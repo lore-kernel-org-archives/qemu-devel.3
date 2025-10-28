@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0ABCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 10:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CC2CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 10:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDhEK-0008P5-8f; Tue, 28 Oct 2025 06:47:09 -0400
+	id 1vDhEL-0008Pa-44; Tue, 28 Oct 2025 06:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vDhDG-0007WK-0z
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vDhDM-0007dh-64
  for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:10 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vDhDA-0005fe-UJ
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:01 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vDhDI-0005ik-Ic
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:07 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 3549D61DF9;
- Tue, 28 Oct 2025 10:45:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09727C4CEF7;
- Tue, 28 Oct 2025 10:45:54 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 1B0B341513;
+ Tue, 28 Oct 2025 10:46:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2534C4CEE7;
+ Tue, 28 Oct 2025 10:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1761648354;
- bh=fGiMIK+5rvPBNof4E+LoU+XtI3OHKHXj0Nev0oi8Bb8=;
+ s=k20201202; t=1761648362;
+ bh=D7GV5YIK68KaGFIMf54ClZrWmjlH6jCoh70v8kXC7y4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WBi/VdPAGcyZP9N/cwwcFYtQMQv+NSVagZ62uWJnKMf9LxaS7F7NF7HRMIRohtSIG
- +wDqMucj6P/mCyOEkGy2WDKNAsDidzPTsclyesZ3b/ctTT+1GowrxEqeuy3j938q7G
- YIZVA61K74Pe13oBdL0nO7Gm3Vpr+tuG8Hxrw5dJ3wPO2qd0RNGwufSSuFbdS8c2CF
- VgeeqTZ8pKm8Xyowveb9JTjJJfUzYScqNKtGtLdr+UcYOVET7P01Z8aBFecHkW+JcC
- 0psBfJyz0rUFsWhUuxPkywZr/2jTqqXjWHSG0ferMdBJedNOAzLb1uClFwVIJxk6hq
- j3+i6bh2AjG3w==
+ b=VYEHinBMuNAEqyu4VNJ9U0kDI3rfkJwqKkNvLUWzhvaFnFLyj1NlX5NqOFuDArxw6
+ ULBmuOh1lRRK38agQcTJbtya6scu9CuZnv4o6icC1NgNOURJtO+eeKAeYpv1esiSca
+ EYWP47hadwWrYRjYQOOyWdaURJWqCtrYZDNmxdbeFYBmrw4Pjebonpd5h6Nwje39z1
+ kQ3iyTPYSyDToz26+cjSrmGNE1eP/E0GjZOqk5KjmYCdyTy7SaIdeJOMx7CXL2vgtC
+ 3STl0iZpx0M+jxwgotCpaDe2ao+3rp1enSNrc0nL1v2BJo0ZTWZR6tkJSejwyQLaHG
+ Uwj9LbHJaSyTQ==
 From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -44,23 +44,21 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Michael Roth <michael.roth@amd.com>,
  Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Srikanth Aithal <srikanth.aithal@amd.com>
-Subject: [PATCH v3 8/9] target/i386: SEV: Add support for setting TSC
- frequency for Secure TSC
-Date: Tue, 28 Oct 2025 16:13:33 +0530
-Message-ID: <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
+Subject: [PATCH v3 9/9] target/i386: SEV: Refactor check_sev_features()
+Date: Tue, 28 Oct 2025 16:13:34 +0530
+Message-ID: <0f998f5761f180829240f84172698f9315655572.1761648149.git.naveen@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1761648149.git.naveen@kernel.org>
 References: <cover.1761648149.git.naveen@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=naveen@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,143 +75,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for configuring the TSC frequency when Secure TSC is enabled
-in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
-guest objects, similar to the vCPU-specific property used by regular
-guests and TDX. A new property is needed since SEV-SNP guests require
-the TSC frequency to be specified during early SNP_LAUNCH_START command
-before any vCPUs are created.
+Refactor check_sev_features() to consolidate SEV-SNP checks to a single
+if block. This is also helpful when adding checks for future SEV
+features.  While at it, move the comment about the checks being done
+outside of the function body and expand it to describe what this
+function does. Update error_setg() invocations to use a consistent
+format.
 
-The user-provided TSC frequency is set through KVM_SET_TSC_KHZ before
-issuing KVM_SEV_SNP_LAUNCH_START.
+No functional change intended.
 
-Attempts to set TSC frequency on both the SEV_SNP object and the cpu
-object result in an error from KVM (on the vCPU ioctl), so do not add
-separate checks for the same.
-
-Sample command-line:
-  -machine q35,confidential-guest-support=sev0 \
-  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on,tsc-frequency=2500000000
-
-Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
 ---
- target/i386/sev.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- qapi/qom.json     |  6 +++++-
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ target/i386/sev.c | 55 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 25 deletions(-)
 
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index af8222b8ceb3..56d7cc9e6901 100644
+index 56d7cc9e6901..50d9e5714408 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -178,6 +178,7 @@ struct SevSnpGuestState {
-     char *id_auth_base64;
-     uint8_t *id_auth;
-     char *host_data;
-+    uint32_t tsc_khz;
+@@ -502,34 +502,22 @@ static void sev_apply_cpu_context(CPUState *cpu)
+     }
+ }
  
-     struct kvm_sev_snp_launch_start kvm_start_conf;
-     struct kvm_sev_snp_launch_finish kvm_finish_conf;
-@@ -536,6 +537,13 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
++/*
++ * Ensure SEV_FEATURES is configured for correct SEV hardware and that
++ * the requested features are supported. In addition, ensure feature
++ * dependencies are satisfied (allow tsc-frequency only if secure-tsc
++ * is also enabled, as an example).
++ */
+ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+                               Error **errp)
+ {
+-    /*
+-     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
+-     * the requested features are supported. If SEV-SNP is enabled then
+-     * that feature must be enabled, otherwise it must be cleared.
+-     */
+-    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
+-        error_setg(
+-            errp,
+-            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
+-            __func__);
+-        return -1;
+-    } else if (!sev_snp_enabled() &&
+-               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
+-        error_setg(
+-            errp,
+-            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
+-            __func__);
+-        return -1;
+-    }
+     if (sev_features && !sev_es_enabled()) {
+         error_setg(errp,
+                    "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
+                    __func__);
+         return -1;
+     }
++
+     if (sev_features & ~sev_common->supported_sev_features) {
+         error_setg(errp,
+                    "%s: VMSA contains unsupported sev_features: %lX, "
+@@ -537,13 +525,30 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
                     __func__, sev_features, sev_common->supported_sev_features);
          return -1;
      }
-+    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
-+        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
-+        error_setg(errp,
-+                   "%s: TSC frequency can only be set if Secure TSC is enabled",
-+                   __func__);
-+        return -1;
-+    }
+-    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
+-        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
+-        error_setg(errp,
+-                   "%s: TSC frequency can only be set if Secure TSC is enabled",
+-                   __func__);
+-        return -1;
++
++    if (sev_snp_enabled()) {
++        if (!(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
++            error_setg(errp,
++                       "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
++                       __func__);
++            return -1;
++        }
++        if (SEV_SNP_GUEST(sev_common)->tsc_khz &&
++            !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
++            error_setg(errp,
++                       "%s: TSC frequency can only be set if Secure TSC is enabled",
++                       __func__);
++            return -1;
++        }
++    } else {
++        if (sev_features & SVM_SEV_FEAT_SNP_ACTIVE) {
++            error_setg(errp,
++                       "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
++                       __func__);
++            return -1;
++        }
+     }
++
      return 0;
  }
  
-@@ -1085,6 +1093,19 @@ sev_snp_launch_start(SevCommonState *sev_common)
-             return 1;
-     }
- 
-+    if (is_sev_feature_set(sev_common, SVM_SEV_FEAT_SECURE_TSC) &&
-+        sev_snp_guest->tsc_khz) {
-+        rc = -EINVAL;
-+        if (kvm_check_extension(kvm_state, KVM_CAP_VM_TSC_CONTROL)) {
-+            rc = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, sev_snp_guest->tsc_khz);
-+        }
-+        if (rc < 0) {
-+            error_report("%s: Unable to set Secure TSC frequency to %u kHz ret=%d",
-+                         __func__, sev_snp_guest->tsc_khz, rc);
-+            return 1;
-+        }
-+    }
-+
-     rc = sev_ioctl(sev_common->sev_fd, KVM_SEV_SNP_LAUNCH_START,
-                    start, &fw_error);
-     if (rc < 0) {
-@@ -3132,6 +3153,28 @@ static void sev_snp_guest_set_secure_tsc(Object *obj, bool value, Error **errp)
-     sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC, value);
- }
- 
-+static void
-+sev_snp_guest_get_tsc_frequency(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint32_t value = SEV_SNP_GUEST(obj)->tsc_khz * 1000;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+}
-+
-+static void
-+sev_snp_guest_set_tsc_frequency(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint32_t value;
-+
-+    if (!visit_type_uint32(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    SEV_SNP_GUEST(obj)->tsc_khz = value / 1000;
-+}
-+
- static void
- sev_snp_guest_class_init(ObjectClass *oc, const void *data)
- {
-@@ -3170,6 +3213,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_bool(oc, "secure-tsc",
-                                   sev_snp_guest_get_secure_tsc,
-                                   sev_snp_guest_set_secure_tsc);
-+    object_class_property_add(oc, "tsc-frequency", "uint32",
-+                              sev_snp_guest_get_tsc_frequency,
-+                              sev_snp_guest_set_tsc_frequency, NULL, NULL);
- }
- 
- static void
-diff --git a/qapi/qom.json b/qapi/qom.json
-index c7dd2dd1b095..5daaf065b6b7 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1104,6 +1104,9 @@
- # @secure-tsc: enable Secure TSC
- #     (default: false) (since 10.2)
- #
-+# @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
-+#     is enabled (default: zero) (since 10.2)
-+#
- # Since: 9.1
- ##
- { 'struct': 'SevSnpGuestProperties',
-@@ -1116,7 +1119,8 @@
-             '*author-key-enabled': 'bool',
-             '*host-data': 'str',
-             '*vcek-disabled': 'bool',
--            '*secure-tsc': 'bool' } }
-+            '*secure-tsc': 'bool',
-+            '*tsc-frequency': 'uint32' } }
- 
- ##
- # @TdxGuestProperties:
 -- 
 2.51.0
 
