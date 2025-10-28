@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B75CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C02CCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDmeb-0008Ds-DT; Tue, 28 Oct 2025 12:34:37 -0400
+	id 1vDmeY-0008BN-Nr; Tue, 28 Oct 2025 12:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeI-00084b-G2
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeH-00084U-Ln
  for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeB-0003Yv-9I
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:18 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDme8-0003Y9-Es
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761669247;
+ s=mimecast20190719; t=1761669245;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eLJdOJSUssWGwBsyDBm1U43bSPC0FcgCsDPLVbyx2Ps=;
- b=VOJjSVJA691hqW2p2jtpiXJSVHJYUmFIFE32k6w2EHYzx3P5J6rJ/3mk/co9GGLu8QT6nY
- DE0AS2kh/6kLqX2d7MRTRRvvpP0u2j2Pxxb0m7nWqzYgz51X+mhCbARy3NNYCF7WeqXuF1
- Tcb80BgB9YXWaW6tralmTtg7MKxrPZ8=
+ bh=6fT6mtzR5u0lZZ0ban5hvgxpPszfsK/X1TDCxFw5a88=;
+ b=husxOrhji3BkLFKy7sNhdBiT8YyKS7dsEMa9fek/Pld7gbZmMifoYiwv4FHtAelXyeN7VR
+ 27zDTl42XjNYxh+WtKJrg+yN+BsyP+34J3XqX1QtEsyHBo7SMj1kyoYJLVDUHu1uuegAt4
+ 9A1QwSW+4fhzU8NWpYyT6wA9HTnT49M=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-miq4GeeLN6KAAvW4-MPLcg-1; Tue, 28 Oct 2025 12:34:06 -0400
-X-MC-Unique: miq4GeeLN6KAAvW4-MPLcg-1
-X-Mimecast-MFC-AGG-ID: miq4GeeLN6KAAvW4-MPLcg_1761669245
+ us-mta-413-DNW2A8wAOIWH0iBXz8jD7Q-1; Tue, 28 Oct 2025 12:33:59 -0400
+X-MC-Unique: DNW2A8wAOIWH0iBXz8jD7Q-1
+X-Mimecast-MFC-AGG-ID: DNW2A8wAOIWH0iBXz8jD7Q_1761669238
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477171bbf51so6378845e9.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:34:05 -0700 (PDT)
+ 5b1f17b1804b1-47111dc7c5dso431565e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:33:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761669245; x=1762274045;
+ d=1e100.net; s=20230601; t=1761669238; x=1762274038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eLJdOJSUssWGwBsyDBm1U43bSPC0FcgCsDPLVbyx2Ps=;
- b=ZASpx+7ouLcRA3fsbUjmDCNt+mVwVxIHuYBAwTMX21okKmr8FrSWl5/EXY4qmnPbAx
- jodWGpj35MEEsnBH45PsDoZkcAq4cSXgw0TMHe+snyTa6SFZyTO6qZlJrZNIExhrhdEI
- GNTYrv9IyLaWjPKqPfomaKWRdsQu9NJYlXqTtIM4m4+bTQ9IQw/4QcsJ5pP2FSsprEw6
- EYph1d7XhGLCWLIgpU4vn5fpC4oqm/HzxO0KOSKdJfhGcPQE9K6No6CVYxjTnpOTOIbA
- 7z50L5h7p1UEIem+wo1DN6PMu00TYeZ7W0LPflc7Zrx7VvODndT64Sgbz7M4bVSPK317
- Mvew==
-X-Gm-Message-State: AOJu0YwDeVUy4B6TgSxg83Yrvygh6aJSfO4yM/1sZbljazEUDU+2MxUR
- +lU6qR8TvzIc6oiBrv5gGxkeduvlq6xLJALtLRg4C4rs+Tn2KzagKuWPRiftFQDjR3MTOVM5qJW
- 21foX9rigin2PLh3pxWblP0cFfJC8GLdS1S46lGwsVBcQdKuWkgzNO6G2
-X-Gm-Gg: ASbGncs/66Adz269OM/8Vc4aTHvHA1Ns+fuii1rQJuDZUd0EpuWvhENwDroAF0vjRnF
- MfYBgEhyajaT1qJodUYOgiLYFrFN56P4SuW4kFSJsLZ00LSMixhLnkw6Cdy+DEph0e2xNB7+Xay
- plTLUUcZGgP+g+gGa9D2+c4RVhbSbZY2dMqzUYkSrLknvLEYFeSLoAwnxXrM4VAo/NEIVmcc5Zu
- vTPJdlSMQ2ofYVyyfCvLvDnaGeny1OxspC1XbC2svnvE+YQIY3eBfUe9/2swee+r5W9sjiyuYnV
- X/cYvb3HVoc3QICFbD8XfVPJ9lKUG4kembhqWfQuZCOcQMswiZvAOYKqXX5y0oqCfPiaWJhWRoc
- pXuPy+3aY1gJW9cIgazFugO2E3IoeVnArhj2uVrAX25x73BT0Z7eS8M8/EQ==
-X-Received: by 2002:a05:600c:5197:b0:477:1be1:9afe with SMTP id
- 5b1f17b1804b1-4771e180d92mr1010945e9.9.1761669244548; 
- Tue, 28 Oct 2025 09:34:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOcMewunCj8cVxj/IW7iuNFMakC0UnB92LOjFdg0o3aFT95YE1qnQx00MZztGgwfwdelYyNQ==
-X-Received: by 2002:a05:600c:5197:b0:477:1be1:9afe with SMTP id
- 5b1f17b1804b1-4771e180d92mr1010515e9.9.1761669243976; 
- Tue, 28 Oct 2025 09:34:03 -0700 (PDT)
+ bh=6fT6mtzR5u0lZZ0ban5hvgxpPszfsK/X1TDCxFw5a88=;
+ b=jS58Cnh6WftnmCpEeOfS33p7cpMKiMev14w3DIfTMogLxxMHH7M87vL9pj8oCgcVzB
+ H5mWOZ7L69esZBvr/IfykS73vGoGmYEcKVJK/mdoc0ruLo5PPd1KXvEKP2K8TqduHNox
+ 53Udd7kcWWjQ1KaZDJcK/iqkN/2N70Sg47M1pne/+B/Tvv5SgRvH+Y0p7u8tnP+9ftYy
+ vSP4xMDY2oNuVnP+0n20ZfKSHxR2/Qs8t2qDZr1vwf8yy6oSMJ6f0QYnOgDHdK3hBMNQ
+ VQqbiB33JhAknCbqwc8yP6F9MVU7qecHFIIdfdWL+aH4CRz31d5ST1ilJ9aCCy6luEre
+ f9+g==
+X-Gm-Message-State: AOJu0Yy6vtijw2jgwE15Ymh6XChPIIoUcSQBlM9EjK0N2Antzj2Ih5zs
+ 5srZuCUzyLDxxMj7SbKyQA0uo2i7KdjDEDmDmBOLORbD2qX8klCRf+pEYlEWg9Am3kPilalWU/w
+ f13/xBGgZRafzNxbb64ig+B0HuccDiroNFsaOwkeNXtfYJcfuSjwOMtFf
+X-Gm-Gg: ASbGnctsQEBxGTJEr8cu9eWzTZEXIcV8GU/MRbGuT6bMq5DoIlHE1i7hbK2Tziihrdn
+ TvDDPAYhGZecgaT/OPK2spbXI3fw4UjcAt/jBBfzfTU7SQbBdxusWdZhKG1v12yUwRsWj3QyheE
+ 5nheGtyVcAvIgpLlh3duq1wK9sy2kfddNWW9SHW8NjA0U/SPY+jV3ib+KQFg0PgbpJ1fdKyZLt6
+ jtzpH3xVRaFDKSvEYs7GSy9SA4Sv8uP5CMUbVZTTqQLNexcpIIvdPVtQg8NLs3bEPLMfhePfkJv
+ X6Ot5VkvRCs685ruZmUUQkeYb3zeWsMGtDO6HzcxvW5knXwCHXDj9PZERXb4IFBzGjRCLVHZ7SO
+ GNcuCkSKVUD0lJhn8u9atCMpzIv8+NI816sPNJ8Oc38SmEDv8Ly7SXVL4mA==
+X-Received: by 2002:a05:600c:c10f:b0:475:d7fd:5c59 with SMTP id
+ 5b1f17b1804b1-4771819772amr25163855e9.16.1761669238295; 
+ Tue, 28 Oct 2025 09:33:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOeyGHVXYZ85irW03JhyRix5r8yuu3zLuUZHaKA1+29RrLT2PcnJiHm7nIPcsmIrdPrRn8Jg==
+X-Received: by 2002:a05:600c:c10f:b0:475:d7fd:5c59 with SMTP id
+ 5b1f17b1804b1-4771819772amr25163605e9.16.1761669237738; 
+ Tue, 28 Oct 2025 09:33:57 -0700 (PDT)
 Received: from localhost
  (p200300cfd7171feeff88afa910cb665f.dip0.t-ipconnect.de.
  [2003:cf:d717:1fee:ff88:afa9:10cb:665f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771843eabfsm23986055e9.2.2025.10.28.09.34.01
+ ffacd0b85a97d-429952cb7dcsm21979902f8f.11.2025.10.28.09.33.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 09:34:02 -0700 (PDT)
+ Tue, 28 Oct 2025 09:33:56 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -82,9 +82,10 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Subject: [PATCH 05/16] curl: Fix coroutine waking
-Date: Tue, 28 Oct 2025 17:33:31 +0100
-Message-ID: <20251028163343.116249-6-hreitz@redhat.com>
+Subject: [PATCH 03/16] =?UTF-8?q?iscsi:=20Run=20co=20BH=20CB=20in=20the=20?=
+ =?UTF-8?q?coroutine=E2=80=99s=20AioContext?=
+Date: Tue, 28 Oct 2025 17:33:29 +0100
+Message-ID: <20251028163343.116249-4-hreitz@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028163343.116249-1-hreitz@redhat.com>
 References: <20251028163343.116249-1-hreitz@redhat.com>
@@ -92,7 +93,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -117,182 +118,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we wake a coroutine from a different context, we must ensure that it
-will yield exactly once (now or later), awaiting that wake.
+For rbd (and others), as described in “rbd: Run co BH CB in the
+coroutine’s AioContext”, the pattern of setting a completion flag and
+waking a coroutine that yields while the flag is not set can only work
+when both run in the same thread.
 
-curl’s current .ret == -EINPROGRESS loop may lead to the coroutine not
-yielding if the request finishes before the loop gets run.  To fix it,
-drop the loop and just yield exactly once, unless the request is served
-from the cache or failed before it was submitted – that last part makes
-it a bit complicated, as the result of curl_find_buf() now needs to be a
-tristate.
+iscsi has the same pattern, but the details are a bit different:
+iscsi_co_generic_cb() can (as far as I understand) only run through
+iscsi_service(), not just from a random thread at a random time.
+iscsi_service() in turn can only be run after iscsi_set_events() set up
+an FD event handler, which is done in iscsi_co_wait_for_task().
 
-(Can be reproduced with multiqueue by adding a usleep(100000) before the
-`while (acb.ret == -EINPROGRESS)` loop.)
+As a result, iscsi_co_wait_for_task() will always yield exactly once,
+because iscsi_co_generic_cb() can only run after iscsi_set_events(),
+after the completion flag has already been checked, and the yielding
+coroutine will then be woken only once the completion flag was set to
+true.  So as far as I can tell, iscsi has no bug and already works fine.
 
-Also, add a comment why aio_co_wake() is safe regardless of whether the
-coroutine and curl_multi_check_completion() run in the same context.
+Still, we don’t need the completion flag because we know we have to
+yield exactly once, so we can drop it.  This simplifies the code and
+makes it more obvious that the “rbd bug” isn’t present here.
 
-Cc: qemu-stable@nongnu.org
+This makes iscsi_co_generic_bh_cb() and iscsi_retry_timer_expired() a
+bit boring, and actually, for the former, we could drop it and run
+aio_co_wake() directly from scsi_co_generic_cb() to the same effect; but
+that would remove the replay_bh_schedule_oneshot_event(), and I assume
+we shouldn’t do that.  At least schedule both the BH and the timer in
+the coroutine’s AioContext to make them simple wrappers around
+qemu_coroutine_enter(), without a further BH indirection.
+
+Finally, remove the iTask->co != NULL checks: This field is set by
+iscsi_co_init_iscsitask(), which all users of IscsiTask run before even
+setting up iscsi_co_generic_cb() as the callback, and it is never set or
+cleared elsewhere, so it is impossible to not be set in
+iscsi_co_generic_cb().
+
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/curl.c | 55 +++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 37 insertions(+), 18 deletions(-)
+ block/iscsi.c | 39 ++++++++++-----------------------------
+ 1 file changed, 10 insertions(+), 29 deletions(-)
 
-diff --git a/block/curl.c b/block/curl.c
-index 68cf83ce55..65996a8866 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -124,6 +124,16 @@ typedef struct BDRVCURLState {
-     char *proxypassword;
- } BDRVCURLState;
+diff --git a/block/iscsi.c b/block/iscsi.c
+index 15b96ee880..76c15e20ea 100644
+--- a/block/iscsi.c
++++ b/block/iscsi.c
+@@ -107,7 +107,6 @@ typedef struct IscsiLun {
  
-+/** Possible result states of curl_find_buf() */
-+typedef enum {
-+    /* No buffer found, need to create new request */
-+    CURL_NO_BUF_FOUND,
-+    /* Buffer found, request filled and done */
-+    CURL_REQUEST_FILLED,
-+    /* Ongoing request found, need to yield */
-+    CURL_REQUEST_ONGOING,
-+} CURLFindBufResult;
-+
- static void curl_clean_state(CURLState *s);
- static void curl_multi_do(void *arg);
- 
-@@ -258,8 +268,8 @@ read_end:
- }
- 
- /* Called with s->mutex held.  */
--static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
--                          CURLAIOCB *acb)
-+static CURLFindBufResult curl_find_buf(BDRVCURLState *s, uint64_t start,
-+                                       uint64_t len, CURLAIOCB *acb)
+ typedef struct IscsiTask {
+     int status;
+-    int complete;
+     int retries;
+     int do_retry;
+     struct scsi_task *task;
+@@ -183,18 +182,13 @@ iscsi_schedule_bh(IscsiAIOCB *acb)
+ static void iscsi_co_generic_bh_cb(void *opaque)
  {
-     int i;
-     uint64_t end = start + len;
-@@ -289,7 +299,7 @@ static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
-                 qemu_iovec_memset(acb->qiov, clamped_len, 0, len - clamped_len);
-             }
-             acb->ret = 0;
--            return true;
-+            return CURL_REQUEST_FILLED;
-         }
- 
-         // Wait for unfinished chunks
-@@ -307,13 +317,13 @@ static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
-             for (j=0; j<CURL_NUM_ACB; j++) {
-                 if (!state->acb[j]) {
-                     state->acb[j] = acb;
--                    return true;
-+                    return CURL_REQUEST_ONGOING;
-                 }
-             }
-         }
-     }
- 
--    return false;
-+    return CURL_NO_BUF_FOUND;
- }
- 
- /* Called with s->mutex held.  */
-@@ -378,6 +388,16 @@ static void curl_multi_check_completion(BDRVCURLState *s)
-                 acb->ret = error ? -EIO : 0;
-                 state->acb[i] = NULL;
-                 qemu_mutex_unlock(&s->mutex);
-+                /*
-+                 * Current AioContext is the BDS context, which may or may not
-+                 * be the request (coroutine) context.
-+                 * - If it is, the coroutine must have yielded or the FD handler
-+                 *   (curl_multi_do()/curl_multi_timeout_do()) could not have
-+                 *   been called and we would not be here
-+                 * - If it is not, it doesn't matter whether it has already
-+                 *   yielded or not; it will be scheduled once it does yield
-+                 * So aio_co_wake() is safe to call.
-+                 */
-                 aio_co_wake(acb->co);
-                 qemu_mutex_lock(&s->mutex);
-             }
-@@ -868,7 +888,8 @@ out_noclean:
-     return -EINVAL;
- }
- 
--static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-+/* Return whether a request was submitted that requires yielding */
-+static bool coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
- {
-     CURLState *state;
-     int running;
-@@ -877,13 +898,15 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
- 
-     uint64_t start = acb->offset;
-     uint64_t end;
-+    CURLFindBufResult find_buf_res;
- 
--    qemu_mutex_lock(&s->mutex);
-+    QEMU_LOCK_GUARD(&s->mutex);
- 
-     // In case we have the requested data already (e.g. read-ahead),
-     // we can just call the callback and be done.
--    if (curl_find_buf(s, start, acb->bytes, acb)) {
--        goto out;
-+    find_buf_res = curl_find_buf(s, start, acb->bytes, acb);
-+    if (find_buf_res != CURL_NO_BUF_FOUND) {
-+        return find_buf_res == CURL_REQUEST_ONGOING;
-     }
- 
-     // No cache found, so let's start a new request
-@@ -898,7 +921,7 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-     if (curl_init_state(s, state) < 0) {
-         curl_clean_state(state);
-         acb->ret = -EIO;
--        goto out;
-+        return false;
-     }
- 
-     acb->start = 0;
-@@ -913,7 +936,7 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-     if (state->buf_len && state->orig_buf == NULL) {
-         curl_clean_state(state);
-         acb->ret = -ENOMEM;
--        goto out;
-+        return false;
-     }
-     state->acb[0] = acb;
- 
-@@ -925,14 +948,12 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-         acb->ret = -EIO;
- 
-         curl_clean_state(state);
--        goto out;
-+        return false;
-     }
- 
-     /* Tell curl it needs to kick things off */
-     curl_multi_socket_action(s->multi, CURL_SOCKET_TIMEOUT, 0, &running);
+     struct IscsiTask *iTask = opaque;
 -
--out:
--    qemu_mutex_unlock(&s->mutex);
-+    return true;
+-    iTask->complete = 1;
+     aio_co_wake(iTask->co);
  }
  
- static int coroutine_fn curl_co_preadv(BlockDriverState *bs,
-@@ -941,14 +962,12 @@ static int coroutine_fn curl_co_preadv(BlockDriverState *bs,
+ static void iscsi_retry_timer_expired(void *opaque)
  {
-     CURLAIOCB acb = {
-         .co = qemu_coroutine_self(),
--        .ret = -EINPROGRESS,
-         .qiov = qiov,
-         .offset = offset,
-         .bytes = bytes
-     };
+     struct IscsiTask *iTask = opaque;
+-    iTask->complete = 1;
+-    if (iTask->co) {
+-        aio_co_wake(iTask->co);
+-    }
++    aio_co_wake(iTask->co);
+ }
  
--    curl_setup_preadv(bs, &acb);
--    while (acb.ret == -EINPROGRESS) {
-+    if (curl_setup_preadv(bs, &acb)) {
-         qemu_coroutine_yield();
+ static inline unsigned exp_random(double mean)
+@@ -239,6 +233,7 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
+ {
+     struct IscsiTask *iTask = opaque;
+     struct scsi_task *task = command_data;
++    AioContext *itask_ctx = qemu_coroutine_get_aio_context(iTask->co);
+ 
+     iTask->status = status;
+     iTask->do_retry = 0;
+@@ -263,9 +258,9 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
+                              " (retry #%u in %u ms): %s",
+                              iTask->retries, retry_time,
+                              iscsi_get_error(iscsi));
+-                aio_timer_init(iTask->iscsilun->aio_context,
+-                               &iTask->retry_timer, QEMU_CLOCK_REALTIME,
+-                               SCALE_MS, iscsi_retry_timer_expired, iTask);
++                aio_timer_init(itask_ctx, &iTask->retry_timer,
++                               QEMU_CLOCK_REALTIME, SCALE_MS,
++                               iscsi_retry_timer_expired, iTask);
+                 timer_mod(&iTask->retry_timer,
+                           qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + retry_time);
+                 iTask->do_retry = 1;
+@@ -284,12 +279,7 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
+         }
      }
-     return acb.ret;
+ 
+-    if (iTask->co) {
+-        replay_bh_schedule_oneshot_event(iTask->iscsilun->aio_context,
+-                                         iscsi_co_generic_bh_cb, iTask);
+-    } else {
+-        iTask->complete = 1;
+-    }
++    replay_bh_schedule_oneshot_event(itask_ctx, iscsi_co_generic_bh_cb, iTask);
+ }
+ 
+ static void coroutine_fn
+@@ -592,12 +582,10 @@ static inline bool iscsi_allocmap_is_valid(IscsiLun *iscsilun,
+ static void coroutine_fn iscsi_co_wait_for_task(IscsiTask *iTask,
+                                                 IscsiLun *iscsilun)
+ {
+-    while (!iTask->complete) {
+-        iscsi_set_events(iscsilun);
+-        qemu_mutex_unlock(&iscsilun->mutex);
+-        qemu_coroutine_yield();
+-        qemu_mutex_lock(&iscsilun->mutex);
+-    }
++    iscsi_set_events(iscsilun);
++    qemu_mutex_unlock(&iscsilun->mutex);
++    qemu_coroutine_yield();
++    qemu_mutex_lock(&iscsilun->mutex);
+ }
+ 
+ static int coroutine_fn
+@@ -669,7 +657,6 @@ retry:
+     }
+ 
+     if (iTask.do_retry) {
+-        iTask.complete = 0;
+         goto retry;
+     }
+ 
+@@ -740,7 +727,6 @@ retry:
+             scsi_free_scsi_task(iTask.task);
+             iTask.task = NULL;
+         }
+-        iTask.complete = 0;
+         goto retry;
+     }
+ 
+@@ -902,7 +888,6 @@ retry:
+     }
+ 
+     if (iTask.do_retry) {
+-        iTask.complete = 0;
+         goto retry;
+     }
+ 
+@@ -940,7 +925,6 @@ retry:
+     }
+ 
+     if (iTask.do_retry) {
+-        iTask.complete = 0;
+         goto retry;
+     }
+ 
+@@ -1184,7 +1168,6 @@ retry:
+     }
+ 
+     if (iTask.do_retry) {
+-        iTask.complete = 0;
+         goto retry;
+     }
+ 
+@@ -1301,7 +1284,6 @@ retry:
+     }
+ 
+     if (iTask.do_retry) {
+-        iTask.complete = 0;
+         goto retry;
+     }
+ 
+@@ -2390,7 +2372,6 @@ retry:
+     iscsi_co_wait_for_task(&iscsi_task, dst_lun);
+ 
+     if (iscsi_task.do_retry) {
+-        iscsi_task.complete = 0;
+         goto retry;
+     }
+ 
 -- 
 2.51.0
 
