@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7535CCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 15:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1735CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 15:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDlUF-0005SR-7n; Tue, 28 Oct 2025 11:19:51 -0400
+	id 1vDlYg-0007YR-IT; Tue, 28 Oct 2025 11:24:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDlU8-0005RL-ER
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:19:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDlU1-0000nE-5B
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:19:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761664772;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EQducGBU0eL0OYAMIb4Ca1kjVhRX6dZz2fI7B/2KgUI=;
- b=YTf96YN2XIuxHHGycbsgqcCRlY9rcYF6+GawL0DzCLQNq/bzYeJrrBHVrmvpbxLRmz0Qga
- WZD7r7OaRXjWxH84T4ii5uXfKN3nABVOZMERLZ81sfJpgqDQPwo0cc6d0AZLCapZBpNJuH
- 38LBKaTDQkqYiOp0lud8oFgvkbseiYg=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-ExXlV7ejN0a3ew38wzD6Tg-1; Tue, 28 Oct 2025 11:19:28 -0400
-X-MC-Unique: ExXlV7ejN0a3ew38wzD6Tg-1
-X-Mimecast-MFC-AGG-ID: ExXlV7ejN0a3ew38wzD6Tg_1761664768
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4e892f776d0so278129451cf.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 08:19:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761664768; x=1762269568;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vDlYd-0007X6-Ps
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:24:24 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vDlYS-0001Mx-GO
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:24:23 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-378d61ce75aso56258521fa.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 08:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761665044; x=1762269844; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EQducGBU0eL0OYAMIb4Ca1kjVhRX6dZz2fI7B/2KgUI=;
- b=AQbE2yHVEyWwqaeVcwYcExicCWyKreyDXpf+WE6bkC40fSNSm5J5cccN497pjsm9oW
- LUBzfjzveEaAHIXc8wAmpj7bKowPd3I2Zg9GbBB3ic2Lk+T5W+aK2Yr3IvKpyYLtauXh
- e7jaSu/c+J5ZU5WIEcfF6/2zdlDN2qYLe9FFofQHXyc9LGz+H/SBytoDdCI6e9rMN2rT
- 0UZvWf43KTIuFtWTQue34/CNkWqbJSxM0c3qDDvyWVT4TLy9Y+VgTiA8kr7rHp1BL4wZ
- MB0yFVGSeOaQPDpXkI1ufVIv1+3ECJoZxwTg9ulx2CJyxDqkS8NU7KNbSzs9pfJBXfZt
- jAlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBJJn6JskD8Mp2XZBLSNUzJDylTXfMO1OGo9Cm16x6Xe1TQ3dOmya9mUzsrRxEdWOfM50/ZHD2NAJL@nongnu.org
-X-Gm-Message-State: AOJu0YzVOFXKg5sDHx3asG3aXsX+dhaYVzGECY2VW9ejXEQNN7nbnBST
- fFiSSn9GaxaoAAyS+45ecvb0jFiITGOniu0U7W3XN+FGtwHgIdWPS/q65FTYZiJ9MNd+JGYPWFA
- Pw5vb/5eeaiZOIZlxzDFcK+LeDxnZfEZmzUZZ2Y/4CSNUUHgrE1Hu8Mh2
-X-Gm-Gg: ASbGncvHrYrLyI0JVoCOzIPqb44Qvy59DI95iMgSqakIpZA2vL0hujSN9tQQ/4vLyRU
- yxasu1TG/AukEeY6IS5IOaAw3fmps6ZapmhefwW7yxe0FfJ6ybuGOiZabobkRLhi+aFgk3ObNa4
- oF20Pgy6obmqUOyzwlBh052dSymB69RIL72pqEEhsPP9ELFo2qiU0Bu1gDojpw5lj5l9NbCVRp3
- CGgNYquVAJ6oWgAnmhHKfD35Y8InEGRPm1YnDSXR6NBxxu/lIXXn8NBpIfJ3TBtjNQosDihTOdo
- t2IAnAwATlESGBTCZyMCbandb7UUg/luwTBk+e3+FuxtGUGRQ/CWN5aw86LkIob6m5M=
-X-Received: by 2002:a05:622a:4896:b0:4ec:f5a1:a2c4 with SMTP id
- d75a77b69052e-4ed0749a32emr55181671cf.9.1761664768259; 
- Tue, 28 Oct 2025 08:19:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGL225WHvl2ZFdzf/re5AHJkSS1N+wUTki2D79YxqHjHX1PByZBu7OyjME6kRWdaKAnqtfYXQ==
-X-Received: by 2002:a05:622a:4896:b0:4ec:f5a1:a2c4 with SMTP id
- d75a77b69052e-4ed0749a32emr55181081cf.9.1761664767709; 
- Tue, 28 Oct 2025 08:19:27 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4eba387fdb2sm72226281cf.37.2025.10.28.08.19.26
+ bh=ptuQ40T8A5qNQ6R3Uee5nOxcUTyPqUa19KlSXchxpcE=;
+ b=f0B6g+8iLGxWo/4JMOSCvx+fz9hcPLZSHCmVxJpRYUmPbiziihEnfx+hJVotm/Pzmc
+ yoaivzpIx+TX5AY+GUb3GeFAREUV/uwRXJ1ICRuIuoOf/D0kyr/fmIhrLnfWuexAKdei
+ 7flzmXmK7i+imOeidkvgVgL/c08HJXg+AS7bpppvhesoDgRPdAx+FuFI3S9rvQ48BtKb
+ mWYKI+Cb2Od43p/HwmOohc1KqTEjJP3WSB4R1UgOcRnjAARhfrkOqbhJDqcSd9ig21SB
+ wSXj0PO4iYFhdL57xqtZ2xVJAAJ6OoIqTihb3d3F5FsAX6ubOoGjBQCi8lnQhMZjj+H9
+ Gmeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761665044; x=1762269844;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ptuQ40T8A5qNQ6R3Uee5nOxcUTyPqUa19KlSXchxpcE=;
+ b=ma3mcaSaQKHC5SzEGjVcJAyPUA4E68nK+aytEkMRX5Va5OuIGRRHZh7xv0EBU+JUjZ
+ CLfIk0vInIKbOpSXNaKP4EDhOEyR6Cb2V7pCORIB6ZdA2zw6FBC7FCiWYMIAlzawg/Ca
+ lVJZzvz4v38i9AQTWrJPseFGuwPw/d1qFeS5o4yJClWobn9MAxKhyEj3WQAJghFLwJvL
+ OSpDy2sxjLBOzALZxkI/bD1+V+rHawILyK6KkYTZGIBo+GHfWTLgsA9h2Mu9YxbO8Ksb
+ xLAHXX9EAqVg5H5N83N27l///ALtW48jafr2fHI0q1wyxVpGyS0EsMk7bkpnie84/s+l
+ xpEg==
+X-Gm-Message-State: AOJu0YyCSgnh8b3LdbOPlApIP3O5xx9q7gasatm3o82mvxoMj8nCDge1
+ o0NETtzoN7gtNFzA1GUg9ChljeRgbcQ+gx+S7u1pvQ5LHQtjqccnANIyAC1aIcY92kxZJQ==
+X-Gm-Gg: ASbGnct0dfHL7WqUEhoNTO7OKrjkhtoWTz50lYQsndM/T8thVc6DEfOxdnIFckQwQ5z
+ kqQz2DAqVe3PKDJyjdl92izTGmYFnzRKwe6m8JHeMcdvNM3oHrfxLsH2pazmc0r7wKdyw+Dxm8D
+ n/jkuk4LHE9ftO6dwW3wHbkA03I98SCS/gfB0cHO1TmzcRsuX3onu0esE6C2C40dLCaHEioRZ0a
+ SVNymZZrVkxhC8sCdZIKqlSL4+ZCvOSLmmJHs29rJQoayq+OWeosj+U24Hsv/1k/x48bA67MxEO
+ lYNyGrE6tSaEqPC0UAbJKx4HoNBw4uWwrT/7CjJCr5JuM/+9vblVc8EKLGmiHAGdjsYCPmEcOZ8
+ 2Tm41CCzPLbHFPX5FceLarMZm++9eSr8UHlywWalauHzlMDbHWAS9/5nWpyZPdhZrbLBQiPt4qb
+ Cenknj6CNcxCegLIE9HM98AUCfjTgcsBol9t8/
+X-Google-Smtp-Source: AGHT+IEKS8n26APkvHWTqIFdTjkhqSVWXc7IMJv5y2NEDFMZsgSJEEv0e4HOJAQzTE2HZetz7foyMA==
+X-Received: by 2002:a05:651c:30e2:b0:376:3a83:4296 with SMTP id
+ 38308e7fff4ca-37907cacd94mr8081551fa.14.1761665043802; 
+ Tue, 28 Oct 2025 08:24:03 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-378ee0a56d7sm26973091fa.23.2025.10.28.08.24.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 08:19:27 -0700 (PDT)
-Date: Tue, 28 Oct 2025 11:19:25 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- berrange@redhat.com, guobin@linux.alibaba.com
-Subject: Re: [PATCH 0/3] migration: Cleanup around MigMode sets
-Message-ID: <aQDe_UZF-fwsqkuL@x1.local>
-References: <20251027064503.1074255-1-armbru@redhat.com>
- <877bwgeau8.fsf@suse.de>
+ Tue, 28 Oct 2025 08:24:02 -0700 (PDT)
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Cc: alex.bennee@linaro.org,
+	bill.mills@linaro.org,
+	edgar.iglesias@amd.com
+Subject: [PATCH v1 2/5] virtio: Add virtio_queue_get_rings
+Date: Tue, 28 Oct 2025 16:23:47 +0100
+Message-ID: <20251028152351.1247812-3-edgar.iglesias@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
+References: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <877bwgeau8.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,36 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 10:24:47AM -0300, Fabiano Rosas wrote:
-> Markus Armbruster <armbru@redhat.com> writes:
-> 
-> > Markus Armbruster (3):
-> >   migration: Use unsigned instead of int for bit set of MigMode
-> >   migration: Use bitset of MigMode instead of variable arguments
-> >   migration: Put Error **errp parameter last
-> >
-> >  include/migration/blocker.h |  9 ++----
-> >  include/migration/misc.h    | 10 +++----
-> >  hw/vfio/container-legacy.c  |  6 ++--
-> >  hw/vfio/cpr-iommufd.c       |  6 ++--
-> >  hw/vfio/cpr-legacy.c        |  8 +++---
-> >  hw/vfio/cpr.c               |  5 ++--
-> >  hw/vfio/device.c            |  4 +--
-> >  migration/migration.c       | 57 +++++++++----------------------------
-> >  stubs/migr-blocker.c        |  2 +-
-> >  system/physmem.c            |  8 +++---
-> >  10 files changed, 40 insertions(+), 75 deletions(-)
-> 
-> Series:
-> 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-I recall I tried to convince Steve to use a bitmask like what patch2 does
-but failed.. I didn't push that too hard, though.
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ hw/virtio/virtio.c         | 16 ++++++++++++++++
+ include/hw/virtio/virtio.h |  2 ++
+ 2 files changed, 18 insertions(+)
 
-Queued, thanks both!
-
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 8a53fb5f93..fe7c635390 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2379,6 +2379,22 @@ void virtio_queue_set_rings(VirtIODevice *vdev, int n, hwaddr desc,
+     virtio_init_region_cache(vdev, n);
+ }
+ 
++void virtio_queue_get_rings(VirtIODevice *vdev, int n, hwaddr *desc,
++                            hwaddr *avail, hwaddr *used)
++{
++    assert(vdev->vq[n].vring.num);
++
++    if (desc) {
++        *desc = vdev->vq[n].vring.desc;
++    }
++    if (avail) {
++        *avail = vdev->vq[n].vring.avail;
++    }
++    if (used) {
++        *used = vdev->vq[n].vring.used;
++    }
++}
++
+ void virtio_queue_set_num(VirtIODevice *vdev, int n, int num)
+ {
+     /* Don't allow guest to flip queue between existent and
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index d97529c3f1..8bceb115a3 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -361,6 +361,8 @@ int virtio_queue_get_max_num(VirtIODevice *vdev, int n);
+ int virtio_get_num_queues(VirtIODevice *vdev);
+ void virtio_queue_set_rings(VirtIODevice *vdev, int n, hwaddr desc,
+                             hwaddr avail, hwaddr used);
++void virtio_queue_get_rings(VirtIODevice *vdev, int n, hwaddr *desc,
++                            hwaddr *avail, hwaddr *used);
+ void virtio_queue_update_rings(VirtIODevice *vdev, int n);
+ void virtio_init_region_cache(VirtIODevice *vdev, int n);
+ void virtio_queue_set_align(VirtIODevice *vdev, int n, int align);
 -- 
-Peter Xu
+2.43.0
 
 
