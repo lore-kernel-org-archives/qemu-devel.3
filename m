@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBFF1CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95956CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDeWW-0004Vz-5J; Tue, 28 Oct 2025 03:53:44 -0400
+	id 1vDeWm-0005VN-E5; Tue, 28 Oct 2025 03:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeW0-0003sd-Te
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:53:19 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeWk-0005Mo-8P
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:53:58 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeVw-0007hd-8p
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:53:12 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4770e7062b5so16819405e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:53:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeWh-0007mk-1J
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:53:57 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-4298b865f84so3036273f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761637984; x=1762242784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761638028; x=1762242828; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wfxMyfRhymW2+pro7iyHUD4s7/sami6rn5TnQpiWkU4=;
- b=fD/RVtOG45T3u6jIYbGyORwGJCytYLHX3cjA2T3B9FA3CX3s/3cQfRJ9JX/OHwia9F
- 8WuFvotSeh5olj8mC4m04iR4uJp7Np2+3ul6yZXdFGkwycFsqOmA3xP89QdNTLtxN7yt
- BbUrkouHIjkTst1sh+neKQBwiGJzM34baAufKPLwJGP3adBiZN6RP7HJYdjQ1CbpJ6vy
- UZEftxaFXFar6fLSkXNZBz9gJOMq5TtMB06gcyaF7GZW59v8kwACWmbsDBB+PTXvZUT0
- 8/YdsLpJmGQDccA9cpQaKetZRaFrUD87faCAH3HO5q+ibsQeEP98QU2UJ+YMyoEBhxlV
- mmgA==
+ bh=tN9+o1MHirw7CB9gDKCqT7ChD79lp84JZH+uUf/YZy4=;
+ b=aaKnZGcHFMD7Xvfh3ODusj6JwHej1fvr+dV8KkVuUP8UVBUyrqa8KakBNwHXN9gsOM
+ C1Q3mksG3AU+oOsIX24ALVjqwuax/pKVCwzjwuJMJ7naw26q6rDc8aKvZB04o7dM1mmX
+ Gk909NgcSgGzwTt6KqbmGey1GiImf4P2vyDbY0/NLy4HainnGgAFMeKfTwiEzgIzgLWT
+ 2kfJzxhmoqWVypOJlNmFn8knJvzROC2ykxtn2zm4KOx+fAJbccGjLn/k18h4odb8mI38
+ X1DFYI2n+siHd7SscZCkH0Bmbo4PH8Mma450qQAF+5bwqSEFyPhrcY8JKbmpN9qN8dh4
+ DdzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761637984; x=1762242784;
+ d=1e100.net; s=20230601; t=1761638028; x=1762242828;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wfxMyfRhymW2+pro7iyHUD4s7/sami6rn5TnQpiWkU4=;
- b=FwiI66UveQVY0Bl1/wB+gcGnidahFJJvWCgMaOVzLRNaW7hheQx6QSPMq0NfRgFmKJ
- MKdxAHvLpBIORv/FYLa+x+KBir3sTcfXVM5Skb+TJ93VobDCJRLOAM7d3wJK6e5TsHLU
- 6dJ+T8MtO0TCwvD99EjbwvyKViuI/lFGnNcBIBe94tTsBK/qlOi8uh06qQIScCWCt9Lb
- dwcfMoEesZR5D7GLpwkeDmf5TPWdd+0zCpNBqRMSMQinQ6q49p9yr/kFieipNOEI4VfS
- OB9PD5IiR1rMLHiR0WI3/NfIAwG+SI+OS7MPdQEjmplNP7/WPMGoRUpqNUPP1Sm+IVFw
- /pNw==
-X-Gm-Message-State: AOJu0YymiLGD0RFPqwVkeXSMXNLtGACdlSI0F7i6WZhzLr6dk9wzK+Dy
- EJUSoIPLD9BaPLA1JeVVgVWlEjLYiF6P5GHVIE0t7HdtsLzMqCrVLPlbOxMrap2ImEPyWRg4rQP
- WkggZrJs=
-X-Gm-Gg: ASbGncs//30eBv1FOnvBhO+qQLVo562VGaUDhHYwFzYqiuNlYPkZ2LV8A+gofRGK34r
- +I1Z2G2oCv+iaWNHCBdkgF8WY0XCoOYRSkYQ6OyKlRtoVTDs2vRW/JGzFAnTHPACVaOO88x6n+P
- bksh2JGAy0ZG827CuqMOM2gMSr+/k0rDqFNBKAZXXJ2HIknJiABByQr0EgO7bX6Gp2UFXzZA3Fo
- GIc7z5l/Hr2YwHo15w6PQB4pQN53X4zdr88GkzbtvrLwo5pgFbaffqCLLv9IWhSwuDodx2IfU4B
- PfOGvYb3mn54WJDMeIQRD4av8TuU05KsS64RZTNJzV173JZqQtAoUWRq71l12+JDlq8iDYK88b3
- nAIgP2iQycdPCq2Tr1QiQehbvLwN9ROX074WShSZBjSwjuhLdc/2Fv51B1QDWPCHX799K9m/+9E
- 6eRd+hFRvwyjVzmwDPbT0ZZUUmlmjhHxn2nkd6mV4P6aLctSutzcwylGg=
-X-Google-Smtp-Source: AGHT+IFOB9T73BS/pQsKvdAVhHtUvlr9uw/r/iy2bUvEswUU4YRBRFEkGo2+RBVOb8eySagDT8pGkQ==
-X-Received: by 2002:a05:600c:34c8:b0:471:c72:c7f8 with SMTP id
- 5b1f17b1804b1-47717e4df73mr17623005e9.21.1761637984432; 
- Tue, 28 Oct 2025 00:53:04 -0700 (PDT)
+ bh=tN9+o1MHirw7CB9gDKCqT7ChD79lp84JZH+uUf/YZy4=;
+ b=mFHSpZ8lHn7qIHLIcf6rtr5VUcWyBBu6gI/ldSF+Rg5upq6lKC3LdEGK8T9roZ4yKQ
+ CpzZNyrvGuEXSRb4JTE5qscYQ20yYryG1CMdfIUqe0zAijGMMM9gOjzBk/kLFJcGq4yi
+ VRTDHGZpuISpB99dePbCbOPAkSKVjnM6EpBLgfAUez44KcC4eWUejDtgJ4QDZzHf3nNV
+ 1iPWlFCKBy+EPuLzOgUOf2Gpz66UEJvteUsWjldba/T9UP4Kd83zeLHPxiVzsZ6ga9dv
+ hBkQLJdVQDzsQDdnxG/hV1fvexBKmh2bYJ75kTK26JJX1uabfDw4i3wZhooZ8JtRTkp/
+ D8ug==
+X-Gm-Message-State: AOJu0YwbyxNQCFeIpjsi8Ukhk64aRq2nPKvUWL1p5XdIuxgyTozACsXd
+ nGo3HBXzXY5WMTAYFOqIx06cemC489bDOs89DxHlkM6sf0jD6lxN/pX1TBxU8IhTLjgG72RVugk
+ zzYSLwjU=
+X-Gm-Gg: ASbGncsmACERFcj3H/lejpsl0j5zuRtKSfVjOz1P2TUe2jrlcfnTM54MpNiz1ah4Gfd
+ zbCM8km4fL6FEaSnCQ2bfphz3QVLTwFiIAy4IgHQozkRbQhqByEa80WNNNt8uHkMFJ8jTDP4Qki
+ y6H2LfyLYpJ8uB3yOYAK6IGb5Hoi9VhzS6qaAzp7mglOshLGm331rbbFYFttG5IMBAVkfGYezVs
+ 4J4sEbUiXFM7r/muoK3+Qc677I+13N2+gdmt6HfJqCnLUI0oEYFT5cu/gdgaj5yfvPa5z1iDd2H
+ zyJ38c3coyoF6uvN9sSCuHSOXb2OUrT6LV0VWaHzrfhhmywySCx7QXh5o+oDjSs9Ee8I/glrxEO
+ rKrmFpn8zOf47vC7/kfoJ4RQ1tbRgOhncVW4Ytt2F/O5d5Qhmxm9iJH2gaLRxORqqMjIE34i2bM
+ M8v3Tvl1qhbOv13JkwnokIpgMOcK4x5wqZNJIzf7sWo1ejMRYESN+00Ig=
+X-Google-Smtp-Source: AGHT+IHcABFnH8jE6bCqVHBwVQZ1rbYW7Px8FRvCeLCO0Zc/zDrPxji2Ec2Ao+VKZr0F6rkIZRrcGg==
+X-Received: by 2002:a05:6000:1aca:b0:426:ee44:6d9 with SMTP id
+ ffacd0b85a97d-429a7e52be4mr1745993f8f.21.1761638027701; 
+ Tue, 28 Oct 2025 00:53:47 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952de4a1sm18811924f8f.37.2025.10.28.00.53.03
+ ffacd0b85a97d-429952cb7d1sm19038498f8f.16.2025.10.28.00.53.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 00:53:04 -0700 (PDT)
+ Tue, 28 Oct 2025 00:53:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 11/23] hw/sysbus: Have various helpers take a const
- SysBusDevice argument
-Date: Tue, 28 Oct 2025 08:48:47 +0100
-Message-ID: <20251028074901.22062-12-philmd@linaro.org>
+ Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>
+Subject: [PULL 13/23] hw/int/loongarch: Include missing 'system/memory.h'
+ header
+Date: Tue, 28 Oct 2025 08:48:49 +0100
+Message-ID: <20251028074901.22062-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028074901.22062-1-philmd@linaro.org>
 References: <20251028074901.22062-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,90 +103,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These getters don't update any SysBusDevice internal fields,
-make the argument const.
+"system/memory.h" header is indirectly pulled by "hw/sysbus.h".
+Include it explicitly to avoid when refactoring the latter:
+
+  In file included from ../../hw/intc/loongson_ipi.c:9:
+  In file included from /Users/philmd/source/qemu/include/hw/intc/loongson_ipi.h:12:
+  include/hw/intc/loongson_ipi_common.h:37:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
+     37 |     MemoryRegion ipi_iocsr_mem;
+        |                  ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20251024190416.8803-3-philmd@linaro.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20251024190416.8803-21-philmd@linaro.org>
 ---
- include/hw/sysbus.h | 10 +++++-----
- hw/core/sysbus.c    | 10 +++++-----
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ include/hw/intc/loongarch_dintc.h         | 2 +-
+ include/hw/intc/loongarch_extioi_common.h | 1 +
+ include/hw/intc/loongarch_pch_msi.h       | 1 +
+ include/hw/intc/loongarch_pic_common.h    | 1 +
+ include/hw/intc/loongson_ipi_common.h     | 1 +
+ 5 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
-index 18fde8a7b48..69eb62e29c8 100644
---- a/include/hw/sysbus.h
-+++ b/include/hw/sysbus.h
-@@ -70,17 +70,17 @@ struct SysBusDevice {
- typedef void FindSysbusDeviceFunc(SysBusDevice *sbdev, void *opaque);
+diff --git a/include/hw/intc/loongarch_dintc.h b/include/hw/intc/loongarch_dintc.h
+index 0b0b5347b2c..01bb1e465cb 100644
+--- a/include/hw/intc/loongarch_dintc.h
++++ b/include/hw/intc/loongarch_dintc.h
+@@ -8,7 +8,7 @@
+ #include "qom/object.h"
+ #include "hw/sysbus.h"
+ #include "hw/loongarch/virt.h"
+-
++#include "system/memory.h"
  
- void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory);
--MemoryRegion *sysbus_mmio_get_region(SysBusDevice *dev, int n);
-+MemoryRegion *sysbus_mmio_get_region(const SysBusDevice *dev, int n);
- void sysbus_init_irq(SysBusDevice *dev, qemu_irq *p);
- void sysbus_pass_irq(SysBusDevice *dev, SysBusDevice *target);
- void sysbus_init_ioports(SysBusDevice *dev, uint32_t ioport, uint32_t size);
+ #define NR_VECTORS     256
  
+diff --git a/include/hw/intc/loongarch_extioi_common.h b/include/hw/intc/loongarch_extioi_common.h
+index c021ccee0fa..1bd2bfa07fc 100644
+--- a/include/hw/intc/loongarch_extioi_common.h
++++ b/include/hw/intc/loongarch_extioi_common.h
+@@ -10,6 +10,7 @@
+ #include "qom/object.h"
+ #include "hw/sysbus.h"
+ #include "hw/loongarch/virt.h"
++#include "system/memory.h"
  
--bool sysbus_has_irq(SysBusDevice *dev, int n);
--bool sysbus_has_mmio(SysBusDevice *dev, unsigned int n);
-+bool sysbus_has_irq(const SysBusDevice *dev, int n);
-+bool sysbus_has_mmio(const SysBusDevice *dev, unsigned int n);
- void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq);
--bool sysbus_is_irq_connected(SysBusDevice *dev, int n);
--qemu_irq sysbus_get_connected_irq(SysBusDevice *dev, int n);
-+bool sysbus_is_irq_connected(const SysBusDevice *dev, int n);
-+qemu_irq sysbus_get_connected_irq(const SysBusDevice *dev, int n);
- void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr);
- int sysbus_mmio_map_name(SysBusDevice *dev, const char*name, hwaddr addr);
- void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index ec69e877a2c..ae447c1196a 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -80,7 +80,7 @@ static void system_bus_class_init(ObjectClass *klass, const void *data)
- }
+ #define LS3A_INTC_IP                 8
+ #define EXTIOI_IRQS                  (256)
+diff --git a/include/hw/intc/loongarch_pch_msi.h b/include/hw/intc/loongarch_pch_msi.h
+index b8586fb3b6f..ef4ec4fdeb8 100644
+--- a/include/hw/intc/loongarch_pch_msi.h
++++ b/include/hw/intc/loongarch_pch_msi.h
+@@ -6,6 +6,7 @@
+  */
  
- /* Check whether an IRQ source exists */
--bool sysbus_has_irq(SysBusDevice *dev, int n)
-+bool sysbus_has_irq(const SysBusDevice *dev, int n)
- {
-     char *prop = g_strdup_printf("%s[%d]", SYSBUS_DEVICE_GPIO_IRQ, n);
-     ObjectProperty *r;
-@@ -91,12 +91,12 @@ bool sysbus_has_irq(SysBusDevice *dev, int n)
-     return (r != NULL);
- }
+ #include "hw/sysbus.h"
++#include "system/memory.h"
  
--bool sysbus_is_irq_connected(SysBusDevice *dev, int n)
-+bool sysbus_is_irq_connected(const SysBusDevice *dev, int n)
- {
-     return !!sysbus_get_connected_irq(dev, n);
- }
+ #define TYPE_LOONGARCH_PCH_MSI "loongarch_pch_msi"
+ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchPCHMSI, LOONGARCH_PCH_MSI)
+diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
+index 675ba96e64e..179361eb567 100644
+--- a/include/hw/intc/loongarch_pic_common.h
++++ b/include/hw/intc/loongarch_pic_common.h
+@@ -9,6 +9,7 @@
  
--qemu_irq sysbus_get_connected_irq(SysBusDevice *dev, int n)
-+qemu_irq sysbus_get_connected_irq(const SysBusDevice *dev, int n)
- {
-     DeviceState *d = DEVICE(dev);
-     return qdev_get_gpio_out_connector(d, SYSBUS_DEVICE_GPIO_IRQ, n);
-@@ -114,7 +114,7 @@ void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq)
- }
+ #include "hw/loongarch/virt.h"
+ #include "hw/sysbus.h"
++#include "system/memory.h"
  
- /* Check whether an MMIO region exists */
--bool sysbus_has_mmio(SysBusDevice *dev, unsigned int n)
-+bool sysbus_has_mmio(const SysBusDevice *dev, unsigned int n)
- {
-     return (n < dev->num_mmio);
- }
-@@ -190,7 +190,7 @@ void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory)
-     dev->mmio[n].memory = memory;
- }
+ #define PCH_PIC_INT_ID                  0x00
+ #define  PCH_PIC_INT_ID_VAL             0x7
+diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
+index e58ce2aa1c4..4fa03bc351f 100644
+--- a/include/hw/intc/loongson_ipi_common.h
++++ b/include/hw/intc/loongson_ipi_common.h
+@@ -11,6 +11,7 @@
+ #include "qom/object.h"
+ #include "hw/sysbus.h"
+ #include "exec/memattrs.h"
++#include "system/memory.h"
  
--MemoryRegion *sysbus_mmio_get_region(SysBusDevice *dev, int n)
-+MemoryRegion *sysbus_mmio_get_region(const SysBusDevice *dev, int n)
- {
-     assert(n >= 0 && n < QDEV_MAX_MMIO);
-     return dev->mmio[n].memory;
+ #define IPI_MBX_NUM           4
+ 
 -- 
 2.51.0
 
