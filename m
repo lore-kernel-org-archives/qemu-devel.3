@@ -4,71 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 327F0CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602FCCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDmWi-0006MQ-Jj; Tue, 28 Oct 2025 12:26:28 -0400
+	id 1vDmeO-00085D-TA; Tue, 28 Oct 2025 12:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDmWc-0006Kx-Vg
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:26:23 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeB-00082T-G0
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDmWT-0002WE-FX
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:26:21 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3117780D47;
- Tue, 28 Oct 2025 19:26:04 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:582::1:19] (unknown
- [2a02:6bf:8080:582::1:19])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2Qg7Ot1Iu0U0-XEXNkrUD; Tue, 28 Oct 2025 19:26:03 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761668763;
- bh=FuE1uMbjVKnu1hb4rDzTeTnCg5KPeTPUkq6ix2OQ3Jo=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=L/hA9bYz0BIfETh6PPsO09/H3rJLFBZg5O7EMOFaMpSMkUX9lTjqYh9ur9nYPXi+V
- CrFvvenkJWCh8YWsgMyolFMCQ12u77DFgemCnqbMF91ZrBG+BPBmWdyhgzUkTaZuMj
- IYojk8ZbilL83K5K0LVnky7IqSsytsaIjNHrvu+M=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <25bfee38-9119-4512-9288-08c46a59acdc@yandex-team.ru>
-Date: Tue, 28 Oct 2025 19:26:01 +0300
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDme6-0003Xf-8Z
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761669243;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xWepIFUxkv0l/eNVnDUu6hPjEIOeUyCJAp9pfFkwuz4=;
+ b=C+3j76I0UVoakuNqfSu6cRFOSEttgRtTNFzMP+jwouuN5wmqOnkyjfKxfuzj/1/W8qJnyq
+ MXAmHszr8JzGt+uTPHCFFVXRewXJfFcr0epfJbMQqmymGJi6s6FPV6CpbkCQfwemRKUznO
+ yoIKwwRQRmMF28tuUB6ljHFp+5Vw7zA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-dUQLGb1hM0OrlGsWxuL0ug-1; Tue, 28 Oct 2025 12:34:02 -0400
+X-MC-Unique: dUQLGb1hM0OrlGsWxuL0ug-1
+X-Mimecast-MFC-AGG-ID: dUQLGb1hM0OrlGsWxuL0ug_1761669241
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-426ce339084so5873964f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:34:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761669241; x=1762274041;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xWepIFUxkv0l/eNVnDUu6hPjEIOeUyCJAp9pfFkwuz4=;
+ b=k/UjRNPEXrvriYddjsSiwVBq245BsdmNZwhSMQjltYdSldQ7zJN5rF03c1KilCZ+q1
+ C1JEwbQJvjDeZyN1zgT2NhdzhYwPTWqr/wQSVQc1QfH56oHhaYsp/Kkexgibd2ZVoOVR
+ vthuDBIWwul1uj6sxT0jyZo2id/qvZYm2Y3e9iLdAS/O4z/hMpL1gvyrisyfhMCzxmPl
+ +v+Y8LN0X1jpHxPabFl+nVGjjhnqg5knweh6Tc3Svd+tY+TlttWG30Anzu3nvmN3vGsa
+ ucJoQ+lR0eXQtA3TeK9xulpFZbf5TqNVlNpim+w9m+xnuwv4NNVvw3QbJM7YvIPt2zHl
+ ztmw==
+X-Gm-Message-State: AOJu0Yx7tduX1M61X17qzT/yKQAFhQlmCgojH4MouLDxKrejxwBxsx8b
+ jfDLmX4LcnCodVcbmGTAajyjIgm8jboxTnrG5ss3VQbqPEPpBnUKV9GJGC6I7bYjNI5m5EuCa9o
+ DHC2afztkIdcGOeCD8Mz42f0YMu1lrB70xWWAUsfq9FqAVFA1HpxdKO4Q
+X-Gm-Gg: ASbGncvkS3LODO4rD9gRq9hdzq12mNTWv3p2IeaBPQq2xn/b6I72ZspoeN4ddQNgdt0
+ kbpXgj5JdulYDTg/NAoH83Z2GwvzwvupBvakeUTh1JIva3O0AiVDdhb7Op6nAIQAEw+XdYuKYgT
+ ghvjXtnwyr5YqFmEFLMSK+lhPTXONRuCqVPF7oQF+3B2CvxQ3Ono18hXuP3hzGduBxzi32332qA
+ Hc+e+KEhQj9ByCyVTRuDuFYJj2oxB5zVecZIBroX8TN5T4vmtLDapxkF+CVZHC+zE3ir7TIm1sH
+ utYjNfHZ9aT5nrHTKQY5GGcUY1eBwWsoYkQrREaJ5KEjA0vncViQnrPFoi4SxJBiToSHFHiY3Qf
+ GK3QWLi3u3VtYJDlgDVskycV6OhuMVK3AiDQanntzdGQqO2W4PD40Yc6XhA==
+X-Received: by 2002:a05:6000:2303:b0:427:8fe:435f with SMTP id
+ ffacd0b85a97d-429a7e96d76mr3624229f8f.57.1761669241074; 
+ Tue, 28 Oct 2025 09:34:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2P6ULcQLL83cnpmkwsziXSisvEEEBUyPGQtbIVoYiNiFnfWmA4b2yaG334qLpXdEDURwrsA==
+X-Received: by 2002:a05:6000:2303:b0:427:8fe:435f with SMTP id
+ ffacd0b85a97d-429a7e96d76mr3624192f8f.57.1761669240665; 
+ Tue, 28 Oct 2025 09:34:00 -0700 (PDT)
+Received: from localhost
+ (p200300cfd7171feeff88afa910cb665f.dip0.t-ipconnect.de.
+ [2003:cf:d717:1fee:ff88:afa9:10cb:665f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47718489d96sm25054745e9.0.2025.10.28.09.33.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Oct 2025 09:33:59 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>,
+ Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Subject: [PATCH 04/16] =?UTF-8?q?nfs:=20Run=20co=20BH=20CB=20in=20the=20co?=
+ =?UTF-8?q?routine=E2=80=99s=20AioContext?=
+Date: Tue, 28 Oct 2025 17:33:30 +0100
+Message-ID: <20251028163343.116249-5-hreitz@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251028163343.116249-1-hreitz@redhat.com>
+References: <20251028163343.116249-1-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] migration: vmsd errp handlers: return bool
-To: Peter Xu <peterx@redhat.com>
-Cc: armenon@redhat.com, Markus Armbruster <armbru@redhat.com>,
- stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- berrange@redhat.com
-References: <20251025202649.1122420-1-vsementsov@yandex-team.ru>
- <20251025202649.1122420-5-vsementsov@yandex-team.ru>
- <87o6psocib.fsf@pond.sub.org>
- <9f5ba3d7-3103-4d2a-b50f-f8883a18c812@yandex-team.ru>
- <aP-eHzbAtvNp3N3d@armenon-kvm.bengluru.csb>
- <591eebe5-0445-4b16-8f2e-280602ab480b@yandex-team.ru>
- <aQDdRn8t0B8oE3gf@x1.local>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aQDdRn8t0B8oE3gf@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,115 +118,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.10.25 18:12, Peter Xu wrote:
-> On Mon, Oct 27, 2025 at 08:06:04PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Understand.. So we don't know, does any caller use this ENOMEM, or not. And want to save
->> a chance for bulk conversion.
->>
->> And blind bulk conversion of all -errno to simple true/false may break something, we
->> don't know.
->>
->> Reasonable. Thanks for the explanation.
-> 
-> Taking vmstate_load_state() as example: most of its callers should
-> ultimately route back to the top of vmstate_load_state() that migration
-> code invokes.
-> 
-> AFAIU, migration itself doesn't care much so far on the retval, but only
-> succeeded or not, plus the errp as a bonus.  There's one thing exception
-> that I remember but it was removed in commit fd037a656aca..  So now I
-> cannot find anything relies on that.
-> 
-> Here's a list of all current vmstate_load_state() callers:
-> 
-> *** hw/display/virtio-gpu.c:
-> virtio_gpu_load[1358]          ret = vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &err);
-> 
-> *** hw/pci/pci.c:
-> pci_device_load[943]           ret = vmstate_load_state(f, &vmstate_pci_device, s, s->version_id,
-> 
-> *** hw/s390x/virtio-ccw.c:
-> virtio_ccw_load_config[1146]   ret = vmstate_load_state(f, &vmstate_virtio_ccw_dev, dev, 1, &local_err);
-> 
-> *** hw/scsi/spapr_vscsi.c:
-> vscsi_load_request[657]        rc = vmstate_load_state(f, &vmstate_spapr_vscsi_req, req, 1, &local_err);
-> 
-> Until here, it's invoked in a get() callback of VMStateInfo.  Ultimately,
-> it goes back to migration's vmstate_load_state() invokation.
-> 
-> *** hw/vfio/pci.c:
-> vfio_pci_load_config[2840]     ret = vmstate_load_state(f, &vmstate_vfio_pci_config, vdev, 1,
-> 
-> This is special as it's part of load_state().  However it's the same, it
-> routes back to vmstate_load() instead (where vmstate_load_state()
-> ultimately also routes there).  So looks safe too.
-> 
-> *** hw/virtio/virtio-mmio.c:
-> virtio_mmio_load_extra_state[630] ret = vmstate_load_state(f, &vmstate_virtio_mmio, proxy, 1, &local_err);
-> 
-> *** hw/virtio/virtio-pci.c:
-> virtio_pci_load_extra_state[205] ret = vmstate_load_state(f, &vmstate_virtio_pci, proxy, 1, &local_err);
-> 
-> *** hw/virtio/virtio.c:
-> virtio_load[3394]              ret = vmstate_load_state(f, vdc->vmsd, vdev, version_id, &local_err);
-> virtio_load[3402]              ret = vmstate_load_state(f, &vmstate_virtio, vdev, 1, &local_err);
-> 
-> More get() users.  Same.
-> 
-> *** migration/cpr.c:
-> cpr_state_load[266]            ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1, errp);
-> 
-> This is special, ignoring retval but using error_abort.  New one, safe.
-> 
-> *** migration/savevm.c:
-> vmstate_load[978]              return vmstate_load_state(f, se->vmsd, se->opaque, se->load_version_id,
-> qemu_loadvm_state_header[2885] ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0,
-> 
-> This is the migration core invokations.  Safe.
-> 
-> *** migration/vmstate-types.c:
-> get_tmp[562]                   ret = vmstate_load_state(f, vmsd, tmp, version_id, &local_err);
-> get_qtailq[670]                ret = vmstate_load_state(f, vmsd, elm, version_id, &local_err);
-> get_gtree[833]                 ret = vmstate_load_state(f, key_vmsd, key, version_id, &local_err);
-> get_gtree[840]                 ret = vmstate_load_state(f, val_vmsd, val, version_id, &local_err);
-> get_qlist[921]                 ret = vmstate_load_state(f, vmsd, elm, version_id, &local_err);
-> 
-> These are special get() for special VMSD fields.  Safe.
-> 
-> *** migration/vmstate.c:
-> vmstate_load_state[208]        ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
-> vmstate_load_state[212]        ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
-> vmstate_subsection_load[652]   ret = vmstate_load_state(f, sub_vmsd, opaque, version_id, errp);
-> 
-> Same migration core invokations. Safe.
-> 
-> *** tests/unit/test-vmstate.c:
-> load_vmstate_one[123]          ret = vmstate_load_state(f, desc, obj, version, &local_err);
-> test_load_v1[377]              ret = vmstate_load_state(loading, &vmstate_versioned, &obj, 1, &local_err);
-> test_load_v2[408]              ret = vmstate_load_state(loading, &vmstate_versioned, &obj, 2, &local_err);
-> test_load_noskip[512]          ret = vmstate_load_state(loading, &vmstate_skipping, &obj, 2, &local_err);
-> test_load_skip[541]            ret = vmstate_load_state(loading, &vmstate_skipping, &obj, 2, &local_err);
-> test_load_q[815]               ret = vmstate_load_state(fload, &vmstate_q, &tgt, 1, &local_err);
-> test_gtree_load_domain[1174]   ret = vmstate_load_state(fload, &vmstate_domain, dest_domain, 1,
-> test_gtree_load_iommu[1294]    ret = vmstate_load_state(fload, &vmstate_iommu, dest_iommu, 1, &local_err);
-> test_load_qlist[1434]          ret = vmstate_load_state(fload, &vmstate_container, dest_container, 1,
-> 
-> Test code only.  Safe.
-> 
-> *** ui/vdagent.c:
-> get_cbinfo[1013]               ret = vmstate_load_state(f, &vmstate_cbinfo_array, &cbinfo, 0,
-> 
-> Yet another get().  Safe.
-> 
-> So.. even if I'm not sure if a bulk conversion could happen or not (the
-> get() users above would be very tricky because get() doesn't allow errp so
-> far.. unless we introduce that too), but other than that, afaict,
-> vmstate_load_state() callers do not yet care about retvals.
-> 
+Like in “rbd: Run co BH CB in the coroutine’s AioContext”, drop the
+completion flag, yield exactly once, and run the BH in the coroutine’s
+AioContext.
 
-Uhh, great analysis! With it, we can proceed with my patch. And may be, just change return value of vmstate_load_state to bool? To avoid analyzing it again in future.
+(Can be reproduced with multiqueue by adding a usleep(100000) before the
+`while (!task.complete)` loops.)
 
+Like in “iscsi: Run co BH CB in the coroutine’s AioContext”, this makes
+nfs_co_generic_bh_cb() trivial, and we could just run aio_co_wake()
+directly from nfs_co_generic_cb().  Like in iscsi, we don’t do that, so
+as to keep the replay_bh_schedule_oneshot_event(), but we should at
+least run the BH in the coroutine’s context to remove further BH
+indirection.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ block/nfs.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
+
+diff --git a/block/nfs.c b/block/nfs.c
+index 0a7d38db09..4667d49416 100644
+--- a/block/nfs.c
++++ b/block/nfs.c
+@@ -69,7 +69,6 @@ typedef struct NFSClient {
+ typedef struct NFSRPC {
+     BlockDriverState *bs;
+     int ret;
+-    int complete;
+     QEMUIOVector *iov;
+     struct stat *st;
+     Coroutine *co;
+@@ -233,8 +232,6 @@ static void coroutine_fn nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)
+ static void nfs_co_generic_bh_cb(void *opaque)
+ {
+     NFSRPC *task = opaque;
+-
+-    task->complete = 1;
+     aio_co_wake(task->co);
+ }
+ 
+@@ -256,7 +253,7 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+     if (task->ret < 0) {
+         error_report("NFS Error: %s", nfs_get_error(nfs));
+     }
+-    replay_bh_schedule_oneshot_event(task->client->aio_context,
++    replay_bh_schedule_oneshot_event(qemu_coroutine_get_aio_context(task->co),
+                                      nfs_co_generic_bh_cb, task);
+ }
+ 
+@@ -278,9 +275,7 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     if (task.ret < 0) {
+         return task.ret;
+@@ -328,9 +323,7 @@ static int coroutine_fn nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     if (my_buffer) {
+         g_free(buf);
+@@ -358,9 +351,7 @@ static int coroutine_fn nfs_co_flush(BlockDriverState *bs)
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     return task.ret;
+ }
+@@ -723,7 +714,7 @@ nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void *data,
+     if (task->ret < 0) {
+         error_report("NFS Error: %s", nfs_get_error(nfs));
+     }
+-    replay_bh_schedule_oneshot_event(task->client->aio_context,
++    replay_bh_schedule_oneshot_event(qemu_coroutine_get_aio_context(task->co),
+                                      nfs_co_generic_bh_cb, task);
+ }
+ 
+@@ -748,9 +739,7 @@ static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     return (task.ret < 0 ? task.ret : st.st_blocks * 512);
+ }
 -- 
-Best regards,
-Vladimir
+2.51.0
+
 
