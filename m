@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5609CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A3DCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjrH-0001hF-5z; Tue, 28 Oct 2025 09:35:31 -0400
+	id 1vDjx1-0002y9-B7; Tue, 28 Oct 2025 09:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDjrG-0001h2-08
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:35:30 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1vDjwy-0002wT-HU
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:41:25 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDjr7-0004dW-KM
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:35:29 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-784826b775aso68329907b3.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:35:19 -0700 (PDT)
+ id 1vDjwq-0005EZ-Fa
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:41:23 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-7847f4265e3so62958827b3.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:41:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761658517; x=1762263317; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DBUt2brYVxBMTM2R5AEdWSaIVChAThtEkPIrbbzKEhk=;
- b=yADtOtplw5OWqoRoBsGEiVozWGlxqFWCLQqjiWuc1W+7QEDLXNCZn7+k7Nw8FGPK1C
- IAq9E7F9zDFz5jLbrYqEg3GND5Hui2e3hCaYWR+wuHmB1Fi7qd5394cu6PzM658j/5t1
- n5iC9L4di1WbdywT4R0FPGINHwQFLnPdStMLp8NWoA+iQ3en2NauFxntgkPkKzspgHb2
- jyaipGFenD3y0RgpsYJNwiDNaP8reXethDgZct5WSDRAk1jX7APUgVsmEgGxu41qPGW6
- wIOv8lQtsQJIcrEjDTqj/7N44Z++yMUlWKedST+5lGe1Rxit4MYaKXUKhDOlBQpa2f98
- 8vyw==
+ d=linaro.org; s=google; t=1761658872; x=1762263672; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gE3QvbRywZ8J/ACR7I8MQ4JSg6nMvjBekUNtG7xeyxQ=;
+ b=QvoG4M5fveSu1kiJaaKG5mkSvwO3u4MEad9LgqOoVuYYvGwdyZimYZMdBvfQhN5nma
+ +1Jpy9Hj5qKRfa7yObp1rhop4Zp/AM5tYBJAnnTlW6N+5ELVTP1LY8UTCPR1xKHYCA8F
+ ifXbK58B7gP9gHKMaqq87QwkX8JGceZnLWrTZESEZ2vg4QVmoR57zKd7eEeYsjjDWkll
+ nLFN/OJplIIJg32MCDb8TfcCse/kLZG3FobPtQsh4BbKTrG1kxqzzRSzwulDIZ1FfEqL
+ e4+dzReYJgstfZH6cmN3ZLb/rHKE30kQXQ6feGhgDrvOWXDbCCHJLn6Mack80joUdfMo
+ Zz4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761658517; x=1762263317;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DBUt2brYVxBMTM2R5AEdWSaIVChAThtEkPIrbbzKEhk=;
- b=Wm9f/88kck+WbVW+xGJTPd754h0L1K9xsF0sXeQQPVXjHbxQ0aivUWBiCj0OiSVtn8
- TDlwDPDpXlqBaMmMpsveJiHgfzf2Q4utql36XfWs70xbOuylZrlTmHde4OZYxHioLo2v
- 64rLGwm97LwHR+YUAuRi7Fk+c65Rf3g6d06MXDTJNiUC6zY8kW1aMEv9IDQU0OzYKGYa
- PCT9unPBHURdaSlonmJRraU19RSyYXNNuPcWS42xt9GUi5KjJDMQvmEl9P0l6f3qy6Pj
- uESOUFZEUX186TbYs9Z6MBC3d/8328HqrxXO8lqaCRjjB+HaT7mCgaIyQRCXdHLdOTDz
- if1w==
-X-Gm-Message-State: AOJu0YyWXlsZwhJYnsX6Xwj+FudFiFbx3Ow/JRg//X7RIjVKdNCRDs9A
- EUFcpl6+TyoqpT2woXWO9AUXBXFBTB7CFRj12zfyPn8Bm6XpeFTWC1m202RkZyGnvhEMFHjFZfN
- iNe0Ge7bu8mntGUoAJyM3FgiEHYicKX3CVrBQW+d8yw==
-X-Gm-Gg: ASbGncuulB6oxQKa+N4Jqdnwy/WpYMrEFX+UWEb2ME2IaLDEHpwqr9JeHCpyIY85xMh
- fajqFHM1rxJ7/ki6ZUR7PDgsIBy33TOOmgXaQDoj0LzHM+FSCBB7jgMUABT/2NjtapLWikd0ABk
- xS8QJqsDxU5RAWxvlCkSt7fpORZCrU0bTF29XxhCSbqz6SPh3IWiuhm8GA4iLnHbGY/YGPdhQKq
- 21RW2fEDgdNoXTgLGqZEqep/LcQ/zt/0YXzkP6Wu9t3rGbmCH64RgALmJzI8w==
-X-Google-Smtp-Source: AGHT+IHZuuO8UNw5lNBI69ELo+rP5eurxDZrGoQVYZM3+swGnZcMjvTFkNKB0GwXXxEPRN0l75Gax2bjw0XW0jVwspY=
-X-Received: by 2002:a05:690c:4909:b0:783:71ee:897f with SMTP id
- 00721157ae682-78617e3e0fdmr37152487b3.3.1761658516592; Tue, 28 Oct 2025
- 06:35:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761658872; x=1762263672;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gE3QvbRywZ8J/ACR7I8MQ4JSg6nMvjBekUNtG7xeyxQ=;
+ b=SAXVQcyuF+CCZ8BmQ++cbUjl5DTd00PWqa5HmZ/6SGD6I3CfI9CmySSa5BsT4m2xku
+ pe0CQcUAHe7fDdQYCtu3TbDBEmd81teR/cF+Nn0gFJw1LGBJHolDxKC5Rs28+Awc39tx
+ 0PkknX3u30RocLbi1KYBF6oqGAafdfW+gv9bYPiESl0h95gdBKc4Zcme6XAKfY6AMLVd
+ BubYruZQeXgVGTfveiHpZWyWJtCLaiynjSqhB1uhjW13DoWwEpx03X7r3+rzTMB6jmMv
+ neCtOe83XyM8y8eyuXPKugHBSXREKgkpJLMnnghcCDVLaTaCeputbuiSlB2rqfaoVpiP
+ xVqQ==
+X-Gm-Message-State: AOJu0Yz7/UDE9UThVKFzm5YXfcn3iIXBHFWH5CV4ABvc2YRbPsTYkfvN
+ TfJ4tA8Ye63BVDBi1U7xn8LwGZ3Zx1V3o2tixhQ7RqqjiFbacKE7O5qmeZWP9ZZlfa+MK14FTeZ
+ kel/7kg5tefQFayzy78OZ0OsK92RAXHGf8pTjKv1GTw==
+X-Gm-Gg: ASbGncss49lEDzf2SzzwKxEQrZFw4Kq0lRBqMgUduaXGCkM84lig0bZAgLPqqhJs9E6
+ Yl8BYhk6C/ERgjalO5mlQl47T82v0qhfH/wn/hl1hNjFU/9h20XCrOA5XvpHDF1nBCk9NDUedm7
+ lGPgxZYbjw4rBLUvYZynKr2KitkvBM0Yf4KtwBlpd27erF9UY3D1qVoGGpC5mEeF1OugNBnLQ4L
+ lz7z/6KbacjAK0UeQ0jswVidvOCSAeAVKKImEiLX4vUTubPN1yYCLl6thTNIA==
+X-Google-Smtp-Source: AGHT+IHLMxmbr3XOhUWOlIAyfMNT/LbAguJnCqhXnqYiy2ZaA5gEXiFDkwd8DIYMcaDvDt46V9H+wgA+xb8XTUY0Z28=
+X-Received: by 2002:a05:690c:30b:b0:781:64f:2b3a with SMTP id
+ 00721157ae682-78618002621mr28563777b3.60.1761658871804; Tue, 28 Oct 2025
+ 06:41:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250626074529.1384114-1-clg@redhat.com>
- <20250626074529.1384114-10-clg@redhat.com>
- <CAFEAcA9+EyeWE0QSUhgd7+i3din8J76jnhTuDB7i9hu3x-urOg@mail.gmail.com>
-In-Reply-To: <CAFEAcA9+EyeWE0QSUhgd7+i3din8J76jnhTuDB7i9hu3x-urOg@mail.gmail.com>
+References: <cover.1747223385.git.mst@redhat.com>
+ <40ab4ed107757e1c5bdccc906e8a44cb4e2cb7a4.1747223385.git.mst@redhat.com>
+ <CAFEAcA8Rqop+ju0fuxN+0T57NBG+bep80z45f6pY0ci2fz_G3A@mail.gmail.com>
+In-Reply-To: <CAFEAcA8Rqop+ju0fuxN+0T57NBG+bep80z45f6pY0ci2fz_G3A@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Oct 2025 13:35:05 +0000
-X-Gm-Features: AWmQ_bnRfhUHLmdZvaJV0k5nSQamdJZwpWQptU5C7L3tIkR91b6Shcw-r6_yxww
-Message-ID: <CAFEAcA88jVL4Qwb4MEzdcqeXDjob1NZ3-k_ZtwPCgG+9U6fkNA@mail.gmail.com>
-Subject: Re: [PULL 09/25] vfio-user: implement message receive infrastructure
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
- John Levon <john.levon@nutanix.com>, John Johnson <john.g.johnson@oracle.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>
+Date: Tue, 28 Oct 2025 13:41:00 +0000
+X-Gm-Features: AWmQ_bneC3e-ffmK--iUqa7hA3QAaHDd5M_U6HWAyi0ZujJX59gpo4AI5Iso9uY
+Message-ID: <CAFEAcA99KqkF+T-vBo2yihaTy5GhUmPoNFkii_cDM0+WX-5Epg@mail.gmail.com>
+Subject: Re: [PULL 05/27] hw/cxl/cxl-mailbox-utils: Media operations Sanitize
+ and Write Zeros commands CXL r3.2(8.2.10.9.5.3)
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Vinayak Holikatti <vinayak.kh@samsung.com>, 
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,153 +96,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 10 Jul 2025 at 13:44, Peter Maydell <peter.maydell@linaro.org> wrot=
-e:
->
-> On Thu, 26 Jun 2025 at 08:47, C=C3=A9dric Le Goater <clg@redhat.com> wrot=
-e:
-> >
-> > From: John Levon <john.levon@nutanix.com>
-> >
-> > Add the basic implementation for receiving vfio-user messages from the
-> > control socket.
-> >
->
-> Hi; Coverity suggests there are some issues with this code
-> (CID 1611807, 1611808, 1611809):
+Ping -- these issues in this change seem to still be
+present in the current version. Would somebody like to have
+a look at them ?
 
-Hi; it looks like 1611807 and 1611808 (the resource leaks)
-are still present in this code in current git; would somebody
-like to have a look at this?
-
-> > +/*
-> > + * Receive and process one incoming message.
-> > + *
-> > + * For replies, find matching outgoing request and wake any waiters.
-> > + * For requests, queue in incoming list and run request BH.
-> > + */
-> > +static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+On Thu, 10 Jul 2025 at 14:23, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Wed, 14 May 2025 at 12:50, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > From: Vinayak Holikatti <vinayak.kh@samsung.com>
+> >
+> > CXL spec 3.2 section 8.2.10.9.5.3 describes media operations commands.
+> > CXL devices supports media operations Sanitize and Write zero command.
+> >
+> > Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > Message-Id: <20250305092501.191929-6-Jonathan.Cameron@huawei.com>
+> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > ---
+>
+> > +static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
+> > +                             size_t length)
 > > +{
->
->
-> > +    /*
-> > +     * For replies, find the matching pending request.
-> > +     * For requests, reap incoming FDs.
-> > +     */
-> > +    if (isreply) {
-> > +        QTAILQ_FOREACH(msg, &proxy->pending, next) {
-> > +            if (hdr.id =3D=3D msg->id) {
-> > +                break;
-> > +            }
-> > +        }
-> > +        if (msg =3D=3D NULL) {
-> > +            error_setg(errp, "unexpected reply");
-> > +            goto err;
-> > +        }
-> > +        QTAILQ_REMOVE(&proxy->pending, msg, next);
+> > +    uint64_t vmr_size, pmr_size, dc_size;
 > > +
-> > +        /*
-> > +         * Process any received FDs
-> > +         */
-> > +        if (numfds !=3D 0) {
-> > +            if (msg->fds =3D=3D NULL || msg->fds->recv_fds < numfds) {
-> > +                error_setg(errp, "unexpected FDs");
-> > +                goto err;
-> > +            }
-> > +            msg->fds->recv_fds =3D numfds;
-> > +            memcpy(msg->fds->fds, fdp, numfds * sizeof(int));
-> > +        }
-> > +    } else {
-> > +        if (numfds !=3D 0) {
-> > +            reqfds =3D vfio_user_getfds(numfds);
-> > +            memcpy(reqfds->fds, fdp, numfds * sizeof(int));
-> > +        } else {
-> > +            reqfds =3D NULL;
-> > +        }
->
-> Here we allocate memory into reqfds...
->
+> > +    if ((dpa_addr % CXL_CACHE_LINE_SIZE) ||
+> > +        (length % CXL_CACHE_LINE_SIZE)  ||
+> > +        (length <= 0)) {
+> > +        return -EINVAL;
 > > +    }
 > > +
-> > +    /*
-> > +     * Put the whole message into a single buffer.
-> > +     */
-> > +    if (isreply) {
-> > +        if (hdr.size > msg->rsize) {
-> > +            error_setg(errp, "reply larger than recv buffer");
-> > +            goto err;
-> > +        }
-> > +        *msg->hdr =3D hdr;
-> > +        data =3D (char *)msg->hdr + sizeof(hdr);
-> > +    } else {
-> > +        buf =3D g_malloc0(hdr.size);
-> > +        memcpy(buf, &hdr, sizeof(hdr));
-> > +        data =3D buf + sizeof(hdr);
-> > +        msg =3D vfio_user_getmsg(proxy, (VFIOUserHdr *)buf, reqfds);
-> > +        msg->type =3D VFIO_MSG_REQ;
+> > +    vmr_size = get_vmr_size(ct3d, NULL);
+> > +    pmr_size = get_pmr_size(ct3d, NULL);
+> > +    dc_size = get_dc_size(ct3d, NULL);
+> > +
+> > +    if (dpa_addr + length > vmr_size + pmr_size + dc_size) {
 >
-> ...and here we allocate memory into msg...
+> Hi; Coverity flagged up a potential issue in this function (CID 1610093)
+> Partly it is a false positive (it thinks vmr_size etc can
+> be -1, but they won't I assume ever be memory regions of that
+> size), but it did make me notice that this address/length
+> check looks wrong. If the guest can pass us a (dpa_addr, length)
+> combination that overflows a 64-bit integer then we can
+> incorrectly pass this length test.
 >
+> > +        return -EINVAL;
 > > +    }
 > > +
-> > +    /*
-> > +     * Read rest of message.
-> > +     */
-> > +    msgleft =3D hdr.size - sizeof(hdr);
-> > +    while (msgleft > 0) {
-> > +        ret =3D qio_channel_read(proxy->ioc, data, msgleft, errp);
-> > +
-> > +        /* prepare to complete read on next iternation */
-> > +        if (ret =3D=3D QIO_CHANNEL_ERR_BLOCK) {
-> > +            proxy->part_recv =3D msg;
-> > +            proxy->recv_left =3D msgleft;
-> > +            return ret;
+> > +    if (dpa_addr > vmr_size + pmr_size) {
+> > +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
+> > +            return -ENODEV;
 > > +        }
-> > +
-> > +        if (ret <=3D 0) {
-> > +            goto fatal;
-> > +        }
->
-> ...but here we may take an error-exit codepath to the 'fatal'
-> label...
->
-> > +        trace_vfio_user_recv_read(hdr.id, ret);
-> > +
-> > +        msgleft -=3D ret;
-> > +        data +=3D ret;
 > > +    }
 > > +
-> > +    vfio_user_process(proxy, msg, isreply);
 > > +    return 0;
-> > +
-> > +    /*
-> > +     * fatal means the other side closed or we don't trust the stream
-> > +     * err means this message is corrupt
-> > +     */
-> > +fatal:
-> > +    vfio_user_shutdown(proxy);
-> > +    proxy->state =3D VFIO_PROXY_ERROR;
-> > +
-> > +    /* set error if server side closed */
-> > +    if (ret =3D=3D 0) {
-> > +        error_setg(errp, "server closed socket");
-> > +    }
-> > +
-> > +err:
-> > +    for (i =3D 0; i < numfds; i++) {
-> > +        close(fdp[i]);
-> > +    }
-> > +    if (isreply && msg !=3D NULL) {
-> > +        /* force an error to keep sending thread from hanging */
-> > +        vfio_user_set_error(msg->hdr, EINVAL);
-> > +        msg->complete =3D true;
-> > +        qemu_cond_signal(&msg->cv);
-> > +    }
-> > +    return -1;
+> > +}
 >
-> ...and in this error handling codepath we don't do anything
-> to free either msg or reqfds.
-
-thanks
--- PMM
+>
+>
+> > +static CXLRetCode media_operations_sanitize(CXLType3Dev *ct3d,
+> > +                                            uint8_t *payload_in,
+> > +                                            size_t len_in,
+> > +                                            uint8_t *payload_out,
+> > +                                            size_t *len_out,
+> > +                                            uint8_t fill_value,
+> > +                                            CXLCCI *cci)
+> > +{
+> > +    struct media_operations_sanitize {
+> > +        uint8_t media_operation_class;
+> > +        uint8_t media_operation_subclass;
+> > +        uint8_t rsvd[2];
+> > +        uint32_t dpa_range_count;
+> > +        struct dpa_range_list_entry dpa_range_list[];
+> > +    } QEMU_PACKED *media_op_in_sanitize_pl = (void *)payload_in;
+> > +    uint32_t dpa_range_count = media_op_in_sanitize_pl->dpa_range_count;
+>
+> This looks dubious -- a packed struct presumably from the
+> guest, with a 32-bit value, that we are reading without
+> doing any handling of host endianness ?
+>
+> thanks
+> -- PMM
 
