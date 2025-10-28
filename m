@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A429CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D0CACCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDiud-0007o4-Ke; Tue, 28 Oct 2025 08:34:55 -0400
+	id 1vDiyO-0000LL-Op; Tue, 28 Oct 2025 08:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDiub-0007n5-Jt
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:34:53 -0400
-Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDiyM-0000Kv-9L
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:38:46 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDiuU-00053f-O1
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:34:52 -0400
-Received: by mail-qk1-x72d.google.com with SMTP id
- af79cd13be357-89c81839de7so313478985a.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:34:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDiyG-0005iV-NU
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:38:45 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-475dc6029b6so31613965e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761654883; x=1762259683; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nQnjYQ0yGom/2oCJUwbsDLkSJOo+kap0BYVvQOuuuWc=;
- b=Xl/WJOs3ascQAfvsUJCDjsAzYH7v5+F8bIHxzj0vUBQWGUBW060c6EXtmJCCSOJJkw
- aGUBaJ0KhjSoWdvws6vKZmJxyGiNjVMsVGb6hcHJJ6s8O8ejBrhq1M1tCVGiLx3rhD8W
- dF86QfpJCoo+OZsXYV9S7NjnAyessbRTJMZHtBLqsW32V+6eYQbSqsMscEKFiXpJzvyT
- gYQuiOAY94i0C0BntSXE01yXYKtJ0H1fGA5RfiBcI4dV6uTnANtxoDWCdQIr9WrL2X1s
- L8oq7zL6ZlyjPUZGYlbIX9LYYd1HZgvjAH4BLrL41ge1ipcC2EzmkFNFZj30bhhWGHvo
- j45A==
+ d=linaro.org; s=google; t=1761655117; x=1762259917; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hm1uqPXDRRIRXg64gln/GpSOapuZJZVYX9Z9cGadBYs=;
+ b=r0q/XdVkBCXssWLK48PvoCKXgIYn39CMQm8EWdSyrKU8X9vcaCFqMHJxMVSTWp+l1q
+ oEpXEEqqxG5TbSdfuSm46t5pv1ov9FjH7elAeG2swOjDmWdBzvNJeY1N9nnR5s0gELC+
+ R9y7q3LQKN87seUfUIftgX2fdSg8COdc8yxowGznGUHbvVcJkcYPp3znp1bLwk/ua8Tr
+ eTsm7k8LyJw0U2QuMTGrUfUVPjU+0c/j+IGmMaEb8wJWBiUzjM+N1HnAIYBdBx1fcPb8
+ +E6X69jtnmh2zwww7o2hZ8NmAXoAFR0mDqNKWrViA5bs/G3OsGRTDrdB37NWMbyeN/DE
+ M2uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761654883; x=1762259683;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nQnjYQ0yGom/2oCJUwbsDLkSJOo+kap0BYVvQOuuuWc=;
- b=KTvhHEuecVrvsi3kyPEr9YTGWmGXUEGuLjBupkXNUbHoQmsJZOig2QuDyQhA66uMWn
- aTi1S+v0NJzfBi4kqnIHs27OyWONUX3kbS9Yn4mzqLMMtX9sk6ZXr5CFjN5B4MEL222b
- mnKwiSNH5/B/Grerd5uAKjwtExlhnrWh5xfVn6fsOIbSSxj/9V6LzlccYE93p7137DB0
- WoKzjulLU2l1Hv+VHatvWfNhhtlFuKwYd7WH8NKfO3yDYqgsEhJPIA4IBMHHImBVVtBl
- 0rFrZYRZWQUm5XpadETtP7nNlv8v2XynRqb8BxqXUIa+J3W9EOdtZvaHYA1t8KmsHI4T
- Zg+Q==
-X-Gm-Message-State: AOJu0Yyd4TEh7jdCa4y/ZkiN4elyTLkUqfdyw6j9QVtcB3g2uzXrdY/U
- 6tVYIDjb+AqrMVabl+aqjKCVfiD5cnKDijXog98M3jT09EPoSfPEDn+MK3HmkbpbFSW+W1JpXBg
- xyvIempAHN26ZVitxedcNoHSTs5eIyXk=
-X-Gm-Gg: ASbGncuY1vUr6MAf0MYLNDex3urEsD/DxhYKGw/qEXhbZtdNp2J4CWTImPqwkHNUtYW
- GEGn3h0Eb+JhLTW492tBAFKCIYC5ocQ1/rtH7fPsdXrZviSPW4FXx1S1qmXhm6t5ZxKq+d4mE2Z
- mu9jhuiB4GHGqUfsaPK1afSmUuE7JIsalpO2NU1e/ox0oyMGp61dv4YCkc5mvhUf1rlB4K/IyLL
- 6imnnXee5kNB+VarRWdNYgzED2i5QCVfT8wkjHSBM3jPLh0nTemg+ZCRJPK145RrdIzJ+YZ43Xe
- OftmVdsrDtrjE1Ts
-X-Google-Smtp-Source: AGHT+IEMD1O4irbieBoEOhfE5znusIqCe6ZhScWbrxZOSavPj+LeiG4RBN3SjnRNCbbGFkVGkEdLfsFXDgjdPzvT28s=
-X-Received: by 2002:a05:620a:371b:b0:859:7e5d:efa3 with SMTP id
- af79cd13be357-8a6f3e24ecamr390126585a.14.1761654883326; Tue, 28 Oct 2025
- 05:34:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761655117; x=1762259917;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hm1uqPXDRRIRXg64gln/GpSOapuZJZVYX9Z9cGadBYs=;
+ b=Jsf4oP016ts+ea0EvwyBWpj28REJ/eKsvvh2VQDaWtBjpWLA74020nhbeDbTa1ky2j
+ 8r2O3LCSq3ymIdzgjHdzk+/PcG2T+EQsfx6AXBE8B/Q+XEDbm21MxXG53VWG1KGy/BZY
+ 0uQrnlfu6mxXhWS1RZfcYFp5wbpg4FRareY/vbDJuZ4KJvV4mbgPT9VvgVk7VxYxAVYQ
+ 3jBuI8d24en3cwcKFoD9ELE+Xk9yoNEFowbjhcvH6g1d/q2zBCbD+0gXgWSTpmAT48vs
+ 6YWwY9V646Y96aE+y+5MVc8GhEvg5Tal5OC6QCR0JLQ561Q7JtIz0zDIBEapWcSScfMY
+ eC7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGuEUUEC1lD62bzFxORlRjbPxvOuqlyGHh95bTHtMgHiMiKxfqimW2B9KDwS5+6fla5F6t8zeNj87F@nongnu.org
+X-Gm-Message-State: AOJu0YwtA+zdx+SfWb6gRmG+Oi9jQ+Nb63l/u7qiE9vbdyblY2H5WX8v
+ k3C5OHqpYVtAvNKZ3lLKsqjlLLW11qQ1SkzbOU1TV5KtKAd1t4VN+85MVJtkLf4tNCE=
+X-Gm-Gg: ASbGncs9+X6qNZJgIOdYGfB/Quapf13Ra/OCVV7TfJm1B2Hku/Rue+nxbsVSLM2egLl
+ JoH3zI+46HK/+Jb11Qyyt9wPq/GAC/VZ6YKAHs5ZiJlOMi0ibv4D2PzTFg93Bv/MuIR0qin8KaO
+ vAbHHEE90bC97UAtsF5T4K8MkrWOTPtSKHNtGHlQ2waY07piyzR28fYowd3F3gZ5l793L3BOCo+
+ ImMkA4mK+DrRBuwvBftZkAb7FjNDfUN4CHbWPtmKCfvv32caoaJ96pLKARuzyz55EIT7p24GLO8
+ 8ZIGeXGsIbB7M3PNREeOUZhJUfIArR+yrRqbKi47/POhGhML/yvuDdolk5+8vm1ErVweHhmLXmr
+ fDftRn57A31DcpaYNM9Tc9nCUJ5axEqBzEwFaleWxtwWCzYAljOPtS7FEsosVU358jIvNOIOhPy
+ MVmnjdY56PzVRP8+ubS6ITAWG68QM=
+X-Google-Smtp-Source: AGHT+IG0Gt4kn4xrlWfGfvTs1RB3ifL9cgRNkA5WuS9e5kR4K3buNKBr/INlMgEmxKp2HRVpOikKSg==
+X-Received: by 2002:a05:600c:45c7:b0:476:57b4:72b6 with SMTP id
+ 5b1f17b1804b1-47717df8103mr34347285e9.8.1761655117221; 
+ Tue, 28 Oct 2025 05:38:37 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd37467esm203770765e9.10.2025.10.28.05.38.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 05:38:36 -0700 (PDT)
+Message-ID: <32ca6c1b-bed6-4ae1-9602-d2d593d758d1@linaro.org>
+Date: Tue, 28 Oct 2025 13:38:35 +0100
 MIME-Version: 1.0
-References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
- <20251027151045.2863176-10-marcandre.lureau@redhat.com>
- <342519b4-4de6-f54b-606e-b1b3b1c97dc9@eik.bme.hu>
-In-Reply-To: <342519b4-4de6-f54b-606e-b1b3b1c97dc9@eik.bme.hu>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Oct 2025 16:34:31 +0400
-X-Gm-Features: AWmQ_blNZnC3_C_4gNNJqKYn16ZoWmT3SY8KHGEr2VNmMH1EHPvD29EE9GfdRG8
-Message-ID: <CAJ+F1CJj__oPiBwXKeH88tF8k6vEjqqe6KMO4g9HmcnNqbpRfA@mail.gmail.com>
-Subject: Re: [PATCH v3 09/35] audio: start making AudioState a QOM Object
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Ratchov <alex@caoua.org>,
- Jan Kiszka <jan.kiszka@web.de>, 
- "Michael S. Tsirkin" <mst@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- qemu-ppc@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>, 
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x72d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/35] ci: clean-up remaining bits of armhf builds.
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20251027110344.2289945-1-alex.bennee@linaro.org>
+ <20251027110344.2289945-2-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251027110344.2289945-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,67 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 10/27/25 12:03, Alex Bennée wrote:
+> We no longer need to support 32 bit builds and we missed this while
+> cleaning up.
+> 
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> ---
+>   docs/devel/testing/ci-jobs.rst.inc            | 7 -------
+>   scripts/ci/setup/ubuntu/build-environment.yml | 6 ------
+>   2 files changed, 13 deletions(-)
 
-On Mon, Oct 27, 2025 at 8:29=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
- wrote:
->
-> On Mon, 27 Oct 2025, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > QOM brings some conveniences for introspection, type checking, referenc=
-e
-> > counting, interfaces etc. This is only the first step to introduce QOM
-> > in audio/ (I have more in the pipeline)
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> > audio/audio.h     |  7 +++++++
-> > audio/audio_int.h |  2 ++
-> > audio/audio.c     | 43 ++++++++++++++++++++++++++++++++-----------
-> > 3 files changed, 41 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/audio/audio.h b/audio/audio.h
-> > index eb5b5d662d..e41c5bc55a 100644
-> > --- a/audio/audio.h
-> > +++ b/audio/audio.h
-> > @@ -80,6 +80,10 @@ typedef struct SWVoiceOut SWVoiceOut;
-> > typedef struct CaptureVoiceOut CaptureVoiceOut;
-> > typedef struct SWVoiceIn SWVoiceIn;
-> >
-> > +struct AudioStateClass {
-> > +    ObjectClass parent_class;
-> > +};
-> > +
-> > typedef struct AudioState AudioState;
-> > typedef struct QEMUSoundCard {
-> >     char *name;
-> > @@ -182,4 +186,7 @@ const char *audio_get_id(QEMUSoundCard *card);
-> > #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
-> >     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
-> >
-> > +#define TYPE_AUDIO_STATE "audio-state"
-> > +OBJECT_DECLARE_TYPE(AudioState, AudioStateClass, AUDIO_STATE)
-> > +
-> > #endif /* QEMU_AUDIO_H */
-> > diff --git a/audio/audio_int.h b/audio/audio_int.h
-> > index f78ca05f92..b2b4d2d10e 100644
-> > --- a/audio/audio_int.h
-> > +++ b/audio/audio_int.h
-> > @@ -217,6 +217,8 @@ struct SWVoiceCap {
-> > };
-> >
-> > typedef struct AudioState {
-> > +    Object parent;
->
-> Coding style says parent_obj, not sure other names are acceptable.
->
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-Alex, since you wrote that section in docs/devel/style.rst, should we
-enforce that naming?
-
---=20
-Marc-Andr=C3=A9 Lureau
+r~
 
