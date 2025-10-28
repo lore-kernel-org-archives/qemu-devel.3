@@ -4,103 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784C7CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE48CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:50:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDfO8-0005n2-Np; Tue, 28 Oct 2025 04:49:15 -0400
+	id 1vDfOk-00060f-8w; Tue, 28 Oct 2025 04:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vDfNv-0005mS-Bt
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:48:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDfOf-0005yN-4F
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:49:41 -0400
+Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vDfNp-0006d4-MH
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:48:54 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47103b6058fso41649715e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:48:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDfOb-0006ea-CW
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:49:40 -0400
+Received: by mail-qk1-x731.google.com with SMTP id
+ af79cd13be357-88f2b29b651so587727185a.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761641325; x=1762246125; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1761641373; x=1762246173; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WQv72y0FXMxHo4R1brH6PeUUPynEY6XFnnx0SFP9c3o=;
- b=QRmc8TFXd9poPGwvEsqBU+4mvh6YaikEDoQRHvIKfapfPi3E38TqLEa1jpBRrCYPbE
- sykBjfCuoESVxTtVSRNTqXwsl3XG4EYzCr+OaXnssC2sA6MihkIsh9RM7oTNMx/gLKld
- n8JNId29ysgRhgUEEa/kneZ/AGmBaIIfwQ+aCdWHTpCmHPSiy9h9tJvL05Gosr7QGwjl
- wc4oWHJFAnlhv1NIdy+dA154FfB12P29S1uxWIn7lyQuk/uVOr//tMDe5vHBPTjFEvw1
- CzuHPwo3Hg/0joLhJdD80ZJyVXZv/ZDN6MnESIS+ULDoI0tj3QEWfrP0FiF7iK+FJ3Y4
- S5FA==
+ bh=wyfFK1dolq9K3/f3rVwkMSWSBsjfZj4+EzIkR6L0oKI=;
+ b=LIjSSshWC2iw/Giwr1WSxROkmMcJEBdgHYYQsKQjUOodup8alGXJvEQIkggfaFhHuP
+ /Um+EqTJ3Xl/xVkbwzRVQHFX+PO6b/JYB+vslOUtGp7mqtB/smW81fbisUqh47O1C7+G
+ KAmyDTpiK0f7EFCHkIq8hNCiOHglg5ppbGqHXlsJeYbaB+iGYhoieyVI5b1BZf1oMC4w
+ MixbSxOiAhZJzpyz/eathe+znvOzvV5Upo4ScNky21BFqYKPCYcB6pT6G2jYJN1Yat2x
+ 8WbKz/2xVCHwP5NaUOMVxjLsX6FUrLWvlUm70PJ0pZVy+FuSrk1ZH8QCQiPcABv3HVnk
+ QuNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761641325; x=1762246125;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1761641373; x=1762246173;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WQv72y0FXMxHo4R1brH6PeUUPynEY6XFnnx0SFP9c3o=;
- b=rkkkwBo+yDhz8u2eCLUCKAepU+3N66ALYVAXpi6BrnLDLYiST4fbTZpynmqrDvMp/f
- W9XJKeYPcY+1FHzo0mk5KCv0cc7Bt9DRn/srWKJeS19yaevYiWoff5REp3Tctgf7nHfL
- QENRPWUhyp0mWdzNgO2GTiFdsWOrubVtgM5jqOx0gAZzvu7w2e49+Gez0F66rxIqQoBb
- KQsgp2KEdM9RPM0Ii+flrrpGYcL3MwSOkQChz/MKYlm0ikuup5Alrl9LoOMNI+PDlxgA
- DSvM7FeJ2CnlmkXvf3qNMvxB2pkncYLE5RXqqSiy5Q9kIA47JT/OKN5qJ9utTY3LOVMT
- +reg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAHST/BUNZLQujuAHyjc2ZRoU8naYYHanwE6obtCF1gZJmkSF6OOElKYimz3FDv5VdFTUfwZk2GovC@nongnu.org
-X-Gm-Message-State: AOJu0Yyi7WGGji+hRm5+Qiw+39VXY3kN5XuVXIhyTIIcQFVVU5VE418p
- 2O5Ky/lQD4y3hXXhBJPT3Y0GcTE3V4WjBWOpcEqKq/IDHP6WyUiAiME8
-X-Gm-Gg: ASbGncu5RdCWQmBoty6a3XwUETaeMpmxhcb9EpmpH2qoaKiD/8iOhYykeDyJi7khlEA
- ngbT6SSmmGnoTgp31sVm8eKlA0RbyHymYnXduwb/+tjqK7FzW1kMH1a+ScG4JqVtI2LGq6GI5K4
- Mv0BGvLetRTAG63JtO2iIuupVIPqf86ikm8fodkXjeOBOCjx4QIfp4kEaMPDsw8aT09COEJlBdQ
- A9YNBmqZ/ckHAeolGBmR4t0do3PuiSOCgRwIcYT4BqoD1i9bz4xDwjT1FQD/NbzuXn1UIasT7RQ
- v/7z05qPImDb0Zm75bkHIHbMv/SxxGKci7isWFFdwldo9Zwf5R6JSdgKFfqyWsphSpTfzmcL1AA
- AGORtgaJbbvuhFgRKuaWVv2jqx8fShQA1DTBhNUKj2hFpxrhjDVDBebQ/BuGt9Mj4FhXp3szFOF
- LHspedwwJEHmR5T8Zz/gwcIFBfw3CZREETS9mQiQRblh6bz/5v6VfTRlRIGzMmRgpYXdiYOuRFL
- CO2X1KqLpE=
-X-Google-Smtp-Source: AGHT+IF+bXKN0eXZjcdzIcJXWHAZ7wGiGx2tI03419aHzTho2s/tQpQ7tWzG4kowPpu3mN+qokjMJA==
-X-Received: by 2002:a05:600d:830f:b0:475:d91d:28fb with SMTP id
- 5b1f17b1804b1-477180f3b54mr13453825e9.4.1761641325284; 
- Tue, 28 Oct 2025 01:48:45 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf271400c439911fd9f45c3c.dip0.t-ipconnect.de.
- [2003:fa:af27:1400:c439:911f:d9f4:5c3c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd478202sm182509315e9.14.2025.10.28.01.48.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 01:48:44 -0700 (PDT)
-Date: Tue, 28 Oct 2025 08:48:42 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-CC: Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2=5D_docs/system/security=3A_Restrict_?=
- =?US-ASCII?Q?=22virtualization_use_case=22_to_specific_machines?=
-In-Reply-To: <CAFEAcA8RaZOXpav64E5-0CDhB66zQXRuLaFuz22GiyPGwGVQJw@mail.gmail.com>
-References: <20251016131159.750480-1-peter.maydell@linaro.org>
- <CAFEAcA8RaZOXpav64E5-0CDhB66zQXRuLaFuz22GiyPGwGVQJw@mail.gmail.com>
-Message-ID: <000E4FA1-EE4A-476B-8CAE-680FC068BCAA@gmail.com>
+ bh=wyfFK1dolq9K3/f3rVwkMSWSBsjfZj4+EzIkR6L0oKI=;
+ b=eMXeD2evyuYm1L86avszVBZapmumXWuZRfx3Kpd5wzfnqBpfoh0eN9rZmzbUn6f3cB
+ Gpeq3T1qYHZ7VsjxvW2MYzOJlRCbnAQDMed8gjD+5ZD8ownILGZpO4KD8fu7yQRROEe1
+ cRfd1Ss3L+bBHwvfKuglhvAlYa8KgxmJ2u8KHuetkl+jZ8YvqZoOSA1XmF5TfpVz2Svx
+ TOlPLOV60lAQeyyVjCE1xFTVNvlw1jLZfb9YS2V8+3UHTvAwWxc9QAcUeiB9N2UjZWMg
+ TaxmQjpP6j+s0OAkJGHah8SjY/rUm7BGdfcnzRGl+lf/0g+X5BwJoiQDPZdXfJf/WJVf
+ 0DHg==
+X-Gm-Message-State: AOJu0Yzk9MFBuuNdOaPArlftcj8E93UAP/SmzJt7gVdLj0vj9jJXTBc3
+ cDQ8bPCSqD7miqJzLkk3NNfyzXI+0cm4u2wMRfjGKY6lhRq/gMNlym3F8D9LiRKVW+Lv24Ts3nD
+ epThDVoDbd8CAjMeJfnH9i4R1gNfhlgM=
+X-Gm-Gg: ASbGnctCVjl+bS/eUH/PB9JHq4kLnBbWBTcQpmIu13aYpPloUeCQdafefPPmqxM4dkX
+ qdOU+SDRu6piy0cdXbxzwGOtPn85D1SVFyv/fVDDU76S5i4B3n0gf/yrRrhiByPCly6hA5ZsljW
+ LpLeAudDKK5kRddmBQFQ6uuJgKOwBT80LUi90hwBHBU6MZ5DkLJ6FnPs37XsryHThA5cFPZlsCn
+ vbFb2l8Yp6M3vbV4XbrdrlNe6M8hc4TiIl75lZmyClF7WmbeQYLxYG9moLyK+c1sO+YqQi+3HU4
+ 3RYRA40vaRiQShgx
+X-Google-Smtp-Source: AGHT+IHqwcwbFu4qFAG1jckH5bKOlUrnWZmnYhb6joA75sezyV1H8hvU1xMQvgqrwBFU+uhibyVugCTlsaHo5wPDXRg=
+X-Received: by 2002:a05:620a:1996:b0:892:7394:e9f9 with SMTP id
+ af79cd13be357-8a6f48c6ae3mr283596585a.23.1761641373349; Tue, 28 Oct 2025
+ 01:49:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20251028080258.23309-1-philmd@linaro.org>
+In-Reply-To: <20251028080258.23309-1-philmd@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Oct 2025 12:49:21 +0400
+X-Gm-Features: AWmQ_bl3KK8iEk5vACj4o6D25dwdfuNaHYndBPYtzKcFCLuXFNTkbn6BRYGt1Pw
+Message-ID: <CAJ+F1CJYxKD23TFCy1-rbZf0Y_mSMdyVH=nFDM6eomDhVpmHYA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] hw/sysbus: Spring cleanups (part 1)
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
+ Bernhard Beschow <shentey@gmail.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org, 
+ qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x731.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,71 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
-
-Am 27=2E Oktober 2025 12:48:29 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->On Thu, 16 Oct 2025 at 14:12, Peter Maydell <peter=2Emaydell@linaro=2Eorg=
-> wrote:
->>
->> Currently our security policy defines a "virtualization use case"
->> where we consider bugs to be security issues, and a
->> "non-virtualization use case" where we do not make any security
->> guarantees and don't consider bugs to be security issues=2E
->>
->> The rationale for this split is that much code in QEMU is older and
->> was not written with malicious guests in mind, and we don't have the
->> resources to audit, fix and defend it=2E  So instead we inform users
->> about what the can in practice rely on as a security barrier, and
->> what they can't=2E
->>
->> We don't currently restrict the "virtualization use case" to any
->> particular set of machine types=2E  This means that we have effectively
->> barred ourselves from adding KVM support to any machine type that we
->> don't want to put into the "bugs are security issues" category, even
->> if it would be useful for users to be able to get better performance
->> with a trusted guest by enabling KVM=2E This seems an unnecessary
->> restriction, and in practice the set of machine types it makes
->> sense to use for untrusted-guest virtualization is quite small=2E
->>
->> Specifically, we would like to be able to enable the use of
->> KVM with the imx8 development board machine types, but we don't
->> want to commit ourselves to having to support those SoC models
->> and device models as part of QEMU's security boundary:
->> https://lore=2Ekernel=2Eorg/qemu-devel/20250629204851=2E1778-3-shentey@=
-gmail=2Ecom/
->>
->> This patch updates the security policy to explicitly list the
->> machine types we consider to be useful for the "virtualization
->> use case"=2E
->>
->> Signed-off-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->> ---
->> changes v1->v2: updated the list:
->>  * remove isapc
->>  * remove ppc, mips, mips64 (no machines supported)
->>  * list pseries as only supported ppc64 machine
->>  * list virt as only supported riscv32, riscv64 machine
->>
->> I believe the list to now be correct, and I think we generally
->> had some consensus about the idea on the v1 patch discussion, so
->> this one is a non-RFC patch=2E
+On Tue, Oct 28, 2025 at 12:04=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
->This has now had various reviews and acks, and no
->suggestions for further revision=2E I propose to take
->this via target-arm=2Enext, unless anybody has any
->objections=2E
-
-Sounds good, I'm looking forward to it=2E
-
-Maybe we could then also merge https://lore=2Ekernel=2Eorg/qemu-devel/2025=
-0629204851=2E1778-3-shentey@gmail=2Ecom/ which had some technical comments =
-and no follow-up=2E
-
-Best regards,
-Bernhard
-
+> - Use proper SysBus accessors
 >
->thanks
->-- PMM
+> Since v1:
+> - Reduce series
+>
+> Philippe Mathieu-Daud=C3=A9 (7):
+>   hw/sysbus: Use memory_region_name()
+>   hw/i386/microvm: Use proper SysBus accessors
+>   hw/i386/ioapic: Use proper SysBus accessors
+>   hw/timer/hpet: Use proper SysBus accessors
+>   hw/acpi/cxl: Use proper SysBus accessors
+>   hw/ppc/e500: Use proper SysBus accessors
+>   hw/pci-bridge/pci_expander_bridge: Use proper SysBus accessors
+>
+
+There are a bunch of compilation issues that I will let you address for v3.
+
+It looks like it should be possible to remove the "addr" field from
+SysBusDevice.mmio. On the surface it looks redundante with
+MemoryRegion.addr. I might be missing something.
+
+
+
+>  hw/acpi/cxl.c                       | 2 +-
+>  hw/core/sysbus.c                    | 2 +-
+>  hw/i386/kvm/ioapic.c                | 3 ++-
+>  hw/i386/microvm-dt.c                | 6 ++++--
+>  hw/pci-bridge/pci_expander_bridge.c | 6 +++---
+>  hw/ppc/e500.c                       | 2 +-
+>  hw/timer/hpet.c                     | 3 ++-
+>  7 files changed, 14 insertions(+), 10 deletions(-)
+>
+> --
+> 2.51.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
