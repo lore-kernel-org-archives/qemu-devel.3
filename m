@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A96CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 09:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092AECCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 09:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDfiQ-0002rY-S5; Tue, 28 Oct 2025 05:10:07 -0400
+	id 1vDfpR-0004RP-Da; Tue, 28 Oct 2025 05:17:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vDfiL-0002r2-I3
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 05:10:01 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDfpN-0004Qd-AS
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 05:17:17 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vDfi9-0000pZ-Kz
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 05:10:01 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-61feb87fe26so9755732a12.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 02:09:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDfpH-0002AQ-Vv
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 05:17:16 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-784826b75a4so66617207b3.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 02:17:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1761642585; x=1762247385; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761643028; x=1762247828; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6+ioTo/kftZYIHGeZIzymdf7bNMKH6pnXAtV38BIoRc=;
- b=ZhrHV+tBQ97axHxwQlEI/hggdZdYNqoawPBdQ+MffF7q6Bvh6xRkPc/prszDUhuXIb
- 1RYE6Aye7O/y4XnwVCZGyv5F0R+TF8B/r9sZ80LCCva9qTbgJf+PjvnjzpbWe1jiJ0yX
- Ur8aiw41Ers32OJZvjNbumcYwm1kSTN+yMUMJg5rK/i4RzlMF6XRBAKX1FGrWJ8B4GOH
- lI4xVwrxS5ueAcGj9AJbMxV8iPdkCS1JAuFpGiL1bgPDVThsZJxAsAoCuAcQHoAJgQNk
- Yb3CdH15WR7AEfhjnbT91nrwRl1fElKWh5ItK84uKD+wb+uzBYCub4vW0NbFwoFg9qSn
- LcOw==
+ bh=F18Qs7uJzCXbncLZaxQP7n0h804Mv95+qZ16khmVUw8=;
+ b=FMuCdHgx1yY6VujQ6++vqnQE8CUB6cdu3Zxqzq0qTie+wF4qQ2mb7kV5wNAU9djaOH
+ xhhAgH4LuHuJHEAF9ffNwNjVMwxS8m/3uYJaR89bAMUrOWrjnuxgwinPlUE7ZX6cZcEp
+ 77KsTmLM0wHf8gWUswKrFiBXQpCEBh7drYUZ65pkxrAJEViXz0h7ZEbYFpgKMH0dyyqj
+ IteuHuwGE9MSC+g2kp5rqvnhq2PqnFUVocWcpBnrKGCbTU7X1SrjKVZyvm4bunD26K4Q
+ 3IuF6fo1DMUzp9ZIroIC0ZMvPUgqJfW1VtoRq01aiBV0247pHa0F+AcP2oqO9T/2Knkh
+ 5b7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761642585; x=1762247385;
+ d=1e100.net; s=20230601; t=1761643028; x=1762247828;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6+ioTo/kftZYIHGeZIzymdf7bNMKH6pnXAtV38BIoRc=;
- b=W4soaj3hjtQd8yfpytO3iAttCWDeWLFZpi/QOQVtxBx7Zj5k0AUoGMpALkOeOQooEG
- vsK2rxix1AJJ2giuiOWicARSqhgKlETHddQ7h3r9jozrKByrFfp7JHXKxKToLVZhRa3z
- RJ1PNTTgSIa6KSGuRCrXGaf6tM6fm5KC8V99hffnd+fg54jTX1zy0nhbxj30fzNAB0Jh
- X/9FPwe/KEmAra0jGcAi4zwazWk3LtqGMACCOlay/GARLG9XALng09mB/qZYM2gykwbL
- gLL1LR7VNcXTILcub9hA0OvO3oESgBSnTBdY22kl62Fbfkmt2lJXx1HNGZCr7SdsLg4Y
- 35HQ==
-X-Gm-Message-State: AOJu0YxZ8acl94u3MqfuSk/5HFzlArFwxur4+oHMweE+o2y71nWTAOrP
- sRKrA0Ba2vGR4H167nsKTKvIvlRASCLZuRL5OT09QHvpiL0xpMCK/B2bSCuz10tAS+cVKEYTN2H
- 8XIR2ThnycavtZEgNo9AFRMfigogiTgwAMXWQQV30djtxuWY4n7YC
-X-Gm-Gg: ASbGncuOwpblK4ks5k9XQcFYM8ugHbmJ3Zzemd7AViSy2tv6/QCFk/iAO+kk/BV2N8h
- K2sd7QLmDZ+CLhWhULCgeKU8veddNryEf/tr4PcBqhYjZvkrVaJsEEqNRqFG2srcgXT8SUwRQGM
- 5rNMl7wF8MewI7mC3MTrA+P9IhGu9zTSAfJ2pMX8/mz+rfO+4puN9tDN7N9UgP4L00Ao22sAWZG
- PoNzCI4x0PsEW/o+nWlZvmt5RGIv8j1COkB8fQSKnB0C/6KepWujT1Q3b1HpZ4=
-X-Google-Smtp-Source: AGHT+IF/EHt6NK2xPRT3uKc8+ON41QLe6lZuxFUUwKT/ZCrzOpZc16h2mXjv9Z+tImIenwNRfihkp87E5QKixBwu4IM=
-X-Received: by 2002:a05:6402:5193:b0:63c:4537:75a7 with SMTP id
- 4fb4d7f45d1cf-63ed8260199mr2324290a12.28.1761642585082; Tue, 28 Oct 2025
- 02:09:45 -0700 (PDT)
+ bh=F18Qs7uJzCXbncLZaxQP7n0h804Mv95+qZ16khmVUw8=;
+ b=jKMNsp8IuwoHuderS1ll4chW2WKYGVryO1iiBCZWnFGUDZ5/VHAIKnXjGgIHQjiU1T
+ fCjBt2y3H8m9mXp50HN2acKQbkgUjA19w9xiZr/qxoLRuOq1PESDdo3QquQLSeplUKVx
+ QlME+Wxie5K8hovhdQGKI9VEPmhmWQldIAfe7iWqv3oQYZx4MI/7Z+biC0r35XM/mbdw
+ QYXYGm/pvWDyrkSo2kGVSnyRXNY64Hmt60oNufu9vG9p6vs9DpzjfvJPRhpp2XtAtq2+
+ R45DcJ5Z097Jld7gIurE5RbM1NYpeh92c9KrXrO0p9ddKQTxUTpxtrb4xTXHRxlTbEYc
+ +F1g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVi+S4RG4lGNdZ9TrE18kpsdVGzr6d19JvLbE069yH/tMdMbRAOp4GjgpfC6M1KcDmNwzdqRfMzwJ+d@nongnu.org
+X-Gm-Message-State: AOJu0YxyM6RCEhj7zyTa5zZ01WxB6Diq3Gav1W8sZQt9cAnXdJbdHWeH
+ VFYEu9Lf8mZ1bhxkHiciGzoJykUVHtSZryNsHQuDbYcCJ/Akd1A+4/CST4X5acPFxs+YRGUglBU
+ dlysmONyAFxMkeniTygi7y+yGka0OwPgBVujyJZcFkw==
+X-Gm-Gg: ASbGnct4qSmHrMcs53aEhbOcYJ/2F5bYPO9IsMwmFDSKrDiQE3h5k/xcJEVG0w32wBn
+ EGxSBWDONto+XiMAuupDDK9tNtn1kruLYinPJIlqVXAFL7O9ennSFJKyrkaKs2xkcIvtl0e8h+n
+ NNHnBDxDhoM6R6eAAK9zL9yxY8uvBFXl6/L7smgboDqdMYST6gcAnIt2HhD7HTSsOIplQ/9WMXF
+ hi446QjQeaYg8NQ9v+StMwLpJGRoTRRrySjkAiIKHv3s6I6Q7XT+BY0ECvcvg==
+X-Google-Smtp-Source: AGHT+IFNsRSM6+VmnHjj6xShmMdhbWjGAZBBnXGhFnLBOUM0O7uKe/hC0NBJt+79GlM2c9OKgsRs9lph53a8WB6Lsnc=
+X-Received: by 2002:a05:690c:a9c:b0:781:212f:b508 with SMTP id
+ 00721157ae682-78618005701mr26252427b3.63.1761643027997; Tue, 28 Oct 2025
+ 02:17:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251028085032.2053569-1-frank.chang@sifive.com>
-In-Reply-To: <20251028085032.2053569-1-frank.chang@sifive.com>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Tue, 28 Oct 2025 17:09:34 +0800
-X-Gm-Features: AWmQ_blFUtxeAx73CGEjglFh7vGE9P3eAO-2_7oSUhBtC7X2W1TfCixD1EwriGk
-Message-ID: <CALw707qcytHujijUg=QmK7Tf3L26_0gzjs-uyGc_-_G6CSHUYw@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv: riscv-iommu: Don't look up DDT cache in Off and
- Bare modes
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <20251028080258.23309-1-philmd@linaro.org>
+ <CAJ+F1CJYxKD23TFCy1-rbZf0Y_mSMdyVH=nFDM6eomDhVpmHYA@mail.gmail.com>
+In-Reply-To: <CAJ+F1CJYxKD23TFCy1-rbZf0Y_mSMdyVH=nFDM6eomDhVpmHYA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Oct 2025 09:16:56 +0000
+X-Gm-Features: AWmQ_bnqlankZg7HwNowUaghAHfhTfclXG021WTDErfY94qHmZl2Taap05FWcYk
+Message-ID: <CAFEAcA-O_Ocyrc11Y5TNmtja0RdgGJqA=gUAX_ya6oSUVRnzEA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] hw/sysbus: Spring cleanups (part 1)
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
+ Bernhard Beschow <shentey@gmail.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org, 
+ qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=jim.shu@sifive.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,71 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
+On Tue, 28 Oct 2025 at 08:50, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+> Hi
+>
+> On Tue, Oct 28, 2025 at 12:04=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> <philmd@linaro.org> wrote:
+> >
+> > - Use proper SysBus accessors
+> >
+> > Since v1:
+> > - Reduce series
+> >
+> > Philippe Mathieu-Daud=C3=A9 (7):
+> >   hw/sysbus: Use memory_region_name()
+> >   hw/i386/microvm: Use proper SysBus accessors
+> >   hw/i386/ioapic: Use proper SysBus accessors
+> >   hw/timer/hpet: Use proper SysBus accessors
+> >   hw/acpi/cxl: Use proper SysBus accessors
+> >   hw/ppc/e500: Use proper SysBus accessors
+> >   hw/pci-bridge/pci_expander_bridge: Use proper SysBus accessors
+> >
+>
+> There are a bunch of compilation issues that I will let you address for v=
+3.
+>
+> It looks like it should be possible to remove the "addr" field from
+> SysBusDevice.mmio. On the surface it looks redundante with
+> MemoryRegion.addr. I might be missing something.
 
-- Jim
+Yes, I think they'll always be the same value. But
+MemoryRegion::addr is private data of MemoryRegion
+and there's no 'get' function provided; SysBus shouldn't
+be reaching inside an MR struct to look at its internals.
 
+(There is a memory_region_set_address(), so we could
+I guess provide a memory_region_get_address() ?)
 
-
-On Tue, Oct 28, 2025 at 4:51=E2=80=AFPM <frank.chang@sifive.com> wrote:
->
-> From: Frank Chang <frank.chang@sifive.com>
->
-> According to the RISC-V IOMMU specification:
->
-> * When ddtp.iommu_mode is set to Off, there is no DDT look-up, and an "Al=
-l
->   inbound transactions disallowed" fault (cause =3D 256) is reported for =
-any
->   inbound transaction.
->
-> * When ddtp.iommu_mode is set to Bare, there is no DDT look-up, and the
->   translated address is the same as the IOVA, unless the transaction type
->   is disallowed (cause =3D 260).
->
-> In the current implementation, the DDT cache is incorrectly looked up
-> even when ddtp.iommu_mode is set to Off or Bare. This may result in
-> unintended cache hits.
->
-> Therefore, the DDT cache must not be looked up when ddtp.iommu_mode is
-> set to Off or Bare. For other modes, software is required to issue cache
-> invalidation commands before any inbound transactions.
->
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> ---
->  hw/riscv/riscv-iommu.c | 13 +++++++++----
->  1 file changed, 9 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index b33c7fe3259..95db811f125 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1290,13 +1290,18 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIO=
-MMUState *s,
->          .devid =3D devid,
->          .process_id =3D process_id,
->      };
-> +    unsigned mode =3D get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
->
->      ctx_cache =3D g_hash_table_ref(s->ctx_cache);
-> -    ctx =3D g_hash_table_lookup(ctx_cache, &key);
->
-> -    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
-> -        *ref =3D ctx_cache;
-> -        return ctx;
-> +    if (mode !=3D RISCV_IOMMU_DDTP_MODE_OFF &&
-> +        mode !=3D RISCV_IOMMU_DDTP_MODE_BARE) {
-> +        ctx =3D g_hash_table_lookup(ctx_cache, &key);
-> +
-> +        if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
-> +            *ref =3D ctx_cache;
-> +            return ctx;
-> +        }
->      }
->
->      ctx =3D g_new0(RISCVIOMMUContext, 1);
-> --
-> 2.43.0
->
->
+-- PMM
 
