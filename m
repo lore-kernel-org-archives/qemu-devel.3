@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A276CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:04:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16280CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDegB-00064K-Qg; Tue, 28 Oct 2025 04:03:43 -0400
+	id 1vDefg-0005w9-VT; Tue, 28 Oct 2025 04:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeg0-000616-L5
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:03:32 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDefe-0005uq-PJ
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:03:10 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDefv-0000oE-6s
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:03:32 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4770c2cd96fso19420125e9.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:03:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDefZ-0000n5-Vi
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:03:10 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4711b95226dso69831995e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761638602; x=1762243402; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0bJEm1B8ks9h5HyZDKkIUNIPRZdg3XjuMbaxmF/lz1I=;
- b=UMfETVQOdyLejXM+bn0lXHRmLNYaPXRrl0gur2oUg0/hF+y80ManCvk1IsOGtf5PkJ
- fZCoBPMIYF+cz9HgADD6p8hqL17vHeD39aQXT0fANz2gAHXQpt9NNm2/czGSp73TB5YV
- UDLq2vis7IknDPMHwZsQtGqVl8smFHtgo5lXQ4cJuFi6fwzw0ehn/J76J3Nz4vSMQ77b
- HDAEwa4qZnERoYQ5EOClX/ZtQ7YZyYrjD7y856lf232PvUXO75r17ZtEV8ZzQY8AO725
- du08puqQ4h9FLEFIaYJGT/YR4C3WM2r92i+UlWjWScIRaaj+eyfLNTqSUl2zPPVo1r3Z
- sa3g==
+ d=linaro.org; s=google; t=1761638580; x=1762243380; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AaJsVvVhH+hhDSMcy010RCCK5d+kbdBS7ibwzW1yshc=;
+ b=Y+DsDo206vPP3uUwmVtqRs/En0wyYN+LfiISrBOjJbE5oy8hJ1S4vYtuJqhpIQIpqp
+ qoq7S72J5pRlRsBLuPJMBXEN5hptHNK8HgXKHePkHn+VHbwQhiiiOLrU49SKXpPYwu0q
+ dMshZX79bhsKr5HyYtTb017jsMKiTUZv1wcE02DWdli8cv3tkRl6oQv/W0xKunIk/iqg
+ x1KxtVgM2ffql1mAlkHBwiserIHW/x+3J5cxAdqLqlaXan4i8J/6tFaa+d2fCmKhoT9A
+ Z+6yDjSenOtsxqnUAOoio72GeLwT6SgJzaNPolfy5xKP+/JW1k5yaJBNnPn/iV5AmDIb
+ i8XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761638602; x=1762243402;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0bJEm1B8ks9h5HyZDKkIUNIPRZdg3XjuMbaxmF/lz1I=;
- b=okIhAvJwOnZSM4j69nKqbfasBEODvRaFsW+cEh531jX+i3F/DB4UAViGnZpgXBW/Q9
- emPOvR9oC8TdgTiA4JFB9nXyi0CddJmZzw+gsS5BY8KCvkRRFpoDlkuln7ZuC+d0p88i
- 9+ht1Ks1snE/yQDKVBz3antOfRLbsC73GSW8VrR2Mw4vdT+Yz6fG303vP7qz4gxHDfoa
- BLLIWheLYmSu/JdnQ+IXSZma3rxCvWa9vxkRkeWSaE1S7Bcau3RuC3fwBLMkCwL6pZaJ
- UNk8QEfqwsaS98huNhsIsVaCrquFyGnTCCi93C86Iw8Z5W5IryBiepkCBjhfYggkg32t
- Cd7w==
-X-Gm-Message-State: AOJu0Yw8l9J8ld2LqcrT0aqvcBGTOxLOEVlakO7tFT8cywcV67f9jVJl
- 5nbs4POtpDywyxqOKM+5zVR7mwMi0Ux6hPjuIpck2AfLwTAgrgDY7W3zhp4/x0cCQNZlbmOnkx4
- btd8PB5M=
-X-Gm-Gg: ASbGncsp6LRIbJVD23rnhCDauZmrnShmMSa3YuRHGCFCXIVg+aGnROv87pRiUgfcxeq
- onaiQDgAIh6W14s/OWo99hRjWVqgFM8x5o/xleCfez1GKpHFn3bAIAkG6MRfvHoLWZL1hlU0Va7
- CIMgeTucUYhHmaZ9gJzCr64Z+lUvT97VIzdruJjINP9yhfCukrOsd6syi9jDUJXlx2FPfZgS2nk
- HR6gxWIRD/JFFA48lBxgfVoj4FjRV0LzqXJDvT2NYHoPP+l+J5G4xG640gK00mfbfZ17qWN0VlR
- p+OcL9ZWG2xuY3mSQBBA4B9MxgkB4o/bZg1pn2+dJAOgxVlW4bKZOFBN5HhQnTbgy+SolbBr5PR
- fiAhg+EVVGfb0Nkttlt7Wyte+C3bSNOEt6Qrm4BAzkgtW9ZI8rTFv8vV14QvbFXaosylLW5KInD
- Sk++Vqt5FKDaIBzOJUQmXpSElgO0bRN0mJWe1Xk1hJ/k6fcliseEcaWwI=
-X-Google-Smtp-Source: AGHT+IGu8tAz7QNSfENwh5DhebxcpB0Uf+T7MY5mWmoV8QBJEMMaI05N0PzFr/4r9vD0c/yed5mTVw==
-X-Received: by 2002:a05:600c:1554:b0:470:ffd1:782d with SMTP id
- 5b1f17b1804b1-47717df6c74mr21252585e9.6.1761638602070; 
- Tue, 28 Oct 2025 01:03:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761638580; x=1762243380;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AaJsVvVhH+hhDSMcy010RCCK5d+kbdBS7ibwzW1yshc=;
+ b=BfRNgsxkzrWKmRPFy3/1VMiLPwbjGKnMkIAggfY029zegYxW7EfA3LEeDXvbpH2OrB
+ uhxfhpCDO4KBdNHYJbRHAWM2hDHV6J38Yc8fvMLMd58F/oHSYvMXgMGALMepYjcSXBT1
+ mcpZIBTN7zk8iRdMt1auI7+EjY7twsNiu6RVSbLy1Cll7QoTh//ypDqpS52RzI0Mh8yC
+ a8r6OsAf662NgtuVsaDJAcqJ/OQWcNVH0ka8PZLi3xm2ZuKgkyLzQU3YG3kBAa/kz1W2
+ 9g2VZ2h2GK0omvGebcuhr2M84ikR04yQGDldosPB3oiS8jNbEQTyS5O/fJ7Yk9g7V0Cf
+ e99g==
+X-Gm-Message-State: AOJu0YzWyjAsB0EMLQQP/U5By6mTlrbyUdNtawQCadvX9Qzd666u7SWe
+ Q9BHPA6oMneX3x9AmTHTMQI3fPnx/DJvEJIw9wV566ub0GnRAmYGTRx1em7bg32as5svYcux2YG
+ 5d64s0II=
+X-Gm-Gg: ASbGncsgp5yFS9hWrhp2mo3aRtrl67AOxMyZdnUN0oP2tnqxgkzvd7VJpIf852mDlFW
+ MOBXmmIRiCQs50GeDCkosd/9SR44hGR93ErvYvyfH1EX8OW/R13msclZObjfFEdop5BXfJL6tR+
+ b8PMLX2qn6ZqTBevOqOWGIVzSASi+eqrmrld87lxgQxQ/s4axXvq2anwLfgdKRUEEy0vFFm+g1E
+ MgdqN+m27/xdPk7eMFrvLjsg0cbVkMCHGvzfLotMKOlrFOUvu90n7rx0GGR2VFjBGognEQ5RlCR
+ VyCXThvC095wR9NNVGmyP9BxHKHgMfFjfHglODM93sDTg4AYyAnvJl0V5IOvwbk7sMg0nMLnG7d
+ XKf4MGpAQnveJcw4kfFg1HklO6tlPkdqUV1jgKRV70GRwjr37bmy17hy7mljDNmLUxwPgOOlzNZ
+ +KsRtmk+NIhKNDIom5rXPLDw/Sv5uRdTijoSjJgXd1KfcC/R6CK/rGBY0=
+X-Google-Smtp-Source: AGHT+IGZM8eE80Fn5hYe80UZn4EAKsdHfpdOu90kdDQpegzFsSjxJ/7R/M8IKMSRaLGVuejV4l/b7A==
+X-Received: by 2002:a05:6000:2c0e:b0:429:89c2:d944 with SMTP id
+ ffacd0b85a97d-429a7e56654mr2358787f8f.15.1761638580022; 
+ Tue, 28 Oct 2025 01:03:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd035dc2sm184181795e9.5.2025.10.28.01.03.21
+ ffacd0b85a97d-429952d5678sm18629797f8f.22.2025.10.28.01.02.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 01:03:21 -0700 (PDT)
+ Tue, 28 Oct 2025 01:02:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org,
  qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v2 1/7] hw/sysbus: Use memory_region_name()
-Date: Tue, 28 Oct 2025 09:02:51 +0100
-Message-ID: <20251028080258.23309-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/7] hw/sysbus: Spring cleanups (part 1)
+Date: Tue, 28 Oct 2025 09:02:50 +0100
+Message-ID: <20251028080258.23309-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251028080258.23309-1-philmd@linaro.org>
-References: <20251028080258.23309-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,28 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MemoryRegion::name is kind of internal. Use the proper
-memory_region_name() accessor, which might return a different
-name.
+- Use proper SysBus accessors
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/core/sysbus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Since v1:
+- Reduce series
 
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index ae447c1196a..d33be6b2b52 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -154,7 +154,7 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
- int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
- {
-     for (int i = 0; i < dev->num_mmio; i++) {
--        if (!strcmp(dev->mmio[i].memory->name, name)) {
-+        if (!strcmp(memory_region_name(dev->mmio[i].memory), name)) {
-             sysbus_mmio_map(dev, i, addr);
-             return i;
-         }
+Philippe Mathieu-Daudé (7):
+  hw/sysbus: Use memory_region_name()
+  hw/i386/microvm: Use proper SysBus accessors
+  hw/i386/ioapic: Use proper SysBus accessors
+  hw/timer/hpet: Use proper SysBus accessors
+  hw/acpi/cxl: Use proper SysBus accessors
+  hw/ppc/e500: Use proper SysBus accessors
+  hw/pci-bridge/pci_expander_bridge: Use proper SysBus accessors
+
+ hw/acpi/cxl.c                       | 2 +-
+ hw/core/sysbus.c                    | 2 +-
+ hw/i386/kvm/ioapic.c                | 3 ++-
+ hw/i386/microvm-dt.c                | 6 ++++--
+ hw/pci-bridge/pci_expander_bridge.c | 6 +++---
+ hw/ppc/e500.c                       | 2 +-
+ hw/timer/hpet.c                     | 3 ++-
+ 7 files changed, 14 insertions(+), 10 deletions(-)
+
 -- 
 2.51.0
 
