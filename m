@@ -4,96 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A84DCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 05:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63056CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 05:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDcXy-0005yv-F5; Tue, 28 Oct 2025 01:47:06 -0400
+	id 1vDcY1-000640-OX; Tue, 28 Oct 2025 01:47:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcXv-0005wy-7b
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:47:04 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcXt-0003LX-6R
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:47:02 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47112a73785so34879035e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 22:47:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761630419; x=1762235219; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KkbYxHoIb89CcjxtDzTwkp8toB1u3wHDHZNoatR4q6A=;
- b=xWlunJy6oyU5eNE0DHcy0n69ElUMJ1Ocjlyqj6BwpbnQLFNjzmMDx2csW9Qzajhiws
- 1W+Yn53MOmSSOvW4qyl6mq8e3lELg9gg/VyxjlSMDCZPfK5Ift4Y/czS6nFLZO1cu+K/
- lKQYzOpFT1xlRhnwEIyCbwQRKQ3O7DjE1L4LOQfJTZy0HVrT39EVtkAVKsl/ntjPqryc
- I37AD5K17zRN0502PWbyfP4laHFZVlW4JTeyerr/IlwAepARjL2OCM+ZAx3KpOqUQAlo
- yxezH0bpZ4tcsolviqE81UNyfU+ecfzkybpMwVfQO/Sp1jdZBBuM1lcFRgWLrCE/xFi3
- hFTA==
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1vDcXz-0005zG-4q
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:47:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1vDcXw-0003Lv-IY
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:47:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761630421;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MjYjUVdz0I6ghKZKvyB9s6ubfgqWF4aJ+zXIpAp5AvU=;
+ b=hXbLqL0tqxeMYBDvKS829reU8MLY3LsO52heIo9TK7YER42pGxr24gv+FL94RQ6tLsAL6s
+ kgY9jww//Ucb88NN5xLqFqaJCEVDugZgwd3r/P55SqV6smuW5wqgaHRizTFC+QKYd3lRgJ
+ vEkmfKgKvThOx6U+RYYBs4n5IGGxcdQ=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-275-BDB_Ut1PMJS9w2fr6Ti91Q-1; Tue, 28 Oct 2025 01:46:59 -0400
+X-MC-Unique: BDB_Ut1PMJS9w2fr6Ti91Q-1
+X-Mimecast-MFC-AGG-ID: BDB_Ut1PMJS9w2fr6Ti91Q_1761630418
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-28973df6a90so41102495ad.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 22:46:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761630419; x=1762235219;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KkbYxHoIb89CcjxtDzTwkp8toB1u3wHDHZNoatR4q6A=;
- b=kBOskWQAa3iqwdtsrQt0/9hg4Q7xFP9oTWEbXzMWDI2lrGexaLTo0wdpUh7b6k9EfG
- iK4gMgfDxBAzYnUVK34VOZWZny2BUysNVWy8ZBxTqDzLZBHsZwtTpOrCIGyeA7gTk/L7
- 4t4hRFg+jaMYed+JQK1t4n7+i1g3+DJVBcz2GFEx7XZH4YGJUxvVNMUxqwK/FQihEYMZ
- LkeJuV/KCnre9Lwy+4Lw9zqiiSYwlHBaXwlu/uL3CQ2QCnjcB739RZ3RWIcb4NZ9/6SB
- JtiaIgVu0c8b6N7ghalU83elBE97Y6549rU5KwPRlUdR0LoHfMsYg04cTxpSuWGwkZZ0
- +y7Q==
-X-Gm-Message-State: AOJu0YwO8YAIHzeFVrfFXWQsakVRrVvXKnoSdXtziWTjcLvdu8CZ8UOW
- 0717cajn32NZc/aKDDKkUGVbvAVlUAnx8cWJYaBPYiQAwPagtVVhUrahH50RB2w+1yYUjRuuvgT
- dK5Nd6c4=
-X-Gm-Gg: ASbGncuwtvLQm6QAus0qcuK6g/ymrMLT4ero9e+BYF24+EAujDAmUuUOZ5EEZv2EDb3
- QV21PVRt9Fcq1rJDkad1qYyEwtrEmuFvc8NYlPlR532W4QWCrHYxOkJLEfuLGkpebOdPhZwXcWl
- 6xx1oJ1Zwef3LZjxOUgGpxfFtra4DyTfugXDO/PkEB7MVAol6WhRRuxJ4yRwUt6Wi+MBLIU25T4
- VIYSbNMTDVGdOwVqwGKFQJLxoNs+EExNwaZGC2npQ6mrYC6o99aKrRL2ijM1jEtZ4jjcblnynn/
- AMky9NMv/o+9mFb+a81Uxps0GotDEonxwC6BDF0aYH9CSmAR3mR/fvWDzp/doh/aHXbeesZXLZU
- m7iLmxKhoa99lbUeBTO2OSHsG4tqSV7tVCX29BEyXT9kdAnUum8k7njqID15iUK01o3wylI82Rg
- xjMIxeIufejTkDrtwp97ImYYtJ46Ec/KZaSMhA6DkDuTHo139UNFsVDos=
-X-Google-Smtp-Source: AGHT+IGZW9oWFKpC/JlRFPeKkuOmfQTtCuwftk5aIyjez3FD00CkiwUeIhKSMAGhnp2UXASLteGcsg==
-X-Received: by 2002:a05:600c:45cc:b0:46e:37fc:def0 with SMTP id
- 5b1f17b1804b1-47717df9db5mr17235685e9.9.1761630418952; 
- Mon, 27 Oct 2025 22:46:58 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952e3201sm18244996f8f.47.2025.10.27.22.46.57
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Oct 2025 22:46:58 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Collingbourne <pcc@google.com>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 06/59] accel/hvf: Rename hvf_put|get_registers ->
- hvf_arch_put|get_registers
-Date: Tue, 28 Oct 2025 06:41:42 +0100
-Message-ID: <20251028054238.14949-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251028054238.14949-1-philmd@linaro.org>
-References: <20251028054238.14949-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1761630418; x=1762235218;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MjYjUVdz0I6ghKZKvyB9s6ubfgqWF4aJ+zXIpAp5AvU=;
+ b=Om8lDlO+J/tmAKEFIKZ0ALwaM/kXEiNrpYm8Ml0F1kJaxIOMVxuDGbXPYK5uNKYYkE
+ Sme5iCFrfPc9VJlgGZgjW390g5g/c4pMCFPkNoANZrTpf+OJhjze0K2r4vc2qGCjwDpD
+ PGKxOB/tUYguFNfCFlPv48yUXSu0dzB2FzxQcTQFHYLfVwdNcrL/thuW3TnPJaO18YSd
+ nD4Ufi7u0VvYJJMhSSRUsI9yUTEgOytMkvOcQsZvuqsgnxYZc30osbI7fbp1NCyezRrA
+ jUys7/B+bazxyx79UmxdzeDMnEFmJCT3M8JT7F6evPoGQKovGxCoi67YnF9P6ZW77Bjw
+ RUMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCT5STq/UYELvPg7kcrrhWxjHfr9yJ0ixU6k/yMTQQDsRF8N1AOQZXtwiHRKGdgqtZvzIkWzvgcGtD@nongnu.org
+X-Gm-Message-State: AOJu0Yy9z7FH77/Xa/G53Re3NHQ6NJIngITlnGwGjNHV2j+fSb0SrIy6
+ 8MAvQ4wMnzv7vsDZRRmYHESB11rjBCoDHJ1ob5/rFHWD3dLwPTv9uybSOah5QT6Gv+RXBB9YlFu
+ LbFCFiFUkPuQJTy8LMVRErtfbu0jDKvNMgrYiNjlPFtaVL2XePEUnOckL
+X-Gm-Gg: ASbGncttvKSs2/DS6QpeQzvUTsLCgX5ySOttUy7dHWlhgb/YhIvQV1GNhLbWV0JSY5T
+ FK3FWWoZjQEmETyc+qe7T6RCWgb8AnQymcO76naFOWa5l9eyN7sIGaSGgekhbhFIIhLxbnD+Mcw
+ 0inuqDHdrx5IZPu/4rySM+UQApbohmJamEg6Uy/wpEJMx6UotiVLdgmPgkFK8YTmkHw5Ozl/Zm1
+ LSp9dM6PcfxbCvkl5O/8WsB0K9puPbKTHHG2i+PyLp+xZ0xroIkav3S8MQp1254AX4P8BMi6gRg
+ KUbfayKS20WF0qAQlJz9j/bcBmhhmW9W31/kUC0hULzRNCqOldlkvHH23J2M6AFXuOgM7KCDEsV
+ 4fM70E5Zoecrg
+X-Received: by 2002:a17:902:c402:b0:290:b14c:4f36 with SMTP id
+ d9443c01a7336-294cb52db11mr32089775ad.31.1761630417884; 
+ Mon, 27 Oct 2025 22:46:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEcgNdmhVQ0xZ0I2J5eQesmsZ1WgbnbJ1aghjda9royNxOwzVD2e48WtFuVsLvQDGhW7tOnxQ==
+X-Received: by 2002:a17:902:c402:b0:290:b14c:4f36 with SMTP id
+ d9443c01a7336-294cb52db11mr32089565ad.31.1761630417528; 
+ Mon, 27 Oct 2025 22:46:57 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.108.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29498d0ac07sm102887865ad.43.2025.10.27.22.46.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Oct 2025 22:46:57 -0700 (PDT)
+Date: Tue, 28 Oct 2025 11:16:50 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PULL 23/45] migration: Capture error in
+ postcopy_ram_listen_thread()
+Message-ID: <aQBYyn-xR9mr28fU@armenon-kvm.bengluru.csb>
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-24-peterx@redhat.com>
+ <CAFEAcA9otBWtR7rPQ0Y9aBm+7ZWJzd4VWpXrAmGr8XspPn+zpw@mail.gmail.com>
+ <aPeosY5_MvfqtiuE@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+In-Reply-To: <aPeosY5_MvfqtiuE@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,141 +117,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hvf_put_registers() and hvf_get_registers() are implemented per
-target, rename them using the 'hvf_arch_' prefix following the
-per target pattern.
+Thank you for the review.
 
-Since they call hv_vcpu_set_reg() / hv_vcpu_get_reg(), mention
-they must be called on the vCPU.
+On Tue, Oct 21, 2025 at 11:37:21AM -0400, Peter Xu wrote:
+> On Tue, Oct 21, 2025 at 03:53:11PM +0100, Peter Maydell wrote:
+> > On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
+> > >
+> > > From: Arun Menon <armenon@redhat.com>
+> > >
+> > > This is an incremental step in converting vmstate loading
+> > > code to report error via Error objects instead of directly
+> > > printing it to console/monitor.
+> > > postcopy_ram_listen_thread() calls qemu_loadvm_state_main()
+> > > to load the vm, and in case of a failure, it should set the error
+> > > in the migration object.
+> > >
+> > > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > > Tested-by: Fabiano Rosas <farosas@suse.de>
+> > > Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > > Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-23-36f11a6fb9d3@redhat.com
+> > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > ---
+> > 
+> > Hi; Coverity reports a memory leak (CID 1641390) as a
+> > result of this change:
+> > 
+> > >  migration/savevm.c | 8 ++++++--
+> > >  1 file changed, 6 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/migration/savevm.c b/migration/savevm.c
+> > > index 34b7a28d38..996673b679 100644
+> > > --- a/migration/savevm.c
+> > > +++ b/migration/savevm.c
+> > > @@ -2095,6 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> > >      QEMUFile *f = mis->from_src_file;
+> > >      int load_res;
+> > >      MigrationState *migr = migrate_get_current();
+> > > +    Error *local_err = NULL;
+> > >
+> > >      object_ref(OBJECT(migr));
+> > >
+> > > @@ -2111,7 +2112,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> > >      qemu_file_set_blocking(f, true, &error_fatal);
+> > >
+> > >      /* TODO: sanity check that only postcopiable data will be loaded here */
+> > > -    load_res = qemu_loadvm_state_main(f, mis, &error_fatal);
+> > > +    load_res = qemu_loadvm_state_main(f, mis, &local_err);
+> > 
+> > Here, a failure in this function will allocate an Error
+> > object and set local_err to point to it.
+> > 
+> > >
+> > >      /*
+> > >       * This is tricky, but, mis->from_src_file can change after it
+> > > @@ -2137,7 +2138,10 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> > >                           __func__, load_res);
+> > >              load_res = 0; /* prevent further exit() */
+> > >          } else {
+> > > -            error_report("%s: loadvm failed: %d", __func__, load_res);
+> > > +            error_prepend(&local_err,
+> > > +                          "loadvm failed during postcopy: %d: ", load_res);
+> > > +            migrate_set_error(migr, local_err);
+> > > +            error_report_err(local_err);
+> > >              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > >                                             MIGRATION_STATUS_FAILED);
+> > 
+> > In this brach of the if(), we error_report_err(), which will
+> > free the error object. But in the other branch of the
+> > if(), we never do anything with local_err, and so we never free
+> > the error object.
+> > 
+> > I think the true-branch of the if() needs to either
+> > incorporate the error into something, or else error_free() it.
+> 
+> Thanks Peter, I'll sent patches for both issues raised in the pull.
 
-Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
----
- include/system/hvf_int.h  | 6 ++++--
- accel/hvf/hvf-accel-ops.c | 2 +-
- target/arm/hvf/hvf.c      | 8 +++++---
- target/i386/hvf/hvf.c     | 2 +-
- target/i386/hvf/x86hvf.c  | 4 ++--
- 5 files changed, 13 insertions(+), 9 deletions(-)
+May I take care of it, along with the fix of passing local Error object
+into vmstate_load_state()?
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 32b32e1d024..8fce627b08c 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -74,12 +74,14 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range);
- int hvf_arch_init_vcpu(CPUState *cpu);
- void hvf_arch_vcpu_destroy(CPUState *cpu);
- hvf_slot *hvf_find_overlap_slot(uint64_t, uint64_t);
--int hvf_put_registers(CPUState *);
--int hvf_get_registers(CPUState *);
- void hvf_kick_vcpu_thread(CPUState *cpu);
- 
- /* Must be called by the owning thread */
- int hvf_arch_vcpu_exec(CPUState *);
-+/* Must be called by the owning thread */
-+int hvf_arch_put_registers(CPUState *);
-+/* Must be called by the owning thread */
-+int hvf_arch_get_registers(CPUState *);
- 
- struct hvf_sw_breakpoint {
-     vaddr pc;
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index 005e2bd891a..3e5feecd8a7 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -81,7 +81,7 @@ hvf_slot *hvf_find_overlap_slot(uint64_t start, uint64_t size)
- static void do_hvf_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
-     if (!cpu->vcpu_dirty) {
--        hvf_get_registers(cpu);
-+        hvf_arch_get_registers(cpu);
-         cpu->vcpu_dirty = true;
-     }
- }
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 9111c1d717b..f0a0e5d1a75 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -424,7 +424,7 @@ static const hv_sys_reg_t hvf_sreg_list[] = {
- 
- #undef DEF_SYSREG
- 
--int hvf_get_registers(CPUState *cpu)
-+int hvf_arch_get_registers(CPUState *cpu)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
-@@ -564,7 +564,7 @@ int hvf_get_registers(CPUState *cpu)
-     return 0;
- }
- 
--int hvf_put_registers(CPUState *cpu)
-+int hvf_arch_put_registers(CPUState *cpu)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
-@@ -692,11 +692,12 @@ int hvf_put_registers(CPUState *cpu)
- static void flush_cpu_state(CPUState *cpu)
- {
-     if (cpu->vcpu_dirty) {
--        hvf_put_registers(cpu);
-+        hvf_arch_put_registers(cpu);
-         cpu->vcpu_dirty = false;
-     }
- }
- 
-+/* Must be called by the owning thread */
- static void hvf_set_reg(CPUState *cpu, int rt, uint64_t val)
- {
-     hv_return_t r;
-@@ -709,6 +710,7 @@ static void hvf_set_reg(CPUState *cpu, int rt, uint64_t val)
-     }
- }
- 
-+/* Must be called by the owning thread */
- static uint64_t hvf_get_reg(CPUState *cpu, int rt)
- {
-     uint64_t val = 0;
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index b2bf59cb483..76a58cb0350 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -734,7 +734,7 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
- 
-     do {
-         if (cpu->vcpu_dirty) {
--            hvf_put_registers(cpu);
-+            hvf_arch_put_registers(cpu);
-             cpu->vcpu_dirty = false;
-         }
- 
-diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
-index a502437c303..afcf737759b 100644
---- a/target/i386/hvf/x86hvf.c
-+++ b/target/i386/hvf/x86hvf.c
-@@ -236,7 +236,7 @@ void hvf_get_msrs(CPUState *cs)
-     env->tsc = rdtscp() + rvmcs(cs->accel->fd, VMCS_TSC_OFFSET);
- }
- 
--int hvf_put_registers(CPUState *cs)
-+int hvf_arch_put_registers(CPUState *cs)
- {
-     X86CPU *x86cpu = X86_CPU(cs);
-     CPUX86State *env = &x86cpu->env;
-@@ -280,7 +280,7 @@ int hvf_put_registers(CPUState *cs)
-     return 0;
- }
- 
--int hvf_get_registers(CPUState *cs)
-+int hvf_arch_get_registers(CPUState *cs)
- {
-     X86CPU *x86cpu = X86_CPU(cs);
-     CPUX86State *env = &x86cpu->env;
--- 
-2.51.0
+> 
+> -- 
+> Peter Xu
+> 
+
+Regards,
+Arun Menon
 
 
