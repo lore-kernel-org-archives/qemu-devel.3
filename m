@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6711CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 17:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD80CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 17:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDnCt-0001EQ-0Q; Tue, 28 Oct 2025 13:10:03 -0400
+	id 1vDnFr-00023Z-EI; Tue, 28 Oct 2025 13:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDnCp-0001Do-Rx
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:09:59 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1vDnFk-00020x-Rv
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:13:01 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDnCW-0000JE-Hl
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:09:48 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 48A30811BC;
- Tue, 28 Oct 2025 20:09:32 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id U9hrmt1IrqM0-DAmRuBwF; Tue, 28 Oct 2025 20:09:31 +0300
+ id 1vDnFc-00012U-HL
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:12:57 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 58C9EC017D;
+ Tue, 28 Oct 2025 20:12:46 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:582::1:19] (unknown
+ [2a02:6bf:8080:582::1:19])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id jChSGa1LpGk0-Qq66rqio; Tue, 28 Oct 2025 20:12:45 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761671371;
- bh=AjICt9/cEE3YqmTiIWl7ZmpWnbhzekTFatGOzt5GHVQ=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=l+gt/MPli/Vbh6WjXAlWn1SJ4ehOUFSxJMa0M50SaSGRQCMTGCjyPT3b8tqG0dEBV
- UYeT8wrxcUn2J6aGajnyFunN9eIIsg5ECIOersb36ycTtZNXDX8agp4gEfU9cBso5D
- Ge2DVN5WLtL74ofAIT/ydHKlS+3TiykwfoUgN/+o=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ s=default; t=1761671565;
+ bh=q358qZ9y++91aGv6ZwjwQYkh6xbp4HpdGPBzZb6p2Dk=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=RH/CrMiKZ+/F/dUYTRsamA8Gmmy/3htoyjK2F50bWGgI0zmRpJPXLyLxKKXzHyxHQ
+ +wTCD+j6m5zZzsq6Cz6b1lF+ECbWfIQ3E+Ke3ycGuHcNwflxzOx6xvd33uudMk77Lw
+ ZK5wP+QB6zAKoHvZOhR0DjKARpRv5z06Q8GqALa4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Message-ID: <9bafb5eb-9808-428c-804d-b7122c9f598e@yandex-team.ru>
+Date: Tue, 28 Oct 2025 20:12:45 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/2] migration: vmsd errp handlers: return bool
 To: peterx@redhat.com
 Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- armbru@redhat.com, berrange@redhat.com, vsementsov@yandex-team.ru,
- armenon@redhat.com
-Subject: [PATCH v4 3/4] migration/vmstate: stop reporting error number for new
- _errp APIs
-Date: Tue, 28 Oct 2025 20:09:25 +0300
-Message-ID: <20251028170926.77219-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251028130738.29037-1-vsementsov@yandex-team.ru>
+ armbru@redhat.com, berrange@redhat.com, armenon@redhat.com
 References: <20251028130738.29037-1-vsementsov@yandex-team.ru>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251028130738.29037-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,59 +77,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The handlers .pre_load_errp, .post_load_errp and .pre_save_errp
-should put all needed information into errp, we should not append
-error number here.
+On 28.10.25 16:07, Vladimir Sementsov-Ogievskiy wrote:
+> Hi.
+> 
+> Finally, I understood, that there is no real benefit in converting
+> these new APIs to bool, as it will break plans of converting all
+> other handlers to new API.
+> 
+> So, only unrelated fixes are kept in the series, maintainers may
+> pick them in separate if convenient.
+> 
+> v4:
+> 01: add r-b by Stefan
+> 02: rework to better patch (and fix one more similar issue)
 
-Note, that there are some more error messages with numeric
-error codes in this file. We leave them for another day, our
-current goal is to prepare for the following commit, which will
-update interface of _errp() APIs.
+After analysis by Peter ( https://lore.kernel.org/qemu-devel/aQDdRn8t0B8oE3gf@x1.local/ ), I've added 03 and 04 back.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- migration/vmstate.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+Unfortunately I missed that I should use --no-thread together with --in-reply-to.. That's why 04 is reply to 03.
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index fd066f910e..677e56c84a 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -157,9 +157,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         ret = vmsd->pre_load_errp(opaque, errp);
-         if (ret < 0) {
-             error_prepend(errp, "pre load hook failed for: '%s', "
--                          "version_id: %d, minimum version_id: %d, "
--                          "ret: %d: ", vmsd->name, vmsd->version_id,
--                          vmsd->minimum_version_id, ret);
-+                          "version_id: %d, minimum version_id: %d: ",
-+                          vmsd->name, vmsd->version_id,
-+                          vmsd->minimum_version_id);
-             return ret;
-         }
-     } else if (vmsd->pre_load) {
-@@ -259,8 +259,8 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         ret = vmsd->post_load_errp(opaque, version_id, errp);
-         if (ret < 0) {
-             error_prepend(errp, "post load hook failed for: %s, version_id: "
--                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
--                          vmsd->version_id, vmsd->minimum_version_id, ret);
-+                          "%d, minimum_version: %d: ", vmsd->name,
-+                          vmsd->version_id, vmsd->minimum_version_id);
-         }
-     } else if (vmsd->post_load) {
-         ret = vmsd->post_load(opaque, version_id);
-@@ -441,8 +441,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-         ret = vmsd->pre_save_errp(opaque, errp);
-         trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
-         if (ret < 0) {
--            error_prepend(errp, "pre-save for %s failed, ret: %d: ",
--                          vmsd->name, ret);
-+            error_prepend(errp, "pre-save for %s failed: ", vmsd->name);
-             return ret;
-         }
-     } else if (vmsd->pre_save) {
+> 
+> Vladimir Sementsov-Ogievskiy (2):
+>    migration: vmstate_save_state_v(): fix error path
+>    tmp_emulator: improve and fix use of errp
+> 
+>   backends/tpm/tpm_emulator.c | 63 +++++++++++++++++++++++--------------
+>   migration/vmstate.c         |  1 +
+>   2 files changed, 40 insertions(+), 24 deletions(-)
+> 
+
+
 -- 
-2.48.1
-
+Best regards,
+Vladimir
 
