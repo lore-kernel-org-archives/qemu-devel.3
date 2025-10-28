@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8E7CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14A51CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDcwm-0002uC-0W; Tue, 28 Oct 2025 02:12:44 -0400
+	id 1vDcxa-0003cu-7Z; Tue, 28 Oct 2025 02:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcwj-0002sm-VV
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:12:42 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcxU-0003bI-Lq
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:13:29 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcwi-0006jA-3c
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:12:41 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3f2cf786abeso3203057f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:12:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcxS-0006ky-0Q
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:13:28 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-475dbc3c9efso21720645e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761631958; x=1762236758; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761632003; x=1762236803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rS/0cEG8zGv/ErrZdKLPdjhw1ubEPoYKy6MJUJ+uZjY=;
- b=cdXIQ1wYV2Cvm1njocpgEX9QSbN+8vmV+m/V5nZA/sVnrrIV8975JATlQd6o9gfjpa
- zmZ8x43SBW7+sOGhtWHF/UQVCXNeznsOyUNUo9GOJ/+3RUfdf0nc/n69U5/QrEkc+/1P
- NAEtrqmbBLJS3ifGRgw1izEykWKzgk+deH09DNqE6+rPTSAHzslw8LXihgjnyEAFnH6H
- Qyz516Evgih4ONJnNQtUMPOS+Fw8FfBXbr/kOP3Zs94a1Vl2pk+L4XZW4L0vew8Y2AXm
- E81McVYM3sDJrZh8nXsB4BKOX4bttaJt8KpLlqgtwsxaRjifnqcOtihzvUFPdYvTfjK9
- q4fA==
+ bh=XB4scvM2utrFpVmeUUOjkW2XsKNOfvIvM6k/lnSZarI=;
+ b=fu/JgioJLvXyk/zAdNGRJZliI4A51K2qszaK7BEtOBT2203w6N2dwrj6AFLqKRdtFk
+ N3YI2n+XLt3FKjH2jORYeUz89JBSO4xMZbFjrtbpPcI7D6PaHUWaVp7ZazCF9KZGxy5n
+ MeINsejXBCEgLBVhnyLlEK6bMi5YZ/8SV8v3XheAd88sx3+KcM0vCuD9H9HVKedP7gmj
+ /ijIw/LA3z2/gejG8FdMsNY9LklQcjoAdcsBnHVGMLfs/9TA4BCX3FYjrnUV7ysg4RdE
+ u9GKVvZSNL8eWC2tvbmyRMmq8I2He2yH4y/OmgZwQFd3j9A3z7zP38meWsdg5sgYXM3g
+ MBwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761631958; x=1762236758;
+ d=1e100.net; s=20230601; t=1761632003; x=1762236803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rS/0cEG8zGv/ErrZdKLPdjhw1ubEPoYKy6MJUJ+uZjY=;
- b=WRjRhqnZJnhM78eOqEG6zOoJOe1faIkVD9hrzhp6LNgdbfauzNCoRY09Rt56YHXU1H
- M3gUA6Lv2TWJXUV5qb+ypho2KaJOliQpmTfmG4G48JKKdbmelhdZSdb3XOr9vJ6HpS01
- /mFdaWREbTU7bGTQOOlDm4EvGrp/4LjVh5a8d0ONRjl74u0a0lqdHyR859cGVnSymQ0o
- JBFtdQPp9GGmTFH2j+dvZmU3ZHZC4FdUDmGWsaGyV8LzUcx7xVMfe3gufwp2FfYCVdby
- 0rWpvFpvpPylo6Cb4dePLh8h5e/2Qyy3ufVSIoVNop4YqYzGQfOenk6a3nyNPj+yYMDu
- uABQ==
-X-Gm-Message-State: AOJu0Yw1/ON2bkaGAMpS7Hu5zhpgNceCsW8stiM/zwjBCoARrZtH3gol
- i62D82Qf1weGJvI6q2LkuXWERQOKdGvamaTvAqje4wPnReJewtdQxlts3+27pl/QP00czwwGZ/u
- D+ZTfyf8=
-X-Gm-Gg: ASbGncttg24DIHINoVyRRtJ5c9zUI3jdFB6ek7hLE8TMNIYJTJoPkgqB7aYlVYR1mrP
- Kkqw+MYUeIfQsyCtWTWD8XOpgLOKWaI6oLEmUj2vA7piscEs0rOvvWTY6l1l9h5uFOmDxGDd/K7
- hOEPYrXjoog4MPiHdU3ltk6nK5NR0AVAtZqhffujjxdzVh5oIdCx88EFpqtDrJWU09jY98ivNS7
- d4envRqsyvwyiRWzy66GoY+U8WR934pDT9LdG/SYOQOMkelOPNIy6E2tdJ+Rlmo4iYLIGQzn3nJ
- 5Uk5ZQcrio53Y6VH73dnU/2f2LvJNBSjqz4z68ZPqXiG3BgrGvA5XH5mzpBjCSDSuMBH6ZJAsKv
- S4qPsYLOgC1yuKssZ7753WM5pgBtlLjVceJ7rdXNXLQ7l0hRePgssH9rsJrfhcRFYF/y1bEuKT5
- 0UDK3GhT7PInRwSpoH13/J75vEV6yRFYpbuTAVLXyudUy5KXqBTeoA2hI=
-X-Google-Smtp-Source: AGHT+IGt+o0q20+/Ua5ohB99OZ+yA4Shz9NLkIv10R2A0bast3mbUlcuctXhX31HLYOnJwVrl9+abg==
-X-Received: by 2002:a5d:5f87:0:b0:427:665:e373 with SMTP id
- ffacd0b85a97d-429a7e9df7bmr1810027f8f.63.1761631957746; 
- Mon, 27 Oct 2025 23:12:37 -0700 (PDT)
+ bh=XB4scvM2utrFpVmeUUOjkW2XsKNOfvIvM6k/lnSZarI=;
+ b=Y5IKXQQ06VGOtMrenQwLMFBLDXuPe3uDWxeNT8/xWIjZPsCJpYfViXyC1Ep2hC1Bcu
+ bdbMi7k+FTACCiAeRe1OhvP1YiVnxRymHI/jbO4VqF8WuVyM8zBt1YKhVGHfj84F7N6T
+ ltkUKbPnVycI7T1zVJ17c8ahRt2CJHyslt5gqImDlgsXVe5i4rpAUqPT3Wjd+OPpOcGt
+ rPGnb8thV6CjfaoVJgZkLY7wN1n5mNsni/TnG92sa72RIi8lNOBvu4An22QJd1MzszNj
+ xBCNkBMiXb9HpBo/L7jtjy18357HwZ4UCtTuVbU2FUIG80Lx7uxMRT4RwHg2C2NPTg43
+ L+fg==
+X-Gm-Message-State: AOJu0YwW4KSTienCyF00ged7oq7PJWoTU4iwYSzeKFuJ4f1eAghZ2TP3
+ K00i9evH3q8269msvAYt58wsqM4/Ajt/OYG0M+F2NuTCucdhbUp1C/AymqWwzcxgUqaMoApBIj5
+ ulBwcv8Y=
+X-Gm-Gg: ASbGnctWccoW/8ubClBofwmaXQPlfjWXuchex97wfOTiqV8iCGtJnwAwYesspHSeFJW
+ J7rStMf3eTBKBqYRfR57LbVRREmAyS2eBvAvTNAMxszzjpYrypuv3gV0e2gVa1MioaxrRSI8mmI
+ USbg9j6wGHbUfED7HmxcDeMmks2Q/XIRXyB29zjvGS/BxkYMifzSXBV35AMVukpHgHQD2FRSpRr
+ 3+pIVXbexHHgDBikmP9+FiHF38wBty2mmafzDw97dNl380rvWOLGhXoCz37n1+OQ6CcfMnizKh1
+ mskTlJnIJeNSzLR8tE1VKKmx3BQPfZo+HfaacwRE8vIHuz2yWMGo+6s1ErnRdObJ/a9aqTODLxG
+ r1HAudEhsCJMjSu07hoSB6rGjM8rWKsQr8AiZayeztPMIRcBJgPmWudyWAgQZgCuJkdBZTfq/aB
+ uDAIlmEZ7EciOSr0UQ9XnzQJA8au00y3EKqY98kgRXaw/asqIF65oqTfI=
+X-Google-Smtp-Source: AGHT+IGGItfAZ+2jiXFo/U2dbhz2Rh3B83tyo08hkzvQgdP0XAUz8weJ7eXn4FmVhmxceBp8UlQvkA==
+X-Received: by 2002:a05:600c:1da3:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-47717dfaa6dmr15612635e9.15.1761632003476; 
+ Mon, 27 Oct 2025 23:13:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df62dsm19852899f8f.45.2025.10.27.23.12.36
+ 5b1f17b1804b1-47718fe6382sm11511685e9.4.2025.10.27.23.13.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Oct 2025 23:12:37 -0700 (PDT)
+ Mon, 27 Oct 2025 23:13:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
@@ -75,17 +75,17 @@ Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
  Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 42/59] accel/hvf: Skip WFI if CPU has work to do
-Date: Tue, 28 Oct 2025 06:42:18 +0100
-Message-ID: <20251028054238.14949-43-philmd@linaro.org>
+Subject: [PATCH v3 43/59] accel/hvf: Implement WFI without using pselect()
+Date: Tue, 28 Oct 2025 06:42:19 +0100
+Message-ID: <20251028054238.14949-44-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028054238.14949-1-philmd@linaro.org>
 References: <20251028054238.14949-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,31 +108,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid sleeping vCPU thread for any pending work, not just IRQs.
+Return to the main loop where we'll be waken again.
+This avoid a tricky race with signals introduced in
+commit 219c101fa7f ("Add HVF WFI handler").
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/system/hvf_int.h  |  1 -
+ accel/hvf/hvf-accel-ops.c |  5 +--
+ target/arm/hvf/hvf.c      | 74 +++------------------------------------
+ 3 files changed, 8 insertions(+), 72 deletions(-)
 
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index d842d4b2b99..c8e407a1463 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -47,7 +47,6 @@ struct AccelCPUState {
+ #ifdef __aarch64__
+     hv_vcpu_exit_t *exit;
+     bool vtimer_masked;
+-    sigset_t unblock_ipi_mask;
+     bool guest_debug_enabled;
+ #endif
+ };
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index bbb0b385fe9..e9dd2d24745 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -128,14 +128,15 @@ static int hvf_init_vcpu(CPUState *cpu)
+     cpu->accel = g_new0(AccelCPUState, 1);
+ 
+     /* init cpu signals */
++    sigset_t unblock_ipi_mask;
+     struct sigaction sigact;
+ 
+     memset(&sigact, 0, sizeof(sigact));
+     sigact.sa_handler = dummy_signal;
+     sigaction(SIG_IPI, &sigact, NULL);
+ 
+-    pthread_sigmask(SIG_BLOCK, NULL, &cpu->accel->unblock_ipi_mask);
+-    sigdelset(&cpu->accel->unblock_ipi_mask, SIG_IPI);
++    pthread_sigmask(SIG_BLOCK, NULL, &unblock_ipi_mask);
++    sigdelset(&unblock_ipi_mask, SIG_IPI);
+ 
+ #ifdef __aarch64__
+     r = hv_vcpu_create(&cpu->accel->fd,
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index da2f4cf2e9c..1abb4a7d7a9 100644
+index 1abb4a7d7a9..5fc9b217a11 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -1737,8 +1737,11 @@ static void hvf_wfi(CPUState *cpu)
-     uint64_t nanos;
-     uint32_t cntfrq;
+@@ -301,7 +301,7 @@ void hvf_arm_init_debug(void)
+ #define TMR_CTL_IMASK   (1 << 1)
+ #define TMR_CTL_ISTATUS (1 << 2)
  
--    if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD | CPU_INTERRUPT_FIQ)) {
--        /* Interrupt pending, no need to wait */
-+    if (cpu_has_work(cpu)) {
-+        /*
-+         * Don't bother to go into our "low power state" if
-+         * we would just wake up immediately.
-+         */
-         return;
+-static void hvf_wfi(CPUState *cpu);
++static int hvf_wfi(CPUState *cpu);
+ 
+ static uint32_t chosen_ipa_bit_size;
+ 
+@@ -1703,81 +1703,17 @@ static uint64_t hvf_vtimer_val_raw(void)
+     return mach_absolute_time() - hvf_state->vtimer_offset;
+ }
+ 
+-static uint64_t hvf_vtimer_val(void)
++static int hvf_wfi(CPUState *cpu)
+ {
+-    if (!runstate_is_running()) {
+-        /* VM is paused, the vtimer value is in vtimer.vtimer_val */
+-        return vtimer.vtimer_val;
+-    }
+-
+-    return hvf_vtimer_val_raw();
+-}
+-
+-static void hvf_wait_for_ipi(CPUState *cpu, struct timespec *ts)
+-{
+-    /*
+-     * Use pselect to sleep so that other threads can IPI us while we're
+-     * sleeping.
+-     */
+-    qatomic_set_mb(&cpu->thread_kicked, false);
+-    bql_unlock();
+-    pselect(0, 0, 0, 0, ts, &cpu->accel->unblock_ipi_mask);
+-    bql_lock();
+-}
+-
+-static void hvf_wfi(CPUState *cpu)
+-{
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    struct timespec ts;
+-    hv_return_t r;
+-    uint64_t ctl;
+-    uint64_t cval;
+-    int64_t ticks_to_sleep;
+-    uint64_t seconds;
+-    uint64_t nanos;
+-    uint32_t cntfrq;
+-
+     if (cpu_has_work(cpu)) {
+         /*
+          * Don't bother to go into our "low power state" if
+          * we would just wake up immediately.
+          */
+-        return;
++        return 0;
      }
  
+-    r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, &ctl);
+-    assert_hvf_ok(r);
+-
+-    if (!(ctl & 1) || (ctl & 2)) {
+-        /* Timer disabled or masked, just wait for an IPI. */
+-        hvf_wait_for_ipi(cpu, NULL);
+-        return;
+-    }
+-
+-    r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, &cval);
+-    assert_hvf_ok(r);
+-
+-    ticks_to_sleep = cval - hvf_vtimer_val();
+-    if (ticks_to_sleep < 0) {
+-        return;
+-    }
+-
+-    cntfrq = gt_cntfrq_period_ns(arm_cpu);
+-    seconds = muldiv64(ticks_to_sleep, cntfrq, NANOSECONDS_PER_SECOND);
+-    ticks_to_sleep -= muldiv64(seconds, NANOSECONDS_PER_SECOND, cntfrq);
+-    nanos = ticks_to_sleep * cntfrq;
+-
+-    /*
+-     * Don't sleep for less than the time a context switch would take,
+-     * so that we can satisfy fast timer requests on the same CPU.
+-     * Measurements on M1 show the sweet spot to be ~2ms.
+-     */
+-    if (!seconds && nanos < (2 * SCALE_MS)) {
+-        return;
+-    }
+-
+-    ts = (struct timespec) { seconds, nanos };
+-    hvf_wait_for_ipi(cpu, &ts);
++    return EXCP_HLT;
+ }
+ 
+ /* Must be called by the owning thread */
+@@ -1967,7 +1903,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+     case EC_WFX_TRAP:
+         advance_pc = true;
+         if (!(syndrome & WFX_IS_WFE)) {
+-            hvf_wfi(cpu);
++            ret = hvf_wfi(cpu);
+         }
+         break;
+     case EC_AA64_HVC:
 -- 
 2.51.0
 
