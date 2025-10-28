@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3051DCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 14:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE63CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 14:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDkpW-0002VM-Qa; Tue, 28 Oct 2025 10:37:46 -0400
+	id 1vDkrI-0002fk-JK; Tue, 28 Oct 2025 10:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDkpU-0002V8-Rs
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 10:37:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDkpR-0003rs-1M
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 10:37:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761662254;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2csqhmQgj0TzgRZV/BMFX/0Njgqa30ez/IKywPQ8x/0=;
- b=QRup+GjYU/kJSGpGKuGUwRIJzoVgeBRzAh6qnN1QlfLeq8S23DPSecNTUAuJed2AEZaDpd
- 0s+sE2CH4g7HUe1Yr1GdsObgFKzLR45yO3L+EdBLPDLitwZI1gEXBeVv0mt7akMLwJ+vVB
- LlMzUBrJR6IyHCv4x9+qrWEnMgCQVtA=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-_7GjSKlTONuf43O-9uI-qg-1; Tue, 28 Oct 2025 10:37:32 -0400
-X-MC-Unique: _7GjSKlTONuf43O-9uI-qg-1
-X-Mimecast-MFC-AGG-ID: _7GjSKlTONuf43O-9uI-qg_1761662251
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8a1ba620dc9so814887485a.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 07:37:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDkrA-0002ew-GK
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 10:39:29 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDkr3-0003wG-Av
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 10:39:28 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b6d345d7ff7so108755066b.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 07:39:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761662354; x=1762267154; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EXt259YuBfadOH1lDpfgQiRnIoeCkfp8taYmmSXcWIo=;
+ b=oT8m3F4w2b/0+HB4fgVgVH/6G6fY/YL/uWVbSoJDAjfV0L8Lg/v9PUd9/XrwpULk41
+ jR8a4Lh9BfAiBEJE9Uk0YnEJjjnwf+290BjBS4SOyj5qnInY71wMgKn2alfD6e2edf6c
+ YfBGUWndr+ZNYDxl+uQjL7I+VZAifWL7qe1D5GW064sDZTvpJ1SI2qyO3pxRtY9YS8ZO
+ bCzYN3k0Q4wlvoFayTbsXFAJ88DkErDMpPIKTE7pUkt9IaZDGpTIgviY5dv8SUPtgrUO
+ qkFKIIfHyzACLaHe4GZr4G4qxzIYdE5CIDF68U9kMI9f7ZqXPdONkRoCSi2vAYTlCAcK
+ a7Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761662251; x=1762267051;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2csqhmQgj0TzgRZV/BMFX/0Njgqa30ez/IKywPQ8x/0=;
- b=LMQL8eRDOUWNcltjVwQIpBGrbtN8fPddyRbCSn3+ggthydcT06kXjWfLWJdDQllGFG
- Anoukd5bnkB17gtO1tWk+lkQiURbtEfUcdbtYDA7yh+nJiHyyzX3a92Jn4lpx9omLlLD
- s4fb5QOLYZbHcYssrcN3xtg9ycEFX0Cg54G94iLI3qKsI21KPGzLaickhMr0E5brMJd3
- kkBevsR5YzmM5JWEyPoP4OhktBVElUzPd2HV/P0okG0gdkB+l6OYAHO65kA1hkeIVoKA
- y/CJrhWWWiXl8kAuK4onRZLfGgQJHsVDnIrcbkQSozl/FX9Q/m2jGMS1Z/gEDW1FsGaw
- luqA==
-X-Gm-Message-State: AOJu0YzoOcGbTlv7qvpPr1y980p56nfPRz/5OI3r0CqqF/RvKs/Vj/So
- qSOV0NDzEWhZFhOokvBE1rUnc8G4vKVxcks40eLgpAgSp3DNKd5R+Th62q1YieX14GVjZwLnxTa
- J5oL0qswDuOI1pNX8y2aPvtO0GAvyHMOyEEEyqI//TQHzsnS8R7CVc8pa
-X-Gm-Gg: ASbGncsrL+av1nPFo8MiKRxbAjSGjYDOM9DmqyTcERLPppd2CduI1wWglMduhPZC+k3
- +NGwj8PGOUPKwG7G7UYRi5YF27Tj48TVZ3vSbJHKUcWAWjg3SM95dirzn8noNEfvGoSML0VidQM
- 1GIvk+pmhABXUlPq2UBYClfGkWqQsuFKRVnkmoYMeQDyQUZTeR57fPY2fLUZncVVoRPvt5C31KY
- PxDGXQgRHhCFGT9puk4T7qfwkIqDYHgn27ZDzjff44iqeG1NddUkJHGFaC14itSfTnX0hDy0CpG
- 5IDhhpsdqWhWwKns4WcKobRykNWgcBvH3yf5hZj/otKgPSDf7YOPwb63g63+1f7YIh0=
-X-Received: by 2002:a05:620a:708e:b0:8a2:da3:97cf with SMTP id
- af79cd13be357-8a7283cc700mr442323285a.43.1761662250167; 
- Tue, 28 Oct 2025 07:37:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHYpSEXeUbvCNWsFp121RBpA5vzpYpCrAUYUEY7KtNG1Dkue72uoLRZQE8f6+UpBvKOKbdkdg==
-X-Received: by 2002:a05:620a:708e:b0:8a2:da3:97cf with SMTP id
- af79cd13be357-8a7283cc700mr442315185a.43.1761662249438; 
- Tue, 28 Oct 2025 07:37:29 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8a8025fc8cesm119532685a.23.2025.10.28.07.37.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 07:37:28 -0700 (PDT)
-Date: Tue, 28 Oct 2025 10:37:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, armbru@redhat.com,
- berrange@redhat.com
-Subject: Re: [PATCH v2] migration: Don't free the reason after calling
- migrate_add_blocker
-Message-ID: <aQDVJ91Q2AZ3m68z@x1.local>
-References: <20251024205532.19883-1-guobin@linux.alibaba.com>
+ d=1e100.net; s=20230601; t=1761662354; x=1762267154;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EXt259YuBfadOH1lDpfgQiRnIoeCkfp8taYmmSXcWIo=;
+ b=MZqjZkW+zqjyFjOHwS8eivkvSkEq1MZKLA0QwWg4jU/xptpR9HuvqDasu6Y5sUg9Rt
+ XsMrBJ8tiOH1PiJuPXeer1rSF1A1m1lrT8PuZpXcDAI21308pz2CwhstDD/aA/ptxWp8
+ KHd6WtRFI4hxKv4LTOJslG9ZPep9k9D0pQ+/IXk6eEK2BUG8TShNWh1VyJhcCjc8JYrR
+ gTYuJbBVyMTcuhexP04U04TRd7esQLVx5YuwykYJfIn1B/W49x96NBe4bAIN5qe+DtbG
+ qiERuKiT1dtxIOnrCQoHhI3D2bRkK52R7w7zPl2+kjUDcRFvf/RWVJOuaWmIAGD7x5wf
+ nj3A==
+X-Gm-Message-State: AOJu0YyBEQQ/aPJtaLq5Kl8kDOzol82DiLQDlNtZzm86SMGz5/GcHOMr
+ t88aKeighmr5pPQsWbyUXI0haDj5I8v4j8k+/gqHSjvzLWdgUUm4jj7isDBhBAmh4jeUObU1wNN
+ YEhIq6DU=
+X-Gm-Gg: ASbGnctzyjBMVaDPy9zXVk9dIL/W7FOWrpldNY5ybJuVC/nNzua7B/F8gZgIB++OmoH
+ NjR4ZkBJFVfVfz4Mywl629+cOSsSXw1eoxdKaT3eAiiZbVLcrQS/WGHYnIyY6d+m80MtyUWJQOi
+ hoJlAINNClYvCz6qHRAeRSqyLujn964ZIIC5hapmQblEupNatLz+VGIuEcezMZdca1QJvFOTf8k
+ x6l1jKszCiPikbL60GuokpveQn2Vm75PJRjKHY/x5dpFGZXHqaLLb9YvHHG7jgZomcvIro5Gij8
+ adKOsxyskn69MiFko6LlNwxWO83cUKn1mdHewQF9jNn4MoS3UJuPQ9S/z/IL/eNo/al+ZTGIdaA
+ 1jqTrHAfsmsUczi06FldPDfrdvW0XpkenvDpANYtOOAglm8RmmUyssq9Oq3uiBI7HfQqZ3bPDaW
+ pS8FIOtwG9dMnJ8qZK
+X-Google-Smtp-Source: AGHT+IEBtALiFGdo41uao0HFKjCFVb+2yYyK8UVzv6XwVHKGhRiyZ9dvrmrPI81tVm0wx7rHMhjqVw==
+X-Received: by 2002:a17:907:1c0b:b0:b50:a87e:efe5 with SMTP id
+ a640c23a62f3a-b6dbbf72685mr410492666b.19.1761662354453; 
+ Tue, 28 Oct 2025 07:39:14 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d853f9a0fsm1104953566b.50.2025.10.28.07.39.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 07:39:14 -0700 (PDT)
+Message-ID: <686b4a77-cf53-45e8-9b75-2b8dd9c4a67f@linaro.org>
+Date: Tue, 28 Oct 2025 15:39:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251024205532.19883-1-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 20/37] target/arm: Consolidate definitions of PAR
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-21-richard.henderson@linaro.org>
+ <CAFEAcA-tVBn3g185gzs2uOCnYLeqWN_zwfeQ0DccLf0n8BN5PQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-tVBn3g185gzs2uOCnYLeqWN_zwfeQ0DccLf0n8BN5PQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,47 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 25, 2025 at 04:55:32AM +0800, Bin Guo wrote:
-> Function migrate_add_blocker will free the reason and set it to NULL
-> if failure is returned.
+On 10/20/25 15:31, Peter Maydell wrote:
+> On Tue, 14 Oct 2025 at 21:11, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Create a function define_par_register which handles the 3
+>> distinct cases for PAR.  It is easier to understand with
+>> the definitions all in one place.
+>>
+>> Make the aarch64 to be the primary definition, when present,
+>> rather than being an alias of the 64-bit non-secure aa32 reg.
 > 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> Doesn't that break tcg-to-tcg migration across this commit?
 
-queued, thanks.
+I don't know... possibly?
+I guess we have a test for this somewhere, but it needs setup?
 
-> ---
->  hw/intc/arm_gicv3_kvm.c | 1 -
->  target/i386/sev.c       | 1 -
->  2 files changed, 2 deletions(-)
-> 
-> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-> index 66b0dddfd4..6f311e37ef 100644
-> --- a/hw/intc/arm_gicv3_kvm.c
-> +++ b/hw/intc/arm_gicv3_kvm.c
-> @@ -841,7 +841,6 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
->          error_setg(&kvm_nv_migration_blocker,
->                     "Live migration disabled because KVM nested virt is enabled");
->          if (migrate_add_blocker(&kvm_nv_migration_blocker, errp)) {
-> -            error_free(kvm_nv_migration_blocker);
->              return;
->          }
->  
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 1057b8ab2c..fd2dada013 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -1661,7 +1661,6 @@ sev_snp_launch_finish(SevCommonState *sev_common)
->      ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
->      if (local_err) {
->          error_report_err(local_err);
-> -        error_free(sev_mig_blocker);
->          exit(1);
->      }
->  }
-> -- 
-> 
+I'll experiment.
 
--- 
-Peter Xu
 
+r~
 
