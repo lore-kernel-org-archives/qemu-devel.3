@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2423ECCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5755ECCF9EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDiYj-0004fB-0A; Tue, 28 Oct 2025 08:12:17 -0400
+	id 1vDiYp-0004gQ-DC; Tue, 28 Oct 2025 08:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vDiYg-0004eh-Is
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:12:14 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1vDiYn-0004gH-J0
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:12:21 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vDiYb-0001yR-FR
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:12:14 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-427015003eeso5238267f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:12:08 -0700 (PDT)
+ id 1vDiYk-0001zB-60
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:12:21 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-421851bcb25so3653142f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761653525; x=1762258325; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761653534; x=1762258334; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jgiZq+yt5DoSqqEyPQWGk7DYumEKCR42t50hbFkH0VE=;
- b=EqjeABMbk2Cu2OI5xhA7kOh19uAKNIISdNcoW7FmSRjMyr5gH7eShLpF/5XojdA/Fy
- /oTmIotSxQgeXZ/CeRMnYMVvwDq1U3f2yBmQMOU9WlLrYhWrzUInkJU9+60UixC1UCvd
- QgfY8Cr+fW9fXisOhxCot355Qp2d1dYx8zlVJYLOhZEOF5yTCTwo4TmzjT9EI22yHwfE
- U3azH6wRd9eFxXi1lhGocMYjaON6z+Dt2BBVmwoUvqTMsYZSPe+bPgLcNFcAVbCn5EE6
- 2JVWigEWo5I4NfgMo6kMmLjBTJG7NPzm8S7jbKKbx1ye6CWVDA7FYRqNvASJl7DIthbI
- 72hA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=oO6cZxSE253WPrBSrlyXKEcK5u6TWYmszNG4NH9uIts=;
+ b=RU7Kez4CG+zw2jub4Vr7l3ms2Fo954rt8NO6ngkb9XNtDDBGBDXKwcc3xBeHgTJmm5
+ 1fuf1a++erXLVUfqz1vHLsMO7Uk1vzz4xeGulqRXKxycvpbjQLy8vBOVHmshiqU/2cjo
+ HmdEetYsUmpTVhqUXgTJab4ZG7vrD0TzjAhhatmO50VCAC1O+hg8eYC/2+kOQWZgKhbb
+ 3XFZ2HGP3Od+d/q552YaUqHIDcygXVCL6jLukO6/tziwv/nuCaDF6yAlb6l0SasdBd6o
+ 2PwfGkwcObb3lk8RIjDYkDG/jtHqWLdsVZ4HWtnwWEWDfbUgM2tsvE98DQgUudwCI9Jd
+ IdGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761653525; x=1762258325;
+ d=1e100.net; s=20230601; t=1761653534; x=1762258334;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jgiZq+yt5DoSqqEyPQWGk7DYumEKCR42t50hbFkH0VE=;
- b=E4C0uk8ivnCMVL0SuopChr1oCrz3qSektQUT/e91WQzUMka5nyR7chNB+g2glUDJg0
- ZwzlZjl9r2elF7xYz+xIHlf680ba3NtRF6ZNrIPFwinaiwir86geM46Jcv/iQuayTMf9
- nRAnzxle8t/+6O88qGxS2bX2HE3ZdpsBlrF40LCkRlYelbGuPN/w92EV6wpGsiq68rye
- +Sofe/fNCT4AtJ9nsewTrd58nCSWUm+bh3ATgvnQYXBR7kZP5nkA8dDYl2ApizuLaMKp
- HwD9EGI86/qO23VHf4s5kt8/G52/vuSKzvMkrd40CXJz7nppn1IRWqDDsiSiaOeI5DR2
- 2RFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnnAcR6i4Wk+1kOlE2JgThKDlCJSAot7Gt79z7E7qNnVI+bO/CpLUjgnoz57ZstfxCY2DRrzTOQTdm@nongnu.org
-X-Gm-Message-State: AOJu0YwKixr6LKMh44C0IlHg2PdEGDT7MPWw/ofrM2ojEjf2lWXqUbJN
- IZGjuRmFUd/8gddBbdXSkotizOxzy7mHWZdcArfrakxXu4mPqPgQQW3OCCbcorC5p7M=
-X-Gm-Gg: ASbGncu5Gb7sawBZPLSFEMpcAx7bzsFrda8vBtKahSlenpO2fJE15x0dbzdzdHcoSQQ
- QxVfw96JAy2jgfmZC0KY6LV+Xn0+Yrxh7BffWg5ge7QU+YfTwJS4FNU6fydY3ufHY+h4udRAuHt
- 1fgB4JE1i1F6FhjsEF9J+k+UFVaESUFSRB6/RPSxWLiIml+WSym1PKjYpg50byJAi5jlZy1LwjH
- 5Tw+xcs8xpxbQHTmr/ebYb4zNeu7Rub0olgQ3uKmxFbvTm/hGLOiChadjg/Y8UVSx587Fsee7vK
- 51hEFy0eWRigY0Dv0oqW+l3iWBvxZz5siglnfFlknHGjTMYTiJZEcsPiDXuzzGJ39F1j2RiOdU3
- u/PGDGMsz9CMmnSj/lg7vTXF2MC12J5xiPcXSpBUZbbTgqC9wQ8xTI4vJCEgSI+B+wmA5F5zZCr
- FyWlr4t6CvmtDzfK/N
-X-Google-Smtp-Source: AGHT+IEY8u70W5xjT1WFglgOtAEgJTxu+ufCAc0+Wjb9lyIzZUpw5sH6oCEFDiP6Lufy6zD+vUFC9A==
-X-Received: by 2002:a05:6000:40c9:b0:428:3f70:4b3 with SMTP id
- ffacd0b85a97d-429a7e9ca36mr2876173f8f.59.1761653524756; 
- Tue, 28 Oct 2025 05:12:04 -0700 (PDT)
+ bh=oO6cZxSE253WPrBSrlyXKEcK5u6TWYmszNG4NH9uIts=;
+ b=rzDyb/TKKNaRlaz1JMUS0lIWW0FnaIOGzm7i9Us7H2GhftrKh1kkhYEDv5LrJKD/2F
+ 1y4bsWOObPEe4+QfIpYdYmd88/H1H1okIOZ3KjkCL5nK31HG7HZdXDQC7zL7hJyQ6tV9
+ fUa+jojDSPJg3F1/HEL6qSzIyjebdExAtqvObzPdqbAqtzxokxPUkrAkgQ5AHou2Wk44
+ zAA/wdy3eimWzMOa2AOtgp5D/W3WermYmGMavIYjMNDXLGBbMYqJPXrUkyBOkPOvz2YT
+ +FohmR/NSePlPnDhs5fAisr45zBy0uUGZUTdW/b/BLanwPchCvb2Em1IN64WjTFeOFXB
+ 0y8g==
+X-Gm-Message-State: AOJu0YydK4ayMk+hElbdKxQWNkjO7AAmCnR2IfbUyntdcHlvoq1INYyi
+ Zf8kGukBpmpXZFj4OGYFCNAmvO8BMRTsGL2WZ8JvPEzQ8HC9r/WTl33c9IqZnp9osQY+XXL3ILa
+ EU7fm2oo=
+X-Gm-Gg: ASbGnctDutWs2CMtRY+J4I/qKPNT4jDy98aW5eTTap9Bf9gH6NB3Gr5Q1BhXLfZKaTe
+ PydHhqZ7dcc04ysqi44fHwI3aLqUv+gYdR0Qk1KsclEX7Ph2XQ8NxYzIQ01Lu+dodMocHDH/i6w
+ Odd1tDzjstLBDgmQAUDth+yvxYzKBq4N/PB5O+2UAIn2tnxLDjqnZtRFrE8SU8ulntVUUFq/LnZ
+ oSsEiISTSx1orbC5lqP3odIq6NLH6toC8s2DWEoBOMwC+im8s1nlpHKiCwp8uz48cqbdK3lXkTV
+ /6tWJABOVz42bczGHQ7lp8ZwOh4G/KpZdTRgyT0FPSobE6S6C+vMotuutiAEsZjGEWDWlacAR32
+ KeWBoKAdNJX9+65EJuwXn0pRnVmMxU1W76bCb3JHfMCWcsobBcE/7agxb1KlcjbdbyT7tM+m9wl
+ mm9Q0k5C2eLttEmWII
+X-Google-Smtp-Source: AGHT+IGOSR7SQEavUtbZVB5F27AaM4NuCeiI3mV2ZNxceoW5bTxHQbJNorb4TfLQyJgg9m+Y84a5IQ==
+X-Received: by 2002:a05:6000:220b:b0:3ff:d5c5:6b01 with SMTP id
+ ffacd0b85a97d-429a7e59e35mr2723217f8f.19.1761653533605; 
+ Tue, 28 Oct 2025 05:12:13 -0700 (PDT)
 Received: from [10.240.88.227] ([212.144.248.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952b7b6fsm20102268f8f.1.2025.10.28.05.12.03
+ ffacd0b85a97d-429952d5985sm19994094f8f.25.2025.10.28.05.12.13
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 05:12:04 -0700 (PDT)
-Message-ID: <c29c844d-0ac2-444f-b5af-a2de52899d00@linaro.org>
-Date: Tue, 28 Oct 2025 13:12:02 +0100
+ Tue, 28 Oct 2025 05:12:13 -0700 (PDT)
+Message-ID: <17fa30ff-5837-4baf-8a1b-ce59c180b17c@linaro.org>
+Date: Tue, 28 Oct 2025 13:12:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/11] Devel scsi ncr710 patches
-To: deller@kernel.org, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fam Zheng <fam@euphon.net>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, deller@gmx.de
-References: <20251027211603.7141-1-deller@kernel.org>
+Subject: Re: [PULL 00/23] Misc HW patches for 2025-10-28
+To: qemu-devel@nongnu.org
+References: <20251028074901.22062-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251027211603.7141-1-deller@kernel.org>
+In-Reply-To: <20251028074901.22062-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,38 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/27/25 22:15, deller@kernel.org wrote:
-> From: Helge Deller<deller@gmx.de>
+On 10/28/25 08:48, Philippe Mathieu-Daudé wrote:
+> The following changes since commit 36076d24f04ea9dc3357c0fbe7bb14917375819c:
 > 
-> The following changes since commit 3bf5c57a11827d9fa706524d57ee3e5af68a429e:
-> 
->    Merge tag 'pull-tcg-20251014' ofhttps://gitlab.com/rth7680/qemu into staging (2025-10-14 10:25:05 -0700)
+>    Merge tag 'next-pr-pull-request' ofhttps://gitlab.com/berrange/qemu into staging (2025-10-25 10:42:55 +0200)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/hdeller/qemu-hppa.git tags/devel-scsi-ncr710-pull-request
+>    https://github.com/philmd/qemu.git tags/hw-misc-20251028
 > 
-> for you to fetch changes up to 95a3f921811ba3f817538580ee7b85336dd16e39:
+> for you to fetch changes up to 7dbe2d7df094aa8af2d8fcdf08fccce70b1ca5bc:
 > 
->    hw/hppa: Add 715 machine type including NCR710 SCSI (2025-10-27 22:13:22 +0100)
+>    hw/riscv: Widen OpenSBI dynamic info struct (2025-10-28 08:19:18 +0100)
 > 
 > ----------------------------------------------------------------
-> HP-PARISC 715 machine with NCR710 SCSI chip
+> Misc HW patches
 > 
-> This series adds a new emulation for a HP PA-RISC 715/64 model,
-> as descrived here:https://www.openpa.net/systems/hp-9000_715.html.
-> 
-> That machine has no PCI bus and instead uses a "LASI" chip which has built-in
-> NCR 53c710 SCSI and i82596 network chips. Compared to the other already
-> emulated machines B160L and C3700, this machine should be able to support older
-> operating systems like HP-UX 9 as well.
-> 
-> The QEMU project participated in the Google Summer of Code 2025 program by
-> "Implementing LASI Network Card and NCR 710 SCSI Controller Device Models", and
-> Soumyajyotii Ssarkar stepped up to develop those drivers.
-> 
-> This patch series includes the code for the NCR710 SCSI controller,
-> the network code will follow in later patch series.
+> Various fixes and cleanups:
+> - Set FPCR exception flag bits for HPPA non-trapped exceptions
+> - ConvertVirtIONet::vlans from pointer to array
+>    and remove VMSTATE_BUFFER_POINTER_UNSAFE()
+> - Remove redundant QOM typedef when OBJECT_DECLARE_SIMPLE_TYPE() is used
+> - Have various QDev / SysBus helpers take a const device argument
+> - Improve errors when loaders parse images
+> - RemoveIntelIOMMUState::dma_translation leftover
+> - Remove most target_[u]long uses in hw/riscv/
+> - Fix DS1225Y MemoryRegion owner
+> - Simplification refactors on Raven PCI Host Bridge
+> ----------------------------------------------------------------
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
