@@ -4,98 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03760CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C11CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjIB-0005HV-7W; Tue, 28 Oct 2025 08:59:15 -0400
+	id 1vDjIs-0005rI-Jy; Tue, 28 Oct 2025 08:59:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDjI9-0005HM-CR
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:59:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vDjIq-0005od-8s; Tue, 28 Oct 2025 08:59:56 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDjI5-000823-A4
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:59:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761656345;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=D3d+zpKdqGoIvBJyEPFNCgv2/F7htFbtupbv1EB8cpo=;
- b=DW/DLtIwuO4XSZ8BuC2xECekRyjB0WE4MoESPTsFx1QmPlKKPuz8EEpsgzAv8Fg7ABPRHE
- F7ueJc1ky9Raypy2rCc5L3F9f82rHcMP9TnTIgNuUoBNcCo1TlMQLZX48HmgCb3rIYhc9X
- kMFjOjoj2yEJvW9si2HsCpyGuhDTunc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-CEC5r9r_Peeon6xexZFmGw-1; Tue, 28 Oct 2025 08:59:03 -0400
-X-MC-Unique: CEC5r9r_Peeon6xexZFmGw-1
-X-Mimecast-MFC-AGG-ID: CEC5r9r_Peeon6xexZFmGw_1761656343
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-42700099ff5so6200156f8f.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:59:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761656343; x=1762261143;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=D3d+zpKdqGoIvBJyEPFNCgv2/F7htFbtupbv1EB8cpo=;
- b=Y4FhNtUp1x/+r1peN5EcvLuJ/Z048X4/Nt7D4r+LZR6U6+iv29mCjxXhIDUQ3b1obm
- UO+zItfSSrq8RwKydfXFCDwYaYWS6tkA9mI0TiIOV73PtQnca8QqdyrOOvtnlycuI+Tu
- aGvkYAbnV5cZRaOHxm8d6d2i++nYETG47hD+j0W+G5q/DH6jivtajhajp/29ECDo+4pS
- a7Ugku3Z22T3kq6eb9IjV0trXUGdzL5MPUE1Q69neVacqZreeGLhZQjLBQUxIOq6/4Dg
- JoWhEMkIKnVEE/mZF40IUmTjfm9Y4RosHOBjrOOcJTvvi7S7NarFPAw+ztmqH4WoKRNv
- wP8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7inWrceg4AfJY2b/7fJsl43vzvaCuE345tfp3De6KBF93GWjngZAA8+/Qir8hv6hFXzoPXrkloMF7@nongnu.org
-X-Gm-Message-State: AOJu0YyjXTrbLECgoihE62Af+WmckjlPJOSoAGBpnxkW+44mdgXWNe2+
- aIqZPyVlklOU5UpH0nMyhuLcRYvy9rheqIWIxIvv3GP+xI4+z51NDyMi6OmPGpers/qs4yYVI5n
- DQVPrQ7uT2o5nO1S1Ja85lsFGjxRTnoomgf/yRwrdW+WWpzQWG+S9NNIp1FiE4L89O1zmv92a75
- im14ogG+axo4PMx51osYasychU7UnAPVc=
-X-Gm-Gg: ASbGncv57C2tKA8kEyY7TI1Q7PDJkurDUoL7uByLZnNkX2jUbsn0J5uOOF/md1WtJP2
- 4+sf9Yr3LY+ieL+0ujHkUBiLlW1+iQS+xa4YuTOot9XqjGk9lli0mapiOSnG25CtFLKkc6qlUi4
- MJYS6IEBmW5toa57gRKhb80mjWpNkncd0A4JzJHyaHWUdOd2DA7agJ05JvLFDGXJhpSnIXNdGH8
- CtWiF/vtOU2vj/Ha6yLA1+3fuI0WwqNA7VmPG4p13PPIwz40irBHez69/2e
-X-Received: by 2002:a05:6000:400b:b0:429:9561:910 with SMTP id
- ffacd0b85a97d-429a7e35ca0mr2696378f8f.10.1761656342717; 
- Tue, 28 Oct 2025 05:59:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHq1ZwtORnUD2Ond629AqWd8dHl2xUJuYKtuODBa8ycE6MXkW508oXVB3TnjTHkyNtvU2UfdjfFJG8zvsb6TB0=
-X-Received: by 2002:a05:6000:400b:b0:429:9561:910 with SMTP id
- ffacd0b85a97d-429a7e35ca0mr2696358f8f.10.1761656342290; Tue, 28 Oct 2025
- 05:59:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vDjIh-00085c-Uc; Tue, 28 Oct 2025 08:59:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DA0115972E5;
+ Tue, 28 Oct 2025 13:59:40 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 2ABzisIEmF5J; Tue, 28 Oct 2025 13:59:38 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 81D905972E3; Tue, 28 Oct 2025 13:59:38 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7FD025972E7;
+ Tue, 28 Oct 2025 13:59:38 +0100 (CET)
+Date: Tue, 28 Oct 2025 13:59:38 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
+In-Reply-To: <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
+Message-ID: <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
+References: <cover.1761346145.git.balaton@eik.bme.hu>
+ <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
+ <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
+ <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
+ <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
 MIME-Version: 1.0
-References: <20251022101420.36059-1-armbru@redhat.com>
- <20251022101420.36059-3-armbru@redhat.com>
- <58177628-7349-4450-a4c0-58bd44b39586@redhat.com>
- <87qzuniadg.fsf@pond.sub.org>
- <CAFEAcA9bpZAKgRpU=38-eMiSY=4dKdT8uQNFW0Uuk9y_Dya_0A@mail.gmail.com>
-In-Reply-To: <CAFEAcA9bpZAKgRpU=38-eMiSY=4dKdT8uQNFW0Uuk9y_Dya_0A@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 28 Oct 2025 13:58:42 +0100
-X-Gm-Features: AWmQ_blVMZTCgEuFLsUTdM-wSw-8-jLyLDx-y7_iLClXDtBxfDFgybOqCl-xuAA
-Message-ID: <CABgObfb37Ept1DoTbeziOOpR+FpuW3KiwDKr4iSOYvg0_rM5gA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] qdev: Fix "info qtree" to show links
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- marcandre.lureau@redhat.com, 
- berrange@redhat.com, eduardo@habkost.net, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-174818736-1761656378=:96783"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,31 +71,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 12:04=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-174818736-1761656378=:96783
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 28 Oct 2025, Philippe Mathieu-Daudé wrote:
+> On 27/10/25 20:47, BALATON Zoltan wrote:
+>> On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
+>>> On 25/10/25 01:31, BALATON Zoltan wrote:
+>>>> These memory windows are a result of the address decoding in the
+>>>> Articia S north bridge so better model it there and not in board code.
+>>>> 
+>>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>> ---
+>>>>   hw/pci-host/articia.c | 15 ++++++++++++++-
+>>>>   hw/ppc/amigaone.c     | 28 +++++-----------------------
+>>>>   hw/ppc/pegasos2.c     | 13 -------------
+>>>>   3 files changed, 19 insertions(+), 37 deletions(-)
+>>> 
+>>> 
+>>>> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, Error 
+>>>> **errp)
+>>>>   {
+>>>>       ArticiaState *s = ARTICIA(dev);
+>>>>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
+>>>> +    MemoryRegion *mr;
+>>>>       PCIDevice *pdev;
+>>>>         bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
+>>>> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState *dev, Error 
+>>>> **errp)
+>>>>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
+>>>>                             TYPE_ARTICIA, 0x1000000);
+>>>>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
+>>>> +    mr = g_new(MemoryRegion, 1);
+>>> 
+>>> Won't Coverity or other analysis tools complain about the leak?
+>>> (this is why we usually keep a reference in the device state, here
+>>> ArticiaState). Otherwise:
+>> 
+>> According to https://www.qemu.org/docs/master/devel/memory.html#region- 
+>> lifecycle
+>> there should be no leak and keeping a reference should not be necessary as 
+>> the lifetime is managed by attaching it to the owner object so no need to 
+>> keep a reference when it's not needed otherwise. Not littering the state 
+>> struct with unneded references makes it easier to comprehend so I'd only 
+>> keep things there that are necessary.
 >
-> On Tue, 28 Oct 2025 at 10:34, Markus Armbruster <armbru@redhat.com> wrote=
-:
-> > The problem: PCI addresses are integers in C and in QOM.  Makes sense.
-> > But "info qtree" has always displayed PCI addresses in the form DEV.FN,
-> > which also makes sense.
-> >
-> > The pre-QOM solution: qdev property method .get() returns the integer,
-> > .print() formats it for humans.  "info qtree" used the latter.
-> >
-> > Aside: "format for humans" may well be more widely applicable, if we
-> > care.
->
-> Relatedly, there are various places where we define a "string" QOM
-> property and then format that into an underlying enum
+> IIUC this doc is about what happens within the allocated MemoryRegion,
+> regardless of where it is allocated.
 
-That is intended, a QOM property type can be any QAPI type (in
-addition to link<class> and child<class>) and therefore it can be the
-name of an enum.
+That doc explicitely says:
 
-The PCI address case was done like this (I imagine) to avoid exposing
-it as a string.
+"Destruction of a memory region happens automatically when the owner 
+object dies. When there are multiple memory regions under the same owner 
+object, the memory API will guarantee all memory regions will be properly 
+detached and finalized one by one. The order in which memory regions will 
+be finalized is not guaranteed."
 
-Paolo
+(and these pci-host objects are created once at machine init and never die 
+so the question seems quite theoretical). I'd like to keep object state 
+simple and not keep around references in it that nothing uses and should 
+be managed automatically. I'd only add fields to the state struct that 
+other methods need.
 
+Regards,
+BALATON Zoltan
+--3866299591-174818736-1761656378=:96783--
 
