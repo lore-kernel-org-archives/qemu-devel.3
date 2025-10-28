@@ -4,203 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41275CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 02:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B8FCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 02:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDZ8u-0007VX-5G; Mon, 27 Oct 2025 22:09:00 -0400
+	id 1vDZDM-0008SA-68; Mon, 27 Oct 2025 22:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vDZ8r-0007VK-NG
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:08:57 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1vDZDK-0008Rn-Un
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:13:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vDZ8m-0001e2-Jk
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:08:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761617332; x=1793153332;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=gp/u7v/AS9AvdiZFLJo/wOP44ixu1SvR7JhPCiQY1KM=;
- b=NORiVPr/qP0n0tIH6nVKJeZnsSKRaTG2PZP65OEf+IcZAA/3QJO6kZoh
- 93McDMdcxJytri+chah3sQlHPr6EpXOzTKtjJ2krfHRt/NLdQZsJOVLlH
- RkeAB48b3w+c8tjXnVC0o31uWkzHkwLngvoWa09U94pmxVah2ljj/OGWf
- RTtajmjDUGei4sEb562c1bbnIq1N3ldSp7VGx+frLOZTJaDxCUK+5Pus3
- L6b1RaBusPOXH3WEPl6IyxpB3Jbc+grijdM6z1RCmKz1sldsUjLTy3d+p
- SL/N27C32tJqMvPo53Tm5rcIPjtm7L+qj2m1ck8LVu9hhndlDVt28Gnem w==;
-X-CSE-ConnectionGUID: cljsNEC0SBGQIq/k5FgybA==
-X-CSE-MsgGUID: FBj/mgBRT/28mtOn2CBBBw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63607108"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="63607108"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2025 19:05:03 -0700
-X-CSE-ConnectionGUID: MFdc/xCDS7C07r0H5zzb4g==
-X-CSE-MsgGUID: 4z9arx12Sbq3wYOKYgCW1w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,260,1754982000"; d="scan'208";a="189266529"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2025 19:05:02 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 27 Oct 2025 19:05:01 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Mon, 27 Oct 2025 19:05:01 -0700
-Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.59) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 27 Oct 2025 19:05:01 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TVsm2L4pI4UGqDETMydjFVGkDDBfInIIUfWesR/XYU7CRHLuHZEoXk+53f8vYWNFkkRDXQXrarzsHwfxDKcy+TYZqluuoX9VcDrqgUwXf/5+LOL3nIbqAtgqJvzyjofrpXma12bL5UWCxe7JOfGRgVvQmcMQTqR8/6CIghrW+RDQ4+JqLv3+85cm66Ngqgwlglyw+sN25z4kMnerfAKWEbgF8OKP0l1yHf1nDSwftPRJ/Eji1I/96tJJimFeg/EdViqCwDVY4MQaLQ8yhgiAuLSKVz+gURQhM7nOQp+O5N9DPORFFuRNdOvT0TZwOKXxGn62GhgiV/BhpAy0Apvuhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FnAjDeh1gCX+205j4yU4Dz2aaxYLLRNmdtYboWqYvmI=;
- b=FuPHpgYqDBcW9Tcr8+7Be3kFeZu/ax7S7TXqP1YY80BcIxWPtcSfuaDyUSFagj+PPbQzTElLCJSTWg0bXTxn1OUvcb7Jp3MV7oqdt0IvCR6LnrdUbE4yIVkPngqWvcvoEbBvde9EI07PLALg+Ip/eCKTalzUq3QW9tm/6bg/yGhUVtPG1w2q3xaLl3W2VU6jBpYhWNXOPERC4usgsvXIc70DU/oJErv2goQbCjtVW/AtiQmWyaToBZKwfqfwuZDunSBpkyB17NP0t4m3WMSIKElI0lgy+SUFFyjIEo9LNrrvBxv8dI/df+jUvYV89MhKRtYV4vqwLN3FfXWSGQXO7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- IA3PR11MB9158.namprd11.prod.outlook.com (2603:10b6:208:57d::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Tue, 28 Oct
- 2025 02:04:59 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.9253.017; Tue, 28 Oct 2025
- 02:04:59 +0000
-Message-ID: <bb8609f2-a17b-42ff-9784-379be0b77502@intel.com>
-Date: Tue, 28 Oct 2025 10:04:49 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/20] i386/cpu: Add CET support in CR4
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Chao Gao
- <chao.gao@intel.com>, John Allen <john.allen@amd.com>, Babu Moger
- <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>, Dapeng Mi
- <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>, Xiaoyao Li
- <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>
-References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-13-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-In-Reply-To: <20251024065632.1448606-13-zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: KU1PR03CA0027.apcprd03.prod.outlook.com
- (2603:1096:802:19::15) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1vDZDH-00025b-Ok
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:13:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761617597;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLYe9AOWl7pPQRY2B72dm5ypE/vO29Drc46QIp7wmwE=;
+ b=AOzaVmVhUbQl46kJnYmLxseBJXWEysHq2LLJcO9Cl8mj+5qQyX+9GXvcCZASXfqWc+cXWn
+ JxaF/BzEYAE0SVSlyv1Nzore44LiWicUEXWZNliB0tP/Rbw4CRi+M+dIlBW8LMzDj71XyO
+ 8LmuYbUg9mXCp4WQq8e2d6HBobAhLDM=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-EVe9aJR_OnSAo6uLMVwpsw-1; Mon, 27 Oct 2025 22:13:15 -0400
+X-MC-Unique: EVe9aJR_OnSAo6uLMVwpsw-1
+X-Mimecast-MFC-AGG-ID: EVe9aJR_OnSAo6uLMVwpsw_1761617595
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8904a9e94ebso1135195285a.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 19:13:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761617595; x=1762222395;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZLYe9AOWl7pPQRY2B72dm5ypE/vO29Drc46QIp7wmwE=;
+ b=N2LnHer5dcFILQDWs7LEC79yjvJyhNCTq6eMqrc8Fr8/j3LdPToMV2w6rRB89fuMiP
+ a0JZOyyIqooS0YyOt92Fx0Dj9RkLQEiT9A4X73QQrwomKSPqbu+GATXi48JoiZhg4sed
+ vL7PS5r7rD2L3jesUJ20hKo4VCSm9RwzXVudHsJGXSuiWiNYAWojrVogcqVbvaCc6tN7
+ yMNreU1q1hp3nd3Q0i/atopoGKdFeOEidLvuNvf1FGCwcab6XrXL37z+nmtVUr4/9QjS
+ gZI/bHoCcktS0oGLqigLSHVQDjvgOpV5QOshjatu4XXNVHK7f8fSBfPWKUmJEK0cC4vl
+ e8Dg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCyOHFYtZ+vFWupIr2/hkm6DcHd72chQGSXe02IbsaFOkdf6SKX/M1MGljoaIbaEDJQvcQvrHBlihb@nongnu.org
+X-Gm-Message-State: AOJu0YxjiUvZdGA4nSOwzm7YgY5gk9JRY5nwLoCP/19R4/fuxduzExQv
+ Q/xZQCWeBubwbVxGlWnf2sWeffMhf35BhaffEkyYHYcJs/W+Nqn+B7ACPAh+KPAcbAWPDEJSx61
+ 9UTq9hT6PC3OYpHCuL2V9DJWncqvh5Nm3/LRsN7uI9MP5EhxwJv5vJvzr
+X-Gm-Gg: ASbGncsBq/1ru+L1uYekuM9kV4ObYS2WpqThz5n7ShN+eZMhW/Juz2LOuAY7RzpMmgL
+ idLL6f53/4ZC91ubxDNYBnkPa6dJk2aDx0Gi0emQ7iUT8ntWXmeMjOnfcFua7j3lkli5AIyHqy8
+ UjoLVTCb7u/3+RrCLIBdDyE9nOIBEZqkxoRPm6DBotWS6CdrdIxv8Awzf/7ORe5EF4XSDuaZPR0
+ mOSzWK+1ekhZ25Zt+Az/NnWs5XmHZgTjztQa7YLHz/+HYh5MvBQfbQqbe4AyqoyGq2CspojZuU8
+ xGtnfOzy+/j60b93fjzlQj7o2K29fpZkX+/r6EogV9VH2CsZGvUTrg1vfR2+y1zqX2oa2m831GU
+ =
+X-Received: by 2002:a05:620a:450f:b0:892:7dd2:9f14 with SMTP id
+ af79cd13be357-8a6f47d049cmr275747685a.25.1761617594984; 
+ Mon, 27 Oct 2025 19:13:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHktz2vJHRa9etpRmyqikOSZkSMHecWN+F5LxZn+rGi5z6+eGx2o9R/xf7px/SUvkxnkbmv0w==
+X-Received: by 2002:a05:620a:450f:b0:892:7dd2:9f14 with SMTP id
+ af79cd13be357-8a6f47d049cmr275745785a.25.1761617594613; 
+ Mon, 27 Oct 2025 19:13:14 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-89f2421fc4csm717517185a.10.2025.10.27.19.13.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Oct 2025 19:13:14 -0700 (PDT)
+Message-ID: <5e897607-2c33-46f2-b2ab-579a2f4b6385@redhat.com>
+Date: Mon, 27 Oct 2025 22:13:11 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|IA3PR11MB9158:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9d48527e-6d5f-4523-73d7-08de15c665c7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VlBiM0dtTlVvMUMzOGRBcU5IVTlGMWxrLzNBb1dhaC9zS2JWNFVkN0lqak8x?=
- =?utf-8?B?UzJhcXhicDEyUDZMT3pkSnl3UGF5RzIzMGxwbmlROTVTV2RqZitGNGMzckgy?=
- =?utf-8?B?bk5RcUlGZm1ubko5K3Vnd1NHS29qdHdCYS93bWFIQ29QbnNPT0QxZVFVSk9u?=
- =?utf-8?B?dUlqek1icmNVMXVGZXNXV0d4V1BlVTRGWWdIUHlHeXB0TVBwbTd2blNiOWNC?=
- =?utf-8?B?RHlRVVFaRHhTS2NKdFhUbVNhejdLTVIrUlcwcWJRT25raXN0NldEcE1yUnp6?=
- =?utf-8?B?RHBjK0FkVjgzRU54OGRodTNCT0Nsdk9uMStEVDBYdUVTSENMcWFKcVpSNFZV?=
- =?utf-8?B?TDBuNjRIcHVlckpIaVkzdnVmb3F1dmd5eWQvK1BOVGRXMG9uYnd5N2lic21z?=
- =?utf-8?B?bzJkT3FmTEhsOTJTMzIwMXdQRXJ4L3VnWDFmb2pCTXFHeU5BdXVDQXpnUENR?=
- =?utf-8?B?UGxnWnA2eGF0azcvb3Vjd3BIQlNXSmp5N2kzMGxtM0NBeXZ4eTc5aEFLYTV2?=
- =?utf-8?B?aXpvZytjcGo2UDd1ZFpRSDhqb3k1K1dvSmpHdWdqcmdHOVRSdWM2VHVwdlZI?=
- =?utf-8?B?NmlYblg0aFZmNFJJNUZWckRyNTdMWkU5d2JhOEp4VTBBUHl5RkdnV3ZEeWdU?=
- =?utf-8?B?Rk5wdnpnQzZ1T2Y0NVpndFlacEoxYyt3SkxNbGliYmlGZ29JSzZ0OFF3NS9i?=
- =?utf-8?B?TndieDBvbTd2eTNkZG9YNWJSTFA1UUtqVWg3NXZEQ2Q2b0RtRTZIaG9wV0VK?=
- =?utf-8?B?a3JLRXJQT1QzeGlxcHNicUNWRXZzbVkxTzM4NkRjS1d3dTU3TnVHa1Y3elJN?=
- =?utf-8?B?Szd0NXN0R2xOTFhYWFZSb01YdTBENmtkUTdUNzBEOHlLeTlZZXlQWnllMDFN?=
- =?utf-8?B?bldjMzJYMi9CSUljbVI5eEVJaXExQTZqaWxhN2NGYzIzL0Y1UXc0MzdlVTBn?=
- =?utf-8?B?MmRHTGtUUVBoQ1dUb1R3blJ6K3Y4eFVYRjM3TkRUYTZrc2ZiaWx3ZmxyOStt?=
- =?utf-8?B?Tlp4NkJBR1QvNGdGemF4d2ExZkpjVTBGTUJLbi9ZOFZkYTBCb0NQaFdwMGRD?=
- =?utf-8?B?SnNOdDg1a3FIL0pBczV6b0FOODVqb0hzRVUvUnVQcXl1MmViaHRDb3R6dDIz?=
- =?utf-8?B?TmtUSng3QTRodzVxb1AyUTBIUEhpZ25VTGRvQ3R2T3NadmswcW5WTDRrUEpU?=
- =?utf-8?B?YVRBcmVCUHJONnM3ZlF1czhib2N2VHI1dllqK3pSR0RJWEZKVnRQOGVTSVNi?=
- =?utf-8?B?d3paelhUNlVOOG5RRjQ5Z25paHg5VmYxekE5RTEwL01UTjFyS1hRMks1bHN1?=
- =?utf-8?B?bzU4Z1FnYmFza1YxWDh4WktnckFWa1AwOHBzLytCUUx2VWFFWUp2Z0FyR0pG?=
- =?utf-8?B?OEZvdnQveCt6M1F1MmJXOE9JOFJHUC9VWncrV0hpdXYyTEZFcE80cW5pWVVR?=
- =?utf-8?B?NTdjUFhVbDFSYVpWWW16SVJQNVBKdXQ1TkhaVGdVL3VpRE94ZW8ya0ZzNkJO?=
- =?utf-8?B?Z1pWZTgwYjY2MkQ1cUszQUV2amlURjN0bEtsQUI3YWNIemVrN3l2dEduMllt?=
- =?utf-8?B?NGNHc1BMUzQyMC9BY1AzaGdscWIyM2lNSERJcjd4WUxCNmI2SS9xSjUzcUoy?=
- =?utf-8?B?cmI1ZExjNDBIaXd6MWZ5Q2czVmQ1ZlZaZXNYTm45NWtSL3N6YjZJaUFnWGM1?=
- =?utf-8?B?emVsRkoveFg4VXAzaFptaW9KS09qTlhXT0hwZWNFYWs1bnFpdG5EN1lUU3lN?=
- =?utf-8?B?NUJ4RWo4eG1YWjBvTE1JbU9kVDgxaDM1L2p4TVoyK2ZQaVhIZDl2am9vbndu?=
- =?utf-8?B?M3ZYQVcvZnFEMU1KN2JuMGRia21PZzd3c0dEallkOUljY2o5N3lZdzhXTTE4?=
- =?utf-8?B?MHpYVWU5V2ZIclArYlBYNWlXTkNhRkE0bXR4aDJZRjlkYno0S3UyMC9ySlJX?=
- =?utf-8?Q?jqDESnSSoE8lE9VFsL33tVkE/r2+m2nb?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MWhkL21UcCtrLzR3bkNkVDlWN2kya0padnYwUWVvWVFrTWIwcEE0SmhaRmNu?=
- =?utf-8?B?OUJ3QUFraUxjRkt4Z1EzbEhDK0pXbms1SW5YY0ZTS1JCS2NEVk5hdnViMHJO?=
- =?utf-8?B?ZDJ3Q1NvNFpCY3lBbytDdXZOckN5RVJjMUlhZ3V0Q3pzbGxra2wyb3pyS2tV?=
- =?utf-8?B?ekZWZ3pWS2NlZjFQYjJKNUJFSnZtYW91WjNOS3h4d1lCOGsyRVA0cTI1c0My?=
- =?utf-8?B?QWJ0Z0lSbnlkUEpFdXZlbGtVRkdSSFFQNjNZeStFMGtTZHZzRktRTjJUUVpI?=
- =?utf-8?B?SGhyQlR4OTRwL0tDd0FzYnMrbGRlaEhzVU5ITE5nRUk3aDBJQVhlc3FSUFk5?=
- =?utf-8?B?bmhmMmpHTlJGSVRSN3o1Y0luNTBqT2ttN0RvWmgxaHI5WkRIZ0NzOS81RFMv?=
- =?utf-8?B?YlhraWJFWkxWTzhRSDVBeHFvL2JxeU1sbWd0VEk0SXdYcUhWM0hBY3pNWXdn?=
- =?utf-8?B?N2UzRkh5S3h1eGJSM3ZFYittSVdjbmhkKzE0dnJBU1E1ZXkxTnlHRE9Ycis1?=
- =?utf-8?B?Q1N3cVZSQ0lzNHg0NzVXMHNpbm9sTjBzY25pWXMra1ZITCthQXo1emlYMEdF?=
- =?utf-8?B?ZHFLMXF6eUpTT1I2L3NjalF0QmVTajQzL0JxUnZkZTZmZm95RzgvSmxveWZM?=
- =?utf-8?B?N2ZtWHdOUmdZSHovck15c3VQOXY1REduMmc2K1JjdXYvdVVHdFp3SVN0ZjZ1?=
- =?utf-8?B?anprRllITlNKNTJLdTRiRmtwQnBoa0o0QWZBY29XbzNqVjZFaUVFN0hSdTVY?=
- =?utf-8?B?WUNVVy9sc3JWZ3RjdDBzcmRjREtqZ2VoVDVWUUFyQjVGMkNJVGRBRkZnVjl6?=
- =?utf-8?B?eVVEeWUxRXJOaWVhYVovSy81TWdHR2ZuNW5ybE56Q3prR3pCanJMcWpUT3RP?=
- =?utf-8?B?VGNUbXdyVVVEckxCQ0tmVUZkbEwrSkFSOHRDUThGSDZLc3h4K3V4T0NocUtp?=
- =?utf-8?B?V2tpMkJET3RqbHlxL3h3KzZnYkM0bVNwampaU3RCUWNmeUhJZnRmT3hHVXNk?=
- =?utf-8?B?d1lRdTRKWElJM1RLdmZaZHkxZWp1aUUycDNHS2ZaTVVQdVd5YWhFWndZdnNp?=
- =?utf-8?B?Wk5JZS9DQ2JJUGhLamUxcVBWQUVYSDl3amQvSnQ3TjhLMWZrOW5sd1BhOWhO?=
- =?utf-8?B?VWduRVZad0xkb2lESHpzTDhYTUdheUJ1RWNaREw2Q214QlFPaml5R3lydjdh?=
- =?utf-8?B?bGlMeXk5cDdyc01tR2hyTGdtZDdYOWFVMDh6LzB6RDYwRGhoeXRRanFLQjZB?=
- =?utf-8?B?RFFVOFZQOStSQlpxaExrL1BLWmdteUdrc1VpMzNCZDlFTFErSFI3aWd0cFM0?=
- =?utf-8?B?ZmEwK0Qzc0JjV0M2bkVzanJpVzd6WlhhOEFUTlhEM2hYRFUySlA0ZUpCdExL?=
- =?utf-8?B?akp6RUIvMWNUY0l4bmtHSng4c1Vvd1hOeXp5Snc2NFd5R3ZkVUp3SU9PR2Nr?=
- =?utf-8?B?RXN4SWhacy85bXhocSsyc3gzOEVnWGNFekdoQzFBZ2RZZ3lFamVCMnk5c2hQ?=
- =?utf-8?B?K3U2a1BjaDdCZFo0ZkNsNTNoVFk2aFBhaGlhUFI3Q2F3c3g3c1RSWUZiVnVx?=
- =?utf-8?B?VTBsQkFUUDFYWWhBSEJBaC9wZmxXWFp5Zk52L0p5clZ4bWlmdTYwcDBlQkJm?=
- =?utf-8?B?MFFFaHh0QmJWV3VQVFJ1VTBobXVwc2pNSkYrYnJidGtON2RkRldFTHQ5a2pZ?=
- =?utf-8?B?WW9qSmUrdGFRR2RmUHY2aGV6Z2xLcVF1OG9zUUUxYmkwRGN6MjdKY3hEbldj?=
- =?utf-8?B?MjA5NXU4V3Y1TG81Z2hvSW5CbnhEV1hMaHZCY0VmQmhpTFhKN0hYWXA4aVh2?=
- =?utf-8?B?Vy9oSnMwbXUxY0R1YXdUNTNnU3REck5DR012Uk5ROUNGaVFMdVpOTXlYcUZQ?=
- =?utf-8?B?cGgxMFZTbFpRb3NVcWJ3MFAwam1hMmtoZkQrdkp2SjNLUmV0anEyWTRWemRn?=
- =?utf-8?B?NkJ6ZGpzSVV5d1k2SndWQjgyT0tZakc1SHBnbDRONkhkZVh2eG54OTFtMzJk?=
- =?utf-8?B?VHhacHMvK3BVWm9iU24xVDkyR3A4V1lmVElGWjN5cWpuK2piSHNxWkhUaUpt?=
- =?utf-8?B?Z2Fxb2lNWkNqVGtZRE85dXVMRGk3emYwdGZOTnFhaUpmU2Fmb25zR0I4dzN2?=
- =?utf-8?B?dDZqMmFnVWI2bzJHdGFUeWlicU92cExiZHlrYXJla2l2bm9PTXI0aEw0VERJ?=
- =?utf-8?B?ZlE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d48527e-6d5f-4523-73d7-08de15c665c7
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2025 02:04:59.4403 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LAZq53IRdfYHUMSIB6OKBCjtIf2PgDKsb0cVdrW8ZBzHgxeXQin0Bj9gPN7WPYhE2jek18MqSMAoVlOCPqZSTg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR11MB9158
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs/system/arm/virt: Document user-creatable SMMUv3
+Content-Language: en-US
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, nicolinc@nvidia.com,
+ nathanc@nvidia.com, mochs@nvidia.com, jonathan.cameron@huawei.com
+References: <20251024084350.252702-1-skolothumtho@nvidia.com>
+ <CAFEAcA8SAQO0frmN-rK6zp_-fEGXLefAXAxHmT=LASqEL-UU5g@mail.gmail.com>
+ <c21641fd-1a35-4b47-a361-bfc2daf7dbd7@redhat.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <c21641fd-1a35-4b47-a361-bfc2daf7dbd7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -216,38 +117,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/24/2025 2:56 PM, Zhao Liu wrote:
-> CR4.CET bit (bit 23) is as master enable for CET.
-> Check and adjust CR4.CET bit based on CET CPUIDs.
+On 10/27/25 10:13 AM, Eric Auger wrote:
 > 
-> Tested-by: Farrah Chen <farrah.chen@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  target/i386/cpu.h    |  7 ++++++-
->  target/i386/helper.c | 12 ++++++++++++
->  2 files changed, 18 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 7584cddb5917..86fbfd5e4023 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -257,6 +257,7 @@ typedef enum X86Seg {
->  #define CR4_SMEP_MASK   (1U << 20)
->  #define CR4_SMAP_MASK   (1U << 21)
->  #define CR4_PKE_MASK   (1U << 22)
-> +#define CR4_CET_MASK   (1U << 23)
->  #define CR4_PKS_MASK   (1U << 24)
->  #define CR4_LAM_SUP_MASK (1U << 28)
->  
-> @@ -274,7 +275,7 @@ typedef enum X86Seg {
->                  | CR4_LA57_MASK \
->                  | CR4_FSGSBASE_MASK | CR4_PCIDE_MASK | CR4_OSXSAVE_MASK \
->                  | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK \
-> -                | CR4_LAM_SUP_MASK | CR4_FRED_MASK))
-> +                | CR4_LAM_SUP_MASK | CR4_FRED_MASK | CR4_CET_MASK))
-
-Maybe put CR4_CET_MASK between PKE and PKS to keep it in order.
+> On 10/27/25 12:27 PM, Peter Maydell wrote:
+>> On Fri, 24 Oct 2025 at 09:46, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+>>> The virt machine now supports creating multiple SMMUv3 instances, each
+>>> associated with a separate PCIe root complex.
+>>>
+>>> Update the documentation with an example.
+>>>
+>>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>> Thanks. I have some minor word-smithing tweaks, but I'll just
+>> apply them to this patch in target-arm.next if you're OK with
+>> that:
+>>
+>>
+>> --- a/docs/system/arm/virt.rst
+>> +++ b/docs/system/arm/virt.rst
+>> @@ -224,23 +224,24 @@ SMMU configuration
+>>   """"""""""""""""""
+>>
+>>   Machine-wide SMMUv3 IOMMU
+>> -  See the machine-specific ``iommu`` option above. This allows specifying
+>> -  a single, machine-wide SMMUv3 instance that applies to all devices in
+>> -  the PCIe topology.
+>> +  Setting the machine-specific option ``iommu=smmuv3`` causes QEMU to
+>> +  create a single, machine-wide SMMUv3 instance that applies to all
+>> +  devices in the PCIe topology.
+>>
+>>     For information about selectively bypassing devices, refer to
+>>     ``docs/bypass-iommu.txt``.
+>>
+>>   User-creatable SMMUv3 devices
+>> -  Allows creating multiple user-defined SMMUv3 devices, each associated
+>> -  with a separate PCIe root complex. This is only permitted if the
+>> -  machine-wide SMMUv3 (``iommu=smmuv3``) option is not used.
+>> +  You can use the ``-device arm-smmuv3`` option to create multiple
+>> +  user-defined SMMUv3 devices, each associated with a separate PCIe
+>> +  root complex. This is only permitted if the machine-wide SMMUv3
+>> +  (``iommu=smmuv3``) option is not used. Each ``arm-smmuv3`` device
+>> +  uses the ``primary-bus`` sub-option to specify which PCIe root
+>> +  complex it is associated with.
+>>
+>>     This model is useful when you want to mirror a host configuration where
+>>     each NUMA node typically has its own SMMU, allowing the VM topology to
+>> -  align more closely with the host’s hardware layout. Supporting multiple
+>> -  SMMUv3 instances is also a prerequisite for future accelerated SMMUv3
+>> -  support.
+>> +  align more closely with the host’s hardware layout.
+>>
+>>     Example::
+>>
+>>
+>>
+>>
+>> (I deleted the sentence about SMMU acceleration because that
+>> isn't upstream yet. When it lands then we can update the
+>> docs if the version of it that lands can't support acceleration
+>> of a single machine-wide accelerator.)
+>>
+>> thanks
+>> -- PMM
+>>
+> Looks good to me as well
+> 
+> Fell free to add my R-b
+> 
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> 
+> Thanks!
+> 
+> Eric
+> 
++1; looks good; can add my r-b if another is desired/needed.
+- Don
+> 
+> 
+> 
 
 
