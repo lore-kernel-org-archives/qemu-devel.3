@@ -4,93 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1043ECCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 05:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0895CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 05:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDbpb-0005Fk-UK; Tue, 28 Oct 2025 01:01:15 -0400
+	id 1vDbwp-0006Oz-KK; Tue, 28 Oct 2025 01:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDbpa-0005FF-48
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:01:14 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDbpX-0005D3-LR
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:01:13 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4771b03267bso547715e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 22:01:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761627669; x=1762232469; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AoLEj6A/DGBWwzlmTYiiD3gq3iqwt5rV7Bg4bmyO1Nc=;
- b=uLKRlkyZaL+JKg9w65ovvhhhB5uNZeD6WNctookCyUWng3IieF+2kDeEVY+rIKSKhD
- 19OLHM1kicjQ/KBZCgunaDLY953x6O4FfWRLaPy20HZQxqnaeBlo0n08jzJjtO5CN9Ob
- xZGBoMR1/RbweK58TEQGgNNDy+yhAD5AeiHH+j+8osmbeACiVHKB/hmTEgRgoOo5RjEe
- CxzFdlUMPqRSsuyYoqrfizDYzvp66d3JBm0/t0smfv9ce5LhQR8S23vsklDVTQsp/jqm
- dEvrtFpM3yEX/k6PMxKwMMdXrB3e0fQL2DIsnpC0HyATPRVaQPUlTj00I2DQBw2Lhkyt
- sEWw==
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1vDbwn-0006OW-30
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:08:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1vDbwi-0005gG-Aa
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:08:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761628113;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=VGW1/Zk/bvozkpRgLkqGOHGHcGKL5In8js7WQYsRL5Y=;
+ b=BgXcwToHfYzye3swsX9cdu2LZ/j0JKoNiXrIh8kdfvB4oyXCnyuwMVOn1wBOJxPll2L7N4
+ HTecNRioBGjyWjTWQxASOL5GuZSuyPUstI11hTqBuk7NvtKX1Ql3QH3llPxBaQJtAjC5ze
+ AC0VyPcCtfL8ebGzF2zGNXBWwaxzUCk=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-168-vEyAYCUCPB-rIMnzUzPUjg-1; Tue, 28 Oct 2025 01:08:32 -0400
+X-MC-Unique: vEyAYCUCPB-rIMnzUzPUjg-1
+X-Mimecast-MFC-AGG-ID: vEyAYCUCPB-rIMnzUzPUjg_1761628111
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b6ceba8968dso4009570a12.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 22:08:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761627669; x=1762232469;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AoLEj6A/DGBWwzlmTYiiD3gq3iqwt5rV7Bg4bmyO1Nc=;
- b=Fvxfgvf+WryErEYC4b23OltO1Ox+mScX1qdLI2gMRL4TcRV5IpzN5Gr+58g0xScS2n
- FDfF/omoHAdp5bF6RBvuSY1SrozjOFnCHjPrr/I797aBqR+UtqyPb14PlDYtIlXkJkR5
- f2z/MpY6dO4Kh3Z8tgD+Ja0GgZQBSybf+MjxJfYDm+YkX31er3ZHWFKwWBCYwDVeEzQw
- DtKdm5wJFCJmRzep4d17kbrW5gXStwAq/saMLrno+R2hkukB0fzGxifppb/2cj2d25zr
- bX8KfNsHreXP3gmbNDi20mjNuO40ldE+FD8R43RfyVRddT0O+DLU7uhVQxnyR3LLb+57
- QxwQ==
-X-Gm-Message-State: AOJu0YxtJskaRECbMgK3LQ7c3CS5d1KYO/4BmpEOLFmDJeQjaQymvH9a
- SnKnO2nWvVo8GaGOTmgU8VilZ5Mqfb/9JCws0yvDh0Tk/ObYBXDairun33aR60zqhgo=
-X-Gm-Gg: ASbGncviUKrJFMKy9qhCFfwH7KEBNtq96FuObhQAxrTCnJPXxMYZTQ+PvoHH+5vdptr
- nOJ2Tw0bW2I8ldQMdtenMrTY3poPFL8QOwlJdmBP+OM05FACrL5nbJcKVsTUZXfprDwE4EjfI8C
- SvSjWUX+/ZCUQfrI9d+mz1gzOBwXkGSIDnI9wcllR/xjavcdWgzHeWXBN2H5BY7cROhmM2SsGbB
- InbKpKwMUuWvC1Qy9XtT9egftZprK8xYOO21h9DX2Pp3dhCkfIASe3tuQDplPM0aMhyJ3e5LFMu
- 7uBXwCvt5aqzrqY4+UvxooAFdq+4EhV0FGhaI2LWwWKtEiFX44KrSttZhVs6qKbaOQ9z5bs6YWr
- ZrfApVPQz1k5X2oMEQFC6hJDjyME+p1EK+bRakzCwcpcphEFlzwQxs7J5BtjEbapPziX+U//Fwr
- plH0yYe26db86fccECMzRFzEGQBtjUYoXSOkIGWOCXXF0KBFCn
-X-Google-Smtp-Source: AGHT+IHPrUU7J5FFBzqtBoHbXk2y0YVui5cx8E/QGc6KjgIqN6YPglyd3Xbhnssy5QShqAYD4na7GQ==
-X-Received: by 2002:a05:600c:3b24:b0:477:58:7cf4 with SMTP id
- 5b1f17b1804b1-47717df7c8emr17406335e9.4.1761627668728; 
- Mon, 27 Oct 2025 22:01:08 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771832f372sm11830375e9.0.2025.10.27.22.01.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 22:01:07 -0700 (PDT)
-Message-ID: <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
-Date: Tue, 28 Oct 2025 06:01:05 +0100
+ d=1e100.net; s=20230601; t=1761628111; x=1762232911;
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VGW1/Zk/bvozkpRgLkqGOHGHcGKL5In8js7WQYsRL5Y=;
+ b=CdwX4Kp7cMsWyHjRg4by6sMpC2UKGC2J/0mbFmeBWjlssG2W/Ol+gWY67UDWsnPLLK
+ kEH5+at0lxdEaMLCmAnzHLsugaonnT2J/OGrmNs8FOS2HKoMFyji+b2IpGIcba8XWIKE
+ /KeP+ScrDRKHOoHoG+5LMbFy7v/6JfRMSjVJ8FJvw6YQwkEDSaPTOqRwOiVf5iGnUnQu
+ Z6ykVHBygdKJhvQWGR+w3gdlcdmOjVXMfAW42z58nzjneTQuNcH6kjR3oQObprFdd5nd
+ DVw2Vo7Aw/tmJ4VqMAju0OVItZknnX8+8oh31VLLhDS0WawDIDB2mzOcfx6q4cUoX3gD
+ x3TA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVIs2GBoKLYzOP9afbw9K/L35onYefAGzabqLCjmXGGeDcvHtDQSaaGrCPTOgDObjjOBi4vuJDQyb8u@nongnu.org
+X-Gm-Message-State: AOJu0YzI2YWA5onyCwrxszk9TNbMaqjMVWoXJRDai0b3UFrwZpRr7l9p
+ tKtwsQXnVYy5KVMn5wAxAOmW8Y3vmjaBvGJA3bmI39OOOc175wLLFUIrdCYzbE93mla8NkRTsAL
+ kaTkD5K6HE2cHDAjs7OuZZXaJBgYh6FajbDK6TdNUJl2pH/Aath81tGWS
+X-Gm-Gg: ASbGnctWWX3SQMPuYpTGQBkZpsToTpi9YZM9dDYKisHELmh/KYfCsB+7RZRFkZDZi3J
+ N9iZrpTUKy2K66p4P1lh/kmA47Bguq1sLoG7lcFSswYatfpCldZWP/O6AfyzJbFx48ngbL8Zwrt
+ 2PBKjLVF5p+gxNPQAGs74FzEjYITYcZ4i+gwTUhv36e3NgcRVPaytDmVB6krhhp2d1TXwUZ5PGT
+ pVXG1C96qWtTrexMh/wkftvSiDuT9ISGz/Hd+2OGqhuwlnneeNZNO2GLW/3aVSw1STUJMquDcKS
+ OFbQ+zQM/azvrOVhBla4Ge31+8sIzZMPD4hhWy8n1hUbxaocrhKC4139M+XkvWsbseSmfBjpMvB
+ zRkhDmnC8nhUS
+X-Received: by 2002:a05:6a21:3291:b0:342:d58b:560b with SMTP id
+ adf61e73a8af0-344d4036346mr2996460637.52.1761628111042; 
+ Mon, 27 Oct 2025 22:08:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJbcg4wwvI9URqDDFgNFYsVlVvPgjhyQfz2iBps+iZbhILSlZBIBd8G8tVyNhmOnwzYE02mw==
+X-Received: by 2002:a05:6a21:3291:b0:342:d58b:560b with SMTP id
+ adf61e73a8af0-344d4036346mr2996440637.52.1761628110659; 
+ Mon, 27 Oct 2025 22:08:30 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.108.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b8087fac6d5sm3683589a12.15.2025.10.27.22.08.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Oct 2025 22:08:30 -0700 (PDT)
+Date: Tue, 28 Oct 2025 10:38:23 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Markus Armbruster <armbru@redhat.com>, peterx@redhat.com,
+ stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
+ berrange@redhat.com
+Subject: Re: [PATCH v3 4/4] migration: vmsd errp handlers: return bool
+Message-ID: <aQBPx3B4ynruu5Qn@armenon-kvm.bengluru.csb>
+References: <20251025202649.1122420-1-vsementsov@yandex-team.ru>
+ <20251025202649.1122420-5-vsementsov@yandex-team.ru>
+ <87o6psocib.fsf@pond.sub.org>
+ <9f5ba3d7-3103-4d2a-b50f-f8883a18c812@yandex-team.ru>
+ <aP-eHzbAtvNp3N3d@armenon-kvm.bengluru.csb>
+ <2699d795-25b0-41ce-b884-ce1a357a1417@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-To: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
- <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2699d795-25b0-41ce-b884-ce1a357a1417@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,71 +113,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 20:47, BALATON Zoltan wrote:
-> On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
->> On 25/10/25 01:31, BALATON Zoltan wrote:
->>> These memory windows are a result of the address decoding in the
->>> Articia S north bridge so better model it there and not in board code.
->>>
->>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>>   hw/pci-host/articia.c | 15 ++++++++++++++-
->>>   hw/ppc/amigaone.c     | 28 +++++-----------------------
->>>   hw/ppc/pegasos2.c     | 13 -------------
->>>   3 files changed, 19 insertions(+), 37 deletions(-)
->>
->>
->>> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, 
->>> Error **errp)
->>>   {
->>>       ArticiaState *s = ARTICIA(dev);
->>>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
->>> +    MemoryRegion *mr;
->>>       PCIDevice *pdev;
->>>         bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
->>> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState *dev, 
->>> Error **errp)
->>>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
->>>                             TYPE_ARTICIA, 0x1000000);
->>>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
->>> +    mr = g_new(MemoryRegion, 1);
->>
->> Won't Coverity or other analysis tools complain about the leak?
->> (this is why we usually keep a reference in the device state, here
->> ArticiaState). Otherwise:
-> 
-> According to https://www.qemu.org/docs/master/devel/memory.html#region- 
-> lifecycle
-> there should be no leak and keeping a reference should not be necessary 
-> as the lifetime is managed by attaching it to the owner object so no 
-> need to keep a reference when it's not needed otherwise. Not littering 
-> the state struct with unneded references makes it easier to comprehend 
-> so I'd only keep things there that are necessary.
+Hi Vladimir,
 
-IIUC this doc is about what happens within the allocated MemoryRegion,
-regardless of where it is allocated.
+On Mon, Oct 27, 2025 at 11:33:22PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 27.10.25 19:30, Arun Menon wrote:
+> > We wanted the new errp variants to be structurally as close to the old
+> > ones as possible so that we can perform a bulk change later.
+> 
+> Still, could you clarify, are you plan to do this bulk change? Or it was
+> a theoretical possibility?
+
+Yes I want to, when time permits. Most of the post_load() calls,
+just like post_save, do not fail. That is the reason why post_save does not have
+an errp variant. They always return 0.
+But there are a few of them that can fail and return an error code. I need to figure out
+what would be the appropriate messages to set in errp in those cases so we
+can propagate it back to the caller.
 
 > 
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> -- 
+> Best regards,
+> Vladimir
 > 
-> Can I keep this R-b considering the above?
-> 
-> Regards,
-> BALATON Zoltan
-> 
->>> +    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", &s->mem,
->>> +                             0, PCI_LOW_SIZE);
->>> +    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
->>> +    mr = g_new(MemoryRegion, 1);
->>> +    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", &s->mem,
->>> +                             PCI_HIGH_ADDR, PCI_HIGH_SIZE);
->>> +    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, 
->>> mr);
->>
->>
+
+Regards,
+Arun Menon
 
 
