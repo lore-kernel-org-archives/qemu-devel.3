@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A5ECCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C587CCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDhcf-0003su-5C; Tue, 28 Oct 2025 07:12:17 -0400
+	id 1vDhh5-0005KO-Hx; Tue, 28 Oct 2025 07:16:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDhcZ-0003sJ-U3
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:12:13 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDhh0-0005Ju-5l
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:16:46 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDhcT-00018s-2R
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:12:11 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-470ffbf2150so40276865e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:12:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDhgv-0002Fx-Nv
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:16:45 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-7861978aca2so12974177b3.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:16:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761649922; x=1762254722; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xJyDe36il24B8sHiFvFIFNoNSBcoJYvI1h9pUm1P3RY=;
- b=sboEoPSwkOZ04zuHEonm+P65EEaW2LvF1bnpdx4RjHICwmDXnCUGvYWhHGcI9OSPzd
- SivB0WRsSCzLyt4S77EPx2eZ5oRer3OqDqgsdddG1LBAg3G+t3IsQYxLLli0XZ8wXRhb
- D/nHLHFYma5qw/lrZHpnU6dSxYdIiguAf3r+VpF7/S4CvdNGHndGlwgWtiGfWhUNfzl/
- Nf/4vBTSTQwjQNDjk/+LNgJT+HjxlFvJZND7sSaM7dc+5WaKJHsXxc9lu+FYsRYqaldy
- nPAnV1yKSkAoRzggqwHg7LRU/RF7ieP55bXEFxKChl/pZsz7toRRuzLt5McM8zeEJxS5
- h8/w==
+ d=linaro.org; s=google; t=1761650197; x=1762254997; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qq19yoNokeRIKV6QsVUrrWcYPH3C20bsjt6gVhyqZd4=;
+ b=of3VAYevfrcQ+pD9Fl/zrjZX1q432Yb8DnMxJbaIvUR8XBjZIiUAlopjIyOMFcq9vO
+ zuIe5S+mKtGXXexVz8T+XC79QDap8N8mWqe74euygUW/3g5g6o7Yh+O4aEmzOlbgVrg0
+ RnON/ZJpfEPtEYJ+//AlANp6h56aOoWqvAzegDBmjnVXPc47irAM2oqM5MOQt40BSmUu
+ 3E+0DSJCyZ8X4b50iW9C0w377HNmouICxgv7SstHDNhuyMFSercbqNx3ykLrzS8hHMly
+ NiJRW6kB0HsvrO1j7OTSuh/D5KG2pfFCpZieESBD7bZNDv0wVMjxTYPvrynKR6Ee4WPP
+ kbwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761649922; x=1762254722;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xJyDe36il24B8sHiFvFIFNoNSBcoJYvI1h9pUm1P3RY=;
- b=nxVlDIltTrdu2NXSzOQ7kvZ0TS8q5FIwiEKHBGK4EbH+cZBMe2HNIcs31wS3ZhZVDz
- MD/nNq9LUnRu4sF7ET+kKuLqvz7oRqHNqf68HEVLKAeQthm2L3gNPIRLI0UqkWy/7O/f
- OkM7nAn1cW3Uks89skBWHW2ogDfq/HBoTvQ66iES3Guac9x2EX+Pgdcj+lmAMywHoG9Q
- jdTtFnKIu4rZWf3q4ZHr/xJ19b02tGdKMjR8V5+cHfKytLpedh1uNS0zwClkUUyrIq92
- omJAYVaDowRzaREQ352UuOP5x0EIkgckaGieWzmhCR2fE1kkzqTUyID1P3sjeG5t6eA2
- PO5w==
-X-Gm-Message-State: AOJu0YzPb+FrcHxqosm4a5EqGxd2uBKRhShMt1RpNJBEKtKT8l1XdaH2
- gK530pjlXcP68ePLc1ComM8+0SU6aHdVeNBQlN4iSmFZIzX/mX+CjZSgwVcHrX/GDmbKTOcAqDj
- IqsL7xmk=
-X-Gm-Gg: ASbGncs6O2BaeiR9VXa3v4HVON2xyjqBK17GDNqOfz2n+9uJ59suL/nsFBvxogEStNQ
- i+DV3t0M63DNDknBysV2HoNOa+Xg2d7ajs0Go6xZ9krwTpKnSiL3I2+uOXF22Xykm4B8jXx2dE1
- mPZ/5W1nd5QnNgA9Qt+Vxoov/7VXIaIXdvOVb7M0Msd064UKboL4++t3d+pb4V6AWNW2PBegwJ9
- q4E3vYluUlK90RmuYEBwZbPAV4+2CVrlbq4DdJXPbexN8mVFJs1lcm6G+o82S4s37wgUWqEQGHz
- zGX8CRbM86gjsivyZji1RkJPyiwd8fom7YCxcbWzEhi//8opVXo7uMmyQIXjHjjNShQSS7rR00D
- A/mIF7qjLW3aoZJ+xsenrdaw+EL+YgMoapkaTuvzdgH/zotwmqWbTfYPu6y7XSgkuYaQDlDSy5F
- JiMwHxiD/pCbA7by79jfrW0cEfYqF/ycZyFMc4Z/Mcpxxq7uy/
-X-Google-Smtp-Source: AGHT+IFe0Jziub8Wkt6LRYvZxNA1eoqQ+qP4ZgX/WCg11/8ilB/4Wi9IcsvRs9aJGN2mdW6ilHaNSA==
-X-Received: by 2002:a05:600c:5246:b0:46e:6339:79c5 with SMTP id
- 5b1f17b1804b1-4771812e415mr29792195e9.5.1761649921716; 
- Tue, 28 Oct 2025 04:12:01 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd4a5cc4sm187031775e9.11.2025.10.28.04.12.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 04:12:01 -0700 (PDT)
-Message-ID: <262b5b0b-ad9e-4a69-a5e8-f8948bc14d62@linaro.org>
-Date: Tue, 28 Oct 2025 12:11:59 +0100
+ d=1e100.net; s=20230601; t=1761650197; x=1762254997;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qq19yoNokeRIKV6QsVUrrWcYPH3C20bsjt6gVhyqZd4=;
+ b=HitqIpDZCdjTTYVkAOHE61C3Zryu5OEdDD+CrglfFehJISR8/nDKkiJi+cN8kz0mcD
+ rwAZWynYU5FD+lMIxvYdmD/4kYE+oewuxVvkXvjUQZ9i8BdcQ+1Rb3B+WPqRA0h9JmzJ
+ VJ1gO/1+Yl3MPqi2zxpu0iEendlwU4usVjTqab1Ffj4RtbbFZ0pSnQBIrx1jOv5yuAg7
+ a1Lbe6XD+7DN9A673bvMPuzTtV7qrH4/0gD8ClWXpOoOmSrpkVwiuHJ0T2xw8/CGah40
+ pA7UvY9nRTL3aMAry5dxdr5q8Hk3PEp2mB68jeXKhfbrlcZ5Ju4zhpe9nCaJynbW+Etv
+ xxyQ==
+X-Gm-Message-State: AOJu0YzpSvo5Vg86oWka8Q820cA+CNw9UR9pLyioxLnM692wp9ECBGR8
+ hMROACE++ydE51RneKkcrRryyshNrI2wHOibgnW9xzDseLdRdm2SrGvFsyrelOG2qn+0I41NIfj
+ zXxN32xu4nzJMJSdpH579Eg0xrK9HobZgAIMY9Q8OjjIr4SgftO1O
+X-Gm-Gg: ASbGncs5+su0Gg4f9ARirTEWXp5q/+k0QjHrma4ZpzEMxDCUrLjHL9Q2WMTjeq5RvJZ
+ Y+psCimiv+sNexGs25DLlv4E45P/FErjZU8hfOhpuLSAknU27bFxuljRdnqHMZ9Bet2nJKIulcJ
+ VsuYF17Dm6Ng3qAAN5cymHV3pvzkNahUUIkM/atZuwI2A6MEoC6+QC8Ja9ETBMYDLa4/FZkgBZj
+ T1Yp7Vxlr/OfB/up9udzVZWbLxfdQm6onGhvDBvjZGyxNYGaZ+VTbI52XqClQ==
+X-Google-Smtp-Source: AGHT+IEGi7F3q6pF1+zy6W59GTZtx+d3+8rlBr38Jem1dg6LCa08F1GP3RrekLa6nf+9gdiLLCgBLS4Q3hoxSR9teOY=
+X-Received: by 2002:a05:690c:92:b0:780:f3f3:b56c with SMTP id
+ 00721157ae682-786190062fbmr24081327b3.9.1761650197646; Tue, 28 Oct 2025
+ 04:16:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] hw/sysbus: Spring cleanups (part 1)
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org
-References: <20251028080258.23309-1-philmd@linaro.org>
- <CAJ+F1CJYxKD23TFCy1-rbZf0Y_mSMdyVH=nFDM6eomDhVpmHYA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ+F1CJYxKD23TFCy1-rbZf0Y_mSMdyVH=nFDM6eomDhVpmHYA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20251028054238.14949-1-philmd@linaro.org>
+ <20251028054238.14949-16-philmd@linaro.org>
+In-Reply-To: <20251028054238.14949-16-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Oct 2025 11:16:26 +0000
+X-Gm-Features: AWmQ_bk6ZxSNt6FtSF_vfFnFHQfrQUny8bk3kq42fEzvXoDzNsArGBKJh9YxbYE
+Message-ID: <CAFEAcA_uxT5CAZ4bdXjgV2hUe6o626Fg4X6hTDufo3ffSsn=sQ@mail.gmail.com>
+Subject: Re: [PATCH v3 15/59] target/arm/hvf: Simplify
+ hvf_arm_get_host_cpu_features()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>, 
+ Cameron Esfahani <dirty@apple.com>, qemu-arm@nongnu.org,
+ Roman Bolshakov <rbolshakov@ddn.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>, Alexander Graf <agraf@csgraf.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,30 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/25 09:49, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Oct 28, 2025 at 12:04 PM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> - Use proper SysBus accessors
->>
->> Since v1:
->> - Reduce series
->>
->> Philippe Mathieu-Daudé (7):
->>    hw/sysbus: Use memory_region_name()
->>    hw/i386/microvm: Use proper SysBus accessors
->>    hw/i386/ioapic: Use proper SysBus accessors
->>    hw/timer/hpet: Use proper SysBus accessors
->>    hw/acpi/cxl: Use proper SysBus accessors
->>    hw/ppc/e500: Use proper SysBus accessors
->>    hw/pci-bridge/pci_expander_bridge: Use proper SysBus accessors
->>
-> 
-> There are a bunch of compilation issues that I will let you address for v3.
+On Tue, 28 Oct 2025 at 05:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Use index in the structure, dereference &host_isar.idregs[] once.
+>
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Sorry, this is based on my latest PR:
-https://github.com/philmd/qemu/releases/tag/hw-misc-20251028
-Based-on: <20251028074901.22062-1-philmd@linaro.org>
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
