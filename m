@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70850CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E81CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:45:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDi31-0008Qu-Jf; Tue, 28 Oct 2025 07:39:31 -0400
+	id 1vDi8L-0003Un-1c; Tue, 28 Oct 2025 07:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
- id 1vDi2q-0008Eq-0B
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:21 -0400
-Received: from sg-1-30.ptr.blmpb.com ([118.26.132.30])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDi8I-0003UR-BH
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:44:58 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
- id 1vDi2X-0004wg-VB
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1761651522;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=SRmOSrAYMyjbWoBqd6nobYayh1hYa/Cu5v2ooVrGWv0=;
- b=exg8GURsHNA7Nv79CILddWfDbVdyJJGfS2/40Z/qXIiYVAenCuFkblY0RPSxy9rB8i6euf
- 6qWeoT+BNMc4s3mK+To6sGdD3Qh+LzLUorr9Q26OylKnPmgQEcqO4Ry/49DckGRPu/pRDe
- VgoUD3z2FFP/v7zQ87ixKFYfdWU9FF8J+zxvsUR3uFjup+1xQ3D9UrBiauF/UusA8l2Pdq
- cjO1T1JenWsKlcYT9IcJdMiKiJAHbaHrV0XtV/clBsrDLVqg/AEXswyvjeGJRWfpGnH6Dv
- 0YLcY8WVrXr832ubcBLahhn/xDBdPWg3y47rEpFZ4qFTLOMG666YQMilV0gxKg==
-Subject: Re: [RFC PATCH v2 4/5] rust/hw/core: Provide some interfaces for the
- GPIO device
-Mime-Version: 1.0
-References: <45032bb11a9006cb7a6e1c30ca6299d40cef614c.1761644606.git.chenmiao@openatom.club>
- <CABgObfbeka+fKixBH8F_Fkprvk8oi+dTss21Vn5kYgm4sY0A8g@mail.gmail.com>
- <f8ec1dad-2654-4db8-b994-0ecd2a1943e9@openatom.club>
- <CABgObfbndBy++yt+Bp=3WuomprUEtJyWyKaJYQje6wWtjnb0Kg@mail.gmail.com>
-X-Lms-Return-Path: <lba+26900ab41+d7deab+nongnu.org+chenmiao@openatom.club>
-Cc: <zhao1.liu@intel.com>, <manos.pitsidianakis@linaro.org>, 
- <richard.henderson@linaro.org>, <philmd@linaro.org>, 
- <chao.liu@openatom.club>, <qemu-rust@nongnu.org>, 
- <qemu-devel@nongnu.org>, <hust-os-kernel-patches@googlegroups.com>
-Date: Tue, 28 Oct 2025 19:38:38 +0800
-Message-Id: <c3d3c718-b745-4a0e-a112-d41f3b5d37bc@openatom.club>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDi8D-00067Y-LP
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:44:58 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b626a4cd9d6so1209723066b.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:44:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761651884; x=1762256684; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Mk5i2be7EZssQLJ/1l17wpc5az1qu4wnupbq88AWFYE=;
+ b=LhDiVIrO+tAfAbZMmgJpcCapxhXN0/fDjFXwbadXwIvln0PtrnqGQ1IY4mVIaoFA5s
+ FTmyG05wawMPmKIxCe5dyLayW0Gn9oh3l8c/1Mn88CCL3sZ70TGmTpH1fI4YoiWDiVCI
+ mtnAQXiDsBqh2nZ1LWRDiJKB6/ka7e0t9Uy6+Vy/w+K79n3D6BJdfUqZHYZXzf7JcA1a
+ C8/gwPDCYRTlTsT7OCjDZCQLbDAsdWyP/wbWzzPb/2mIv83fDQuU7Qsyv3bOcYrlDbcR
+ 6HOoLpulw7pA5pmUtGqtgWCpFEsL+Pw/idLcXhDJc1iGfmSrexsSbDJP6ihnPRto3igi
+ zsIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761651884; x=1762256684;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mk5i2be7EZssQLJ/1l17wpc5az1qu4wnupbq88AWFYE=;
+ b=oNcS/HaqPknPySSprXuMjtBakLaEjkyJYU5+IMf2owk/aaEDdnvtVLYbOy3BHcLeh5
+ esppuE1pgmkbZzB3hZyVO6/NsrrOvRjjS1maaN5mmzSsIETzfWb5//X5s3BBFog0w76E
+ HzKwcuNxJ640LjWnR/lHeSdMMPVVLlq20cQPNpeuUz49SVaTm8hPEYdh+bzEeIpjsp30
+ eeugwue5OsbIEp+XOdSxD8hcw55TvFrMsm0ArsCVwo+DhMmMZ2BIyo9NlZg18GKQbrN9
+ qWhKYNglI6nuUuoC5qAvR65EL+hX4yRwaIOYaG0g1JMcCN2qSdT6jO5THcQklYhqYr3h
+ 9RjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5G4mRtUL6DpBurhGPEI/mUdEn0j0AqUNd2SbUz+AwGk4Hwd9266NPGGKBa4JWZJmKVgXWzzfBNJO2@nongnu.org
+X-Gm-Message-State: AOJu0YzxiXz0PXYLH3DCJArt8wYv19E6YYEpsha9lIlIJXpv0Jho6HU+
+ E7ycOFBsad+JTcgRQQ7hrY3ND70XDNLBMhUDqaQrM5XT29V3jnQDbm4n24VTwvobm8o=
+X-Gm-Gg: ASbGncth5Sz4dpxRnNfgn95bed3RlQbD4MsHGcLjeZv+Sy/d//3bASjdSMmRwGUGrjZ
+ uCh0q6eYTCqumSrM+TLhrkw3kQSTOeyMa0/7K2N/i9+sUxjJav5PyRiLwgpaXmjsz7txPzkui52
+ xvs8RmcN8fuJgLH2A7gSgRaZEOatULtcgCl35pGQMTXVUaynMMW0cXiBLBN+ehZoWfJ+G2n0GrO
+ lN6isQvqJS8ae5qxLW91JzagGCBxJjIH49+x6TJOCFpJIQbslbVbTci0SjGttlIX49i282efo1r
+ VVOsrb3Af5iJTs2DWoRsFq0rfubCksXXQcVYU5x0qU88RT4J2MIB34o28hyx96u4QzqNrCnZ+CQ
+ 5LKJpKDIktuoPzokTetb9vpDUbH5UkZoF5HiLFq2eLVKc0X2em1hqH8vByeDBFzK9vBg63RKOLM
+ 7uJNhmcSrUw8RB8q6P
+X-Google-Smtp-Source: AGHT+IH0TUavLg0vZIia+x2IXs73pUR162RJh+Ciodcn7fHTqzh33pG2sJtHgdOiuC+jIgNRgS4ZBg==
+X-Received: by 2002:a17:906:f58e:b0:b3e:1400:6cab with SMTP id
+ a640c23a62f3a-b6dba487a3bmr350894366b.17.1761651883755; 
+ Tue, 28 Oct 2025 04:44:43 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d8538478fsm1075342066b.33.2025.10.28.04.44.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 04:44:43 -0700 (PDT)
+Message-ID: <635a923b-cfd2-49ad-99ff-dedb26ebbe58@linaro.org>
+Date: Tue, 28 Oct 2025 12:44:41 +0100
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-X-Original-From: Chen Miao <chenmiao@openatom.club>
-To: "Paolo Bonzini" <pbonzini@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CABgObfbndBy++yt+Bp=3WuomprUEtJyWyKaJYQje6wWtjnb0Kg@mail.gmail.com>
-From: "Chen Miao" <chenmiao@openatom.club>
-Content-Type: text/plain; charset=UTF-8
-Received: from [198.18.0.1] ([114.249.194.57]) by smtp.feishu.cn with ESMTPS;
- Tue, 28 Oct 2025 19:38:39 +0800
-Received-SPF: pass client-ip=118.26.132.30;
- envelope-from=chenmiao@openatom.club; helo=sg-1-30.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Subject: Re: [PATCH v3 32/59] accel/hvf: Enforce host alignment in
+ hv_vm_protect()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
+References: <20251028054238.14949-1-philmd@linaro.org>
+ <20251028054238.14949-33-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251028054238.14949-33-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,83 +113,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/2025 7:30 PM, Paolo Bonzini wrote:
-> On Tue, Oct 28, 2025 at 12:24=E2=80=AFPM Chen Miao <chenmiao@openatom.clu=
-b> wrote:
->> On 10/28/2025 6:49 PM, Paolo Bonzini wrote:
->>> On Tue, Oct 28, 2025 at 11:18=E2=80=AFAM chenmiao <chenmiao@openatom.cl=
-ub> wrote:
->>>> In irq.rs, we added a new get method for the InterruptSource type to d=
-etermine
->>>> whether an InterruptSource is null. This eliminates the need to repeat=
-edly
->>>> call self.cell.get().is_null() for null checks during comparisons.
->>>> Additionally, we exposed the slice_as_ptrmethod to support external us=
-age with
->>>> the &[InterruptSource]type.
->>>>
->>>> In qdev.rs, we implemented the init_gpio_out_namedfunction, which corr=
-esponds
->>>> to the C function qdev_init_gpio_out_named. We also refactored the
->>>> init_gpio_outfunction to reuse the init_gpio_out_namedinterface.
->>>>
->>>> Signed-off-by: chenmiao <chenmiao@openatom.club>
->>>> ---
->>>>    rust/hw/core/src/irq.rs  |  6 +++++-
->>>>    rust/hw/core/src/qdev.rs | 12 +++++++++---
->>>>    2 files changed, 14 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
->>>> index e0d7784d97..dd5d0cadbc 100644
->>>> --- a/rust/hw/core/src/irq.rs
->>>> +++ b/rust/hw/core/src/irq.rs
->>>> @@ -71,6 +71,10 @@ pub fn pulse(&self) {
->>>>        pub fn raise(&self) {
->>>>            self.set(true);
->>>>        }
->>>> +
->>>> +    pub fn get(&self) -> bool {
->>>> +        !self.cell.get().is_null()
->>>> +    }
->>> This should not be get(), but "is_connected()". Also it should be
->>> implemented for any T, therefore in the "impl<T> InterruptSource<T>"
->>> block below.
->> I'll fix it later.
-> You can drop it actually (see review of 5/5).
-Ok!
->>>>    }
->>>>
->>>>    impl<T> InterruptSource<T>
->>>> @@ -91,7 +95,7 @@ pub(crate) const fn as_ptr(&self) -> *mut *mut bindi=
-ngs::IRQState {
->>>>            self.cell.as_ptr()
->>>>        }
->>>>
->>>> -    pub(crate) const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bin=
-dings::IRQState {
->>>> +    pub const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bindings::=
-IRQState {
->>>>            assert!(!slice.is_empty());
->>>>            slice[0].as_ptr()
->>>>        }
->>> Since you are not using this, you don't need to expose it outside the c=
-rate.
->> I have used this function in the next patch.
-> Isn't it commented out? The code that is used is:
->
-> +        self.init_gpio_in(self.handler_size(), PCF8574State::gpio_set);
-> +        self.init_gpio_out(from_ref(&self.handler[0]));
-> +        self.init_gpio_out_named(from_ref(&self.intrq), "nINT", 1);
+On 10/28/25 06:42, Philippe Mathieu-Daudé wrote:
+> hv_vm_protect() arguments must be aligned to host page.
+> 
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/hvf/hvf-all.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+> index e13abddbd9c..2efecdc9f40 100644
+> --- a/accel/hvf/hvf-all.c
+> +++ b/accel/hvf/hvf-all.c
+> @@ -11,6 +11,7 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/error-report.h"
+>   #include "accel/accel-ops.h"
+> +#include "exec/cpu-common.h"
+>   #include "system/address-spaces.h"
+>   #include "system/memory.h"
+>   #include "system/hvf.h"
+> @@ -67,6 +68,8 @@ static void do_hv_vm_protect(hwaddr start, size_t size,
+>                            flags & HV_MEMORY_READ  ? 'R' : '-',
+>                            flags & HV_MEMORY_WRITE ? 'W' : '-',
+>                            flags & HV_MEMORY_EXEC  ? 'X' : '-');
+> +    g_assert(!((uintptr_t)start & ~qemu_real_host_page_mask()));
+> +    g_assert(!(size & ~qemu_real_host_page_mask()));
+>   
+>       ret = hv_vm_protect(start, size, flags);
+>       assert_hvf_ok(ret);
 
-Oh, sorry, I was referring to my initial version. Initially, this function =
-was=20
-used externally, but later I implemented init_gpio_out_named, and now it's=
-=20
-internal again.
+You should call qemu_real_host_page_mask only once.
+Otherwise,
 
-You're right, this function should not be exposed.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Chen Miao
-
->
+r~
 
