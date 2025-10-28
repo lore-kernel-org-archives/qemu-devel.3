@@ -4,66 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B69DCCF9F0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916FBCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjQl-0000Kj-8l; Tue, 28 Oct 2025 09:08:07 -0400
+	id 1vDjTc-0002IY-22; Tue, 28 Oct 2025 09:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDjQX-0000J5-U4
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:07:54 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vDjTV-0002Ht-Ge
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:10:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDjQT-0000v6-2V
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:07:53 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 28EF2C0288;
- Tue, 28 Oct 2025 16:07:42 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id d7duxl1L2qM0-LdEmXTHW; Tue, 28 Oct 2025 16:07:41 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761656861;
- bh=I8uSKWv9CfGnhUsU+UQbkcSjwMS6bRrjmewdcbsGfgY=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=Ml4wOsZOlOCuamHQ5RRMmcIddMKSpSGspoaxId5IVCJVEsJKxco1sOoHEufzFAnJf
- iIrhMdfANvH5k/RRxq/jLr2IwU34NkXk1pNhlO3+Z//67cDw+zAGTZcZi+dFqj64yb
- wPITkGu2V5gzAcT4x1UdyuYY6z+qTI+WT5JAgeGY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: peterx@redhat.com
-Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- armbru@redhat.com, berrange@redhat.com, vsementsov@yandex-team.ru,
- armenon@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v4 1/2] migration: vmstate_save_state_v(): fix error path
-Date: Tue, 28 Oct 2025 16:07:37 +0300
-Message-ID: <20251028130738.29037-2-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251028130738.29037-1-vsementsov@yandex-team.ru>
-References: <20251028130738.29037-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vDjTM-0001QO-MS
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:10:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761657042;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=B2uBjHvjp+rxM+YNv1+CIZ7OuVYSXpYXKg37sphaSyo=;
+ b=WTOT9fMiEO9Bg4l5KAKNBMJ4BtJO0tz+cYqa8XQQKD0B2RiQhNmhes3HR5+U/DqHvBIhZo
+ aMuTZP+wBrv7YCUcVCjFevhluKqVchBUlXo9xDEQD9lwT7HvTaKRIspET7eW52gYXBxHaN
+ Xvtu06qq+aFtEIWN/k/Roozve6mZw58=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-18-8E00jibVMuuuh-NvQPb1Sg-1; Tue, 28 Oct 2025 09:10:40 -0400
+X-MC-Unique: 8E00jibVMuuuh-NvQPb1Sg-1
+X-Mimecast-MFC-AGG-ID: 8E00jibVMuuuh-NvQPb1Sg_1761657039
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-42992cb2ee8so2060070f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:10:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761657039; x=1762261839;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B2uBjHvjp+rxM+YNv1+CIZ7OuVYSXpYXKg37sphaSyo=;
+ b=k6ux4v0u97QPfKGk638OhDf0LWuG7+5hIRmz9ZmvYGHsT1LIit1lGaQlfV8vCaqWnk
+ 5kUSun+jpE8dmq6zOOwFvyfUjA6oijjFUwNEIwHCVF0EunZk1uDmDRMtkr+G1wKf1Tzi
+ 7JHiS/Uke91P3WcOCjibrdBwiQ7jjbNBMrq9ec4oJVwVObpICY2ykQJA917TzjlYlJVU
+ bedW52j8mUnuMn5kKBCEcbYE6EgTKJnFXCMIdgz0j3bC21bOLqBSqSdzEnUU6BNE7JNK
+ JLBwRiLpgFHO2hjvgvNDyTQXQhtxKyCgaCCRqUtHoR7cVBG1I1W9+1lIcHwREuwqYcAu
+ /ePw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMMZ5t8LSTfOmUatKKEQ9FDuhredAbMBdx/B4JyUNDRs/UZtJb3/7e7Lr4FDmTcd9jRNpK5rm6aV/q@nongnu.org
+X-Gm-Message-State: AOJu0Yzwu79S18od0svUnVvwreiUv9t8dUR04KCBFydRgU2de2mpgpm4
+ 5UOYL/vZ3td51WvQJq+ehKdd1TFvqXWpdnVCue1VjAwwzbObXMIP91BZki2wHaFvDhnGrMyaVLK
+ Hk4vCEQxiQ2uYkoSI/EO0CrSkJeGxo26NoNXtuvKvs6RzsONqfZc6wJ1m+j9SBRJJRlCEuMBb2A
+ sAWRT7WXJrQ48V7HSp97IsmI1QTTjHEdw=
+X-Gm-Gg: ASbGncv00NulZ4l2g1SnGVCf/LxpWPlh0wPfjjXgf+rQsomLD2SZ8hBv3T3i25d737X
+ Kv9YlKr31o9/fZ6iMgm0DXxQICc6cVwZJe8N+rW8WZT00nL7m0Dw+cu4cv7tccAPun05kqiEWzz
+ RA8jQT/ONgoneIXsZ+MxIz7QuDowzl4FMqUTdF08cnnrybWCVOaYJRiB2/Vu61W7bHh9EURG2/Z
+ To5oeEV22wCgQn8QfoYoXO0x2tRX6lpeI2Kxn193X36IWpQEr/YjyW1gd/P
+X-Received: by 2002:a05:6000:2508:b0:405:3028:1bf0 with SMTP id
+ ffacd0b85a97d-429a7e4eb62mr2920472f8f.10.1761657039322; 
+ Tue, 28 Oct 2025 06:10:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxUNVc6iqLHWou2f5q4canDtbA5jUMypNlSTbs1Kj5pwUD7jEJAHf7fV8eq0gCFSkSDt2fx9Nht8NJz0CKBqQ=
+X-Received: by 2002:a05:6000:2508:b0:405:3028:1bf0 with SMTP id
+ ffacd0b85a97d-429a7e4eb62mr2920445f8f.10.1761657038909; Tue, 28 Oct 2025
+ 06:10:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20251022101420.36059-1-armbru@redhat.com>
+ <20251022101420.36059-3-armbru@redhat.com>
+ <58177628-7349-4450-a4c0-58bd44b39586@redhat.com>
+ <87qzuniadg.fsf@pond.sub.org> <aQCiCi5wsBA4Jq5V@redhat.com>
+In-Reply-To: <aQCiCi5wsBA4Jq5V@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 28 Oct 2025 14:10:26 +0100
+X-Gm-Features: AWmQ_bnFoQG0qtujnAgkNlbEHLmRPgPpBQiIaz3U6A9g31ihF3LRSclttjYt-j0
+Message-ID: <CABgObfbHcMBmpJNaSBUMTAWm=_+9M3aeBXHgZOiNyNDfzpCm1g@mail.gmail.com>
+Subject: Re: [PATCH 2/3] qdev: Fix "info qtree" to show links
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ marcandre.lureau@redhat.com, eduardo@habkost.net, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,33 +109,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case of pre_save_errp, on error, we continue processing fields,
-unlike case of pre_save, where we return immediately. Behavior
-for pre_save_errp case is wrong, we must return here, like for
-pre_save.
+On Tue, Oct 28, 2025 at 11:59=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
+> On Tue, Oct 28, 2025 at 11:33:31AM +0100, Markus Armbruster wrote:
+> > Aside: "format for humans" may well be more widely applicable, if we
+> > care.
+>
+> The scope of the DEV.FN hack is worse than that - with PCI addresses,
+> while most of the time we just pass DEV, the QAPI also accepts it in
+> DEV.FN format for the 'addr' property and libvirt relies on that.
 
-Fixes: 40de712a89
- "migration: Add error-parameterized function variants in VMSD struct"
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
----
- migration/vmstate.c | 1 +
- 1 file changed, 1 insertion(+)
+That's fine, it's "just" a QAPI alternate type. A bit weird, but it
+works and is used by other QAPI side.
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 81eadde553..fd066f910e 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -443,6 +443,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-         if (ret < 0) {
-             error_prepend(errp, "pre-save for %s failed, ret: %d: ",
-                           vmsd->name, ret);
-+            return ret;
-         }
-     } else if (vmsd->pre_save) {
-         ret = vmsd->pre_save(opaque);
--- 
-2.48.1
+The getter (printing) side is where the mess is.
+
+Paolo
 
 
