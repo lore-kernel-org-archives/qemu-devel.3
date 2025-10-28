@@ -4,85 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26028CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 15:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB4C5CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 15:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDlYg-0007Wf-M3; Tue, 28 Oct 2025 11:24:26 -0400
+	id 1vDlYl-0007aC-EZ; Tue, 28 Oct 2025 11:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vDlYa-0007Vv-EG
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:24:20 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vDlYO-0001MR-BZ
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:24:20 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-591eb980286so6425580e87.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 08:24:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761665040; x=1762269840; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gyY7G2KNQ4IeSzA7C4uKfXSHI+47EUZHyeSU/TbBB8k=;
- b=gYt5BZMXHirPOyzpb8wIpB3Y1FWl3umbyb5uGLLuhTeneY7uSYJ7v7ilL1S3ErB7QO
- Cf1xrb9aQjp7i0PZVo7M5ePuO+bLZqPhlG7aRqjnH5SCVUr47AZVbyQ4gFNdAr/DAw0h
- FGDxndFz1r086cvCo32XDN/LzAYgS0P8WnybggcTg/tFfcMdAf7ijToY9RwXAmXB31p4
- zwS4Iy2fNzjPVuXFYbKbX2xfmrX9C3JQCVbqDJMoFA3h7/bAIuy37X+4tWfRcREZKOn8
- 3jeS+BBNL8PSSR3xZ17l9dc7x3QO65aP1TgK5WYBsH8N3CBW/hVQgWGtxETIHi+Ziwg/
- oU3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761665040; x=1762269840;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gyY7G2KNQ4IeSzA7C4uKfXSHI+47EUZHyeSU/TbBB8k=;
- b=j3cXNxX1iPkZ1eUwrC/EuktltS4VZ8viaUUl6bzfMTnV88/7L767tiRlEyspLH2yJz
- 26p2ileYSbKhNWCgKWUqHmLhI7wc/YF/Z8Vk0VIbdQlRH4bXwCHKyAVBAACpBcSEC8gt
- Q4Un0gw/h9e5gRqZBpgni5thsvsS1zea73OIgVxAOLiywHdlByO/5UzCzcdpe/sHOjbc
- cYaUBcaF3A431h0BNJEhVxR++TVvWvMC773AeQyvqCo+2YBrW1X7GzwvcubK9O3aFUIv
- cjndbMtKO2nm12qKwoEDyLxiT1BJ2JC7BtLLOPWxpb4ZNyEzlmrjiaKbLw1qjHGLkc3s
- GrgA==
-X-Gm-Message-State: AOJu0YyTNvhyMnpCVuxhZ3mY3ISTWK15mKVisO9gr2eDmYa7GTHfHOxu
- 7qaxcecdmhpFGJCC27RwVva9S+Y+6vLZPf78EfRaOCTlvNGOvdKZUMfguJtWJrpjtqItmA==
-X-Gm-Gg: ASbGnctSHXtrQjGGRZrI/UIT0+f60bFCbcDJ3qOhTvjJQD1H1EfATWkg3EHQU5CG+Sv
- RjsGFAi4PiFRprKTWO+njV3RkOreTUOd2o6LknqrVGOEm6Y5ZmSnYFgs+KRtdkNfoPrtNq4tCen
- 3ILKodF9weNyAqzaKaIXoBCPBtZBjf4JGR6bRiLz3qodbbzLl5x4SlQltxfXDHZcV4t/zLbelcg
- 3xY7H7FzO288kDzNIVV8QuATTdv1nP6rDNguVueZG6HufD8+jtQWrIyYGPnp0gwrFSlizvKg3Ba
- EuUBm0Rcmc/XcoFksJe7Rr/keyFlhdks4RNrEAggO41SDvKu9j3PPusGKqT7cegNMoQKqbsoJ20
- iv+Sg4lBdpNYxk1hfRbLDXllYTtMcpUaffH6OkIYuBeWSQDGsAmmdIg6xglTVMSAnefqkMpQFmV
- JS+cLjY5ZqDogq4G+b3q4/yjGq7WB+bCbIAzL5fEbHrYd3VR4=
-X-Google-Smtp-Source: AGHT+IFImF0gGbyAmzDGX52hYiuwfpeF8+Gn5J4XOnuxyXkZciZheo/rvY6st6QMaJlLdqKsuF7ong==
-X-Received: by 2002:a05:6512:308c:b0:591:c5bb:ce44 with SMTP id
- 2adb3069b0e04-5930e9c31fdmr1719870e87.43.1761665039565; 
- Tue, 28 Oct 2025 08:23:59 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-59301f5fc75sm3045953e87.59.2025.10.28.08.23.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 08:23:58 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, alex.bennee@linaro.org, bill.mills@linaro.org,
- edgar.iglesias@amd.com
-Subject: [PATCH v1 0/5] virtio: Add the virtio-msg transport
-Date: Tue, 28 Oct 2025 16:23:45 +0100
-Message-ID: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vDlYg-0007YO-Rh
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:24:27 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vDlYY-0001Mj-9U
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:24:25 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8D34C8088A;
+ Tue, 28 Oct 2025 18:24:03 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 1OfZYa2b6W20-Wqy5Wm9s; Tue, 28 Oct 2025 18:24:02 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761665042;
+ bh=eYl2XH3rI4O5lL1Gau8t5tkzWGMnogNy+MCzYI5+ltE=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=Qml16Yy+Vfri6LqmeGOtpgb5tmTxRdr3two9x92S56Gr4YIvS21lq91AwERDs5Ge6
+ 4JmNhwy8OqK9EYTTn+j50YjBgkbeMdFrFkFyFP5SIUr0tCFfsUDDE16FvOEksZxLWT
+ gS1WtN5rWY4MS6nXIs4nHnhXuf2rFYyijxpBMyCA=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com
+Cc: devel@lists.libvirt.org, eblake@redhat.com, armbru@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, vsementsov@yandex-team.ru
+Subject: [PATCH v5] qapi: net: deprecate vhostforce option
+Date: Tue, 28 Oct 2025 18:23:59 +0300
+Message-ID: <20251028152400.45938-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,87 +73,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+This option for tap and vhost-user netdevs doesn't make sense
+since long ago (10 years!), starting from commits:
 
-This adds virtio-msg, a new virtio transport. Virtio-msg works by
-exchanging messages over a bus and doesn't rely on trapping and emulation
-making it a good fit for a number of applications such as AMP, real-time
-and safety applications.
+ 1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
+ 24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
 
-Together with the new transport, this series adds a PCI device that
-implements an AMP setup much like it could look if two SoC's would
-use virtio-msg across a PCI link.
+Prior these commits, to enable kernel vhost-net, or vhost-user-net for
+some specific kind of guests (that don't have MSI-X support), you should
+have set vhostforce=on.
 
-Current gaps and limitations:
-Shared memory FIFO layout likely to change in the future.
-Temporarily uses PCI Vendor Xilinx / Device 0x9039.
-Documentation.
+Now guest type doesn't matter, all guests are equal for these
+options logic.
 
-The virtio-msg draft spec:
-https://github.com/Linaro/virtio-msg-spec/
+For tap the current logic is:
+  vhost=on / vhost=off : vhostforce ignored, doesn't make sense
+  vhost unset : vhostforce counts, enabling vhost
 
-QEMU with these patches:
-https://github.com/edgarigl/qemu/tree/edgar/virtio-msg-rfc
+So you may enable vhost for tap several ways:
+- vhost=on
+- vhostforce=on
+- vhost=on + vhostforce=on
+- and even vhost=on + vhostforce=off
 
-Linux with virtio-msg support:
-https://github.com/edgarigl/linux/tree/edgari/virtio-msg-6.17
+- they are all equal.
 
-To try it, first build Linux with the following enabled:
-CONFIG_VIRTIO_MSG=y
-CONFIG_VIRTIO_MSG_AMP=y
-CONFIG_VIRTIO_MSG_AMP_PCI=y
+For vhost-user we simply ignore the vhostforce option at all in the
+code.
 
-Boot linux on QEMU with a virtio-msg-amp-pci device, in this example
-with a virtio-net device attached to it:
+Let's finally deprecate the extra options.
 
- -device virtio-msg-amp-pci
- -device virtio-net-device,netdev=n0
- -netdev user,id=n0
+Also, fix @vhostforce documentation everywhere to show the real picture,
+and update vhost-user test to not use deprecated option.
 
-If you're running on a QEMU machine that has virtio-mmio enabled, e.g 
-ARM virt, you'll need to specify the virtio-bus for the device, otherwise
-QEMU will connect it to virtio-mmio. For ARM virt machines:
+While updating command line options, drop "experimental" word from
+"experimental in kernel accelerator". vhost-net is in production for
+years.
 
- -device virtio-msg-amp-pci
- -device virtio-net-device,netdev=n0,bus=/gpex-pcihost/pcie.0/virtio-msg-amp-pci/fifo0/virtio-msg/bus0/virtio-msg-dev
- -netdev user,id=n0
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
 
-Cheers,
-Edgar
+v5: update wording and commit message
 
-Edgar E. Iglesias (5):
-  virtio: Introduce notify_queue
-  virtio: Add virtio_queue_get_rings
-  virtio: Add the virtio-msg transport
-  hw/misc: Add generic virtio-msg AMP PCI device
-  docs: Describe virtio-msg-amp-pci
+ docs/about/deprecated.rst     | 11 +++++++++++
+ qapi/net.json                 | 18 ++++++++++++++----
+ qemu-options.hx               | 13 +++++--------
+ tests/qtest/vhost-user-test.c |  2 +-
+ 4 files changed, 31 insertions(+), 13 deletions(-)
 
- .../devices/virtio/virtio-msg-amp-pci.rst     |  70 ++
- hw/misc/Kconfig                               |   7 +
- hw/misc/meson.build                           |   1 +
- hw/misc/virtio-msg-amp-pci.c                  | 328 +++++++
- hw/virtio/Kconfig                             |   4 +
- hw/virtio/meson.build                         |   5 +
- hw/virtio/virtio-msg-bus.c                    |  89 ++
- hw/virtio/virtio-msg.c                        | 695 ++++++++++++++
- hw/virtio/virtio.c                            |  23 +
- include/hw/virtio/spsc_queue.h                | 213 +++++
- include/hw/virtio/virtio-bus.h                |   1 +
- include/hw/virtio/virtio-msg-bus.h            |  95 ++
- include/hw/virtio/virtio-msg-prot.h           | 846 ++++++++++++++++++
- include/hw/virtio/virtio-msg.h                |  56 ++
- include/hw/virtio/virtio.h                    |   2 +
- 15 files changed, 2435 insertions(+)
- create mode 100644 docs/system/devices/virtio/virtio-msg-amp-pci.rst
- create mode 100644 hw/misc/virtio-msg-amp-pci.c
- create mode 100644 hw/virtio/virtio-msg-bus.c
- create mode 100644 hw/virtio/virtio-msg.c
- create mode 100644 include/hw/virtio/spsc_queue.h
- create mode 100644 include/hw/virtio/virtio-msg-bus.h
- create mode 100644 include/hw/virtio/virtio-msg-prot.h
- create mode 100644 include/hw/virtio/virtio-msg.h
-
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index dacf2882e4..a781600a2f 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -484,6 +484,17 @@ Stream ``reconnect`` (since 9.2)
+ The ``reconnect`` option only allows specifying second granularity timeouts,
+ which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+ 
++TAP ``vhostforce`` (since 10.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The ``vhostforce`` option is redundant with the ``vhost`` option.
++If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
++
++Vhost-user ``vhostforce`` (since 10.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The ``vhostforce`` option is a no-op.  Do not use it.
++
+ CPU device properties
+ '''''''''''''''''''''
+ 
+diff --git a/qapi/net.json b/qapi/net.json
+index 60d196afe5..e8ccc8afc2 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -346,13 +346,18 @@
+ # @vhostfds: file descriptors of multiple already opened vhost net
+ #     devices
+ #
+-# @vhostforce: vhost on for non-MSIX virtio guests
++# @vhostforce: enable vhost-net network accelerator.  Ignored when
++#    @vhost is set.
+ #
+ # @queues: number of queues to be created for multiqueue capable tap
+ #
+ # @poll-us: maximum number of microseconds that could be spent on busy
+ #     polling for tap (since 2.7)
+ #
++# Features:
++#
++# @deprecated: Member @vhostforce is deprecated.  Use @vhost instead.
++#
+ # Since: 1.2
+ ##
+ { 'struct': 'NetdevTapOptions',
+@@ -369,7 +374,7 @@
+     '*vhost':      'bool',
+     '*vhostfd':    'str',
+     '*vhostfds':   'str',
+-    '*vhostforce': 'bool',
++    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
+     '*queues':     'uint32',
+     '*poll-us':    'uint32'} }
+ 
+@@ -606,17 +611,22 @@
+ #
+ # @chardev: name of a unix socket chardev
+ #
+-# @vhostforce: vhost on for non-MSIX virtio guests (default: false).
++# @vhostforce: silently ignored, exists just for backward
++#     compatibility.
+ #
+ # @queues: number of queues to be created for multiqueue vhost-user
+ #     (default: 1) (Since 2.5)
+ #
++# Features:
++#
++# @deprecated: Member @vhostforce is deprecated.
++#
+ # Since: 2.1
+ ##
+ { 'struct': 'NetdevVhostUserOptions',
+   'data': {
+     'chardev':        'str',
+-    '*vhostforce':    'bool',
++    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
+     '*queues':        'int' } }
+ 
+ ##
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 0223ceffeb..35a70096e8 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2882,7 +2882,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+ #else
+     "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
+     "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
+-    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
++    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
+     "         [,poll-us=n]\n"
+     "                configure a host TAP network backend with ID 'str'\n"
+     "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
+@@ -2898,9 +2898,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
+     "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
+     "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
+-    "                use vhost=on to enable experimental in kernel accelerator\n"
+-    "                    (only has effect for virtio guests which use MSIX)\n"
+-    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
++    "                use vhost=on to enable in kernel accelerator\n"
+     "                use 'vhostfd=h' to connect to an already opened vhost net device\n"
+     "                use 'vhostfds=x:y:...:z to connect to multiple already opened vhost net devices\n"
+     "                use 'queues=n' to specify the number of queues to be created for multiqueue TAP\n"
+@@ -2991,7 +2989,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                use 'start-queue=m' to specify the first queue that should be used\n"
+ #endif
+ #ifdef CONFIG_POSIX
+-    "-netdev vhost-user,id=str,chardev=dev[,vhostforce=on|off]\n"
++    "-netdev vhost-user,id=str,chardev=dev\n"
+     "                configure a vhost-user network, backed by a chardev 'dev'\n"
+ #endif
+ #ifdef __linux__
+@@ -3882,12 +3880,11 @@ SRST
+     for insertion into the socket map.  The combination of 'map-path' and
+     'sock-fds' together is not supported.
+ 
+-``-netdev vhost-user,chardev=id[,vhostforce=on|off][,queues=n]``
++``-netdev vhost-user,chardev=id[,queues=n]``
+     Establish a vhost-user netdev, backed by a chardev id. The chardev
+     should be a unix domain socket backed one. The vhost-user uses a
+     specifically defined protocol to pass vhost ioctl replacement
+-    messages to an application on the other end of the socket. On
+-    non-MSIX guests, the feature can be forced with vhostforce. Use
++    messages to an application on the other end of the socket. Use
+     'queues=n' to specify the number of queues to be created for
+     multiqueue vhost-user.
+ 
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 609ff24059..a4862d7087 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -46,7 +46,7 @@
+ #define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
+                         " -numa node,memdev=mem"
+ #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
+-#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
++#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s"
+ 
+ #define HUGETLBFS_MAGIC       0x958458f6
+ 
 -- 
-2.43.0
+2.48.1
 
 
