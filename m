@@ -4,97 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D0ADCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D32BCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDj8U-0002lE-0v; Tue, 28 Oct 2025 08:49:14 -0400
+	id 1vDjGW-0004dF-OX; Tue, 28 Oct 2025 08:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vDj8Q-0002kd-BM
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:49:10 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vDj8M-0006vB-1t
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:49:08 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-592f22b1e49so5431146e87.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:49:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761655743; x=1762260543; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=t6l883tFJpAQf8YAlHanMOkQlY/AtsD2XxeUSoX88Sc=;
- b=ThTLNkrwEs5Yen6WrEdqi7V3mBeBMMy39V0a7KFi6f+1kFGNsrZa1ZnXJZ32lm5ZNi
- RU5xpG7lYT8Qrk5MLxiSm7MYo5lPBVhSwGwANzh1A6U6K88ksNPsW6+xwnDZhSpjvlbe
- WKAlJNUvy9mrFm/E993t9L6K7WrWkvAqgHu7C/+zD5Wg4Gm0D27T2O58qXPyktfC+QME
- 2uDlxOm8pV5tW5spjQkighTfhTPLa/c/S3DQvkzlOyGZ2cYHreofyHc9tEFSjVG4Xn5Y
- efMs/p1+gVaqmsNuHoGLf04tYdci0w2oVtVM8FzpOVc2LhC6x8zrYHHH79quhLngacjJ
- PFww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761655743; x=1762260543;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=t6l883tFJpAQf8YAlHanMOkQlY/AtsD2XxeUSoX88Sc=;
- b=N2AeCDjm2kGQQIb0HBHrCCAFZIPepze70yUpqrroaAmxmQiLm5dfv/1frbyNxofQvv
- z3KwxId449rk5lx68W7eS/623qRdPnBvTDH2Acc3H3xKP6LIAyx4tuhBUbPgKik455br
- JME1/kEq9hRZzIfaEAW2IAGykOtVwt208xDasjnz5WLdUl66m7Q5zpf9kE8oTcYPoWAw
- b28Id0HJ4OP09m5I0N/FyREZDLwvVleLqlcjrjE39iGGb0EKrKokpvdqyL77DdSdQQbk
- ExGXcx5bU12KCd7tP7E6izApBI6Oi/egWYkYaLAtaYpe+qXw1jC2Jn4ZRmsd8Bcxvplu
- MUKw==
-X-Gm-Message-State: AOJu0YyGB8Iaq6LQtSPppTQ4pa1EIdxiVOaW2/gdUS53blNsAzvgCh0u
- xXMwwfFIaZ5E4L0wgG8MujAfgxgUEtoT1fTUjRrkfohkTM+0bvN4txsi
-X-Gm-Gg: ASbGncv618wMJvoJRQlKAriNCOGLt99E+2P41QVIOqN9T5owmY766Ou9gRZ24sJWiVK
- kFcW2Ly3iR39WWkzCkuFv3mwX0Ls3TtJ3NqSdkXbalnoAMPox3pVuedL2MLUxGSxIksh179CSKB
- 8Y7hIZzgsA63X/c9a0+xYG55isu47pOswQwgwaLZiihg86xSMOFj1NsOb9wrD5aPRDxQeLCjiIq
- AjeuAhvMgpJYyLj7a9lTQW5IXC8PLYOjF1/YUQeyp9HNo4lyrNNcNTp80e4vbH7r8QvcdUCF8S4
- jmoLLBcbR6qVSgp5gkXKAQs6Lh7VPcKDXmOOiPNRNFt5873uI8uOIShDJ4ydr6JjQBtt2ukXKC3
- +exlQx4OAy6MNiHBR34po64G7ruH6643LLQEeWE0BmBgCC8aRoSB10FdFOvLU4Pfqu3pJv8nKrD
- uB4q4QYzgRPMr1JYN1Ak4FO92Cgrn3Q/Uvwk2m
-X-Google-Smtp-Source: AGHT+IHC3k1jTGxJ5IBzuBvL4mcg9tubmk9jzGOT+Qf3FcXQ/5a9ChnBIHTlFax2lPAaLyfudoR2Rg==
-X-Received: by 2002:a05:6512:3b10:b0:592:fcf7:a178 with SMTP id
- 2adb3069b0e04-5930e997c5bmr1359279e87.6.1761655742772; 
- Tue, 28 Oct 2025 05:49:02 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-59301f41bf3sm3007997e87.20.2025.10.28.05.49.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 05:49:01 -0700 (PDT)
-Date: Tue, 28 Oct 2025 13:49:00 +0100
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>,
- xen-devel@lists.xenproject.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: Re: [PATCH 2/3] hw/xen: Replace target_ulong by agnostic
- target_long_bits()
-Message-ID: <aQC7vCX4OHElpfDD@zapote>
-References: <20251022140114.72372-1-philmd@linaro.org>
- <20251022140114.72372-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <bblank@thinkmo.de>) id 1vDicq-0000fa-9x
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:16:36 -0400
+Received: from s3.thinkmo.de ([162.55.237.202] helo=mail.thinkmo.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bblank@thinkmo.de>) id 1vDici-0002OL-RN
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:16:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by mail.thinkmo.de (Postfix) with ESMTP id 4cwq9B2dl5zyX0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 12:16:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thinkmo.de; h=
+ content-disposition:content-type:content-type:mime-version
+ :message-id:subject:subject:from:from:date:date:received
+ :received; s=mail202312; t=1761653774; bh=cNJwD7Q9h8FYeMZC097VuU
+ VFJXrHsHW8/hH972sR1qo=; b=h1yAIZbumnm1TG7p14FzBdbQIS9BjOyc3zo16v
+ XG1reTbWNpU1g2re/NJLNed1cFphnWHh/Vdigtwm3JImwr1u0F0HyNq22FFF/BoV
+ t/MerMJmhbrSwzeyMrFnc6fsfRXqbSu54rqtkT9Ubv+uC3DntaOuUGVQyRIhFGsz
+ IuHx1DcVuK+WWU+EYkx7CPjCOCKg9v+ZXUBQjO8EWMfxt32PZzkg/dmmAeHM73jo
+ OAxc91ag/XNHVo2851Z4ToTAsuuIB9M4ZbqHgUCBdmioK4nc9UJDJUCLLW8YEnBD
+ G5V+Xs982v1JbL5Oxt51GqR43WNFwvJwslMJVOS9JrhGVzqw==
+X-Virus-Scanned: Debian amavis at 
+Received: from mail.thinkmo.de ([127.0.0.1])
+ by localhost (mail.thinkmo.de [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id cglhLUPdbEKz for <qemu-devel@nongnu.org>;
+ Tue, 28 Oct 2025 12:16:14 +0000 (UTC)
+Received: from steamhammer.waldi.eu.org (unknown
+ [IPv6:2a02:8071:5af1:6518:893d:4418:d27e:21b8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (prime256v1) server-signature ECDSA (secp384r1)
+ server-digest SHA384) (No client certificate requested)
+ by mail.thinkmo.de (Postfix) with ESMTPSA id 4cwq9B1cYYzyV1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 12:16:14 +0000 (UTC)
+Date: Tue, 28 Oct 2025 13:16:12 +0100
+From: Bastian Blank <bblank@thinkmo.de>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v2] linux-user: Use correct type for FIBMAP and FIGETBSZ
+ emulation
+Message-ID: <l6slswtmabktu6g23so3sldafschilwbp3kqolny3lppjezosi@hn6ptmklek4q>
+Mail-Followup-To: Bastian Blank <bblank@thinkmo.de>, qemu-devel@nongnu.org
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251022140114.72372-3-philmd@linaro.org>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=162.55.237.202; envelope-from=bblank@thinkmo.de;
+ helo=mail.thinkmo.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 28 Oct 2025 08:57:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,49 +79,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 04:01:12PM +0200, Philippe Mathieu-Daudé wrote:
-> Both are equivalent:
-> 
->   target_long_bits()
-> 
->   sizeof(target_u?long) * BITS_PER_BYTE
-> 
-> Prefer the former which is target-agnostic.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Both the FIBMAP and FIGETBSZ ioctl get "int *" (pointer to 32bit
+integer) as argument, not "long *" as specified in qemu.  Using the
+correct type makes the emulation work in cross endian context.
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Both ioctl does not seem to be documented. However the kernel
+implementation has always used "int *".
 
+Signed-off-by: Bastian Blank <waldi@debian.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3185
+---
+ linux-user/ioctls.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-> ---
->  hw/xen/xen-hvm-common.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-> index 258014370e1..b40ae0b3af0 100644
-> --- a/hw/xen/xen-hvm-common.c
-> +++ b/hw/xen/xen-hvm-common.c
-> @@ -2,8 +2,8 @@
->  #include "qemu/units.h"
->  #include "qemu/bitops.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/target-info.h"
->  #include "qapi/error.h"
-> -#include "exec/target_long.h"
->  #include "exec/target_page.h"
->  #include "trace.h"
->  
-> @@ -455,7 +455,7 @@ static void handle_ioreq(XenIOState *state, ioreq_t *req)
->                         req->addr, req->data, req->count, req->size);
->  
->      if (!req->data_is_ptr && (req->dir == IOREQ_WRITE) &&
-> -            (req->size < sizeof (target_ulong))) {
-> +            (req_size_bits < target_long_bits())) {
->          req->data &= MAKE_64BIT_MASK(0, req_size_bits);
->      }
->  
-> -- 
-> 2.51.0
-> 
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 3b41128..2f62fd2 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -130,7 +130,7 @@
+      IOCTL(FDTWADDLE, 0, TYPE_NULL)
+      IOCTL(FDEJECT, 0, TYPE_NULL)
+ 
+-     IOCTL(FIBMAP, IOC_W | IOC_R, MK_PTR(TYPE_LONG))
++     IOCTL(FIBMAP, IOC_W | IOC_R, MK_PTR(TYPE_INT))
+ #ifdef FICLONE
+      IOCTL(FICLONE, IOC_W, TYPE_INT)
+      IOCTL(FICLONERANGE, IOC_W, MK_PTR(MK_STRUCT(STRUCT_file_clone_range)))
+@@ -145,7 +145,7 @@
+      IOCTL(FITRIM, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_fstrim_range)))
+ #endif
+ 
+-     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
++     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_INT))
+ #ifdef CONFIG_FIEMAP
+      IOCTL_SPECIAL(FS_IOC_FIEMAP, IOC_W | IOC_R, do_ioctl_fs_ioc_fiemap,
+                    MK_PTR(MK_STRUCT(STRUCT_fiemap)))
+-- 
+2.51.0
 
