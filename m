@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F54DCCF9F4
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDDDECCF9F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDsti-00033D-R7; Tue, 28 Oct 2025 19:14:39 -0400
+	id 1vDstO-0002vS-Ry; Tue, 28 Oct 2025 19:14:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstd-00031C-BM
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:33 -0400
+ id 1vDstM-0002te-ER
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:16 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstM-00017M-LY
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:31 -0400
+ id 1vDst8-000148-Th
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:15 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id F03098175F;
- Wed, 29 Oct 2025 02:14:00 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B64BA8174D;
+ Wed, 29 Oct 2025 02:13:53 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id oDnXpg2bCW20-wtiMufGJ; Wed, 29 Oct 2025 02:14:00 +0300
+ ESMTPSA id oDnXpg2bCW20-YA4SyPGP; Wed, 29 Oct 2025 02:13:53 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761693240;
- bh=Ic5f2KC+92lrPpzC+dJc2PdflQkRqcAGO/TiRTlcmX0=;
+ s=default; t=1761693233;
+ bh=lLdUY3HJY+EAhmA9vc28UfAQF17pyF94N7tH58szokw=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=F7rwYa3YBvKa6P25Kr2JZS4imzjPEsL/q3XnXxGm3OorKtxkNXemRTVS2oari73qX
- pO+W8h0OCfMMsHYhuYjUmZk6xbMeU//MJ7pnrHM810Ds813TEJGgP/9io8YS/L6BXr
- b1QhyJAbxlNDLDumJBkmIm4xH7i13U397o+ObC9k=
+ b=KE8KAaPPRO0JStcAlDnkeM00eRvQFXYOB7519g407aSVWOynYglEJbM4/Ycow0J2v
+ VMjzRIqhSbjaO/XGGP26Nz9fewnOsQj0x2wXy6gVGlBzb+XAdCxE48nomkvClK7U2k
+ ke/CXp07Nt64Q0vlTtCaxhrOfvsOKaJ85wmDiMG8=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -43,9 +43,9 @@ To: peterx@redhat.com
 Cc: armbru@redhat.com,
 	vsementsov@yandex-team.ru,
 	qemu-devel@nongnu.org
-Subject: [RFC 13/22] hw/display/virtio-gpu: move to new migration APIs
-Date: Wed, 29 Oct 2025 02:13:37 +0300
-Message-ID: <20251028231347.194844-14-vsementsov@yandex-team.ru>
+Subject: [RFC 02/22] migration: VMStateInfo: introduce new handlers with errp
+Date: Wed, 29 Oct 2025 02:13:26 +0300
+Message-ID: <20251028231347.194844-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251028231347.194844-1-vsementsov@yandex-team.ru>
 References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
@@ -75,203 +75,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add new APIs with errp, to allow handlers report good
+error messages. We'll convert existing handlers soon.
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/display/virtio-gpu.c | 66 ++++++++++++++++++++++-------------------
- 1 file changed, 35 insertions(+), 31 deletions(-)
+ include/migration/vmstate.h |  7 +++++++
+ migration/vmstate.c         | 37 +++++++++++++++++++++++++++----------
+ 2 files changed, 34 insertions(+), 10 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 3a555125be..9356ef391a 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1220,8 +1220,9 @@ static const VMStateDescription vmstate_virtio_gpu_scanouts = {
-     },
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 0aac3b7a66..f0ffd8f9c5 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -46,6 +46,13 @@ struct VMStateInfo {
+     int coroutine_mixed_fn (*put)(QEMUFile *f, void *pv, size_t size,
+                                   const VMStateField *field,
+                                   JSONWriter *vmdesc);
++    bool coroutine_mixed_fn (*load)(QEMUFile *f, void *pv, size_t size,
++                                    const VMStateField *field,
++                                    Error **errp);
++    bool coroutine_mixed_fn (*save)(QEMUFile *f, void *pv, size_t size,
++                                    const VMStateField *field,
++                                    JSONWriter *vmdesc,
++                                    Error **errp);
  };
  
--static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
--                           const VMStateField *field, JSONWriter *vmdesc)
-+static bool virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-+                            const VMStateField *field, JSONWriter *vmdesc,
-+                            Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_simple_resource *res;
-@@ -1248,8 +1249,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-     }
-     qemu_put_be32(f, 0); /* end of list */
+ enum VMStateFlags {
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 4d28364f7b..1d291ff556 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -212,13 +212,22 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                                              inner_field->struct_version_id,
+                                              errp);
+                 } else {
+-                    ret = inner_field->info->get(f, curr_elem, size,
+-                                                 inner_field);
+-                    if (ret < 0) {
+-                        error_setg(errp,
+-                                   "Failed to load element of type %s for %s: "
+-                                   "%d", inner_field->info->name,
+-                                   inner_field->name, ret);
++                    if (inner_field->info->get) {
++                        ret = inner_field->info->get(f, curr_elem, size,
++                                                     inner_field);
++                        if (ret < 0) {
++                            error_setg(errp,
++                                       "Failed to load element of type %s for %s: "
++                                       "%d", inner_field->info->name,
++                                       inner_field->name, ret);
++                        }
++                    } else if (!inner_field->info->load(
++                        f, curr_elem, size, inner_field, errp)) {
++                            error_prepend(
++                                errp,
++                                "Failed to load element of type %s for %s: ",
++                                inner_field->info->name, inner_field->name);
++                            ret = -EINVAL;
+                     }
+                 }
  
--    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL,
--                              &error_fatal);
-+    return vmstate_save_vmsd(f, &vmstate_virtio_gpu_scanouts, g, NULL, errp);
- }
+@@ -536,9 +545,12 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                                curr_elem, vmdesc_loop,
+                                                inner_field->struct_version_id,
+                                                errp);
+-                } else {
++                } else if (inner_field->info->put) {
+                     ret = inner_field->info->put(f, curr_elem, size,
+                                                  inner_field, vmdesc_loop);
++                } else if (!inner_field->info->save(
++                    f, curr_elem, size, inner_field, vmdesc_loop, errp)) {
++                    ret = -EINVAL;
+                 }
  
- static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-@@ -1281,11 +1281,10 @@ static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-     return true;
- }
+                 written_bytes = qemu_file_transferred(f) - old_offset;
+@@ -551,8 +563,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 }
  
--static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
--                           const VMStateField *field)
-+static bool virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-+                            const VMStateField *field, Error **errp)
- {
-     VirtIOGPU *g = opaque;
--    Error *err = NULL;
-     struct virtio_gpu_simple_resource *res;
-     uint32_t resource_id, pformat;
-     int i;
-@@ -1296,7 +1295,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-     while (resource_id != 0) {
-         res = virtio_gpu_find_resource(g, resource_id);
-         if (res) {
--            return -EINVAL;
-+            error_setg(errp, "Failed to find resource %" PRIu32, resource_id);
-+            return false;
-         }
- 
-         res = g_new0(struct virtio_gpu_simple_resource, 1);
-@@ -1310,7 +1310,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-         pformat = virtio_gpu_get_pixman_format(res->format);
-         if (!pformat) {
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Unknown pixman format %" PRIu32, res->format);
-+            return false;
-         }
- 
-         res->hostmem = calc_image_hostmem(pformat, res->width, res->height);
-@@ -1321,10 +1322,9 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-                                              res->width,
-                                              res->height,
-                                              res->height ? res->hostmem / res->height : 0,
--                                             &err)) {
--            warn_report_err(err);
-+                                             errp)) {
-             g_free(res);
--            return -EINVAL;
-+            return false;
-         }
- 
-         res->addrs = g_new(uint64_t, res->iov_cnt);
-@@ -1341,20 +1341,20 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-         if (!virtio_gpu_load_restore_mapping(g, res)) {
-             pixman_image_unref(res->image);
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Failed to load restore mapping");
-+            return false;
-         }
- 
-         resource_id = qemu_get_be32(f);
-     }
- 
-     /* load & apply scanout state */
--    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &error_fatal);
--
--    return 0;
-+    return vmstate_load_vmsd(f, &vmstate_virtio_gpu_scanouts, g, 1, errp);
- }
- 
--static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
--                                const VMStateField *field, JSONWriter *vmdesc)
-+static bool virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-+                                 const VMStateField *field, JSONWriter *vmdesc,
-+                                 Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_simple_resource *res;
-@@ -1378,11 +1378,11 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-     }
-     qemu_put_be32(f, 0); /* end of list */
- 
--    return 0;
-+    return true;
- }
- 
--static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
--                                const VMStateField *field)
-+static bool virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-+                                 const VMStateField *field, Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_simple_resource *res;
-@@ -1422,7 +1422,7 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-     return 0;
- }
- 
--static int virtio_gpu_post_load(void *opaque, int version_id)
-+static bool virtio_gpu_post_load(void *opaque, int version_id, Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_scanout *scanout;
-@@ -1437,7 +1437,9 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
- 
-         res = virtio_gpu_find_resource(g, scanout->resource_id);
-         if (!res) {
--            return -EINVAL;
-+            error_setg(errp, "Failed to find resource %" PRIu32,
-+                       scanout->resource_id);
-+            return false;
-         }
- 
-         if (scanout->fb.format != 0) {
-@@ -1450,12 +1452,14 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-             };
- 
-             if (!virtio_gpu_do_set_scanout(g, i, &scanout->fb, res, &r, &error)) {
--                return -EINVAL;
-+                error_setg(errp, "Failed to set scanout");
-+                return false;
-             }
-         } else {
-             /* legacy v1 migration support */
-             if (!res->image) {
--                return -EINVAL;
-+                error_setg(errp, "No image");
-+                return false;
-             }
-             scanout->ds = qemu_create_displaysurface_pixman(res->image);
-             qemu_displaysurface_set_share_handle(scanout->ds, res->share_handle, 0);
-@@ -1469,7 +1473,7 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-         res->scanout_bitmask |= (1 << i);
-     }
- 
--    return 0;
-+    return true;
- }
- 
- void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
-@@ -1638,8 +1642,8 @@ const VMStateDescription vmstate_virtio_gpu_blob_state = {
-             .name = "virtio-gpu/blob",
-             .info = &(const VMStateInfo) {
-                 .name = "blob",
--                .get = virtio_gpu_blob_load,
--                .put = virtio_gpu_blob_save,
-+                .load = virtio_gpu_blob_load,
-+                .save = virtio_gpu_blob_save,
-             },
-             .flags = VMS_SINGLE,
-         } /* device */,
-@@ -1665,8 +1669,8 @@ static const VMStateDescription vmstate_virtio_gpu = {
-             .name = "virtio-gpu",
-             .info = &(const VMStateInfo) {
-                         .name = "virtio-gpu",
--                        .get = virtio_gpu_load,
--                        .put = virtio_gpu_save,
-+                        .load = virtio_gpu_load,
-+                        .save = virtio_gpu_save,
-             },
-             .flags = VMS_SINGLE,
-         } /* device */,
-@@ -1676,7 +1680,7 @@ static const VMStateDescription vmstate_virtio_gpu = {
-         &vmstate_virtio_gpu_blob_state,
-         NULL
-     },
--    .post_load = virtio_gpu_post_load,
-+    .post_load_errp = virtio_gpu_post_load,
- };
- 
- static const Property virtio_gpu_properties[] = {
+                 if (ret) {
+-                    error_setg(errp, "Save of field %s/%s failed",
+-                                vmsd->name, field->name);
++                    if (*errp) {
++                        error_prepend(errp, "Save of field %s/%s failed: ",
++                                      vmsd->name, field->name);
++                    } else {
++                        error_setg(errp, "Save of field %s/%s failed",
++                                   vmsd->name, field->name);
++                    }
+                     if (vmsd->post_save) {
+                         vmsd->post_save(opaque);
+                     }
 -- 
 2.48.1
 
