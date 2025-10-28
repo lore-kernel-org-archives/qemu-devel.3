@@ -4,97 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C39CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A3DCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDe4K-0002Ls-Ew; Tue, 28 Oct 2025 03:24:36 -0400
+	id 1vDe5a-00038v-6e; Tue, 28 Oct 2025 03:25:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe4I-0002La-9R
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:24:34 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe5X-00033h-1B
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:25:51 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe4F-0003ov-OC
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:24:34 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46fcf9f63b6so33108785e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:24:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe5U-00047u-2W
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:25:50 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4711b95226dso69344845e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761636269; x=1762241069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761636344; x=1762241144; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5Wc5EMJcGF/yIZ1a3Xyle52cvqomflG7WNTE1Zfw/QI=;
- b=EISWoKcITGyIGkIJz0OjH0Ya9R83InLZc0eqHXuB1eVLJnkeJcQFQicjk0FyXGafsP
- 9+QT1aa75xFiJtMCUL0fYcFC5v+0QGVQn8L1ozHYk6auIvynXCkiuo5U9RhZOnyoI1nd
- 4lkMCEVtAQcI3BQroemIPaY9OyUysW2/3l4/8lmzgYDZi24QCsA3S1X/haywvA2p4J86
- 0exGehJId/X6vkpoVW1yhXwB4dxgjoBf3eKRWdd29asx8xoVW0JZVmT2xYUzkBSDgxlz
- LhmDibAlvNifd0CH3yQuMFACnVGYdAR1FHaSa9v9HhzkTqNUgelNtH2agyHA11d05kni
- NCRA==
+ bh=JupiA+gDKZLA7RJRuS5xjA3ZsmuH63BVmHdFks/ehbk=;
+ b=fuXzRuzRqi/+pzV6D/j4J+oNZwAOmKb3qowG2ZY5z/oZTpK7/Al6owtCbbY91CB8Gh
+ /5J9/zxToxyhF2vMDWNkqEy+D7iohHQHVE04qQ6mpE1bmhGb2pTyo61cibaVtj+rdl5A
+ KlLmAhFLiq2j1mRS5IkCzsvfBmtB4c4Dl8kARX/L/v0I5VcJmHJyhepeBKpJlKZSqC0V
+ cZesrzcb7k8thDDmjW+al3wymUW3AYYNjC2bDHyFAePp3nc0Kpk9o4LboCllA0wi5pBI
+ 2z53bBOgaefAnUqeZx9BeQ79OIaqCYNz0RMcpSv+aHj8h7pE+8zPSdwzT4Uu9ewGhsXO
+ d0PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761636269; x=1762241069;
+ d=1e100.net; s=20230601; t=1761636344; x=1762241144;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5Wc5EMJcGF/yIZ1a3Xyle52cvqomflG7WNTE1Zfw/QI=;
- b=LkjgxElYSTWkS11F8nAT+jsSP0XDhiXol14j5JGaT7RDKaSMxC+HdF+DbXTW6NRSiK
- 5y6yCR1RQivMjcteizd1ilyZpBwywH9N6+v07BBGkzq10i0smQcl6xYNDDZbVHgJn7o2
- NXDzYHea81sXzAgYRJhYT8p/pxktb5+rYS1tNwa8twit8Gz/KoySS3cIiMF0vcHgmubD
- xV9bDUS1suW7QCV2wHs3aaNGiDJixJ6ZVn2HCAfnRMVbXdK2auZv46BSXBlWgCT90TgA
- RDwnCNeHymzOH8bYaq1eMbGNcpxiLMG5480poRqVsS9VL8KVYCWgETbskcbrcsNS/0x3
- cfpQ==
-X-Gm-Message-State: AOJu0YzsV36JUxgtQDC6KcAT4qay3e9xIweYilGnybFqgw41iZ2FmGb9
- 8KeP433aSkyjfxU+Tle/5aRTGIaa8s7PyBVR+ixupR0KBjm9hxkqrwhq6yJ4o+uAa7qPjfRnrRr
- DO9PtIHE=
-X-Gm-Gg: ASbGncv0qjuJFPj8NXXjsB3BSEJSHPXTlK17DTU5F2gKSoiibrXBjsvSyOh7wxDY1Q7
- 0hqAPcUFG0QNW2YtC8JgCtpDI5qdBnS8rfUtJc+xtI2ux8qcV4AsdFjRGY+EcrkWNs5VWuSQ5Bv
- /RO/KTpnEQMlJE1i+cQVEb3Zf/WFHLVDADlZEo03+MfAd2FlQNhegVK9iGga8/X2pDh4WRrqHhy
- 7kShdPSzrlR2P/4hTpvydtPjiaF8VNJoWdnifU7F+uRFdrDtveoG3CLjzxFY5XZ+NvQlY3AFBlU
- 7ulgezR/OAwrNOpTiaYcFiUytObxRDVdfiJ59dkvUwKr47PZ4TrS3P2HM/QFvxfaGe15UYxZidl
- 9lfFiLwBfXmSmnqwTHDbpi2ImIMHwI0ABsgNvmStuwGKCU2jwJckgU+4/9znRewSqzHQ08I9yyl
- yuz3892mrpkh2MnCBhOj2sqcT6OSqWfpsUblZbPGy6Byu2ivZw
-X-Google-Smtp-Source: AGHT+IHx5cG+9O/KFCGlN4IXvyg6Dpidl0xdTMmq9j7zCRvdamNWHN3JDp2Ap09izyNQnsEQWwsVpw==
-X-Received: by 2002:a05:600c:5246:b0:471:12c2:201f with SMTP id
- 5b1f17b1804b1-47717e40d7cmr21207195e9.32.1761636268991; 
- Tue, 28 Oct 2025 00:24:28 -0700 (PDT)
+ bh=JupiA+gDKZLA7RJRuS5xjA3ZsmuH63BVmHdFks/ehbk=;
+ b=CvDIz34scRvqVAcLA2RsILExBR493Tjm2CXCuCVy1jqEFAX42quiHVK6yMB+oAGGsX
+ M8wFkSUh1yWlosNbKQJrDEBzjGMYgEF5ZCLBKj9vY5S3S3fkM7meoqSqTZ+VKlLbt5GZ
+ YVDsO/akv7vSqntw2XUIjqfRgNKrIwiK+yQIqwpcGlUzFMq5DJovY5io3xEi3MwF9PAn
+ BPUJvSJ9S54nJnTeqb4Ch0jKfhG4sViDjyFpAKnsxBx7U36eZ59uQG3hTEfEwi0l+N+q
+ RXdF/9LsX8u65hgP6SP0QO6zFTC/KNmweywAKKg3dS7WjSJQX69pyDK1NzhCXAEunvt8
+ c75Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMt2r+Suy0k4M4ZeNp4VlXBCxe7ffV/Jjr5J3DIvy7FL9sTPIWcPFc3lsiu9FrPQ8ERdSwylGuKBrn@nongnu.org
+X-Gm-Message-State: AOJu0YyMLJGhgtH41R+FMTrF0eonviLiVOOM4uqQ8b3klcE/cfyIWJD/
+ 58LKZWd9eT58he/jvmhNcztc7M+Hxbu0GSUFyoI+NOCcSn1+iAxjuO79w1e6/kpP6LA=
+X-Gm-Gg: ASbGncsw6xcZOH+kHbdvrJHHkvju4FIcaqZZA4OzRkC2MaXPvC5nFRvH9Xt21JWE9zT
+ ofNpygleNNWoupzEpRrws76rwZ4B9Dek3vkZyNhFBfqhQKx0Lr7fQHO3PrK+ZhXi7tKnm1DrIh4
+ ai/vyWJPu+kR7Gh+Fh/Yn442lsSPUsxhJLnEJ1MX6RWbcZDS7koKxvtquU3f4YFQkYoJVU9xsdr
+ rJJcIlHpafHu68nPqBdTgR2urTjwYh/kIqd48mi40iw66bWIxMXz0/nbyzTQyiVylCSfADg+oJb
+ 5ITCHfy5OYB6yPeh84pQy4iCvS45H2Y6pAsLl9KUlTX5hFIF2nWWk+rMDQh3Ar3LngRkQFQpyNX
+ BZMIJRv/k8vyayOYu8pId5kINgO7xSa+UvmVLZAdmz1ftBXZEU1zmyOnTT6rb13q+JVU3TDSaif
+ P+Un3GxBAaXRLIhmnpCFCfR5j/GHcil1GT7MVRX8Zav4kqamvz
+X-Google-Smtp-Source: AGHT+IE5fz4l6rThrsyI8MJw95C08bqTc2VmoMjHdubXWEex19N7EQkEyeyQeWr3yHMrTeTYx+N3yw==
+X-Received: by 2002:a05:600c:45c7:b0:471:c04:a352 with SMTP id
+ 5b1f17b1804b1-47717df6bf2mr20216575e9.4.1761636344608; 
+ Tue, 28 Oct 2025 00:25:44 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd02ce46sm214378625e9.3.2025.10.28.00.24.27
+ ffacd0b85a97d-429952db964sm18751776f8f.33.2025.10.28.00.25.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 00:24:28 -0700 (PDT)
-Message-ID: <5602536a-d57f-466f-8913-0d6264c13eda@linaro.org>
-Date: Tue, 28 Oct 2025 08:24:27 +0100
+ Tue, 28 Oct 2025 00:25:44 -0700 (PDT)
+Message-ID: <494cb717-88eb-4243-a39c-62e94f89f285@linaro.org>
+Date: Tue, 28 Oct 2025 08:25:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent
- class_init()
+Subject: Re: [PATCH v2 0/3] single-binary: Prepare hw/riscv for single
+ compilation
 Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Glenn Miles <milesg@linux.ibm.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goat?=
- =?UTF-8?Q?er?= <clg@kaod.org>, Paul Burton <paulburton@kernel.org>,
- Joel Stanley <joel@jms.id.au>, Jagannathan Raman <jag.raman@oracle.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Aurelien Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>,
- Aditya Gupta <adityag@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Bernhard Beschow <shentey@gmail.com>,
- qemu-arm@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Steven Lee <steven_lee@aspeedtech.com>, Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-ppc@nongnu.org
-References: <20251027112306.57634-1-philmd@linaro.org>
- <CAJ+F1CKRRQY9w=e8XnxxMNTLoJqWiN-TBtu7qV_+2pAaEhM5fA@mail.gmail.com>
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com,
+ richard.henderson@linaro.org, palmer@dabbelt.com
+References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ+F1CKRRQY9w=e8XnxxMNTLoJqWiN-TBtu7qV_+2pAaEhM5fA@mail.gmail.com>
+In-Reply-To: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,84 +104,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/25 08:16, Marc-André Lureau wrote:
-> On Mon, Oct 27, 2025 at 3:37 PM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> No need to set DEVICE_CATEGORY_BRIDGE for each device
->> implementing TYPE_PCI_HOST_BRIDGE: set it once in the
->> parent.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> this will also categorize a bunch of devices
+On 27/10/25 13:35, Anton Johansson wrote:
 
-Indeed:
+> Anton Johansson (3):
+>        hw/riscv: Use generic hwaddr for firmware addressses
 
-$ git grep -l parent.*TYPE_PCI_HOST_BRIDGE
-hw/alpha/typhoon.c
-hw/pci-bridge/pci_expander_bridge.c
-hw/pci-host/articia.c
-hw/pci-host/astro.c
-hw/pci-host/bonito.c
-hw/pci-host/designware.c
-hw/pci-host/dino.c
-hw/pci-host/grackle.c
-hw/pci-host/gt64120.c
-hw/pci-host/i440fx.c
-hw/pci-host/mv64361.c
-hw/pci-host/ppc440_pcix.c
-hw/pci-host/ppc4xx_pci.c
-hw/pci-host/ppce500.c
-hw/pci-host/raven.c
-hw/pci-host/sabre.c
-hw/pci-host/sh_pci.c
-hw/pci-host/uninorth.c
-hw/pci-host/versatile.c
-hw/pci/pcie_host.c
-hw/ppc/spapr_pci.c
-hw/s390x/s390-pci-bus.c
+>        hw/riscv: Widen OpenSBI dynamic info struct
 
-So the following ones are categorized:
-
-hw/alpha/typhoon.c
-hw/pci-bridge/pci_expander_bridge.c
-hw/pci-host/astro.c
-hw/pci-host/bonito.c
-hw/pci-host/dino.c
-hw/pci-host/i440fx.c
-hw/pci-host/ppc440_pcix.c
-hw/pci-host/ppc4xx_pci.c
-hw/pci-host/sh_pci.c
-hw/pci-host/versatile.c
-hw/pci/pcie_host.c
-hw/ppc/spapr_pci.c
-hw/s390x/s390-pci-bus.c
-
-I'll update the description.
-
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-Thanks!
-
-> 
->> ---
->>   hw/pci-host/articia.c     | 1 -
->>   hw/pci-host/aspeed_pcie.c | 1 -
->>   hw/pci-host/designware.c  | 3 ---
->>   hw/pci-host/gpex.c        | 2 --
->>   hw/pci-host/grackle.c     | 1 -
->>   hw/pci-host/gt64120.c     | 1 -
->>   hw/pci-host/mv64361.c     | 1 -
->>   hw/pci-host/pnv_phb.c     | 1 -
->>   hw/pci-host/ppce500.c     | 1 -
->>   hw/pci-host/q35.c         | 1 -
->>   hw/pci-host/raven.c       | 1 -
->>   hw/pci-host/remote.c      | 1 -
->>   hw/pci-host/sabre.c       | 1 -
->>   hw/pci-host/uninorth.c    | 4 ----
->>   hw/pci-host/xilinx-pcie.c | 2 --
->>   hw/pci/pci_host.c         | 1 +
->>   16 files changed, 1 insertion(+), 22 deletions(-)
-
+Queuing patches #1 (without kernel hwaddr change) and #3, thanks!
 
