@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE934CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 15:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE37CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDltB-0008Oz-6a; Tue, 28 Oct 2025 11:45:37 -0400
+	id 1vDm8Y-0003hL-4h; Tue, 28 Oct 2025 12:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDlt6-0008Ng-HL
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:45:35 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1vDm82-0003On-4W
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:01:03 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDlsw-0004bW-Hk
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 11:45:32 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-63e11347fd9so6924708d50.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 08:45:20 -0700 (PDT)
+ id 1vDm7w-00064O-GL
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:00:56 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4710665e7deso32686535e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761666318; x=1762271118; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=knnT1ftdmTMJx/XyavOPGJh2UCADWh3KX8LeDc7hUa8=;
- b=HfaEyvitMxhO7ov9QvNgd6Nnw1OWdbyccwFniaUvi1HGYiqfM74PRP/AQziLvUjNaw
- Kdg1t4aFIHs2WWxBQPmOX6iTMJA4+ma7EG6NX6+I+7fXDb2VQoZE5y3dh2I2R10nczpU
- grkZcoyJW4fyClA+5kMhSPt48myfIEQnPgnsZOp2YMRFH3EC6SVMhD89UaWm/lSxQHl7
- X2yI/0vYWLhtEjMvc0t8GrtsouXWf3HYw8r4YfMDn9DAby4qmD8yCgEPfkiG05Jl0Rz4
- q4ZZiMfBXMpPQ4gYiqWZ2jxDKH+j0ZNho1vnE8dS1P+CaWaQ2n0FcW6gykwDMT/69rf3
- JU9Q==
+ d=linaro.org; s=google; t=1761667245; x=1762272045; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3VO5d5EAGo4wZzbvR3QkkqwC3BxWJb1UbGxi7v8NEQc=;
+ b=kbEKguJmxspj9Yi7+1gTZ2seffz5uK1/a5R/FEfskQbd9klxcHDNmf5K0uSyUBmALO
+ T2/DRgvpxQ1S19bI+oB75JC2xSZ89zRZquRpHMZskcx+z+AeR7POFBZhyDaa6W4+eiV4
+ 4LQccAxDIKieNukBkrtn0E08AFOu6zxPugM0mIYWA7mYMxASF0Lo8JWY253zFdLkK4oZ
+ yH0a2z1LqahexfKw3gmfGfGbsqRG3WeViBCgGNEDRghK4lXWT59Au8j/0kBPUSencJPa
+ Fnrth2zoTZol2kTMzaPE3Icw9EJHwdV3uJs10uHXgZ2e4GjRzpvvj2pWj0G4Tg6GgZj/
+ 0Utg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761666318; x=1762271118;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=knnT1ftdmTMJx/XyavOPGJh2UCADWh3KX8LeDc7hUa8=;
- b=QF/iu1x74oag6ROr1JAyYxqJQSac+uNt3tkSZL4NzPPGKgakLybei7c6z1oCN905o8
- BW5/mJsGOlygyX112IJgLrzSbQFeiXQDWrpguf7rrs6UTk8MDiWEzAuMwDiEdOAqLcBP
- bMApWIGDHmvrOcf814aQamZntiV8GNzWqXESBcVCDs6E8kXPEHiPbttqIYnpXUBwV7NN
- Mp0PJR1TzJcNGZk64rKyv5syQCkDZu1+SEgGmjeLOsuuOV3kIiIbUxRI5PF4OODe40d5
- ly21EnPxlHA6Nn5ywqmd1sZYKCUDDEHzoD5uGFfS/JlbaHgWC+Rgo4Oj+8BDQY9WVMyt
- /QlQ==
-X-Gm-Message-State: AOJu0YzzdPqIELB6ibK/j1q23mNvqXT9h7XIbltMSaOSwryZQTM8CnqI
- zVvVbLg842U0oQYfYGym2CM4/VRZ4LzHj8acd5facBO29uzB9HnI0Az/+onc5wQKh2k+QcYBp4D
- gBZcvWtGOF6gsJdgpNdhrLQdFo9aP5jHWwglXQtwU5g==
-X-Gm-Gg: ASbGncsAQoJ1EiDpPMfAxculodUga4LJ7Qggm5Wd2BIwDS1evihSusSYDS8RkuRYvmI
- ZLLnamgBJnvJ8Ai55wGVaRDmUxyi7U3bRoPLVgjEMAASzgJK2y15TTglxV5Ixg74DFudt2Vwtha
- /sUhh2YMc/fNHXvyVn8OlTA8WXdqPhObxcPt21RyTo64unR8cDKj03ZsXJebyQT5akm4l8ww/js
- ay/o/oT38+zF2LJvxOtEdyhivvNTagdMUTCAaZG/XEDM+ulB7/xu5JeONaEDw==
-X-Google-Smtp-Source: AGHT+IF1tsX8B8ODvnmAHDIpvh2LJFczDiQsY2ee0V5DVnxa/M0OLoTOk4GaJaUAbc5VTbFhhWy+XTA3Ul09ajY2ZPQ=
-X-Received: by 2002:a05:690e:dcd:b0:63e:3a34:7bac with SMTP id
- 956f58d0204a3-63f6baa0f6emr3042756d50.62.1761666316772; Tue, 28 Oct 2025
- 08:45:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20251028054238.14949-1-philmd@linaro.org>
- <CAFEAcA-3SzHPmLc-huMnyNbZBnEwi5+fbPNuvCYJcvY7gYboEA@mail.gmail.com>
- <0d2fcc9b-ad42-4668-a8bd-9ecb70c9822e@linaro.org>
-In-Reply-To: <0d2fcc9b-ad42-4668-a8bd-9ecb70c9822e@linaro.org>
+ d=1e100.net; s=20230601; t=1761667245; x=1762272045;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3VO5d5EAGo4wZzbvR3QkkqwC3BxWJb1UbGxi7v8NEQc=;
+ b=tKCLziRDB78Sx2jUn5WoiagILfZHgyHB6wR5g3YT7p54ec6zKV1qaVTMafuTe8qNIx
+ SkAB8zo13SsM1DgeLsz12BFrwVPWZLv3IoeeZojUZxcdH/K4+zT7jqF6aXSLDG+b3ekN
+ In79KxaaV/4T4yzLHI/fVpdVKBnW5MTJD0V9ar8yy9SeuebgZEbr3xkgRaBKefvrHOeQ
+ c2hdVIdURJzTCtVi7FlIPGmzox2AnBAySqvdwjgsG2hNX8dmgnCJbbPeWthuDsbWj7m/
+ HWH4TLtJG8IlKfaiaoHtOB6xQFSzGN/sVOB5Mw7EbzsNZQ7F1RhFap6rVM0tZ1SnafdH
+ uuSw==
+X-Gm-Message-State: AOJu0YzU+4f3e12e7XqppnNn27LSu9EtuRw8lH3J2JXdiDNR+UwUPq/L
+ MD/aP1imE9IAO7CPxIJ16oYJkDIQ97TjOFUE0sYD380YrTHmt+EJ4zuIxdT5ZxlHZudkytk4N1j
+ h/Me8
+X-Gm-Gg: ASbGncu/0zVL1J24AFwJtpYqFsH4RlPNXSFfCoBftzzDKtqHcwxeeM4roUm/OGe46Zz
+ DUkn+W8UhSt09u1U0j7WaD0PvdYDpwJKBpyz4rnoD09B8lT9knwnaPwv7F3Ef58AgL3N5k3NOJX
+ xCr0niT5NUwwm07ZIb8F0Vak4zxCtdQJjso4u+uGU6wV7ZSeQ2Eo2j6WwUkfP9tOg6yO9SSaz0H
+ 2au8EOPgQlW70FVG/yl2JKJanzOc9OzCm7eBFI0gldPiqxm+5L9v/8JDs8PRtXSvPJak1j9a/Tz
+ I8+2FRmnMBQBQEStHQ5C58gLqrGrcO8TmadB+LL/gKs1KsicjnNhTlW8XbDw27HR3O9QzMz+600
+ BE5DGU8duIKy4r+t4JdQstegMfI9Oufd6P/DY01YgWbWIYwHM/o7zgBwKdeaZfXULsHx6fwS1Gv
+ VlFkYc5Q==
+X-Google-Smtp-Source: AGHT+IFdEtd5mJn9ZwQUZlpnXD92xDMsuSzMIzWn+tbykOL4nXzE/Ma63P2HlZrSZlO2xnBG8pGDAA==
+X-Received: by 2002:a05:600c:3d8b:b0:471:1d8e:3c4f with SMTP id
+ 5b1f17b1804b1-47717e4147cmr26891775e9.24.1761667245135; 
+ Tue, 28 Oct 2025 09:00:45 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd374e41sm203109415e9.12.2025.10.28.09.00.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Oct 2025 09:00:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Oct 2025 15:45:04 +0000
-X-Gm-Features: AWmQ_bnFyegvKgNoRM11TRUoBuIr3K__VeiCDYbNWOQn3uB_WvI8Z4KPJOly3Rc
-Message-ID: <CAFEAcA9GNmtQUUCVg-o4MsJ78saaiH69VHrLcJCQSBWsEE_eBA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/59] target/arm/hvf: Consolidate
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>, 
- Cameron Esfahani <dirty@apple.com>, qemu-arm@nongnu.org,
- Roman Bolshakov <rbolshakov@ddn.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Collingbourne <pcc@google.com>, Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>,
+	Bin Meng <bmeng@tinylab.org>
+Subject: [PATCH] net: pad packets to minimum length in qemu_receive_packet()
+Date: Tue, 28 Oct 2025 16:00:42 +0000
+Message-ID: <20251028160042.3321933-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,30 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Oct 2025 at 15:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 28/10/25 14:10, Peter Maydell wrote:
-> > On Tue, 28 Oct 2025 at 05:42, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >>
-> >> Missing review: 15, 18, 26, 32, 33, 38 (up to #41 could be merged)
-> >>                  42, 43 (up to #49 could be merged)
-> >>                  50+
-> >>
-> >> Since v2:
-> >> - Improve host page size/mask uses (rth)
-> >> - Remove cpu_test_interrupt in hvf_wfi (rth)
-> >
-> > Richard found an issue with patch 32, so I'm going to
->
-> IIUC this is not an issue, just a worry about performance,
-> whether getpagesize() implementation calls a syscall.
-> Anyway I'll cache the value locally -- or better, maybe
-> have qemu_real_host_page_size() doing that --.
+In commits like 969e50b61a28 ("net: Pad short frames to minimum size
+before sending from SLiRP/TAP") we switched away from requiring
+network devices to handle short frames to instead having the net core
+code do the padding of short frames out to the ETH_ZLEN minimum size.
+We then dropped the code for handling short frames from the network
+devices in a series of commits like 140eae9c8f7 ("hw/net: e1000:
+Remove the logic of padding short frames in the receive path").
 
-I just meant to note "the patch needs some change before
-it can be applied"; I agree that the changes are minor.
+This missed one route where the device's receive code can still see a
+short frame: if the device is in loopback mode and it transmits a
+short frame via the qemu_receive_packet() function, this will be fed
+back into its own receive code without being padded.
 
--- PMM
+Add the padding logic to qemu_receive_packet().
+
+This fixes a buffer overrun which can be triggered in the
+e1000_receive_iov() logic via the loopback code path.
+
+Other devices that use qemu_receive_packet() to implement loopback
+are cadence_gem, dp8393x, lan9118, msf2-emac, pcnet, rtl8139
+and sungem.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3043
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I think this is the right fix, but I'm not very familiar
+with the net internals...
+---
+ net/net.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/net/net.c b/net/net.c
+index 27e0d278071..8aefdb3424f 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -775,10 +775,20 @@ ssize_t qemu_send_packet(NetClientState *nc, const uint8_t *buf, int size)
+ 
+ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
+ {
++    uint8_t min_pkt[ETH_ZLEN];
++    size_t min_pktsz = sizeof(min_pkt);
++
+     if (!qemu_can_receive_packet(nc)) {
+         return 0;
+     }
+ 
++    if (net_peer_needs_padding(nc)) {
++        if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
++            buf = min_pkt;
++            size = min_pktsz;
++        }
++    }
++
+     return qemu_net_queue_receive(nc->incoming_queue, buf, size);
+ }
+ 
+-- 
+2.43.0
+
 
