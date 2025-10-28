@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68918CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C5BCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjmo-0000OO-5l; Tue, 28 Oct 2025 09:30:54 -0400
+	id 1vDjop-00012e-3r; Tue, 28 Oct 2025 09:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDjmh-0000O1-Sd
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:30:51 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1vDjon-00012T-KM
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:32:58 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDjmf-0004Ed-IT
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:30:47 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b6d78062424so1243426466b.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:30:43 -0700 (PDT)
+ id 1vDjoj-0004Ix-7I
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:32:57 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b3e9d633b78so117206166b.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761658239; x=1762263039; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761658369; x=1762263169; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ab0akvkC3mgVWGYARJ9qx4sI05tVRHB3/ShmUCOOMwk=;
- b=U0dRa+OaYhSbb3NuaitbmyTKMGQpL/010roRYQdOsjmlvqVkhhalcp7EwmxZP7ykPc
- uKOnrw53gW51KbaGYerEU28GPgb0//LaNG8N/TOmT3ykbm2gpOAUOiQi+DcH6AKOdJhM
- 96iMm04R4wvFm3DTfGIsCapPKQ34qQfo7JlrY/UQF6chaVk4umR+2srW+SkeIpMGgUWy
- ajU2b+NbuZalv4eIoyML7wHvA0Jq/CE+8GYwvWFUpwNjn4xYMzBr7fVPgGAoOvlpmcSk
- XT+IxPPgOndb/jq5xdHLQMt4XDfHzCHqLlzZjdMU8BrzzLxtYdeogA5GMgMMsuJavWXh
- zSjA==
+ bh=a5/bDuFb9njMVCZOzi760O2Yv8hdxoRK1eC/vDwEn9o=;
+ b=f52a22wYjuJt+4KDlgT2fNBJT479632FM/WA0sSiWlzxigEpVGHXTxkSuezqKF6s+M
+ KP7lsfRv/oBtv2cBwfSfH2b4Lr8dMb9AbOJ+H3tfX03WnczJhcxXGhf5t1D+PB+T2DkC
+ brBHP2L0VXnw9booVZp732G7NPYqlgnc18zk3EJnvim6n48kVUaRc6P4VpR13eOyuIm1
+ Ki5B4Q/axYtkgWWNbZ7AN0o2dih8M34k5VRd3k67b+ss1E69XONe7AUjh9eG0ZZSoMt4
+ ZgyZtIkpXYBO2au1tWTt7u+DaiMzU9AfQwtET1+Df3+LrvlTSLQmevWe3+k2TgncfE7W
+ C8Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761658239; x=1762263039;
+ d=1e100.net; s=20230601; t=1761658369; x=1762263169;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ab0akvkC3mgVWGYARJ9qx4sI05tVRHB3/ShmUCOOMwk=;
- b=qAw9QZEsl2RBQGN/DvjJ0ZZi7iLHnDFGLUyrjEFaO5xImW9OepWAdgYsLBHEAx4oFC
- ByY/hXmhOCuwtn1r6k3sM2LCPD9jd+mZWUUK0XTquchf8ugsSc5iCVEd10ZZ/HhyGDRd
- ZueAaTuOq5XLCekoisAZf6x5U/rwTuVT3NXG5E7g9IXdgNqOxGsFQfdiyqzLtOdERw+o
- qkMikLD43OOMQzjJAnSmfr2A3fTphNg7R2+rVuhIY7dD3C2DJelCTtgmH0K501thDeI6
- nlkK9xD8ptr+2x5ynLv/SW73kaeQh9TSKBltu8uaPoK5ZAL/B4zYoMi1LhyVzJOIMWT6
- 5aNQ==
-X-Gm-Message-State: AOJu0YyL7gN9obNch1JaioxnPIbSy6a16mvNyCnYc21ZsB5SZOA9OUy+
- lFwx15BmkqkXWZ/b1LEjDgXPmJuZ1IZCVvc7t0q6HtvjFyigKyWVaRc/3yQ/JmdcKwn/PlkvOR9
- DN80WKWbzbESIL+u06LE7097N6KS1UMI=
-X-Gm-Gg: ASbGncv9baU1Jhf6I0xhPChw6ATWWK8xiaIYSiqeMg4hcL0lrSiijZm+FCnsjARoKB5
- 66/zHHWzzjzggI984IAU6hIHPvkp/v5dI5WAo/Tyg14Q67MU2bs2Jp9LBB/euCaoHNOxWOKMN1v
- qW/sLQJuzCllr85TzuAvpeEni+Iw8opSIIBda0PMgOt8vCdzDc8Fn/PvRXZGdEl2V22mmcyalf3
- NiUppsOsHQuf1fH3y1CuIhORRC7/Jvi45pzjqLakURA5660eOe31c3VlbUoZE3OsIabJhl1h0HQ
- ECDq86UzG7uOz3O5
-X-Google-Smtp-Source: AGHT+IGEKwDSDjx23kdnF4Jh9Lmsm23ITKcOThXaGUr1fTRmeGjyijBG7KD3Xi5yydFvwPxcZ1oU+NiKBWOJFaZ5qJo=
-X-Received: by 2002:a17:907:6e88:b0:b6d:3f8c:a2fa with SMTP id
- a640c23a62f3a-b6dba58317amr378764966b.32.1761658238901; Tue, 28 Oct 2025
- 06:30:38 -0700 (PDT)
+ bh=a5/bDuFb9njMVCZOzi760O2Yv8hdxoRK1eC/vDwEn9o=;
+ b=dNhOg4wzv6SyihuO9xNlxamqSX1JZmAbQbvhOpTP7Su3LcnJIM7HoX0mw4ogFJ3tKP
+ 8rB2fVqvBS3HcfvcYRWm0a9QZnXLkedxh1FphAyOV8uyYI5ukrWJgZN0PsRXCbUt27i0
+ /XqXZSka0QqT69y/hhrCN7F+lD1DqI5cpvUsiXQJd+WLxwfF5NGYxJRFoDBCZOjJZ4tp
+ RYFG4GCT4NFEJY/jM5ViV/QcNmtdeRS+Mjp66XCT8Z/K0wM3hSa3+6psbvzLTOq/MDVG
+ 5FB4dgC74aJFSmMKmGF8BDoF9wBx30/b7/J0V4h0BBt7+Uz7zxnfw2165Q+Ln2WtAaZo
+ M64A==
+X-Gm-Message-State: AOJu0YzhGfDneqC2grrnBgGmeFcN4xSoLxZg1t91W4dxiSazng+t9FAi
+ TpzItdf1p/lhgI2PKbV37VDNcvAsAXkoUDmwQ9vrW9AYPT+Hc4W1KltivZW3Kzcc+gbj4sd/Cin
+ Qs11U1BiBxYkogBBI2ER1Eez4NxzVxrQ=
+X-Gm-Gg: ASbGnctvO+YuzF7g9CM3Yh1QMNe/fubv/cl7TdWCSBumhoPXaPtKO0kFwDNcSSJ9Xz1
+ Zr8qVH1KqVbAPZEp3GrytN6e7Yn4z3Q1qfLcADn9+RIkSXS3zcj90Th9DxM3rumb3PCKMnmdJ/n
+ 60WTV67XOS8WI7Bnx6XtNAlTd2aYB4qvN5t43M/gw0bEPA7kiMs0pmpMBZ9OFC396BE+W93jMRG
+ //mbClss0iZ8cBqSCrzTDubt3fj3O3jVG9Dm1iDlxN2kMffBzAHj1igh3Hzzsd6Hx4dvgH0uAyv
+ yitKiN8Mcb9J9iYDjZVW7e6JYDQ=
+X-Google-Smtp-Source: AGHT+IE2KfdSOP97V4K5DPWhD+1MiAClm1XZ6JsBte+V99xN/KlDtRyxEq5ffwjAySw7+Lstl6YnjgR+U7XwrAyGXbw=
+X-Received: by 2002:a17:907:8e95:b0:b07:87f1:fc42 with SMTP id
+ a640c23a62f3a-b6dbbf4e7e0mr373630266b.16.1761658368803; Tue, 28 Oct 2025
+ 06:32:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251022150743.78183-1-philmd@linaro.org>
- <20251022150743.78183-4-philmd@linaro.org>
-In-Reply-To: <20251022150743.78183-4-philmd@linaro.org>
+ <20251022150743.78183-5-philmd@linaro.org>
+In-Reply-To: <20251022150743.78183-5-philmd@linaro.org>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Oct 2025 17:30:23 +0400
-X-Gm-Features: AWmQ_bldgE0LGX31anVT810C7d-aEZ8VcPRcaCnlRGTAOYcQ9hR3Te3iXVuwp9g
-Message-ID: <CAJ+F1CLcgEC-XoET_UPM3z2_T_AUi8T5rnj0dbN6BPeDLSmHhg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/9] chardev/char: Improve ChardevClass::chr_write()
- docstring
+Date: Tue, 28 Oct 2025 17:32:35 +0400
+X-Gm-Features: AWmQ_bkeZsfmFKqhlsSM547hvTZ6gEzbonkNVizj6Tpz-b2zX3cD2I5jQLtj2e4
+Message-ID: <CAJ+F1CLodiy5VcX8xAO0E_vAaYbqQBVmr4wE7F5Jf8La_G6onQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/9] chardev/char: Document qemu_chr_write[_all]()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,42 +105,57 @@ On Wed, Oct 22, 2025 at 7:09=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  include/chardev/char.h | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>  include/chardev/char.h | 24 ++++++++++++++++++++++++
+>  1 file changed, 24 insertions(+)
 >
 > diff --git a/include/chardev/char.h b/include/chardev/char.h
-> index b65e9981c14..d809bb316e9 100644
+> index d809bb316e9..8b1d5153dfd 100644
 > --- a/include/chardev/char.h
 > +++ b/include/chardev/char.h
-> @@ -263,7 +263,16 @@ struct ChardevClass {
->      void (*open)(Chardev *chr, ChardevBackend *backend,
->                   bool *be_opened, Error **errp);
->
-> -    /* write buf to the backend */
-> +    /**
-> +     * chr_write: Write data to a character backend
-> +     * @s: the character backend to write to
-> +     * @buf: the data to write
-> +     * @len: the number of bytes to write
-> +     *
-> +     * Called with chr_write_lock held.
-> +     *
-> +     * Returns: the number of bytes consumed or -1 on error.
+> @@ -223,7 +223,31 @@ void qemu_chr_set_feature(Chardev *chr,
+>                            ChardevFeature feature);
+>  QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
+>                                  bool permit_mux_mon);
+> +/**
+> + * qemu_chr_write: Write data to a character backend
+> + * @s: the character backend to write to
+> + * @buf: the data
+> + * @len: the number of bytes to write
+> + * @write_all: whether to block until all chars are written
+> + *
+> + * Attempt to write all the data to the backend. If not all
+> + * data can be consumed and @write_all is %true, keep retrying
+> + * while the backend return EAGAIN, effectively blocking the caller.
+> + *
+> + * Returns: the number of bytes consumed or -1 on error.
+> + */
+>  int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_a=
+ll);
 
-you could add that "errno" is expected to be set in that case.
+extra empty lines would be welcome
+
+> +/**
+> + * qemu_chr_write_all: Write data to a character backend
+> + * @s: the character backend to write to
+> + * @buf: the data
+> + * @len: the number of bytes to write
+> + *
+> + * Unlike @qemu_chr_write, this call will block if the backend
+> + * cannot consume all of the data attempted to be written.
+> + *
+> + * Returns: the number of bytes consumed or -1 on error.
+> + */
+>  #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true=
+)
+>  int qemu_chr_wait_connected(Chardev *chr, Error **errp);
+>
+
+
+Mention that "errno" is expected to be set too?
 
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-> +     */
->      int (*chr_write)(Chardev *s, const uint8_t *buf, int len);
->
->      /*
-> --
-> 2.51.0
->
->
 
-
---=20
+--
 Marc-Andr=C3=A9 Lureau
 
