@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FD1BCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB01CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 12:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDj6J-00027Z-Cb; Tue, 28 Oct 2025 08:46:59 -0400
+	id 1vDj7s-0002f3-LB; Tue, 28 Oct 2025 08:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDj6G-000279-J4
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:46:56 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vDj7r-0002ei-6H
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:48:35 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDj6A-0006e7-BL
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:46:56 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-63e0c6f0adfso6030685d50.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:46:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vDj7k-0006n6-EG
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 08:48:34 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-592fcf7a1ceso5245552e87.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 05:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761655606; x=1762260406; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=D3RH6UsMdMy87c5o+TRKGSs4DdkK1RyRgMopjF4kntY=;
- b=b5m96n2KyS2Bv/RVjdimjbhuwE4Hv2nt4lrqqQdxGbr3V6wSiHTd8J5Fp4j9eBBLV8
- r0DXJrCubyQyNdVqbXEDZdRqStIxVKCNutVNWAHnsWJqkFtdh1sfdf/T2XaVnPQEc4B1
- OzTpJ1/ZOj+rsBhOloO2M7JTT3b+CKD5k0dfdYlQSZ2IVn83y7nxsqsdqLa4NwREAW5g
- xP2fdvY7Q9KoEUlJ1x2dDkTgHxH2RzhgSQzewo3ybgMS2UC71X4ZYKB9/yTEAlqBQq9+
- C+8wDuQ7skYTsYhiRuV1BLAySxIUbekUdPjVc0VTlfCpc2EBgNr8Fh4vlGzoJQ4hUINy
- akDA==
+ d=gmail.com; s=20230601; t=1761655704; x=1762260504; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Pucb64fBJWr4+y9UVYKlttRFUeMCsZ8bQOysNcf5NkE=;
+ b=BjSUB7k5KPONbiecb6qXSnw5qYlgg5kWODjb9Hki8KE/LXzU+hh3UOT8TT//Jc9Rah
+ igYOthmakAH2H/HH3P5SrU7T7pAv/I1TeKTLgelfEcG0fHNJRSTaZKMZlxNufb67MKCX
+ nobYZ2rXQRQQEsI+ojX8cH/yS+5lCz2YDkU02MIQi5JUfGKWP9PbJ672Tv2USUSu+Hos
+ i1SeJAazk+kGgY8bGMSb4eCLPuo96mq8u/7WRvXvIpa4yjL4IsmAtE99r59uox0YF4De
+ G6LCz5H4BdaOk19H9cqnhZUnx37NCvc4PPrPmwpYdQtE6w7vaLsU3B5DdMdY/WQdsmLB
+ GjIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761655606; x=1762260406;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1761655704; x=1762260504;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D3RH6UsMdMy87c5o+TRKGSs4DdkK1RyRgMopjF4kntY=;
- b=pzJWMpagwlR6/QTAqwSx1A7GIkRBlkz2bF9iZfAstJ/cGv+lHAqh+k6+P0nMpZ2kGl
- p3CIZqkcyDWzd+QDLJUg/WFgLRrjN9gKdX+cUGpY+/sw6JVrSftEXBIizzdocasHPEDO
- G9B1qaf2PRHePS1lKjNBFg3KbXmiL54LzXyd9tZq9mkGN4no6SPQEbFlBKBimSVJIaVx
- src+iSQn30ycUqgKehxS0eW7l07wT1NfObk3H1+etbUYFlZ9uJO/jBf3qb48fqDS6P3J
- H3cky7IJYn1UokpgI9FnFx5giWYnC8Iew6f6oQR4vcmWqiyZ20Gn1VzXVlJ749S2BbG0
- Y/jw==
-X-Gm-Message-State: AOJu0Yy2G6FZvXN9mm8Ww7YTqDL621PMWnd318jcbda+YQhPa15qbKZE
- o+reCsYlo+4/9e75dcdzEyF1m8pI6lN/lO85r3CHkCVusklPBQWTuC4JX/rbDqoNrvdsqnprA7H
- Ylz9ChAJyVXguWvt/aFpZRg56tuutdOM0nFqJALRE6g==
-X-Gm-Gg: ASbGnctgTK/uCdcFOlOmy9ZBUycy8v3IGkGdd1sAOgcWf9fHPRFHK24niJCa796zKdw
- XFJAO7EPq4L6ZF0rAhPELfebdXdIgqIiPE9U7Wyz5GoiIQcF9sZj+Rd+LhGZNnJPxB7ctvkzKTs
- M4U1uJMl68+xq36asTZO5H7qHYVN3zgMLORCmrvxouEaVsdseX3gBYYRpwh0hVYdUt6EntfNp/K
- uUNA2IPhhwhzYoeis4vp1WaAxvzH9WSOU6fGirngm860VwF0PKlMh8ef5nW/A==
-X-Google-Smtp-Source: AGHT+IH1O6i8hecTj4l2aLo4OldJkWtQ8u8T0RQCgB8Hp4HMRcRLb8koFsgd74eAE4goa26cuPqJKqRaKkrJ4RO1PuE=
-X-Received: by 2002:a53:c64d:0:b0:63e:1395:1951 with SMTP id
- 956f58d0204a3-63f6ba92260mr2329214d50.54.1761655606083; Tue, 28 Oct 2025
- 05:46:46 -0700 (PDT)
+ bh=Pucb64fBJWr4+y9UVYKlttRFUeMCsZ8bQOysNcf5NkE=;
+ b=mx+jWxOwHeq5w96cr9SPXXOTluSZogk73O1bHpRoGCmEO+pa5a8tqK3BQJL4U2tAAi
+ fX6SdgVEkqZ6z9uxSxKgGG5XpjYOAulBrY1dMUc2REb4d+60WnQb6snXnIQAB293Oz5P
+ +XtlyErmUNfPBRR2PH4TFXeJMNPRd+QfaSikDS8ueil0LmL1eJ4dMHR/Q1LAtdPaQ7N2
+ 0MmW3vyahIcbYc5BepNkiifquz7RL/Yja4Ky+z9XpbgN+4QKToseIiGeu9mhzgy2eMvN
+ L0y+hYsOKPrbEznE8yGQwuylXLpmb0R6vQnYzD4ffJlBujHop2/BkUT8nYCUcCzweUoy
+ YiDA==
+X-Gm-Message-State: AOJu0Yw3xa17iQdpNDYGfi5YQ4d0VgysUBOzJ3r+nceAYrrC0ppQWNYA
+ yJxsNEXfEbHOqtoqE82fQ7aGkvppQldSgMio6+DkmLhNTVDLwBol+4mF
+X-Gm-Gg: ASbGncv8rNte8pPAH4rwRLxxh4l21Qdg5MMlRr4UJ74PmjaSrR3Ns/jBuemPUXbHBOZ
+ 62DFsa8wM5cubYbj4jkp72WvYpqXrCqixLh/91ZJuJ0ODIwRZ9lxXH0dMEdRGEOpBuBnClKwBg5
+ v5i8jeP3akuN66jwedFYBTV9kpKSUxtHYMSFwUWICeplLRuEAWpoXOWlJLmtLDG84N/R1IR7/x7
+ 64778OdFsB1FZld/UHYAvfhGblIIPov6lD6bpAQ9F2F+TG7p7f32gWzZOJ0yazCcxekyI/QtlNu
+ jYj9T6U3bLyF6w3u7lIf7ntytt5i7OwoMDizTdWlxq5bomaE7cEmfSG/7+nU9XVOfJb0Ebgz07q
+ hm83ZYlm9c4ua2weHk/5S0JmVgD3RIwxf/wiL2zAaDkG5y4Ynqwp6zB97qWn9zkLPC/1gTMIbWz
+ wcH+vHLsx0+B6XWLYbYKWZZkKGAuRMmeELn2VU2kixPQUwAwI=
+X-Google-Smtp-Source: AGHT+IF6ccHGzuzxNm7+bHl7g/7fMJDKTL+xoHfyAW6ncH9aLVAwNW32+RfTkPnTLRjRK6Csu5NkiQ==
+X-Received: by 2002:a05:6512:238a:b0:592:fc21:bc15 with SMTP id
+ 2adb3069b0e04-5930e9dd032mr1404878e87.45.1761655703317; 
+ Tue, 28 Oct 2025 05:48:23 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-59301f5098bsm3042698e87.40.2025.10.28.05.48.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Oct 2025 05:48:21 -0700 (PDT)
+Date: Tue, 28 Oct 2025 13:48:20 +0100
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>,
+ xen-devel@lists.xenproject.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: Re: [PATCH 1/3] hw/xen: Use BITS_PER_BYTE & MAKE_64BIT_MASK() in
+ req_size_bits()
+Message-ID: <aQC7lEwW9pSmCtIx@zapote>
+References: <20251022140114.72372-1-philmd@linaro.org>
+ <20251022140114.72372-2-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250629204851.1778-1-shentey@gmail.com>
- <20250629204851.1778-3-shentey@gmail.com>
-In-Reply-To: <20250629204851.1778-3-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Oct 2025 12:46:34 +0000
-X-Gm-Features: AWmQ_bkMhIpPncgf5hD9mm751gVd8CuTkkix0pY9v1Zm67Q2MKeXiO5odTkC_cg
-Message-ID: <CAFEAcA9Rvvymu7oS0pPx00v9SdXzwr27vy1VmnZmwQ7ayZK+yQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/arm/imx8mp-evk: Add KVM support
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251022140114.72372-2-philmd@linaro.org>
+User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,92 +109,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 29 Jun 2025 at 21:49, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> Allows the imx8mp-evk machine to be run with KVM acceleration as a guest.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+On Wed, Oct 22, 2025 at 04:01:11PM +0200, Philippe Mathieu-Daudé wrote:
+> Replace magic 8 by BITS_PER_BYTE, use MAKE_64BIT_MASK()
+> instead of open coding it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
 > ---
->  docs/system/arm/imx8mp-evk.rst |  7 +++++++
->  hw/arm/fsl-imx8mp.c            | 33 ++++++++++++++++++++++++++++-----
->  hw/arm/imx8mp-evk.c            | 11 +++++++++++
->  hw/arm/Kconfig                 |  3 ++-
->  hw/arm/meson.build             |  2 +-
->  5 files changed, 49 insertions(+), 7 deletions(-)
->
-> diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-> index b2f7d29ade..1399820163 100644
-> --- a/docs/system/arm/imx8mp-evk.rst
-> +++ b/docs/system/arm/imx8mp-evk.rst
-> @@ -60,3 +60,10 @@ Now that everything is prepared the machine can be started as follows:
->        -dtb imx8mp-evk.dtb \
->        -append "root=/dev/mmcblk2p2" \
->        -drive file=sdcard.img,if=sd,bus=2,format=raw,id=mmcblk2
-> +
-> +
-> +KVM Virtualization
-> +------------------
-> +
-> +To enable hardware-assisted acceleration via KVM, append
-> +``-accel kvm -cpu host`` to the command line.
-
-Coming back to this now we've resolved the "does this put
-things inside our security-promises that we don't want"
-question...
-
-I think we should be a bit clearer in the documentation
-about what tradeoffs the user is making here when they select
-KVM. Specifically:
-
- * we should note that this is intended only to improve
-   performance, and is not covered by QEMU's security policy
- * we should say that you will not get a Cortex-A53, so any
-   guest code with tight dependencies on the host CPU type
-   might not work correctly
- * we should say that the guest will only be able to run
-   at EL1, and (unlike TCG) there is no EL2 or EL3
-
-> diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-> index 866f4d1d74..7e61392abb 100644
-> --- a/hw/arm/fsl-imx8mp.c
-> +++ b/hw/arm/fsl-imx8mp.c
-> @@ -12,11 +12,13 @@
->  #include "system/address-spaces.h"
->  #include "hw/arm/bsa.h"
->  #include "hw/arm/fsl-imx8mp.h"
-> -#include "hw/intc/arm_gicv3.h"
-
-Why does this include get removed ?
-
->  #include "hw/misc/unimp.h"
->  #include "hw/boards.h"
-> +#include "system/kvm.h"
->  #include "system/system.h"
-> +#include "target/arm/cpu.h"
->  #include "target/arm/cpu-qom.h"
-> +#include "target/arm/kvm_arm.h"
+>  hw/xen/xen-hvm-common.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+> index 52e2cce397a..258014370e1 100644
+> --- a/hw/xen/xen-hvm-common.c
+> +++ b/hw/xen/xen-hvm-common.c
+> @@ -1,5 +1,6 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/units.h"
+> +#include "qemu/bitops.h"
+>  #include "qemu/error-report.h"
 >  #include "qapi/error.h"
->  #include "qobject/qlist.h"
-
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index d90be8f4c9..a4212a6ab2 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -59,7 +59,7 @@ arm_common_ss.add(when: 'CONFIG_MUSCA', if_true: files('musca.c'))
->  arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
-> -arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
-> +arm_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
->  arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
->  arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
->  arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
-
-Philippe, Pierrick: is it OK that this moves the
-fsl-imx8p.c file from arm_common to arm_ss, or is there
-a preferable way to do this from a single-binary point
-of view?
-
-thanks
--- PMM
+>  #include "exec/target_long.h"
+> @@ -448,12 +449,14 @@ static void cpu_ioreq_config(XenIOState *state, ioreq_t *req)
+>  
+>  static void handle_ioreq(XenIOState *state, ioreq_t *req)
+>  {
+> +    size_t req_size_bits = req->size * BITS_PER_BYTE;
+> +
+>      trace_handle_ioreq(req, req->type, req->dir, req->df, req->data_is_ptr,
+>                         req->addr, req->data, req->count, req->size);
+>  
+>      if (!req->data_is_ptr && (req->dir == IOREQ_WRITE) &&
+>              (req->size < sizeof (target_ulong))) {
+> -        req->data &= ((target_ulong) 1 << (8 * req->size)) - 1;
+> +        req->data &= MAKE_64BIT_MASK(0, req_size_bits);
+>      }
+>  
+>      if (req->dir == IOREQ_WRITE)
+> -- 
+> 2.51.0
+> 
 
