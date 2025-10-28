@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC5D0CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC21CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:34:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDhul-0004XM-Rz; Tue, 28 Oct 2025 07:31:01 -0400
+	id 1vDhxn-0005qt-2g; Tue, 28 Oct 2025 07:34:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDhuY-0004SJ-W6
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:30:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDhuV-00040V-1F
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:30:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761651038;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r5tJzDqyYqPpdP8MS7D19APAjZ5EN9NXPqDK713GW1k=;
- b=a6QQsi/xmPSh3swvK3Bdq0VZYfN4zPworpvTGC6IO66vjrHdG/ZsGzO7gE7eTSaI5TXMH2
- 9W9lEdaQ40mkhRxVJ6JZnn6GwNL+VfvLJ+P2y1j3/+us8630qqSoUCIb4w3k6m0/2JcS4e
- 3CWss1QvjOT4ItlBV5BRvdWmejRDCBg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-gRj3ErjtNoyI_YqrpBRyeQ-1; Tue, 28 Oct 2025 07:30:37 -0400
-X-MC-Unique: gRj3ErjtNoyI_YqrpBRyeQ-1
-X-Mimecast-MFC-AGG-ID: gRj3ErjtNoyI_YqrpBRyeQ_1761651036
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42705afbf19so3020174f8f.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:30:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDhxk-0005qT-V6
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:34:05 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDhxV-0004Mq-Sh
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:34:00 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b3b27b50090so1040496066b.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:33:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761651225; x=1762256025; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Oqywvgzht8w+QYLBZHYhDDhSx7n3vcr9BzmjlX4F8Wk=;
+ b=YXZTUnZD85ok7amHaCPkCee6NAGyli8hfHTXjrioXxOgHXESgUs/p+KuNy0mN7FsXd
+ C0AbPdeWLASGL4RtL2ZkmIk9jaPRueQJLux1unRlctAJg7f2C4oWmLiB1m9Okr6tsd09
+ cTdTa4LBfnAgtmjYBwX2Ve/GlD5Wx8fkznmiZKuXUci6fO+p2iNx3jGHMwuzWRB5ptQi
+ TflR9k5tQdu0W1xVVi9owWNBPigauZdWV6GoC5YLVMVnQSlGmM81PIcrOYKn1HTdGeCN
+ fYQb9a3huAVj4UkgK+0aCiMqbejRkIDz/DskFxgiGx+TysQ+0+1OTudixRq1KOvVZoMZ
+ +iHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761651036; x=1762255836;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=r5tJzDqyYqPpdP8MS7D19APAjZ5EN9NXPqDK713GW1k=;
- b=Gsgs8x2kEACt8ytJMblsZyfKjL7v7ug2CeqXe7i9vCR3O3KpiZ2YsGEZaZB3UnQQ1O
- uR9b+u2fUm8bljTUCpgfDo6TAIQbeJ9vGRTIZN/Kn97rplspdAm7ZzR8Ulx4WzOq9xTU
- UPkqnqHr2QMJslKDk4BnTVkrR7m4ZqY3FOG8JD+Yvj0munzRY1n0pwAPw85SIszmsN4C
- kZPYkBGIKjBKGyL8rhpUuuJDYLjt7wFRQkhjX5l1l9WQWS+yMzs4uL58VBZsBPcnfhSN
- plftG8FjHYYH3gEOHpSdqyaXWSaM2rPTXIiVEaPakDi2Y5illpAK95GVjNEPkAE0JVbv
- 3utg==
+ d=1e100.net; s=20230601; t=1761651225; x=1762256025;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Oqywvgzht8w+QYLBZHYhDDhSx7n3vcr9BzmjlX4F8Wk=;
+ b=p3AMzjq/XbwWDHIJIUm58bRtNAVDx9mLco59K9zfquV5fME3aZEwxUAiF45ozk7XHO
+ m4aSc5QTdaRjXbfeNvGNEViETduUXqJH3IWkWn45SkHtOAsQbf2YhQcpoc7R5jfkMKyd
+ 9OfH4/vSrrWoY5x1ROMLiyESpSzY2DlJr2QhQZLViP2UWPIdAfuCuCwLg+OWV+jD5moO
+ JBCRfHi/ebqbh2t1TCdvhBswULRWvXqKPVAUma9hRmhiHdHyBaIbB8gBH1QZvT69UmUO
+ FerEkHwzqT8JklqT30iUExou0yKang4sWNDcd5ElVfXI0666hKd65NRTujMBwqCyKvoy
+ tPfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCHfF65uABUpTHRlgrXmhd9vYde6d4k/O8s9ZI9fxRbE+R0yTFdojhjYOskLlTvFJXyVhZdM41vrdc@nongnu.org
-X-Gm-Message-State: AOJu0YzYiPWk8gMzIZkDj58xcdov0Kctfbhj1P1UVUhppr1uxXYzUrV6
- GYLwGiv1XSZg8ciSQmCL5elEeCMGhuoehIdr+TEmJBG60GYdA++Ku3tbn284QTGEUv3c7U+8mMJ
- OtGaqq81bq010SXb70WMUeGN+VPVW/T5yX6IH3q2xhrJEp6d9R/jRfiO+tkPaytElk/gVLWv9CW
- /9uBUv72hhcm3N0BBT3OkKt/mfogKloro=
-X-Gm-Gg: ASbGncupgJQDJlBMFa7yo1dYvjdX9kILSnsplDcsx/KsfvBd/ixM40UHXbCecAfMXob
- IouL/VItu76km/DIg7iichcwA/RZY597UsP6bGE/ZNxTZtjZjLIKoXxZ8FF/Ol1zd6D42Hns3Iy
- 6XAb6AwcDbClpsbHZz3SyS+CIbA7dVB03aE1/80mFzVnyX4UGGF084UsQvGbQ6bJ/XbIc/9sGRL
- kfr4BTBi/9/Q5zrZZnd28I6qsyGOuJtbi43JtMCVYkgebkRwuwx6TtkdL4y
-X-Received: by 2002:a5d:5d13:0:b0:427:67b:b385 with SMTP id
- ffacd0b85a97d-429a81b1402mr2373074f8f.11.1761651036064; 
- Tue, 28 Oct 2025 04:30:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3ARsWCjklUC/YRtQHaz/aur1yYLEPGvhuA972e7EFaDfspTKTMLnZn4qA6U3aM45eAre9HITBnzxE3nndD2M=
-X-Received: by 2002:a5d:5d13:0:b0:427:67b:b385 with SMTP id
- ffacd0b85a97d-429a81b1402mr2373038f8f.11.1761651035637; Tue, 28 Oct 2025
- 04:30:35 -0700 (PDT)
+ AJvYcCXrzgwRGTOSyR/TUefcIrCY+HG38k6zbmhr0R13hJ08v3tgO/X883PzlsdcsK/E0BC3PrvM+AdOM+wV@nongnu.org
+X-Gm-Message-State: AOJu0Yzakkh7x55iJ2miAM7iTDqf6IZvhHgf9/emoGwK80+58CUNrjpG
+ K3W1geMNnaMY8fpSCGC8bM42aDVhlxcicxZNiN2C5/9lJ0ZRSr5pZuEFR8ehxh5D3Dg=
+X-Gm-Gg: ASbGnct6WPGd55+feaasC05t0weDKlHbhZeE1inqIqUouzKvS+dIhbTShRnsXgGBJQb
+ VifNniwzN3pC6qlchKWgWJVeywm+XPe7Oi/JmPx4z35jIB0CIds+Gg/h4H/yrr7lIfYvY81VL8z
+ /ISsPTh/Rjm8oZtNZ6GuZusAYj0azXNJSSLcyL3Rd9Yu36bLFwels+kF/MfZWpNd1PaTdAlnU8h
+ jAoE5VDta2d/Ho+I43MN4jvV4lIJ3/DoRXv+/WYBzsIJSCRvbULM71/8RBd5wckJgMqgSBbuKaN
+ yIV4tEn2zsTVZedw7fzjAQ0po+gHH83vudBW0kY54zJO/p0Le1vzIG3BpEpKT1QAogg/iLtUjqB
+ gmOHGAq3b0DChUPEEX7Y/1Xz2Gh9fijouslWPGtVK2V+F2fnqUD8qKOY2kXIm79ps7I/ipxGrgk
+ 4UVQzVL51PmccW05El
+X-Google-Smtp-Source: AGHT+IFMoRg1/y3PZv2+uRaFlAvgg4YnbPPx2lLpiafEXjau4rq+KbbGtpDpF/AvigWc+kF0KMtaaQ==
+X-Received: by 2002:a17:907:2da2:b0:b6d:7859:61eb with SMTP id
+ a640c23a62f3a-b6dba4a2ec5mr312011366b.29.1761651225369; 
+ Tue, 28 Oct 2025 04:33:45 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d85369675sm1073348866b.28.2025.10.28.04.33.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 04:33:44 -0700 (PDT)
+Message-ID: <434ca97e-7a77-46fe-b6f5-2be5e9387743@linaro.org>
+Date: Tue, 28 Oct 2025 12:33:42 +0100
 MIME-Version: 1.0
-References: <45032bb11a9006cb7a6e1c30ca6299d40cef614c.1761644606.git.chenmiao@openatom.club>
- <CABgObfbeka+fKixBH8F_Fkprvk8oi+dTss21Vn5kYgm4sY0A8g@mail.gmail.com>
- <f8ec1dad-2654-4db8-b994-0ecd2a1943e9@openatom.club>
-In-Reply-To: <f8ec1dad-2654-4db8-b994-0ecd2a1943e9@openatom.club>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 28 Oct 2025 12:30:24 +0100
-X-Gm-Features: AWmQ_blG_SqtHLFgMI88CtemEe8nP-PEPaE2hkmXAJGWqVWcejsHYri_dvXshQ8
-Message-ID: <CABgObfbndBy++yt+Bp=3WuomprUEtJyWyKaJYQje6wWtjnb0Kg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 4/5] rust/hw/core: Provide some interfaces for the
- GPIO device
-To: Chen Miao <chenmiao@openatom.club>
-Cc: zhao1.liu@intel.com, manos.pitsidianakis@linaro.org, 
- richard.henderson@linaro.org, philmd@linaro.org, chao.liu@openatom.club, 
- qemu-rust@nongnu.org, qemu-devel@nongnu.org, 
- hust-os-kernel-patches@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 15/59] target/arm/hvf: Simplify
+ hvf_arm_get_host_cpu_features()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
+References: <20251028054238.14949-1-philmd@linaro.org>
+ <20251028054238.14949-16-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251028054238.14949-16-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,75 +113,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 12:24=E2=80=AFPM Chen Miao <chenmiao@openatom.club>=
- wrote:
->
-> On 10/28/2025 6:49 PM, Paolo Bonzini wrote:
-> > On Tue, Oct 28, 2025 at 11:18=E2=80=AFAM chenmiao <chenmiao@openatom.cl=
-ub> wrote:
-> >> In irq.rs, we added a new get method for the InterruptSource type to d=
-etermine
-> >> whether an InterruptSource is null. This eliminates the need to repeat=
-edly
-> >> call self.cell.get().is_null() for null checks during comparisons.
-> >> Additionally, we exposed the slice_as_ptrmethod to support external us=
-age with
-> >> the &[InterruptSource]type.
-> >>
-> >> In qdev.rs, we implemented the init_gpio_out_namedfunction, which corr=
-esponds
-> >> to the C function qdev_init_gpio_out_named. We also refactored the
-> >> init_gpio_outfunction to reuse the init_gpio_out_namedinterface.
-> >>
-> >> Signed-off-by: chenmiao <chenmiao@openatom.club>
-> >> ---
-> >>   rust/hw/core/src/irq.rs  |  6 +++++-
-> >>   rust/hw/core/src/qdev.rs | 12 +++++++++---
-> >>   2 files changed, 14 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
-> >> index e0d7784d97..dd5d0cadbc 100644
-> >> --- a/rust/hw/core/src/irq.rs
-> >> +++ b/rust/hw/core/src/irq.rs
-> >> @@ -71,6 +71,10 @@ pub fn pulse(&self) {
-> >>       pub fn raise(&self) {
-> >>           self.set(true);
-> >>       }
-> >> +
-> >> +    pub fn get(&self) -> bool {
-> >> +        !self.cell.get().is_null()
-> >> +    }
-> > This should not be get(), but "is_connected()". Also it should be
-> > implemented for any T, therefore in the "impl<T> InterruptSource<T>"
-> > block below.
-> I'll fix it later.
+On 10/28/25 06:41, Philippe Mathieu-Daudé wrote:
+> Use index in the structure, dereference &host_isar.idregs[] once.
+> 
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/arm/hvf/hvf.c | 25 +++++++++++++------------
+>   1 file changed, 13 insertions(+), 12 deletions(-)
 
-You can drop it actually (see review of 5/5).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> >>   }
-> >>
-> >>   impl<T> InterruptSource<T>
-> >> @@ -91,7 +95,7 @@ pub(crate) const fn as_ptr(&self) -> *mut *mut bindi=
-ngs::IRQState {
-> >>           self.cell.as_ptr()
-> >>       }
-> >>
-> >> -    pub(crate) const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bin=
-dings::IRQState {
-> >> +    pub const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bindings::=
-IRQState {
-> >>           assert!(!slice.is_empty());
-> >>           slice[0].as_ptr()
-> >>       }
-> > Since you are not using this, you don't need to expose it outside the c=
-rate.
->
-> I have used this function in the next patch.
-
-Isn't it commented out? The code that is used is:
-
-+        self.init_gpio_in(self.handler_size(), PCF8574State::gpio_set);
-+        self.init_gpio_out(from_ref(&self.handler[0]));
-+        self.init_gpio_out_named(from_ref(&self.intrq), "nINT", 1);
-
+r~
 
