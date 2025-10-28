@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95956CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47DABCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDeWm-0005VN-E5; Tue, 28 Oct 2025 03:54:00 -0400
+	id 1vDeX7-0006Fh-RW; Tue, 28 Oct 2025 03:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeWk-0005Mo-8P
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:53:58 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeX5-00061S-1w
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:54:19 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeWh-0007mk-1J
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:53:57 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-4298b865f84so3036273f8f.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:53:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeWz-0007oa-Qt
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:54:18 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-475dd54d7cdso10541055e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761638028; x=1762242828; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761638049; x=1762242849; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tN9+o1MHirw7CB9gDKCqT7ChD79lp84JZH+uUf/YZy4=;
- b=aaKnZGcHFMD7Xvfh3ODusj6JwHej1fvr+dV8KkVuUP8UVBUyrqa8KakBNwHXN9gsOM
- C1Q3mksG3AU+oOsIX24ALVjqwuax/pKVCwzjwuJMJ7naw26q6rDc8aKvZB04o7dM1mmX
- Gk909NgcSgGzwTt6KqbmGey1GiImf4P2vyDbY0/NLy4HainnGgAFMeKfTwiEzgIzgLWT
- 2kfJzxhmoqWVypOJlNmFn8knJvzROC2ykxtn2zm4KOx+fAJbccGjLn/k18h4odb8mI38
- X1DFYI2n+siHd7SscZCkH0Bmbo4PH8Mma450qQAF+5bwqSEFyPhrcY8JKbmpN9qN8dh4
- DdzQ==
+ bh=A1wTqGfxroYNlh7jZZ0rSRCtHsLrALGGJnp3dDpAgqg=;
+ b=wJhfBtVzLUX2Bh214UEnMFJDj+QqdhzoLFa9CgUIQNk1j5WVPB9X0A/K/kmJE2Uskf
+ 3jwecax4vPX89blMn+fRoHwOYm87BwJ3kGb/oZmatIS99Fk7YN1AAVCIrdY88i/xo2H6
+ e25TW/uh44DONbp0jXWFo4xEe7xcggCwdr3QU2r5cIOzBZAf0pqcXgzJWuI1fUIQ7FN9
+ gZKzfdX15WwSWDVwt47FQEaZDWv7anr36fmCZyRYmR+sU/nrx7Bhkd692vQioJJNiLAW
+ NJc2SBkNCqgWlEMKJsCsy9oP8AOpMQhGeQd2i5g8ijSsreVTulabL0aQShzIRHJnddND
+ qEIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761638028; x=1762242828;
+ d=1e100.net; s=20230601; t=1761638049; x=1762242849;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tN9+o1MHirw7CB9gDKCqT7ChD79lp84JZH+uUf/YZy4=;
- b=mFHSpZ8lHn7qIHLIcf6rtr5VUcWyBBu6gI/ldSF+Rg5upq6lKC3LdEGK8T9roZ4yKQ
- CpzZNyrvGuEXSRb4JTE5qscYQ20yYryG1CMdfIUqe0zAijGMMM9gOjzBk/kLFJcGq4yi
- VRTDHGZpuISpB99dePbCbOPAkSKVjnM6EpBLgfAUez44KcC4eWUejDtgJ4QDZzHf3nNV
- 1iPWlFCKBy+EPuLzOgUOf2Gpz66UEJvteUsWjldba/T9UP4Kd83zeLHPxiVzsZ6ga9dv
- hBkQLJdVQDzsQDdnxG/hV1fvexBKmh2bYJ75kTK26JJX1uabfDw4i3wZhooZ8JtRTkp/
- D8ug==
-X-Gm-Message-State: AOJu0YwbyxNQCFeIpjsi8Ukhk64aRq2nPKvUWL1p5XdIuxgyTozACsXd
- nGo3HBXzXY5WMTAYFOqIx06cemC489bDOs89DxHlkM6sf0jD6lxN/pX1TBxU8IhTLjgG72RVugk
- zzYSLwjU=
-X-Gm-Gg: ASbGncsmACERFcj3H/lejpsl0j5zuRtKSfVjOz1P2TUe2jrlcfnTM54MpNiz1ah4Gfd
- zbCM8km4fL6FEaSnCQ2bfphz3QVLTwFiIAy4IgHQozkRbQhqByEa80WNNNt8uHkMFJ8jTDP4Qki
- y6H2LfyLYpJ8uB3yOYAK6IGb5Hoi9VhzS6qaAzp7mglOshLGm331rbbFYFttG5IMBAVkfGYezVs
- 4J4sEbUiXFM7r/muoK3+Qc677I+13N2+gdmt6HfJqCnLUI0oEYFT5cu/gdgaj5yfvPa5z1iDd2H
- zyJ38c3coyoF6uvN9sSCuHSOXb2OUrT6LV0VWaHzrfhhmywySCx7QXh5o+oDjSs9Ee8I/glrxEO
- rKrmFpn8zOf47vC7/kfoJ4RQ1tbRgOhncVW4Ytt2F/O5d5Qhmxm9iJH2gaLRxORqqMjIE34i2bM
- M8v3Tvl1qhbOv13JkwnokIpgMOcK4x5wqZNJIzf7sWo1ejMRYESN+00Ig=
-X-Google-Smtp-Source: AGHT+IHcABFnH8jE6bCqVHBwVQZ1rbYW7Px8FRvCeLCO0Zc/zDrPxji2Ec2Ao+VKZr0F6rkIZRrcGg==
-X-Received: by 2002:a05:6000:1aca:b0:426:ee44:6d9 with SMTP id
- ffacd0b85a97d-429a7e52be4mr1745993f8f.21.1761638027701; 
- Tue, 28 Oct 2025 00:53:47 -0700 (PDT)
+ bh=A1wTqGfxroYNlh7jZZ0rSRCtHsLrALGGJnp3dDpAgqg=;
+ b=b5xWIDCuT1GQSWui/XnLhAiqmbw1WiSQ47jwHD7AD0aC35vPhwpOxlYWS6EFkgr4hv
+ AQi1VMPJQQj+RjztLj0WmvmEr4u1HOijj+1dM/eFL0vWnZ/Kx+Sys6fy99zT4RzI161q
+ Obl4uGH+Tu84ks7rEcCbgLQgBbg6T0ubdwqhRxI8BfKZQooKmw1I10BRsiwnAyH3+px8
+ 4DKu5kLFshObp+roHg8sVo6bsFcDrYv2HwlN50QK2GUaxWEyiAXezDo7/CHkinh+zQM/
+ GeYo004FIjcfAAIEFkDBrFKQu4reqT3uutUkNFXLRl8ww1hOyaqx7AX1Rg0hsZvX3RSy
+ A4Pg==
+X-Gm-Message-State: AOJu0YwbemDh+ZR9t4cPB/uNlZ10psIELkM48ilE9r7P6mqti7iINsff
+ H5gfopNRTkjOgi8VtCAAWzk5yYCr2RB2Qe3cAdNMjARONpRxYGtWd6H3sbGq9hFTRBmroIWH0rj
+ kiGbdwQo=
+X-Gm-Gg: ASbGncuozaWM/uzgdAcULKaxtruNkjo8BirhOUtafJaa7acuETJpUanEXZImu6B5Rt9
+ NT45AvrqO9fr+KTifhA9m+bKRWbgu7nC09bCqCo1F9Itxrsw1YVWwx/91cvNB0Cjvi+yMORbZ64
+ 9qzOtZbDuTC/XrrrQCQsm/iVRVt1dClwW2kBWP6BsqiBPkFBBqBWpjCcWH9dePjRlFS+YebiXcz
+ P5tZCMpA0OLU+ZmRDxFD6TjcJLn5INftIk1LZHosGaZpyhw/kClUzoOeyW084Ka/F/YpulXhhaZ
+ lR9E/mSKnJntUP2/+JaSGra8gN2ogVJin0Kig1Y+uuWNPvsYmXh3y8TMARoZj3M7kThs8rkM6cv
+ Zefoo3i44+TDE7WW5CrWVIMIrC/+obIbXXaSfO9YPpYVcrRLXhwWAN9IKM6vvuU+IMb24kbx/Br
+ TzPSZnLIi73aGoMZyMjdrXBN47TCj8+snPHUMAekMQcLcBJtQXCsbj2xs=
+X-Google-Smtp-Source: AGHT+IHzMjeoNH1FNiov7bailjR0kfGRCe945nTHWe/NpzoLLvG2p5nbrnDm+uv+YLheRb30msxPQg==
+X-Received: by 2002:a05:600c:4ecc:b0:46e:37a7:48d1 with SMTP id
+ 5b1f17b1804b1-47717e6ac1cmr23026255e9.34.1761638049412; 
+ Tue, 28 Oct 2025 00:54:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952cb7d1sm19038498f8f.16.2025.10.28.00.53.46
+ 5b1f17b1804b1-477184ff5a0sm14742405e9.6.2025.10.28.00.54.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 00:53:47 -0700 (PDT)
+ Tue, 28 Oct 2025 00:54:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>
-Subject: [PULL 13/23] hw/int/loongarch: Include missing 'system/memory.h'
- header
-Date: Tue, 28 Oct 2025 08:48:49 +0100
-Message-ID: <20251028074901.22062-14-philmd@linaro.org>
+Cc: Vishal Chourasia <vishalc@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 14/23] hw/core/loader: Use qemu_open() instead of open() in
+ get_image_size()
+Date: Tue, 28 Oct 2025 08:48:50 +0100
+Message-ID: <20251028074901.22062-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028074901.22062-1-philmd@linaro.org>
 References: <20251028074901.22062-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,87 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"system/memory.h" header is indirectly pulled by "hw/sysbus.h".
-Include it explicitly to avoid when refactoring the latter:
+From: Vishal Chourasia <vishalc@linux.ibm.com>
 
-  In file included from ../../hw/intc/loongson_ipi.c:9:
-  In file included from /Users/philmd/source/qemu/include/hw/intc/loongson_ipi.h:12:
-  include/hw/intc/loongson_ipi_common.h:37:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     37 |     MemoryRegion ipi_iocsr_mem;
-        |                  ^
+Replace open() with qemu_open() which provides better error handling
+via the Error object, automatically sets O_CLOEXEC, and supports FD
+passing with /dev/fdset.
 
+Currently pass errp argument as NULL.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Message-ID: <20251024130556.1942835-4-vishalc@linux.ibm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20251024190416.8803-21-philmd@linaro.org>
 ---
- include/hw/intc/loongarch_dintc.h         | 2 +-
- include/hw/intc/loongarch_extioi_common.h | 1 +
- include/hw/intc/loongarch_pch_msi.h       | 1 +
- include/hw/intc/loongarch_pic_common.h    | 1 +
- include/hw/intc/loongson_ipi_common.h     | 1 +
- 5 files changed, 5 insertions(+), 1 deletion(-)
+ hw/core/loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/intc/loongarch_dintc.h b/include/hw/intc/loongarch_dintc.h
-index 0b0b5347b2c..01bb1e465cb 100644
---- a/include/hw/intc/loongarch_dintc.h
-+++ b/include/hw/intc/loongarch_dintc.h
-@@ -8,7 +8,7 @@
- #include "qom/object.h"
- #include "hw/sysbus.h"
- #include "hw/loongarch/virt.h"
--
-+#include "system/memory.h"
- 
- #define NR_VECTORS     256
- 
-diff --git a/include/hw/intc/loongarch_extioi_common.h b/include/hw/intc/loongarch_extioi_common.h
-index c021ccee0fa..1bd2bfa07fc 100644
---- a/include/hw/intc/loongarch_extioi_common.h
-+++ b/include/hw/intc/loongarch_extioi_common.h
-@@ -10,6 +10,7 @@
- #include "qom/object.h"
- #include "hw/sysbus.h"
- #include "hw/loongarch/virt.h"
-+#include "system/memory.h"
- 
- #define LS3A_INTC_IP                 8
- #define EXTIOI_IRQS                  (256)
-diff --git a/include/hw/intc/loongarch_pch_msi.h b/include/hw/intc/loongarch_pch_msi.h
-index b8586fb3b6f..ef4ec4fdeb8 100644
---- a/include/hw/intc/loongarch_pch_msi.h
-+++ b/include/hw/intc/loongarch_pch_msi.h
-@@ -6,6 +6,7 @@
-  */
- 
- #include "hw/sysbus.h"
-+#include "system/memory.h"
- 
- #define TYPE_LOONGARCH_PCH_MSI "loongarch_pch_msi"
- OBJECT_DECLARE_SIMPLE_TYPE(LoongArchPCHMSI, LOONGARCH_PCH_MSI)
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 675ba96e64e..179361eb567 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -9,6 +9,7 @@
- 
- #include "hw/loongarch/virt.h"
- #include "hw/sysbus.h"
-+#include "system/memory.h"
- 
- #define PCH_PIC_INT_ID                  0x00
- #define  PCH_PIC_INT_ID_VAL             0x7
-diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
-index e58ce2aa1c4..4fa03bc351f 100644
---- a/include/hw/intc/loongson_ipi_common.h
-+++ b/include/hw/intc/loongson_ipi_common.h
-@@ -11,6 +11,7 @@
- #include "qom/object.h"
- #include "hw/sysbus.h"
- #include "exec/memattrs.h"
-+#include "system/memory.h"
- 
- #define IPI_MBX_NUM           4
- 
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 477661a0255..c9782d67e86 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -74,7 +74,7 @@ int64_t get_image_size(const char *filename)
+ {
+     int fd;
+     int64_t size;
+-    fd = open(filename, O_RDONLY | O_BINARY);
++    fd = qemu_open(filename, O_RDONLY | O_BINARY, NULL);
+     if (fd < 0)
+         return -1;
+     size = lseek(fd, 0, SEEK_END);
 -- 
 2.51.0
 
