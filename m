@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 320F8CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A96CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 09:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDfUj-00007N-Lf; Tue, 28 Oct 2025 04:55:57 -0400
+	id 1vDfiQ-0002rY-S5; Tue, 28 Oct 2025 05:10:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vDfUg-000065-4I
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:55:55 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vDfUR-0007bC-BH
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:55:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761641739; x=1793177739;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=LDkly6JAWl+jNWu68ElLZLMn4bAcPr46JUM/YlHZDEM=;
- b=dEenYQUjBdqv305/3pgvDY9SXy9uVxtTxvi+eOspOalNYirppxmiuYZo
- 9u5xWnJP3V1M4mVNBs/5tlFAyV12hTmRp3lNcjwfRa03i3QvmXX5ZyEai
- 4rxYCDjuoMKfnLR/GrHI1gmqYsdQJkETD30Ifngt0BKAYti0OLfv2bDao
- BSKUBEm98ss+2c9Zd6+FVLPUHr/4pbS9VjHAkGavSVmTNH0ZgIEQga1Kc
- URwn7ftelVOJ3fZYdsgznXdhtEV/JV/nCI95hl8+Ev3M1Fh3PPG51/Id2
- VPXZxTuB0BakPlZ5yWlKtoST69oWidnuVgeqRvV1M2wWJRaWYE1Dh9dSF Q==;
-X-CSE-ConnectionGUID: 5pF5CVQ5SyWg4cXP7eG0Qw==
-X-CSE-MsgGUID: 0ToGk1qITyq27tccr9EhOg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="51309699"
-X-IronPort-AV: E=Sophos;i="6.19,261,1754982000"; d="scan'208";a="51309699"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2025 01:55:31 -0700
-X-CSE-ConnectionGUID: Gooqyu1mSvqm+npkSCoOvA==
-X-CSE-MsgGUID: 4/64+YRuQBqbi7MTw9YwmA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,261,1754982000"; d="scan'208";a="189345914"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2025 01:55:29 -0700
-Message-ID: <ea4ff407-b5ee-4649-b5cd-82b626dca3ee@intel.com>
-Date: Tue, 28 Oct 2025 16:55:25 +0800
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vDfiL-0002r2-I3
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 05:10:01 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vDfi9-0000pZ-Kz
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 05:10:01 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-61feb87fe26so9755732a12.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 02:09:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1761642585; x=1762247385; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6+ioTo/kftZYIHGeZIzymdf7bNMKH6pnXAtV38BIoRc=;
+ b=ZhrHV+tBQ97axHxwQlEI/hggdZdYNqoawPBdQ+MffF7q6Bvh6xRkPc/prszDUhuXIb
+ 1RYE6Aye7O/y4XnwVCZGyv5F0R+TF8B/r9sZ80LCCva9qTbgJf+PjvnjzpbWe1jiJ0yX
+ Ur8aiw41Ers32OJZvjNbumcYwm1kSTN+yMUMJg5rK/i4RzlMF6XRBAKX1FGrWJ8B4GOH
+ lI4xVwrxS5ueAcGj9AJbMxV8iPdkCS1JAuFpGiL1bgPDVThsZJxAsAoCuAcQHoAJgQNk
+ Yb3CdH15WR7AEfhjnbT91nrwRl1fElKWh5ItK84uKD+wb+uzBYCub4vW0NbFwoFg9qSn
+ LcOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761642585; x=1762247385;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6+ioTo/kftZYIHGeZIzymdf7bNMKH6pnXAtV38BIoRc=;
+ b=W4soaj3hjtQd8yfpytO3iAttCWDeWLFZpi/QOQVtxBx7Zj5k0AUoGMpALkOeOQooEG
+ vsK2rxix1AJJ2giuiOWicARSqhgKlETHddQ7h3r9jozrKByrFfp7JHXKxKToLVZhRa3z
+ RJ1PNTTgSIa6KSGuRCrXGaf6tM6fm5KC8V99hffnd+fg54jTX1zy0nhbxj30fzNAB0Jh
+ X/9FPwe/KEmAra0jGcAi4zwazWk3LtqGMACCOlay/GARLG9XALng09mB/qZYM2gykwbL
+ gLL1LR7VNcXTILcub9hA0OvO3oESgBSnTBdY22kl62Fbfkmt2lJXx1HNGZCr7SdsLg4Y
+ 35HQ==
+X-Gm-Message-State: AOJu0YxZ8acl94u3MqfuSk/5HFzlArFwxur4+oHMweE+o2y71nWTAOrP
+ sRKrA0Ba2vGR4H167nsKTKvIvlRASCLZuRL5OT09QHvpiL0xpMCK/B2bSCuz10tAS+cVKEYTN2H
+ 8XIR2ThnycavtZEgNo9AFRMfigogiTgwAMXWQQV30djtxuWY4n7YC
+X-Gm-Gg: ASbGncuOwpblK4ks5k9XQcFYM8ugHbmJ3Zzemd7AViSy2tv6/QCFk/iAO+kk/BV2N8h
+ K2sd7QLmDZ+CLhWhULCgeKU8veddNryEf/tr4PcBqhYjZvkrVaJsEEqNRqFG2srcgXT8SUwRQGM
+ 5rNMl7wF8MewI7mC3MTrA+P9IhGu9zTSAfJ2pMX8/mz+rfO+4puN9tDN7N9UgP4L00Ao22sAWZG
+ PoNzCI4x0PsEW/o+nWlZvmt5RGIv8j1COkB8fQSKnB0C/6KepWujT1Q3b1HpZ4=
+X-Google-Smtp-Source: AGHT+IF/EHt6NK2xPRT3uKc8+ON41QLe6lZuxFUUwKT/ZCrzOpZc16h2mXjv9Z+tImIenwNRfihkp87E5QKixBwu4IM=
+X-Received: by 2002:a05:6402:5193:b0:63c:4537:75a7 with SMTP id
+ 4fb4d7f45d1cf-63ed8260199mr2324290a12.28.1761642585082; Tue, 28 Oct 2025
+ 02:09:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 20/20] i386/tdx: Add CET SHSTK/IBT into the supported
- CPUID by XFAM
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao
- <chao.gao@intel.com>, John Allen <john.allen@amd.com>,
- Babu Moger <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>,
- Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
-References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-21-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20251024065632.1448606-21-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20251028085032.2053569-1-frank.chang@sifive.com>
+In-Reply-To: <20251028085032.2053569-1-frank.chang@sifive.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Tue, 28 Oct 2025 17:09:34 +0800
+X-Gm-Features: AWmQ_blFUtxeAx73CGEjglFh7vGE9P3eAO-2_7oSUhBtC7X2W1TfCixD1EwriGk
+Message-ID: <CALw707qcytHujijUg=QmK7Tf3L26_0gzjs-uyGc_-_G6CSHUYw@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv: riscv-iommu: Don't look up DDT cache in Off and
+ Bare modes
+To: frank.chang@sifive.com
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.574, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,44 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/2025 2:56 PM, Zhao Liu wrote:
-> From: Chenyi Qiang <chenyi.qiang@intel.com>
-> 
-> So that it can be configured in TD guest.
-> 
-> And considerring cet-u and cet-s have the same dependencies, it's enough
-> to only list cet-u in tdx_xfam_deps[].
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
 
-In fact, this is not the reason.
+- Jim
 
-The reason is that CET_U and CET_S bits are always same in supported 
-XFAM reported by TDX module, i.e., either 00 or 11. So, we only need to 
-choose one of them.
 
-> Tested-by: Farrah Chen <farrah.chen@intel.com>
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-With commit message updated,
-
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
+On Tue, Oct 28, 2025 at 4:51=E2=80=AFPM <frank.chang@sifive.com> wrote:
+>
+> From: Frank Chang <frank.chang@sifive.com>
+>
+> According to the RISC-V IOMMU specification:
+>
+> * When ddtp.iommu_mode is set to Off, there is no DDT look-up, and an "Al=
+l
+>   inbound transactions disallowed" fault (cause =3D 256) is reported for =
+any
+>   inbound transaction.
+>
+> * When ddtp.iommu_mode is set to Bare, there is no DDT look-up, and the
+>   translated address is the same as the IOVA, unless the transaction type
+>   is disallowed (cause =3D 260).
+>
+> In the current implementation, the DDT cache is incorrectly looked up
+> even when ddtp.iommu_mode is set to Off or Bare. This may result in
+> unintended cache hits.
+>
+> Therefore, the DDT cache must not be looked up when ddtp.iommu_mode is
+> set to Off or Bare. For other modes, software is required to issue cache
+> invalidation commands before any inbound transactions.
+>
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
 > ---
->   target/i386/kvm/tdx.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index a3444623657f..01619857685b 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -526,6 +526,8 @@ TdxXFAMDep tdx_xfam_deps[] = {
->       { XSTATE_OPMASK_BIT,    { FEAT_7_0_EDX, CPUID_7_0_EDX_AVX512_FP16 } },
->       { XSTATE_PT_BIT,        { FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT } },
->       { XSTATE_PKRU_BIT,      { FEAT_7_0_ECX, CPUID_7_0_ECX_PKU } },
-> +    { XSTATE_CET_U_BIT,     { FEAT_7_0_ECX, CPUID_7_0_ECX_CET_SHSTK } },
-> +    { XSTATE_CET_U_BIT,     { FEAT_7_0_EDX, CPUID_7_0_EDX_CET_IBT } },
->       { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_BF16 } },
->       { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_TILE } },
->       { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_INT8 } },
-
+>  hw/riscv/riscv-iommu.c | 13 +++++++++----
+>  1 file changed, 9 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index b33c7fe3259..95db811f125 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -1290,13 +1290,18 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIO=
+MMUState *s,
+>          .devid =3D devid,
+>          .process_id =3D process_id,
+>      };
+> +    unsigned mode =3D get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
+>
+>      ctx_cache =3D g_hash_table_ref(s->ctx_cache);
+> -    ctx =3D g_hash_table_lookup(ctx_cache, &key);
+>
+> -    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+> -        *ref =3D ctx_cache;
+> -        return ctx;
+> +    if (mode !=3D RISCV_IOMMU_DDTP_MODE_OFF &&
+> +        mode !=3D RISCV_IOMMU_DDTP_MODE_BARE) {
+> +        ctx =3D g_hash_table_lookup(ctx_cache, &key);
+> +
+> +        if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+> +            *ref =3D ctx_cache;
+> +            return ctx;
+> +        }
+>      }
+>
+>      ctx =3D g_new0(RISCVIOMMUContext, 1);
+> --
+> 2.43.0
+>
+>
 
