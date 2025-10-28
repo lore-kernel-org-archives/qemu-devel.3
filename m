@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B5ACCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 593B0CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDk8a-0006SA-Lo; Tue, 28 Oct 2025 09:53:24 -0400
+	id 1vDkAd-0007iG-6j; Tue, 28 Oct 2025 09:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDk8Y-0006S1-9q
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:53:22 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDk8U-0006we-OA
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:53:21 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-4e4d9fc4316so64390941cf.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:53:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761659596; x=1762264396; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QwpKffiIzZfIj3OR8x2H74w/HHbZRzvGrYIknNZdOzg=;
- b=kO9zYGBHbN4KeCKvx/lx9NVt7I5a127bEzKg9tKvxXY5aFuopUd7EaR6JFZXRjRIaA
- VLWufT+HpHCqg0kipk1Y5bhlkmjVEgziWr4smfVVg3iI6l4t6lhHoASA11MQJLBsiizQ
- AU9XuoDGnWKS82S9EjlJMe2x2rF5IiYcvkOPUyrCI21vFIXn698ojYSHvBNQfJeoS0Gh
- U4VUSTQEXpJTMY0hkT1xWx/JSxpUP+lQaFs2RbqdZUqzJhGKPdl3XA1U0l3qLzlYgerg
- N+Rc3cQS+mojDf895/sydpptKebsv522FB/M+TGaIFEyvRCwjF97IFNCXl8o76QJvs4c
- V8Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761659596; x=1762264396;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QwpKffiIzZfIj3OR8x2H74w/HHbZRzvGrYIknNZdOzg=;
- b=QOv/mI2ZB9SLSvqU2XNJWZ26Tj827p2FPFg0uxNDdUiB3CkL3x/WTQxR6TL9r5I9wF
- YDUKvyH62y2ekpmBoJ1EQXBvHr4J+kvqQp950feDGyz2GUZYCMojBEyVe6mEUwpCC0FP
- XQ7MiIkk76JqmSX/bby9/Sn3eDX9i3RoEEZ6IJeFXCR5zTivq0/IgKuGTyTylEkFZq03
- Lnv13TcPcM7H8FP86ys1DEVoaAI1SvVjIvoxA+XRbjAMmHWjW/nfw0UtIiuFjoerTUQf
- TNFLJVpZOdATMR5rlDVCFMqtfWsn+1vQvejooOs/PqxlspLFvTz9pIz0AD+bKiQ1M52s
- 2VCQ==
-X-Gm-Message-State: AOJu0YzIW5o0JvUf/Fp1Nnz3iljsgY+Yp5fZs5k77XeCQGGuZQbyZOOQ
- 54MQXmP6ht7DjjUvLiJbGuAdiidayrohcRZ1mwMh6aegPwM1W9zURyjjiMu50Z+YEpoCHgpj3+3
- VHsnSwXaJ6ec8S04QSztr4pXoqyWUQrz4JvRA8V0=
-X-Gm-Gg: ASbGncswSt1xqA94+qJeE3vWOgP5AMmkO7VDw2ioAeEbcg3SnKk2/CADPYqqNnWdMmi
- cMFem8uYxO9eeewPBjKp/VCod/102PFaFbYFMMSxvBNixX2s6f00BSokVqhscLfXigsgdnAl1tP
- b6zztvUjLj5fOaWtgsDC21nfPCB1I0IbTJhLieskzyDvNHXbCevBZOx6I4FTB+DJc15oZIKLIGo
- nCFltg5uvPqz70rB5fOcRWEo39Cr7hc7F92gNE5XMyD9z7EmYcTczOghQxr1U7ZXhzlGlQXiFdN
- pamz1DQYGkLhwfrb
-X-Google-Smtp-Source: AGHT+IGECE4bYPYCjFR0nW9wttV57exmgIDs/hHdGyhQgJe9oimQdp0WKHLsyXurDPb3khSQgRLCx/dOq6tg6S1H4qQ=
-X-Received: by 2002:a05:622a:3cc:b0:4e8:8d97:ccad with SMTP id
- d75a77b69052e-4ed0764464cmr42147321cf.78.1761659595955; Tue, 28 Oct 2025
- 06:53:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vDkAa-0007fu-KJ; Tue, 28 Oct 2025 09:55:28 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vDkAS-0007CR-NA; Tue, 28 Oct 2025 09:55:27 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 46A021637AB;
+ Tue, 28 Oct 2025 16:55:08 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id F2138307F00;
+ Tue, 28 Oct 2025 16:55:12 +0300 (MSK)
+Message-ID: <aaa82a95-e15c-4e0a-b229-16761bc7793a@tls.msk.ru>
+Date: Tue, 28 Oct 2025 16:55:12 +0300
 MIME-Version: 1.0
-References: <20251022150743.78183-1-philmd@linaro.org>
- <20251022150743.78183-7-philmd@linaro.org>
-In-Reply-To: <20251022150743.78183-7-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Oct 2025 17:53:02 +0400
-X-Gm-Features: AWmQ_bnZljpW8NnDYiIA7o4nX_5Ycbepq7bQ05Yabzi5ihs-2zRzaNlVdGoTMRg
-Message-ID: <CAJ+F1CKXgp5cFk+yLDSM698rcV_OgxY_RvbripnjgVeVA01DOA@mail.gmail.com>
-Subject: Re: [PATCH v2 6/9] chardev/char: Allow partial writes in
- qemu_chr_write()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x834.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Use correct type for FIBMAP and FIGETBSZ
+ emulation
+To: Bastian Blank <bblank@thinkmo.de>, qemu-devel@nongnu.org
+References: <l6slswtmabktu6g23so3sldafschilwbp3kqolny3lppjezosi@hn6ptmklek4q>
+Content-Language: en-US, ru-RU
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-stable <qemu-stable@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <l6slswtmabktu6g23so3sldafschilwbp3kqolny3lppjezosi@hn6ptmklek4q>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,47 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 10/28/25 15:16, Bastian Blank wrote:
+> Both the FIBMAP and FIGETBSZ ioctl get "int *" (pointer to 32bit
+> integer) as argument, not "long *" as specified in qemu.  Using the
+> correct type makes the emulation work in cross endian context.
+> 
+> Both ioctl does not seem to be documented. However the kernel
+> implementation has always used "int *".
+> 
+> Signed-off-by: Bastian Blank <waldi@debian.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3185
 
-On Wed, Oct 22, 2025 at 7:10=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> If qemu_chr_write_buffer() returned an error, but could
-> write some characters, return the number of character
-> written. Otherwise frontends able to recover and resume
-> writes re-write the partial chars already written.
->
-> Cc: qemu-stable@nongnu.org
-> Suggested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  chardev/char.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/chardev/char.c b/chardev/char.c
-> index 30b21fedce4..5c8130b2435 100644
-> --- a/chardev/char.c
-> +++ b/chardev/char.c
-> @@ -189,7 +189,7 @@ int qemu_chr_write(Chardev *s, const uint8_t *buf, in=
-t len, bool write_all)
->          replay_char_write_event_save(res, offset);
->      }
->
-> -    if (res < 0) {
-> +    if (res < 0 && offset =3D=3D 0) {
->          return res;
+Reviwed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-If write_all=3D=3Dtrue, we should still return an error, I guess.
+Again, I can pick this up through qemu-trivial if there's no
+objection, Laurent?
 
+And Cc: qemu-stable.
 
->      }
->      return offset;
-> --
-> 2.51.0
->
->
+Thanks,
 
-
---=20
-Marc-Andr=C3=A9 Lureau
+/mjt
 
