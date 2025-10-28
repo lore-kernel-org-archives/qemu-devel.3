@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDDDECCF9F1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D4ABCCF9EA
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDstO-0002vS-Ry; Tue, 28 Oct 2025 19:14:18 -0400
+	id 1vDstM-0002uB-UH; Tue, 28 Oct 2025 19:14:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstM-0002te-ER
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:16 -0400
+ id 1vDstK-0002tY-TQ
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:15 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDst8-000148-Th
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:15 -0400
+ id 1vDst9-00014g-1N
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:14 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B64BA8174D;
- Wed, 29 Oct 2025 02:13:53 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id ACB9F81756;
+ Wed, 29 Oct 2025 02:13:55 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id oDnXpg2bCW20-YA4SyPGP; Wed, 29 Oct 2025 02:13:53 +0300
+ ESMTPSA id oDnXpg2bCW20-kSdLoIY9; Wed, 29 Oct 2025 02:13:55 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761693233;
- bh=lLdUY3HJY+EAhmA9vc28UfAQF17pyF94N7tH58szokw=;
+ s=default; t=1761693235;
+ bh=1/MGi/tsP2KZAQxhpYMWKHlovow3Rr/el/C7tdrzP30=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=KE8KAaPPRO0JStcAlDnkeM00eRvQFXYOB7519g407aSVWOynYglEJbM4/Ycow0J2v
- VMjzRIqhSbjaO/XGGP26Nz9fewnOsQj0x2wXy6gVGlBzb+XAdCxE48nomkvClK7U2k
- ke/CXp07Nt64Q0vlTtCaxhrOfvsOKaJ85wmDiMG8=
+ b=fJNleDlJvqjIlqmTUqR4UYjOUfRCj11H+nGYeudRI9z7zHQx3E524LxWoNy/tmfxi
+ f9OyJRHpDYYtVlZPlNsFY/QJVdgY4USpqT3T1C0NyZle/3qvFUmNKAwAdZ3bsMRqys
+ LAnR7IKPrpOKobR0yMjyd7PfmXmL5nRPCWU7qfbQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -43,9 +43,9 @@ To: peterx@redhat.com
 Cc: armbru@redhat.com,
 	vsementsov@yandex-team.ru,
 	qemu-devel@nongnu.org
-Subject: [RFC 02/22] migration: VMStateInfo: introduce new handlers with errp
-Date: Wed, 29 Oct 2025 02:13:26 +0300
-Message-ID: <20251028231347.194844-3-vsementsov@yandex-team.ru>
+Subject: [RFC 05/22] hw/s390x/virtio-ccw.c: move to new migration APIs
+Date: Wed, 29 Oct 2025 02:13:29 +0300
+Message-ID: <20251028231347.194844-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251028231347.194844-1-vsementsov@yandex-team.ru>
 References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
@@ -75,97 +75,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new APIs with errp, to allow handlers report good
-error messages. We'll convert existing handlers soon.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- include/migration/vmstate.h |  7 +++++++
- migration/vmstate.c         | 37 +++++++++++++++++++++++++++----------
- 2 files changed, 34 insertions(+), 10 deletions(-)
+ hw/s390x/virtio-ccw.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 0aac3b7a66..f0ffd8f9c5 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -46,6 +46,13 @@ struct VMStateInfo {
-     int coroutine_mixed_fn (*put)(QEMUFile *f, void *pv, size_t size,
-                                   const VMStateField *field,
-                                   JSONWriter *vmdesc);
-+    bool coroutine_mixed_fn (*load)(QEMUFile *f, void *pv, size_t size,
-+                                    const VMStateField *field,
-+                                    Error **errp);
-+    bool coroutine_mixed_fn (*save)(QEMUFile *f, void *pv, size_t size,
-+                                    const VMStateField *field,
-+                                    JSONWriter *vmdesc,
-+                                    Error **errp);
- };
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index 4cb1ced001..f456856d42 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -38,7 +38,7 @@
  
- enum VMStateFlags {
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 4d28364f7b..1d291ff556 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -212,13 +212,22 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                                              inner_field->struct_version_id,
-                                              errp);
-                 } else {
--                    ret = inner_field->info->get(f, curr_elem, size,
--                                                 inner_field);
--                    if (ret < 0) {
--                        error_setg(errp,
--                                   "Failed to load element of type %s for %s: "
--                                   "%d", inner_field->info->name,
--                                   inner_field->name, ret);
-+                    if (inner_field->info->get) {
-+                        ret = inner_field->info->get(f, curr_elem, size,
-+                                                     inner_field);
-+                        if (ret < 0) {
-+                            error_setg(errp,
-+                                       "Failed to load element of type %s for %s: "
-+                                       "%d", inner_field->info->name,
-+                                       inner_field->name, ret);
-+                        }
-+                    } else if (!inner_field->info->load(
-+                        f, curr_elem, size, inner_field, errp)) {
-+                            error_prepend(
-+                                errp,
-+                                "Failed to load element of type %s for %s: ",
-+                                inner_field->info->name, inner_field->name);
-+                            ret = -EINVAL;
-                     }
-                 }
+ bool have_virtio_ccw = true;
  
-@@ -536,9 +545,12 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                                                curr_elem, vmdesc_loop,
-                                                inner_field->struct_version_id,
-                                                errp);
--                } else {
-+                } else if (inner_field->info->put) {
-                     ret = inner_field->info->put(f, curr_elem, size,
-                                                  inner_field, vmdesc_loop);
-+                } else if (!inner_field->info->save(
-+                    f, curr_elem, size, inner_field, vmdesc_loop, errp)) {
-+                    ret = -EINVAL;
-                 }
+-static int virtio_ccw_dev_post_load(void *opaque, int version_id)
++static bool virtio_ccw_dev_post_load(void *opaque, int version_id, Error **errp)
+ {
+     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(opaque);
+     CcwDevice *ccw_dev = CCW_DEVICE(dev);
+@@ -54,7 +54,7 @@ static int virtio_ccw_dev_post_load(void *opaque, int version_id)
+     if (ck->refill_ids) {
+         ck->refill_ids(ccw_dev);
+     }
+-    return 0;
++    return true;
+ }
  
-                 written_bytes = qemu_file_transferred(f) - old_offset;
-@@ -551,8 +563,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
+ typedef struct VirtioCcwDeviceTmp {
+@@ -62,7 +62,7 @@ typedef struct VirtioCcwDeviceTmp {
+     uint16_t config_vector;
+ } VirtioCcwDeviceTmp;
  
-                 if (ret) {
--                    error_setg(errp, "Save of field %s/%s failed",
--                                vmsd->name, field->name);
-+                    if (*errp) {
-+                        error_prepend(errp, "Save of field %s/%s failed: ",
-+                                      vmsd->name, field->name);
-+                    } else {
-+                        error_setg(errp, "Save of field %s/%s failed",
-+                                   vmsd->name, field->name);
-+                    }
-                     if (vmsd->post_save) {
-                         vmsd->post_save(opaque);
-                     }
+-static int virtio_ccw_dev_tmp_pre_save(void *opaque)
++static bool virtio_ccw_dev_tmp_pre_save(void *opaque, Error **errp)
+ {
+     VirtioCcwDeviceTmp *tmp = opaque;
+     VirtioCcwDevice *dev = tmp->parent;
+@@ -70,23 +70,24 @@ static int virtio_ccw_dev_tmp_pre_save(void *opaque)
+ 
+     tmp->config_vector = vdev->config_vector;
+ 
+-    return 0;
++    return true;
+ }
+ 
+-static int virtio_ccw_dev_tmp_post_load(void *opaque, int version_id)
++static bool virtio_ccw_dev_tmp_post_load(void *opaque, int version_id,
++                                         Error **errp)
+ {
+     VirtioCcwDeviceTmp *tmp = opaque;
+     VirtioCcwDevice *dev = tmp->parent;
+     VirtIODevice *vdev = virtio_bus_get_device(&dev->bus);
+ 
+     vdev->config_vector = tmp->config_vector;
+-    return 0;
++    return true;
+ }
+ 
+ const VMStateDescription vmstate_virtio_ccw_dev_tmp = {
+     .name = "s390_virtio_ccw_dev_tmp",
+-    .pre_save = virtio_ccw_dev_tmp_pre_save,
+-    .post_load = virtio_ccw_dev_tmp_post_load,
++    .pre_save_errp = virtio_ccw_dev_tmp_pre_save,
++    .post_load_errp = virtio_ccw_dev_tmp_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT16(config_vector, VirtioCcwDeviceTmp),
+         VMSTATE_END_OF_LIST()
+@@ -97,7 +98,7 @@ const VMStateDescription vmstate_virtio_ccw_dev = {
+     .name = "s390_virtio_ccw_dev",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .post_load = virtio_ccw_dev_post_load,
++    .post_load_errp = virtio_ccw_dev_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_CCW_DEVICE(parent_obj, VirtioCcwDevice),
+         VMSTATE_PTR_TO_IND_ADDR(indicators, VirtioCcwDevice),
+@@ -105,7 +106,7 @@ const VMStateDescription vmstate_virtio_ccw_dev = {
+         VMSTATE_PTR_TO_IND_ADDR(summary_indicator, VirtioCcwDevice),
+         /*
+          * Ugly hack because VirtIODevice does not migrate itself.
+-         * This also makes legacy via vmstate_save_state possible.
++         * This also makes legacy via vmstate_save_vmsd possible.
+          */
+         VMSTATE_WITH_TMP(VirtioCcwDevice, VirtioCcwDeviceTmp,
+                          vmstate_virtio_ccw_dev_tmp),
+@@ -1130,13 +1131,13 @@ static int virtio_ccw_load_queue(DeviceState *d, int n, QEMUFile *f)
+ static void virtio_ccw_save_config(DeviceState *d, QEMUFile *f)
+ {
+     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(d);
+-    vmstate_save_state(f, &vmstate_virtio_ccw_dev, dev, NULL, &error_fatal);
++    vmstate_save_vmsd(f, &vmstate_virtio_ccw_dev, dev, NULL, &error_fatal);
+ }
+ 
+ static int virtio_ccw_load_config(DeviceState *d, QEMUFile *f)
+ {
+     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(d);
+-    return vmstate_load_state(f, &vmstate_virtio_ccw_dev, dev, 1, &error_fatal);
++    return vmstate_load_vmsd(f, &vmstate_virtio_ccw_dev, dev, 1, &error_fatal);
+ }
+ 
+ static void virtio_ccw_pre_plugged(DeviceState *d, Error **errp)
 -- 
 2.48.1
 
