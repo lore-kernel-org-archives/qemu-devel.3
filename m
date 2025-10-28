@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B8AACCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50950CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDdwu-0000rb-D0; Tue, 28 Oct 2025 03:16:56 -0400
+	id 1vDe12-0001fD-AS; Tue, 28 Oct 2025 03:21:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDdws-0000qh-Og
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:16:54 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe0z-0001er-S0
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:21:09 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDdwn-0002i2-Kg
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:16:54 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b3b3a6f4dd4so1054558066b.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:16:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe0x-0003Nh-LP
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:21:09 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47103b6058fso40951925e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761635807; x=1762240607; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zB+81qr5fyzRi3t9mH0+KlO4414dUIRjUl8O7kRsM+k=;
- b=ND28aKaq3bADjhJVytKcvnTxTEH85qIQoyRBV7HBYIrZhNpar8mywnxnyT7Vh6vbra
- zGiFX0rM/jzmbQnC7ypSMOosOMfqzhFyxTYMJm+E5RiqgpPTZfDbYPnVVAUeLX+SCtJx
- MjFHGdulPRjmNavfwTprqPjycXBWhgKnASDRCKSIlExWtEzPpYvJoDDuh2BR3feA2twx
- SEvXZpzMIQlaaM3m93lEwvcApey2wgOBT0PqF/dUWoFvSQF0BegkdguLd75YnqXljx/5
- jKTbdHDISC4JuVXOt4b69PS6sixdzu464WFwhsm/nam5YI5IAuK0S5YLOZdmLqy5BEJ3
- VeRQ==
+ d=linaro.org; s=google; t=1761636064; x=1762240864; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=N7nu7PK90YXI5ougHYdnUc2XCygZqpqlYRNaiEeDPYw=;
+ b=blFeToO3Q7y6QpwDHeGzrrwNXmTrgannL4duWXzA4903wpSJsZLF3NLi/rnemnz6Xy
+ mpiUS9sy+1xOsz06Fpv0KNKWngFTcVPP9Zcv8Ndg8jeYj9xLKNblJrIasl4nFBP2GCbJ
+ G7iFf7VZl2R666z0tEc+dxULVX4lyfzfjPxHvhpM5ohK+y3ULZJSz0eI9MAFyDlvXN3X
+ Ez5bv5wn7hdPNsdjiK6RoqKSYJaUWBWy3ulxmvYF2NE6p3J8P5QsYP1JCrRr8EGNiESr
+ /vyzjuTZCtikfbHwdbS8Fd4SEOuhkI5/RreH3B6tXjOQCfov9UgGQHp6r7aLODYGMb5E
+ jbug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761635807; x=1762240607;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zB+81qr5fyzRi3t9mH0+KlO4414dUIRjUl8O7kRsM+k=;
- b=HaruacqHR0FQIA3bU5PE0i6uceYMsT8Otfya3dWSD7Noj+jq390n9wrozq+W45CW5u
- 802zf0V1TCqxchW9VDZPLg4rICOxk+oNVBLUM48oLJkZE7VSXafNCgcjhzzk2l2+eal/
- 6DPa+gJF7/B7wlXOQ0U6HEMfYysPo1p09h2XBnewTtr4hBp+x8rvsYpb8LJO5I2IiIIA
- 1ITXKiVHCz0K6murFrltnwX3uyduO6LMjG1u58oQVOxbVHhUnvTGZs1S6YJD8Q0bl4XL
- hThYBxMK0Z0DbCN9MigcSyH4Twev7PRc0C7r6C5hk1uMBZPPDQTrLV5HlWl+mZrsgzXD
- sGbA==
-X-Gm-Message-State: AOJu0YwVAtA4s7UXK2wwloqBWMKL2D/nhCOpoN2SLieiNqGqH0ztU1Ma
- SWYEeFIa6InWcJq+c7YjX5HDPRyx4YIMmOqA58n5KSUE5RX/i+VN0s//UzIj2R3W95PQNv7x/tz
- 6fHnE+LLdEa7DWsSWsuCl/VY01v713g0=
-X-Gm-Gg: ASbGnct4JjEwHkfqGpsCkp5iUjJ4LBhRGNANFIlG/QJOICGuBsArpi72G+SqoeTHKLK
- U2cbXSDP3AifxvfwuSGgVdZzwvNAQNMXEWzBoHebY9iqBJcFOKSAAdnxA4LHBGUQfpIchYVqnyb
- lSGGfQHhJmApJsrF3OUOl5xz1Hd2ZJDpzp1Ab9pCxn80qdxDy01XgC7g0v7JKPUvRqlxGb8mdlA
- bAZ+Af8anx/jAE5B3EGxHdx2SxHfoAh+/Q7EVphLZMetrdKq59qqNq7k9+idMvoclHHOPC47wQy
- iZb2uKwZ4j2MJfmsX28Z8m5pabc=
-X-Google-Smtp-Source: AGHT+IGUT0mUMBlAFpIk7Uw371kmagbxrKKwUGJQVOvWp2MTBTBhvoA7xFVx57DkJg2tsgUwltvTZj9rcB3vX+ZyBbw=
-X-Received: by 2002:a17:907:1b22:b0:b42:9840:eac1 with SMTP id
- a640c23a62f3a-b6dba55c48fmr268141066b.49.1761635806450; Tue, 28 Oct 2025
- 00:16:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761636064; x=1762240864;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=N7nu7PK90YXI5ougHYdnUc2XCygZqpqlYRNaiEeDPYw=;
+ b=Q2/P/29VYKWZRTiBUnY65SBL5OaL9HImqaJOuOqnqfuhRcnp7tM9eQIktNjJS3VFK7
+ Xk//3AbRKgs4OPao+1CF3UtZiNgadBOxfOjm4/pUPRy/dKuWHYokw/QMhUrD80KD8gxS
+ gK3/Ryg0NA+lMayka8HQR7D1xd4slvf5gZCQwFBK8gN0FlPkmB/140HHO8VKVDGYDoG8
+ 4f7bIVZetPj0klSCgQPj8joBGx1vMMrO+EYQTqkH53l2mlZdDnwXFemi0CoBjg+8nufK
+ Z8Fn6WW8sfzBvTAh7NNd86LRbRm08uqjiUhzxVEZdVg+L0j0tlbCT4pQO1lEu7I+4P7T
+ OWew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXehb/bqrkmyxRU4t2u6JOU7gb1DlBNmquUfsqMaGfZFbiF/OVS18IPZmDAAiTdOr8Q6OrIn7+09gKS@nongnu.org
+X-Gm-Message-State: AOJu0YzaKiopRbizg/GaZJeVCRuz8Oz46DRu4ks1httcktADP6tjFNLQ
+ /bs0FwuE83pKCDw7U1PlYzmvft2+4vxly0nihSWaqArGEXZH2EZGcT4K/Zs1XOoymCo=
+X-Gm-Gg: ASbGncuHzMRmxpC+K2w2bFbkgMAlKQ3l/r4FnN0Jl9g64OHJ4y3aBVm39seUtbT00Gr
+ ebtS/6vAc37SdaJ4r+SIaKmGcLHollGFwqnaQRk7i+ayrsp73OSANcB60ytnTNFt2OvNV6p8VIV
+ DjHShDxddabsUIbzaL77bIFYxRaHi3H+5g9qyCGysadSJB2tAkwg7wQYnrHMUwUzXh4Dm98m6jH
+ YP7UpVaZEZoVvpCnK+rLwiZueSCjHhVBRuBc0SlqUFGxATw7hexFg72tspSUfo88Uz+gbP/ye/o
+ zgQ6Bh6u3duKqD19qoz2Z2B91Hk6tRA1HuqC8qqB3Apnyt9eUfi1k0ppLw3sBOV0to2tQD4U4Ty
+ bzRak4d3bRMKQ4VD+SntPOtadxkWMhwTZJ7igbBKzhMFUM8VLbjAgSmqqvpsjuLrpQPsarRljKo
+ gl3Qwt0sof31Ol26i18SG4XSnt6oqUnuKfjY7uivwuJ3OnHRuU
+X-Google-Smtp-Source: AGHT+IFGp3z8A1qloCBRFDt0s9TNFrsZhhWyCHiiYmh6iUDB4yZEniPh0QbY4Yk/cLMVmxpgQ7mlFA==
+X-Received: by 2002:a05:600c:46d3:b0:45f:29eb:2148 with SMTP id
+ 5b1f17b1804b1-4771a46941fmr9051465e9.7.1761636063871; 
+ Tue, 28 Oct 2025 00:21:03 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47718427409sm14116455e9.1.2025.10.28.00.21.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 00:21:02 -0700 (PDT)
+Message-ID: <d86bebc2-2c97-4dd2-8132-441020d21376@linaro.org>
+Date: Tue, 28 Oct 2025 08:21:00 +0100
 MIME-Version: 1.0
-References: <20251027112306.57634-1-philmd@linaro.org>
-In-Reply-To: <20251027112306.57634-1-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Oct 2025 11:16:30 +0400
-X-Gm-Features: AWmQ_bkROYGAvMhgKZM_C4h-8F7-NuAcB_I38QjM8k4bTkHHodupVhTJTizl7Qc
-Message-ID: <CAJ+F1CKRRQY9w=e8XnxxMNTLoJqWiN-TBtu7qV_+2pAaEhM5fA@mail.gmail.com>
-Subject: Re: [PATCH] hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent
- class_init()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Glenn Miles <milesg@linux.ibm.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Paul Burton <paulburton@kernel.org>, Joel Stanley <joel@jms.id.au>, 
- Jagannathan Raman <jag.raman@oracle.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Aditya Gupta <adityag@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Bernhard Beschow <shentey@gmail.com>,
- qemu-arm@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-ej1-x62a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/13] hw/pci-host/raven clean ups
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <cover.1761232472.git.balaton@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <cover.1761232472.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,307 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 3:37=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> No need to set DEVICE_CATEGORY_BRIDGE for each device
-> implementing TYPE_PCI_HOST_BRIDGE: set it once in the
-> parent.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 23/10/25 17:26, BALATON Zoltan wrote:
 
-this will also categorize a bunch of devices
+> BALATON Zoltan (13):
+>    hw/pci-host/raven: Simplify creating PCI facing part
+>    hw/pci-host/raven: Simplify PCI facing part
+>    hw/pci-host/raven: Simplify host bridge type declaration
+>    hw/pci-host/raven: Use DEFINE_TYPES macro
+>    hw/pci-host/raven: Simplify PCI bus creation
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> ---
->  hw/pci-host/articia.c     | 1 -
->  hw/pci-host/aspeed_pcie.c | 1 -
->  hw/pci-host/designware.c  | 3 ---
->  hw/pci-host/gpex.c        | 2 --
->  hw/pci-host/grackle.c     | 1 -
->  hw/pci-host/gt64120.c     | 1 -
->  hw/pci-host/mv64361.c     | 1 -
->  hw/pci-host/pnv_phb.c     | 1 -
->  hw/pci-host/ppce500.c     | 1 -
->  hw/pci-host/q35.c         | 1 -
->  hw/pci-host/raven.c       | 1 -
->  hw/pci-host/remote.c      | 1 -
->  hw/pci-host/sabre.c       | 1 -
->  hw/pci-host/uninorth.c    | 4 ----
->  hw/pci-host/xilinx-pcie.c | 2 --
->  hw/pci/pci_host.c         | 1 +
->  16 files changed, 1 insertion(+), 22 deletions(-)
->
-> diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
-> index cc65aac2a87..47f223879f0 100644
-> --- a/hw/pci-host/articia.c
-> +++ b/hw/pci-host/articia.c
-> @@ -200,7 +200,6 @@ static void articia_class_init(ObjectClass *klass, co=
-nst void *data)
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
->      dc->realize =3D articia_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  }
->
->  /* TYPE_ARTICIA_PCI_HOST */
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index f7593444fc4..2499d3fe680 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -312,7 +312,6 @@ static void aspeed_pcie_rc_class_init(ObjectClass *kl=
-ass, const void *data)
->      dc->desc =3D "ASPEED PCIe RC";
->      dc->realize =3D aspeed_pcie_rc_realize;
->      dc->fw_name =3D "pci";
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->
->      hc->root_bus_path =3D aspeed_pcie_rc_root_bus_path;
->      device_class_set_props(dc, aspeed_pcie_rc_props);
-> diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-> index f6e49ce9b8d..b0b51ad9517 100644
-> --- a/hw/pci-host/designware.c
-> +++ b/hw/pci-host/designware.c
-> @@ -593,8 +593,6 @@ static void designware_pcie_root_class_init(ObjectCla=
-ss *klass,
->      PCIDeviceClass *k =3D PCI_DEVICE_CLASS(klass);
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> -
->      k->vendor_id =3D PCI_VENDOR_ID_SYNOPSYS;
->      k->device_id =3D 0xABCD;
->      k->revision =3D 0;
-> @@ -736,7 +734,6 @@ static void designware_pcie_host_class_init(ObjectCla=
-ss *klass,
->
->      hc->root_bus_path =3D designware_pcie_host_root_bus_path;
->      dc->realize =3D designware_pcie_host_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->      dc->vmsd =3D &vmstate_designware_pcie_host;
->  }
-> diff --git a/hw/pci-host/gpex.c b/hw/pci-host/gpex.c
-> index b806a2286f7..5f809028be2 100644
-> --- a/hw/pci-host/gpex.c
-> +++ b/hw/pci-host/gpex.c
-> @@ -200,7 +200,6 @@ static void gpex_host_class_init(ObjectClass *klass, =
-const void *data)
->      hc->root_bus_path =3D gpex_host_root_bus_path;
->      dc->realize =3D gpex_host_realize;
->      dc->unrealize =3D gpex_host_unrealize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->      device_class_set_props(dc, gpex_host_properties);
->  }
-> @@ -242,7 +241,6 @@ static void gpex_root_class_init(ObjectClass *klass, =
-const void *data)
->      PCIDeviceClass *k =3D PCI_DEVICE_CLASS(klass);
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->desc =3D "QEMU generic PCIe host bridge";
->      dc->vmsd =3D &vmstate_gpex_root;
->      k->vendor_id =3D PCI_VENDOR_ID_REDHAT;
-> diff --git a/hw/pci-host/grackle.c b/hw/pci-host/grackle.c
-> index f9da5a908c1..fa872c17e3b 100644
-> --- a/hw/pci-host/grackle.c
-> +++ b/hw/pci-host/grackle.c
-> @@ -140,7 +140,6 @@ static void grackle_class_init(ObjectClass *klass, co=
-nst void *data)
->
->      dc->realize =3D grackle_realize;
->      device_class_set_props(dc, grackle_properties);
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->      sbc->explicit_ofw_unit_address =3D grackle_ofw_unit_address;
->  }
-> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-> index b1d96f62fe9..bffa1165580 100644
-> --- a/hw/pci-host/gt64120.c
-> +++ b/hw/pci-host/gt64120.c
-> @@ -1298,7 +1298,6 @@ static void gt64120_class_init(ObjectClass *klass, =
-const void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      device_class_set_props(dc, gt64120_properties);
->      dc->realize =3D gt64120_realize;
->      device_class_set_legacy_reset(dc, gt64120_reset);
-> diff --git a/hw/pci-host/mv64361.c b/hw/pci-host/mv64361.c
-> index e05b6770102..e5e6614b139 100644
-> --- a/hw/pci-host/mv64361.c
-> +++ b/hw/pci-host/mv64361.c
-> @@ -108,7 +108,6 @@ static void mv64361_pcihost_class_init(ObjectClass *k=
-lass, const void *data)
->
->      dc->realize =3D mv64361_pcihost_realize;
->      device_class_set_props(dc, mv64361_pcihost_props);
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  }
->
->  static const TypeInfo mv64361_pcihost_info =3D {
-> diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
-> index 4b0ced79b08..e07cf8a0d0f 100644
-> --- a/hw/pci-host/pnv_phb.c
-> +++ b/hw/pci-host/pnv_phb.c
-> @@ -202,7 +202,6 @@ static void pnv_phb_class_init(ObjectClass *klass, co=
-nst void *data)
->      hc->root_bus_path =3D pnv_phb_root_bus_path;
->      dc->realize =3D pnv_phb_realize;
->      device_class_set_props(dc, pnv_phb_properties);
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->user_creatable =3D true;
->  }
->
-> diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-> index 975d191ccb8..edadc35384c 100644
-> --- a/hw/pci-host/ppce500.c
-> +++ b/hw/pci-host/ppce500.c
-> @@ -516,7 +516,6 @@ static void e500_pcihost_class_init(ObjectClass *klas=
-s, const void *data)
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
->      dc->realize =3D e500_pcihost_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      device_class_set_props(dc, pcihost_properties);
->      dc->vmsd =3D &vmstate_ppce500_pci;
->  }
-> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index 1951ae440cc..c134679fa0c 100644
-> --- a/hw/pci-host/q35.c
-> +++ b/hw/pci-host/q35.c
-> @@ -194,7 +194,6 @@ static void q35_host_class_init(ObjectClass *klass, c=
-onst void *data)
->      device_class_set_props(dc, q35_host_props);
->      /* Reason: needs to be wired up by pc_q35_init */
->      dc->user_creatable =3D false;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->  }
->
-> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index eacffc86d84..661a4223d69 100644
-> --- a/hw/pci-host/raven.c
-> +++ b/hw/pci-host/raven.c
-> @@ -365,7 +365,6 @@ static void raven_pcihost_class_init(ObjectClass *kla=
-ss, const void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->realize =3D raven_pcihost_realizefn;
->      dc->fw_name =3D "pci";
->  }
-> diff --git a/hw/pci-host/remote.c b/hw/pci-host/remote.c
-> index e6d2af4502a..959beb5c301 100644
-> --- a/hw/pci-host/remote.c
-> +++ b/hw/pci-host/remote.c
-> @@ -55,7 +55,6 @@ static void remote_pcihost_class_init(ObjectClass *klas=
-s, const void *data)
->      dc->realize =3D remote_pcihost_realize;
->
->      dc->user_creatable =3D false;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->  }
->
-> diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
-> index 538624c5079..f95e5db583a 100644
-> --- a/hw/pci-host/sabre.c
-> +++ b/hw/pci-host/sabre.c
-> @@ -505,7 +505,6 @@ static void sabre_class_init(ObjectClass *klass, cons=
-t void *data)
->      dc->realize =3D sabre_realize;
->      device_class_set_legacy_reset(dc, sabre_reset);
->      device_class_set_props(dc, sabre_properties);
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->      sbc->explicit_ofw_unit_address =3D sabre_ofw_unit_address;
->  }
-> diff --git a/hw/pci-host/uninorth.c b/hw/pci-host/uninorth.c
-> index 194037d6e75..d337a2fd62c 100644
-> --- a/hw/pci-host/uninorth.c
-> +++ b/hw/pci-host/uninorth.c
-> @@ -435,7 +435,6 @@ static void pci_unin_main_class_init(ObjectClass *kla=
-ss, const void *data)
->
->      dc->realize =3D pci_unin_main_realize;
->      device_class_set_props(dc, pci_unin_main_pci_host_props);
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->      sbc->explicit_ofw_unit_address =3D pci_unin_main_ofw_unit_address;
->  }
-> @@ -453,7 +452,6 @@ static void pci_u3_agp_class_init(ObjectClass *klass,=
- const void *data)
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
->      dc->realize =3D pci_u3_agp_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  }
->
->  static const TypeInfo pci_u3_agp_info =3D {
-> @@ -469,7 +467,6 @@ static void pci_unin_agp_class_init(ObjectClass *klas=
-s, const void *data)
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
->      dc->realize =3D pci_unin_agp_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  }
->
->  static const TypeInfo pci_unin_agp_info =3D {
-> @@ -485,7 +482,6 @@ static void pci_unin_internal_class_init(ObjectClass =
-*klass, const void *data)
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
->      dc->realize =3D pci_unin_internal_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  }
->
->  static const TypeInfo pci_unin_internal_info =3D {
-> diff --git a/hw/pci-host/xilinx-pcie.c b/hw/pci-host/xilinx-pcie.c
-> index c71492de9e7..1540533223c 100644
-> --- a/hw/pci-host/xilinx-pcie.c
-> +++ b/hw/pci-host/xilinx-pcie.c
-> @@ -172,7 +172,6 @@ static void xilinx_pcie_host_class_init(ObjectClass *=
-klass, const void *data)
->
->      hc->root_bus_path =3D xilinx_pcie_host_root_bus_path;
->      dc->realize =3D xilinx_pcie_host_realize;
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name =3D "pci";
->      device_class_set_props(dc, xilinx_pcie_host_props);
->  }
-> @@ -291,7 +290,6 @@ static void xilinx_pcie_root_class_init(ObjectClass *=
-klass, const void *data)
->      PCIDeviceClass *k =3D PCI_DEVICE_CLASS(klass);
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->desc =3D "Xilinx AXI-PCIe Host Bridge";
->      k->vendor_id =3D PCI_VENDOR_ID_XILINX;
->      k->device_id =3D 0x7021;
-> diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-> index 7179d99178b..b5c624e12e8 100644
-> --- a/hw/pci/pci_host.c
-> +++ b/hw/pci/pci_host.c
-> @@ -245,6 +245,7 @@ static void pci_host_class_init(ObjectClass *klass, c=
-onst void *data)
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
->      device_class_set_props(dc, pci_host_properties_common);
->      dc->vmsd =3D &vmstate_pcihost;
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  }
->
->  static const TypeInfo pci_host_type_info =3D {
-> --
-> 2.51.0
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
+Queuing reviewed patches, thanks.
 
