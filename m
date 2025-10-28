@@ -4,62 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CC2CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 10:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE826CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 10:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDhEL-0008Pa-44; Tue, 28 Oct 2025 06:47:11 -0400
+	id 1vDhET-0000Gi-Us; Tue, 28 Oct 2025 06:47:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vDhDM-0007dh-64
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:10 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vDhE5-0008EO-Gs
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vDhDI-0005ik-Ic
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:07 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 1B0B341513;
- Tue, 28 Oct 2025 10:46:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2534C4CEE7;
- Tue, 28 Oct 2025 10:46:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1761648362;
- bh=D7GV5YIK68KaGFIMf54ClZrWmjlH6jCoh70v8kXC7y4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=VYEHinBMuNAEqyu4VNJ9U0kDI3rfkJwqKkNvLUWzhvaFnFLyj1NlX5NqOFuDArxw6
- ULBmuOh1lRRK38agQcTJbtya6scu9CuZnv4o6icC1NgNOURJtO+eeKAeYpv1esiSca
- EYWP47hadwWrYRjYQOOyWdaURJWqCtrYZDNmxdbeFYBmrw4Pjebonpd5h6Nwje39z1
- kQ3iyTPYSyDToz26+cjSrmGNE1eP/E0GjZOqk5KjmYCdyTy7SaIdeJOMx7CXL2vgtC
- 3STl0iZpx0M+jxwgotCpaDe2ao+3rp1enSNrc0nL1v2BJo0ZTWZR6tkJSejwyQLaHG
- Uwj9LbHJaSyTQ==
-From: "Naveen N Rao (AMD)" <naveen@kernel.org>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>
-Subject: [PATCH v3 9/9] target/i386: SEV: Refactor check_sev_features()
-Date: Tue, 28 Oct 2025 16:13:34 +0530
-Message-ID: <0f998f5761f180829240f84172698f9315655572.1761648149.git.naveen@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <cover.1761648149.git.naveen@kernel.org>
-References: <cover.1761648149.git.naveen@kernel.org>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vDhDy-0005u5-EQ
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 06:46:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761648401;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oqswuCohGI/O8Z9pOr54ZNHujtz9Cg9VUJQ0QE3M9/s=;
+ b=BFZG75Fw+zx4jGaH5TQp6zF57ZSFDKky6GLIkf1OQbYzqXeaSKBjJ+ni8J5YqdPiAVOKTb
+ +uwtLlx3eiJ9/QhyEkxf9dpiyLGjAOMU1cYDOWlN833DoHDdT9+kv1uZqe+S6VfibyOI1Y
+ +tv+9OtITeSuzvagVDuDBJBWi6j9jiQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-22-nr_M7NC4PEegOlF3SmlH3A-1; Tue, 28 Oct 2025 06:46:40 -0400
+X-MC-Unique: nr_M7NC4PEegOlF3SmlH3A-1
+X-Mimecast-MFC-AGG-ID: nr_M7NC4PEegOlF3SmlH3A_1761648399
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-42814749a6fso3005639f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 03:46:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761648399; x=1762253199;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oqswuCohGI/O8Z9pOr54ZNHujtz9Cg9VUJQ0QE3M9/s=;
+ b=mDK0Z+GggpAwGkZ8I6H4l8BNRBlPQhFwftkxfW2VYsj9TnjE8a/BVQ4dULC0JBf3Ku
+ xt7OG2OchGWojVbaOiNZ72UDDaVFqGYcXqPXEHMmNDvAIrKN0741uLzsQ2zOAuNRSRlE
+ xTanhueqZmGlLFl6hlsdf44cEqSoKc8m44HSgYhd263+Xglm41BBVlqUMdiy5Q6bFmq4
+ V1I/S9BkxGHrBjyUS5606MnqXaYUqYBe8IFfN81AhKSdj54CphshHlYr+XOU0U3ykhX3
+ KkoJSaS5vfaaJ18GlDe2rXAnPqCKxkQ7hIlxkdriGgk0uBMf2WHYoQn6gw3yw4YSIzTj
+ 3m5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWP49BjBOOE2IbEzBw/6fKXk6kTRyrP964niAcWGdn62Ahv4DqT3aoHIH/AoNhDDxtQt4PECdKtkKtn@nongnu.org
+X-Gm-Message-State: AOJu0YysGslcNUbAzB4yhVXlH4twguhGKs5YynooV6pQJDo61cQXoQbB
+ TsFhelUpYjmQa0OJxjW+Iv/MN8QejTTbs27tq8M87AJ9IyD93GGinUKk75XtP4L+YC+me4asoLl
+ MWlazhoVFshpqcxXult5pIuxnW7naV5JuADtZEvT+YoPvyvHEpBuBE5eSFF2QvwEs9P5ax4Pyzd
+ 29fJPFU7yMSS+V8lv5TOX2CcKylQKbNbo=
+X-Gm-Gg: ASbGncvugOFv1V+U4WPznJVXGkIaChkXJBUDuYq5HC35eic9Uyjw4YgSn7xZXj7qfWa
+ Q1fn6UDMSTp3K77A19Ccd0C8W+43UjHKOHBn20B+aZVBCWg4eevbxufDeezD4lwGlPaNCamuxVR
+ 6UBUuQ5wPajJZWlVhJs7iXAGMimwrUuQH2RQ9GiBN0bgWNAvGDkgLjzUiJyNLMxnj8B9d/8siNY
+ N7OU1dJNNQ0F+0/aHQ/k9deoVnzA3tv7QaJ2gQpZF7vRI/Omc2AWVcMciiS
+X-Received: by 2002:a05:6000:290c:b0:427:7ad:466f with SMTP id
+ ffacd0b85a97d-429a7e83a78mr2445393f8f.39.1761648398952; 
+ Tue, 28 Oct 2025 03:46:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPWkS17TzLd/QE4SHuRoKCUtw0TrWEdmtuZ6c5g7w+i8DEOEeGCmi1GFQB+A9ScnDHNzxOp1Q8i+I/v0UfXOk=
+X-Received: by 2002:a05:6000:290c:b0:427:7ad:466f with SMTP id
+ ffacd0b85a97d-429a7e83a78mr2445365f8f.39.1761648398504; Tue, 28 Oct 2025
+ 03:46:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
+References: <90746cd6a57c0df971158f604c422a23d750e0b4.1761644606.git.chenmiao@openatom.club>
+In-Reply-To: <90746cd6a57c0df971158f604c422a23d750e0b4.1761644606.git.chenmiao@openatom.club>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 28 Oct 2025 11:46:26 +0100
+X-Gm-Features: AWmQ_bnsVmMuJKLz4wLLnF7FNTgdlpPIZ7-XG8OEzdCH4xAw5wUwlTwvFMjUwjU
+Message-ID: <CABgObfZEm7nu1gRPHQnYc-WJ2PHrBa40VX6Qv2bRTWBYt2BsOA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/5] hw/gpio: Move the pcf8574 struct to header
+To: chenmiao <chenmiao@openatom.club>
+Cc: zhao1.liu@intel.com, manos.pitsidianakis@linaro.org, 
+ richard.henderson@linaro.org, philmd@linaro.org, chao.liu@openatom.club, 
+ qemu-rust@nongnu.org, qemu-devel@nongnu.org, 
+ hust-os-kernel-patches@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,105 +108,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor check_sev_features() to consolidate SEV-SNP checks to a single
-if block. This is also helpful when adding checks for future SEV
-features.  While at it, move the comment about the checks being done
-outside of the function body and expand it to describe what this
-function does. Update error_setg() invocations to use a consistent
-format.
+On Tue, Oct 28, 2025 at 11:18=E2=80=AFAM chenmiao <chenmiao@openatom.club> =
+wrote:
+>
+> To better implement the Rust PCF8574 bindings, move its struct definition=
+ to
+> the header file.
 
-No functional change intended.
+This should not be needed, the struct is entirely hidden within the C
+implementation and the same should be true for the Rust one.
 
-Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
----
- target/i386/sev.c | 55 ++++++++++++++++++++++++++---------------------
- 1 file changed, 30 insertions(+), 25 deletions(-)
+Paolo
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 56d7cc9e6901..50d9e5714408 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -502,34 +502,22 @@ static void sev_apply_cpu_context(CPUState *cpu)
-     }
- }
- 
-+/*
-+ * Ensure SEV_FEATURES is configured for correct SEV hardware and that
-+ * the requested features are supported. In addition, ensure feature
-+ * dependencies are satisfied (allow tsc-frequency only if secure-tsc
-+ * is also enabled, as an example).
-+ */
- static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-                               Error **errp)
- {
--    /*
--     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
--     * the requested features are supported. If SEV-SNP is enabled then
--     * that feature must be enabled, otherwise it must be cleared.
--     */
--    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
--        error_setg(
--            errp,
--            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
--            __func__);
--        return -1;
--    } else if (!sev_snp_enabled() &&
--               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
--        error_setg(
--            errp,
--            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
--            __func__);
--        return -1;
--    }
-     if (sev_features && !sev_es_enabled()) {
-         error_setg(errp,
-                    "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
-                    __func__);
-         return -1;
-     }
-+
-     if (sev_features & ~sev_common->supported_sev_features) {
-         error_setg(errp,
-                    "%s: VMSA contains unsupported sev_features: %lX, "
-@@ -537,13 +525,30 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-                    __func__, sev_features, sev_common->supported_sev_features);
-         return -1;
-     }
--    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
--        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
--        error_setg(errp,
--                   "%s: TSC frequency can only be set if Secure TSC is enabled",
--                   __func__);
--        return -1;
-+
-+    if (sev_snp_enabled()) {
-+        if (!(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+            error_setg(errp,
-+                       "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
-+                       __func__);
-+            return -1;
-+        }
-+        if (SEV_SNP_GUEST(sev_common)->tsc_khz &&
-+            !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
-+            error_setg(errp,
-+                       "%s: TSC frequency can only be set if Secure TSC is enabled",
-+                       __func__);
-+            return -1;
-+        }
-+    } else {
-+        if (sev_features & SVM_SEV_FEAT_SNP_ACTIVE) {
-+            error_setg(errp,
-+                       "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
-+                       __func__);
-+            return -1;
-+        }
-     }
-+
-     return 0;
- }
- 
--- 
-2.51.0
+> Signed-off-by: chenmiao <chenmiao@openatom.club>
+> ---
+>  hw/gpio/pcf8574.c         | 32 --------------------------------
+>  include/hw/gpio/pcf8574.h | 36 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 36 insertions(+), 32 deletions(-)
+>
+> diff --git a/hw/gpio/pcf8574.c b/hw/gpio/pcf8574.c
+> index 274b44bb61..670fc006bb 100644
+> --- a/hw/gpio/pcf8574.c
+> +++ b/hw/gpio/pcf8574.c
+> @@ -15,38 +15,6 @@
+>  #include "qemu/module.h"
+>  #include "qom/object.h"
+>
+> -/*
+> - * PCF8574 and compatible chips incorporate quasi-bidirectional
+> - * IO. Electrically it means that device sustain pull-up to line
+> - * unless IO port is configured as output _and_ driven low.
+> - *
+> - * IO access is implemented as simple I2C single-byte read
+> - * or write operation. So, to configure line to input user write 1
+> - * to corresponding bit. To configure line to output and drive it low
+> - * user write 0 to corresponding bit.
+> - *
+> - * In essence, user can think of quasi-bidirectional IO as
+> - * open-drain line, except presence of builtin rising edge acceleration
+> - * embedded in PCF8574 IC
+> - *
+> - * PCF8574 has interrupt request line, which is being pulled down when
+> - * port line state differs from last read. Port read operation clears
+> - * state and INT line returns to high state via pullup.
+> - */
+> -
+> -OBJECT_DECLARE_SIMPLE_TYPE(PCF8574State, PCF8574)
+> -
+> -#define PORTS_COUNT (8)
+> -
+> -struct PCF8574State {
+> -    I2CSlave parent_obj;
+> -    uint8_t  lastrq;     /* Last requested state. If changed - assert ir=
+q */
+> -    uint8_t  input;      /* external electrical line state */
+> -    uint8_t  output;     /* Pull-up (1) or drive low (0) on bit */
+> -    qemu_irq handler[PORTS_COUNT];
+> -    qemu_irq intrq;      /* External irq request */
+> -};
+> -
+>  static void pcf8574_reset(DeviceState *dev)
+>  {
+>      PCF8574State *s =3D PCF8574(dev);
+> diff --git a/include/hw/gpio/pcf8574.h b/include/hw/gpio/pcf8574.h
+> index 3291d7dbbc..fe1ce891b7 100644
+> --- a/include/hw/gpio/pcf8574.h
+> +++ b/include/hw/gpio/pcf8574.h
+> @@ -10,6 +10,42 @@
+>  #ifndef _HW_GPIO_PCF8574
+>  #define _HW_GPIO_PCF8574
+>
+> +#include "qemu/osdep.h"
+> +#include "hw/i2c/i2c.h"
+> +#include "qom/object.h"
+> +
+>  #define TYPE_PCF8574 "pcf8574"
+>
+> +/*
+> + * PCF8574 and compatible chips incorporate quasi-bidirectional
+> + * IO. Electrically it means that device sustain pull-up to line
+> + * unless IO port is configured as output _and_ driven low.
+> + *
+> + * IO access is implemented as simple I2C single-byte read
+> + * or write operation. So, to configure line to input user write 1
+> + * to corresponding bit. To configure line to output and drive it low
+> + * user write 0 to corresponding bit.
+> + *
+> + * In essence, user can think of quasi-bidirectional IO as
+> + * open-drain line, except presence of builtin rising edge acceleration
+> + * embedded in PCF8574 IC
+> + *
+> + * PCF8574 has interrupt request line, which is being pulled down when
+> + * port line state differs from last read. Port read operation clears
+> + * state and INT line returns to high state via pullup.
+> + */
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(PCF8574State, PCF8574)
+> +
+> +#define PORTS_COUNT (8)
+> +
+> +struct PCF8574State {
+> +    I2CSlave parent_obj;
+> +    uint8_t  lastrq;     /* Last requested state. If changed - assert ir=
+q */
+> +    uint8_t  input;      /* external electrical line state */
+> +    uint8_t  output;     /* Pull-up (1) or drive low (0) on bit */
+> +    qemu_irq handler[PORTS_COUNT];
+> +    qemu_irq intrq;      /* External irq request */
+> +};
+> +
+>  #endif /* _HW_GPIO_PCF8574 */
+> --
+> 2.43.0
+>
 
 
