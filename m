@@ -4,104 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0895CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 05:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568CFCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 05:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDbwp-0006Oz-KK; Tue, 28 Oct 2025 01:08:43 -0400
+	id 1vDbye-0006y9-1f; Tue, 28 Oct 2025 01:10:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDbwn-0006OW-30
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:08:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1vDax1-0007uj-D1; Tue, 28 Oct 2025 00:04:51 -0400
+Received: from mail-japaneastazolkn190120002.outbound.protection.outlook.com
+ ([2a01:111:f403:d405::2] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDbwi-0005gG-Aa
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 01:08:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761628113;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VGW1/Zk/bvozkpRgLkqGOHGHcGKL5In8js7WQYsRL5Y=;
- b=BgXcwToHfYzye3swsX9cdu2LZ/j0JKoNiXrIh8kdfvB4oyXCnyuwMVOn1wBOJxPll2L7N4
- HTecNRioBGjyWjTWQxASOL5GuZSuyPUstI11hTqBuk7NvtKX1Ql3QH3llPxBaQJtAjC5ze
- AC0VyPcCtfL8ebGzF2zGNXBWwaxzUCk=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-vEyAYCUCPB-rIMnzUzPUjg-1; Tue, 28 Oct 2025 01:08:32 -0400
-X-MC-Unique: vEyAYCUCPB-rIMnzUzPUjg-1
-X-Mimecast-MFC-AGG-ID: vEyAYCUCPB-rIMnzUzPUjg_1761628111
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b6ceba8968dso4009570a12.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 22:08:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761628111; x=1762232911;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VGW1/Zk/bvozkpRgLkqGOHGHcGKL5In8js7WQYsRL5Y=;
- b=CdwX4Kp7cMsWyHjRg4by6sMpC2UKGC2J/0mbFmeBWjlssG2W/Ol+gWY67UDWsnPLLK
- kEH5+at0lxdEaMLCmAnzHLsugaonnT2J/OGrmNs8FOS2HKoMFyji+b2IpGIcba8XWIKE
- /KeP+ScrDRKHOoHoG+5LMbFy7v/6JfRMSjVJ8FJvw6YQwkEDSaPTOqRwOiVf5iGnUnQu
- Z6ykVHBygdKJhvQWGR+w3gdlcdmOjVXMfAW42z58nzjneTQuNcH6kjR3oQObprFdd5nd
- DVw2Vo7Aw/tmJ4VqMAju0OVItZknnX8+8oh31VLLhDS0WawDIDB2mzOcfx6q4cUoX3gD
- x3TA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIs2GBoKLYzOP9afbw9K/L35onYefAGzabqLCjmXGGeDcvHtDQSaaGrCPTOgDObjjOBi4vuJDQyb8u@nongnu.org
-X-Gm-Message-State: AOJu0YzI2YWA5onyCwrxszk9TNbMaqjMVWoXJRDai0b3UFrwZpRr7l9p
- tKtwsQXnVYy5KVMn5wAxAOmW8Y3vmjaBvGJA3bmI39OOOc175wLLFUIrdCYzbE93mla8NkRTsAL
- kaTkD5K6HE2cHDAjs7OuZZXaJBgYh6FajbDK6TdNUJl2pH/Aath81tGWS
-X-Gm-Gg: ASbGnctWWX3SQMPuYpTGQBkZpsToTpi9YZM9dDYKisHELmh/KYfCsB+7RZRFkZDZi3J
- N9iZrpTUKy2K66p4P1lh/kmA47Bguq1sLoG7lcFSswYatfpCldZWP/O6AfyzJbFx48ngbL8Zwrt
- 2PBKjLVF5p+gxNPQAGs74FzEjYITYcZ4i+gwTUhv36e3NgcRVPaytDmVB6krhhp2d1TXwUZ5PGT
- pVXG1C96qWtTrexMh/wkftvSiDuT9ISGz/Hd+2OGqhuwlnneeNZNO2GLW/3aVSw1STUJMquDcKS
- OFbQ+zQM/azvrOVhBla4Ge31+8sIzZMPD4hhWy8n1hUbxaocrhKC4139M+XkvWsbseSmfBjpMvB
- zRkhDmnC8nhUS
-X-Received: by 2002:a05:6a21:3291:b0:342:d58b:560b with SMTP id
- adf61e73a8af0-344d4036346mr2996460637.52.1761628111042; 
- Mon, 27 Oct 2025 22:08:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJbcg4wwvI9URqDDFgNFYsVlVvPgjhyQfz2iBps+iZbhILSlZBIBd8G8tVyNhmOnwzYE02mw==
-X-Received: by 2002:a05:6a21:3291:b0:342:d58b:560b with SMTP id
- adf61e73a8af0-344d4036346mr2996440637.52.1761628110659; 
- Mon, 27 Oct 2025 22:08:30 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.108.180])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b8087fac6d5sm3683589a12.15.2025.10.27.22.08.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 22:08:30 -0700 (PDT)
-Date: Tue, 28 Oct 2025 10:38:23 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Markus Armbruster <armbru@redhat.com>, peterx@redhat.com,
- stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- berrange@redhat.com
-Subject: Re: [PATCH v3 4/4] migration: vmsd errp handlers: return bool
-Message-ID: <aQBPx3B4ynruu5Qn@armenon-kvm.bengluru.csb>
-References: <20251025202649.1122420-1-vsementsov@yandex-team.ru>
- <20251025202649.1122420-5-vsementsov@yandex-team.ru>
- <87o6psocib.fsf@pond.sub.org>
- <9f5ba3d7-3103-4d2a-b50f-f8883a18c812@yandex-team.ru>
- <aP-eHzbAtvNp3N3d@armenon-kvm.bengluru.csb>
- <2699d795-25b0-41ce-b884-ce1a357a1417@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1vDawy-0006sf-E1; Tue, 28 Oct 2025 00:04:51 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ev9e8btcGEf/1CTGgIK/7ZW+cWSdJ/SCdRg0LT6gVV11ZEYDtC+HmEkWhhN7ZgpUH4Nitl+0X0zVJJTMzY1N9biEkuhwQ77FjYhqhBJo4r39ufSywla3EEttAKChRD2nc4tvD3K0QxJ3HIN+Lv9l3JNoFHbN7YQr41Yb5iGCLWsQDdOdpz9YsY8eHaM49QTjKRmrzpKBYQqyXkeRgtkEkqxEljKAKex3Dz/vDI7acTKC8vUcWQCdL7t5LxNdaS/xg36uLy/82mF2jfNlbgax59x1n552qlP5VrRZ7pfIxlca0ZgFpNKC56P+PUnhYJumaDCfUpxJMdwAOEt/vK9wUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dP3947JZZR4FPDATP+Lbzw4iL7BvhlGBkdVHHgph8Rw=;
+ b=hvDurVDAKP+/jdrFAgai7n7CBraS1NVjK4VfPow0PqG4MVd2EB8dzUl4on26UWuSDYLNqLxpDEXmcKkJrFhIkBCgsco9Cgsg3XOcXAHE2OaNBMMfzN8bVQXzVSI0EJ5vE9Sme/AXuC8q1tvGUx6w9qcH7xOqXDy4RIH1HsnIlpC2hcdYrLzSmyQA1Ef4JYhI+GSxY6lMU/MdjnKsXFKG7hCl38Qq6ZUiMTYJM2Mr/77TsQtpbplKJQJ0jytub4s6FDOCzHmof+VzLl3gDPxqLqg8Hb8Gi7EgtXFzZ6UKFFPQG+We2OFBEAp5fzBLMJSwyLTUgZhpfTv3GGTGJTBwhA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dP3947JZZR4FPDATP+Lbzw4iL7BvhlGBkdVHHgph8Rw=;
+ b=aKyPsKx6NmSzqpiqfmPaxbGSMiisrlGvurW3edY1k4GjaGn5HwjFb2YivDubXiTI313XzafNpppOf4VZzxU0id3xP5i0pifJ+8y4XyBsDJSz1rd/7e4J3wWnUP04MrQyGLD4lk3xvSyoDYdg3IxN2Jnrq3ULaO/tAJ7ZNCdI+JxfiwgGQY4Ju+gLXdqC8SihDCF6svOeSgECTda55hm/AVVjUa/vAJx2m4DQduOK8dvXwWU7bNxZzAUxGoeX6Zlfvyc/xfI5exGuFt8x1F6orDkSGvBYZ7YzcFxzIOdKjIi/PfUaBZ4Hpc5mFFz1+ML8vJyMIcGxa92PeBNVWyV0qg==
+Received: from KUZPR04MB9265.apcprd04.prod.outlook.com (2603:1096:d10:5a::6)
+ by TYSPR04MB7504.apcprd04.prod.outlook.com (2603:1096:400:466::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Tue, 28 Oct
+ 2025 04:04:39 +0000
+Received: from KUZPR04MB9265.apcprd04.prod.outlook.com
+ ([fe80::3c38:c065:daf4:cbfa]) by KUZPR04MB9265.apcprd04.prod.outlook.com
+ ([fe80::3c38:c065:daf4:cbfa%6]) with mapi id 15.20.9253.017; Tue, 28 Oct 2025
+ 04:04:39 +0000
+Message-ID: <KUZPR04MB926504948DCFEE1620225882F3FDA@KUZPR04MB9265.apcprd04.prod.outlook.com>
+Date: Tue, 28 Oct 2025 12:04:35 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix MemoryRegion owner
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+References: <20251027-iommu-v1-1-0fc52a02a273@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20251027-iommu-v1-1-0fc52a02a273@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2P153CA0002.APCP153.PROD.OUTLOOK.COM (2603:1096::12) To
+ KUZPR04MB9265.apcprd04.prod.outlook.com (2603:1096:d10:5a::6)
+X-Microsoft-Original-Message-ID: <37ea3f76-87b5-47a7-9807-a20935befe76@hotmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2699d795-25b0-41ce-b884-ce1a357a1417@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KUZPR04MB9265:EE_|TYSPR04MB7504:EE_
+X-MS-Office365-Filtering-Correlation-Id: 81980430-8cd1-4260-5ba6-08de15d71d3f
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|19110799012|37102599003|15080799012|23021999003|461199028|5072599009|8060799015|6090799003|40105399003|52005399003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MnVaZXdNUHpJRGUyWUdOZGhQVHVvNkVwWTBGeGxleEoxV3FSQ3NNY0kzUnYw?=
+ =?utf-8?B?YjVnby9DUnlWOWNRTUZWOGJWcVp0Mm9UZFpDL0xrVjl1YUpDOXhQWi9oV3Bm?=
+ =?utf-8?B?YlNGV05ocUF0cVJLSk40WWVQZGMydXIwQnB2OGlDdGpNUjgvQlVpL0wyc1Rn?=
+ =?utf-8?B?c25abVBYZjdkT0t0ODNzK2c2c3l2UlZXY1JMZXNVWEk4a0JmTmNmNzJXaEVo?=
+ =?utf-8?B?OUI1dXZIaWRJU3JYQURpcGljZ1g2QmQycS9FeExHL0s4Y205R3ZuN0ZSdXRO?=
+ =?utf-8?B?bm9UdHJ2SVdVanBvdUZ0Nkdtc0NvcTRwekt5SlgzVTkvbkFhcXdCUUMvbEtR?=
+ =?utf-8?B?UEFqM1FDYlpCNnFVcEt4V1ZCbU8wMm5SdDNlMWliU0dnVG5oUFVWSnpTQk9H?=
+ =?utf-8?B?bjhJK1k3OWsrTTJyYXJXRUgvNmIvb3dVbnBqcTNYNVRXS284R2Z4QytlZ2R1?=
+ =?utf-8?B?Z1hJMVBpZ2J2eW56ME5CbXpxc0VFTGJqTS9nNlpMTjdpZzN3dXo2cHJYVStQ?=
+ =?utf-8?B?QWt2WkRDTllPZ0FHZ1RsNnA4UFBHQ0lYTC9LbHRaYWlWM3VjeWJKRFBCeDNY?=
+ =?utf-8?B?dkVBdllvektKL0RxcWVlSi9WbzYwcWYvdXg2OXZJaVZ0UUlYd1hOcmJVYXZY?=
+ =?utf-8?B?STdtYWFScUY3UnI4K00rTWtvOURzKzlqY2M4c250MStOMHlpYkxYQmlrTHJv?=
+ =?utf-8?B?NzA4VmZ3ZlFiMzFNSmpyNUNOTDJhVW5tNGRXVWtXV1k0b2JlcUJZbFY3Mytj?=
+ =?utf-8?B?L0hxTmJHTVpiU1Y1aWt0MjNyZUZ0UDhSdkZmNUU2QzVMbm16R3B1WGJaRW44?=
+ =?utf-8?B?ZFd5SkRmcUpha2Fzd2ZZcHhvRUxTL1hjajlZYlBtUWMwRFV2MHFkOTIwSWVt?=
+ =?utf-8?B?UVlhblBvUTlaSkZWcmE5S2QzbkRxSy9JenNlOGVRQzROeTdwSE0rM1VFaEdM?=
+ =?utf-8?B?djlidWRvaUZiZ0VVR2ViazIzNk15SVhQMURPMmJJU0RIcXIweHZQYkVkT3di?=
+ =?utf-8?B?RlU5aEpxS0ZLdkNscnZ5YkJIZVBPYitWUVZJUFhTMk14NTh1UDkvMDlqczE4?=
+ =?utf-8?B?WjE1d2VuNDExenlmc2dtUCttdGpCZmlqeDZxaW9IMUFDRCt3YzE0ZDh1cmsw?=
+ =?utf-8?B?Q2Y3ZHFWVlVJNjBQdytCSms0Tk9kT2hTbGFVc3VPVGF5UTJhOTBYcDJYQ2Rv?=
+ =?utf-8?B?djRlU1pqekp1OHBkdGpKZ0FtbUJzdHNZdEoxcVFKYzhNZGd0em9jY0JZWFNx?=
+ =?utf-8?B?MWE0bUZEOGhzRUpBejluVEQ0MmtiVmZ5ZlU3UzdBcG84ZW9oSEczd3NNc3or?=
+ =?utf-8?B?MFc3VXJCMHlDZnZndGsrQ0JYd21kMDA4UlB5Vml0WFNOWWNjN0lyQk5ONUp6?=
+ =?utf-8?B?dnhsY1EzNTJ4WVRwenN1UXYzL2tmYjYvM3h6US9BcGNtVnN6aVNob3JXWVJj?=
+ =?utf-8?B?UUtGZHVDdVkxOENGL1ErNkk5bCtGbWFEUDhVS0ZsSFNjbnpNeWYvOFh5cWpq?=
+ =?utf-8?B?L05kd0lJY3hCdHZsU1lTMTdjenBrUXJlSm53Q2dSeG1kNWhwOFBacGEvemNv?=
+ =?utf-8?B?Ymdrang1SGx5VlFlNCtyRllNbFlpMW9OSEtKZmFkWlNDVzl3L1RJQnpEeUhN?=
+ =?utf-8?Q?2LmnyL1rUjj8d1bq3ptejqemFHDwbhMbb4qpO1sYczAY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dkhDN2c5amwvTTViT2pzYnJ1MTkweDByZjhldFNaWDFmUlR1U3puZmFJVEs1?=
+ =?utf-8?B?b2Zhb0ZZbVFNaXFyTERDdmFCUWNvZ3h5aWlxREFSR1pHQzFvZGFyRjB0T0xB?=
+ =?utf-8?B?MEE5R1N4QVF6OUFZUjNrOFg2ZWY4V3A1dTI2TzZnbkVyVjVqdDV0KzdNZGpx?=
+ =?utf-8?B?RWZLSjNwdjVEYUtJZStob1JDUk9YQ2NabjJlM1lBclVLQVNLTm5ibWVZV21M?=
+ =?utf-8?B?QUJBWTQ3aW1RejZQa2RJRnRROWNGVEt2OTUvaCtyYWx6bStFZmRyaTRiY0oy?=
+ =?utf-8?B?S0ZTRkV4YWRDY240cjc5VTM4eHpWSWp3eHUvQVlJSTQrSjlJbk9JODc2UmJI?=
+ =?utf-8?B?OEp6WG5wZFk3aHBGVTJLUVd0U29BcUZSTkRQQzZFK1BiWnRvbmdVaHdPZUpp?=
+ =?utf-8?B?RW83c1R0by8zMTZlOENLbDIxRnl5UE1LZEFwcFowRXFXOHpLUmFKbWZrQld2?=
+ =?utf-8?B?S2o3eWNQQnJmT2FRcit3S2hEZzVRU3FVc0FYUitZMk1ZdFl0aTVlL3dRQmlX?=
+ =?utf-8?B?R3EvSHZobGtaL1pGWURlYnJ3OUE0bjdpN1NRU2NSRUZFaFE1R1A0RVc4WVF6?=
+ =?utf-8?B?SE5EUFlLOGdxa0dDWk5pRjM2c2hZUm16UDROZ2hsNFZUUDN5MER6RjRvT3Nq?=
+ =?utf-8?B?MUptMzZaSDNucnV6QjIrNVNXT3Nqb3Y5RUp0amNHbzlQTDB3emoxaWxrQk1Z?=
+ =?utf-8?B?RkgzQ0JBbnZNVVpCRTA5alpwKzhyYzZiajdoVGloWjhQY3VTQ1dTaTdweStB?=
+ =?utf-8?B?Q2Vuc1MydEVUa3psNUQ2WlpxdlNuMDdLaUdYb0U4RVhoY2dlUG9oaDYya0xR?=
+ =?utf-8?B?VFNiVTkxbGxoMkk1eDB5L2o4c1FDaFZvTXZ3RDFDV3JVUlpoY2hNOTZOaFBs?=
+ =?utf-8?B?M1hZYkVyUEpWUmllcENvVVFLbHBPRitCVWhlV2FLd29sRldLR0krVDM2Y0NW?=
+ =?utf-8?B?QW40UHBTb0hHUmp5ZlZsQXFFYXBENGdjTHdtaXFDVVhxK3ZPdEFlVk9zUVlq?=
+ =?utf-8?B?Q0RQblJLTnZsSXMxeTJBZS9LK1RyUUVZS1ZwOSt1VWNtSTJiOG5HYjVXbS83?=
+ =?utf-8?B?VmpvY21nTjZMRTR5ZXlMeGJ0aVcvd20yL2xDVllpZnhrcFQ2VjFoVXU4MVI1?=
+ =?utf-8?B?R21nTmorRkFrQjFtNFVNZjJ2SGliVmNmVHZ1T3U3VnJtbTZMMDdpVGRxbjl2?=
+ =?utf-8?B?TnJNOHNaOVRWS0NabExDR1dmUXJweDRzUjIvbWJxTGpZdXl6aHBXTU5MZDVC?=
+ =?utf-8?B?aURCalFPU3hacHBDdG00S0tyaEdSK2o4VThLUm13ZU4zb1R2d2JiYWh2UHVB?=
+ =?utf-8?B?ZGdwREJpSzhZWnBHVUZxLzU3NEt1RTRKUGJPOWx2SFQxM2tTdlRBOGcwcFVw?=
+ =?utf-8?B?emdnK2tSMlVMWm9TMkxObFhhZkpPS0k4a0p4cW5UUEdIaGdmWkdRTlBPRW8x?=
+ =?utf-8?B?L3UzR1hhMzE4ck02Wi9QeWpNdkFYSDh5OWRxWXdOZGhqTGJWUWRaaWZiWiti?=
+ =?utf-8?B?RzJUWXB5aVBlNVhvdDBkcVFJQXFXRm1kUldEbWx5OEZCTldpNW93OW51K0lY?=
+ =?utf-8?B?Qm1yeU5rMU8wZitXTTdCYW5Ud2RUUUdDMzV4RElSQ1QwcGUrb0J4anNraWpU?=
+ =?utf-8?Q?6z5FdWKfCxpM72iPWjHOcqQvBSRCmeBYHL8RiFU5oHJY=3D?=
+X-OriginatorOrg: sct-15-20-9052-0-msonline-outlook-38779.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81980430-8cd1-4260-5ba6-08de15d71d3f
+X-MS-Exchange-CrossTenant-AuthSource: KUZPR04MB9265.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2025 04:04:38.9619 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR04MB7504
+Received-SPF: pass client-ip=2a01:111:f403:d405::2;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 28 Oct 2025 01:10:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,34 +155,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vladimir,
+On 10/27/2025 1:37 PM, Akihiko Odaki wrote:
+> as points to the MemoryRegion itself. s is the device that owns the
+> MemoryRegion.
+>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>   hw/riscv/riscv-iommu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
-On Mon, Oct 27, 2025 at 11:33:22PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 27.10.25 19:30, Arun Menon wrote:
-> > We wanted the new errp variants to be structurally as close to the old
-> > ones as possible so that we can perform a bulk change later.
-> 
-> Still, could you clarify, are you plan to do this bulk change? Or it was
-> a theoretical possibility?
-
-Yes I want to, when time permits. Most of the post_load() calls,
-just like post_save, do not fail. That is the reason why post_save does not have
-an errp variant. They always return 0.
-But there are a few of them that can fail and return an error code. I need to figure out
-what would be the appropriate messages to set in errp in those cases so we
-can propagate it back to the caller.
-
-> 
-> -- 
-> Best regards,
-> Vladimir
-> 
-
-Regards,
-Arun Menon
-
+Thanks,
+Nutty
 
