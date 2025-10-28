@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16215CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D260CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDeSh-0000K2-Oo; Tue, 28 Oct 2025 03:49:47 -0400
+	id 1vDeTb-0000rW-FK; Tue, 28 Oct 2025 03:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeSe-0000JJ-S4
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:44 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeTB-0000bn-V8
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:50:18 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeSV-0006zK-AJ
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:44 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3ee15b5435bso4146038f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:49:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeT8-0007P5-RP
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:50:17 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-475dbb524e4so20146175e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761637765; x=1762242565; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761637811; x=1762242611; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rXN/vpWvITLur9ZDJo/U77KGUGvSZDrxaC3ix1ult+U=;
- b=Z56nuKKeneXN1iCQtgz/+YaZPPeHnq1Ph4Hy9L+vmunoXaOEZcIthJsQhpEvKr0Ldw
- 7oDFeKrpbm2gGzoXPD/eY9h1nToXw3/juooOSX0Uej4OpRSkk1KEX+Dc3m2JOEdlC5Fh
- 9ZeHABskAFmPhmy1Kb6NHu1uxml9fKxKG5/UBh66JULTwN5nvhvxc8zhxSQqiEfJY7eq
- 5k7Ik4ygVVul8qzt9hGQEJAeXBIRbyY1c+BubJ42wkbo5G6cEq0RATEWJ5vXSySxh9ys
- qNdWUwSX3gyuFRkeJqW0dOoz3H0zPknIGU4lhLOONgiJNHpE9KsEjQKe8vol8bSs+cXv
- qyXQ==
+ bh=zTLB3cFEY6Tsij+P5yppIDVPLmX58penzFNO8leReIM=;
+ b=ZJd00j49Iam41xtHLzPdaJ3Brz/YXciESOmm72NbwPm0k7gjjZpHxBcuxkTN9BDhlR
+ 1zvZA2NYAz9jV+FpfxalFWWqElR2Q6u6Hu6EAzvMhM833Emu0oaXhyEBKaaYWdtkTLID
+ jOT9YXE9RsKRS5PeXw5TTCJJA9B7EGWdlu61WMdw4k3N5nhZeAyEicGqJ1Y9cVzMC0Lh
+ NvxQ5YAiO0vT6vJqG1WEFxw4A+QROCipziAA43xSs3w5kUOlZpKcp2zFDYHag2XehzBr
+ qx1nrot7SqPk+RuTZHvUmCe8nbe0PjEsERrv1bVBs2wDAs1JHpHS2UPtxpiHxtEQn8ZE
+ dG0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761637765; x=1762242565;
+ d=1e100.net; s=20230601; t=1761637811; x=1762242611;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rXN/vpWvITLur9ZDJo/U77KGUGvSZDrxaC3ix1ult+U=;
- b=IRPmduRHK+7IIfzQ5NPoqGZFUjTl5F0okKi2ncZHPmCg6LOoxqGHZgV+7WS3uTtIu7
- TaIpGNaVb/n17d5rNhMKLl5WCBms41SrtQfJFw0qoLwndaLYwQ3jiQkhjPlzu8cpxMnH
- B0MfgI9b+d2U0lzMbdzAKL7kQct0EUUQdEpjlbWJH9k6DcgpG769Tw1M7srlmTloYlvx
- i9vOAAzMo0GEE5NDty9q7XaEJvls7Cy/CMcL4ViBjJfcXjTCbz8mkwn45ckGY2MdV1jI
- xbd3vEMA/xQMtMgL5gS9oIcYe7VC4LzYhq1zGWCOsJyaD1I6pvXsYAeMXGVcun4PneOH
- 9ZIA==
-X-Gm-Message-State: AOJu0YzDMQ+b4zu+ozKsMrE1SCTKkzw00CAGI7/rljl8504ZYmqSgar9
- OE8cw9PWSXCEjnnxxXuvvXXT/qupuCyh4/Gjj5jisdJwzQciJpOsKJSSDBDBLvKOQ+0LHuzS4NU
- H/j96fQE=
-X-Gm-Gg: ASbGncsNXNjZru0reHH5fU/H9Vv0ui3QMEKab6ymKVCZHtYuT4VQBQqbsTlYp1jmApV
- slGr4tijY1hqtp2xcFHxxaKZZvowSt7EzcxxHsVZCqiwmtWgx6R6isT7ofb6oPoFaUlXGyAlqL8
- VrKwVIY+dsPu6x5apNRRGbXw681pibwLQSSh/OOrlmIh9FdkvV5+rguB/BMA1NB0kfcDFSVbYUj
- iE3HO5Nx1uDDpoJecY0ffXj0QKoiJ6cvrDYW74Dwus7k98hL20bCU7zeAPV6CRpfDULC4xcHHrh
- llItB0oCi8ngHAd4VVHhvmt2tJ4uf8Nn2LGHKCCfIp/zzxmYTv3BA0PzN0bwCJzcS4wuVszYfuC
- Lpa4/Yck7uolfe4uuX1UK+fp7ShbhG86A8CXNjl4hrJJdX0cT6v+ouLKSLUSwQIv423XpAfzWZT
- bXfcygSeZBBOjg+sLLTyEiNoc5g8G9UdxNcsTfdQltEWKVc4ZdlFOXjDpT8K/MF5c2Yg==
-X-Google-Smtp-Source: AGHT+IFZgGmgYjRVxipdgM0ms0LUPHcNV4cTY2Isw9cLlVof15Of32cuYr7kpZEKTXuSYxXeDWU+CQ==
-X-Received: by 2002:a05:6000:26ce:b0:427:5e6:c0e5 with SMTP id
- ffacd0b85a97d-429a7e75aaamr1897535f8f.39.1761637765219; 
- Tue, 28 Oct 2025 00:49:25 -0700 (PDT)
+ bh=zTLB3cFEY6Tsij+P5yppIDVPLmX58penzFNO8leReIM=;
+ b=YMUJOFll+nLz3ATWuRNFVzrqeXrRmvORJWeSFoRIATh8epWHCqFFqonR2d3rgYj0zg
+ ikXDC0W0KPfJCopFjhB4srk3WrpVesR7+SaBqRJkM2UsyIYRkdPKtP1Xf9SBgDS4p5aV
+ g9Ghicgh9s1nvI7+Ap90W2K55Z9j5xX1OkI9Gz7NG2gdPRSNDWRtDAHOaOPMPLmtQ7i+
+ ar9R3t9hhg/pyzkX21eZYZkWY6/4l9uEtLE5IDiWOCrqZ98AIH8rfEnlqywVIqSaUX5G
+ KF7rUyi3oUlj4i9oh1GfPwmzY12+mAlLItnR3S2CR8TBN+49ZzQkaNbpHvVE+XI0xEmK
+ IyZQ==
+X-Gm-Message-State: AOJu0YwiQalQglYZ2bW0ee3vMzY+C2mB9/NPQfiF4A1fYL2fFs9PEM5T
+ 6r2hHd+AC6Ikv4Ui1004IYSAB3I+jvODR8KMQwvykvZnwexk3hhHZ3ETDpzZGvzOfPoiRO/QnHj
+ BDc5EYvQ=
+X-Gm-Gg: ASbGncsvlMrzaOe7eDfpQiZSR3z+m1MOZD2n+2OgbdlwTqK2uuMoO1EMBwdDq/9R3T1
+ uZFihcPohdHpQeDoDhhJ5JTJAz6BDcY5ai7BwIht5APRyVsMPz8zzZWgWMVn20A1AlnwtX6jCCH
+ PjIlB0IZYD8QYTLc+u8llYu/m2UN5SID9aTyZmAVMzNKAJvbAzDQab+2Dguu9Ya7+9ZKm8zuqyw
+ +wYxBQXotVpUkHq/XxmmUqkoyXRv4NJA8AsYa5OScDwoPDzp/C7U2RnLU/yQmBjWha4Q3+ikpuW
+ EGUvMUdDjlVl7njBunhZJoDnirDO5i5R0GmQi7DQuzOzNFyC5utzccLCem2cWPlPuFY1RSOjo6M
+ SLsDz/RgB6/EFxHuyYhd4KALdAJcSRGXwEeqBY98vf93rYOhz8WPV3pZt0YZiiOj9l4/EvctCmd
+ Czi7QSBMRoVITnq0heFV977G/eHQ6OlkDv8Wune6YnAG4vFIaU1gJxVAs=
+X-Google-Smtp-Source: AGHT+IEw5keHIFH1+3mzddsjpLeBiEFEAjEtmyjxajE9J84wqtnL9TyoPfgqU/NWW1vCosA3jYCeNQ==
+X-Received: by 2002:a05:600c:8710:b0:477:bf0:b9da with SMTP id
+ 5b1f17b1804b1-47717e41402mr20379905e9.19.1761637810877; 
+ Tue, 28 Oct 2025 00:50:10 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952de971sm18606985f8f.39.2025.10.28.00.49.24
+ 5b1f17b1804b1-475dd494d5csm183211645e9.9.2025.10.28.00.50.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 00:49:24 -0700 (PDT)
+ Tue, 28 Oct 2025 00:50:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- Helge Deller <deller@gmx.de>,
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Lei Yang <leiyang@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/23] target/hppa: Set FPCR exception flag bits for
- non-trapped exceptions
-Date: Tue, 28 Oct 2025 08:48:37 +0100
-Message-ID: <20251028074901.22062-2-philmd@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 03/23] hw/net/virtio-net: make VirtIONet.vlans an array instead
+ of a pointer
+Date: Tue, 28 Oct 2025 08:48:39 +0100
+Message-ID: <20251028074901.22062-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028074901.22062-1-philmd@linaro.org>
 References: <20251028074901.22062-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,61 +105,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
 
-In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
-we added the code for setting up the registers correctly on trapping
-FP exceptions, we accidentally broke the handling of the flag bits
-for non-trapping exceptions.
+This field is a fixed-size buffer (number of elements is MAX_VLAN,
+known at build time).  There's no need to allocate it dynamically,
+it can be made an integral part of VirtIONet structure.
 
-In update_fr0_op() we incorrectly zero out the flag bits and the C
-bit, so any fp operation would clear previously set flag bits. We
-also stopped setting the flag bits when the fp operation raises
-an exception and the trap is not enabled.
+This field is the only user of VMSTATE_BUFFER_POINTER_UNSAFE() macro.
 
-Adjust the code so that we set the Flag bits for every exception that
-happened and where the trap is not enabled.  (This is the correct
-behaviour for the case where an instruction triggers two exceptions,
-one of which traps and one of which does not; that can only happen
-for inexact + underflow or inexact + overflow.)
-
-Cc: qemu-stable@nongnu.org
-Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
-Message-ID: <20251017085350.895681-1-peter.maydell@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20251023135316.31128-2-mjt@tls.msk.ru>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/hppa/fpu_helper.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio-net.h | 2 +-
+ hw/net/virtio-net.c            | 9 ++++-----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
-index 45353202fae..2d272730f60 100644
---- a/target/hppa/fpu_helper.c
-+++ b/target/hppa/fpu_helper.c
-@@ -94,7 +94,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
- {
-     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
-     uint32_t hard_exp = 0;
--    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
-+    uint32_t shadow = env->fr0_shadow;
-+    uint32_t to_flag = 0;
-     uint32_t fr1 = 0;
- 
-     if (likely(soft_exp == 0)) {
-@@ -122,6 +123,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
-             fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
-         }
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 5b8ab7bda79..f7083553068 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -202,7 +202,7 @@ struct VirtIONet {
+         uint8_t uni_overflow;
+         uint8_t *macs;
+     } mac_table;
+-    uint32_t *vlans;
++    uint32_t vlans[MAX_VLAN];
+     virtio_net_conf net_conf;
+     NICConf nic_conf;
+     DeviceState *qdev;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 33116712eb4..17ed0ef9190 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -986,7 +986,7 @@ static void virtio_net_set_features(VirtIODevice *vdev,
+         virtio_has_feature_ex(vdev->guest_features_ex,
+                               VIRTIO_NET_F_CTRL_VLAN)) {
+         bool vlan = virtio_has_feature_ex(features, VIRTIO_NET_F_CTRL_VLAN);
+-        memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
++        memset(n->vlans, vlan ? 0 : 0xff, sizeof(n->vlans));
      }
-+    /* Set the Flag bits for every exception that was not enabled */
-+    to_flag = hard_exp & ~shadow;
-+    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
-+
-     env->fr0_shadow = shadow;
-     env->fr[0] = (uint64_t)shadow << 32 | fr1;
  
+     if (virtio_has_feature_ex(features, VIRTIO_NET_F_STANDBY)) {
+@@ -3600,7 +3600,8 @@ static const VMStateDescription vmstate_virtio_net_device = {
+          * buffer; hold onto your endiannesses; it's actually used as a bitmap
+          * but based on the uint.
+          */
+-        VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
++        VMSTATE_BUFFER_UNSAFE(vlans, VirtIONet, 0,
++                              sizeof(typeof_field(VirtIONet, vlans))),
+         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
+                          vmstate_virtio_net_has_vnet),
+         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
+@@ -4018,8 +4019,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ 
+     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
+ 
+-    n->vlans = g_malloc0(MAX_VLAN >> 3);
+-    memset(n->vlans, 0xff, MAX_VLAN >> 3);
++    memset(n->vlans, 0xff, sizeof(n->vlans));
+ 
+     nc = qemu_get_queue(n->nic);
+     nc->rxfilter_notify_enabled = 1;
+@@ -4068,7 +4068,6 @@ static void virtio_net_device_unrealize(DeviceState *dev)
+     n->netclient_type = NULL;
+ 
+     g_free(n->mac_table.macs);
+-    g_free(n->vlans);
+ 
+     if (n->failover) {
+         qobject_unref(n->primary_opts);
 -- 
 2.51.0
 
