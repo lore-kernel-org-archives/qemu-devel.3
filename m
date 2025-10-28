@@ -4,81 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BAAFCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76773CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjTe-0002JI-5H; Tue, 28 Oct 2025 09:11:06 -0400
+	id 1vDjUv-0003IE-4v; Tue, 28 Oct 2025 09:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDjTU-0002Hr-OV
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:10:58 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1vDjUt-0003Ef-8S
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:12:23 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDjTP-0001Qk-0Z
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:10:56 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-63b710f276fso5925364d50.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:10:49 -0700 (PDT)
+ id 1vDjUm-0001ai-1w
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:12:22 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7815092cd0bso71693547b3.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761657047; x=1762261847; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2O3ru6bTDJHgdmYgqB4W8Hotz207mC+7l7vbnYfbmNQ=;
- b=EiZlXOicts7pflPmN7DWc3K3iJCFyzX9+/vuapU833OUCtC3i6QqO21kWUf0c4/aRt
- lePyFzxXrSrRQyd8BUQh+HodA2XQYKBl4C7CyEUMtoc/K2MusouyFzZmGjiXgk2kzemJ
- Rno/Odgv7c/79NgRrHoFjXFcdNPMauwwcbEtJ5ZYdGQA7WuhLPLHx7O0q1gmzTM16kQY
- U63EYp8H9Beu2s9H1ifErBYORSQzw2N/yHACyPSlp3mLbzXve7ScZ+od+XIcCuZmPHZJ
- hu5hx5SSTYFjyFSouhzrSRVM0ZLSE5x+yZoX+gRXtcYTfAtBdquBozm3GKYQKGfF7uRU
- iCwQ==
+ d=linaro.org; s=google; t=1761657130; x=1762261930; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nGzZaXPfdGQi/k2OduiVfLXwisTBw3+ULg+qkqz8MQ0=;
+ b=IPwRPO3hFinF/kq+wdxJRwBr0tG/p6jp5qxb9Ep9Ba9ZnVsb7Ls1xAkgNwp5/7c0k+
+ K0jkV6Csz41dTCFhZAU4yuorqsH/1vOJ8IZ+F0eih7CiOEycrRS3wQLQ6mMlTaS/yEQc
+ lGezbs9CXiTYRi6EdVFBg3FU1okS2ZSjVjs3OhcPbp04xQhDeUmwoevQ1us7k0wjCvzH
+ oUl5Jdiyc/mBelcWLtmxYG5BvXr/0lSU07+RD/iyR+4WTdqSJl03RBWlqyGShgZJLv/6
+ VPuT6P+1N7/fYFoMVO923vWu15SXdFzB+/Y8OCxZfi1VSVL+dVnqPiyxj8gOYcJOeccB
+ CUIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761657047; x=1762261847;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2O3ru6bTDJHgdmYgqB4W8Hotz207mC+7l7vbnYfbmNQ=;
- b=aPOUfHUxcgg+uR0v29SgEcVIiENWUxJoQWr6mrdfK2Jz7Gw3/gpBNavtpZDeEkWUmD
- QmzM6YNrjyoFkoFPQh1jJ/HOV4kDcbqRTCOMxLfnR7htnoxX34A0DUTs3XvTM8zXGaG0
- 9Tu01yjKvhyALLyaRx9Cqt/eYpBxoK9viiRTxlsx84DCUzqadch1UJE/jG4QPTj+4/Yk
- EzXyloYRvbkwzBJCKPr+q9BPSQ95YRsGc/YwA0nTn4ant1zVeBCM9EtvZ8epH5HPTCrd
- ex4IlpqJQgobRus6DEXHwIkjFlr0LdUSDJ2RnQmqqE2bU3KawWvpsGboAgmqZXB3ZWeX
- fJbg==
-X-Gm-Message-State: AOJu0YygEulrP9ZhEapgyOQmM4D08xCmyXqNaMxob8GbgB9Pya7osVu6
- +O5miA6k4g2MBqRV4WdIQHFUgpbWeKC23YCzzRx5Yatv8chbllvGK7R54eOiH1FmLxrkcIlhf3c
- zvXErz6rVL4LZfH3p4TW5ScPdQ3S02iB2LhFEn6UFlA==
-X-Gm-Gg: ASbGnctamc9laNFckO0ePUsFRWOE9NB2E8y4XrhTNRB6Vd2AempHcGkE/tEG0xV/ZHu
- +NomsYz9BgjyrugQ013LaV/puxM7AUoK9aYxCMwaRSb++uH0gXY+67yvbr7wTg15UWoFORtQZLX
- RFdxgzB9oCJUHm0UyCHF1kRR+J6Wh/OFzLDVcM347ttCkJzAhcKh+OfAi6lIaItSdQ0bkm0huyn
- jZ4K7Rt3ZNMixDJvm0aBMlFeJ0EaIa+JkoP/UvFIqTK96oBlQKOPEJ7h4yoYQ==
-X-Google-Smtp-Source: AGHT+IGlHI9mLlBVkrO9VxmOtOe30pOmwlqni7AolhwbAyGX+QB02Qe1S2Xw+CDM724HOI8Ab6mLEN69LebUyKf/U3U=
-X-Received: by 2002:a05:690e:1517:b0:63e:e5e:6b75 with SMTP id
- 956f58d0204a3-63f6b94bc0emr3137514d50.19.1761657047361; Tue, 28 Oct 2025
- 06:10:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761657130; x=1762261930;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nGzZaXPfdGQi/k2OduiVfLXwisTBw3+ULg+qkqz8MQ0=;
+ b=trmDrWWEiPYORiI+a6D77JZptczjzD0sYC9WVd0qpf1goDEiGNENXsH1EXas45CuE/
+ ZCoCRQRQVNipYlPp6hxIfptF4Bf1aVVfxQ8chmQOEgRTdOgcEu1KLwF17asuNY4fg6Iv
+ eVVXdxY2pMNy338fKQjYpCceRXQFqcHEC0EBaCM4E+aAN8Gygwjfwq8eLoJdfPzT67+J
+ 3bagb5oi6LzmhKuE+nEFrzC4aa8pAdJUbfioMjnZNk9b+/h1tkEuMKPp51Rd3zG8vhVf
+ DyPf+MRV85/uMFLKAnzx0nGVTyZQRixZI4Jq+f4RajXUyCaM2Nm2tUpm6hkMhqKfa+hA
+ bbmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUthqCtcCtLXGAq4QDgALTFiIo1b7kKo3GXvEQLglO/P2f3iQX2tP9pO781gP9rLIjuhPtWoTtyZx8J@nongnu.org
+X-Gm-Message-State: AOJu0YzTwEg9H1hbZNSyjcVnKtO8kNf3PbRtw4/aWrpt6z+sppwy+Fo7
+ pSBLxXgjvjJgQi3YHxVtwvgOEVcCgNwLTzHMa8gRAhsorVDdv7nRW+rg1eDM7Lex2n0C9zuI2jQ
+ kX7mwlZzwA+TRr2PXsJ3hG2wCYl246q14ei3jvlucbRXmEj8VaUHy
+X-Gm-Gg: ASbGnctAQrCUa4Wo4PHJZwdxPpVtgTaoOGwFU5IYWMBrSKKfbguFwFm86RxrpTL9/XZ
+ R8ucyf3XpXqiaV/+ZX2fdOp3wn2dhcqaSO9JQV487aWjfxnH5WdEoAtDkjzsm/lzm4Ixkv1GsTO
+ 7h6d2oUqMYmg5FGxIxr/1UIAEY0Z2rgXzcJyMq1qkSFFdkMZbng3a+RyyHNJqZNEJU/JutbrzsG
+ MTWGP7qYUMnp5JfM6kFNSiWqwXJOYx3q1iuoIPtt4/EZ5PwYk/Al70GEZwt542D1UMsbj4r
+X-Google-Smtp-Source: AGHT+IHGcJ45V1+WjBFIBSAI4ClL9m/WmZCbthHsPnhkm8/w3MXiAg5b9SCDLeu32+/SxabsdU81yUplUk4vj41GxsE=
+X-Received: by 2002:a05:690c:6887:b0:786:266c:5bd0 with SMTP id
+ 00721157ae682-786266c6964mr1141967b3.42.1761657129853; Tue, 28 Oct 2025
+ 06:12:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251028054238.14949-1-philmd@linaro.org>
-In-Reply-To: <20251028054238.14949-1-philmd@linaro.org>
+References: <l6slswtmabktu6g23so3sldafschilwbp3kqolny3lppjezosi@hn6ptmklek4q>
+In-Reply-To: <l6slswtmabktu6g23so3sldafschilwbp3kqolny3lppjezosi@hn6ptmklek4q>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Oct 2025 13:10:36 +0000
-X-Gm-Features: AWmQ_bmI0UZUWFDDf5w0nAKk2QHOEmBqLLbhoAo-8KUaIShwBk8o89lZIsfU9ts
-Message-ID: <CAFEAcA-3SzHPmLc-huMnyNbZBnEwi5+fbPNuvCYJcvY7gYboEA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/59] target/arm/hvf: Consolidate
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>, 
- Cameron Esfahani <dirty@apple.com>, qemu-arm@nongnu.org,
- Roman Bolshakov <rbolshakov@ddn.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Collingbourne <pcc@google.com>, Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>
+Date: Tue, 28 Oct 2025 13:11:57 +0000
+X-Gm-Features: AWmQ_bk3MRGbKJdKh9dUDAFbizqaKm8Fsz-dyqCTioaCzK91k4VrG1xRH-rp7W8
+Message-ID: <CAFEAcA-FdX1OwY07QSWfavJ9vQuyOhf2twOXY1GCREfER1_qHg@mail.gmail.com>
+Subject: Re: [PATCH v2] linux-user: Use correct type for FIBMAP and FIGETBSZ
+ emulation
+To: Bastian Blank <bblank@thinkmo.de>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,21 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Oct 2025 at 05:42, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Tue, 28 Oct 2025 at 12:58, Bastian Blank <bblank@thinkmo.de> wrote:
 >
-> Missing review: 15, 18, 26, 32, 33, 38 (up to #41 could be merged)
->                 42, 43 (up to #49 could be merged)
->                 50+
+> Both the FIBMAP and FIGETBSZ ioctl get "int *" (pointer to 32bit
+> integer) as argument, not "long *" as specified in qemu.  Using the
+> correct type makes the emulation work in cross endian context.
 >
-> Since v2:
-> - Improve host page size/mask uses (rth)
-> - Remove cpu_test_interrupt in hvf_wfi (rth)
+> Both ioctl does not seem to be documented. However the kernel
+> implementation has always used "int *".
+>
+> Signed-off-by: Bastian Blank <waldi@debian.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3185
+> ---
 
-Richard found an issue with patch 32, so I'm going to
-take patches 1-30 into target-arm.next (patch 31 is
-reviewed, but conceptually part of the next few patches
-in the set which use the new functions it defines).
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
