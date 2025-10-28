@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B929CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B849CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDtRV-0002AE-Kk; Tue, 28 Oct 2025 19:49:33 -0400
+	id 1vDtRm-0002Gt-5i; Tue, 28 Oct 2025 19:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vDtRR-00026R-Ro
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:30 -0400
-Received: from p-east1-cluster5-host8-snip4-4.eps.apple.com ([57.103.89.205]
+ id 1vDtRX-0002BI-KX
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:36 -0400
+Received: from p-east1-cluster5-host8-snip4-2.eps.apple.com ([57.103.89.203]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vDtQw-0004oB-6S
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:28 -0400
+ id 1vDtQy-0004oA-MW
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:35 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-20-percent-0 (Postfix) with ESMTPS id
- BD46118034EC; Tue, 28 Oct 2025 23:48:40 +0000 (UTC)
+ AB387180312A; Tue, 28 Oct 2025 23:48:42 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=jXPIkvwftnVZHRg4Mjz/B4doNai4bCzAxKe4sYL/QI8=;
+ s=sig1; bh=KLJXCxRspSRDpfdk3bPZ4+2wmalBnWy7d7qziX03lt0=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Pb8eWHWP8nPHWUWBZxtg4O6NyQ/QnkokocgiaSEVUCK7vleq9ssEowyITMhH8wvGU3n4F8DoHk5LGdR8ABIxa1WLsfyhBO8jLl91aTingS6PfjahrUwRXEU/GDSSRjtEC2ZT19KbKpyNQX0QiiHczFbIx8ZlYQLyQ8KxyDL1tSbZoGwJbXZDn6iC4k9wy/YY9z2g1MJQXTiWyaygrH+TFIZ4WV+8OrsvJG8vBCIWkvkHh7ErO3jHSKqxqRGou2/3msB1TsJboxnjMVTPnMRfLRDCO70XZNMMm/b+0ziYF7n2qb6bds6VpMMJxlLXUT7207TA4/jMpVVqs9nS0gRFsA==
+ b=bzwwYaA6v2cQ2GrjvAQLvSu9QP1ThgLTF5AOuhEKuRN/Xtw4Lovual4i+eTgZmEjIEis2scHpNaYDb/PUrhkoXOJJ+2zEbcoGtSwbP4RsJwogZxm73TaPohoAgUaRSCU+CszA5sw7RgJDKKJq+PI6UyDajGF/gb//wU4L2UX/TEmN1eKdmY5Gf72g9+ep2hOT9FJdlvWh2BgZ7csIstWlallTbffwTRkX4t51mJOSCin6Na5TQUca6cE+Uq2wvW8U2jKq4zFcSbsClI8n4rGySjxoHgtLSOJLLvdGoJbzFGXh18/KMMW5kEOc+Tp1bFSWXOHUdFTAo8jyIhbL0Sv7g==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-20-percent-0 (Postfix) with ESMTPSA id
- E55381800E4C; Tue, 28 Oct 2025 23:48:37 +0000 (UTC)
+ 6365B18034E8; Tue, 28 Oct 2025 23:48:40 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -41,42 +41,39 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Pedro Barbuda <pbarbuda@microsoft.com>
-Subject: [PATCH v9 15/27] hw/arm: virt: cleanly fail on attempt to use the
- platform vGIC together with ITS
-Date: Wed, 29 Oct 2025 00:47:45 +0100
-Message-ID: <20251028234757.39609-16-mohamed@unpredictable.fr>
+Subject: [PATCH v9 16/27] hw: arm: virt: rework MSI-X configuration
+Date: Wed, 29 Oct 2025 00:47:46 +0100
+Message-ID: <20251028234757.39609-17-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251028234757.39609-1-mohamed@unpredictable.fr>
 References: <20251028234757.39609-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: V_LFeW9HykNdymzcz7xNbfkvFNJw7irV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDIwMiBTYWx0ZWRfX+iFMwx12XTD2
- roDQGv9qf1+eFy88UM/id7TPVajaTC+ZudFoojQ/WRugt76BCnJH3Mp9Jp0HrrnMhtJvDXC71RL
- JapP5VIpoo68A5ywYtGDJ45r6KGqmIqbGzVki0F0bhAc0xaLXtYAXBrFUHcwHmf9ZJ/W9SjYlQG
- 6V4eHmMRrI5PUqk0Yp1u23Ac/ReF2RxvRMoQo8fbFw1gVn7qz5CBvR/GgX9WZPblxUVS8PsCyjq
- ChjOCDvsBz1iS1C98ptxujks69ir1f2uGLbL+XJWx2GvtYluisRb5xfzti+PqEsI7RDTnaCPg=
-X-Proofpoint-ORIG-GUID: V_LFeW9HykNdymzcz7xNbfkvFNJw7irV
+X-Proofpoint-GUID: c-6M42QPI5w1ofrlEmsAvl8Vb-tVIHVn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDIwMiBTYWx0ZWRfX7Sz0Aky+AZOv
+ 284/yOxlE0ApaeWUuu+s5XXvhRvJPt3+A6+NUXmRlSxgWcr59xsd2ru0LEV3RlGntCTEQ+HcelT
+ b2IUG9xD3ryk4OXMXNApYtFcVSSRekXLd2sA0JwcO66ojZi/GIds/BaAG4e4yD6mg4YN+JOSODM
+ Yif8zknyDTwzR99083PMH2mJTc6RV3l0UJUyXiKI4hvTWk5q7e2U9ssNphtrUECtusLT8DHdCL8
+ sKXLfQd2G/IGjLsgCwHcBiZ0oHpgcZCp9sTBo8bYgolDXA5hI86ggCR6G5vHxLicm2AOYxZaw=
+X-Proofpoint-ORIG-GUID: c-6M42QPI5w1ofrlEmsAvl8Vb-tVIHVn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-28_09,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=932
- spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxscore=0
- clxscore=1030 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.22.0-2506270000 definitions=main-2510280202
-X-JNJ: AAAAAAABewG+HThIl9mL71KbMJ9UkIStUmISfqACeRW7+rz+BXk6ay5hbjIW5cRe6xPR4aAiD6Aj/8aRSmvqt6C5RCg/nh5S76l4b9Rxm16ZM3Fiic3T8nUL8RB6/Ywto/bDPC7hBDNl5PvGIicRnAk9Ut898DSIZOppQP7TUjDgT8HHaIQZeGnjGLzGBuIAhBaHg1AJFhsNGO5fRBfjEQYqh56u/0r0D9H6r+6BSNQf4IbymdxGn2tRbzcaiXl0v7TBdLVib0TsEiAnnZgucAIl3FV3gqhdvFp8YLRmGQHSvkUt7Wuh+PWr5KEUyd1Iti2wKFbgGPZ4Usp6oUQHVB5Ki6gFzwOdm4iOsCFY6qd5Zjc4VN4xcwQo01bhdkWYC9BuctOJl3aFdx+7IVQTFxFyeVsmQyd9LqUs2htldcZqUSaYVvmCWljwph8367QYfbK9TCXaVW3nSjexz5Pl4WuGZFjKjVoQLGKFcTyUaHat6GMVyduYXaMI8o7XNK4pPoaZOYHP7AiU9+YXXS5uuZgQ08G/LQrJZEud8uqkxN/W8kbuGb6QLsS+ei7ts4N2WWrr3UXcYN/QnGrBWxbWk93Evw7CRYnXx9MCCbI0Ae2VVcZbAc26OEfGODY++1wDI1dAid2FXXYRbXL6hPxsGrA1QExtZnNtakWJHMNQ//uGXik3jRTpNMg/Hbe0wYbZUZ9YYHg3bcUP5DA39zN+2B+Vnnv8J1MNSP/0A/9Z8dIPZZ0TdELeNfaoxgcrpYQV
-Received-SPF: pass client-ip=57.103.89.205;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=908 clxscore=1030 mlxscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2510280202
+X-JNJ: AAAAAAABKUQ8uclY6tXVKxrn6+jK/YiiMRJcd3sKlYQSIYZYrPTA2O/k2aq32xBE7XMHechG2wY/yS3bd8XTSquKo1HqTqn0OTr+LuvdB0RCorxDF5h9cFEGOF/UvyknUGvdDmYj5O2yL3I9AIbl/WmTkUhjZLPkVbbQ/JfMhXFIxlU2+jBxIf6gDlVbBSTMWNm8lrSwdfZ4WmjkgiIzkKwHSqZkC9ttwu2u7+LW60ZRyH89q5cJSWNtgl76xRDDKRDAFvFbl6AFDDZmZNx4CEsyyvUsngIpoh+fJGd0heoVjToSWw+xq4XuBL89Z/p0UpggSdLhZT+71pPPvD157P5FNnv3IYVu52nSjf7O4lHcf1CpN1m0VzcGp/V29hnq1fNSEG9yY8uDdvQi0PXQznuvPByiH9qP6LDtCzEfeKSXBt4T2ke8lISmrh4r0j/IqGFAa+LMNVS+8AiXiSHuivsa65INZfLm2USD4h6rjQePE0J/u8kTW1idTvarQjnhd6GsmUUAjlcjzYQZDyjoZACQzYXfsSqBw4Lw5lkF4nB0kkdqYtYa0qHC73oNXXohGsx1vK8LHn4c3tMYqrx8KqTxulxOGP9VULmBmA3eQf4gy9B6t8johmSCcJYQW/e+3odz3iXIoF/X7XUjR13Y9e2IzUM4bouQ/WnvxGhkS07TPmuYwQM1r6LNdVm5IarZ2Z5F4LJU2paFyg7Nb373yK82h2YoHJI7C7QROq4OXo57QIM4aA==
+Received-SPF: pass client-ip=57.103.89.203;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,209 +89,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch its to a tristate.
+Introduce a -M msi= argument to be able to control MSI-X support independently
+from ITS, as part of supporting GICv3 + GICv2m platforms.
 
-Windows Hypervisor Platform's vGIC doesn't support ITS.
-Deal with this by reporting to the user and exiting.
-
-Regular configuration: GICv3 + ITS
-New default configuration with WHPX: GICv3 with GICv2m
-And its=off explicitly for the newest machine version: GICv3 + GICv2m
+Remove vms->its as it's no longer needed after that change.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/arm/virt-acpi-build.c | 15 +++++++------
- hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
- include/hw/arm/virt.h    |  4 +++-
- 3 files changed, 47 insertions(+), 18 deletions(-)
+ hw/arm/virt-acpi-build.c |   3 +-
+ hw/arm/virt.c            | 110 +++++++++++++++++++++++++++++++--------
+ include/hw/arm/virt.h    |   4 +-
+ 3 files changed, 93 insertions(+), 24 deletions(-)
 
 diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 0a6ec74aa0..8e730731ca 100644
+index 8e730731ca..a6a56455a9 100644
 --- a/hw/arm/virt-acpi-build.c
 +++ b/hw/arm/virt-acpi-build.c
-@@ -472,7 +472,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
-         rc_mapping_count = rc_smmu_idmaps_len;
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * Knowing the ID ranges from the RC to the SMMU, it's possible to
-              * determine the ID ranges from RC that go directly to ITS.
-@@ -483,7 +483,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             rc_mapping_count += rc_its_idmaps->len;
-         }
-     } else {
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             nb_nodes = 2; /* RC and ITS */
-             rc_mapping_count = 1; /* Direct map to ITS */
-         } else {
-@@ -498,7 +498,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
-     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
- 
--    if (vms->its) {
-+    if (virt_is_its_enabled(vms)) {
-         /* Table 12 ITS Group Format */
-         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
-         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-@@ -517,7 +517,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         int smmu_mapping_count, offset_to_id_array;
-         int irq = sdev->irq;
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             smmu_mapping_count = 1; /* ITS Group node */
-             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
-         } else {
-@@ -610,7 +610,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             }
-         }
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * Map bypassed (don't go through the SMMU) RIDs (input) to
-              * ITS Group node directly: RC -> ITS.
-@@ -945,7 +945,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
-         }
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * ACPI spec, Revision 6.0 Errata A
-              * (original 6.0 definition has invalid Length)
-@@ -961,7 +961,8 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+@@ -961,8 +961,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
          }
      }
  
--    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && !vms->no_gicv3_with_gicv2m) {
-+    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
-+     && !vms->no_gicv3_with_gicv2m) {
+-    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
+-     && !vms->no_gicv3_with_gicv2m) {
++    if (virt_is_gicv2m_enabled(vms)) {
          const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
  
          /* 5.2.12.16 GIC MSI Frame Structure */
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 9121eb37eb..dbf9a28b8d 100644
+index dbf9a28b8d..6978d4e867 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -735,7 +735,7 @@ static void create_its(VirtMachineState *vms)
- {
-     DeviceState *dev;
- 
--    assert(vms->its);
-+    assert(virt_is_its_enabled(vms));
-     if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
-         /*
-          * Do nothing if ITS is neither supported by the host nor emulated by
-@@ -744,6 +744,15 @@ static void create_its(VirtMachineState *vms)
-         return;
-     }
- 
-+    if (whpx_enabled() && vms->tcg_its) {
-+        /*
-+         * Signal to the user when ITS is neither supported by the host
-+         * nor emulated by the machine.
-+         */
-+        info_report("ITS not supported on WHPX.");
-+        exit(1);
-+    }
-+
-     dev = qdev_new(its_class_name());
- 
-     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
-@@ -955,7 +964,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+@@ -964,12 +964,12 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
  
      fdt_add_gic_node(vms);
  
--    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
-+    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
+-    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
++    if (virt_is_its_enabled(vms)) {
          create_its(vms);
-     } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+-    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+-        create_v2m(vms);
+-    } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
++    } else if (virt_is_gicv2m_enabled(vms)) {
          create_v2m(vms);
-@@ -2705,18 +2714,34 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
++    } else {
++        vms->msi_controller = VIRT_MSI_CTRL_NONE;
+     }
  }
  
--static bool virt_get_its(Object *obj, Error **errp)
-+bool virt_is_its_enabled(VirtMachineState *vms)
-+{
-+    if (vms->its == ON_OFF_AUTO_OFF) {
-+        return false;
-+    }
-+    if (vms->its == ON_OFF_AUTO_AUTO) {
-+        if (whpx_enabled()) {
+@@ -2716,32 +2716,93 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
+ 
+ bool virt_is_its_enabled(VirtMachineState *vms)
+ {
+-    if (vms->its == ON_OFF_AUTO_OFF) {
+-        return false;
++    switch (vms->msi_controller) {
++        case VIRT_MSI_CTRL_NONE:
 +            return false;
-+        }
-+    }
-+    return true;
++        case VIRT_MSI_CTRL_ITS:
++            return true;
++        case VIRT_MSI_CTRL_GICV2M:
++            return false;
++        case VIRT_MSI_CTRL_AUTO:
++            if (whpx_enabled() && whpx_irqchip_in_kernel()) {
++                return false;
++            }
++            if (vms->gic_version == VIRT_GIC_VERSION_2) {
++                return false;
++            }
++            return true;
++        default:
++            return false;
+     }
+-    if (vms->its == ON_OFF_AUTO_AUTO) {
+-        if (whpx_enabled()) {
 +}
 +
-+static void virt_get_its(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-+    OnOffAuto its = vms->its;
- 
--    return vms->its;
-+    visit_type_OnOffAuto(v, name, &its, errp);
++bool virt_is_gicv2m_enabled(VirtMachineState *vms)
++{
++    switch (vms->msi_controller) {
++        case VIRT_MSI_CTRL_NONE:
+             return false;
+-        }
++        default:
++            return !virt_is_its_enabled(vms);
+     }
+-    return true;
  }
  
--static void virt_set_its(Object *obj, bool value, Error **errp)
-+static void virt_set_its(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
+-static void virt_get_its(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static char *virt_get_msi(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++    const char *val;
++
++    switch (vms->msi_controller) {
++    case VIRT_MSI_CTRL_NONE:
++        val = "off";
++        break;
++    case VIRT_MSI_CTRL_ITS:
++        val = "its";
++        break;
++    case VIRT_MSI_CTRL_GICV2M:
++        val = "gicv2m";
++    default:
++        val = "auto";
++        break;
++    }
++    return g_strdup(val);
++}
++
++static void virt_set_msi(Object *obj, const char *value, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+-    OnOffAuto its = vms->its;
+ 
+-    visit_type_OnOffAuto(v, name, &its, errp);
++    if (!strcmp(value, "auto")) {
++        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overriden later */
++    } else if (!strcmp(value, "its")) {
++        vms->msi_controller = VIRT_MSI_CTRL_ITS;
++    } else if (!strcmp(value, "gicv2m")) {
++        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++    } else if (!strcmp(value, "none")) {
++        vms->msi_controller = VIRT_MSI_CTRL_NONE;
++    } else {
++        error_setg(errp, "Invalid msi value");
++        error_append_hint(errp, "Valid values are auto, gicv2m, its, off\n");
++    }
+ }
+ 
+-static void virt_set_its(Object *obj, Visitor *v, const char *name,
+-                          void *opaque, Error **errp)
++static bool virt_get_its(Object *obj, Error **errp)
  {
      VirtMachineState *vms = VIRT_MACHINE(obj);
  
--    vms->its = value;
-+    visit_type_OnOffAuto(v, name, &vms->its, errp);
+-    visit_type_OnOffAuto(v, name, &vms->its, errp);
++    return virt_is_its_enabled(vms);
++}
++
++static void virt_set_its(Object *obj, bool value, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    if (value) {
++        vms->msi_controller = VIRT_MSI_CTRL_ITS;
++    } else if (vms->no_gicv3_with_gicv2m) {
++        vms->msi_controller = VIRT_MSI_CTRL_NONE;
++    } else {
++        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++    }
  }
  
  static bool virt_get_dtb_randomness(Object *obj, Error **errp)
-@@ -3426,8 +3451,9 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+@@ -3068,6 +3129,8 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+             db_start = base_memmap[VIRT_GIC_V2M].base;
+             db_end = db_start + base_memmap[VIRT_GIC_V2M].size - 1;
+             break;
++        case VIRT_MSI_CTRL_AUTO:
++            g_assert_not_reached();
+         }
+         resv_prop_str = g_strdup_printf("0x%"PRIx64":0x%"PRIx64":%u",
+                                         db_start, db_end,
+@@ -3451,13 +3514,18 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
                                            "guest CPU which implements the ARM "
                                            "Memory Tagging Extension");
  
--    object_class_property_add_bool(oc, "its", virt_get_its,
--                                   virt_set_its);
-+    object_class_property_add(oc, "its", "OnOffAuto",
-+        virt_get_its, virt_set_its,
-+        NULL, NULL);
+-    object_class_property_add(oc, "its", "OnOffAuto",
+-        virt_get_its, virt_set_its,
+-        NULL, NULL);
++    object_class_property_add_bool(oc, "its", virt_get_its,
++                                   virt_set_its);
      object_class_property_set_description(oc, "its",
                                            "Set on/off to enable/disable "
                                            "ITS instantiation");
-@@ -3487,8 +3513,8 @@ static void virt_instance_init(Object *obj)
-     vms->highmem_mmio = true;
+ 
++    object_class_property_add_str(oc, "msi", virt_get_msi,
++                                  virt_set_msi);
++    object_class_property_set_description(oc, "msi",
++                                          "Set MSI settings. "
++                                          "Valid values are auto/gicv2m/its/off");
++
+     object_class_property_add_bool(oc, "dtb-randomness",
+                                    virt_get_dtb_randomness,
+                                    virt_set_dtb_randomness);
+@@ -3514,7 +3582,7 @@ static void virt_instance_init(Object *obj)
      vms->highmem_redists = true;
  
--    /* Default allows ITS instantiation */
--    vms->its = true;
-+    /* Default allows ITS instantiation if available */
-+    vms->its = ON_OFF_AUTO_AUTO;
+     /* Default allows ITS instantiation if available */
+-    vms->its = ON_OFF_AUTO_AUTO;
++    vms->msi_controller = VIRT_MSI_CTRL_AUTO;
      /* Allow ITS emulation if the machine version supports it */
      vms->tcg_its = !vmc->no_tcg_its;
      vms->no_gicv3_with_gicv2m = false;
 diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index d31348dd61..997dd51678 100644
+index 997dd51678..99db8607e7 100644
 --- a/include/hw/arm/virt.h
 +++ b/include/hw/arm/virt.h
-@@ -149,7 +149,7 @@ struct VirtMachineState {
+@@ -101,6 +101,8 @@ typedef enum VirtIOMMUType {
+ 
+ typedef enum VirtMSIControllerType {
+     VIRT_MSI_CTRL_NONE,
++    /* This value is overriden at runtime.*/
++    VIRT_MSI_CTRL_AUTO,
+     VIRT_MSI_CTRL_GICV2M,
+     VIRT_MSI_CTRL_ITS,
+ } VirtMSIControllerType;
+@@ -149,7 +151,6 @@ struct VirtMachineState {
      bool highmem_ecam;
      bool highmem_mmio;
      bool highmem_redists;
--    bool its;
-+    OnOffAuto its;
+-    OnOffAuto its;
      bool tcg_its;
      bool virt;
      bool ras;
-@@ -218,4 +218,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
-             vms->highmem_redists) ? 2 : 1;
+@@ -219,5 +220,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
  }
  
-+bool virt_is_its_enabled(VirtMachineState *vms);
-+
+ bool virt_is_its_enabled(VirtMachineState *vms);
++bool virt_is_gicv2m_enabled(VirtMachineState *vms);
+ 
  #endif /* QEMU_ARM_VIRT_H */
 -- 
 2.50.1 (Apple Git-155)
