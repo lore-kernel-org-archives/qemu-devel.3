@@ -4,92 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7528CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 22:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0612DCCF9F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDrtV-0002iT-PT; Tue, 28 Oct 2025 18:10:21 -0400
+	id 1vDstW-0002yT-AI; Tue, 28 Oct 2025 19:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDrtS-0002i3-Eg
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 18:10:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vDstT-0002we-Uu
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:24 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDrtG-0001PF-1t
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 18:10:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761689400;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xxPmWJy8goSvbsAvaDdewY8/5hwNk5ldoU6C5+BL/P8=;
- b=ipBD9YP0ubLYzLnzTURFBlkU17PsYyo2MBIXyDBpvaEeuqu+EdHLpsg7S/694ZuQM1D8jJ
- vfk7GPSg7k87eqAmTHV32lWrNbmFfr32kIhlRgWn2aWp3X1XeB3MvLtLWf0opXw+3XvsGe
- k3LtKJPaYxWRblqkJJikVEtYr4mn2n8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-q6Q1kFl9PEKh__SZXpLbMA-1; Tue, 28 Oct 2025 18:09:59 -0400
-X-MC-Unique: q6Q1kFl9PEKh__SZXpLbMA-1
-X-Mimecast-MFC-AGG-ID: q6Q1kFl9PEKh__SZXpLbMA_1761689399
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-88f81cf8244so2614867985a.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 15:09:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761689398; x=1762294198;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xxPmWJy8goSvbsAvaDdewY8/5hwNk5ldoU6C5+BL/P8=;
- b=JnAneBEs5t+go0GcdW8+H6v+7mmTnPl1SywREEJotYvp5pWWhnjTDzEbnOaiJ/AsZr
- QaaV840XFDZBZzjVtkeaZrYpLWP/STh9iwnI88Cz/DqXyrshL8wiPDb3FAxoIudSdQYm
- P/sh4Wm15G4v6l6ssxIgztVtWZasiiW9ed2LKN9PNtchPQpE2+JqFt5S6IIqbXbirWrL
- /Y3ESRN/qDPD+sk+/vOv3LfEHcdv4J/iCP5P5w2IGndwccdrGTl78BV57WX3uU/BKghS
- w0FgIK435iDH7SSFTS8jnbQdxrSuO3PqGX9qHyHEUcZtlkGRIOtmk05c6jazo6xUxIuN
- 5/Hw==
-X-Gm-Message-State: AOJu0YxO6o1lECMKPx15eump5qbF8OkYx+W74S8iRFDlueafvbKtpyme
- S2wlEN8juwF8AOUz/bNLpe5EbX98aoTResngWld2V0y2xM8sE6zuvy7VqafCdwpwRxQLWlP5R2W
- pvnqM9e0Ko7NwiNFoHyGPTAYPMkHwWNaogWbZRO8Ahxfdno1fKlOrtCTOWp2Ea7zn
-X-Gm-Gg: ASbGncsK0WFMRrM6zZoNIzJ2Fln/h235GCcCcg6ivptz8IvGG1mTzZ0Ks+xj3NvgJ9C
- J0l+/30/0qzCmHstSj5j8A1/f80M/ZaO3nAsdLZrpDaxsczDVmxN1KmMRQXrZsJh4k0s5Sac4gN
- 0/mIyZcgq8kT9A/2WVzDLjN9HIAFUMbcwV4XWyM474WnSlYbzer8r2HPY+JAdUqin2pjm32Kkfv
- poZcu6FVfi4D99yk8Y6+ipkpZ/SL/LwUIuiM3y5y7YnINQ3LxQS/MeMzZKwmmwpp16k/SLlDlnI
- DGg3bdB9pKGeGMUwT0nnooI9iOMCBpVINLTaMMocP1LkGImELEjgJk9aQboLPHiBW/Q=
-X-Received: by 2002:a05:620a:4711:b0:88f:dba3:e9c8 with SMTP id
- af79cd13be357-8a8e55c7d78mr128282185a.72.1761689398295; 
- Tue, 28 Oct 2025 15:09:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEivBkIMBLDviAA+oCCIdbLtN/KuyvYK8zu58ZWQ5CQ3Vq7QSZlibBkv0DeNdcOcUCjXFRslA==
-X-Received: by 2002:a05:620a:4711:b0:88f:dba3:e9c8 with SMTP id
- af79cd13be357-8a8e55c7d78mr128278585a.72.1761689397759; 
- Tue, 28 Oct 2025 15:09:57 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-89f25896d52sm910808085a.38.2025.10.28.15.09.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 15:09:56 -0700 (PDT)
-Date: Tue, 28 Oct 2025 18:09:55 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] memory: Make FlatView root references weak
-Message-ID: <aQE_M1qsr78RrQaw@x1.local>
-References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vDstL-00017L-2v
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:23 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 4887F81765;
+ Wed, 29 Oct 2025 02:14:00 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id oDnXpg2bCW20-CMWkYUWR; Wed, 29 Oct 2025 02:13:59 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761693239;
+ bh=p+nRtrNPovY55BdLG50N9jkuwP8uMv1quoi1fFi1LL4=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=RKL/BrIqwq6WUN4kJdnyWEOkzi2suqmvqAo22/xkimWjBgbq8GTp7yHY6r4Tj2b6g
+ j/emSDPUlsFf2J3tY8HXnZOpqDrp2geqT3WgUE5iQurLCFh4okIbiEPL3PoB1QEp2x
+ OxlpC3EBHm+OQ0S1s8xjR+kIh/aJbjRbw4waZ/9o=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: peterx@redhat.com
+Cc: armbru@redhat.com,
+	vsementsov@yandex-team.ru,
+	qemu-devel@nongnu.org
+Subject: [RFC 12/22] hw/virtio: move to new migration APIs
+Date: Wed, 29 Oct 2025 02:13:36 +0300
+Message-ID: <20251028231347.194844-13-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251028231347.194844-1-vsementsov@yandex-team.ru>
+References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,156 +75,391 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 02:56:53PM +0900, Akihiko Odaki wrote:
-> docs/devel/memory.rst says "memory_region_ref and memory_region_unref
-> are never called on aliases", but these functions are called for
-> FlatView roots, which can be aliases.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/virtio/vhost-user-fs.c      | 65 ++++++++++++++--------------
+ hw/virtio/virtio-mmio.c        | 10 +++--
+ hw/virtio/virtio-pci.c         | 10 +++--
+ hw/virtio/virtio.c             | 78 ++++++++++++++++++++--------------
+ include/hw/virtio/virtio-bus.h |  4 +-
+ include/hw/virtio/virtio.h     |  2 -
+ 6 files changed, 94 insertions(+), 75 deletions(-)
 
-IMHO the quoted doc was in a special context, where it was talking about
-the example of address_space_map() holding adhoc refcounts of a MR, in
-which case "memory_region_ref and memory_region_unref are never called on
-aliases" was correct..
-
-The full context:
-
-  ...
-  If you break this rule, the following situation can happen:
-  
-  - the memory region's owner had a reference taken via memory_region_ref
-    (for example by address_space_map)
-  
-  - the region is unparented, and has no owner anymore
-  
-  - when address_space_unmap is called, the reference to the memory region's
-    owner is leaked.
-  
-  There is an exception to the above rule: it is okay to call
-  object_unparent at any time for an alias or a container region.  It is
-  therefore also okay to create or destroy alias and container regions
-  dynamically during a device's lifetime.
-  
-  This exceptional usage is valid because aliases and containers only help
-  QEMU building the guest's memory map; they are never accessed directly.
-  memory_region_ref and memory_region_unref are never called on aliases
-  or containers, and the above situation then cannot happen.  Exploiting
-  this exception is rarely necessary, and therefore it is discouraged,
-  but nevertheless it is used in a few places.
-  ...
-
-So I can't say the doc is wrong, but maybe it can be at least be clearer on
-the scope of that sentence.. indeed.
-
-> 
-> This causes object overwrite hazard in pci-bridge. Specifically,
-> pci_bridge_region_init() expects that there are no references to
-> w->alias_io after object_unparent() is called, allowing it to reuse the
-> associated storage. However, if a parent bus still holds a reference to
-> the existing object as a FlatView's root, the storage is still in use,
-> leading to an overwrite. This hazard can be confirmed by adding the
-> following code to pci_bridge_region_init():
-> 
-> PCIDevice *parent_dev = parent->parent_dev;
-> assert(!object_dynamic_cast(OBJECT(parent_dev), TYPE_PCI_BRIDGE) ||
->        PCI_BRIDGE(parent_dev)->as_io.current_map->root != &w->alias_io);
-
-What's interesting is I found PCIBridge.as_io / PCIBridge.as_mem are not
-used anywhere..  because it looks like the bridge code uses MRs to operate
-rather than address spaces.
-
-Does it mean we can drop the two ASes?  Then if they're the only holder of
-the refcounts of these problematic MRs, does it solve the problem too in an
-easier way?  Maybe there're other issues you want to fix too with this patch?
-
-> 
-> This assertion fails when running:
-> meson test -C build qtest-x86_64/bios-tables-test \
->     '--test-args=-p /x86_64/acpi/piix4/pci-hotplug/no_root_hotplug'
-> 
-> Make the references of FlatView roots "weak" (i.e., remove the
-> reference to a root automatically removed when it is finalized) to
-> avoid calling memory_region_ref and memory_region_unref and fix the
-> hazard with pci-bridge.
-> 
-> Alternative solutions (like removing the "never called on aliases"
-> statement or detailing the exception) were rejected because the alias
-> invariant is still relied upon in several parts of the codebase, and
-> updating existing code to align with a new condition is non-trivial.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  system/memory.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/system/memory.c b/system/memory.c
-> index 8b84661ae36c..08fe5e791224 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -266,7 +266,6 @@ static FlatView *flatview_new(MemoryRegion *mr_root)
->      view = g_new0(FlatView, 1);
->      view->ref = 1;
->      view->root = mr_root;
-> -    memory_region_ref(mr_root);
->      trace_flatview_new(view, mr_root);
->  
->      return view;
-> @@ -301,7 +300,6 @@ static void flatview_destroy(FlatView *view)
->          memory_region_unref(view->ranges[i].mr);
->      }
->      g_free(view->ranges);
-> -    memory_region_unref(view->root);
->      g_free(view);
->  }
->  
-> @@ -1796,6 +1794,12 @@ void memory_region_init_iommu(void *_iommu_mr,
->  static void memory_region_finalize(Object *obj)
->  {
->      MemoryRegion *mr = MEMORY_REGION(obj);
-> +    gpointer key;
-> +    gpointer value;
-> +
-> +    if (g_hash_table_steal_extended(flat_views, mr, &key, &value)) {
-> +        ((FlatView *)value)->root = NULL;
-> +    }
-
-This is definitely very tricky.. The translation path (from
-AddressSpaceDispatch) indeed looks ok as of now, which doesn't looks at
-view->root.. however at least I saw this:
-
-void flatview_unref(FlatView *view)
-{
-    if (qatomic_fetch_dec(&view->ref) == 1) {
-        trace_flatview_destroy_rcu(view, view->root);
-        assert(view->root);                            <-------------------
-        call_rcu(view, flatview_destroy, rcu);
-    }
-}
-
-I wonder how it didn't already crash.
-
-The other stupid but working solution is we can always make the 6 aliases
-to not be reused, IOW we can always use dynamic MRs considering
-pci_bridge_update_mappings() should be rare?
-
-In short, I wished we can fix this with something cleaner, and it's hard to
-justify view->root==NULL is fine to be concurrently reset.. So IMHO we
-should be very careful justifying this.
-
-Thanks,
-
->  
->      /*
->       * Each memory region (that can be freed) must have an owner, and it
-> 
-> ---
-> base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
-> change-id: 20251024-root-d431450fcbbf
-> 
-> Best regards,
-> --  
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-
+diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+index e77c69eb12..84a7663ea8 100644
+--- a/hw/virtio/vhost-user-fs.c
++++ b/hw/virtio/vhost-user-fs.c
+@@ -306,9 +306,11 @@ static struct vhost_dev *vuf_get_vhost(VirtIODevice *vdev)
+ /**
+  * Fetch the internal state from virtiofsd and save it to `f`.
+  */
+-static int vuf_save_state(QEMUFile *f, void *pv, size_t size,
+-                          const VMStateField *field, JSONWriter *vmdesc)
++static bool vuf_save_state(QEMUFile *f, void *pv, size_t size,
++                           const VMStateField *field, JSONWriter *vmdesc,
++                           Error **errp)
+ {
++    ERRP_GUARD();
+     VirtIODevice *vdev = pv;
+     VHostUserFS *fs = VHOST_USER_FS(vdev);
+     Error *local_error = NULL;
+@@ -316,39 +318,39 @@ static int vuf_save_state(QEMUFile *f, void *pv, size_t size,
+ 
+     ret = vhost_save_backend_state(&fs->vhost_dev, f, &local_error);
+     if (ret < 0) {
+-        error_reportf_err(local_error,
+-                          "Error saving back-end state of %s device %s "
+-                          "(tag: \"%s\"): ",
+-                          vdev->name, vdev->parent_obj.canonical_path,
+-                          fs->conf.tag ?: "<none>");
+-        return ret;
++        error_prepend(errp,
++                      "Error saving back-end state of %s device %s "
++                      "(tag: \"%s\"): ",
++                      vdev->name, vdev->parent_obj.canonical_path,
++                      fs->conf.tag ?: "<none>");
++        return false;
+     }
+ 
+-    return 0;
++    return true;
+ }
+ 
+ /**
+  * Load virtiofsd's internal state from `f` and send it over to virtiofsd.
+  */
+-static int vuf_load_state(QEMUFile *f, void *pv, size_t size,
+-                          const VMStateField *field)
++static bool vuf_load_state(QEMUFile *f, void *pv, size_t size,
++                           const VMStateField *field, Error **errp)
+ {
++    ERRP_GUARD();
+     VirtIODevice *vdev = pv;
+     VHostUserFS *fs = VHOST_USER_FS(vdev);
+-    Error *local_error = NULL;
+     int ret;
+ 
+-    ret = vhost_load_backend_state(&fs->vhost_dev, f, &local_error);
++    ret = vhost_load_backend_state(&fs->vhost_dev, f, errp);
+     if (ret < 0) {
+-        error_reportf_err(local_error,
+-                          "Error loading back-end state of %s device %s "
+-                          "(tag: \"%s\"): ",
+-                          vdev->name, vdev->parent_obj.canonical_path,
+-                          fs->conf.tag ?: "<none>");
+-        return ret;
++        error_prepend(errp,
++                      "Error loading back-end state of %s device %s "
++                      "(tag: \"%s\"): ",
++                      vdev->name, vdev->parent_obj.canonical_path,
++                      fs->conf.tag ?: "<none>");
++        return false;
+     }
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static bool vuf_is_internal_migration(void *opaque)
+@@ -357,20 +359,21 @@ static bool vuf_is_internal_migration(void *opaque)
+     return true;
+ }
+ 
+-static int vuf_check_migration_support(void *opaque)
++static bool vuf_check_migration_support(void *opaque, Error **errp)
+ {
+     VirtIODevice *vdev = opaque;
+     VHostUserFS *fs = VHOST_USER_FS(vdev);
+ 
+     if (!vhost_supports_device_state(&fs->vhost_dev)) {
+-        error_report("Back-end of %s device %s (tag: \"%s\") does not support "
+-                     "migration through qemu",
+-                     vdev->name, vdev->parent_obj.canonical_path,
+-                     fs->conf.tag ?: "<none>");
+-        return -ENOTSUP;
++        error_setg(errp,
++                   "Back-end of %s device %s (tag: \"%s\") does not support "
++                   "migration through qemu",
++                   vdev->name, vdev->parent_obj.canonical_path,
++                   fs->conf.tag ?: "<none>");
++        return false;
+     }
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static const VMStateDescription vuf_backend_vmstate;
+@@ -392,15 +395,15 @@ static const VMStateDescription vuf_backend_vmstate = {
+     .name = "vhost-user-fs-backend",
+     .version_id = 0,
+     .needed = vuf_is_internal_migration,
+-    .pre_load = vuf_check_migration_support,
+-    .pre_save = vuf_check_migration_support,
++    .pre_load_errp = vuf_check_migration_support,
++    .pre_save_errp = vuf_check_migration_support,
+     .fields = (const VMStateField[]) {
+         {
+             .name = "back-end",
+             .info = &(const VMStateInfo) {
+                 .name = "virtio-fs back-end state",
+-                .get = vuf_load_state,
+-                .put = vuf_save_state,
++                .load = vuf_load_state,
++                .save = vuf_save_state,
+             },
+         },
+         VMSTATE_END_OF_LIST()
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index fb58c36452..9d37ee029b 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -609,18 +609,20 @@ static const VMStateDescription vmstate_virtio_mmio = {
+     }
+ };
+ 
+-static void virtio_mmio_save_extra_state(DeviceState *opaque, QEMUFile *f)
++static bool virtio_mmio_save_extra_state(DeviceState *opaque, QEMUFile *f,
++                                         Error **errp)
+ {
+     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(opaque);
+ 
+-    vmstate_save_state(f, &vmstate_virtio_mmio, proxy, NULL, &error_fatal);
++    return vmstate_save_vmsd(f, &vmstate_virtio_mmio, proxy, NULL, errp);
+ }
+ 
+-static int virtio_mmio_load_extra_state(DeviceState *opaque, QEMUFile *f)
++static bool virtio_mmio_load_extra_state(DeviceState *opaque, QEMUFile *f,
++                                         Error **errp)
+ {
+     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(opaque);
+ 
+-    return vmstate_load_state(f, &vmstate_virtio_mmio, proxy, 1, &error_fatal);
++    return vmstate_load_vmsd(f, &vmstate_virtio_mmio, proxy, 1, errp);
+ }
+ 
+ static bool virtio_mmio_has_extra_state(DeviceState *opaque)
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 937e22f08a..95faa84a58 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -184,18 +184,20 @@ static bool virtio_pci_has_extra_state(DeviceState *d)
+     return true;
+ }
+ 
+-static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
++static bool virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f,
++                                        Error **errp)
+ {
+     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+ 
+-    vmstate_save_state(f, &vmstate_virtio_pci, proxy, NULL, &error_fatal);
++    return vmstate_save_vmsd(f, &vmstate_virtio_pci, proxy, NULL, errp);
+ }
+ 
+-static int virtio_pci_load_extra_state(DeviceState *d, QEMUFile *f)
++static bool virtio_pci_load_extra_state(DeviceState *d, QEMUFile *f,
++                                        Error **errp)
+ {
+     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+ 
+-    return vmstate_load_state(f, &vmstate_virtio_pci, proxy, 1, &error_fatal);
++    return vmstate_load_vmsd(f, &vmstate_virtio_pci, proxy, 1, errp);
+ }
+ 
+ static void virtio_pci_save_queue(DeviceState *d, int n, QEMUFile *f)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 153ee0a0cf..36e0493344 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2873,35 +2873,37 @@ static const VMStateDescription vmstate_virtio_ringsize = {
+     }
+ };
+ 
+-static int get_extra_state(QEMUFile *f, void *pv, size_t size,
+-                           const VMStateField *field)
++static bool load_extra_state(QEMUFile *f, void *pv, size_t size,
++                             const VMStateField *field,
++                             Error **errp)
+ {
+     VirtIODevice *vdev = pv;
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+ 
+     if (!k->load_extra_state) {
+-        return -1;
++        error_setg(errp, "extra state is unsupported");
++        return false;
+     } else {
+-        return k->load_extra_state(qbus->parent, f);
++        return k->load_extra_state(qbus->parent, f, errp);
+     }
+ }
+ 
+-static int put_extra_state(QEMUFile *f, void *pv, size_t size,
+-                           const VMStateField *field, JSONWriter *vmdesc)
++static bool save_extra_state(QEMUFile *f, void *pv, size_t size,
++                             const VMStateField *field, JSONWriter *vmdesc,
++                             Error **errp)
+ {
+     VirtIODevice *vdev = pv;
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+ 
+-    k->save_extra_state(qbus->parent, f);
+-    return 0;
++    return k->save_extra_state(qbus->parent, f, errp);
+ }
+ 
+ static const VMStateInfo vmstate_info_extra_state = {
+     .name = "virtqueue_extra_state",
+-    .get = get_extra_state,
+-    .put = put_extra_state,
++    .load = load_extra_state,
++    .save = save_extra_state,
+ };
+ 
+ static const VMStateDescription vmstate_virtio_extra_state = {
+@@ -3024,14 +3026,13 @@ static const VMStateDescription vmstate_virtio = {
+     }
+ };
+ 
+-int virtio_save(VirtIODevice *vdev, QEMUFile *f)
++static bool virtio_save(VirtIODevice *vdev, QEMUFile *f, Error **errp)
+ {
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+     uint32_t guest_features_lo = (vdev->guest_features & 0xffffffff);
+     int i;
+-    Error *local_err = NULL;
+ 
+     if (k->save_config) {
+         k->save_config(qbus->parent, f);
+@@ -3075,39 +3076,54 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
+     }
+ 
+     if (vdc->vmsd) {
+-        int ret = vmstate_save_state(f, vdc->vmsd, vdev, NULL, &local_err);
+-        if (ret) {
+-            error_report_err(local_err);
+-            return ret;
++        if (!vmstate_save_vmsd(f, vdc->vmsd, vdev, NULL, errp)) {
++            return false;
+         }
+     }
+ 
+     /* Subsections */
+-    return vmstate_save_state(f, &vmstate_virtio, vdev, NULL, &error_fatal);
++    return vmstate_save_vmsd(f, &vmstate_virtio, vdev, NULL, &error_fatal);
+ }
+ 
+ /* A wrapper for use as a VMState .put function */
+-static int virtio_device_put(QEMUFile *f, void *opaque, size_t size,
+-                              const VMStateField *field, JSONWriter *vmdesc)
++static bool virtio_device_save(QEMUFile *f, void *opaque, size_t size,
++                               const VMStateField *field, JSONWriter *vmdesc,
++                               Error **errp)
+ {
+-    return virtio_save(VIRTIO_DEVICE(opaque), f);
++    return virtio_save(VIRTIO_DEVICE(opaque), f, errp);
+ }
+ 
+ /* A wrapper for use as a VMState .get function */
+-static int coroutine_mixed_fn
+-virtio_device_get(QEMUFile *f, void *opaque, size_t size,
+-                  const VMStateField *field)
++static bool coroutine_mixed_fn
++virtio_device_load(QEMUFile *f, void *opaque, size_t size,
++                   const VMStateField *field, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
+     DeviceClass *dc = DEVICE_CLASS(VIRTIO_DEVICE_GET_CLASS(vdev));
+ 
+-    return virtio_load(vdev, f, dc->vmsd->version_id);
++    /* TODO: update virtio_load() to set errp and return bool */
++    int ret = virtio_load(vdev, f, dc->vmsd->version_id);
++
++    if (ret < 0) {
++        /*
++         * Using error_setg_errn or strerror would be incorrect,
++         * because virtio_load may mix simple -1 with -errno
++         * values on different paths.
++         *
++         * TODO: update virtio_load and all related callbacks
++         * to "errp + boolean return value" API.
++         */
++        error_setg(errp, "virtio_load failed: %d", ret);
++        return false;
++    }
++
++    return true;
+ }
+ 
+ const VMStateInfo  virtio_vmstate_info = {
+     .name = "virtio",
+-    .get = virtio_device_get,
+-    .put = virtio_device_put,
++    .load = virtio_device_load,
++    .save = virtio_device_save,
+ };
+ 
+ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
+@@ -3387,18 +3403,16 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+     }
+ 
+     if (vdc->vmsd) {
+-        ret = vmstate_load_state(f, vdc->vmsd, vdev, version_id, &local_err);
+-        if (ret) {
++        if (!vmstate_load_vmsd(f, vdc->vmsd, vdev, version_id, &local_err)) {
+             error_report_err(local_err);
+-            return ret;
++            return -EINVAL;
+         }
+     }
+ 
+     /* Subsections */
+-    ret = vmstate_load_state(f, &vmstate_virtio, vdev, 1, &local_err);
+-    if (ret) {
++    if (!vmstate_load_vmsd(f, &vmstate_virtio, vdev, 1, &local_err)) {
+         error_report_err(local_err);
+-        return ret;
++        return -EINVAL;
+     }
+ 
+     if (vdev->device_endian == VIRTIO_DEVICE_ENDIAN_UNKNOWN) {
+diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
+index 7ab8c9dab0..31bf2cd607 100644
+--- a/include/hw/virtio/virtio-bus.h
++++ b/include/hw/virtio/virtio-bus.h
+@@ -42,11 +42,11 @@ struct VirtioBusClass {
+     void (*notify)(DeviceState *d, uint16_t vector);
+     void (*save_config)(DeviceState *d, QEMUFile *f);
+     void (*save_queue)(DeviceState *d, int n, QEMUFile *f);
+-    void (*save_extra_state)(DeviceState *d, QEMUFile *f);
++    bool (*save_extra_state)(DeviceState *d, QEMUFile *f, Error **errp);
+     int (*load_config)(DeviceState *d, QEMUFile *f);
+     int (*load_queue)(DeviceState *d, int n, QEMUFile *f);
+     int (*load_done)(DeviceState *d, QEMUFile *f);
+-    int (*load_extra_state)(DeviceState *d, QEMUFile *f);
++    bool (*load_extra_state)(DeviceState *d, QEMUFile *f, Error **errp);
+     bool (*has_extra_state)(DeviceState *d);
+     bool (*query_guest_notifiers)(DeviceState *d);
+     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index d97529c3f1..d729502eca 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -296,8 +296,6 @@ int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+ 
+ void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
+ 
+-int virtio_save(VirtIODevice *vdev, QEMUFile *f);
+-
+ extern const VMStateInfo virtio_vmstate_info;
+ 
+ #define VMSTATE_VIRTIO_DEVICE \
 -- 
-Peter Xu
+2.48.1
 
 
