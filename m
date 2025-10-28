@@ -4,121 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DCFCCF9EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466EACCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDd5d-0003zy-AA; Tue, 28 Oct 2025 02:21:54 -0400
+	id 1vDd6f-0005wF-Ky; Tue, 28 Oct 2025 02:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDd5S-0003qn-TI
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:21:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDd5P-0008Kk-8D
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:21:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761632498;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ByCSKi9r1vAXRTDrxPp/LbuSRwyChFrEImzbNaS37bI=;
- b=GusZXvvRIDXQneeFoxaJLophpwgYvmYbYy/lx7q2JTWbkXTfN4fQQtsFo0dm2ACXJmUrBx
- SB0HgD2ORov7J9zYhU7vHelG9X+YrF9yjCSgKkk/GEYs2U2yi8od9xNPZU1sGoX5hK1Sje
- Knj+qFzAbJudREagg3algbCGrWwks7g=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684--Td8gi8YP8Wu2_9Mcq834g-1; Tue, 28 Oct 2025 02:21:36 -0400
-X-MC-Unique: -Td8gi8YP8Wu2_9Mcq834g-1
-X-Mimecast-MFC-AGG-ID: -Td8gi8YP8Wu2_9Mcq834g_1761632496
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-b6ceba8968dso4055796a12.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:21:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDd6O-0005nO-Na
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:22:40 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDd6L-0000V4-NJ
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:22:40 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-427007b1fe5so4703622f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:22:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761632554; x=1762237354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hXwgMzbkRa9lVN9HUpv/wtEfpGvPebV/MvemfcmQGBs=;
+ b=ECBWx2Z8fyGQEehrOQ1DhKCRiFxvQBXlC1UqgzzUZpfbITAwp7o/5bPY77t4hIfeDO
+ TGQ8OwhUKMR5ekFWbqv+PTGI7qqfIPXIdyeRfBVeXNDWTKF9brdZd6XFlCWv5kHqudFi
+ e9UKzu17u+CpOm4ngB7FXZc/0wEAwP7K039ItbAJK5mn6woG0SBulTcDpJdHhjs7q2Fb
+ RHY7IPWlvRb93OK92SaQ2pZG2L1U4MTeP33bT+8N9Kn7QrhtOpNPcI3XuRkjC3S3tFu/
+ x2guZFFRDZYgtkGTxGAWExpsvg3+0wYPwnHpxlpu1LAzSAjBYbN5LNoSfGLV/3q1CHwf
+ KzUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761632495; x=1762237295;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1761632554; x=1762237354;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ByCSKi9r1vAXRTDrxPp/LbuSRwyChFrEImzbNaS37bI=;
- b=PgoCEoqWgubWTMVPZf6dRIa0RSqSFQimQMf1y2Eiwa9TW+cRkWG4kTqRskoVAfmxNy
- kenElzk8+ZCqDXFsST77MPNE90lJgr1/ujfGGJLd6QXwOxBg5vY9Nm5pYXOcQRQx4P9d
- 3N5UT2+gkv14WSimiOL0P/7lObZpwC3RM8lRp5xUhdocgjV4hDxHLlln8x58XzL8rfaT
- idCvDqQa3KjLKYl1bo8S3D2d+xq3w2zVXdHg3qkw7xv1IetL/jXL50aYCjsJwvypC9cD
- 0I7FVDtmfBWUMx7BpGFQ8mwKcwLiIeAMALGBawECaaSabhLV6WAoSS0EZLNxqyE2BmDa
- B4HA==
-X-Gm-Message-State: AOJu0YznpQwsqoGhrrtbPbbHm/qlrFaVwLIhp7HSEr3ya8GlPb2YXD6S
- YsV0HezB6GfZ7stAf6Pn3SeQGJcZ+zKZmLFiRCmuzoOMcerdY9l0Ajqh7XkkZq54T0cLqbKtP1p
- vgzE7Dva7846uiAUrSkSoEp0LMVe3wfKmz3tj1PeFr76WmfQjZHH53Kcs
-X-Gm-Gg: ASbGnctRZTvMiwW21C2mbLkjuHH+jT56H1EIM78ke8I0f0O/Ih72OzK16aY2Ntsyukt
- f3p6FN+MbgNsWs+//Lt459jOQ1usfsKYbANpK1kpDrrlde45JF9ZIAucVWtBj7BdaQ5cPc9HDEX
- hcJqgrInhrl5/KP2i3q+DYwrKErI8rrh0t/nWLTAHicZNAnHc+y4RD+h5O6FxgLLDuGGIswP+TJ
- eHRdOZenfZX9pa8Rz7ChzgG1Pb5pOl2L8c8CbLUXhPk9BsMlWDjrxoK7h3cD5FEAl+RyJdBFIsR
- 3yEyFXPUeIiFyQ6tIMGflh7Cm37YKPZ01CiqjAqXpkdmdlPrkLrCjdi+0nMZbyzojmB/Z8+LaM/
- Wnh0D6+B4lQ1F
-X-Received: by 2002:a17:902:d50c:b0:293:e0f:3e3 with SMTP id
- d9443c01a7336-294cb52e567mr30662375ad.29.1761632495605; 
- Mon, 27 Oct 2025 23:21:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgTTnwN4TOSJQLen1Fi7P7iQV86LWgqbMgovO2a2KvPOFKyqpWPHWZzfS3Wmn0EuQ9OKGfTA==
-X-Received: by 2002:a17:902:d50c:b0:293:e0f:3e3 with SMTP id
- d9443c01a7336-294cb52e567mr30662015ad.29.1761632495216; 
- Mon, 27 Oct 2025 23:21:35 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.108.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29498d40de4sm105463995ad.77.2025.10.27.23.21.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 23:21:34 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-Date: Tue, 28 Oct 2025 11:51:03 +0530
-Subject: [PATCH v2 2/2] migration: Fix memory leak in
- postcopy_ram_listen_thread()
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251028-solve_error_fatal_regression-v2-2-dab24c808a28@redhat.com>
-References: <20251028-solve_error_fatal_regression-v2-0-dab24c808a28@redhat.com>
-In-Reply-To: <20251028-solve_error_fatal_regression-v2-0-dab24c808a28@redhat.com>
+ bh=hXwgMzbkRa9lVN9HUpv/wtEfpGvPebV/MvemfcmQGBs=;
+ b=Ww3xSR4t0Ez7wNh99Y9KE/sqsMtAz5HCcmMecUhp12+113tFQt1O1RJibR+0VED6Lt
+ MkBi3rWyqr0oVeWBmAfX8Gr6hA26EE7oOu4VSw+QfRxD65OlDfk2xtI4lSNJXSAWXFN+
+ I+voDsKJ+GOOh/td26xpMBP9HUXyOHRQCUCHAeoOu/WuDZsW0TT8nDpyU4zo/YpR+Uny
+ u+CASBS/ENDHEYGB9ViOnyt0ufSqr1Eb8E6sRTjeZwJS7RFxWAdHe8VUjUrw/XPsn+RF
+ Tu/jEr0d/1j0lcZ25DGYf0hnWIyvDahj4Re950gCgzDIboqwSgVYbtueaBLLSI1NkdoO
+ rUVg==
+X-Gm-Message-State: AOJu0YxpXhLs7yJi0zGGxK7lqEp4mxdSJP8siKIMjH+EY7Ncp0OuzClO
+ SxC36yNopLVCWJ3sWuV1uQ6ZXJ0tXDzn85225Toou7AghJ47sHVGsBh5yHo4NRXhwle6SyF+aJO
+ deB9SdOQ=
+X-Gm-Gg: ASbGncsk/4hJLvNbBkzqC8j2hvdCBR5I+/cUipXckjJotY0l2+6kChI3jdS5VR5yTnx
+ cOZxn0sT8kkZUj1GbPvk6QplSwJnv7okPVobiCAqqMOXZC/AmbpcykbfukNc92xBk84Eae76bG/
+ 7LY5NzJAG4UXrVDwJCRHjgkRprXegLK2sueq60nU/IUcX+7fRzno06wlKad2HD0y8Qyu4rdUL3R
+ yNqXfUR/HSXumBQgD4tj9RV6ACuU8BQY2/F/w+mVO1jnycUyw2Pc0DxamX3H2lkmRLTB08cUmiH
+ kIQf/YHK5uTIxWA+3rEdjKM2/y55dmTit3JCd9PQ35tJmakbDTzY+DMafipX2oD/TD3fm+R668c
+ JUNIV+mD3OZgMDzd5oWAdI4QgQbXKwOj9mRX53h88pd6mlI5LesM2BM8jcAXAca85Xa2uqVJZPI
+ XXoQ7ElS4XooZy/A1/L33dKim5N3X0gbrMO5o6atoeH6tfUwXcq+phEo8=
+X-Google-Smtp-Source: AGHT+IFYoE0SswbNXBThHEKhBOsbGc8TvLh3juZIX9BKBrwhesx8c5z9wspKYFw/+Pu/6IczywwArg==
+X-Received: by 2002:a05:6000:2008:b0:428:3d1d:6d15 with SMTP id
+ ffacd0b85a97d-429a7e9c957mr1563338f8f.57.1761632554435; 
+ Mon, 27 Oct 2025 23:22:34 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952df682sm18216529f8f.43.2025.10.27.23.22.33
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 27 Oct 2025 23:22:34 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Arun Menon <armenon@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=916; i=armenon@redhat.com;
- h=from:subject:message-id; bh=l7kD73eZZkxINafbqQuwKNBcfj7gqAa+0anvmpEQrm8=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQyZDws2NivGuO77t4Kw5GVPW0Zpx1i4le8Zaxw7W7Bfzm
- eY7vHnVUcrCIMbFICumyNLwNUC2KaAwItL25XWYOaxMIEMYuDgFYCL1mowMrcWeU40PzqypPaz/
- qYGh0vH5/CNPlqhfvRR+vcjv29dlAgz/7JYvd2bWefXxlv8pu06VeIvVEqZy09sSvqxdWrp9r5Y
- 4PwA=
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 56/59] target/arm: Better describe PMU depends on TCG or HVF
+Date: Tue, 28 Oct 2025 06:42:32 +0100
+Message-ID: <20251028054238.14949-57-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251028054238.14949-1-philmd@linaro.org>
+References: <20251028054238.14949-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,28 +108,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-commit 94272d9b45 introduced a memory leak in the
-postcopy_ram_listen_thread() call.
-We need to free the local error object in the if clause as well.
+Simplify PMU logic by rewriting '!KVM' as 'TCG || HVF'
+(ignoring QTest, because vCPUs are not available there).
 
-Signed-off-by: Arun Menon <armenon@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- migration/savevm.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/cpu.c     |  2 +-
+ target/arm/machine.c | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 7b35ec4dd007c6ed494201be8528a9e4f1c13843..f18c6ee659c1b9a005ff8ccfe51875f81d37694b 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2141,6 +2141,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-                          "bitmaps may be lost, and present migrated dirty "
-                          "bitmaps are correctly migrated and valid.",
-                          __func__, load_res);
-+            error_free(local_err);
-             load_res = 0; /* prevent further exit() */
-         } else {
-             error_prepend(&local_err,
-
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index eaf76532eca..5a5a9994af0 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1979,7 +1979,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     if (arm_feature(env, ARM_FEATURE_PMU)) {
+         pmu_init(cpu);
+ 
+-        if (!kvm_enabled()) {
++        if (tcg_enabled() || hvf_enabled()) {
+             arm_register_pre_el_change_hook(cpu, &pmu_pre_el_change, 0);
+             arm_register_el_change_hook(cpu, &pmu_post_el_change, 0);
+         }
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 44a0cf844b0..80aa2e34b4b 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -1,7 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "qemu/error-report.h"
+-#include "system/kvm.h"
++#include "system/hvf.h"
+ #include "system/tcg.h"
+ #include "kvm_arm.h"
+ #include "internals.h"
+@@ -943,7 +943,7 @@ static int cpu_pre_save(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+ 
+-    if (!kvm_enabled()) {
++    if (tcg_enabled() || hvf_enabled()) {
+         pmu_op_start(&cpu->env);
+     }
+ 
+@@ -978,7 +978,7 @@ static int cpu_post_save(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+ 
+-    if (!kvm_enabled()) {
++    if (tcg_enabled() || hvf_enabled()) {
+         pmu_op_finish(&cpu->env);
+     }
+ 
+@@ -1011,7 +1011,7 @@ static int cpu_pre_load(void *opaque)
+      */
+     env->irq_line_state = UINT32_MAX;
+ 
+-    if (!kvm_enabled()) {
++    if (tcg_enabled() || hvf_enabled()) {
+         pmu_op_start(env);
+     }
+ 
+@@ -1103,7 +1103,7 @@ static int cpu_post_load(void *opaque, int version_id)
+         }
+     }
+ 
+-    if (!kvm_enabled()) {
++    if (tcg_enabled() || hvf_enabled()) {
+         pmu_op_finish(env);
+     }
+ 
 -- 
 2.51.0
 
