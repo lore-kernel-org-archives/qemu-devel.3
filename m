@@ -4,102 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AEA4CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 18:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B756CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 18:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDoGM-0000xn-0A; Tue, 28 Oct 2025 14:17:42 -0400
+	id 1vDoGR-0001AU-3c; Tue, 28 Oct 2025 14:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDoFi-0000GN-D8
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:17:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDoFZ-00026y-MK
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:17:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761675408;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hnENuPDQaLlrJ0UVxQkXQUiAAOZqFEg8qhARQdruJDg=;
- b=i1qqs+lD/EbuG9qe/KkTpm3jZIW2aoY4MlhUjAviB1EDECYaZVGN6Fa5vz/H90/daoUEsl
- bxsdIasiC+nILlsrEqEOqtf7M6X36/KIsGZQdrBrlGNP4qQ+iv1QJG8ZLyoRUK2W5VfW7b
- zAMW1BYytSYRJxq5i1N9uYUHwAEiY/s=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-3pua95BFPseO6-jBm0Y_4w-1; Tue, 28 Oct 2025 14:16:47 -0400
-X-MC-Unique: 3pua95BFPseO6-jBm0Y_4w-1
-X-Mimecast-MFC-AGG-ID: 3pua95BFPseO6-jBm0Y_4w_1761675407
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4e8984d8833so288085321cf.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 11:16:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDoG9-0000Sx-2T
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:17:32 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDoFv-000286-Iq
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:17:28 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439bc3so3997576f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 11:17:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761675431; x=1762280231; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ogjIj2x0b+Ph1mDq8xs+aaEQIpc9IB/77pPj2JRToEQ=;
+ b=snw85uAJ0YE12Hnho7O/S5L0PLEcMKwytIZn5Mv7H5AgMkUQ8A8zl9lMIovgIq20Td
+ WPFLZHcNzvvlrumhXQJ/epBOW1Zl2p/QNONH7/ZQLw+j3SwUx5ty9/QDOrKnSRBiO6DW
+ c1jFwx1YD3msirEoP/93Hb8kw0Wn6jXSDQQYNkHydwolFfjRluQl4eJUbWSzsgdai7qS
+ Z/QyNlJguFbnZTCMSz2S5TNxIMU/rNtOR4PwoiaA5RKtMnXI5B8iwb+ritDjkcFasAb3
+ XbdoyB4+A0MiKjpOIOfbSgQ5b12PPZYWW5nl7oaX8b3aniTGujmFb4jRhd8YT8uxRwb6
+ ooWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761675407; x=1762280207;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hnENuPDQaLlrJ0UVxQkXQUiAAOZqFEg8qhARQdruJDg=;
- b=wOgeUpfSTJRvsTJO+gpzRVJwmN+JevvdMaOF1AfN7jZYeaRl2+BMvwKOxWZRD9pRSD
- s+MZuI1U7E508Ac3dP98idCOr/orCWoxRY/EdelBO682jQdxT+6HH2dLTlauVo15PdRJ
- xf8gjdW5KwxaXZtOWr8+Snl6PM8/SQt3TjTFDSOJ67LEhYeBVD2zHsVnu+eKEut05jOJ
- n/4DNdf5zRwtF0eaRNzNldd0FzHk0kmKsm9t9i85HTGU+9ZlKV+eW7RDiz48OHin7NQs
- m0n4sMrR4+vY8JJEkBtXwbsnldq2cd9KjmasgG05+C8G7e8hzwYCmEX6mO7SDjT2YndC
- 5o4Q==
-X-Gm-Message-State: AOJu0Yz64AUAsPuL/E8Q/j3ltQ9WDfxdoA+CgGOou0SV3kPAjrgz98Sq
- dibT9rzunQkXRrvvs71aoRV0EkJriM+zlYsIbASvcQ0WJOULfZ+V0vjTlgvYJlj8agnD3AiAXeW
- gS88de4/DiyPKNJyImcnjgvKvFoEqcVDe3Hrh9w6B0pO+SEplC+1kd9jv
-X-Gm-Gg: ASbGncvomjXBgboPQk0e/50syKudQZf1eVxbo7Ob15YGhHjlsM9lh9Cz0ZMItBZCFA/
- jEP+zyjQqPO5eIUfo9UpJRQ4hjb3oxgqb4qSG5deY2eiQVZxzuusmNG+FLPPnl04X9Q62hMN3z/
- nDYaVwpbwqRrbBMXDmom2d0cIkPs9CuVwiG5McXeyx0anWsEoHZC5MvmD+a6wUfQ58TpDF6Lz80
- 7Vzj+X1MOAIXtLPlbLdgcgOvbko9m6bvpBLvQGLSypHxCLUG/g7ORyEm3mqsSYcP9Ru5DKLT1Fr
- 9epzmuDiC11bY6WMJZE441SEfqy5vHZf5OF7l1kBnDnzLMq4zSwTc5z1p6YdIpsIxBI=
-X-Received: by 2002:a05:622a:a6d8:b0:4e8:85e8:801a with SMTP id
- d75a77b69052e-4ed15e5cd0bmr721581cf.40.1761675406808; 
- Tue, 28 Oct 2025 11:16:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGanjQyxNK9RqpGQ5UgSRLYN3fZuDQYGVxk6TiLkbibmOOZAt55VEdCWH4kB84CJa/tYWMIhQ==
-X-Received: by 2002:a05:622a:a6d8:b0:4e8:85e8:801a with SMTP id
- d75a77b69052e-4ed15e5cd0bmr721191cf.40.1761675406372; 
- Tue, 28 Oct 2025 11:16:46 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87fc49e3370sm83479796d6.59.2025.10.28.11.16.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 11:16:45 -0700 (PDT)
-Date: Tue, 28 Oct 2025 14:16:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>, Zhang Chen <zhangckid@gmail.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 02/13] migration: Properly wait on G_IO_IN when peeking
- messages
-Message-ID: <aQEIi6HZCiTeHinJ@x1.local>
-References: <20251022192612.2737648-1-peterx@redhat.com>
- <20251022192612.2737648-3-peterx@redhat.com>
- <aPtqvjF7Jw17040Z@redhat.com>
+ d=1e100.net; s=20230601; t=1761675431; x=1762280231;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ogjIj2x0b+Ph1mDq8xs+aaEQIpc9IB/77pPj2JRToEQ=;
+ b=PXiydrIv1PBRK+4Vtdk+3VxEAJdjh9DpwhmfPdeuR/YOajfMnWJbP2OZiDJBYb75Dz
+ v+aBZORe4R654VILLCJhol/ZugQiBb1XIuji02Y/xRMn8J/lvqjZ9EgRu9T31FScwAv4
+ PFzB5/nDhKSJCRX06DVAJQORIfjfsP0xss0FySW80GQJIz1wsKbGPGDUNA6/+CsbCiYp
+ 98McI/oZNwTcTSUmJl1V9psPjCSkGGYAIb3LrexNfnWQ406wY+JTVLIXbb6fvtEThMNi
+ IjZk+hkyHAhGAGPdWtdUK4mfTplu36uaEpmZaTJl0RvaIzUXiazNhqh6TEepE+uOfDLd
+ Yjkg==
+X-Gm-Message-State: AOJu0YzUR+eJZRXxl2zY07JU0RRXEUCS+8wDG7aY1soUQlHS4HFQ2R8K
+ MILyxWqXV8KHb33pM/ygLoRYnJNhRyWjHxzr3tF6Ig6tWuMPg/GqW0ymetJK/o1oXBuqWN8MVrE
+ yCjk4nq0=
+X-Gm-Gg: ASbGncupG19Vayv+et/AUnB86+yOGLSNHKYYV8/JZltrbton2ATynhA7ryJ/xJoP9J4
+ J0fdCPEWIDbZc+TYLb8pa/yYgMB+bNYTKOnxJTum+7d0UrFIv/c19hnfUnIJPD4oGDC5x2feZP6
+ Ky6mny2kDTJAmgXKKYeJrUX9fptNrvF7XB2HWkScl1vOv93f52llqTHfOSeYjH9EFc2ptcNl2TT
+ 0KHzMZUh7lIfNr7aFqs0iyaR8ZbegZRC/CBbL4a6TdzkaLr3ZMyTVfzoY/qFFiTv7FczNkizeuQ
+ Ltogt/PvaO1JVGKicJu6WTmyDDRuPCesy08cheTW8Zhw1C2auQbi8D0l+PVOUx6KpYgdsqbVWIa
+ eaiPI7vxJ4CvrhbN6N5I+2L9wWA29xs4YqvG4ethxoR465nH8oiyw/X5abpNrY5LiR53uthCEWS
+ JlZRJI9cLkfOGP81TfxmuKXJI2WxsMDHWg2sEz2Qn5LUMCBapIfw==
+X-Google-Smtp-Source: AGHT+IGZXkSBvcMPXbgnK+FlW/f44gMl6lxA9bRKWCpTYzA77U/IZTSLqjuTQCa2An7uq/TgPnrKyw==
+X-Received: by 2002:a5d:5f84:0:b0:428:5674:7a13 with SMTP id
+ ffacd0b85a97d-429aefbbd87mr4104f8f.36.1761675431530; 
+ Tue, 28 Oct 2025 11:17:11 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952df6b9sm22503931f8f.44.2025.10.28.11.17.10
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 28 Oct 2025 11:17:11 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-block@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH v3 04/25] hw/acpi/cxl: Use proper SysBus accessors
+Date: Tue, 28 Oct 2025 19:12:38 +0100
+Message-ID: <20251028181300.41475-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251028181300.41475-1-philmd@linaro.org>
+References: <20251028181300.41475-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aPtqvjF7Jw17040Z@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,22 +106,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 24, 2025 at 01:02:06PM +0100, Daniel P. Berrangé wrote:
-> On Wed, Oct 22, 2025 at 03:26:01PM -0400, Peter Xu wrote:
-> > migration_channel_read_peek() used to do explicit waits of a short period
-> > when peeking message needs retry.  Replace it with explicit polls on the io
-> > channel, exactly like what qemu_fill_buffer() does.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/channel.c | 7 +------
-> >  1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+SysBusDevice::mmio[] is private data of SysBusDevice, use
+sysbus_mmio_get_region() to access it.
 
-Thanks both for the fast reviews. I queued patches 1-2 in advance for 10.2.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/acpi/cxl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
+index 75d5b30bb8b..77c99dfb184 100644
+--- a/hw/acpi/cxl.c
++++ b/hw/acpi/cxl.c
+@@ -104,7 +104,7 @@ static void cedt_build_chbs(GArray *table_data, PXBCXLDev *cxl)
+ {
+     PXBDev *pxb = PXB_DEV(cxl);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(cxl->cxl_host_bridge);
+-    struct MemoryRegion *mr = sbd->mmio[0].memory;
++    MemoryRegion *mr = sysbus_mmio_get_region(sbd, 0);
+ 
+     /* Type */
+     build_append_int_noprefix(table_data, 0, 1);
 -- 
-Peter Xu
+2.51.0
 
 
