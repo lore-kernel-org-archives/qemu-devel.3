@@ -4,114 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BFC2CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5863ACCF9EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDmGH-0007l5-4V; Tue, 28 Oct 2025 12:09:32 -0400
+	id 1vDmG1-0007h4-Fw; Tue, 28 Oct 2025 12:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
- id 1vDmFs-0007ge-6S
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:09:05 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ id 1vDmFo-0007g5-IW
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:09:00 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
- id 1vDmFj-0008Am-Nr
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:09:03 -0400
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198])
+ id 1vDmFk-0008B3-Sx
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:09:00 -0400
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id CEB493F47E
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 16:08:49 +0000 (UTC)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id A64E83F2EF
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 16:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1761667729;
- bh=L13FBzb5Dbf6Zb8pqQONDrC/y/voW0s/dRyDHhZxE+8=;
- h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc;
- b=f58+jdt66/jgjSqALK8zVfffjIfMSMmmffyIJiEYpn6h+Jo/1mUC6FodmMW+qoSX2
- LBIzGhkY9gBIsqRGq0zW5wigndMzNQRbSyH3g5kJYC+zsHSNVVTNl+SUUVyJtfUfSM
- XcoIk1JIgiiTqun04TPO3QNzm6ddMiWs/8E926waSXgi8g1EWkApwiGaelQLvdTCJq
- lDwNe9HB/bGB9aoglfoDomgTy11Gv4HQoVJ6CFQvv0X40PfZcOYzG7GLVn6LLk+0rK
- CGTOZyy7aSFc1NIeYXg+genTe0gihdM9bK6ETKE5hK+fX2JX6+bgaho+jCye64JPUA
- mi3EOW5eTzqkKYReUyRPxx39L3GtTEZ8vC2LhgLci0tSKqYRtOyM28TZBShHkdEyzL
- 1IKMMUCw0F0DFGFfCcappPLoNsfpYc77m4CCM4ZssKaTYLuTd+8k9rlV5kojt9Dea/
- Yi2GpAuigVYgIveIh3pc7Yxa3vZkEN+ocjDIk7F9jDPlUSEXknSy5cOygo7M9jG4UC
- uoI3p15XTeGKMOxFthrJkpNlXkuBDsF3RngsbBxwGkaYfCsm90fUo7vrxhdGivh3ye
- sdOxRWbsUC0ByVDprR9Q3ARTTI9cYi4H5d8PE5CKYQEpDIBe20T5BfxYZynQy3oupF
- 7PHDaC66vpHkydlo5cEZCvfg=
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-430d7ace0ddso79976515ab.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:08:49 -0700 (PDT)
+ s=20251003; t=1761667732;
+ bh=HMAH3SPkwY99wfIEsCRgGiy6p6Oz5j/29G/4FUed4yU=;
+ h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+ In-Reply-To:To:Cc;
+ b=L5ZhnG2tO8N08gngK3tmXFzSHWSWF5dYDxNNTwDR619d3a5c9LZm1DwsepBgfqwsl
+ apJEA52/66RVvLACYSEVp/K7m2ET+KqCcNmAeEIJEGRNHyTDz4sh3cBR3GLoOQTOmQ
+ +3Z3PcqU72gAG8e96/aaTpAsDUztFe62wTTHevq5s7kAOdFRSUuJuJdAbhJNpAh8XR
+ 7JB0oSyz8NXAHj0JuSP19VhWLLHRVvnoB51N6/r2ZSwdeMimraCT6/fyl0dm/8p0VI
+ JgOwsf4aaJ0zNlu3Z9Avm+1Pcwbn65oje04JQXtsafPtvIcIWH5Hqr+AUoVelNGl6a
+ mptGVfDF5Z1b0x7ZslW/siPEQteC4O15SXJ0/DC2169n3vk89U3wlrdW5x1OXZjNH8
+ g2LdvPpRk2/FisNJU6MBIw2v23ldQ4hajkEePuZdWDjMEXhpXIWHxJyABQoOH0ThTo
+ xriTKM0skqWw5vLfkAKwAnqh/GHD3/wgz+rL3pNFZXazdlGCpIgBi1wjh5XvdjGN2C
+ q28tLV95UQnH9DOroD7tRhLD5x7u5HSXe2myJlI3L06Hf2EwOWxgUIL+bocwC1eBPh
+ LgfU1zhCvZn0KoOhPmQlIvSgzm5XdC7YCCyvgdBcHOFWfZFaUclHF3l2Vm+dSLo1EL
+ kiODUOyHQHgw9G1mcf6Djs70=
+Received: by mail-il1-f199.google.com with SMTP id
+ e9e14a558f8ab-430b3c32f75so64820295ab.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:08:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761667728; x=1762272528;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=L13FBzb5Dbf6Zb8pqQONDrC/y/voW0s/dRyDHhZxE+8=;
- b=hBxJPPlyN27xbWmedBGcPA7WpLvCqg81m4Y7U0oYxgYx5fFp+naewi9Glm0ZXKV6M4
- SMBpbzrHiKpe8L+Je5T/VGZlFoId7gglOTbava3NR5TXmNzJH5U1CvkztJLG95CEQs9b
- QdUMJHZ0hP34BodAaocnWX1p11V0SXLqWFNfd3tWLksT5BHTrLCvBRhLtVdMu4gEfxif
- T72xPdeh/pWbDN5F+Z7b7Sdi6BDGrs+XpKpJ70TH4v0GTp3oQvcs63JifWe2NCc7fk1P
- bfYz+OTrJ+yXxfEQnQvX30/PAennfkhiU66V8CjZnXnDMK9I9L7fupX87I3mnAeZkzx9
- vt1g==
-X-Gm-Message-State: AOJu0Yycm7dsgIBjGOwIT0Wvtbkn/HxCYiKrWod1J6k5p2jvNh/Rb1di
- yC/AVEMQnvivjx7vel4cmqIEVkRoYM2hE4458cSSaoT9CKGBIScPmsf5qBHP5cvQdVIowwTvV/k
- dEEhudJgfsj869berEIF7ci0syxveYeevgufm3FToThU5wAgFurqrMBPf0POT3iNtAvOqDsMqrh
- 4FefyexF4=
-X-Gm-Gg: ASbGnctiNluVPdk86OtsPpCmkqi4KQrWyAj0hyrAm0JaoPwt/ztQAkrz6mL0VdvaN5s
- zpH7LOZuIpHnYTPlfE22MdH2hiwaxmiSkN+tMWe0zGoYdKAJta1SeXivY97oH340t6dE4/jXAAA
- GrgPlKVbn9nviUAT1nCH9ypoUPdLQT5HkMncFGX8/Sb5etB3VrZndKd8dMhZikh8tfrba3Hrg+v
- sBiYDUQOv3iZPsv5l5svk2NhP8v6w5JoG6cnb74IwNStL0zfzkaPZkhD10ggvFWJrSSNQ6dypx0
- ytewf8785+RD7JJ6ehg+FE6FpsJCVIo/oz+SH2ZJ+vf60nkgya1Tr8ueOHD0KUESzGrI2YUcRRo
- io80PpBu/4kAYivgE
-X-Received: by 2002:a05:6e02:3787:b0:430:bf84:e941 with SMTP id
- e9e14a558f8ab-4320f7a65efmr64449145ab.3.1761667728236; 
- Tue, 28 Oct 2025 09:08:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfVf0HP0lBpu3U2jHxAiKGG/O4sGy1fzq7FbGEnw6RDfhWxGSEb9Indfvmb09HkW6YXeiC7g==
-X-Received: by 2002:a05:6e02:3787:b0:430:bf84:e941 with SMTP id
- e9e14a558f8ab-4320f7a65efmr64448595ab.3.1761667727686; 
- Tue, 28 Oct 2025 09:08:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761667730; x=1762272530;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HMAH3SPkwY99wfIEsCRgGiy6p6Oz5j/29G/4FUed4yU=;
+ b=TjellFIAdjpLJfiV2aO/ePmWQsFg0PJG4Wm1aJO5AVnaCRo7aN6hdMA3UXtlCNl1I3
+ ngAlvHp2f4nLc5z9L6AAzv8C9GYpPZLf0eTD1rDg6aFRcCyCEVcmgkAAWOyUJNCuAetw
+ EeIIPdMya0Bpn7x0XYrOHiRQrRf+pSmg6lZwplHqAmEKPkOuB9GRAdBpv/T/CgJY5HjF
+ vqoz3XGZlQoI00mJhx5XZyJKA1N5uhbPaJRuwjb9ARPQbnJZAMA9t2E5MZpiGwfA70Jm
+ RRdAfyU8jEMVPoqBhYB25iB7kqnOr5qwJbjZ83LACuOHvzDG3Pd8D9eIt4lCUB3X34JU
+ duaQ==
+X-Gm-Message-State: AOJu0YzMTmXEg1aUx9mFvZbO84c5vIfUDEapCDRWRFPZu8Dby60teMmv
+ cV317rOKGPKeRO7uKY+99b5zcRLP8q7Op4BtI6tnUSGBdc8Wq+cyrPXJ/xGSHOVLa6d0w9RYGH5
+ 4CGZO6X4e6SpHRK7MEx9N9qDfmiXC/Ky6NO/Onl6sdpMY5ACUDY3SNYT4lmkBcvm8MykqHjdNQQ
+ W+b9PW
+X-Gm-Gg: ASbGncslPPfoXVo557/1f5OeO/OBGbv8IMqepbbtMq5QzCpcdHUTfCG/cBDrcpmiqtR
+ XxsCwqwsKiDc1t8XV/ebWKdTK2iANwopx5iT4PWxOh3ZQAWuYE7bEDKZA+JkUNIIxu2nqTq1xR+
+ m0KVz3GvYgqIy6xZ36/od5dwYEA1uvMUYUAVA4a1c0KcmeFOq8mm+n//dIsRm0rJ4PoUGFCg5G9
+ /yFjx8jE1jwG0GO2m4J/mHVtTYc8PxPoToUAymnqoel2OuYqLmvpYDGoT/OqNuykdDI9BU4XImf
+ 7MqJn/EVhlww8uNKn23zGbisDEsYCcMIhV2JZeZRLa5Mymh9y+wFBJKzQ9tJt4DOAtnoay0/xp1
+ dAnU6vqRicHrrMElC
+X-Received: by 2002:a05:6e02:144f:b0:430:a66b:4ec1 with SMTP id
+ e9e14a558f8ab-4320f79b2b0mr53714285ab.23.1761667729890; 
+ Tue, 28 Oct 2025 09:08:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IED6X5HJl0LRepFPuiI7L+/B3sZpnowkknrXUaRHjBhszMATptJsHboPVDWXgl79LiNNN18QQ==
+X-Received: by 2002:a05:6e02:144f:b0:430:a66b:4ec1 with SMTP id
+ e9e14a558f8ab-4320f79b2b0mr53713625ab.23.1761667729275; 
+ Tue, 28 Oct 2025 09:08:49 -0700 (PDT)
 Received: from resolute.lxd ([147.219.77.79]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-5aea9e35c4asm4558721173.56.2025.10.28.09.08.46
+ 8926c6da1cb9f-5aea9e35c4asm4558721173.56.2025.10.28.09.08.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 09:08:47 -0700 (PDT)
+ Tue, 28 Oct 2025 09:08:48 -0700 (PDT)
 From: Wesley Hershberger <wesley.hershberger@canonical.com>
-Subject: [PATCH 0/2] block: Keep filter children attached during drop
-Date: Tue, 28 Oct 2025 11:08:20 -0500
-Message-Id: <20251028-third-fix-3149-v1-0-bf3c712d2439@canonical.com>
+Date: Tue, 28 Oct 2025 11:08:21 -0500
+Subject: [PATCH 1/2] iotests/257: Insert missing flush during blockdev-backup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHTqAGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1NDAyNz3ZKMzKIU3bTMCl1jQxNLXVMLo7QUc2MgmWSpBNRUUJQKlAMbGB1
- bWwsA8I1ONGAAAAA=
-X-Change-ID: 20251027-third-fix-3149-582fd7382fb9
+Message-Id: <20251028-third-fix-3149-v1-1-bf3c712d2439@canonical.com>
+References: <20251028-third-fix-3149-v1-0-bf3c712d2439@canonical.com>
+In-Reply-To: <20251028-third-fix-3149-v1-0-bf3c712d2439@canonical.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
  qemu-block@nongnu.org, 
  Wesley Hershberger <wesley.hershberger@canonical.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1232;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8993;
  i=wesley.hershberger@canonical.com; h=from:subject:message-id;
- bh=rXQAKGIbdbWAso8+EnVZQpl/vh8xDb3Z3IQesInn2jc=;
- b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBpAOqNUIsbjUmp65IAbtVbJzRIRm0yIgKc6i1Cs
- eypp+jpEFWJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCaQDqjQAKCRD5KICs4jod
- ud0KDADRQG0CgHalTKvP/w9tFeiko1/xAo8iwzV2mY1HjJDC2a3CjX6KO5rKkEV5b3VvsMv75e7
- FURA8r3pMuqf9NtrOXTnXikXToiuBiniD0i77a9RyRDmKje1ZGgZR8v42da4hnQSp2FFkiXdA/Y
- I0CH9raWP0VSQg2qdp53CmhJ+nFU8pO3MkkgFGE1xZ6XqC0WJYVHLpk6UXzTLwgsYcKJS/e4Y2G
- dCMNbn2DHvd7szFOuZMSteYsSlVHlB2+7CV19FTF+N6cXiav9OcQsDvrx70NlKN2e3Pox8dyT7+
- 3jbcfExPszz/u1xeQQYqiAtfgfxLHpaTyZLpDbxDUm/sfDnSYiJAuiPrKywCO1gmpXSwfeSAJna
- lJVmhzQyFeG0CPXMe10hmS9CpDjKQEJMcXknCEm7gQQsQ+GydrSihURru11fhPQPy62bVAHRNmr
- JHJoNUOU6grsPrb8Bf3uIhNeX9ok/waj2Rov0I7S3Ys18/RAUFXXUUjydq6bvVE+dPLzc=
+ bh=E4NNWL7hhg+RvqhJWX/JvJuAXx4WG8wiWCfzbciBxe8=;
+ b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBpAOqN0vqALwUJzNIwZdL1T0FsslvEn/Y6qRKBt
+ /fc6NfL+LaJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCaQDqjQAKCRD5KICs4jod
+ udB7C/0ZVWDS+dHESgGjm8mFozIyh4hnGNru52Lt7ZJvzcB6/SmIN5vBXG7wLlmHxTXkFbh7f7W
+ 4G1Q/r33Ys+4klwy8CivVlYhGpWWMg5ZOE8H7IXpMy6AMWU1w3D09/vKfV/DjeD9II9qVPeUEUl
+ +4YHrk2gt60qMJAuJoKzg0kjh26r5GEKH4ucD2jserQkczxx/TGOP4LCaI/FSHznLbMNgUBO3Ex
+ w5pvXRfk9cuqe7DNnJuRO0Gqqa/oP88spvYK925WbVqD5DTVO3TF0ygtpnxjTEydRGPTQCpZXyT
+ u0qtNIA5rInl1SAoJmwwo7Zt8xCK5BKYLS1oSQFg0PofSfWt2flmoRp28T4+B5I5aErHG57BJSQ
+ +IcHhgEm1iUVAZdo6bVNdXEiidlLkic+NF9phVpNifkANZIGCvgkBi+WSiMxp6bjjZurcX9hWNg
+ Zyvyx0V5N0BI1cYiAb5UGFAzMgHT6aq2PLrClVgnz4CIQL6h9g1/enzztlTd9m9eRB9xo=
 X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
  fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
-Received-SPF: pass client-ip=185.125.188.122;
+Received-SPF: pass client-ip=185.125.188.123;
  envelope-from=wesley.hershberger@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
+ helo=smtp-relay-internal-1.canonical.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,7 +118,7 @@ X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,37 +134,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thank you all for the discussion in the previous thread:
-20251024-second-fix-3149-v1-1-d997fa3d5ce2@canonical.com
+The next patch causes a blockdev-backup job's copy-before-write filter
+to hold references to its children until the filter is unref'd. This
+causes an additional flush during bdrv_close.
 
-I have verified that this patch resolves the issue from #3149 and passes
-the iotests for qcow2/raw/nbd that don't fail on master (for me). Thanks
-for the pointers on testing.
-
-I'm committed to finding a solution to this that is adequately
-understood and tested; I'm happy to continue to make
-adjustments/submissions as needed until we have a solution that is
-satisfying.
-
-Please let me know if any adjustments are needed; thanks for your
-patience and continued involvement.
-
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
 ---
-Wesley Hershberger (2):
-      iotests/257: Insert missing flush during blockdev-backup
-      block: Drop detach_subchain for bdrv_replace_node
-
- block.c                    | 38 ++++----------------------------------
  tests/qemu-iotests/257     |  8 ++++++--
  tests/qemu-iotests/257.out | 14 +++++++-------
- 3 files changed, 17 insertions(+), 43 deletions(-)
----
-base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
-change-id: 20251027-third-fix-3149-582fd7382fb9
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
-Best regards,
+diff --git a/tests/qemu-iotests/257 b/tests/qemu-iotests/257
+index 7d3720b8e593bbe17a4b49ac0f07e1d209bda820..cd0468aaa1621c195586379b09594a550ce7c18a 100755
+--- a/tests/qemu-iotests/257
++++ b/tests/qemu-iotests/257
+@@ -310,14 +310,18 @@ def test_bitmap_sync(bsync_mode, msync_mode='bitmap', failure=None):
+                     'state': 1,
+                     'new_state': 2
+                 }, {
+-                    'event': 'read_aio',
++                    'event': 'flush_to_disk',
+                     'state': 2,
+                     'new_state': 3
++                }, {
++                    'event': "read_aio",
++                    'state': 3,
++                    'new_state': 4
+                 }],
+                 'inject-error': [{
+                     'event': 'read_aio',
+                     'errno': 5,
+-                    'state': 3,
++                    'state': 4,
+                     'immediately': False,
+                     'once': True
+                 }]
+diff --git a/tests/qemu-iotests/257.out b/tests/qemu-iotests/257.out
+index c33dd7f3a907fd1212e7624b66d7a0937f37a1c7..fb28333cb2fab0e7f25990b889ae9253abcc40b8 100644
+--- a/tests/qemu-iotests/257.out
++++ b/tests/qemu-iotests/257.out
+@@ -272,7 +272,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+@@ -1017,7 +1017,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+@@ -1762,7 +1762,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+@@ -2507,7 +2507,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+@@ -3252,7 +3252,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+@@ -3997,7 +3997,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+@@ -4742,7 +4742,7 @@ qemu_img compare "TEST_DIR/PID-img" "TEST_DIR/PID-fbackup2" ==> Identical, OK!
+ 
+ --- Preparing image & VM ---
+ 
+-{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 3}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "read_aio", "new-state": 3, "state": 2}]}, "node-name": "drive0"}}
++{"execute": "blockdev-add", "arguments": {"driver": "qcow2", "file": {"driver": "blkdebug", "image": {"driver": "file", "filename": "TEST_DIR/PID-img"}, "inject-error": [{"errno": 5, "event": "read_aio", "immediately": false, "once": true, "state": 4}], "set-state": [{"event": "flush_to_disk", "new-state": 2, "state": 1}, {"event": "flush_to_disk", "new-state": 3, "state": 2}, {"event": "read_aio", "new-state": 4, "state": 3}]}, "node-name": "drive0"}}
+ {"return": {}}
+ 
+ --- Write #0 ---
+
 -- 
-Wesley Hershberger <wesley.hershberger@canonical.com>
+2.51.0
 
 
