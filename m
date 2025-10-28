@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8BBCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 18:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774E6CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 19:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDoeL-0005pr-R9; Tue, 28 Oct 2025 14:42:29 -0400
+	id 1vDpL0-000106-Bb; Tue, 28 Oct 2025 15:26:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDoe2-0005OK-MK
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:42:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vDpKx-0000yS-4h; Tue, 28 Oct 2025 15:26:31 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vDodW-0005rM-EI
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:42:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761676895;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8JE18ZjWlXAwit2z6n1ZQ+ilWG96/G0LXLXd9ZdiuWQ=;
- b=Zy2aU01uEkYNwrunKI5fgMq8XTP/wG29sNZvXYgtu3QEXVPwXu/WYRikZcsDvqgss35XyH
- /Q6N/Q04Ck56BUsqc09b+HWaxRYAQLIVoiJ8zVl6/NdxynW82MJWahWqz2zDVwURoCh72j
- ajasflh++RkNqRWI91beq4X26LFOi+M=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-155-kgceK-MoNH6sRilln-r2mw-1; Tue, 28 Oct 2025 14:41:30 -0400
-X-MC-Unique: kgceK-MoNH6sRilln-r2mw-1
-X-Mimecast-MFC-AGG-ID: kgceK-MoNH6sRilln-r2mw_1761676890
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8a15d36c209so985660385a.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 11:41:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761676890; x=1762281690;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8JE18ZjWlXAwit2z6n1ZQ+ilWG96/G0LXLXd9ZdiuWQ=;
- b=ftBCyLjkPNOT3TEphsuysxQaYq5kysggQXd9ziY9MpMJxAa/Hme02XmgYN2iWR2Z9g
- mt4vLctcE4PEVgNE3lHytNv3itzIV8YOqMt+lbkoZ2PnIovMU8iBbRkB4n5lg5Pko4D0
- xdLtpg4XjCqPDgjOUpGIUggrMyeQJYVK8Z9edIqUXxylIpPmANDkjgn+Gt/uZntozKUS
- 0k4JKbazRh9H9GMTmrcDY9wb9nlW4dr9+u6pbjfba7z7o7qfblTr48pwJT9M09n+9p4n
- gmtJZM0jiaTtp9OrFcZZWZ7pSPZ537D/IhxTc4OhDaPqE28h266xtjdHVTblGfKYX0vP
- GNGA==
-X-Gm-Message-State: AOJu0Yzhgy+5r9heAzo8eNgEDQWwNI+fw+5N/mPx7WsOrOj3dYoz1QLU
- wweMfHhSuqIJeIVwFux1eEFohqFx7k43Rkzl93sCP2dKp1ccSDi7OHRK3OEv4FE5Y7Q/x75o7Rf
- IxX1frfiP0y7akGL5KxmyejdGtke0Dy0ffddQpyXTXXlSfk9apHzisPtuZQVqNS8n
-X-Gm-Gg: ASbGncv26aLM0sKn1x3fdqtiQu5VXdZlVUE2h3urnesNc/qilzoYtOx6hoFxvICeRqI
- 6+gP4ZxATRHWtbadlCaIqrOSMLREsFEfyzg9G5PdZN9Pm1TIZtNjivgmP9Kch106DOIShd3mwCP
- XpAqRXISUTtVkmtI9iUdpCLSHZ5FRncleFKfzTW2oBREY4xav+l27Oe9uAQawv87niAzusN3UxW
- cPgBle+bMTsp1/W1oKDizVGzDIauMjp/1vZTb8BFz7MNtquTlzdwbiJAVNnegl3Sl8hoXZEml23
- 0Pom3Jm5jYWRkEBtffQhVSmMkxpWZwR3ysHaPLhp9Ws3Gn4kGyGUANCZMSL64oq6Vzw=
-X-Received: by 2002:a05:6214:27c9:b0:798:acd7:2bb with SMTP id
- 6a1803df08f44-88009c0b912mr1037226d6.51.1761676889834; 
- Tue, 28 Oct 2025 11:41:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGz9dR8kMz0S6e9uZHFhtek7D0C9LNsYC8wL8XSrLNCkrY/ca31qp0JCfvcV3KUiInSS0KnQg==
-X-Received: by 2002:a05:6214:27c9:b0:798:acd7:2bb with SMTP id
- 6a1803df08f44-88009c0b912mr1036896d6.51.1761676889279; 
- Tue, 28 Oct 2025 11:41:29 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87fc49204dfsm82115346d6.30.2025.10.28.11.41.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 11:41:28 -0700 (PDT)
-Date: Tue, 28 Oct 2025 14:41:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v3 12/25] migration/ram: Use memory_region_get_address()
-Message-ID: <aQEOV2ucE_77LJD7@x1.local>
-References: <20251028181300.41475-1-philmd@linaro.org>
- <20251028181300.41475-13-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vDpKr-0004Te-Ti; Tue, 28 Oct 2025 15:26:30 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E61681638C3;
+ Tue, 28 Oct 2025 22:26:07 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B3A4C30806B;
+ Tue, 28 Oct 2025 22:26:12 +0300 (MSK)
+Message-ID: <949000e9-ac59-4bc9-ad00-861c3a9a08c9@tls.msk.ru>
+Date: Tue, 28 Oct 2025 22:26:12 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 33/75] hw/i386/pc: Avoid overlap between CXL window and PCI
+ 64bit BARs in QEMU
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ peng guo <engguopeng@buaa.edu.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <cover.1759691708.git.mst@redhat.com>
+ <d1193481dee63442fc41e47ca6ebc4cd34f1f69c.1759691708.git.mst@redhat.com>
+ <26067051-421d-44ed-9c7e-13ed0bdac18b@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <26067051-421d-44ed-9c7e-13ed0bdac18b@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251028181300.41475-13-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,15 +111,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 07:12:46PM +0100, Philippe Mathieu-Daudé wrote:
-> MemoryRegion::addr is private data of MemoryRegion, use
-> memory_region_get_address() to access it.
+On 10/6/25 20:08, Michael Tokarev wrote:
+> On 10/5/25 22:17, Michael S. Tsirkin wrote:
+>> From: peng guo <engguopeng@buaa.edu.cn>
+>>
+>> When using a CXL Type 3 device together with a virtio 9p device in 
+>> QEMU on a
+>> physical server, the 9p device fails to initialize properly. The 
+>> kernel reports
+>> the following error:
+>>
+>>      virtio: device uses modern interface but does not have 
+>> VIRTIO_F_VERSION_1
+>>      9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with 
+>> error -22
+>>
+>> Further investigation revealed that the 64-bit BAR space assigned to 
+>> the 9pnet
+>> device was overlapped by the memory window allocated for the CXL 
+>> devices. As a
+>> result, the kernel could not correctly access the BAR region, causing the
+>> virtio device to malfunction.
+>>
+>> An excerpt from /proc/iomem shows:
+>>
+>>      480010000-cffffffff : CXL Window 0
+>>        480010000-4bfffffff : PCI Bus 0000:00
+>>        4c0000000-4c01fffff : PCI Bus 0000:0c
+>>          4c0000000-4c01fffff : PCI Bus 0000:0d
+>>        4c0200000-cffffffff : PCI Bus 0000:00
+>>          4c0200000-4c0203fff : 0000:00:03.0
+>>            4c0200000-4c0203fff : virtio-pci-modern
+>>
+>> To address this issue, this patch adds the reserved memory end 
+>> calculation
+>> for cxl devices to reserve sufficient address space and ensure that 
+>> CXL memory
+>> windows are allocated beyond all PCI 64-bit BARs. This prevents 
+>> overlap with
+>> 64-bit BARs regions such as those used by virtio or other pcie devices,
+>> resolving the conflict.
+>>
+>> QEMU Build Configuration:
+>>
+>>      ./configure --prefix=/home/work/qemu_master/build/ \
+>>                  --target-list=x86_64-softmmu \
+>>                  --enable-kvm \
+>>                  --enable-virtfs
+>>
+>> QEMU Boot Command:
+>>
+>>      sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
+>>          -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
+>>          -hda /home/work/gp_qemu/rootfs.img \
+>>          -virtfs local,path=/home/work/gp_qemu/ 
+>> share,mount_tag=host0,security_model=passthrough,id=host0 \
+>>          -kernel /home/work/linux_output/arch/x86/boot/bzImage \
+>>          --append "console=ttyS0 crashkernel=256M root=/dev/sda 
+>> rootfstype=ext4 rw loglevel=8" \
+>>          -object memory-backend-ram,id=vmem0,share=on,size=4096M \
+>>          -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+>>          -device cxl- 
+>> rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
+>>          -device cxl-type3,bus=root_port13,volatile- 
+>> memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
+>>          -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
+>>
+>> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a 
+>> machine parameter")
+>> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
+>> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>> ---
+>>   hw/i386/pc.c | 20 +++++++++++---------
+>>   1 file changed, 11 insertions(+), 9 deletions(-)
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Hi!
+> 
+> Is it qemu-stable material (10.0.x & 10.1.x)?
 
-Acked-by: Peter Xu <peterx@redhat.com>
+A friendly ping for the stable series?
 
--- 
-Peter Xu
+Thanks,
 
+/mjt
 
