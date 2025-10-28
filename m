@@ -4,58 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C11CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD94CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjIs-0005rI-Jy; Tue, 28 Oct 2025 08:59:59 -0400
+	id 1vDjOo-0007yW-V3; Tue, 28 Oct 2025 09:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vDjIq-0005od-8s; Tue, 28 Oct 2025 08:59:56 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vDjIh-00085c-Uc; Tue, 28 Oct 2025 08:59:54 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DA0115972E5;
- Tue, 28 Oct 2025 13:59:40 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 2ABzisIEmF5J; Tue, 28 Oct 2025 13:59:38 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 81D905972E3; Tue, 28 Oct 2025 13:59:38 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7FD025972E7;
- Tue, 28 Oct 2025 13:59:38 +0100 (CET)
-Date: Tue, 28 Oct 2025 13:59:38 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-In-Reply-To: <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
-Message-ID: <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
- <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
- <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vDjOn-0007xt-4X
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:06:05 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vDjOi-0000qD-7L
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:06:04 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-475dd559b0bso44677825e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761656754; x=1762261554; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mXfbEpAvx+wk43Zo4ZCte1quumNYK7zO7MKx3CFVRdM=;
+ b=URJEBm5ePsSOvxdcaxJCTxqEkeE/YTKjhyhFEQkV5uKk39b2+22R853DqHJCw4PrBZ
+ Sl81mfiWTAzdfxJTv1rneLWL5i86LQSAiVVXOQYqji8Gl72djxujj0ozYpQCiKeYL//5
+ yVpB7kzExRBrOU95PZWau018RIkCprtNq4U5UdTGMsQbVtea1BvhZMDjZ2w9+SuKEMkZ
+ zCRa936k94nU+jujv1HZvTjJJLFk9o+dM3L131Y41QKlRuvGUzf5xAtj/9Ba79rjyW5Q
+ kwmvDrud07HwM908d0eU0PJWi51XN4bDXr/E9OIaezxUcSJ9ojHqdP8YFO41ajNNfCO/
+ M1Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761656754; x=1762261554;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mXfbEpAvx+wk43Zo4ZCte1quumNYK7zO7MKx3CFVRdM=;
+ b=aO/VoQSUvU4LSxArJcvQMTpOCqhl0eMYKs3BzvUhGzfG6JFeF0LlrODASacoIhVtDr
+ kovRmNW5NvGVLqPAcZj3iX6juXE8HyeuAMJKRd3ZyhMSkNAqhddPVZn1tC2fswinPwQf
+ WOL6tFqrXrsJnVEOp6Spn8BDifDDtXmz5DabYVIOiVSEMyWdHxSVwJvIzN6aJa7gORmp
+ vmnmsYw0bEm2BfxQu8IzH6M+hGi7at6n4gCCJzpCIFkRZBU8Nm60Tx9ndrx8HeEsiW4S
+ J1ahEodMqtdjTG61p9HL1CiTQ/eApOvMi4fR1UCfwLwwMTTKO2IQTOL2n7uCTGBI+EdT
+ rttA==
+X-Gm-Message-State: AOJu0YxlQTZHjAicKdyYFJeWMHC8NsNL3qji3eOAiz5kVzGZs1GQj0CX
+ uuDsoMFCKkbHK4GkuoIesAIzRkIX/mOqX7WXNEe7WSBOUuD3uIa+O9DdZnToD0FHWeuo0JbRXau
+ 2ZbNv
+X-Gm-Gg: ASbGnctaMzgf+1WF+tCU62ituyygwE59PeDHIka5N4Zj+eaKBxP7gnzM7fvw0QmhISh
+ bqkgNTBm4teAU2yhQWpwQK23woZZOT/TS8Il+wJbcVKYDvqueEm6+puq2XaZb9TiNQKKK+DbzeQ
+ 94cAJjjyWtiNWyMIFiPllBXYJ8N9lEMLCcWdLypS1AzO9rmnh1yB/60sFwWIbAx33CgeAU4RGUt
+ gHXJ7EfTE8Y5/r2OxLSO/cnwnKYBIyPNEkmflP7RN874r3M0TxAo3ZJZLZl7QaptnupREhmSmn9
+ 4q/pZA6t1EBb04IOU8EI4ZhWdOoGD2YBhYGcInvDPtmDTnbNgwpupO1VhiF+kKK5Cmzw4jfKwHH
+ sAb5rUFIBUu5wEbbeprErq/0U4tt1ZBkKaPb1WQ9dY0hn/oh2/b/mH3AOl7gCW9zSKZpg7EFDY7
+ CBVkn5RXw+Z8tJhUaGkbBqm+aL2IYoD4BAw/YaARFqaVdr0o4AHL3g+HQiGLPHZH7MEQ==
+X-Google-Smtp-Source: AGHT+IE3ezY5Zvg5wIu7N7jFU/gtpj8cMQjB7HnyFKiSttcFlWRyhSha5DjqnxAbGVzwyt8KcdssfQ==
+X-Received: by 2002:a05:600c:548f:b0:46e:1fb7:a1b3 with SMTP id
+ 5b1f17b1804b1-47717e512dbmr25594555e9.23.1761656754202; 
+ Tue, 28 Oct 2025 06:05:54 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6?
+ ([2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952ca979sm20826224f8f.14.2025.10.28.06.05.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 06:05:53 -0700 (PDT)
+Message-ID: <df404447-bed8-41cb-9514-fc581ef0824f@linaro.org>
+Date: Tue, 28 Oct 2025 14:05:51 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-174818736-1761656378=:96783"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] hw/arm/imx8mp-evk: Add KVM support
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250629204851.1778-1-shentey@gmail.com>
+ <20250629204851.1778-3-shentey@gmail.com>
+ <CAFEAcA9Rvvymu7oS0pPx00v9SdXzwr27vy1VmnZmwQ7ayZK+yQ@mail.gmail.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA9Rvvymu7oS0pPx00v9SdXzwr27vy1VmnZmwQ7ayZK+yQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,74 +109,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-174818736-1761656378=:96783
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Tue, 28 Oct 2025, Philippe Mathieu-Daudé wrote:
-> On 27/10/25 20:47, BALATON Zoltan wrote:
->> On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
->>> On 25/10/25 01:31, BALATON Zoltan wrote:
->>>> These memory windows are a result of the address decoding in the
->>>> Articia S north bridge so better model it there and not in board code.
->>>> 
->>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>>   hw/pci-host/articia.c | 15 ++++++++++++++-
->>>>   hw/ppc/amigaone.c     | 28 +++++-----------------------
->>>>   hw/ppc/pegasos2.c     | 13 -------------
->>>>   3 files changed, 19 insertions(+), 37 deletions(-)
->>> 
->>> 
->>>> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, Error 
->>>> **errp)
->>>>   {
->>>>       ArticiaState *s = ARTICIA(dev);
->>>>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
->>>> +    MemoryRegion *mr;
->>>>       PCIDevice *pdev;
->>>>         bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
->>>> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState *dev, Error 
->>>> **errp)
->>>>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
->>>>                             TYPE_ARTICIA, 0x1000000);
->>>>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
->>>> +    mr = g_new(MemoryRegion, 1);
->>> 
->>> Won't Coverity or other analysis tools complain about the leak?
->>> (this is why we usually keep a reference in the device state, here
->>> ArticiaState). Otherwise:
->> 
->> According to https://www.qemu.org/docs/master/devel/memory.html#region- 
->> lifecycle
->> there should be no leak and keeping a reference should not be necessary as 
->> the lifetime is managed by attaching it to the owner object so no need to 
->> keep a reference when it's not needed otherwise. Not littering the state 
->> struct with unneded references makes it easier to comprehend so I'd only 
->> keep things there that are necessary.
+On 2025-10-28 13:46, Peter Maydell wrote:
+> On Sun, 29 Jun 2025 at 21:49, Bernhard Beschow <shentey@gmail.com> wrote:
+>>
+>> Allows the imx8mp-evk machine to be run with KVM acceleration as a guest.
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>> ---
+>>   docs/system/arm/imx8mp-evk.rst |  7 +++++++
+>>   hw/arm/fsl-imx8mp.c            | 33 ++++++++++++++++++++++++++++-----
+>>   hw/arm/imx8mp-evk.c            | 11 +++++++++++
+>>   hw/arm/Kconfig                 |  3 ++-
+>>   hw/arm/meson.build             |  2 +-
+>>   5 files changed, 49 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+>> index b2f7d29ade..1399820163 100644
+>> --- a/docs/system/arm/imx8mp-evk.rst
+>> +++ b/docs/system/arm/imx8mp-evk.rst
+>> @@ -60,3 +60,10 @@ Now that everything is prepared the machine can be started as follows:
+>>         -dtb imx8mp-evk.dtb \
+>>         -append "root=/dev/mmcblk2p2" \
+>>         -drive file=sdcard.img,if=sd,bus=2,format=raw,id=mmcblk2
+>> +
+>> +
+>> +KVM Virtualization
+>> +------------------
+>> +
+>> +To enable hardware-assisted acceleration via KVM, append
+>> +``-accel kvm -cpu host`` to the command line.
+> 
+> Coming back to this now we've resolved the "does this put
+> things inside our security-promises that we don't want"
+> question...
+> 
+> I think we should be a bit clearer in the documentation
+> about what tradeoffs the user is making here when they select
+> KVM. Specifically:
+> 
+>   * we should note that this is intended only to improve
+>     performance, and is not covered by QEMU's security policy
+>   * we should say that you will not get a Cortex-A53, so any
+>     guest code with tight dependencies on the host CPU type
+>     might not work correctly
+>   * we should say that the guest will only be able to run
+>     at EL1, and (unlike TCG) there is no EL2 or EL3
+> 
+>> diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+>> index 866f4d1d74..7e61392abb 100644
+>> --- a/hw/arm/fsl-imx8mp.c
+>> +++ b/hw/arm/fsl-imx8mp.c
+>> @@ -12,11 +12,13 @@
+>>   #include "system/address-spaces.h"
+>>   #include "hw/arm/bsa.h"
+>>   #include "hw/arm/fsl-imx8mp.h"
+>> -#include "hw/intc/arm_gicv3.h"
+> 
+> Why does this include get removed ?
+> 
+>>   #include "hw/misc/unimp.h"
+>>   #include "hw/boards.h"
+>> +#include "system/kvm.h"
+>>   #include "system/system.h"
+>> +#include "target/arm/cpu.h"
+>>   #include "target/arm/cpu-qom.h"
+>> +#include "target/arm/kvm_arm.h"
+>>   #include "qapi/error.h"
+>>   #include "qobject/qlist.h"
+> 
+>> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+>> index d90be8f4c9..a4212a6ab2 100644
+>> --- a/hw/arm/meson.build
+>> +++ b/hw/arm/meson.build
+>> @@ -59,7 +59,7 @@ arm_common_ss.add(when: 'CONFIG_MUSCA', if_true: files('musca.c'))
+>>   arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
+>>   arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+>>   arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
+>> -arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+>> +arm_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+>>   arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+>>   arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+>>   arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+> 
+> Philippe, Pierrick: is it OK that this moves the
+> fsl-imx8p.c file from arm_common to arm_ss, or is there
+> a preferable way to do this from a single-binary point
+> of view?
 >
-> IIUC this doc is about what happens within the allocated MemoryRegion,
-> regardless of where it is allocated.
 
-That doc explicitely says:
+Looking at original patch, this is needed because an ifdef CONFIG_KVM is 
+introduced.
 
-"Destruction of a memory region happens automatically when the owner 
-object dies. When there are multiple memory regions under the same owner 
-object, the memory API will guarantee all memory regions will be properly 
-detached and finalized one by one. The order in which memory regions will 
-be finalized is not guaranteed."
+  static void imx8mp_evk_machine_init(MachineClass *mc)
+  {
++    static const char *const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-a53"),
++#ifdef CONFIG_KVM
++        ARM_CPU_TYPE_NAME("host"),
++#endif /* CONFIG_KVM */
++        NULL
++    };
++
 
-(and these pci-host objects are created once at machine init and never die 
-so the question seems quite theoretical). I'd like to keep object state 
-simple and not keep around references in it that nothing uses and should 
-be managed automatically. I'd only add fields to the state struct that 
-other methods need.
+This is not needed, and valid_cpu_types array can be dynamically 
+created, adding "host" only if kvm_enabled().
 
-Regards,
-BALATON Zoltan
---3866299591-174818736-1761656378=:96783--
+See this patch for reference:
+https://lore.kernel.org/qemu-devel/20251021210144.58108-4-philmd@linaro.org/
+
+> thanks
+> -- PMM
+
+Pierrick
 
