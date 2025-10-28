@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E64CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BBECCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDstY-0002zC-2e; Tue, 28 Oct 2025 19:14:28 -0400
+	id 1vDstj-00033I-U4; Tue, 28 Oct 2025 19:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstW-0002yi-Ib
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:26 -0400
+ id 1vDstf-00031v-7V
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:35 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstJ-00016y-LB
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:25 -0400
+ id 1vDstO-000181-CC
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:33 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8E2DA81762;
- Wed, 29 Oct 2025 02:13:59 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9283781770;
+ Wed, 29 Oct 2025 02:14:02 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id oDnXpg2bCW20-2mUnRvaE; Wed, 29 Oct 2025 02:13:59 +0300
+ ESMTPSA id oDnXpg2bCW20-W0bfPDEB; Wed, 29 Oct 2025 02:14:02 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761693239;
- bh=2XoO4sK3PyosnJP9ENpDuxfvkqVmRhLmWENx1ysV1oc=;
+ s=default; t=1761693242;
+ bh=Fqa9PzaB2NaxsEUcFr/1/+bAl7RDY45zxrOOs/iPfxI=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=lky/sMJ1rxIIeo3fifHeTmvSUf9OxxHCAFpOoh+pB8GTrzh+LQgrIhw26VJKVBxrW
- CErMVZowtxZEPbDkdu5V7y0Rparx+o6EH7Uon5gPjOYf5HHwpTd+LDkZ65v5OQiZSF
- HwMufkUGOQ67osyDvQIq/+keKaN40Fs0ot84lpjo=
+ b=f8+CtqryyizCzQFk1xdEJKVZwE0XbAz7Sb9Q+iyKFeNztPKQUuaRmszvfo3L7r1Y5
+ g45sP7h0Ic6ZG+bEK5tCO1aVsc2MG/N3aSXlKJXzG/gzWDIXvWhDp4HXl9EhALD2F9
+ E/r3IBi7TWbyMQ4H+2bMdUesxoB1K88bU8eUygzs=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,9 +44,9 @@ To: peterx@redhat.com
 Cc: armbru@redhat.com,
 	vsementsov@yandex-team.ru,
 	qemu-devel@nongnu.org
-Subject: [RFC 11/22] hw/pci/shpc.c: use new migration APIs
-Date: Wed, 29 Oct 2025 02:13:35 +0300
-Message-ID: <20251028231347.194844-12-vsementsov@yandex-team.ru>
+Subject: [RFC 15/22] hw/nvram/eeprom93xx.c: use new migration APIs
+Date: Wed, 29 Oct 2025 02:13:39 +0300
+Message-ID: <20251028231347.194844-16-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251028231347.194844-1-vsementsov@yandex-team.ru>
 References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
@@ -77,58 +77,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/pci/shpc.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ hw/nvram/eeprom93xx.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
-index aac6f2d034..15f79d6bec 100644
---- a/hw/pci/shpc.c
-+++ b/hw/pci/shpc.c
-@@ -759,31 +759,35 @@ void shpc_cap_write_config(PCIDevice *d, uint32_t addr, uint32_t val, int l)
-     shpc_cap_update_dword(d);
- }
+diff --git a/hw/nvram/eeprom93xx.c b/hw/nvram/eeprom93xx.c
+index a8fd60a8fb..32dab854fa 100644
+--- a/hw/nvram/eeprom93xx.c
++++ b/hw/nvram/eeprom93xx.c
+@@ -39,6 +39,7 @@
+ #include "hw/nvram/eeprom93xx.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
++#include "qapi/error.h"
  
--static int shpc_save(QEMUFile *f, void *pv, size_t size,
--                     const VMStateField *field, JSONWriter *vmdesc)
-+static bool shpc_save(QEMUFile *f, void *pv, size_t size,
-+                      const VMStateField *field, JSONWriter *vmdesc,
-+                      Error **errp)
+ /* Debug EEPROM emulation. */
+ //~ #define DEBUG_EEPROM
+@@ -95,28 +96,28 @@ struct _eeprom_t {
+    This is a Big hack, but it is how the old state did it.
+  */
+ 
+-static int get_uint16_from_uint8(QEMUFile *f, void *pv, size_t size,
+-                                 const VMStateField *field)
++static bool get_uint16_from_uint8(QEMUFile *f, void *pv, size_t size,
++                                  const VMStateField *field, Error **errp)
  {
-     PCIDevice *d = container_of(pv, PCIDevice, shpc);
-     qemu_put_buffer(f, d->shpc->config, SHPC_SIZEOF(d));
- 
+     uint16_t *v = pv;
+     *v = qemu_get_ubyte(f);
 -    return 0;
 +    return true;
  }
  
--static int shpc_load(QEMUFile *f, void *pv, size_t size,
--                     const VMStateField *field)
-+static bool shpc_load(QEMUFile *f, void *pv, size_t size,
-+                      const VMStateField *field, Error **errp)
+-static int put_unused(QEMUFile *f, void *pv, size_t size,
+-                      const VMStateField *field, JSONWriter *vmdesc)
++static bool put_unused(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field, JSONWriter *vmdesc,
++                       Error **errp)
  {
-     PCIDevice *d = container_of(pv, PCIDevice, shpc);
-     int ret = qemu_get_buffer(f, d->shpc->config, SHPC_SIZEOF(d));
-     if (ret != SHPC_SIZEOF(d)) {
--        return -EINVAL;
-+        error_setg(errp,
-+                   "Failed to load SHPC config: expected %d bytes, got %d",
-+                   SHPC_SIZEOF(d), ret);
-+        return false;
-     }
-     /* Make sure we don't lose notifications. An extra interrupt is harmless. */
-     d->shpc->msi_requested = 0;
-     shpc_interrupt_update(d);
+-    fprintf(stderr, "uint16_from_uint8 is used only for backwards compatibility.\n");
+-    fprintf(stderr, "Never should be used to write a new state.\n");
+-    exit(0);
+-
 -    return 0;
-+    return true;
++    error_setg(errp,
++               "uint16_from_uint8 is used only for backwards compatibility. "
++               "Never should be used to write a new state.");
++    return false;
  }
  
- const VMStateInfo shpc_vmstate_info = {
-     .name = "shpc",
--    .get  = shpc_load,
--    .put  = shpc_save,
-+    .load = shpc_load,
-+    .save = shpc_save,
+ static const VMStateInfo vmstate_hack_uint16_from_uint8 = {
+     .name = "uint16_from_uint8",
+-    .get  = get_uint16_from_uint8,
+-    .put  = put_unused,
++    .load = get_uint16_from_uint8,
++    .save = put_unused,
  };
+ 
+ #define VMSTATE_UINT16_HACK_TEST(_f, _s, _t)                           \
 -- 
 2.48.1
 
