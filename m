@@ -4,69 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64453CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B260CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDd3H-00015Y-PV; Tue, 28 Oct 2025 02:19:29 -0400
+	id 1vDd3n-0001rP-Hd; Tue, 28 Oct 2025 02:20:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vDd2u-00011D-LK
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:19:05 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vDd2q-0007oD-OB
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:19:04 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Axz79KYABpPnYbAA--.57376S3;
- Tue, 28 Oct 2025 14:18:50 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDxQ+RHYABpXqUUAQ--.19617S3;
- Tue, 28 Oct 2025 14:18:49 +0800 (CST)
-Subject: Re: [RFC PATCH] target/loongarch: Add kvm support dintc
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20251015072745.3921106-1-gaosong@loongson.cn>
- <d57bf88e-a537-7b12-844b-b67acaeb316d@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <d12624c6-e364-e6d5-8486-4c13a0746f33@loongson.cn>
-Date: Tue, 28 Oct 2025 14:18:59 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDd3k-0001jr-TU
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:19:56 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDd3i-0007r1-2r
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:19:56 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47114a40161so62548495e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:19:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761632386; x=1762237186; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IChYbWTlLnmk9z3MzpiGjHtdHd4pwj5fs9KZRAqli+E=;
+ b=ifgcRnXSjWmZMQpzAo4wPO/Nl+M1tmkuGq2XW7bn/3xIBJ+M19hzNYovgcBjcvcDFR
+ VFGTLnUXV94S7WFGOIjl/35R/unhWXXCbDIglAPjB4LsJxTWxHDYbcppnEkVZzqRmOOE
+ uZpd+y9KxT5d1LzimEYo4A26tu1p0mwNPAcK5fIYcLHYqhVwbjj1/Bt/k9JcIY/7OzkE
+ uRoUQ4Owj56Ap49sAc+zE6bt82s8IHLRa+WvclxjGGxbk8DCumglSkpc0WCjjR/h5CFI
+ 3qGTQYSqd+aTJ0K/ZkDcLGlf2qmdu4oXvk9jZtoVU26A94JtfiQXHvVyX6cDR1EDOE+k
+ s3JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761632386; x=1762237186;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IChYbWTlLnmk9z3MzpiGjHtdHd4pwj5fs9KZRAqli+E=;
+ b=f2EsEMWlIa/9Hhu3TZD1stBrWE4xSOgHXbQ4V2/W4rZzIt03/0R91Iw1z1R2C+ySAy
+ BPS+OrH6hINK/S3GUes4yNSSo8+6NCNWdeZ75hvr05qA/zhzBqm2oTfZyvD/9kWxMpxz
+ EXaIR1Xl31XLYIS66N1JIWXf/SUh4f3ocpTCtoq3BfNVXgkwoNMDgR43IkAOGdnBGepb
+ jkRQ5BU4Dq3bC0EHwiMNrr02dU3irUmh/xTC0bgtKHrgH/npadsi7lwEWNOH0T/JQLpD
+ v/AZNGJlAmQzXJgQRIwcdJRyHamtOkiK4DVecFmGmgDwVulLkoCmLqR7RGOKSNS64MgA
+ YRAg==
+X-Gm-Message-State: AOJu0YwSSAe+QAChhpb9BSVqCYG1034jvxSVDP99IFCarOud3JWt3IjI
+ K+RCgsnVIJKoLke7qmXluwCkqMcLBP38fz5W56C01J1oFdkK454U2FRydOvFR2LKDCqJnKy5HC0
+ J6kJ7Xh0=
+X-Gm-Gg: ASbGnctCdG572U+z6rXs3cb6rt9f9ZsMxmYMgcP7kSEBbPETTyvszl/cPo0ddhuBBRx
+ efIbIfXpyTlJE+mi7h6Z9xwDILYRbqf7Gw9pjpmFfJJ5JqQ9pzoaw8bnXAKwOVKVQBEtMtcO0rv
+ WI2nMasGMwcFN+qP10/5u0xgOEnySjOknNXqs/GDFAR7bwXqLBTIZRM289GRzCVaHpn0b9rqvVa
+ ndfX563LV2Bj1Y5RrWToMBudXc8ER69CzIwCMjvgCwSX7nOL2Fy14Ejiz2TWCzmItNope4Jt95r
+ fJVQn5zWIEBpWR2Mul+TGNi/v86l/fqxNKV5o7N4mOH/QIkpAmo8CbwPgp8wIbHE3gMDXgI8F1K
+ VFV0M7ADpkPza1/IQ9XE9pJSImxgmKg+G9JZMkH8J9HTwNCeEAOsz3d+nhyBsPKYX4QWWTEq0rs
+ LGxW6Yk9Xk1Vu0KsPyR2rOlJ4go6OcEmbiYs2Kpgmr7g1aYmwgpaOM7A0H4S1edCpeWg==
+X-Google-Smtp-Source: AGHT+IEmlXZ5Hi/grDN8QyvFykamGhiXCVwlMh1BTIQWIZ+pquFTUZ0Hdq4yf0NlTMVbIx5zjOGtTA==
+X-Received: by 2002:a05:600c:8710:b0:475:d8c8:6894 with SMTP id
+ 5b1f17b1804b1-47717dfc603mr18653855e9.9.1761632385803; 
+ Mon, 27 Oct 2025 23:19:45 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd374e4esm170612465e9.11.2025.10.27.23.19.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 27 Oct 2025 23:19:45 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 52/59] accel/hvf: Introduce
+ hvf_arch_cpu_synchronize_[pre/post]exec() hooks
+Date: Tue, 28 Oct 2025 06:42:28 +0100
+Message-ID: <20251028054238.14949-53-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251028054238.14949-1-philmd@linaro.org>
+References: <20251028054238.14949-1-philmd@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <d57bf88e-a537-7b12-844b-b67acaeb316d@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJDxQ+RHYABpXqUUAQ--.19617S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Jr4kArW3Jr13KFWrCF13Jrc_yoW3Wr1kpr
- n5JFWUGFy5Grn7Jw17try5XryUXr18J3WUXr18XFyUAr4UGr1jqr10grn0gF1UAw48Jr1r
- AF1UZrsxur17JrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24SoDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.221,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,188 +109,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/10/21 上午10:02, Bibo Mao 写道:
->
->
-> On 2025/10/15 下午3:27, Song Gao wrote:
->> This patch adds set/get msgint CSRs and check msgint feature.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->> RFC: this patch need update linux-headers and
->> the linux kernel kvm support avec(not merged).
->>
->>   linux-headers/asm-loongarch/kvm.h |  1 +
->>   target/loongarch/cpu.h            |  1 +
->>   target/loongarch/kvm/kvm.c        | 59 ++++++++++++++++++++++++++++++-
->>   3 files changed, 60 insertions(+), 1 deletion(-)
->>
->> diff --git a/linux-headers/asm-loongarch/kvm.h 
->> b/linux-headers/asm-loongarch/kvm.h
->> index 5f354f5c68..20e69561bf 100644
->> --- a/linux-headers/asm-loongarch/kvm.h
->> +++ b/linux-headers/asm-loongarch/kvm.h
->> @@ -103,6 +103,7 @@ struct kvm_fpu {
->>   #define  KVM_LOONGARCH_VM_FEAT_PMU        5
->>   #define  KVM_LOONGARCH_VM_FEAT_PV_IPI        6
->>   #define  KVM_LOONGARCH_VM_FEAT_PV_STEALTIME    7
->> +#define  KVM_LOONGARCH_VM_FEAT_MSGINT           8
->>     /* Device Control API on vcpu fd */
->>   #define KVM_LOONGARCH_VCPU_CPUCFG    0
->> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->> index b8e3b46c3a..e714b4252e 100644
->> --- a/target/loongarch/cpu.h
->> +++ b/target/loongarch/cpu.h
->> @@ -278,6 +278,7 @@ enum loongarch_features {
->>       LOONGARCH_FEATURE_PMU,
->>       LOONGARCH_FEATURE_PV_IPI,
->>       LOONGARCH_FEATURE_STEALTIME,
->> +    LOONGARCH_FEATURE_MSGINT,
->>   };
->>     typedef struct  LoongArchBT {
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index 4e4f4e79f6..7c48787d97 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -316,6 +316,18 @@ static int kvm_loongarch_get_csr(CPUState *cs)
->>       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(3)),
->>                              &env->CSR_DMW[3]);
->>   +    ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
->> +                           &env->CSR_MSGIS[0]);
->> +
->> +    ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
->> +                           &env->CSR_MSGIS[1]);
->> +
->> +    ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
->> +                           &env->CSR_MSGIS[2]);
->> +
->> +    ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
->> +                           &env->CSR_MSGIS[3]);
->> +
-> It will better if there will msgint feature checking such as 
-> msgint_needed().
->
-> static bool msgint_needed(void *opaque)
-> {
->     LoongArchCPU *cpu = opaque;
->
->     return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-> }
-I wll add check on v2.
->
->>       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
->>                              &env->CSR_TVAL);
->>   @@ -488,6 +500,19 @@ static int kvm_loongarch_put_csr(CPUState *cs, 
->> KvmPutState level)
->>         ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(3)),
->>                              &env->CSR_DMW[3]);
->> +
->> +    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
->> +                           &env->CSR_MSGIS[0]);
->> +
->> +    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
->> +                           &env->CSR_MSGIS[1]);
->> +
->> +    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
->> +                           &env->CSR_MSGIS[2]);
->> +
->> +    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
->> +                           &env->CSR_MSGIS[3]);
->> +
-> Ditto
->>       /*
->>        * timer cfg must be put at last since it is used to enable
->>        * guest timer
->> @@ -930,7 +955,11 @@ static bool kvm_feature_supported(CPUState *cs, 
->> enum loongarch_features feature)
->>           attr.attr = KVM_LOONGARCH_VM_FEAT_PV_STEALTIME;
->>           ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->>           return (ret == 0);
->> -
->> +    case LOONGARCH_FEATURE_MSGINT:
->> +        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
->> +        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
->> +        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->> +        return (ret == 0);
-> Space line needed here :)
->
-Got it .
->>       default:
->>           return false;
->>       }
->> @@ -1074,6 +1103,28 @@ static int kvm_cpu_check_pv_features(CPUState 
->> *cs, Error **errp)
->>       return 0;
->>   }
->>   +static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
->> +{
->> +    CPULoongArchState *env = cpu_env(cs);
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->> +    bool kvm_supported;
->> +
->> +    kvm_supported = kvm_feature_supported(cs, 
->> LOONGARCH_FEATURE_MSGINT);
->> +    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
->> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
->> +        if (kvm_supported) {
->> +            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +        } else {
->> +            error_setg(errp, "'msgint' feature not supported by KVM 
->> on this host");
->> +            return -ENOTSUP;
->> +        }
->> +    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
-> When is its value set with ON_OFF_AUTO_AUTO in KVM mode? It seems that 
-> all is ON_OFF_AUTO_OFF by default in KVM mode.
->
-it set when use max cpu,  and I miss some code on this patch.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/system/hvf_int.h  | 4 ++++
+ accel/hvf/hvf-accel-ops.c | 3 +++
+ target/arm/hvf/hvf.c      | 8 ++++++++
+ target/i386/hvf/hvf.c     | 8 ++++++++
+ 4 files changed, 23 insertions(+)
 
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -385,10 +385,8 @@ static void loongarch_max_initfn(Object *obj)
-      /* '-cpu max' for TCG: we use cpu la464. */
-      loongarch_la464_initfn(obj);
-
--    if (tcg_enabled()) {
--        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
-MSG_INT, 1);
--        cpu->msgint = ON_OFF_AUTO_AUTO;
--    }
-+    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
-MSG_INT, 1);
-+    cpu->msgint = ON_OFF_AUTO_AUTO;
-  }
-
-Thanks.
-Song Gao
-
-> Regards
-> Bibo Mao
->> +        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->>   {
->>       return 0;
->> @@ -1123,6 +1174,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>           return ret;
->>       }
->>   +    ret = kvm_cpu_check_msgint(cs, &local_err);
->> +    if (ret < 0) {
->> +        error_report_err(local_err);
->> +        return ret;
->> +    }
->> +
->>       return 0;
->>   }
->>
->> base-commit: 3bf5c57a11827d9fa706524d57ee3e5af68a429e
->>
->
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 96790b49386..3120a4593a4 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -71,6 +71,10 @@ int hvf_arch_put_registers(CPUState *);
+ int hvf_arch_get_registers(CPUState *);
+ /* Must be called by the owning thread */
+ void hvf_arch_update_guest_debug(CPUState *cpu);
++/* Must be called by the owning thread */
++void hvf_arch_cpu_synchronize_pre_exec(CPUState *cpu);
++/* Must be called by the owning thread */
++void hvf_arch_cpu_synchronize_post_exec(CPUState *cpu);
+ 
+ void hvf_protect_clean_range(hwaddr addr, size_t size);
+ void hvf_unprotect_dirty_range(hwaddr addr, size_t size);
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index 28d50e23017..6fb1fda424c 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -181,10 +181,13 @@ static void *hvf_cpu_thread_fn(void *arg)
+     do {
+         qemu_process_cpu_events(cpu);
+         if (cpu_can_run(cpu)) {
++
++            hvf_arch_cpu_synchronize_pre_exec(cpu);
+             r = hvf_arch_vcpu_exec(cpu);
+             if (r == EXCP_DEBUG) {
+                 cpu_handle_guest_debug(cpu);
+             }
++            hvf_arch_cpu_synchronize_post_exec(cpu);
+         }
+     } while (!cpu->unplug || cpu_can_run(cpu));
+ 
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5b077744720..f5bab7e7213 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2013,6 +2013,14 @@ static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
+     return ret;
+ }
+ 
++void hvf_arch_cpu_synchronize_pre_exec(CPUState *cpu)
++{
++}
++
++void hvf_arch_cpu_synchronize_post_exec(CPUState *cpu)
++{
++}
++
+ int hvf_arch_vcpu_exec(CPUState *cpu)
+ {
+     int ret;
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 49f26169632..5711ed6f1d3 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -729,6 +729,14 @@ void hvf_simulate_wrmsr(CPUState *cs)
+     printf("write msr %llx\n", RCX(cs));*/
+ }
+ 
++void hvf_arch_cpu_synchronize_pre_exec(CPUState *cpu)
++{
++}
++
++void hvf_arch_cpu_synchronize_post_exec(CPUState *cpu)
++{
++}
++
+ static int hvf_handle_vmexit(CPUState *cpu)
+ {
+     X86CPU *x86_cpu = env_archcpu(cpu_env(cpu));
+-- 
+2.51.0
 
 
