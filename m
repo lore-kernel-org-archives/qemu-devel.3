@@ -4,71 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128C0CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68918CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDjkG-0007hr-9g; Tue, 28 Oct 2025 09:28:17 -0400
+	id 1vDjmo-0000OO-5l; Tue, 28 Oct 2025 09:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDjkB-0007h4-FI
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:28:11 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDjk4-0003v3-93
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:28:11 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id D7DABC0064;
- Tue, 28 Oct 2025 16:27:58 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:582::1:19] (unknown
- [2a02:6bf:8080:582::1:19])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uRdL9U1FweA0-y7MVDYwy; Tue, 28 Oct 2025 16:27:58 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761658078;
- bh=M9gJiDpPDQCpZ0BMGcSjZSV5bcYoH4WSP7HyYx/ejxY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=jR3pY5PiJJRGF8Z5tfj//S1mm8moFrUVnrdKjfWlCHpmcwH/8JKIyXtlu0ugd1j4u
- FCXPefLDK8Esmvb8ru2jsdrutgvmqLdt7n2gvRYUMBMqrQQWePj5tTjBgGWaVeHjnh
- /mVnboeCxAACnBqXYOiM4RFwK5x55BbnpE1Jv0VE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a0599f11-f929-4e9a-9e72-cc94e2a4b5cb@yandex-team.ru>
-Date: Tue, 28 Oct 2025 16:27:56 +0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDjmh-0000O1-Sd
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:30:51 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDjmf-0004Ed-IT
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:30:47 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b6d78062424so1243426466b.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:30:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761658239; x=1762263039; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ab0akvkC3mgVWGYARJ9qx4sI05tVRHB3/ShmUCOOMwk=;
+ b=U0dRa+OaYhSbb3NuaitbmyTKMGQpL/010roRYQdOsjmlvqVkhhalcp7EwmxZP7ykPc
+ uKOnrw53gW51KbaGYerEU28GPgb0//LaNG8N/TOmT3ykbm2gpOAUOiQi+DcH6AKOdJhM
+ 96iMm04R4wvFm3DTfGIsCapPKQ34qQfo7JlrY/UQF6chaVk4umR+2srW+SkeIpMGgUWy
+ ajU2b+NbuZalv4eIoyML7wHvA0Jq/CE+8GYwvWFUpwNjn4xYMzBr7fVPgGAoOvlpmcSk
+ XT+IxPPgOndb/jq5xdHLQMt4XDfHzCHqLlzZjdMU8BrzzLxtYdeogA5GMgMMsuJavWXh
+ zSjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761658239; x=1762263039;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ab0akvkC3mgVWGYARJ9qx4sI05tVRHB3/ShmUCOOMwk=;
+ b=qAw9QZEsl2RBQGN/DvjJ0ZZi7iLHnDFGLUyrjEFaO5xImW9OepWAdgYsLBHEAx4oFC
+ ByY/hXmhOCuwtn1r6k3sM2LCPD9jd+mZWUUK0XTquchf8ugsSc5iCVEd10ZZ/HhyGDRd
+ ZueAaTuOq5XLCekoisAZf6x5U/rwTuVT3NXG5E7g9IXdgNqOxGsFQfdiyqzLtOdERw+o
+ qkMikLD43OOMQzjJAnSmfr2A3fTphNg7R2+rVuhIY7dD3C2DJelCTtgmH0K501thDeI6
+ nlkK9xD8ptr+2x5ynLv/SW73kaeQh9TSKBltu8uaPoK5ZAL/B4zYoMi1LhyVzJOIMWT6
+ 5aNQ==
+X-Gm-Message-State: AOJu0YyL7gN9obNch1JaioxnPIbSy6a16mvNyCnYc21ZsB5SZOA9OUy+
+ lFwx15BmkqkXWZ/b1LEjDgXPmJuZ1IZCVvc7t0q6HtvjFyigKyWVaRc/3yQ/JmdcKwn/PlkvOR9
+ DN80WKWbzbESIL+u06LE7097N6KS1UMI=
+X-Gm-Gg: ASbGncv9baU1Jhf6I0xhPChw6ATWWK8xiaIYSiqeMg4hcL0lrSiijZm+FCnsjARoKB5
+ 66/zHHWzzjzggI984IAU6hIHPvkp/v5dI5WAo/Tyg14Q67MU2bs2Jp9LBB/euCaoHNOxWOKMN1v
+ qW/sLQJuzCllr85TzuAvpeEni+Iw8opSIIBda0PMgOt8vCdzDc8Fn/PvRXZGdEl2V22mmcyalf3
+ NiUppsOsHQuf1fH3y1CuIhORRC7/Jvi45pzjqLakURA5660eOe31c3VlbUoZE3OsIabJhl1h0HQ
+ ECDq86UzG7uOz3O5
+X-Google-Smtp-Source: AGHT+IGEKwDSDjx23kdnF4Jh9Lmsm23ITKcOThXaGUr1fTRmeGjyijBG7KD3Xi5yydFvwPxcZ1oU+NiKBWOJFaZ5qJo=
+X-Received: by 2002:a17:907:6e88:b0:b6d:3f8c:a2fa with SMTP id
+ a640c23a62f3a-b6dba58317amr378764966b.32.1761658238901; Tue, 28 Oct 2025
+ 06:30:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/13] migration: Introduce WITH_BQL_HELD() /
- WITH_BQL_RELEASED()
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Li Zhijian <lizhijian@fujitsu.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Zhang Chen <zhangckid@gmail.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
-References: <20251022192612.2737648-1-peterx@redhat.com>
- <20251022192612.2737648-7-peterx@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251022192612.2737648-7-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20251022150743.78183-1-philmd@linaro.org>
+ <20251022150743.78183-4-philmd@linaro.org>
+In-Reply-To: <20251022150743.78183-4-philmd@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Oct 2025 17:30:23 +0400
+X-Gm-Features: AWmQ_bldgE0LGX31anVT810C7d-aEZ8VcPRcaCnlRGTAOYcQ9hR3Te3iXVuwp9g
+Message-ID: <CAJ+F1CLcgEC-XoET_UPM3z2_T_AUi8T5rnj0dbN6BPeDLSmHhg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/9] chardev/char: Improve ChardevClass::chr_write()
+ docstring
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,14 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.10.25 22:26, Peter Xu wrote:
-> Introduce the helpers to conditionally take or release BQL for a process.
-> 
-> Signed-off-by: Peter Xu<peterx@redhat.com>
+Hi
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On Wed, Oct 22, 2025 at 7:09=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  include/chardev/char.h | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/chardev/char.h b/include/chardev/char.h
+> index b65e9981c14..d809bb316e9 100644
+> --- a/include/chardev/char.h
+> +++ b/include/chardev/char.h
+> @@ -263,7 +263,16 @@ struct ChardevClass {
+>      void (*open)(Chardev *chr, ChardevBackend *backend,
+>                   bool *be_opened, Error **errp);
+>
+> -    /* write buf to the backend */
+> +    /**
+> +     * chr_write: Write data to a character backend
+> +     * @s: the character backend to write to
+> +     * @buf: the data to write
+> +     * @len: the number of bytes to write
+> +     *
+> +     * Called with chr_write_lock held.
+> +     *
+> +     * Returns: the number of bytes consumed or -1 on error.
 
--- 
-Best regards,
-Vladimir
+you could add that "errno" is expected to be set in that case.
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> +     */
+>      int (*chr_write)(Chardev *s, const uint8_t *buf, int len);
+>
+>      /*
+> --
+> 2.51.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
