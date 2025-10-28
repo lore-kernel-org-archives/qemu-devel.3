@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FA2CCF9EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD83DCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDi20-0007kb-R7; Tue, 28 Oct 2025 07:38:30 -0400
+	id 1vDi35-0008TM-QQ; Tue, 28 Oct 2025 07:39:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vDi1y-0007kG-8G; Tue, 28 Oct 2025 07:38:26 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vDi1s-0004tW-J2; Tue, 28 Oct 2025 07:38:25 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BAD4A1636C3;
- Tue, 28 Oct 2025 14:38:00 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 479D7307E53;
- Tue, 28 Oct 2025 14:38:05 +0300 (MSK)
-Message-ID: <765304d3-d6c0-440e-ab92-a905f44d003f@tls.msk.ru>
-Date: Tue, 28 Oct 2025 14:38:05 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDi2v-0008LY-TB
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:26 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDi2n-0004za-HH
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:23 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-784826b775aso66668847b3.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761651548; x=1762256348; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vWz1wjAUcUO8dzSnLsMAab5s/DVpHJWu2/n8Ei85kFk=;
+ b=zXad2gRUYnypGQk+tXyY3LC7rr9wkb0SQB1ywqi04Rk0H0NUFRE4LRsa1ig2nBobz9
+ UgS3c77QmtrUhTlib+dxphUoWXmLPvzSO/T4VVaNusemAr9dSw2YrpIYbCQXBdUr5TNA
+ gIl570ECJR274a0a0Vlc4DVJhm6dpOsKq1IhNwrpnJWruZt3+30yPC8JdiqCzVPKShpV
+ lnzUkNHaT+iwlGjBQ7a4r8ehnhqXWJNsw0pqRvjuPs6jAFJBqLsHEvjtKEBbyluIEPHj
+ 21sizbsOrtz2gSMQHjMMICVuQWUtP/mGdxJWqbOyxA2VxwrjKvWbPo7sUTx/graSjUS2
+ JRaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761651548; x=1762256348;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vWz1wjAUcUO8dzSnLsMAab5s/DVpHJWu2/n8Ei85kFk=;
+ b=EFsQ0kDwLY7ajkDWRta6Fbox4NxJgcGZf+vbYS7D7hQrmhLvycqCEOTcJAbgCpH1H2
+ Tyddh4ZIubv229gXfAXYJmof6Gm58cfFulNFa9NNbxgOIMdrNtF7oAm0Tc7D24R0xrn8
+ BB7IzQq1zZQtn0lgWUSgR8UlIkX/MQcQlAchlxJ8WLsZle8F7umJT1gUyPa7mqVhd9jb
+ nnPpr5dfxJy3wJcChNxJW7M/zX+IAXd6jit/08UVVfwjOgZGg3AfF8plg8/O4goenKGO
+ vZkqKasBEgPGtxXYMs6fgf30TXJdOlGoBQujwLe/7b4j6pIgDlhQqalS4hJyN5YQc82f
+ p7uQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPUge6S2YLu4OYAjR7JQXtKcDjsol1+7d41vFJCA+osKVFlnWOT+kWXK1Tuqhkd783j47S93QRjCaF@nongnu.org
+X-Gm-Message-State: AOJu0YxDYI1dbMCB+LSIqqXpG/Ymg5QFDdgnVHb+Brjmru7MrXA3aF/Q
+ CkylJyQYZk83y9/pXXPgrDtr3pZZvRe5DjD9cNOfhGGpLy8f4VgHtHRvnLEd+4Jb19bPNHTDOQx
+ JmYNote46UCuvaL2AR6MjEVpxyOSs7ZS9uU25BxR0bA==
+X-Gm-Gg: ASbGncuyDnG+oDmGduEr3pY9Nf19aGYgn99T1iwunqq40OqHVgcHPt+H1dBMtnd+E0y
+ 816bJF+6GlHDKZbkOGbPvYEY54oxiLuIMgkK5h6EhgLplEi1FzPQKmw4L9rlb1VVjWVl70pBorG
+ GIQgS74lPu6oHIITENlU10NXWuazF9J63noMaBdeETx7ELZV9ToMH0quDkMPN2fjygQbRsjTefQ
+ 84IzeHd2u1RDdrQEfGYq5K4aeRDJvT5IWYbMcimuzYyhxoPak5U+rL4o9x67g==
+X-Google-Smtp-Source: AGHT+IErFuQxfHGymiVpLnG1uZQC8DTMR/QZ5aqz3Bwrw3I6ssyq1RiDmHEPLGeo060AzzHIM8ZtLZqZCGoe87ISkeA=
+X-Received: by 2002:a05:690c:2c8d:b0:785:cc3e:13e0 with SMTP id
+ 00721157ae682-786183862a3mr34145877b3.49.1761651548177; Tue, 28 Oct 2025
+ 04:39:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <s7ingr72rgtvch2poxlwyc25lkxp7hh5c273ubvmz4tdskjttz@7dzfvylkgwsh>
+In-Reply-To: <s7ingr72rgtvch2poxlwyc25lkxp7hh5c273ubvmz4tdskjttz@7dzfvylkgwsh>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Oct 2025 11:38:56 +0000
+X-Gm-Features: AWmQ_bk7D_dREHEf4B7QMAU1dpcW-TBbaZBJZyM1GjtFfymKXCRm0Y_T9G3Cv_E
+Message-ID: <CAFEAcA-gmKkfysSThFDFzCUU0dYjh10qDA4zM8E0y2qcipzNXg@mail.gmail.com>
 Subject: Re: [PATCH] Use correct type for ioctl(FIGETBSZ) emulation
 To: Bastian Blank <waldi@debian.org>, qemu-devel@nongnu.org
-References: <s7ingr72rgtvch2poxlwyc25lkxp7hh5c273ubvmz4tdskjttz@7dzfvylkgwsh>
-Content-Language: en-US, ru-RU
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-stable <qemu-stable@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <s7ingr72rgtvch2poxlwyc25lkxp7hh5c273ubvmz4tdskjttz@7dzfvylkgwsh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,47 +92,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/25 14:29, Bastian Blank wrote:
+On Tue, 28 Oct 2025 at 11:29, Bastian Blank <waldi@debian.org> wrote:
+>
 > The FIGETBSZ ioctl get's "int *" (pointer to 32bit integer) as argument,
 > not "long *" as specified in qemu.  Using the correct type makes the
 > emulation work.
-> 
-> Signed-off-by: Bastian Blank <waldi@debian.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3185
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+We could also note:
 
-(Adding Laurent to Cc:)
+This ioctl does not seem to be documented. However the kernel
+implementation has always used "int *".
 
-While applying, it'd be nice to include "linux-user: " prefix to
-the subject.  And the thing should definitely be picked up for the
-stable series (Cc'd).
-
-This bug has been with us since the day linux-user was implemented,
-in 2003.
-
-I can pick this one up to qemu-trivial tree, if no one objects.
-
-Thanks,
-
-/mjt
-
->   linux-user/ioctls.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-> index 3b41128..c87ce61 100644
-> --- a/linux-user/ioctls.h
-> +++ b/linux-user/ioctls.h
-> @@ -145,7 +145,7 @@
->        IOCTL(FITRIM, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_fstrim_range)))
->   #endif
->   
-> -     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
-> +     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_INT))
->   #ifdef CONFIG_FIEMAP
->        IOCTL_SPECIAL(FS_IOC_FIEMAP, IOC_W | IOC_R, do_ioctl_fs_ioc_fiemap,
->                      MK_PTR(MK_STRUCT(STRUCT_fiemap)))
-
-
+thanks
+-- PMM
 
