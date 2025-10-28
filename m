@@ -4,88 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4028DCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 13:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2997CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 14:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDkCY-0008Sq-Ua; Tue, 28 Oct 2025 09:57:31 -0400
+	id 1vDkFz-0000py-UF; Tue, 28 Oct 2025 10:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vDkCW-0008SS-T5
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:57:28 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDkFw-0000pf-W0
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 10:01:01 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vDkCN-0007Jj-8F
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 09:57:28 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-592fcf7a1ceso5340220e87.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 06:57:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDkFp-00084C-RD
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 10:01:00 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b626a4cd9d6so1242066766b.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 07:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761659834; x=1762264634; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ywkWcUB/bHBOlXnCDPOpcuQpF9M08DR5u7xlF4oebkU=;
- b=VkAe6+lUwhsePmZ+Un0eRQ01irG+LF1YKPJwiX+/H0JZGG9HZi5ekuSbDzq2oNH3GG
- bX8yI4xr9UGdnvIvVsxM6wrBFU39VfnmYXTxekwxy1K+cME+cePAYGSFMLwn3UhBR/wo
- JEYth3rdEOXTr6+MVLEUOfcQ1oYRMEm9jod6evQuu3ZKp6T3OZCwDbaFvopSvEdUpBZj
- Rrqk5MOvI0FbGy62w/+cZuzkuTxICB/9XGrGE85b6QMQ90+dYEeKCHAJ6XF3AdqXuPLM
- 4WQHFWHnldq6E0ATScrbCNo5n4lSxF64EHiXQlF8F9Z74rNI2rL3wMiJhApZKOnUt/Ci
- 32Qw==
+ d=gmail.com; s=20230601; t=1761660048; x=1762264848; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MPF20KQj9Kkit6qF0zFz1hQQjDow0Vd9RI3Nb+hupNg=;
+ b=ZmK97Z3nWzEW04YBncCZA0Yib2MITiJ2d8AXK5XO2r74n+OmrRHEBURsU8qAmeJOBY
+ pGqTK0joURZ+Y5yoUj7l8wzozTmm6is8IzJNnFIhT7pPeNtZitGP6EZxS/QfOE+JqmeW
+ svvr06+e0crg2hNgGJQHfhl4Xp6OMUBkMwZoZT/jnmRNyFs+UeJW07NG/elPF0XWNF4W
+ 5zBDFfQeDzGfShEfSu1DxGhPuQ/10v4Y3vWIgBsA+cH+1td1+RlD0rqGp0e+YB23Fqjq
+ zIUoh/+M2v/GRoCzXxx0FcB3lNr7NLb/9UMgsOlPJPcZEMWcT5SSf5+vgq3VEaXtzAmH
+ GOSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761659834; x=1762264634;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ywkWcUB/bHBOlXnCDPOpcuQpF9M08DR5u7xlF4oebkU=;
- b=LdEIMBWDx3dYpSuDrIYZkLKbipuvyluD5MpzjRUINHqRbnsK8y0kSftdJyUTvlFvQc
- NuQWsmP9XDD5ml6VG/wThL6/ZkYKdNisFdqE7N2egs8fdleceRWcF19SNY6N4kdVNcyu
- uFhPUE3FiOqFsUm6Hq69MwB8h4YyTvHya+RL+M5hUWNfpxaQGpGf9ScAAP9HCw6MN4e/
- zH3WYtryP4pn1GOLFAkDyUEqCwpA01sfg7Ytpxata7a9WuExteIcWsh17bHfW//0ZxAT
- F0VGWbXHui0a3VMy1rdk0jrIPHDFIiQ1j5WzsKidhHJS1e2s664eWAtQns4MnV4XsjEp
- EqUQ==
-X-Gm-Message-State: AOJu0Yx//l8uC/d7uwYBDf3eFzKlw+ua4tSyIztk6473pWT7UzPFtsKF
- 5u9emQ2eaSiXCYHhmplMiXrDyfKsqWEND7cro4WVCcJMS6RC7sKKcYWM
-X-Gm-Gg: ASbGncsTnkChj+sKAIgI7+LbTolaNafCuP06KhBIPzLeEsnj4IDPmPHixOGzfb5RSsi
- F2CvEDHfMO2yc7CgQFrMt7UiFWo10wbnzCqFwyOwG2/iP5nRwfVBFGc/0oBBkPpipN84K5P4aN6
- HSwO92Qbp61siQvLL9Zk+fbCTYOcL6IMwolMFGn5NURPjx8BZaP05MPJLbhPivPLwj50pcy0Vtx
- NvVFxcA7HC1fpkcCV537FYLfq9ez/HqkQXW2f3/Yj0QQhqYmUtVmois7xAzCBVt5HRcB36/xNWg
- fniQXiLFLg7eSWNX5Ej4wZOabLKb7bIIxQRq0Hv5b/xDKYOl41f3pq0Ra5MB4UOOtPAqAGPJVwb
- GfZsD+TUrFFL3Azk/MamZLmMwU1hcI1GqRHM9BVMMz/NiGf312DMcEUPIfRBXE/6V9uJhOSr1yP
- ISK3GacZikPpQlx6RaxRUjum7cYpJ1twP+c9ao
-X-Google-Smtp-Source: AGHT+IHhlEhCXWG4JnGYnZ9PlIkPfPss+qjJNDrSomU1aZUyUCzyg6jNNad5EKiHbRdmXz1yu4/PQQ==
-X-Received: by 2002:ac2:4f03:0:b0:591:ebc3:a688 with SMTP id
- 2adb3069b0e04-5930e9f7af6mr1094572e87.56.1761659833877; 
- Tue, 28 Oct 2025 06:57:13 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-593027d858bsm3005590e87.47.2025.10.28.06.57.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 06:57:12 -0700 (PDT)
-Date: Tue, 28 Oct 2025 14:57:11 +0100
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>,
- xen-devel@lists.xenproject.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paul Durrant <paul@xen.org>, Stefano Stabellini <sstabellini@kernel.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: Re: [PATCH 3/3] hw/xen: Build only once
-Message-ID: <aQDLt44edkDsfTAU@zapote>
-References: <20251022140114.72372-1-philmd@linaro.org>
- <20251022140114.72372-4-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1761660048; x=1762264848;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MPF20KQj9Kkit6qF0zFz1hQQjDow0Vd9RI3Nb+hupNg=;
+ b=Wu7Ircr82PC4eOu24UdQYngfWsWfPiKtjyRGI2u4qpCNvMoiLCepANT4ZHGFCFZ+FH
+ aVxmX86JpeZXhbH8yC/tCdtOC/nU8M33pxgJCgf4TjnOAKPebFxQgFK4Douuqr89J+uZ
+ r0fJsk7KuauCqjvc6RBJSmSdXZFuj31bn662KTghvPrnHGfncP941ssafo+UsTjGcGVb
+ wTSWf5Y88mNgvudo/x3vLZkyegTHQ8nx1QnWRA4ltx605ZPNkc5EWyZl3+SEkvoaJNtT
+ Z+IgEM8REr4BhSJTtSOV2JdjkjnXuIUoPjmnzaIPRChJRn1xO9M+Ya8r2bpHnUsZUVss
+ eI9w==
+X-Gm-Message-State: AOJu0YxgCarvTkB4ychQhNVToJoYzPi/1FXEnN5ZLcWQvxfQ7s8PYe0M
+ eRmkG9el5t5Yh0lUHUXOzO2S50TGgqSF4p9nPPbiRvssqSK4OQSYv8QJUr6y7fSkenrYVDkEQqo
+ JG2Ha6FYJfIOgiC9LDpFkvlA/mSyx1Mk=
+X-Gm-Gg: ASbGncuBTbEF0tazElAf+cE27KHvGygLWbZVGoMhZqSLP0hhe/QwKO7U6jdyfwiu6tE
+ +mBNpD2bdk8HI8OqEcQEUdaBRNJPr1GEjIEAXF5kBGKKT2y1zcKGCwfhaRik0KChwY4eqsJT0NY
+ atEug+v4LEO/FYaG6xi6gLjEEnXwS/h09/aMAh0b33Khuc98VU3M4kq87KUgqkbAeqI7NYSpXxy
+ /PUMR+5goQ80g2TrXLX3s0l8hIjZipDx3E2q4MWx3tp2F2o8jwYTOspEBVYAIEoN5TBVzRg7Sqf
+ XZgRB3PQt5Xqidy8
+X-Google-Smtp-Source: AGHT+IHL7oV3gHvsuvxeU87DSv6JUFIK6Im3Y9dkyDgT3xXGSfxzjuJwqXQFza45Rcybup8J5NrxeosB/9Ge5wTdeYk=
+X-Received: by 2002:a17:906:4fce:b0:b04:3bfe:5b20 with SMTP id
+ a640c23a62f3a-b6dba584b73mr372551766b.30.1761660047355; Tue, 28 Oct 2025
+ 07:00:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251022140114.72372-4-philmd@linaro.org>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x132.google.com
+References: <20251022150743.78183-1-philmd@linaro.org>
+ <20251022150743.78183-8-philmd@linaro.org>
+In-Reply-To: <20251022150743.78183-8-philmd@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Oct 2025 18:00:33 +0400
+X-Gm-Features: AWmQ_blGdRx3ZkIR1RejAr68S8_JFTYQd_KtUTiMkkeP8IXQ4naiViitfZY_Gcs
+Message-ID: <CAJ+F1CJj+00rCtuNkpSfcFN5Amvbe_JiKAXQ8XnBcOHcL5Duaw@mail.gmail.com>
+Subject: Re: [PATCH v2 7/9] chardev/char: Preserve %errno in qemu_chr_write()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,65 +98,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 04:01:13PM +0200, Philippe Mathieu-Daudé wrote:
-> Now than hw/xen/ files don't use any target-specific code,
-> we can build all file units once, removing the need for the
-> xen_specific_ss[] source set.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+On Wed, Oct 22, 2025 at 7:10=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> qemu_chr_write() dispatches to ChardevClass::chr_write(),
+> and is expected to propagate the backend error, not some
+> unrelated one produce by "best effort" logfile or replay.
+> Preserve and return the relevant %errno.
 
+Indeed.. imho we should avoid using errno, it's too easy to clutter.
+Even qemu mutex, which may use trace, may change it...
 
+patch lgtm anyway
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
+>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  hw/xen/meson.build | 22 +++++++++-------------
->  1 file changed, 9 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/xen/meson.build b/hw/xen/meson.build
-> index a1850e76988..dcd2b7e1df3 100644
-> --- a/hw/xen/meson.build
-> +++ b/hw/xen/meson.build
-> @@ -7,21 +7,16 @@ system_ss.add(when: ['CONFIG_XEN_BUS'], if_true: files(
->    'xen_pvdev.c',
->  ))
->  
-> -system_ss.add(when: ['CONFIG_XEN', xen], if_true: files(
-> -  'xen-operations.c',
-> -),
-> -if_false: files(
-> -  'xen_stubs.c',
-> -))
-> -
-> -xen_specific_ss = ss.source_set()
-> -xen_specific_ss.add(files(
-> -  'xen-mapcache.c',
-> +xen_common_ss = ss.source_set()
-> +xen_common_ss.add(files(
->    'xen-hvm-common.c',
-> +  'xen-mapcache.c',
-> +  'xen-operations.c',
->    'xen-pvh-common.c',
->  ))
-> +
->  if have_xen_pci_passthrough
-> -  xen_specific_ss.add(files(
-> +  xen_common_ss.add(files(
->      'xen-host-pci-device.c',
->      'xen_pt.c',
->      'xen_pt_config_init.c',
-> @@ -30,7 +25,8 @@ if have_xen_pci_passthrough
->      'xen_pt_msi.c',
->    ))
->  else
-> -  xen_specific_ss.add(files('xen_pt_stub.c'))
-> +  xen_common_ss.add(files('xen_pt_stub.c'))
->  endif
->  
-> -specific_ss.add_all(when: ['CONFIG_XEN', xen], if_true: xen_specific_ss)
-> +system_ss.add_all(when: ['CONFIG_XEN', xen], if_true: xen_common_ss)
-> +system_ss.add(when: ['CONFIG_XEN', xen], if_false: files('xen_stubs.c'))
-> -- 
+>  chardev/char.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/chardev/char.c b/chardev/char.c
+> index 5c8130b2435..2af402d9855 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -113,6 +113,7 @@ static int qemu_chr_write_buffer(Chardev *s,
+>                                   int *offset, bool write_all)
+>  {
+>      ChardevClass *cc =3D CHARDEV_GET_CLASS(s);
+> +    int saved_errno;
+>      int res =3D 0;
+>      *offset =3D 0;
+>
+> @@ -138,6 +139,7 @@ static int qemu_chr_write_buffer(Chardev *s,
+>              break;
+>          }
+>      }
+> +    saved_errno =3D errno;
+>      if (*offset > 0) {
+>          /*
+>           * If some data was written by backend, we should
+> @@ -154,6 +156,7 @@ static int qemu_chr_write_buffer(Chardev *s,
+>           */
+>          qemu_chr_write_log(s, buf, len);
+>      }
+> +    errno =3D saved_errno;
+>      qemu_mutex_unlock(&s->chr_write_lock);
+>
+>      return res;
+> @@ -186,7 +189,9 @@ int qemu_chr_write(Chardev *s, const uint8_t *buf, in=
+t len, bool write_all)
+>      res =3D qemu_chr_write_buffer(s, buf, len, &offset, write_all);
+>
+>      if (qemu_chr_replay(s) && replay_mode =3D=3D REPLAY_MODE_RECORD) {
+> +        int saved_errno =3D errno;
+>          replay_char_write_event_save(res, offset);
+> +        errno =3D saved_errno;
+>      }
+>
+>      if (res < 0 && offset =3D=3D 0) {
+> --
 > 2.51.0
-> 
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
