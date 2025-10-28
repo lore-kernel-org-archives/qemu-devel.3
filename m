@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6929ECCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B043CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDcnx-0003s3-TF; Tue, 28 Oct 2025 02:03:40 -0400
+	id 1vDcoX-0004Ew-3V; Tue, 28 Oct 2025 02:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcnn-0003pJ-8M
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:03:27 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcoV-0004Cj-5q
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:04:11 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcnk-0005hc-1f
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:03:26 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so41815725e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:03:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDcoS-0005kR-VJ
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:04:10 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3f2cf786abeso3197737f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761631402; x=1762236202; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761631446; x=1762236246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ll6Tf0Ct69En0jXlpNgHzxdgqKjfsdOoKFlniwfriwU=;
- b=dXbMPZ5k2ODr/W6OEGcFOJGQVtd1OWneggkR833RzJoHOIMCtOULso4jiCoR8GaeXQ
- du3zlbFdr8vOcmHNhMSCobsMX3Wm9HQ34BLPV3F0cwWo21oMAqQxpZuHB17Hg8OewE0n
- ix++qIwNILg9wsMrgLyv1vBEdY7rd6EX5/pPJ6X7aNYY6tsKitvrJVtZ72c4vxr2RAzf
- jkjHo7HpJ1wv6vYsGAsQg3EsLIJzVHQbB5NYLYRHr9iqGMdwHeaXVjT0ivima1qMZp99
- 0DjYfjE+jn2FMsECAMFjkZrQzQBp8pkFMVzP5nxfDe96dZyL7pRyAIE2twBu4yZEBSYZ
- OSBQ==
+ bh=Xn1hBfvpsHSz1gYz2L9i4rhmWW2kN0qXymZ6HJBhx7M=;
+ b=DwvhGkjXuFF7+TLPoxN730CdP0OSjB96gP3pkyoAuodVI4dfmCIE3kIoSiFMLU17fG
+ E/jJKZ3eRMAxdbxyiYRewzl2ne6/q8qkXgbWfuO4Z+Nfjb35AG8YPCzz01cb8NFEmoxy
+ C/xqK/bD9oiu2hQ6bkSYKU/8CQ6xqPUNjiORzmEf2+AqcWuchCv9m+mDjwof86hruSf1
+ bcrQbEy9gNXAWONs6dJciLpzXMEvn/vZJmqf+r791nJRQue2KO6N8CjLFjVxEqMatWZS
+ zTimxPJJ3hxoShvBaoTW0doj+5McHKud2SeafnX53WLmT/FupRSq6z6kiflQTPszWFFa
+ HHyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761631402; x=1762236202;
+ d=1e100.net; s=20230601; t=1761631446; x=1762236246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ll6Tf0Ct69En0jXlpNgHzxdgqKjfsdOoKFlniwfriwU=;
- b=GjlkS7VokKIbTee4JN1nvlD+uCAo5c9NUZe3rIYvQCvcHRDSLcdIKvFkB+QRQ+iwwN
- HEWIxDgS/urRbiFiW4OLTC7h3uISsjOzd0LLhwFbOemI7h+4rOzLJ48p9zyLz60ykmeM
- l3WASNFxxwvdkjs7eAqt+rvEt0rwLzwVeq/dL1beLgP2Z3zmzBVU1wKiaNQDKInAjpI3
- oFcQTv0gDF1gUiNgojwlZhZPG/scqsADVfQsk7hgV2xKECmvK9lD6Oz47mLzsGjO7gPI
- /gERWdChU/86LLXHAJYzmksFw7seTKVw4EGf+WsmPSxrTAHX/ZhpJwU5q6NZkiRe3vDm
- B9+A==
-X-Gm-Message-State: AOJu0YwQQITFk30zZI49jQ2J6UhkzHiqGskT5fODUfMHappNN5KQfmMj
- TTcnJSNN4QsJm+LsVmCrCnNiv2B3EiWqAT0kvR1I0BqIiO5YHLsNuzvp5f85kUEJxaO9hwe2Ieh
- 8vHuzwPw=
-X-Gm-Gg: ASbGncvdMnIzweB0oBCfnCEYnC+p8/3g8uD+O5m6DTBAqZaOiJTC4r6xRlC5aqizxj/
- 2+1JBbX/z0GZLmZ3OsxoOEAJHAXcu8d6Suo8BH95hCkHY1Urg/Mf5YERUUhLV4APrupI55bHUqG
- sy+uLv3pUfzd6anis5FMcp/Ywx48sBWc68xEKq6As69F1iuNo8dVevz1T1ra9YJBUg6tkIrjOps
- CVNt1B1zHbtwVP6Tr51MkV1jCdcPjXLh6QjHSkDdhuFEUjffUeRNKEPlK2Vy2AEx6sJO0Avx6gh
- O3FpkO9uPTKrlc90Gy3duMjdjT/4VPFSO+em/bKFRgBiEiDJ2Fe6W7oVPG5LSp/uFd+xWIUqQi+
- //FA5vQb0agR0AjdpoyT3Ux9esMQLQ/avkbiiq/Qn0QmC+LSkqsWxiTwO4m/Y38+OepqpYES1Da
- mHUBQ4QlsIJFch0ch3JEJ+eFka5IRHN/MZuvpgT0B4LM1a56UsOPTkGpU=
-X-Google-Smtp-Source: AGHT+IGAMsXwptan82HAuhng40vI14uZK7lXnZWO7NrVQgMpYfQLMhTUt44fnTq6xVkq8eQ8fsWA/g==
-X-Received: by 2002:a05:600c:83c3:b0:475:de68:3c30 with SMTP id
- 5b1f17b1804b1-47717dfaa4bmr13964525e9.16.1761631401853; 
- Mon, 27 Oct 2025 23:03:21 -0700 (PDT)
+ bh=Xn1hBfvpsHSz1gYz2L9i4rhmWW2kN0qXymZ6HJBhx7M=;
+ b=SD5r0xxIqCw2DPN6h9FuUyCkWoA7809VAXO3umyn6/ty+LP4xCgaHbgv5JLYcP2Xtx
+ FAXUyAoHqG/Qb+VI5lWgXRhsGgO7MFhH86wAv/TraVYtwAWKIQw8jAs8jcaMm7jk3XV6
+ B0j5bQB+QDn4+rqzQMiwtvt5R4r+l3HYFUvnniE0uggzbnQk5GuZ2X2C+oLAP1zJIZWL
+ bzbk8T2U8Nrctp6Okj5as/K9ch//Ny1jtA8IsKHB0F78nv5hjtd5pLjIsMw4JJW8AsZj
+ AAwleSYxJreegZrpVvh8R7WjaO1fbvtLkzBUQqEi6WZbWQwizGFHywgwNa4+tmIyJfcQ
+ 2jmw==
+X-Gm-Message-State: AOJu0Yzh2AKasI1JZOh+FwbVBEMMjOzpUJXSvMnz1WddioZ3SBqcTqPg
+ fM1UGnMfHGZacqYWVUG3DldDTLqAQBB4HEBsKZ7xhhUlaLW44X730/Shj+EEcyQY9O9bBrpYrFN
+ NClB7Q1o=
+X-Gm-Gg: ASbGncsQW99T/dJe1CrnW998EFHICCOHu4p1GXmf7nXKA4WvAWY6Bp0yvCMJUJ2ydIF
+ Lh2Q0/xAxNPaA3w1FZ2WvhcENpZoEhy3+mFjKhg7dTlEHpGlGn/6bvKj9yauhVV7mpJUK7aZrDb
+ 1qU+ndDD8qi2pPjJn8GTIi5wW89ojnd81CCkBAC709LmHoy3Myg2mSbeJJkP8VkgLKsqtfZSH53
+ g1wygxq1XuAp9hsi3Vf2TFoXL/q2J1WHUbEl31Pa6XJ9s01SYeNh/zzkqlNjjn6mITKGpWJcPe2
+ j3q9VkSz2+nZmW1jPt7c1Qj4voz9yhugz7GEQyjZ4sN8yQjmLcbQASKc6342kxeZtKTJYMxim05
+ HYvG7dTgNBlQ3Ye60oV4ztA38qsE1hVQSLqODPhDi5i9sX8js4JwHuNKC5LUJgPs+xRmHTbKi6D
+ Dt3qKCQZOlIlRoz6y3WZ0PminpV0YCFoxFM55twTuuKjVeDlTFmWOKh/Y=
+X-Google-Smtp-Source: AGHT+IFOk/Fv4mLKlzE/tHV2k7ujL4eD6BoTdajwOCc2as4saYM/Jjgd+oVbiA5xEqHNioY5AT6b6Q==
+X-Received: by 2002:a05:6000:1a87:b0:425:7c32:d969 with SMTP id
+ ffacd0b85a97d-429a7e52f3cmr2003885f8f.5.1761631446405; 
+ Mon, 27 Oct 2025 23:04:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df62dsm19804790f8f.45.2025.10.27.23.03.19
+ ffacd0b85a97d-429952d5678sm18089059f8f.22.2025.10.27.23.04.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Oct 2025 23:03:20 -0700 (PDT)
+ Mon, 27 Oct 2025 23:04:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
@@ -75,25 +75,24 @@ Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
  Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 29/59] target/arm/hvf/hvf: Document $pc adjustment in HVF &
- SMC
-Date: Tue, 28 Oct 2025 06:42:05 +0100
-Message-ID: <20251028054238.14949-30-philmd@linaro.org>
+Subject: [PATCH v3 30/59] accel/hvf: Trace prefetch abort
+Date: Tue, 28 Oct 2025 06:42:06 +0100
+Message-ID: <20251028054238.14949-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028054238.14949-1-philmd@linaro.org>
 References: <20251028054238.14949-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,29 +111,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/hvf/hvf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/hvf/hvf.c        | 11 +++++++++++
+ target/arm/hvf/trace-events |  1 +
+ 2 files changed, 12 insertions(+)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index f31b6e54ee7..805fe75e6b1 100644
+index 805fe75e6b1..de1e8fb8a05 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -1936,6 +1936,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-     case EC_AA64_HVC:
+@@ -1963,6 +1963,17 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+         }
+         break;
++    case EC_INSNABORT: {
++        uint32_t set = (syndrome >> 12) & 3;
++        bool fnv = (syndrome >> 10) & 1;
++        bool ea = (syndrome >> 9) & 1;
++        bool s1ptw = (syndrome >> 7) & 1;
++        uint32_t ifsc = (syndrome >> 0) & 0x3f;
++
++        trace_hvf_insn_abort(env->pc, set, fnv, ea, s1ptw, ifsc);
++
++        /* fall through */
++    }
+     default:
          cpu_synchronize_state(cpu);
-         if (arm_is_psci_call(arm_cpu, EXCP_HVC)) {
-+            /* Do NOT advance $pc for HVC */
-             if (!hvf_handle_psci_call(cpu)) {
-                 trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
-                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
-@@ -1949,6 +1950,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-     case EC_AA64_SMC:
-         cpu_synchronize_state(cpu);
-         if (arm_is_psci_call(arm_cpu, EXCP_SMC)) {
-+            /* Secure Monitor Call exception, we need to advance $pc */
-             advance_pc = true;
- 
-             if (!hvf_handle_psci_call(cpu)) {
+         trace_hvf_exit(syndrome, ec, env->pc);
+diff --git a/target/arm/hvf/trace-events b/target/arm/hvf/trace-events
+index 29387780e3f..b0d3d7bd322 100644
+--- a/target/arm/hvf/trace-events
++++ b/target/arm/hvf/trace-events
+@@ -3,6 +3,7 @@ hvf_unhandled_sysreg_write(uint64_t pc, uint32_t reg, uint32_t op0, uint32_t op1
+ hvf_inject_fiq(void) "injecting FIQ"
+ hvf_inject_irq(void) "injecting IRQ"
+ hvf_data_abort(uint64_t va, uint64_t pa, bool isv, bool iswrite, bool s1ptw, uint32_t len, uint32_t srt) "data abort: [va=0x%016"PRIx64" pa=0x%016"PRIx64" isv=%d iswrite=%d s1ptw=%d len=%d srt=%d]"
++hvf_insn_abort(uint64_t pc, uint32_t set, bool fnv, bool ea, bool s1ptw, uint32_t ifsc) "insn abort: [pc=0x%"PRIx64" set=%d fnv=%d ea=%d s1ptw=%d ifsc=%d]"
+ hvf_sysreg_read(uint32_t reg, uint32_t op0, uint32_t op1, uint32_t crn, uint32_t crm, uint32_t op2, uint64_t val) "sysreg read 0x%08x (op0=%d op1=%d crn=%d crm=%d op2=%d) = 0x%016"PRIx64
+ hvf_sysreg_write(uint32_t reg, uint32_t op0, uint32_t op1, uint32_t crn, uint32_t crm, uint32_t op2, uint64_t val) "sysreg write 0x%08x (op0=%d op1=%d crn=%d crm=%d op2=%d, val=0x%016"PRIx64")"
+ hvf_unknown_hvc(uint64_t pc, uint64_t x0) "pc=0x%"PRIx64" unknown HVC! 0x%016"PRIx64
 -- 
 2.51.0
 
