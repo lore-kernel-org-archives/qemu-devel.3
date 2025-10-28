@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B672CCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538B2CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 06:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDd5S-0003oQ-QC; Tue, 28 Oct 2025 02:21:42 -0400
+	id 1vDd5a-0003v8-Jz; Tue, 28 Oct 2025 02:21:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDd5H-0003lB-Mc
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:21:31 -0400
+ id 1vDd5P-0003nr-2u
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:21:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDd5D-0008F9-Sg
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:21:30 -0400
+ id 1vDd5I-0008Fk-Ca
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 02:21:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761632484;
+ s=mimecast20190719; t=1761632491;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=sFuj2530MIh854321LaAzcwpxFdazWrjdFWR9mQsJMU=;
- b=C6rwWJjWJeAeo5CIYJhds0qW9EP5tCBuckicqnL+sg91cDSZKWl7p+bwKSfUy9Slzl48br
- RCByo4DYzLT2iTxeIzZES5piZlrqkDdlDMRIFsqUI1Jgo+bWro/rzllPJ5H1KlBXfHMtQd
- tZxOjwer4helBHuy8GgJ1ljBoOwYZY4=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zTXf+w8zKKDbgsXcu+kqZO8hk7mKEc8CuurfX3i26Qo=;
+ b=Sebet2hPFyGzobFCsc9cuYA4pbQ1X5Y/6cIAlA0rpAA9QWviQUoUH95hiWJJZwmUqwzJ6T
+ YjGzwpFHcmJyq5+O27GK+swqeB1O0C370l2I9M9nQ1hAjiluMZvP2OfH03d8fmEFTlhJhg
+ /iY4UBkOnxjrB/7005wSWmTmqd/z6cc=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-lP-Vh_LdOjaUEaZfND8xdQ-1; Tue, 28 Oct 2025 02:21:22 -0400
-X-MC-Unique: lP-Vh_LdOjaUEaZfND8xdQ-1
-X-Mimecast-MFC-AGG-ID: lP-Vh_LdOjaUEaZfND8xdQ_1761632481
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b6ce15aaa99so4053843a12.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:21:22 -0700 (PDT)
+ us-mta-70-c7qX3M8XNIGsJ_LvQ4MEEg-1; Tue, 28 Oct 2025 02:21:29 -0400
+X-MC-Unique: c7qX3M8XNIGsJ_LvQ4MEEg-1
+X-Mimecast-MFC-AGG-ID: c7qX3M8XNIGsJ_LvQ4MEEg_1761632489
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-290e4fade70so45947195ad.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 23:21:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761632481; x=1762237281;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sFuj2530MIh854321LaAzcwpxFdazWrjdFWR9mQsJMU=;
- b=gtTUc8wNZKDRkfoB72p7UKcVgly3+FPAlFvrSykefsmOc/mjhWLyW4YWUgGu8J0nSD
- 8vVGE5pYYzkwOSdatnqvSZkP+PCVMm5N6IxWwrp1tsduX/skWxD7+ChI6NbZ4OrEi6xL
- ZyfKAZm/7Jx2gYRAfmIe8yZphQLUFL1nvo3DJDDWnWgFhaaa9Sou65NmLaFJ5mymvloP
- fNDlookN1dFVCpiIabh2w71i20WKFJ+aTDJ/KEniZEF+r/YjH4qAnCvWY5/gv2uwFGts
- diDUE+VcTtOBUpDCxnRJXhHzjrLFaSGkef743sHQ++YE4JCeGTgBaHYhqJkH3Q6+RFgu
- NxHA==
-X-Gm-Message-State: AOJu0YxX91JNyQ93aZDgcN1/gf5mZynhsO+oUo47JOFnMh5nza1JOLq8
- i87QIE4R8k8joRLyUUR+N/h7wOH+6lIoaGwiGxr8wOm/LJCPB60N43NdPKUZIJJyAWtyS7LJlz5
- AnOaId1PKU1mh0tbUTEL5EZH7hHtQsQ/gbdFckq5ECTiOSA14Mwev5dOJ
-X-Gm-Gg: ASbGncuzk7o0sNqbUXtmClqkCTDBpqfAljDM5VZP2rGRRr00IPzldL0tx6taqpq5g+w
- T+nQXWGeKv0xdGqcDiHqs6lv/BK560lXtBRwgGNJtzKWq3usutoq8/YJfNX56KNOl9FwCGSiVuy
- SfcFySs5QvQu1T0ChK6pybreOBvwUMAjFTZrteKlX+bnzQU/VHeJRcziuZ0dfQ8ERe6gZOXs7zh
- ogm4FWBnqmQjLnhwnWKBF/nuivGip4AKj7lcAcpjL+8eL2zapnfsJzrh0t8RTneeL9Kd/5TE08O
- zHGm6MUrZaIDVjFPsUjiuiw7w00Rll7TGw6HQgNvh5GvZLE7J+9EWpc/X1iLMp2yBHB5iIoP2s7
- 1ODEx3y88fziF
-X-Received: by 2002:a17:902:b68c:b0:290:bd91:d81a with SMTP id
- d9443c01a7336-294cb3f1decmr21506365ad.39.1761632481511; 
- Mon, 27 Oct 2025 23:21:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfZnMbRhY7ecq6zReCCs70k0jN+BJ16K/vkYDwi0/9QJ8ngVDlEk2IuUrxb1pzMCW/MpWmXg==
-X-Received: by 2002:a17:902:b68c:b0:290:bd91:d81a with SMTP id
- d9443c01a7336-294cb3f1decmr21506055ad.39.1761632481113; 
- Mon, 27 Oct 2025 23:21:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761632488; x=1762237288;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zTXf+w8zKKDbgsXcu+kqZO8hk7mKEc8CuurfX3i26Qo=;
+ b=D7LNaek2JFXSIPOqVaKJs/vfk4a13vXq0HQHobchR2RaZtSBJC69UYyDHvbm+q0/iB
+ 7FwYXxeDkEY3gwXvad6vGIONOFhbmssuY7nYOlKRxNlcSfwc5II2qPSc8waOG8O8A4NA
+ XsbUHNQqzfCNHOcnJl3ZjupAWoC6KpC6bNsRvl+2ixYCyBG8z+LIa+8gf3Lmep8OLYeV
+ 0GywdAHJ2efUIHmYgUDJai7n2p6+ZO1Fm/3irH+Vkgpoaa8oXpDDRNuyrOJxxTxbdzY9
+ Qd5d9pY/0cCaLIWu3DbBoocIU/dbNMQGILb6arOBsvXJDjYOqxeCUbssFzfpf+4JGCff
+ 345A==
+X-Gm-Message-State: AOJu0YytAqMcWPrv5BvWmOG0MgSh5uXirtnHg/b1iW1b1bT2UPWKzF1h
+ 4fL2ceyxD53TPnGt4FjjBYqS5/zo5ttR2g9yroDEV7RaN7eFzSGIoMNVgq/waJ1ElERb6Y/iWcb
+ 3Om6OCZaWTRRLirbA+KmUIM4Nh6WnsVklzRMQ/WEtBdyYVpISVpFAVUM1
+X-Gm-Gg: ASbGnctTIVT2di05yRv9I83Mlu6CU3je//8zSX+2NH0m78mVctFlrz26ykxxsQEbWkG
+ aTLxi318qaQycL7nN/JHrLeJXLKN/zzGvBOCEwstw6OGoDcBAApo/ooxFU31BxN8/MneczOMr2s
+ WPbXtP28xvf9T+ZzQOfKcD997oZc8I3MVHa4q3qybdkSAYRSvzxr+W0HjQuNI9BCQjg3TxRl4L8
+ 69OZQGNsxL78mdCGdH7PMg0Df6UvoOQieucrhbNuICnipztV/E0aUmQuBqjlkWQ09Ts5zKy5ahY
+ i3nGBesH92erAunrGVEMzGrdmqCykWRskHaU9Vfhy1IDLIWwsvhWzZXv6gpShpeKr1OABFyJCo1
+ fwzVJma5JXm7X
+X-Received: by 2002:a17:902:ea03:b0:270:4964:ad82 with SMTP id
+ d9443c01a7336-294cb522a71mr29433745ad.38.1761632488477; 
+ Mon, 27 Oct 2025 23:21:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2jmurG9q9LMfOy/A2/4eVDi/D+7Y5Sub2SwPRJDIo+TO5VYyKR0dn5DRSUx8JvkLt/GgJdg==
+X-Received: by 2002:a17:902:ea03:b0:270:4964:ad82 with SMTP id
+ d9443c01a7336-294cb522a71mr29433605ad.38.1761632488044; 
+ Mon, 27 Oct 2025 23:21:28 -0700 (PDT)
 Received: from armenon-kvm.bengluru.csb ([49.36.108.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29498d40de4sm105463995ad.77.2025.10.27.23.21.14
+ d9443c01a7336-29498d40de4sm105463995ad.77.2025.10.27.23.21.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 23:21:20 -0700 (PDT)
+ Mon, 27 Oct 2025 23:21:27 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
-Subject: [PATCH v2 0/2] migration: Fix error propagation regression and
- memory leak
-Date: Tue, 28 Oct 2025 11:51:01 +0530
-Message-Id: <20251028-solve_error_fatal_regression-v2-0-dab24c808a28@redhat.com>
+Date: Tue, 28 Oct 2025 11:51:02 +0530
+Subject: [PATCH v2 1/2] migration: Fix regression of passing error_fatal
+ into vmstate_load_state()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAM1gAGkC/42NQQqDMBQFryJ/3ZQktlq66j2KSDRPDVhTfiS0S
- O7e6Am6nIE3b6MAdgh0LzZiRBecXzLoU0H9ZJYRwtnMpKW+KqkvIvg5ogWz53Ywq5lbxsgI+1C
- UUtVVadHZ20A58WYM7nPkn03myYXV8/d4i2q3f4ajEkpYXaHqOytNjQfDTmY99/5FTUrpB47JP
- tHJAAAA
-X-Change-ID: 20251024-solve_error_fatal_regression-301763debd8f
+Message-Id: <20251028-solve_error_fatal_regression-v2-1-dab24c808a28@redhat.com>
+References: <20251028-solve_error_fatal_regression-v2-0-dab24c808a28@redhat.com>
+In-Reply-To: <20251028-solve_error_fatal_regression-v2-0-dab24c808a28@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
@@ -103,12 +101,12 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
  Arun Menon <armenon@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1415; i=armenon@redhat.com;
- h=from:subject:message-id; bh=5fqHi42U+1OUPlqMAR8Vvp7KAwbHIOoGLJb8cVDxI+o=;
- b=kA0DAAoWanolONkPMo4ByyZiAGkAYNbIZ+QLwyyx1TZ/F82FfxspfBhrcHW6rURS4aUjBHrtl
- Yh1BAAWCgAdFiEEgPVQHYJQcVhZPenXanolONkPMo4FAmkAYNYACgkQanolONkPMo6wdgEAzdIg
- LfoiZaiA/jGBTQCt2q7npQvqdJB15xQ8ffYTUDUA/18YnrIjBQIGjD8ConN7KS2M70EJFe2d5Hz
- 6GChXSYwF
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9811; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=mbGpAJIcTettZUBwdzFOZrukmNwCySTAG5TPh0lywhg=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQyZDwk2LvT//7n6x9X9PVq7ywjfXRNoXe0k09i2YFbvY+
+ 5lrpUZDRykLgxgXg6yYIkvD1wDZpoDCiEjbl9dh5rAygQxh4OIUgIncF2FkuM4z9+HviPUrb3Xp
+ 3NoV0jHb5ymT/rOaP788Of4cVy/92sfIsK/o/7KmiSybtxkuvF/09sAlVaHgP8Fr9gffDs4t6ts
+ nygIA
 X-Developer-Key: i=armenon@redhat.com; a=openpgp;
  fpr=80F5501D82507158593DE9D76A7A2538D90F328E
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
@@ -136,28 +134,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+error_fatal is passed to vmstate_load_state() and vmstate_save_state()
+functions. This was introduced in commit c632ffbd74. This would exit(1)
+on error, and therefore does not allow to propagate the error back to
+the caller.
 
-This series fixes the following:
+To maintain consistency with prior error handling i.e. either propagating
+the error to the caller or reporting it, we must set the error within a
+local Error object instead of using error_fatal.
 
-commit c632ffbd74 introduced a regression of passing error_fatal
-to vmstate_load_state() and vmstate_save_state() functions.
-This will not allow us to propagate the error back to the caller.
-
-commit 94272d9b45 introduced a memory leak in postcopy_ram_listen_thread().
-We need to free the local_err object in the if clause as well.
-
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
-Changes in v2:
-- Refactoring of the return statement in virtio_gpu_load().
-- Add another patch to fix the memory leak in postcopy_ram_listen_thread()
-- Link to v1: https://lore.kernel.org/qemu-devel/20251024-solve_error_fatal_regression-v1-1-d26e6cbd0a7e@redhat.com
-
----
-Arun Menon (2):
-      migration: Fix regression of passing error_fatal into vmstate_load_state()
-      migration: Fix memory leak in postcopy_ram_listen_thread()
-
  hw/display/virtio-gpu.c | 19 ++++++++++++++-----
  hw/pci/pci.c            | 13 +++++++++++--
  hw/s390x/virtio-ccw.c   | 15 +++++++++++++--
@@ -165,14 +153,249 @@ Arun Menon (2):
  hw/virtio/virtio-mmio.c | 15 +++++++++++++--
  hw/virtio/virtio-pci.c  | 15 +++++++++++++--
  hw/virtio/virtio.c      | 10 +++++++---
- migration/savevm.c      |  1 +
- 8 files changed, 79 insertions(+), 18 deletions(-)
----
-base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
-change-id: 20251024-solve_error_fatal_regression-301763debd8f
+ 7 files changed, 78 insertions(+), 18 deletions(-)
 
-Best regards,
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 3a555125be60aa4c243cfb870caa517995de8183..63263ecc5bda889e5327aa59ada53cb41b0219cb 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1225,7 +1225,9 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+ {
+     VirtIOGPU *g = opaque;
+     struct virtio_gpu_simple_resource *res;
++    Error *err = NULL;
+     int i;
++    int ret = 0;
+ 
+     /* in 2d mode we should never find unprocessed commands here */
+     assert(QTAILQ_EMPTY(&g->cmdq));
+@@ -1248,8 +1250,12 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+     }
+     qemu_put_be32(f, 0); /* end of list */
+ 
+-    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL,
+-                              &error_fatal);
++    ret = vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL,
++                             &err);
++    if (ret < 0) {
++        error_report_err(err);
++    }
++    return ret;
+ }
+ 
+ static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
+@@ -1289,6 +1295,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+     struct virtio_gpu_simple_resource *res;
+     uint32_t resource_id, pformat;
+     int i;
++    int ret = 0;
+ 
+     g->hostmem = 0;
+ 
+@@ -1348,9 +1355,11 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+     }
+ 
+     /* load & apply scanout state */
+-    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &error_fatal);
+-
+-    return 0;
++    ret = vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &err);
++    if (ret < 0) {
++        error_report_err(err);
++    }
++    return ret;
+ }
+ 
+ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index acc03fd4707cdb843ba8ed8ff0e2cc8c4830932c..0090c72560de313db160f71ff494d206859ec796 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -925,8 +925,13 @@ void pci_device_save(PCIDevice *s, QEMUFile *f)
+      * in irq_state which we are saving.
+      * This makes us compatible with old devices
+      * which never set or clear this bit. */
++    int ret;
++    Error *local_err = NULL;
+     s->config[PCI_STATUS] &= ~PCI_STATUS_INTERRUPT;
+-    vmstate_save_state(f, &vmstate_pci_device, s, NULL, &error_fatal);
++    ret = vmstate_save_state(f, &vmstate_pci_device, s, NULL, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
+     /* Restore the interrupt status bit. */
+     pci_update_irq_status(s);
+ }
+@@ -934,8 +939,12 @@ void pci_device_save(PCIDevice *s, QEMUFile *f)
+ int pci_device_load(PCIDevice *s, QEMUFile *f)
+ {
+     int ret;
++    Error *local_err = NULL;
+     ret = vmstate_load_state(f, &vmstate_pci_device, s, s->version_id,
+-                             &error_fatal);
++                             &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
+     /* Restore the interrupt status bit. */
+     pci_update_irq_status(s);
+     return ret;
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index 4cb1ced001ae241c53c503ebfd7c90e336799c37..41c7d62a482de3c618e71dd07c0cd23e1bcd5578 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -1130,13 +1130,24 @@ static int virtio_ccw_load_queue(DeviceState *d, int n, QEMUFile *f)
+ static void virtio_ccw_save_config(DeviceState *d, QEMUFile *f)
+ {
+     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(d);
+-    vmstate_save_state(f, &vmstate_virtio_ccw_dev, dev, NULL, &error_fatal);
++    int ret;
++    Error *local_err = NULL;
++    ret = vmstate_save_state(f, &vmstate_virtio_ccw_dev, dev, NULL, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
+ }
+ 
+ static int virtio_ccw_load_config(DeviceState *d, QEMUFile *f)
+ {
+     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(d);
+-    return vmstate_load_state(f, &vmstate_virtio_ccw_dev, dev, 1, &error_fatal);
++    int ret;
++    Error *local_err = NULL;
++    ret = vmstate_load_state(f, &vmstate_virtio_ccw_dev, dev, 1, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
+ 
+ static void virtio_ccw_pre_plugged(DeviceState *d, Error **errp)
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index f0a7dd2b882a13deec4a4c6d2eb4aae6d2fdbeb9..af4debc2f8638a0b64b5701d3d15ee9c3966cea7 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -628,10 +628,15 @@ static const VMStateDescription vmstate_spapr_vscsi_req = {
+ static void vscsi_save_request(QEMUFile *f, SCSIRequest *sreq)
+ {
+     vscsi_req *req = sreq->hba_private;
++    int rc;
++    Error *local_err = NULL;
+     assert(req->active);
+ 
+-    vmstate_save_state(f, &vmstate_spapr_vscsi_req, req, NULL, &error_fatal);
+-
++    rc = vmstate_save_state(f, &vmstate_spapr_vscsi_req, req, NULL, &local_err);
++    if (rc < 0) {
++        error_report_err(local_err);
++        return;
++    }
+     trace_spapr_vscsi_save_request(req->qtag, req->cur_desc_num,
+                                    req->cur_desc_offset);
+ }
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index fb58c36452730cfc92a0d26ff13e01e2d6654960..ffdda63e279fd1795a447cd32effe9dcdced6120 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -612,15 +612,26 @@ static const VMStateDescription vmstate_virtio_mmio = {
+ static void virtio_mmio_save_extra_state(DeviceState *opaque, QEMUFile *f)
+ {
+     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(opaque);
++    Error *local_err = NULL;
++    int ret;
+ 
+-    vmstate_save_state(f, &vmstate_virtio_mmio, proxy, NULL, &error_fatal);
++    ret = vmstate_save_state(f, &vmstate_virtio_mmio, proxy, NULL, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
+ }
+ 
+ static int virtio_mmio_load_extra_state(DeviceState *opaque, QEMUFile *f)
+ {
+     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(opaque);
++    int ret;
++    Error *local_err = NULL;
+ 
+-    return vmstate_load_state(f, &vmstate_virtio_mmio, proxy, 1, &error_fatal);
++    ret = vmstate_load_state(f, &vmstate_virtio_mmio, proxy, 1, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
+ 
+ static bool virtio_mmio_has_extra_state(DeviceState *opaque)
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 937e22f08a2005d5d9e96764358a4afc09078613..f245f5c3c5e5d469e08e9e7a27f83496e90c8f59 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -187,15 +187,26 @@ static bool virtio_pci_has_extra_state(DeviceState *d)
+ static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
+ {
+     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
++    int ret;
++    Error *local_err = NULL;
+ 
+-    vmstate_save_state(f, &vmstate_virtio_pci, proxy, NULL, &error_fatal);
++    ret = vmstate_save_state(f, &vmstate_virtio_pci, proxy, NULL, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
+ }
+ 
+ static int virtio_pci_load_extra_state(DeviceState *d, QEMUFile *f)
+ {
+     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
++    int ret;
++    Error *local_err = NULL;
+ 
+-    return vmstate_load_state(f, &vmstate_virtio_pci, proxy, 1, &error_fatal);
++    ret = vmstate_load_state(f, &vmstate_virtio_pci, proxy, 1, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
+ 
+ static void virtio_pci_save_queue(DeviceState *d, int n, QEMUFile *f)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 153ee0a0cf1dd45c3e2246e431b696856d29b161..257cda506a40403ea1c0dbcc0de38b9854372193 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3030,7 +3030,7 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+     uint32_t guest_features_lo = (vdev->guest_features & 0xffffffff);
+-    int i;
++    int i, ret;
+     Error *local_err = NULL;
+ 
+     if (k->save_config) {
+@@ -3075,7 +3075,7 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
+     }
+ 
+     if (vdc->vmsd) {
+-        int ret = vmstate_save_state(f, vdc->vmsd, vdev, NULL, &local_err);
++        ret = vmstate_save_state(f, vdc->vmsd, vdev, NULL, &local_err);
+         if (ret) {
+             error_report_err(local_err);
+             return ret;
+@@ -3083,7 +3083,11 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
+     }
+ 
+     /* Subsections */
+-    return vmstate_save_state(f, &vmstate_virtio, vdev, NULL, &error_fatal);
++    ret = vmstate_save_state(f, &vmstate_virtio, vdev, NULL, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
+ 
+ /* A wrapper for use as a VMState .put function */
+
 -- 
-Arun Menon <armenon@redhat.com>
+2.51.0
 
 
