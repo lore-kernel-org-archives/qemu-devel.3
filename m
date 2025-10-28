@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00ADCCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C1ACCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDmfc-0000da-9X; Tue, 28 Oct 2025 12:35:40 -0400
+	id 1vDmew-0008UG-Az; Tue, 28 Oct 2025 12:34:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmev-0008Tc-Hn
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeb-0008Ep-Gw
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmed-0003mi-1Y
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:56 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeU-0003kl-Kq
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761669277;
+ s=mimecast20190719; t=1761669267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IkfdsjarwHSxOpg3pQ0lv1QR6fFd3UpdDIRhxBkgC2g=;
- b=WkIniiy24mwyp2Oo9euf/XV6B6yR5/3qGTAR9a8XBaGdawD3vc+59bIQHqEx+jSO5hyEYu
- hsNbWMrM9liHpv4d+LdWkW72f03g0aXT2oNVtGtEOAzNmITD7lhdMGs2J8OIjuqwrvVR5Z
- xPeDbgw1bxmqe/7HoKWPmPZS1qTEXJg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y0JjoR5QFLg5Ya/8VWQa0jjW4vk8Vly+iRXL6VOjsbk=;
+ b=EH5VgDJ/Sb2TA7wZmGC5Q2SwpHtEVfU3lRfqHfUsiXfJvepqZqxSctSp+CUMOCpjCPaUWF
+ 8qSJ4YL6OROQmsurgdocdRp8gIFi8cbzo9v1PffmEcNSw9uDweD9a5o6TT5NOm/m0sx2/0
+ kUhMhVylVoko6TggWN96mqIOFIe3yGk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-zUoj0JiIN12SaqQnJzM1eg-1; Tue, 28 Oct 2025 12:34:35 -0400
-X-MC-Unique: zUoj0JiIN12SaqQnJzM1eg-1
-X-Mimecast-MFC-AGG-ID: zUoj0JiIN12SaqQnJzM1eg_1761669274
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47496b3c1dcso47215635e9.3
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:34:35 -0700 (PDT)
+ us-mta-250-H43xj-ftN-KbUvqBrq4-vg-1; Tue, 28 Oct 2025 12:34:25 -0400
+X-MC-Unique: H43xj-ftN-KbUvqBrq4-vg-1
+X-Mimecast-MFC-AGG-ID: H43xj-ftN-KbUvqBrq4-vg_1761669263
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-471001b980eso39603195e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:34:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761669274; x=1762274074;
+ d=1e100.net; s=20230601; t=1761669262; x=1762274062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IkfdsjarwHSxOpg3pQ0lv1QR6fFd3UpdDIRhxBkgC2g=;
- b=YoG43DVqjmPLxbgmMRPQFDB4DHah+ZOaeJd8XbeKq2+dKtjnuppVYIle19bzZum1sK
- PU18XYvXtlAQwLyP8EmZqB8cjIq2rMpZiTYmuaOcdF/eyjWD9NhDLZvcrzhswehoLrxW
- T2Jt13FJGdcu9dbkc2x2tJ+vpiS90hrKrQ5TH+dhk3uGXd03xEq9Mn80OSYPRgsnUW1H
- zozS/9rqMhm2OdNyGrvNg60vuX80v/EuietfSStcuWu5pRZMj2VQl40osrHd0pFAmfX4
- kVkG1l7a9qTrJ66yyxu58pQ/6WajP/0cysfX640BlOsCoYN9L7VuCuAzK3IlhOO7jXg7
- lIyg==
-X-Gm-Message-State: AOJu0Yx5OQcHE+aPN/8jc4qRHNXn3vcK/mm8MxhBBVJ0Bh8sBk4odZIM
- zAozIKDq102moaIXYXz20FTu7PQM+bbMcAMmynOLOvFdb1Upi+nDi5OmXMDGciJ+q7bppXgI8rL
- ObDG62h1IuojUoCvJuAr4ZHdrZhboqPRBCi9ZNxTpsfl/rIpM+AHqUw6s
-X-Gm-Gg: ASbGnct0yJuSUW5/HDb7FtG0rhw1zv0iXYBb2KiAUPkn9mGsb0ZoeI4xVEQO1f2/5wd
- 4g6u6uQ8wBHT1W8BUJWtYojWmNw+u1mFXYq/aZiuACVusNBeRFNHQJcZ3Z4xdOdHWuqQsiN5kEb
- HFZOsx8ix+tUJNQ6hz7rrlVuW6vdXuuttvBZxwZDA+Wb1hkSUMWL6HaPZtw0kvpSNpUyQlt5q8T
- 40IZLa96XlvOHD+pKVTgHax1pdQcVBXcLiKgH20Xyvw3FhkKOTVtz0lT2nvlb0j/7PQr5jO5J0B
- 0mYlQURpFqSJxgb/YSYw4vIXsf8kOzARBuxNBYLSrkcj4kvB6P7PYVEk9w8diyKeaYjBFOAR2J1
- BmyG11NPvCV+b2WiWGwcfR8MdQAKDbMOReY/jDnYci1TEY0cdkStiFGvH8A==
-X-Received: by 2002:a05:600c:4ec6:b0:475:df91:ddf0 with SMTP id
- 5b1f17b1804b1-4771e1f0f49mr760445e9.33.1761669274273; 
- Tue, 28 Oct 2025 09:34:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzuN+T4OqxC5NpkyDonmtKiOglbvQDKTB5SQJ+NZyiBtDg6FfrRmEe9vMwhtNh7NpzfWhpSA==
-X-Received: by 2002:a05:600c:4ec6:b0:475:df91:ddf0 with SMTP id
- 5b1f17b1804b1-4771e1f0f49mr760165e9.33.1761669273803; 
- Tue, 28 Oct 2025 09:34:33 -0700 (PDT)
+ bh=y0JjoR5QFLg5Ya/8VWQa0jjW4vk8Vly+iRXL6VOjsbk=;
+ b=o8aJLsSQAmnyldB6utGvJ7Y0AuGAmRE09ToqXv7KlHmnXz5o2Mhvj57Q/pILkfIvFb
+ PLedrG34/x/fD5VA9r3Ttj+22CkGR5dakR+jqzW/0cNtwHECv+/Bmz7uNS9i/Nq1YXLY
+ qU4AR5De0b9G5q9xqi58OkgplwD1H92Qh2gZ/CrKNGVOPFB15vDCn7kcSOxKv0P0QFjd
+ tmXQmqS7GeQSOkJtqxOzHnWMwcCIKdKw9/A3Wzmc/G36I+nMVxCamqAEvT44fh3FZDtf
+ J5UnoT/kAKviaPX4d8kXx9Yjnpn7uiJoT/pwUocUdDEs8/JFE7mk27iSVaT8mJHX7Qe4
+ 8CGA==
+X-Gm-Message-State: AOJu0YwR88L5YMkvcbOcrh+1anhevg9xO9hshhRKINm2IIjwMkDf1jht
+ gXYjm4wQ7Zw3YGiF01q/lU1+/UJ+jHvXmDMAffYZ5ho6OW1xQwkRppCq83KQPnA5cI7/B9xm2NL
+ 5RHOddzA9zG/F6oQmKoUwdWxJbzUAkPpBcZW3Xuhp8hhn/Zk6dWX8bMmH
+X-Gm-Gg: ASbGncsYjdFcwaA3yehcDFHonQ048rFKjBVvEw5JSioUGISWCBrEtLB5eqY8dPnc1wx
+ naZw9CKd7SVS8JjCq/+7bxNch3yOT6EQzmpc3NVTgkPVxQYN8FZFdhdHZKaxNHce0tyscMgl6Z6
+ FpB6uYrC5MfyLYvEIFyXLZ83xrvmVsdOT/fStS86ambtemxqc/f1JsA6ZNPzT5w9AZy+yIy9eqb
+ 5AgjoxRWsBK+nmPHjM0SRJMnexeQikUjNjAyT9TXbOu33xTKDtgQiLB3xejkwrFh+aWALme7xT5
+ 0c7AKzGh8Ld4BzWPj0zTaS3KL9fZoQOYVefH90yARbqyacU1ZXRqOlrhzFoh5pR0HFt0+zGh3KX
+ 4CzF4a5VYUNGcoccXF55qazXOrF3ZMukdbFWldWQ1iwz//WbZyOreSWyGsA==
+X-Received: by 2002:a05:600c:4683:b0:46e:4883:27d with SMTP id
+ 5b1f17b1804b1-4771e3aca51mr69955e9.30.1761669262500; 
+ Tue, 28 Oct 2025 09:34:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFsYdEGDyF3r0kYMxsuNQaA3yRv1rRLBfSmdZvKVr5ZxxBBxUOp0Nd2SX0UlHsrbEZGprzyA==
+X-Received: by 2002:a05:600c:4683:b0:46e:4883:27d with SMTP id
+ 5b1f17b1804b1-4771e3aca51mr69685e9.30.1761669262053; 
+ Tue, 28 Oct 2025 09:34:22 -0700 (PDT)
 Received: from localhost
  (p200300cfd7171feeff88afa910cb665f.dip0.t-ipconnect.de.
  [2003:cf:d717:1fee:ff88:afa9:10cb:665f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771e3b9994sm11855e9.16.2025.10.28.09.34.32
+ 5b1f17b1804b1-4771e3ace25sm38805e9.9.2025.10.28.09.34.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 09:34:32 -0700 (PDT)
+ Tue, 28 Oct 2025 09:34:20 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -82,26 +82,25 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Subject: [PATCH 15/16] null-aio: Run CB in original AioContext
-Date: Tue, 28 Oct 2025 17:33:41 +0100
-Message-ID: <20251028163343.116249-16-hreitz@redhat.com>
+Subject: [PATCH 11/16] ssh: Run restart_coroutine in current AioContext
+Date: Tue, 28 Oct 2025 17:33:37 +0100
+Message-ID: <20251028163343.116249-12-hreitz@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028163343.116249-1-hreitz@redhat.com>
 References: <20251028163343.116249-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,40 +116,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AIO callbacks must be called in the originally calling AioContext,
-regardless of the BDS’s “main” AioContext.
+restart_coroutine() is attached as an FD handler just to wake the
+current coroutine after yielding.  It makes most sense to attach it to
+the current (request) AioContext instead of the BDS main context.  This
+way, the coroutine can be entered directly from the BH instead of having
+yet another indirection through AioContext.co_schedule_bh.
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/null.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ block/ssh.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/block/null.c b/block/null.c
-index 4e448d593d..253d20ccbb 100644
---- a/block/null.c
-+++ b/block/null.c
-@@ -173,18 +173,17 @@ static inline BlockAIOCB *null_aio_common(BlockDriverState *bs,
- {
-     NullAIOCB *acb;
-     BDRVNullState *s = bs->opaque;
-+    AioContext *ctx = qemu_get_current_aio_context();
- 
-     acb = qemu_aio_get(&null_aiocb_info, bs, cb, opaque);
-     /* Only emulate latency after vcpu is running. */
-     if (s->latency_ns) {
--        aio_timer_init(bdrv_get_aio_context(bs), &acb->timer,
--                       QEMU_CLOCK_REALTIME, SCALE_NS,
-+        aio_timer_init(ctx, &acb->timer, QEMU_CLOCK_REALTIME, SCALE_NS,
-                        null_timer_cb, acb);
-         timer_mod_ns(&acb->timer,
-                      qemu_clock_get_ns(QEMU_CLOCK_REALTIME) + s->latency_ns);
-     } else {
--        replay_bh_schedule_oneshot_event(bdrv_get_aio_context(bs),
--                                         null_bh_cb, acb);
-+        replay_bh_schedule_oneshot_event(ctx, null_bh_cb, acb);
-     }
-     return &acb->common;
+diff --git a/block/ssh.c b/block/ssh.c
+index 70fe7cf86e..bdec94e9e9 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -1010,19 +1010,18 @@ static int ssh_has_zero_init(BlockDriverState *bs)
  }
+ 
+ typedef struct BDRVSSHRestart {
+-    BlockDriverState *bs;
++    BDRVSSHState *s;
+     Coroutine *co;
+ } BDRVSSHRestart;
+ 
+ static void restart_coroutine(void *opaque)
+ {
+     BDRVSSHRestart *restart = opaque;
+-    BlockDriverState *bs = restart->bs;
+-    BDRVSSHState *s = bs->opaque;
+-    AioContext *ctx = bdrv_get_aio_context(bs);
++    BDRVSSHState *s = restart->s;
+ 
+     trace_ssh_restart_coroutine(restart->co);
+-    aio_set_fd_handler(ctx, s->sock, NULL, NULL, NULL, NULL, NULL);
++    aio_set_fd_handler(qemu_get_current_aio_context(), s->sock,
++                       NULL, NULL, NULL, NULL, NULL);
+ 
+     aio_co_wake(restart->co);
+ }
+@@ -1031,12 +1030,13 @@ static void restart_coroutine(void *opaque)
+  * handlers are set up so that we'll be rescheduled when there is an
+  * interesting event on the socket.
+  */
+-static coroutine_fn void co_yield(BDRVSSHState *s, BlockDriverState *bs)
++static coroutine_fn void co_yield(BDRVSSHState *s)
+ {
+     int r;
+     IOHandler *rd_handler = NULL, *wr_handler = NULL;
++    AioContext *ctx = qemu_get_current_aio_context();
+     BDRVSSHRestart restart = {
+-        .bs = bs,
++        .s = s,
+         .co = qemu_coroutine_self()
+     };
+ 
+@@ -1051,7 +1051,7 @@ static coroutine_fn void co_yield(BDRVSSHState *s, BlockDriverState *bs)
+ 
+     trace_ssh_co_yield(s->sock, rd_handler, wr_handler);
+ 
+-    aio_set_fd_handler(bdrv_get_aio_context(bs), s->sock,
++    aio_set_fd_handler(ctx, s->sock,
+                        rd_handler, wr_handler, NULL, NULL, &restart);
+     qemu_coroutine_yield();
+     trace_ssh_co_yield_back(s->sock);
+@@ -1093,7 +1093,7 @@ static coroutine_fn int ssh_read(BDRVSSHState *s, BlockDriverState *bs,
+         trace_ssh_read_return(r, sftp_get_error(s->sftp));
+ 
+         if (r == SSH_AGAIN) {
+-            co_yield(s, bs);
++            co_yield(s);
+             goto again;
+         }
+         if (r == SSH_EOF || (r == 0 && sftp_get_error(s->sftp) == SSH_FX_EOF)) {
+@@ -1168,7 +1168,7 @@ static coroutine_fn int ssh_write(BDRVSSHState *s, BlockDriverState *bs,
+         trace_ssh_write_return(r, sftp_get_error(s->sftp));
+ 
+         if (r == SSH_AGAIN) {
+-            co_yield(s, bs);
++            co_yield(s);
+             goto again;
+         }
+         if (r < 0) {
+@@ -1233,7 +1233,7 @@ static coroutine_fn int ssh_flush(BDRVSSHState *s, BlockDriverState *bs)
+  again:
+     r = sftp_fsync(s->sftp_handle);
+     if (r == SSH_AGAIN) {
+-        co_yield(s, bs);
++        co_yield(s);
+         goto again;
+     }
+     if (r < 0) {
 -- 
 2.51.0
 
