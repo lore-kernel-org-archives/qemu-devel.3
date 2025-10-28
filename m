@@ -4,92 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774E6CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 19:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3CECCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 19:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDpL0-000106-Bb; Tue, 28 Oct 2025 15:26:34 -0400
+	id 1vDpNW-00023a-7y; Tue, 28 Oct 2025 15:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vDpKx-0000yS-4h; Tue, 28 Oct 2025 15:26:31 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vDpNU-00022Z-3W; Tue, 28 Oct 2025 15:29:08 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vDpKr-0004Te-Ti; Tue, 28 Oct 2025 15:26:30 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E61681638C3;
- Tue, 28 Oct 2025 22:26:07 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B3A4C30806B;
- Tue, 28 Oct 2025 22:26:12 +0300 (MSK)
-Message-ID: <949000e9-ac59-4bc9-ad00-861c3a9a08c9@tls.msk.ru>
-Date: Tue, 28 Oct 2025 22:26:12 +0300
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vDpNJ-0004jW-PD; Tue, 28 Oct 2025 15:29:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5717C5972E6;
+ Tue, 28 Oct 2025 20:28:43 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id qSfD73BVld4K; Tue, 28 Oct 2025 20:28:41 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 3B9B35972E3; Tue, 28 Oct 2025 20:28:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3972B5972E1;
+ Tue, 28 Oct 2025 20:28:41 +0100 (CET)
+Date: Tue, 28 Oct 2025 20:28:41 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v3 06/25] hw/pci-bridge: Use proper SysBus accessors
+In-Reply-To: <20251028181300.41475-7-philmd@linaro.org>
+Message-ID: <1e330577-64cb-14f5-88d0-20f1a23c4fb3@eik.bme.hu>
+References: <20251028181300.41475-1-philmd@linaro.org>
+ <20251028181300.41475-7-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 33/75] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- peng guo <engguopeng@buaa.edu.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <cover.1759691708.git.mst@redhat.com>
- <d1193481dee63442fc41e47ca6ebc4cd34f1f69c.1759691708.git.mst@redhat.com>
- <26067051-421d-44ed-9c7e-13ed0bdac18b@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <26067051-421d-44ed-9c7e-13ed0bdac18b@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Content-Type: multipart/mixed;
+ boundary="3866299591-1308992722-1761679721=:26358"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -111,89 +70,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/25 20:08, Michael Tokarev wrote:
-> On 10/5/25 22:17, Michael S. Tsirkin wrote:
->> From: peng guo <engguopeng@buaa.edu.cn>
->>
->> When using a CXL Type 3 device together with a virtio 9p device in 
->> QEMU on a
->> physical server, the 9p device fails to initialize properly. The 
->> kernel reports
->> the following error:
->>
->>      virtio: device uses modern interface but does not have 
->> VIRTIO_F_VERSION_1
->>      9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with 
->> error -22
->>
->> Further investigation revealed that the 64-bit BAR space assigned to 
->> the 9pnet
->> device was overlapped by the memory window allocated for the CXL 
->> devices. As a
->> result, the kernel could not correctly access the BAR region, causing the
->> virtio device to malfunction.
->>
->> An excerpt from /proc/iomem shows:
->>
->>      480010000-cffffffff : CXL Window 0
->>        480010000-4bfffffff : PCI Bus 0000:00
->>        4c0000000-4c01fffff : PCI Bus 0000:0c
->>          4c0000000-4c01fffff : PCI Bus 0000:0d
->>        4c0200000-cffffffff : PCI Bus 0000:00
->>          4c0200000-4c0203fff : 0000:00:03.0
->>            4c0200000-4c0203fff : virtio-pci-modern
->>
->> To address this issue, this patch adds the reserved memory end 
->> calculation
->> for cxl devices to reserve sufficient address space and ensure that 
->> CXL memory
->> windows are allocated beyond all PCI 64-bit BARs. This prevents 
->> overlap with
->> 64-bit BARs regions such as those used by virtio or other pcie devices,
->> resolving the conflict.
->>
->> QEMU Build Configuration:
->>
->>      ./configure --prefix=/home/work/qemu_master/build/ \
->>                  --target-list=x86_64-softmmu \
->>                  --enable-kvm \
->>                  --enable-virtfs
->>
->> QEMU Boot Command:
->>
->>      sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
->>          -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
->>          -hda /home/work/gp_qemu/rootfs.img \
->>          -virtfs local,path=/home/work/gp_qemu/ 
->> share,mount_tag=host0,security_model=passthrough,id=host0 \
->>          -kernel /home/work/linux_output/arch/x86/boot/bzImage \
->>          --append "console=ttyS0 crashkernel=256M root=/dev/sda 
->> rootfstype=ext4 rw loglevel=8" \
->>          -object memory-backend-ram,id=vmem0,share=on,size=4096M \
->>          -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
->>          -device cxl- 
->> rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
->>          -device cxl-type3,bus=root_port13,volatile- 
->> memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
->>          -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
->>
->> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a 
->> machine parameter")
->> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
->> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->> Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
->> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->> ---
->>   hw/i386/pc.c | 20 +++++++++++---------
->>   1 file changed, 11 insertions(+), 9 deletions(-)
-> 
-> Hi!
-> 
-> Is it qemu-stable material (10.0.x & 10.1.x)?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-A friendly ping for the stable series?
+--3866299591-1308992722-1761679721=:26358
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Thanks,
+On Tue, 28 Oct 2025, Philippe Mathieu-Daudé wrote:
+> SysBusDevice::mmio[] is private data of SysBusDevice, use
+> sysbus_mmio_get_region() to access it.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-/mjt
+I haven't reviewed this patch but the e500 one.
+
+Regards,
+BALATON Zoltan
+
+> ---
+> hw/pci-bridge/pci_expander_bridge.c | 6 ++++--
+> 1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> index 1bcceddbc4d..aa55749954a 100644
+> --- a/hw/pci-bridge/pci_expander_bridge.c
+> +++ b/hw/pci-bridge/pci_expander_bridge.c
+> @@ -157,9 +157,11 @@ static char *pxb_host_ofw_unit_address(const SysBusDevice *dev)
+>     main_host = PCI_HOST_BRIDGE(pxb_dev_base->parent_bus->parent);
+>     main_host_sbd = SYS_BUS_DEVICE(main_host);
+>
+> -    if (main_host_sbd->num_mmio > 0) {
+> +    if (sysbus_has_mmio(main_host_sbd, 0)) {
+> +        MemoryRegion *mr = sysbus_mmio_get_region(main_host_sbd, 0);
+> +
+>         return g_strdup_printf(HWADDR_FMT_plx ",%x",
+> -                               main_host_sbd->mmio[0].addr, position + 1);
+> +                               mr->addr, position + 1);
+>     }
+>     if (main_host_sbd->num_pio > 0) {
+>         return g_strdup_printf("i%04x,%x",
+>
+--3866299591-1308992722-1761679721=:26358--
 
