@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9A1CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 22:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C41BCCF9EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 22:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDrnZ-0005Ol-PR; Tue, 28 Oct 2025 18:04:13 -0400
+	id 1vDrnQ-0005KN-Ro; Tue, 28 Oct 2025 18:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vDrnW-0005NH-DQ
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 18:04:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vDrnO-0005J0-7y
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 18:04:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vDrnU-0000qs-Cz
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 18:04:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vDrnJ-0000ok-D5
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 18:04:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761689047;
+ s=mimecast20190719; t=1761689036;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S9ONvg4FLEEWdF6/KMxrKY7PqcPckGgIhgyI2F1a6C8=;
- b=VRN/J3DAkCPqnYl0CrHkifBTamzUaCAD1g8bKKWNvJDYBrEebmDUlPmCV/W9BRj3LcDqzR
- UbbnN48PbvwMrchyjo85x38R9lPzfYMoTjWmR57RGoupqy5TBcZCswFYhGTYgHc5MjG+eE
- n2U64CBdzb1ittxT+TmpR+IDtlqRZaE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Gpf4V2bb+8hXxNM3tDTaO0kWor7kB+IRYRJ5Qgyiqc0=;
+ b=Rm5m2jcsnt4aGDc7/x2xOWri33ky7Enmz/Hl8lqtCEuDvnl5UO9CvETMd+uS3kHa1AfSqp
+ TkId2We5jpl34Cwn9C8soPugTwhZvRyhY69g7p2XHdb4wy4hYuRZRnSgBQVWbgISzV+3K6
+ ps38RozJsidyhabKx7RSXP7zxGdCy00=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-MPRYe6tAPCe4HNZ5J1GTFg-1; Tue,
- 28 Oct 2025 18:04:04 -0400
-X-MC-Unique: MPRYe6tAPCe4HNZ5J1GTFg-1
-X-Mimecast-MFC-AGG-ID: MPRYe6tAPCe4HNZ5J1GTFg_1761689043
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-QtnpFAK6MNunOWAjFViFaw-1; Tue,
+ 28 Oct 2025 18:03:54 -0400
+X-MC-Unique: QtnpFAK6MNunOWAjFViFaw-1
+X-Mimecast-MFC-AGG-ID: QtnpFAK6MNunOWAjFViFaw_1761689033
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3EC3195608D; Tue, 28 Oct 2025 22:04:02 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7411E18002F7; Tue, 28 Oct 2025 22:03:53 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.120])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D4A3130001A2; Tue, 28 Oct 2025 22:04:00 +0000 (UTC)
+ id 3C1BE30001A2; Tue, 28 Oct 2025 22:03:50 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
@@ -54,10 +54,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH RFC 07/10] meson: create meson custom target for python test
- dependencies
-Date: Tue, 28 Oct 2025 18:03:37 -0400
-Message-ID: <20251028220342.1407883-8-jsnow@redhat.com>
+Subject: [PATCH RFC 03/10] python/mkvenv: create timestamp file for each group
+ "ensured"
+Date: Tue, 28 Oct 2025 18:03:33 -0400
+Message-ID: <20251028220342.1407883-4-jsnow@redhat.com>
 In-Reply-To: <20251028220342.1407883-1-jsnow@redhat.com>
 References: <20251028220342.1407883-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -88,39 +88,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RFC: I can't actually seem to make this depend on the group file as it
-is stored in the pyvenv directory, so the output for this target doesn't
-actually exist. Not ideal, but I want to send an RFC to the list before
-spending too much time figuring this out.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/meson.build | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ python/scripts/mkvenv.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tests/meson.build b/tests/meson.build
-index cbe79162411..e61efc21802 100644
---- a/tests/meson.build
-+++ b/tests/meson.build
-@@ -1,3 +1,18 @@
-+pyvenv_test_deps = custom_target(
-+    'pyvenv_test_deps',
-+    output: 'tests.group',
-+    input: files(
-+        meson.source_root() + '/pythondeps.toml',
-+        meson.source_root() + '/python/scripts/mkvenv.py'
-+    ),
-+
-+    command: [ python, '@INPUT1@',
-+               'ensuregroup',
-+               '--dir', meson.source_root() + '/python/wheels',
-+               '@INPUT0@',
-+               'tests' ],
-+)
-+
- subdir('bench')
- subdir('qemu-iotests')
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index a064709e6ce..a22e3ee3394 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -838,6 +838,12 @@ def ensure_group(
+             raise Ouch(result[0])
+         raise SystemExit(f"\n{result[0]}\n\n")
  
++    if inside_a_venv():
++        for group in groups:
++            path = Path(sys.prefix).joinpath(f"{group}.group")
++            with open(path, "w", encoding="UTF8"):
++                pass
++
+ 
+ def post_venv_setup() -> None:
+     """
 -- 
 2.51.0
 
