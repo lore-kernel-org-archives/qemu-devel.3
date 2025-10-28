@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A5FCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784C7CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDfMl-0004Tm-5y; Tue, 28 Oct 2025 04:47:43 -0400
+	id 1vDfO8-0005n2-Np; Tue, 28 Oct 2025 04:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDfLq-0004Cu-Dy
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:46:47 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vDfNv-0005mS-Bt
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:48:55 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vDfLj-0006TI-MF
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:46:46 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-4eba5b415b8so14893271cf.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:46:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vDfNp-0006d4-MH
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:48:54 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47103b6058fso41649715e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761641197; x=1762245997; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1761641325; x=1762246125; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=74c4+HqxRJPus9bQybEz+YN4FB48AHHcS3sr1YkogJg=;
- b=IcvSbhL1ZGFLVcTUotjTFyI4ByQbVwWJLU+YVa1YRCGxMzU7LajnMviEMqyp5nu6Ch
- Ximv7tdccAfCIdoWo8XRryg1cGCAVTV//U9TxKoqLvFatfnJMuzHxt7/b3GHpwAxT5hk
- AgwiIb0M8onXgFTy4PEJv0smBfuVnHQOguC2W2SvQoZW5JsKGuyrXRieGLZoXSWUzC1j
- CwFzor9FDthC6HeZrOBP4EO+usP9yqXH6me2XnpG+aYx8n5OqUrWnPq+NIgqfiWajYSF
- QUx4gXZOQ4iPF5PbFUhzhyr/obQmaorAu9XMBf6lfBA90iDWR2PkeuhKMqQgFVgdMmNj
- RCBA==
+ bh=WQv72y0FXMxHo4R1brH6PeUUPynEY6XFnnx0SFP9c3o=;
+ b=QRmc8TFXd9poPGwvEsqBU+4mvh6YaikEDoQRHvIKfapfPi3E38TqLEa1jpBRrCYPbE
+ sykBjfCuoESVxTtVSRNTqXwsl3XG4EYzCr+OaXnssC2sA6MihkIsh9RM7oTNMx/gLKld
+ n8JNId29ysgRhgUEEa/kneZ/AGmBaIIfwQ+aCdWHTpCmHPSiy9h9tJvL05Gosr7QGwjl
+ wc4oWHJFAnlhv1NIdy+dA154FfB12P29S1uxWIn7lyQuk/uVOr//tMDe5vHBPTjFEvw1
+ CzuHPwo3Hg/0joLhJdD80ZJyVXZv/ZDN6MnESIS+ULDoI0tj3QEWfrP0FiF7iK+FJ3Y4
+ S5FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761641197; x=1762245997;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1761641325; x=1762246125;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=74c4+HqxRJPus9bQybEz+YN4FB48AHHcS3sr1YkogJg=;
- b=n1y0I14THg4XIcgY+q1Q0cP2yeuLUq8cLuL6nLzZ5LfXpTzs3WEXnuvLx1cpU4KiPV
- hZMw27IJDzzGHagp9wQzOQI1lIVgDF4+6eCZyT8c+WIYuZ+HMtbRGlQtlp3w1RgYRQcC
- 8l/vQf78Q9RwnT4MBnPU4O/oTDZ/xUhDgzX2hP8V+gSH8wD7KuCBDnJ2Co8IN9NEzg/E
- jt55KYvTNYtZu1zUHqewlDGpJXPkcHKbmSjj8Jk1+XzN2sqXWUTgZfcdRN/ww/h3Gb7s
- vy/F5Wkj06No0U9Ol04qBmtMuXxkh9MmpbuFBi0Nj+jXKluMPpWStHkSoMRTFuUFQAcO
- 9WFw==
-X-Gm-Message-State: AOJu0YzAy54qyShSv9LL2miLfk/qi5bcpQzKdwtO/dwrVC4CIEtmQ9MO
- y67LvsY5UeSZUWD34ZyHmgRo+zq6xMHPHtGIxvsmEFZeqEQRQtHnHMe/MS2kzUE/junpufGbgkW
- YbRwd3I78DU6u5a1x3cQ/xv9feAPnlFQ=
-X-Gm-Gg: ASbGncvt+2xAyS7H4+qOA679WkzH+ExUjobET5idZ64MFptjQMhqx4OtebSUYNYAMC8
- mRDxL9rsVaP/x0JHVmcCXyeHtsJEvOd7T30oVZBpLlW4hfpAYFctRh0YiwC30PXj9tFfENSY31x
- fLCQO1HY1z5yJhmkx5p6F8Y5MJE5LiZnb9O4Iu3rlgdvJYRXnKJQsjOzLesDFbUvJvprZ+FCku8
- cEX+vuL+dY0DQqzLWOFnwSRhNkZuEi54BcIA60hAwnkRML/N8KQpvFB5Pdewgv3+NYg67OtEgby
- UvT605gps6ai6lzI
-X-Google-Smtp-Source: AGHT+IFzNNq0xtkG3HBZV+k9Q4Qh4wBkcSOloZPVyfaympGwhInn0h4RZJZpXf6Rit9f1sgCDBkCbzqmNa2FO97Oecs=
-X-Received: by 2002:a05:622a:4244:b0:4ec:fa43:4d58 with SMTP id
- d75a77b69052e-4ed075cd25bmr42364871cf.50.1761641196777; Tue, 28 Oct 2025
- 01:46:36 -0700 (PDT)
+ bh=WQv72y0FXMxHo4R1brH6PeUUPynEY6XFnnx0SFP9c3o=;
+ b=rkkkwBo+yDhz8u2eCLUCKAepU+3N66ALYVAXpi6BrnLDLYiST4fbTZpynmqrDvMp/f
+ W9XJKeYPcY+1FHzo0mk5KCv0cc7Bt9DRn/srWKJeS19yaevYiWoff5REp3Tctgf7nHfL
+ QENRPWUhyp0mWdzNgO2GTiFdsWOrubVtgM5jqOx0gAZzvu7w2e49+Gez0F66rxIqQoBb
+ KQsgp2KEdM9RPM0Ii+flrrpGYcL3MwSOkQChz/MKYlm0ikuup5Alrl9LoOMNI+PDlxgA
+ DSvM7FeJ2CnlmkXvf3qNMvxB2pkncYLE5RXqqSiy5Q9kIA47JT/OKN5qJ9utTY3LOVMT
+ +reg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAHST/BUNZLQujuAHyjc2ZRoU8naYYHanwE6obtCF1gZJmkSF6OOElKYimz3FDv5VdFTUfwZk2GovC@nongnu.org
+X-Gm-Message-State: AOJu0Yyi7WGGji+hRm5+Qiw+39VXY3kN5XuVXIhyTIIcQFVVU5VE418p
+ 2O5Ky/lQD4y3hXXhBJPT3Y0GcTE3V4WjBWOpcEqKq/IDHP6WyUiAiME8
+X-Gm-Gg: ASbGncu5RdCWQmBoty6a3XwUETaeMpmxhcb9EpmpH2qoaKiD/8iOhYykeDyJi7khlEA
+ ngbT6SSmmGnoTgp31sVm8eKlA0RbyHymYnXduwb/+tjqK7FzW1kMH1a+ScG4JqVtI2LGq6GI5K4
+ Mv0BGvLetRTAG63JtO2iIuupVIPqf86ikm8fodkXjeOBOCjx4QIfp4kEaMPDsw8aT09COEJlBdQ
+ A9YNBmqZ/ckHAeolGBmR4t0do3PuiSOCgRwIcYT4BqoD1i9bz4xDwjT1FQD/NbzuXn1UIasT7RQ
+ v/7z05qPImDb0Zm75bkHIHbMv/SxxGKci7isWFFdwldo9Zwf5R6JSdgKFfqyWsphSpTfzmcL1AA
+ AGORtgaJbbvuhFgRKuaWVv2jqx8fShQA1DTBhNUKj2hFpxrhjDVDBebQ/BuGt9Mj4FhXp3szFOF
+ LHspedwwJEHmR5T8Zz/gwcIFBfw3CZREETS9mQiQRblh6bz/5v6VfTRlRIGzMmRgpYXdiYOuRFL
+ CO2X1KqLpE=
+X-Google-Smtp-Source: AGHT+IF+bXKN0eXZjcdzIcJXWHAZ7wGiGx2tI03419aHzTho2s/tQpQ7tWzG4kowPpu3mN+qokjMJA==
+X-Received: by 2002:a05:600d:830f:b0:475:d91d:28fb with SMTP id
+ 5b1f17b1804b1-477180f3b54mr13453825e9.4.1761641325284; 
+ Tue, 28 Oct 2025 01:48:45 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf271400c439911fd9f45c3c.dip0.t-ipconnect.de.
+ [2003:fa:af27:1400:c439:911f:d9f4:5c3c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd478202sm182509315e9.14.2025.10.28.01.48.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 01:48:44 -0700 (PDT)
+Date: Tue, 28 Oct 2025 08:48:42 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+CC: Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
+ qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2=5D_docs/system/security=3A_Restrict_?=
+ =?US-ASCII?Q?=22virtualization_use_case=22_to_specific_machines?=
+In-Reply-To: <CAFEAcA8RaZOXpav64E5-0CDhB66zQXRuLaFuz22GiyPGwGVQJw@mail.gmail.com>
+References: <20251016131159.750480-1-peter.maydell@linaro.org>
+ <CAFEAcA8RaZOXpav64E5-0CDhB66zQXRuLaFuz22GiyPGwGVQJw@mail.gmail.com>
+Message-ID: <000E4FA1-EE4A-476B-8CAE-680FC068BCAA@gmail.com>
 MIME-Version: 1.0
-References: <20251028080258.23309-1-philmd@linaro.org>
- <20251028080258.23309-2-philmd@linaro.org>
-In-Reply-To: <20251028080258.23309-2-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Oct 2025 12:46:25 +0400
-X-Gm-Features: AWmQ_bkThyhwBWC8TUuZxvYfJI7M5STrRVP98r7pdXwiwEosZAsP-gMPAiyy5zo
-Message-ID: <CAJ+F1CK=CcFS3xxWQtoEcYBmSoTFKwaAqZz=BsBcevp6ZXh=3w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] hw/sysbus: Use memory_region_name()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org, 
- qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +116,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 12:06=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> MemoryRegion::name is kind of internal. Use the proper
-> memory_region_name() accessor, which might return a different
-> name.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 
-> ---
->  hw/core/sysbus.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Am 27=2E Oktober 2025 12:48:29 UTC schrieb Peter Maydell <peter=2Emaydell@=
+linaro=2Eorg>:
+>On Thu, 16 Oct 2025 at 14:12, Peter Maydell <peter=2Emaydell@linaro=2Eorg=
+> wrote:
+>>
+>> Currently our security policy defines a "virtualization use case"
+>> where we consider bugs to be security issues, and a
+>> "non-virtualization use case" where we do not make any security
+>> guarantees and don't consider bugs to be security issues=2E
+>>
+>> The rationale for this split is that much code in QEMU is older and
+>> was not written with malicious guests in mind, and we don't have the
+>> resources to audit, fix and defend it=2E  So instead we inform users
+>> about what the can in practice rely on as a security barrier, and
+>> what they can't=2E
+>>
+>> We don't currently restrict the "virtualization use case" to any
+>> particular set of machine types=2E  This means that we have effectively
+>> barred ourselves from adding KVM support to any machine type that we
+>> don't want to put into the "bugs are security issues" category, even
+>> if it would be useful for users to be able to get better performance
+>> with a trusted guest by enabling KVM=2E This seems an unnecessary
+>> restriction, and in practice the set of machine types it makes
+>> sense to use for untrusted-guest virtualization is quite small=2E
+>>
+>> Specifically, we would like to be able to enable the use of
+>> KVM with the imx8 development board machine types, but we don't
+>> want to commit ourselves to having to support those SoC models
+>> and device models as part of QEMU's security boundary:
+>> https://lore=2Ekernel=2Eorg/qemu-devel/20250629204851=2E1778-3-shentey@=
+gmail=2Ecom/
+>>
+>> This patch updates the security policy to explicitly list the
+>> machine types we consider to be useful for the "virtualization
+>> use case"=2E
+>>
+>> Signed-off-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
+>> ---
+>> changes v1->v2: updated the list:
+>>  * remove isapc
+>>  * remove ppc, mips, mips64 (no machines supported)
+>>  * list pseries as only supported ppc64 machine
+>>  * list virt as only supported riscv32, riscv64 machine
+>>
+>> I believe the list to now be correct, and I think we generally
+>> had some consensus about the idea on the v1 patch discussion, so
+>> this one is a non-RFC patch=2E
 >
-> diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-> index ae447c1196a..d33be6b2b52 100644
-> --- a/hw/core/sysbus.c
-> +++ b/hw/core/sysbus.c
-> @@ -154,7 +154,7 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr=
- addr)
->  int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr add=
-r)
->  {
->      for (int i =3D 0; i < dev->num_mmio; i++) {
-> -        if (!strcmp(dev->mmio[i].memory->name, name)) {
-> +        if (!strcmp(memory_region_name(dev->mmio[i].memory), name)) {
->              sysbus_mmio_map(dev, i, addr);
->              return i;
->          }
-> --
-> 2.51.0
->
->
+>This has now had various reviews and acks, and no
+>suggestions for further revision=2E I propose to take
+>this via target-arm=2Enext, unless anybody has any
+>objections=2E
 
+Sounds good, I'm looking forward to it=2E
 
---
-Marc-Andr=C3=A9 Lureau
+Maybe we could then also merge https://lore=2Ekernel=2Eorg/qemu-devel/2025=
+0629204851=2E1778-3-shentey@gmail=2Ecom/ which had some technical comments =
+and no follow-up=2E
+
+Best regards,
+Bernhard
+
+>
+>thanks
+>-- PMM
 
