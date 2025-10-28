@@ -4,79 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD83DCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70850CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDi35-0008TM-QQ; Tue, 28 Oct 2025 07:39:38 -0400
+	id 1vDi31-0008Qu-Jf; Tue, 28 Oct 2025 07:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDi2v-0008LY-TB
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:26 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
+ id 1vDi2q-0008Eq-0B
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:21 -0400
+Received: from sg-1-30.ptr.blmpb.com ([118.26.132.30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDi2n-0004za-HH
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:23 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-784826b775aso66668847b3.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761651548; x=1762256348; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vWz1wjAUcUO8dzSnLsMAab5s/DVpHJWu2/n8Ei85kFk=;
- b=zXad2gRUYnypGQk+tXyY3LC7rr9wkb0SQB1ywqi04Rk0H0NUFRE4LRsa1ig2nBobz9
- UgS3c77QmtrUhTlib+dxphUoWXmLPvzSO/T4VVaNusemAr9dSw2YrpIYbCQXBdUr5TNA
- gIl570ECJR274a0a0Vlc4DVJhm6dpOsKq1IhNwrpnJWruZt3+30yPC8JdiqCzVPKShpV
- lnzUkNHaT+iwlGjBQ7a4r8ehnhqXWJNsw0pqRvjuPs6jAFJBqLsHEvjtKEBbyluIEPHj
- 21sizbsOrtz2gSMQHjMMICVuQWUtP/mGdxJWqbOyxA2VxwrjKvWbPo7sUTx/graSjUS2
- JRaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761651548; x=1762256348;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vWz1wjAUcUO8dzSnLsMAab5s/DVpHJWu2/n8Ei85kFk=;
- b=EFsQ0kDwLY7ajkDWRta6Fbox4NxJgcGZf+vbYS7D7hQrmhLvycqCEOTcJAbgCpH1H2
- Tyddh4ZIubv229gXfAXYJmof6Gm58cfFulNFa9NNbxgOIMdrNtF7oAm0Tc7D24R0xrn8
- BB7IzQq1zZQtn0lgWUSgR8UlIkX/MQcQlAchlxJ8WLsZle8F7umJT1gUyPa7mqVhd9jb
- nnPpr5dfxJy3wJcChNxJW7M/zX+IAXd6jit/08UVVfwjOgZGg3AfF8plg8/O4goenKGO
- vZkqKasBEgPGtxXYMs6fgf30TXJdOlGoBQujwLe/7b4j6pIgDlhQqalS4hJyN5YQc82f
- p7uQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPUge6S2YLu4OYAjR7JQXtKcDjsol1+7d41vFJCA+osKVFlnWOT+kWXK1Tuqhkd783j47S93QRjCaF@nongnu.org
-X-Gm-Message-State: AOJu0YxDYI1dbMCB+LSIqqXpG/Ymg5QFDdgnVHb+Brjmru7MrXA3aF/Q
- CkylJyQYZk83y9/pXXPgrDtr3pZZvRe5DjD9cNOfhGGpLy8f4VgHtHRvnLEd+4Jb19bPNHTDOQx
- JmYNote46UCuvaL2AR6MjEVpxyOSs7ZS9uU25BxR0bA==
-X-Gm-Gg: ASbGncuyDnG+oDmGduEr3pY9Nf19aGYgn99T1iwunqq40OqHVgcHPt+H1dBMtnd+E0y
- 816bJF+6GlHDKZbkOGbPvYEY54oxiLuIMgkK5h6EhgLplEi1FzPQKmw4L9rlb1VVjWVl70pBorG
- GIQgS74lPu6oHIITENlU10NXWuazF9J63noMaBdeETx7ELZV9ToMH0quDkMPN2fjygQbRsjTefQ
- 84IzeHd2u1RDdrQEfGYq5K4aeRDJvT5IWYbMcimuzYyhxoPak5U+rL4o9x67g==
-X-Google-Smtp-Source: AGHT+IErFuQxfHGymiVpLnG1uZQC8DTMR/QZ5aqz3Bwrw3I6ssyq1RiDmHEPLGeo060AzzHIM8ZtLZqZCGoe87ISkeA=
-X-Received: by 2002:a05:690c:2c8d:b0:785:cc3e:13e0 with SMTP id
- 00721157ae682-786183862a3mr34145877b3.49.1761651548177; Tue, 28 Oct 2025
- 04:39:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <s7ingr72rgtvch2poxlwyc25lkxp7hh5c273ubvmz4tdskjttz@7dzfvylkgwsh>
-In-Reply-To: <s7ingr72rgtvch2poxlwyc25lkxp7hh5c273ubvmz4tdskjttz@7dzfvylkgwsh>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Oct 2025 11:38:56 +0000
-X-Gm-Features: AWmQ_bk7D_dREHEf4B7QMAU1dpcW-TBbaZBJZyM1GjtFfymKXCRm0Y_T9G3Cv_E
-Message-ID: <CAFEAcA-gmKkfysSThFDFzCUU0dYjh10qDA4zM8E0y2qcipzNXg@mail.gmail.com>
-Subject: Re: [PATCH] Use correct type for ioctl(FIGETBSZ) emulation
-To: Bastian Blank <waldi@debian.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
+ id 1vDi2X-0004wg-VB
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:39:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1761651522;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=SRmOSrAYMyjbWoBqd6nobYayh1hYa/Cu5v2ooVrGWv0=;
+ b=exg8GURsHNA7Nv79CILddWfDbVdyJJGfS2/40Z/qXIiYVAenCuFkblY0RPSxy9rB8i6euf
+ 6qWeoT+BNMc4s3mK+To6sGdD3Qh+LzLUorr9Q26OylKnPmgQEcqO4Ry/49DckGRPu/pRDe
+ VgoUD3z2FFP/v7zQ87ixKFYfdWU9FF8J+zxvsUR3uFjup+1xQ3D9UrBiauF/UusA8l2Pdq
+ cjO1T1JenWsKlcYT9IcJdMiKiJAHbaHrV0XtV/clBsrDLVqg/AEXswyvjeGJRWfpGnH6Dv
+ 0YLcY8WVrXr832ubcBLahhn/xDBdPWg3y47rEpFZ4qFTLOMG666YQMilV0gxKg==
+Subject: Re: [RFC PATCH v2 4/5] rust/hw/core: Provide some interfaces for the
+ GPIO device
+Mime-Version: 1.0
+References: <45032bb11a9006cb7a6e1c30ca6299d40cef614c.1761644606.git.chenmiao@openatom.club>
+ <CABgObfbeka+fKixBH8F_Fkprvk8oi+dTss21Vn5kYgm4sY0A8g@mail.gmail.com>
+ <f8ec1dad-2654-4db8-b994-0ecd2a1943e9@openatom.club>
+ <CABgObfbndBy++yt+Bp=3WuomprUEtJyWyKaJYQje6wWtjnb0Kg@mail.gmail.com>
+X-Lms-Return-Path: <lba+26900ab41+d7deab+nongnu.org+chenmiao@openatom.club>
+Cc: <zhao1.liu@intel.com>, <manos.pitsidianakis@linaro.org>, 
+ <richard.henderson@linaro.org>, <philmd@linaro.org>, 
+ <chao.liu@openatom.club>, <qemu-rust@nongnu.org>, 
+ <qemu-devel@nongnu.org>, <hust-os-kernel-patches@googlegroups.com>
+Date: Tue, 28 Oct 2025 19:38:38 +0800
+Message-Id: <c3d3c718-b745-4a0e-a112-d41f3b5d37bc@openatom.club>
+User-Agent: Mozilla Thunderbird
+X-Original-From: Chen Miao <chenmiao@openatom.club>
+To: "Paolo Bonzini" <pbonzini@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABgObfbndBy++yt+Bp=3WuomprUEtJyWyKaJYQje6wWtjnb0Kg@mail.gmail.com>
+From: "Chen Miao" <chenmiao@openatom.club>
+Content-Type: text/plain; charset=UTF-8
+Received: from [198.18.0.1] ([114.249.194.57]) by smtp.feishu.cn with ESMTPS;
+ Tue, 28 Oct 2025 19:38:39 +0800
+Received-SPF: pass client-ip=118.26.132.30;
+ envelope-from=chenmiao@openatom.club; helo=sg-1-30.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,17 +78,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Oct 2025 at 11:29, Bastian Blank <waldi@debian.org> wrote:
+On 10/28/2025 7:30 PM, Paolo Bonzini wrote:
+> On Tue, Oct 28, 2025 at 12:24=E2=80=AFPM Chen Miao <chenmiao@openatom.clu=
+b> wrote:
+>> On 10/28/2025 6:49 PM, Paolo Bonzini wrote:
+>>> On Tue, Oct 28, 2025 at 11:18=E2=80=AFAM chenmiao <chenmiao@openatom.cl=
+ub> wrote:
+>>>> In irq.rs, we added a new get method for the InterruptSource type to d=
+etermine
+>>>> whether an InterruptSource is null. This eliminates the need to repeat=
+edly
+>>>> call self.cell.get().is_null() for null checks during comparisons.
+>>>> Additionally, we exposed the slice_as_ptrmethod to support external us=
+age with
+>>>> the &[InterruptSource]type.
+>>>>
+>>>> In qdev.rs, we implemented the init_gpio_out_namedfunction, which corr=
+esponds
+>>>> to the C function qdev_init_gpio_out_named. We also refactored the
+>>>> init_gpio_outfunction to reuse the init_gpio_out_namedinterface.
+>>>>
+>>>> Signed-off-by: chenmiao <chenmiao@openatom.club>
+>>>> ---
+>>>>    rust/hw/core/src/irq.rs  |  6 +++++-
+>>>>    rust/hw/core/src/qdev.rs | 12 +++++++++---
+>>>>    2 files changed, 14 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
+>>>> index e0d7784d97..dd5d0cadbc 100644
+>>>> --- a/rust/hw/core/src/irq.rs
+>>>> +++ b/rust/hw/core/src/irq.rs
+>>>> @@ -71,6 +71,10 @@ pub fn pulse(&self) {
+>>>>        pub fn raise(&self) {
+>>>>            self.set(true);
+>>>>        }
+>>>> +
+>>>> +    pub fn get(&self) -> bool {
+>>>> +        !self.cell.get().is_null()
+>>>> +    }
+>>> This should not be get(), but "is_connected()". Also it should be
+>>> implemented for any T, therefore in the "impl<T> InterruptSource<T>"
+>>> block below.
+>> I'll fix it later.
+> You can drop it actually (see review of 5/5).
+Ok!
+>>>>    }
+>>>>
+>>>>    impl<T> InterruptSource<T>
+>>>> @@ -91,7 +95,7 @@ pub(crate) const fn as_ptr(&self) -> *mut *mut bindi=
+ngs::IRQState {
+>>>>            self.cell.as_ptr()
+>>>>        }
+>>>>
+>>>> -    pub(crate) const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bin=
+dings::IRQState {
+>>>> +    pub const fn slice_as_ptr(slice: &[Self]) -> *mut *mut bindings::=
+IRQState {
+>>>>            assert!(!slice.is_empty());
+>>>>            slice[0].as_ptr()
+>>>>        }
+>>> Since you are not using this, you don't need to expose it outside the c=
+rate.
+>> I have used this function in the next patch.
+> Isn't it commented out? The code that is used is:
 >
-> The FIGETBSZ ioctl get's "int *" (pointer to 32bit integer) as argument,
-> not "long *" as specified in qemu.  Using the correct type makes the
-> emulation work.
+> +        self.init_gpio_in(self.handler_size(), PCF8574State::gpio_set);
+> +        self.init_gpio_out(from_ref(&self.handler[0]));
+> +        self.init_gpio_out_named(from_ref(&self.intrq), "nINT", 1);
 
-We could also note:
+Oh, sorry, I was referring to my initial version. Initially, this function =
+was=20
+used externally, but later I implemented init_gpio_out_named, and now it's=
+=20
+internal again.
 
-This ioctl does not seem to be documented. However the kernel
-implementation has always used "int *".
+You're right, this function should not be exposed.
 
-thanks
--- PMM
+Chen Miao
+
+>
 
