@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B518CCF9F3
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 001D7CCF9F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDsto-00036c-8R; Tue, 28 Oct 2025 19:14:44 -0400
+	id 1vDste-00031w-Ap; Tue, 28 Oct 2025 19:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstn-00036M-2c
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:43 -0400
+ id 1vDsta-000308-2I
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:30 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDstQ-00018p-RC
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:42 -0400
+ id 1vDstM-00017j-0R
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:14:29 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id EF36A8177F;
- Wed, 29 Oct 2025 02:14:06 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 04FE281769;
+ Wed, 29 Oct 2025 02:14:04 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:582::1:19])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id oDnXpg2bCW20-3Q8HwkNU; Wed, 29 Oct 2025 02:14:06 +0300
+ ESMTPSA id oDnXpg2bCW20-BtA4HKAb; Wed, 29 Oct 2025 02:14:03 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761693246;
- bh=d77pOpn706V6UlmPku+gqYZpRBb+6mVRH/UFFJ6GHEo=;
+ s=default; t=1761693243;
+ bh=ZFgV8LSqGvshmmzDjsgrPq5Un6VZfE1YlTpXK2OqD6g=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=H7mHalUnFQ5rqhAPY19nEp4eSsBXLXFMCfnxTku1sR4bcggzP8orPjS8qHHr6k7Ll
- JjNpZQnvT3arl8T5siklHC0ds0Xm3Jc2+OoVtDojZb9MayJjQlI8+d8Y6ZUlpozCf9
- M09qz3ZW8oloUDYbsK0H5xe9qmSTVmbA8+T0RjYU=
+ b=wnZQgMS8XpHZ1SmrRO57vEULX1e/8gr+/WI4/BYmIwx5k8Jx8fYwYB+mLbR85NdAh
+ K6PA8gnfTHiLRuRMkJ+Farkap96AcDQ3lk2i529HlFo6DGDW+RllHlQSSRUOebxmVL
+ myxsJO6noQj8+u51TdKrPA1AFPhW5Nks1JE0dwqE=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -43,10 +43,9 @@ To: peterx@redhat.com
 Cc: armbru@redhat.com,
 	vsementsov@yandex-team.ru,
 	qemu-devel@nongnu.org
-Subject: [RFC 21/22] migration: convert vmstate_subsection_save/load functions
- to bool
-Date: Wed, 29 Oct 2025 02:13:45 +0300
-Message-ID: <20251028231347.194844-22-vsementsov@yandex-team.ru>
+Subject: [RFC 17/22] migration/cpr: move to new migration APIs
+Date: Wed, 29 Oct 2025 02:13:41 +0300
+Message-ID: <20251028231347.194844-18-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251028231347.194844-1-vsementsov@yandex-team.ru>
 References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
@@ -60,7 +59,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,154 +75,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert them to bool return value, as preparation to further
-convertion of vmstate_save/load_state().
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- migration/vmstate.c | 55 +++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 30 deletions(-)
+ include/migration/cpr.h |  4 ++--
+ migration/cpr.c         | 32 ++++++++++++++------------------
+ migration/migration.c   |  2 +-
+ 3 files changed, 17 insertions(+), 21 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 6f1e878f36..2298f190de 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -21,11 +21,11 @@
- #include "qemu/error-report.h"
- #include "trace.h"
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index a412d6663c..f930fdb5b0 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -41,8 +41,8 @@ MigMode cpr_get_incoming_mode(void);
+ void cpr_set_incoming_mode(MigMode mode);
+ bool cpr_is_incoming(void);
  
--static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc,
--                                   Error **errp);
--static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, Error **errp);
-+static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-+                                    void *opaque, JSONWriter *vmdesc,
-+                                    Error **errp);
-+static bool vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-+                                    void *opaque, Error **errp);
+-int cpr_state_save(MigrationChannel *channel, Error **errp);
+-int cpr_state_load(MigrationChannel *channel, Error **errp);
++bool cpr_state_save(MigrationChannel *channel, Error **errp);
++bool cpr_state_load(MigrationChannel *channel, Error **errp);
+ void cpr_state_close(void);
+ struct QIOChannel *cpr_state_ioc(void);
  
- /* Whether this field should exist for either save or load the VM? */
- static bool
-@@ -249,10 +249,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         field++;
-     }
-     assert(field->flags == VMS_END);
--    ret = vmstate_subsection_load(f, vmsd, opaque, errp);
--    if (ret != 0) {
--        qemu_file_set_error(f, ret);
--        return ret;
-+    if (!vmstate_subsection_load(f, vmsd, opaque, errp)) {
-+        qemu_file_set_error(f, -EINVAL);
-+        return false;
-     }
-     if (vmsd->post_load_errp) {
-         if (!vmsd->post_load_errp(opaque, version_id, errp)) {
-@@ -584,7 +583,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-         json_writer_end_array(vmdesc);
-     }
- 
--    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
-+    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp) ? 0 : -EINVAL;
- 
-     if (vmsd->post_save) {
-         int ps_ret = vmsd->post_save(opaque);
-@@ -610,15 +609,14 @@ vmstate_get_subsection(const VMStateDescription * const *sub,
-     return NULL;
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 22dbac7c72..b8d6c0cead 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -176,9 +176,8 @@ bool cpr_is_incoming(void)
+     return incoming_mode != MIG_MODE_NONE;
  }
  
--static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, Error **errp)
-+static bool vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-+                                    void *opaque, Error **errp)
+-int cpr_state_save(MigrationChannel *channel, Error **errp)
++bool cpr_state_save(MigrationChannel *channel, Error **errp)
  {
-     ERRP_GUARD();
-     trace_vmstate_subsection_load(vmsd->name);
+-    int ret;
+     QEMUFile *f;
+     MigMode mode = migrate_mode();
  
-     while (qemu_peek_byte(f, 0) == QEMU_VM_SUBSECTION) {
-         char idstr[256], *idstr_ret;
--        int ret;
-         uint8_t version_id, len, size;
-         const VMStateDescription *sub_vmsd;
- 
-@@ -626,12 +624,12 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-         if (len < strlen(vmsd->name) + 1) {
-             /* subsection name has to be "section_name/a" */
-             trace_vmstate_subsection_load_bad(vmsd->name, "(short)", "");
--            return 0;
-+            return true;
-         }
-         size = qemu_peek_buffer(f, (uint8_t **)&idstr_ret, len, 2);
-         if (size != len) {
-             trace_vmstate_subsection_load_bad(vmsd->name, "(peek fail)", "");
--            return 0;
-+            return true;
-         }
-         memcpy(idstr, idstr_ret, size);
-         idstr[size] = 0;
-@@ -646,34 +644,32 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
-             error_setg(errp, "VM subsection '%s' in '%s' does not exist",
-                        idstr, vmsd->name);
--            return -ENOENT;
-+            return false;
-         }
-         qemu_file_skip(f, 1); /* subsection */
-         qemu_file_skip(f, 1); /* len */
-         qemu_file_skip(f, len); /* idstr */
-         version_id = qemu_get_be32(f);
- 
--        ret = vmstate_load_state(f, sub_vmsd, opaque, version_id, errp);
--        if (ret) {
-+        if (!vmstate_load_vmsd(f, sub_vmsd, opaque, version_id, errp)) {
-             trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(child)");
-             error_prepend(errp,
--                          "Loading VM subsection '%s' in '%s' failed: %d: ",
--                          idstr, vmsd->name, ret);
--            return ret;
-+                          "Loading VM subsection '%s' in '%s' failed: ",
-+                          idstr, vmsd->name);
-+            return false;
-         }
+@@ -190,19 +189,18 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+     } else if (mode == MIG_MODE_CPR_EXEC) {
+         f = cpr_exec_output(errp);
+     } else {
+-        return 0;
++        return true;
+     }
+     if (!f) {
+-        return -1;
++        return false;
      }
  
-     trace_vmstate_subsection_load_good(vmsd->name);
+     qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
+     qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
+ 
+-    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0, errp);
+-    if (ret) {
++    if (!vmstate_save_vmsd(f, &vmstate_cpr_state, &cpr_state, 0, errp)) {
+         qemu_fclose(f);
+-        return ret;
++        return false;
+     }
+ 
+     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+@@ -217,12 +215,11 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+     qio_channel_shutdown(qemu_file_get_ioc(f), QIO_CHANNEL_SHUTDOWN_WRITE,
+                          NULL);
+     cpr_state_file = f;
 -    return 0;
 +    return true;
  }
  
--static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc,
--                                   Error **errp)
-+static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-+                                    void *opaque, JSONWriter *vmdesc,
-+                                    Error **errp)
+-int cpr_state_load(MigrationChannel *channel, Error **errp)
++bool cpr_state_load(MigrationChannel *channel, Error **errp)
  {
-     const VMStateDescription * const *sub = vmsd->subsections;
-     bool vmdesc_has_subsections = false;
--    int ret = 0;
- 
-     trace_vmstate_subsection_save_top(vmsd->name);
-     while (sub && *sub) {
-@@ -697,9 +693,8 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-             qemu_put_byte(f, len);
-             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
-             qemu_put_be32(f, vmsdsub->version_id);
--            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc, errp);
--            if (ret) {
--                return ret;
-+            if (!vmstate_save_vmsd(f, vmsdsub, opaque, vmdesc, errp)) {
-+                return false;
-             }
- 
-             if (vmdesc) {
-@@ -713,5 +708,5 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-         json_writer_end_array(vmdesc);
+-    int ret;
+     uint32_t v;
+     QEMUFile *f;
+     MigMode mode = 0;
+@@ -238,10 +235,10 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+         cpr_set_incoming_mode(mode);
+         f = cpr_transfer_input(channel, errp);
+     } else {
+-        return 0;
++        return true;
      }
+     if (!f) {
+-        return -1;
++        return false;
+     }
+ 
+     trace_cpr_state_load(MigMode_str(mode));
+@@ -251,19 +248,18 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+     if (v != QEMU_CPR_FILE_MAGIC) {
+         error_setg(errp, "Not a migration stream (bad magic %x)", v);
+         qemu_fclose(f);
+-        return -EINVAL;
++        return false;
+     }
+     v = qemu_get_be32(f);
+     if (v != QEMU_CPR_FILE_VERSION) {
+         error_setg(errp, "Unsupported migration stream version %d", v);
+         qemu_fclose(f);
+-        return -ENOTSUP;
++        return false;
+     }
+ 
+-    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1, errp);
+-    if (ret) {
++    if (!vmstate_load_vmsd(f, &vmstate_cpr_state, &cpr_state, 1, errp)) {
+         qemu_fclose(f);
+-        return ret;
++        return false;
+     }
+ 
+     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+@@ -277,7 +273,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+      */
+     cpr_state_file = f;
  
 -    return ret;
 +    return true;
  }
+ 
+ void cpr_state_close(void)
+diff --git a/migration/migration.c b/migration/migration.c
+index a63b46bbef..c8a5712993 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2301,7 +2301,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+         return;
+     }
+ 
+-    if (cpr_state_save(cpr_channel, &local_err)) {
++    if (!cpr_state_save(cpr_channel, &local_err)) {
+         goto out;
+     }
+ 
 -- 
 2.48.1
 
