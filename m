@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40727CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D512BCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDerf-0000J9-LB; Tue, 28 Oct 2025 04:15:35 -0400
+	id 1vDeyA-0002dH-0p; Tue, 28 Oct 2025 04:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vDerS-0000Hg-KG
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:15:22 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vDerO-0002Ie-49
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:15:21 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so56423155e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761639312; x=1762244112; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gUZ1SQrBBCxBz4nA+mLQlqgoUza4T4kePX+Yxoa1A4s=;
- b=ZBMuChtAmb9Z9IlH+xStFnWPeGSFBXDx6RlibJDNcu+Z5azpAInYnAS1CZOXEBmXm5
- xJ5G7l+qpqW+k5vyMK5+96/xQe2kE1XeKyDdPFm73puPrWiZtGvN6IEBAZxU4O2u/Vxw
- 93q0i0WFm425Doz6wsxtxtadSCq2dFEBe0t/5vSV/zv2mC93C5K02dCAI6PPoUVLvvk2
- g+0CAb5Z5UPZVFf73XMecFQu7myho+xPqJZsA76vxujlzPkp9Iw7Q22h/xBgPExoG1z3
- Gzk1kemLJZZmH8FlvBXpPwysVRKoARo3blq9YwlK+lDnKZk9q3WEgp72i7QoxmA0jL4l
- Mp6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761639312; x=1762244112;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gUZ1SQrBBCxBz4nA+mLQlqgoUza4T4kePX+Yxoa1A4s=;
- b=fssw17FzYGwsFRgvGdOG8ZWdrTVVU3p4gU1NXrAfMRRvxEC2+tzrr2PZjvDzwAlyFE
- BEiUqUij5o4m4Wqylb1q+DTEp8nNc1h1pB260R6YoiDW+93c3fxKhSqXzqKeI0IfgcC5
- 13PpxrX7kaiQzw8y5WmXFIks7Ags0LbXdAn4hpa5lKg5dnmo7UU0YUKkeIaZtBLJDTzr
- GSBVV5E2rTiKOxSmanQTxof5ACUy4YnJs4pePyqSkt57kJwjh21ugGUJq1HtSWYPkeSR
- TUcfq8iF/xmL+Ne3xRKqyUoGGDP0QKWaWqrxEB7bCqpbLRbTzl7Bj79ZaPFJqXFB4PT8
- P5/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlI0fiR2lYQH4tB9LKkOr/EdxZ/aoijSbbXY30d6YvUzGgrLXG6vhqZJhhYzANSKxXMMhXAWhk8WBd@nongnu.org
-X-Gm-Message-State: AOJu0Yx4HwQE2MsPz+h656+dID3N2722xlBuyOsiziWtQUux0SpxmPoB
- BOIgyiAhfL+J/jH+J3YaoayfqoX1cp4jwo0vi+3QL0DA1+ue7oge/WypB1OQv4uUmgo=
-X-Gm-Gg: ASbGncsypCjR5Sg9J8Oya/Fa3LsgMriuRkmbgaYhde1AYoEpEEZmtZBGD0gD/Fybrr3
- IAWWbYJmLcqhuL6zDshjOoOIhlvUaZ5k/uetpuGLyvHhktqrH/oNF9fWCAcjmvndrJh09hUv9l2
- WLawaUO7jzKd4SxOF0eBSLEh4ptBAs/8Lc9ecRh9UsxMnCes+Hn1Y5m76nSv13NJmBPdLILmGL4
- KbNbPbzswakRH2EVzj54fIPq0BtSUE6hvYYstxQ9jfcMGE4OETwzhqygWR+gZjyzp2p3KbXqAo5
- S7FxcrjuBNkusjAzXMbcTlP2RIbWP/z5R4kUVkcs4qRFFYZuH3fx461MgnT2VOx+Q/qedY8SaXr
- Rrp+BaDo+K592y/n0Rg91u7WVDXbAZ5G7JFOzcT0/69xPiF/mMxheFqBpGaX+ajSODBl219VRGR
- K0pTTNN4wuwfgA9eKgdGur894UI/ZaRKr2X6O4UCU+i8Gcz5/sqS6QcmgwJFxg146cNw==
-X-Google-Smtp-Source: AGHT+IHbNnTz/wy9hGAV9c9cZsyAqP8PR1DbYo303tFXbGRZUOru10z9UHlsWTRJ8DN5CTfEgs9uoQ==
-X-Received: by 2002:a05:600c:4e8f:b0:471:1717:40f with SMTP id
- 5b1f17b1804b1-47717e41a42mr18394555e9.22.1761639312469; 
- Tue, 28 Oct 2025 01:15:12 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6?
- ([2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd47794asm202179625e9.1.2025.10.28.01.15.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 01:15:12 -0700 (PDT)
-Message-ID: <a5f8bf29-662b-4ae0-be9e-711621616e35@linaro.org>
-Date: Tue, 28 Oct 2025 09:15:09 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vDey5-0002cd-TF
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:22:14 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vDexz-000396-8x
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:22:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761639727; x=1793175727;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=dY2iVd/Mn+6MsIGW/ZBQhZZVDr9eenfNUId7Aq8nd1o=;
+ b=YVdsvR2EsLYiHfcD58YexZRDjUytA+7jcQDwaago3Rh0jNKRFJN0j8UM
+ YY8r/NGT+OMh1WlUMP2hvqZlxohNLAgrUUV7nbpwxK3UNq/66kPRbL6aQ
+ im7055/8q7yEHqAl8deH1zPr9CzVWOuAz7XoIrQDUPAEkLWaAYE5IOWWs
+ TzJhlIy/AWlD1H6fE3Ar59XMIga3l2YXatByf/lCp5jiwqlBhZA+G9iGA
+ qO2dYb4s2fxhAOtP/UpaGVcUiWM/mobM4Q53mBD5WsIU9W/QHzm/C5xpd
+ bQCdE0nUggsa7xZDO9EoF0fynubhRz9Qshc1tSJRNoHC7MN2T5NHR6Fsd A==;
+X-CSE-ConnectionGUID: bF49kOXIS3+TRBdNd1FPvA==
+X-CSE-MsgGUID: Pkj9URr8SQqboocEfgwGaQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63633378"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="63633378"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2025 01:22:03 -0700
+X-CSE-ConnectionGUID: Lhk7nHssRn+H6jBPTXySuw==
+X-CSE-MsgGUID: 8+Aw1TbUSNS84gBW9effLQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,261,1754982000"; d="scan'208";a="189338684"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2025 01:21:59 -0700
+Message-ID: <9c5d49a8-c049-4ab0-bd0a-cc24dbee93f4@intel.com>
+Date: Tue, 28 Oct 2025 16:21:55 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/33] target/riscv: Fix size of gpr and gprh
+Subject: Re: [PATCH v3 14/20] i386/kvm: Add save/load support for
+ KVM_REG_GUEST_SSP
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao
+ <chao.gao@intel.com>, John Allen <john.allen@amd.com>,
+ Babu Moger <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>,
+ Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>,
+ Yang Weijiang <weijiang.yang@intel.com>
+References: <20251024065632.1448606-1-zhao1.liu@intel.com>
+ <20251024065632.1448606-15-zhao1.liu@intel.com>
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-References: <20251027181831.27016-1-anjo@rev.ng>
- <20251027181831.27016-10-anjo@rev.ng>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251027181831.27016-10-anjo@rev.ng>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20251024065632.1448606-15-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.574, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,29 +93,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-10-27 19:18, Anton Johansson wrote:
-> gprh is only needed for TARGET_RISCV64 when modeling 128-bit registers,
-> fixing their size to 64 bits makes sense.
+On 10/24/2025 2:56 PM, Zhao Liu wrote:
+> From: Yang Weijiang <weijiang.yang@intel.com>
 > 
-> gpr is also fixed to 64 bits since all direct uses of env->gpr
-> correctly zero extend/truncate to/from target_ulong, meaning
-> !TARGET_RISCV64 will behave as expected.
+> CET provides a new architectural register, shadow stack pointer (SSP),
+> which cannot be directly encoded as a source, destination or memory
+> operand in instructions. But Intel VMCS & VMCB provide fields to
+> save/load guest & host's ssp.
 > 
-> We do however need to be a bit careful when mapping 64-bit fields to
-> 32-bit TCGv globals on big endian hosts.
+> It's necessary to save & load Guest's ssp before & after migration. To
+> support this, KVM implements Guest's SSP as a special KVM internal
+> register - KVM_REG_GUEST_SSP, and allows QEMU to save & load it via
+> KVM_GET_ONE_REG/KVM_SET_ONE_REG.
 > 
-> Note, the cpu/rv128 VMSTATE version is bumped, breaking migration from
-> older versions.
+> Cache KVM_REG_GUEST_SSP in X86CPUState.
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> Tested-by: Farrah Chen <farrah.chen@intel.com>
+> Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
+> Co-developed-by: Chao Gao <chao.gao@intel.com>
+> Signed-off-by: Chao Gao <chao.gao@intel.com>
+> Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
 > ---
->   target/riscv/cpu.h            |  4 ++--
->   target/riscv/cpu.c            |  2 +-
->   target/riscv/machine.c        |  8 ++++----
->   target/riscv/riscv-qmp-cmds.c |  2 +-
->   target/riscv/translate.c      | 17 +++++++++++++++--
->   5 files changed, 23 insertions(+), 10 deletions(-)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>   target/i386/cpu.h     |  1 +
+>   target/i386/kvm/kvm.c | 39 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 40 insertions(+)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 4edb977575e2..ad4287822831 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2105,6 +2105,7 @@ typedef struct CPUArchState {
+>       uint64_t pl2_ssp;
+>       uint64_t pl3_ssp;
+>       uint64_t int_ssp_table;
+> +    uint64_t guest_ssp;
+>   
+>       /* Fields up to this point are cleared by a CPU reset */
+>       struct {} end_reset_fields;
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 92c2fd6d6aee..412e99ba5b53 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -4280,6 +4280,35 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+>       return kvm_buf_set_msrs(cpu);
+>   }
+>   
+> +static int kvm_put_kvm_regs(X86CPU *cpu)
+> +{
+> +    CPUX86State *env = &cpu->env;
+> +    int ret;
+> +
+> +    if ((env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
+> +        ret = kvm_set_one_reg(CPU(cpu), KVM_X86_REG_KVM(KVM_REG_GUEST_SSP),
+> +                              &env->guest_ssp);
+> +        if (ret) {
+> +            return ret;
+> +        }
+> +    }
+> +    return 0;
+> +}
+> +
+> +static int kvm_get_kvm_regs(X86CPU *cpu)
+> +{
+> +    CPUX86State *env = &cpu->env;
+> +    int ret;
+> +
+> +    if ((env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
+> +        ret = kvm_get_one_reg(CPU(cpu), KVM_X86_REG_KVM(KVM_REG_GUEST_SSP),
+> +                              &env->guest_ssp);
+> +        if (ret) {
+> +            return ret;
+> +        }
+> +    }
+> +    return 0;
+> +}
+>   
+>   static int kvm_get_xsave(X86CPU *cpu)
+>   {
+> @@ -5425,6 +5454,11 @@ int kvm_arch_put_registers(CPUState *cpu, KvmPutState level, Error **errp)
+>           error_setg_errno(errp, -ret, "Failed to set MSRs");
+>           return ret;
+>       }
+> +    ret = kvm_put_kvm_regs(x86_cpu);
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, -ret, "Failed to set KVM type registers");
+> +        return ret;
+> +    }
+>       ret = kvm_put_vcpu_events(x86_cpu, level);
+>       if (ret < 0) {
+>           error_setg_errno(errp, -ret, "Failed to set vCPU events");
+> @@ -5497,6 +5531,11 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+>           error_setg_errno(errp, -ret, "Failed to get MSRs");
+>           goto out;
+>       }
+> +    ret = kvm_get_kvm_regs(cpu);
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, -ret, "Failed to get KVM type registers");
+> +        goto out;
+> +    }
+>       ret = kvm_get_apic(cpu);
+>       if (ret < 0) {
+>           error_setg_errno(errp, -ret, "Failed to get APIC");
 
 
