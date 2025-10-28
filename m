@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE2BBCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3F0CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDeAr-0004aW-M6; Tue, 28 Oct 2025 03:31:21 -0400
+	id 1vDeF1-0005sR-KB; Tue, 28 Oct 2025 03:35:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeAX-0004RT-9w
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:31:07 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDeEu-0005sC-JR
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:35:33 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeAU-0004im-GG
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:31:01 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-427015003eeso4963528f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:30:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vDeEr-0005IB-R5
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:35:32 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-4ed0c162789so3780111cf.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761636655; x=1762241455; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SEzoQDM9mSnVz9QLn6FTTopG9J7I3kL+wox9V4NkHNw=;
- b=ZkZO3ag8MVsjkYuCdhbT4idpK/bk8y4IUsO/qD4d1DZPF/TECXjCrqotq1t4BBZ3nQ
- eST7kRKAmQEnsQF5EzJuuT7MKQhGY3dW/20uOPHiBWacxkB9AG5cAud3Wnv+qUo5fji/
- K8Npt8N0EiYfUZfPLzwr6NTnV2yERRZ4nrw/j1n2eZLpol/ZNDte5CGcruf9nk9XdUbo
- SYFl3MuK4TZoHVjc3IId/b9DfUVll9Q8gB7uL+Za0EA6USLhR87BpwKg2Delt69iDFb5
- ALAT/rV26kRml0x/3/9fl4yNBjwPAEewwlJfkV9gydJGLAnqExRnKUlUPzyglLNu5YgG
- bk/A==
+ d=gmail.com; s=20230601; t=1761636926; x=1762241726; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5IEXDvYexfcgTROxVKwQBAdAkcITu8SYQfb0MLZP/WQ=;
+ b=Ov0Xg+F6eXDAfbT+gpOAfKxKl7mV5CkinXaFCbaw+1AStRLT4l7j255H4jhpGRFaVB
+ y8WKi2A0sBX/506v3oNphSWUL2m+qIZZ/mmyjzZqdPuJeNnuZVdw9G60wPfouCzCt7ex
+ unSbZvXKb1Hkxqmp6BoIr4iqL+L3KuIhQKgJ8vM/sS6mz118vL8gsCDKZ9HyCpivXNhF
+ qu28TB5VBrxcjkTAEjhaAStBFIZvm9fPFziGILGuxm9xadBg44/am8D2BlZEB+EE6iCm
+ WZBfNN/j8XAzQbeA7/V+I2wWHVj9iesqI3ldfT9roIywRh6vNoGKUZ5hllPZ90gYf0XC
+ TeOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761636655; x=1762241455;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SEzoQDM9mSnVz9QLn6FTTopG9J7I3kL+wox9V4NkHNw=;
- b=cOHlP67QKY/iScLotRLRi9RK9cZ92ihXuC3JZRgWFrelQdWMaNvxmde5N8DRNE5LH6
- lAUFMhlKJYLdPnQGauZAIMrg676i5JTF+bN0JgzoqEf9E1sREYHigmlPw6YJLKhAeWEq
- IKwxXUsSjad5n+VIcZYqVl1uSZ1yDMxmsLmRoKTZ4DnSNWfx8BGAEuFTs2zjZ6WPRIr3
- sd8DJ92nLEjCcu8tYBpBztEQFkhyimZhB69sYlbLK/RzSV874WxrToqziNiI4WdNS1q/
- pAjcHWwKZ+zRlRCXzkAMohwX8d1+f7chSgS66HF0/2DroEdd6AezPqU23qBUI0Fstxj7
- psFg==
+ d=1e100.net; s=20230601; t=1761636926; x=1762241726;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5IEXDvYexfcgTROxVKwQBAdAkcITu8SYQfb0MLZP/WQ=;
+ b=ZZuSBLtf2811sl4KcXTDCEMaUiP7zN3h2BW3LcfTtWoaEsl0M9dG0p27IM/N007DJN
+ ibPyll3Y3BU9G/PKGQN3O/vhHn7zo+7q+Os56i2kJizV3BbkbyyTBJb27pHC7G2zAEb6
+ CEX7F/XGxP93jyIj9cZxCZZXPtg5OQ+l1rvuK1IqdbvgDEDGKuEr1UxftWicirvGIWjG
+ bzE+9I9YRnh1DQWq5/+1HDS3xx/C44M40iAyZA7Sow8t2BeMbeLpLvE+qo48698RKDKk
+ BJuqnQh9Lh23oZ+PI2kL8IIiKEj9/YGFZnFWl6cOpnTnV4g/nR1lRZUNALOFx3OABAvp
+ JqrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXaDsOV6e0pOlJBGP0Zq07upmPluRGWoiXpYN4ehNWLNVT+du6wOILvDjrnPJ7XwD9GA17xmbCGS9wB@nongnu.org
-X-Gm-Message-State: AOJu0Yw0TBE+D+m5hxtl7z7ciHdyVJ5JQQyk2zftoMl03PjyuodKthhU
- rlobNamj7hRKh3tjiPflrZmnh90n+qWFHkCVSCFR5OmoDdbycGzRXf3lltU9kuK0cUZNnT4Tpqr
- gPXIo52g=
-X-Gm-Gg: ASbGnctYjEwImKTdhlQCY6hRpUMosDo0x6l6K7QhMaUxN996CLnzRjzIs1+7D0Wr2/k
- UV+o2L8z1IRx+2jy8xYjsa6HYHkwJu3OpG+16wIzgk/OHKeoBDBVVGihB/+E6KbxzBbM34bzp39
- K2Hxnrlwt4ac1A6kPeKECybAoqtUaKQANncmDX2l81p+SG34y4dXVgxT4p2trYjpA7mS2PS3tQu
- pEZtAKuRUEafwDU3tYCCfd5JwXAcPoY6V868PpjQHi+q8QTjbWXeBNB+ErAw5ftkz9asMjSuzqv
- uijVTbo4vy1clEZoXYgeVgvZl6//jz5CCWat+XQ+m0uwVPpITfIbuiDnt1kP0YEShKYnrjPI0SW
- CQCET0rfeUqEbEzRaFiAgvYTX0Ueac1pIWoVx45NPV556J+9EWDW9FbH8xTqEVCkKCwwWRvIbiQ
- SopBUwgYQOhvuTKjfJ533jGZCWx/N9f0y0Ohb5P5IF/x6QUQdL
-X-Google-Smtp-Source: AGHT+IHCKmo2srPVKKeafu4guf724ubNIObUmN4ggh9glDZdHwe78PPBMK88V/VY9BthnEqFSZIfpA==
-X-Received: by 2002:a05:6000:230b:b0:429:8cb7:4e29 with SMTP id
- ffacd0b85a97d-429a7e59459mr1932807f8f.25.1761636655040; 
- Tue, 28 Oct 2025 00:30:55 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952d5768sm19110316f8f.24.2025.10.28.00.30.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 00:30:54 -0700 (PDT)
-Message-ID: <b45053c9-8032-4efe-9687-4c8e2eecdb02@linaro.org>
-Date: Tue, 28 Oct 2025 08:30:53 +0100
+ AJvYcCUgcg1sKd/u8J0RVpFPOdUp845HBrR8iIbz23eLdbkWQvZ/iJ4KAxOyqXeB+q9cX13b5B62HAr2BLPw@nongnu.org
+X-Gm-Message-State: AOJu0YwdunXKPd9o4ZN8RgINNYK0YPaWXQYpNBGqjqlbikf+zjiDbKZS
+ sILCuHWhdWS8pq1+qI9NXMdnmH/Qv21AxtExAmd/yNH7L0IBAXvaJb+RjKchZKWUqyrWVYQHVZ8
+ P8NdQWbMK+W+0PppEAFuop/xLUspnCUo=
+X-Gm-Gg: ASbGncv550t94vX4ETUTX0rz+EznPQ/QCQJmdXRsid/OdmVc44yrE2v9ybttsABJgHf
+ jUFI3Xl1PHDZy3HW+XT/twf2k2bK+fXhqClx1sSBFbX4mBmNw5I5h3vwdGIfzSLRTQBpBRZgqO2
+ HMlYJU6Z+dmq1OKVcaB1Ojvo6qfRiQpBsggxxaysuwYJhmlVToE/1+4QmEQkHjq7jHrCGLYJovA
+ Bt7IaNnAcNR21XoTE9uqjh5giOK4N8MbJe4n7NTWzdjGNgYYHv+aZ2uIz02K7XWyJIXM33vSPIl
+ qsoC70oGs6m9zK7+uh3GGDUzbq8=
+X-Google-Smtp-Source: AGHT+IH3A/e7zqX0c+0suLfjnP0sTsVUzYL2UDQm09Zv+s0v+2Kwsi6OUoNf/uxTK+l6VDJgGwMu65UwWyZeMwI0nrg=
+X-Received: by 2002:a05:622a:130e:b0:4ec:f151:6559 with SMTP id
+ d75a77b69052e-4ed074b6299mr37464201cf.27.1761636925929; Tue, 28 Oct 2025
+ 00:35:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: Set FPCR exception flag bits for non-trapped
- exceptions
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-References: <20251017085350.895681-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251017085350.895681-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+References: <20251027165304.98296-1-philmd@linaro.org>
+ <20251027165304.98296-2-philmd@linaro.org>
+ <CAFEAcA-=cT_2JX+-D0_nHMrr_fgpRtXA2WqvY66unNAUhwkVkQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA-=cT_2JX+-D0_nHMrr_fgpRtXA2WqvY66unNAUhwkVkQ@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Oct 2025 11:35:14 +0400
+X-Gm-Features: AWmQ_bm8gFUqsnospo-ujqxGgmgusZ3NKTbROf4AEt0Ry9DbcCPetkQBvpATpLc
+Message-ID: <CAJ+F1CLRGqjegi9zSy75TvxNrnbURUUAY3Y9aWcv=AWFDW3HPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] hw/pci/pci_host: Add 'config-reg-check-high-bit'
+ property
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Helge Deller <deller@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,30 +104,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/25 10:53, Peter Maydell wrote:
-> In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
-> we added the code for setting up the registers correctly on trapping
-> FP exceptions, we accidentally broke the handling of the flag bits
-> for non-trapping exceptions.
-> 
-> In update_fr0_op() we incorrectly zero out the flag bits and the C
-> bit, so any fp operation would clear previously set flag bits. We
-> also stopped setting the flag bits when the fp operation raises
-> an exception and the trap is not enabled.
-> 
-> Adjust the code so that we set the Flag bits for every exception that
-> happened and where the trap is not enabled.  (This is the correct
-> behaviour for the case where an instruction triggers two exceptions,
-> one of which traps and one of which does not; that can only happen
-> for inexact + underflow or inexact + overflow.)
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/hppa/fpu_helper.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+Hi
 
-Queued via hw-misc, thanks!
+On Mon, Oct 27, 2025 at 9:31=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Mon, 27 Oct 2025 at 16:54, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org> wrote:
+> >
+> > In order to have more PCI host bridges to re-use the
+> > generic pci_host_data_le_ops MemoryRegionOps, add the
+> > 'config-reg-check-high-bit' property (%true by default).
+> >
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> > diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+> > index b5c624e12e8..d6db365e327 100644
+> > --- a/hw/pci/pci_host.c
+> > +++ b/hw/pci/pci_host.c
+> > @@ -184,8 +184,10 @@ static void pci_host_data_write(void *opaque, hwad=
+dr addr,
+> >  {
+> >      PCIHostState *s =3D opaque;
+> >
+> > -    if (s->config_reg & (1u << 31))
+> > -        pci_data_write(s->bus, s->config_reg | (addr & 3), val, len);
+> > +    if (s->config_reg_check_high_bit && !(s->config_reg & (1U << 31)))=
+ {
+> > +        return;
+> > +    }
+> > +    pci_data_write(s->bus, s->config_reg | (addr & 3), val, len);
+> >  }
+> >
+> >  static uint64_t pci_host_data_read(void *opaque,
+> > @@ -193,7 +195,7 @@ static uint64_t pci_host_data_read(void *opaque,
+> >  {
+> >      PCIHostState *s =3D opaque;
+> >
+> > -    if (!(s->config_reg & (1U << 31))) {
+> > +    if (s->config_reg_check_high_bit && !(s->config_reg & (1U << 31)))=
+ {
+> >          return 0xffffffff;
+> >      }
+> >      return pci_data_read(s->bus, s->config_reg | (addr & 3), len);
+> > @@ -235,6 +237,8 @@ const VMStateDescription vmstate_pcihost =3D {
+> >  };
+> >
+> >  static const Property pci_host_properties_common[] =3D {
+> > +    DEFINE_PROP_BOOL("config-reg-check-high-bit", PCIHostState,
+> > +                     config_reg_check_high_bit, true),
+>
+> I think it might be useful to name and document this
+> property at a slightly higher level of abstraction.
+>
+> Specifically, this code is handling the behaviour of
+> the CONFIG_ADDRESS register which is part of the PCI
+> Configuration Access Method (CAM). For x86 the top bit of
+> CONFIG_ADDRESS is an Enable bit, which must be set to
+> cause accesses to CONFIG_DATA to actually do something.
+> For PCI controllers like Dino there is no Enable bit
+> defined in CONFIG_ADDRESS[*] and CONFIG_DATA accesses always
+> take effect.
+>
+> [*] http://ftp.parisc-linux.org/docs/chips/dino_ers.pdf page 49
+>
+> So perhaps we could call this "config-address-reg-has-enable-bit" ?
+>
+> A documentation comment about its purpose and noting that
+> the expectation is that this is set by the subclass,
+> not by end-users, might also be helpful.
+
+If this shouldn't be tweaked by users and is specific to a device
+kind, could it be a bool on the PCIHostBridgeClass ?
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
