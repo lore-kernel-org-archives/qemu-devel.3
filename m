@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5E9CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 18:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F5D4CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 18:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDoHm-0002I3-Bc; Tue, 28 Oct 2025 14:19:10 -0400
+	id 1vDoIK-0003OW-Dq; Tue, 28 Oct 2025 14:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDoH7-0001Xg-8K
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:18:35 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDoI3-0003Ip-IO
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:19:29 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDoGx-0002Eg-0l
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:18:27 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4770e7062b5so22028225e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 11:18:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDoHy-0002KR-KV
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 14:19:26 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-475dc6029b6so35412895e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 11:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761675494; x=1762280294; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761675557; x=1762280357; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=01hqDrORZqT6m82C01ACWFcfM3wBkQW5SH2Nidv/XUc=;
- b=RlaLx+tSY+hUqtRkv0QBR+kj18iFR0oQwiDaIcpvqhbALvf1QNldhOUZchhfDJ9fYt
- vaJLMKOXc2HE5nEMIn5s0yUbQlp2h6G77348/3JSSWddUK72pMTU8cRU5AfYpkliAL0u
- /9Xp+MKzGgbEqt147Adgw/AuP4MFbbwS9Ioy+E0SglbSAUhCK2J5ugVBgLhCBRcJMMTH
- PA4NqPmrcu0gbUEWw/z9mM2FoygWvtk1JUwP9CIvDQ3JGGtheNX84ctD3fcw/97XMaLf
- aykIJjCpZF1pg9tEzDbKZRJk31Eahu1AjB8B1wFwdnIwo8cLqahYIUeU4svH4TzxOwvb
- 6eYA==
+ bh=fUj5tDuFxMrJLcMfMzba2XS192smTgWQLL5DdnxIsIc=;
+ b=IuhRkrFVs+vVgPzP0yd83rXBTD1ivBFPi7bpG7j9cmaTAfYd2oSrfLpkNhO/EJ0GY3
+ nmgJcOqeJkmZ+kf9dE6QiVRg/mOOBUqaD33YUbAgMND2DapTwePLYxqK2Bclq9ieag8c
+ Rj3M0WNTQHdrhajYg4zTBn6Rly9BqQ5zomqzL9WJUDqgdqSba+nq/iY9UnCNCHsu0t2j
+ H6Q83GGKjajqL5ck7WeDhxIUPUPx2Eo6kLtO9tZo4hhL1s6cVKeZr9w4udNZcKO93tkj
+ w96fQ76cY7ebJKXG16c/SwTxZ8Sd9cvvmRTMAM0gjiUgARe+aEchG/axA00mprGI5wUJ
+ 4DyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761675494; x=1762280294;
+ d=1e100.net; s=20230601; t=1761675557; x=1762280357;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=01hqDrORZqT6m82C01ACWFcfM3wBkQW5SH2Nidv/XUc=;
- b=YMvCGWOhfDYBIOhUqVIz3ak0KaX+tMEBU/zoL3JfphsR6lCSyeJkj5pfwqWOEdRYmA
- NPcsxT2PzCFvTHT6No0fLuYoi3uFfoWr617d9GHZKVvukcvM4z5Ab1x3MF3xDkVtWHyM
- I8Sc21y/9T79ac14RHAEotFTIvqyeNeZbBN9C5wpvjcwklCldPtJVekpTQLVumvMVpqo
- FYalf1zI8VdNV/tTUL3WeSeV1G2HsRD+VrY6CHQY87QRItLNgqjAcMXci+0Pifhowcjx
- nVzmYUiSg2714hcSz5gA8qhUJPomuL5C4TpCqDQS9otMjtCElI87kJCMtyYIAiksmy4B
- eGQw==
-X-Gm-Message-State: AOJu0YydCvY0Wt0z7C7HKGPdfl+7vP+A2m8z3TtcDupnc6HEc+iEF9EV
- TfaBV6+b91PrmvTPrhEJ0gGSkbTaUBjc7F1csZpmkPhgXTCck53AxhgRQMEdWrO6i+n6f863owc
- ILVoNUAs=
-X-Gm-Gg: ASbGnctO0Cpr6/Actm1Ajh1ZANWl4xPw694yNneFPuJw3cWlEKtat7nsXq0VmDNdNL9
- fCTY1wq3aiNZ5KN+lyJesV4bZOzaHQYqGH+T6nXV9Zefu8JyRCo9PJg+8mbLBPT7kWaytKeXTQj
- C+JAAPeAtSTNraWEBIqeG0ZXsC6k3E1+WTqcf9QHTUMOZekwgBxOKV6Q0pZcQKxboTHQ3Of980g
- pXIS8NkGRjgJxk2Ngh46FY1awsye5C+Pf9m9GSZWzSULvmRy/s5yFdJsBwivJACpsewRLhsiXeY
- VNc6u4nX0OiK7QXITdGKU1ffV9qZKswn2DLcndavnp5E86+gDKD/+0nsy69tHHKzh3H5iwy+0fi
- CV6c10GzOoW/RhKXwwNSbUbLXXE0C5xarKSPt1d2qHD70WDQ38ZptVxoj4MgxYF1Z9hBrt91zkV
- 2jmE9Ig5OVED/J4xCHZkiIwzMf0KCJX/B5C8qkVFQTxcPN5NdQUA==
-X-Google-Smtp-Source: AGHT+IGiptqj6/iCv9W/NsMN2YruISusc2YzRGdBP1Bs0Mn8UNzSF4baihJ10riNMKzZLg8Yf/0Y1w==
-X-Received: by 2002:a05:600c:6218:b0:475:dd53:6c06 with SMTP id
- 5b1f17b1804b1-4771e20a66cmr3592985e9.40.1761675494104; 
- Tue, 28 Oct 2025 11:18:14 -0700 (PDT)
+ bh=fUj5tDuFxMrJLcMfMzba2XS192smTgWQLL5DdnxIsIc=;
+ b=r0zRfFwW7Etp5hk13LwrgMkPaAIq6bqvH7bJ1DCPWbSfFLcM95GEYljQeQeOIA5t9z
+ uyq4qKJBviTvflHS3sFeQxrOaCnCumBoPW0ZzcVgD4oROoD+MhL3pqwJOHCU+WrxiJgd
+ p8/66FqHSrqK8fm/AXBsW5XnMOEgLeA31rDlFaIrWWciUbycaTcwWYI8dGSkfGQmZU0a
+ I4ltLvOWy+DRQEwEcK5VDhgMDO4X+ReH8JNpux+m1x8o3NU1KiLFVH3LzgNnBkmPBOd1
+ iX6WBHlxHH4nsUMuhOV+2ZKkZyAt2Sig2z9pXN2+Xtro4TQkTGLcKNchfD6uUAKhrFZ1
+ +sBA==
+X-Gm-Message-State: AOJu0YwpU4IpAtj+L8sQUfarYLMmcdRUnUjVzoaojbiiIHn6qfxAWKbe
+ AbCETd3V+g6OJc0gMz5Uy8NVU1i8go47DcaFUraMlr2PBbGPrhk/6Nm4NmEATBCMyo+l11jqayl
+ y/JR+xQ0=
+X-Gm-Gg: ASbGncskXHzizEU+rnDjrA3EiwvEF7LiiQMkoXoZkEglbRyFfpiKjH4X+2FrrxS/zui
+ tLbJ5Nm49LWp6bRQgRNLbXt1LI8EUXY5I/xU5//JVmB9I3mjU1iDANBvLBRszCY7UoEUl8O46sD
+ i0dYWq38PpSYRbHNQSraLd36JE3eGTJVgUBtFSmHpKSXEUMj2QpNZjm4siTXOvnQFYAQ/ESC3hD
+ tbxMqEp8dh1UI/pBOSisux6DBwBSWhW+RbXEPJQ2d8jnEYVKk/e4PQyIacjHHkiSQn54LALpuG2
+ 1VFHcsDGGGMnygBQSK8DnVP4+kWcb8gehUxGoIkhBGwPJGtXUlPZQkpVcWdND+96efFlmP3qnyN
+ 11r9ggfznmvr5MSJimRE/giJqDXIGkL2RHrql60FW2c4Q0HLofxqBLJlB9JraQwP3DzfiklNZFE
+ GOveKT9vJN0gsKo+NUWrSEXogplQBaFzAt82MrWNGJ3MG+DjMZRA==
+X-Google-Smtp-Source: AGHT+IFI+gul3yKAwz4c1fktmae3PtXn0re8tT5hM2q9v277iSe/eJTmPxa7M5Ll7Jfuyxo1LE2TRg==
+X-Received: by 2002:a05:600c:46cc:b0:477:bb0:751b with SMTP id
+ 5b1f17b1804b1-4771e1e0589mr3761845e9.27.1761675557024; 
+ Tue, 28 Oct 2025 11:19:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47718fd69fdsm25186225e9.3.2025.10.28.11.18.12
+ 5b1f17b1804b1-4771e196a4bsm6065935e9.6.2025.10.28.11.19.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 11:18:13 -0700 (PDT)
+ Tue, 28 Oct 2025 11:19:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org,
@@ -71,18 +71,19 @@ Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 05/25] hw/ppc/e500: Use proper SysBus accessors
-Date: Tue, 28 Oct 2025 19:12:39 +0100
-Message-ID: <20251028181300.41475-6-philmd@linaro.org>
+ BALATON Zoltan <balaton@eik.bme.hu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 06/25] hw/pci-bridge: Use proper SysBus accessors
+Date: Tue, 28 Oct 2025 19:12:40 +0100
+Message-ID: <20251028181300.41475-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028181300.41475-1-philmd@linaro.org>
 References: <20251028181300.41475-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,23 +110,29 @@ SysBusDevice::mmio[] is private data of SysBusDevice, use
 sysbus_mmio_get_region() to access it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/e500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/pci-bridge/pci_expander_bridge.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 8842f7f6b88..fe1aeffe676 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -887,7 +887,7 @@ static DeviceState *ppce500_init_mpic(PPCE500MachineState *pms,
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 1bcceddbc4d..aa55749954a 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -157,9 +157,11 @@ static char *pxb_host_ofw_unit_address(const SysBusDevice *dev)
+     main_host = PCI_HOST_BRIDGE(pxb_dev_base->parent_bus->parent);
+     main_host_sbd = SYS_BUS_DEVICE(main_host);
  
-     s = SYS_BUS_DEVICE(dev);
-     memory_region_add_subregion(ccsr, MPC8544_MPIC_REGS_OFFSET,
--                                s->mmio[0].memory);
-+                                sysbus_mmio_get_region(s, 0));
- 
-     return dev;
- }
+-    if (main_host_sbd->num_mmio > 0) {
++    if (sysbus_has_mmio(main_host_sbd, 0)) {
++        MemoryRegion *mr = sysbus_mmio_get_region(main_host_sbd, 0);
++
+         return g_strdup_printf(HWADDR_FMT_plx ",%x",
+-                               main_host_sbd->mmio[0].addr, position + 1);
++                               mr->addr, position + 1);
+     }
+     if (main_host_sbd->num_pio > 0) {
+         return g_strdup_printf("i%04x,%x",
 -- 
 2.51.0
 
