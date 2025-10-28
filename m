@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0079CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16215CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDeSY-0000Ii-Ih; Tue, 28 Oct 2025 03:49:39 -0400
+	id 1vDeSh-0000K2-Oo; Tue, 28 Oct 2025 03:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeST-0000IR-Kw
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:33 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeSe-0000JJ-S4
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:44 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeS3-0006wW-R2
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:23 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-475dc0ed8aeso27836835e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:49:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeSV-0006zK-AJ
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:44 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso4146038f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761637743; x=1762242543; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=swfUf7YT2HN3IdIkPCfKk032w9FveEY2Y7oYC8RTyY0=;
- b=DGCXRVD1XMUzsdPnQAIGuIpn0ADua/3BcDNS5WS+px/opOJ0YqDzUF3baqX8NCQ3QB
- fiVrdDhEx3UYdzdoJV9Z2meK8VmMvSc+iyoPdUP2QeO8UB9bOW6gY7Nc+Mu5ci5SLPLn
- Qc/N9GUIXoJtnCwzeKFy8X0Dxrc7ZVFSWIcKdzZN9zBh3lx3k2Q+RXhB0qqctlOSmA+O
- 5tuRZLGmm1Og7E6MvZh6JoimP9YRNxOQJsYVo9fUBCBCSQTjSaOEoFJpxJdnR/Y7JsTX
- hwW3rAq8Sx76WauYmUBoviecJRrw6F2t/9Id76/+CIkZ1GWTrFHaVFA4/BQRE5t1nNd0
- /6XQ==
+ d=linaro.org; s=google; t=1761637765; x=1762242565; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rXN/vpWvITLur9ZDJo/U77KGUGvSZDrxaC3ix1ult+U=;
+ b=Z56nuKKeneXN1iCQtgz/+YaZPPeHnq1Ph4Hy9L+vmunoXaOEZcIthJsQhpEvKr0Ldw
+ 7oDFeKrpbm2gGzoXPD/eY9h1nToXw3/juooOSX0Uej4OpRSkk1KEX+Dc3m2JOEdlC5Fh
+ 9ZeHABskAFmPhmy1Kb6NHu1uxml9fKxKG5/UBh66JULTwN5nvhvxc8zhxSQqiEfJY7eq
+ 5k7Ik4ygVVul8qzt9hGQEJAeXBIRbyY1c+BubJ42wkbo5G6cEq0RATEWJ5vXSySxh9ys
+ qNdWUwSX3gyuFRkeJqW0dOoz3H0zPknIGU4lhLOONgiJNHpE9KsEjQKe8vol8bSs+cXv
+ qyXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761637743; x=1762242543;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=swfUf7YT2HN3IdIkPCfKk032w9FveEY2Y7oYC8RTyY0=;
- b=KjGJp3z3SJEVCYSpzMWmClt7haAQu47DxuyHlBXouT8RZrY6bYLXhNjG56T5/mNhvw
- 2txlV4HGyjJRmypLrot6dTQIa0+U3M7skTp9RO+P76X7VewedjkZcKzzaDW2vNHjaQRF
- ZvH09KDCmStoWIftkeSSZn+5raHtYeWi7Xli6xIs2fAOAyjW1bYcoe6K6i9K4Y6M6lLD
- SLXTWloKN6mI8BneBOL6JStWYV6IUyqPN9litm/9NLfA3PGnlV/323Gd6WVumiL1ooed
- 91ReVppqRrVMRNSNZIL79x0053IlI5d0bwaEKkSdrZ/Pg6dUH4kaF/h2SOoQvC+Fd6Of
- MKpw==
-X-Gm-Message-State: AOJu0YzqCKnGy/naYtdmRdYkFo8+XPBNTRbhr4cwTYaQSi9/h/qBDkel
- IP6DDTMy2B6xpENTFzeqwsz/RT8fjNVNhhUE1wFAE3VLmSvh/CgerfgCPE+bnNUNdurmnvodl/I
- ZCUDpF1A=
-X-Gm-Gg: ASbGncv9V6hp1G6zOmczlfkmLrmAIx3qSk7HEAAgNYJ8dLxDfc17mhlNIWErgyqCXNc
- xgnVZAdk7JFuCo+SBYjXYCWI5cxGfSoc+9cp31ggK+P1/g5CpeHT976ZYFSRUOYxvPOu6G4EjxF
- tTbaMsw+DtEHFdfS0YJhBVX4w7c1LwZjajIJM4eQA2JP62f9biRgusnjP3+bRL/KfSPScsLFfx7
- 0WImA5TJgAYGYz8zx7vTFB9EDrmrEjFujeU2F04/aWimAzCnQeaKdR72+yKI1pv4+o6n+yplTyu
- RxFJ6h/pVr/G3HRX94zkn3051tAWqhhG/cujLGnMR7ahuWAl1m3yuAbqbLPY0d1jM2PuXL19kW2
- TECLs6PD3+oa3t1hmhsxWA53/K4zHKsUH/Iqv/lXDtyCwlFa1DXoqz7N4GU+4iS1YR9qAhImWaZ
- gUZIiVho5hlXa9Cea138uuEdN0K2/zuKeQBKfBRF5uOljrsZJWjqdsmdg=
-X-Google-Smtp-Source: AGHT+IHDwu4lqhNf9oq80u4Z7KnlXzHBu2pijclYUroTmuLMG3ugxkwcF7ZTvZYY/inIJnTjGDdBcQ==
-X-Received: by 2002:a05:600c:4fd4:b0:45d:d1a3:ba6a with SMTP id
- 5b1f17b1804b1-47717e4089amr19227235e9.33.1761637743471; 
- Tue, 28 Oct 2025 00:49:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761637765; x=1762242565;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rXN/vpWvITLur9ZDJo/U77KGUGvSZDrxaC3ix1ult+U=;
+ b=IRPmduRHK+7IIfzQ5NPoqGZFUjTl5F0okKi2ncZHPmCg6LOoxqGHZgV+7WS3uTtIu7
+ TaIpGNaVb/n17d5rNhMKLl5WCBms41SrtQfJFw0qoLwndaLYwQ3jiQkhjPlzu8cpxMnH
+ B0MfgI9b+d2U0lzMbdzAKL7kQct0EUUQdEpjlbWJH9k6DcgpG769Tw1M7srlmTloYlvx
+ i9vOAAzMo0GEE5NDty9q7XaEJvls7Cy/CMcL4ViBjJfcXjTCbz8mkwn45ckGY2MdV1jI
+ xbd3vEMA/xQMtMgL5gS9oIcYe7VC4LzYhq1zGWCOsJyaD1I6pvXsYAeMXGVcun4PneOH
+ 9ZIA==
+X-Gm-Message-State: AOJu0YzDMQ+b4zu+ozKsMrE1SCTKkzw00CAGI7/rljl8504ZYmqSgar9
+ OE8cw9PWSXCEjnnxxXuvvXXT/qupuCyh4/Gjj5jisdJwzQciJpOsKJSSDBDBLvKOQ+0LHuzS4NU
+ H/j96fQE=
+X-Gm-Gg: ASbGncsNXNjZru0reHH5fU/H9Vv0ui3QMEKab6ymKVCZHtYuT4VQBQqbsTlYp1jmApV
+ slGr4tijY1hqtp2xcFHxxaKZZvowSt7EzcxxHsVZCqiwmtWgx6R6isT7ofb6oPoFaUlXGyAlqL8
+ VrKwVIY+dsPu6x5apNRRGbXw681pibwLQSSh/OOrlmIh9FdkvV5+rguB/BMA1NB0kfcDFSVbYUj
+ iE3HO5Nx1uDDpoJecY0ffXj0QKoiJ6cvrDYW74Dwus7k98hL20bCU7zeAPV6CRpfDULC4xcHHrh
+ llItB0oCi8ngHAd4VVHhvmt2tJ4uf8Nn2LGHKCCfIp/zzxmYTv3BA0PzN0bwCJzcS4wuVszYfuC
+ Lpa4/Yck7uolfe4uuX1UK+fp7ShbhG86A8CXNjl4hrJJdX0cT6v+ouLKSLUSwQIv423XpAfzWZT
+ bXfcygSeZBBOjg+sLLTyEiNoc5g8G9UdxNcsTfdQltEWKVc4ZdlFOXjDpT8K/MF5c2Yg==
+X-Google-Smtp-Source: AGHT+IFZgGmgYjRVxipdgM0ms0LUPHcNV4cTY2Isw9cLlVof15Of32cuYr7kpZEKTXuSYxXeDWU+CQ==
+X-Received: by 2002:a05:6000:26ce:b0:427:5e6:c0e5 with SMTP id
+ ffacd0b85a97d-429a7e75aaamr1897535f8f.39.1761637765219; 
+ Tue, 28 Oct 2025 00:49:25 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd02cd6dsm186480535e9.2.2025.10.28.00.49.02
+ ffacd0b85a97d-429952de971sm18606985f8f.39.2025.10.28.00.49.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 00:49:03 -0700 (PDT)
+ Tue, 28 Oct 2025 00:49:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/23] Misc HW patches for 2025-10-28
-Date: Tue, 28 Oct 2025 08:48:36 +0100
-Message-ID: <20251028074901.22062-1-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 01/23] target/hppa: Set FPCR exception flag bits for
+ non-trapped exceptions
+Date: Tue, 28 Oct 2025 08:48:37 +0100
+Message-ID: <20251028074901.22062-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251028074901.22062-1-philmd@linaro.org>
+References: <20251028074901.22062-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,174 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 36076d24f04ea9dc3357c0fbe7bb14917375819c:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Merge tag 'next-pr-pull-request' of https://gitlab.com/berrange/qemu into staging (2025-10-25 10:42:55 +0200)
+In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
+we added the code for setting up the registers correctly on trapping
+FP exceptions, we accidentally broke the handling of the flag bits
+for non-trapping exceptions.
 
-are available in the Git repository at:
+In update_fr0_op() we incorrectly zero out the flag bits and the C
+bit, so any fp operation would clear previously set flag bits. We
+also stopped setting the flag bits when the fp operation raises
+an exception and the trap is not enabled.
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20251028
+Adjust the code so that we set the Flag bits for every exception that
+happened and where the trap is not enabled.  (This is the correct
+behaviour for the case where an instruction triggers two exceptions,
+one of which traps and one of which does not; that can only happen
+for inexact + underflow or inexact + overflow.)
 
-for you to fetch changes up to 7dbe2d7df094aa8af2d8fcdf08fccce70b1ca5bc:
+Cc: qemu-stable@nongnu.org
+Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+Message-ID: <20251017085350.895681-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hppa/fpu_helper.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-  hw/riscv: Widen OpenSBI dynamic info struct (2025-10-28 08:19:18 +0100)
-
-----------------------------------------------------------------
-Misc HW patches
-
-Various fixes and cleanups:
-- Set FPCR exception flag bits for HPPA non-trapped exceptions
-- Convert VirtIONet::vlans from pointer to array
-  and remove VMSTATE_BUFFER_POINTER_UNSAFE()
-- Remove redundant QOM typedef when OBJECT_DECLARE_SIMPLE_TYPE() is used
-- Have various QDev / SysBus helpers take a const device argument
-- Improve errors when loaders parse images
-- Remove IntelIOMMUState::dma_translation leftover
-- Remove most target_[u]long uses in hw/riscv/
-- Fix DS1225Y MemoryRegion owner
-- Simplification refactors on Raven PCI Host Bridge
-----------------------------------------------------------------
-
-Akihiko Odaki (1):
-  nw/nvram/ds1225y: Fix nvram MemoryRegion owner
-
-Anton Johansson (2):
-  hw/riscv: Use generic hwaddr for firmware addresses
-  hw/riscv: Widen OpenSBI dynamic info struct
-
-BALATON Zoltan (5):
-  hw/pci-host/raven: Simplify creating PCI facing part
-  hw/pci-host/raven: Simplify PCI facing part
-  hw/pci-host/raven: Simplify host bridge type declaration
-  hw/pci-host/raven: Use DEFINE_TYPES macro
-  hw/pci-host/raven: Simplify PCI bus creation
-
-Clément Mathieu--Drif (1):
-  hw/i386/intel_iommu: Remove an unused state field
-
-Michael Tokarev (2):
-  hw/net/virtio-net: make VirtIONet.vlans an array instead of a pointer
-  migration/vmstate: remove VMSTATE_BUFFER_POINTER_UNSAFE macro
-
-Nguyen Dinh Phi (1):
-  qom: remove redundant typedef when use OBJECT_DECLARE_SIMPLE_TYPE
-
-Peter Maydell (1):
-  target/hppa: Set FPCR exception flag bits for non-trapped exceptions
-
-Philippe Mathieu-Daudé (4):
-  hw/qdev: Have qdev_get_gpio_out_connector() take const DeviceState arg
-  hw/sysbus: Have various helpers take a const SysBusDevice argument
-  hw/uefi: Include missing 'system/memory.h' header
-  hw/int/loongarch: Include missing 'system/memory.h' header
-
-Vishal Chourasia (6):
-  hw/core/loader: Use qemu_open() instead of open() in get_image_size()
-  hw/core/loader: capture Error from load_image_targphys
-  hw/core/loader: improve error handling in image loading functions
-  hw/core/loader: add check for zero size in load_image_targphys_as
-  hw/core/loader: Pass errp to load_image_targphys_as()
-  hw/ppc: Pass error_fatal to load_image_targphys()
-
- hw/net/fsl_etsec/etsec.h                  |   1 -
- include/hw/char/serial.h                  |   1 -
- include/hw/i386/intel_iommu.h             |   1 -
- include/hw/input/lasips2.h                |   6 +-
- include/hw/intc/loongarch_dintc.h         |   2 +-
- include/hw/intc/loongarch_extioi_common.h |   1 +
- include/hw/intc/loongarch_pch_msi.h       |   1 +
- include/hw/intc/loongarch_pic_common.h    |   1 +
- include/hw/intc/loongson_ipi_common.h     |   1 +
- include/hw/loader.h                       |   8 +-
- include/hw/misc/auxbus.h                  |   7 +-
- include/hw/misc/bcm2835_mphi.h            |   7 +-
- include/hw/misc/npcm7xx_pwm.h             |   7 +-
- include/hw/pci-host/pnv_phb3.h            |   6 +-
- include/hw/pci-host/pnv_phb4.h            |   8 +-
- include/hw/ppc/mac_dbdma.h                |   7 +-
- include/hw/qdev-core.h                    |   3 +-
- include/hw/riscv/boot.h                   |  18 ++--
- include/hw/riscv/boot_opensbi.h           |  14 +--
- include/hw/riscv/iommu.h                  |   3 -
- include/hw/scsi/scsi.h                    |   7 +-
- include/hw/sysbus.h                       |  10 +--
- include/hw/uefi/var-service.h             |   1 +
- include/hw/vfio/vfio-container-legacy.h   |   5 +-
- include/hw/virtio/virtio-net.h            |   2 +-
- include/hw/virtio/virtio-serial.h         |   5 +-
- include/migration/vmstate.h               |   9 --
- include/net/can_emu.h                     |   7 +-
- backends/cryptodev-lkcf.c                 |   1 -
- hw/alpha/dp264.c                          |   4 +-
- hw/arm/armv7m.c                           |   2 +-
- hw/arm/boot.c                             |   5 +-
- hw/arm/digic_boards.c                     |   2 +-
- hw/arm/highbank.c                         |   3 +-
- hw/arm/raspi.c                            |   2 +-
- hw/arm/vexpress.c                         |   2 +-
- hw/char/ipoctal232.c                      |   9 +-
- hw/char/xen_console.c                     |   1 -
- hw/core/generic-loader.c                  |   5 +-
- hw/core/gpio.c                            |   3 +-
- hw/core/guest-loader.c                    |   4 +-
- hw/core/loader.c                          |  42 ++++++---
- hw/core/sysbus.c                          |  10 +--
- hw/dma/pl330.c                            |   6 +-
- hw/hppa/machine.c                         |   5 +-
- hw/i386/multiboot.c                       |   2 +-
- hw/i386/x86-common.c                      |   4 +-
- hw/ipmi/ipmi_bmc_sim.c                    |   2 +-
- hw/loongarch/boot.c                       |   5 +-
- hw/m68k/an5206.c                          |   2 +-
- hw/m68k/mcf5208.c                         |   4 +-
- hw/m68k/next-cube.c                       |   2 +-
- hw/m68k/q800.c                            |   7 +-
- hw/m68k/virt.c                            |   4 +-
- hw/microblaze/boot.c                      |   5 +-
- hw/mips/boston.c                          |   2 +-
- hw/mips/fuloong2e.c                       |   9 +-
- hw/mips/jazz.c                            |   2 +-
- hw/mips/loongson3_virt.c                  |  10 ++-
- hw/mips/malta.c                           |   9 +-
- hw/net/virtio-net.c                       |   9 +-
- hw/net/xen_nic.c                          |   2 -
- hw/nubus/nubus-device.c                   |   2 +-
- hw/nvram/ds1225y.c                        |   2 +-
- hw/openrisc/boot.c                        |   5 +-
- hw/pci-host/bonito.c                      |   7 +-
- hw/pci-host/raven.c                       | 105 +++++++---------------
- hw/pci/pci.c                              |   2 +-
- hw/ppc/amigaone.c                         |  13 +--
- hw/ppc/e500.c                             |  20 +----
- hw/ppc/mac_newworld.c                     |  19 ++--
- hw/ppc/mac_oldworld.c                     |  19 ++--
- hw/ppc/pef.c                              |   1 -
- hw/ppc/pegasos2.c                         |  10 +--
- hw/ppc/pnv.c                              |  27 ++----
- hw/ppc/ppc440_bamboo.c                    |   9 +-
- hw/ppc/prep.c                             |  19 ++--
- hw/ppc/sam460ex.c                         |   8 +-
- hw/ppc/spapr.c                            |  17 +---
- hw/ppc/virtex_ml507.c                     |  11 +--
- hw/riscv/boot.c                           |  49 +++++-----
- hw/riscv/microchip_pfsoc.c                |   2 +-
- hw/riscv/sifive_u.c                       |   2 +-
- hw/riscv/spike.c                          |   4 +-
- hw/riscv/virt.c                           |   2 +-
- hw/rx/rx-gdbsim.c                         |   2 +-
- hw/s390x/ipl.c                            |   8 +-
- hw/sh4/r2d.c                              |   8 +-
- hw/smbios/smbios.c                        |   2 +-
- hw/sparc/leon3.c                          |   4 +-
- hw/sparc/sun4m.c                          |   8 +-
- hw/sparc64/sun4u.c                        |   7 +-
- hw/usb/dev-mtp.c                          |   7 +-
- hw/usb/dev-uas.c                          |   7 +-
- hw/xtensa/xtfpga.c                        |   3 +-
- system/device_tree.c                      |   2 +-
- target/hppa/fpu_helper.c                  |   7 +-
- 97 files changed, 321 insertions(+), 434 deletions(-)
-
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 45353202fae..2d272730f60 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -94,7 +94,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+ {
+     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+     uint32_t hard_exp = 0;
+-    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
++    uint32_t shadow = env->fr0_shadow;
++    uint32_t to_flag = 0;
+     uint32_t fr1 = 0;
+ 
+     if (likely(soft_exp == 0)) {
+@@ -122,6 +123,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+             fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
+         }
+     }
++    /* Set the Flag bits for every exception that was not enabled */
++    to_flag = hard_exp & ~shadow;
++    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++
+     env->fr0_shadow = shadow;
+     env->fr[0] = (uint64_t)shadow << 32 | fr1;
+ 
 -- 
 2.51.0
 
