@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E986CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A36CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE9g9-0005Y2-Sr; Wed, 29 Oct 2025 13:09:45 -0400
+	id 1vE9gk-00061T-AT; Wed, 29 Oct 2025 13:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9g4-0005UN-QS
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:09:40 -0400
-Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9ge-0005w2-Tj
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:10:17 -0400
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9fy-0006vW-E6
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:09:40 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.30])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cxYd66PQ4z6PXF;
- Wed, 29 Oct 2025 17:09:30 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9gY-00076m-Kn
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:10:16 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.75])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cxYdp0fpHz5wNB;
+ Wed, 29 Oct 2025 17:10:06 +0000 (UTC)
 Received: from kaod.org (37.59.142.106) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Wed, 29 Oct
- 2025 18:09:27 +0100
+ 2025 18:10:02 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-106R0062669e423-0e67-4e96-baf4-d1bea6cdaa7f,
+ (GARM-106R00662429ea8-8f6c-4d14-b9ca-10781ba9ca16,
  1C4C5A15D30C5F2C89D761F8A9BCD43732F6FBF1) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 92.184.104.153
-Message-ID: <bc782228-69a7-4cbf-b296-473fd15ffba7@kaod.org>
-Date: Wed, 29 Oct 2025 18:09:26 +0100
+Message-ID: <d33c6e64-c5dc-45c7-a669-7438fd0a1785@kaod.org>
+Date: Wed, 29 Oct 2025 18:10:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Subject: Re: [SPAM] [PATCH v1 06/13] hw/arm/aspeed: Split G220A machine into a
- separate source file for better maintenance
+Subject: Re: [SPAM] [PATCH v1 12/13] hw/arm/aspeed: Split Supermicro X11SPI
+ machine into a separate file for maintainability
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -43,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251023100150.295370-1-jamin_lin@aspeedtech.com>
- <20251023100150.295370-7-jamin_lin@aspeedtech.com>
+ <20251023100150.295370-13-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
@@ -87,35 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251023100150.295370-7-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251023100150.295370-13-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [37.59.142.106]
 X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 90d33f37-24ef-486b-a595-82d0f955f73f
-X-Ovh-Tracer-Id: 5353091110878677938
+X-Ovh-Tracer-GUID: 8b734537-9968-41c3-a5b8-1711b59a1b12
+X-Ovh-Tracer-Id: 5363224207084850098
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGJtndeWzAcVmR3XQqv252AeEKBLpnCW+HIMR3QhdhXHEsRNZmTBWFtDuU6G+K6XLtB/XeQtVkaVEIms8z9pRt1yRQt5qfUQRWa1vgO4ljZG7KmZQIpeYzfsufFgQguJNkamwBp8BU5mKpdVzsE4CJJYW+iPhQhTOSpXMqHQ5Uas9wmwwo0I2RlKcjPHbwdNzRInedZEzld+taO0Ma/RRGS9Ram7OQgXGdQlRhrogme9kqwmVbSsmaQ2zYV/ByLPjk7mGrz07y/gMJmTxHLVoOA97IjGia3ClVPINkGCFkzHQhoyDv8PBvWtxprOEDa09El/jlk1VPGy6oBC4ZR2S8yd2bt6tpQ4uC+U89I55q7v9b5efx6UVM616TbfF23WtblKTIUvBpe8KWyezp6N0w+Rvg5ph3PNDsztmeYAIxeGq2hrAMhr/e/nd901VW4vwer4LBI13G5y1Kj5EDsv47GXTxRGTqXG7VpQc1pKcZm7heFm6UORzEvfxy3qdnbrhYq1CI5ruEMgeZJDqJ8N7h8UXGpL1jhkfl5PuwvoQoBKfGBbwGOSvmohj0QskH2Z7QIEvIK670aRkaeXzmTM8kRrc9hWgk77FsL2GWTmGaDSr1UDT0AWdUt3tmZGdHpulQOGZn1lShFLHNvpJgMpvIGQKLPg0A9N8nMnik3I5swpg
-DKIM-Signature: a=rsa-sha256; bh=R4sunLIttoAw0izQQyf88qN+HeMBtCC0ZEmkjWHewFg=; 
+X-VR-SPAMCAUSE: dmFkZTGJtndeWzAcVmR3XQqv252AeEKBLpnCW+HIMR3QhdhXHEsRNZmTBWFtDuU6G+K6XLtB/XeQtVkaVEIms8z9pRt1yRQt5qfUQRWa1vgO4ljZG7KmZQIpeYzfsufFgQguJNkamwBp8BU5mKpdVzsE4CJJYW+iPhQhTOSpXMqHQ5Uas9wmwwo0I2RlKcjPHbwdNzRInedZEzld+taO0Ma/RRGS9Ram7OQgXGdQlRhrogme9kqwmVbSsmaQ2zYV/ByLPjk7mGrz07y/gMJmTxHLVoOA97IjGia3ClVPINkGCFkzHQhoyDv8PBvWtxprOEDa09El/jlk1VPGy6oBC4ZR2S8yJhhe2prKqB7YDFmYxH+uHbSMNxRq05CdDECcmCsrmRv/Fe8Hn1cHq8JucFDMcs7WmGwiNGd2prn0jEl1UObr3orDaginqWWiUmpwS1n/dQ4oceECLAiC51o/KWEzjojaG+E2MUOTanlc68jy9XREQGwNwqeBibaGtPMWGvbE5Yscz2MAIbi0ApyCnFOaSaxy7PE7p1ExGTpHjxzLtDrCa6DDwZI44aexH9Rh5mzmXgD9xqzFv72YG2ub2LyjlavSBck6nZ731Q2IZbp31OZ5+3Pp0A0Ini+OZipY3fqLG+e8MjKayeJ4jNBoKn5nZ9nY+uFvEW5aZFLSxmnaf87GcA
+DKIM-Signature: a=rsa-sha256; bh=oipKMVMWiCHu8LUCXIe0PRT9Q60RNCfPvsmm0GAKWaQ=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1761757771; v=1;
- b=bBHPltf3do3gwAZYVJlYsuWc7Vhm8SL9vkjgy97s7w4x6MUaWOPtL24Hgpf5ikQ/kwXtggo8
- oqQef7IRSt/gjtzuqfWhFPXiVk9zp62I1sCnSIRekj8+S8WsIi+k/GYrRrVJPo6/zngdA7yb9W0
- iQMMRF4BB8Mh9nkSmk7KC27Hvzl8y1cxEUpBDkwurYMSbGmADIS1AzCB/Wvh4A5/FovTGy4Aopm
- UH5Onx6kVin0I93h6H3fpYFy/H006BdbYEVCQ/n3uwCfB6uIw83MTm8XxAfVtVyufJ7bzceQR8l
- aobpO24Gbzkae9YocMmaR93st+FlVXLXAkqtWc1E0i4zA==
-Received-SPF: pass client-ip=178.33.105.233; envelope-from=clg@kaod.org;
- helo=2.mo552.mail-out.ovh.net
+ t=1761757806; v=1;
+ b=iRdshLz6bfvSnhWkyGsrmAzPTbUm+CuDzf1hYJv9CaVyxd38Z7mjilGgxW7agMRH7kbeSIF0
+ 4Xs9tAatNYFrskOrs3FWc41ozOhxf3Yx5AV282HvnOoE2P6cjcCLmpuu0dEjL0OsPUS/0D7p9KW
+ 35NOJe6KNNJ7ypyZBeE56vpllKFoFfVwm9FeA79lrw1VB/CfU3Lb7Zn9UkVEfN5+NgOz4dAjwHe
+ ni1pyhj6NkIm1xS70qHqTwqnGue+mBAd0879Cp7cb/Pahqlt3WRJJG48k7q/QNrbdzUZkIh4CHR
+ SoceUoi/P7BSWBc/nTTKs5NIrf6w6U2ltR6T4DSH7aklg==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,34 +132,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/23/25 12:01, Jamin Lin wrote:
-> This commit refactors the Bytedance G220A BMC machine by moving its
-> implementation from aspeed.c into a new dedicated file
-> aspeed_ast2500_g220a.c.
+> This commit moves the Supermicro X11SPI BMC machine definition from
+> aspeed.c into a new standalone file aspeed_ast2500_supermicro-x11spi.c,
+> and adds a dedicated I²C initialization function for the platform.
 > 
-> The goal is to improve modularity and maintainability of Aspeed
-> machine definitions by isolating each platform into its own source
-> file. This aligns with ongoing efforts to simplify aspeed.c,
-> which previously contained all machine configurations.
+> The refactor continues the effort to modularize Aspeed platform support,
+> ensuring each machine model is defined in its own source file. This improves
+> code organization, readability, and simplifies maintenance when adding or
+> modifying platform-specific behavior.
+> 
+> Previously, the Supermicro X11SPI machine reused
+> palmetto_bmc_i2c_init() for its I²C setup. To make the machine
+> definition fully self-contained, the function was copied and renamed
+> to supermicro_x11spi_bmc_i2c_init(). This ensures that the machine
+> can evolve independently without depending on Palmetto’s board logi
 > 
 > Key updates include:
-> 
-> - Moved G220A_BMC_HW_STRAP1 definition and
-> g220a_bmc_i2c_init() function into aspeed_ast2500_g220a.c.
-> - Moved aspeed_machine_g220a_class_init() and related type
-> registration to the new file.
-> - Added the new file to the build system (meson.build).
-> - Removed all G220A-specific code from aspeed.c.
+> - Moved SUPERMICRO_X11SPI_BMC_HW_STRAP1 macro and machine class init
+> (aspeed_machine_supermicro_x11spi_bmc_class_init) into a new file.
+> - Added new function supermicro_x11spi_bmc_i2c_init() copied from
+> palmetto_bmc_i2c_init() for independent control.
+> - Updated the machine definition to use the new I²C init function.
+> - Registered the new source file in meson.build.
+> - Removed all Supermicro X11SPI-related definitions from aspeed.c.
 > 
 > No functional changes.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed.c               | 71 ---------------------------
->   hw/arm/aspeed_ast2500_g220a.c | 91 +++++++++++++++++++++++++++++++++++
->   hw/arm/meson.build            |  1 +
->   3 files changed, 92 insertions(+), 71 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast2500_g220a.c
+>   hw/arm/aspeed.c                           | 32 ----------
+>   hw/arm/aspeed_ast2500_supermicro-x11spi.c | 76 +++++++++++++++++++++++
+>   hw/arm/meson.build                        |  1 +
+>   3 files changed, 77 insertions(+), 32 deletions(-)
+>   create mode 100644 hw/arm/aspeed_ast2500_supermicro-x11spi.c
 > 
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
