@@ -4,75 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2649FCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 16:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DADCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 16:29:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE8hH-0004YZ-GC; Wed, 29 Oct 2025 12:06:54 -0400
+	id 1vE91Y-0002F1-Lf; Wed, 29 Oct 2025 12:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE8gj-0004Rf-Tu
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 12:06:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vE91U-0002C8-AR; Wed, 29 Oct 2025 12:27:44 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE8gZ-0005La-DE
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 12:06:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761753965;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ACs8zAVT28fsXNdYag46SkGD7kgjAcjkUqyUE11gB2Q=;
- b=UZ/edaAwV0L/OJ1uM7LAX/ZVcJV1fsBKkgp3DiHDyX+nXuAd6p/yZ0hjrb1fbYgqb5MJXC
- Xt7UySdUj/77tsXYFRBnArdS9RiSDm1acJ1CGicyaFRwID+UuupEVBg49aMW87u46mzi4z
- ceAl7npMnM+rC2RfmE93PdmnK3r2vmU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-USktdEV8NIaVtaI_EnD6dw-1; Wed,
- 29 Oct 2025 12:05:59 -0400
-X-MC-Unique: USktdEV8NIaVtaI_EnD6dw-1
-X-Mimecast-MFC-AGG-ID: USktdEV8NIaVtaI_EnD6dw_1761753957
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 782AA18F91AA; Wed, 29 Oct 2025 16:05:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.204])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 806911800353; Wed, 29 Oct 2025 16:05:35 +0000 (UTC)
-Date: Wed, 29 Oct 2025 17:05:32 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>,
- qemu-devel@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
-Subject: Re: [PATCH 2/5] vvfat: move fat_type check prior to size setup
-Message-ID: <aQI7TCjx395U0P4k@redhat.com>
-References: <20250903075721.77623-1-chigot@adacore.com>
- <20250903075721.77623-3-chigot@adacore.com>
- <aPp2eRW7gQfv4hT7@redhat.com>
- <CAJ307Eg_YngaeBukZjpr81iGJCm+ycwZHj_aPuxU_8tuSC9MPw@mail.gmail.com>
- <7f81bcff-9262-b092-42b4-f7e19b302f97@eik.bme.hu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7f81bcff-9262-b092-42b4-f7e19b302f97@eik.bme.hu>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vE91P-0008KY-Dn; Wed, 29 Oct 2025 12:27:43 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TCL8ng020885;
+ Wed, 29 Oct 2025 16:27:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=5nGiu3+DYKLipI2zymf6FzpspOzeEKI+CNW51jQRB5E=; b=Cm7JzvtYJQUP
+ hX/qvfzxg9DQYuoWfoGQZ5IVTHlRsvreM4wcog/gJ8wAqqJwfd+QmpMlN/9/YNcS
+ VMZtm9npiKI4MAXvL4en0p2Dp4Y12jWNygBnfo3dB8A9RoqKufAXKn3opEAd2ZFT
+ tLK5FuqpllGbfcVMutQhuSCgJPXhwGNtF/zwwzHfBSdZzKrhBhlMPDrf+DAfzAH9
+ S6MxhIwW/wSJA06apbeif86UGwNj4L9AgW708Aoyw7uJttB4dwYgRiCMUWDEOJvj
+ 5PgwwLao4i8lPlpIhjpTRetiB79YwokchNW+MHgTLfsp1smSAyJeJivJ4+qki+pk
+ l/9+uX92WA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34agm8nd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Oct 2025 16:27:27 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59TGO1IQ012589;
+ Wed, 29 Oct 2025 16:27:26 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34agm8n8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Oct 2025 16:27:26 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59TDiKpq023844;
+ Wed, 29 Oct 2025 16:27:26 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33vx4b29-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Oct 2025 16:27:26 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59TGROtS61145516
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Oct 2025 16:27:24 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D3AC58056;
+ Wed, 29 Oct 2025 16:27:24 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EFBB458052;
+ Wed, 29 Oct 2025 16:27:23 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Oct 2025 16:27:23 +0000 (GMT)
+Message-ID: <e863e676dac2bb802e1f66dff57fe4c26464d7c9.camel@linux.ibm.com>
+Subject: Re: [PATCH] tests/functional/ppc64: Fix class names to silence
+ pylint warnings
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath
+ <rathc@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>, Aditya Gupta
+ <adityag@linux.ibm.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>
+Date: Wed, 29 Oct 2025 11:27:23 -0500
+In-Reply-To: <20251029141946.86110-1-thuth@redhat.com>
+References: <20251029141946.86110-1-thuth@redhat.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=K+gv3iWI c=1 sm=1 tr=0 ts=6902406f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=cOzduJsHjfEYIaPULTkA:9 a=QEXdDO2ut3YA:10 a=poXaRoVlC6wW9_mwW8W4:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
+X-Proofpoint-ORIG-GUID: gpFbQNwyJT0dZF7NRY-r_E2ppSjk57y_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX9iZxOOPM7wUw
+ Ns3+Koxb7CI56cLQa5j9ZuRhMr3KmQlPqNZzGB+bMXbP/Mx/ZsHpwuybsHapO3I5m0BWUNEIeHt
+ ucNVOFWj2U78go9T9YMV61QzwBSr1YKLuTvV3V+JqOzib5cNnbl1QoGxe2qsAPWWgexTPi8QmqP
+ LjFEdlJd5QUlXgw/8l0o6mzZ9QtQiWQ0sSY0mzd3YqL1aJJi/HH9RdIRMo/llT/HPUNuzom25Vn
+ Vo2x1psBdTad+7Aa3+FpFUP4YWNGWzvuoLXMB8DueG5A5hlICxV8m09J+aKcCFbv2QhMww8eOBs
+ 8JVLB+LTKnvD27BlV/vt/u1WVvu8gB7FvANiLMfvvaCtv+eaLMw1YrLkTKdi5s6/pJ1e/zK8qXn
+ AIJd4omIRB3JOQpyHoHKZot0IsujEg==
+X-Proofpoint-GUID: rCGKM4R_Oxz25fb94eF_pKHle1wrTtt7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-29_06,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ adultscore=0 clxscore=1011 malwarescore=0 phishscore=0 spamscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2510280166
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,56 +130,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 29.10.2025 um 14:58 hat BALATON Zoltan geschrieben:
-> On Wed, 29 Oct 2025, Clément Chigot wrote:
-> > On Thu, Oct 23, 2025 at 8:40 PM Kevin Wolf <kwolf@redhat.com> wrote:
-> > > 
-> > > Am 03.09.2025 um 09:57 hat Clément Chigot geschrieben:
-> > > > This allows to handle the default FAT size in a single place and make the
-> > > > following part taking care only about size parameters. It will be later
-> > > > moved away in a specific function.
-> > > > 
-> > > > Setting a floppy disk of 1MB is no longer possible as it was a side
-> > > > effect of passing "fat-type=12". To be precise there were three cases:
-> > > >  - fat-type undefined (aka default): a fat12 2MB disk
-> > > >  - fat-type=16: a fat16 2Mb disk
-> > > >  - fat-type=12: a fat12 1Mb disk
-> > > 
-> > > That's quite a strange interface!
-> > > 
-> > > If we're touching it anyway, I would change it to make the more common
-> > > format (1.44 MB) the default for FAT12 and make the 2.88 MB FAT12 floppy
-> > > temporarily unavailable and later require an explicit size. This way
-> > > both sizes would still be available using the fat-type.
-> > 
-> > I'm a bit hesitant to change the default behavior as people might be
-> > using it without clear knowledge of it. True, "floppy" is probably not
-> > a widely used feature but still.
-> > Do QEMU have some specific guidelines when changing such default
-> > behavior ? Adding a warning ? Or just a comment in the changelog would
-> > be enough ?
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+
+Thanks,
+
+Glenn
+
+On Wed, 2025-10-29 at 15:19 +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> https://www.qemu.org/docs/master/about/deprecated.html
+> Pylint complains about inconsistent CamelCase names here, so let's
+> slightly change the names to make pylint happy again.
 > 
-> Usually you'd add a warning and list it in the docs as deprecated then can
-> make the change after it was deperecated for two releases.
-
-We're not removing any functionality, just changing the default. So I
-don't think the deprecation period applies.
-
-In general, our stance is that we can change defaults whenever we want
-to, and if you don't want to be surprised by changing defaults, you need
-to specify the option explicitly. What's a bit strange about the vvfat
-interface is that the default actually represents a configuration that
-can't even be expressed explicitly at the moment.
-
-So it is a special case in a way, but given that this is vvfat, which is
-known to be unstable, not widely used outside of the occasional manual
-use and not supported by libvirt, I'm willing to just make the change.
-
-Kevin
+> In the sam460ex test, also split a line where pylint was complaining
+> about it being too long.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/functional/ppc/test_74xx.py            | 2 +-
+>  tests/functional/ppc/test_sam460ex.py        | 5 +++--
+>  tests/functional/ppc64/test_powernv.py       | 2 +-
+>  tests/functional/ppc64/test_pseries.py       | 2 +-
+>  tests/functional/ppc64/test_reverse_debug.py | 2 +-
+>  5 files changed, 7 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/functional/ppc/test_74xx.py b/tests/functional/ppc/test_74xx.py
+> index 5386016f261..219c7991aca 100755
+> --- a/tests/functional/ppc/test_74xx.py
+> +++ b/tests/functional/ppc/test_74xx.py
+> @@ -10,7 +10,7 @@
+>  from qemu_test import QemuSystemTest
+>  from qemu_test import wait_for_console_pattern
+>  
+> -class ppc74xxCpu(QemuSystemTest):
+> +class Ppc74xxCpu(QemuSystemTest):
+>  
+>      timeout = 5
+>  
+> diff --git a/tests/functional/ppc/test_sam460ex.py b/tests/functional/ppc/test_sam460ex.py
+> index 31cf9dd6de8..024406d155c 100755
+> --- a/tests/functional/ppc/test_sam460ex.py
+> +++ b/tests/functional/ppc/test_sam460ex.py
+> @@ -8,10 +8,11 @@
+>  from qemu_test import exec_command_and_wait_for_pattern
+>  
+>  
+> -class sam460exTest(LinuxKernelTest):
+> +class Sam460exTest(LinuxKernelTest):
+>  
+>      ASSET_BR2_SAM460EX_LINUX = Asset(
+> -        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc_sam460ex-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
+> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main'
+> +         '/buildroot/qemu_ppc_sam460ex-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
+>          '6f46346f3e20e8b5fc050ff363f350f8b9d76a051b9e0bd7ea470cc680c14df2')
+>  
+>      def test_ppc_sam460ex_buildroot(self):
+> diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+> index 9ada832b781..0ea6c93e428 100755
+> --- a/tests/functional/ppc64/test_powernv.py
+> +++ b/tests/functional/ppc64/test_powernv.py
+> @@ -10,7 +10,7 @@
+>  from qemu_test import LinuxKernelTest, Asset
+>  from qemu_test import wait_for_console_pattern
+>  
+> -class powernvMachine(LinuxKernelTest):
+> +class PowernvMachine(LinuxKernelTest):
+>  
+>      timeout = 90
+>      KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
+> diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
+> index 67057934e8d..7840c4e3ff8 100755
+> --- a/tests/functional/ppc64/test_pseries.py
+> +++ b/tests/functional/ppc64/test_pseries.py
+> @@ -10,7 +10,7 @@
+>  from qemu_test import QemuSystemTest, Asset
+>  from qemu_test import wait_for_console_pattern
+>  
+> -class pseriesMachine(QemuSystemTest):
+> +class PseriesMachine(QemuSystemTest):
+>  
+>      timeout = 90
+>      KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
+> diff --git a/tests/functional/ppc64/test_reverse_debug.py b/tests/functional/ppc64/test_reverse_debug.py
+> index 69551fb84df..4eef779936d 100755
+> --- a/tests/functional/ppc64/test_reverse_debug.py
+> +++ b/tests/functional/ppc64/test_reverse_debug.py
+> @@ -18,7 +18,7 @@
+>  from reverse_debugging import ReverseDebugging
+>  
+>  
+> -class ReverseDebugging_ppc64(ReverseDebugging):
+> +class ReverseDebuggingPpc64(ReverseDebugging):
+>  
+>      @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
+>      def test_ppc64_pseries(self):
 
 
