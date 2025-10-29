@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907BDCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 07:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C104CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 07:13:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE0Gs-0005Cj-1V; Wed, 29 Oct 2025 03:07:02 -0400
+	id 1vE0MW-0006YI-Oj; Wed, 29 Oct 2025 03:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE0Go-0005CR-MV
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 03:06:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE0MV-0006Y9-Hl
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 03:12:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE0Gh-00053U-3b
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 03:06:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE0MM-0005VZ-FO
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 03:12:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761721607;
+ s=mimecast20190719; t=1761721957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=P+hBtwTnmYEwYpBYKrrVfy4QZP0aNmrBQvOEZ7NvP9M=;
- b=deC2n5XKHuD3KjgiD2jreYNztytWWOIAqFRMgbVqXlsW3+PEL7jPJ1PmBLHrLD7FmlpAM6
- dd0hpnUCw2QI8yvIXh2x3Cw9McVw2ordsTTfjj33MYcax3Dkj4vXOOmETvQegSun2T7+uR
- T03TZrSTSDvO0BKbB3iWsQJrNKTupc0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=V7EuQ/QORi9lHyL+ZtakFK14Q1nPGKOITfCyqqZEZ+E=;
+ b=BIMwNRGHVCzdDUivXApkTec+Xiwuw7lnZzTYbjQ1qPZsdmL/eIpAqNY0k3nXpMuIFkk0wo
+ jyaeAstVStNn7bBc0AmH9SQBZBnipeWhkWc29G0l8hXPqiM60yme6Wixaf2PMtfx5mSdnL
+ BT8qf3PJBj44HqhL4n5adc6xfCv2N6A=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-216-wsfyayshOCycc_uX_TwRNQ-1; Wed, 29 Oct 2025 03:06:43 -0400
-X-MC-Unique: wsfyayshOCycc_uX_TwRNQ-1
-X-Mimecast-MFC-AGG-ID: wsfyayshOCycc_uX_TwRNQ_1761721602
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477124f7c00so11889185e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 00:06:42 -0700 (PDT)
+ us-mta-630-o17r5RR-NXuc9D2LyqkB5Q-1; Wed, 29 Oct 2025 03:12:34 -0400
+X-MC-Unique: o17r5RR-NXuc9D2LyqkB5Q-1
+X-Mimecast-MFC-AGG-ID: o17r5RR-NXuc9D2LyqkB5Q_1761721953
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-428566218c6so3157422f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 00:12:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761721602; x=1762326402;
+ d=1e100.net; s=20230601; t=1761721953; x=1762326753;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=P+hBtwTnmYEwYpBYKrrVfy4QZP0aNmrBQvOEZ7NvP9M=;
- b=EryYDJUsn9Y+UozvnYd84K/7Vx48an+yEzWdgdChJ4lFFg74/MYNgvhY5iV4ouQK/W
- 61nNV1duKnIPFsBcwUiEFu8wOO9eK1iOAHtZHtOLjPphzXKMWTjnaMGt67W47LAOz7IK
- 5f0Pt99X13uwPui+svt2yN9xnPyRGdUFl9kO9vue0s9vAckDRJCTKYlbF6+ANBqI4Gcz
- X9NHw+7OSjpH3Vg4YDEkCbD2ISJOZWNxszwnLn4762A7cH0H3u3MlS/XkK0CZGZMKJm9
- 1rutnljmr2CK44JwpiFJ8mqBFcL76j9nw6zSNrvwnCsq3VY+g+Kd4N8zN4PWgkrQbASe
- yk2A==
+ bh=V7EuQ/QORi9lHyL+ZtakFK14Q1nPGKOITfCyqqZEZ+E=;
+ b=KinBl33aIFY/G0dPxKrqC8G+lSgNZSyowuaLGpLG7WqF5JDoeKczZGRv6VgmvKrT7H
+ wDIO/wlK6IDJhKNIbskDUXLcNilrwHFCfsPe/ImHGrXIdjSqQvVBmr4AQMNQ3J1SPz2y
+ sjO91hN5vi34YfHQ09fO0KBv2Il5rUrtUwvKdc3uCs/wDZvJBsbC8ENDb84KpZCOslww
+ OLQRNlUZPPvtnbRTCofOqMEJeST4O8AqH6b+hE/HjwFPI63oPgeGfNrPRnFMg71A7Zkj
+ PEWF9HjeSQXpEzEr1KZV81YCDGwAzpp7dIw4KICKWa7iNtnWTcuvOyBceapBttp3gfCV
+ 7JVw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX21NC1qZfRxOfB0A16tu207jwIc7oWc3UZKNlmWOF+alv6jr/uDBTBZ/PDPnFGgvB877XCNgiGJ86G@nongnu.org
-X-Gm-Message-State: AOJu0YwcSFks5OctqwX8BQUz3SeBSDM24Hl8xgMrjC+99I9EhXCY+lLD
- KKcJvKrW2BIHNxoV70WN0eNl+Eev92dCThLwaYyaM3TmsAMHSg4N6CIMd1884DabOLks1elJtL2
- ljPv/0Ac8lHH3whsF8W4kWBDTeahK0FriZ/6o4M5FfrnQjHq60x3UFTZb
-X-Gm-Gg: ASbGncug2bjDEunqvM/IK2CbEVQ8AqepJAHoosE+BBhO8vCHM3z4czLRUVFOBFJt+R9
- RejtkCVgaz6gCldHKbAinwm46PKeyir24KaVISgQGDB9i9JtcjPpHdqv2tG+qdHnDrmivC0CVi+
- z5r5dCZUJw6L9wI9H0Tk+GCODnCVfCyeWXLWL9YU7qDGdZv5TeGEsjnpCpO34BYdSkRIHT9w2m+
- nIRB/5Lar89w+pHcGLUoWnpJ7EGPXvIVxZRFeItxW5BA6ZfWDmiOHmM7Lz322GLdWs0gqRjiYUt
- oflmOzXFm77umVSuCbZQXEMy8jEi0ZI+9qle5fQ2z6tugtfveHl8eR0XTNoXVColB8bi6rU=
-X-Received: by 2002:a05:600c:a087:b0:46f:b42e:e367 with SMTP id
- 5b1f17b1804b1-4771e2639eemr13965175e9.41.1761721601853; 
- Wed, 29 Oct 2025 00:06:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHP0API+j2IBjmz1UpXHcOBpbsLgcu0HPN4r28dAw4qlh2Zc3NhYrRGHHELjmqA5ZOUSgQjg==
-X-Received: by 2002:a05:600c:a087:b0:46f:b42e:e367 with SMTP id
- 5b1f17b1804b1-4771e2639eemr13964985e9.41.1761721601492; 
- Wed, 29 Oct 2025 00:06:41 -0700 (PDT)
+ AJvYcCXB46WJDdvidO4HkdVBXfDncEQSs4kHVHCOw+JtUcBFXhz3iI6hpR0PZPwrv8wzhkIwWobJPZYR5rhM@nongnu.org
+X-Gm-Message-State: AOJu0YyWhslDwTtQM2Y/fWmQxpQws9cbWcuZLYyKXbx1QeXVsESZyO8R
+ 7ElTWwWhEX7D1yMIcprM/NGDjWrpd9E03PLhAVCXeaiQA1MkBaFf5KU45Ax/WCP0ZwEeBLmuTrT
+ m5u1MFfUz17XiFgLe3axNlvtytByc7DyX+u6Ja86Pg81YB3+TENeS/7c1
+X-Gm-Gg: ASbGncvamLYNi1NAqleG3IUGcBtNw+Iny957e5Xb5ID6e65xd3zHtiWZdE8miiTQjwo
+ eikscymxngUXf3LOa5927HrDsGmA9SKhSufxWbh5dxc5qDnPeEqCMB6XJUzqPidq0hcUgiHRvqZ
+ LsAfeLh5R1nJ7kBeQ9sThZ639hW0E6xt/1wLnXnZn/UBLOjwLtFDzi2mYMJ88nPWNgvxA9/7KHQ
+ gj8qLcUr/jWAgOHCFFZuRy5ikwagtFwb5ySg+lTeUO67+32bV6Pgm60dclcBT+5ggXvih9OCyw9
+ TgAQuI30ppNw98ZYS5cfbHYLjZqGFWDdJBFClR6NXk4OMhcO201S0Hyef8kBTTVRnRHMttI=
+X-Received: by 2002:a05:6000:2203:b0:429:957b:ee72 with SMTP id
+ ffacd0b85a97d-429aefbefbamr1324914f8f.53.1761721952983; 
+ Wed, 29 Oct 2025 00:12:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhZP8tej5Nms8HH1sJGEu+lcFBcRWE8K0eBxvLtshfKmqljqk0PYquKMWd6p6U5XgRK0i3sg==
+X-Received: by 2002:a05:6000:2203:b0:429:957b:ee72 with SMTP id
+ ffacd0b85a97d-429aefbefbamr1324890f8f.53.1761721952545; 
+ Wed, 29 Oct 2025 00:12:32 -0700 (PDT)
 Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771e387caasm31379235e9.1.2025.10.29.00.06.40
+ ffacd0b85a97d-429952b7b22sm24268674f8f.9.2025.10.29.00.12.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 00:06:40 -0700 (PDT)
-Message-ID: <4c03b66c-5e0c-46cb-80d3-e91a67d4e532@redhat.com>
-Date: Wed, 29 Oct 2025 08:06:39 +0100
+ Wed, 29 Oct 2025 00:12:32 -0700 (PDT)
+Message-ID: <c87f0929-a38c-425d-bfb6-d2985b908124@redhat.com>
+Date: Wed, 29 Oct 2025 08:12:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional: include logger name and function in
+Subject: Re: [PATCH 2/2] tests/functional: include the lower level QMP log
  messages
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20251028182651.873256-1-berrange@redhat.com>
- <20251028182651.873256-2-berrange@redhat.com>
+ <20251028182651.873256-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,7 +127,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251028182651.873256-2-berrange@redhat.com>
+In-Reply-To: <20251028182651.873256-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -156,31 +156,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/10/2025 19.26, Daniel P. Berrangé wrote:
-> As we collect debug logs from a wide range of code it becomes
-> increasingly confusing to understand where each log messages comes
-> from. Adding "%(name)s" gives us the logger name, which is usually
-> based on the python __name__ symbol, aka the code module name.
-> Then "%(funcName)s" completes the story by identifying the function.
+> We've seen a GitLab CI timeout failure in the test_pseries.py test,
+> where it appears likely that the test has hung in a self.qmp('quit')
+> call, but we don't have conclusive proof. Adding the QMP log category
+> to what we capture should help us diagnose this, at the cost of the
+> base.log file becoming significantly more verbose. The previous
+> commit to include the logger category name and function should at
+> least help understanding the more verbose logs.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/testcase.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   tests/functional/qemu_test/testcase.py | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
 > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 2c0abde395..6fc6e1ac0a 100644
+> index 6fc6e1ac0a..5ab84ce674 100644
 > --- a/tests/functional/qemu_test/testcase.py
 > +++ b/tests/functional/qemu_test/testcase.py
-> @@ -217,7 +217,7 @@ def setUp(self):
->           self._log_fh = logging.FileHandler(self.log_filename, mode='w')
->           self._log_fh.setLevel(logging.DEBUG)
->           fileFormatter = logging.Formatter(
-> -            '%(asctime)s - %(levelname)s: %(message)s')
-> +            '%(asctime)s - %(levelname)s: %(name)s.%(funcName)s %(message)s')
->           self._log_fh.setFormatter(fileFormatter)
->           self.log.addHandler(self._log_fh)
+> @@ -225,6 +225,9 @@ def setUp(self):
+>           self.machinelog = logging.getLogger('qemu.machine')
+>           self.machinelog.setLevel(logging.DEBUG)
+>           self.machinelog.addHandler(self._log_fh)
+> +        self.qmplog = logging.getLogger('qemu.qmp')
+> +        self.qmplog.setLevel(logging.DEBUG)
+> +        self.qmplog.addHandler(self._log_fh)
 >   
+>           if not self.assets_available():
+>               self.skipTest('One or more assets is not available')
+> @@ -235,6 +238,7 @@ def tearDown(self):
+>           if self.socketdir is not None:
+>               shutil.rmtree(self.socketdir.name)
+>               self.socketdir = None
+> +        self.qmplog.removeHandler(self._log_fh)
+>           self.machinelog.removeHandler(self._log_fh)
+>           self.log.removeHandler(self._log_fh)
+>           self._log_fh.close()
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Hi,
+
+I tested this patch, and now I'm seeing Python stack traces in the base.log, 
+like this:
+
+2025-10-29 07:22:45,264 - DEBUG: qemu.qmp.protocol.default._bh_loop_forever 
+Task.Reader: failure:
+   | Traceback (most recent call last):
+   |   File "../python/qemu/qmp/protocol.py", line 914, in _bh_loop_forever
+   |     await async_fn()
+   |   File "../python/qemu/qmp/protocol.py", line 952, in _bh_recv_message
+   |     msg = await self._recv()
+   |           ^^^^^^^^^^^^^^^^^^
+   |   File "../python/qemu/qmp/protocol.py", line 1053, in _recv
+   |     message = await self._do_recv()
+   |               ^^^^^^^^^^^^^^^^^^^^^
+   |   File "../python/qemu/qmp/qmp_client.py", line 459, in _do_recv
+   |     msg_bytes = await self._readline()
+   |                 ^^^^^^^^^^^^^^^^^^^^^^
+   |   File "../python/qemu/qmp/protocol.py", line 1021, in _readline
+   |     raise EOFError
+   | EOFError
+
+If if it's harmless, I think that's very confusing for the casual user when 
+trying to debug a problem. Can we avoid these?
+
+Or maybe rather log the qmp stuff into a separate file, e.g. qmp.log ?
+
+  Thomas
 
 
