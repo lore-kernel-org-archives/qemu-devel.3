@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1811CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2706FCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE6hg-0005MJ-MW; Wed, 29 Oct 2025 09:59:08 -0400
+	id 1vE6kR-0006g6-KC; Wed, 29 Oct 2025 10:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6ha-0005Hu-LZ
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:59:02 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6jz-0006bm-CA
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:01:32 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6hR-00052I-VQ
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:59:01 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-475dbb524e4so30572845e9.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 06:58:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6jl-0005W7-K7
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:01:27 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-475db4ad7e4so21166965e9.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 07:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761746329; x=1762351129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761746470; x=1762351270; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=L9zlBbPAA9oBrM+tkItgC3zSorgHc7QzE47afNVIQf4=;
- b=C2Ok2+mMBjl51J3JMbgv9RMcsz5b16S3L19O1CL4cuJR2Cx3tGAE3hJ2ySpanEweMa
- 6gpnlcJj2tV2MlR4PKLLfwpOD483mKUdzKyF57m54t9T/pcKmkFdBZimQTsSz0Eue7sM
- mPKH2aj1DTWrqspnQj6fzgLjQfx+p6Z0wWeE6wp0I/5l9hNUtfUctEJHuDS1S/L6nxmf
- 3O8n0P19eNbvWhHHl9pZS/KFtM6FFVicz+BplPzFhaz9V6nhrmbQlrX+jqP9eK6pbqQj
- VYJVl5V1OCOgCQent+RWO8dRB4HFQErkFHKVLsvbFJY2EN+dYhaOIwikTQ8YliD1dn3k
- QIZg==
+ bh=QEhR6M0s41+/Hqzw01UANwG0jYSvvs8GWwB6rih1zEc=;
+ b=arsVyIDiHMaw1OEfy+xvSEcTSPoWUaSmu2R0INLzMYJEdoJOVamgD9yaydMZowL0tW
+ n+l4L48gv5UG5Zbla5XcpDnl2/uxSASq2C6bTF00wpmyqmptXjLhqy+eJrx+9TMueYbe
+ KTHJXezS52SfOwiE7F/nDpxH9VbV7USB38qsKEaqT4kNpr5mH/wk2wUAQL8p4fO2Kdv5
+ 7K600n7nk027wL8JlYfttEOsAm2lT1ZME95N36Pde5oqk215t1f0goLv8ULt0AuTMwJt
+ WIwt9Gg+BztvXDveGEbCOKgKc0JRlAx1VSRFx9zQji95XSK4F7y7kiX8eQlU6/LcGfSg
+ rG/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761746329; x=1762351129;
+ d=1e100.net; s=20230601; t=1761746470; x=1762351270;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=L9zlBbPAA9oBrM+tkItgC3zSorgHc7QzE47afNVIQf4=;
- b=edZtHd8qw1puQrOAdcVe/X0iIYPsyL77+hBe0fSSm0Lsaoo/v9EBGlfzEiyrFWD+ZB
- RDkOaKe5EU4L9NiXn2i5cfcFkyZfFRdVBHgcsW1jpXkEvQK1Dzg7PwhbwBM3iQhEv/zT
- yafIWR+DKOvJsRuC9GbfU9Mm86AHCCKn3qpyuAGg7b9/SfjGUTJVDoGrgTBV23Ss0yUa
- GHc+cf7AuMHgRofNK5JyjSnYgYvGUklHcNsUhQ+a0iOeYX0CjEo3bGJDaNYKsdNwR89U
- pTr1si2qyL0VTHzEGo5tIugmaKWTPIM+1QD8J/m6ru6Sav2FogS3jkQOtRaoJiGfN6u3
- kcEg==
+ bh=QEhR6M0s41+/Hqzw01UANwG0jYSvvs8GWwB6rih1zEc=;
+ b=qkf0DCjYlAd+QhjE9F3n7ryuQIpX3uQKHyID4EXjIslc1xJ0zPPV9pMg1QOG7uNGZv
+ psuLbfRQV7dBaN4cGsFOCShNhDhx6Fwv+u4g47K9fU86QcqbEFvtbum5bZIAnqzZ931l
+ f8yKaid6GIjAIjvJTY6LwKIwzd2dSj22+JtLFe0ypjj9cYZtL8mNAloiS7OMRnp8s/1y
+ XPgTfzvNDZy8f0pxZTrOlXno3+gQdjkjO2KLvV357xkDXjj/2ZZETxeqFqkVjg+h9yOY
+ aq85PGizwnuO+9vYNZjItmjwW7sSZGHDyypf4lzhhDY+pqBhjRjM8Wc4klnk5TVHCWlP
+ DQbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUi5xp5Srzfs0vnoMpdoKjipV0fg76zTzByMhKDzbj72ZM/WfbEqkK05dp0VH0KaVrlN7j1waqqLUvx@nongnu.org
-X-Gm-Message-State: AOJu0YzsRWa/z+Q+7hrML36hgPSzt5VbpyDMiR7Za4xZr/HoYTMx7rAa
- PyBY3qIX0n+cklnlck3zIgrN3X7/VLmxI+nCWD8aZuJDDLL7HfEASnj+j+rrOYqOZ1g=
-X-Gm-Gg: ASbGncsVJ2tbfE2EfY856UT+yBelEyf9sG/KGtCXZOa4w+tKsw9MvJWFy0N0H8rRHYC
- 8BMZjtXbmVbSA1GO2R37KUWBpaezo8nX+c/XJvrlih5swhv+HfCxyvheiIKOaaL0QCRSk1SGB8d
- 8ucAi8nzAu5BD/vpikSVzks2TODIVs/Vo1ZMl6rDImOJtwSew28TGS1lgeAWMzeuoyJDlXiXFif
- x2aiKIyLlEJS7zO+8NIy8dD19BIFOlUSirw/uYa9MEQmI9ZhKkfxUXpg8uY/n8WSj9qk+4bzFer
- Ns8iDXc3Kk0nV5jyJiC4eqlLJtRBg0o2iz0Ful7oBmb/otqMjjf+go78wtCn790AzsbSubcMQKO
- bW7mCRg8p9+YDeNBGxHG58b3JApZ6nublj3+QxEwwDoOL4I5MLCtWeLh/i3nniHdvCC3ZH9vWFk
- Ukx64rTI9gG5PozubLY736Pyr4JMHj+D4IkHnQ9FvTktE=
-X-Google-Smtp-Source: AGHT+IFjoN5C+uOanxun2tnqHZ1de5PEpv09uNvR16VTfmDRQbw3CaOgZUnXie/+se+gLFA9seykoA==
-X-Received: by 2002:a05:600c:154c:b0:475:df91:ddf2 with SMTP id
- 5b1f17b1804b1-4771e18a983mr30681075e9.17.1761746328681; 
- Wed, 29 Oct 2025 06:58:48 -0700 (PDT)
+ AJvYcCX8a78++aeJE/t8rhkSqs4xyClCbaAXuEwI1ND3KSDTXm5qfJ9TwBBv5gixNu5T/0bWMo9LTOxIo4tm@nongnu.org
+X-Gm-Message-State: AOJu0Yz7wmTnNWsfNwXGB4FhZBNoj/gJCX66gx4MpemT0vwIHxSmeomF
+ ET9xDWLu2KZ3mpiaSOfDMCbeQJRFnNGwyZ+LbgQNfB6e50O45WMZOxj/2egaSR6NoAE=
+X-Gm-Gg: ASbGncv71GNxIfOy5/egwobEFona4TvSEdW0si9OUk22aHKMRCRBouV2bkrul86JLMa
+ xLEh31HpOBe7Fp/bNcwGzwvFdNxrWsjm1HbMPbrPyan0qnYNb5OYG+faM1CMv2TxKyqPTgMWk6q
+ aR3PiY3KDbOJ/zJSXEYrKZ8zANUy+277kjzA9oi0oO0d5xuhVkkpNMzLByjNLAa/2/RkFbM2o0k
+ 4pt0U7vSEijVbhDiw/8/NbgIKkNEHNnWPGtOnMB9Mwhet11ZtJhteMXQwsfAbQlft1AoDIw9Xgu
+ L/HcNqdPnllG5gMS1xg/QtieJhl663jDUMny4p0SsBI8JCLKwMLlFOmC3zipsGr4o9CpyPWFY/0
+ c7fNC4s1OKd4D0slUOAMnWp85bQhoTa9Piy953Z716T9jGj+dSPSGdC8xKwC1ynS596DCmJMqAI
+ nfGJyMZSfMBKcYLlKsG9mevWqMh1iufsPYgdeZGt+CuRQMiAWy47Yxkw==
+X-Google-Smtp-Source: AGHT+IEm1B/B8M5sogNSxjNyogOJwHhjpWeG0zC/QBmPglhJoxtpWgJ5QXNgvKTq78lghe9EA/B0lg==
+X-Received: by 2002:a05:600c:4683:b0:475:dd87:fa32 with SMTP id
+ 5b1f17b1804b1-4771e1659f8mr27433415e9.1.1761746469550; 
+ Wed, 29 Oct 2025 07:01:09 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771e196b27sm52895915e9.8.2025.10.29.06.58.47
+ 5b1f17b1804b1-4771e27f7b8sm52089295e9.0.2025.10.29.07.01.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 06:58:48 -0700 (PDT)
-Message-ID: <fd302b66-1430-454d-8f68-dde3a74b1caf@linaro.org>
-Date: Wed, 29 Oct 2025 14:58:46 +0100
+ Wed, 29 Oct 2025 07:01:08 -0700 (PDT)
+Message-ID: <92e2aa49-d55b-4ea2-aab1-fe802a787bca@linaro.org>
+Date: Wed, 29 Oct 2025 15:01:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/35] qdev: add qdev_find_default_bus()
+Subject: Re: [PATCH v3 02/35] hw/audio: look up the default bus from the
+ device class
 Content-Language: en-US
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
@@ -91,13 +92,13 @@ Cc: Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
 References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
- <20251027151045.2863176-2-marcandre.lureau@redhat.com>
+ <20251027151045.2863176-3-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027151045.2863176-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20251027151045.2863176-3-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,35 +124,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 27/10/25 16:10, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> This helper is used next by -audio code.
+> Generalize and simplify the device model creation.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/monitor/qdev.h |  3 +++
->   system/qdev-monitor.c  | 25 +++++++++++++++++++++----
->   2 files changed, 24 insertions(+), 4 deletions(-)
-
-
->   DeviceState *qdev_device_add_from_qdict(const QDict *opts,
->                                           bool from_json, Error **errp)
->   {
-> @@ -657,10 +676,8 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
->               return NULL;
->           }
->       } else if (dc->bus_type != NULL) {
-> -        bus = qbus_find_recursive(sysbus_get_default(), NULL, dc->bus_type);
-
-I don't understand why we use sysbus here, but this is pre-existing, so:
+>   hw/audio/soundhw.c | 20 ++++----------------
+>   1 file changed, 4 insertions(+), 16 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> -        if (!bus || qbus_is_full(bus)) {
-> -            error_setg(errp, "No '%s' bus found for device '%s'",
-> -                       dc->bus_type, driver);
-> +        bus = qdev_find_default_bus(dc, errp);
-> +        if (!bus) {
->               return NULL;
->           }
->       }
 
 
