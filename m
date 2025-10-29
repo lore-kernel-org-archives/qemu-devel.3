@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D03CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C7CCCF9F6
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE2g2-0002Ra-IK; Wed, 29 Oct 2025 05:41:10 -0400
+	id 1vE2gJ-0002Z2-R0; Wed, 29 Oct 2025 05:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vE2fz-0002Qz-Mo
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:41:07 -0400
+ id 1vE2gI-0002Ye-Ai
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:41:26 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vE2fu-0008Rj-R8
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:41:06 -0400
+ id 1vE2g8-0008TE-KG
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:41:24 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1C391808B7;
- Wed, 29 Oct 2025 12:40:53 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 35CE9808B7;
+ Wed, 29 Oct 2025 12:41:10 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex.net (unknown [2a02:6bf:8080:d37::1:31])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id Rea6510FtiE0-CGSPPmoI; 
- Wed, 29 Oct 2025 12:40:52 +0300
+ (smtpcorp/Yandex) with ESMTPSA id Rea6510FtiE0-W2yEEPnq; 
+ Wed, 29 Oct 2025 12:41:09 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761730852;
- bh=dewZtlGVF78OCULW01xUxoCXbqgHh67srXGr7dEfC/c=;
+ s=default; t=1761730869;
+ bh=L3idjeFzpoBa9CNA1EydnK3SilKFwfpI7XQJIuYetWs=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=q8D9DEmMFfLyZO8KiEPZEB1uMhcvkq9f6WHYj7GkHBD0GkBrVnJU4QrVS12SFKfC1
- HmOaBGrE61NzvENMQrkQ/kfXJF7U5wWsIk1aQh4iymQr5o1X8bf9SDSx3t68ZVg8SY
- G+jrpmMyw4cCNsde/PE4uI/4j8OWz3cwMYBJFEHQ=
+ b=kRwZUeWL7r5LG/ghvyAV+cNj9FRoye0cZt10L8e5uBDz8DU9+TAK84p8aH7SrzZQF
+ XQXhsVnrAJHZFZMQqFVNjNt20ZBOP9feeQgsRRTPdUyCh5+1kUQoc/6nMW9dcQGik4
+ znRmMObsL9uCBeSu95Ft722dp2mAovipmagaJemU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -48,10 +48,9 @@ Cc: Raphael Norwitz <raphael@enfabrica.net>,
  Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v2 2/3] vhost: add vmstate for inflight region with inner
- buffer
-Date: Wed, 29 Oct 2025 14:39:41 +0500
-Message-Id: <20251029093939.3251188-3-dtalexundeer@yandex-team.ru>
+Subject: [PATCH v2 3/3] vhost-user-blk: support inter-host inflight migration
+Date: Wed, 29 Oct 2025 14:39:43 +0500
+Message-Id: <20251029093939.3251188-4-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
 References: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
@@ -81,90 +80,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for future inflight region migration for vhost-user-blk.
-We need to migrate size, queue_size, and inner buffer.
+During inter-host migration, waiting for disk requests to be drained
+in the vhost-user backend can incur significant downtime.
 
-So firstly it migrate size and queue_size fields, then allocate memory for buffer with
-migrated size, then migrate inner buffer itself.
+This can be avoided if QEMU migrates the inflight region in
+vhost-user-blk.
+Thus, during the qemu migration, the vhost-user backend can cancel all
+inflight requests and
+then, after migration, they will be executed on another host.
+
+In vhost_user_blk_stop() on incoming inter-host migration make force_stop = true,
+so GET_VRING_BASE will not be executed.
 
 Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 ---
- hw/virtio/vhost.c         | 44 +++++++++++++++++++++++++++++++++++++++
- include/hw/virtio/vhost.h |  6 ++++++
- 2 files changed, 50 insertions(+)
+ hw/block/vhost-user-blk.c          | 30 ++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost-user-blk.h |  1 +
+ 2 files changed, 31 insertions(+)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index c46203eb9c..f0c283f8f4 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2028,6 +2028,50 @@ const VMStateDescription vmstate_backend_transfer_vhost_inflight = {
-     }
- };
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index a8fd90480a..29d4505d24 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -242,6 +242,12 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     force_stop = s->skip_get_vring_base_on_force_shutdown &&
+                  qemu_force_shutdown_requested();
  
-+static int vhost_inflight_buffer_pre_load(void *opaque)
-+{
-+    info_report("vhost_inflight_region_buffer_pre_load");
-+    struct vhost_inflight *inflight = opaque;
-+
-+    Error *err = NULL;
-+    int fd = -1;
-+    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
-+                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-+                                  &fd, &err);
-+    if (err) {
-+        error_report_err(err);
-+        return -ENOMEM;
++    if (s->enable_inflight_region_migration &&
++        !migrate_local_vhost_user_blk() &&
++        runstate_check(RUN_STATE_FINISH_MIGRATE)) {
++        force_stop = true;
 +    }
 +
-+    inflight->offset = 0;
-+    inflight->addr = addr;
-+    inflight->fd = fd;
+     s->dev.backend_transfer = s->dev.backend_transfer ||
+         (runstate_check(RUN_STATE_FINISH_MIGRATE) &&
+          migrate_local_vhost_user_blk());
+@@ -656,6 +662,24 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+     return &s->dev;
+ }
+ 
++static bool vhost_user_blk_inflight_needed(void *opaque)
++{
++    struct VHostUserBlk *s = opaque;
 +
-+    return 0;
++    return s->enable_inflight_region_migration &&
++           !migrate_local_vhost_user_blk();
 +}
 +
-+const VMStateDescription vmstate_vhost_inflight_region_buffer = {
-+    .name = "vhost-inflight-region/buffer",
-+    .pre_load = vhost_inflight_buffer_pre_load,
++static const VMStateDescription vmstate_vhost_user_blk_inflight = {
++    .name = "vhost-user-blk/inflight",
++    .version_id = 1,
++    .needed = vhost_user_blk_inflight_needed,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+const VMStateDescription vmstate_vhost_inflight_region = {
-+    .name = "vhost-inflight-region",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(size, struct vhost_inflight),
-+        VMSTATE_UINT16(queue_size, struct vhost_inflight),
++        VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
 +        VMSTATE_END_OF_LIST()
 +    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_vhost_inflight_region_buffer,
-+        NULL
-+    }
 +};
 +
- const VMStateDescription vmstate_vhost_virtqueue = {
-     .name = "vhost-virtqueue",
-     .fields = (const VMStateField[]) {
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 13ca2c319f..dd552de91f 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -596,6 +596,12 @@ extern const VMStateDescription vmstate_backend_transfer_vhost_inflight;
-                            vmstate_backend_transfer_vhost_inflight, \
-                            struct vhost_inflight)
+ static bool vhost_user_blk_pre_incoming(void *opaque, Error **errp)
+ {
+     VHostUserBlk *s = VHOST_USER_BLK(opaque);
+@@ -678,6 +702,10 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+         VMSTATE_VIRTIO_DEVICE,
+         VMSTATE_END_OF_LIST()
+     },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_vhost_user_blk_inflight,
++        NULL
++    }
+ };
  
-+extern const VMStateDescription vmstate_vhost_inflight_region;
-+#define VMSTATE_VHOST_INFLIGHT_REGION(_field, _state) \
-+    VMSTATE_STRUCT_POINTER(_field, _state, \
-+                           vmstate_vhost_inflight_region, \
-+                           struct vhost_inflight)
-+
- extern const VMStateDescription vmstate_vhost_dev;
- #define VMSTATE_BACKEND_TRANSFER_VHOST(_field, _state) \
-     VMSTATE_STRUCT(_field, _state, 0, vmstate_vhost_dev, struct vhost_dev)
+ static bool vhost_user_needed(void *opaque)
+@@ -751,6 +779,8 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
+     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+                      skip_get_vring_base_on_force_shutdown, false),
++    DEFINE_PROP_BOOL("enable-inflight-migration", VHostUserBlk,
++                     enable_inflight_region_migration, false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
+index b06f55fd6f..1556714296 100644
+--- a/include/hw/virtio/vhost-user-blk.h
++++ b/include/hw/virtio/vhost-user-blk.h
+@@ -52,6 +52,7 @@ struct VHostUserBlk {
+     bool started_vu;
+ 
+     bool skip_get_vring_base_on_force_shutdown;
++    bool enable_inflight_region_migration;
+ 
+     bool incoming_backend;
+ };
 -- 
 2.34.1
 
