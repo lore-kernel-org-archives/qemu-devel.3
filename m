@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C760CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918E2CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE894-0007Ld-Bm; Wed, 29 Oct 2025 11:31:30 -0400
+	id 1vE8Pk-0003WU-Su; Wed, 29 Oct 2025 11:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vE890-0007Jk-1r
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:31:26 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vE8Pd-0003W8-Bj
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:48:37 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vE88o-00007w-RJ
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:31:24 -0400
+ id 1vE8PR-0002Xb-Tc
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:48:37 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 562FB5972FD;
- Wed, 29 Oct 2025 16:31:09 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 179F3597300;
+ Wed, 29 Oct 2025 16:48:19 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id rb0RF6W6zCLK; Wed, 29 Oct 2025 16:31:06 +0100 (CET)
+ id 3C-xkgrBPDVM; Wed, 29 Oct 2025 16:48:16 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D35855972E8; Wed, 29 Oct 2025 16:31:06 +0100 (CET)
+ id A55125972FD; Wed, 29 Oct 2025 16:48:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D17B05972E3;
- Wed, 29 Oct 2025 16:31:06 +0100 (CET)
-Date: Wed, 29 Oct 2025 16:31:06 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A341B5972E3;
+ Wed, 29 Oct 2025 16:48:16 +0100 (CET)
+Date: Wed, 29 Oct 2025 16:48:16 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
 cc: qemu-devel@nongnu.org
 Subject: Re: [PATCH] ati-vga: Implement HOST_DATA transfers to enable X.org
  text rendering
 In-Reply-To: <e3e36622-94fc-b892-6283-280b3ec5292d@eik.bme.hu>
-Message-ID: <54125fb1-0d5a-43d1-197e-4feb86e5c6cc@eik.bme.hu>
+Message-ID: <fabdf0f2-4dbf-488e-9bf9-1249c3154678@eik.bme.hu>
 References: <20251029140112.275456-1-chad@jablonski.xyz>
  <e3e36622-94fc-b892-6283-280b3ec5292d@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,7 +69,6 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 29 Oct 2025, BALATON Zoltan wrote:
 > Hello,
->
 > On Wed, 29 Oct 2025, Chad Jablonski wrote:
 >> HOST_DATA as a source for 2D blits (ROP3_SRCCOPY) was unimplemented,
 >> preventing X.org text rendering with 2D acceleration enabled. This
@@ -326,9 +326,106 @@ On Wed, 29 Oct 2025, BALATON Zoltan wrote:
 >>     }
 >> }
 >> 
->> -#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
+>> -#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & 
+>> GMC_DST_PITCH_OFFSET_CNTL)
+>> +/* Convert 1bpp monochrome data to 32bpp ARGB using color expansion */
+>> +static void expand_colors(uint8_t *color_dst, const uint8_t *mono_src,
+>> +                          uint32_t width, uint32_t height,
+>> +                          uint32_t fg_color, uint32_t bg_color,
+>> +                          bool lsb_to_msb)
+>> +{
+>> +    uint32_t byte, color;
+>> +    uint8_t *pixel;
+>> +    int i, j, bit;
+>> +    /* Rows are 32-bit aligned */
+>> +    int bytes_per_row = ((width + 31) / 32) * 4;
+>> +
+>> +    for (i = 0; i < height; i++) {
+>> +        for (j = 0; j < width; j++) {
+>> +            byte = mono_src[i * bytes_per_row + (j / 8)];
+>> +            bit = lsb_to_msb ? 7 - (j % 8) : j % 8;
+>> +            color = (byte >> bit) & 0x1 ? fg_color : bg_color;
+>> +            pixel = &color_dst[(i * width + j) * 4];
+>> +            memcpy(pixel, &color, sizeof(color));
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +/* Blit color expanded HOST_DATA to the screen */
+>> +static void ati_blt_mono_host_to_screen(ATIVGAState *s)
+>
+> Why do we need a separate function when we have a buffer with source data? 
+> Can't we use the same blit setting the source to the buffer? If only because 
+> of color expansion can that be done beforehand? It seems to have a separate 
+> pass over the image anyway and not doing it line by line but I think it could 
+> be done for one line in the main blit function too.
+>
+>> +{
+>> +    DisplaySurface *ds = qemu_console_surface(s->vga.con);
+>> +
+>> +    uint8_t *mono_data, *color_data, *dst_data;
+>> +    uint32_t dst_stride, dst_x, dst_y, bpp;
+>> +    uint32_t width = s->regs.dst_width;
+>> +    uint32_t height = s->regs.dst_height;
+>> +    uint32_t pixels = width * height;
+>> +    bool lsb_to_msb = s->regs.dp_gui_master_cntl & 
+>> GMC_BYTE_ORDER_LSB_TO_MSB;
+>> +    uint32_t fg_clr = s->regs.dp_src_frgd_clr;
+>> +    uint32_t bg_clr = s->regs.dp_src_bkgd_clr;
+>> +
+>> +    /* Monochrome source is 1 bpp aligned to 32-bit rows */
+>> +    uint32_t mono_size = ((width + 31) / 32) * 4 * height;
+>> +    /* Color destination is 32 bpp */
+>> +    uint32_t clr_size = pixels * sizeof(uint32_t);
+>> +
+>> +    if (s->host_data_pos < mono_size) {
+>> +        qemu_log_mask(LOG_UNIMP,
+>> +                      "HOST_DATA blit requires %u bytes, buffer holds %u "
+>> +                      "(increase buffer size)\n",
+>> +                      mono_size, s->host_data_pos);
+>> +        return;
+>> +    }
+>> +
+>> +    mono_data = s->host_data_buffer;
+>> +    color_data = g_malloc(clr_size);
+>> +
+>> +    expand_colors(color_data, mono_data, width, height,
+>> +                  fg_clr, bg_clr, lsb_to_msb);
+>> +
+>> +    /* Rage 128 stores pitch as pixels * 8. We need pixels. */
+>> +    dst_stride = (DEFAULT_CNTL ?
+>> +                 s->regs.dst_pitch : s->regs.default_pitch) * 8;
+>> +    dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
+>> +            s->regs.dst_x : s->regs.dst_x + 1 - s->regs.dst_width);
+>> +    dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+>> +            s->regs.dst_y : s->regs.dst_y + 1 - s->regs.dst_height);
+>> +    bpp = ati_bpp_from_datatype(s);
+>> +    dst_data = s->vga.vram_ptr + (DEFAULT_CNTL ?
+>> +               s->regs.dst_offset : s->regs.default_offset);
+>> +    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+>> +        dst_data += s->regs.crtc_offset & 0x07ffffff;
+>> +    }
+>> +    /* And now we need stride in words to pass to pixman */
+>> +    dst_stride = (dst_stride * (bpp / 8)) / sizeof(uint32_t);
+>> +
+>> +    pixman_blt((uint32_t *)color_data, (uint32_t *)dst_data,
+>> +               width, dst_stride, EXPANDED_SRC_BPP, bpp,
+>> +               0, 0, dst_x, dst_y,
+>> +               width, height);
 
-As this was there before, just disregard by above comment about it,
+Looking at it a bit more I think you would want to integrate this in the 
+existing ati_2d_blt function otherwise you would need to duplicate the 
+whole fallback here too as pixman is not a requirement in QEMU and can be 
+disabled or it can also fail even if available e.g. on ARM when it has no 
+implementation for an operation. (This patch would not compile with 
+configure --without-pixman as it is.) So it's best to have it in one 
+function or if it needs to be separate then the part that does the blit 
+with fallback may need to be split off and called from both functions. I 
+think it could still be done in ati_2d_blt maybe calling the color 
+expansion when needed before the blit or doing it line by line in the 
+fallback. As we're adding more features of the ati blitter it may 
+eventually be needed to rewrite it without pixman but maybe we can still 
+keep that with host data.
 
 Regards,
 BALATON Zoltan
