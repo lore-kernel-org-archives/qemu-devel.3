@@ -4,110 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0A9CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 21:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E3BCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 21:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEDw4-0005hn-Rm; Wed, 29 Oct 2025 17:42:28 -0400
+	id 1vEDxA-0006dU-TV; Wed, 29 Oct 2025 17:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDw3-0005e4-7D
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:42:27 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDx7-0006ar-B8
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:43:33 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDvp-0005oN-QE
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:42:25 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47114a40161so3345805e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 14:42:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDwu-0005vS-4C
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:43:33 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-475dd559b0bso4201605e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 14:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761774123; x=1762378923; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QAAOCxQ3njC9sd38gRl2lcX4tyoH13t+XkOmzilp5O8=;
- b=Va5r2qcmCXfmpQsPB57lxY23RulNHd1mKi7HhdRQBp9Cc23Kz83ttVrHF2P+3ZFB/U
- 5MhCWnUWiX+GHe44Wz4jTWSE5Wvw7/NySVmtCTl1nIre22Zb9wv6b0nejQJlA8/86ssE
- +CyP8UNRgJCUNZ0NgiJJiSBmQUFHjv1NntfBRI3WKIdfDlxCNA5sIaFpN4V63rgIGSGf
- BD/79lp5ZLt8xGhGSS6wpwOsPBoRK2DAWvsigMfmQ8Q/o9sRlJytTzG7acPDCt2f80M2
- KiBH8XQKBWLKcQx0gNrKDPkjV/q1jvMXJr6r0l6KtZOG0Hs4Gchqn1xVI03LJFhFrSuF
- cC0w==
+ d=linaro.org; s=google; t=1761774188; x=1762378988; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=idKPFW9DNb94tsTYsft1e7s0DZqqwVrbPK/YrVaEB84=;
+ b=meQm/PPu7QsvoIbC6cAQpoBB+u3ei6QtkZyzoOSrEJmq/KyhYoeI1rMj6QEu7yOR6i
+ q2nuCrRlWjODQ2h+GbopuKCDmRtYIja2D+v7AGEUJ8kk27Rdj1DvIXCDvh1lmh+3cyfQ
+ yofDPdjHsCz2syXOKLVlh/BKiIalyTSH3caYYmQa36ZPBXWe2RbmgoO4vXI555VMRSNM
+ 4iROSie3xuDaB8UzTfnI57l4HtP29gQYdfuh880FGtnp3WcPsWLD0zrVtfxb+FCg+hEc
+ GkvoFpvhhArhtngZEGn92T+u9UWlyx2NnWbBxpoN84Nz6rfHXx4SK53wIscyVbfgqbjw
+ OwdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761774123; x=1762378923;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QAAOCxQ3njC9sd38gRl2lcX4tyoH13t+XkOmzilp5O8=;
- b=G4MtgM4lDls5GE2sRrcpGff30KFTE13exk/HKZNhAN6k6sUMNGf+LgB9Cp/MShENsm
- hUDynWfHDHB5fTTdwL4wGRrn5G4+clk5LK8DX0Xu5S/+5gBjlQCXSbPN3vCObGk7ht2q
- O1epXBQraZHzzJYiHbj5SXwnxmjtS4LYOBVBDP1Goo+DJgKxDxB1erXkqbiwXS7mr911
- /KsM5uHeV0v91SwIJ3ZYFvZ/rjbBJPAHbn4nFR5wLC6sozbLSGFSQaBNfR+yGcSZjFuy
- 2MxF9Ffe2mR1HVrzjPji9WM9pzaWUNDiFkWjFBQuQ2rBREk7DQaaq0WTOe8tk15GMM1s
- b/eg==
-X-Gm-Message-State: AOJu0YyfhibtUPlg3zjxJdE2/d0Nyo2huME0M10GylYUC8EKNNuuOp0K
- XVDRmtkRc0fh8Bkc4mX6jp9nkX0UFxKKI9L0Moz2LfaSaV8xnzLytzH38gFbWOYirxMc6ygNRlH
- B9+wOusI=
-X-Gm-Gg: ASbGncsObJiSPFvGUCxaZJqyioCcBJE82UqvWmikI/QvQXIUocT+hGXQibP/f7qKcGw
- jmdGmFicBbWQkkbnSqIJdx4JGw7gAflwrafnocb39eWuytc40N/BOu0yT6v6uHcR2v3Rm+uw3Ss
- I+XFHvic84pGEiZcWcViffsoVAJcJWkUhr3JZKM1ogTBYQ2PnCvVL19tcpkg6eE35GhKDb2ELgr
- tyu23IRrwV9WMdJUdBimzZ2wAmvEW37lEkRRcB6lEPsE3vidNhOnOsj4PDGKZ8l+gL+exY+SCYz
- ZvomIYefWut6OFXAUtLDYLZ6l1F54M+LdLOqJblvraylf5Xa545adbUzBkqXK94+Vnij2AogfO6
- 7gHZWtDTTXqgST8MgkggYw8YCT2SBt61SNR7L2JqEPlTr273NZKQmJtpL96uVC7WewnDFRF1V5d
- 6Dki2UnPGEAzNwqK4ummyJztdgGoWzX8mSK4yJYLzRRUw=
-X-Google-Smtp-Source: AGHT+IGnB4KRWCBDbIHVNsOMOSYmdoSFBuOFopMo/r5gQ8CYOJ7qC/h5Z0Tfdef5fEmjqZd0Aw4EyQ==
-X-Received: by 2002:a05:600c:46ce:b0:471:15c1:45b9 with SMTP id
- 5b1f17b1804b1-4771e3b84c0mr47555425e9.29.1761774122790; 
- Wed, 29 Oct 2025 14:42:02 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1761774188; x=1762378988;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=idKPFW9DNb94tsTYsft1e7s0DZqqwVrbPK/YrVaEB84=;
+ b=eV6UHgskxhO4DJ/rOL9l9MItaZS3G0s9rYcqJ7S9ru5eB+uws/8AVpmihVaahXz0zq
+ cKtrV6vTue2KowPO8IrgmB47MnReNCGViPUkYJuRamGxPlrhoQhzmKHfhC86dR0IhX4s
+ DtSqE36ty14o5Szvq0GhooQa/oybQyqNeLYa2gLmmggkMVCTr5PrJFLHm3aQX+W4PpDS
+ 4KpP/p4P+we2jJYhs73QS6Bw41I1KcLYSqFeuqonmSOSPKK1VkzWXHC5EoozP8Wa0iJm
+ CF/GPEM+O2pua4lY3ij6Rzga5pdfSAEindk07cpzXn4eiKlVOkMwWe/Qj2fHnIlE4nOD
+ Qx/w==
+X-Gm-Message-State: AOJu0YwWUt6/8JgsgjnyTjQS2GpJOxXRZT8NIpFW3MncyYWVxDvrZCAq
+ VnNlec4p4lvp7MpYEHLeEmWDWh9TNkE8OH2hz87N9O+diQqmEFGEHuDBzaUIjhKhGkHkcSqfwBU
+ blnXxhqc=
+X-Gm-Gg: ASbGncugVtrzvaLcXbsqUPtqHxlw4+xgkc8TB3Quqc7hYiWKE6VByvIbidOWwHZOpw+
+ 9WLf/mKMmPGIhRtxtxF03sCksL+y0j2und5jTbeb9+6R0tM+WORLKPCJqEu9wEvkhs5c6yGPuvE
+ fp7odIBPmUxFuddLzauoqLvsOzyDFI41QstBhPrx/YQOByQsPVLy72XP4nDCN1HPrzW66FCT4Rv
+ gYlNRJiQlg+3b9R86aDRoBmDLWTjaKdo34tokTpgclzkgvnXz0WqyZJI+JFOxpQm769mM9Kc1Ob
+ VU1cL3RLSvWGjxXix9hKrSOCE2iVTfFrLHskJ3lz2dRrgqrqBHp2Q+YQI02gKkJUR/x/vsOjneo
+ M+K1kXXMirLDxlQ/rw5dvTqk0EGE6hPDzGlG9EE2HcW13SH8+Wwuro+J3PQNQIoxxZwbziX+DiE
+ Ruk8ad2y3M01MhOqjUjFGyRwLiYBs5aOas0OPeqWCQUtuB9MR9B2+Nfgp2DxhK
+X-Google-Smtp-Source: AGHT+IGPYe8+TsAzWt3PeFAWy5OcSA6+QmmYiUYpLYR9+7sl7OvK+zAYiXOLP6Lq5n3d8cMf5MgL8w==
+X-Received: by 2002:a05:600c:4ecb:b0:46d:b665:1d95 with SMTP id
+ 5b1f17b1804b1-4771e1edb27mr41335165e9.32.1761774187879; 
+ Wed, 29 Oct 2025 14:43:07 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771832e857sm55417945e9.0.2025.10.29.14.42.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 14:42:02 -0700 (PDT)
-Message-ID: <adbf6cd9-72b0-4ce9-93a6-4f83338ca8a3@linaro.org>
-Date: Wed, 29 Oct 2025 22:42:00 +0100
+ 5b1f17b1804b1-477289a5625sm4258775e9.5.2025.10.29.14.43.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 29 Oct 2025 14:43:07 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PULL 03/23] hw/arm: Add DEFINE_MACHINE_ARM() /
+ DEFINE_MACHINE_AARCH64() macros
+Date: Wed, 29 Oct 2025 22:39:40 +0100
+Message-ID: <20251029214001.99824-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251029214001.99824-1-philmd@linaro.org>
+References: <20251029214001.99824-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 19/35] audio: register and unregister vmstate with
- AudioState
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Alexandre Ratchov <alex@caoua.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jan Kiszka <jan.kiszka@web.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
-References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
- <20251027151045.2863176-20-marcandre.lureau@redhat.com>
- <ffab95ce-9b5d-43ea-93a7-611de6044ad8@linaro.org>
- <CAJ+F1C+qnkm=F1q0YSHZ9WbAMcz+-NJo5mzj1b-DcU24dNpRLQ@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ+F1C+qnkm=F1q0YSHZ9WbAMcz+-NJo5mzj1b-DcU24dNpRLQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,56 +100,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/10/25 20:00, Marc-André Lureau wrote:
-> Hi
-> 
-> On Wed, Oct 29, 2025 at 5:51 PM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> On 27/10/25 16:10, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> Proper lifecycle management with QOM state.
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>    audio/audio.c | 7 ++++++-
->>>    1 file changed, 6 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/audio/audio.c b/audio/audio.c
->>> index 4c3c3fd52f..853930bb48 100644
->>> --- a/audio/audio.c
->>> +++ b/audio/audio.c
->>> @@ -1614,6 +1614,8 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
->>>        audio_reset_timer (s);
->>>    }
->>>
->>> +static const VMStateDescription vmstate_audio;
->>> +
->>>    static void audio_state_init(Object *obj)
->>>    {
->>>        AudioState *s = AUDIO_STATE(obj);
->>> @@ -1625,6 +1627,8 @@ static void audio_state_init(Object *obj)
->>>
->>>        s->vmse = qemu_add_vm_change_state_handler(audio_vm_change_state_handler, s);
->>>        assert(s->vmse != NULL);
->>> +
->>> +    vmstate_register_any(NULL, &vmstate_audio, s);
->>
->> Please avoid legacy APIs:
->>
->> /**
->>    * vmstate_register_any() - legacy function to register state
->>    * serialisation description and let the function choose the id
->>    *
->>    * New code shouldn't be using this function as QOM-ified devices have
->>    * dc->vmsd to store the serialisation description.
->>    *
->>    * Returns: 0 on success, -1 on failure
->>    */
->>
-> 
-> qdev/Device have vmsd, but not plain Object (or legacy code without object).
+A machine defined with the DEFINE_MACHINE_ARM() macro will
+be available in both qemu-system-arm and qemu-system-aarch64
+binaries.
 
-Hmm right. Cc'ing Peter & Fabiano.
+One defined with DEFINE_MACHINE_AARCH64() will only be
+available in the qemu-system-aarch64 binary.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20251021205741.57109-4-philmd@linaro.org>
+---
+ include/hw/arm/machines-qom.h | 28 ++++++++++++++++++++++++++++
+ target/arm/machine.c          | 18 ++++++++++++++++++
+ 2 files changed, 46 insertions(+)
+
+diff --git a/include/hw/arm/machines-qom.h b/include/hw/arm/machines-qom.h
+index a17225f5f92..3f64d5eb024 100644
+--- a/include/hw/arm/machines-qom.h
++++ b/include/hw/arm/machines-qom.h
+@@ -9,10 +9,38 @@
+ #ifndef HW_ARM_MACHINES_QOM_H
+ #define HW_ARM_MACHINES_QOM_H
+ 
++#include "hw/boards.h"
++
+ #define TYPE_TARGET_ARM_MACHINE \
+         "target-info-arm-machine"
+ 
+ #define TYPE_TARGET_AARCH64_MACHINE \
+         "target-info-aarch64-machine"
+ 
++/*
++ * A machine filtered with arm_machine_interfaces[] or
++ * arm_aarch64_machine_interfaces[] will be available
++ * in both qemu-system-arm and qemu-system-aarch64 binaries.
++ *
++ * One filtered with aarch64_machine_interfaces[] will only
++ * be available in the qemu-system-aarch64 binary.
++ */
++extern const InterfaceInfo arm_machine_interfaces[];
++extern const InterfaceInfo arm_aarch64_machine_interfaces[];
++extern const InterfaceInfo aarch64_machine_interfaces[];
++
++/*
++ * A machine defined with the DEFINE_MACHINE_ARM() macro will be
++ * available in both qemu-system-arm and qemu-system-aarch64 binaries.
++ *
++ * One defined with DEFINE_MACHINE_AARCH64() will only be available in
++ * the qemu-system-aarch64 binary.
++ */
++#define DEFINE_MACHINE_ARM(namestr, machine_initfn) \
++        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
++                                            arm_machine_interfaces)
++#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
++        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
++                                            aarch64_machine_interfaces)
++
+ #endif
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 44a0cf844b0..0befdb0b28a 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -9,6 +9,7 @@
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "target/arm/gtimer.h"
++#include "hw/arm/machines-qom.h"
+ 
+ static bool vfp_needed(void *opaque)
+ {
+@@ -1212,3 +1213,20 @@ const VMStateDescription vmstate_arm_cpu = {
+         NULL
+     }
+ };
++
++const InterfaceInfo arm_machine_interfaces[] = {
++    { TYPE_TARGET_ARM_MACHINE },
++    { TYPE_TARGET_AARCH64_MACHINE },
++    { }
++};
++
++const InterfaceInfo arm_aarch64_machine_interfaces[] = {
++    { TYPE_TARGET_ARM_MACHINE },
++    { TYPE_TARGET_AARCH64_MACHINE },
++    { }
++};
++
++const InterfaceInfo aarch64_machine_interfaces[] = {
++    { TYPE_TARGET_AARCH64_MACHINE },
++    { }
++};
+-- 
+2.51.0
+
 
