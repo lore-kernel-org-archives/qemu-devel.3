@@ -4,74 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA7FCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 10:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520C1CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 10:40:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE3T9-0003xY-O7; Wed, 29 Oct 2025 06:31:57 -0400
+	id 1vE3af-0005Vw-5r; Wed, 29 Oct 2025 06:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vE3T2-0003vz-Kz
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 06:31:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vE3ad-0005VQ-17; Wed, 29 Oct 2025 06:39:39 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vE3Sx-0007e6-Kf
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 06:31:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761733894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FQtxOQIRA4Pj7ZFudKh4zcjQxuVpsgN0GIAXg/0LvMc=;
- b=Fg03pI3DS4a4wFJP1wnPcmvvVs6P+Gx7ZP90+YvwLOdeaNi2C3hm/IlS4P02r7YE8vPnFE
- wqMGEd+6uo16KGt3HrXH5hI4o2WtXLjy086mVOqFdmwa6XAugfufCbjQQdfSpMMv1s8z3f
- 782vFICsVbhNGSZNzyq4IhXyZdESHs4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-96--sGRegliOzuinRjIROQMSg-1; Wed,
- 29 Oct 2025 06:31:31 -0400
-X-MC-Unique: -sGRegliOzuinRjIROQMSg-1
-X-Mimecast-MFC-AGG-ID: -sGRegliOzuinRjIROQMSg_1761733890
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA1CC1800654; Wed, 29 Oct 2025 10:31:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4C1D180057E; Wed, 29 Oct 2025 10:31:29 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0638A21E6A27; Wed, 29 Oct 2025 11:31:27 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  eblake@redhat.com
-Subject: Re: [PATCH v2 00/33] qapi: docs: width=70 and two spaces between
- sentences
-In-Reply-To: <ccda71ab-8070-4068-a774-d32fa0057eec@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 29 Oct 2025 12:24:19 +0300")
-References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
- <87sef2qdm4.fsf@pond.sub.org>
- <ccda71ab-8070-4068-a774-d32fa0057eec@yandex-team.ru>
-Date: Wed, 29 Oct 2025 11:31:27 +0100
-Message-ID: <873472q9s0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vE3aX-0000AU-Ja; Wed, 29 Oct 2025 06:39:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 62DD5597301;
+ Wed, 29 Oct 2025 11:39:27 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id th4EJ_aPMPxk; Wed, 29 Oct 2025 11:39:25 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 097085972FF; Wed, 29 Oct 2025 11:39:25 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 07D305972FD;
+ Wed, 29 Oct 2025 11:39:25 +0100 (CET)
+Date: Wed, 29 Oct 2025 11:39:24 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+cc: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH] hw/ppc/sam460ex: Update u-boot-sam460ex
+In-Reply-To: <b131d419-15a8-4b4a-8dbd-c6f4988679fa@linux.ibm.com>
+Message-ID: <aedc6da1-605d-9c23-69b7-d93649fcd2cc@eik.bme.hu>
+References: <20251028151923.10DBB5972E5@zero.eik.bme.hu>
+ <ee77b09f-7a12-4d52-b5f6-2d4b5b711448@linux.ibm.com>
+ <f4c3bbb6-9a54-69ff-0d54-481ab4a55579@eik.bme.hu>
+ <b131d419-15a8-4b4a-8dbd-c6f4988679fa@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,69 +66,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> On 29.10.25 12:08, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On Wed, 29 Oct 2025, Harsh Prateek Bora wrote:
+> On 10/29/25 15:28, BALATON Zoltan wrote:
+>> On Wed, 29 Oct 2025, Harsh Prateek Bora wrote:
+>>> + Thomas
+>>> 
+>>> Hi BALATON,
+>>> 
+>>> I am unable to fetch it with b4 am, and I do not see it appear on lore 
+>>> also, not sure if its due to the binary size.
+>>> 
+>>> harshpb:patches$ b4 am 20251028151923.10DBB5972E5@zero.eik.bme.hu
+>>> Looking up 
+>>> https://lore.kernel.org/r/20251028151923.10DBB5972E5%40zero.eik.bme.hu
+>>> Grabbing thread from 
+>>> lore.kernel.org/all/20251028151923.10DBB5972E5%40zero.eik.bme.hu/t.mbox.gz
+>>> Server returned an error: 404
+>>> harshpb:patches$
+>>> 
+>>> I guess you may need to send a PULL SUBSYSTEM req like Thomas did for 
+>>> slof:
+>>> https://lore.kernel.org/qemu-devel/20251027074404.25758-1-thuth@redhat.com/
 >> 
->>> Hi all!
->>>
->>> Let's bring the documentation in line with the requirements. And
->>> do check these requirements in QAPI parser.
->>
->> Prior art:
->>
->>      01bed0ff14 qapi: Refill doc comments to conform to conventions
->>      7270819384 qga/qapi-schema: Refill doc comments to conform to current conventions
->>      209e64d9ed qapi: Refill doc comments to conform to current conventions
->>
->> These only touched prose.
->>
->> Your series also touches examples, is split per source file, and adds
->> code to enforce the rules automatically.
->>
->> Automatic enforcement makes a ton of sense.  Should've tried to code it
->> up long ago.  Much appreciated!  However, it's in the first patch.  It
->> needs to go last to not break bisection.
->>
->> I don't think splitting per source file is necessary.
->>
->> I'd prefer to put aside examples for now and focus on prose, since the
->> case for prose is much stronger.
->>
->> Since I already split off the prose changes for my own review purposes,
->> there's no need for you to do that again.  I'll take care of it.
->>
->> However, we need to adjust the enforcement code to skip examples.
->>
->> Examples are marked up with ReST directive qmp-example.  They look like
->> this:
->>
->>      # .. qmp-example::
->>      #
->>      #     the example
->>      #         text is
->>      #     indented
->>
->> The stupidest solution that could possibly work is to start skipping the
->> checks at
->>
->>      # .. qmp-example::
->>
->> and resume it at the first unindented line.
->>
->> This is of course a hack: it second-guesses the ReST parser.  I think
->> it's good enough.
->>
->> If we in a later step decide reflowing the examples is usful, the hack
->> goes away.
->>
->> Would you be willing to take care of that part?
+>> Hi Harsh,
+>> 
+>> You should be able to download mbox from
+>> https://patchew.org/QEMU/20251028151923.10DBB5972E5@zero.eik.bme.hu/
+>> and git am that. This was tested by somebody else and worked.
 >
-> Of course. Will you send a detached prose changes, so I can base changed
-> patch 01 on top of it?
+> Yes, git fetch from there seems to work, thanks.
+>
+> If needed
+>> I could try to split the binary into another patch or send you the patch 
+>> again. Maybe lore does not store large files?
+>
+> Having only binary file update into its own separate patch may be better
+> as a best practice, so other patch gets non-binary changes for easy review.
+> Also, maintaining the date stamp may also be helpful in some cases.
+> Let me know if you think otherwise.
 
-Cool!  I'll make my patches somewhat more presentable after lunch, and
-send you an URL to git-fetch them.
+Which date stamp maintaining are you referring to? I can split the patch 
+in two later today or tomorrow if you want and send a v2 but not right 
+now. For that to compile and work after each patch it would need to add 
+the new binary in one patch then remove the old one after changing its 
+usage. Or maybe even 3 patches: first updating submodule, then adding 
+binary rebuilt from that then changing usage and removing old one. I think 
+this would make the series larger as git now seems to contain binary diff 
+between old and new versions but if these are in different patch it may 
+still add the removed binary as a binary patch. So this only works if the 
+old and new binary is the same name or renamed in one patch but then that 
+would break if the usage is not updated in the same patch. So maybe patch 
+one to update submodule, patch 2 to add binary with old name and patch 3 
+to rename the binary could work but does that worth the hassle and any 
+better than this single patch?
 
+Regards,
+BALATON Zoltan
 
