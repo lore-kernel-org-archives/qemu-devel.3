@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD85CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79E0CCF9F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxxd-0000Ty-Hl; Wed, 29 Oct 2025 00:39:01 -0400
+	id 1vDxz0-00034M-Pq; Wed, 29 Oct 2025 00:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxxa-0000T9-MJ; Wed, 29 Oct 2025 00:38:58 -0400
+ id 1vDxyx-0002wL-Fj; Wed, 29 Oct 2025 00:40:23 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxxR-0004Ya-1D; Wed, 29 Oct 2025 00:38:58 -0400
+ id 1vDxyl-0004hn-SU; Wed, 29 Oct 2025 00:40:23 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 29 Oct
- 2025 12:37:15 +0800
+ 2025 12:37:19 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 29 Oct 2025 12:37:15 +0800
+ Transport; Wed, 29 Oct 2025 12:37:19 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,16 +32,16 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 10/17] hw/arm/aspeed: Make
- aspeed_machine_ast2600_class_emmc_init() a common API for eMMC boot setup
-Date: Wed, 29 Oct 2025 12:36:56 +0800
-Message-ID: <20251029043710.1486573-11-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 17/17] hw/arm/aspeed: Split AST1030 EVB machine into a
+ separate source file for maintainability
+Date: Wed, 29 Oct 2025 12:37:03 +0800
+Message-ID: <20251029043710.1486573-18-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 References: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -49,7 +49,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,47 +67,270 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit exposes the function aspeed_machine_ast2600_class_emmc_init() as
-a common API so that other AST2600-based machine implementations can reuse it
-to enable the "boot-emmc" property.
+This commit moves the Aspeed AST1030 MiniBMC machine
+implementation out of aspeed.c into a new standalone file
+aspeed_ast10x0_evb.c.
 
-Previously, this function was defined as a static helper within aspeed.c,
-limiting its visibility to that file. By making it global and declaring it in
-aspeed.h, other machine definition files (e.g., for specific AST2600 boards)
-can now easily call this API to register eMMC boot configuration support.
+This refactor continues the modularization effort for Aspeed platform
+support, placing each board’s logic and initialization sequence in its
+own dedicated source file. It improves maintainability, readability, and
+makes it easier to extend support for additional AST10x0-based variants.
+
+Key updates include:
+- Moved aspeed_minibmc_machine_init() and
+  aspeed_minibmc_machine_ast1030_evb_class_init() from aspeed.c to
+  aspeed_ast10x0_evb.c.
+- Moved ast1030_evb_i2c_init() and associated I2C setup code.
+- Removed AST1030 EVB machine type registration from aspeed.c.
+- Added aspeed_ast10x0_evb.c to the Meson build system (meson.build).
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/arm/aspeed.h | 1 +
- hw/arm/aspeed.c         | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ hw/arm/aspeed.c             |  89 ------------------------------
+ hw/arm/aspeed_ast10x0_evb.c | 107 ++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build          |   1 +
+ 3 files changed, 108 insertions(+), 89 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast10x0_evb.c
 
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index 414c181c3a..02f0ea5522 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -69,5 +69,6 @@ struct AspeedMachineClass {
- void aspeed_machine_class_init_cpus_defaults(MachineClass *mc);
- void create_pca9552(AspeedSoCState *soc, int bus_id, int addr);
- I2CSlave *create_pca9554(AspeedSoCState *soc, int bus_id, int addr);
-+void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc);
- 
- #endif
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 821a18b16c..8a6a5b3e91 100644
+index c5e8a0608d..8bf32cb220 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -754,7 +754,7 @@ static void aspeed_machine_ast2600_set_boot_from_emmc(Object *obj, bool value,
-     }
+@@ -15,14 +15,9 @@
+ #include "hw/arm/aspeed.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/block/flash.h"
+-#include "hw/i2c/smbus_eeprom.h"
+ #include "hw/gpio/pca9552.h"
+ #include "hw/gpio/pca9554.h"
+-#include "hw/sensor/tmp105.h"
+-#include "hw/misc/led.h"
+-#include "hw/qdev-properties.h"
+ #include "system/block-backend.h"
+-#include "system/reset.h"
+ #include "qemu/error-report.h"
+ #include "qemu/units.h"
+ #include "hw/qdev-clock.h"
+@@ -423,92 +418,8 @@ static void aspeed_machine_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_class_props_init(oc);
  }
  
--static void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc)
-+void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc)
- {
-     object_class_property_add_bool(oc, "boot-emmc",
-                                    aspeed_machine_ast2600_get_boot_from_emmc,
+-#define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
+-/* Main SYSCLK frequency in Hz (200MHz) */
+-#define SYSCLK_FRQ 200000000ULL
+-
+-static void aspeed_minibmc_machine_init(MachineState *machine)
+-{
+-    AspeedMachineState *bmc = ASPEED_MACHINE(machine);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
+-    Clock *sysclk;
+-
+-    sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, SYSCLK_FRQ);
+-
+-    bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
+-    object_unref(OBJECT(bmc->soc));
+-    qdev_connect_clock_in(DEVICE(bmc->soc), "sysclk", sysclk);
+-
+-    object_property_set_link(OBJECT(bmc->soc), "memory",
+-                             OBJECT(get_system_memory()), &error_abort);
+-    connect_serial_hds_to_uarts(bmc);
+-    qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
+-
+-    if (defaults_enabled()) {
+-        aspeed_board_init_flashes(&bmc->soc->fmc,
+-                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
+-                            amc->num_cs,
+-                            0);
+-
+-        aspeed_board_init_flashes(&bmc->soc->spi[0],
+-                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                            amc->num_cs, amc->num_cs);
+-
+-        aspeed_board_init_flashes(&bmc->soc->spi[1],
+-                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                            amc->num_cs, (amc->num_cs * 2));
+-    }
+-
+-    if (amc->i2c_init) {
+-        amc->i2c_init(bmc);
+-    }
+-
+-    armv7m_load_kernel(ARM_CPU(first_cpu),
+-                       machine->kernel_filename,
+-                       0,
+-                       AST1030_INTERNAL_FLASH_SIZE);
+-}
+-
+-static void ast1030_evb_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-
+-    /* U10 24C08 connects to SDA/SCL Group 1 by default */
+-    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
+-
+-    /* U11 LM75 connects to SDA/SCL Group 2 by default */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
+-}
+-
+-static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+-                                                          const void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-
+-    mc->desc = "Aspeed AST1030 MiniBMC (Cortex-M4)";
+-    amc->soc_name = "ast1030-a1";
+-    amc->hw_strap1 = 0;
+-    amc->hw_strap2 = 0;
+-    mc->init = aspeed_minibmc_machine_init;
+-    amc->i2c_init = ast1030_evb_i2c_init;
+-    mc->default_ram_size = 0;
+-    amc->fmc_model = "w25q80bl";
+-    amc->spi_model = "w25q256";
+-    amc->num_cs = 2;
+-    amc->macs_mask = 0;
+-    aspeed_machine_class_init_cpus_defaults(mc);
+-}
+-
+ static const TypeInfo aspeed_machine_types[] = {
+     {
+-        .name           = MACHINE_TYPE_NAME("ast1030-evb"),
+-        .parent         = TYPE_ASPEED_MACHINE,
+-        .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+-    }, {
+         .name          = TYPE_ASPEED_MACHINE,
+         .parent        = TYPE_MACHINE,
+         .instance_size = sizeof(AspeedMachineState),
+diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
+new file mode 100644
+index 0000000000..fb34a47dbd
+--- /dev/null
++++ b/hw/arm/aspeed_ast10x0_evb.c
+@@ -0,0 +1,107 @@
++/*
++ * ASPEED AST10x0 EVB
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/aspeed.h"
++#include "hw/arm/aspeed_soc.h"
++#include "hw/qdev-clock.h"
++#include "system/system.h"
++#include "hw/i2c/smbus_eeprom.h"
++
++#define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
++/* Main SYSCLK frequency in Hz (200MHz) */
++#define SYSCLK_FRQ 200000000ULL
++
++static void aspeed_minibmc_machine_init(MachineState *machine)
++{
++    AspeedMachineState *bmc = ASPEED_MACHINE(machine);
++    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
++    Clock *sysclk;
++
++    sysclk = clock_new(OBJECT(machine), "SYSCLK");
++    clock_set_hz(sysclk, SYSCLK_FRQ);
++
++    bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
++    object_unref(OBJECT(bmc->soc));
++    qdev_connect_clock_in(DEVICE(bmc->soc), "sysclk", sysclk);
++
++    object_property_set_link(OBJECT(bmc->soc), "memory",
++                             OBJECT(get_system_memory()), &error_abort);
++    connect_serial_hds_to_uarts(bmc);
++    qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
++
++    if (defaults_enabled()) {
++        aspeed_board_init_flashes(&bmc->soc->fmc,
++                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
++                            amc->num_cs,
++                            0);
++
++        aspeed_board_init_flashes(&bmc->soc->spi[0],
++                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
++                            amc->num_cs, amc->num_cs);
++
++        aspeed_board_init_flashes(&bmc->soc->spi[1],
++                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
++                            amc->num_cs, (amc->num_cs * 2));
++    }
++
++    if (amc->i2c_init) {
++        amc->i2c_init(bmc);
++    }
++
++    armv7m_load_kernel(ARM_CPU(first_cpu),
++                       machine->kernel_filename,
++                       0,
++                       AST1030_INTERNAL_FLASH_SIZE);
++}
++
++static void ast1030_evb_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++
++    /* U10 24C08 connects to SDA/SCL Group 1 by default */
++    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
++
++    /* U11 LM75 connects to SDA/SCL Group 2 by default */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
++}
++
++static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
++                                                          const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc = "Aspeed AST1030 MiniBMC (Cortex-M4)";
++    amc->soc_name = "ast1030-a1";
++    amc->hw_strap1 = 0;
++    amc->hw_strap2 = 0;
++    mc->init = aspeed_minibmc_machine_init;
++    amc->i2c_init = ast1030_evb_i2c_init;
++    mc->default_ram_size = 0;
++    amc->fmc_model = "w25q80bl";
++    amc->spi_model = "w25q256";
++    amc->num_cs = 2;
++    amc->macs_mask = 0;
++    aspeed_machine_class_init_cpus_defaults(mc);
++}
++
++static const TypeInfo aspeed_ast10x0_evb_types[] = {
++    {
++        .name           = MACHINE_TYPE_NAME("ast1030-evb"),
++        .parent         = TYPE_ASPEED_MACHINE,
++        .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
++    },
++};
++
++DEFINE_TYPES(aspeed_ast10x0_evb_types)
++
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 8e568e21b5..f46f3a1c84 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -67,6 +67,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2600_qcom-firework.c',
+   'aspeed_ast2600_rainier.c',
+   'aspeed_ast10x0.c',
++  'aspeed_ast10x0_evb.c',
+   'fby35.c'))
+ arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
+   'aspeed_ast27x0.c',
 -- 
 2.43.0
 
