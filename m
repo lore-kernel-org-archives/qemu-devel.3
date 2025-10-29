@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E340CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3938CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE196-0003Z7-WF; Wed, 29 Oct 2025 04:03:05 -0400
+	id 1vE1A8-00050G-I2; Wed, 29 Oct 2025 04:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE18N-00039g-AM
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:02:19 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1vE1A3-0004jr-RD
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:04:04 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE18J-0003ch-2U
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:02:18 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-63bad3cd668so13448849a12.3
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:02:13 -0700 (PDT)
+ id 1vE19t-0003id-9k
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:04:03 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-62fc0b7bf62so3870334a12.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761724931; x=1762329731; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761725030; x=1762329830; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WscbCcmz1jc5Gwh5WBGhVUBrxowj5OKXTiAX6c7aWLM=;
- b=YWYOGPd4M/hRfeSaL+g6CEPt8hfb8Hv3QFUIvtk/8WUX+28vvCwphKXAf9mpP8j4OM
- Vjw0oz6BGJ7O8sFipSKpm6CRBidHBW50YjwG7lBBPcw+DCo2acnfLonSr/cE2Phm1CBS
- /CpBowMG+xDxT5Do5UH4fbHZM1SVMa2IULCgBCwp2zokFLcr0V45Iwr5l9Fa7YF1aIjs
- d/cwo5AL4xaLaCNAAWWXo+QBUM5zRxvMFxlQ6Irt/10qjkAQ5c+72Dlz35tSa1ELy5GG
- ImK3Z5uP+dY6+gTPgTsdO/tlJH+KWdVhjR6AoIaPzl0ajHldMkOIJVFvCGNPHwoCNNlG
- SK7w==
+ bh=2Br8E+AWpSy3dJekVdYJJsvfvPRbB6v5tjS3jqJvZCM=;
+ b=Le6R2HNSOn8tzkCYgsXKwp/v4gjAK9fJT4mRGGIwKARKf/tp2Plfw5pEKu7dMygCPZ
+ 822vtUroPvCSI+x12N3X9bcAMnDTN0rOVewqxk1vEWTEZv9nOdeOThh3MlBIPoPx3LjO
+ JHU3SLWpKWAUfGqUOu0cJChV+rvCQOa5D3joPP0VhgnAWCluBIofRw8s+SoYcjmOg96r
+ u/LGG4gjdp3XgzTCWAfTgtMtlGvlvTLjUz16fmgroPwYODqpXHrjlVj61bvcMPPqPt6m
+ REyM/fnCPv+6U5KW9V76x41dwNb5PTz/oZgWkR0i3B4Z7nbn8vpEwpZyxETwwayn+bdU
+ mFgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761724931; x=1762329731;
+ d=1e100.net; s=20230601; t=1761725030; x=1762329830;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WscbCcmz1jc5Gwh5WBGhVUBrxowj5OKXTiAX6c7aWLM=;
- b=BvBMp7q3c3X6qlq9qmSi7QsPTMxgRVkxmgQOWYMMmR6SHfq0xFhL3hZ2g78CxW7Fn9
- qKbjFcmwpf+p7J4EuGLfbbveVCDzfVZRC4I1fWgiHAk6xmvBn62YuNtH+RR4bkGojJEg
- 58GsdVJQY22iwkIjN86m2KXycPLUtAxktguYtwjulwkzqxw2NSf+fE/GZmaa53u6dQQZ
- RQByD3L/BQv759Yf9TViozaEAwrfzXKA/6zib9dQC45s8e3FXdBKWgWs1VMou+UF40Yr
- u9UJW0m5Bxvkz9Enee75/dWIEg8oaI8hsyiERdSPM/pVrcGooLm2NiUMg3ianObDY8A7
- ciyA==
-X-Gm-Message-State: AOJu0YxHZbrT6DLNsGwHXPOJdKVSpDG/VTDn2NMrNbmkiMT+xqXEfdCY
- KOGCPzG+AT7TAtZ9nVaPH3Y1ryjCbNzJIJpQFObl78Pq2msHR4yRYwxJOQqMlXrwmXJg8t4/bSq
- kRdn2xmYERd5iRE3sb8ZEbEEO5zXFoo9aSR5fGU7cfA==
-X-Gm-Gg: ASbGncsgfQ+6tL1kwvWGynvgWL3GSWTEtcqt8sFtqvcw7oQ7ebcClL0YbINqMBP7NYL
- HAE2y5nLSnzP8c3ZIVX5S+v2kyk7CwfKGeuya1l57oWxWrfsTrsFfgMdIWCJL8JamZILcQ16M/F
- 2RWOLGxmUEsBHtipOwb7XucImqvqREAbagFgOw8ssInUq2MQqWjo4BAmS8kX24einn9z5+c8CNX
- XTVa5yEVRI+rFdVr8jyOqKn6teO4nkHTKJ7+N0NymdbvNL24Mn4od619hiC
-X-Google-Smtp-Source: AGHT+IHJbV+NYmSO//92bode9TKPTyrX4/f5dkPcK0r9xVIJlpa5ZEBSqxhnkT6xUT7LB9APAjrIf9VcnWbP1XBR3D4=
-X-Received: by 2002:a05:6402:35c3:b0:63b:f91e:60a2 with SMTP id
- 4fb4d7f45d1cf-64044276880mr1335139a12.25.1761724930692; Wed, 29 Oct 2025
- 01:02:10 -0700 (PDT)
+ bh=2Br8E+AWpSy3dJekVdYJJsvfvPRbB6v5tjS3jqJvZCM=;
+ b=hg6BryM06AnjSf8oV0NE83TGiDXw+EEi39EAFcAoffg1Bi++DcgDQdWOujdXSUNDoH
+ 1XWwiwUohY+CTOE4/4j3rF5KmWifSlXKAdmm1LY9YwxGyjFLFUe5hC1uTw6WDt1bwJXu
+ LoUio0bT9edyLZVsiNzXAzseqhv853X6EPuqGLriqfO6CGTWmw1j1qJ1eyJ537ZjRHQL
+ U2M+jKfBRaQBcw633Icpw4FqAjQYCnolA71Uj8QZaKMswsfohpeNKfJGIVr6VvN8sh4i
+ O7gImAwFwuBLPGqtvDxYT+hS/RoEKqB8BaVL810h44OmUK0VEKtrLSdXd+t1EwfyEpkw
+ HX0w==
+X-Gm-Message-State: AOJu0Yy7QRuend903IuzeJdtiza1pZADk8cQQDZY0wa9DgjiEnMEN3AR
+ 2tkbu+Y9BLemeBtmFFNs4r8q4A5CwB+r15e0pcQ0TMJYmR52aEVhsk97K4mWWGoYPgCpyJNOK43
+ OPYh1fJ5VsI596inLQyDVfCZwRWeMzXh/SBiqtHw4Zg==
+X-Gm-Gg: ASbGncvEI4A8RLAot9qgVktpD4qZY3f/qYRMUilrVCGlfICl8xYZGM9hf8016377Wm0
+ X8/RhAklsUtI7fEnhFZ+3U05p0Tlp+38+aWkpiSqTiFoFTDGEs9G4Q9pvu8XSpmrHtVthu+c3cu
+ qpM+OBXkJgS0DNjBc/VWKNQbqDkm7uwcQwDlwaQ3IPe642eM+od0u+WgceUsAjwMpYOUZfy+VOo
+ jKG5km2PPOWcWSL3OWFasr1e+Ymrx8kPj+7Nyn/bOyrUSeXYk7kgRdzeGvS
+X-Google-Smtp-Source: AGHT+IHxQ+sNjpcaC/jRVlw5MNECnJ34Mz24SAhjYMOtqlK2Wx4Imr3WPxk1XhGj0nwN9eM7DbkG0V3cFEDBEj4SeHM=
+X-Received: by 2002:a05:6402:510c:b0:63c:3cd8:72df with SMTP id
+ 4fb4d7f45d1cf-640442518a0mr1516204a12.17.1761725030375; Wed, 29 Oct 2025
+ 01:03:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251029075257.63635-1-philmd@linaro.org>
-In-Reply-To: <20251029075257.63635-1-philmd@linaro.org>
+References: <20251028165236.3327658-1-peter.maydell@linaro.org>
+In-Reply-To: <20251028165236.3327658-1-peter.maydell@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 29 Oct 2025 10:01:44 +0200
-X-Gm-Features: AWmQ_bmdgjM6n8K3Go8XXHz87bf2sCkEyWDESvMwwj9cEgPYj7w34B5qT_pu7ew
-Message-ID: <CAAjaMXYuXpp3s9_v6Zvkbzgu07JE5Pe7soaeFB+G4wG3v976nw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/bcm283x: Initialize CPU objects in SoC common
- DeviceRealize()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date: Wed, 29 Oct 2025 10:03:24 +0200
+X-Gm-Features: AWmQ_blTls_UGRPWmE-OSgb0IK5VvmHVKacCYih1qygsYquVT7XmsiC90wApj8A
+Message-ID: <CAAjaMXYu3tL+8HTCQA5Fv_XaFTQStF2TQinGKyaqVp87M_Rugg@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel/testing/fuzzing: Note that you can get qtest
+ to read from a file
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Bulekov <alxndr@bu.edu>, Bandan Das <bsd@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>, 
+ Qiuhao Li <Qiuhao.Li@outlook.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,86 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 9:54=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On Tue, Oct 28, 2025 at 6:53=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
 >
-> QOM .instance_init() handler can not fail. QDev DeviceRealize
-> can.
+> It is possible to get qtest to read fuzzer reproducers from a file
+> rather than directly from stdio; this is useful when you want to run
+> QEMU under gdb to debug the failure.  Document how to do this, which
+> was previously only written down in the commit message for
+> 5b18a6bf44b9 ("chardev: Allow setting file chardev input file on the
+> command line").
 >
-> The device-introspect QTest enumerates all QDev types and
-> instantiate each one, without realizing it, then introspects
-> the instance properties.
->
-> When switching to a single QEMU binary, all QDev types are
-> available in the binary, but only a filtered subset might be
-> available, depending on which previous target the binary is
-> trying to mimic.
->
-> In particular with the Raspi machines, the TYPE_RASPI4B_MACHINE
-> and ARM_CPU_TYPE_NAME("cortex-a72") will be built in the
-> qemu-system-arm binary, while not available (because filtered
-> as being 64-bit, for the qemu-system-aarch64 binary).
->
-> However the TYPE_BCM2838 SoC is not filtered out, and will
-> abort when being initialized, because the "cortex-a72" CPU type
-> is filtered out, leading to device-introspect failure:
->
->   1/1 qemu:qtest+qtest-arm / qtest-arm/device-introspect-test        ERRO=
-R            2.46s   killed by signal 6 SIGABRT
->   stderr:
->   unknown type 'cortex-a72-arm-cpu'
->   Broken pipe
->   ../../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU p=
-rocess but encountered exit status 1 (expected 0)
->   (test program exited with status code -6)
->   TAP parsing error: Too few tests run (expected 167, got 5)
->
-> In order to avoid that, move the CPU *initialization* in the
-> SoC DeviceRealize handler, so the SoC initialization won't
-> fail, while realization still will.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I got bored of looking up the commit message in the git log
+> every time :-)
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  hw/arm/bcm2836.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  docs/devel/testing/fuzzing.rst | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 >
-> diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
-> index cd61ba15054..6e4066f137d 100644
-> --- a/hw/arm/bcm2836.c
-> +++ b/hw/arm/bcm2836.c
-> @@ -25,12 +25,7 @@ static void bcm283x_base_init(Object *obj)
->  {
->      BCM283XBaseState *s =3D BCM283X_BASE(obj);
->      BCM283XBaseClass *bc =3D BCM283X_BASE_GET_CLASS(obj);
-> -    int n;
+> diff --git a/docs/devel/testing/fuzzing.rst b/docs/devel/testing/fuzzing.=
+rst
+> index c3ac084311b..c43f815f320 100644
+> --- a/docs/devel/testing/fuzzing.rst
+> +++ b/docs/devel/testing/fuzzing.rst
+> @@ -263,6 +263,15 @@ generic-fuzz target.
 >
-> -    for (n =3D 0; n < bc->core_count; n++) {
-> -        object_initialize_child(obj, "cpu[*]", &s->cpu[n].core,
-> -                                bc->cpu_type);
-> -    }
->      if (bc->core_count > 1) {
->          qdev_property_add_static(DEVICE(obj), &bcm2836_enabled_cores_pro=
-perty);
->          qdev_prop_set_uint32(DEVICE(obj), "enabled-cpus", bc->core_count=
-);
-> @@ -65,6 +60,11 @@ bool bcm283x_common_realize(DeviceState *dev, BCMSocPe=
-ripheralBaseState *ps,
->      BCM283XBaseClass *bc =3D BCM283X_BASE_GET_CLASS(dev);
->      Object *obj;
+>  - Report the bug and send a patch with the C reproducer upstream
 >
-> +    for (int n =3D 0; n < bc->core_count; n++) {
-> +        object_initialize_child(OBJECT(dev), "cpu[*]", &s->cpu[n].core,
-> +                                bc->cpu_type);
-> +    }
+> +QEMU can also read the reproducer directly from a file rather than
+> +from standard input::
 > +
->      /* common peripherals from bcm2835 */
+> +    $QEMU_PATH $QEMU_ARGS -qtest chardev:repro \
+> +      -chardev file,id=3Drepro,path=3D/dev/null,input-path=3D/tmp/reprod=
+ucer
+> +
+> +This is useful if you want to run QEMU under a debugger to investigate
+> +the failure.
+> +
+>  Implementation Details / Fuzzer Lifecycle
+>  -----------------------------------------
 >
->      obj =3D object_property_get_link(OBJECT(dev), "ram", &error_abort);
 > --
-> 2.51.0
+> 2.43.0
 >
 >
 
