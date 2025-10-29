@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A283CCCF9F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7531CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE9g3-0005U6-OW; Wed, 29 Oct 2025 13:09:40 -0400
+	id 1vE9gT-0005j8-Pn; Wed, 29 Oct 2025 13:10:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9fz-0005Ql-Lg
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:09:37 -0400
-Received: from 9.mo552.mail-out.ovh.net ([87.98.180.222])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9gR-0005hD-2r
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:10:03 -0400
+Received: from 8.mo548.mail-out.ovh.net ([46.105.45.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9fn-0006tr-NR
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:09:34 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.143])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cxYcv2vdyz6PXP;
- Wed, 29 Oct 2025 17:09:19 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9gE-0006yy-QS
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:10:00 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.14])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cxYdL6tk8z5yFC;
+ Wed, 29 Oct 2025 17:09:42 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Wed, 29 Oct
- 2025 18:09:16 +0100
+ 2025 18:09:39 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-105G0067c4118c4-fdc0-456f-afa9-e8878abc4196,
+ (GARM-106R0061be39716-26fd-4231-8f62-553c70b8665e,
  1C4C5A15D30C5F2C89D761F8A9BCD43732F6FBF1) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 92.184.104.153
-Message-ID: <308593c2-2da7-495f-8389-29d7a560852a@kaod.org>
-Date: Wed, 29 Oct 2025 18:09:16 +0100
+Message-ID: <10087d38-6c73-454b-9425-51d74077c35a@kaod.org>
+Date: Wed, 29 Oct 2025 18:09:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Subject: Re: [SPAM] [PATCH v1 05/13] hw/arm/aspeed: Split FP5280G2 machine
- into a separate source file for maintenance
+Subject: Re: [SPAM] [PATCH v1 08/13] hw/arm/aspeed: Split YosemiteV2 machine
+ into a separate source file for maintainability
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -43,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251023100150.295370-1-jamin_lin@aspeedtech.com>
- <20251023100150.295370-6-jamin_lin@aspeedtech.com>
+ <20251023100150.295370-9-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
@@ -87,33 +87,33 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251023100150.295370-6-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251023100150.295370-9-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 04a5a136-804b-4ab5-b1ea-1e7574a72e38
-X-Ovh-Tracer-Id: 5349994883853159346
+X-Ovh-Tracer-GUID: e283bf11-6fb3-4a29-afdb-c7c6f8c4bfa5
+X-Ovh-Tracer-Id: 5356468809033747378
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGKmpEiFvpSjmg8NB87fP2zMCjlQ5aIaVcJ0olTAjSj21mZENFIQcLk17FhzR47KS8LgsnK48P6Ix8BDziBxtEQIcenzHT1afTRHnOjjP1YQn9mPC5Z4v4lFoXse17yd1RWBZojCCJvkZkQ9JUxqKwrzyJBMlsA6/763rer9KMcT4G/0huPo5NMgbwtaotnbpaOwFUb3CX7DKj6HGrDmV0z9JGNfZl5CPiP7HgOUFRyZ5vsjmvPUsl3DbBJnMg7x7Mydxf7WPgVnPl+JYwdYSbXKbY2R2qnUjpC930H69/m/Fm8eHC9bGMTknN+BS3aGgv3DJP/T+sHnAatSZNovAUHpHMK8p5BfMpY1XhcK78pAACqhM6DwO4LxNagUsLfcP7lkBx/CN1NnA1Z1BLKTKsvkG01pmOA1/5U4JZ7ZIFmdxMD0p2ele+FJPyUd2T1X7jx9e4CoXkEcRZPizoHGz8oFmTGVIV3jkz9kAHeobZD649V9IU0EpVtAha8oNsYCo4i3mfSXiTxhMjdg8CkTyI+i6V7nJzjRBp3BmLad5lwUjBwYkDPBvLky0rm6524UMKB7XhDuZsZx21puX5emN33+XU6zq8JGl95mEPw5taK6f/kI/wzFes7WtQ6+IoXYIO5PkpPQIwKxg7xwfF+W7xdQu5J3lbpep6nqNljj8gl7Q
-DKIM-Signature: a=rsa-sha256; bh=r89ptQhbDwWE5HQm5zQwJomzuEbE/tNjtaZ5OurZKPU=; 
+X-VR-SPAMCAUSE: dmFkZTGvqICiuChEvCHRDpMcNOLDxJaHqbe5F0x1ZmQ+idEGrrtQUHJoxGU579WKuvCmhuR6+SFAA0znV6rhdPGfYAdnkfOYRkFWg5GHtZYcpVambL1MBPj1HGIXYRxRglk0Cxobc6+nJG6p08UeNFDcqT1NysoUKpd4Pw++G72d2URPlmPk9H9VkQqiSUnlDVYA54nP22LpGou160umQ9FHl5l3/RH626ZNIy4rTNtftvqcHlmqvygY9jcWmY2aIXsmtxvh/QPcCeJmhBRxgITnoK/ffEQ2oxrT4VAMPm/j9SwvzPIUjnp+AC++01LPLdxTvEzyhH6y3nm6VQM3/x3eA4+3Gx8AJcm9Ht/ZFm77pR04VT6cwkmFQclJg08ia4ruaDpHMTuP9eSo5M9DPoTLXAsoB/uJPqV7GeGXRE8jh6JKtZ0dyj7VoSFAU89DKyjadkMovShFiSVegd0S/LpJ0+dfOF1E6or/QPq/SKMa9+MSMhLhPLryEXNPK0ENQe2xGpVJskNbVgodWPpTI3jehBiO/9030qFgm0JhHiYf/IExUhOjV5b4prrYHr+19oG71JCBedHZf9NNn0eMJmn7A2rbG/OKbmeh7cf5rfi9FPlGPgk/tSU7BkmA2HRtqa8ZUvvEXPurD/qxSOneA/SCDU/PZGtAqDVL5P0zWfaXeoFVBQ
+DKIM-Signature: a=rsa-sha256; bh=YyFZM9BZMhbrt1fxTXi3eVYQ5psdGR9P8AbORIKGTNY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1761757759; v=1;
- b=HVrAdzwB3s6HeZpu4K7u5dId2aJk0CAQ/DaMoCLZtVU5w99Vcyh0seEJI7A0jPIDiiAVsdkO
- kmrjTMlT93g8z+j5NLwiyHJwfJa/YQlEVX++uabj+GwHype8jt7VW6NCW0XC1YiU72PYxScdR6x
- YP+PNzZPGVhzQXSfjIU5IJJ/DQgT4ideJSZSr1Z7necgDdvGSPN4fAZn+6Nk8ZJS9wrEkYv2RGD
- H2YsDB7952IltQBYvX8A+KOAmFyXoQRr/RvwfwcU3GsxBMNCEAOeKVTdPXF+5ZNOmbEPkbe0pzQ
- uv3H3yEa3Ip+U8jHkX0s4/wb4pVFu/Qt3v3m2vL+n68FQ==
-Received-SPF: pass client-ip=87.98.180.222; envelope-from=clg@kaod.org;
- helo=9.mo552.mail-out.ovh.net
+ t=1761757783; v=1;
+ b=WnAlKFGtw8w6QH+z5Uo3gL9aykUYTDX6JaNRsaBR+M3uy+O/pkbGt7m753rjhoD5oN64KMLY
+ eNvtObHaY7s1VpWReftlz8wNyTc28Wvxi9RGSY8+hkCNNyf6XYby11AP+taoVZuukKtcpYNS+/q
+ pMh9MidPVpQV+mPWArRY/bK6YkYUOtxmB0jWk4JCJ4CvFXJTuiAzXe7bd0jK9leMDFQ/6pVJA9V
+ tQeXt7RCecAMD6BICElgBZncFcz/tnhcWhbWELi3RsqCTucJG2IyyDTGhZObxtC/yC6M8lp8KFe
+ RpdH1DKiJojdggpK2qFgjgGvHwvstyg91NePQN9Wyc0vg==
+Received-SPF: pass client-ip=46.105.45.231; envelope-from=clg@kaod.org;
+ helo=8.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -132,34 +132,49 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/23/25 12:01, Jamin Lin wrote:
-> This commit moves the FP5280G2 BMC machine implementation from
-> aspeed.c into a new standalone file aspeed_ast2500_fp5280g2.c.
+> This commit moves the YosemiteV2 BMC machine implementation from
+> aspeed.c into a new standalone file aspeed_ast2500_yosemitev2.c.
 > 
-> The change improves code organization and prepares the Aspeed
-> machine framework for future expansion and easier maintenance.
+> To support splitting YosemiteV2 into a dedicated source file,
+> a new YOSEMITEV2_BMC_HW_STRAP1 macro is added as a copy of
+> AST2500_EVB_HW_STRAP1.
+> 
+> The refactor is part of an ongoing effort to modularize Aspeed
+> machine definitions by separating each board into its own source
+> file. This improves code readability, maintainability, and simplifies
+> future platform-specific changes.
 > 
 > Key updates include:
-> - Moved fp5280g2_bmc_i2c_init() and related machine class init
-> functions into aspeed_ast2500_fp5280g2.c.
-> - Added new file to hw/arm/meson.build for compilation.
-> - Removed obsolete FP5280G2 definitions from aspeed.c
+> 
+> - Moved yosemitev2_bmc_i2c_init() and its FRU data into a new file.
+> - Removed aspeed_machine_yosemitev2_class_init() and type registration
+> from aspeed.c.
+> - Removed YosemiteV2 FRUID data and declarations from
+> aspeed_eeprom.c and aspeed_eeprom.h.
+> - Added aspeed_ast2500_yosemitev2.c to the build system
+> (meson.build).
 > 
 > No functional changes.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed.c                  | 65 ------------------------
->   hw/arm/aspeed_ast2500_fp5280g2.c | 87 ++++++++++++++++++++++++++++++++
->   hw/arm/meson.build               |  1 +
->   3 files changed, 88 insertions(+), 65 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast2500_fp5280g2.c
+>   hw/arm/aspeed_eeprom.h             |  3 -
+>   hw/arm/aspeed.c                    | 36 ------------
+>   hw/arm/aspeed_ast2500_yosemitev2.c | 90 ++++++++++++++++++++++++++++++
+>   hw/arm/aspeed_eeprom.c             | 22 --------
+>   hw/arm/meson.build                 |  1 +
+>   5 files changed, 91 insertions(+), 61 deletions(-)
+>   create mode 100644 hw/arm/aspeed_ast2500_yosemitev2.c
 > 
+
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 
 
 
