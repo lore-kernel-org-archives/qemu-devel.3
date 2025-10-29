@@ -4,114 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F8FCCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8970CCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:15:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE1K9-0000MK-JE; Wed, 29 Oct 2025 04:14:30 -0400
+	id 1vE1LK-0001f9-7v; Wed, 29 Oct 2025 04:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE1K0-0000H4-Vw
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:14:22 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE1Jt-0004zd-Q6
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:14:20 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47114a40161so77875525e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:14:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761725650; x=1762330450; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=utZpS5XcNdUXDjEy2icG4A48+qvfCU4a3CJWGYsuPLk=;
- b=GKlC53jJ/meVo3+inmopC+maKqcKO6kkOBxiWFsAoVrdayKuuIgxiF5v8/t8joYV7H
- f3+gnK6hRBsomO2ECeXWsc50PLTTj3zHy5Ir8P6wXmGC4k0qSXRIA0u6g5Oud7zgX8Zq
- WaUw3m9Poj1TVNXso/yji+BJInSbTXmcn5fH0ue90hXIj+ycgrySUIyjRsUWvq33AfUg
- LOkHpvLz8QshR+hTGJD4nXEYQAFctLU3DONLMc3T4KIkQXbGWy+ccvU+yYU5soU+FbhM
- R5GCtVSLKSLhArwaGCojz50PBM8T1tl5nzaLaGhJtILB4N/7tKC182AjDNxJecvl9eQ3
- 4f8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761725650; x=1762330450;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=utZpS5XcNdUXDjEy2icG4A48+qvfCU4a3CJWGYsuPLk=;
- b=KFBwsU6eEcJlIlPBK7Zj1i3tLMb2ud7TFGdV1wsxFaveV7jexSro57hFbihBJhDNnY
- 6kfXpHJ4SYx8KnrnRSPT/M1RYluYhiywV58BqE5TgiD3GDETBEqRvBmR3l93GLqlJI7J
- ezc4duqpMjjOgQGwpXDzgu/GKVR/XrCaQdX9AX74Jk/+oB43CN0bdy/xmBqdyW7ALFAi
- MakNh3QbMacrJquWB0KGfCigBowCzixVBlDn37O4BKKthkDE4Sg5s5Iv8TntY6ZyLIUS
- ppv5GWYpMigGG9KtxEPQDuaUrf6viZjCSUSQLsBUeGHnl7hNZYtUQMDo4a1lDAu68PWZ
- b9Og==
-X-Gm-Message-State: AOJu0YxqzLWHBYzrsKUNKbEZiK6AJvJz3jG7FvopXxKlhRoAN2d9rFEh
- oXh8Le5ph2uB0+ha8cFR5W8JMa7rzzaI4M66KXb4gsR17R961A6G4qUZAExcGSIiqqjkK/FKlGH
- nzxUB
-X-Gm-Gg: ASbGncsNv/E8x9rDdkzVSGOLKfoZOsUu+tgyN/maSbM84OQT1e/i4Ph4iBrAd6L72fs
- jpwCofCfyqrnxGGz50j98+GUOT6yQCSdoHXfRoAT/sooFysussVNmc1l3G0/mgSVI79YiOYFT7/
- JP17pbeQPN+/txIrD5e5dwKY5fDUs4Uwb4+cl66Pwhuz1t84It92xTQyH+LZTyiLuL85PApJ56J
- zVmSH7201QytlGv4qymQw6hPTw8oTO7nDhG1HP7DiABd6YYJs+cKwX0pkCZUNVX9Rm70W/qqVWJ
- Wf3sSilAd4RE4VVAx9TTn5iBD/8CqFXrWmZoZsRdmFjaEOsTJFPAtt3UUt79LRVAkhQ/udoDQwf
- VnV86QMaZ8r6BInitJE1AAZSzhVFqsK9zWtQSmchYvo4UNPFmz3zuEwwBDYznboduzaEqWHdfsk
- y8UkH2uATSJMBaz/5EWgY+0Id5gqjRxxsNNPOBzJzILiVVmaX8
-X-Google-Smtp-Source: AGHT+IGe0QAwil3HRHsL1f+brsYo1R2IDj27kRaROm84jCx7ds86A2azE4hTCXen23RNyZx98a95jA==
-X-Received: by 2002:a05:600c:3506:b0:46e:37fe:f0e6 with SMTP id
- 5b1f17b1804b1-4771e3b849fmr17106615e9.30.1761725650574; 
- Wed, 29 Oct 2025 01:14:10 -0700 (PDT)
-Received: from meli-email.org (athedsl-4440624.home.otenet.gr. [79.129.178.32])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771bc597c7sm29848275e9.1.2025.10.29.01.14.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 01:14:10 -0700 (PDT)
-Date: Wed, 29 Oct 2025 10:13:42 +0200
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alexandre Iooss <erdnaxe@crans.org>, 
- Chinmay Rath <rathc@linux.ibm.com>, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin <npiggin@gmail.com>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- qemu-ppc@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Helge Deller <deller@gmx.de>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Stafford Horne <shorne@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9_?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>, 
- Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org, 
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: Re: [PATCH 02/35] scripts/ci/setup: regenerate yaml
-User-Agent: meli/0.8.12
-References: <20251027110344.2289945-1-alex.bennee@linaro.org>
- <20251027110344.2289945-3-alex.bennee@linaro.org>
-In-Reply-To: <20251027110344.2289945-3-alex.bennee@linaro.org>
-Message-ID: <t4vw7k.qshbmizu7wto@linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE1LH-0001aI-Ke
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:15:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE1L5-0005GN-6O
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:15:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761725723;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=l6+zfLdkw8EuX9kWfIgRpvWslSH9NbN+rlpm0AsWvlA=;
+ b=DnxWZIpz5uER5nKz1YCDgoz+U4S3LZoze6fMWHaatN9JxszkHSP3BMbu4GhTHPAO6Y5UJg
+ sKbl69VKFvIs5Rls3HLiUqK3VEnJ5sAybmsyLjJu8t5gUjZExpbVFpUnENIYs4V8mYs084
+ pg6P30mcUHAKp0RLIKA7rmaCYKD68Y4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-Nstbjx7kNn2e3ES0iNyYSQ-1; Wed,
+ 29 Oct 2025 04:15:19 -0400
+X-MC-Unique: Nstbjx7kNn2e3ES0iNyYSQ-1
+X-Mimecast-MFC-AGG-ID: Nstbjx7kNn2e3ES0iNyYSQ_1761725718
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 934E61800744; Wed, 29 Oct 2025 08:15:18 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.98])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2C9B71955F1B; Wed, 29 Oct 2025 08:15:15 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] tests/functional/x86_64/test_acpi_bits: Silence warnings
+ reported by pylint
+Date: Wed, 29 Oct 2025 09:15:14 +0100
+Message-ID: <20251029081514.60802-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.737,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,66 +81,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Oct 2025 13:03, Alex Bennée <alex.bennee@linaro.org> wrote:
->We inadvertently updated the base libvirt-ci project which has
->resulted in changes. Make sure the output matches what we generate.
->
->Fixes: 0d4fb8f746d (configure: set the bindgen cross target)
->Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->---
+From: Thomas Huth <thuth@redhat.com>
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Pylint complains about too many positional arguments for the __init__
+function of the QEMUBitsMachine class, use a "*" to enforce argument
+passing by names instead (which the calling sites are doing here already).
 
-> scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml | 4 ++--
-> scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml   | 4 ++--
-> 2 files changed, 4 insertions(+), 4 deletions(-)
->
->diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
->index ce632d97108..70063db198e 100644
->--- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
->+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
->@@ -26,7 +26,7 @@ packages:
->   - git
->   - hostname
->   - libaio-dev
->-  - libasan6
->+  - libasan8
->   - libasound2-dev
->   - libattr1-dev
->   - libbpf-dev
->@@ -37,7 +37,7 @@ packages:
->   - libcap-ng-dev
->   - libcapstone-dev
->   - libcbor-dev
->-  - libclang-dev
->+  - libclang-rt-dev
->   - libcmocka-dev
->   - libcurl4-gnutls-dev
->   - libdaxctl-dev
->diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
->index f45f75c9602..4f1a49be34a 100644
->--- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
->+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
->@@ -26,7 +26,7 @@ packages:
->   - git
->   - hostname
->   - libaio-dev
->-  - libasan6
->+  - libasan8
->   - libasound2-dev
->   - libattr1-dev
->   - libbpf-dev
->@@ -37,7 +37,7 @@ packages:
->   - libcap-ng-dev
->   - libcapstone-dev
->   - libcbor-dev
->-  - libclang-dev
->+  - libclang-rt-dev
->   - libcmocka-dev
->   - libcurl4-gnutls-dev
->   - libdaxctl-dev
->-- 
->2.47.3
->
->
+Second, use lazy logging when calling self.log.info() with a "%s" format
+string, and drop a superfluous "else:" that is not necessary after a
+"raise" statement.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/x86_64/test_acpi_bits.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/tests/functional/x86_64/test_acpi_bits.py b/tests/functional/x86_64/test_acpi_bits.py
+index 9a2816533d6..ec716d643bf 100755
+--- a/tests/functional/x86_64/test_acpi_bits.py
++++ b/tests/functional/x86_64/test_acpi_bits.py
+@@ -57,6 +57,7 @@ class QEMUBitsMachine(QEMUMachine): # pylint: disable=too-few-public-methods
+     """
+     def __init__(self,
+                  binary: str,
++                 *,
+                  args: Sequence[str] = (),
+                  wrapper: Sequence[str] = (),
+                  name: Optional[str] = None,
+@@ -225,7 +226,7 @@ def generate_bits_iso(self):
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT,
+                                       check=True)
+-                self.log.info("grub-mkrescue output %s" % proc.stdout)
++                self.log.info("grub-mkrescue output %s", proc.stdout)
+             else:
+                 subprocess.check_call([mkrescue_script, '-o',
+                                       iso_file, bits_dir],
+@@ -287,9 +288,8 @@ def parse_log(self):
+             except AssertionError as e:
+                 self._print_log(log)
+                 raise e
+-            else:
+-                if os.getenv('V') or os.getenv('BITS_DEBUG'):
+-                    self._print_log(log)
++            if os.getenv('V') or os.getenv('BITS_DEBUG'):
++                self._print_log(log)
+ 
+     def tearDown(self):
+         """
+-- 
+2.51.0
+
 
