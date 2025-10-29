@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99190CCF9F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73238CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE1Gr-0007Ou-DT; Wed, 29 Oct 2025 04:11:09 -0400
+	id 1vE1Iz-0008Jf-EI; Wed, 29 Oct 2025 04:13:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE1Gh-0007OG-Rh
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:10:55 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1vE1Ix-0008JL-Rv
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:13:15 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE1Gc-0004bM-I6
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:10:54 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4283be7df63so3362377f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:10:49 -0700 (PDT)
+ id 1vE1Iq-0004qi-L5
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:13:15 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4711b95226dso86869245e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:13:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761725447; x=1762330247; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761725584; x=1762330384; darn=nongnu.org;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=WMZtSrVCQzr0uAODDe4WO0RNkp8rQj/Tb5xXoORj8fQ=;
- b=HTqGdX1b9cYtzfLe/lXs/E6s9TXDsizysHRc164jLydnkpCjF0HkRKSnbmuAMMbr7R
- yIYVxMIWxAcUyE66zveT8eAs5wLtIZ3AS+g+dLCjiE0nsvKQuhy9EKhqUyXMPvqizmC/
- Eiz4OEsglIIw7vK+DSCDw9310tLx9qupDbLRPLtNPj2q7Cdp1T2KjEFn641xolLkHSJ/
- C4ySjcwOSqQbxeRjnqcJQNkdhLW2Lkh1DKKcx4R5xOyrfsuDyi/k1knPSveKn7NuTJc1
- AIufqP+h+KrkMav0XLJPouYg9PQ5BFdbaBH3I9qWyOfEHFlhaDS2vPXuxFDiGVX0t1qU
- xAgg==
+ bh=R/9s/t1bENeKNi0IR6brXQSJO7uR7qYZrg1UP6diQPQ=;
+ b=VcbRcKev4ZmA2BYiVCqYiyEjTO3bMIo8HIT/Q+pJJC0Orn1K3C+yWyDLLnDzEhI+ej
+ WpUp1QbFVxmfGEPMMRdNajm4MrZ40Y5a6nu92GFwa8cqDp/Q1LG6YsAX6T6ULBqEWsV3
+ 9vUafx2kSr/pSNm4acIcKNoqLmN1mgVDlV/oe/P0wuAubW4Sg1iLySHx/7HAeTDEuUyA
+ cpMUovjWYuzKUAeeqJPWcHOISGPmYezvdspqcLdeuH30a7+Bme5aaqsR+Cm2BiyKro+g
+ MqyqR4Ddw2761QYGy16QnTs95YFtGh/mjzcvFcSv24UL2kFlOrL/NBJVu9IADeG4iJKY
+ uW/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761725447; x=1762330247;
+ d=1e100.net; s=20230601; t=1761725584; x=1762330384;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WMZtSrVCQzr0uAODDe4WO0RNkp8rQj/Tb5xXoORj8fQ=;
- b=nDUi0EEM53qEsfaZOfTpqQ8HdF7sYr5GJhSJyz8da9gfjyYDkrjQLtOLmLIm9AdCSD
- sFjraAzCtpYU0VBElZfc+ymmr66CdBnR4BDwl0GG1+DivBm3uXBzJwrhiM7NTAA0ASmw
- u/fYGkn2Wg1kTJRDgReCKNE4Rwkr+by+DnvoticPEEzBIFJ4Wjrov48O8WFCFXN7UtGL
- 04UZLCBu9yA6QJEiWGT8ipWNFHRdYT7cNl4cJsWUMzGZD1y/lo10DodArxnCxttg75Ma
- dpaNqQJDPGFR8udA124tyTZTHmysIgYnZD/x30x48VqvnY/dsKpBmx60gZ+76WaJD/Hp
- 9ysA==
-X-Gm-Message-State: AOJu0Yw84pQopcNQrbvCzaHRv9ssYfiR0TOTLoP8MA4DSmtEQbnbK5fd
- 2RGdOF9xloE5ZTLC7dClJxeZ35ivVhYG5gZYraMg2f6BwWTLX8CKfhOYj44XEwA1qwcqNmi4WBn
- eQ8Hz
-X-Gm-Gg: ASbGncvyBCEc/pLGXY7Kdxy4HOXpqzrRd4a7CfCNLGLQ8GiMsqYH3Balw3mQokuPakT
- GkpLM8jWDSF5X90vxiqyxgvtrqnc0hfA/wKy4hJaq+WAif20F4kD7kl5ApecmXRjvkLIMhdxAEW
- sQ5tELJyMvlSV0yDDY0/UyCvxL0izedvoIsw1nbejjrMW7vzjFZff/BdgxsifSl91mhlsPB0+ch
- C5rrzhjkizwMhbKJwCaN6OMRVMqPlFjpmuGejn35+Phjj8zRiofmwcbaCLd+vGO/krjaUuLfxIO
- 0lFSbYT5C6r2NC6IJm0MQfN0j+sSU4unZDIK60oBF5IGUntaiiKvyQ3nD36B3Iiyk4puluLq0Q9
- /o1z+0HvIATA7XqdSlJIo/5DI2cZVBHQp81CHvFCA7OOtSE3dqwq3IXu7uwqRw6IPaGIn16KDG/
- WKFRpK81eCGTaOFTXpWpxND4MJJdo/mUpbdLHwrpxmytHAGFI+
-X-Google-Smtp-Source: AGHT+IGT7zOS85s9tlg3jilcN9QYaJKuyN0sURC4ERCaHbjy3qjLqWlaD+DPUcv8eJq6jQcxMchs9A==
-X-Received: by 2002:a05:6000:1846:b0:429:8d8b:fef7 with SMTP id
- ffacd0b85a97d-429aefca3a0mr1393034f8f.49.1761725447248; 
- Wed, 29 Oct 2025 01:10:47 -0700 (PDT)
+ bh=R/9s/t1bENeKNi0IR6brXQSJO7uR7qYZrg1UP6diQPQ=;
+ b=akujn8SmkHTvxHtdHiG2jy+uTT7MWDIOJy8/Wo0j+7P8KX0I+/inIk4C1TwCsnVH5N
+ FqMl1RlW9s1YqsbKf8NEO2FNL0vukkyaxwzJelhN3HSvBsiLRhlIPZhphAWekTnAlRnC
+ jbO0HC4wcOQWPOJu9dT95YprAgaQ+esOETIv3qttXY912G9GzjGaudRZCCxi8G30ycTZ
+ MPCh+16MNrGZjdofRyGniHiEoVte8lQiqQJJoKPqhTRnIkQHoW7JSIzvpS05s0ogZWgM
+ Pl9AE5ZBe5JquCC0+l+uRjz0iZdqpamWaOhGWsccxsR/JnrF6EQooi4aXU4QF3xYUOCH
+ Enew==
+X-Gm-Message-State: AOJu0YyqcVM/BkskK5S95AfWmQiAQlUXfn1kjoniQ7PJ7B3UDzCNEPce
+ j+/OFT30/dIVkNdprFaOb6d/ZZMmx2yk7rsBDGGlBIceZ5p4PYXclvVwZqOyE6mZtVjco03xfjV
+ dxSU/
+X-Gm-Gg: ASbGncu7uiyvaxnOKfYaVBUA1+Gl0R64WvgBdvhS+yNFA3VEdl+q3LFsh5yDjUb3eGI
+ XqGMjhET1cPL+MCOSaQwdedciancbN4N/WheHHDfcrsxRH1Q8icnESgFPTVDoHH1fcTfrFzgX/b
+ WkVA09MNd0WJUKydc341aw7r8Aa7ecEqStIbnAXDssOuDUtrFZQEO8Wp7DjBq6LLaYpNd30iKTV
+ Cl+JbwXlGbb4T8T5YF4ugpUX+/+/SAp4ZBMdxebwRzl/BOM/iL/nQDGOL0yE9ar7F9/Y1/fW3J8
+ I7dmUtkd6aGamJ7KB6mVaY89P57b2XY4LabY1yRnq0I2PpZaT1yVwdk/znDjpjyvv+XnmIdj3Gj
+ 58zFlNiq9hCaXFw8DVXDBJmQSf0byhP/emoG2MyWKn+D8ir5RXqoooKm85JMVWwmOBchXv75zmx
+ UyVTcSXttswQMjNYR0bBiC96v71cDwNwnDSW0HYOsZh1ZEjL54
+X-Google-Smtp-Source: AGHT+IGVueVntI3GwRFIek3kHcTea1AOzJsr+wA8rD7J0CWGkRhwXu2gQwodz1ctuioGDLPGmVhaQg==
+X-Received: by 2002:a05:600c:a55:b0:471:9da:5248 with SMTP id
+ 5b1f17b1804b1-4771e400d8emr14146385e9.26.1761725584206; 
+ Wed, 29 Oct 2025 01:13:04 -0700 (PDT)
 Received: from meli-email.org (athedsl-4440624.home.otenet.gr. [79.129.178.32])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952d5c9dsm25987917f8f.26.2025.10.29.01.10.46
+ ffacd0b85a97d-429952b7badsm24440045f8f.7.2025.10.29.01.13.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 01:10:46 -0700 (PDT)
-Date: Wed, 29 Oct 2025 10:10:24 +0200
+ Wed, 29 Oct 2025 01:13:03 -0700 (PDT)
+Date: Wed, 29 Oct 2025 10:11:35 +0200
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -95,16 +95,16 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>, 
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org, 
  Aleksandar Rikalo <arikalo@gmail.com>
-Subject: Re: [PATCH 06/35] scripts/ci: modify gitlab runner deb setup
+Subject: Re: [PATCH 03/35] scripts/ci: move build-environment.yaml up a level
 User-Agent: meli/0.8.12
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
- <20251027110344.2289945-7-alex.bennee@linaro.org>
-In-Reply-To: <20251027110344.2289945-7-alex.bennee@linaro.org>
-Message-ID: <t4vw1x.1ndc8wjayp8ac@linaro.org>
+ <20251027110344.2289945-4-alex.bennee@linaro.org>
+In-Reply-To: <20251027110344.2289945-4-alex.bennee@linaro.org>
+Message-ID: <t4vw5r.fh3zebmjdmh3@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -128,44 +128,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 27 Oct 2025 13:03, Alex Bennée <alex.bennee@linaro.org> wrote:
->Both Debian and Ubuntu are setup the same way.
+>We can share the setup of the build environment with multiple
+>operating systems as we just need to check the YAML for each env is
+>present in the directory structure.
 >
 >Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 >---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> scripts/ci/setup/gitlab-runner.yml | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
+> .../ci/setup/{ubuntu => }/build-environment.yml  | 16 +++++++++++-----
+> 1 file changed, 11 insertions(+), 5 deletions(-)
+> rename scripts/ci/setup/{ubuntu => }/build-environment.yml (81%)
 >
->diff --git a/scripts/ci/setup/gitlab-runner.yml b/scripts/ci/setup/gitlab-runner.yml
->index 7025935487a..76aeaf4ee95 100644
->--- a/scripts/ci/setup/gitlab-runner.yml
->+++ b/scripts/ci/setup/gitlab-runner.yml
->@@ -56,12 +56,12 @@
->         url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
->         mode: 0755
+>diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/build-environment.yml
+>similarity index 81%
+>rename from scripts/ci/setup/ubuntu/build-environment.yml
+>rename to scripts/ci/setup/build-environment.yml
+>index 1c517c74f74..66bde188755 100644
+>--- a/scripts/ci/setup/ubuntu/build-environment.yml
+>+++ b/scripts/ci/setup/build-environment.yml
+>@@ -27,18 +27,24 @@
+>         - ansible_facts['distribution'] == 'Ubuntu'
+> 
+>     # the package lists are updated by "make lcitool-refresh"
+>-    - name: Include package lists based on OS and architecture
+>-      include_vars:
+>-        file: "ubuntu-2404-{{ ansible_facts['architecture'] }}.yaml"
+>+    - name: Define package list file path
+>+      set_fact:
+>+        package_file: "ubuntu/ubuntu-2404-{{ ansible_facts['architecture'] }}.yaml"
+>       when:
+>         - ansible_facts['distribution'] == 'Ubuntu'
+>         - ansible_facts['distribution_version'] == '24.04'
+> 
+>+    - name: Include package lists based on OS and architecture
+>+      include_vars:
+>+        file: "{{ package_file }}"
+>+      when:
+>+        - package_file is exists
+>+
+>     - name: Install packages for QEMU on Ubuntu 24.04
+>       package:
+>         name: "{{ packages }}"
 >       when:
 >-        - ansible_facts['distribution'] == 'Ubuntu'
->+        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
+>-        - ansible_facts['distribution_version'] == '24.04'
+>+        - package_file is exists
+>+        - packages is defined
 > 
->     - name: Run gitlab-runner repo setup script (DEB)
->       shell: "/root/script.deb.sh"
->       when:
->-        - ansible_facts['distribution'] == 'Ubuntu'
->+        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
 > 
->     - name: Install gitlab-runner (DEB)
->       ansible.builtin.apt:
->@@ -69,7 +69,7 @@
->           update_cache: yes
->           state: present
->       when:
->-        - ansible_facts['distribution'] == 'Ubuntu'
->+        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
-> 
->     # RPM setup
->     - name: Get gitlab-runner repo setup script (RPM)
 >-- 
 >2.47.3
 >
