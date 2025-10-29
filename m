@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A193CCF9F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB60CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE8S0-00040T-SQ; Wed, 29 Oct 2025 11:51:04 -0400
+	id 1vE8S4-00041p-31; Wed, 29 Oct 2025 11:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8Ry-0003zE-Pp
+ id 1vE8Rx-0003z3-DG
  for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:02 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8Rp-0002rm-Fl
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:02 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b6d53684cfdso6934966b.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:50:50 -0700 (PDT)
+ id 1vE8Rr-0002s0-DQ
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:00 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-637e9f9f9fbso13563581a12.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761753048; x=1762357848; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Wg6+PT/hZIx0xGwf6Sxgv7SpSjwIGao1Eq5ccApyXa8=;
- b=N+FfwyUwIdrv8CW571T0zdaa/ARmKsWWq51S4AmR2uoB+zil001DzKRewTIZVPv5J+
- qBvK+BLQS9yQj2LQ5HToz67hiCqkYuaa3AhfyxsrwjlbvD/0SCpUCQKX91JDk/cewAGV
- mxAu0qlxA6hNlJMGg5t7LsR/uJEUFCmoVZHdiJ6ZyV1lpsuoGSwe6397FQfx8bYAsPx1
- vOW9Jk64uz042a9ZQmVzngYOaWrb8exwEHo+mxsezwDtNdC4VNxwkLXwZKqJIM3SqTil
- pdlOWKzyfCymsiYdTPqrAjDC+FlXN2pOxR24iN+W1Q1wS9DiSx4c4nHN+WJZIGEnloS4
- 2oGw==
+ d=linaro.org; s=google; t=1761753049; x=1762357849; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bVt91U9CN3CeKgB2+TdAfUtyShLCYqGa0ESHQprmkuk=;
+ b=xuoePvQ1rLnH3Y0hSoLMniE4CNYIUuQJk1KGLmUzkhQC1FjAyMzGb5+iqh7+yMBmWh
+ giK3WkG7mqZBjeM0qE3lJAG1Mqvv2HbM1NUnLGSCOYzl2sQt2yRXRCbBeOsuk4momPxK
+ JSoJKsuU083ZtctlGvzFLSoRnESbFPGOst6KM8aslRwc5mVp1hRalgZRiVX17wExwWmK
+ 3vYK11IOPl3b2kLoNERd6rIIiKpSbTdgAo1ejLuEvKb+EDF79rR081HndvRBqB4SdtfS
+ 3aMVTV1yQCpG1RmMqdmtj5JBaXKOy9Urfnl2DXtkxwxtfV8OSbaroxQqs+vFyKaWc14/
+ i6DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761753048; x=1762357848;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Wg6+PT/hZIx0xGwf6Sxgv7SpSjwIGao1Eq5ccApyXa8=;
- b=FJ0ow9DU/Lf1eb919wMN3v8PHQUe2iu95HG78eL3OvmNuyedObEi1v1xWLJZRJo50J
- Mch63GKjHTtdCyR7e2cz9m40vugC6wd0OGM0Sxkn0zzdMttyo1KbhQ54n6lgkh79nwu4
- PCNcOKqeWGEMPPbGIUDHWbKsVOgKwSKXJxDT+7w+Dmly8ZZzcKCoJGddnUeCckL9/BWj
- F8f9BEcKMaXP21dN4gn32dawnWYL5G8Tw3ZhjRTnLligX0DnA/kpFn4GhbtXIyOqnHg3
- 0KNuBtDRbdz+j7hZGLF+ndVOVQUUBnWJvZ63Dbovbmp9/BvFlrbCaV68NtDYdVithPwH
- l6mQ==
-X-Gm-Message-State: AOJu0YxSDAyukYEyWV7wV5u9j4AdFD7gDTot3Dsrzq4TqxrydprObeNA
- 3EsAA/ELI3yuVT116NV3ABS7SOKtFvdIgDJOqRaFcxYLELGqpkbylEv5VlXzT/G3zss=
-X-Gm-Gg: ASbGnctzstxN3R8O9a/M1zWAyd2nKKaOztNSObFWfoeccdHP3uzmaMkW3XzD7pPxQLd
- lFjeyA2r1qsdjkLTv3zGxYD/JqxLSdlfPd+Lq7XlYQQfvGsL+U3fuXUpe5wL1xMGJuEydC57J7X
- x1Zbrj6z81ncKKmvZV3SQ+lAb3QFFA1N+gTORaVD78xlg0mQi9FNWAWLtu/vBTXddtUlEr9ELjN
- tHWEY15dAI+Vx/QFfRen3ASTwWwcNm++3IMTsjqMawuVyOvqkcN18ZHys67RMzqfECiOlYaTWYb
- jGmZmO1Z0AJX3G7YIvlpiUCI4gkKH9p9pPmRHnZLEXOLrNGv8aivpOB4jK23X8xmt3DIuEpihty
- YWtXNKPVORRVwOXFaj7Rs2+Fob8iZz+7pVtLWvLnlENsihe2vEFFRgVkB6gZ8GTyBEtUELHWb6q
- JX
-X-Google-Smtp-Source: AGHT+IETFUh2d3vD8OThvnMjx1hIP5HdZnugjt/d0SGX5H7cOvGE1K4zsZCRLkc9B6M5hMN7xsP63g==
-X-Received: by 2002:a17:906:6a0e:b0:b6d:5f52:eee8 with SMTP id
- a640c23a62f3a-b703d33aa3fmr332009966b.29.1761753047799; 
- Wed, 29 Oct 2025 08:50:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761753049; x=1762357849;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bVt91U9CN3CeKgB2+TdAfUtyShLCYqGa0ESHQprmkuk=;
+ b=gMXqx2XIhWxkllJl/4ml3ZN0zBwucaSqqBhc1TpzFSo32P1ILKupAsvAigWiV1tu3N
+ BdsQFn06EQEvwbiYQYcv4CFiyGE3V9H4c+gvV3Kxti/JWJWlmvPDuY4zBGasaC42cj+e
+ urkNdLM2cQwua6lOcZN1tGRUcj2s19JPyznmmprtPH6LSos4UU5qDNB4wyv1ce16JpOO
+ X+MK/R8Qob2wo4umNFzOUqiKpK45QyNwzSeR2VVU+T4S2oN4+DF3Hpz4hG2rL9Se5X4L
+ MnZms2DlVcLu3J21A5cXRYKQb+PgKo8TeDj84KXrM0bBO6tJielB2o6jvlpiMSVGUnOi
+ AkEA==
+X-Gm-Message-State: AOJu0YxiU3B4CW39oBvtqNSfwqy1QEOIr/eHZ3gzjvSQOvZQXTU349dp
+ ARdzUdIkVpKi34qMc1e0zTTEMCy6rH6m209pguukQ3FJqejA7lWNwu1Q3TI9czaPMsiBVINi1XV
+ mLAYjqEM=
+X-Gm-Gg: ASbGncupq5kSsJEpbXKXZmkCYIjkolUY+1V8mnVRtoWT7UrmAdqVrlKG4I/9aan+CVt
+ 7o6mxpd3r5V56lCcRoaddH/siY8E6HIT4LrpwAJMnTy9nePZrogbXXM09+RbA7c7wZ46g9ifbIp
+ gAwqB0b1oZJcnsVHuXtLwln0AjzMOh07XAIpl0u3IaeGc+mCkBRoDpz8fqQkwWgo25nvd9/k5Hb
+ k4zknlOAN5cOrlPGCK66UBCJmWhWdDCQcLh8CkGBE7b9GH+PK4WAVeHbKELqAxX70eP+N4xcFvz
+ i+AcDqKniK9/eE9USLPAusrqw7ERtwhUtM8uYar3sBydP1IKLOwAITubvoq1CaZ1wTpKTfInUSs
+ wMQfIA9kTXCZmtAvzbPnSd546FQEFB/g0xY3UOtFKD4bKrXEkjXFJYPlaaTszAqwRY09rtvhWSQ
+ PJ
+X-Google-Smtp-Source: AGHT+IHWIOUNwjQskpLNHvpUYWWWiHzcKKrthG6nnG+TOBGom+KolvUOFLJVXevZdRzpVsmHA66t+Q==
+X-Received: by 2002:a17:907:7f05:b0:b40:b6a9:f70f with SMTP id
+ a640c23a62f3a-b703d2df135mr350484266b.4.1761753048529; 
+ Wed, 29 Oct 2025 08:50:48 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6dad195456sm929565466b.72.2025.10.29.08.50.46
+ a640c23a62f3a-b6d85308c6csm1507517566b.1.2025.10.29.08.50.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 29 Oct 2025 08:50:46 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EFD905F909;
+ by draig.lan (Postfix) with ESMTP id DA8855F7C7;
  Wed, 29 Oct 2025 15:50:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 01/35] ci: clean-up remaining bits of armhf builds.
-Date: Wed, 29 Oct 2025 15:50:10 +0000
-Message-ID: <20251029155045.257802-2-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 00/35] maintainer updates (ci, plugins, semihosting)
+Date: Wed, 29 Oct 2025 15:50:09 +0000
+Message-ID: <20251029155045.257802-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251029155045.257802-1-alex.bennee@linaro.org>
-References: <20251029155045.257802-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,49 +101,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We no longer need to support 32 bit builds and we missed this while
-cleaning up.
+The following changes since commit e090e0312dc9030d94e38e3d98a88718d3561e4e:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251027110344.2289945-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-10-29 10:44:15 +0100)
 
-diff --git a/docs/devel/testing/ci-jobs.rst.inc b/docs/devel/testing/ci-jobs.rst.inc
-index f1c541cc25b..b92d372a0a9 100644
---- a/docs/devel/testing/ci-jobs.rst.inc
-+++ b/docs/devel/testing/ci-jobs.rst.inc
-@@ -168,13 +168,6 @@ If you've got access to an aarch64 host that can be used as a gitlab-CI
- runner, you can set this variable to enable the tests that require this
- kind of host. The runner should be tagged with "aarch64".
- 
--AARCH32_RUNNER_AVAILABLE
--~~~~~~~~~~~~~~~~~~~~~~~~
--If you've got access to an armhf host or an arch64 host that can run
--aarch32 EL0 code to be used as a gitlab-CI runner, you can set this
--variable to enable the tests that require this kind of host. The
--runner should be tagged with "aarch32".
--
- S390X_RUNNER_AVAILABLE
- ~~~~~~~~~~~~~~~~~~~~~~
- If you've got access to an IBM Z host that can be used as a gitlab-CI
-diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
-index 0f8ec5fab04..1c517c74f74 100644
---- a/scripts/ci/setup/ubuntu/build-environment.yml
-+++ b/scripts/ci/setup/ubuntu/build-environment.yml
-@@ -19,12 +19,6 @@
-           - '((ansible_version.major == 2) and (ansible_version.minor >= 8)) or (ansible_version.major >= 3)'
-         msg: "Unsuitable ansible version, please use version 2.8.0 or later"
- 
--    - name: Add armhf foreign architecture to aarch64 hosts
--      command: dpkg --add-architecture armhf
--      when:
--        - ansible_facts['distribution'] == 'Ubuntu'
--        - ansible_facts['architecture'] == 'aarch64'
--
-     - name: Update apt cache / upgrade packages via apt
-       apt:
-         update_cache: yes
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-10.2-maintainer-291025-1
+
+for you to fetch changes up to 4f45b2c352bb72c13a8801805061b31979e3f048:
+
+  semihosting: Fix GDB File-I/O FLEN (2025-10-29 14:13:40 +0000)
+
+----------------------------------------------------------------
+maintainer updates for 10.2
+
+  - clean-up remaining 32 bit armhf bits in ci
+  - rationalise build-environment.yml for Debian and Ubuntu
+  - generate a Debian ppc64 package list
+  - rationalise gitlab-runner.yml for Debian and Ubuntu
+  - new TCG plugin feature to track discontinuities
+  - add missing CFI annotation to plugin callbacks
+  - drop SBSA_REF from minimal Arm build
+  - format string fix for gdbstub syscall response
+  - simplify the gdbstub flen handling for semihosting
+
+----------------------------------------------------------------
+Alex Bennée (8):
+      ci: clean-up remaining bits of armhf builds.
+      scripts/ci/setup: regenerate yaml
+      scripts/ci: move build-environment.yaml up a level
+      scripts/ci: allow both Ubuntu or Debian to run upgrade
+      tests/lcitool: generate a yaml file for the ppc64le runner
+      scripts/ci: modify gitlab runner deb setup
+      plugins/core: add missing QEMU_DISABLE_CFI annotations
+      configs: drop SBSA_REF from minimal specification
+
+Julian Ganz (25):
+      plugins: add types for callbacks related to certain discontinuities
+      plugins: add API for registering discontinuity callbacks
+      plugins: add hooks for new discontinuity related callbacks
+      contrib/plugins: add plugin showcasing new dicontinuity related API
+      target/alpha: call plugin trap callbacks
+      target/arm: call plugin trap callbacks
+      target/avr: call plugin trap callbacks
+      target/hppa: call plugin trap callbacks
+      target/i386: call plugin trap callbacks
+      target/loongarch: call plugin trap callbacks
+      target/m68k: call plugin trap callbacks
+      target/microblaze: call plugin trap callbacks
+      target/mips: call plugin trap callbacks
+      target/openrisc: call plugin trap callbacks
+      target/ppc: call plugin trap callbacks
+      target/riscv: call plugin trap callbacks
+      target/rx: call plugin trap callbacks
+      target/s390x: call plugin trap callbacks
+      target/sh4: call plugin trap callbacks
+      target/sparc: call plugin trap callbacks
+      target/tricore: call plugin trap callbacks
+      target/xtensa: call plugin trap callbacks
+      tests: add plugin asserting correctness of discon event's to_pc
+      tests: add test for double-traps on rv64
+      tests: add test with interrupted memory accesses on rv64
+
+Sean Anderson (2):
+      gdbstub: Fix %s formatting
+      semihosting: Fix GDB File-I/O FLEN
+
+ docs/about/emulation.rst                           |   8 +
+ docs/devel/testing/ci-jobs.rst.inc                 |   7 -
+ configs/devices/aarch64-softmmu/minimal.mak        |   1 -
+ include/qemu/plugin-event.h                        |   3 +
+ include/qemu/plugin.h                              |  13 ++
+ include/qemu/qemu-plugin.h                         |  60 ++++++
+ target/arm/internals.h                             |   1 +
+ contrib/plugins/traps.c                            |  83 ++++++++
+ gdbstub/syscalls.c                                 |   2 +-
+ plugins/core.c                                     |  58 ++++++
+ plugins/loader.c                                   |   1 +
+ semihosting/arm-compat-semi.c                      |   5 +-
+ target/alpha/helper.c                              |  13 ++
+ target/arm/helper.c                                |  24 +++
+ target/arm/tcg/m_helper.c                          |   5 +
+ target/avr/helper.c                                |   3 +
+ target/hppa/int_helper.c                           |  17 ++
+ target/i386/tcg/excp_helper.c                      |   3 +
+ target/i386/tcg/seg_helper.c                       |   4 +
+ target/loongarch/tcg/tcg_cpu.c                     |   4 +
+ target/m68k/op_helper.c                            |  22 ++
+ target/microblaze/helper.c                         |  10 +
+ target/mips/tcg/system/tlb_helper.c                |  11 +
+ target/openrisc/interrupt.c                        |  15 ++
+ target/ppc/excp_helper.c                           |  41 ++++
+ target/riscv/cpu_helper.c                          |   9 +
+ target/rx/helper.c                                 |  12 ++
+ target/s390x/tcg/excp_helper.c                     |   8 +
+ target/sh4/helper.c                                |   4 +
+ target/sparc/int32_helper.c                        |   7 +
+ target/sparc/int64_helper.c                        |  10 +
+ target/tricore/op_helper.c                         |   5 +
+ target/xtensa/exc_helper.c                         |   6 +
+ target/xtensa/xtensa-semi.c                        |   3 +
+ tests/tcg/plugins/discons.c                        | 221 +++++++++++++++++++++
+ .../custom-runners/ubuntu-24.04-aarch64.yml        |   2 -
+ contrib/plugins/meson.build                        |   2 +-
+ .../ci/setup/{ubuntu => }/build-environment.yml    |  32 +--
+ scripts/ci/setup/debian/debian-13-ppc64le.yaml     | 134 +++++++++++++
+ scripts/ci/setup/gitlab-runner.yml                 |   6 +-
+ scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml   |   4 +-
+ scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml     |   4 +-
+ tests/lcitool/refresh                              |   1 +
+ tests/tcg/plugins/meson.build                      |   2 +-
+ tests/tcg/riscv64/Makefile.softmmu-target          |  12 ++
+ tests/tcg/riscv64/doubletrap.S                     |  73 +++++++
+ tests/tcg/riscv64/interruptedmemory.S              |  97 +++++++++
+ 47 files changed, 1031 insertions(+), 37 deletions(-)
+ create mode 100644 contrib/plugins/traps.c
+ create mode 100644 tests/tcg/plugins/discons.c
+ rename scripts/ci/setup/{ubuntu => }/build-environment.yml (63%)
+ create mode 100644 scripts/ci/setup/debian/debian-13-ppc64le.yaml
+ create mode 100644 tests/tcg/riscv64/doubletrap.S
+ create mode 100644 tests/tcg/riscv64/interruptedmemory.S
+
 -- 
 2.47.3
 
