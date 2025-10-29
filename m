@@ -4,120 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F8CCCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 521E7CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEA14-00019u-3r; Wed, 29 Oct 2025 13:31:22 -0400
+	id 1vEA1D-0001Fz-6L; Wed, 29 Oct 2025 13:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1vEA10-00018r-JR; Wed, 29 Oct 2025 13:31:19 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vEA19-0001Dr-Fb
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:31:27 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1vEA0v-0002Nj-B9; Wed, 29 Oct 2025 13:31:18 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TC6kVm025645;
- Wed, 29 Oct 2025 17:30:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4gFkqj
- BO3ir5S3IoEaEdkpnJb4+vml9MAqUFNDsQcFo=; b=Bp3wWLe4PdsB80QJv+yjWx
- XTXz8JrKdVpSikhfpfk2vGd1yF1p8WOxSRRt8MVGSbGH2EfmzxnanoyFhyUU2d8F
- P98nhn30ccxvN3btrbqerjMSo9hdN9dzsDIucMeUzrx6SOWON9xrAJj8zSk6tM/X
- A2lT4GAd5T35PF8g4bYkXLtds0Lg6YJ14DwnB550LqWgtpbKl1ZqtjJF61UD/cyx
- /qlaQ1C50DufyQBniJL+lyCnextvugIlwJ0qDolQFcZjX+kv8JHsngbT8s9mZHS3
- cQ7rQ1uOOM8PQFBlsnn1YvwWy/jV7ksis0L4wu/k6pkjBHUk4OopsY+jAC5I55Qw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acmpne-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 17:30:27 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59THPuf7017089;
- Wed, 29 Oct 2025 17:30:27 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acmpnb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 17:30:27 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59TGdDp3030759;
- Wed, 29 Oct 2025 17:30:25 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwmmjs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 17:30:25 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59THUL6a36503908
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Oct 2025 17:30:21 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A00302004E;
- Wed, 29 Oct 2025 17:30:21 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D1F9F20040;
- Wed, 29 Oct 2025 17:30:19 +0000 (GMT)
-Received: from [9.39.29.62] (unknown [9.39.29.62])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Oct 2025 17:30:19 +0000 (GMT)
-Message-ID: <1f952d10-9630-42d6-8d24-b7461f90aa9f@linux.ibm.com>
-Date: Wed, 29 Oct 2025 23:00:18 +0530
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vEA12-0002Xp-0h
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:31:27 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4DFCEC0122;
+ Wed, 29 Oct 2025 20:31:02 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:842::1:3a])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 1Vi5X50FDW20-sTuDMZTE; Wed, 29 Oct 2025 20:31:01 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761759061;
+ bh=f5MHWZjzxmQpPW1w2m9n4SbY19rufB/FUYtbPgZ0ooA=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=nLQYN9+Y7Ior7vi/j2G7fmNJxpNozDj1xr2kY+oBGoTMFPfA6r+6vt7weMN0rHSeU
+ qjKz2MJ12jL8zHuru2971uE3o2Kh0Afx09P0dP5Y6QG1kzBE8jkNZSdlLVBSAE0Y6d
+ wq/IiBrz3DPk8YQh6j9a5vAm1pIS5Z7tg6uk5OWo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: armbru@redhat.com
+Cc: michael.roth@amd.com,
+	qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH v3] qapi: Add documentation format validation
+Date: Wed, 29 Oct 2025 20:30:59 +0300
+Message-ID: <20251029173059.378607-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
- pseries-4.2 machines
-To: =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251021084346.73671-1-philmd@linaro.org>
- <aPdpjysqFBAMTvG-@kitsune.suse.cz>
-Content-Language: en-US
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-In-Reply-To: <aPdpjysqFBAMTvG-@kitsune.suse.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XbuEDY55 c=1 sm=1 tr=0 ts=69024f33 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=25UEqmkVfaNy5ATf4DkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22 a=HhbK4dLum7pmb74im6QT:22 a=pHzHmUro8NiASowvMSCR:22
- a=Ew2E2A-JSTLzCXPT_086:22
-X-Proofpoint-ORIG-GUID: 83c93mqdpwgkSsb4ljr_LNVBPhkayISp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX4zi2Y13/kLCP
- qk5Bpv0P+JNYuWTkRGXHpHO07ebf5v6o3/+UvkWzpnq3i7ZqCLHuhxYADDRGypRYac0+Lp/iMr9
- oWCPA1rS5MwN4+Ebnr0g+lUL0O4sUoD5N9f5Muxh3dx1oHDjYZC7qlL3yKE8000gSNmEmxxd9gl
- ZqhBmoU094o/sNLdhoLqUL5RZH704bT/iXRaCTBOD+6AMBlJaV6TtHljSboYT3+IDfJ47bcmEJY
- jXnoi9kKWKDabskFzi1qodgO+gpqh0WMR9IzTxiLtPDhBUolZml16CiYHH0InuMPHDfS3dgoONk
- KjuzPW37tZoC+/TIx1Q6qM9wV+LKSrcKQ2CAGRNatdnjaWRmgD5wi75k1tq1+rrKQpLlEWi/SjA
- GAoCCT4F8+Rgbmy6mEwimMW31ARd8g==
-X-Proofpoint-GUID: ytzy4QqTsGuIddlfdj5jRmqBe9iBFKzY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-29_07,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
- impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1011
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -135,60 +73,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michal,
+Add explicit validation for QAPI documentation formatting rules:
 
+1. Lines must not exceed 70 columns in width (including '# ' prefix)
+2. Sentences must be separated by two spaces
 
-On 10/21/25 4:37 PM, Michal Suchánek wrote:
-> Hello,
->
-> I noticed removal of old pSeries revisions.
->
-> FTR to boot Linux 3.0 I need pSeries-2.7 (already removed earlier).
->
-> The thing that broke booting linux 3.0 for me is
-> 357d1e3bc7d2d80e5271bc4f3ac8537e30dc8046 spapr: Improved placement of
-> PCI host bridges in guest memory map
->
-> I do not use Linux 3.0 anymore which is the reason I did not notice this
-> breakage due to old platform revision removal.
+Example sections are excluded, we don't require them to be <= 70,
+that would be too restrictive.
 
-I tried booting linux kernel 3.13.0-170-generic from ubuntu 14.04.6 LTS 
-with the oldest supported machine pseries-5.0 as of now.
+Example sections share common 80-columns recommendations (not
+requirements).
 
-It worked fine.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
 
+Hi all!
 
-qemu-system-ppc64 -machine pseries-5.0 -accel tcg -nographic -m size=12G 
--cpu power8 -smp 1 -drive 
-file=/root/images/ubuntu16.04.qcow2,format=qcow2,if=none,id=drive-virtio-disk0 
--device virtio-blk-pci,drive=drive-virtio-disk0,id=virtio-disk0 -serial 
-mon:stdio -kernel /root/images/vmlinux-3.13.0-170-generic -initrd 
-/root/images/initrd.img-3.13.0-170-generic -append 
-"BOOT_IMAGE=/boot/vmlinux-4.4.0-142-generic 
-root=UUID=94fba90c-dbb0-4f8d-bc3e-acd5f2e54749 ro vt.handoff=7"
+This substitutes my previous attempt
+  "[PATCH v2 00/33] qapi: docs: width=70 and two spaces between sentences"
+Supersedes: <20251011140441.297246-1-vsementsov@yandex-team.ru>
 
+v3:
+01: ignore example sections
+other commits: dropped :)
 
-shiva@ubuntu:~$ uname -a
-Linux ubuntu 3.13.0-170-generic #220-Ubuntu SMP Thu May 9 12:44:25 UTC 
-2019 ppc64le ppc64le ppc64le GNU/Linux
-shiva@ubuntu:~$ cat /proc/cpuinfo
-processor    : 0
-cpu        : POWER8 (architected), altivec supported
-clock        : 1000.000000MHz
-revision    : 2.0 (pvr 004d 0200)
+Of course, this _does not_ build on top of current master. v3 is
+to be based on top of coming soon doc-cleanup series by Markus.
 
-timebase    : 512000000
-platform    : pSeries
-model        : IBM pSeries (emulated by qemu)
-machine        : CHRP IBM pSeries (emulated by qemu)
+ scripts/qapi/parser.py | 46 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 45 insertions(+), 1 deletion(-)
 
-
-Hope that helps.
-
-
-Thanks,
-
-Shivaprasad
-
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 9fbf80a541..b9d76fff39 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -108,6 +108,9 @@ def __init__(self,
+         self.exprs: List[QAPIExpression] = []
+         self.docs: List[QAPIDoc] = []
+ 
++        # State for tracking qmp-example blocks
++        self._in_qmp_example = False
++
+         # Showtime!
+         self._parse()
+ 
+@@ -423,12 +426,53 @@ def get_doc_line(self) -> Optional[str]:
+             if self.val != '##':
+                 raise QAPIParseError(
+                     self, "junk after '##' at end of documentation comment")
++            self._in_qmp_example = False
+             return None
+         if self.val == '#':
+             return ''
+         if self.val[1] != ' ':
+             raise QAPIParseError(self, "missing space after #")
+-        return self.val[2:].rstrip()
++
++        line = self.val[2:].rstrip()
++
++        if line.startswith('.. qmp-example::'):
++            self._in_qmp_example = True
++
++        if not self._in_qmp_example:
++            self._validate_doc_line_format(line)
++
++        return line
++
++    def _validate_doc_line_format(self, line: str) -> None:
++        """
++        Validate documentation format rules for a single line:
++        1. Lines should not exceed 70 columns
++        2. Sentences should be separated by two spaces
++        """
++        full_line_length = len(line) + 2  # "# " = 2 characters
++        if full_line_length > 70:
++            # Skip URL lines - they can't be broken
++            stripped_line = line.strip()
++            if (stripped_line.startswith(('http://', 'https://', 'ftp://')) and
++                ' ' not in stripped_line):
++                pass
++            else:
++                raise QAPIParseError(
++                    self, f"documentation line exceeds 70 columns "
++                    f"({full_line_length} columns): {line[:50]}..."
++                )
++
++        single_space_pattern = r'[.!?] [A-Z0-9]'
++        for m in list(re.finditer(single_space_pattern, line)):
++            left = line[0:m.start() + 1]
++            # Ignore abbreviations and numbered lists
++            if left.endswith('e.g.') or re.fullmatch(r' *\d\.', left):
++                continue
++            raise QAPIParseError(
++                 self, f"documentation has single space after sentence "
++                 f"ending. Use two spaces between sentences: "
++                 f"...{line[m.start()-5:m.end()+5]}..."
++            )
+ 
+     @staticmethod
+     def _match_at_name_colon(string: str) -> Optional[Match[str]]:
+-- 
+2.48.1
 
 
