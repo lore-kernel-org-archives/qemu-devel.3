@@ -4,47 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE12ECCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0EDDCCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE24g-0004UG-1r; Wed, 29 Oct 2025 05:02:34 -0400
+	id 1vE28T-0000Ka-ID; Wed, 29 Oct 2025 05:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vE24e-0004Tc-CD; Wed, 29 Oct 2025 05:02:32 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vE24b-000372-S6; Wed, 29 Oct 2025 05:02:32 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 28EE8163E64;
- Wed, 29 Oct 2025 12:01:43 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5222B3084AB;
- Wed, 29 Oct 2025 12:01:49 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Bastian Blank <bblank@thinkmo.de>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 7/7] linux-user: Use correct type for FIBMAP and FIGETBSZ
- emulation
-Date: Wed, 29 Oct 2025 12:01:45 +0300
-Message-ID: <20251029090148.648212-8-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251029090148.648212-1-mjt@tls.msk.ru>
-References: <20251029090148.648212-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vE28N-0000Gi-Kp
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:06:23 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vE289-0003kV-Rg
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:06:22 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b4f323cf89bso1653426166b.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 02:06:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761728764; x=1762333564; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YfivwcAV8lV0ugr8GXnfVmjPdjVqFmGNUu+eUNthIL0=;
+ b=O0dGEzgsfz6nE2p13OE/fiEBmGqCyBa7GQ/G9V//oKc9WL8nfRVgmCEhbQoFhBeycC
+ hHZ3SRmWlz9f4c2vXkVAwqgD7pnS7/gi20QgBREk8z70IcU4Ft3Q4LNcgbXUVsHN3JcX
+ kQ8xSvKORnhLesuKJBlwoiSSERwVW4s2DceGnzq1Le8NL7EdiQvsU0NsOqEzdYy3VIkU
+ meS8hdF0IJIFaigo2yaY1LRnUEzirsYm7U7f/k4FnFHmWiOZ6hyije5vYCS++dJ5n1vw
+ xAdGKxiTipYCyCKPQjWXfAgNwshdBD7DQbOe0EyV+X608TCslCy+QOFRLWGobTa3U4uK
+ iVnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761728764; x=1762333564;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YfivwcAV8lV0ugr8GXnfVmjPdjVqFmGNUu+eUNthIL0=;
+ b=ZsnTzadxvggSO4WsD/S1o9j0VO1MhfN3h9FlnvmjD7c3JucRwUArcWfXBVw8fb/o6l
+ P29eBIopOE8x0u9wYiCAlBfMdgpamDX22waRLB76g3vIMxfKyAfzpaN80oXEjvDuWgHH
+ 5dBrkVnzjV8G+KBOp8W5NNLATBguXnlXK61vZ15kX3vNSEk98yxUKMvJSDJhpnMKQ9tM
+ DZYE0Sw28v+RP3l/XoD3f2Lad/I+WYmM4/sQJ3g48hHjBXOcLG5Wjc4VxhEvaUR6vAc2
+ xq6jr13RZEgLv5drDFgEf5aJL/ojRMD7fJfclb3ysWxRgAYlqLEgOsSPO7A76/bh6iH3
+ TPaQ==
+X-Gm-Message-State: AOJu0YxaS0s4bfWiT71wDhchOaEh8m90AJGdzDp+oiQNsYNu2PEFSYp8
+ 1BuyoTtv/aK440vcOUo46j1FH43ge9gbOSXOCSAGFAlGYX4cemCCYQUjP1zWy+iUZsSYDyb0cYm
+ yK/ah8T99BW3EY/espAQL+/cX3yuaHSwi4yJ7xjTurw==
+X-Gm-Gg: ASbGncvQ5jbFeWeSUoGnI5ZVlzO+4eJN5AbrvzeDIj/QS9a8Q4oX+NNgYAyn/1YwZto
+ Me5P25gYnw/zDzgUMUe0+wmxFfG0joSHy/yF604PyOpx2XipOoQ4M4WNLRHA2glTXkhWuaAXFEF
+ 9l42Y5lXhL/Wfhd3K7aLUBIaxqrswxCcL5b2MKjGBLvE2zKSJXClhM/Q7hP28f/iXUc+Z7MH83R
+ Lmbad5HUW26RyAVPu/SXhoe/hdPSjsTNpryA1XVdT/+gpPrXYqfmzZdh0AU
+X-Google-Smtp-Source: AGHT+IGIEB5ciokg7Btgfiv6pF493QcyEZr2n6/rj0GHsdGfwKt0X7nNrI/m2J66U7BQPc+KnYMGgPzBRXZAQdovR+s=
+X-Received: by 2002:a17:907:968c:b0:b3f:9b9c:d499 with SMTP id
+ a640c23a62f3a-b703d53f5c2mr200426266b.51.1761728764030; Wed, 29 Oct 2025
+ 02:06:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250928163155.1472914-1-richard.henderson@linaro.org>
+ <20250928163155.1472914-2-richard.henderson@linaro.org>
+In-Reply-To: <20250928163155.1472914-2-richard.henderson@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 29 Oct 2025 11:05:37 +0200
+X-Gm-Features: AWmQ_bl1YpFZSqQJK_pO0qkmKlNuPas6tkasTje4aJNgQW3aAYcoSJSIcYJRj34
+Message-ID: <CAAjaMXYZPjcgKFYG3+b=3agTECD6EYaX03HOw4Ss-w7eZjaoZg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] tcg: Simplify extract2 usage in tcg_gen_shifti_i64
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,48 +94,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bastian Blank <bblank@thinkmo.de>
+On Sun, Sep 28, 2025 at 7:33=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> The else after the TCG_TARGET_HAS_extract2 test is exactly
+> the same as what tcg_gen_extract2_i32 would emit itself.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-Both the FIBMAP and FIGETBSZ ioctl get "int *" (pointer to 32bit
-integer) as argument, not "long *" as specified in qemu.  Using the
-correct type makes the emulation work in cross endian context.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Both ioctl does not seem to be documented. However the kernel
-implementation has always used "int *".
-
-Signed-off-by: Bastian Blank <waldi@debian.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3185
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviwed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/ioctls.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 3b41128fd7..2f62fd2cb9 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -130,7 +130,7 @@
-      IOCTL(FDTWADDLE, 0, TYPE_NULL)
-      IOCTL(FDEJECT, 0, TYPE_NULL)
- 
--     IOCTL(FIBMAP, IOC_W | IOC_R, MK_PTR(TYPE_LONG))
-+     IOCTL(FIBMAP, IOC_W | IOC_R, MK_PTR(TYPE_INT))
- #ifdef FICLONE
-      IOCTL(FICLONE, IOC_W, TYPE_INT)
-      IOCTL(FICLONERANGE, IOC_W, MK_PTR(MK_STRUCT(STRUCT_file_clone_range)))
-@@ -145,7 +145,7 @@
-      IOCTL(FITRIM, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_fstrim_range)))
- #endif
- 
--     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
-+     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_INT))
- #ifdef CONFIG_FIEMAP
-      IOCTL_SPECIAL(FS_IOC_FIEMAP, IOC_W | IOC_R, do_ioctl_fs_ioc_fiemap,
-                    MK_PTR(MK_STRUCT(STRUCT_fiemap)))
--- 
-2.47.3
-
+>  tcg/tcg-op.c | 22 ++++------------------
+>  1 file changed, 4 insertions(+), 18 deletions(-)
+>
+> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+> index dfa5c38728..ab7b409be6 100644
+> --- a/tcg/tcg-op.c
+> +++ b/tcg/tcg-op.c
+> @@ -1818,30 +1818,16 @@ static inline void tcg_gen_shifti_i64(TCGv_i64 re=
+t, TCGv_i64 arg1,
+>              tcg_gen_movi_i32(TCGV_LOW(ret), 0);
+>          }
+>      } else if (right) {
+> -        if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I32, 0)) {
+> -            tcg_gen_extract2_i32(TCGV_LOW(ret),
+> -                                 TCGV_LOW(arg1), TCGV_HIGH(arg1), c);
+> -        } else {
+> -            tcg_gen_shri_i32(TCGV_LOW(ret), TCGV_LOW(arg1), c);
+> -            tcg_gen_deposit_i32(TCGV_LOW(ret), TCGV_LOW(ret),
+> -                                TCGV_HIGH(arg1), 32 - c, c);
+> -        }
+> +        tcg_gen_extract2_i32(TCGV_LOW(ret), TCGV_LOW(arg1),
+> +                             TCGV_HIGH(arg1), c);
+>          if (arith) {
+>              tcg_gen_sari_i32(TCGV_HIGH(ret), TCGV_HIGH(arg1), c);
+>          } else {
+>              tcg_gen_shri_i32(TCGV_HIGH(ret), TCGV_HIGH(arg1), c);
+>          }
+>      } else {
+> -        if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I32, 0)) {
+> -            tcg_gen_extract2_i32(TCGV_HIGH(ret),
+> -                                 TCGV_LOW(arg1), TCGV_HIGH(arg1), 32 - c=
+);
+> -        } else {
+> -            TCGv_i32 t0 =3D tcg_temp_ebb_new_i32();
+> -            tcg_gen_shri_i32(t0, TCGV_LOW(arg1), 32 - c);
+> -            tcg_gen_deposit_i32(TCGV_HIGH(ret), t0,
+> -                                TCGV_HIGH(arg1), c, 32 - c);
+> -            tcg_temp_free_i32(t0);
+> -        }
+> +        tcg_gen_extract2_i32(TCGV_HIGH(ret), TCGV_LOW(arg1),
+> +                             TCGV_HIGH(arg1), 32 - c);
+>          tcg_gen_shli_i32(TCGV_LOW(ret), TCGV_LOW(arg1), c);
+>      }
+>  }
+> --
+> 2.43.0
+>
+>
 
