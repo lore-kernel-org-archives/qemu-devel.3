@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F52FCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3254ACCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE75k-00068k-Qw; Wed, 29 Oct 2025 10:24:01 -0400
+	id 1vE79a-0000Xb-9s; Wed, 29 Oct 2025 10:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vE75a-00067L-2o
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:23:52 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vE75N-0008Kl-9P
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:23:47 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-471b80b994bso100368055e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 07:23:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761747810; x=1762352610; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+k2zjMvB10MLJYg+WaiVjaqJZ5hHFGUGTiYqjjtMNNI=;
- b=Eu5Ehj8Px0nNVlOOUI24qg8hd67WgThEcHE3fBcluyejTzEB5mpZtFmiZ8z5oR7Z4Y
- Eb8zPLYxG3SRJQVOennll+Fm9VPIJVin78cpYUfFPHrJ86oT2UljjLZOVvX+9BBLkvjA
- UcGo9XtuP/ty0S2+lIfQPxgG0rUPPOBiHzD6yb/9TjCp/gfPQsKpUQwlaeGdrYhe0m87
- 77as2cjHTAYCKxxj5MgKQxUgU24osp7H58mfZHSUsHHadaxm+DJozzTUlv3v7SEmbZ4P
- RPHoyZpEidWgEqNtCwHHgMrApGlz0bbY2ekfmLNKZ4VFEktgX8TAu/WC9jLwh6m05VyK
- +Hfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761747810; x=1762352610;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+k2zjMvB10MLJYg+WaiVjaqJZ5hHFGUGTiYqjjtMNNI=;
- b=OwwkTdMYYuWHGblBSb5jL/PWovdCcN2hbcaLbm7+dBnzv/Sl1rpRzARywaBdCobdn5
- A8sg2VefEuWvn0q707O0ACM6UvXuNIsh2jMUoW8sunFfQVvdhxr9jyAUuZuXvW7e30DH
- NwNG8ZUsWVCpRG49ji6uEjro2hLxdu1QfbtVm7mY24s+TjsZ9v+XKLiKt35b4dAg93zu
- cOR2YA5ljtodZcCdpcwjCftTmwwb49hjGyCbB8bOmfHWzw7Co4vDBHW9W/IHys+WwCiy
- ufQ3hvA1OT3GV66WPyi0lVOeMRQ+Gx5mm2vbjXeGhcnmyc+bo6uPCjJboRlC3JTk6nT+
- dv9w==
-X-Gm-Message-State: AOJu0YxYsjqDzd3L68zsC6D9EANb0arff19FS5X6ygVZFl4kItKw2Uil
- r9xOUbpRkexc2TIeGOIirjxlsMCLRLdBEiWoqBW687BAiQ0OFPN/s4iER5NMEQ==
-X-Gm-Gg: ASbGnct3kyml9AFmCMYKkYsRW6MVZA0mBuOL9udpqvYUe7lTWofcc581cFX5OzYck45
- d3rlAja0U0mmeobOcywlVAatKYeBtboLDxg1V4MQXT4l1PArhd9/vkMGv0dEG+tvIX3uDm7EK9r
- F43I0XVO4WokJK6yOeMIhUwc3Tfz06FvJe2V6A18BHmx6SYJCD/q3tXCWVf6Nvt9Foa3giJoTAo
- aLgRKx4YhhFM9kBVySDH81Y7CIX62iCPqHY9a/euFO5RdeXXdh0RI8sLWMWb9EBXoveq8kl4jP2
- fJlSNPdQRBln7to0LlyLdAry4kda2YT8ZZ6epotDaCppaS5yEUkB1efFYQYKZog4AqJ+Ly7Wxkt
- Na8xDmphlemyVM47TdcZ1HEr1vvprPE33h5qSztHp3Msa8v47cvLLSzbYppL0HCVAUs8pgYqYSm
- rr1trrkieqbGl2jKQcgK73N4ahOvhNu4gJ
-X-Google-Smtp-Source: AGHT+IGkbXq8YLYTlrHU3Y/qlQuki8pLt80vcv9+30feu/MLXI59AP0oNkd7Jspqd0uFC6XDgb3Thw==
-X-Received: by 2002:a05:600c:46c4:b0:476:84e9:b571 with SMTP id
- 5b1f17b1804b1-4771e183b35mr33153625e9.14.1761747810039; 
- Wed, 29 Oct 2025 07:23:30 -0700 (PDT)
-Received: from archlinux (pd95edc07.dip0.t-ipconnect.de. [217.94.220.7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952ca569sm26038747f8f.12.2025.10.29.07.23.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 07:23:29 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 2/2] hw/arm/imx8mp-evk: Fix guest time in KVM mode
-Date: Wed, 29 Oct 2025 15:23:11 +0100
-Message-ID: <20251029142311.2986-3-shentey@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251029142311.2986-1-shentey@gmail.com>
-References: <20251029142311.2986-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE79U-0000WZ-20
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:27:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE79J-0000PV-Vb
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:27:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761748049;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+IQt/32bOOtTfd/77x4Ws/t6l8hg78hvdIEEVSQvjkA=;
+ b=EUFRjlDrsepzcUJ80GU4C31MMdtqx1T13O4vIxuSLSSk1eIjqFfpRGqhWp1sXIWhzLaDKM
+ 0N1yBlW010t+HFjWJDXLmvAywziZ6jJzlYGa6iplNe3t0OkcbE52F6ruttu0/TmMw5qKgU
+ q7NzpwuMNMtSg50FanpUrI8a26S9Ew0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-97CtU9YkPOargnTYZXGDHQ-1; Wed,
+ 29 Oct 2025 10:27:24 -0400
+X-MC-Unique: 97CtU9YkPOargnTYZXGDHQ-1
+X-Mimecast-MFC-AGG-ID: 97CtU9YkPOargnTYZXGDHQ_1761748042
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 19D3D1800D86; Wed, 29 Oct 2025 14:27:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.204])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE7B61800579; Wed, 29 Oct 2025 14:27:17 +0000 (UTC)
+Date: Wed, 29 Oct 2025 15:27:15 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>,
+ Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Subject: Re: [PATCH 03/16] iscsi: Run =?utf-8?Q?co_?=
+ =?utf-8?Q?BH_CB_in_the_coroutine=E2=80=99s?= AioContext
+Message-ID: <aQIkQ8q9CaUYw8Ob@redhat.com>
+References: <20251028163343.116249-1-hreitz@redhat.com>
+ <20251028163343.116249-4-hreitz@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32e.google.com
+In-Reply-To: <20251028163343.116249-4-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,38 +91,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The imx8mp DTB hardcodes the clock frequency of the system counter to 8MHz.
-In KVM mode, the host CPU is used whose system counter runs at a different
-frequency, resulting in the guest clock running slower or faster. Fix this
-by not hardcoding the clock frequency which makes the Linux driver read
-the real clock frequency from the register.
+Am 28.10.2025 um 17:33 hat Hanna Czenczek geschrieben:
+> For rbd (and others), as described in “rbd: Run co BH CB in the
+> coroutine’s AioContext”, the pattern of setting a completion flag and
+> waking a coroutine that yields while the flag is not set can only work
+> when both run in the same thread.
+> 
+> iscsi has the same pattern, but the details are a bit different:
+> iscsi_co_generic_cb() can (as far as I understand) only run through
+> iscsi_service(), not just from a random thread at a random time.
+> iscsi_service() in turn can only be run after iscsi_set_events() set up
+> an FD event handler, which is done in iscsi_co_wait_for_task().
+> 
+> As a result, iscsi_co_wait_for_task() will always yield exactly once,
+> because iscsi_co_generic_cb() can only run after iscsi_set_events(),
+> after the completion flag has already been checked, and the yielding
+> coroutine will then be woken only once the completion flag was set to
+> true.  So as far as I can tell, iscsi has no bug and already works fine.
+> 
+> Still, we don’t need the completion flag because we know we have to
+> yield exactly once, so we can drop it.  This simplifies the code and
+> makes it more obvious that the “rbd bug” isn’t present here.
+> 
+> This makes iscsi_co_generic_bh_cb() and iscsi_retry_timer_expired() a
+> bit boring, and actually, for the former, we could drop it and run
+> aio_co_wake() directly from scsi_co_generic_cb() to the same effect; but
+> that would remove the replay_bh_schedule_oneshot_event(), and I assume
+> we shouldn’t do that.  At least schedule both the BH and the timer in
+> the coroutine’s AioContext to make them simple wrappers around
+> qemu_coroutine_enter(), without a further BH indirection.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/arm/imx8mp-evk.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+I don't think we have to keep the BH. Is your concern about replay? I
+doubt that this works across different QEMU versions anyway, and if it
+does, it's pure luck.
 
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 80036f8589..e26c62aee1 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -43,6 +43,15 @@ static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
-         fdt_nop_property(fdt, offset, "cpu-idle-states");
-         offset = fdt_node_offset_by_compatible(fdt, offset, "arm,cortex-a53");
-     }
-+
-+    if (kvm_enabled()) {
-+        /* Use system counter frequency from host CPU to fix time in guest */
-+        offset = fdt_node_offset_by_compatible(fdt, -1, "arm,armv8-timer");
-+        while (offset >= 0) {
-+            fdt_nop_property(fdt, offset, "clock-frequency");
-+            offset = fdt_node_offset_by_compatible(fdt, offset, "arm,armv8-timer");
-+        }
-+    }
- }
- 
- static void imx8mp_evk_init(MachineState *machine)
--- 
-2.51.2
+> Finally, remove the iTask->co != NULL checks: This field is set by
+> iscsi_co_init_iscsitask(), which all users of IscsiTask run before even
+> setting up iscsi_co_generic_cb() as the callback, and it is never set or
+> cleared elsewhere, so it is impossible to not be set in
+> iscsi_co_generic_cb().
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+
+Kevin
 
 
