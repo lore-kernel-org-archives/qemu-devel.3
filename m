@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D454CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 670E6CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE1kl-0004K7-6a; Wed, 29 Oct 2025 04:41:59 -0400
+	id 1vE1lP-0004l0-L3; Wed, 29 Oct 2025 04:42:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vE1kh-0004HU-QM
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:41:55 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1vE1lH-0004bm-HC
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:42:31 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vE1kf-0000EZ-Bt
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:41:55 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-421851bca51so6318882f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:41:52 -0700 (PDT)
+ id 1vE1lC-0000GR-VD
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:42:30 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4711810948aso51859695e9.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:42:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761727309; x=1762332109; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761727344; x=1762332144; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SBvBFkeIedbY5IcBgnqkKR385QLPGJXyW68yoj9oBCQ=;
- b=sjweYyp/WgSbaUOc4pnsgnvZRR7LlN5q/KL68ariJEuuf/9WVnzyll1r7O4boz3mGe
- h3mQw4joW+/eebK4RLcTiQmhr4S1gZhJUGUcL3OIZxyd3YUlAiLNNGdAWCKwDfLe2YTN
- bom1KF//+oj/vszGDH80jv+Z22gXZDyoXW8b5MzibbTOXpPtEE3If963QgT0K/xmd6Vu
- eOEhu/f73/Uj9ibKQEy9zCZJPANtiK0LCt6f4ySeLtBYSwGP6LfOwHoJrzN8rVjTLk94
- O0MhJDkkI/DGM4UBo4dbrKpmH12Pxp/ek4L9sNwXBh1UqTGem3OHSuG2ySCq/RQO+Bpu
- /oTA==
+ bh=V+OfLsRZ9s76E6R1qSZMXm3vCNDLMJ+dmweCI51a+Y8=;
+ b=NtqBnbU+OxoE5EGMfBoVJ99WVC5vbEG/mtBL8WfOs+la29uSzgLdMkXUFBI2C1KZLd
+ 28NzV7aHwk9n6+fxJxxIJ6SQS+ZsWIrAaFJ9aqCrqg+zUHWUq5sZThTPpqOYmFOcTQCl
+ pds1Jz0nOz8Y3VhQvbL3I1ybtPamDtmq19RXMQPe4FdWuBCn44MYy8wliU0l2ncHSM+/
+ esr0U7c7tjq1eQVvWaBWux53gCZoaQL0rnnffQLBfX4wdro9HWkGYjwKiMUFrh0Tc/bj
+ GlN1FokQWKhUo2oFa2v+TLFH+7cSYSfKoIKA53XNVqAwpIhY2lyj32KbWQI92NQJ72c9
+ piGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761727309; x=1762332109;
+ d=1e100.net; s=20230601; t=1761727344; x=1762332144;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SBvBFkeIedbY5IcBgnqkKR385QLPGJXyW68yoj9oBCQ=;
- b=G1Dwd8JNmR0jlOTpXwZMn/jz+BVDzrFutrKSJWQghy5GGUSmNX0gTSKQwXlqp4/gbc
- eI7QS+yBCVSRdT/aZVZUhzBJukJUg6BJh3WrPYQTEWxxeyQUz+sMotyg2ZAkne8Xa/cM
- M1k4iTRlxtkxzjEdC+nqyhy9cqyikzpaO03ahXn33yEwGt+MxzJ9CKMILhIvwth5KfNn
- 8FcAhlS8BVDAmV2nxYparT7817ppTQUR5xoQH7BLq5ZhQiqMDsZK7tAiMgzlqcNTOQtN
- UQe9HCaKa5AVCVo63UGK+C/7NWdXM96xkh6H8z/3pnnBmVujoF08y4naoJ5Uh7PRxvD0
- S3kA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDnOXARiB7XKg6uCazF4I2DgHBUWQhVXxsJopDLApiB1+hz2A3JIN72sjZ5TNbU1eYfJhry2zdLDRo@nongnu.org
-X-Gm-Message-State: AOJu0YxbSma43kAp/LqJ4bOOAOUKFOmABRULNfTRR63qy0bLEiV+/mGb
- /qE7dz1jM7I1UyQfZBnkY0F6KH+j7mBPRr17RkKCAwJu/gGlZGkCLCy7dfNoalZS9tg=
-X-Gm-Gg: ASbGncuTovJZ1q/LaPWIYl8KE+a9jAVerSJcO//bIKyxXFZNluGmmeSzMCSAm7PUjQL
- rl6nX7w9fpc4KRFAgU5v/t5IDtx2QwxEwIOuZ2OIl8URipgT+tUe7UHON4zP1+/1v9okH7aWSqW
- UzNEHbRIsULXakAeJHpajJi6D2QIpXlkRXdyeIxuE8h2pzPFM7MlfM2kVw6m4JvDXzw/Ahb5LWm
- /YdmvqcTL4izqwRw1JCO9htTyP3nBor/bsINkb0tbOINc9eEV2+iEY1JYgPyXZKNVSbjIgACXmB
- i/9cs6zF3LZnzEZsieW0MKYIliJ+w34l6B4kEMPkeQ/ud9vdMtajOPjMYjhLtfZu3RVr5tZsn8G
- 2EjZ81sNkwZBZ0wIdvz+tUikn7Xqa/c+yJh2HlNwxut6a+JWt8BI5DOd0SEGTjFHcUfOzLl7nTa
- 428nEGr1JpFoEA2GO+
-X-Google-Smtp-Source: AGHT+IFbGvtx41Sh6WnxyLOoFeLAoTx6JQgLXLPNeBNjss3FeZF8b8GXB9uMkFDgmQuNyqA2ORR6JQ==
-X-Received: by 2002:a05:6000:2283:b0:425:7590:6a1f with SMTP id
- ffacd0b85a97d-429aeff13a2mr1345069f8f.49.1761727309292; 
- Wed, 29 Oct 2025 01:41:49 -0700 (PDT)
+ bh=V+OfLsRZ9s76E6R1qSZMXm3vCNDLMJ+dmweCI51a+Y8=;
+ b=c/C3s1g692dKfD3xqUOomkqL7LIxdx9rn4P1/5neaOJtMRPVKlvrtqAoPsXGaDDWeT
+ WVHqJmOv3tzHfGlGLXfeh2AqMrqCkCEg76bHNZze+IGTX50PJw0j+pe8bXTsPMG5umxL
+ pqueeMHo+JR2dtxKxV1STvHqMPqW0umVbfZZNQ2ix1537qSZFrRanTLozve1o8vj0t5q
+ fcDFbGPGBia7HPFXKfWrnwIgO20ZYsnMl4eujvdc6jRVuTZzQiHEx2LWcICT//xmtjBF
+ MSMJZ51CVPsdkyK3Om7ad4goR9B/QTRxTKdkGycY8wiglFeX1C8TDBF9O0MdPdcuW1GO
+ b+vA==
+X-Gm-Message-State: AOJu0YzKyq13uxDbAkVXpzYf4Fa+zMhEk6nL9h3qsUD/8iCk4bEid1eX
+ D5r4Cee6XXIqXRRSOWcwYfGX00ChDQzm14S/78NuxWkMZvHQ8e7xkJi4GMsbg580nOfn5weTzhb
+ 7M/DiPSI=
+X-Gm-Gg: ASbGnctmMcgb1tbqO8Oko6xDcAnpRzlfnjPa72M3KdVqhjpVdBo2qPl7igTRw0ulFWz
+ fWCHK5NOPcJgbHOgREOW9L4B0YsraaI9ZNv2oCYNgO1KeaobpHCIifbU/qlRh5apS1J2e/g+Frk
+ schYT9dTNbc2wYI+fcuDID5o3YO2DGr8ZuNPzvzoJ053oHtYQzO1rQeriAWBCMPKy53kJdHWBY9
+ xVxJDjNaiTaTAgcRw23uW++OfzvpgbtmIm2KBJTSVdrlAOtBSXqFhV3PvQqj7sOK0TvNBsc+4Gz
+ PfUsd1aCWE6zeGzAY9AfXbR6NGei/sArzlqY/a4xJfYeLJ3seZY9VDAY/rc5UdQa7+x9EB25k2T
+ 9S6xTYd9brh0WNUcoPMiVukxxsPSUrtCXihV+uz0LjDpAqZRVCTQfGB3NEMJ6jpVMGhEw8IXwaS
+ tjoj4dhJNx+ou4TTSm
+X-Google-Smtp-Source: AGHT+IF7qHAmjxqM9hcGfYes2x71W0ZdCPTGWwEEtCLG7pyYWUxXVoOBdREM7l6ympAAN0aH27Ab6Q==
+X-Received: by 2002:a05:600c:46ce:b0:475:de68:3c28 with SMTP id
+ 5b1f17b1804b1-4771e31da2cmr20024715e9.8.1761727343955; 
+ Wed, 29 Oct 2025 01:42:23 -0700 (PDT)
 Received: from [10.240.88.227] ([212.144.248.67])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df6b9sm25901687f8f.44.2025.10.29.01.41.48
+ ffacd0b85a97d-429952b79absm24818086f8f.3.2025.10.29.01.42.23
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 01:41:48 -0700 (PDT)
-Message-ID: <c45152ab-b42b-4320-a6c4-efd5ec8f3d98@linaro.org>
-Date: Wed, 29 Oct 2025 09:41:47 +0100
+ Wed, 29 Oct 2025 01:42:23 -0700 (PDT)
+Message-ID: <a4117d57-b6de-4dbf-9d1e-83b0123a4fb0@linaro.org>
+Date: Wed, 29 Oct 2025 09:42:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/25] hw/fdt: Use memory_region_get_address()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 15/25] hw/nvme: Use memory_region_get_address()
+To: qemu-devel@nongnu.org
 References: <20251028181300.41475-1-philmd@linaro.org>
- <20251028181300.41475-15-philmd@linaro.org>
+ <20251028181300.41475-16-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251028181300.41475-15-philmd@linaro.org>
+In-Reply-To: <20251028181300.41475-16-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,11 +108,10 @@ On 10/28/25 19:12, Philippe Mathieu-Daudé wrote:
 > MemoryRegion::addr is private data of MemoryRegion, use
 > memory_region_get_address() to access it.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/i386/microvm-dt.c          | 4 ++--
->   hw/loongarch/virt-fdt-build.c | 4 ++--
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   hw/nvme/ctrl.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
