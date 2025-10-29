@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507CCCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D219FCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEAUp-00085F-T6; Wed, 29 Oct 2025 14:02:08 -0400
+	id 1vEAWx-0000Y3-D3; Wed, 29 Oct 2025 14:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEAUn-00084t-DB
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:02:05 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEAWr-0000Rt-W6
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:04:16 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEAUc-0007Ts-41
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:02:05 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so1190005e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 11:01:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEAWi-0007e7-Oi
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:04:12 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso131765f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 11:04:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761760900; x=1762365700; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1761761036; x=1762365836; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RU+DKa1AzAh0fxw0Ftt+P5hkeXWLgezjVsnTqgL3Bio=;
- b=v/cENkauBsN9+EIh/8+CGQ9EUITfgRtdAwMZXkuOieEcSYcI00OJEgyXgoXnVND22U
- 8xC/qrQdf6NRnbOeCem4P23rnDSEYvn0+Vwg4lZd6OvOaLlbCyM4fvOdGn3lHDLvhPll
- 5zzvmF9y+8ayq1jZl3uQXZijRMvLmVlMRcOzCTDS9/nL1JMZiyAEZ6GjAPGIQX/Badoc
- wyZgAQWQsCvHBB0s92DxTGjvhgK2bgH7ERztr0UryfqyP9giOmZSf1L8KZ3CgPGnu7+M
- g4BlwbH4e2JUJdNWhCEKx8nfpp5xwRI8o4/8BjPgFtfVxb1AAkn6E66DtlRGZ32s3BVu
- CU5Q==
+ bh=9VQ9NFqmoQaRAvyFbiiny8iwf9jUVf2eG2Hxhn7ltXM=;
+ b=dwQJdFYFg3LvfnC+CFV1xLnrmtwNW4g5NQOJOr+PDeoh8YTRy+dyaRtE+rp54TwT30
+ kMWpWnJC7+g1XnWFCkhGT84iOGZB1wv+95rL7DYFSAm04f1kREPp1vXhiLx1EomYeaA/
+ qXdLffpFGShYig8yBEnX3+xpUfZ3UeaPqH17Bj1ePBMnxaXIcmSw6dBnCo41mfEIENDw
+ uHcmAo7M9+excf6bfQU2nZl8CIpWGh8RoVhJi9Cc8VJl1+ojAj8PckesEh/C9D1DUoAe
+ +WvnopHmBj+jhBsRnX4mcZrzZo9YQwQy5uVEdVqljlLBTbudEBlM9nkfiDCNpyJ5Tliq
+ 4NKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761760900; x=1762365700;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1761761036; x=1762365836;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RU+DKa1AzAh0fxw0Ftt+P5hkeXWLgezjVsnTqgL3Bio=;
- b=mWMExOmRRsiD/slw8ptvBuP/EJ6J/RgSNHSukP8XqQ68rROSznmaIidXgA3dIk3Obk
- gpvfxiX/X/FuLF36RL4nXWdmmOIKk9n0+XMXv/q3noNtcKoVT9YAqtDP2Jrng+KTxFY0
- elsTF0MUCgylRn6pdy4W2Rpnd7o011fYChJB7QeZLJm8SigktLZYhTdT/6Vyc8neLYfT
- TRCGLdWf4EwtCIRnJF53ttDWpZmElrRMIp112q3ijWqN3rUd50Te26YSZfe24PRws3d7
- +kheuDdrh/Rnu57ft0zvO9vXQ3Jqpy4tTMkuzwu4Bp7KjlmPVH8NCny/o52km1gKxeg4
- +FFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdln4kF63f32lyVVRrGWzTG8FkXqWzRk6OpRJ1JpiiiQSBkzFGIlEXUFVWvF4YDQnC/Rq0XgRkLQuA@nongnu.org
-X-Gm-Message-State: AOJu0Yzwy2iF9v2ZoXPyaO9EwcBEPdw1nsGQUDd+bF19+/OyxsVDTD0V
- mUZ6V9rumYXiw5vAOtS3fFv9yR/GSWFRoGobrlimiVAsCoi6In14gYqwTGa/Oc4SLTg=
-X-Gm-Gg: ASbGnct37V/Z5Qslwwc9TbFEoAvTd3QFPV2dh0DrldIVsJ9hHYnPzEbcph4Ql2i6Pm6
- CXWvTfvvcLk7bHViDOBJHRiEASV2tevC/wJ+4/kUWUqH8vvo1zxsn3ZUocO2eCqfpbksTqqNaKZ
- 5kpcDL8B6ZeUyZ9buLButpy1V5ojqjDFrTfma/PektRGkXe5Ede0ZVf3WzYzwg5XkL6c21srWvk
- YFdrR0A3Nrr2UH4bD7F7aiLARus9Mx09UtPVpnY+rK+agxOk5t60p289A1yVH/kjuYlWQv/+DE6
- G1DfnSrgiZsgnz0gBfNYg3h8Bw1CLkvMy4Zku9cDBBKLfjAEagB2Ggo8Ugji+yF4bs2eDihsrU9
- xFZBxVlF4UZCjFNUjwiBCCnrqPjo4mB2jIaIJWbaZsP7mGE4f7ATxVOjfSDzeoM/9Un3Bl/ySBC
- y4E+EqsUnCVsI5Tysdf4ilMMASkmcKY6sJSX7IOxN6V3o=
-X-Google-Smtp-Source: AGHT+IHwv9qUNDV9082Pmxdo8bJzCqvtHpmA79TX3v/O9fLnmTc0smtFCjlUHcYpFMdTbgFP14B5vA==
-X-Received: by 2002:a05:600c:4450:b0:46e:4a60:ea2c with SMTP id
- 5b1f17b1804b1-4771e3ba5bcmr36607065e9.37.1761760900072; 
- Wed, 29 Oct 2025 11:01:40 -0700 (PDT)
+ bh=9VQ9NFqmoQaRAvyFbiiny8iwf9jUVf2eG2Hxhn7ltXM=;
+ b=SuQ0FdcVoh3tIzv/YE9VX4onnxn9u6Fv1MOmQoWELBKQNAVELo6kvraInTvav7Im2r
+ Ia4Moi7i9xecq5MOi/M4qH/WoJZJALYtg6GKP16yj0bN063NorsAMlf3ZxRFrM3HvL5o
+ Y8+xH+Agt/c4+KgnjwObG/++Kv4zL+Vf3VB2SbUakvN0aZHv3qHDnpVgpP3Ma6WUx1gv
+ HYldRtXUnLZrNdFPycKCqnI2C4iGXyjcoU3eIG0+3lk0pZddt6NscwzxOh8aEIPROP/k
+ uPurhyfomS21US5b3fMKUNtcxTzFK4JExq3SrmYqvsqDlnRx5wDwB44Y6n5OU+7jTIGp
+ vPDQ==
+X-Gm-Message-State: AOJu0YzyFr07tiexS4xTcbEC3f8/v5hkJjuU36mIJXTn43bbsgCHtCoP
+ x5p70UPX74YR+z7bidsdSC2SPj22RTXQ30Jrf2zHpQrdfuIMUJw10g0yIqOhFq131Qv4+W8GTns
+ c9crLClE=
+X-Gm-Gg: ASbGncsH5AbJXgFc+ILMk+jucpIZF98tGBfOjQcioVKzRL8QNM9GFBTJ2xCIm9W2uO/
+ 591YXDxg5zMGNvn7v0uKxA4s6guCXEkiVud0CGSQ5ojKGPsb6l1r2QzQSjor6JzEGdWuLOz31Fp
+ gm3M3xLSSUz9aStGdewmniv076JqtP/dgrddKghjupadabxcEXOsvxi79Nn2G5SW1jmc+EbvSoO
+ 0B5KUwRhyjUKgYGpGs5WF8TRVkM5rFrb0o6+Y65WL45DNrIWrx6kr2fFUwhmjjcdc7Y9L3HaEeq
+ uMuRCY9R/6X92yFT2VnsrEBC7VgTAaDIN0Xq7/KNj0ZAU+vBryBBvyEH1XZ8CeMd6OBaPmWWMq5
+ KnJ0ueFzQputi9sVKf+wssaqMoifJEf5TT6bNGpdJvGto+9qsklFbn59W5zKfhpwj88JoQCsv/Y
+ lI+aSQLdBnGhVyOuEcjOM63R3+mJm0wOSc10nUpK0HLz0=
+X-Google-Smtp-Source: AGHT+IFOOC35tgEDpGgsXmuWu7r0djoujt+Yy6qRLjDUgazWUa9T871lHEfonAwAiAmla/XzbRZFLg==
+X-Received: by 2002:a05:6000:238a:b0:427:9a9:462b with SMTP id
+ ffacd0b85a97d-429aef78fb8mr3142266f8f.18.1761761035767; 
+ Wed, 29 Oct 2025 11:03:55 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771e202093sm62701755e9.11.2025.10.29.11.01.39
+ ffacd0b85a97d-429952b7a94sm32890124f8f.5.2025.10.29.11.03.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 11:01:39 -0700 (PDT)
-Message-ID: <49e7ca69-3477-40c8-aad3-f799d848ce7a@linaro.org>
-Date: Wed, 29 Oct 2025 19:01:38 +0100
+ Wed, 29 Oct 2025 11:03:54 -0700 (PDT)
+Message-ID: <1fb8a69d-de0b-4afd-9e61-083d7b3d7abf@linaro.org>
+Date: Wed, 29 Oct 2025 19:03:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hw/riscv: Replace target_ulong uses
+Subject: Re: [PATCH 0/3] hw/xen: Build only once
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com,
- richard.henderson@linaro.org, palmer@dabbelt.com
-References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
- <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Paul Durrant <paul@xen.org>,
+ Stefano Stabellini <sstabellini@kernel.org>, Anton Johansson <anjo@rev.ng>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20251022140114.72372-1-philmd@linaro.org>
+ <64b66fb0-f297-494a-8e79-b38c02c070b1@linaro.org>
+In-Reply-To: <64b66fb0-f297-494a-8e79-b38c02c070b1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,53 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 13:35, Anton Johansson wrote:
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   hw/riscv/riscv-iommu.c | 6 ++++--
->   hw/riscv/riscv_hart.c  | 2 +-
->   2 files changed, 5 insertions(+), 3 deletions(-)
+On 27/10/25 20:17, Philippe Mathieu-Daudé wrote:
+> On 22/10/25 16:01, Philippe Mathieu-Daudé wrote:
+>> Replace target-specific code to allow building
+>> hw/xen/ files once.
+>>
+>> Philippe Mathieu-Daudé (3):
+>>    hw/xen: Use BITS_PER_BYTE & MAKE_64BIT_MASK() in req_size_bits()
+>>    hw/xen: Replace target_ulong by agnostic target_long_bits()
+>>    hw/xen: Build only once
 > 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index b33c7fe325..f8656ec04b 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -26,6 +26,8 @@
->   #include "migration/vmstate.h"
->   #include "qapi/error.h"
->   #include "qemu/timer.h"
-> +#include "qemu/target-info.h"
-> +#include "qemu/bitops.h"
->   
->   #include "cpu_bits.h"
->   #include "riscv-iommu.h"
-> @@ -391,9 +393,9 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->               const uint64_t va_mask = (1ULL << va_len) - 1;
->   
->               if (pass == S_STAGE && va_len > 32) {
-> -                target_ulong mask, masked_msbs;
-> +                uint64_t mask, masked_msbs;
->   
-> -                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
-> +                mask = MAKE_64BIT_MASK(0, target_long_bits() - va_len + 1);
->                   masked_msbs = (addr >> (va_len - 1)) & mask;
->   
->                   if (masked_msbs != 0 && masked_msbs != mask) {
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index c7e98a4308..65d2c92018 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -93,7 +93,7 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
->           g_assert(rc == 0);
->           csr_call(words[1], cpu, csr, &val);
->   
-> -        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
-> +        qtest_sendf(chr, "OK 0 %"PRIx64"\n", val);
->   
->           return true;
->       }
-> 
+> ping?
 
-What about csr_call()?
+Series queued, thanks!
 
