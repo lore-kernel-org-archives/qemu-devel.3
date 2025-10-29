@@ -4,79 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EEA2CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F8FCCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:14:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE1JC-0008Ls-Uo; Wed, 29 Oct 2025 04:13:31 -0400
+	id 1vE1K9-0000MK-JE; Wed, 29 Oct 2025 04:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vE1J8-0008La-Kj
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:13:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vE1Iu-0004r2-EZ
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:13:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761725588;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5a8Kq+IOmMJRrwM8iNvSbLy58xA4clpP8sMfwpHD0SE=;
- b=P6+ROFI86mCI1KYjl0KBNR7H8CCv/M776XEX8vYzF44TdvVHEiWQJuwIKy6AmFRwzGc0fh
- BzUr1xXWWtUc9HvleI+d78sqlRhmDFfD284Ep1SUwT7FbXJhljCB1vavp0DppeIuk2Y6xH
- +Rut6fjNcy5EbEoNjUly2w/Aot1y/r8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-zL-f8zpyPxGYi8NnSshH0Q-1; Wed,
- 29 Oct 2025 04:13:04 -0400
-X-MC-Unique: zL-f8zpyPxGYi8NnSshH0Q-1
-X-Mimecast-MFC-AGG-ID: zL-f8zpyPxGYi8NnSshH0Q_1761725583
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A5B3180121E; Wed, 29 Oct 2025 08:13:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.72])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4AFCF180035A; Wed, 29 Oct 2025 08:13:00 +0000 (UTC)
-Date: Wed, 29 Oct 2025 08:12:57 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 2/2] tests/functional: include the lower level QMP log
- messages
-Message-ID: <aQHMNLgcazOGGR45@redhat.com>
-References: <20251028182651.873256-1-berrange@redhat.com>
- <20251028182651.873256-3-berrange@redhat.com>
- <c87f0929-a38c-425d-bfb6-d2985b908124@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vE1K0-0000H4-Vw
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:14:22 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vE1Jt-0004zd-Q6
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:14:20 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47114a40161so77875525e9.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:14:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761725650; x=1762330450; darn=nongnu.org;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=utZpS5XcNdUXDjEy2icG4A48+qvfCU4a3CJWGYsuPLk=;
+ b=GKlC53jJ/meVo3+inmopC+maKqcKO6kkOBxiWFsAoVrdayKuuIgxiF5v8/t8joYV7H
+ f3+gnK6hRBsomO2ECeXWsc50PLTTj3zHy5Ir8P6wXmGC4k0qSXRIA0u6g5Oud7zgX8Zq
+ WaUw3m9Poj1TVNXso/yji+BJInSbTXmcn5fH0ue90hXIj+ycgrySUIyjRsUWvq33AfUg
+ LOkHpvLz8QshR+hTGJD4nXEYQAFctLU3DONLMc3T4KIkQXbGWy+ccvU+yYU5soU+FbhM
+ R5GCtVSLKSLhArwaGCojz50PBM8T1tl5nzaLaGhJtILB4N/7tKC182AjDNxJecvl9eQ3
+ 4f8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761725650; x=1762330450;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=utZpS5XcNdUXDjEy2icG4A48+qvfCU4a3CJWGYsuPLk=;
+ b=KFBwsU6eEcJlIlPBK7Zj1i3tLMb2ud7TFGdV1wsxFaveV7jexSro57hFbihBJhDNnY
+ 6kfXpHJ4SYx8KnrnRSPT/M1RYluYhiywV58BqE5TgiD3GDETBEqRvBmR3l93GLqlJI7J
+ ezc4duqpMjjOgQGwpXDzgu/GKVR/XrCaQdX9AX74Jk/+oB43CN0bdy/xmBqdyW7ALFAi
+ MakNh3QbMacrJquWB0KGfCigBowCzixVBlDn37O4BKKthkDE4Sg5s5Iv8TntY6ZyLIUS
+ ppv5GWYpMigGG9KtxEPQDuaUrf6viZjCSUSQLsBUeGHnl7hNZYtUQMDo4a1lDAu68PWZ
+ b9Og==
+X-Gm-Message-State: AOJu0YxqzLWHBYzrsKUNKbEZiK6AJvJz3jG7FvopXxKlhRoAN2d9rFEh
+ oXh8Le5ph2uB0+ha8cFR5W8JMa7rzzaI4M66KXb4gsR17R961A6G4qUZAExcGSIiqqjkK/FKlGH
+ nzxUB
+X-Gm-Gg: ASbGncsNv/E8x9rDdkzVSGOLKfoZOsUu+tgyN/maSbM84OQT1e/i4Ph4iBrAd6L72fs
+ jpwCofCfyqrnxGGz50j98+GUOT6yQCSdoHXfRoAT/sooFysussVNmc1l3G0/mgSVI79YiOYFT7/
+ JP17pbeQPN+/txIrD5e5dwKY5fDUs4Uwb4+cl66Pwhuz1t84It92xTQyH+LZTyiLuL85PApJ56J
+ zVmSH7201QytlGv4qymQw6hPTw8oTO7nDhG1HP7DiABd6YYJs+cKwX0pkCZUNVX9Rm70W/qqVWJ
+ Wf3sSilAd4RE4VVAx9TTn5iBD/8CqFXrWmZoZsRdmFjaEOsTJFPAtt3UUt79LRVAkhQ/udoDQwf
+ VnV86QMaZ8r6BInitJE1AAZSzhVFqsK9zWtQSmchYvo4UNPFmz3zuEwwBDYznboduzaEqWHdfsk
+ y8UkH2uATSJMBaz/5EWgY+0Id5gqjRxxsNNPOBzJzILiVVmaX8
+X-Google-Smtp-Source: AGHT+IGe0QAwil3HRHsL1f+brsYo1R2IDj27kRaROm84jCx7ds86A2azE4hTCXen23RNyZx98a95jA==
+X-Received: by 2002:a05:600c:3506:b0:46e:37fe:f0e6 with SMTP id
+ 5b1f17b1804b1-4771e3b849fmr17106615e9.30.1761725650574; 
+ Wed, 29 Oct 2025 01:14:10 -0700 (PDT)
+Received: from meli-email.org (athedsl-4440624.home.otenet.gr. [79.129.178.32])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4771bc597c7sm29848275e9.1.2025.10.29.01.14.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Oct 2025 01:14:10 -0700 (PDT)
+Date: Wed, 29 Oct 2025 10:13:42 +0200
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-arm@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin <npiggin@gmail.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ qemu-ppc@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Helge Deller <deller@gmx.de>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Stafford Horne <shorne@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9_?= <philmd@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>, 
+ Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org, 
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: Re: [PATCH 02/35] scripts/ci/setup: regenerate yaml
+User-Agent: meli/0.8.12
+References: <20251027110344.2289945-1-alex.bennee@linaro.org>
+ <20251027110344.2289945-3-alex.bennee@linaro.org>
+In-Reply-To: <20251027110344.2289945-3-alex.bennee@linaro.org>
+Message-ID: <t4vw7k.qshbmizu7wto@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c87f0929-a38c-425d-bfb6-d2985b908124@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.737,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,106 +124,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 08:12:31AM +0100, Thomas Huth wrote:
-> On 28/10/2025 19.26, Daniel P. Berrangé wrote:
-> > We've seen a GitLab CI timeout failure in the test_pseries.py test,
-> > where it appears likely that the test has hung in a self.qmp('quit')
-> > call, but we don't have conclusive proof. Adding the QMP log category
-> > to what we capture should help us diagnose this, at the cost of the
-> > base.log file becoming significantly more verbose. The previous
-> > commit to include the logger category name and function should at
-> > least help understanding the more verbose logs.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   tests/functional/qemu_test/testcase.py | 4 ++++
-> >   1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> > index 6fc6e1ac0a..5ab84ce674 100644
-> > --- a/tests/functional/qemu_test/testcase.py
-> > +++ b/tests/functional/qemu_test/testcase.py
-> > @@ -225,6 +225,9 @@ def setUp(self):
-> >           self.machinelog = logging.getLogger('qemu.machine')
-> >           self.machinelog.setLevel(logging.DEBUG)
-> >           self.machinelog.addHandler(self._log_fh)
-> > +        self.qmplog = logging.getLogger('qemu.qmp')
-> > +        self.qmplog.setLevel(logging.DEBUG)
-> > +        self.qmplog.addHandler(self._log_fh)
-> >           if not self.assets_available():
-> >               self.skipTest('One or more assets is not available')
-> > @@ -235,6 +238,7 @@ def tearDown(self):
-> >           if self.socketdir is not None:
-> >               shutil.rmtree(self.socketdir.name)
-> >               self.socketdir = None
-> > +        self.qmplog.removeHandler(self._log_fh)
-> >           self.machinelog.removeHandler(self._log_fh)
-> >           self.log.removeHandler(self._log_fh)
-> >           self._log_fh.close()
-> 
->  Hi,
-> 
-> I tested this patch, and now I'm seeing Python stack traces in the base.log,
-> like this:
-> 
-> 2025-10-29 07:22:45,264 - DEBUG: qemu.qmp.protocol.default._bh_loop_forever
-> Task.Reader: failure:
->   | Traceback (most recent call last):
->   |   File "../python/qemu/qmp/protocol.py", line 914, in _bh_loop_forever
->   |     await async_fn()
->   |   File "../python/qemu/qmp/protocol.py", line 952, in _bh_recv_message
->   |     msg = await self._recv()
->   |           ^^^^^^^^^^^^^^^^^^
->   |   File "../python/qemu/qmp/protocol.py", line 1053, in _recv
->   |     message = await self._do_recv()
->   |               ^^^^^^^^^^^^^^^^^^^^^
->   |   File "../python/qemu/qmp/qmp_client.py", line 459, in _do_recv
->   |     msg_bytes = await self._readline()
->   |                 ^^^^^^^^^^^^^^^^^^^^^^
->   |   File "../python/qemu/qmp/protocol.py", line 1021, in _readline
->   |     raise EOFError
->   | EOFError
-> 
-> If if it's harmless, I think that's very confusing for the casual user when
-> trying to debug a problem. Can we avoid these?
+On Mon, 27 Oct 2025 13:03, Alex Bennée <alex.bennee@linaro.org> wrote:
+>We inadvertently updated the base libvirt-ci project which has
+>resulted in changes. Make sure the output matches what we generate.
+>
+>Fixes: 0d4fb8f746d (configure: set the bindgen cross target)
+>Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>---
 
-That comes from this code in qemu/qmp/protocol.py
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-        except BaseException as err:
-            self.logger.log(
-                logging.INFO if isinstance(err, EOFError) else logging.ERROR,
-                "Task.%s: %s",
-                name, exception_summary(err)
-            )
-            self.logger.debug("Task.%s: failure:\n%s\n",
-                              name, pretty_traceback())
-            self._schedule_disconnect()
-            raise
-
-Given EOF is a "normal" thing, I'm not convinced it justifies printing
-a traceback.  I'd be inclined to suggest a new "except EOFError" clause
-that catches that normal exception and thus skips the traceback.
-
-I don't think we need to block this patch waiting for that improvement
-though. When collecting DEBUG logs there are always going to be weird
-things like this present, and anything misleading just needs to be
-fixed when we uncover it.
-
-> Or maybe rather log the qmp stuff into a separate file, e.g. qmp.log ?
-
-I really don't want separate files for different log categories, as then
-you have created a problem of merging the two files in order to interpret
-the flow. That doesn't doesn't scale as we capture yet more log categories.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+> scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml | 4 ++--
+> scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml   | 4 ++--
+> 2 files changed, 4 insertions(+), 4 deletions(-)
+>
+>diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+>index ce632d97108..70063db198e 100644
+>--- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+>+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+>@@ -26,7 +26,7 @@ packages:
+>   - git
+>   - hostname
+>   - libaio-dev
+>-  - libasan6
+>+  - libasan8
+>   - libasound2-dev
+>   - libattr1-dev
+>   - libbpf-dev
+>@@ -37,7 +37,7 @@ packages:
+>   - libcap-ng-dev
+>   - libcapstone-dev
+>   - libcbor-dev
+>-  - libclang-dev
+>+  - libclang-rt-dev
+>   - libcmocka-dev
+>   - libcurl4-gnutls-dev
+>   - libdaxctl-dev
+>diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+>index f45f75c9602..4f1a49be34a 100644
+>--- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+>+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+>@@ -26,7 +26,7 @@ packages:
+>   - git
+>   - hostname
+>   - libaio-dev
+>-  - libasan6
+>+  - libasan8
+>   - libasound2-dev
+>   - libattr1-dev
+>   - libbpf-dev
+>@@ -37,7 +37,7 @@ packages:
+>   - libcap-ng-dev
+>   - libcapstone-dev
+>   - libcbor-dev
+>-  - libclang-dev
+>+  - libclang-rt-dev
+>   - libcmocka-dev
+>   - libcurl4-gnutls-dev
+>   - libdaxctl-dev
+>-- 
+>2.47.3
+>
+>
 
