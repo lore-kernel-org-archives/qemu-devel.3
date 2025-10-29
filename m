@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B79AFCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619C6CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE16Y-000276-A0; Wed, 29 Oct 2025 04:00:26 -0400
+	id 1vE174-0002XZ-AC; Wed, 29 Oct 2025 04:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE16U-00022H-Oj
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:00:23 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vE16o-0002Pw-87
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:00:49 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE16O-00036W-4p
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:00:22 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b6d3340dc2aso216165566b.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:00:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vE16l-0003B3-LV
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:00:41 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-63c09ff13aeso12027126a12.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761724809; x=1762329609; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lo/fkvxlatZ9ZM7K5APZJjivH8SZkSuHjrJ5IcMH1Wo=;
- b=Vx9KIc4OvfQ00CEJcPidNisvxa6DDc00VTqSIRuOr3AN+oh7E2BKiQkht8jeqMoygu
- AYDuu80oa8bp/Oa/5xZqBvibeBmzBde6aAXjM7QtL91KXABP3/ODGoB2ydUhK6S4E/bH
- GGwzWNLJ/QvieW3hDZ0m+8u9FR05vxIclQvHu/6rsDCJQ98lj6GB8uBUn2Oo3eghWSwK
- HL0Sz2vR5HVjLT1T6m4LlCaFKWf0OEmr5N5F98FTaeG8eV6weZxkwU3PXg4VQRUixZ7K
- WSYWtQsACF/VPrym0NiIsA519EF0b0fkathzqUzKN83uohMl7OBDPNjWu9sDFw8P/qKo
- sw8A==
+ d=linaro.org; s=google; t=1761724837; x=1762329637; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ql5bKAxaYAKUxX0VLJd7feZr+XAxbQxLPmdw2hRi2xs=;
+ b=mCIwlQfADR/Abn4YzZuATM4MboegB7z1xvZW+8BZM0skIfjSKtE1ki3h4nUaOlYb8g
+ ysT0rgMvkno11+7GApH0ztBnZs4d+K2A5KutquSQWiNV5b/A/MbLQprAwq7vJbWVFVv2
+ OOEJSmwx4EyFYy9BZokbAaMGzpd46oz1i1GIFM5WgW0WSQIDNGGbrogyCYgDQd7UQs14
+ LKGNLvh6JmYbjBC3fmiOHhagRdi/ykrGEo0dwY+5lZokKD1gIIYu3D01jFJLuVLPQS7/
+ u4KuOJJAf8yg1o6/SAd6wwtWg8VZlmN1Vcbcm3I32gq156wqw0sNSxEqIzh5hS8rxzzi
+ RogQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761724809; x=1762329609;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lo/fkvxlatZ9ZM7K5APZJjivH8SZkSuHjrJ5IcMH1Wo=;
- b=RRjoc1I/dvTjenSn0pHv/R3cPqW1dSsUwM3U9UE8tGSgvICR+Gzp/fsJDO32fyThZx
- uYkOHyhKuoa024e1UT0zYC8YbyvjzBgQ7YiMvCPOaMhM0/sVauqtFBcOXlysOcxL+1d/
- GcVChhBJQbBLhFcGlx3N/EJEHhqOTbDhEEPaa6IpCTc7xXwTU0sNZU8OKwwZOh9Al7Bk
- eTfkk4FX13v/iFbN203TCwP2/QfYBqSKedJDat3EL+cCtXn/Tr3eIUaabmTU+wczSORh
- dvp9/AsPKXyWdpdU+HfU6HHPOR+/YiWFTC5XqPu8PfZY5l/5SiyBLFS6F/Fu8TsapeNh
- S45g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4EFvNvmlvuKLkci5WpQnWtVeXRS0fQLVTrQ40lePPnQCs45cro8DHXl+b4lh5dOKr3xoyvDDKjFC+@nongnu.org
-X-Gm-Message-State: AOJu0YxU+9R+uIYN8uWsCc8ZAz1mMBnMe0SHYxR8vdlyKrtDF3vjO7Wh
- xguxKwopQbu8cgG+syZxWl5pfL3w82kEdZdmYrzyvu0Vp4v8FnTwMeeNRJNz8s2FGJ+GHH9WpaC
- vPovtHcZqcwuQhg9Hr3z0LN19H0neuPjHjnZkji7+9Q==
-X-Gm-Gg: ASbGncvLVBKOCjPB95OyCwGuxk+UIDsdnIDHM8wEnP26AUQfyirUUGu29lMS7f965x1
- hJwamLAuJDfC1jFspaSDizZFVTL8hzbCxNlQAKbJ+12qbcEk91kYVqY3kjwus83fUEf+/HuS3Dx
- LCh/G739csWNRJqm0WHT/lyUbf9f8OQIiasWx2VUxqVORvXYRuxE0634WO7EWguL4OrZJStHknj
- sxzlffcLNVYfSmOfhMerj+ggj3E3gMqPbG5oxNUceShWgnEr3wLtN1z++tx4xwJ0zdfbw0=
-X-Google-Smtp-Source: AGHT+IFjn45/OHUwuBV7F8oV82cyrC2Qo98Ee5FPkabo+9A5VXgMJf0dVDNh3S1APrme49lheLiizPGOHhGPorkAkSw=
-X-Received: by 2002:a17:906:dc91:b0:b07:87f1:fc42 with SMTP id
- a640c23a62f3a-b703c15215emr220748966b.16.1761724809228; Wed, 29 Oct 2025
- 01:00:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761724837; x=1762329637;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ql5bKAxaYAKUxX0VLJd7feZr+XAxbQxLPmdw2hRi2xs=;
+ b=rmMiOgbuoYMxSs4LsbW/ry0CGUyFQbaxltaFyX0mf8Y+Xwbduvo2RvL2EnSnTEHFJP
+ 9Ag46BENvB+dxbmHNzvISr3su4jjbJOofSoq0GzcW91O5evHmLtBcgU9URsQaQHdAbF5
+ RE7a16DF3Rpui0FcgLkHF9riqgbW/Aq5tveO+tf1M/KhraaIAm6Ier1JGJVblAG/YrPK
+ rSZIZ3eEGauoYa6OofWBrI3srbVpwlaL3jnmNt2jFWpK6qDwmqBfopjCrwgSg/DkHYj4
+ ajbDrVQLEGQ9tnFP2Zm4i2GqhJoz3QBH7c1mlZ8kSPV7yrNmR65yUARL1V2nTkpDwXgV
+ 2Mmw==
+X-Gm-Message-State: AOJu0Yw9s5K0dmAuOC4lcWeqaisoqfcNwSIMsTSl5r10gFL+A2KdWS8X
+ o+nuFJQwmeQZJdXXN31hN3KuJ0U335KsNflIFYHENTrG+t9oDIKzVgufYNoIz4NidEu7SlLO/6X
+ ESjltclM=
+X-Gm-Gg: ASbGncu7/5ufQJAb/EZuUrYw//fntBuLIOR31Hi+FqfENwsmQfWT9YmjWXcc/y8I3x3
+ nekNZ7Rsg4E8buHB7aZWyrvVvSe8wNnNw1TZPVzYcTkPFPSsLIW9KlT2qxJea0GUyXHVqGUJpqS
+ fYVk7T+C2BWvKaZ/C5VW5nujC/PQ0Z1Fmlez9rfU9/ekPTvnlVkiy1i6bi3/kLKa7DrUb1llWzY
+ jT0U2biwtTbOJwfeXAQvd3eyofc17TM5obvhH8pvNLaG7OGinuB4KgUJGuooRKmw+s71PQDsJoU
+ fRd6HNNK02LLQd/QH65ZoLfwLWPKKiBCDa7fIzwGJIWz92Kc4A/24PY07j24b0D47sEsUAxZWv2
+ o/PcLp3F0ZplVhsP2ugiBs2RowrQvZogxpAK5mDQYaR+6LVGvGlpleig3Gs2I7ZNU4AYI3eNBa0
+ ADSx+hJ71UpuaeKDVU
+X-Google-Smtp-Source: AGHT+IGgBO3776x/LoHhySaHhlUzn6c5TeNBzHBZeoJIzQ0K01AGLk7VmTC51MnFlAmvDKjlixpi0g==
+X-Received: by 2002:a17:907:c03:b0:b3b:9832:f9b with SMTP id
+ a640c23a62f3a-b703d303048mr208758766b.25.1761724837488; 
+ Wed, 29 Oct 2025 01:00:37 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d8541f95csm1354093666b.58.2025.10.29.01.00.36
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Oct 2025 01:00:37 -0700 (PDT)
+Message-ID: <e397a39d-132b-42dd-824c-413223153070@linaro.org>
+Date: Wed, 29 Oct 2025 09:00:35 +0100
 MIME-Version: 1.0
-References: <20251029075342.47335-1-thuth@redhat.com>
-In-Reply-To: <20251029075342.47335-1-thuth@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 29 Oct 2025 09:59:43 +0200
-X-Gm-Features: AWmQ_bkiEOFyYcFWPDqmF2uJs0au_ErqgZwG5na9Z6fWKNK4grrZvEHfF8Ts1N8
-Message-ID: <CAAjaMXYSHKM8rKizqjuURiaK7p0prs=ab+Gd_mC8skSRJ0RaQA@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional/x86_64/test_virtio_balloon: Fix cosmetic
- issues from pylint
-To: Thomas Huth <thuth@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x634.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 10/25] system/memory: Have memory_region_size() take a
+ const argument
+To: qemu-devel@nongnu.org
+References: <20251028181300.41475-1-philmd@linaro.org>
+ <20251028181300.41475-11-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251028181300.41475-11-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,62 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 9:54=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> From: Thomas Huth <thuth@redhat.com>
->
-> Pylint complains about some style issues in this file: Unused variables
-> should be marked with an underscore, "when > then and when < now"
-> can be simplified to "now > when > then" and expectData doesn't conform
-> to the usual snake_case naming style.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 10/28/25 19:12, Philippe Mathieu-Daudé wrote:
+> Since the @mr argument is not modified, it can be const.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
+>   include/system/memory.h | 2 +-
+>   system/memory.c         | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->  tests/functional/x86_64/test_virtio_balloon.py | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/tests/functional/x86_64/test_virtio_balloon.py b/tests/funct=
-ional/x86_64/test_virtio_balloon.py
-> index 5877b6c408c..7a579e0d69a 100755
-> --- a/tests/functional/x86_64/test_virtio_balloon.py
-> +++ b/tests/functional/x86_64/test_virtio_balloon.py
-> @@ -66,7 +66,7 @@ def assert_initial_stats(self):
->          when =3D ret.get('last-update')
->          assert when =3D=3D 0
->          stats =3D ret.get('stats')
-> -        for name, val in stats.items():
-> +        for _name, val in stats.items():
->              assert val =3D=3D UNSET_STATS_VALUE
->
->      def assert_running_stats(self, then):
-> @@ -87,10 +87,10 @@ def assert_running_stats(self, then):
->
->          now =3D time.time()
->
-> -        assert when > then and when < now
-> +        assert now > when > then
->          stats =3D ret.get('stats')
->          # Stat we expect this particular Kernel to have set
-> -        expectData =3D [
-> +        expect_data =3D [
->              "stat-available-memory",
->              "stat-disk-caches",
->              "stat-free-memory",
-> @@ -103,7 +103,7 @@ def assert_running_stats(self, then):
->              "stat-total-memory",
->          ]
->          for name, val in stats.items():
-> -            if name in expectData:
-> +            if name in expect_data:
->                  assert val !=3D UNSET_STATS_VALUE
->              else:
->                  assert val =3D=3D UNSET_STATS_VALUE
-> --
-> 2.51.0
->
->
+r~
 
