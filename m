@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E434CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACBCCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE8SQ-0004aH-Gs; Wed, 29 Oct 2025 11:51:30 -0400
+	id 1vE8SM-0004W7-Ru; Wed, 29 Oct 2025 11:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8SL-0004Un-G2
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:26 -0400
+ id 1vE8SG-0004M3-Jo
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:21 -0400
 Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8S1-0002uO-0X
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:25 -0400
+ id 1vE8S0-0002uA-VM
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:20 -0400
 Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b6d345d7ff7so248221266b.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:51:02 -0700 (PDT)
+ a640c23a62f3a-b6d3340dc2aso16634966b.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761753061; x=1762357861; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761753058; x=1762357858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sYa79bBACSHKuE0pZ4iXVTr8fHkW5hyXRoUJItryceQ=;
- b=mkvN5+c2R/8o6wfpg1U5s/lCbqvpSsn3iXoou324N9ghbph5CODmzxDhtHwWenY0vq
- 3CoBoORceNRLEqQWiFhXAUHM04EuYMKE/JTiT/iH4CRQeBV22th/dMz7rcAE8wGLCkCT
- 2Bg2R0f4WU1vodjiKBJgvfIKyr6WpCsCDWQHSVul6Lmzyegb8bcuyZAqszyF2Xe9Dtkq
- 5ud9ejU7JDIxTYXDCRnAFFDkYLyVQ6fRcbiwqGAdnU4jD+wK7VekbAxgX0DuA1bm4YJz
- qw5HWCiaeRk1liPppFHzCebpInnfz9mzY1ceSTHN5ccS+Kyt6efVxiPv/l0PodUM5UVo
- reng==
+ bh=c+ln+dG2wKaF7Yw5cmZbQoKlVg9Z7JYXIwQU5UuyNBg=;
+ b=GtMsZsnqj/vBDJplgNTIINcwMHXTLyWZxWfevUCJAjA/pONxNUcZELOOc/5+qq6N0z
+ qxrXguU2b5CLhUMzeYAJzHE/I99NyQYR9TP79a5KMX3HyyyjlrZ6qJ26nEn36e8m7GxL
+ EPGXwOL9DCGFkuZVWsQKdMP/kKBmiT0u68uXGWdHu/t4QyG7+boaH5O7a/yTJSDP6wt0
+ /m+kf2gll+ai5MvcxHfT0+zhikbENeA87TvoIIFtC06AZOTuag6vpV0xTj8ghOiUaSie
+ USdOh6TzMEpPMNTpSZkOaRfpaASpu1Rf+/9cvrFe3jLjHpMxANt01J+QyEQDOT5/WTgk
+ OX+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761753061; x=1762357861;
+ d=1e100.net; s=20230601; t=1761753058; x=1762357858;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sYa79bBACSHKuE0pZ4iXVTr8fHkW5hyXRoUJItryceQ=;
- b=KlxCkjRyPyPvgQEFTTvLgsrHAHD9I+8C2FnKupre4upnevT8wqrUvEGgvyymJRuynn
- BE0xH/MBOqDr+7zUBwtrKkomMAJlY4xejSFXO3dZRxVQs1QSiQMu1//HMUvhkXy+trH2
- BZcTUhhrYl4UUnBPVa8kmAy2MpSRadkzeTI//p9GdQ8r15N9YNLduBpu/kQg3TdtpE+U
- OA/sr9aTzu1Cr8GiS7LrUR51m62beU6LjFpeyIen7zPOIO0ZE/DKTN39F+Xk6jsYys8B
- qhxLvMGiiQ+0axZBsOcwKfbqMV6w4bWA6pyJQmLkxoz8fH0vqkE+Rlx0PnDs4LKu4Rdk
- GYAw==
-X-Gm-Message-State: AOJu0YxnQk6d2aQCDKosOn30FlkRlEkzdm6NQ7FRvfs0uuSeaYq3YVRe
- 0OoWesRb4xD3j8vxFtdeeTCMB8STpwXRXGB1Q7c4hKrpSXgsyv0e69/cWK8TF3rHhq4=
-X-Gm-Gg: ASbGncs9iOsRU3gaqEteur/tHPliEky1tfl0NO21lmh6Y9yLttIloJpBvfxKv8uOveS
- htk9EKMPi6y455F9rr5DxEyct3G47jxrqt+OMxY2h1lB5M4uM0gIn7EYcIBNpAFt4oHdbCV3ske
- WNj3O9dUCLcT7OryVAF+Dq62hlkBHdWswd5Gyd1G+Ohj6/6zWWbpTJak/hSOs79IRjqEfBOIKcQ
- CjJfs0wbX4BwSmhvIEjNNoNDH68HXaL/u4LC5SomvkeMrfJj/OkmefxTDTnpXK8A6B596mu6Z0B
- MTGmwvv2/6Xz6AIO86o7/P9VZPDM/tnZZUrxNQsU+/Cy83Bw/JOIYLf5QpRKFVUS1mKqH8iTTxZ
- TRsuLuF37D3F2Ta3cwidPii0XTdp5K8KSCmKexlntJI6X+R0ih670MlWFbsnXEhqrtMRg0pv4U+
- sF
-X-Google-Smtp-Source: AGHT+IGIeUByh2IK0sfxB2LNBgWWquh+c9uJUD3+I6ncNhqMB22dJ7G4NVDCsTEXywasLNBfpxh4jA==
-X-Received: by 2002:a17:907:7f94:b0:b3d:e757:8c36 with SMTP id
- a640c23a62f3a-b7051f28d17mr10480866b.3.1761753060791; 
- Wed, 29 Oct 2025 08:51:00 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d853696a3sm1458499966b.27.2025.10.29.08.50.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=c+ln+dG2wKaF7Yw5cmZbQoKlVg9Z7JYXIwQU5UuyNBg=;
+ b=kOQgnYZJfDDco7T8OcF7bs+Q+3ezRaKbDMbBA20uQ6461yZuIVw1QusEGeRFlHj4kt
+ g17linsNBmOspvrokYSpm3WW5aklD5I5FyTiUBdiODERVsFWeIbmEd1H/UkSJG5d3QPB
+ 4NDk6kaZaeaaAmqF5VESc5Ugozaw0ho4ark2mG0r5LVQh5xfHkk9ttJtqkXqeyxsqiRW
+ aCFbd0I2uoyAGM+9R57YjmhA8SxjRl8cq4OxC8Nmz1vaA5AXh4ME4GGY/jG8NZSIB0fX
+ KO8DSqLFjzHOTMFIHR4ZWLpdB28j1ModsIipxpqmgT7GTcnR/30YaHLYcm1bz1LA24Ch
+ rzOg==
+X-Gm-Message-State: AOJu0Ywk+gVY4wDCDQ8uzAUQJCruWpNkq+v/fCPBH2nPu7RVXSOFE/JE
+ 2r6CKmUUPi7lJiVxOjcCQ7JyDwS0E+XocLoBcuXSR/YvMd9w+D4GMwbTu15iiRfJhlQ=
+X-Gm-Gg: ASbGnct5jAi8yMoAzY2vLDNR0bj+JkpyEC7TJz0FFliG3zQbxGeNTf3IpGn9XyuvTyw
+ ZwApTckMpbkbVcQQCHee9WegFSSaL/+re3SVK3/ZbEo+fq5aVXfqunQHRSZX3DeGlUYd0MDulHm
+ yK6iYJgTOPdhuBlJX+l6Ng53pdaq5c+iizmYXwSQgDyW+SHlryGOI1SBknP5ulBOV2xdwj6F3Mk
+ GIFQEuLzQXOrFY0XZD6gomFErU5ahDGd3NuJgyUI4HwuSRJ0XqA8KVqane48Ni/DQNSCgTWvwfU
+ QPUKdwbzuR8N9CEs3BsDhm5wlGoXHz0v27+PmyjPXBn4I/qcu4lAsTB5L/BtcLOcyj18fTEDfui
+ +547RQR+i24nXizEZCNAtgq7fhdp8DRN2QnXXQi5IEZur5xE+SA6N6AohxWupxs/iz/tXnSEYPi
+ Kl
+X-Google-Smtp-Source: AGHT+IE7fNRKVHFhU42Qa+DYrRxvU564A9e6wdbDkcv5KG7BLGz2/w5HaBW7C1n6aXfKBMZDZ6J76A==
+X-Received: by 2002:a17:907:6d1c:b0:b6d:6650:c3cd with SMTP id
+ a640c23a62f3a-b705212b084mr6520066b.21.1761753058400; 
  Wed, 29 Oct 2025 08:50:58 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d8ceeaffasm1483828566b.45.2025.10.29.08.50.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Oct 2025 08:50:54 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 09CDE61502;
- Wed, 29 Oct 2025 15:50:49 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3D84C60A0F;
+ Wed, 29 Oct 2025 15:50:47 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 32/35] plugins/core: add missing QEMU_DISABLE_CFI annotations
-Date: Wed, 29 Oct 2025 15:50:41 +0000
-Message-ID: <20251029155045.257802-33-alex.bennee@linaro.org>
+Cc: Julian Ganz <neither@nut.email>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PULL 14/35] target/hppa: call plugin trap callbacks
+Date: Wed, 29 Oct 2025 15:50:23 +0000
+Message-ID: <20251029155045.257802-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251029155045.257802-1-alex.bennee@linaro.org>
 References: <20251029155045.257802-1-alex.bennee@linaro.org>
@@ -107,45 +107,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of the memory callbacks come directly from the generated code
-however we have do have a a direct from C callback for the slow-path
-and memory helpers.
+From: Julian Ganz <neither@nut.email>
 
-There is also a reset callback that calls out to plugins.
+We identified a number of exceptions as interrupts, and we assume every
+other exception is a (syncroneous) exceptions. PA-RISC appears to not
+have any form of host-call.
 
-Like the other plugin points we need to disable CFI as we are making
-function calls to dynamically linked libraries.
+This change places the hook for PA-RISC targets.
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3175
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20251027110344.2289945-33-alex.bennee@linaro.org>
+Signed-off-by: Julian Ganz <neither@nut.email>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251027110344.2289945-15-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/plugins/core.c b/plugins/core.c
-index 35a252d2729..8f8bc7219c2 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -668,6 +668,7 @@ void exec_inline_op(enum plugin_dyn_cb_type type,
-     }
- }
+diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+index 191ae19404b..4e4869285b5 100644
+--- a/target/hppa/int_helper.c
++++ b/target/hppa/int_helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/helper-proto.h"
+ #include "hw/core/cpu.h"
+ #include "hw/hppa/hppa_hardware.h"
++#include "qemu/plugin.h"
  
-+QEMU_DISABLE_CFI
- void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                              uint64_t value_low,
-                              uint64_t value_high,
-diff --git a/plugins/loader.c b/plugins/loader.c
-index ba10ebac993..0dbe7bea263 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -318,6 +318,7 @@ struct qemu_plugin_reset_data {
-     bool reset;
- };
- 
-+QEMU_DISABLE_CFI
- static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
+ static void eval_interrupt(HPPACPU *cpu)
  {
-     struct qemu_plugin_ctx *ctx = data->ctx;
+@@ -95,6 +96,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+     CPUHPPAState *env = &cpu->env;
+     int i = cs->exception_index;
+     uint64_t old_psw, old_gva_offset_mask;
++    uint64_t last_pc = cs->cc->get_pc(cs);
+ 
+     /* As documented in pa2.0 -- interruption handling.  */
+     /* step 1 */
+@@ -212,6 +214,21 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+     env->iasq_f = 0;
+     env->iasq_b = 0;
+ 
++    switch (i) {
++    case EXCP_HPMC:
++    case EXCP_POWER_FAIL:
++    case EXCP_RC:
++    case EXCP_EXT_INTERRUPT:
++    case EXCP_LPMC:
++    case EXCP_PER_INTERRUPT:
++    case EXCP_TOC:
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
++        break;
++    default:
++        qemu_plugin_vcpu_exception_cb(cs, last_pc);
++        break;
++    }
++
+     if (qemu_loglevel_mask(CPU_LOG_INT)) {
+         static const char * const names[] = {
+             [EXCP_HPMC]          = "high priority machine check",
 -- 
 2.47.3
 
