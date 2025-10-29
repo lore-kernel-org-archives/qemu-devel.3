@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F27FCCF9EE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D03CCF9EB
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE2fz-0002Pz-4U; Wed, 29 Oct 2025 05:41:07 -0400
+	id 1vE2g2-0002Ra-IK; Wed, 29 Oct 2025 05:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vE2fk-0002O0-Kv
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:40:55 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1vE2fz-0002Qz-Mo
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:41:07 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vE2fe-0008PB-2y
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:40:52 -0400
+ id 1vE2fu-0008Rj-R8
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:41:06 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id CC44B80EB7;
- Wed, 29 Oct 2025 12:40:34 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1C391808B7;
+ Wed, 29 Oct 2025 12:40:53 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex.net (unknown [2a02:6bf:8080:d37::1:31])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (smtpcorp/Yandex) with ESMTPSA id Rea6510FtiE0-gpHMGC7E; 
- Wed, 29 Oct 2025 12:40:34 +0300
+ (smtpcorp/Yandex) with ESMTPSA id Rea6510FtiE0-CGSPPmoI; 
+ Wed, 29 Oct 2025 12:40:52 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761730834;
- bh=DQBesmOkcQe1NMva0FgClReKlCLo1Nov2vXF3dKi+sA=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=MkHiqvI4zH76SbQ9hgOeoBA5RXXUEoiTWWP60gWc4/xMNHqyGppykBqnz8scjRg4w
- 8Se/0HTbjDJIL2yR1B3WZWCYY0mkZCP4AzefdnWGM7MrZrlvoY/VoTNhJdcf/TxLgx
- emOj+l4LHrYoAdCs7kH0kqSerHoB/gu5RQ+B5D04=
+ s=default; t=1761730852;
+ bh=dewZtlGVF78OCULW01xUxoCXbqgHh67srXGr7dEfC/c=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=q8D9DEmMFfLyZO8KiEPZEB1uMhcvkq9f6WHYj7GkHBD0GkBrVnJU4QrVS12SFKfC1
+ HmOaBGrE61NzvENMQrkQ/kfXJF7U5wWsIk1aQh4iymQr5o1X8bf9SDSx3t68ZVg8SY
+ G+jrpmMyw4cCNsde/PE4uI/4j8OWz3cwMYBJFEHQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -49,20 +48,24 @@ Cc: Raphael Norwitz <raphael@enfabrica.net>,
  Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v2 0/3] vhost-user-blk: support inflight migration
-Date: Wed, 29 Oct 2025 14:39:37 +0500
-Message-Id: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
+Subject: [PATCH v2 2/3] vhost: add vmstate for inflight region with inner
+ buffer
+Date: Wed, 29 Oct 2025 14:39:41 +0500
+Message-Id: <20251029093939.3251188-3-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
+References: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,57 +81,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: 
-- rewrite migration using VMSD instead of qemufile API
-- add vhost-user-blk parameter instead of migration capability
+Prepare for future inflight region migration for vhost-user-blk.
+We need to migrate size, queue_size, and inner buffer.
 
-I don't know if VMSD was used cleanly in migration implementation, so
-feel free for comments.
+So firstly it migrate size and queue_size fields, then allocate memory for buffer with
+migrated size, then migrate inner buffer itself.
 
-v2 is based on Vladimir's work:
-[PATCH v2 00/25] vhost-user-blk: live-backend local migration
-  which was based on:
-    - [PATCH v4 0/7] chardev: postpone connect
-      (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
-    - [PATCH v3 00/23] vhost refactoring and fixes
-    - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+---
+ hw/virtio/vhost.c         | 44 +++++++++++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost.h |  6 ++++++
+ 2 files changed, 50 insertions(+)
 
-Based-on: <20250924133309.334631-1-vsementsov@yandex-team.ru>
-Based-on: <20251015212051.1156334-1-vsementsov@yandex-team.ru>
-Based-on: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
-Based-on: <20251015132136.1083972-15-vsementsov@yandex-team.ru>
-Based-on: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
-
---- 
-
-Hi!
-
-During inter-host migration, waiting for disk requests to be drained
-in the vhost-user backend can incur significant downtime.
-
-This can be avoided if QEMU migrates the inflight region in vhost-user-blk. 
-Thus, during the qemu migration, the vhost-user backend can cancel all inflight requests and
-then, after migration, they will be executed on another host. 
-
-At first, I tried to implement migration for all vhost-user devices that support inflight at once, 
-but this would require a lot of changes both in vhost-user-blk (to transfer it to the base class) and 
-in the vhost-user-base base class (inflight implementation and remodeling + a large refactor).
-
-Therefore, for now I decided to leave this idea for later and 
-implement the migration of the inflight region first for vhost-user-blk.
-
-Alexandr Moshkov (3):
-  vmstate: introduce VMSTATE_VBUFFER_UINT64
-  vhost: add vmstate for inflight region with inner buffer
-  vhost-user-blk: support inter-host inflight migration
-
- hw/block/vhost-user-blk.c          | 30 ++++++++++++++++++++
- hw/virtio/vhost.c                  | 44 ++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-user-blk.h |  1 +
- include/hw/virtio/vhost.h          |  6 ++++
- include/migration/vmstate.h        | 10 +++++++
- 5 files changed, 91 insertions(+)
-
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c46203eb9c..f0c283f8f4 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -2028,6 +2028,50 @@ const VMStateDescription vmstate_backend_transfer_vhost_inflight = {
+     }
+ };
+ 
++static int vhost_inflight_buffer_pre_load(void *opaque)
++{
++    info_report("vhost_inflight_region_buffer_pre_load");
++    struct vhost_inflight *inflight = opaque;
++
++    Error *err = NULL;
++    int fd = -1;
++    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
++                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
++                                  &fd, &err);
++    if (err) {
++        error_report_err(err);
++        return -ENOMEM;
++    }
++
++    inflight->offset = 0;
++    inflight->addr = addr;
++    inflight->fd = fd;
++
++    return 0;
++}
++
++const VMStateDescription vmstate_vhost_inflight_region_buffer = {
++    .name = "vhost-inflight-region/buffer",
++    .pre_load = vhost_inflight_buffer_pre_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++const VMStateDescription vmstate_vhost_inflight_region = {
++    .name = "vhost-inflight-region",
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(size, struct vhost_inflight),
++        VMSTATE_UINT16(queue_size, struct vhost_inflight),
++        VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_vhost_inflight_region_buffer,
++        NULL
++    }
++};
++
+ const VMStateDescription vmstate_vhost_virtqueue = {
+     .name = "vhost-virtqueue",
+     .fields = (const VMStateField[]) {
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 13ca2c319f..dd552de91f 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -596,6 +596,12 @@ extern const VMStateDescription vmstate_backend_transfer_vhost_inflight;
+                            vmstate_backend_transfer_vhost_inflight, \
+                            struct vhost_inflight)
+ 
++extern const VMStateDescription vmstate_vhost_inflight_region;
++#define VMSTATE_VHOST_INFLIGHT_REGION(_field, _state) \
++    VMSTATE_STRUCT_POINTER(_field, _state, \
++                           vmstate_vhost_inflight_region, \
++                           struct vhost_inflight)
++
+ extern const VMStateDescription vmstate_vhost_dev;
+ #define VMSTATE_BACKEND_TRANSFER_VHOST(_field, _state) \
+     VMSTATE_STRUCT(_field, _state, 0, vmstate_vhost_dev, struct vhost_dev)
 -- 
 2.34.1
 
