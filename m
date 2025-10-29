@@ -4,109 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929D7CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B2ECCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE6Nx-00024F-U6; Wed, 29 Oct 2025 09:38:45 -0400
+	id 1vE6OZ-0002Ay-Gu; Wed, 29 Oct 2025 09:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6Nt-00023U-27
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:38:41 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6Nn-0001br-UX
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:38:40 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3ee12807d97so6975120f8f.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 06:38:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761745108; x=1762349908; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=drrCDzzWp9ZAwjtaL394EHQhDbbkx5hV5hdBSxYB0RQ=;
- b=tD7H3U1AspMid5PPUVOeTES19eLjucApbPmcfQCqB14dw2sXH8oqths7EKjKTrXYru
- ZVGjlFsWsrxDt6lEn3fz9t81TYqvl7Tt9qW8flbJNPI1BAinpvXlM2gxo1+1K4dY7zpv
- ZrQrDNUWsGCxdzpacN9d7ZbP+oT4Q4mIoJ3zsi0u43oaNna+1g1+DbGErh6WOKyuItzk
- cOBCEdG+BL6dsxYSKRDngiMFpHsZj/u3NkijLdzpvDO8sS9wzmFMrqI+naDEodBf6FQO
- pHwOLCmCGRzMOHWQ9hhJnPBW52RkwkeOFKUtDyL5i+Byq4YpKCAHVgchO4OD867/+i44
- C2wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761745108; x=1762349908;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=drrCDzzWp9ZAwjtaL394EHQhDbbkx5hV5hdBSxYB0RQ=;
- b=Xi7p+KNtMTT9bTxqW6l7wzPobqcGOa1RNPpCsKwEzWMSW27X5FkYVxh/i/VpDB46yG
- 0hECTauu/EBKS4JfVObJltuKVeEOe84MduucXXbOBBObAbr4nN/7MNJhd8AZ8c7ZWlf/
- HOZcHgAUMlx7kutFcBrFDM/EYqz/cUprGZU13Nz/TrXmStw2R6Hx9FeD24Sia9WFOjPE
- FA2ggY9X4BLr3x1ZBc/V71zVAbQ+xdcuyvftts4bAV38WwvVlbVHoJfDaUWyLztTJfMZ
- Qqu2oojB3JpOSGoS6JUFi02yYxpXXb5tKp67bpHHQcdYNLxP4WlE67F/18WLr8j/r4fh
- V+yQ==
-X-Gm-Message-State: AOJu0Yye5C3QCEemGh5v+qNnpv4wyli52nUBLyN92ohAOXuWzEGzMkPm
- /8w6WlR0R20QDXsJh4TUb8oH7xtMIzlN0H54vjbeL8qC2gqr9VdTCfvdxFM684CFIR5f4b0HG/V
- pAtNrSeA=
-X-Gm-Gg: ASbGncu02gCMNRsz2OiDbN3+6bri8RrZkK/IdzvYVoc8AppjcDcgj02ZuOUB0JibffF
- BT6GxsHZ547uacYUtPp2ypXH3kS2GLz02RuhGn5GUbLVSGuwo7vVPSUKaYReKzt6Oevo+vIURp6
- x0DW9QdtXEw8hm7w6mGSoIwRJP4zmkHNCPTmVYgG4EFfoht2+Ln/QhnPH7+L/yjyUkus5WCGWf1
- 8MPn5BqtFyAPEyo3WtsstXCF6wsvpih3+OMdDRYQ9horvdpqTaBF0tURfU/fZcKgcrVfe45HEIb
- tlbdP/2BPMax3QBjvYf3VaUcWwYb9BjRkfJKSo2egzQAQMfWw75WcwAzxlt8Shz7UO0zmpGsCcP
- DNArvQumcx6iehi9kzYp5nuSMpPHsY88SFbCm3YRUz/wtO0mUTe3L/2N+IUcW8bYC7+Hi15vUfW
- nyFYW/KRBU9qyRk486T1U1P7OYkRTpnN6CIjC7YhmUFn0=
-X-Google-Smtp-Source: AGHT+IHnmTE0PCsxvTSPlvw3ewTff3emjQYCm99APNOqESiVm8YIW2N6NxeKcXRRUvLYtifSp6iDJQ==
-X-Received: by 2002:a05:6000:144d:b0:425:8577:9cd4 with SMTP id
- ffacd0b85a97d-429aefcf870mr2349329f8f.54.1761745108374; 
- Wed, 29 Oct 2025 06:38:28 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df6b9sm27326076f8f.44.2025.10.29.06.38.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 06:38:27 -0700 (PDT)
-Message-ID: <9242eddc-718d-40e6-854c-4847898ebd2a@linaro.org>
-Date: Wed, 29 Oct 2025 14:38:26 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vE6OX-0002AG-D4
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:39:21 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vE6OO-0001kO-IA
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:39:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E3C0A597300;
+ Wed, 29 Oct 2025 14:39:06 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id G6b2g_loCDFu; Wed, 29 Oct 2025 14:39:04 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DCE2D597303; Wed, 29 Oct 2025 14:39:04 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DB5DC597301;
+ Wed, 29 Oct 2025 14:39:04 +0100 (CET)
+Date: Wed, 29 Oct 2025 14:39:04 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org
+cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com, 
+ philmd@linaro.org
+Subject: Re: [PATCH] ati-vga: Separate default control bit for source
+In-Reply-To: <f34373a4-d8a7-4993-b41c-052c76d9e5e1@eik.bme.hu>
+Message-ID: <c4d5feac-3ae8-ae30-ad01-5c65e46bc60f@eik.bme.hu>
+References: <20251007195435.8ACAC56F2A3@zero.eik.bme.hu>
+ <f34373a4-d8a7-4993-b41c-052c76d9e5e1@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/35] audio: start making AudioState a QOM Object
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Ratchov <alex@caoua.org>,
- Jan Kiszka <jan.kiszka@web.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
- <20251027151045.2863176-10-marcandre.lureau@redhat.com>
- <342519b4-4de6-f54b-606e-b1b3b1c97dc9@eik.bme.hu>
- <CAJ+F1CJj__oPiBwXKeH88tF8k6vEjqqe6KMO4g9HmcnNqbpRfA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ+F1CJj__oPiBwXKeH88tF8k6vEjqqe6KMO4g9HmcnNqbpRfA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,44 +66,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/25 13:34, Marc-André Lureau wrote:
-> Hi
-> 
-> On Mon, Oct 27, 2025 at 8:29 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+On Thu, 23 Oct 2025, BALATON Zoltan wrote:
+> On Tue, 7 Oct 2025, BALATON Zoltan wrote:
+>> The DP_GUI_MASTER_CNTL register has separate bits for src and dest but
+>> we were only looking at the dest bit. Use the correct bit for source.
+>
+> Ping?
+
+Ping^2
+Is there anybody sending a pull request with this and other ati-vga patch 
+before the freeze?
+
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>> hw/display/ati_2d.c | 11 ++++++-----
+>> 1 file changed, 6 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+>> index 309bb5ccb6..e69b15b570 100644
+>> --- a/hw/display/ati_2d.c
+>> +++ b/hw/display/ati_2d.c
+>> @@ -43,7 +43,8 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
+>>     }
+>> }
+>> 
+>> -#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & 
+>> GMC_DST_PITCH_OFFSET_CNTL)
+>> +#define DFLT_CNTL_SRC (s->regs.dp_gui_master_cntl & 
+>> GMC_SRC_PITCH_OFFSET_CNTL)
+>> +#define DFLT_CNTL_DST (s->regs.dp_gui_master_cntl & 
+>> GMC_DST_PITCH_OFFSET_CNTL)
+>> 
+>> void ati_2d_blt(ATIVGAState *s)
+>> {
+>> @@ -63,12 +64,12 @@ void ati_2d_blt(ATIVGAState *s)
+>>         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+>>         return;
+>>     }
+>> -    int dst_stride = DEFAULT_CNTL ? s->regs.dst_pitch : 
+>> s->regs.default_pitch;
+>> +    int dst_stride = DFLT_CNTL_DST ? s->regs.dst_pitch : 
+>> s->regs.default_pitch;
+>>     if (!dst_stride) {
+>>         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
+>>         return;
+>>     }
+>> -    uint8_t *dst_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
+>> +    uint8_t *dst_bits = s->vga.vram_ptr + (DFLT_CNTL_DST ?
+>>                         s->regs.dst_offset : s->regs.default_offset);
 >>
->> On Mon, 27 Oct 2025, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> QOM brings some conveniences for introspection, type checking, reference
->>> counting, interfaces etc. This is only the first step to introduce QOM
->>> in audio/ (I have more in the pipeline)
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>> audio/audio.h     |  7 +++++++
->>> audio/audio_int.h |  2 ++
->>> audio/audio.c     | 43 ++++++++++++++++++++++++++++++++-----------
->>> 3 files changed, 41 insertions(+), 11 deletions(-)
-
-
->>> diff --git a/audio/audio_int.h b/audio/audio_int.h
->>> index f78ca05f92..b2b4d2d10e 100644
->>> --- a/audio/audio_int.h
->>> +++ b/audio/audio_int.h
->>> @@ -217,6 +217,8 @@ struct SWVoiceCap {
->>> };
->>>
->>> typedef struct AudioState {
->>> +    Object parent;
+>>     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+>> @@ -97,13 +98,13 @@ void ati_2d_blt(ATIVGAState *s)
+>>                        s->regs.src_x : s->regs.src_x + 1 - 
+>> s->regs.dst_width);
+>>         unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+>>                        s->regs.src_y : s->regs.src_y + 1 - 
+>> s->regs.dst_height);
+>> -        int src_stride = DEFAULT_CNTL ?
+>> +        int src_stride = DFLT_CNTL_SRC ?
+>>                          s->regs.src_pitch : s->regs.default_pitch;
+>>         if (!src_stride) {
+>>             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
+>>             return;
+>>         }
+>> -        uint8_t *src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
+>> +        uint8_t *src_bits = s->vga.vram_ptr + (DFLT_CNTL_SRC ?
+>>                             s->regs.src_offset : s->regs.default_offset);
 >>
->> Coding style says parent_obj, not sure other names are acceptable.
->>
-> 
-> 
-> Alex, since you wrote that section in docs/devel/style.rst, should we
-> enforce that naming?
-
-Yes please!
-
+>>         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+>> 
+>
+>
 
