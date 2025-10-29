@@ -4,92 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2880CCCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A68CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDzm1-0007s2-Ov; Wed, 29 Oct 2025 02:35:09 -0400
+	id 1vDzqA-00018O-B2; Wed, 29 Oct 2025 02:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vDzm0-0007rO-KV
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:35:08 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vDzln-0000ql-IK
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:35:08 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-63d6ee383bdso14670203a12.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 23:34:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761719690; x=1762324490; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ry0M+9kopk7MNnN3poBXxumoJIxvGoLsSMglqpbFUSM=;
- b=r1lWN96qbPk3q8kgpVQJNdap6giV2zTHxqjiWbN2UT3G/02aGMumqpjsbwzU62IkVB
- D2BszXyRISU3cxwb0BctoDKW+SAYe4Whh8Rs2UtGg0uRyLWZTGcC7o/SIN27kjav60u1
- uWJKpkD4J26MjZUDE8h7CaZUDO4NFOj8VG6lhAOSZNU1ZqOxK2ygyNzn9vmww9YL9nNy
- C2VIUD8aVstV4Uc/lysXp1E8JDd4kRlAP1UQhM7MSCKIugbTEzpvb79QnEZQu6Oros1V
- gnVV6cp8iQ/kjb9hLMZ7KyIf3uMn5A7GvcU6BEmDIrsjbHDvuM1Ct6AYD1jNGTkoBcaG
- nPOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761719690; x=1762324490;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ry0M+9kopk7MNnN3poBXxumoJIxvGoLsSMglqpbFUSM=;
- b=lNriwse0po5Xl9JzLWg1eliKKOKN1GNDGw4ZucFGYBtuhYb9reBnPos/BE+fOMZh29
- Ylj9h7xsVIKofoo/En87XLC6y6+FeSqK7DVO7OXOD3JDrPLXeL/S4gVjxBg/ptac9uN8
- 2RC2Gg4c70FcYi9p1TCATjplBG/5rbKi1wWV2sNiRj24uPGil0XBfoiPhi+tR/u86fRT
- VG9A0oKmiUKoigRRrNwQCX7Qyv1lgxzuBU1r66+rh1g4c0XsYVIaol6+kUoU3V6wkPUJ
- hNouzeJYRtFIT5RqAm5dvu2UZMaWXIY9jFckaIiGTXOtpLLzqx04D9DnyJY3jhjUcE9s
- eiWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSlxKwc+jlYQMbKDT2YRxeMbZx5Vg+CD2a3GufWPoYKaEYoS7v5wGi7ifAU4R0ySrt8b7iXrPZa2+D@nongnu.org
-X-Gm-Message-State: AOJu0Yw92ZmGNU3koWbNNUW98/LH+lqNC8v3wwl0Wz5LLgF02sJElFUB
- kQfDkOlkNy14p09xy+XKNr0FpmLbewqmgRVVhsBY2GhkvMB4v9w4OAT5Zu9ZWvlXMQY=
-X-Gm-Gg: ASbGnculermlPWSqrZTuH5/f2O2rBAoNs/KS7pcf3jzr+APzcbLVevPpnXk1f3l7TEm
- sMoBucKTmmwFPjD/HVfqGM+KtK2vw4FBvMriQ6kqkRv9Y9BtlwEtTMEttDT+zrzEjBlNLfV/ZRD
- oYOnN2xpjCj5M55qpW8d9DIkozsiHrT+Dd6l0Hx4uEBlPpKGdZEbSJZFIF0oFv15tc7t/vg/BkR
- 1jRRy6YHof8WuynimuZuq6vFugE1ZdaTL722RMS4qjEEcMplT28kUOUFNOGX+PQXySlgro878Xx
- 7z72e29sr/Y7lgBsol/sk4+JHR621dmp/NmUlMS4OXpNW3WCNuvu/j/zUHjLfcFoSRgC7b875x+
- 8d4pzUNcWGguKQXSFjRHYdSKQAYSK2bwJxXDYGM5eDI4UfVQyiIAine1j8ghrJyXTeTtdxnUH4C
- v2aKqfcjXRcV/F42Na
-X-Google-Smtp-Source: AGHT+IHMTas65ns31ln779kL9I3LLiFDDwTTOM76b5e2WynOHBnGiMk8/dup1SKnnax8AeJrLyEyQQ==
-X-Received: by 2002:a05:6402:518c:b0:63e:1643:de4c with SMTP id
- 4fb4d7f45d1cf-640441a8165mr1192626a12.7.1761719690091; 
- Tue, 28 Oct 2025 23:34:50 -0700 (PDT)
-Received: from [10.240.88.227] ([212.144.248.67])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-64043e05a5esm1286303a12.4.2025.10.28.23.34.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 23:34:49 -0700 (PDT)
-Message-ID: <05b5eff7-ad25-428e-8468-8b71878aad2c@linaro.org>
-Date: Wed, 29 Oct 2025 07:34:46 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 18/18] rust: migration: allow passing ParentField<> to
- vmstate_of!
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Chen Miao <chenmiao@openatom.club>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vDzq8-000176-5M
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:39:24 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vDzq1-0001Nm-Ny
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:39:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761719958; x=1793255958;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=DnS0Yvs1z03uEdqAFXx0ktOv4LAyDh0CIIGIB1D7S/Y=;
+ b=P29xRvw3gJ6bjKSpoXYUPlr3PQglhjvCOj5rDzQkT7M0EFpfPp5Zl7EC
+ YUcxxDmB4DQK0yWo+dloWtFZ7+7pD4GIvGGc0jBBOpEev3QClrwSV9CEm
+ fs0etog3pxjcUKPlQKaziFRkHbYIkdicwFncgt6z03i6eyGYIyeC8oKL5
+ ylIWRh8uU6O0sly51PEenqzjUqVPcZe5o+0ErsqbnKA0ZNFX2pczGbm70
+ Im09U1xj6U5wv2r2iOmyercZqnaWuwqTm5E47GtmiqFgEpRDNwfMBxY23
+ JKeFkdp2n/qBZ/rnbkE5sloTgfRvQ5aLRe5j27treoIKcSG8ETwDUcgnq w==;
+X-CSE-ConnectionGUID: 5+BnHJ9TQPyKyvIY5w/Vag==
+X-CSE-MsgGUID: 3hvH1PS/SkGVCZzdgvCrSA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63927854"
+X-IronPort-AV: E=Sophos;i="6.19,263,1754982000"; d="scan'208";a="63927854"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2025 23:39:11 -0700
+X-CSE-ConnectionGUID: 2w9DHdp4SzGrhqX1jWNNlA==
+X-CSE-MsgGUID: ZkcHdB29Re+v+kNTSNil6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,263,1754982000"; d="scan'208";a="189926654"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 28 Oct 2025 23:39:10 -0700
+Date: Wed, 29 Oct 2025 15:01:21 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PULL 02/18] i386/kvm/cpu: Init SMM cpu address space for
+ hotplugged CPUs
+Message-ID: <aQG7wdY/lBjgzho3@intel.com>
 References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-19-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251028173430.2180057-19-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20251028173430.2180057-3-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251028173430.2180057-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,73 +85,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/25 18:34, Paolo Bonzini wrote:
-> The common superclass for devices could have its own migration state;
-> for it to be included in the subclass's VMState, ParentField<> must
-> implement the VMState trait.
-> 
-> Reported-by: Chen Miao <chenmiao@openatom.club>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   roms/opensbi                  | 2 +-
->   rust/migration/src/vmstate.rs | 3 ++-
->   rust/qom/src/qom.rs           | 3 ++-
->   3 files changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/roms/opensbi b/roms/opensbi
-> index a32a9106911..43cace6c367 160000
-> --- a/roms/opensbi
-> +++ b/roms/opensbi
-> @@ -1 +1 @@
-> -Subproject commit a32a91069119e7a5aa31e6bc51d5e00860be3d80
-> +Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index 7512be64d67..5716191fff1 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -183,6 +183,17 @@ void x86_cpu_plug(HotplugHandler *hotplug_dev,
+>          fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+>      }
+>  
+> +    /*
+> +     * Non-hotplugged CPUs get their SMM cpu address space initialized in
+> +     * machine init done notifier: register_smram_listener().
+> +     *
+> +     * We need initialize the SMM cpu address space for the hotplugged CPU
+> +     * specifically.
+> +     */
+> +    if (kvm_enabled() && dev->hotplugged && x86_machine_is_smm_enabled(x86ms)) {
+> +        kvm_smm_cpu_address_space_init(cpu);
+> +    }
+> +
 
-Spurious subproject change.
+Unfortunately, the original KVM SMM patch caused this bug, but even
+more unfortunately, CPU_FOREACH in the machine_done callback is more
+fragile than I originally anticipated, now requiring more hack checks to
+fix. :-(
 
+IMO, the root of the chaos is that KVM SMM doesn't do this in the CPU
+context like TCG did for a long time. I'll find time to sort all this
+out.
 
-r~
-
-> diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-> index 42e5df8d818..5a237c409ac 100644
-> --- a/rust/migration/src/vmstate.rs
-> +++ b/rust/migration/src/vmstate.rs
-> @@ -268,7 +268,7 @@ macro_rules! impl_vmstate_transparent {
->       ($type:ty where $base:tt: VMState $($where:tt)*) => {
->           unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmstate::VMState $($where)* {
->               const BASE: $crate::vmstate::VMStateField = $crate::vmstate::VMStateField {
-> -                size: mem::size_of::<$type>(),
-> +                size: ::core::mem::size_of::<$type>(),
->                   ..<$base as $crate::vmstate::VMState>::BASE
->               };
->               const VARRAY_FLAG: $crate::bindings::VMStateFlags = <$base as $crate::vmstate::VMState>::VARRAY_FLAG;
-> @@ -282,6 +282,7 @@ unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmsta
->   impl_vmstate_transparent!(std::cell::UnsafeCell<T> where T: VMState);
->   impl_vmstate_transparent!(std::pin::Pin<T> where T: VMState);
->   impl_vmstate_transparent!(common::Opaque<T> where T: VMState);
-> +impl_vmstate_transparent!(std::mem::ManuallyDrop<T> where T: VMState);
->   
->   #[macro_export]
->   macro_rules! impl_vmstate_bitsized {
-> diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
-> index 5808051cd77..84455cea79b 100644
-> --- a/rust/qom/src/qom.rs
-> +++ b/rust/qom/src/qom.rs
-> @@ -102,7 +102,7 @@
->   };
->   
->   use common::Opaque;
-> -use migration::impl_vmstate_pointer;
-> +use migration::{impl_vmstate_pointer, impl_vmstate_transparent};
->   
->   use crate::bindings::{
->       self, object_class_dynamic_cast, object_dynamic_cast, object_get_class, object_get_typename,
-> @@ -182,6 +182,7 @@ fn as_ref(&self) -> &$parent {
->   #[derive(Debug)]
->   #[repr(transparent)]
->   pub struct ParentField<T: ObjectType>(std::mem::ManuallyDrop<T>);
-> +impl_vmstate_transparent!(ParentField<T> where T: VMState + ObjectType);
->   
->   impl<T: ObjectType> Deref for ParentField<T> {
->       type Target = T;
+Regards,
+Zhao
 
 
