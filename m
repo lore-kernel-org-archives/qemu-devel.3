@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B13BCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 20:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EFC2CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 20:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vECte-0003cN-JL; Wed, 29 Oct 2025 16:35:54 -0400
+	id 1vECtP-0003Wq-F5; Wed, 29 Oct 2025 16:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vECsk-0003J6-VO
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 16:35:00 -0400
+ id 1vECsi-0003IH-2G
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 16:34:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vECsS-00055L-47
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 16:34:58 -0400
+ id 1vECsM-00055X-HD
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 16:34:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1761770070;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LKIIxYg5faKwNG+Fa5o30NR1aEU5ZOtPmO+uYueR2ko=;
- b=jSrCyWEYH/xMzOrx+XbzhVx9BcCwXp9P4yBBoaP+qlrhaosXLz8jxxRWmFUrC4HQD7kvUk
- YeNlhg1eSxczk0jRGkozJMPFMUWAXfI+KRuQm3ekmW/rR9UZbFPoGeOEIdye/0C70Hv3z2
- FRxD3KDpL1Mm12SYhYd6H0f1r6UJbfY=
+ bh=qWKZgPMT1vjCWUd0Ifvhu6cxvDnIVcWg8I7oiOdLwU8=;
+ b=CAQFG8AEq3eHOkc383LdXiwEX+CoV9x2bMoMghnHyV9AhAlGdAA9ToHefbmOdnWCRWCuWH
+ xApN8WI2KvpSWHj/6Q9UfLzzLEiAO3tTWLi+xOqegBRXsCRbMhs40+348cO55hR6WGF+/1
+ KaCswmlyFphpr/PO+t3OcqTZjBn+1Jo=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-BJyZPpn2NVuhWqEXWxtQDg-1; Wed,
- 29 Oct 2025 16:34:26 -0400
-X-MC-Unique: BJyZPpn2NVuhWqEXWxtQDg-1
-X-Mimecast-MFC-AGG-ID: BJyZPpn2NVuhWqEXWxtQDg_1761770065
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-mei7mZGAMeO5Nb8olQHO0w-1; Wed,
+ 29 Oct 2025 16:34:29 -0400
+X-MC-Unique: mei7mZGAMeO5Nb8olQHO0w-1
+X-Mimecast-MFC-AGG-ID: mei7mZGAMeO5Nb8olQHO0w_1761770068
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2709180136C; Wed, 29 Oct 2025 20:34:24 +0000 (UTC)
+ id 7FC7D1800D8F; Wed, 29 Oct 2025 20:34:28 +0000 (UTC)
 Received: from localhost (unknown [10.2.17.43])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3920E19560AD; Wed, 29 Oct 2025 20:34:24 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E099B1800579; Wed, 29 Oct 2025 20:34:27 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, hibriansong@gmail.com,
  qemu-block@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  eblake@redhat.com
-Subject: [PATCH v5 05/12] aio: remove aio_context_use_g_source()
-Date: Wed, 29 Oct 2025 16:34:04 -0400
-Message-ID: <20251029203411.445852-6-stefanha@redhat.com>
+Subject: [PATCH v5 07/12] aio: add errp argument to aio_context_setup()
+Date: Wed, 29 Oct 2025 16:34:06 -0400
+Message-ID: <20251029203411.445852-8-stefanha@redhat.com>
 In-Reply-To: <20251029203411.445852-1-stefanha@redhat.com>
 References: <20251029203411.445852-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -70,7 +70,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,91 +86,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need for aio_context_use_g_source() now that epoll(7) and
-io_uring(7) file descriptor monitoring works with the glib event loop.
-AioContext doesn't need to be notified that GSource is being used.
+When aio_context_new() -> aio_context_setup() fails at startup it
+doesn't really matter whether errors are returned to the caller or the
+process terminates immediately.
 
-On hosts with io_uring support this now enables fdmon-io_uring.c by
-default, replacing fdmon-poll.c and fdmon-epoll.c. In other words, the
-event loop will use io_uring!
+However, it is not acceptable to terminate when hotplugging --object
+iothread at runtime. Refactor aio_context_setup() so that errors can be
+propagated. The next commit will set errp when fdmon_io_uring_setup()
+fails.
 
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
 v5:
-- Mention in commit message that fdmon-io_uring.c is the new default [Kevin]
+- Indicate error in return value from function with Error *errp arg [Kevin]
 ---
- include/block/aio.h |  3 ---
- util/aio-posix.c    | 12 ------------
- util/aio-win32.c    |  4 ----
- util/async.c        |  1 -
- 4 files changed, 20 deletions(-)
+ include/block/aio.h | 5 ++++-
+ util/aio-posix.c    | 5 +++--
+ util/aio-win32.c    | 3 ++-
+ util/async.c        | 6 +++++-
+ 4 files changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/include/block/aio.h b/include/block/aio.h
-index 39ed86d14d..1657740a0e 100644
+index 2760f308f5..9562733fa7 100644
 --- a/include/block/aio.h
 +++ b/include/block/aio.h
-@@ -728,9 +728,6 @@ void aio_context_setup(AioContext *ctx);
-  */
- void aio_context_destroy(AioContext *ctx);
- 
--/* Used internally, do not call outside AioContext code */
--void aio_context_use_g_source(AioContext *ctx);
--
+@@ -718,10 +718,13 @@ void qemu_set_current_aio_context(AioContext *ctx);
  /**
-  * aio_context_set_poll_params:
+  * aio_context_setup:
   * @ctx: the aio context
++ * @errp: error pointer
+  *
+  * Initialize the aio context.
++ *
++ * Returns: true on success, false otherwise
+  */
+-void aio_context_setup(AioContext *ctx);
++bool aio_context_setup(AioContext *ctx, Error **errp);
+ 
+ /**
+  * aio_context_destroy:
 diff --git a/util/aio-posix.c b/util/aio-posix.c
-index 9de05ee7e8..bebd9ce3a2 100644
+index bebd9ce3a2..9806a75c12 100644
 --- a/util/aio-posix.c
 +++ b/util/aio-posix.c
-@@ -743,18 +743,6 @@ void aio_context_destroy(AioContext *ctx)
-     aio_free_deleted_handlers(ctx);
+@@ -718,7 +718,7 @@ bool aio_poll(AioContext *ctx, bool blocking)
+     return progress;
  }
  
--void aio_context_use_g_source(AioContext *ctx)
--{
--    /*
--     * Disable io_uring when the glib main loop is used because it doesn't
--     * support mixed glib/aio_poll() usage. It relies on aio_poll() being
--     * called regularly so that changes to the monitored file descriptors are
--     * submitted, otherwise a list of pending fd handlers builds up.
--     */
--    fdmon_io_uring_destroy(ctx);
--    aio_free_deleted_handlers(ctx);
--}
--
- void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
-                                  int64_t grow, int64_t shrink, Error **errp)
+-void aio_context_setup(AioContext *ctx)
++bool aio_context_setup(AioContext *ctx, Error **errp)
  {
+     ctx->fdmon_ops = &fdmon_poll_ops;
+     ctx->epollfd = -1;
+@@ -726,10 +726,11 @@ void aio_context_setup(AioContext *ctx)
+ 
+     /* Use the fastest fd monitoring implementation if available */
+     if (fdmon_io_uring_setup(ctx)) {
+-        return;
++        return true;
+     }
+ 
+     fdmon_epoll_setup(ctx);
++    return true;
+ }
+ 
+ void aio_context_destroy(AioContext *ctx)
 diff --git a/util/aio-win32.c b/util/aio-win32.c
-index c6fbce64c2..18cc9fb7a9 100644
+index 18cc9fb7a9..6e6f699e4b 100644
 --- a/util/aio-win32.c
 +++ b/util/aio-win32.c
-@@ -427,10 +427,6 @@ void aio_context_destroy(AioContext *ctx)
- {
+@@ -419,8 +419,9 @@ bool aio_poll(AioContext *ctx, bool blocking)
+     return progress;
  }
  
--void aio_context_use_g_source(AioContext *ctx)
--{
--}
--
- void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
-                                  int64_t grow, int64_t shrink, Error **errp)
+-void aio_context_setup(AioContext *ctx)
++bool aio_context_setup(AioContext *ctx, Error **errp)
  {
++    return true;
+ }
+ 
+ void aio_context_destroy(AioContext *ctx)
 diff --git a/util/async.c b/util/async.c
-index a736d2cd0d..cb72ad3777 100644
+index 7d06ff98f3..00e46b99f9 100644
 --- a/util/async.c
 +++ b/util/async.c
-@@ -433,7 +433,6 @@ static GSourceFuncs aio_source_funcs = {
+@@ -580,6 +580,7 @@ static void co_schedule_bh_cb(void *opaque)
  
- GSource *aio_get_g_source(AioContext *ctx)
+ AioContext *aio_context_new(Error **errp)
  {
--    aio_context_use_g_source(ctx);
-     g_source_ref(&ctx->source);
-     return &ctx->source;
- }
++    ERRP_GUARD();
+     int ret;
+     AioContext *ctx;
+ 
+@@ -610,7 +611,10 @@ AioContext *aio_context_new(Error **errp)
+      * you add any new resources to AioContext, it's probably best to acquire
+      * them before aio_context_setup().
+      */
+-    aio_context_setup(ctx);
++    if (!aio_context_setup(ctx, errp)) {
++        event_notifier_cleanup(&ctx->notifier);
++        goto fail;
++    }
+ 
+     g_source_set_can_recurse(&ctx->source, true);
+     qemu_lockcnt_init(&ctx->list_lock);
 -- 
 2.51.0
 
