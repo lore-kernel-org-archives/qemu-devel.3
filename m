@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9B6CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907BDCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 07:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE03c-0003S4-Lk; Wed, 29 Oct 2025 02:53:20 -0400
+	id 1vE0Gs-0005Cj-1V; Wed, 29 Oct 2025 03:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE03Z-0003Qj-5p
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:53:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE0Go-0005CR-MV
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 03:06:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE03Q-0002sz-UA
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:53:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE0Gh-00053U-3b
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 03:06:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761720782;
+ s=mimecast20190719; t=1761721607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bB6XHtyLnaCBhd9j2JUE3VkBWD54UKnG5MRs41CJFTU=;
- b=RQ247O4o3pfALt5OiG1iVpjUC6YrR8GQu81JGD3hX8ttZwqhJjp+G9GEg+27Q0NIIuP2Qn
- uaqOKj9pd0B6iBVsOmKBobhoOQSLci1hs51rS9s9KlH1Vt79GwlRcQdoiPgukiMyRgsGlC
- n6DncRmMVHb3Yp8jbFbCW3r+5Av62WU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P+hBtwTnmYEwYpBYKrrVfy4QZP0aNmrBQvOEZ7NvP9M=;
+ b=deC2n5XKHuD3KjgiD2jreYNztytWWOIAqFRMgbVqXlsW3+PEL7jPJ1PmBLHrLD7FmlpAM6
+ dd0hpnUCw2QI8yvIXh2x3Cw9McVw2ordsTTfjj33MYcax3Dkj4vXOOmETvQegSun2T7+uR
+ T03TZrSTSDvO0BKbB3iWsQJrNKTupc0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-48-_yFohV_SPwa_0a3o5RPjFA-1; Wed, 29 Oct 2025 02:53:00 -0400
-X-MC-Unique: _yFohV_SPwa_0a3o5RPjFA-1
-X-Mimecast-MFC-AGG-ID: _yFohV_SPwa_0a3o5RPjFA_1761720779
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4771e696e76so4748325e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 23:53:00 -0700 (PDT)
+ us-mta-216-wsfyayshOCycc_uX_TwRNQ-1; Wed, 29 Oct 2025 03:06:43 -0400
+X-MC-Unique: wsfyayshOCycc_uX_TwRNQ-1
+X-Mimecast-MFC-AGG-ID: wsfyayshOCycc_uX_TwRNQ_1761721602
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477124f7c00so11889185e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 00:06:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761720779; x=1762325579;
+ d=1e100.net; s=20230601; t=1761721602; x=1762326402;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bB6XHtyLnaCBhd9j2JUE3VkBWD54UKnG5MRs41CJFTU=;
- b=D5OVgf7tomGjlXzG/2t+d1TDaIl9iPcp44cOLXBI93trtC4XeEIhwfeQfVSsuUpyMD
- 7lWyrlz7AQ0IXEdGM2/fiqj5h9DmNZwz0+OFu7HV2Hio0RO4T1FDL7XcjsNFUgm2Xa5F
- Zbm3aLTR8/hV0cOlLZBQRVnWgGLzSAd91qq9tTIzgp7jigC6FhbyxC6BYlU3sIWw5TXt
- /As2BXbTYyQJPdCaL8rYTBQliqsgDS77w7ZcUfkdzNL/Epqt8kPuLtmdgQaVYllJRIvw
- 5RMBNYOdq4NmENIvYGG6DcvYZFipPO6fSWNxzKthKamhKJekSxLgcAPwgzlXVHrFpPLj
- aZwQ==
+ bh=P+hBtwTnmYEwYpBYKrrVfy4QZP0aNmrBQvOEZ7NvP9M=;
+ b=EryYDJUsn9Y+UozvnYd84K/7Vx48an+yEzWdgdChJ4lFFg74/MYNgvhY5iV4ouQK/W
+ 61nNV1duKnIPFsBcwUiEFu8wOO9eK1iOAHtZHtOLjPphzXKMWTjnaMGt67W47LAOz7IK
+ 5f0Pt99X13uwPui+svt2yN9xnPyRGdUFl9kO9vue0s9vAckDRJCTKYlbF6+ANBqI4Gcz
+ X9NHw+7OSjpH3Vg4YDEkCbD2ISJOZWNxszwnLn4762A7cH0H3u3MlS/XkK0CZGZMKJm9
+ 1rutnljmr2CK44JwpiFJ8mqBFcL76j9nw6zSNrvwnCsq3VY+g+Kd4N8zN4PWgkrQbASe
+ yk2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxCGm8RjEt7oi3DT4rD5zx/mjrUdSXeV/5/OosHmZJSXDhyrajLLI1q7zGHe1YAIhggGt3p1jSvWVu@nongnu.org
-X-Gm-Message-State: AOJu0Yx+VH2xChEEogsWJBhuXVWj1A849YHdqtXrdhRFchtw67PQOeJF
- +1cjcz0w4hM1M1RwgnPoA9uR32/8G0QYqeDnYopOAliiKzQE9HWDX6HGXBzBp9JDrP8+WNQHumQ
- qAn3MSjTVtdwW6jY8djNto9hAGqMxdHMfR9Xi437uBib8U9ekUPdhCF4j
-X-Gm-Gg: ASbGnct9kRhLJGSdoNl2iYNV+sa87cqjdW9h3JA5Izr2Q1cu5fMPYcloGEeLnK81keP
- Z7GLqPInfVD3x9z6t5BAbvlYlAvkE5JOHwNaliFtrgS0sITqu4ToGl4iDsBeGfGBTA9Lz6OGkep
- sjhTuDj2ghVJJfhuCNN70COLr/lYjJzDwvxCgAGrQlBtueNGSymvbfxrhxdDs9rzldJFm+VOQOH
- 1rnveRSlJ7cMB8w6xOv8UmFjvYvZggIGJj1JM+rduS5FcBpvcPr1eGPkWkQcUI9Y05ki1+N72z4
- 1oHfjDaPApSnO4rR15qMdO+JaKAYjiJFeOC9r2vBRqMtaHPNvq6bTKefuHxU6nvP+u9h3ZQ=
-X-Received: by 2002:a05:6000:1445:b0:428:55c3:ceab with SMTP id
- ffacd0b85a97d-429aefafc11mr1035898f8f.35.1761720779360; 
- Tue, 28 Oct 2025 23:52:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQrzYzGxAjmhrQrc0/jgTpp9VmGpVlrnlTQbXUnb8QaG0JPPJByxulaYHfXSqwPb16G4ckRA==
-X-Received: by 2002:a05:6000:1445:b0:428:55c3:ceab with SMTP id
- ffacd0b85a97d-429aefafc11mr1035885f8f.35.1761720778875; 
- Tue, 28 Oct 2025 23:52:58 -0700 (PDT)
+ AJvYcCX21NC1qZfRxOfB0A16tu207jwIc7oWc3UZKNlmWOF+alv6jr/uDBTBZ/PDPnFGgvB877XCNgiGJ86G@nongnu.org
+X-Gm-Message-State: AOJu0YwcSFks5OctqwX8BQUz3SeBSDM24Hl8xgMrjC+99I9EhXCY+lLD
+ KKcJvKrW2BIHNxoV70WN0eNl+Eev92dCThLwaYyaM3TmsAMHSg4N6CIMd1884DabOLks1elJtL2
+ ljPv/0Ac8lHH3whsF8W4kWBDTeahK0FriZ/6o4M5FfrnQjHq60x3UFTZb
+X-Gm-Gg: ASbGncug2bjDEunqvM/IK2CbEVQ8AqepJAHoosE+BBhO8vCHM3z4czLRUVFOBFJt+R9
+ RejtkCVgaz6gCldHKbAinwm46PKeyir24KaVISgQGDB9i9JtcjPpHdqv2tG+qdHnDrmivC0CVi+
+ z5r5dCZUJw6L9wI9H0Tk+GCODnCVfCyeWXLWL9YU7qDGdZv5TeGEsjnpCpO34BYdSkRIHT9w2m+
+ nIRB/5Lar89w+pHcGLUoWnpJ7EGPXvIVxZRFeItxW5BA6ZfWDmiOHmM7Lz322GLdWs0gqRjiYUt
+ oflmOzXFm77umVSuCbZQXEMy8jEi0ZI+9qle5fQ2z6tugtfveHl8eR0XTNoXVColB8bi6rU=
+X-Received: by 2002:a05:600c:a087:b0:46f:b42e:e367 with SMTP id
+ 5b1f17b1804b1-4771e2639eemr13965175e9.41.1761721601853; 
+ Wed, 29 Oct 2025 00:06:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHP0API+j2IBjmz1UpXHcOBpbsLgcu0HPN4r28dAw4qlh2Zc3NhYrRGHHELjmqA5ZOUSgQjg==
+X-Received: by 2002:a05:600c:a087:b0:46f:b42e:e367 with SMTP id
+ 5b1f17b1804b1-4771e2639eemr13964985e9.41.1761721601492; 
+ Wed, 29 Oct 2025 00:06:41 -0700 (PDT)
 Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952d3532sm25170459f8f.20.2025.10.28.23.52.56
+ 5b1f17b1804b1-4771e387caasm31379235e9.1.2025.10.29.00.06.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 23:52:57 -0700 (PDT)
-Message-ID: <46ac8536-58e9-407e-9ec5-e0e6c67fd80a@redhat.com>
-Date: Wed, 29 Oct 2025 07:52:55 +0100
+ Wed, 29 Oct 2025 00:06:40 -0700 (PDT)
+Message-ID: <4c03b66c-5e0c-46cb-80d3-e91a67d4e532@redhat.com>
+Date: Wed, 29 Oct 2025 08:06:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc/sam460ex: Update u-boot-sam460ex
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Cornelia Huck <cohuck@redhat.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20251028151923.10DBB5972E5@zero.eik.bme.hu>
- <ee77b09f-7a12-4d52-b5f6-2d4b5b711448@linux.ibm.com>
+Subject: Re: [PATCH 1/2] tests/functional: include logger name and function in
+ messages
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20251028182651.873256-1-berrange@redhat.com>
+ <20251028182651.873256-2-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,9 +127,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ee77b09f-7a12-4d52-b5f6-2d4b5b711448@linux.ibm.com>
+In-Reply-To: <20251028182651.873256-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -139,7 +139,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,39 +155,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/10/2025 07.31, Harsh Prateek Bora wrote:
-> + Thomas
+On 28/10/2025 19.26, Daniel P. Berrangé wrote:
+> As we collect debug logs from a wide range of code it becomes
+> increasingly confusing to understand where each log messages comes
+> from. Adding "%(name)s" gives us the logger name, which is usually
+> based on the python __name__ symbol, aka the code module name.
+> Then "%(funcName)s" completes the story by identifying the function.
 > 
-> Hi BALATON,
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/testcase.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> I am unable to fetch it with b4 am, and I do not see it appear on lore also, 
-> not sure if its due to the binary size.
-> 
-> harshpb:patches$ b4 am 20251028151923.10DBB5972E5@zero.eik.bme.hu
-> Looking up https://lore.kernel.org/ 
-> r/20251028151923.10DBB5972E5%40zero.eik.bme.hu
-> Grabbing thread from lore.kernel.org/ 
-> all/20251028151923.10DBB5972E5%40zero.eik.bme.hu/t.mbox.gz
-> Server returned an error: 404
-> harshpb:patches$
-> 
-> I guess you may need to send a PULL SUBSYSTEM req like Thomas did for slof:
-> https://lore.kernel.org/qemu-devel/20251027074404.25758-1-thuth@redhat.com/
-> 
-> Hi Thomas,
-> Is it a known thing to deal with binary updates ?
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index 2c0abde395..6fc6e1ac0a 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -217,7 +217,7 @@ def setUp(self):
+>           self._log_fh = logging.FileHandler(self.log_filename, mode='w')
+>           self._log_fh.setLevel(logging.DEBUG)
+>           fileFormatter = logging.Formatter(
+> -            '%(asctime)s - %(levelname)s: %(message)s')
+> +            '%(asctime)s - %(levelname)s: %(name)s.%(funcName)s %(message)s')
+>           self._log_fh.setFormatter(fileFormatter)
+>           self.log.addHandler(self._log_fh)
+>   
 
-  Hi,
-
-honestly, I can't remember clearly why we introduced these subsystem pull 
-requests in the past ... Maybe it was related to some problems with binary 
-patches, but I think it was rather meant as a staged approach for the case 
-where the maintainer of the firmware is not the main maintainer of the 
-architecture subsystem, so that the main maintainer gets another chance of 
-doing tests before the final pull request to the master branch.
-
-Conny, Alexey, do you remember?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
