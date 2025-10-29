@@ -4,71 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A268CCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D87FCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 19:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEBHz-0003Jk-DC; Wed, 29 Oct 2025 14:52:55 -0400
+	id 1vEBPc-00050W-ES; Wed, 29 Oct 2025 15:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vEBHw-0003JO-SG
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:52:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vEBHl-0008AV-E3
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:52:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761763951;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=9e/hObse3BAo5O3NWyShgmz3j/Vs/xAe45DGh6eVFeA=;
- b=Kso4m8E9WEz6S9FCSML7ZNo6/SwF1oWDaXgVtpms6WDYwlwmnjZ+D02uT37JcS4ZSU8meW
- jwZEIsh/ob1kEDcXd2pG1M1mdANLiYZSj9TtHRvEEUNMDeKF2aaKWHK8yXDYy1Blbpyk7s
- G3oCVOS+X1Ok7UsdhYeSQJ3toK0L+K4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-248-dpF7ytEwMoq7ThCPHvLeJw-1; Wed,
- 29 Oct 2025 14:52:27 -0400
-X-MC-Unique: dpF7ytEwMoq7ThCPHvLeJw-1
-X-Mimecast-MFC-AGG-ID: dpF7ytEwMoq7ThCPHvLeJw_1761763947
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8E44195609D; Wed, 29 Oct 2025 18:52:26 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.43])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA37B30001A7; Wed, 29 Oct 2025 18:52:25 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Peixiu Hou <phou@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH] system/physmem: mark io_mem_unassigned lockless
-Date: Wed, 29 Oct 2025 14:52:24 -0400
-Message-ID: <20251029185224.420261-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vEBPX-00050D-Pc
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 15:00:44 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vEBPL-0000mA-US
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 15:00:41 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-4ed0d6d3144so1294111cf.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 12:00:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761764424; x=1762369224; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EXspraXHM0TPtF5KOO/3bIdmauHuTzRo+mAsbwuwqB0=;
+ b=GdIem8LfYBbRsssP233ElUwrocIj0SBkxU2/e4hq6wf2EW5V61f4kRGnmY8PWiQ5so
+ 51l8t590/Dm8x4v46gvx4XGWHIGxgdFqqDUS9Bf85qwzO/jI/SPexwbn7nmpA8cx1QLA
+ mywzTvSF7DrNv+7K4rtKYP3fnkjbtaGQUuT1iAlNcBr+T/95D1U/eXm3iPE40cjrF6EK
+ 03IPclk/EVpZgTh0wxv467ALvXct8UFb0b9jbUrFH8NHZebaJkZqxlxpsyeYL8LT7wWj
+ V3Zyha4TYNK3MExt9kPSH7AgxN2e7RlxHFoFhXs8CiE8y3ZQ4xx4sSpmtG4ZGwi20Nky
+ VvzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761764424; x=1762369224;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EXspraXHM0TPtF5KOO/3bIdmauHuTzRo+mAsbwuwqB0=;
+ b=lViT91i7H1ztfZXC/dp/O31xmDWP5NcQ6Sv80kF1S52H/WTKWUlN3YD8oAbWxq1Q/A
+ kxPChjkXlhu+qCH1YVEy0Ztr+DMkwOvkOOx1Dtq+GE3o/miHdEE4cWhCGKat8zEmb7D6
+ sXHbiOe5og2thjh4wS/7D6ODi4lyU2Jkzx4241Og6b5/jZEIGEOWIHlDSAlZ7HuXDiiQ
+ GV6XuPAJRgf9bRh8aTwgXVfmpuDWG3tcfSZ51puvDvuvvyt30xYJJq3Ew4RxZN31zGTJ
+ iQHv5wI5hn01v6UwhD3Ng/u/p9HaD6VkRIbtPKU622KrdeeXe9g6b444qE+VDVH84q3O
+ maMA==
+X-Gm-Message-State: AOJu0YwTpKgTJu8rUj1zG94i2KLgVi3tbhn90hfqhlwD+Y1c43vglFVe
+ /m0HfWb7iJER9BHriisO54fl183eZXL9HUxNJ1X5HfmD2VEhdww9+1URdsYUJhz0YyEEYo3uCpq
+ O/GvIaHgvZU9u2ksgRR/mWzHm5LtCtgc=
+X-Gm-Gg: ASbGncsPlbCNr5HIgpY7y8IUInJooW1JcJOlqc+7tWpZVSA8hN8NXeBlI50FM4GcH03
+ 2qFcbkZmKhktFhFYmLxEpymqThqynsIrmWrv9LL1mU1TdtXa/5WjUGXOSvwsUncf0iMps4EmS+W
+ fjSJyfi3ZIy2/4Ltt4OccgFWN7cKMsFzPeYNf0B09fLhfH+2ElObFJQ0Vg08eLYb8IRBCt4kFB6
+ 46T3YOxjVk4/h1MYRFb87d7tmCKSZHFl5rPVip2qHPiyc3+Nd7+sA4nycAKrteb8DQIXXaISNi+
+ 4y+q+S+ytG5sxvEf
+X-Google-Smtp-Source: AGHT+IEvwl9ZaBXLgW6Jp5ufjUJvfE2JG69Ga6dE1zeEiTu7jaenR63Bdvl1/+S1N6+Y+zr2HCLCThIYwGdsoZ30zOs=
+X-Received: by 2002:ac8:7c43:0:b0:4e8:a3aa:7a89 with SMTP id
+ d75a77b69052e-4ed21f4e861mr6352201cf.45.1761764424096; Wed, 29 Oct 2025
+ 12:00:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
+ <20251027151045.2863176-20-marcandre.lureau@redhat.com>
+ <ffab95ce-9b5d-43ea-93a7-611de6044ad8@linaro.org>
+In-Reply-To: <ffab95ce-9b5d-43ea-93a7-611de6044ad8@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 29 Oct 2025 23:00:12 +0400
+X-Gm-Features: AWmQ_bm9VFQyXo1ysdqgFgjThZg-_49lCrPUaj86svbFMyq-tMJzIWSelD-c5CM
+Message-ID: <CAJ+F1C+qnkm=F1q0YSHZ9WbAMcz+-NJo5mzj1b-DcU24dNpRLQ@mail.gmail.com>
+Subject: Re: [PATCH v3 19/35] audio: register and unregister vmstate with
+ AudioState
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexandre Ratchov <alex@caoua.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Jan Kiszka <jan.kiszka@web.de>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, 
+ Thomas Huth <huth@tuxfamily.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ qemu-ppc@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,95 +117,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the Bus Master bit is disabled in a PCI device's Command Register,
-the device's DMA address space becomes unassigned memory (i.e. the
-io_mem_unassigned MemoryRegion).
+Hi
 
-This can lead to deadlocks with IOThreads since io_mem_unassigned
-accesses attempt to acquire the Big QEMU Lock (BQL). For example,
-virtio-pci devices deadlock in virtio_write_config() ->
-virtio_pci_stop_ioeventfd() when waiting for the IOThread while holding
-the BQL. The IOThread is unable to acquire the BQL but the vcpu thread
-won't release the BQL while waiting for the IOThread.
+On Wed, Oct 29, 2025 at 5:51=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 27/10/25 16:10, marcandre.lureau@redhat.com wrote:
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > Proper lifecycle management with QOM state.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   audio/audio.c | 7 ++++++-
+> >   1 file changed, 6 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/audio/audio.c b/audio/audio.c
+> > index 4c3c3fd52f..853930bb48 100644
+> > --- a/audio/audio.c
+> > +++ b/audio/audio.c
+> > @@ -1614,6 +1614,8 @@ static void audio_vm_change_state_handler (void *=
+opaque, bool running,
+> >       audio_reset_timer (s);
+> >   }
+> >
+> > +static const VMStateDescription vmstate_audio;
+> > +
+> >   static void audio_state_init(Object *obj)
+> >   {
+> >       AudioState *s =3D AUDIO_STATE(obj);
+> > @@ -1625,6 +1627,8 @@ static void audio_state_init(Object *obj)
+> >
+> >       s->vmse =3D qemu_add_vm_change_state_handler(audio_vm_change_stat=
+e_handler, s);
+> >       assert(s->vmse !=3D NULL);
+> > +
+> > +    vmstate_register_any(NULL, &vmstate_audio, s);
+>
+> Please avoid legacy APIs:
+>
+> /**
+>   * vmstate_register_any() - legacy function to register state
+>   * serialisation description and let the function choose the id
+>   *
+>   * New code shouldn't be using this function as QOM-ified devices have
+>   * dc->vmsd to store the serialisation description.
+>   *
+>   * Returns: 0 on success, -1 on failure
+>   */
+>
 
-io_mem_unassigned is trivially thread-safe since it has no state, it
-simply rejects all load/store accesses. Therefore it is safe to enable
-lockless I/O on io_mem_unassigned to eliminate this deadlock.
+qdev/Device have vmsd, but not plain Object (or legacy code without object)=
+.
 
-Here is the backtrace described above:
 
-  Thread 9 (Thread 0x7fccfcdff6c0 (LWP 247832) "CPU 4/KVM"):
-  #0  0x00007fcd11529d46 in ppoll () from target:/lib64/libc.so.6
-  #1  0x000056468a1a9bad in ppoll (__fds=<optimized out>, __nfds=<optimized out>, __timeout=0x0, __ss=0x0) at /usr/include/bits/poll2.h:88
-  #2  0x000056468a18f9d9 in fdmon_poll_wait (ctx=0x5646c6a1dc30, ready_list=0x7fccfcdfb310, timeout=-1) at ../util/fdmon-poll.c:79
-  #3  0x000056468a18f14f in aio_poll (ctx=<optimized out>, blocking=blocking@entry=true) at ../util/aio-posix.c:730
-  #4  0x000056468a1ad842 in aio_wait_bh_oneshot (ctx=<optimized out>, cb=cb@entry=0x564689faa420 <virtio_blk_ioeventfd_stop_vq_bh>, opaque=<optimized out>) at ../util/aio-wait.c:85
-  #5  0x0000564689faaa89 in virtio_blk_stop_ioeventfd (vdev=0x5646c8fd7e90) at ../hw/block/virtio-blk.c:1644
-  #6  0x0000564689d77880 in virtio_bus_stop_ioeventfd (bus=bus@entry=0x5646c8fd7e08) at ../hw/virtio/virtio-bus.c:264
-  #7  0x0000564689d780db in virtio_bus_stop_ioeventfd (bus=bus@entry=0x5646c8fd7e08) at ../hw/virtio/virtio-bus.c:256
-  #8  0x0000564689d7d98a in virtio_pci_stop_ioeventfd (proxy=0x5646c8fcf8e0) at ../hw/virtio/virtio-pci.c:413
-  #9  virtio_write_config (pci_dev=0x5646c8fcf8e0, address=4, val=<optimized out>, len=<optimized out>) at ../hw/virtio/virtio-pci.c:803
-  #10 0x0000564689dcb45a in memory_region_write_accessor (mr=mr@entry=0x5646c6dc2d30, addr=3145732, value=value@entry=0x7fccfcdfb528, size=size@entry=2, shift=<optimized out>, mask=mask@entry=65535, attrs=...) at ../system/memory.c:491
-  #11 0x0000564689dcaeb0 in access_with_adjusted_size (addr=addr@entry=3145732, value=value@entry=0x7fccfcdfb528, size=size@entry=2, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x564689dcb3f0 <memory_region_write_accessor>, mr=0x5646c6dc2d30, attrs=...) at ../system/memory.c:567
-  #12 0x0000564689dcb156 in memory_region_dispatch_write (mr=mr@entry=0x5646c6dc2d30, addr=addr@entry=3145732, data=<optimized out>, op=<optimized out>, attrs=attrs@entry=...) at ../system/memory.c:1554
-  #13 0x0000564689dd389a in flatview_write_continue_step (attrs=..., attrs@entry=..., buf=buf@entry=0x7fcd05b87028 "", mr_addr=3145732, l=l@entry=0x7fccfcdfb5f0, mr=0x5646c6dc2d30, len=2) at ../system/physmem.c:3266
-  #14 0x0000564689dd3adb in flatview_write_continue (fv=0x7fcadc0d8930, addr=3761242116, attrs=..., ptr=0xe0300004, len=2, mr_addr=<optimized out>, l=<optimized out>, mr=<optimized out>) at ../system/physmem.c:3296
-  #15 flatview_write (fv=0x7fcadc0d8930, addr=addr@entry=3761242116, attrs=attrs@entry=..., buf=buf@entry=0x7fcd05b87028, len=len@entry=2) at ../system/physmem.c:3327
-  #16 0x0000564689dd7191 in address_space_write (as=0x56468b433600 <address_space_memory>, addr=3761242116, attrs=..., buf=0x7fcd05b87028, len=2) at ../system/physmem.c:3447
-  #17 address_space_rw (as=0x56468b433600 <address_space_memory>, addr=3761242116, attrs=attrs@entry=..., buf=buf@entry=0x7fcd05b87028, len=2, is_write=<optimized out>) at ../system/physmem.c:3457
-  #18 0x0000564689ff1ef6 in kvm_cpu_exec (cpu=cpu@entry=0x5646c6dab810) at ../accel/kvm/kvm-all.c:3248
-  #19 0x0000564689ff32f5 in kvm_vcpu_thread_fn (arg=arg@entry=0x5646c6dab810) at ../accel/kvm/kvm-accel-ops.c:53
-  #20 0x000056468a19225c in qemu_thread_start (args=0x5646c6db6190) at ../util/qemu-thread-posix.c:393
-  #21 0x00007fcd114c5b68 in start_thread () from target:/lib64/libc.so.6
-  #22 0x00007fcd115364e4 in clone () from target:/lib64/libc.so.6
 
-  Thread 3 (Thread 0x7fcd0503a6c0 (LWP 247825) "IO iothread1"):
-  #0  0x00007fcd114c2d30 in __lll_lock_wait () from target:/lib64/libc.so.6
-  #1  0x00007fcd114c8fe2 in pthread_mutex_lock@@GLIBC_2.2.5 () from target:/lib64/libc.so.6
-  #2  0x000056468a192538 in qemu_mutex_lock_impl (mutex=0x56468b432e60 <bql>, file=0x56468a1e26a5 "../system/physmem.c", line=3198) at ../util/qemu-thread-posix.c:94
-  #3  0x0000564689dc12e2 in bql_lock_impl (file=file@entry=0x56468a1e26a5 "../system/physmem.c", line=line@entry=3198) at ../system/cpus.c:566
-  #4  0x0000564689ddc151 in prepare_mmio_access (mr=0x56468b433800 <io_mem_unassigned>) at ../system/physmem.c:3198
-  #5  address_space_lduw_internal_cached_slow (cache=<optimized out>, addr=2, attrs=..., result=0x0, endian=DEVICE_LITTLE_ENDIAN) at ../system/memory_ldst.c.inc:211
-  #6  address_space_lduw_le_cached_slow (cache=<optimized out>, addr=addr@entry=2, attrs=attrs@entry=..., result=result@entry=0x0) at ../system/memory_ldst.c.inc:253
-  #7  0x0000564689fd692c in address_space_lduw_le_cached (result=0x0, cache=<optimized out>, addr=2, attrs=...) at /var/tmp/qemu/include/exec/memory_ldst_cached.h.inc:35
-  #8  lduw_le_phys_cached (cache=<optimized out>, addr=2) at /var/tmp/qemu/include/exec/memory_ldst_phys.h.inc:66
-  #9  virtio_lduw_phys_cached (vdev=<optimized out>, cache=<optimized out>, pa=2) at /var/tmp/qemu/include/hw/virtio/virtio-access.h:166
-  #10 vring_avail_idx (vq=0x5646c8fe2470) at ../hw/virtio/virtio.c:396
-  #11 virtio_queue_split_set_notification (vq=0x5646c8fe2470, enable=0) at ../hw/virtio/virtio.c:534
-  #12 virtio_queue_set_notification (vq=0x5646c8fe2470, enable=0) at ../hw/virtio/virtio.c:595
-  #13 0x000056468a18e7a8 in poll_set_started (ctx=ctx@entry=0x5646c6c74e30, ready_list=ready_list@entry=0x7fcd050366a0, started=started@entry=true) at ../util/aio-posix.c:247
-  #14 0x000056468a18f2bb in poll_set_started (ctx=0x5646c6c74e30, ready_list=0x7fcd050366a0, started=true) at ../util/aio-posix.c:226
-  #15 try_poll_mode (ctx=0x5646c6c74e30, ready_list=0x7fcd050366a0, timeout=<synthetic pointer>) at ../util/aio-posix.c:612
-  #16 aio_poll (ctx=0x5646c6c74e30, blocking=blocking@entry=true) at ../util/aio-posix.c:689
-  #17 0x000056468a032c26 in iothread_run (opaque=opaque@entry=0x5646c69f3380) at ../iothread.c:63
-  #18 0x000056468a19225c in qemu_thread_start (args=0x5646c6c75410) at ../util/qemu-thread-posix.c:393
-  #19 0x00007fcd114c5b68 in start_thread () from target:/lib64/libc.so.6
-  #20 0x00007fcd115364e4 in clone () from target:/lib64/libc.so.6
-
-Buglink: https://issues.redhat.com/browse/RHEL-71933
-Reported-by: Peixiu Hou <phou@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- system/physmem.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index a340ca3e61..1dc2b46e12 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3011,6 +3011,9 @@ static void io_mem_init(void)
- {
-     memory_region_init_io(&io_mem_unassigned, NULL, &unassigned_mem_ops, NULL,
-                           NULL, UINT64_MAX);
-+
-+    /* Trivially thread-safe since memory accesses are rejected */
-+    memory_region_enable_lockless_io(&io_mem_unassigned);
- }
- 
- AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv)
--- 
-2.51.0
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
