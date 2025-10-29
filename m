@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14A5CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DA3CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE8Yj-0005RI-4O; Wed, 29 Oct 2025 11:58:01 -0400
+	id 1vE8ZI-0005zE-Lk; Wed, 29 Oct 2025 11:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8Ya-0005FP-8H
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:57:55 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1vE8Ys-0005nT-4m
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:58:11 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8YR-0003Xf-Tn
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:57:51 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-63b9da57cecso11458219a12.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:57:33 -0700 (PDT)
+ id 1vE8YR-0003YG-UK
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:58:03 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b6d70df0851so6120666b.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:57:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761753451; x=1762358251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761753454; x=1762358254; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=89K9UohZzH0h6Hv05a+atCjJ751UhZo4tfa75Adu0VM=;
- b=MXT7WeFQtgXydoJiN87S/gCj3mgDZbmdCgUb+JXxLQDTktyBqsEJaWygX6A8T+riH0
- Gs044drrdW7jhw3Xjeys5tFHPUUBE2MV1w3VEsOyn4QafN/rSmszY6NtnfunLIn1Pjh8
- xX50UtuzDhZ1LjH5CUILfquXeks/2HwOJ7LXJnmIgP+K8NvR/CU2PT++8STibok4Yy6k
- hPDsaMSGiiCM1aYOavNVNvnq1+1VQB8Mi1sgIzcyZNn0A2dqmumAE2pQMfYV5YU4rmbE
- 62E/XKBeiqYY/AEXHEUL1gRSsmjMYr1JCk7OvwEiw6AqRM3AxEC0ok2kAu/oicIXl2vA
- m2bg==
+ bh=ObwLZIKrEvZcuWDrp2icwNOmPKMnNUeUMaIT0Oe14hw=;
+ b=lFa5LO6S14+n9X61QWEXoV1RQ36YkRyPXaANP5ywXS0Cr/sPM/fCSRG9jDpDk5BBJy
+ 1k5iHjJdHj/hwb6o0IbTHXTwy47v+L/Br6TQ3AejZhmwJN2s5jAt1aqXqXtmO+Z/d3OE
+ M0kiWj7n7MI3z8oyKuLabTHloje6HsrBqtKalPjSG4PvW7ejxjyRps+KsK6NgYUwscLT
+ aCDVYt7QPI+HnG7qGbAsgdM4tjY/XNAO4OgbV6NV1nV63DJouqj4NnU4cfswJZ8dJVWy
+ ydGaqh73lD/km43a00Yk4ERpf7e5PsjRAoY1QNDFY/bjTavpamnLse9x3jm8vrnojrE/
+ ELPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761753451; x=1762358251;
+ d=1e100.net; s=20230601; t=1761753454; x=1762358254;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=89K9UohZzH0h6Hv05a+atCjJ751UhZo4tfa75Adu0VM=;
- b=goeXcgV9z1Z0rgftFi6yQcs5qMy2FofFE/Ad/JNAHju6AN70mIPLEIypAbu0QVN6O7
- pFTywniAszlfFYA/W9MTHo/6h+2l/sjMFgcxOo42VM0SahdW5rtRfNi8v+lUD070wQ5y
- hurefd3UlOit7fwNW9QlfI+kUktJsNAWZ5kpeXJFnHH6miwG6smeio16AQuQ6TsX2DQj
- 6I4NZnqvBjHthuFt5WUHEeT52tZg/8DSrSTsPzK7i+tD/7OTHqs4tTCo33DOI6Z+Rf/Q
- ELvUoMsJzIH2FWr3B+DK18mLWMJeKtVQLLCfHfq/x5W6GkrCPN/ef7GcpXJ/ad/9m4U4
- 85eA==
-X-Gm-Message-State: AOJu0YxAhp90tnxIyhRiBNgwpyNj+CBDcLBOuT7TSyVAsimhiv56b1is
- 69BOvJcNNdCA45QR7Jck68o6qEksK7FtSEcUE1ymUIUDmR5zlGbYqs7mcJv5/eRcN/s=
-X-Gm-Gg: ASbGncuaOXs2MbLxUwaEsBEUkdjcArBAwz/d+6ncScyp+vhnwDZhzHnV2Qyimz0zA0f
- mXwtwx+o/bXYOxhFqXkFB7HtUa6r4Zi5vbSgeCEjoIEGsF5cPaykiD32FvWORHwTQ8JWi9yKUMl
- wp1IePnxYMI6exadUy6Gh3zOvNhP9PehwY9MpMQXC/Rfw1XXuPEyXqcCotWTS/5wM5jPzYgd0Vn
- 1/DyU34s36y4mRN+YK5K2T3u9BJrpyvKw5S6CkqjatJ21Z+rt3BBeaIr4yTnmT/ic8eo2YLBCRg
- +0XZ8bzzEwAxvnToqHb2bu6Dy0zSKLQfr5kDGtQFQuml45QgQXETPH2JrQaOUAnN8Cv5kLIMoCQ
- mnNnSlFjntXMZ2hSQBCu9QEARh68zyIRF9RauD3C0QmEmDxxT5rCPaddapYnpc5/nIaHCxvbBIm
- 4U
-X-Google-Smtp-Source: AGHT+IEdRGuVDjp+89hHJhLbme6fxra2eMMvOY4Rvjg5qASqG4xWdLo7iYrljRz2UrF1o6SdpJn+PQ==
-X-Received: by 2002:a05:6402:40c3:b0:63c:58b6:25ef with SMTP id
- 4fb4d7f45d1cf-64044246f86mr2958856a12.20.1761753451449; 
- Wed, 29 Oct 2025 08:57:31 -0700 (PDT)
+ bh=ObwLZIKrEvZcuWDrp2icwNOmPKMnNUeUMaIT0Oe14hw=;
+ b=jFUVAif+8AcT6xhifptUDpLah1KV8To4AwEabXbful4FUgilKN9yq6y5FeQq3vc0lF
+ 4AaehzfPdqS+zjXrCEU97xe7K/1FIKegYAU4KLsZjYlk/Y2MplVtPOsyml/nqUb58JQL
+ nIGUA3+mDW75gyMwNeGkk5Z7bM5uZZGKoM3M+lzspIUiUfOtrkWqzpwbueH5tdZRALF2
+ MOBDJD7bKPNN4soEh5Mc+Qgp4PgHUhf2hUK0pQKBcphtB7VklNTGRWRQHhD6Yd7tP/Ba
+ q3E+vT8W1fQqoNrAB8uE8sG0ZCfjmI4lTCJzSt/bVqXSiIqk7q0LT64pSxF5pCziDvBd
+ buPA==
+X-Gm-Message-State: AOJu0Yyg2dB0UhyeKrVyTcc7Zd2ZkRaJadZi2G3zp705sBq+4nX+upRm
+ hJ5nuQ2fzP+1rewrSWkyKW1otnCPDa59eHPSuvXpWPWpWoZJmeW8KtpCs9DovDe+z9ZTWfxJ0Gg
+ HR7zreFw=
+X-Gm-Gg: ASbGncs1pqbOQVhCcGm1k5LsSvMLFBu/sPrOCfnNaSzXj7n9mLOLZJwtlsC/eZRvbyh
+ 7GIMgy1i7CENRIgh89g278whtZGoLG3MU98lSiMB8g5WwW9QHLXEQipMuadV45UbGwe3efgx3IH
+ MKKCUeRtFUWqFJpkBnGzo/8uC7RJ4L72J6D2aeNAGXD+/dir6xMIL6lavr8Ww7dXO3dxHq3jEt1
+ 0G+XcHRLSscQ97L1VJ+2bFvrbECg0r14tK96XOHsZa+jZxqKq8311YOfdLeZWVEqgJAZJ5uLI9/
+ 6pFIyK7U6rm4oZ0U2yrpaRDSEnp/RkBkCNu6B2adF6lw2Kvrv7oq8SlUjttNmKHQYvhdQOyxf+l
+ p1xl32kF8N/wO24sZHE8sp66B75HC81IUl5Q12JK4yAhV7C+3WwJI8ruvERU2UdXVsHD53dUpu8
+ HB
+X-Google-Smtp-Source: AGHT+IFy2mD1I+kh3rUvLv8rKFFdvHT/VpfbJVaiwtXxxx3DiZkZDvOIgps5s+pl/0LsPaayx1gDJQ==
+X-Received: by 2002:a17:907:94c3:b0:b0e:d477:4972 with SMTP id
+ a640c23a62f3a-b703d3840dcmr341769366b.25.1761753454030; 
+ Wed, 29 Oct 2025 08:57:34 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e7ef6c129sm12372234a12.3.2025.10.29.08.57.29
+ a640c23a62f3a-b6d85369697sm1510782666b.26.2025.10.29.08.57.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 29 Oct 2025 08:57:30 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6B3BC60E7B;
+ by draig.lan (Postfix) with ESMTP id CC1D060F82;
  Wed, 29 Oct 2025 15:50:48 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PULL 26/35] target/sparc: call plugin trap callbacks
-Date: Wed, 29 Oct 2025 15:50:35 +0000
-Message-ID: <20251029155045.257802-27-alex.bennee@linaro.org>
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PULL 30/35] tests: add test for double-traps on rv64
+Date: Wed, 29 Oct 2025 15:50:39 +0000
+Message-ID: <20251029155045.257802-31-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251029155045.257802-1-alex.bennee@linaro.org>
 References: <20251029155045.257802-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,72 +112,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Julian Ganz <neither@nut.email>
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+We do have a number of test-case for various architectures exercising
+their interrupt/exception logic. However, for the recently introduced
+trap API we also want to exercise the logic for double traps on at least
+one architecture.
 
-This change places hooks for SPARC (32bit and 64bit) targets. We treat
-any interrupt other than EXTINT and IVEC as exceptions as they appear to
-be synchroneous events.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Julian Ganz <neither@nut.email>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251027110344.2289945-27-alex.bennee@linaro.org>
+Message-ID: <20251027110344.2289945-31-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index fdcaa0a578b..b29f693a6bf 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -24,6 +24,7 @@
- #include "accel/tcg/cpu-ldst.h"
- #include "exec/log.h"
- #include "system/runstate.h"
-+#include "qemu/plugin.h"
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 3ca595335dd..d9c0036eb4b 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -24,5 +24,11 @@ EXTRA_RUNS += run-test-mepc-masking
+ run-test-mepc-masking: test-mepc-masking
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
  
- static const char * const excp_names[0x80] = {
-     [TT_TFAULT] = "Instruction Access Fault",
-@@ -174,4 +175,10 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-         env->qemu_irq_ack(env, intno);
-     }
- #endif
++EXTRA_RUNS += run-plugin-doubletrap
++run-plugin-doubletrap: doubletrap
++	$(call run-test, $<, \
++	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $<.pout \
++	  $(QEMU_OPTS)$<)
 +
-+    if (intno == TT_EXTINT) {
-+        qemu_plugin_vcpu_interrupt_cb(cs, env->regwptr[9]);
-+    } else {
-+        qemu_plugin_vcpu_exception_cb(cs, env->regwptr[9]);
-+    }
- }
-diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
-index 96ef81c26cd..60ab0478fc6 100644
---- a/target/sparc/int64_helper.c
-+++ b/target/sparc/int64_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/helper-proto.h"
- #include "exec/log.h"
- #include "trace.h"
-+#include "qemu/plugin.h"
- 
- #define DEBUG_PCALL
- 
-@@ -256,6 +257,15 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-     }
-     env->npc = env->pc + 4;
-     cs->exception_index = -1;
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/doubletrap.S b/tests/tcg/riscv64/doubletrap.S
+new file mode 100644
+index 00000000000..b61089c9c1c
+--- /dev/null
++++ b/tests/tcg/riscv64/doubletrap.S
+@@ -0,0 +1,73 @@
++	.option norvc
 +
-+    switch (intno) {
-+    case TT_EXTINT:
-+    case TT_IVEC:
-+        qemu_plugin_vcpu_interrupt_cb(cs, tsptr->tpc);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs, tsptr->tpc);
-+    }
- }
- 
- trap_state *cpu_tsptr(CPUSPARCState* env)
++	.text
++	.global _start
++_start:
++	# Set up vectored interrupts
++	lla	t0, trap
++	add	t0, t0, 1
++	csrw	mtvec, t0
++
++	# Enable sw interrupts
++	csrrsi	zero, mie, 0x8
++	csrrsi	zero, mstatus, 0x8
++
++	# Engage the double trap: we trigger an machine-level software
++	# interrupt, which will trap to an illegal instruction
++	lui	t1, 0x02000
++	li	t0, 1
++	sw	t0, 0(t1)
++
++	# If we still not went out via the software interrupt route after a
++	# short while, we failed the test.
++	lui	t0, 0x1
++0:
++	addi	t0, t0, -1
++	bnez	t0, 0b
++	j	fail
++
++trap:
++	j	illegal_insn # Exceptions
++	j	fail # Supervisor software interrupt
++	j	fail
++	.insn	i CUSTOM_0, 0, x0, x0, 0 # Machine software interrupt
++	j	fail
++	j	fail # Supervisor timer interrupt
++	j	fail
++	j	fail # Machine timer interrupt
++	j	fail
++	j	fail # Supervisor external interrupt
++	j	fail
++	j	fail # Machine external interrupt
++	j	fail
++	j	fail # Counter overflow interrupt
++	j	fail
++	j	fail
++
++illegal_insn:
++	# Check whether we really got an illegal instruction
++	csrr	t0, mcause
++	li	t1, 2
++	bne	t0, t1, fail
++	li	a0, 0
++	j	_exit
++fail:
++	li	a0, 1
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.47.3
 
