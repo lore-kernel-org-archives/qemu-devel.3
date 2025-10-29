@@ -4,84 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E886CCCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B907FCCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE6YD-0007wo-Rk; Wed, 29 Oct 2025 09:49:22 -0400
+	id 1vE6YI-0007zZ-KJ; Wed, 29 Oct 2025 09:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1vE6Xw-0007lJ-F7
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:49:05 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6Xy-0007ld-H7
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:49:06 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1vE6Xp-0003gl-BE
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:49:04 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-63c09ff13aeso12648234a12.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 06:48:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6Xq-0003hu-AT
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:49:06 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47721743fd0so4091795e9.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 06:48:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1761745732; x=1762350532; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BHfrAOQKlWUNOOdiZnp3sKxU6aOyXzVnVWPBMBRYcrw=;
- b=GjSZ6adbReSVRxrWOQj0bKSWpjBiGK5JKhbSdZK9tzLXdtqK/5ebdFZ2NvIa4fc96K
- O8KNQtEPHC/euewDPi4fo7hkazkwJ4BSth31jg5l5KZZReetenbHvibg+Y8h3SWTCcC5
- kSDqLvO8W6QThO2a+PziiHiXcgBlDe6H8DbAs7B4Ry5f0jsGx6w2ygcE6ukX6f8jywr0
- +htxM3Tlk1a6ErZqTq59cohRUfRUtExoDKByXSIBBefgpUWc5+aeXyTc8dm1jU0yci9L
- 4NvC8O6vTWC7mKwr9Lg4NcD65tlAuOxjt/Zo4wNssDwyXebvFdqodhqaybPTm2bOxpOl
- CAYg==
+ d=linaro.org; s=google; t=1761745734; x=1762350534; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=m4FI7htY6fyZ9UuoHzS9j6zJSgM8JX/GsD7HtcGfcFQ=;
+ b=AkbhhVWbskujT+1PxEk4JfMBTVyDHwSKcj4LLBKo4YJc6b+7lLLaqQDtCwyUB4Up/9
+ 8lF0aOVoIVzZaQHK2HCenpGioiXD8iA3yxq5TXTmkVh9S+2BmN6PBdUtV5J7pXZcKLkk
+ w/8idWZ3z2KObWPWxcAtuVks6vs+uQnWAwR3mQDGxhvWP97uBk63q+RpPOOhzGekiTCq
+ evDd8hhxvgAuqpGrGaxVRvBRSQxU7W/XzSevdQ3eiKfd6p0220BEimU6N7z0YBJ7t6Qo
+ CtyiZPpC7xenVvvmEjNVDSrrGbyvVSkLjFPtO4ni76pbIWDh4IDvHAUrGHKPDY0o40Kk
+ gyzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761745732; x=1762350532;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BHfrAOQKlWUNOOdiZnp3sKxU6aOyXzVnVWPBMBRYcrw=;
- b=tiADzHYPYmF9Szhb7xnnof2lwF/RENXJtZB4Mby51h1MphGZsJVMjdnDQQVJOzRite
- Ovs2DK5dBHgDYUNcwrWu9DE/Amd7eld97Kp3gVTOFmtbHoicythIOoGpkv7fHzbpfqeT
- EzRnZO+gsU22LVnR+4ZUjYaiLq2o1RS64w6PCyUxyEy825OA6LEjGZGp46DPd7tARs5B
- rzq5mbDWxLLxoqmq1FJ46Nakvghp9jQeGlg5Atx8BsFv/xUX6ERRReD4MF1i5qc85aIS
- H+IJ+tJHXjAGHzU+aOONeX5q4C7wpt5izRSYA2xf2mmokqebeiVp9a3a53A1CW6n4ruk
- GTuw==
-X-Gm-Message-State: AOJu0YyDwfj7x5JxDc1yNPJCgVDm0hskYsl27Kv7ZVqvUDgUqk0ReJZ8
- 2WrBXIzJR5+MvecgmqR9+ce41n0DzlC5InQedLUb7GcjrIiCbONkrt4WaBALGgjEUguoTIm8Jzr
- P2wMQ4dZmOr4cAcfYFbIkC4BAISOxG8hQvv2jcJvy
-X-Gm-Gg: ASbGncsBXMUehL3H1qn2ckE/lgwXeFIc6+9WOm8iuyCzkrrWXvL1uJy6p8Oyf0ojF6g
- yzGSl4ymAHLXlZEBuXlKjO5V+uHuMBS4jnmJ6yJOhu1mXvfQh0GWi7hd74RfxC14nAkM2HEAKad
- iqpbY0ZDQad2lVt2D+CMf3CKUq+6jpQ/WvyU66DRDoZ8Y4hF27W+4ZcnZ3wrUiKW3CC4i3vNx+8
- XrHjsq9pMdIfKtDSe5irm8x1yfgBiZh15OBgMbQ+hkJEKdjpMT4JvJO/ccV5uyQNbRmX6/M3tcS
- 6V2UPzMQYFISfllzKE0=
-X-Google-Smtp-Source: AGHT+IH0P8XBdMiW4xFRyWKtnzSNN7tVEdZvbaKSU4BUZ5kOSlfK8+npX6ZudLB+X3jnEU/ZD+LIuK4g6TWUj+BHjzU=
-X-Received: by 2002:a05:6402:13cf:b0:637:e57d:c21 with SMTP id
- 4fb4d7f45d1cf-640441ce207mr2431064a12.3.1761745732208; Wed, 29 Oct 2025
- 06:48:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761745734; x=1762350534;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=m4FI7htY6fyZ9UuoHzS9j6zJSgM8JX/GsD7HtcGfcFQ=;
+ b=TVgO8PlXvp4CFxi5IXVc3GYobOLp/4TEa+0Et7+l9DHHpcTaZmDqVoevaPul+LbI1o
+ Dr7iBblBd6/kTrNh6azAB2+FN8NjwwR61bYKR0DJhB/DohClAwqT9JCJHBHSwJpq1Ly8
+ eTNb039kc+XcCsYEVU8HCJILwCwiefp5dO7QgPuVRNhxzlK1GNTFbyihQZGxLL1BFyzO
+ BbYgHsunZ0ej/Uo9U3CiAtSsWp9aO2oGQIaYtnmKXzqLW7jeKKnYXVAqewo88eTPEY/q
+ NnJbcgr2Db2lVQ0GHylTaLqHFjQ203TEppOkxfr4D+R/cEURjKqo1YdI9pp/g91ZsfIF
+ bm2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbkXEfNOjzLr6fNcGChG+lmYXPHLXYRPsr3Dl45R0cET9gS1nbmihJRsm5bN8gGw88lGeicq9CvW4R@nongnu.org
+X-Gm-Message-State: AOJu0YxyVx7gvyMFJl3jPnm//R/00RzEhCNfDKKFXKyXIEhVtlIVpH1b
+ /Hn+Ewpg3KTSsMLYGBGaybVpm6xYnR8SoAUP5e62UC7CsyKMrCHh/PEIaoBtz9gdtGo=
+X-Gm-Gg: ASbGnctfVJkaluWGWRUa/HVAzOVDlTroudyFrAloNHgjXsb6mKANQ0uXvDINtsEgpsj
+ +cnSO07FtGeIisfD6shbzVUIxWN8+YuoB9VZGzenNZOheRopOEqrU2ymA/ocHXZ+kyqKixgjSte
+ dBFpxaMxYR0iZKnJxp6B6A9bGfuyjwwdwbsKzkjuvJbhKizcFkXe46toDXFycxawMzC8WPPoheh
+ 7Zx42cA8npgVmyDFeideTkjw7xwZGmPprflrTgsH7wnEsPTiDF1VTMekcdFKfism95iZCAQZSEw
+ FA8QCw3Vw0w9PxDpTRoowaK6K1Yvb+iSWAYz9E9LUv8NkiS6jSd8rBZ3Bu+Hb74nTL7Sv/el4sn
+ 7/vSktQfAFEeE2Sx98y2mM1hydoSSLY/wFO0dqlUA0MvbtvUvL6SFMbjXtzvjxfCqdJflFydoxS
+ A9AtNjC+8DOIPCeqo1ufvNAh7l8KAyfMe65BAabWZ2jJM=
+X-Google-Smtp-Source: AGHT+IGITpEhoQK2d72zOHA7jX4ykmByEFPMEURlWXsfenTSz8ElaEP2jkYIYthvqniNVxqnZ1ANPg==
+X-Received: by 2002:a05:600c:46cc:b0:471:95a:60c9 with SMTP id
+ 5b1f17b1804b1-4771e19ac2dmr30581595e9.8.1761745733951; 
+ Wed, 29 Oct 2025 06:48:53 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47718493c61sm45224905e9.4.2025.10.29.06.48.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Oct 2025 06:48:53 -0700 (PDT)
+Message-ID: <3a096bf8-863f-4d58-a60e-b0979d73d185@linaro.org>
+Date: Wed, 29 Oct 2025 14:48:51 +0100
 MIME-Version: 1.0
-References: <20250903075721.77623-1-chigot@adacore.com>
- <20250903075721.77623-3-chigot@adacore.com>
- <aPp2eRW7gQfv4hT7@redhat.com>
-In-Reply-To: <aPp2eRW7gQfv4hT7@redhat.com>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Wed, 29 Oct 2025 14:48:41 +0100
-X-Gm-Features: AWmQ_bneHG3Y0lJwx7gvurF4FFdmegWnAuqudZ-kBS3-hSq7lHcUXcNXOOfK-SM
-Message-ID: <CAJ307Eg_YngaeBukZjpr81iGJCm+ycwZHj_aPuxU_8tuSC9MPw@mail.gmail.com>
-Subject: Re: [PATCH 2/5] vvfat: move fat_type check prior to size setup
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=chigot@adacore.com; helo=mail-ed1-x531.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 21/35] audio: remove some needless headers
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Jan Kiszka <jan.kiszka@web.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
+ <vr_qemu@t-online.de>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
+References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
+ <20251027151045.2863176-22-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251027151045.2863176-22-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,53 +120,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 23, 2025 at 8:40=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
-:
->
-> Am 03.09.2025 um 09:57 hat Cl=C3=A9ment Chigot geschrieben:
-> > This allows to handle the default FAT size in a single place and make t=
-he
-> > following part taking care only about size parameters. It will be later
-> > moved away in a specific function.
-> >
-> > Setting a floppy disk of 1MB is no longer possible as it was a side
-> > effect of passing "fat-type=3D12". To be precise there were three cases=
-:
-> >  - fat-type undefined (aka default): a fat12 2MB disk
-> >  - fat-type=3D16: a fat16 2Mb disk
-> >  - fat-type=3D12: a fat12 1Mb disk
->
-> That's quite a strange interface!
->
-> If we're touching it anyway, I would change it to make the more common
-> format (1.44 MB) the default for FAT12 and make the 2.88 MB FAT12 floppy
-> temporarily unavailable and later require an explicit size. This way
-> both sizes would still be available using the fat-type.
+On 27/10/25 16:10, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   audio/audio.h       | 1 -
+>   audio/audio.c       | 3 ---
+>   audio/dbusaudio.c   | 2 --
+>   audio/dsoundaudio.c | 1 -
+>   audio/mixeng.c      | 4 +++-
+>   audio/noaudio.c     | 2 --
+>   audio/wavaudio.c    | 3 ---
+>   audio/wavcapture.c  | 1 -
+>   8 files changed, 3 insertions(+), 14 deletions(-)
 
-I'm a bit hesitant to change the default behavior as people might be
-using it without clear knowledge of it. True, "floppy" is probably not
-a widely used feature but still.
-Do QEMU have some specific guidelines when changing such default
-behavior ? Adding a warning ? Or just a comment in the changelog would
-be enough ?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> Please say 1.44 MB and 2.88 MB in the commit message rather than 1MB (or
-> even 1Mb, which might mean megabit). There were other sizes like 1.2 MB
-> that are closer to 1 MB, so it's better to avoid that confusion.
->
-> > Now, that fat-type undefined means fat-type=3D2, it's no longer possibl=
-e
->
-> s/2/12/
->
-> > to make that size distinction. It will be added back a bit later,
-> > through the size parameter.
-> >
-> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
->
-> The code looks good, apart from the change I suggested above (making
-> 1.44 MB the default for FAT12).
->
-> Kevin
->
 
