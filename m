@@ -4,107 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7F3CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2736CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE6Rx-0004Tq-PG; Wed, 29 Oct 2025 09:42:53 -0400
+	id 1vE6TY-0004yQ-9W; Wed, 29 Oct 2025 09:44:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6Rv-0004TM-7f
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:42:51 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1vE6TV-0004wO-Q0
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:44:29 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vE6Rp-0002N6-QX
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:42:50 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-475dbb524e4so30451225e9.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 06:42:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1vE6TP-0002jl-8K
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 09:44:29 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-63c2d72582cso11573825a12.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 06:44:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761745362; x=1762350162; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yLXEqp9AMFVQkqy41V1LQbG8mPckdyIcZyzJQ1+3qok=;
- b=n7HXwOVz2ewJMYu+me/nAqZsYVbF4VS4Nk9/ouFcIo0TezgMxY89bEX8/2H0K+dqSW
- p5fKS5cvYgbgJHeT9YrMQpsucCch0E6XDOCKf7/5LTZs6XGD4WOnPKBSdal7ahp3e8lh
- 9j2AxwMh71PnN47D6yi6xgdiA0QHYTuHrGzpAos62Rwx9KZ648KAmkTzsEfTlQQRV2XO
- vxTpILKVVDh+IzLUNAJ+BG+GaG589JgEJ2RsLvjfJVpqVtr7zcmBoMGJg5wmneiDI64O
- cxGxWimcCpP5KmuGKg7O8Zi45MuAr5Ntvb77DPcJy0ChcHiExhaM3XcbVVyR785fyG0Q
- xYJA==
+ d=adacore.com; s=google; t=1761745458; x=1762350258; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bndmBYkqvlVjgTRbYRQiJEYS+aYsxp3enG0L5CPA9jY=;
+ b=Zc+fdG66BTeMdW0ALwKgXSf4G94XmGznAtM3m5gwpxAHYjry+CbEn8mbhxGS7AOmB3
+ UO6w89BM7Zi21gDD7P6hvMllj66ndcQuSzCmdhrRJSQvjgVo2cG9pLW+rJtGs0pLhjMX
+ YhTUyH2JoVTwUhyToO87P5HKX/LvnGdwpRYbSj5l/iEPr63hh4I+dMA5ON94058RaHGA
+ 7QwAQziK9y9ZOO1w/73d7DEt0BjI9rAbX1F5snXMROTmduDW9jPy6GpE0MY+4wlcCWKg
+ Bqjg0ZNJvK/erhixPQ069uub9s3mJGwlrRGpEnbMgRjEBLFftC8wvlFKczZr5QbUda83
+ /i9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761745362; x=1762350162;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yLXEqp9AMFVQkqy41V1LQbG8mPckdyIcZyzJQ1+3qok=;
- b=owcnTmtzfUbofPmnVGPy9j9JGcrQTrOaUgkOrNulS9UlYVQS6wRZCF5fQnCkU3k+8i
- cH/B93ZprVyTCh6bLrcaUXL5KdqvqrU+9gG8cWjbp03IuIuntzqAlzEdL3wv/PMhFQjV
- roVDvgTCvz3SXF1r/YL2KZ4xw8J36BScRE0k8k5ogF+YpI6kz7p6WocGO86nH5e4K9Gf
- XVAm5DQDgXzxeZ5I6yj7xC6gbDKYs+DC/uq61iLdxLKjgtjY1oXvH2wJqpxIdE7L3JQb
- Q1A1eltuAHNDrr8rHjSxySpBRJ35pf+fw6hfhF1OP00nKbvH1qN6Og+j5T4Hq59oFbyR
- oohw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQEZW/D2Cd7jNVEI0gDu0gzF86zMxzVheIPbXg89XnIzQBeNckLy/RRBIttE6g6e1pW0EQnzLe/DvM@nongnu.org
-X-Gm-Message-State: AOJu0YwQYdvGF6Fd6IB2uDDWkb/8HaTHiipYA50q/NtXvDTkiSS5zNx9
- +hzZVJJ9I2ySjAcd6V0DoqNyKtZG5CMVpJ6pbGToz2htzW28RrRek7LIHuDGrFjE374=
-X-Gm-Gg: ASbGncupi8KCPVViv/I/IWu62bwCQ0e79Aj6bTnSwfcEKf84SnMDZaE9LXCxt4ZecaE
- lrGGlJ6WsIaDeuHgQg4o9XAyTJqSLWdjE49O3HeyU1uNoRMn9ADHAsDVv3rTqN7LpJwEYkeFZE4
- E+AIRERGL370jYsCHAYF53zmk18jTB7JCbzmegOAVFEg1/j2MY19AfdoNCSY7SgvCQON3nOFGPH
- DkePE6kIQ4jkmU2FiwnooG+OcLd36c9xud58r1rYCbprtU9c/pBRqHqPjQ8m34FvzvTeSeTe8fi
- lpYAbNB3w/P5OyhqqbHFWvMIGHR1f1gO89ZO4j2RAbfIr8+gRQrQJ82tPxxDuhDdkG2hejwf7lh
- 4IDmLCs7di9kvMo6WeyPREro+UMtbG8AfR5yvGLkuGshII39/5m/OQz07igEL3HneRbjUjSdp5Z
- wCQAxOoPCXZPDCmNztnwbttVf6APnDbMboLgakx9TjOGA=
-X-Google-Smtp-Source: AGHT+IE1hmcoBZoZObbarq/8wPi5BLyKPTgD2lU/IyYdYctNJopLmVgddbjhI6ZCMqV0GJ+8k5oJOw==
-X-Received: by 2002:a05:600c:4e09:b0:46e:206a:78cc with SMTP id
- 5b1f17b1804b1-4771e1e1079mr32781795e9.28.1761745360541; 
- Wed, 29 Oct 2025 06:42:40 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952da645sm25223925f8f.30.2025.10.29.06.42.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 06:42:39 -0700 (PDT)
-Message-ID: <2c4470f9-e71f-4c2b-acdb-860648c2e571@linaro.org>
-Date: Wed, 29 Oct 2025 14:42:38 +0100
+ d=1e100.net; s=20230601; t=1761745458; x=1762350258;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bndmBYkqvlVjgTRbYRQiJEYS+aYsxp3enG0L5CPA9jY=;
+ b=g+6X/tDzui9o6I5F7lj5uDa8dlTn89N1BvQpHZKlfuOTF5Aj5/Ueswtebl/qD/ege4
+ qAX8RxSEFzb2zx/bh3cp7Gw1dMtz5vnR+21hFUnZtypx8nOZSVemyq8Pzyts/CXexOjm
+ uP8f0u8D/bncnjB3uzdmkI00svKoz7qwJOv3MDsCWJuAfkbvJrvAnfhz8QApphpKTf1t
+ NOiZ0yIUXsoCBjIQ2rnLQkccUoMSBWyNxp9tExDzs6w38IRvInaov5SHMeGnF0l78xQb
+ 3it03ShncuBJ4EmSm8A/XiTTgtmgwUlTAGKPrWTIVRjRGs7DGAtXNAAGjvhfzx/4QCct
+ WVEg==
+X-Gm-Message-State: AOJu0YypUM1lTUPr1jj0TuMUKiUZq0zIbV4rxRevuenJ8uq4l10fLZXF
+ FTM+MyfLoDiN7BOnAkuzJirC4+2wLObgKdbiF9/gY2hQLV47bM6t6khMzZCcrGPi+J9ivb0Dp3t
+ Y1LSwHX8YvTJ3LodHB14FB7Jj/3LlwumpJV0mGFr0
+X-Gm-Gg: ASbGncv7uglijQPUiI24MzgyM9rLY8i/G6R1FM3jmouhxMk/sl77ovOpSX46MFArIip
+ QSrLhBGiIJRdx/ZRiwsJEy8boTHEXbudfh+aGwyBM+S+odl0a1BxuzfMy9YFIf8a3nmzBd2wlMD
+ DRrPVPUmFOdvo/YLUp62VL51aRECq5qW/okQiimZr13KW8ZxjbG9PUELdOEGVbGiFFoYiqz2RL9
+ gnsDc/UKuU3fyz0QeuhS01Y4PSG738LObxZdTC56sd9WPIo9fHq4t4QF4A5XvVod0PiMfhyLPIB
+ IMuv2Zj+BWNLMCkvOQY=
+X-Google-Smtp-Source: AGHT+IEMusiH1lzAB4BWJlrkkeBDoTTNX8Z93x+j6+APT5i3JUVZwAEXdKy+M1hrXTWVXRCKPKcUQrhnJtGtDr1mecw=
+X-Received: by 2002:a05:6402:1d4d:b0:634:ab34:ed40 with SMTP id
+ 4fb4d7f45d1cf-64043f3e702mr2088711a12.0.1761745458108; Wed, 29 Oct 2025
+ 06:44:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/35] audio/dsound: simplify init()
-Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Jan Kiszka <jan.kiszka@web.de>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
-References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
- <20251027151045.2863176-14-marcandre.lureau@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027151045.2863176-14-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <20250903075721.77623-1-chigot@adacore.com>
+ <20250903075721.77623-2-chigot@adacore.com>
+ <aPpyAzn7abZZ5WNv@redhat.com>
+ <CAJ307Egx3tcg6BLpZFV+7PcbiqMp6pADTz0nPTPLppFodifYyw@mail.gmail.com>
+ <aQHy7ERcW289V9E1@redhat.com>
+In-Reply-To: <aQHy7ERcW289V9E1@redhat.com>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Wed, 29 Oct 2025 14:44:07 +0100
+X-Gm-Features: AWmQ_bk2FNypncC4zjHLfxEqgihej8z7Z6OdbSXIuTbtKuID4AGAKOrImSwbeao
+Message-ID: <CAJ307Ehx0qSTVWz+fF5X52bjZLebc+Ssv69moBGyzV9s9PnKFQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] vvfat: introduce no-mbr option
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=chigot@adacore.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,17 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 16:10, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Use dsound_audio_fini() on error & fail if the capture failed to
-> initialize too.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   audio/dsoundaudio.c | 29 +++++++++++------------------
->   1 file changed, 11 insertions(+), 18 deletions(-)
+On Wed, Oct 29, 2025 at 11:56=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
+e:
+>
+> Am 29.10.2025 um 09:37 hat Cl=C3=A9ment Chigot geschrieben:
+> > On Thu, Oct 23, 2025 at 8:21=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> w=
+rote:
+> > >
+> > > Am 03.09.2025 um 09:57 hat Cl=C3=A9ment Chigot geschrieben:
+> > > > This option when set prevents a master boot record (MBR) to be
+> > > > initialized. This is mandatory as some operating system don't recog=
+nized
+> > > > mounted disks if a MBR is present.
+> > > >
+> > > > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+> > >
+> > > Can we actually give an example of such an OS in the commit message?
+> > >
+> > > > ---
+> > > >  block/vvfat.c | 16 +++++++++++++++-
+> > > >  1 file changed, 15 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/block/vvfat.c b/block/vvfat.c
+> > > > index 814796d918..0220dd828b 100644
+> > > > --- a/block/vvfat.c
+> > > > +++ b/block/vvfat.c
+> > > > @@ -1082,6 +1082,11 @@ static QemuOptsList runtime_opts =3D {
+> > > >              .type =3D QEMU_OPT_BOOL,
+> > > >              .help =3D "Make the image writable",
+> > > >          },
+> > > > +        {
+> > > > +            .name =3D "no-mbr",
+> > > > +            .type =3D QEMU_OPT_BOOL,
+> > > > +            .help =3D "Do not add a Master Boot Record on this dis=
+k",
+> > > > +        },
+> > >
+> > > Let's keep option names positive to avoid double negations like
+> > > 'no-mbr=3Dfalse'. We can have an 'mbr' option that defaults to true. =
+Or in
+> > > fact, maybe calling it 'partitioned' would be easier to understand.
+> > >
+> > > You need to update BlockdevOptionsVVFAT in qapi/block-core.json, too,=
+ to
+> > > make the new option work with -blockdev. You should update the
+> > > description for @floppy there, too, because it says that hard disks a=
+re
+> > > always partitioned.
+> > >
+> > > It should also be added to vvfat_strong_runtime_opts because the valu=
+e
+> > > of this option changes the data that the guest sees.
+> >
+> > Just to keep you updated, I've seen your comments. I'm just waiting to
+> > see where the discussion of patch 5 leads before pushing v2.
+>
+> Yes, that makes sense. So this means that for all the other patches, you
+> agree with my comments and it's clear to you what to change in v2?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Globally yes. I'm still unsure about patch 2 (I'll answer directly on
+this patch). But for patch 1 and, yes clearly.
 
