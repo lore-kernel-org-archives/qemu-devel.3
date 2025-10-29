@@ -4,71 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D8DCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC08CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE72I-0004jW-5p; Wed, 29 Oct 2025 10:20:26 -0400
+	id 1vE75Y-00066t-1C; Wed, 29 Oct 2025 10:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE72E-0004Qp-UY
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:20:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE720-0007g3-9w
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:20:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761747599;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=JBiBPLoIzqLkUEZ894NYeeJibtODPnN1r8S6jr9Pl5c=;
- b=GuVg3kPuOGG+XzDsTCIl5hz8IlhqNF0X7+5sDXxrze3XFXCWEli8CKxqfPXua3WXzY6Vw9
- 5MEGwws4BxkyDRDM5mUL54bVM3aGV8LlCxCXd8WAEWloRBNl305LQpqydeiYBmj2KRNPtV
- 9A4P7+icwF9fZFN0nR0sswmi5/5I7uM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-ssX4cHDkOYSGoYYcUUZLBw-1; Wed,
- 29 Oct 2025 10:19:54 -0400
-X-MC-Unique: ssX4cHDkOYSGoYYcUUZLBw-1
-X-Mimecast-MFC-AGG-ID: ssX4cHDkOYSGoYYcUUZLBw_1761747592
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF4BC1956050; Wed, 29 Oct 2025 14:19:51 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.98])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 55B2430001A2; Wed, 29 Oct 2025 14:19:47 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-ppc@nongnu.org,
-	Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] tests/functional/ppc64: Fix class names to silence pylint
- warnings
-Date: Wed, 29 Oct 2025 15:19:46 +0100
-Message-ID: <20251029141946.86110-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vE75Q-00066K-Lj
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:23:41 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vE75M-0008Kc-QQ
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:23:39 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-427084a641aso5506746f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 07:23:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761747809; x=1762352609; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FTNe6gnfG2cpAQOiw+oJAVOw6pV994804oSGHalc8e0=;
+ b=On21YVEJJiUciUC7m47m1rSQVwY8SD8FbNXcMvqgCrpFYFFl4du56YjBvp1B5+R2pP
+ Humk3jVb+P3axs04A6Oj1LsUJVOAeZi6Obn6hteUa+C9QEwN7wJALFKns3YGpE+FQz3H
+ 1i0JV3Ng75vvSj71qTuMSvOfuBbsqtKzcL80ZZecAjwuHp5YgScbHYq07qGFIdMYNvhj
+ 6Yy80RvDNfy67XdYOLYZSuxKH9YRvEEGeBrXVNRfDIY6QcOj2jF5EkhmCvgZ+Mu6kR0M
+ Eb9JNg6xG4LjpglEU259TlHZxXna45QIKuJwwa3WKQaqeSpDSdNkyW/lByaYd/u8vFV2
+ HUNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761747809; x=1762352609;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FTNe6gnfG2cpAQOiw+oJAVOw6pV994804oSGHalc8e0=;
+ b=d45zdCfTAEfdDvJnDqBr/5h5IuN5iU3TeX2gDjMvNs5s3VNqqI9NKdIGFK1PlQGURH
+ tMKxASeo/aejAPIHi2djvCEb7OOHA/XQyS51gC74d/Ijb05JeLfMtBb2QRlr0R4QRups
+ zJm7vI00EL6PytFt3GbChLEYOqIt5D7Ja7/BW5dWQLpcX7G4j05KrYy65q/n/BncLooE
+ jSqaYKZk1TGWzoOzfD1pdOnEuMKSoZ+h7vWg0dtk9VKWxgGJIDBxgcS12Wp6QcHKa8BS
+ VRjHtkRYTZSzI4bifQjgs8da23MDWVP3OjzUfXogR8R9gAwLVWcdBJ4OoC9FPcJ5fNmM
+ aQYg==
+X-Gm-Message-State: AOJu0Yw9hOi9X2zsjoDBs+/IaKKPjUDx74F4lBhlzwKEENwyFioWHaxR
+ FIyZqrxRgGY/RrTH+otfJRACabjx/5cp6bWuClWXRLOAnP9XcDCsGLoXOsNF/w==
+X-Gm-Gg: ASbGncuyMP+3UeytwIHy/C4JaJOGvUqch3PnTklUQQiXH415upFNL/THzzXx70Pd4aM
+ AQmRtG4r6z3BHvpdLnZsgatCEm12QAmU0Qd+VFtmuxo7wKmre3xVUJTsoWvEhHk/4jZ2C3pJUsK
+ a9vYRTJsh2W6kWrGoSO9h/FP8PcoAxYvRDgNLv6pEES6QQwEvXbh6PQHVYFpkG5UVhrWX6GQ5Rf
+ PkoSxgPuWXUKGZFswNf5jt4ryJIOU+rrK3xb7UgDV/f8KomjVYZPXSWCWrNjNy4pAV+NFMHEJ+B
+ P7eygrQFJUaajXtArKygadA/XpkYT2TRyxKdffY+CmLgZcVOORSmMYQPkKQPeJIbVPXr3tz9NnF
+ v3KNOf1H1qLUWtuElhVxZ2GmX4wnQ9vFatqD68a2wYXbxAhERFZqugx3jYkD5wj6P2t+9mRU/03
+ pfn0RcvQHo3DLuWvZusCSYxQfEieKvU11u
+X-Google-Smtp-Source: AGHT+IF8OK+bx7nuhKhlPR1C4M19AriVl2FHj6ZRJ/APYHdveoeSzbITN416YWrBbPU2nl+gErbCgg==
+X-Received: by 2002:a05:6000:25c8:b0:425:855c:5879 with SMTP id
+ ffacd0b85a97d-429aef85215mr3017283f8f.15.1761747808425; 
+ Wed, 29 Oct 2025 07:23:28 -0700 (PDT)
+Received: from archlinux (pd95edc07.dip0.t-ipconnect.de. [217.94.220.7])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952ca569sm26038747f8f.12.2025.10.29.07.23.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Oct 2025 07:23:27 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v2 0/2] KVM Support for imx8mp-evk Machine
+Date: Wed, 29 Oct 2025 15:23:09 +0100
+Message-ID: <20251029142311.2986-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.51.2
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,94 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
-
-Pylint complains about inconsistent CamelCase names here, so let's
-slightly change the names to make pylint happy again.
-
-In the sam460ex test, also split a line where pylint was complaining
-about it being too long.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/ppc/test_74xx.py            | 2 +-
- tests/functional/ppc/test_sam460ex.py        | 5 +++--
- tests/functional/ppc64/test_powernv.py       | 2 +-
- tests/functional/ppc64/test_pseries.py       | 2 +-
- tests/functional/ppc64/test_reverse_debug.py | 2 +-
- 5 files changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/tests/functional/ppc/test_74xx.py b/tests/functional/ppc/test_74xx.py
-index 5386016f261..219c7991aca 100755
---- a/tests/functional/ppc/test_74xx.py
-+++ b/tests/functional/ppc/test_74xx.py
-@@ -10,7 +10,7 @@
- from qemu_test import QemuSystemTest
- from qemu_test import wait_for_console_pattern
- 
--class ppc74xxCpu(QemuSystemTest):
-+class Ppc74xxCpu(QemuSystemTest):
- 
-     timeout = 5
- 
-diff --git a/tests/functional/ppc/test_sam460ex.py b/tests/functional/ppc/test_sam460ex.py
-index 31cf9dd6de8..024406d155c 100755
---- a/tests/functional/ppc/test_sam460ex.py
-+++ b/tests/functional/ppc/test_sam460ex.py
-@@ -8,10 +8,11 @@
- from qemu_test import exec_command_and_wait_for_pattern
- 
- 
--class sam460exTest(LinuxKernelTest):
-+class Sam460exTest(LinuxKernelTest):
- 
-     ASSET_BR2_SAM460EX_LINUX = Asset(
--        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc_sam460ex-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main'
-+         '/buildroot/qemu_ppc_sam460ex-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
-         '6f46346f3e20e8b5fc050ff363f350f8b9d76a051b9e0bd7ea470cc680c14df2')
- 
-     def test_ppc_sam460ex_buildroot(self):
-diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
-index 9ada832b781..0ea6c93e428 100755
---- a/tests/functional/ppc64/test_powernv.py
-+++ b/tests/functional/ppc64/test_powernv.py
-@@ -10,7 +10,7 @@
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import wait_for_console_pattern
- 
--class powernvMachine(LinuxKernelTest):
-+class PowernvMachine(LinuxKernelTest):
- 
-     timeout = 90
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
-diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
-index 67057934e8d..7840c4e3ff8 100755
---- a/tests/functional/ppc64/test_pseries.py
-+++ b/tests/functional/ppc64/test_pseries.py
-@@ -10,7 +10,7 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- 
--class pseriesMachine(QemuSystemTest):
-+class PseriesMachine(QemuSystemTest):
- 
-     timeout = 90
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
-diff --git a/tests/functional/ppc64/test_reverse_debug.py b/tests/functional/ppc64/test_reverse_debug.py
-index 69551fb84df..4eef779936d 100755
---- a/tests/functional/ppc64/test_reverse_debug.py
-+++ b/tests/functional/ppc64/test_reverse_debug.py
-@@ -18,7 +18,7 @@
- from reverse_debugging import ReverseDebugging
- 
- 
--class ReverseDebugging_ppc64(ReverseDebugging):
-+class ReverseDebuggingPpc64(ReverseDebugging):
- 
-     @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
-     def test_ppc64_pseries(self):
--- 
-2.51.0
-
+This series adds KVM support to the imx8mp-evk machine, allowing it to run=
+=0D
+guests with KVM acceleration. Inspiration was taken from the virt machine. =
+This=0D
+required a device tree quirk for the guest clock to be kept in sync with th=
+e=0D
+host. Without this quirk the guest's clock would advance with factor <host=
+=0D
+system counter> / 8Mhz.=0D
+=0D
+Testing done:=0D
+* Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under=0D
+  `qemu-system-aarch64 -M virt,secure=3Don,virtualization=3Don,gic-version=
+=3D4 \=0D
+  -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx8mp-evk=
+ \=0D
+  -accel tcg -smp 4". Observe that the `date` command reflects the host's d=
+ate.=0D
+=0D
+v2:=0D
+* Mention various tradeoffs in the board documentation (Peter)=0D
+* Accommodate for single-binary (Peter, Pierrick) by having CPU defaults=0D
+=0D
+Bernhard Beschow (2):=0D
+  hw/arm/imx8mp-evk: Add KVM support=0D
+  hw/arm/imx8mp-evk: Fix guest time in KVM mode=0D
+=0D
+ docs/system/arm/imx8mp-evk.rst | 18 ++++++++++++++++++=0D
+ hw/arm/fsl-imx8mp.c            | 33 ++++++++++++++++++++++++++++-----=0D
+ hw/arm/imx8mp-evk.c            | 21 +++++++++++++++++++++=0D
+ hw/arm/Kconfig                 |  3 ++-=0D
+ 4 files changed, 69 insertions(+), 6 deletions(-)=0D
+=0D
+-- =0D
+2.51.2=0D
+=0D
 
