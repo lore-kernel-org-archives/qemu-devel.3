@@ -4,64 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F0BCCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 11:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1EBCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 11:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE41E-0000f0-Uy; Wed, 29 Oct 2025 07:07:09 -0400
+	id 1vE4Fg-0005ad-3d; Wed, 29 Oct 2025 07:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vE414-0000bK-Um; Wed, 29 Oct 2025 07:06:59 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vE410-0004aq-54; Wed, 29 Oct 2025 07:06:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4cxPYY2P6vzHnGh3;
- Wed, 29 Oct 2025 11:05:53 +0000 (UTC)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id B6E22140417;
- Wed, 29 Oct 2025 19:06:45 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 29 Oct
- 2025 11:06:44 +0000
-Date: Wed, 29 Oct 2025 11:06:43 +0000
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-CC: <qemu-devel@nongnu.org>, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>, <qemu-block@nongnu.org>,
- =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- <qemu-arm@nongnu.org>, <qemu-s390x@nongnu.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, "Song
- Gao" <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>
-Subject: Re: [PATCH v3 13/25] hw/acpi: Use memory_region_get_address()
-Message-ID: <20251029110643.0000361f@huawei.com>
-In-Reply-To: <20251028181300.41475-14-philmd@linaro.org>
-References: <20251028181300.41475-1-philmd@linaro.org>
- <20251028181300.41475-14-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vE4Fe-0005a6-2K
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 07:22:02 -0400
+Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vE4FW-00078F-IS
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 07:22:01 -0400
+Received: by mail-il1-x12a.google.com with SMTP id
+ e9e14a558f8ab-430b45ba0e4so35247015ab.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 04:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761736908; x=1762341708; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=iZ6bWxM6COZrVavPABH85e4M314ppYX/3vwalEvZLvA=;
+ b=YyQXc4ReBe4W6u9nUeTn53oA9hzCpF8IwRpXT41GVpUkakMcmrYe6oRfVoJQu3Ef0U
+ iJbzFV6sZ9TEC8IGBkc3qAKt2TykB7hbvZN3sf2gPzGiUvgr0b9C5SXeU747cX+JKSoA
+ MhH+iFf4mTDRRF7XcjfmguLgqfAF510iDNQxbpVc0LcOOsmSY2QJrPPR2qIqDaG9Z7Qw
+ GyTCNOHVTurmXMHh0kT3N64cquZofA1rl46QJvXWn/nH6AuHaptl9/9jvbyMlGLzpHK1
+ O/JqPLXyx73bJpuQAIx/rS9a9bTkUSnVIb0p84UeAsHOly8ixobcxsxyo/OQr1mUJ4je
+ SwKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761736908; x=1762341708;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iZ6bWxM6COZrVavPABH85e4M314ppYX/3vwalEvZLvA=;
+ b=h99qIMIb61R+IOw0aWtRDdtspmGHA2+b6N8Lxw2X1ChXG3QcWVhZlAVB3i9nHwp303
+ 0NiuVxlYSJNIemnPbXE1q5npk2uF28GBy3KjCFmf3k16pTfRDyvOzDOLqwQJ2vuQ7gzb
+ CYJecrT+6k4XwLhekGpJBMO5O5osv8/Zi2QfXkKYjBmIV7SxDyvKnp3NfTRemVurq/IL
+ ykW/jHdTGqDHcwxHcz48Uck6NaYcTheY48zM0gDrijHQ5sup5fVXzTPXBECawwYKFwAD
+ U6S9yoHFeYAVUJbxQ0hZqJvch5j/azWQfFk1TfRGPTbyXTluul2BO1wpQRXKduWpEhKS
+ mIIw==
+X-Gm-Message-State: AOJu0YzuK8MSS4LZjpuJzRnxDnOrahP5MFkBxo/HqVCUcb50vDfWLXmm
+ rYAdSQheuwpu+LCyj2Lgfapq7LbfKyssSatOJm47U0S9JSR1QkUeVQHKR1CVeofr5jVLP+RzXaD
+ X+/1AXLw=
+X-Gm-Gg: ASbGncuHJPUSpx0Kp27hk42xkCmbmLxfsxtCvkRRGhS8O8BG+PKIEdHjxk5kCWF3D7M
+ j+y76lSFxJiBdsvZLeHVhTz5eM+mZATffE66EAzYWO1/lAqSPvLQ1ABs8J1NeMSsWUo32noNtRp
+ RVX2XQbeNLiMCZf03x4Us1TEBOixetouwKGwJmFNfv4OINk5yrZv6EQ6g+iMMUMrZIt2KpshFXh
+ ySk3+H7SIJnQEgHVxCnQIfaQDOFbk4O7fOo5VkEIZYq9tD+K1MCUNR5YYtqEsfc0iklKqUFvM30
+ gC/aNuBG+XC4PxQFLi4E6rL1vbjZt30u+nsHSLqtyBZZM5EVlLh9THQGvXNWmB/wMPHFSBE1goM
+ jxnZiK6j2IhyGjBbr83lN0hwMdP9huN+NXaiaz5eCohC4kHBT+MecNA3D7U6V/ywtoYZEya/P4T
+ f6FlaxLNbnhl4bR40ZQdlh8xfbeSTu4Mps7Ey7Ifdcud2++iOIJXLeHXqapTGhHZN0Pg==
+X-Google-Smtp-Source: AGHT+IEw7Z0Ps426XBRGW2mYJqBnzodRwi24NBduuHGGF14WeTBp3uYazKZeTmurAx7b8+vP0VL4DA==
+X-Received: by 2002:a05:6e02:470b:b0:430:c49d:750c with SMTP id
+ e9e14a558f8ab-432f9055864mr27291645ab.27.1761736907685; 
+ Wed, 29 Oct 2025 04:21:47 -0700 (PDT)
+Received: from [10.240.88.227] ([172.56.16.75])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-5aea78e1a56sm5414738173.18.2025.10.29.04.21.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Oct 2025 04:21:47 -0700 (PDT)
+Message-ID: <0e6949c7-9282-43a9-95da-746d0148ba0d@linaro.org>
+Date: Wed, 29 Oct 2025 12:21:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/7] Trivial patches for 2025-10-29
+To: qemu-devel@nongnu.org
+References: <20251029090148.648212-1-mjt@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251029090148.648212-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,65 +100,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Oct 2025 19:12:47 +0100
-Philippe Mathieu-Daud=E9 <philmd@linaro.org> wrote:
+On 10/29/25 10:01, Michael Tokarev wrote:
+> The following changes since commit bc831f37398b51dfe65d99a67bcff9352f84a9d2:
+> 
+>    Merge tag 'hw-misc-20251028' ofhttps://github.com/philmd/qemu into staging (2025-10-28 11:48:05 +0100)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+> 
+> for you to fetch changes up to 7c7089321670fb51022a1c4493cbcc69aa288a0f:
+> 
+>    linux-user: Use correct type for FIBMAP and FIGETBSZ emulation (2025-10-29 11:58:55 +0300)
+> 
+> ----------------------------------------------------------------
+> trivial patches for 2025-10-29
 
-> MemoryRegion::addr is private data of MemoryRegion, use
-> memory_region_get_address() to access it.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
-> ---
->  hw/acpi/cxl.c                  | 8 ++++++--
 
-Acked-by: Jonathan Cameron <jonathan.cameron@huawei.com> #for CXL
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
->  hw/i386/acpi-build.c           | 8 +++++---
->  hw/loongarch/virt-acpi-build.c | 4 ++--
->  3 files changed, 13 insertions(+), 7 deletions(-)
->=20
-> diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
-> index 77c99dfb184..92c032851cc 100644
-> --- a/hw/acpi/cxl.c
-> +++ b/hw/acpi/cxl.c
-> @@ -105,6 +105,7 @@ static void cedt_build_chbs(GArray *table_data, PXBCX=
-LDev *cxl)
->      PXBDev *pxb =3D PXB_DEV(cxl);
->      SysBusDevice *sbd =3D SYS_BUS_DEVICE(cxl->cxl_host_bridge);
->      MemoryRegion *mr =3D sysbus_mmio_get_region(sbd, 0);
-> +    hwaddr container_base_addr =3D memory_region_get_address(mr->contain=
-er);
-> =20
->      /* Type */
->      build_append_int_noprefix(table_data, 0, 1);
-> @@ -125,7 +126,9 @@ static void cedt_build_chbs(GArray *table_data, PXBCX=
-LDev *cxl)
->      build_append_int_noprefix(table_data, 0, 4);
-> =20
->      /* Base - subregion within a container that is in PA space */
-> -    build_append_int_noprefix(table_data, mr->container->addr + mr->addr=
-, 8);
-> +    build_append_int_noprefix(table_data,
-> +                              container_base_addr
-> +                              + memory_region_get_address(mr), 8);
-> =20
->      /* Length */
->      build_append_int_noprefix(table_data, memory_region_size(mr), 8);
-> @@ -154,7 +157,8 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml =
-*cedt)
->      build_append_int_noprefix(table_data, 0, 4);
-> =20
->      /* Base HPA */
-> -    build_append_int_noprefix(table_data, fw->mr.addr, 8);
-> +    build_append_int_noprefix(table_data,
-> +                              memory_region_get_address(&fw->mr), 8);
-> =20
->      /* Window Size */
->      build_append_int_noprefix(table_data, fw->size, 8);
+r~
 
 
 
