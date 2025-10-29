@@ -4,64 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A90CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B716CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxuy-0006pg-BG; Wed, 29 Oct 2025 00:36:17 -0400
+	id 1vDxwL-00079B-P1; Wed, 29 Oct 2025 00:37:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDxur-0006ox-Tv
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 00:36:10 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vDxwJ-00077l-EV; Wed, 29 Oct 2025 00:37:39 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDxui-00045m-HA
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 00:36:09 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59T4ZnZu038343
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 29 Oct 2025 13:35:49 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4ZCJqyQWMhw2pEUPsChUbdA5eVVoYaw9ntuaPvVa3qI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:From:To;
- s=rs20250326; t=1761712550; v=1;
- b=k2DjAX4r/0927GnmKP64BCA9M8Zbncr7tyIFJHfRV8zyHgqb+EQDCy+E/LHauxWl
- WY6yQ2SoMqmXAvd3oha64B2roXoumkGVBdblDP9RV2vG3puiGQlzryvIQG+uWn0S
- zbeREBw0nP7V2LFkuRqHoGmzprThLt6fRqBA9VBAmjDu22UcHaheqrNIp6g/NoME
- wIAR1/EVEZ2Aj/1xM6YFsSI/ahcpVOtOnt7KXz2bt1rxFRw0GoGsS0lXCMAG8l4w
- PI2XZzR2iLZWqGF6fJLUCYvg/lHP1FiwzpvL9YN4+KHNeAqTa7U2mLY5FsIFdgBS
- uVdH9+oLUIWQm9Rr3XfknA==
-Message-ID: <7e46c5de-3227-4b24-ab95-8fb9575fe7ed@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 29 Oct 2025 13:35:49 +0900
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vDxwB-0004M3-7y; Wed, 29 Oct 2025 00:37:39 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 29 Oct
+ 2025 12:37:11 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Wed, 29 Oct 2025 12:37:11 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v2 01/17] hw/arm/aspeed: Split Quanta-Q71L machine into a
+ separate source file for maintainability
+Date: Wed, 29 Oct 2025 12:36:47 +0800
+Message-ID: <20251029043710.1486573-2-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
+References: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] memory: Make FlatView root references weak
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
- <aQE_M1qsr78RrQaw@x1.local>
- <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-In-Reply-To: <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,191 +62,239 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/29 13:06, Akihiko Odaki wrote:
-> On 2025/10/29 7:09, Peter Xu wrote:
->> On Mon, Oct 27, 2025 at 02:56:53PM +0900, Akihiko Odaki wrote:
->>> docs/devel/memory.rst says "memory_region_ref and memory_region_unref
->>> are never called on aliases", but these functions are called for
->>> FlatView roots, which can be aliases.
->>
->> IMHO the quoted doc was in a special context, where it was talking about
->> the example of address_space_map() holding adhoc refcounts of a MR, in
->> which case "memory_region_ref and memory_region_unref are never called on
->> aliases" was correct..
->>
->> The full context:
->>
->>    ...
->>    If you break this rule, the following situation can happen:
->>    - the memory region's owner had a reference taken via 
->> memory_region_ref
->>      (for example by address_space_map)
->>    - the region is unparented, and has no owner anymore
->>    - when address_space_unmap is called, the reference to the memory 
->> region's
->>      owner is leaked.
->>    There is an exception to the above rule: it is okay to call
->>    object_unparent at any time for an alias or a container region.  It is
->>    therefore also okay to create or destroy alias and container regions
->>    dynamically during a device's lifetime.
->>    This exceptional usage is valid because aliases and containers only 
->> help
->>    QEMU building the guest's memory map; they are never accessed 
->> directly.
->>    memory_region_ref and memory_region_unref are never called on aliases
->>    or containers, and the above situation then cannot happen.  Exploiting
->>    this exception is rarely necessary, and therefore it is discouraged,
->>    but nevertheless it is used in a few places.
->>    ...
->>
->> So I can't say the doc is wrong, but maybe it can be at least be 
->> clearer on
->> the scope of that sentence.. indeed.
-> 
-> I think statement "it is okay to call object_unparent at any time for an 
-> alias or a container region" can be corrected. Practically, developers 
-> will want call object_unparent() only when:
-> - the memory region is not added to a container and
-> - there is no manual references created with memory_region_ref().
-> 
-> These two conditions can be satisfied by auditing the device code that 
-> owns the memory region instead of multiple devices.
-> 
->>
->>>
->>> This causes object overwrite hazard in pci-bridge. Specifically,
->>> pci_bridge_region_init() expects that there are no references to
->>> w->alias_io after object_unparent() is called, allowing it to reuse the
->>> associated storage. However, if a parent bus still holds a reference to
->>> the existing object as a FlatView's root, the storage is still in use,
->>> leading to an overwrite. This hazard can be confirmed by adding the
->>> following code to pci_bridge_region_init():
->>>
->>> PCIDevice *parent_dev = parent->parent_dev;
->>> assert(!object_dynamic_cast(OBJECT(parent_dev), TYPE_PCI_BRIDGE) ||
->>>         PCI_BRIDGE(parent_dev)->as_io.current_map->root != &w- 
->>> >alias_io);
->>
->> What's interesting is I found PCIBridge.as_io / PCIBridge.as_mem are not
->> used anywhere..  because it looks like the bridge code uses MRs to 
->> operate
->> rather than address spaces.
->>
->> Does it mean we can drop the two ASes?  Then if they're the only 
->> holder of
->> the refcounts of these problematic MRs, does it solve the problem too 
->> in an
->> easier way?  Maybe there're other issues you want to fix too with this 
->> patch?
-> 
-> Apparently we cannot drop the ASes. See commit 55fa4be6f76a ("virtio- 
-> pci: fix memory_region_find for VirtIOPCIRegion's MR"), which introduced 
-> them.
-> 
-> I don't know any other existing devices affected by this FlatView 
-> behavior, but it is also difficult to show that they are *not* affected 
-> because it requires traversing MemoryRegion graphs that span across 
-> several devices.
-> 
-> We will also need to update the documentation for future devices, but it 
-> is not trivial either as the condition where aliases are referenced from 
-> FlatView is complex.
-> 
-> Considering that, I think this patch is a pragmatic solution that 
-> ensures correctness of object_unparent() on aliases.
-> 
->>
->>>
->>> This assertion fails when running:
->>> meson test -C build qtest-x86_64/bios-tables-test \
->>>      '--test-args=-p /x86_64/acpi/piix4/pci-hotplug/no_root_hotplug'
->>>
->>> Make the references of FlatView roots "weak" (i.e., remove the
->>> reference to a root automatically removed when it is finalized) to
->>> avoid calling memory_region_ref and memory_region_unref and fix the
->>> hazard with pci-bridge.
->>>
->>> Alternative solutions (like removing the "never called on aliases"
->>> statement or detailing the exception) were rejected because the alias
->>> invariant is still relied upon in several parts of the codebase, and
->>> updating existing code to align with a new condition is non-trivial.
->>>
->>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> ---
->>>   system/memory.c | 8 ++++++--
->>>   1 file changed, 6 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/system/memory.c b/system/memory.c
->>> index 8b84661ae36c..08fe5e791224 100644
->>> --- a/system/memory.c
->>> +++ b/system/memory.c
->>> @@ -266,7 +266,6 @@ static FlatView *flatview_new(MemoryRegion *mr_root)
->>>       view = g_new0(FlatView, 1);
->>>       view->ref = 1;
->>>       view->root = mr_root;
->>> -    memory_region_ref(mr_root);
->>>       trace_flatview_new(view, mr_root);
->>>       return view;
->>> @@ -301,7 +300,6 @@ static void flatview_destroy(FlatView *view)
->>>           memory_region_unref(view->ranges[i].mr);
->>>       }
->>>       g_free(view->ranges);
->>> -    memory_region_unref(view->root);
->>>       g_free(view);
->>>   }
->>> @@ -1796,6 +1794,12 @@ void memory_region_init_iommu(void *_iommu_mr,
->>>   static void memory_region_finalize(Object *obj)
->>>   {
->>>       MemoryRegion *mr = MEMORY_REGION(obj);
->>> +    gpointer key;
->>> +    gpointer value;
->>> +
->>> +    if (g_hash_table_steal_extended(flat_views, mr, &key, &value)) {
->>> +        ((FlatView *)value)->root = NULL;
->>> +    }
->>
->> This is definitely very tricky.. The translation path (from
->> AddressSpaceDispatch) indeed looks ok as of now, which doesn't looks at
->> view->root.. however at least I saw this:
->>
->> void flatview_unref(FlatView *view)
->> {
->>      if (qatomic_fetch_dec(&view->ref) == 1) {
->>          trace_flatview_destroy_rcu(view, view->root);
->>          assert(view->root);                            
->> <-------------------
->>          call_rcu(view, flatview_destroy, rcu);
->>      }
->> }
->>
->> I wonder how it didn't already crash.
-> 
-> In case of pci-bridge, I guess flatview_unref() is synchronously called, 
-> but memory_region_unref(view->root) is not because of flatview_destroy() 
-> is delayed with RCU.
-> 
->>
->> The other stupid but working solution is we can always make the 6 aliases
->> to not be reused, IOW we can always use dynamic MRs considering
->> pci_bridge_update_mappings() should be rare?
-> 
-> Perhaps we may introduce memory_region_new_alias() (that calls 
-> object_new()) and allow calling object_unparent() only for aliases 
-> created with the function.
-Speaking of alternative solutions, I think the best solution in long 
-term is to use functions that dynamically update aliases such as 
-memory_region_set_alias_offset() instead of dynamically calling 
-object_unparent().
+This commit moves the Quanta-Q71L BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2400_quanta-q71l.c.
 
-But that also requires considerable amount of effort, so I think this 
-patch still makes sense as an immediate solution. Perhaps we may also 
-expand the documentation to tell developers to use the dynamic update 
-functions so that the number of object_unparent() calls on aliases will 
-decrease over time and we can eventually remove the weak reference trick.
+This refactor continues the modularization effort for Aspeed platform
+support, placing each board’s logic in its own dedicated source file.
+It improves maintainability, readability, and simplifies future
+development for new platforms without cluttering aspeed.c
 
-Regards,
-Akihiko Odaki
+Key updates include:
+
+- Removed QUANTA_Q71L_BMC_HW_STRAP1 macro definition from aspeed.c.
+- Moved quanta_q71l_bmc_i2c_init() I²C initialization logic into the new file.
+- Moved aspeed_machine_quanta_q71l_class_init() and type registration.
+- Added aspeed_ast2400_quanta-q71l.c to the build system (meson.build).
+- Removed all Quanta-Q71L–specific code and macros from aspeed.c.
+
+No functional changes.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed.c                     | 66 ----------------------
+ hw/arm/aspeed_ast2400_quanta-q71l.c | 85 +++++++++++++++++++++++++++++
+ hw/arm/meson.build                  |  1 +
+ 3 files changed, 86 insertions(+), 66 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2400_quanta-q71l.c
+
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 11c74c3e1b..3eb1d19373 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -70,19 +70,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+         SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+         SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
+ 
+-/* Quanta-Q71l hardware value */
+-#define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
+-        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
+-        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2/* DDR3 with CL=6, CWL=5 */) | \
+-        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
+-        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_24M_IN) |       \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_PASS_THROUGH) |          \
+-        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
+-        SCU_HW_STRAP_SPI_WIDTH |                                        \
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_8M_DRAM) |                        \
+-        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
+-
+ /* AST2600 evb hardware value */
+ #define AST2600_EVB_HW_STRAP1 0x000000C0
+ #define AST2600_EVB_HW_STRAP2 0x00000003
+@@ -362,38 +349,6 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
+     object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
+ }
+ 
+-static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-
+-    /*
+-     * The quanta-q71l platform expects tmp75s which are compatible with
+-     * tmp105s.
+-     */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4c);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
+-
+-    /* TODO: i2c-1: Add baseboard FRU eeprom@54 24c64 */
+-    /* TODO: i2c-1: Add Frontpanel FRU eeprom@57 24c64 */
+-    /* TODO: Add Memory Riser i2c mux and eeproms. */
+-
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9546", 0x74);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9548", 0x77);
+-
+-    /* TODO: i2c-3: Add BIOS FRU eeprom@56 24c64 */
+-
+-    /* i2c-7 */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "pca9546", 0x70);
+-    /*        - i2c@0: pmbus@59 */
+-    /*        - i2c@1: pmbus@58 */
+-    /*        - i2c@2: pmbus@58 */
+-    /*        - i2c@3: pmbus@59 */
+-
+-    /* TODO: i2c-7: Add PDB FRU eeprom@52 */
+-    /* TODO: i2c-8: Add BMC FRU eeprom@50 */
+-}
+-
+ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
+ {
+     AspeedSoCState *soc = bmc->soc;
+@@ -1117,23 +1072,6 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+-static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc,
+-                                                  const void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-
+-    mc->desc       = "Quanta-Q71l BMC (ARM926EJ-S)";
+-    amc->soc_name  = "ast2400-a1";
+-    amc->hw_strap1 = QUANTA_Q71L_BMC_HW_STRAP1;
+-    amc->fmc_model = "n25q256a";
+-    amc->spi_model = "mx25l25635e";
+-    amc->num_cs    = 1;
+-    amc->i2c_init  = quanta_q71l_bmc_i2c_init;
+-    mc->default_ram_size       = 128 * MiB;
+-    aspeed_machine_class_init_cpus_defaults(mc);
+-}
+-
+ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+                                                         const void *data)
+ {
+@@ -1517,10 +1455,6 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_qcom_firework_class_init,
+-    }, {
+-        .name          = MACHINE_TYPE_NAME("quanta-q71l-bmc"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_quanta_q71l_class_init,
+     }, {
+         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
+diff --git a/hw/arm/aspeed_ast2400_quanta-q71l.c b/hw/arm/aspeed_ast2400_quanta-q71l.c
+new file mode 100644
+index 0000000000..cda0406ace
+--- /dev/null
++++ b/hw/arm/aspeed_ast2400_quanta-q71l.c
+@@ -0,0 +1,85 @@
++/*
++ * Quanta Q71l
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/arm/aspeed.h"
++#include "hw/arm/aspeed_soc.h"
++
++/* Quanta-Q71l hardware value */
++#define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
++        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
++        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2/* DDR3 with CL=6, CWL=5 */) | \
++        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
++        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_24M_IN) |       \
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_PASS_THROUGH) |          \
++        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
++        SCU_HW_STRAP_SPI_WIDTH |                                        \
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_8M_DRAM) |                        \
++        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
++
++static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++
++    /*
++     * The quanta-q71l platform expects tmp75s which are compatible with
++     * tmp105s.
++     */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4c);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
++
++    /* TODO: i2c-1: Add baseboard FRU eeprom@54 24c64 */
++    /* TODO: i2c-1: Add Frontpanel FRU eeprom@57 24c64 */
++    /* TODO: Add Memory Riser i2c mux and eeproms. */
++
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9546", 0x74);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9548", 0x77);
++
++    /* TODO: i2c-3: Add BIOS FRU eeprom@56 24c64 */
++
++    /* i2c-7 */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "pca9546", 0x70);
++    /*        - i2c@0: pmbus@59 */
++    /*        - i2c@1: pmbus@58 */
++    /*        - i2c@2: pmbus@58 */
++    /*        - i2c@3: pmbus@59 */
++
++    /* TODO: i2c-7: Add PDB FRU eeprom@52 */
++    /* TODO: i2c-8: Add BMC FRU eeprom@50 */
++}
++
++static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc,
++                                                  const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc       = "Quanta-Q71l BMC (ARM926EJ-S)";
++    amc->soc_name  = "ast2400-a1";
++    amc->hw_strap1 = QUANTA_Q71L_BMC_HW_STRAP1;
++    amc->fmc_model = "n25q256a";
++    amc->spi_model = "mx25l25635e";
++    amc->num_cs    = 1;
++    amc->i2c_init  = quanta_q71l_bmc_i2c_init;
++    mc->default_ram_size       = 128 * MiB;
++    aspeed_machine_class_init_cpus_defaults(mc);
++}
++
++static const TypeInfo aspeed_ast2400_quanta_q71l_types[] = {
++    {
++        .name          = MACHINE_TYPE_NAME("quanta-q71l-bmc"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_quanta_q71l_class_init,
++    }
++};
++
++DEFINE_TYPES(aspeed_ast2400_quanta_q71l_types)
++
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index cbee7ebf60..4475807e11 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -44,6 +44,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed.c',
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
++  'aspeed_ast2400_quanta-q71l.c',
+   'aspeed_ast2500_evb.c',
+   'aspeed_ast2500_fp5280g2.c',
+   'aspeed_ast2500_g220a.c',
+-- 
+2.43.0
+
 
