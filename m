@@ -4,49 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E163BCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EBFCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 13:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE6eA-0004WJ-Ko; Wed, 29 Oct 2025 09:55:31 -0400
+	id 1vE6hG-0005G7-78; Wed, 29 Oct 2025 09:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vE6e8-0004W7-Mf; Wed, 29 Oct 2025 09:55:28 -0400
+ id 1vE6hC-0005FZ-Cc; Wed, 29 Oct 2025 09:58:38 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vE6e1-0004nN-Hv; Wed, 29 Oct 2025 09:55:27 -0400
+ id 1vE6h7-0004zK-Rs; Wed, 29 Oct 2025 09:58:37 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 738BD597304;
- Wed, 29 Oct 2025 14:55:15 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 11504597300;
+ Wed, 29 Oct 2025 14:58:31 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 62RLQB14ghuj; Wed, 29 Oct 2025 14:55:13 +0100 (CET)
+ id uV7293Zpf0sI; Wed, 29 Oct 2025 14:58:28 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 631F9597303; Wed, 29 Oct 2025 14:55:13 +0100 (CET)
+ id A82835972FD; Wed, 29 Oct 2025 14:58:28 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 61B67597300;
- Wed, 29 Oct 2025 14:55:13 +0100 (CET)
-Date: Wed, 29 Oct 2025 14:55:13 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A69105972E8;
+ Wed, 29 Oct 2025 14:58:28 +0100 (CET)
+Date: Wed, 29 Oct 2025 14:58:28 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: pegasos2 patches for the freeze
-Message-ID: <bee2d3b0-1565-2c63-93a0-4e84ced610f0@eik.bme.hu>
+To: =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>
+cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org, hreitz@redhat.com, 
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 2/5] vvfat: move fat_type check prior to size setup
+In-Reply-To: <CAJ307Eg_YngaeBukZjpr81iGJCm+ycwZHj_aPuxU_8tuSC9MPw@mail.gmail.com>
+Message-ID: <7f81bcff-9262-b092-42b4-f7e19b302f97@eik.bme.hu>
+References: <20250903075721.77623-1-chigot@adacore.com>
+ <20250903075721.77623-3-chigot@adacore.com> <aPp2eRW7gQfv4hT7@redhat.com>
+ <CAJ307Eg_YngaeBukZjpr81iGJCm+ycwZHj_aPuxU_8tuSC9MPw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
+Content-Type: multipart/mixed;
+ boundary="3866299591-1772260342-1761746308=:62650"
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, HEXHASH_WORD=1,
- SPF_HELO_NONE=0.001, T_HDRS_LCASE=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,31 +66,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To help tracking patches to be merged here's the list I have on my 
-pegasos2 branch that I hope can be merged for the next release:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-f5c71e99b5 (HEAD -> pegasos2) hw/pci-host/articia: Add variable for common type cast
-159f8cec9c hw/ppc/pegasos: Update documentation for pegasos1
-8835cce4ff hw/ppc/pegasos2: Rename to pegasos
-356511cf3d hw/pci-host/articia: Map PCI memory windows in realize
-7649f4c174 hw/ppc/pegasos2: Add /chosen/stdin node with VOF
-b1b9b6668d (master) hw/ppc/sam460ex: Update u-boot-sam460ex
-41312cc017 ati-vga: Fix framebuffer mapping by using hardware-correct aperture sizes
-2d1444017d ati-vga: Separate default control bit for source
+--3866299591-1772260342-1761746308=:62650
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-I hope somebody can take care of the ati-vga patches so you don't have to 
-care about them, you already have the sam460ex u-boot update then only 
-need the "Some more pegasos patches" series and the last articia patch 
-I've sent separately based on the series. No review yet on the 7649f4c174 
-hw/ppc/pegasos2: Add /chosen/stdin node with VOF patch and not sure if we 
-can keep Philippe's R-b on 356511cf3d hw/pci-host/articia: Map PCI memory 
-windows in realize based on previous discussion but other's were R-b by 
-Philippe already. I hope these can be in your last pull request for the 
-freeze.
+On Wed, 29 Oct 2025, Clément Chigot wrote:
+> On Thu, Oct 23, 2025 at 8:40 PM Kevin Wolf <kwolf@redhat.com> wrote:
+>>
+>> Am 03.09.2025 um 09:57 hat Clément Chigot geschrieben:
+>>> This allows to handle the default FAT size in a single place and make the
+>>> following part taking care only about size parameters. It will be later
+>>> moved away in a specific function.
+>>>
+>>> Setting a floppy disk of 1MB is no longer possible as it was a side
+>>> effect of passing "fat-type=12". To be precise there were three cases:
+>>>  - fat-type undefined (aka default): a fat12 2MB disk
+>>>  - fat-type=16: a fat16 2Mb disk
+>>>  - fat-type=12: a fat12 1Mb disk
+>>
+>> That's quite a strange interface!
+>>
+>> If we're touching it anyway, I would change it to make the more common
+>> format (1.44 MB) the default for FAT12 and make the 2.88 MB FAT12 floppy
+>> temporarily unavailable and later require an explicit size. This way
+>> both sizes would still be available using the fat-type.
+>
+> I'm a bit hesitant to change the default behavior as people might be
+> using it without clear knowledge of it. True, "floppy" is probably not
+> a widely used feature but still.
+> Do QEMU have some specific guidelines when changing such default
+> behavior ? Adding a warning ? Or just a comment in the changelog would
+> be enough ?
 
-Congrats for becoming ppc maintainer by default :-) but thank you very 
-much for helping out with this.
+https://www.qemu.org/docs/master/about/deprecated.html
+
+Usually you'd add a warning and list it in the docs as deprecated then can 
+make the change after it was deperecated for two releases.
 
 Regards,
 BALATON Zoltan
+--3866299591-1772260342-1761746308=:62650--
 
