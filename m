@@ -4,109 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2071ACCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 19:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0571CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 19:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEBWG-0006Mx-8g; Wed, 29 Oct 2025 15:07:41 -0400
+	id 1vEBWL-0006O2-7U; Wed, 29 Oct 2025 15:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1vEBWB-0006MI-Ms; Wed, 29 Oct 2025 15:07:35 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vEBWC-0006MX-PK; Wed, 29 Oct 2025 15:07:36 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1vEBW0-0001PK-4m; Wed, 29 Oct 2025 15:07:32 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TC6kdr025645;
- Wed, 29 Oct 2025 19:07:13 GMT
+ id 1vEBVz-0001P0-Nw; Wed, 29 Oct 2025 15:07:36 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TA1HfG026029;
+ Wed, 29 Oct 2025 19:07:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ECb2xfE+GzOP0lSP6
- 3dCsi5rgcQWNkidDjZYytOst/8=; b=O6YrXUcT6mq2g9XwTtlS5h8n1kKNAX12Y
- DWCt9d3bWYiIRWNfc5J8L+SkIvboLP0eTJ0TuNcV+Mh8TDapRLPsjSrgzA+3Q/8D
- T9Uz9Nu9+V1qkOe+niyeC3H/mPI4fKwLe11DnhnPHFNovkzctbH62Rn2zeBG7c8T
- uxQvNFNMmyggOip8yV791fJ57TDChmrJPVLJJEdJJmerA9dkr8XWI4mcfiF2/mlb
- kHLYvPB8URN+g8MMvUv0QFhPNRmfG15bldaqTXLSdXq3p+CudjBVkwulNW9++Afh
- bB35dLMqcSR5o8d1uo4PiK0aQnzQs/Gix6OphRZVEy47qXfe0qKdg==
+ :mime-version:references:subject:to; s=pp1; bh=iwkaVuBlwz+ePTv+h
+ 51JfTzIRUzkqD2xxDdmV0GuXO0=; b=Xt5ZQQLq12qEfO1MUTCnq8i3hzmWeu5Co
+ 2hH99IwvfI/EieebbIa2ah5s+i1nuEn9mZXNCHsNIm1FbZZ7NZLTXMKuy+OYM6bw
+ wk0M4k+ELhIO/OCZNPRomq7gkxgm7WwAJoTs5U/3e4Km6uWyVIXQMo5j81iB7mbt
+ 0anospeGFbilkRZZBhKrTO5sL6N+X1rCeMDpIsNxr9zusGGJzybVquYwjRQCpk9d
+ BagUsPe84ugoZopxEO30EtKW+bzOf30iL9+Izjf2AuQkgIvQUXdfQUJk2KKkx0/q
+ fAdDA7g4lkcHkgTjet6GXYWxZsvC9/f89njkmHjHbLH69cDHesRdg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acn2x8-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34aamwxt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 19:07:13 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59TJ2Qnx029338;
- Wed, 29 Oct 2025 19:07:12 GMT
+ Wed, 29 Oct 2025 19:07:10 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59TJ7AGS012794;
+ Wed, 29 Oct 2025 19:07:10 GMT
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acn2x5-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34aamwxp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 19:07:12 +0000 (GMT)
+ Wed, 29 Oct 2025 19:07:10 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59TGh1HW030714;
- Wed, 29 Oct 2025 19:07:11 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwn1n3-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59TGj47Z030790;
+ Wed, 29 Oct 2025 19:07:09 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwn1mv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 19:07:11 +0000
+ Wed, 29 Oct 2025 19:07:09 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59TJ77B955771582
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59TJ75JE49414546
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Oct 2025 19:07:07 GMT
+ Wed, 29 Oct 2025 19:07:05 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4CBA620049;
- Wed, 29 Oct 2025 19:07:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C039B20049;
+ Wed, 29 Oct 2025 19:07:05 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 14BDD20040;
- Wed, 29 Oct 2025 19:07:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8922620040;
+ Wed, 29 Oct 2025 19:07:04 +0000 (GMT)
 Received: from ltcd48-lp3.ltc.tadn.ibm.com (unknown [9.5.7.39])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Oct 2025 19:07:05 +0000 (GMT)
+ Wed, 29 Oct 2025 19:07:04 +0000 (GMT)
 From: Narayana Murty N <nnmlinux@linux.ibm.com>
 To: npiggin@gmail.com, harshpb@linux.ibm.com, qemu-ppc@nongnu.org,
  qemu-devel@nongnu.org
 Cc: mahesh@linux.ibm.com, ganeshgr@linux.ibm.com
-Subject: [RFC 4/4] ppc/spapr: Advertise RTAS error injection call support via
- FDT property
-Date: Wed, 29 Oct 2025 10:06:18 -0500
-Message-ID: <20251029150618.186803-5-nnmlinux@linux.ibm.com>
+Subject: [RFC 3/4] ppc/spapr: Add support for 'ibm, open-errinjct' and 'ibm,
+ close-errinjct'
+Date: Wed, 29 Oct 2025 10:06:17 -0500
+Message-ID: <20251029150618.186803-4-nnmlinux@linux.ibm.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251029150618.186803-1-nnmlinux@linux.ibm.com>
 References: <20251029150618.186803-1-nnmlinux@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XbuEDY55 c=1 sm=1 tr=0 ts=690265e1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=ALkgKXG8 c=1 sm=1 tr=0 ts=690265de cx=c_pps
  a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=nNPvQeRNBT9IKkD_gJkA:9
-X-Proofpoint-ORIG-GUID: G45XxM0orDulbhSaYFtxnRNAtVMIroqb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX7hLtUSEBY9UR
- gJ/xGVXuEddIsde0V3wE1r0iCtban+qEaQl+ib2CYqglSuX8m4tI6ssC/19U1PDNj2m95YYFd2h
- fLlsNmUfnxRvI7nuW6WBWmJUsy9TPJDHMgAS37H3p8zlvOtmx4lWE015+Mya+iZwK/aePX1X21J
- CrYSweDczS3bDtlDCA2gqxGzsmnJSudZhwIfsfpHceO1FxMiRxA6+fTO05/mTyOuofB8ZPzmfhN
- 1kNzs6EYAVj8OzGvVOWClm8iFILpxvn/Bu+zihxqD1ZgGR1Hs/WMynMlFTKFJpp6obsd0BqueWP
- KZ1PRA30/C/NoIC3ZwRSMiyv63RGrFPooGzUBwybcgVbPFMRLot8t2Y/Ly+4PsKHZw+h29335yW
- NmkUh5qgHXojl4EszRnBLC68c1oWNA==
-X-Proofpoint-GUID: tMn96BJAQp8FBZPB8PWG7uO6qNWMqSNH
+ a=QI9oHtSxlEyCc_VTGTAA:9
+X-Proofpoint-ORIG-GUID: tehYuktGMqcdlCgtlgkbJkHa8P6PZg9i
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfXxJGHan1RQWBe
+ tbTN4QguP+fp0HLNisQWFhuaFBN1TvJg0/6ErJv48HnZ/VcJ4FamRI6xQ55k6m5VTbEOYCyWSi1
+ D/nMEjJ+XlucSEKl9c7Y+KPhi0HE32IXyOEYt6lmUmeew8TYo2KWmubRYcAp5hvj8ETBg5DEe1O
+ I9d/KEY1hwE4MGnaRneeCsNv3KJOlfV/v6Z98LxNN/he6FpBuXCFkJ7Ig6VtXD/DuqCKYLWjJw/
+ 7EKm8PzBBWVNf9QPuROUFDSOJimpIchdgbMezN52k6nJQ8lpkRa2Elt/EQ/bfDLTNxbBsikMRHW
+ Q3zPPClIizLJsvkxK8UKBZdhUvJpRu8y30qryAnZE2NELuWYiQZvbsE79TLdUfCLtHaggRg2Qgr
+ z4uMFZVuMQ7EPxb7aR9blAjw8U4Y5w==
+X-Proofpoint-GUID: ZVjPVnMAMVs2bYxekaLED23ywGBv1Eif
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-10-29_07,2025-10-29_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
- impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1011
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1011 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
  definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -124,164 +125,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Advertise RTAS error injection call support to guests through a new
-"ibm,errinjct-tokens" property under the RTAS node in the device tree.
+Add support for the 'ibm,open-errinjct' and 'ibm,close-errinjct' RTAS
+calls. These handlers manage exclusive access to error injection
+facilities through a simple session-based mechanism.
 
-This patch introduces:
-  - spapr_get_errinject_tokens(), which retrieves or constructs a blob
-    of supported error injection tokens from the host or fallback data.
-  - Integration of "ibm,errinjct-tokens" into the RTAS FDT node.
-  - Addition of "ibm,open-errinjct" and "ibm,close-errinjct" properties
-    to advertise open/close handlers for error injection sessions.
+Updates include:
+  - Implementation of rtas_ibm_open_errinjct() and rtas_ibm_close_errinjct()
+  - Tracking field 'spapr->errinjct_token' in SpaprMachineState
+  - New token definitions for the above RTAS calls
+  - Return codes for already open or invalid close conditions
 
-The ibm,errinjct-tokens property allows guests to programmatically
-discover supported RTAS error injection facilities, enabling safe and
-dynamic usage. The helper routine allocates memory for the token blob,
-which the caller must free once it has been added to the FDT.
-
-If the device-tree file (/proc/device-tree/rtas/ibm,errinjct-tokens)
-is not available, a static fallback blob is generated internally.
+This ensures that only one guest process can actively perform error
+injection at a time, improving reliability and preventing conflicts.
 
 Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
 ---
- hw/ppc/spapr.c | 106 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 106 insertions(+)
+---
+ include/hw/ppc/spapr.h |  8 +++++-
+ hw/ppc/spapr_pci.c     | 65 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index e0a2e5a984..0ca8c777d5 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -114,6 +114,8 @@
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index f762be030c..af9617b13e 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -283,6 +283,7 @@ struct SpaprMachineState {
+     Error *fwnmi_migration_blocker;
  
- #define PHANDLE_INTC            0x00001111
+     SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
++    uint32_t errinjct_token;
+ };
  
-+#define ERR_BLOB_MAX            512
-+
- /* These two functions implement the VCPU id numbering: one to compute them
-  * all and one to identify thread 0 of a VCORE. Any change to the first one
-  * is likely to have an impact on the second one, so let's keep them close.
-@@ -900,10 +902,104 @@ static int spapr_dt_rng(void *fdt)
-     return ret ? -1 : 0;
+ #define H_SUCCESS         0
+@@ -755,6 +756,9 @@ enum rtas_err_type {
+ #define RTAS_OUT_PARAM_ERROR                    -3
+ #define RTAS_OUT_NOT_SUPPORTED                  -3
+ #define RTAS_OUT_NO_SUCH_INDICATOR              -3
++#define RTAS_OUT_ALREADY_OPEN                   -4
++#define RTAS_OUT_NOT_OPEN                       -5
++#define RTAS_OUT_CLOSE_ERROR                    -6
+ #define RTAS_OUT_NOT_AUTHORIZED                 -9002
+ #define RTAS_OUT_SYSPARM_PARAM_ERROR            -9999
+ 
+@@ -818,8 +822,10 @@ enum rtas_err_type {
+ #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
+ #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
+ #define RTAS_IBM_ERRINJCT                       (RTAS_TOKEN_BASE + 0x2D)
++#define RTAS_IBM_OPEN_ERRINJCT                  (RTAS_TOKEN_BASE + 0x2E)
++#define RTAS_IBM_CLOSE_ERRINJCT                 (RTAS_TOKEN_BASE + 0x2F)
+ 
+-#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
++#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x30)
+ 
+ /* RTAS ibm,get-system-parameter token values */
+ #define RTAS_SYSPARM_SPLPAR_CHARACTERISTICS      20
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index 219099f5aa..4723b87c65 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -864,6 +864,65 @@ param_error_exit:
+     rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
  }
  
-+/*
-+ * spapr_get_errinject_tokens:
-+ * ---------------------------
-+ * Retrieve or construct a binary blob representing supported RTAS error
-+ * injection tokens. If the host device-tree path
-+ * "/proc/device-tree/rtas/ibm,errinjct-tokens" exists, it is read directly.
-+ * Otherwise, a static fallback list of tokens is generated.
-+ *
-+ * The caller receives a dynamically allocated buffer in @out_buf and
-+ * its size in @out_size, both of which must be freed by the caller
-+ * once used.
-+ *
-+ * Returns:
-+ *   0 (EXIT_SUCCESS)  - on success
-+ *  -EIO, -ENOMEM      - on failure
-+ */
-+static int spapr_get_errinject_tokens(char **out_buf, size_t *out_size)
++static void rtas_ibm_open_errinjct(PowerPCCPU *cpu,
++                                   SpaprMachineState *spapr,
++                                   uint32_t token,
++                                   uint32_t nargs,
++                                   target_ulong args,
++                                   uint32_t nret,
++                                   target_ulong rets)
 +{
-+    char *path = NULL, *buf = NULL;
-+    gsize len = 0;
-+    uint8_t errinjct_blob[ERR_BLOB_MAX];
-+
-+    static const struct {
-+        const char *name;
-+        enum rtas_err_type token;
-+    } errinjct_tokens[] = {
-+        { "recovered-special-event", RTAS_ERR_TYPE_RECOVERED_SPECIAL_EVENT },
-+        { "corrupted-page",          RTAS_ERR_TYPE_CORRUPTED_PAGE },
-+        { "ioa-bus-error",           RTAS_ERR_TYPE_IOA_BUS_ERROR },
-+        { "corrupted-dcache-start",  RTAS_ERR_TYPE_CORRUPTED_DCACHE_START },
-+        { "corrupted-dcache-end",    RTAS_ERR_TYPE_CORRUPTED_DCACHE_END },
-+        { "corrupted-icache-start",  RTAS_ERR_TYPE_CORRUPTED_ICACHE_START },
-+        { "corrupted-icache-end",    RTAS_ERR_TYPE_CORRUPTED_ICACHE_END },
-+        { "corrupted-tlb-start",     RTAS_ERR_TYPE_CORRUPTED_TLB_START },
-+        { "corrupted-tlb-end",       RTAS_ERR_TYPE_CORRUPTED_TLB_END },
-+        { "ioa-bus-error-64",        RTAS_ERR_TYPE_IOA_BUS_ERROR_64 },
-+    };
-+
-+    path = g_strdup("/proc/device-tree/rtas/ibm,errinjct-tokens");
-+
-+    if (g_file_test(path, G_FILE_TEST_EXISTS)) {
-+        qemu_log("RTAS: Found %s\n", path);
-+
-+        if (!g_file_get_contents(path, &buf, &len, NULL)) {
-+            error_report("RTAS: Failed to read %s", path);
-+            g_free(path);
-+            return -EIO;
-+        }
-+
-+        qemu_log("RTAS: Read %zu bytes from device-tree\n", len);
-+        *out_buf = buf;
-+        *out_size = len;
-+        g_free(path);
-+        return EXIT_SUCCESS;
++    /* Validate argument count */
++    if ((nargs != 0) || (nret != 2)) {
++        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        return;
 +    }
 +
-+    qemu_log("RTAS: %s not found, building fallback blob\n", path);
-+    g_free(path);
-+    len = 0;
-+
-+    for (int i = 0; i < G_N_ELEMENTS(errinjct_tokens); i++) {
-+        const char *name = errinjct_tokens[i].name;
-+        size_t str_len = strlen(name) + 1;
-+
-+        if (len + str_len + sizeof(uint32_t) > sizeof(errinjct_blob)) {
-+            error_report("RTAS: Too many tokens for static buffer");
-+            return -ENOMEM;
-+        }
-+
-+        memcpy(&errinjct_blob[len], name, str_len);
-+        len += str_len;
-+
-+        uint32_t be_token = cpu_to_be32(errinjct_tokens[i].token);
-+        memcpy(&errinjct_blob[len], &be_token, sizeof(be_token));
-+        len += sizeof(be_token);
++    if (spapr->errinjct_token) {
++        /* Already open: return token=0 and code=ALREADY_OPEN */
++        rtas_st(rets, 0, 0);
++        rtas_st(rets, 1, RTAS_OUT_ALREADY_OPEN);
++        return;
 +    }
 +
-+    buf = g_malloc(len);
-+    if (!buf) {
-+        error_report("RTAS: Failed to allocate %zu bytes for blob", len);
-+        return -ENOMEM;
-+    }
++    spapr->errinjct_token = 1;
 +
-+    memcpy(buf, errinjct_blob, len);
-+    *out_buf = buf;
-+    *out_size = len;
-+
-+    qemu_log("RTAS: Fallback blob built (%zu bytes)\n", len);
-+    return EXIT_SUCCESS;
++    /*
++     * Unlike most RTAS calls, ibm,open-errinjct returns
++     * the session token in the first output parameter
++     * and the status in the second.
++     */
++    rtas_st(rets, 0, spapr->errinjct_token);
++    rtas_st(rets, 1, RTAS_OUT_SUCCESS);
 +}
 +
++static void rtas_ibm_close_errinjct(PowerPCCPU *cpu,
++                                    SpaprMachineState *spapr,
++                                    uint32_t token,
++                                    uint32_t nargs,
++                                    target_ulong args,
++                                    uint32_t nret,
++                                    target_ulong rets)
++{
++    uint32_t o_token;
 +
- static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
- {
-     MachineState *ms = MACHINE(spapr);
-     int rtas;
-+    size_t size_tokens = 0;
-+    g_autofree char *errinject_tokens;
-     GString *hypertas = g_string_sized_new(256);
-     GString *qemu_hypertas = g_string_sized_new(256);
-     uint64_t max_device_addr = 0;
-@@ -1012,6 +1108,16 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
-      */
-     _FDT(fdt_setprop(fdt, rtas, "ibm,extended-os-term", NULL, 0));
- 
-+    if (!spapr_get_errinject_tokens(&errinject_tokens, &size_tokens)) {
-+        _FDT(fdt_setprop(fdt, rtas, "ibm,errinjct-tokens",
-+                         errinject_tokens, size_tokens));
-+
-+        _FDT(fdt_setprop_string(fdt, rtas, "ibm,open-errinjct",
-+                                "ibm,open-errinjct"));
-+        _FDT(fdt_setprop_string(fdt, rtas, "ibm,close-errinjct",
-+                                "ibm,close-errinjct"));
++    if ((nargs != 1) || (nret != 1)) {
++        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        return;
 +    }
 +
-     _FDT(fdt_setprop(fdt, rtas, "ibm,lrdr-capacity",
-                      lrdr_capacity, sizeof(lrdr_capacity)));
++    o_token = rtas_ld(args, 0);
++
++    if (o_token != spapr->errinjct_token) {
++        rtas_st(rets, 0, RTAS_OUT_NOT_OPEN);
++        return;
++    }
++
++    spapr->errinjct_token = 0;
++
++    rtas_st(rets, 0, RTAS_OUT_SUCCESS);
++}
++
+ static void pci_spapr_set_irq(void *opaque, int irq_num, int level)
+ {
+     /*
+@@ -2560,6 +2619,12 @@ void spapr_pci_rtas_init(void)
+     spapr_rtas_register(RTAS_IBM_ERRINJCT,
+                         "ibm,errinjct",
+                         rtas_ibm_errinjct);
++    spapr_rtas_register(RTAS_IBM_OPEN_ERRINJCT,
++                        "ibm,open-errinjct",
++                        rtas_ibm_open_errinjct);
++    spapr_rtas_register(RTAS_IBM_CLOSE_ERRINJCT,
++                        "ibm,close-errinjct",
++                        rtas_ibm_close_errinjct);
+ }
  
+ static void spapr_pci_register_types(void)
 -- 
 2.51.0
 
