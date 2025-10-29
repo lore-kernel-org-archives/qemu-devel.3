@@ -4,166 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0885CCCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A90CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxmY-0005aV-0V; Wed, 29 Oct 2025 00:27:34 -0400
+	id 1vDxuy-0006pg-BG; Wed, 29 Oct 2025 00:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vDxmT-0005Yr-JP; Wed, 29 Oct 2025 00:27:30 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vDxur-0006ox-Tv
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 00:36:10 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vDxmN-0003KO-QO; Wed, 29 Oct 2025 00:27:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KQFdN3px2EHH/SmJDFfIJ2AsETO8o7ewwb9kbJ3XVx6FWagU0/6Y0zhGWOLFCaUtqy/maesLtoJtFWulZx7F06/LM4wVfoENjxj/pSpRnwCS164Gz80ZDN+ElXN5f3g/RrcYFzXGu6CU9x5zeepJApE4wjaQ5n+U8yMQ+u0SB7xaGO7nGi5MJXQu/HYKCKztePp9uRiqmooXSFUlEcExjhmtBVmSodbcF3opqOEWe6E3k9HqG2fsLt7rTNrvaH2UvFtNbEHoCEeN5ro4u3uP1dUhKCDNpmzXDRDEFq2EkfpLVN2JBgRbl5TUgWg9K/qUB8VT33/pXiBnEjEko0Xxdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=laV/sKzr99pyp3tUeBKzD1oZMdS7ab2LEYHqVwuP1Ys=;
- b=cDXqqZAQV6Frmdf1/9BNcObOE0OGqkOMVAwMBhCHi703FqBsE1ZJHGdQsm4Fvflk8osXZtpFrMY39hmDiZhc5RAzETy3JsR0wVmJDq27SOliV3fjmgb26+6CTA3VyM6cVLMfyniKrzCaabXUKs+zW+Act281muFocaMxk8p6XXETsfkG9id0T+9sFLxlfrcz6OlnNJo3/JO/dCILxhnfkZ+xuA9X07f5p+b82lTd9vzhv9hstBlTyQ5Sh+mxW8m1hM4h7wrAZKbUL+kW2uYfpJ1kEliNbBDd3gxOO8maxkDzKgVBjIrFQaCfHqfMzFzgC3tV8x+IPhndHMd60xeWug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=laV/sKzr99pyp3tUeBKzD1oZMdS7ab2LEYHqVwuP1Ys=;
- b=Ktwr1FaIv1ckeU0HwvO73o+fGcC8HT1AeOK/hyojxEXzzgb0SgUn4wo8+6JZE/pF7+ePB5Zzfx+LI46co3NR91H0BjpxwDnPwQ1oSLdnuZhp0fz32n8xirbKpr16+5GCMmTUpRjM/+9lMQtkjw4+fE+zsHKmqD/svrzZo5ZC40NrCQsc7wiv8d3D9OBILXpPidGnr1o12iHrT3ysRqZHHjgXODdhA1YLBdeMaUDmbpnmDIBYfrqnA125TtjfJQ1SU6HIPdwPxsl210DcarBCjcMrjsyc5FvjlFe3bojpwkQ4DbwMKU9dQTYZvAVDQZ6QaVhZxmw/bL8KJGOrX8CtcA==
-Received: from MN0P220CA0014.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::6)
- by DS0PR12MB6584.namprd12.prod.outlook.com (2603:10b6:8:d0::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9275.12; Wed, 29 Oct 2025 04:27:08 +0000
-Received: from BL6PEPF0001AB4A.namprd04.prod.outlook.com
- (2603:10b6:208:52e:cafe::69) by MN0P220CA0014.outlook.office365.com
- (2603:10b6:208:52e::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.12 via Frontend Transport; Wed,
- 29 Oct 2025 04:27:07 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BL6PEPF0001AB4A.mail.protection.outlook.com (10.167.242.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9275.10 via Frontend Transport; Wed, 29 Oct 2025 04:27:08 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 28 Oct
- 2025 21:26:51 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Tue, 28 Oct 2025 21:26:51 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Tue, 28 Oct 2025 21:26:50 -0700
-Date: Tue, 28 Oct 2025 21:26:49 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
- reset
-Message-ID: <aQGXibWAiMpXAQlF@Asurada-Nvidia>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-20-skolothumtho@nvidia.com>
- <aPF9l5GwctGN0tqT@Asurada-Nvidia>
- <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
- <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vDxui-00045m-HA
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 00:36:09 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59T4ZnZu038343
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 29 Oct 2025 13:35:49 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=4ZCJqyQWMhw2pEUPsChUbdA5eVVoYaw9ntuaPvVa3qI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:From:To;
+ s=rs20250326; t=1761712550; v=1;
+ b=k2DjAX4r/0927GnmKP64BCA9M8Zbncr7tyIFJHfRV8zyHgqb+EQDCy+E/LHauxWl
+ WY6yQ2SoMqmXAvd3oha64B2roXoumkGVBdblDP9RV2vG3puiGQlzryvIQG+uWn0S
+ zbeREBw0nP7V2LFkuRqHoGmzprThLt6fRqBA9VBAmjDu22UcHaheqrNIp6g/NoME
+ wIAR1/EVEZ2Aj/1xM6YFsSI/ahcpVOtOnt7KXz2bt1rxFRw0GoGsS0lXCMAG8l4w
+ PI2XZzR2iLZWqGF6fJLUCYvg/lHP1FiwzpvL9YN4+KHNeAqTa7U2mLY5FsIFdgBS
+ uVdH9+oLUIWQm9Rr3XfknA==
+Message-ID: <7e46c5de-3227-4b24-ab95-8fb9575fe7ed@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 29 Oct 2025 13:35:49 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] memory: Make FlatView root references weak
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
+ <aQE_M1qsr78RrQaw@x1.local>
+ <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+In-Reply-To: <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4A:EE_|DS0PR12MB6584:EE_
-X-MS-Office365-Filtering-Correlation-Id: e82ab1c7-3482-4880-ce9d-08de16a36c13
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|7416014|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eEd6NmZLVHJkaEdHazVrU3hQSE03c2FlWGRnV05rTFczWThQQkgzSERueEt0?=
- =?utf-8?B?OHc2ZExrY3pHUHBoQlFyTG1PdGxEMmk5SWxCeXdGUHVVS2pWY1dFS0llWUN5?=
- =?utf-8?B?bElidE01b0pSRDZjRXFGME5NVkdqaDZTcTNQUTJlQzFpbTRPQ0NHaTA5K3N6?=
- =?utf-8?B?eXpRQzZaOHFpUTZwb1lBeVdVRDJ2dGlONkRVK3l1OVk3UGR2b1JmbXdtZGY2?=
- =?utf-8?B?YmU0NTdQNmxHSEdjYU9GRm0zV1pzRVM1cWVLd1JGaTY4OUZCMCtDRWd2QUNG?=
- =?utf-8?B?MTVaYU5sVTlCc25jUmtoaUU3dWwxN0JZcEpEbk5XWjhxYi9aeWFRVzRvSTlx?=
- =?utf-8?B?YXV6R3NqbXdUY3NLa0tQbU9RdTB4M0YvNFR1KzluZHlPMWRLcjBJWmdEeEgy?=
- =?utf-8?B?YS9ObFIxOERqNkt3NFFrbU5vclgvM0JadlVlUGpONm10Y0RYY1JSSGluc2pK?=
- =?utf-8?B?QnNDYTZXSERGSlhBajM5b3VVRHhQcDg1eUZhTTEwZytQM0V5Y1pZWU91SWMz?=
- =?utf-8?B?SHQrc3c4SjZrMEZWRWRXU0J5eUl2OG52dDNIUktZOHQ0TnJwaE5nRmZmQldH?=
- =?utf-8?B?S3BOdVgzTlowK0twTFZsNXdDOTY3dHdXSm5IQ1lPeitlb1hhQTQ5blVQdnA2?=
- =?utf-8?B?c0Q4UytkZFNvZ0REd1BHNjU3cmNMWUZHbzVEdEcrM3M5MnRJUityenVoQlRp?=
- =?utf-8?B?UDdMZEx1NkRBTGZteGVwR2twbjczME91Y1pwMnN1c1NOdU5MSXhkQUc5MjI3?=
- =?utf-8?B?Sk5sNGo1Z0ZaNzlCZVBjQTBQazFhNEdNRVNTRjhJY1ZUQUNJQkF1cEJmZnpj?=
- =?utf-8?B?L3ZoNi9ZTHZpc1VkdExMWWo0TmxrMXlJQzFyL3Yxejd4THE5ckl2dStESW16?=
- =?utf-8?B?ZzAwK0dPbm9ObjdSc1ZKMTcyM0hQNTZrT1NTV3cvWERCSGgvQkZWdjRwTTZx?=
- =?utf-8?B?Y014RlpqYkNzTGhYYlc4QVJnVk01NkFYS2FXQjBYYnlQQ3RoYVVndWt0cXFW?=
- =?utf-8?B?TmVJNGY0UHlWRFlFQ1lUdmNaSlFUdTZkc2tFZ0R6MTBOZHpRa1RZQTkvQjNI?=
- =?utf-8?B?aTRWY3dTTVRUd1NwaDRaWFdmcHdVbTNOaUwwZ0xMT1J4U01hOEExZ2tKMVc4?=
- =?utf-8?B?V1ZxMHV2MmdMU2w3SWhuclJRcTdVL2d3YXZvTzYrNjRYWm51Ry9LcEpDRDNQ?=
- =?utf-8?B?ZFhyNm0vSlo2b1BvcnpkUlhZWjlNSXZJNnIwT3QxMkZXL0ZvOFNNbVhHQnp1?=
- =?utf-8?B?dmQ4cUV5RmZxTGdaYXI0QTFYdmJ4Q21GRSt2WW9jUjRaMWlQMUdnK2lVWVpS?=
- =?utf-8?B?TFptdnF2WlJuaVB0ZlU3R25WQWdFS1Q3bGZMNUQ3ZzBrVzV3UlZoc2l1d25T?=
- =?utf-8?B?NnJoQ1Y2cSs4Nng3a1M0NnNaVXZZL0V5alFJZ25zdVRRdjRXdXppVnhLRkFm?=
- =?utf-8?B?UUNnQVNHb2dhR0dJMXg4Z0ZQaU5DdDZFRXI3Yk1zMW96WnZqWCsrMy96SGwv?=
- =?utf-8?B?dDluQ2dPZVJFclJXc08zNjVvcWk5Zkh4RDJTdDhJdWVPbzBMbHZ5S3Zla0g0?=
- =?utf-8?B?YUFpZjdyZnd0cDFVVE9rRXc3MFZ6MVpyc2plVFYzVzU1VEYyb3Z1VzlLcERJ?=
- =?utf-8?B?cENZTTF3MGJvQkdsSmR3bWZIY0lRbk1HUFRFMStKZ3lJNy96dmhMQ2crSlQw?=
- =?utf-8?B?bEZMSFlEV0ZnWnJXREFkZTR3bVYxRlM1SFJ3a093NTZGdXNVclZ1M0ZrNmJH?=
- =?utf-8?B?VnlacTZqSDNyVHMxSUNES1hGWEQrOG1PZUYreDVkRERoUnp5SjR0Rmw1VW9V?=
- =?utf-8?B?czlJb3pHMnVBWCthNGhPNTJHNWw3VU4rZnp0YXdZSGxqZHRtM00wc2Nkd0xh?=
- =?utf-8?B?UUR2SW8zc2pxRmNRUmtSZkdnQW9oaFRzdTRuSlNOQzNVdGJ2bU5ZOFRSSkdE?=
- =?utf-8?B?d1MvTVZqeWRiWndtcVVRZDAvVWNwM3cyZDJJTS9kSGlVbGRuNmxoTWJRZ2FW?=
- =?utf-8?B?dXNkS3B0eERkaUFzeXZPdEFuRElrcDIvRFdRSVRiYk5UYTZDUWZ1MzZXS05G?=
- =?utf-8?B?Rmw3cVF3NGFEZHdrTnp4bkJxR21QYTVMT3BzVFo3a2htTDA3Qnd0OE5KOFBq?=
- =?utf-8?Q?Cc64=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(7416014)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2025 04:27:08.0111 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e82ab1c7-3482-4880-ce9d-08de16a36c13
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4A.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6584
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=nicolinc@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,53 +77,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 07:51:15AM -0700, Shameer Kolothum wrote:
-> > On 10/17/25 1:19 AM, Nicolin Chen wrote:
-> > > On Mon, Sep 29, 2025 at 02:36:35PM +0100, Shameer Kolothum wrote:
-> > >> When the guest reboots with devices in nested mode (S1 + S2), any
-> > QEMU/UEFI
-> > >> access to those devices can fail because S1 translation is not valid during
-> > >> the reboot. For example, a passthrough NVMe device may hold GRUB boot
-> > info
-> > >> that UEFI tries to read during the reboot.
-> > >>
-> > >> Set S1 to bypass mode during reset to avoid such failures.
-> > > GBPA is set to bypass on reset so I think it's fine. Yet, maybe the
-> > > code should check that.
-> > 
-> > shouldn't we check its actual value before setting bypass?
-> > 
-> > By the way the spec says is ABORT is set to 0x0:
-> > "Do not abort incoming transactions. Transactions bypass the SMMU with
-> > attributes given by other fields in this register."
-> > 
-> > Wondering about those attributes and they can apply on the host?
+On 2025/10/29 13:06, Akihiko Odaki wrote:
+> On 2025/10/29 7:09, Peter Xu wrote:
+>> On Mon, Oct 27, 2025 at 02:56:53PM +0900, Akihiko Odaki wrote:
+>>> docs/devel/memory.rst says "memory_region_ref and memory_region_unref
+>>> are never called on aliases", but these functions are called for
+>>> FlatView roots, which can be aliases.
+>>
+>> IMHO the quoted doc was in a special context, where it was talking about
+>> the example of address_space_map() holding adhoc refcounts of a MR, in
+>> which case "memory_region_ref and memory_region_unref are never called on
+>> aliases" was correct..
+>>
+>> The full context:
+>>
+>>    ...
+>>    If you break this rule, the following situation can happen:
+>>    - the memory region's owner had a reference taken via 
+>> memory_region_ref
+>>      (for example by address_space_map)
+>>    - the region is unparented, and has no owner anymore
+>>    - when address_space_unmap is called, the reference to the memory 
+>> region's
+>>      owner is leaked.
+>>    There is an exception to the above rule: it is okay to call
+>>    object_unparent at any time for an alias or a container region.  It is
+>>    therefore also okay to create or destroy alias and container regions
+>>    dynamically during a device's lifetime.
+>>    This exceptional usage is valid because aliases and containers only 
+>> help
+>>    QEMU building the guest's memory map; they are never accessed 
+>> directly.
+>>    memory_region_ref and memory_region_unref are never called on aliases
+>>    or containers, and the above situation then cannot happen.  Exploiting
+>>    this exception is rarely necessary, and therefore it is discouraged,
+>>    but nevertheless it is used in a few places.
+>>    ...
+>>
+>> So I can't say the doc is wrong, but maybe it can be at least be 
+>> clearer on
+>> the scope of that sentence.. indeed.
 > 
-> That’s right. There are other attributes there. Currently kernel only
-> support,
+> I think statement "it is okay to call object_unparent at any time for an 
+> alias or a container region" can be corrected. Practically, developers 
+> will want call object_unparent() only when:
+> - the memory region is not added to a container and
+> - there is no manual references created with memory_region_ref().
 > 
-> * @ste: The first two double words of the user space Stream Table Entry for
->  *       the translation. Must be little-endian.
->  *       Allowed fields: (Refer to "5.2 Stream Table Entry" in SMMUv3 HW Spec)
->  *       - word-0: V, Cfg, S1Fmt, S1ContextPtr, S1CDMax
->  *       - word-1: EATS, S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
+> These two conditions can be satisfied by auditing the device code that 
+> owns the memory region instead of multiple devices.
 > 
-> If other attributes make sense, we may have to update kernel. I will add a note
-> here, so that we can update it if required. I think Nicolin is looking into this.
+>>
+>>>
+>>> This causes object overwrite hazard in pci-bridge. Specifically,
+>>> pci_bridge_region_init() expects that there are no references to
+>>> w->alias_io after object_unparent() is called, allowing it to reuse the
+>>> associated storage. However, if a parent bus still holds a reference to
+>>> the existing object as a FlatView's root, the storage is still in use,
+>>> leading to an overwrite. This hazard can be confirmed by adding the
+>>> following code to pci_bridge_region_init():
+>>>
+>>> PCIDevice *parent_dev = parent->parent_dev;
+>>> assert(!object_dynamic_cast(OBJECT(parent_dev), TYPE_PCI_BRIDGE) ||
+>>>         PCI_BRIDGE(parent_dev)->as_io.current_map->root != &w- 
+>>> >alias_io);
+>>
+>> What's interesting is I found PCIBridge.as_io / PCIBridge.as_mem are not
+>> used anywhere..  because it looks like the bridge code uses MRs to 
+>> operate
+>> rather than address spaces.
+>>
+>> Does it mean we can drop the two ASes?  Then if they're the only 
+>> holder of
+>> the refcounts of these problematic MRs, does it solve the problem too 
+>> in an
+>> easier way?  Maybe there're other issues you want to fix too with this 
+>> patch?
+> 
+> Apparently we cannot drop the ASes. See commit 55fa4be6f76a ("virtio- 
+> pci: fix memory_region_find for VirtIOPCIRegion's MR"), which introduced 
+> them.
+> 
+> I don't know any other existing devices affected by this FlatView 
+> behavior, but it is also difficult to show that they are *not* affected 
+> because it requires traversing MemoryRegion graphs that span across 
+> several devices.
+> 
+> We will also need to update the documentation for future devices, but it 
+> is not trivial either as the condition where aliases are referenced from 
+> FlatView is complex.
+> 
+> Considering that, I think this patch is a pragmatic solution that 
+> ensures correctness of object_unparent() on aliases.
+> 
+>>
+>>>
+>>> This assertion fails when running:
+>>> meson test -C build qtest-x86_64/bios-tables-test \
+>>>      '--test-args=-p /x86_64/acpi/piix4/pci-hotplug/no_root_hotplug'
+>>>
+>>> Make the references of FlatView roots "weak" (i.e., remove the
+>>> reference to a root automatically removed when it is finalized) to
+>>> avoid calling memory_region_ref and memory_region_unref and fix the
+>>> hazard with pci-bridge.
+>>>
+>>> Alternative solutions (like removing the "never called on aliases"
+>>> statement or detailing the exception) were rejected because the alias
+>>> invariant is still relied upon in several parts of the codebase, and
+>>> updating existing code to align with a new condition is non-trivial.
+>>>
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>>   system/memory.c | 8 ++++++--
+>>>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/system/memory.c b/system/memory.c
+>>> index 8b84661ae36c..08fe5e791224 100644
+>>> --- a/system/memory.c
+>>> +++ b/system/memory.c
+>>> @@ -266,7 +266,6 @@ static FlatView *flatview_new(MemoryRegion *mr_root)
+>>>       view = g_new0(FlatView, 1);
+>>>       view->ref = 1;
+>>>       view->root = mr_root;
+>>> -    memory_region_ref(mr_root);
+>>>       trace_flatview_new(view, mr_root);
+>>>       return view;
+>>> @@ -301,7 +300,6 @@ static void flatview_destroy(FlatView *view)
+>>>           memory_region_unref(view->ranges[i].mr);
+>>>       }
+>>>       g_free(view->ranges);
+>>> -    memory_region_unref(view->root);
+>>>       g_free(view);
+>>>   }
+>>> @@ -1796,6 +1794,12 @@ void memory_region_init_iommu(void *_iommu_mr,
+>>>   static void memory_region_finalize(Object *obj)
+>>>   {
+>>>       MemoryRegion *mr = MEMORY_REGION(obj);
+>>> +    gpointer key;
+>>> +    gpointer value;
+>>> +
+>>> +    if (g_hash_table_steal_extended(flat_views, mr, &key, &value)) {
+>>> +        ((FlatView *)value)->root = NULL;
+>>> +    }
+>>
+>> This is definitely very tricky.. The translation path (from
+>> AddressSpaceDispatch) indeed looks ok as of now, which doesn't looks at
+>> view->root.. however at least I saw this:
+>>
+>> void flatview_unref(FlatView *view)
+>> {
+>>      if (qatomic_fetch_dec(&view->ref) == 1) {
+>>          trace_flatview_destroy_rcu(view, view->root);
+>>          assert(view->root);                            
+>> <-------------------
+>>          call_rcu(view, flatview_destroy, rcu);
+>>      }
+>> }
+>>
+>> I wonder how it didn't already crash.
+> 
+> In case of pci-bridge, I guess flatview_unref() is synchronously called, 
+> but memory_region_unref(view->root) is not because of flatview_destroy() 
+> is delayed with RCU.
+> 
+>>
+>> The other stupid but working solution is we can always make the 6 aliases
+>> to not be reused, IOW we can always use dynamic MRs considering
+>> pci_bridge_update_mappings() should be rare?
+> 
+> Perhaps we may introduce memory_region_new_alias() (that calls 
+> object_new()) and allow calling object_unparent() only for aliases 
+> created with the function.
+Speaking of alternative solutions, I think the best solution in long 
+term is to use functions that dynamically update aliases such as 
+memory_region_set_alias_offset() instead of dynamically calling 
+object_unparent().
 
-According to SMMU spec 6.3 GBPA register's Additional information:
- - If SMMU_IDR1.ATTR_TYPES_OVR == 0, MTCFG, SHCFG, ALLOCCFG are
-   effectively fixed as Use incoming and it is IMPLEMENTATION
-   SPECIFIC whether these fields read as zero or a previously
-   written value. In this case, MemAttr reads as UNKNOWN.
- - If SMMU_IDR1.ATTR_PERMS_OVR == 0, INSTCFG and PRIVCFG are
-   effectively fixed as Use incoming and it is IMPLEMENTATION
-   SPECIFIC whether these fields read as zero or a previously
-   written value.
+But that also requires considerable amount of effort, so I think this 
+patch still makes sense as an immediate solution. Perhaps we may also 
+expand the documentation to tell developers to use the dynamic update 
+functions so that the number of object_unparent() calls on aliases will 
+decrease over time and we can eventually remove the weak reference trick.
 
-On the other hand, QEMU seems to set both OVR fields to 0, so all
-those "other attributes" wouldn't be necessarily forwarded to the
-kernel?
-
-Nicolin
+Regards,
+Akihiko Odaki
 
