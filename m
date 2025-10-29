@@ -4,81 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4950CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F27FCCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE2W4-00014H-5B; Wed, 29 Oct 2025 05:30:52 -0400
+	id 1vE2fz-0002Pz-4U; Wed, 29 Oct 2025 05:41:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE2W0-00013l-9T
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:30:50 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE2Vs-000725-H9
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:30:47 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b3b27b50090so1246202566b.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 02:30:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761730237; x=1762335037; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qjtERFwEfJo8YNRUSkD5XA213cdj7flN3ypYiQVDpUc=;
- b=PkBvLDmSjS8e2ioGKmbhCWV7NSZnkOlkQng7CsYzpYsHs2IxlMwidB3Xf6OiuPK/7Y
- gNvkNXjknOOPU7g+ArADq93tlc/24irw8NE+hrRqdJaXp6ZQ8hf79nT6wnQwpLL/AcJP
- tDe5s/GtXCWm5E0009yi7hiaVx9Z7JeP5DmLiri9fgdHIYyUsaEqL1nMVgl6iFE0nAUP
- +KxgR1fh7vJAZWzLSDKFfmeRhL64v7TD8tMnq60+kkNhWU38l+bEntvS3B7LYn2glia0
- yaaDxY+mEoyWy13QBTPeNyeqzWQ+u2JPFRCthZHvWqiSXAuPzL9BC3iFz0eI0kVvPUas
- RUlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761730237; x=1762335037;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qjtERFwEfJo8YNRUSkD5XA213cdj7flN3ypYiQVDpUc=;
- b=e7nP18n1YfTBDozsTtBzrC1sNYqnBU5KvdQDwHjUmOsbNrDBme9Gy62qjpHguBwOPC
- gS3rlQRiyBQvF6A9epAqjIa69mgJJljDPybnJ2nx+bG/ZAQmJhHAQs+b9h3kyRP8N9oE
- 86MgnAwGZF+WelVI9zYUE0RIyohZMja8M5xxjdtPwIGOugILkKhedin3Mt9Tvv7HfDAU
- ZwW/mEm2wGc36irrDRt1tbuD6D5MsEMxHdm7H1UNXZD1OaQUPDE//1knNgBxXgDeCda/
- QJqDTTzq/84ncVjInbbDZDjKbnHDYghY+HUtbPeEkXUYArRxo/H3diOPW12e+YvhdYe3
- g+Sg==
-X-Gm-Message-State: AOJu0YxC4pW/UZor7cK+WA4tuMLlAHDsrWOMd2byVZIhlyjDXxeMApOC
- v7B3r0oe8JjewAedMVVTwf9zmv/Zo6VZi/IPkuiAA/DOlGK8/lNidmNrE5BKl21s3i78rvR9aqS
- KjgTS//7B0YsyLOJZelm7nRUA+XuhzvNaA04ohL4X/g==
-X-Gm-Gg: ASbGnctuEhZcUk+YpImMuwuCl6k2SmPf2daugvFYjEbjFxN5YWL7EjDHXs8TWLq6Yu4
- RWdy4rq7VOpjfL0CNLo3dYSH0x3CJHS4u52ttd9640GNjAJA+5tkvla5T7+9b3A9WdnxWLMxUBf
- 9pG35TQzeh3MoOJO/QoQ28d8S6T8XaAEFcK/jrGwK59QOKz5M2F69VrDrivQEUqqvtzm47sA183
- +chTb5YMbFsgyuoeX/cEKmVmhWZXgu46xS8oj/RT2dVCKKjSQE07MjzaSnf
-X-Google-Smtp-Source: AGHT+IHXLVzQhdSScxV5VPonDd7eOoytaOKnujb5um20hlOL6ENQWHjhH3ra2pgziMXm+/LIzxHL1i7TogB+CL4ipXM=
-X-Received: by 2002:a17:907:3e0d:b0:b6d:7ad8:23f9 with SMTP id
- a640c23a62f3a-b703d311050mr211682466b.16.1761730237133; Wed, 29 Oct 2025
- 02:30:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1vE2fk-0002O0-Kv
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:40:55 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1vE2fe-0008PB-2y
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:40:52 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id CC44B80EB7;
+ Wed, 29 Oct 2025 12:40:34 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex.net (unknown [2a02:6bf:8080:d37::1:31])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (smtpcorp/Yandex) with ESMTPSA id Rea6510FtiE0-gpHMGC7E; 
+ Wed, 29 Oct 2025 12:40:34 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761730834;
+ bh=DQBesmOkcQe1NMva0FgClReKlCLo1Nov2vXF3dKi+sA=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=MkHiqvI4zH76SbQ9hgOeoBA5RXXUEoiTWWP60gWc4/xMNHqyGppykBqnz8scjRg4w
+ 8Se/0HTbjDJIL2yR1B3WZWCYY0mkZCP4AzefdnWGM7MrZrlvoY/VoTNhJdcf/TxLgx
+ emOj+l4LHrYoAdCs7kH0kqSerHoB/gu5RQ+B5D04=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Raphael Norwitz <raphael@enfabrica.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v2 0/3] vhost-user-blk: support inflight migration
+Date: Wed, 29 Oct 2025 14:39:37 +0500
+Message-Id: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250928163155.1472914-1-richard.henderson@linaro.org>
- <20250928163155.1472914-5-richard.henderson@linaro.org>
-In-Reply-To: <20250928163155.1472914-5-richard.henderson@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 29 Oct 2025 11:30:10 +0200
-X-Gm-Features: AWmQ_bnYISAIcDMA16SE5whJ89w--mSUqwgsJDFKjAQNo39mIiatKO-ozM4Tyh0
-Message-ID: <CAAjaMXab1HbSQgB8txAat657efNDpXpQ-XmOH8FwX6Sow-79uw@mail.gmail.com>
-Subject: Re: [PATCH 4/5] tcg: Expand missing rotri with extract2
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,145 +78,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 28, 2025 at 7:33=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Use extract2 to implement rotri.  To make this easier,
-> redefine rotli in terms of rotri, rather than the reverse.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  tcg/tcg-op.c | 70 ++++++++++++++++++++++++++++++----------------------
->  1 file changed, 41 insertions(+), 29 deletions(-)
->
-> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-> index 4caf77da1e..3e10a3ad16 100644
-> --- a/tcg/tcg-op.c
-> +++ b/tcg/tcg-op.c
-> @@ -834,23 +834,12 @@ void tcg_gen_rotl_i32(TCGv_i32 ret, TCGv_i32 arg1, =
-TCGv_i32 arg2)
->  void tcg_gen_rotli_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2)
->  {
->      tcg_debug_assert(arg2 >=3D 0 && arg2 < 32);
-> -    /* some cases can be optimized here */
->      if (arg2 =3D=3D 0) {
->          tcg_gen_mov_i32(ret, arg1);
->      } else if (tcg_op_supported(INDEX_op_rotl, TCG_TYPE_I32, 0)) {
-> -        TCGv_i32 t0 =3D tcg_constant_i32(arg2);
-> -        tcg_gen_op3_i32(INDEX_op_rotl, ret, arg1, t0);
-> -    } else if (tcg_op_supported(INDEX_op_rotr, TCG_TYPE_I32, 0)) {
-> -        TCGv_i32 t0 =3D tcg_constant_i32(32 - arg2);
-> -        tcg_gen_op3_i32(INDEX_op_rotr, ret, arg1, t0);
-> +        tcg_gen_op3_i32(INDEX_op_rotl, ret, arg1, tcg_constant_i32(arg2)=
-);
->      } else {
-> -        TCGv_i32 t0 =3D tcg_temp_ebb_new_i32();
-> -        TCGv_i32 t1 =3D tcg_temp_ebb_new_i32();
-> -        tcg_gen_shli_i32(t0, arg1, arg2);
-> -        tcg_gen_shri_i32(t1, arg1, 32 - arg2);
-> -        tcg_gen_or_i32(ret, t0, t1);
-> -        tcg_temp_free_i32(t0);
-> -        tcg_temp_free_i32(t1);
-> +        tcg_gen_rotri_i32(ret, arg1, -arg2 & 31);
->      }
->  }
->
-> @@ -878,7 +867,16 @@ void tcg_gen_rotr_i32(TCGv_i32 ret, TCGv_i32 arg1, T=
-CGv_i32 arg2)
->  void tcg_gen_rotri_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2)
->  {
->      tcg_debug_assert(arg2 >=3D 0 && arg2 < 32);
-> -    tcg_gen_rotli_i32(ret, arg1, -arg2 & 31);
-> +    if (arg2 =3D=3D 0) {
-> +        tcg_gen_mov_i32(ret, arg1);
-> +    } else if (tcg_op_supported(INDEX_op_rotr, TCG_TYPE_I64, 0)) {
-> +        tcg_gen_op3_i32(INDEX_op_rotr, ret, arg1, tcg_constant_i32(arg2)=
-);
-> +    } else if (tcg_op_supported(INDEX_op_rotl, TCG_TYPE_I64, 0)) {
-> +        tcg_gen_op3_i32(INDEX_op_rotl, ret, arg1, tcg_constant_i32(32 - =
-arg2));
-> +    } else {
-> +        /* Do not recurse with the rotri simplification. */
-> +        tcg_gen_op4i_i32(INDEX_op_extract2, ret, arg1, arg1, arg2);
-> +    }
->  }
->
->  void tcg_gen_deposit_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2,
-> @@ -2417,23 +2415,12 @@ void tcg_gen_rotl_i64(TCGv_i64 ret, TCGv_i64 arg1=
-, TCGv_i64 arg2)
->  void tcg_gen_rotli_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2)
->  {
->      tcg_debug_assert(arg2 >=3D 0 && arg2 < 64);
-> -    /* some cases can be optimized here */
->      if (arg2 =3D=3D 0) {
->          tcg_gen_mov_i64(ret, arg1);
-> -    } else if (tcg_op_supported(INDEX_op_rotl, TCG_TYPE_I64, 0)) {
-> -        TCGv_i64 t0 =3D tcg_constant_i64(arg2);
-> -        tcg_gen_op3_i64(INDEX_op_rotl, ret, arg1, t0);
-> -    } else if (tcg_op_supported(INDEX_op_rotr, TCG_TYPE_I64, 0)) {
-> -        TCGv_i64 t0 =3D tcg_constant_i64(64 - arg2);
-> -        tcg_gen_op3_i64(INDEX_op_rotr, ret, arg1, t0);
-> +    } else if (tcg_op_supported(INDEX_op_rotl, TCG_TYPE_I32, 0)) {
+v2: 
+- rewrite migration using VMSD instead of qemufile API
+- add vhost-user-blk parameter instead of migration capability
 
-Shouldn't this be:
+I don't know if VMSD was used cleanly in migration implementation, so
+feel free for comments.
 
-s/TCG_TYPE_I32/TCG_TYPE_I64
+v2 is based on Vladimir's work:
+[PATCH v2 00/25] vhost-user-blk: live-backend local migration
+  which was based on:
+    - [PATCH v4 0/7] chardev: postpone connect
+      (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
+    - [PATCH v3 00/23] vhost refactoring and fixes
+    - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
 
-?
+Based-on: <20250924133309.334631-1-vsementsov@yandex-team.ru>
+Based-on: <20251015212051.1156334-1-vsementsov@yandex-team.ru>
+Based-on: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
+Based-on: <20251015132136.1083972-15-vsementsov@yandex-team.ru>
+Based-on: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
 
-> +        tcg_gen_op3_i64(INDEX_op_rotl, ret, arg1, tcg_constant_i64(arg2)=
-);
->      } else {
-> -        TCGv_i64 t0 =3D tcg_temp_ebb_new_i64();
-> -        TCGv_i64 t1 =3D tcg_temp_ebb_new_i64();
-> -        tcg_gen_shli_i64(t0, arg1, arg2);
-> -        tcg_gen_shri_i64(t1, arg1, 64 - arg2);
-> -        tcg_gen_or_i64(ret, t0, t1);
-> -        tcg_temp_free_i64(t0);
-> -        tcg_temp_free_i64(t1);
-> +        tcg_gen_rotri_i64(ret, arg1, -arg2 & 63);
->      }
->  }
->
-> @@ -2461,7 +2448,32 @@ void tcg_gen_rotr_i64(TCGv_i64 ret, TCGv_i64 arg1,=
- TCGv_i64 arg2)
->  void tcg_gen_rotri_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2)
->  {
->      tcg_debug_assert(arg2 >=3D 0 && arg2 < 64);
-> -    tcg_gen_rotli_i64(ret, arg1, -arg2 & 63);
-> +    if (arg2 =3D=3D 0) {
-> +        tcg_gen_mov_i64(ret, arg1);
-> +    } else if (TCG_TARGET_REG_BITS =3D=3D 32) {
-> +        TCGv_i32 rl =3D tcg_temp_ebb_new_i32();
-> +        TCGv_i32 rh =3D TCGV_HIGH(ret);
-> +        TCGv_i32 t0, t1;
-> +
-> +        if (arg2 & 32) {
-> +            t0 =3D TCGV_HIGH(arg1);
-> +            t1 =3D TCGV_LOW(arg1);
-> +        } else {
-> +            t0 =3D TCGV_LOW(arg1);
-> +            t1 =3D TCGV_HIGH(arg1);
-> +        }
-> +        tcg_gen_extract2_i32(rl, t0, t1, arg2 & 31);
-> +        tcg_gen_extract2_i32(rh, t1, t0, arg2 & 31);
-> +        tcg_gen_mov_i32(TCGV_LOW(ret), rl);
-> +        tcg_temp_free_i32(rl);
-> +    } else if (tcg_op_supported(INDEX_op_rotr, TCG_TYPE_I64, 0)) {
-> +        tcg_gen_op3_i64(INDEX_op_rotr, ret, arg1, tcg_constant_i64(arg2)=
-);
-> +    } else if (tcg_op_supported(INDEX_op_rotl, TCG_TYPE_I64, 0)) {
-> +        tcg_gen_op3_i64(INDEX_op_rotl, ret, arg1, tcg_constant_i64(64 - =
-arg2));
-> +    } else {
-> +        /* Do not recurse with the rotri simplification. */
-> +        tcg_gen_op4i_i64(INDEX_op_extract2, ret, arg1, arg1, arg2);
-> +    }
->  }
->
->  void tcg_gen_deposit_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2,
-> --
-> 2.43.0
->
->
+--- 
+
+Hi!
+
+During inter-host migration, waiting for disk requests to be drained
+in the vhost-user backend can incur significant downtime.
+
+This can be avoided if QEMU migrates the inflight region in vhost-user-blk. 
+Thus, during the qemu migration, the vhost-user backend can cancel all inflight requests and
+then, after migration, they will be executed on another host. 
+
+At first, I tried to implement migration for all vhost-user devices that support inflight at once, 
+but this would require a lot of changes both in vhost-user-blk (to transfer it to the base class) and 
+in the vhost-user-base base class (inflight implementation and remodeling + a large refactor).
+
+Therefore, for now I decided to leave this idea for later and 
+implement the migration of the inflight region first for vhost-user-blk.
+
+Alexandr Moshkov (3):
+  vmstate: introduce VMSTATE_VBUFFER_UINT64
+  vhost: add vmstate for inflight region with inner buffer
+  vhost-user-blk: support inter-host inflight migration
+
+ hw/block/vhost-user-blk.c          | 30 ++++++++++++++++++++
+ hw/virtio/vhost.c                  | 44 ++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost-user-blk.h |  1 +
+ include/hw/virtio/vhost.h          |  6 ++++
+ include/migration/vmstate.h        | 10 +++++++
+ 5 files changed, 91 insertions(+)
+
+-- 
+2.34.1
+
 
