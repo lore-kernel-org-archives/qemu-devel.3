@@ -4,72 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A68CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5FDCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDzqA-00018O-B2; Wed, 29 Oct 2025 02:39:26 -0400
+	id 1vE01O-0002n7-Qj; Wed, 29 Oct 2025 02:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vDzq8-000176-5M
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:39:24 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vE01J-0002m6-Q5; Wed, 29 Oct 2025 02:50:57 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vDzq1-0001Nm-Ny
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:39:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761719958; x=1793255958;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=DnS0Yvs1z03uEdqAFXx0ktOv4LAyDh0CIIGIB1D7S/Y=;
- b=P29xRvw3gJ6bjKSpoXYUPlr3PQglhjvCOj5rDzQkT7M0EFpfPp5Zl7EC
- YUcxxDmB4DQK0yWo+dloWtFZ7+7pD4GIvGGc0jBBOpEev3QClrwSV9CEm
- fs0etog3pxjcUKPlQKaziFRkHbYIkdicwFncgt6z03i6eyGYIyeC8oKL5
- ylIWRh8uU6O0sly51PEenqzjUqVPcZe5o+0ErsqbnKA0ZNFX2pczGbm70
- Im09U1xj6U5wv2r2iOmyercZqnaWuwqTm5E47GtmiqFgEpRDNwfMBxY23
- JKeFkdp2n/qBZ/rnbkE5sloTgfRvQ5aLRe5j27treoIKcSG8ETwDUcgnq w==;
-X-CSE-ConnectionGUID: 5+BnHJ9TQPyKyvIY5w/Vag==
-X-CSE-MsgGUID: 3hvH1PS/SkGVCZzdgvCrSA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63927854"
-X-IronPort-AV: E=Sophos;i="6.19,263,1754982000"; d="scan'208";a="63927854"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2025 23:39:11 -0700
-X-CSE-ConnectionGUID: 2w9DHdp4SzGrhqX1jWNNlA==
-X-CSE-MsgGUID: ZkcHdB29Re+v+kNTSNil6Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,263,1754982000"; d="scan'208";a="189926654"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 28 Oct 2025 23:39:10 -0700
-Date: Wed, 29 Oct 2025 15:01:21 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PULL 02/18] i386/kvm/cpu: Init SMM cpu address space for
- hotplugged CPUs
-Message-ID: <aQG7wdY/lBjgzho3@intel.com>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vE01D-0002fR-MK; Wed, 29 Oct 2025 02:50:57 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59T6oRS7091399
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 29 Oct 2025 15:50:36 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=+XJM9L58F5tsLo4ferbBd9FuV8Mh6lWbSiBA4YTolOU=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1761720636; v=1;
+ b=mENBduJWg8IFT9S39pnNkV0hrwuyh7D+Z0+z40L8UE5ee5FsyyYwdwY+tLMq27lD
+ 13O7JLPqJk6HUJYiTozgqREFhao6xD7MH3eO7Mmb3HYlj5TEfAKhiagcoOHox718
+ Ad/kQK/MGSFOe5EnY8ULeu9lrTBqyoiUMkXMs64LNBGIiKNEp2ohCODgnF5S3rGp
+ AgbH50JGF6qUbWFCCQu/DOvBzw3mFWBWWIWf9xlw0zUsnFy4KyGSbfnrCLBgDvoY
+ DlT4XjQPkJTib8HE3jv6pW6Yf3TnpRiSFsGUGMRrrspyavx7qE3uyYbLwiZANnxP
+ rPY4L6FMONZeWJSkMzCOVQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 29 Oct 2025 15:50:27 +0900
+Subject: [PATCH v3] file-posix: Tolerate unaligned hole at middle
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251028173430.2180057-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251029-dio-v3-1-6ae3bb70db16@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIADK5AWkC/1WMyw6CMBQFf4XctTV90NK44j+Mi76Qu5Ca1jQQw
+ r9bcCPLOTkzK+SQMGS4NSukUDBjnCqISwNuNNMzEPSVgVMuqeSaeIzEW9oapUynWw31+U5hwPm
+ o3B+VR8yfmJYjWti+nv3CCCNKCLo3mNWu92aZcL66+II9UPifJOhP4lWSWlAr1dBpdpa2bfsCI
+ 1rHAcwAAAA=
+X-Change-ID: 20250528-dio-db04a66a7848
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, devel@daynix.com,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,36 +75,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index 7512be64d67..5716191fff1 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -183,6 +183,17 @@ void x86_cpu_plug(HotplugHandler *hotplug_dev,
->          fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
->      }
->  
-> +    /*
-> +     * Non-hotplugged CPUs get their SMM cpu address space initialized in
-> +     * machine init done notifier: register_smram_listener().
-> +     *
-> +     * We need initialize the SMM cpu address space for the hotplugged CPU
-> +     * specifically.
-> +     */
-> +    if (kvm_enabled() && dev->hotplugged && x86_machine_is_smm_enabled(x86ms)) {
-> +        kvm_smm_cpu_address_space_init(cpu);
-> +    }
-> +
+file-posix used to assume that existing holes satisfy the requested
+alignment, which equals to the estimated direct I/O alignment
+requirement if direct I/O is requested, and assert the assumption
+unless it is at EOF.
 
-Unfortunately, the original KVM SMM patch caused this bug, but even
-more unfortunately, CPU_FOREACH in the machine_done callback is more
-fragile than I originally anticipated, now requiring more hack checks to
-fix. :-(
+However, the estimation of direct I/O alignment requirement is sometimes
+inexact and can be overly strict. For example, I observed that QEMU
+estimated the alignment requirement as 16K while the real requirement
+is 4K when Btrfs is used on Linux 6.14.6 and the host page size is 16K.
 
-IMO, the root of the chaos is that KVM SMM doesn't do this in the CPU
-context like TCG did for a long time. I'll find time to sort all this
-out.
+For direct I/O alignment, open(2) sugguests as follows:
+> Since Linux 6.1, O_DIRECT support and alignment restrictions for a
+> file can be queried using statx(2), using the STATX_DIOALIGN flag.
+> Support for STATX_DIOALIGN varies by filesystem; see statx(2).
+>
+> Some filesystems provide their own interfaces for querying O_DIRECT
+> alignment restrictions, for example the XFS_IOC_DIOINFO operation in
+> xfsctl(3). STATX_DIOALIGN should be used instead when it is available.
+>
+> If none of the above is available, then direct I/O support and
+> alignment restrictions can only be assumed from known characteristics
+> of the filesystem, the individual file, the underlying storage
+> device(s), and the kernel version. In Linux 2.4, most filesystems
+> based on block devices require that the file offset and the length and
+> memory address of all I/O segments be multiples of the filesystem
+> block size (typically 4096 bytes). In Linux 2.6.0, this was relaxed to
+> the logical block size of the block device (typically 512 bytes). A
+> block device's logical block size can be determined using the ioctl(2)
+> BLKSSZGET operation or from the shell using the command:
 
-Regards,
-Zhao
+Apparently Btrfs doesn't support STATX_DIOALIGN nor provide its own
+interface for querying the requirement. Using BLKSSZGET brings another
+problem to determine the underlying block device, which also involves
+heuristics.
+
+Moreover, even if we could figure out the direct I/O alignment
+requirement, I could not find a documentation saying it will exactly
+match with the alignment of holes.
+
+So stop asserting the assumption on the holes and handle unaligned holes
+properly.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Changes in v3:
+- Stop iterating until finding an aligned location. I think I did too
+  much with the last version; some caller (e.g., is_zero() in
+  block/qcow2.c) only cares if there is *any* allocation in a range, and
+  extra iterations only add I/O overhead in such a case.
+  The code to iterate should be added only if it is proved to bring
+  more benefits than overheads.
+- Link to v2: https://lore.kernel.org/qemu-devel/20250530-dio-v2-1-5830b56f781c@daynix.com
+
+Changes in v2:
+- Changed to round the number also when the specified offset in a hole.
+- Changed to iterate until finding an aligned location.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250528-dio-v1-1-633066a71b8c@daynix.com
+---
+ block/file-posix.c | 41 +++++++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 16 deletions(-)
+
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 8c738674cedb..b6d7a31b4d04 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -3315,29 +3315,38 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
+         *pnum = bytes;
+         ret = BDRV_BLOCK_DATA;
+     } else if (data == offset) {
+-        /* On a data extent, compute bytes to the end of the extent,
+-         * possibly including a partial sector at EOF. */
++        /* On a data extent, compute bytes to the end of the extent. */
+         *pnum = hole - offset;
+ 
+-        /*
+-         * We are not allowed to return partial sectors, though, so
+-         * round up if necessary.
+-         */
+-        if (!QEMU_IS_ALIGNED(*pnum, bs->bl.request_alignment)) {
+-            int64_t file_length = raw_getlength(bs);
+-            if (file_length > 0) {
+-                /* Ignore errors, this is just a safeguard */
+-                assert(hole == file_length);
+-            }
+-            *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
+-        }
+-
++         /*
++          * We may have allocation unaligned with the requested
++          * alignment due to the following reaons:
++          * - unaligned file size
++          * - inexact direct I/O alignment requirement estimation
++          * - mismatches between the allocation size and
++          *   direct I/O alignment requirement.
++          *
++          * We are not allowed to return partial sectors, though, so
++          * round up the end of allocation if necessary.
++          */
++        *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
+         ret = BDRV_BLOCK_DATA;
+     } else {
+         /* On a hole, compute bytes to the beginning of the next extent.  */
+         assert(hole == offset);
+         *pnum = data - offset;
+-        ret = BDRV_BLOCK_ZERO;
++
++        /*
++         * We may have allocation unaligned, so round down the beginning
++         * of allocation if necessary.
++         */
++        if (*pnum < bs->bl.request_alignment) {
++            *pnum = bs->bl.request_alignment;
++            ret = BDRV_BLOCK_DATA;
++        } else {
++            *pnum = ROUND_DOWN(*pnum, bs->bl.request_alignment);
++            ret = BDRV_BLOCK_ZERO;
++        }
+     }
+     *map = offset;
+     *file = bs;
+
+---
+base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
+change-id: 20250528-dio-db04a66a7848
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
