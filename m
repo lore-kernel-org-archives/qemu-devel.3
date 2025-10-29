@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CA7CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CA6CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxwA-00070j-0J; Wed, 29 Oct 2025 00:37:31 -0400
+	id 1vDxxM-0008PG-Ek; Wed, 29 Oct 2025 00:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxw7-00070R-Jx; Wed, 29 Oct 2025 00:37:27 -0400
+ id 1vDxxK-0008HJ-10; Wed, 29 Oct 2025 00:38:42 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxw0-0004M3-KA; Wed, 29 Oct 2025 00:37:27 -0400
+ id 1vDxxF-0004M3-FQ; Wed, 29 Oct 2025 00:38:40 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 29 Oct
- 2025 12:37:10 +0800
+ 2025 12:37:15 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 29 Oct 2025 12:37:10 +0800
+ Transport; Wed, 29 Oct 2025 12:37:15 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,12 +32,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 00/17] Split AST2400, AST2600,
- AST2700 and AST1030 SoC machines into separate source files for
- maintainability
-Date: Wed, 29 Oct 2025 12:36:46 +0800
-Message-ID: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 09/17] hw/arm/aspeed: Split QCOM DC-SCM V1 machine into a
+ separate source file for maintainability
+Date: Wed, 29 Oct 2025 12:36:55 +0800
+Message-ID: <20251029043710.1486573-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
+References: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -66,105 +67,170 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series depends on the following patch series:
-Split AST2500 SoC machines into separate source files for maintainability
-https://patchwork.kernel.org/project/qemu-devel/cover/20251023100150.295370-1-jamin_lin@aspeedtech.com/
+This commit moves the QCOM DC-SCM V1 BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2600_qcom-dc-scm-v1.c.
 
-v1:
- 1. Split each Aspeed machine into its own source file for better
-    readability and maintainability:
-    - Quanta-Q71L
-    - Supermicro X11
-    - Palmetto
-    - Bletchley
-    - fby35 BMC
-    - Facebook Fuji
-    - QCOM Firework
-    - QCOM DC-SCM V1
-    - GB200NVL
-    - Rainier
-    - Catalina
-    - AST2600 EVB
-    - AST2700 EVB
-    - AST1030 EVB
- 2. Make aspeed_machine_ast2600_class_emmc_init() a shared API
-    for eMMC boot setup.
- 3. Promote connect_serial_hds_to_uarts() to a public machine API
-    for reuse across platforms.
+This refactor continues the modularization effort for Aspeed platform support,
+placing each board’s logic in its own dedicated source file. It improves
+maintainability, readability, and simplifies future development for new
+platforms without cluttering aspeed.c.
 
-v2:
- 1. Restore ASPEED_RAM_SIZE() macro
+Key updates include:
+- Moved QCOM_DC_SCM_V1_BMC_HW_STRAP1 and QCOM_DC_SCM_V1_BMC_HW_STRAP2 macro
+  into the new file aspeed_ast2600_qcom-dc-scm-v1.c.
+- Moved qcom_dc_scm_bmc_i2c_init() and aspeed_machine_qcom_dc_scm_v1_class_init()
+  into the new file aspeed_ast2600_qcom-dc-scm-v1.c.
+- Moved "qcom-dc-scm-v1-bmc" machine type registration from aspeed.c to the new file.
+- Updated hw/arm/meson.build to include aspeed_ast2600_qcom-dc-scm-v1.c.
+- Cleaned up all QCOM DC-SCM V1-specific code from aspeed.c.
 
-Jamin Lin (17):
-  hw/arm/aspeed: Split Quanta-Q71L machine into a separate source file
-    for maintainability
-  hw/arm/aspeed: Split Supermicro X11 machine into a separate source
-    file for maintainability
-  hw/arm/aspeed: Split Palmetto machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Move ASPEED_RAM_SIZE() macro to common header for reuse
-  hw/arm/aspeed: Split Bletchley machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Split FBY35 BMC machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Split Fuji machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Split QCOM Firework machine into a separate source file
-    for maintainability
-  hw/arm/aspeed: Split QCOM DC-SCM V1 machine into a separate source
-    file for maintainability
-  hw/arm/aspeed: Make aspeed_machine_ast2600_class_emmc_init() a common
-    API for eMMC boot setup
-  hw/arm/aspeed: Split GB200NVL machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Split Rainier machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Split Catalina machine into a separate source file for
-    maintainability
-  hw/arm/aspeed: Split AST2600 EVB machine into a separate source file
-    for maintainability
-  hw/arm/aspeed: Split AST2700 EVB machine into a separate source file
-    for maintainability
-  hw/arm/aspeed: Promote connect_serial_hds_to_uarts() to public machine
-    API
-  hw/arm/aspeed: Split AST1030 EVB machine into a separate source file
-    for maintainability
+No functional changes.
 
- hw/arm/aspeed_eeprom.h                        |   25 -
- include/hw/arm/aspeed.h                       |    9 +
- hw/arm/aspeed.c                               | 1144 +----------------
- hw/arm/aspeed_ast10x0_evb.c                   |  107 ++
- hw/arm/aspeed_ast2400_palmetto.c              |   79 ++
- hw/arm/aspeed_ast2400_quanta-q71l.c           |   85 ++
- hw/arm/aspeed_ast2400_supermicrox11.c         |   80 ++
- hw/arm/aspeed_ast2600_bletchley.c             |   96 ++
- hw/arm/aspeed_ast2600_catalina.c              |  224 ++++
- hw/arm/aspeed_ast2600_evb.c                   |   64 +
- ...aspeed_eeprom.c => aspeed_ast2600_fby35.c} |  165 ++-
- hw/arm/aspeed_ast2600_fuji.c                  |  139 ++
- hw/arm/aspeed_ast2600_gb200nvl.c              |  110 ++
- hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c        |   54 +
- hw/arm/aspeed_ast2600_qcom-firework.c         |   90 ++
- hw/arm/aspeed_ast2600_rainier.c               |  197 +++
- hw/arm/aspeed_ast27x0_evb.c                   |   86 ++
- hw/arm/meson.build                            |   15 +-
- 18 files changed, 1533 insertions(+), 1236 deletions(-)
- delete mode 100644 hw/arm/aspeed_eeprom.h
- create mode 100644 hw/arm/aspeed_ast10x0_evb.c
- create mode 100644 hw/arm/aspeed_ast2400_palmetto.c
- create mode 100644 hw/arm/aspeed_ast2400_quanta-q71l.c
- create mode 100644 hw/arm/aspeed_ast2400_supermicrox11.c
- create mode 100644 hw/arm/aspeed_ast2600_bletchley.c
- create mode 100644 hw/arm/aspeed_ast2600_catalina.c
- create mode 100644 hw/arm/aspeed_ast2600_evb.c
- rename hw/arm/{aspeed_eeprom.c => aspeed_ast2600_fby35.c} (51%)
- create mode 100644 hw/arm/aspeed_ast2600_fuji.c
- create mode 100644 hw/arm/aspeed_ast2600_gb200nvl.c
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed.c                        | 35 -----------------
+ hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c | 54 ++++++++++++++++++++++++++
+ hw/arm/meson.build                     |  1 +
+ 3 files changed, 55 insertions(+), 35 deletions(-)
  create mode 100644 hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
- create mode 100644 hw/arm/aspeed_ast2600_qcom-firework.c
- create mode 100644 hw/arm/aspeed_ast2600_rainier.c
- create mode 100644 hw/arm/aspeed_ast27x0_evb.c
 
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 8d02678659..821a18b16c 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -55,10 +55,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+ #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
+ #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
+ 
+-/* Qualcomm DC-SCM hardware value */
+-#define QCOM_DC_SCM_V1_BMC_HW_STRAP1  0x00000000
+-#define QCOM_DC_SCM_V1_BMC_HW_STRAP2  0x00000041
+-
+ #define AST_SMP_MAILBOX_BASE            0x1e6e2180
+ #define AST_SMP_MBOX_FIELD_ENTRY        (AST_SMP_MAILBOX_BASE + 0x0)
+ #define AST_SMP_MBOX_FIELD_GOSIGN       (AST_SMP_MAILBOX_BASE + 0x4)
+@@ -627,13 +623,6 @@ static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
+                           gb200nvl_bmc_fruid_len);
+ }
+ 
+-static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
+-}
+-
+ static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
+ {
+     return ASPEED_MACHINE(obj)->mmio_exec;
+@@ -1010,35 +999,11 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+ }
+ #endif
+ 
+-static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+-                                                     const void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-
+-    mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
+-    mc->deprecation_reason = "use 'ast2600-evb' instead";
+-    amc->soc_name  = "ast2600-a3";
+-    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
+-    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
+-    amc->fmc_model = "n25q512a";
+-    amc->spi_model = "n25q512a";
+-    amc->num_cs    = 2;
+-    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+-    amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
+-    mc->default_ram_size = 1 * GiB;
+-    aspeed_machine_class_init_cpus_defaults(mc);
+-};
+-
+ static const TypeInfo aspeed_machine_types[] = {
+     {
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_ast2600_evb_class_init,
+-    }, {
+-        .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
+     }, {
+         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
+diff --git a/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c b/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+new file mode 100644
+index 0000000000..f022a382d4
+--- /dev/null
++++ b/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+@@ -0,0 +1,54 @@
++/*
++ * Qualcomm DC-SCM V1
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/arm/aspeed.h"
++#include "hw/arm/aspeed_soc.h"
++
++/* Qualcomm DC-SCM hardware value */
++#define QCOM_DC_SCM_V1_BMC_HW_STRAP1  0x00000000
++#define QCOM_DC_SCM_V1_BMC_HW_STRAP2  0x00000041
++
++static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
++}
++
++static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
++                                                     const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
++    mc->deprecation_reason = "use 'ast2600-evb' instead";
++    amc->soc_name  = "ast2600-a3";
++    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
++    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
++    amc->fmc_model = "n25q512a";
++    amc->spi_model = "n25q512a";
++    amc->num_cs    = 2;
++    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
++    amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
++    mc->default_ram_size = 1 * GiB;
++    aspeed_machine_class_init_cpus_defaults(mc);
++};
++
++static const TypeInfo aspeed_ast2600_qcom_dc_scm_v1_types[] = {
++    {
++        .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
++    },
++};
++
++DEFINE_TYPES(aspeed_ast2600_qcom_dc_scm_v1_types)
++
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 89d2f05bd2..2813698918 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2600_bletchley.c',
+   'aspeed_ast2600_fby35.c',
+   'aspeed_ast2600_fuji.c',
++  'aspeed_ast2600_qcom-dc-scm-v1.c',
+   'aspeed_ast2600_qcom-firework.c',
+   'aspeed_ast10x0.c',
+   'aspeed_eeprom.c',
 -- 
 2.43.0
 
