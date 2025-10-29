@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C02CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 07:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F02ECCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 07:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE0RN-0007ey-5Y; Wed, 29 Oct 2025 03:17:53 -0400
+	id 1vE0RQ-0007gn-A2; Wed, 29 Oct 2025 03:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
- id 1vE0RK-0007eW-4Z; Wed, 29 Oct 2025 03:17:50 -0400
+ id 1vE0RL-0007eu-In; Wed, 29 Oct 2025 03:17:51 -0400
 Received: from m.syntacore.com ([178.249.69.228])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
- id 1vE0RG-0005wE-Kc; Wed, 29 Oct 2025 03:17:49 -0400
+ id 1vE0RI-0005w4-1n; Wed, 29 Oct 2025 03:17:51 -0400
 Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
- by m.syntacore.com (Postfix) with ESMTP id 809D71A0005;
- Wed, 29 Oct 2025 07:17:44 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com 809D71A0005
+ by m.syntacore.com (Postfix) with ESMTP id CB1B51A0004;
+ Wed, 29 Oct 2025 07:17:40 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com CB1B51A0004
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
- t=1761722264; bh=YJGVliqenItPfXmFgXw7zMsjaTNeX8YAjNRruO4xHo8=;
+ t=1761722260; bh=dF/c3yYAPjfNe1SB3tUNXCQLPVaC/iWuGkW+IviFGzg=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=GpbKQA832Ulf7lVcdKbhw4ithuJUaqzoWJBhkkrU6nu8t7K0JT5pbuRfMxpi88/gF
- uN+K+H2wSgLU0wtjNfHKyKESyYfJx173JsKkUwwFgqn6OLq2KHg7tbqcWgui5ak28b
- UGVVZgIbs6qZkjw+PiahKXTXO92pbt5yocx+wRnbhcd99KjA2/qQTbr2MhtYLBS0xC
- ieNKhFkEz6XIc8BdWJx0o6116wm1Mjj/eF+DhFTSEb+F9qh6c8qdSRy0THFWLX3XWJ
- gRC1Y1vvih9ISFWoXpU8fw31kkOvSuHIe15ghKTS7wEz+j8xfHq0eI/7LvxT6glI0b
- q0YkHuYQxCyvw==
-Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
+ b=g2NVXCYh9tFXDyKGxfbgU6CPyk/6LWFWwvTe7jWx4TacbOp17Yg3n1DX1xrOR4IXN
+ xsLVlM1GtqihsfHuauvokk2Jt7Pll9Y39dR2CHMvYOkmqIDgf1y65VGW2ZCcF6YsW3
+ 3gJiO31ntHftSlGW7I7XPRRwTshOO6zxFmXx8CzjrT44MGcC+AC5vZ6DwWM6cLSHKd
+ bnu0GD2Kd8dW1XS+/EQ9xogZ9Isl4WN/nsQC7NHVXD00N76BP6fbZOJ5QHsXxXFO9W
+ vKOSdkQCadGBz+aY/yE+hExCaQzkkjsAUL4S1sDIyoitREnPs6rIBP2QzAPWhwqdog
+ f4l1hIlNhIHcQ==
+Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
  [10.76.202.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
  by m.syntacore.com (Postfix) with ESMTPS;
- Wed, 29 Oct 2025 07:17:43 +0000 (UTC)
+ Wed, 29 Oct 2025 07:17:40 +0000 (UTC)
 Received: from mail.syntacore.com (172.17.58.29) by
  S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Wed, 29 Oct 2025 10:17:38 +0300
+ 15.2.2562.29; Wed, 29 Oct 2025 10:17:35 +0300
 From: Nikita Novikov <n.novikov@syntacore.com>
 To: <qemu-devel@nongnu.org>
 CC: Nikita Novikov <n.novikov@syntacore.com>, <qemu-riscv@nongnu.org>, Palmer
  Dabbelt <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, 
  Weiwei Li <liwei1518@gmail.com>, Daniel Henrique Barboza
  <dbarboza@ventanamicro.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 2/2] hw/intc/riscv_aplic: Factor out source_active() and
- remove duplicate checks
-Date: Wed, 29 Oct 2025 10:17:13 +0300
-Message-ID: <20251029-n-novikov-aplic_aia_ro-v1-2-39fec74c918a@syntacore.com>
+Subject: [PATCH 1/2] hw/intc/riscv_aplic: Expand inactive source handling for
+ AIA target[i]
+Date: Wed, 29 Oct 2025 10:17:12 +0300
+Message-ID: <20251029-n-novikov-aplic_aia_ro-v1-1-39fec74c918a@syntacore.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251029-n-novikov-aplic_aia_ro-v1-0-39fec74c918a@syntacore.com>
 References: <20251029-n-novikov-aplic_aia_ro-v1-0-39fec74c918a@syntacore.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761722114; l=2968;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761722114; l=3042;
  i=n.novikov@syntacore.com; s=20251028; h=from:subject:message-id;
- bh=jNhz21qMMPjj9BorlQDIHcDoXk3KtnEbQex2fn3RXlk=;
- b=4cXq5RIAnpdxZtvwid/Hm78ZHjzMAMBAMnfssdYmtk0F0q9i1Q6qgNaZ3TbnUTMK+c4P7oV0R
- GMg0ZQk0j42AChM0AegfUojXO4ItIRrFH32JhwJs5tU74afWjWVgcTQ
+ bh=j/rGdgBW6paBVwktG3cecuNOZmIhYHkDBXERYNaefKs=;
+ b=CzWzJ42IFJCwdGzGZzJrfsByAaEsWgKdobskYAn7LCUcVXYorXmp6o2p35c/V1AjLxNySnnTd
+ Z/Gd28ap1bQAkladL41HryHB9fm0BdNriPtkly8kmPoCq9Uvv8RoKY0
 X-Developer-Key: i=n.novikov@syntacore.com; a=ed25519;
  pk=b3kqL1EmXxsQV/ZvSbT5Us5pjaKldmMgJuniTm3uLSM=
 Content-Transfer-Encoding: 8bit
@@ -101,91 +101,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the APLIC code to consolidate repeated conditions checking
-whether an interrupt source is valid, delegated, or inactive.
+According to the RISC-V AIA v1.0, section 4.5.2 ("Source configurations"),
+register target[i] shall be read-only zero when interrupt source i is inactive
+in this domain. A source is inactive if it is delegated to a child domain or
+its source mode is INACTIVE.
 
+The previous implementation only checked SM == INACTIVE. This patch adds
+full compliance:
+- Return zero on read if D == 1 or SM == INACTIVE
+- Ignore writes in both cases
+
+Fixes: b6f1244678 ("intc/riscv_aplic: Fix target register read when source is inactive")
 Signed-off-by: Nikita Novikov <n.novikov@syntacore.com>
 ---
- hw/intc/riscv_aplic.c | 44 +++++++-------------------------------------
- 1 file changed, 7 insertions(+), 37 deletions(-)
+ hw/intc/riscv_aplic.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
 diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 8c3b16074cd3ca1bc3004cfaaa13f34b8860bd48..ccfbc9b4656f3e2a69eb5bcd1cee9e5762020351 100644
+index a2041e702245211ba3bcf4334301d7c86272e36f..8c3b16074cd3ca1bc3004cfaaa13f34b8860bd48 100644
 --- a/hw/intc/riscv_aplic.c
 +++ b/hw/intc/riscv_aplic.c
-@@ -216,22 +216,13 @@ static inline bool riscv_aplic_source_active(RISCVAPLICState *aplic,
+@@ -193,6 +193,26 @@ void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
+ #endif
+ }
+ 
++/*
++ * APLIC target[i] must be read-only zero if the source i is inactive
++ * in this domain (delegated or SM == INACTIVE)
++ */
++static inline bool riscv_aplic_source_active(RISCVAPLICState *aplic,
++                                             uint32_t irq)
++{
++    uint32_t sc, sm;
++
++    if ((irq == 0) || (aplic->num_irqs <= irq)) {
++        return false;
++    }
++    sc = aplic->sourcecfg[irq];
++    if (sc & APLIC_SOURCECFG_D) {
++        return false;
++    }
++    sm = sc & APLIC_SOURCECFG_SM_MASK;
++    return sm != APLIC_SOURCECFG_SM_INACTIVE;
++}
++
  static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
                                            uint32_t irq)
  {
--    uint32_t sourcecfg, sm, raw_input, irq_inverted;
-+    uint32_t sm, raw_input, irq_inverted;
+@@ -635,7 +655,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
  
--    if (!irq || aplic->num_irqs <= irq) {
--        return false;
--    }
--
--    sourcecfg = aplic->sourcecfg[irq];
--    if (sourcecfg & APLIC_SOURCECFG_D) {
--        return false;
--    }
--
--    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
--    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-+    if (!riscv_aplic_source_active(aplic, irq)) {
-         return false;
-     }
- 
-+    sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
-     raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
-     irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
-                     sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-@@ -284,22 +275,13 @@ static void riscv_aplic_set_pending_raw(RISCVAPLICState *aplic,
- static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
-                                     uint32_t irq, bool pending)
+ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
  {
--    uint32_t sourcecfg, sm;
-+    uint32_t sm;
+-    uint32_t irq, word, idc, sm;
++    uint32_t irq, word, idc;
+     RISCVAPLICState *aplic = opaque;
  
--    if ((irq <= 0) || (aplic->num_irqs <= irq)) {
--        return;
--    }
--
--    sourcecfg = aplic->sourcecfg[irq];
--    if (sourcecfg & APLIC_SOURCECFG_D) {
--        return;
--    }
--
--    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
--    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-+    if (!riscv_aplic_source_active(aplic, irq)) {
-         return;
-     }
- 
-+    sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
-     if ((sm == APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
-         (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
-         if (!aplic->msimode) {
-@@ -370,19 +352,7 @@ static void riscv_aplic_set_enabled_raw(RISCVAPLICState *aplic,
- static void riscv_aplic_set_enabled(RISCVAPLICState *aplic,
-                                     uint32_t irq, bool enabled)
- {
--    uint32_t sourcecfg, sm;
--
--    if ((irq <= 0) || (aplic->num_irqs <= irq)) {
--        return;
--    }
--
--    sourcecfg = aplic->sourcecfg[irq];
--    if (sourcecfg & APLIC_SOURCECFG_D) {
--        return;
--    }
--
--    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
--    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-+    if (!riscv_aplic_source_active(aplic, irq)) {
-         return;
-     }
- 
+     /* Reads must be 4 byte words */
+@@ -703,8 +723,7 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
+     } else if ((APLIC_TARGET_BASE <= addr) &&
+             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
+         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
+-        sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
+-        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
++        if (!riscv_aplic_source_active(aplic, irq)) {
+             return 0;
+         }
+         return aplic->target[irq];
+@@ -841,6 +860,9 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+     } else if ((APLIC_TARGET_BASE <= addr) &&
+             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
+         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
++        if (!riscv_aplic_source_active(aplic, irq)) {
++            return;
++        }
+         if (aplic->msimode) {
+             aplic->target[irq] = value;
+         } else {
 
 -- 
 2.51.0
