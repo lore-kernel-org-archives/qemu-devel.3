@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C46CCF9F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9AACCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEA5z-0003sK-1r; Wed, 29 Oct 2025 13:36:28 -0400
+	id 1vEA5F-0003Pk-BT; Wed, 29 Oct 2025 13:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vEA5k-0003ic-Er
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:36:12 -0400
-Received: from p-east2-cluster4-host3-snip4-2.eps.apple.com ([57.103.78.133]
+ id 1vEA58-0003NO-5i
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:35:35 -0400
+Received: from p-east2-cluster1-host9-snip4-6.eps.apple.com ([57.103.76.109]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vEA5O-0003QL-Q6
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:36:11 -0400
+ id 1vEA4x-0003Fc-6w
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:35:33 -0400
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-60-percent-10 (Postfix) with ESMTPS id
- CF1C91819DFB; Wed, 29 Oct 2025 17:35:32 +0000 (UTC)
+ B7CB71819DFF; Wed, 29 Oct 2025 17:35:18 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=6QHLe7sI/ta/TpnlofGbhZSXfY72nxkqv2tu61id1Xw=;
+ s=sig1; bh=lE935EhSo6eiiRGBTf1TCzdO8HBh375WWDyS664DB/c=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=ACmYPaOK3wlGjvAw7EvZwc3GPi9M6yUHeduX0TArOzYayJqx2WN4hhQ1/eVEcUhDWN68CUoIQ/jJqCsbIt86WyMpwAJtWCE1qoBlRsVGUXgMBEj4TrC/bWmhdWXGKbXR+xdI2v4IIjLwXqFV1VevdimfPuBRwc+0Tipz530Xe/vVlXoCq8bMVwbhDmH7VaUvjdnKIvtBERUN9lcrdl760Y4r+Ywfbjm6tnuOsBLq/fB0JzWMszv8fXnArahqScbWZwmJjZMJbGYFmpji386OZ76DfXlTDwEac6WBOTmfQ9YDK+AXyQXdMrYGPOUS+yz3tLoeXE22wJ+1s6iH46E5Mw==
+ b=UstOJnhK/+7HSOCeSb3QX26LdpoZlBq9oWD/6OBgmCNxCNFBCE0qECtkjAtNu8iY7lNRBEt+Fvb2TWyurncRemuHaWk9m3p4SoRUKPkafR3CPlo/ISAUu7tBNYbSoVg9mAJ6l+BXlFfbOV3VqY5tvSxr3QDsuwiTMbCJsszYwuRjW3LGMNPsNHBPSPVVaLUfgdFFAhDgllR8HaWK6nM/niVrbvxZ09y/GhXL3nokYnsfbibArPGA3dlX441rpe3XHA4mUnM9gZ4zzMhF3CU4jxq9JO8bFSt/oyp1lOR8UFggkotrJ09OiVStT//botiYW7xF/jjDBg86C8FWxnk1mw==
 mail-alias-created-date: 1752046281608
 Received: from mac.home (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-60-percent-10 (Postfix) with ESMTPSA id
- 8FB58185FF7E; Wed, 29 Oct 2025 16:55:49 +0000 (UTC)
+ 3AEAB1859E4B; Wed, 29 Oct 2025 16:55:21 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org,
 	mohamed@unpredictable.fr
@@ -40,32 +40,33 @@ Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
  Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v10 18/28] docs: arm: update virt machine model description
-Date: Wed, 29 Oct 2025 17:55:00 +0100
-Message-ID: <20251029165510.45824-19-mohamed@unpredictable.fr>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v10 03/28] qtest: hw/arm: virt: skip ACPI test for ITS off
+Date: Wed, 29 Oct 2025 17:54:45 +0100
+Message-ID: <20251029165510.45824-4-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251029165510.45824-1-mohamed@unpredictable.fr>
 References: <20251029165510.45824-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 09__zpetjAVAmnjb9JSUTN-KIG__7UPg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDE0MCBTYWx0ZWRfX6ZnYYUI/zEGM
- ZqSFf7B4pEv9lGkP/n1Eu4fWwRx7qUq+3m2bbWDY9X0yhU9aBXFvV83CYjWgB8BQFn33tfKZbmi
- 0JJ7GHoia9Sq6Lw7gry0rW1ZdHahRQxBdmI+NwMIusBcWhV4IvW+hqx2IFF2gEo524gJzRTdG4y
- xjVeofpCTOOCqKwE8/FXMJ9n7EbMmvk5Ku2Ir305Z+Lzx7BDkE5Iv1Y8a9z7fT28ahYLwhuNJ11
- c7qXzCuHivM4IEaYt0bKV7KKaNHYbt0f2hQ3V8Q1S6ApiDOZTdYm03O4rIqxvHN7+wGFseu24=
-X-Proofpoint-ORIG-GUID: 09__zpetjAVAmnjb9JSUTN-KIG__7UPg
+X-Proofpoint-GUID: xTADgFWmv7xhy2aejrbm0uVmCKHXaiEc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDE0MCBTYWx0ZWRfXye64S+Kio2Pw
+ dld5bpAium1xHbktoqFuhNpu+t7cQZU8PKM4GRCphgdFAmGXrdZtxFsypzcD7kZEH9j68A4F562
+ sqlQ3faR7xyqZ4QsTzdebPaDyAMyQiqh6G6QqHA9thluLkT91JZkm/q15ijPMbXcXFItwhmwStk
+ hvWplKKmp+MFvu5p/bhtuloFE67B/8DHG+tQTkWDYxAZxsMITUPr7q3clXTdXGLpDzsJ6wG+krs
+ 12e78bQscpgyLscqBRoOPY5COLKbmRbU13SDHRehzaJl0gT2yZobo58rUGKVQ2NDEvNNHrdL0=
+X-Proofpoint-ORIG-GUID: xTADgFWmv7xhy2aejrbm0uVmCKHXaiEc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-10-29_07,2025-10-29_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- adultscore=0 phishscore=0 clxscore=1030 mlxscore=0
- mlxlogscore=810
- bulkscore=0 suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ mlxscore=0 clxscore=1030 adultscore=0 bulkscore=0
+ suspectscore=0
+ mlxlogscore=774 spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.22.0-2506270000 definitions=main-2510290140
-X-JNJ: AAAAAAABO9Iz7HPx/694WUVTKGEvYK73zyEiPiyWIZNVWm+usUBa6BbBQcBTidc3q8tycRfv/30ARlc/rcAA4I7ECnr3/48tVGCw732HwktasRgComaY19RftBVJ1r0qDcoZdA7Nd5554jggJLJZkVxqHdv2kWgLOjM671vzQfA2NOyIw/CBgyxGirNT/2iyoVFoGEjN157w7J5GRUE3A+8DOvOAfhHHf8B0jsXKmm8vAcWLNXpCmYAtq9tD0MVKaCp4b/fDcyqBSL4HsdueJu2SREZb/o44d1aPsEWXOoQO7kT81R7IxTWPDfqDduZrowhL5Pi/VSseXN+ZBnXh/Ynd0njdwFYCjDA0FSOCaL4+OXfpMDfRaZcCf36NiGHDZnlhDVrZerubvJwADRzW7xR1imDxnsu/CMoWEwCtO/u36FXRErcZJWib6YMjcUds5unX076OA9yBtfkiN/Wpst2QuWZqyC01ZnmpZUZge53j0EMIDcBaM+31eqG1wqXxHBbQE2AxouNQeyBdr4W2m32/wc3QPZllit9bjtM+fve3C9e2W9jHvXFYtbZEgcNjx+1WScV+zzikbdtLbZzOZ+lmJDnbUiQr1sIadenzdnNeWe4A7DvDGxfQP5l/yE0Ed7ms3GRG0w0Ji1P1fVBi56fsuFaLsFfnLysacMLmjehnsFLsNbRQj9Ujn3tbXkSkHnHWWf0nxG7xIO7+s5x1TDME7omVVgJIt28AADsu3gNs/6WFgfZFqYFdBkFoqo8=
-Received-SPF: pass client-ip=57.103.78.133;
+X-JNJ: AAAAAAABVZ9HcTW9oAxeUbUrQ1o27a5PgxkR3/USwiNQGPoeSpy3OcmGZO0w8LyEr8e6UGPiTfoUVYQSCFGK1PiAC1vZckjesYlmi7+0OKF80q/33DhKwVOjxqroe6Cmx2erts8H6kfdow8trUUVnLpPIdCrkkiW8x8cNDL66tjTj/0Fp9reQLt+cKPgMk7pJ82V3IWlJkecnPJ86+my9gsWGHm+HBaYr/Ria/Cme7dy/uUpoXSrTL2sOPSYkttVPVAybOA/6ljonqvAs/JJsdctsYukp2B3BaAY/2Ojto3l3KrRWS5W7ueBOtU7TVj0965Gvr6jyIFbH9b+88oj27HiODCf0qmAWK0mW8/Hpw0iO9A2lsKOuroz0LT+i3chA//dN9FAwprCezGoeBW7jz21KwZ1a6VZ2msHwa8QDj1DM7MNHQRZqCERYYd1/20Lr9NgMiquHRgVeRciuNsPaAK85lr8jQZrt0PqkQy/Kuy5hUVRHJnY56lpY32ZsP2a+w0NSotYgFjDfh5XPJY5Emz04xycqZZZuBjjqSvWX2Zf9qQ/zzPG637Gx57U5bwvO4HDcBZozwYH4wgmAYLxOUNptRhreZ9RR+LdDNbVk9tweJvenL3EaU1rf2jMeIcaSxZcPNlzAuIk2v+j9ePzoxJJ1y8r5F3hyWnZIKuRytH1/odemQrvHM7k5M8aLOSEgQclcaCedJTxbh+CR6Nn0RX4AGXTJjnSdX5tzMV40g4OUP7I66UJ+KwmbIyLcWTHdsxZU58kfi5GZrR3nT+Ylh8=
+Received-SPF: pass client-ip=57.103.76.109;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -73,7 +74,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,44 +90,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the documentation to match current QEMU.
-
-Remove the mention of pre-2.7 machine models as those aren't provided
-anymore.
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- docs/system/arm/virt.rst | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index 10cbffc8a7..fe95be991e 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -40,9 +40,10 @@ The virt board supports:
- - An optional SMMUv3 IOMMU
- - hotpluggable DIMMs
- - hotpluggable NVDIMMs
--- An MSI controller (GICv2M or ITS). GICv2M is selected by default along
--  with GICv2. ITS is selected by default with GICv3 (>= virt-2.7). Note
--  that ITS is not modeled in TCG mode.
-+- An MSI controller (GICv2m or ITS).
-+  - When using a GICv3, ITS is selected by default when available on the platform.
-+  - If using a GICv2 or when ITS is not available, a GICv2m is provided by default instead.
-+  - Before virt-10.2, a GICv2m is not provided when the ITS is disabled.
- - 32 virtio-mmio transport devices
- - running guests using the KVM accelerator on aarch64 hardware
- - large amounts of RAM (at least 255GB, and more if using highmem)
-@@ -167,8 +168,7 @@ gic-version
-     ``4`` if ``virtualization`` is ``on``, but this may change in future)
- 
- its
--  Set ``on``/``off`` to enable/disable ITS instantiation. The default is ``on``
--  for machine types later than ``virt-2.7``.
-+  Set ``on``/``off``/``auto`` to control ITS instantiation. The default is ``auto``.
- 
- iommu
-   Set the IOMMU type to create for the guest. Valid values are:
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..bfc4d60124 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/APIC.its_off",
 -- 
 2.50.1 (Apple Git-155)
 
