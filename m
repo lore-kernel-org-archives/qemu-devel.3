@@ -4,81 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0EDDCCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9D4CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE28T-0000Ka-ID; Wed, 29 Oct 2025 05:06:29 -0400
+	id 1vE2Aq-0001UP-QB; Wed, 29 Oct 2025 05:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE28N-0000Gi-Kp
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:06:23 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE289-0003kV-Rg
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:06:22 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b4f323cf89bso1653426166b.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 02:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761728764; x=1762333564; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YfivwcAV8lV0ugr8GXnfVmjPdjVqFmGNUu+eUNthIL0=;
- b=O0dGEzgsfz6nE2p13OE/fiEBmGqCyBa7GQ/G9V//oKc9WL8nfRVgmCEhbQoFhBeycC
- hHZ3SRmWlz9f4c2vXkVAwqgD7pnS7/gi20QgBREk8z70IcU4Ft3Q4LNcgbXUVsHN3JcX
- kQ8xSvKORnhLesuKJBlwoiSSERwVW4s2DceGnzq1Le8NL7EdiQvsU0NsOqEzdYy3VIkU
- meS8hdF0IJIFaigo2yaY1LRnUEzirsYm7U7f/k4FnFHmWiOZ6hyije5vYCS++dJ5n1vw
- xAdGKxiTipYCyCKPQjWXfAgNwshdBD7DQbOe0EyV+X608TCslCy+QOFRLWGobTa3U4uK
- iVnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761728764; x=1762333564;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YfivwcAV8lV0ugr8GXnfVmjPdjVqFmGNUu+eUNthIL0=;
- b=ZsnTzadxvggSO4WsD/S1o9j0VO1MhfN3h9FlnvmjD7c3JucRwUArcWfXBVw8fb/o6l
- P29eBIopOE8x0u9wYiCAlBfMdgpamDX22waRLB76g3vIMxfKyAfzpaN80oXEjvDuWgHH
- 5dBrkVnzjV8G+KBOp8W5NNLATBguXnlXK61vZ15kX3vNSEk98yxUKMvJSDJhpnMKQ9tM
- DZYE0Sw28v+RP3l/XoD3f2Lad/I+WYmM4/sQJ3g48hHjBXOcLG5Wjc4VxhEvaUR6vAc2
- xq6jr13RZEgLv5drDFgEf5aJL/ojRMD7fJfclb3ysWxRgAYlqLEgOsSPO7A76/bh6iH3
- TPaQ==
-X-Gm-Message-State: AOJu0YxaS0s4bfWiT71wDhchOaEh8m90AJGdzDp+oiQNsYNu2PEFSYp8
- 1BuyoTtv/aK440vcOUo46j1FH43ge9gbOSXOCSAGFAlGYX4cemCCYQUjP1zWy+iUZsSYDyb0cYm
- yK/ah8T99BW3EY/espAQL+/cX3yuaHSwi4yJ7xjTurw==
-X-Gm-Gg: ASbGncvQ5jbFeWeSUoGnI5ZVlzO+4eJN5AbrvzeDIj/QS9a8Q4oX+NNgYAyn/1YwZto
- Me5P25gYnw/zDzgUMUe0+wmxFfG0joSHy/yF604PyOpx2XipOoQ4M4WNLRHA2glTXkhWuaAXFEF
- 9l42Y5lXhL/Wfhd3K7aLUBIaxqrswxCcL5b2MKjGBLvE2zKSJXClhM/Q7hP28f/iXUc+Z7MH83R
- Lmbad5HUW26RyAVPu/SXhoe/hdPSjsTNpryA1XVdT/+gpPrXYqfmzZdh0AU
-X-Google-Smtp-Source: AGHT+IGIEB5ciokg7Btgfiv6pF493QcyEZr2n6/rj0GHsdGfwKt0X7nNrI/m2J66U7BQPc+KnYMGgPzBRXZAQdovR+s=
-X-Received: by 2002:a17:907:968c:b0:b3f:9b9c:d499 with SMTP id
- a640c23a62f3a-b703d53f5c2mr200426266b.51.1761728764030; Wed, 29 Oct 2025
- 02:06:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vE2Ao-0001Th-S6
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:08:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vE2Ak-00045c-NK
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:08:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761728928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3L3aeQ5zMgXGcfARs66NS6uaAiHTBvuLvBBFOYmlaFA=;
+ b=fneZDZHmCr1fNRt1l9iOZunzyhgsvMBEFu22X9ZmTGx9UdPPPC0jlC8FgEnSqOmRv/d3Gn
+ HLZr7GY3AS01W4Cp5nI1lwzHnmosrALGYFgyiKxwmLl57ZgBUklR6ht5fNmc5jwvpjjRh6
+ I6X3s4oT99xaAXI1PtfCHXc/4tYDpJ4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-4gUMxvkYP8GSfLOyUBZ5DQ-1; Wed,
+ 29 Oct 2025 05:08:44 -0400
+X-MC-Unique: 4gUMxvkYP8GSfLOyUBZ5DQ-1
+X-Mimecast-MFC-AGG-ID: 4gUMxvkYP8GSfLOyUBZ5DQ_1761728924
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEFC7183452C; Wed, 29 Oct 2025 09:08:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C8DE30001BF; Wed, 29 Oct 2025 09:08:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 983D021E6A27; Wed, 29 Oct 2025 10:08:35 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org,  eblake@redhat.com
+Subject: Re: [PATCH v2 00/33] qapi: docs: width=70 and two spaces between
+ sentences
+In-Reply-To: <20251011140441.297246-1-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Sat, 11 Oct 2025 17:04:06 +0300")
+References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+Date: Wed, 29 Oct 2025 10:08:35 +0100
+Message-ID: <87sef2qdm4.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250928163155.1472914-1-richard.henderson@linaro.org>
- <20250928163155.1472914-2-richard.henderson@linaro.org>
-In-Reply-To: <20250928163155.1472914-2-richard.henderson@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 29 Oct 2025 11:05:37 +0200
-X-Gm-Features: AWmQ_bl1YpFZSqQJK_pO0qkmKlNuPas6tkasTje4aJNgQW3aAYcoSJSIcYJRj34
-Message-ID: <CAAjaMXYZPjcgKFYG3+b=3agTECD6EYaX03HOw4Ss-w7eZjaoZg@mail.gmail.com>
-Subject: Re: [PATCH 1/5] tcg: Simplify extract2 usage in tcg_gen_shifti_i64
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,63 +85,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 28, 2025 at 7:33=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The else after the TCG_TARGET_HAS_extract2 test is exactly
-> the same as what tcg_gen_extract2_i32 would emit itself.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Hi all!
+>
+> Let's bring the documentation in line with the requirements. And
+> do check these requirements in QAPI parser.
 
->  tcg/tcg-op.c | 22 ++++------------------
->  1 file changed, 4 insertions(+), 18 deletions(-)
->
-> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-> index dfa5c38728..ab7b409be6 100644
-> --- a/tcg/tcg-op.c
-> +++ b/tcg/tcg-op.c
-> @@ -1818,30 +1818,16 @@ static inline void tcg_gen_shifti_i64(TCGv_i64 re=
-t, TCGv_i64 arg1,
->              tcg_gen_movi_i32(TCGV_LOW(ret), 0);
->          }
->      } else if (right) {
-> -        if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I32, 0)) {
-> -            tcg_gen_extract2_i32(TCGV_LOW(ret),
-> -                                 TCGV_LOW(arg1), TCGV_HIGH(arg1), c);
-> -        } else {
-> -            tcg_gen_shri_i32(TCGV_LOW(ret), TCGV_LOW(arg1), c);
-> -            tcg_gen_deposit_i32(TCGV_LOW(ret), TCGV_LOW(ret),
-> -                                TCGV_HIGH(arg1), 32 - c, c);
-> -        }
-> +        tcg_gen_extract2_i32(TCGV_LOW(ret), TCGV_LOW(arg1),
-> +                             TCGV_HIGH(arg1), c);
->          if (arith) {
->              tcg_gen_sari_i32(TCGV_HIGH(ret), TCGV_HIGH(arg1), c);
->          } else {
->              tcg_gen_shri_i32(TCGV_HIGH(ret), TCGV_HIGH(arg1), c);
->          }
->      } else {
-> -        if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I32, 0)) {
-> -            tcg_gen_extract2_i32(TCGV_HIGH(ret),
-> -                                 TCGV_LOW(arg1), TCGV_HIGH(arg1), 32 - c=
-);
-> -        } else {
-> -            TCGv_i32 t0 =3D tcg_temp_ebb_new_i32();
-> -            tcg_gen_shri_i32(t0, TCGV_LOW(arg1), 32 - c);
-> -            tcg_gen_deposit_i32(TCGV_HIGH(ret), t0,
-> -                                TCGV_HIGH(arg1), c, 32 - c);
-> -            tcg_temp_free_i32(t0);
-> -        }
-> +        tcg_gen_extract2_i32(TCGV_HIGH(ret), TCGV_LOW(arg1),
-> +                             TCGV_HIGH(arg1), 32 - c);
->          tcg_gen_shli_i32(TCGV_LOW(ret), TCGV_LOW(arg1), c);
->      }
->  }
-> --
-> 2.43.0
->
->
+Prior art:
+
+    01bed0ff14 qapi: Refill doc comments to conform to conventions
+    7270819384 qga/qapi-schema: Refill doc comments to conform to current conventions
+    209e64d9ed qapi: Refill doc comments to conform to current conventions
+
+These only touched prose.
+
+Your series also touches examples, is split per source file, and adds
+code to enforce the rules automatically.
+
+Automatic enforcement makes a ton of sense.  Should've tried to code it
+up long ago.  Much appreciated!  However, it's in the first patch.  It
+needs to go last to not break bisection.
+
+I don't think splitting per source file is necessary.
+
+I'd prefer to put aside examples for now and focus on prose, since the
+case for prose is much stronger.
+
+Since I already split off the prose changes for my own review purposes,
+there's no need for you to do that again.  I'll take care of it.
+
+However, we need to adjust the enforcement code to skip examples.
+
+Examples are marked up with ReST directive qmp-example.  They look like
+this:
+
+    # .. qmp-example::
+    #
+    #     the example
+    #         text is
+    #     indented
+
+The stupidest solution that could possibly work is to start skipping the
+checks at
+
+    # .. qmp-example::
+
+and resume it at the first unindented line.
+
+This is of course a hack: it second-guesses the ReST parser.  I think
+it's good enough.
+
+If we in a later step decide reflowing the examples is usful, the hack
+goes away.
+
+Would you be willing to take care of that part?
+
 
