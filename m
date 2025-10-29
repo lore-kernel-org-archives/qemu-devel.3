@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19504CCF9F7
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 12:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B11CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 12:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE4xQ-0003AV-JO; Wed, 29 Oct 2025 08:07:18 -0400
+	id 1vE4y2-0003Tq-PI; Wed, 29 Oct 2025 08:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE4xB-000360-J4
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 08:07:05 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE4xR-0003DY-Mr
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 08:07:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE4wy-0004wB-OZ
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 08:06:55 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vE4xE-00050l-Oh
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 08:07:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761739606;
+ s=mimecast20190719; t=1761739616;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AmT8x+qOHL11jqdaDCEcFKPTxt0bXUDzwKkXxr+i52Q=;
- b=Q9RscTb2v9pViEClX7PP/7Yc2zej5OsbRRUI2iwcvckvgnPb/wbMS5DqzWL+V0hOA5UJbZ
- P9tYq6pBALLFUwvGIcmn6QS0cABO5vVEfXnAva1GNyUIBM8FCMHae1CF+VQZhPNUkkhsAf
- GcHoef5asvCo5Vlj7dY3qlXR+xp9D/c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=o2nLVnIMpd1SN7HGH5Ve6xUlTg+yyzNFQi5ephwI5Ls=;
+ b=LdfOvCYb/1M2bpDRMQu5NOjBdyAEB8pZczC+qhRDTd+TkPxTqIMuoZq/OtDqzR+c/j8Gl+
+ Xjz4F+vk1fAavpNeb34UsDQ1yU6ZEWvCZtA5v4SxEkH6r09rESbtQ/R0/dttp7hXCTJGAr
+ YRzzPX0YF/HDF2J8/vIgMtjAJO4+/zE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-GMz57SsDM66Kp7t76EsEnw-1; Wed,
- 29 Oct 2025 08:06:45 -0400
-X-MC-Unique: GMz57SsDM66Kp7t76EsEnw-1
-X-Mimecast-MFC-AGG-ID: GMz57SsDM66Kp7t76EsEnw_1761739604
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-XwDIVz7xMgeaZY5vYF60qw-1; Wed,
+ 29 Oct 2025 08:06:54 -0400
+X-MC-Unique: XwDIVz7xMgeaZY5vYF60qw-1
+X-Mimecast-MFC-AGG-ID: XwDIVz7xMgeaZY5vYF60qw_1761739613
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70F64195608D; Wed, 29 Oct 2025 12:06:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B433F180A200; Wed, 29 Oct 2025 12:06:53 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.33.204])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 25473180057E; Wed, 29 Oct 2025 12:06:42 +0000 (UTC)
+ id 39103180057C; Wed, 29 Oct 2025 12:06:51 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 03/18] block: fix luks 'amend' when run in coroutine
-Date: Wed, 29 Oct 2025 13:06:19 +0100
-Message-ID: <20251029120634.288467-4-kwolf@redhat.com>
+Subject: [PULL 08/18] block: enable stats-intervals for storage devices
+Date: Wed, 29 Oct 2025 13:06:24 +0100
+Message-ID: <20251029120634.288467-9-kwolf@redhat.com>
 In-Reply-To: <20251029120634.288467-1-kwolf@redhat.com>
 References: <20251029120634.288467-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -67,7 +66,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,118 +82,449 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Chandan Somani <csomani@redhat.com>
 
-Launch QEMU with
+This patch allows stats-intervals to be used for storage
+devices with the -device option. It accepts a list of interval
+lengths in JSON format.
 
-  $ qemu-img create \
-      --object secret,id=sec0,data=123456 \
-      -f luks -o key-secret=sec0 demo.luks 1g
+It configures and collects the stats in the BlockBackend layer
+through the storage device that consumes the BlockBackend.
 
-  $ qemu-system-x86_64 \
-      --object secret,id=sec0,data=123456 \
-      -blockdev  driver=luks,key-secret=sec0,file.filename=demo.luks,file.driver=file,node-name=luks
-
-Then in QMP shell attempt
-
-  x-blockdev-amend job-id=fish node-name=luks options={'state':'active','new-secret':'sec0','driver':'luks'}
-
-It will result in an assertion
-
-  #0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-  #1  0x00007fad18b73f63 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:89
-  #2  0x00007fad18b19f3e in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-  #3  0x00007fad18b016d0 in __GI_abort () at abort.c:77
-  #4  0x00007fad18b01639 in __assert_fail_base
-      (fmt=<optimized out>, assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>) at assert.c:118
-  #5  0x00007fad18b120af in __assert_fail (assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>)
-      at assert.c:127
-  #6  0x000055ff74fdbd46 in bdrv_graph_rdlock_main_loop () at ../block/graph-lock.c:260
-  #7  0x000055ff7548521b in graph_lockable_auto_lock_mainloop (x=<optimized out>)
-      at /usr/src/debug/qemu-9.2.4-1.fc42.x86_64/include/block/graph-lock.h:266
-  #8  block_crypto_read_func (block=<optimized out>, offset=4096, buf=0x55ffb6d66ef0 "", buflen=256000, opaque=0x55ffb5edcc30, errp=0x55ffb6f00700)
-      at ../block/crypto.c:71
-  #9  0x000055ff75439f8b in qcrypto_block_luks_load_key
-      (block=block@entry=0x55ffb5edbe90, slot_idx=slot_idx@entry=0, password=password@entry=0x55ffb67dc260 "123456", masterkey=masterkey@entry=0x55ffb5fb0c40 "", readfunc=readfunc@entry=0x55ff754851e0 <block_crypto_read_func>, opaque=opaque@entry=0x55ffb5edcc30, errp=0x55ffb6f00700)
-      at ../crypto/block-luks.c:927
-  #10 0x000055ff7543b90f in qcrypto_block_luks_find_key
-      (block=<optimized out>, password=<optimized out>, masterkey=<optimized out>, readfunc=<optimized out>, opaque=<optimized out>, errp=<optimized out>) at ../crypto/block-luks.c:1045
-  #11 qcrypto_block_luks_amend_add_keyslot
-      (block=0x55ffb5edbe90, readfunc=0x55ff754851e0 <block_crypto_read_func>, writefunc=0x55ff75485100 <block_crypto_write_func>, opaque=0x55ffb5edcc3, opts_luks=0x7fad1715aef8, force=<optimized out>, errp=0x55ffb6f00700) at ../crypto/block-luks.c:1673
-  #12 qcrypto_block_luks_amend_options
-      (block=0x55ffb5edbe90, readfunc=0x55ff754851e0 <block_crypto_read_func>, writefunc=0x55ff75485100 <block_crypto_write_func>, opaque=0x55ffb5edcc30, options=0x7fad1715aef0, force=<optimized out>, errp=0x55ffb6f00700) at ../crypto/block-luks.c:1865
-  #13 0x000055ff75485b95 in block_crypto_amend_options_generic_luks
-      (bs=<optimized out>, amend_options=<optimized out>, force=<optimized out>, errp=<optimized out>) at ../block/crypto.c:949
-  #14 0x000055ff75485c28 in block_crypto_co_amend_luks (bs=<optimized out>, opts=<optimized out>, force=<optimized out>, errp=<optimized out>)
-      at ../block/crypto.c:1008
-  #15 0x000055ff754778e5 in blockdev_amend_run (job=0x55ffb6f00640, errp=0x55ffb6f00700) at ../block/amend.c:52
-  #16 0x000055ff75468b90 in job_co_entry (opaque=0x55ffb6f00640) at ../job.c:1106
-  #17 0x000055ff755a0fc2 in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../util/coroutine-ucontext.c:175
-
-This changes the read/write callbacks to not assert that they
-are run in mainloop context if already in a coroutine.
-
-This is also reproduced by qemu-iotests cases 295 and 296.
-
-Fixes: 1f051dcbdf2e4b6f518db731c84e304b2b9d15ce
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250919112213.1530079-1-berrange@redhat.com>
+Signed-off-by: Chandan Somani <csomani@redhat.com>
+Message-ID: <20251003220039.1336663-1-csomani@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/crypto.c | 30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ include/block/accounting.h |  5 +++--
+ include/hw/block/block.h   |  7 ++++++-
+ block/accounting.c         | 17 +++++++++++++++--
+ blockdev.c                 |  3 ++-
+ hw/block/block.c           |  7 +++++--
+ tests/qemu-iotests/172.out | 38 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 69 insertions(+), 8 deletions(-)
 
-diff --git a/block/crypto.c b/block/crypto.c
-index 17b4749a1e..7c37b23e36 100644
---- a/block/crypto.c
-+++ b/block/crypto.c
-@@ -67,11 +67,18 @@ static int block_crypto_read_func(QCryptoBlock *block,
-     BlockCrypto *crypto = bs->opaque;
-     ssize_t ret;
+diff --git a/include/block/accounting.h b/include/block/accounting.h
+index a59e39f49d..b1cf417b57 100644
+--- a/include/block/accounting.h
++++ b/include/block/accounting.h
+@@ -101,8 +101,9 @@ typedef struct BlockAcctCookie {
+ } BlockAcctCookie;
  
--    GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    if (qemu_in_coroutine()) {
-+        GRAPH_RDLOCK_GUARD();
+ void block_acct_init(BlockAcctStats *stats);
+-void block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+-                      enum OnOffAuto account_failed);
++bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
++                      enum OnOffAuto account_failed, uint32_t *stats_intervals,
++                      uint32_t num_stats_intervals, Error **errp);
+ void block_acct_cleanup(BlockAcctStats *stats);
+ void block_acct_add_interval(BlockAcctStats *stats, unsigned interval_length);
+ BlockAcctTimedStats *block_acct_interval_next(BlockAcctStats *stats,
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index de3946a5f1..b4d914624e 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -34,6 +34,8 @@ typedef struct BlockConf {
+     OnOffAuto account_invalid, account_failed;
+     BlockdevOnError rerror;
+     BlockdevOnError werror;
++    uint32_t num_stats_intervals;
++    uint32_t *stats_intervals;
+ } BlockConf;
  
--    ret = bdrv_pread(crypto->header ? crypto->header : bs->file,
--                     offset, buflen, buf, 0);
-+        ret = bdrv_co_pread(crypto->header ? crypto->header : bs->file,
-+                            offset, buflen, buf, 0);
-+    } else {
-+        GLOBAL_STATE_CODE();
-+        GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+        ret = bdrv_pread(crypto->header ? crypto->header : bs->file,
-+                         offset, buflen, buf, 0);
+ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+@@ -66,7 +68,10 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
+     DEFINE_PROP_ON_OFF_AUTO("account-invalid", _state,                  \
+                             _conf.account_invalid, ON_OFF_AUTO_AUTO),   \
+     DEFINE_PROP_ON_OFF_AUTO("account-failed", _state,                   \
+-                            _conf.account_failed, ON_OFF_AUTO_AUTO)
++                            _conf.account_failed, ON_OFF_AUTO_AUTO),    \
++    DEFINE_PROP_ARRAY("stats-intervals", _state,                        \
++                     _conf.num_stats_intervals, _conf.stats_intervals,  \
++                     qdev_prop_uint32, uint32_t)
+ 
+ #define DEFINE_BLOCK_PROPERTIES(_state, _conf)                          \
+     DEFINE_PROP_DRIVE("drive", _state, _conf.blk),                      \
+diff --git a/block/accounting.c b/block/accounting.c
+index 3e46159569..0933c61f3a 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -28,6 +28,7 @@
+ #include "block/block_int.h"
+ #include "qemu/timer.h"
+ #include "system/qtest.h"
++#include "qapi/error.h"
+ 
+ static QEMUClockType clock_type = QEMU_CLOCK_REALTIME;
+ static const int qtest_latency_ns = NANOSECONDS_PER_SECOND / 1000;
+@@ -56,13 +57,25 @@ static bool bool_from_onoffauto(OnOffAuto val, bool def)
+     }
+ }
+ 
+-void block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
+-                      enum OnOffAuto account_failed)
++bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
++                      enum OnOffAuto account_failed, uint32_t *stats_intervals,
++                      uint32_t num_stats_intervals, Error **errp)
+ {
+     stats->account_invalid = bool_from_onoffauto(account_invalid,
+                                                  stats->account_invalid);
+     stats->account_failed = bool_from_onoffauto(account_failed,
+                                                 stats->account_failed);
++    if (stats_intervals) {
++        for (int i = 0; i < num_stats_intervals; i++) {
++            if (stats_intervals[i] <= 0) {
++                error_setg(errp, "Invalid interval length: %u", stats_intervals[i]);
++                return false;
++            }
++            block_acct_add_interval(stats, stats_intervals[i]);
++        }
++        g_free(stats_intervals);
 +    }
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Could not read encryption header");
-         return ret;
-@@ -90,11 +97,18 @@ static int block_crypto_write_func(QCryptoBlock *block,
-     BlockCrypto *crypto = bs->opaque;
-     ssize_t ret;
++    return true;
+ }
  
--    GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    if (qemu_in_coroutine()) {
-+        GRAPH_RDLOCK_GUARD();
+ void block_acct_cleanup(BlockAcctStats *stats)
+diff --git a/blockdev.c b/blockdev.c
+index b451fee6e1..dbd1d4d3e8 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -617,7 +617,8 @@ static BlockBackend *blockdev_init(const char *file, QDict *bs_opts,
  
--    ret = bdrv_pwrite(crypto->header ? crypto->header : bs->file,
--                      offset, buflen, buf, 0);
-+        ret = bdrv_co_pwrite(crypto->header ? crypto->header : bs->file,
-+                             offset, buflen, buf, 0);
-+    } else {
-+        GLOBAL_STATE_CODE();
-+        GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+        ret = bdrv_pwrite(crypto->header ? crypto->header : bs->file,
-+                          offset, buflen, buf, 0);
+         bs->detect_zeroes = detect_zeroes;
+ 
+-        block_acct_setup(blk_get_stats(blk), account_invalid, account_failed);
++        block_acct_setup(blk_get_stats(blk), account_invalid, account_failed,
++                         NULL, 0, NULL);
+ 
+         if (!parse_stats_intervals(blk_get_stats(blk), interval_list, errp)) {
+             blk_unref(blk);
+diff --git a/hw/block/block.c b/hw/block/block.c
+index 2e10611d95..f187fa025d 100644
+--- a/hw/block/block.c
++++ b/hw/block/block.c
+@@ -249,8 +249,11 @@ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+     blk_set_enable_write_cache(blk, wce);
+     blk_set_on_error(blk, rerror, werror);
+ 
+-    block_acct_setup(blk_get_stats(blk), conf->account_invalid,
+-                     conf->account_failed);
++    if (!block_acct_setup(blk_get_stats(blk), conf->account_invalid,
++                          conf->account_failed, conf->stats_intervals,
++                          conf->num_stats_intervals, errp)) {
++        return false;
 +    }
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Could not write encryption header");
-         return ret;
+     return true;
+ }
+ 
+diff --git a/tests/qemu-iotests/172.out b/tests/qemu-iotests/172.out
+index 146fc72388..a023cd407d 100644
+--- a/tests/qemu-iotests/172.out
++++ b/tests/qemu-iotests/172.out
+@@ -30,6 +30,7 @@ Testing:
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ 
+ 
+@@ -59,6 +60,7 @@ Testing: -fda TEST_DIR/t.qcow2
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -95,6 +97,7 @@ Testing: -fdb TEST_DIR/t.qcow2
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -109,6 +112,7 @@ Testing: -fdb TEST_DIR/t.qcow2
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -149,6 +153,7 @@ Testing: -fda TEST_DIR/t.qcow2 -fdb TEST_DIR/t.qcow2.2
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -163,6 +168,7 @@ Testing: -fda TEST_DIR/t.qcow2 -fdb TEST_DIR/t.qcow2.2
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -204,6 +210,7 @@ Testing: -fdb
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -218,6 +225,7 @@ Testing: -fdb
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ 
+ 
+@@ -247,6 +255,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -283,6 +292,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2,index=1
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -297,6 +307,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2,index=1
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -337,6 +348,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=floppy,file=TEST_DIR/t
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -351,6 +363,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=floppy,file=TEST_DIR/t
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -395,6 +408,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -431,6 +445,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,unit=1
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -467,6 +482,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qco
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -481,6 +497,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qco
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -531,6 +548,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -545,6 +563,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -586,6 +605,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -600,6 +620,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -641,6 +662,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 1 (0x1)
+@@ -655,6 +677,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -696,6 +719,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 1 (0x1)
+@@ -710,6 +734,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -760,6 +785,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -774,6 +800,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -815,6 +842,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+               dev: floppy, id ""
+                 unit = 0 (0x0)
+@@ -829,6 +857,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/unattached/device[N]
+@@ -876,6 +905,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -global floppy.drive=none0 -device
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -942,6 +972,7 @@ Testing: -device floppy
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ 
+ Testing: -device floppy,drive-type=120
+@@ -968,6 +999,7 @@ Testing: -device floppy,drive-type=120
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "120"
+ 
+ Testing: -device floppy,drive-type=144
+@@ -994,6 +1026,7 @@ Testing: -device floppy,drive-type=144
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ 
+ Testing: -device floppy,drive-type=288
+@@ -1020,6 +1053,7 @@ Testing: -device floppy,drive-type=288
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ 
+ 
+@@ -1049,6 +1083,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,drive-t
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "120"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -1085,6 +1120,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,drive-t
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "288"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -1124,6 +1160,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,logical
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
+@@ -1160,6 +1197,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,physica
+                 share-rw = false
+                 account-invalid = "auto"
+                 account-failed = "auto"
++                stats-intervals = <null>
+                 drive-type = "144"
+ none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
+     Attached to:      /machine/peripheral-anon/device[N]
 -- 
 2.51.0
 
