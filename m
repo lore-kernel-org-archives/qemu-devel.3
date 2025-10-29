@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13EB7CCF9EB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E434CCF9F0
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 15:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE8S7-000444-2C; Wed, 29 Oct 2025 11:51:11 -0400
+	id 1vE8SQ-0004aH-Gs; Wed, 29 Oct 2025 11:51:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8S4-00042O-Hi
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:08 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1vE8SL-0004Un-G2
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:26 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vE8Rw-0002sm-9A
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:08 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b6d3effe106so2709766b.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:50:56 -0700 (PDT)
+ id 1vE8S1-0002uO-0X
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 11:51:25 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b6d345d7ff7so248221266b.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 08:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761753053; x=1762357853; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761753061; x=1762357861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=USJvroAe4YWNpWWacUbn1WFtugDBkJmsxwDxe+5+ZlI=;
- b=alE8cmqAm0y2zJ99Qm3OzX+ADub8/S481Xr1m6dvjLunFY9oJT7N/zBmr8NdkBtp9T
- xSHiyKPJjaTX86gepXhRmW1w50ghHaIbgbcBXycFcROyMzcDHS8scUj35SqbJMGX9Khf
- rRBOW9Nix5zHmJt54aJ0n4VctJsw7c8+gttfEiB0i8Y/YE4Uocf7gKXbjwzfo8YPZqyn
- CFHKdfoVVnPTyz1/LuCzvKXuOaUVorISHVWxVJyWJOVofsgkKBbP0+I35SXjTikjg1+O
- +8znR+S2Upg3ix8Ezzg6Ivv+VTzZTwX50ekhHRcg3grqI18chVHTGd/p5M0ky5+dz8Na
- GdKw==
+ bh=sYa79bBACSHKuE0pZ4iXVTr8fHkW5hyXRoUJItryceQ=;
+ b=mkvN5+c2R/8o6wfpg1U5s/lCbqvpSsn3iXoou324N9ghbph5CODmzxDhtHwWenY0vq
+ 3CoBoORceNRLEqQWiFhXAUHM04EuYMKE/JTiT/iH4CRQeBV22th/dMz7rcAE8wGLCkCT
+ 2Bg2R0f4WU1vodjiKBJgvfIKyr6WpCsCDWQHSVul6Lmzyegb8bcuyZAqszyF2Xe9Dtkq
+ 5ud9ejU7JDIxTYXDCRnAFFDkYLyVQ6fRcbiwqGAdnU4jD+wK7VekbAxgX0DuA1bm4YJz
+ qw5HWCiaeRk1liPppFHzCebpInnfz9mzY1ceSTHN5ccS+Kyt6efVxiPv/l0PodUM5UVo
+ reng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761753053; x=1762357853;
+ d=1e100.net; s=20230601; t=1761753061; x=1762357861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=USJvroAe4YWNpWWacUbn1WFtugDBkJmsxwDxe+5+ZlI=;
- b=YTgOn/tXRMDUXyZ/WfRGYxAjF5FfxYK6pCXvrFQMMxrMnBN1UU1xABPR9oJF4QiFm4
- XCt2mUnUmhOeMZ7MT1Mhkf/ZAZfRyFyk8sQAhaRG4YWlGsdajYzVcJhIU3nyOBlAE7vU
- DqU/SpYhsCQkEFNXbAEkhSM8DzmVWNNCZyFJvBqls4L91X6uWUGZDPlFuByyVhSdNhXJ
- BKgyoiM8BfWC2vcD313Q7+V2E723VOJyJy9QOX8RwTr1R47g6FeDAjHjms/rclohpd75
- 4b3KRREoXPQZo8yBZC4K03rLWdoUG+pfIptkRJHvUuqHWp9qsattwtDBDI7/nT03zakL
- Pu2w==
-X-Gm-Message-State: AOJu0YyZErc0Xtl1mLmnvWsIL4irGl2ojrG0LEQoPLpMNEOwRBzrCv9W
- 1T/uMTwwNNaJYHR0RxHaiNLMo4LsNWTE1P2JCtTn0Z2LwvVIetHTM7rQ9B/DSdC57pA=
-X-Gm-Gg: ASbGnctckmL5hFFNAxi5y9hzG18zmNW79WCT0x9xlfQ3iFGMZTOaSFstNY+/KlRmq3T
- J88rusq4bfW2D0M1NkJzFAKT/P7WpOD6wNq+qtoCOdzX15iE9yrviLaAFj4i+J9hdTf0iN7zXSY
- 76uZfWil72XC+GfsVMvKrcLvAeaCjrzmZzn1S6eSPwXCbGxu92kjM4yHP00SSJ2XBd8SE1UHPYz
- rTvmdf7CN/q5RvH8EPnI3axoW+IYlS43xKgGs3VDwII9+X1odwmplpVMPNiFxpbnyCyBl/S91qs
- udUXX1IybQmFCYOEcXckuiuHm3K1EsCjcN7XBPnYuGdVrmsPGUUGXrZT61MqnOwlGE2oW8MqxqT
- T5TupHnPsxczGRyuXD6Y2MFvyszoA5k725lIfNkW7ZSJtJhGireL4lSac/s4FoPRWeDExLcBHjN
- IR
-X-Google-Smtp-Source: AGHT+IGAqDWLjgWlwMFTIOzzzLbG1vlfcPUaNxsOWBLbs3eIDXXUKclPUj4i/E9pZlSgZUjCwAPJvg==
-X-Received: by 2002:a17:907:7292:b0:b33:a2ef:c7 with SMTP id
- a640c23a62f3a-b703d5cb7efmr387845066b.55.1761753053058; 
- Wed, 29 Oct 2025 08:50:53 -0700 (PDT)
+ bh=sYa79bBACSHKuE0pZ4iXVTr8fHkW5hyXRoUJItryceQ=;
+ b=KlxCkjRyPyPvgQEFTTvLgsrHAHD9I+8C2FnKupre4upnevT8wqrUvEGgvyymJRuynn
+ BE0xH/MBOqDr+7zUBwtrKkomMAJlY4xejSFXO3dZRxVQs1QSiQMu1//HMUvhkXy+trH2
+ BZcTUhhrYl4UUnBPVa8kmAy2MpSRadkzeTI//p9GdQ8r15N9YNLduBpu/kQg3TdtpE+U
+ OA/sr9aTzu1Cr8GiS7LrUR51m62beU6LjFpeyIen7zPOIO0ZE/DKTN39F+Xk6jsYys8B
+ qhxLvMGiiQ+0axZBsOcwKfbqMV6w4bWA6pyJQmLkxoz8fH0vqkE+Rlx0PnDs4LKu4Rdk
+ GYAw==
+X-Gm-Message-State: AOJu0YxnQk6d2aQCDKosOn30FlkRlEkzdm6NQ7FRvfs0uuSeaYq3YVRe
+ 0OoWesRb4xD3j8vxFtdeeTCMB8STpwXRXGB1Q7c4hKrpSXgsyv0e69/cWK8TF3rHhq4=
+X-Gm-Gg: ASbGncs9iOsRU3gaqEteur/tHPliEky1tfl0NO21lmh6Y9yLttIloJpBvfxKv8uOveS
+ htk9EKMPi6y455F9rr5DxEyct3G47jxrqt+OMxY2h1lB5M4uM0gIn7EYcIBNpAFt4oHdbCV3ske
+ WNj3O9dUCLcT7OryVAF+Dq62hlkBHdWswd5Gyd1G+Ohj6/6zWWbpTJak/hSOs79IRjqEfBOIKcQ
+ CjJfs0wbX4BwSmhvIEjNNoNDH68HXaL/u4LC5SomvkeMrfJj/OkmefxTDTnpXK8A6B596mu6Z0B
+ MTGmwvv2/6Xz6AIO86o7/P9VZPDM/tnZZUrxNQsU+/Cy83Bw/JOIYLf5QpRKFVUS1mKqH8iTTxZ
+ TRsuLuF37D3F2Ta3cwidPii0XTdp5K8KSCmKexlntJI6X+R0ih670MlWFbsnXEhqrtMRg0pv4U+
+ sF
+X-Google-Smtp-Source: AGHT+IGIeUByh2IK0sfxB2LNBgWWquh+c9uJUD3+I6ncNhqMB22dJ7G4NVDCsTEXywasLNBfpxh4jA==
+X-Received: by 2002:a17:907:7f94:b0:b3d:e757:8c36 with SMTP id
+ a640c23a62f3a-b7051f28d17mr10480866b.3.1761753060791; 
+ Wed, 29 Oct 2025 08:51:00 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d8544c9f5sm1491873866b.68.2025.10.29.08.50.47
+ a640c23a62f3a-b6d853696a3sm1458499966b.27.2025.10.29.08.50.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 08:50:50 -0700 (PDT)
+ Wed, 29 Oct 2025 08:50:58 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 55E885FA07;
- Wed, 29 Oct 2025 15:50:46 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 09CDE61502;
+ Wed, 29 Oct 2025 15:50:49 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 05/35] tests/lcitool: generate a yaml file for the ppc64le
- runner
-Date: Wed, 29 Oct 2025 15:50:14 +0000
-Message-ID: <20251029155045.257802-6-alex.bennee@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 32/35] plugins/core: add missing QEMU_DISABLE_CFI annotations
+Date: Wed, 29 Oct 2025 15:50:41 +0000
+Message-ID: <20251029155045.257802-33-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251029155045.257802-1-alex.bennee@linaro.org>
 References: <20251029155045.257802-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,199 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike the Aarch64 runners this comes with pure Debian out of the box.
-We need a minor tweak to build-environment to deal with the
-differences in naming convention.
+Most of the memory callbacks come directly from the generated code
+however we have do have a a direct from C callback for the slow-path
+and memory helpers.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20251027110344.2289945-6-alex.bennee@linaro.org>
+There is also a reset callback that calls out to plugins.
+
+Like the other plugin points we need to disable CFI as we are making
+function calls to dynamically linked libraries.
+
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3175
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20251027110344.2289945-33-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
-index 253d0b759bc..528150dce78 100644
---- a/scripts/ci/setup/build-environment.yml
-+++ b/scripts/ci/setup/build-environment.yml
-@@ -27,20 +27,26 @@
-         - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
+diff --git a/plugins/core.c b/plugins/core.c
+index 35a252d2729..8f8bc7219c2 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -668,6 +668,7 @@ void exec_inline_op(enum plugin_dyn_cb_type type,
+     }
+ }
  
-     # the package lists are updated by "make lcitool-refresh"
--    - name: Define package list file path
-+    - name: Define package list file path for Ubuntu
-       set_fact:
-         package_file: "ubuntu/ubuntu-2404-{{ ansible_facts['architecture'] }}.yaml"
-       when:
-         - ansible_facts['distribution'] == 'Ubuntu'
-         - ansible_facts['distribution_version'] == '24.04'
++QEMU_DISABLE_CFI
+ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                              uint64_t value_low,
+                              uint64_t value_high,
+diff --git a/plugins/loader.c b/plugins/loader.c
+index ba10ebac993..0dbe7bea263 100644
+--- a/plugins/loader.c
++++ b/plugins/loader.c
+@@ -318,6 +318,7 @@ struct qemu_plugin_reset_data {
+     bool reset;
+ };
  
-+    - name: Define package list file path for Debian
-+      set_fact:
-+        package_file: "debian/debian-{{ ansible_facts['distribution_major_version'] }}-{{ ansible_facts['architecture'] }}.yaml"
-+      when:
-+        - ansible_facts['distribution'] == 'Debian'
-+
-     - name: Include package lists based on OS and architecture
-       include_vars:
-         file: "{{ package_file }}"
-       when:
-         - package_file is exists
- 
--    - name: Install packages for QEMU on Ubuntu 24.04
-+    - name: Install packages for QEMU on Ubuntu/Debian
-       package:
-         name: "{{ packages }}"
-       when:
-diff --git a/scripts/ci/setup/debian/debian-13-ppc64le.yaml b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-new file mode 100644
-index 00000000000..e29c9c18403
---- /dev/null
-+++ b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-@@ -0,0 +1,134 @@
-+# THIS FILE WAS AUTO-GENERATED
-+#
-+#  $ lcitool variables --host-arch ppc64le debian-13 qemu
-+#
-+# https://gitlab.com/libvirt/libvirt-ci
-+
-+packages:
-+  - bash
-+  - bc
-+  - bindgen
-+  - bison
-+  - bsdextrautils
-+  - bzip2
-+  - ca-certificates
-+  - ccache
-+  - clang
-+  - dbus
-+  - debianutils
-+  - diffutils
-+  - exuberant-ctags
-+  - findutils
-+  - flex
-+  - gcc
-+  - gcovr
-+  - gettext
-+  - git
-+  - hostname
-+  - libaio-dev
-+  - libasan8
-+  - libasound2-dev
-+  - libattr1-dev
-+  - libbpf-dev
-+  - libbrlapi-dev
-+  - libbz2-dev
-+  - libc6-dev
-+  - libcacard-dev
-+  - libcap-ng-dev
-+  - libcapstone-dev
-+  - libcbor-dev
-+  - libclang-rt-dev
-+  - libcmocka-dev
-+  - libcurl4-gnutls-dev
-+  - libdaxctl-dev
-+  - libdrm-dev
-+  - libepoxy-dev
-+  - libfdt-dev
-+  - libffi-dev
-+  - libfuse3-dev
-+  - libgbm-dev
-+  - libgcrypt20-dev
-+  - libglib2.0-dev
-+  - libglusterfs-dev
-+  - libgnutls28-dev
-+  - libgtk-3-dev
-+  - libgtk-vnc-2.0-dev
-+  - libibverbs-dev
-+  - libiscsi-dev
-+  - libjemalloc-dev
-+  - libjpeg62-turbo-dev
-+  - libjson-c-dev
-+  - liblttng-ust-dev
-+  - liblzo2-dev
-+  - libncursesw5-dev
-+  - libnfs-dev
-+  - libnuma-dev
-+  - libpam0g-dev
-+  - libpcre2-dev
-+  - libpipewire-0.3-dev
-+  - libpixman-1-dev
-+  - libpng-dev
-+  - libpulse-dev
-+  - librbd-dev
-+  - librdmacm-dev
-+  - libsasl2-dev
-+  - libsdl2-dev
-+  - libsdl2-image-dev
-+  - libseccomp-dev
-+  - libselinux1-dev
-+  - libslirp-dev
-+  - libsnappy-dev
-+  - libsndio-dev
-+  - libspice-protocol-dev
-+  - libspice-server-dev
-+  - libssh-dev
-+  - libstd-rust-dev
-+  - libsystemd-dev
-+  - libtasn1-6-dev
-+  - libubsan1
-+  - libudev-dev
-+  - liburing-dev
-+  - libusb-1.0-0-dev
-+  - libusbredirhost-dev
-+  - libvdeplug-dev
-+  - libvirglrenderer-dev
-+  - libvte-2.91-dev
-+  - libxdp-dev
-+  - libzstd-dev
-+  - llvm
-+  - locales
-+  - make
-+  - mtools
-+  - multipath-tools
-+  - ncat
-+  - nettle-dev
-+  - ninja-build
-+  - openssh-client
-+  - pkgconf
-+  - python3
-+  - python3-numpy
-+  - python3-opencv
-+  - python3-pillow
-+  - python3-pip
-+  - python3-setuptools
-+  - python3-sphinx
-+  - python3-sphinx-rtd-theme
-+  - python3-tomli
-+  - python3-venv
-+  - python3-wheel
-+  - python3-yaml
-+  - rpm2cpio
-+  - rustc
-+  - sed
-+  - socat
-+  - sparse
-+  - swtpm
-+  - systemtap-sdt-dev
-+  - tar
-+  - tesseract-ocr
-+  - tesseract-ocr-eng
-+  - vulkan-tools
-+  - xorriso
-+  - zlib1g-dev
-+  - zstd
-+
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 056cfb6e9d7..7fbdf6f340b 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -272,6 +272,7 @@ try:
-     #
-     generate_yaml("ubuntu", "ubuntu-2404", "aarch64")
-     generate_yaml("ubuntu", "ubuntu-2404", "s390x")
-+    generate_yaml("debian", "debian-13", "ppc64le")
- 
- 
-     sys.exit(0)
++QEMU_DISABLE_CFI
+ static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
+ {
+     struct qemu_plugin_ctx *ctx = data->ctx;
 -- 
 2.47.3
 
