@@ -4,61 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A377FCCF9F3
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2880CCCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 06:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDzRA-0000di-R6; Wed, 29 Oct 2025 02:13:36 -0400
+	id 1vDzm1-0007s2-Ov; Wed, 29 Oct 2025 02:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDzQw-0000XG-5M
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:13:23 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDzQr-0006qA-0I
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:13:21 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59T6CsDR077258
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 29 Oct 2025 15:13:03 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=cD58OELSBPZUPtc2Nwde7FP/zTv4pAILKDqDTCL+hEQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1761718383; v=1;
- b=WH8j/Nr1gpcF+g0IFGg9aCPaYw1p+a0979QqA3hVHqvPh3hotouucROt2b87wv6U
- 91K7X5j0Ij2Fi6rTBR4x7W2S/pokkY+iKlEkY2I4MCNDxhuy3yUFIvLJ0VLips8/
- BtFxwYCl7463XdK+Dq+zqpsifI22Aay8evXaipiOqRkMvJa5Kz66tUoKU5VBdT5h
- XmGyqyTmb0e2+En/OudYVKVlTWIh6XZ5bnthbOrdNaFJe5uz3WafwJDHNFfoxW/d
- 2qWZ7tLdo6q7vKxL9CYPUmCdhSM64corzJnGUegJYgRs0HeHHPE3KMDuDpt5FqIh
- QmDmjMzv0lRzOSnBptCsoQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 29 Oct 2025 15:12:46 +0900
-Subject: [PATCH 2/5] qemu-thread: Add qemu_event_timedwait()
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDzm0-0007rO-KV
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:35:08 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDzln-0000ql-IK
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 02:35:08 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-63d6ee383bdso14670203a12.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 23:34:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761719690; x=1762324490; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ry0M+9kopk7MNnN3poBXxumoJIxvGoLsSMglqpbFUSM=;
+ b=r1lWN96qbPk3q8kgpVQJNdap6giV2zTHxqjiWbN2UT3G/02aGMumqpjsbwzU62IkVB
+ D2BszXyRISU3cxwb0BctoDKW+SAYe4Whh8Rs2UtGg0uRyLWZTGcC7o/SIN27kjav60u1
+ uWJKpkD4J26MjZUDE8h7CaZUDO4NFOj8VG6lhAOSZNU1ZqOxK2ygyNzn9vmww9YL9nNy
+ C2VIUD8aVstV4Uc/lysXp1E8JDd4kRlAP1UQhM7MSCKIugbTEzpvb79QnEZQu6Oros1V
+ gnVV6cp8iQ/kjb9hLMZ7KyIf3uMn5A7GvcU6BEmDIrsjbHDvuM1Ct6AYD1jNGTkoBcaG
+ nPOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761719690; x=1762324490;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ry0M+9kopk7MNnN3poBXxumoJIxvGoLsSMglqpbFUSM=;
+ b=lNriwse0po5Xl9JzLWg1eliKKOKN1GNDGw4ZucFGYBtuhYb9reBnPos/BE+fOMZh29
+ Ylj9h7xsVIKofoo/En87XLC6y6+FeSqK7DVO7OXOD3JDrPLXeL/S4gVjxBg/ptac9uN8
+ 2RC2Gg4c70FcYi9p1TCATjplBG/5rbKi1wWV2sNiRj24uPGil0XBfoiPhi+tR/u86fRT
+ VG9A0oKmiUKoigRRrNwQCX7Qyv1lgxzuBU1r66+rh1g4c0XsYVIaol6+kUoU3V6wkPUJ
+ hNouzeJYRtFIT5RqAm5dvu2UZMaWXIY9jFckaIiGTXOtpLLzqx04D9DnyJY3jhjUcE9s
+ eiWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSlxKwc+jlYQMbKDT2YRxeMbZx5Vg+CD2a3GufWPoYKaEYoS7v5wGi7ifAU4R0ySrt8b7iXrPZa2+D@nongnu.org
+X-Gm-Message-State: AOJu0Yw92ZmGNU3koWbNNUW98/LH+lqNC8v3wwl0Wz5LLgF02sJElFUB
+ kQfDkOlkNy14p09xy+XKNr0FpmLbewqmgRVVhsBY2GhkvMB4v9w4OAT5Zu9ZWvlXMQY=
+X-Gm-Gg: ASbGnculermlPWSqrZTuH5/f2O2rBAoNs/KS7pcf3jzr+APzcbLVevPpnXk1f3l7TEm
+ sMoBucKTmmwFPjD/HVfqGM+KtK2vw4FBvMriQ6kqkRv9Y9BtlwEtTMEttDT+zrzEjBlNLfV/ZRD
+ oYOnN2xpjCj5M55qpW8d9DIkozsiHrT+Dd6l0Hx4uEBlPpKGdZEbSJZFIF0oFv15tc7t/vg/BkR
+ 1jRRy6YHof8WuynimuZuq6vFugE1ZdaTL722RMS4qjEEcMplT28kUOUFNOGX+PQXySlgro878Xx
+ 7z72e29sr/Y7lgBsol/sk4+JHR621dmp/NmUlMS4OXpNW3WCNuvu/j/zUHjLfcFoSRgC7b875x+
+ 8d4pzUNcWGguKQXSFjRHYdSKQAYSK2bwJxXDYGM5eDI4UfVQyiIAine1j8ghrJyXTeTtdxnUH4C
+ v2aKqfcjXRcV/F42Na
+X-Google-Smtp-Source: AGHT+IHMTas65ns31ln779kL9I3LLiFDDwTTOM76b5e2WynOHBnGiMk8/dup1SKnnax8AeJrLyEyQQ==
+X-Received: by 2002:a05:6402:518c:b0:63e:1643:de4c with SMTP id
+ 4fb4d7f45d1cf-640441a8165mr1192626a12.7.1761719690091; 
+ Tue, 28 Oct 2025 23:34:50 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-64043e05a5esm1286303a12.4.2025.10.28.23.34.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 23:34:49 -0700 (PDT)
+Message-ID: <05b5eff7-ad25-428e-8468-8b71878aad2c@linaro.org>
+Date: Wed, 29 Oct 2025 07:34:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 18/18] rust: migration: allow passing ParentField<> to
+ vmstate_of!
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Chen Miao <chenmiao@openatom.club>
+References: <20251028173430.2180057-1-pbonzini@redhat.com>
+ <20251028173430.2180057-19-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251028173430.2180057-19-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251029-force_rcu-v1-2-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
-References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,151 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_event_timedwait() is equivalent to qemu_event_wait(), except it has
-a relative timeout.
+On 10/28/25 18:34, Paolo Bonzini wrote:
+> The common superclass for devices could have its own migration state;
+> for it to be included in the subclass's VMState, ParentField<> must
+> implement the VMState trait.
+> 
+> Reported-by: Chen Miao <chenmiao@openatom.club>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   roms/opensbi                  | 2 +-
+>   rust/migration/src/vmstate.rs | 3 ++-
+>   rust/qom/src/qom.rs           | 3 ++-
+>   3 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/roms/opensbi b/roms/opensbi
+> index a32a9106911..43cace6c367 160000
+> --- a/roms/opensbi
+> +++ b/roms/opensbi
+> @@ -1 +1 @@
+> -Subproject commit a32a91069119e7a5aa31e6bc51d5e00860be3d80
+> +Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- include/qemu/thread-posix.h | 11 +++++++++++
- include/qemu/thread.h       |  8 +++++++-
- util/event.c                | 34 +++++++++++++++++++++++++++++-----
- util/qemu-thread-posix.c    | 11 +----------
- 4 files changed, 48 insertions(+), 16 deletions(-)
+Spurious subproject change.
 
-diff --git a/include/qemu/thread-posix.h b/include/qemu/thread-posix.h
-index 758808b705e4..11193b1580f8 100644
---- a/include/qemu/thread-posix.h
-+++ b/include/qemu/thread-posix.h
-@@ -36,4 +36,15 @@ struct QemuThread {
-     pthread_t thread;
- };
- 
-+static inline clockid_t qemu_timedwait_clockid(void)
-+{
-+#ifdef CONFIG_PTHREAD_CONDATTR_SETCLOCK
-+    return CLOCK_MONOTONIC;
-+#else
-+    return CLOCK_REALTIME;
-+#endif
-+}
-+
-+void compute_abs_deadline(struct timespec *ts, int ms);
-+
- #endif
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index f0302ed01fdb..3030458bb666 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -201,7 +201,13 @@ void qemu_sem_destroy(QemuSemaphore *sem);
- void qemu_event_init(QemuEvent *ev, bool init);
- void qemu_event_set(QemuEvent *ev);
- void qemu_event_reset(QemuEvent *ev);
--void qemu_event_wait(QemuEvent *ev);
-+bool qemu_event_timedwait(QemuEvent *ev, int ms);
-+
-+static inline void qemu_event_wait(QemuEvent *ev)
-+{
-+    qemu_event_timedwait(ev, INT_MAX);
-+}
-+
- void qemu_event_destroy(QemuEvent *ev);
- 
- void qemu_thread_create(QemuThread *thread, const char *name,
-diff --git a/util/event.c b/util/event.c
-index 5a8141cd0e46..e22cc08a629b 100644
---- a/util/event.c
-+++ b/util/event.c
-@@ -33,7 +33,15 @@ void qemu_event_init(QemuEvent *ev, bool init)
- {
- #ifndef HAVE_FUTEX
-     pthread_mutex_init(&ev->lock, NULL);
-+#ifdef CONFIG_PTHREAD_CONDATTR_SETCLOCK
-+    pthread_condattr_t attr;
-+    pthread_condattr_init(&attr);
-+    pthread_condattr_setclock(&attr, qemu_timedwait_clockid());
-+    pthread_cond_init(&ev->cond, &attr);
-+    pthread_condattr_destroy(&attr);
-+#else
-     pthread_cond_init(&ev->cond, NULL);
-+#endif
- #endif
- 
-     ev->value = (init ? EV_SET : EV_FREE);
-@@ -121,15 +129,17 @@ void qemu_event_reset(QemuEvent *ev)
- #endif
- }
- 
--void qemu_event_wait(QemuEvent *ev)
-+bool qemu_event_timedwait(QemuEvent *ev, int ms)
- {
-     assert(ev->initialized);
- 
- #ifdef HAVE_FUTEX
-+    int64_t deadline = get_clock() + (int64_t)ms * SCALE_MS;
-+
-     while (true) {
-         /*
--         * qemu_event_wait must synchronize with qemu_event_set even if it does
--         * not go down the slow path, so this load-acquire is needed that
-+         * qemu_event_timedwait must synchronize with qemu_event_set even if it
-+         * does not go down the slow path, so this load-acquire is needed that
-          * synchronizes with the first memory barrier in qemu_event_set().
-          */
-         unsigned value = qatomic_load_acquire(&ev->value);
-@@ -159,13 +169,27 @@ void qemu_event_wait(QemuEvent *ev)
-          * a smp_mb() pairing with the second barrier of qemu_event_set().
-          * The barrier is inside the FUTEX_WAIT system call.
-          */
--        qemu_futex_wait(ev, EV_BUSY);
-+        if (!qemu_futex_timedwait(ev, EV_BUSY, deadline)) {
-+            return false;
-+        }
-     }
-+
-+    return true;
- #else
-+    bool failed;
-+    struct timespec ts;
-+
-+    compute_abs_deadline(&ts, ms);
-+
-     pthread_mutex_lock(&ev->lock);
-     while (qatomic_read(&ev->value) != EV_SET) {
--        pthread_cond_wait(&ev->cond, &ev->lock);
-+        failed = pthread_cond_timedwait(&ev->cond, &ev->lock, &ts);
-+        if (failed) {
-+            break;
-+        }
-     }
-     pthread_mutex_unlock(&ev->lock);
-+
-+    return !failed;
- #endif
- }
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index ba725444ba63..f649bfa00015 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -44,16 +44,7 @@ static void error_exit(int err, const char *msg)
-     abort();
- }
- 
--static inline clockid_t qemu_timedwait_clockid(void)
--{
--#ifdef CONFIG_PTHREAD_CONDATTR_SETCLOCK
--    return CLOCK_MONOTONIC;
--#else
--    return CLOCK_REALTIME;
--#endif
--}
--
--static void compute_abs_deadline(struct timespec *ts, int ms)
-+void compute_abs_deadline(struct timespec *ts, int ms)
- {
-     clock_gettime(qemu_timedwait_clockid(), ts);
-     ts->tv_nsec += (ms % 1000) * 1000000;
 
--- 
-2.51.0
+r~
+
+> diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+> index 42e5df8d818..5a237c409ac 100644
+> --- a/rust/migration/src/vmstate.rs
+> +++ b/rust/migration/src/vmstate.rs
+> @@ -268,7 +268,7 @@ macro_rules! impl_vmstate_transparent {
+>       ($type:ty where $base:tt: VMState $($where:tt)*) => {
+>           unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmstate::VMState $($where)* {
+>               const BASE: $crate::vmstate::VMStateField = $crate::vmstate::VMStateField {
+> -                size: mem::size_of::<$type>(),
+> +                size: ::core::mem::size_of::<$type>(),
+>                   ..<$base as $crate::vmstate::VMState>::BASE
+>               };
+>               const VARRAY_FLAG: $crate::bindings::VMStateFlags = <$base as $crate::vmstate::VMState>::VARRAY_FLAG;
+> @@ -282,6 +282,7 @@ unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmsta
+>   impl_vmstate_transparent!(std::cell::UnsafeCell<T> where T: VMState);
+>   impl_vmstate_transparent!(std::pin::Pin<T> where T: VMState);
+>   impl_vmstate_transparent!(common::Opaque<T> where T: VMState);
+> +impl_vmstate_transparent!(std::mem::ManuallyDrop<T> where T: VMState);
+>   
+>   #[macro_export]
+>   macro_rules! impl_vmstate_bitsized {
+> diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
+> index 5808051cd77..84455cea79b 100644
+> --- a/rust/qom/src/qom.rs
+> +++ b/rust/qom/src/qom.rs
+> @@ -102,7 +102,7 @@
+>   };
+>   
+>   use common::Opaque;
+> -use migration::impl_vmstate_pointer;
+> +use migration::{impl_vmstate_pointer, impl_vmstate_transparent};
+>   
+>   use crate::bindings::{
+>       self, object_class_dynamic_cast, object_dynamic_cast, object_get_class, object_get_typename,
+> @@ -182,6 +182,7 @@ fn as_ref(&self) -> &$parent {
+>   #[derive(Debug)]
+>   #[repr(transparent)]
+>   pub struct ParentField<T: ObjectType>(std::mem::ManuallyDrop<T>);
+> +impl_vmstate_transparent!(ParentField<T> where T: VMState + ObjectType);
+>   
+>   impl<T: ObjectType> Deref for ParentField<T> {
+>       type Target = T;
 
 
