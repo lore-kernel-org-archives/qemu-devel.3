@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B009BCCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A76CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxyE-0001Ql-HX; Wed, 29 Oct 2025 00:39:38 -0400
+	id 1vDxyO-0001ps-5M; Wed, 29 Oct 2025 00:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxy8-0001Bw-46; Wed, 29 Oct 2025 00:39:35 -0400
+ id 1vDxyL-0001m6-93; Wed, 29 Oct 2025 00:39:45 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxy3-0004Ya-42; Wed, 29 Oct 2025 00:39:31 -0400
+ id 1vDxyA-0004Ya-9D; Wed, 29 Oct 2025 00:39:43 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 29 Oct
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 13/17] hw/arm/aspeed: Split Catalina machine into a
+Subject: [PATCH v2 14/17] hw/arm/aspeed: Split AST2600 EVB machine into a
  separate source file for maintainability
-Date: Wed, 29 Oct 2025 12:36:59 +0800
-Message-ID: <20251029043710.1486573-14-jamin_lin@aspeedtech.com>
+Date: Wed, 29 Oct 2025 12:37:00 +0800
+Message-ID: <20251029043710.1486573-15-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 References: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
@@ -67,281 +67,116 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the Facebook Catalina BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_catalina.c.
+This commit moves the Aspeed AST2600 EVB machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2600_evb.c.
 
-This refactor continues the ongoing modularization of Aspeed platform
-support, organizing each board’s logic into its own dedicated source file.
-It improves maintainability, readability, and simplifies future
-development of new BMC platforms without cluttering aspeed.c.
+This refactor continues the modularization effort of the Aspeed platform
+machine definitions, separating each board’s initialization logic into its
+own dedicated source file. It improves code maintainability, readability,
+and reduces clutter in aspeed.c, simplifying future platform extensions.
 
 Key updates include:
-- Moved CATALINA_BMC_HW_STRAP1 and CATALINA_BMC_HW_STRAP2 macro definitions
-  into the new file.
-- Moved catalina_bmc_i2c_init() and all Catalina-specific I2C device setup
-  into the new aspeed_ast2600_catalina.c file.
-- Moved aspeed_machine_catalina_class_init() and type registration logic
+- Removed AST2600_EVB_HW_STRAP1 and AST2600_EVB_HW_STRAP2 macro definitions.
+- Moved ast2600_evb_i2c_init() and related device initialization code into
+  the new aspeed_ast2600_evb.c file.
+- Moved aspeed_machine_ast2600_evb_class_init() and type registration logic
   out of aspeed.c.
-- Cleaned up all Catalina-specific code and macros from aspeed.c.
-- Added aspeed_ast2600_catalina.c to the Meson build system (meson.build).
+- Added aspeed_ast2600_evb.c to the Meson build system (meson.build).
+- Cleaned up all AST2600 EVB-specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c                  | 204 ----------------------------
- hw/arm/aspeed_ast2600_catalina.c | 224 +++++++++++++++++++++++++++++++
- hw/arm/meson.build               |   1 +
- 3 files changed, 225 insertions(+), 204 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_catalina.c
+ hw/arm/aspeed.c             | 43 -------------------------
+ hw/arm/aspeed_ast2600_evb.c | 64 +++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build          |  1 +
+ 3 files changed, 65 insertions(+), 43 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2600_evb.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 36c3daa903..81099e56b5 100644
+index 81099e56b5..74d35021db 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -15,11 +15,9 @@
- #include "hw/arm/aspeed.h"
- #include "hw/arm/aspeed_soc.h"
- #include "hw/block/flash.h"
--#include "hw/i2c/i2c_mux_pca954x.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/gpio/pca9552.h"
- #include "hw/gpio/pca9554.h"
--#include "hw/nvram/eeprom_at24c.h"
- #include "hw/sensor/tmp105.h"
- #include "hw/misc/led.h"
- #include "hw/qdev-properties.h"
-@@ -294,184 +292,6 @@ I2CSlave *create_pca9554(AspeedSoCState *soc, int bus_id, int addr)
-                             TYPE_PCA9554, addr);
- }
- 
--#define TYPE_LM75 TYPE_TMP105
--#define TYPE_TMP75 TYPE_TMP105
--#define TYPE_TMP421 "tmp421"
--#define TYPE_DS1338 "ds1338"
--
--/* Catalina hardware value */
--#define CATALINA_BMC_HW_STRAP1 0x00002002
--#define CATALINA_BMC_HW_STRAP2 0x00000800
--
--#define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
--
--static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
--{
--    /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
--
--    AspeedSoCState *soc = bmc->soc;
--    I2CBus *i2c[16] = {};
--    I2CSlave *i2c_mux;
--
--    /* busses 0-15 are all used. */
--    for (int i = 0; i < ARRAY_SIZE(i2c); i++) {
--        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
--    }
--
--    /* &i2c0 */
--    /* i2c-mux@71 (PCA9546) on i2c0 */
--    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
--
--    /* i2c-mux@72 (PCA9546) on i2c0 */
--    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x72);
--
--    /* i2c0mux1ch1 */
--    /* io_expander7 - pca9535@20 */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
--                            TYPE_PCA9552, 0x20);
--    /* eeprom@50 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB);
--
--    /* i2c-mux@73 (PCA9546) on i2c0 */
--    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x73);
--
--    /* i2c-mux@75 (PCA9546) on i2c0 */
--    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
--
--    /* i2c-mux@76 (PCA9546) on i2c0 */
--    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x76);
--
--    /* i2c0mux4ch1 */
--    /* io_expander8 - pca9535@21 */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
--                            TYPE_PCA9552, 0x21);
--    /* eeprom@50 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB);
--
--    /* i2c-mux@77 (PCA9546) on i2c0 */
--    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x77);
--
--
--    /* &i2c1 */
--    /* i2c-mux@70 (PCA9548) on i2c1 */
--    i2c_mux = i2c_slave_create_simple(i2c[1], TYPE_PCA9548, 0x70);
--    /* i2c1mux0ch0 */
--    /* ina238@41 - no model */
--    /* ina238@42 - no model */
--    /* ina238@44 - no model */
--    /* i2c1mux0ch1 */
--    /* ina238@41 - no model */
--    /* ina238@43 - no model */
--    /* i2c1mux0ch4 */
--    /* ltc4287@42 - no model */
--    /* ltc4287@43 - no model */
--
--    /* i2c1mux0ch5 */
--    /* eeprom@54 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB);
--    /* tpm75@4f */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
--
--    /* i2c1mux0ch6 */
--    /* io_expander5 - pca9554@27 */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
--                            TYPE_PCA9554, 0x27);
--    /* io_expander6 - pca9555@25 */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
--                            TYPE_PCA9552, 0x25);
--    /* eeprom@51 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 6), 0x51, 8 * KiB);
--
--    /* i2c1mux0ch7 */
--    /* eeprom@53 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 7), 0x53, 8 * KiB);
--    /* temperature-sensor@4b - tmp75 */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
--
--    /* &i2c2 */
--    /* io_expander0 - pca9555@20 */
--    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x20);
--    /* io_expander0 - pca9555@21 */
--    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x21);
--    /* io_expander0 - pca9555@27 */
--    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x27);
--    /* eeprom@50 */
--    at24c_eeprom_init(i2c[2], 0x50, 8 * KiB);
--    /* eeprom@51 */
--    at24c_eeprom_init(i2c[2], 0x51, 8 * KiB);
--
--    /* &i2c5 */
--    /* i2c-mux@70 (PCA9548) on i2c5 */
--    i2c_mux = i2c_slave_create_simple(i2c[5], TYPE_PCA9548, 0x70);
--    /* i2c5mux0ch6 */
--    /* eeprom@52 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 6), 0x52, 8 * KiB);
--    /* i2c5mux0ch7 */
--    /* ina230@40 - no model */
--    /* ina230@41 - no model */
--    /* ina230@44 - no model */
--    /* ina230@45 - no model */
--
--    /* &i2c6 */
--    /* io_expander3 - pca9555@21 */
--    i2c_slave_create_simple(i2c[6], TYPE_PCA9552, 0x21);
--    /* rtc@6f - nct3018y */
--    i2c_slave_create_simple(i2c[6], TYPE_DS1338, 0x6f);
--
--    /* &i2c9 */
--    /* io_expander4 - pca9555@4f */
--    i2c_slave_create_simple(i2c[9], TYPE_PCA9552, 0x4f);
--    /* temperature-sensor@4b - tpm75 */
--    i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4b);
--    /* eeprom@50 */
--    at24c_eeprom_init(i2c[9], 0x50, 8 * KiB);
--    /* eeprom@56 */
--    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
--
--    /* &i2c10 */
--    /* temperature-sensor@1f - tpm421 */
--    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x1f);
--    /* eeprom@50 */
--    at24c_eeprom_init(i2c[10], 0x50, 8 * KiB);
--
--    /* &i2c11 */
--    /* ssif-bmc@10 - no model */
--
--    /* &i2c12 */
--    /* eeprom@50 */
--    at24c_eeprom_init(i2c[12], 0x50, 8 * KiB);
--
--    /* &i2c13 */
--    /* eeprom@50 */
--    at24c_eeprom_init(i2c[13], 0x50, 8 * KiB);
--    /* eeprom@54 */
--    at24c_eeprom_init(i2c[13], 0x54, 256);
--    /* eeprom@55 */
--    at24c_eeprom_init(i2c[13], 0x55, 256);
--    /* eeprom@57 */
--    at24c_eeprom_init(i2c[13], 0x57, 256);
--
--    /* &i2c14 */
--    /* io_expander9 - pca9555@10 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x10);
--    /* io_expander10 - pca9555@11 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x11);
--    /* io_expander11 - pca9555@12 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x12);
--    /* io_expander12 - pca9555@13 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x13);
--    /* io_expander13 - pca9555@14 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x14);
--    /* io_expander14 - pca9555@15 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x15);
--
--    /* &i2c15 */
--    /* temperature-sensor@1f - tmp421 */
--    i2c_slave_create_simple(i2c[15], TYPE_TMP421, 0x1f);
--    /* eeprom@52 */
--    at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
--}
--
- static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
- {
-     return ASPEED_MACHINE(obj)->mmio_exec;
-@@ -650,26 +470,6 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
-     aspeed_machine_ast2600_class_emmc_init(oc);
+@@ -32,10 +32,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+     .board_id = -1, /* device-tree-only board */
  };
  
--static void aspeed_machine_catalina_class_init(ObjectClass *oc,
--                                               const void *data)
+-/* AST2600 evb hardware value */
+-#define AST2600_EVB_HW_STRAP1 0x000000C0
+-#define AST2600_EVB_HW_STRAP2 0x00000003
+-
+ #ifdef TARGET_AARCH64
+ /* AST2700 evb hardware value */
+ /* SCU HW Strap1 */
+@@ -267,19 +263,6 @@ static void aspeed_machine_init(MachineState *machine)
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
+ }
+ 
+-static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-    uint8_t *eeprom_buf = g_malloc0(8 * 1024);
+-
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 7), 0x50,
+-                          eeprom_buf);
+-
+-    /* LM75 is compatible with TMP105 driver */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
+-                     TYPE_TMP105, 0x4d);
+-}
+-
+ void create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+ {
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
+@@ -448,28 +431,6 @@ static void aspeed_machine_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_class_props_init(oc);
+ }
+ 
+-static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
+-                                                  const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Facebook Catalina BMC (Cortex-A7)";
+-    mc->desc       = "Aspeed AST2600 EVB (Cortex-A7)";
 -    amc->soc_name  = "ast2600-a3";
--    amc->hw_strap1 = CATALINA_BMC_HW_STRAP1;
--    amc->hw_strap2 = CATALINA_BMC_HW_STRAP2;
--    amc->fmc_model = "w25q01jvq";
--    amc->spi_model = NULL;
--    amc->num_cs    = 2;
--    amc->macs_mask = ASPEED_MAC2_ON;
--    amc->i2c_init  = catalina_bmc_i2c_init;
--    mc->default_ram_size = CATALINA_BMC_RAM_SIZE;
+-    amc->hw_strap1 = AST2600_EVB_HW_STRAP1;
+-    amc->hw_strap2 = AST2600_EVB_HW_STRAP2;
+-    amc->fmc_model = "w25q512jv";
+-    amc->spi_model = "w25q512jv";
+-    amc->num_cs    = 1;
+-    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON |
+-                     ASPEED_MAC3_ON;
+-    amc->sdhci_wp_inverted = true;
+-    amc->i2c_init  = ast2600_evb_i2c_init;
+-    mc->default_ram_size = 1 * GiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -    aspeed_machine_ast2600_class_emmc_init(oc);
--}
+-};
 -
  #define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
  /* Main SYSCLK frequency in Hz (200MHz) */
  #define SYSCLK_FRQ 200000000ULL
-@@ -809,10 +609,6 @@ static const TypeInfo aspeed_machine_types[] = {
-         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2600_evb_class_init,
--    }, {
--        .name          = MACHINE_TYPE_NAME("catalina-bmc"),
+@@ -606,10 +567,6 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+ 
+ static const TypeInfo aspeed_machine_types[] = {
+     {
+-        .name          = MACHINE_TYPE_NAME("ast2600-evb"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_catalina_class_init,
-     }, {
+-        .class_init    = aspeed_machine_ast2600_evb_class_init,
+-    }, {
          .name           = MACHINE_TYPE_NAME("ast1030-evb"),
          .parent         = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+diff --git a/hw/arm/aspeed_ast2600_evb.c b/hw/arm/aspeed_ast2600_evb.c
 new file mode 100644
-index 0000000000..5a44bf9122
+index 0000000000..07c46b7826
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_catalina.c
-@@ -0,0 +1,224 @@
++++ b/hw/arm/aspeed_ast2600_evb.c
+@@ -0,0 +1,64 @@
 +/*
-+ * Facebook Catalina
++ * ASPEED AST2600 EVB
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -352,227 +187,67 @@ index 0000000000..5a44bf9122
 +#include "qapi/error.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/i2c/i2c_mux_pca954x.h"
-+#include "hw/gpio/pca9552.h"
-+#include "hw/gpio/pca9554.h"
-+#include "hw/nvram/eeprom_at24c.h"
++#include "hw/i2c/smbus_eeprom.h"
 +#include "hw/sensor/tmp105.h"
 +
-+/* Catalina hardware value */
-+#define CATALINA_BMC_HW_STRAP1 0x00002002
-+#define CATALINA_BMC_HW_STRAP2 0x00000800
-+#define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
++/* AST2600 evb hardware value */
++#define AST2600_EVB_HW_STRAP1 0x000000C0
++#define AST2600_EVB_HW_STRAP2 0x00000003
 +
-+#define TYPE_TMP75 TYPE_TMP105
-+#define TYPE_TMP421 "tmp421"
-+#define TYPE_DS1338 "ds1338"
-+
-+static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
++static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
 +{
-+    /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
-+
 +    AspeedSoCState *soc = bmc->soc;
-+    I2CBus *i2c[16] = {};
-+    I2CSlave *i2c_mux;
++    uint8_t *eeprom_buf = g_malloc0(8 * 1024);
 +
-+    /* busses 0-15 are all used. */
-+    for (int i = 0; i < ARRAY_SIZE(i2c); i++) {
-+        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
-+    }
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 7), 0x50,
++                          eeprom_buf);
 +
-+    /* &i2c0 */
-+    /* i2c-mux@71 (PCA9546) on i2c0 */
-+    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
-+
-+    /* i2c-mux@72 (PCA9546) on i2c0 */
-+    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x72);
-+
-+    /* i2c0mux1ch1 */
-+    /* io_expander7 - pca9535@20 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
-+                            TYPE_PCA9552, 0x20);
-+    /* eeprom@50 */
-+    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB);
-+
-+    /* i2c-mux@73 (PCA9546) on i2c0 */
-+    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x73);
-+
-+    /* i2c-mux@75 (PCA9546) on i2c0 */
-+    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
-+
-+    /* i2c-mux@76 (PCA9546) on i2c0 */
-+    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x76);
-+
-+    /* i2c0mux4ch1 */
-+    /* io_expander8 - pca9535@21 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
-+                            TYPE_PCA9552, 0x21);
-+    /* eeprom@50 */
-+    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB);
-+
-+    /* i2c-mux@77 (PCA9546) on i2c0 */
-+    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x77);
-+
-+
-+    /* &i2c1 */
-+    /* i2c-mux@70 (PCA9548) on i2c1 */
-+    i2c_mux = i2c_slave_create_simple(i2c[1], TYPE_PCA9548, 0x70);
-+    /* i2c1mux0ch0 */
-+    /* ina238@41 - no model */
-+    /* ina238@42 - no model */
-+    /* ina238@44 - no model */
-+    /* i2c1mux0ch1 */
-+    /* ina238@41 - no model */
-+    /* ina238@43 - no model */
-+    /* i2c1mux0ch4 */
-+    /* ltc4287@42 - no model */
-+    /* ltc4287@43 - no model */
-+
-+    /* i2c1mux0ch5 */
-+    /* eeprom@54 */
-+    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB);
-+    /* tpm75@4f */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
-+
-+    /* i2c1mux0ch6 */
-+    /* io_expander5 - pca9554@27 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
-+                            TYPE_PCA9554, 0x27);
-+    /* io_expander6 - pca9555@25 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
-+                            TYPE_PCA9552, 0x25);
-+    /* eeprom@51 */
-+    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 6), 0x51, 8 * KiB);
-+
-+    /* i2c1mux0ch7 */
-+    /* eeprom@53 */
-+    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 7), 0x53, 8 * KiB);
-+    /* temperature-sensor@4b - tmp75 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
-+
-+    /* &i2c2 */
-+    /* io_expander0 - pca9555@20 */
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x20);
-+    /* io_expander0 - pca9555@21 */
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x21);
-+    /* io_expander0 - pca9555@27 */
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x27);
-+    /* eeprom@50 */
-+    at24c_eeprom_init(i2c[2], 0x50, 8 * KiB);
-+    /* eeprom@51 */
-+    at24c_eeprom_init(i2c[2], 0x51, 8 * KiB);
-+
-+    /* &i2c5 */
-+    /* i2c-mux@70 (PCA9548) on i2c5 */
-+    i2c_mux = i2c_slave_create_simple(i2c[5], TYPE_PCA9548, 0x70);
-+    /* i2c5mux0ch6 */
-+    /* eeprom@52 */
-+    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 6), 0x52, 8 * KiB);
-+    /* i2c5mux0ch7 */
-+    /* ina230@40 - no model */
-+    /* ina230@41 - no model */
-+    /* ina230@44 - no model */
-+    /* ina230@45 - no model */
-+
-+    /* &i2c6 */
-+    /* io_expander3 - pca9555@21 */
-+    i2c_slave_create_simple(i2c[6], TYPE_PCA9552, 0x21);
-+    /* rtc@6f - nct3018y */
-+    i2c_slave_create_simple(i2c[6], TYPE_DS1338, 0x6f);
-+
-+    /* &i2c9 */
-+    /* io_expander4 - pca9555@4f */
-+    i2c_slave_create_simple(i2c[9], TYPE_PCA9552, 0x4f);
-+    /* temperature-sensor@4b - tpm75 */
-+    i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4b);
-+    /* eeprom@50 */
-+    at24c_eeprom_init(i2c[9], 0x50, 8 * KiB);
-+    /* eeprom@56 */
-+    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
-+
-+    /* &i2c10 */
-+    /* temperature-sensor@1f - tpm421 */
-+    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x1f);
-+    /* eeprom@50 */
-+    at24c_eeprom_init(i2c[10], 0x50, 8 * KiB);
-+
-+    /* &i2c11 */
-+    /* ssif-bmc@10 - no model */
-+
-+    /* &i2c12 */
-+    /* eeprom@50 */
-+    at24c_eeprom_init(i2c[12], 0x50, 8 * KiB);
-+
-+    /* &i2c13 */
-+    /* eeprom@50 */
-+    at24c_eeprom_init(i2c[13], 0x50, 8 * KiB);
-+    /* eeprom@54 */
-+    at24c_eeprom_init(i2c[13], 0x54, 256);
-+    /* eeprom@55 */
-+    at24c_eeprom_init(i2c[13], 0x55, 256);
-+    /* eeprom@57 */
-+    at24c_eeprom_init(i2c[13], 0x57, 256);
-+
-+    /* &i2c14 */
-+    /* io_expander9 - pca9555@10 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x10);
-+    /* io_expander10 - pca9555@11 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x11);
-+    /* io_expander11 - pca9555@12 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x12);
-+    /* io_expander12 - pca9555@13 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x13);
-+    /* io_expander13 - pca9555@14 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x14);
-+    /* io_expander14 - pca9555@15 */
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x15);
-+
-+    /* &i2c15 */
-+    /* temperature-sensor@1f - tmp421 */
-+    i2c_slave_create_simple(i2c[15], TYPE_TMP421, 0x1f);
-+    /* eeprom@52 */
-+    at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
++    /* LM75 is compatible with TMP105 driver */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
++                     TYPE_TMP105, 0x4d);
 +}
 +
-+static void aspeed_machine_catalina_class_init(ObjectClass *oc,
-+                                               const void *data)
++static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
++                                                  const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Facebook Catalina BMC (Cortex-A7)";
++    mc->desc       = "Aspeed AST2600 EVB (Cortex-A7)";
 +    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = CATALINA_BMC_HW_STRAP1;
-+    amc->hw_strap2 = CATALINA_BMC_HW_STRAP2;
-+    amc->fmc_model = "w25q01jvq";
-+    amc->spi_model = NULL;
-+    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC2_ON;
-+    amc->i2c_init  = catalina_bmc_i2c_init;
-+    mc->default_ram_size = CATALINA_BMC_RAM_SIZE;
++    amc->hw_strap1 = AST2600_EVB_HW_STRAP1;
++    amc->hw_strap2 = AST2600_EVB_HW_STRAP2;
++    amc->fmc_model = "w25q512jv";
++    amc->spi_model = "w25q512jv";
++    amc->num_cs    = 1;
++    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON |
++                     ASPEED_MAC3_ON;
++    amc->sdhci_wp_inverted = true;
++    amc->i2c_init  = ast2600_evb_i2c_init;
++    mc->default_ram_size = 1 * GiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +    aspeed_machine_ast2600_class_emmc_init(oc);
-+}
++};
 +
-+static const TypeInfo aspeed_ast2600_catalina_types[] = {
++static const TypeInfo aspeed_ast2600_evb_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("catalina-bmc"),
++        .name          = MACHINE_TYPE_NAME("ast2600-evb"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_catalina_class_init,
++        .class_init    = aspeed_machine_ast2600_evb_class_init,
 +    },
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_catalina_types)
++DEFINE_TYPES(aspeed_ast2600_evb_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index e81dad1ac4..75d25626d1 100644
+index 75d25626d1..c3c054b74e 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -58,6 +58,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2500_yosemitev2.c',
+@@ -59,6 +59,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
    'aspeed_ast2600.c',
    'aspeed_ast2600_bletchley.c',
-+  'aspeed_ast2600_catalina.c',
+   'aspeed_ast2600_catalina.c',
++  'aspeed_ast2600_evb.c',
    'aspeed_ast2600_fby35.c',
    'aspeed_ast2600_fuji.c',
    'aspeed_ast2600_gb200nvl.c',
