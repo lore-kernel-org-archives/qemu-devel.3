@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65856CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 21:42:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A385CCF9F5
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 21:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEDui-00059s-GL; Wed, 29 Oct 2025 17:41:05 -0400
+	id 1vEDuB-000520-Fx; Wed, 29 Oct 2025 17:40:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDub-00058j-2g
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:40:57 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDu9-00051B-A2
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:40:29 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDuM-0005kN-E6
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:40:56 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-475dd559b0bso4178915e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 14:40:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEDtx-0005Xn-CM
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 17:40:26 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4770c2cd96fso2320145e9.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 14:40:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761774032; x=1762378832; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ncKmPlVytzymp+1TPUudiFEf8xHLOE7bUhfZrx7l5p4=;
- b=c6HBNVgAqyTvOr0AYKIbbySaRFIJg24QCLNqVzy92EedZh+Ge8LgLxKVC1M6Pt8x7H
- MJJlN0PYs4r8gACkaZSlRX4nRiR29ois5yBzz616Bhn/uGTRXzXv8210RJ0X0xxYkYkL
- YbEcNPJBYV8zFBZhC7okXg8Gw84qLUqs+rmBFabRBM9i+Y3XjynnueR41hypJYOnKqN8
- 9OFKQEgfNJqtXaTAX+p6aArEkCS5+i2cNoL0RUuNiuAxXdxiAH4Ay9pDrazVnQ09gHYQ
- qhV2BZZu3ohWoDOJXxJP90ZCSK0AgJDdcMcSRzzqUiYOD62V3X4lBR4e+yTFdAco1ayb
- e9XQ==
+ d=linaro.org; s=google; t=1761774003; x=1762378803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uY7fmVdMvGJL7gcl8U60RZO8Bwcu1zFyXw5gGAJaj1Q=;
+ b=lCn4hB2Tbom33fj2nA/GaTb0aXlFltdbB6kg2bIdPEH9IUuqmM1XXyJYvEnApuCHNC
+ rJqgYv63cTAPj+1ft9OvSoPYMnNo1JZx3/9gFpE1DzBU84o0weC10YURMv758kJpol0z
+ xr8/LqGkbZWIwq2Hr0maboOs4camVJnvFef1JlB9aEzZzIQeEMF5S5/uVZPT++jF5rh0
+ h3bVEfxfCK3aCNVh49yKrafjZCrK83dUuLzlSsYAe3AqucgZ5zhqg2uQcuxqP7VY8t5h
+ XpiPPocW41F0iuk1/BGnvZRNzUh/ApvJ4l5dOU2DvaMHfxRKMKyw9LE4XmRYwiDGcCma
+ eB8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761774032; x=1762378832;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ncKmPlVytzymp+1TPUudiFEf8xHLOE7bUhfZrx7l5p4=;
- b=po31GEknaRibeU4lctwO5VoQt+GFIhEtCiFx28pHqiyF4EOCYpZEuwZZ/h6kE9hNDX
- Nq1vXPxplKMC8IhY5kG5/KxUCs3pu3zfbIz6Z9bhJ24x8dCEj2oJFfx/zUnDWpNxxtg2
- IX7Mt6684csqUFyG6lXm+Lg9jYWRofNRPh+ZwFjQrz/q9+dUxInVVEeXuWCWSWTbCsUS
- YJNyEg7R6Ap3+2MaN2mPWl77FFEB7m8fHn/8gvCrxjHVXrSTs3Wy7A2v7/jg2/OVUywD
- K0Q9mmkfyaXWFID9aRCh4NR7wo2KfSYunglA+KNplduHrBvQekHWBpZZKl07pYh/h05F
- E39Q==
-X-Gm-Message-State: AOJu0YyS0v4LNaHZtew2ewnKAYL7nvZ+GRewyS9ttv2t99pauq6bWzM3
- BL6jbYSW+xjVgwhVo83d9BzkfG2PXHg/9w67+2nshOQhVs5AKtEmGeOr5yEygQKLThg=
-X-Gm-Gg: ASbGncv+Y35oxJfw6tghixGOndzLVyXv68M9DMsLJuOzaulJt+0BwpDPVGSjUxlzcXn
- q3E+b7Rha225lGHs1OkARhlxcOYe9cWMkAi6CwJ5xGsYqpxyEau4c1elU3tXX0076FdgJ87OJc3
- eAUUM119FD9uhzokIVvvIvDg09UL8jGOUkprUaRdzxaWmaX8MpI8jEz+iy4q7N5vnrAE0KccO0L
- skaWAbGUPYklzuYasa2GE3RMO1Lf2zrqFAbv3IistF2IotycHCZYR4URLlZFm7eKc54QfXTOQf9
- v7f4TCkn9ugkd1vxYWA1vCIZ2JoHY0Ko6DrAmdisugkp8gtO9zjZRbduW+WD7FaWQHP7fmAcJm4
- ROTrqdg3qKuHphFtOg/MmB/ye3/TJ5rpgig87kxwH6rupZlhcT0tftp8bPBp3g1axTqxy27PH5o
- bJoOfrI8Ymm3ZtPImB7uBacZtekyBuyVsXUl2iFGErr3Y=
-X-Google-Smtp-Source: AGHT+IFXUJifVRQ7Vbl9dG5zJpYgqfo0P08xQwkOPkawg2q8imAVIcD2QygFY2RYHcgIQpUn834ULQ==
-X-Received: by 2002:a05:600c:64cf:b0:471:1717:411 with SMTP id
- 5b1f17b1804b1-4771e1db42fmr39515955e9.24.1761774032250; 
- Wed, 29 Oct 2025 14:40:32 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1761774003; x=1762378803;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uY7fmVdMvGJL7gcl8U60RZO8Bwcu1zFyXw5gGAJaj1Q=;
+ b=Rmq6WYaGxTBd9nnY6WJo2/Y824INrkj5dQB8cKGOJA748Eoj6DMzgDymnZhJ3VV8M5
+ aT9JhJLKC4QZM+snJ7VWUe52nq98PUh+kV9kiFwxfTwEyEyC0Oh1Lon8eYqkX1sNKkU5
+ 2JeXtyWvlStlC+bfcR5CqxqD9yPGUX8OsENYSv/g575dntzNBvwBBUOI7HBQUpuiYGrK
+ Q90cCfrBaQTS9wo994pXh62NXn0n2FQdeKY+uPmvAYR4NsrrGoRyXMcDCmhPwhgY0Dt+
+ KQ9791LY0fZ5JuyzrR8H8UO+u1MZi4qwPZaMmlti9UDc+HIGd7EvTpWP2/8/yxqN2XT1
+ K89Q==
+X-Gm-Message-State: AOJu0YwxTURQ1wrS5dC4RlCGtxnZsjgHXWdmWFbQb5Kzrauf+kfPRCC5
+ GliSvTDtkzoS6k04+7GbEQ32Sk6oNmnCXoZBVyAoTjIOWSNvxpiFoevB65H32B4uT8MaKKRelhJ
+ 25ZQU6tw=
+X-Gm-Gg: ASbGncs1odoTOVBP8EUSRNgCJQTMVzcoRkPMnLXnsvcPieizb2aHP7qJmzlkMSkSab1
+ 2Hu0kquwQxR108gPPeJ+n+ar8udP5qoBkfdJIzdhk9lWPkZpIhBOifuuS94zCmbbIzLyeESb7KW
+ vju+CTXxeUTVUA0xFzZPyTXXNTnHuZJZu5vjDOiXa9pW8onaGV7Cu5ioPLg54A+Pgmu5DSzFU/K
+ 1jmgBGVL+NEbG9RyB2DbKtXc/0hdpaPi1tKIe5UUdJF5yFqx7RsEfQuJrIEgIWssCppS1Jc6BX6
+ gY9BLjppvKkCCxDatOUMdarh34/H5iLXRW24PuxC7o3NC2s8WdRQaFw94tjQMX3XzcmqvgmYYbs
+ lLSqdAEKwytMiRrosY2W5EGc9Qy8bJoKwiwiKplWxlogsdLUFdcnq4VsGY4EgUFjSTeejWUC2rI
+ MSP2gDLbSCpm4bo8+Cce8TaIhc7FA70DovqxgnfFlXThmfBy/tkg==
+X-Google-Smtp-Source: AGHT+IHHNK2TL6G+Hc9lLw6pM9stiGxKghrY/g+yqrLmhhcTpCuh2ECR/39400mVfMfO5BllRIt+Gg==
+X-Received: by 2002:a05:600c:1c81:b0:477:e66:4077 with SMTP id
+ 5b1f17b1804b1-4771e3fb258mr48680075e9.29.1761774003037; 
+ Wed, 29 Oct 2025 14:40:03 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952b7b2dsm28106136f8f.2.2025.10.29.14.40.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 14:40:31 -0700 (PDT)
-Message-ID: <9931a47f-6d04-4763-9d48-7377b1a29531@linaro.org>
-Date: Wed, 29 Oct 2025 22:40:30 +0100
+ 5b1f17b1804b1-477289adc18sm4198735e9.6.2025.10.29.14.40.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 29 Oct 2025 14:40:02 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PULL 00/23] Misc single binary patches for 2025-10-29
+Date: Wed, 29 Oct 2025 22:39:37 +0100
+Message-ID: <20251029214001.99824-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/19] single-binary: Make hw/arm/ common
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson
- <anjo@rev.ng>, Luc Michel <luc.michel@amd.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20251021205741.57109-1-philmd@linaro.org>
- <CAFEAcA8A5xa0nJUczM_BDCvVu+sP-tdbt_CxDGos6hKW27qEZA@mail.gmail.com>
- <a244a654-7bd8-46cf-bc55-87ab5287bda5@linaro.org>
- <CAFEAcA9y29qsC4UQLjO+sJ5TLiA7FqtBTKwUAaQhq8Bz+WX+2g@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9y29qsC4UQLjO+sJ5TLiA7FqtBTKwUAaQhq8Bz+WX+2g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +97,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 14:16, Peter Maydell wrote:
-> On Wed, 22 Oct 2025 at 15:03, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 22/10/25 13:50, Peter Maydell wrote:
->>> On Tue, 21 Oct 2025 at 21:57, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>>>
->>>> Series fully reviewed.
->>>>
->>>> Since v6:
->>>> - Addressed Jan comment
->>>> - Removed aspeed/raspi meson patches
->>>
->>> I'm assuming you'll take this via your own tree like the
->>> other single-binary stuff -- let me know if you want me
->>> to take it into target-arm instead.
->>
->> Since most files are hw/arm/ related, I tried to get it fully reviewed
->> before the last Tuesday before soft freeze so you could queue it;
->> however it is based on my hw-misc-20251021 pull request, which isn't
->> yet merged. I'm happy to merge myself, but would you mind to provide
->> your Acked-by tag?
-> 
-> Sure:
-> 
-> Acked-by: Peter Maydell <peter.maydell@linaro.org>
+The following changes since commit e090e0312dc9030d94e38e3d98a88718d3561e4e:
 
-Thanks! Series queued.
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-10-29 10:44:15 +0100)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/single-binary-20251029
+
+for you to fetch changes up to e5c542fa16b0a7d47070692481db301736a0ac7b:
+
+  hw/riscv: Replace target_ulong uses (2025-10-29 19:16:24 +0100)
+
+----------------------------------------------------------------
+Various patches related to single binary work:
+
+- Make hw/arm/ common by adding a QOM type to machines to
+  tag in which binary (32 or 64-bit) they can be used.
+  Convert the Virt and SBSA-Ref machines.
+- Build Xen files once
+
+----------------------------------------------------------------
+
+Anton Johansson (1):
+  hw/riscv: Replace target_ulong uses
+
+Philippe Mathieu-Daudé (22):
+  hw/arm: Register TYPE_TARGET_ARM/AARCH64_MACHINE QOM interfaces
+  hw/core: Allow ARM/Aarch64 binaries to use the 'none' machine
+  hw/arm: Add DEFINE_MACHINE_ARM() / DEFINE_MACHINE_AARCH64() macros
+  hw/arm: Filter machine types for qemu-system-arm/aarch64 binaries
+  meson: Prepare to accept per-binary TargetInfo structure
+    implementation
+  config/target: Implement per-binary TargetInfo structure (ARM,
+    AARCH64)
+  hw/arm/virt: Register valid CPU types dynamically
+  hw/arm/virt: Check accelerator availability at runtime
+  qemu/target_info: Add target_arm() helper
+  qemu/target_info: Add target_aarch64() helper
+  qemu/target_info: Add target_base_arm() helper
+  hw/arm/virt: Replace TARGET_AARCH64 -> target_aarch64()
+  hw/arm/virt: Get default CPU type at runtime
+  hw/arm/sbsa-ref: Include missing 'cpu.h' header
+  hw/arm/sbsa-ref: Build only once
+  hw/arm/virt-acpi-build: Include missing 'cpu.h' header
+  hw/arm/virt-acpi-build: Build only once
+  hw/arm/virt: Build only once
+  hw/arm/meson: Move Xen files to arm_common_ss[]
+  hw/xen: Use BITS_PER_BYTE & MAKE_64BIT_MASK() in req_size_bits()
+  hw/xen: Replace target_ulong by agnostic target_long_bits()
+  hw/xen: Build only once
+
+ MAINTAINERS                       |  1 +
+ meson.build                       | 10 ++++-
+ include/hw/arm/machines-qom.h     | 46 +++++++++++++++++++
+ include/qemu/target-info.h        | 21 +++++++++
+ configs/targets/aarch64-softmmu.c | 26 +++++++++++
+ configs/targets/arm-softmmu.c     | 26 +++++++++++
+ hw/arm/aspeed.c                   | 27 ++++++++++-
+ hw/arm/aspeed_ast27x0-fc.c        |  2 +
+ hw/arm/b-l475e-iot01a.c           |  2 +
+ hw/arm/bananapi_m2u.c             |  3 +-
+ hw/arm/collie.c                   |  2 +
+ hw/arm/cubieboard.c               |  3 +-
+ hw/arm/digic_boards.c             |  3 +-
+ hw/arm/exynos4_boards.c           |  3 ++
+ hw/arm/fby35.c                    |  2 +
+ hw/arm/highbank.c                 |  3 ++
+ hw/arm/imx25_pdk.c                |  3 +-
+ hw/arm/imx8mp-evk.c               |  4 +-
+ hw/arm/integratorcp.c             |  3 +-
+ hw/arm/kzm.c                      |  3 +-
+ hw/arm/mcimx6ul-evk.c             |  4 +-
+ hw/arm/mcimx7d-sabre.c            |  4 +-
+ hw/arm/microbit.c                 |  2 +
+ hw/arm/mps2-tz.c                  |  5 +++
+ hw/arm/mps2.c                     |  5 +++
+ hw/arm/mps3r.c                    |  2 +
+ hw/arm/msf2-som.c                 |  3 +-
+ hw/arm/musca.c                    |  3 ++
+ hw/arm/musicpal.c                 |  3 +-
+ hw/arm/netduino2.c                |  3 +-
+ hw/arm/netduinoplus2.c            |  3 +-
+ hw/arm/npcm7xx_boards.c           |  6 +++
+ hw/arm/npcm8xx_boards.c           |  2 +
+ hw/arm/olimex-stm32-h405.c        |  3 +-
+ hw/arm/omap_sx1.c                 |  3 ++
+ hw/arm/orangepi.c                 |  3 +-
+ hw/arm/raspi.c                    |  6 +++
+ hw/arm/raspi4b.c                  |  2 +
+ hw/arm/realview.c                 |  5 +++
+ hw/arm/sabrelite.c                |  3 +-
+ hw/arm/sbsa-ref.c                 |  3 ++
+ hw/arm/stellaris.c                |  3 ++
+ hw/arm/stm32vldiscovery.c         |  3 +-
+ hw/arm/versatilepb.c              |  3 ++
+ hw/arm/vexpress.c                 |  3 ++
+ hw/arm/virt-acpi-build.c          |  1 +
+ hw/arm/virt.c                     | 74 ++++++++++++++++++-------------
+ hw/arm/xilinx_zynq.c              |  2 +
+ hw/arm/xlnx-versal-virt.c         |  3 ++
+ hw/arm/xlnx-zcu102.c              |  2 +
+ hw/core/null-machine.c            |  6 ++-
+ hw/riscv/riscv-iommu.c            |  6 ++-
+ hw/riscv/riscv_hart.c             |  2 +-
+ hw/xen/xen-hvm-common.c           |  9 ++--
+ target-info-qom.c                 | 24 ++++++++++
+ target-info.c                     | 21 +++++++++
+ target/arm/machine.c              | 18 ++++++++
+ configs/targets/meson.build       |  5 +++
+ hw/arm/meson.build                |  8 ++--
+ hw/xen/meson.build                | 22 ++++-----
+ 60 files changed, 406 insertions(+), 75 deletions(-)
+ create mode 100644 include/hw/arm/machines-qom.h
+ create mode 100644 configs/targets/aarch64-softmmu.c
+ create mode 100644 configs/targets/arm-softmmu.c
+ create mode 100644 target-info-qom.c
+ create mode 100644 configs/targets/meson.build
+
+-- 
+2.51.0
 
 
