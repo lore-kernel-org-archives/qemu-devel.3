@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A16CCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12700CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE24V-0004Ni-6E; Wed, 29 Oct 2025 05:02:24 -0400
+	id 1vE24c-0004S4-2t; Wed, 29 Oct 2025 05:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vE24S-0004LX-M5; Wed, 29 Oct 2025 05:02:20 -0400
+ id 1vE24Y-0004Qb-Uq; Wed, 29 Oct 2025 05:02:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vE24Q-00035G-C3; Wed, 29 Oct 2025 05:02:20 -0400
+ id 1vE24S-00035L-Id; Wed, 29 Oct 2025 05:02:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DFF47163E61;
- Wed, 29 Oct 2025 12:01:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 07421163E62;
+ Wed, 29 Oct 2025 12:01:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 097913084A8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 259883084A9;
  Wed, 29 Oct 2025 12:01:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 4/7] tests/functional/i386: Remove unused variable from the
- replay test
-Date: Wed, 29 Oct 2025 12:01:42 +0300
-Message-ID: <20251029090148.648212-5-mjt@tls.msk.ru>
+Subject: [PULL 5/7] docs/system/sriov.rst: Fix typo in title
+Date: Wed, 29 Oct 2025 12:01:43 +0300
+Message-ID: <20251029090148.648212-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251029090148.648212-1-mjt@tls.msk.ru>
 References: <20251029090148.648212-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,32 +59,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Remove a left-over from the time when this test was still an
-avocado-based test.
+Fix a typo in the title of the sriov.rst document.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- tests/functional/i386/test_replay.py | 1 -
- 1 file changed, 1 deletion(-)
+ docs/system/sriov.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/i386/test_replay.py b/tests/functional/i386/test_replay.py
-index 7c4c2602da..3a92ecde17 100755
---- a/tests/functional/i386/test_replay.py
-+++ b/tests/functional/i386/test_replay.py
-@@ -17,7 +17,6 @@ class I386Replay(ReplayKernelBase):
+diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
+index d12178f3c3..b19e787339 100644
+--- a/docs/system/sriov.rst
++++ b/docs/system/sriov.rst
+@@ -1,7 +1,7 @@
+ .. SPDX-License-Identifier: GPL-2.0-or-later
  
-     def test_pc(self):
-         self.set_machine('pc')
--        kernel_url = ()
-         kernel_path = self.ASSET_KERNEL.fetch()
-         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-         console_pattern = 'VFS: Cannot open root device'
+-Compsable SR-IOV device
+-=======================
++Composable SR-IOV device
++========================
+ 
+ SR-IOV (Single Root I/O Virtualization) is an optional extended capability of a
+ PCI Express device. It allows a single physical function (PF) to appear as
 -- 
 2.47.3
 
