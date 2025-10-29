@@ -4,185 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9E4CCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D043DCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEAml-0003ss-8i; Wed, 29 Oct 2025 14:20:42 -0400
+	id 1vEApC-0004cZ-G8; Wed, 29 Oct 2025 14:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vEAme-0003qv-KE; Wed, 29 Oct 2025 14:20:33 -0400
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEApB-0004bt-3i
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:23:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vEAmU-0001lX-UC; Wed, 29 Oct 2025 14:20:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xh0slCVOtWZR16MOjTfr66BaAAcOwQVMMKe+zM7x/eLalWUisuSmS9B7tJYnY+P76rdkeQ6kcYRTEGa87iECIApwtJBfl3m2C2/jfV83QlgpGp+HpZcSsh2tPVxZF6aDzW1eNQXUBlI11REGbaJPG2l/+7Yb8oP2hLNzbR2641I9vSPxEZiecY0NSIyH+Aepg7IS1SCOe9NWbX5SiUUsktj02WZUf851EnjnkHjP2TQ4da07Sd0dz6q0x96GvrBqqOjfOcN4Vepf4CsdQMmyclnyNieyw9G/zkz5ifIiBT7Nwtewe4+c8w0uTTfpEAQwZ8uAwJB3nHZysJPYmHOq+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GAUJQ4uMyiOTRh09y1bzTCtbqK1vmBfR/0GnZ2QP1kg=;
- b=kSDm913fk7E2vkBz5ovsl7ZLxJgcQbCNCB8cArb3bec4hUUadZhU0iegymn4VuCbQaPGbU0A6RvmV8Z8YMPDlrPShGxPg5ZOKOeWnqriHQwn6zFqIP0HBrmHo+5BuzQGyTS5emrS0P5siGdHdjaidz2gceZp730vb4lbLvarEaZqi3yPH61h+zFI3FmKUtFI5fZi9ViaeD0FfnCrsiz+WYA4CE3sIRN1kXkjYV5QY/WN267S2iP7VRGqk+JlHcPG63Ld6Gs4ER3dEydk/dCBKj4FkV0PrvJnoPitKRGuWdOxK90OpH0PPd5B4XqJt99ePYSv3rE3VxF2J54wZT0Npg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GAUJQ4uMyiOTRh09y1bzTCtbqK1vmBfR/0GnZ2QP1kg=;
- b=Pz+5/zrvLzZyDi0Jm5Z881Wdfgf6mrP+8M5M0EkDzVjyhyrBUJvT6yPdtzGjecuLoQ2uJSfa0B6PvR/hWLdknV1M7e5DrK0sHf1dpVqL4ZaTRspH1CLKOIa+Rdb6NtF2bzGSgIH3axq9DhpSrh0NUo8eIIC2Cry3huuNE6lqdchDh3s0F2zZHk+zSml80ty+UELbu0u5ZjbTPnuwd3P79wcQjB2anDoBdZ5Kkpnel6xnxy7OnWpk2KFcnJqBGccAQcv4gSYNrG9enbsg9YjOTvAl50DMQy3FJ3l/Y8USONx47IFMDrrZZWhGfDT7p4MrSCBTvlV4H2oUt8RFyHqjBA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by CY5PR12MB6275.namprd12.prod.outlook.com (2603:10b6:930:20::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.19; Wed, 29 Oct
- 2025 18:19:59 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9253.018; Wed, 29 Oct 2025
- 18:19:59 +0000
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: RE: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
- reset
-Thread-Topic: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
- reset
-Thread-Index: AQHcPvNf8cNe0zISsE6Kcr2+CesP+rTWHWaAgAAEKcCAAnkGgIAA30qw
-Date: Wed, 29 Oct 2025 18:19:59 +0000
-Message-ID: <CH3PR12MB7548FB14A0D0F08688DE9CCDABFAA@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-20-skolothumtho@nvidia.com>
- <aPF9l5GwctGN0tqT@Asurada-Nvidia>
- <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
- <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aQGXibWAiMpXAQlF@Asurada-Nvidia>
-In-Reply-To: <aQGXibWAiMpXAQlF@Asurada-Nvidia>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CY5PR12MB6275:EE_
-x-ms-office365-filtering-correlation-id: 9a15092b-fac4-4b49-dcbb-08de1717c521
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|7416014|38070700021|7053199007; 
-x-microsoft-antispam-message-info: =?utf-8?B?OEpZSXUvQ2x3dzUzT0RBUER5eE1ZbzgvamtEZlA5SlNWZm9KN1BNeTluYldE?=
- =?utf-8?B?ZHpPWERnQUhJL0FnNU1OSmsyZytDd0pYc1BPOWdsa1diN3NyaTY0Q0daYUxS?=
- =?utf-8?B?OWprbWdVM0FjZ3hJYlljVlBySlorUDJKWjZEalhKNVlsK09YV3dZc0hIWWJZ?=
- =?utf-8?B?cml5MGNCOXBMZjFlY3lLamZjVDFOQU5wU3ZiVGdRbTVLM0diSEdaRzMyY0Ny?=
- =?utf-8?B?eXlDQm8yRWhZQ3hqQk9iT1BNT3FqK2c5bmEzaHpLYlgyYlpzZ1dUbkFEbjlx?=
- =?utf-8?B?QW1qekJCOXNwcm1jN3RBRHkzYVJHWG5DV3dmZUtNdXNuWDNCRFhoRW00cXUw?=
- =?utf-8?B?ZnB3eE00MXpVaEFmazlFc2dwd1NHRWtaVjhvNmpYRlFYeElKQlBYek1oOW5y?=
- =?utf-8?B?YkJpOXNTdHZ4akYyRTdKMDRkb0hLQjVaY01NVVRBZyt3YkdJb2QzWWY2d29s?=
- =?utf-8?B?cG5QalV2VDBkaXFJTEozc3RYU3NYZ2NHY1lFbWZoR1hUUFZud3pORnZod2FH?=
- =?utf-8?B?emI1L0FaNHpSMWh1L2VsQzZ1Y0lTcG1FRVRleG41dEh4RzRSU1FNODVnWUE3?=
- =?utf-8?B?cnlwOTYwLzdLL1B5OUY1Z0graXBuZWFjbHRZMytMSFFPVjJjQWNUUFVkNjI5?=
- =?utf-8?B?UFVGYlVXSGV3cHdrY0ZhSXpMNThiZmRGNDZKVWpMcnZwL3lJV3NBelRSTTdk?=
- =?utf-8?B?RmZBaERlOUczRDJ1aDZ1NGw2UjI5MnRGSnJvUzUydElMNXBxNURwdnJIKzl5?=
- =?utf-8?B?bm5DaWtUMlNPYkRtQzEwamgwNEJxbEg0Skw4dDArNzVxYnVzVWNRd0puTXFh?=
- =?utf-8?B?V1Q1N1p6M2JUNVBRMzRCckNQQ2hlc0U4VkYvRnBrRTdtWVZWSVBRU29VS05I?=
- =?utf-8?B?bisrU0srSW9hWEhZcitMbWVPN0xOc091VlFKSGJyb1JYNE1TZURFQTVWdzhp?=
- =?utf-8?B?aGVQWkpSYVlaSldVR2ZOZFd0VjZ0aGtFK0trVXBxU2VUckl6MUtFSGFjRldX?=
- =?utf-8?B?aC9xZktLQ3I5UThKK1lXK050aUI5TnBzT2VYb3BzVDJJbkJvVmV1aEFIWjlP?=
- =?utf-8?B?TVlocndmWVVta1owa0RPbFBBVFlTNE5hRVJBRlBJT3hVQkpUUm11Y2pEUEF6?=
- =?utf-8?B?SlQ3ZkVTblJwRXJZa3lMS1g1akgvZGZ3UmRYLzg1SzZQeTJvblFEc2w0bW05?=
- =?utf-8?B?NHNKeXF4VXdDcjlpd1pzenRnMEtHbjR5ZzJKMFRiaSsvc1c1ZGxIdERvRVZC?=
- =?utf-8?B?bzBCcDM4SGcyQXlSbGxNNUpFamErM0VhSEM0S1o1K3JKeURuTjdsdjIvNEVn?=
- =?utf-8?B?VUs4bHFlM2x1aTJoRWE4UElxUWNDRzhWVUcraGNUZ0M1dUZkN0JDeS9rdDg2?=
- =?utf-8?B?T2dwaUNrZTI3Vnh1b2RMMUp2ajhvem0za1ZKSkppbUJ3akZwUTk4Z1hQZ3BZ?=
- =?utf-8?B?ei9BdXNXRzcxenJ2SlAwWFdNdWVOTkN1NEwxV3Q4MzBTWnRaSjArK1F1VHpM?=
- =?utf-8?B?bk4velJZREZLalcyaWZaaTBNRkRTd0h0cE9VejRidDNva1J5bmZuMnV3Z09a?=
- =?utf-8?B?VXk2QXZQdWlPTVU2S3FBRURlNlpUa0JOMG9HVFZHUFcyQjVPLzNyREE5WExv?=
- =?utf-8?B?eTlqMzdNTHJxT0NGMTFBUHdaNkFmWmdqVmJlTVJHcDhIRG9HblhIWnBVT0NC?=
- =?utf-8?B?OGhCek1sNk9MakpwcTJPNDhLQjA3L0VWTklZQlhHQU5ITFlnUXJPRFVoRTYr?=
- =?utf-8?B?SmFvaVZDM09KMEs3NXdwNEQwSnh5NWVMaFhlZ0MyT0FnMDdlU2Y0blZrSTVU?=
- =?utf-8?B?c3hEQ25XcTlHWjEvbHRGaWU3WExoRUZLemxodHNwdHlQaHV0WnVFRWlIZ2p3?=
- =?utf-8?B?ckwrYzl5TnNIc3d5Zmw0dEI1TEJvTk9Va2FjWTRndCtvbkJQM25XK01qVUVC?=
- =?utf-8?B?TTZBMi9scE9mczlMSXFGU3JKcFVXRTFwTHczSEJZTFVncjJEWlF3Rmc1YmFr?=
- =?utf-8?B?Q3BpWkpmdmIxeU9zaVZ1UzgvWDFLcnVGdTFidll4VEtzY3EyaUJ4UGNjcnNl?=
- =?utf-8?Q?x0OxkW?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(7416014)(38070700021)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bU9LcGFjTEJQcWIzN1J1aFdYdHlzcU1vOFJ6MUpGYXdyZ2tjT0lyQmpPVWdq?=
- =?utf-8?B?TjdhbkNlbUpCd2FOa2xNUjdleXRLVlJja3RNeVNRWklhUGFpNit2NllDemZX?=
- =?utf-8?B?MS9OalNDSlJsbU9KY1paSk0valVJRmNBMnhHak01dTFkVVcxcjRyS3VhUDI2?=
- =?utf-8?B?MFlyenI1Z1Rja0R2SVlQdFVtOGk2WU0wR1I1TnFQTlNNL1ZKWlpHYi9MYmVm?=
- =?utf-8?B?SlZka0xJMkkrSlpKcEpkRnVmM1FzRjBhM3lFQTdwcUprZ2lqMncrTHFPZFE5?=
- =?utf-8?B?YlJNU3FGRC9jYkx3c09DakdPK1VBU000T3JaUHN5NFQxZVZoOC9oQ1ZtMnZt?=
- =?utf-8?B?Y3dnWHRUVDhqbU9VN1NiMUhzcFZLNnhaaUZDcis1UkdjanR5SDR5OHBmNnJ4?=
- =?utf-8?B?NW1EVVYvcjh5MVlkRUhvb3RDZ0tVVGRmZlBTUWxzM2U5aXZFRFFmZmlrMG1C?=
- =?utf-8?B?OTNKVEptRUQyNmo0ckdaRWZZY3MxVERMK1FhbDRva2k5QjJ6RUdQcnNkSmFM?=
- =?utf-8?B?WFBWZ2NxbTlKbFVrK3hEN2FtZE9FcTMrK1ZjRlcxVUNUMC9tWTRZNS90c3Y0?=
- =?utf-8?B?UFQyOTF0L1B0d0pkaklQcHN0VXkzY0dyenBGYjdXd2FhL3RLYWZHMFpiRW1z?=
- =?utf-8?B?T29XRStIay92OWs0RjVoRjlaa3B3THk3R0QrNFlFc2JyTXpYNW1Ra1hRdFA1?=
- =?utf-8?B?ZEd3OWlCZlNwM1FESk4vSDdBdm1ua1ZZd01OTDAza0Mwa1h4Zk05UmhFc2RY?=
- =?utf-8?B?QXdXc0diTllsejg1SXNCN3IwdWh6Q3B0UXVsWUc1KzAySEEyeUZtYndYSWxJ?=
- =?utf-8?B?U29BdXprU1czNGU3dFhLaDhRU2NRM2JxT2V2MnZRMnRONkpPOUJyWFJ4UXBn?=
- =?utf-8?B?L0xjUk9hTjQrM1phVEFidzk5RGNuZ1VwSno2SHVMSWlsSE1RMnRyMzZUdGxL?=
- =?utf-8?B?bDExYjU5d21tZmNaK2VxOVVTbEN5RnN4R2x5bTNmSVdFVlpvMnRvYnlDVUph?=
- =?utf-8?B?cEhZRGwwVXhEMjhIbTBZaVA3dlFqTjJrRmpqZnFqK3AvdGRzaXZUTGdsMEJ6?=
- =?utf-8?B?UUtqSkg5R1FhV2d5L1hRZ1V0cmpGMHY5VnkxcnJ0VnAwQzN6YUM4MGxWcE9B?=
- =?utf-8?B?enhOVnBvc1lzWFl5dnYxWDVJVUE5bzhTWldPeGlkTEpwVDBwQnAyMjN4ZThW?=
- =?utf-8?B?Rml5TGE5MXgySHlwYnhKVnpsYzQ0VzhCV1c3Njg4dEl0cjg4M2MvbFV3S0cv?=
- =?utf-8?B?TzJqL3htNTEzRUY5MzE5bU93dC9lWU9Ma2R5ZStjNXBlS1R3L1hQb2h1N0I5?=
- =?utf-8?B?dEU1bUhNc1lYbDZTL0ptVUZqQnVsVUJ4R1B6VDYyQktSRVpYc0lNczNUQTRG?=
- =?utf-8?B?NE9HSnVEVnFkZkFMT0QxRitWSWtRaXFQakNwNU9qUFc0bWgrVGV4UzNsZHhZ?=
- =?utf-8?B?elM5dklzNVpuendTeGtrV01WV0ZQeFhhMG1GdXBMTXhlUCtiWkVPdlZ5bjZS?=
- =?utf-8?B?UG1TQ1kvM0g5Y1JJZERIekFMa3FUcWhnUHF1RjJiV2k4ZWZ4TnlGU3E3RnFw?=
- =?utf-8?B?eU5FQnhNeGR3U2NyZXdkeFdYdnRaclIxWDgwZUlDZjlZQkUrTFVjTHBwK2tR?=
- =?utf-8?B?Q1lKTnVuMzhuYjJCakJrNjB5MElGMGhwdVBJTXh2M2Y0enVVTndDbzI1WXha?=
- =?utf-8?B?RHZDQkRqTVZ4elJZZFNRNzEyQ25KTlJIbDNSN2JTdmJxNVM1NDV0L0hVcnMr?=
- =?utf-8?B?VEJiZmVqQkx3UTdiRm9rUVNveHF4NGhlT2dTd3RKaURlUkE0K0V5L0RubmJ1?=
- =?utf-8?B?VFRRUWxRNy9nV1REZHJmM3dUbVVZK002QnhNNVh4RzRGTHhCU2FRbk9ZNjc4?=
- =?utf-8?B?Z1Z4UW50VzZzNmkzOW5BaVA2NXpWL1MyOVJCOEw2ekljL0o4WW5XbWhqWFBk?=
- =?utf-8?B?Y1RPdEszMVpyNEVrVGtHcEdKaDRlQ2Qya2VuRWg0NnB6dERVclFPSCtyZHR3?=
- =?utf-8?B?REhicjFzT3cyWW5LcDhRY1lIK0c2V1ZVbEVWcUdxNnNLN1ByVGRLdGNjdmdN?=
- =?utf-8?B?ckZEZWxoVnBxdzhEL3RSV2VwRUFURlpDcDRMUzVvS2ZZdDdXRFQyNkJRMFJE?=
- =?utf-8?Q?UMUUoJ1JUxqrPpyGhZSNOSHno?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEAp3-0002TV-IM
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:23:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761762173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jBynEImvavthhi6mxc0dORlXJBBFx3LgWVYpGNmOIMw=;
+ b=Jqusy4eqABu3OpEw6LOzN89i8fyl6pvRxMTTGWvf7jatXvoS6Y1mUkJAzGcjKUogj4tNNR
+ Q2Ca1RFtHMhs1IGb1UNnSGyBdqPsHdexL1pSZ7U3sK6l3gv3/Q5KYPfjMaGR4LYGVtX4N7
+ r0cvhHVr+hytfv6cN/8PL3UM8BMCgp4=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-47-DdhkTuYnPwe3gkVSo5kMPA-1; Wed, 29 Oct 2025 14:22:52 -0400
+X-MC-Unique: DdhkTuYnPwe3gkVSo5kMPA-1
+X-Mimecast-MFC-AGG-ID: DdhkTuYnPwe3gkVSo5kMPA_1761762171
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-78e5b6f1296so5186696d6.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 11:22:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761762171; x=1762366971;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jBynEImvavthhi6mxc0dORlXJBBFx3LgWVYpGNmOIMw=;
+ b=RjSPM4cHd3ax5APUoUcN35WtSWJgMn/zJOnEgWZaNsgYBtpQ51wPIMg9t8HFzJ4hyK
+ 5kvlCG01Rvy/ftvaEjJCiB7SbZd0qHx0BGo035ddbuqA8Vi+QPLAcB5nc3YxlvdTvr0g
+ /aVE8scvuy1IWu09GtKx4YZz3t6jdHOMamt3MYX7hVfUp8DiW/gnUHJo5szQy2Ml2AFl
+ o18oTYhXZcdAIb1LxbwbuPBGRirTpIiKUsW9BbyNK+nSiymgYUYygouAo/62ahJyv89q
+ oVoVJM1kC43JV5YITbTG6m/qpWPXVmPvSDxwC5QVEqI2tAASUM5803nItSQl0L+fqC9l
+ dRFQ==
+X-Gm-Message-State: AOJu0YxeU40kFkIQNyysETMjQVXUxsA82B831pz8Ka+91rXMSbQ6yP+t
+ e3EUyXnSl8hihwvMnF8vCI0p1ordi064/IoU+m7VZM8NqqcQBm7GfgggnXtcmT6sroGZHdNZQV/
+ dA+NSO5glv88ppCkF5/gJ9wCp39KAZ/GIiWquCOCCgHjfH6W/mFSFJra1
+X-Gm-Gg: ASbGncsgemfEdZE/JKgboeAaJALCJjPsJIvSn3Uv06k6hUPGSBskMYhavrivSmLB99V
+ Rr+7DSsPE/9eMv4yCZQsXZjyo9GPVQ6AfCXWlp9CQCv8qIZFddLjxmVwHkhNC5Nhp5up4VlTfDI
+ jaU2v7vO/ACSqK85b5PJ7nQaHPT4LTaf+8g1dArvBzueR3h4uE82fQjckCzR0oG01Y+GaAhyHLt
+ sLvzmt4oe9FVzUTLdosuwZDZfl+IpLMLFpav0JSx7P6ACGMVzd4Wl3kMQYR3hrl2/Oa5Z3om0su
+ Fy42usAgWXyouejnZ9wsLEqwLnbmaD+kgUoDyo/UMjf2Bl0ZCN1GX17KungbiTq6a7Q=
+X-Received: by 2002:a05:6214:2588:b0:87d:fcf6:b1fb with SMTP id
+ 6a1803df08f44-88009ad5b1cmr45165996d6.1.1761762171221; 
+ Wed, 29 Oct 2025 11:22:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyYxikt3cFmnM71PSddH/7nVooOW2kBrIfxdGlX4rgwgSpmpRT73wqnlpi8NcNNTVLzTLqPw==
+X-Received: by 2002:a05:6214:2588:b0:87d:fcf6:b1fb with SMTP id
+ 6a1803df08f44-88009ad5b1cmr45165486d6.1.1761762170650; 
+ Wed, 29 Oct 2025 11:22:50 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87fc51e3746sm101302036d6.25.2025.10.29.11.22.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Oct 2025 11:22:49 -0700 (PDT)
+Date: Wed, 29 Oct 2025 14:22:47 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+Message-ID: <aQJbd5qYR10qcbr7@x1.local>
+References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9a15092b-fac4-4b49-dcbb-08de1717c521
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Oct 2025 18:19:59.2078 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: PE+kKYdXisdJQBiXFbQmJzSIlT6CzlJYi8L0Rv9B7NSvEcVW8Dr8UHZzXrlm91+Nwd94fogrsn+pQxMuTftXMw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6275
-Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
- envelope-from=skolothumtho@nvidia.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -198,68 +106,330 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogTmljb2xpbiBDaGVuIDxu
-aWNvbGluY0BudmlkaWEuY29tPg0KPiBTZW50OiAyOSBPY3RvYmVyIDIwMjUgMDQ6MjcNCj4gVG86
-IFNoYW1lZXIgS29sb3RodW0gPHNrb2xvdGh1bXRob0BudmlkaWEuY29tPg0KPiBDYzogZXJpYy5h
-dWdlckByZWRoYXQuY29tOyBxZW11LWFybUBub25nbnUub3JnOyBxZW11LQ0KPiBkZXZlbEBub25n
-bnUub3JnOyBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7IEphc29uIEd1bnRob3JwZQ0KPiA8amdn
-QG52aWRpYS5jb20+OyBkZHV0aWxlQHJlZGhhdC5jb207IGJlcnJhbmdlQHJlZGhhdC5jb207IE5h
-dGhhbg0KPiBDaGVuIDxuYXRoYW5jQG52aWRpYS5jb20+OyBNYXR0IE9jaHMgPG1vY2hzQG52aWRp
-YS5jb20+Ow0KPiBzbW9zdGFmYUBnb29nbGUuY29tOyB3YW5nemhvdTFAaGlzaWxpY29uLmNvbTsN
-Cj4gamlhbmdrdW5rdW5AaHVhd2VpLmNvbTsgam9uYXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tOw0K
-PiB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZzsgemhlbnpob25nLmR1YW5AaW50ZWwuY29tOyB5aS5s
-LmxpdUBpbnRlbC5jb207DQo+IHNoYW1lZXJrb2xvdGh1bUBnbWFpbC5jb20NCj4gU3ViamVjdDog
-UmU6IFtQQVRDSCB2NCAxOS8yN10gaHcvYXJtL3NtbXV2My1hY2NlbDogSW5zdGFsbCBTMSBieXBh
-c3MgaHdwdA0KPiBvbiByZXNldA0KPiANCj4gT24gTW9uLCBPY3QgMjcsIDIwMjUgYXQgMDc6NTE6
-MTVBTSAtMDcwMCwgU2hhbWVlciBLb2xvdGh1bSB3cm90ZToNCj4gPiA+IE9uIDEwLzE3LzI1IDE6
-MTkgQU0sIE5pY29saW4gQ2hlbiB3cm90ZToNCj4gPiA+ID4gT24gTW9uLCBTZXAgMjksIDIwMjUg
-YXQgMDI6MzY6MzVQTSArMDEwMCwgU2hhbWVlciBLb2xvdGh1bSB3cm90ZToNCj4gPiA+ID4+IFdo
-ZW4gdGhlIGd1ZXN0IHJlYm9vdHMgd2l0aCBkZXZpY2VzIGluIG5lc3RlZCBtb2RlIChTMSArIFMy
-KSwgYW55DQo+ID4gPiBRRU1VL1VFRkkNCj4gPiA+ID4+IGFjY2VzcyB0byB0aG9zZSBkZXZpY2Vz
-IGNhbiBmYWlsIGJlY2F1c2UgUzEgdHJhbnNsYXRpb24gaXMgbm90IHZhbGlkIGR1cmluZw0KPiA+
-ID4gPj4gdGhlIHJlYm9vdC4gRm9yIGV4YW1wbGUsIGEgcGFzc3Rocm91Z2ggTlZNZSBkZXZpY2Ug
-bWF5IGhvbGQgR1JVQg0KPiBib290DQo+ID4gPiBpbmZvDQo+ID4gPiA+PiB0aGF0IFVFRkkgdHJp
-ZXMgdG8gcmVhZCBkdXJpbmcgdGhlIHJlYm9vdC4NCj4gPiA+ID4+DQo+ID4gPiA+PiBTZXQgUzEg
-dG8gYnlwYXNzIG1vZGUgZHVyaW5nIHJlc2V0IHRvIGF2b2lkIHN1Y2ggZmFpbHVyZXMuDQo+ID4g
-PiA+IEdCUEEgaXMgc2V0IHRvIGJ5cGFzcyBvbiByZXNldCBzbyBJIHRoaW5rIGl0J3MgZmluZS4g
-WWV0LCBtYXliZSB0aGUNCj4gPiA+ID4gY29kZSBzaG91bGQgY2hlY2sgdGhhdC4NCj4gPiA+DQo+
-ID4gPiBzaG91bGRuJ3Qgd2UgY2hlY2sgaXRzIGFjdHVhbCB2YWx1ZSBiZWZvcmUgc2V0dGluZyBi
-eXBhc3M/DQo+ID4gPg0KPiA+ID4gQnkgdGhlIHdheSB0aGUgc3BlYyBzYXlzIGlzIEFCT1JUIGlz
-IHNldCB0byAweDA6DQo+ID4gPiAiRG8gbm90IGFib3J0IGluY29taW5nIHRyYW5zYWN0aW9ucy4g
-VHJhbnNhY3Rpb25zIGJ5cGFzcyB0aGUgU01NVSB3aXRoDQo+ID4gPiBhdHRyaWJ1dGVzIGdpdmVu
-IGJ5IG90aGVyIGZpZWxkcyBpbiB0aGlzIHJlZ2lzdGVyLiINCj4gPiA+DQo+ID4gPiBXb25kZXJp
-bmcgYWJvdXQgdGhvc2UgYXR0cmlidXRlcyBhbmQgdGhleSBjYW4gYXBwbHkgb24gdGhlIGhvc3Q/
-DQo+ID4NCj4gPiBUaGF04oCZcyByaWdodC4gVGhlcmUgYXJlIG90aGVyIGF0dHJpYnV0ZXMgdGhl
-cmUuIEN1cnJlbnRseSBrZXJuZWwgb25seQ0KPiA+IHN1cHBvcnQsDQo+ID4NCj4gPiAqIEBzdGU6
-IFRoZSBmaXJzdCB0d28gZG91YmxlIHdvcmRzIG9mIHRoZSB1c2VyIHNwYWNlIFN0cmVhbSBUYWJs
-ZSBFbnRyeSBmb3INCj4gPiAgKiAgICAgICB0aGUgdHJhbnNsYXRpb24uIE11c3QgYmUgbGl0dGxl
-LWVuZGlhbi4NCj4gPiAgKiAgICAgICBBbGxvd2VkIGZpZWxkczogKFJlZmVyIHRvICI1LjIgU3Ry
-ZWFtIFRhYmxlIEVudHJ5IiBpbiBTTU1VdjMgSFcgU3BlYykNCj4gPiAgKiAgICAgICAtIHdvcmQt
-MDogViwgQ2ZnLCBTMUZtdCwgUzFDb250ZXh0UHRyLCBTMUNETWF4DQo+ID4gICogICAgICAgLSB3
-b3JkLTE6IEVBVFMsIFMxRFNTLCBTMUNJUiwgUzFDT1IsIFMxQ1NILCBTMVNUQUxMRA0KPiA+DQo+
-ID4gSWYgb3RoZXIgYXR0cmlidXRlcyBtYWtlIHNlbnNlLCB3ZSBtYXkgaGF2ZSB0byB1cGRhdGUg
-a2VybmVsLiBJIHdpbGwgYWRkIGENCj4gbm90ZQ0KPiA+IGhlcmUsIHNvIHRoYXQgd2UgY2FuIHVw
-ZGF0ZSBpdCBpZiByZXF1aXJlZC4gSSB0aGluayBOaWNvbGluIGlzIGxvb2tpbmcgaW50byB0aGlz
-Lg0KPiANCj4gQWNjb3JkaW5nIHRvIFNNTVUgc3BlYyA2LjMgR0JQQSByZWdpc3RlcidzIEFkZGl0
-aW9uYWwgaW5mb3JtYXRpb246DQo+ICAtIElmIFNNTVVfSURSMS5BVFRSX1RZUEVTX09WUiA9PSAw
-LCBNVENGRywgU0hDRkcsIEFMTE9DQ0ZHIGFyZQ0KPiAgICBlZmZlY3RpdmVseSBmaXhlZCBhcyBV
-c2UgaW5jb21pbmcgYW5kIGl0IGlzIElNUExFTUVOVEFUSU9ODQo+ICAgIFNQRUNJRklDIHdoZXRo
-ZXIgdGhlc2UgZmllbGRzIHJlYWQgYXMgemVybyBvciBhIHByZXZpb3VzbHkNCj4gICAgd3JpdHRl
-biB2YWx1ZS4gSW4gdGhpcyBjYXNlLCBNZW1BdHRyIHJlYWRzIGFzIFVOS05PV04uDQo+ICAtIElm
-IFNNTVVfSURSMS5BVFRSX1BFUk1TX09WUiA9PSAwLCBJTlNUQ0ZHIGFuZCBQUklWQ0ZHIGFyZQ0K
-PiAgICBlZmZlY3RpdmVseSBmaXhlZCBhcyBVc2UgaW5jb21pbmcgYW5kIGl0IGlzIElNUExFTUVO
-VEFUSU9ODQo+ICAgIFNQRUNJRklDIHdoZXRoZXIgdGhlc2UgZmllbGRzIHJlYWQgYXMgemVybyBv
-ciBhIHByZXZpb3VzbHkNCj4gICAgd3JpdHRlbiB2YWx1ZS4NCj4gDQo+IE9uIHRoZSBvdGhlciBo
-YW5kLCBRRU1VIHNlZW1zIHRvIHNldCBib3RoIE9WUiBmaWVsZHMgdG8gMCwgc28gYWxsDQo+IHRo
-b3NlICJvdGhlciBhdHRyaWJ1dGVzIiB3b3VsZG4ndCBiZSBuZWNlc3NhcmlseSBmb3J3YXJkZWQg
-dG8gdGhlDQo+IGtlcm5lbD8NCg0KT0suIEJhc2VkIG9uIHRoZSBRRU1VIE9WUiB2YWx1ZSwgR0JQ
-QSBub3cgcmVzZXRzIHRvIDB4MTAwMCwgbWVhbmluZw0KU0hDRkcgPSAwYjAxIChVc2UgaW5jb21p
-bmcpLiBIb3dldmVyLCBpbiB0aGUgY3VycmVudCB2U1RFIGJ5cGFzcy9hYm9ydA0KY2FzZXMsIFNI
-Q0ZHIGlzIHNldCB0byAwYjAwIChOb24tc2hhcmVhYmxlKS4NCg0KSG93ZXZlciwgSSB0aGluayB0
-aGUgU0hDRkcgd2lsbCBiZSBvdmVycmlkZGVuIGJ5IFMyRldCLg0KDQpTbywgSSBkb27igJl0IHRo
-aW5rIHdlIG5lZWQgdG8gbW9kaWZ5IGFueXRoaW5nIGF0IHRoaXMgc3RhZ2UuIEluIGdlbmVyYWws
-DQp0aG91Z2gsIHRoZSBrZXJuZWwgbWlnaHQgbmVlZCB0byBwcm9wYWdhdGUgc29tZSBvZiB0aGVz
-ZSBhdHRyaWJ1dGVzLA0KcG9zc2libHkgSU5TVENGRyBhbmQgUFJJVkNGRywgc2luY2UgdGhleSBh
-cmUgbm90IG92ZXJyaWRkZW4gYnkgUzJGV0IgPw0KDQpUaGFua3MsDQpTaGFtZWVyDQoNCg0KDQoN
-Cg0KDQo=
+On Wed, Oct 29, 2025 at 03:12:48PM +0900, Akihiko Odaki wrote:
+> drain_call_rcu() triggers the force quiescent state, but it can be
+> delayed if the RCU thread is sleeping. Ensure the force quiescent state
+> is immediately triggered by waking the RCU thread up.
+> 
+> The logic to trigger the force quiescent state is decoupled as
+> force_rcu() so that it can be used independently.
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  include/qemu/rcu.h |   1 +
+>  util/rcu.c         | 106 ++++++++++++++++++++++++++++++++---------------------
+>  2 files changed, 65 insertions(+), 42 deletions(-)
+> 
+> diff --git a/include/qemu/rcu.h b/include/qemu/rcu.h
+> index 020dbe4d8b77..d6aa4e5854d3 100644
+> --- a/include/qemu/rcu.h
+> +++ b/include/qemu/rcu.h
+> @@ -118,6 +118,7 @@ static inline void rcu_read_unlock(void)
+>      }
+>  }
+>  
+> +void force_rcu(void);
+>  void synchronize_rcu(void);
+>  
+>  /*
+> diff --git a/util/rcu.c b/util/rcu.c
+> index 3c4af9d213c8..85f9333f5dff 100644
+> --- a/util/rcu.c
+> +++ b/util/rcu.c
+> @@ -49,10 +49,13 @@
+>  unsigned long rcu_gp_ctr = RCU_GP_LOCKED;
+>  
+>  QemuEvent rcu_gp_event;
+> -static int in_drain_call_rcu;
+> +static bool forced;
+>  static int rcu_call_count;
+>  static QemuMutex rcu_registry_lock;
+>  
+> +/* Set when the forced variable is set or rcu_call_count becomes non-zero. */
+> +static QemuEvent sync_event;
+> +
+>  /*
+>   * Check whether a quiescent state was crossed between the beginning of
+>   * update_counter_and_wait and now.
+> @@ -74,36 +77,21 @@ QEMU_DEFINE_CO_TLS(struct rcu_reader_data, rcu_reader)
+>  typedef QLIST_HEAD(, rcu_reader_data) ThreadList;
+>  static ThreadList registry = QLIST_HEAD_INITIALIZER(registry);
+>  
+> +void force_rcu(void)
+> +{
+> +    qatomic_set(&forced, true);
+> +    qemu_event_set(&sync_event);
+> +}
+> +
+>  /* Wait for previous parity/grace period to be empty of readers.  */
+> -static void wait_for_readers(void)
+> +static void wait_for_readers(bool sleep)
+>  {
+>      ThreadList qsreaders = QLIST_HEAD_INITIALIZER(qsreaders);
+>      struct rcu_reader_data *index, *tmp;
+> -    int sleeps = 0;
+> -    bool forced = false;
+> +    int sleeps = sleep ? 5 : 0;
+> +    bool waiting = false;
+>  
+>      for (;;) {
+> -        /*
+> -         * Force the grace period to end and wait for it if any of the
+> -         * following heuristical conditions are satisfied:
+> -         * - A decent number of callbacks piled up.
+> -         * - It timed out.
+> -         * - It is in a drain_call_rcu() call.
+> -         *
+> -         * Otherwise, periodically poll the grace period, hoping it ends
+> -         * promptly.
+> -         */
+> -        if (!forced &&
+> -            (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+> -             sleeps >= 5 || qatomic_read(&in_drain_call_rcu))) {
+> -            forced = true;
+> -
+> -            QLIST_FOREACH(index, &registry, node) {
+> -                notifier_list_notify(&index->force_rcu, NULL);
+> -                qatomic_set(&index->waiting, true);
+> -            }
+> -        }
+
+IIUC this is the part to set index->waiting first whenever necessary, then
+that'll guarantee the wait(rcu_gp_event) will be notified in rcu unlock.
+
+Now we removed this chunk, then could it happen if waiting=true and the
+wait(rcu_gp_event) may wait for more than it should (as nobody will wake it
+up if all threads have waiting=false)?
+
+The other thing is, right below here there's the code and comment:
+
+        /* Here, order the stores to index->waiting before the loads of
+         * index->ctr.  Pairs with smp_mb_placeholder() in rcu_read_unlock(),
+         * ensuring that the loads of index->ctr are sequentially consistent.
+         *
+         * If this is the last iteration, this barrier also prevents
+         * frees from seeping upwards, and orders the two wait phases
+         * on architectures with 32-bit longs; see enter_qs().
+         */
+        smp_mb_global();
+
+IIUC it explains the mb_global() to order the updates of waiting and the
+reads of index->ctr.  It doesn't look like applicable anymore.  Said that,
+I think we should indeed still need some barrier to make sure we read
+index->ctr at least to be after we update global gp_ctr (done before
+calling wait_for_readers()).  I'm not sure if it means the mb is needed,
+however maybe at least the comment is outdated if so.
+
+> -
+>          /* Here, order the stores to index->waiting before the loads of
+>           * index->ctr.  Pairs with smp_mb_placeholder() in rcu_read_unlock(),
+>           * ensuring that the loads of index->ctr are sequentially consistent.
+> @@ -150,7 +138,8 @@ static void wait_for_readers(void)
+>           */
+>          qemu_mutex_unlock(&rcu_registry_lock);
+>  
+> -        if (forced) {
+> +        if (waiting) {
+> +            /* Wait for the forced quiescent state. */
+>              qemu_event_wait(&rcu_gp_event);
+>  
+>              /*
+> @@ -158,9 +147,25 @@ static void wait_for_readers(void)
+>               * while we walk the list.
+>               */
+>              qemu_event_reset(&rcu_gp_event);
+> +        } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+> +                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
+> +            /*
+> +             * Now one of the following heuristical conditions is satisfied:
+> +             * - A decent number of callbacks piled up.
+> +             * - It timed out.
+> +             * - force_rcu() was called.
+> +             *
+> +             * Force a quiescent state.
+> +             */
+> +            waiting = true;
+> +
+> +            QLIST_FOREACH(index, &registry, node) {
+> +                notifier_list_notify(&index->force_rcu, NULL);
+> +                qatomic_set(&index->waiting, true);
+> +            }
+>          } else {
+> -            g_usleep(10000);
+> -            sleeps++;
+> +            /* Try again. */
+> +            sleeps--;
+>          }
+>  
+>          qemu_mutex_lock(&rcu_registry_lock);
+> @@ -170,7 +175,7 @@ static void wait_for_readers(void)
+>      QLIST_SWAP(&registry, &qsreaders, node);
+>  }
+>  
+> -static void enter_qs(void)
+> +static void enter_qs(bool sleep)
+>  {
+>      /* Write RCU-protected pointers before reading p_rcu_reader->ctr.
+>       * Pairs with smp_mb_placeholder() in rcu_read_lock().
+> @@ -189,14 +194,14 @@ static void enter_qs(void)
+>               * Switch parity: 0 -> 1, 1 -> 0.
+>               */
+>              qatomic_set(&rcu_gp_ctr, rcu_gp_ctr ^ RCU_GP_CTR);
+> -            wait_for_readers();
+> +            wait_for_readers(sleep);
+>              qatomic_set(&rcu_gp_ctr, rcu_gp_ctr ^ RCU_GP_CTR);
+>          } else {
+>              /* Increment current grace period.  */
+>              qatomic_set(&rcu_gp_ctr, rcu_gp_ctr + RCU_GP_CTR);
+>          }
+>  
+> -        wait_for_readers();
+> +        wait_for_readers(sleep);
+>      }
+>  }
+>  
+> @@ -205,7 +210,6 @@ static void enter_qs(void)
+>   */
+>  static struct rcu_head dummy;
+>  static struct rcu_head *head = &dummy, **tail = &dummy.next;
+> -static QemuEvent rcu_call_ready_event;
+>  
+>  static void enqueue(struct rcu_head *node)
+>  {
+> @@ -282,6 +286,7 @@ static void *call_rcu_thread(void *opaque)
+>      rcu_register_thread();
+>  
+>      for (;;) {
+> +        bool sleep = true;
+>          int n;
+>  
+>          /*
+> @@ -289,7 +294,7 @@ static void *call_rcu_thread(void *opaque)
+>           * added before enter_qs() starts.
+>           */
+>          for (;;) {
+> -            qemu_event_reset(&rcu_call_ready_event);
+> +            qemu_event_reset(&sync_event);
+>              n = qatomic_read(&rcu_call_count);
+>              if (n) {
+>                  break;
+> @@ -298,20 +303,36 @@ static void *call_rcu_thread(void *opaque)
+>  #if defined(CONFIG_MALLOC_TRIM)
+>              malloc_trim(4 * 1024 * 1024);
+>  #endif
+> -            qemu_event_wait(&rcu_call_ready_event);
+> +            qemu_event_wait(&sync_event);
+> +        }
+> +
+> +        /*
+> +         * Ensure that an event for a rcu_call_count change will not interrupt
+> +         * wait_for_readers().
+> +         */
+> +        qemu_event_reset(&sync_event);
+> +
+> +        /*
+> +         * Ensure that the forced variable has not been set after fetching
+> +         * rcu_call_count; otherwise we may get confused by a force quiescent
+> +         * state request for an element later than n.
+> +         */
+> +        while (qatomic_xchg(&forced, false)) {
+> +            sleep = false;
+> +            n = qatomic_read(&rcu_call_count);
+>          }
+
+This is pretty tricky, and I wonder if it will make the code easier to read
+if we convert the sync_event to be a semaphore instead.  When as a sem, it
+will take account of whatever kick to it, either a call_rcu1() or an
+enforced rcu flush, so that we don't need to reset it.  Meanwhile, we don't
+worry on an slightly outdated "n" read because the 2nd round of sem_wait()
+will catch that new "n".
+
+Instead, worst case is rcu thread runs one more round without seeing
+callbacks on the queue.
+
+I'm not sure if that could help simplying code, maybe also make it less
+error-prone.
+
+>  
+> -        enter_qs();
+> +        enter_qs(sleep);
+>          qatomic_sub(&rcu_call_count, n);
+>          bql_lock();
+>          while (n > 0) {
+>              node = try_dequeue();
+>              while (!node) {
+
+I have a pure question here not relevant to your changes.. do you know when
+this "if" will trigger?  It seems to me the enqueue() should always happen
+before the increment of rcu_call_count:
+
+void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
+{
+    node->func = func;
+    enqueue(node);
+
+    if (!qatomic_fetch_inc(&rcu_call_count)) {
+        qemu_event_set(&sync_event);
+    }
+}
+
+I believe qatomic_fetch_inc() is RMW so it's strong mb and order
+guaranteed.  Then here why the node can be null even if we're sure >=n have
+been enqueued?
+
+Thanks,
+
+>                  bql_unlock();
+> -                qemu_event_reset(&rcu_call_ready_event);
+> +                qemu_event_reset(&sync_event);
+>                  node = try_dequeue();
+>                  if (!node) {
+> -                    qemu_event_wait(&rcu_call_ready_event);
+> +                    qemu_event_wait(&sync_event);
+>                      node = try_dequeue();
+>                  }
+>                  bql_lock();
+> @@ -329,8 +350,10 @@ void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
+>  {
+>      node->func = func;
+>      enqueue(node);
+> -    qatomic_inc(&rcu_call_count);
+> -    qemu_event_set(&rcu_call_ready_event);
+> +
+> +    if (!qatomic_fetch_inc(&rcu_call_count)) {
+> +        qemu_event_set(&sync_event);
+> +    }
+>  }
+>  
+>  
+> @@ -388,10 +411,9 @@ void drain_call_rcu(void)
+>       * assumed.
+>       */
+>  
+> -    qatomic_inc(&in_drain_call_rcu);
+>      call_rcu(&sync, sync_rcu_callback, rcu);
+> +    force_rcu();
+>      qemu_event_wait(&sync.complete_event);
+> -    qatomic_dec(&in_drain_call_rcu);
+>  
+>      if (locked) {
+>          bql_lock();
+> @@ -435,7 +457,7 @@ static void rcu_init_complete(void)
+>      qemu_mutex_init(&rcu_registry_lock);
+>      qemu_event_init(&rcu_gp_event, true);
+>  
+> -    qemu_event_init(&rcu_call_ready_event, false);
+> +    qemu_event_init(&sync_event, false);
+>  
+>      /* The caller is assumed to have BQL, so the call_rcu thread
+>       * must have been quiescent even after forking, just recreate it.
+> 
+> -- 
+> 2.51.0
+> 
+> 
+
+-- 
+Peter Xu
+
 
