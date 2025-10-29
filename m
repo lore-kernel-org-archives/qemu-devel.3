@@ -4,85 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3938CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A561CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE1A8-00050G-I2; Wed, 29 Oct 2025 04:04:08 -0400
+	id 1vE1BH-00060X-92; Wed, 29 Oct 2025 04:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE1A3-0004jr-RD
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:04:04 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vE19t-0003id-9k
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:04:03 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-62fc0b7bf62so3870334a12.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:03:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761725030; x=1762329830; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2Br8E+AWpSy3dJekVdYJJsvfvPRbB6v5tjS3jqJvZCM=;
- b=Le6R2HNSOn8tzkCYgsXKwp/v4gjAK9fJT4mRGGIwKARKf/tp2Plfw5pEKu7dMygCPZ
- 822vtUroPvCSI+x12N3X9bcAMnDTN0rOVewqxk1vEWTEZv9nOdeOThh3MlBIPoPx3LjO
- JHU3SLWpKWAUfGqUOu0cJChV+rvCQOa5D3joPP0VhgnAWCluBIofRw8s+SoYcjmOg96r
- u/LGG4gjdp3XgzTCWAfTgtMtlGvlvTLjUz16fmgroPwYODqpXHrjlVj61bvcMPPqPt6m
- REyM/fnCPv+6U5KW9V76x41dwNb5PTz/oZgWkR0i3B4Z7nbn8vpEwpZyxETwwayn+bdU
- mFgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761725030; x=1762329830;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2Br8E+AWpSy3dJekVdYJJsvfvPRbB6v5tjS3jqJvZCM=;
- b=hg6BryM06AnjSf8oV0NE83TGiDXw+EEi39EAFcAoffg1Bi++DcgDQdWOujdXSUNDoH
- 1XWwiwUohY+CTOE4/4j3rF5KmWifSlXKAdmm1LY9YwxGyjFLFUe5hC1uTw6WDt1bwJXu
- LoUio0bT9edyLZVsiNzXAzseqhv853X6EPuqGLriqfO6CGTWmw1j1qJ1eyJ537ZjRHQL
- U2M+jKfBRaQBcw633Icpw4FqAjQYCnolA71Uj8QZaKMswsfohpeNKfJGIVr6VvN8sh4i
- O7gImAwFwuBLPGqtvDxYT+hS/RoEKqB8BaVL810h44OmUK0VEKtrLSdXd+t1EwfyEpkw
- HX0w==
-X-Gm-Message-State: AOJu0Yy7QRuend903IuzeJdtiza1pZADk8cQQDZY0wa9DgjiEnMEN3AR
- 2tkbu+Y9BLemeBtmFFNs4r8q4A5CwB+r15e0pcQ0TMJYmR52aEVhsk97K4mWWGoYPgCpyJNOK43
- OPYh1fJ5VsI596inLQyDVfCZwRWeMzXh/SBiqtHw4Zg==
-X-Gm-Gg: ASbGncvEI4A8RLAot9qgVktpD4qZY3f/qYRMUilrVCGlfICl8xYZGM9hf8016377Wm0
- X8/RhAklsUtI7fEnhFZ+3U05p0Tlp+38+aWkpiSqTiFoFTDGEs9G4Q9pvu8XSpmrHtVthu+c3cu
- qpM+OBXkJgS0DNjBc/VWKNQbqDkm7uwcQwDlwaQ3IPe642eM+od0u+WgceUsAjwMpYOUZfy+VOo
- jKG5km2PPOWcWSL3OWFasr1e+Ymrx8kPj+7Nyn/bOyrUSeXYk7kgRdzeGvS
-X-Google-Smtp-Source: AGHT+IHxQ+sNjpcaC/jRVlw5MNECnJ34Mz24SAhjYMOtqlK2Wx4Imr3WPxk1XhGj0nwN9eM7DbkG0V3cFEDBEj4SeHM=
-X-Received: by 2002:a05:6402:510c:b0:63c:3cd8:72df with SMTP id
- 4fb4d7f45d1cf-640442518a0mr1516204a12.17.1761725030375; Wed, 29 Oct 2025
- 01:03:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE1BE-00060A-6u
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:05:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vE1BB-00042d-GQ
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:05:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761725112;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=op7z1X52GwW9SZWhbky3Kpx1uDQphXc2x6MOH436cOw=;
+ b=fGIhuWgiF8s8svnXS44esF9H8v8omWIVe37FrFsVPnJMSReBwMUkV8xPFssl0DcPt76box
+ 6ED5+6CzDRhH1x4AETMsRI6/0obY5jRa2frHEGbs6jBMW1Q6ZMDCPyqcHysW7EsmaW0DuX
+ pYK7XCtwETU9GbYB8tWNmp1f4E5JPBM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-e-mJfT_fN1214kPwPsvZMQ-1; Wed,
+ 29 Oct 2025 04:05:08 -0400
+X-MC-Unique: e-mJfT_fN1214kPwPsvZMQ-1
+X-Mimecast-MFC-AGG-ID: e-mJfT_fN1214kPwPsvZMQ_1761725107
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05EE91800673; Wed, 29 Oct 2025 08:05:07 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.98])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3192A19560AD; Wed, 29 Oct 2025 08:05:04 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+	qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH 1/1] tests/functional/ppc64/test_mac99: Fix style issues
+ reported by pylint
+Date: Wed, 29 Oct 2025 09:05:02 +0100
+Message-ID: <20251029080502.52938-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20251028165236.3327658-1-peter.maydell@linaro.org>
-In-Reply-To: <20251028165236.3327658-1-peter.maydell@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 29 Oct 2025 10:03:24 +0200
-X-Gm-Features: AWmQ_blTls_UGRPWmE-OSgb0IK5VvmHVKacCYih1qygsYquVT7XmsiC90wApj8A
-Message-ID: <CAAjaMXYu3tL+8HTCQA5Fv_XaFTQStF2TQinGKyaqVp87M_Rugg@mail.gmail.com>
-Subject: Re: [PATCH] docs/devel/testing/fuzzing: Note that you can get qtest
- to read from a file
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Alexander Bulekov <alxndr@bu.edu>, Bandan Das <bsd@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>, 
- Qiuhao Li <Qiuhao.Li@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,51 +80,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 6:53=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> It is possible to get qtest to read fuzzer reproducers from a file
-> rather than directly from stdio; this is useful when you want to run
-> QEMU under gdb to debug the failure.  Document how to do this, which
-> was previously only written down in the commit message for
-> 5b18a6bf44b9 ("chardev: Allow setting file chardev input file on the
-> command line").
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I got bored of looking up the commit message in the git log
-> every time :-)
-> ---
+From: Thomas Huth <thuth@redhat.com>
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Pylint complained about lines being too long here, and mac99Test not
+following the usual CamelCase capitalization.
 
->  docs/devel/testing/fuzzing.rst | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/docs/devel/testing/fuzzing.rst b/docs/devel/testing/fuzzing.=
-rst
-> index c3ac084311b..c43f815f320 100644
-> --- a/docs/devel/testing/fuzzing.rst
-> +++ b/docs/devel/testing/fuzzing.rst
-> @@ -263,6 +263,15 @@ generic-fuzz target.
->
->  - Report the bug and send a patch with the C reproducer upstream
->
-> +QEMU can also read the reproducer directly from a file rather than
-> +from standard input::
-> +
-> +    $QEMU_PATH $QEMU_ARGS -qtest chardev:repro \
-> +      -chardev file,id=3Drepro,path=3D/dev/null,input-path=3D/tmp/reprod=
-ucer
-> +
-> +This is useful if you want to run QEMU under a debugger to investigate
-> +the failure.
-> +
->  Implementation Details / Fuzzer Lifecycle
->  -----------------------------------------
->
-> --
-> 2.43.0
->
->
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/ppc64/test_mac99.py | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/tests/functional/ppc64/test_mac99.py b/tests/functional/ppc64/test_mac99.py
+index dfd9c01371d..a3261a8330a 100755
+--- a/tests/functional/ppc64/test_mac99.py
++++ b/tests/functional/ppc64/test_mac99.py
+@@ -7,14 +7,16 @@
+ from qemu_test import LinuxKernelTest, Asset
+ from qemu_test import exec_command_and_wait_for_pattern
+ 
+-class mac99Test(LinuxKernelTest):
++class Mac99Test(LinuxKernelTest):
+ 
+     ASSET_BR2_MAC99_LINUX = Asset(
+-        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
++        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main'
++         '/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
+         'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
+ 
+     ASSET_BR2_MAC99_ROOTFS = Asset(
+-        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main//buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2',
++        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main'
++         '/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2'),
+         'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
+ 
+     def test_ppc64_mac99_buildroot(self):
+-- 
+2.51.0
+
 
