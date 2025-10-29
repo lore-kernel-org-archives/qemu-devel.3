@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0571CCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 19:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41347CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 19:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEBWL-0006O2-7U; Wed, 29 Oct 2025 15:07:46 -0400
+	id 1vEBjK-0002M5-Lf; Wed, 29 Oct 2025 15:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1vEBWC-0006MX-PK; Wed, 29 Oct 2025 15:07:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEBjI-0002LH-FS
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 15:21:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1vEBVz-0001P0-Nw; Wed, 29 Oct 2025 15:07:36 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TA1HfG026029;
- Wed, 29 Oct 2025 19:07:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=iwkaVuBlwz+ePTv+h
- 51JfTzIRUzkqD2xxDdmV0GuXO0=; b=Xt5ZQQLq12qEfO1MUTCnq8i3hzmWeu5Co
- 2hH99IwvfI/EieebbIa2ah5s+i1nuEn9mZXNCHsNIm1FbZZ7NZLTXMKuy+OYM6bw
- wk0M4k+ELhIO/OCZNPRomq7gkxgm7WwAJoTs5U/3e4Km6uWyVIXQMo5j81iB7mbt
- 0anospeGFbilkRZZBhKrTO5sL6N+X1rCeMDpIsNxr9zusGGJzybVquYwjRQCpk9d
- BagUsPe84ugoZopxEO30EtKW+bzOf30iL9+Izjf2AuQkgIvQUXdfQUJk2KKkx0/q
- fAdDA7g4lkcHkgTjet6GXYWxZsvC9/f89njkmHjHbLH69cDHesRdg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34aamwxt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 19:07:10 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59TJ7AGS012794;
- Wed, 29 Oct 2025 19:07:10 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34aamwxp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 19:07:10 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59TGj47Z030790;
- Wed, 29 Oct 2025 19:07:09 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwn1mv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 19:07:09 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59TJ75JE49414546
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Oct 2025 19:07:05 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C039B20049;
- Wed, 29 Oct 2025 19:07:05 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8922620040;
- Wed, 29 Oct 2025 19:07:04 +0000 (GMT)
-Received: from ltcd48-lp3.ltc.tadn.ibm.com (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Oct 2025 19:07:04 +0000 (GMT)
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-To: npiggin@gmail.com, harshpb@linux.ibm.com, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: mahesh@linux.ibm.com, ganeshgr@linux.ibm.com
-Subject: [RFC 3/4] ppc/spapr: Add support for 'ibm, open-errinjct' and 'ibm,
- close-errinjct'
-Date: Wed, 29 Oct 2025 10:06:17 -0500
-Message-ID: <20251029150618.186803-4-nnmlinux@linux.ibm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251029150618.186803-1-nnmlinux@linux.ibm.com>
-References: <20251029150618.186803-1-nnmlinux@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEBj7-0003WB-TJ
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 15:21:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761765649;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sx9skujbOzAhJaA8ojljNZyg41FYTwyTZvmXGxrCr4k=;
+ b=MYjaPP0Caj/kyJY4cXjmhu5F9rHDyFnIsW1g4uwspAPImo//SA+xC1ZbPtnXjk9Qhq5IxS
+ AlpiAN4ha7JdoqbsBafNPPIoQgm+yFUQRf3I0PZf3SONLrQRoQGfDK8IPSURuaXxzX0DBF
+ ln6qCuvkWn1yl2d68EChzks7YB9vOgs=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-orPuQBfPPkS5dI4yDTJyjA-1; Wed, 29 Oct 2025 15:20:48 -0400
+X-MC-Unique: orPuQBfPPkS5dI4yDTJyjA-1
+X-Mimecast-MFC-AGG-ID: orPuQBfPPkS5dI4yDTJyjA_1761765648
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8aa1a684953so81201185a.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 12:20:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761765648; x=1762370448;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sx9skujbOzAhJaA8ojljNZyg41FYTwyTZvmXGxrCr4k=;
+ b=OLO1VQLy9RiYSNIzMt+gsXZhs6CqOdoF6wAPzxSBbaRaK/on1lb9aAMLqDg4nrPMb9
+ iqWmov4NJe/d1QHFkk1oAVp1fmL+ukhw/Ct1//byFJkt9BsMiMCh5CACUROXyqM6EhQC
+ mXi2fynakxzAqYVggb6QL5CQ5QqlQ8Jn/0PNHB0xtBWmSTMA5NyPCEcPuxBOCMySqCLA
+ BaeSaf5gonKjzGvg3Z0BlkSb6C/dWGUehdgOmhFFdQhynjorRnyzTA+U07cxKuBExZ7w
+ oPYgNvwLgaHoIxdsvkNDvI5gKoRA08BGxChH4EanAUbIRAAfl5c/9BNV/Qx52J5qtLyZ
+ xCNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9jchNzbpz6s1586SM2kMUcwaRohffw7H0TE4KAqqeOBA5+G6m1aDJDl0jtxLgeG9692sCyMlJlcpF@nongnu.org
+X-Gm-Message-State: AOJu0Yy80lbDvSC372JLFYA1EtIGH4x5ng+/8U6cU2RsWtkwK7as6i2r
+ WoosvJARfaN5gdKxwr2IENrRB9BrmW0jHhyuba4RfWuwYuwJBK5XVT3WI5mkvBZ0+LEhEJxVMej
+ PSRfts2ZuPGna/ZQJQw4rmgd8BmB8h0/bB6ZeSJUmx0TMNvIhGu5+VBbl
+X-Gm-Gg: ASbGncuaU9MS9pQG5yuIlLg4VxLIWO1mm3ebovmn0xDuVxWDohsfEvDhhlDDa1QFzp0
+ ffF9mgJI1nMRQpFm5g7FFDulZzhgCiKRXx1qW0y5BougAJzdiVHebCAORdGPsptLeG/66owUJLr
+ aCTURJJGs5nrDO1du6BT88wVyB8YML8a4UI7KJq76dM5ZVxBT+Tu9vOnP6IXgH3e9oC+Nig4zoT
+ xX173oS2VENJTaLcu20B+5DWnGcScGjNnPfNRAUL5N6L1/EGwIZPv+cetF5bldALtMXmYj6XKmO
+ ARdnwEVhFVy0Li8tR8Q+ZBZEXorasOhCsHYOpUPsaqYfPW94ZwVYvVDySmzDF4PjhMo=
+X-Received: by 2002:a05:620a:31a5:b0:8a3:c4fa:9b77 with SMTP id
+ af79cd13be357-8aa2a559c30mr133386185a.6.1761765647746; 
+ Wed, 29 Oct 2025 12:20:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFVIij/rkczZgHCy8mdZKOEtx2chkJ8ndmT87UpohU/0euylD3KBpGvA6fpA2eNsDFcbERYAQ==
+X-Received: by 2002:a05:620a:31a5:b0:8a3:c4fa:9b77 with SMTP id
+ af79cd13be357-8aa2a559c30mr133382085a.6.1761765647292; 
+ Wed, 29 Oct 2025 12:20:47 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-89f2607f05csm1102334185a.53.2025.10.29.12.20.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Oct 2025 12:20:46 -0700 (PDT)
+Date: Wed, 29 Oct 2025 15:20:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
+Message-ID: <aQJpDE6FvkIF6GgE@x1.local>
+References: <cover.1761346145.git.balaton@eik.bme.hu>
+ <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
+ <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
+ <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
+ <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
+ <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
+ <802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp>
+ <28c6f065-ba8d-e5e2-922e-d5fd1fb58b60@eik.bme.hu>
+ <db06bf5e-b7f5-4980-a054-393529e188eb@rsg.ci.i.u-tokyo.ac.jp>
+ <759b6b4c-1155-184a-fa99-1df384f0fac3@eik.bme.hu>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ALkgKXG8 c=1 sm=1 tr=0 ts=690265de cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=QI9oHtSxlEyCc_VTGTAA:9
-X-Proofpoint-ORIG-GUID: tehYuktGMqcdlCgtlgkbJkHa8P6PZg9i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfXxJGHan1RQWBe
- tbTN4QguP+fp0HLNisQWFhuaFBN1TvJg0/6ErJv48HnZ/VcJ4FamRI6xQ55k6m5VTbEOYCyWSi1
- D/nMEjJ+XlucSEKl9c7Y+KPhi0HE32IXyOEYt6lmUmeew8TYo2KWmubRYcAp5hvj8ETBg5DEe1O
- I9d/KEY1hwE4MGnaRneeCsNv3KJOlfV/v6Z98LxNN/he6FpBuXCFkJ7Ig6VtXD/DuqCKYLWjJw/
- 7EKm8PzBBWVNf9QPuROUFDSOJimpIchdgbMezN52k6nJQ8lpkRa2Elt/EQ/bfDLTNxbBsikMRHW
- Q3zPPClIizLJsvkxK8UKBZdhUvJpRu8y30qryAnZE2NELuWYiQZvbsE79TLdUfCLtHaggRg2Qgr
- z4uMFZVuMQ7EPxb7aR9blAjw8U4Y5w==
-X-Proofpoint-GUID: ZVjPVnMAMVs2bYxekaLED23ywGBv1Eif
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-29_07,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1011 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <759b6b4c-1155-184a-fa99-1df384f0fac3@eik.bme.hu>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,144 +118,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the 'ibm,open-errinjct' and 'ibm,close-errinjct' RTAS
-calls. These handlers manage exclusive access to error injection
-facilities through a simple session-based mechanism.
+On Wed, Oct 29, 2025 at 11:30:10AM +0100, BALATON Zoltan wrote:
+> > memory_region_new_* will work, but I don't think removing unnecessary
+> > but harmless fields from a device state structure does not sufficiently
+> > motivates adding them.
+> 
+> I haven't given up on this yet, that's why I alternatively proposed
+> 
+> object_alloc (same as object_new without object_initialize)
+> memory_region_init
+> 
+> which is just a small change but should also work without adding
+> memory_region_new convenience functions. Then only object_alloc needs to be
+> added.
 
-Updates include:
-  - Implementation of rtas_ibm_open_errinjct() and rtas_ibm_close_errinjct()
-  - Tracking field 'spapr->errinjct_token' in SpaprMachineState
-  - New token definitions for the above RTAS calls
-  - Return codes for already open or invalid close conditions
+IMHO if this will ever happen, memory_region_new*() is better, unless
+object_alloc() can be used anywhere besides MemoryRegion..
 
-This ensures that only one guest process can actively perform error
-injection at a time, improving reliability and preventing conflicts.
+It seems to me, MemoryRegion is the only one I'm aware of that may need
+such tweak, rather than using object_new() directly.
 
-Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
----
----
- include/hw/ppc/spapr.h |  8 +++++-
- hw/ppc/spapr_pci.c     | 65 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 72 insertions(+), 1 deletion(-)
-
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index f762be030c..af9617b13e 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -283,6 +283,7 @@ struct SpaprMachineState {
-     Error *fwnmi_migration_blocker;
- 
-     SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
-+    uint32_t errinjct_token;
- };
- 
- #define H_SUCCESS         0
-@@ -755,6 +756,9 @@ enum rtas_err_type {
- #define RTAS_OUT_PARAM_ERROR                    -3
- #define RTAS_OUT_NOT_SUPPORTED                  -3
- #define RTAS_OUT_NO_SUCH_INDICATOR              -3
-+#define RTAS_OUT_ALREADY_OPEN                   -4
-+#define RTAS_OUT_NOT_OPEN                       -5
-+#define RTAS_OUT_CLOSE_ERROR                    -6
- #define RTAS_OUT_NOT_AUTHORIZED                 -9002
- #define RTAS_OUT_SYSPARM_PARAM_ERROR            -9999
- 
-@@ -818,8 +822,10 @@ enum rtas_err_type {
- #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
- #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
- #define RTAS_IBM_ERRINJCT                       (RTAS_TOKEN_BASE + 0x2D)
-+#define RTAS_IBM_OPEN_ERRINJCT                  (RTAS_TOKEN_BASE + 0x2E)
-+#define RTAS_IBM_CLOSE_ERRINJCT                 (RTAS_TOKEN_BASE + 0x2F)
- 
--#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
-+#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x30)
- 
- /* RTAS ibm,get-system-parameter token values */
- #define RTAS_SYSPARM_SPLPAR_CHARACTERISTICS      20
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 219099f5aa..4723b87c65 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -864,6 +864,65 @@ param_error_exit:
-     rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
- }
- 
-+static void rtas_ibm_open_errinjct(PowerPCCPU *cpu,
-+                                   SpaprMachineState *spapr,
-+                                   uint32_t token,
-+                                   uint32_t nargs,
-+                                   target_ulong args,
-+                                   uint32_t nret,
-+                                   target_ulong rets)
-+{
-+    /* Validate argument count */
-+    if ((nargs != 0) || (nret != 2)) {
-+        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
-+        return;
-+    }
-+
-+    if (spapr->errinjct_token) {
-+        /* Already open: return token=0 and code=ALREADY_OPEN */
-+        rtas_st(rets, 0, 0);
-+        rtas_st(rets, 1, RTAS_OUT_ALREADY_OPEN);
-+        return;
-+    }
-+
-+    spapr->errinjct_token = 1;
-+
-+    /*
-+     * Unlike most RTAS calls, ibm,open-errinjct returns
-+     * the session token in the first output parameter
-+     * and the status in the second.
-+     */
-+    rtas_st(rets, 0, spapr->errinjct_token);
-+    rtas_st(rets, 1, RTAS_OUT_SUCCESS);
-+}
-+
-+static void rtas_ibm_close_errinjct(PowerPCCPU *cpu,
-+                                    SpaprMachineState *spapr,
-+                                    uint32_t token,
-+                                    uint32_t nargs,
-+                                    target_ulong args,
-+                                    uint32_t nret,
-+                                    target_ulong rets)
-+{
-+    uint32_t o_token;
-+
-+    if ((nargs != 1) || (nret != 1)) {
-+        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
-+        return;
-+    }
-+
-+    o_token = rtas_ld(args, 0);
-+
-+    if (o_token != spapr->errinjct_token) {
-+        rtas_st(rets, 0, RTAS_OUT_NOT_OPEN);
-+        return;
-+    }
-+
-+    spapr->errinjct_token = 0;
-+
-+    rtas_st(rets, 0, RTAS_OUT_SUCCESS);
-+}
-+
- static void pci_spapr_set_irq(void *opaque, int irq_num, int level)
- {
-     /*
-@@ -2560,6 +2619,12 @@ void spapr_pci_rtas_init(void)
-     spapr_rtas_register(RTAS_IBM_ERRINJCT,
-                         "ibm,errinjct",
-                         rtas_ibm_errinjct);
-+    spapr_rtas_register(RTAS_IBM_OPEN_ERRINJCT,
-+                        "ibm,open-errinjct",
-+                        rtas_ibm_open_errinjct);
-+    spapr_rtas_register(RTAS_IBM_CLOSE_ERRINJCT,
-+                        "ibm,close-errinjct",
-+                        rtas_ibm_close_errinjct);
- }
- 
- static void spapr_pci_register_types(void)
 -- 
-2.51.0
+Peter Xu
 
 
