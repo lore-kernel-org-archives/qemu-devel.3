@@ -4,120 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB99CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 10:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C13CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 11:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE3rt-0004Gl-L7; Wed, 29 Oct 2025 06:57:30 -0400
+	id 1vE3w2-0007eU-Gx; Wed, 29 Oct 2025 07:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vE3rm-0003wJ-Ky; Wed, 29 Oct 2025 06:57:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vE3vs-0007dh-FW
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 07:01:36 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vE3rb-0002g6-MS; Wed, 29 Oct 2025 06:57:21 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59SJm21A004466;
- Wed, 29 Oct 2025 10:57:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=MSuvFl
- mQNGgbBIIwXjkwWu8UaqBjWg6WhvDZGAATYD8=; b=sS5UgEBf57P6nEcc0mtZMo
- vIyc1GrMrFgOyR2GpvRPR9YV4xPJHq/v2R4Bg09+XnXr5PtijrRF17gtQkqo1S6V
- 78TNjbWYo77tescghH+499I0Q3qoKJicgsRtpHcp2ip9//MwRZpLhjHRivGOf5YG
- JzLFj53u+ilxqua2u6+PnR6w2sBHxXMxYo9F5Nj3HW3Oi8I59GvKSFxZYWdxE7hV
- 6oWk6I12Db+GQVBZqLGpsppx07QRt0WdOI6wXAfjd8kw0sqKDRA8ICUsfpauMoOo
- voQukkCeBkdoIPtEFReHA/WZqhG6zCcTDssUOh+oyioClBgE3A78GMTKdxyagr+w
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34a8juv3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 10:57:03 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59TAdEAN002247;
- Wed, 29 Oct 2025 10:57:03 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34a8juuy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 10:57:02 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59T9sptL030714;
- Wed, 29 Oct 2025 10:57:01 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwjxn4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Oct 2025 10:57:01 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59TAv1Rm23069092
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Oct 2025 10:57:01 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7679B58052;
- Wed, 29 Oct 2025 10:57:01 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9CC4558050;
- Wed, 29 Oct 2025 10:56:59 +0000 (GMT)
-Received: from [9.39.28.229] (unknown [9.39.28.229])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Oct 2025 10:56:59 +0000 (GMT)
-Message-ID: <8ee23eb9-e7cd-42b9-ad43-a5a5370860db@linux.ibm.com>
-Date: Wed, 29 Oct 2025 16:26:58 +0530
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vE3vj-0003YA-8h
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 07:01:35 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cxPMn0p8Sz6M4Yx;
+ Wed, 29 Oct 2025 18:57:25 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id B3587140278;
+ Wed, 29 Oct 2025 19:01:15 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 29 Oct
+ 2025 11:01:14 +0000
+Date: Wed, 29 Oct 2025 11:01:13 +0000
+To: Michael Tokarev <mjt@tls.msk.ru>
+CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, "Peter
+ Maydell" <peter.maydell@linaro.org>, peng guo <engguopeng@buaa.edu.cn>, Paolo
+ Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PULL 33/75] hw/i386/pc: Avoid overlap between CXL window and
+ PCI 64bit BARs in QEMU
+Message-ID: <20251029110113.000028ca@huawei.com>
+In-Reply-To: <949000e9-ac59-4bc9-ad00-861c3a9a08c9@tls.msk.ru>
+References: <cover.1759691708.git.mst@redhat.com>
+ <d1193481dee63442fc41e47ca6ebc4cd34f1f69c.1759691708.git.mst@redhat.com>
+ <26067051-421d-44ed-9c7e-13ed0bdac18b@tls.msk.ru>
+ <949000e9-ac59-4bc9-ad00-861c3a9a08c9@tls.msk.ru>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc/sam460ex: Update u-boot-sam460ex
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20251028151923.10DBB5972E5@zero.eik.bme.hu>
- <ee77b09f-7a12-4d52-b5f6-2d4b5b711448@linux.ibm.com>
- <f4c3bbb6-9a54-69ff-0d54-481ab4a55579@eik.bme.hu>
- <b131d419-15a8-4b4a-8dbd-c6f4988679fa@linux.ibm.com>
- <aedc6da1-605d-9c23-69b7-d93649fcd2cc@eik.bme.hu>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <aedc6da1-605d-9c23-69b7-d93649fcd2cc@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=DYkaa/tW c=1 sm=1 tr=0 ts=6901f2ff cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=GaQpPoNlAAAA:8
- a=2bKAHB_-g_cVxtq2Nj4A:9 a=QEXdDO2ut3YA:10 a=xF5q_uoM5gZT5J3czcBi:22
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: __7kLs349X578AZA3Wzdg-sV3x-nYiFR
-X-Proofpoint-ORIG-GUID: al72_EWHlfKuRj1DLXHXxmbGPohivSTQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX0N27NUP9qDoU
- HbOZmOFe427YkZOWghu2f6UvnxYe9hP6LQf0abcuTENSQXfvtS53kRPjuzNuhm9DDxDjguXTCng
- DxxntT0OJ/Pnoer7gNvHtBVz11zOnyz9KsF+xVe/Ao7OQTXTWlGAXVq6LQi28axYEP8Eis0PZE2
- jX+s92HmqaTLfWTNzo99xg94+jWOSJHWeUY++cFcpQzCwOXYN7rrQsoiwy1Hd5rqvi33t1RnPM6
- B3E829D1BmkVKl6nGfz2N4lu0kwtCvAslMaA8R45gTflgHab/fA79Ld04g0T2uIoDTusv5Cf5Ko
- /VoRW4uROkAMa2/o2ZZLRb4lhm6chlw8ACaPI6H3KYzuWxQswISl4I9V5gFowJtEtsztaqHPh6f
- 7GlERQKFWE27PXgSlG20OvF0K7i+nA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-29_04,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,76 +75,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 28 Oct 2025 22:26:12 +0300
+Michael Tokarev <mjt@tls.msk.ru> wrote:
 
+> On 10/6/25 20:08, Michael Tokarev wrote:
+> > On 10/5/25 22:17, Michael S. Tsirkin wrote: =20
+> >> From: peng guo <engguopeng@buaa.edu.cn>
+> >>
+> >> When using a CXL Type 3 device together with a virtio 9p device in=20
+> >> QEMU on a
+> >> physical server, the 9p device fails to initialize properly. The=20
+> >> kernel reports
+> >> the following error:
+> >>
+> >> =A0=A0=A0=A0 virtio: device uses modern interface but does not have=20
+> >> VIRTIO_F_VERSION_1
+> >> =A0=A0=A0=A0 9pnet_virtio virtio0: probe with driver 9pnet_virtio fail=
+ed with=20
+> >> error -22
+> >>
+> >> Further investigation revealed that the 64-bit BAR space assigned to=20
+> >> the 9pnet
+> >> device was overlapped by the memory window allocated for the CXL=20
+> >> devices. As a
+> >> result, the kernel could not correctly access the BAR region, causing =
+the
+> >> virtio device to malfunction.
+> >>
+> >> An excerpt from /proc/iomem shows:
+> >>
+> >> =A0=A0=A0=A0 480010000-cffffffff : CXL Window 0
+> >> =A0=A0=A0=A0=A0=A0 480010000-4bfffffff : PCI Bus 0000:00
+> >> =A0=A0=A0=A0=A0=A0 4c0000000-4c01fffff : PCI Bus 0000:0c
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 4c0000000-4c01fffff : PCI Bus 0000:0d
+> >> =A0=A0=A0=A0=A0=A0 4c0200000-cffffffff : PCI Bus 0000:00
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 4c0200000-4c0203fff : 0000:00:03.0
+> >> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 4c0200000-4c0203fff : virtio-pci-modern
+> >>
+> >> To address this issue, this patch adds the reserved memory end=20
+> >> calculation
+> >> for cxl devices to reserve sufficient address space and ensure that=20
+> >> CXL memory
+> >> windows are allocated beyond all PCI 64-bit BARs. This prevents=20
+> >> overlap with
+> >> 64-bit BARs regions such as those used by virtio or other pcie devices,
+> >> resolving the conflict.
+> >>
+> >> QEMU Build Configuration:
+> >>
+> >> =A0=A0=A0=A0 ./configure --prefix=3D/home/work/qemu_master/build/ \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 --target-list=3Dx86_6=
+4-softmmu \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 --enable-kvm \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 --enable-virtfs
+> >>
+> >> QEMU Boot Command:
+> >>
+> >> =A0=A0=A0=A0 sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64=
+ \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -nographic -machine q35,cxl=3Don -enable-kvm =
+-m 16G -smp 8 \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -hda /home/work/gp_qemu/rootfs.img \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -virtfs local,path=3D/home/work/gp_qemu/=20
+> >> share,mount_tag=3Dhost0,security_model=3Dpassthrough,id=3Dhost0 \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -kernel /home/work/linux_output/arch/x86/boot=
+/bzImage \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 --append "console=3DttyS0 crashkernel=3D256M =
+root=3D/dev/sda=20
+> >> rootfstype=3Dext4 rw loglevel=3D8" \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -object memory-backend-ram,id=3Dvmem0,share=
+=3Don,size=3D4096M \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=
+=3Dcxl.1 \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -device cxl-=20
+> >> rp,port=3D0,bus=3Dcxl.1,id=3Droot_port13,chassis=3D0,slot=3D2 \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -device cxl-type3,bus=3Droot_port13,volatile-=
+=20
+> >> memdev=3Dvmem0,id=3Dcxl-vmem0,sn=3D0x123456789 \
+> >> =A0=A0=A0=A0=A0=A0=A0=A0 -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=
+=3D4G
+> >>
+> >> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a=
+=20
+> >> machine parameter")
+> >> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+> >> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> >> Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
+> >> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> >> ---
+> >> =A0 hw/i386/pc.c | 20 +++++++++++---------
+> >> =A0 1 file changed, 11 insertions(+), 9 deletions(-) =20
+> >=20
+> > Hi!
+> >=20
+> > Is it qemu-stable material (10.0.x & 10.1.x)? =20
+>=20
+> A friendly ping for the stable series?
 
-On 10/29/25 16:09, BALATON Zoltan wrote:
-> On Wed, 29 Oct 2025, Harsh Prateek Bora wrote:
->> On 10/29/25 15:28, BALATON Zoltan wrote:
->>> On Wed, 29 Oct 2025, Harsh Prateek Bora wrote:
->>>> + Thomas
->>>>
->>>> Hi BALATON,
->>>>
->>>> I am unable to fetch it with b4 am, and I do not see it appear on 
->>>> lore also, not sure if its due to the binary size.
->>>>
->>>> harshpb:patches$ b4 am 20251028151923.10DBB5972E5@zero.eik.bme.hu
->>>> Looking up 
->>>> https://lore.kernel.org/r/20251028151923.10DBB5972E5%40zero.eik.bme.hu
->>>> Grabbing thread from 
->>>> lore.kernel.org/all/20251028151923.10DBB5972E5%40zero.eik.bme.hu/t.mbox.gz
->>>> Server returned an error: 404
->>>> harshpb:patches$
->>>>
->>>> I guess you may need to send a PULL SUBSYSTEM req like Thomas did 
->>>> for slof:
->>>> https://lore.kernel.org/qemu-devel/20251027074404.25758-1-thuth@redhat.com/
->>>
->>> Hi Harsh,
->>>
->>> You should be able to download mbox from
->>> https://patchew.org/QEMU/20251028151923.10DBB5972E5@zero.eik.bme.hu/
->>> and git am that. This was tested by somebody else and worked.
->>
->> Yes, git fetch from there seems to work, thanks.
->>
->> If needed
->>> I could try to split the binary into another patch or send you the 
->>> patch again. Maybe lore does not store large files?
->>
->> Having only binary file update into its own separate patch may be better
->> as a best practice, so other patch gets non-binary changes for easy 
->> review.
->> Also, maintaining the date stamp may also be helpful in some cases.
->> Let me know if you think otherwise.
-> 
-> Which date stamp maintaining are you referring to? I can split the patch 
-> in two later today or tomorrow if you want and send a v2 but not right 
-> now. For that to compile and work after each patch it would need to add 
-> the new binary in one patch then remove the old one after changing its 
-> usage. Or maybe even 3 patches: first updating submodule, then adding 
-> binary rebuilt from that then changing usage and removing old one. I 
-> think this would make the series larger as git now seems to contain 
-> binary diff between old and new versions but if these are in different 
-> patch it may still add the removed binary as a binary patch. So this 
-> only works if the old and new binary is the same name or renamed in one 
-> patch but then that would break if the usage is not updated in the same 
-> patch. So maybe patch one to update submodule, patch 2 to add binary 
-> with old name and patch 3 to rename the binary could work but does that 
-> worth the hassle and any better than this single patch?
+I think it does make sense for stable.
 
+Thanks,
 
-I was referring to the version number in binary name as date stamp which
-is being removed, but that's fine. I think we can take this patch as-is
-for now as split doesn't add much value and also we are close to freeze.
+Jonathan
 
-regards,
-Harsh
+>=20
+> Thanks,
+>=20
+> /mjt
+>=20
 
-> 
-> Regards,
-> BALATON Zoltan
 
