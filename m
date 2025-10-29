@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824E6CCF9EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EB7CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEAAO-0001Ue-1P; Wed, 29 Oct 2025 13:41:00 -0400
+	id 1vEA6Q-0004Ny-0V; Wed, 29 Oct 2025 13:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vEA9w-00017Q-PE
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:40:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vEA5o-0003n7-Gb
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:36:17 -0400
+Received: from p-east2-cluster4-host11-snip4-10.eps.apple.com ([57.103.78.181]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vEA9o-0004Rv-2U
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:40:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761759615;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1OcNUmC7upxxIyk0/z4M4iVFHtq1JgHRGKEpzGJa4iU=;
- b=XnhcnhYI71umynLotreu2l6aTir8q7/fM7fJF+rNQg/bEDXGbHqUGbVHlkWZTZYr/ugJrT
- rilBSfaEc1UDXU30jcRGQZyRdw6iDm1+iV4kO3bTumlRtPuEE0INdHUVckoXuAmnkDDWZB
- dLuCY/gl1iL8VwkkjCiji8lRrpmqT0g=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-p9Uiz0hLPsqTOEPEJn9ARA-1; Wed,
- 29 Oct 2025 13:40:11 -0400
-X-MC-Unique: p9Uiz0hLPsqTOEPEJn9ARA-1
-X-Mimecast-MFC-AGG-ID: p9Uiz0hLPsqTOEPEJn9ARA_1761759607
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E6901800673; Wed, 29 Oct 2025 17:40:06 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.204])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 097AB19540E9; Wed, 29 Oct 2025 17:40:01 +0000 (UTC)
-Date: Wed, 29 Oct 2025 18:39:59 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>,
- Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Subject: Re: [PATCH 07/16] nvme: Kick and check completions in BDS context
-Message-ID: <aQJRb3OnQSa7dRbV@redhat.com>
-References: <20251028163343.116249-1-hreitz@redhat.com>
- <20251028163343.116249-8-hreitz@redhat.com>
- <aQJNdeSL9Sh_UMuf@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vEA5U-0003Sl-6m
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:36:15 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-10 (Postfix) with ESMTPS id
+ BF8DE1824483; Wed, 29 Oct 2025 17:35:48 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=w3P/pjd9SPTWUADMWm5TSzmLlO2TAvpYEIX8vxIZRXs=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=OgvunuWpLaKCom1NacconB+cv9N7sCeZ+fVdulohQ+BBTluapFoFW/TtwKFKFCcZ6lIdA43uijHNXY7pha5UwCAMREpmQfuIAebHXHGWIPj0HrPqk41Fkvw8n1kXmZ4vcRa/7NMVJaIqDilzU95N7r9j9twZ51P8uiyUBTGrlxyIsghdnr7UxNuM9FSG1r+E86tezuRGTPgi/JpRiwLcbpTUzHWNE2uux/1ktzMBsX3qOQKxrRiYiiw+oV5HxZaZUrDCVyJyor1AM+MnDDEb2Pue8ig+jXk0k7PvvvS4kPYfCBBNU1jvBqWeKYKkOm7SJwZdMuiVIJFXHiKdXS5Ixw==
+mail-alias-created-date: 1752046281608
+Received: from mac.home (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-10 (Postfix) with ESMTPSA id
+ B41C3182A801; Wed, 29 Oct 2025 16:56:01 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v10 24/28] whpx: enable arm64 builds
+Date: Wed, 29 Oct 2025 17:55:06 +0100
+Message-ID: <20251029165510.45824-25-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251029165510.45824-1-mohamed@unpredictable.fr>
+References: <20251029165510.45824-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aQJNdeSL9Sh_UMuf@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDE0MCBTYWx0ZWRfX+dcQi7zlmUYO
+ AX9d4jv4yAYtleQeY9bLS61CgK5r5iIPNFTizB4iyNzke+azDE7eTbc8ELHlHNtYyLQeXNDfnrw
+ unMPbucttwNFiD5Ie0qpilT2ke3dGizmIucJjgtPU+JOvIoWZiG4uuKtT31tQqvUNcanwEA5vql
+ 5e0Kv3INEmBv2XT003M5on0mi9YVh4pM6PRSXdBHx565zO29ayFCTYaJoNVTKAbYDlOjM3hayx7
+ YX2fBnwNPG27+Use1CofMLpdbSimcQERoSRvhBPUjXposK78jINXnxf5jnBPqwBhrGNS92BOc=
+X-Proofpoint-GUID: I3Q3kw4xSCbJU6QujTnVSNVGM4wrtI9P
+X-Proofpoint-ORIG-GUID: I3Q3kw4xSCbJU6QujTnVSNVGM4wrtI9P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-29_07,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 mlxlogscore=627 bulkscore=0 spamscore=0 malwarescore=0
+ phishscore=0 clxscore=1030 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2510290140
+X-JNJ: AAAAAAABTyYB3IyHmoXdl5wldOs4RJ2Rfh3B7o3T5Vx+ViEiuU4jsEDwQ3K+rGTLoXgTjW56X9L/0ExF7riSXoYApgBy2azVW4kpB5LzhYEdwsO6LMRKdGQiqR43IMPNKMiz1Oizb2CzxmH+hosuXXsWVOX/VeBByzI0a3pb9Cetk7dN6Wj4VvIxApqZb39H1cFR13Ir3NHYMau/v+0HEbdH1F7IKXgAf7pgqmjOhgq0qIl/5IrpbZEtnHAT4j0HMNI9Zxi39hl5//WvEm7fF/LgSaNy1IwUATCzo9KaFQ03F7lW2/6JNNq4Jj2/B58dK5XsGuSBz9Wb6tGeYZYtLQ6aSclwo/h/nTdup7nV/VNVJluuKCgeD98t5whgOTsmZjRoKySbDAyZEE+iU2F1jhdwhg7UYXNndhXo7RiXaL2GE+VxwPOTNVlfdmWZqnbKjhjDAzOs/A2k7aFUV5v2SQ9lJheICA/Kg8gMCge/NLpeZW2OA4OreZWUg/6TvYVEzYgqrCbX6JoaRHLNHn/37i3+iRchNedHR2mEP/u5QWH3bu6WqancFIzJJSrIp0pI2Jy2zsEdEGZfvoFxYC+RDmTkfBZJJXmUs8RHmhCDZlFd4Xv4g6L/EtGydOxogCqRZnux+gSnUDut3AuHwbQehot3pdBm5RQZwKBHtiaCNqeBSZBN4XLvIlUBaXH1uciiSjvTqDbxT2mO7SwCtZLVmkde3FzYfUnfqBr+O5t24O1lpZXYbmSTc39G2sTed+4+wSOLyuxl
+Received-SPF: pass client-ip=57.103.78.181;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,49 +89,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 29.10.2025 um 18:23 hat Kevin Wolf geschrieben:
-> Am 28.10.2025 um 17:33 hat Hanna Czenczek geschrieben:
-> > nvme_process_completion() must run in the main BDS context, so schedule
-> > a BH for requests that aren’t there.
-> > 
-> > The context in which we kick does not matter, but let’s just keep kick
-> > and process_completion together for simplicity’s sake.
-> 
-> Ok, fair, move the main BDS context for calling these functions. But
-> doesn't that mean that we need to move back to the request context for
-> calling the callback?
-> 
-> In particular, I see this:
-> 
->     static void nvme_rw_cb_bh(void *opaque)
->     {
->         NVMeCoData *data = opaque;
->         qemu_coroutine_enter(data->co);
->     }
-> 
-> The next patch changes some things about coroutine wakeup, but it
-> doesn't touch this qemu_coroutine_enter(). So I think the coroutine is
-> now running in the wrong thread.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-It actually isn't because the patch changes in which AioContext the BH
-is called. Quite confusing with all the indirections. Let's get rid of
-the BH with qemu_coroutine_enter() and just call aio_co_wake() directly.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ meson.build | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-Kevin
-
-> I also feel that it gets a bit confusing what is running in which
-> context, so maybe we can add comments to each of the callbacks telling
-> that they are running in main BDS context or request coroutine context.
-> 
-> > (For what it’s worth, a quick fio bandwidth test indicates that on my
-> > test hardware, if anything, this may be a bit better than kicking
-> > immediately before scheduling a pure nvme_process_completion() BH.  But
-> > I wouldn’t take more from those results than that it doesn’t really seem
-> > to matter either way.)
-> > 
-> > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> 
-> Kevin
+diff --git a/meson.build b/meson.build
+index 8ad37c992b..065cb1c493 100644
+--- a/meson.build
++++ b/meson.build
+@@ -325,7 +325,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
+ 
+ if cpu == 'aarch64'
+   accelerator_targets += {
+-    'CONFIG_HVF': ['aarch64-softmmu']
++    'CONFIG_HVF': ['aarch64-softmmu'],
++    'CONFIG_WHPX': ['aarch64-softmmu']
+   }
+ elif cpu == 'x86_64'
+   accelerator_targets += {
+@@ -891,13 +892,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
+ endif
+ 
+ if get_option('whpx').allowed() and host_os == 'windows'
+-  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
+-    error('WHPX requires 64-bit host')
+-  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
+-       cc.has_header('winhvemulation.h', required: get_option('whpx'))
+-    accelerators += 'CONFIG_WHPX'
++  if cpu == 'i386'
++    if get_option('whpx').enabled()
++     error('WHPX requires 64-bit host')
++    endif
++   # Leave CONFIG_WHPX disabled
++  else
++    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
++      cc.has_header('winhvemulation.h', required: get_option('whpx'))
++      accelerators += 'CONFIG_WHPX'
++    endif
+   endif
+-endif
++ endif
+ 
+ hvf = not_found
+ if get_option('hvf').allowed()
+-- 
+2.50.1 (Apple Git-155)
 
 
