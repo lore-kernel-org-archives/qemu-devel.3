@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67934CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE77CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 08:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE1uh-0000U7-JF; Wed, 29 Oct 2025 04:52:15 -0400
+	id 1vE1v3-0000Vr-FE; Wed, 29 Oct 2025 04:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vE1uf-0000Tr-Hq
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:52:13 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1vE1v0-0000VU-TL
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:52:34 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vE1uc-0001j3-JM
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:52:13 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-475dbb524e4so28207285e9.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:52:08 -0700 (PDT)
+ id 1vE1uy-0001kV-Ia
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 04:52:34 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4283be7df63so3386927f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 01:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761727925; x=1762332725; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761727949; x=1762332749; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=haA3cr8PysJy9OkOpiy/+jFZ3ciPbePpeknDrP6kx9Y=;
- b=S317rcHOiMpJm5WryRTSAuHb3Y0Uex0MdCf5MPUHWmVw8wJdfKi4uIemgcIUUuT9vA
- GIBX8gKVKxrGdyMJt12vJ2Z051msCN/9a3zMrBVVhe3mkVtppkdFwm6LoRmUY1mwLQut
- 4OQth6SZtMzoZE5CVk3+YuwYt76y+qSRHZZ30JZ4yLOSd7mcJr5snq1BDWoZp+K2cOrO
- UUplzQKiDwBeZYgYEXiBkdY/3pnyZu8pkjKcY+UFwNrDIwpOoN0qU/P0lbtKnTFc4EaN
- 6TWojwWhvpDQFP163yvpqyiiU6gKipkrytJLFHZgC/EH4RvBGz6RUiE0mEPvJzWflML9
- 4y0w==
+ bh=BhAG5V72lhnAqfiaASU2O7p0+hSQreXqIdg5YGiZRzo=;
+ b=dHiBO/NhXqFoTIC9RZkGu1GNty9+dF5/w9PBy4zx+JW/nJjIJSOaU8ejzdlTRw4+Vs
+ w7Peua12Wl2mHzzVHu9EXqFxu+DqnVRRhgXdkATBrS9M3mzCA2OGJT4poi6QDdu8XssW
+ A6G4+fsTAwJdF1ktS1wZBqrtfyqMQsm0itXibeuMamrmoMbxJv3QGiAoDzTIxBDCthny
+ 5y337/d5brMvIBhgtwZ9iik5Z8CvpqEGN+5ELgcpKYfdBLV3nJLTdrR4hq1+KSLs9y05
+ OmyhsoByFYDRS7/usXuEc2FUYEUMKhZWHJT10hJ7VQJd9LcD6GQiSDtSjf6pga9Ao9dz
+ 03Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761727925; x=1762332725;
+ d=1e100.net; s=20230601; t=1761727949; x=1762332749;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=haA3cr8PysJy9OkOpiy/+jFZ3ciPbePpeknDrP6kx9Y=;
- b=Ia4+E6f8JxaD4T6ARILcXNaya+gSEEnNVOPRxphi/ux03lA3N8a5HKPS29GsA20dWi
- cyumLwMc+eCLuAl/XBuDmkC9IRoVEl/fX5K68MGWNqzqJr6nMJKbnrnYqAqUEeu9Y1ZK
- GdqtjAdooamBUGJSu5J6l0lAFzdgGop4u2cP4AXqAoqC6krGX6ep10x+HR686IyYIeSG
- B79FhFccECOhYTFdlGfx3ZqH7WqJ0X3UEysPReCm5Ejpj913CjHG5od6rZg2RSVmQ72D
- FLKeQIfMZpZU7aHSw9NS0B3XoCCp6o8zsVpaqo8+bJgJo/GXwYfOtBYEBJ0zv8BMFb8+
- qL2w==
-X-Gm-Message-State: AOJu0YwMqjdOWxZPrdM5ZoViCOPXksNAg565eyRclM4QBg0mraA0Xl1G
- w362IWS3w/f8meRY0r795307FCUfHxYG0dIRQwVL3HOwI5YEQacE/wBVj1dmowhSGVyMzwVrK4F
- b8mw6ods=
-X-Gm-Gg: ASbGnct4itpuLGUrE5+lbyb0N7THC8aoANnFW33uMPAkK+nTS5k3E9D2Qj80sAxM3TE
- COZkgRdhL9Fkgfc2LU6DDGf6oevsm1sGXYvTdJV2llMiNK9FYOuQxykvB0GlKKDqIyT+LvOeug4
- hBQyqQ9UrBCbXDjTWQqFFnvZGgrQTe/yUAioWgVB/ZCZbTjcV2NFpP0sQAcvupJy6fjwTgoYjaO
- mioyiEh7DpxeyGI6gfRbm93qQ6oZN/NG9UhVcRcfEDrIvURYnZkwJIKDlWl1AIJrRl10032nubr
- kYqX1LaOYvGdf6nwA6tPGoQD5RtnCNS6ihCY1JUTimK4TTxhorLBRA7uvzK5E5XpldQulwCiBu7
- HYXdMX5/ljQckeQvXBWFC0ApEwqxcuv7px7jf5DomOIYHqPiqIXEIFuOF0PeYNehLWWxSp8hYya
- tkOLz9GRRK8EFL3gO+
-X-Google-Smtp-Source: AGHT+IGNzI8OGPgVgEvc8SpVBs64IgfUAOjlWWop0qfCKH6TjmI8XvMxIkpDzXm/c/XB4eKXFD7zJw==
-X-Received: by 2002:a05:600c:4707:b0:475:dd04:128a with SMTP id
- 5b1f17b1804b1-4771e1e10b2mr18153375e9.31.1761727924598; 
- Wed, 29 Oct 2025 01:52:04 -0700 (PDT)
+ bh=BhAG5V72lhnAqfiaASU2O7p0+hSQreXqIdg5YGiZRzo=;
+ b=IVOFakT1mLQQY2G9n05XxwB3p7xoWpxY593wMe8k0mP3YIf96W+3aDvxR0Chx3nqLb
+ nPdDt1YBi/J1s1dFHF/CIvjWssFj79KgxWtlmzM2b7U9V6UUEPrFAOlOYrBR/hOzwzYI
+ et12t/haSYz5NaY6TNUjrZHX+cLBeXfVK9Z9z6A8z/jcctaA8bCidiIat9JQBLP1UTcA
+ axhxhtz6twLIzx58DLlKrHw7TW801UFhhn14/2pVFV76b5EhLrEzkxLhWRznOZKyzCAR
+ HwdSPFb/exMlkpQ520PqOjpXEUlY8jdIDY3cDfBvVSl9a9tR4ppVzVL8mW115ScDUdKY
+ q/7g==
+X-Gm-Message-State: AOJu0YzTVMP5rEac85vDYXlL0StG13Cm8a9ZG56gwvRAC6Q7dQQfL4vS
+ TVwxks0NmrCMsUV5FzxyxR7zVZENoSVmOHMFCkqpS1hjKjFRwEc4UDo0dbjBiDEPeuBz28NY6sm
+ YXmoq9J8=
+X-Gm-Gg: ASbGnctkgOdujtQPUgwVfzIdAdioScPZiitMbja0fvFhalL3keKR0JE9fEP4fXl1zT2
+ o8E5SERAXZEl6Q1hWNloQruvYx6H5MqXDO6qdMezvIxBQjtCu+KEF0Q2XZrX+Yb6qB6SqFmT01R
+ sjIzNtFuV4ngq5mwPXp8uFDGLZ8fuGf0uZr6fyvECs0xlXVZg/2bOGMX2+1T5ux/NgqS3U8I7m0
+ 6lDdf3Ebu9Qn0W45Vzib7ciobIS0zL0kxBF2CeJm0udzcpKg8Zui3M4lS6s41y/U0xyA9a+kw6G
+ UoB0d+oG4exUiU9e9tTBExXap20nQxFaq3zu5LGyh0ygjnHfPkBmMmYXyGP7QAxducyCwJK3RKi
+ R3XQPCQlg6shnivH9yxsZUJAYqprrfua8sPBbEjqWQbk1I6UK1ouTHEvyDYk3HJ+vr9rQb/fXS4
+ uiYWoxPbhvw+LMmyU6
+X-Google-Smtp-Source: AGHT+IFyy/S+4fAUwMT9phJVuMQuPR5l5eeTk9T2TSJuSQiSEySzWhtoSbjj/by6SyEPYDey41ZXyA==
+X-Received: by 2002:a05:6000:2583:b0:429:927e:f2d with SMTP id
+ ffacd0b85a97d-429aefba9acmr1720394f8f.38.1761727949456; 
+ Wed, 29 Oct 2025 01:52:29 -0700 (PDT)
 Received: from [10.240.88.227] ([212.144.248.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771e3aae1fsm35339935e9.12.2025.10.29.01.52.03
+ 5b1f17b1804b1-4771902fa8dsm38673335e9.8.2025.10.29.01.52.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Oct 2025 01:52:04 -0700 (PDT)
-Message-ID: <bb7eb8e2-9089-4708-bf93-52afc3243b2e@linaro.org>
-Date: Wed, 29 Oct 2025 09:52:02 +0100
+ Wed, 29 Oct 2025 01:52:29 -0700 (PDT)
+Message-ID: <6815d70d-3eaf-45e9-a9c5-a706c9825530@linaro.org>
+Date: Wed, 29 Oct 2025 09:52:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/25] hw/sysbus: Use memory_region_get_address()
+Subject: Re: [PATCH v3 22/25] hw/sysbus: Hoist MemoryRegion in
+ sysbus_mmio_map_common()
 To: qemu-devel@nongnu.org
 References: <20251028181300.41475-1-philmd@linaro.org>
- <20251028181300.41475-22-philmd@linaro.org>
+ <20251028181300.41475-23-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251028181300.41475-22-philmd@linaro.org>
+In-Reply-To: <20251028181300.41475-23-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,57 +106,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/28/25 19:12, Philippe Mathieu-Daudé wrote:
-> MemoryRegion::addr is private data of MemoryRegion, use
-> memory_region_get_address() to access it.
+> In order to make the next commit easier to review,
+> use the local @mr variable in sysbus_mmio_map_common().
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/core/sysbus.c | 17 ++++++++++-------
->   1 file changed, 10 insertions(+), 7 deletions(-)
-
-The patch description is incomplete for these changes, but the changes themselves are good.
+>   hw/core/sysbus.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
-> 
-> diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-> index d33be6b2b52..414b3f806d1 100644
-> --- a/hw/core/sysbus.c
-> +++ b/hw/core/sysbus.c
-> @@ -257,13 +257,14 @@ bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp)
->   static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent)
->   {
->       SysBusDevice *s = SYS_BUS_DEVICE(dev);
-> -    hwaddr size;
-> -    int i;
->   
-> -    for (i = 0; i < s->num_mmio; i++) {
-> -        size = memory_region_size(s->mmio[i].memory);
-> -        monitor_printf(mon, "%*smmio " HWADDR_FMT_plx "/" HWADDR_FMT_plx "\n",
-> -                       indent, "", s->mmio[i].addr, size);
-> +    for (int i = 0; i < s->num_mmio; i++) {
-> +        MemoryRegion *mr = sysbus_mmio_get_region(s, i);
-> +        hwaddr addr = memory_region_get_address(mr);
-> +        uint64_t size = memory_region_size(mr);
-> +
-> +        monitor_printf(mon, "%*smmio " HWADDR_FMT_plx "/%016" PRIx64 "\n",
-> +                       indent, "", addr, size);
->       }
->   }
->   
-> @@ -282,8 +283,10 @@ static char *sysbus_get_fw_dev_path(DeviceState *dev)
->           }
->       }
->       if (s->num_mmio) {
-> +        MemoryRegion *mr = sysbus_mmio_get_region(s, 0);
-> +
->           return g_strdup_printf("%s@" HWADDR_FMT_plx, qdev_fw_name(dev),
-> -                               s->mmio[0].addr);
-> +                               memory_region_get_address(mr));
->       }
->       if (s->num_pio) {
->           return g_strdup_printf("%s@i%04x", qdev_fw_name(dev), s->pio[0]);
-
 
