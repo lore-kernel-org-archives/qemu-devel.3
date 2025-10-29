@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6416BCCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 502FFCCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxxE-00080w-NE; Wed, 29 Oct 2025 00:38:36 -0400
+	id 1vDxyn-0002Pz-9X; Wed, 29 Oct 2025 00:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxxB-0007w9-Ih; Wed, 29 Oct 2025 00:38:33 -0400
+ id 1vDxya-0002H7-76; Wed, 29 Oct 2025 00:40:01 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxx1-0004M3-GL; Wed, 29 Oct 2025 00:38:33 -0400
+ id 1vDxyS-0004Ya-4f; Wed, 29 Oct 2025 00:39:58 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 29 Oct
- 2025 12:37:14 +0800
+ 2025 12:37:18 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 29 Oct 2025 12:37:14 +0800
+ Transport; Wed, 29 Oct 2025 12:37:18 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 08/17] hw/arm/aspeed: Split QCOM Firework machine into a
+Subject: [PATCH v2 15/17] hw/arm/aspeed: Split AST2700 EVB machine into a
  separate source file for maintainability
-Date: Wed, 29 Oct 2025 12:36:54 +0800
-Message-ID: <20251029043710.1486573-9-jamin_lin@aspeedtech.com>
+Date: Wed, 29 Oct 2025 12:37:01 +0800
+Message-ID: <20251029043710.1486573-16-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 References: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
@@ -67,126 +67,136 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the QCOM Firework BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_qcom-firework.c.
+This commit moves the Aspeed AST2700 EVB machine implementation out of
+aspeed.c into a new standalone file aspeed_ast27x0_evb.c.
 
-This refactor continues the modularization effort for Aspeed platform support,
-placing each board’s logic in its own dedicated source file. It improves
-maintainability, readability, and simplifies future development for new
-platforms without cluttering aspeed.c.
+This refactor continues the ongoing modularization of Aspeed platform
+support, organizing each board’s initialization logic into its own
+dedicated source file. It improves maintainability, readability, and
+makes it easier to extend or update individual platform support without
+cluttering aspeed.c.
 
 Key updates include:
-- Removed qcom_dc_scm_firework_i2c_init() and its Firework-specific devices
-  from aspeed.c.
-- Removed aspeed_machine_qcom_firework_class_init() and its type registration
-  ("qcom-firework-bmc") from aspeed_machine_types[].
-- Added new source file aspeed_ast2600_qcom-firework.c containing the
-  Firework-specific initialization and machine class definition.
-- Updated hw/arm/meson.build to include aspeed_ast2600_qcom-firework.c.
-- Cleaned up all Firework-specific code from aspeed.c.
-- Renamed `QCOM_DC_SCM_V1_BMC_HW_STRAP1` to
-  `QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1` to avoid dependency conflicts with
-  other QCOM DC-SCM machines.
+- Removed AST2700_EVB_HW_STRAP1 and AST2700_EVB_HW_STRAP2 macro definitions.
+- Moved ast2700_evb_i2c_init(), aspeed_machine_ast2700a0_evb_class_init(),
+  and aspeed_machine_ast2700a1_evb_class_init() into the new
+  aspeed_ast27x0_evb.c file.
+- Removed the AST2700 EVB machine type registration from aspeed.c.
+- Added aspeed_ast27x0_evb.c to the Meson build system (meson.build).
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c                       | 56 -----------------
- hw/arm/aspeed_ast2600_qcom-firework.c | 90 +++++++++++++++++++++++++++
- hw/arm/meson.build                    |  1 +
- 3 files changed, 91 insertions(+), 56 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_qcom-firework.c
+ hw/arm/aspeed.c             | 72 -------------------------------
+ hw/arm/aspeed_ast27x0_evb.c | 86 +++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build          |  1 +
+ 3 files changed, 87 insertions(+), 72 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast27x0_evb.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 1f35706050..8d02678659 100644
+index 74d35021db..fc37f48802 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -634,38 +634,6 @@ static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
- }
- 
--static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
--{
--    AspeedSoCState *soc = bmc->soc;
--    I2CSlave *therm_mux, *cpuvr_mux;
--
--    /* Create the generic DC-SCM hardware */
--    qcom_dc_scm_bmc_i2c_init(bmc);
--
--    /* Now create the Firework specific hardware */
--
--    /* I2C7 CPUVR MUX */
--    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
--                                        "pca9546", 0x70);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
--
--    /* I2C8 Thermal Diodes*/
--    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
--                                        "pca9548", 0x70);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
--
--    /* I2C9 Fan Controller (MAX31785) */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
--}
--
- static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
- {
-     return ASPEED_MACHINE(obj)->mmio_exec;
-@@ -1062,26 +1030,6 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
+@@ -32,14 +32,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+     .board_id = -1, /* device-tree-only board */
  };
  
--static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+-#ifdef TARGET_AARCH64
+-/* AST2700 evb hardware value */
+-/* SCU HW Strap1 */
+-#define AST2700_EVB_HW_STRAP1 0x00000800
+-/* SCUIO HW Strap1 */
+-#define AST2700_EVB_HW_STRAP2 0x00000700
+-#endif
+-
+ #define AST_SMP_MAILBOX_BASE            0x1e6e2180
+ #define AST_SMP_MBOX_FIELD_ENTRY        (AST_SMP_MAILBOX_BASE + 0x0)
+ #define AST_SMP_MBOX_FIELD_GOSIGN       (AST_SMP_MAILBOX_BASE + 0x4)
+@@ -511,75 +503,11 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+-#ifdef TARGET_AARCH64
+-static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-
+-    /* LM75 is compatible with TMP105 driver */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
+-                            TYPE_TMP105, 0x4d);
+-}
+-
+-static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc,
 -                                                    const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
--    mc->deprecation_reason = "use 'ast2600-evb' instead";
--    amc->soc_name  = "ast2600-a3";
--    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
--    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
--    amc->fmc_model = "n25q512a";
--    amc->spi_model = "n25q512a";
+-    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
+-    amc->soc_name  = "ast2700-a0";
+-    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+-    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
+-    amc->fmc_model = "w25q01jvq";
+-    amc->spi_model = "w25q512jv";
 -    amc->num_cs    = 2;
--    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
--    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
+-    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+-    amc->uart_default = ASPEED_DEV_UART12;
+-    amc->i2c_init  = ast2700_evb_i2c_init;
+-    amc->vbootrom = true;
 -    mc->default_ram_size = 1 * GiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
--};
+-}
+-
+-static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+-                                                    const void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-
+-    mc->alias = "ast2700-evb";
+-    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
+-    amc->soc_name  = "ast2700-a1";
+-    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+-    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
+-    amc->fmc_model = "w25q01jvq";
+-    amc->spi_model = "w25q512jv";
+-    amc->num_cs    = 2;
+-    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+-    amc->uart_default = ASPEED_DEV_UART12;
+-    amc->i2c_init  = ast2700_evb_i2c_init;
+-    amc->vbootrom = true;
+-    mc->default_ram_size = 1 * GiB;
+-    aspeed_machine_class_init_cpus_defaults(mc);
+-}
+-#endif
 -
  static const TypeInfo aspeed_machine_types[] = {
      {
-         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
-@@ -1091,10 +1039,6 @@ static const TypeInfo aspeed_machine_types[] = {
-         .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
+         .name           = MACHINE_TYPE_NAME("ast1030-evb"),
+         .parent         = TYPE_ASPEED_MACHINE,
+         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+-#ifdef TARGET_AARCH64
 -    }, {
--        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
+-        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_qcom_firework_class_init,
+-        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
+-        }, {
+-        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+-#endif
      }, {
-         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
-         .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_qcom-firework.c b/hw/arm/aspeed_ast2600_qcom-firework.c
+         .name          = TYPE_ASPEED_MACHINE,
+         .parent        = TYPE_MACHINE,
+diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
 new file mode 100644
-index 0000000000..c9cfccda1f
+index 0000000000..76cbe2caf0
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_qcom-firework.c
-@@ -0,0 +1,90 @@
++++ b/hw/arm/aspeed_ast27x0_evb.c
+@@ -0,0 +1,86 @@
 +/*
-+ * Qualcomm DC-SCM V1/Firework
++ * ASPEED AST27x0 EVB
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -197,96 +207,92 @@ index 0000000000..c9cfccda1f
 +#include "qapi/error.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/i2c/i2c_mux_pca954x.h"
 +#include "hw/sensor/tmp105.h"
 +
-+/* Qualcomm DC-SCM Firework hardware value */
-+#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1  0x00000000
-+#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2  0x00000041
++/* AST2700 evb hardware value */
++/* SCU HW Strap1 */
++#define AST2700_EVB_HW_STRAP1 0x00000800
++/* SCUIO HW Strap1 */
++#define AST2700_EVB_HW_STRAP2 0x00000700
 +
-+#define TYPE_LM75 TYPE_TMP105
-+
-+static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
++static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
 +
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
++    /* LM75 is compatible with TMP105 driver */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
++                            TYPE_TMP105, 0x4d);
 +}
 +
-+static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
-+{
-+    AspeedSoCState *soc = bmc->soc;
-+    I2CSlave *therm_mux, *cpuvr_mux;
-+
-+    /* Create the generic DC-SCM hardware */
-+    qcom_dc_scm_bmc_i2c_init(bmc);
-+
-+    /* Now create the Firework specific hardware */
-+
-+    /* I2C7 CPUVR MUX */
-+    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
-+                                        "pca9546", 0x70);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
-+
-+    /* I2C8 Thermal Diodes*/
-+    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
-+                                        "pca9548", 0x70);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
-+
-+    /* I2C9 Fan Controller (MAX31785) */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
-+}
-+
-+static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
++static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc,
 +                                                    const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
-+    mc->deprecation_reason = "use 'ast2600-evb' instead";
-+    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1;
-+    amc->hw_strap2 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2;
-+    amc->fmc_model = "n25q512a";
-+    amc->spi_model = "n25q512a";
++    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
++    amc->soc_name  = "ast2700-a0";
++    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
++    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
++    amc->fmc_model = "w25q01jvq";
++    amc->spi_model = "w25q512jv";
 +    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-+    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
++    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
++    amc->uart_default = ASPEED_DEV_UART12;
++    amc->i2c_init  = ast2700_evb_i2c_init;
++    amc->vbootrom = true;
 +    mc->default_ram_size = 1 * GiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
-+};
++}
 +
-+static const TypeInfo aspeed_ast2600_qcom_firework_types[] = {
++static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
++                                                    const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->alias = "ast2700-evb";
++    mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
++    amc->soc_name  = "ast2700-a1";
++    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
++    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
++    amc->fmc_model = "w25q01jvq";
++    amc->spi_model = "w25q512jv";
++    amc->num_cs    = 2;
++    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
++    amc->uart_default = ASPEED_DEV_UART12;
++    amc->i2c_init  = ast2700_evb_i2c_init;
++    amc->vbootrom = true;
++    mc->default_ram_size = 1 * GiB;
++    aspeed_machine_class_init_cpus_defaults(mc);
++}
++
++static const TypeInfo aspeed_ast27x0_evb_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
++        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_qcom_firework_class_init,
++        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
++    }, {
++        .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_ast2700a1_evb_class_init,
 +    },
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_qcom_firework_types)
++DEFINE_TYPES(aspeed_ast27x0_evb_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index c22b692260..89d2f05bd2 100644
+index c3c054b74e..8e568e21b5 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_bletchley.c',
-   'aspeed_ast2600_fby35.c',
-   'aspeed_ast2600_fuji.c',
-+  'aspeed_ast2600_qcom-firework.c',
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
+@@ -70,6 +70,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
    'fby35.c'))
+ arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
+   'aspeed_ast27x0.c',
++  'aspeed_ast27x0_evb.c',
+   'aspeed_ast27x0-fc.c',
+   'aspeed_ast27x0-ssp.c',
+   'aspeed_ast27x0-tsp.c',
 -- 
 2.43.0
 
