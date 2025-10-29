@@ -4,68 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A579DCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0885CCCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxj2-0003zf-4r; Wed, 29 Oct 2025 00:23:56 -0400
+	id 1vDxmY-0005aV-0V; Wed, 29 Oct 2025 00:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDxix-0003xx-DI; Wed, 29 Oct 2025 00:23:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vDxmT-0005Yr-JP; Wed, 29 Oct 2025 00:27:30 -0400
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDxis-0002tI-AP; Wed, 29 Oct 2025 00:23:50 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59T4NNUN033325
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 29 Oct 2025 13:23:23 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=mbi+Cfut2OSzwwfFl6gK2b5thSIZ18vIJvhgmyK/av8=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1761711803; v=1;
- b=TmbXRUglkj/pJyAViq7FMt67N/mcr0NTTRcb8zOCyoyRDY3RKkoeXzqucijzQZTJ
- 6/Zh7xJ3Sh3ruw/AqNfCeF3Jl3IG47OSJZsI9kX2blvpnC1UtD3ZO/VfDiSci6Hc
- yI/lTxt0lAhHm+nPfyUfWypK1Dqp4OKl3Xxgy3gQnSEQQrFK72fUoQUU92bcyYAW
- EKhW4skoFNoqCL6fRBW3k8zJnWIuqXP8HeUP1oaloJ7M9LBSG+Ri2yCYphnqOK6i
- kUG21vF4f7qT7ShdSLERf/DbfuiblK+J82kPTWKo4/YZ8Rj2agm48qnLprYlB+xs
- BrcTXINLalClgug9bhEY4Q==
-Message-ID: <db06bf5e-b7f5-4980-a054-393529e188eb@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 29 Oct 2025 13:23:23 +0900
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vDxmN-0003KO-QO; Wed, 29 Oct 2025 00:27:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KQFdN3px2EHH/SmJDFfIJ2AsETO8o7ewwb9kbJ3XVx6FWagU0/6Y0zhGWOLFCaUtqy/maesLtoJtFWulZx7F06/LM4wVfoENjxj/pSpRnwCS164Gz80ZDN+ElXN5f3g/RrcYFzXGu6CU9x5zeepJApE4wjaQ5n+U8yMQ+u0SB7xaGO7nGi5MJXQu/HYKCKztePp9uRiqmooXSFUlEcExjhmtBVmSodbcF3opqOEWe6E3k9HqG2fsLt7rTNrvaH2UvFtNbEHoCEeN5ro4u3uP1dUhKCDNpmzXDRDEFq2EkfpLVN2JBgRbl5TUgWg9K/qUB8VT33/pXiBnEjEko0Xxdw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=laV/sKzr99pyp3tUeBKzD1oZMdS7ab2LEYHqVwuP1Ys=;
+ b=cDXqqZAQV6Frmdf1/9BNcObOE0OGqkOMVAwMBhCHi703FqBsE1ZJHGdQsm4Fvflk8osXZtpFrMY39hmDiZhc5RAzETy3JsR0wVmJDq27SOliV3fjmgb26+6CTA3VyM6cVLMfyniKrzCaabXUKs+zW+Act281muFocaMxk8p6XXETsfkG9id0T+9sFLxlfrcz6OlnNJo3/JO/dCILxhnfkZ+xuA9X07f5p+b82lTd9vzhv9hstBlTyQ5Sh+mxW8m1hM4h7wrAZKbUL+kW2uYfpJ1kEliNbBDd3gxOO8maxkDzKgVBjIrFQaCfHqfMzFzgC3tV8x+IPhndHMd60xeWug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=laV/sKzr99pyp3tUeBKzD1oZMdS7ab2LEYHqVwuP1Ys=;
+ b=Ktwr1FaIv1ckeU0HwvO73o+fGcC8HT1AeOK/hyojxEXzzgb0SgUn4wo8+6JZE/pF7+ePB5Zzfx+LI46co3NR91H0BjpxwDnPwQ1oSLdnuZhp0fz32n8xirbKpr16+5GCMmTUpRjM/+9lMQtkjw4+fE+zsHKmqD/svrzZo5ZC40NrCQsc7wiv8d3D9OBILXpPidGnr1o12iHrT3ysRqZHHjgXODdhA1YLBdeMaUDmbpnmDIBYfrqnA125TtjfJQ1SU6HIPdwPxsl210DcarBCjcMrjsyc5FvjlFe3bojpwkQ4DbwMKU9dQTYZvAVDQZ6QaVhZxmw/bL8KJGOrX8CtcA==
+Received: from MN0P220CA0014.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::6)
+ by DS0PR12MB6584.namprd12.prod.outlook.com (2603:10b6:8:d0::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9275.12; Wed, 29 Oct 2025 04:27:08 +0000
+Received: from BL6PEPF0001AB4A.namprd04.prod.outlook.com
+ (2603:10b6:208:52e:cafe::69) by MN0P220CA0014.outlook.office365.com
+ (2603:10b6:208:52e::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.12 via Frontend Transport; Wed,
+ 29 Oct 2025 04:27:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BL6PEPF0001AB4A.mail.protection.outlook.com (10.167.242.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9275.10 via Frontend Transport; Wed, 29 Oct 2025 04:27:08 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 28 Oct
+ 2025 21:26:51 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Tue, 28 Oct 2025 21:26:51 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Tue, 28 Oct 2025 21:26:50 -0700
+Date: Tue, 28 Oct 2025 21:26:49 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
+ reset
+Message-ID: <aQGXibWAiMpXAQlF@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-20-skolothumtho@nvidia.com>
+ <aPF9l5GwctGN0tqT@Asurada-Nvidia>
+ <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
+ <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
- <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
- <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
- <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
- <802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp>
- <28c6f065-ba8d-e5e2-922e-d5fd1fb58b60@eik.bme.hu>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <28c6f065-ba8d-e5e2-922e-d5fd1fb58b60@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+In-Reply-To: <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4A:EE_|DS0PR12MB6584:EE_
+X-MS-Office365-Filtering-Correlation-Id: e82ab1c7-3482-4880-ce9d-08de16a36c13
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|7416014|376014|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eEd6NmZLVHJkaEdHazVrU3hQSE03c2FlWGRnV05rTFczWThQQkgzSERueEt0?=
+ =?utf-8?B?OHc2ZExrY3pHUHBoQlFyTG1PdGxEMmk5SWxCeXdGUHVVS2pWY1dFS0llWUN5?=
+ =?utf-8?B?bElidE01b0pSRDZjRXFGME5NVkdqaDZTcTNQUTJlQzFpbTRPQ0NHaTA5K3N6?=
+ =?utf-8?B?eXpRQzZaOHFpUTZwb1lBeVdVRDJ2dGlONkRVK3l1OVk3UGR2b1JmbXdtZGY2?=
+ =?utf-8?B?YmU0NTdQNmxHSEdjYU9GRm0zV1pzRVM1cWVLd1JGaTY4OUZCMCtDRWd2QUNG?=
+ =?utf-8?B?MTVaYU5sVTlCc25jUmtoaUU3dWwxN0JZcEpEbk5XWjhxYi9aeWFRVzRvSTlx?=
+ =?utf-8?B?YXV6R3NqbXdUY3NLa0tQbU9RdTB4M0YvNFR1KzluZHlPMWRLcjBJWmdEeEgy?=
+ =?utf-8?B?YS9ObFIxOERqNkt3NFFrbU5vclgvM0JadlVlUGpONm10Y0RYY1JSSGluc2pK?=
+ =?utf-8?B?QnNDYTZXSERGSlhBajM5b3VVRHhQcDg1eUZhTTEwZytQM0V5Y1pZWU91SWMz?=
+ =?utf-8?B?SHQrc3c4SjZrMEZWRWRXU0J5eUl2OG52dDNIUktZOHQ0TnJwaE5nRmZmQldH?=
+ =?utf-8?B?S3BOdVgzTlowK0twTFZsNXdDOTY3dHdXSm5IQ1lPeitlb1hhQTQ5blVQdnA2?=
+ =?utf-8?B?c0Q4UytkZFNvZ0REd1BHNjU3cmNMWUZHbzVEdEcrM3M5MnRJUityenVoQlRp?=
+ =?utf-8?B?UDdMZEx1NkRBTGZteGVwR2twbjczME91Y1pwMnN1c1NOdU5MSXhkQUc5MjI3?=
+ =?utf-8?B?Sk5sNGo1Z0ZaNzlCZVBjQTBQazFhNEdNRVNTRjhJY1ZUQUNJQkF1cEJmZnpj?=
+ =?utf-8?B?L3ZoNi9ZTHZpc1VkdExMWWo0TmxrMXlJQzFyL3Yxejd4THE5ckl2dStESW16?=
+ =?utf-8?B?ZzAwK0dPbm9ObjdSc1ZKMTcyM0hQNTZrT1NTV3cvWERCSGgvQkZWdjRwTTZx?=
+ =?utf-8?B?Y014RlpqYkNzTGhYYlc4QVJnVk01NkFYS2FXQjBYYnlQQ3RoYVVndWt0cXFW?=
+ =?utf-8?B?TmVJNGY0UHlWRFlFQ1lUdmNaSlFUdTZkc2tFZ0R6MTBOZHpRa1RZQTkvQjNI?=
+ =?utf-8?B?aTRWY3dTTVRUd1NwaDRaWFdmcHdVbTNOaUwwZ0xMT1J4U01hOEExZ2tKMVc4?=
+ =?utf-8?B?V1ZxMHV2MmdMU2w3SWhuclJRcTdVL2d3YXZvTzYrNjRYWm51Ry9LcEpDRDNQ?=
+ =?utf-8?B?ZFhyNm0vSlo2b1BvcnpkUlhZWjlNSXZJNnIwT3QxMkZXL0ZvOFNNbVhHQnp1?=
+ =?utf-8?B?dmQ4cUV5RmZxTGdaYXI0QTFYdmJ4Q21GRSt2WW9jUjRaMWlQMUdnK2lVWVpS?=
+ =?utf-8?B?TFptdnF2WlJuaVB0ZlU3R25WQWdFS1Q3bGZMNUQ3ZzBrVzV3UlZoc2l1d25T?=
+ =?utf-8?B?NnJoQ1Y2cSs4Nng3a1M0NnNaVXZZL0V5alFJZ25zdVRRdjRXdXppVnhLRkFm?=
+ =?utf-8?B?UUNnQVNHb2dhR0dJMXg4Z0ZQaU5DdDZFRXI3Yk1zMW96WnZqWCsrMy96SGwv?=
+ =?utf-8?B?dDluQ2dPZVJFclJXc08zNjVvcWk5Zkh4RDJTdDhJdWVPbzBMbHZ5S3Zla0g0?=
+ =?utf-8?B?YUFpZjdyZnd0cDFVVE9rRXc3MFZ6MVpyc2plVFYzVzU1VEYyb3Z1VzlLcERJ?=
+ =?utf-8?B?cENZTTF3MGJvQkdsSmR3bWZIY0lRbk1HUFRFMStKZ3lJNy96dmhMQ2crSlQw?=
+ =?utf-8?B?bEZMSFlEV0ZnWnJXREFkZTR3bVYxRlM1SFJ3a093NTZGdXNVclZ1M0ZrNmJH?=
+ =?utf-8?B?VnlacTZqSDNyVHMxSUNES1hGWEQrOG1PZUYreDVkRERoUnp5SjR0Rmw1VW9V?=
+ =?utf-8?B?czlJb3pHMnVBWCthNGhPNTJHNWw3VU4rZnp0YXdZSGxqZHRtM00wc2Nkd0xh?=
+ =?utf-8?B?UUR2SW8zc2pxRmNRUmtSZkdnQW9oaFRzdTRuSlNOQzNVdGJ2bU5ZOFRSSkdE?=
+ =?utf-8?B?d1MvTVZqeWRiWndtcVVRZDAvVWNwM3cyZDJJTS9kSGlVbGRuNmxoTWJRZ2FW?=
+ =?utf-8?B?dXNkS3B0eERkaUFzeXZPdEFuRElrcDIvRFdRSVRiYk5UYTZDUWZ1MzZXS05G?=
+ =?utf-8?B?Rmw3cVF3NGFEZHdrTnp4bkJxR21QYTVMT3BzVFo3a2htTDA3Qnd0OE5KOFBq?=
+ =?utf-8?Q?Cc64=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(7416014)(376014)(1800799024)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2025 04:27:08.0111 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e82ab1c7-3482-4880-ce9d-08de16a36c13
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4A.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6584
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,170 +179,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/29 6:28, BALATON Zoltan wrote:
-> On Wed, 29 Oct 2025, Akihiko Odaki wrote:
->> On 2025/10/28 21:59, BALATON Zoltan wrote:
->>> On Tue, 28 Oct 2025, Philippe Mathieu-Daudé wrote:
->>>> On 27/10/25 20:47, BALATON Zoltan wrote:
->>>>> On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
->>>>>> On 25/10/25 01:31, BALATON Zoltan wrote:
->>>>>>> These memory windows are a result of the address decoding in the
->>>>>>> Articia S north bridge so better model it there and not in board 
->>>>>>> code.
->>>>>>>
->>>>>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>>>>> ---
->>>>>>>   hw/pci-host/articia.c | 15 ++++++++++++++-
->>>>>>>   hw/ppc/amigaone.c     | 28 +++++-----------------------
->>>>>>>   hw/ppc/pegasos2.c     | 13 -------------
->>>>>>>   3 files changed, 19 insertions(+), 37 deletions(-)
->>>>>>
->>>>>>
->>>>>>> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, 
->>>>>>> Error **errp)
->>>>>>>   {
->>>>>>>       ArticiaState *s = ARTICIA(dev);
->>>>>>>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
->>>>>>> +    MemoryRegion *mr;
->>>>>>>       PCIDevice *pdev;
->>>>>>>         bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
->>>>>>> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState 
->>>>>>> *dev, Error **errp)
->>>>>>>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
->>>>>>>                             TYPE_ARTICIA, 0x1000000);
->>>>>>>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
->>>>>>> +    mr = g_new(MemoryRegion, 1);
->>>>>>
->>>>>> Won't Coverity or other analysis tools complain about the leak?
->>>>>> (this is why we usually keep a reference in the device state, here
->>>>>> ArticiaState). Otherwise:
->>>>>
->>>>> According to https://www.qemu.org/docs/master/devel/ 
->>>>> memory.html#region- lifecycle
->>>>> there should be no leak and keeping a reference should not be 
->>>>> necessary as the lifetime is managed by attaching it to the owner 
->>>>> object so no need to keep a reference when it's not needed 
->>>>> otherwise. Not littering the state struct with unneded references 
->>>>> makes it easier to comprehend so I'd only keep things there that 
->>>>> are necessary.
->>>>
->>>> IIUC this doc is about what happens within the allocated MemoryRegion,
->>>> regardless of where it is allocated.
->>>
->>> That doc explicitely says:
->>>
->>> "Destruction of a memory region happens automatically when the owner 
->>> object dies. When there are multiple memory regions under the same 
->>> owner object, the memory API will guarantee all memory regions will 
->>> be properly detached and finalized one by one. The order in which 
->>> memory regions will be finalized is not guaranteed."
->>
->> Destruction in this context does not imply freeing the storage.
->>
->> The documentation describes destruction in QOM. QOM performs the 
->> following steps during destruction:
->> 1. Delete properties
->> 2. Call finalization callbacks
->> 3. Free the storage
->>
->> However, 3 will not happen in this case since you allocate the storage 
->> by yourself and it is not managed by QOM.
->>
->> Please also note that the documentation also says:
->>> If however the memory region is part of a dynamically allocated data
->>> structure, you should free the memory region in the instance_finalize
->>> callback.  For an example see VFIOMSIXInfo and VFIOQuirk in
->>> hw/vfio/pci.c.
+On Mon, Oct 27, 2025 at 07:51:15AM -0700, Shameer Kolothum wrote:
+> > On 10/17/25 1:19 AM, Nicolin Chen wrote:
+> > > On Mon, Sep 29, 2025 at 02:36:35PM +0100, Shameer Kolothum wrote:
+> > >> When the guest reboots with devices in nested mode (S1 + S2), any
+> > QEMU/UEFI
+> > >> access to those devices can fail because S1 translation is not valid during
+> > >> the reboot. For example, a passthrough NVMe device may hold GRUB boot
+> > info
+> > >> that UEFI tries to read during the reboot.
+> > >>
+> > >> Set S1 to bypass mode during reset to avoid such failures.
+> > > GBPA is set to bypass on reset so I think it's fine. Yet, maybe the
+> > > code should check that.
+> > 
+> > shouldn't we check its actual value before setting bypass?
+> > 
+> > By the way the spec says is ABORT is set to 0x0:
+> > "Do not abort incoming transactions. Transactions bypass the SMMU with
+> > attributes given by other fields in this register."
+> > 
+> > Wondering about those attributes and they can apply on the host?
 > 
-> So the problem is probably using g_new() to allocate it. Maybe this 
-> should be object_new() instead? I was trying to figure out how this 
-> should work but not sure I understand everything. It looks like as long 
-> as the mr has a name, memory_region_init() will add the mr as a child 
-> property to the owner and unref it so the reference will be passed to 
-> the owner which will own this mr after that. On destructing the owner it 
-> will delete all its properties which should dereference the memory 
-> region so it would be freed then if it had a free function set but it 
-> seems allocating with g_new and init-ing the region with 
-> memory_region_init() won't set the free function. Only way to set that 
-> seems to be object_new() but that also inits the object so maybe using 
-> it would double init the mr or add an extra reference so that may also 
-> not work. The extra ref could be solved by unref'ing after 
-> memory_region_init() but double init seems to be unnecessary. Maybe we 
-> need a memory_region_new_* set of functions or simpler than that an 
-> object_alloc() that allocates the object without
-> init it that could be used in this case when init is done by other 
-> function like memory_region_init in this case?
+> That’s right. There are other attributes there. Currently kernel only
+> support,
+> 
+> * @ste: The first two double words of the user space Stream Table Entry for
+>  *       the translation. Must be little-endian.
+>  *       Allowed fields: (Refer to "5.2 Stream Table Entry" in SMMUv3 HW Spec)
+>  *       - word-0: V, Cfg, S1Fmt, S1ContextPtr, S1CDMax
+>  *       - word-1: EATS, S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
+> 
+> If other attributes make sense, we may have to update kernel. I will add a note
+> here, so that we can update it if required. I think Nicolin is looking into this.
 
-memory_region_new_* will work, but I don't think removing unnecessary 
-but harmless fields from a device state structure does not sufficiently 
-motivates adding them.
+According to SMMU spec 6.3 GBPA register's Additional information:
+ - If SMMU_IDR1.ATTR_TYPES_OVR == 0, MTCFG, SHCFG, ALLOCCFG are
+   effectively fixed as Use incoming and it is IMPLEMENTATION
+   SPECIFIC whether these fields read as zero or a previously
+   written value. In this case, MemAttr reads as UNKNOWN.
+ - If SMMU_IDR1.ATTR_PERMS_OVR == 0, INSTCFG and PRIVCFG are
+   effectively fixed as Use incoming and it is IMPLEMENTATION
+   SPECIFIC whether these fields read as zero or a previously
+   written value.
 
-> 
->>> (and these pci-host objects are created once at machine init and 
->>> never die so the question seems quite theoretical). I'd like to keep 
->>> object state simple and not keep around references in it that nothing 
->>> uses and should be managed automatically. I'd only add fields to the 
->>> state struct that other methods need.
->>
->> It is indeed theoretical. That said, I prefer the memory region to be 
->> embedded into the device state struct as it will clarify that the 
->> lifetime of the memory region is bound to the device.
-> 
-> But that way a lot of otherwise not needed fields would make the state 
-> struct more crowded and harder to see what's actually used there. Maybe 
-> this could be remedied by grouping these at the end below a comment but 
-> if ref counting worked as the docs state it this should not be necessary.
-> 
-> Before my cleanup the state strcut in raven.c looked like this:
-> 
-> struct PRePPCIState {
->      PCIHostState parent_obj;
-> 
->      OrIRQState *or_irq;
->      qemu_irq pci_irqs[PCI_NUM_PINS];
->      PCIBus pci_bus;
->      AddressSpace pci_io_as;
->      MemoryRegion pci_io;
->      MemoryRegion pci_io_non_contiguous;
->      MemoryRegion pci_memory;
->      MemoryRegion pci_intack;
->      MemoryRegion bm;
->      MemoryRegion bm_ram_alias;
->      MemoryRegion bm_pci_memory_alias;
->      AddressSpace bm_as;
->      RavenPCIState pci_dev;
-> 
->      int contiguous_map;
-> };
-> 
-> which would become this after this series:
-> 
-> struct PREPPCIState {
->      PCIHostState parent_obj;
-> 
->      qemu_irq irq;
->      MemoryRegion pci_io;
->      MemoryRegion pci_discontiguous_io;
->      MemoryRegion pci_memory;
->      MemoryRegion pci_intack;
->      AddressSpace bm_as;
-> };
-> 
-> if we don't have to keep regions we don't use after realize so those can 
-> be managed by QOM which is much more readable and comprehensible to me.
+On the other hand, QEMU seems to set both OVR fields to 0, so all
+those "other attributes" wouldn't be necessarily forwarded to the
+kernel?
 
-It still requires a trade-off that obscures the duration of MemoryRegion 
-and may confuse Coverity or other tools. I also prefer the fields 
-present in the state as I can be immediately sure they do not leak even 
-without checking that the device is not hotpluggable.
-
-I don't think it needs comments. It is a common pattern that 
-MemoryRegions are directly referenced only at initialization and 
-uninitialization. The presence of MemoryRegions in a device state 
-structure only tells that they are alive as long as the device is alive, 
-and does not imply that it is directly referenced later.
-
-Regards,
-Akihiko Odaki
+Nicolin
 
