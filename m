@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413F2CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC52CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 17:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE9dc-0004Yf-4Y; Wed, 29 Oct 2025 13:07:08 -0400
+	id 1vE9fY-000595-W2; Wed, 29 Oct 2025 13:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9da-0004YW-E0
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:07:06 -0400
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9fU-00058Z-Fq
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:09:04 -0400
+Received: from 9.mo552.mail-out.ovh.net ([87.98.180.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9dV-0006d1-NR
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:07:06 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.235])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cxYYt4dHTz5vtR;
- Wed, 29 Oct 2025 17:06:42 +0000 (UTC)
-Received: from kaod.org (37.59.142.110) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vE9fO-0006pZ-O2
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 13:09:04 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.229])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cxYcK3s7mz6PWg;
+ Wed, 29 Oct 2025 17:08:49 +0000 (UTC)
+Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Wed, 29 Oct
- 2025 18:06:38 +0100
+ 2025 18:08:46 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-110S004ae3e3c5e-f1e6-4c0b-97a6-68532c3c0611,
+ (GARM-105G0061c885ad3-126d-4a48-9ce5-421294536d9f,
  1C4C5A15D30C5F2C89D761F8A9BCD43732F6FBF1) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 92.184.104.153
-Message-ID: <561601ce-fdcd-4f65-8a46-648d753a317e@kaod.org>
-Date: Wed, 29 Oct 2025 18:06:36 +0100
+Message-ID: <24d256d0-a6ef-4d02-8723-25c1916082e9@kaod.org>
+Date: Wed, 29 Oct 2025 18:08:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Subject: Re: [SPAM] [PATCH v1 01/13] hw/arm/aspeed: Move AspeedMachineState
- definition to common header for reuse
+Subject: Re: [SPAM] [PATCH v1 02/13] hw/arm/aspeed: Make
+ aspeed_machine_class_init_cpus_defaults() globally accessible
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -43,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251023100150.295370-1-jamin_lin@aspeedtech.com>
- <20251023100150.295370-2-jamin_lin@aspeedtech.com>
+ <20251023100150.295370-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
@@ -87,33 +87,33 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251023100150.295370-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251023100150.295370-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 4132fba2-3f60-43a1-bd6d-0ae75410dd0e
-X-Ovh-Tracer-Id: 5305521836082039730
+X-Ovh-Tracer-GUID: c0fb206b-8785-4656-9d2f-7175a844b4a9
+X-Ovh-Tracer-Id: 5341550634782002098
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFjj8VyB2lABgXpm2UGukBvDInZo7UoOF/uNtd9hTvWjeYPwIEc0CZf1FYg2kcHZaRKA0IVwNmVytMxoJRPHQW09+eqyqyy08LwL/VaqLzLb8nsSC1UhvwjMZTGHJv21Nd8fj8w5BClNo9aUK5GMKTKlqi/fSIF3wEhj6o0F804Z/XcNuQ6cBW2O3HltRJWwx2TutQHZsbUuqJFIFy9G2KwaGQgw62AQz4xbeT8LH+5k5n7GsqAhah9AokLIhdLtVdjK6CBpe6lm/pntxBSD4QT6CCBi/9PCTINVsntBxnih7Yp6b4bLh5uBkoPi5NcS5aSsKyPCb2G/rluwWOmm1gvHn+yYoFquQqGYAWx+YXJLA7smf+h6QUNGS82lVfgnRN5axjUgtvk6Ey4DpmIME1UQ8vkXKT6zK2Q75Y6zpDC9oYGlXWPGBP+RYeZ32CZewnVd9FGCX2LPdYbGPeZU7I/DxsStroNbbRKAAyN4vnQwQk26Mx9/UjI76rhS3Z0MbEGJgD0GCMozy8tIQaE+oeI3nI2h5oL0PoDF6GwMjFnCdb9m1sfCzE4fH53TROaOsqGmWNJ9bvw81caQmeIkJkvmCE4juqFgTfXRMsr94c1Fk5jES9rmzHugDGVYuhLtS+qfLqvf1nVFaTh147B17Sbq6K5s5K9bxZCKSE8MAaDGw
-DKIM-Signature: a=rsa-sha256; bh=DOYw0PTLrs1SMRAYJVL2JbXc0tz92vKk7Vm8Bqyu4rA=; 
+X-VR-SPAMCAUSE: dmFkZTGKmpEiFvpSjmg8NB87fP2zMCjlQ5aIaVcJ0olTAjSj21mZENFIQcLk17FhzR47KS8LgsnK48P6Ix8BDziBxtEQIcenzHT1afTRHnOjjP1YQn9mPC5Z4v4lFoXse17yd1RWBZojCCJvkZkQ9JUxqKwrzyJBMlsA6/763rer9KMcT4G/0huPo5NMgbwtaotnbpaOwFUb3CX7DKj6HGrDmV0z9JGNfZl5CPiP7HgOUFRyZ5vsjmvPUsl3DbBJnMg7x7Mydxf7WPgVnPl+JYwdYSbXKbY2R2qnUjpC930H69/m/Fm8eHC9bGMTknN+BS3aGgv3DJP/T+sHnAatSZNovAUHK6V1Uu8SVQZuD17IvVDPlFRvjtminlUethasU2+SvDbBPEn1s3Pa3EvUtqgO7XTU9IVen5hsc/Rhhta5vfz56gLg1C85RHJ8LJuKJ2m/jOLXIOZFfeBbuLg/QDZI+AefB20DOgUD0+QqbLfRl9SkxqmLGmb1LsaH8bCSu5XbzTkpaOxPSaBdy8ZlyUSDI24Tc1SYHmWkOhRcJ1hV3Lfy9yr04PaGV5K0Futb86+yh4dYMGac6LhcT/QYbmtS3DZCeU/HO2OKhBaAuZBWCFUuVv1Awll37J1xe6h9oOX1c7qszObiCV9p9MTf6GJ/NrbA2cyUyeo4lxh3Ogu0EAfnCg
+DKIM-Signature: a=rsa-sha256; bh=p35w0oWRH6CroRKOvxBr34WDXf5Rz6XnRVUlGtdSYok=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1761757604; v=1;
- b=RAv0RxpBfSkaolXKPgktvyCHqbKoRb7a4wakyRSeWPRC+Dz220EILPl1UgbmbbybUhNHEQ0V
- BwkqOfAHffYOzM9gmDp29PEmR8a2IlyNtGlnsq53KDBXfaFdP8/i0jDvN/HWGj2dc1085FUrIuL
- qyEORvAeEZ1JeJ6xzsNhhxQsZ8jSAltU+ps5AM23XHe61VnBC2JBXCqnfRQbjMk5YPHy03usto+
- qt6IvxcevSLGjdKeNuotWqtR3XtpLGvyioxrEjac8cLvuvq9vDPNWOI23GBzOJCvXPbnQFiYG6e
- RsjXu6Jpj4j7QgC2Dt6DiiB25ap5j/kpI6mOd2YIAYKEw==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
+ t=1761757730; v=1;
+ b=C50RCU6CzszihnKM7DVzSI+L4X1U0TpUQgedy23TGqZIv1XDAxheb5wcJEktUevv7EtiVyhj
+ 0wBfxhNavC+CJpvgj62muOpXznh9A1VjF6gbt2DhjQn66i4JCYItyvbUwgEbqlGY/vADrEklEAB
+ gGlIBnpv7M5ceaiZMiG9p4zYXB87RzR2GBTImMrYZ9nKWKtc0KWxVsHiigLTA2NrUmpow6V+qrj
+ u2dc6DRkvTUNZ4HA3+DmWQvD61LVfDd/jBnWjgNcbWEimtuRLYsWsCNuB0cFIb65dyRVatFhzO0
+ CRhT3C8AeEgwk/aOUGOK2s7n4LdcR4+bLOqCxpBmOj8QQ==
+Received-SPF: pass client-ip=87.98.180.222; envelope-from=clg@kaod.org;
+ helo=9.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -132,73 +132,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/23/25 12:01, Jamin Lin wrote:
-> Aspeed machines will be moved into split C files for better
-> modularization and future maintenance.
+> The function aspeed_machine_class_init_cpus_defaults() is now made
+> globally visible so that it can be used by other Aspeed machine C files.
 > 
-> To allow all machine implementations to reuse the same
-> AspeedMachineState structure, the struct definition is moved
-> from aspeed.c to the shared header aspeed.h.
-> 
-> This change centralizes the common state structure used across
-> all Aspeed machine models, reduces redundancy, and simplifies
-> future refactoring work for new machines.
+> Previously, this function was declared as static, restricting its
+> visibility to aspeed.c. Since future machine split files will also
+> need to call this helper to initialize default CPU settings, its
+> declaration has been moved to the common header aspeed.h and the
+> static keyword has been removed.
 > 
 > No functional changes.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/arm/aspeed.h | 14 ++++++++++++++
->   hw/arm/aspeed.c         | 14 --------------
->   2 files changed, 14 insertions(+), 14 deletions(-)
+>   include/hw/arm/aspeed.h | 1 +
+>   hw/arm/aspeed.c         | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 > 
 > diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-> index 6c36455656..383ebb9759 100644
+> index 383ebb9759..7743ad2fb0 100644
 > --- a/include/hw/arm/aspeed.h
 > +++ b/include/hw/arm/aspeed.h
-> @@ -11,6 +11,7 @@
->   
->   #include "hw/boards.h"
->   #include "qom/object.h"
-> +#include "hw/arm/aspeed_soc.h"
->   
->   typedef struct AspeedMachineState AspeedMachineState;
->   
-> @@ -24,6 +25,19 @@ DECLARE_OBJ_CHECKERS(AspeedMachineState, AspeedMachineClass,
->   #define ASPEED_MAC2_ON   (1 << 2)
->   #define ASPEED_MAC3_ON   (1 << 3)
->   
-> +struct AspeedMachineState {
-> +    /* Private */
-> +    MachineState parent_obj;
-> +    /* Public */
-> +
-> +    AspeedSoCState *soc;
-> +    MemoryRegion boot_rom;
-> +    bool mmio_exec;
-> +    uint32_t uart_chosen;
-> +    char *fmc_model;
-> +    char *spi_model;
-> +    uint32_t hw_strap1;
-> +};
->   
->   struct AspeedMachineClass {
->       MachineClass parent_obj;
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 1bc9e534ba..761b526994 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -35,20 +35,6 @@ static struct arm_boot_info aspeed_board_binfo = {
->       .board_id = -1, /* device-tree-only board */
+> @@ -59,5 +59,6 @@ struct AspeedMachineClass {
+>       bool vbootrom;
 >   };
 >   
-> -struct AspeedMachineState {
-> -    /* Private */
-> -    MachineState parent_obj;
-> -    /* Public */
-
-You could drop the 'Private' and 'Public' comments.
-
-Anyhow,
+> +void aspeed_machine_class_init_cpus_defaults(MachineClass *mc);
+>   
+>   #endif
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 761b526994..5da21a4d6a 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1338,7 +1338,7 @@ static void aspeed_machine_class_props_init(ObjectClass *oc)
+>                                             "Change the SPI Flash model");
+>   }
+>   
+> -static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+> +void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+>   {
+>       AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(mc);
+>       AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
 
 
 
@@ -208,19 +182,6 @@ Thanks,
 
 C.
 
-   > -
-> -    AspeedSoCState *soc;
-> -    MemoryRegion boot_rom;
-> -    bool mmio_exec;
-> -    uint32_t uart_chosen;
-> -    char *fmc_model;
-> -    char *spi_model;
-> -    uint32_t hw_strap1;
-> -};
-> -
->   /* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
->   #if HOST_LONG_BITS == 32
->   #define ASPEED_RAM_SIZE(sz) MIN((sz), 1 * GiB)
 
 
 
