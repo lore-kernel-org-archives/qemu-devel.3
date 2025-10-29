@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADB9CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC0CCCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 09:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE2tW-0005yN-V2; Wed, 29 Oct 2025 05:55:07 -0400
+	id 1vE2tb-000658-6o; Wed, 29 Oct 2025 05:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vE2tP-0005x1-Nz
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:54:59 -0400
+ id 1vE2tY-00063x-Ci
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:55:08 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vE2tN-0002pk-9q
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:54:59 -0400
+ id 1vE2tV-0002qs-6A
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 05:55:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761731698; x=1793267698;
+ t=1761731705; x=1793267705;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=INo9zFVHFO7PnVTAEL7U6nieTC6v0bt514H4r0YlqN0=;
- b=a3bXT+jPosCrAVF858XIayBB0LhV0pK6NBnMArdzO0x+XIJ1ae1q4BJr
- kHjr6hIayOcsjTr6yg5QbIR0O2dMn+Kd/fM2T2xmWNeqHx/+ehnsRcsdN
- ypKhaW5bxM70Rbz1dWPailUtaiHXosrXoIVv5S3+vNcKkEPskPB49DkK4
- B4qKD+ik31FVQie4d/aegc32g3c46gEMgLyootIVBENcy5LTpPIDmIN9I
- YJevzUzwK2+miT89s8zHYVsaWJDDKxImHg+sUs2a5VxvyndRhnuITn7DK
- /Qn0VwCl5CFJC/2hZ3p+6LOD4CYdLI9BUER8ZpmGeGVywGqdD3MK3OehQ w==;
-X-CSE-ConnectionGUID: fzA+bfKnQyqN0XG7fjHbiA==
-X-CSE-MsgGUID: 8ys0FL9GQraZSfAnLlK7MQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="67685146"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="67685146"
+ bh=27Kzqt4KNnkxv05PFDVsUqXyUhhKvyijxvUko4OI5iI=;
+ b=H83AUPYje8kMNen5sHQfkOL6C8Qc4yIGXuysSO0agA7L33l/A+j/TA+l
+ Me76NRHGMD1BYSjsIhaEZ9TwGWScQ4knFR1rorYh3k0KQXmX5nMf/7Biq
+ /0wmQIa6lY/YFHh+eMG2yNi/A3SgYq/fi6I8HGEJbZYAq2VWK8/SIqG/s
+ C8aRF3HwSGrZ6A1SfnHAW4XEvO3NW/dgd69mWvJGeWqfCWFrRsC6A3YG9
+ o6bMyNn/B0rzv9mszYkj+g97b8lXULkwRMib944sr+1B765hu4WzycApU
+ eip5rdKEgvPfte0+XnlrvgApKBgGBHw3pjeD74h+IDQ2VxSRVppM/ylul g==;
+X-CSE-ConnectionGUID: cgQqXPfgSWuaQmAAmS3gDg==
+X-CSE-MsgGUID: El09PmXcSza2aa+FYKPBqQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="67685164"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="67685164"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2025 02:54:53 -0700
-X-CSE-ConnectionGUID: lkHz89efQBqT/UNKHyOUew==
-X-CSE-MsgGUID: LecCX/G6T1e4nO4X0X1RRA==
+ 29 Oct 2025 02:55:01 -0700
+X-CSE-ConnectionGUID: 8g5uNG2dQWSwRbfaOrBeuA==
+X-CSE-MsgGUID: Z10q+nCnR0e7Xj9MLFogDA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,263,1754982000"; d="scan'208";a="185529902"
+X-IronPort-AV: E=Sophos;i="6.19,263,1754982000"; d="scan'208";a="185529932"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2025 02:54:49 -0700
+ 29 Oct 2025 02:54:57 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
@@ -53,11 +53,12 @@ Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
  eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
  xudong.hao@intel.com, giovanni.cabiddu@intel.com, rohith.s.r@intel.com,
  mark.gross@intel.com, arjan.van.de.ven@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 08/10] vfio/migration: Fix a check on
- vbasedev->iommu_dirty_tracking
-Date: Wed, 29 Oct 2025 05:53:51 -0400
-Message-ID: <20251029095354.56305-9-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Zeng <jason.zeng@intel.com>
+Subject: [PATCH v4 10/10] vfio/migration: Allow live migration with vIOMMU
+ without VFs using device dirty tracking
+Date: Wed, 29 Oct 2025 05:53:53 -0400
+Message-ID: <20251029095354.56305-11-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251029095354.56305-1-zhenzhong.duan@intel.com>
 References: <20251029095354.56305-1-zhenzhong.duan@intel.com>
@@ -88,40 +89,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO IOMMU type1 claims to support IOMMU dirty tracking by setting
-bcontainer->dirty_pages_supported, but in vfio_migration_realize()
-vbasedev->iommu_dirty_tracking is checked, we should pass
-bcontainer->dirty_pages_supported to vbasedev->iommu_dirty_tracking
-in legacy backend so that the check is accurate.
+Commit e46883204c38 ("vfio/migration: Block migration with vIOMMU")
+introduces a migration blocker when vIOMMU is enabled, because we need
+to calculate the IOVA ranges for device dirty tracking. But this is
+unnecessary for iommu dirty tracking.
 
-Fixes: 30b916778517 ("vfio/common: Allow disabling device dirty page tracking")
+Limit the vfio_viommu_preset() check to those devices which use device
+dirty tracking. This allows live migration with VFIO devices which use
+iommu dirty tracking.
+
+Suggested-by: Jason Zeng <jason.zeng@intel.com>
+Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+Tested-by: Rohith S R <rohith.s.r@intel.com>
 ---
- hw/vfio/container-legacy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/vfio/migration.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-index dd9c4a6a5a..fa726a2733 100644
---- a/hw/vfio/container-legacy.c
-+++ b/hw/vfio/container-legacy.c
-@@ -845,6 +845,7 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
-                             VFIODevice *vbasedev, Error **errp)
- {
-     g_autofree struct vfio_device_info *info = NULL;
-+    VFIOContainer *bcontainer = VFIO_IOMMU(group->container);
-     int fd;
- 
-     fd = vfio_cpr_group_get_device_fd(group->fd, name);
-@@ -883,7 +884,8 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
-         }
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 0a1d8cac2c..40f337b798 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -1230,7 +1230,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
+         goto out_deinit;
      }
  
--    vfio_device_prepare(vbasedev, VFIO_IOMMU(group->container), info);
-+    vfio_device_prepare(vbasedev, bcontainer, info);
-+    vbasedev->iommu_dirty_tracking = bcontainer->dirty_pages_supported;
- 
-     vbasedev->fd = fd;
-     vbasedev->group = group;
+-    if (vfio_viommu_preset(vbasedev)) {
++    if (!vfio_device_dirty_pages_disabled(vbasedev) &&
++        vfio_viommu_preset(vbasedev)) {
+         error_setg(&err, "%s: Migration is currently not supported "
+                    "with vIOMMU enabled", vbasedev->name);
+         goto add_blocker;
 -- 
 2.47.1
 
