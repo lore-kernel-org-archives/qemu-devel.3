@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D043DCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A268CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 18:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEApC-0004cZ-G8; Wed, 29 Oct 2025 14:23:10 -0400
+	id 1vEBHz-0003Jk-DC; Wed, 29 Oct 2025 14:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEApB-0004bt-3i
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:23:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vEBHw-0003JO-SG
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:52:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEAp3-0002TV-IM
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:23:08 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vEBHl-0008AV-E3
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 14:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761762173;
+ s=mimecast20190719; t=1761763951;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jBynEImvavthhi6mxc0dORlXJBBFx3LgWVYpGNmOIMw=;
- b=Jqusy4eqABu3OpEw6LOzN89i8fyl6pvRxMTTGWvf7jatXvoS6Y1mUkJAzGcjKUogj4tNNR
- Q2Ca1RFtHMhs1IGb1UNnSGyBdqPsHdexL1pSZ7U3sK6l3gv3/Q5KYPfjMaGR4LYGVtX4N7
- r0cvhHVr+hytfv6cN/8PL3UM8BMCgp4=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-47-DdhkTuYnPwe3gkVSo5kMPA-1; Wed, 29 Oct 2025 14:22:52 -0400
-X-MC-Unique: DdhkTuYnPwe3gkVSo5kMPA-1
-X-Mimecast-MFC-AGG-ID: DdhkTuYnPwe3gkVSo5kMPA_1761762171
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-78e5b6f1296so5186696d6.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 11:22:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761762171; x=1762366971;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jBynEImvavthhi6mxc0dORlXJBBFx3LgWVYpGNmOIMw=;
- b=RjSPM4cHd3ax5APUoUcN35WtSWJgMn/zJOnEgWZaNsgYBtpQ51wPIMg9t8HFzJ4hyK
- 5kvlCG01Rvy/ftvaEjJCiB7SbZd0qHx0BGo035ddbuqA8Vi+QPLAcB5nc3YxlvdTvr0g
- /aVE8scvuy1IWu09GtKx4YZz3t6jdHOMamt3MYX7hVfUp8DiW/gnUHJo5szQy2Ml2AFl
- o18oTYhXZcdAIb1LxbwbuPBGRirTpIiKUsW9BbyNK+nSiymgYUYygouAo/62ahJyv89q
- oVoVJM1kC43JV5YITbTG6m/qpWPXVmPvSDxwC5QVEqI2tAASUM5803nItSQl0L+fqC9l
- dRFQ==
-X-Gm-Message-State: AOJu0YxeU40kFkIQNyysETMjQVXUxsA82B831pz8Ka+91rXMSbQ6yP+t
- e3EUyXnSl8hihwvMnF8vCI0p1ordi064/IoU+m7VZM8NqqcQBm7GfgggnXtcmT6sroGZHdNZQV/
- dA+NSO5glv88ppCkF5/gJ9wCp39KAZ/GIiWquCOCCgHjfH6W/mFSFJra1
-X-Gm-Gg: ASbGncsgemfEdZE/JKgboeAaJALCJjPsJIvSn3Uv06k6hUPGSBskMYhavrivSmLB99V
- Rr+7DSsPE/9eMv4yCZQsXZjyo9GPVQ6AfCXWlp9CQCv8qIZFddLjxmVwHkhNC5Nhp5up4VlTfDI
- jaU2v7vO/ACSqK85b5PJ7nQaHPT4LTaf+8g1dArvBzueR3h4uE82fQjckCzR0oG01Y+GaAhyHLt
- sLvzmt4oe9FVzUTLdosuwZDZfl+IpLMLFpav0JSx7P6ACGMVzd4Wl3kMQYR3hrl2/Oa5Z3om0su
- Fy42usAgWXyouejnZ9wsLEqwLnbmaD+kgUoDyo/UMjf2Bl0ZCN1GX17KungbiTq6a7Q=
-X-Received: by 2002:a05:6214:2588:b0:87d:fcf6:b1fb with SMTP id
- 6a1803df08f44-88009ad5b1cmr45165996d6.1.1761762171221; 
- Wed, 29 Oct 2025 11:22:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHyYxikt3cFmnM71PSddH/7nVooOW2kBrIfxdGlX4rgwgSpmpRT73wqnlpi8NcNNTVLzTLqPw==
-X-Received: by 2002:a05:6214:2588:b0:87d:fcf6:b1fb with SMTP id
- 6a1803df08f44-88009ad5b1cmr45165486d6.1.1761762170650; 
- Wed, 29 Oct 2025 11:22:50 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87fc51e3746sm101302036d6.25.2025.10.29.11.22.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 11:22:49 -0700 (PDT)
-Date: Wed, 29 Oct 2025 14:22:47 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
-Message-ID: <aQJbd5qYR10qcbr7@x1.local>
-References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
- <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9e/hObse3BAo5O3NWyShgmz3j/Vs/xAe45DGh6eVFeA=;
+ b=Kso4m8E9WEz6S9FCSML7ZNo6/SwF1oWDaXgVtpms6WDYwlwmnjZ+D02uT37JcS4ZSU8meW
+ jwZEIsh/ob1kEDcXd2pG1M1mdANLiYZSj9TtHRvEEUNMDeKF2aaKWHK8yXDYy1Blbpyk7s
+ G3oCVOS+X1Ok7UsdhYeSQJ3toK0L+K4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-248-dpF7ytEwMoq7ThCPHvLeJw-1; Wed,
+ 29 Oct 2025 14:52:27 -0400
+X-MC-Unique: dpF7ytEwMoq7ThCPHvLeJw-1
+X-Mimecast-MFC-AGG-ID: dpF7ytEwMoq7ThCPHvLeJw_1761763947
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8E44195609D; Wed, 29 Oct 2025 18:52:26 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.43])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DA37B30001A7; Wed, 29 Oct 2025 18:52:25 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Peixiu Hou <phou@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH] system/physmem: mark io_mem_unassigned lockless
+Date: Wed, 29 Oct 2025 14:52:24 -0400
+Message-ID: <20251029185224.420261-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,7 +67,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,330 +84,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 03:12:48PM +0900, Akihiko Odaki wrote:
-> drain_call_rcu() triggers the force quiescent state, but it can be
-> delayed if the RCU thread is sleeping. Ensure the force quiescent state
-> is immediately triggered by waking the RCU thread up.
-> 
-> The logic to trigger the force quiescent state is decoupled as
-> force_rcu() so that it can be used independently.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  include/qemu/rcu.h |   1 +
->  util/rcu.c         | 106 ++++++++++++++++++++++++++++++++---------------------
->  2 files changed, 65 insertions(+), 42 deletions(-)
-> 
-> diff --git a/include/qemu/rcu.h b/include/qemu/rcu.h
-> index 020dbe4d8b77..d6aa4e5854d3 100644
-> --- a/include/qemu/rcu.h
-> +++ b/include/qemu/rcu.h
-> @@ -118,6 +118,7 @@ static inline void rcu_read_unlock(void)
->      }
->  }
->  
-> +void force_rcu(void);
->  void synchronize_rcu(void);
->  
->  /*
-> diff --git a/util/rcu.c b/util/rcu.c
-> index 3c4af9d213c8..85f9333f5dff 100644
-> --- a/util/rcu.c
-> +++ b/util/rcu.c
-> @@ -49,10 +49,13 @@
->  unsigned long rcu_gp_ctr = RCU_GP_LOCKED;
->  
->  QemuEvent rcu_gp_event;
-> -static int in_drain_call_rcu;
-> +static bool forced;
->  static int rcu_call_count;
->  static QemuMutex rcu_registry_lock;
->  
-> +/* Set when the forced variable is set or rcu_call_count becomes non-zero. */
-> +static QemuEvent sync_event;
-> +
->  /*
->   * Check whether a quiescent state was crossed between the beginning of
->   * update_counter_and_wait and now.
-> @@ -74,36 +77,21 @@ QEMU_DEFINE_CO_TLS(struct rcu_reader_data, rcu_reader)
->  typedef QLIST_HEAD(, rcu_reader_data) ThreadList;
->  static ThreadList registry = QLIST_HEAD_INITIALIZER(registry);
->  
-> +void force_rcu(void)
-> +{
-> +    qatomic_set(&forced, true);
-> +    qemu_event_set(&sync_event);
-> +}
-> +
->  /* Wait for previous parity/grace period to be empty of readers.  */
-> -static void wait_for_readers(void)
-> +static void wait_for_readers(bool sleep)
->  {
->      ThreadList qsreaders = QLIST_HEAD_INITIALIZER(qsreaders);
->      struct rcu_reader_data *index, *tmp;
-> -    int sleeps = 0;
-> -    bool forced = false;
-> +    int sleeps = sleep ? 5 : 0;
-> +    bool waiting = false;
->  
->      for (;;) {
-> -        /*
-> -         * Force the grace period to end and wait for it if any of the
-> -         * following heuristical conditions are satisfied:
-> -         * - A decent number of callbacks piled up.
-> -         * - It timed out.
-> -         * - It is in a drain_call_rcu() call.
-> -         *
-> -         * Otherwise, periodically poll the grace period, hoping it ends
-> -         * promptly.
-> -         */
-> -        if (!forced &&
-> -            (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
-> -             sleeps >= 5 || qatomic_read(&in_drain_call_rcu))) {
-> -            forced = true;
-> -
-> -            QLIST_FOREACH(index, &registry, node) {
-> -                notifier_list_notify(&index->force_rcu, NULL);
-> -                qatomic_set(&index->waiting, true);
-> -            }
-> -        }
+When the Bus Master bit is disabled in a PCI device's Command Register,
+the device's DMA address space becomes unassigned memory (i.e. the
+io_mem_unassigned MemoryRegion).
 
-IIUC this is the part to set index->waiting first whenever necessary, then
-that'll guarantee the wait(rcu_gp_event) will be notified in rcu unlock.
+This can lead to deadlocks with IOThreads since io_mem_unassigned
+accesses attempt to acquire the Big QEMU Lock (BQL). For example,
+virtio-pci devices deadlock in virtio_write_config() ->
+virtio_pci_stop_ioeventfd() when waiting for the IOThread while holding
+the BQL. The IOThread is unable to acquire the BQL but the vcpu thread
+won't release the BQL while waiting for the IOThread.
 
-Now we removed this chunk, then could it happen if waiting=true and the
-wait(rcu_gp_event) may wait for more than it should (as nobody will wake it
-up if all threads have waiting=false)?
+io_mem_unassigned is trivially thread-safe since it has no state, it
+simply rejects all load/store accesses. Therefore it is safe to enable
+lockless I/O on io_mem_unassigned to eliminate this deadlock.
 
-The other thing is, right below here there's the code and comment:
+Here is the backtrace described above:
 
-        /* Here, order the stores to index->waiting before the loads of
-         * index->ctr.  Pairs with smp_mb_placeholder() in rcu_read_unlock(),
-         * ensuring that the loads of index->ctr are sequentially consistent.
-         *
-         * If this is the last iteration, this barrier also prevents
-         * frees from seeping upwards, and orders the two wait phases
-         * on architectures with 32-bit longs; see enter_qs().
-         */
-        smp_mb_global();
+  Thread 9 (Thread 0x7fccfcdff6c0 (LWP 247832) "CPU 4/KVM"):
+  #0  0x00007fcd11529d46 in ppoll () from target:/lib64/libc.so.6
+  #1  0x000056468a1a9bad in ppoll (__fds=<optimized out>, __nfds=<optimized out>, __timeout=0x0, __ss=0x0) at /usr/include/bits/poll2.h:88
+  #2  0x000056468a18f9d9 in fdmon_poll_wait (ctx=0x5646c6a1dc30, ready_list=0x7fccfcdfb310, timeout=-1) at ../util/fdmon-poll.c:79
+  #3  0x000056468a18f14f in aio_poll (ctx=<optimized out>, blocking=blocking@entry=true) at ../util/aio-posix.c:730
+  #4  0x000056468a1ad842 in aio_wait_bh_oneshot (ctx=<optimized out>, cb=cb@entry=0x564689faa420 <virtio_blk_ioeventfd_stop_vq_bh>, opaque=<optimized out>) at ../util/aio-wait.c:85
+  #5  0x0000564689faaa89 in virtio_blk_stop_ioeventfd (vdev=0x5646c8fd7e90) at ../hw/block/virtio-blk.c:1644
+  #6  0x0000564689d77880 in virtio_bus_stop_ioeventfd (bus=bus@entry=0x5646c8fd7e08) at ../hw/virtio/virtio-bus.c:264
+  #7  0x0000564689d780db in virtio_bus_stop_ioeventfd (bus=bus@entry=0x5646c8fd7e08) at ../hw/virtio/virtio-bus.c:256
+  #8  0x0000564689d7d98a in virtio_pci_stop_ioeventfd (proxy=0x5646c8fcf8e0) at ../hw/virtio/virtio-pci.c:413
+  #9  virtio_write_config (pci_dev=0x5646c8fcf8e0, address=4, val=<optimized out>, len=<optimized out>) at ../hw/virtio/virtio-pci.c:803
+  #10 0x0000564689dcb45a in memory_region_write_accessor (mr=mr@entry=0x5646c6dc2d30, addr=3145732, value=value@entry=0x7fccfcdfb528, size=size@entry=2, shift=<optimized out>, mask=mask@entry=65535, attrs=...) at ../system/memory.c:491
+  #11 0x0000564689dcaeb0 in access_with_adjusted_size (addr=addr@entry=3145732, value=value@entry=0x7fccfcdfb528, size=size@entry=2, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x564689dcb3f0 <memory_region_write_accessor>, mr=0x5646c6dc2d30, attrs=...) at ../system/memory.c:567
+  #12 0x0000564689dcb156 in memory_region_dispatch_write (mr=mr@entry=0x5646c6dc2d30, addr=addr@entry=3145732, data=<optimized out>, op=<optimized out>, attrs=attrs@entry=...) at ../system/memory.c:1554
+  #13 0x0000564689dd389a in flatview_write_continue_step (attrs=..., attrs@entry=..., buf=buf@entry=0x7fcd05b87028 "", mr_addr=3145732, l=l@entry=0x7fccfcdfb5f0, mr=0x5646c6dc2d30, len=2) at ../system/physmem.c:3266
+  #14 0x0000564689dd3adb in flatview_write_continue (fv=0x7fcadc0d8930, addr=3761242116, attrs=..., ptr=0xe0300004, len=2, mr_addr=<optimized out>, l=<optimized out>, mr=<optimized out>) at ../system/physmem.c:3296
+  #15 flatview_write (fv=0x7fcadc0d8930, addr=addr@entry=3761242116, attrs=attrs@entry=..., buf=buf@entry=0x7fcd05b87028, len=len@entry=2) at ../system/physmem.c:3327
+  #16 0x0000564689dd7191 in address_space_write (as=0x56468b433600 <address_space_memory>, addr=3761242116, attrs=..., buf=0x7fcd05b87028, len=2) at ../system/physmem.c:3447
+  #17 address_space_rw (as=0x56468b433600 <address_space_memory>, addr=3761242116, attrs=attrs@entry=..., buf=buf@entry=0x7fcd05b87028, len=2, is_write=<optimized out>) at ../system/physmem.c:3457
+  #18 0x0000564689ff1ef6 in kvm_cpu_exec (cpu=cpu@entry=0x5646c6dab810) at ../accel/kvm/kvm-all.c:3248
+  #19 0x0000564689ff32f5 in kvm_vcpu_thread_fn (arg=arg@entry=0x5646c6dab810) at ../accel/kvm/kvm-accel-ops.c:53
+  #20 0x000056468a19225c in qemu_thread_start (args=0x5646c6db6190) at ../util/qemu-thread-posix.c:393
+  #21 0x00007fcd114c5b68 in start_thread () from target:/lib64/libc.so.6
+  #22 0x00007fcd115364e4 in clone () from target:/lib64/libc.so.6
 
-IIUC it explains the mb_global() to order the updates of waiting and the
-reads of index->ctr.  It doesn't look like applicable anymore.  Said that,
-I think we should indeed still need some barrier to make sure we read
-index->ctr at least to be after we update global gp_ctr (done before
-calling wait_for_readers()).  I'm not sure if it means the mb is needed,
-however maybe at least the comment is outdated if so.
+  Thread 3 (Thread 0x7fcd0503a6c0 (LWP 247825) "IO iothread1"):
+  #0  0x00007fcd114c2d30 in __lll_lock_wait () from target:/lib64/libc.so.6
+  #1  0x00007fcd114c8fe2 in pthread_mutex_lock@@GLIBC_2.2.5 () from target:/lib64/libc.so.6
+  #2  0x000056468a192538 in qemu_mutex_lock_impl (mutex=0x56468b432e60 <bql>, file=0x56468a1e26a5 "../system/physmem.c", line=3198) at ../util/qemu-thread-posix.c:94
+  #3  0x0000564689dc12e2 in bql_lock_impl (file=file@entry=0x56468a1e26a5 "../system/physmem.c", line=line@entry=3198) at ../system/cpus.c:566
+  #4  0x0000564689ddc151 in prepare_mmio_access (mr=0x56468b433800 <io_mem_unassigned>) at ../system/physmem.c:3198
+  #5  address_space_lduw_internal_cached_slow (cache=<optimized out>, addr=2, attrs=..., result=0x0, endian=DEVICE_LITTLE_ENDIAN) at ../system/memory_ldst.c.inc:211
+  #6  address_space_lduw_le_cached_slow (cache=<optimized out>, addr=addr@entry=2, attrs=attrs@entry=..., result=result@entry=0x0) at ../system/memory_ldst.c.inc:253
+  #7  0x0000564689fd692c in address_space_lduw_le_cached (result=0x0, cache=<optimized out>, addr=2, attrs=...) at /var/tmp/qemu/include/exec/memory_ldst_cached.h.inc:35
+  #8  lduw_le_phys_cached (cache=<optimized out>, addr=2) at /var/tmp/qemu/include/exec/memory_ldst_phys.h.inc:66
+  #9  virtio_lduw_phys_cached (vdev=<optimized out>, cache=<optimized out>, pa=2) at /var/tmp/qemu/include/hw/virtio/virtio-access.h:166
+  #10 vring_avail_idx (vq=0x5646c8fe2470) at ../hw/virtio/virtio.c:396
+  #11 virtio_queue_split_set_notification (vq=0x5646c8fe2470, enable=0) at ../hw/virtio/virtio.c:534
+  #12 virtio_queue_set_notification (vq=0x5646c8fe2470, enable=0) at ../hw/virtio/virtio.c:595
+  #13 0x000056468a18e7a8 in poll_set_started (ctx=ctx@entry=0x5646c6c74e30, ready_list=ready_list@entry=0x7fcd050366a0, started=started@entry=true) at ../util/aio-posix.c:247
+  #14 0x000056468a18f2bb in poll_set_started (ctx=0x5646c6c74e30, ready_list=0x7fcd050366a0, started=true) at ../util/aio-posix.c:226
+  #15 try_poll_mode (ctx=0x5646c6c74e30, ready_list=0x7fcd050366a0, timeout=<synthetic pointer>) at ../util/aio-posix.c:612
+  #16 aio_poll (ctx=0x5646c6c74e30, blocking=blocking@entry=true) at ../util/aio-posix.c:689
+  #17 0x000056468a032c26 in iothread_run (opaque=opaque@entry=0x5646c69f3380) at ../iothread.c:63
+  #18 0x000056468a19225c in qemu_thread_start (args=0x5646c6c75410) at ../util/qemu-thread-posix.c:393
+  #19 0x00007fcd114c5b68 in start_thread () from target:/lib64/libc.so.6
+  #20 0x00007fcd115364e4 in clone () from target:/lib64/libc.so.6
 
-> -
->          /* Here, order the stores to index->waiting before the loads of
->           * index->ctr.  Pairs with smp_mb_placeholder() in rcu_read_unlock(),
->           * ensuring that the loads of index->ctr are sequentially consistent.
-> @@ -150,7 +138,8 @@ static void wait_for_readers(void)
->           */
->          qemu_mutex_unlock(&rcu_registry_lock);
->  
-> -        if (forced) {
-> +        if (waiting) {
-> +            /* Wait for the forced quiescent state. */
->              qemu_event_wait(&rcu_gp_event);
->  
->              /*
-> @@ -158,9 +147,25 @@ static void wait_for_readers(void)
->               * while we walk the list.
->               */
->              qemu_event_reset(&rcu_gp_event);
-> +        } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
-> +                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
-> +            /*
-> +             * Now one of the following heuristical conditions is satisfied:
-> +             * - A decent number of callbacks piled up.
-> +             * - It timed out.
-> +             * - force_rcu() was called.
-> +             *
-> +             * Force a quiescent state.
-> +             */
-> +            waiting = true;
-> +
-> +            QLIST_FOREACH(index, &registry, node) {
-> +                notifier_list_notify(&index->force_rcu, NULL);
-> +                qatomic_set(&index->waiting, true);
-> +            }
->          } else {
-> -            g_usleep(10000);
-> -            sleeps++;
-> +            /* Try again. */
-> +            sleeps--;
->          }
->  
->          qemu_mutex_lock(&rcu_registry_lock);
-> @@ -170,7 +175,7 @@ static void wait_for_readers(void)
->      QLIST_SWAP(&registry, &qsreaders, node);
->  }
->  
-> -static void enter_qs(void)
-> +static void enter_qs(bool sleep)
->  {
->      /* Write RCU-protected pointers before reading p_rcu_reader->ctr.
->       * Pairs with smp_mb_placeholder() in rcu_read_lock().
-> @@ -189,14 +194,14 @@ static void enter_qs(void)
->               * Switch parity: 0 -> 1, 1 -> 0.
->               */
->              qatomic_set(&rcu_gp_ctr, rcu_gp_ctr ^ RCU_GP_CTR);
-> -            wait_for_readers();
-> +            wait_for_readers(sleep);
->              qatomic_set(&rcu_gp_ctr, rcu_gp_ctr ^ RCU_GP_CTR);
->          } else {
->              /* Increment current grace period.  */
->              qatomic_set(&rcu_gp_ctr, rcu_gp_ctr + RCU_GP_CTR);
->          }
->  
-> -        wait_for_readers();
-> +        wait_for_readers(sleep);
->      }
->  }
->  
-> @@ -205,7 +210,6 @@ static void enter_qs(void)
->   */
->  static struct rcu_head dummy;
->  static struct rcu_head *head = &dummy, **tail = &dummy.next;
-> -static QemuEvent rcu_call_ready_event;
->  
->  static void enqueue(struct rcu_head *node)
->  {
-> @@ -282,6 +286,7 @@ static void *call_rcu_thread(void *opaque)
->      rcu_register_thread();
->  
->      for (;;) {
-> +        bool sleep = true;
->          int n;
->  
->          /*
-> @@ -289,7 +294,7 @@ static void *call_rcu_thread(void *opaque)
->           * added before enter_qs() starts.
->           */
->          for (;;) {
-> -            qemu_event_reset(&rcu_call_ready_event);
-> +            qemu_event_reset(&sync_event);
->              n = qatomic_read(&rcu_call_count);
->              if (n) {
->                  break;
-> @@ -298,20 +303,36 @@ static void *call_rcu_thread(void *opaque)
->  #if defined(CONFIG_MALLOC_TRIM)
->              malloc_trim(4 * 1024 * 1024);
->  #endif
-> -            qemu_event_wait(&rcu_call_ready_event);
-> +            qemu_event_wait(&sync_event);
-> +        }
-> +
-> +        /*
-> +         * Ensure that an event for a rcu_call_count change will not interrupt
-> +         * wait_for_readers().
-> +         */
-> +        qemu_event_reset(&sync_event);
-> +
-> +        /*
-> +         * Ensure that the forced variable has not been set after fetching
-> +         * rcu_call_count; otherwise we may get confused by a force quiescent
-> +         * state request for an element later than n.
-> +         */
-> +        while (qatomic_xchg(&forced, false)) {
-> +            sleep = false;
-> +            n = qatomic_read(&rcu_call_count);
->          }
+Buglink: https://issues.redhat.com/browse/RHEL-71933
+Reported-by: Peixiu Hou <phou@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ system/physmem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-This is pretty tricky, and I wonder if it will make the code easier to read
-if we convert the sync_event to be a semaphore instead.  When as a sem, it
-will take account of whatever kick to it, either a call_rcu1() or an
-enforced rcu flush, so that we don't need to reset it.  Meanwhile, we don't
-worry on an slightly outdated "n" read because the 2nd round of sem_wait()
-will catch that new "n".
-
-Instead, worst case is rcu thread runs one more round without seeing
-callbacks on the queue.
-
-I'm not sure if that could help simplying code, maybe also make it less
-error-prone.
-
->  
-> -        enter_qs();
-> +        enter_qs(sleep);
->          qatomic_sub(&rcu_call_count, n);
->          bql_lock();
->          while (n > 0) {
->              node = try_dequeue();
->              while (!node) {
-
-I have a pure question here not relevant to your changes.. do you know when
-this "if" will trigger?  It seems to me the enqueue() should always happen
-before the increment of rcu_call_count:
-
-void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
-{
-    node->func = func;
-    enqueue(node);
-
-    if (!qatomic_fetch_inc(&rcu_call_count)) {
-        qemu_event_set(&sync_event);
-    }
-}
-
-I believe qatomic_fetch_inc() is RMW so it's strong mb and order
-guaranteed.  Then here why the node can be null even if we're sure >=n have
-been enqueued?
-
-Thanks,
-
->                  bql_unlock();
-> -                qemu_event_reset(&rcu_call_ready_event);
-> +                qemu_event_reset(&sync_event);
->                  node = try_dequeue();
->                  if (!node) {
-> -                    qemu_event_wait(&rcu_call_ready_event);
-> +                    qemu_event_wait(&sync_event);
->                      node = try_dequeue();
->                  }
->                  bql_lock();
-> @@ -329,8 +350,10 @@ void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
->  {
->      node->func = func;
->      enqueue(node);
-> -    qatomic_inc(&rcu_call_count);
-> -    qemu_event_set(&rcu_call_ready_event);
-> +
-> +    if (!qatomic_fetch_inc(&rcu_call_count)) {
-> +        qemu_event_set(&sync_event);
-> +    }
->  }
->  
->  
-> @@ -388,10 +411,9 @@ void drain_call_rcu(void)
->       * assumed.
->       */
->  
-> -    qatomic_inc(&in_drain_call_rcu);
->      call_rcu(&sync, sync_rcu_callback, rcu);
-> +    force_rcu();
->      qemu_event_wait(&sync.complete_event);
-> -    qatomic_dec(&in_drain_call_rcu);
->  
->      if (locked) {
->          bql_lock();
-> @@ -435,7 +457,7 @@ static void rcu_init_complete(void)
->      qemu_mutex_init(&rcu_registry_lock);
->      qemu_event_init(&rcu_gp_event, true);
->  
-> -    qemu_event_init(&rcu_call_ready_event, false);
-> +    qemu_event_init(&sync_event, false);
->  
->      /* The caller is assumed to have BQL, so the call_rcu thread
->       * must have been quiescent even after forking, just recreate it.
-> 
-> -- 
-> 2.51.0
-> 
-> 
-
+diff --git a/system/physmem.c b/system/physmem.c
+index a340ca3e61..1dc2b46e12 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3011,6 +3011,9 @@ static void io_mem_init(void)
+ {
+     memory_region_init_io(&io_mem_unassigned, NULL, &unassigned_mem_ops, NULL,
+                           NULL, UINT64_MAX);
++
++    /* Trivially thread-safe since memory accesses are rejected */
++    memory_region_enable_lockless_io(&io_mem_unassigned);
+ }
+ 
+ AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv)
 -- 
-Peter Xu
+2.51.0
 
 
