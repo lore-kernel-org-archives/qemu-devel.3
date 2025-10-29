@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D1BCCF9E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A7DCCCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 14:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vE70O-00031e-I6; Wed, 29 Oct 2025 10:18:30 -0400
+	id 1vE70b-00036Q-6e; Wed, 29 Oct 2025 10:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vE704-0002zb-5u
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:18:09 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ id 1vE707-000317-QC
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:18:21 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vE6zw-0007Vv-3A
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:18:07 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-378d61ce75aso10677541fa.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 07:17:57 -0700 (PDT)
+ id 1vE6zz-0007WS-Th
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 10:18:11 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-378e8d10494so60629091fa.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 07:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761747474; x=1762352274; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jH2ovA5kxRIknVuqXTGVDlJABoWI8fAisSqXcIX8I1g=;
- b=JzVRG/xoFRRvcwKNWJKTvrceDO9XrwULbXQ25kDquA9tfKrIyYCnbzD0pKHORTsvV3
- EXx4DP7QbPHTnbjGAHVicDVYi3WHGxJUq/haLJ1lSBE/1abVxin1vtQThwolTWXUU9IT
- rJ2vpxam1yaW4/mzoFlYzbm43FoLlmyGMO3h6/cDt4DC5RHn8NFbRxRxXVvEi2vzQmxn
- zFNlyo/3TJwissAHD9Gm0HyVzRtBOgdxQKOdJmEr6ID9S1jLdQc1YJiS0YWBFdh4GWp4
- /m58vs4hXhXybS7m/nnOz5N1cHEy2QzdALDcC38DBci+G7b6hUgoW+43S8uxVEL6dFwm
- ugtw==
+ d=gmail.com; s=20230601; t=1761747480; x=1762352280; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EVn0sUQNQNSn8ZCiQSobP2QW4bk86yZD0BGFnx3OH2U=;
+ b=Lj8qmw5K4G55Kn9xS+7t2RcFQUHn6qsezo5wzG+Vkd2RBmdvY/+KV7zoB9P8eO3PNT
+ xqwylE2Hu3IOSmqZh6Gd3FtiAEhnkc+D7rQwuiVOmXqj1UUyURZ/M0UiYAGZE61imoug
+ UmxBgVoT4tNyP80ok7lOOfZj9R9gtXl2bDd51OGzbRVToN0BaODyDr5YiXIw19u6aoh9
+ 5/9IF8dku11CRsouJoEm2EeqMPuPV20JgBIL9o2zkyq4ES0gsoOG5yX37mwp8o7XkQwk
+ uUfLC9E1sreHeGKWcehiABkpaM2UtMScevyS/a4WUfj9mY7qDCSjt84ovPzk4MP3FW/1
+ OQaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761747474; x=1762352274;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jH2ovA5kxRIknVuqXTGVDlJABoWI8fAisSqXcIX8I1g=;
- b=CsnJKpAQ4ymYUbIZuOXNODqtkGkh+qLxvhZweKwO1WbiYoYfhUPoUSxsUo9hVTDgrN
- pjSKeV3Cq/85z7u92uaVyfvKCeR0jnx7XbeVOz0IFPZ6VSNJclN7WmEAOo+C1Q8/ofCC
- LkXRnDBSItap/WTilyUj2Y9eMmPtRohh8CPt2QNSQjib3epw4M195FiRna1u5OOa5FZf
- eZ+F/NhYEgEpmDHfzItpPVCAEBc7lpcAzfysC7fXFiQP9Kl6PK8Z2TKIUgrPO9oxJbCJ
- M2V8Sf9Vl4vPX7JLfb9c/AVV0kNub6Mao5iZv5j9NqonkkqwDLJ4q5ib8OtIvPUlPTZg
- MFpg==
-X-Gm-Message-State: AOJu0Yy9C79vMI9SctrjmN7xZ+gMRboLeGjkNXstHDMb4iUeBTJdRW0j
- zO9XnBq8n5k5jmWr3nPJD31E/3jNoD2ktgZynCzsBhIdlkoMSrrkvxhQGY2eeVs1808=
-X-Gm-Gg: ASbGncvghEJUevJhRPAA45av8U6lYUyhQBVxTLoiBb6I2KeKZy/ZLvwNu8NdKEkZt28
- 5wXFHyj5s8I04WYSa/efH3Irgs35TXaIvt4Vf8J6Z2RP3EKty58d81+RHRkMfIhn34mCcHHVdhG
- 75Q7ugg3mVT4tKnizDwPrHUERkuqUw496u28r8FxV2wcy6kEp1d61c3l/zRtjToM2wdm9xJ8OFM
- 9xkwVk8QQ4Amn3eKbr0z3gunMntpePjAE7QV2WBbxs4otfXinJxYt4K68ozEYFVD+fUJacTGOYU
- bqzuVsx5EUjISlKcsCwGGahZ4PBpidbFYluwB11G6ilFIYBPBGiOGYVHNL1f63ArHqGvkrgP7Hg
- VgEr536xxTLxg3HPAUpGS+/ZJwOYotqjAhFBukrdm+D8Oby8QNWYK7pjB9zn3Vc7YnZYsKQ2MjI
- dDeE4vdVPvK5ovCMOftRGXtcreZWshH/U/J5fJ
-X-Google-Smtp-Source: AGHT+IEBrNVU+hn+SRIAuPZya/WmA2ki8vO2huTC3oRc92XivbIlrGXmXHTySsWrMeBvotcpiwXplA==
-X-Received: by 2002:a05:651c:2207:b0:378:e30b:d1ee with SMTP id
- 38308e7fff4ca-37a05eb559emr12499921fa.23.1761747473992; 
- Wed, 29 Oct 2025 07:17:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761747480; x=1762352280;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EVn0sUQNQNSn8ZCiQSobP2QW4bk86yZD0BGFnx3OH2U=;
+ b=TTXgXapN702i4LDzOQLFJ338acJ4Ty2MBpE3CoQaVo45AZqtm0ZmplOPcZ9wfswHNt
+ pZoJ6lWNwmHPZEZOmdljhsZzQ5MqPYzZbetyvmanpN4A8gT211pVAa4lFW2eyOG/RyFE
+ lbr6ONBexESL9VER0u54bU5KjW7J2mt0nPUgluPMc0afB6aISWxeZxs5VHJXutFRwCyP
+ bIrLCC5MqLvdYvJ7QOFrw0jiSq9FxrifhExgFEXqCgIrAA0V+43WjhR7KKHaDwLdrmmM
+ j1d0YNJR8q16ZZKLZl+suuAqq+0x3NHiVUeM0dp+STdzPHXjJ7xIl8kdISmMdUVGh0CQ
+ mFBw==
+X-Gm-Message-State: AOJu0YwpVRAhreV6mPtWrQzUcd2glPwxVIVTzLwIPYnwb/ntv8YLRxeg
+ quVQVqKLA/Z08XASOkxcvu743doQqahrYprS1Hc2gdCVQLUajk86T0CZKaC7wGKmY0A=
+X-Gm-Gg: ASbGncuKhVkBG8PX3ZPePGKokcPRLC2GeaB6fNz3F0p0WWo1VjXz3iO057bsQ6pZTwD
+ jSGUrNAhYkd2IK/ghDvgdAAp2lJUdXXeH2oLnQ8ABxWkPofS62kTNyNovQZztG8r7jFJUvixzmq
+ aaudAB8RKyONvg81b1XGzt5qjI0q6Z4PeRaAe296cenSvg5Nn6QN0LelET4XREUSFP6eYbKcEXI
+ RHJVY1ekqA+G8r5K3Bt9D6mPaRqNdpJqkb7Pvy1CMt99JaQSAOIBk2yt6jUvgYJ/PMaXJR1VwTx
+ 9wJL0oAUx9G6TmZMwg3ijayhhWST4NgK5HhUCGYruS4ZNq8o67erY3lv2JE/fG92fkddOwA5SZH
+ pc8Wc0SlEDDjvwVjgSxctot6Br+gpwKnCwOVFwJ78Q9ugtfpgfvjEz0KM6NU8ZWg5s39j0Qrof6
+ 7syPbbidAN+X9+wlnNMeXH76MDrAgVe2ha3tUr
+X-Google-Smtp-Source: AGHT+IG8oCd8E7MdQukwNoCNtKCL1omJvfX50gQ0WZ3coDiy9qvWN29mBc8jyvwW6bIEenisWg6SBQ==
+X-Received: by 2002:a05:651c:882:b0:379:782:1223 with SMTP id
+ 38308e7fff4ca-37a023cdbacmr9271251fa.22.1761747479393; 
+ Wed, 29 Oct 2025 07:17:59 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-378ee0d7655sm36173551fa.41.2025.10.29.07.17.52
+ 38308e7fff4ca-378ee0da2acsm33304661fa.42.2025.10.29.07.17.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 07:17:53 -0700 (PDT)
+ Wed, 29 Oct 2025 07:17:58 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	edgar.iglesias@amd.com
-Subject: [PULL v1 0/3] Microblaze signed division overflows
-Date: Wed, 29 Oct 2025 15:17:46 +0100
-Message-ID: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org,
+	"Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: richard.henderson@linaro.org, edgar.iglesias@amd.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v1 2/3] target/microblaze: div: Break out raise_divzero()
+Date: Wed, 29 Oct 2025 15:17:48 +0100
+Message-ID: <20251029141749.1274729-3-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
+References: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,32 +105,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-The following changes since commit bc831f37398b51dfe65d99a67bcff9352f84a9d2:
+Break out raise_divzero() and take the opportunity to rename
+and reorder function args to better match with spec and
+pseudo code.
 
-  Merge tag 'hw-misc-20251028' of https://github.com/philmd/qemu into staging (2025-10-28 11:48:05 +0100)
+No functional change.
 
-are available in the Git repository at:
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/microblaze/op_helper.c | 38 +++++++++++++++++------------------
+ target/microblaze/translate.c | 12 ++---------
+ 2 files changed, 20 insertions(+), 30 deletions(-)
 
-  https://gitlab.com/edgar.iglesias/qemu.git tags/edgar/xilinx-queue-2025-10-29.for-upstream
-
-for you to fetch changes up to cfc1d54251d3b4c4cf21c4fa278c8aea2fe25a99:
-
-  target/microblaze: Handle signed division overflows (2025-10-29 13:37:44 +0100)
-
-----------------------------------------------------------------
-Xilinx queue
-
-----------------------------------------------------------------
-Edgar E. Iglesias (3):
-  target/microblaze: Remove unused arg from check_divz()
-  target/microblaze: div: Break out raise_divzero()
-  target/microblaze: Handle signed division overflows
-
- target/microblaze/cpu.h       |  1 +
- target/microblaze/op_helper.c | 53 ++++++++++++++++++++++-------------
- target/microblaze/translate.c | 12 ++------
- 3 files changed, 36 insertions(+), 30 deletions(-)
-
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+index 886224df3c..d3f688e375 100644
+--- a/target/microblaze/op_helper.c
++++ b/target/microblaze/op_helper.c
+@@ -69,38 +69,36 @@ void helper_raise_exception(CPUMBState *env, uint32_t index)
+     cpu_loop_exit(cs);
+ }
+ 
+-static bool check_divz(CPUMBState *env, uint32_t b, uintptr_t ra)
++/* Raises ESR_EC_DIVZERO if exceptions are enabled.  */
++static void raise_divzero(CPUMBState *env, uint32_t esr, uintptr_t unwind_pc)
+ {
+-    if (unlikely(b == 0)) {
+-        env->msr |= MSR_DZ;
+-
+-        if ((env->msr & MSR_EE) &&
+-            env_archcpu(env)->cfg.div_zero_exception) {
+-            CPUState *cs = env_cpu(env);
+-
+-            env->esr = ESR_EC_DIVZERO;
+-            cs->exception_index = EXCP_HW_EXCP;
+-            cpu_loop_exit_restore(cs, ra);
+-        }
+-        return false;
++    env->msr |= MSR_DZ;
++
++    if ((env->msr & MSR_EE) && env_archcpu(env)->cfg.div_zero_exception) {
++        CPUState *cs = env_cpu(env);
++
++        env->esr = esr;
++        cs->exception_index = EXCP_HW_EXCP;
++        cpu_loop_exit_restore(cs, unwind_pc);
+     }
+-    return true;
+ }
+ 
+-uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
++uint32_t helper_divs(CPUMBState *env, uint32_t ra, uint32_t rb)
+ {
+-    if (!check_divz(env, b, GETPC())) {
++    if (!ra) {
++        raise_divzero(env, ESR_EC_DIVZERO, GETPC());
+         return 0;
+     }
+-    return (int32_t)a / (int32_t)b;
++    return (int32_t)rb / (int32_t)ra;
+ }
+ 
+-uint32_t helper_divu(CPUMBState *env, uint32_t a, uint32_t b)
++uint32_t helper_divu(CPUMBState *env, uint32_t ra, uint32_t rb)
+ {
+-    if (!check_divz(env, b, GETPC())) {
++    if (!ra) {
++        raise_divzero(env, ESR_EC_DIVZERO, GETPC());
+         return 0;
+     }
+-    return a / b;
++    return rb / ra;
+ }
+ 
+ /* raise FPU exception.  */
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 6442a250c5..fefe5cb552 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -450,16 +450,8 @@ DO_TYPEA0_CFG(flt, use_fpu >= 2, true, gen_flt)
+ DO_TYPEA0_CFG(fint, use_fpu >= 2, true, gen_fint)
+ DO_TYPEA0_CFG(fsqrt, use_fpu >= 2, true, gen_fsqrt)
+ 
+-/* Does not use ENV_WRAPPER3, because arguments are swapped as well. */
+-static void gen_idiv(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+-{
+-    gen_helper_divs(out, tcg_env, inb, ina);
+-}
+-
+-static void gen_idivu(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+-{
+-    gen_helper_divu(out, tcg_env, inb, ina);
+-}
++ENV_WRAPPER3(gen_idiv, gen_helper_divs)
++ENV_WRAPPER3(gen_idivu, gen_helper_divu)
+ 
+ DO_TYPEA_CFG(idiv, use_div, true, gen_idiv)
+ DO_TYPEA_CFG(idivu, use_div, true, gen_idivu)
 -- 
 2.43.0
 
