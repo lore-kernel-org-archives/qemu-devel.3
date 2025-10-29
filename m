@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CA6CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A062ACCF9E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Oct 2025 04:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDxxM-0008PG-Ek; Wed, 29 Oct 2025 00:38:44 -0400
+	id 1vDxwm-0007Kv-0h; Wed, 29 Oct 2025 00:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxxK-0008HJ-10; Wed, 29 Oct 2025 00:38:42 -0400
+ id 1vDxwk-0007Jl-Bl; Wed, 29 Oct 2025 00:38:06 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vDxxF-0004M3-FQ; Wed, 29 Oct 2025 00:38:40 -0400
+ id 1vDxwg-0004M3-JR; Wed, 29 Oct 2025 00:38:06 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 29 Oct
- 2025 12:37:15 +0800
+ 2025 12:37:13 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 29 Oct 2025 12:37:15 +0800
+ Transport; Wed, 29 Oct 2025 12:37:13 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 09/17] hw/arm/aspeed: Split QCOM DC-SCM V1 machine into a
+Subject: [PATCH v2 05/17] hw/arm/aspeed: Split Bletchley machine into a
  separate source file for maintainability
-Date: Wed, 29 Oct 2025 12:36:55 +0800
-Message-ID: <20251029043710.1486573-10-jamin_lin@aspeedtech.com>
+Date: Wed, 29 Oct 2025 12:36:51 +0800
+Message-ID: <20251029043710.1486573-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
 References: <20251029043710.1486573-1-jamin_lin@aspeedtech.com>
@@ -67,106 +67,147 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the QCOM DC-SCM V1 BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_qcom-dc-scm-v1.c.
+This commit moves the Facebook Bletchley BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2600_bletchley.c.
 
 This refactor continues the modularization effort for Aspeed platform support,
-placing each board’s logic in its own dedicated source file. It improves
-maintainability, readability, and simplifies future development for new
-platforms without cluttering aspeed.c.
+placing each board’s logic in its own dedicated source file.
+It improves maintainability, readability, and simplifies future development for
+new platforms without cluttering aspeed.c.
 
 Key updates include:
-- Moved QCOM_DC_SCM_V1_BMC_HW_STRAP1 and QCOM_DC_SCM_V1_BMC_HW_STRAP2 macro
-  into the new file aspeed_ast2600_qcom-dc-scm-v1.c.
-- Moved qcom_dc_scm_bmc_i2c_init() and aspeed_machine_qcom_dc_scm_v1_class_init()
-  into the new file aspeed_ast2600_qcom-dc-scm-v1.c.
-- Moved "qcom-dc-scm-v1-bmc" machine type registration from aspeed.c to the new file.
-- Updated hw/arm/meson.build to include aspeed_ast2600_qcom-dc-scm-v1.c.
-- Cleaned up all QCOM DC-SCM V1-specific code from aspeed.c.
+- Moved BLETCHLEY_BMC_HW_STRAP1 and BLETCHLEY_BMC_HW_STRAP2 macro definitions into the new file.
+- Moved bletchley_bmc_i2c_init() I²C initialization logic into the new file.
+- Moved aspeed_machine_bletchley_class_init() and type registration.
+- Added aspeed_ast2600_bletchley.c to the build system (meson.build).
+- Removed all Bletchley-specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c                        | 35 -----------------
- hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c | 54 ++++++++++++++++++++++++++
- hw/arm/meson.build                     |  1 +
- 3 files changed, 55 insertions(+), 35 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+ hw/arm/aspeed.c                   | 76 ------------------------
+ hw/arm/aspeed_ast2600_bletchley.c | 96 +++++++++++++++++++++++++++++++
+ hw/arm/meson.build                |  1 +
+ 3 files changed, 97 insertions(+), 76 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2600_bletchley.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 8d02678659..821a18b16c 100644
+index 690ad0be87..6458798c2c 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
 @@ -55,10 +55,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+ #define FUJI_BMC_HW_STRAP1    0x00000000
+ #define FUJI_BMC_HW_STRAP2    0x00000000
+ 
+-/* Bletchley hardware value */
+-#define BLETCHLEY_BMC_HW_STRAP1 0x00002000
+-#define BLETCHLEY_BMC_HW_STRAP2 0x00000801
+-
+ /* GB200NVL hardware value */
  #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
  #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
- 
--/* Qualcomm DC-SCM hardware value */
--#define QCOM_DC_SCM_V1_BMC_HW_STRAP1  0x00000000
--#define QCOM_DC_SCM_V1_BMC_HW_STRAP2  0x00000041
--
- #define AST_SMP_MAILBOX_BASE            0x1e6e2180
- #define AST_SMP_MBOX_FIELD_ENTRY        (AST_SMP_MAILBOX_BASE + 0x0)
- #define AST_SMP_MBOX_FIELD_GOSIGN       (AST_SMP_MAILBOX_BASE + 0x4)
-@@ -627,13 +623,6 @@ static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
-                           gb200nvl_bmc_fruid_len);
+@@ -684,53 +680,6 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+     at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
  }
  
--static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
+-static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
+-    I2CBus *i2c[13] = {};
+-    for (int i = 0; i < 13; i++) {
+-        if ((i == 8) || (i == 11)) {
+-            continue;
+-        }
+-        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
+-    }
 -
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
+-    /* Bus 0 - 5 all have the same config. */
+-    for (int i = 0; i < 6; i++) {
+-        /* Missing model: ti,ina230 @ 0x45 */
+-        /* Missing model: mps,mp5023 @ 0x40 */
+-        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
+-        /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
+-        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
+-        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
+-        /* Missing model: fsc,fusb302 @ 0x22 */
+-    }
+-
+-    /* Bus 6 */
+-    at24c_eeprom_init(i2c[6], 0x56, 65536);
+-    /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
+-    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
+-
+-
+-    /* Bus 7 */
+-    at24c_eeprom_init(i2c[7], 0x54, 65536);
+-
+-    /* Bus 9 */
+-    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
+-
+-    /* Bus 10 */
+-    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
+-    /* Missing model: ti,hdc1080 @ 0x40 */
+-    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
+-
+-    /* Bus 12 */
+-    /* Missing model: adi,adm1278 @ 0x11 */
+-    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
+-    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
+-    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
 -}
 -
- static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
+-
+ static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
  {
-     return ASPEED_MACHINE(obj)->mmio_exec;
-@@ -1010,35 +999,11 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
- }
- #endif
+     AspeedSoCState *soc = bmc->soc;
+@@ -1058,27 +1007,6 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_class_init_cpus_defaults(mc);
+ };
  
--static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
--                                                     const void *data)
+-#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+-
+-static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
+-                                                const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
--    mc->deprecation_reason = "use 'ast2600-evb' instead";
+-    mc->desc       = "Facebook Bletchley BMC (Cortex-A7)";
 -    amc->soc_name  = "ast2600-a3";
--    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
--    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
--    amc->fmc_model = "n25q512a";
--    amc->spi_model = "n25q512a";
+-    amc->hw_strap1 = BLETCHLEY_BMC_HW_STRAP1;
+-    amc->hw_strap2 = BLETCHLEY_BMC_HW_STRAP2;
+-    amc->fmc_model = "w25q01jvq";
+-    amc->spi_model = NULL;
 -    amc->num_cs    = 2;
--    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
--    amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
--    mc->default_ram_size = 1 * GiB;
+-    amc->macs_mask = ASPEED_MAC2_ON;
+-    amc->i2c_init  = bletchley_bmc_i2c_init;
+-    mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
 -    aspeed_machine_class_init_cpus_defaults(mc);
--};
+-}
 -
- static const TypeInfo aspeed_machine_types[] = {
-     {
-         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
+ static void aspeed_machine_catalina_class_init(ObjectClass *oc,
+                                                const void *data)
+ {
+@@ -1361,10 +1289,6 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("fuji-bmc"),
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2600_evb_class_init,
+         .class_init    = aspeed_machine_fuji_class_init,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
+-        .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
+-        .class_init    = aspeed_machine_bletchley_class_init,
      }, {
-         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
+         .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c b/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
 new file mode 100644
-index 0000000000..f022a382d4
+index 0000000000..bb13970894
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
-@@ -0,0 +1,54 @@
++++ b/hw/arm/aspeed_ast2600_bletchley.c
+@@ -0,0 +1,96 @@
 +/*
-+ * Qualcomm DC-SCM V1
++ * Facebook Bletchley
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -177,60 +218,102 @@ index 0000000000..f022a382d4
 +#include "qapi/error.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
++#include "hw/gpio/pca9552.h"
++#include "hw/nvram/eeprom_at24c.h"
 +
-+/* Qualcomm DC-SCM hardware value */
-+#define QCOM_DC_SCM_V1_BMC_HW_STRAP1  0x00000000
-+#define QCOM_DC_SCM_V1_BMC_HW_STRAP2  0x00000041
++#define TYPE_TMP421 "tmp421"
++/* Bletchley hardware value */
++#define BLETCHLEY_BMC_HW_STRAP1 0x00002000
++#define BLETCHLEY_BMC_HW_STRAP2 0x00000801
++#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
 +
-+static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
++static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
++    I2CBus *i2c[13] = {};
++    for (int i = 0; i < 13; i++) {
++        if ((i == 8) || (i == 11)) {
++            continue;
++        }
++        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
++    }
 +
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
++    /* Bus 0 - 5 all have the same config. */
++    for (int i = 0; i < 6; i++) {
++        /* Missing model: ti,ina230 @ 0x45 */
++        /* Missing model: mps,mp5023 @ 0x40 */
++        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
++        /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
++        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
++        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
++        /* Missing model: fsc,fusb302 @ 0x22 */
++    }
++
++    /* Bus 6 */
++    at24c_eeprom_init(i2c[6], 0x56, 65536);
++    /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
++    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
++
++
++    /* Bus 7 */
++    at24c_eeprom_init(i2c[7], 0x54, 65536);
++
++    /* Bus 9 */
++    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
++
++    /* Bus 10 */
++    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
++    /* Missing model: ti,hdc1080 @ 0x40 */
++    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
++
++    /* Bus 12 */
++    /* Missing model: adi,adm1278 @ 0x11 */
++    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
++    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
++    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
 +}
 +
-+static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-+                                                     const void *data)
++static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
++                                                const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
-+    mc->deprecation_reason = "use 'ast2600-evb' instead";
++    mc->desc       = "Facebook Bletchley BMC (Cortex-A7)";
 +    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
-+    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
-+    amc->fmc_model = "n25q512a";
-+    amc->spi_model = "n25q512a";
++    amc->hw_strap1 = BLETCHLEY_BMC_HW_STRAP1;
++    amc->hw_strap2 = BLETCHLEY_BMC_HW_STRAP2;
++    amc->fmc_model = "w25q01jvq";
++    amc->spi_model = NULL;
 +    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-+    amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
-+    mc->default_ram_size = 1 * GiB;
++    amc->macs_mask = ASPEED_MAC2_ON;
++    amc->i2c_init  = bletchley_bmc_i2c_init;
++    mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
 +    aspeed_machine_class_init_cpus_defaults(mc);
-+};
++}
 +
-+static const TypeInfo aspeed_ast2600_qcom_dc_scm_v1_types[] = {
++static const TypeInfo aspeed_ast2600_bletchley_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
++        .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
++        .class_init    = aspeed_machine_bletchley_class_init,
 +    },
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_qcom_dc_scm_v1_types)
++DEFINE_TYPES(aspeed_ast2600_bletchley_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 89d2f05bd2..2813698918 100644
+index 293dbbb53b..06e27d94b9 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_bletchley.c',
-   'aspeed_ast2600_fby35.c',
-   'aspeed_ast2600_fuji.c',
-+  'aspeed_ast2600_qcom-dc-scm-v1.c',
-   'aspeed_ast2600_qcom-firework.c',
+@@ -57,6 +57,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2500_witherspoon.c',
+   'aspeed_ast2500_yosemitev2.c',
+   'aspeed_ast2600.c',
++  'aspeed_ast2600_bletchley.c',
    'aspeed_ast10x0.c',
    'aspeed_eeprom.c',
+   'fby35.c'))
 -- 
 2.43.0
 
