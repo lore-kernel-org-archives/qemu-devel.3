@@ -4,143 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC65CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A507CCCF9FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEOEL-00057U-Iy; Thu, 30 Oct 2025 04:42:01 -0400
+	id 1vEOI3-00065O-Pa; Thu, 30 Oct 2025 04:45:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEOEF-00052b-JB
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:41:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEOE4-0006en-7C
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:41:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761813698;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lnRHmoB5Cq94aAjyX9z9r8SARznNLbUgTc+Bj2O2Hk4=;
- b=Cr/ihSu6PDDvFEs2yLc1wm9qe6K4oge+k06mfN9z2QpRzZ2aBgfl+aeUDx61sqnC5ehjt2
- 4ewSY+EpAoKWnwvUUBGdVLCSgRgFYPLxsouhGbFIpiY8KiHcUb1b8NNO5It6PnQR50E15C
- wiNe04VEx1PFa5wPrEuONPaHfAwtjv4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-VtN8iG1UMU6q4dCpUQwfcQ-1; Thu, 30 Oct 2025 04:41:36 -0400
-X-MC-Unique: VtN8iG1UMU6q4dCpUQwfcQ-1
-X-Mimecast-MFC-AGG-ID: VtN8iG1UMU6q4dCpUQwfcQ_1761813695
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-427015f63faso422443f8f.0
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 01:41:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vEOHo-00062d-GR
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:45:38 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vEOHg-000735-O1
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:45:34 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b6d3340dc2aso214573066b.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 01:45:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761813920; x=1762418720; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YvVXyXEC4ouHlK09pYRWE6ZpgOz26EbhsqkkpB7UII4=;
+ b=GVTH98b5Al20JTXrzjHExIg2ZwthOFyaYToIcVXQr2riTrwBvKEpVi0xQTbbS5q9r4
+ tRAW/IPHFxgyjoV/i+kQK+aySnMCPjptqObXlG/8Cs0g7EiF1U52iWiN1B7ChAvm1wMj
+ rtAIbR1z2gptFkZ1aUvjFPdFsSBj22LoqzpSVd1DRBn0Y8kOs0k4sMdo/yqBA3yuY7ZE
+ mfwGjqHIhoqhgwpVn8AdXxhmWhR4v9nECnCkHgQdvDzeGXT7INT8zEUKtEGIEL3Z+BHG
+ bmcwwOef9jNRadLwEwdPZj12hb3Xh90lfpHQ3H2mh7qOW2vr4zRSNmhEJQn5+UTunXox
+ GVBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761813695; x=1762418495;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lnRHmoB5Cq94aAjyX9z9r8SARznNLbUgTc+Bj2O2Hk4=;
- b=td/cUKdCEykDaLJm31upN+pAoQYsiM6lglN5CODYuhsH3zGlRn5po4ACsjX75tcV9K
- 9qSpsGTQDcqo5r0LFuc+sDyaqd1XA2VtThAdZvk9T96zUcWb6JTyzO6MQ/2R9m6nck6H
- Wf9RV+5lggsvDeGZK8E72HkBSEB/xEwJWSq2xcXi3evhN0DG3FB20IBevqOapAHkrBXY
- bfg2rRfUFQ6X3PqrRUj1dSd/esXlbkNq9j6kVC2YwSLNNFTvOJM28eEAYCu4cHYgeKE6
- IRUC8WTDlqrn5TN5+MNjWf1Shjy8WXqHvGjy7pCbSDKBrt7fjJBOZL3eYOAok2d1amAY
- rt/w==
+ d=1e100.net; s=20230601; t=1761813920; x=1762418720;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YvVXyXEC4ouHlK09pYRWE6ZpgOz26EbhsqkkpB7UII4=;
+ b=F98PbEJ5riOlax0+JqrClzSivcyWq/mEXr6DLxScNAeiks5vbHFWMFm+3ZafaxeulE
+ yUkM1yhY2OKw7+JNv4VIZGcr3PlHvEhV8oUEdKtvqG7vriQ0cakq3cXxqQEdTjNI9mXu
+ BBDjx6x4/OZNx50nrN520OQZNI1sdIxM3prCeEi+jOuD1k1m3yR8PVgGP/YqFiBUfK67
+ vhN8iL59kDzA+RCuga8hVdDnX4pcHjnnRmJ2GD+k/WseOr2b2QACNEfqrsL6z5r50eHY
+ 1vDRyzDeOuCrYvXZrCjtZj/0yhfacuNH6LSN+8nQ7K0TeEMa3+8rJ6ogvdETE1kgxds1
+ Ue7g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrTOyi4kH2LwOvjmyUcSJUE23GQAdTdhEs0XuFf3t+JoI7Gjq7HK8MYCdYaXEHV4EdZiSIiBlL9u4r@nongnu.org
-X-Gm-Message-State: AOJu0YyIQN99u6BcGzoHER5MqPkjbGlPgSS5T0L8l/IAiu8jjnkwlG7G
- pW3ZvkkFRPxhzuVdwXzHFRoVg72dePG2UZegH0x46A3zISzvXsv/EBHkueFLHdPgO24aUtW6AJY
- RhK73QBuWMY7tOf3jUc5Rhxui48SdFq3v6GCisiQa1EZaa3FJddCGmATxqg7F0EOG
-X-Gm-Gg: ASbGnctaqe+2Rm4EmJ4XWh2xQwXDZFSDO8WTJAOpQUZvRPyoATvMAmJBVGeda4nuEnc
- Pkc8CIMZkHWndYax1Yd2SH+oJTdz33B0fuJXb85d3VkswKMvF8MejnozTzvtVBDgmzZQ9dRWsA6
- cshC3lbxdsQv8oBHUuEb8Bb/Ww2BT0bFfm0BmYP1q9SzFghWsHK2YoDhZrO55yX5rYRINfRBaZI
- 9aRKNW5dlA1q8DcsyC6hUj/f+38f6naIbRxu5Ym3dZIeVzvWh64nH7lcxlL/w0Y+wgACPrm6cxL
- b6P0HFU9TW2AFm6XKGiqBQmaY2kvsZZdnndowMq9z5ghOjpwaFM3C2n8TwoAsplrRqdWlwM=
-X-Received: by 2002:a05:6000:1a8a:b0:429:9197:5b31 with SMTP id
- ffacd0b85a97d-429aefcaa88mr5257919f8f.53.1761813695472; 
- Thu, 30 Oct 2025 01:41:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJUgOldO5Pvag4OWP+0tRfmMue1vGq27cPj8qBo20jRh0Ltq+1nf64XBLvFUXwjgGCfnXq4A==
-X-Received: by 2002:a05:6000:1a8a:b0:429:9197:5b31 with SMTP id
- ffacd0b85a97d-429aefcaa88mr5257893f8f.53.1761813695028; 
- Thu, 30 Oct 2025 01:41:35 -0700 (PDT)
-Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477289a5625sm28438455e9.5.2025.10.30.01.41.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 01:41:34 -0700 (PDT)
-Message-ID: <f58ea42a-8fd9-46ed-aeb3-dd7a15709721@redhat.com>
-Date: Thu, 30 Oct 2025 09:41:33 +0100
+ AJvYcCW0gJ+/Iaw8FZ6nCKsy/Hg9i0wSKhpUv0tNQEkEsuweEKOtwqEu3v5NKi9Wb5XFZKlBOF1WxLG1jtcQ@nongnu.org
+X-Gm-Message-State: AOJu0YymVwdrij4l81g82NJ9Na/LwT+PEUREkpHOrQaF1r77lvh8jjU6
+ 99eXMUbVEDb7RIOe49PAPf/lDwzSMgV0zvdsHMnjT8cDoOqrru/bJQqJRqz0I2NDOaKpH4h0k3S
+ zBdzxCxsyZI6KmmfKKLr/um+9WMt1Z6BRf7oWPsSvAg==
+X-Gm-Gg: ASbGnctwik/LD96Wu92GYzIs/HF0HuaaK+B/n+BcU4g2rWh+SDAhiUbh1jJISYIPXbD
+ EktrijNYnpARHbvHQsZYAXdET69zt1oEHV9HpRM1nwfDb5+tqQYXde7h+6kgsMv6IYWNRHITkSv
+ oZjDmYYgNVzzih/A5m+YPsUXHyMmAnHStXX3vK5FBcwMZkMyW115suODOTdJ38N2XApiIxCKLDZ
+ 1dCeKODqywDqKUKdcn5BP7cu7KHt5LpPaVJn3cIPR8yJ20gtGQX+kYmTnv7
+X-Google-Smtp-Source: AGHT+IHXtr4ZdVd8KTDcQOU6kw8s2Np0hWDtoCk+2JcfChGHtxnpCwfpktQHDppYOCTSQgPHVHcGGWKSZDMCOFA2AVU=
+X-Received: by 2002:a17:907:3d8e:b0:b5c:6e0b:3706 with SMTP id
+ a640c23a62f3a-b70520b308dmr346542566b.13.1761813919928; Thu, 30 Oct 2025
+ 01:45:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 09/10] python: quote dotted dependency keys
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kevin Wolf <kwolf@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-References: <20251028220342.1407883-1-jsnow@redhat.com>
- <20251028220342.1407883-10-jsnow@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251028220342.1407883-10-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251030083413.1532360-1-quic_haixcui@quicinc.com>
+ <20251030083413.1532360-4-quic_haixcui@quicinc.com>
+In-Reply-To: <20251030083413.1532360-4-quic_haixcui@quicinc.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 30 Oct 2025 10:44:53 +0200
+X-Gm-Features: AWmQ_bk5t31587Dc6kgLiC6KnCQtXCGDEPD2uLcusEBW_gnKPz09cDf9ByA8was
+Message-ID: <CAAjaMXYRpRXxGcGA9B5=56=tgHNjCyaiWpJ7wQj4RHGXe24XLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] virtio-spi: Add vhost-user-spi device support
+To: Haixu Cui <quic_haixcui@quicinc.com>
+Cc: alex.bennee@linaro.org, viresh.kumar@linaro.org, quic_tsoni@quicinc.com, 
+ qemu-devel@nongnu.org, mst@redhat.com, zhiqiang.tu@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,30 +98,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/2025 23.03, John Snow wrote:
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On Thu, Oct 30, 2025 at 10:34=E2=80=AFAM Haixu Cui <quic_haixcui@quicinc.co=
+m> wrote:
+>
+> This patch introduces support for vhost-user-spi and vhost-user-spi-pci
+> devices in QEMU, enabling virtio-based SPI communication via the vhost-us=
+er
+> protocol.
+>
+> The implementation follows the virtio-spi specification and leverages
+> the upstream virtio-spi driver in Linux. Relevant references:
+>
+> - Virtio SPI specification:
+>   https://github.com/oasis-tcs/virtio-spec/tree/master/device-types/spi
+> - Linux virtio-spi driver:
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
+/drivers/spi/spi-virtio.c?h=3Dv6.18-rc3
+> - vhost-user-spi daemon:
+>   https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-spi
+>
+> Example usage with rust-vmm vhost-user-spi daemon:
+>
+> Start the vhost-user-spi daemon:
+>     vhost-device-spi --socket-path=3Dvspi.sock --socket-count=3D1 \
+>         --device "/dev/spidev0.0"
+>
+> Launch QEMU with:
+>     qemu-system-aarch64 -m 1G \
+>         -chardev socket,path=3D/home/root/vspi.sock0,id=3Dvspi \
+>         -device vhost-user-spi-device,chardev=3Dvspi,id=3Dspi \
+>         -object memory-backend-file,id=3Dmem,size=3D1G,mem-path=3D/dev/sh=
+m,share=3Don \
+>         -numa node,memdev=3Dmem
+>
+> Signed-off-by: Haixu Cui <quic_haixcui@quicinc.com>
 > ---
->   pythondeps.toml | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index 70e83320855..a5cdf94a791 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -32,8 +32,8 @@ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
->   sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
->   
->   [tests]
-> -qemu_qmp = { accepted = ">=0.0.5", installed = "0.0.5" }
-> +"qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
->   
->   [functests]
-> -qemu_qmp = { accepted = ">=0.0.5", installed = "0.0.5" }
-> +"qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
->   pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
+>  MAINTAINERS                               |  6 ++
+>  docs/system/devices/virtio/vhost-user.rst |  3 +
+>  hw/virtio/Kconfig                         |  5 ++
+>  hw/virtio/meson.build                     |  3 +
+>  hw/virtio/vhost-user-spi-pci.c            | 69 +++++++++++++++++++++++
+>  hw/virtio/vhost-user-spi.c                | 65 +++++++++++++++++++++
+>  hw/virtio/virtio.c                        |  4 +-
+>  include/hw/virtio/vhost-user-spi.h        | 25 ++++++++
+>  8 files changed, 179 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/virtio/vhost-user-spi-pci.c
+>  create mode 100644 hw/virtio/vhost-user-spi.c
+>  create mode 100644 include/hw/virtio/vhost-user-spi.h
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f33f95ceea..9ce2e16140 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2520,6 +2520,12 @@ F: hw/virtio/vhost-user-scmi*
+>  F: include/hw/virtio/vhost-user-scmi.h
+>  F: tests/qtest/libqos/virtio-scmi.*
+>
+> +vhost-user-spi
+> +M: Haixu Cui <quic_haixcui@quicinc.com>
+> +S: Maintained
+> +F: include/hw/virtio/vhost-user-spi.h
+> +F: hw/virtio/vhost-user-spi*
+> +
+>  virtio-crypto
+>  M: Gonglei <arei.gonglei@huawei.com>
+>  S: Supported
+> diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devi=
+ces/virtio/vhost-user.rst
+> index f556a840e9..2806d81ca2 100644
+> --- a/docs/system/devices/virtio/vhost-user.rst
+> +++ b/docs/system/devices/virtio/vhost-user.rst
+> @@ -58,6 +58,9 @@ platform details for what sort of virtio bus to use.
+>    * - vhost-user-vsock
+>      - Socket based communication
+>      - `vhost-device-vsock <https://github.com/rust-vmm/vhost-device/tree=
+/main/vhost-device-vsock>`_
+> +  * - vhost-user-spi
+> +    - Proxy spi devices to host
+> +    - `vhost-device-spi <https://github.com/rust-vmm/vhost-device/tree/m=
+ain/vhost-device-spi>`_
+>
+>  The referenced *daemons* are not exhaustive, any conforming backend
+>  implementing the device and using the vhost-user protocol should work.
+> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+> index 10f5c53ac0..8895682c61 100644
+> --- a/hw/virtio/Kconfig
+> +++ b/hw/virtio/Kconfig
+> @@ -127,6 +127,11 @@ config VHOST_USER_SCMI
+>      default y
+>      depends on VIRTIO && VHOST_USER && ARM
+>
+> +config VHOST_USER_SPI
+> +    bool
+> +    default y
+> +    depends on VIRTIO && VHOST_USER
+> +
+>  config VHOST_USER_TEST
+>      bool
+>      default y
+> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> index affd66887d..6675b63ce6 100644
+> --- a/hw/virtio/meson.build
+> +++ b/hw/virtio/meson.build
+> @@ -28,6 +28,7 @@ if have_vhost
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('=
+vhost-user-rng.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('=
+vhost-user-snd.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files=
+('vhost-user-input.c'))
+> +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files('=
+vhost-user-spi.c'))
+>
+>      # PCI Stubs
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+TEST'],
+> @@ -42,6 +43,8 @@ if have_vhost
+>                           if_true: files('vhost-user-snd-pci.c'))
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+INPUT'],
+>                           if_true: files('vhost-user-input-pci.c'))
+> +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+SPI'],
+> +                         if_true: files('vhost-user-spi-pci.c'))
+>    endif
+>    if have_vhost_vdpa
+>      system_virtio_ss.add(files('vhost-vdpa.c'))
+> diff --git a/hw/virtio/vhost-user-spi-pci.c b/hw/virtio/vhost-user-spi-pc=
+i.c
+> new file mode 100644
+> index 0000000000..095aba5760
+> --- /dev/null
+> +++ b/hw/virtio/vhost-user-spi-pci.c
+> @@ -0,0 +1,69 @@
+> +/*
+> + * Vhost-user spi virtio device PCI glue
+> + *
+> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserv=
+ed.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/virtio/vhost-user-spi.h"
+> +#include "hw/virtio/virtio-pci.h"
+> +
+> +struct VHostUserSPIPCI {
+> +    VirtIOPCIProxy parent_obj;
+> +    VHostUserSPI vdev;
+> +};
+> +
+> +typedef struct VHostUserSPIPCI VHostUserSPIPCI;
+> +
+> +#define TYPE_VHOST_USER_SPI_PCI "vhost-user-spi-pci-base"
+> +
+> +DECLARE_INSTANCE_CHECKER(VHostUserSPIPCI, VHOST_USER_SPI_PCI,
+> +                         TYPE_VHOST_USER_SPI_PCI)
+> +
+> +static void vhost_user_spi_pci_realize(VirtIOPCIProxy *vpci_dev, Error *=
+*errp)
+> +{
+> +    VHostUserSPIPCI *dev =3D VHOST_USER_SPI_PCI(vpci_dev);
+> +    DeviceState *vdev =3D DEVICE(&dev->vdev);
+> +
+> +    vpci_dev->nvectors =3D 1;
+> +    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+> +}
+> +
+> +static void vhost_user_spi_pci_class_init(ObjectClass *klass, const void=
+ *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +    VirtioPCIClass *k =3D VIRTIO_PCI_CLASS(klass);
+> +    PCIDeviceClass *pcidev_k =3D PCI_DEVICE_CLASS(klass);
+> +    k->realize =3D vhost_user_spi_pci_realize;
+> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> +    pcidev_k->vendor_id =3D PCI_VENDOR_ID_REDHAT_QUMRANET;
+> +    pcidev_k->device_id =3D 0; /* Set by virtio-pci based on virtio id *=
+/
+> +    pcidev_k->revision =3D 0x00;
+> +    pcidev_k->class_id =3D PCI_CLASS_COMMUNICATION_OTHER;
+> +}
+> +
+> +static void vhost_user_spi_pci_instance_init(Object *obj)
+> +{
+> +    VHostUserSPIPCI *dev =3D VHOST_USER_SPI_PCI(obj);
+> +
+> +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
+> +                                TYPE_VHOST_USER_SPI);
+> +}
+> +
+> +static const VirtioPCIDeviceTypeInfo vhost_user_spi_pci_info =3D {
+> +    .base_name =3D TYPE_VHOST_USER_SPI_PCI,
+> +    .non_transitional_name =3D "vhost-user-spi-pci",
+> +    .instance_size =3D sizeof(VHostUserSPIPCI),
+> +    .instance_init =3D vhost_user_spi_pci_instance_init,
+> +    .class_init =3D vhost_user_spi_pci_class_init,
+> +};
+> +
+> +static void vhost_user_spi_pci_register(void)
+> +{
+> +    virtio_pci_types_register(&vhost_user_spi_pci_info);
+> +}
+> +
+> +type_init(vhost_user_spi_pci_register);
+> diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
+> new file mode 100644
+> index 0000000000..0d44dec46a
+> --- /dev/null
+> +++ b/hw/virtio/vhost-user-spi.c
+> @@ -0,0 +1,65 @@
+> +/*
+> + * Vhost-user spi virtio device
+> + *
+> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserv=
+ed.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/virtio/virtio-bus.h"
+> +#include "hw/virtio/vhost-user-spi.h"
+> +#include "qemu/error-report.h"
+> +#include "standard-headers/linux/virtio_ids.h"
+> +#include "standard-headers/linux/virtio_spi.h"
+> +
+> +static const Property vspi_properties[] =3D {
+> +    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+> +};
+> +
+> +static void vspi_realize(DeviceState *dev, Error **errp)
+> +{
+> +    VHostUserBase *vub =3D VHOST_USER_BASE(dev);
+> +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_GET_CLASS(dev);
+> +
+> +    /* Fixed for SPI */
+> +    vub->virtio_id =3D VIRTIO_ID_SPI;
+> +    vub->num_vqs =3D 1;
+> +    vub->vq_size =3D 4;
+> +    vub->config_size =3D sizeof(struct virtio_spi_config);
+> +
+> +    vubc->parent_realize(dev, errp);
+> +}
+> +
+> +static const VMStateDescription vu_spi_vmstate =3D {
+> +    .name =3D "vhost-user-spi",
+> +    .unmigratable =3D 1,
+> +};
+> +
+> +static void vu_spi_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_CLASS(klass);
+> +
+> +    dc->vmsd =3D &vu_spi_vmstate;
+> +    device_class_set_props(dc, vspi_properties);
+> +    device_class_set_parent_realize(dc, vspi_realize,
+> +                                    &vubc->parent_realize);
+> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> +}
+> +
+> +static const TypeInfo vu_spi_info =3D {
+> +    .name =3D TYPE_VHOST_USER_SPI,
+> +    .parent =3D TYPE_VHOST_USER_BASE,
+> +    .instance_size =3D sizeof(VHostUserSPI),
+> +    .class_init =3D vu_spi_class_init,
+> +};
+> +
+> +static void vu_spi_register_types(void)
+> +{
+> +    type_register_static(&vu_spi_info);
+> +}
+> +
+> +type_init(vu_spi_register_types)
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 153ee0a0cf..242b95e702 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -48,6 +48,7 @@
+>  #include "standard-headers/linux/virtio_iommu.h"
+>  #include "standard-headers/linux/virtio_mem.h"
+>  #include "standard-headers/linux/virtio_vsock.h"
+> +#include "standard-headers/linux/virtio_spi.h"
+>
+>  /*
+>   * Maximum size of virtio device config space
+> @@ -196,7 +197,8 @@ const char *virtio_device_names[] =3D {
+>      [VIRTIO_ID_PARAM_SERV] =3D "virtio-param-serv",
+>      [VIRTIO_ID_AUDIO_POLICY] =3D "virtio-audio-pol",
+>      [VIRTIO_ID_BT] =3D "virtio-bluetooth",
+> -    [VIRTIO_ID_GPIO] =3D "virtio-gpio"
+> +    [VIRTIO_ID_GPIO] =3D "virtio-gpio",
+> +    [VIRTIO_ID_SPI] =3D "virtio-spi"
+>  };
+>
+>  static const char *virtio_id_to_name(uint16_t device_id)
+> diff --git a/include/hw/virtio/vhost-user-spi.h b/include/hw/virtio/vhost=
+-user-spi.h
+> new file mode 100644
+> index 0000000000..a1a65820cd
+> --- /dev/null
+> +++ b/include/hw/virtio/vhost-user-spi.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * Vhost-user spi virtio device
+> + *
+> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserv=
+ed.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QEMU_VHOST_USER_SPI_H
+> +#define QEMU_VHOST_USER_SPI_H
+> +
+> +#include "hw/virtio/virtio.h"
+> +#include "hw/virtio/vhost.h"
+> +#include "hw/virtio/vhost-user.h"
+> +#include "hw/virtio/vhost-user-base.h"
+> +
+> +#define TYPE_VHOST_USER_SPI "vhost-user-spi-device"
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(VHostUserSPI, VHOST_USER_SPI)
+> +
+> +struct VHostUserSPI {
+> +    VHostUserBase parent_obj;
+> +};
+> +
+> +#endif /* QEMU_VHOST_USER_SPI_H */
+> --
+> 2.34.1
+>
 
-Uh, why not immediately using this in patch 4 ?
+I unfortunately cannot test it since the rust-vmm daemon requires a
+host SPI device, but LGTM
 
-  Thomas
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
