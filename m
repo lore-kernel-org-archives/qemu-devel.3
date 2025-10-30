@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11217CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 06:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113CBCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 06:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEMHG-0008K4-97; Thu, 30 Oct 2025 02:36:54 -0400
+	id 1vEMLs-0002MS-TM; Thu, 30 Oct 2025 02:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vEMHC-0008GJ-Sr; Thu, 30 Oct 2025 02:36:51 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ id 1vEMLr-0002MA-KW; Thu, 30 Oct 2025 02:41:39 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vEMH5-0006g1-AS; Thu, 30 Oct 2025 02:36:49 -0400
+ id 1vEMLh-0007To-H0; Thu, 30 Oct 2025 02:41:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761806204; x=1793342204;
+ t=1761806490; x=1793342490;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=URmbxQAjSFYcQmMfc19x+FtS84aUH5HLwmkhx6Wp9tM=;
- b=nnDdTQnDTyvElBmsYjKvazsKWnGo5ppb64anH+i60JpF0MfVPCuQBO3t
- zfQz53XXEancBJekVZ6WRrgVJToSqlO9xduNnEbzrwg5vNGIFt/aUgTfI
- 2OG9DrQ4SIayE+lsideXpkizFWuiMcsqBNO+UbJvFgL/LIuQL1/uhr0Qg
- BVl2VmaalFM2A6qQjwVeAagkVmhCQO7zsEOdy38hJe7nXf/fyd6W9bcsu
- lwTOtmo83gYWgJJTiP7hMZEesuLOj7h7fYfWdKkC9Ukch/6ql5VXeP2vB
- Zl3RrgwL3EubvRNhSzueZRYVvhCXFERUapOF6l9AXyYhp/lW/LG0t8I8Y w==;
-X-CSE-ConnectionGUID: BhpQ+vfqRxu3zLyTQVcYTA==
-X-CSE-MsgGUID: ojsAt3AaSHuiMKuFlAH6OQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="63144320"
-X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="63144320"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2025 23:36:36 -0700
-X-CSE-ConnectionGUID: 2yCRW4NyQcOMtny0EFPUAA==
-X-CSE-MsgGUID: 95MwK7ynQHy3ii8pdfyOXg==
+ bh=5wfmeGEMZMkCwMJvTLM6jIBJR+Synl+xkK26rajBms8=;
+ b=adrFGYXNTmzv5sCTYCLAmw74uolrIRtbUk1kkApZnjTOF117RDWk2/oa
+ DsGPh7XX7IBIzrmKnkyNoKD93ItCs+lVxxDVA6Q/MxTBJ5m2JpyygKQmU
+ k794xwFXR2tmKSt/aLrDDo2Byd7dkrJxVA4h9PjYYnKcLf+Tw0fx6yMgB
+ uWf+5+F4owxR9YVwQ3U2q6iz+59dcw+Zt3jUx612cLWm1iMyM393gf68j
+ 0uOGjBkLusovW698AQ33Qz57JsWCFPkIFJFBoWLyB3/TXDNTMhazXVyNt
+ bQHoWMzy0K9GrA/BEoSMGc32xMp3ZBgAnn4A82mfuBTxDha27ZyikaXp6 A==;
+X-CSE-ConnectionGUID: XKrh2cYHTpOjjdhtp8Lx8A==
+X-CSE-MsgGUID: 0Ald+AkMTcOtIXyFAirxUw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="67773306"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="67773306"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2025 23:41:17 -0700
+X-CSE-ConnectionGUID: JGoOYJHdRmapw3gZBsOsVQ==
+X-CSE-MsgGUID: IHwRATa4SKO2eGEud1fWDA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="185805048"
+X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="190206245"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 29 Oct 2025 23:36:32 -0700
-Date: Thu, 30 Oct 2025 14:58:44 +0800
+ by orviesa004.jf.intel.com with ESMTP; 29 Oct 2025 23:41:14 -0700
+Date: Thu, 30 Oct 2025 15:03:25 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
@@ -56,23 +56,22 @@ Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v3 01/25] hw/i386/microvm: Use proper SysBus accessors
-Message-ID: <aQMMpP9CeSLeUgJZ@intel.com>
+Subject: Re: [PATCH v3 02/25] hw/i386/ioapic: Use proper SysBus accessors
+Message-ID: <aQMNvc+k14B7e3nA@intel.com>
 References: <20251028181300.41475-1-philmd@linaro.org>
- <20251028181300.41475-2-philmd@linaro.org>
+ <20251028181300.41475-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251028181300.41475-2-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20251028181300.41475-3-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,10 +89,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 07:12:35PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Tue, 28 Oct 2025 19:12:35 +0100
+On Tue, Oct 28, 2025 at 07:12:36PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Tue, 28 Oct 2025 19:12:36 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 01/25] hw/i386/microvm: Use proper SysBus accessors
+> Subject: [PATCH v3 02/25] hw/i386/ioapic: Use proper SysBus accessors
 > X-Mailer: git-send-email 2.51.0
 > 
 > SysBusDevice::mmio[] is private data of SysBusDevice, use
@@ -101,9 +100,13 @@ On Tue, Oct 28, 2025 at 07:12:35PM +0100, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/i386/microvm-dt.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  hw/i386/kvm/ioapic.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+BTW, it seems ioapic & microvm could also use memory_region_get_address(mr)
+as the follow up cleanup, just like hpet did.
+
+Regards,
+Zhao
 
 
