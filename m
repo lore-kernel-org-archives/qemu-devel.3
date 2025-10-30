@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34CC3CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 12:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A828CCCF9FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 12:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vERv2-0000bH-IR; Thu, 30 Oct 2025 08:38:20 -0400
+	id 1vERz4-0003tB-UA; Thu, 30 Oct 2025 08:42:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vERuy-0000Zt-1x
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:38:16 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1vERyx-0003so-Au
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:42:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vERup-00075B-Vq
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:38:15 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1vERyh-0007da-7T
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:42:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761827879;
+ s=mimecast20190719; t=1761828121;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vo2QpaQ8nvXy8DWiIEvHHrIUdQrToRlPa1cWo0N8OS4=;
- b=RknW0PM9+Jg20ZjDgFtHWCnVeVvlwnq30JfwNU+zt4I10DPbqaQwZWm8gv+pItDDEdGcCh
- mswwHnW4MrQm6qaMQavvmXy3Prdv10VqpG4kBK07FyYcB91JD/U0xl9aw+NN6+A1IGUBNx
- d9vzH8z8ZFeibJ1W75mkPR5Lv1r79nQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-sBZcrUzVPj2guVReBYpZrA-1; Thu,
- 30 Oct 2025 08:37:57 -0400
-X-MC-Unique: sBZcrUzVPj2guVReBYpZrA-1
-X-Mimecast-MFC-AGG-ID: sBZcrUzVPj2guVReBYpZrA_1761827877
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D61381805C2C
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 12:37:56 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 523A3180035A; Thu, 30 Oct 2025 12:37:55 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, berrange@redhat.com, rjones@redhat.com
-Subject: [PATCH 1/5] x86: q35: ich9: add 'wdat' property
-Date: Thu, 30 Oct 2025 13:37:46 +0100
-Message-ID: <20251030123750.136175-2-imammedo@redhat.com>
-In-Reply-To: <20251030123750.136175-1-imammedo@redhat.com>
-References: <20251030123750.136175-1-imammedo@redhat.com>
+ bh=XrYhlZeFWBKfKgYiDLaWIQXk8NkZq8ANI03Y4aHp8eE=;
+ b=NtwolPBSnobjX2nSPDHl+EKBje/BiHfvWqBupQN1TGhLfpS7RCjLmqMz5H6aCuoXaL3Fsj
+ tjgI/EpjXPWDf7rzwjYcJ187cZMhfE6hM1WmxzPjSFNef/PMGwaZZQmRPAHRpGf7GORbDz
+ 2J2aBm7dxZ7r5OiYMABGfJllpOTxzTc=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-630-Fgq5VwTqO_KjGuixJyLQhQ-1; Thu, 30 Oct 2025 08:40:15 -0400
+X-MC-Unique: Fgq5VwTqO_KjGuixJyLQhQ-1
+X-Mimecast-MFC-AGG-ID: Fgq5VwTqO_KjGuixJyLQhQ_1761828015
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-87fb496e4d1so43624706d6.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 05:40:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761828015; x=1762432815;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XrYhlZeFWBKfKgYiDLaWIQXk8NkZq8ANI03Y4aHp8eE=;
+ b=fnoWJb2tXF8sUBDWUIOe7L/Ndj692R++Gqv3kFFdBZZDV/nRhHYhWN4wWVMbqtHP0/
+ 9hlbqJDRAgGN5fyTepdJLGDadOqOP9kx7SVzxkrWEb1cVU+dTRvR5qsxa2jdUP73BR6i
+ Qmab3Q2ps+T23jAYiU+78q6QnaoPQ5lvytlDoUw0Ob6+rZ+ps7miSOVxdQKNsy/kBqAB
+ xRgGxn/Bgp9DGilcApf+o7n3Qmkgen5754eU5cTgyLvhGlYQuCA0W5Q95Ypl2fTYmJYU
+ TArHNBb6dfbxiHFzEpEa/zZi+NXorUnnwizVCO7SQWFUtfljbG/ZdzIecUZechsxspxd
+ +9iA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU905KV3z8B12CSvZmrAaTFZ0iLRshQxsZB6rBzdFBufr3Kylot3Rrpx/I0JKCyjdsirIm6mDkehJx8@nongnu.org
+X-Gm-Message-State: AOJu0YwI3qwRJIyn6kTiKHjCnvpSQxrjc9/nRnXFY7KWwbh0nptii/uo
+ 6mINpc4jdJ3pPchuzm9BUwQ4g9iN37/BtLIK/rqKKwr+mdVV9TwjDqFykYxKbcLx/1h4LSW4Tyz
+ OfTp6QHyR4jUZVIPC1L6w3diE8BoJkMsESjIHAI/aA5W2MMuJAyNBivxEHBxtax2GOjeivROKLp
+ Iu/wb1jD0nx8crl8NrjxonoKPG1VporMw=
+X-Gm-Gg: ASbGncvVhcO5E0gHWVeBY1uvMWlTHlYLQcAacczYS59o8YvQlF2784DXGfEKeitqnKM
+ zMqM8wFthwJiNnPF4NXWwztrkojVoiGm3rQxOUgPQr5mUjvsiFuWTWSgAvQw0qBD9kZFUQZmlHf
+ utRf1jZiXg4TsucCaZ/8TyBwPMsDA9j1kjB8BZIOiTHWxRqXF7xbpMu7k5MA==
+X-Received: by 2002:a05:6214:1c47:b0:87e:f861:712b with SMTP id
+ 6a1803df08f44-88009c07ef8mr73979776d6.51.1761828014873; 
+ Thu, 30 Oct 2025 05:40:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs3z7GMr3qEVu8Y5xh51LwMAd0WEwR8SLEYKEGq5CWh2p+yZM3/+HoHkzeGacxE2N39Aj1B4+F/2gPjDZVzUQ=
+X-Received: by 2002:a05:6214:1c47:b0:87e:f861:712b with SMTP id
+ 6a1803df08f44-88009c07ef8mr73979526d6.51.1761828014498; Thu, 30 Oct 2025
+ 05:40:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+References: <20250926214015.120338-1-r@drigo.nl>
+In-Reply-To: <20250926214015.120338-1-r@drigo.nl>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Thu, 30 Oct 2025 14:40:03 +0200
+X-Gm-Features: AWmQ_bnND2vZPgGpc0-6BMQDakK7pN3ccRQrCvzEb-7kjFPHRzXvE6uoNKT7xos
+Message-ID: <CAPMcbCqSBfD5XKFPo6TJ-YxP74dZbNT+fuW6-iM3AFamCJ2CAg@mail.gmail.com>
+Subject: Re: [PATCH] qga: Support guest shutdown of BusyBox-based systems
+To: Rodrigo Dias Correa <r@drigo.nl>
+Cc: michael.roth@amd.com, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f5b33106425f8c73"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,64 +102,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-it will be used to make QEMU generate WDAT ACPI table,
-that describes TCO watchdog in platfom independed way
-and allows guest to use generic 'wdat' driver.
-To enable it use '-global ICH9-LPC.wdat=on' option.
+--000000000000f5b33106425f8c73
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-PS:
-On linux wdat driver takes ove TCO watchdog if WDAT
-table is present, hence 'wdat=off' by default to
-avoid guest visible change on existing VMs.
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Best Regards,
+Kostiantyn Kostiuk.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
- include/hw/acpi/ich9.h | 1 +
- hw/acpi/ich9.c         | 5 +++++
- hw/isa/lpc_ich9.c      | 1 +
- 3 files changed, 7 insertions(+)
 
-diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-index 245fe08dc2..c84e17f9f6 100644
---- a/include/hw/acpi/ich9.h
-+++ b/include/hw/acpi/ich9.h
-@@ -69,6 +69,7 @@ typedef struct ICH9LPCPMRegs {
-     bool smm_compat;
-     bool enable_tco;
-     TCOIORegs tco_regs;
-+    bool enable_wdat;
- 
-     bool swsmi_timer_enabled;
-     bool periodic_timer_enabled;
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 2b3b493c01..08a01aa1aa 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -321,6 +321,11 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
-         acpi_pm_tco_init(&pm->tco_regs, &pm->io);
-     }
- 
-+    if (pm->enable_wdat && !pm->enable_tco) {
-+        error_setg(&error_fatal,
-+            "'wdat' can not be enabled without 'enable_tco=on'");
-+    }
-+
-     if (pm->acpi_pci_hotplug.use_acpi_hotplug_bridge) {
-         object_property_set_link(OBJECT(lpc_pci), "bus",
-                                  OBJECT(pci_get_bus(lpc_pci)), &error_abort);
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index c9cb8f7779..ce9cf87363 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -832,6 +832,7 @@ static const VMStateDescription vmstate_ich9_lpc = {
- 
- static const Property ich9_lpc_properties[] = {
-     DEFINE_PROP_BOOL("noreboot", ICH9LPCState, pin_strap.spkr_hi, false),
-+    DEFINE_PROP_BOOL("wdat", ICH9LPCState, pm.enable_wdat, false),
-     DEFINE_PROP_BOOL("smm-compat", ICH9LPCState, pm.smm_compat, false),
-     DEFINE_PROP_BOOL("smm-enabled", ICH9LPCState, pm.smm_enabled, false),
-     DEFINE_PROP_BIT64("x-smi-broadcast", ICH9LPCState, smi_host_features,
--- 
-2.47.3
+On Sat, Sep 27, 2025 at 12:49=E2=80=AFAM Rodrigo Dias Correa <r@drigo.nl> w=
+rote:
+
+> On POSIX systems, the QEMU Guest Agent uses /sbin/shutdown to implement
+> the command guest-shutdown. Systems based on BusyBox, such as Alpine
+> Linux, don't have /sbin/shutdown. They have instead three separate
+> commands: poweroff, reboot, and halt.
+>
+> Change the QEMU Guest Agent to, depending on the mode argument, use
+> /sbin/{poweroff,halt,reboot} when they exist, falling back to
+> /sbin/shutdown when they don't.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2589
+>
+> Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
+> ---
+>  qga/commands-posix.c | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+>
+> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+> index 5070f27..c705985 100644
+> --- a/qga/commands-posix.c
+> +++ b/qga/commands-posix.c
+> @@ -213,9 +213,20 @@ out:
+>      return retcode;
+>  }
+>
+> +static bool file_exists(const char *path)
+> +{
+> +    struct stat st;
+> +    return stat(path, &st) =3D=3D 0 && (S_ISREG(st.st_mode) ||
+> S_ISLNK(st.st_mode));
+> +}
+> +
+> +#define POWEROFF_CMD_PATH "/sbin/poweroff"
+> +#define HALT_CMD_PATH "/sbin/halt"
+> +#define REBOOT_CMD_PATH "/sbin/reboot"
+> +
+>  void qmp_guest_shutdown(const char *mode, Error **errp)
+>  {
+>      const char *shutdown_flag;
+> +    const char *shutdown_cmd =3D NULL;
+>      Error *local_err =3D NULL;
+>
+>  #ifdef CONFIG_SOLARIS
+> @@ -234,10 +245,19 @@ void qmp_guest_shutdown(const char *mode, Error
+> **errp)
+>
+>      slog("guest-shutdown called, mode: %s", mode);
+>      if (!mode || strcmp(mode, "powerdown") =3D=3D 0) {
+> +        if (file_exists(POWEROFF_CMD_PATH)) {
+> +            shutdown_cmd =3D POWEROFF_CMD_PATH;
+> +        }
+>          shutdown_flag =3D powerdown_flag;
+>      } else if (strcmp(mode, "halt") =3D=3D 0) {
+> +        if (file_exists(HALT_CMD_PATH)) {
+> +            shutdown_cmd =3D HALT_CMD_PATH;
+> +        }
+>          shutdown_flag =3D halt_flag;
+>      } else if (strcmp(mode, "reboot") =3D=3D 0) {
+> +        if (file_exists(REBOOT_CMD_PATH)) {
+> +            shutdown_cmd =3D REBOOT_CMD_PATH;
+> +        }
+>          shutdown_flag =3D reboot_flag;
+>      } else {
+>          error_setg(errp,
+> @@ -255,6 +275,15 @@ void qmp_guest_shutdown(const char *mode, Error
+> **errp)
+>  #endif
+>                            "hypervisor initiated shutdown", (char *) NULL=
+};
+>
+> +    /*
+> +     * If the specific command exists (poweroff, halt or reboot), use it
+> instead
+> +     * of /sbin/shutdown.
+> +     */
+> +    if (shutdown_cmd !=3D NULL) {
+> +        argv[0] =3D shutdown_cmd;
+> +        argv[1] =3D NULL;
+> +    }
+> +
+>      ga_run_command(argv, NULL, "shutdown", &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+> --
+> 2.47.3
+>
+>
+
+--000000000000f5b33106425f8c73
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto=
+:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><d=
+iv><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signa=
+ture"><div dir=3D"ltr"><div>Best Regards,</div><div>Kostiantyn Kostiuk.</di=
+v></div></div></div><br></div><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Sep 27, 2025 at 12:49=
+=E2=80=AFAM Rodrigo Dias Correa &lt;<a href=3D"mailto:r@drigo.nl">r@drigo.n=
+l</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>On POSIX systems, the QEMU Guest Agent uses /sbin/shutdown to implement<br=
+>
+the command guest-shutdown. Systems based on BusyBox, such as Alpine<br>
+Linux, don&#39;t have /sbin/shutdown. They have instead three separate<br>
+commands: poweroff, reboot, and halt.<br>
+<br>
+Change the QEMU Guest Agent to, depending on the mode argument, use<br>
+/sbin/{poweroff,halt,reboot} when they exist, falling back to<br>
+/sbin/shutdown when they don&#39;t.<br>
+<br>
+Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2589" re=
+l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
+ssues/2589</a><br>
+<br>
+Signed-off-by: Rodrigo Dias Correa &lt;<a href=3D"mailto:r@drigo.nl" target=
+=3D"_blank">r@drigo.nl</a>&gt;<br>
+---<br>
+=C2=A0qga/commands-posix.c | 29 +++++++++++++++++++++++++++++<br>
+=C2=A01 file changed, 29 insertions(+)<br>
+<br>
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
+index 5070f27..c705985 100644<br>
+--- a/qga/commands-posix.c<br>
++++ b/qga/commands-posix.c<br>
+@@ -213,9 +213,20 @@ out:<br>
+=C2=A0 =C2=A0 =C2=A0return retcode;<br>
+=C2=A0}<br>
+<br>
++static bool file_exists(const char *path)<br>
++{<br>
++=C2=A0 =C2=A0 struct stat st;<br>
++=C2=A0 =C2=A0 return stat(path, &amp;st) =3D=3D 0 &amp;&amp; (S_ISREG(st.s=
+t_mode) || S_ISLNK(st.st_mode));<br>
++}<br>
++<br>
++#define POWEROFF_CMD_PATH &quot;/sbin/poweroff&quot;<br>
++#define HALT_CMD_PATH &quot;/sbin/halt&quot;<br>
++#define REBOOT_CMD_PATH &quot;/sbin/reboot&quot;<br>
++<br>
+=C2=A0void qmp_guest_shutdown(const char *mode, Error **errp)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0const char *shutdown_flag;<br>
++=C2=A0 =C2=A0 const char *shutdown_cmd =3D NULL;<br>
+=C2=A0 =C2=A0 =C2=A0Error *local_err =3D NULL;<br>
+<br>
+=C2=A0#ifdef CONFIG_SOLARIS<br>
+@@ -234,10 +245,19 @@ void qmp_guest_shutdown(const char *mode, Error **err=
+p)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0slog(&quot;guest-shutdown called, mode: %s&quot;, mode)=
+;<br>
+=C2=A0 =C2=A0 =C2=A0if (!mode || strcmp(mode, &quot;powerdown&quot;) =3D=3D=
+ 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (file_exists(POWEROFF_CMD_PATH)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 shutdown_cmd =3D POWEROFF_CMD_PA=
+TH;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0shutdown_flag =3D powerdown_flag;<br>
+=C2=A0 =C2=A0 =C2=A0} else if (strcmp(mode, &quot;halt&quot;) =3D=3D 0) {<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (file_exists(HALT_CMD_PATH)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 shutdown_cmd =3D HALT_CMD_PATH;<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0shutdown_flag =3D halt_flag;<br>
+=C2=A0 =C2=A0 =C2=A0} else if (strcmp(mode, &quot;reboot&quot;) =3D=3D 0) {=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (file_exists(REBOOT_CMD_PATH)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 shutdown_cmd =3D REBOOT_CMD_PATH=
+;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0shutdown_flag =3D reboot_flag;<br>
+=C2=A0 =C2=A0 =C2=A0} else {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg(errp,<br>
+@@ -255,6 +275,15 @@ void qmp_guest_shutdown(const char *mode, Error **errp=
+)<br>
+=C2=A0#endif<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0&quot;hypervisor initiated shutdown&quot;, (char *)=
+ NULL};<br>
+<br>
++=C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0* If the specific command exists (poweroff, halt or re=
+boot), use it instead<br>
++=C2=A0 =C2=A0 =C2=A0* of /sbin/shutdown.<br>
++=C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 if (shutdown_cmd !=3D NULL) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 argv[0] =3D shutdown_cmd;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 argv[1] =3D NULL;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0ga_run_command(argv, NULL, &quot;shutdown&quot;, &amp;l=
+ocal_err);<br>
+=C2=A0 =C2=A0 =C2=A0if (local_err) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_propagate(errp, local_err);<br>
+-- <br>
+2.47.3<br>
+<br>
+</blockquote></div>
+
+--000000000000f5b33106425f8c73--
 
 
