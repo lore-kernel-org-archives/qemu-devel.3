@@ -4,72 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CDF4CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 02:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79770CCF9F5
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 02:49:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEIH2-0006Ra-Ms; Wed, 29 Oct 2025 22:20:25 -0400
+	id 1vEIhT-00022Z-Vq; Wed, 29 Oct 2025 22:47:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vEIH0-0006RF-LU
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 22:20:22 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vEIGo-0007B9-NF
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 22:20:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761790811; x=1793326811;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=viO1/E0SUULLfzjrQtI5K+c6ySbAiDEQEcdX2H3Z6/w=;
- b=T7iqlotqjs1++M5jJDCNSJOYfYfcdtS+Bj6trE1FdUyI+j1/bBjCBL7y
- eYFV+Hmb7xV9fe5VnpI30FiMNYB4v5n6iHtqRKgF+xgwc34AD6Pb87YDD
- Xa8VhFvSwjCzOsLVbDsUS+KZE7891QYPVBY6BRbmDPDCTfyP32PEyRl2N
- 8/u4B7XaHVu+3QJntEtEQGfdrc0DW6sIi6ehhJWJ9TE0hVqBR+gdonL5/
- hOFfMi32Unf55talhR/XquLbrPldABTzsMYshFus8KzosSz4lTc7Tvbth
- QbbK/DDezBfB7dECKlTyDICO/zzwhB4fLvEhK4btzFqq2ghB4/YQQy/Sd g==;
-X-CSE-ConnectionGUID: lPs3mdOtTAOa6N1KpzKCDQ==
-X-CSE-MsgGUID: epVjfvulSgGde8YbuXscUw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="75045132"
-X-IronPort-AV: E=Sophos;i="6.19,265,1754982000"; d="scan'208";a="75045132"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2025 19:19:57 -0700
-X-CSE-ConnectionGUID: x8Pts7mHTuiNEV7atB/wyA==
-X-CSE-MsgGUID: KaMbK95vRWKQFmlX4R/MKw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,265,1754982000"; d="scan'208";a="190995310"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2025 19:19:55 -0700
-Message-ID: <5a50deb8-c499-43b0-8456-ea784bc7f1fb@intel.com>
-Date: Thu, 30 Oct 2025 10:19:53 +0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vEIhP-00021v-89
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 22:47:39 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vEIhB-0001zO-NA
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 22:47:37 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8AxB9Gq0QJpR3AcAA--.61872S3;
+ Thu, 30 Oct 2025 10:47:06 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJCxocKn0QJpWSIbAQ--.26243S2;
+ Thu, 30 Oct 2025 10:47:03 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/2] loongarch queue
+Date: Thu, 30 Oct 2025 10:47:01 +0800
+Message-Id: <20251030024703.3730929-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/18] i386/kvm/cpu: Init SMM cpu address space for
- hotplugged CPUs
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-3-pbonzini@redhat.com> <aQG7wdY/lBjgzho3@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aQG7wdY/lBjgzho3@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.576, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxocKn0QJpWSIbAQ--.26243S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,45 +61,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/2025 3:01 PM, Zhao Liu wrote:
->> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
->> index 7512be64d67..5716191fff1 100644
->> --- a/hw/i386/x86-common.c
->> +++ b/hw/i386/x86-common.c
->> @@ -183,6 +183,17 @@ void x86_cpu_plug(HotplugHandler *hotplug_dev,
->>           fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
->>       }
->>   
->> +    /*
->> +     * Non-hotplugged CPUs get their SMM cpu address space initialized in
->> +     * machine init done notifier: register_smram_listener().
->> +     *
->> +     * We need initialize the SMM cpu address space for the hotplugged CPU
->> +     * specifically.
->> +     */
->> +    if (kvm_enabled() && dev->hotplugged && x86_machine_is_smm_enabled(x86ms)) {
->> +        kvm_smm_cpu_address_space_init(cpu);
->> +    }
->> +
-> 
-> Unfortunately, the original KVM SMM patch caused this bug, but even
-> more unfortunately, CPU_FOREACH in the machine_done callback is more
-> fragile than I originally anticipated, now requiring more hack checks to
-> fix. :-(
-> 
-> IMO, the root of the chaos is that KVM SMM doesn't do this in the CPU
-> context like TCG did for a long time. I'll find time to sort all this
-> out.
+The following changes since commit e090e0312dc9030d94e38e3d98a88718d3561e4e:
 
-I had this idea before. It needs to move the initialization of KVM SMM 
-MemoryRegion a bit earlier at least. And it seems to require more time 
-than I expected, especially the effort to test the SMM functionality 
-after the change. So I went with the most straightforward fix.
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-10-29 10:44:15 +0100)
 
-It will be great if you can find time to clean it up. Looking forward to it.
+are available in the Git repository at:
 
-> Regards,
-> Zhao
-> 
+  https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20251030
+
+for you to fetch changes up to c981119dab04ac20f86ae755a669d74fc1373cb7:
+
+  target/loongarch: Add PTW feature support in KVM mode (2025-10-30 10:34:58 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20251030 queue
+
+----------------------------------------------------------------
+Bibo Mao (2):
+      linux-headers: Update to Linux v6.18-rc3
+      target/loongarch: Add PTW feature support in KVM mode
+
+ include/standard-headers/linux/ethtool.h           |  1 +
+ include/standard-headers/linux/fuse.h              | 22 ++++++++++++--
+ include/standard-headers/linux/input-event-codes.h |  1 +
+ include/standard-headers/linux/input.h             | 22 +++++++++++++-
+ include/standard-headers/linux/pci_regs.h          | 10 +++++++
+ include/standard-headers/linux/virtio_ids.h        |  1 +
+ linux-headers/asm-loongarch/kvm.h                  |  1 +
+ linux-headers/asm-riscv/kvm.h                      | 23 +++++++++++++-
+ linux-headers/asm-riscv/ptrace.h                   |  4 +--
+ linux-headers/asm-x86/kvm.h                        | 34 +++++++++++++++++++++
+ linux-headers/asm-x86/unistd_64.h                  |  1 +
+ linux-headers/asm-x86/unistd_x32.h                 |  1 +
+ linux-headers/linux/kvm.h                          |  3 ++
+ linux-headers/linux/psp-sev.h                      | 10 ++++++-
+ linux-headers/linux/stddef.h                       |  1 -
+ linux-headers/linux/vduse.h                        |  2 +-
+ linux-headers/linux/vhost.h                        |  4 +--
+ target/loongarch/cpu.c                             |  6 ++--
+ target/loongarch/cpu.h                             |  1 +
+ target/loongarch/kvm/kvm.c                         | 35 ++++++++++++++++++++++
+ 20 files changed, 169 insertions(+), 14 deletions(-)
 
 
