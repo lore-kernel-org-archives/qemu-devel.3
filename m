@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621D6CCF9EE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E3FCCF9F7
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 01:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEHrH-0000pV-Cc; Wed, 29 Oct 2025 21:53:47 -0400
+	id 1vEHrS-0000tG-MA; Wed, 29 Oct 2025 21:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEHrB-0000oy-Tu
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 21:53:42 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1vEHrJ-0000qx-0w
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 21:53:49 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEHr5-0003xx-06
- for qemu-devel@nongnu.org; Wed, 29 Oct 2025 21:53:40 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-b6cf1a95274so295800a12.1
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 18:53:28 -0700 (PDT)
+ id 1vEHr5-0003zF-Cf
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 21:53:48 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-340564186e0so140651a91.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 18:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761789206; x=1762394006; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761789210; x=1762394010; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I9PYdtPq/gQiBvKY9grH57UZdyPF18YiYW2MY/8WcRk=;
- b=Zp64ef5fm/ronky1v+butGFrAkMSO9XaZwC8Fmx5hIS5fyf0FLwwFwyy3jGU/B1ZkS
- cSNGZwMEWWT0g2MxgRDfkDdemJW8SCia8Cmsn1aAupI+HgkXFiexsFf5MjzzGs3gWdvA
- p30/+ExcIBvlfE+AoZQ752HvKEu5IlN0dA+2wVsPobAwG/FifIU7w2QgF0KhodeZqYO0
- Ohk8eyEopZlgb36mrFwkqBiqXzSCnhlh+pOQvq+4fu1Jl8pKp5uFeAJ9giuYlCvBk3q+
- AMLrxAnZU1E2Q0bWk5Gpaw/ddNFjFv3BFgqrlLu42IVrHkd5f+yg4xoetJobOWzkVMaH
- i8RQ==
+ bh=jMBp5mx5hVRrEJ3mweez2X+rN4LXdCNUoPyr+hQYFtc=;
+ b=hFWF224N6aO6mmfF45uMACIFLxTZN4YAdWQS1XTg+sPBVUS1GX8nRaBzCfFUAxsWtF
+ tmUTEbemh5lNjsaUSZHxd+Dk0g9yhQJFWkdfBFZjV/tvCLCNBETQXEjx3SBj0FVAZ4Yp
+ ImD41fxPGdXkQI72RcGpO1sBmSsewmpaBirC3kI9gJBO9ZaPFOyxTC+1CCue6beoMZUu
+ YrIeMrTzYs37hnRmtfQsg7niHG4kP/faS3tk6KIfLoMdqmtth7j/hD7R/zfCIN/2S736
+ yTX+KQfKv9A+7P6ESH2NuCh1x9ipkoOZqxOl6e/vhpMh3aLRBbORvJZO/oe2eeJwIQyB
+ mnRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761789206; x=1762394006;
+ d=1e100.net; s=20230601; t=1761789210; x=1762394010;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I9PYdtPq/gQiBvKY9grH57UZdyPF18YiYW2MY/8WcRk=;
- b=c+urt72fde5X7ur6+wcDgLsoIAd0uFb9MGF8GRKcUrviHGIrn2qUj5xUVyGl5THC7J
- EKBOGPlqlxBcjyZUKBD2dAllBFCIoJS2AsVzVyNosUXuHL6tVwgyrAY2zxt6WI6Hd+4/
- hhKFyv2QOd/WmLBnP9zDSl4lXh5UkymueEFUM+3ABWhKV2xqgx58vFPcB6M+ekDyqRvq
- G9fa/NgwPAM4la+47cvUeQVGMi9tz2iIKVMV9s3YH+kPxGZis6DhtrLiAC7oZHAxIrcK
- WHj9SxKQVl9bSj15dFZ4qCOiaI1Yk6XVPPotwrz3vwhSZJzHO62h5VLXWARCHVlA7PRi
- XaZw==
+ bh=jMBp5mx5hVRrEJ3mweez2X+rN4LXdCNUoPyr+hQYFtc=;
+ b=trbUmMA2aIpVIdRohOiZ3676Oxgq3jby59De44F9ql5lRmuB1m+r2/50vIyUDGViTB
+ +ntIZeYx/+xgXeED+/imOu45rOPdqE9NInGtSqBzRaaKsk0QS3bzaYP2bw1K18HGJBqV
+ mtBFdpgjZX8jQwEv54XaTH4Bnv7zMo/CNxmwLUuEuJGsuadzRQzRTgr/H1y1WIUROVvL
+ n9mJDLar52iXx2GX1DRScwA2FgFm4RDGJh5ZvFb8eSAEJvZHQ7YaszdgasTrRxhVHfmF
+ MSLJaDI4adUCgORi5ZTmRrG7rcYoKnJCOuoaz/WdCldhOtgxmcEezyDAyimp90H0/0lt
+ uM9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPcTvncP5m+LQiwxQCniP1GgREBqbmi7wnVoIVv8WiP24+K5UoQIUDnZRThSUj4LJ3XHc0CLPjvExx@nongnu.org
-X-Gm-Message-State: AOJu0Yyu2i8Eu3fDK6IDX/42mIXpao81TQA6uYTON95J+78XSvC3Z/C/
- 7BbGD4u3dhrW1FW447WwNSzlq4s0QJhf1LeP0F7OnXeLxn9qq6PeUM1QVG+vAQ==
-X-Gm-Gg: ASbGnctgzf0yy8dsMeOCAEMf5H2KlxMA/fe2jER952XvC6AKLwc0SZmMemhO7qp4BNV
- BpHWKG5PqX61TJhVSVa1KJ3+6gnkgMwSZEVuglAGvKNIHtvava3CYolkqUZ1qCiQIdaMYe1gg3l
- A8IFpN6YTE2ZqsLS3ms1Khbh2DU3ShjtZJ954qlApm9ia8+0GZxqhlWXJfSXIXUqLmQ+auER6LA
- yriGQrLWElQLsHrX5HmkjX5baT/vCJ7+CnXyqLl7lQQ/3W3gjtaP0ahVkoX/CIyCRGztpxz3MxV
- alBkijm7ASbncBVIxVryAO+6Epb3c1B6vEgLKqkQEAVlmDrjoMIAI2FswmkZ+t0035e70diHpIb
- wbMN95/rIFDCFWWNA3wN/K+lJer1GLeAmoKZ0M4VXSV8I02opx3OBbX/KKUxYt703xhsSqPcfQP
- 05gkv+F2SYha2jkjxPa6zy18PyE5MdgeC8MAvHGFD3p8yyppxAWOZ0E6c3KuFHwVfD/JoVlGXYE
- mHxRfjRuuywEtQJAGk=
-X-Google-Smtp-Source: AGHT+IEpTeUOpQeADD/10RPy/N8D+gu6n+Wr0DvfXGSyDeb+VYX/r9Oc7M65SX/c3KFfnNVQAzyDMg==
-X-Received: by 2002:a17:902:d501:b0:294:cc1d:e2b5 with SMTP id
- d9443c01a7336-294ed92718bmr14300115ad.0.1761789206441; 
- Wed, 29 Oct 2025 18:53:26 -0700 (PDT)
+ AJvYcCWe6sY4lNPCl4sV1sTx9/V18Il2lXo6E0gK/a6dIF30aUC63QBNjfR9tjpWTvTj/1h9KGNq227SE3UQ@nongnu.org
+X-Gm-Message-State: AOJu0YxBGAuCaJl1bKAlO+tLOjbgBllzEfIMbxyA1oEefkrdO5acuogg
+ IyHZK9FPAP+yBasXWgEB7gWjMhm/2HtnH6OypLmRb9vUyKkTRcYVXYqo
+X-Gm-Gg: ASbGncumFZQ/OOxoOKXKQpVAGYJQ5Xn2qeTi2bNRcJCWFI2Ajb5iOib8iyfct3j0nG9
+ EEthcwRSxUygtsqk40JTaxkLW4QCf+d2iUrnu4/IbnmrxWv0C0w0x1257doavPAC/UdfDf4PO4/
+ vk4Bfvx9ZavQuK+XjuB1OBmQjwx+5GrStiUHcMfI7EJrj+u0a5YqA8WZTuhxF1iX+3srtM2X5gC
+ cv+HZSLrdUgWmv/XmHgKu4hIAMbZRChEic9NkXSqctuJTPcEpbVktvJ4nc0TAlm3O90FbfaQTsq
+ oV04e2CxOlUX7BeAaKVfAxiTvkqPpUXn/ZDQ27XuvK3YbBAXAHQONFzEef66PlYJ4F4rBhmrBfu
+ ccrzaeNi9XsrvI2Ae1oGM3vrK/GuQ5nfnnJ8Fc0QXp74olUdw9CzEXLfJvejFEzi220v8aYILPY
+ 3xwvBa59cVs9VMxDsYRDXnbwGN2rmD49YTzYDjdFAgoPpPUwTXLcBWQ7hnzBvX3nqoOqvA7dgEA
+ D011QjIoEsV5M/DdSk=
+X-Google-Smtp-Source: AGHT+IHFDOyXv9Qj/8f3y0+aOpnd4DXd07EjgRAhJeNNlipjWFCoOQ/7nHhUmJeGkOBIH6cwFZh2+g==
+X-Received: by 2002:a17:90b:3a81:b0:33d:ad49:16da with SMTP id
+ 98e67ed59e1d1-3403a2f2005mr4951182a91.31.1761789209702; 
+ Wed, 29 Oct 2025 18:53:29 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3405089b069sm586981a91.0.2025.10.29.18.53.23
+ 98e67ed59e1d1-3405089b069sm586981a91.0.2025.10.29.18.53.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Oct 2025 18:53:25 -0700 (PDT)
+ Wed, 29 Oct 2025 18:53:29 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: philmd@linaro.org, alistair.francis@wdc.com, vishalc@linux.ibm.com,
  qemu-devel@nongnu.org
 Cc: alistair23@gmail.com
-Subject: [PATCH 2/3] hw/core/loader: Free the image file descriptor on error
-Date: Thu, 30 Oct 2025 11:53:05 +1000
-Message-ID: <20251030015306.2279148-2-alistair.francis@wdc.com>
+Subject: [PATCH 3/3] hw/core/loader: Free the allocated string from
+ size_to_str()
+Date: Thu, 30 Oct 2025 11:53:06 +1000
+Message-ID: <20251030015306.2279148-3-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251030015306.2279148-1-alistair.francis@wdc.com>
 References: <20251030015306.2279148-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -92,7 +93,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,22 +111,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alistair Francis <alistair.francis@wdc.com>
 
-Coverity: CID 1642764
-Fixes: f62226f7dc4 ("hw/core/loader: improve error handling in image loading functions")
+The string needs be be freed with g_free() according to the functions
+documentation.
+
+Coverity: CID 1642762
+Fixes: f62226f7dc44 ("hw/core/loader: improve error handling in image loading functions")
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/core/loader.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/core/loader.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 73564a2a46..1598dca03c 100644
+index 1598dca03c..e83d245202 100644
 --- a/hw/core/loader.c
 +++ b/hw/core/loader.c
-@@ -86,6 +86,7 @@ int64_t get_image_size(const char *filename, Error **errp)
+@@ -153,8 +153,12 @@ ssize_t load_image_targphys_as(const char *filename,
+     }
  
-     if (size < 0) {
-         error_setg_errno(errp, errno, "lseek failure: %s", filename);
-+        close(fd);
+     if (size > max_sz) {
++        char *size_str = size_to_str(max_sz);
++
+         error_setg(errp, "%s exceeds maximum image size (%s)",
+-                   filename, size_to_str(max_sz));
++                   filename, size_str);
++
++        g_free(size_str);
          return -1;
      }
  
