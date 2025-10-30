@@ -4,97 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F245CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 16:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236D8CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 16:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEVj1-0001LX-0P; Thu, 30 Oct 2025 12:42:11 -0400
+	id 1vEVke-00045o-If; Thu, 30 Oct 2025 12:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEVic-00018c-Hj
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:41:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEViS-0003PR-Jo
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:41:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761842493;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yKHN9IPd8PDlWxkU43GJFEFW4HMySwOIdN+Avigo3ag=;
- b=iSq1+4d1l/T4zMLUZtGw4IbaOPWPfYuGrpExeiVL++2dFavDS+INjxB2w1s5knPOUdd320
- mwnEEcYVgVMCB60r4uYTtp+ReT8tjrAlVWT4qETnVyAiSDtD2oAgwLH8Vd+dFjOU1NOs8h
- sl7eiAECWUctQLDgAKDGAkp3ZmrkGZc=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-J0baYgviMxmhP13K1tOCFw-1; Thu, 30 Oct 2025 12:41:31 -0400
-X-MC-Unique: J0baYgviMxmhP13K1tOCFw-1
-X-Mimecast-MFC-AGG-ID: J0baYgviMxmhP13K1tOCFw_1761842491
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8a4ef35cc93so330837185a.3
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 09:41:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEVkQ-0003pX-38
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:43:41 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEVk6-0003Vz-Ai
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:43:34 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b6dbb4a209aso243665266b.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 09:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761842592; x=1762447392; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=G8eV1FRR47sZH5kygZofNxOHp940E7AT+ZsoVqkmAXs=;
+ b=qkmyq0UCufu/qzSPQshizBse80ude720cAkba3ynASbTIHgf7YGINjv4ZwT8WM6W8D
+ B61NM9V4AqKqu7rYEwbQilOE5sLIELhjECwAHMsE2mi3u1QBZtkHBFlW+ZbhCotl4lft
+ 0J0RBV+GWLoCIxANXjeYa4jsu75bwGWnsPERwJ0S+i24EiLNxYz7xUMscAp5VukUnVpJ
+ Dlhp5/Q+yvDjUouKiGBWx3BuBJISiOWqjC5ccJtRN+waBfHAHD5nXT5yF3Xu+vvj2eTY
+ ufE7QAW4+a7sbMsjdIr3KKJMqJz6OlBbUJ6DC4EQdGthCyutGXO9AqOU07jRNYTcrsBO
+ rK0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761842491; x=1762447291;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yKHN9IPd8PDlWxkU43GJFEFW4HMySwOIdN+Avigo3ag=;
- b=Kjo11aIVYnV/7aSxOquV1y611gx2cp+Fs9PH8cs4w/+AYBFprqi576XjaCWUiPIG8O
- NDJXv2KBvjHzkzicCvWB2uFOaJglEXbmvqRJ7JXpIz2y9ECvlsl+Q4lMycxNdN/UJ5F0
- bOZy925bX4AOGp8jFv+suHB/0mYgbDHLZwdvI3qjuoam0DhdK/K9FiBlyQQiq1GwQ8fb
- 4qLbH0tovfScaEeLeH97dd5Zmcg2JMVyRx/lXAb3ipEwVmjoDqlTvmWABUM5EFI/3zKa
- nqjXp0+iKFI+nrWJw+sWmp/CaGIMCLvU7+yGjj676YXLa0YtOXFLlEJDBu23MZyFOZv4
- JHkQ==
-X-Gm-Message-State: AOJu0Yzg1FWiKp6vXJtA3rvxqCMQAsjlhhd0LICrfdcy2KSBShT6mBRS
- DChPdwVb2x9CLJ80lkLrFoX9CE+JJJn+vXJycn0cr0uZrVxfpen0D5PinuhaWy8gYcX6L4jbLRL
- JMiYY8UlRt+CEqKHta9zECSO7+1kkxk/HrdS+EDkYT+igIbbzAkuQyWj1
-X-Gm-Gg: ASbGnctHK2O7noxYC24IEZxwehE4jnFvohHPPLPIjhfMD6Vbmnro+CP9QTZZQB12ZhJ
- 4CsyxB66HlEyJDrfJ0VxKwDPehmcUcqeWjyXuwvUz/zm3VDmSDU66VXVfjUDZmi6aclYyaKHKme
- z+0lEtEP7zz0jsqzSz5IpUu3RyAA9AgtIGHt7e/dbrJN+JIwzYYgeRFuqHRovfJuBDvpxaD3pIZ
- Zi5XOvA+itJfAR1cKD327EQ/PGK15VRV/C9z4WiCi/wXDJ4Ps/CXRbLo1miEjWdAMsJgb9hQw2B
- CLl8RLrjmsddeL/1VzQ1t3NrfBXSK5XDk6Pr37L5DlJzs4WXjCbmAhYoFODYr0HssiE=
-X-Received: by 2002:a05:620a:31a1:b0:893:2ba8:eeb8 with SMTP id
- af79cd13be357-8ab9a629c4dmr10093885a.56.1761842490869; 
- Thu, 30 Oct 2025 09:41:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHl+WV93zuV5A0/noL87R5ulXdKAFCA4lhBB0WuSJA074MkoTLvGtl8HigZxgIdydd2rW+/fw==
-X-Received: by 2002:a05:620a:31a1:b0:893:2ba8:eeb8 with SMTP id
- af79cd13be357-8ab9a629c4dmr10090085a.56.1761842490377; 
- Thu, 30 Oct 2025 09:41:30 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4eba37db728sm114514251cf.12.2025.10.30.09.41.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Oct 2025 09:41:29 -0700 (PDT)
-Date: Thu, 30 Oct 2025 12:41:28 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Raphael Norwitz <raphael@enfabrica.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 2/3] vhost: add vmstate for inflight region with inner
- buffer
-Message-ID: <aQOVOFe2TNxNZ8j8@x1.local>
-References: <20251029093939.3251188-1-dtalexundeer@yandex-team.ru>
- <20251029093939.3251188-3-dtalexundeer@yandex-team.ru>
+ d=1e100.net; s=20230601; t=1761842592; x=1762447392;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=G8eV1FRR47sZH5kygZofNxOHp940E7AT+ZsoVqkmAXs=;
+ b=X7BMH5Sea1v98Dcm0SkZGC4zPVD+DfUPVDx6p+oZOhlRcKJkthi2oDVwR2jGaHICIK
+ VzX3FEOHfesofekTlTTKS0qza7TyinM0XgELb7bAnuVoCCcxraNm5WsBwKTneTGYje20
+ jgTjneMhcEZKYEkjcYbSZBgauoUc5Hh5wk79VvtpFamNWSv3s/13FlKV35tkmIfZPiIx
+ CMZ4kiaa3WbmJPIkhomJvTPJAn7FnyXrBYhf0tcW7Ke63Gm9pIxoVzO7PJVYO/NkjFG7
+ dU1SegDPdiGISAlYZxZT+PZ7TNqLtnhHzm9ICQZASvXTfql+RNsR7l4+TMR7HUThU5Lg
+ JheQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMwMefsLvyHG8j5adzJ0tEHNg+BBv3jScl8E8UlFU6z8797Zt8HTkPYrywmp/RY7iHx0uvhMk5teGW@nongnu.org
+X-Gm-Message-State: AOJu0YxqtYMCFDrAphALvwPTOYI0ur5MY0NrL9mZKJHkRR9LmEUIS9z4
+ TwsOC+toXD/1AFK7nfqMUnXYVZIlXglhbsQtPakCVzIikszmAKKDWaAbLJHkaHJ+d3w=
+X-Gm-Gg: ASbGnctfugecJ6qzfcfragRjogx1NKWrHo7c9A9CQlRgd7FZCWEX1ciZWEwteytGds3
+ L97oxwVVryxSnESYg47p0Jsf/aMo0yEud0Zn/KYCobVKQX2H6lRdOFKBkTQZeDgtAia94qSS33e
+ qXV7ebWJKdHXKlpDrYJjQprc4I7ZgNPjBQXBpDe2AWz+gMB8iE+HxdsQz5MjWGYmfZA2gFR1v0W
+ 85Jh+v5+caWLAuj5z3L3kxcACuKHmRCNLaPkrRTOHq/MOoiG44Pt5nhzz0FVnvkwBR9hDa88BCw
+ CEQTs1cVA8jL9/t27lih671bN4jmwuLTOrj4bcq54Laldvwi8vh2S6ZSmxdm3Cheqxhi/dywIqk
+ avGF0jATwFzuJtcV7KHaY0j1y3oyN8hE3UWP8nnSytirx3WLzxrEQh9s4A1fdRvj/eEHxGEMUW4
+ RHHwqgvZCddUupC3iqQrYlPQk26B6wkVjKIlo+vSHJxw==
+X-Google-Smtp-Source: AGHT+IGiDbPZ99yBxB1j7NrjlcPTsIGQehP2K0HeszKtG7jVCDOKxyyjE+XdOld1snxt59DGqdBh1Q==
+X-Received: by 2002:a17:907:2d0a:b0:b6d:5f52:eee8 with SMTP id
+ a640c23a62f3a-b7070199ee4mr16828766b.29.1761842592353; 
+ Thu, 30 Oct 2025 09:43:12 -0700 (PDT)
+Received: from [10.180.230.213] (183.105.204.77.rev.sfr.net. [77.204.105.183])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d8992aa28sm1758610666b.41.2025.10.30.09.43.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Oct 2025 09:43:11 -0700 (PDT)
+Message-ID: <0ed9cb4e-7d72-43f8-9408-bcc3dae0e429@linaro.org>
+Date: Thu, 30 Oct 2025 17:43:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251029093939.3251188-3-dtalexundeer@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 27/35] audio: remove QEMUSoundCard
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Jan Kiszka <jan.kiszka@web.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
+ <vr_qemu@t-online.de>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
+References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
+ <20251027151045.2863176-28-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251027151045.2863176-28-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,101 +120,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 02:39:41PM +0500, Alexandr Moshkov wrote:
-> Prepare for future inflight region migration for vhost-user-blk.
-> We need to migrate size, queue_size, and inner buffer.
+On 27/10/25 16:10, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> So firstly it migrate size and queue_size fields, then allocate memory for buffer with
-> migrated size, then migrate inner buffer itself.
+> There is no clear need for this extra intermediary structure between
+> the audio backend and its user.
 > 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/virtio/vhost.c         | 44 +++++++++++++++++++++++++++++++++++++++
->  include/hw/virtio/vhost.h |  6 ++++++
->  2 files changed, 50 insertions(+)
+>   audio/audio.h                       | 18 ++++++------------
+>   audio/audio_int.h                   |  3 ---
+>   audio/audio_template.h              | 22 ++++++++++------------
+>   hw/audio/lm4549.h                   |  2 +-
+>   include/hw/audio/asc.h              |  2 +-
+>   include/hw/audio/virtio-snd.h       |  2 +-
+>   include/hw/display/xlnx_dp.h        |  2 +-
+>   include/hw/isa/vt82c686.h           |  2 +-
+>   include/hw/qdev-properties-system.h |  2 +-
+>   audio/audio.c                       | 29 ++++++++++-------------------
+>   hw/audio/ac97.c                     | 25 ++++++++++++-------------
+>   hw/audio/adlib.c                    |  9 ++++-----
+>   hw/audio/asc.c                      |  9 +++------
+>   hw/audio/cs4231a.c                  |  8 ++++----
+>   hw/audio/es1370.c                   | 23 +++++++++++------------
+>   hw/audio/gus.c                      |  9 ++++-----
+>   hw/audio/hda-codec.c                | 15 +++++++--------
+>   hw/audio/lm4549.c                   |  8 ++++----
+>   hw/audio/pcspk.c                    |  9 +++++----
+>   hw/audio/pl041.c                    |  2 +-
+>   hw/audio/sb16.c                     | 16 ++++++++--------
+>   hw/audio/via-ac97.c                 |  9 ++++-----
+>   hw/audio/virtio-snd.c               | 13 ++++++-------
+>   hw/audio/wm8750.c                   | 23 +++++++++++------------
+>   hw/core/qdev-properties-system.c    | 11 +++++------
+>   hw/display/xlnx_dp.c                |  6 +++---
+>   hw/usb/dev-audio.c                  | 11 +++++------
+>   27 files changed, 129 insertions(+), 161 deletions(-)
 > 
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index c46203eb9c..f0c283f8f4 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -2028,6 +2028,50 @@ const VMStateDescription vmstate_backend_transfer_vhost_inflight = {
->      }
->  };
->  
-> +static int vhost_inflight_buffer_pre_load(void *opaque)
-> +{
-> +    info_report("vhost_inflight_region_buffer_pre_load");
-> +    struct vhost_inflight *inflight = opaque;
-> +
-> +    Error *err = NULL;
-> +    int fd = -1;
-> +    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
-> +                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> +                                  &fd, &err);
-> +    if (err) {
-> +        error_report_err(err);
-> +        return -ENOMEM;
-> +    }
-> +
-> +    inflight->offset = 0;
-> +    inflight->addr = addr;
-> +    inflight->fd = fd;
-> +
-> +    return 0;
-> +}
-> +
-> +const VMStateDescription vmstate_vhost_inflight_region_buffer = {
-> +    .name = "vhost-inflight-region/buffer",
-> +    .pre_load = vhost_inflight_buffer_pre_load,
+> diff --git a/audio/audio.h b/audio/audio.h
+> index 1d56f111ea..fdbc33ae0c 100644
+> --- a/audio/audio.h
+> +++ b/audio/audio.h
+> @@ -69,18 +69,12 @@ struct AudioBackendClass {
+>   };
+>   
+>   typedef struct AudioBackend AudioBackend;
+> -typedef struct QEMUSoundCard {
+> -    char *name;
+> -    AudioBackend *be;
+> -    QLIST_ENTRY (QEMUSoundCard) entries;
+> -} QEMUSoundCard;
+>   
+>   typedef struct QEMUAudioTimeStamp {
+>       uint64_t old_ts;
+>   } QEMUAudioTimeStamp;
+>   
+> -bool AUD_register_card (const char *name, QEMUSoundCard *card, Error **errp);
+> -void AUD_remove_card (QEMUSoundCard *card);
+> +bool AUD_backend_check (AudioBackend **be, Error **errp);
+>   CaptureVoiceOut *AUD_add_capture(
+>       AudioBackend *s,
+>       struct audsettings *as,
+> @@ -90,7 +84,7 @@ CaptureVoiceOut *AUD_add_capture(
+>   void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque);
+>   
+>   SWVoiceOut *AUD_open_out (
+> -    QEMUSoundCard *card,
+> +    AudioBackend *be,
+>       SWVoiceOut *sw,
+>       const char *name,
+>       void *callback_opaque,
+> @@ -98,7 +92,7 @@ SWVoiceOut *AUD_open_out (
+>       struct audsettings *settings
+>       );
+>   
+> -void AUD_close_out (QEMUSoundCard *card, SWVoiceOut *sw);
+> +void AUD_close_out (AudioBackend *be, SWVoiceOut *sw);
+>   size_t AUD_write (SWVoiceOut *sw, void *pcm_buf, size_t size);
+>   int  AUD_get_buffer_size_out (SWVoiceOut *sw);
+>   void AUD_set_active_out (SWVoiceOut *sw, int on);
+> @@ -132,7 +126,7 @@ AUD_set_volume_in_lr(SWVoiceIn *sw, bool mut, uint8_t lvol, uint8_t rvol) {
+>   }
+>   
+>   SWVoiceIn *AUD_open_in (
+> -    QEMUSoundCard *card,
+> +    AudioBackend *be,
+>       SWVoiceIn *sw,
+>       const char *name,
+>       void *callback_opaque,
+> @@ -140,7 +134,7 @@ SWVoiceIn *AUD_open_in (
+>       struct audsettings *settings
+>       );
+>   
+> -void AUD_close_in (QEMUSoundCard *card, SWVoiceIn *sw);
+> +void AUD_close_in (AudioBackend *be, SWVoiceIn *sw);
 
-vmsd is much better, thanks.
+I know this is painful, but please fix ./checkpatch.pl errors before
+posting your pull request.
 
-You can also use pre_load_errp() instead to avoid error_report_err().
-
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +const VMStateDescription vmstate_vhost_inflight_region = {
-> +    .name = "vhost-inflight-region",
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64(size, struct vhost_inflight),
-> +        VMSTATE_UINT16(queue_size, struct vhost_inflight),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_vhost_inflight_region_buffer,
-> +        NULL
-> +    }
-> +};
-> +
->  const VMStateDescription vmstate_vhost_virtqueue = {
->      .name = "vhost-virtqueue",
->      .fields = (const VMStateField[]) {
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index 13ca2c319f..dd552de91f 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -596,6 +596,12 @@ extern const VMStateDescription vmstate_backend_transfer_vhost_inflight;
->                             vmstate_backend_transfer_vhost_inflight, \
->                             struct vhost_inflight)
->  
-> +extern const VMStateDescription vmstate_vhost_inflight_region;
-> +#define VMSTATE_VHOST_INFLIGHT_REGION(_field, _state) \
-> +    VMSTATE_STRUCT_POINTER(_field, _state, \
-> +                           vmstate_vhost_inflight_region, \
-> +                           struct vhost_inflight)
-> +
->  extern const VMStateDescription vmstate_vhost_dev;
->  #define VMSTATE_BACKEND_TRANSFER_VHOST(_field, _state) \
->      VMSTATE_STRUCT(_field, _state, 0, vmstate_vhost_dev, struct vhost_dev)
-> -- 
-> 2.34.1
-> 
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
