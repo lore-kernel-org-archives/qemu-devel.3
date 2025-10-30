@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227E4CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D745ECCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vETyd-0000wo-15; Thu, 30 Oct 2025 10:50:11 -0400
+	id 1vETzp-0002jp-Fe; Thu, 30 Oct 2025 10:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vETyY-0000rq-Tn
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:06 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vETyy-0001ov-Uu
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vETyK-0001Pu-Lo
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:06 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vETyf-0001hX-N0
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761835785;
+ s=mimecast20190719; t=1761835809;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=avCY1hlGyBZK0pmtgUoh4yZzaxSU4Nu3njqRInDUgWU=;
- b=IEQl37HZhnRsyUvSLLL+GM3UjbubUe2HAnlrWlQabLHV5EQIGepVuwkmvlrbtmoyAc/dho
- qO1197jJBdyFAu5kV2aDeOCjNyunO1z1TohUSjm7KBRpyclxiA6S9JMz5yVIbdpO1oNUWS
- G3tody1Ty0+noGx3necTQ/G8YBWDKi0=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-MNqokhEsNLK3sgO1jAHOIg-1; Thu, 30 Oct 2025 10:49:42 -0400
-X-MC-Unique: MNqokhEsNLK3sgO1jAHOIg-1
-X-Mimecast-MFC-AGG-ID: MNqokhEsNLK3sgO1jAHOIg_1761835781
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-745c3f7e569so13182037b3.1
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 07:49:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761835781; x=1762440581;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=avCY1hlGyBZK0pmtgUoh4yZzaxSU4Nu3njqRInDUgWU=;
- b=aK7pG5VXb2hJbryimSRgCkGktJgawIr9Vrzfxxu9Z4aW+o5kwS7zeDh1E1z+crgaQS
- TTiT3bOPF2lA5DRX+JgmgpYb6uEtJzsZrklGy3rA6fGXRMzo18ZSAb8NDmTR8p+MT8Ps
- 0/2/xHAPB7Lcn53Om72D/e2zU2MUEBX5gUa0Ay41mkqKeRC2xWyXz27c8r5WBvLS6gnV
- metugM5VJqJ2I4tU4DPO5DryI6a2rfwNWcCWHgq9v+dB20tBoVRBaNEvZt28u3G49+jL
- SFkWpLw8VfGRwDjZ+bsVLWTehjSzGu7RgoR/zxKyl6Ylc+VY4TJHdQYWWOAX2WM9dAsJ
- Tq0A==
-X-Gm-Message-State: AOJu0YyZguHrPGtY+34XOl7pQTJ1NwSWeaLNzCLWw2etpvIQ6SPkbqAJ
- QkEPLj4pt2eYJ5LiysbRRKCu5TIMTAuQ3RNc8QQZ/LYY5oFoVSmUAQEe2wx/GvaNsd7AJGIcndr
- 2mLkTiMjL+pVLrzFfbnN0SfYnbI4fiWNyheQIhROFn+sezv71x53B56QOHq/AlhFWhuyrpUwXOn
- SXSYj+0Exlk2QN6D4LwITETRtbM8Injd81PH98gm8=
-X-Gm-Gg: ASbGnctrqNfkgDhnQJn/F7nfyvsFShnfW+U+5kT3K8hdhhvcmM8fbOFB33ssu/oE8Sl
- RFmzJnDIcqegTh0zlBvJr1kR768L28Fu0dX5moF29EsHq3yFwEKkJgFTCIBZSIlKIhPcv+tdfik
- 8xWaXCoVoD+cf8zWQzx5XPLsXP6s+2u1lYI0jJJnA6ZdiB8UFx30ND37NBlpxyESEfxS0eJLLun
- jQ2X+/qzeLLF6s=
-X-Received: by 2002:a05:690c:6a86:b0:780:f794:6e21 with SMTP id
- 00721157ae682-78638e30e25mr55070267b3.24.1761835781080; 
- Thu, 30 Oct 2025 07:49:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHD/hkIMnfFHmiLd35CBodaxMKHSPADLmc5slosMZZZ7ZvAbzI5EJIiVLSgeYxTZUwuwWHVo6Qm9rXfRFr3s6Q=
-X-Received: by 2002:a05:690c:6a86:b0:780:f794:6e21 with SMTP id
- 00721157ae682-78638e30e25mr55069817b3.24.1761835780611; Thu, 30 Oct 2025
- 07:49:40 -0700 (PDT)
+ bh=FmJwRcYHph7YCK5pTSk0YLKu0sRfJX3dwWiIh3rSYPw=;
+ b=V3U/TR2UE3IeDdvVjo4G2Xn7ZstP2W1BJpLHHVaHiAuH2w/44iQ+vxDw5RR6QXoSbxxSib
+ Nv7dlAJ9RvlbAUOVvXOnFUWpEY438rdUYskM9UtM+iyCaUEfK6CpWJFsf0geYCYGUHVdhO
+ jE1bOFifYp73V34fxgNbJTP2zuT/BGY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-Ax8BtAWNM52QW4U-YJ38qg-1; Thu,
+ 30 Oct 2025 10:50:07 -0400
+X-MC-Unique: Ax8BtAWNM52QW4U-YJ38qg-1
+X-Mimecast-MFC-AGG-ID: Ax8BtAWNM52QW4U-YJ38qg_1761835807
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E22C11955DC2; Thu, 30 Oct 2025 14:50:06 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.122])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 794AB30001A1; Thu, 30 Oct 2025 14:50:05 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org
+Subject: [PATCH 19/21] crypto: expand logic to cope with multiple certificate
+ identities
+Date: Thu, 30 Oct 2025 14:49:25 +0000
+Message-ID: <20251030144927.2241109-20-berrange@redhat.com>
+In-Reply-To: <20251030144927.2241109-1-berrange@redhat.com>
+References: <20251030144927.2241109-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20251028220342.1407883-1-jsnow@redhat.com>
- <20251028220342.1407883-2-jsnow@redhat.com>
- <65b02307-35c9-46ab-bef3-2b5a9e7e082d@redhat.com>
-In-Reply-To: <65b02307-35c9-46ab-bef3-2b5a9e7e082d@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 30 Oct 2025 10:49:29 -0400
-X-Gm-Features: AWmQ_bms078nOXjE1tEREHLbSA1txRWd1vvznhZdN8YsUdNr-UpG-1hanwde6DA
-Message-ID: <CAFn=p-aqazgRzKTXxpN8rNk8R=LEzkKFuuHuf_EjcwJSDRxZUA@mail.gmail.com>
-Subject: Re: [PATCH RFC 01/10] python/mkvenv: ensure HAVE_LIB variables are
- actually constants
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Qemu-block <qemu-block@nongnu.org>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000db3f050642615bee"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,108 +87,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000db3f050642615bee
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Currently only a single set of certificates can be loaded for a
+server / client. Certificates are created using a particular
+key algorithm and in some scenarios it can be useful to support
+multiple algorithms in parallel. This requires the ability to
+load multiple sets of certificates.
 
-On Thu, Oct 30, 2025, 3:51=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote:
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/tlscredsx509.c | 164 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 112 insertions(+), 52 deletions(-)
 
-> On 28/10/2025 23.03, John Snow wrote:
-> > Pylint 4.x has refined checking for variable names that behave as
-> > constants vs ones that do not; unfortunately our tricky import machiner=
-y
-> > is perceived as these variables being re-assigned.
-> >
-> > Add a temporary variable with an underscore and assign to the global
-> > constants precisely once to alleviate this new nag message.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   python/scripts/mkvenv.py | 24 ++++++++++++++++--------
-> >   python/setup.cfg         |  1 +
-> >   2 files changed, 17 insertions(+), 8 deletions(-)
->
-> ...> diff --git a/python/setup.cfg b/python/setup.cfg
-> > index d7f5dc7bafe..f40f11396c9 100644
-> > --- a/python/setup.cfg
-> > +++ b/python/setup.cfg
-> > @@ -159,6 +159,7 @@ good-names=3Di,
-> >              c,   # for c in string: ...
-> >              T,   # for TypeVars. See pylint#3401
-> >              SocketAddrT,  # Not sure why this is invalid.
-> > +           _import_ok,  # For mkvenv import trickery and compatibility
-> pre-4.x
->
-> Out of curiosity, is it really necessary to add _import_ok to good-names,
-> or
-> is this just for being on the safe side for future changes in pylint?
->
-
-It's for the older versions... they still think it's a constant and want it
-uppercased.
-
-
-> Anyway,
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
->
->
-
---000000000000db3f050642615bee
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 30, 2025, 3:51=E2=80=
-=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
- 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 28/10/2025 23.03,=
- John Snow wrote:<br>
-&gt; Pylint 4.x has refined checking for variable names that behave as<br>
-&gt; constants vs ones that do not; unfortunately our tricky import machine=
-ry<br>
-&gt; is perceived as these variables being re-assigned.<br>
-&gt; <br>
-&gt; Add a temporary variable with an underscore and assign to the global<b=
-r>
-&gt; constants precisely once to alleviate this new nag message.<br>
-&gt; <br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0python/scripts/mkvenv.py | 24 ++++++++++++++++--------<br>
-&gt;=C2=A0 =C2=A0python/setup.cfg=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =
-1 +<br>
-&gt;=C2=A0 =C2=A02 files changed, 17 insertions(+), 8 deletions(-)<br>
-<br>
-...&gt; diff --git a/python/setup.cfg b/python/setup.cfg<br>
-&gt; index d7f5dc7bafe..f40f11396c9 100644<br>
-&gt; --- a/python/setup.cfg<br>
-&gt; +++ b/python/setup.cfg<br>
-&gt; @@ -159,6 +159,7 @@ good-names=3Di,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c,=C2=A0 =C2=A0# for c=
- in string: ...<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 T,=C2=A0 =C2=A0# for T=
-ypeVars. See pylint#3401<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 SocketAddrT,=C2=A0 # N=
-ot sure why this is invalid.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0_import_ok,=C2=A0 # For mkve=
-nv import trickery and compatibility pre-4.x<br>
-<br>
-Out of curiosity, is it really necessary to add _import_ok to good-names, o=
-r <br>
-is this just for being on the safe side for future changes in pylint?<br></=
-blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">It&#39=
-;s for the older versions... they still think it&#39;s a constant and want =
-it uppercased.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div clas=
-s=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-Anyway,<br>
-Reviewed-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=3D"=
-_blank" rel=3D"noreferrer">thuth@redhat.com</a>&gt;<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000db3f050642615bee--
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index 3cb0a6c31f..d7d1f594c0 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -39,6 +39,14 @@ struct QCryptoTLSCredsX509 {
+     char *passwordid;
+ };
+ 
++typedef struct QCryptoTLSCredsX509IdentFiles QCryptoTLSCredsX509IdentFiles;
++struct QCryptoTLSCredsX509IdentFiles {
++    char *certpath;
++    char *keypath;
++    gnutls_x509_crt_t *certs;
++    unsigned int ncerts;
++    gnutls_x509_privkey_t key;
++};
+ 
+ typedef struct QCryptoTLSCredsX509Files QCryptoTLSCredsX509Files;
+ struct QCryptoTLSCredsX509Files {
+@@ -46,11 +54,8 @@ struct QCryptoTLSCredsX509Files {
+     gnutls_x509_crt_t *cacerts;
+     unsigned int ncacerts;
+ 
+-    char *certpath;
+-    char *keypath;
+-    gnutls_x509_crt_t *certs;
+-    unsigned int ncerts;
+-    gnutls_x509_privkey_t key;
++    QCryptoTLSCredsX509IdentFiles **identities;
++    size_t nidentities;
+ };
+ 
+ static QCryptoTLSCredsX509Files *
+@@ -61,14 +66,9 @@ qcrypto_tls_creds_x509_files_new(void)
+ 
+ 
+ static void
+-qcrypto_tls_creds_x509_files_free(QCryptoTLSCredsX509Files *files)
++qcrypto_tls_creds_x509_ident_files_free(QCryptoTLSCredsX509IdentFiles *files)
+ {
+     size_t i;
+-    for (i = 0; i < files->ncacerts; i++) {
+-        gnutls_x509_crt_deinit(files->cacerts[i]);
+-    }
+-    g_free(files->cacerts);
+-    g_free(files->cacertpath);
+     for (i = 0; i < files->ncerts; i++) {
+         gnutls_x509_crt_deinit(files->certs[i]);
+     }
+@@ -79,6 +79,26 @@ qcrypto_tls_creds_x509_files_free(QCryptoTLSCredsX509Files *files)
+     g_free(files);
+ }
+ 
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoTLSCredsX509IdentFiles,
++                              qcrypto_tls_creds_x509_ident_files_free);
++
++
++static void
++qcrypto_tls_creds_x509_files_free(QCryptoTLSCredsX509Files *files)
++{
++    size_t i;
++    for (i = 0; i < files->ncacerts; i++) {
++        gnutls_x509_crt_deinit(files->cacerts[i]);
++    }
++    g_free(files->cacerts);
++    g_free(files->cacertpath);
++    for (i = 0; i < files->nidentities; i++) {
++        qcrypto_tls_creds_x509_ident_files_free(files->identities[i]);
++    }
++    g_free(files->identities);
++    g_free(files);
++}
++
+ G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoTLSCredsX509Files,
+                               qcrypto_tls_creds_x509_files_free);
+ 
+@@ -573,33 +593,32 @@ qcrypto_tls_creds_load_privkey(QCryptoTLSCredsX509 *creds,
+ 
+ 
+ static int
+-qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+-                                    QCryptoTLSCredsX509Files *files,
+-                                    bool isServer,
+-                                    Error **errp)
++qcrypto_tls_creds_x509_sanity_check_identity(QCryptoTLSCredsX509 *creds,
++                                             QCryptoTLSCredsX509Files *files,
++                                             QCryptoTLSCredsX509IdentFiles *ifiles,
++                                             bool isServer,
++                                             Error **errp)
+ {
+     size_t i;
+ 
+-    for (i = 0; i < files->ncerts; i++) {
++    for (i = 0; i < ifiles->ncerts; i++) {
+         if (qcrypto_tls_creds_check_cert(creds,
+-                                         files->certs[i], files->certpath,
++                                         ifiles->certs[i], ifiles->certpath,
+                                          isServer, i != 0, errp) < 0) {
+             return -1;
+         }
+     }
+ 
+-    if (files->ncerts &&
++    if (ifiles->ncerts &&
+         qcrypto_tls_creds_check_authority_chain(creds, files,
+-                                                files->certs, files->ncerts,
++                                                ifiles->certs, ifiles->ncerts,
+                                                 isServer, errp) < 0) {
+         return -1;
+     }
+ 
+-    if (files->ncerts &&
+-        qcrypto_tls_creds_check_cert_pair(files,
+-                                          files->certs, files->ncerts,
+-                                          files->certpath, isServer,
+-                                          errp) < 0) {
++    if (ifiles->ncerts &&
++        qcrypto_tls_creds_check_cert_pair(files, ifiles->certs, ifiles->ncerts,
++                                          ifiles->certpath, isServer, errp) < 0) {
+         return -1;
+     }
+ 
+@@ -607,6 +626,26 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+ }
+ 
+ 
++static int
++qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
++                                    QCryptoTLSCredsX509Files *files,
++                                    bool isServer,
++                                    Error **errp)
++{
++    size_t i;
++    for (i = 0; i < files->nidentities; i++) {
++        if (qcrypto_tls_creds_x509_sanity_check_identity(creds,
++                                                         files,
++                                                         files->identities[i],
++                                                         isServer,
++                                                         errp) < 0) {
++            return -1;
++        }
++    }
++    return 0;
++}
++
++
+ static int
+ qcrypto_tls_creds_x509_load_ca(QCryptoTLSCredsX509 *creds,
+                                QCryptoTLSCredsBox *box,
+@@ -642,48 +681,38 @@ qcrypto_tls_creds_x509_load_ca(QCryptoTLSCredsX509 *creds,
+ }
+ 
+ 
+-static int
++static QCryptoTLSCredsX509IdentFiles *
+ qcrypto_tls_creds_x509_load_identity(QCryptoTLSCredsX509 *creds,
+                                      QCryptoTLSCredsBox *box,
+-                                     QCryptoTLSCredsX509Files *files,
+-                                     bool isServer,
++                                     const char *certbase,
++                                     const char *keybase,
++                                     bool isOptional,
+                                      Error **errp)
+ {
++    g_autoptr(QCryptoTLSCredsX509IdentFiles) files =
++        g_new0(QCryptoTLSCredsX509IdentFiles, 1);
+     int ret;
+ 
+-    if (isServer) {
+-        if (qcrypto_tls_creds_get_path(&creds->parent_obj,
+-                                       QCRYPTO_TLS_CREDS_X509_SERVER_CERT,
+-                                       true, &files->certpath, errp) < 0 ||
+-            qcrypto_tls_creds_get_path(&creds->parent_obj,
+-                                       QCRYPTO_TLS_CREDS_X509_SERVER_KEY,
+-                                       true, &files->keypath, errp) < 0) {
+-            return -1;
+-        }
+-    } else {
+-        if (qcrypto_tls_creds_get_path(&creds->parent_obj,
+-                                       QCRYPTO_TLS_CREDS_X509_CLIENT_CERT,
+-                                       false, &files->certpath, errp) < 0 ||
+-            qcrypto_tls_creds_get_path(&creds->parent_obj,
+-                                       QCRYPTO_TLS_CREDS_X509_CLIENT_KEY,
+-                                       false, &files->keypath, errp) < 0) {
+-            return -1;
+-        }
++    if (qcrypto_tls_creds_get_path(&creds->parent_obj, certbase,
++                                   !isOptional, &files->certpath, errp) < 0 ||
++        qcrypto_tls_creds_get_path(&creds->parent_obj, keybase,
++                                   !isOptional, &files->keypath, errp) < 0) {
++        return NULL;
+     }
+ 
+     if (!files->certpath &&
+         !files->keypath) {
+-        return 0;
++        return NULL;
+     }
+     if (files->certpath && !files->keypath) {
+         error_setg(errp, "Cert '%s' without corresponding key",
+                    files->certpath);
+-        return -1;
++        return NULL;
+     }
+     if (!files->certpath && files->keypath) {
+         error_setg(errp, "Key '%s' without corresponding cert",
+                    files->keypath);
+-        return -1;
++        return NULL;
+     }
+ 
+     if (qcrypto_tls_creds_load_cert_list(creds,
+@@ -691,14 +720,14 @@ qcrypto_tls_creds_x509_load_identity(QCryptoTLSCredsX509 *creds,
+                                          &files->certs,
+                                          &files->ncerts,
+                                          errp) < 0) {
+-        return -1;
++        return NULL;
+     }
+ 
+     if (qcrypto_tls_creds_load_privkey(creds,
+                                        files->keypath,
+                                        &files->key,
+                                        errp) < 0) {
+-        return -1;
++        return NULL;
+     }
+ 
+     ret = gnutls_certificate_set_x509_key(box->data.cert,
+@@ -708,8 +737,39 @@ qcrypto_tls_creds_x509_load_identity(QCryptoTLSCredsX509 *creds,
+     if (ret < 0) {
+         error_setg(errp, "Cannot set certificate '%s' & key '%s': %s",
+                    files->certpath, files->keypath, gnutls_strerror(ret));
++        return NULL;
++    }
++    return g_steal_pointer(&files);
++}
++
++
++static int
++qcrypto_tls_creds_x509_load_identities(QCryptoTLSCredsX509 *creds,
++                                       QCryptoTLSCredsBox *box,
++                                       QCryptoTLSCredsX509Files *files,
++                                       bool isServer,
++                                       Error **errp)
++{
++    QCryptoTLSCredsX509IdentFiles *ifiles;
++
++    ifiles = qcrypto_tls_creds_x509_load_identity(
++        creds, box,
++        isServer ?
++        QCRYPTO_TLS_CREDS_X509_SERVER_CERT :
++        QCRYPTO_TLS_CREDS_X509_CLIENT_CERT,
++        isServer ?
++        QCRYPTO_TLS_CREDS_X509_SERVER_KEY :
++        QCRYPTO_TLS_CREDS_X509_CLIENT_KEY,
++        !isServer, errp);
++    if (!ifiles) {
+         return -1;
+     }
++
++    files->identities = g_renew(QCryptoTLSCredsX509IdentFiles *,
++                                files->identities,
++                                files->nidentities + 1);
++    files->identities[files->nidentities++] = ifiles;
++
+     return 0;
+ }
+ 
+@@ -752,8 +812,8 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+         return -1;
+     }
+ 
+-    if (qcrypto_tls_creds_x509_load_identity(creds, box, files,
+-                                             isServer, errp) < 0) {
++    if (qcrypto_tls_creds_x509_load_identities(creds, box, files,
++                                               isServer, errp) < 0) {
+         return -1;
+     }
+ 
+-- 
+2.51.1
 
 
