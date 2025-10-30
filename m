@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56C22CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 12:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED7DCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 12:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vES9M-0006HQ-2v; Thu, 30 Oct 2025 08:53:08 -0400
+	id 1vESDm-0007Qh-CR; Thu, 30 Oct 2025 08:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vES9J-0006Gl-Gg
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:53:05 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vES96-0000rQ-N5
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:53:03 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-429b895458cso447201f8f.1
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 05:52:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761828764; x=1762433564; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=m776V6m0D6/vfvn1FV4xNqtr5h8+oJ1yaveKTo0Dt9o=;
- b=V9FmZnwJYzu4kgKYnwWKgZHHf7coFq75YbWD6oLPvGTq94VGi1t/CbrTu56Ceafh7C
- G7XPuGkS4057Cl1MmFmXLUWFeck9HMSgLICBY8mY1ZDmP3jZUmtNUKqvH/OUCeWKIFuK
- FeetAPOambP2yixHLxtx5mF7cusOuFPC6zEY9I3aMvhko4kJw2Mcb/O3qfN4tpGRAf1T
- sPOl4XWmL+Tod4CSaiCXXQXJcrbevAsx2GcO0A9uzbn3Qx9+yikj4KO7aMbfltWSukRF
- O5cC92qodLjntCBMIalYbzjqt3uO3P92QL2wx+S+jbOAzuRCR9Co9fwm8lK8mEaiu046
- uzjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761828764; x=1762433564;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=m776V6m0D6/vfvn1FV4xNqtr5h8+oJ1yaveKTo0Dt9o=;
- b=fo6e0QlfRihjPDf/4dscPXS81Hd+xKuJdcR1hMC2VPlMxzGpTm0KMpwdGcKNDjjddF
- MKmy6euREjydj1WtH8BMMwm62x6PkuNmKXDKBuSFh24fXxvpXtVLC5Cougb8lBbtueFu
- HheH7tPbvAgTVpsy+VnZDdRqw8izR78EnTLkBelTtEij47T8eEkUcx6SN635QXG4P9ef
- 9wAICVWX2pJxa3oDdwwOBnkqhGV+zSAIvZTQKs3fqDkPdtBa13P7MjOdbQrwBdVzZ1Tp
- H+DJvkeihiyPuKt/l9RI9X76OJVfpisAVJSEEmFakNLthQjD6wEdnjO3sIz3Waa+a3/f
- Jp6w==
-X-Gm-Message-State: AOJu0Ywp+F87jXgD0wuGd8cWw0qazefmy90Z3RuucYgzru4zg4wnO98h
- ciVIYwmdqul12JzEDJeOTY+RiBnOsd91h7KIGeabeg3NNWQ+Gk3sXRZ8m9R9g1lBbrg=
-X-Gm-Gg: ASbGncvQ0b5My5gNnVL0CkMkSg23yvJ8YnxTlYRbl+VVEof5baGAMA76GBgpK9qwu62
- BWoxAtN5Da07cVNpWhm6nZLzdlQkaQZWV85mpvxmShRMPE5A2615bs5LthoULtS11DvHSmROMfj
- xXuxHwbnS6/1zx0mLursyaBIoqDb4BTN8ohyOdfm99fjN9rQzZNMPyy6ppPgpOzLaAslg5mKNbP
- 5mTTC/1Dip7nd0JniKD0ixNsx2ThLjsNnHsiFdRJKwUiwrlpJW+97fs89Le9eeFDsFLl5HTKw74
- FZw1K9H1U9opoHtDpvb/ebS7krEEIeO2RTrgAy/eVMwCU9ozYFKTA6wAf6/E9O9067jHPHxRmQh
- AUOAyUTTeWYx8BkWXFZnyeAcpyh7xJRqFVJGLBXpVG8llSpfdy0Y4VJxecnzxZeXqzSJPo1URKU
- a1UyrW+67X0CG9152L2D0OMHtw0q/RpyCT2gykbdPWRLDfhXy0o7v+VRA=
-X-Google-Smtp-Source: AGHT+IGbbd3BJRWFbFFfG+uT97yK1i0Cux4CA9jUOH/+WmltcThhav1Qp2+cJb26tXzFaAj/xv77pQ==
-X-Received: by 2002:a5d:5d01:0:b0:428:3d14:7385 with SMTP id
- ffacd0b85a97d-429aef8481amr5991587f8f.28.1761828763955; 
- Thu, 30 Oct 2025 05:52:43 -0700 (PDT)
-Received: from [10.180.230.213] (99.red-88-29-173.dynamicip.rima-tde.net.
- [88.29.173.99]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429ba445463sm2137237f8f.10.2025.10.30.05.52.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 05:52:43 -0700 (PDT)
-Message-ID: <a3d39ae0-9c0d-4822-9dfc-9ddcf79f63e5@linaro.org>
-Date: Thu, 30 Oct 2025 13:52:38 +0100
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vESDj-0007QR-Ke
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:57:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vESDX-0001ZL-Eq
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761829027;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jU5Wki8AIYfQomUxVle6GXYRqDBYassJ5K909zj9XU8=;
+ b=CrkPIslDujxe8vhFSYrLqNPDKOZ8AC6mwKiMfJkUe9xg3hEec/ynaKH7WTN6OarU+RY5KL
+ VX9oD0v0CtX+ZuI5CtxFliufthsw+y4vLw7VPPGusI7z0JW0hcyJ9DDsu39xhV6gkqQuEC
+ QPyeBkXPncV6iJuAfv0VEd/mcEVaFrc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-O3cHxm1_PMaFBfxCCDHFpA-1; Thu,
+ 30 Oct 2025 08:57:04 -0400
+X-MC-Unique: O3cHxm1_PMaFBfxCCDHFpA-1
+X-Mimecast-MFC-AGG-ID: O3cHxm1_PMaFBfxCCDHFpA_1761829023
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 028891954B17; Thu, 30 Oct 2025 12:57:02 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.33.5])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF93C19560A2; Thu, 30 Oct 2025 12:57:00 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 2F2BC1800080; Thu, 30 Oct 2025 13:56:58 +0100 (CET)
+Date: Thu, 30 Oct 2025 13:56:58 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: NaNa Liu <nanliu@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>, 
+ qemu-devel@nongnu.org, "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH] docs/devel: Correct uefi-vars-x64 device name
+Message-ID: <4xp5ewcaie4pbq4qlutrp7577sduwuo2di225lw3ijaqpukbnt@jhwxoo767jff>
+References: <20250922065714.93081-1-nanliu@redhat.com>
+ <CAFEAcA8pLFu6eOK5N+E97qo5PCp3OW3BRfYNSEL7=YQS6+eh2g@mail.gmail.com>
+ <fcf01a1c-3503-4397-a41b-d453ca2b7df9@tls.msk.ru>
+ <CAFEAcA_BR4VEsZrq1eq19E6iguk49W=Fx2OKQvkvTZ7_6Pd0KA@mail.gmail.com>
+ <CANUVZAznv1aP5DH6pHEQBZGxczkoNVQfKR5oOV7eTyrk4rVrpQ@mail.gmail.com>
+ <CAFEAcA8mC-VbD-29=7XLMiEQ0yhdKAaHzxWyKt5NXmUsjHgmBA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hw/riscv: Replace target_ulong uses
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org,
- alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
-References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
- <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
- <49e7ca69-3477-40c8-aad3-f799d848ce7a@linaro.org>
- <2y2ism54afg4ke5oeykqin5oy2kn4lb4gcd7fidgrmlwwbe6df@5h4wudvpyll4>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2y2ism54afg4ke5oeykqin5oy2kn4lb4gcd7fidgrmlwwbe6df@5h4wudvpyll4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8mC-VbD-29=7XLMiEQ0yhdKAaHzxWyKt5NXmUsjHgmBA@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +89,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/10/25 13:32, Anton Johansson wrote:
-> On 29/10/25, Philippe Mathieu-Daudé wrote:
->> On 27/10/25 13:35, Anton Johansson wrote:
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>> ---
->>>    hw/riscv/riscv-iommu.c | 6 ++++--
->>>    hw/riscv/riscv_hart.c  | 2 +-
->>>    2 files changed, 5 insertions(+), 3 deletions(-)
-
-
->>> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
->>> index c7e98a4308..65d2c92018 100644
->>> --- a/hw/riscv/riscv_hart.c
->>> +++ b/hw/riscv/riscv_hart.c
->>> @@ -93,7 +93,7 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
->>>            g_assert(rc == 0);
->>>            csr_call(words[1], cpu, csr, &val);
->>> -        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
->>> +        qtest_sendf(chr, "OK 0 %"PRIx64"\n", val);
->>>            return true;
->>>        }
->>>
->>
->> What about csr_call()?
+On Thu, Oct 30, 2025 at 10:34:24AM +0000, Peter Maydell wrote:
+> On Thu, 30 Oct 2025 at 05:47, NaNa Liu <nanliu@redhat.com> wrote:
 > 
-> csr_call() is handled in the other series making cpu.h target agnostic,
-> there we expose 64 bit variants of reading/writing CSRs which are then
-> used by csr_call().
+> The device name being "uefi-vars-x64" is unfortunate, but we
+> can't change that. We should be consistent about how we talk
+> about the architecture name in general when our hands are not
+> tied by compatibility problems.
 
-Ah, good then, thanks!
+Well, UEFI has the habit of having their own architecture
+names, which is where this comes from ...
+
+  i386 -> ia32
+  x86_64 -> x64
+  aarch64 -> aa64
+
+Luckily they stopped doing so, new architectures like riscv
+and loongarch kept their name in the UEFI universe, so going
+forward this confusion should at least not become worse than
+it already is.
+
+take care,
+  Gerd
+
 
