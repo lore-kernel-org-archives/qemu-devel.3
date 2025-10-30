@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF83BCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 21:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E5ACCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 21:52:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEaX8-0006vS-Ov; Thu, 30 Oct 2025 17:50:14 -0400
+	id 1vEaWv-0006nc-Tj; Thu, 30 Oct 2025 17:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vEaX4-0006vF-Ky
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 17:50:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vEaWk-0006jO-1u
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 17:49:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vEaWt-0000gR-Ou
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 17:50:08 -0400
+ id 1vEaWX-0000Y4-Qh
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 17:49:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761860990;
+ s=mimecast20190719; t=1761860966;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=y6wqd5lciJsAo9IQM8zPf6C+QCoE2/o8d67nBJyAwDY=;
- b=jMNge5ZZvrMDu+fqJX5BxABsm7mwuVFLk7ue82E8gNycZ18WM+DRoC/Wr023+8bO2hD5bc
- Uw7KFiwW8SfVCua72qUKo4vxSwn9YXjW/FW/iZv8ayYDvMFJPqeOY5nuPGwpArj4Ij58Yz
- JUH09VT+v5rQUBOn03YO7c/Ip45otVA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=B2x4Ydz0YDAHO1cBmw+mmGIlAPnJPqKveuIqv61b0as=;
+ b=OatxiBZJBe4FTgantOyit/EcDMkV/u0R7XQ8FwX7/eFjkGx5F4CVkmvBtrPEfZdvUcQpTm
+ xN025MlM+RG2u8QDQNNiNt5Rx9ztIPhGbPGWiRm62jb+UqSW8CQakb0d7+/1HnEFFgZvXl
+ iAdoWI2HZFfu7uAjpYrTW/K/GlGiP6E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-x27j4jd0O9ahP7qU_g8lRQ-1; Thu,
- 30 Oct 2025 17:49:47 -0400
-X-MC-Unique: x27j4jd0O9ahP7qU_g8lRQ-1
-X-Mimecast-MFC-AGG-ID: x27j4jd0O9ahP7qU_g8lRQ_1761860986
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-H32zSLs1PjOty-nPcIdPZg-1; Thu,
+ 30 Oct 2025 17:49:23 -0400
+X-MC-Unique: H32zSLs1PjOty-nPcIdPZg-1
+X-Mimecast-MFC-AGG-ID: H32zSLs1PjOty-nPcIdPZg_1761860962
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B0F7A1955F3B; Thu, 30 Oct 2025 21:49:46 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFAA419540EA; Thu, 30 Oct 2025 21:49:21 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.45.224.58])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0CA71800586; Thu, 30 Oct 2025 21:49:44 +0000 (UTC)
+ id 75688180057E; Thu, 30 Oct 2025 21:49:19 +0000 (UTC)
 From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, Peter Xu <peterx@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Jiri Denemark <jdenemar@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v3 6/7] migration: Make postcopy listen thread joinable
-Date: Thu, 30 Oct 2025 22:49:10 +0100
-Message-ID: <20251030214915.1411860-7-jmarcin@redhat.com>
-In-Reply-To: <20251030214915.1411860-1-jmarcin@redhat.com>
-References: <20251030214915.1411860-1-jmarcin@redhat.com>
+Subject: [PATCH v3 0/7] migration: Introduce POSTCOPY_DEVICE state
+Date: Thu, 30 Oct 2025 22:49:04 +0100
+Message-ID: <20251030214915.1411860-1-jmarcin@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,49 +82,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+This series introduces a new POSTCOPY_DEVICE state that is active (both,
+on source and destination side), while the destination loads the device
+state. Before this series, if the destination machine failed during the
+device load, the source side would stay stuck POSTCOPY_ACTIVE with no
+way of recovery. With this series, if the migration fails while in
+POSTCOPY_DEVICE state, the source side can safely resume, as destination
+has not started yet.
 
-This patch makes the listen thread joinable instead detached, and joins
-it alongside other postcopy threads.
+RFC: https://lore.kernel.org/all/20250807114922.1013286-1-jmarcin@redhat.com/
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- migration/postcopy-ram.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+V1: https://lore.kernel.org/all/20250915115918.3520735-1-jmarcin@redhat.com/
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 91431f02a4..8405cce7b4 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -2181,7 +2181,6 @@ static void *postcopy_listen_thread(void *opaque)
- 
- out:
-     rcu_unregister_thread();
--    mis->have_listen_thread = false;
-     postcopy_state_set(POSTCOPY_INCOMING_END);
- 
-     migration_bh_schedule(postcopy_listen_thread_bh, NULL);
-@@ -2215,7 +2214,7 @@ int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp)
-     mis->have_listen_thread = true;
-     postcopy_thread_create(mis, &mis->listen_thread,
-                            MIGRATION_THREAD_DST_LISTEN,
--                           postcopy_listen_thread, QEMU_THREAD_DETACHED);
-+                           postcopy_listen_thread, QEMU_THREAD_JOINABLE);
- 
-     return 0;
- }
-@@ -2224,6 +2223,11 @@ int postcopy_incoming_cleanup(MigrationIncomingState *mis)
- {
-     int rc = 0;
- 
-+    if (mis->have_listen_thread) {
-+        qemu_thread_join(&mis->listen_thread);
-+        mis->have_listen_thread = false;
-+    }
-+
-     if (migrate_postcopy_ram()) {
-         rc = postcopy_ram_incoming_cleanup(mis);
-     }
+V2: https://lore.kernel.org/all/20251027154115.4138677-1-jmarcin@redhat.com/
+
+V3 changes:
+
+- rebased on top of https://gitlab.com/peterx/qemu/-/commits/staging
+
+Patch 2:
+- split into two separate patches
+
+Patches 4, 5, 6 (was Patch 3)
+- return to previous migration_incoming_state_destroy() that will not
+  exit on error
+- use existing exit-on-error option also for postcopy, in separate patch
+- moved conversion of the postcopy listen thread to a joinable thread
+  into a separate patch
+
+Patch 7:
+- added reset of postcopy_package_loaded_event
+
+Juraj Marcin (6):
+  migration: Move postcopy_ram_listen_thread() to postcopy-ram.c
+  migration: Introduce postcopy incoming setup and cleanup functions
+  migration: Refactor all incoming cleanup info
+    migration_incoming_destroy()
+  migration: Respect exit-on-error when migration fails before resuming
+  migration: Make postcopy listen thread joinable
+  migration: Introduce POSTCOPY_DEVICE state
+
+Peter Xu (1):
+  migration: Do not try to start VM if disk activation fails
+
+ migration/migration.c                 | 116 ++++++++++++-------
+ migration/migration.h                 |   4 +
+ migration/postcopy-ram.c              | 160 ++++++++++++++++++++++++++
+ migration/postcopy-ram.h              |   3 +
+ migration/savevm.c                    | 134 +--------------------
+ migration/savevm.h                    |   2 +
+ migration/trace-events                |   3 +-
+ qapi/migration.json                   |   8 +-
+ tests/qtest/migration/precopy-tests.c |   3 +-
+ 9 files changed, 260 insertions(+), 173 deletions(-)
+
 -- 
 2.51.0
 
