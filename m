@@ -4,101 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61642CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 00:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621D6CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 01:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEGfa-0000nG-5n; Wed, 29 Oct 2025 20:37:38 -0400
+	id 1vEHrH-0000pV-Cc; Wed, 29 Oct 2025 21:53:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEGfY-0000mt-DV; Wed, 29 Oct 2025 20:37:36 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEGfQ-0003OD-0K; Wed, 29 Oct 2025 20:37:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=DG4k2FLooCN0pqJoA/l3DEO33TCHVZYUXN3N1Rp186w=; b=Dl3yhBboT9eKB2C1FBQuYQ0EL3
- p6SwYH0aOX+S/F6mT5MDZy8WJeKhId1kgCDkHQ6Ekm8/SVh9nV8Wv9vDcyq+3022STHC79nEAQh3t
- S2cbyZoMySSdDKQNY+Z2Vt7RVhHyqO03CnCGZuT/r8OXIZWyBL4Qijnd8sCNki1Iinv+g7/Rb5P//
- e8I0dm+SM4YD7lUUYIY9x7S2n91+T5jjgPbj0W4mmCChQzUlaGZaQ9S+Ai9kFmIREcMRtBSnBEUvZ
- V5KgzWFDQxU+jKBc6HCZAxzXM0L9XkghmK3k14wtmdi1+/pZ2NXHhLmDN9spgPMTf2q9/6OYgE5t5
- WsgkZZ/REnmIwlSTK04RuRKJUE4SO+toGa4R3T2wjHG9WO9aQwD6FCBuuakTDT4RgwXsRYAcYXUcK
- iG7PxBKuLwA7xIBdhJHCSnJuM2O4PigW+5C04ZF+XV+MfOXcMDo3DABVEP3Ho4fyXhJPmIuBFZ50v
- m2LyUOKoi3GUheQdMZ7pJV4u3/srLObtkStLUDC3eLKknbKRbjUvTK7unUOei7fDGfkWmBac8fgmf
- w1gy2tp9M4UfG1SPUKc0nUOFbP3mwbplWibF9jfPxyMhjLecEwKZ0gc6BcYly9ivBqsEYMko+kZMH
- 0szun0WA+LuZvzm0jAj4oW9m733BDsu8fTJSmw/z4=;
-Received: from [2a02:8012:2f01:0:6dad:b13d:61b8:819c]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEGcp-0004dH-1i; Thu, 30 Oct 2025 00:34:50 +0000
-Message-ID: <2dc5e0d6-2b98-49d6-99ef-8969d58a02ed@ilande.co.uk>
-Date: Thu, 30 Oct 2025 00:36:57 +0000
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vEHrB-0000oy-Tu
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 21:53:42 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vEHr5-0003xx-06
+ for qemu-devel@nongnu.org; Wed, 29 Oct 2025 21:53:40 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b6cf1a95274so295800a12.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 18:53:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761789206; x=1762394006; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I9PYdtPq/gQiBvKY9grH57UZdyPF18YiYW2MY/8WcRk=;
+ b=Zp64ef5fm/ronky1v+butGFrAkMSO9XaZwC8Fmx5hIS5fyf0FLwwFwyy3jGU/B1ZkS
+ cSNGZwMEWWT0g2MxgRDfkDdemJW8SCia8Cmsn1aAupI+HgkXFiexsFf5MjzzGs3gWdvA
+ p30/+ExcIBvlfE+AoZQ752HvKEu5IlN0dA+2wVsPobAwG/FifIU7w2QgF0KhodeZqYO0
+ Ohk8eyEopZlgb36mrFwkqBiqXzSCnhlh+pOQvq+4fu1Jl8pKp5uFeAJ9giuYlCvBk3q+
+ AMLrxAnZU1E2Q0bWk5Gpaw/ddNFjFv3BFgqrlLu42IVrHkd5f+yg4xoetJobOWzkVMaH
+ i8RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761789206; x=1762394006;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I9PYdtPq/gQiBvKY9grH57UZdyPF18YiYW2MY/8WcRk=;
+ b=c+urt72fde5X7ur6+wcDgLsoIAd0uFb9MGF8GRKcUrviHGIrn2qUj5xUVyGl5THC7J
+ EKBOGPlqlxBcjyZUKBD2dAllBFCIoJS2AsVzVyNosUXuHL6tVwgyrAY2zxt6WI6Hd+4/
+ hhKFyv2QOd/WmLBnP9zDSl4lXh5UkymueEFUM+3ABWhKV2xqgx58vFPcB6M+ekDyqRvq
+ G9fa/NgwPAM4la+47cvUeQVGMi9tz2iIKVMV9s3YH+kPxGZis6DhtrLiAC7oZHAxIrcK
+ WHj9SxKQVl9bSj15dFZ4qCOiaI1Yk6XVPPotwrz3vwhSZJzHO62h5VLXWARCHVlA7PRi
+ XaZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPcTvncP5m+LQiwxQCniP1GgREBqbmi7wnVoIVv8WiP24+K5UoQIUDnZRThSUj4LJ3XHc0CLPjvExx@nongnu.org
+X-Gm-Message-State: AOJu0Yyu2i8Eu3fDK6IDX/42mIXpao81TQA6uYTON95J+78XSvC3Z/C/
+ 7BbGD4u3dhrW1FW447WwNSzlq4s0QJhf1LeP0F7OnXeLxn9qq6PeUM1QVG+vAQ==
+X-Gm-Gg: ASbGnctgzf0yy8dsMeOCAEMf5H2KlxMA/fe2jER952XvC6AKLwc0SZmMemhO7qp4BNV
+ BpHWKG5PqX61TJhVSVa1KJ3+6gnkgMwSZEVuglAGvKNIHtvava3CYolkqUZ1qCiQIdaMYe1gg3l
+ A8IFpN6YTE2ZqsLS3ms1Khbh2DU3ShjtZJ954qlApm9ia8+0GZxqhlWXJfSXIXUqLmQ+auER6LA
+ yriGQrLWElQLsHrX5HmkjX5baT/vCJ7+CnXyqLl7lQQ/3W3gjtaP0ahVkoX/CIyCRGztpxz3MxV
+ alBkijm7ASbncBVIxVryAO+6Epb3c1B6vEgLKqkQEAVlmDrjoMIAI2FswmkZ+t0035e70diHpIb
+ wbMN95/rIFDCFWWNA3wN/K+lJer1GLeAmoKZ0M4VXSV8I02opx3OBbX/KKUxYt703xhsSqPcfQP
+ 05gkv+F2SYha2jkjxPa6zy18PyE5MdgeC8MAvHGFD3p8yyppxAWOZ0E6c3KuFHwVfD/JoVlGXYE
+ mHxRfjRuuywEtQJAGk=
+X-Google-Smtp-Source: AGHT+IEpTeUOpQeADD/10RPy/N8D+gu6n+Wr0DvfXGSyDeb+VYX/r9Oc7M65SX/c3KFfnNVQAzyDMg==
+X-Received: by 2002:a17:902:d501:b0:294:cc1d:e2b5 with SMTP id
+ d9443c01a7336-294ed92718bmr14300115ad.0.1761789206441; 
+ Wed, 29 Oct 2025 18:53:26 -0700 (PDT)
+Received: from toolbx.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3405089b069sm586981a91.0.2025.10.29.18.53.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Oct 2025 18:53:25 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: philmd@linaro.org, alistair.francis@wdc.com, vishalc@linux.ibm.com,
+ qemu-devel@nongnu.org
+Cc: alistair23@gmail.com
+Subject: [PATCH 2/3] hw/core/loader: Free the image file descriptor on error
+Date: Thu, 30 Oct 2025 11:53:05 +1000
+Message-ID: <20251030015306.2279148-2-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251030015306.2279148-1-alistair.francis@wdc.com>
+References: <20251030015306.2279148-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
- <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
- <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
- <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
- <802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp>
- <28c6f065-ba8d-e5e2-922e-d5fd1fb58b60@eik.bme.hu>
- <db06bf5e-b7f5-4980-a054-393529e188eb@rsg.ci.i.u-tokyo.ac.jp>
- <759b6b4c-1155-184a-fa99-1df384f0fac3@eik.bme.hu>
- <cad75a33-ddc0-6fbc-c7e9-68e05877213c@eik.bme.hu>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <cad75a33-ddc0-6fbc-c7e9-68e05877213c@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:6dad:b13d:61b8:819c
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,59 +108,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/10/2025 13:25, BALATON Zoltan wrote:
+From: Alistair Francis <alistair.francis@wdc.com>
 
-> On Wed, 29 Oct 2025, BALATON Zoltan wrote:
->> On Wed, 29 Oct 2025, Akihiko Odaki wrote:
->>> On 2025/10/29 6:28, BALATON Zoltan wrote:
->>>> On Wed, 29 Oct 2025, Akihiko Odaki wrote:
->>>>> On 2025/10/28 21:59, BALATON Zoltan wrote:
->>>>>> On Tue, 28 Oct 2025, Philippe Mathieu-Daudé wrote:
->>>>>>> On 27/10/25 20:47, BALATON Zoltan wrote:
->>>>>>>> On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
->>>>>>>>> On 25/10/25 01:31, BALATON Zoltan wrote:
->>>>>>>>>> These memory windows are a result of the address decoding in the
->>>>>>>>>> Articia S north bridge so better model it there and not in board code.
->>>>>>>>>>
->>>>>>>>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>>>>>>>> ---
->>>>>>>>>>   hw/pci-host/articia.c | 15 ++++++++++++++-
->>>>>>>>>>   hw/ppc/amigaone.c     | 28 +++++-----------------------
->>>>>>>>>>   hw/ppc/pegasos2.c     | 13 -------------
->>>>>>>>>>   3 files changed, 19 insertions(+), 37 deletions(-)
->>>>>>>>>
-> [...]
->> It looks like we won't be able to come to an agreement before the freeze and I 
->> don't have time now to change this patch but don't want to miss the release with 
->> this series that finishes pegasos renaming because of this. So for this patch I'd 
->> say since this is already how it is now and it does not make it worse and this 
->> object is not user creatable anyway so cannot leak please take it as it is and 
->> we'll do a clean up later after we finish discussion.
-> 
-> As for all of these files I'm the maintainer let me make an executive decision here 
-> to keep this patch without Philippe's reviewed-by for now to be able to move on with 
-> this series before the freeze. Fixing the theoretical leak can be done on top and 
-> since that's a fix it can be done during soft freeze that would give us more time. So 
-> Harsh please go ahead and merge this series too if there are no other concerns. I'll 
-> then address this later together with other similar issues elsewhere.
+Coverity: CID 1642764
+Fixes: f62226f7dc4 ("hw/core/loader: improve error handling in image loading functions")
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/core/loader.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I think the issue here is that several people have now raised concerns as to the way 
-you are trying to use MemoryRegions (both here and in the raven series): simply put, 
-if reviewers didn't see any problems with this approach, your series would already 
-have review tags.
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 73564a2a46..1598dca03c 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -86,6 +86,7 @@ int64_t get_image_size(const char *filename, Error **errp)
+ 
+     if (size < 0) {
+         error_setg_errno(errp, errno, "lseek failure: %s", filename);
++        close(fd);
+         return -1;
+     }
+ 
+-- 
+2.51.0
 
-If you want to suggest a different approach to managing MemoryRegions, then I would 
-suggest you send a proposal to the mailing list so it can be reviewed by the QOM and 
-memory people (along with updated code style documentation so we can all use it). But 
-with freeze coming up in a few days this is certainly out of scope for 10.2.
-
-For now I would suggest the easiest way to get review tags is to stick with the 
-existing inline MemoryRegion approach for 10.2 to aid getting your patches merged: 
-it's simply not fair to put time pressure on Harsh to merge patches in this way.
-
-
-ATB,
-
-Mark.
 
