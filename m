@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7923ECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06F62CCF9FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vETyL-0000Ye-Fc; Thu, 30 Oct 2025 10:49:55 -0400
+	id 1vETyb-0000vO-2x; Thu, 30 Oct 2025 10:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vETyF-0000WC-BP
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:49:47 -0400
+ id 1vETyW-0000mE-UZ
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vETy7-0001Ox-Fr
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:49:47 -0400
+ id 1vETyK-0001Qi-Kv
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761835774;
+ s=mimecast20190719; t=1761835789;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PlevrSvzWBhggmPHA7hhe6GL7fX65li+MyacTeAvpos=;
- b=Y36Bz35ccav5PpoJRZTw/8kTdCCHoGei5XsI5L1fRYgBCVvqIpFO8gq0JQHdBMTj+XX9eo
- E2GFff0jPnxj3sxKn3GZd88bvs00wgnbfrV0lSApsyrZ6Q8A14yp8Xd9yjZvysRNEzUg82
- DYQEGwaBueES1Szidn40yn52bFQn//I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9VCUq/HIHBYwxvVt40JsI8yTa5W9mzMEdms0e8ecB5c=;
+ b=jShu7x8T8HSA7BgSngDjUajwQlvUuGmINC4MewZjaotIZDjpxUhikRQaKCQM52EybWYxcf
+ p3mufIirxcgW5r3M5KxVLCzGxjSwrU/f1lJvRO8AZXhwN33+okI4NcK60eArIEDS0/2dtC
+ 3Ky9qQMJxjnhjzR4E5+nVKD1otJcnZA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-cE0AdseLMoKZnX5gMmStdw-1; Thu,
- 30 Oct 2025 10:49:33 -0400
-X-MC-Unique: cE0AdseLMoKZnX5gMmStdw-1
-X-Mimecast-MFC-AGG-ID: cE0AdseLMoKZnX5gMmStdw_1761835772
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-503--0NIDpVHNjOjfqo2twqpyQ-1; Thu,
+ 30 Oct 2025 10:49:45 -0400
+X-MC-Unique: -0NIDpVHNjOjfqo2twqpyQ-1
+X-Mimecast-MFC-AGG-ID: -0NIDpVHNjOjfqo2twqpyQ_1761835784
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C3281954231; Thu, 30 Oct 2025 14:49:32 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 921921955DCF; Thu, 30 Oct 2025 14:49:44 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.122])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 24E8130001A1; Thu, 30 Oct 2025 14:49:30 +0000 (UTC)
+ id 35C4130001A1; Thu, 30 Oct 2025 14:49:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  devel@lists.libvirt.org
-Subject: [PATCH 01/21] crypto: remove redundant parameter checking CA certs
-Date: Thu, 30 Oct 2025 14:49:07 +0000
-Message-ID: <20251030144927.2241109-2-berrange@redhat.com>
+Subject: [PATCH 07/21] crypto: remove needless indirection via parent_obj field
+Date: Thu, 30 Oct 2025 14:49:13 +0000
+Message-ID: <20251030144927.2241109-8-berrange@redhat.com>
 In-Reply-To: <20251030144927.2241109-1-berrange@redhat.com>
 References: <20251030144927.2241109-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -70,7 +70,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,54 +86,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The only caller of qcrypto_tls_creds_check_authority_chain always
-passes 'true' for the 'isCA' parameter. The point of this method
-is to check the CA chani, so no other value would ever make sense.
+The reload method already has a pointer to the parent object in
+the 'creds' parameter that is passed in, so indirect access via
+the subclass 'parent_obj' field is redundant.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/tlscredsx509.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ crypto/tlscredsx509.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-index db2b74bafa..847fd4d9fa 100644
+index e5b869a35f..39f80b33ad 100644
 --- a/crypto/tlscredsx509.c
 +++ b/crypto/tlscredsx509.c
-@@ -315,7 +315,6 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
-                                         unsigned int ncacerts,
-                                         const char *cacertFile,
-                                         bool isServer,
--                                        bool isCA,
-                                         Error **errp)
- {
-     gnutls_x509_crt_t cert_to_check = certs[ncerts - 1];
-@@ -356,7 +355,7 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
-              */
-             return qcrypto_tls_creds_check_cert(
-                 creds, cert_to_check, cacertFile,
--                isServer, isCA, errp);
-+                isServer, true, errp);
-         }
-         for (int i = 0; i < ncacerts; i++) {
-             if (gnutls_x509_crt_check_issuer(cert_to_check,
-@@ -370,7 +369,7 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
-         }
+@@ -773,15 +773,15 @@ qcrypto_tls_creds_x509_reload(QCryptoTLSCreds *creds, Error **errp)
+     QCryptoTLSCredsX509 *x509_creds = QCRYPTO_TLS_CREDS_X509(creds);
+     Error *local_err = NULL;
+     gnutls_certificate_credentials_t creds_data = x509_creds->data;
+-    gnutls_dh_params_t creds_dh_params = x509_creds->parent_obj.dh_params;
++    gnutls_dh_params_t creds_dh_params = creds->dh_params;
  
-         if (qcrypto_tls_creds_check_cert(creds, cert_issuer, cacertFile,
--                                         isServer, isCA, errp) < 0) {
-+                                         isServer, true, errp) < 0) {
-             return -1;
-         }
- 
-@@ -534,7 +533,7 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
-                                                 certs, ncerts,
-                                                 cacerts, ncacerts,
-                                                 cacertFile, isServer,
--                                                true, errp) < 0) {
-+                                                errp) < 0) {
-         goto cleanup;
+     x509_creds->data = NULL;
+-    x509_creds->parent_obj.dh_params = NULL;
++    creds->dh_params = NULL;
+     qcrypto_tls_creds_x509_load(x509_creds, &local_err);
+     if (local_err) {
+         qcrypto_tls_creds_x509_unload(x509_creds);
+         x509_creds->data = creds_data;
+-        x509_creds->parent_obj.dh_params = creds_dh_params;
++        creds->dh_params = creds_dh_params;
+         error_propagate(errp, local_err);
+         return false;
      }
- 
 -- 
 2.51.1
 
