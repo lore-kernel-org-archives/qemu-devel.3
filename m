@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17254CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7785FCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:31:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEO2a-0007ll-IZ; Thu, 30 Oct 2025 04:29:52 -0400
+	id 1vEO3D-0008Fi-QM; Thu, 30 Oct 2025 04:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEO2Z-0007lF-CI
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:29:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEO39-0008Di-TL
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:30:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEO2S-0004zL-2W
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:29:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEO33-0005Gd-9T
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:30:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761812982;
+ s=mimecast20190719; t=1761813016;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=u+XakWZqWO2q4rnbaFIdBjPO6h8waqIqnzqZGe2qrSA=;
- b=XHGMqNEo6SRo8Y4KdKv6iXAEeWjchUJMLW1Fms5hbPiAVwMPFTNUX6fqrGSROsHuIAW4rC
- 7vC3p8bCQE3rPSMnOPpDfl1k9Xekyp/ZZ0G+SnqLzegcrHGX5ZRQrwbfVNtv7Z3Hebhq56
- vIaSl1FRHPnP7c4gC8PmWt+vZtGEcac=
+ bh=mQON9S8HA6JKbFMviDz3n6JvHKmQgUkfE7L3JghWZNM=;
+ b=YxofZfcIiSxHOXbW0wqZ3jFUQ+A5gOFJWKRznrz/IF09mqWNNVvNw+suQUo5KEPrNAs+HP
+ oKyZ3t8S3qMovWt38v+MFHwDTG7ZyNqKpDMoKMFkqUvzL0DN+y/k2OAg1TQ6BJW4E74Lnx
+ Sd/CSGZRvyLtTYa/9FCNYWIkbLmHoOQ=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-yBo6pf3oMDyTFpuRmmFXIA-1; Thu, 30 Oct 2025 04:29:40 -0400
-X-MC-Unique: yBo6pf3oMDyTFpuRmmFXIA-1
-X-Mimecast-MFC-AGG-ID: yBo6pf3oMDyTFpuRmmFXIA_1761812979
+ us-mta-379-ml-Pz5U5Mo-3-Io-wKN_uw-1; Thu, 30 Oct 2025 04:30:12 -0400
+X-MC-Unique: ml-Pz5U5Mo-3-Io-wKN_uw-1
+X-Mimecast-MFC-AGG-ID: ml-Pz5U5Mo-3-Io-wKN_uw_1761813011
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-429893e2905so933960f8f.3
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 01:29:40 -0700 (PDT)
+ ffacd0b85a97d-427015f63faso414525f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 01:30:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761812979; x=1762417779;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u+XakWZqWO2q4rnbaFIdBjPO6h8waqIqnzqZGe2qrSA=;
- b=xD76xKHp16VKuZfGWg41PodrNAoF7tEWENdDxGslZDg3XSVFZ1gopzk5nwcpBZyF7s
- YDjsp98hvMSZZ9bN+rLqhm7KnJYFCTtdB2ivBqdXO+k6Nca3Fz7ZJJvWuip3KkpmX96U
- rD9JaPf4YIj3BuhLra8ASpKEpA+WqzeNC77+Uc9XWNhmBCWXZ+Hx3qoGy/vy5Z91ZlDb
- 8zg/EI/mg21tyXwTFIX9HyZgghFhaHMP8jZQN238p5hfOA2fZ8MW8f0HBAz1k3+je0Jc
- veB3uMfdG5lzmy1/vgp6pRppkHrA7jcgY7lxv6CfQNkHuzFTuQwLtd4kulnTKSktBjPa
- Vyvg==
+ d=1e100.net; s=20230601; t=1761813011; x=1762417811;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mQON9S8HA6JKbFMviDz3n6JvHKmQgUkfE7L3JghWZNM=;
+ b=xAj2LNmbOqHAZyEj1xJ0GvEr/huTYL36IYzSiZS67ngbyDEzpF2UvyB3VzExh6zIuv
+ gGTS3Vq6hWFDlXzHsUnOApToI/O3eUOsTqmSH/McdbJ7vE4rrGuNsMy0ztRxxdaaojAd
+ sVoY34KglqBlodTZgN9sSAPh+wZEe6IyVVvPFIeZyEwJYgZWtpHqYyJi3F5I7ISuQEc6
+ z744w1lLKGckaixmPq5q/APtX45Yk4RLb4LtJFKr5NjYWdJZCCib58baBRgv5foKxcF4
+ hv1EqqmCFrAa/psC7sPFI8D1rGBlauKNH2PWH/TLta8zYBv3pHQY45kh8tF0iUQ8ch8h
+ 6K0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcATEsHl1Y4pVeBbgHydOVyvq0JXl/LsLFLZ8d+HRc2j133wCkKbLruJCTRadzXWbqVJ2HhkbEgnEe@nongnu.org
-X-Gm-Message-State: AOJu0Yx2AGieMCKh13FlNsXhj8dNN+JuARh/EcgkCpU5tpE2IP5bVuRl
- xsFaSOWVAgu/92VVNvPnQl8i2lmOl1/5c/9mmKJRjI1TycfK+ou0YuVHQrzXKiVUMwAuIIhQbQ2
- do422prabNdNxQrUx0mZ2LxdTzXbGfQ0Pqf4jcF1gT4axE+LXFCJA/4q5
-X-Gm-Gg: ASbGncs+GKpsb/acU1PvqYCoJvX2ztKEWoijZRFUTcr4F+mQ4skc8F7rHYeYVhAYFnB
- lObSFeNRTVWggFDnYHsSlrmEMO/AIAIn7mMQbk+Wu+9O+2zo+fjg1ZkCR7Mw/rwqVPWYCxNfDWf
- OQ35PzAwI+NGQ1yihx0TXTA+bvpxaTuNhKd74nMQU3KFZbxbngtPk2BEqPrJ+C96onptu50h7ly
- HTOFwXf8JfoCj8nHtjkb1rRsqV3oXDbycNmVQEXFMs/UDDioMYsuHFFsMkZJZ57vNzuckOi4aHp
- i8x8qUsW8wXRBlFC8Qy2fwQ9LhC1HlQ1EhPHAvWzcsO2NErHX7j2ShhQXWYh9GxVWT632BA=
-X-Received: by 2002:a05:6000:260f:b0:429:b8c7:1817 with SMTP id
- ffacd0b85a97d-429b8c71e1fmr681540f8f.30.1761812979216; 
- Thu, 30 Oct 2025 01:29:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEm7zWtir7Pmm1ce5EAUE5V09Vj3lQ3ip1kw/stZ35p3jPKvLE3DUinefP0h2RYm854Odx1WA==
-X-Received: by 2002:a05:6000:260f:b0:429:b8c7:1817 with SMTP id
- ffacd0b85a97d-429b8c71e1fmr681511f8f.30.1761812978529; 
- Thu, 30 Oct 2025 01:29:38 -0700 (PDT)
+ AJvYcCXHH6Z3Wf3FMblDLGMf87tXfV49UalXvIZPf80izxa01AsSOFy5gQjn8Uluqouve9DPlKsa1aM/5lAE@nongnu.org
+X-Gm-Message-State: AOJu0Ywbvxy/+JdYYf2VRruRVbJ0RiUGvwwFlY3bWnit3TAp7oAsVsnl
+ lKhho5BLijVUM1k95fZzqDsYAHN0WAafGMGsFtCO6T+ETL2IjtL3FRfu8HCL8PK8Zahp9Pmsdxj
+ PGN/dKnRmnA/agdOLZESdGmajDcZPo0U9SGWyi+zuGrR04dp4grkGscE3
+X-Gm-Gg: ASbGncvPnFsqGimwdFZ4d22ti924rpDEIoXGIAVlMpr2CbIuxvdhe3p2e6Cpr3AWxzn
+ GSIKWdCNWqPdo1p0JSqak5uaYJo7R02w6DYMKGsUXuiV90xunD0ZD98fESKj4bXPAegM7Z0amet
+ Je6xk4hAiweMXW4zD9J3Vqxr+rkbFhvysj6IR9nwTwiw3116P2H92jAzxs2ds8OkeI8ad4/Bz/5
+ rvnit1KsbfYfwhktZ/qW7KRDlbcIz8bPTNgzrnDTtVWlHWWB/vZh2OV6Axj1U02zWTWa2NKOUs9
+ OOMg1NcwdIzePTCCiCtXsqsEj8Po/g4gyeX6LZD0eenp7/AbTqeJMuLYUaFrwk1j7x2bcHU=
+X-Received: by 2002:a5d:64c5:0:b0:426:d80c:2759 with SMTP id
+ ffacd0b85a97d-429aef82f47mr4885510f8f.25.1761813011214; 
+ Thu, 30 Oct 2025 01:30:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoUC6bUe3NxZ/vAYQDgNfVowszSKOf5vad0KJBIQBrv2pA4CRHIAwfIhzRCQThMioA1QfFOQ==
+X-Received: by 2002:a5d:64c5:0:b0:426:d80c:2759 with SMTP id
+ ffacd0b85a97d-429aef82f47mr4885473f8f.25.1761813010783; 
+ Thu, 30 Oct 2025 01:30:10 -0700 (PDT)
 Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477289e7cf5sm28240625e9.14.2025.10.30.01.29.37
+ ffacd0b85a97d-429952cb55asm30854722f8f.17.2025.10.30.01.30.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 01:29:38 -0700 (PDT)
-Message-ID: <6d5432b0-8156-4e26-a65e-04471e3b36ed@redhat.com>
-Date: Thu, 30 Oct 2025 09:29:37 +0100
+ Thu, 30 Oct 2025 01:30:10 -0700 (PDT)
+Message-ID: <3727d68c-ca7f-45f0-af74-b695cc88afdb@redhat.com>
+Date: Thu, 30 Oct 2025 09:30:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 04/10] python/mkvenv: bump 'qemu.qmp' dependency for
- testdeps
+Subject: Re: [PATCH RFC 05/10] python/mkvenv: rename 'testdeps' to 'functests'
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -84,9 +83,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
 References: <20251028220342.1407883-1-jsnow@redhat.com>
- <20251028220342.1407883-5-jsnow@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20251028220342.1407883-6-jsnow@redhat.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -129,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251028220342.1407883-5-jsnow@redhat.com>
+In-Reply-To: <20251028220342.1407883-6-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -141,7 +140,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,29 +157,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/10/2025 23.03, John Snow wrote:
-> Firstly, there is a new v0.0.5 that should be used instead of
-> v0.0.3.
-> 
-> Secondly, the use of a period in the key name does not behave as
-> expected when installing and checking for dependencies, so use
-> underscore instead - which does indeed resolve to the same package.
+> pygdmi is only needed for functional tests and not tests in general; to
+> prepare for more universally required test dependencies, rename this
+> dependency group "functests" instead.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   pythondeps.toml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   pythondeps.toml        | 2 +-
+>   tests/Makefile.include | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/pythondeps.toml b/pythondeps.toml
-> index 98e99e79005..daf5a18989a 100644
+> index daf5a18989a..3d6907af799 100644
 > --- a/pythondeps.toml
 > +++ b/pythondeps.toml
-> @@ -32,5 +32,5 @@ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+> @@ -31,6 +31,6 @@ meson = { accepted = ">=1.9.0", installed = "1.9.0", canary = "meson" }
+>   sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
 >   sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
 >   
->   [testdeps]
-> -qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
-> +qemu_qmp = { accepted = ">=0.0.5", installed = "0.0.5" }
+> -[testdeps]
+> +[functests]
+>   qemu_qmp = { accepted = ">=0.0.5", installed = "0.0.5" }
 >   pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
+> diff --git a/tests/Makefile.include b/tests/Makefile.include
+> index d4dfbf3716d..6f86eb283d3 100644
+> --- a/tests/Makefile.include
+> +++ b/tests/Makefile.include
+> @@ -98,7 +98,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+>   
+>   $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+>   	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+> -	$(MKVENV_ENSUREGROUP) $< testdeps
+> +	$(MKVENV_ENSUREGROUP) $< functests
+>   	$(call quiet-command, touch $@)
+>   
+>   check-venv: $(TESTS_VENV_TOKEN)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
