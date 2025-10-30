@@ -4,168 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D59CCF9F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 05:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349AFCCF9F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 05:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vELDl-0007qS-K3; Thu, 30 Oct 2025 01:29:13 -0400
+	id 1vELWa-0002V0-CV; Thu, 30 Oct 2025 01:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vELDk-0007q1-0o; Thu, 30 Oct 2025 01:29:12 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <nanliu@redhat.com>) id 1vELWX-0002QJ-UB
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 01:48:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vELDY-0005hV-1k; Thu, 30 Oct 2025 01:29:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YiDPszAoIRjrMgQuF931D6VcHQGM1QjEQp4U5/GZU0EvzrT4gdycR8ORQnTkEaivDKIY7IsfBKvdVLEBTk9Cf5RG+KwF68yirp3H++Cst8kgdWSiKD0CkebOK/wx/DWi78QW41T4Sm2M5nNgUzYPoDK8WQflJ8H3zD0yI+LfAClxDU0VDQKL2X4EcqRVlc4/bbta/tFUwbEb6uOiyoQHYI8C4ZHRKk74/GJ8rdFzBUGmN6zA1ggFN3mjgke9CGdXp6rBH8W5UgXA1OCJvLxHTkNfJrFuB2utzkwcOA2TuE2o5fU9NqhDiWumjhe6g+gbCNZXrYdyILC3IF4Ks+GB0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rHSzZNzRtQ3dtFzlut9II97HHMtsYjqlQfNQPZbkQaQ=;
- b=IaZH7BDeCv/yVsPhCnJAHf47GGBt/i3giI4GJ/7dA+Ecoba22qpos7TBiEacioglE0kSZ7X2O31V9h3Z6eNN2mE2L9vvX4faBG5spp5EDxDWbUhstJIvopAUCED+nrBlwKW3eohrJ8wXzlzwdmag0LS1nDcibTIk0uZLM4tDRFMibHbiF4C8WZixP5KJ42lcZ/ml4xmWxuOqW46zMGfHkiuMSeoeblZN5+eUNyU7l0RiT3nAUr/1ZzWqRLUaOMh8hmLjWpVBHuuZeo/IJd3zJkGutN73QV5NVm+R+TehL848mIaAmOyFCfHVC7v+p0quh/Mb9MTXfyj21E3UTxq4TQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rHSzZNzRtQ3dtFzlut9II97HHMtsYjqlQfNQPZbkQaQ=;
- b=gfVf9sRWx+c4fdwzqd15UGEuaxhCze5KNCQqkAXkiLUc3V0PMyOl4sVTQwBdaTIJ/c/Maw8xRT+yOIn3Y2Ald6BJlxrTp/ekaZqtcGklq0Lm50A/erzXFHQeim+vyTytPNcKe4IXO8xkquoyIootm2TDp26atdIOV9JrFDPMUcWlISrp9M2FYaL0XjsTTsf3IsgLV/n/gr9KmfzNpAe5Od2sJll3NUzSWBNY7GD+xMg3Ww5FnKtBLRdK/tmc/bQ546BbDVMm2Fu90INw2Qp3riSC3JjVedYM4bc0HCZrDPEBXR7Qf6Dgauztg7Io8W400OwTizYlP8tQknwtRhjopg==
-Received: from SN6PR2101CA0022.namprd21.prod.outlook.com
- (2603:10b6:805:106::32) by SA3PR12MB9227.namprd12.prod.outlook.com
- (2603:10b6:806:398::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.13; Thu, 30 Oct
- 2025 05:28:48 +0000
-Received: from SA2PEPF00003AE6.namprd02.prod.outlook.com
- (2603:10b6:805:106:cafe::75) by SN6PR2101CA0022.outlook.office365.com
- (2603:10b6:805:106::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9298.5 via Frontend Transport; Thu,
- 30 Oct 2025 05:28:48 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SA2PEPF00003AE6.mail.protection.outlook.com (10.167.248.6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9275.10 via Frontend Transport; Thu, 30 Oct 2025 05:28:48 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 29 Oct
- 2025 22:28:35 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 29 Oct
- 2025 22:28:35 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 29 Oct 2025 22:28:34 -0700
-Date: Wed, 29 Oct 2025 22:28:32 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
- reset
-Message-ID: <aQL3gNT+1Ehgi1pn@Asurada-Nvidia>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-20-skolothumtho@nvidia.com>
- <aPF9l5GwctGN0tqT@Asurada-Nvidia>
- <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
- <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aQGXibWAiMpXAQlF@Asurada-Nvidia>
- <CH3PR12MB7548FB14A0D0F08688DE9CCDABFAA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <nanliu@redhat.com>) id 1vELWP-0000NT-8U
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 01:48:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761803307;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zKDXzeGoT92LMljzjA5alHgmCQRBI+W+byfC8plt9yI=;
+ b=JDbBhx3H/FwxVv3HeOA11xai95SITzLsW33mS1mpOoKh6QlCrAJxKT3jrj+bVjsHcWGDYT
+ T1LbQRftkGRl6RsmBUs+lLKhQRAuI5KFyF6aQUQCIL+wusNxpNQ3DJpgRcwIl0KOR+vfjJ
+ jJlAgAlwXv/3qxoYwiUItdyq3nVC02o=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-YxymPgJHM4eQ3kG_12S26g-1; Thu, 30 Oct 2025 01:47:06 -0400
+X-MC-Unique: YxymPgJHM4eQ3kG_12S26g-1
+X-Mimecast-MFC-AGG-ID: YxymPgJHM4eQ3kG_12S26g_1761803225
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-63c0edb0593so676834a12.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 22:47:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761803224; x=1762408024;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zKDXzeGoT92LMljzjA5alHgmCQRBI+W+byfC8plt9yI=;
+ b=AMWIru2JT7oWM0MVQU1/5KNuVNSAe5y8el6cmk9SvssMhWobuBLLsom23GsYUw+Gur
+ 8+GGEbyGI2p1c/fHFJVnD5G28FCdDDu181YIicpU+rt4kmazfVukOSXy3ZlEsPJ6a5wb
+ v9OoGf2RUHhp22GRmlofulYNmF8uUkQLSfjTWxYGa4DRKPtQZ70u0QyVo5bSRdzCdvii
+ 7iLNIfYrLayqI1Ljh21R1Lxzp+ptWOFTl9J3Hn1BbcQybJzLHjSRllTxPhCkTnNHU47g
+ +DLRhMbR2rc2A+rTFRVPEyppXI+wbt/LtRkJ/xkTatpJbp/cSH4j/zZklIIAOAQc3aIg
+ 1LQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOXsISUY/eHYANYjBAWs3QLe1sIq8wQrP+XsVXT0oHYvh+oJ9YxSl3m+VlHSpbSnbDn32E5Gryhf/l@nongnu.org
+X-Gm-Message-State: AOJu0Yz6oS8s0EkEmaQELx1u64N0MU9HI9RE22MT1gB5mCLLzmwHHZ84
+ gra57QG85oMdtwjLe/iLsPwIqayRY8CJ6JSNHByl1KOlOMagnpeaRvsTiA3KqOJxxg2aHLlQtOC
+ HUDVF6zFG7I7A2vA6VywuIxGBF82Y+yjsNhvIBmp0kfvdUhBNOy6wNeIAUfj3mewiMbC7FZdq8f
+ BvwV+H4EPhlJDzJvCFAHHNzlmdfFaSBQqiDoPZu7xaE09s7eQ=
+X-Gm-Gg: ASbGncsw6kdwwwuoydyInAHqz9wjTAdE8KxBXSjMEJNnv0eB46NHxIctVBK+oXv9UwN
+ Hp7nFVo1WxLemF5BUBZ/tvZYyA+z6D/MAqhxqjD/LIHh2jfnjNrgCN6KW7D0+qD3/JEcfTJvb+2
+ QQS0YLKgXcTN8xfLy+WF9EVTSCnedQ8tHM9bncPeGP4tOI0LsWyguNm4QT
+X-Received: by 2002:a05:6402:3553:b0:633:d0b7:d6d2 with SMTP id
+ 4fb4d7f45d1cf-64061a3f66cmr1571637a12.18.1761803224225; 
+ Wed, 29 Oct 2025 22:47:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHv1p+gOEEmlhrPO8SsbzlyARRTmp7Hn7fRGHKuEIr0We62RhhnOazO3T6eYWOP9K6TIwjDSY9U8jkDvo3Vris=
+X-Received: by 2002:a05:6402:3553:b0:633:d0b7:d6d2 with SMTP id
+ 4fb4d7f45d1cf-64061a3f66cmr1571626a12.18.1761803223816; Wed, 29 Oct 2025
+ 22:47:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CH3PR12MB7548FB14A0D0F08688DE9CCDABFAA@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00003AE6:EE_|SA3PR12MB9227:EE_
-X-MS-Office365-Filtering-Correlation-Id: 207cf71f-2d72-496f-b2ea-08de17753451
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|7416014|376014|36860700013|13003099007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?d2pDWWFHM0UwMklPVFM3L3o3cUNxTER2ZUdQd0pRWWY1clJZQmVNTUd4eFl1?=
- =?utf-8?B?YVRqSW1LQStFQk5oaTFORVE4UVRQcVlGNnlmSFMrSnB0aFZCaldhSnB3VUZC?=
- =?utf-8?B?aSt6c0lNSHRUbTl2SjVLQkZ0THd5VW4vazJzaUYvMVIvTmk1ZFZFYnF0b2hL?=
- =?utf-8?B?eDQ4NDVSVFNrWWgvcDVpV0NGdFptbGpsYlkyKzhXaVVwYUdJRTFZT0xGb1B6?=
- =?utf-8?B?RXlDRllXSUhMNnVsMm5UWkc5d3VBSlBwdjhDdWIwN2tvUU52QlMzWXA0RDM3?=
- =?utf-8?B?VGlOZHBNbUMyOFg2SVI0UzdXVW1mK3NEU2pGcGI1VkFNUkpyZTRzR0hLNnVK?=
- =?utf-8?B?NTN2a1FQSDM5cWVud3ArUHQ2UnNnM1BlZ1pESjRKekljdnpDZGQ2a3ZGWVAy?=
- =?utf-8?B?cXFVV0FkRmxKS3Q1dFdzeVR0cHlGTmtXMnhmSXl0anpiRG5STGJLOEphN2tl?=
- =?utf-8?B?UExMN1FOYTEvYTJHSlRjSURaTmRJeXVBZ2hsQ3REbUVtT29CbU1LWmZjNksw?=
- =?utf-8?B?TDFJS1pCN3A0WXpzVXl0WVJJMUF6T0FYZ1pTWmdKNkZyUGxxYkNGako4N29t?=
- =?utf-8?B?cWdmd0pEaTN0QnFLaE1YaTBwTnJuZVp1bzJOTTF6UEtTN1dOZ09Sbk9kYWly?=
- =?utf-8?B?ekJZdi9uWDc5OGprOUdXNzBWK0RLU2FyQ3I0T0hqYnRyZGRCSDR3RDdMNFUx?=
- =?utf-8?B?aHBUNEVwbCswTmpJWjh3dHNmS2l6MW90OGNYa0E1ZGE5UXEyVG9ZazFEczhr?=
- =?utf-8?B?ZXU2ZFZ2L2VzMkNLZXJjbHplcVg2cnhjNVIvSkhURmI5UDgySVZhUmxKeHNy?=
- =?utf-8?B?a3JpZ1VaNDVCZ21JV1NjNzNLSVlJYTQ2U2haZVQ1RWFFUW1rb25MeW9mbGh5?=
- =?utf-8?B?elF5VnJXWXl6R0piVUo2Z0x3aFJoSkEwd3pmWWcrYlFkYk5xUDRicjliSkQ2?=
- =?utf-8?B?cU1YeWo2d3BaS2dWMXBvc0JVTUdUNkdTbyt3RnppQVpseVdaeGJJK0ZVSzlh?=
- =?utf-8?B?UitlMnhHMnRxQTdxejRDdk11b2Z2aWJyVGJSRzNMbTlhazF6Z2c3V1BMa0h1?=
- =?utf-8?B?TEhwTWVNc0JzLzVLZmx6aTdJYzB4cjVkb29kSlprcTQ2RUlyTmxOZ2ZhMGlK?=
- =?utf-8?B?cDNxeVRWZFhxZFNsZUlEbVg4US9KV2dvVVU0cDB2TE1XRjBQbmQrTWZjWnJZ?=
- =?utf-8?B?bUlmUWgwVjBBa2lTOFZkc1loV2RFRUNFRmRtYTg5SDhEdkxGL0NmT3AvNDli?=
- =?utf-8?B?alNBbDh0MDYxdDBGOHRHWlE1bVdzYjdxVHBsMkI0T0tzbjJVL2tLcFh4ak5Z?=
- =?utf-8?B?T1d6b3RTeGNKV0dBM2VwSmlhM2l5ZkpqVzVTclFFZEFuOVhMU1VHNDZRYTV2?=
- =?utf-8?B?RDFEQTQydnVkYTVFb3lvRDFHMGJaOFlxcC81T2FFTVBZQ2dvTHJYbGREcGNk?=
- =?utf-8?B?SFBzZDJwaEFpbGRvK1JBS3hwT2lIaWZ6VmxZVkFrWC9jOC9GbmhucUNuQUFq?=
- =?utf-8?B?Q21ZRFZVaFdCUFZpRGhTNlFMR1VqUTI0RGhNUkY5bFZyM1RWVGNwWjZ1TjFw?=
- =?utf-8?B?V2l0cmN0ZkJBYlp1TXlYZlhJaWR3NDlFUFRMeWZhQjZ2MERQU0RhTHlqTTF3?=
- =?utf-8?B?MmtkTk52TVNxVkZYK0dBVVh1VjF2TUpLQVFEK0xrT2ZIZytaMlptRHMvY3Ez?=
- =?utf-8?B?WnplcHJiSVVreDc5Y1V3K3BZZUYrbUM0clhUVUVzeEdaMk1qclBwSlZOclI4?=
- =?utf-8?B?RGhRdWY3eDZvWDA3VVN4eW9DTkZ0cE05ZFlDZXdSSXFvdjNPMVZIcnpLTzBB?=
- =?utf-8?B?UnJVNjZHMHNJLzZxcU9jTWErWW1uUUUwMlN0UTk1bWZZNFd5RWlIQmVPeVJU?=
- =?utf-8?B?cElyZFBjNHRudytaZGhMc2REK3poN0hzTFplZENQYUpHeFkrWmh6RE93WWpa?=
- =?utf-8?B?b1E0TGxWd1VOaXE4Wk1lZmppMmtTRVl0QndhWTZKaGJQRW5zKzFIOFgzYkRh?=
- =?utf-8?B?VGIrb3dWZ3A1UkQ1anhZMW83RlZ0RDJsMXVsNFU2aW9jZFFDck1ObUJKL1o1?=
- =?utf-8?B?QnFxNjUyMTVxUTUxd2xTRHFGbTE3WURRT3FUOVJCb1lPdjdXMDJXRG51eGtN?=
- =?utf-8?Q?fA8E=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(7416014)(376014)(36860700013)(13003099007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2025 05:28:48.8737 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 207cf71f-2d72-496f-b2ea-08de17753451
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003AE6.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9227
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
- envelope-from=nicolinc@nvidia.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.399, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20250922065714.93081-1-nanliu@redhat.com>
+ <CAFEAcA8pLFu6eOK5N+E97qo5PCp3OW3BRfYNSEL7=YQS6+eh2g@mail.gmail.com>
+ <fcf01a1c-3503-4397-a41b-d453ca2b7df9@tls.msk.ru>
+ <CAFEAcA_BR4VEsZrq1eq19E6iguk49W=Fx2OKQvkvTZ7_6Pd0KA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_BR4VEsZrq1eq19E6iguk49W=Fx2OKQvkvTZ7_6Pd0KA@mail.gmail.com>
+From: NaNa Liu <nanliu@redhat.com>
+Date: Thu, 30 Oct 2025 13:46:52 +0800
+X-Gm-Features: AWmQ_bmMsu5UWgtKZu-L-DwXOOZmZTOPccIj-DRmRArJnWINPBcLK69IAOEkaPs
+Message-ID: <CANUVZAznv1aP5DH6pHEQBZGxczkoNVQfKR5oOV7eTyrk4rVrpQ@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel: Correct uefi-vars-x64 device name
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, kraxel@redhat.com,
+ "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000051eab7064259c7cd"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=nanliu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,43 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 11:19:59AM -0700, Shameer Kolothum wrote:
-> > According to SMMU spec 6.3 GBPA register's Additional information:
-> >  - If SMMU_IDR1.ATTR_TYPES_OVR == 0, MTCFG, SHCFG, ALLOCCFG are
-> >    effectively fixed as Use incoming and it is IMPLEMENTATION
-> >    SPECIFIC whether these fields read as zero or a previously
-> >    written value. In this case, MemAttr reads as UNKNOWN.
-> >  - If SMMU_IDR1.ATTR_PERMS_OVR == 0, INSTCFG and PRIVCFG are
-> >    effectively fixed as Use incoming and it is IMPLEMENTATION
-> >    SPECIFIC whether these fields read as zero or a previously
-> >    written value.
-> > 
-> > On the other hand, QEMU seems to set both OVR fields to 0, so all
-> > those "other attributes" wouldn't be necessarily forwarded to the
-> > kernel?
-> 
-> OK. Based on the QEMU OVR value, GBPA now resets to 0x1000, meaning
-> SHCFG = 0b01 (Use incoming). However, in the current vSTE bypass/abort
-> cases, SHCFG is set to 0b00 (Non-shareable).
+--00000000000051eab7064259c7cd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ah, no, my bad. SHCFG will need to be forwarded, if the hw_info
-call reports that host SMMU has SMMU_IDR1.ATTR_TYPES_OVR == 1.
+On Sat, Sep 27, 2025 at 7:41=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
 
-So, the SHCFG=incoming has been the default case, but to support
-a non-incoming configuration, kernel needs to allow SHCFG in the
-vSTE.
+> On Sat, 27 Sept 2025 at 09:48, Michael Tokarev <mjt@tls.msk.ru> wrote:
+> >
+> > On 23.09.2025 14:57, Peter Maydell wrote:
+> >
+> > > We could probably also correct the bit of the text in this file
+> > > that currently reads "depend on SMM emulation on x64" to either
+> > > say "x86" or "x86_64".
+> >
+> > This one will be a bit more than trivial :)  I for one don't know
+> > if this is related to any x86 or to x86_64 only.
+>
+> I just mean exactly and specifically the one place in this
+> file which says "x64" and ought to say either "x86" or
+> "x86_64". To me a single word change is pretty trivial,
+> especially since nowhere else in our docs do we use "x64".
+>
+> This is to ensure consistency between the documentation and the API code
+(var-service-api.h) parameters and json file, which use "uefi-vars-x64".
 
-> However, I think the SHCFG will be overridden by S2FWB.
 
-I don't think S2FWB affects SHCFG. SHCFG has been set by kernel:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c?h=v6.18-rc3#n1681
+Thanks.
+Nana
 
-> So, I don’t think we need to modify anything at this stage. In general,
-> though, the kernel might need to propagate some of these attributes,
-> possibly INSTCFG and PRIVCFG, since they are not overridden by S2FWB ?
 
-Yes. I have drafted a few patches, and will send soon.
 
-Thanks
-Nicolin
+> -- PMM
+>
+>
+
+--00000000000051eab7064259c7cd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Sep 27,=
+ 2025 at 7:41=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
+linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">On Sat, 27 Sept 2025 at 09:48, Michael =
+Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru" target=3D"_blank">mjt@tls.msk=
+.ru</a>&gt; wrote:<br>
+&gt;<br>
+&gt; On 23.09.2025 14:57, Peter Maydell wrote:<br>
+&gt;<br>
+&gt; &gt; We could probably also correct the bit of the text in this file<b=
+r>
+&gt; &gt; that currently reads &quot;depend on SMM emulation on x64&quot; t=
+o either<br>
+&gt; &gt; say &quot;x86&quot; or &quot;x86_64&quot;.<br>
+&gt;<br>
+&gt; This one will be a bit more than trivial :)=C2=A0 I for one don&#39;t =
+know<br>
+&gt; if this is related to any x86 or to x86_64 only.<br>
+<br>
+I just mean exactly and specifically the one place in this<br>
+file which says &quot;x64&quot; and ought to say either &quot;x86&quot; or<=
+br>
+&quot;x86_64&quot;. To me a single word change is pretty trivial,<br>
+especially since nowhere else in our docs do we use &quot;x64&quot;.<br>
+<br></blockquote><div>This is to ensure consistency between the documentati=
+on and the API code (var-service-api.h) parameters and json file, which use=
+=C2=A0&quot;uefi-vars-x64&quot;.<br></div><div><br></div><div><br></div><di=
+v>Thanks.</div><div>Nana</div><div><br></div><div>=C2=A0</div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">
+-- PMM<br>
+<br>
+</blockquote></div></div>
+
+--00000000000051eab7064259c7cd--
+
 
