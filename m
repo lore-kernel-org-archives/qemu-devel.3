@@ -4,117 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 231E0CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28C6CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vETYi-0001Ck-5k; Thu, 30 Oct 2025 10:23:24 -0400
+	id 1vETZa-0001Q1-Gz; Thu, 30 Oct 2025 10:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1vETYc-0001BQ-Ql
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:23:18 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1vETYS-0005x2-Dy
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:23:18 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59UCq3aJ019735;
- Thu, 30 Oct 2025 14:23:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=08oIkZ
- wp8NU/7yOzJBZxggYCHLahv2VIIl94oHOJJpw=; b=aEdJjkmSAI8hIxk2pmDedy
- rD2clvmmOyS3B8IfGMLdA16r4Mz5MXR2CDJu37UYpYxti5/DkElaGxfOHWgekYeu
- APyq66dGTzGNKNRuqJOdmaiBPntg3gK9kR8B87uJxSi1UQ1Vv5th4H+XE7o9n6zo
- yyLpgNbvOQ8LrAMGu4jQo5x7zbg0eqrKPCrmPlGLYoiuLdC7wYPOWhxCF2EGR6kw
- gd7Dupbtzca22nBPIPkUj5P3M1MRDomkcznnieW/bTHb4e+5/mMBfxwYpzo7A7vt
- xz0hfPLAs5DT/J/YxBJnke7+0x0haLebWkfbPrMEv8/RHdIKLfD7ASm7d/TvAK3A
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34agrkrr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 14:23:00 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59UDGoT9018742;
- Thu, 30 Oct 2025 14:23:00 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4a33xwh243-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 14:22:59 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59UEMuo631719828
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Oct 2025 14:22:56 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 16CCA20043;
- Thu, 30 Oct 2025 14:22:56 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD2E020040;
- Thu, 30 Oct 2025 14:22:52 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.39.29.84])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 30 Oct 2025 14:22:52 +0000 (GMT)
-Date: Thu, 30 Oct 2025 19:52:48 +0530
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>, Aditya Gupta <adityag@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- peter.maydell@linaro.org, adityag@linux.ibm.com, qemu-devel@nongnu.org,
- sourabhjain@linux.ibm.com
-Subject: Re: [PATCH v2 1/2] hw/ppc: Fix missing return on allocation failure
-Message-ID: <fz5bixswyqecp2tgbobkz2vlncuhdm4cxagdndn77qpprltssl@opqtjw4ixgpk>
-References: <20251028080551.92722-1-shivangu@linux.ibm.com>
- <20251028080551.92722-2-shivangu@linux.ibm.com>
- <8d5a8cce-d769-4cd8-9753-7e9ad37d8a47@linaro.org>
- <dio77m3m5jj6ccgqpswkifiqztf5fz45qsjpspu2yszgwrfgha@mcwjruxszkn5>
- <47ac6382-3270-4179-8455-43cee36a9ca9@linux.ibm.com>
- <c089e14f-69a3-fe9c-cc80-b0c7bba4105a@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vETZT-0001Mn-TW
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:24:13 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vETZL-00068R-Uq
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:24:11 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-290dc63fabbso10945535ad.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 07:24:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1761834238; x=1762439038; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2qhmL40yJuYA7VTug2A9/droT3+foPeGGcISVtBeqCo=;
+ b=eW6YF6Vl7R2l8rOG1c0ncuA0CFxX30fii8kDpeNDmTemxXktOnvJrePE6ZY6ylISgH
+ cljFQsqffugtxf2obrlflCINmuOWWYHG7C4ic/OpYjLciKIobaYHIB/p7bgIP9b5+D+d
+ IgbxnXHk7+n7e4R2YGxpkzD7I90/IaPoEoxcejdt1nzpvyEG03embWVjlkABK2IeaCQT
+ OqzGXRUTz5s1g8WDzXD+GMPS6qDCcwZOTjOCT8iZHu4IUtcoSX6MOF/H5RsqTgPtuhKC
+ 7NKKf82Rat71owgp4Ue+vDff0xsY7SIRhNeM5MziRhATYUh7g9NZOy6djTvZJvsi/8GO
+ f55Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761834238; x=1762439038;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2qhmL40yJuYA7VTug2A9/droT3+foPeGGcISVtBeqCo=;
+ b=CqfiNhLWagTm4xv4lItvGmFWNuZ6P6ZhQcVsHPVBzFH07NUpwcNghL4D99NxQErSJ2
+ J9seqVK0EwRa0AiKNVWa2czFbK6fMFX/bgb2lUKvix606LbcFC/NpS7lvzaqCPJ4HMKA
+ rhCHOJnBdOwgcl/OrPraJ+NhSG+XCeZJMs8uDrBColGEataxSvz2chAoV6zsw+maCarP
+ McZx++yHSMYy1zCsj3S5LhD79JsSUzJ4JoxI00MqANRDRzdJmLIRRGxvFh2YRKNsKSMv
+ gxLRSw8erD78QNG4We+3G7xTBZ8CQac8v/VH+5bCV4bHa+GNJiGDL31r04nkieomeqdM
+ GvaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUydZd0RE+r00QTjJS9KG2Qyo0VaLWifF6rLxbT+7Fn9rIrUoMgI+6/XCWYHqhH7iRX8ki7l1lJ7gF@nongnu.org
+X-Gm-Message-State: AOJu0YzvUGTpVOpsKZ7TiHQX1HepB3xNnz7HDaLlVXR0sCncz3kqFxr5
+ pA5fsW7BoWL7Cte9gWNZPy8tIdzCTdpYWDr165Pzl6pPgnWgSwT8QCdcKNycvfdFeG00UCWIiPg
+ gYZ0JZGY=
+X-Gm-Gg: ASbGncsyCfDuqCX1TxJgWpzb0SwNOLG8m5zU9A40GSw9590ltfOczH4fWYESxeZn07C
+ Tn4dM3FclRqCrOF5eNgIlw8xPmXWnLgaU+FYpskR6o5RtNWTfThq7MP6X5INtBiIa2015NCiP1M
+ R0eBGLnIDJ6Ob7/Kojlocta4JrGyYS4d7UgmlFVdUCHwX0q47lr4PRaGV3KUFmi6GbjxiXkPh4N
+ +WH/Wp0kwvHm6cTEayVROPvhAOB2NsMXnYYsRWQRmD+ZU6MVEqAYNGBIZnbbqVd29t1lS6oIMiK
+ Lq1q9yIqHMYb79QESki8wd5rJV/N9toijmmsSnbcnhPeyTM3GruYLyHl1xu0ELJKmbsJ3lbLUFN
+ G/LpH21Nd6I0qrltLKU660YPs5L72ku6rBVokCo59j8SHmaK/KZok6gDDnallvVP8ZE6jheyu4/
+ hO0X+IrxjMTe2jMssmihaO+F0=
+X-Google-Smtp-Source: AGHT+IFuwKo04u9v0JNDnnu0lw8LLMTDxx7C5hMRIO22lCjQU5IfvCCWveWeiXaY9m3O8KUM2m2QRw==
+X-Received: by 2002:a17:903:1a4e:b0:246:80b1:8c87 with SMTP id
+ d9443c01a7336-294deef8844mr94161415ad.43.1761834229801; 
+ Thu, 30 Oct 2025 07:23:49 -0700 (PDT)
+Received: from [192.168.68.110] ([187.101.65.79])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29498d0c414sm189617475ad.44.2025.10.30.07.23.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Oct 2025 07:23:49 -0700 (PDT)
+Message-ID: <8a1ee6f6-0198-4a6c-b4db-180ede88187f@ventanamicro.com>
+Date: Thu, 30 Oct 2025 11:23:44 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c089e14f-69a3-fe9c-cc80-b0c7bba4105a@eik.bme.hu>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=K+gv3iWI c=1 sm=1 tr=0 ts=690374c4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=8nJEP1OIZ-IA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
- a=Rw2pgWYzqnU3bIbjUzIA:9 a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=cvBusfyB2V15izCimMoJ:22 a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-ORIG-GUID: 95HuYYwxjWni-wT8AFvzHK6KX1CuuNrM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX7r6y/IXQwY3t
- +IXY6FBDVynSjoOdvlvVskgxuXXmmNeLUTLQltWOGwJEWm38qU8S2yHauNR6wIIsQnJnGLCufi+
- J9tjIneLnmCZyocEd5InIzDVFapYH8j5Hyhm5h+ZnuEzAhA1uoqKWUtplkBT8L7YiVteva54/nt
- AM6hxxojFBjFczPiMDtEDNSqZFCq64SjcxrEUtR/RfnxFk4f/YXiAe+vPoDz2HZKclxfMGLwq+d
- CSwUInO5UkwGqRjUV1Ng+6t7SrSBFdr5D1iw1NE++uMUxjmYMSMPF9xNFLGNx4N2hdnyf+38zcX
- 80lC5rKTlnhrwG99sxKjl1swDtFV6ECaD+a5Ug1dexzrPWuLkLON817LZIF28Mi5lG3TpHsV3DG
- qEnNkNiU11EkDkYpcoHB+OLWne57Jg==
-X-Proofpoint-GUID: 95HuYYwxjWni-wT8AFvzHK6KX1CuuNrM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_04,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- adultscore=0 clxscore=1011 malwarescore=0 phishscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv: riscv-iommu: Don't look up DDT cache in Off and
+ Bare modes
+To: frank.chang@sifive.com, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <20251028085032.2053569-1-frank.chang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <20251028085032.2053569-1-frank.chang@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,85 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 30, 2025 at 12:09:44PM +0100, BALATON Zoltan wrote:
-> On Thu, 30 Oct 2025, Harsh Prateek Bora wrote:
-> > On 10/28/25 15:54, Shivang Upadhyay wrote:
-> > > On Tue, Oct 28, 2025 at 09:35:40AM +0100, Philippe Mathieu-Daudé wrote:
-> > > > On 28/10/25 09:05, Shivang Upadhyay wrote:
-> > > > > Fixes coverity (CID 1642026)
-> > > > > 
-> > > > > Cc: Aditya Gupta <adityag@linux.ibm.com>
-> > > > > Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > > > > Link: https://lore.kernel.org/qemu-devel/CAFEAcA-SPmsnU1wzsWxBcFC=ZM_DDhPEg1N4iX9Q4bL1xOnwBg@mail.gmail.com/
-> > > > > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > > > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > > > > Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> > > > > ---
-> > > > >    hw/ppc/spapr_fadump.c | 1 +
-> > > > >    1 file changed, 1 insertion(+)
-> > > > > 
-> > > > > diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-> > > > > index fa3aeac94c..883a60cdcf 100644
-> > > > > --- a/hw/ppc/spapr_fadump.c
-> > > > > +++ b/hw/ppc/spapr_fadump.c
-> > > > > @@ -234,6 +234,7 @@ static bool do_preserve_region(FadumpSection *region)
-> > > > >            qemu_log_mask(LOG_GUEST_ERROR,
-> > > > 
-> > > > FWIW host heap exhaustion is not really a *guest* error, because the
-> > > > guest can not control it.
-> > > Hi, Philippe
-> > > 
-> > > 
-> > > Thanks for the review. There are following log level defined in log.h
-> > > 
-> > > 	....
-> > > 
-> > > 	#define CPU_LOG_TB_OUT_ASM (1u << 0)
-> > > 	#define CPU_LOG_TB_IN_ASM  (1u << 1)
-> > > 	#define CPU_LOG_TB_OP      (1u << 2)
-> > > 	#define CPU_LOG_TB_OP_OPT  (1u << 3)
-> > > 	#define CPU_LOG_INT        (1u << 4)
-> > > 	#define CPU_LOG_EXEC       (1u << 5)
-> > > 	#define CPU_LOG_PCALL      (1u << 6)
-> > > 	#define CPU_LOG_TB_CPU     (1u << 8)
-> > > 	#define CPU_LOG_RESET      (1u << 9)
-> > > 	#define LOG_UNIMP          (1u << 10)
-> > > 	#define LOG_GUEST_ERROR    (1u << 11)
-> > > 	#define CPU_LOG_MMU        (1u << 12)
-> > > 	#define CPU_LOG_TB_NOCHAIN (1u << 13)
-> > > 	#define CPU_LOG_PAGE       (1u << 14)
-> > > 	/* LOG_TRACE (1 << 15) is defined in log-for-trace.h */
-> > > 	#define CPU_LOG_TB_OP_IND  (1u << 16)
-> > > 	#define CPU_LOG_TB_FPU     (1u << 17)
-> > > 	#define CPU_LOG_PLUGIN     (1u << 18)
-> > > 	/* LOG_STRACE is used for user-mode strace logging. */
-> > > 	#define LOG_STRACE         (1u << 19)
-> > > 	#define LOG_PER_THREAD     (1u << 20)
-> > > 	#define CPU_LOG_TB_VPU     (1u << 21)
-> > > 	#define LOG_TB_OP_PLUGIN   (1u << 22)
-> > > 	#define LOG_INVALID_MEM    (1u << 23)
-> > > 
-> > > 	....
-> > > 
-> > > Which one do you recommend we use? or May we introduce a `LOG_HOST_ERROR`,
-> > > if that's more appropriate.
-> > 
-> > I think it would be better to have LOG_INSUFF_MEM for this case, but
-> > let's hear from Philippe and others for suggestions.
+
+
+On 10/28/25 5:50 AM, frank.chang@sifive.com wrote:
+> From: Frank Chang <frank.chang@sifive.com>
 > 
-> If it's not a guest error but an error in QEMU then maybe error_report (or
-> warn_report if it's recoverable)?
+> According to the RISC-V IOMMU specification:
 > 
-> Regards,
-> BALATON Zoltan
-Hi
+> * When ddtp.iommu_mode is set to Off, there is no DDT look-up, and an "All
+>    inbound transactions disallowed" fault (cause = 256) is reported for any
+>    inbound transaction.
+> 
+> * When ddtp.iommu_mode is set to Bare, there is no DDT look-up, and the
+>    translated address is the same as the IOVA, unless the transaction type
+>    is disallowed (cause = 260).
+> 
+> In the current implementation, the DDT cache is incorrectly looked up
+> even when ddtp.iommu_mode is set to Off or Bare. This may result in
+> unintended cache hits.
+> 
+> Therefore, the DDT cache must not be looked up when ddtp.iommu_mode is
+> set to Off or Bare. For other modes, software is required to issue cache
+> invalidation commands before any inbound transactions.
+> 
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> ---
 
-This allocation failure does not seem recoverable. Maybe Aditya can be more
-right about this.
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Also I noticed a pattern to use `g_malloc` for critical things instead
-of `g_try_malloc`. But it will kill the full application if failure happens.
-So maybe just `error_report` is fine here(?).
+>   hw/riscv/riscv-iommu.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index b33c7fe3259..95db811f125 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -1290,13 +1290,18 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
+>           .devid = devid,
+>           .process_id = process_id,
+>       };
+> +    unsigned mode = get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
+>   
+>       ctx_cache = g_hash_table_ref(s->ctx_cache);
+> -    ctx = g_hash_table_lookup(ctx_cache, &key);
+>   
+> -    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+> -        *ref = ctx_cache;
+> -        return ctx;
+> +    if (mode != RISCV_IOMMU_DDTP_MODE_OFF &&
+> +        mode != RISCV_IOMMU_DDTP_MODE_BARE) {
+> +        ctx = g_hash_table_lookup(ctx_cache, &key);
+> +
+> +        if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+> +            *ref = ctx_cache;
+> +            return ctx;
+> +        }
+>       }
+>   
+>       ctx = g_new0(RISCVIOMMUContext, 1);
 
-~Shivang.
 
