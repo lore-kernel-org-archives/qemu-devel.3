@@ -4,138 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D86ACCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 09:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC69CCF9F5
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 09:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEOcv-0006cd-Cy; Thu, 30 Oct 2025 05:07:25 -0400
+	id 1vEOca-0006Xk-AY; Thu, 30 Oct 2025 05:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEOcp-0006c6-2f
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:07:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vEOcX-0006X6-G3
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:07:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEOcl-00018f-6O
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:07:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761815229;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HK5KGJUtyGacq2JZ/rntUpqp7CfkiIVklMhSsKJob2c=;
- b=TFoICh3VVM2BqnNjpi26t+6/Iq/e1/8x26dOzRG5lxUhjndmlbIOmdF7k2PPP8HgD1FwSb
- wV4UzYZxVL9piotsKHeL8zdAjVwnCwmBQhgGe+qqlWDOFnEQdoXG2k7B7m2ySHtwZGqLyD
- DNYD25Ejc+e6FpoY0KpXzpANiZV3myk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-hZqWQQcvMmackM9g2fgemw-1; Thu, 30 Oct 2025 05:07:07 -0400
-X-MC-Unique: hZqWQQcvMmackM9g2fgemw-1
-X-Mimecast-MFC-AGG-ID: hZqWQQcvMmackM9g2fgemw_1761815226
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4256fae4b46so927397f8f.0
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 02:07:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761815226; x=1762420026;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HK5KGJUtyGacq2JZ/rntUpqp7CfkiIVklMhSsKJob2c=;
- b=HHRMP5tJLN/6klh+FGBA143nsDQr/nuVP0y52WwqPJf5DqJ84nVmg2g2ygv4yUBKkP
- eXYzUjaN1FaIeYGBZe1lDbwgspY2hhXUoiQgbIlZgNowh7Q83KgwxxeJh/WbcPot4hpq
- 6lPFUBsk6i60l5y2KHZ4H4gCXtENqpEVLQjm8ho2ImKv0bEWXikFSNFTJ84jC4J1ixGB
- /BKqEZcqA7IZZ/DpnFn4rk9Hf7xAcRPshn+gBilQ65+i+zBVf5EFhAkjUOfTkfotGNaZ
- sPAFnFIp8hY5AwDxFa8vnEZvqUNDHnFrPGezHkf+4e1nz1wiJbfK8YSytGvk1wm/ptUb
- 2/yg==
-X-Gm-Message-State: AOJu0YzPuizz7E/Unxfu80gc15BEt0AF67fGFsSEtI16yVIED3LCvgLn
- E4mJ79onFTEafsud2z3oQyMVjUZckMfinjN8WmdQCnWchpo/1QHn8+0NzZ8/zB+PKY/xLylz0gN
- y9PEwq85GwAOYlKT4UHW2eovQO0cmR1vISCTX/NQcTyVL3Wc5BgNlfyOY
-X-Gm-Gg: ASbGncsQIE+AMpfHN3BXZghIHaReNFuESaLGapAyx9zTxUju+XJrdZhaMR85ywKek54
- fPIoGFQXkuDO+CsdUm+2f/3z7MxsIAtLUpemq6EJ9n1ddFusSw50hXfS5PpAW3DJceOF9ikRRFr
- AkA/Dajx/G/ZG6qFb1rN1bi5RWuzKDCjmQXbN/6ySmBJefwYJmr7/GYFPk7WiyssimPUdLQdSeO
- s9vxNvgJIG4UyQNupRYSFrihG/+xgi87rKwrEksVgXB1mADhKRqN8rkOucXsWeBP/sL17AH1g8J
- gn09L/zaVivwO61GUSZQyVqFspitBLVo7rQUj8QEZqrDlgfORpQWr7pmsuzPMjzT7g1p2zw=
-X-Received: by 2002:a05:600c:530f:b0:471:13fc:4ad3 with SMTP id
- 5b1f17b1804b1-477266f37dfmr23497815e9.2.1761815225924; 
- Thu, 30 Oct 2025 02:07:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPKk6GzwKeLf2EgbSEhEx0LdBaCh0sqOlFzpULhKvjNN90+7ph8kG8uyZC7UUAjK9wPiElZA==
-X-Received: by 2002:a05:600c:530f:b0:471:13fc:4ad3 with SMTP id
- 5b1f17b1804b1-477266f37dfmr23497415e9.2.1761815225482; 
- Thu, 30 Oct 2025 02:07:05 -0700 (PDT)
-Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477289b396dsm28187075e9.11.2025.10.30.02.07.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 02:07:04 -0700 (PDT)
-Message-ID: <a0c828b6-61ca-4be4-9e08-591a89c28500@redhat.com>
-Date: Thu, 30 Oct 2025 10:07:03 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vEOcN-00016X-CK
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:06:59 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TMr9ob008678;
+ Thu, 30 Oct 2025 09:06:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=S0E+DW
+ cqhK0AXb/cmRDHJrt+f7j8Or7wzmqHhJe4VRo=; b=nYLtVduFPyGyKR71z6bxLd
+ eyuwFxYFG2kSyBBChxn5NGtOmXMnRVEcn8hGwHvYLcf4juFTeDGZGPCryqSgRkD6
+ k/mgwHj/6I+vDOUQwNzXyqoHHG4zeX2xiLaI5qkD9kYKBK0n+M6/NXiEYwFZvvpV
+ eKVZbaBE2aBgTmRqHb0e3lUn3PONu/WzAz/1rqRq0671hGItDfiUFD7mWU6mBqNV
+ YB3fLSPYMQ450dqt2CKQQIpc2qMC9WKyWa75YHSuVRTbOkZDiGNK97LslpW++7lT
+ P8y4n4/5qHdkibbQ1awNMOP1pFwcUTQPtgGs1v7207yk3+ON33RYeyeGkrXB+JlA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34affgcr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Oct 2025 09:06:42 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U5rRbZ030753;
+ Thu, 30 Oct 2025 09:06:41 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwquk3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Oct 2025 09:06:41 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59U96fqd33882466
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Oct 2025 09:06:41 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 00E875805A;
+ Thu, 30 Oct 2025 09:06:41 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 955D658064;
+ Thu, 30 Oct 2025 09:06:39 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Oct 2025 09:06:39 +0000 (GMT)
+Message-ID: <e41be786-df4c-41e5-ae29-c9e8875ee0d2@linux.ibm.com>
+Date: Thu, 30 Oct 2025 14:36:37 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 04/12] tests/functional: Test whether the
- vmstate-static-checker script works fine
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20250924063956.519792-1-thuth@redhat.com>
- <20250924063956.519792-5-thuth@redhat.com> <aQIBVcKRMDUjeeqK@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PULL 15/32] hw/ppc/pegasos2: Change device tree generation
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <20251023121653.3686015-1-harshpb@linux.ibm.com>
+ <20251023121653.3686015-16-harshpb@linux.ibm.com>
+ <CAFEAcA8qbC-1LhHXxiYXZjiCvstch1UFtMNxGdR1fquLB9i2PA@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <aQIBVcKRMDUjeeqK@redhat.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <CAFEAcA8qbC-1LhHXxiYXZjiCvstch1UFtMNxGdR1fquLB9i2PA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: CPKTk9BI6FP2dpzTrsNAKK1L9B8AdRpn
+X-Authority-Analysis: v=2.4 cv=WPhyn3sR c=1 sm=1 tr=0 ts=69032aa2 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
+ a=MHk2ux3hTTbxPN1EU_oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfXzEJY1Vju73mn
+ wXK5yj2WbjzV+IObgUzQP04ufn52dXmJGtWzOLK61/ME3Xkg3h1loiFo6RDPTnFoa+IQCQPP3W3
+ 7zc25PJ2Pw3FxjwIfQodjWxBO1xw7xf1YftSPLhbvOTSc8EDS7Oph/IdecfZ6dXrQ5zwQSqjhcK
+ LlNPcABSyUpRsSc6kW+UcJsbqbPjpdSPHI3pZz3V5R+7jWY4Iu6darX6/jn4/wimeyiqPtRHC2O
+ 41VAPgQHzWcYvBVZNN7P4lsZuNtRPVUFtbndgGaDCr9vWfENkIDdvUjkfdr+Bay3TN4FXfNrwiu
+ yfyZrpV0xUXOe2Lrz27ywU1PkbwHMWMVsEjwJLZ72zSslolXIhqviVHfaEvwaNKyMreSanuo364
+ NYwhCndSegF47lT0OMtSmbK2NnbD/w==
+X-Proofpoint-ORIG-GUID: CPKTk9BI6FP2dpzTrsNAKK1L9B8AdRpn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 malwarescore=0 suspectscore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2510280166
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,28 +127,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/10/2025 12.58, Daniel P. Berrangé wrote:
-> On Wed, Sep 24, 2025 at 08:39:48AM +0200, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
+Hi BALATON,
+
+Would you be taking care of this coverity issue?
+
+regards,
+Harsh
+
+On 10/27/25 18:44, Peter Maydell wrote:
+> On Thu, 23 Oct 2025 at 13:22, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
 >>
->> We've got two vmstate dump files in the repository which are meant
->> for verifying whether the vmstate-static-checker.py works as expected.
->> Since running this manually is a cumbersome job, let's add an automated
->> test for this instead that runs the script with the two dump files
->> and checks for the expected output.
+>> From: BALATON Zoltan <balaton@eik.bme.hu>
+>>
+>> We generate a flattened device tree programmatically for VOF. Change
+>> this to load the static parts from a device tree blob and only
+>> generate the parts that depend on run time conditions such as CPU
+>> type, memory size and PCI devices. Moving the static parts in a dts
+>> makes the board code simpler and more generic.
+>>
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Link: https://lore.kernel.org/qemu-devel/383891fc2696609b27d2de9773efe1b4f493e333.1761176219.git.balaton@eik.bme.hu
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 > 
-> This job always fails on Fedora 43, because the vmstate script
-> output includes python deprecation warnings:
+> Hi; Coverity points out (CID 1642027) that this change
+> accidentally introduces a memory leak:
 > 
->    2025-10-29 11:53:55,097 - INFO: vmstate-static-checker output:
->    /var/home/berrange/src/virt/qemu/tests/functional/../../scripts/vmstate-static-checker.py:385: PendingDeprecationWarning: FileType is deprecated. Simply open files after parsing arguments.
->      parser.add_argument('-s', '--src', type=argparse.FileType('r'),
->    /var/home/berrange/src/virt/qemu/tests/functional/../../scripts/vmstate-static-checker.py:388: PendingDeprecationWarning: FileType is deprecated. Simply open files after parsing arguments.
->      parser.add_argument('-d', '--dest', type=argparse.FileType('r'),
-
-Thanks for the heads-up, I guess we should now rather use type=pathlib.Path 
-in this script instead. I'll try to come up with a patch...
-
-  Thomas
-
+>> @@ -780,7 +675,10 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
+>>                                        pci_get_word(&d->config[PCI_VENDOR_ID]),
+>>                                        pci_get_word(&d->config[PCI_DEVICE_ID]));
+>>
+>> -    if (pci_get_word(&d->config[PCI_CLASS_DEVICE])  ==
+>> +    if (!strcmp(pn, "pci1106,8231")) {
+>> +        return; /* ISA bridge and devices are included in dtb */
+>> +    }
+> 
+> In this function we define at the top:
+>      GString *node = g_string_new(NULL);
+> 
+> This change introduces an early-return which does not free
+> the GString.
+> 
+> The simplest fix is probably to declare node as
+>     g_autoptr(GString) node = g_string_new(NULL);
+> 
+> and delete the now-superfluous g_string_free() from the
+> bottom of the function.
+> 
+> thanks
+> -- PMM
 
