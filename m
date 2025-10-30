@@ -4,114 +4,194 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC69CCF9F5
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 09:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B732CCF9F5
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 09:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEOca-0006Xk-AY; Thu, 30 Oct 2025 05:07:04 -0400
+	id 1vEOgH-0008IX-Pv; Thu, 30 Oct 2025 05:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vEOcX-0006X6-G3
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:07:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vEOgE-0008EV-Qg
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:10:51 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vEOcN-00016X-CK
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:06:59 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TMr9ob008678;
- Thu, 30 Oct 2025 09:06:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=S0E+DW
- cqhK0AXb/cmRDHJrt+f7j8Or7wzmqHhJe4VRo=; b=nYLtVduFPyGyKR71z6bxLd
- eyuwFxYFG2kSyBBChxn5NGtOmXMnRVEcn8hGwHvYLcf4juFTeDGZGPCryqSgRkD6
- k/mgwHj/6I+vDOUQwNzXyqoHHG4zeX2xiLaI5qkD9kYKBK0n+M6/NXiEYwFZvvpV
- eKVZbaBE2aBgTmRqHb0e3lUn3PONu/WzAz/1rqRq0671hGItDfiUFD7mWU6mBqNV
- YB3fLSPYMQ450dqt2CKQQIpc2qMC9WKyWa75YHSuVRTbOkZDiGNK97LslpW++7lT
- P8y4n4/5qHdkibbQ1awNMOP1pFwcUTQPtgGs1v7207yk3+ON33RYeyeGkrXB+JlA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34affgcr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 09:06:42 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U5rRbZ030753;
- Thu, 30 Oct 2025 09:06:41 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33wwquk3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 09:06:41 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59U96fqd33882466
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Oct 2025 09:06:41 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 00E875805A;
- Thu, 30 Oct 2025 09:06:41 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 955D658064;
- Thu, 30 Oct 2025 09:06:39 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Oct 2025 09:06:39 +0000 (GMT)
-Message-ID: <e41be786-df4c-41e5-ae29-c9e8875ee0d2@linux.ibm.com>
-Date: Thu, 30 Oct 2025 14:36:37 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/32] hw/ppc/pegasos2: Change device tree generation
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-References: <20251023121653.3686015-1-harshpb@linux.ibm.com>
- <20251023121653.3686015-16-harshpb@linux.ibm.com>
- <CAFEAcA8qbC-1LhHXxiYXZjiCvstch1UFtMNxGdR1fquLB9i2PA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vEOg2-0001g8-Bs
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:10:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761815438; x=1793351438;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=HBTM20QVKm2XnFISj2xmZWHWO9jJvU55qHEScTXZypk=;
+ b=G4wNaAnZtvv18E8s2FDSBonJO8Ctd+as1cQZcBrixNKsC+lmqLC+DUcD
+ mRNc9dPvBoItvFO65JQqtl5/7Mh2choCB5Ip4FLWfbjc4DVearOVkb+30
+ fiASCk0lzz4hDOz2+xcRlmkG8r2lLKrcvQa0Ru7KGjW9KqKs1BUMswoze
+ IzDTtWRf9TDJ8/fqZSaG8HvsM4Xy5ofttcLtAOtWO4GrJ6ZdGnHa8X8+n
+ X+qMH/wV6cYZ5PdFQw1u+SMW35btF9iFlabgckTqNS+BhrwHDGNINLUqK
+ zOpWM1/7znW2omcEGAYK9iy+lM2f+r2Rcivl0uqOZAlEsGIvGSECyTVG/ g==;
+X-CSE-ConnectionGUID: px8h+ZfPRSy/NT0mayW1EA==
+X-CSE-MsgGUID: I3785sK1RrepfdEEdrQDgQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="63860339"
+X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="63860339"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Oct 2025 02:10:29 -0700
+X-CSE-ConnectionGUID: wsTbSO/qRJitnZoKG4/Dsw==
+X-CSE-MsgGUID: RVSpIxnOTLOTAtHMONv4JA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="209483875"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Oct 2025 02:10:29 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 30 Oct 2025 02:10:29 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Thu, 30 Oct 2025 02:10:29 -0700
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.49) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 30 Oct 2025 02:10:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lpag4DFUipka/qBfI39mh+c+tSIesW+Dj9lw2Y6Z3MmJp2gVVplll/8rfXFw5A6Vtbxi0VtiBbo/jy934BRf8qLuAkYsjv9epfLheUhYKNPDcieWIM/xojP5OyCP8vTZRJnWg8j6jDUYktDH2d78+9v8L5sXLiyvd8zXB3GuA6qnobjj3923TSQn1oVqoTeJbiAIxeSYAKC/lA2KW91QNirH0EvI9KQFfr3v7qfFEBEYqQvDrHozvemgtxRGg9zk4AXYR7ZeYhDMLkFv6YyI9ng23nJiizgjzSK7dpROFondQ8l6hL5GDhYdvejhVLT8q2rCCFcrGLa35sE1k3t+YA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UKgwa4ksmsXoHerO1rWtvl2db89rTuYoSBcJxL/2WUA=;
+ b=CDAdSOoqd/PIUr/QgrQ3t/KGjB9TvDna0EqgQDefyoFmnDuZ3+Re+7z3y92OkiXNJ2hO/OosTr9MnkQxVvF8tY2rvFkxVxPZebpRRAv51bzEHOC/d6IxucEK7F6Kmx4su9r9xx95BYr9+SE1hBzB3oUMgzfx9OsQhWYmBuTYb1MPP93Ejp9vCJA7OFY85Y23eJoZEleaDSeizMUknSrWHKnjZY4bqi2/QRda+0P1Vos3XxPaamBnbutAN3sNmmvl1x4VFXmJVAhFgCC821sWyI64kxh/9tn4CeMQamdVhxE9LRRxq1QnMmLcJxQ1kCGXG8ocM3Y5ZGSk+lYGP5QHzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by SJ0PR11MB8269.namprd11.prod.outlook.com (2603:10b6:a03:478::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.13; Thu, 30 Oct
+ 2025 09:10:26 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9275.013; Thu, 30 Oct 2025
+ 09:10:25 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Avihai Horon <avihaih@nvidia.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "Hao, Xudong" <xudong.hao@intel.com>, "Cabiddu,
+ Giovanni" <giovanni.cabiddu@intel.com>, Rohith S R <rohith.s.r@intel.com>,
+ "Gross, Mark" <mark.gross@intel.com>, "Van De Ven, Arjan"
+ <arjan.van.de.ven@intel.com>
+Subject: RE: [PATCH v4 08/10] vfio/migration: Fix a check on
+ vbasedev->iommu_dirty_tracking
+Thread-Topic: [PATCH v4 08/10] vfio/migration: Fix a check on
+ vbasedev->iommu_dirty_tracking
+Thread-Index: AQHcSLoYic5r0GqRiU2SGu5DZpxfKbTaWxAAgAADbcA=
+Date: Thu, 30 Oct 2025 09:10:25 +0000
+Message-ID: <IA3PR11MB913625D418E023D14D4ED0CF92FBA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20251029095354.56305-1-zhenzhong.duan@intel.com>
+ <20251029095354.56305-9-zhenzhong.duan@intel.com>
+ <eb2e5419-7a63-47be-adaf-e34709d8310f@nvidia.com>
+In-Reply-To: <eb2e5419-7a63-47be-adaf-e34709d8310f@nvidia.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <CAFEAcA8qbC-1LhHXxiYXZjiCvstch1UFtMNxGdR1fquLB9i2PA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: CPKTk9BI6FP2dpzTrsNAKK1L9B8AdRpn
-X-Authority-Analysis: v=2.4 cv=WPhyn3sR c=1 sm=1 tr=0 ts=69032aa2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
- a=MHk2ux3hTTbxPN1EU_oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfXzEJY1Vju73mn
- wXK5yj2WbjzV+IObgUzQP04ufn52dXmJGtWzOLK61/ME3Xkg3h1loiFo6RDPTnFoa+IQCQPP3W3
- 7zc25PJ2Pw3FxjwIfQodjWxBO1xw7xf1YftSPLhbvOTSc8EDS7Oph/IdecfZ6dXrQ5zwQSqjhcK
- LlNPcABSyUpRsSc6kW+UcJsbqbPjpdSPHI3pZz3V5R+7jWY4Iu6darX6/jn4/wimeyiqPtRHC2O
- 41VAPgQHzWcYvBVZNN7P4lsZuNtRPVUFtbndgGaDCr9vWfENkIDdvUjkfdr+Bay3TN4FXfNrwiu
- yfyZrpV0xUXOe2Lrz27ywU1PkbwHMWMVsEjwJLZ72zSslolXIhqviVHfaEvwaNKyMreSanuo364
- NYwhCndSegF47lT0OMtSmbK2NnbD/w==
-X-Proofpoint-ORIG-GUID: CPKTk9BI6FP2dpzTrsNAKK1L9B8AdRpn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 malwarescore=0 suspectscore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SJ0PR11MB8269:EE_
+x-ms-office365-filtering-correlation-id: 894dfc81-9d89-4d30-170d-08de179429e9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?AiRcCzoX1ubQE3LYHKmaKGcciD1CFuSnb4D1xxF3zYAER229Tf6/a7thM1P7?=
+ =?us-ascii?Q?cOAQ8XzQPCsBwBCwtvUIcwf1Yqnwp25jeLrM37UdV91cTsegZfAIvVh+t9wd?=
+ =?us-ascii?Q?0IDpzCLprs21SPYv20K014pT0TvxhsP7642+pxYTQc5c1Z617GPhVg4B6lE+?=
+ =?us-ascii?Q?pP/x4vIS53Wx4LfWnQciWHuLO414cI6nQPqNyRO/oWXfKD7+Y7SRh7958r6/?=
+ =?us-ascii?Q?XfjRpK9fTApbP4ebaNEcmGvBQnxD9nqoJ2XWyoonBqmUQoZbdn0tkpXJaPrp?=
+ =?us-ascii?Q?hBs3JbftYPJHfxfkgUXe4PvEz6Bndb11lYGBRZRomfGVfM6kzWsRoZ03h8oJ?=
+ =?us-ascii?Q?Wl34nEN7mGSAbeXVsrS+lKaL44mXizdmh+A7/qT8W/sX3N+lJ9vQTdzGYFqk?=
+ =?us-ascii?Q?LtUd+dQ16TvGAgTeCYICP0uzVUXnIH9D+NufDIXH80gGu8oI0fnW4QTRQuYR?=
+ =?us-ascii?Q?EhFF6+jCELGhGXJ3Y8/GjBgHvOtCS4BW1cTujx8vHZSjSZOiDvmPxcCUsQxg?=
+ =?us-ascii?Q?bz1gV9QbLWaejoUr9NsRZcJktivTQ37EJ4w/0BAYbwogqSyVmbr2iFpL4TwA?=
+ =?us-ascii?Q?RT3dYEkAFLtYeICQ/A2pixks39w3lByL+HE7d28zv59oXGLAbytbt9b8SPj8?=
+ =?us-ascii?Q?LDuzB7rTF3O8SILLbjNAVz4ltQ5qzpxVGQ2zFlHkniHuxmSrH3ZRxE46s0ms?=
+ =?us-ascii?Q?B4V0GV3Wyqg+NaoZeN7HHjKjHM6kyXfGPnz0Bzo35qrtSgogGcocVTFkf1bX?=
+ =?us-ascii?Q?cT06aNwcCZnsYUgHCo+Y+A/DPs1hNtAKccP8Pj+jyFcgzgPl0Al6g12KtUWs?=
+ =?us-ascii?Q?uYP3GLRfiaaAPdMkQ/FT9UdjQekU1JYNh5hCGXzRf0b5JR7jVDfHWdmq8brh?=
+ =?us-ascii?Q?Mx0Ygg5Rc+xxWOFTXx6obUZCUYRKNWZWlXsqWeHOecXNWQQOPVbSa+IG5Cum?=
+ =?us-ascii?Q?62VX44ZYoYzUAHsxxs/yjICkQQKPmd/pU37P1MDM521X9OKdeJVRehivOeoZ?=
+ =?us-ascii?Q?LLAPvNlw5E5+LiOckgtqab7YbNHRVrU6BxCmGlEZAW7hpNdV8xsc+MhpmEjE?=
+ =?us-ascii?Q?ep0+qoHdpWR9dZTZaHVbv4o7nJr2NcEoCOE0linSbaZYAD5wVgd7mDRzXezW?=
+ =?us-ascii?Q?UYGX9rOlSBUI+96aESKI13oKhOne1PQn5NtlaxpIQdC8WqiSyZPieu/mxLkn?=
+ =?us-ascii?Q?/+v8k6ctTQENERjlPvAFY53mIaCie4xwdesQXWwgXnlYQs7dghsYkh2Ht0ER?=
+ =?us-ascii?Q?QZhcZOVz2fDv6IFj6STAhR0Focbz4HnzyMnXYW8SQvwwL4/AJMEy1EbrDoP1?=
+ =?us-ascii?Q?Dt4wX3XvOlZ+Qm12XMc7dQ6rifVpA7WwYbpB90ZLKgoI3RBDRG1j5qB5KLgG?=
+ =?us-ascii?Q?p7LhP9T2JKoi9oTqa5R9RN/K6gCEEG6L6/khu4pXXGuDVADROdrMpzdOWZPv?=
+ =?us-ascii?Q?6ORtBWMa864Bf+tyKZn64ANuFu3cQCdmWWmlPkH2DW3WVB07iadP45bS7Oz9?=
+ =?us-ascii?Q?EaayDVlkbKq+Pvji4GA0ezpkt8HIBSznwhqf?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?S2M3DBWMcBjtFYD21mvbw3CmTRjUIP3L22AE3MT4a8Mu+cVeLYkL4cZF5npe?=
+ =?us-ascii?Q?Q/W4Vnwb9tOwUgVKGaHl9F+OrLzE7BJMSoF/Bwi8qSnzISongZ0GTqM/bUfS?=
+ =?us-ascii?Q?1MDiwrw1EQbiFtDQzuTMKAQj6fJD7NYp9fHUA7X0koLeGdhkSLaJ4PoauPzx?=
+ =?us-ascii?Q?jApM4Zebg8viFHeMqVK/Y3yLRi4jxs0itVissG248n5ZqBhLYeNoN8klwMzQ?=
+ =?us-ascii?Q?hBhHB9/fcV5aWAxB22AJjEtOYeTZG7v3+7LxghlFzLCys+Wr1xvYX0CihsGc?=
+ =?us-ascii?Q?11gsUh5Cmcxy9GSYOGgcgcaER70tHOuw5KEuU/AOlAvd0UMHK3FdU7ouRR7p?=
+ =?us-ascii?Q?s3OZ+SRP5xOpxfbhJy02EYfEb1NGyo3DQiHZZ+JvGN88WMfz++3Uc3KYRp0c?=
+ =?us-ascii?Q?/gya0l3O9JMhTiBckHb3gVwMjWekCnVQUijzhfSPp+M+fdboXVNv0st3BV9k?=
+ =?us-ascii?Q?HuRwUNnaSHi13ViGbZmuchRGEqcRVDyAVGNQd6+nFd7uXzEQgxid/PA/9ljk?=
+ =?us-ascii?Q?cgv7fETN6jKd3aPjIq9rXxB9RAyMxc/DTMhY6MBwr4A4Nv3BGxBpkkQ3fIFB?=
+ =?us-ascii?Q?WBaUmbvF01Cg7cRN8V5zPnrF/VRPpwGYMnG379SLTxtnPdcfG/jL4exggrmn?=
+ =?us-ascii?Q?t2jdTkrlVFjNHwkyyFLUuALtJ8P9x3ewtGh23EKV6U/qRuMQ2y4/fXEGm7Vv?=
+ =?us-ascii?Q?/tJLwwUPPwQ18JzVSgNvQnFi7npl1K33nBypKwVTPBKz9GKygGBVCxhnm0PC?=
+ =?us-ascii?Q?QLLdIUrtg13Nq3GCZqF0uCrvQERI51F028NuUfZXYH6TAWFIO0uUqmNcg5qB?=
+ =?us-ascii?Q?ziRoTEcLXVyd9txQ0zTvPIxjrITajhHjzSW0boWztBdcMKqAESsRqVuTBhpF?=
+ =?us-ascii?Q?1F8soWoy07h3TmJbBfxadsIe9vgCG7UCWX7h3Wvv7m8U+plrglnTQ39Vv07D?=
+ =?us-ascii?Q?YrB+mgYgkAWqFn8+vO0PzTqW3ZT+rHe/fHF7bt3PSqhWQWOIkW2Tdod/hwZa?=
+ =?us-ascii?Q?tppn5ghzVGfUiQ/PMnenA8J07iuGK0JLGwAu992Bl+UvI3V+jodDzFTkRJ3Z?=
+ =?us-ascii?Q?1zQV5LIVt/LoCHaUnOOG/mCXxjG6Xde09TNnbhvL3Ktzbu+hGmt9bLs2BqSW?=
+ =?us-ascii?Q?qDCcTg94xlrk5MssEpnSqMK84nAgmKLAa6SV+yD54d5qxNRMpn02hkm2baj3?=
+ =?us-ascii?Q?KmwPB30PEE8qy06/4oWVkIZdSWizhYgaysoXtsX+pKeK3f5014DvEw3Q93Gf?=
+ =?us-ascii?Q?NfyKhES/p4rouBXjyOTwklSiP1UYed9FCUbo6gm/w7ELULWgyCoKLmBHm0Mk?=
+ =?us-ascii?Q?RSm2FXzz4E43XwcQGBQ2Kx/gA1toQXUuCEsSEDrUGjqM1J7hmtGN1tLnnRBC?=
+ =?us-ascii?Q?gS+ekSg9kIP0xeYtomZgbFowsEDeY0D41wUpbWXGcpk9Y6mtIzEpVx7r+XmO?=
+ =?us-ascii?Q?YIrg/zjOb4X7oOXcRVlDefgevai9BpjJqz3E5jCfeST4zVBs4fH/93qsogOw?=
+ =?us-ascii?Q?JOESlzKWgZFRH4MX7K865fYhf+lx482MXbe4qW7SgsMi4v5rGKf6URxntpzY?=
+ =?us-ascii?Q?weFOJzq18HnqDU23oSakicvJ69SyuQfwKtXgZBaG?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 894dfc81-9d89-4d30-170d-08de179429e9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Oct 2025 09:10:25.8558 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8/h3HLG8yjfjF2Tf2+cVLb4TtRtXT7WJ4boXrcNeHtEmZDbx+ZuP8KWTaHb6QNPDnM8cvB56jtRHcir5oDoGmfhbfkyI3EuVLSc4Bi50Xe0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB8269
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.17;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,53 +207,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi BALATON,
 
-Would you be taking care of this coverity issue?
 
-regards,
-Harsh
+>-----Original Message-----
+>From: Avihai Horon <avihaih@nvidia.com>
+>Subject: Re: [PATCH v4 08/10] vfio/migration: Fix a check on
+>vbasedev->iommu_dirty_tracking
+>
+>
+>On 29/10/2025 11:53, Zhenzhong Duan wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> VFIO IOMMU type1 claims to support IOMMU dirty tracking by setting
+>> bcontainer->dirty_pages_supported, but in vfio_migration_realize()
+>> vbasedev->iommu_dirty_tracking is checked, we should pass
+>> bcontainer->dirty_pages_supported to vbasedev->iommu_dirty_tracking
+>> in legacy backend so that the check is accurate.
+>>
+>> Fixes: 30b916778517 ("vfio/common: Allow disabling device dirty page
+>tracking")
+>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> ---
+>>   hw/vfio/container-legacy.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+>> index dd9c4a6a5a..fa726a2733 100644
+>> --- a/hw/vfio/container-legacy.c
+>> +++ b/hw/vfio/container-legacy.c
+>> @@ -845,6 +845,7 @@ static bool vfio_device_get(VFIOGroup *group,
+>const char *name,
+>>                               VFIODevice *vbasedev, Error **errp)
+>>   {
+>>       g_autofree struct vfio_device_info *info =3D NULL;
+>> +    VFIOContainer *bcontainer =3D VFIO_IOMMU(group->container);
+>>       int fd;
+>>
+>>       fd =3D vfio_cpr_group_get_device_fd(group->fd, name);
+>> @@ -883,7 +884,8 @@ static bool vfio_device_get(VFIOGroup *group,
+>const char *name,
+>>           }
+>>       }
+>>
+>> -    vfio_device_prepare(vbasedev, VFIO_IOMMU(group->container),
+>info);
+>> +    vfio_device_prepare(vbasedev, bcontainer, info);
+>> +    vbasedev->iommu_dirty_tracking =3D
+>bcontainer->dirty_pages_supported;
+>
+>IIRC, we intentionally don't consider VFIO IOMMU type1 dirty tracking as
+>a real dirty tracker, because all it does is mark the whole tracked
+>address range as dirty (which is the same as not having dirty tracking
+>support at all).
 
-On 10/27/25 18:44, Peter Maydell wrote:
-> On Thu, 23 Oct 2025 at 13:22, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>
->> From: BALATON Zoltan <balaton@eik.bme.hu>
->>
->> We generate a flattened device tree programmatically for VOF. Change
->> this to load the static parts from a device tree blob and only
->> generate the parts that depend on run time conditions such as CPU
->> type, memory size and PCI devices. Moving the static parts in a dts
->> makes the board code simpler and more generic.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Link: https://lore.kernel.org/qemu-devel/383891fc2696609b27d2de9773efe1b4f493e333.1761176219.git.balaton@eik.bme.hu
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> 
-> Hi; Coverity points out (CID 1642027) that this change
-> accidentally introduces a memory leak:
-> 
->> @@ -780,7 +675,10 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
->>                                        pci_get_word(&d->config[PCI_VENDOR_ID]),
->>                                        pci_get_word(&d->config[PCI_DEVICE_ID]));
->>
->> -    if (pci_get_word(&d->config[PCI_CLASS_DEVICE])  ==
->> +    if (!strcmp(pn, "pci1106,8231")) {
->> +        return; /* ISA bridge and devices are included in dtb */
->> +    }
-> 
-> In this function we define at the top:
->      GString *node = g_string_new(NULL);
-> 
-> This change introduces an early-return which does not free
-> the GString.
-> 
-> The simplest fix is probably to declare node as
->     g_autoptr(GString) node = g_string_new(NULL);
-> 
-> and delete the now-superfluous g_string_free() from the
-> bottom of the function.
-> 
-> thanks
-> -- PMM
+Yes.
+
+>Thus, when vbasedev->iommu_dirty_tracking was introduced, we
+>intentionally set it only if IOMMUFD dirty tracking was supported.
+
+Then we have conflict setting of vbasedev->iommu_dirty_tracking and bcontai=
+ner->dirty_pages_supported.
+We had set bcontainer->dirty_pages_supported =3D true in vfio_get_iommu_inf=
+o_migration().
+
+bcontainer->dirty_pages_supported is checked in dirty tracking related func=
+tions of container scope,
+e.g., vfio_container_set_dirty_page_tracking() and vfio_container_query_dir=
+ty_bitmap(). If we take the
+legacy backend ditry tracking as not supported, we should set it to false, =
+is that work for you?
+
+>
+>So, I don't think this patch needed.
+
+Yes, if we set bcontainer->dirty_pages_supported =3D false, this patch and =
+patch9 are both not needed.
+
+>
+>BTW, do you have a real production use case for migration with VFIO
+>IOMMU type1 dirty tracking? I mean, is the scenario you described in
+>patch #7 a real use case or you just fixed it for completeness?
+>If there is no use case, maybe patch #9 is not really needed?
+
+patch7 is a real use case, in guest, we switch device from IOMMU domain to =
+block domain and see the issue.
+We need to send accurate unmap notification with actual mapping during migr=
+ation, for both backend.
+
+patch9 is specifically for unmap_bitmap(), it's needed as long as we set bc=
+ontainer->dirty_pages_supported =3D true for legacy backend,
+because vfio_legacy_dma_unmap_one checks bcontainer->dirty_pages_supported.
+
+Thanks
+Zhenzhong
 
