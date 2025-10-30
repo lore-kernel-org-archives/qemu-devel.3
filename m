@@ -4,95 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA33CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A4CCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vETzu-0003G6-0t; Thu, 30 Oct 2025 10:51:30 -0400
+	id 1vETyu-0001dZ-3n; Thu, 30 Oct 2025 10:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vETzk-0002gY-4H
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:51:21 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vETyq-0001ZF-Pz
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vETzZ-0001sC-BG
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:51:19 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vETyc-0001gY-0h
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:50:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761835863;
+ s=mimecast20190719; t=1761835806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2nFMttYB5fauTANmpLOz33X8KQGAeltN2KPLLD7rD2c=;
- b=h1xGT474CN9epahbh18xJoipnCC8XX3mSp8lv+KycUZxzrvlfqvQFlyJnrDRQXlD5jsid4
- XTyl4ngNSRWFtiW8ijCelh/dSOR2xAXGoumGIsHq58eBXg5CmwryFRj1lYzAL5FVx7VBup
- kUi5pHGpSHvAD0OuT+HHDrDsDl7po8U=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-FPWkVw3-PaaY5JfV6KpUuA-1; Thu, 30 Oct 2025 10:51:01 -0400
-X-MC-Unique: FPWkVw3-PaaY5JfV6KpUuA-1
-X-Mimecast-MFC-AGG-ID: FPWkVw3-PaaY5JfV6KpUuA_1761835861
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-781353ba452so15508007b3.0
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 07:51:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761835861; x=1762440661;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2nFMttYB5fauTANmpLOz33X8KQGAeltN2KPLLD7rD2c=;
- b=cHee+zImHdYpugsUpCMaQgffDLMtW/dcrrP258T1c+KK/ir1bmaMK8FQUEAk2uNRBO
- lJj/EJOlcseQXQK9/BIljwG8MyhNokUNgbFfuE/hQ993pMBHWtHfM/6bpHhPxuC26zzf
- p9xS419HH2oxpjkeZPZ8jBkwA8OVVIv1MVlNk6imAQuBWi6Lwm3bG77e9d3qpR6hx1Df
- wR4iNdgIzc/1EIahIl6T2NfoT6ZaPppVaxObSwmIoxn1l3j5+Xqe4Wfa6aS7biWQuhU3
- IG3dG/Gv9zhTNXqDnH/aAZojV6wIk0tauIcLpOrlcBASzrqn1WfreKl/ztkwNi/fksJJ
- jzeQ==
-X-Gm-Message-State: AOJu0YxRGmQZbZw3vcikOLMfXQOTXn6s2Ox47fR1f40+ln2G9ClVBisQ
- b2xLPY3o3Zu8cBT6v76f5Bx0XNU/9oGosBh575yR3xgUiSjehMToQXe+SZwjGXBumXxmzhocY8x
- uQ4yT9MClrnv+8FOb3j9sawYZhu2Ix5T2ovG6jQjxBRLf4UbQXwpwYgaOQ+P/tA/URiVZcHZsCm
- mwZdNzNg8fE+DSwT32NlmL5DNJkaK3J2I=
-X-Gm-Gg: ASbGncvggP5dC9CIGFgQTXmgD6M9EZxoUE1sRkDx9F45sbtVYJSCgmLeZhR+S75e3/E
- Cy65K0RK+P0pqMNKPYxuxZMRhipkfoVTjTHZMz+txRotSXG3AsxYutFNIn318N0t3NU/pjm4xB3
- TDBlUXHE2w3h2J/dFGAocEM2SXh6ZqAGq+cV8ixTBhLUC3Iyk25APp4CoWdBImjOW8RjUhurphf
- KjAgEXqyFt1MLA=
-X-Received: by 2002:a05:690c:6c84:b0:784:f14d:6946 with SMTP id
- 00721157ae682-78628ffec19mr65704837b3.55.1761835861117; 
- Thu, 30 Oct 2025 07:51:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGU2XBs3mVPK45zy1qH+p5tLgwo80pni5MM2JQeI+9sTSxnp2++sHZ/kMQJZrBl6wFtoqcG6tRkUE+/YwdxmBA=
-X-Received: by 2002:a05:690c:6c84:b0:784:f14d:6946 with SMTP id
- 00721157ae682-78628ffec19mr65704417b3.55.1761835860549; Thu, 30 Oct 2025
- 07:51:00 -0700 (PDT)
+ bh=wAZEG03ZQWoQ1rAmFed0mIn2oPfoyTflGi5QHhoCFX8=;
+ b=G00qpNrQ1/bGI0FBKrE1rvmjsFiNVqAS4jYpSEy+ag0zCGnJskKiSY8RBzBs9vpxt7xBio
+ AZMJJphW7LH2Pz25ckOsWUfrXu8hNLBagvR5vBu6B4n5zXd8yIcUct0RP8nVfvvsh1P4Fk
+ vL5zsXGUzP0Ppa4A8E69GQzBA6tl8qU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-ac8s4WDCM7-8KQzk3tc-mg-1; Thu,
+ 30 Oct 2025 10:50:00 -0400
+X-MC-Unique: ac8s4WDCM7-8KQzk3tc-mg-1
+X-Mimecast-MFC-AGG-ID: ac8s4WDCM7-8KQzk3tc-mg_1761835799
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F8671956078; Thu, 30 Oct 2025 14:49:59 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.122])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0668E30001A1; Thu, 30 Oct 2025 14:49:57 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org
+Subject: [PATCH 15/21] crypto: make TLS credentials structs private
+Date: Thu, 30 Oct 2025 14:49:21 +0000
+Message-ID: <20251030144927.2241109-16-berrange@redhat.com>
+In-Reply-To: <20251030144927.2241109-1-berrange@redhat.com>
+References: <20251030144927.2241109-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20251028220342.1407883-1-jsnow@redhat.com>
- <20251028220342.1407883-3-jsnow@redhat.com>
- <d08731ce-e543-462c-8980-e5153cca5621@redhat.com>
-In-Reply-To: <d08731ce-e543-462c-8980-e5153cca5621@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 30 Oct 2025 10:50:48 -0400
-X-Gm-Features: AWmQ_bkoYvttOzeVlmK40i_lzQ_1lRSmegMi8ALWuYOyVmYD1E0KdW1ZK58UzFU
-Message-ID: <CAFn=p-YkossgdQJUJZE9NXJKcavmAcOA7pcyNTiTEMVWxiAeiA@mail.gmail.com>
-Subject: Re: [PATCH RFC 02/10] python/qapi: Add an ignore for Pylint 4.x
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Qemu-block <qemu-block@nongnu.org>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000009ef7050642616039"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,100 +86,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009ef7050642616039
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Now that the TLS session code no longer needs to look at the TLS
+credential structs, they can be made private.
 
-On Thu, Oct 30, 2025, 4:23=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote:
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/tlscredsanon.c |  3 +++
+ crypto/tlscredspriv.h | 15 ---------------
+ crypto/tlscredspsk.c  |  5 +++++
+ crypto/tlscredsx509.c |  6 ++++++
+ 4 files changed, 14 insertions(+), 15 deletions(-)
 
-> On 28/10/2025 23.03, John Snow wrote:
-> > Pylint 4.x wants to use a different regex for _Stub for some reason;
-> > just silence this.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   scripts/qapi/introspect.py | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-> > index 89ee5d5f176..7e28de2279a 100644
-> > --- a/scripts/qapi/introspect.py
-> > +++ b/scripts/qapi/introspect.py
-> > @@ -59,7 +59,7 @@
-> >   #
-> >   # Sadly, mypy does not support recursive types; so the _Stub alias is
-> used to
-> >   # mark the imprecision in the type model where we'd otherwise use
-> JSONValue.
-> > -_Stub =3D Any
-> > +_Stub =3D Any  # pylint: disable=3Dinvalid-name
-> >   _Scalar =3D Union[str, bool, None]
-> >   _NonScalar =3D Union[Dict[str, _Stub], List[_Stub]]
-> >   _Value =3D Union[_Scalar, _NonScalar]
->
-> Alternatively, rename it to "_stub" ?
->
-
-Well, it's a "type" and it should match the others, ... I don't actually
-know why it is deciding to whine about this and had bigger fish to fry.
-
-
-> Anyway,
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
->
->
-
---0000000000009ef7050642616039
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 30, 2025, 4:23=E2=80=
-=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
- 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 28/10/2025 23.03,=
- John Snow wrote:<br>
-&gt; Pylint 4.x wants to use a different regex for _Stub for some reason;<b=
-r>
-&gt; just silence this.<br>
-&gt; <br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0scripts/qapi/introspect.py | 2 +-<br>
-&gt;=C2=A0 =C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py<b=
-r>
-&gt; index 89ee5d5f176..7e28de2279a 100644<br>
-&gt; --- a/scripts/qapi/introspect.py<br>
-&gt; +++ b/scripts/qapi/introspect.py<br>
-&gt; @@ -59,7 +59,7 @@<br>
-&gt;=C2=A0 =C2=A0#<br>
-&gt;=C2=A0 =C2=A0# Sadly, mypy does not support recursive types; so the _St=
-ub alias is used to<br>
-&gt;=C2=A0 =C2=A0# mark the imprecision in the type model where we&#39;d ot=
-herwise use JSONValue.<br>
-&gt; -_Stub =3D Any<br>
-&gt; +_Stub =3D Any=C2=A0 # pylint: disable=3Dinvalid-name<br>
-&gt;=C2=A0 =C2=A0_Scalar =3D Union[str, bool, None]<br>
-&gt;=C2=A0 =C2=A0_NonScalar =3D Union[Dict[str, _Stub], List[_Stub]]<br>
-&gt;=C2=A0 =C2=A0_Value =3D Union[_Scalar, _NonScalar]<br>
-<br>
-Alternatively, rename it to &quot;_stub&quot; ?<br></blockquote></div></div=
-><div dir=3D"auto"><br></div><div dir=3D"auto">Well, it&#39;s a &quot;type&=
-quot; and it should match the others, ... I don&#39;t actually know why it =
-is deciding to whine about this and had bigger fish to fry.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote=
-_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
-rder-left:1px #ccc solid;padding-left:1ex">
-<br>
-Anyway,<br>
-Reviewed-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=3D"=
-_blank" rel=3D"noreferrer">thuth@redhat.com</a>&gt;<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000009ef7050642616039--
+diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
+index 0a728ccbf6..69ed1d792a 100644
+--- a/crypto/tlscredsanon.c
++++ b/crypto/tlscredsanon.c
+@@ -31,6 +31,9 @@
+ 
+ #include <gnutls/gnutls.h>
+ 
++struct QCryptoTLSCredsAnon {
++    QCryptoTLSCreds parent_obj;
++};
+ 
+ static int
+ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+diff --git a/crypto/tlscredspriv.h b/crypto/tlscredspriv.h
+index 4e6dffa22f..69dac02437 100644
+--- a/crypto/tlscredspriv.h
++++ b/crypto/tlscredspriv.h
+@@ -37,21 +37,6 @@ struct QCryptoTLSCreds {
+     QCryptoTLSCredsBox *box;
+ };
+ 
+-struct QCryptoTLSCredsAnon {
+-    QCryptoTLSCreds parent_obj;
+-};
+-
+-struct QCryptoTLSCredsPSK {
+-    QCryptoTLSCreds parent_obj;
+-    char *username;
+-};
+-
+-struct QCryptoTLSCredsX509 {
+-    QCryptoTLSCreds parent_obj;
+-    bool sanityCheck;
+-    char *passwordid;
+-};
+-
+ #ifdef CONFIG_GNUTLS
+ 
+ int qcrypto_tls_creds_get_path(QCryptoTLSCreds *creds,
+diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
+index 5568f1ad0c..e437985260 100644
+--- a/crypto/tlscredspsk.c
++++ b/crypto/tlscredspsk.c
+@@ -31,6 +31,11 @@
+ 
+ #include <gnutls/gnutls.h>
+ 
++struct QCryptoTLSCredsPSK {
++    QCryptoTLSCreds parent_obj;
++    char *username;
++};
++
+ static int
+ lookup_key(const char *pskfile, const char *username, gnutls_datum_t *key,
+            Error **errp)
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index ef31ea664c..2fc0872627 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -33,6 +33,12 @@
+ #include <gnutls/gnutls.h>
+ #include <gnutls/x509.h>
+ 
++struct QCryptoTLSCredsX509 {
++    QCryptoTLSCreds parent_obj;
++    bool sanityCheck;
++    char *passwordid;
++};
++
+ 
+ static int
+ qcrypto_tls_creds_check_cert_times(gnutls_x509_crt_t cert,
+-- 
+2.51.1
 
 
