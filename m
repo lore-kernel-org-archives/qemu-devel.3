@@ -4,88 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9693ACCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 17:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D104CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 17:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEWWf-0001CI-AV; Thu, 30 Oct 2025 13:33:29 -0400
+	id 1vEWaE-000262-Aw; Thu, 30 Oct 2025 13:37:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vEWWc-0001Br-Ha
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:33:27 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vEWWR-0002wu-QM
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:33:26 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-63c4b5a1b70so2870267a12.1
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 10:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761845588; x=1762450388; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hkO6OeeX1sOmdPHBsGMONIpye9aGTGkeACzl8aZQVmM=;
- b=X4vUp8M+tYaqMW3/7VJVyGVBbNj+MInrhwbk1saQ4qmo2DaaLMWVmoQ9t1ybtHv0cW
- vOPKpvefQlheYUlOtRetGHIq+DufNuTcYwwICdCwzoQpN7+u368iiVY9XUQxmmSJA3kI
- 7N8p1Cs457cE1Kyyrlz8XZ9zbAEKBDiMGWfrXuffT1j14LjzTtB7K89zMiV3uj8bVyug
- 7KdVnj+/wF9L7jkq/xELNs64zpHGH60qbTii76EJUuFtis9y1Ft81duoBV/3VEQXE0yz
- g/FPZbaZuRC0TziU3j1TmpDqXHidwf4/x5HU1t6HZ2TZX10bPKz/x+DL3C+q/SfVhE8H
- tC3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761845588; x=1762450388;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hkO6OeeX1sOmdPHBsGMONIpye9aGTGkeACzl8aZQVmM=;
- b=STuNY/POHYtcTqV5GVpIrmto8jpDuiR8TDbfuByn8jRkFd/+9riAdtqOUvTdnlKJus
- fNG84SxBpbkfuCHvR/kVXjsdFg2q6xaUni9hAnM/LR5pSZM2XEQxL8890kxH8uCGkGkA
- Yp+ll3UNIe3HNYBXLwiXJIKAcNsgNnXhO/voiufK9L4a65UUK6LHoYFSNO5CaReFIDFt
- CgWqPy1ewmcds9q5flCFufhNFynbQElg2cYxQUsqsKInJ0AI3EfsagM7qB4E2ic6MMQC
- 3AhI6PFXtQI4ERmeB/cKkcPySO7nDr/p+ILMcshTw4o0OWalgvCGsL6lrikv0vG8CDDi
- BTlg==
-X-Gm-Message-State: AOJu0Yz710RMdEVNMqHTGo1BKBq8OlGD64H4kFzF0uGszZVYtWgmnsQO
- 3mjjD6KIIIfD1pGptIIBSXHpJtAdMwZCqMO/fxmgJuzQdMrJlcOvaEmPvlQ0eHAosNk=
-X-Gm-Gg: ASbGncvCekZzDQ5WBoeFveaMz/OUBjys2tIh1j2ZGXdlkWkJdLVYB/lva3JbdjwtkXD
- 94beZs2ge5B++82dQc9qRhMYh7UtQbcdSNb5fwtzQyQ/WmOEQTotd5iVZeIQwENINP18hT6MLFX
- k11VP2WlWOo7Zs9NaJCF31++ZfJ8vJ6oToatWajNStoujFZjc/QZTYftOrX3mUSt6jYxdAghyj6
- iwyxpMUL+UWe38w4K9aur2H1YG0qYNXo3CEljAGaB706Lg1jLecBaqLtUiejJVSFfB5Vf75uoxp
- bh+XrywUcVY7gYlqX1GtvmufZ/U/W7CDQbWuvS6XlmzEvN3XL4SBljn2ClUBaUfoy5U/TO/ALkP
- NtRtpXlUe9Cm310KxjZ2qFgeVXrIj9xs5jzfDHIzZ3tccrjUgx5ts/KyBuVVhwwdbeJXROB7GAI
- FYczjVKaHLfq0=
-X-Google-Smtp-Source: AGHT+IF+vJo0QhtSTAwbgTH46g3Tsj2xxqNyx3o0X+tggGfS4XBtO0+7h6Vx20gxEj4pePHWCG3Jog==
-X-Received: by 2002:a05:6402:2549:b0:640:6650:9173 with SMTP id
- 4fb4d7f45d1cf-64077043cefmr236470a12.33.1761845587715; 
- Thu, 30 Oct 2025 10:33:07 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e7efd116asm15669705a12.33.2025.10.30.10.33.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Oct 2025 10:33:07 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2BB785F80C;
- Thu, 30 Oct 2025 17:33:06 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH] timers: properly prefix init_clocks()
-Date: Thu, 30 Oct 2025 17:33:02 +0000
-Message-ID: <20251030173302.1379174-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vEWaC-00025p-Kc
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:37:08 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vEWZx-0003uR-V4
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:37:08 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E689280928;
+ Thu, 30 Oct 2025 20:36:38 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:861::1:2b] (unknown
+ [2a02:6bf:8080:861::1:2b])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id aajZ9N0GqCg0-xjtNbcHp; Thu, 30 Oct 2025 20:36:38 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761845798;
+ bh=ZFvmyumDTonWef7FF7L4UhOqzXSfecDzFKGEtqBHGB4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=jvQr7/gFAcZrkZMvBC3LS8u5LeByOaajfQ0Fi5nsKGlJaMkY2bv90AtSd/4tYmITb
+ kYDq4tGiLnPnyXrtqWZe1JtoCVzV64sBEm1VL+gPHzhvWtiCbaySBinqYFF/8vgDEj
+ lQeyGFiI5fqQKq60VEbNE+tf1rVY7lj3VOErmTBE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <0ded12d3-c7b6-4fec-98e7-ea9fda425d36@yandex-team.ru>
+Date: Thu, 30 Oct 2025 20:36:36 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 00/22] migration: convert vmstate_load/save_state
+To: Peter Xu <peterx@redhat.com>
+Cc: armbru@redhat.com, qemu-devel@nongnu.org, Fabiano Rosas
+ <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
+ <aQOc7ogTLqs8iML0@x1.local> <aQOeHqILFfBdlhJb@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aQOeHqILFfBdlhJb@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,76 +79,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Otherwise we run the risk of name clashing, for example with
-stm32l4x5_usart-test.c should we shuffle the includes.
+On 30.10.25 20:19, Peter Xu wrote:
+> On Thu, Oct 30, 2025 at 01:14:22PM -0400, Peter Xu wrote:
+>> On Wed, Oct 29, 2025 at 02:13:24AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>> Hi all!
+>>>
+>>> That's a proof-of-concept for converting vmstate_load/save_state
+>>> to have boolean error value, to fixup this analysis
+>>>    https://lore.kernel.org/qemu-devel/aQDdRn8t0B8oE3gf@x1.local/
+>>> in code.
+>>>
+>>> As many of .get / .set handlers call vmstate_load/save_state,
+>>> let's convert them too, it not too much.
+>>>
+>>> And finally, while touching each file, let's also use
+>>> new pre/post _errp() APIs.
+>>>
+>>> So, this series propagate a lot of errors through errp, which
+>>> were simply printed out before.
+>>>
+>>> Why it is an RFC:
+>>> 1. I didn't yet double check the accuracy of all patches
+>>> 2. Maybe, commit messages need to be more detailed, maybe they
+>>> need more arguments about correctness of the change
+>>> 3. Maybe, it's better first merge new generic interfaces, and
+>>> than send per-maintainer small series, to avoid this huge
+>>> series, depending on many maintainers.
+>>>
+>>> So, I don't include in CC many maintainers now, to get a first
+>>> look from Markus and Peter.
+>>
+>> It's still good to collect more opinions on especially rfc series, even if
+>> the list doesn't need to include maintainers for each device. I added
+>> Fabiano and Dan too.
+>>
+>>>
+>>> What do you think?
+>>
+>> In general.. I liked it. :) Thanks for trying it.
+> 
+> Oh wait, so this is still not the full list of what needs to be done?
+> After I applied your patchset, I still see:
+> 
+> $ git grep -E "\.get | \.set " | wc -l
+> 214
+> 
+> Some of them are outliers but most of them look not.. :(
+> 
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/qemu/timer.h              | 5 +++--
- tests/unit/test-aio-multithread.c | 2 +-
- util/main-loop.c                  | 2 +-
- util/qemu-timer.c                 | 2 +-
- 4 files changed, 6 insertions(+), 5 deletions(-)
+I think, they are qdev properties, not VMStateInfo. In this series I do
+remove old .get / .set interfaces, and compilation still works for me..
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index 406d7411203..8b561cd6960 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -786,11 +786,12 @@ static inline int64_t qemu_soonest_timeout(int64_t timeout1, int64_t timeout2)
- }
- 
- /**
-- * initclocks:
-+ * qemu_init_clocks:
-+ * @notify_cb: optional call-back for timer expiry
-  *
-  * Initialise the clock & timer infrastructure
-  */
--void init_clocks(QEMUTimerListNotifyCB *notify_cb);
-+void qemu_init_clocks(QEMUTimerListNotifyCB *notify_cb);
- 
- static inline int64_t get_max_clock_jump(void)
- {
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index 0ead6bf34ad..c24200a7121 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -443,7 +443,7 @@ static void test_multi_mutex_10(void)
- 
- int main(int argc, char **argv)
- {
--    init_clocks(NULL);
-+    qemu_init_clocks(NULL);
- 
-     g_test_init(&argc, &argv, NULL);
-     g_test_add_func("/aio/multi/lifecycle", test_lifecycle);
-diff --git a/util/main-loop.c b/util/main-loop.c
-index b8ddda8f5ee..b462598f76e 100644
---- a/util/main-loop.c
-+++ b/util/main-loop.c
-@@ -162,7 +162,7 @@ int qemu_init_main_loop(Error **errp)
-     int ret;
-     GSource *src;
- 
--    init_clocks(qemu_timer_notify_cb);
-+    qemu_init_clocks(qemu_timer_notify_cb);
- 
-     ret = qemu_signal_init(errp);
-     if (ret) {
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 56f11b6a641..2a6be4c7f95 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -637,7 +637,7 @@ static void qemu_virtual_clock_set_ns(int64_t time)
-     return cpus_set_virtual_clock(time);
- }
- 
--void init_clocks(QEMUTimerListNotifyCB *notify_cb)
-+void qemu_init_clocks(QEMUTimerListNotifyCB *notify_cb)
- {
-     QEMUClockType type;
-     for (type = 0; type < QEMU_CLOCK_MAX; type++) {
+Maybe some modules are not included into my build config? Unfortunately yes:
+
+> git grep -A 5 'VMStateInfo .* = {' | grep '\.get' | awk '{print $1}' | sort | uniq
+hw/usb/redirect.c-
+target/alpha/machine.c-
+target/arm/machine.c-
+target/avr/machine.c-
+target/hppa/machine.c-
+target/microblaze/machine.c-
+target/mips/system/machine.c-
+target/openrisc/machine.c-
+target/ppc/machine.c-
+target/sparc/machine.c-
+
+
+That's 10 more commits. And the whole series would be 32, involving many people..
+
+I think, I'll resend only migration/* commits as "part I", except for 20/22 (to save
+old interfaces too), and then other parts in separate smaller series.
+
+
 -- 
-2.47.3
-
+Best regards,
+Vladimir
 
