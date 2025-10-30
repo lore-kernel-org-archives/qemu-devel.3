@@ -4,64 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641C2CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 16:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EEF1CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 16:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEVrr-0000QD-9w; Thu, 30 Oct 2025 12:51:19 -0400
+	id 1vEVtI-0000dd-IS; Thu, 30 Oct 2025 12:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1vEVro-0000NU-EO
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:51:17 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vEVtG-0000dS-20
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:52:46 -0400
+Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1vEVrb-0004Rv-N1
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:51:14 -0400
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
- by metis.whiteo.stw.pengutronix.de with esmtps
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <jlu@pengutronix.de>)
- id 1vEVrS-0001z8-IT; Thu, 30 Oct 2025 17:50:54 +0100
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
- by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <jlu@pengutronix.de>) id 1vEVrS-006F5R-0N;
- Thu, 30 Oct 2025 17:50:54 +0100
-Received: from localhost ([127.0.0.1] helo=[IPv6:::1])
- by ptz.office.stw.pengutronix.de with esmtp (Exim 4.98.2)
- (envelope-from <jlu@pengutronix.de>) id 1vEVrR-00000001aOj-3xXW;
- Thu, 30 Oct 2025 17:50:54 +0100
-Message-ID: <e609ef19aa3d3ed9d7d9c105052f5d8550de5cab.camel@pengutronix.de>
-Subject: Re: [PATCH v5 2/6] hw/sd/sdcard: Allow user-instantiated eMMC
-From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Bin Meng
- <bmeng.cn@gmail.com>, qemu-block@nongnu.org, Ilias Apalodimas
- <ilias.apalodimas@linaro.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Jerome Forissier <jerome.forissier@linaro.org>
-Date: Thu, 30 Oct 2025 17:50:53 +0100
-In-Reply-To: <90fc6201696fcf0e5fd0493365bc32b217aa9d6e.1760702638.git.jan.kiszka@siemens.com>
-References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <90fc6201696fcf0e5fd0493365bc32b217aa9d6e.1760702638.git.jan.kiszka@siemens.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vEVt5-0004Zw-2B
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 12:52:44 -0400
+Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
+ by m0409410.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 59UFoEiU1180310; Thu, 30 Oct 2025 16:52:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=jan2016.eng; bh=gJhczxobc
+ 1mZNz8qaVS4ULglRmVp5/t/yxjmM1TDAkc=; b=k0VoSE6O195kCxechH6VK8UsS
+ ppfGG+uQBHP1CqOqJxzgkIpy5+wapI62GYq1fjushIwtexjnr3qKzElVYc1ABvsW
+ 2U8AcaCuwJj9qde29uhSWGpcHfRwWMKi1Dtfn9Uer1covgYZM1tJ4awg2kYY+cRI
+ UHxE5yX9RNR0q4AIvkfjAcpN6O7pUXnxUaSC9hpbauCkd6CAzCOeq+AwztA7x2q/
+ paRjXpvQWw35NCqPNKVETHGuizPUeBhNhZixAn7YpgAMv6lAKrwY9S3L8MT4ZnsN
+ 0BVrJkSgHWUB5QWXNKt7gCvvIVHcasQ5cPU0JkWa2ZijotisQUCYMJ3DmklWA==
+Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18])
+ by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 4a4b0ugmw9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Oct 2025 16:52:24 +0000 (GMT)
+Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
+ by prod-mail-ppoint1.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 59UDuA9L008142; Thu, 30 Oct 2025 12:52:23 -0400
+Received: from prod-mail-relay02.akamai.com ([172.27.118.35])
+ by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 4a49b20nq1-1;
+ Thu, 30 Oct 2025 12:52:23 -0400
+Received: from bos-lhvkhf.bos01.corp.akamai.com
+ (bos-lhvkhf.bos01.corp.akamai.com [172.28.40.75])
+ by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 4AED283;
+ Thu, 30 Oct 2025 16:52:23 +0000 (UTC)
+From: Ben Chaney <bchaney@akamai.com>
+To: steven.sistare@oracle.com
+Cc: farosas@suse.de, hamza.khan@nutanix.com, jasowang@redhat.com,
+ mst@redhat.com, peterx@redhat.com, qemu-devel@nongnu.org,
+ sgarzare@redhat.com, johunt@akamai.com, mtottenh@akamai.com,
+ bchaney@akamai.com
+Subject: Re: [RFC V2 0/8] Live update: tap and vhost
+Date: Thu, 30 Oct 2025 12:52:23 -0400
+Message-Id: <20251030165223.508678-1-bchaney@akamai.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: jlu@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-30_05,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ adultscore=0 mlxscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=482 suspectscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
+ definitions=main-2510300138
+X-Authority-Analysis: v=2.4 cv=VMvQXtPX c=1 sm=1 tr=0 ts=690397c8 cx=c_pps
+ a=StLZT/nZ0R8Xs+spdojYmg==:117 a=StLZT/nZ0R8Xs+spdojYmg==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=mauVNlPaqdg2CfaPDjgA:9
+ a=ZXulRonScM0A:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: gY8YRwAa88P741fwqaSUNGSaZgxI8eDQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMwMDEzOSBTYWx0ZWRfX0X6mV4xz8FQE
+ QlS0T4WCJIz1WMNvjRAwgM45iQVWalK5X4lvNveD+PBo3n/G7L7qLQvqTVaUKmf+NE0AIoJ89Lv
+ vDUfLhcTPkDAH6bEf+5yecjdTkYgkks89eRHqyoeMXD52fV9UVRqRPRKJHCG7TFmzoNbJJdZLWI
+ cw0Mxf90NifVuuzcJRVIM5/A2toiAEwB3gQv0u9sjQA8dWtqVErpfh1UoWX5Tsu59tM3Gi8a4eZ
+ jrfAv2c2AzmhbIPCMOHNJXNoXWl1WVAk+lty7202rfGiiPJpC2wnp6KgDa7rQkT0B1j7SELPZPU
+ a7RcGZEQwp6Sw7kL1mGNPdd4Fu1X5lbyc+Lw2mKfp6Z+LUxsTtn1pcQUTsZxEMX97MI3qt10okO
+ QRk548G6300WOgDDV0CprHfmO+dvGQ==
+X-Proofpoint-GUID: gY8YRwAa88P741fwqaSUNGSaZgxI8eDQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-30_05,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1011
+ priorityscore=1501 phishscore=0
+ malwarescore=0 adultscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510300139
+Received-SPF: pass client-ip=67.231.157.127; envelope-from=bchaney@akamai.com;
+ helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,44 +114,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-10-17 at 14:03 +0200, Jan Kiszka wrote:
-> From: Jan Kiszka <jan.kiszka@siemens.com>
->=20
-> Enable user-instantiation so that PCI-attached eMMCs can be created for
-> virt machines, for QA purposes for the eMMC model itself and for complex
-> firmware/OS integrations using the upcoming RPMB partition support.
+> Tap and vhost devices can be preserved during cpr-transfer
 
-Perhaps reword to "Enable user-instantiation so that eMMCs can be created f=
-or
-PCI-attached SD/MMC host controllers (such as sdhci-pci) on virt machines, =
-..."
-to match the actual bus hierarchy?
+Hi Steve,
 
-Jan
+    I tested this patch set. With the two fixes. it is working
+as expected. Are there plans for a v3 of this patch set?
 
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-> ---
->  hw/sd/sd.c | 2 --
->  1 file changed, 2 deletions(-)
->=20
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index d1e1bb4f0e..305ea251cb 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -2928,8 +2928,6 @@ static void emmc_class_init(ObjectClass *klass, con=
-st void *data)
->      dc->desc =3D "eMMC";
->      dc->realize =3D emmc_realize;
->      device_class_set_props(dc, emmc_properties);
-> -    /* Reason: Soldered on board */
-> -    dc->user_creatable =3D false;
-> =20
->      sc->proto =3D &sd_proto_emmc;
-> =20
-
---=20
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+Thanks,
+     Ben
 
