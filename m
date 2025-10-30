@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD601CCF9F1
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 09:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77FA9CCF9F1
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 09:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEPEG-0000Ee-9m; Thu, 30 Oct 2025 05:46:00 -0400
+	id 1vEPMV-0002KD-Od; Thu, 30 Oct 2025 05:54:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEPE9-0000Do-Fq
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:45:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEPMQ-0002Jc-P4
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:54:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEPDy-0007xp-7N
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:45:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEPMI-0000du-Gr
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 05:54:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761817537;
+ s=mimecast20190719; t=1761818051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9wl/byNpooaOfvgU62aGelOq0QuDu/deo/1/Vwr9rwY=;
- b=JDWy1vpsD05NScTXGVvH1nFPJzCdpxDZH36mTiPe7gkQN/7AD8ONsfYlf6q3wewwJmMrrf
- o8R0OUsIueYjz2UcK+24c4iHRznaPPBjuAZ89I70F27/pWSnUqZ2BYdI8bovN+tfST/k1D
- FWJgahAiX/iRGB1seJuzYGfYmrXlCp4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6XdgfQxluwBcLDe1xFkj4ry8yZVXVpGUg4q+UPa18g0=;
+ b=h+yYS+MC16hTm1OgmEmpE0YpcmjH4VGhM6BGb+iUYjezSZ/aHHa1oo/6BVQD0Hefcarh2h
+ tlXQAV8tZcITGrSYHC1xyuklx8f8HD+uqXzDp+9cF/uWxvJ73YksRQvHK54iGjJntqxerT
+ aSL7qiArmRtf8+jnzbBMGK+oXiVhJMM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-p6q8Ab-wMFqkkPFIWevdPA-1; Thu, 30 Oct 2025 05:45:35 -0400
-X-MC-Unique: p6q8Ab-wMFqkkPFIWevdPA-1
-X-Mimecast-MFC-AGG-ID: p6q8Ab-wMFqkkPFIWevdPA_1761817535
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-471168953bdso6834515e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 02:45:35 -0700 (PDT)
+ us-mta-14-jjJMfaP_NjKO8GZENv30iA-1; Thu, 30 Oct 2025 05:54:09 -0400
+X-MC-Unique: jjJMfaP_NjKO8GZENv30iA-1
+X-Mimecast-MFC-AGG-ID: jjJMfaP_NjKO8GZENv30iA_1761818048
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-475dca91610so3243525e9.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 02:54:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761817534; x=1762422334;
+ d=1e100.net; s=20230601; t=1761818048; x=1762422848;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9wl/byNpooaOfvgU62aGelOq0QuDu/deo/1/Vwr9rwY=;
- b=ZWNeJn+ayj88av1qK+Wk43aoeeWTW4sZ+ypHXitcQcJ7SJOvTICZyxZF0uK151BC/k
- 7iWbqTyqdl4Rdt3Sf7zkp6cKIDNfXruJnLLELH5cwbFOqvF3USmbf+pxvBwkOhUXpSDJ
- EHBVq1E1k4cV5E7aNzZUgMuwsOXIbBykBogTmr+34ZCb0cXGfecWQ3vpZ1cRInty3VjG
- +ida+e8F5Y8Zc+mDoN7DOa5Msk/wtSoBUQC7YHxQW/nZKII3cR6awCh1Ko4R3WWmCIme
- wmCGDdMGSpBEeC59FM6vUv0/vvGdH1zOeVXQUm32uCODWEWIPxvO137/arh6KnNYetXG
- sfBw==
-X-Gm-Message-State: AOJu0Yx0y3n5WlWR50OfwiEAuJT1W+UtpyXw924aw3DKq6csbhTQ/apG
- eZVE02Wbc7U0pvZywitK/hv1uBNUdhmT3U1wwedP1A5kMscwfTmIJxoErKL1uL2bB1q/qrYUSgB
- G5DJDH7tPHXO3mSo0q7jx4eQ3rY7kB2Vbn6NT3Xfm8sjw5X5DCtFDBmEb
-X-Gm-Gg: ASbGncs7Ww3p4IdUq6iIl1n3Ylua0nMdgLEU4CcTxLhMIlr+asKkFB7+lt4HNiWjGtV
- pQ2sEERilr9LY9p6bl0WAsHEIBmIOd+RZYHujCSY4P6oHDVGZNWyXYtD3FStDzrmf0u0JM62SV5
- Zg/IpHDRRaHyZmm8ypWvEgCtg3gw44UtBIwjEh6UpeenHFK/voEq9LE84Z9d9aC5RDCupdFBLg0
- jEg5GRXIyrFIABI8CaLjctNsy7v6B57iKF1YwFSqgBES1kJMimLoNT4mLphz/zeO5d2V5cSabWT
- hcJQls8NcSj1O1IHhMapL7tpm8unzxYixO9tY135ReFVzo9n6yu0Kd8fMgVBVYHw0iCERpA=
-X-Received: by 2002:a05:600c:6299:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-477262bc2edmr24863785e9.16.1761817534511; 
- Thu, 30 Oct 2025 02:45:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQzoA52x3bRk6TBZ5RQAB/m9Zw2AQTJ4vCPURXZRqQw8ZefviUSbhgFg9rBwaLVgTXCbyeuw==
-X-Received: by 2002:a05:600c:6299:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-477262bc2edmr24863555e9.16.1761817534076; 
- Thu, 30 Oct 2025 02:45:34 -0700 (PDT)
+ bh=6XdgfQxluwBcLDe1xFkj4ry8yZVXVpGUg4q+UPa18g0=;
+ b=vDihF2zoDlGEPbitWaxccy2UOF8FDUzU9rhigawMCUIWO9HUZyCZ3mB/JteUnWwrio
+ sIO0j+lD58peXMBlgaeLtxty3hLbdxlM+KZEXm0jCMLQyql0JHUIwrkrw8P4UTz3lN6N
+ dS0pGFvSY/RNx7A3e972k2cnGnu2XIxFo9zQQzhwJ86MzlqnYsL/egVPB6zI/LznY5yM
+ 035NQ4g2oXnqE+pyTT+yOxrIOqpNSR26dkeujOqTa9jDOW50J/XwfmUpdTGIEaBLjmRm
+ /LqAO3tonon7GCApc0UxiBJ80/NffsCF6TWprRyJqm7u5YBCSoG5xklBzWI1cWHIx4GO
+ 78OQ==
+X-Gm-Message-State: AOJu0YxCP76rGv5uEL7mFfDwIUYiUqjBWWtjxJFyozr3mGLr6ySq0lEb
+ XVYqz6A0KmDrk+WjeHc2OghUB1AfB8cqNnT5nPIMRfh8vktnZ9q6eoLGCXQ1SMuP76Z8ttJ+ZQk
+ pssleHKW7zdltI1khEsH0i/2MIEN0ErKBJFzPdtvh3q12HCUyy/a7xjK6
+X-Gm-Gg: ASbGncs39q33h77WfJ8XWGJyRxyF3dNmz94cq4Gbksg7isuWPjGqqBnWBgLbo4G+O/R
+ TQHF2sGxNkva0SejNuL7njVRJx2o9bUIWhuuI7J1VbVM7I5aCRDSGNVuZXgt3UCszTeyfN/UBaA
+ fMCuYdzMs2R5Ul0W80nad9kKPjHpdVUMUcOXQ6S1fCDIOL43hX936h6tp2ehQT0yVc8B8SZkeGO
+ whiFvFscm9+OI5sGCWQneJN1RoQaHaNxlXp/dX6PwSg6xV6pWokRUfSylX052pMbtDbHbDg9++7
+ KXxcsxPSxFC9XUxajkUgSgHuWpSQ7xXKXqKxU/98Dxrg9MJbGV4euTldw8s1/eveH9Qt8PA=
+X-Received: by 2002:a05:600c:4589:b0:46e:38f7:625f with SMTP id
+ 5b1f17b1804b1-477267cba4cmr19188285e9.10.1761818048125; 
+ Thu, 30 Oct 2025 02:54:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiKnsTMRwnEykoX7nPL335mVoGXcmgw5oh565MUBk2izNxIBlvGI3Zzs/AFgkI8nYoxDqwpA==
+X-Received: by 2002:a05:600c:4589:b0:46e:38f7:625f with SMTP id
+ 5b1f17b1804b1-477267cba4cmr19187955e9.10.1761818047685; 
+ Thu, 30 Oct 2025 02:54:07 -0700 (PDT)
 Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477289adc18sm32972785e9.6.2025.10.30.02.45.33
+ ffacd0b85a97d-429b6bc5907sm3040024f8f.13.2025.10.30.02.54.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 02:45:33 -0700 (PDT)
-Message-ID: <6b52e145-8732-413f-a3db-6e5abf1eb70b@redhat.com>
-Date: Thu, 30 Oct 2025 10:45:32 +0100
+ Thu, 30 Oct 2025 02:54:07 -0700 (PDT)
+Message-ID: <55d74476-4697-464f-91d1-202b26627d2c@redhat.com>
+Date: Thu, 30 Oct 2025 10:54:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/vmstate-static-checker: Fix deprecation warnings
- with latest argparse
+Subject: Re: [PATCH] hw/arm/bcm283x: Initialize CPU objects in SoC common
+ DeviceRealize()
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251029075257.63635-1-philmd@linaro.org>
+ <CAFEAcA961WKB4fxwAS0WHXXKwYEO7TnmovD4z-BPGehr6sxBQw@mail.gmail.com>
 From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, John Snow <jsnow@redhat.com>,
- Amit Shah <amit@kernel.org>, Eduardo Habkost <eduardo@habkost.net>
-References: <20251030092638.39505-1-thuth@redhat.com>
- <aQMw-AO720PNFzWW@redhat.com>
- <7e315a0a-5876-4816-8db3-fecbe2b1ebaf@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -126,7 +127,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <7e315a0a-5876-4816-8db3-fecbe2b1ebaf@redhat.com>
+In-Reply-To: <CAFEAcA961WKB4fxwAS0WHXXKwYEO7TnmovD4z-BPGehr6sxBQw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -138,7 +139,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,53 +156,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/10/2025 10.42, Thomas Huth wrote:
-> On 30/10/2025 10.33, Daniel P. Berrangé wrote:
->> On Thu, Oct 30, 2025 at 10:26:38AM +0100, Thomas Huth wrote:
->>> From: Thomas Huth <thuth@redhat.com>
->>>
->>> The argparse.FileType() type has been deprecated in the latest argparse
->>> version (e.g. the one from Fedora 43), now causing the test_bad_vmstate
->>> functional test to fail since there are unexpected strings in the output.
->>> Change the script to use pathlib.Path instead to fix the test_bad_vmstate
->>> test and to be prepared for the future when the deprecated FileType gets
->>> removed completely.
-...
->>> @@ -393,10 +394,10 @@ def main():
->>>                           help='reverse the direction')
->>>       args = parser.parse_args()
->>> -    src_data = json.load(args.src)
->>> -    dest_data = json.load(args.dest)
->>> -    args.src.close()
->>> -    args.dest.close()
->>> +    with open(args.src, 'r', encoding='utf-8') as src_fh:
->>> +        src_data = json.load(src_fh)
->>> +    with open(args.dest, 'r', encoding='utf-8') as dst_fh:
->>> +        dest_data = json.load(dst_fh)
+On 29/10/2025 15.14, Peter Maydell wrote:
+> On Wed, 29 Oct 2025 at 07:53, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >>
->> This could be
+>> QOM .instance_init() handler can not fail. QDev DeviceRealize
+>> can.
 >>
->>   src_data = json.load(args.src.read_text('utf-8'))
->>   dest_data = json.load(args.dest.read_text('utf-8'))
+>> The device-introspect QTest enumerates all QDev types and
+>> instantiate each one, without realizing it, then introspects
+>> the instance properties.
+>>
+>> When switching to a single QEMU binary, all QDev types are
+>> available in the binary, but only a filtered subset might be
+>> available, depending on which previous target the binary is
+>> trying to mimic.
+>>
+>> In particular with the Raspi machines, the TYPE_RASPI4B_MACHINE
+>> and ARM_CPU_TYPE_NAME("cortex-a72") will be built in the
+>> qemu-system-arm binary, while not available (because filtered
+>> as being 64-bit, for the qemu-system-aarch64 binary).
+>>
+>> However the TYPE_BCM2838 SoC is not filtered out, and will
+>> abort when being initialized, because the "cortex-a72" CPU type
+>> is filtered out, leading to device-introspect failure:
+>>
+>>    1/1 qemu:qtest+qtest-arm / qtest-arm/device-introspect-test        ERROR            2.46s   killed by signal 6 SIGABRT
+>>    stderr:
+>>    unknown type 'cortex-a72-arm-cpu'
+>>    Broken pipe
+>>    ../../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
+>>    (test program exited with status code -6)
+>>    TAP parsing error: Too few tests run (expected 167, got 5)
+>>
+>> In order to avoid that, move the CPU *initialization* in the
+>> SoC DeviceRealize handler, so the SoC initialization won't
+>> fail, while realization still will.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/arm/bcm2836.c | 10 +++++-----
+>>   1 file changed, 5 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+>> index cd61ba15054..6e4066f137d 100644
+>> --- a/hw/arm/bcm2836.c
+>> +++ b/hw/arm/bcm2836.c
+>> @@ -25,12 +25,7 @@ static void bcm283x_base_init(Object *obj)
+>>   {
+>>       BCM283XBaseState *s = BCM283X_BASE(obj);
+>>       BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(obj);
+>> -    int n;
+>>
+>> -    for (n = 0; n < bc->core_count; n++) {
+>> -        object_initialize_child(obj, "cpu[*]", &s->cpu[n].core,
+>> -                                bc->cpu_type);
+>> -    }
+>>       if (bc->core_count > 1) {
+>>           qdev_property_add_static(DEVICE(obj), &bcm2836_enabled_cores_property);
+>>           qdev_prop_set_uint32(DEVICE(obj), "enabled-cpus", bc->core_count);
+>> @@ -65,6 +60,11 @@ bool bcm283x_common_realize(DeviceState *dev, BCMSocPeripheralBaseState *ps,
+>>       BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(dev);
+>>       Object *obj;
+>>
+>> +    for (int n = 0; n < bc->core_count; n++) {
+>> +        object_initialize_child(OBJECT(dev), "cpu[*]", &s->cpu[n].core,
+>> +                                bc->cpu_type);
+>> +    }
+>> +
 > 
-> Does not work, looks like the load() function cannot deal with a string:
+> This seems a bit odd to me. Yes, object instance_init isn't
+> allowed to fail. But it's OK for one object to init another
+> in its own init method, exactly because of this. And even
+> if we do move this, the failure won't cause the realize
+> method to fail cleanly, because object_initialize_child()
+> doesn't return a failure message.
 > 
-> $ scripts/vmstate-static-checker.py -s tests/data/vmstate-static-checker/ 
-> dump1.json -d tests/data/vmstate-static-checker/dump2.json
-> Traceback (most recent call last):
->    File "../scripts/vmstate-static-checker.py", line 439, in <module>
->      sys.exit(main())
->               ~~~~^^
->    File "../scripts/vmstate-static-checker.py", line 397, in main
->      src_data = json.load(args.src.read_text('utf-8'))
->    File "/usr/lib64/python3.13/json/__init__.py", line 293, in load
->      return loads(fp.read(),
->                   ^^^^^^^
-> AttributeError: 'str' object has no attribute 'read'
+> The problem as described in the commit message seems to be
+> fairly general: we have effectively blacklisted some types
+> as "not really creatable", but we haven't got a mechanism for
+> propagating that to other types that unconditionally use those.
+> Working around this problem by moving child init from
+> init to realize in parent classes is going to result in
+> a lot of weird parent classes that do work in realize that
+> ought to be in init.
+> 
+> I think we should either:
+> (1) find a way to propagate the "this type doesn't really
+> exist for this binary" downwards
+> (2) allow the "shouldn't really exist types" to be created
+> programmatically, but just don't advertise them to the user.
 
-Ok, there also seems to be a json.loads() function (with "s" at the end) 
-that seems to do the job ... but IMHO it would be better to continue using 
-the load() function here to let the json parser decide how to read the file.
+Maybe we could have a DEFINE_TYPES_IF_ARCH(arch, ...) macro that uses
+"if (qemu_arch_available(arch)) { ... }" internally, and then replace the 
+DEFINE_TYPES() in hw/arm/bcm2836.c with that macro?
 
   Thomas
 
