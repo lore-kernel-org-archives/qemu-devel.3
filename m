@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC6FCCF9FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 12:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7649CCF9FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 12:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vERmz-0006rd-Ps; Thu, 30 Oct 2025 08:30:01 -0400
+	id 1vERtm-0000RN-6H; Thu, 30 Oct 2025 08:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vERmy-0006rR-Fm
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:30:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vERmn-0006DJ-VU
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:29:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761827382;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=V8tsY0bibyYs3/R08KHMq4hHKdQzEUS22utMa8+DGko=;
- b=UsOsd8Q1wsza/QzRh3/w3l7p4lk4hDUBhUxgNC6ggiIeHNWFtqgMhv2LdvZR8WVUmGNivl
- BEf1j7tjsvSw1Y5ylKSbinj5j58qY8DZ/fKvV4kdveV9uM6OzvTnqr800Unn8NS6yz29fl
- 7KALgWE+ZnHRxst1JbZlCLB1EZ7hmqc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-466-tv8YcnTTMXmBGaHpJPeU0Q-1; Thu, 30 Oct 2025 08:29:41 -0400
-X-MC-Unique: tv8YcnTTMXmBGaHpJPeU0Q-1
-X-Mimecast-MFC-AGG-ID: tv8YcnTTMXmBGaHpJPeU0Q_1761827380
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-427015f62a7so542066f8f.0
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 05:29:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vERtf-0000RA-NB
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:36:55 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vERtU-000712-NH
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 08:36:53 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7a4176547bfso977364b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 05:36:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1761827800; x=1762432600; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jiA3TVeTk03hcxDVVESJGnJYy4UZWUreyttuFTt8+BU=;
+ b=Im2275GjNiCLLVe9jVMPNS9GM2wJE9Xv8GOz0UULlGOr7Gg9Gi2aWQyHt74+edQA4v
+ NOqZD+tdN/hOJeImGK8khYRaAFj8vhitIiK6N3moZCUL47m7gy/QAD8y3LQaUQxAwm9b
+ E1CBYpCBFU6smOVqU00dcOhnFUjsau1YjcQ8/oLxO2s6l32RXrakHUD4Xvz0J+m1Jtvj
+ 7Gmbyh3eLLS/dvALHAHsvOPugEjBgJ1YKQe3x3j/tNMds2+ojXhSV4EYR0KM+9dE9ILc
+ tz3/VRhMVsugBH12qDZls2EITs3HBaWRl4helWWtSmWAayCKnEWq6jZr6zYYolgrtBPh
+ PqYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761827380; x=1762432180;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=V8tsY0bibyYs3/R08KHMq4hHKdQzEUS22utMa8+DGko=;
- b=bX1SawUDjw8TqUJdxLP8XR4HpQXWPEm3TPhlzKvGKIKIQptl9BUDG8vV8cd4oAe6QR
- xL1lvS18v1WFV5fyANIIXLyQm3N0HDoA8GPxsMPZCwkFXOeKvar7Q1Gvt0MrhI8I3Ch1
- q5XNcRG6BVks69z77yqd53Znfimvxavx5Q+0qT/mwSX++PajcPh4EsoVE92WFhSBhDjs
- bR56Q8xC5FMcvdHjGSKpkd7G45Gpg2zX1DCCS3PUSHUrCZyQpdXpMZgZfhlsbalahCN5
- CSiBK/ArtquQk4eAbWJjPfNXGl/j+FX2lLjQCQb6qHT+ucJwxhNTPWTlHFHGNt1zuga6
- LUMw==
+ d=1e100.net; s=20230601; t=1761827800; x=1762432600;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jiA3TVeTk03hcxDVVESJGnJYy4UZWUreyttuFTt8+BU=;
+ b=Wtj4B8rk+v4HXkmasbMJVtHAdQp8TC011oLyeCeIbjECpHwqQFdNXJbaa8cxG0/0g9
+ NVLncxFGXOj2pCj7DgEPbfAKBb2mCalTq2a2joyJzRW23p8hooRTlgID3ttNnodjVkHG
+ CPtQuIWBh1Dg0b7OyOIm9LjS0HPDThRWTpE2/IqakwImAR3I698uuUiJECRUxvwKBCUU
+ ZPE+o5Sx8HfjBWdBQxP3WsnydJcZncSWY2xmM5rWbW/7HBD18GSK6JO3cmQcxKobZjJu
+ WoYsQmfd2ca70UVvCkVEQlzq3Gepa+bbraKYB24CKZRkfh28yvS6gIMPXRe28fPBist2
+ uvqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXqS0eX3Ywbg6gKOsBSDg/WUReXuMs7LwfdZNZAR8ABys54eKrFNXXR47YZA3DN3xzAPP0ZbJ8basn@nongnu.org
-X-Gm-Message-State: AOJu0YzLZGqE/ad/kv8/7JWwf6YcuOFXysnvx+4RL9N/uVavZfIs9odt
- Mw/1M/85y1yvP9hJ6Z/S7/dEGr272bzSq3xpyzYxtcqKhMvLgL3RX3H6WJKAM4rpM3aiRXj1gTQ
- 1RBEg7ltld9PG1PInCYGkZOYnDwEOuIjjcIMbhW6EyYcF1N+irHisPA47oPs5lKlGA+wq+Jr7P4
- D8trtrw0uRClvkEWsbSuoIpnDTorcZfps=
-X-Gm-Gg: ASbGncs4KDngk1ahlorwhKH6aUVvk89Gso6ySziLky9Tfj8FTVnJoVGTDJzBLbbDrs/
- 85OfI4TCHNQWJNXOr6oiyvaw1d27nSJZa395gxwqGlj/YzPaPdaAe77GGzzBJLkmSXp5pMoNCWO
- jTOW4LotFfooUf1EHMIN+cP5AKQ53WXCcmHlhxMsc5vigaOi8KkU4sA1dfA0ok/Uu7EzjxS8tb1
- lMYAibOj360F+WKrVYZG/icC0nCvfB0mtFVrDHEVnioaH3+hjqkUTa64ii3
-X-Received: by 2002:a05:6000:2505:b0:3ec:ea73:a91e with SMTP id
- ffacd0b85a97d-429b4c734d9mr2631577f8f.12.1761827379714; 
- Thu, 30 Oct 2025 05:29:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFW/SQ2l20Pd/adTG/FbLc8O09celfND9oqpi+NzW0oIoWUfWUfoTj0F3LReA/whuUfKyYSTmKgIezVXZqUhII=
-X-Received: by 2002:a05:6000:2505:b0:3ec:ea73:a91e with SMTP id
- ffacd0b85a97d-429b4c734d9mr2631557f8f.12.1761827379232; Thu, 30 Oct 2025
- 05:29:39 -0700 (PDT)
+ AJvYcCW3rbbBefE7EXzdmwLA+t+nMllUxFH0Tlh+1hFV/olnhsx0FDq+qlBPQ/3xY+uyBFJbM70v8sEa+Db5@nongnu.org
+X-Gm-Message-State: AOJu0Yxt6Drjrch/WMk77kKnTj4W2zZNJbCycp31NlA15wQoiD64CSD6
+ O1mOi6zJePtB5qPYjo10zSRelq/YJ7SeC+Hq8etz1kEjJa8wbCnCbM6RT3X0031gnEt9rQZgIiz
+ Ex6J40Uc=
+X-Gm-Gg: ASbGncv6o1HdZMyE/e0/co7HyvuZ1IHdcnHL71uVCX+hTMgcUSQqoxFedCdZwlKl2qX
+ QbG/N6CHFOHR2tJSBqXoU+Jj24/a2uMTkoaZEl7qwwduwEX+CEXsveq3oVTaJ6ZOeVtVZ0t4rXH
+ nRxa7IJDd32IH6zyfgqP+K8aB54ixODBd+NQlVe0aER91fcciUJu3RLpqCwFtc/iTKgcc0wxEom
+ Pp8ICwCC4c0wr3L/P/akTmELWvKU8K1kTYQplT4oyCcAgKmFQ5SigFEGptDBwUlGIovKcNHSQ4L
+ 3if77VbBmRXaPQBMmfkf9eGbhepCJqU5DrxXpuQaeRe9OCqUlf+bQkKh/6lWtNFHtNW9bspj/q0
+ 2fsNgtbx8d8NA4V5vAQvilMqHSTPpU4k/a8SNyjqS3myYX/fdnxJUYmU7d1+KQx5NztAh/IhjJk
+ A+IfKSB4gN8i2taPYrC+sgH3k=
+X-Google-Smtp-Source: AGHT+IHBAXy4Y0BYi28NbGZy4eg1/DCv8LCg9afnRaJRtwwdyfMysMbtGq2EImA627wxI/3bvTSdzA==
+X-Received: by 2002:a05:6a00:12e8:b0:781:c54:4d24 with SMTP id
+ d2e1a72fcca58-7a4e482d746mr8450553b3a.21.1761827799704; 
+ Thu, 30 Oct 2025 05:36:39 -0700 (PDT)
+Received: from [192.168.68.110] ([187.101.65.79])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7a414087d2asm19074545b3a.63.2025.10.30.05.36.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Oct 2025 05:36:39 -0700 (PDT)
+Message-ID: <b6c09324-15d1-4c1a-b941-008c0a4feeb9@ventanamicro.com>
+Date: Thu, 30 Oct 2025 09:36:34 -0300
 MIME-Version: 1.0
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
- <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
- <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
- <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
- <802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp>
- <28c6f065-ba8d-e5e2-922e-d5fd1fb58b60@eik.bme.hu>
- <db06bf5e-b7f5-4980-a054-393529e188eb@rsg.ci.i.u-tokyo.ac.jp>
- <759b6b4c-1155-184a-fa99-1df384f0fac3@eik.bme.hu> <aQJpDE6FvkIF6GgE@x1.local>
- <318bf988-9035-4012-9708-40c3783803f8@redhat.com>
- <b525a0c5-bcc0-7349-a925-6827591b7a34@eik.bme.hu>
- <3849eccc-ca94-49f9-87a4-4c5aad496976@redhat.com>
- <ffde4e42-58ae-3338-e056-dcfea5d43475@eik.bme.hu>
-In-Reply-To: <ffde4e42-58ae-3338-e056-dcfea5d43475@eik.bme.hu>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 30 Oct 2025 13:29:28 +0100
-X-Gm-Features: AWmQ_bmRDUATseBD7lLwRK9I8Ea816nG6FfgxmTaJw0-oUvHqH5hNqpm5WTaVo4
-Message-ID: <CABgObfZ5fa40SStxMb+OXmg1k2iup1391n+doQNVyZWnR=_v-w@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, 
- "zmta06.collab.prod.int.phx2.redhat.com, list@suse.de" <qemu-ppc@nongnu.org>,
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Content-Type: multipart/alternative; boundary="00000000000018538806425f6783"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] hw/char: add NEORV32 UART (CTRL/DATA, fifo,
+ chardev)
+To: Michael Levit <michael@videogpu.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
+ zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, smishash@gmail.com
+References: <20251027100938.11822-1-michael@videogpu.com>
+ <20251027100938.11822-4-michael@videogpu.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <20251027100938.11822-4-michael@videogpu.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,130 +107,499 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000018538806425f6783
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Il gio 30 ott 2025, 12:01 BALATON Zoltan <balaton@eik.bme.hu> ha scritto:
-
-> > Not sure what's different between
-> >
-> >    MemoryRegion foo_mr;
-> >
-> > in the struct, versus
-> >
-> >    mr = g_new(MemoryRegion, 1);
-> >
-> > in the realize function.  It's one line either way.
->
-> Please read back in thread. An example here:
-> https://lists.nongnu.org/archive/html/qemu-ppc/2025-10/msg00785.html
-> from this series
-> https://patchew.org/QEMU/cover.1761232472.git.balaton@eik.bme.hu/
+This patch fails to build (in my env at least):
 
 
-I did read it of course.
 
-There's four people in this thread telling you not to do something. Just
-stop arguing please.
+/home/danielhb/work/qemu/include/hw/char/neorv32_uart.h:57:5: error: unknown type name ‘CharBackend’; did you mean ‘ChardevBackend’?
+    57 |     CharBackend chr;
+       |     ^~~~~~~~~~~
+       |     ChardevBackend
+In file included from /home/danielhb/work/qemu/include/qemu/osdep.h:53,
+                  from ../hw/char/neorv32_uart.c:23:
+/home/danielhb/work/qemu/include/qemu/compiler.h:65:35: error: invalid operands to binary - (have ‘CharFrontend *’ and ‘int *’)
+    65 | #define type_check(t1,t2) ((t1*)0 - (t2*)0)
+       |                                   ^
+/home/danielhb/work/qemu/include/hw/qdev-properties.h:82:15: note: in expansion of macro ‘type_check’
+    82 |             + type_check(_type, typeof_field(_state, _field)),   \
+       |               ^~~~~~~~~~
+/home/danielhb/work/qemu/include/hw/qdev-properties-system.h:41:5: note: in expansion of macro ‘DEFINE_PROP’
+    41 |     DEFINE_PROP(_n, _s, _f, qdev_prop_chr, CharFrontend)
+       |     ^~~~~~~~~~~
+../hw/char/neorv32_uart.c:41:5: note: in expansion of macro ‘DEFINE_PROP_CHR’
+    41 |     DEFINE_PROP_CHR("chardev", Neorv32UARTState, chr),
+       |     ^~~~~~~~~~~~~~~
+../hw/char/neorv32_uart.c: In function ‘neorv32_uart_read’:
+../hw/char/neorv32_uart.c:121:42: error: passing argument 1 of ‘qemu_chr_fe_accept_input’ from incompatible pointer type [-Wincompatible-pointer-types]
+   121 |                 qemu_chr_fe_accept_input(&s->chr);
+       |                                          ^~~~~~~
+       |                                          |
+       |                                          int *
+In file included from ../hw/char/neorv32_uart.c:28:
+/home/danielhb/work/qemu/include/chardev/char-fe.h:131:45: note: expected ‘CharFrontend *’ but argument is of type ‘int *’
+   131 | void qemu_chr_fe_accept_input(CharFrontend *c);
+       |                               ~~~~~~~~~~~~~~^
+../hw/char/neorv32_uart.c: In function ‘neorv32_uart_write’:
+../hw/char/neorv32_uart.c:156:31: error: passing argument 1 of ‘qemu_chr_fe_write’ from incompatible pointer type [-Wincompatible-pointer-types]
+   156 |             qemu_chr_fe_write(&s->chr, &ch, 1);
+       |                               ^~~~~~~
+       |                               |
+       |                               int *
+/home/danielhb/work/qemu/include/chardev/char-fe.h:232:37: note: expected ‘CharFrontend *’ but argument is of type ‘int *’
+   232 | int qemu_chr_fe_write(CharFrontend *c, const uint8_t *buf, int len);
+       |                       ~~~~~~~~~~~~~~^
+../hw/char/neorv32_uart.c: In function ‘neorv32_uart_be_change’:
+../hw/char/neorv32_uart.c:216:30: error: passing argument 1 of ‘qemu_chr_fe_set_handlers’ from incompatible pointer type [-Wincompatible-pointer-types]
+   216 |     qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_rx,
+       |                              ^~~~~~~
+       |                              |
+       |                              int *
+/home/danielhb/work/qemu/include/chardev/char-fe.h:108:45: note: expected ‘CharFrontend *’ but argument is of type ‘int *’
+   108 | void qemu_chr_fe_set_handlers(CharFrontend *c,
+       |                               ~~~~~~~~~~~~~~^
+../hw/char/neorv32_uart.c: In function ‘neorv32_uart_realize’:
+../hw/char/neorv32_uart.c:227:30: error: passing argument 1 of ‘qemu_chr_fe_set_handlers’ from incompatible pointer type [-Wincompatible-pointer-types]
+   227 |     qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_rx,
+       |                              ^~~~~~~
+       |                              |
+       |                              int *
+/home/danielhb/work/qemu/include/chardev/char-fe.h:108:45: note: expected ‘CharFrontend *’ but argument is of type ‘int *’
+   108 | void qemu_chr_fe_set_handlers(CharFrontend *c,
+       |                               ~~~~~~~~~~~~~~^
+[1730/3024] Compiling C object libsystem.a.p/hw_core_sysbus-fdt.c.o
+ninja: build stopped: subcommand failed.
 
-Paolo
 
+Thanks,
 
-> >> - Documentation says it should work this way QOM managing memory
-> regions so
-> >> it was meant to be that way. I'd rather fix code than documentation as
-> I
-> >> think if it just works that's easier than loosing that convenience.No,
-> >> that's *your* reading of the documentation, and it's based on the
-> > incorrect assumption that destruction implies freeing the memory.
-> Akihiko
-> > explained that
-> > (
-> https://lore.kernel.org/qemu-devel/802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp/
-> ).
-> >
-> > The memory region documentation does not exist in a void, the difference
-> > between QOM object_initialize() and object_new() exists independent of
-> that
-> > documentation.  It may be worth improving the QOM documentation on the
-> object
-> > lifecycle; that could be.
->
-> I'll try to also clarify documentation but IMO the fix is not dropping
-> this intended feature but fixing and using it where helps.
->
-> Regards,
-> BALATON Zoltan
->
->
+Daniel
 
---00000000000018538806425f6783
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 30 ott 2025, 12:01 BALATO=
-N Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu">balaton@eik.bme.hu</a>&g=
-t; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&=
-gt; Not sure what&#39;s different between<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 MemoryRegion foo_mr;<br>
-&gt;<br>
-&gt; in the struct, versus<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 mr =3D g_new(MemoryRegion, 1);<br>
-&gt;<br>
-&gt; in the realize function.=C2=A0 It&#39;s one line either way.<br>
-<br>
-Please read back in thread. An example here:<br>
-<a href=3D"https://lists.nongnu.org/archive/html/qemu-ppc/2025-10/msg00785.=
-html" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lists.nongnu.=
-org/archive/html/qemu-ppc/2025-10/msg00785.html</a><br>
-from this series<br>
-<a href=3D"https://patchew.org/QEMU/cover.1761232472.git.balaton@eik.bme.hu=
-/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://patchew.org/QEMU=
-/cover.1761232472.git.balaton@eik.bme.hu/</a></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">I did read it of course.=C2=A0</di=
-v><div dir=3D"auto"><br></div><div dir=3D"auto">There&#39;s four people in =
-this thread telling you not to do something. Just stop arguing please.=C2=
-=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote=
-_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-&gt;&gt; - Documentation says it should work this way QOM managing memory r=
-egions so <br>
-&gt;&gt; it was meant to be that way. I&#39;d rather fix code than document=
-ation as I <br>
-&gt;&gt; think if it just works that&#39;s easier than loosing that conveni=
-ence.No, <br>
-&gt;&gt; that&#39;s *your* reading of the documentation, and it&#39;s based=
- on the <br>
-&gt; incorrect assumption that destruction implies freeing the memory. Akih=
-iko <br>
-&gt; explained that <br>
-&gt; (<a href=3D"https://lore.kernel.org/qemu-devel/802b77f2-2c23-4b5a-a739=
--d56b09c335de@rsg.ci.i.u-tokyo.ac.jp/" rel=3D"noreferrer noreferrer" target=
-=3D"_blank">https://lore.kernel.org/qemu-devel/802b77f2-2c23-4b5a-a739-d56b=
-09c335de@rsg.ci.i.u-tokyo.ac.jp/</a>).<br>
-&gt;<br>
-&gt; The memory region documentation does not exist in a void, the differen=
-ce <br>
-&gt; between QOM object_initialize() and object_new() exists independent of=
- that <br>
-&gt; documentation.=C2=A0 It may be worth improving the QOM documentation o=
-n the object <br>
-&gt; lifecycle; that could be.<br>
-<br>
-I&#39;ll try to also clarify documentation but IMO the fix is not dropping =
-<br>
-this intended feature but fixing and using it where helps.<br>
-<br>
-Regards,<br>
-BALATON Zoltan<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000018538806425f6783--
+On 10/27/25 7:09 AM, Michael Levit wrote:
+> From: Michael <michael@videogpu.com>
+> 
+> Add NEORV32 UART device: CTRL/DATA registers, RX FIFO, TX to chardev.
+> Includes Kconfig/meson and public header.
+> 
+> Signed-off-by: Michael Levit <michael@videogpu.com>
+> 
+> diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+> index 020c0a84bb..1fd39c2b30 100644
+> --- a/hw/char/Kconfig
+> +++ b/hw/char/Kconfig
+> @@ -95,3 +95,6 @@ config IP_OCTAL_232
+>       bool
+>       default y
+>       depends on IPACK
+> +
+> +config NEORV32_UART
+> +    bool
+> 
+> diff --git a/hw/char/meson.build b/hw/char/meson.build
+> index a9e1dc26c0..2f5bf827a7 100644
+> --- a/hw/char/meson.build
+> +++ b/hw/char/meson.build
+> @@ -31,6 +31,7 @@ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_uart.c'))
+>   system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_aux.c'))
+>   system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: files('renesas_sci.c'))
+>   system_ss.add(when: 'CONFIG_SIFIVE_UART', if_true: files('sifive_uart.c'))
+> +system_ss.add(when: 'CONFIG_NEORV32_UART', if_true: files('neorv32_uart.c'))
+>   system_ss.add(when: 'CONFIG_SH_SCI', if_true: files('sh_serial.c'))
+>   system_ss.add(when: 'CONFIG_STM32F2XX_USART', if_true: files('stm32f2xx_usart.c'))
+>   system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'))
+> 
+> diff --git a/hw/char/neorv32_uart.c b/hw/char/neorv32_uart.c
+> new file mode 100644
+> index 0000000000..b54ab54d6a
+> --- /dev/null
+> +++ b/hw/char/neorv32_uart.c
+> @@ -0,0 +1,311 @@
+> +/*
+> + * Neorv32-specific UART.
+> + *
+> + * Copyright (c) 2025 Michael Levit
+> + *
+> + * Author:
+> + *   Michael Levit <michael@videogpu.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/log.h"
+> +#include "migration/vmstate.h"
+> +#include "chardev/char.h"
+> +#include "chardev/char-fe.h"
+> +#include "hw/irq.h"
+> +#include "hw/char/neorv32_uart.h"
+> +#include "hw/qdev-properties-system.h"
+> +
+> +typedef volatile struct __attribute__((packed,aligned(4))) {
+> +  uint32_t CTRL;  /**< offset 0: control register (#NEORV32_UART_CTRL_enum) */
+> +  uint32_t DATA;  /**< offset 4: data register  (#NEORV32_UART_DATA_enum) */
+> +} neorv32_uart_t;
+> +
+> +#define NEORV32_UART_IO_REGION_SIZE  (32)
+> +
+> +static Property neorv32_uart_properties[] = {
+> +    DEFINE_PROP_CHR("chardev", Neorv32UARTState, chr),
+> +};
+> +
+> +enum {
+> +    NEORV32_UART_CTRL = 0,  /**< offset 0: control register */
+> +    NEORV32_UART_DATA = 4  /**< offset 4: data register  */
+> +};
+> +
+> +/** UART control register bits */
+> +enum NEORV32_UART_CTRL_enum {
+> +  UART_CTRL_EN            =  0, /**< UART control register(0)  (r/w): UART global enable */
+> +  UART_CTRL_SIM_MODE      =  1, /**< UART control register(1)  (r/w): Simulation output override enable */
+> +  UART_CTRL_HWFC_EN       =  2, /**< UART control register(2)  (r/w): Enable RTS/CTS hardware flow-control */
+> +  UART_CTRL_PRSC_LSB      =  3, /**< UART control register(3)  (r/w): clock prescaler select, bit 0 (LSB) */
+> +  UART_CTRL_PRSC_MSB      =  5, /**< UART control register(5)  (r/w): clock prescaler select, bit 2 (MSB) */
+> +  UART_CTRL_BAUD_LSB      =  6, /**< UART control register(6)  (r/w): BAUD rate divisor, bit 0 (LSB) */
+> +  UART_CTRL_BAUD_MSB      = 15, /**< UART control register(15) (r/w): BAUD rate divisor, bit 9 (MSB) */
+> +  UART_CTRL_RX_NEMPTY     = 16, /**< UART control register(16) (r/-): RX FIFO not empty */
+> +  UART_CTRL_RX_FULL       = 17, /**< UART control register(17) (r/-): RX FIFO full */
+> +  UART_CTRL_TX_EMPTY      = 18, /**< UART control register(18) (r/-): TX FIFO empty */
+> +  UART_CTRL_TX_NFULL      = 19, /**< UART control register(19) (r/-): TX FIFO not full */
+> +  UART_CTRL_IRQ_RX_NEMPTY = 20, /**< UART control register(20) (r/w): Fire IRQ if RX FIFO not empty */
+> +  UART_CTRL_IRQ_RX_FULL   = 21, /**< UART control register(21) (r/w): Fire IRQ if RX FIFO full */
+> +  UART_CTRL_IRQ_TX_EMPTY  = 22, /**< UART control register(22) (r/w): Fire IRQ if TX FIFO empty */
+> +  UART_CTRL_IRQ_TX_NFULL  = 23, /**< UART control register(23) (r/w): Fire IRQ if TX FIFO not full */
+> +
+> +  UART_CTRL_RX_OVER       = 30, /**< UART control register(30) (r/-): RX FIFO overflow */
+> +  UART_CTRL_TX_BUSY       = 31  /**< UART control register(31) (r/-): Transmitter busy or TX FIFO not empty */
+> +};
+> +
+> +/**  bits */
+> +enum NEORV32_UART_DATA_enum {
+> +  UART_DATA_RTX_LSB          =  0, /**< (r/w): UART rx/tx data, LSB */
+> +  UART_DATA_RTX_MSB          =  7, /**< (r/w): UART rx/tx data, MSB */
+> +
+> +  UART_DATA_RX_FIFO_SIZE_LSB =  8, /**< (r/-): log2(RX FIFO size), LSB */
+> +  UART_DATA_RX_FIFO_SIZE_MSB = 11, /**< (r/-): log2(RX FIFO size), MSB */
+> +
+> +  UART_DATA_TX_FIFO_SIZE_LSB = 12, /**< (r/-): log2(RX FIFO size), LSB */
+> +  UART_DATA_TX_FIFO_SIZE_MSB = 15, /**< (r/-): log2(RX FIFO size), MSB */
+> +};
+> +/**@}*/
+> +
+> +static void neorv32_uart_update_irq(Neorv32UARTState *s)
+> +{
+> +    int cond = 0;
+> +    if ((s->ie & NEORV32_UART_IE_TXWM) ||
+> +        ((s->ie & NEORV32_UART_IE_RXWM) && s->rx_fifo_len)) {
+> +        cond = 1;
+> +    }
+> +    if (cond) {
+> +        qemu_irq_raise(s->irq);
+> +    } else {
+> +        qemu_irq_lower(s->irq);
+> +    }
+> +}
+> +
+> +static uint64_t
+> +neorv32_uart_read(void *opaque, hwaddr addr, unsigned int size)
+> +{
+> +    Neorv32UARTState *s = opaque;
+> +    unsigned char r;
+> +
+> +    switch (addr) {
+> +        case NEORV32_UART_CTRL:
+> +			if (s->rx_fifo_len) {
+> +				s->CTRL |= (1 << UART_CTRL_RX_NEMPTY); /* set data available */
+> +			} else {
+> +				s->CTRL &= ~(1 << UART_CTRL_RX_NEMPTY); /* clear data available */
+> +			}
+> +			//TODO: assuming here TX is always avalable, fix it.
+> +			s->CTRL |= (1 << UART_CTRL_TX_NFULL); /* set TX not full */
+> +
+> +        	return s->CTRL;
+> +
+> +        case NEORV32_UART_DATA:
+> +            if (s->rx_fifo_len) {
+> +                r = s->rx_fifo[0];
+> +                memmove(s->rx_fifo, s->rx_fifo + 1, s->rx_fifo_len - 1);
+> +                s->rx_fifo_len--;
+> +                qemu_chr_fe_accept_input(&s->chr);
+> +                s->DATA = r;
+> +
+> +                neorv32_uart_update_irq(s); /* TODO: check if need to call */
+> +                return r;
+> +            }
+> +        }
+> +
+> +
+> +
+> +    qemu_log_mask(LOG_GUEST_ERROR, "%s: bad read: addr=0x%x\n",
+> +                  __func__, (int)addr);
+> +    return 0;
+> +}
+> +
+> +
+> +
+> +static void
+> +neorv32_uart_write(void *opaque, hwaddr addr,
+> +                  uint64_t val64, unsigned int size)
+> +{
+> +
+> +    Neorv32UARTState *s = opaque;
+> +    uint32_t value = val64;
+> +    unsigned char ch = value;
+> +
+> +    /* TODO: check if need to update data and control bits */
+> +    switch (addr) {
+> +        case NEORV32_UART_CTRL:
+> +            s->CTRL = value;
+> +            /* TODO: check if need to call, depending on IRQ flags */
+> +            /* neorv32_uart_update_irq(s); */
+> +            return;
+> +        case NEORV32_UART_DATA:
+> +            s->DATA = value;
+> +            qemu_chr_fe_write(&s->chr, &ch, 1);
+> +            /* neorv32_uart_update_irq(s); TODO: check if need to call */
+> +            return;
+> +        }
+> +
+> +    qemu_log_mask(LOG_GUEST_ERROR, "%s: bad write: addr=0x%x v=0x%x\n",
+> +                  __func__, (int)addr, (int)value);
+> +}
+> +
+> +static const MemoryRegionOps neorv32_uart_ops = {
+> +    .read  = neorv32_uart_read,
+> +    .write = neorv32_uart_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4
+> +    }
+> +};
+> +
+> +static void neorv32_uart_init(Object *obj)
+> +{
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+> +    Neorv32UARTState *s = NEORV32_UART(obj);
+> +
+> +    memory_region_init_io(&s->mmio, OBJECT(s), &neorv32_uart_ops, s,
+> +                          TYPE_NEORV32_UART, NEORV32_UART_IO_REGION_SIZE);
+> +    sysbus_init_mmio(sbd, &s->mmio);
+> +    sysbus_init_irq(sbd, &s->irq);
+> +}
+> +
+> +
+> +static void neorv32_uart_rx(void *opaque, const uint8_t *buf, int size)
+> +{
+> +    Neorv32UARTState *s = opaque;
+> +
+> +    /* Got a byte.  */
+> +    if (s->rx_fifo_len >= sizeof(s->rx_fifo)) {
+> +        printf("WARNING: UART dropped char.\n");
+> +        return;
+> +    }
+> +    s->rx_fifo[s->rx_fifo_len++] = *buf;
+> +
+> +    neorv32_uart_update_irq(s);
+> +}
+> +
+> +static int neorv32_uart_can_rx(void *opaque)
+> +{
+> +    Neorv32UARTState *s = opaque;
+> +
+> +    return s->rx_fifo_len < sizeof(s->rx_fifo);
+> +}
+> +
+> +static void neorv32_uart_event(void *opaque, QEMUChrEvent event)
+> +{
+> +}
+> +
+> +static int  neorv32_uart_be_change(void *opaque)
+> +{
+> +    Neorv32UARTState *s = opaque;
+> +
+> +    qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_rx,
+> +                             neorv32_uart_event, neorv32_uart_be_change, s,
+> +                             NULL, true);
+> +
+> +    return 0;
+> +}
+> +
+> +static void neorv32_uart_realize(DeviceState *dev, Error **errp)
+> +{
+> +    Neorv32UARTState *s = NEORV32_UART(dev);
+> +
+> +    qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_rx,
+> +                            neorv32_uart_event, neorv32_uart_be_change, s,
+> +                             NULL, true);
+> +
+> +}
+> +
+> +static const VMStateDescription vmstate_neorv32_uart = {
+> +    .name = TYPE_NEORV32_UART,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (VMStateField[]) {
+> +        VMSTATE_UINT8_ARRAY(rx_fifo,
+> +                            Neorv32UARTState,
+> +                            NEORV32_UART_RX_FIFO_SIZE),
+> +        VMSTATE_UINT8(rx_fifo_len, Neorv32UARTState),
+> +        VMSTATE_UINT32(ie, Neorv32UARTState),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static void neorv32_uart_reset_enter(Object *obj, ResetType type)
+> +{
+> +    Neorv32UARTState *s = NEORV32_UART(obj);
+> +    s->rx_fifo_len = 0;
+> +    s->ie = 0;
+> +}
+> +
+> +static void neorv32_uart_reset_hold(Object *obj, ResetType type)
+> +{
+> +    Neorv32UARTState *s = NEORV32_UART(obj);
+> +    qemu_irq_lower(s->irq);
+> +}
+> +
+> +static void neorv32_uart_class_init(ObjectClass *oc,const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    ResettableClass *rc = RESETTABLE_CLASS(oc);
+> +
+> +    dc->realize = neorv32_uart_realize;
+> +    dc->vmsd = &vmstate_neorv32_uart;
+> +    rc->phases.enter = neorv32_uart_reset_enter;
+> +    rc->phases.hold  = neorv32_uart_reset_hold;
+> +    device_class_set_props(dc, neorv32_uart_properties);
+> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> +}
+> +
+> +static const TypeInfo neorv32_uart_info = {
+> +    .name          = TYPE_NEORV32_UART,
+> +    .parent        = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(Neorv32UARTState),
+> +    .instance_init = neorv32_uart_init,
+> +    .class_init    = neorv32_uart_class_init,
+> +};
+> +
+> +static void neorv32_uart_register_types(void)
+> +{
+> +    type_register_static(&neorv32_uart_info);
+> +}
+> +
+> +type_init(neorv32_uart_register_types)
+> +/*
+> + * Create UART device.
+> + */
+> +Neorv32UARTState *neorv32_uart_create(MemoryRegion *address_space,
+> +                                      hwaddr base,
+> +                                      Chardev *chr)
+> +{
+> +    DeviceState *dev;
+> +    SysBusDevice *s;
+> +    bool succed= false;
+> +
+> +    dev = qdev_new("riscv.neorv32.uart");
+> +
+> +    qdev_prop_set_chr(dev, "chardev", chr);
+> +    s = SYS_BUS_DEVICE(dev);
+> +    succed = sysbus_realize_and_unref(s, &error_fatal);
+> +
+> +    if (succed) {
+> +        memory_region_add_subregion(address_space, base,
+> +                                    sysbus_mmio_get_region(s, 0));
+> +        return NEORV32_UART(dev);
+> +    } else {
+> +        return NULL;
+> +    }
+> +} //neorv32_uart_create
+> 
+> diff --git a/include/hw/char/neorv32_uart.h b/include/hw/char/neorv32_uart.h
+> new file mode 100644
+> index 0000000000..3651d4741f
+> --- /dev/null
+> +++ b/include/hw/char/neorv32_uart.h
+> @@ -0,0 +1,68 @@
+> +/*
+> + * Neorv32-specific UART.
+> + *
+> + * Copyright (c) 2025 Michael Levit
+> + *
+> + * Author:
+> + *   Michael Levit <michael@videogpu.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef HW_NEORV32_UART_H
+> +#define HW_NEORV32_UART_H
+> +
+> +#include "chardev/char-fe.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/sysbus.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_NEORV32_UART "riscv.neorv32.uart"
+> +OBJECT_DECLARE_SIMPLE_TYPE(Neorv32UARTState, NEORV32_UART)
+> +
+> +#define QEMU_UART_DATA_RX_FIFO_SIZE_LSB  8 /**256 < UART data register(8)  (r/-): log2(RX FIFO size), LSB */
+> +#define QEMU_UART_DATA_RX_FIFO_SIZE_MSB  11 /** 2048 < UART data register(11) (r/-): log2(RX FIFO size), MSB */
+> +
+> +#define NEORV32_UART_RX_FIFO_SIZE  32 //in HW it is  2048 + 256 = _MSB + _LSB
+> +
+> +enum {
+> +	NEORV32_UART_IE_TXWM       = 1, /* Transmit watermark interrupt enable */
+> +	NEORV32_UART_IE_RXWM       = 2  /* Receive watermark interrupt enable */
+> +};
+> +
+> +enum {
+> +	NEORV32_UART_IP_TXWM       = 1, /* Transmit watermark interrupt pending */
+> +	NEORV32_UART_IP_RXWM       = 2  /* Receive watermark interrupt pending */
+> +};
+> +
+> +
+> +
+> +struct Neorv32UARTState {
+> +    /*< private >*/
+> +    SysBusDevice parent_obj;
+> +
+> +    /*< public >*/
+> +    qemu_irq irq;
+> +    MemoryRegion mmio;
+> +    CharBackend chr;
+> +    uint8_t rx_fifo[NEORV32_UART_RX_FIFO_SIZE];
+> +    uint8_t rx_fifo_len;
+> +    uint32_t ie; //interrupt enable
+> +    uint32_t CTRL;
+> +    uint32_t DATA;
+> +};
+> +
+> +Neorv32UARTState *neorv32_uart_create(MemoryRegion *address_space, hwaddr base,
+> +    Chardev *chr);
+> +
+> +#endif //HW_NEORV32_UART_H
 
 
