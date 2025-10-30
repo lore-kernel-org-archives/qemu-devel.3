@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A72CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 04:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7921DCCF9EA
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 04:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEK01-00061Y-9U; Thu, 30 Oct 2025 00:10:57 -0400
+	id 1vEKIz-0000BC-Sl; Thu, 30 Oct 2025 00:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEJzy-00061Q-Dv
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 00:10:54 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEJzs-0004NV-Vq
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 00:10:52 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-63d6ee383bdso1084383a12.2
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 21:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761797443; x=1762402243; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FKd3OfVogN+Dj+gkdfx9dhx/UKUsz8IjoiyjQmmr/pE=;
- b=P7PwrmqsKkB1R+muHVfxHnu/0fKMHcapNgU7K39GDlE5vhp+RIvcuE1iOOyBqWmapi
- 6rJ+H9tHAXPC+LkEm9pgJPoslkXwW4nzMJJnWpcUhG/ylkNyVugZtdAqu7qOJBvSqWnZ
- gQND4Iozhq8mmgYgiI/FEL/xkAEEnzcgCFOVp2CFkcwBpyq98I/eD8njT7Wco23ZNKiV
- Uu9Fikm702R+G8Qm80OAN1YRwIu2giyixMSRM7DhvR7gqPO8tT+ge7e7QnDWE02MRhNT
- MMgACcssAGY1f2nLU6W6bR4Q21kOxU+DtATdp8K162mkk8ZEDv0X+liCk21JFu/+Nayl
- JeEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761797443; x=1762402243;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FKd3OfVogN+Dj+gkdfx9dhx/UKUsz8IjoiyjQmmr/pE=;
- b=KvQQLw+OZeNPyV6lWNYSVb9DNWGQteCtn3XE7lHGWp4TAv9QBPfnGSgRtBC11Vdu3x
- Zt39C0VQWOLFgE0KHBWWKoNTA4QKW7N+H+Xv+tRBgjY/reD/ZSJxps95LEP9SYg2SXkA
- J2YO8W2osooSGdqZ5RT+Qzc5CGAbuofDOXByu8qJfIMIJWhrNbgszVeTG/rghPzMWbFS
- E7x8lGNf2z3IUF1lfKAAzdNGvZHnqg6jDI1DJDPUTl5qrckylJy2Tw4psXvwrYeJWTOx
- GWqUNNpSr+31ULRVM6btBBvUORhdu3pi1W+hP7gz3JxA1D3he/YjOoSQfO+3ioKZKHtD
- bPVA==
-X-Gm-Message-State: AOJu0YxcOAjcL9fh/1TZtLM60ddeb9oJxsNYN23fxqb8UCk9dbLRCMWX
- IlMIDhbe9kGUMHkfWdOBeTDR9ygJGGtjJtbZVPyTjjRCAK1o5u9ZUSmd/F2IT0eGCsmz+QKrsZC
- gQG6L5shg8tc3IMHMsGuLCOPYRqgVJ1g=
-X-Gm-Gg: ASbGnct/Sfy4DADvtC+n33VGiDf1mByEoq/FDxulTn1IXfEjbsfSO0hwbnPsl5zIzpx
- dLI6d4LZmJUBCTjgSyaPpMDqL1IgksE55UBZvS+m4ag/tbYqBJvfDkuifkIFF3/e7aFBs7dinoa
- ZI2nuFiGzfuW+/xjpQr0svofZA4Dx/ty4K/Hk/vU8elTqLDLEBAl9VN+xhopERYwRpBaP07/5TL
- AxiE0iXnbbcREhJe0YkimkjHRx1QAsuughvIO2MCCVyvyTt4p+LfOOnnXNjDgWamgNrRD5YFlN/
- WR/NTbNt9QI6iRykmbFlzHEydQ==
-X-Google-Smtp-Source: AGHT+IEaRX3RaAmiYcD4Wvip5ZigO2K8FZNfdxmX0SDlRYGGIu5n85T99w1kYgQMjkyTvBMlDw2VQXIl24fRH+Mp040=
-X-Received: by 2002:a05:6402:354a:b0:61c:8114:8832 with SMTP id
- 4fb4d7f45d1cf-640441e5250mr4463748a12.16.1761797442939; Wed, 29 Oct 2025
- 21:10:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vEKIv-0000Ai-AA
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 00:30:30 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vEKIf-0006Jr-Qt
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 00:30:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761798614; x=1793334614;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=u7PuITfx4IeFAa8s+tPsssN46kIRp4aS74VUU7N6W48=;
+ b=T5/ZlM6/ezxEcZkUo2J/gn42aZ1fklWDPMJ78H+QlZt66yXwJ043/x+U
+ 5qpfTNuqKLiKUSZkc6JscTzO4dXhRvHMNE6V9Rod13x28NFTpQByoge3+
+ LXTrIzaVBu4S58S9Il9E3yjtUH02fse/yUgAY3zxWZfhWC+AvRNTImunn
+ EG61pnhOeN0LNEbPC45Z5b06XHGIiYmDGMFcepsJr1q4QM7xGNrpRcekw
+ 1qyu0uN0SXywR91i9rnPRpKbKvCpDrao/BCdDeYOa7Lr3v3WBYWrXU7IQ
+ xU3VVBufuqYdezH9FWTvWXG4fk6vyXViwdLskCoElpCPUlJjWWAgPG2Mv A==;
+X-CSE-ConnectionGUID: 6YWXlYrLTuqnTxiJhFhXEw==
+X-CSE-MsgGUID: ST04GxN0TzCgQDGOLKuN4w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74531267"
+X-IronPort-AV: E=Sophos;i="6.19,265,1754982000"; d="scan'208";a="74531267"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2025 21:30:00 -0700
+X-CSE-ConnectionGUID: iS6zRn3IRu2hIWFWiaXczw==
+X-CSE-MsgGUID: 0JqmzqhuRoihmN4bC/MmsA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,265,1754982000"; d="scan'208";a="191018131"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2025 21:29:57 -0700
+Message-ID: <4806bc74-e4c2-4aa1-b003-e72895a11f11@intel.com>
+Date: Thu, 30 Oct 2025 12:29:54 +0800
 MIME-Version: 1.0
-References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
- <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
-In-Reply-To: <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 30 Oct 2025 14:10:16 +1000
-X-Gm-Features: AWmQ_bnhXjfkfVX4c0blVGwLYAeACSjDtyjJd-biSY_z8Jg8ZJLP27kXONf4KEI
-Message-ID: <CAKmqyKPSmfBtK_P66uhvLgg1PinCLJY9=++gMgLTS9kR9fasUA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] hw/riscv: Replace target_ulong uses
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/20] i386/cpu: Enable xsave support for CET states
+To: Chao Gao <chao.gao@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ John Allen <john.allen@amd.com>, Babu Moger <babu.moger@amd.com>,
+ Mathias Krause <minipli@grsecurity.net>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Zide Chen <zide.chen@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Farrah Chen <farrah.chen@intel.com>, Yang Weijiang <weijiang.yang@intel.com>
+References: <20251024065632.1448606-1-zhao1.liu@intel.com>
+ <20251024065632.1448606-12-zhao1.liu@intel.com> <aQGe66NsIm7AglKb@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aQGe66NsIm7AglKb@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.576, HK_RANDOM_FROM=0.999,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,65 +91,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 10:35=E2=80=AFPM Anton Johansson via
-<qemu-devel@nongnu.org> wrote:
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+On 10/29/2025 12:58 PM, Chao Gao wrote:
+> On Fri, Oct 24, 2025 at 02:56:23PM +0800, Zhao Liu wrote:
+>> From: Yang Weijiang <weijiang.yang@intel.com>
+>>
+>> Add CET_U/S bits in xstate area and report support in xstate
+>> feature mask.
+>> MSR_XSS[bit 11] corresponds to CET user mode states.
+>> MSR_XSS[bit 12] corresponds to CET supervisor mode states.
+>>
+>> CET Shadow Stack(SHSTK) and Indirect Branch Tracking(IBT) features
+>> are enumerated via CPUID.(EAX=07H,ECX=0H):ECX[7] and EDX[20]
+>> respectively, two features share the same state bits in XSS, so
+>> if either of the features is enabled, set CET_U and CET_S bits
+>> together.
+>>
+>> Tested-by: Farrah Chen <farrah.chen@intel.com>
+>> Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
+>> Co-developed-by: Chao Gao <chao.gao@intel.com>
+>> Signed-off-by: Chao Gao <chao.gao@intel.com>
+>> Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+>> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> It just occurred to me that KVM_GET/SET_XSAVE don't save/restore supervisor
+> states. Supervisor states need to be saved/restored via MSR APIs. So, there
+> is no need to add supervisor states (including ARCH_LBR states) to
+> x86_ext_save_areas[].
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+x86_ext_save_areas[] is not used only for xsave state, it's also used 
+for the setup of xsave features, i.e., CPUID leaf 0xD.
 
-Alistair
-
-> ---
->  hw/riscv/riscv-iommu.c | 6 ++++--
->  hw/riscv/riscv_hart.c  | 2 +-
->  2 files changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index b33c7fe325..f8656ec04b 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -26,6 +26,8 @@
->  #include "migration/vmstate.h"
->  #include "qapi/error.h"
->  #include "qemu/timer.h"
-> +#include "qemu/target-info.h"
-> +#include "qemu/bitops.h"
->
->  #include "cpu_bits.h"
->  #include "riscv-iommu.h"
-> @@ -391,9 +393,9 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, =
-RISCVIOMMUContext *ctx,
->              const uint64_t va_mask =3D (1ULL << va_len) - 1;
->
->              if (pass =3D=3D S_STAGE && va_len > 32) {
-> -                target_ulong mask, masked_msbs;
-> +                uint64_t mask, masked_msbs;
->
-> -                mask =3D (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
-> +                mask =3D MAKE_64BIT_MASK(0, target_long_bits() - va_len =
-+ 1);
->                  masked_msbs =3D (addr >> (va_len - 1)) & mask;
->
->                  if (masked_msbs !=3D 0 && masked_msbs !=3D mask) {
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index c7e98a4308..65d2c92018 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -93,7 +93,7 @@ static bool csr_qtest_callback(CharBackend *chr, gchar =
-**words)
->          g_assert(rc =3D=3D 0);
->          csr_call(words[1], cpu, csr, &val);
->
-> -        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
-> +        qtest_sendf(chr, "OK 0 %"PRIx64"\n", val);
->
->          return true;
->      }
->
-> --
-> 2.51.0
->
->
+And you did catch the missing part of this series, it lacks the 
+save/restore of CET XSAVE state in 
+x86_cpu_xsave_all_areas()/x86_cpu_xrstor_all_areas()
 
