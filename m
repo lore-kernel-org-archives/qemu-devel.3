@@ -4,194 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D56CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 13:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B850FCCF9FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 13:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vESN7-0001KB-75; Thu, 30 Oct 2025 09:07:21 -0400
+	id 1vESOI-0001W5-8i; Thu, 30 Oct 2025 09:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vESN5-0001K2-MO
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:07:19 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1vESOB-0001Tc-Rx
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:08:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vESMv-0002qk-CO
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:07:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761829629; x=1793365629;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=4KloIONLy2832J2E6LXi+eRae1krtkJifecfPoGM0fU=;
- b=g8mgD05WaL/ZXbM2j6j9m5voUlIhz2NCDPPlfynEh+akczLYuZCozGx6
- wMzRNhvb0STmwAtuqO6vDrdSEqlJxYosiQofLfU22Y6RO1ZhslBVKSnXl
- m4CizK+yMWX2k0YsrP2C8Nn+xYw51QZ499i2CN+7HXBsLcT6Hs+KjfJmz
- PgRXf5RRyN4DQBRQKiOjCQJR+j+7Gg0ihHh/gVBfB1L9m80F00Jo0AoJD
- 008XCudGKxYGZpgfNTMyrEnUm5drWVtYQVjcIdihAPSi0lPAIl/K02jNk
- UN7nQYxjmQ9cLqlo6BcZenuejEiQrlNZj9o4TxeOLH6RYk7fd8uOqUqBf w==;
-X-CSE-ConnectionGUID: loYZHahwTie/Eu90XKjdfw==
-X-CSE-MsgGUID: hV6A/w2wRqOI4ZjK6BI9QA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11598"; a="74568859"
-X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="74568859"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Oct 2025 06:06:59 -0700
-X-CSE-ConnectionGUID: WZkVD3abRce7EKvPyRPApw==
-X-CSE-MsgGUID: GSQV5jAWThaBYAYKE2RHmA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="209529310"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Oct 2025 06:07:00 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 30 Oct 2025 06:06:59 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Thu, 30 Oct 2025 06:06:59 -0700
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.49) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 30 Oct 2025 06:06:59 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kEdeb1I61arCltG247DAcZ3IiJv5iH1IMVPMv4qNGNT6nvK2nlAPqecdIzxEFs6uHg6UKHa1oTlcB0unINVVMl0hs7OKvdY/N+bESyeqVWn1BEUQnrVf2ooo9/9C8QZqQFsFovphkfajSjSGU2bZ2/5XLsQiIxl80xNXNR1gJXoOIykQvDpRbvGyTf+yjhgJCDwaDdmgPnwZmTrUjUTzxB+ixdPorcm8FHpNyoD8t4HIn3gDlrQeRbI04jJnJPeQjD44G40f8dkjMHZ0yqN5ZhWOU107S5iRDH6l2nHmv3GxubYuNkGrCYXmjhnDFRTMNizzz+I0Kw0RgraLsINm+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4KloIONLy2832J2E6LXi+eRae1krtkJifecfPoGM0fU=;
- b=QirpBLvbAHtDcWPXC3OE1BdncC5v5wRU2XJ6/LMuIVSFwWC+191ajTS/l/7DtKUi7BMEWvaYZ845AOb/EPybJUa2Q3L7Je3nAq87xgsSPh7K8/uknovA6MiODGMa3R43ZQ9iV1IMH6r0PiWlgbnH4EiExun9KUj7vqtIurtJm34o/46VoYEeRxkXyX5bDTXSmWRuUQRQ6iTvZtqhb5A1FzjX9dB6JdNZR9GZUHVaA3rgsJZtowK2n4Ddli46Ewivh7fXoeaACJkbgr7xbEAz8ipUvGGEzNqZgeGW5EuDSEnFYTupQcIgT9/LoP9sw2Qtr7UIEhoFQCYygQ1ay2X3Sg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by SA2PR11MB4939.namprd11.prod.outlook.com (2603:10b6:806:115::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.19; Thu, 30 Oct
- 2025 13:06:56 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9275.013; Thu, 30 Oct 2025
- 13:06:56 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Joao Martins <joao.m.martins@oracle.com>, Avihai Horon <avihaih@nvidia.com>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "Hao, Xudong"
- <xudong.hao@intel.com>, "Cabiddu, Giovanni" <giovanni.cabiddu@intel.com>,
- Rohith S R <rohith.s.r@intel.com>, "Gross, Mark" <mark.gross@intel.com>, "Van
- De Ven, Arjan" <arjan.van.de.ven@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: RE: [PATCH v4 08/10] vfio/migration: Fix a check on
- vbasedev->iommu_dirty_tracking
-Thread-Topic: [PATCH v4 08/10] vfio/migration: Fix a check on
- vbasedev->iommu_dirty_tracking
-Thread-Index: AQHcSLoYic5r0GqRiU2SGu5DZpxfKbTaWxAAgAADbcCAABzFAIAAKx3g
-Date: Thu, 30 Oct 2025 13:06:56 +0000
-Message-ID: <IA3PR11MB9136D46E2ADB556BBFA68A1792FBA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20251029095354.56305-1-zhenzhong.duan@intel.com>
- <20251029095354.56305-9-zhenzhong.duan@intel.com>
- <eb2e5419-7a63-47be-adaf-e34709d8310f@nvidia.com>
- <IA3PR11MB913625D418E023D14D4ED0CF92FBA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <fbfe567f-c8d0-4342-a593-efe48d7050ad@oracle.com>
-In-Reply-To: <fbfe567f-c8d0-4342-a593-efe48d7050ad@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SA2PR11MB4939:EE_
-x-ms-office365-filtering-correlation-id: 857ce87d-c4a9-48e0-8d84-08de17b53438
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
-x-microsoft-antispam-message-info: =?us-ascii?Q?4p72Hcgwt9F1Pa5P5b4GptY5QTKZdkEXtcT+9QM4nso8ahik26meswsluaX1?=
- =?us-ascii?Q?+lYBP0Zg+bbQstx/3ccuqedJ3fhhbt66XK/8ic6pQIpmddHxw//rGX8LGq+I?=
- =?us-ascii?Q?xBMFzqHR0P0c8UxfHUt6ZTh3UpfYYi/8Cy1Uvn/yVGz+lDQ8ZqqGeS/pWA3A?=
- =?us-ascii?Q?pvyW76Haq3x8l3o48/vzVnEAMutu6fPoG3tMtH3hoL27xTy/k3U//zXb3/o2?=
- =?us-ascii?Q?QiuRxzvqLbmPTjvRWON5P9UQLhq2LNlE6VfN4M2HPwSUPO6kzSE/6NW0DZ5g?=
- =?us-ascii?Q?XRGpPVlpXaLAm+PWZLoJGO2A/Bm55eNoAygchVxzQIX5qpouLa1BT1nzZaLv?=
- =?us-ascii?Q?QRwFXPPymvdPrKyVApW2zVoAv8tuhnUC3EZNXgLteEUi+XwSOSiiKd+/f2Io?=
- =?us-ascii?Q?hv/vLHYUmxCPdgH3ANn0UZZrNxkH6qW0oQhsyFlHRog7VKeNqPUNLXFGH0OR?=
- =?us-ascii?Q?b4WoLuQ4Kpd1TRmkno6cCYVQaeA17Y7y1eW5NQ7NZFver6PHW8F5V1Vmk/ai?=
- =?us-ascii?Q?C3QdLUgTdfA0g5zILDwerwu9PNR07adB6lMqKIoZ6tUedzGXUmV1uVx9YFFo?=
- =?us-ascii?Q?TqNHWPB5uE9eOKDscyavI2YYXF+sQPPhjXN+LfeeEHQGHGIYgL/kUfp4G2Tl?=
- =?us-ascii?Q?lvV48Wb92h4iinjZQjzGFn1+hIsm9Lq2YaMXDgRD8thT4ndehuvibPBCPn6E?=
- =?us-ascii?Q?7Jg7PpxvoV8c42/d+l4/qEg/RLh8jy0x3klLtTwlBsnmqKLZweOk3kwPc1Vs?=
- =?us-ascii?Q?nZamFoIlgrzj2yg1iLJGQRjXuuCce+VqdYW9xbInSXihQUdEQK/WrSbGTcZJ?=
- =?us-ascii?Q?/Qwcx/Jw1AkIii6l/BjqiOnOHZOinWCNXAzqn8z6OQIw3rl+zGVeIgqCtqAg?=
- =?us-ascii?Q?vJ5rzMmVb0jEQAuhTpCgf/9xA9LUGVj5BkcHl2++vuy/z0tXXmbdvt7L1SEm?=
- =?us-ascii?Q?He3Hc3/uikAzT9XgLDf8/CCqDNw9EmR93jzpLqgGNrV5yE9yq6+oRky2JWI8?=
- =?us-ascii?Q?+PWI/py4wEugSKSxZBqD8zfV9XAYJdo6kP0zHnRddawHXQSDY6PZ1Hcy7qNX?=
- =?us-ascii?Q?nhGjYi/2U0AaevhJI2dKUCCKRI+swiPCxMXiyQ8WjazV2G4OQAWifRYzrr5d?=
- =?us-ascii?Q?5Ma9VdGSrkSGY9swB+0JFFF3CfE5j59Gspl1nNc2586BGQ9i1UWpZudJ3wPA?=
- =?us-ascii?Q?HZfbrPjP8Th/tVBp2JwIKRnjVW3fEUAmsPsgSEFpL4rWxeQh6T4gPorCFq6H?=
- =?us-ascii?Q?4sP8N/5YJSAuVJxE0PMpCQhfhED3xZFTMJa09LLuhRVkQAE8Exv2SmL6G2EN?=
- =?us-ascii?Q?NNS43TfDpBCJl/IbYj+DKeidMsqGrwTNdSE2PDbx7x8LQt1r7eBgAQkkKMYM?=
- =?us-ascii?Q?Wj8kMpshESOj0QuLrl84UytuVvTx1n/3ag6sfvEntAC1y0gkNO4SUw7VwDMJ?=
- =?us-ascii?Q?uGknYczkEV4kd0NbTkqsNC3du1Bx/Kndyp+wrngB3jePulCCC40wzgD8NJky?=
- =?us-ascii?Q?RfrQFw2hzHe2N7uMXyQ42RrouVPGf/9iZz4I?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?9VhgHRT9QVM+4iXSDrEvhGd2VTxpZ+DpZBTJRf6MzAVxoJkounjZd+V1PvqC?=
- =?us-ascii?Q?FxlscjVT8OPm467QFcEHx4myeSDNxyzJXcHgkEXYfLsIAzmaYdUQwHfplqdQ?=
- =?us-ascii?Q?aHOUdoR8jCwXYy+4Vv+O+ErVwPMwXOzZofAqJV5NIHK8URLcp50U0tjAkKhq?=
- =?us-ascii?Q?05vElbGcbYoZsRlvbTU0UAyggIDRoYy2WXSMjYael9XMIjHTyRDW4znmI9jU?=
- =?us-ascii?Q?sQguuNuwT05DyfCqKUETymRPGkSprdpMmIbsiQy7WUPfQphttR5rBYUif8dc?=
- =?us-ascii?Q?/vjqB7ZA/+bKlDUb4EBB0gEEpfveCnZNBaDco4F/ynh3rP1MaauoqBcpFsom?=
- =?us-ascii?Q?P6GtgOdUcoyR1UnOdTlWHm/66Q9QnRxLBsoiTqNVypkvsFUpt5F5m/MTwSSp?=
- =?us-ascii?Q?oFhvbejxKwFr/821aiW91FfM03hkKl93jziYNcE0QEw/WHlaQB1lVFY2fewA?=
- =?us-ascii?Q?uyJWEaHN9jjYB7A4vtyWamvoxc7NyKjf9ZWDX6mNWTBup6KNSFMjLdmtTVBw?=
- =?us-ascii?Q?sc6AwInbgzWyZxpSq/By6wktzqDPUw9I+Ilv/DyL4V4nRf05MZdUMjVa+Gfj?=
- =?us-ascii?Q?hEHWlT4ASFDdWm4HYIglGp8uD47g47+Fj6Wf4ANw1f7GqKwF4GnBrEmXzzYv?=
- =?us-ascii?Q?T2dExEPdE2uQjo21r52umwtnSi5Esi6J91RClgC5iVYblT6li1BWinlYqJk9?=
- =?us-ascii?Q?fpvS9ak++WkNZD9u8DCSh5lPFZSIqe6jUkpBTpmBYcCa9PLcjPTjhX+5f5v6?=
- =?us-ascii?Q?WxHdK6x8hCdpB24DPCNIEFu/sxEu1RMYztqfKtwl4mv6Ftsl5drSyVG3HcJQ?=
- =?us-ascii?Q?aUR/A2NEGqbZijJARtCDBGrvtgRA2ERCcUu0SOFGj/hYRSo5q6JZcK3DjJox?=
- =?us-ascii?Q?ydlyDyBM1qelAXc16kTFaCfG1HOyZwQJMZXi0aUpr9wp8s8bBKqOQZ/43QSF?=
- =?us-ascii?Q?OG1397qQH2uo522U6fBRg0mEXN97wPpQU+0R4cpN49JMoNbXbCCctVO8LNOf?=
- =?us-ascii?Q?DIzLIIG0BOsimuhYUMacDPYxSzMgX+VfzMLK7uf5oRx8XDJx/Wgweped+FFd?=
- =?us-ascii?Q?Nec5OlgE9k+L6qcws2F+n9akHoFdCI/xVsV6fIf4Xj7//4GGes1ZbmJyYTTn?=
- =?us-ascii?Q?6sAwzoSikZOrgFo8XPnuOmAhX5D1QhD2Xv4mioCdMoj/ci7LOdTxutXlExKm?=
- =?us-ascii?Q?uWMsuzKMsUB4RK6a0zRmQNg/m7qg+Zv3AIWYX2Io1DO2igSIy6cfSmPLGY65?=
- =?us-ascii?Q?CS6jUV/s5yrJKXuJvvWvv8NgnMq+SU1EFQeIhnRro3I9BUow6OHJPoPee2QT?=
- =?us-ascii?Q?w5o0Y+c0ggcqsau7FWaDKLIKbUnmZsZVK1/7AEVL6sjAgR1AxTDNZFR3C5Kn?=
- =?us-ascii?Q?e2vvVMshZd9Gov9++B9o/Z1XqvzQSCTZen3FSB2kPNHQ4ob9uhLg7NUTpall?=
- =?us-ascii?Q?eunlphW2nxJrw+j1kBePMA++axAOlci8FvUM04T2nnylgMWmoh4sOycobhZW?=
- =?us-ascii?Q?72hH6BUEIomLzClEVMUwxnr55xbjoelxYRHiAfomflZ7jFZYcPYuczG4qlHL?=
- =?us-ascii?Q?qGpzcCAaqtIw/rzJeXZpe9zwnGqsY0BuGKsgugb9?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1vESO6-0002tW-Ci
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:08:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761829693;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vtYfJGr9+3HLCgwTVXSW/zeC1IbpB9StjeLLuZRq7S0=;
+ b=MpTvNRqw7K2pIZew+hssZYLtFcaINAmTV2FNETFXJU8MeCRaU7XutG0Nv0Uv88sjDQtu/b
+ yNwRRnAFPs0kQhC3lJJVjXmHCZhYXnrvy2f3o67jvNwFO6yTy8hKk5MpsNIl/gQH+eNGFc
+ IKVUJWfKBK11ihTrYGQmpDATX9XHeio=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-224--ck0vgxWOxu41qYteSQCpA-1; Thu, 30 Oct 2025 09:08:12 -0400
+X-MC-Unique: -ck0vgxWOxu41qYteSQCpA-1
+X-Mimecast-MFC-AGG-ID: -ck0vgxWOxu41qYteSQCpA_1761829691
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-471201dc0e9so6232355e9.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 06:08:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761829691; x=1762434491;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vtYfJGr9+3HLCgwTVXSW/zeC1IbpB9StjeLLuZRq7S0=;
+ b=CvqKIDIXqI+X/rTS6ri8Z5cDHR66TI9PB+8gJ7ld1qCuaiBp2AC5Ql23HrPn8vaeoS
+ apbj+wP3h0NVwnD2oTP0JcReqqiWDU3cH1oBaMXigSl+dnN8FbOkO/d41gKCNomfcSvz
+ ClQyGgJ076AQkQvSGmHW2U4fAVzzzuY37h1RPGv5cnSKoQNHmViv8PkTrYXYSjXEGlgW
+ QZ6qY0Mh+1RBOi1dj0venoslR/g/U2ZjqBeBBmQgbIcuYC5fT+kQvOryq2QoU5MPL/Qm
+ M4OGZ9bZbxzDkWZneNSNdB2RUpKvavE8MRlrZMHYholXLKeX1Je7mc0ucykf+munEDQh
+ JDtA==
+X-Gm-Message-State: AOJu0YzOdhOZCYsEp3CzXAG00xx/BKabtxYOhDqcWpQw7DGKwpNGLnUx
+ KNIDbmr+1zeNWFIY67slLWQ5dcaOjV3TFDNXfpy6wZNUmcY/oosg5r72D5TMKRpjgN5TuIA+KNp
+ wiuYQEfWwwGptyKc8+bOI4R24oSiTV619fgf/K6nh8Zq+YgqTcBBACR9U
+X-Gm-Gg: ASbGncuIBSqIX9Rr5D6FxEgbcmq3Js317Fai2jt47F+GrWN9PcajleW70x9MpmZPRo6
+ 8J3h+QGpTtpRqQ8Fw7NbgnA1WoaJe1uFcfq4037alaKH+Q0xc+k0Vrjz86aHnEOaMHMIuG7inHm
+ jHTmoX3izuejZDZKPxoADosqiTKSS4QYSvXnrel5jTa/DOatYEWR3y+A/YJcCYPL6pxcwEvKbG0
+ 9Vk0gWD7byb1F/nJLXTf1NsLq4xnY2ruP0P507+60rjZS3ZsziucMEvMRxoFVNT8DxsayYQ1ga2
+ tsyNYyFfWKk13UCOWRCPUaPJbWI5l/d0ErMPAFg7ldpAp1bJtA4tLc0htf1DiC98
+X-Received: by 2002:a05:600c:3509:b0:45d:5c71:769a with SMTP id
+ 5b1f17b1804b1-4771e3aaf80mr54347075e9.26.1761829690516; 
+ Thu, 30 Oct 2025 06:08:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNWZAp9yfL3nhwNt5odwj9p2ni6NgtzJZ7klAnj7ZfjFssdicenMNebX/ZyFj8bfryXk6dsg==
+X-Received: by 2002:a05:600c:3509:b0:45d:5c71:769a with SMTP id
+ 5b1f17b1804b1-4771e3aaf80mr54346775e9.26.1761829689976; 
+ Thu, 30 Oct 2025 06:08:09 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429bb752b49sm818365f8f.9.2025.10.30.06.08.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Oct 2025 06:08:09 -0700 (PDT)
+Date: Thu, 30 Oct 2025 14:08:06 +0100
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Jiri Denemark <jdenemar@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 2/4] migration: Move postcopy_ram_listen_thread() to
+ postcopy-ram.c
+Message-ID: <dqpskxkmn6zxhd7oeuj4mqpyl7vdhjrecimtldx4k4v6wijnl3@ynjeyazm4ai4>
+References: <20251027154115.4138677-1-jmarcin@redhat.com>
+ <20251027154115.4138677-3-jmarcin@redhat.com>
+ <aQJwx5IBnwk7SxkJ@x1.local>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 857ce87d-c4a9-48e0-8d84-08de17b53438
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Oct 2025 13:06:56.5679 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 71ovI34n/Um5+w8y9Yp28vxd2hMRpc72NGy0jdDJIyJUFi3p7IrXRKGN/ZUC5KfCVnc/4SeANX6dmD5h3c8j34PtNoB/gYHbK3AdK/D4jjk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB4939
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQJwx5IBnwk7SxkJ@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -207,65 +109,404 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2025-10-29 15:53, Peter Xu wrote:
+> On Mon, Oct 27, 2025 at 04:41:09PM +0100, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > This patch addresses a TODO about moving postcopy_ram_listen_thread() to
+> > postcopy file. Furthermore, this patch adds a pair of functions,
+> > postcopy_incoming_setup() and postcopy_incoming_cleanup(), which sets up
+> > and cleans the postcopy_ram_incoming state and the listen thread.
+> 
+> It would be great to separate code movements and changes.
 
+I wanted to get around the need to expose the postcopy listen thread
+function in a header file, hence the postcopy_incoming_setup() function,
+adding postcopy_incoming_cleanup() together then seemed natural to me.
 
->-----Original Message-----
->From: Joao Martins <joao.m.martins@oracle.com>
->Subject: Re: [PATCH v4 08/10] vfio/migration: Fix a check on
->vbasedev->iommu_dirty_tracking
->
->On 30/10/2025 09:10, Duan, Zhenzhong wrote:
->>> From: Avihai Horon <avihaih@nvidia.com>
->>> On 29/10/2025 11:53, Zhenzhong Duan wrote:
->>>
->>> BTW, do you have a real production use case for migration with VFIO
->>> IOMMU type1 dirty tracking? I mean, is the scenario you described in
->>> patch #7 a real use case or you just fixed it for completeness?
->>> If there is no use case, maybe patch #9 is not really needed?
->>
->> patch7 is a real use case, in guest, we switch device from IOMMU domain
->to block domain and see the issue.
->> We need to send accurate unmap notification with actual mapping during
->migration, for both backend.
->>
->
->I think the real question is why you are using type1 backend overall for
->purposes of dirty tracking.
+However, I could split it like this:
 
-Just because we had set bcontainer->dirty_pages_supported =3D true, the dir=
-ty tracking
-by query through kernel VFIO type1 interface is used during migration, even=
- though it's 'perpectual'.
+1. Move postcopy_ram_listen_thread() to postcopy-ram.c and add a simple
+   wrapper for postcopy_thread_create() (something like
+   postcopy_ram_listen_thread_create).
+2. Rename postcopy_ram_listen_thread_create to postcopy_incoming_setup
+   and move rest of loadvm_postcopy_handle_listen, that is moved by this
+   patch, and lastly introduce postcopy_ram_incoming_cleanup().
 
->
->type1 dirty tracking just returns everything in the bitmap as 1s. There's =
-no
->actual dirty tracking and we usually call 'perpectual' dirty tracking beca=
-use
->everything DMA mapped as write is always returned as dirty no matter what
->you
->do. It doesn't look at pagetable neither for the unmap get dirty.
->
->It's only (known) use has been for testing (in the lack of IOMMU HW +
->IOMMUFD)
+> 
+> Meanwhile, this patch won't apply cleanly on top of the staging branch that
+> I kept.. it'll be great if you could rebase this series to the branch when
+> repost:
+> 
+> https://gitlab.com/peterx/qemu/-/commits/staging
 
-You mean testing live migration or the legacy VFIO type1 dirty tracking int=
-erface?
-If you mean the first, we can force enable it with 'enable-migration=3Don' =
-and set
-bcontainer->dirty_pages_supported =3D false.
+I'll rebase.
 
->
->But reading your statement in a different way: you are saying that you use
->*two*
->backends at the same time? Why would you do that?
+> 
+> > 
+> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > ---
+> >  migration/migration.c    |   2 +-
+> >  migration/postcopy-ram.c | 144 +++++++++++++++++++++++++++++++++++++++
+> >  migration/postcopy-ram.h |   3 +
+> >  migration/savevm.c       | 131 +----------------------------------
+> >  4 files changed, 150 insertions(+), 130 deletions(-)
+> > 
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index e9acd0f63b..8827884a15 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -892,7 +892,7 @@ process_incoming_migration_co(void *opaque)
+> >               * but managed to complete within the precopy period, we can use
+> >               * the normal exit.
+> >               */
+> > -            postcopy_ram_incoming_cleanup(mis);
+> > +            postcopy_incoming_cleanup(mis);
+> >          } else if (ret >= 0) {
+> >              /*
+> >               * Postcopy was started, cleanup should happen at the end of the
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index 5471efb4f0..dbbb2dfb78 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -2077,3 +2077,147 @@ bool postcopy_is_paused(MigrationStatus status)
+> >      return status == MIGRATION_STATUS_POSTCOPY_PAUSED ||
+> >          status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
+> >  }
+> > +
+> > +/*
+> > + * Triggered by a postcopy_listen command; this thread takes over reading
+> > + * the input stream, leaving the main thread free to carry on loading the rest
+> > + * of the device state (from RAM).
+> > + */
+> > +static void *postcopy_listen_thread(void *opaque)
+> > +{
+> > +    MigrationIncomingState *mis = migration_incoming_get_current();
+> > +    QEMUFile *f = mis->from_src_file;
+> > +    int load_res;
+> > +    MigrationState *migr = migrate_get_current();
+> > +    Error *local_err = NULL;
+> > +
+> > +    object_ref(OBJECT(migr));
+> > +
+> > +    migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+> > +                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> > +    qemu_event_set(&mis->thread_sync_event);
+> > +    trace_postcopy_ram_listen_thread_start();
+> > +
+> > +    rcu_register_thread();
+> > +    /*
+> > +     * Because we're a thread and not a coroutine we can't yield
+> > +     * in qemu_file, and thus we must be blocking now.
+> > +     */
+> > +    qemu_file_set_blocking(f, true, &error_fatal);
+> > +
+> > +    /* TODO: sanity check that only postcopiable data will be loaded here */
+> > +    load_res = qemu_loadvm_state_main(f, mis, &local_err);
+> > +
+> > +    /*
+> > +     * This is tricky, but, mis->from_src_file can change after it
+> > +     * returns, when postcopy recovery happened. In the future, we may
+> > +     * want a wrapper for the QEMUFile handle.
+> > +     */
+> > +    f = mis->from_src_file;
+> > +
+> > +    /* And non-blocking again so we don't block in any cleanup */
+> > +    qemu_file_set_blocking(f, false, &error_fatal);
+> > +
+> > +    trace_postcopy_ram_listen_thread_exit();
+> > +    if (load_res < 0) {
+> > +        qemu_file_set_error(f, load_res);
+> > +        dirty_bitmap_mig_cancel_incoming();
+> > +        if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
+> > +            !migrate_postcopy_ram() && migrate_dirty_bitmaps())
+> > +        {
+> > +            error_report("%s: loadvm failed during postcopy: %d. All states "
+> > +                         "are migrated except dirty bitmaps. Some dirty "
+> > +                         "bitmaps may be lost, and present migrated dirty "
+> > +                         "bitmaps are correctly migrated and valid.",
+> > +                         __func__, load_res);
+> > +            load_res = 0; /* prevent further exit() */
+> > +        } else {
+> > +            error_prepend(&local_err,
+> > +                          "loadvm failed during postcopy: %d: ", load_res);
+> > +            migrate_set_error(migr, local_err);
+> > +            error_report_err(local_err);
+> > +            migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > +                                           MIGRATION_STATUS_FAILED);
+> > +        }
+> > +    }
+> > +    if (load_res >= 0) {
+> > +        /*
+> > +         * This looks good, but it's possible that the device loading in the
+> > +         * main thread hasn't finished yet, and so we might not be in 'RUN'
+> > +         * state yet; wait for the end of the main thread.
+> > +         */
+> > +        qemu_event_wait(&mis->main_thread_load_event);
+> > +    }
+> > +    postcopy_incoming_cleanup(mis);
+> 
+> Here I did notice that this replaced the old
+> postcopy_ram_incoming_cleanup().  I'm just curious: is it needed to check
+> postcopy-ram=on once more?
+> 
+> The two callers of postcopy_incoming_cleanup() should always have
+> postcopy-ram enabled, right?
 
-I mean patch7 is needed no matter legacy backend or IOMMUFD backend.
+They actually don't. Postcopy listen thread can be also used by
+dirty-bitmaps with postcopy-ram capability disabled, hence why I also
+renamed it to postcopy_listen_thread instead of
+postcopy_ram_listen_thread.
 
-btw: we do support a qemu cmdline with mixed backend, e.g., two devices,
-one backed by legacy backend and the other backed by IOMMUFD. But I'm not m=
-ean that.
+Currently, postcopy_ram_incoming_cleanup() will do nothing if
+postcopy-ram is not enabled, as it checks for each thread, however, I
+think it's better to check for postcopy-ram beforehand. On the other
+hand, postcopy-ram capability is always checked before calling
+postcopy_ram_incoming_setup().
 
-Thanks
-Zhenzhong
+> 
+> > +
+> > +    if (load_res < 0) {
+> > +        /*
+> > +         * If something went wrong then we have a bad state so exit;
+> > +         * depending how far we got it might be possible at this point
+> > +         * to leave the guest running and fire MCEs for pages that never
+> > +         * arrived as a desperate recovery step.
+> > +         */
+> > +        rcu_unregister_thread();
+> > +        exit(EXIT_FAILURE);
+> > +    }
+> > +
+> > +    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > +                                   MIGRATION_STATUS_COMPLETED);
+> > +    /*
+> > +     * If everything has worked fine, then the main thread has waited
+> > +     * for us to start, and we're the last use of the mis.
+> > +     * (If something broke then qemu will have to exit anyway since it's
+> > +     * got a bad migration state).
+> > +     */
+> > +    bql_lock();
+> > +    migration_incoming_state_destroy();
+> > +    bql_unlock();
+> > +
+> > +    rcu_unregister_thread();
+> > +    mis->have_listen_thread = false;
+> > +    postcopy_state_set(POSTCOPY_INCOMING_END);
+> > +
+> > +    object_unref(OBJECT(migr));
+> > +
+> > +    return NULL;
+> > +}
+> > +
+> > +int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp)
+> > +{
+> > +    /*
+> > +     * Sensitise RAM - can now generate requests for blocks that don't exist
+> > +     * However, at this point the CPU shouldn't be running, and the IO
+> > +     * shouldn't be doing anything yet so don't actually expect requests
+> > +     */
+> > +    if (migrate_postcopy_ram()) {
+> > +        if (postcopy_ram_incoming_setup(mis)) {
+> > +            postcopy_ram_incoming_cleanup(mis);
+> > +            error_setg(errp, "Failed to setup incoming postcopy RAM blocks");
+> > +            return -1;
+> > +        }
+> > +    }
+> > +
+> > +    trace_loadvm_postcopy_handle_listen("after uffd");
+> > +
+> > +    if (postcopy_notify(POSTCOPY_NOTIFY_INBOUND_LISTEN, errp)) {
+> > +        return -1;
+> > +    }
+> > +
+> > +    mis->have_listen_thread = true;
+> > +    postcopy_thread_create(mis, &mis->listen_thread,
+> > +                           MIGRATION_THREAD_DST_LISTEN,
+> > +                           postcopy_listen_thread, QEMU_THREAD_DETACHED);
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +int postcopy_incoming_cleanup(MigrationIncomingState *mis)
+> > +{
+> > +    int rc = 0;
+> > +
+> > +    if (migrate_postcopy_ram()) {
+> > +        rc = postcopy_ram_incoming_cleanup(mis);
+> > +    }
+> > +
+> > +    return rc;
+> > +}
+> > diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+> > index ca19433b24..a080dd65a7 100644
+> > --- a/migration/postcopy-ram.h
+> > +++ b/migration/postcopy-ram.h
+> > @@ -199,4 +199,7 @@ bool postcopy_is_paused(MigrationStatus status);
+> >  void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+> >                                     RAMBlock *rb);
+> >  
+> > +int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp);
+> > +int postcopy_incoming_cleanup(MigrationIncomingState *mis);
+> > +
+> >  #endif
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index 7b35ec4dd0..96a2699ca7 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2087,112 +2087,6 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+> >      return 0;
+> >  }
+> >  
+> > -/*
+> > - * Triggered by a postcopy_listen command; this thread takes over reading
+> > - * the input stream, leaving the main thread free to carry on loading the rest
+> > - * of the device state (from RAM).
+> > - * (TODO:This could do with being in a postcopy file - but there again it's
+> > - * just another input loop, not that postcopy specific)
+> > - */
+> > -static void *postcopy_ram_listen_thread(void *opaque)
+> > -{
+> > -    MigrationIncomingState *mis = migration_incoming_get_current();
+> > -    QEMUFile *f = mis->from_src_file;
+> > -    int load_res;
+> > -    MigrationState *migr = migrate_get_current();
+> > -    Error *local_err = NULL;
+> > -
+> > -    object_ref(OBJECT(migr));
+> > -
+> > -    migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+> > -                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> > -    qemu_event_set(&mis->thread_sync_event);
+> > -    trace_postcopy_ram_listen_thread_start();
+> > -
+> > -    rcu_register_thread();
+> > -    /*
+> > -     * Because we're a thread and not a coroutine we can't yield
+> > -     * in qemu_file, and thus we must be blocking now.
+> > -     */
+> > -    qemu_file_set_blocking(f, true, &error_fatal);
+> > -
+> > -    /* TODO: sanity check that only postcopiable data will be loaded here */
+> > -    load_res = qemu_loadvm_state_main(f, mis, &local_err);
+> > -
+> > -    /*
+> > -     * This is tricky, but, mis->from_src_file can change after it
+> > -     * returns, when postcopy recovery happened. In the future, we may
+> > -     * want a wrapper for the QEMUFile handle.
+> > -     */
+> > -    f = mis->from_src_file;
+> > -
+> > -    /* And non-blocking again so we don't block in any cleanup */
+> > -    qemu_file_set_blocking(f, false, &error_fatal);
+> > -
+> > -    trace_postcopy_ram_listen_thread_exit();
+> > -    if (load_res < 0) {
+> > -        qemu_file_set_error(f, load_res);
+> > -        dirty_bitmap_mig_cancel_incoming();
+> > -        if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
+> > -            !migrate_postcopy_ram() && migrate_dirty_bitmaps())
+> > -        {
+> > -            error_report("%s: loadvm failed during postcopy: %d. All states "
+> > -                         "are migrated except dirty bitmaps. Some dirty "
+> > -                         "bitmaps may be lost, and present migrated dirty "
+> > -                         "bitmaps are correctly migrated and valid.",
+> > -                         __func__, load_res);
+> > -            load_res = 0; /* prevent further exit() */
+> > -        } else {
+> > -            error_prepend(&local_err,
+> > -                          "loadvm failed during postcopy: %d: ", load_res);
+> > -            migrate_set_error(migr, local_err);
+> > -            error_report_err(local_err);
+> > -            migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > -                                           MIGRATION_STATUS_FAILED);
+> > -        }
+> > -    }
+> > -    if (load_res >= 0) {
+> > -        /*
+> > -         * This looks good, but it's possible that the device loading in the
+> > -         * main thread hasn't finished yet, and so we might not be in 'RUN'
+> > -         * state yet; wait for the end of the main thread.
+> > -         */
+> > -        qemu_event_wait(&mis->main_thread_load_event);
+> > -    }
+> > -    postcopy_ram_incoming_cleanup(mis);
+> > -
+> > -    if (load_res < 0) {
+> > -        /*
+> > -         * If something went wrong then we have a bad state so exit;
+> > -         * depending how far we got it might be possible at this point
+> > -         * to leave the guest running and fire MCEs for pages that never
+> > -         * arrived as a desperate recovery step.
+> > -         */
+> > -        rcu_unregister_thread();
+> > -        exit(EXIT_FAILURE);
+> > -    }
+> > -
+> > -    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > -                                   MIGRATION_STATUS_COMPLETED);
+> > -    /*
+> > -     * If everything has worked fine, then the main thread has waited
+> > -     * for us to start, and we're the last use of the mis.
+> > -     * (If something broke then qemu will have to exit anyway since it's
+> > -     * got a bad migration state).
+> > -     */
+> > -    bql_lock();
+> > -    migration_incoming_state_destroy();
+> > -    bql_unlock();
+> > -
+> > -    rcu_unregister_thread();
+> > -    mis->have_listen_thread = false;
+> > -    postcopy_state_set(POSTCOPY_INCOMING_END);
+> > -
+> > -    object_unref(OBJECT(migr));
+> > -
+> > -    return NULL;
+> > -}
+> > -
+> >  /* After this message we must be able to immediately receive postcopy data */
+> >  static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis,
+> >                                           Error **errp)
+> > @@ -2218,32 +2112,11 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis,
+> >  
+> >      trace_loadvm_postcopy_handle_listen("after discard");
+> >  
+> > -    /*
+> > -     * Sensitise RAM - can now generate requests for blocks that don't exist
+> > -     * However, at this point the CPU shouldn't be running, and the IO
+> > -     * shouldn't be doing anything yet so don't actually expect requests
+> > -     */
+> > -    if (migrate_postcopy_ram()) {
+> > -        if (postcopy_ram_incoming_setup(mis)) {
+> > -            postcopy_ram_incoming_cleanup(mis);
+> > -            error_setg(errp, "Failed to setup incoming postcopy RAM blocks");
+> > -            return -1;
+> > -        }
+> > -    }
+> > +    int rc = postcopy_incoming_setup(mis, errp);
+> >  
+> > -    trace_loadvm_postcopy_handle_listen("after uffd");
+> > -
+> > -    if (postcopy_notify(POSTCOPY_NOTIFY_INBOUND_LISTEN, errp)) {
+> > -        return -1;
+> > -    }
+> > -
+> > -    mis->have_listen_thread = true;
+> > -    postcopy_thread_create(mis, &mis->listen_thread,
+> > -                           MIGRATION_THREAD_DST_LISTEN,
+> > -                           postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
+> >      trace_loadvm_postcopy_handle_listen("return");
+> >  
+> > -    return 0;
+> > +    return rc;
+> >  }
+> >  
+> >  static void loadvm_postcopy_handle_run_bh(void *opaque)
+> > -- 
+> > 2.51.0
+> > 
+> 
+> -- 
+> Peter Xu
+> 
+
 
