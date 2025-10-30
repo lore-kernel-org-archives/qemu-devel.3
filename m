@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F5FCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 15:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26521CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 15:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEUTu-0004cT-Tx; Thu, 30 Oct 2025 11:22:31 -0400
+	id 1vEUUB-0004hi-GI; Thu, 30 Oct 2025 11:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vEUTt-0004cC-Kd
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:22:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vEUU8-0004gr-GI
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:22:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vEUTe-0006UK-C2
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:22:29 -0400
+ id 1vEUTk-0006XU-9w
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:22:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761837728;
+ s=mimecast20190719; t=1761837737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rKD06Zh1LimJCOg8P85Zg613TQFXlBfxg67E/SB0OO8=;
- b=U30FxhacK/6dZJ0vK/mbeUNC4L30M9D4wAvqG8IwYRHXNG6/9mo/trTS2gffgu54TE6gxh
- GZR8xljOQwyOItRm4qdfyNql//5KGKL8rpgbxKmy/hxfbB/PWKSUF8srZsAEjthAuI3cUk
- 4/3UniFZK4U38ZpZ6m1ChMbS4TLC+0E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6Lm/GnRFPdaTGn+n6ZnJEDhQJPDWu5LYL8zGrDK1Esk=;
+ b=eI8zDAdksza/Xw7Ko8A/kI0x/qDRqDecaDDF+kMvU7pS6otchy03CbDSOn85cIp8+t8qDs
+ PIWfXvODdGack+T1EZZC634QxAtAnjICnyqKF8VANPBHIWihRVFbIemNI0z00+ukD6B8nY
+ 0vylGPNv/ETqpFQYM6eBnJqitg8AJF4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-gIpaBRcDPMiUQLVSfAOtpg-1; Thu,
- 30 Oct 2025 11:22:07 -0400
-X-MC-Unique: gIpaBRcDPMiUQLVSfAOtpg-1
-X-Mimecast-MFC-AGG-ID: gIpaBRcDPMiUQLVSfAOtpg_1761837726
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-o0MS5bP7PAafbh0yB6aF3A-1; Thu,
+ 30 Oct 2025 11:22:14 -0400
+X-MC-Unique: o0MS5bP7PAafbh0yB6aF3A-1
+X-Mimecast-MFC-AGG-ID: o0MS5bP7PAafbh0yB6aF3A_1761837733
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4589C1954B0D; Thu, 30 Oct 2025 15:22:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5883D1955DCD; Thu, 30 Oct 2025 15:22:13 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.94])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C46991800583; Thu, 30 Oct 2025 15:22:05 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EE45330001A1; Thu, 30 Oct 2025 15:22:12 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Czenczek <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  hibriansong@gmail.com, eblake@redhat.com,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  qemu-block@nongnu.org
-Subject: [RESEND PATCH v5 09/13] aio-posix: unindent fdmon_io_uring_destroy()
-Date: Thu, 30 Oct 2025 11:21:45 -0400
-Message-ID: <20251030152150.470170-10-stefanha@redhat.com>
+Subject: [RESEND PATCH v5 13/13] block/io_uring: use non-vectored read/write
+ when possible
+Date: Thu, 30 Oct 2025 11:21:49 -0400
+Message-ID: <20251030152150.470170-14-stefanha@redhat.com>
 In-Reply-To: <20251030152150.470170-1-stefanha@redhat.com>
 References: <20251030152150.470170-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,79 +87,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reduce the level of indentation to make further code changes easier to
-read.
+The io_uring_prep_readv2/writev2() man pages recommend using the
+non-vectored read/write operations when possible for performance
+reasons.
 
+I didn't measure a significant difference but it doesn't hurt to have
+this optimization in place.
+
+Suggested-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
 v5:
-- Add patch to unindent fdmon_io_uring_destroy() [Kevin]
+- Reduce #ifdef HAVE_IO_URING_PREP_WRITEV2 code duplication [Kevin]
 ---
- util/fdmon-io_uring.c | 46 ++++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 22 deletions(-)
+ block/io_uring.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index 730c1ee205..663e95d777 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -391,33 +391,35 @@ bool fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+diff --git a/block/io_uring.c b/block/io_uring.c
+index dd930ee57e..f1514cf024 100644
+--- a/block/io_uring.c
++++ b/block/io_uring.c
+@@ -46,17 +46,28 @@ static void luring_prep_sqe(struct io_uring_sqe *sqe, void *opaque)
  
- void fdmon_io_uring_destroy(AioContext *ctx)
- {
--    if (ctx->fdmon_ops == &fdmon_io_uring_ops) {
--        AioHandler *node;
-+    AioHandler *node;
- 
--        io_uring_queue_exit(&ctx->fdmon_io_uring);
-+    if (ctx->fdmon_ops != &fdmon_io_uring_ops) {
-+        return;
+     switch (req->type) {
+     case QEMU_AIO_WRITE:
+-#ifdef HAVE_IO_URING_PREP_WRITEV2
+     {
+         int luring_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+-        io_uring_prep_writev2(sqe, fd, qiov->iov,
+-                              qiov->niov, offset, luring_flags);
+-    }
++        if (luring_flags != 0 || qiov->niov > 1) {
++#ifdef HAVE_IO_URING_PREP_WRITEV2
++            io_uring_prep_writev2(sqe, fd, qiov->iov,
++                                  qiov->niov, offset, luring_flags);
+ #else
+-        assert(flags == 0);
+-        io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
++            /*
++             * FUA should only be enabled with HAVE_IO_URING_PREP_WRITEV2, see
++             * luring_has_fua().
++             */
++            assert(luring_flags == 0);
++
++            io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
+ #endif
++        } else {
++            /* The man page says non-vectored is faster than vectored */
++            struct iovec *iov = qiov->iov;
++            io_uring_prep_write(sqe, fd, iov->iov_base, iov->iov_len, offset);
++        }
+         break;
 +    }
- 
--        /* Move handlers due to be removed onto the deleted list */
--        while ((node = QSLIST_FIRST_RCU(&ctx->submit_list))) {
--            unsigned flags = qatomic_fetch_and(&node->flags,
--                    ~(FDMON_IO_URING_PENDING |
--                      FDMON_IO_URING_ADD |
--                      FDMON_IO_URING_REMOVE |
--                      FDMON_IO_URING_DELETE_AIO_HANDLER));
-+    io_uring_queue_exit(&ctx->fdmon_io_uring);
- 
--            if ((flags & FDMON_IO_URING_REMOVE) ||
--                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
--                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers,
--                                      node, node_deleted);
--            }
-+    /* Move handlers due to be removed onto the deleted list */
-+    while ((node = QSLIST_FIRST_RCU(&ctx->submit_list))) {
-+        unsigned flags = qatomic_fetch_and(&node->flags,
-+                ~(FDMON_IO_URING_PENDING |
-+                  FDMON_IO_URING_ADD |
-+                  FDMON_IO_URING_REMOVE |
-+                  FDMON_IO_URING_DELETE_AIO_HANDLER));
- 
--            QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
-+        if ((flags & FDMON_IO_URING_REMOVE) ||
-+            (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
-+            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers,
-+                                  node, node_deleted);
+     case QEMU_AIO_ZONE_APPEND:
+         io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
+         break;
+@@ -65,8 +76,15 @@ static void luring_prep_sqe(struct io_uring_sqe *sqe, void *opaque)
+         if (req->resubmit_qiov.iov != NULL) {
+             qiov = &req->resubmit_qiov;
          }
- 
--        g_source_remove_unix_fd(&ctx->source, ctx->io_uring_fd_tag);
--        ctx->io_uring_fd_tag = NULL;
--
--        qemu_lockcnt_lock(&ctx->list_lock);
--        fdmon_poll_downgrade(ctx);
--        qemu_lockcnt_unlock(&ctx->list_lock);
-+        QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
+-        io_uring_prep_readv(sqe, fd, qiov->iov, qiov->niov,
+-                            offset + req->total_read);
++        if (qiov->niov > 1) {
++            io_uring_prep_readv(sqe, fd, qiov->iov, qiov->niov,
++                                offset + req->total_read);
++        } else {
++            /* The man page says non-vectored is faster than vectored */
++            struct iovec *iov = qiov->iov;
++            io_uring_prep_read(sqe, fd, iov->iov_base, iov->iov_len,
++                               offset + req->total_read);
++        }
+         break;
      }
-+
-+    g_source_remove_unix_fd(&ctx->source, ctx->io_uring_fd_tag);
-+    ctx->io_uring_fd_tag = NULL;
-+
-+    qemu_lockcnt_lock(&ctx->list_lock);
-+    fdmon_poll_downgrade(ctx);
-+    qemu_lockcnt_unlock(&ctx->list_lock);
- }
+     case QEMU_AIO_FLUSH:
 -- 
 2.51.0
 
