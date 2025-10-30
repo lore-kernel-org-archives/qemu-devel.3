@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B6ACCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 15:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EBCCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 15:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEUKp-0008TR-Th; Thu, 30 Oct 2025 11:13:09 -0400
+	id 1vEUM7-0000d0-QR; Thu, 30 Oct 2025 11:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vEUKU-0008QP-T7
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:12:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vEUM5-0000cI-Oj
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:14:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vEUKP-00058j-Gq
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:12:46 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vEUM1-0005Dg-RS
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:14:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761837156;
+ s=mimecast20190719; t=1761837256;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6G3KeI0h89ZTRwaL5AVRWAIvBSSC3/QKm/TnduamAsE=;
- b=Sbrr/OLr7Au0RPCw8skmuvlJwqnjeNLsHoiTA0K4tO88xmzRA7QqLKKIlBxeKTvu2ot7DP
- w4NcSV56LV7fzrBMJa7Jyk1w2yLMR90hSkZRwueNy4epwr1CnZP74nTxnINHONpqTLOR2j
- 3PMy/qTRyZW68L+WmNzwqobdw+A7Ehc=
+ bh=agOED+/yo51W0n8T3pBqMS1+uQy3sv2h8G7u7MF9ZPU=;
+ b=J+u7rTwlGrCSz4hRedO+84s85I/WKBzySH8PR8woUMYhZNEtl7wJ5ve808jNFAhRz3SZrF
+ zkgggpkfYutAVjYSFsQNYOoBTrmA8ndjxoHfe8K1/sHYq/U4xFIkq7oQS3Bq9Sld1Unr+2
+ dcJEUN2f+r6KmmqAtykdOue/w+Bp/YI=
 Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
  [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-Ce__2bivPpmaCB0nOylX3w-1; Thu, 30 Oct 2025 11:12:34 -0400
-X-MC-Unique: Ce__2bivPpmaCB0nOylX3w-1
-X-Mimecast-MFC-AGG-ID: Ce__2bivPpmaCB0nOylX3w_1761837154
+ us-mta-321-1CRxTK3qMvCtk6uvKaGyTQ-1; Thu, 30 Oct 2025 11:14:14 -0400
+X-MC-Unique: 1CRxTK3qMvCtk6uvKaGyTQ-1
+X-Mimecast-MFC-AGG-ID: 1CRxTK3qMvCtk6uvKaGyTQ_1761837254
 Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-785c67bec06so15233287b3.2
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 08:12:34 -0700 (PDT)
+ 00721157ae682-7848168dffaso14806397b3.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 08:14:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761837154; x=1762441954;
+ d=1e100.net; s=20230601; t=1761837254; x=1762442054;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6G3KeI0h89ZTRwaL5AVRWAIvBSSC3/QKm/TnduamAsE=;
- b=M57ceNQGf7srv0llSA6sDHmeMDMLekhqR3LgKyiRt0qNhQS1wpGw+tY8lBa56Wfc+K
- dIidUYjlVHdY5C38zGnl0kn0HtWSaZKmrUB6ST5GMlk9+sbChJSykSOwnxKO+ym9Y8uR
- 77WL8mvUfRKiGUwJ89xjITlR4QB67YflPfy0EzVbEhJTxgGxh20qa4gGXH32uAmzT9Iw
- ocvjsKyPn3i1TOnLGxgTakp+V3TeFThpaXzx2qg6OkryApAT5tIIcImIZy5Atn1JaxlI
- HPHg72bCLH+XjK5lYXrlrrqosQs4aPvwVckBFEOlW9nqQkZClrYTnrWEVikW0/GmjZlj
- dH5A==
-X-Gm-Message-State: AOJu0YwFdcMTo1iCBp85tmuyiIw1NT9DYA95YZ6xak4DCo9WEjyChRME
- 0yd6rYlUhVKwP+T3PGxVilv5OfxwAdkBmK1M0GqXzzZDETnvynDBhdq9OYtxDg18iLQFweW4fxZ
- 8uw4dlE2qQPx6EVu1czbBcLk3TqJjhecPl4X0pgg4dNsCFXiyjv2uvTsYnWzDEk1SBinC9T+DmA
- 5Eenw6vf6k4hiAL5Bpd+58Juh/dr7sJOs=
-X-Gm-Gg: ASbGncv3OgEXaPmpVTSmLNscI9OTy+lOz7SlHt0TQK1slTNJ+VTPZ9k0YJ8nSmAVRio
- D82QK9KgKizZ4zCsZlXbTMm8oKtRNLkI2jPj9a5sBAKSe/MgjaiGx2eK8Y18owNmsPtCiAq9zvw
- 3qep4tRCe0lbZtDY0+hkWkkXWK6kzFNLd3hdIiQu+l5hu1rt+oxnIEU0RRClk1pgHgL+D+4Fh29
- 3Rpfb08qHvw+mU=
-X-Received: by 2002:a05:690c:3612:b0:785:c4d1:da0e with SMTP id
- 00721157ae682-7863911e91fmr34953467b3.66.1761837153809; 
- Thu, 30 Oct 2025 08:12:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiQWmyDl9rNcitjK3b20esqYVzEbJh1eNOMx2gKOCh2dkukleL1Ebbh+/T6Y7UIWrCsxzV1mKHzx/QHuk2T3U=
-X-Received: by 2002:a05:690c:3612:b0:785:c4d1:da0e with SMTP id
- 00721157ae682-7863911e91fmr34953187b3.66.1761837153320; Thu, 30 Oct 2025
- 08:12:33 -0700 (PDT)
+ bh=agOED+/yo51W0n8T3pBqMS1+uQy3sv2h8G7u7MF9ZPU=;
+ b=qS5cFIGcPq4Eu3BHIquQjdGSJxU4vP4/JP3z6k8Hq+X4gkEQZqsriALkvsRQ1acBt7
+ I/ICmZYGGizvuKtJ2FP9hflwZQ1qCUkrtIZQj+pwNEmvOnMLDpGRrJMsmw1kuBPETXfi
+ gkgAZEmuIFoCCq+OgTbALEDXqHPqVH/ZSBOKeTC824VwnI9mDZs03VjB1gw/sJRjaVuZ
+ NBD+Lf0eJJw7PZD9/7SkqwLdkQN8nS4W7KATmIWJO+Q3XNAGRlfu2QfeDlPR+BHqUUoK
+ OZdrM37N91kJUQxqmOBf6VhV1dAeDHEg6veM5bZCvTy13asJ0G38vL+TQNaVFa2rK1Vw
+ M9pg==
+X-Gm-Message-State: AOJu0YygEdK4tHK+cApg01iqnm09B+PCdRoLfmoGSdNfiynLwI7YOsYO
+ g1z5uea4Tf7+idC7CcvfG5Ze3ADisvf38l5IR8FAyQcMsS3WxffI3+BTWOu4TA+6j8Z+IX9BDn8
+ FNSTFXzy5bmMDfSNglNY7QMIgUAe7QxnKYiItTJbufKmIefWisCht739HtbvTglACTpDEU3uxsL
+ I7+QcWyS8iRhhYNKP6rf8cmfoXHk/sNAo=
+X-Gm-Gg: ASbGncsgHNcT1KmaquBNey+Io7vH3GLgj7XlojamPXLF1hJbxjikb8bQXW7vyarUeK1
+ KuLJqoGgY0wCsCFZiuE/O8IEsRjRPa6E5VXh8+0trlBoQ938dDM8CgwIoVkWbbY3WUoKY7DA5PD
+ kN5oGulcSr2tb6SPfKVpNDSgyKYIrHAnCWYqy9UA8FyR7YuQlBL1hwEIohvgDW5ov1UuQS+3tdE
+ 42aiaYcY0gcVbw=
+X-Received: by 2002:a05:690c:4990:b0:784:8d21:394f with SMTP id
+ 00721157ae682-7863901a97fmr36572747b3.6.1761837253825; 
+ Thu, 30 Oct 2025 08:14:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3HUCeuEzVr/+kJqE1CU5ZesugVO7u1awryMHDBD2q90CQxEEHJRB08FJryCV/Mv8KnGZgmdI+oKYZE7M0CTM=
+X-Received: by 2002:a05:690c:4990:b0:784:8d21:394f with SMTP id
+ 00721157ae682-7863901a97fmr36572227b3.6.1761837252977; Thu, 30 Oct 2025
+ 08:14:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251028220342.1407883-1-jsnow@redhat.com>
- <20251028220342.1407883-4-jsnow@redhat.com>
- <de0c1bf7-7ae9-4087-9a33-ea96d1fa6db7@redhat.com>
-In-Reply-To: <de0c1bf7-7ae9-4087-9a33-ea96d1fa6db7@redhat.com>
+ <20251028220342.1407883-10-jsnow@redhat.com>
+ <f58ea42a-8fd9-46ed-aeb3-dd7a15709721@redhat.com>
+In-Reply-To: <f58ea42a-8fd9-46ed-aeb3-dd7a15709721@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Thu, 30 Oct 2025 11:12:22 -0400
-X-Gm-Features: AWmQ_bku-P3jTxALP9uHk07aGIDXqSj8qu9EiL8MsU4hDVrlYeZy4_zNql1Ob8A
-Message-ID: <CAFn=p-a9QCwhA=QLXOLJVMBqxBk_3PVMhFSedVB=iBsoDsDEDw@mail.gmail.com>
-Subject: Re: [PATCH RFC 03/10] python/mkvenv: create timestamp file for each
- group "ensured"
+Date: Thu, 30 Oct 2025 11:14:01 -0400
+X-Gm-Features: AWmQ_bnEec-A8YD2Md5D3lEA-JwJgggIdTqxlQPpl9Ju3_9ULsYSQJqe6rT22uM
+Message-ID: <CAFn=p-YDmsNSZO7geB+reX7=mytPy2keaoPEqmNmukc+g-g0cA@mail.gmail.com>
+Subject: Re: [PATCH RFC 09/10] python: quote dotted dependency keys
 To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
  Cleber Rosa <crosa@redhat.com>,
@@ -82,8 +81,8 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Qemu-block <qemu-block@nongnu.org>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ad1f4d064261adbd"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/alternative; boundary="0000000000009db5f5064261b3a3"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,105 +108,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ad1f4d064261adbd
+--0000000000009db5f5064261b3a3
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 30, 2025, 4:28=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote:
+On Thu, Oct 30, 2025, 4:41=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote:
 
+> On 28/10/2025 23.03, John Snow wrote:
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >   pythondeps.toml | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/pythondeps.toml b/pythondeps.toml
+> > index 70e83320855..a5cdf94a791 100644
+> > --- a/pythondeps.toml
+> > +++ b/pythondeps.toml
+> > @@ -32,8 +32,8 @@ sphinx =3D { accepted =3D ">=3D3.4.3", installed =3D =
+"6.2.1",
+> canary =3D "sphinx-build" }
+> >   sphinx_rtd_theme =3D { accepted =3D ">=3D0.5", installed =3D "1.2.2" =
+}
+> >
+> >   [tests]
+> > -qemu_qmp =3D { accepted =3D ">=3D0.0.5", installed =3D "0.0.5" }
+> > +"qemu.qmp" =3D { accepted =3D ">=3D0.0.5", installed =3D "0.0.5" }
+> >
+> >   [functests]
+> > -qemu_qmp =3D { accepted =3D ">=3D0.0.5", installed =3D "0.0.5" }
+> > +"qemu.qmp" =3D { accepted =3D ">=3D0.0.5", installed =3D "0.0.5" }
+> >   pygdbmi =3D { accepted =3D ">=3D0.11.0.0", installed =3D "0.11.0.0" }
 >
-> Missing patch description - what is this good for?
+> Uh, why not immediately using this in patch 4 ?
 >
 
-At the moment, truthfully, nothing!
-
-The intent was a timestamp file for each group so scripts don't need to
-reinstall groups post-config time.
-
-Basically a replacement for check-venv's timestamp file.
-
+Mea culpa, I fixed this after send. I really meant "RFC" this time, sorry!
 
 
 >   Thomas
 >
-> On 28/10/2025 23.03, John Snow wrote:
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   python/scripts/mkvenv.py | 6 ++++++
-> >   1 file changed, 6 insertions(+)
-> >
-> > diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-> > index a064709e6ce..a22e3ee3394 100644
-> > --- a/python/scripts/mkvenv.py
-> > +++ b/python/scripts/mkvenv.py
-> > @@ -838,6 +838,12 @@ def ensure_group(
-> >               raise Ouch(result[0])
-> >           raise SystemExit(f"\n{result[0]}\n\n")
-> >
-> > +    if inside_a_venv():
-> > +        for group in groups:
-> > +            path =3D Path(sys.prefix).joinpath(f"{group}.group")
-> > +            with open(path, "w", encoding=3D"UTF8"):
-> > +                pass
-> > +
-> >
-> >   def post_venv_setup() -> None:
-> >       """
->
 >
 
---000000000000ad1f4d064261adbd
+--0000000000009db5f5064261b3a3
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 30, 2025, 4:28=E2=80=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 30, 2025, 4:41=E2=80=
 =AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com<=
 /a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
- 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><br>
-Missing patch description - what is this good for?<br></blockquote></div></=
-div><div dir=3D"auto"><br></div><div dir=3D"auto">At the moment, truthfully=
-, nothing!</div><div dir=3D"auto"><br></div><div dir=3D"auto">The intent wa=
-s a timestamp file for each group so scripts don&#39;t need to reinstall gr=
-oups post-config time.</div><div dir=3D"auto"><br></div><div dir=3D"auto">B=
-asically a replacement for check-venv&#39;s timestamp file.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div clas=
-s=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-=C2=A0 Thomas<br>
-<br>
-On 28/10/2025 23.03, John Snow wrote:<br>
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 28/10/2025 23.03,=
+ John Snow wrote:<br>
 &gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
 t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
 &gt; ---<br>
-&gt;=C2=A0 =C2=A0python/scripts/mkvenv.py | 6 ++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 6 insertions(+)<br>
+&gt;=C2=A0 =C2=A0pythondeps.toml | 4 ++--<br>
+&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
 &gt; <br>
-&gt; diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py<br>
-&gt; index a064709e6ce..a22e3ee3394 100644<br>
-&gt; --- a/python/scripts/mkvenv.py<br>
-&gt; +++ b/python/scripts/mkvenv.py<br>
-&gt; @@ -838,6 +838,12 @@ def ensure_group(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0raise Ouch(resul=
-t[0])<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0raise SystemExit(f&quot;\n{res=
-ult[0]}\n\n&quot;)<br>
+&gt; diff --git a/pythondeps.toml b/pythondeps.toml<br>
+&gt; index 70e83320855..a5cdf94a791 100644<br>
+&gt; --- a/pythondeps.toml<br>
+&gt; +++ b/pythondeps.toml<br>
+&gt; @@ -32,8 +32,8 @@ sphinx =3D { accepted =3D &quot;&gt;=3D3.4.3&quot;, =
+installed =3D &quot;6.2.1&quot;, canary =3D &quot;sphinx-build&quot; }<br>
+&gt;=C2=A0 =C2=A0sphinx_rtd_theme =3D { accepted =3D &quot;&gt;=3D0.5&quot;=
+, installed =3D &quot;1.2.2&quot; }<br>
 &gt;=C2=A0 =C2=A0<br>
-&gt; +=C2=A0 =C2=A0 if inside_a_venv():<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for group in groups:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 path =3D Path(sys.prefix).j=
-oinpath(f&quot;{group}.group&quot;)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 with open(path, &quot;w&quo=
-t;, encoding=3D&quot;UTF8&quot;):<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pass<br>
-&gt; +<br>
+&gt;=C2=A0 =C2=A0[tests]<br>
+&gt; -qemu_qmp =3D { accepted =3D &quot;&gt;=3D0.0.5&quot;, installed =3D &=
+quot;0.0.5&quot; }<br>
+&gt; +&quot;qemu.qmp&quot; =3D { accepted =3D &quot;&gt;=3D0.0.5&quot;, ins=
+talled =3D &quot;0.0.5&quot; }<br>
 &gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0def post_venv_setup() -&gt; None:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;&quot;&quot;<br>
+&gt;=C2=A0 =C2=A0[functests]<br>
+&gt; -qemu_qmp =3D { accepted =3D &quot;&gt;=3D0.0.5&quot;, installed =3D &=
+quot;0.0.5&quot; }<br>
+&gt; +&quot;qemu.qmp&quot; =3D { accepted =3D &quot;&gt;=3D0.0.5&quot;, ins=
+talled =3D &quot;0.0.5&quot; }<br>
+&gt;=C2=A0 =C2=A0pygdbmi =3D { accepted =3D &quot;&gt;=3D0.11.0.0&quot;, in=
+stalled =3D &quot;0.11.0.0&quot; }<br>
+<br>
+Uh, why not immediately using this in patch 4 ?<br></blockquote></div></div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">Mea culpa, I fixed this afte=
+r send. I really meant &quot;RFC&quot; this time, sorry!</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_cont=
+ainer"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
+left:1px #ccc solid;padding-left:1ex">
+<br>
+=C2=A0 Thomas<br>
 <br>
 </blockquote></div></div></div>
 
---000000000000ad1f4d064261adbd--
+--0000000000009db5f5064261b3a3--
 
 
