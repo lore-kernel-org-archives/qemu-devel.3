@@ -4,100 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95193CCF9FA
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 07:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 134D1CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 07:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEN7n-0003F8-EX; Thu, 30 Oct 2025 03:31:12 -0400
+	id 1vEND2-0007dD-4q; Thu, 30 Oct 2025 03:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN7H-0002rY-3z
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:49 -0400
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vENCu-0007cR-Qo; Thu, 30 Oct 2025 03:36:30 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN77-00053a-0F
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:37 -0400
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfout.phl.internal (Postfix) with ESMTP id C813FEC01C0;
- Thu, 30 Oct 2025 03:30:25 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-11.internal (MEProxy); Thu, 30 Oct 2025 03:30:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1761809425; x=
- 1761895825; bh=lahpd9GNodsj9jGZJq8wJPs5uzoaarEYXqYshrZLfxM=; b=r
- jK+DEBL8VsejJRqBKdartUnsidiHG6ylYCB8k35NSWHGtGsaHxL5HCnG2OdUAkl8
- 9CiL/8ZZ+wJhnyrCVbc7y5Pb1tysmaS2ZJY3zPifEJjEqcYBWmxBB4MIO3Aret/F
- 6MUixjLIXcp2uNVY2RO7XglfLszU3SQ/qBa18TCHQzru4hf2Tw9Bgib3RA7s2Zcp
- L2CHlk3ydljFlm8bqNzpFnfWqrWuRQ9tJloZX6m7rR+5jmrUaRQ+E94qOXUB7Q+o
- OReZwoP3k5dAXFEq6Y/qLj55tSm0ayULbxHGlGrjubycDXTOw9+pH6MTAeRPp9an
- xlXOOclAZ1ovl3xQZUBwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1761809425; x=1761895825; bh=l
- ahpd9GNodsj9jGZJq8wJPs5uzoaarEYXqYshrZLfxM=; b=Am8cHhFHYgH2spure
- /a2wVIpWVfp9faTtNeZptbjRqDb1SFLraWpSUvsQvmKwMAOYN6v256GIj7gYdzNz
- oZyZMicZPj4WOUtNFYIgGQaiHaTwiVdXzyKkTgpiLRoBppoetnt934JhqeJtrBc5
- dpWazPbr9+LylD7BS8bhXFwNQySeMwN0kUAIsqTC+DA/OITqaGeuCL3nh8sz5OeD
- obZxm5KSEOE9x7WCs6T0RLQUk/+s0dCLEx/f4+omilsSZH9xifoUK+Tbk3qufZ3A
- HMtKdKWyslVMTKzyNrwsBgjhriAUaWNvPTA6I5bTvzwfgYmwPyvCdxXiju//uCZ7
- wrvWw==
-X-ME-Sender: <xms:ERQDaSIRkbqNxEbu54m_w7h0kEqGzoM2HOUXXTgy2xvIu-j4v2R7Vg>
- <xme:ERQDaTExfRBveGsMo6xTIIL_toaAB6tMFwn7s2CZ8LzcPjXgO7ylAnr87hsl6OqFM
- KigYe-Ftmp7FAzravhD3tINHFRxWAVonLOQ-knrJmABJl7Uc2pnJ4iy>
-X-ME-Received: <xmr:ERQDaeQ_5az5B5T2BwfOneOGGQLzTVQ15k4ofTEiSjbFyoypvJh8lwVdbmuyVSIl30NLB67mximhHCtntxYt5zIoksjlby9MIvF1Pb4dxdLWNVH7GcM_ESlxDnIJ9_-Q0jCa2fw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeitdduucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
- lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudejudeg
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
- esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
- phhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
- gtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphht
- thhopeifihhlfhhrvggurdhmrghllhgrfigrseifuggtrdgtohhmpdhrtghpthhtohepjh
- honhgrthhhrghnrdgtrghmvghrohhnsehhuhgrfigvihdrtghomhdprhgtphhtthhopegr
- lhhishhtrghirhdrfhhrrghntghishesfigutgdrtghomhdprhgtphhtthhopehkrdhjvg
- hnshgvnhesshgrmhhsuhhnghdrtghomh
-X-ME-Proxy: <xmx:ERQDaXdNpCoZ_pJmKs6qpsmYW4fkI3tEPVpUCdIcMuuATeAAqa0a_g>
- <xmx:ERQDaVpABarmVa7WC4N9UTGKk8q6BTeauPsG8j66RinndouNT6hNMA>
- <xmx:ERQDaQ-y8l5F3WWVub9yQWcOnYT2BL-Fw_Bsw9Yr6SuRGFFAlDTzNQ>
- <xmx:ERQDaZcZmQdKQ1OL-qRB7HMaZEucDKrl5IS-rxzfoN9NIjiDDSFUdg>
- <xmx:ERQDaetEiRbNKpvs8fyUsJspTMn8HLOQ49oqyKIRS3-VHgom4w5kI7Zp>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 03:30:24 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Wilfred Mallawa <wilfred.mallawa@wdc.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 4/7] spdm: define SPDM transport enum types
-Date: Thu, 30 Oct 2025 08:29:52 +0100
-Message-ID: <20251030072956.1194-5-its@irrelevant.dk>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251030072956.1194-1-its@irrelevant.dk>
-References: <20251030072956.1194-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vENCm-00064P-1w; Thu, 30 Oct 2025 03:36:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aNU6ereVBjTacN+ltn3eELcxtuYkJ2l0FGmBTMTD913oKggDdbQpr/fkxpSBe0Lmpu+mZg9OxE8/mRot5HaZkvVJQ+4tixta3TWoBr6Pbm1e/YgnH19P0s8T8PJoK9HnOamb0VeTpJtD50exv/ULzPknl4SJYefMRO6YEDIvdRbWMIWWT3HGBvfzzdmFYCw+wHAdbrdtM2JFB5Zm7DO75igwIi+y4PHn9w+HL5EAmbU2VYz7a7rt0c6JQ9wQg0TN84LDoHiLM3oqp3y8EcIcm1oOqPJQOpyyDdBEwJsKuGIs3509X40lkPHNo6EnFte5QAl9rkMHdbbAqzti7Z/32g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+lorpsg5yBWp+3Da1zF1i9vrUGZw1tEes/+u/rwNUeE=;
+ b=cLE3SHaX22qsWTA+EBy4wtdnKjtm1kWEoYwxiQAOjTgDwQLH3nt4buVQtzz5Ljlt5QfYMWJZdAY7W/V2vYbORrcPqND71Vjc2rOAxhx2bhAby+fe4ZaNpU/C7FVSgIyGYC907Da0CLCTaB0QM32bFP4cGtl21gPvwWN2aLCd10/ffaLQc4p4MNvMck7Lqq4FnTOLpJ3N2hy89fQkoProyCa6G35GN87axOokCSjqKKU6oEQOQBavd3e1RmuizWmE7fszfL5FRCkzcyWETVFd3MCIbnH5dSy0zHDhUVQvK04CP/snKMC590HOhT6dwSWhYxQ+tUYiYU85BjmOg8hLwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+lorpsg5yBWp+3Da1zF1i9vrUGZw1tEes/+u/rwNUeE=;
+ b=gvIRHkTIXUHQS3G+I+bpbGOHQLNTVVfjrq/xeb2Nkc7K8/0nPYbXm8TckY1alyuWkNeVFzcJDIrRmu+LBFpkfV0jEbUf4rCqZUfc2JVxyLSUw9ATY5eGte7NVJAP6oU+7AlRyj/e5XskWdYgsxN1NX4CA5WnRbqoTn5f8r7OLVvwgORufN0Rxjz4IuGvsPDvgTVbS0ScOWMD7n2ovlHF9ljIs6Uh/wLncvgGXal8o75A/fSU6WjA/M/3rDgKlJXu6YnPYzoGZPPgh/uYCHUn5PeBcwi874kpPcLOHOeK8xcqCjP86gK3NTear1zRaZh7UM9Ir7wDyzQJnzeg6DO2GA==
+Received: from BLAPR03CA0153.namprd03.prod.outlook.com (2603:10b6:208:32f::19)
+ by CH3PR12MB9219.namprd12.prod.outlook.com (2603:10b6:610:197::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.14; Thu, 30 Oct
+ 2025 07:36:01 +0000
+Received: from MN1PEPF0000ECDA.namprd02.prod.outlook.com
+ (2603:10b6:208:32f:cafe::37) by BLAPR03CA0153.outlook.office365.com
+ (2603:10b6:208:32f::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.14 via Frontend Transport; Thu,
+ 30 Oct 2025 07:35:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ MN1PEPF0000ECDA.mail.protection.outlook.com (10.167.242.134) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9275.10 via Frontend Transport; Thu, 30 Oct 2025 07:36:01 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 30 Oct
+ 2025 00:35:47 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 30 Oct
+ 2025 00:35:46 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Thu, 30 Oct 2025 00:35:45 -0700
+Date: Thu, 30 Oct 2025 00:35:43 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
+ reset
+Message-ID: <aQMVT5BN6kLq6+cJ@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-20-skolothumtho@nvidia.com>
+ <aPF9l5GwctGN0tqT@Asurada-Nvidia>
+ <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
+ <CH3PR12MB75480062975BA40AD454742CABFCA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aQGXibWAiMpXAQlF@Asurada-Nvidia>
+ <CH3PR12MB7548FB14A0D0F08688DE9CCDABFAA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aQL3gNT+1Ehgi1pn@Asurada-Nvidia>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=its@irrelevant.dk;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aQL3gNT+1Ehgi1pn@Asurada-Nvidia>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECDA:EE_|CH3PR12MB9219:EE_
+X-MS-Office365-Filtering-Correlation-Id: 82211c0b-a959-4a2d-703d-08de1786f9a4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|7416014|36860700013|1800799024|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?9MC+paFQ2m/VmzZWurvtxuOf2agKm4qkEOZnd3HdS8imCm9NWatwmn8yy4A5?=
+ =?us-ascii?Q?zvpjO/eBRp57vvU3NypuZRwv6Fw2WxJdxwLt+QJI4fyyCe657riMpF6aYFcP?=
+ =?us-ascii?Q?2qoG4B9/0cS4xuqAmj93rN9dQjgn5RpnwQUrVEv9zYTysHzvcgS55O0N722n?=
+ =?us-ascii?Q?AUtxkEqj9tf5rbXlhm5tHID6iGTBFyCrCkj4SrXWFlYTzf3lmJrRavxOiYM1?=
+ =?us-ascii?Q?2qMIrhNNhhmQ8R4jJOprZKDEswTJxwtdv7/GHQzMmDsGh674hk+o2he3WoVv?=
+ =?us-ascii?Q?Po1TEvpIv5fvlfEL5d9SGfPIYnbbXOLBipyCXSiOdp/hrMGdn5/P1TNfmaV4?=
+ =?us-ascii?Q?mWfPl09opLg71QelddcDOrerXlThkSaNt1x4U97scaSuYPitHx8Mj4KuCfvR?=
+ =?us-ascii?Q?7QzK9vhOnwPE0MfH4xPxJCLeQU4plCswIMaN2MTrjwSOrzB//GVlJP9X8fNs?=
+ =?us-ascii?Q?bGrZe9OfxDQk1KOMAwqCvb6Q2o//pv3aYf9cV9usULHZD7TF9FO8hGE5UQPC?=
+ =?us-ascii?Q?PhBGjji/w5jvQ3q532RXG1pBTs5yd4/k3Bt3dr6EDtqcAQqs4xNJUA4xaAwf?=
+ =?us-ascii?Q?Bnq1vouiGJLuuMUwu4AhhaMUtCJXrPPDVygruY/Zv3+91qH7LSex9SoebHep?=
+ =?us-ascii?Q?LYdRNNlh1sQRm1K7S9xOBRfAlf7fykBO5QWFvbmmpZn/saFj4RLTno5x+UfM?=
+ =?us-ascii?Q?rnIBtdDd1jBYwxOi7n2clVId8mz1OHrddSTjSEMz4L60YDG+yW3FjR4UKfEj?=
+ =?us-ascii?Q?ib0dVGZXG7HSUoCVXxF/DXAfWo8ZJAwnH2AP8zSld5S4QO2YSHKfr4yGnoMR?=
+ =?us-ascii?Q?66Rnuws3ELddVpiQLex3JUguvZWTi3EfWEiCqbcJvY0kVfVhgYWkqBE3ksqO?=
+ =?us-ascii?Q?lZAEJmbDjjq8E2iVntt6k8ltSsEt8jegIsrulWbGbKS7EzGEhA/qgv6HmHSO?=
+ =?us-ascii?Q?oSu8mZBkulBs0uNoxDLgT1q/iZFAnO9yQ7gvTfdaj/6KSjmJmxXkDopsFzwL?=
+ =?us-ascii?Q?13ewqQ5J7SMA0NkRkD3buAs/Xrr0fIqugqo1E1t6ayVeLXJFPHHoqw89YzeD?=
+ =?us-ascii?Q?lknZCz+1Z+sgnh3IiXNTDWeLlPXxfxqaIyxHg1cQMViEQwxtdH3xN2qLIb4L?=
+ =?us-ascii?Q?bkcvxCuFuBZu5SKG1PgeuvkqZ0wIOWgCCjjYxjekWfs3FPHDdQjffjgrkC9T?=
+ =?us-ascii?Q?8o06EzKSsXoT5niBgy++3Oubkf/+/DFibwqMYbeA6/Eh6Dz+0UcRM3q1EDeL?=
+ =?us-ascii?Q?IDOAzeS1UrZ+8an6A9Oa/psynLntafpajqqPblaMsM/jnPZRzKzEG6THtwyp?=
+ =?us-ascii?Q?2b0VqID/us2CQFaokJwZHq5kwUCGl7K0cYyVMoNUXXcigCLUbWmOSDkYW+Lg?=
+ =?us-ascii?Q?sXDMIRMsUh77i/EL9DZa40Klpsu9tEQ/Ge0wiq1CRWThw/eePFcfEb9g+3nw?=
+ =?us-ascii?Q?K4zYPYSmGR3QzT2Fz8nYqQLi3wZwFEr2GaBXp2myQLcvW5Y7cH2XSFDfViZH?=
+ =?us-ascii?Q?Mz7X/Ecfm7RkTz7jBWs1LHTwYYSblBu3dzOmxK/6ooODOkGdGHovr27b7jxY?=
+ =?us-ascii?Q?n7BXKt+BY8sQV5L9QaQ=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2025 07:36:01.1323 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 82211c0b-a959-4a2d-703d-08de1786f9a4
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECDA.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9219
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,92 +173,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+On Wed, Oct 29, 2025 at 10:28:35PM -0700, Nicolin Chen wrote:
+> On Wed, Oct 29, 2025 at 11:19:59AM -0700, Shameer Kolothum wrote:
+> > > According to SMMU spec 6.3 GBPA register's Additional information:
+> > >  - If SMMU_IDR1.ATTR_TYPES_OVR == 0, MTCFG, SHCFG, ALLOCCFG are
+> > >    effectively fixed as Use incoming and it is IMPLEMENTATION
+> > >    SPECIFIC whether these fields read as zero or a previously
+> > >    written value. In this case, MemAttr reads as UNKNOWN.
+> > >  - If SMMU_IDR1.ATTR_PERMS_OVR == 0, INSTCFG and PRIVCFG are
+> > >    effectively fixed as Use incoming and it is IMPLEMENTATION
+> > >    SPECIFIC whether these fields read as zero or a previously
+> > >    written value.
+> > > 
+> > > On the other hand, QEMU seems to set both OVR fields to 0, so all
+> > > those "other attributes" wouldn't be necessarily forwarded to the
+> > > kernel?
+> > 
+> > OK. Based on the QEMU OVR value, GBPA now resets to 0x1000, meaning
+> > SHCFG = 0b01 (Use incoming). However, in the current vSTE bypass/abort
+> > cases, SHCFG is set to 0b00 (Non-shareable).
+> 
+> Ah, no, my bad. SHCFG will need to be forwarded, if the hw_info
+> call reports that host SMMU has SMMU_IDR1.ATTR_TYPES_OVR == 1.
+> 
+> So, the SHCFG=incoming has been the default case, but to support
+> a non-incoming configuration, kernel needs to allow SHCFG in the
+> vSTE.
+> 
+> > However, I think the SHCFG will be overridden by S2FWB.
+> 
+> I don't think S2FWB affects SHCFG. SHCFG has been set by kernel:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c?h=v6.18-rc3#n1681
 
-SPDM maybe used over different transports. This patch specifies the
-trasnport types as an enum with a qdev property definition such that
-a user input transport type (string) can be mapped directly into the
-respective SPDM transportenum for internal use.
+Hmm, the table "13.5 Summary of attribute/permission configuration
+fields" in SMMU spec doesn't seem to show the complete picture..
 
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- backends/spdm-socket.c       | 23 +++++++++++++++++++++++
- include/system/spdm-socket.h | 19 +++++++++++++++----
- 2 files changed, 38 insertions(+), 4 deletions(-)
+I found the pseudo code in ARMv8 spec telling the details:
 
-diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
-index ab74a02d9cf6..6d8f02d3b928 100644
---- a/backends/spdm-socket.c
-+++ b/backends/spdm-socket.c
-@@ -13,6 +13,9 @@
- #include "qemu/osdep.h"
- #include "system/spdm-socket.h"
- #include "qapi/error.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/core/qdev-prop-internal.h"
- 
- static bool read_bytes(const int socket, uint8_t *buffer,
-                        size_t number_of_bytes)
-@@ -246,3 +249,23 @@ void spdm_socket_close(const int socket, uint32_t transport_type)
-     send_platform_data(socket, transport_type,
-                        SPDM_SOCKET_COMMAND_SHUTDOWN, NULL, 0);
- }
-+
-+const QEnumLookup SpdmTransport_lookup = {
-+    .array = (const char *const[]) {
-+        [SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC] = "unspecified",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_MCTP] = "mctp",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE] = "doe",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_SCSI] = "scsi",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_NVME] = "nvme",
-+    },
-+    .size = SPDM_SOCKET_TRANSPORT_TYPE_MAX
-+};
-+
-+const PropertyInfo qdev_prop_spdm_trans = {
-+    .type = "SpdmTransportType",
-+    .description = "Spdm Transport, doe/nvme/mctp/scsi/unspecified",
-+    .enum_table = &SpdmTransport_lookup,
-+    .get = qdev_propinfo_get_enum,
-+    .set = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index e61163381251..00cb0e97f36e 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -112,11 +112,22 @@ typedef struct {
- #define SPDM_SOCKET_COMMAND_UNKOWN                0xFFFF
- #define SPDM_SOCKET_COMMAND_TEST                  0xDEAD
- 
--#define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
--#define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
--#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
--
- #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
- #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
- 
-+typedef enum SpdmTransportType {
-+    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
-+    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
-+    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
-+    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
-+    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+    SPDM_SOCKET_TRANSPORT_TYPE_MAX
-+} SpdmTransportType;
-+
-+extern const PropertyInfo qdev_prop_spdm_trans;
-+
-+#define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
-+    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
-+                         qdev_prop_spdm_trans, SpdmTransportType)
-+
- #endif
--- 
-2.51.0
+shared/translation/attrs/S2AttrDecode
+// S2AttrDecode()
+// ==============
+// Converts the Stage 2 attribute fields into orthogonal attributes and hints
+MemoryAttributes S2AttrDecode(bits(2) SH, bits(4) attr, AccType acctype)
+	MemoryAttributes memattrs;
+	apply_force_writeback = HaveStage2MemAttrControl() && HCR_EL2.FWB == '1';
+	// Device memory
+	if (apply_force_writeback && attr<2> == '0') || attr<3:2> == '00' then
+		memattrs.memtype = MemType_Device;
+		case attr<1:0> of
+			when '00' memattrs.device = DeviceType_nGnRnE;
+			when '01' memattrs.device = DeviceType_nGnRE;
+			when '10' memattrs.device = DeviceType_nGRE;
+			when '11' memattrs.device = DeviceType_GRE;
+	// Normal memory
+	elsif apply_force_writeback then
+		if attr<2> == '1' then
+			memattrs.memtype = MemType_Normal;
+			memattrs.inner.attrs = attr<1:0>;
+			memattrs.outer.attrs = attr<1:0>;
+			memattrs.shareable = SH<1> == '1';
+			memattrs.outershareable = SH == '10';
+	elsif attr<1:0> != '00' then
+		memattrs.memtype = MemType_Normal;
+		memattrs.outer = S2ConvertAttrsHints(attr<3:2>, acctype);
+		memattrs.inner = S2ConvertAttrsHints(attr<1:0>, acctype);
+		memattrs.shareable = SH<1> == '1';
+		memattrs.outershareable = SH == '10';
+	else
+		memattrs = MemoryAttributes UNKNOWN; // Reserved
+return MemAttrDefaults(memattrs);
 
+So, it seems that you are right. SHCFG will be overridden by S2FWB.
+
+However, we have CPU like Grace that doesn't have S2FWB..
+
+Nicolin
 
