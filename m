@@ -4,64 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F8CCCF9FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 13:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D97CCF9FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vET9A-0001vD-AB; Thu, 30 Oct 2025 09:57:01 -0400
+	id 1vETEP-0003Ru-Ac; Thu, 30 Oct 2025 10:02:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vET98-0001v2-3V
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:56:58 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vETEL-0003Pl-4I
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:02:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vET92-0001gG-8t
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:56:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cy5Cd3TKrz6L4tD;
- Thu, 30 Oct 2025 21:52:45 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 06326140370;
- Thu, 30 Oct 2025 21:56:21 +0800 (CST)
-Received: from localhost (10.203.177.99) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 30 Oct
- 2025 13:56:19 +0000
-Date: Thu, 30 Oct 2025 13:56:14 +0000
-To: Gustavo Romero <gustavo.romero@linaro.org>
-CC: <qemu-devel@nongnu.org>, <anisinha@redhat.com>, <armbru@redhat.com>,
- <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>, 
- <farman@linux.ibm.com>, <imammedo@redhat.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>, <maobibo@loongson.cn>,
- <mst@redhat.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
- <philmd@linaro.org>, <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
- <shannon.zhaosl@gmail.com>, <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
-Subject: Re: [PATCH v16 0/8] Specifying cache topology on ARM
-Message-ID: <20251030135614.00001ffc.alireza.sanaee@huawei.com>
-In-Reply-To: <41ac930f-2288-434d-af47-6ed82781727e@linaro.org>
-References: <20250827142152.206-1-alireza.sanaee@huawei.com>
- <41ac930f-2288-434d-af47-6ed82781727e@linaro.org>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vETEB-0002S8-JW
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:02:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761832921;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=81HW2gZc6DxiHXRSen0iVn++IiUXH8j/g0Xrco8dG/s=;
+ b=GHkcg6sCpTIUzAf55A6gp2f/xCT8LayrzIas/L8pGA+itHjvZ0BMFAprFpFQChtIBcOepo
+ lxXeUX9FYorm3pzcyqbv/iYlsmYGEkuYG1qLTBTuHxRSbbC3502ZYBnwvNgw1AqfuXqjoq
+ HZ2rOqAp2OyFCb09/Cw6dE7Fxh1Z0fM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-eLCukxU4NhGtkJMa7dXy1w-1; Thu,
+ 30 Oct 2025 10:01:57 -0400
+X-MC-Unique: eLCukxU4NhGtkJMa7dXy1w-1
+X-Mimecast-MFC-AGG-ID: eLCukxU4NhGtkJMa7dXy1w_1761832916
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 491FA183450E; Thu, 30 Oct 2025 14:01:56 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AB2019560B6; Thu, 30 Oct 2025 14:01:55 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CACF121E6A27; Thu, 30 Oct 2025 15:01:52 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: michael.roth@amd.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] qapi: Add documentation format validation
+In-Reply-To: <20251029173059.378607-1-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 29 Oct 2025 20:30:59 +0300")
+References: <20251029173059.378607-1-vsementsov@yandex-team.ru>
+Date: Thu, 30 Oct 2025 15:01:52 +0100
+Message-ID: <87ms58fpyn.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,210 +81,283 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Oct 2025 10:51:06 -0300
-Gustavo Romero <gustavo.romero@linaro.org> wrote:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Hi Gustavo,
+> Add explicit validation for QAPI documentation formatting rules:
+>
+> 1. Lines must not exceed 70 columns in width (including '# ' prefix)
+> 2. Sentences must be separated by two spaces
+>
+> Example sections are excluded, we don't require them to be <= 70,
+> that would be too restrictive.
+>
+> Example sections share common 80-columns recommendations (not
+> requirements).
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>
+> Hi all!
+>
+> This substitutes my previous attempt
+>   "[PATCH v2 00/33] qapi: docs: width=70 and two spaces between sentences"
+> Supersedes: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+>
+> v3:
+> 01: ignore example sections
+> other commits: dropped :)
+>
+> Of course, this _does not_ build on top of current master. v3 is
+> to be based on top of coming soon doc-cleanup series by Markus.
 
-Thanks for the review and sorry for the delay. I am planning to go through all of the reviews soon. A quick note on your comment for the cover letter INLINE.
+I'll post this today.
 
-> Hi Alireza,
-> 
-> I've started to review your series and have some questions/comments on it,
-> please see them inline in the patches.
-> 
-> 
-> On 8/27/25 11:21, Alireza Sanaee wrote:
-> > Specifying the cache layout in virtual machines is useful for
-> > applications and operating systems to fetch accurate information about
-> > the cache structure and make appropriate adjustments. Enforcing correct  
-> 
-> Since this series applies only to TCG and all cache management
-> instruction are modeled as NOPs I'm wondering what would be a use case
-> for being able to specify the cache layout. I'm not saying I'm against it,
-> specially because it's for the virt machine and we have sort of freedom to
-> "customize" it in general.
+>  scripts/qapi/parser.py | 46 +++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 45 insertions(+), 1 deletion(-)
+>
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 9fbf80a541..b9d76fff39 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -108,6 +108,9 @@ def __init__(self,
+>          self.exprs: List[QAPIExpression] = []
+>          self.docs: List[QAPIDoc] = []
+>  
+> +        # State for tracking qmp-example blocks
+> +        self._in_qmp_example = False
+> +
+>          # Showtime!
+>          self._parse()
+>  
+> @@ -423,12 +426,53 @@ def get_doc_line(self) -> Optional[str]:
+>              if self.val != '##':
+>                  raise QAPIParseError(
+>                      self, "junk after '##' at end of documentation comment")
+> +            self._in_qmp_example = False
+>              return None
+>          if self.val == '#':
+>              return ''
+>          if self.val[1] != ' ':
+>              raise QAPIParseError(self, "missing space after #")
+> -        return self.val[2:].rstrip()
+> +
+> +        line = self.val[2:].rstrip()
+> +
+> +        if line.startswith('.. qmp-example::'):
 
-We tested with TCG and KVM, and the only change related to TCG was the increase of cache levels for cpu=max.
+This matches how we spell the directive, but ReST appears to accept
+additional spaces.  Let's use
 
-This set applies to KVM indeed, because not all cache information come from registers. The sharing bit, in particular topology, must be described somehow, and we ENABLE that.
+    re.match(r'\.\. +qmp-example *::', line)
 
-Thanks,
-Alireza
-> 
-> 
-> Cheers,
-> Gustavo
-> 
-> > sharing information can lead to better optimizations. Patches that allow
-> > for an interface to express caches was landed in the prior cycles. This
-> > patchset uses the interface as a foundation.  Thus, the device tree and
-> > ACPI/PPTT table, and device tree are populated based on
-> > user-provided information and CPU topology.
-> > 
-> > Example:
-> > 
-> > +----------------+                         +----------------+
-> > |    Socket 0    |                         |    Socket 1    |
-> > |    (L3 Cache)  |                         |    (L3 Cache)  |
-> > +--------+-------+                         +--------+-------+
-> >           |                                          |
-> > +--------+--------+                        +--------+--------+
-> > |   Cluster 0     |                        |   Cluster 0     |
-> > |   (L2 Cache)    |                        |   (L2 Cache)    |
-> > +--------+--------+                        +--------+--------+
-> >           |                                          |
-> > +--------+--------+  +--------+--------+   +--------+--------+  +--------+----+
-> > |   Core 0         | |   Core 1        |   |   Core 0        |  |   Core 1    |
-> > |   (L1i, L1d)     | |   (L1i, L1d)    |   |   (L1i, L1d)    |  |   (L1i, L1d)|
-> > +--------+--------+  +--------+--------+   +--------+--------+  +--------+----+
-> >           |                    |                     |                    |
-> > +--------+              +--------+             +--------+           +--------+
-> > |Thread 0|              |Thread 1|             |Thread 1|           |Thread 0|
-> > +--------+              +--------+             +--------+           +--------+
-> > |Thread 1|              |Thread 0|             |Thread 0|           |Thread 1|
-> > +--------+              +--------+             +--------+           +--------+
-> > 
-> > 
-> > The following command will represent the system relying on **ACPI PPTT tables**.
-> > 
-> > ./qemu-system-aarch64 \
-> >   -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluster,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
-> >   -cpu max \
-> >   -m 2048 \
-> >   -smp sockets=2,clusters=1,cores=2,threads=2 \
-> >   -kernel ./Image.gz \
-> >   -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
-> >   -initrd rootfs.cpio.gz \
-> >   -bios ./edk2-aarch64-code.fd \
-> >   -nographic
-> > 
-> > The following command will represent the system relying on **the device tree**.
-> > 
-> > ./qemu-system-aarch64 \
-> >   -machine virt,acpi=off,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluster,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
-> >   -cpu max \
-> >   -m 2048 \
-> >   -smp sockets=2,clusters=1,cores=2,threads=2 \
-> >   -kernel ./Image.gz \
-> >   -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
-> >   -initrd rootfs.cpio.gz \
-> >   -nographic
-> > 
-> > Failure cases:
-> >      1) There are scenarios where caches exist in systems' registers but
-> >      left unspecified by users. In this case qemu returns failure.
-> > 
-> >      2) SMT threads cannot share caches which is not very common. More
-> >      discussions here [1].
-> > 
-> > Currently only three levels of caches are supported to be specified from
-> > the command line. However, increasing the value does not require
-> > significant changes. Further, this patch assumes l2 and l3 unified
-> > caches and does not allow l(2/3)(i/d). The level terminology is
-> > thread/core/cluster/socket. Hierarchy assumed in this patch:
-> > Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
-> > 
-> > Possible future enhancements:
-> >    1) Separated data and instruction cache at L2 and L3.
-> >    2) Additional cache controls.  e.g. size of L3 may not want to just
-> >    match the underlying system, because only some of the associated host
-> >    CPUs may be bound to this VM.
-> > 
-> > [1] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
-> > 
-> > Change Log:
-> >    v15->v16:
-> >      * Rebase to e771ba98de25c9f43959f79fc7099cf7fbba44cc (Open 10.2 development tree)
-> >      * v15: https://lore.kernel.org/qemu-devel/20250812122829.204-1-alireza.sanaee@huawei.com/
-> > 
-> >    v14->v15:
-> >     * Introduced a separate patch for loongarch64 build_pptt function.
-> >     * Made sure loongarch64 tests pass.
-> >     * Downgraded to V2 for ACPI PPTT. Removed PPTT IDs as was not necessary.
-> >     * Removed dependency as it's been merged in the recent cycle.
-> >       -- 20250604115233.1234-1-alireza.sanaee@huawei.com
-> >     * Fixed styling issues and removed irrelevant changes.
-> >     * Moved cache headers to core/cpu.h to be used in both acpi and virt.
-> >     * v14: https://lore.kernel.org/qemu-devel/20250707121908.155-1-alireza.sanaee@huawei.com/
-> >     # Thanks to Jonathan and Zhao for their comments.
-> > 
-> >    v13->v14:
-> >     * Rebased on latest staging.
-> >     * Made some naming changes to machine-smp.c, addd docs added to the
-> >          same file.
-> > 
-> >    v12->v13:
-> >     * Applied comments from Zhao.
-> >     * Introduced a new patch for machine specific cache topology functions.
-> >     * Base: bc98ffdc7577e55ab8373c579c28fe24d600c40f.
-> > 
-> >    v11->v12:
-> >     * Patch #4 couldn't not merge properly as the main file diverged. Now it is fixed (hopefully).
-> >     * Loonarch build_pptt function updated.
-> >     * Rebased on 09be8a511a2e278b45729d7b065d30c68dd699d0.
-> > 
-> >    v10->v11:
-> >     * Fix some coding style issues.
-> >     * Rename some variables.
-> > 
-> >    v9->v10:
-> >     * PPTT rev down to 2.
-> > 
-> >    v8->v9:
-> >     * rebase to 10
-> >     * Fixed a bug in device-tree generation related to a scenario when
-> >          caches are shared at core in higher levels than 1.
-> >    v7->v8:
-> >     * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
-> >     * I mis-included a file in patch #4 and I removed it in this one.
-> > 
-> >    v6->v7:
-> >     * Intel stuff got pulled up, so rebase.
-> >     * added some discussions on device tree.
-> > 
-> >    v5->v6:
-> >     * Minor bug fix.
-> >     * rebase based on new Intel patchset.
-> >       - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-> > 
-> >    v4->v5:
-> >      * Added Reviewed-by tags.
-> >      * Applied some comments.
-> > 
-> >    v3->v4:
-> >      * Device tree added.
-> > 
-> > Alireza Sanaee (8):
-> >    target/arm/tcg: increase cache level for cpu=max
-> >    hw/core/machine: topology functions capabilities added
-> >    hw/arm/virt: add cache hierarchy to device tree
-> >    bios-tables-test: prepare to change ARM ACPI virt PPTT
-> >    acpi: add caches to ACPI build_pptt table function
-> >    hw/acpi: add cache hierarchy to pptt table
-> >    tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
-> >    Update the ACPI tables based on new aml-build.c
-> > 
-> >   hw/acpi/aml-build.c                        | 203 +++++++++-
-> >   hw/arm/virt-acpi-build.c                   |   8 +-
-> >   hw/arm/virt.c                              | 412 ++++++++++++++++++++-
-> >   hw/core/machine-smp.c                      |  56 +++
-> >   hw/loongarch/virt-acpi-build.c             |   4 +-
-> >   include/hw/acpi/aml-build.h                |   4 +-
-> >   include/hw/acpi/cpu.h                      |  10 +
-> >   include/hw/arm/virt.h                      |   7 +-
-> >   include/hw/boards.h                        |   5 +
-> >   include/hw/core/cpu.h                      |  12 +
-> >   target/arm/tcg/cpu64.c                     |  13 +
-> >   tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 516 bytes
-> >   tests/qtest/bios-tables-test.c             |   4 +
-> >   13 files changed, 723 insertions(+), 15 deletions(-)
-> >   
-> 
+> +            self._in_qmp_example = True
+> +
+> +        if not self._in_qmp_example:
+> +            self._validate_doc_line_format(line)
+> +
+> +        return line
+
+self._in_qmp_example is initialized to False at the beginning of a doc
+comment block, becomes True at the first '.. qmp-example::' line, then
+remains True until the end of the doc comment block.  This isn't quite
+right.  Consider qapi/control.json:
+
+    ##
+    # @qmp_capabilities:
+    #
+    # Enable QMP capabilities.
+    #
+    # @enable: An optional list of `QMPCapability` values to enable.  The
+    #     client must not enable any capability that is not mentioned in
+    #     the QMP greeting message.  If the field is not provided, it
+    #     means no QMP capabilities will be enabled.  (since 2.12)
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "qmp_capabilities",
+    #          "arguments": { "enable": [ "oob" ] } }
+    #     <- { "return": {} }
+    #
+    # .. note:: This command is valid exactly when first connecting: it
+    #    must be issued before any other command will be accepted, and
+    #    will fail once the monitor is accepting other commands.  (see
+    #    :doc:`/interop/qmp-spec`)
+    #
+    # .. note:: The QMP client needs to explicitly enable QMP
+    #    capabilities, otherwise all the QMP capabilities will be turned
+    #    off by default.
+    #
+    # Since: 0.13
+    ##
+
+ReST directives like '.. qmp-example::' and '.. note::' stop at the
+first non-blank non-indented line.  We need to change
+self._in_qmp_example from True to False at such a line.
+
+> +
+> +    def _validate_doc_line_format(self, line: str) -> None:
+> +        """
+> +        Validate documentation format rules for a single line:
+> +        1. Lines should not exceed 70 columns
+> +        2. Sentences should be separated by two spaces
+> +        """
+> +        full_line_length = len(line) + 2  # "# " = 2 characters
+> +        if full_line_length > 70:
+> +            # Skip URL lines - they can't be broken
+> +            stripped_line = line.strip()
+> +            if (stripped_line.startswith(('http://', 'https://', 'ftp://')) and
+> +                ' ' not in stripped_line):
+
+Avoidable long line:
+
+               if (stripped_line.startswith(('http://', 'https://', 'ftp://'))
+                   and ' ' not in stripped_line):
+
+But I'd prefer
+
+               if re.match(r' *(https?|ftp)://[^ ]*$', line):
+
+instead.
+
+> +                pass
+> +            else:
+> +                raise QAPIParseError(
+> +                    self, f"documentation line exceeds 70 columns "
+> +                    f"({full_line_length} columns): {line[:50]}..."
+
+The resulting error message is rather long, the meaning of the
+parenthesis is not immediately obvious, and quoting the tail of the line
+doesn't feel worthwhile.  I think "documentation line exceeds 70
+columns" or "documentation line longer than 70 characters" suffices.
+
+> +                )
+> +
+> +        single_space_pattern = r'[.!?] [A-Z0-9]'
+
+This pattern matches possible sentence ends that lack a second space:
+sentence-ending punctuation, single space, capital letter or digit.
+
+The pattern avoids common false positives in the middle of a sentence,
+such as "i.e." here:
+
+    # Describes a block export, i.e. how single node should be exported on
+                                ~~~~~
+
+Good.  There's still a risk of false positives, though: a capital letter
+need not be the start of a sentence, it could also be a proper noun, or
+the pronoun "I".  I figure the latter is vanishingly unlikely to occur
+in technical documentation.  Example of the former:
+
+    # @format: Extent type (e.g. FLAT or SPARSE)
+
+You filter these out below.
+
+Digits are even more ambiguous than capital letters: they can occur in
+the middle of a sentence as much as at the beginning.  Do they occur?
+
+    $ git-grep '\. [0-9]' \*.json
+    docs/interop/firmware.json:#                of SMRAM. 48MB should suffice for 4TB of guest-phys
+
+Yes, but only in a QAPI schema we don't actually parse.  We should
+probably update these to conform to conventions.  Not today.
+
+Let's keep the digits in the pattern for now.
+
+The pattern misses sentence ends like this one:
+
+    # @children: Information about child block nodes. (since: 10.1)
+                                               ~~~~~~~
+
+As far as I can tell, all misses are before "(".  Let's simply add "("
+to the pattern: [A-Z0-9(].
+
+> +        for m in list(re.finditer(single_space_pattern, line)):
+> +            left = line[0:m.start() + 1]
+
+@left is the line left of the match plus the first character of the
+match, i.e. the punctuation character.
+
+> +            # Ignore abbreviations and numbered lists
+> +            if left.endswith('e.g.') or re.fullmatch(r' *\d\.', left):
+> +                continue
+
+Skip if we matched "e.g. " or a numbered list item.
+
+We saw above why we need the former: "e.g. FLAT".
+
+We need the latter for
+
+    #     1. The guest may be in a catastrophic state or can have
+    #        corrupted memory, which cannot be trusted
+
+Whenever I see regexp match followed by string split followed by more
+matching, I wonder whether a single match would do.  Here's my try:
+
+        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
+        for m in list(re.finditer(single_space_pattern, line)):
+            if not m.group(2):
+                continue
+
+This uses a common regexp trick: match exception | ... | (wanted), then
+check whether the group containing wanted matched.
+
+> +            raise QAPIParseError(
+> +                 self, f"documentation has single space after sentence "
+> +                 f"ending. Use two spaces between sentences: "
+> +                 f"...{line[m.start()-5:m.end()+5]}..."
+
+Again, the error message is rather long:
+
+    ../qapi/block-core.json:162:1: documentation has single space after sentence ending. Use two spaces between sentences: ...ormat. If e...
+
+The error message consists of two parts: the complaint, and a hint on
+how to fix it.
+
+We can separate the two by embedding a newline, like expr.py's
+check_keys() does:
+
+            raise QAPIParseError(
+                 self,
+                 "documentation has single space after sentence ending"
+                 "\nUse two spaces between sentences: "
+                 f"...{line[m.start(2)-5:m.end(2)+5]}...")
+
+This results in
+
+    ../qapi/block-core.json:162:1: documentation has single space after sentence ending
+    Use two spaces between sentences: ...ormat. If e...
+
+Better, but the "...ormat. If e..." part is still odd.
+
+Ideally, the error message location would point right to the trouble
+spot, like so:
+
+    ../qapi/block-core.json:162:47: bla bla
+
+Sadly, it points to the beginning of the line instead: "162:1:" instead
+"162:47".  This is because the error is reported for the parser's
+current position, and the current position is the beginning of the
+token, i.e. the '#' starting the comment.
+
+I can offer a disgusting hack:
+
+            # HACK so the error message points to the the offending spot
+            self.pos = self.line_pos + 2 + m.start(2) + 1
+            raise QAPIParseError(
+                 self, "Use two spaces between sentences")
+
+This results in
+
+    ../qapi/block-core.json:162:47: Use two spaces between sentences
+
+Emacs then takes me right to the offending single space.
+
+> +            )
+>  
+>      @staticmethod
+>      def _match_at_name_colon(string: str) -> Optional[Match[str]]:
 
 
