@@ -4,66 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D104CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 17:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F80CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 18:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEWaE-000262-Aw; Thu, 30 Oct 2025 13:37:10 -0400
+	id 1vEWw3-0006CF-S9; Thu, 30 Oct 2025 13:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEWaC-00025p-Kc
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:37:08 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEWZx-0003uR-V4
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:37:08 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E689280928;
- Thu, 30 Oct 2025 20:36:38 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:861::1:2b] (unknown
- [2a02:6bf:8080:861::1:2b])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id aajZ9N0GqCg0-xjtNbcHp; Thu, 30 Oct 2025 20:36:38 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761845798;
- bh=ZFvmyumDTonWef7FF7L4UhOqzXSfecDzFKGEtqBHGB4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=jvQr7/gFAcZrkZMvBC3LS8u5LeByOaajfQ0Fi5nsKGlJaMkY2bv90AtSd/4tYmITb
- kYDq4tGiLnPnyXrtqWZe1JtoCVzV64sBEm1VL+gPHzhvWtiCbaySBinqYFF/8vgDEj
- lQeyGFiI5fqQKq60VEbNE+tf1rVY7lj3VOErmTBE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0ded12d3-c7b6-4fec-98e7-ea9fda425d36@yandex-team.ru>
-Date: Thu, 30 Oct 2025 20:36:36 +0300
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vEWw0-0006Bk-B7
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:59:40 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vEWvq-0006KG-Ux
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 13:59:38 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4298a028de6so1534886f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 10:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761847161; x=1762451961; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4YJiafowLr1nciQHG7oZHuGbx0cNEUbbZ5g/s5gWKCE=;
+ b=egRUeSoO2aoVF0D5NX/W3mPDGpJPX2uk5T4TjGYrcQdMK95n+fLk37lejmK4pFiDJp
+ IPQkmpwUfJG0NQynYw3jY/QeJcztNELesR3xCE0p5cU/Z0VZkiiLuuTz1r8L04rXCpEr
+ oGU5NOARuxc0FU4/6ar8ASY4d3Z+KycH26zsVZaavyBbFqeOLwG7f33EFg4XalhwmXR8
+ rn6ScJEBWv7OhaHFqbg3jJ/wF4Mq4esIcowAfxDSoxBedGWvdTM4P3Ng4lSLhLza5d3h
+ GbNN4RwtZYpnQvIkVdV3yo3zr4FJQzJRJCy1yAe8NNne6jjL8KDeQmHDHiN2MEkGrSZk
+ EOYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761847161; x=1762451961;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4YJiafowLr1nciQHG7oZHuGbx0cNEUbbZ5g/s5gWKCE=;
+ b=JdjdOqM8uPKM2zVKi+mjQM83bIspsfqPLxR6+vCxF5SpbjTuWg6Pkcp4cJkncVseoo
+ TNwPH7GV/mBf2Xk+73E5KMdNgzDPWb8QL25V/9JJpyFEKQt0k4QD+u6Pp46Fz6rGdxIN
+ 5lu7CpHuBVrmA0YR51PQ6i0qQXNv2T/DurzPqG0A3zLp3/wGaNfwIKdfst9uDVw3CVhs
+ ZYNsKXgxfMNyeNbc7kAeX/G+Yzd9/lCMv58cwgwbYVYYA/RED9QsFdy/yibC3ehEgU/+
+ WZH2NrHyfY+/hNgX95MHs6leVB69fhiJ0Y1D4WIpZinf03lm7IzYR9HxNYoqrv/y0y17
+ d65w==
+X-Gm-Message-State: AOJu0YwUnEuYQ7mj+mVtFOo09EDmQFYKSdNB6mdpfPxkmKtDX004GJ0W
+ AclyNatXYiViYbDYY6+FYR4pUzzxluEc8ggy3uMIA81LH96kFZkKfgHJe5diMpTOzxM=
+X-Gm-Gg: ASbGnct4papaDcZga+fMpkLR2JNR9EjD3uJUW4NWKjtW3IP+EgzRc/y14rddKr9TXLB
+ k0pr6fjvIYzdxQ3QU5tQW+lgQmh/OoPR4VqbBWHYcWOKLtEszWYUzm9BuD7uTJMdDuEjrbUb5R3
+ QqwtmoVkOrezZTbAqK6hghy+8DRN8yHQ6ALLsh9JgY+RWDgwDuJ4q4sfDqP0rpjYrn92ayIP0+q
+ dsJNyJE0iQkoDMk+d0ZdCsyKrNnta8Q+pyQmlc7Ewk1I+nbi0Ky8NtqjVH54BqW5t2C0yglPSpr
+ Psra4csTgHX56h3Zf3uxSdwrjSGgDu8N0Le/GGDSws+mMYVaGAzrbXmHlIXx7r0BV45EAXb5uQj
+ z8QYI9dx/bB4rb5bXX77OIcr/QKICJPtNosRXfG30M/8eC6iWfGjtpWo/x8hkVMKuHHsBPktoDg
+ 1Z
+X-Google-Smtp-Source: AGHT+IE5nPMHbWAccXMdJaaPXpPbJ2WasQHuCXHZEJW1POFMjCW9AXagIMPWdzmNYeidbIIeqJb0dw==
+X-Received: by 2002:a5d:5885:0:b0:429:bac1:c7f4 with SMTP id
+ ffacd0b85a97d-429bcd04fa9mr583885f8f.9.1761847161542; 
+ Thu, 30 Oct 2025 10:59:21 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952df682sm33055700f8f.43.2025.10.30.10.59.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Oct 2025 10:59:20 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1EDF65F80C;
+ Thu, 30 Oct 2025 17:59:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 0/5] virtio-gpu: Force RCU when unmapping blob
+In-Reply-To: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ (Akihiko Odaki's message of "Wed, 29 Oct 2025 15:12:44 +0900")
+References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+User-Agent: mu4e 1.12.14-dev2; emacs 30.1
+Date: Thu, 30 Oct 2025 17:59:20 +0000
+Message-ID: <87jz0ctgnb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 00/22] migration: convert vmstate_load/save_state
-To: Peter Xu <peterx@redhat.com>
-Cc: armbru@redhat.com, qemu-devel@nongnu.org, Fabiano Rosas
- <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20251028231347.194844-1-vsementsov@yandex-team.ru>
- <aQOc7ogTLqs8iML0@x1.local> <aQOeHqILFfBdlhJb@x1.local>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aQOeHqILFfBdlhJb@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,79 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.10.25 20:19, Peter Xu wrote:
-> On Thu, Oct 30, 2025 at 01:14:22PM -0400, Peter Xu wrote:
->> On Wed, Oct 29, 2025 at 02:13:24AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>> Hi all!
->>>
->>> That's a proof-of-concept for converting vmstate_load/save_state
->>> to have boolean error value, to fixup this analysis
->>>    https://lore.kernel.org/qemu-devel/aQDdRn8t0B8oE3gf@x1.local/
->>> in code.
->>>
->>> As many of .get / .set handlers call vmstate_load/save_state,
->>> let's convert them too, it not too much.
->>>
->>> And finally, while touching each file, let's also use
->>> new pre/post _errp() APIs.
->>>
->>> So, this series propagate a lot of errors through errp, which
->>> were simply printed out before.
->>>
->>> Why it is an RFC:
->>> 1. I didn't yet double check the accuracy of all patches
->>> 2. Maybe, commit messages need to be more detailed, maybe they
->>> need more arguments about correctness of the change
->>> 3. Maybe, it's better first merge new generic interfaces, and
->>> than send per-maintainer small series, to avoid this huge
->>> series, depending on many maintainers.
->>>
->>> So, I don't include in CC many maintainers now, to get a first
->>> look from Markus and Peter.
->>
->> It's still good to collect more opinions on especially rfc series, even if
->> the list doesn't need to include maintainers for each device. I added
->> Fabiano and Dan too.
->>
->>>
->>> What do you think?
->>
->> In general.. I liked it. :) Thanks for trying it.
-> 
-> Oh wait, so this is still not the full list of what needs to be done?
-> After I applied your patchset, I still see:
-> 
-> $ git grep -E "\.get | \.set " | wc -l
-> 214
-> 
-> Some of them are outliers but most of them look not.. :(
-> 
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-I think, they are qdev properties, not VMStateInfo. In this series I do
-remove old .get / .set interfaces, and compilation still works for me..
+> Based-on: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
+> ("[PATCH] rcu: Unify force quiescent state")
+>
+> Unmapping a blob changes the memory map, which is protected with RCU.
+> RCU is designed to minimize the read-side overhead at the cost of
+> reclamation delay. While this design usually makes sense, it is
+> problematic when unmapping a blob because the operation blocks all
+> virtio-gpu commands and causes perceivable disruption.
+>
+> Minimize such the disruption with force_rcu(), which minimizes the
+> reclamation delay at the cost of a read-side overhead.
+>
+> Dmitry, can you see if this change makes difference?
 
-Maybe some modules are not included into my build config? Unfortunately yes:
+Also works with the blob test:
 
-> git grep -A 5 'VMStateInfo .* = {' | grep '\.get' | awk '{print $1}' | sort | uniq
-hw/usb/redirect.c-
-target/alpha/machine.c-
-target/arm/machine.c-
-target/avr/machine.c-
-target/hppa/machine.c-
-target/microblaze/machine.c-
-target/mips/system/machine.c-
-target/openrisc/machine.c-
-target/ppc/machine.c-
-target/sparc/machine.c-
+  =E2=9E=9C  ./pyvenv/bin/meson test --setup thorough func-aarch64-gpu_blob
+  ninja: Entering directory `/home/alex/lsrc/qemu.git/builds/all'
+  [1/6] Generating qemu-version.h with a custom command (wrapped by meson t=
+o capture output)
+  1/1 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-gpu_=
+blob        OK              0.37s   1 subtests passed
+
+  Ok:                 1=20=20=20
+  Expected Fail:      0=20=20=20
+  Fail:               0=20=20=20
+  Unexpected Pass:    0=20=20=20
+  Skipped:            0=20=20=20
+  Timeout:            0=20=20=20
+
+  Full log written to /home/alex/lsrc/qemu.git/builds/all/meson-logs/testlo=
+g-thorough.txt
+  =F0=9F=95=9917:57:38 alex@draig:qemu.git/builds/all  on =EE=82=A0 virtio-=
+gpu/next [$!?]=20
+
+so a Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org> from me.
 
 
-That's 10 more commits. And the whole series would be 32, involving many people..
+>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+> Akihiko Odaki (5):
+>       futex: Add qemu_futex_timedwait()
+>       qemu-thread: Add qemu_event_timedwait()
+>       rcu: Use call_rcu() in synchronize_rcu()
+>       rcu: Wake the RCU thread when draining
+>       virtio-gpu: Force RCU when unmapping blob
+>
+>  include/qemu/futex.h          |  29 ++++++--
+>  include/qemu/rcu.h            |   1 +
+>  include/qemu/thread-posix.h   |  11 +++
+>  include/qemu/thread.h         |   8 ++-
+>  hw/display/virtio-gpu-virgl.c |   1 +
+>  util/event.c                  |  34 ++++++++--
+>  util/qemu-thread-posix.c      |  11 +--
+>  util/rcu.c                    | 153 ++++++++++++++++++++++++------------=
+------
+>  8 files changed, 163 insertions(+), 85 deletions(-)
+> ---
+> base-commit: ee7fbe81705732785aef2cb568bbc5d8f7d2fce1
+> change-id: 20251027-force_rcu-616c743373f7
+>
+> Best regards,
 
-I think, I'll resend only migration/* commits as "part I", except for 20/22 (to save
-old interfaces too), and then other parts in separate smaller series.
-
-
--- 
-Best regards,
-Vladimir
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
