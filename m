@@ -4,118 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF231CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E401CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vENfw-0006iw-Nl; Thu, 30 Oct 2025 04:06:29 -0400
+	id 1vENhd-0007Xt-UA; Thu, 30 Oct 2025 04:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vENfu-0006ia-U8; Thu, 30 Oct 2025 04:06:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1vENhb-0007XC-6E; Thu, 30 Oct 2025 04:08:11 -0400
+Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vENfo-0001nj-Hx; Thu, 30 Oct 2025 04:06:24 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TM6j8Z004792;
- Thu, 30 Oct 2025 08:06:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LIqUZp
- YSn32mcNHijQiUkJ/rYcahiymgdrwlBpFiwAo=; b=DQwDTvV50zg5L7Lwn9Iplk
- g4ZLmKfwaVVF99jmmXKMOYuycC1Q8tTZG5xYFvXCXAcJeW1AjG2zgPepgNfS7l/Y
- U55j07XwE3RDdPSqjY7d1qiGQBhaN3ouSShnFXIIzk01dm9ARgUHelj3XsnXdAbl
- QlsmfRiLPCIuVAzlFJsH4L8t43vzXOp65x6IEzF6SWyiMp6PUABEeZEvrBxrjMUH
- EVyUVVk4kYYRuyMW/4yHKkR2CzJRUFo0pDF3hDxs8nUhqcujnjaWRUkkRiznEOjb
- bkZtUU/tvEBUToWhmiG/njEBZlOekPq5l/qAq5CeQjG2GApub15pDNSP0M5Pk1VQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34a8qaga-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:06:13 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59U84fH4028700;
- Thu, 30 Oct 2025 08:06:13 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34a8qag5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:06:13 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U5e8nT023839;
- Thu, 30 Oct 2025 08:06:12 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33vx7g62-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:06:12 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59U86B9r3015190
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Oct 2025 08:06:11 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4DE2B58064;
- Thu, 30 Oct 2025 08:06:11 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A60095805A;
- Thu, 30 Oct 2025 08:06:09 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Oct 2025 08:06:09 +0000 (GMT)
-Message-ID: <31effff7-cdff-4ddb-a772-3849941af587@linux.ibm.com>
-Date: Thu, 30 Oct 2025 13:36:08 +0530
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1vENhY-0001uD-DM; Thu, 30 Oct 2025 04:08:10 -0400
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 048DC140018F;
+ Thu, 30 Oct 2025 04:08:04 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-11.internal (MEProxy); Thu, 30 Oct 2025 04:08:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1761811683; x=
+ 1761898083; bh=/3QYjGTp1OFaxWBx8XJ1huB8mMWVb66+F/yey7XPPJo=; b=l
+ qBavK0Dpl4aPa3YLkBaSo1dNRMP5VVmmeXjxrNV5JjiK2J2WCd4GrIZrvCWxlGPY
+ EMJqUwQ0O2MnsejTLE+yHNF2+auN3tNcmlh8CmXk1ZDzgJSywW89wSrqpMPbqn1U
+ +38jme3tCNuGy0ItMK0vaX+7INHa8VbILhU3GVW4QAHhYdaQB72nI+6YYNVuiwUh
+ Zk+dAJLqIlaKxig+tcJ4eBMBms9SpK0n0II0BtOHyF0E7dszy/oSvw6ZKZ7EdcV2
+ pZIf+QqSOGGvJYL9zJPkc+MwHq9OuQkpdC0Rv//GVtcROU2HH3JO5TpxNCyXHREa
+ jFlPQI7wKE0O2316fHOwA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1761811683; x=1761898083; bh=/3QYjGTp1OFaxWBx8XJ1huB8mMWVb66+F/y
+ ey7XPPJo=; b=U5G8aeMt1ZIurQofruJauc2WuDAeIzIpACIeaa33zWRoRpL+41A
+ Q2ZpwCHaG6pVUYutWDGXLQGwWMlmiQ9rNtqmOnRocJqYVImtFXGqgG2yclb8X0Co
+ bvY+s2D/B5GR7aQo4TwqjmoJjJjTKPbjVr63Ta659qrW8Uhq0uusWrPHXn5MIyiZ
+ dbLJu34oNgsaf7Rk2EBVCEWiQOrXHzoCbBWp5etXWnMMJ0yJr5I6S+Fda+BxwUzB
+ k5QgzU0VhQjutGqCw4xBzVcAA8hy3oxEevgh0DbsP/QBbY28hOgoC/4+QQxB65OP
+ VWSxWOlgFDtULz92opYMKdV/78Uuj7RsELQ==
+X-ME-Sender: <xms:4xwDaX3G61vcfocEdOxKcfOpCJnzdCD0fAh5wOPf3O-NGzTVAtU_3w>
+ <xme:4xwDaUAZLa8fL-6tbyBboFKU8qQhzJcg1I2IzQvOv426A2AkTRAMm0QWP4wRcoT9j
+ 0mTTJ0LbouPfNDRbor5HU0Kq6AQjbjM0gUu3_lZ8RjnRSf0rOha61g>
+X-ME-Received: <xmr:4xwDaaOBVNlI8gH-qEZwQGQR1ximTDiXfDPQsexEFGUmHgPxA1BUANIsD4rWXv7O1pkxFeASYqx_SoWvVuO6EpEIsRcgnDPCE6w_lAEmhKEr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeitdelucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeev
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtoheprghlrghnrdgruggrmhhsohhnsehorhgrtghlvgdrtghomh
+ dprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthht
+ ohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepkhgsuhhstghhsehkvg
+ hrnhgvlhdrohhrghdprhgtphhtthhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdho
+ rhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:4xwDaRb_eppZSK4waG61PaS15aUXVh1ymSNmN73vC8xVXJ2-DjgPJw>
+ <xmx:4xwDaRvQwWfeZVhlbLAuwTla8mBVcSl2oK2ubxyy6smtxfNdEf4e_A>
+ <xmx:4xwDabOs1_cF4y_z0Yy-NN4F0RKKkPos0cn_eZQUrbSR7YihZym8VQ>
+ <xmx:4xwDaQ55MUpMpk-I2Ble0HCwnGS_EFND-m43fKymAmd_j5QmrWo4Qg>
+ <xmx:4xwDaQ66b4kboqpcYYOVeGfQLEjtZAs3aHKibsLjbxIVeYB2uCvXfi8P>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Oct 2025 04:08:02 -0400 (EDT)
+Date: Thu, 30 Oct 2025 09:08:02 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Alan Adamson <alan.adamson@oracle.com>
+Cc: qemu-devel@nongnu.org, foss@defmacro.it, kbusch@kernel.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 0/2] Add support for NVMe Namespace and Boundary Atomic
+ Parameters
+Message-ID: <aQMc4vSkEgsjAaYY@AALNPWKJENSEN.aal.scsc.local>
+References: <20250602230458.1073148-1-alan.adamson@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/ppc/pegasos2: Add /chosen/stdin node with VOF
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <642ef77674d08ba466e7a2beb4858ab1e67776ae.1761346145.git.balaton@eik.bme.hu>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <642ef77674d08ba466e7a2beb4858ab1e67776ae.1761346145.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=DYkaa/tW c=1 sm=1 tr=0 ts=69031c75 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=65ho8ntZO24EVziD3ksA:9
- a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: IALbCea5llIRDjBX-BoaViPdnsZaDLGB
-X-Proofpoint-ORIG-GUID: ZmvehMgthqJKqQ2WlZE5UriTJSt7w9rj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfXxZG6AGSk5H0/
- 7FtU5At3Krha+EDhMa5Woes8Qf7J9xdGgrQJ93YNg97Hkm6yn9xXxwf699xgZHKP1grav+/B9jT
- 2RFbj9POrEUF7vSfBuNfLdM7xF5fxgzpVux9rFnV6ZVeJxnQGSh4aldVA7oaAXnFdTnllUfyNGL
- ta3HM9/2uBvJQrOa0Pge0+3O9mlX1YMGWTSJI7viZPqORY0M+Lx+3aeEu/Tnbi67TxPQ40ung/u
- AY0+FEU8eMsGPfmgQ/J5Q/kkEGSc9AIB+cUZQDeBZVAgdqthBoNwOl3uHm1rVggBtMOcJVb6MNX
- 18m/99HS5x6XYRdil71zByidlg8vxiKCHHIS7hIM9KVEgz3XB67FjtIG46ETJdVFwslXINlNLyN
- tyLdp3Pdd4YIWCgWjeCFJ0HKj9HS5g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="a9I+gAIDwFAgIVLM"
+Content-Disposition: inline
+In-Reply-To: <20250602230458.1073148-1-alan.adamson@oracle.com>
+Received-SPF: pass client-ip=103.168.172.153; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,29 +111,96 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--a9I+gAIDwFAgIVLM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 10/25/25 05:01, BALATON Zoltan wrote:
-> Some very old Linux kernels fail to start if /chosen/stdin is not
-> found so add it to the device tree when using VOF.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/ppc/pegasos2.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> index 93696ed381..21299dde3c 100644
-> --- a/hw/ppc/pegasos2.c
-> +++ b/hw/ppc/pegasos2.c
-> @@ -565,6 +565,7 @@ static void pegasos_machine_reset(MachineState *machine, ResetType type)
->       qemu_fdt_setprop(fdt, "/chosen", "qemu,boot-kernel", d, sizeof(d));
->   
->       vof_build_dt(fdt, pm->vof);
-> +    vof_client_open_store(fdt, pm->vof, "/chosen", "stdin", "/failsafe");
+On Jun  2 16:04, Alan Adamson wrote:
+> This patch set is a follow on to commit ebd1568fc732 ("hw/nvme: add atomic
+> write support").  These patches introduces two updates to the NVMe subsys=
+tem in QEMU,
+> both aimed at enhancing atomic write support for namespaces.
+>=20
+> hw/nvme: enable ns atomic writes
+> --------------------------------
+> This patch introduces support for namespace-specific atomic write paramet=
+ers: NAWUN
+> and NAWUPF, as defined by the NVMe specification. The atomic parameters a=
+re
+> utilized to guarantee that writes conforming to these boundaries will be =
+atomic,
+> improving data integrity for namespaces that require atomic operations.
+>=20
+> The patch introduces new NVMe QEMU parameters:
+> 	atomic.nawun (default: 0)
+> 	atomic.nawupf (default: 0)
+> 	atomic.nsfeat (default: off)
+>=20
+> The addition of atomic.nsfeat sets the Namespace Supported Atomic Boundar=
+y &
+> Power (NSABP) bit in the Identify Namespace Data Structure, enabling name=
+space-specific
+> atomic write features. The patch also ensures that atomic write behavior =
+adheres to the
+> NACWU and NAWUPF parameters.
+>=20
+> hw/nvme: add atomic boundary support
+> ------------------------------------
+> The second patch expands on the atomic write capabilities by adding suppo=
+rt for atomic
+> boundary parameters: NABO, NABSN, and NABSPF. These parameters define the=
+ atomic
+> boundary size for writes and ensure that any writes crossing these bounda=
+ries are
+> treated atomically, based on the AWUN and AWUPF values.
+>=20
+> The following parameters are added:
+> 	atomic.nabo (default: 0)
+> 	atomic.nabsn (default: 0)
+> 	atomic.nabspf (default: 0)
+>=20
+> If the atomic boundary is crossed, the writes are guaranteed to be atomic=
+ only if their
+> size does not exceed the values defined by AWUN and AWUPF. This ensures t=
+hat larger
+> writes crossing atomic boundaries are not subject to partial updates, the=
+reby improving
+> the robustness of atomic operations across boundaries.
+>=20
+> See the NVMe Specification for more information.
+>=20
+> Alan Adamson (2):
+>   hw/nvme: enable ns atomic writes
+>   hw/nvme: add atomic boundary support
+>=20
+>  hw/nvme/ctrl.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/ns.c   | 74 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/nvme.h | 14 ++++++++++
+>  3 files changed, 164 insertions(+)
+>=20
+> --=20
+> 2.43.5
+>=20
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 
->       vof_client_open_store(fdt, pm->vof, "/chosen", "stdout", "/failsafe");
->   
->       /* Set machine->fdt for 'dumpdtb' QMP/HMP command */
+Thanks Alan; merged!
+
+--a9I+gAIDwFAgIVLM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmkDHOEACgkQTeGvMW1P
+DemkCggAs33D1hdci6BMyvIRvjFMpoheNbyNad12Ho4kVy06n5Oty1poputcUBFJ
+qoUbrnz4oDpxJkQe7xNB9e+qmZG56agwEySzM88fdK76Jl4nPp0htPnPVPO0NTci
+hcROAaU9buiwVmSSp7D9Zmj7G9cESSPhjAE6039Fm0A2Yi6Q2HYIUJp4YX2E4s+b
+miNQ+OIrQDrY7a7eJrs9OUtPzcoUmDEOdlm2xjeOdxUzHJuJWKP/wj7BjlbkgkyH
+uDAr4DNez11xrwOnkts3b4PcEvo/7y0R8GR3Oj9PmzRUJV0rInLSIVuAewqIQmcE
+Jf/ZIsNMzQPXG3dswnPBfzu+XAbIFg==
+=cl3C
+-----END PGP SIGNATURE-----
+
+--a9I+gAIDwFAgIVLM--
 
