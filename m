@@ -4,96 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28C6CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DAA0CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vETZa-0001Q1-Gz; Thu, 30 Oct 2025 10:24:18 -0400
+	id 1vEThg-0004C0-Ul; Thu, 30 Oct 2025 10:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vETZT-0001Mn-TW
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:24:13 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vETZL-00068R-Uq
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:24:11 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-290dc63fabbso10945535ad.0
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 07:24:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761834238; x=1762439038; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2qhmL40yJuYA7VTug2A9/droT3+foPeGGcISVtBeqCo=;
- b=eW6YF6Vl7R2l8rOG1c0ncuA0CFxX30fii8kDpeNDmTemxXktOnvJrePE6ZY6ylISgH
- cljFQsqffugtxf2obrlflCINmuOWWYHG7C4ic/OpYjLciKIobaYHIB/p7bgIP9b5+D+d
- IgbxnXHk7+n7e4R2YGxpkzD7I90/IaPoEoxcejdt1nzpvyEG03embWVjlkABK2IeaCQT
- OqzGXRUTz5s1g8WDzXD+GMPS6qDCcwZOTjOCT8iZHu4IUtcoSX6MOF/H5RsqTgPtuhKC
- 7NKKf82Rat71owgp4Ue+vDff0xsY7SIRhNeM5MziRhATYUh7g9NZOy6djTvZJvsi/8GO
- f55Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761834238; x=1762439038;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2qhmL40yJuYA7VTug2A9/droT3+foPeGGcISVtBeqCo=;
- b=CqfiNhLWagTm4xv4lItvGmFWNuZ6P6ZhQcVsHPVBzFH07NUpwcNghL4D99NxQErSJ2
- J9seqVK0EwRa0AiKNVWa2czFbK6fMFX/bgb2lUKvix606LbcFC/NpS7lvzaqCPJ4HMKA
- rhCHOJnBdOwgcl/OrPraJ+NhSG+XCeZJMs8uDrBColGEataxSvz2chAoV6zsw+maCarP
- McZx++yHSMYy1zCsj3S5LhD79JsSUzJ4JoxI00MqANRDRzdJmLIRRGxvFh2YRKNsKSMv
- gxLRSw8erD78QNG4We+3G7xTBZ8CQac8v/VH+5bCV4bHa+GNJiGDL31r04nkieomeqdM
- GvaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUydZd0RE+r00QTjJS9KG2Qyo0VaLWifF6rLxbT+7Fn9rIrUoMgI+6/XCWYHqhH7iRX8ki7l1lJ7gF@nongnu.org
-X-Gm-Message-State: AOJu0YzvUGTpVOpsKZ7TiHQX1HepB3xNnz7HDaLlVXR0sCncz3kqFxr5
- pA5fsW7BoWL7Cte9gWNZPy8tIdzCTdpYWDr165Pzl6pPgnWgSwT8QCdcKNycvfdFeG00UCWIiPg
- gYZ0JZGY=
-X-Gm-Gg: ASbGncsyCfDuqCX1TxJgWpzb0SwNOLG8m5zU9A40GSw9590ltfOczH4fWYESxeZn07C
- Tn4dM3FclRqCrOF5eNgIlw8xPmXWnLgaU+FYpskR6o5RtNWTfThq7MP6X5INtBiIa2015NCiP1M
- R0eBGLnIDJ6Ob7/Kojlocta4JrGyYS4d7UgmlFVdUCHwX0q47lr4PRaGV3KUFmi6GbjxiXkPh4N
- +WH/Wp0kwvHm6cTEayVROPvhAOB2NsMXnYYsRWQRmD+ZU6MVEqAYNGBIZnbbqVd29t1lS6oIMiK
- Lq1q9yIqHMYb79QESki8wd5rJV/N9toijmmsSnbcnhPeyTM3GruYLyHl1xu0ELJKmbsJ3lbLUFN
- G/LpH21Nd6I0qrltLKU660YPs5L72ku6rBVokCo59j8SHmaK/KZok6gDDnallvVP8ZE6jheyu4/
- hO0X+IrxjMTe2jMssmihaO+F0=
-X-Google-Smtp-Source: AGHT+IFuwKo04u9v0JNDnnu0lw8LLMTDxx7C5hMRIO22lCjQU5IfvCCWveWeiXaY9m3O8KUM2m2QRw==
-X-Received: by 2002:a17:903:1a4e:b0:246:80b1:8c87 with SMTP id
- d9443c01a7336-294deef8844mr94161415ad.43.1761834229801; 
- Thu, 30 Oct 2025 07:23:49 -0700 (PDT)
-Received: from [192.168.68.110] ([187.101.65.79])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29498d0c414sm189617475ad.44.2025.10.30.07.23.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 07:23:49 -0700 (PDT)
-Message-ID: <8a1ee6f6-0198-4a6c-b4db-180ede88187f@ventanamicro.com>
-Date: Thu, 30 Oct 2025 11:23:44 -0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEThX-0004Aq-2b
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:32:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEThP-0007UL-5r
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:32:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761834733;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+NrDvS6Aotp/xW8hVc1NW6LHl5SmyHTm1TR8vdFNRDg=;
+ b=D/W4XAIQ9w/Vc1Plu120XzEu2KYEk0Rr1LV5pEB5+C+jhwC8grjXlUMMHSPx4JQs07KQqL
+ PpWx2HO4ZMdg2SpOF4NpButWYlLOtaxUiBw+9AEMR6z/YmyB1UOcyPFcS8x2al/DjkdVCE
+ kaBzvcBtWYbMvLdLUJ2lzyYnUpB30vY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-LMV_zpjcME60hm6UU_ZlcQ-1; Thu,
+ 30 Oct 2025 10:32:08 -0400
+X-MC-Unique: LMV_zpjcME60hm6UU_ZlcQ-1
+X-Mimecast-MFC-AGG-ID: LMV_zpjcME60hm6UU_ZlcQ_1761834727
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25CFA1955E95; Thu, 30 Oct 2025 14:32:07 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.122])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5F328180057C; Thu, 30 Oct 2025 14:32:05 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH] tests/functional/aarch64/test_device_passthrough: Fix
+ warnings from pylint
+Date: Thu, 30 Oct 2025 15:32:03 +0100
+Message-ID: <20251030143203.297692-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv: riscv-iommu: Don't look up DDT cache in Off and
- Bare modes
-To: frank.chang@sifive.com, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-References: <20251028085032.2053569-1-frank.chang@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20251028085032.2053569-1-frank.chang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,63 +80,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Thomas Huth <thuth@redhat.com>
 
+Remove unused imports, write constants with capital letters and make
+sure that the code uses the right indentation / formatting.
 
-On 10/28/25 5:50 AM, frank.chang@sifive.com wrote:
-> From: Frank Chang <frank.chang@sifive.com>
-> 
-> According to the RISC-V IOMMU specification:
-> 
-> * When ddtp.iommu_mode is set to Off, there is no DDT look-up, and an "All
->    inbound transactions disallowed" fault (cause = 256) is reported for any
->    inbound transaction.
-> 
-> * When ddtp.iommu_mode is set to Bare, there is no DDT look-up, and the
->    translated address is the same as the IOVA, unless the transaction type
->    is disallowed (cause = 260).
-> 
-> In the current implementation, the DDT cache is incorrectly looked up
-> even when ddtp.iommu_mode is set to Off or Bare. This may result in
-> unintended cache hits.
-> 
-> Therefore, the DDT cache must not be looked up when ddtp.iommu_mode is
-> set to Off or Bare. For other modes, software is required to issue cache
-> invalidation commands before any inbound transactions.
-> 
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> ---
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ .../aarch64/test_device_passthrough.py        | 26 ++++++++++++-------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/riscv/riscv-iommu.c | 13 +++++++++----
->   1 file changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index b33c7fe3259..95db811f125 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1290,13 +1290,18 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
->           .devid = devid,
->           .process_id = process_id,
->       };
-> +    unsigned mode = get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
->   
->       ctx_cache = g_hash_table_ref(s->ctx_cache);
-> -    ctx = g_hash_table_lookup(ctx_cache, &key);
->   
-> -    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
-> -        *ref = ctx_cache;
-> -        return ctx;
-> +    if (mode != RISCV_IOMMU_DDTP_MODE_OFF &&
-> +        mode != RISCV_IOMMU_DDTP_MODE_BARE) {
-> +        ctx = g_hash_table_lookup(ctx_cache, &key);
-> +
-> +        if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
-> +            *ref = ctx_cache;
-> +            return ctx;
-> +        }
->       }
->   
->       ctx = g_new0(RISCVIOMMUContext, 1);
+diff --git a/tests/functional/aarch64/test_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
+index 05a3f52d5e2..10c73728f36 100755
+--- a/tests/functional/aarch64/test_device_passthrough.py
++++ b/tests/functional/aarch64/test_device_passthrough.py
+@@ -10,13 +10,13 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from os.path import join
++from random import randbytes
+ 
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import exec_command, wait_for_console_pattern
+-from qemu_test import exec_command_and_wait_for_pattern
+-from random import randbytes
++from qemu_test import wait_for_console_pattern
++
+ 
+-guest_script = '''
++GUEST_SCRIPT = '''
+ #!/usr/bin/env bash
+ 
+ set -euo pipefail
+@@ -56,7 +56,7 @@
+ -device vfio-pci,host=$pci_iommufd,iommufd=iommufd0
+ '''
+ 
+-nested_guest_script = '''
++NESTED_GUEST_SCRIPT = '''
+ #!/usr/bin/env bash
+ 
+ set -euo pipefail
+@@ -75,6 +75,7 @@
+ echo device_passthrough_test_ok
+ '''
+ 
++
+ class Aarch64DevicePassthrough(QemuSystemTest):
+ 
+     # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthrough
+@@ -86,7 +87,7 @@ class Aarch64DevicePassthrough(QemuSystemTest):
+     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
+         ('https://github.com/pbo-linaro/qemu-linux-stack/'
+          'releases/download/build/device_passthrough-a9612a2.tar.xz'),
+-         'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
++        'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
+ 
+     # This tests the device passthrough implementation, by booting a VM
+     # supporting it with two nvme disks attached, and launching a nested VM
+@@ -108,10 +109,14 @@ def test_aarch64_device_passthrough(self):
+         guest_cmd = join(stack, 'guest.sh')
+         nested_guest_cmd = join(stack, 'nested_guest.sh')
+         # we generate two random disks
+-        with open(disk_vfio, "wb") as d: d.write(randbytes(512))
+-        with open(disk_iommufd, "wb") as d: d.write(randbytes(1024))
+-        with open(guest_cmd, 'w') as s: s.write(guest_script)
+-        with open(nested_guest_cmd, 'w') as s: s.write(nested_guest_script)
++        with open(disk_vfio, "wb") as d:
++            d.write(randbytes(512))
++        with open(disk_iommufd, "wb") as d:
++            d.write(randbytes(1024))
++        with open(guest_cmd, 'w', encoding='utf-8') as s:
++            s.write(GUEST_SCRIPT)
++        with open(nested_guest_cmd, 'w', encoding='utf-8') as s:
++            s.write(NESTED_GUEST_SCRIPT)
+ 
+         self.vm.add_args('-cpu', 'max')
+         self.vm.add_args('-m', '2G')
+@@ -139,5 +144,6 @@ def test_aarch64_device_passthrough(self):
+         wait_for_console_pattern(self, 'device_passthrough_test_ok',
+                                  failure_message='Kernel panic')
+ 
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
+-- 
+2.51.0
 
 
