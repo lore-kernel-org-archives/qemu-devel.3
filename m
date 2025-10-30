@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C57DCCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD94CCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEOMV-0007pQ-Bi; Thu, 30 Oct 2025 04:50:27 -0400
+	id 1vEOMX-0007q8-G9; Thu, 30 Oct 2025 04:50:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vEOMP-0007oY-3J
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:50:21 -0400
+ id 1vEOMN-0007o5-OA
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:50:20 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vEOMJ-0007YZ-Cp
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:50:20 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TLn0Tk025885;
+ id 1vEOMC-0007Mg-8r
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:50:18 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TLR8Er004789;
  Thu, 30 Oct 2025 08:50:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Sqlblq
- 1MeXt0L45/MWtpbq9GmnPCdlDdo7dJ0KWWwek=; b=V0QgfVjBW5hHIqOsnR/5pw
- XzugRXLoUjkHUe8AcyGMhT0KXR5FmbDIRF+y8hBndOZRa/M2q0U/oxIO+VzExsBE
- RHAdh6jHY/MR/CKaoGTwuVkvb2WWEAv7P+BwvLLU0UssbnKvfFXPsXBf5mpP7Ieo
- i70Q4pbTRxw+2CCAn4Y6jcZWLpVZzROxuxxfzrHY7bUTFL8svgCQZfve9K4fI4dW
- QX5LCVxBc2rW+Y3HFiOjiq+L5uHOfBGeu9MV5YucYSwEqAUbtLOaw6mUsLs/V7r/
- Q/cySt/7WzNI2EXMx1Lgs8D4eETQ0rfjbMZMEqGDEKKmDAGxJYdpIojFlVlQgVyw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7i/HVO
+ eAJb/QE+74UZMwnXWPZYVDQVsYfpDxpOlXY1A=; b=fTAZr0yc7N9gKOibGJ675W
+ TQC22RsLjnVChxtsctVjJB9U31Fa6Ml+PYFRs7StpOzgCcUFm2rOP8M0wq7ZEj4K
+ voPKQ2NkeSbVYCc2YBTSPyK06m28NkYF4+4AebKAHp3xKwDN/Ejb5kalvidBAR+u
+ n0aMl+w4aC6rBNqQPmTGw96OL3uZB1045OaPPurAE6WDHz36JwL3OiE4YoMAuXb1
+ /gLQU4Rmevy8lKGoaTpvMQGVUgkgceRVfzzvWhj8g62HZz1k/8JqkdOjM7Ruwp/W
+ Qm1cJRbG73e9eJYnKCs89mMwzXpWpSHiyaJV+wAREHmUQmc1gaU6OWXMXztO6Hdw
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acqdd1-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34a8qfus-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:50:02 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U60JbN019541;
- Thu, 30 Oct 2025 08:50:01 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4a33xy7q8p-1
+ Thu, 30 Oct 2025 08:50:01 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U5oW6F023836;
+ Thu, 30 Oct 2025 08:50:00 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a33vx7qxc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:50:01 +0000
+ Thu, 30 Oct 2025 08:50:00 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59U8nx6l22151654
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59U8nuUx59965916
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Oct 2025 08:49:59 GMT
+ Thu, 30 Oct 2025 08:49:56 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A7A612004D;
- Thu, 30 Oct 2025 08:49:59 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8CDA620043;
+ Thu, 30 Oct 2025 08:49:56 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DEB3220040;
- Thu, 30 Oct 2025 08:49:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7E5BF2004B;
+ Thu, 30 Oct 2025 08:49:55 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
  [9.109.242.24]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Oct 2025 08:49:58 +0000 (GMT)
+ Thu, 30 Oct 2025 08:49:55 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/10] hw/ppc/pegasos: Update documentation for pegasos1
-Date: Thu, 30 Oct 2025 14:19:36 +0530
-Message-ID: <20251030084936.1132417-11-harshpb@linux.ibm.com>
+Subject: [PULL 07/10] hw/ppc: Fix memory leak in get_cpu_state_data()
+Date: Thu, 30 Oct 2025 14:19:33 +0530
+Message-ID: <20251030084936.1132417-8-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251030084936.1132417-1-harshpb@linux.ibm.com>
 References: <20251030084936.1132417-1-harshpb@linux.ibm.com>
@@ -74,30 +76,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XbuEDY55 c=1 sm=1 tr=0 ts=690326ba cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=DYkaa/tW c=1 sm=1 tr=0 ts=690326b9 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=R4SA8OYZAAAA:8 a=a4NEJbfMAAAA:8
- a=h7_BzZE7AAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=P_rJWWM8_-YO9Bp8fwoA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=7stNvC5sXRea_myt1Wfc:22
- a=TnV4WSYrcWMO94jUQ48d:22 a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22
- a=poXaRoVlC6wW9_mwW8W4:22 a=p-dnK0njbqwfn1k4-x12:22 a=rLkV7i5x5X597yo9dRWc:22
-X-Proofpoint-ORIG-GUID: dy3utwIkDwvX7rb823k-HtYFm-d6ZKwz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX9yYosZBD0eyl
- 0EgaauGrJGkScr3nCMxJGg8/r0BUxfAwz+USsUxLMc+NScr3rXqJQ90h3XAqa9/cMr3+w8nclX3
- ULORgugVUtru+9GRuxwrE0/1yw71Jtv0iRwz1QdpCmH+u4kmn2rT9oy5yK3XCHfY1HXn/cXT6cK
- ZWIDcVqDGImO/2bNVGyePQ/xEXysLzT76UA+ManbgNohRQ8ywXVjX486HH8CraxBWMxNFbwejQh
- /LznKjsrOkgt8nFLtUOqd7tVfsNQ6ajxR0+XruaYIH/IzSjOedneLbLtVm4JXx9mOj6lOQltdGG
- qRKsbMEH/vFngyAYFayTrlU0yCamqKCSD52PpeHqsA/iro27yU5XUrKWA/fvBSH9nDDaEpuKfa0
- IlrlfDt5SEYue2YA39CnQFpDCc2dvw==
-X-Proofpoint-GUID: dy3utwIkDwvX7rb823k-HtYFm-d6ZKwz
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
+ a=KKAkSRfTAAAA:8 a=BgDxkCfs33UlwvxV0KsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-GUID: JRBTN_23yMubCTARrEZRfyYifdL904_j
+X-Proofpoint-ORIG-GUID: JRBTN_23yMubCTARrEZRfyYifdL904_j
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX5+5nlKTZETs7
+ Iuk5eMTmniU9RENvxFW+FKpF8mEmQQqWUnt2U0ogarnhgSt+gXse1SUVZwD74mCEOvQ0L5IWxb5
+ lViz9MJ5zTSxD947BoXTBdFVt7LNqK9+6thqj+r3wQ2592Lef0KYWp2lHwfjr/jnFt6TE5NeZny
+ kM54/0UnOdPtlr08SZkL5Tkdvk6NRZO1m7wA0xJKkFLbQqQqqz1JxFcMpP1j8l3sJD6aHQUSx+v
+ NmVs7561DGENEeTyTbLcDf1KZme8XwvR294wJidkIMUfg5yNzTVlrU2NMiDuJpFHBAjPDt9jXKy
+ XCJf019PMol5dapN0vfslcuq1TxFRJytnqU5NWPpx9tlMAgwnrGZnY5AXUtRnMkpBc4g+cParJA
+ za1JHViW4rFtt2C7VXNSzWv5IJwLhg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
- impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ spamscore=0 clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
  definitions=main-2510280166
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
@@ -125,81 +126,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Fixes coverity (CID 1642024)
+
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/CAFEAcA_Bm52bkPi9MH_uugXRR5fj48RtpbOnPNFQtbX=7Mz_yw@mail.gmail.com/
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/r/f86b90f6839a0cf9426c0d89e95e6ca33704728c.1761346145.git.balaton@eik.bme.hu
-Message-ID: <f86b90f6839a0cf9426c0d89e95e6ca33704728c.1761346145.git.balaton@eik.bme.hu>
+Link: https://lore.kernel.org/r/20251028080551.92722-3-shivangu@linux.ibm.com
+Message-ID: <20251028080551.92722-3-shivangu@linux.ibm.com>
 ---
- docs/system/ppc/amigang.rst | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ hw/ppc/spapr_fadump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
-index 21bb14ed09..e290412369 100644
---- a/docs/system/ppc/amigang.rst
-+++ b/docs/system/ppc/amigang.rst
-@@ -1,6 +1,6 @@
--=========================================================
--AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
--=========================================================
-+=======================================================================
-+AmigaNG boards (``amigaone``, ``pegasos1``, ``pegasos2``, ``sam460ex``)
-+=======================================================================
- 
- These PowerPC machines emulate boards that are primarily used for
- running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
-@@ -64,18 +64,23 @@ eventually it boots and the installer becomes visible. The ``ati-vga`` RV100
- emulation is not complete yet so only frame buffer works, DRM and 3D is not
- available.
- 
--Genesi/bPlan Pegasos II (``pegasos2``)
--======================================
-+Genesi/bPlan Pegasos (``pegasos1``, ``pegasos2``)
-+=================================================
- 
--The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
--designed by bPlan. Its schematics are available at
--https://www.powerdeveloper.org/platforms/pegasos/schematics.
-+The ``pegasos1`` machine emulates the original Pegasos (later marked I) sold by
-+Genesi and designed by bPlan. It uses the same Articia S north bridge as the
-+``amigaone`` machine, otherwise it is mostly the same as the later Pegasos II.
-+
-+The ``pegasos2`` machine emulates the Pegasos II which is a redesigned version
-+of Pegasos I to fix problems with its north bridge. Its schematics are available
-+at https://www.powerdeveloper.org/platforms/pegasos/schematics.
- 
- Emulated devices
- ----------------
- 
-  * PowerPC 7457 CPU (can also use ``-cpu g3`` or ``750cxe``)
-- * Marvell MV64361 Discovery II north bridge
-+ * Articia S north bridge (for ``pegasos1``)
-+ * Marvell MV64361 Discovery II north bridge (for ``pegasos2``)
-  * VIA VT8231 south bridge
-  * PCI VGA compatible card (guests may need other card instead)
-  * PS/2 keyboard and mouse
-@@ -83,9 +88,9 @@ Emulated devices
- Firmware
- --------
- 
--The Pegasos II board has an Open Firmware compliant ROM based on
-+The Pegasos boards have an Open Firmware compliant ROM based on
- SmartFirmware with some changes that are not open-sourced therefore
--the ROM binary cannot be included in QEMU. An updater was available
-+the ROM binary cannot be included in QEMU. A Pegasos II updater was available
- from bPlan, it can be found in the `Internet Archive
- <http://web.archive.org/web/20071021223056/http://www.bplan-gmbh.de/up050404/up050404>`_.
- The ROM image can be extracted from it with the following command:
-@@ -111,7 +116,7 @@ At the firmware ``ok`` prompt enter ``boot cd install/pegasos``.
- 
- Alternatively, it is possible to boot the kernel directly without
- firmware ROM using the QEMU built-in minimal Virtual Open Firmware
--(VOF) emulation which is also supported on ``pegasos2``. For this,
-+(VOF) emulation which is also supported on ``pegasos1`` and ``pegasos2``. For this,
- extract the kernel ``install/powerpc/vmlinuz-chrp.initrd`` from the CD
- image, then run:
+diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+index 883a60cdcf..13cab0cfe1 100644
+--- a/hw/ppc/spapr_fadump.c
++++ b/hw/ppc/spapr_fadump.c
+@@ -453,7 +453,7 @@ static FadumpRegEntry *populate_cpu_reg_entries(CPUState *cpu,
+ static void *get_cpu_state_data(uint64_t *cpu_state_len)
+ {
+     FadumpRegSaveAreaHeader reg_save_hdr;
+-    FadumpRegEntry *reg_entries;
++    g_autofree FadumpRegEntry *reg_entries = NULL;
+     FadumpRegEntry *curr_reg_entry;
+     CPUState *cpu;
  
 -- 
 2.43.5
