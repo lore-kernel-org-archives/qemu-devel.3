@@ -4,66 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3E0CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 11:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96749CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 11:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEQPN-0005tr-6Z; Thu, 30 Oct 2025 07:01:33 -0400
+	id 1vEQXa-0007cZ-Hw; Thu, 30 Oct 2025 07:10:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vEQPG-0005tL-5S; Thu, 30 Oct 2025 07:01:26 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vEQXY-0007cA-CE
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 07:10:00 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vEQP6-0001Kn-Lx; Thu, 30 Oct 2025 07:01:24 -0400
+ id 1vEQXS-00036n-UT
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 07:10:00 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EF9855972E8;
- Thu, 30 Oct 2025 12:01:08 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9A4515972EB;
+ Thu, 30 Oct 2025 12:09:46 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id g7J38uzbmQ4U; Thu, 30 Oct 2025 12:01:06 +0100 (CET)
+ id s0gyV_w2Ppyp; Thu, 30 Oct 2025 12:09:44 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A74E95972E4; Thu, 30 Oct 2025 12:01:06 +0100 (CET)
+ id 42DE25972E4; Thu, 30 Oct 2025 12:09:44 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A517D5972E3;
- Thu, 30 Oct 2025 12:01:06 +0100 (CET)
-Date: Thu, 30 Oct 2025 12:01:06 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 40E095972E3;
+ Thu, 30 Oct 2025 12:09:44 +0100 (CET)
+Date: Thu, 30 Oct 2025 12:09:44 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+cc: Shivang Upadhyay <shivangu@linux.ibm.com>, 
  =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-In-Reply-To: <3849eccc-ca94-49f9-87a4-4c5aad496976@redhat.com>
-Message-ID: <ffde4e42-58ae-3338-e056-dcfea5d43475@eik.bme.hu>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
- <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
- <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
- <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
- <802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp>
- <28c6f065-ba8d-e5e2-922e-d5fd1fb58b60@eik.bme.hu>
- <db06bf5e-b7f5-4980-a054-393529e188eb@rsg.ci.i.u-tokyo.ac.jp>
- <759b6b4c-1155-184a-fa99-1df384f0fac3@eik.bme.hu>
- <aQJpDE6FvkIF6GgE@x1.local> <318bf988-9035-4012-9708-40c3783803f8@redhat.com>
- <b525a0c5-bcc0-7349-a925-6827591b7a34@eik.bme.hu>
- <3849eccc-ca94-49f9-87a4-4c5aad496976@redhat.com>
+ peter.maydell@linaro.org, adityag@linux.ibm.com, qemu-devel@nongnu.org, 
+ sourabhjain@linux.ibm.com
+Subject: Re: [PATCH v2 1/2] hw/ppc: Fix missing return on allocation
+ failure
+In-Reply-To: <47ac6382-3270-4179-8455-43cee36a9ca9@linux.ibm.com>
+Message-ID: <c089e14f-69a3-fe9c-cc80-b0c7bba4105a@eik.bme.hu>
+References: <20251028080551.92722-1-shivangu@linux.ibm.com>
+ <20251028080551.92722-2-shivangu@linux.ibm.com>
+ <8d5a8cce-d769-4cd8-9753-7e9ad37d8a47@linaro.org>
+ <dio77m3m5jj6ccgqpswkifiqztf5fz45qsjpspu2yszgwrfgha@mcwjruxszkn5>
+ <47ac6382-3270-4179-8455-43cee36a9ca9@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Content-Type: multipart/mixed;
+ boundary="3866299591-1427477736-1761822584=:43010"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,46 +73,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Oct 2025, Paolo Bonzini wrote:
-> On 10/30/25 11:38, BALATON Zoltan wrote:
->> I've tried to explain why I dislike that way in previous replies in this 
->> thread but here's a short summary:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-1427477736-1761822584=:43010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Thu, 30 Oct 2025, Harsh Prateek Bora wrote:
+> On 10/28/25 15:54, Shivang Upadhyay wrote:
+>> On Tue, Oct 28, 2025 at 09:35:40AM +0100, Philippe Mathieu-Daudé wrote:
+>>> On 28/10/25 09:05, Shivang Upadhyay wrote:
+>>>> Fixes coverity (CID 1642026)
+>>>> 
+>>>> Cc: Aditya Gupta <adityag@linux.ibm.com>
+>>>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>>> Link: 
+>>>> https://lore.kernel.org/qemu-devel/CAFEAcA-SPmsnU1wzsWxBcFC=ZM_DDhPEg1N4iX9Q4bL1xOnwBg@mail.gmail.com/
+>>>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+>>>> ---
+>>>>    hw/ppc/spapr_fadump.c | 1 +
+>>>>    1 file changed, 1 insertion(+)
+>>>> 
+>>>> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+>>>> index fa3aeac94c..883a60cdcf 100644
+>>>> --- a/hw/ppc/spapr_fadump.c
+>>>> +++ b/hw/ppc/spapr_fadump.c
+>>>> @@ -234,6 +234,7 @@ static bool do_preserve_region(FadumpSection *region)
+>>>>            qemu_log_mask(LOG_GUEST_ERROR,
+>>> 
+>>> FWIW host heap exhaustion is not really a *guest* error, because the
+>>> guest can not control it.
+>> Hi, Philippe
 >> 
->> - Not piling memory regions not otherwise needed in device struct makes it 
->> easier to understand. (Could you spot errors within the lot of boiler plate 
->> code before clean up? Having less code makes it more comprehensible.)
+>> 
+>> Thanks for the review. There are following log level defined in log.h
+>>
+>> 	....
+>>
+>> 	#define CPU_LOG_TB_OUT_ASM (1u << 0)
+>> 	#define CPU_LOG_TB_IN_ASM  (1u << 1)
+>> 	#define CPU_LOG_TB_OP      (1u << 2)
+>> 	#define CPU_LOG_TB_OP_OPT  (1u << 3)
+>> 	#define CPU_LOG_INT        (1u << 4)
+>> 	#define CPU_LOG_EXEC       (1u << 5)
+>> 	#define CPU_LOG_PCALL      (1u << 6)
+>> 	#define CPU_LOG_TB_CPU     (1u << 8)
+>> 	#define CPU_LOG_RESET      (1u << 9)
+>> 	#define LOG_UNIMP          (1u << 10)
+>> 	#define LOG_GUEST_ERROR    (1u << 11)
+>> 	#define CPU_LOG_MMU        (1u << 12)
+>> 	#define CPU_LOG_TB_NOCHAIN (1u << 13)
+>> 	#define CPU_LOG_PAGE       (1u << 14)
+>> 	/* LOG_TRACE (1 << 15) is defined in log-for-trace.h */
+>> 	#define CPU_LOG_TB_OP_IND  (1u << 16)
+>> 	#define CPU_LOG_TB_FPU     (1u << 17)
+>> 	#define CPU_LOG_PLUGIN     (1u << 18)
+>> 	/* LOG_STRACE is used for user-mode strace logging. */
+>> 	#define LOG_STRACE         (1u << 19)
+>> 	#define LOG_PER_THREAD     (1u << 20)
+>> 	#define CPU_LOG_TB_VPU     (1u << 21)
+>> 	#define LOG_TB_OP_PLUGIN   (1u << 22)
+>> 	#define LOG_INVALID_MEM    (1u << 23)
+>>
+>> 	....
+>> 
+>> Which one do you recommend we use? or May we introduce a `LOG_HOST_ERROR`,
+>> if that's more appropriate.
 >
-> Not sure what's different between
->
->    MemoryRegion foo_mr;
->
-> in the struct, versus
->
->    mr = g_new(MemoryRegion, 1);
->
-> in the realize function.  It's one line either way.
+> I think it would be better to have LOG_INSUFF_MEM for this case, but let's 
+> hear from Philippe and others for suggestions.
 
-Please read back in thread. An example here:
-https://lists.nongnu.org/archive/html/qemu-ppc/2025-10/msg00785.html
-from this series
-https://patchew.org/QEMU/cover.1761232472.git.balaton@eik.bme.hu/
-
->> - Documentation says it should work this way QOM managing memory regions so 
->> it was meant to be that way. I'd rather fix code than documentation as I 
->> think if it just works that's easier than loosing that convenience.No, 
->> that's *your* reading of the documentation, and it's based on the 
-> incorrect assumption that destruction implies freeing the memory. Akihiko 
-> explained that 
-> (https://lore.kernel.org/qemu-devel/802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp/).
->
-> The memory region documentation does not exist in a void, the difference 
-> between QOM object_initialize() and object_new() exists independent of that 
-> documentation.  It may be worth improving the QOM documentation on the object 
-> lifecycle; that could be.
-
-I'll try to also clarify documentation but IMO the fix is not dropping 
-this intended feature but fixing and using it where helps.
+If it's not a guest error but an error in QEMU then maybe error_report (or 
+warn_report if it's recoverable)?
 
 Regards,
 BALATON Zoltan
+
+> Since it's unlreated to the coverity fix and can be taken separately, so:
+>
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>
+>> 
+>> Thanks
+>> ~Shivang.
+>>>
+>>>>                "FADump: Failed allocating memory (size: %zu) for copying"
+>>>>                " reserved memory regions\n", FADUMP_CHUNK_SIZE);
+>>>> +        return false;
+>>>>        }
+>>>>        num_chunks = ceil((src_len * 1.0f) / FADUMP_CHUNK_SIZE);
+>>> 
+>
+>
+--3866299591-1427477736-1761822584=:43010--
 
