@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D557CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCAECCFA00
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 14:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vETx1-0008PH-BG; Thu, 30 Oct 2025 10:48:31 -0400
+	id 1vETyB-0000Ul-HJ; Thu, 30 Oct 2025 10:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vETwz-0008Lr-5U
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:48:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vETy8-0000SV-5G
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:49:40 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vETwt-0001KA-GD
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:48:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761835698;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V63kLovDtLxShSX97e1gMJ0rHkzBCZtg+z1997cvzJc=;
- b=f+TfaA2yPBuZko5ggxX04tdUDGwnocVYsHTh53Gr8C0KLsxna6P9EZ9tHqD2sPRr4G1ShF
- 25eu0MdWArk9yP4FhiFfO5mdkLePaI9GRMdjL2nCaXv5kHA2L1rTahYWjcQwdyIHn45++2
- QgLd5ULQjqTdBaZd+sBHRtQTowybhcI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-Znw35p0AOoGaZKGT85wIFg-1; Thu,
- 30 Oct 2025 10:48:15 -0400
-X-MC-Unique: Znw35p0AOoGaZKGT85wIFg-1
-X-Mimecast-MFC-AGG-ID: Znw35p0AOoGaZKGT85wIFg_1761835694
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59FA61955E74; Thu, 30 Oct 2025 14:48:14 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.122])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 02E831800581; Thu, 30 Oct 2025 14:48:12 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org
-Subject: [PATCH 03/21] crypto: replace stat() with access() for credential
- checks
-Date: Thu, 30 Oct 2025 14:47:47 +0000
-Message-ID: <20251030144805.2239954-4-berrange@redhat.com>
-In-Reply-To: <20251030144805.2239954-1-berrange@redhat.com>
-References: <20251030144805.2239954-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vETxz-0001O1-K3
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 10:49:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761835771; x=1793371771;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Iddla4z7flI67h7EdMSDk02AU+XEEh2561J+ewfpQww=;
+ b=Kz9A2GquAr4hX9+GvBUx4DEjizjCrmqZp9QrpO0XKR6nq5pEIrGwODCT
+ L6qajqlmq3unt1ARwCGB1DKPDzQQbsFv9aAm914/P1CUFCam/UOWhfMoX
+ vdd0pBEF36FWTrk5CowwK3TabY1iFqM5Fhu5k5IKxDBtxJTb94WeV0iqW
+ DNqi1CRyfjMZoWz7Pjrt+xngTbE64jAg8/XVOs0fOygauZs4fESEJpmz2
+ zO7arGAMQ/L/qedDdPlEiK/4TUSweLAjVGMdfwEQtBOyJkF1I4lo6LFUg
+ so4KtlHhKg1czclChZZowzWxQGgkpJvzGF+zICyHSXqrChk6T+QFMmRZb g==;
+X-CSE-ConnectionGUID: DWcbzxLyRjWrI/a0GlkVPw==
+X-CSE-MsgGUID: Zljp+AdNQSCUuI5bV5zU0g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11598"; a="63864602"
+X-IronPort-AV: E=Sophos;i="6.19,267,1754982000"; d="scan'208";a="63864602"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Oct 2025 07:49:19 -0700
+X-CSE-ConnectionGUID: 18uW1v3FSGOYNruA8URLZg==
+X-CSE-MsgGUID: Rb9i9bojQzu35J+ddr2Qww==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,267,1754982000"; d="scan'208";a="190311721"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 30 Oct 2025 07:49:16 -0700
+Date: Thu, 30 Oct 2025 23:11:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
+ John Allen <john.allen@amd.com>, Babu Moger <babu.moger@amd.com>,
+ Mathias Krause <minipli@grsecurity.net>,
+ Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
+Subject: Re: [PATCH v3 02/20] i386/cpu: Clean up indent style of
+ x86_ext_save_areas[]
+Message-ID: <aQOAH0a9P3ZK+5H5@intel.com>
+References: <20251024065632.1448606-1-zhao1.liu@intel.com>
+ <20251024065632.1448606-3-zhao1.liu@intel.com>
+ <94d254b3-3d0f-4fe8-b6aa-da5df2b9c0e6@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <94d254b3-3d0f-4fe8-b6aa-da5df2b9c0e6@intel.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,36 +91,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Readability of the credential files is what matters for our usage,
-so access() is more appropriate than stat().
+On Mon, Oct 27, 2025 at 01:47:53PM +0800, Xiaoyao Li wrote:
+> Date: Mon, 27 Oct 2025 13:47:53 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v3 02/20] i386/cpu: Clean up indent style of
+>  x86_ext_save_areas[]
+> 
+> On 10/24/2025 2:56 PM, Zhao Liu wrote:
+> 
+> <empty commit message> isn't good.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/tlscreds.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/crypto/tlscreds.c b/crypto/tlscreds.c
-index 9e59594d67..208a7e6d8f 100644
---- a/crypto/tlscreds.c
-+++ b/crypto/tlscreds.c
-@@ -100,7 +100,6 @@ qcrypto_tls_creds_get_path(QCryptoTLSCreds *creds,
-                            char **cred,
-                            Error **errp)
- {
--    struct stat sb;
-     int ret = -1;
- 
-     if (!creds->dir) {
-@@ -114,7 +113,7 @@ qcrypto_tls_creds_get_path(QCryptoTLSCreds *creds,
- 
-     *cred = g_strdup_printf("%s/%s", creds->dir, filename);
- 
--    if (stat(*cred, &sb) < 0) {
-+    if (access(*cred, R_OK) < 0) {
-         if (errno == ENOENT && !required) {
-             ret = 0;
-         } else {
--- 
-2.51.1
+Yeah, will add the description.
 
 
