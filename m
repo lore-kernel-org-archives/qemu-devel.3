@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BE4CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 18:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C89BECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 18:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEX8M-0008Qf-Ro; Thu, 30 Oct 2025 14:12:28 -0400
+	id 1vEXCk-0001lQ-DC; Thu, 30 Oct 2025 14:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vEX8H-0008Q1-TQ
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 14:12:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vEXCb-0001kw-II
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 14:16:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vEX85-0008RL-MB
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 14:12:20 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vEXCP-0000u5-1j
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 14:16:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761847925;
+ s=mimecast20190719; t=1761848186;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=906m17tjiDU0GS+f+Q6+Spva9ZS+Vblfudxgihk5llY=;
- b=LZzbGhpRMb0keoEfhXVeGybtkig8OhPg0i9KX2p1QLYU9fcwqXKZB/nagGJS9Jdut3sNyo
- H61lWSFkL1NIjeN9PMHY4XQucaRetJL+hLomnhIB113DgObAj6ZdX83vj2mx432IobJHg7
- 6E7uFgvQ0bF5riQzkW9qTzlgLX1HNuE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=+jh+zsJvuNtF138ol3pBNtWyA+YEd/2pcUUkqwCiA6M=;
+ b=AkauvTxw6MzhIfZFZCBO5ChCCWg256IZPFYR/eOFH9i2dIHmgmiWggtIA8ICXS8TdTwpnb
+ 6/1x3uI9FBji8YeX7PC18LwUpE6jpVT9dtUwpukrMTCL2NfJ7fpybnHWMXpTJl0/iyiEpQ
+ pgVuemaKlO1Vc3EVzutyJPiR6HiMTWM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-6dLUOzaUMr6Q6O_U2_BsQw-1; Thu,
- 30 Oct 2025 14:12:01 -0400
-X-MC-Unique: 6dLUOzaUMr6Q6O_U2_BsQw-1
-X-Mimecast-MFC-AGG-ID: 6dLUOzaUMr6Q6O_U2_BsQw_1761847920
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-kfWtM9IkNPKpLjo7pZMZ2Q-1; Thu,
+ 30 Oct 2025 14:16:22 -0400
+X-MC-Unique: kfWtM9IkNPKpLjo7pZMZ2Q-1
+X-Mimecast-MFC-AGG-ID: kfWtM9IkNPKpLjo7pZMZ2Q_1761848181
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA2E819560AA; Thu, 30 Oct 2025 18:11:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.243])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E99930001A1; Thu, 30 Oct 2025 18:11:56 +0000 (UTC)
-Date: Thu, 30 Oct 2025 19:11:54 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, hibriansong@gmail.com,
- eblake@redhat.com, qemu-block@nongnu.org
-Subject: Re: [RESEND PATCH v5 00/13] aio: add the aio_add_sqe() io_uring API
-Message-ID: <aQOqau-bpiJiNVHI@redhat.com>
-References: <20251030152150.470170-1-stefanha@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9DE2A18001D6; Thu, 30 Oct 2025 18:16:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.238])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CA3C180057E; Thu, 30 Oct 2025 18:16:13 +0000 (UTC)
+Date: Thu, 30 Oct 2025 13:16:10 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH v3] file-posix: Tolerate unaligned hole at middle
+Message-ID: <ikijqrvl3psokhrnnjs63lx73jngbfuhtpta2mx3ba6ac7lfhd@joni3xjywtt2>
+References: <20251029-dio-v3-1-6ae3bb70db16@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251030152150.470170-1-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <20251029-dio-v3-1-6ae3bb70db16@rsg.ci.i.u-tokyo.ac.jp>
+User-Agent: NeoMutt/20250905
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,8 +66,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,73 +83,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 30.10.2025 um 16:21 hat Stefan Hajnoczi geschrieben:
-> v5:
-> - Explain how fdmon-io_uring.c differs from other fdmon implementations
->   in commit message [Kevin]
-> - Move test-nested-aio-poll aio_get_g_source() removal into commit that touches test case [Kevin]
-> - Avoid g_source_add_poll() use-after-free in fdmon_poll_update() [Kevin]
-> - Avoid duplication in fdmon_epoll_gsource_dispatch(), use fdmon_epoll_wait() [Kevin]
-> - Drop unnecessary revents checks in fdmon_poll_gsource_dispatch() [Kevin]
-> - Mention in commit message that fdmon-io_uring.c is the new default [Kevin]
-> - Add comments explaining how to clean up resources in error paths [Kevin]
-> - Indicate error in return value from function with Error *errp arg [Kevin]
-> - Add patch to unindent fdmon_io_uring_destroy() [Kevin]
-> - Add patch to introduce FDMonOps->dispatch() callback [Kevin]
-> - Drop patch with hacky BH optimization for fdmon-io_uring.c [Kevin]
-> - Replace cqe_handler_bh with FDMonOps->dispatch() [Kevin]
-> - Rename AioHandler->cqe_handler field to ->internal_cqe_handler [Kevin]
-> - Consolidate fdmon-io_uring.c trace-events changes into this commit
-> - Reduce #ifdef HAVE_IO_URING_PREP_WRITEV2 code duplication [Kevin]
+On Wed, Oct 29, 2025 at 03:50:27PM +0900, Akihiko Odaki wrote:
+> file-posix used to assume that existing holes satisfy the requested
+> alignment, which equals to the estimated direct I/O alignment
+> requirement if direct I/O is requested, and assert the assumption
+> unless it is at EOF.
+> 
+> However, the estimation of direct I/O alignment requirement is sometimes
+> inexact and can be overly strict. For example, I observed that QEMU
+> estimated the alignment requirement as 16K while the real requirement
+> is 4K when Btrfs is used on Linux 6.14.6 and the host page size is 16K.
 
-The changes look good to me.
+If needed, it should be possible to use nbdkit and an NBD device to
+force other unusual alignment scenarios.  But for this patch, I agree
+with your analysis that...
 
-However, the test cases are still failing. I just tried to see where
-test-aio is stuck, and while I looked for a backtrace first, I noticed
-that just attaching gdb to the process and immediately detaching again
-makes the test unstuck. Very strange.
+> Moreover, even if we could figure out the direct I/O alignment
+> requirement, I could not find a documentation saying it will exactly
+> match with the alignment of holes.
+> 
+> So stop asserting the assumption on the holes and handle unaligned holes
+> properly.
 
-This is the backtrace, maybe a bit unsurpring:
+...not asserting, and merely handling rounding ourselves, is the best
+path forward.
 
-(gdb) bt
-#0  0x00007ffff7e6fec6 in __io_uring_submit () from /lib64/liburing.so.2
-#1  0x00005555556f4394 in fdmon_io_uring_wait (ctx=0x555556409950, ready_list=0x7fffffffcda0, timeout=749993088) at ../util/fdmon-io_uring.c:410
-#2  0x00005555556ed29f in aio_poll (ctx=0x555556409950, blocking=true) at ../util/aio-posix.c:699
-#3  0x0000555555681547 in test_timer_schedule () at ../tests/unit/test-aio.c:413
-#4  0x00007ffff6f30e7e in test_case_run (tc=0x55555640d340, test_run_name=0x55555640de10 "/aio/timer/schedule", path=<optimized out>) at ../glib/gtestutils.c:3115
-#5  g_test_run_suite_internal (suite=suite@entry=0x5555558696d0, path=path@entry=0x0) at ../glib/gtestutils.c:3210
-#6  0x00007ffff6f30df3 in g_test_run_suite_internal (suite=suite@entry=0x555555867480, path=path@entry=0x0) at ../glib/gtestutils.c:3229
-#7  0x00007ffff6f30df3 in g_test_run_suite_internal (suite=suite@entry=0x555555867720, path=path@entry=0x0) at ../glib/gtestutils.c:3229
-#8  0x00007ffff6f313aa in g_test_run_suite (suite=suite@entry=0x555555867720) at ../glib/gtestutils.c:3310
-#9  0x00007ffff6f31440 in g_test_run () at ../glib/gtestutils.c:2379
-#10 g_test_run () at ../glib/gtestutils.c:2366
-#11 0x000055555567e204 in main (argc=1, argv=0x7fffffffd488) at ../tests/unit/test-aio.c:872
+>  block/file-posix.c | 41 +++++++++++++++++++++++++----------------
+>  1 file changed, 25 insertions(+), 16 deletions(-)
+> 
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 8c738674cedb..b6d7a31b4d04 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -3315,29 +3315,38 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
 
-And running it under strace shows that we're indeed hanging in the
-syscall:
+> +         /*
+> +          * We may have allocation unaligned with the requested
+> +          * alignment due to the following reaons:
 
-write(1, "# Start of timer tests\n", 23) = 23
-eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK)   = 9
-io_uring_enter(7, 1, 0, 0, NULL, 8)     = 1
-clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffc239bec80) = 0
-io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8
+reasons
 
-Of course, if I start the test without strace and then attach strace to
-the running process, that gets it unstuck like attaching gdb (not very
-surprising, I guess, it's both just ptrace).
+> +          * - unaligned file size
+> +          * - inexact direct I/O alignment requirement estimation
+> +          * - mismatches between the allocation size and
+> +          *   direct I/O alignment requirement.
+> +          *
+> +          * We are not allowed to return partial sectors, though, so
+> +          * round up the end of allocation if necessary.
+> +          */
+> +        *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
+>          ret = BDRV_BLOCK_DATA;
+>      } else {
+>          /* On a hole, compute bytes to the beginning of the next extent.  */
+>          assert(hole == offset);
+>          *pnum = data - offset;
+> -        ret = BDRV_BLOCK_ZERO;
+> +
+> +        /*
+> +         * We may have allocation unaligned, so round down the beginning
+> +         * of allocation if necessary.
+> +         */
+> +        if (*pnum < bs->bl.request_alignment) {
+> +            *pnum = bs->bl.request_alignment;
+> +            ret = BDRV_BLOCK_DATA;
+> +        } else {
+> +            *pnum = ROUND_DOWN(*pnum, bs->bl.request_alignment);
+> +            ret = BDRV_BLOCK_ZERO;
+> +        }
 
-Finally I tried Ctrl-C while having strace logging to a file, and now
-the io_uring_enter() returns 1 (rather than EINTR or 0 or whatever):
+With the typo fix,
 
-io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8) = 1
---- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
-+++ killed by SIGINT +++
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
-Not sure what to make of this.
-
-I think you already said you run the same kernel version, but just to be
-sure, I'm running 6.17.5-200.fc42.x86_64.
-
-Kevin
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
