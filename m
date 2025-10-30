@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D329CCF9F0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C56CCF9FE
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 19:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEYMz-0002Dz-In; Thu, 30 Oct 2025 15:31:38 -0400
+	id 1vEYN0-0002EP-H9; Thu, 30 Oct 2025 15:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vEYMs-0002BY-NE
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 15:31:31 -0400
+ id 1vEYMu-0002Ca-En
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 15:31:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vEYMp-0005dQ-Pb
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 15:31:30 -0400
+ id 1vEYMl-0005cJ-K6
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 15:31:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761852681;
+ s=mimecast20190719; t=1761852674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=55ns2Mzh6/J8lyxJnlWCJ3ZuM14xKTHwKoZk2ILqPM8=;
- b=IR30EYaDpOYupsohQzG1mcQSEiMugfMkOK+ibTOvQIyJsYavRFdc0rtOG1niDagLEpVOIB
- yGtdFGkgW8maMHngA662EU4So/zodM7wE/86GrzpitoONOMoUJY8VUqjvvDfvwcASjlhDF
- UD6rV6uWXZy4SVYbBIsKYZuNivodH/Y=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iAbYVwRcarBDX/vkEKyB7UWcZC+bH4ku/qdXMMoXhfA=;
+ b=Ht6Svf2XhznbmM8y7AuvArQ1f07TWe2iuNvxOV+vinAiEUzCQzyfVMC4DK6RDW6+/y7m/I
+ BDsBKEISBYazC/3TueZzE6YpbLfCdOe0aBFnok0Ga3pE50Z0gEEnktrIBMgef8vFa+rB7g
+ kGVeeOJvFKp8rxLmoYoPqUxT+diYd78=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-C3mmoSWTOy6K6s7KnCnRvw-1; Thu, 30 Oct 2025 15:31:20 -0400
-X-MC-Unique: C3mmoSWTOy6K6s7KnCnRvw-1
-X-Mimecast-MFC-AGG-ID: C3mmoSWTOy6K6s7KnCnRvw_1761852679
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-34029b3dbfeso1683096a91.3
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 12:31:19 -0700 (PDT)
+ us-mta-27-RcQbfu7dObiYF0d6uN-BRw-1; Thu, 30 Oct 2025 15:31:12 -0400
+X-MC-Unique: RcQbfu7dObiYF0d6uN-BRw-1
+X-Mimecast-MFC-AGG-ID: RcQbfu7dObiYF0d6uN-BRw_1761852671
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-295093f614cso8740145ad.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 12:31:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761852679; x=1762457479;
+ d=1e100.net; s=20230601; t=1761852671; x=1762457471;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=55ns2Mzh6/J8lyxJnlWCJ3ZuM14xKTHwKoZk2ILqPM8=;
- b=NRTQViYrxi5WrA0ixOgq1COHLXGfB9zHnVCWrbbVxo87d/S0L6lAbq7oyRlhWMyHt2
- 5ZtG8Z/SEkzqkSbhagcDZZzW8ilxrEwtbEmW41EaA2uTITeTZGPYPI5QXD3r3hIT/pY2
- 9heD2TuZpxpGs5pg2w1BiXwEc1mVQpZbPicJT7UJyl6pm+u3hNIJ0QIl+S3aTT3TaP1I
- /5hd6NepV09MLTeBiS85g4Rj76NV1qc1qTswTKC5BDfo3ZeqTdF6/6UNc4rx8EGtAxmP
- J5oTFG0sHGaOOJaLSD7BUgZvi2sM00J+Z3plc9UOlUdk9TfCiI1xCNYW3sXRgK7M4/3x
- ZgdA==
-X-Gm-Message-State: AOJu0YxBYsSeWZczTmYTnlA/MmxrXHTvm2Bo5HiRZJHNxDkUSBuFjTow
- 2xoqnFqtQSkrAkcstf/vB11Pkgx7Xba+ZPGJsjvq66svAeprXZDUiFvWIfChs4hDIvkfJS7RY44
- dqWidCWUqVQsnUaj+Bk8r2KHB27Ny2J2A6dbMhwAK+VoNVbPuEouNXbhYOL7VaPP/aTvtxj6RA8
- KVmImOSX9IC5vGg5sJV9+vVfKsJqmX0Yw=
-X-Gm-Gg: ASbGncs1okE5FA+kjpAojbf8B3mppS7BjkvJE7DoIbahrtKwfnTYRSn/uJuPGxmGgj/
- x6rHkF4baaeC5dsNR4EiIhKjkhzCr14dTrJMa/fkA8aI0tBeGMFoVd/jq07sMMdESjZoYTyOFIv
- jN4Z5kVOAx8C+cXr/uyPGfdJXUXEF4vJfBiUMipyj7xtPwcxgQT4FvF9HZZ3HfGABzwN+RloVbo
- DvdCreK8EpmT9I=
-X-Received: by 2002:a17:902:ec86:b0:268:15f:8358 with SMTP id
- d9443c01a7336-2951a51e6b1mr9743595ad.42.1761852678766; 
- Thu, 30 Oct 2025 12:31:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrSozkt/xL7JmTNvdr5aPx0vhlHVuV9XYfqVyf148tiJUHhZEABLsbtaXmN74WJBRSq5Hobuo+pVej7HWlRtY=
-X-Received: by 2002:a17:902:ec86:b0:268:15f:8358 with SMTP id
- d9443c01a7336-2951a51e6b1mr9743255ad.42.1761852678191; Thu, 30 Oct 2025
- 12:31:18 -0700 (PDT)
+ bh=iAbYVwRcarBDX/vkEKyB7UWcZC+bH4ku/qdXMMoXhfA=;
+ b=a2CD+JQo+aeHmUz66ibcklOoedzhTyrtF6TXKrxubyC4TdofF8Z8kBLWNr4CleQwyx
+ sbobXRTJljYJ38o+Qv5Nf4SZqD0stlHRw3a0Dpnwj7AyxuD7Bsgq7SV325NcIMK3dzfg
+ Euu39WnbykA8dxuxfnJFKIJJauuMSP+UOXWUtAhVZrsYYQXaM6Me5oIyDx4mlkb7PisC
+ HY7eGiVxO6XgkVBA6lPfEN0/uT5SisRcXC8pdgdU9ccYW1pepg7zOA+h++7dN3UwJ0WR
+ eu6OD9yj6Q5PjUU8kyefh2m/IbwKT0fliujgYFwzyWoxiKwwswB1RL9oWyX7QyE4sW+d
+ 048A==
+X-Gm-Message-State: AOJu0Yxs11CLSDi0fldkG+1k57y4iv6wHZM1iWeJrQkivbh6aKguCc0F
+ rU9tfilYQ5a/nIWnVOw2u08CsnrEW4Q5qrSg4fBnqq/ippvz/Ncbfsxs5aHPA7pkIDoi5CD84yR
+ JDzduY3HnvodHiT9hf8QnEWT2dPMcj84H6bPqflWuRsukvwV7Tp35LxtbkwchAOWXLGI2KR3apM
+ NGTbDf7gXsjnxDfus0JVjKvny9+lcSurE=
+X-Gm-Gg: ASbGncvbIuGqLi4SsOs2SoUAxs/+Ed5+pFLppmYcMitib92yZTVsKFtMtX2KeL3BfXl
+ ydPysS8X49wv0O9NtvBUl7Vp9SASbmieBS2xNyJZnbUNDRiHS6VxA4uGsJhR/u7ra33pqZSqxaG
+ ktUZmwbMRgH08J6gxlNB/L0voPhe7pC2Z/m5pJE//bNwl88CxQSSj91ZzNXkbVbNkqvt3f9g2+b
+ UnV2V8OUJfleH0=
+X-Received: by 2002:a17:902:e891:b0:24b:1585:6350 with SMTP id
+ d9443c01a7336-295185b3b01mr12532835ad.11.1761852670869; 
+ Thu, 30 Oct 2025 12:31:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHnswZo0jArx4LFDSxo/Cevv3kAV9UqBuEn/luWw0ZytMgVawTVAzioL9K6TZLVp3crj+MlTSCtdd6yQ1LmvJM=
+X-Received: by 2002:a17:902:e891:b0:24b:1585:6350 with SMTP id
+ d9443c01a7336-295185b3b01mr12532495ad.11.1761852670316; Thu, 30 Oct 2025
+ 12:31:10 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251030144805.2239954-1-berrange@redhat.com>
- <20251030144805.2239954-3-berrange@redhat.com>
-In-Reply-To: <20251030144805.2239954-3-berrange@redhat.com>
+ <20251030144805.2239954-2-berrange@redhat.com>
+In-Reply-To: <20251030144805.2239954-2-berrange@redhat.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 30 Oct 2025 23:31:07 +0400
-X-Gm-Features: AWmQ_bk6Gp0AtbUtGBKf_9LvryHhKaXZSV317wHJVCCUhkz5zy4kY2LwA4lM-Pc
-Message-ID: <CAMxuvayvt_2AEc-h2XFE3Zvs7TCB3+XMj9beE4r8G+3OP8t3UA@mail.gmail.com>
-Subject: Re: [PATCH 02/21] crypto: add missing free of certs array
+Date: Thu, 30 Oct 2025 23:30:58 +0400
+X-Gm-Features: AWmQ_blVCslhJCSpn_Z4c8QDjrMvRjbE8dTE2xykKuTXElnVUwaY-tKLpByfEyQ
+Message-ID: <CAMxuvawkgPHcV1ts9SbcRELCS871tRgRy3zVHfkNov3mdiEUxw@mail.gmail.com>
+Subject: Re: [PATCH 01/21] crypto: remove redundant parameter checking CA certs
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org
-Content-Type: multipart/alternative; boundary="00000000000007d3b20642654b37"
+Content-Type: multipart/alternative; boundary="0000000000008fa6380642654a2e"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -103,16 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000007d3b20642654b37
+--0000000000008fa6380642654a2e
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-
-Hi
 
 On Thu, Oct 30, 2025 at 6:48=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
 edhat.com>
 wrote:
 
+> The only caller of qcrypto_tls_creds_check_authority_chain always
+> passes 'true' for the 'isCA' parameter. The point of this method
+> is to check the CA chani, so no other value would ever make sense.
+>
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 >
 
@@ -120,66 +122,125 @@ Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 
 > ---
->  crypto/tlscredsx509.c | 1 +
->  1 file changed, 1 insertion(+)
+>  crypto/tlscredsx509.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 >
 > diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-> index 847fd4d9fa..75c70af522 100644
+> index db2b74bafa..847fd4d9fa 100644
 > --- a/crypto/tlscredsx509.c
 > +++ b/crypto/tlscredsx509.c
-> @@ -550,6 +550,7 @@
+> @@ -315,7 +315,6 @@
+> qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+>                                          unsigned int ncacerts,
+>                                          const char *cacertFile,
+>                                          bool isServer,
+> -                                        bool isCA,
+>                                          Error **errp)
+>  {
+>      gnutls_x509_crt_t cert_to_check =3D certs[ncerts - 1];
+> @@ -356,7 +355,7 @@
+> qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+>               */
+>              return qcrypto_tls_creds_check_cert(
+>                  creds, cert_to_check, cacertFile,
+> -                isServer, isCA, errp);
+> +                isServer, true, errp);
+>          }
+>          for (int i =3D 0; i < ncacerts; i++) {
+>              if (gnutls_x509_crt_check_issuer(cert_to_check,
+> @@ -370,7 +369,7 @@
+> qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+>          }
+>
+>          if (qcrypto_tls_creds_check_cert(creds, cert_issuer, cacertFile,
+> -                                         isServer, isCA, errp) < 0) {
+> +                                         isServer, true, errp) < 0) {
+>              return -1;
+>          }
+>
+> @@ -534,7 +533,7 @@
 > qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
->      for (i =3D 0; i < ncerts; i++) {
->          gnutls_x509_crt_deinit(certs[i]);
+>                                                  certs, ncerts,
+>                                                  cacerts, ncacerts,
+>                                                  cacertFile, isServer,
+> -                                                true, errp) < 0) {
+> +                                                errp) < 0) {
+>          goto cleanup;
 >      }
-> +    g_free(certs);
->      for (i =3D 0; i < ncacerts; i++) {
->          gnutls_x509_crt_deinit(cacerts[i]);
->      }
+>
 > --
 > 2.51.1
 >
 >
 
---00000000000007d3b20642654b37
+--0000000000008fa6380642654a2e
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div>Hi</div><br><div class=3D"gmail_quot=
-e"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 30, 2025 at 6:48=E2=80=
-=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" ta=
-rget=3D"_blank">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">Signed-off-by: Daniel P. Berrang=C3=A9 &=
-lt;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat=
-.com</a>&gt;<br></blockquote><div><br></div><div>Reviewed-by: Marc-Andr=C3=
-=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_bl=
-ank">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=A0</div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0crypto/tlscredsx509.c | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c<br>
-index 847fd4d9fa..75c70af522 100644<br>
---- a/crypto/tlscredsx509.c<br>
-+++ b/crypto/tlscredsx509.c<br>
-@@ -550,6 +550,7 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509=
- *creds,<br>
-=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; ncerts; i++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gnutls_x509_crt_deinit(certs[i]);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+=C2=A0 =C2=A0 g_free(certs);<br>
-=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; ncacerts; i++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gnutls_x509_crt_deinit(cacerts[i]);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--- <br>
-2.51.1<br>
-<br>
-</blockquote></div></div>
-</div>
-
---00000000000007d3b20642654b37--
+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGJyPjwvZGl2Pjxi
+cj48ZGl2IGNsYXNzPSJnbWFpbF9xdW90ZSI+PGRpdiBkaXI9Imx0ciIgY2xhc3M9ImdtYWlsX2F0
+dHIiPk9uIFRodSwgT2N0IDMwLCAyMDI1IGF0IDY6NDjigK9QTSBEYW5pZWwgUC4gQmVycmFuZ8Op
+ICZsdDs8YSBocmVmPSJtYWlsdG86YmVycmFuZ2VAcmVkaGF0LmNvbSIgdGFyZ2V0PSJfYmxhbmsi
+PmJlcnJhbmdlQHJlZGhhdC5jb208L2E+Jmd0OyB3cm90ZTo8YnI+PC9kaXY+PGJsb2NrcXVvdGUg
+Y2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRl
+ci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVmdDoxZXgiPlRoZSBv
+bmx5IGNhbGxlciBvZiBxY3J5cHRvX3Rsc19jcmVkc19jaGVja19hdXRob3JpdHlfY2hhaW4gYWx3
+YXlzPGJyPg0KcGFzc2VzICYjMzk7dHJ1ZSYjMzk7IGZvciB0aGUgJiMzOTtpc0NBJiMzOTsgcGFy
+YW1ldGVyLiBUaGUgcG9pbnQgb2YgdGhpcyBtZXRob2Q8YnI+DQppcyB0byBjaGVjayB0aGUgQ0Eg
+Y2hhbmksIHNvIG5vIG90aGVyIHZhbHVlIHdvdWxkIGV2ZXIgbWFrZSBzZW5zZS48YnI+DQo8YnI+
+DQpTaWduZWQtb2ZmLWJ5OiBEYW5pZWwgUC4gQmVycmFuZ8OpICZsdDs8YSBocmVmPSJtYWlsdG86
+YmVycmFuZ2VAcmVkaGF0LmNvbSIgdGFyZ2V0PSJfYmxhbmsiPmJlcnJhbmdlQHJlZGhhdC5jb208
+L2E+Jmd0Ozxicj48L2Jsb2NrcXVvdGU+PGRpdj48YnI+PC9kaXY+PGRpdj5SZXZpZXdlZC1ieTog
+TWFyYy1BbmRyw6kgTHVyZWF1ICZsdDs8YSBocmVmPSJtYWlsdG86bWFyY2FuZHJlLmx1cmVhdUBy
+ZWRoYXQuY29tIiB0YXJnZXQ9Il9ibGFuayI+bWFyY2FuZHJlLmx1cmVhdUByZWRoYXQuY29tPC9h
+PiZndDs8L2Rpdj48ZGl2PsKgPC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBz
+dHlsZT0ibWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2Io
+MjA0LDIwNCwyMDQpO3BhZGRpbmctbGVmdDoxZXgiPg0KLS0tPGJyPg0KwqBjcnlwdG8vdGxzY3Jl
+ZHN4NTA5LmMgfCA3ICsrKy0tLS08YnI+DQrCoDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMo
+KyksIDQgZGVsZXRpb25zKC0pPGJyPg0KPGJyPg0KZGlmZiAtLWdpdCBhL2NyeXB0by90bHNjcmVk
+c3g1MDkuYyBiL2NyeXB0by90bHNjcmVkc3g1MDkuYzxicj4NCmluZGV4IGRiMmI3NGJhZmEuLjg0
+N2ZkNGQ5ZmEgMTAwNjQ0PGJyPg0KLS0tIGEvY3J5cHRvL3Rsc2NyZWRzeDUwOS5jPGJyPg0KKysr
+IGIvY3J5cHRvL3Rsc2NyZWRzeDUwOS5jPGJyPg0KQEAgLTMxNSw3ICszMTUsNiBAQCBxY3J5cHRv
+X3Rsc19jcmVkc19jaGVja19hdXRob3JpdHlfY2hhaW4oUUNyeXB0b1RMU0NyZWRzWDUwOSAqY3Jl
+ZHMsPGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqB1bnNpZ25lZCBpbnQgbmNhY2VydHMsPGJyPg0KwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjb25zdCBjaGFy
+ICpjYWNlcnRGaWxlLDxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgYm9vbCBpc1NlcnZlciw8YnI+DQotwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYm9vbCBpc0NB
+LDxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgRXJyb3IgKiplcnJwKTxicj4NCsKgezxicj4NCsKgIMKgIMKgZ251dGxzX3g1
+MDlfY3J0X3QgY2VydF90b19jaGVjayA9IGNlcnRzW25jZXJ0cyAtIDFdOzxicj4NCkBAIC0zNTYs
+NyArMzU1LDcgQEAgcWNyeXB0b190bHNfY3JlZHNfY2hlY2tfYXV0aG9yaXR5X2NoYWluKFFDcnlw
+dG9UTFNDcmVkc1g1MDkgKmNyZWRzLDxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgICovPGJyPg0K
+wqAgwqAgwqAgwqAgwqAgwqAgwqByZXR1cm4gcWNyeXB0b190bHNfY3JlZHNfY2hlY2tfY2VydCg8
+YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNyZWRzLCBjZXJ0X3RvX2NoZWNrLCBjYWNl
+cnRGaWxlLDxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpc1NlcnZlciwgaXNDQSwgZXJy
+cCk7PGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlzU2VydmVyLCB0cnVlLCBlcnJwKTs8
+YnI+DQrCoCDCoCDCoCDCoCDCoH08YnI+DQrCoCDCoCDCoCDCoCDCoGZvciAoaW50IGkgPSAwOyBp
+ICZsdDsgbmNhY2VydHM7IGkrKykgezxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgaWYgKGdudXRs
+c194NTA5X2NydF9jaGVja19pc3N1ZXIoY2VydF90b19jaGVjayw8YnI+DQpAQCAtMzcwLDcgKzM2
+OSw3IEBAIHFjcnlwdG9fdGxzX2NyZWRzX2NoZWNrX2F1dGhvcml0eV9jaGFpbihRQ3J5cHRvVExT
+Q3JlZHNYNTA5ICpjcmVkcyw8YnI+DQrCoCDCoCDCoCDCoCDCoH08YnI+DQo8YnI+DQrCoCDCoCDC
+oCDCoCDCoGlmIChxY3J5cHRvX3Rsc19jcmVkc19jaGVja19jZXJ0KGNyZWRzLCBjZXJ0X2lzc3Vl
+ciwgY2FjZXJ0RmlsZSw8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpc1NlcnZlciwgaXNDQSwgZXJycCkgJmx0OyAwKSB7
+PGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgaXNTZXJ2ZXIsIHRydWUsIGVycnApICZsdDsgMCkgezxicj4NCsKgIMKgIMKg
+IMKgIMKgIMKgIMKgcmV0dXJuIC0xOzxicj4NCsKgIMKgIMKgIMKgIMKgfTxicj4NCjxicj4NCkBA
+IC01MzQsNyArNTMzLDcgQEAgcWNyeXB0b190bHNfY3JlZHNfeDUwOV9zYW5pdHlfY2hlY2soUUNy
+eXB0b1RMU0NyZWRzWDUwOSAqY3JlZHMsPGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjZXJ0cywgbmNl
+cnRzLDxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2FjZXJ0cywgbmNhY2VydHMsPGJyPg0KwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBjYWNlcnRGaWxlLCBpc1NlcnZlciw8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgdHJ1
+ZSwgZXJycCkgJmx0OyAwKSB7PGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGVycnApICZsdDsgMCkgezxi
+cj4NCsKgIMKgIMKgIMKgIMKgZ290byBjbGVhbnVwOzxicj4NCsKgIMKgIMKgfTxicj4NCjxicj4N
+Ci0tIDxicj4NCjIuNTEuMTxicj4NCjxicj4NCjwvYmxvY2txdW90ZT48L2Rpdj48L2Rpdj4NCjwv
+ZGl2Pg0K
+--0000000000008fa6380642654a2e--
 
 
