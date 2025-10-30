@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9931CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 07:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6621FCCF9FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 07:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEN7X-0002xb-Mh; Thu, 30 Oct 2025 03:30:58 -0400
+	id 1vEN7F-0002oR-W1; Thu, 30 Oct 2025 03:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN7A-0002k8-LX
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:34 -0400
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN7A-0002jV-EX
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:32 -0400
+Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN72-00053C-HT
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN70-00052y-V9
  for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:31 -0400
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 488051400186;
- Thu, 30 Oct 2025 03:30:20 -0400 (EDT)
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfout.phl.internal (Postfix) with ESMTP id F3392EC01BC;
+ Thu, 30 Oct 2025 03:30:16 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-12.internal (MEProxy); Thu, 30 Oct 2025 03:30:20 -0400
+ by phl-compute-11.internal (MEProxy); Thu, 30 Oct 2025 03:30:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1761809420; x=
- 1761895820; bh=SYl82fCDZJcU+VsPevtjzlgUXnb+eBJwdu+nmoiLFJc=; b=b
- oYhgA43vdPkaYGvY2yJgpmMNeNAm4gfzppgA3woiDrXWqq0MP3i6rDX3vnpz+yj1
- 7WCnRexQ2W1rYhiAs8JPgjY2Jv+gnO2nRbyNTMYnWOw3ikMnEECNup7fZTObiIC4
- 82t0YLYYaov2VUfaXQ8pYpfUPlUo9MSEm4/JbxuvXiOy6sFfd4odwpPDKqcGPMk1
- o+WinToJ4XN0DPexMfB9uUi49INqTp1RAQBXVSePEt58OO7j3vJsun6taAZmAb2n
- 00TE8D6Ki0mGmhCCvwBymUHpkOK8E/yhqatg05+OjovlrJqJpO4rJKIhwANkRO0n
- rOyOfQy8DB3CymVO8JEKg==
+ :from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm2; t=1761809416; x=1761895816; bh=c+AVQO0qIt
+ TooVBeHKPFxs72DRI/QQ9Y+06Y7ZD4F50=; b=BfH5tecUbwPlWwVlaw1W0X4utl
+ OaY0XPqU0tZK9yTnR9+kgeMZzeOKf36BmraYVf+hhIdAxNJ1XGfiIbOCW6nAP4Qd
+ ruLdUC5Jv+micVu1gfQ8/ZykQRabRcxJNHIGkUjYpSKI0Bkf7N9R178QjVe9ESPb
+ 8fXq6RexP/tzmS+njy823xNZ7U2yXL1P89tWeEwjfmv+M5HadYRwzxdHmyJCojeL
+ OPedUS71JoIrSTyHhXmC9C4ZU/dh7+nWl0f6QPu5fcPpxXgHL9A8AoXtqXegMr9Z
+ CuXVr5tGibsPygyT8QKg+FtsN0bFKCfU7IEbClv9QzVCoczewj9zhdT1W5cA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1761809420; x=1761895820; bh=S
- Yl82fCDZJcU+VsPevtjzlgUXnb+eBJwdu+nmoiLFJc=; b=T3I4FCDVOPtAgoxhK
- CUrwMIWpIT1NPOZr9PAQ4tmRb9Co00qKQTRVUsMPpXu0gL9RnTNMFa8653eBO3bl
- 5Ry82H5ryXyrbe0yd6mQSmSy2nDIcnoV5Iqg/PSGdI/U2u9gfr1G3qO7hXfsnEdr
- yeYuHwy//K56+RlFFRsR/86V1Ck4aFwQ4VDggACL9SOj13K5t1OJFQZeLy5bGo5k
- osYotbJAaU9Df2AJhCkwmrzPtwW5yNfawwMNCk5+uQZCG68QxLluQwDLUH4rb3ML
- kTNkAvEUumcsSE814ySoTtT+bBnkRnFrr/pRU13JH5z+TtEyu6dMK6nXH9oktW4w
- 5rV2A==
-X-ME-Sender: <xms:DBQDadPijKDi3dBoWc3SY92io_FRkaV8Q1w2zY2hBcyiVpP6Qk8Qkg>
- <xme:DBQDaY5_RginHzEEpuYEvLCdZ9AuuDKISptA6ZmuImdtoxCIDsLaG5jfQgqKobVZ0
- kLsc_vd-XHiNNsOTZ6GL8o0wev6qYSxVsq1EQ1a-T4XKeqqm-xTQHQ>
-X-ME-Received: <xmr:DBQDaX0rv-3rV1ENjNlY-u-9dEIZnghpokYhLRTBq01ApBdiClDunkU0p8O6kXMcaLvvQm5E7u_EK4M0Z8DlsuZYtNr34tqkSZ1DYy8L363EdiJkUwGnblJfi1oXUB78fOFT2j8>
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1761809416; x=1761895816; bh=c+AVQO0qItTooVBeHKPFxs72DRI/QQ9Y+06
+ Y7ZD4F50=; b=eKo5mTISs/EmJgkgrNLZehCfiTx/yyVdjsrbHg+Bw8NpSddGj8F
+ /vMi6cXpx0ZhkiGx8LxxCZd4nKCrvBwHFg+aosFzUbBKf9wIQeEyusEjmHUkxjz6
+ hJMJwniuB2fFrC43qJ0o0mzD4++Q6tYLFXajhCdDhKAUqxKEqT7frcz/dhLYZqOL
+ 0LT422zDxcmxiyXK3CjwyFAL4XdSzzAoScqFn9xlfNlbwrpfAhsUCsPtie9/FNjP
+ 5+tLPiLqam/5x48lVkmL+wA1eV6MsjB4JNIQDDqixJpm+HhmvKTu/XHuf7siiPOt
+ 1OUOLYaGuO8bWDZSqSyz0n1yFXrUIDsDUNg==
+X-ME-Sender: <xms:CBQDaTqR8qVNy2xNcB1Y8uhBfh0GzYqRQWWa5pRL8QKWsU51DHPY3w>
+ <xme:CBQDaR_d0WEodjdHmzOw_JmIerALXUnPETA0vKT0amnDu5eF3EIx4PyYhzhhLregr
+ A0fzr0UU0bZZ_UmKeCEms_ggrJkksfSPpJosbJzRFqwN1lsySP-ovRw>
+X-ME-Received: <xmr:CBQDafWyLcnkL1OojPW2DmOMBJOUBXaDR4Bawc8oebmU8MlQ730rmTIQUg3EsP96XF8pmSrU0J5N7QLleYwsVmg9sUS2DOjQww_5Aqj4_61vZCsYXBtmNjWVlRogiXM2gvbcGrY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeitdduucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
- lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudejudeg
- necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
- esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
- phhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
- gtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphht
- thhopeifihhlfhhrvggurdhmrghllhgrfigrseifuggtrdgtohhmpdhrtghpthhtoheprg
- hlihhsthgrihhrrdhfrhgrnhgtihhsseifuggtrdgtohhmpdhrtghpthhtohepjhhonhgr
- thhhrghnrdgtrghmvghrohhnsehhuhgrfigvihdrtghomhdprhgtphhtthhopehkrdhjvg
- hnshgvnhesshgrmhhsuhhnghdrtghomh
-X-ME-Proxy: <xmx:DBQDaZwTJXAXQn1mfNAJJ0JTPuy8QjPh70x8HYlPae5kxtkMON3A1g>
- <xmx:DBQDaRvc-rPXmENfbeqUBUSSzfGOajqliHIxw20IweGP7g2KExJP0A>
- <xmx:DBQDaTxpYTpXSA0g1v4txnb4kpu7B-HAolChRrU5figg64LeslWFEA>
- <xmx:DBQDacCFy9H4QUCdc3zpbqVHLg8RQ4HvomNyC8DiAQj5j9ZcLoTQ4g>
- <xmx:DBQDaYzfLRrENo9-HPHgLmjTX3rkTWksv-fVAp8bLfJX_4puKPLuJvI->
+ gurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepmfhlrghushculfgv
+ nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
+ epjeevheevhffhvdegveetjeevgfevgeeuueehffeuvedvjeejjeduheeiueffkefhnecu
+ ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggp
+ rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdqug
+ gvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghl
+ lheslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunh
+ hgrdgtohhm
+X-ME-Proxy: <xmx:CBQDafBH69jb5uvHGQUdHy7AT5Jj-0KObqcFMCURU1swse0rs82byw>
+ <xmx:CBQDaYxJjWRG1WhexrlCdKhdtmUt5BgDPpVMgwqWywEowrwwKIOlcA>
+ <xmx:CBQDaUCcFt4-FXgtad4Klpumb7164OkE2XQaCwrVqvd5HrsKIxYMUQ>
+ <xmx:CBQDadaCY9WLxuj8ZQry96yk71lshHa-_ukqF7903SHk_rtMdzaBUA>
+ <xmx:CBQDabNAE8TwnajBAAN5YKLHDC8VTzfBgZbvgRUqFfSnDRHNGJlyfEnr>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 03:30:19 -0400 (EDT)
+ 30 Oct 2025 03:30:15 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Wilfred Mallawa <wilfred.mallawa@wdc.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
  Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 2/7] spdm: add spdm storage transport virtual header
-Date: Thu, 30 Oct 2025 08:29:50 +0100
-Message-ID: <20251030072956.1194-3-its@irrelevant.dk>
+Subject: [PULL 0/7] nvme queue
+Date: Thu, 30 Oct 2025 08:29:48 +0100
+Message-ID: <20251030072956.1194-1-its@irrelevant.dk>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251030072956.1194-1-its@irrelevant.dk>
-References: <20251030072956.1194-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
- helo=fhigh-a1-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.149; envelope-from=its@irrelevant.dk;
+ helo=fout-a6-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -113,51 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-This header contains the transport encoding for an SPDM message that
-uses the SPDM over Storage transport as defined by the DMTF DSP0286.
+Hi,
 
-Note that in the StorageSpdmTransportHeader structure, security_protocol
-field is defined in the SCSI Primary Commands 5 (SPC-5) specification.
-The NVMe specification also refers to the SPC-5 for this definition.
-The security_protocol_specific field is defined in DSP0286 and is
-referred to as SP Specific for NVMe and ATA.
+The following changes since commit e090e0312dc9030d94e38e3d98a88718d3561e4e:
 
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- include/system/spdm-socket.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-10-29 10:44:15 +0100)
 
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 29aa04fd5211..8c07dc12d283 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -88,6 +88,20 @@ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-  */
- void spdm_socket_close(const int socket, uint32_t transport_type);
- 
-+/*
-+ * Defines the transport encoding for SPDM, this information shall be passed
-+ * down to the SPDM server, when conforming to the SPDM over Storage standard
-+ * as defined by DSP0286.
-+ */
-+typedef struct {
-+    uint8_t security_protocol;              /* Must be 0xE8 for SPDM Commands
-+                                               as per SCSI Primary Commands 5 */
-+    uint16_t security_protocol_specific;    /* Bit[7:2] SPDM Operation
-+                                               Bit[0:1] Connection ID
-+                                               per DSP0286 1.0: Section 7.2 */
-+    uint32_t length;                        /* Length of the SPDM Message*/
-+} QEMU_PACKED StorageSpdmTransportHeader;
-+
- #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
- #define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
- #define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
--- 
-2.51.0
+are available in the Git repository at:
 
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20251030
+
+for you to fetch changes up to bce51b83709b548fbecbe64acd65225587c5b803:
+
+  hw/nvme: add atomic boundary support (2025-10-30 07:07:14 +0100)
+
+----------------------------------------------------------------
+nvme queue
+
+----------------------------------------------------------------
+Alan Adamson (2):
+      hw/nvme: enable ns atomic writes
+      hw/nvme: add atomic boundary support
+
+Wilfred Mallawa (5):
+      spdm-socket: add seperate send/recv functions
+      spdm: add spdm storage transport virtual header
+      hw/nvme: add NVMe Admin Security SPDM support
+      spdm: define SPDM transport enum types
+      hw/nvme: connect SPDM over NVMe Security Send/Recv
+
+ backends/spdm-socket.c       |  81 +++++++++--
+ docs/specs/spdm.rst          |  10 +-
+ hw/nvme/ctrl.c               | 335 +++++++++++++++++++++++++++++++++++++++++--
+ hw/nvme/ns.c                 |  74 ++++++++++
+ hw/nvme/nvme.h               |  19 +++
+ include/block/nvme.h         |  15 ++
+ include/hw/pci/pci_device.h  |   2 +
+ include/system/spdm-socket.h |  65 ++++++++-
+ 8 files changed, 571 insertions(+), 30 deletions(-)
 
