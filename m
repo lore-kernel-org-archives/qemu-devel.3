@@ -4,104 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0FD1CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483A7CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEO7n-0001G9-Nk; Thu, 30 Oct 2025 04:35:16 -0400
+	id 1vEO9m-0003EM-7D; Thu, 30 Oct 2025 04:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
- id 1vEO7b-00019Q-0C
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:35:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEO9c-0003Dg-HX
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:37:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
- id 1vEO7P-0005aw-Oy
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:35:02 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 59TNg4Wh811844; Thu, 30 Oct 2025 08:34:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- z/1Fo2bHzFPB7FZ/afoe7y/RHqDF4ibFnHpIGV1W3RY=; b=QUquwZp4fCUNoBoy
- 7Pnvmqb8XI6exQrVRfGdydiF2eZFHEeBiKISmNqe/bnrwK3cvFnSHB+ryAyCfDAi
- +bnZhzvhlecaaj9FZhHUeQk8eqoiJjJeNlbQaf9d/VFrClI60moC9yCyNw5YcCBB
- g8rmkRgfYC9eMrIEiJUz/S1n8aAFpeN21ja8XCoTNuUw8tFoKtIeo5DnVZBRamXt
- h67CxmfyxqYlQ/7zlCRRA9CcjhBdBrvhQ9kEbAvAg5ccELKF/Ytjv3/u/pXz3+lv
- pCOpVv5WAtoOdm0juA3Aqk0Sw/LSkDvbXbz8TfCsZa+cRT3Sa8t7FDzzCwG6v1Ds
- oCy40g==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a3mvgaues-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:34:46 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
- [10.47.209.197])
- by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59U8Ykaj011200
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 08:34:46 GMT
-Received: from haixcui1-gv.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.24; Thu, 30 Oct 2025 01:34:43 -0700
-From: Haixu Cui <quic_haixcui@quicinc.com>
-To: <manos.pitsidianakis@linaro.org>, <alex.bennee@linaro.org>,
- <viresh.kumar@linaro.org>, <quic_tsoni@quicinc.com>,
- <qemu-devel@nongnu.org>, <mst@redhat.com>, <zhiqiang.tu@oss.qualcomm.com>
-CC: Haixu Cui <quic_haixcui@quicinc.com>
-Subject: [PATCH v2 2/3] standard-headers: Update virtio_spi.h from Linux
- v6.18-rc3
-Date: Thu, 30 Oct 2025 16:34:12 +0800
-Message-ID: <20251030083413.1532360-3-quic_haixcui@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251030083413.1532360-1-quic_haixcui@quicinc.com>
-References: <20251030083413.1532360-1-quic_haixcui@quicinc.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEO9T-0005xV-Ax
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:37:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761813416;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=s2bDkk012UoUz84GJrQ0NTHbj+oRUZZQ8Z5aewP4Jys=;
+ b=MAEsyaG7a3Naf0+yOvs4/imgzZ8A5P8ltkcrkfX4Qf2d5cqcMavJ3AfI11PLuKAnc2Kzv/
+ Lgr3cMLA13jFo4V0WePAzBnH8a+cs1439jHLAfpWzk1IPjAAb6UnAcMdt4rWIFzZwYBhJA
+ 0iSrcSJljg08QF2pOkuaHHDOFxHl91E=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-1ay3xhuYNamTOW2HqGRu_g-1; Thu, 30 Oct 2025 04:36:53 -0400
+X-MC-Unique: 1ay3xhuYNamTOW2HqGRu_g-1
+X-Mimecast-MFC-AGG-ID: 1ay3xhuYNamTOW2HqGRu_g_1761813412
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-475c422fd70so7612455e9.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 01:36:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761813412; x=1762418212;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=s2bDkk012UoUz84GJrQ0NTHbj+oRUZZQ8Z5aewP4Jys=;
+ b=E9NjB0ML5jN/rOS+vPYjz7wFUUjzlxcTsMEu5+1gnIvTFY4AAMuIbsjf4QkswI7YdE
+ 0mhACu+wGTGGXl6c5VhyIWhPMsk53shrJH6oRyJyy6ReAN7rGsFL8cwKkd7P+KfQ0Vgd
+ llyx5GncjoyBq0I62Mx4hKm2+Sxe9MH0YPp3I384/uBjE94eD617tZMey9GIxJO3fDJp
+ KJz07qjtPX7ByL+5JEl78NhhdOnVy7Ju8lkrpeDeq2UclJ72AkFozQ+mBFlGHgAQAFmu
+ R5++aYSKx2vX4h5UHSTkXH3JBwE6EjMsfvg0JYbChuRjWu9SSIRLZmPAzmR+vmD5hib0
+ 7M8w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyjwkwGTpI5pA//7+3fGWRix0xl3W9P6HJRoHGQJc1A3U3hj/StvvUGxP6XLwQ+bAx+XIEOpaCYNXt@nongnu.org
+X-Gm-Message-State: AOJu0YxKbnrOa7un08JbiQnJKfbmgGwXPy0kHCuZqVYdeSBZ1mfcKh/9
+ SDiSByl5idyCaALsYwwy7Xh9WxDRVTfDI0y6Gvs9GCSmj4oCQ9sVcCcFO5jnNC1hP1pkc/bBn6n
+ kLxz0sxaY7xfHheyNpnPKpWwwjQKVhlUhbMlSAh7U8vFg99vxeU1mQS0H
+X-Gm-Gg: ASbGncvGObYpM+tTqL4N7j8Wej19+8oaWd+/BbkgATzrbKCM+uWkN7r8ttRPnCAVlvi
+ 97gW/+A7txecahsbTWrMZ3hmurnoMtvqvJgywdTei6MI9GudxKB7MsP3yJoOS+WW3qeh3aVErAr
+ y/tGW7Plfv5n0qhDDtw7mU8VRLnQFRz2bocZcOQnb1hwN+uX+0pXs8j9GQ1auyr9AIskqHesV1V
+ 7zs7a5TMNUnjIDck/Ht9M2cQZGKWBCKsIHaNo8rh+K2KVCatISkYfDrirHHVOVgJDSzlaafdkzN
+ C9WH/4aOqBS0otTcVlxVbkCzbnhR/pYhm3oa0nD9s20KkqRIHncLcLjGDc7fx3n1cH75jB8=
+X-Received: by 2002:a05:600c:608e:b0:46e:432f:32ab with SMTP id
+ 5b1f17b1804b1-4772684ed85mr18298095e9.33.1761813412345; 
+ Thu, 30 Oct 2025 01:36:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+X2lOj4ntpsxc0a4BzJds5llmLeW2xcpkoTMnb7D1S4T8wBKJGTCANsO3AmfVpW5y1xfDeA==
+X-Received: by 2002:a05:600c:608e:b0:46e:432f:32ab with SMTP id
+ 5b1f17b1804b1-4772684ed85mr18297785e9.33.1761813411754; 
+ Thu, 30 Oct 2025 01:36:51 -0700 (PDT)
+Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477285d1e43sm31671775e9.0.2025.10.30.01.36.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Oct 2025 01:36:51 -0700 (PDT)
+Message-ID: <8d65b802-f8b3-4124-ac66-1bb3e89a6013@redhat.com>
+Date: Thu, 30 Oct 2025 09:36:50 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMwMDA2OSBTYWx0ZWRfXy0z09HnEMwTc
- cbx2/zm6MBo6FpwhnSxtoNCEsd5oZsf02lpn7FPK1gg6jB5GPo7Z8bInYerui8UUXJdp2vCCs+x
- vFarSl9Y3ksMEAlq/Sgi4aY9F+paC6WMdsZBGzMHXtcUO293mx5iImyhkAuBaEDrrAtR2ABR3Nm
- /hqaEJRSg1p2pNZJacP/CLGAatbnjnlTSDT3sQZNP9EdcxKTgOSBEDKvCSR3l/XCNH30xmW3hi0
- 06m4G6XUB9fz1fg2JzmHMr52e0/ouzHiSvI6K/4V12OmJYYIPCpw0hOpQCbOICRj5QzHTJW6nOj
- gZw9JNQL3+JVo+jpI5I8CvcbQrBRI+VSJU9sjP+c1XKzIHmW0IAr6xJW6yc+TS4zh+cGnhoPEuw
- DHTIzs/wOqXrygnF5xsUJW3L/IDSbg==
-X-Authority-Analysis: v=2.4 cv=S8XUAYsP c=1 sm=1 tr=0 ts=69032326 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Z4Rwk6OoAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=rqJjEXyH_1KH1bkhQPcA:9
- a=HkZW87K1Qel5hWWM3VKY:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: coGUSrW559DldNFEfsCTvfKBrZ9-PLIK
-X-Proofpoint-ORIG-GUID: coGUSrW559DldNFEfsCTvfKBrZ9-PLIK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 bulkscore=0 clxscore=1011
- phishscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2510300069
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_haixcui@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 05/10] python/mkvenv: rename 'testdeps' to 'functests'
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Kevin Wolf <kwolf@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
+References: <20251028220342.1407883-1-jsnow@redhat.com>
+ <20251028220342.1407883-6-jsnow@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251028220342.1407883-6-jsnow@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,212 +156,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Synced virtio_spi.h from upstream Linux kernelusing
-scripts/update-linux-headers.sh.
+On 28/10/2025 23.03, John Snow wrote:
+> pygdmi is only needed for functional tests and not tests in general; to
+> prepare for more universally required test dependencies, rename this
+> dependency group "functests" instead.
+By the way, "check-venv" also seems to be still in use by 
+tests/vm/Makefile.include ... not sure whether you want to mention it here 
+somewhere, though.
 
-Source:
-- Linux commit dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa (v6.18-rc3)
-- Author: Linus Torvalds <torvalds@linux-foundation.org>
-- Date:   Sun Oct 26 15:59:49 2025 -0700
-
-This update ensures QEMU's standard headers are consistent with the latest
-virtio SPI definitions from Linux v6.18-rc3.
-
-Signed-off-by: Haixu Cui <quic_haixcui@quicinc.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- include/standard-headers/linux/virtio_spi.h | 181 ++++++++++++++++++++
- 1 file changed, 181 insertions(+)
- create mode 100644 include/standard-headers/linux/virtio_spi.h
-
-diff --git a/include/standard-headers/linux/virtio_spi.h b/include/standard-headers/linux/virtio_spi.h
-new file mode 100644
-index 0000000000..54e570fb4a
---- /dev/null
-+++ b/include/standard-headers/linux/virtio_spi.h
-@@ -0,0 +1,181 @@
-+/* SPDX-License-Identifier: BSD-3-Clause */
-+/*
-+ * Copyright (C) 2023 OpenSynergy GmbH
-+ * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+#ifndef _LINUX_VIRTIO_VIRTIO_SPI_H
-+#define _LINUX_VIRTIO_VIRTIO_SPI_H
-+
-+#include "standard-headers/linux/types.h"
-+#include "standard-headers/linux/virtio_config.h"
-+#include "standard-headers/linux/virtio_ids.h"
-+#include "standard-headers/linux/virtio_types.h"
-+
-+/* Sample data on trailing clock edge */
-+#define VIRTIO_SPI_CPHA			_BITUL(0)
-+/* Clock is high when IDLE */
-+#define VIRTIO_SPI_CPOL			_BITUL(1)
-+/* Chip Select is active high */
-+#define VIRTIO_SPI_CS_HIGH			_BITUL(2)
-+/* Transmit LSB first */
-+#define VIRTIO_SPI_MODE_LSB_FIRST		_BITUL(3)
-+/* Loopback mode */
-+#define VIRTIO_SPI_MODE_LOOP			_BITUL(4)
-+
-+/**
-+ * struct virtio_spi_config - All config fields are read-only for the
-+ * Virtio SPI driver
-+ * @cs_max_number: maximum number of chipselect the host SPI controller
-+ *   supports.
-+ * @cs_change_supported: indicates if the host SPI controller supports to toggle
-+ *   chipselect after each transfer in one message:
-+ *   0: unsupported, chipselect will be kept in active state throughout the
-+ *      message transaction;
-+ *   1: supported.
-+ *   Note: Message here contains a sequence of SPI transfers.
-+ * @tx_nbits_supported: indicates the supported number of bit for writing:
-+ *   bit 0: DUAL (2-bit transfer), 1 for supported
-+ *   bit 1: QUAD (4-bit transfer), 1 for supported
-+ *   bit 2: OCTAL (8-bit transfer), 1 for supported
-+ *   other bits are reserved as 0, 1-bit transfer is always supported.
-+ * @rx_nbits_supported: indicates the supported number of bit for reading:
-+ *   bit 0: DUAL (2-bit transfer), 1 for supported
-+ *   bit 1: QUAD (4-bit transfer), 1 for supported
-+ *   bit 2: OCTAL (8-bit transfer), 1 for supported
-+ *   other bits are reserved as 0, 1-bit transfer is always supported.
-+ * @bits_per_word_mask: mask indicating which values of bits_per_word are
-+ *   supported. If not set, no limitation for bits_per_word.
-+ * @mode_func_supported: indicates the following features are supported or not:
-+ *   bit 0-1: CPHA feature
-+ *     0b00: invalid, should support as least one CPHA setting
-+ *     0b01: supports CPHA=0 only
-+ *     0b10: supports CPHA=1 only
-+ *     0b11: supports CPHA=0 and CPHA=1.
-+ *   bit 2-3: CPOL feature
-+ *     0b00: invalid, should support as least one CPOL setting
-+ *     0b01: supports CPOL=0 only
-+ *     0b10: supports CPOL=1 only
-+ *     0b11: supports CPOL=0 and CPOL=1.
-+ *   bit 4: chipselect active high feature, 0 for unsupported and 1 for
-+ *     supported, chipselect active low is supported by default.
-+ *   bit 5: LSB first feature, 0 for unsupported and 1 for supported,
-+ *     MSB first is supported by default.
-+ *   bit 6: loopback mode feature, 0 for unsupported and 1 for supported,
-+ *     normal mode is supported by default.
-+ * @max_freq_hz: the maximum clock rate supported in Hz unit, 0 means no
-+ *   limitation for transfer speed.
-+ * @max_word_delay_ns: the maximum word delay supported, in nanoseconds.
-+ *   A value of 0 indicates that word delay is unsupported.
-+ *   Each transfer may consist of a sequence of words.
-+ * @max_cs_setup_ns: the maximum delay supported after chipselect is asserted,
-+ *   in ns unit, 0 means delay is not supported to introduce after chipselect is
-+ *   asserted.
-+ * @max_cs_hold_ns: the maximum delay supported before chipselect is deasserted,
-+ *   in ns unit, 0 means delay is not supported to introduce before chipselect
-+ *   is deasserted.
-+ * @max_cs_incative_ns: maximum delay supported after chipselect is deasserted,
-+ *   in ns unit, 0 means delay is not supported to introduce after chipselect is
-+ *   deasserted.
-+ */
-+struct virtio_spi_config {
-+	uint8_t cs_max_number;
-+	uint8_t cs_change_supported;
-+#define VIRTIO_SPI_RX_TX_SUPPORT_DUAL		_BITUL(0)
-+#define VIRTIO_SPI_RX_TX_SUPPORT_QUAD		_BITUL(1)
-+#define VIRTIO_SPI_RX_TX_SUPPORT_OCTAL		_BITUL(2)
-+	uint8_t tx_nbits_supported;
-+	uint8_t rx_nbits_supported;
-+	uint32_t bits_per_word_mask;
-+#define VIRTIO_SPI_MF_SUPPORT_CPHA_0		_BITUL(0)
-+#define VIRTIO_SPI_MF_SUPPORT_CPHA_1		_BITUL(1)
-+#define VIRTIO_SPI_MF_SUPPORT_CPOL_0		_BITUL(2)
-+#define VIRTIO_SPI_MF_SUPPORT_CPOL_1		_BITUL(3)
-+#define VIRTIO_SPI_MF_SUPPORT_CS_HIGH		_BITUL(4)
-+#define VIRTIO_SPI_MF_SUPPORT_LSB_FIRST		_BITUL(5)
-+#define VIRTIO_SPI_MF_SUPPORT_LOOPBACK		_BITUL(6)
-+	uint32_t mode_func_supported;
-+	uint32_t max_freq_hz;
-+	uint32_t max_word_delay_ns;
-+	uint32_t max_cs_setup_ns;
-+	uint32_t max_cs_hold_ns;
-+	uint32_t max_cs_inactive_ns;
-+};
-+
-+/**
-+ * struct spi_transfer_head - virtio SPI transfer descriptor
-+ * @chip_select_id: chipselect index the SPI transfer used.
-+ * @bits_per_word: the number of bits in each SPI transfer word.
-+ * @cs_change: whether to deselect device after finishing this transfer
-+ *     before starting the next transfer, 0 means cs keep asserted and
-+ *     1 means cs deasserted then asserted again.
-+ * @tx_nbits: bus width for write transfer.
-+ *     0,1: bus width is 1, also known as SINGLE
-+ *     2  : bus width is 2, also known as DUAL
-+ *     4  : bus width is 4, also known as QUAD
-+ *     8  : bus width is 8, also known as OCTAL
-+ *     other values are invalid.
-+ * @rx_nbits: bus width for read transfer.
-+ *     0,1: bus width is 1, also known as SINGLE
-+ *     2  : bus width is 2, also known as DUAL
-+ *     4  : bus width is 4, also known as QUAD
-+ *     8  : bus width is 8, also known as OCTAL
-+ *     other values are invalid.
-+ * @reserved: for future use.
-+ * @mode: SPI transfer mode.
-+ *     bit 0: CPHA, determines the timing (i.e. phase) of the data
-+ *         bits relative to the clock pulses.For CPHA=0, the
-+ *         "out" side changes the data on the trailing edge of the
-+ *         preceding clock cycle, while the "in" side captures the data
-+ *         on (or shortly after) the leading edge of the clock cycle.
-+ *         For CPHA=1, the "out" side changes the data on the leading
-+ *         edge of the current clock cycle, while the "in" side
-+ *         captures the data on (or shortly after) the trailing edge of
-+ *         the clock cycle.
-+ *     bit 1: CPOL, determines the polarity of the clock. CPOL=0 is a
-+ *         clock which idles at 0, and each cycle consists of a pulse
-+ *         of 1. CPOL=1 is a clock which idles at 1, and each cycle
-+ *         consists of a pulse of 0.
-+ *     bit 2: CS_HIGH, if 1, chip select active high, else active low.
-+ *     bit 3: LSB_FIRST, determines per-word bits-on-wire, if 0, MSB
-+ *         first, else LSB first.
-+ *     bit 4: LOOP, loopback mode.
-+ * @freq: the transfer speed in Hz.
-+ * @word_delay_ns: delay to be inserted between consecutive words of a
-+ *     transfer, in ns unit.
-+ * @cs_setup_ns: delay to be introduced after CS is asserted, in ns
-+ *     unit.
-+ * @cs_delay_hold_ns: delay to be introduced before CS is deasserted
-+ *     for each transfer, in ns unit.
-+ * @cs_change_delay_inactive_ns: delay to be introduced after CS is
-+ *     deasserted and before next asserted, in ns unit.
-+ */
-+struct spi_transfer_head {
-+	uint8_t chip_select_id;
-+	uint8_t bits_per_word;
-+	uint8_t cs_change;
-+	uint8_t tx_nbits;
-+	uint8_t rx_nbits;
-+	uint8_t reserved[3];
-+	uint32_t mode;
-+	uint32_t freq;
-+	uint32_t word_delay_ns;
-+	uint32_t cs_setup_ns;
-+	uint32_t cs_delay_hold_ns;
-+	uint32_t cs_change_delay_inactive_ns;
-+};
-+
-+/**
-+ * struct spi_transfer_result - virtio SPI transfer result
-+ * @result: Transfer result code.
-+ *          VIRTIO_SPI_TRANS_OK: Transfer successful.
-+ *          VIRTIO_SPI_PARAM_ERR: Parameter error.
-+ *          VIRTIO_SPI_TRANS_ERR: Transfer error.
-+ */
-+struct spi_transfer_result {
-+#define VIRTIO_SPI_TRANS_OK	0
-+#define VIRTIO_SPI_PARAM_ERR	1
-+#define VIRTIO_SPI_TRANS_ERR	2
-+	uint8_t result;
-+};
-+
-+#endif /* #ifndef _LINUX_VIRTIO_VIRTIO_SPI_H */
--- 
-2.34.1
+  Thomas
 
 
