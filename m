@@ -4,83 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC286CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 07:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9931CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 07:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEMdd-00056j-8f; Thu, 30 Oct 2025 03:00:01 -0400
+	id 1vEN7X-0002xb-Mh; Thu, 30 Oct 2025 03:30:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vEMdW-00056W-WF
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 02:59:57 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vEMdM-0000sG-Dr
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 02:59:53 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-63b9da57cecso1062703a12.0
- for <qemu-devel@nongnu.org>; Wed, 29 Oct 2025 23:59:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761807578; x=1762412378; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jJ/HO6pHQVocYwCqGJnhbN0FHbwRi34rNhDy730oj+I=;
- b=D8vsWG9q9Md4emtDzfwd2XylL48QzWkii731JBlo8M2jjDCYT8rxB6ReURTOOB4iTh
- aTnJ40sohxrVkNYpF2eUHy2P2Fr9c8TvNcfbjy9Pm8pu2yABNvAxxOPIUItDSXcCJ6Fo
- QMtP6CikS0iM3T0vuGo12U9X7pBcC5Fxe5R6fdtFGe/5Rkxu2XXVTTwqXNxlm6uLQENA
- IFWcTw+Ho99vUseuFb+RPP9Nka7ICTXgNqfIM5kl1GUoeGPmXBsuJX3b7GTsZY+PLk9E
- t7yssP0JwaQ9Ox5RUdt4I2nSVWAbVm/vkwVe2S0jws2aaL2+NJSSq7jLK0kOenp2n2Nz
- IANQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761807578; x=1762412378;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jJ/HO6pHQVocYwCqGJnhbN0FHbwRi34rNhDy730oj+I=;
- b=KTCq0cqABRk+qLiAJGGWOnKs9j8ULXRrDFuvX21no80F+SFgj8NNuFNqHycF0TUNRT
- 7fYtr5CY35qlfBxuO0jX7kXsEebVL+NdoFkjXL6n+xZ8O2sWpa8FK/UfGPV+RqTaT1IA
- jbvfOntxgnSQJbQYC3+bRQxj7I/mNwqucYgOiGLFDUJMH3XYJgo9tGCwAUUnCh/qLrIe
- h/ZVNvjLIAB1NSc8/fBp6oO9TyXhaS1eEP5cc3KCkCctNCCX9gu/ZrBsnWDIb6CyuSWR
- V3WcryUWiDoIryQbHeF9ru4aYkYPDilX5snh3bD5Pvu7XP0s2wfioW5KnNTzZyWef15T
- ViOA==
-X-Gm-Message-State: AOJu0Yz5YhwO4+Wc+0rq8/TUf+5mzJ1XfgEGobEAuM6mcTO55ZHWboDm
- U/kIt9dMOp5jXvXN8cb6RyWeQQXBpy/k3WbuO6jm0tbOkJL4cifY5cKc64ledZPfX5J/8139ziP
- a+K0W6P5wKAgfsBNoPDOjmakoXJoTjA7D+JTBsKmpCg==
-X-Gm-Gg: ASbGncsH96oTkLgaQxHoDDnKQlX/isFTqLnmOUfro9ZzBiTlULemQuQnFDMoGVyHvVe
- 3ZlolCH6AXyJKsq/Ok6+YXHFjaq3Di3eOQCFUD1D567dE0vCXO8tTVSM90cS8CYpQj01gYpTlxV
- l/MATRGr7fC5og3Y+DxoIXmewR2GAiHXpWvBkQxYwF25BzkCmd0jLG6tAq/IBq7m4VKDoJGJCIg
- cS/lwWY4cE63fM/19l6sSd0UA+cQ5C9BXu2kwCzxlgd+cF/DWMxNbFNseW88yhrc3jYlHQ=
-X-Google-Smtp-Source: AGHT+IH0xKtTOvXSj0w0p9pGjs44bfmfXmJe9ZjkC3NgIW10Mc0UYv7dQoY/VDKyF22Hv8KKVyDpPTiWdRNVg40T52w=
-X-Received: by 2002:a05:6402:3506:b0:640:464a:56ce with SMTP id
- 4fb4d7f45d1cf-64061a206bdmr1615343a12.2.1761807577663; Wed, 29 Oct 2025
- 23:59:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN7A-0002k8-LX
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:34 -0400
+Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vEN72-00053C-HT
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 03:30:31 -0400
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 488051400186;
+ Thu, 30 Oct 2025 03:30:20 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-12.internal (MEProxy); Thu, 30 Oct 2025 03:30:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1761809420; x=
+ 1761895820; bh=SYl82fCDZJcU+VsPevtjzlgUXnb+eBJwdu+nmoiLFJc=; b=b
+ oYhgA43vdPkaYGvY2yJgpmMNeNAm4gfzppgA3woiDrXWqq0MP3i6rDX3vnpz+yj1
+ 7WCnRexQ2W1rYhiAs8JPgjY2Jv+gnO2nRbyNTMYnWOw3ikMnEECNup7fZTObiIC4
+ 82t0YLYYaov2VUfaXQ8pYpfUPlUo9MSEm4/JbxuvXiOy6sFfd4odwpPDKqcGPMk1
+ o+WinToJ4XN0DPexMfB9uUi49INqTp1RAQBXVSePEt58OO7j3vJsun6taAZmAb2n
+ 00TE8D6Ki0mGmhCCvwBymUHpkOK8E/yhqatg05+OjovlrJqJpO4rJKIhwANkRO0n
+ rOyOfQy8DB3CymVO8JEKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1761809420; x=1761895820; bh=S
+ Yl82fCDZJcU+VsPevtjzlgUXnb+eBJwdu+nmoiLFJc=; b=T3I4FCDVOPtAgoxhK
+ CUrwMIWpIT1NPOZr9PAQ4tmRb9Co00qKQTRVUsMPpXu0gL9RnTNMFa8653eBO3bl
+ 5Ry82H5ryXyrbe0yd6mQSmSy2nDIcnoV5Iqg/PSGdI/U2u9gfr1G3qO7hXfsnEdr
+ yeYuHwy//K56+RlFFRsR/86V1Ck4aFwQ4VDggACL9SOj13K5t1OJFQZeLy5bGo5k
+ osYotbJAaU9Df2AJhCkwmrzPtwW5yNfawwMNCk5+uQZCG68QxLluQwDLUH4rb3ML
+ kTNkAvEUumcsSE814ySoTtT+bBnkRnFrr/pRU13JH5z+TtEyu6dMK6nXH9oktW4w
+ 5rV2A==
+X-ME-Sender: <xms:DBQDadPijKDi3dBoWc3SY92io_FRkaV8Q1w2zY2hBcyiVpP6Qk8Qkg>
+ <xme:DBQDaY5_RginHzEEpuYEvLCdZ9AuuDKISptA6ZmuImdtoxCIDsLaG5jfQgqKobVZ0
+ kLsc_vd-XHiNNsOTZ6GL8o0wev6qYSxVsq1EQ1a-T4XKeqqm-xTQHQ>
+X-ME-Received: <xmr:DBQDaX0rv-3rV1ENjNlY-u-9dEIZnghpokYhLRTBq01ApBdiClDunkU0p8O6kXMcaLvvQm5E7u_EK4M0Z8DlsuZYtNr34tqkSZ1DYy8L363EdiJkUwGnblJfi1oXUB78fOFT2j8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeitdduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudejudeg
+ necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
+ gtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphht
+ thhopeifihhlfhhrvggurdhmrghllhgrfigrseifuggtrdgtohhmpdhrtghpthhtoheprg
+ hlihhsthgrihhrrdhfrhgrnhgtihhsseifuggtrdgtohhmpdhrtghpthhtohepjhhonhgr
+ thhhrghnrdgtrghmvghrohhnsehhuhgrfigvihdrtghomhdprhgtphhtthhopehkrdhjvg
+ hnshgvnhesshgrmhhsuhhnghdrtghomh
+X-ME-Proxy: <xmx:DBQDaZwTJXAXQn1mfNAJJ0JTPuy8QjPh70x8HYlPae5kxtkMON3A1g>
+ <xmx:DBQDaRvc-rPXmENfbeqUBUSSzfGOajqliHIxw20IweGP7g2KExJP0A>
+ <xmx:DBQDaTxpYTpXSA0g1v4txnb4kpu7B-HAolChRrU5figg64LeslWFEA>
+ <xmx:DBQDacCFy9H4QUCdc3zpbqVHLg8RQ4HvomNyC8DiAQj5j9ZcLoTQ4g>
+ <xmx:DBQDaYzfLRrENo9-HPHgLmjTX3rkTWksv-fVAp8bLfJX_4puKPLuJvI->
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Oct 2025 03:30:19 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 2/7] spdm: add spdm storage transport virtual header
+Date: Thu, 30 Oct 2025 08:29:50 +0100
+Message-ID: <20251030072956.1194-3-its@irrelevant.dk>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251030072956.1194-1-its@irrelevant.dk>
+References: <20251030072956.1194-1-its@irrelevant.dk>
 MIME-Version: 1.0
-References: <20250120061310.81368-1-philmd@linaro.org>
- <395c7c86-08b1-4af4-a5ca-012a9aa89339@linaro.org>
-In-Reply-To: <395c7c86-08b1-4af4-a5ca-012a9aa89339@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 30 Oct 2025 08:59:11 +0200
-X-Gm-Features: AWmQ_bl6hqBdTUMqfB1A4rR44hN5EJ76yR6SMau1gPDpmEtyNMVrsra4cLNQE5A
-Message-ID: <CAAjaMXZSkxCgzdC6w-onUxVxU_ZW5fiBtW5-ioeKaXwD_7tJeQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] cpus: Constify some CPUState arguments
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- kvm@vger.kernel.org, Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,25 +113,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 29, 2025 at 7:59=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 20/1/25 07:13, Philippe Mathieu-Daud=C3=A9 wrote:
-> > This is in preparation of making various CPUClass handlers
-> > take a const CPUState argument.
-> >
-> > Philippe Mathieu-Daud=C3=A9 (7):
-> >    qemu/thread: Constify qemu_thread_get_affinity() 'thread' argument
-> >    qemu/thread: Constify qemu_thread_is_self() argument
-> >    cpus: Constify qemu_cpu_is_self() argument
-> >    cpus: Constify cpu_get_address_space() 'cpu' argument
-> >    cpus: Constify cpu_is_stopped() argument
-> >    cpus: Constify cpu_work_list_empty() argument
-> >    accels: Constify AccelOpsClass::cpu_thread_is_idle() argument
->
-> ping?
->
+From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 
-Hi Philippe, I can't find this series in my mailbox and it's not on
-lore.kernel.org/patchew/lists.gnu.org either. Resend?
+This header contains the transport encoding for an SPDM message that
+uses the SPDM over Storage transport as defined by the DMTF DSP0286.
+
+Note that in the StorageSpdmTransportHeader structure, security_protocol
+field is defined in the SCSI Primary Commands 5 (SPC-5) specification.
+The NVMe specification also refers to the SPC-5 for this definition.
+The security_protocol_specific field is defined in DSP0286 and is
+referred to as SP Specific for NVMe and ATA.
+
+Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ include/system/spdm-socket.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
+index 29aa04fd5211..8c07dc12d283 100644
+--- a/include/system/spdm-socket.h
++++ b/include/system/spdm-socket.h
+@@ -88,6 +88,20 @@ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
+  */
+ void spdm_socket_close(const int socket, uint32_t transport_type);
+ 
++/*
++ * Defines the transport encoding for SPDM, this information shall be passed
++ * down to the SPDM server, when conforming to the SPDM over Storage standard
++ * as defined by DSP0286.
++ */
++typedef struct {
++    uint8_t security_protocol;              /* Must be 0xE8 for SPDM Commands
++                                               as per SCSI Primary Commands 5 */
++    uint16_t security_protocol_specific;    /* Bit[7:2] SPDM Operation
++                                               Bit[0:1] Connection ID
++                                               per DSP0286 1.0: Section 7.2 */
++    uint32_t length;                        /* Length of the SPDM Message*/
++} QEMU_PACKED StorageSpdmTransportHeader;
++
+ #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
+ #define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
+ #define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
+-- 
+2.51.0
+
 
