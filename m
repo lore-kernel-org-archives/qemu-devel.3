@@ -4,96 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C82CCF9FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 13:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C939FCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 13:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vESZQ-0005V2-Qq; Thu, 30 Oct 2025 09:20:05 -0400
+	id 1vESbB-0006Cs-97; Thu, 30 Oct 2025 09:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vESZN-0005SI-GH
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:20:02 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vESZF-0004wZ-Aq
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 09:20:00 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-79af647cef2so1074414b3a.3
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 06:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761830389; x=1762435189; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=q33dVfR7I0sRlr0ArDRLpth+Uv5pZ35yocp5NV8Ir/8=;
- b=HeKXTvI8xFZdUjRm5/vFB+Hc5PSgxTpUYRUdH5gnbYkZOFybJ0hUpnRCitGRnVbWZM
- Wx1aPpr/vZ0INverjqvBPnO3MDoYFZSMxMimY0cDLfRrna8i3Xo5JaL6pl/HZL2a+cBS
- VVZr8Ldr92AYICs8mfe9L/LNBv8Zm4I0JnMA43yG111wwv2kz6uov20FaN35wYiHjLGB
- MTZigzHWcVxq5r1eTAt9DVTzhNRwt7R5XIyiTuxJXwRnn0t7LHtsTiB4B6QeSb1nrHBU
- qt/ZBtgZCbXG5LdG24F9psVUwo8/22AMI+fb1z/CH88G0emeB1AW1P0HEpwihtIPBnyM
- osDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761830389; x=1762435189;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q33dVfR7I0sRlr0ArDRLpth+Uv5pZ35yocp5NV8Ir/8=;
- b=GfI/pfxdWZ87ida6SZuV/X1fDtwV+QAeKUBeTHPRAOGouopkOVA4s572juiRtusA6z
- VYeCZYGfRQ4VRLK2w24O+QbivxrntJweh0EWVAKq7u+Zb7se0M+6DMxY/A6kc+AbB9ch
- mfWafE6IUUCUnR+aGpFP3iAzV3OFpMq0NISvObqQOrri0cyTnDhG7zEke4GdKECiqjQC
- NtAPqTdBO2Zf3REgfrXWim90/mbfkiLhxKe6v9Snbl13ZV5Qkcp9Jeh/uVBoD7ui/lfW
- ZL0l8X0ckoBa1tOKz80/tlH8oh9Yu84ghLdpxILvRLBKJyiKP7Fa6p8YWohwav7fa2LS
- ytPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXICy1aEOFYdwiv0NfdGERXkmj7dDrO+P5NoRFF+7HTEDqrNiTyh1KxVD3JuaJGCefY98S4OqjqzDn@nongnu.org
-X-Gm-Message-State: AOJu0YzZw4hp8I4ahOdnv4v2UDp7TkruwWX1MUDQI3uld0Y+BnRZFG34
- 2zGJ3KB4SVk1HyL9sOpZp9MLyW8STqlJWJgjRx9N7tdJ3sZWM/vO+4DZ+BST8wDNVk8=
-X-Gm-Gg: ASbGncu/6i9TyT6hVJ1xgJcYsnsoiQhwF0buYlDweEyaoP3IGJYTxHyGiHAUgh2MEVp
- zkcPfF0u01gcf0dmfmARl5U7bbVtGkvCqyrsQMWkDW57rUKCxbLWdyFq2dQpD7tfvVZoF21PRBM
- ON4+BzBbBC7SPrM0xridm2/ZNzp+K+MuyskLS1/RwVE6XKqI7486diwJNfjISl3j0AZk4cuKaNH
- CLR6AqLyROhzse7Uj6NCijvJVXrw2XYmO1PdafQfZcBufx0iWRShGYQF2jv63f8LUduvBRF+uo1
- AKgAxIIqbv46yqfJtDRT+7+5YnI+duzjdUmPf6GFyQ0ublQ2NCc5i/RB0o8ep4YdsjM+4alFqLC
- 8wACn7T01WZvZ5b54h327jDmZLua52lg6d/ldbJ27y8Oyo/Prq4HAN05fQQSEgkbdFTKBTwqxjw
- /sVjV5vq95KHhc5dwQRCs+phg=
-X-Google-Smtp-Source: AGHT+IHBdcctJTdK54jyns5fuimMRNnCTLDhhckFxkdoJsjNRL8JTQ7RTpv+CgfCY5U2pEX7YNFpJA==
-X-Received: by 2002:a05:6a21:6d95:b0:341:c4e5:f626 with SMTP id
- adf61e73a8af0-34784a490ccmr4511071637.7.1761830389128; 
- Thu, 30 Oct 2025 06:19:49 -0700 (PDT)
-Received: from [192.168.68.110] ([187.101.65.79])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a41408e0cbsm18773622b3a.66.2025.10.30.06.19.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Oct 2025 06:19:48 -0700 (PDT)
-Message-ID: <8200a695-2f99-4d08-a245-7fa9ea0ebb9d@ventanamicro.com>
-Date: Thu, 30 Oct 2025 10:19:45 -0300
+ (Exim 4.90_1) (envelope-from <chao.liu.riscv@isrc.iscas.ac.cn>)
+ id 1vER1H-0004st-Fq; Thu, 30 Oct 2025 07:40:43 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <chao.liu.riscv@isrc.iscas.ac.cn>)
+ id 1vER1A-00080A-TA; Thu, 30 Oct 2025 07:40:42 -0400
+Received: from [192.168.71.4] (unknown [114.88.97.170])
+ by APP-01 (Coremail) with SMTP id qwCowAC3H2qdTgNpiNo0AA--.1692S2;
+ Thu, 30 Oct 2025 19:40:13 +0800 (CST)
+Message-ID: <9d373320-f90e-4a33-9d32-8a069046d545@isrc.iscas.ac.cn>
+Date: Thu, 30 Oct 2025 19:40:09 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/intc/riscv_aplic: Factor out source_active() and
- remove duplicate checks
-To: Nikita Novikov <n.novikov@syntacore.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20251029-n-novikov-aplic_aia_ro-v1-0-39fec74c918a@syntacore.com>
- <20251029-n-novikov-aplic_aia_ro-v1-2-39fec74c918a@syntacore.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20251029-n-novikov-aplic_aia_ro-v1-2-39fec74c918a@syntacore.com>
+To: dbarboza@ventanamicro.com
+Cc: ajones@ventanamicro.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ zhiwei_liu@linux.alibaba.com
+References: <20250528200129.1548259-5-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v3 4/4] hw/riscv/server_platform_ref.c: add riscv-iommu-sys
+From: Chao Liu <chao.liu.riscv@isrc.iscas.ac.cn>
+In-Reply-To: <20250528200129.1548259-5-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qwCowAC3H2qdTgNpiNo0AA--.1692S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxJrWUAFyDKrW8CFW5Wr1rWFg_yoW8Cw1xpF
+ 4DGF45Cr4rJFnaqFy3Kr43Gr15Xan3uFW5C34xZF1UAw47JrWUXwnrtw18WFy8GFWqy34Y
+ 9Fyv9F1akF4jqaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUkFb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6r1j6r18M7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+ A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+ jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4
+ A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+ 64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+ Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK
+ 82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGw
+ C20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48J
+ MIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMI
+ IF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
+ 87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jYlksUUUUU=
+X-Originating-IP: [114.88.97.170]
+X-CM-SenderInfo: pfkd0hholxh2hlvf4qplvuuh5lvft2wodfhubq/1tbiDAULAGkDNAZbRwAAsG
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=chao.liu.riscv@isrc.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 30 Oct 2025 09:21:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,98 +77,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/29/25 4:17 AM, Nikita Novikov wrote:
-> Refactor the APLIC code to consolidate repeated conditions checking
-> whether an interrupt source is valid, delegated, or inactive.
+On Wed, May 28, 2025 at 05:01:29PM -0300, Daniel Henrique Barboza wrote:
+>Add an always present IOMMU platform device for the rvsp-ref board.
+>
+>The IRQs being used are similar to what the 'virt' board is using: IRQs
+>36 to 39, one IRQ for queue.
+>
+>Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>---
+> hw/riscv/Kconfig               |  1 +
+> hw/riscv/server_platform_ref.c | 78 ++++++++++++++++++++++++++++++++--
+> 2 files changed, 75 insertions(+), 4 deletions(-)
+>
+>diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+>index f626774c52..cd70095687 100644
+>--- a/hw/riscv/Kconfig
+>+++ b/hw/riscv/Kconfig
+>@@ -82,6 +82,7 @@ config SERVER_PLATFORM_REF
+>     select RISCV_ACLINT
+>     select RISCV_APLIC
+>     select RISCV_IMSIC
+>+    select RISCV_IOMMU
 > 
-> Signed-off-by: Nikita Novikov <n.novikov@syntacore.com>
-> ---
-
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/intc/riscv_aplic.c | 44 +++++++-------------------------------------
->   1 file changed, 7 insertions(+), 37 deletions(-)
+> config SHAKTI_C
+>     bool
+>diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+>index 5102286103..9740b395f6 100644
+>--- a/hw/riscv/server_platform_ref.c
+>+++ b/hw/riscv/server_platform_ref.c
+>@@ -31,6 +31,8 @@
+> #include "hw/riscv/riscv_hart.h"
+> #include "hw/riscv/boot.h"
+> #include "hw/riscv/numa.h"
+>+#include "hw/riscv/iommu.h"
+>+#include "hw/riscv/riscv-iommu-bits.h"
+> #include "hw/intc/riscv_aclint.h"
+> #include "hw/intc/riscv_aplic.h"
+> #include "hw/intc/riscv_imsic.h"
+>@@ -94,6 +96,7 @@ enum {
+>     RVSP_MROM,
+>     RVSP_RESET_SYSCON,
+>     RVSP_RTC,
+>+    RVSP_IOMMU_SYS,
+>     RVSP_ACLINT,
+>     RVSP_APLIC_M,
+>     RVSP_APLIC_S,
+>@@ -112,6 +115,7 @@ enum {
+>     RVSP_UART0_IRQ = 10,
+>     RVSP_RTC_IRQ = 11,
+>     RVSP_PCIE_IRQ = 0x20, /* 32 to 35 */
+>+    IOMMU_SYS_IRQ = 0x24 /* 36 to 39 */
+> };
 > 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8c3b16074cd3ca1bc3004cfaaa13f34b8860bd48..ccfbc9b4656f3e2a69eb5bcd1cee9e5762020351 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -216,22 +216,13 @@ static inline bool riscv_aplic_source_active(RISCVAPLICState *aplic,
->   static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
->                                             uint32_t irq)
->   {
-> -    uint32_t sourcecfg, sm, raw_input, irq_inverted;
-> +    uint32_t sm, raw_input, irq_inverted;
->   
-> -    if (!irq || aplic->num_irqs <= irq) {
-> -        return false;
-> -    }
-> -
-> -    sourcecfg = aplic->sourcecfg[irq];
-> -    if (sourcecfg & APLIC_SOURCECFG_D) {
-> -        return false;
-> -    }
-> -
-> -    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
-> -    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-> +    if (!riscv_aplic_source_active(aplic, irq)) {
->           return false;
->       }
->   
-> +    sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
->       raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
->       irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
->                       sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-> @@ -284,22 +275,13 @@ static void riscv_aplic_set_pending_raw(RISCVAPLICState *aplic,
->   static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
->                                       uint32_t irq, bool pending)
->   {
-> -    uint32_t sourcecfg, sm;
-> +    uint32_t sm;
->   
-> -    if ((irq <= 0) || (aplic->num_irqs <= irq)) {
-> -        return;
-> -    }
-> -
-> -    sourcecfg = aplic->sourcecfg[irq];
-> -    if (sourcecfg & APLIC_SOURCECFG_D) {
-> -        return;
-> -    }
-> -
-> -    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
-> -    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-> +    if (!riscv_aplic_source_active(aplic, irq)) {
->           return;
->       }
->   
-> +    sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
->       if ((sm == APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
->           (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
->           if (!aplic->msimode) {
-> @@ -370,19 +352,7 @@ static void riscv_aplic_set_enabled_raw(RISCVAPLICState *aplic,
->   static void riscv_aplic_set_enabled(RISCVAPLICState *aplic,
->                                       uint32_t irq, bool enabled)
->   {
-> -    uint32_t sourcecfg, sm;
-> -
-> -    if ((irq <= 0) || (aplic->num_irqs <= irq)) {
-> -        return;
-> -    }
-> -
-> -    sourcecfg = aplic->sourcecfg[irq];
-> -    if (sourcecfg & APLIC_SOURCECFG_D) {
-> -        return;
-> -    }
-> -
-> -    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
-> -    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-> +    if (!riscv_aplic_source_active(aplic, irq)) {
->           return;
->       }
->   
-> 
+> /*
+>@@ -141,6 +145,7 @@ static const MemMapEntry rvsp_ref_memmap[] = {
+>     [RVSP_MROM] =           {     0x1000,        0xf000 },
+>     [RVSP_RESET_SYSCON] =   {   0x100000,        0x1000 },
+>     [RVSP_RTC] =            {   0x101000,        0x1000 },
+>+    [RVSP_IOMMU_SYS] =      {    0102000,        0x1000 },
+This might be a typo:
+      0102000 -> 0x102000
+
+Thanks,
+Chao
 
 
