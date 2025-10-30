@@ -4,93 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E352CCF9FC
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75698CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 08:05:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vENd4-0005s6-UJ; Thu, 30 Oct 2025 04:03:31 -0400
+	id 1vENf2-0006Sh-NS; Thu, 30 Oct 2025 04:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vENd2-0005ry-GM
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:03:28 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vENf0-0006SN-EZ
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:05:30 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vENcz-0001UQ-EJ
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:03:28 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F231F1644B9;
- Thu, 30 Oct 2025 11:03:10 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C6510308E57;
- Thu, 30 Oct 2025 11:03:18 +0300 (MSK)
-Message-ID: <2aac5c96-e324-4173-806a-5ea2366ebcda@tls.msk.ru>
-Date: Thu, 30 Oct 2025 11:03:18 +0300
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vENev-0001lG-RF
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 04:05:28 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59U0C2FC026651;
+ Thu, 30 Oct 2025 08:05:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Pur6lQ
+ qiPE/btq4kKrjaY7+yIyJve2PYXBugJaZcow0=; b=oy21WzwvImrzqulu5I9vfe
+ rHuL2T4oGuXH1d7n4zbfKa+br8adgeNAVkzlGMiXAC5D40UG37sL0oKYjS0RzTJD
+ sB/mAcMO/paLKrPWYWfl2Syk6V70Q9K23OBRONsQD4XK/hBma37e6wHToAiYQ/iK
+ SJ5qcQ45VW6vZFjQ3vssOUytn5TJD+tQfcAi8AuPHrFuI6Grc2n22W9aBBZsrrNV
+ OUDV1o+IEpWQeIIMKmGbquRF/ETxyfwjhmddQaJGikSNDohNsUjOW+maqRx95OuV
+ lGYU+gzYkL3kXAN1tgnXrUcMwrcy6pLmIql6w/dxJolLPd+E6/UQB9e8ctn1LQbQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acq820-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Oct 2025 08:05:17 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U6GTrv027440;
+ Thu, 30 Oct 2025 08:05:17 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4a33w2qfpg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Oct 2025 08:05:17 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59U85FBt34013584
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Oct 2025 08:05:15 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 166A558056;
+ Thu, 30 Oct 2025 08:05:15 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2410B58052;
+ Thu, 30 Oct 2025 08:05:13 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Oct 2025 08:05:12 +0000 (GMT)
+Message-ID: <47ac6382-3270-4179-8455-43cee36a9ca9@linux.ibm.com>
+Date: Thu, 30 Oct 2025 13:35:11 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/18] i386/kvm/cpu: Init SMM cpu address space for
- hotplugged CPUs
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-3-pbonzini@redhat.com>
- <fc683f6e-9d03-4e7d-bcd2-638c53daed7d@tls.msk.ru>
- <57d3c5b2-8b07-41ee-bf41-a9eac16eb6da@intel.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <57d3c5b2-8b07-41ee-bf41-a9eac16eb6da@intel.com>
+Subject: Re: [PATCH v2 1/2] hw/ppc: Fix missing return on allocation failure
+To: Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: peter.maydell@linaro.org, adityag@linux.ibm.com, qemu-devel@nongnu.org,
+ sourabhjain@linux.ibm.com
+References: <20251028080551.92722-1-shivangu@linux.ibm.com>
+ <20251028080551.92722-2-shivangu@linux.ibm.com>
+ <8d5a8cce-d769-4cd8-9753-7e9ad37d8a47@linaro.org>
+ <dio77m3m5jj6ccgqpswkifiqztf5fz45qsjpspu2yszgwrfgha@mcwjruxszkn5>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <dio77m3m5jj6ccgqpswkifiqztf5fz45qsjpspu2yszgwrfgha@mcwjruxszkn5>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=XbuEDY55 c=1 sm=1 tr=0 ts=69031c3d cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
+ a=KKAkSRfTAAAA:8 a=NuKsrJnVAG_wn9fm84IA:9 a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+ a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-ORIG-GUID: kcKEwjUV5yMIWGw1t2JZ-buReqp0ZPbw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX5cJiTtb71PZo
+ +QjZB3eUGXPj5awfvR0c8HaTVj8n0htlQb0XiEHjTxHLmORg513cyMjz+VKRhSwqjnljwtK7lXt
+ 9csfbKZyo6ESpoDSuxUAaKOK0XHzot61x4HDSBDsMr23h70lBhiIuUR3VHs/cLvb87P2qhQfazQ
+ nfxkeh0xAK0EicToIdZOTaLqz5qhiQx17qr/SzRiZMO58h4v1ZAtsz/NT1EKf1R9VhE1vAbylUW
+ EB8fVlxhw9EOaklKZ+811vlByDW3xZLEPTNyrIEuWFshHy+VSBGLd+0D2oz0XNvlKVZcht/wQUU
+ 1VN84KOvCucpQo9PLzOcFSjBt1CP9ODH0YI1kL8Qnu/LO0B8Ls06XUzouoKbzcrUGXhdeOkO7SQ
+ LRVojib0sonTfDAx/GrGzIy/jIMUzg==
+X-Proofpoint-GUID: kcKEwjUV5yMIWGw1t2JZ-buReqp0ZPbw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2510280166
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,44 +129,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/30/25 10:49, Xiaoyao Li wrote:
-> On 10/30/2025 3:36 PM, Michael Tokarev wrote:
->> On 10/28/25 20:34, Paolo Bonzini wrote:
->>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+
+
+On 10/28/25 15:54, Shivang Upadhyay wrote:
+> On Tue, Oct 28, 2025 at 09:35:40AM +0100, Philippe Mathieu-Daudé wrote:
+>> On 28/10/25 09:05, Shivang Upadhyay wrote:
+>>> Fixes coverity (CID 1642026)
 >>>
->>> The SMM cpu address space is initialized in a machine_init_done
->>> notifier. It only runs once when QEMU starts up, which leads to the
->>> issue that for any hotplugged CPU after the machine is ready, SMM
->>> cpu address space doesn't get initialized.
+>>> Cc: Aditya Gupta <adityag@linux.ibm.com>
+>>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>> Link: https://lore.kernel.org/qemu-devel/CAFEAcA-SPmsnU1wzsWxBcFC=ZM_DDhPEg1N4iX9Q4bL1xOnwBg@mail.gmail.com/
+>>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+>>> ---
+>>>    hw/ppc/spapr_fadump.c | 1 +
+>>>    1 file changed, 1 insertion(+)
 >>>
->>> Fix the issue by initializing the SMM cpu address space in 
->>> x86_cpu_plug()
->>> when the cpu is hotplugged.
->>>
->>> Fixes: 591f817d819f ("target/i386: Define enum X86ASIdx for x86's 
->>> address spaces")
+>>> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+>>> index fa3aeac94c..883a60cdcf 100644
+>>> --- a/hw/ppc/spapr_fadump.c
+>>> +++ b/hw/ppc/spapr_fadump.c
+>>> @@ -234,6 +234,7 @@ static bool do_preserve_region(FadumpSection *region)
+>>>            qemu_log_mask(LOG_GUEST_ERROR,
 >>
->> How this commit can be fixing 591f817d819f, while technically
->> 591f817d819f is a no-op, - it changed 0s and 1s in a few places
->> to symbolic names with the same 0s and 1s.
+>> FWIW host heap exhaustion is not really a *guest* error, because the
+>> guest can not control it.
+> Hi, Philippe
+> 
+> 
+> Thanks for the review. There are following log level defined in log.h
+> 
+> 	....
+> 
+> 	#define CPU_LOG_TB_OUT_ASM (1u << 0)
+> 	#define CPU_LOG_TB_IN_ASM  (1u << 1)
+> 	#define CPU_LOG_TB_OP      (1u << 2)
+> 	#define CPU_LOG_TB_OP_OPT  (1u << 3)
+> 	#define CPU_LOG_INT        (1u << 4)
+> 	#define CPU_LOG_EXEC       (1u << 5)
+> 	#define CPU_LOG_PCALL      (1u << 6)
+> 	#define CPU_LOG_TB_CPU     (1u << 8)
+> 	#define CPU_LOG_RESET      (1u << 9)
+> 	#define LOG_UNIMP          (1u << 10)
+> 	#define LOG_GUEST_ERROR    (1u << 11)
+> 	#define CPU_LOG_MMU        (1u << 12)
+> 	#define CPU_LOG_TB_NOCHAIN (1u << 13)
+> 	#define CPU_LOG_PAGE       (1u << 14)
+> 	/* LOG_TRACE (1 << 15) is defined in log-for-trace.h */
+> 	#define CPU_LOG_TB_OP_IND  (1u << 16)
+> 	#define CPU_LOG_TB_FPU     (1u << 17)
+> 	#define CPU_LOG_PLUGIN     (1u << 18)
+> 	/* LOG_STRACE is used for user-mode strace logging. */
+> 	#define LOG_STRACE         (1u << 19)
+> 	#define LOG_PER_THREAD     (1u << 20)
+> 	#define CPU_LOG_TB_VPU     (1u << 21)
+> 	#define LOG_TB_OP_PLUGIN   (1u << 22)
+> 	#define LOG_INVALID_MEM    (1u << 23)
+> 
+> 	....
+> 
+> Which one do you recommend we use? or May we introduce a `LOG_HOST_ERROR`,
+> if that's more appropriate.
+
+I think it would be better to have LOG_INSUFF_MEM for this case, but 
+let's hear from Philippe and others for suggestions.
+
+Since it's unlreated to the coverity fix and can be taken separately, so:
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+> 
+> Thanks
+> ~Shivang.
 >>
->> It seems the "Fixes" commit should be something else.
->> The way it is now, it's confusing.
-> 
-> It should be
-> 
->    0516f4b70264 ("i386/cpu: Enable SMM cpu address space under KVM")
-> 
-> Sorry for my carelessness. Is there a way to remedy as the patch has 
-> been merged into the master?
-
-I hope it's possible still.
-
-Paolo, please also add Cc: qemu-stable@ in there, -- because the change
-which is being fixed here (Enable SMM cpu address space) has been picked
-up to the stable series too.  It's best to keep all the pieces :)
-
-Thank you Xiaoyao, Paolo!
-
-/mjt
+>>>                "FADump: Failed allocating memory (size: %zu) for copying"
+>>>                " reserved memory regions\n", FADUMP_CHUNK_SIZE);
+>>> +        return false;
+>>>        }
+>>>        num_chunks = ceil((src_len * 1.0f) / FADUMP_CHUNK_SIZE);
+>>
 
