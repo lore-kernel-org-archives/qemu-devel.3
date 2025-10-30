@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE82CCF9FA
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 15:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62986CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 15:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEUOF-0002BQ-Nt; Thu, 30 Oct 2025 11:16:39 -0400
+	id 1vEUOA-0002A1-Nb; Thu, 30 Oct 2025 11:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEUOC-0002AR-BJ
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:16:36 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vEUO8-00028K-Fk
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:16:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vEUNo-0005Za-Sl
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:16:35 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vEUNm-0005XQ-Ba
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 11:16:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761837367;
+ s=mimecast20190719; t=1761837349;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Vn0M/NlZHtyvr8itcZWJIvUgseTvPvlypcxTGygvEmg=;
- b=VJB41rYHfTOgIVvfDFLjVdDG4si3xOgjfzts7CR7C2aDAklRg5Pyr/lfTq1+u8PHOukEQU
- VQbL0pKYpCTG4jkM55H0iNWNUrxjH0pvtcI1eYPUZo4kQ6FwUkuaKKr2/baNZ2SSulYrN7
- u6QDLnam0+IWI6x4OwuoUO6r4j5yW0k=
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-ATsihkpXMxySLgVs8CJv6A-1; Thu, 30 Oct 2025 11:16:05 -0400
-X-MC-Unique: ATsihkpXMxySLgVs8CJv6A-1
-X-Mimecast-MFC-AGG-ID: ATsihkpXMxySLgVs8CJv6A_1761837365
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-5d7cbbaef1bso407169137.1
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 08:16:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761837365; x=1762442165;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vn0M/NlZHtyvr8itcZWJIvUgseTvPvlypcxTGygvEmg=;
- b=jDG6KGpwY4t0OTUnUOMw8rmRUeuCzGW+GtJ+eikT2dvvwrStZZWG15T17I0+h4Ulrd
- MF/+E9BGaWkRD8yb4mhCC6XOVrORD2NN+foALIorsCcRtTXcQeQ8ARhy5ZSvNOWiRz3a
- JFEIfidbbgQbk5OCW05cLaiJFK3Tb0TfdFAlbTzioL5sLFSy8MzAffKtpoVVO1AGqb7j
- Dirfg7yBIgAdOqzponXfVVVjRqc3T5o6bL5CDBZH/f0CsGazZCGyiOvcPVaSYzag1qP1
- dgwiJfezWG936qcmZ5E5JQzqYd4fJM2GJ5M00UcuUNIV0JXnuto5XODKuVXWXAP/glpa
- GeNA==
-X-Gm-Message-State: AOJu0YyD5sdmpdrWtVFc6v+vtMyjRuR/K41JprvSBkjBRRT43lGf3xhQ
- 51BbWgLXEHYJUobWaN6j4nktTJu5nvyMFLtgkuoSlYluHVmk4etfWkHudZ17EZH+rtnBOJ+HWSD
- lmaXPc+fOlaVYeSuj/PnRHkEHbuOR4w8G//WkrL1XQVJEi70QPWyrUX8N
-X-Gm-Gg: ASbGnctsHuz/SSgcYHfss8Fn/xGkwlw2DbEMTnDERJg2H7+xT0/TGprNQOIYD/F7OfS
- DWLKVyDslvl0g1sXeyhSD8LETwZ2EIO4CJKqbF1wgOwER+kV4gLPbX/AWek7mFN26u85nwbS5OS
- 6Hp5S8U9vm1EajPN1emJLjpvy24OtWCzZrx45NzCvzWTvqoDqIyfdmRBbJB++Jt5buIb2+c+DBJ
- /le46oQdI+ObSGJXjdSqR7tJD/URC2WUXz0saauO1j/GZr8Lfp+VC1xNWpHuj7DeP5M5IqlBHaY
- LXXfZ0kMh9YKUnU/YfzVOy9DO2qir+Afo/wPCIsCdGdClJYxNsv4QDppwM81Mo/ftoA=
-X-Received: by 2002:a05:6102:809f:b0:5db:350f:2c6b with SMTP id
- ada2fe7eead31-5db90698d8amr2487039137.38.1761837364877; 
- Thu, 30 Oct 2025 08:16:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOqpuECF5Q1K2zaGCUKedwKErlGKDHaXVmDuKSchaY+pYQcTWVI88ZzfZeXERBSPHXu+go0Q==
-X-Received: by 2002:a05:6102:809f:b0:5db:350f:2c6b with SMTP id
- ada2fe7eead31-5db90698d8amr2487013137.38.1761837364405; 
- Thu, 30 Oct 2025 08:16:04 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-880132bb7f2sm27765126d6.17.2025.10.30.08.16.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Oct 2025 08:16:03 -0700 (PDT)
-Date: Thu, 30 Oct 2025 11:16:01 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Jiri Denemark <jdenemar@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 2/4] migration: Move postcopy_ram_listen_thread() to
- postcopy-ram.c
-Message-ID: <aQOBMemFJe4f-Nqx@x1.local>
-References: <20251027154115.4138677-1-jmarcin@redhat.com>
- <20251027154115.4138677-3-jmarcin@redhat.com>
- <aQJwx5IBnwk7SxkJ@x1.local>
- <dqpskxkmn6zxhd7oeuj4mqpyl7vdhjrecimtldx4k4v6wijnl3@ynjeyazm4ai4>
+ bh=eab2tx2w5QXiUqXcIAbs5awDyQgrZ3ZVoJUi/axt7sY=;
+ b=SWPex6BnFXOHOQikm1Ngd8ZCmfL5UUHnJyJ09v55vZSRKq5eexlJLEEGnRW7t75bTc/zqq
+ uinTL077vrGC7St0hrmC3440pnWlfKi+qgXRNHC8iexz1qeq+vOMEAw18JQtjd78fYrFAH
+ EQrz/juE51/HC8ZGKM3zNFzYk1PE5SU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-g7RDu2_7PIOKlV8XeQuzqw-1; Thu,
+ 30 Oct 2025 11:15:45 -0400
+X-MC-Unique: g7RDu2_7PIOKlV8XeQuzqw-1
+X-Mimecast-MFC-AGG-ID: g7RDu2_7PIOKlV8XeQuzqw_1761837345
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C97E019560B2; Thu, 30 Oct 2025 15:15:44 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.94])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5944219560BC; Thu, 30 Oct 2025 15:15:44 +0000 (UTC)
+Date: Thu, 30 Oct 2025 11:15:43 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ hibriansong@gmail.com, qemu-block@nongnu.org,
+ Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com
+Subject: Re: [PATCH v5 00/12] aio: add the aio_add_sqe() io_uring API
+Message-ID: <20251030151543.GA462334@fedora>
+References: <20251029203411.445852-1-stefanha@redhat.com>
+ <aQN5q47Lw2Bv8I_X@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="BSRB53UMvLFCYZXL"
 Content-Disposition: inline
-In-Reply-To: <dqpskxkmn6zxhd7oeuj4mqpyl7vdhjrecimtldx4k4v6wijnl3@ynjeyazm4ai4>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <aQN5q47Lw2Bv8I_X@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -92,7 +71,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,43 +88,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 30, 2025 at 02:08:06PM +0100, Juraj Marcin wrote:
-> On 2025-10-29 15:53, Peter Xu wrote:
-> > On Mon, Oct 27, 2025 at 04:41:09PM +0100, Juraj Marcin wrote:
-> > > From: Juraj Marcin <jmarcin@redhat.com>
-> > > 
-> > > This patch addresses a TODO about moving postcopy_ram_listen_thread() to
-> > > postcopy file. Furthermore, this patch adds a pair of functions,
-> > > postcopy_incoming_setup() and postcopy_incoming_cleanup(), which sets up
-> > > and cleans the postcopy_ram_incoming state and the listen thread.
-> > 
-> > It would be great to separate code movements and changes.
-> 
-> I wanted to get around the need to expose the postcopy listen thread
-> function in a header file, hence the postcopy_incoming_setup() function,
-> adding postcopy_incoming_cleanup() together then seemed natural to me.
-> 
-> However, I could split it like this:
-> 
-> 1. Move postcopy_ram_listen_thread() to postcopy-ram.c and add a simple
->    wrapper for postcopy_thread_create() (something like
->    postcopy_ram_listen_thread_create).
-> 2. Rename postcopy_ram_listen_thread_create to postcopy_incoming_setup
->    and move rest of loadvm_postcopy_handle_listen, that is moved by this
->    patch, and lastly introduce postcopy_ram_incoming_cleanup().
 
-I'm not sure I fully get what you described, but it's okay, I'll read what
-you'll post. :)
+--BSRB53UMvLFCYZXL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The idea here is when there's major movement of codes, do it in one patch
-(or a few) only for the movement but nothing else.  Then try to do anything
-on top, either changing existing code or even adding some wrappers.
-Normally that'll make review / backport / ... all easier.
+On Thu, Oct 30, 2025 at 03:43:55PM +0100, Kevin Wolf wrote:
+> Am 29.10.2025 um 21:33 hat Stefan Hajnoczi geschrieben:
+> > v5:
+> > - Explain how fdmon-io_uring.c differs from other fdmon implementations
+> >   in commit message [Kevin]
+> > - Move test-nested-aio-poll aio_get_g_source() removal into commit that=
+ touches test case [Kevin]
+> > - Avoid g_source_add_poll() use-after-free in fdmon_poll_update() [Kevi=
+n]
+> > - Avoid duplication in fdmon_epoll_gsource_dispatch(), use fdmon_epoll_=
+wait() [Kevin]
+> > - Drop unnecessary revents checks in fdmon_poll_gsource_dispatch() [Kev=
+in]
+> > - Mention in commit message that fdmon-io_uring.c is the new default [K=
+evin]
+> > - Add comments explaining how to clean up resources in error paths [Kev=
+in]
+> > - Indicate error in return value from function with Error *errp arg [Ke=
+vin]
+> > - Add patch to unindent fdmon_io_uring_destroy() [Kevin]
+> > - Add patch to introduce FDMonOps->dispatch() callback [Kevin]
+> > - Drop patch with hacky BH optimization for fdmon-io_uring.c [Kevin]
+> > - Replace cqe_handler_bh with FDMonOps->dispatch() [Kevin]
+> > - Rename AioHandler->cqe_handler field to ->internal_cqe_handler [Kevin]
+> > - Consolidate fdmon-io_uring.c trace-events changes into this commit
+> > - Reduce #ifdef HAVE_IO_URING_PREP_WRITEV2 code duplication [Kevin]
+>=20
+> Actually the whole last patch that contained the duplication seems to be
+> missing. Did you accidentally remove it?
 
-It'll be fine if we need to add some entries to headers then remove them
-later on.
+Yes. I'll resend in a few moments.
 
--- 
-Peter Xu
+Stefan
+
+--BSRB53UMvLFCYZXL
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmkDgR8ACgkQnKSrs4Gr
+c8iXggf/dX64dCKSe98EoBIM64LdWgxIJHo5K/DJjOxCTdT+FG51ukX+7akEtjEj
+MPpCXNqUK3Cc90wSNMUPNWvi0euE/+ytJmw6qOE+5N6rvyTT+hZQSSmIe+l0+zME
+Ddvdo98cCvm1hwFmDLBpMvEEvRYtmIjnRDq/lRpjyeuUAAWWc+mUx4wSX+RTn/F9
+xvpoG4mEf9vXmvXKAxMPBDd/mMDnv93Sa9RZwcLu0AGstypb0jL6AfP+4zw4cRup
+7wsBYDjFnb+r6mxT808pVLw3pgwsgGrmXKVVFy2gbpecnEJIvdt7atsbmznaNMks
+jq7YJu5/GiCtqzxdInxf3iMJiTO7zw==
+=rZTo
+-----END PGP SIGNATURE-----
+
+--BSRB53UMvLFCYZXL--
 
 
