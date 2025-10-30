@@ -4,110 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3AC8CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 06:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE75CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Oct 2025 06:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEMBS-0005K9-Lv; Thu, 30 Oct 2025 02:30:54 -0400
+	id 1vEMGA-0007jv-1N; Thu, 30 Oct 2025 02:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vEMBA-0005Ib-My; Thu, 30 Oct 2025 02:30:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vEMG5-0007jc-BY; Thu, 30 Oct 2025 02:35:41 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vEMAz-0005Wp-P0; Thu, 30 Oct 2025 02:30:36 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59TMTY78025859;
- Thu, 30 Oct 2025 06:30:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=D1ECpO
- SJ6h9rsrQOVZfWLVwqWZtSxXpOb3HNVp7D+lk=; b=F1nLyIvjb+xnZvoWjLyJDB
- bAFR3JtTz8sNPvGufzMC3fNibUSjq0R3IzNwQH7WCkKyoSc8lkgrk4qK5tVFALdG
- xA8Gs/ZOkWJYmNzjEMK9u5hhzauhb0YD0iKzBXgyBtzrlnzsjmYWwgRpdcDLxabt
- e8MvGWXVBISCra5grF2t10TuZAJ3tHH3ZWPaN00p6Z/d/RZ4V55rYR8fGzKO3dzf
- Gz+HUbu+p+vBZKMdoJya/v25Ixp62ayXhW5Y5UpgMKW/7dkA6ifksBpycOdbdmSx
- FX1oDYIapQ3wUV5kUaL1/KVogj9rsBWCVTfERqcHK5hG8mYAB3MFYxBu1MWZ4XCA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34acpwae-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 06:30:15 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59U6GTXZ027440;
- Thu, 30 Oct 2025 06:30:14 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4a33w2q60t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Oct 2025 06:30:14 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59U6UD6U30999050
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Oct 2025 06:30:13 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1A505805C;
- Thu, 30 Oct 2025 06:30:13 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 18CFE58051;
- Thu, 30 Oct 2025 06:30:12 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Oct 2025 06:30:11 +0000 (GMT)
-Message-ID: <9a402fdd-17a0-47e2-a5a2-2b6b874c2f8d@linux.ibm.com>
-Date: Thu, 30 Oct 2025 12:00:10 +0530
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vEMFu-0006YA-Oq; Thu, 30 Oct 2025 02:35:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761806131; x=1793342131;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=ka05c/JWyGKqJhdpSvFE7i66F+dJEiVQVgesEq2fPRw=;
+ b=SVZnutjJq9vpmblhmAncYGCjMZqgJNnuarB9kwuWKTAs/9x2LwldexwM
+ CIbCxVxf/kw5Idj6yGUkw8z5kFDyBWu+T7zrQdDsW655r9+YVCOmGrxAd
+ 0BJ3FNjp6DfsxqS9mg5UX7d1Mo7rjcNC4LPQ+ksssjPoTutl1XHFgmJKG
+ HFA4i3cpdsZXDI50UeDFx3yojQy9dB0YVvsfqMC14Eg9EZ3DJxwSkk/pA
+ 53mAeC6etDtYDsNNZTh11KYf54iQPISelCmYdiEWocRZaVYLMitWvM69B
+ r0gvPu2wNYDOmrecLY4COUkJCwOwXVBWaguqQCUO2vei43LUzEokb5toq g==;
+X-CSE-ConnectionGUID: dFHl5RLETeKdoX/lIjCPjw==
+X-CSE-MsgGUID: ZcDsHQJRQl2B/n7G43L19Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="89406049"
+X-IronPort-AV: E=Sophos;i="6.19,265,1754982000"; d="scan'208";a="89406049"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Oct 2025 23:35:21 -0700
+X-CSE-ConnectionGUID: S0xk/W7mSg23oG33ojSvrQ==
+X-CSE-MsgGUID: p32bsYGiRjmlFDPjgYwb+g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; d="scan'208";a="223092625"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa001.jf.intel.com with ESMTP; 29 Oct 2025 23:35:18 -0700
+Date: Thu, 30 Oct 2025 14:57:29 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 03/25] hw/timer/hpet: Use proper SysBus accessors
+Message-ID: <aQMMWTLPSVdCBA2r@intel.com>
+References: <20251028181300.41475-1-philmd@linaro.org>
+ <20251028181300.41475-4-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: pegasos2 patches for the freeze
-To: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <bee2d3b0-1565-2c63-93a0-4e84ced610f0@eik.bme.hu>
- <942911e5-0fab-4bf8-a41a-082de491d960@redhat.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <942911e5-0fab-4bf8-a41a-082de491d960@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XbuEDY55 c=1 sm=1 tr=0 ts=690305f7 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pcZqCyVeAAAA:8
- a=B6KV-2SKrMV_BjcW9SUA:9 a=QEXdDO2ut3YA:10 a=SGy6VSG0Ue1xmPAwIFl9:22
- a=oH34dK2VZjykjzsv8OSz:22 a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
- a=jd6J4Gguk5HxikPWLKER:22
-X-Proofpoint-ORIG-GUID: QpvLTvnWRPo0QlRaq7Qg2aPish9jDuSH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfXyHRqnhnMG7OG
- wHXd3V8z5UgoRoLuwofiGD6vQ8S/73l3gW6FwlMb87ZEEsEE/wH7tmkJNIOoVjCh37B4T5YQ47E
- nXq9HOa9MXUeVjvJk26MSlujlTD8CzEa63Rvx9t4Yr8YWgej69ZhTrbdhYNsXyUqIwKnXoz7XTD
- fEwpplcB++UJX2ZSkzA6LwiZtbbqddFRilgxRleDNiPiq1diyDAxozSZALa+OXDa5hj8ofTpWax
- lqWkwR8VYOps0BMlrHrQLGzdVWDajTddOAy6qBhWG7/Rqmpt8DloyVXlmj3nZS+A5e/laca+rBa
- CA/2G7kj1m2ShEadGQ2rAe69WXePOGaLUBE9MtV7WdCHQ9diGS8fIsRqI+06Lfvd5xyb1H/xnh7
- NhAZz/HVPfS995IIpReyBo76luQN7A==
-X-Proofpoint-GUID: QpvLTvnWRPo0QlRaq7Qg2aPish9jDuSH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_01,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
- impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251028181300.41475-4-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,53 +86,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi BALATON, Paolo,
-
-On 10/30/25 11:44, Paolo Bonzini wrote:
-> On 10/29/25 14:55, BALATON Zoltan wrote:
->> To help tracking patches to be merged here's the list I have on my 
->> pegasos2 branch that I hope can be merged for the next release:
->>
->> f5c71e99b5 (HEAD -> pegasos2) hw/pci-host/articia: Add variable for 
->> common type cast
->> 159f8cec9c hw/ppc/pegasos: Update documentation for pegasos1
->> 8835cce4ff hw/ppc/pegasos2: Rename to pegasos
->> 356511cf3d hw/pci-host/articia: Map PCI memory windows in realize
->> 7649f4c174 hw/ppc/pegasos2: Add /chosen/stdin node with VOF
->> b1b9b6668d (master) hw/ppc/sam460ex: Update u-boot-sam460ex
->> 41312cc017 ati-vga: Fix framebuffer mapping by using hardware-correct 
->> aperture sizes
->> 2d1444017d ati-vga: Separate default control bit for source
->>
->> I hope somebody can take care of the ati-vga patches so you don't have 
->> to care about them, you already have the sam460ex u-boot update then 
->> only need the "Some more pegasos patches" series and the last articia 
->> patch I've sent separately based on the series. No review yet on the 
->> 7649f4c174 hw/ppc/pegasos2: Add /chosen/stdin node with VOF patch and 
->> not sure if we can keep Philippe's R-b on 356511cf3d hw/pci-host/ 
->> articia: Map PCI memory windows in realize based on previous 
->> discussion but other's were R-b by Philippe already. I hope these can 
->> be in your last pull request for the freeze.
->>
->> Congrats for becoming ppc maintainer by default :-) but thank you very 
->> much for helping out with this.
-
-Thanks
-
+On Tue, Oct 28, 2025 at 07:12:37PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Tue, 28 Oct 2025 19:12:37 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v3 03/25] hw/timer/hpet: Use proper SysBus accessors
+> X-Mailer: git-send-email 2.51.0
 > 
-> Not sure if this was referring to Harsh; if not, please prepare a branch 
-> on gitlab or github and I'll pull from there (no need to send a formal 
-> pull request to me with git-request-pull, just reply here).
-
-Paolo,
-
-There are some disagreements on this patch:
-https://lore.kernel.org/qemu-devel/2dc5e0d6-2b98-49d6-99ef-8969d58a02ed@ilande.co.uk/
-
-I am planning to include other reviewed patches in my next pull req though.
-
-
+> SysBusDevice::mmio[] is private data of SysBusDevice, use
+> sysbus_mmio_get_region() to access it.
 > 
-> Paolo
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/timer/hpet.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index 1acba4fa9db..c1b96d0a89f 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -654,7 +654,7 @@ static const MemoryRegionOps hpet_ram_ops = {
+>  static void hpet_reset(DeviceState *d)
+>  {
+>      HPETState *s = HPET(d);
+> -    SysBusDevice *sbd = SYS_BUS_DEVICE(d);
+> +    MemoryRegion *mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(d), 0);
+>      int i;
+>  
+>      for (i = 0; i < s->num_timers; i++) {
+> @@ -677,7 +677,7 @@ static void hpet_reset(DeviceState *d)
+>      s->hpet_offset = 0ULL;
+>      s->config = 0ULL;
+>      hpet_fw_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
+> -    hpet_fw_cfg.hpet[s->hpet_id].address = sbd->mmio[0].addr;
+> +    hpet_fw_cfg.hpet[s->hpet_id].address = mr->addr;
+  
+Rust's sysbus has a method "mmio_addr". Maybe Rust side should also
+split it into two methods similar to `sysbus_mmio_get_region` and
+`memory_region_get_address`, to align with the C interfaces.
+
+For this patch,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+>      /* to document that the RTC lowers its output on reset as well */
+>      s->rtc_irq_level = 0;
+> -- 
+> 2.51.0
+> 
 > 
 
