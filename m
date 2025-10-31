@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3E4CCF9FF
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97C3CCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vElRt-0001yk-DN; Fri, 31 Oct 2025 05:29:33 -0400
+	id 1vElTk-00034V-AD; Fri, 31 Oct 2025 05:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vElRq-0001xg-Rl
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:29:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vElTg-00033f-4x
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:31:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vElRg-0003mU-Gn
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:29:27 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vElTb-0004NG-GK
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:31:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761902954;
+ s=mimecast20190719; t=1761903077;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ag5lI1UPkpi4D/CydEoNJdHOa5d1MaFHtmLdOB9/2po=;
- b=g4kiT5vtgqw8YRg+n9mzZXA3PJ2PKhKMYlkpqnTIfEnW8KVQOjYco2tfop4M/RoX1Qm8Dr
- F4Pdld7aiFUrBnPme1ALcjOdZ8Ofn7mNPA8gRYc+YZsYrDRM3WT0sAyugObVP7aeOjvkmX
- dSq7XwQ4u/OCJyfJ4ce5wI8SvoUtj+Y=
+ bh=+3ignvJa2MwZhJqv7vbLBKfijqZzak6Gd1733ilbURg=;
+ b=eZjJpx+NbDt/xO9QaLDdLKd1kiAJ39VBDQAehdKh+9f5M463kbbBJ3R9w7sOBpDS9gSyZx
+ 1hfSd45xVwm3G106scl4ZcUyV7JoOPYaZDD9tjdIviyRKFKri4YtKPzUdGlIgee7uE9Ryy
+ DakcXYvGCNtGbzXqFfpjaeZLYeXkpkw=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-VZ3YznT2OQ29l7EOgTZs0w-1; Fri, 31 Oct 2025 05:29:13 -0400
-X-MC-Unique: VZ3YznT2OQ29l7EOgTZs0w-1
-X-Mimecast-MFC-AGG-ID: VZ3YznT2OQ29l7EOgTZs0w_1761902952
+ us-mta-79-vp6OyDBZMOahI287f6shUg-1; Fri, 31 Oct 2025 05:31:16 -0400
+X-MC-Unique: vp6OyDBZMOahI287f6shUg-1
+X-Mimecast-MFC-AGG-ID: vp6OyDBZMOahI287f6shUg_1761903075
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-427015f62a7so1609476f8f.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:29:13 -0700 (PDT)
+ ffacd0b85a97d-428567f67c5so961970f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:31:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761902951; x=1762507751;
+ d=1e100.net; s=20230601; t=1761903074; x=1762507874;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ag5lI1UPkpi4D/CydEoNJdHOa5d1MaFHtmLdOB9/2po=;
- b=PG6hg9biElN7nJVnnupiu2s147RxpG67k7iTXCvuTT/NFQe4u82vM8CVSNNGVJA2sv
- KSXnIUjFPRrPchhxZM82B4hYQuPtFaRowQ/SO5A31+3i9L0qvWDdVYEO1Hlv9DdfnSRi
- LUxKsu4fD2vBQigmcLkjXAxC+uNy7q6b5Nqvn11h5LQu2fD6M5h9upuXDdr6LvBovDqJ
- kGioaCPAE/xFEQwePZOck/rk1EiB2LskvOZBBEIN9CQak4Io1kMVO+4AeFqP5C1OwbzA
- QY/SbG0R/E3sEyuBuoyFn7NDZrg+/9JVwJW5t/PbwK8kUXmTbhIydvdKNnDctRzFnKjx
- XcpQ==
+ bh=+3ignvJa2MwZhJqv7vbLBKfijqZzak6Gd1733ilbURg=;
+ b=fbtZEtnBW9VdQyCEH0MYNFcSBdGUFoohmm1OtB25CmaG4C50qDrZECWm1vD57uYC4S
+ aIVaYJhsKVD5bqhFTF9tISvqEKk/qUqH2fYcVn2CpZfsXA+5KWHVkLBGlkOzcTbhbEMq
+ CJI2Rrx9q40oR/R9g1fC39+VjZ9Sgfp7yJ4C3WzjvKZY8vP8KPuvMKhb0fqqy/kQmvBi
+ i7bz59abhmXqkSl72Ka+jgu3bpOdxAkifZPl51KPVJMoOaJspP2EPQsSArRwcDRSWFW2
+ Ct90ao7J/2Ccf+zIAwrZQ3v14xNIGZM9u3dnBl34pnTD5jto+ukF/mns5AnvKLpzCbBE
+ fT1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbO3mWFCmFoL2zQBNuq9CSxGPVBGxGBpMNemrS307Io3jLLcItykxRDu+1fUHxn54WC3OKd21xL3rD@nongnu.org
-X-Gm-Message-State: AOJu0YzBTWL+AcYq1Xieu7kRB9G/ToYzqihAmc26kq3yiqEHEzFGSmkW
- lPSsf+tzh7QAVNKxy3PwqOsTT8Ag4scpL6LxqVYxvXR6DYx39LfcabGK5NWIvhMUyMfBiqiiAWO
- Gijcv2UwNgyCrDVQIK7SOvPWFmvG2xPZFvKkinNa+iGf7jmX4Hdm6UZ8zlU1DN1Om
-X-Gm-Gg: ASbGncuHYmT4Dbq1Y8cz82z3fORU7CwikOioxav2KOoPPVoQoHQQwDZ8OsSynvWT+pn
- v4VQMWYeGqhwlizWNwojm+Hu+NYdok7Fc9mvXL393Ci9UrZDUVakvQv/8aAPE5hZNeVWYqbZoYq
- kMMvXVySMZb5EUra+JHhKVDXDpWPVK9K54iml4Zm8zG6i4WXAEMgJMUL1+5LdoO7OEv1vSzB+cM
- lM81pJjUhtKDgsy6TGibH91iFKgifxU+JLoJcG6GDXAlmjAwWfPLRW2NZx/2XVVYkhTEGm/MRTk
- yrQkurYtjzOVvG54BVCPpogWAfrIdvNRKehbL+Ktx76xvHO5ih+bNcIOh7xArofR6GbI/p7pRY6
- H33R5zyo/AxRRWoJWtbhy30ZE0cjzlcl+9qjy9Bxiyg8gUKDQsNblt6XMpDGh/WBgC3m5HyRmxR
- R1FeJqQ0PW1PIIIoIUtP9ppNeaOAP5
-X-Received: by 2002:a05:6000:420b:b0:428:3da6:b1f5 with SMTP id
- ffacd0b85a97d-429bd6c1f73mr2429957f8f.59.1761902950905; 
- Fri, 31 Oct 2025 02:29:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6WXA0ibXgRkyM0octDIbQ+J0EE3IcqyAIe3bwujLbJPQWe4JV+XYufUPpwgbU73f+3l6Dcg==
-X-Received: by 2002:a05:6000:420b:b0:428:3da6:b1f5 with SMTP id
- ffacd0b85a97d-429bd6c1f73mr2429917f8f.59.1761902950419; 
- Fri, 31 Oct 2025 02:29:10 -0700 (PDT)
+ AJvYcCXCiGbd9eCgQn7aWdVUj+1BATsa4X4tts+hXsuh7GfzNG69GYJoViu2XRBSLR1qxal4KgpVh78t8FCJ@nongnu.org
+X-Gm-Message-State: AOJu0Yzp7cHJZropAbqiwYwjTvh3Lsyiq4AKy/3tyYFqMYf/f/sXIWB+
+ HF2PMJm6pCAxDo4olT8eiZy0dTy8JGMspk8FrixD9082YsYZ/XVD35UKPK0yEHRDDqBFhbcg69J
+ aHJmYI6nxbDzTb9WICkEMeUpBC806LIaDbhVQNIVB+MsvEyoWy89WY3s/lFSLSo/f
+X-Gm-Gg: ASbGnctB1/WYPLSmGgmgQs3MJlYI+4wLmNxWfi6whGz3LMLpVX2TVCD3Op2M21QKbj6
+ LfR28fZrE9/LiNlwObohVmE/Vc4QMFeTD6yQ/23ol3OYC+tdQnEnHlHRtNMSAH7AGZLJqcZfz9i
+ FuiRSAkXrHd/qZfn+BHyNZk/BTN0wNBY57t+8r1wf3hTZ+PjjMQw4KmVQ36ECBA3AqRFwTJSLwv
+ fLT8F2qHBBsqq7HAJ+VuDizfUA08VIBmTv+PGXmr5IAO0ycqNiFkXWDMtdvKqyl50U62u25tVGC
+ cSH6Nl3XrqHTMvh6C9KPmhfm59Ovtx6/S6xYL7mCSQ+OkrxXSie78+R1zBLHLecLD8qUuzSE4/F
+ AzXg1Z7ePuOnyuMu2g50FUxB2ClhvU4nc/3X/SnYcOXBeXtDsTi9Lm12rgMKJhSiHjOq5g/6TpM
+ LE2mDBqAAgebMwy2JnnK+IX7/Swao8
+X-Received: by 2002:a05:6000:1846:b0:426:d80c:2759 with SMTP id
+ ffacd0b85a97d-429bd696c7fmr2477915f8f.25.1761903073751; 
+ Fri, 31 Oct 2025 02:31:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUtql4N47jiKx1Hg4wIRVJw0j5wY7h+s/AwPw9dcfgEpMezhEQ6le1hyjldZr4KV+ZuprQ9Q==
+X-Received: by 2002:a05:6000:1846:b0:426:d80c:2759 with SMTP id
+ ffacd0b85a97d-429bd696c7fmr2477874f8f.25.1761903073327; 
+ Fri, 31 Oct 2025 02:31:13 -0700 (PDT)
 Received: from ?IPV6:2003:cf:d717:1f4c:b757:9963:8006:395e?
  (p200300cfd7171f4cb75799638006395e.dip0.t-ipconnect.de.
  [2003:cf:d717:1f4c:b757:9963:8006:395e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13e1c9esm2632417f8f.22.2025.10.31.02.29.08
+ ffacd0b85a97d-429c10ff4f6sm3258963f8f.4.2025.10.31.02.31.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 02:29:09 -0700 (PDT)
-Message-ID: <0d98f477-722c-4023-9b28-54d8faffff66@redhat.com>
-Date: Fri, 31 Oct 2025 10:29:07 +0100
+ Fri, 31 Oct 2025 02:31:12 -0700 (PDT)
+Message-ID: <90078c5e-7237-4226-9bf4-82a8feb36888@redhat.com>
+Date: Fri, 31 Oct 2025 10:31:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/16] qcow2: Fix cache_clean_timer
+Subject: Re: [PATCH 16/16] win32-aio: Run CB in original context
 To: Kevin Wolf <kwolf@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -89,13 +89,13 @@ Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
 References: <20251028163343.116249-1-hreitz@redhat.com>
- <20251028163343.116249-11-hreitz@redhat.com> <aQJ30-Ifcji8lrme@redhat.com>
+ <20251028163343.116249-17-hreitz@redhat.com> <aQNyaNumB0tiCOgM@redhat.com>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <aQJ30-Ifcji8lrme@redhat.com>
+In-Reply-To: <aQNyaNumB0tiCOgM@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,8 +104,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,203 +120,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.10.25 21:23, Kevin Wolf wrote:
+On 30.10.25 15:12, Kevin Wolf wrote:
 > Am 28.10.2025 um 17:33 hat Hanna Czenczek geschrieben:
->> The cache-cleaner runs as a timer CB in the BDS AioContext.  With
->> multiqueue, it can run concurrently to I/O requests, and because it does
->> not take any lock, this can break concurrent cache accesses, corrupting
->> the image.  While the chances of this happening are low, it can be
->> reproduced e.g. by modifying the code to schedule the timer CB every
->> 5 ms (instead of at most once per second) and modifying the last (inner)
->> while loop of qcow2_cache_clean_unused() like so:
+>> AIO callbacks must be called in the originally calling AioContext,
+>> regardless of the BDS’s “main” AioContext.
 >>
->>      while (i < c->size && can_clean_entry(c, i)) {
->>          for (int j = 0; j < 1000 && can_clean_entry(c, i); j++) {
->>              usleep(100);
->>          }
->>          c->entries[i].offset = 0;
->>          c->entries[i].lru_counter = 0;
->>          i++;
->>          to_clean++;
->>      }
+>> Note: I tried to test this (under wine), but failed.  Whenever I tried
+>> to use multiqueue or even just an I/O thread for a virtio-blk (or
+>> virtio-scsi) device, I/O stalled, both with and without this patch.
 >>
->> i.e. making it wait on purpose for the point in time where the cache is
->> in use by something else.
->>
->> The solution chosen for this in this patch is not the best solution, I
->> hope, but I admittedly can’t come up with anything strictly better.
->>
->> We can protect from concurrent cache accesses either by taking the
->> existing s->lock, or we introduce a new (non-coroutine) mutex
->> specifically for cache accesses.  I would prefer to avoid the latter so
->> as not to introduce additional (very slight) overhead.
-> In theory, the old plan was that eventually qcow2 would use fine grained
-> locks instead of the single s->lock, and having a separate cache lock
-> would be a step towards it. But if we never actually make use of it to
-> hold s->lock for a shorter time, that's not really a good argument. I'm
-> not sure if that's ever going to happen unless for a rewrite in Rust or
-> something.
->
-> I never tried to measure specifically if lock contention is a problem
-> with high queue depth and random I/O on a huge disk. Intuitively,
-> holding s->lock while doing I/O for loading entries into the cache can't
-> be really good.
->
-> Anyway, I went a bit on a tangent there...
->
->> Using s->lock, which is a coroutine mutex, however means that we need to
->> take it in a coroutine, so the timer CB must enter such a coroutine.  As
->> a result, descheduling the timer is no longer a guarantee that the
->> cache-cleaner will not run, because it may now be yielding in
->> qemu_co_mutex_lock().
-> I think creating a coroutine in cache_clean_timer_cb() is the wrong
-> approach. Instead, cache_clean_timer_init() could create a coroutine
-> and its implementation could be something like this:
->
->      while (!s->cache_clean_timer_stopping) {
->          qemu_co_sleep_ns_wakeable(&s->cache_clean_timer_wake,
->                                    QEMU_CLOCK_VIRTUAL,
->                                    s->cache_clean_interval * NANOSECONDS_PER_SECOND);
->
->          qemu_co_mutex_lock(&s->lock);
->          qcow2_cache_clean_unused(s->l2_table_cache);
->          qcow2_cache_clean_unused(s->refcount_block_cache);
->          qemu_co_mutex_unlock(&s->lock);
->      }
->      s->cache_clean_timer_stopping = false;
-
-Ah, that’s nicer.  I think we can replace the flag by checking 
-s->cache_clean_interval > 0 and adding a CoQueue to wake up waiting 
-coroutines.
-
->> (Note even now this was only guaranteed for cache_clean_timer_del()
->> callers that run in the BDS (the timer’s) AioContext.  For callers
->> running in the main context, the problem may have already existed,
->> though maybe the BQL prevents timers from running in other contexts, I’m
->> not sure.)
->>
->> Polling to await the timer to actually settle seems very complicated for
->> something that’s rather a minor problem, but I can’t come up with any
->> better solution that doesn’t again just overlook potential problems.
->>
->> (One cleaner idea may be to have a generic way to have timers run
->> coroutines, and to await those when descheduling the timer.  But while
->> cleaner, it would also be more complicated, and I don’t think worth it
->> at this point.)
->>
->> (Not Cc-ing qemu-stable, as the issue is quite unlikely to be hit, and
->> I’m not too fond of this solution.)
+>> For what it’s worth, when not using an I/O thread, I/O continued to work
+>> with this patch.
 >>
 >> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
->> ---
->>   block/qcow2.h |  1 +
->>   block/qcow2.c | 90 ++++++++++++++++++++++++++++++++++++++++++++-------
->>   2 files changed, 79 insertions(+), 12 deletions(-)
->> @@ -867,6 +893,39 @@ static void cache_clean_timer_del(BlockDriverState *bs)
->>       }
->>   }
->>   
->> +/*
->> + * Delete the cache clean timer and await any yet running instance.
->> + * Must be called from the main or BDS AioContext, holding s->lock.
->> + */
->> +static void coroutine_fn
->> +cache_clean_timer_locked_co_del_and_wait(BlockDriverState *bs)
->> +{
->> +    BDRVQcow2State *s = bs->opaque;
->> +    IO_OR_GS_CODE();
->> +    cache_clean_timer_del(bs);
->> +    if (qatomic_read(&s->cache_clean_running)) {
->> +        qemu_co_mutex_unlock(&s->lock);
->> +        qatomic_set(&s->cache_clean_polling, true);
->> +        BDRV_POLL_WHILE(bs, qatomic_read(&s->cache_clean_running));
-> Polling in a coroutine_fn is verboten.
->
-> If we do need this function, I think it would be a yield here and a wake
-> on the other side. I think we might be able to get around it if we move
-> the call from qcow2_do_open() into qcow2_open() (i.e. outside the
-> coroutine). A bit ugly, so your choice.
+> Should we then do the opposite thing and just move every request into
+> the main thread and only move back before returning to the caller?
 
-We can let a CoQueue do the waking, no?
+Maybe it would be fairer to fail requests when they’re not in BDS context?
 
->> +        qemu_co_mutex_lock(&s->lock);
->> +    }
->> +}
->> +
->> +/*
->> + * Delete the cache clean timer and await any yet running instance.
->> + * Must be called from the main or BDS AioContext without s->lock held.
->> + */
->> +static void cache_clean_timer_del_and_wait(BlockDriverState *bs)
->> +{
->> +    BDRVQcow2State *s = bs->opaque;
->> +    IO_OR_GS_CODE();
->> +    cache_clean_timer_del(bs);
->> +    if (qatomic_read(&s->cache_clean_running)) {
->> +        qatomic_set(&s->cache_clean_polling, true);
->> +        BDRV_POLL_WHILE(bs, qatomic_read(&s->cache_clean_running));
->> +    }
->> +}
->> +
->>   static void qcow2_detach_aio_context(BlockDriverState *bs)
->>   {
->>       cache_clean_timer_del(bs);
->> @@ -1214,12 +1273,20 @@ fail:
->>       return ret;
->>   }
->>   
->> +/* s_locked specifies whether s->lock is held or not */
->>   static void qcow2_update_options_commit(BlockDriverState *bs,
->> -                                        Qcow2ReopenState *r)
->> +                                        Qcow2ReopenState *r,
->> +                                        bool s_locked)
->>   {
->>       BDRVQcow2State *s = bs->opaque;
->>       int i;
->>   
->> +    if (s_locked) {
->> +        cache_clean_timer_locked_co_del_and_wait(bs);
->> +    } else {
->> +        cache_clean_timer_del_and_wait(bs);
->> +    }
->> +
->>       if (s->l2_table_cache) {
->>           qcow2_cache_destroy(s->l2_table_cache);
->>       }
->> @@ -1228,6 +1295,10 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
->>       }
->>       s->l2_table_cache = r->l2_table_cache;
->>       s->refcount_block_cache = r->refcount_block_cache;
->> +
->> +    s->cache_clean_interval = r->cache_clean_interval;
->> +    cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
->> +
->>       s->l2_slice_size = r->l2_slice_size;
->>   
->>       s->overlap_check = r->overlap_check;
->> @@ -1239,12 +1310,6 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
->>   
->>       s->discard_no_unref = r->discard_no_unref;
->>   
->> -    if (s->cache_clean_interval != r->cache_clean_interval) {
->> -        cache_clean_timer_del(bs);
->> -        s->cache_clean_interval = r->cache_clean_interval;
->> -        cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
->> -    }
->> -
-> I think the del/init pair here won't be necessary any more after
-> switching to the background coroutine. It will just start using the new
-> value of s->cache_clean_interval the next time it sleeps.
+> But I'm also not against making the theoretical fix so that maybe
+> someone can fix the other problem later. It just seems to be of somewhat
+> limited use on its own.
 
-One problem is that if we don’t lock s->lock, the coroutine can read 
-s->l2_table_cache and s->refcount_block_cache while they’re invalid, 
-which is why I moved the deletion above.  We also still need to delete 
-if the interval is set to 0 (or special-case that in the coroutine to 
-wait forever).
-
-We could run all of this in a coroutine so we can lock s->lock, or we 
-have to force-stop the timer/coroutine at the start.  Maybe running it 
-in a coroutine is better…
+True.  But as explained in patch 13, these last few patches are not 
+really that useful in practice anyway…
 
 Hanna
 
