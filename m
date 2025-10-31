@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A18CDCCF9F0
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 01:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B512ECCF9F0
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 02:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEeOV-0002Pb-WB; Thu, 30 Oct 2025 21:57:36 -0400
+	id 1vEeRL-00032d-BO; Thu, 30 Oct 2025 22:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEeOR-0002PQ-G6
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 21:57:31 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1vEeRI-000326-Ga
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:00:28 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEeOJ-0003iu-Kl
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 21:57:31 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-63c4b41b38cso3489459a12.3
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 18:57:19 -0700 (PDT)
+ id 1vEeR8-0004CL-Qh
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:00:28 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-63bdfd73e6eso5372805a12.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 19:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761875834; x=1762480634; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761876010; x=1762480810; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wCB7RZS9oe/YNNjh3MSj0NRYu5lrDPHxW+5XFPECsWI=;
- b=QHcB5bYOHa7aWqAPl+xgSuP0YIUb6kFfaxfEgKF6nnYaCsjFazx/ZQb4OjVNm/qm8b
- OhdNhT3u7+KQ049aY16YEdFLluUZLf01M/BsZCWxxp9jAWLDFqqASv+Dm6nFKGqGF5Vk
- 2kw3oRcEbfX8UpIq+pZObowpWz0FlcGybaT8RPfksYfYDhsqYH5o6WqGh+mR/lF08ygC
- zFHz7yUXE0R58IC5yaZsxYx+ps5RtxYDxdEglkGSJtM4brrprnmRVQbdtKTmmNM2w2Oy
- uXalJvtSxSp8p5thvCTXCE/N+c9QldWGICjnmrC2PWuJdzFRThWPUN6vQ+Y6qkkl9sHR
- 0wCw==
+ bh=2DdN7Q1HDgkc3WZecmT4/NYJYG0Sp4eQJgN0BZoB6ZA=;
+ b=ZVYGqv170P6HIbYZB1kpKS4l1DUVLVLMlRur3cUIlJJrM6Vfq9r2UgqVpNfwOcqwR/
+ hxIEjFqLKoAX+X42fY0ra1Zx0lOR8vhN8V/9MA4UXLuIQip7N/I6Zmqt3TQXTGhZvFg7
+ Xmf+Phvrr7ANoOIOnMor7Yd7907eLtn02KPji3Te08sGHYeNEThiM3t2vMbWuRGHcGXy
+ 73gUbUDtvHRXS/hE+YlU0r0/EZC895grPVW702jUwAwqgtCBT3TsIT0wF9E2cjxBGewW
+ LzMTUiW9W/ia6qvIO3w/09lyb/ZaB7hOdIG/iL71vsHvoNJitzypx4GMu+c8zCIX4bqL
+ CR8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761875834; x=1762480634;
+ d=1e100.net; s=20230601; t=1761876010; x=1762480810;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wCB7RZS9oe/YNNjh3MSj0NRYu5lrDPHxW+5XFPECsWI=;
- b=EE2O/FH1gpY0aYx7WlRPfFeALVu9+rRjgi0XILb6UGvbE2ID30zbl5WoO00Ah7CXUM
- 9aKgOwykcUYdMwGvxd6HIHD1zpWbbiu0Fw5kfJ+Rerfd2NgERDQ36ykJoyYrEI0Inc7W
- 2RJMFEms0X8De8yrv60QWYQO1m0yCQOIuRwUczeCRxflFIfLEEdzzX0fEX6ebkYm+Jjo
- 9bZFjyZ9LmdeJ1D9z3bP07LIa5+coQ0TvzORwLOIfBzDkzXzjQ42ZuBwGX+h7YcqFTrG
- ts62TyMI0rkwpeAETU2R1566KmV3MUN2iHWUnH+l0F6rU7lhzNuDv6Fq4lQeKALnO8rl
- qkAA==
-X-Gm-Message-State: AOJu0YzStbz7Q111lSEqVkrp71+w6x2nDTXNPmuxM6SvezeRZiUkgBQJ
- 36gBXwiNkm1yGJaH+5PizGVRbrxnb6/9ZI/BDQ9Zgr7TN/Cw2jvxuu8rNi3sm89vIYYbuOZesrQ
- zvil8YUi96RvUcglrHSVSfBRei/gd7po=
-X-Gm-Gg: ASbGncuhLmMQjvxLVnkgYazSDOzUz2xAb6S1Tk7kOf/kxyBRpXD69Mz9yFfW85PyoQx
- tsdCL9zg5P3dRuoofJIHMj9XA5N7Ske8KulGft+aRHGaUoZswBzTCxGUub2ldo4HwFiwj5a6RD+
- cOsIQmiWwz+swsHkh5VH3arhoC/gDJFTdYMELzJcLV0Q527omll8D+D21B+n9NRFl56dkFmXm6y
- YfBRo+brW3ewNT/2J6vU3rrhE8/2lFIlzmi/1T1j+CZvNsl3LwsLbWoXA/Fknw0JCwhtM0jglyW
- t4VjzHrbHruRIsay8duLbsj1uA==
-X-Google-Smtp-Source: AGHT+IHQwKe3hEz4PjtXP7lf00D9VdDUe7o8U1P374uMWhvD++0Ix6Tomx9zNwect/BKim6te9KktVPRpsTcH6fuoZk=
-X-Received: by 2002:a05:6402:268e:b0:63e:2d46:cc5d with SMTP id
- 4fb4d7f45d1cf-64076f71156mr1340145a12.7.1761875834092; Thu, 30 Oct 2025
- 18:57:14 -0700 (PDT)
+ bh=2DdN7Q1HDgkc3WZecmT4/NYJYG0Sp4eQJgN0BZoB6ZA=;
+ b=Ho4g1vy1TxnKA3dg3DklKO1F85MHI3Ad1gBxrwiE56GrXn+gz6sxC5jm433WuoXDoA
+ hpOw2jwFV28A/5hJxMEh5khI0dk8EHH4faawGvp5V6Iejp0vE04JwgeSP3lE9MZjxt2F
+ Ip6n4xWVHh1ix7p0UHcJoRVRdNcxMJVe982Rlo7ElVMDDml7Ndx8QjosX3jfM/eRL+kn
+ Cc1B0HEBanWdz+GBUgzs9sF32kiUH/+l5hRSkjYbKu2W2wN4VQm28EXMBt8ZRATO3jim
+ 4YaKWv56S+/eroASALksoKCIQvj4cSAxFyEMHff+QdNDop9h98Ue886K2I4B+hiYm2ol
+ 1u1A==
+X-Gm-Message-State: AOJu0YyoyaY2/jD0DnUoS3FUiKPbRIf3aaCRZeWe/Hqka+2vVof52K0y
+ ATLzot0/wR8z49k6CMKG9ODylFbbU5zIqulgdNOiT/UEgIlqlifaDqTm1F4eCdhR7/+wR8ktLvs
+ toBKX+7ml0+m4rsOS+/YhkrOTil+Tr7o=
+X-Gm-Gg: ASbGnctyt1CO00MgYgvCQbuzRjL/yq9BOt6KF39nauc8X9rpEq6ka5gFg3yMThdslnR
+ NY/Ggm8Jsm4TQf41I6p9S5IuY6/yMMcWpegsKkqm0x188JtD/MihASe11XtFtacNKCg16TA9qiF
+ zJNct3Hq0mtjb2J5Tyj7Lmio93X/BFb3k8lrH9NxdhZGho/2K4kkp7VUctIZYloZfQjytx6+zC7
+ uF11qQajEizwExLnerV1J5MPJDJpvDeZjrjgDAoH8lPecxX8eP+8I3htOd8xdEqWn966Bvdy6/R
+ FWddZgaSiVK6cF/BYsync64A7g==
+X-Google-Smtp-Source: AGHT+IHjm5DZmS4J2XAmIZ+PCAKavjCzLkoXywBtymrsQwVWpdeFfur4NTIeg5A95LXfsNBs6u4suS5bNsyjXE8Vd0o=
+X-Received: by 2002:a05:6402:510c:b0:63b:ee76:3f63 with SMTP id
+ 4fb4d7f45d1cf-64075334a32mr1781614a12.7.1761876009642; Thu, 30 Oct 2025
+ 19:00:09 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251027181831.27016-1-anjo@rev.ng>
- <20251027181831.27016-11-anjo@rev.ng>
-In-Reply-To: <20251027181831.27016-11-anjo@rev.ng>
+ <20251027181831.27016-23-anjo@rev.ng>
+In-Reply-To: <20251027181831.27016-23-anjo@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 31 Oct 2025 11:56:47 +1000
-X-Gm-Features: AWmQ_bmYjWsYO8aeICo1cuuEkjZezWZXLmvl6rAab-3-lu_xr7qqakj8hK16Mmk
-Message-ID: <CAKmqyKOW2NOqCWO0LW6MsxLvjHboLzkzquJ4sV_xbL7xjSvDgw@mail.gmail.com>
-Subject: Re: [PATCH v4 10/33] target/riscv: Fix size of vector CSRs
+Date: Fri, 31 Oct 2025 11:59:43 +1000
+X-Gm-Features: AWmQ_bmSCvfiIz61FgjMjJuv4PcQi9aY1X4lqrDohmyAdL40yzdiMldMyIIcaw8
+Message-ID: <CAKmqyKPzGyDVkgHO+1t_G=zqMivadfNNcnj1WpAuCQq4eZz=MA@mail.gmail.com>
+Subject: Re: [PATCH v4 22/33] target/riscv: Fix size of [m|s|vs]iselect fields
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
  alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,30 +98,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 4:28=E2=80=AFAM Anton Johansson via
+On Tue, Oct 28, 2025 at 4:23=E2=80=AFAM Anton Johansson via
 <qemu-devel@nongnu.org> wrote:
 >
-> According to version 20250508 of the unprivileged specification:
-> - vtype: bits 0..7 used, bit XLEN-1 illegal, rest reserved
->   =3D> fix to 64-bits.
->
-> - vxsat: bit 0 used, vxrm which would occupy bits 1..2 is stored
->   separately, and bits 3..31 are set to 0
->   =3D> fix to 8-bits.
->
-> - vxrm: 2 lowest bits are used for rounding mode, rest set to 0
->   =3D> fix to 8-bits.
->
-> - vstart: maximum value of VLMAX-1, where VLMAX is at most 2^16
->   =3D> fix to 32-bits as vstart is mapped to a TCG global.
->
-> - vl: maximum value of VLEN which is at most 2^16
->   =3D> fix to 32-bits as vl is mapped to a TCG global.
->
-> Fields are shuffled for reduced padding.
->
-> Note, the cpu/vector VMSTATE version is bumped, breaking migration from
-> older versions.
+> [m|s|vs]iselect are defined in version 20250508 of the privileged
+> specification to be XLEN in size, however QEMU only ever uses at most
+> 16 bits of these fields, so fix them to 16.  Update relevant function
+> arguments.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
@@ -131,294 +114,210 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.h                      | 12 ++++++------
->  target/riscv/machine.c                  | 14 +++++++-------
->  target/riscv/translate.c                | 12 ++++++++----
->  target/riscv/vector_helper.c            | 22 ++++++++++++++++++----
->  target/riscv/insn_trans/trans_rvv.c.inc | 24 ++++++++++++------------
->  5 files changed, 51 insertions(+), 33 deletions(-)
+>  target/riscv/cpu.h     |  6 +++---
+>  target/riscv/csr.c     | 32 ++++++++++++++++----------------
+>  target/riscv/machine.c |  6 +++---
+>  3 files changed, 22 insertions(+), 22 deletions(-)
 >
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 6b4edbfe9e..bd200ccad4 100644
+> index 5f051796f4..b35851cf4f 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -192,7 +192,7 @@ FIELD(VTYPE, VSEW, 3, 3)
->  FIELD(VTYPE, VTA, 6, 1)
->  FIELD(VTYPE, VMA, 7, 1)
->  FIELD(VTYPE, VEDIV, 8, 2)
-> -FIELD(VTYPE, RESERVED, 10, sizeof(target_ulong) * 8 - 11)
-> +FIELD(VTYPE, RESERVED, 10, sizeof(uint64_t) * 8 - 11)
+> @@ -343,8 +343,8 @@ struct CPUArchState {
+>      uint8_t siprio[64];
 >
->  typedef struct PMUCTRState {
->      /* Current value of a counter */
-> @@ -218,11 +218,11 @@ struct CPUArchState {
+>      /* AIA CSRs */
+> -    target_ulong miselect;
+> -    target_ulong siselect;
+> +    uint16_t miselect;
+> +    uint16_t siselect;
+>      uint64_t mvien;
+>      uint64_t mvip;
 >
->      /* vector coprocessor state. */
->      uint64_t vreg[32 * RV_VLEN_MAX / 64] QEMU_ALIGNED(16);
-> -    target_ulong vxrm;
-> -    target_ulong vxsat;
-> -    target_ulong vl;
-> -    target_ulong vstart;
-> -    target_ulong vtype;
-> +    uint64_t vtype;
-> +    uint32_t vl;
-> +    uint32_t vstart;
-> +    uint8_t vxrm;
-> +    uint8_t vxsat;
->      bool vill;
+> @@ -390,7 +390,7 @@ struct CPUArchState {
+>      uint64_t vsatp;
 >
->      target_ulong pc;
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 7349383eab..440b09fc32 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -137,16 +137,16 @@ static bool vector_needed(void *opaque)
+>      /* AIA VS-mode CSRs */
+> -    target_ulong vsiselect;
+> +    uint16_t vsiselect;
 >
->  static const VMStateDescription vmstate_vector =3D {
->      .name =3D "cpu/vector",
-> -    .version_id =3D 2,
-> -    .minimum_version_id =3D 2,
-> +    .version_id =3D 3,
-> +    .minimum_version_id =3D 3,
->      .needed =3D vector_needed,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_UINT64_ARRAY(env.vreg, RISCVCPU, 32 * RV_VLEN_MAX / 64),
-> -        VMSTATE_UINTTL(env.vxrm, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vxsat, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vl, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vstart, RISCVCPU),
-> -        VMSTATE_UINTTL(env.vtype, RISCVCPU),
-> +        VMSTATE_UINT64(env.vtype, RISCVCPU),
-> +        VMSTATE_UINT32(env.vl, RISCVCPU),
-> +        VMSTATE_UINT32(env.vstart, RISCVCPU),
-> +        VMSTATE_UINT8(env.vxrm, RISCVCPU),
-> +        VMSTATE_UINT8(env.vxsat, RISCVCPU),
->          VMSTATE_BOOL(env.vill, RISCVCPU),
->          VMSTATE_END_OF_LIST()
->      }
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 8df1a2ed3c..15eee7f6ee 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -39,8 +39,9 @@
->  #include "tcg/tcg-cpu.h"
+>      uint64_t mtval2;
+>      uint64_t mtinst;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 5ba1fe4168..ebdb955869 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2405,7 +2405,7 @@ static RISCVException rmw_xiselect(CPURISCVState *e=
+nv, int csrno,
+>                                     target_ulong *val, target_ulong new_v=
+al,
+>                                     target_ulong wr_mask)
+>  {
+> -    target_ulong *iselect;
+> +    uint16_t *iselect;
+>      int ret;
 >
->  /* global register indices */
-> -static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
-> +static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc;
->  static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
-> +static TCGv_i32 cpu_vl, cpu_vstart;
->  static TCGv load_res;
->  static TCGv load_val;
->
-> @@ -1455,6 +1456,10 @@ void riscv_translate_init(void)
->      size_t field_offset =3D 0;
->  #endif
->
-> +    /* 32 bits in size, no offset needed */
-> +    size_t vl_offset =3D offsetof(CPURISCVState, vl);
-> +    size_t vstart_offset =3D offsetof(CPURISCVState, vstart);
-> +
->      for (i =3D 1; i < 32; i++) {
->          cpu_gpr[i] =3D tcg_global_mem_new(tcg_env,
->              offsetof(CPURISCVState, gpr[i]) + field_offset,
-> @@ -1470,9 +1475,8 @@ void riscv_translate_init(void)
->      }
->
->      cpu_pc =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), =
-"pc");
-> -    cpu_vl =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, vl), =
-"vl");
-> -    cpu_vstart =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, v=
-start),
-> -                            "vstart");
-> +    cpu_vl =3D tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
-> +    cpu_vstart =3D tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstar=
-t");
->      load_res =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, loa=
-d_res),
->                               "load_res");
->      load_val =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, loa=
-d_val),
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 2de3358ee8..cf9a199566 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -360,6 +360,12 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, targ=
-et_ulong addr,
->      uint32_t evl =3D env->vstart + elems;
->      MMUAccessType access_type =3D is_load ? MMU_DATA_LOAD : MMU_DATA_STO=
-RE;
->
-> +    /*
-> +     * Maximum vector length is VLMAX =3D=3D 2^16 =3D=3D LMUL * VL / SEW=
-, and
-> +     * occurs for LMUL =3D=3D 8, SEW =3D=3D 8, VL =3D=3D 2^16.
-> +     */
-> +    g_assert(env->vstart < UINT16_MAX && UINT16_MAX - env->vstart >=3D e=
-lems);
-> +
->      /* Check page permission/pmp/watchpoint/etc. */
->      probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &fla=
-gs,
->                  true);
-> @@ -2594,19 +2600,27 @@ static inline uint8_t get_round(int vxrm, uint64_=
-t v, uint8_t shift)
->
->      d1 =3D extract64(v, shift - 1, 1);
->      D1 =3D extract64(v, 0, shift);
-> -    if (vxrm =3D=3D 0) { /* round-to-nearest-up (add +0.5 LSB) */
-> +    switch (vxrm) {
-> +    case 0:
-> +        /* round-to-nearest-up (add +0.5 LSB) */
->          return d1;
-> -    } else if (vxrm =3D=3D 1) { /* round-to-nearest-even */
-> +    case 1:
-> +        /* round-to-nearest-even */
->          if (shift > 1) {
->              D2 =3D extract64(v, 0, shift - 1);
->              return d1 & ((D2 !=3D 0) | d);
->          } else {
->              return d1 & d;
->          }
-> -    } else if (vxrm =3D=3D 3) { /* round-to-odd (OR bits into LSB, aka "=
-jam") */
-> +    case 2:
-> +        /* round-down (truncate) */
-> +        return 0;
-> +    case 3:
-> +        /* round-to-odd (OR bits into LSB, aka "jam") */
->          return !d & (D1 !=3D 0);
-> +    default:
-> +        g_assert_not_reached();
->      }
-> -    return 0; /* round-down (truncate) */
+>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+> @@ -2448,18 +2448,18 @@ static RISCVException rmw_xiselect(CPURISCVState =
+*env, int csrno,
+>      return RISCV_EXCP_NONE;
 >  }
 >
->  static inline int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a,
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
-trans/trans_rvv.c.inc
-> index 2a487179f6..32474a21dc 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -194,7 +194,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs=
-1, TCGv s2)
+> -static bool xiselect_aia_range(target_ulong isel)
+> +static bool xiselect_aia_range(uint16_t isel)
+>  {
+>      return (ISELECT_IPRIO0 <=3D isel && isel <=3D ISELECT_IPRIO15) ||
+>             (ISELECT_IMSIC_FIRST <=3D isel && isel <=3D ISELECT_IMSIC_LAS=
+T);
+>  }
 >
->      if (rd =3D=3D 0 && rs1 =3D=3D 0) {
->          s1 =3D tcg_temp_new();
-> -        tcg_gen_mov_tl(s1, cpu_vl);
-> +        tcg_gen_ext_i32_tl(s1, cpu_vl);
->      } else if (rs1 =3D=3D 0) {
->          /* As the mask is at least one bit, RV_VLEN_MAX is >=3D VLMAX */
->          s1 =3D tcg_constant_tl(RV_VLEN_MAX);
-> @@ -1213,9 +1213,9 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t =
-rs1, uint32_t nf,
->                              MO_LE | MO_64 | atomicity);
->                  }
->                  if (i =3D=3D size - 8) {
-> -                    tcg_gen_movi_tl(cpu_vstart, 0);
-> +                    tcg_gen_movi_i32(cpu_vstart, 0);
->                  } else {
-> -                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_es=
-z);
-> +                    tcg_gen_addi_i32(cpu_vstart, cpu_vstart, 8 >> log2_e=
-sz);
->                  }
->              }
->          } else {
-> @@ -1231,9 +1231,9 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t =
-rs1, uint32_t nf,
->                              MO_LE | MO_32 | atomicity);
->                  }
->                  if (i =3D=3D size - 4) {
-> -                    tcg_gen_movi_tl(cpu_vstart, 0);
-> +                    tcg_gen_movi_i32(cpu_vstart, 0);
->                  } else {
-> -                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 4 >> log2_es=
-z);
-> +                    tcg_gen_addi_i32(cpu_vstart, cpu_vstart, 4 >> log2_e=
-sz);
->                  }
->              }
->          }
-> @@ -3459,7 +3459,7 @@ static bool trans_vmv_x_s(DisasContext *s, arg_vmv_=
-x_s *a)
->          vec_element_loadi(s, t1, a->rs2, 0, true);
->          tcg_gen_trunc_i64_tl(dest, t1);
->          gen_set_gpr(s, a->rd, dest);
-> -        tcg_gen_movi_tl(cpu_vstart, 0);
-> +        tcg_gen_movi_i32(cpu_vstart, 0);
->          finalize_rvv_inst(s);
->          return true;
->      }
-> @@ -3476,7 +3476,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_=
-s_x *a)
->          TCGv s1;
->          TCGLabel *over =3D gen_new_label();
+> -static bool xiselect_cd_range(target_ulong isel)
+> +static bool xiselect_cd_range(uint16_t isel)
+>  {
+>      return (ISELECT_CD_FIRST <=3D isel && isel <=3D ISELECT_CD_LAST);
+>  }
 >
-> -        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-> +        tcg_gen_brcond_i32(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
+> -static bool xiselect_ctr_range(int csrno, target_ulong isel)
+> +static bool xiselect_ctr_range(int csrno, uint16_t isel)
+>  {
+>      /* MIREG-MIREG6 for the range 0x200-0x2ff are not used by CTR. */
+>      return CTR_ENTRIES_FIRST <=3D isel && isel <=3D CTR_ENTRIES_LAST &&
+> @@ -2467,7 +2467,7 @@ static bool xiselect_ctr_range(int csrno, target_ul=
+ong isel)
+>  }
 >
->          t1 =3D tcg_temp_new_i64();
+>  static int rmw_iprio(target_ulong xlen,
+> -                     target_ulong iselect, uint8_t *iprio,
+> +                     uint16_t iselect, uint8_t *iprio,
+>                       target_ulong *val, target_ulong new_val,
+>                       target_ulong wr_mask, int ext_irq_no)
+>  {
+> @@ -2511,7 +2511,7 @@ static int rmw_iprio(target_ulong xlen,
+>      return 0;
+>  }
 >
-> @@ -3488,7 +3488,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_=
-s_x *a)
->          tcg_gen_ext_tl_i64(t1, s1);
->          vec_element_storei(s, a->rd, 0, t1);
->          gen_set_label(over);
-> -        tcg_gen_movi_tl(cpu_vstart, 0);
-> +        tcg_gen_movi_i32(cpu_vstart, 0);
->          finalize_rvv_inst(s);
->          return true;
->      }
-> @@ -3516,7 +3516,7 @@ static bool trans_vfmv_f_s(DisasContext *s, arg_vfm=
-v_f_s *a)
->          }
+> -static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val=
+,
+> +static int rmw_ctrsource(CPURISCVState *env, uint16_t isel, target_ulong=
+ *val,
+>                            target_ulong new_val, target_ulong wr_mask)
+>  {
+>      /*
+> @@ -2550,7 +2550,7 @@ static int rmw_ctrsource(CPURISCVState *env, int is=
+el, target_ulong *val,
+>      return 0;
+>  }
 >
->          mark_fs_dirty(s);
-> -        tcg_gen_movi_tl(cpu_vstart, 0);
-> +        tcg_gen_movi_i32(cpu_vstart, 0);
->          finalize_rvv_inst(s);
->          return true;
->      }
-> @@ -3536,7 +3536,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfm=
-v_s_f *a)
->          TCGLabel *over =3D gen_new_label();
+> -static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val=
+,
+> +static int rmw_ctrtarget(CPURISCVState *env, uint16_t isel, target_ulong=
+ *val,
+>                            target_ulong new_val, target_ulong wr_mask)
+>  {
+>      /*
+> @@ -2589,7 +2589,7 @@ static int rmw_ctrtarget(CPURISCVState *env, int is=
+el, target_ulong *val,
+>      return 0;
+>  }
 >
->          /* if vstart >=3D vl, skip vector register write back */
-> -        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-> +        tcg_gen_brcond_i32(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
+> -static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
+> +static int rmw_ctrdata(CPURISCVState *env, uint16_t isel, target_ulong *=
+val,
+>                          target_ulong new_val, target_ulong wr_mask)
+>  {
+>      /*
+> @@ -2630,7 +2630,7 @@ static int rmw_ctrdata(CPURISCVState *env, int isel=
+, target_ulong *val,
+>  }
 >
->          /* NaN-box f[rs1] */
->          t1 =3D tcg_temp_new_i64();
-> @@ -3545,7 +3545,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfm=
-v_s_f *a)
->          vec_element_storei(s, a->rd, 0, t1);
+>  static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+> -                         target_ulong isel, target_ulong *val,
+> +                         uint16_t isel, target_ulong *val,
+>                           target_ulong new_val, target_ulong wr_mask)
+>  {
+>      bool virt =3D false, isel_reserved =3D false;
+> @@ -2710,12 +2710,12 @@ done:
+>  }
 >
->          gen_set_label(over);
-> -        tcg_gen_movi_tl(cpu_vstart, 0);
-> +        tcg_gen_movi_i32(cpu_vstart, 0);
->          finalize_rvv_inst(s);
->          return true;
->      }
-> @@ -3610,7 +3610,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr =
-*a)                  \
->                                                                          =
-\
->          fns[s->sew](dest, mask, src1, src2, tcg_env, desc);             =
-\
->                                                                          =
-\
-> -        tcg_gen_movi_tl(cpu_vstart, 0);                                 =
-\
-> +        tcg_gen_movi_i32(cpu_vstart, 0);                                =
-\
->          finalize_rvv_inst(s);                                           =
-\
->                                                                          =
-\
->          return true;                                                    =
-\
+>  static int rmw_xireg_cd(CPURISCVState *env, int csrno,
+> -                        target_ulong isel, target_ulong *val,
+> +                        uint16_t isel, target_ulong *val,
+>                          target_ulong new_val, target_ulong wr_mask)
+>  {
+>      int ret =3D -EINVAL;
+> -    int ctr_index =3D isel - ISELECT_CD_FIRST;
+> -    int isel_hpm_start =3D ISELECT_CD_FIRST + 3;
+> +    uint16_t ctr_index =3D isel - ISELECT_CD_FIRST;
+> +    uint16_t isel_hpm_start =3D ISELECT_CD_FIRST + 3;
+>
+>      if (!riscv_cpu_cfg(env)->ext_smcdeleg || !riscv_cpu_cfg(env)->ext_ss=
+ccfg) {
+>          ret =3D RISCV_EXCP_ILLEGAL_INST;
+> @@ -2782,7 +2782,7 @@ done:
+>  }
+>
+>  static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
+> -                        target_ulong isel, target_ulong *val,
+> +                        uint16_t isel, target_ulong *val,
+>                          target_ulong new_val, target_ulong wr_mask)
+>  {
+>      if (!riscv_cpu_cfg(env)->ext_smctr && !riscv_cpu_cfg(env)->ext_ssctr=
+) {
+> @@ -2810,7 +2810,7 @@ static int rmw_xireg_ctr(CPURISCVState *env, int cs=
+rno,
+>   * extension using csrind should be implemented here.
+>   */
+>  static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
+> -                              target_ulong isel, target_ulong *val,
+> +                              uint16_t isel, target_ulong *val,
+>                                target_ulong new_val, target_ulong wr_mask=
+)
+>  {
+>      bool virt =3D csrno =3D=3D CSR_VSIREG ? true : false;
+> @@ -2840,7 +2840,7 @@ static int rmw_xiregi(CPURISCVState *env, int csrno=
+, target_ulong *val,
+>                        target_ulong new_val, target_ulong wr_mask)
+>  {
+>      int ret =3D -EINVAL;
+> -    target_ulong isel;
+> +    uint16_t isel;
+>
+>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+>      if (ret !=3D RISCV_EXCP_NONE) {
+> @@ -2871,7 +2871,7 @@ static RISCVException rmw_xireg(CPURISCVState *env,=
+ int csrno,
+>                                  target_ulong wr_mask)
+>  {
+>      int ret =3D -EINVAL;
+> -    target_ulong isel;
+> +    uint16_t isel;
+>
+>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+>      if (ret !=3D RISCV_EXCP_NONE) {
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 8a8f5be8d6..376075b2bd 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -108,7 +108,7 @@ static const VMStateDescription vmstate_hyper =3D {
+>          VMSTATE_UINT64(env.vscause, RISCVCPU),
+>          VMSTATE_UINT64(env.vstval, RISCVCPU),
+>          VMSTATE_UINT64(env.vsatp, RISCVCPU),
+> -        VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
+> +        VMSTATE_UINT16(env.vsiselect, RISCVCPU),
+>          VMSTATE_UINT64(env.vsie, RISCVCPU),
+>
+>          VMSTATE_UINT64(env.mtval2, RISCVCPU),
+> @@ -467,8 +467,8 @@ const VMStateDescription vmstate_riscv_cpu =3D {
+>          VMSTATE_UINT64(env.mepc, RISCVCPU),
+>          VMSTATE_UINT64(env.mcause, RISCVCPU),
+>          VMSTATE_UINT64(env.mtval, RISCVCPU),
+> -        VMSTATE_UINTTL(env.miselect, RISCVCPU),
+> -        VMSTATE_UINTTL(env.siselect, RISCVCPU),
+> +        VMSTATE_UINT16(env.miselect, RISCVCPU),
+> +        VMSTATE_UINT16(env.siselect, RISCVCPU),
+>          VMSTATE_UINT32(env.scounteren, RISCVCPU),
+>          VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+>          VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
 > --
 > 2.51.0
 >
