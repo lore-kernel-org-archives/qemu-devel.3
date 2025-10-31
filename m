@@ -4,60 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52150CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96181CCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEnjn-0000EU-BA; Fri, 31 Oct 2025 07:56:11 -0400
+	id 1vEnkf-0002Ea-1L; Fri, 31 Oct 2025 07:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEnjQ-0008FN-VO
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:55:51 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEnkZ-00028u-JR
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:57:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEnj9-0006HI-8m
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:55:48 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id BF4FF80949;
- Fri, 31 Oct 2025 14:55:20 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id JteCMd0FtqM0-ajlbdRpA; Fri, 31 Oct 2025 14:55:20 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761911720;
- bh=SwHuwFnOy0I3k3Cs0w00DYpDUa/PBuK5DTTs/Tdc+88=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=M0rS+/W7gJswzTG9P6OzEJjs7Af04XVQ4ZhRkA6TF+uIt3ycV8IfLRCu0Dswf9Lc8
- 7gaUAT6EWCMm9zhm/795ovPlFQHyac+aUEB4h9cL9TFkUuc7tJnSYrdUG/VPObcvOO
- oSaiDuqN66hHGlF222tgU6WHyiURd27deMWwQFfw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: armbru@redhat.com
-Cc: michael.roth@amd.com,
-	qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru
-Subject: [PATCH v4] qapi: Add documentation format validation
-Date: Fri, 31 Oct 2025 14:55:17 +0300
-Message-ID: <20251031115517.79032-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEnkQ-0006Yz-R4
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:56:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761911805;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wka6/4ypPSZaKBUR8NW+l1dG+F0tcDS/RKul62uDrwI=;
+ b=U8tRObUUbnsDjgbeGT2rubADBspuzA/rU5ZlykqP27PbI6iyaBWG60YKcG2mwopKbowMxj
+ qyCSdQ9rkpFa/y6rhre6GjagNs9viRRfbNoLp+g/7cVlz4HOKwHAHJD4BMx5y2nJg3lJOx
+ ZbgR1Dde07q0J7wYkpKaz0Jbi+sC8ZA=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-600-XDLnBDMXPbW21mBBoItzrQ-1; Fri, 31 Oct 2025 07:56:43 -0400
+X-MC-Unique: XDLnBDMXPbW21mBBoItzrQ-1
+X-Mimecast-MFC-AGG-ID: XDLnBDMXPbW21mBBoItzrQ_1761911802
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b6d40007ea1so152138266b.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:56:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761911802; x=1762516602;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wka6/4ypPSZaKBUR8NW+l1dG+F0tcDS/RKul62uDrwI=;
+ b=rIctlGX4KzL/AHijFWwMnztMiYPemxvC3Jkvh5MrOD45fam6DAFeaG2L6YkBRcuX43
+ 5qZGDQGqmKoKWhBWmPUl18lkRpFHMdX/vjxx8RyVnCwOxtMSfCk0TfnSelDppM9DysRQ
+ 7KRKe1pUaiXpWff03tbblcgZWAFogQSBOrJh4H/iHNoKOapzR0pSsFL774avTfly2U4C
+ 78fAoRaDlnFzjI2oEyfeaaGV7N5xQHagzbg3N0mbaBDTmkequb2JbF5zkI0V7zIC6wJz
+ VLUSim3nwRZTSjV9JotMNPIEJjRSEEqdPSYxqb2wir0F3J93plzsjPcLY+U0vRaErOLe
+ TGBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVX/FfiQLP/XBoAH85ux2otHd/XVISZE66Aq4su20f8onBOrHviUnyVIVaWq/J639QP+Hu/6wEXdUAY@nongnu.org
+X-Gm-Message-State: AOJu0Yw4YeDey4EbA2XqE7f5NWgyV1i1ZOHT1FMshoxe7a3/eIC8DVuX
+ E3aAHv7mCCOAN2d2Hdx3fUYCzULMXTnv3RVOrysevIcrXEkEuYwSVrDpgh/w+7Iq4kiam7Q2RQl
+ 4+pWGU0STA2HFJ67hF6360oCkwJ7sf731QsbT+kultz6uRBAe9USfGait
+X-Gm-Gg: ASbGncsVPxGthGxvAVcewLOF/nfccbXXToQm7G5CMixtpNyHEJ0MCR+6ZrUa230CZF5
+ S3Z66YUY4IZsEOI5cH3yB2eTvnDAbI/ImJ7WTzwR2M0xwZ37K4lBf6MYz57+//VdjzJsH42BBPl
+ Oa9aYvIMzVy+ET9l3c6xrSauatU9bS0MXqFQNdV9tzgNI0TSQ0n7HeegenjMdOLrY8O762HYLcO
+ 7KrQz2w07vUcDjLbx6b9c8nPQPP6XoLoB1B5AmdUs1vsthF6vuPQOCwZzBTq4w9briTHVZVkA49
+ 6LL5mm0xrrrY10x7jphEjhX4x8CccLUc7zOBhD0upXKDrNEhmRpOba2mKquZpb9SgS0H7S0CptU
+ YUhI5yTaflegN72Vjx6A7MZvj+T0TWZoVvpzLnqn3s7H9iEYTzEIM/kZhiv2OQlybtBsj6LyIG0
+ nSL1G2z6N6MUQM9FpHvFUmBWmBP5AY
+X-Received: by 2002:a17:907:7fa0:b0:b5d:7a22:ae41 with SMTP id
+ a640c23a62f3a-b70701a8902mr295952766b.24.1761911801860; 
+ Fri, 31 Oct 2025 04:56:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwRNtWJiJ91H4u+OH4bo4a2LJZwHbYcS3olw5OdJxtiythuSudGnPfhITcMEzEeMpitnR08g==
+X-Received: by 2002:a17:907:7fa0:b0:b5d:7a22:ae41 with SMTP id
+ a640c23a62f3a-b70701a8902mr295949666b.24.1761911801400; 
+ Fri, 31 Oct 2025 04:56:41 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d717:1f4c:b757:9963:8006:395e?
+ (p200300cfd7171f4cb75799638006395e.dip0.t-ipconnect.de.
+ [2003:cf:d717:1f4c:b757:9963:8006:395e])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6407b438b05sm1387781a12.27.2025.10.31.04.56.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 04:56:40 -0700 (PDT)
+Message-ID: <950e06da-1af6-4694-8623-8d6eabd791d9@redhat.com>
+Date: Fri, 31 Oct 2025 12:56:39 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 16/21] block/export: Add multi-threading interface
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
+References: <20250701114437.207419-1-hreitz@redhat.com>
+ <20250701114437.207419-17-hreitz@redhat.com> <aPjUv2YHrw_Hac0o@redhat.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <aPjUv2YHrw_Hac0o@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,101 +116,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add explicit validation for QAPI documentation formatting rules:
+On 22.10.25 14:57, Kevin Wolf wrote:
+> Am 01.07.2025 um 13:44 hat Hanna Czenczek geschrieben:
+>> Make BlockExportType.iothread an alternate between a single-thread
+>> variant 'str' and a multi-threading variant '[str]'.
+>>
+>> In contrast to the single-thread setting, the multi-threading setting
+>> will not change the BDS's context (and so is incompatible with the
+>> fixed-iothread setting), but instead just pass a list to the export
+>> driver, with which it can do whatever it wants.
+>>
+>> Currently no export driver supports multi-threading, so they all return
+>> an error when receiving such a list.
+>>
+>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>> Acked-by: Markus Armbruster <armbru@redhat.com>
+>> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> diff --git a/include/block/export.h b/include/block/export.h
+>> index 4bd9531d4d..ca45da928c 100644
+>> --- a/include/block/export.h
+>> +++ b/include/block/export.h
+>> @@ -32,8 +32,16 @@ typedef struct BlockExportDriver {
+>>       /* True if the export type supports running on an inactive node */
+>>       bool supports_inactive;
+>>   
+>> -    /* Creates and starts a new block export */
+>> -    int (*create)(BlockExport *, BlockExportOptions *, Error **);
+>> +    /*
+>> +     * Creates and starts a new block export.
+>> +     *
+>> +     * If the user passed a set of I/O threads for multi-threading, @multithread
+>> +     * is a list of the @multithread_count corresponding contexts (freed by the
+>> +     * caller).  Note that @exp->ctx has no relation to that list.
+> Maybe worth stating that it's NULL in the single threaded case?
 
-1. Lines must not exceed 70 columns in width (including '# ' prefix)
-2. Sentences must be separated by two spaces
+I think that’s implicit, but absolutely no harm in being explicit about it.
 
-Example sections and literal :: blocks (seldom case) are excluded, we
-don't require them to be <= 70, that would be too restrictive. Anyway,
-they share common 80-columns recommendations (not requirements).
+>> +     */
+>> +    int (*create)(BlockExport *exp, BlockExportOptions *opts,
+>> +                  AioContext *const *multithread, size_t multithread_count,
+>> +                  Error **errp);
+>>   
+>>       /*
+>>        * Frees a removed block export. This function is only called after all
+>> diff --git a/block/export/export.c b/block/export/export.c
+>> index f3bbf11070..b733f269f3 100644
+>> --- a/block/export/export.c
+>> +++ b/block/export/export.c
+>> @@ -76,16 +76,26 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+>>   {
+>>       bool fixed_iothread = export->has_fixed_iothread && export->fixed_iothread;
+>>       bool allow_inactive = export->has_allow_inactive && export->allow_inactive;
+>> +    bool multithread = export->iothread &&
+>> +        export->iothread->type == QTYPE_QLIST;
+>>       const BlockExportDriver *drv;
+>>       BlockExport *exp = NULL;
+>>       BlockDriverState *bs;
+>>       BlockBackend *blk = NULL;
+>>       AioContext *ctx;
+>> +    AioContext **multithread_ctxs = NULL;
+> g_autofree?
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+Sure, why not.
 
-Hi all!
-
-v4: apply suggestions by Markus:
- - smart regexps
- - simpler error messages
- - hack to move cursor at the place of error
- - support :: blocks
-
-This is based on
-[PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
-Based-on: <20251031094751.2817932-1-armbru@redhat.com>
-
- scripts/qapi/parser.py | 44 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
-
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 9fbf80a541..2c244a3608 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -108,6 +108,10 @@ def __init__(self,
-         self.exprs: List[QAPIExpression] = []
-         self.docs: List[QAPIDoc] = []
- 
-+        # State for tracking qmp-example blocks and simple
-+        # :: literal blocks.
-+        self._literal_mode = False
-+
-         # Showtime!
-         self._parse()
- 
-@@ -423,12 +427,50 @@ def get_doc_line(self) -> Optional[str]:
-             if self.val != '##':
-                 raise QAPIParseError(
-                     self, "junk after '##' at end of documentation comment")
-+            self._literal_mode = False
-             return None
-         if self.val == '#':
-             return ''
-         if self.val[1] != ' ':
-             raise QAPIParseError(self, "missing space after #")
--        return self.val[2:].rstrip()
-+
-+        line = self.val[2:].rstrip()
-+
-+        if re.match(r'(\.\. +qmp-example)? *::$', line):
-+            self._literal_mode = True
-+        elif self._literal_mode and line and not line.startswith(' '):
-+            # ReST directives stop at first non-blank non-indented line
-+            self._literal_mode = False
-+
-+        if not self._literal_mode:
-+            self._validate_doc_line_format(line)
-+
-+        return line
-+
-+    def _validate_doc_line_format(self, line: str) -> None:
-+        """
-+        Validate documentation format rules for a single line:
-+        1. Lines should not exceed 70 columns
-+        2. Sentences should be separated by two spaces
-+        """
-+        full_line_length = len(line) + 2  # "# " = 2 characters
-+        if full_line_length > 70:
-+            # Skip URL lines - they can't be broken
-+            if re.match(r' *(https?|ftp)://[^ ]*$', line):
-+                pass
-+            else:
-+                raise QAPIParseError(
-+                    self, "documentation line exceeds 70 columns"
-+                )
-+
-+        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
-+        for m in list(re.finditer(single_space_pattern, line)):
-+            if not m.group(2):
-+                continue
-+            # HACK so the error message points to the offending spot
-+            self.pos = self.line_pos + 2 + m.start(2) + 1
-+            raise QAPIParseError(
-+                 self, "Use two spaces between sentences")
- 
-     @staticmethod
-     def _match_at_name_colon(string: str) -> Optional[Match[str]]:
--- 
-2.48.1
+Hanna
 
 
