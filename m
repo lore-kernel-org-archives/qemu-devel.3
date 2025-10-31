@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0031ECCF9FE
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB882CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEmkG-0002gr-Fl; Fri, 31 Oct 2025 06:52:36 -0400
+	id 1vEmkb-0002ta-IN; Fri, 31 Oct 2025 06:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vEmkD-0002gD-Rz; Fri, 31 Oct 2025 06:52:33 -0400
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ id 1vEmkX-0002qu-BD; Fri, 31 Oct 2025 06:52:53 -0400
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vEmk8-0002sl-3I; Fri, 31 Oct 2025 06:52:33 -0400
+ id 1vEmkS-0002tn-8E; Fri, 31 Oct 2025 06:52:52 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XMU0obeCso7RqsyM3dfJ7lkyDhCoFxE9rCDidu7JEHATcKInhufkzrksTB7tiOkmuNFqSRO6k1ZQWBBJNsXSqXQnFCmALAfXd4I+dR8aKYh8iDW4caoNEWnJhHdF05TNzlilOT34jH8ey+s6A8pFDo4+bb9jgWyPKFUKRFgZrBu/z6jf3QbDeBibxrmMGaVlu2gpZ964yH1KnfpyTqSUExhP/nW5diiHxJN037NwOat3SE4V94CV0Ntzt1hYK3tfzs5e6KQkzBJHNuq1EF6GUAfXR6zvCn0ytCu86Q4006Dgr3IVxfrrY2aiyIf8XbRZJp7mxE2qcoTLhxJp16vBjQ==
+ b=KuhDyjQubrcenBs3XsC3jg1YUz9pXmJwBpD6PV1hWLWVpXbDeRO+ARnUSBwkDbRDaWn1ZilUuVUzqqYbmfDVSxqwhP2ZeKrhI68x8sFtQSLSKoxxGkBt7CNUimFJygR3ULlmp/dFjEvBKq7CIY1efx+a9LYsEc+2+aAZt0oYnjCTA/mEbc1WhzE53pOFuWHpb0lkfx1vgSuSO3MkAU9XtU9Dqm4OxLqOATJn70QBrvHcd5/wlmetTWZaBr03sAAROfUj1mPZP/ya415BgCEqHfXqPv7tgesQrmeQIVw5y9ibuKtK3L+YIH8Ygp6nLF/XfiV11ZvaezUmExbR25BYQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oDAUD71vCbGpTxf56C5+XG1rvj25h8GtBem7HGhLNCQ=;
- b=WE5lV/UrKRFZEYCIS8+8c7SGLECYmdvSHsmcFESONQFuf14i/kX0+fPm0rMqU5uLy1NjeeTYkM/KVSbjHiqRJaFvJhA7GEbPTxa7ToD6JgMESYJDJsnmROm6dMHgmGkF/OS9d149XqtHowQsgYqjWaZsAWzx6EdM8R+pU+yVKWBkWyTAfKxK7Gv2qtDFYL4a1b4YZoZ3ArFS/9zK9Hx665jv6Eesq+Mx5mvI3pz/VQu1Dc94P83+/qVGcHWptZLZZIT8co0Bum5MW99mI7XXUeztp1ODLkGUnoqNmv7QpAIe5aR0rLH5dOHdp1l57E+1WM1XP53r50ut7/0EC9TCOQ==
+ bh=ClVGz80L8jUr8B2zYHZ1WY8NHWbShRbNSEA7lCu0ZzU=;
+ b=ETQlbdPScr/vDBaBAJqaCgXVlgE71o/bCaVhOApZsZRV7MB1UH8ce/SybZLTj7A4hGGsYFkgy/C5v7zaYhqlo3eIUVWChjAJPcAGnwWKczuiyNnyWbvuBW0sAf7H9TeZENQ4T1s+2riR83Ay47qcgh7sknBLnATIHJ/khjI6QmHr0wq8fFRdUWEsd/+BNvPjQGArjB4ACArKlLop4vfof3LcJsy3HLKGGxcdeRE+PlxLxno0rK8SF4LzfqJ8+4E5vCLtafYGVSTOiVo4RJ+lkyja6OVkOGlZysf1ZLjZ6ghG7+6q8s8Xcog3t40gwkue+Msa1BVSnhl9dT1zQP8VeQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oDAUD71vCbGpTxf56C5+XG1rvj25h8GtBem7HGhLNCQ=;
- b=aByO0L6lODwozs5XVFsPASE5fUw2naELdkrBJw1ko3LaRE2IeV3qE0CWsJ9R3klzOgcPtN5bKbpZfmt4UPfOWoFzfDBDVwXhsHkkL8VOwYyx2z3wYFoxE21j11jIphMjzZAK1+SjZTSWLZlhGRDUjcKC+RX9vG8pGFn9irevYNm627DE8O35ok8lSW6ysQXNloVxN8O2vZixPB4OAGcW0ikfPbZiM8YBD3jHL6z71IfRFE6Gv0j2OEeffMz1w96UL94k0tR7r9tGTdjyTjUPsOIU3WhkRqCQEE9AmU5TTQJyuGhOrGfmtyFlLyv8OgnGfFGes885ySCmy+pvt9WgSw==
-Received: from SJ0PR03CA0223.namprd03.prod.outlook.com (2603:10b6:a03:39f::18)
- by CH3PR12MB9396.namprd12.prod.outlook.com (2603:10b6:610:1d0::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.13; Fri, 31 Oct
- 2025 10:52:15 +0000
-Received: from MWH0EPF000971E8.namprd02.prod.outlook.com
- (2603:10b6:a03:39f:cafe::f8) by SJ0PR03CA0223.outlook.office365.com
- (2603:10b6:a03:39f::18) with Microsoft SMTP Server (version=TLS1_3,
+ bh=ClVGz80L8jUr8B2zYHZ1WY8NHWbShRbNSEA7lCu0ZzU=;
+ b=RvAJEgnYLqDjT50E/Bm96TXJFfDUxnAWuklW+VY7lZ4QSTQgZxAWeDVQ4yeorussIP9LKwtfnYYbr8JifmL/L1hFbL3I1rCZThmyK94btFnoXmHSJxOjv9N/SDyNvGVf+uoGYy2GADM1Qxg4XxWOF2hQ7M5eJjwYC0MgKeXQZMk1vbw5v69n6grqVxbF0GWIEmNfj8NlACUupjpomRViHIgQWApLhk7B87xnkmFPBsuruWYshbupay3HG1MjnI2DuSAZWhooPO8Qv/QyRTXFAZEsY9oW/5K6ZhrR2DL9dLkUFJq+DeR6iqifccZANf6vSJF8WOLQ+YCmOsIdutazEw==
+Received: from DM5PR07CA0098.namprd07.prod.outlook.com (2603:10b6:4:ae::27) by
+ CH3PR12MB9078.namprd12.prod.outlook.com (2603:10b6:610:196::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.15; Fri, 31 Oct
+ 2025 10:52:37 +0000
+Received: from CY4PEPF0000EE34.namprd05.prod.outlook.com
+ (2603:10b6:4:ae:cafe::70) by DM5PR07CA0098.outlook.office365.com
+ (2603:10b6:4:ae::27) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.15 via Frontend Transport; Fri,
- 31 Oct 2025 10:52:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ 31 Oct 2025 10:52:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- MWH0EPF000971E8.mail.protection.outlook.com (10.167.243.68) with Microsoft
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CY4PEPF0000EE34.mail.protection.outlook.com (10.167.242.40) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9275.10 via Frontend Transport; Fri, 31 Oct 2025 10:52:14 +0000
+ 15.20.9275.10 via Frontend Transport; Fri, 31 Oct 2025 10:52:37 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 31 Oct
- 2025 03:52:07 -0700
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 31 Oct
+ 2025 03:52:28 -0700
 Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 31 Oct
- 2025 03:52:04 -0700
+ 2025 03:52:24 -0700
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
@@ -72,78 +72,71 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
  <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <kjaju@nvidia.com>
-Subject: [PATCH v5 00/32] hw/arm/virt: Add support for user-creatable
- accelerated SMMUv3
-Date: Fri, 31 Oct 2025 10:49:33 +0000
-Message-ID: <20251031105005.24618-1-skolothumtho@nvidia.com>
+Subject: [PATCH v5 03/32] hw/arm/smmu-common: Factor out common helper
+ functions and export
+Date: Fri, 31 Oct 2025 10:49:36 +0000
+Message-ID: <20251031105005.24618-4-skolothumtho@nvidia.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251031105005.24618-1-skolothumtho@nvidia.com>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.126.231.35]
 X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000971E8:EE_|CH3PR12MB9396:EE_
-X-MS-Office365-Filtering-Correlation-Id: 55d18652-cb0b-4466-e935-08de186b8d70
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE34:EE_|CH3PR12MB9078:EE_
+X-MS-Office365-Filtering-Correlation-Id: 094d92ae-2d1d-4b5e-7421-08de186b9ad9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|7416014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bkRuZWZJTTdLUFVhc3NFc2FnUGZQYnJlR3FOTWtIeTYyRTFML2NFVWlzSEc2?=
- =?utf-8?B?SE12d01td1YvMzFUSEFJWHJxSXA3ZUl2SUdtVldNRG1XSGh5aFZldnRRcCtq?=
- =?utf-8?B?a1B6WjdhUEwxOVc4bElaanhGWTVQZWpaR1FWUG1OeldtaW14MnpFTUViY0gz?=
- =?utf-8?B?SkRIa1R1UWtodDNBTm0yd1NtellkR3RqNEF4K3JOUlY0T2FVZzBybldDRnNl?=
- =?utf-8?B?SHQ0b1NjNnFQTHBibllleHBBVGhYdkZzNzdpZzB1ZDN4bllMeWFhZy9ab2JL?=
- =?utf-8?B?elMwUHh1VXRMcERmdlN5RVhXdFVMb1M1V0N6b2ZsVmgwWGd4VkYxOFRROHZU?=
- =?utf-8?B?aHduN3hlOHJOYlZMNWJ4a3phVnQvNGNocWgxaTJVZUtydTY4bzZRNHJjbzR3?=
- =?utf-8?B?dS92eitTM00wdGE5VVVsVldCSkxqWm5HVFVyZ0RUTjYwSUVNZVQ3c1k0dHlu?=
- =?utf-8?B?Y1VtK29Bb2VHRi91TTVuMVpoVWJFNEZhQkVCZUZ2aXJjR2Q3K1liRVQraEhX?=
- =?utf-8?B?N01GMituZXV4TEVEMTNxUCtFSHordXp2R0R5NFB3WDNCblZIajJXSGViZkRX?=
- =?utf-8?B?Q0xhdXBsNDhWaFV5YnM4eFFHL0RUOXNLYi81SjhZTzdkS3U2WmxqZDJjczhh?=
- =?utf-8?B?VXFkWUxXeE1mQ0Fock1jQ3ZEWlJxKzJQV2c3TzFqOCs0UXV3VnRSV0wzS2R1?=
- =?utf-8?B?b09zd1RJNDJhVW54TjVzSXBWeGhUL1pucXN5UFZKWks2YVZHcGpSMFBlV0FI?=
- =?utf-8?B?RTdYZStDbFhjRHowaHBEVnlXb3MzYzFKYVRNdm5icXpLNjQ5alNoUm0yNzdw?=
- =?utf-8?B?SUdmdXZNdzh1dEl6VVZKcnA1OXgvb21VWEdLZWdWWDZlQkU5UVUxQS96eEVV?=
- =?utf-8?B?S3pZZHd3bGx3ZUx2L3JDbUJtRTRpQWVZdmN1eUdWTkU2d0p1WFVIQUdjaXh6?=
- =?utf-8?B?NjlzRXkrTFRHUTVaYXZBMjVwQkJPeHJiMEIvdXljS2dJOWFhVThua2ljVmFN?=
- =?utf-8?B?VHgrK3g4NEhCUzIxdVZXb1BQYkt5ZHQzYmUzTkpnRlpxRTE0bWkwemJQc25o?=
- =?utf-8?B?K3VBVlU2bzJUazA5SmNoWjFKc2FHaXo5UkQ1TVhnSm1JUTg3MVNUWlF5MGlL?=
- =?utf-8?B?bkQ4dkZiY2lud04wVnk2bnpFSU1xSDFNZ1ViZ2gwekNFNnVkOU9ycUMrYWdp?=
- =?utf-8?B?UzJQb0YzM2R5TWhhSEpMS0FzR2N5MEhkaVY4MU16NWEzQ1VCekdWS2U3ZGNj?=
- =?utf-8?B?TEpvWW82a3IrU043UUdwZEF4TUxvYWhyd0RZVUNnYWJpZThmbUR5bnd3WDZk?=
- =?utf-8?B?N2xUMFJWTGZXS0VwNjkzODBNRExKUDMzZVg3dTVIMGx4bEJhWVRJeXdyR0hT?=
- =?utf-8?B?aDRLMlh6WXJPYmFwRU8yL2VuSnB3REszaWRJMmU3Sm5EU2UyRHE2aGY2cm4v?=
- =?utf-8?B?YVBEdUEwSFNwMEY5K29VbDBWSUFZdFBoQi9CS0RnRU9MQmFRRzl4bW9jNWVD?=
- =?utf-8?B?alU1bktnenhnNC9YTmoxNnpOa2gxTGJlUHR3N3labTRzYXE5OG9Qak9qTUZV?=
- =?utf-8?B?RWVRc2RJY3Yzd3B1VytqaFMvR00xK21OMVgxSnBQbjBaNy9HTk5FUU1PVHFR?=
- =?utf-8?B?bG5JZTYxZzZKWWhHbnk5VUtCWll6cTQ2MkZRdS9rVkMwMS85SnQxcWIwNHJU?=
- =?utf-8?B?ZFhaUklFQTVHOXk2UGUxNE1WUXN5NTVaVDFPYlN5WHBidCtCbitYMjkveE44?=
- =?utf-8?B?YitJZnh2K3lSVkh4UHgvNCtLT0QwbGhaVlg2SktibEFMUTZzNTVWYmNCMEpQ?=
- =?utf-8?B?V2c3cTkzQlRFdzdZZnR6cnFWRjVFajltOUxjc1ArRFBRSGhpL0hXRXBSVTl2?=
- =?utf-8?B?d2tqdTh6ajRKMVQ0WW1LT0hnVmhRRWtMTExHTVNEN3VjZTRDOThqS1hxZTEw?=
- =?utf-8?B?VG9jUk1ZeW1uWFcrZElYNk8xNnNCZkJ2b0wwYTFETXF2U1F1V003MTdtaUxy?=
- =?utf-8?B?YTY1UnlmT3hZYjNMUU5xOTlPcVNkd0N6dHF6cGhkbFBjQ1pQbURQTnhYQ0lo?=
- =?utf-8?B?dDY2YTQrbmRTaXM2NUFGY05DTVFsTEUwS0lDUUs5SkNHWVpLVnFkOVpRTkt1?=
- =?utf-8?Q?Nf+eqZiPpFzX7JAcrIWqXHz/f?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(7416014)(1800799024)(36860700013); DIR:OUT;
+ ARA:13230040|1800799024|82310400026|36860700013|7416014|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?v/UEdEF9+DfBAEshsZore0JIfQvZl51gMLrX0RyVx+m/v/SGW+jeLKak0Qeo?=
+ =?us-ascii?Q?o0SmdqTCO+lwsUlcCvkF5oJ06XBF9dOkCwiuzOGXwDO/kRqrEalf08xKiGiE?=
+ =?us-ascii?Q?h180KlqsOqGTn2shtJFYNem0nPYignAqNz95YkoBdDa6snGdRTZZ+ISnHAVp?=
+ =?us-ascii?Q?zrBDiszskP1qEVwT5v7xle81iNR4aJMKa36Y9a2gi+3rqWPNGtlx5JrfQQsO?=
+ =?us-ascii?Q?NVQR2xozxDQ1nPgO4Iz2xHnoo+ZI/HG+hFYm9E1p1l60jO0RS+rOfhgKwuZ+?=
+ =?us-ascii?Q?pKrWLhzauVaky+yU/8kEKTC2VdSAxvYiTtIo+0sGtoKAxifwiD02t87YUdxo?=
+ =?us-ascii?Q?QPuz3K96NrnO2Pvu7k1x4aLEJs90f/tD+T2zWCuiuZdK8xaqTh66sd0GZmnV?=
+ =?us-ascii?Q?+X61XHT+h5yrTD2jYuwA7ZUv9ni/hFYwzP5jQE4i81qZHReUZZWTDqy/UWLg?=
+ =?us-ascii?Q?Azc1+N1sMlZ2t1ONmMdSijr3r4N83KHDpv4K2ncr+pBCifMNKDe6vir8XACW?=
+ =?us-ascii?Q?quNckn7qLEEQE3mpME12zHQ1VeAwY95HAOibpBQrga8Muzde091ZNGP/HHBp?=
+ =?us-ascii?Q?yvzVgt8FxZRXqXBtwfcEpvnolxJ8Qfvqv0/WbrI9uewHySvOSHPLRm7S/zPY?=
+ =?us-ascii?Q?nEpvi4o0Na16pT4UcRCWbDZzqanRiuFcWk9yXTzY9iFEwmAElRNYIehyGgGw?=
+ =?us-ascii?Q?PMA2Xyfro5lNn7EylceOc5DajdKLiq0sRDFz3fpsW8quWGd4TWQ7yYD3av6o?=
+ =?us-ascii?Q?by8SjcS5zHLeW1mg8+eXlE4xzHa9KVG5Gm6SCUHPrhOBD+r5ITQz8iEcDm3z?=
+ =?us-ascii?Q?elG33BgYiUnKJvQf6WKhUAlUtPv0H/UyTiuNmHiJM7gzQwWwkJZBYs6ALJ/5?=
+ =?us-ascii?Q?nO9rNHzBzJxMhloTfdmvo2qQ+FymD/JqgOhAkiXwNF+5XXp/DiNlOYx8gL7g?=
+ =?us-ascii?Q?CqeqAEsK97AqIchXmJlt3TCgSxO+HJyB8xRxsIOnkiEAxFaWzA9bbq0h7Swp?=
+ =?us-ascii?Q?/PMTlX+Hzw98hQnvxPDPk35NUBlx9WLY+n5x/DNdRBYDmcO8XiFOaudmnMla?=
+ =?us-ascii?Q?vQNxIRSyRMsxFyRNyQi8OaB4T/yqIF+RVFRVLainH1iVhVkM3zOlgV/einLW?=
+ =?us-ascii?Q?CbCdSTacMykdj/PRWPFCM1+kEQ+QC9gQNkYRIa80H3rLmaYbk2A4XIY3R8q4?=
+ =?us-ascii?Q?a9zshDivh8y7bOksRxg9UWRUAmX9kqgaBo44YyWF/341daO/mndX1bkDmT8Q?=
+ =?us-ascii?Q?KBAJm1dDkrv9xoDY7BRe6gS4sagfD7CiITUt8NK0yzHqt4SPhOCV9eoLwSUJ?=
+ =?us-ascii?Q?UCuUCmgs8u/LbA4HTbQBFI87E6D/DKgtuJW8Vj67pdoOcp7KpNfj7RxeS2WT?=
+ =?us-ascii?Q?lYJYeLvrU+l3etgo/XoWQu+KjXP/QjT8xGRTpVyT1ahxf7mqATrTE9BvvHFr?=
+ =?us-ascii?Q?9scrUUFzZb/9ny0Gu1mEqnwe3iT9Lx++tGOe1RiLGG0Ns14RskLRJMoxPCbx?=
+ =?us-ascii?Q?fUqwq8TBsE24hzLfcR7+DW+ABjFyCOUpS1CRIu7g0C9l/8e6ptRQEhb8CpV+?=
+ =?us-ascii?Q?zVyzpX6Rt+ZFUH+U02Q=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(36860700013)(7416014)(376014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2025 10:52:14.5604 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 55d18652-cb0b-4466-e935-08de186b8d70
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2025 10:52:37.0537 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 094d92ae-2d1d-4b5e-7421-08de186b9ad9
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000971E8.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE34.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9396
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9078
+Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
  envelope-from=skolothumtho@nvidia.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -166,198 +159,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Factor out common helper functions and export. Subsequent patches for
+smmuv3 accel support will make use of this.
 
-Changes from v4:
-  https://lore.kernel.org/qemu-devel/20250929133643.38961-1-skolothumtho@nvidia.com/
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ hw/arm/smmu-common.c         | 44 +++++++++++++++++++++---------------
+ include/hw/arm/smmu-common.h |  6 +++++
+ 2 files changed, 32 insertions(+), 18 deletions(-)
 
- - Addressed feedback from v4 and picked up R-by and T-by tags.
-   Thanks to all!
- - Split out the _DSM fix into a separate mini series which has
-   already been sent out [0].
- - Introduced a global shared address space aliasing to the system
-   address space instead of directly using "address_space_memory" in the
-   get_address_space() callback(patch #6).
- - Fixed pci_find_device() returning NULL in the get_address_space()
-   path (Patch #7).
- - Introduced an optional supports_address_space() callback for
-   rejecting devices attached to a vIOMMU (Patch #8). This allows us
-   to reject emulated endpoints when using SMMUv3 with accel=on.
- - Added BIOS table tests for the IORT revision change.
- - Added support to install vSTE based on SMMUv3 GBPA (Patch #14).
- - Factored out ID register initialization from the reset path so
-   that it can be used early in the SMMUv3 accel path for HW
-   compatibility checks (Patch #18).
- - GBPA-based vSTE update depends on Nicolin's kernel patch [1].
- - VFIO/IOMMUFD has dependency on Zhenzhong's patches: 4/5/8 from the
-   pass-through support series [3].
-
-PATCH organization:
- 1–25: Enables accelerated SMMUv3 with features based on default QEMU SMMUv3,
-       including IORT RMR based MSI support.
- 26–28: Adds options for specifying RIL, ATS, and OAS features.
- 29–32: Adds PASID support, including VFIO changes.
-
-Tests:
-Performed basic sanity tests on an NVIDIA GRACE platform with GPU device
-assignments. A CUDA test application was used to verify the SVA use case.
-Further tests are always welcome.
-
-Eg: Qemu Cmd line:
-
-qemu-system-aarch64 -machine virt,gic-version=3,highmem-mmio-size=2T \
--cpu host -smp cpus=4 -m size=16G,slots=2,maxmem=66G -nographic \
--bios QEMU_EFI.fd -object iommufd,id=iommufd0 -enable-kvm \
--object memory-backend-ram,size=8G,id=m0 \
--object memory-backend-ram,size=8G,id=m1 \
--numa node,memdev=m0,cpus=0-3,nodeid=0 -numa node,memdev=m1,nodeid=1 \
--numa node,nodeid=2 -numa node,nodeid=3 -numa node,nodeid=4 -numa node,nodeid=5 \
--numa node,nodeid=6 -numa node,nodeid=7 -numa node,nodeid=8 -numa node,nodeid=9 \
--device pxb-pcie,id=pcie.1,bus_nr=1,bus=pcie.0 \
--device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.0,accel=on,ats=on,ril=off,pasid=on,oas=48 \
--device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1,pref64-reserve=512G,id=dev0 \
--device vfio-pci,host=0019:06:00.0,rombar=0,id=dev0,iommufd=iommufd0,bus=pcie.port1 \
--object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2 \
-...
--object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
--device pxb-pcie,id=pcie.2,bus_nr=8,bus=pcie.0 \
--device arm-smmuv3,primary-bus=pcie.2,id=smmuv3.1,accel=on,ats=on,ril=off,pasid=on \
--device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2,pref64-reserve=512G \
--device vfio-pci,host=0018:06:00.0,rombar=0,id=dev1,iommufd=iommufd0,bus=pcie.port2 \
--device virtio-blk-device,drive=fs \
--drive file=image.qcow2,index=0,media=disk,format=qcow2,if=none,id=fs \
--net none \
--nographic
-
-A complete branch can be found here,
-https://github.com/shamiali2008/qemu-master master-smmuv3-accel-v5
-
-Please take a look and let me know your feedback.
-
-Thanks,
-Shameer
-
-[0] https://lore.kernel.org/qemu-devel/20251022080639.243965-1-skolothumtho@nvidia.com/
-[1] https://lore.kernel.org/linux-iommu/20251024040551.1711281-1-nicolinc@nvidia.com/
-[2] https://lore.kernel.org/qemu-devel/20251024084349.102322-1-zhenzhong.duan@intel.com/
-
-Details from RFCv3 Cover letter:
--------------------------------
-https://lore.kernel.org/qemu-devel/20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com/
-
-This patch series introduces initial support for a user-creatable,
-accelerated SMMUv3 device (-device arm-smmuv3,accel=on) in QEMU.
-
-This is based on the user-creatable SMMUv3 device series [0].
-
-Why this is needed:
-
-On ARM, to enable vfio-pci pass-through devices in a VM, the host SMMUv3
-must be set up in nested translation mode (Stage 1 + Stage 2), with
-Stage 1 (S1) controlled by the guest and Stage 2 (S2) managed by the host.
-
-This series introduces an optional accel property for the SMMUv3 device,
-indicating that the guest will try to leverage host SMMUv3 features for
-acceleration. By default, enabling accel configures the host SMMUv3 in
-nested mode to support vfio-pci pass-through.
-
-This new accelerated, user-creatable SMMUv3 device lets you:
-
- -Set up a VM with multiple SMMUv3s, each tied to a different physical SMMUv3
-  on the host. Typically, you’d have multiple PCIe PXB root complexes in the
-  VM (one per virtual NUMA node), and each of them can have its own SMMUv3.
-  This setup mirrors the host's layout, where each NUMA node has its own
-  SMMUv3, and helps build VMs that are more aligned with the host's NUMA
-  topology.
-
- -The host–guest SMMUv3 association results in reduced invalidation broadcasts
-  and lookups for devices behind different physical SMMUv3s.
-
- -Simplifies handling of host SMMUv3s with differing feature sets.
-
- -Lays the groundwork for additional capabilities like vCMDQ support.
--------------------------------
-
-Eric Auger (2):
-  hw/pci-host/gpex: Allow to generate preserve boot config DSM #5
-  hw/arm/virt-acpi-build: Add IORT RMR regions to handle MSI nested
-    binding
-
-Nicolin Chen (4):
-  backends/iommufd: Introduce iommufd_backend_alloc_viommu
-  backends/iommufd: Introduce iommufd_backend_alloc_vdev
-  hw/arm/smmuv3-accel: Add set/unset_iommu_device callback
-  hw/arm/smmuv3-accel: Add nested vSTE install/uninstall support
-
-Shameer Kolothum (25):
-  hw/arm/smmu-common: Factor out common helper functions and export
-  hw/arm/smmu-common: Make iommu ops part of SMMUState
-  hw/arm/smmuv3-accel: Introduce smmuv3 accel device
-  hw/arm/smmuv3-accel: Initialize shared system address space
-  hw/pci/pci: Move pci_init_bus_master() after adding device to bus
-  hw/pci/pci: Add optional supports_address_space() callback
-  hw/pci-bridge/pci_expander_bridge: Move TYPE_PXB_PCIE_DEV to header
-  hw/arm/smmuv3-accel: Restrict accelerated SMMUv3 to vfio-pci endpoints
-    with iommufd
-  hw/arm/smmuv3: Implement get_viommu_cap() callback
-  hw/arm/smmuv3-accel: Install SMMUv3 GBPA based hwpt
-  hw/pci/pci: Introduce optional get_msi_address_space() callback
-  hw/arm/smmuv3-accel: Make use of get_msi_address_space() callback
-  hw/arm/smmuv3-accel: Add support to issue invalidation cmd to host
-  hw/arm/smmuv3: Initialize ID registers early during realize()
-  hw/arm/smmuv3-accel: Get host SMMUv3 hw info and validate
-  hw/arm/virt: Set PCI preserve_config for accel SMMUv3
-  tests/qtest/bios-tables-test: Prepare for IORT revison upgrade
-  tests/qtest/bios-tables-test: Update IORT blobs after revision upgrade
-  hw/arm/smmuv3: Add accel property for SMMUv3 device
-  hw/arm/smmuv3-accel: Add a property to specify RIL support
-  hw/arm/smmuv3-accel: Add support for ATS
-  hw/arm/smmuv3-accel: Add property to specify OAS bits
-  backends/iommufd: Retrieve PASID width from
-    iommufd_backend_get_device_info()
-  Extend get_cap() callback to support PASID
-  hw/arm/smmuv3-accel: Add support for PASID enable
-
-Yi Liu (1):
-  vfio: Synthesize vPASID capability to VM
-
- backends/iommufd.c                            |  77 +-
- backends/trace-events                         |   2 +
- hw/arm/Kconfig                                |   5 +
- hw/arm/meson.build                            |   3 +-
- hw/arm/smmu-common.c                          |  51 +-
- hw/arm/smmuv3-accel.c                         | 763 ++++++++++++++++++
- hw/arm/smmuv3-accel.h                         |  92 +++
- hw/arm/smmuv3-internal.h                      |  29 +-
- hw/arm/smmuv3.c                               | 161 +++-
- hw/arm/trace-events                           |   6 +
- hw/arm/virt-acpi-build.c                      | 128 ++-
- hw/arm/virt.c                                 |  31 +-
- hw/i386/intel_iommu.c                         |   5 +-
- hw/pci-bridge/pci_expander_bridge.c           |   1 -
- hw/pci-host/gpex-acpi.c                       |  29 +-
- hw/pci/pci.c                                  |  44 +-
- hw/vfio/container-legacy.c                    |   8 +-
- hw/vfio/iommufd.c                             |   7 +-
- hw/vfio/pci.c                                 |  37 +
- include/hw/arm/smmu-common.h                  |   7 +
- include/hw/arm/smmuv3.h                       |   9 +
- include/hw/arm/virt.h                         |   1 +
- include/hw/iommu.h                            |   1 +
- include/hw/pci-host/gpex.h                    |   1 +
- include/hw/pci/pci.h                          |  33 +
- include/hw/pci/pci_bridge.h                   |   1 +
- include/system/host_iommu_device.h            |  17 +-
- include/system/iommufd.h                      |  29 +-
- target/arm/kvm.c                              |   2 +-
- tests/data/acpi/aarch64/virt/IORT             | Bin 128 -> 128 bytes
- tests/data/acpi/aarch64/virt/IORT.its_off     | Bin 172 -> 172 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 364 -> 364 bytes
- .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 276 bytes
- 33 files changed, 1506 insertions(+), 74 deletions(-)
- create mode 100644 hw/arm/smmuv3-accel.c
- create mode 100644 hw/arm/smmuv3-accel.h
-
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 62a7612184..59d6147ec9 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -847,12 +847,24 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+     return NULL;
+ }
+ 
+-static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
++void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn)
+ {
+-    SMMUState *s = opaque;
+-    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+-    SMMUDevice *sdev;
+     static unsigned int index;
++    g_autofree char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn,
++                                            index++);
++    sdev->smmu = s;
++    sdev->bus = bus;
++    sdev->devfn = devfn;
++
++    memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
++                             s->mrtypename, OBJECT(s), name, UINT64_MAX);
++    address_space_init(&sdev->as, MEMORY_REGION(&sdev->iommu), name);
++    trace_smmu_add_mr(name);
++}
++
++SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus)
++{
++    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+ 
+     if (!sbus) {
+         sbus = g_malloc0(sizeof(SMMUPciBus) +
+@@ -861,23 +873,19 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+         g_hash_table_insert(s->smmu_pcibus_by_busptr, bus, sbus);
+     }
+ 
++    return sbus;
++}
++
++static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
++{
++    SMMUState *s = opaque;
++    SMMUPciBus *sbus = smmu_get_sbus(s, bus);
++    SMMUDevice *sdev;
++
+     sdev = sbus->pbdev[devfn];
+     if (!sdev) {
+-        char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
+-
+         sdev = sbus->pbdev[devfn] = g_new0(SMMUDevice, 1);
+-
+-        sdev->smmu = s;
+-        sdev->bus = bus;
+-        sdev->devfn = devfn;
+-
+-        memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+-                                 s->mrtypename,
+-                                 OBJECT(s), name, UINT64_MAX);
+-        address_space_init(&sdev->as,
+-                           MEMORY_REGION(&sdev->iommu), name);
+-        trace_smmu_add_mr(name);
+-        g_free(name);
++        smmu_init_sdev(s, sdev, bus, devfn);
+     }
+ 
+     return &sdev->as;
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index 80d0fecfde..d307ddd952 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -180,6 +180,12 @@ OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
+ /* Return the SMMUPciBus handle associated to a PCI bus number */
+ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
+ 
++/* Return the SMMUPciBus handle associated to a PCI bus */
++SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus);
++
++/* Initialize SMMUDevice handle associated to a SMMUPciBus */
++void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn);
++
+ /* Return the stream ID of an SMMU device */
+ static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
+ {
 -- 
 2.43.0
 
