@@ -4,79 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9FC5CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 15:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4135CCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 15:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vErOw-0003rR-0K; Fri, 31 Oct 2025 11:50:54 -0400
+	id 1vErVl-0006h9-CX; Fri, 31 Oct 2025 11:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vErOs-0003qb-8b
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:50:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
+ id 1vErVj-0006gk-JD
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:57:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vErOk-0004vM-Qm
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:50:49 -0400
+ (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
+ id 1vErVd-0005uY-Aj
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:57:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761925837;
+ s=mimecast20190719; t=1761926263;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qCgy7MvSjSEY8GTC0i34ltpMQWreCRziX97ui3XJ2us=;
- b=SAUrpeUopypSzlJ8BLfkml/mftBr2ZkNndmGAWuZ6XJUjkYBMajnrgrujU+0012G2y8N+C
- 4nnaPIL6vvqhbMafFydEGOXTGYxue+IR1WGa4EguNaiEXmLcWOKN1tmyN/Y50z2N7Wcvbv
- B/h10xEyjfURKYqZcoqw8DKfxagGHzQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-ubDhbpptOK2Ulke7k9V_IA-1; Fri,
- 31 Oct 2025 11:50:34 -0400
-X-MC-Unique: ubDhbpptOK2Ulke7k9V_IA-1
-X-Mimecast-MFC-AGG-ID: ubDhbpptOK2Ulke7k9V_IA_1761925833
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 282141956094; Fri, 31 Oct 2025 15:50:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.146])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E91BB30001A6; Fri, 31 Oct 2025 15:50:30 +0000 (UTC)
-Date: Fri, 31 Oct 2025 16:50:28 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: Re: [PATCH v3 21/21] fuse: Increase MAX_WRITE_SIZE with a second
- buffer
-Message-ID: <aQTaxC5xEAAz2JNE@redhat.com>
-References: <20250701114437.207419-1-hreitz@redhat.com>
- <20250701114437.207419-22-hreitz@redhat.com>
- <aPpFogd44fuISVKd@redhat.com>
- <c9339232-476d-4074-9150-ea7c154658b7@redhat.com>
- <aQSsmAOnj2tAeNxx@redhat.com>
- <67b6e046-3175-4d7b-b4b9-3ac56b733987@redhat.com>
+ bh=nIBEwGk7G5jnbtn7DgH0FSnLESOoPusLJVHahY03jMo=;
+ b=FL3Temgxzpx+qXzJQBxrsCdvwLJVkKfC7OuOSXd2UJ2pheUVNx2gyVao/Kq4Ih5BTJaxLf
+ 4KCx6Vu+EH3wkNLSbRIHWYbwwN4Bg1HtQkNtXqj5YQjhsHsBNE/Zs0BiWQJg4EsRtPyJFd
+ NNri/xI9+qghJwsRPlcqO6at+6t9YIM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-94-npByKlPJMfSHu6qH42-EKA-1; Fri, 31 Oct 2025 11:56:24 -0400
+X-MC-Unique: npByKlPJMfSHu6qH42-EKA-1
+X-Mimecast-MFC-AGG-ID: npByKlPJMfSHu6qH42-EKA_1761926184
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-88f7eff9d5fso546263885a.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 08:56:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761926183; x=1762530983;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nIBEwGk7G5jnbtn7DgH0FSnLESOoPusLJVHahY03jMo=;
+ b=JMTSXbBzMZM5qPRYvY0GAPbaBnKYJ0oTwbXrt5SFqWF7KBz7JDqK2qQZMpQXyE/z5M
+ X98vx1OkJrTEdbJMY/CYKjHMwaduuOoFhEcDvAelGD2BAZf1rofNuUxZqSeR1IITLDeM
+ zWSIBCj6BqTvObPRJ4d2qqlJdiw+EFJEGTvzBj/2JPLek66hgUa+JkFEWVNaXE3o6yxG
+ 89LkUifDiU+MhvXLeXo7ZjHoHJKz49fLqzeIsPDmYAJPmR/dm8Jzgg9v+swIQWTtHNjW
+ afCXcwwZrKTWAP2+mbWAQkbdmDcdSBHh4BsEXzcQI2yZv5Da+b6d4yDgiOMjn/nkkENe
+ uscA==
+X-Gm-Message-State: AOJu0YwpUejYOrmdTQSK5fHrNQGEoBFXlYwlnb5GMkkMgXxY+psi3Qp9
+ ZwVXYGDuQYCF5MlxfpvlczkH7AZMAe0ltwBZ2f6lr6aGXZ0KCh3udUW4vU/SY16uLPEZsROq/BO
+ P1fjZ8BWKaMipoANdOxfWZ5twUZ59FKOEFZ6WDujjKXM4hE6usMW3lHZ1+l3L/suBglB2Qg3Sb4
+ Vpac8nnnMG1fqSG+NBe8jVMRQkaTb4WxFJyJknk5pVW1A=
+X-Gm-Gg: ASbGncsyTnxB3nBTOh7fkI8B22nnxF720uSgLbREDo5uTtQzgjVrT9ofh+lmbSuvwps
+ x9tnxAed82kiS0cJhou1R0jV/n/HWXPXxK8cqEqeoaD3DLm6xVWm7qM6rE2bMpHbL73t5FUUIgU
+ 55P+3DOdqRJ+W8IrGkc1AqelOOA6ZFiAuKZDBhH6gJPb4eEL8EZH1jVxrKaTKVXRY1agqlahKfZ
+ VjVqS0ShUAyP8D0eTMAZvziq2GGw9uby25YyPGOLH1O+f9L/i2xH4U8rpaL31zQPCdyHXLhvhb+
+ GjATACTrs5TSd5rThowh0gRumlRgbV81ghhTeEkxPHmF8d7DVt6ApusFRbNxyRfrqiDaTPIfjXY
+ EEYB39rz6p6jfDTKTzJmokMhhdMuv5vJOIHz6M/0o
+X-Received: by 2002:a05:620a:371c:b0:8a2:2233:c157 with SMTP id
+ af79cd13be357-8ab996873fbmr447824585a.21.1761926183468; 
+ Fri, 31 Oct 2025 08:56:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFm8UymuaECRkSMIOQfr0VGVN5mk23DSiLn6fMGHwpr3uz2kC3vIdCuF1D/rvK7ZeXdo+/Edw==
+X-Received: by 2002:a05:620a:371c:b0:8a2:2233:c157 with SMTP id
+ af79cd13be357-8ab996873fbmr447819385a.21.1761926182773; 
+ Fri, 31 Oct 2025 08:56:22 -0700 (PDT)
+Received: from localhost (red-hat-inc.vlan560.asr1.mad1.gblx.net.
+ [159.63.51.90]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8ac02f84935sm129356885a.38.2025.10.31.08.56.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Oct 2025 08:56:22 -0700 (PDT)
+From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Cornelia Huck <cohuck@redhat.com>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Timos Ampelikiotis <t.ampelikiotis@virtualopensystems.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+Subject: [RFC 2/2] Add vhost-user-can and vhost-user-can-pci devices
+Date: Fri, 31 Oct 2025 16:56:17 +0100
+Message-ID: <20251031155617.1223248-2-mvaralar@redhat.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20251031155617.1223248-1-mvaralar@redhat.com>
+References: <20251031155617.1223248-1-mvaralar@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <67b6e046-3175-4d7b-b4b9-3ac56b733987@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mvaralar@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,105 +115,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 31.10.2025 um 16:03 hat Hanna Czenczek geschrieben:
-> On 31.10.25 13:33, Kevin Wolf wrote:
-> > Am 31.10.2025 um 13:13 hat Hanna Czenczek geschrieben:
-> > > On 23.10.25 17:11, Kevin Wolf wrote:
-> > > > Am 01.07.2025 um 13:44 hat Hanna Czenczek geschrieben:
-> > > > > We probably want to support larger write sizes than just 4k; 64k seems
-> > > > > nice.  However, we cannot read partial requests from the FUSE FD, we
-> > > > > always have to read requests in full; so our read buffer must be large
-> > > > > enough to accommodate potential 64k writes if we want to support that.
-> > > > > 
-> > > > > Always allocating FuseRequest objects with 64k buffers in them seems
-> > > > > wasteful, though.  But we can get around the issue by splitting the
-> > > > > buffer into two and using readv(): One part will hold all normal (up to
-> > > > > 4k) write requests and all other requests, and a second part (the
-> > > > > "spill-over buffer") will be used only for larger write requests.  Each
-> > > > > FuseQueue has its own spill-over buffer, and only if we find it used
-> > > > > when reading a request will we move its ownership into the FuseRequest
-> > > > > object and allocate a new spill-over buffer for the queue.
-> > > > > 
-> > > > > This way, we get to support "large" write sizes without having to
-> > > > > allocate big buffers when they aren't used.
-> > > > > 
-> > > > > Also, this even reduces the size of the FuseRequest objects because the
-> > > > > read buffer has to have at least FUSE_MIN_READ_BUFFER (8192) bytes; but
-> > > > > the requests we support are not quite so large (except for >4k writes),
-> > > > > so until now, we basically had to have useless padding in there.
-> > > > > 
-> > > > > With the spill-over buffer added, the FUSE_MIN_READ_BUFFER requirement
-> > > > > is easily met and we can decrease the size of the buffer portion that is
-> > > > > right inside of FuseRequest.
-> > > > > 
-> > > > > As for benchmarks, the benefit of this patch can be shown easily by
-> > > > > writing a 4G image (with qemu-img convert) to a FUSE export:
-> > > > > - Before this patch: Takes 25.6 s (14.4 s with -t none)
-> > > > > - After this patch: Takes 4.5 s (5.5 s with -t none)
-> > > > > 
-> > > > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > > > > Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> > > > The commit message seems outdated, there is no such thing as a
-> > > > FuseRequest object.
-> > > > 
-> > > > I agree with the idea of allocating a separate buffer for the data to be
-> > > > written. I'm not so sure that the approach taken here with combining an
-> > > > in-place and a spillover buffer does actually do much for us in exchange
-> > > > for the additional complexity.
-> > > > 
-> > > > The allocation + memcpy for in_place buf in fuse_co_write() bothers me a
-> > > > bit. I'd rather have a buffer for the data to write that can be directly
-> > > > used. And let's be real, we already allocate a 1 MB stack per request. I
-> > > > don't think 64k more or less make a big difference, but it would allow
-> > > > us to save the memcpy() for 4k requests and additionally an allocation
-> > > > for larger requests.
-> > > > 
-> > > > The tradeoff when you use an iov for the buffer in FuseQueue that is
-> > > > only big enough for the header and fuse_write_in and then directly the
-> > > > per-request buffer that is owned by the coroutine is that for requests
-> > > > that are larger than fuse_write_in, you'll have to copy the rest back
-> > > > from the data buffer first. This seems to be only fuse_setattr_in, which
-> > > > shouldn't be a hot path at all, and only a few bytes.
-> > > So I understand that first, you disagree with “Always allocating FuseRequest
-> > > objects with 64k buffers in them seems wasteful, though.” I.e. to just use a
-> > > 64k buffer per request.  OK, fair.
-> > I think in practice most write requests will exceed the 4k anyway, so
-> > we'd already use the spillover buffer. Maybe the most common exception
-> > is fio, if we want to optimise for that one. :-)
-> > 
-> > > Second, you suggest to improve performance by having an aligned 64k data
-> > > buffer separate from the request metadata buffer to save on memcpy().  I did
-> > > consider this, but discarded it because of I was afraid of the complexity.
-> > > Actually probably too afraid.
-> > > 
-> > > I’ll take a look, it actually can’t be too hard.  (Just have two buffers;
-> > > make the metadata buffer long enough to capture all request headers, but
-> > > only pass the sizeof(fuse_write_in)-long head into readv(), then check the
-> > > request opcode.  If metadata spilled over to the data buffer, copy it back
-> > > into the “shadowed” metadata buffer tail.)
-> > Yes, that's what I had in mind. Not sure if it's premature
-> > optimisation...
-> 
-> Just to confirm – this means we will have to do an allocation for each write
-> request.  I think this should still be cheaper than the current memcpy(),
-> but still wanted to ask back whether you agree.
+From: Timos Ampelikiotis <t.ampelikiotis@virtualopensystems.com>
 
-For write requests, we will save the unconditional 4k bounce buffer
-allocation and make the currently conditional 64k allocation (where in
-practice I argued the condition is usually met) unconditional instead.
+Add vhost-user-can device, which has been tested with latest
+vhost-device-can (see
+https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-can) and
+the virtio-can driver v6 (see
+https://lore.kernel.org/all/aQJRnX7OpFRY%2F1+H@fedora/).
 
-All other requests have no allocations before and after.
+Signed-off-by: Timos Ampelikiotis <t.ampelikiotis@virtualopensystems.com>
+Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+Tested-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+---
+ hw/net/Kconfig                  |  5 +++
+ hw/net/can/meson.build          |  3 ++
+ hw/net/can/vhost-user-can-pci.c | 69 +++++++++++++++++++++++++++++++++
+ hw/net/can/vhost-user-can.c     | 65 +++++++++++++++++++++++++++++++
+ include/hw/net/vhost-user-can.h | 26 +++++++++++++
+ 5 files changed, 168 insertions(+)
+ create mode 100644 hw/net/can/vhost-user-can-pci.c
+ create mode 100644 hw/net/can/vhost-user-can.c
+ create mode 100644 include/hw/net/vhost-user-can.h
 
-Is this right? If so, I expect that the change could only ever reduce
-the number of allocations. It can increase the size of allocations (for
-small write requests < 4k), but I'm not very worried about this.
-
-> (We could have a pool of buffers, but that would most definitely be a
-> premature optimization – and I hope our memalloc algorithm can do that
-> internally just fine.)
-
-Yes.
-
-Kevin
+diff --git a/hw/net/Kconfig b/hw/net/Kconfig
+index 2b513d6895..c6fe5b4376 100644
+--- a/hw/net/Kconfig
++++ b/hw/net/Kconfig
+@@ -160,3 +160,8 @@ config CAN_CTUCANFD_PCI
+     default y if PCI_DEVICES
+     depends on PCI && CAN_CTUCANFD
+     select CAN_BUS
++
++config VHOST_USER_CAN
++    bool
++    default y
++    depends on VIRTIO && VHOST_USER
+diff --git a/hw/net/can/meson.build b/hw/net/can/meson.build
+index 7382344628..1796a89820 100644
+--- a/hw/net/can/meson.build
++++ b/hw/net/can/meson.build
+@@ -4,5 +4,8 @@ system_ss.add(when: 'CONFIG_CAN_PCI', if_true: files('can_pcm3680_pci.c'))
+ system_ss.add(when: 'CONFIG_CAN_PCI', if_true: files('can_mioe3680_pci.c'))
+ system_ss.add(when: 'CONFIG_CAN_CTUCANFD', if_true: files('ctucan_core.c'))
+ system_ss.add(when: 'CONFIG_CAN_CTUCANFD_PCI', if_true: files('ctucan_pci.c'))
++system_ss.add(when: 'CONFIG_VHOST_USER_CAN', if_true: files('vhost-user-can.c'))
++system_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_CAN'],
++                      if_true: files('vhost-user-can-pci.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZYNQMP', if_true: files('xlnx-zynqmp-can.c'))
+ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-canfd.c'))
+diff --git a/hw/net/can/vhost-user-can-pci.c b/hw/net/can/vhost-user-can-pci.c
+new file mode 100644
+index 0000000000..e525d28ab1
+--- /dev/null
++++ b/hw/net/can/vhost-user-can-pci.c
+@@ -0,0 +1,69 @@
++/*
++ * Vhost-user CAN virtio device PCI glue
++ *
++ * Copyright (c) 2024 Timos Ampelikiotis <t.ampelikiotis@virtualopensystems.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/net/vhost-user-can.h"
++#include "hw/virtio/virtio-pci.h"
++
++struct VHostUserCanPCI {
++    VirtIOPCIProxy parent_obj;
++    VHostUserCan vdev;
++};
++
++typedef struct VHostUserCanPCI VHostUserCanPCI;
++
++#define TYPE_VHOST_USER_CAN_PCI "vhost-user-can-pci-base"
++
++DECLARE_INSTANCE_CHECKER(VHostUserCanPCI, VHOST_USER_CAN_PCI,
++                         TYPE_VHOST_USER_CAN_PCI)
++
++static void vhost_user_can_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
++{
++    VHostUserCanPCI *dev = VHOST_USER_CAN_PCI(vpci_dev);
++    DeviceState *vdev = DEVICE(&dev->vdev);
++
++    vpci_dev->nvectors = 1;
++
++    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
++}
++
++static void vhost_user_can_pci_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
++    PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
++    k->realize = vhost_user_can_pci_realize;
++    set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
++    pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
++    pcidev_k->device_id = 0; /* Set by virtio-pci based on virtio id */
++    pcidev_k->revision = 0x00;
++    pcidev_k->class_id = PCI_CLASS_SERIAL_CANBUS;
++}
++
++static void vhost_user_can_pci_instance_init(Object *obj)
++{
++    VHostUserCanPCI *dev = VHOST_USER_CAN_PCI(obj);
++
++    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
++                                TYPE_VHOST_USER_CAN);
++}
++
++static const VirtioPCIDeviceTypeInfo vhost_user_can_pci_info = {
++    .base_name = TYPE_VHOST_USER_CAN_PCI,
++    .non_transitional_name = "vhost-user-can-pci",
++    .instance_size = sizeof(VHostUserCanPCI),
++    .instance_init = vhost_user_can_pci_instance_init,
++    .class_init = vhost_user_can_pci_class_init,
++};
++
++static void vhost_user_can_pci_register(void)
++{
++    virtio_pci_types_register(&vhost_user_can_pci_info);
++}
++
++type_init(vhost_user_can_pci_register);
+diff --git a/hw/net/can/vhost-user-can.c b/hw/net/can/vhost-user-can.c
+new file mode 100644
+index 0000000000..acab1f64ee
+--- /dev/null
++++ b/hw/net/can/vhost-user-can.c
+@@ -0,0 +1,65 @@
++/*
++ * Vhost-user CAN virtio device
++ *
++ * Copyright (c) 2024 Timos Ampelikiotis <t.ampelikiotis@virtualopensystems.com>
++ *
++ * Simple wrapper of the generic vhost-user-device.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/qdev-properties.h"
++#include "hw/virtio/virtio-bus.h"
++#include "hw/net/vhost-user-can.h"
++#include "standard-headers/linux/virtio_ids.h"
++#include "standard-headers/linux/virtio_can.h"
++
++static const VMStateDescription vu_can_vmstate = {
++    .name = "vhost-user-can",
++    .unmigratable = 1,
++};
++
++static const Property vcan_properties[] = {
++    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
++};
++
++static void vu_can_base_realize(DeviceState *dev, Error **errp)
++{
++    VHostUserBase *vub = VHOST_USER_BASE(dev);
++    VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
++
++    vub->virtio_id = VIRTIO_ID_CAN;
++    vub->num_vqs = 3;
++    vub->config_size = sizeof(struct virtio_can_config);
++
++    vubs->parent_realize(dev, errp);
++}
++
++static void vu_can_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
++
++    dc->vmsd = &vu_can_vmstate;
++    device_class_set_props(dc, vcan_properties);
++    device_class_set_parent_realize(dc, vu_can_base_realize,
++                                    &vubc->parent_realize);
++
++    set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
++}
++
++static const TypeInfo vu_can_info = {
++    .name = TYPE_VHOST_USER_CAN,
++    .parent = TYPE_VHOST_USER_BASE,
++    .instance_size = sizeof(VHostUserCan),
++    .class_init = vu_can_class_init,
++};
++
++static void vu_can_register_types(void)
++{
++    type_register_static(&vu_can_info);
++}
++
++type_init(vu_can_register_types)
+diff --git a/include/hw/net/vhost-user-can.h b/include/hw/net/vhost-user-can.h
+new file mode 100644
+index 0000000000..38bc261ce7
+--- /dev/null
++++ b/include/hw/net/vhost-user-can.h
+@@ -0,0 +1,26 @@
++/*
++ * Vhost-user Can virtio device
++ *
++ * Copyright (c) 2024 Timos Ampelikiotis <t.ampelikiotis@virtualopensystems.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_VHOST_USER_CAN_H
++#define QEMU_VHOST_USER_CAN_H
++
++#include "hw/virtio/virtio.h"
++#include "hw/virtio/vhost.h"
++#include "hw/virtio/vhost-user.h"
++#include "hw/virtio/vhost-user-base.h"
++
++#define TYPE_VHOST_USER_CAN "vhost-user-can"
++OBJECT_DECLARE_SIMPLE_TYPE(VHostUserCan, VHOST_USER_CAN)
++
++struct VHostUserCan {
++    /*< private >*/
++    VHostUserBase parent;
++    /*< public >*/
++};
++
++#endif /* QEMU_VHOST_USER_CAN_H */
+-- 
+2.42.0
 
 
