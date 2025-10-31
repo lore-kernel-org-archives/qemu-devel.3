@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7039CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC8ACCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEw8b-0003w9-6u; Fri, 31 Oct 2025 16:54:22 -0400
+	id 1vEw9S-00049e-AU; Fri, 31 Oct 2025 16:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEw8Z-0003ve-Ip
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:54:19 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEw9P-000499-MM
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:55:11 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEw8P-0006Zp-MX
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:54:17 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-475d9de970eso18452125e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 13:54:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEw9I-0006il-11
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:55:11 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-429be5d31c9so997976f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 13:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761944047; x=1762548847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761944099; x=1762548899; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aWig3n2agd4WazZPYglttl86zROiptjK3T/62YRviE8=;
- b=jJ0Er47n0hCytt6xPWSLxJf3UteybTzdBW2HoADkNNsmCnH24rpfcJLHFm1FYr3HKZ
- MtV5VVHl9WPwz/tdOlcxfW67QscQ1UzgXG+oXY6oQcswisV9Eh6wMuB5XcegRQN/AD4T
- GgH2wcyKinS+4TuMORKMOzY4enU8t0TsCqLqG2cc9/gIKV6JQ51/hyQzQg0HLz4FOiMX
- k8VbhVkP5SQow1xSEfTBjpWFL9iww6rTNIylSoDmM+xe7gmiDuqeItyJWPPNgL94Muk+
- PACSk4zPDinvBKrnhpicIdx0jJULv0ouRXUYJCRr5dVdVOdLD8z60zL+iGZIbW18BXwb
- 2QkA==
+ bh=E2494wC8Zkk4OFrvtAjz7MtJs3Y18IdMSDm/KH2Fia8=;
+ b=HhCxfIh7dh/ThsgvOBGdJK6HXjFlQzB5jhzE9n6sYE745rS4GAqt/qg0Q37nR4Elh/
+ 1fR7LOZVqvcGubThEmSLJE0tfY+ZvJVsD7RsAVwmDYlXRW/L/KE3QPfJ2cTXbTTvg03+
+ xZ+QO+ToLAn7xJa3MBbXAEcWJ0NpCoigWOKteXkBNmRNcAFdtwM58xDke/4mAsNLGpDG
+ 1hcF8I5ocQI5HnvP+4vusVwBu7MCeHiyQ9Vdh4R2Gl9jqTfddtYqeV4F2KW4ReTPhBlW
+ 4BI69Mx4SP43Jvwgsk6HCYffkEjKJnfU/HfJ03numc6RF1BQhuzzxAZcJH3q0BG1jUmD
+ XKPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761944047; x=1762548847;
+ d=1e100.net; s=20230601; t=1761944099; x=1762548899;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aWig3n2agd4WazZPYglttl86zROiptjK3T/62YRviE8=;
- b=lI3EQN3RZrBr2hrggMZ8oDgTrf31iC5zMlEF8/fGxex/Y3bUsodKy6IuldSKr9XhOi
- ISo+mcrBZCNEFllqbJXWDM/cO/HYckNy/Xzkui/tEiOk6PE6rwKXmQZXjxiyt8XCP0qV
- jJCdWnGL3nVMysxy4SzmK+jNhzI4yRWyuuliJNqxOt4KEa+YjXKVVLgHCPDRaGOarfWv
- 7geeA5AcRqcHyTCNXkezqGbbdOM48rIqh/nEhBA/yzUqdgz3JKuad8St62HxB91M/3uR
- ppXNgzE4Y2Amk0YNuAZb/JPo8e0uDl2rLZk1R1ASvCHaU21PRvKD3u6gq7/GrcaLBJk5
- AvBA==
-X-Gm-Message-State: AOJu0YywbBBKTZB6F24kn20p2/7Ra53x7SXYdfcuUlEIHBvCOh0LFSsS
- SzXzAyi0W3z6NqCn+sbAcMebLzU0buWW63u8e6aCj2Vv3cseZWyogpYcc0Vft3OwGfI=
-X-Gm-Gg: ASbGncv9yOh6NiItCHOxcBHh2PjAqLhrLSs4NhVbFMXKVYo4mqEYabgYwiUQuQwOWMb
- JGEx219UKvxDHac6a0xPXiXtMmckULTj3nELI/i5v5opkgFCsCpWUQm7AQr/EZptAAkxu7BpO7c
- yoINKnpeYmo4QiAqUK00TOi1/B//a9rQ6K0KhBrJI+HMWEVu+m4LEMCGI6renfbBwBoE584lNxr
- r7ArXj5CvWI4+gJ5Sga5qqJW09qvdykDGbe9sHcGMnfvY9785enzs6YBbOKgK9r1OxAdHmza9NL
- J+aXY2R29o3GivjLRpYNNWEjLS1hgACG2LtLaYt8jq+wNKU90On5y7sT5Ynuy/IjePYDGlm7Bgg
- q38jB0iUvPrW/tGcJ7t5JhW9RgVKfYapHRIeoUoGR06wn34nO6IZSwwCWzbHXTW8+xm3o0Et/1A
- z7i/zwViCAY74CmmAhO0AeBKXFM89oBaxXvcWSVSEH+blolKjrc55F1pyIpa+0QL/AP+B5n43zz
- NUN
-X-Google-Smtp-Source: AGHT+IGQTn+fq+0v1xipSyleHL0S7CRlf605MewZVs7NliFpecaUAOOQ8lIQoE1GZu+mM4s+4lPsGw==
-X-Received: by 2002:a05:600c:3149:b0:477:fcb:2256 with SMTP id
- 5b1f17b1804b1-477307e486fmr43819815e9.17.1761944047010; 
- Fri, 31 Oct 2025 13:54:07 -0700 (PDT)
+ bh=E2494wC8Zkk4OFrvtAjz7MtJs3Y18IdMSDm/KH2Fia8=;
+ b=CbiGStKKwWfFiaQRvSkLG44CPRCUfeMCdi/8XOgGs3FN1Bw5h0C2ueetYjNbTj5JwE
+ HERukIl402grAgHrmI3tA4cOhHwlehG0OvASs3c9Mx0Ke155LUSPAKOETllRibX4yBj7
+ L0+E6WpqWZreBDsEehxT9Td6KBd0y5mT0bLnAl38wHVPah5FC+XR03ue2oRm76sul961
+ HA/lODQ/63FIQdRsOZ7RmBMGSN14qr3rWe95tO725BNpsMK+NRwGZc0EGkg8/8Akvqwz
+ Ep5IIM4eugq/8XuFDWHISwaBLqE8iBYIwedJCkWsC1iE8hAJ9F+hcHxUf3ASDxxqYYh+
+ 7Gug==
+X-Gm-Message-State: AOJu0YxvmCnAlqyxKF7lXPZ1x03sVQZyhXS7+D/9lOU6QoLdMT4MUcHW
+ Rq8n33oPV6xKb0ZIJ0Z8Fcue5kfEaz5gyBpZuy8AsfutGakp5u0LS09VpNvIzJcUKiU=
+X-Gm-Gg: ASbGncswDlojOWd9ALNXrAOaJFnqKt6i9DCasLgZfMEqiqc9XCPNix0qtigozVpHyQc
+ USBgn1mc/7E/1oASB7rrXmxmAkWSg4HDOtF6eUilOF9A5TGQtF7pi+vZMWgaOIgiXW5OD+XhzV2
+ JSwt3GJOXbAYuObKaPP1DmYaXUGCKkVdBQmMlTVGOrTd8UouMEK1C7rdS9felqbXLDrt0c6itlH
+ duP/NtyAxNydJHXBkfkbZFcELUrZ0tHKNAzekpSr7qVkrcB2UnoKqK5VScKIOiu0VSIzFRyydVc
+ DM33nmJkN1ONGZjVBMLwyx5X4xVi+0pvaJW/eKTqSh+bV0Qqy+tRFJ4iNjxJjdrpTFFqhYaupnX
+ FFxeS8W1GLbhLP/esCJWNz27sJhqIWZZAOej4HsZ9/oAGzc3xBhDBal+cOuw5WM0a5rpWVxqn1Q
+ 3b6mI9bPgu1YtB5PZ9HzDsrrSK+zKo4PirP/JH3IdChvnjjKoVCMkoyew=
+X-Google-Smtp-Source: AGHT+IERE4nYpQyQ1FMulxJHon9OZNyNed52fzDTEPbNmpaVb9Za2x2MXFJjp2U4Ptu1ubXMOQGWtQ==
+X-Received: by 2002:a05:6000:144a:b0:428:3e62:3204 with SMTP id
+ ffacd0b85a97d-429bd6c1aacmr4620233f8f.36.1761944098872; 
+ Fri, 31 Oct 2025 13:54:58 -0700 (PDT)
 Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13f3278sm5249453f8f.42.2025.10.31.13.54.05
+ 5b1f17b1804b1-4773c3a77b1sm13994355e9.17.2025.10.31.13.54.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 13:54:06 -0700 (PDT)
-Message-ID: <d0f6aa76-08c6-4630-927e-358c8f81f383@linaro.org>
-Date: Fri, 31 Oct 2025 21:54:04 +0100
+ Fri, 31 Oct 2025 13:54:58 -0700 (PDT)
+Message-ID: <ae1133f7-b2f2-4335-b1d0-9ce186b7a5d0@linaro.org>
+Date: Fri, 31 Oct 2025 21:54:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
+Subject: Re: [PATCH v2 2/2] tests/unit: add unit test for qemu_hexdump()
 Content-Language: en-US
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  berrange@redhat.com
 Cc: qemu-devel@nongnu.org
 References: <20251031190246.257153-1-vsementsov@yandex-team.ru>
- <20251031190246.257153-2-vsementsov@yandex-team.ru>
+ <20251031190246.257153-3-vsementsov@yandex-team.ru>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251031190246.257153-2-vsementsov@yandex-team.ru>
+In-Reply-To: <20251031190246.257153-3-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,50 +103,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 31/10/25 20:02, Vladimir Sementsov-Ogievskiy wrote:
-> QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
-> qemu_hexdump_line(). This leads to last line of the dump (when
-> length is not multiply of 16) has badly aligned ASCII part.
-> 
-> Let's calculate length the same way.
+> Test, that fix in previous commit make sense.
 > 
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   util/hexdump.c | 38 ++++++++++++++++++++++++--------------
->   1 file changed, 24 insertions(+), 14 deletions(-)
-> 
-> diff --git a/util/hexdump.c b/util/hexdump.c
-> index f29ffceb74..7cfc547261 100644
-> --- a/util/hexdump.c
-> +++ b/util/hexdump.c
-> @@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
->       return (x < 10 ? '0' : 'a' - 10) + x;
->   }
->   
-> +static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
-> +                                  size_t block_len)
-> +{
-> +    size_t est = buf_len * 2;
-> +    if (unit_len) {
-> +        est += buf_len / unit_len;
-> +    }
-> +    if (block_len) {
-> +        est += buf_len / block_len;
-> +    }
-> +    return est;
-> +}
-
-
->   void qemu_hexdump(FILE *fp, const char *prefix,
->                     const void *bufptr, size_t size)
->   {
-> -    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
-> +    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
-
-size_t
-
-> +                                    QEMU_HEXDUMP_UNIT,
-> +                                    QEMU_HEXDUMP_BLOCK);
-> +    g_autoptr(GString) str = g_string_sized_new(width + 1);
+>   tests/unit/test-cutils.c | 43 ++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 43 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
