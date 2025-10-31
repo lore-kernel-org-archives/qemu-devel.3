@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8636CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02242CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEwWC-0002YS-1U; Fri, 31 Oct 2025 17:18:44 -0400
+	id 1vEwWm-0003OP-ON; Fri, 31 Oct 2025 17:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwWA-0002Xq-F0
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:18:42 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwWk-0003ND-U7
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:19:19 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwW4-0002Cc-Nz
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:18:42 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-475dbc3c9efso16572125e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:18:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwWc-0002KD-Eu
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:19:18 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-429bf011e6cso1369135f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761945512; x=1762550312; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761945545; x=1762550345; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Zb+lg8rKtYHqXOou6DMojkI7hCEEFWdJALRTKbhb5QU=;
- b=Ux27czvs8RTAWw8tXX62SY2edDnqRM7WfdwB0ersuDEeorxx7wvlnEwF7AsJFZ2dQR
- Fk5O/18DxvfUJdZ2RpYS2mbzP12JKaeRo2xtUoIVvwzKvviRDOzTcir5lOytPWvlDnuS
- DqucseBhItPyUDvXO//UF39m+kpQF39RitIlorgkktvCuTOW5b3SLfZkHOUQMQpYP1ha
- EpyrX0/RGGA/ybyiCBTb+mRFVYry9DGPqONccNHlmeytFm9ZBiyR2buXJpc3W9aUuNBO
- hRKDBvkNH9oPin6Cmzit19apTNlscSsLYQDSJq5AsPKe/3aDzJesW9DqWNLUZOTrk98N
- fKig==
+ :reply-to; bh=dtB18Pvc9S14eiCOzWzreWzk+lt1hMQZD4T89jMibmU=;
+ b=R/pQ2lNJcbHCGD6uCCLT4NHuafClw0Bp2meOR+G642VeyWv33e0LzByaRWqiDyCBgV
+ L+JioqpniR3dg2pbmVmNGlbxMGXZZ8kYJkAj9HqpzgjrSyWOy2qZ/CUOm+HlKFx7Z+yL
+ H0RKa1daISjeY+um126yWnoX7Jz2uWs8cuxAcUH6gvea4ky/ZuvXOloGAeYEjqssIp5i
+ UnoVNSFpcCKZTCSyU9vKn1Dw0YwO/sSpjlozZmegUU7iJqiX5V48KAiZz3SOjdNSIAnR
+ hPuvIkyP8GUN/AuNZsOQMJbzD5AXBN1aQmahesM/Tt4qAByNUkii0ceKy3boUxH+Turn
+ 1KtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761945512; x=1762550312;
+ d=1e100.net; s=20230601; t=1761945545; x=1762550345;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Zb+lg8rKtYHqXOou6DMojkI7hCEEFWdJALRTKbhb5QU=;
- b=irTv8RxCPIlsuZK9edDj+lU3cF39CrBEWqshYr3cw7TDwspHobabJGTRn8MmzURf4C
- dBV28mnAPXEWHEreA69r5w8Wwvd6GpeABVQP4xE4ZuRHB4Ip033rOAf+rgkfNmJx19mu
- fgDlO5dDW4XadppRpfBPRhiI9Fy65jlQ2I5ERXxY+VQqpPxnF/6VeYY3h7KnBnCXyTV7
- OtVFVlK6zUguS7/SOA7cnZr6eutnFEJvY1OE6uYtWfUVudQ+jJNFTaQEUSmt+v/+WIjb
- vcfm1cUkOyecF2Z3zRcyT9Jfa6nRdlCi2xU4tSkOGXG8kpw0gTwXifCxaDYEwaRijEll
- WNaQ==
-X-Gm-Message-State: AOJu0YxDujzUh8dcK93ulS48HfCvUxnkxaLW/jBFRJgMe/b3hJ05ePYN
- OjnZdEEPvBPepAIdgQOn6NsqfgrFM1Kn2Z5olv8rvPMuctipJ8w54nPr8EXK8xdAec11lyU3COP
- Y5IyRG6QDKA==
-X-Gm-Gg: ASbGnctbRnlHNaxpuJuk4Nv0RSRYG8MLLfFAh8jDhWzdpiAl9DbfC2B9sGIBBGUDv6c
- 9QOy12i92i8aDUdDpUcGB94dukxd9JUiRFCqvd6OSVmpK7jWY/czoTpGMgrGtq2Z30ElGSbXa6n
- VQyPbETkcj6qSkJBbIl+zTs50Xh2LE6q5hkdgEld+pl+99bKiy/y13m3SqRpGJAtQMRsQpHYVqM
- iH6Llw+BTgob2IB9P9QhaLMnZ1all+tF6qnsTcJX2ct0Qugtbej5XcSFvc/5woDqUVnN71WLhTH
- CjkGwr8Ll7si1BreRxwBg2WL453tgqSL5gOs7ZR39ulzcZjfZznPyLdncNJb3Ww2850fJImUpDT
- y3uypuYzNROGuZqTiCBSEX2upEOJJoHElhKdL1qVmHEPjbdrXTN5eMQY8Iz/oELBcxrn4dlY3GK
- DlzyVrKrzrKDfDkAL3BN9OuR8McMJD825j69mwzJ03zUu6uqhWjNKnzCCtMMM=
-X-Google-Smtp-Source: AGHT+IFLnhyAA9CkWO0jrp8RSvBDbYJfUG83ahO8p7aSI3guDf1VA/xMFawUJsnM0M3SjIRGjDW4iA==
-X-Received: by 2002:a05:600c:3149:b0:477:942:7521 with SMTP id
- 5b1f17b1804b1-477307e285dmr49019015e9.14.1761945511933; 
- Fri, 31 Oct 2025 14:18:31 -0700 (PDT)
+ bh=dtB18Pvc9S14eiCOzWzreWzk+lt1hMQZD4T89jMibmU=;
+ b=HPeKmhosp/VsVRtWhi996o8PVCUl8mStrLO/Qi2+QSrXIXp4PgRCYHjR6zHFzQmLT5
+ SoZkt8N6DDhC4hRtBwnEN/qJfxNSEHlWNad3NQPw0M9h9cZMTehnKRm6ZZFK2s5ejB09
+ yPH0NPAmDfVPSnhYlSsQfiyoPaEgzi6hPK55uZzRTf4DcOZSkYz+2UiWQT1kcfyvMABB
+ cWbLqWu8nY3r8sOSVwfuNVQAzRxxNhEFIymNLrzPnSDLuPaxKEz9A4PZ8x6k5tCVUQzG
+ tUsj/BJbMjv7/wj5dlj0ZvmbXLZfRp5eWSJAu+FIUnNCiVmFIHcGu9qHHKgLqAwYbDA4
+ 1ZFg==
+X-Gm-Message-State: AOJu0YwQdOpQQM3vNH7h7ch/GtUHGtcGhSFQjBh4Fnxwf/Z9NZ2vBnD0
+ I8ButJDWdEjXjjDv7WqbkjsTruBfQEu5owxWXX7N7btBNZV44LEqRnp2Q81DAAcSF+5mpMgv9Wj
+ Zk1CYzhoSYA==
+X-Gm-Gg: ASbGncs/lCvA0qxFU+6c7dNE6h9a4O9WclEFxYHeZIVkpNphXpfv4hZMsfV+6aKt4YV
+ BqP3ycdlrai5tAesC7riPqrv5Jy50DhfOONDO8Fqgg5sjV494QFosqlolehB26tryZwYqjDv0u6
+ okVInjnVWgEdxWNoMCaVAsiJ/HPwtN59DZW7KqS/+8njYUgVpLtrX4LULDd+uyqendpC31ijTEW
+ xDqfZ+w4MVf/o+6AIvUA1GaEvo1v3Qoe1fmSWPhof3iB/CeA6N57XguKkmcG+7tbmE0AMccxSAU
+ u/ql12pt0MYxRGU+L3zZVNTNjXGcz4GKWjWxe2+e+gceqcqD+ovlE5m/NAdg6SNRn3yfQye6/+H
+ Je6eTTptGv8cCTk0CInd+CQFOGdRibsbx0lgHBcGqbLMNn53H+4/UQs7BMVY6IXBW0d+8U6jZ8a
+ uGoX9nV0mZE/0ibCfuvm/CfDXe8FNCLLT2S6KlV8up18/D/2oa
+X-Google-Smtp-Source: AGHT+IFrsaJGgwF2yOSCmVBULDmoRt4zzlKIoCMbn1/VY9QQCfR1Fnnp10dBvo/w7b9XLjYpajJW3g==
+X-Received: by 2002:a5d:64e8:0:b0:429:8a40:e995 with SMTP id
+ ffacd0b85a97d-429bd6ece4bmr5326479f8f.61.1761945544603; 
+ Fri, 31 Oct 2025 14:19:04 -0700 (PDT)
 Received: from pc56.home (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773c383ba6sm14974095e9.10.2025.10.31.14.18.31
+ ffacd0b85a97d-429c13ebfe8sm5401752f8f.35.2025.10.31.14.19.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Oct 2025 14:18:31 -0700 (PDT)
+ Fri, 31 Oct 2025 14:19:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 6/9] timers: properly prefix init_clocks()
-Date: Fri, 31 Oct 2025 22:15:15 +0100
-Message-ID: <20251031211518.38503-7-philmd@linaro.org>
+Subject: [PULL 7/9] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
+Date: Fri, 31 Oct 2025 22:15:16 +0100
+Message-ID: <20251031211518.38503-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251031211518.38503-1-philmd@linaro.org>
 References: <20251031211518.38503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,80 +98,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Otherwise we run the risk of name clashing, for example with
-stm32l4x5_usart-test.c should we shuffle the includes.
+QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
+qemu_hexdump_line(). This leads to last line of the dump (when
+length is not multiply of 16) has badly aligned ASCII part.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Let's calculate length the same way.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251030173302.1379174-1-alex.bennee@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251031190246.257153-2-vsementsov@yandex-team.ru>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qemu/timer.h              | 5 +++--
- tests/unit/test-aio-multithread.c | 2 +-
- util/main-loop.c                  | 2 +-
- util/qemu-timer.c                 | 2 +-
- 4 files changed, 6 insertions(+), 5 deletions(-)
+ util/hexdump.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index 406d7411203..8b561cd6960 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -786,11 +786,12 @@ static inline int64_t qemu_soonest_timeout(int64_t timeout1, int64_t timeout2)
+diff --git a/util/hexdump.c b/util/hexdump.c
+index f29ffceb746..7cfc5472613 100644
+--- a/util/hexdump.c
++++ b/util/hexdump.c
+@@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
+     return (x < 10 ? '0' : 'a' - 10) + x;
  }
  
- /**
-- * initclocks:
-+ * qemu_init_clocks:
-+ * @notify_cb: optional call-back for timer expiry
-  *
-  * Initialise the clock & timer infrastructure
-  */
--void init_clocks(QEMUTimerListNotifyCB *notify_cb);
-+void qemu_init_clocks(QEMUTimerListNotifyCB *notify_cb);
- 
- static inline int64_t get_max_clock_jump(void)
++static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
++                                  size_t block_len)
++{
++    size_t est = buf_len * 2;
++    if (unit_len) {
++        est += buf_len / unit_len;
++    }
++    if (block_len) {
++        est += buf_len / block_len;
++    }
++    return est;
++}
++
+ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
+                            size_t unit_len, size_t block_len)
  {
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index 0ead6bf34ad..c24200a7121 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -443,7 +443,7 @@ static void test_multi_mutex_10(void)
+@@ -30,14 +43,8 @@ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
  
- int main(int argc, char **argv)
- {
--    init_clocks(NULL);
-+    qemu_init_clocks(NULL);
+     if (str == NULL) {
+         /* Estimate the length of the output to avoid reallocs. */
+-        size_t est = len * 2;
+-        if (unit_len) {
+-            est += len / unit_len;
+-        }
+-        if (block_len) {
+-            est += len / block_len;
+-        }
+-        str = g_string_sized_new(est + 1);
++        str = g_string_sized_new(hexdump_line_length(len, unit_len, block_len)
++                                 + 1);
+     }
  
-     g_test_init(&argc, &argv, NULL);
-     g_test_add_func("/aio/multi/lifecycle", test_lifecycle);
-diff --git a/util/main-loop.c b/util/main-loop.c
-index b8ddda8f5ee..b462598f76e 100644
---- a/util/main-loop.c
-+++ b/util/main-loop.c
-@@ -162,7 +162,7 @@ int qemu_init_main_loop(Error **errp)
-     int ret;
-     GSource *src;
- 
--    init_clocks(qemu_timer_notify_cb);
-+    qemu_init_clocks(qemu_timer_notify_cb);
- 
-     ret = qemu_signal_init(errp);
-     if (ret) {
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 56f11b6a641..2a6be4c7f95 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -637,7 +637,7 @@ static void qemu_virtual_clock_set_ns(int64_t time)
-     return cpus_set_virtual_clock(time);
+     for (u = 0, b = 0; len; u++, b++, len--, buf++) {
+@@ -76,13 +83,16 @@ static void asciidump_line(char *line, const void *bufptr, size_t len)
  }
  
--void init_clocks(QEMUTimerListNotifyCB *notify_cb)
-+void qemu_init_clocks(QEMUTimerListNotifyCB *notify_cb)
+ #define QEMU_HEXDUMP_LINE_BYTES 16
+-#define QEMU_HEXDUMP_LINE_WIDTH \
+-    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
++#define QEMU_HEXDUMP_UNIT 1
++#define QEMU_HEXDUMP_BLOCK 4
+ 
+ void qemu_hexdump(FILE *fp, const char *prefix,
+                   const void *bufptr, size_t size)
  {
-     QEMUClockType type;
-     for (type = 0; type < QEMU_CLOCK_MAX; type++) {
+-    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
++    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
++                                    QEMU_HEXDUMP_UNIT,
++                                    QEMU_HEXDUMP_BLOCK);
++    g_autoptr(GString) str = g_string_sized_new(width + 1);
+     char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
+     size_t b, len;
+ 
+@@ -90,11 +100,11 @@ void qemu_hexdump(FILE *fp, const char *prefix,
+         len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
+ 
+         g_string_truncate(str, 0);
+-        qemu_hexdump_line(str, bufptr + b, len, 1, 4);
++        qemu_hexdump_line(str, bufptr + b, len,
++                          QEMU_HEXDUMP_UNIT, QEMU_HEXDUMP_BLOCK);
+         asciidump_line(ascii, bufptr + b, len);
+ 
+-        fprintf(fp, "%s: %04zx: %-*s %s\n",
+-                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, str->str, ascii);
++        fprintf(fp, "%s: %04zx: %-*s %s\n", prefix, b, width, str->str, ascii);
+     }
+ 
+ }
 -- 
 2.51.0
 
