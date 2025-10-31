@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A729CCF9FF
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 14:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32542CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 14:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEpfa-0000Va-ON; Fri, 31 Oct 2025 09:59:58 -0400
+	id 1vEpfh-0000YJ-2z; Fri, 31 Oct 2025 10:00:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vEpfY-0000VN-RM
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 09:59:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vEpfQ-0003Hy-IB
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 09:59:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761919185;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=stuMcp2HDAWTrsB12IWigVUpixcN3VROJ5irrSVVg4I=;
- b=RbP7f1654jE7oLGlUXW25wppE5la0mouWK3UsjeeiQmYK02Q+wNTdXTm1KfSbKJK8Wx9xi
- kS9TaujcqSn8wpSF80ad8d85CJvLEI2mP/Pe/uGm/Hq3Ua7ka41kJTKBfO+noj04uwAS7I
- fYtf7FkvbxomlFgr7Y9vGjCYIriBJHY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-SVbJLH4wMembZenRPNAtJA-1; Fri,
- 31 Oct 2025 09:59:40 -0400
-X-MC-Unique: SVbJLH4wMembZenRPNAtJA-1
-X-Mimecast-MFC-AGG-ID: SVbJLH4wMembZenRPNAtJA_1761919179
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 458231955DA6; Fri, 31 Oct 2025 13:59:37 +0000 (UTC)
-Received: from redhat.com (dhcp-17-192.lcy.redhat.com [10.42.17.192])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F52419540DA; Fri, 31 Oct 2025 13:59:35 +0000 (UTC)
-Date: Fri, 31 Oct 2025 13:59:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Tejus GK <tejus.gk@nutanix.com>
-Cc: qemu-devel@nongnu.org, Manish Mishra <manish.mishra@nutanix.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v7 2/2] QIOChannelSocket: flush zerocopy socket error
- queue on sendmsg failure due to ENOBUF
-Message-ID: <aQTAxDBWPxcrj82g@redhat.com>
-References: <20251024131546.929499-1-tejus.gk@nutanix.com>
- <20251024131546.929499-3-tejus.gk@nutanix.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEpff-0000X5-6i
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 10:00:03 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEpfS-0003Hm-QR
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 10:00:02 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4710683a644so20054385e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 06:59:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761919184; x=1762523984; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lNw2EJaIg1eeQojFyH4I7yV2pKjy0BZpWHP33NwKPN0=;
+ b=zDtQqfDeM42EHv7/zFbdN5BNZ+zc1cmACXqyT2U46dA3vffLDgPjpmvVBjLgJmCVOy
+ 14J7zfk2mQHiTI+IgfOBX3Pr7pcVsTSe0ZV0dnBtAeBAX5MiCHghf5BNtjeKfBoKM4x3
+ L+SiP+J8tn7P1Sj5dwXNJzphxmMyeMuHdBvvHkSrh50BEFjctaNz7MQObDePpuZ7vZUg
+ pzdYo4a5BAz1Mym+9IIGXp8bxeRy0wSPEt7oQh93AnSz7aA+INhvMqnhQIRMRQWYWAyk
+ xhRTDBjQAEf0ZljJIUhkp9qUCF/qa4KIw+WiopiNGjTmUDijBw5+/9AazZKO3GxXdJZN
+ o0Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761919184; x=1762523984;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lNw2EJaIg1eeQojFyH4I7yV2pKjy0BZpWHP33NwKPN0=;
+ b=vXvFbXcSD83CE6UJFFVLMxMIfH/3EbM4o/taRereHR/ie5I/kzNX2BhQhmlgWgBfo7
+ jpYKWvb84VtESy4rsTfpHRc/OxnSdWoaNXQTNG9v1vz+xYhZyQZ8g7d/lOopzwpr4uXQ
+ 115X3jrCUrcoKZlDi3mmW3InM4lfCC8dzKtWgE30kHlwuuXPrrQ5fXEZVvq1behhq/eB
+ QHiXCjCxKi9BybZLSR6r/KGd2iAx9Qi7/2HMAOlGP7FfXlQSi9g+jw7jCXX0MGpKFpmH
+ Rxi1wt6ar79VHB8ibK/Kixay8mNeeIKeiZ/18OJawfia+tbhXeCq3nrBEbUdfO/fTIvK
+ lQSQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUClYRrl0mJo0sW+yknpdfjbxDKdy4T6ic3SsCELQWalcEb4ZFkVX9bVkBcksnhmIQUA3rm5jT53nS3@nongnu.org
+X-Gm-Message-State: AOJu0YyaPe+ddCMKkORhPeAxgX7gih7rkIp3jx/psBMDOf3XGAXm4+TM
+ NwdWFCteWLfV37812PNJ6pIIkPE+pB+FlnvbmtuPgUykVLSxHeFo+I5CkoYH0ld13XE=
+X-Gm-Gg: ASbGncs0nZuWFJEBL/gz4B300mj32FBujyL+6/rJvNfBxTBCjx3p/ge6l7PhGmhuHcm
+ TWJDpBOMdDFJWBs5Bzb6Z+MY0Gk+rLG14V+JFaWJCObG/q4L96qyQ6RB/cY0vaGHxEkF8rlxJU5
+ z9FYUDqU4vMI4CENjAzjpnNxIiOMFyYftQBLa0R0lTjuXk0SaV0JdpLK3o9Zccq6OQalU3mzhSK
+ v8lUUZKmfLHlOBpUMoRedHtSEsqr9liXjpu2yQsdEfTa5Jq2503qloF2BVwADC50721aFl+nkwB
+ LLf4+OsKKfVh/8ny8xgZJkUKaDvwfxcxEvlRTeEOZpUXU0TQUoHqR9fdEyQG1klRJNRTcceeUAZ
+ GBLTZX3nK0QJ9fSYOoqCkzaYw9B1sfZh3FNkKREe/244bXHRxwCWidCvl7XWXMvcZzzlfwmbl7P
+ iWPlkMG4mhAfbLICpybgif1bMDgS9YYuWuM+mOSz72rTYHEUxVFhvDCTSkgv8EiWDf2g==
+X-Google-Smtp-Source: AGHT+IFRWDJoq+RlGMV4sXxM8D8V8yCyKFzquz5/FhXXy8uewJF7PXqUTZ1C7CcMYVxP/RZPLDfhUQ==
+X-Received: by 2002:a05:600c:530f:b0:46f:a8fd:c0dc with SMTP id
+ 5b1f17b1804b1-47730068201mr40491725e9.3.1761919184232; 
+ Fri, 31 Oct 2025 06:59:44 -0700 (PDT)
+Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47732ff7fdbsm33970095e9.16.2025.10.31.06.59.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 06:59:43 -0700 (PDT)
+Message-ID: <50852162-42b3-4702-87bc-6be2e7950441@linaro.org>
+Date: Fri, 31 Oct 2025 14:59:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/21] crypto: use g_autofree when loading x509 credentials
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org
+References: <20251030144927.2241109-1-berrange@redhat.com>
+ <20251030144927.2241109-7-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251030144927.2241109-7-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251024131546.929499-3-tejus.gk@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,131 +102,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 24, 2025 at 01:15:43PM +0000, Tejus GK wrote:
-> From: Manish Mishra <manish.mishra@nutanix.com>
+On 30/10/25 15:49, Daniel P. Berrangé wrote:
+> This allows removal of goto jumps during loading of the credentials
+> and will simplify the diff in following commits.
 > 
-> The kernel allocates extra metadata SKBs in case of a zerocopy send,
-> eventually used for zerocopy's notification mechanism. This metadata
-> memory is accounted for in the OPTMEM limit. The kernel queues
-> completion notifications on the socket error queue and this error queue
-> is freed when userspace reads it.
-> 
-> Usually, in the case of in-order processing, the kernel will batch the
-> notifications and merge the metadata into a single SKB and free the
-> rest. As a result, it never exceeds the OPTMEM limit. However, if there
-> is any out-of-order processing or intermittent zerocopy failures, this
-> error chain can grow significantly, exhausting the OPTMEM limit. As a
-> result, all new sendmsg requests fail to allocate any new SKB, leading
-> to an ENOBUF error. Depending on the amount of data queued before the
-> flush (i.e., large live migration iterations), even large OPTMEM limits
-> are prone to failure.
-> 
-> To work around this, if we encounter an ENOBUF error with a zerocopy
-> sendmsg, flush the error queue and retry once more.
-> 
-> Co-authored-by: Manish Mishra <manish.mishra@nutanix.com>
-> Signed-off-by: Tejus GK <tejus.gk@nutanix.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  include/io/channel-socket.h |  5 +++
->  io/channel-socket.c         | 80 ++++++++++++++++++++++++++++++-------
->  2 files changed, 71 insertions(+), 14 deletions(-)
+>   crypto/tlscredsx509.c | 35 +++++++++++++++--------------------
+>   1 file changed, 15 insertions(+), 20 deletions(-)
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
->  SocketAddress *
->  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
->                                       Error **errp)
-> @@ -66,6 +72,7 @@ qio_channel_socket_new(void)
->      sioc->zero_copy_queued = 0;
->      sioc->zero_copy_sent = 0;
->      sioc->blocking = false;
-> +    sioc->new_zero_copy_sent_success = FALSE;
-
-Needs to be 'false'
-
->  
->      ioc = QIO_CHANNEL(sioc);
->      qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-> @@ -618,6 +625,8 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->      size_t fdsize = sizeof(int) * nfds;
->      struct cmsghdr *cmsg;
->      int sflags = 0;
-> +    bool blocking = sioc->blocking;
-> +    bool zerocopy_flushed_once = false;
->  
->      memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
->  
-> @@ -664,9 +673,24 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->              goto retry;
->          case ENOBUFS:
->              if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
-> -                error_setg_errno(errp, errno,
-> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
-> -                return -1;
-> +                /**
-> +                 * Socket error queueing may exhaust the OPTMEM limit. Try
-> +                 * flushing the error queue once.
-> +                 */
-> +                if (!zerocopy_flushed_once) {
-> +                    ret = qio_channel_socket_flush_internal(ioc, blocking,
-> +                                                            errp);
-> +                    if (ret < 0) {
-> +                        return -1;
-> +                    }
-> +                    zerocopy_flushed_once = TRUE;
-
-... 'true'..
-
-
-> @@ -843,13 +876,32 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->          /* No errors, count successfully finished sendmsg()*/
->          sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
->  
-> -        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
-> +        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
->          if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> -            ret = 0;
-> +            sioc->new_zero_copy_sent_success = TRUE;
-
-...true...
-
->          }
->      }
->  
-> -    return ret;
-> +    return 0;
-> +}
-> +
-> +static int qio_channel_socket_flush(QIOChannel *ioc,
-> +                                    Error **errp)
-> +{
-> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
-> +    int ret;
-> +
-> +    ret = qio_channel_socket_flush_internal(ioc, true, errp);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    if (sioc->new_zero_copy_sent_success) {
-> +        sioc->new_zero_copy_sent_success = FALSE;
-
-...false....
-
-Since these are trivial changes, i'll make them when applying this
-patch, so no need to re-send.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
