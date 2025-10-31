@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6216CCF9FF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B947CCCFA00
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:42:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vElda-0006BC-8M; Fri, 31 Oct 2025 05:41:38 -0400
+	id 1vEldi-0006Bh-Cl; Fri, 31 Oct 2025 05:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEldY-0006Ak-18
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:41:36 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEldh-0006BS-24
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:41:45 -0400
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEldU-000644-3D
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:41:35 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-475dbb524e4so12193815e9.2
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:41:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vElde-00064c-FN
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:41:44 -0400
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-471b80b994bso25307485e9.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:41:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761903684; x=1762508484; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=W/LUMLW07ydoPx9ukxpuiOkMSqsMaJR5YW6Qt7lCr7M=;
- b=juCELnEdksQdFN34EUUdB2cJZvS+lsC1n4IRo5ETMHmKW9rBOR5ioeOKRQmXV8p29I
- YlHXaXND1+zpb/YRAAwxcfD/42hcYjsVqWqsCOCZey9dBox/jqeRlpeXq0pyvp5NO8vc
- JMyq7GVrXOHvZ7r+Ix2D9bJM/aakmoP5Iuyu8ZU/mlTzvLik04hopV5UrCBx1F3PDpGx
- Dbo2vTcWgJ4TbRcM2+4IVOMLBEbwhY4cE78XEutSyjvIDJQYC2JyMgEW6BtFFVchamxu
- G1qx9iCItSDRieyO93X1GOHlgYMGUjW0u8cdLxbSXQ8zpme+rmY2Rm1nnQkFa6fpIDOR
- XGvg==
+ d=linaro.org; s=google; t=1761903698; x=1762508498; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kXGoH1b4Mg89hW+3uAck9luCnqVQn9F+7nalHP1pE0c=;
+ b=V4YymdukpX/hdyMuEoBxNei18Zlf/+Cx3uLD0goCbY6SnAwMMpI5FbtEtGUdcnyfH7
+ 4IkMq0Lb8tc+7H/30AztNSEQj/vkResoCknDUxgXhno8h98tegHNnGaA9+p1icZoXntG
+ iihuU26wz/pK6H9HSG5aylQ0u3yg14q1Ote2Sonec+fISM84gJf9dELdhIb7pDwSUW9S
+ rZgcE5R2rjTfPO7LKqwfNuWuXIwtc2KbJtmeJ4UWdAagYz3gh/616AZqC/zK4mlp/pE1
+ PPF5ugK12m50pCSyWnH1IwNC2qZ50BwkraqRozGPo3rk8o5SMPuN+SipS8S/7eT2DsCb
+ YDJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761903684; x=1762508484;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W/LUMLW07ydoPx9ukxpuiOkMSqsMaJR5YW6Qt7lCr7M=;
- b=O95tmLn7VJNfxTvJ9TXMiLhy1XEVSP6BmiJ6g+11BXu2kl6Pud6SUcsMSPXklwu1mR
- 0E4cvYVdhfIWDyqcyyVClKDRpjurLyvHnqqT6a6RFv4u3/po82HF3cCMk+shTon+hT8J
- iVvcHnodUHpntm3DxpWESAKnSwa2ZNarcDl/17ccM434SqIgw0ZKbL/D5QE4Ux4xmdJb
- w+IOXDxvJp//G4U2XgGRtxd8qT0jhDi2/tSm8bQo8S10U+kaqTqfRt6Cu/KXU4dBo1dz
- 4LvnvWW/HAQVIsd0j1dTN0eCf5C5nIhOmUJpD1uH1ndak01NBCqP7E45vxDM+AgmwnXb
- Qz4A==
-X-Gm-Message-State: AOJu0Yyi3JM1XPtej3PVJXZvKefo6XjNwUxOJwWFZiUwAyJpRb7TgGi4
- 171AGYAZWuGYV3cJ0gsiQJlWBaaZJPzkqvlSMsCqCpxs6rXKu8W4RieT3/H74a4BALFlSZb23FW
- tPxVcmwLHGyEZ
-X-Gm-Gg: ASbGncvVv3GH3uaeZX2IlbRd8bJUCMh2F5XWO8eAfbi+k9kyMotyCUf1euJqeVcyF8A
- DJMYVoW9zlA4k7tEixyt7vEoctj9V3qYjv4CJCIl7xS+k2qMuIth4TNcjBcox47/WWrtr1IpuB6
- heF2ov0xR8gyApbrboi+oMPUQuy7jI9XBKv0fbD5kaD3LdjQDXguLS1+HtuX0nRUc4ot/i8OrJ7
- 9MI+o0oo4g06UyI6BPAU4T4KuJ+bAol32tA+fPBk9ZkH9irY8pOvMNgue7MgV40GOTYstHD8TCg
- kBMevJCfTKb1pG7STWlEBmCypO0uAagzcYk1Jbfzr8DIrttjaJC/rgc0+kCKmKGU4QqHbJUzt5Z
- P53JxXm2LsgCGe16g8MCSKqNiVZGHRRJzbQFEPZdis6Wj2Sau8yaSnZXdqSazbZYL++F0ozQCKi
- HaHvGr+lzlGa+B4tzWyFQXQE5ny+H5psZ1yDIT/3Mle7N9SCpCTPZdaA==
-X-Google-Smtp-Source: AGHT+IG/sRRWSdPqGmCqkSqgnk7MO+gWE8EJdbtF9RP9qfRBKafMCdABIR8cd97DQ9h7HsVOYswz2w==
-X-Received: by 2002:a05:600c:a088:b0:477:19c2:9765 with SMTP id
- 5b1f17b1804b1-477307da91dmr24485715e9.4.1761903684335; 
- Fri, 31 Oct 2025 02:41:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761903698; x=1762508498;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kXGoH1b4Mg89hW+3uAck9luCnqVQn9F+7nalHP1pE0c=;
+ b=DiUJViMa9IEXPOGG73/Q7d2nlN3TCiSEhKvp8xCxA+9u/u4oXTWia52aR/Ci4EnAen
+ WDU8EZQaWR6hAg7bkO6CGxpPR/Vot2jRPxzBmbOl1ze0iDjSIS3Avg/E+6ZXZiIP+1Vb
+ UeyD4TWwvKHwUD9LIqy29XVRe94PHIurcTfMLW2epNvgYrN5vRnJGE0thtEOQVvKBmqT
+ 98TDZmv30dWYl5922+3nOrViUvBVvVpNUP3PtMvcQrIJKcKsBc8gqFILHffV+7+c/12O
+ CWg1wmYCTPcGKENPMCwfVFg5UGgdf9e8qvvIJXdq2c7of/bDTshlatQD8EJe9eyIfeCh
+ pXYQ==
+X-Gm-Message-State: AOJu0YxXX45Gw+gh7CYIeaRyln3E4fGiaLd++unACFhSmoVbRXFWkUre
+ Xo0UU1cr0gHsW46aNj5iJiBhOqvxVt7Kx8orwM0WP/qDGkivbYOqQb/PO3/3n/G7g+EbHW1cie0
+ LNFzoDSLwQQHlk0I=
+X-Gm-Gg: ASbGncsS31xoFG4w8lqPl+IuOhzNRZqo9eXo10VLBJ6LMEQGBeqnFukeCMxzpCoWjV8
+ tMHLWKS4y7f8NtxjKM89EBfrF/6KqdfV3CAzPYzFPF/20MS2BFHQ/nIacW2dAz519O5QDeCkmkg
+ Hf8mfYN2J4PIqoPklGy0X8/MGPcLVPkpDV77KEfzByZLlbPYG6D957y7IrV0/iPhX2Q4wa6BopW
+ 4O9jI3TSzWzFZ8j5MgLi5byzZ/Bo7ahY2rP150yusDNWCSghh29FEJDOcMLYXBsZwhOom4+KFjt
+ QUEiZ9onZy9dqrap8cQqjKJ47PRtcyJNyrzUQb4OzHUpz/bc3dLba9EfWfJraMs+NtopivJtNzL
+ 06c017PZcG6sDeUQ0DbjaIVdaZu/cA8ZZK/gTVsFKrSvKH92K/QYWTwn09rFC7RzRnC1FCjER66
+ RTzKbhbShveCLKfG/JgaqCX6ux47I6D7JkgNRNa1tE8wstyPnVWVo8mA==
+X-Google-Smtp-Source: AGHT+IHTB4gGB12S0KvXIvtOagjdQwFyu1ioqXqWLU/l+GQe+zTmt6Ujq2/sr4ZRNC3DBiGRQnYjMA==
+X-Received: by 2002:a05:600c:5307:b0:45b:9a46:69e9 with SMTP id
+ 5b1f17b1804b1-47730890cd5mr27981175e9.31.1761903698054; 
+ Fri, 31 Oct 2025 02:41:38 -0700 (PDT)
 Received: from pc56.home (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4772fc52378sm17682305e9.6.2025.10.31.02.41.21
+ 5b1f17b1804b1-47728aa6b0dsm78904805e9.14.2025.10.31.02.41.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Oct 2025 02:41:23 -0700 (PDT)
+ Fri, 31 Oct 2025 02:41:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/2] tests/functional: Disable flaky MIPS tests on our GitLab
- CI
-Date: Fri, 31 Oct 2025 10:41:16 +0100
-Message-ID: <20251031094118.28440-1-philmd@linaro.org>
+Subject: [PATCH 1/2] tests/functional: Mark the MIPS replay tests as flaky
+Date: Fri, 31 Oct 2025 10:41:17 +0100
+Message-ID: <20251031094118.28440-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251031094118.28440-1-philmd@linaro.org>
+References: <20251031094118.28440-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,21 +103,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Disable both replay / wheezy tests which have been reported
-as flaky since too long.
+MIPS test_replay.py often times out (likely hang) under GitLab CI:
 
-Philippe Mathieu-Daudé (2):
-  tests/functional: Mark the MIPS replay tests as flaky
-  tests/functional: Mark the MIPS Debian Wheezy tests as flaky
+  2/21 qemu:func-thorough+func-mips64el-thorough+thorough / func-mips64el-replay   TIMEOUT   180.12s   killed by signal 15 SIGTERM
 
- tests/functional/mips/test_malta.py      | 2 ++
+The console.log file is empty, and recording.logs only shows:
+
+  qemu-system-mips64el: terminating on signal 15 from pid 344
+
+Since this is a long term issue affecting our CI, disable the tests.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  tests/functional/mips/test_replay.py     | 2 ++
- tests/functional/mips64/test_malta.py    | 2 ++
- tests/functional/mips64el/test_malta.py  | 1 +
  tests/functional/mips64el/test_replay.py | 2 ++
- tests/functional/mipsel/test_malta.py    | 2 ++
- 6 files changed, 11 insertions(+)
+ 2 files changed, 4 insertions(+)
 
+diff --git a/tests/functional/mips/test_replay.py b/tests/functional/mips/test_replay.py
+index 4327481e35b..747835bf008 100755
+--- a/tests/functional/mips/test_replay.py
++++ b/tests/functional/mips/test_replay.py
+@@ -5,6 +5,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset, skipSlowTest
++from qemu_test import skipFlakyTest
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+@@ -16,6 +17,7 @@ class MipsReplay(ReplayKernelBase):
+          'linux-image-2.6.32-5-4kc-malta_2.6.32-48_mips.deb'),
+         '16ca524148afb0626f483163e5edf352bc1ab0e4fc7b9f9d473252762f2c7a43')
+ 
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+     def test_replay_mips_malta(self):
+         self.set_machine('malta')
+         kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
+diff --git a/tests/functional/mips64el/test_replay.py b/tests/functional/mips64el/test_replay.py
+index 26a6ccff3f7..05cc585f854 100755
+--- a/tests/functional/mips64el/test_replay.py
++++ b/tests/functional/mips64el/test_replay.py
+@@ -5,6 +5,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset, skipUntrustedTest
++from qemu_test import skipFlakyTest
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+@@ -16,6 +17,7 @@ class Mips64elReplay(ReplayKernelBase):
+          'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb'),
+         '35eb476f03be589824b0310358f1c447d85e645b88cbcd2ac02b97ef560f9f8d')
+ 
++    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+     def test_replay_mips64el_malta(self):
+         self.set_machine('malta')
+         kernel_path = self.archive_extract(self.ASSET_KERNEL_2_63_2,
 -- 
 2.51.0
 
