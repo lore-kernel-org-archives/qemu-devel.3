@@ -4,91 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D604CCF9FE
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09511CCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vElz4-0001XZ-6H; Fri, 31 Oct 2025 06:03:50 -0400
+	id 1vElyy-0001Nf-Bs; Fri, 31 Oct 2025 06:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vElyz-0001TP-NT
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:03:45 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vElyw-0001uX-Rv
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:03:45 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4711b95226dso25639695e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761905019; x=1762509819; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DjrfepaVlzM2YoxtAFXLNNtWxWSOXoG2khDssmhyEig=;
- b=JBG6fWawF5lJjL8K1PAumR5Gp2HkeyjWpVxAJqblXPM3oOzThjsSHEPEuXo7k3N3rC
- MqxZleZgWGN5vSkcFL4RLV9Amwj1vzIq7RL1P9lW83xWj3oXs0zePSJVeO3WGNAsbPYX
- 0V2CfbjMXZ5JocV4FUINnAvL4XPfppD63K33IPjemx18OEsGk7GKYdJO6V06RX2bndAS
- qsOE8RdHvqyPu5IaGsrv6fHxedO0gsxk2MNorC3iDxALF1Jch7rgl5p7sYwKc1IhM7IG
- 2y79N8++Fe5GNF1u4niSRlbabg8e3OR5GQt2kWIZ0RkdnU+zHZOUX413x1TKyjGzrw4O
- bqLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761905019; x=1762509819;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DjrfepaVlzM2YoxtAFXLNNtWxWSOXoG2khDssmhyEig=;
- b=adA2kbuwLV3UH0ppOZgUGqdi2PnDK5OuOai+T9ztJVHGc/jInsUF/ZGe2D3x7Bz/wL
- 2UmUV+xg8RtRJ5Sou/DD4FKfEH1DYA4YLOLC+B/Y/HHgQCtB73OrQ1UN9UFQkX0ryTZp
- tPUHkqWbGAJzbiHFQPN6SpsRMOgKqd8PpsSDlUYLAgWY5SmncHnPzfFVZonT8Y8KTKZk
- hNuojugNVE6+pK9erPX62eRhQY4+5Qi0mdkdPi6D4zSqwCA7di3JjoAnvY2BwZHwpbLE
- atl23PJ4AjP9PIwDBA107VbKUxNzwzBJRaeMZn4QDIiiOsNPk737BQzDPHU+9Q0rl1uh
- 61Yw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHkic/+Psi6bVLo8MdXXLCYdxZbNLAiHrBtPUZb8RwWejuuslGbPxYZ+UvdhNXYVAltjQwh0VRMdia@nongnu.org
-X-Gm-Message-State: AOJu0YwG0oFtml9cgHo896feInXU/XuovEZxlK4TzdTvbs+DLaAzM0fB
- h/GtEa2yFIZscyv8WTGtwvjny4cE5H6Zh9G9vEOopAquqbrOub209XX7PzTVv5PI5Jw=
-X-Gm-Gg: ASbGnct4ZCZEazl+VvUJjN+m5hSk75U4+wJrlMJskAJm2bBkRjUBxDPMpU125xxZ1rq
- fOVNnp3fGM0UN972tipdmsN9xoK1vtljmSLt6LyrZ9rE9tigsJg4ait/UKlTkmGVR4L4wP2IAkI
- kSmNGF/+rzb79Vu3GuPQ82v0jXeD2QzdVqqsh9HThh/8pRIk83jzkKOe7AlYH5+hAxcITL9bD0d
- 3dqTXxrkUMRuzkS71jhb1OrVaNURjNy40ngQPd8aqREuiD/cko2BzLVwpyA8TLQkdy4/AXGL2ka
- yUsSZXS04ZClj+V32C5Admj0RBKSZvepXmpJKX/WH8vw3s+Osf6gSt2niNMVtoeYN8X5XApO3Jv
- zDJH7i74fbfr+tbMzA+fAKeVlW+6Sr+O1BcuGHF15xEYY58w5ccfYdCnkRfLtYiFN1mtaNWoP+x
- ldUhHDEgT5adXa2jekWsTsn+K9qtMLO0/N9XXNYT3ohevDgS2JZeAzNB8=
-X-Google-Smtp-Source: AGHT+IEtw9xCEyZXaZLabayJYR8W3Ityavrn+pHFn/r3d+TDd4XzT3ES1wg41GhT942W5OFZxyFkUg==
-X-Received: by 2002:a05:600c:4ece:b0:46e:4586:57e4 with SMTP id
- 5b1f17b1804b1-4773087b2dbmr25772055e9.24.1761905019584; 
- Fri, 31 Oct 2025 03:03:39 -0700 (PDT)
-Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
- [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47732ff7fdbsm23791235e9.16.2025.10.31.03.03.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 03:03:38 -0700 (PDT)
-Message-ID: <0d57858e-d6e1-4eaf-a043-1573b49c37f6@linaro.org>
-Date: Fri, 31 Oct 2025 11:03:37 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vElyg-00018c-UQ; Fri, 31 Oct 2025 06:03:32 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vElyV-0000hb-4A; Fri, 31 Oct 2025 06:03:26 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cybtq3TXvz6M4lG;
+ Fri, 31 Oct 2025 17:54:59 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id 14BE41402E9;
+ Fri, 31 Oct 2025 17:58:53 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 31 Oct
+ 2025 09:58:52 +0000
+Date: Fri, 31 Oct 2025 09:58:50 +0000
+To: Gavin Shan <gshan@redhat.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <mst@redhat.com>,
+ <imammedo@redhat.com>, <anisinha@redhat.com>, <gengdongjiu1@gmail.com>,
+ <peter.maydell@linaro.org>, <pbonzini@redhat.com>,
+ <mchehab+huawei@kernel.org>, <shan.gavin@gmail.com>
+Subject: Re: [PATCH RESEND v2 1/3] acpi/ghes: Extend
+ acpi_ghes_memory_errors() to support multiple CPERs
+Message-ID: <20251031095850.00002589@huawei.com>
+In-Reply-To: <20251007060810.258536-2-gshan@redhat.com>
+References: <20251007060810.258536-1-gshan@redhat.com>
+ <20251007060810.258536-2-gshan@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] docs/interop/firmware: Literal block markup
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: jsnow@redhat.com, eblake@redhat.com, vsementsov@yandex-team.ru,
- thuth@redhat.com, berrange@redhat.com, kchamart@redhat.com, mst@redhat.com,
- sgarzare@redhat.com
-References: <20251031094751.2817932-1-armbru@redhat.com>
- <20251031094751.2817932-8-armbru@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251031094751.2817932-8-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,20 +70,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/25 10:47, Markus Armbruster wrote:
-> A few doc comments show command line snippets.  The snippets are
-> indented, which is legible enough.  Actually formatting these with
-> Sphinx would fail with "Unexpected indentation", though.  We don't so
-> far.  Add suitable markup anyway.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   docs/interop/firmware.json | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
+On Tue,  7 Oct 2025 16:08:08 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> In the situation where host and guest has 64KB and 4KB page sizes, one
+> error on the host's page affects 16 guest's pages. we need to send 16
+> consective errors in this specific case.
+
+Hi Gavin,
+
+Sorry this one has been on my to review list far too long.
+
+> 
+> Extend acpi_ghes_memory_errors() to support multiple CPERs after the
+> hunk of code to generate the GHES error status is pulled out from
+> ghes_gen_err_data_uncorrectable_recoverable().
+
+I think this description needs to be more detailed wrt to how those
+multiple CPERs are handled.  Specifically that they are in a single
+error status block (so should only represent related errors.)
+
+This is to make it clear this isn't queuing events, but instead just
+presenting them as one block.
+
+> 
+> No functional changes intended.
+> 
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> ---
+>  hw/acpi/ghes-stub.c    |  2 +-
+>  hw/acpi/ghes.c         | 27 ++++++++++++++-------------
+>  include/hw/acpi/ghes.h |  2 +-
+>  target/arm/kvm.c       |  7 ++++++-
+>  4 files changed, 22 insertions(+), 16 deletions(-)
+
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 06555905ce..045b77715f 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -214,18 +214,13 @@ static void acpi_ghes_build_append_mem_cper(GArray *table,
+>  
+>  static void
+>  ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
+> -                                            const uint8_t *section_type,
+> -                                            int data_length)
+> +                                            const uint8_t *section_type)
+>  {
+>      /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+>       * Table 17-13 Generic Error Data Entry
+>       */
+>      QemuUUID fru_id = {};
+>  
+> -    /* Build the new generic error status block header */
+> -    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
+> -        0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
+> -]
+
+With this bit gone, is it worth having the helper?  Perhaps just move
+the remains to where it is called.
+
+>      /* Build this new generic error data entry header */
+>      acpi_ghes_generic_error_data(block, section_type,
+>          ACPI_CPER_SEV_RECOVERABLE, 0, 0,
+
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 4f769d69b3..9a47ac9e3a 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -2434,6 +2434,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>      ram_addr_t ram_addr;
+>      hwaddr paddr;
+>      AcpiGhesState *ags;
+> +    GArray *addresses;
+>  
+>      assert(code == BUS_MCEERR_AR || code == BUS_MCEERR_AO);
+>  
+> @@ -2442,6 +2443,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>          ram_addr = qemu_ram_addr_from_host(addr);
+>          if (ram_addr != RAM_ADDR_INVALID &&
+>              kvm_physical_memory_addr_from_host(c->kvm_state, addr, &paddr)) {
+> +            addresses = g_array_new(false, false, sizeof(paddr));
+
+Given you are going to free in all paths, maybe a g_autofree?
+
+Also, we know this only grows to a fixed max size (16 after patch 3), so maybe just
+provide a hwaddr paddrs[16]; and pass forwards the count?
+
+>              kvm_hwpoison_page_add(ram_addr);
+>              /*
+>               * If this is a BUS_MCEERR_AR, we know we have been called
+> @@ -2454,16 +2456,19 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>               * later from the main thread, so doing the injection of
+>               * the error would be more complicated.
+>               */
+> +            g_array_append_vals(addresses, &paddr, 1);
+>              if (code == BUS_MCEERR_AR) {
+>                  kvm_cpu_synchronize_state(c);
+>                  if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
+> -                                             paddr)) {
+> +                                             addresses)) {
+>                      kvm_inject_arm_sea(c);
+>                  } else {
+>                      error_report("failed to record the error");
+>                      abort();
+>                  }
+>              }
+> +
+> +            g_array_free(addresses, true);
+>              return;
+>          }
+>          if (code == BUS_MCEERR_AO) {
 
 
