@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02242CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CCECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEwWm-0003OP-ON; Fri, 31 Oct 2025 17:19:20 -0400
+	id 1vEwXD-0003m2-9Y; Fri, 31 Oct 2025 17:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwWk-0003ND-U7
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:19:19 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwXB-0003lP-Rp
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:19:45 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwWc-0002KD-Eu
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:19:18 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-429bf011e6cso1369135f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:19:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwX5-0002Nl-49
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:19:45 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47109187c32so14177265e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761945545; x=1762550345; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761945576; x=1762550376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dtB18Pvc9S14eiCOzWzreWzk+lt1hMQZD4T89jMibmU=;
- b=R/pQ2lNJcbHCGD6uCCLT4NHuafClw0Bp2meOR+G642VeyWv33e0LzByaRWqiDyCBgV
- L+JioqpniR3dg2pbmVmNGlbxMGXZZ8kYJkAj9HqpzgjrSyWOy2qZ/CUOm+HlKFx7Z+yL
- H0RKa1daISjeY+um126yWnoX7Jz2uWs8cuxAcUH6gvea4ky/ZuvXOloGAeYEjqssIp5i
- UnoVNSFpcCKZTCSyU9vKn1Dw0YwO/sSpjlozZmegUU7iJqiX5V48KAiZz3SOjdNSIAnR
- hPuvIkyP8GUN/AuNZsOQMJbzD5AXBN1aQmahesM/Tt4qAByNUkii0ceKy3boUxH+Turn
- 1KtA==
+ :reply-to; bh=EBWQEu+G6aZWeAXHylufENQApXkpCx0rf9wOYW18fhY=;
+ b=WF42dxxeUye2XYgkH2SqZBhY3M61XouhlqIsjGkOkS+M6brrx3TLnAjfb2axdHWcBz
+ GY0Ca+W6opHtHSLWSJWy/25fvjpSYgyQR98cstzyjTGbPRIPS0ZxQvinlFBW9JHkAPs5
+ BuglfcF6bFnpAvMGzKRPdH6QcCPoMEoPGnasbAHxVLkopORfgDhaKjVsZ1Yo0od5EkUX
+ HP59qvPbDPuVVJfT5qZ5uNWgd/vdBtTHWb8JNvsUCuRTJcGxFVFtmwn587uzd7oIhrKM
+ KihF625QhISGLDspFHV8ReYgtTW9M194bOabK1q1TeOz6B3rJfB8rVI1JSIWBAwDiSTC
+ /m2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761945545; x=1762550345;
+ d=1e100.net; s=20230601; t=1761945576; x=1762550376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dtB18Pvc9S14eiCOzWzreWzk+lt1hMQZD4T89jMibmU=;
- b=HPeKmhosp/VsVRtWhi996o8PVCUl8mStrLO/Qi2+QSrXIXp4PgRCYHjR6zHFzQmLT5
- SoZkt8N6DDhC4hRtBwnEN/qJfxNSEHlWNad3NQPw0M9h9cZMTehnKRm6ZZFK2s5ejB09
- yPH0NPAmDfVPSnhYlSsQfiyoPaEgzi6hPK55uZzRTf4DcOZSkYz+2UiWQT1kcfyvMABB
- cWbLqWu8nY3r8sOSVwfuNVQAzRxxNhEFIymNLrzPnSDLuPaxKEz9A4PZ8x6k5tCVUQzG
- tUsj/BJbMjv7/wj5dlj0ZvmbXLZfRp5eWSJAu+FIUnNCiVmFIHcGu9qHHKgLqAwYbDA4
- 1ZFg==
-X-Gm-Message-State: AOJu0YwQdOpQQM3vNH7h7ch/GtUHGtcGhSFQjBh4Fnxwf/Z9NZ2vBnD0
- I8ButJDWdEjXjjDv7WqbkjsTruBfQEu5owxWXX7N7btBNZV44LEqRnp2Q81DAAcSF+5mpMgv9Wj
- Zk1CYzhoSYA==
-X-Gm-Gg: ASbGncs/lCvA0qxFU+6c7dNE6h9a4O9WclEFxYHeZIVkpNphXpfv4hZMsfV+6aKt4YV
- BqP3ycdlrai5tAesC7riPqrv5Jy50DhfOONDO8Fqgg5sjV494QFosqlolehB26tryZwYqjDv0u6
- okVInjnVWgEdxWNoMCaVAsiJ/HPwtN59DZW7KqS/+8njYUgVpLtrX4LULDd+uyqendpC31ijTEW
- xDqfZ+w4MVf/o+6AIvUA1GaEvo1v3Qoe1fmSWPhof3iB/CeA6N57XguKkmcG+7tbmE0AMccxSAU
- u/ql12pt0MYxRGU+L3zZVNTNjXGcz4GKWjWxe2+e+gceqcqD+ovlE5m/NAdg6SNRn3yfQye6/+H
- Je6eTTptGv8cCTk0CInd+CQFOGdRibsbx0lgHBcGqbLMNn53H+4/UQs7BMVY6IXBW0d+8U6jZ8a
- uGoX9nV0mZE/0ibCfuvm/CfDXe8FNCLLT2S6KlV8up18/D/2oa
-X-Google-Smtp-Source: AGHT+IFrsaJGgwF2yOSCmVBULDmoRt4zzlKIoCMbn1/VY9QQCfR1Fnnp10dBvo/w7b9XLjYpajJW3g==
-X-Received: by 2002:a5d:64e8:0:b0:429:8a40:e995 with SMTP id
- ffacd0b85a97d-429bd6ece4bmr5326479f8f.61.1761945544603; 
- Fri, 31 Oct 2025 14:19:04 -0700 (PDT)
+ bh=EBWQEu+G6aZWeAXHylufENQApXkpCx0rf9wOYW18fhY=;
+ b=Gdb0Xz+OkxaGc1+HuVE1Z02fhO5dOBygjpmtf+kNfOpe+RLRuLYmHtKqpORj8yUEOm
+ 6p5mZqIfIffO6ApcBdcgjMH4q2ejrUgbtVexBPWfxYesr5X4y5p5IvzFSmPSjW6Z0W6T
+ /qupwj2FSZie988qQilMcODhDpLS9R5igBDmM9IsuLqW4oNebKxjR+5ukBtSlQBigPLG
+ erlajgTnjP1wZaD2u1/vo5FvJf52PK4tIfP4c/TZmmOf7I2AuVCLz+FvbybS+XFVuVeJ
+ S+V+negVrnxYPzDqW0YJnedrsk+Pu/npcbKdRR+ytcuhQyvRsQ0VPgdFF1INfLA9TmF/
+ 99FA==
+X-Gm-Message-State: AOJu0YyQSJOgL7747KVEu9NW7LeMH2ON6U4XDn0RJ9oI5Iedsrimf2ZC
+ 1qcXRuRldya768Hbk18fK1yDsxmvvoFTVgWIeVHgetuSGwheX4llXAxWMIFtHl1s8RdGYQNtYOu
+ 4Wg2K8Uw+xQ==
+X-Gm-Gg: ASbGnct79RDmBoUg2O06js0RLsrY6wFztLwDdu12yquMyM4145zfQrImYyTyiPLSsx8
+ SPYpXVViVn9Is3Or0wdmZeI26bUNSwUNRGwTBYilSFP9vCYi29RI0ByH2ShCe9GgjKwQoIyj44p
+ U6feJA4/9eSStK+gyNjSFCw6eSWxHcv5DRy7BJwTq9YtfW9kiFMuhQImy+WFjUXMRyvpNTMu8/g
+ enRVHuMQcv9Rba+fLDS8lRd8sejOGSUfqR34q0xfTYVs9VGEfygC/18Qm5efCwptfn3EWqfLV8U
+ SJY0qcqYtQ+AUpKawuIfiUwrztWFHwYHj6zU2lynrejKWyc1FxGaikLIEDYT/PPByHQpUTV7A2/
+ Bp2BlS4m4292Z3f8erVH0PfeSwJ9zI6Lhwm9uzTDDajXUF1bMMduF1ykvAtLIr+eka+XuVQyXec
+ QDprr/cKHKnaonLkh0ZoaXxG6jGgZYK1Qj+ZRljJSK5SI1w+n1xqmYa8EKf3M=
+X-Google-Smtp-Source: AGHT+IEYbSHSR5e9FmjDsV0sS9jOFHeFfpqhjswQ9b5Rqs6AVwRVv8+H9vL84svkddbk+bb+LKhCqA==
+X-Received: by 2002:a05:600c:3e06:b0:475:dc58:39e5 with SMTP id
+ 5b1f17b1804b1-4773089b541mr45267795e9.27.1761945576398; 
+ Fri, 31 Oct 2025 14:19:36 -0700 (PDT)
 Received: from pc56.home (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13ebfe8sm5401752f8f.35.2025.10.31.14.19.02
+ 5b1f17b1804b1-4772fbeef62sm30578125e9.1.2025.10.31.14.19.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Oct 2025 14:19:04 -0700 (PDT)
+ Fri, 31 Oct 2025 14:19:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 7/9] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
-Date: Fri, 31 Oct 2025 22:15:16 +0100
-Message-ID: <20251031211518.38503-8-philmd@linaro.org>
+Subject: [PULL 8/9] tests/unit: add unit test for qemu_hexdump()
+Date: Fri, 31 Oct 2025 22:15:17 +0100
+Message-ID: <20251031211518.38503-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251031211518.38503-1-philmd@linaro.org>
 References: <20251031211518.38503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,96 +101,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
-qemu_hexdump_line(). This leads to last line of the dump (when
-length is not multiply of 16) has badly aligned ASCII part.
-
-Let's calculate length the same way.
+Test, that fix in previous commit make sense.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251031190246.257153-2-vsementsov@yandex-team.ru>
+Message-ID: <20251031190246.257153-3-vsementsov@yandex-team.ru>
+[PMD: Wrap long lines]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- util/hexdump.c | 38 ++++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ tests/unit/test-cutils.c | 45 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/util/hexdump.c b/util/hexdump.c
-index f29ffceb746..7cfc5472613 100644
---- a/util/hexdump.c
-+++ b/util/hexdump.c
-@@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
-     return (x < 10 ? '0' : 'a' - 10) + x;
+diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
+index 227acc59955..67b1cded64a 100644
+--- a/tests/unit/test-cutils.c
++++ b/tests/unit/test-cutils.c
+@@ -3626,6 +3626,46 @@ static void test_si_prefix(void)
+     g_assert_cmpstr(si_prefix(18), ==, "E");
  }
  
-+static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
-+                                  size_t block_len)
++static void test_qemu_hexdump_alignment(void)
 +{
-+    size_t est = buf_len * 2;
-+    if (unit_len) {
-+        est += buf_len / unit_len;
-+    }
-+    if (block_len) {
-+        est += buf_len / block_len;
-+    }
-+    return est;
++    /*
++     * Test that ASCII part is properly aligned for incomplete lines.
++     * This test catches the bug that was fixed in previous commit
++     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
++     *
++     * We use data that is not aligned to 16 bytes, so last line
++     * is incomplete.
++     */
++    const uint8_t data[] = {
++        /* First line: 16 bytes */
++        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* "Hello Wo" */
++        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* "rld! Thi" */
++        /* Second line: 5 bytes (incomplete) */
++        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s is " */
++    };
++    char *output = NULL;
++    size_t size;
++    FILE *stream = open_memstream(&output, &size);
++
++    g_assert_nonnull(stream);
++
++    qemu_hexdump(stream, "test", data, sizeof(data));
++    fclose(stream);
++
++    g_assert_nonnull(output);
++
++    /* We expect proper alignment of "s is" part on the second line */
++    const char *expected =
++        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 54 68 69   "
++            "Hello World! Thi\n"
++        "test: 0010: 73 20 69 73  20                                      "
++            "s is \n";
++
++    g_assert_cmpstr(output, ==, expected);
++
++    free(output);
 +}
 +
- GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
-                            size_t unit_len, size_t block_len)
+ int main(int argc, char **argv)
  {
-@@ -30,14 +43,8 @@ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
- 
-     if (str == NULL) {
-         /* Estimate the length of the output to avoid reallocs. */
--        size_t est = len * 2;
--        if (unit_len) {
--            est += len / unit_len;
--        }
--        if (block_len) {
--            est += len / block_len;
--        }
--        str = g_string_sized_new(est + 1);
-+        str = g_string_sized_new(hexdump_line_length(len, unit_len, block_len)
-+                                 + 1);
-     }
- 
-     for (u = 0, b = 0; len; u++, b++, len--, buf++) {
-@@ -76,13 +83,16 @@ static void asciidump_line(char *line, const void *bufptr, size_t len)
- }
- 
- #define QEMU_HEXDUMP_LINE_BYTES 16
--#define QEMU_HEXDUMP_LINE_WIDTH \
--    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
-+#define QEMU_HEXDUMP_UNIT 1
-+#define QEMU_HEXDUMP_BLOCK 4
- 
- void qemu_hexdump(FILE *fp, const char *prefix,
-                   const void *bufptr, size_t size)
- {
--    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
-+    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
-+                                    QEMU_HEXDUMP_UNIT,
-+                                    QEMU_HEXDUMP_BLOCK);
-+    g_autoptr(GString) str = g_string_sized_new(width + 1);
-     char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
-     size_t b, len;
- 
-@@ -90,11 +100,11 @@ void qemu_hexdump(FILE *fp, const char *prefix,
-         len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
- 
-         g_string_truncate(str, 0);
--        qemu_hexdump_line(str, bufptr + b, len, 1, 4);
-+        qemu_hexdump_line(str, bufptr + b, len,
-+                          QEMU_HEXDUMP_UNIT, QEMU_HEXDUMP_BLOCK);
-         asciidump_line(ascii, bufptr + b, len);
- 
--        fprintf(fp, "%s: %04zx: %-*s %s\n",
--                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, str->str, ascii);
-+        fprintf(fp, "%s: %04zx: %-*s %s\n", prefix, b, width, str->str, ascii);
-     }
- 
+     g_test_init(&argc, &argv, NULL);
+@@ -3995,5 +4035,10 @@ int main(int argc, char **argv)
+                     test_iec_binary_prefix);
+     g_test_add_func("/cutils/si_prefix",
+                     test_si_prefix);
++
++    /* qemu_hexdump() test */
++    g_test_add_func("/cutils/qemu_hexdump/alignment",
++                    test_qemu_hexdump_alignment);
++
+     return g_test_run();
  }
 -- 
 2.51.0
