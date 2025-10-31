@@ -4,60 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C74CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBE7BCCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEtuv-0003Jz-Ln; Fri, 31 Oct 2025 14:32:05 -0400
+	id 1vEtwJ-0004Ct-Eg; Fri, 31 Oct 2025 14:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEtut-0003JM-2d
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:32:03 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEtue-0005uT-04
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:31:59 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id CBE12C0157;
- Fri, 31 Oct 2025 21:31:33 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id UVld3d0Gj4Y0-etopZuYF; Fri, 31 Oct 2025 21:31:32 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761935492;
- bh=UhMiifSzE8VpldrM1dkSvTWfFrj4YgW6TUkb0IkBTvA=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=VbqO0cx6JlHIYKxm9PN7fNgMCYbklOpyOkxczsYuOD0ec5lXjsMr57x3ky6iqo6/m
- rv0yUVo44I/XEVzqWY18vNGo8OotBiplQUZDVLBYzrX9Knyi6jJk10EIe9+64aUJ4z
- PDDW7ZGFWYKyYPgF39FNNZ9MhsCtZjOzAJYE1s/c=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: armbru@redhat.com
-Cc: michael.roth@amd.com,
-	qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru
-Subject: [PATCH v5] qapi: Add documentation format validation
-Date: Fri, 31 Oct 2025 21:31:29 +0300
-Message-ID: <20251031183129.246814-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vEtwH-0004At-Pe
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:29 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vEtwA-0006Am-24
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:28 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-426f1574a14so1697374f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761935592; x=1762540392; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sGx31Ll513CXKqm3c4XM9FoCRrQIvlZb6QfyJDJg0c8=;
+ b=y4qChX3JXS6cd95D6Crz4th1Me0vaChRaYO0/3p1EMPPQZ3Db96BbQSUltonQd1rpP
+ rzrnVa4w6B/ls0OBSGC52Wvomn1QUY8/aUGR988RZLBd1gvE4V8pvB8ej1gjmWwh1on2
+ LdsnGNDLKyK8SZUwS+HRspxaKc6e0Kmd1NU+a7/7Pdcp9mnaz4vfMmqVgB1hHccv1gD8
+ D7weth893oZYwRVbuDdfSiPPBmKSYWj1S3M9aQ2To1srEtbPkdFY0WSz+huwNvVUpBUi
+ nrXCV/H2HCWvhZXdc5mqmPI575izBYOxaHtmaJA713l5KXbrV/ZPwT6MOzLjJ6q/ZOwo
+ 5aEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761935592; x=1762540392;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sGx31Ll513CXKqm3c4XM9FoCRrQIvlZb6QfyJDJg0c8=;
+ b=mRlqt0EAGK17kQ5mueGRIQDpbAYrXDkvantCD/MosffTLa+cAhOtcPOwOlpokzIex5
+ FN1ufqgqeaelvapL0IWCJRc3DJt/tr9lXOfodOYH8lno453OuE6grOt0QbDCBcv8mFXf
+ L8Gq153pgM+c79EiCdXTqbWFUNOXaTzUk1LHTXTyEydyz0r0UScz3DHUtuDw9lz2SO0O
+ 9MfilJV4oYxvjbNgDcKTDcv9ZBEqHt4Jy5HdGYLShEjq3NIQHe99Z0zeBZwaxrJ6AeYh
+ xOdsAOw3QI2L26AxPqJ7OMHEvySygfgObfnU64nhnx+Uc4S+BRQyRiNJWxTrHEwncXcb
+ 8NcA==
+X-Gm-Message-State: AOJu0YybEinbCA5Grp7mY6d7zRS2v/6GIh1B4moRgsgJBbRoiUx00suu
+ d19LkQ+4jrs7VjP8cY9HVqdBL9Sb7/QdGYXgQ43Yho5U4sGX0J0V/8j1N7ZSZgfE3DzOJRvS/IQ
+ ql9N3
+X-Gm-Gg: ASbGncvljjKRQqbi3Dbtx2mZdoW/qLTI40jx9kdQMJTqmdPmUTUAjVK+9tr6xajgIZn
+ bSH1Jp8nRP1WWcJuDcd/SLWTfJ5uDHZcGtcEHEnLy4a9pdf09uQ6Iv7uYVAAaHaXPZzpKp845s8
+ s57taOHc+bz6Br4uZjM/SIYC7naSjPFIjgMVVQdniKkIb1qqxcbR5M8YA6DPLmldMRvyzV3ldU2
+ TIniPs8gVxddgWnY1tX+VQfKXkZ6uwl43O5UVC62YDCHO+m8mdib6vCLJcgfP1uG6GjPL0NDDU6
+ zVPIUNrFGFIBkveHDMuws0uRrbK1e0mNuBY6VkKQAjwjP5hNCn9DYYmKG/h/Kc/Nosp1oX84zk3
+ m5z+u0McymcEfQ08iP1ucW+ame29ZqLLWUrlElc53xygrld4b8k5kEDZsxjpkzppKP+Z3j+g3T9
+ SeFS/dZyCgLLqufGyI
+X-Google-Smtp-Source: AGHT+IGUj3xhRi4EJKuKoGNd3RlNberl5YgXZqGD3OZww/ytnnmV/y0Cok4COMCTvyoCDmW/soVb2w==
+X-Received: by 2002:a05:6000:2dc7:b0:428:5673:11c5 with SMTP id
+ ffacd0b85a97d-429bd6add35mr4151127f8f.61.1761935592468; 
+ Fri, 31 Oct 2025 11:33:12 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Oct 2025 11:33:11 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/38] target-arm queue
+Date: Fri, 31 Oct 2025 18:32:32 +0000
+Message-ID: <20251031183310.3778349-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,182 +98,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add explicit validation for QAPI documentation formatting rules:
+Hi; here's an arm pullreq for the freeze. Mostly this is Philippe's
+hvf cleanup work, but there are some other smaller things in here too.
 
-1. Lines must not exceed 70 columns in width (including '# ' prefix)
-2. Sentences must be separated by two spaces
+thanks
+-- PMM
 
-Example sections and literal :: blocks (seldom case) are excluded, we
-don't require them to be <= 70, that would be too restrictive. Anyway,
-they share common 80-columns recommendations (not requirements).
+The following changes since commit 3728de31925ae9658e2ce3d1ff9b63c83609f310:
 
-Add two simple tests, illustrating the change.
+  Merge tag 'single-binary-20251030' of https://github.com/philmd/qemu into staging (2025-10-31 10:26:34 +0100)
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+are available in the Git repository at:
 
-Hi all!
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251031
 
-v5: - break "literal" block at any decreasing the indent,
-      not only at no-indent
-    - add two simple tests
+for you to fetch changes up to 8b733be9f408f9b550fc998c790e32aded5119f1:
 
-This is based on
-[PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
-Based-on: <20251031094751.2817932-1-armbru@redhat.com>
+  accel/hvf: Trace prefetch abort (2025-10-31 16:26:46 +0000)
 
- scripts/qapi/parser.py                     | 52 +++++++++++++++++++++-
- tests/qapi-schema/doc-bad-long-line.err    |  1 +
- tests/qapi-schema/doc-bad-long-line.json   |  6 +++
- tests/qapi-schema/doc-bad-long-line.out    |  0
- tests/qapi-schema/doc-bad-whitespaces.err  |  2 +
- tests/qapi-schema/doc-bad-whitespaces.json |  6 +++
- tests/qapi-schema/doc-bad-whitespaces.out  |  0
- tests/qapi-schema/meson.build              |  2 +
- 8 files changed, 68 insertions(+), 1 deletion(-)
- create mode 100644 tests/qapi-schema/doc-bad-long-line.err
- create mode 100644 tests/qapi-schema/doc-bad-long-line.json
- create mode 100644 tests/qapi-schema/doc-bad-long-line.out
- create mode 100644 tests/qapi-schema/doc-bad-whitespaces.err
- create mode 100644 tests/qapi-schema/doc-bad-whitespaces.json
- create mode 100644 tests/qapi-schema/doc-bad-whitespaces.out
+----------------------------------------------------------------
+target-arm queue:
+ *  hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
+ * docs/system/arm/virt: Document user-creatable SMMUv3
+ * docs/system/security: Restrict "virtualization use case" to specific machines
+ * target/arm: Add assert to arm_to_core_mmu_idx()
+ * hw/arm/virt: remove deprecated virt-4.1 and virt-4.2 machine types
+ * hvf: Refactorings and cleanups
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 9fbf80a541..ffb149850d 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -108,6 +108,11 @@ def __init__(self,
-         self.exprs: List[QAPIExpression] = []
-         self.docs: List[QAPIDoc] = []
- 
-+        # State for tracking qmp-example blocks and simple
-+        # :: literal blocks.
-+        self._literal_mode = False
-+        self._literal_mode_indent = 0
-+
-         # Showtime!
-         self._parse()
- 
-@@ -423,12 +428,57 @@ def get_doc_line(self) -> Optional[str]:
-             if self.val != '##':
-                 raise QAPIParseError(
-                     self, "junk after '##' at end of documentation comment")
-+            self._literal_mode = False
-             return None
-         if self.val == '#':
-             return ''
-         if self.val[1] != ' ':
-             raise QAPIParseError(self, "missing space after #")
--        return self.val[2:].rstrip()
-+
-+        line = self.val[2:].rstrip()
-+
-+        if re.match(r'(\.\. +qmp-example)? *::$', line):
-+            self._literal_mode = True
-+            self._literal_mode_indent = 0
-+        elif self._literal_mode and line:
-+            indent = re.match(r'^ *', line).end()
-+            if self._literal_mode_indent == 0:
-+                self._literal_mode_indent = indent
-+            elif indent < self._literal_mode_indent:
-+                # ReST directives stop at decreasing indentation
-+                self._literal_mode = False
-+
-+        if not self._literal_mode:
-+            self._validate_doc_line_format(line)
-+
-+        return line
-+
-+    def _validate_doc_line_format(self, line: str) -> None:
-+        """
-+        Validate documentation format rules for a single line:
-+        1. Lines should not exceed 70 columns
-+        2. Sentences should be separated by two spaces
-+        """
-+        full_line_length = len(line) + 2  # "# " = 2 characters
-+        if full_line_length > 70:
-+            # Skip URL lines - they can't be broken
-+            if re.match(r' *(https?|ftp)://[^ ]*$', line):
-+                pass
-+            else:
-+                raise QAPIParseError(
-+                    self, "documentation line exceeds 70 columns"
-+                )
-+
-+        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
-+        for m in list(re.finditer(single_space_pattern, line)):
-+            if not m.group(2):
-+                continue
-+            # HACK so the error message points to the offending spot
-+            self.pos = self.line_pos + 2 + m.start(2) + 1
-+            raise QAPIParseError(
-+                self, "Use two spaces between sentences\n"
-+                "If this not the end of a sentence, please report the bug",
-+            )
- 
-     @staticmethod
-     def _match_at_name_colon(string: str) -> Optional[Match[str]]:
-diff --git a/tests/qapi-schema/doc-bad-long-line.err b/tests/qapi-schema/doc-bad-long-line.err
-new file mode 100644
-index 0000000000..611a3b1fef
---- /dev/null
-+++ b/tests/qapi-schema/doc-bad-long-line.err
-@@ -0,0 +1 @@
-+doc-bad-long-line.json:4:1: documentation line exceeds 70 columns
-diff --git a/tests/qapi-schema/doc-bad-long-line.json b/tests/qapi-schema/doc-bad-long-line.json
-new file mode 100644
-index 0000000000..d7f887694d
---- /dev/null
-+++ b/tests/qapi-schema/doc-bad-long-line.json
-@@ -0,0 +1,6 @@
-+##
-+# @foo:
-+#
-+# This line has exactly 71 characters, including spaces and punctuation!
-+##
-+{ 'command': 'foo' }
-diff --git a/tests/qapi-schema/doc-bad-long-line.out b/tests/qapi-schema/doc-bad-long-line.out
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qapi-schema/doc-bad-whitespaces.err b/tests/qapi-schema/doc-bad-whitespaces.err
-new file mode 100644
-index 0000000000..5cca1954c0
---- /dev/null
-+++ b/tests/qapi-schema/doc-bad-whitespaces.err
-@@ -0,0 +1,2 @@
-+doc-bad-whitespaces.json:4:48: Use two spaces between sentences
-+If this not the end of a sentence, please report the bug
-diff --git a/tests/qapi-schema/doc-bad-whitespaces.json b/tests/qapi-schema/doc-bad-whitespaces.json
-new file mode 100644
-index 0000000000..b0c318c670
---- /dev/null
-+++ b/tests/qapi-schema/doc-bad-whitespaces.json
-@@ -0,0 +1,6 @@
-+##
-+# @foo:
-+#
-+# Sentences should be split by two whitespaces. But here is only one.
-+##
-+{ 'command': 'foo' }
-diff --git a/tests/qapi-schema/doc-bad-whitespaces.out b/tests/qapi-schema/doc-bad-whitespaces.out
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
-index c47025d16d..b24b27db21 100644
---- a/tests/qapi-schema/meson.build
-+++ b/tests/qapi-schema/meson.build
-@@ -61,8 +61,10 @@ schemas = [
-   'doc-bad-event-arg.json',
-   'doc-bad-feature.json',
-   'doc-bad-indent.json',
-+  'doc-bad-long-line.json',
-   'doc-bad-symbol.json',
-   'doc-bad-union-member.json',
-+  'doc-bad-whitespaces.json',
-   'doc-before-include.json',
-   'doc-before-pragma.json',
-   'doc-duplicate-features.json',
--- 
-2.48.1
+----------------------------------------------------------------
+Mohamed Mediouni (2):
+      target/arm/hvf: Hardcode Apple MIDR
+      target/arm/hvf: switch hvf_arm_get_host_cpu_features to not create a vCPU
 
+Peter Maydell (3):
+      docs/system/arm/virt: Document user-creatable SMMUv3
+      docs/system/security: Restrict "virtualization use case" to specific machines
+      target/arm: Add assert to arm_to_core_mmu_idx()
+
+Philippe Mathieu-Daudé (33):
+      hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
+      hw/arm/virt: Remove deprecated virt-4.1 machine
+      hw/arm/virt: Remove VirtMachineClass::no_ged field
+      hw/arm/virt: Remove deprecated virt-4.2 machine
+      hw/arm/virt: Remove VirtMachineClass::kvm_no_adjvtime field
+      target/arm/hvf: Release memory allocated by hv_vcpu_config_create()
+      target/arm/hvf: Trace vCPU KICK events
+      target/arm/hvf: Check hv_vcpus_exit() returned value
+      target/arm/hvf: Check hv_vcpu_set_vtimer_mask() returned value
+      accel/hvf: Rename hvf_vcpu_exec() -> hvf_arch_vcpu_exec()
+      accel/hvf: Rename hvf_put|get_registers -> hvf_arch_put|get_registers
+      target/arm/hvf: Mention flush_cpu_state() must run on vCPU thread
+      accel/hvf: Mention hvf_arch_init_vcpu() must run on vCPU thread
+      target/arm/hvf: Mention hvf_sync_vtimer() must run on vCPU thread
+      target/arm/hvf: Mention hvf_arch_set_traps() must run on vCPU thread
+      accel/hvf: Mention hvf_arch_update_guest_debug() must run on vCPU
+      target/arm/hvf: Mention hvf_inject_interrupts() must run on vCPU thread
+      accel/hvf: Implement hvf_arch_vcpu_destroy()
+      target/arm/hvf: Simplify hvf_arm_get_host_cpu_features()
+      target/arm/hvf: Factor hvf_handle_exception() out
+      target/i386/hvf: Factor hvf_handle_vmexit() out
+      target/arm/hvf: Factor hvf_handle_vmexit() out
+      target/arm/hvf: Keep calling hv_vcpu_run() in loop
+      cpus: Trace cpu_exec_start() and cpu_exec_end() calls
+      accel/hvf: Guard hv_vcpu_run() between cpu_exec_start/end() calls
+      target/arm: Call aarch64_add_pauth_properties() once in host_initfn()
+      accel/hvf: Restrict ARM specific fields of AccelCPUState
+      target/arm: Rename init_cpreg_list() -> arm_init_cpreg_list()
+      target/arm/hvf: Rename 'vgic' -> 'emu_reginfo' in trace events
+      target/arm: Re-use arm_is_psci_call() in HVF
+      target/arm: Share ARM_PSCI_CALL trace event between TCG and HVF
+      target/arm/hvf/hvf: Document $pc adjustment in HVF & SMC
+      accel/hvf: Trace prefetch abort
+
+ docs/system/arm/virt.rst    |  35 +++-
+ docs/system/security.rst    |  26 +++
+ include/hw/arm/virt.h       |   2 -
+ include/system/hvf_int.h    |  23 ++-
+ target/arm/internals.h      |   6 +-
+ accel/hvf/hvf-accel-ops.c   |   4 +-
+ cpu-common.c                |   3 +
+ hw/arm/virt.c               |  33 +--
+ hw/gpio/pl061.c             |  16 +-
+ hw/vmapple/vmapple.c        |   4 +-
+ target/arm/cpu.c            |   2 +-
+ target/arm/cpu64.c          |   8 +-
+ target/arm/helper.c         |   2 +-
+ target/arm/hvf/hvf.c        | 244 +++++++++++++---------
+ target/arm/tcg/psci.c       |   3 +
+ target/i386/hvf/hvf.c       | 484 +++++++++++++++++++++++---------------------
+ target/i386/hvf/x86hvf.c    |   4 +-
+ target/arm/hvf/trace-events |   6 +-
+ target/arm/trace-events     |   3 +
+ trace-events                |   2 +
+ 20 files changed, 511 insertions(+), 399 deletions(-)
 
