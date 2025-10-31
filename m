@@ -4,90 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1088ACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67746CCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEnNe-0006xP-Ma; Fri, 31 Oct 2025 07:33:19 -0400
+	id 1vEnOb-0007OV-JN; Fri, 31 Oct 2025 07:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vEnNd-0006x8-Bq
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:33:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEnOV-0007KT-45
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:34:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vEnNX-0002Gk-NE
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:33:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vEnON-0002NF-En
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:34:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761910387;
+ s=mimecast20190719; t=1761910432;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sEb20HK7eSZm56T++WgMxDh1emREf5mlZ+KyxqhBJmI=;
- b=EOBlsLgvi4EzFvKWUaF30LZOrzh2ZTOLg+YnwWBtySBZTqm+uozX/MsPwQyLz2d6gvs7SZ
- mX1cvE6+Q/Nci1vXekyv/tOqU5YCb0WjfdpnWqMRE6ngGYqBLvK1WsTd4yeFaQP6HuybMS
- vHQjAY54AkBHVMcLz09mqpkX8ygRj/E=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=syJrmqveR8vJ/dhtzNUAQmF7YVN3SAro1vSaL4H1rdc=;
+ b=h+urWABFlXKiZBzekvAdGYU6zBT7J3IU5CO6pfXWFLlbG3xH2McVPpdGPTiG/B/NRZD9yh
+ YQEbY4w9zVCv1OT9TNLz6gxdK77bKHXouIJofXtesptTndnNdPJSlQDQCgXsQASFB2Jpc+
+ HIEEogAbjcr9/G8FmhaJt7KGed87ahI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-F1py5ZhfMFeg6JpwNGU0ug-1; Fri, 31 Oct 2025 07:33:05 -0400
-X-MC-Unique: F1py5ZhfMFeg6JpwNGU0ug-1
-X-Mimecast-MFC-AGG-ID: F1py5ZhfMFeg6JpwNGU0ug_1761910384
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-33d75897745so5431373a91.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:33:05 -0700 (PDT)
+ us-mta-583-11IB8F0FO5e4YfR__POpRg-1; Fri, 31 Oct 2025 07:33:51 -0400
+X-MC-Unique: 11IB8F0FO5e4YfR__POpRg-1
+X-Mimecast-MFC-AGG-ID: 11IB8F0FO5e4YfR__POpRg_1761910430
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-476b8c02445so18882825e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:33:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761910384; x=1762515184;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1761910430; x=1762515230;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sEb20HK7eSZm56T++WgMxDh1emREf5mlZ+KyxqhBJmI=;
- b=ObxRm0n8xvX06Gc/z74JcPvQ4euoEe2BVVN7qBhPNa1ePYmLyO2eGVqCXTKzzdfXCX
- c7fTw4DQIaL7tLUsgVXxJQq3QKWuBQkmv0SYaJeZJd4s0Ts3FgXx10ZvbeuRQxRG2oUG
- 4kVlWUdDOH1VhdB0rXsAFoj9ybemnYwRbvGEbNU45ZMxWpiWwR8bkoLsGO1OhtJHGByJ
- ygYzV3vyvcJ+OMkFRotsaJGLcSqw3Cl8Ooy95t9xIo81HmqIhqCWhUtMPd+A9L/rHfvd
- 0FaFN3g7SDSKvqNOKmkaWpIRFKB0fDRnwOwx3MdliF+hDqyJE4rTRqJnQs9nsHbmURya
- +D/A==
-X-Gm-Message-State: AOJu0YxVb2nmD5n0yFbdIENQrD1TBU6XKAQAqPftqKeGPZ4HbBqXhP6l
- 7o6orByskznxHAHuF+M35k4XmFA1mn8Q10mwd56ppFpHJO93vWKD+WtRpYANzjZV63cPR1E1q+l
- ATAPA9YLauwZ8gCbvOu1hdcddFuSJuLZajk5asxcEs2Npgsge+6ZDPdHf053lhhrxQnQikTyi0J
- EOowWVPY3u1I2Cqz25MUC5M2Sydz98q4oztMprLbx7IA==
-X-Gm-Gg: ASbGnctfPMMlcYnJsBBt49WLv18k5T4eGvh1/b+/DP/pd/q5qsKhCavhrOY92CuzrMa
- 3QUxNJi9w9bqus5VW2sDHP+vBKVmwRG4TlIDRCPquy9tyxapj5B5RUXrdQitO/sIN5sTAAAhXdQ
- hf05Ae/4t8UBpSX/SnKynaLYPkxNxJPe+xnLGNUUgbXZ+HSb3dY7u+zixn3aeOmXYz9RCu7841q
- j4MMHzXi6bcmss=
-X-Received: by 2002:a17:90b:5910:b0:33b:6650:57c3 with SMTP id
- 98e67ed59e1d1-340830553e6mr4302510a91.21.1761910383676; 
- Fri, 31 Oct 2025 04:33:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOZI7q1j4A8Q137UN4aynnhFq5im5MM3m9a4OGIlA5dwkz0a8qJZqWv80om9YOpHRJH/i1lTGqeeHpUeY7oJg=
-X-Received: by 2002:a17:90b:5910:b0:33b:6650:57c3 with SMTP id
- 98e67ed59e1d1-340830553e6mr4302459a91.21.1761910383136; Fri, 31 Oct 2025
- 04:33:03 -0700 (PDT)
+ bh=syJrmqveR8vJ/dhtzNUAQmF7YVN3SAro1vSaL4H1rdc=;
+ b=ln2gUjQqf44VnDENEPEQVwP3qVrLVZSiecpY5/9ZOVKJxmCxwwYBB8xdH/ljgePSb3
+ KW+bTG7fFvqulBtdnbP99iX8/EcHzdbdykfCbY4jLUKopIZf1TlWfePPVY6N3qofaunP
+ g7dZuzwLa+qKGtGpnNWq8KMcAoj9aaotwegshZtheuR1TRFG5kt8xWUN2xZ6Fuxo8RG3
+ +S8MSjGkS+r9FZs140WbVeKoHGFtH48yTminQD5ohpVqhK37lLsYEPIVyj3mHm/GTbX4
+ fUJHTXBPaPFLHjO0AHfWf8Y+DHzQ2bw+5rU2B2YWGDcu31K0z6Hc132fRSw6vLAzSUiE
+ R8yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+LXiD9qW4vTj3jOi4SbBMMzPpzn/g/Nt9CR5VC6xxsqpLTJ7eaJupaf2VcVwEiyqgZRyYAbde1lrt@nongnu.org
+X-Gm-Message-State: AOJu0Yz8/jOCUzyiFj9IMtlJYUEbVT7FiCJrV6Q0tVmYMDOjJQSw3TPt
+ LwcM0zUBvXSPNGB7UT9X2ZRSl6/cTW85F8BuZtkMX9oQCWcI2zqgx+ASZYs9+7X0y5iVrvn95SM
+ rsYJUT4mgxH0H4k5663hSt7Cg73/mAxej4TVoKl9oEhpnne0fX8hcRHaV
+X-Gm-Gg: ASbGncvpWPCIhrOG5PGv1agMd9vQBGtlhdqTP5z6hqMYBtSTOUHI/Y/17ZG6c7vq30r
+ XNMwLpMxnVfxYgXh3yTUUbo/8Nzqd/bq+hIRVDp/30lKHoaUTlqhS4RBN8sOcn6MMcgtJ8Dg+gZ
+ 05KvjKP2wEobOCpv1nRDz4eX2+N+xfcpTzk67SjXvmAXJ5sf9ZEdhLZS7RpJCbDMr5Nw1+p4c6Q
+ v+fodYT8SU+fqj3e5TTukhezskukEJUfZreuPxZE52gua0lC9Qkosmye9FAV+hTit4/691ZylQu
+ vuZ0iy4ZYKt+dWNaW7E4ncFpL8zcFujxyfg3lUcY8DoDeB64rvCcFk+Wx19AzSKZqtV7QVY=
+X-Received: by 2002:a05:600c:828f:b0:46e:3d41:6001 with SMTP id
+ 5b1f17b1804b1-477308a7b5emr36110135e9.34.1761910429928; 
+ Fri, 31 Oct 2025 04:33:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXy8BYfe7o7DolXHWv87EvxHkm3N2h4YZlij0F4SwYDFK+FRUHJsGdM0S+0IHfdeNOlAplaA==
+X-Received: by 2002:a05:600c:828f:b0:46e:3d41:6001 with SMTP id
+ 5b1f17b1804b1-477308a7b5emr36109825e9.34.1761910429484; 
+ Fri, 31 Oct 2025 04:33:49 -0700 (PDT)
+Received: from [192.168.0.7] ([47.64.112.33]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477289b0bb3sm91331445e9.8.2025.10.31.04.33.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 04:33:49 -0700 (PDT)
+Message-ID: <171d963f-9543-4a1d-9852-3ba48e9e7310@redhat.com>
+Date: Fri, 31 Oct 2025 12:33:48 +0100
 MIME-Version: 1.0
-References: <20251030144927.2241109-1-berrange@redhat.com>
- <20251030144927.2241109-17-berrange@redhat.com>
-In-Reply-To: <20251030144927.2241109-17-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 31 Oct 2025 15:32:51 +0400
-X-Gm-Features: AWmQ_blwecbO-p5U2A2z26xYJ7b7g8sGypoT1M8kdlAXI8urSCFcfhtTlyrd8TM
-Message-ID: <CAMxuvawDsd+w_UFD7VJDq76BNzoEWL0tQvNt_ZC8soPVEdtTRg@mail.gmail.com>
-Subject: Re: [PATCH 16/21] crypto: deprecate use of external dh-params.pem file
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org
-Content-Type: multipart/alternative; boundary="0000000000008367b6064272ba42"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] tests/functional: Mark the MIPS Debian Wheezy tests
+ as flaky
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20251031094118.28440-1-philmd@linaro.org>
+ <20251031094118.28440-3-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251031094118.28440-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,450 +157,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008367b6064272ba42
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 31/10/2025 10.41, Philippe Mathieu-Daudé wrote:
+> test_malta.py sometimes times out (likely hang) under GitLab CI:
+> 
+>    1/57 qemu:func-thorough+func-mips-thorough+thorough / func-mips-malta    TIMEOUT   480.11s   killed by signal 15 SIGTERM
 
-Hi
+Do you have an URL from a test job where this happened? I clicked through a 
+bunch of failed pipelines in the qemu-project, but I only saw failures of 
+the replay test in recent runs...
 
-On Thu, Oct 30, 2025 at 6:50=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
+Also, does it happen for all mips targets, or only for specific flavors?
 
-> GNUTLS has deprecated use of externally provided diffie-hellman
-> parameters, since it will automatically negotiate DH params in
-> accordance with RFC7919.
->
-
-The doc says:
- Since 3.6.0, DH parameters are negotiated following RFC7919.
-
-But QEMU doesn't require >=3D 3.6. Add a preliminary patch?
-
-
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
-> ---
->  crypto/tlscreds.c         | 24 ++++++++----------------
->  crypto/tlscredsanon.c     |  6 ++++--
->  crypto/tlscredspsk.c      |  6 ++++--
->  crypto/tlscredsx509.c     |  4 +++-
->  docs/about/deprecated.rst |  9 +++++++++
->  docs/system/tls.rst       | 12 +++++++-----
->  6 files changed, 35 insertions(+), 26 deletions(-)
->
-> diff --git a/crypto/tlscreds.c b/crypto/tlscreds.c
-> index 798c9712fb..85268f3b57 100644
-> --- a/crypto/tlscreds.c
-> +++ b/crypto/tlscreds.c
-> @@ -22,6 +22,7 @@
->  #include "qapi/error.h"
->  #include "qapi-types-crypto.h"
->  #include "qemu/module.h"
-> +#include "qemu/error-report.h"
->  #include "tlscredspriv.h"
->  #include "trace.h"
->
-> @@ -38,22 +39,7 @@ qcrypto_tls_creds_get_dh_params_file(QCryptoTLSCreds
-> *creds,
->
->      trace_qcrypto_tls_creds_load_dh(creds, filename ? filename :
-> "<generated>");
->
-> -    if (filename =3D=3D NULL) {
-> -        ret =3D gnutls_dh_params_init(dh_params);
-> -        if (ret < 0) {
-> -            error_setg(errp, "Unable to initialize DH parameters: %s",
-> -                       gnutls_strerror(ret));
-> -            return -1;
-> -        }
-> -        ret =3D gnutls_dh_params_generate2(*dh_params, DH_BITS);
-> -        if (ret < 0) {
-> -            gnutls_dh_params_deinit(*dh_params);
-> -            *dh_params =3D NULL;
-> -            error_setg(errp, "Unable to generate DH parameters: %s",
-> -                       gnutls_strerror(ret));
-> -            return -1;
-> -        }
-> -    } else {
-> +    if (filename !=3D NULL) {
->          GError *gerr =3D NULL;
->          gchar *contents;
->          gsize len;
-> @@ -67,6 +53,10 @@ qcrypto_tls_creds_get_dh_params_file(QCryptoTLSCreds
-> *creds,
->              g_error_free(gerr);
->              return -1;
->          }
-> +        warn_report_once("Use of an external DH parameters file '%s' is =
-"
-> +                         "deprecated and will be removed in a future
-> release",
-> +                         filename);
-> +
->          data.data =3D (unsigned char *)contents;
->          data.size =3D len;
->          ret =3D gnutls_dh_params_init(dh_params);
-> @@ -87,6 +77,8 @@ qcrypto_tls_creds_get_dh_params_file(QCryptoTLSCreds
-> *creds,
->                         filename, gnutls_strerror(ret));
->              return -1;
->          }
-> +    } else {
-> +        *dh_params =3D NULL;
->      }
->
->      return 0;
-> diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
-> index 69ed1d792a..777cc4f5bb 100644
-> --- a/crypto/tlscredsanon.c
-> +++ b/crypto/tlscredsanon.c
-> @@ -68,8 +68,10 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds=
-,
->              return -1;
->          }
->
-> -        gnutls_anon_set_server_dh_params(box->data.anonserver,
-> -                                         box->dh_params);
-> +        if (box->dh_params) {
-> +            gnutls_anon_set_server_dh_params(box->data.anonserver,
-> +                                             box->dh_params);
-> +        }
->      } else {
->          ret =3D
-> gnutls_anon_allocate_client_credentials(&box->data.anonclient);
->          if (ret < 0) {
-> diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
-> index e437985260..801da50625 100644
-> --- a/crypto/tlscredspsk.c
-> +++ b/crypto/tlscredspsk.c
-> @@ -129,8 +129,10 @@ qcrypto_tls_creds_psk_load(QCryptoTLSCredsPSK *creds=
-,
->                         gnutls_strerror(ret));
->              goto cleanup;
->          }
-> -        gnutls_psk_set_server_dh_params(box->data.pskserver,
-> -                                        box->dh_params);
-> +        if (box->dh_params) {
-> +            gnutls_psk_set_server_dh_params(box->data.pskserver,
-> +                                            box->dh_params);
-> +        }
->      } else {
->          box =3D qcrypto_tls_creds_box_new_client(GNUTLS_CRD_PSK);
->
-> diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-> index 2fc0872627..7e79af4266 100644
-> --- a/crypto/tlscredsx509.c
-> +++ b/crypto/tlscredsx509.c
-> @@ -684,7 +684,9 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *cred=
-s,
->                                                   errp) < 0) {
->              return -1;
->          }
-> -        gnutls_certificate_set_dh_params(box->data.cert, box->dh_params)=
-;
-> +        if (box->dh_params) {
-> +            gnutls_certificate_set_dh_params(box->data.cert,
-> box->dh_params);
-> +        }
->      }
->      creds->parent_obj.box =3D g_steal_pointer(&box);
->
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index ca6b3769b5..694a69da64 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -365,6 +365,15 @@ Options are:
->      - move backing file to NVDIMM storage and keep ``pmem=3Don``
->        (to have NVDIMM with persistence guaranties).
->
-> +Using an external DH (Diffie-Hellman) parameters file (since 10.2)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +Loading of external Diffie-Hellman parameters from a 'dh-params.pem'
-> +file is deprecated and will be removed with no replacement in a
-> +future release. Where no 'dh-params.pem' file is provided, the DH
-> +parameters will be automatically negotiated in accordance with
-> +RFC7919.
-> +
->  Device options
->  --------------
->
-> diff --git a/docs/system/tls.rst b/docs/system/tls.rst
-> index a4f6781d62..44c4bf04e9 100644
-> --- a/docs/system/tls.rst
-> +++ b/docs/system/tls.rst
-> @@ -251,11 +251,13 @@ When specifying the object, the ``dir`` parameters
-> specifies which
->  directory contains the credential files. This directory is expected to
->  contain files with the names mentioned previously, ``ca-cert.pem``,
->  ``server-key.pem``, ``server-cert.pem``, ``client-key.pem`` and
-> -``client-cert.pem`` as appropriate. It is also possible to include a set
-> -of pre-generated Diffie-Hellman (DH) parameters in a file
-> -``dh-params.pem``, which can be created using the
-> -``certtool --generate-dh-params`` command. If omitted, QEMU will
-> -dynamically generate DH parameters when loading the credentials.
-> +``client-cert.pem`` as appropriate.
-> +
-> +While it is possible to include a set of pre-generated Diffie-Hellman
-> +(DH) parameters in a file ``dh-params.pem``, this facility is now
-> +deprecated and will be removed in a future release. When omitted the
-> +DH parameters will be automatically negotiated in accordance with
-> +RFC7919.
->
->  The ``endpoint`` parameter indicates whether the credentials will be
->  used for a network client or server, and determines which PEM files are
-> --
-> 2.51.1
->
->
-
---0000000000008367b6064272ba42
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi</div><br><div class=3D"gmail_quote gmail_quote_con=
-tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 30, 2025 at 6:50=
-=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.c=
-om">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">GNUTLS has deprecated use of externally provided dif=
-fie-hellman<br>
-parameters, since it will automatically negotiate DH params in<br>
-accordance with RFC7919.<br></blockquote><div><br></div><div>The doc says:<=
-/div><div>=C2=A0Since 3.6.0, DH parameters are negotiated
-following RFC7919.</div><div><br></div><div>But QEMU doesn&#39;t require &g=
-t;=3D 3.6. Add a preliminary patch?</div><div><br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-<br>
-Signed-off-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
-t.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
-</blockquote><div><br></div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a=
- href=3D"mailto:marcandre.lureau@redhat.com">marcandre.lureau@redhat.com</a=
->&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">---<br>
-=C2=A0crypto/tlscreds.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 24 ++++++++-----=
------------<br>
-=C2=A0crypto/tlscredsanon.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 6 ++++--<br>
-=C2=A0crypto/tlscredspsk.c=C2=A0 =C2=A0 =C2=A0 |=C2=A0 6 ++++--<br>
-=C2=A0crypto/tlscredsx509.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 4 +++-<br>
-=C2=A0docs/about/deprecated.rst |=C2=A0 9 +++++++++<br>
-=C2=A0docs/system/tls.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0| 12 +++++++-----<br>
-=C2=A06 files changed, 35 insertions(+), 26 deletions(-)<br>
-<br>
-diff --git a/crypto/tlscreds.c b/crypto/tlscreds.c<br>
-index 798c9712fb..85268f3b57 100644<br>
---- a/crypto/tlscreds.c<br>
-+++ b/crypto/tlscreds.c<br>
-@@ -22,6 +22,7 @@<br>
-=C2=A0#include &quot;qapi/error.h&quot;<br>
-=C2=A0#include &quot;qapi-types-crypto.h&quot;<br>
-=C2=A0#include &quot;qemu/module.h&quot;<br>
-+#include &quot;qemu/error-report.h&quot;<br>
-=C2=A0#include &quot;tlscredspriv.h&quot;<br>
-=C2=A0#include &quot;trace.h&quot;<br>
-<br>
-@@ -38,22 +39,7 @@ qcrypto_tls_creds_get_dh_params_file(QCryptoTLSCreds *cr=
-eds,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0trace_qcrypto_tls_creds_load_dh(creds, filename ? filen=
-ame : &quot;&lt;generated&gt;&quot;);<br>
-<br>
--=C2=A0 =C2=A0 if (filename =3D=3D NULL) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D gnutls_dh_params_init(dh_params);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Unable to=
- initialize DH parameters: %s&quot;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0gnutls_strerror(ret));<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D gnutls_dh_params_generate2(*dh_params,=
- DH_BITS);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_dh_params_deinit(*dh_para=
-ms);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *dh_params =3D NULL;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Unable to=
- generate DH parameters: %s&quot;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0gnutls_strerror(ret));<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 if (filename !=3D NULL) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0GError *gerr =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gchar *contents;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gsize len;<br>
-@@ -67,6 +53,10 @@ qcrypto_tls_creds_get_dh_params_file(QCryptoTLSCreds *cr=
-eds,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_error_free(gerr);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 warn_report_once(&quot;Use of an external DH p=
-arameters file &#39;%s&#39; is &quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0&quot;deprecated and will be removed in a future release&q=
-uot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0filename);<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0data.data =3D (unsigned char *)contents;<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0data.size =3D len;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D gnutls_dh_params_init(dh_params);=
-<br>
-@@ -87,6 +77,8 @@ qcrypto_tls_creds_get_dh_params_file(QCryptoTLSCreds *cre=
-ds,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 filename, gnutls_strerror(ret));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-+=C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *dh_params =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0return 0;<br>
-diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c<br>
-index 69ed1d792a..777cc4f5bb 100644<br>
---- a/crypto/tlscredsanon.c<br>
-+++ b/crypto/tlscredsanon.c<br>
-@@ -68,8 +68,10 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_anon_set_server_dh_params(box-&gt;data.=
-anonserver,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bo=
-x-&gt;dh_params);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (box-&gt;dh_params) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_anon_set_server_dh_params=
-(box-&gt;data.anonserver,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0box-&gt;dh_params);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D gnutls_anon_allocate_client_crede=
-ntials(&amp;box-&gt;data.anonclient);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret &lt; 0) {<br>
-diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c<br>
-index e437985260..801da50625 100644<br>
---- a/crypto/tlscredspsk.c<br>
-+++ b/crypto/tlscredspsk.c<br>
-@@ -129,8 +129,10 @@ qcrypto_tls_creds_psk_load(QCryptoTLSCredsPSK *creds,<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 gnutls_strerror(ret));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto cleanup;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_psk_set_server_dh_params(box-&gt;data.p=
-skserver,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 box-&gt;=
-dh_params);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (box-&gt;dh_params) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_psk_set_server_dh_params(=
-box-&gt;data.pskserver,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 box-&gt;dh_params);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0box =3D qcrypto_tls_creds_box_new_client(=
-GNUTLS_CRD_PSK);<br>
-<br>
-diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c<br>
-index 2fc0872627..7e79af4266 100644<br>
---- a/crypto/tlscredsx509.c<br>
-+++ b/crypto/tlscredsx509.c<br>
-@@ -684,7 +684,9 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,=
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 errp) &lt; 0) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_certificate_set_dh_params(box-&gt;data.=
-cert, box-&gt;dh_params);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (box-&gt;dh_params) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gnutls_certificate_set_dh_params=
-(box-&gt;data.cert, box-&gt;dh_params);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0creds-&gt;parent_obj.box =3D g_steal_pointer(&amp;box);=
-<br>
-<br>
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst<br>
-index ca6b3769b5..694a69da64 100644<br>
---- a/docs/about/deprecated.rst<br>
-+++ b/docs/about/deprecated.rst<br>
-@@ -365,6 +365,15 @@ Options are:<br>
-=C2=A0 =C2=A0 =C2=A0- move backing file to NVDIMM storage and keep ``pmem=
-=3Don``<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0(to have NVDIMM with persistence guaranties).<br=
->
-<br>
-+Using an external DH (Diffie-Hellman) parameters file (since 10.2)<br>
-+&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39=
-;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39=
-;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39=
-;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39=
-;&#39;&#39;&#39;&#39;&#39;&#39;<br>
-+<br>
-+Loading of external Diffie-Hellman parameters from a &#39;dh-params.pem&#3=
-9;<br>
-+file is deprecated and will be removed with no replacement in a<br>
-+future release. Where no &#39;dh-params.pem&#39; file is provided, the DH<=
-br>
-+parameters will be automatically negotiated in accordance with<br>
-+RFC7919.<br>
-+<br>
-=C2=A0Device options<br>
-=C2=A0--------------<br>
-<br>
-diff --git a/docs/system/tls.rst b/docs/system/tls.rst<br>
-index a4f6781d62..44c4bf04e9 100644<br>
---- a/docs/system/tls.rst<br>
-+++ b/docs/system/tls.rst<br>
-@@ -251,11 +251,13 @@ When specifying the object, the ``dir`` parameters sp=
-ecifies which<br>
-=C2=A0directory contains the credential files. This directory is expected t=
-o<br>
-=C2=A0contain files with the names mentioned previously, ``ca-cert.pem``,<b=
-r>
-=C2=A0``server-key.pem``, ``server-cert.pem``, ``client-key.pem`` and<br>
--``client-cert.pem`` as appropriate. It is also possible to include a set<b=
-r>
--of pre-generated Diffie-Hellman (DH) parameters in a file<br>
--``dh-params.pem``, which can be created using the<br>
--``certtool --generate-dh-params`` command. If omitted, QEMU will<br>
--dynamically generate DH parameters when loading the credentials.<br>
-+``client-cert.pem`` as appropriate.<br>
-+<br>
-+While it is possible to include a set of pre-generated Diffie-Hellman<br>
-+(DH) parameters in a file ``dh-params.pem``, this facility is now<br>
-+deprecated and will be removed in a future release. When omitted the<br>
-+DH parameters will be automatically negotiated in accordance with<br>
-+RFC7919.<br>
-<br>
-=C2=A0The ``endpoint`` parameter indicates whether the credentials will be<=
-br>
-=C2=A0used for a network client or server, and determines which PEM files a=
-re<br>
--- <br>
-2.51.1<br>
-<br>
-</blockquote></div></div>
-
---0000000000008367b6064272ba42--
+  Thomas
 
 
