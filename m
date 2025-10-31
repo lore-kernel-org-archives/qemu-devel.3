@@ -4,63 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CF3CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 03:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01963CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 03:29:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEfn2-0003Lk-4X; Thu, 30 Oct 2025 23:27:00 -0400
+	id 1vEfoZ-0004Iz-U7; Thu, 30 Oct 2025 23:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vEfmu-0003KH-E3; Thu, 30 Oct 2025 23:26:53 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vEfmg-0008N9-6L; Thu, 30 Oct 2025 23:26:50 -0400
-Received: from [10.160.60.129] (p7852202-ipoefx.ipoe.ocn.ne.jp
- [123.225.53.201]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59V3Q2jY060595
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 31 Oct 2025 12:26:11 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=QYKq03V29Qc3z8MLqs8oxumDnUB+Kkzri3+5gA4Di1k=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1761881171; v=1;
- b=DGTUW2J2H+KUccrN3h7Cfoc6NTcGujbDIZDhCRGFhhqYk0YswvBV42JVd+B+l3Tg
- NqyvKs9D42wSVGY+aV1AM1aOntu9isjCoP5C8qiHfMbo1dv55PB12BTRja11qAQn
- lak6Zmn/2yFxGrDt3p/Nx86WHcIh0L+jgvnW866ZRnIDqGojz+rc7pdJI4GlY5jj
- eJnkvqHwwYmjH1c0wJpNBplfg9+EVbsacF74AbJRnUUfeKooopVFqlMQzyHzRpC3
- Q51E+MCZoyC840buPKdcbWaGSmbs2Bs4rL08U78XGTajH3VuGIAki+MOq3D5t1Nb
- MuuxQ74GfT5sRmsVz8YRDQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 31 Oct 2025 12:25:56 +0900
-Subject: [PATCH v4] file-posix: Tolerate unaligned hole at middle
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vEfoP-0004FS-KP
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 23:28:26 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vEfo8-00009n-2K
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 23:28:25 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b70406feed3so286530966b.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 20:28:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761881282; x=1762486082; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=15Etxng1yKQcD15sQ41t8xNrVASrdEUcgNWL8RWqk2w=;
+ b=X6xTA6EdHjWhc0JsdEN4t64MNeR8usqNYfzhza/Ne04qDMl0DvXukJjOl8fkkxaTt4
+ fxBebde35uqK7qp11gzM9UZ1jimwbHq/GJ6WyMIG+NAlutleYltE5vSTexjzixYcD4yv
+ SfSEf06SkYDH+UMQoec8EFW0sWVhh/kgFu75CUmB7ACbiRNnhHQDx064Nh9ke+WtV8XM
+ v/i8fT+hFwoohWE/667cwLMROp6JTWqwMrxAKCgvMvcImCmThTSt91Fty36LU7UGNR5f
+ XYJcWKfe/lr06xN6XvZm7Cq0yGja4JW/9NixfJzMYrW0FqU4XtuOu+Hjz88NC0uMi3a0
+ yWEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761881282; x=1762486082;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=15Etxng1yKQcD15sQ41t8xNrVASrdEUcgNWL8RWqk2w=;
+ b=ZD32P0MaqZ52AD/qWaaSeUTSde7I2rt/B2hWu0ja40tBcNnFgRArE00zs1FphhtGsl
+ DbRpXCz76kJVGoNS+zOf0qU9Rbks3VnrR1x8kt7jzEeXGpD1Gv1zR4LMDWKResoaxrGK
+ Oc6Dba8Fa1YkzMxX+8jKu0/S9lWq0aXb+S185EPgqnKRGoMTLtdf7+JtFlDZ+KhYCstc
+ NL9FjoMtJuGufNAa0eeE2j+UN8w/odkbueAiK/d2ko0kuT/px089Xbxo/7O9sXe3NJSK
+ tau0tD7nEUpic3WgTb+I5FNZvc3LIYpiojIRiQjm7MaKx8D2ioyjdKr8sOBYF8GB68Ee
+ 6Rbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHPaNHxbjgltpyxofuczPzTaPm666kbb/ZodhK8UPxP7H1E8oXpg1YRmyNq1GGk44yIkQNOye7etN+@nongnu.org
+X-Gm-Message-State: AOJu0YytVYW5o/xE94+HtaqmfKD6JxF1GIggAF30cycXk5eM9slhME8U
+ 2LBYqMvvUecS5APO64pYSnH5Uv1MygqFsh3rVYt7scIYWrMRaByXp6Pm6MD8p9waGT8VKXyVhJI
+ Szguszgp6h/rD52SpZuLwKeab8cZ7O+0=
+X-Gm-Gg: ASbGncun18elvsdgYdrLIgpGyHPSuFDEFSq7dCpQ08XHvbrE/a2hen6OM/tYZEU8P3l
+ N2TDVJODIF9vsiudidCsPBqVJ3ubyyIv4ma3XaDP7ohQ2EC1C7q7WWhf3rAmr6S5KoF6Aze/TBl
+ KThnZ6x7RC+DTluIRtcmF5BqIEMSeFv1FD1IQxxh5yMK/mJQhG6FP2qlLJ4gBManX/bo2Mt4Q5M
+ qEupnCyK1cwLDyeqsxp8C9NmaMAUMgrCS61BKINrs3Twuw2El5k1yX27mvX8xnHEQeQ1rclPJU4
+ /QZNWFvE84EpDCr52tr3D//dxjqzbRB5MZJs
+X-Google-Smtp-Source: AGHT+IH0F/jQcl8v9tak+8P4hfPPVf4989AhLUUMv5CjPEk9mz17nIhDqe3u5a1AL1goDt1qGMem4tX+fDj2qRQpnaQ=
+X-Received: by 2002:a05:6402:234d:b0:638:74dc:cf78 with SMTP id
+ 4fb4d7f45d1cf-64077068abfmr1392784a12.34.1761881281798; Thu, 30 Oct 2025
+ 20:28:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251031-dio-v4-1-89b31c736b97@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAEMsBGkC/2XNSw6CMBSF4a2Qjm3TB5TqiH0YB30JVyMlLRKJY
- e8WSYzG4bnp9/eJko/gEzoUTxT9BAlCn0e5K5DtdN96DC5vxCmvaMUVdhCwM7TUUupalQrll0P
- 0Z3i8K8dT3h2kMcT5HZ3Yev31E8MMSyHo2mBG2cbpuYcHseGG1sDEv5CgG+IZVUpQU8lzrdg/E
- h/EKN9vSKw/aS+MqakzTDYxtcQCAXLHY7jOgWhLLgM6LcvyAuIqsnENAQAA
-X-Change-ID: 20250528-dio-db04a66a7848
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, devel@daynix.com,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Eric Blake <eblake@redhat.com>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+References: <20250919171235.152476-1-ben.dooks@codethink.co.uk>
+ <20250919171235.152476-3-ben.dooks@codethink.co.uk>
+In-Reply-To: <20250919171235.152476-3-ben.dooks@codethink.co.uk>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 31 Oct 2025 13:27:34 +1000
+X-Gm-Features: AWmQ_bnrJUoMGowy0q5-gl8hn5U1Eizdj7y19wQvJOyql04lry_a_OCIcbED8u0
+Message-ID: <CAKmqyKNUG9+rQM-eLGtigxFJ6h5+woypX=1Z33CaiT_EHSVMbA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] hw/riscv: add CVA6 machine
+To: Ben Dooks <ben.dooks@codethink.co.uk>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ lawrence.hunter@codethink.co.uk, javier.jardon@codethink.co.uk, 
+ roan.richmond@codethink.co.uk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,138 +102,455 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-file-posix used to assume that existing holes satisfy the requested
-alignment, which equals to the estimated direct I/O alignment
-requirement if direct I/O is requested, and assert the assumption
-unless it is at EOF.
-
-However, the estimation of direct I/O alignment requirement is sometimes
-inexact and can be overly strict. For example, I observed that QEMU
-estimated the alignment requirement as 16K while the real requirement
-is 4K when Btrfs is used on Linux 6.14.6 and the host page size is 16K.
-
-For direct I/O alignment, open(2) sugguests as follows:
-> Since Linux 6.1, O_DIRECT support and alignment restrictions for a
-> file can be queried using statx(2), using the STATX_DIOALIGN flag.
-> Support for STATX_DIOALIGN varies by filesystem; see statx(2).
+On Sat, Sep 20, 2025 at 3:13=E2=80=AFAM Ben Dooks <ben.dooks@codethink.co.u=
+k> wrote:
 >
-> Some filesystems provide their own interfaces for querying O_DIRECT
-> alignment restrictions, for example the XFS_IOC_DIOINFO operation in
-> xfsctl(3). STATX_DIOALIGN should be used instead when it is available.
+> Add a (currently Genesy2 based) CVA6 machine.
 >
-> If none of the above is available, then direct I/O support and
-> alignment restrictions can only be assumed from known characteristics
-> of the filesystem, the individual file, the underlying storage
-> device(s), and the kernel version. In Linux 2.4, most filesystems
-> based on block devices require that the file offset and the length and
-> memory address of all I/O segments be multiples of the filesystem
-> block size (typically 4096 bytes). In Linux 2.6.0, this was relaxed to
-> the logical block size of the block device (typically 512 bytes). A
-> block device's logical block size can be determined using the ioctl(2)
-> BLKSSZGET operation or from the shell using the command:
+> Has SPI and UART, the GPIO and Ethernet are currently black-holed
+> as there is no hardware model for them (lowRISC ethernet and Xilinx
+> GPIO)
+>
+> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+> ---
+> v4:
+>  - fixed comment style
+>  - moved the cva6 core-type to earlier in patch series
+> v3:
+>  - fix missed plic comment
+>  - made 64bit only for now
+> v2:
+>  - whitespace fixes
+>  - use g_autofree on plic
+> v1:
+>  - squashed in fixes for sd-card and new qemu init
+>  - move to spdx for cva6 machine
+>  - code cleanups missed in first review
+> ---
+>  hw/riscv/Kconfig        |  11 ++
+>  hw/riscv/cva6.c         | 265 ++++++++++++++++++++++++++++++++++++++++
+>  hw/riscv/meson.build    |   1 +
+>  include/hw/riscv/cva6.h |  88 +++++++++++++
+>  4 files changed, 365 insertions(+)
+>  create mode 100644 hw/riscv/cva6.c
+>  create mode 100644 include/hw/riscv/cva6.h
+>
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index fc9c35bd98..1759197540 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -9,6 +9,17 @@ config IBEX
+>
+>  # RISC-V machines in alphabetical order
+>
+> +# technically it might be possible to build cva6 32bit
+> +config CVA6
+> +    bool
+> +    default y
+> +    depends on RISCV64
+> +    select DEVICE_TREE
+> +    select SIFIVE_PLIC
+> +    select XILINX_SPI
+> +    select RISCV_ACLINT
+> +    select UNIMP
+> +
+>  config MICROCHIP_PFSOC
+>      bool
+>      default y
+> diff --git a/hw/riscv/cva6.c b/hw/riscv/cva6.c
+> new file mode 100644
+> index 0000000000..39aa118b21
+> --- /dev/null
+> +++ b/hw/riscv/cva6.c
+> @@ -0,0 +1,265 @@
+> +/*
+> + * QEMU RISC-V Board for OpenHW CVA6 SoC
+> + *
+> + * Copyright (c) 2025 Codethink Ltd
+> + * Ben Dooks <ben.dooks@codethink.co.uk>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/units.h"
+> +#include "qapi/error.h"
+> +#include "qapi/visitor.h"
+> +#include "hw/boards.h"
+> +#include "hw/irq.h"
+> +#include "hw/loader.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/misc/unimp.h"
+> +
+> +#include "hw/sd/sd.h"
+> +#include "hw/ssi/ssi.h"
+> +
+> +#include "hw/riscv/cva6.h"
+> +#include "hw/riscv/boot.h"
+> +#include "hw/intc/riscv_aclint.h"
+> +
+> +#include "system/system.h"
+> +#include "system/device_tree.h"
+> +
+> +#include <libfdt.h>
+> +
+> +#define CVA6_ROM_BASE  0x10000
+> +
+> +static const MemMapEntry cva6_memmap[] =3D {
+> +    [CVA6_DEBUG] =3D              {  0x0000000,  0x1000 },
+> +    [CVA6_ROM] =3D                { CVA6_ROM_BASE, 0x10000 },
+> +    [CVA6_CLINT] =3D              {  0x2000000, 0xC0000 },
+> +    [CVA6_PLIC] =3D               {  0xC000000, 0x4000000 },
+> +    [CVA6_UART] =3D               { 0x10000000, 0x1000 },
+> +    [CVA6_TIMER] =3D              { 0x18000000, 0x10000 },
+> +    [CVA6_SPI] =3D                { 0x20000000, 0x800000 },
+> +    [CVA6_ETHERNET] =3D           { 0x30000000, 0x10000 },
+> +    [CVA6_GPIO] =3D               { 0x40000000, 0x1000 },
+> +    [CVA6_DRAM] =3D               { 0x80000000, 0x40000000 },
+> +};
+> +
+> +static void cva6_machine_init(MachineState *machine)
+> +{
+> +    MachineClass *mc =3D MACHINE_GET_CLASS(machine);
+> +    MemoryRegion *sys_mem =3D get_system_memory();
+> +    hwaddr dram_addr =3D cva6_memmap[CVA6_DRAM].base;
+> +    hwaddr dram_size =3D cva6_memmap[CVA6_DRAM].size;
+> +    CVA6State *s =3D CVA6_MACHINE(machine);
+> +    RISCVBootInfo boot_info;
+> +
+> +    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RISCV_=
+CVA6);
+> +    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+> +
+> +    if (machine->ram_size > mc->default_ram_size) {
+> +        error_report("RAM size is too big for DRAM area");
+> +        exit(EXIT_FAILURE);
+> +    }
+> +
+> +    memory_region_add_subregion(sys_mem, dram_addr, machine->ram);
+> +    riscv_boot_info_init(&boot_info, &s->soc.cpus);
+> +
+> +    /* support two booting methods, either by supplying the bootrom as
+> +     * -firmware or supplying a kernel and fdt file that's loaded and
+> +     * executed via a fake boot vector
+> +     */
+> +
+> +    if (machine->firmware) {
+> +         hwaddr firmware_load_addr =3D cva6_memmap[CVA6_ROM].base;
+> +         riscv_load_firmware(machine->firmware, &firmware_load_addr, NUL=
+L);
+> +    }
+> +
+> +     if (machine->kernel_filename) {
+> +         uint64_t fdt_load_addr;
+> +
+> +         riscv_load_kernel(machine, &boot_info, dram_addr, false, NULL);
+> +
+> +         if (machine->dtb) {
+> +             int fdt_size;
+> +
+> +             machine->fdt =3D load_device_tree(machine->dtb, &fdt_size);
+> +             if (!machine->fdt) {
+> +                error_report("load_device_tree() failed");
+> +                exit(1);
+> +             }
+> +
+> +             fdt_load_addr =3D riscv_compute_fdt_addr(dram_addr, dram_si=
+ze,
+> +                                                    machine, &boot_info)=
+;
+> +
+> +             riscv_load_fdt(fdt_load_addr, machine->fdt);
+> +         } else {
+> +             warn_report_once("no device tree file provided for kernel b=
+oot");
+> +             fdt_load_addr =3D 0x0;
+> +         }
+> +
+> +         /* kernel only, let's use the bootrom to build a simple resetve=
+c
+> +          * to start the kernel
+> +          */
+> +
+> +         riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
+> +                                   boot_info.image_low_addr,
+> +                                   cva6_memmap[CVA6_ROM].base,
+> +                                   cva6_memmap[CVA6_ROM].size,
+> +                                   dram_addr, fdt_load_addr);
 
-Apparently Btrfs doesn't support STATX_DIOALIGN nor provide its own
-interface for querying the requirement. Using BLKSSZGET brings another
-problem to determine the underlying block device, which also involves
-heuristics.
+Shouldn't this be inside a !machine->firmware ?
 
-Moreover, even if we could figure out the direct I/O alignment
-requirement, I could not find a documentation saying it will exactly
-match with the alignment of holes.
+Alistair
 
-So stop asserting the assumption on the holes and handle unaligned holes
-properly.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Eric Blake <eblake@redhat.com>
----
-Changes in v4:
-- Fixed a typo pointed out by Eric Blake.
-- Link to v3: https://lore.kernel.org/qemu-devel/20251029-dio-v3-1-6ae3bb70db16@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v3:
-- Stop iterating until finding an aligned location. I think I did too
-  much with the last version; some caller (e.g., is_zero() in
-  block/qcow2.c) only cares if there is *any* allocation in a range, and
-  extra iterations only add I/O overhead in such a case.
-  The code to iterate should be added only if it is proved to bring
-  more benefits than overheads.
-- Link to v2: https://lore.kernel.org/qemu-devel/20250530-dio-v2-1-5830b56f781c@daynix.com
-
-Changes in v2:
-- Changed to round the number also when the specified offset in a hole.
-- Changed to iterate until finding an aligned location.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250528-dio-v1-1-633066a71b8c@daynix.com
----
- block/file-posix.c | 41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 8c738674cedb..ee97c24ed928 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3315,29 +3315,38 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
-         *pnum = bytes;
-         ret = BDRV_BLOCK_DATA;
-     } else if (data == offset) {
--        /* On a data extent, compute bytes to the end of the extent,
--         * possibly including a partial sector at EOF. */
-+        /* On a data extent, compute bytes to the end of the extent. */
-         *pnum = hole - offset;
- 
--        /*
--         * We are not allowed to return partial sectors, though, so
--         * round up if necessary.
--         */
--        if (!QEMU_IS_ALIGNED(*pnum, bs->bl.request_alignment)) {
--            int64_t file_length = raw_getlength(bs);
--            if (file_length > 0) {
--                /* Ignore errors, this is just a safeguard */
--                assert(hole == file_length);
--            }
--            *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
--        }
--
-+         /*
-+          * We may have allocation unaligned with the requested
-+          * alignment due to the following reasons:
-+          * - unaligned file size
-+          * - inexact direct I/O alignment requirement estimation
-+          * - mismatches between the allocation size and
-+          *   direct I/O alignment requirement.
-+          *
-+          * We are not allowed to return partial sectors, though, so
-+          * round up the end of allocation if necessary.
-+          */
-+        *pnum = ROUND_UP(*pnum, bs->bl.request_alignment);
-         ret = BDRV_BLOCK_DATA;
-     } else {
-         /* On a hole, compute bytes to the beginning of the next extent.  */
-         assert(hole == offset);
-         *pnum = data - offset;
--        ret = BDRV_BLOCK_ZERO;
-+
-+        /*
-+         * We may have allocation unaligned, so round down the beginning
-+         * of allocation if necessary.
-+         */
-+        if (*pnum < bs->bl.request_alignment) {
-+            *pnum = bs->bl.request_alignment;
-+            ret = BDRV_BLOCK_DATA;
-+        } else {
-+            *pnum = ROUND_DOWN(*pnum, bs->bl.request_alignment);
-+            ret = BDRV_BLOCK_ZERO;
-+        }
-     }
-     *map = offset;
-     *file = bs;
-
----
-base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
-change-id: 20250528-dio-db04a66a7848
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
+> +    }
+> +}
+> +
+> +static void cva6_machine_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    MachineClass *mc =3D MACHINE_CLASS(oc);
+> +
+> +    mc->desc =3D "RISC-V board for CVA6";
+> +    mc->init =3D cva6_machine_init;
+> +    mc->max_cpus =3D 1;
+> +    mc->default_ram_id =3D "cva6.ram";
+> +    mc->default_cpu_type =3D TYPE_RISCV_CPU_CVA6;
+> +    mc->default_ram_size =3D cva6_memmap[CVA6_DRAM].size;
+> +};
+> +
+> +static void cva6_soc_init(Object *obj)
+> +{
+> +    CVA6SoCState *s =3D RISCV_CVA6(obj);
+> +
+> +    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY=
+);
+> +}
+> +
+> +static void cva6_add_spi(CVA6SoCState *s, const MemMapEntry *map)
+> +{
+> +    DriveInfo *dinfo;
+> +    BlockBackend *blk;
+> +    DeviceState *card_dev;
+> +    qemu_irq sd_cs;
+> +    DeviceState *sddev;
+> +    SysBusDevice *busdev;
+> +    DeviceState *spi_dev;
+> +    SSIBus *spi;
+> +
+> +    spi_dev =3D qdev_new("xlnx.xps-spi");
+> +    qdev_prop_set_uint8(spi_dev, "num-ss-bits", 1);
+> +    qdev_prop_set_string(spi_dev, "endianness", "little");
+> +
+> +    busdev =3D SYS_BUS_DEVICE(spi_dev);
+> +    sysbus_realize_and_unref(busdev, &error_fatal);
+> +    sysbus_mmio_map(busdev, 0, map->base);
+> +    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(s->plic), CVA6=
+_SPI_IRQ));
+> +
+> +    spi =3D (SSIBus *)qdev_get_child_bus(spi_dev, "spi");
+> +
+> +    sddev =3D ssi_create_peripheral(spi, "ssi-sd");
+> +    sd_cs =3D qdev_get_gpio_in_named(sddev, SSI_GPIO_CS, 0);
+> +    sysbus_connect_irq(busdev, 1, sd_cs);
+> +
+> +    dinfo =3D drive_get(IF_SD, 0, 0);
+> +    blk =3D dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
+> +    card_dev =3D qdev_new(TYPE_SD_CARD_SPI);
+> +    qdev_prop_set_drive_err(card_dev, "drive", blk, &error_fatal);
+> +
+> +    qdev_realize_and_unref(card_dev, qdev_get_child_bus(sddev, "sd-bus")=
+, &error_fatal);
+> +}
+> +
+> +static void not_implemented(const char *name, const MemMapEntry *map)
+> +{
+> +    create_unimplemented_device(name, map->base, map->size);
+> +}
+> +
+> +static void cva6_soc_realize(DeviceState *dev_soc, Error **errp)
+> +{
+> +    MemoryRegion *system_memory =3D get_system_memory();
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    CVA6SoCState *s =3D RISCV_CVA6(dev_soc);
+> +    const MemMapEntry *memmap =3D cva6_memmap;
+> +    MemoryRegion *rom =3D g_new(MemoryRegion, 1);
+> +    g_autofree char *plic_hart_config;
+> +
+> +    object_property_set_str(OBJECT(&s->cpus), "cpu-type", ms->cpu_type,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->cpus), "resetvec", CVA6_ROM_BASE,
+> +                            &error_abort);
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
+> +
+> +    /* boot rom */
+> +    memory_region_init_rom(rom, OBJECT(dev_soc), "riscv.cva6.bootrom",
+> +                           memmap[CVA6_ROM].size, &error_fatal);
+> +    memory_region_add_subregion(system_memory, memmap[CVA6_ROM].base,
+> +                                rom);
+> +
+> +    /* create PLIC hart topology configuration string */
+> +    plic_hart_config =3D riscv_plic_hart_config_string(ms->smp.cpus);
+> +
+> +    /* MMIO */
+> +    s->plic =3D sifive_plic_create(memmap[CVA6_PLIC].base,
+> +        plic_hart_config, ms->smp.cpus, 0,
+> +        CVA6_PLIC_NUM_SOURCES,
+> +        CVA6_PLIC_NUM_PRIORITIES,
+> +        CVA6_PLIC_PRIORITY_BASE,
+> +        CVA6_PLIC_PENDING_BASE,
+> +        CVA6_PLIC_ENABLE_BASE,
+> +        CVA6_PLIC_ENABLE_STRIDE,
+> +        CVA6_PLIC_CONTEXT_BASE,
+> +        CVA6_PLIC_CONTEXT_STRIDE,
+> +        memmap[CVA6_PLIC].size);
+> +
+> +    riscv_aclint_swi_create(memmap[CVA6_CLINT].base, 0,
+> +                            ms->smp.cpus, false);
+> +
+> +    riscv_aclint_mtimer_create(
+> +        memmap[CVA6_CLINT].base + RISCV_ACLINT_SWI_SIZE,
+> +        RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+> +        RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+> +        CLINT_TIMEBASE_FREQ, true);
+> +
+> +    /* something in cva6-sdk uboot seems to prod the debug
+> +     * unit by accident, so make it not implemented.
+> +     */
+> +    not_implemented("debug", &memmap[CVA6_DEBUG]);
+> +
+> +    /* 16550 uart, one 32bit register per 32bit word */
+> +
+> +    serial_mm_init(system_memory, memmap[CVA6_UART].base, 2,
+> +                   qdev_get_gpio_in(DEVICE(s->plic), CVA6_UART_IRQ),
+> +                   50*1000*10000,
+> +                   serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> +
+> +    /* just unimplement the timers, network and gpio here for now.
+> +     * no-one seems to be using the apb timer block anyway,
+> +     */
+> +    not_implemented("net", &memmap[CVA6_ETHERNET]);
+> +    not_implemented("gpio", &memmap[CVA6_GPIO]);
+> +    not_implemented("timer", &memmap[CVA6_TIMER]);
+> +
+> +    /* connect xilinx spi block here */
+> +    cva6_add_spi(s, &memmap[CVA6_SPI]);
+> +}
+> +
+> +static void cva6_soc_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(oc);
+> +
+> +    dc->realize =3D cva6_soc_realize;
+> +    dc->user_creatable =3D false;
+> +};
+> +
+> +static const TypeInfo cva6_types[] =3D {
+> +    {
+> +        .name           =3D TYPE_RISCV_CVA6,
+> +        .parent         =3D TYPE_DEVICE,
+> +        .instance_size  =3D sizeof(CVA6SoCState),
+> +        .instance_init  =3D cva6_soc_init,
+> +        .class_init     =3D cva6_soc_class_init,
+> +    }, {
+> +        .name           =3D TYPE_CVA6_MACHINE,
+> +        .parent         =3D TYPE_MACHINE,
+> +        .instance_size  =3D sizeof(CVA6State),
+> +        .class_init     =3D cva6_machine_class_init,
+> +    }
+> +};
+> +
+> +DEFINE_TYPES(cva6_types)
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index 2a8d5b136c..88c7eac970 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -2,6 +2,7 @@ riscv_ss =3D ss.source_set()
+>  riscv_ss.add(files('boot.c'))
+>  riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+>  riscv_ss.add(files('riscv_hart.c'))
+> +riscv_ss.add(when: 'CONFIG_CVA6', if_true: files('cva6.c'))
+>  riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+>  riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+>  riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+> diff --git a/include/hw/riscv/cva6.h b/include/hw/riscv/cva6.h
+> new file mode 100644
+> index 0000000000..48e0979a0a
+> --- /dev/null
+> +++ b/include/hw/riscv/cva6.h
+> @@ -0,0 +1,88 @@
+> +/*
+> + * QEMU RISC-V Board for OpenHW CVA6 SoC
+> + * https://github.com/openhwgroup/cva6/tree/master/corev_apu
+> + *
+> + * Copyright (c) 2025 Codethink Ltd
+> + * Ben Dooks <ben.dooks@codethink.co.uk>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_CVA6_H
+> +#define HW_CVA6_H
+> +
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "hw/intc/sifive_plic.h"
+> +#include "hw/char/serial-mm.h"
+> +
+> +#include "hw/boards.h"
+> +#include "hw/sysbus.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_RISCV_CVA6 "riscv.cva6.soc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(CVA6SoCState, RISCV_CVA6)
+> +
+> +typedef struct CVA6SoCState {
+> +    /*< private >*/
+> +    DeviceState parent_obj;
+> +
+> +    /*< public >*/
+> +    RISCVHartArrayState cpus;
+> +    DeviceState *plic;
+> +    MemoryRegion rom;
+> +
+> +    uint32_t resetvec;
+> +} CVA6SoCState;
+> +
+> +#define TYPE_CVA6_MACHINE MACHINE_TYPE_NAME("cva6")
+> +OBJECT_DECLARE_SIMPLE_TYPE(CVA6State, CVA6_MACHINE)
+> +
+> +typedef struct CVA6State {
+> +    /*< private >*/
+> +    MachineState parent_obj;
+> +
+> +    /*< public >*/
+> +    CVA6SoCState soc;
+> +}
+> +CVA6State;
+> +
+> +enum {
+> +    CVA6_DEBUG,
+> +    CVA6_ROM,
+> +    CVA6_CLINT,
+> +    CVA6_PLIC,
+> +    CVA6_UART,
+> +    CVA6_TIMER,
+> +    CVA6_SPI,
+> +    CVA6_ETHERNET,
+> +    CVA6_GPIO,
+> +    CVA6_DRAM,
+> +};
+> +
+> +enum {
+> +    CVA6_UART_IRQ       =3D 1,
+> +    CVA6_SPI_IRQ        =3D 2,
+> +    CVA6_ETH_IRQ        =3D 3,
+> +    CVA6_TIMER0_OVF_IRQ =3D 4,
+> +    CVA6_TIMER0_CMP_IRQ =3D 5,
+> +    CVA6_TIMER1_OVF_IRQ =3D 6,
+> +    CVA6_TIMER1_CMP_IRQ =3D 7,
+> +};
+> +
+> +#define CLINT_TIMEBASE_FREQ 25000000
+> +
+> +/*
+> + * plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv
+> + * https://github.com/pulp-platform/rv_plic/blob/master/rtl/plic_regmap.=
+sv
+> +*/
+> +
+> +#define CVA6_PLIC_NUM_SOURCES           32
+> +#define CVA6_PLIC_NUM_PRIORITIES        7
+> +#define CVA6_PLIC_PRIORITY_BASE         0x0000
+> +#define CVA6_PLIC_PENDING_BASE          0x1000
+> +#define CVA6_PLIC_ENABLE_BASE           0x2000
+> +#define CVA6_PLIC_ENABLE_STRIDE         0x80
+> +#define CVA6_PLIC_CONTEXT_BASE          0x200000
+> +#define CVA6_PLIC_CONTEXT_STRIDE        0x1000
+> +
+> +#endif /* HW_CVA6_H */
+> --
+> 2.37.2.352.g3c44437643
+>
+>
 
