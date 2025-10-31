@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BF8CCF9FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 12:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91902CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 12:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEo1L-0007vI-TL; Fri, 31 Oct 2025 08:14:19 -0400
+	id 1vEo1y-00082F-QB; Fri, 31 Oct 2025 08:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEo1J-0007uw-HR
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 08:14:17 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEo1r-00080S-4u
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 08:14:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEo19-0001XA-7I
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 08:14:14 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEo1k-0001aB-BR
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 08:14:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761912841;
+ s=mimecast20190719; t=1761912878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fF4rLlliWWjQ8tZD2fzHXYjtmsoJfyaEqewXy2v5NTo=;
- b=OCQja1m6MPFVbZriTO7G/+qyId2Ycqyl6KvTRUAY2bwO28TCAmfUyZapTUiCi/rVXZumRB
- wUzN8KZeFUoEr5gisA8BoiL7rkSVfb/pfbsHkQ+9Yv4ITwFevl+uZf1XbkVi+fS2/pqj78
- S0TJdQxHpBNmF169/Sl/M3JBxQnn8N4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lK/kVPl9dv1lSTcrss464KhBoOlJOlZCJNfZYcDp6H4=;
+ b=U+GAqdlSmc2KcI6j5VOaCCdLN++6IGyFhS+Ttuy7DDcd2CJXF/zBvm7H4THrUG9ahdYk87
+ pZlB5lRKXM8Xrz6vume30ZYWVRBurVzkWkXdxsoFv8zPfSzTe7xYz1uSRAGK45IOGI9IMv
+ RNFg2Z9+VVUukjpwJuq6LPxOpBj+Mn8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-Z3Fb7sp3OUquyOiFCF5oFw-1; Fri, 31 Oct 2025 08:14:00 -0400
-X-MC-Unique: Z3Fb7sp3OUquyOiFCF5oFw-1
-X-Mimecast-MFC-AGG-ID: Z3Fb7sp3OUquyOiFCF5oFw_1761912839
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4283bf540ceso1165889f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 05:14:00 -0700 (PDT)
+ us-mta-574-Pl6gWJiePkiJEkdPW2WM2A-1; Fri, 31 Oct 2025 08:14:35 -0400
+X-MC-Unique: Pl6gWJiePkiJEkdPW2WM2A-1
+X-Mimecast-MFC-AGG-ID: Pl6gWJiePkiJEkdPW2WM2A_1761912874
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-475de1afec6so10214155e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 05:14:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761912839; x=1762517639;
+ d=1e100.net; s=20230601; t=1761912874; x=1762517674;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fF4rLlliWWjQ8tZD2fzHXYjtmsoJfyaEqewXy2v5NTo=;
- b=FW6prVPKADZQOKbFaMABWLTG8pO4eChR4EC3H1aITkvvOfKSUdRZH/rHg842C4DxbQ
- phE8Czg+BDzrRqg50n8ulKzQx8hxdjpiwuSeablrlWhJPaWP9rKbHNmUQg5hQc3oU9ND
- qfg4stNmcQa4cX0XAhpbxc3CKPpC0ENlSIBMSsuQpz/6suMkZWQ7uaw2nWYbuJhi4Peg
- +2OqBUvKYFXRivB4trALflx4BSAR8rXucy1v9smNiFv66LiRrs8jCW3mCAejiYg+oF3L
- PkmhvDxcQ6ZHwfkKASai/ACpPIiLzdinfauriIN95pYPDooZ0Z1ZqdAgonIOj7RkJazP
- jecA==
+ bh=lK/kVPl9dv1lSTcrss464KhBoOlJOlZCJNfZYcDp6H4=;
+ b=iS8sgbymt1TGuXyXMzChPUVzFtYhZvRmz3P7ai3jRGW5YRM14/QNsX3Uh2N2PWGyST
+ teq5O38zxyKh+ZqPa6yJkg5cTM7S2ynmkubXlc7HpnkQIkjsSe5oFbRiBR0uPD1bO2m3
+ R14maYruCqNuEmTWdWdTDI6SWmYNjVDAHNamecjcA2iRdqa+jfhD2rP+0iR1rQnCAlmw
+ ndXIBH3jZRiR4n2M6DAqFLgJa4TyS2GFiPwZn8a4UIc/oUfIHykfz+kVmI2pBnW/EGkN
+ lbhXRkWQq4K4iB1ncE8RdJ8tGw+6tuqRuBU5DkA7P7MK9BxzpcmkMZFmVmluz8wymRwT
+ 0ulQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXVbzQuj3yWJS7ZcyRMCfyt1BEskFnaMLbgys1dsH8i/dmMB09kZ6M/WF5/JsZ0M7sg7Edxsp0U5XwG@nongnu.org
-X-Gm-Message-State: AOJu0YzO7qvTAdxBKU4z0kYdVkw1QsC1LrbMpHIK8tBDhRxNUBNt9VHG
- gdXbbnuaDXRgaH/xJAKlJ1ByDjh6pZ+JgGg9xFLGCQp0GuKaDHV7AoNZYqa6OyonqDtCOuxk7GK
- qrQKmtjB6M2TPsNe11euACgR87goU2sVn+hjJHvNMqIcm3N9ajK0P86wP
-X-Gm-Gg: ASbGnctDIDK4yvo1MKNls/N5wC9GSZQ6UCQOOhkT7TrV1+m4WVLYQFE4jLnStRloL8L
- pNWualkHwMUrHilbpKte6IUoqXxQj6S7FbP+Gsu3TeIG29CoI606nA0ZuLMTTjnBJyw9QXc8dDP
- Yi8P7A5XbHy+KMCtP0RM8jU4zyrPn7DsBYTVW2F/KHbcLyP4TUHHOD4qo0Cm3//EBqSrgLErHUj
- cqq7zstAoZ9cyUdUhZf6QphHptjy9j9YOSmnlM9hhSLByjP9iGG0Adrgrw8PuTNBkU8KgGV5DVk
- L3X9+fjCG88Qk7P6idn/79kxL/OkAT7jNuM52ULHwnsVbhwcs5rmXUORH52JZbefDXJGxahuEB/
- Rw7xsUpOUXkW14QCYdCg+R5BrZjxfFRPlbYK5f25PqnovVNzLokYgNsIdjzp4s1FoFahFnqNaDl
- 5RK2LIyJyojWHE8ZcjGI2r4kcOP491
-X-Received: by 2002:a05:6000:290c:b0:427:9e6:3a76 with SMTP id
- ffacd0b85a97d-429bd69910emr2807098f8f.36.1761912838701; 
- Fri, 31 Oct 2025 05:13:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVsV7304QGlFGHyyOV/tHlIq8evk/LFat112nXRhrXPiUX8OlHfrs/MfbE0XgRc5rw0T0PWg==
-X-Received: by 2002:a05:6000:290c:b0:427:9e6:3a76 with SMTP id
- ffacd0b85a97d-429bd69910emr2807078f8f.36.1761912838227; 
- Fri, 31 Oct 2025 05:13:58 -0700 (PDT)
+ AJvYcCUE4SODAE5AGJKbJV1l2NcCdyL9/QUPUjPsrBOI0F7HylGVH46Ul0SkkKgG/ga6uTF1gYjkFi6+QC5q@nongnu.org
+X-Gm-Message-State: AOJu0Yy8tQVu8+nP/TRGyNivvmn8k7OLJX6H/kQH6tbi8QgenLJugd6H
+ UyhnhjThXB3okNFfOoACw9AmLEsolW+pwn3T9qZB9ExcRquyo9gqrRkJv5UWHgjbDM+KK0gzFLO
+ 0H+OSCgTZmhoSSMNuvYZxCigNZ8PIbJnRQ698mjeRIsUrMA9q0pbWDzdn
+X-Gm-Gg: ASbGncuObOFTwy34YletH/X3s94E2Zd2cjO6jCmOYzYGq9fwoxqAvTz0craQwPg0uOx
+ gw5oP1pmeaZZSFiuyeJZXRQ0E7c9mDrk+X2ZDIA+tHOXWXsghmPuRQBPsXT0C3DhU+DCyJgr3VE
+ C1lkQRORyHvvfakS1bIBqaJfvBP99POBUMSoxrLEsqSScOvbJPwEoO45l5RYRWKxdnpIEmLrBdI
+ jdf0Vmui+IXdmFJkPSlNFD367BBrze35N2U2HsGsHOleQv298e3mWIa+LEpsBVu8Do1dVmWfSrM
+ KAtruoBZzL4V6X6utJCrvvbmL/Q1OZLVqQ7+0UHISfUAAZMqEnRGdEeCpl7O1GcqiQANQVTSJ6G
+ TJj/xUl04x5E7Ha6mvqLvG0ayg2yV/QOJkBHHooukeevCWBSIpqwj+pH2SxuC/O9lLyv2zmO3Mq
+ QFIaHQRbv9Rn9N006zg23TCNXXTp1p
+X-Received: by 2002:a05:600d:830f:b0:477:ede:d2b4 with SMTP id
+ 5b1f17b1804b1-47726263362mr45246775e9.9.1761912873969; 
+ Fri, 31 Oct 2025 05:14:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvRKvx55f0r6ox3+kwZMp82v6joA2H9nLGIZEGIEn8CcImNMgAxNmxotLE1NOs+ZMAaB0OCw==
+X-Received: by 2002:a05:600d:830f:b0:477:ede:d2b4 with SMTP id
+ 5b1f17b1804b1-47726263362mr45246555e9.9.1761912873589; 
+ Fri, 31 Oct 2025 05:14:33 -0700 (PDT)
 Received: from ?IPV6:2003:cf:d717:1f4c:b757:9963:8006:395e?
  (p200300cfd7171f4cb75799638006395e.dip0.t-ipconnect.de.
  [2003:cf:d717:1f4c:b757:9963:8006:395e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13e0325sm3275112f8f.29.2025.10.31.05.13.56
+ 5b1f17b1804b1-47733023256sm31555645e9.17.2025.10.31.05.14.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 05:13:57 -0700 (PDT)
-Message-ID: <c9339232-476d-4074-9150-ea7c154658b7@redhat.com>
-Date: Fri, 31 Oct 2025 13:13:56 +0100
+ Fri, 31 Oct 2025 05:14:32 -0700 (PDT)
+Message-ID: <f5910674-d651-4230-a453-03650da029d4@redhat.com>
+Date: Fri, 31 Oct 2025 13:14:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/21] fuse: Increase MAX_WRITE_SIZE with a second
- buffer
+Subject: Re: [PATCH v3 00/21] export/fuse: Use coroutines and multi-threading
 To: Kevin Wolf <kwolf@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>, Markus Armbruster
  <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
 References: <20250701114437.207419-1-hreitz@redhat.com>
- <20250701114437.207419-22-hreitz@redhat.com> <aPpFogd44fuISVKd@redhat.com>
+ <aPpGlhSwW0tBYBZU@redhat.com>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <aPpFogd44fuISVKd@redhat.com>
+In-Reply-To: <aPpGlhSwW0tBYBZU@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
@@ -99,9 +98,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,84 +116,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.10.25 17:11, Kevin Wolf wrote:
+On 23.10.25 17:15, Kevin Wolf wrote:
 > Am 01.07.2025 um 13:44 hat Hanna Czenczek geschrieben:
->> We probably want to support larger write sizes than just 4k; 64k seems
->> nice.  However, we cannot read partial requests from the FUSE FD, we
->> always have to read requests in full; so our read buffer must be large
->> enough to accommodate potential 64k writes if we want to support that.
+>> Hi,
 >>
->> Always allocating FuseRequest objects with 64k buffers in them seems
->> wasteful, though.  But we can get around the issue by splitting the
->> buffer into two and using readv(): One part will hold all normal (up to
->> 4k) write requests and all other requests, and a second part (the
->> "spill-over buffer") will be used only for larger write requests.  Each
->> FuseQueue has its own spill-over buffer, and only if we find it used
->> when reading a request will we move its ownership into the FuseRequest
->> object and allocate a new spill-over buffer for the queue.
+>> This series:
+>> - Fixes some bugs/minor inconveniences,
+>> - Removes libfuse from the request processing path,
+>> - Make the FUSE export use coroutines for request handling,
+>> - Introduces multi-threading into the FUSE export.
 >>
->> This way, we get to support "large" write sizes without having to
->> allocate big buffers when they aren't used.
+>> More detail on the v1 cover letter:
+>> https://lists.nongnu.org/archive/html/qemu-block/2025-03/msg00359.html
 >>
->> Also, this even reduces the size of the FuseRequest objects because the
->> read buffer has to have at least FUSE_MIN_READ_BUFFER (8192) bytes; but
->> the requests we support are not quite so large (except for >4k writes),
->> so until now, we basically had to have useless padding in there.
->>
->> With the spill-over buffer added, the FUSE_MIN_READ_BUFFER requirement
->> is easily met and we can decrease the size of the buffer portion that is
->> right inside of FuseRequest.
->>
->> As for benchmarks, the benefit of this patch can be shown easily by
->> writing a 4G image (with qemu-img convert) to a FUSE export:
->> - Before this patch: Takes 25.6 s (14.4 s with -t none)
->> - After this patch: Takes 4.5 s (5.5 s with -t none)
->>
->> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> The commit message seems outdated, there is no such thing as a
-> FuseRequest object.
->
-> I agree with the idea of allocating a separate buffer for the data to be
-> written. I'm not so sure that the approach taken here with combining an
-> in-place and a spillover buffer does actually do much for us in exchange
-> for the additional complexity.
->
-> The allocation + memcpy for in_place buf in fuse_co_write() bothers me a
-> bit. I'd rather have a buffer for the data to write that can be directly
-> used. And let's be real, we already allocate a 1 MB stack per request. I
-> don't think 64k more or less make a big difference, but it would allow
-> us to save the memcpy() for 4k requests and additionally an allocation
-> for larger requests.
->
-> The tradeoff when you use an iov for the buffer in FuseQueue that is
-> only big enough for the header and fuse_write_in and then directly the
-> per-request buffer that is owned by the coroutine is that for requests
-> that are larger than fuse_write_in, you'll have to copy the rest back
-> from the data buffer first. This seems to be only fuse_setattr_in, which
-> shouldn't be a hot path at all, and only a few bytes.
+>> v2 cover letter:
+>> https://lists.nongnu.org/archive/html/qemu-block/2025-06/msg00040.html
+> I have finished review and while I did have comments here and there how
+> things could be nicer, I don't think I saw a real blocker. Please have a
+> look at my comments and let me know if you intend to respin the series
+> or if there are things I should fix up while applying the patches.
 
-So I understand that first, you disagree with “Always allocating 
-FuseRequest objects with 64k buffers in them seems wasteful, though.” 
-I.e. to just use a 64k buffer per request.  OK, fair.
-
-Second, you suggest to improve performance by having an aligned 64k data 
-buffer separate from the request metadata buffer to save on memcpy().  I 
-did consider this, but discarded it because of I was afraid of the 
-complexity.  Actually probably too afraid.
-
-I’ll take a look, it actually can’t be too hard.  (Just have two 
-buffers; make the metadata buffer long enough to capture all request 
-headers, but only pass the sizeof(fuse_write_in)-long head into readv(), 
-then check the request opcode.  If metadata spilled over to the data 
-buffer, copy it back into the “shadowed” metadata buffer tail.)
+Thanks for your suggestions!  They all sound good, I’ll revise.
 
 Hanna
-
-> All that said, what you have is an obvious improvement over limiting
-> write requests to 4k.
->
-> Kevin
->
 
 
