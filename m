@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C340ECCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BCFBCCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEnbq-0005GX-4d; Fri, 31 Oct 2025 07:47:58 -0400
+	id 1vEnee-0006ZX-4f; Fri, 31 Oct 2025 07:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEnbl-0005FT-Ue
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:47:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEnbh-0005C3-Uv
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:47:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761911267;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cbcbvyOxwj5hZ9NCbsoYCQjxopoz3miKOB2DKeQlLAQ=;
- b=TO3f1qkRdwTD+Yae2b8pYV1VGFS5ZLo4hAWNkPBulJBxUv5nXWsJ1QVfGcs5ZDtTarFPqb
- G76nBY2sGxSwRjNbOiAdAUuuFoUM0PUhqmojvfDgOLXv26+VscAoPygqxzOZiBgTI2Gd4l
- KqF5T2XoGU6CegOsL4G2OLjj7yOHEtE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-S6HQBNxSP9akk-6cQvXLLw-1; Fri,
- 31 Oct 2025 07:47:43 -0400
-X-MC-Unique: S6HQBNxSP9akk-6cQvXLLw-1
-X-Mimecast-MFC-AGG-ID: S6HQBNxSP9akk-6cQvXLLw_1761911263
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFA8018001E9; Fri, 31 Oct 2025 11:47:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89DED30001A6; Fri, 31 Oct 2025 11:47:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 01C0D21E6A27; Fri, 31 Oct 2025 12:47:40 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  jsnow@redhat.com,  eblake@redhat.com,
- thuth@redhat.com,  berrange@redhat.com,  philmd@linaro.org,
- kchamart@redhat.com,  mst@redhat.com,  sgarzare@redhat.com
-Subject: Re: [PATCH 2/8] qapi: Refill doc comments to conform to conventions
-In-Reply-To: <51280808-c3aa-4922-addc-ccd0b8e8a33b@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Fri, 31 Oct 2025 13:25:55 +0300")
-References: <20251031094751.2817932-1-armbru@redhat.com>
- <20251031094751.2817932-3-armbru@redhat.com>
- <51280808-c3aa-4922-addc-ccd0b8e8a33b@yandex-team.ru>
-Date: Fri, 31 Oct 2025 12:47:39 +0100
-Message-ID: <87pla38f8k.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vEnea-0006XT-Ob
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:50:48 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vEneW-0005hB-4E
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:50:48 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b6d3340dc2aso598072266b.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:50:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761911435; x=1762516235; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3hQHlfDzZkIKvwhUPONKEN0h3U8H4inETL+0+fdu2Dw=;
+ b=O7xQYiA0nnZ61K1F2s9peF5PGClV61cOa/TQhQPMOtVG5xIjtg2OddAa7XNmM935Ss
+ TF0Qh3TrbN26zNkqsXmkSPoyGd3Q0Ub0oh7anY2DoQC93YZnmAst4nOonqna7LrS8AjT
+ r0HlbZCKc4jkvvdo4lkkwhmcRJoQ9Bg9zpSFk8pBiyXa0tmuvHJBSdqY9MIjh7ylW05v
+ ET0qlCILJCxYlQv21HsFze/mkXQ64vOzlqMN5ZZbp9W+CHw6C6hjdRYhfv6xfdvnnix9
+ 0EsrcBQ+2Azo8Y21Wdmuc+f0hJcJtCZMrMCz/eSQi6EdRW0Cc1Lu2eEPyOBnOOekweW+
+ 9tWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761911435; x=1762516235;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3hQHlfDzZkIKvwhUPONKEN0h3U8H4inETL+0+fdu2Dw=;
+ b=EKU6bOjSVVu7QqZs7dYPLTGZtTuq+dAiQd5eg64j95XiZdZzyYnhtxjCf5XhhLOw11
+ GoVV8ua0uLpnu5iNezHBT7QLjPB2mh6M1alRl++8/qFWCvnMSDeIfybwhYmSZjaPcTHh
+ 2t4s7jLQQ6M3hP9LpXoz6MvUBkwmsivsCW15CH9LEc+VadOT4uX0/iuK6f74yU7gJxYy
+ vC3RYvBi1pgffPX6FhXWgRNiU90R/K/oJQpSfP8DASdNmagkasIdHv7p02K0pxHFuKw1
+ FvQ8oAvhpmj108XFpbWgNpVQNe0eYEAuNQh2Od9rrVw9Lgxa+H+RlDPhql9Br8zPnkbK
+ bR8A==
+X-Gm-Message-State: AOJu0YxMqLkglh0LKMbFteKjPL20xcjDuAyN0YuM2Oxcuen0lXfVtjea
+ bJcpcnX6nNifMxc2F7bkJqPAZ+VWO9nThmUCIGZxneOfKxOYVv4cNenjbRMYJJwHUivnN8TEQMn
+ GtbjZygg=
+X-Gm-Gg: ASbGncstSPBYsJL1yqiEOuQeLCRe0pZ3TZWbAcsrX6QukEsvWK4WUMDYD48ncMD5Pr2
+ YtnagdIHJvRF9ufPn4VbBN+uDSEfm30rsHG4PPIyTMSFFzqaLL0Oc0nsmpM/vzMMUML78AT5Gt2
+ tBWOFPCzRg2UcPRjn26U33wUR6+Y+K/OkLqJ5Yv7HwMXYTTbDQBB/CmVuPVIECmRDx5kod7UxGI
+ 3UKieQs46XOhg+IvDm8KIFk5DjyxsI/tWrdKez1CaAp4Z/HzpjgbJZl7A0IfG1Tfy1cSLygVDCs
+ YAFTk9KyHyMcbVEyFP9l8u3aexyekAMydLJqdLW9umsGCWvegrULdxs6UfGihHoxKVDQtgITIiu
+ +AjiLMqkgUz2MFTbpIiy4q5L/b1uy8AkqFHltYeOyTYBJbZ/2d6tk2LGGIv/25T1U2T5Na/XLpw
+ D8V/hKcTOU94RdVfRXN9ErEuQRms+IHVymgkE2mJoCgeoL+2mpGtjKpfdx9au22Q==
+X-Google-Smtp-Source: AGHT+IFupkMrupgRnxy7dlMDnEvo+gUmOACbyyFiaw87o4f5pbUXpGEkBqFE6X1RtrfAyq1FGtZJ/g==
+X-Received: by 2002:a17:907:9707:b0:b3c:5f99:dac7 with SMTP id
+ a640c23a62f3a-b706e54eabfmr350412566b.21.1761911434916; 
+ Fri, 31 Oct 2025 04:50:34 -0700 (PDT)
+Received: from [10.240.88.227] (C3239BBB.static.ziggozakelijk.nl.
+ [195.35.155.187]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b7077d065e1sm154996466b.71.2025.10.31.04.50.34
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 04:50:34 -0700 (PDT)
+Message-ID: <74c5441c-2d00-422c-b301-93c9215ea02c@linaro.org>
+Date: Fri, 31 Oct 2025 12:50:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] tests/functional: Disable flaky MIPS tests on our
+ GitLab CI
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20251031094118.28440-1-philmd@linaro.org>
+ <1e445b6d-f1a4-47bb-b34b-38b37967e0c3@linaro.org>
+Content-Language: en-US
+In-Reply-To: <1e445b6d-f1a4-47bb-b34b-38b37967e0c3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,28 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> On 31.10.25 12:47, Markus Armbruster wrote:
->> Sweep the entire documentation again.  Last done in commit
->> 01bed0ff14b (qapi: Refill doc comments to conform to conventions).
+On 10/31/25 11:00, Richard Henderson wrote:
+> On 10/31/25 10:41, Philippe Mathieu-Daudé wrote:
+>> Disable both replay / wheezy tests which have been reported
+>> as flaky since too long.
 >>
->> To check the generated documentation does not change, I compared the
->> generated HTML before and after this commit with "wdiff -3".  Finds no
->> differences.  Comparing with diff is not useful, as the reflown
->> paragraphs are visible there.
+>> Philippe Mathieu-Daudé (2):
+>>    tests/functional: Mark the MIPS replay tests as flaky
+>>    tests/functional: Mark the MIPS Debian Wheezy tests as flaky
 >>
->> Signed-off-by: Markus Armbruster<armbru@redhat.com>
->
-> git show --color-words='[^#[:space:]]+'
->
-> shows no difference, except for around postcopy-vcpy-latency, were it
-> breaks for some reason.
+>>   tests/functional/mips/test_malta.py      | 2 ++
+>>   tests/functional/mips/test_replay.py     | 2 ++
+>>   tests/functional/mips64/test_malta.py    | 2 ++
+>>   tests/functional/mips64el/test_malta.py  | 1 +
+>>   tests/functional/mips64el/test_replay.py | 2 ++
+>>   tests/functional/mipsel/test_malta.py    | 2 ++
+>>   6 files changed, 11 insertions(+)
+>>
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> r~
 
-Yes, diff gets a bit confused around there.
+Queued.
 
-> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Thanks!
-
+r~
 
