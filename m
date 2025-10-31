@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBE7BCCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B52BCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEtwJ-0004Ct-Eg; Fri, 31 Oct 2025 14:33:31 -0400
+	id 1vEtwG-0004Ao-PA; Fri, 31 Oct 2025 14:33:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtwH-0004At-Pe
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:29 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1vEtwE-0004A6-EI
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:26 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtwA-0006Am-24
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:28 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-426f1574a14so1697374f8f.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:17 -0700 (PDT)
+ id 1vEtw7-0006B0-F5
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:26 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-421851bcb25so1515572f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761935592; x=1762540392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=sGx31Ll513CXKqm3c4XM9FoCRrQIvlZb6QfyJDJg0c8=;
- b=y4qChX3JXS6cd95D6Crz4th1Me0vaChRaYO0/3p1EMPPQZ3Db96BbQSUltonQd1rpP
- rzrnVa4w6B/ls0OBSGC52Wvomn1QUY8/aUGR988RZLBd1gvE4V8pvB8ej1gjmWwh1on2
- LdsnGNDLKyK8SZUwS+HRspxaKc6e0Kmd1NU+a7/7Pdcp9mnaz4vfMmqVgB1hHccv1gD8
- D7weth893oZYwRVbuDdfSiPPBmKSYWj1S3M9aQ2To1srEtbPkdFY0WSz+huwNvVUpBUi
- nrXCV/H2HCWvhZXdc5mqmPI575izBYOxaHtmaJA713l5KXbrV/ZPwT6MOzLjJ6q/ZOwo
- 5aEg==
+ d=linaro.org; s=google; t=1761935595; x=1762540395; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=4a5pZGC2LeA5EmYHWr+77na5jmR1RmVRW3azsXbL3Ag=;
+ b=xBVJITi5pXbmADfJvEYwki58zFj8hFx519qwYUrXcKIE/hhWut696AXG16U36NFdVm
+ TY7FxeU046QiykzijK5Ja1sC2U9AFl3f9fbGIPoCbFrr1ze6TESD/mw0dpqeUdwwQ144
+ ukZXU33bKnNg5r/+gOyl+F23UUaU37EghZbXwMyTryTfjsHeZfSd0YaMuzRilXdVQLbW
+ AnZODFa6Om5fOY2+3dcTDkaJ/Gnrn8FSuEOzsrV7k5a30JF7dkuWABbCg34hjQyJcwxh
+ NTeD8yda833fAJEmd7QBz/X4U9sUAvxDdma37boosHrSlG0XC7wuBxdsO+a+3oKxciIQ
+ CIeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761935592; x=1762540392;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sGx31Ll513CXKqm3c4XM9FoCRrQIvlZb6QfyJDJg0c8=;
- b=mRlqt0EAGK17kQ5mueGRIQDpbAYrXDkvantCD/MosffTLa+cAhOtcPOwOlpokzIex5
- FN1ufqgqeaelvapL0IWCJRc3DJt/tr9lXOfodOYH8lno453OuE6grOt0QbDCBcv8mFXf
- L8Gq153pgM+c79EiCdXTqbWFUNOXaTzUk1LHTXTyEydyz0r0UScz3DHUtuDw9lz2SO0O
- 9MfilJV4oYxvjbNgDcKTDcv9ZBEqHt4Jy5HdGYLShEjq3NIQHe99Z0zeBZwaxrJ6AeYh
- xOdsAOw3QI2L26AxPqJ7OMHEvySygfgObfnU64nhnx+Uc4S+BRQyRiNJWxTrHEwncXcb
- 8NcA==
-X-Gm-Message-State: AOJu0YybEinbCA5Grp7mY6d7zRS2v/6GIh1B4moRgsgJBbRoiUx00suu
- d19LkQ+4jrs7VjP8cY9HVqdBL9Sb7/QdGYXgQ43Yho5U4sGX0J0V/8j1N7ZSZgfE3DzOJRvS/IQ
- ql9N3
-X-Gm-Gg: ASbGncvljjKRQqbi3Dbtx2mZdoW/qLTI40jx9kdQMJTqmdPmUTUAjVK+9tr6xajgIZn
- bSH1Jp8nRP1WWcJuDcd/SLWTfJ5uDHZcGtcEHEnLy4a9pdf09uQ6Iv7uYVAAaHaXPZzpKp845s8
- s57taOHc+bz6Br4uZjM/SIYC7naSjPFIjgMVVQdniKkIb1qqxcbR5M8YA6DPLmldMRvyzV3ldU2
- TIniPs8gVxddgWnY1tX+VQfKXkZ6uwl43O5UVC62YDCHO+m8mdib6vCLJcgfP1uG6GjPL0NDDU6
- zVPIUNrFGFIBkveHDMuws0uRrbK1e0mNuBY6VkKQAjwjP5hNCn9DYYmKG/h/Kc/Nosp1oX84zk3
- m5z+u0McymcEfQ08iP1ucW+ame29ZqLLWUrlElc53xygrld4b8k5kEDZsxjpkzppKP+Z3j+g3T9
- SeFS/dZyCgLLqufGyI
-X-Google-Smtp-Source: AGHT+IGUj3xhRi4EJKuKoGNd3RlNberl5YgXZqGD3OZww/ytnnmV/y0Cok4COMCTvyoCDmW/soVb2w==
-X-Received: by 2002:a05:6000:2dc7:b0:428:5673:11c5 with SMTP id
- ffacd0b85a97d-429bd6add35mr4151127f8f.61.1761935592468; 
- Fri, 31 Oct 2025 11:33:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761935595; x=1762540395;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4a5pZGC2LeA5EmYHWr+77na5jmR1RmVRW3azsXbL3Ag=;
+ b=O+NhofCiDx1vzXEAw57WCyrzvqGtfHTDXXUvlQrNLndBwMc3Re88NJX9KSiUSbl5ue
+ 7QAd1dz3yc3dl2irCZhi8/ZfRTfFiaPUtUnBHsNCoVmf6+pKpb3mlwYaarsLkhYVj/Y9
+ 535Iy0sX4hvVxhDT0/xOtQqZkUz+36rPGKtaiDAx5p95oGFmFBJF4vJzkomszZE/mEEA
+ i5pI76xBEUp1t8UWLPinDKHUrwXOCS9IIoZ95ZAnPxFOSIqLnP+/hKBaIxyFZbLpfWfk
+ Y/k8uKk6aiZmekKjqQ4hCp2ptpZondpGY5Dc6Dr1V9D8CF2IamMFFJj8Yf4eJ36L58eE
+ 0d6A==
+X-Gm-Message-State: AOJu0Yyaci5UODfdbhXbmiyxg3/eddDbxs/b3wbqomS5/LkrsarQaHdv
+ n22tGU2cFWA+b1t9MaVyn1JX61zom44RgKIBl8Ul/8X20iuDJlNP+9k8yrIYV4e3/9/c4XWg3bx
+ IcnKb
+X-Gm-Gg: ASbGncvaMkk+4psd2ufzUGXfJimBTf+g9aRI9TFvFH7SbDtWDO/YWlnZkpThfURnyjw
+ hirmIrJ8OGXV5YztO1am+rbm7i0yw63atcqbsGFGg6OB2bzWPHv/+NasTC/cV121H6j/oSUtfkT
+ s2VnSFRMaBGWsu0DBJiDq7hxo/Hc/kUbG5CqLQYJxGxiD2JCz4bUSpJXj1NJLvDbkGEh+mF+uj9
+ UGlUALY9pmh4s5hQMflg1GNpcdAeKZdmhQj/K9Hq056maoXp4xAlJUYEQDakJT+SG3yZ9h/KkxZ
+ ADcmVgf5I8Q3c+0vCuv3UVg9MzXQMZmleNvaq5yOwi5ZkMUK/m9CgxmY//4APivqDlYc+c4WRzq
+ F/6UYKpsCk4+in3Rx0QMsZFFLD6U6sjCLZZo52P5ndyl0UyWq18KL0wQwPdZRCFGWNUeNUKxQuw
+ 6uaHbX3+ReT0qMzS3W
+X-Google-Smtp-Source: AGHT+IEmxmmVfnuU31DzwJtrdRjeNcXi/MPq5LWYn8FFJYykp0yN3PGotZh4vuTfT5TKfBg66iZrUg==
+X-Received: by 2002:a05:6000:240c:b0:429:bb21:94dd with SMTP id
+ ffacd0b85a97d-429bd6ad96cmr4012366f8f.46.1761935594943; 
+ Fri, 31 Oct 2025 11:33:14 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.11
+ ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 11:33:11 -0700 (PDT)
+ Fri, 31 Oct 2025 11:33:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/38] target-arm queue
-Date: Fri, 31 Oct 2025 18:32:32 +0000
-Message-ID: <20251031183310.3778349-1-peter.maydell@linaro.org>
+Subject: [PULL 03/38] docs/system/security: Restrict "virtualization use case"
+ to specific machines
+Date: Fri, 31 Oct 2025 18:32:35 +0000
+Message-ID: <20251031183310.3778349-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251031183310.3778349-1-peter.maydell@linaro.org>
+References: <20251031183310.3778349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,97 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq for the freeze. Mostly this is Philippe's
-hvf cleanup work, but there are some other smaller things in here too.
+Currently our security policy defines a "virtualization use case"
+where we consider bugs to be security issues, and a
+"non-virtualization use case" where we do not make any security
+guarantees and don't consider bugs to be security issues.
 
-thanks
--- PMM
+The rationale for this split is that much code in QEMU is older and
+was not written with malicious guests in mind, and we don't have the
+resources to audit, fix and defend it.  So instead we inform users
+about what the can in practice rely on as a security barrier, and
+what they can't.
 
-The following changes since commit 3728de31925ae9658e2ce3d1ff9b63c83609f310:
+We don't currently restrict the "virtualization use case" to any
+particular set of machine types.  This means that we have effectively
+barred ourselves from adding KVM support to any machine type that we
+don't want to put into the "bugs are security issues" category, even
+if it would be useful for users to be able to get better performance
+with a trusted guest by enabling KVM. This seems an unnecessary
+restriction, and in practice the set of machine types it makes
+sense to use for untrusted-guest virtualization is quite small.
 
-  Merge tag 'single-binary-20251030' of https://github.com/philmd/qemu into staging (2025-10-31 10:26:34 +0100)
+Specifically, we would like to be able to enable the use of
+KVM with the imx8 development board machine types, but we don't
+want to commit ourselves to having to support those SoC models
+and device models as part of QEMU's security boundary:
+https://lore.kernel.org/qemu-devel/20250629204851.1778-3-shentey@gmail.com/
 
-are available in the Git repository at:
+This patch updates the security policy to explicitly list the
+machine types we consider to be useful for the "virtualization
+use case".
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251031
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20251016131159.750480-1-peter.maydell@linaro.org
+Acked-by: Markus Armbruster <armbru@redhat.com>
+---
+ docs/system/security.rst | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-for you to fetch changes up to 8b733be9f408f9b550fc998c790e32aded5119f1:
+diff --git a/docs/system/security.rst b/docs/system/security.rst
+index f2092c8768b..53992048e65 100644
+--- a/docs/system/security.rst
++++ b/docs/system/security.rst
+@@ -35,6 +35,32 @@ malicious:
+ Bugs affecting these entities are evaluated on whether they can cause damage in
+ real-world use cases and treated as security bugs if this is the case.
+ 
++To be covered by this security support policy you must:
++
++- use a virtualization accelerator like KVM or HVF
++- use one of the machine types listed below
++
++It may be possible to use other machine types with a virtualization
++accelerator to provide improved performance with a trusted guest
++workload, but any machine type not listed here should not be
++considered to be providing guest isolation or security guarantees,
++and falls under the "non-virtualization use case".
++
++Supported machine types for the virtualization use case, by target architecture:
++
++aarch64
++  ``virt``
++i386, x86_64
++  ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``
++s390x
++  ``s390-ccw-virtio``
++loongarch64:
++  ``virt``
++ppc64:
++  ``pseries``
++riscv32, riscv64:
++  ``virt``
++
+ Non-virtualization Use Case
+ '''''''''''''''''''''''''''
+ 
+-- 
+2.43.0
 
-  accel/hvf: Trace prefetch abort (2025-10-31 16:26:46 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- *  hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
- * docs/system/arm/virt: Document user-creatable SMMUv3
- * docs/system/security: Restrict "virtualization use case" to specific machines
- * target/arm: Add assert to arm_to_core_mmu_idx()
- * hw/arm/virt: remove deprecated virt-4.1 and virt-4.2 machine types
- * hvf: Refactorings and cleanups
-
-----------------------------------------------------------------
-Mohamed Mediouni (2):
-      target/arm/hvf: Hardcode Apple MIDR
-      target/arm/hvf: switch hvf_arm_get_host_cpu_features to not create a vCPU
-
-Peter Maydell (3):
-      docs/system/arm/virt: Document user-creatable SMMUv3
-      docs/system/security: Restrict "virtualization use case" to specific machines
-      target/arm: Add assert to arm_to_core_mmu_idx()
-
-Philippe Mathieu-Daudé (33):
-      hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
-      hw/arm/virt: Remove deprecated virt-4.1 machine
-      hw/arm/virt: Remove VirtMachineClass::no_ged field
-      hw/arm/virt: Remove deprecated virt-4.2 machine
-      hw/arm/virt: Remove VirtMachineClass::kvm_no_adjvtime field
-      target/arm/hvf: Release memory allocated by hv_vcpu_config_create()
-      target/arm/hvf: Trace vCPU KICK events
-      target/arm/hvf: Check hv_vcpus_exit() returned value
-      target/arm/hvf: Check hv_vcpu_set_vtimer_mask() returned value
-      accel/hvf: Rename hvf_vcpu_exec() -> hvf_arch_vcpu_exec()
-      accel/hvf: Rename hvf_put|get_registers -> hvf_arch_put|get_registers
-      target/arm/hvf: Mention flush_cpu_state() must run on vCPU thread
-      accel/hvf: Mention hvf_arch_init_vcpu() must run on vCPU thread
-      target/arm/hvf: Mention hvf_sync_vtimer() must run on vCPU thread
-      target/arm/hvf: Mention hvf_arch_set_traps() must run on vCPU thread
-      accel/hvf: Mention hvf_arch_update_guest_debug() must run on vCPU
-      target/arm/hvf: Mention hvf_inject_interrupts() must run on vCPU thread
-      accel/hvf: Implement hvf_arch_vcpu_destroy()
-      target/arm/hvf: Simplify hvf_arm_get_host_cpu_features()
-      target/arm/hvf: Factor hvf_handle_exception() out
-      target/i386/hvf: Factor hvf_handle_vmexit() out
-      target/arm/hvf: Factor hvf_handle_vmexit() out
-      target/arm/hvf: Keep calling hv_vcpu_run() in loop
-      cpus: Trace cpu_exec_start() and cpu_exec_end() calls
-      accel/hvf: Guard hv_vcpu_run() between cpu_exec_start/end() calls
-      target/arm: Call aarch64_add_pauth_properties() once in host_initfn()
-      accel/hvf: Restrict ARM specific fields of AccelCPUState
-      target/arm: Rename init_cpreg_list() -> arm_init_cpreg_list()
-      target/arm/hvf: Rename 'vgic' -> 'emu_reginfo' in trace events
-      target/arm: Re-use arm_is_psci_call() in HVF
-      target/arm: Share ARM_PSCI_CALL trace event between TCG and HVF
-      target/arm/hvf/hvf: Document $pc adjustment in HVF & SMC
-      accel/hvf: Trace prefetch abort
-
- docs/system/arm/virt.rst    |  35 +++-
- docs/system/security.rst    |  26 +++
- include/hw/arm/virt.h       |   2 -
- include/system/hvf_int.h    |  23 ++-
- target/arm/internals.h      |   6 +-
- accel/hvf/hvf-accel-ops.c   |   4 +-
- cpu-common.c                |   3 +
- hw/arm/virt.c               |  33 +--
- hw/gpio/pl061.c             |  16 +-
- hw/vmapple/vmapple.c        |   4 +-
- target/arm/cpu.c            |   2 +-
- target/arm/cpu64.c          |   8 +-
- target/arm/helper.c         |   2 +-
- target/arm/hvf/hvf.c        | 244 +++++++++++++---------
- target/arm/tcg/psci.c       |   3 +
- target/i386/hvf/hvf.c       | 484 +++++++++++++++++++++++---------------------
- target/i386/hvf/x86hvf.c    |   4 +-
- target/arm/hvf/trace-events |   6 +-
- target/arm/trace-events     |   3 +
- trace-events                |   2 +
- 20 files changed, 511 insertions(+), 399 deletions(-)
 
