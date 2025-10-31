@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8181CCF9FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399BBCCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vElkD-0000W2-Mt; Fri, 31 Oct 2025 05:48:29 -0400
+	id 1vElk7-0000V6-Ut; Fri, 31 Oct 2025 05:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEljv-0000Sb-8O
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:48:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEljx-0000TG-3A
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:48:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEljn-0006hk-9y
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:48:10 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEljo-0006hg-OV
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:48:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761904082;
+ s=mimecast20190719; t=1761904081;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IgaNYBq59QOIAkbsNbXqCSPl0bHKIMBbUZyzvpB3hoc=;
- b=g2lKg7rsNhAPH1RDuBRX+bC2yBTwtyDVWMXwSZJ+32JXp9LE+k2X74hG251S0u+BiHMBkm
- Jbcs4N0rbYTSZaYDxc1kN5+HmGAqqH4f2jMjfYQjC5e1U+RXmX75PRCvi19I7iRIjpudKE
- 63qD4JVU2rmKHpWDM2OBfXsBW+OJagg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1ravWWZiOxa4lutq++HRMkeIF4/f8evIpnDEuRs0+ME=;
+ b=FguEO10CGAwzNACD9+OnmwrN7CL9NVMydZyv17EymWsxjDxI2MLbwpfS4RgGpU2KsnmbrU
+ QiACP+g3aHW2gjLnS7ywhfSmYmYy1UWT5OPAaUoPLhhAXHpWVChSkxlkaMBY0Hma4R7+vc
+ uw8xdrocc1uDcuHZWBSnxNQXWi4OIY4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-5gA1hp_7N_OoiioOMq1RlQ-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-i1AgH3hUPdig-FdQ1bwQKw-1; Fri,
  31 Oct 2025 05:47:58 -0400
-X-MC-Unique: 5gA1hp_7N_OoiioOMq1RlQ-1
-X-Mimecast-MFC-AGG-ID: 5gA1hp_7N_OoiioOMq1RlQ_1761904077
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: i1AgH3hUPdig-FdQ1bwQKw-1
+X-Mimecast-MFC-AGG-ID: i1AgH3hUPdig-FdQ1bwQKw_1761904077
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 551051955DCC; Fri, 31 Oct 2025 09:47:57 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 606081953989; Fri, 31 Oct 2025 09:47:57 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E30B619560A2; Fri, 31 Oct 2025 09:47:56 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 12BCC1955BE3; Fri, 31 Oct 2025 09:47:57 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 465FF21E676A; Fri, 31 Oct 2025 10:47:51 +0100 (CET)
+ id 3D2D821E6774; Fri, 31 Oct 2025 10:47:51 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com, eblake@redhat.com, vsementsov@yandex-team.ru,
  thuth@redhat.com, berrange@redhat.com, philmd@linaro.org,
  kchamart@redhat.com, mst@redhat.com, sgarzare@redhat.com
-Subject: [PATCH 7/8] docs/interop/firmware: Literal block markup
-Date: Fri, 31 Oct 2025 10:47:50 +0100
-Message-ID: <20251031094751.2817932-8-armbru@redhat.com>
+Subject: [PATCH 5/8] qga/qapi-schema: Clean up whitespace between definitions
+Date: Fri, 31 Oct 2025 10:47:48 +0100
+Message-ID: <20251031094751.2817932-6-armbru@redhat.com>
 In-Reply-To: <20251031094751.2817932-1-armbru@redhat.com>
 References: <20251031094751.2817932-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,58 +85,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few doc comments show command line snippets.  The snippets are
-indented, which is legible enough.  Actually formatting these with
-Sphinx would fail with "Unexpected indentation", though.  We don't so
-far.  Add suitable markup anyway.
+Consistently separate definitions with a single blank line.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/interop/firmware.json | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ qga/qapi-schema.json | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 7ffa7697e4..da0362a2c0 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -308,12 +308,19 @@
- #     indicates whether there will be an associated NVRAM template
- #     present.  The preferred corresponding QEMU command line options
- #     are
-+#
-+#     ::
-+#
- #         -drive if=none,id=pflash0,readonly=on,file=@executable.@filename,format=@executable.@format
- #         -machine pflash0=pflash0
-+#
- #     or equivalent -blockdev instead of -drive.  When @mode is
- #     @combined the executable must be cloned before use and
- #     configured with readonly=off.  With QEMU versions older than
- #     4.0, you have to use
-+#
-+#     ::
-+#
- #         -drive if=pflash,unit=0,readonly=on,file=@executable.@filename,format=@executable.@format
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index af75f12a28..5791b49dde 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -197,6 +197,7 @@
+ { 'struct': 'GuestAgentInfo',
+   'data': { 'version': 'str',
+             'supported_commands': ['GuestAgentCommandInfo'] } }
++
+ ##
+ # @guest-info:
  #
- # @nvram-template: Identifies the NVRAM template compatible with
-@@ -326,10 +333,17 @@
- #     typically used for persistently storing the non-volatile UEFI
- #     variables of a virtual machine definition.  The preferred
- #     corresponding QEMU command line options are
-+#
-+#     ::
-+#
- #         -drive if=none,id=pflash1,readonly=off,file=FILENAME_OF_PRIVATE_NVRAM_FILE,format=@nvram-template.@format
- #         -machine pflash1=pflash1
-+#
- #     or equivalent -blockdev instead of -drive.  With QEMU versions
- #     older than 4.0, you have to use
-+#
-+#     ::
-+#
- #         -drive if=pflash,unit=1,readonly=off,file=FILENAME_OF_PRIVATE_NVRAM_FILE,format=@nvram-template.@format
+@@ -322,7 +323,6 @@
+   'data':    { 'handle': 'int', 'buf-b64': 'str', '*count': 'int' },
+   'returns': 'GuestFileWrite' }
+ 
+-
+ ##
+ # @GuestFileSeek:
  #
- # Since: 3.0
+@@ -876,7 +876,6 @@
+             'sas', 'mmc', 'virtual', 'file-backed-virtual', 'nvme' ],
+   'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
+-
+ ##
+ # @GuestPCIAddress:
+ #
+@@ -1276,6 +1275,7 @@
+   'data': { 'exited': 'bool', '*exitcode': 'int', '*signal': 'int',
+             '*out-data': 'str', '*err-data': 'str',
+             '*out-truncated': 'bool', '*err-truncated': 'bool' }}
++
+ ##
+ # @guest-exec-status:
+ #
+@@ -1365,7 +1365,6 @@
+                '*input-data': 'str', '*capture-output': 'GuestExecCaptureOutput' },
+   'returns': 'GuestExec' }
+ 
+-
+ ##
+ # @GuestHostName:
+ #
+@@ -1392,7 +1391,6 @@
+ { 'command': 'guest-get-host-name',
+   'returns': 'GuestHostName' }
+ 
+-
+ ##
+ # @GuestUser:
+ #
+@@ -1763,7 +1761,6 @@
+   'data': [ 'linux' ],
+   'if': 'CONFIG_LINUX' }
+ 
+-
+ ##
+ # @GuestLinuxCpuStats:
+ #
+@@ -1838,7 +1835,6 @@
+   'if': 'CONFIG_LINUX'
+ }
+ 
+-
+ ##
+ # @GuestLoadAverage:
+ #
+@@ -1921,7 +1917,6 @@
+ # @version: IP version (4 or 6)
+ #
+ # Since: 9.1
+-
+ ##
+ { 'struct': 'GuestNetworkRoute',
+   'data': {'iface': 'str',
 -- 
 2.49.0
 
