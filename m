@@ -4,103 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96181CCF9FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41FD4CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEnkf-0002Ea-1L; Fri, 31 Oct 2025 07:57:05 -0400
+	id 1vEnl4-0002g4-Jy; Fri, 31 Oct 2025 07:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEnkZ-00028u-JR
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:57:00 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vEnl1-0002fO-4r
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:57:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEnkQ-0006Yz-R4
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:56:58 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vEnkq-0006e3-HB
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:57:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761911805;
+ s=mimecast20190719; t=1761911831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wka6/4ypPSZaKBUR8NW+l1dG+F0tcDS/RKul62uDrwI=;
- b=U8tRObUUbnsDjgbeGT2rubADBspuzA/rU5ZlykqP27PbI6iyaBWG60YKcG2mwopKbowMxj
- qyCSdQ9rkpFa/y6rhre6GjagNs9viRRfbNoLp+g/7cVlz4HOKwHAHJD4BMx5y2nJg3lJOx
- ZbgR1Dde07q0J7wYkpKaz0Jbi+sC8ZA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-600-XDLnBDMXPbW21mBBoItzrQ-1; Fri, 31 Oct 2025 07:56:43 -0400
-X-MC-Unique: XDLnBDMXPbW21mBBoItzrQ-1
-X-Mimecast-MFC-AGG-ID: XDLnBDMXPbW21mBBoItzrQ_1761911802
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b6d40007ea1so152138266b.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:56:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761911802; x=1762516602;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Wka6/4ypPSZaKBUR8NW+l1dG+F0tcDS/RKul62uDrwI=;
- b=rIctlGX4KzL/AHijFWwMnztMiYPemxvC3Jkvh5MrOD45fam6DAFeaG2L6YkBRcuX43
- 5qZGDQGqmKoKWhBWmPUl18lkRpFHMdX/vjxx8RyVnCwOxtMSfCk0TfnSelDppM9DysRQ
- 7KRKe1pUaiXpWff03tbblcgZWAFogQSBOrJh4H/iHNoKOapzR0pSsFL774avTfly2U4C
- 78fAoRaDlnFzjI2oEyfeaaGV7N5xQHagzbg3N0mbaBDTmkequb2JbF5zkI0V7zIC6wJz
- VLUSim3nwRZTSjV9JotMNPIEJjRSEEqdPSYxqb2wir0F3J93plzsjPcLY+U0vRaErOLe
- TGBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVX/FfiQLP/XBoAH85ux2otHd/XVISZE66Aq4su20f8onBOrHviUnyVIVaWq/J639QP+Hu/6wEXdUAY@nongnu.org
-X-Gm-Message-State: AOJu0Yw4YeDey4EbA2XqE7f5NWgyV1i1ZOHT1FMshoxe7a3/eIC8DVuX
- E3aAHv7mCCOAN2d2Hdx3fUYCzULMXTnv3RVOrysevIcrXEkEuYwSVrDpgh/w+7Iq4kiam7Q2RQl
- 4+pWGU0STA2HFJ67hF6360oCkwJ7sf731QsbT+kultz6uRBAe9USfGait
-X-Gm-Gg: ASbGncsVPxGthGxvAVcewLOF/nfccbXXToQm7G5CMixtpNyHEJ0MCR+6ZrUa230CZF5
- S3Z66YUY4IZsEOI5cH3yB2eTvnDAbI/ImJ7WTzwR2M0xwZ37K4lBf6MYz57+//VdjzJsH42BBPl
- Oa9aYvIMzVy+ET9l3c6xrSauatU9bS0MXqFQNdV9tzgNI0TSQ0n7HeegenjMdOLrY8O762HYLcO
- 7KrQz2w07vUcDjLbx6b9c8nPQPP6XoLoB1B5AmdUs1vsthF6vuPQOCwZzBTq4w9briTHVZVkA49
- 6LL5mm0xrrrY10x7jphEjhX4x8CccLUc7zOBhD0upXKDrNEhmRpOba2mKquZpb9SgS0H7S0CptU
- YUhI5yTaflegN72Vjx6A7MZvj+T0TWZoVvpzLnqn3s7H9iEYTzEIM/kZhiv2OQlybtBsj6LyIG0
- nSL1G2z6N6MUQM9FpHvFUmBWmBP5AY
-X-Received: by 2002:a17:907:7fa0:b0:b5d:7a22:ae41 with SMTP id
- a640c23a62f3a-b70701a8902mr295952766b.24.1761911801860; 
- Fri, 31 Oct 2025 04:56:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwRNtWJiJ91H4u+OH4bo4a2LJZwHbYcS3olw5OdJxtiythuSudGnPfhITcMEzEeMpitnR08g==
-X-Received: by 2002:a17:907:7fa0:b0:b5d:7a22:ae41 with SMTP id
- a640c23a62f3a-b70701a8902mr295949666b.24.1761911801400; 
- Fri, 31 Oct 2025 04:56:41 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d717:1f4c:b757:9963:8006:395e?
- (p200300cfd7171f4cb75799638006395e.dip0.t-ipconnect.de.
- [2003:cf:d717:1f4c:b757:9963:8006:395e])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6407b438b05sm1387781a12.27.2025.10.31.04.56.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 04:56:40 -0700 (PDT)
-Message-ID: <950e06da-1af6-4694-8623-8d6eabd791d9@redhat.com>
-Date: Fri, 31 Oct 2025 12:56:39 +0100
+ bh=/JV7DvWyQMEkQPB88AGf+gjHKUeIDsrDUKee2VP/vlw=;
+ b=e5KjD4A/T5u6aF6VE4U/3R52tvodq9KAtMkbXL51NsH5AsJOdwoz2pRU/W+enVMBDcWDE6
+ /EBO6L2JWY1Ep6DGEh65+KC+9j0/8OYUAVuGB+zTtpiYGXJiBEE8DYSOprLOg2L0DIfcVw
+ NorhEL5viTot/8ymZmRACwd28s97oIE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-CGMlH7KYPJif3_530XPBTw-1; Fri,
+ 31 Oct 2025 07:57:10 -0400
+X-MC-Unique: CGMlH7KYPJif3_530XPBTw-1
+X-Mimecast-MFC-AGG-ID: CGMlH7KYPJif3_530XPBTw_1761911829
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96C8219540DF; Fri, 31 Oct 2025 11:57:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.146])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAF0119560B6; Fri, 31 Oct 2025 11:56:59 +0000 (UTC)
+Date: Fri, 31 Oct 2025 12:56:57 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ hreitz@redhat.com, qemu-block@nongnu.org
+Subject: Re: [PATCH 5/5] vvfat: add support for "size" options
+Message-ID: <aQSkCSjgyoDRZCB6@redhat.com>
+References: <20250903075721.77623-1-chigot@adacore.com>
+ <20250903075721.77623-6-chigot@adacore.com>
+ <aPqCJRNCjxcZ6jq5@redhat.com> <87ms5g3dnq.fsf@pond.sub.org>
+ <CAJ307EjFXNyEwDTeXEwdc02PxBLHGENbPJCM+-v_6FRQ2VYEcw@mail.gmail.com>
+ <87ms5cmtqh.fsf@pond.sub.org>
+ <CAJ307EhFGHrTYcVJZghCNgGFmXZf1vTNg2E=7AA41jFvRqtGcg@mail.gmail.com>
+ <877bwbcy3e.fsf@pond.sub.org>
+ <CAJ307EiBBKDiLAX=CCx3d9n6PQQ5JnBv8RCWZpQqartVzWcBKg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 16/21] block/export: Add multi-threading interface
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-References: <20250701114437.207419-1-hreitz@redhat.com>
- <20250701114437.207419-17-hreitz@redhat.com> <aPjUv2YHrw_Hac0o@redhat.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <aPjUv2YHrw_Hac0o@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+In-Reply-To: <CAJ307EiBBKDiLAX=CCx3d9n6PQQ5JnBv8RCWZpQqartVzWcBKg@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,70 +91,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.10.25 14:57, Kevin Wolf wrote:
-> Am 01.07.2025 um 13:44 hat Hanna Czenczek geschrieben:
->> Make BlockExportType.iothread an alternate between a single-thread
->> variant 'str' and a multi-threading variant '[str]'.
->>
->> In contrast to the single-thread setting, the multi-threading setting
->> will not change the BDS's context (and so is incompatible with the
->> fixed-iothread setting), but instead just pass a list to the export
->> driver, with which it can do whatever it wants.
->>
->> Currently no export driver supports multi-threading, so they all return
->> an error when receiving such a list.
->>
->> Suggested-by: Kevin Wolf <kwolf@redhat.com>
->> Acked-by: Markus Armbruster <armbru@redhat.com>
->> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
->> diff --git a/include/block/export.h b/include/block/export.h
->> index 4bd9531d4d..ca45da928c 100644
->> --- a/include/block/export.h
->> +++ b/include/block/export.h
->> @@ -32,8 +32,16 @@ typedef struct BlockExportDriver {
->>       /* True if the export type supports running on an inactive node */
->>       bool supports_inactive;
->>   
->> -    /* Creates and starts a new block export */
->> -    int (*create)(BlockExport *, BlockExportOptions *, Error **);
->> +    /*
->> +     * Creates and starts a new block export.
->> +     *
->> +     * If the user passed a set of I/O threads for multi-threading, @multithread
->> +     * is a list of the @multithread_count corresponding contexts (freed by the
->> +     * caller).  Note that @exp->ctx has no relation to that list.
-> Maybe worth stating that it's NULL in the single threaded case?
+Am 31.10.2025 um 10:47 hat Clément Chigot geschrieben:
+> > > I was unable to make `vvfat.c` recognize the "size" argument passed
+> > > along `format=raw`, even if hardcoding the value in `vvfat.c` did make
+> > > a difference. And that's why I'm adding the warning in the commit
+> > > message.
+> >
+> > This one:
+> >
+> >     Some limitations remains, the size parameter is recognized only when
+> >     "format=vvfat" is passed. In particular, "format=raw,size=xxx" is
+> >     keeping the previously hardcoded value: 504MB for FAT16 and 32 MB for
+> >     FAT12. FAT32 has not been adjusted and thus still default to 504MB.
 
-I think thatâ€™s implicit, but absolutely no harm in being explicit about it.
+I actually wonder if we should give the vvfat option a different name to
+make it less error prone. Forgetting format=vvfat is easy and then raw
+will be autodetected and size will be interpreted as an option for raw.
 
->> +     */
->> +    int (*create)(BlockExport *exp, BlockExportOptions *opts,
->> +                  AioContext *const *multithread, size_t multithread_count,
->> +                  Error **errp);
->>   
->>       /*
->>        * Frees a removed block export. This function is only called after all
->> diff --git a/block/export/export.c b/block/export/export.c
->> index f3bbf11070..b733f269f3 100644
->> --- a/block/export/export.c
->> +++ b/block/export/export.c
->> @@ -76,16 +76,26 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
->>   {
->>       bool fixed_iothread = export->has_fixed_iothread && export->fixed_iothread;
->>       bool allow_inactive = export->has_allow_inactive && export->allow_inactive;
->> +    bool multithread = export->iothread &&
->> +        export->iothread->type == QTYPE_QLIST;
->>       const BlockExportDriver *drv;
->>       BlockExport *exp = NULL;
->>       BlockDriverState *bs;
->>       BlockBackend *blk = NULL;
->>       AioContext *ctx;
->> +    AioContext **multithread_ctxs = NULL;
-> g_autofree?
+> > > I've also realized that following my patch, the mismatch in between
+> > > the disk and the partition in Linux was going away when using `-drive
+> > > format=vvfat,size=xxx`. Making it not just QNX-oriented.
+> > >   | (host) $ qemu-system-aarch64 -M raspi4b -kernel raspi4b-kernel
+> > > -nographic -no-reboot -append "earlycon=pl011,mmio32,0xfe201000
+> > > console=ttyAMA0 noreboot" -dtb bcm2711-rpi-4-b.dtb -initrd
+> > > rootfs.cpio.gz  -drive
+> > > id=sdcard,file=fat:rw:<host_folder>,format=vvfat,if=sd,size=256M
+> > >   | (QEMU) # fdisk -l /dev/mmcblk1
+> > >   | Disk /dev/mmcblk1: 256 MB, 268435456 bytes, 524288 sectors
+> > >   | 1024 cylinders, 16 heads, 32 sectors/track
+> > >   | Units: sectors of 1 * 512 = 512 bytes
+> > >   |
+> > >   | Device       Boot StartCHS    EndCHS        StartLBA     EndLBA
+> > > Sectors  Size Id Type
+> > >   | /dev/mmcblk1p1 *  0,1,32      1023,15,32          63     524287
+> > >  524225  255M  6 FAT16
+> >
+> > EndLBA matches disk size.  EndCHS still matches EndLBA.  Good.
+> >
+> > The difference to the command line you showed above is format=raw (bad)
+> > vs. format=vvfat (good).
+> >
+> > With format=raw,size=256M you get that size, but a bogus partition
+> > table.
+> >
+> > With format=vvfat,size=256M you get that size, and a sensible partition
+> > table.
+> >
+> > Correct?
+> 
+> Yes and the main reason for that is because I don't know how to
+> retrieve the size given to "raw" within `vvfat_open`.
+> My understanding is that raw-format.c is suppressing that option,
+> through `qemu_opts_del` in `raw_read_options`, before calling its
+> block childs (here vvfat). Hence, it assumes the default size 512M.
 
-Sure, why not.
+The order is the other way around. You always get the protocol level
+openen first and only then the image format level.
 
-Hanna
+Imagine the simple case of a qcow2 image file used for the VM. You get
+things stacked like this:
+
+        virtio-blk
+            |
+            v
+          qcow2
+            |
+            v
+          file
+
+You need to open them from bottom to top. Opening a qcow2 image must be
+able to read from the file, so first the file layer must be opened. And
+obvious a virtio-blk device can only use the image after the qcow2
+layered has been opened.
+
+In your case, this is raw over vvfat. vvfat gets opened first, and then
+raw gets instantiated on top of it. (If you use format=vvfat, then the
+raw layer is left away.)
+
+Top level options you give to -drive go to the topmost block driver. You
+should be able to still set it on the vvfat level with -drive
+format=raw,file.size=... Deciding which option goes to which node is
+part of the (rather complicated) bdrv_open() logic in block.c.
+
+What raw does when a size option is given is that it just truncates the
+lower level to the given size. So as vvfat doesn't know the size, it
+still creates a 504 MB image, but raw shows only the first part of it to
+the guest. This results not only in an invalid partition table, but also
+means that as soon as vvfat decides to put a cluster after your limited
+size, you'll see filesystem corruption in the guest.
+
+So your approach to deal with this in vvfat and create a smaller
+filesystem to start with does look right to me.
+
+Kevin
 
 
