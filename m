@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 796B4CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 19:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A2FCCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 19:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEuP1-00017P-Nu; Fri, 31 Oct 2025 15:03:11 -0400
+	id 1vEuP4-00017g-Ue; Fri, 31 Oct 2025 15:03:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEuOz-00016y-CV
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:03:09 -0400
+ id 1vEuP1-00017K-2a
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:03:11 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEuOp-0004Xd-8U
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:03:09 -0400
+ id 1vEuOp-0004Xs-8T
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:03:10 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3F3CCC0159;
- Fri, 31 Oct 2025 22:02:52 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 16A92C015B;
+ Fri, 31 Oct 2025 22:02:53 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id m2mTmi0FnuQ0-hANvvA5b; Fri, 31 Oct 2025 22:02:51 +0300
+ ESMTPSA id m2mTmi0FnuQ0-6ou9Bglx; Fri, 31 Oct 2025 22:02:52 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761937371;
- bh=N+I1NJouYOnrrHASJrjD5TNHeMpicQO5xeT8Na9pxR0=;
+ s=default; t=1761937372;
+ bh=aToQozPJO7fyPFG7e9mtPKKMftwtXd+NUmEWhNOSUUM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=BRpkslg6GtiLSS3tdVuxE0mR1XTTRjeerbYQQhOCP8yfEsJEoBBnT3LeqOisWklHB
- GpoyrzJH/Ivyq/5kbmsaRT00uvEaBI3179b1fSKUpTE9Yo2TNbki9gDsxGac5DvJ2T
- USCc5j7/OBpFHAGP2aWGIYFa2twW/o4JkKQQEgMM=
+ b=Ptl8+BaCRttptY1uow6bM4+jAkPCasCGGVmP7/60+291DgQWPoehSenhxpxS52qWo
+ UmoBMLA4Wj24mFOnS9aS/fh2fvLo/3HR1AvFdC5+iJkHF4QSrMQpZ/oukXef6TgzjR
+ YJCSG1FzNQqkdF52s6RcsyasBRMciXOMTYDEI/jc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: berrange@redhat.com
 Cc: qemu-devel@nongnu.org,
 	vsementsov@yandex-team.ru
-Subject: [PATCH v2 1/2] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
-Date: Fri, 31 Oct 2025 22:02:45 +0300
-Message-ID: <20251031190246.257153-2-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 2/2] tests/unit: add unit test for qemu_hexdump()
+Date: Fri, 31 Oct 2025 22:02:46 +0300
+Message-ID: <20251031190246.257153-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251031190246.257153-1-vsementsov@yandex-team.ru>
 References: <20251031190246.257153-1-vsementsov@yandex-team.ru>
@@ -74,92 +74,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
-qemu_hexdump_line(). This leads to last line of the dump (when
-length is not multiply of 16) has badly aligned ASCII part.
-
-Let's calculate length the same way.
+Test, that fix in previous commit make sense.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- util/hexdump.c | 38 ++++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ tests/unit/test-cutils.c | 43 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/util/hexdump.c b/util/hexdump.c
-index f29ffceb74..7cfc547261 100644
---- a/util/hexdump.c
-+++ b/util/hexdump.c
-@@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
-     return (x < 10 ? '0' : 'a' - 10) + x;
+diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
+index 227acc5995..24fef16a7f 100644
+--- a/tests/unit/test-cutils.c
++++ b/tests/unit/test-cutils.c
+@@ -3626,6 +3626,44 @@ static void test_si_prefix(void)
+     g_assert_cmpstr(si_prefix(18), ==, "E");
  }
  
-+static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
-+                                  size_t block_len)
++static void test_qemu_hexdump_alignment(void)
 +{
-+    size_t est = buf_len * 2;
-+    if (unit_len) {
-+        est += buf_len / unit_len;
-+    }
-+    if (block_len) {
-+        est += buf_len / block_len;
-+    }
-+    return est;
++    /*
++     * Test that ASCII part is properly aligned for incomplete lines.
++     * This test catches the bug that was fixed in previous commit
++     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
++     *
++     * We use data that is not aligned to 16 bytes, so last line
++     * is incomplete.
++     */
++    const uint8_t data[] = {
++        /* First line: 16 bytes */
++        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* "Hello Wo" */
++        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* "rld! Thi" */
++        /* Second line: 5 bytes (incomplete) */
++        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s is " */
++    };
++    char *output = NULL;
++    size_t size;
++    FILE *stream = open_memstream(&output, &size);
++
++    g_assert_nonnull(stream);
++
++    qemu_hexdump(stream, "test", data, sizeof(data));
++    fclose(stream);
++
++    g_assert_nonnull(output);
++
++    /* We expect proper alignment of "s is" part on the second line */
++    const char *expected =
++        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 54 68 69   Hello World! Thi\n"
++        "test: 0010: 73 20 69 73  20                                      s is \n";
++
++    g_assert_cmpstr(output, ==, expected);
++
++    free(output);
 +}
 +
- GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
-                            size_t unit_len, size_t block_len)
+ int main(int argc, char **argv)
  {
-@@ -30,14 +43,8 @@ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
- 
-     if (str == NULL) {
-         /* Estimate the length of the output to avoid reallocs. */
--        size_t est = len * 2;
--        if (unit_len) {
--            est += len / unit_len;
--        }
--        if (block_len) {
--            est += len / block_len;
--        }
--        str = g_string_sized_new(est + 1);
-+        str = g_string_sized_new(hexdump_line_length(len, unit_len, block_len)
-+                                 + 1);
-     }
- 
-     for (u = 0, b = 0; len; u++, b++, len--, buf++) {
-@@ -76,13 +83,16 @@ static void asciidump_line(char *line, const void *bufptr, size_t len)
- }
- 
- #define QEMU_HEXDUMP_LINE_BYTES 16
--#define QEMU_HEXDUMP_LINE_WIDTH \
--    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
-+#define QEMU_HEXDUMP_UNIT 1
-+#define QEMU_HEXDUMP_BLOCK 4
- 
- void qemu_hexdump(FILE *fp, const char *prefix,
-                   const void *bufptr, size_t size)
- {
--    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
-+    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
-+                                    QEMU_HEXDUMP_UNIT,
-+                                    QEMU_HEXDUMP_BLOCK);
-+    g_autoptr(GString) str = g_string_sized_new(width + 1);
-     char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
-     size_t b, len;
- 
-@@ -90,11 +100,11 @@ void qemu_hexdump(FILE *fp, const char *prefix,
-         len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
- 
-         g_string_truncate(str, 0);
--        qemu_hexdump_line(str, bufptr + b, len, 1, 4);
-+        qemu_hexdump_line(str, bufptr + b, len,
-+                          QEMU_HEXDUMP_UNIT, QEMU_HEXDUMP_BLOCK);
-         asciidump_line(ascii, bufptr + b, len);
- 
--        fprintf(fp, "%s: %04zx: %-*s %s\n",
--                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, str->str, ascii);
-+        fprintf(fp, "%s: %04zx: %-*s %s\n", prefix, b, width, str->str, ascii);
-     }
- 
+     g_test_init(&argc, &argv, NULL);
+@@ -3995,5 +4033,10 @@ int main(int argc, char **argv)
+                     test_iec_binary_prefix);
+     g_test_add_func("/cutils/si_prefix",
+                     test_si_prefix);
++
++    /* qemu_hexdump() test */
++    g_test_add_func("/cutils/qemu_hexdump/alignment",
++                    test_qemu_hexdump_alignment);
++
+     return g_test_run();
  }
 -- 
 2.48.1
