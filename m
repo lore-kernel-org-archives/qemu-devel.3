@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E29CFCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 08:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4E9CCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 08:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEk2L-0002zF-4S; Fri, 31 Oct 2025 03:59:06 -0400
+	id 1vEkCL-0006LD-9O; Fri, 31 Oct 2025 04:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1vEk2H-0002yw-5l; Fri, 31 Oct 2025 03:59:02 -0400
-Received: from dedi548.your-server.de ([85.10.215.148])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vEkCJ-0006Kd-04
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 04:09:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1vEk2D-0006CU-Dt; Fri, 31 Oct 2025 03:59:00 -0400
-Received: from sslproxy07.your-server.de ([78.47.199.104])
- by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1vEk23-0004u9-2c; Fri, 31 Oct 2025 08:58:48 +0100
-Received: from localhost ([127.0.0.1])
- by sslproxy07.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1vEk23-000GBl-1e; Fri, 31 Oct 2025 08:58:47 +0100
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 0E16148014E;
- Fri, 31 Oct 2025 08:58:47 +0100 (CET)
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id beBozUZgIBLl; Fri, 31 Oct 2025 08:58:46 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 76393480152;
- Fri, 31 Oct 2025 08:58:46 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.embedded-brains.de 76393480152
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=embedded-brains.de;
- s=34EE5404-8E36-11F0-B577-2ECCAB4968F5; t=1761897526;
- bh=1eV0Ldsgx/ctP8tgKGd2Lw97BG5YK4pGwns+q7b5HA0=;
- h=Date:From:To:Message-ID:MIME-Version;
- b=bJpe0DqSTZ/V98qHg1I6fGKVPbeS1M9e3zCTbIRXTPW6NpG3LXeraY1fImqC4ObpA
- 7jQTLhyIrG0giKrrFXmFYemfb129s1Jb0q7iccZ1FH2c0aSNPTbVkmXqPqiXmKIYlO
- 6BNg/5+xmsQDjad+IVKQmiZpJxWO2qh1HIvmEZ73DvgQiyGb7wCuIXELEeV/0iTn0j
- tSmufqamjJYfNw6eTVQWpxxRLUlZcq3pdfb58+c4ruS8mIt2mcsdjnkZqWbOQ1nNQN
- cx4GC110y4nnUf18wfcRg+YgEQmupZbiybsXDeCOTXYBRmJ3RZ/T4azSArpRScsD5j
- h4STzElI+UP9g==
-X-Virus-Scanned: amavis at zimbra.eb.localhost
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id CiBujhIz4Iyh; Fri, 31 Oct 2025 08:58:46 +0100 (CET)
-Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
- by mail.embedded-brains.de (Postfix) with ESMTP id 514C348014E;
- Fri, 31 Oct 2025 08:58:46 +0100 (CET)
-Date: Fri, 31 Oct 2025 08:58:46 +0100 (CET)
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Guenter Roeck <linux@roeck-us.net>, qemu-devel <qemu-devel@nongnu.org>, 
- qemu-riscv <qemu-riscv@nongnu.org>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <387693146.35079.1761897526299.JavaMail.zimbra@embedded-brains.de>
-In-Reply-To: <CAKmqyKNkJiK_8UkJ6AqvmCbtkj=amzJvrV1CUx2EXCdUvD_jCw@mail.gmail.com>
-References: <20250319061342.26435-1-sebastian.huber@embedded-brains.de>
- <20250319061342.26435-4-sebastian.huber@embedded-brains.de>
- <38528707-3d28-4be8-8b58-60269cb1db1b@roeck-us.net>
- <788527663.312.1759727663914.JavaMail.zimbra@embedded-brains.de>
- <67097d9c-ec3c-420c-b5b3-e2f3595a0612@roeck-us.net>
- <CAKmqyKNkJiK_8UkJ6AqvmCbtkj=amzJvrV1CUx2EXCdUvD_jCw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] hw/riscv: Make FDT optional for MPFS
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vEkCD-0007cx-GA
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 04:09:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761898152;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z0+5gqv9VOs85bmbQbEwidjxvMub2Y6ghknO7kleT8E=;
+ b=b/NYuy/hu7RRdsKRTxZVXhZsiAqukOR9RcGUaGwCoETPr3F9NGklL4mNmzKl41C2Fe0yyu
+ 3e6KmAyAgjlFIjsyveQphqiuUM0VJjnlOpbNI5tSg/oWJ7AFCZLM6aIYwI+MU5Qa+Bl89G
+ DJIUhO0q1JIEyXm+SHWwIJnX+P+DFMI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-543-tMlK5it5PESKed7JsprgIw-1; Fri, 31 Oct 2025 04:09:10 -0400
+X-MC-Unique: tMlK5it5PESKed7JsprgIw-1
+X-Mimecast-MFC-AGG-ID: tMlK5it5PESKed7JsprgIw_1761898149
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-429af6b48a8so2092213f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 01:09:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761898149; x=1762502949;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Z0+5gqv9VOs85bmbQbEwidjxvMub2Y6ghknO7kleT8E=;
+ b=Z0kHR2tMCMwRJiTgiNOyhfqR654U3QlWlGWt5k0bVKcDEz0YsFEipIkdRoVZxWb34k
+ JJq5Q6ACTJjztDJqlbNVb3DQqXU0qANikc1lj97q3+MlXrtmw7HRKN7/XzrwE5yhyoim
+ r/t0pl0PpZ77I/uGYmsSayCeB7tElotmAOrKDi3osDaypAi/mLTb2TS+/1BCyFwfRYip
+ zndaL66AQBGGkSLvd/rGsJP1RdQUmZVcqueU3/rANwqtVooRrudplj2cHxxl05J29Rgo
+ YU2EyRX69Etch1C7+cZthR2i7yIjfeUed5BlcORUeRlEIsWpZnQhX2OSQ7T9l2wMpVKk
+ NVxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2w7S56wr1sONpeo+NrR5y+oOeqPAcj0WgtR3h8TkxCLtE0AqcjAzOZUfqDop4BUbQtxvmT6jzSCSG@nongnu.org
+X-Gm-Message-State: AOJu0YxHFX2zf64v3eaa6wQMfI5uk/1oubOZCrFzrY4JeyDcxFcJi3Nv
+ ocedAg0n5NPufLcYPXvOyeWbAzUECHpTofktEy5csfVU1n0q7bb6RrttZYzAyNOjPI61OAEKSCA
+ icu/ZBX05bN0743wKfYwhz94uFh6pXdT+E9DL4gCwb316Y/XEX7B/CWH5
+X-Gm-Gg: ASbGnctYQg7121aH+6U9ZISneVoOd/a7QvlMvOpZrP24euvQxgvn4fn1dw+myAlP/sE
+ 3pdy8QOZLVA60rhbfld5dCY9rDJL0rY33wEBa659NB0CiPcX57WRJeU3bKmUc5Gd+0eknYS5+m7
+ pJeYJU8LLjXoLw6+qJq1FF0atD3hNRgrzBZ5eWlr0tGcm0+XsLdQFLjHQIa1UCLdfV4igUJ6ojK
+ r6TkARN2qTB/nD+XkiiHsUvlbFr4jpn3zZshiOAslvlH6fpE2YZC8g2EKmi4gI8vysdaB6UpgH0
+ 0bbjx2oMBmFqEbdcmPqb4qxCANTNcj6by77IL/1UyiQN4Yw0RSameTkRdg8TVdWielM+aVmyXhl
+ EpLtoWNvHLbKdFzWpkpjrcl3FyLStLZOVxQlefnEVNRTStQ==
+X-Received: by 2002:a05:600c:820e:b0:475:de12:d3b2 with SMTP id
+ 5b1f17b1804b1-477308a6da5mr25467775e9.36.1761898148907; 
+ Fri, 31 Oct 2025 01:09:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFknTLua7JG8KwW8svfiubdFR3wc7ri45LcPTxD599iZNU7zr9pFVBJLAbseK+5SSif17tc5A==
+X-Received: by 2002:a05:600c:820e:b0:475:de12:d3b2 with SMTP id
+ 5b1f17b1804b1-477308a6da5mr25467385e9.36.1761898148422; 
+ Fri, 31 Oct 2025 01:09:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47732dc28ebsm19507725e9.2.2025.10.31.01.09.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 01:09:07 -0700 (PDT)
+Message-ID: <d9eedc35-1548-4011-8eb3-5f6a4dcefe51@redhat.com>
+Date: Fri, 31 Oct 2025 09:09:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [192.168.96.204]
-X-Mailer: Zimbra 10.1.10_GA_4785 (ZimbraWebClient - FF140
- (Linux)/10.1.10_GA_4785)
-Thread-Topic: hw/riscv: Make FDT optional for MPFS
-Thread-Index: 2LxsqKNBypmzsIfWY5xx/vh+OhXjQw==
-X-DKIM-Status: pass [(embedded-brains.de) - 78.47.199.104]
-X-Virus-Scanned: Clear (ClamAV 1.0.9/27808/Thu Oct 30 10:49:23 2025)
-Received-SPF: pass client-ip=85.10.215.148;
- envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 09/23] intel_iommu: Stick to system MR for IOMMUFD
+ backed host device when x-flts=on
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
+ <20251024084349.102322-10-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251024084349.102322-10-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +118,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
------ Am 31. Okt 2025 um 3:56 schrieb Alistair Francis alistair23@gmail.com=
-:
+Hi Zhenzhong,
 
-> On Tue, Oct 7, 2025 at 6:34=E2=80=AFAM Guenter Roeck <linux@roeck-us.net>=
- wrote:
->>
->> On 10/5/25 22:14, Sebastian Huber wrote:
->> > Hello Guenter,
->> >
->> > thanks for the report. Do you have a Linux image and a Qemu command li=
-ne so that
->> > I can test this?
->> >
->> See http://server.roeck-us.net/qemu/riscv64/
->>
->> run.sh executed with qemu 10.1 or later should trigger the problem
->> (the command line is not passed to the kernel).
->=20
-> Any updates here?
+On 10/24/25 10:43 AM, Zhenzhong Duan wrote:
+> When guest enables scalable mode and setup first stage page table, we don't
+> want to use IOMMU MR but rather continue using the system MR for IOMMUFD
+> backed host device.
+>
+> Then default HWPT in VFIO contains GPA->HPA mappings which could be reused
+> as nesting parent HWPT to construct nested HWPT in vIOMMU.
 
-Sorry, I didn't forget it, but I have a huge backlog of work.
+we had a discussion thread with Nicolin and Shameer about usage of AS
+for nested SMMU
+(https://lore.kernel.org/all/add07edd-3652-430d-b52c-cb2bdbc7f587@redhat.com/)
+If I understand correctly you also rely on system MR for nested. I am
+not sure this is a good usage of the API/AS objects as in practice you
+have an actual translation in place (althout implemented by HW) while by
+using the system MR you do not reflect that. I encouraged Shameer to try
+using a dummy dedicated AS that can be shared. I think it would be
+better if we could align the strategies.
 
---=20
-embedded brains GmbH & Co. KG
-Herr Sebastian HUBER
-Dornierstr. 4
-82178 Puchheim
-Germany
-email: sebastian.huber@embedded-brains.de
-phone: +49-89-18 94 741 - 16
-fax:   +49-89-18 94 741 - 08
+>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+> ---
+>  hw/i386/intel_iommu.c | 36 ++++++++++++++++++++++++++++++++++--
+>  1 file changed, 34 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 4c83578c54..ce4c54165e 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -41,6 +41,7 @@
+>  #include "migration/misc.h"
+>  #include "migration/vmstate.h"
+>  #include "trace.h"
+> +#include "system/iommufd.h"
+>  
+>  /* context entry operations */
+>  #define PASID_0    0
+> @@ -1713,6 +1714,24 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
+>  
+>  }
+>  
+> +static VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+> +{
+> +    IntelIOMMUState *s = as->iommu_state;
+> +    struct vtd_as_key key = {
+> +        .bus = as->bus,
+> +        .devfn = as->devfn,
+> +    };
+> +    VTDHostIOMMUDevice *vtd_hiod = g_hash_table_lookup(s->vtd_host_iommu_dev,
+> +                                                       &key);
+> +
+> +    if (vtd_hiod && vtd_hiod->hiod &&
+> +        object_dynamic_cast(OBJECT(vtd_hiod->hiod),
+> +                            TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+> +        return vtd_hiod;
+> +    }
+> +    return NULL;
+> +}
+> +
+>  static bool vtd_as_pt_enabled(VTDAddressSpace *as)
+>  {
+>      IntelIOMMUState *s;
+> @@ -1738,12 +1757,25 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
+>  /* Return whether the device is using IOMMU translation. */
+>  static bool vtd_switch_address_space(VTDAddressSpace *as)
+>  {
+> +    IntelIOMMUState *s;
+>      bool use_iommu, pt;
+>  
+>      assert(as);
+>  
+> -    use_iommu = as->iommu_state->dmar_enabled && !vtd_as_pt_enabled(as);
+> -    pt = as->iommu_state->dmar_enabled && vtd_as_pt_enabled(as);
+> +    s = as->iommu_state;
+> +    use_iommu = s->dmar_enabled && !vtd_as_pt_enabled(as);
+> +    pt = s->dmar_enabled && vtd_as_pt_enabled(as);
+> +
+> +    /*
+> +     * When guest enables scalable mode and sets up first stage page table,
+> +     * we stick to system MR for IOMMUFD backed host device. Then its
+> +     * default hwpt contains GPA->HPA mappings which is used directly if
+> +     * PGTT=PT and used as nesting parent if PGTT=FST. Otherwise fall back
+> +     * to original processing.
+According to the above comment you have a S1 translation in place but
+you set use_iommu = false and use system MR?
 
-Registergericht: Amtsgericht M=C3=BCnchen
-Registernummer: HRB 157899
-Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
-=C3=B6rfler
-Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
-https://embedded-brains.de/datenschutzerklaerung/
+Revoking my R-bs for now because I am not convinced we shall use system
+MR when S1+S2 is setup. I may be wrong but at least I need more
+explanations ;-)
+
+Eric
+> +     */
+> +    if (s->root_scalable && s->fsts && vtd_find_hiod_iommufd(as)) {
+> +        use_iommu = false;
+> +    }
+>  
+>      trace_vtd_switch_address_space(pci_bus_num(as->bus),
+>                                     VTD_PCI_SLOT(as->devfn),
+
 
