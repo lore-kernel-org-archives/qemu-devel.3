@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA37FCCF9FF
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 06:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D15FCCF9EB
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 06:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEixv-0003D2-Bf; Fri, 31 Oct 2025 02:50:27 -0400
+	id 1vEiwv-0000Oq-1i; Fri, 31 Oct 2025 02:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vEixo-00036F-Cm
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 02:50:20 -0400
+ id 1vEiwl-0008Tn-F5
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 02:49:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vEixi-0004K1-5s
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 02:50:19 -0400
+ id 1vEiwd-0003xB-6z
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 02:49:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761893409;
+ s=mimecast20190719; t=1761893344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7F1uWKrfDRlDi2YyV2H6l6ipF83SDAuQw1JsdxjlRnQ=;
- b=ETesRf5OKMuefC/WU/9cErSV5xFpHqqUJoIs2ouKeSYcAU7Wc9tih2hsHW5zX+jGTKH9Ex
- 1N0Lt/uAUu/T0jCWf7mrnc+KCPqdrV+fVNrJMeFFBhWBlV5kQPsM1j9F3Bz57VNuB6ctKc
- OdMk8I6py6n1pnCi9ndtHNp4f1HXLdw=
+ bh=pAi6/TjfRTISHrBjXrRdIToAwhXS/+qZenv56liLF5o=;
+ b=DxIn+8wcPYgtXdsHC6cpDQShevEctGOwMqy3kEdRAH7AkK5Yx9frQsf94/DgUXtWxg3nL1
+ Ym5xOL9XKN4rxMNLwyRCCg5XoQTDiKhVfHyFU5UpID1AL4qFbjYVAkqIsZ0kpqiudAOP4T
+ RnwV1xTGr/Dkl3w5NNTOrmUoQX7OXo8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-moIbU2FXNnSR6lL60QiWNA-1; Fri,
- 31 Oct 2025 02:50:07 -0400
-X-MC-Unique: moIbU2FXNnSR6lL60QiWNA-1
-X-Mimecast-MFC-AGG-ID: moIbU2FXNnSR6lL60QiWNA_1761893406
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-Bvp2UhtiMqumdIY6V_vHgw-1; Fri,
+ 31 Oct 2025 02:49:01 -0400
+X-MC-Unique: Bvp2UhtiMqumdIY6V_vHgw-1
+X-Mimecast-MFC-AGG-ID: Bvp2UhtiMqumdIY6V_vHgw_1761893340
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51BED1955DE4; Fri, 31 Oct 2025 06:50:06 +0000 (UTC)
+ id AB7041955D8E; Fri, 31 Oct 2025 06:49:00 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC8F118002AD; Fri, 31 Oct 2025 06:50:04 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 18F6C19560A2; Fri, 31 Oct 2025 06:48:58 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 32/36] audio: move capture API to own header
-Date: Fri, 31 Oct 2025 10:46:25 +0400
-Message-ID: <20251031064631.134651-33-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 22/36] audio: remove AUDIO_HOST_ENDIANNESS
+Date: Fri, 31 Oct 2025 10:46:15 +0400
+Message-ID: <20251031064631.134651-23-marcandre.lureau@redhat.com>
 In-Reply-To: <20251031064631.134651-1-marcandre.lureau@redhat.com>
 References: <20251031064631.134651-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -71,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,159 +89,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-For modularity/clarity reasons, move the capture API in a specific
-header.
-
-The current audio/ header license is MIT.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                  |  2 +-
- audio/audio_int.h            |  1 +
- include/qemu/audio-capture.h | 43 ++++++++++++++++++++++++++++++++++++
- include/qemu/audio.h         | 31 --------------------------
- ui/vnc.h                     |  2 +-
- 5 files changed, 46 insertions(+), 33 deletions(-)
- create mode 100644 include/qemu/audio-capture.h
+ audio/audio.h      | 6 ------
+ audio/audio.c      | 6 +++---
+ audio/spiceaudio.c | 4 ++--
+ hw/audio/adlib.c   | 2 +-
+ hw/audio/asc.c     | 2 +-
+ hw/audio/cs4231a.c | 2 +-
+ hw/audio/gus.c     | 2 +-
+ 7 files changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 24323e8800..c78aa1f565 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2977,7 +2977,7 @@ X: audio/paaudio.c
- X: audio/sdlaudio.c
- X: audio/sndioaudio.c
- X: audio/spiceaudio.c
--F: include/qemu/audio.h
-+F: include/qemu/audio*.h
- F: qapi/audio.json
+diff --git a/audio/audio.h b/audio/audio.h
+index 3be0c4f24f..0af911fd9a 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -31,12 +31,6 @@
  
- ALSA Audio backend
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index df13a466e4..5834ebea5e 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -30,6 +30,7 @@
- /* #define RECIPROCAL */
+ typedef void (*audio_callback_fn) (void *opaque, int avail);
+ 
+-#if HOST_BIG_ENDIAN
+-#define AUDIO_HOST_ENDIANNESS 1
+-#else
+-#define AUDIO_HOST_ENDIANNESS 0
+-#endif
+-
+ typedef struct audsettings {
+     int freq;
+     int nchannels;
+diff --git a/audio/audio.c b/audio/audio.c
+index f334030d96..18bc9188db 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -274,7 +274,7 @@ static int audio_pcm_info_eq (struct audio_pcm_info *info, struct audsettings *a
+         && info->is_signed == is_signed
+         && info->is_float == is_float
+         && info->bits == bits
+-        && info->swap_endianness == (as->endianness != AUDIO_HOST_ENDIANNESS);
++        && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
+ }
+ 
+ void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
+@@ -320,7 +320,7 @@ void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
+     info->nchannels = as->nchannels;
+     info->bytes_per_frame = as->nchannels * mul;
+     info->bytes_per_second = info->freq * info->bytes_per_frame;
+-    info->swap_endianness = (as->endianness != AUDIO_HOST_ENDIANNESS);
++    info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
+ }
+ 
+ void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
+@@ -2179,7 +2179,7 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
+         .freq = pdo->frequency,
+         .nchannels = pdo->channels,
+         .fmt = pdo->format,
+-        .endianness = AUDIO_HOST_ENDIANNESS,
++        .endianness = HOST_BIG_ENDIAN,
+     };
+ }
+ 
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index 7f02f7285c..7e737bff9a 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -102,7 +102,7 @@ static int line_out_init(HWVoiceOut *hw, struct audsettings *as,
  #endif
- #include "qemu/audio.h"
-+#include "qemu/audio-capture.h"
- #include "mixeng.h"
+     settings.nchannels  = SPICE_INTERFACE_PLAYBACK_CHAN;
+     settings.fmt        = AUDIO_FORMAT_S16;
+-    settings.endianness = AUDIO_HOST_ENDIANNESS;
++    settings.endianness = HOST_BIG_ENDIAN;
  
- #ifdef CONFIG_GIO
-diff --git a/include/qemu/audio-capture.h b/include/qemu/audio-capture.h
-new file mode 100644
-index 0000000000..a07412db85
---- /dev/null
-+++ b/include/qemu/audio-capture.h
-@@ -0,0 +1,43 @@
-+/*
-+ * QEMU Audio subsystem
-+ *
-+ * SPDX-License-Identifier: MIT
-+ */
-+#ifndef QEMU_AUDIO_CAPTURE_H
-+#define QEMU_AUDIO_CAPTURE_H
-+
-+#include "audio.h"
-+
-+typedef struct CaptureVoiceOut CaptureVoiceOut;
-+
-+typedef enum {
-+    AUD_CNOTIFY_ENABLE,
-+    AUD_CNOTIFY_DISABLE
-+} audcnotification_e;
-+
-+struct audio_capture_ops {
-+    void (*notify) (void *opaque, audcnotification_e cmd);
-+    void (*capture) (void *opaque, const void *buf, int size);
-+    void (*destroy) (void *opaque);
-+};
-+
-+struct capture_ops {
-+    void (*info) (void *opaque);
-+    void (*destroy) (void *opaque);
-+};
-+
-+typedef struct CaptureState {
-+    void *opaque;
-+    struct capture_ops ops;
-+    QLIST_ENTRY(CaptureState) entries;
-+} CaptureState;
-+
-+CaptureVoiceOut *AUD_add_capture(
-+    AudioBackend *be,
-+    struct audsettings *as,
-+    struct audio_capture_ops *ops,
-+    void *opaque
-+    );
-+void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque);
-+
-+#endif /* QEMU_AUDIO_CAPTURE_H */
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index 0f224810c7..c56af895d6 100644
---- a/include/qemu/audio.h
-+++ b/include/qemu/audio.h
-@@ -41,30 +41,7 @@ typedef struct audsettings {
-     int endianness;
- } audsettings;
+     audio_pcm_init_info (&hw->info, &settings);
+     hw->samples = LINE_OUT_SAMPLES;
+@@ -218,7 +218,7 @@ static int line_in_init(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ #endif
+     settings.nchannels  = SPICE_INTERFACE_RECORD_CHAN;
+     settings.fmt        = AUDIO_FORMAT_S16;
+-    settings.endianness = AUDIO_HOST_ENDIANNESS;
++    settings.endianness = HOST_BIG_ENDIAN;
  
--typedef enum {
--    AUD_CNOTIFY_ENABLE,
--    AUD_CNOTIFY_DISABLE
--} audcnotification_e;
--
--struct audio_capture_ops {
--    void (*notify) (void *opaque, audcnotification_e cmd);
--    void (*capture) (void *opaque, const void *buf, int size);
--    void (*destroy) (void *opaque);
--};
--
--struct capture_ops {
--    void (*info) (void *opaque);
--    void (*destroy) (void *opaque);
--};
--
--typedef struct CaptureState {
--    void *opaque;
--    struct capture_ops ops;
--    QLIST_ENTRY (CaptureState) entries;
--} CaptureState;
--
- typedef struct SWVoiceOut SWVoiceOut;
--typedef struct CaptureVoiceOut CaptureVoiceOut;
- typedef struct SWVoiceIn SWVoiceIn;
+     audio_pcm_init_info (&hw->info, &settings);
+     hw->samples = LINE_IN_SAMPLES;
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index 6aae365f47..45c0a458f2 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -272,7 +272,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
+     as.freq = s->freq;
+     as.nchannels = SHIFT;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = AUDIO_HOST_ENDIANNESS;
++    as.endianness = HOST_BIG_ENDIAN;
  
- struct AudioBackendClass {
-@@ -79,14 +56,6 @@ typedef struct QEMUAudioTimeStamp {
+     s->voice = AUD_open_out (
+         &s->card,
+diff --git a/hw/audio/asc.c b/hw/audio/asc.c
+index edd42d6d91..41472dc2e3 100644
+--- a/hw/audio/asc.c
++++ b/hw/audio/asc.c
+@@ -650,7 +650,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
+     as.freq = ASC_FREQ;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_U8;
+-    as.endianness = AUDIO_HOST_ENDIANNESS;
++    as.endianness = HOST_BIG_ENDIAN;
  
- bool AUD_backend_check(AudioBackend **be, Error **errp);
+     s->voice = AUD_open_out(&s->card, s->voice, "asc.out", s, asc_out_cb,
+                             &as);
+diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
+index 3b80a61378..0a5d614f8b 100644
+--- a/hw/audio/cs4231a.c
++++ b/hw/audio/cs4231a.c
+@@ -305,7 +305,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
+         s->tab = ALawDecompressTable;
+     x_law:
+         as.fmt = AUDIO_FORMAT_S16;
+-        as.endianness = AUDIO_HOST_ENDIANNESS;
++        as.endianness = HOST_BIG_ENDIAN;
+         s->shift = as.nchannels == 2;
+         break;
  
--CaptureVoiceOut *AUD_add_capture(
--    AudioBackend *s,
--    struct audsettings *as,
--    struct audio_capture_ops *ops,
--    void *opaque
--    );
--void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque);
--
- SWVoiceOut *AUD_open_out (
-     AudioBackend *be,
-     SWVoiceOut *sw,
-diff --git a/ui/vnc.h b/ui/vnc.h
-index 4d8363ebf3..ec8d0c91b5 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -31,7 +31,7 @@
- #include "qemu/thread.h"
- #include "ui/clipboard.h"
- #include "ui/console.h"
--#include "qemu/audio.h"
-+#include "qemu/audio-capture.h"
- #include "qemu/bitmap.h"
- #include "crypto/tlssession.h"
- #include "qemu/buffer.h"
+diff --git a/hw/audio/gus.c b/hw/audio/gus.c
+index 45ea04bf89..d13a95eb5a 100644
+--- a/hw/audio/gus.c
++++ b/hw/audio/gus.c
+@@ -255,7 +255,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+     as.freq = s->freq;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = AUDIO_HOST_ENDIANNESS;
++    as.endianness = HOST_BIG_ENDIAN;
+ 
+     s->voice = AUD_open_out (
+         &s->card,
 -- 
 2.51.1
 
