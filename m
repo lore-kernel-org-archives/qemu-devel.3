@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFEECCF9FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3D9CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEmEB-0007Y8-Lj; Fri, 31 Oct 2025 06:19:27 -0400
+	id 1vEmFK-0007pj-TW; Fri, 31 Oct 2025 06:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vEmE8-0007Wv-7X; Fri, 31 Oct 2025 06:19:24 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vEmDy-0003pP-6v; Fri, 31 Oct 2025 06:19:23 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D839E164C9D;
- Fri, 31 Oct 2025 13:18:44 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0B70309746;
- Fri, 31 Oct 2025 13:18:54 +0300 (MSK)
-Message-ID: <15aae406-bb9c-4938-8ea4-10a794065990@tls.msk.ru>
-Date: Fri, 31 Oct 2025 13:18:54 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEmEj-0007e3-VA
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:20:04 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEmEg-000424-Ik
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:20:01 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-426fd62bfeaso967074f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:19:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761905993; x=1762510793; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YnHjcdSn0P+cFf0qWItza4cccJHqkagZQ+H3wvNM5Is=;
+ b=iAOcp2ALaIGgT96uLg8NAqMlhP59rWYfAHiNMgnDPJsmdDgafTN9CPPYMjsBZo6VBI
+ ClhdQ5MxuWed7Vdrdd6HYU0RoK6d+F1V4kQCHYeDP1zO/ihVy9dCC0mVcnUq9ot74fnZ
+ pn4zk7x+vuszqun5Sx1gg77QmbJDuqXv1zsCGEuN2IHoCkDpL1EdA0ogcnwc5I+Yt28Y
+ YkTRBscpJvaI9mUKhKIYRQRH9P8RD87KvhsP5v+IAu40O7papDrY6bUTGqrL/ytefI+e
+ mKIWGrXdO+wtMmiDwmf53xk9TahS4U4WxMOIwpEjnT4LGpmM36AE/iuJeM+GElOn9CYJ
+ uVDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761905993; x=1762510793;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YnHjcdSn0P+cFf0qWItza4cccJHqkagZQ+H3wvNM5Is=;
+ b=enClnTRqag+4Q13DXuIUqvXbCK6W6BMzccWjF5XH1dEqciAg8dVoqUvI4QEUkRhnTC
+ NEl4eqMHvXmHd98wezDi+0ycfVffwn0v+Yn/90MbVN+HPZRgq9oPdW2fz75poyIr90qD
+ 7/7VXyOPblid9SuFLD3UKJyvYirO29q3QGoGRZfbQ7NoXTLPryWa/bhse8LzyeR+NHw7
+ hNedAHknakY3ASvy2Z6GR9BY2Q1xFS7lcXeVSER58FlBo5y9Y1Lw1VLQX406RNwiBx51
+ qNvc8bkmBvwcOatmNMQdxH5/8/y1IeVWXHGyhzh/YNVFqwzOhIImqQEl7zvX/cZAjRrq
+ Gqcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXg5WpM5Jq8Do1RVK+h5wCQGy8kVYzfka5vUNoK9O/ueZ3Lyz/zIiHJD2MoLMQYRq2rRfIliOKbl3UG@nongnu.org
+X-Gm-Message-State: AOJu0YzZH7ilVp8X8I2+N+MpqbjaXXzrpCnk/bVND5OBUvR0V1nS20rC
+ v9pWC2q/FTo/qw5dgWuDeZzGwuAShAMYAc3FHEXF9ET2n1f7WcTDf6vWsHN9BJ49UjoLT5JjlF/
+ hrcRAk27E/UdFnkU=
+X-Gm-Gg: ASbGncvFz0DJknNRLynPhRtr/64FiR+xK0cNQD2DDjxtqvpqcUX80BJbjeeO5oOdccQ
+ fiic633BiGh80qOfGGUJObrp0GbdCV4fpnLNC5qCtxeOe9/B9BzT2S/fgY15c7X8KEuIAKTdtCZ
+ 9b5jSlsFJbuD/t8UV7iRzBtlmict/Uu1LqfaRRKC99g2TD07J8TuUzy531Wh5nYv266EiAGFt00
+ NkABG7FxFBZ/1T6sOnJL9gX1RK2cWDJ5FlQJz4f4vpTo219m1zjngMpt5IWHAHX98IJZc8VCLZ4
+ ywfHpvrR5qrKTszbx8NFFYRmx+AYXtlo7FxjZ5NGF1haT60Ms1ut8jx7lJpHh9ecVsKP1+4HYjg
+ yhNh+zxmuJIa1d38e2PEYeKDzHlSdOukBMno0WGev7ff2xDG/7z17n7I1KLWtd9+jVl0msqduIP
+ iIQnoI1SkRuyuBqVyr24tOKDYFOg2LgAHfpukaVZkQkAncOA6+fAb0rjfnqHC0qIISHg==
+X-Google-Smtp-Source: AGHT+IFb/E0N8IYdeiNhiS8IlrZxjIPLj6DjATrQ3bcWq4ASIsrV+lHUZkYSnhoUTZaf3KjSJ3vRzA==
+X-Received: by 2002:a05:6000:2382:b0:427:613:7772 with SMTP id
+ ffacd0b85a97d-429bd6c1948mr2604978f8f.32.1761905993017; 
+ Fri, 31 Oct 2025 03:19:53 -0700 (PDT)
+Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c10ff4f6sm3509973f8f.4.2025.10.31.03.19.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 03:19:52 -0700 (PDT)
+Message-ID: <8a312445-c113-40d3-a37b-f0f6fe8463c1@linaro.org>
+Date: Fri, 31 Oct 2025 11:19:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 03/18] block: fix luks 'amend' when run in coroutine
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20251029120634.288467-1-kwolf@redhat.com>
- <20251029120634.288467-4-kwolf@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251029120634.288467-4-kwolf@redhat.com>
+Subject: Re: [PATCH 1/2] tests/functional: Mark the MIPS replay tests as flaky
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251031094118.28440-1-philmd@linaro.org>
+ <20251031094118.28440-2-philmd@linaro.org>
+ <f30f2246-dec8-43a1-a7bb-cb8fddfdbf2a@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <f30f2246-dec8-43a1-a7bb-cb8fddfdbf2a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,33 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/25 15:06, Kevin Wolf wrote:
-> From: Daniel P. Berrangé <berrange@redhat.com>
+On 31/10/25 11:00, Richard Henderson wrote:
+> On 10/31/25 10:41, Philippe Mathieu-Daudé wrote:
+>> +    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
 > 
-> Launch QEMU with
-> 
->    $ qemu-img create \
->        --object secret,id=sec0,data=123456 \
->        -f luks -o key-secret=sec0 demo.luks 1g
-> 
->    $ qemu-system-x86_64 \
->        --object secret,id=sec0,data=123456 \
->        -blockdev  driver=luks,key-secret=sec0,file.filename=demo.luks,file.driver=file,node-name=luks
-> 
-> Then in QMP shell attempt
-> 
->    x-blockdev-amend job-id=fish node-name=luks options={'state':'active','new-secret':'sec0','driver':'luks'}
-> 
-> It will result in an assertion
+> If you're going to reference this, you might want to re-open it.
 
-Is this a qemu-stable material (for 10.0 & 10.1),
-or is it not because it's an x-command? :)
+I didn't notice it was closed (now re-opened).
 
-I picked it up for now, please let me know if I shouldn't.
+Per commit 1f881ea4a44 ("replay: stop us hanging in rr_wait_io_event"):
 
-Thanks,
-
-/mjt
-
-
+     This fixes most of the failures in replay_kernel.py
+                ^^^^
 
