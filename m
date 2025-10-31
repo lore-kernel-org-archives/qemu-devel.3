@@ -4,63 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7487ACCF9FF
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 13:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64329CCF9FF
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 13:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEpdh-0007vq-CX; Fri, 31 Oct 2025 09:58:01 -0400
+	id 1vEped-0008HG-LX; Fri, 31 Oct 2025 09:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEpde-0007uM-BY; Fri, 31 Oct 2025 09:57:58 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEpdX-0002tb-Ce; Fri, 31 Oct 2025 09:57:57 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2ECC880859;
- Fri, 31 Oct 2025 16:57:39 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:546::1:17] (unknown
- [2a02:6bf:8080:546::1:17])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id cvgYmb0FKqM0-YfGrx6uB; Fri, 31 Oct 2025 16:57:38 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761919058;
- bh=DHOjKE2jPPvuU3sWSPRjAh2LZXfKNymw3iZOlyWepAo=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Opt2Xk/qfKPphyyec8ovPRlgoJ992hk6PSarDNPSLLNGUJ5unbwZUa2ktrlov0Flv
- mt5XOPxEsxvPhHk1KcxGU3K4GWVZ90VguZ4oXFo/3XGWMgqkSqvrdFE+w6HSa98SKI
- IgYGaNv6qWlo1DjY4E7u5Dl2JbcFmwt14hRuaZaU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <fa667a3e-7cf4-4e85-a1fb-571ef0da6314@yandex-team.ru>
-Date: Fri, 31 Oct 2025 16:57:38 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEpeZ-0008H0-R5
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 09:58:56 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEpeP-0003Bo-Mt
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 09:58:54 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-429b72691b4so2113355f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 06:58:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761919120; x=1762523920; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kvbQ84EseZoQBE+gIzMBX3PwN8bjurCsjMBB2wqx10w=;
+ b=JIPAQhYuowXBrAsLExcPJ9+xy8P0VqtoVGfiAuOyKx/Y63Z3qhTD+C3h2pADzG+1OE
+ eX8JUvwWEdnbF3ZU5kRcKqna37eKEvqbaXa8xFo3cP1NF3iX+L3gyyvw3pgKXLJiLEmA
+ 10kL6vZLmcX9O6CeLjw09eSAgKTelPhiYXbE0DTU5O/8r5Jqp7VUKTCh6WBCfC3ojfpT
+ Cqc1x+hmHXfQXzGogbaOIiV9/4bJJSSKKQdNdiBpLdpcc7aD6lIZZizWq9mJ1Glbvp9K
+ Y7VgaK+b9zX3e2t+D+hLJLH9HMO+OYP29JJ7pzeEpG5LjB2pVkrfP4iqIdtZnGcaohGX
+ p9pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761919120; x=1762523920;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kvbQ84EseZoQBE+gIzMBX3PwN8bjurCsjMBB2wqx10w=;
+ b=YS8I9vMjRED5R7US0GfexZ0eiJIlVDrn4NZ2aZwMPrVnKz39awIokNLs7AGP4E4R3z
+ gkXP+loMbUA9z29btVy19Z/wpzy4nseIgfT73+b9YG6pUj1Ipqb04IppFBIuGmMrlpw5
+ F6tANze6+j7B06Y432YYramFkC8liW9eYZjGtZfA6hSzyObCgmpfBFiUJyrtR0Sb2sY/
+ AkSOJ2sPCP7hWf2p3p/2NZKW7NuDbBzCdf0EFZ6P0nbI4cDD9LKAbtruRVTJ7Ep8oAlU
+ HVFtdHghdDMqRKbSAalo3tH9y2MCOcEum3LvEdtXnZEowfiJ2v9h27SbLtcEGnUNlDOG
+ 6PxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxgT87JFBrDhSR2qIz8eIES2EboKcrAkAF/KQjYlBJ9uhfGoQI80JULOOA1+RqLDVxHW8eEqowIoXF@nongnu.org
+X-Gm-Message-State: AOJu0YyK8dXFl30yDNFju27klRD84hMOqYNyuRJ0JFU70NHChM358PK0
+ M6IzOgSKZTKXwznt8TkR8/2KikmPKAJVBveawkY+cNXTgKXwp9iXNzVKAIAkxesbwZe88LqE0jO
+ utqnNAi11QQ==
+X-Gm-Gg: ASbGncu5t5Pd9dJ4HhoQ8MJTdrvLVHhXoWNeOZx1U79hIn8i1yMoqm6KAsMYXVPDjra
+ qmrLXdeRi2WuojEbJj8WvbkUMP9UwDUK9EwxyVv7pJ8RLNKvxc7Pbyyd4O839SpPfposLVvBdd7
+ g/cNAnLaFKRQbf4HcXJWFMjHU4/Nn2x3R2AJ31eda/cnVLe+PMwRpAwoUg+l4BN/d8zJmtwof7k
+ vp5R85RVz5ejV/eQnV0ECF9TxNUaPtFfSUuSk5hXy7Jt6P/2vNDTGu0YYoidtcI294yR9uaC3ye
+ 6E1lrDUZGN00yy7n5TPMsjXNgtIzQWW/uTZnrNFkjnTqdOvKTb7j9wIZqj8Qqe1fmcH1cw7JZIo
+ sBuq/VfidtZYK+KtXVom9X8PTIFz/xPoXGd4ll66B6n/Z1OKO+r/TkTqlVxBWj+SwonNlUF2mVb
+ K34Vaj6OghIovM3QldgZ4bhhmkbDcZGYkfDV2t1WFfpiPFVm9FrnhL4qCr2Downp/NbcU2zOl2W
+ HfL
+X-Google-Smtp-Source: AGHT+IEDrtNwiQVEKIxrBNTT4+svDVaBFhYvUyjG4DcM7zynTEJEydw/FwGyHPUO92bfoeUjfE2OnA==
+X-Received: by 2002:a05:6000:2384:b0:428:3d75:b0e8 with SMTP id
+ ffacd0b85a97d-429bd6ed1b7mr3465476f8f.62.1761919119632; 
+ Fri, 31 Oct 2025 06:58:39 -0700 (PDT)
+Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c114c944sm3741112f8f.20.2025.10.31.06.58.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 06:58:39 -0700 (PDT)
+Message-ID: <3d89ba27-4ef0-40a7-b0c2-72afaee032d3@linaro.org>
+Date: Fri, 31 Oct 2025 14:58:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] block: replace TABs with space
-To: Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>
-References: <20251007163511.334178-1-thuth@redhat.com>
+Subject: Re: [PATCH 03/21] crypto: replace stat() with access() for credential
+ checks
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251007163511.334178-1-thuth@redhat.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org
+References: <20251030144927.2241109-1-berrange@redhat.com>
+ <20251030144927.2241109-4-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251030144927.2241109-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,30 +108,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.10.25 19:35, Thomas Huth wrote:
-> From: Yeqi Fu <fufuyqqqqqq@gmail.com>
+On 30/10/25 15:49, Daniel P. Berrangé wrote:
+> Readability of the credential files is what matters for our usage,
+> so access() is more appropriate than stat().
 > 
-> Bring the block files in line with the QEMU coding style, with spaces
-> for indentation. This patch partially resolves the issue 371.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/371
-> Signed-off-by: Yeqi Fu <fufuyqqqqqq@gmail.com>
-> Message-ID: <20230325085224.23842-1-fufuyqqqqqq@gmail.com>
-> [thuth: Rebased the patch to the current master branch]
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   crypto/tlscreds.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
-lost patch?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-It still applies to master, and fixes all <TAB> invocations in block/, check:
-
-git grep -P '\t' -- block
-
-- gives no output.
-
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-
--- 
-Best regards,
-Vladimir
 
