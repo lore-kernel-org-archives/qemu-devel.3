@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3D9CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EDECCF9FE
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEmFK-0007pj-TW; Fri, 31 Oct 2025 06:20:40 -0400
+	id 1vEmHG-0000gV-Vz; Fri, 31 Oct 2025 06:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEmEj-0007e3-VA
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:20:04 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEmEg-000424-Ik
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:20:01 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-426fd62bfeaso967074f8f.2
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761905993; x=1762510793; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YnHjcdSn0P+cFf0qWItza4cccJHqkagZQ+H3wvNM5Is=;
- b=iAOcp2ALaIGgT96uLg8NAqMlhP59rWYfAHiNMgnDPJsmdDgafTN9CPPYMjsBZo6VBI
- ClhdQ5MxuWed7Vdrdd6HYU0RoK6d+F1V4kQCHYeDP1zO/ihVy9dCC0mVcnUq9ot74fnZ
- pn4zk7x+vuszqun5Sx1gg77QmbJDuqXv1zsCGEuN2IHoCkDpL1EdA0ogcnwc5I+Yt28Y
- YkTRBscpJvaI9mUKhKIYRQRH9P8RD87KvhsP5v+IAu40O7papDrY6bUTGqrL/ytefI+e
- mKIWGrXdO+wtMmiDwmf53xk9TahS4U4WxMOIwpEjnT4LGpmM36AE/iuJeM+GElOn9CYJ
- uVDA==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vEmHC-0000bm-8F
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:22:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vEmH6-0004RR-LY
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:22:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761906139;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lJSufPyB6bN1hmzOPEJzVNg+xS6L3ijbpCqyae/DFj8=;
+ b=asWaqjU5+/zLdhe142UoQ6IDZqllzsBCL05bhjkn10F7nGGLJqgSRh17RHgwQVcHHfG8aA
+ ay6EVOUxiICN3bFT5KsQ4jrNQfyTG+zZdIOZKnxINTPPp/8U0d5Jspm0lq9BhdVRWEXXWu
+ MGKYGEBWq5JPCUdGV8R9BrvyCdhO7o0=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-8EFtq9dKOJCCSCrxtcF87A-1; Fri, 31 Oct 2025 06:22:17 -0400
+X-MC-Unique: 8EFtq9dKOJCCSCrxtcF87A-1
+X-Mimecast-MFC-AGG-ID: 8EFtq9dKOJCCSCrxtcF87A_1761906136
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-63c41bc2dfcso1491742a12.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:22:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761905993; x=1762510793;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YnHjcdSn0P+cFf0qWItza4cccJHqkagZQ+H3wvNM5Is=;
- b=enClnTRqag+4Q13DXuIUqvXbCK6W6BMzccWjF5XH1dEqciAg8dVoqUvI4QEUkRhnTC
- NEl4eqMHvXmHd98wezDi+0ycfVffwn0v+Yn/90MbVN+HPZRgq9oPdW2fz75poyIr90qD
- 7/7VXyOPblid9SuFLD3UKJyvYirO29q3QGoGRZfbQ7NoXTLPryWa/bhse8LzyeR+NHw7
- hNedAHknakY3ASvy2Z6GR9BY2Q1xFS7lcXeVSER58FlBo5y9Y1Lw1VLQX406RNwiBx51
- qNvc8bkmBvwcOatmNMQdxH5/8/y1IeVWXHGyhzh/YNVFqwzOhIImqQEl7zvX/cZAjRrq
- Gqcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXg5WpM5Jq8Do1RVK+h5wCQGy8kVYzfka5vUNoK9O/ueZ3Lyz/zIiHJD2MoLMQYRq2rRfIliOKbl3UG@nongnu.org
-X-Gm-Message-State: AOJu0YzZH7ilVp8X8I2+N+MpqbjaXXzrpCnk/bVND5OBUvR0V1nS20rC
- v9pWC2q/FTo/qw5dgWuDeZzGwuAShAMYAc3FHEXF9ET2n1f7WcTDf6vWsHN9BJ49UjoLT5JjlF/
- hrcRAk27E/UdFnkU=
-X-Gm-Gg: ASbGncvFz0DJknNRLynPhRtr/64FiR+xK0cNQD2DDjxtqvpqcUX80BJbjeeO5oOdccQ
- fiic633BiGh80qOfGGUJObrp0GbdCV4fpnLNC5qCtxeOe9/B9BzT2S/fgY15c7X8KEuIAKTdtCZ
- 9b5jSlsFJbuD/t8UV7iRzBtlmict/Uu1LqfaRRKC99g2TD07J8TuUzy531Wh5nYv266EiAGFt00
- NkABG7FxFBZ/1T6sOnJL9gX1RK2cWDJ5FlQJz4f4vpTo219m1zjngMpt5IWHAHX98IJZc8VCLZ4
- ywfHpvrR5qrKTszbx8NFFYRmx+AYXtlo7FxjZ5NGF1haT60Ms1ut8jx7lJpHh9ecVsKP1+4HYjg
- yhNh+zxmuJIa1d38e2PEYeKDzHlSdOukBMno0WGev7ff2xDG/7z17n7I1KLWtd9+jVl0msqduIP
- iIQnoI1SkRuyuBqVyr24tOKDYFOg2LgAHfpukaVZkQkAncOA6+fAb0rjfnqHC0qIISHg==
-X-Google-Smtp-Source: AGHT+IFb/E0N8IYdeiNhiS8IlrZxjIPLj6DjATrQ3bcWq4ASIsrV+lHUZkYSnhoUTZaf3KjSJ3vRzA==
-X-Received: by 2002:a05:6000:2382:b0:427:613:7772 with SMTP id
- ffacd0b85a97d-429bd6c1948mr2604978f8f.32.1761905993017; 
- Fri, 31 Oct 2025 03:19:53 -0700 (PDT)
-Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
- [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c10ff4f6sm3509973f8f.4.2025.10.31.03.19.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 03:19:52 -0700 (PDT)
-Message-ID: <8a312445-c113-40d3-a37b-f0f6fe8463c1@linaro.org>
-Date: Fri, 31 Oct 2025 11:19:50 +0100
+ d=1e100.net; s=20230601; t=1761906136; x=1762510936;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lJSufPyB6bN1hmzOPEJzVNg+xS6L3ijbpCqyae/DFj8=;
+ b=aM5xtn7hCnZ2WZqK+oFtwqhpWW+GGXVcFe9zurUg5BkNpe1D/AhNqVeaXyr6t2/umI
+ NTHD2DrYrIAEK3n57yKHOTQYXN7LFgeoGmFPGPMD2YTLqmynCqyKgjh7iE6uLkmrC9W5
+ 56sfvjx5MFkzc/dFGE0844imKVlxgCLZo/sa0iYKX1X+R9cj7lF7J5Y1VSpXxwIDnDcP
+ xg2jW0iFGl/pOM2fgrvmnCoqEBODWgCyVrEWUlnwR96MI5Q5lr8LW9b1WTEbD691Y+8x
+ ENEjodxmICLvwAvq24BdhY/3e5mrpX1rlpk13vTIiM/lhM4bmksrNdcepGMpGRAg0yyo
+ cLGg==
+X-Gm-Message-State: AOJu0YyifUdP6ypbF5wpfAis3eJfaIPwcV0ajhKoeRAy/igP5AuZ83ar
+ OG41gRen1qNpSmeayEwfYz5v2Rdf4lyot9ZoxWKJBSQ15jawcf6kn5QIP26UvB9+vaRKc1rXcjc
+ cj8ZIUhEuFPZJf5XgZjKpN8hrnJkkvoQf6N8eHYbj045GynSIrgKYIbH2
+X-Gm-Gg: ASbGnctHNtU7h8pqbL29tWw7NEBOifYx5my7XIHeyfMP3w7k4gzSRwUCp9NE4zblYbw
+ u+dvEKKr2DbGmSN60B0h8FGoLz4YXu/3XUUSyMINtnu8IS3J3SYuQUJv+guqoQaVVGSI2Pq4pb/
+ AOwPWGjLxjJgyKUkNmtEt/Sb74uv0LclD4VMjF0usv7UoWAz7g34ZtEWKTfXqZEoJ08Gz+Bryqw
+ vX5iIejs9EMo1AbxTUv5k/pH89dLsqGE+/eIOmd3OZaG2nFCeAOx4ffVGGNQaGH5OyLToXtJHip
+ Xj5YRh0BWFSb8pJZMOFCrly47U4CIFa2B6AAOEMzbjl7m+jEAcvAmyQetAm3NnXssD7DX+UEvtB
+ jGY2zL8VBfm2DftcGVgfUmPK16mNC3bGbh5G1q+CCKmgSgbSeT4A=
+X-Received: by 2002:a17:907:1ca2:b0:b6d:7db1:49aa with SMTP id
+ a640c23a62f3a-b70708a0e58mr295515566b.63.1761906136336; 
+ Fri, 31 Oct 2025 03:22:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtp1lISdfZywW18P2XTw4JeUtMNxCH//JPP91kh3CPXYUsZTkG0CmQj8omZhIvIvnGZ4BGXA==
+X-Received: by 2002:a17:907:1ca2:b0:b6d:7db1:49aa with SMTP id
+ a640c23a62f3a-b70708a0e58mr295513266b.63.1761906135848; 
+ Fri, 31 Oct 2025 03:22:15 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
+ [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b70779762bcsm140708366b.15.2025.10.31.03.22.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Oct 2025 03:22:15 -0700 (PDT)
+Date: Fri, 31 Oct 2025 11:22:08 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH] hw/i386/microvm: Use fdt field from MachineState
+Message-ID: <heua2u3gdvdrw5fusmx4wy75dcbku3citxa6wbvflipudq7tyy@3orfglusvl6x>
+References: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional: Mark the MIPS replay tests as flaky
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20251031094118.28440-1-philmd@linaro.org>
- <20251031094118.28440-2-philmd@linaro.org>
- <f30f2246-dec8-43a1-a7bb-cb8fddfdbf2a@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f30f2246-dec8-43a1-a7bb-cb8fddfdbf2a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,16 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/25 11:00, Richard Henderson wrote:
-> On 10/31/25 10:41, Philippe Mathieu-Daudé wrote:
->> +    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
-> 
-> If you're going to reference this, you might want to re-open it.
+On Thu, Oct 30, 2025 at 03:32:04PM +0100, Luigi Leonardi wrote:
+>MachineState already provides an fdt field, remove it from
+>MicrovmMachineState and use that instead.
+>
+>This is useful when using the `dumpdtb` option, as QEMU expects the
+>device tree to be stored in the MachineState struct, othwise it will
 
-I didn't notice it was closed (now re-opened).
+s/othwise/otherwise
 
-Per commit 1f881ea4a44 ("replay: stop us hanging in rr_wait_io_event"):
+>return this error:
+>
+>qemu-system-x86_64: This machine doesn't have an FDT
+>
+>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>---
+>`fdt` field is already available in `MachineState` but
+>`MicrovmMachineState` uses its own.
+>
+>This prevents the "dumpdtb" option from working.
+>---
+> hw/i386/microvm-dt.c      | 96 +++++++++++++++++++++++++----------------------
+> include/hw/i386/microvm.h |  2 -
+> 2 files changed, 52 insertions(+), 46 deletions(-)
 
-     This fixes most of the failures in replay_kernel.py
-                ^^^^
+The patch LGTM:
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+
 
