@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EDECCF9FE
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264B7CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEmHG-0000gV-Vz; Fri, 31 Oct 2025 06:22:39 -0400
+	id 1vEmIW-0001Gx-BV; Fri, 31 Oct 2025 06:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1vEmHC-0000bm-8F
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:22:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vEmIO-0001EJ-VK; Fri, 31 Oct 2025 06:23:49 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1vEmH6-0004RR-LY
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:22:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761906139;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lJSufPyB6bN1hmzOPEJzVNg+xS6L3ijbpCqyae/DFj8=;
- b=asWaqjU5+/zLdhe142UoQ6IDZqllzsBCL05bhjkn10F7nGGLJqgSRh17RHgwQVcHHfG8aA
- ay6EVOUxiICN3bFT5KsQ4jrNQfyTG+zZdIOZKnxINTPPp/8U0d5Jspm0lq9BhdVRWEXXWu
- MGKYGEBWq5JPCUdGV8R9BrvyCdhO7o0=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-8EFtq9dKOJCCSCrxtcF87A-1; Fri, 31 Oct 2025 06:22:17 -0400
-X-MC-Unique: 8EFtq9dKOJCCSCrxtcF87A-1
-X-Mimecast-MFC-AGG-ID: 8EFtq9dKOJCCSCrxtcF87A_1761906136
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-63c41bc2dfcso1491742a12.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:22:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761906136; x=1762510936;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lJSufPyB6bN1hmzOPEJzVNg+xS6L3ijbpCqyae/DFj8=;
- b=aM5xtn7hCnZ2WZqK+oFtwqhpWW+GGXVcFe9zurUg5BkNpe1D/AhNqVeaXyr6t2/umI
- NTHD2DrYrIAEK3n57yKHOTQYXN7LFgeoGmFPGPMD2YTLqmynCqyKgjh7iE6uLkmrC9W5
- 56sfvjx5MFkzc/dFGE0844imKVlxgCLZo/sa0iYKX1X+R9cj7lF7J5Y1VSpXxwIDnDcP
- xg2jW0iFGl/pOM2fgrvmnCoqEBODWgCyVrEWUlnwR96MI5Q5lr8LW9b1WTEbD691Y+8x
- ENEjodxmICLvwAvq24BdhY/3e5mrpX1rlpk13vTIiM/lhM4bmksrNdcepGMpGRAg0yyo
- cLGg==
-X-Gm-Message-State: AOJu0YyifUdP6ypbF5wpfAis3eJfaIPwcV0ajhKoeRAy/igP5AuZ83ar
- OG41gRen1qNpSmeayEwfYz5v2Rdf4lyot9ZoxWKJBSQ15jawcf6kn5QIP26UvB9+vaRKc1rXcjc
- cj8ZIUhEuFPZJf5XgZjKpN8hrnJkkvoQf6N8eHYbj045GynSIrgKYIbH2
-X-Gm-Gg: ASbGnctHNtU7h8pqbL29tWw7NEBOifYx5my7XIHeyfMP3w7k4gzSRwUCp9NE4zblYbw
- u+dvEKKr2DbGmSN60B0h8FGoLz4YXu/3XUUSyMINtnu8IS3J3SYuQUJv+guqoQaVVGSI2Pq4pb/
- AOwPWGjLxjJgyKUkNmtEt/Sb74uv0LclD4VMjF0usv7UoWAz7g34ZtEWKTfXqZEoJ08Gz+Bryqw
- vX5iIejs9EMo1AbxTUv5k/pH89dLsqGE+/eIOmd3OZaG2nFCeAOx4ffVGGNQaGH5OyLToXtJHip
- Xj5YRh0BWFSb8pJZMOFCrly47U4CIFa2B6AAOEMzbjl7m+jEAcvAmyQetAm3NnXssD7DX+UEvtB
- jGY2zL8VBfm2DftcGVgfUmPK16mNC3bGbh5G1q+CCKmgSgbSeT4A=
-X-Received: by 2002:a17:907:1ca2:b0:b6d:7db1:49aa with SMTP id
- a640c23a62f3a-b70708a0e58mr295515566b.63.1761906136336; 
- Fri, 31 Oct 2025 03:22:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtp1lISdfZywW18P2XTw4JeUtMNxCH//JPP91kh3CPXYUsZTkG0CmQj8omZhIvIvnGZ4BGXA==
-X-Received: by 2002:a17:907:1ca2:b0:b6d:7db1:49aa with SMTP id
- a640c23a62f3a-b70708a0e58mr295513266b.63.1761906135848; 
- Fri, 31 Oct 2025 03:22:15 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
- [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b70779762bcsm140708366b.15.2025.10.31.03.22.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 03:22:15 -0700 (PDT)
-Date: Fri, 31 Oct 2025 11:22:08 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Luigi Leonardi <leonardi@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH] hw/i386/microvm: Use fdt field from MachineState
-Message-ID: <heua2u3gdvdrw5fusmx4wy75dcbku3citxa6wbvflipudq7tyy@3orfglusvl6x>
-References: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vEmIJ-0004VZ-1E; Fri, 31 Oct 2025 06:23:48 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B9004164CAA;
+ Fri, 31 Oct 2025 13:23:28 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7D21E30974C;
+ Fri, 31 Oct 2025 13:23:38 +0300 (MSK)
+Message-ID: <982e5492-6fc4-4a9a-b655-753edc365d6b@tls.msk.ru>
+Date: Fri, 31 Oct 2025 13:23:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v1 0/3] Microblaze signed division overflows
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, edgar.iglesias@amd.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,32 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 30, 2025 at 03:32:04PM +0100, Luigi Leonardi wrote:
->MachineState already provides an fdt field, remove it from
->MicrovmMachineState and use that instead.
->
->This is useful when using the `dumpdtb` option, as QEMU expects the
->device tree to be stored in the MachineState struct, othwise it will
+On 10/29/25 17:17, Edgar E. Iglesias wrote:
+..
+>    target/microblaze: Remove unused arg from check_divz()
+>    target/microblaze: div: Break out raise_divzero()
+>    target/microblaze: Handle signed division overflows
+> 
+>   target/microblaze/cpu.h       |  1 +
+>   target/microblaze/op_helper.c | 53 ++++++++++++++++++++++-------------
+>   target/microblaze/translate.c | 12 ++------
+>   3 files changed, 36 insertions(+), 30 deletions(-)
 
-s/othwise/otherwise
+Is it a qemu-stable material?  It feels like it is, even
+if it's a sort-of "new feature".
 
->return this error:
->
->qemu-system-x86_64: This machine doesn't have an FDT
->
->Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
->---
->`fdt` field is already available in `MachineState` but
->`MicrovmMachineState` uses its own.
->
->This prevents the "dumpdtb" option from working.
->---
-> hw/i386/microvm-dt.c      | 96 +++++++++++++++++++++++++----------------------
-> include/hw/i386/microvm.h |  2 -
-> 2 files changed, 52 insertions(+), 46 deletions(-)
+Thanks,
 
-The patch LGTM:
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
+/mjt
 
