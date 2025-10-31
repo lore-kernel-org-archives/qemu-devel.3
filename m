@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94862CCFA00
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 16:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57EFCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 16:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vErXP-00076W-MM; Fri, 31 Oct 2025 11:59:40 -0400
+	id 1vErXY-00079l-O8; Fri, 31 Oct 2025 11:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vErXH-00074S-41
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:31 -0400
+ id 1vErXJ-00074w-6h
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:34 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vErXC-0005zc-K3
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:30 -0400
+ id 1vErXG-0005zo-2R
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:32 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B9663807E3;
- Fri, 31 Oct 2025 18:59:19 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A730580830;
+ Fri, 31 Oct 2025 18:59:21 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Fxip9o0FqiE0-TwTehFjH; Fri, 31 Oct 2025 18:59:19 +0300
+ ESMTPSA id Fxip9o0FqiE0-dwLOF0QJ; Fri, 31 Oct 2025 18:59:21 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761926359;
- bh=vEFpAi/SJoZ1FyW5/cNP/W5tIquHEsUoHiATdJxF5jc=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=hF1bS4YV5TCTxrccSEq00j59kAqw4+UZf4UOArAIKMLEN8FskyvUKkFoIMoNfFKxI
- pmaZKU8IMkYyTddn0zGLzENxfSP1JCNbxw1aVo38B3zvp+IhIS15ly6jp2HrWX5hYo
- NAurDsZdmcTefr3nysyh+kJmjVkoiHBaSiYHzOuY=
+ s=default; t=1761926361;
+ bh=OyEDQt/UD/uta2M4iXMXqAM/L/B3XLaYf2JW8GQOWMM=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=QosOKBdWcx17sQoKweIrEcUlvmFu5nGybttqbC1MK4OgZS2XwT3YyMo3tnx4wwOPQ
+ rSO11vtDUZSZI57eEMyuOpjYw8DEwW/yoMvvsnoRDe/JfwL9CpZi6/RuV/yo79k7FK
+ ql4suh7DLHnyiFRA8dDYS3qcR/x0JVEe57D5gv8M=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,14 +45,13 @@ To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  qemu-devel@nongnu.org, vsementsov@yandex-team.ru, raphael@enfabrica.net,
  armbru@redhat.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: [PATCH v5 1/7] chardev/char-socket: simplify reconnect-ms handling
-Date: Fri, 31 Oct 2025 18:59:08 +0300
-Message-ID: <20251031155914.189112-2-vsementsov@yandex-team.ru>
+Subject: [PATCH v5 3/7] chardev/char: qemu_char_open(): add return value
+Date: Fri, 31 Oct 2025 18:59:10 +0300
+Message-ID: <20251031155914.189112-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251031155914.189112-1-vsementsov@yandex-team.ru>
 References: <20251031155914.189112-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
@@ -76,68 +75,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We pass it to qmp_chardev_open_socket_client() only to write
-to s->reconnect_time_ms. Let's simply set this field earlier,
-together with other options.
+Accordingly with recommendations in include/qapi/error.h accompany
+errp by boolean return value and get rid of error propagation.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- chardev/char-socket.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ chardev/char.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 62852e3caf..f3bc6290d2 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1274,18 +1274,16 @@ skip_listen:
- 
- 
- static int qmp_chardev_open_socket_client(Chardev *chr,
--                                          int64_t reconnect_ms,
-                                           Error **errp)
- {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
- 
--    if (reconnect_ms > 0) {
--        s->reconnect_time_ms = reconnect_ms;
-+    if (s->reconnect_time_ms > 0) {
-         tcp_chr_connect_client_async(chr);
-         return 0;
--    } else {
--        return tcp_chr_connect_client_sync(chr, errp);
-     }
-+
-+    return tcp_chr_connect_client_sync(chr, errp);
+diff --git a/chardev/char.c b/chardev/char.c
+index 216c95c053..3e9a274d7d 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -246,14 +246,20 @@ int qemu_chr_add_client(Chardev *s, int fd)
+         CHARDEV_GET_CLASS(s)->chr_add_client(s, fd) : -1;
  }
  
+-static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
++static bool qemu_char_open(Chardev *chr, ChardevBackend *backend,
+                            bool *be_opened, Error **errp)
+ {
++    ERRP_GUARD();
+     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
  
-@@ -1378,7 +1376,6 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     bool is_tn3270      = sock->has_tn3270  ? sock->tn3270  : false;
-     bool is_waitconnect = sock->has_wait    ? sock->wait    : false;
-     bool is_websock     = sock->has_websocket ? sock->websocket : false;
--    int64_t reconnect_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
-     SocketAddress *addr;
- 
-     s->is_listen = is_listen;
-@@ -1386,6 +1383,8 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     s->is_tn3270 = is_tn3270;
-     s->is_websock = is_websock;
-     s->do_nodelay = do_nodelay;
-+    s->reconnect_time_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
-+
-     if (sock->tls_creds) {
-         Object *creds;
-         creds = object_resolve_path_component(
-@@ -1450,7 +1449,7 @@ static void qmp_chardev_open_socket(Chardev *chr,
-             return;
-         }
-     } else {
--        if (qmp_chardev_open_socket_client(chr, reconnect_ms, errp) < 0) {
-+        if (qmp_chardev_open_socket_client(chr, errp) < 0) {
-             return;
-         }
+     if (cc->open) {
+         cc->open(chr, backend, be_opened, errp);
++        if (*errp) {
++            return false;
++        }
      }
++
++    return true;
+ }
+ 
+ static void char_init(Object *obj)
+@@ -1015,7 +1021,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
+ {
+     Object *obj;
+     Chardev *chr = NULL;
+-    Error *local_err = NULL;
+     bool be_opened = true;
+ 
+     assert(g_str_has_prefix(typename, "chardev-"));
+@@ -1031,9 +1036,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
+         goto fail;
+     }
+ 
+-    qemu_char_open(chr, backend, &be_opened, &local_err);
+-    if (local_err) {
+-        error_propagate(errp, local_err);
++    if (!qemu_char_open(chr, backend, &be_opened, errp)) {
+         goto fail;
+     }
+ 
 -- 
 2.48.1
 
