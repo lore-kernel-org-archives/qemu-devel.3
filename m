@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45F58CCFA04
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6369CCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vElwK-0008A6-Sy; Fri, 31 Oct 2025 06:01:00 -0400
+	id 1vElyI-0000SD-8m; Fri, 31 Oct 2025 06:03:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vElwD-000889-DY
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:00:55 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vElxY-00008M-3U
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:02:24 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vElw1-0001P7-Pq
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:00:49 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b3b3a6f4dd4so398469666b.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:00:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vElxQ-0001jp-DK
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 06:02:15 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439b56so1242531f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 03:02:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761904838; x=1762509638; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BNBnEeG6++egCk9q/ndavQd68bgd6HWdd2DgomeQEk0=;
- b=ChIQxbji18FgYozPkLYcOdAQ7uJO9zNqcPxSY0UQ53AZrumzu9OHJO6H/mg9jq5+nA
- 2RpsefuCawsxXpeFZp/sAWci+Y8uOzQW/eav9Ndn+7jZE5BdhmNbhY1pOjV19uYS2nIN
- R6756A+5uujC6DPJl1Yo4NNTDWLNxTC1ZvNTidSaaC9vs5TcByDgcBg02NWFgmLqU235
- tHscbeAtReQP4nfpoLNkYESH3sp6+odRAmzJIkmXvjadaknQzWGjhumwIJ3dBs/F9o7P
- BZUoBQnHva3YM/07j1YMheZOBdoIgkxsOwYDHrW5ATo7Wj/PiYhhrpsPLMp7aeYNhHv0
- t5hg==
+ d=linaro.org; s=google; t=1761904926; x=1762509726; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lFXnG+0EOe+4315LYAtHqnIdacQnPT26GCUgFBwsDhk=;
+ b=kZnRoeHlyTW7oe3GQCC6MA1zqg08hckTqq3y2muFaU3GpWDmEuL/ZHq43f8hinUbzP
+ DbgQRvQJUJO+J71bOb+Gs4E/VgGHTkB9ARhIduzEYA6XxfHV7f1+k+1mtOwNC6pjlUYI
+ JZoCGxja67JKa1il/Pv2/AxdxjJlt3y/+lqywpsVgqiUH00wZWmacbXKjrqKA0J3aFeZ
+ e/GVLiK/KjuZJZqrFBTapnwoawStuN8n7kJQu9yct0kaSjxzGbBpMdxyRFy9yOhSJjcF
+ OeDh227yW+l2VvB7mztQvsVgactNlYFK+LkBohVuYTBjFbRh+iwKqACPpZL0BNuwq3oy
+ 5ddA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761904838; x=1762509638;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761904926; x=1762509726;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BNBnEeG6++egCk9q/ndavQd68bgd6HWdd2DgomeQEk0=;
- b=IFVdo+y7+GJvJKU1u7VKQ+VSPl/vXV/eJ6dRIMX1RbNUsZjhdA11TtpmzMThC7oFqC
- BWA+T4DeJJ+bo8XJGRAL09BKfcAtp7dHzvCheKRMF5lSpar6iCOjnVzWMOxHFcgLYsgQ
- q/JnV9c60GbTp3azcHu/Zyfm8kE2DOE936k/HbnFGQenXHVefJrg3XNZDSUbO5DpLokl
- iVo/01B+8VA2NWJy+wbjxVPxIHpjVAvt70tQGgQVIBf2NGdwNjcm3GD25GGaMYJR5YSQ
- RmT+p6JCngVADWYkOAI9tdTgd8a7OeV1aa87bynXi3j6Ne1/BcVoyge5odkiJu33mGx6
- X+Xw==
-X-Gm-Message-State: AOJu0YwqsTSAZdtp/p7EPnZFk4mqXbaG5kxnidOEk83qvQoQToYf45WT
- jVasYXO+xZEqEDmxppvtcDwkRaC4y8ljT1L958TR8O6rRBt2kcROsJJ5b3cCqKk/gp8Ib66tmal
- 2zqvkUT0ogQ==
-X-Gm-Gg: ASbGncs/SmsOo8MlWuPAM8OYcv2XTlo2yi1GZyGSQUq0X7xqndedzo/PnGHWCDyOlkv
- Ku1wgkK2BWnT3zGfCSg+xVoL0Y7mqOR1yCrBFuUQyMtGYEgoRR9LPNxhtCqGD7pW3Z5zcJIi7+P
- iP8xYdzn6AGPmABOqedAzgGh73f2Q3yDSFoRCYvRgv0iW81u0+ftTtCrcvniTeQV2eMtyKuZpC9
- g6St2AmFK02uukh7xV2JJEXyObnX8/KGrNukY+enEEntseFo86KgtjYx02RHEr2ZI/ecQ33UeNG
- kyRCaosTzN5MPIGx0IdXgJ0Cw6pGHn1AMPS11L70C27dj9OZuj1HWnIONGGOnwBXycKXPdzsSQe
- ZGzzRAVh9bKQ4y9fWGOHaFiI9g4UWDKmuuOmLwhhLHP0Pwd0VJZWd96C2NeZJtJdg9AwjeEHSTB
- KpxInftlnz0Co4t4EwrE5TGt3HCAVqLfY9/KkNmbQk1+J3h/GFHQ8=
-X-Google-Smtp-Source: AGHT+IHdpkZrsYq9UPfpCfkI34MiF1IewJsaLp8UISeJ4Y+QA50eq1rx8GG0PU0WcjQT40ka+raAZQ==
-X-Received: by 2002:a17:907:7b9f:b0:b6d:42cb:7fb6 with SMTP id
- a640c23a62f3a-b70708a8b81mr247386566b.60.1761904838386; 
- Fri, 31 Oct 2025 03:00:38 -0700 (PDT)
-Received: from [10.240.88.227] (C3239BBB.static.ziggozakelijk.nl.
- [195.35.155.187]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b7077c9dc34sm132163966b.55.2025.10.31.03.00.37
- for <qemu-devel@nongnu.org>
+ bh=lFXnG+0EOe+4315LYAtHqnIdacQnPT26GCUgFBwsDhk=;
+ b=whK6WeoZDTIwKH5wrVv/HIqg+v7o13MfesWS23P4TkIgSjTR37Y5knyU43wdobEd8Q
+ ZNLGoSZSVU6+masVjDP6HlRMVno2hgE+Z9i2MCmvk7UYzDpPDGNu0FimKcntD8m605hL
+ qqg0g9GdITMnq2anh82yWM8p8Cm/Adia+zvNa5Z8y8pc6nvsPYmKwtvJR99acHqxc81u
+ uZPiu4TxlvbBOXFqIfRR+SJUaVSytlNXGpxceXqCIQPdVC7RXRrjWruyHtuQkOaxlNAo
+ vaJ55Ro4KMJXlnFfk1Cj548hAfLFXBTN0pTXOvYBVBimGTtlKN5N0HvllvLWuO9wL+3A
+ x1og==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1KWcNVuXd9yw4xKjkmBgzRDIHVbmma6XrD/cXVZPCu40w/M3br74wMyl7l2tFQCb1ZUi9cmjZbrIf@nongnu.org
+X-Gm-Message-State: AOJu0YybnMJbfpwcQOAlSCVqrO6+O52G03lXptkQVp2wne3tbHzJS03E
+ jo7cVshaVNzG0YBipIsWT0y7d2D0sa+rc3oFsGmL/N4Cog6NLbxKLgjQl5qM76QZe4c=
+X-Gm-Gg: ASbGncvcD1AFlN106oUd0Yi2A1NH2MEBfSlwCcPP8tsRZvcFKX4QTNsOA+87srNUJ3T
+ deJBW/guTm9NV1buP1mEg6V1yo5+B09KhSaWCqBDKT/M2y5UU1WjQJhQYCWHewP2iq94fbAKBih
+ t2VhL//M40gJqWYNksNRGVLoM+ih9YfyPgFwmDYRVXeP4iL8UsAvsh1CbMyRw+JiNOe4j3CQn0X
+ APAuFBj2KeN4cVyr8cDcyukrlIB0Hzv+Ta9dVtdeYdwoCWtjP2i5ch0b4Tbns2UCC+5z7xQZpPF
+ x+RhezsxkmoASouQZ1u8wjOemvR6/xvmiYR+7A8mFoxf/IY/EgPCEf4ZIrQpOxjOef48nac6HqD
+ 1HPCGTyH4ydiYTpOcL/E2tdU+Hvm2BpPB55KJAqd83+xRZgytz/GOwHTAMTdrq40n+vQ3mwkcXi
+ wWRFstey2mIS0SgIOvPMh59D3zUciDlB6y+em33HuWmMLkvnmefMRnUm9SAg3JliIuqA==
+X-Google-Smtp-Source: AGHT+IEusH0uKFA2dFxrPNu4WVGpMqpMyiYJw1K/LWbCB31+P04L7s5Nb9HlXW4A1Gbaf5hEqraBmQ==
+X-Received: by 2002:a05:6000:186c:b0:3df:c5e3:55fe with SMTP id
+ ffacd0b85a97d-429bd69d8fbmr2213843f8f.29.1761904925681; 
+ Fri, 31 Oct 2025 03:02:05 -0700 (PDT)
+Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c13e0325sm2600047f8f.29.2025.10.31.03.02.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 03:00:38 -0700 (PDT)
-Message-ID: <f30f2246-dec8-43a1-a7bb-cb8fddfdbf2a@linaro.org>
-Date: Fri, 31 Oct 2025 11:00:36 +0100
+ Fri, 31 Oct 2025 03:02:04 -0700 (PDT)
+Message-ID: <185c6a36-a90a-4ca1-9c10-477d819d4028@linaro.org>
+Date: Fri, 31 Oct 2025 11:02:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional: Mark the MIPS replay tests as flaky
-To: qemu-devel@nongnu.org
-References: <20251031094118.28440-1-philmd@linaro.org>
- <20251031094118.28440-2-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/8] qapi/audio: Fix description markup of
+ AudiodevDBusOptions @nsamples
 Content-Language: en-US
-In-Reply-To: <20251031094118.28440-2-philmd@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: jsnow@redhat.com, eblake@redhat.com, vsementsov@yandex-team.ru,
+ thuth@redhat.com, berrange@redhat.com, kchamart@redhat.com, mst@redhat.com,
+ sgarzare@redhat.com
+References: <20251031094751.2817932-1-armbru@redhat.com>
+ <20251031094751.2817932-2-armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251031094751.2817932-2-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,10 +106,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/31/25 10:41, Philippe Mathieu-Daudé wrote:
-> +    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
+On 31/10/25 10:47, Markus Armbruster wrote:
+> The description of Member @nsamples is indented incorrectly.  Comes
+> out like
+> 
+>      Members:
+>              [...]
+> 	    nsamples (int, optional) – set the number of samples per read/write calls (default to 480,
+> 
+>      10ms at 48kHz).
+> 
+> Fixing the indentation makes it come out like
+> 
+>      Members:
+>              [...]
+> 	    nsamples (int, optional) – set the number of samples per read/write calls (default to 480, 10ms at 48kHz).
+> 
+> Fixes: 19c628f2f579 (dbus: add -audio dbus nsamples option)
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   qapi/audio.json | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-If you're going to reference this, you might want to re-open it.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-r~
 
