@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AD1CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B94ECCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEwT7-0000Gu-6A; Fri, 31 Oct 2025 17:15:33 -0400
+	id 1vEwTm-0000Q2-KN; Fri, 31 Oct 2025 17:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwT5-0000Gg-Cx
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:15:31 -0400
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwTf-0000L6-78
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:16:07 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwT2-0001x1-91
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:15:31 -0400
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-429c4c65485so813551f8f.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:15:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwTX-0001z6-Nn
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:16:06 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47114a40161so30247775e9.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761945320; x=1762550120; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=1JCNmCeXKwVK6R9M/MpOAZqMdQ/Z7uwpqnv+fcT8EZU=;
- b=nwjG/ahDU5Lezl1yfNJNtRtMUOVu5afVNx9crTe8ZoRVBY75EDDDu0XfGnZwOia63c
- ZAhULTPrkBmVSzyKkazXhRGvGx41o1qSnxXvapod53p5Ui1gam747PXGhaCwloYd9x9U
- 4a26WOYFD++mu1s0rkunCXDhY/dNm9cPpiHVej9zW6jnOw0Zd/WJToFx9F2r3tUauaZQ
- VYowrdhc5RJPbkZjTKiEJ08l5NqPn6YLFBh0LpYdc0OJWD2yAh6NUNe/DD4hhXQruMYk
- Gym/88LTZMAH+plchBj7RDeWnOY3WT4lsxDKVb3kL2IHHSM3pN2FgtTG7ccGt4ijSHLv
- 0Bvg==
+ d=linaro.org; s=google; t=1761945353; x=1762550153; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=HFZ3cOuhc8mkvqGRr8iMXyeFtjdCa5BH/GDXyvHjKUg=;
+ b=BW7Yi++QISnKp/mB6lZv+ovAOc1tnmyDERn2fIkV4coA2kBRNope4qYvxjEpmriItl
+ I/lpchfNrhKW/XJElCAdkURUn86btwnQpP712m8nD1wiJRKKAYim7QmZ4/ju8YcH/i4S
+ ehLuN4LUxWUWyPjDuj5GOgLYoOOCo2lAG1PefqEirc5AiseEkTxxPleibIXZKOxhaJ/H
+ oWN9XBMB21wJm3x4fs+9ptslU0BlLNDmg6sMpsr5CsHmYI55P/6Zojmg7P9qu67YoMmG
+ MQqgH4kNo4SZr1ep6XlZoHqofkuWJqTC/SQflId505HZ5z7BVrUNUBcuZbBDfZw4/VFK
+ zvvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761945320; x=1762550120;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1JCNmCeXKwVK6R9M/MpOAZqMdQ/Z7uwpqnv+fcT8EZU=;
- b=vN4jkNO/tdvi5VuJopx7WMJeCp94ublxYDJH8DLE4V3ZClPPbYQ0kba2krxnV110ei
- h87kCUgTf1UwdvAAe5aXhyTuo1EpeDPGOWZNYHUdDGoAkhC09P8J882Q6xrZ3QqGrRbz
- nJYq+9qTL97Ftzhi3a0tZc0vjzPiu/KSmfRzxV2VM7Uj+vOFEiZOsj8ePso8lo3RvbPz
- P7KBf3kYTbdEcEvIVx/JEKcCV4hyaChWQUxdIwH7bKT1JxrMD1RotAjBrN4lEM+V3F5c
- ZFom16XS7rVWSJDv1Xe0Uah1uSbgSSr3WUlhT8l2CJKIcNy8LPo23VKSEqsJHyOyLYAU
- nJCw==
-X-Gm-Message-State: AOJu0YwsLN6z+LaxXlyE+JauU4l+PvI+YZZnlHuLJJzBs++toK9FQjcL
- BPi0c5zNFqDlk9YFv/Cf937K4T6No99nwNdT/HV1CbffAO5Ybs10vXsae2XzxUkfMYMsJvhrZh2
- 2DDpdZmE24B1c
-X-Gm-Gg: ASbGnctiN5clqr+J4YnBysCcxJFAnAcVVEYBk8eg0CwBnAB2AdQK446k05NQHSE8iVp
- 558MT3qT8KDaW+hPhQlXz2iQPToI/TiTqai6dTF8eoYe/y5KJ6QiEki7NsN1Du5g7teV2w62ol+
- XFsT8Lp52U1P58U9k9ExBv8Y4On6IFiRZGulUHggDGpN8kRbnxAFnv01rSsFAIz79JsDUyCRF4a
- hrgSz2IEk1AR0Hg/DtG7wC1RQYDRkMkyVp8EOeZf+lIoapwaNuVIJAxTisyWXPTuDfgXkW2pjFZ
- vrHv3Ao30zCmbTesCuu+dRiJoTHsJs5VaKVsd4ljH/Jp6BU3XMLq/5kXH2yHn2ggwcZvQ9asgP3
- jvxO6IdGeTvkVmIOSeohSUzcjniwImjYektz9CpRUNCifc7pdYr5YyXSHSPydqU149KvaGDWym3
- FK4+qkXNGScf+SUbcUHJ5i0ZUYjKBg0sGwfCmFvJdUxqC4Iw5cSvzKuFO+ZK8BHkrW
-X-Google-Smtp-Source: AGHT+IG5MK3usWKT1kItrPg4KUJFSk+5dwFtGTlNC6ZP0ZhjJol0uvaYSYALSbHHJjIViLqE9dm7yg==
-X-Received: by 2002:a05:6000:490b:b0:427:666:f9d6 with SMTP id
- ffacd0b85a97d-429bd6a660fmr4264872f8f.39.1761945320327; 
- Fri, 31 Oct 2025 14:15:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761945353; x=1762550153;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HFZ3cOuhc8mkvqGRr8iMXyeFtjdCa5BH/GDXyvHjKUg=;
+ b=cW0K+86vbmqTyYX4kuOGYQKP8+/oTooaYq8i58pqK5q1PDhuEDuYgU3T90is4WfsV8
+ yO403CAhcnoGUjh91Tm0asXZJ3Yvd/mOUpcBWpyp4oQl7Ux/+9fKSItbvZkcOmAnNodz
+ rGX2FRDUZTKydf7v3n61nC4FmMm08NIpuWa7ATGTS160678WXflffCe2L+ykFzb8Au4I
+ 8vMSMy/JGOnJgkh0NHV5iOQdZ8S4E/HSc5LroS5Yt9wEq7RgiADPmpIBkwsb5jSC1fey
+ VYjh+wfEb5OmGhpH42ZhzmBwRjkF3AhVGk1Cq5+grm1egGifTwkKOR/NKpTTXc8eIvoE
+ AZow==
+X-Gm-Message-State: AOJu0YylD5kBdP4iA0GkZxP0fdJtN+d5YsbIs3AAuaRhsmEJIJgR0kZw
+ qzqqv/U/ogV+kwJERlxnqIyvpiamQfdTXeyHT5IBdLheGJV/NzVx3sWgnlzdRZsNe/qE8YDPMal
+ 7rf2H9DBztQ==
+X-Gm-Gg: ASbGncvWytQuaUczEq9z/guSxo5OFj6na7rqbf/yzuL9ZA+2HI2AuSkR1NVjWtAHxO7
+ eKXlJymRI5s2a3gwgTCU1pKX21GY4mpA73gMn0F2hNUQxRpefMisgr8+Zpy7TJH4V0wtLc+0hRi
+ mcxaAC9Os501eUKL3bBOgYeXClyRXfnD8I2IplBegft37DM2CcB8ec3tIop7tt7fPk7CXFCd9Sy
+ MqNZKsU2yFa8PSa7ZWheexg/TuedxuE1BjpNP1P7wyN86b7KLTSZi8em7q+5pfOhB38qel5UL1m
+ dzVKqll9lRAXhS3VXqfzYZNR2lQcrmLH1KVGJshKYfeZOtzMOQGTYA042tY1180pLI4nTB1zqHj
+ XBeN/9AZroZTQLQ5NG8C8wihXl7cgSNwg9NMlILaKNSAppD8gV0fkXeqAW0jq9kbP2FBQ4wRd2P
+ oLPctzSXQjL6Zq75DInY7g4Yg7ergCAbIMlJ61Rm/ZlzaLUzFelfa3XQVh59tcFtmf
+X-Google-Smtp-Source: AGHT+IHjug+um51Ev2IgrHFR0N/6rD4FjmdTDnTbuhjl6rFOV9bqbpaHIQQgGmg2Kl5MSW0/Ul1CEA==
+X-Received: by 2002:a05:600c:4591:b0:477:c37:2ea7 with SMTP id
+ 5b1f17b1804b1-4773089c4acmr51129835e9.21.1761945353186; 
+ Fri, 31 Oct 2025 14:15:53 -0700 (PDT)
 Received: from pc56.home (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13eae16sm5354145f8f.32.2025.10.31.14.15.19
+ 5b1f17b1804b1-4772fd38c4esm28114095e9.12.2025.10.31.14.15.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 31 Oct 2025 14:15:19 -0700 (PDT)
+ Fri, 31 Oct 2025 14:15:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/9] Accelerators & CPU patches for Halloween 2025
-Date: Fri, 31 Oct 2025 22:15:09 +0100
-Message-ID: <20251031211518.38503-1-philmd@linaro.org>
+Subject: [PULL 1/9] cpus: Access CPUState::thread_kicked atomically
+Date: Fri, 31 Oct 2025 22:15:10 +0100
+Message-ID: <20251031211518.38503-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251031211518.38503-1-philmd@linaro.org>
+References: <20251031211518.38503-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,77 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c494afbb7d552604ad26036127655c534a2645e5:
+cpus_kick_thread() is called via cpu_exit() -> qemu_cpu_kick(),
+and also via gdb_syscall_handling(). Access the CPUState field
+using atomic accesses. See commit 8ac2ca02744 ("accel: use atomic
+accesses for exit_request") for rationale.
 
-  Merge tag 'pull-nvme-20251030' of https://gitlab.com/birkelund/qemu into staging (2025-10-31 12:56:05 +0100)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <20250925025520.71805-3-philmd@linaro.org>
+---
+ system/cpus.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/accel-cpus-20251031
-
-for you to fetch changes up to 0da6099730dbd44a6a96ad18774e5553d1ca7d21:
-
-  rx: cpu: fix interrupts check in rx_cpu_do_interrupt() (2025-10-31 22:10:50 +0100)
-
-Following checkpatch.pl error ignored:
-
-  8/9 Checking commit 46f767bd6814 (tests/unit: add unit test for qemu_hexdump())
-  ERROR: unnecessary whitespace before a quoted newline
-  #59: FILE: tests/unit/test-cutils.c:3662:
-  +            "s is \n";
-
-  total: 1 errors, 0 warnings, 56 lines checked
-
-----------------------------------------------------------------
-Generic CPUs / accelerators patch queue
-
-- Access CPUState::thread_kicked atomically
-- Make async_safe_run_on_cpu() safe on HVF
-- Fix bql_locked status with condvar APIs
-- Document cpu_memory_rw_debug()
-- Rename init_clocks() -> qemu_init_clocks() to avoid name clashing
-- Fix QEMU_HEXDUMP_LINE_WIDTH logic
-- Fix interrupts check in rx_cpu_do_interrupt()
-----------------------------------------------------------------
-
-Alex Bennée (1):
-  timers: properly prefix init_clocks()
-
-Igor Mammedov (1):
-  rx: cpu: fix interrupts check in rx_cpu_do_interrupt()
-
-Peter Xu (1):
-  bql: Fix bql_locked status with condvar APIs
-
-Philippe Mathieu-Daudé (4):
-  cpus: Access CPUState::thread_kicked atomically
-  accel/hvf: Make async_safe_run_on_cpu() safe
-  accel/tcg: Use cpu_is_stopped() helper to access CPUState::stopped
-  exec/cpu: Declare cpu_memory_rw_debug() in 'hw/core/cpu.h' and
-    document
-
-Vladimir Sementsov-Ogievskiy (2):
-  util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
-  tests/unit: add unit test for qemu_hexdump()
-
- include/exec/cpu-common.h         |  4 ---
- include/hw/core/cpu.h             | 20 ++++++++++++++
- include/qemu/main-loop.h          | 18 +++++++++++++
- include/qemu/timer.h              |  5 ++--
- util/qemu-thread-common.h         |  7 +++++
- accel/tcg/tcg-accel-ops-rr.c      |  2 +-
- stubs/iothread-lock.c             |  9 +++++++
- system/cpus.c                     | 18 ++++++++++---
- target/arm/hvf/hvf.c              |  2 ++
- target/i386/hvf/hvf.c             |  2 ++
- target/rx/helper.c                | 45 ++++++++++++++-----------------
- tests/unit/test-aio-multithread.c |  2 +-
- tests/unit/test-cutils.c          | 45 +++++++++++++++++++++++++++++++
- util/hexdump.c                    | 38 ++++++++++++++++----------
- util/main-loop.c                  |  2 +-
- util/qemu-timer.c                 |  2 +-
- 16 files changed, 168 insertions(+), 53 deletions(-)
-
+diff --git a/system/cpus.c b/system/cpus.c
+index aa7bfcf56e5..74f5a5bd4e2 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -480,10 +480,10 @@ void qemu_process_cpu_events(CPUState *cpu)
+ 
+ void cpus_kick_thread(CPUState *cpu)
+ {
+-    if (cpu->thread_kicked) {
++    if (qatomic_read(&cpu->thread_kicked)) {
+         return;
+     }
+-    cpu->thread_kicked = true;
++    qatomic_set(&cpu->thread_kicked, true);
+ 
+ #ifndef _WIN32
+     int err = pthread_kill(cpu->thread->thread, SIG_IPI);
 -- 
 2.51.0
 
