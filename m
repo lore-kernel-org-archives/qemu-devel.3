@@ -4,108 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF075CCF9FF
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB46CCFA00
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEl6V-0002pt-KB; Fri, 31 Oct 2025 05:07:27 -0400
+	id 1vEl8h-0003S6-2N; Fri, 31 Oct 2025 05:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEl6S-0002pO-3x
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:07:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vEl6J-00083o-2B
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:07:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761901629;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t6oxqYwFAhws+qxiwnGA7hTzxza9DnPp87hJNznnvNA=;
- b=A8yrgZHSzLpmpejAufW54Lcrq63Hsp5iWJqBpAGM8egii6yOCTvro30CnPz75cOALIAHWl
- IUV2jNDfcc9zee3VP+7vMtFqGXR2k2bZ1SUIWPoqAbWRz3wB4sTmMHTkT8ZWJvf8nOli6/
- PCP1kbtfW/+uah33wl46sfMfHKgXLOM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-VPrgmGKLNlKbjaaBMmJ0CQ-1; Fri, 31 Oct 2025 05:07:07 -0400
-X-MC-Unique: VPrgmGKLNlKbjaaBMmJ0CQ-1
-X-Mimecast-MFC-AGG-ID: VPrgmGKLNlKbjaaBMmJ0CQ_1761901626
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47106a388cfso14996995e9.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:07:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEl8e-0003RZ-RI
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:09:41 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEl8b-0008CE-Ak
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:09:40 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4770c34ca8eso17666665e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:09:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761901773; x=1762506573; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4MHmy3wxWhV8hOlGBOvn/gt7F0v/XH1uGfGmkzDzWxs=;
+ b=vtg0K95c+NbrO3j2ZM/8TOVA4dMPwqxNf87hrQK1DWgk179rYC9s2nIambu7XifmV+
+ 1xml2MGpDGf660vQnMpUKmDYbhOZGiKraHsgobnL/ppPtwhOmbQboWoahxBvYeE5DW6H
+ PSULV1xPf2YGDlpeJxCkhVfl+fE9OuiqFVAp+OmsSAhF/91BXgCDoGjVFjVJyS+vVUGP
+ sXAGTAYmKlOXoFA7FYh5KImuSef8hBj1pdaN10igYH+Lh0jbYWm4LLIGNXlLARfR1wBZ
+ 8AHVTCLGA7JZ7rdqV6OD/bDxiX2k/yIPhQD95O7GFBnY9qN2s7LwPN89+7g9hjr7+r4H
+ Qnhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761901626; x=1762506426;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t6oxqYwFAhws+qxiwnGA7hTzxza9DnPp87hJNznnvNA=;
- b=VAiWQKXT2yBSYDIoZOkwcUPQYEaIsKx9vd8Kuu6wRGH7IQRPv3cybfs+AFUY7c9esF
- tMH6rhtZTK/N7FCMfbdgqZY6sNF9ZmdgcdhpzhiOOV9PfR4rV1FAzhSJhInjiqTCpq8U
- yecB/fhf0QCz8/ar/K+vz0ORIboob8xsOSF/eqiOGuE40cU1W9fRAISIcNJMJKoMP+ww
- zaMYn6s+5AV61Xk3oMC5eK1/QEbDd573I/FLYW9a1KmuCjpffxDesHAIDXTFNLVn7mLN
- bvexbM+IL4bd50+9Geh0rkIqYe7Vbk4vziqC/IcC6wVL7vHlURjaaUyVpEZNR0X7INCg
- sMxA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSb36Pi8zwjb2z1JONFnf1xKCo6fGVJxPIOJkQ9EQxCAuaIQcljvx5m5JxxEhSB8E/31YHvzr2ZKAg@nongnu.org
-X-Gm-Message-State: AOJu0YzZn0Ezo26DE+fV1erMzE1N7fbyIhkXuz7SLrAKhnsGRNAY7eG9
- KXBcJ6Gf4UUPF+NFPKaoYs94S3A9rR+W7IQ39g2oxHTBvD7ZWe/7fQ+pCnmlko4i7qi8p4Ap4bS
- VXzWX2iwpvz1Iv/Kj1c4uqAj6WNOEuyVdWUUOQtK9x5/MOGUeMkH+dX7C
-X-Gm-Gg: ASbGncvGdHLjQYgxQ+C1R+2NwKicPQJJd8UHhidZPLuNXx2jRppLl+ZIbBIkdz9lxqU
- Ntgu2tt0eFxoZT6Wh50q4AOi7JqhpbzqPeEcBU1oRnW5cSezZx3dIY7xJlO0Hk8CMrX4jiewaNr
- UnBfW7jnSkXJmU/qYlSD7X9lv7tDFATva1t8uhOYYlWIJJkfGXPtPtgKyOhHglmRJ9Wsa+vcyOg
- L0og9rR2uH7nIR8WM9ZEWQDFsbk6lVtK/nQumMrqe9nQO7Yo+omWdGwzZwel2PRp0XJzze8pIGY
- ptLxuAY0qyYlwlkF1bZUVAynNTn9MlypwxDlIP3ATntlIG7TNYBePO3H5jQ3K+RYlgICYeojJYm
- bFynMSFx/I6Ckelr8AKAqnFtnCoii2gS7PqoJVZzf/jGfINqm7aBQfKLp/4xC5rp4GJ3Ccf5x8Z
- V8XRgMiuCWMQvpM+Or3EfnZJ9japvL
-X-Received: by 2002:a05:600c:5021:b0:46f:b42e:e392 with SMTP id
- 5b1f17b1804b1-477308b1a99mr21715545e9.39.1761901626129; 
- Fri, 31 Oct 2025 02:07:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0kf+kIOt8nKlPSJkBny1PB9fsRt02hOgt6kpoqe9L10lzv1AXYO5/+S5VWXZdVXL7hQmsmw==
-X-Received: by 2002:a05:600c:5021:b0:46f:b42e:e392 with SMTP id
- 5b1f17b1804b1-477308b1a99mr21715155e9.39.1761901625703; 
- Fri, 31 Oct 2025 02:07:05 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d717:1f4c:b757:9963:8006:395e?
- (p200300cfd7171f4cb75799638006395e.dip0.t-ipconnect.de.
- [2003:cf:d717:1f4c:b757:9963:8006:395e])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47732ddd0a3sm22704215e9.5.2025.10.31.02.07.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 02:07:03 -0700 (PDT)
-Message-ID: <5206b3f2-42c7-48a2-aa92-5580f2733ae3@redhat.com>
-Date: Fri, 31 Oct 2025 10:07:01 +0100
+ d=1e100.net; s=20230601; t=1761901773; x=1762506573;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4MHmy3wxWhV8hOlGBOvn/gt7F0v/XH1uGfGmkzDzWxs=;
+ b=MBRymlom27zgsU3TW/2FBgAVV1Xt+GBkMydePrmMH766cnzy+FhEGsd00aa3x3YC0a
+ pGZT1erML29i3ZNBZWrqbezLlGS4pEnQ7MishenRlPdytehLM3Y0cqid8epyzs8tUeA5
+ vnUQqGro1ncQ7vWc4yEpcNP/n/iqsBqCbS2IDWLXfvNGVfmcIgqyupxOZ7tsrNZelIs3
+ yDGY+unMSPQVwqH1zqMavZkzulKgHUqsM/bmwii/FXJDQByXdkh/R7JP1RE7RizNEyCB
+ ONDLsSLAKhaMZqIBwhW27j1lAHFbf+d0oTUL5wLyUmBrOV05YkCgtgDVTxFDtotDtAJl
+ m9dw==
+X-Gm-Message-State: AOJu0Yy3lSjib+35tWGz9kzRuPm7Y+hl9NUQWs7t7pd55py5anfoveRJ
+ 3omRXmwJJu71vo9P8jEXNaNNnsEG0srVPdmMQSiWzeD9kXm/oaTYNf6zWuqhhO/twDS8sRKx5dP
+ bN+x+DDi+p1F8
+X-Gm-Gg: ASbGncvsLKl09JgVNqAsnFYMbFrSHBIA059tl4+t9FP8ESdovKfmp12YsHWZv1VPIgD
+ YcY/Z6VWaEeZs81TJDzANlsokA+xXx2pQ1XyOieELdceTUfLAjuEVRRWDFO9fpauz5d6JSzByWj
+ +NXWrFQSmzht1gOEO/7d/T6pcHAHhjeNTi8M2E0MPBf5Kv34cFgs8gfMymOKuT6ldVSLEuA6ESK
+ ZTBkt8yyEnY3b3Hkb9IZ6FlUJ9um9tkcYRsYHVryNzc8nCmnrjg/TLUXsNFylfq7ZvJzJcddW5x
+ OSYtHxqL234fvFgRcFHBc52klf3lCPR1A2P+iHhGvKGgXx5EpvVNVQW9eNG+76Tl1sj4RHX1aXX
+ MDGNXwDCff+nMf189og05S3zkxKp6o4w/TQWuBY5RESoDXAOTD44JotQmxcRqJU8FizslKu3Mui
+ NqDwR1uitl4icRjg8Y45lUswSpzFtVnhd4tDpVF3A5oR8951B/7Jiqik0OQp4=
+X-Google-Smtp-Source: AGHT+IEQpEWO6d0onfQ13+enrnHAWbwbEuCv0GfRK9j9n0OfWSUFL+1a6fSpsJmLFUwgZRjim9N7Ng==
+X-Received: by 2002:a05:600c:840a:b0:471:131f:85b7 with SMTP id
+ 5b1f17b1804b1-477307e7004mr27957355e9.15.1761901773217; 
+ Fri, 31 Oct 2025 02:09:33 -0700 (PDT)
+Received: from pc56.home (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c13e16d8sm2461522f8f.31.2025.10.31.02.09.31
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 31 Oct 2025 02:09:32 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] crypto/hash: Have hashing functions take void * buffer
+ argument
+Date: Fri, 31 Oct 2025 10:09:30 +0100
+Message-ID: <20251031090930.27159-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_03/16=5D_iscsi=3A_Run_co_BH_CB_in_the_coro?=
- =?UTF-8?Q?utine=E2=80=99s_AioContext?=
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>,
- Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-References: <20251028163343.116249-1-hreitz@redhat.com>
- <20251028163343.116249-4-hreitz@redhat.com> <aQIkQ8q9CaUYw8Ob@redhat.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <aQIkQ8q9CaUYw8Ob@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,57 +99,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.10.25 15:27, Kevin Wolf wrote:
-> Am 28.10.2025 um 17:33 hat Hanna Czenczek geschrieben:
->> For rbd (and others), as described in “rbd: Run co BH CB in the
->> coroutine’s AioContext”, the pattern of setting a completion flag and
->> waking a coroutine that yields while the flag is not set can only work
->> when both run in the same thread.
->>
->> iscsi has the same pattern, but the details are a bit different:
->> iscsi_co_generic_cb() can (as far as I understand) only run through
->> iscsi_service(), not just from a random thread at a random time.
->> iscsi_service() in turn can only be run after iscsi_set_events() set up
->> an FD event handler, which is done in iscsi_co_wait_for_task().
->>
->> As a result, iscsi_co_wait_for_task() will always yield exactly once,
->> because iscsi_co_generic_cb() can only run after iscsi_set_events(),
->> after the completion flag has already been checked, and the yielding
->> coroutine will then be woken only once the completion flag was set to
->> true.  So as far as I can tell, iscsi has no bug and already works fine.
->>
->> Still, we don’t need the completion flag because we know we have to
->> yield exactly once, so we can drop it.  This simplifies the code and
->> makes it more obvious that the “rbd bug” isn’t present here.
->>
->> This makes iscsi_co_generic_bh_cb() and iscsi_retry_timer_expired() a
->> bit boring, and actually, for the former, we could drop it and run
->> aio_co_wake() directly from scsi_co_generic_cb() to the same effect; but
->> that would remove the replay_bh_schedule_oneshot_event(), and I assume
->> we shouldn’t do that.  At least schedule both the BH and the timer in
->> the coroutine’s AioContext to make them simple wrappers around
->> qemu_coroutine_enter(), without a further BH indirection.
-> I don't think we have to keep the BH. Is your concern about replay? I
-> doubt that this works across different QEMU versions anyway, and if it
-> does, it's pure luck.
+Cryptographic hash function can operate on any area of memory,
+regardless of the content their represent. Do not restrict to
+array of char, use the void* type, which is also the type of
+the underlying iovec::iov_base field.
 
-It is solely about replay, yes.  I assumed the 
-replay_bh_schedule_oneshot_event() would be a replay point, so removing 
-it would, well, remove a replay point.  I suppose we’re going to have 
-one replay point per request anyway (when going through the blkreplay 
-driver), so maybe it doesn’t matter much?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/crypto/hash.h |  8 ++++----
+ include/crypto/hmac.h |  4 ++--
+ crypto/hash.c         | 16 ++++++++--------
+ crypto/hmac.c         |  8 ++++----
+ 4 files changed, 18 insertions(+), 18 deletions(-)
 
-Anyway, it seemed safer to keep it.  But apart from replay, I don’t have 
-any concern about dropping the BH.
-
->> Finally, remove the iTask->co != NULL checks: This field is set by
->> iscsi_co_init_iscsitask(), which all users of IscsiTask run before even
->> setting up iscsi_co_generic_cb() as the callback, and it is never set or
->> cleared elsewhere, so it is impossible to not be set in
->> iscsi_co_generic_cb().
->>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> Kevin
->
+diff --git a/include/crypto/hash.h b/include/crypto/hash.h
+index 1868d4a0f78..43525098c51 100644
+--- a/include/crypto/hash.h
++++ b/include/crypto/hash.h
+@@ -122,7 +122,7 @@ int qcrypto_hash_bytesv(QCryptoHashAlgo alg,
+  * Returns: 0 on success, -1 on error
+  */
+ int qcrypto_hash_bytes(QCryptoHashAlgo alg,
+-                       const char *buf,
++                       const void *buf,
+                        size_t len,
+                        uint8_t **result,
+                        size_t *resultlen,
+@@ -180,7 +180,7 @@ int qcrypto_hash_updatev(QCryptoHash *hash,
+  * Returns: 0 on success, -1 on error
+  */
+ int qcrypto_hash_update(QCryptoHash *hash,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         Error **errp);
+ 
+@@ -289,7 +289,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoHash, qcrypto_hash_free)
+  * Returns: 0 on success, -1 on error
+  */
+ int qcrypto_hash_digest(QCryptoHashAlgo alg,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         char **digest,
+                         Error **errp);
+@@ -335,7 +335,7 @@ int qcrypto_hash_base64v(QCryptoHashAlgo alg,
+  * Returns: 0 on success, -1 on error
+  */
+ int qcrypto_hash_base64(QCryptoHashAlgo alg,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         char **base64,
+                         Error **errp);
+diff --git a/include/crypto/hmac.h b/include/crypto/hmac.h
+index af3d5f8feb2..0885ae22d1d 100644
+--- a/include/crypto/hmac.h
++++ b/include/crypto/hmac.h
+@@ -139,7 +139,7 @@ int qcrypto_hmac_bytesv(QCryptoHmac *hmac,
+  *  0 on success, -1 on error
+  */
+ int qcrypto_hmac_bytes(QCryptoHmac *hmac,
+-                       const char *buf,
++                       const void *buf,
+                        size_t len,
+                        uint8_t **result,
+                        size_t *resultlen,
+@@ -187,7 +187,7 @@ int qcrypto_hmac_digestv(QCryptoHmac *hmac,
+  * Returns: 0 on success, -1 on error
+  */
+ int qcrypto_hmac_digest(QCryptoHmac *hmac,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         char **digest,
+                         Error **errp);
+diff --git a/crypto/hash.c b/crypto/hash.c
+index 7513769e42d..6ffb88bf541 100644
+--- a/crypto/hash.c
++++ b/crypto/hash.c
+@@ -67,13 +67,13 @@ int qcrypto_hash_bytesv(QCryptoHashAlgo alg,
+ 
+ 
+ int qcrypto_hash_bytes(QCryptoHashAlgo alg,
+-                       const char *buf,
++                       const void *buf,
+                        size_t len,
+                        uint8_t **result,
+                        size_t *resultlen,
+                        Error **errp)
+ {
+-    struct iovec iov = { .iov_base = (char *)buf,
++    struct iovec iov = { .iov_base = (void *)buf,
+                          .iov_len = len };
+     return qcrypto_hash_bytesv(alg, &iov, 1, result, resultlen, errp);
+ }
+@@ -89,11 +89,11 @@ int qcrypto_hash_updatev(QCryptoHash *hash,
+ }
+ 
+ int qcrypto_hash_update(QCryptoHash *hash,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         Error **errp)
+ {
+-    struct iovec iov = { .iov_base = (char *)buf, .iov_len = len };
++    struct iovec iov = { .iov_base = (void *)buf, .iov_len = len };
+ 
+     return qcrypto_hash_updatev(hash, &iov, 1, errp);
+ }
+@@ -206,12 +206,12 @@ int qcrypto_hash_digestv(QCryptoHashAlgo alg,
+ }
+ 
+ int qcrypto_hash_digest(QCryptoHashAlgo alg,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         char **digest,
+                         Error **errp)
+ {
+-    struct iovec iov = { .iov_base = (char *)buf, .iov_len = len };
++    struct iovec iov = { .iov_base = (void *)buf, .iov_len = len };
+ 
+     return qcrypto_hash_digestv(alg, &iov, 1, digest, errp);
+ }
+@@ -237,12 +237,12 @@ int qcrypto_hash_base64v(QCryptoHashAlgo alg,
+ }
+ 
+ int qcrypto_hash_base64(QCryptoHashAlgo alg,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         char **base64,
+                         Error **errp)
+ {
+-    struct iovec iov = { .iov_base = (char *)buf, .iov_len = len };
++    struct iovec iov = { .iov_base = (void *)buf, .iov_len = len };
+ 
+     return qcrypto_hash_base64v(alg, &iov, 1, base64, errp);
+ }
+diff --git a/crypto/hmac.c b/crypto/hmac.c
+index 422e005182a..2f0d044cf27 100644
+--- a/crypto/hmac.c
++++ b/crypto/hmac.c
+@@ -28,14 +28,14 @@ int qcrypto_hmac_bytesv(QCryptoHmac *hmac,
+ }
+ 
+ int qcrypto_hmac_bytes(QCryptoHmac *hmac,
+-                       const char *buf,
++                       const void *buf,
+                        size_t len,
+                        uint8_t **result,
+                        size_t *resultlen,
+                        Error **errp)
+ {
+     struct iovec iov = {
+-            .iov_base = (char *)buf,
++            .iov_base = (void *)buf,
+             .iov_len = len
+     };
+ 
+@@ -70,13 +70,13 @@ int qcrypto_hmac_digestv(QCryptoHmac *hmac,
+ }
+ 
+ int qcrypto_hmac_digest(QCryptoHmac *hmac,
+-                        const char *buf,
++                        const void *buf,
+                         size_t len,
+                         char **digest,
+                         Error **errp)
+ {
+     struct iovec iov = {
+-            .iov_base = (char *)buf,
++            .iov_base = (void *)buf,
+             .iov_len = len
+     };
+ 
+-- 
+2.51.0
 
 
