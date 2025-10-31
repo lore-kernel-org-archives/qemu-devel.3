@@ -4,108 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD3FCCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 19:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 623E3CCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEv3y-0001Xl-MU; Fri, 31 Oct 2025 15:45:31 -0400
+	id 1vEvd7-00014L-8A; Fri, 31 Oct 2025 16:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vEv3w-0001X9-EU
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:45:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vEvd5-00012r-BY
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:21:47 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vEv3q-0002s4-NE
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:45:27 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59VASPc3026029
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=POt2zd
- YJ7pAdExy6KjBpWuIMGovP9XhKcuPEVaKXn6Y=; b=ilDcjAwLdlQUDFr0M6r1GN
- DR7KWp/l5174oQyvVGGKOm7DmiR519KogOJnyp660Ufn0Uh/fFYQWiPNdFhsU1+K
- RgH4aJVAgIA4RHM46gtw/MjT9Opc+5rqw0L2E94BcWZ9GKfmRMgk71nEY6imYJvu
- /RV4Tjj8hMYFqVa1X8RxMydn6+HF8SVPjOKODC+1uU9S870VvgmbYnXnN2+3334B
- sfeLcwvsZn136bQRdhpmF140Yv90euC5zQoHQzxVY/hw4VeGgzpG3WU4bzLX5kIY
- nd0K3cG8X0/PbapVd4UMFIy8fPHYIMTGh17aN/MbkJFswCjDFWE/K4ILQycv4uPQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a34aayas3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:13 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59VGKGYi018748
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:12 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4a33xwqwt7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:12 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59VJjB7h32899778
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:11 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 543F158056
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:11 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2FEA95803F
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:11 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 19:45:11 +0000 (GMT)
-Message-ID: <800989e7-d889-492d-a814-f0a6c4979b7f@linux.ibm.com>
-Date: Fri, 31 Oct 2025 15:45:10 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vEvcw-00019B-5T
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:21:45 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E8D6164F71;
+ Fri, 31 Oct 2025 23:21:20 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id EB8B03099CF;
+ Fri, 31 Oct 2025 23:21:30 +0300 (MSK)
+Message-ID: <82f3c305-bbc4-480a-9c73-ef4386e4ab3b@tls.msk.ru>
+Date: Fri, 31 Oct 2025 23:21:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] tmp_emulator: improve and fix use of errp
-To: qemu-devel@nongnu.org
-References: <20251028130738.29037-1-vsementsov@yandex-team.ru>
- <20251028130738.29037-3-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20251028130738.29037-3-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH] accel/tcg: Introduce and use MO_ALIGN_TLB_ONLY
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20251022001741.222499-1-richard.henderson@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20251022001741.222499-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ALkgKXG8 c=1 sm=1 tr=0 ts=690511c9 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=6R7veym_AAAA:8 a=9LEeJrRFzkvvDkBgsgkA:9 a=QEXdDO2ut3YA:10
- a=ILCOIF4F_8SzUMnO7jNM:22 a=poXaRoVlC6wW9_mwW8W4:22 a=pHzHmUro8NiASowvMSCR:22
- a=nt3jZW36AmriUCFCBwmW:22
-X-Proofpoint-ORIG-GUID: xVmKbuypdZUkzA9Vt0IIyTs6DYHDaLs9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE2NiBTYWx0ZWRfX4UW3+dA07B2J
- YUNfiBzzcdX1W5AGYPjy9yZHFfedVvAhZlm5+8EcdAaZXSTx+Wv2bDWoRzPhOEDNcxxWz8Bd2WP
- j8pQU7QNWHJx/6w9HFcX/8BcwJf3FzmZKNOnhgH+JsAg86fCXXTvWmmTxFkeqhY/DcMZZUVmLoj
- ER8bmLcJ+IfaTxfrp9UQzDlDjGNb+L2R5EtS8fvajI8YIWQl3wzUQq1pmDIt462Yx4FnSB0N3/j
- g3CZydkMkhZS16cWgNU4dgi9RzyWLB88NQzvrFN0GpNzWjSKtSgaGpTWIp/jnXPjRGBmD7FUMGl
- 7hGKa38Ii+LYEbYvNQEvn23RcclgyaAW+YGnZjby/nZSyZnbj80X5yBoFw90r+5hQM8M05PZ9LI
- +0ph3nWYPuDMwalU6650ilZDSCypQg==
-X-Proofpoint-GUID: xVmKbuypdZUkzA9Vt0IIyTs6DYHDaLs9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-31_06,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2510280166
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,198 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/28/25 9:07 AM, Vladimir Sementsov-Ogievskiy wrote:
-> tpm_emulator_post_load() and tpm_emulator_set_state_blobs() has
-> error paths, where they return negative value, but do not set
-> errp.
+On 10/22/25 03:17, Richard Henderson wrote:
+> For Arm, we need 3 cases: (1) the alignment required when accessing
+> Normal memory, (2) the alignment required when accessing Device memory,
+> and (3) the atomicity of the access.
 > 
-> To fix that, we also have to convert several other functions to
-> set errp instead of error_reporting.
+> When we added TLB_CHECK_ALIGNED, we assumed that cases 2 and 3 were
+> identical, and thus used memop_atomicity_bits for TLB_CHECK_ALIGNED.
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   backends/tpm/tpm_emulator.c | 63 +++++++++++++++++++++++--------------
->   1 file changed, 39 insertions(+), 24 deletions(-)
+> This is incorrect for multiple reasons, including that the atomicity
+> of the access is adjusted depending on whether or not we are executing
+> within a serial context.
 > 
-> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-> index dacfca5ab7..6abe9872e6 100644
-> --- a/backends/tpm/tpm_emulator.c
-> +++ b/backends/tpm/tpm_emulator.c
-> @@ -308,22 +308,22 @@ static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
->       return 0;
->   }
->   
-> -static int tpm_emulator_stop_tpm(TPMBackend *tb)
-> +static int tpm_emulator_stop_tpm(TPMBackend *tb, Error **errp)
->   {
->       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
->       ptm_res res;
->   
->       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_STOP, &res, 0,
->                                sizeof(ptm_res), sizeof(res)) < 0) {
-> -        error_report("tpm-emulator: Could not stop TPM: %s",
-> -                     strerror(errno));
-> +        error_setg(errp, "tpm-emulator: Could not stop TPM: %s",
-> +                   strerror(errno));
->           return -1;
->       }
->   
->       res = be32_to_cpu(res);
->       if (res) {
-> -        error_report("tpm-emulator: TPM result for CMD_STOP: 0x%x %s", res,
-> -                     tpm_emulator_strerror(res));
-> +        error_setg(errp, "tpm-emulator: TPM result for CMD_STOP: 0x%x %s", res,
-> +                   tpm_emulator_strerror(res));
->           return -1;
->       }
->   
-> @@ -362,12 +362,13 @@ static int tpm_emulator_lock_storage(TPMEmulator *tpm_emu)
->   
->   static int tpm_emulator_set_buffer_size(TPMBackend *tb,
->                                           size_t wanted_size,
-> -                                        size_t *actual_size)
-> +                                        size_t *actual_size,
-> +                                        Error **errp)
->   {
->       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
->       ptm_setbuffersize psbs;
->   
-> -    if (tpm_emulator_stop_tpm(tb) < 0) {
-> +    if (tpm_emulator_stop_tpm(tb, errp) < 0) {
->           return -1;
->       }
->   
-> @@ -376,16 +377,17 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
->       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_BUFFERSIZE, &psbs,
->                                sizeof(psbs.u.req), sizeof(psbs.u.resp.tpm_result),
->                                sizeof(psbs.u.resp)) < 0) {
-> -        error_report("tpm-emulator: Could not set buffer size: %s",
-> -                     strerror(errno));
-> +        error_setg(errp, "tpm-emulator: Could not set buffer size: %s",
-> +                   strerror(errno));
->           return -1;
->       }
->   
->       psbs.u.resp.tpm_result = be32_to_cpu(psbs.u.resp.tpm_result);
->       if (psbs.u.resp.tpm_result != 0) {
-> -        error_report("tpm-emulator: TPM result for set buffer size : 0x%x %s",
-> -                     psbs.u.resp.tpm_result,
-> -                     tpm_emulator_strerror(psbs.u.resp.tpm_result));
-> +        error_setg(errp,
-> +                   "tpm-emulator: TPM result for set buffer size : 0x%x %s",
-> +                   psbs.u.resp.tpm_result,
-> +                   tpm_emulator_strerror(psbs.u.resp.tpm_result));
->           return -1;
->       }
->   
-> @@ -402,7 +404,7 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
->   }
->   
->   static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
-> -                                     bool is_resume)
-> +                                           bool is_resume, Error **errp)
->   {
->       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
->       ptm_init init = {
-> @@ -413,7 +415,7 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
->       trace_tpm_emulator_startup_tpm_resume(is_resume, buffersize);
->   
->       if (buffersize != 0 &&
-> -        tpm_emulator_set_buffer_size(tb, buffersize, NULL) < 0) {
-> +        tpm_emulator_set_buffer_size(tb, buffersize, NULL, errp) < 0) {
->           goto err_exit;
->       }
->   
-> @@ -424,15 +426,15 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
->       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_INIT, &init, sizeof(init),
->                                sizeof(init.u.resp.tpm_result),
->                                sizeof(init)) < 0) {
-> -        error_report("tpm-emulator: could not send INIT: %s",
-> -                     strerror(errno));
-> +        error_setg(errp, "tpm-emulator: could not send INIT: %s",
-> +                   strerror(errno));
->           goto err_exit;
->       }
->   
->       res = be32_to_cpu(init.u.resp.tpm_result);
->       if (res) {
-> -        error_report("tpm-emulator: TPM result for CMD_INIT: 0x%x %s", res,
-> -                     tpm_emulator_strerror(res));
-> +        error_setg(errp, "tpm-emulator: TPM result for CMD_INIT: 0x%x %s", res,
-> +                   tpm_emulator_strerror(res));
->           goto err_exit;
->       }
->       return 0;
-> @@ -441,18 +443,31 @@ err_exit:
->       return -1;
->   }
->   
-> -static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
-> +static int do_tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize,
-> +                                       Error **errp)
->   {
->       /* TPM startup will be done from post_load hook */
->       if (runstate_check(RUN_STATE_INMIGRATE)) {
->           if (buffersize != 0) {
-> -            return tpm_emulator_set_buffer_size(tb, buffersize, NULL);
-> +            return tpm_emulator_set_buffer_size(tb, buffersize, NULL, errp);
->           }
->   
->           return 0;
->       }
->   
-> -    return tpm_emulator_startup_tpm_resume(tb, buffersize, false);
-> +    return tpm_emulator_startup_tpm_resume(tb, buffersize, false, errp);
-> +}
-> +
-> +static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
-> +{
-> +    Error *local_err = NULL;
-> +    int ret = do_tpm_emulator_startup_tpm(tb, buffersize, &local_err);
-> +
-> +    if (ret < 0) {
-> +        error_report_err(local_err);
-> +    }
-> +
-> +    return ret;
->   }
->   
->   static bool tpm_emulator_get_tpm_established_flag(TPMBackend *tb)
-> @@ -546,7 +561,7 @@ static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
->   {
->       size_t actual_size;
->   
-> -    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size) < 0) {
-> +    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size, NULL) < 0) {
+> For Arm, what is true is that there is an underlying alignment
+> requirement of the access, and for that access Normal memory
+> will support unalignement.
+> 
+> Introduce MO_ALIGN_TLB_ONLY to indicate that the alignment
+> specified in MO_AMASK only applies when the TLB entry has
+> TLB_CHECK_ALIGNED set; otherwise no alignment required.
+> 
+> Introduce memop_tlb_alignment_bits with an additional bool
+> argument that specifies whether TLB_CHECK_ALIGNED is set.
+> All other usage of memop_alignment_bits assumes it is not.
+> 
+> Remove memop_atomicity_bits as unused; it didn't properly
+> support MO_ATOM_SUBWORD anyway.
+> 
+> Update target/arm finalize_memop_atom to set MO_ALIGN_TLB_ONLY
+> when strict alignment isn't otherwise required.
+> 
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3171
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-You would have to pass a &local_err here as well otherwise the error is 
-ignored.
+I wonder if we should pick this up for qemu-stable too (including
+10.0.x lts series).  It's a rather large change though.
 
->           return 4096;
->       }
->   
-> @@ -889,7 +904,7 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
->   
->       trace_tpm_emulator_set_state_blobs();
->   
-> -    if (tpm_emulator_stop_tpm(tb) < 0) {
-> +    if (tpm_emulator_stop_tpm(tb, errp) < 0) {
->           trace_tpm_emulator_set_state_blobs_error("Could not stop TPM");
->           return -EIO;
->       }
-> @@ -960,7 +975,7 @@ static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
->           return ret;
->       }
->   
-> -    if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
-> +    if (tpm_emulator_startup_tpm_resume(tb, 0, true, errp) < 0) {
->           return -EIO;
->       }
->   
+The patch applies cleanly to both 10.0.x and 10.1.x series, and
+seems to be working fine.  Maybe it can be picked up for a later
+release.
 
-Thank you.
+What's the implication of this bug, anyway?
 
-    Stefan
+Thanks,
+
+/mjt
+
+
 
