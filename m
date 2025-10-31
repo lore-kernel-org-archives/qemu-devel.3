@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB88CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE09CCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEn47-0000De-8q; Fri, 31 Oct 2025 07:13:10 -0400
+	id 1vEn89-0001Nf-NS; Fri, 31 Oct 2025 07:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vEn43-0000Ad-C6
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:13:03 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vEn7u-0001MK-37
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:17:02 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vEn3v-00062A-R6
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:13:02 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-afcb7ae6ed0so473229866b.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:12:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vEn7h-0006sX-KY
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:17:01 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b6dbb4a209aso399474666b.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 04:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761909172; x=1762513972; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iV+gtM1ohcEXrlaGlvGbFqdRPvrV/oAbDujN3dYxtAk=;
- b=sYwb4hO7gS5jL8VbZ/dxjlC1Nu6BFlNe7805ydbcsyWxkiIB3/FbTLXiDriMqB2i+y
- iDs4B7wXcGlBmdKyicKQhxFB2iQrrDCwGHo/wxSPXLHx6EeBfX5Ortl/7RrJj8Zii42f
- tU40OMJpr7wsS1xK2dIPLgfHc5sbVgyGz4cpyZm3MYAvLwqmWU7tZCJh3/L6lhXJf0+m
- ApzbeFpyhDYtihW68CeCQcZUtjYCLEV6ZznnF0T8XUmBPGoG6Pag0y5EjSFQfIbUdUev
- TXiVQr7Puv1dc31k9EF1L3/pbcHQigbRbOfN5KBgHs+tJCUDKFxPqkLO8rtCDLlj9Fu5
- mSEQ==
+ d=gmail.com; s=20230601; t=1761909403; x=1762514203; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=84dQQuQZUpiEJNbL90PnFW9aGRW5hOd6mnnFES7i4oA=;
+ b=KGM1yap1SwcxJ4YR3+7c7tP5/j7vE3mJLBc3ptievdhfX6WnzJ0UoA8lPusuAUehtK
+ N9Jl0zN/zz8qNCwAzxYZIdDxAvDgSoVOv3T39CLga1EzA+dPMAH6jNWh4ve7iIOe0xXc
+ mhSSt68fiRl8lUePPvhmm7fkR7bCsQpAHVTXAI3J1S2d/LnKVJq8ehlNf1Qg5ZzzEqWn
+ zni5NNlVOlzbfcwvT/Dz37DhAJ0wfETKgh3qEhNZ2kcbv38KhE6OC1Qpf2jCnzPu7Jwn
+ U3ubZYJGtTg7AfK09M3/o5xI2DVGSV2tfHv9DkSQs70/H53V+FPV5bMCTq3SSs41bZ4l
+ vUfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761909172; x=1762513972;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iV+gtM1ohcEXrlaGlvGbFqdRPvrV/oAbDujN3dYxtAk=;
- b=mXTB0KLIgjQ8tEsY8e/0hJhF4fgtYzKvdyAD95PWZdd4auBx5dao4jpwq7l8rrDZKR
- t1TUT2VyujLnOcUUWGGBbpyQz6GO3gs2LNWp4dsWzzXvZY8y/cya/evfQG+QDHyZjKZj
- yWj8udm9pdaKOgxBVggjAtP9T3wCyJM7VmtYUCIqLz2gNHLaLcmwjebR9ZiYmrlH02RV
- NWzpR7M1v4wsumQeHM4g566CSfDsqQcr+gOmgpCVPF5O4+0kvjQ49qt+K3T3Lf6Bq+B5
- ByNT3ht1NcEIzlkiyT7Ko/+mpmFfIh3nUtdjFcO0wyumEHqsVKd3QRMBOqUKIzj3kvro
- gFSQ==
-X-Gm-Message-State: AOJu0YxwXWZMN9jT1UZyn17vUEb7gxg1pRi1UV5VxqSMUby8SSH1HsQs
- px4/KGsOJiAsnJ6hsegGNHW12mnPGB4mIXETu1Cpu8vUXIO44CYW1x5yy9YV8Zh7vyT2cMV8p8B
- Io9jvfaA=
-X-Gm-Gg: ASbGncvA9WCN0MN55TLqDJgn4qS8lwAZDdsD2C2iHQQl7XPB//53zeOQ8QN43gCc0Ms
- R5Pe1bHJ2edjT4Mmn35Xxg/Nfl14fktkSHXkQ1a/ntx18fKMZLQLIsDUvi3+O28rFzNIGeqH09X
- U8732DDHSjSk05mKp6vuC2eKBHcKAkyY9rPjOF3SwRpk6T0rW4od2BaRje6P0VWVDwyxfNkO//z
- vI/Uuwsz2WODByX+EQt1UaTJ+ZstuvVT4VoHScO6+3Bs1VMQagH4tR5pEFiYnNZ1PZcmvW3KocO
- JHY2CX3cVK33vje8W+P1DtX6mtZTv8prBU7szE6Mqh9UU0taSkNnyxk6vn3rFmO3jqmKvCdRWV5
- O+nvyIzcRj1X4uQmO/T+jZDVXcA4L16HB61tphkpXgqUXTKElQkrhubQ+hKYgV9BkFLpJ3R5OcI
- RKaaIQZTCHt9hqCmfPBOBfYzHp31nx34otQjebhHv0HdpfkAUz2yQ=
-X-Google-Smtp-Source: AGHT+IGnLoqvzSAjCkOWwpHdSBGyOAtTwkScI+j4zkhhFJKCHYpai164FSMl4uxy7VNihnNOAIrhZg==
-X-Received: by 2002:a17:907:2d1f:b0:b3c:1bfc:c552 with SMTP id
- a640c23a62f3a-b70705f35c0mr316423166b.42.1761909172040; 
- Fri, 31 Oct 2025 04:12:52 -0700 (PDT)
-Received: from [10.240.88.227] (C3239BBB.static.ziggozakelijk.nl.
- [195.35.155.187]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b7077ce927csm146487366b.63.2025.10.31.04.12.51
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1761909403; x=1762514203;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=84dQQuQZUpiEJNbL90PnFW9aGRW5hOd6mnnFES7i4oA=;
+ b=XI4yepHr+32HaG8gO8Bj7T3wZjof5o/6Q78AFpzZJ3Ao4a7WpFQ/Zv1LCUtKkGDwyB
+ w8rHdOgSGgvTwEMKF1WZuxaTSGw1SPOztMD9tDHIf1OZ8hDdrVwu+QmcV8FU05lhdxHJ
+ Xn1zZj6J5+EuKe2Vep8wgClPuwEDP9JyYQWK3KO7YjQeUy8lOWNkrycVzjr7s0P2lVYA
+ FG3VcSy6Lk8I5wmRY59brWdvo2eltorqNGvvKsOWhm//oc+oOggk9NG2erGowgyJq4mt
+ 0tcruPkaOf9J0I/R8jDGumoBSWPd/jw5b9G9E0PWZhpXD2uM535z5J/2hnZ49oHDhIdl
+ l1kg==
+X-Gm-Message-State: AOJu0YzUAGwL/FmBxzGYfQHd3qEg67YRjfydg4cBQ2EMZR6Hy7o4zse/
+ RyhwE1638tDxAsikPttLVRwgZjcwEiSNkihIxVVCY5gcYMM6n4gq9yxL8jdQlA==
+X-Gm-Gg: ASbGncsSJdIhK+YYeyNMpBA8DudE9VYlCDUiK55Uq1ao4H0FEp/sYZtB3wMvXxNglId
+ jEECLdvuHJVAXY+kv/HNM5CfDweM1Ablon5YHd+9d+QN5nhS44qptRnst3O1M7hAqo076P0gRb4
+ uHTkstEMbq/7KT5u0WmyZ1fiZvSg0o7NvIO+eael86QcBhb51q70vtX9FIh8AkeZ+3YWgzrWkoy
+ tBR8ad2q3JUboWmwPzuS+KwwpJF34M7Da1llCp0JaGsBomjXji/yZCND5OCsGI7BmvEWTZRQToB
+ SkJQYmUQiCpWgdcewtKoROqP60+wC04PfAPPLn3YKkILwjWYVHomffNyUNglTQk5F2hBY5FaBFK
+ BgZUkKIo0Ar/2kUUVC92dqcoIh7Mpiw7LQV5E+jIj7wA6lsyHVb0Dz+sS6v8t05zQO/9bzDDiot
+ B6wTadQ3TpeiYuNIT2H3o6Kp7kpcKUwBQa7dG2VetcKI7irkXWsYIPexu63C76hXxTOBBy+pn0
+X-Google-Smtp-Source: AGHT+IHwClixWNV00Njyxu7hjC+/PMIoujD37hZztE0cJi/slSEpDngHxAXMujdFphFJRj9dKKZCOw==
+X-Received: by 2002:a17:907:94c7:b0:b32:2b60:eed with SMTP id
+ a640c23a62f3a-b7070624345mr288653366b.44.1761909402645; 
+ Fri, 31 Oct 2025 04:16:42 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (p200300faaf271400e42d34416465d6be.dip0.t-ipconnect.de.
+ [2003:fa:af27:1400:e42d:3441:6465:d6be])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b70779a92c9sm149626066b.22.2025.10.31.04.16.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 04:12:51 -0700 (PDT)
-Message-ID: <756f3e9e-8db8-4e52-8b4a-28748701bb59@linaro.org>
-Date: Fri, 31 Oct 2025 12:12:49 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: permit sendto() with NULL buf and 0 len
+ Fri, 31 Oct 2025 04:16:41 -0700 (PDT)
+Date: Fri, 31 Oct 2025 11:16:39 +0000
+From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-References: <20251028142001.3011630-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251028142001.3011630-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62b.google.com
+CC: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 0/2] KVM Support for imx8mp-evk Machine
+In-Reply-To: <20251029142311.2986-1-shentey@gmail.com>
+References: <20251029142311.2986-1-shentey@gmail.com>
+Message-ID: <DD4D4E54-2935-4A74-BD9D-0C175F61687C@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,25 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/28/25 15:20, Peter Maydell wrote:
-> If you pass sendto() a NULL buffer, this is usually an error
-> (causing an EFAULT return); however if you pass a 0 length then
-> we should not try to validate the buffer provided. Instead we
-> skip the copying of the user data and possible processing
-> through fd_trans_target_to_host_data, and call the host syscall
-> with NULL, 0.
-> 
-> (unlock_user() permits a NULL buffer pointer for "do nothing"
-> so we don't need to special case the unlock code.)
-> 
-> Cc:qemu-stable@nongnu.org
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/3102
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   linux-user/syscall.c | 25 ++++++++++++++-----------
->   1 file changed, 14 insertions(+), 11 deletions(-)
 
-Queued, thanks.
 
-r~
+Am 29=2E Oktober 2025 14:23:09 UTC schrieb Bernhard Beschow <shentey@gmail=
+=2Ecom>:
+>This series adds KVM support to the imx8mp-evk machine, allowing it to ru=
+n
+>
+>guests with KVM acceleration=2E Inspiration was taken from the virt machi=
+ne=2E This
+>
+>required a device tree quirk for the guest clock to be kept in sync with =
+the
+>
+>host=2E Without this quirk the guest's clock would advance with factor <h=
+ost
+>
+>system counter> / 8Mhz=2E
+>
+>
+>
+>Testing done:
+>
+>* Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
+>
+>  `qemu-system-aarch64 -M virt,secure=3Don,virtualization=3Don,gic-versio=
+n=3D4 \
+>
+>  -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx8mp-e=
+vk \
+>
+>  -accel tcg -smp 4"=2E Observe that the `date` command reflects the host=
+'s date=2E
+>
+>
+>
+>v2:
+>
+>* Mention various tradeoffs in the board documentation (Peter)
+>
+>* Accommodate for single-binary (Peter, Pierrick) by having CPU defaults
+=
+>
+
+Any chance we could get this into 10=2E2?
+
+Best regards,
+Bernhard
+
+>
+>
+>Bernhard Beschow (2):
+>
+>  hw/arm/imx8mp-evk: Add KVM support
+>
+>  hw/arm/imx8mp-evk: Fix guest time in KVM mode
+>
+>
+>
+> docs/system/arm/imx8mp-evk=2Erst | 18 ++++++++++++++++++
+>
+> hw/arm/fsl-imx8mp=2Ec            | 33 ++++++++++++++++++++++++++++-----
+=
+>
+> hw/arm/imx8mp-evk=2Ec            | 21 +++++++++++++++++++++
+>
+> hw/arm/Kconfig                 |  3 ++-
+>
+> 4 files changed, 69 insertions(+), 6 deletions(-)
+>
+>
+>
+>-- >
+>2=2E51=2E2
+>
+>
+>
 
