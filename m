@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD92BCCF9FE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B6A6CCF9F8
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 15:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEr0s-000158-8i; Fri, 31 Oct 2025 11:26:02 -0400
+	id 1vEr1l-0001Wh-HK; Fri, 31 Oct 2025 11:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vEr0q-000139-Ie
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:26:00 -0400
+ id 1vEr1j-0001Vo-EZ
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:26:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vEr0j-0000nw-0R
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:26:00 -0400
+ id 1vEr1f-0000uf-Kj
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:26:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761924349;
+ s=mimecast20190719; t=1761924405;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yq29Dg28MtHToBMDyjMkNHHVvYBx9/maalG2F5iiQUk=;
- b=TxQChlmbiftbsEJzfVovzhLVbq/O87A3F08O3LS+Tb4Wmv6afWE9BkHu3sAcM0EiVrAI0w
- ZZsRv4FDCkrQghABgWXWVXK+uVpQ1aMM3/JSU+DjTp//XZOuhB+A1UyjarjjFEjazwHm+o
- tsEe5sv3xiLftaxBtS7utxpobCXkMAw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=04RuWmhgEhZPNHkjGGD1OovzSe5jaThhHam1mzKieug=;
+ b=Qn7yQuE/9S4MQnDlQKg5QGK8BlALGSo736sSHOHQ87f07fmZvOcqM8LCDDxCTA6i3KDv11
+ +6L2M2M8QpowKLEeCNihlyYnyFytKWgaWtJkPmapNL4lYnUYvQRNPvJaVgllpIEw5QWtve
+ b8yblGYOSLp9/FpDNO3BnFQeUuBUcZg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-y1GqENMbPmi8duaNuuFCkA-1; Fri, 31 Oct 2025 11:25:48 -0400
-X-MC-Unique: y1GqENMbPmi8duaNuuFCkA-1
-X-Mimecast-MFC-AGG-ID: y1GqENMbPmi8duaNuuFCkA_1761924348
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4270a61ec48so2483975f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 08:25:48 -0700 (PDT)
+ us-mta-145-WqzJKbDnOnq10DQRJWCKcw-1; Fri, 31 Oct 2025 11:26:43 -0400
+X-MC-Unique: WqzJKbDnOnq10DQRJWCKcw-1
+X-Mimecast-MFC-AGG-ID: WqzJKbDnOnq10DQRJWCKcw_1761924403
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47106a388cfso18024035e9.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 08:26:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761924347; x=1762529147;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yq29Dg28MtHToBMDyjMkNHHVvYBx9/maalG2F5iiQUk=;
- b=L7ViMiAogBrE7lnZeOF5sgPQTm1gIGwEtwrRdkp/ezygYhvalamKyBETIs7vF3xg3g
- DxT3GegYf1gUeu/ObShN8NQ3WRFkRKslJyBzrUdcWvUlBS1uUKBbrwhYL5uJpvQ3aBGI
- W0dZal8Y6zIwDumGdWmw6O56/NDw53vxTC9us0LxihuC+cwz3f0G3t4I50Fdi/UlHGxy
- OFSW4PgSs7n4Sd8sYUkCHEppP0527uk+uirPITLX2o2eQFqhwrp09z2xOwrI8/+UDPGS
- 7xPE3SPoFBgT2XyKJ2nhrjf/EZXRn/uMPqiWvl0bPnWEFzj83ata3g+pekLNYVPgncNm
- HNzg==
-X-Gm-Message-State: AOJu0YxtO3E3dMASxPWc7tCt4MOTIUDfzEtvIGp/6SQ9qc8oIA6ATaz8
- kF1mxf/0OFTPcgWB2iClvVTgElepg4+435DCnzCMx3xvIOZ9QSpOtssdr2FrOQDVyA7gq11pNnG
- 28y0LLWDwQlvHxExymQ+VdNTSjwOXFq1VxwejtR7cZBeJTbu74JS5Ict3V9aqdvvemxa9Yxq9eR
- sSAY8Qy2/O5ca95JxDa9gPaSLzEk1sOdF/HnBheht8
-X-Gm-Gg: ASbGncuVv8WA+rAvSQvzinB5yIDA6Cm1lt8Z+jc5oJreolStTDBAy4z+DX6irTvSXMF
- 9bNU72o6KtMRgPejUlEsA0g63qcC6qOh+t+qSJ+jJnsZN8YO0EaKrpgX2V/WbXDu/bbQrJeCxZK
- 0O1pw4N/m98ieCvvYQSqae+ukjjLhB/oogGDBteFA9pB/RbNgpYNpk98U7Gh0Kc7aSbNclo7ST/
- TIXiXMzCmcBtsR2gmXPocY1OU4vg6rlvbr+SY8aOQ+btmUbARzmpaTbiJdSYVGmEgJrPeLTsSlh
- O2WRKS7KjqQ5B5LVbPVj4JkQV5eOVqAm2gIi04yotj0LXllOrCfcLGdjiuCd6XpKPr4iptuRlY2
- o/H50snTMiaXedVIWrb4YLff/ey8pPBFLL45co34n3CCqNjDMw58T86RL3mbwwaeAHKqbQCNr8v
- b1i0X5
-X-Received: by 2002:a05:6000:178d:b0:429:b6e2:1ecf with SMTP id
- ffacd0b85a97d-429bd682973mr3607042f8f.22.1761924346537; 
- Fri, 31 Oct 2025 08:25:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+AE6S2+Hnk6TlxexEo9pNzi7wHPxmlDA3dLqnAnfopUDJHyzaRgkMPQVjDKCi6dc3ADB8/A==
-X-Received: by 2002:a05:6000:178d:b0:429:b6e2:1ecf with SMTP id
- ffacd0b85a97d-429bd682973mr3607011f8f.22.1761924345963; 
- Fri, 31 Oct 2025 08:25:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761924402; x=1762529202;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=04RuWmhgEhZPNHkjGGD1OovzSe5jaThhHam1mzKieug=;
+ b=Us+5uQrNmBtv/iDqCv+ROQuXH+/rq8evohEyHBEZE2CJNKW/nSJxlIi6AXpO4Kumzq
+ N9MC+1Y5MOg3ZIYXHvCF9DwwqTGpZHrK+gCZji/J3/mPATN7m7orqEkBSCbM2QeCAY9i
+ FTSu9tz7H//5P1hfhvEATTLpdGsDGdieF6tYoIxlA1KL9ahh4HLYlNQGagdRkVUCRHal
+ 7/50y6fzXma0Km8y6LMLQBVA4dQhZcZVGCqHtY23GrekqbiaBshYIUYevSCdWTarWfs1
+ IXxgJ3JHshqcSRxviuXWfUzvkN6l+7HpVU84UGpJCDrgvZp9oaQzXepxWMx5qNc66JWn
+ M1mQ==
+X-Gm-Message-State: AOJu0YxZQKjDiQgQ/0wmWjgfSBr9aP7ef5bxUMwalpQ8vS+T2jeSkD0g
+ Ujb9IX3gET8iE4PJ4X245NYPClMPhMXRP7HHJUiFNXUEyQLUno1ZpPKalkCZCRUbHewPAAX4kzt
+ ce9iX7u1XYsoqLhcwr2AL3mAstkzM0PjscoTHx37y7uBIVAFhDnk67tml1VFD2hRhkx9rp9Gq6h
+ sXufb2RvhpTPSc4h9I2TJgRN3GJfmADHZDJ9KGr8uA
+X-Gm-Gg: ASbGnctNFINDebUGh0mQC10uZHzAiKPyMWbZn6A/8TLyqTInnqdL3p0Ivo9ToLSdk7r
+ FPGIbcLY8Ws79G/9Qe7JNI7gppcgdaxOOAj2RCZ99FbyeHdLikTrc/B2skjxytaXcF8sPF+QkSV
+ nsRlHkcADsOagLfYifokTIALRGibeK2A/jCYPYGMhUmI0LYd+n/wWCfQ7cgRxPagrZJhLypOIGl
+ ZDrqvYBN4U+h8TfBFACj70yodUKQkXJ9F/GUEnxWbTtVg9WK3bAtg/hC8r9pr+gGg17ljMPWhog
+ p6iQ42/k+vysKCyZPN8G0nj530trAM+5AaymNoRZfjJkyy8EvpQRGjcb+mZ3W2ETjuUtK7eLhHo
+ s1fpUTt0GmHDF22t2y8kweJtYCKD2z0XLMHTB4fVoTsN16IK2555b7WW6vt3wJq5NCMvesl2IAt
+ FUigRQ
+X-Received: by 2002:a05:600c:524e:b0:475:dd8d:2f52 with SMTP id
+ 5b1f17b1804b1-4773089c6a2mr41277585e9.32.1761924402057; 
+ Fri, 31 Oct 2025 08:26:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTetH5W0AcN5wpDJ7Jh8nSwU82xs3Ht1saY6yXNhq0YCYqZqrNgudLkNudJkQ0l+f8Z0Z3rw==
+X-Received: by 2002:a05:600c:524e:b0:475:dd8d:2f52 with SMTP id
+ 5b1f17b1804b1-4773089c6a2mr41277115e9.32.1761924401565; 
+ Fri, 31 Oct 2025 08:26:41 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.110.222])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13f1d4csm3735435f8f.39.2025.10.31.08.25.43
+ 5b1f17b1804b1-4773c48daa0sm2122045e9.3.2025.10.31.08.26.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 08:25:43 -0700 (PDT)
+ Fri, 31 Oct 2025 08:26:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org
-Subject: [PATCH 1/4] rust/util: add ensure macro
-Date: Fri, 31 Oct 2025 16:25:36 +0100
-Message-ID: <20251031152540.293293-2-pbonzini@redhat.com>
+Subject: [PATCH] rust: add back to Ubuntu 22.04 jobs
+Date: Fri, 31 Oct 2025 16:26:39 +0100
+Message-ID: <20251031152639.294034-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251031152540.293293-1-pbonzini@redhat.com>
-References: <20251031152540.293293-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -94,8 +91,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,184 +107,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The macro is similar to anyhow::ensure but uses QEMU's variation
-on anyhow::Error.  It can be used to easily check a condition
-and format an error message.
+Ubuntu is now including updated versions of Rust (up to 1.85) for
+its LTS releases.  Adjust the CI containers and re-add --enable-rust
+to the Ubuntu jobs.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 21 ++++++----
- rust/hw/timer/hpet/src/fw_cfg.rs |  7 ++--
- rust/util/src/error.rs           | 71 ++++++++++++++++++++++++++++++++
- 3 files changed, 86 insertions(+), 13 deletions(-)
+ docs/about/build-platforms.rst                   | 10 +++++-----
+ .gitlab-ci.d/buildtest.yml                       |  2 +-
+ scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml |  2 +-
+ scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml   |  2 +-
+ tests/docker/dockerfiles/ubuntu2204.docker       |  6 +++---
+ tests/lcitool/mappings.yml                       |  4 ++--
+ tests/lcitool/refresh                            |  4 ++--
+ 7 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 23f2eefd1cd..3564aa79c6e 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -25,7 +25,10 @@
-     bindings::{address_space_memory, address_space_stl_le, hwaddr},
-     MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder, MEMTXATTRS_UNSPECIFIED,
- };
--use util::timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND};
-+use util::{
-+    ensure,
-+    timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
-+};
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index fc2743658d4..e95784cdb55 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -117,14 +117,14 @@ Rust build dependencies
+   a newer version using ``cargo install bindgen-cli``.
  
- use crate::fw_cfg::HPETFwConfig;
+   QEMU requires Rust 1.83.0.  This is available on all supported platforms
+-  with two exception: Ubuntu LTS releases 22.04 and 24.04, and the
+-  ``mips64el`` architecture on Debian bookworm.  For all other
++  except for the ``mips64el`` architecture on Debian bookworm.  For all other
+   architectures, Debian bookworm provides a new-enough Rust compiler
+   in the ``rustc-web`` package.
  
-@@ -728,14 +731,14 @@ fn post_init(&self) {
-     }
+-  It is expected that in the future Ubuntu will provide updated packages
+-  like the existing ``rustc-1.82`` package.  The path to ``rustc`` and
+-  ``rustdoc`` will have to be provided manually to the configure script.
++  For Ubuntu 22.04 ("Jammy") and 24.04 ("Noble") updated versions of
++  Rust are available through packages such as ``rustc-1.83`` package;
++  the path to ``rustc`` and ``rustdoc`` has to be provided manually to
++  the configure script.
  
-     fn realize(&self) -> util::Result<()> {
--        if self.num_timers < HPET_MIN_TIMERS || self.num_timers > HPET_MAX_TIMERS {
--            Err(format!(
--                "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
--            ))?;
--        }
--        if self.int_route_cap == 0 {
--            Err("hpet.hpet-intcap property not initialized")?;
--        }
-+        ensure!(
-+            (HPET_MIN_TIMERS..=HPET_MAX_TIMERS).contains(&self.num_timers),
-+            "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
-+        );
-+        ensure!(
-+            self.int_route_cap != 0,
-+            "hpet.hpet-intcap property not initialized"
-+        );
+   Some distros prefer to avoid vendored crate sources, and instead use
+   local sources from e.g. ``/usr/share/cargo/registry``.  QEMU includes a
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 21f6d7e96fe..44df116139b 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -39,7 +39,7 @@ build-system-ubuntu:
+     - job: amd64-ubuntu2204-container
+   variables:
+     IMAGE: ubuntu2204
+-    CONFIGURE_ARGS: --enable-docs
++    CONFIGURE_ARGS: --enable-docs --enable-rust
+     TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
+     MAKE_CHECK_ARGS: check-build
  
-         self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+index ce632d97108..8c4b71b5942 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+@@ -119,7 +119,7 @@ packages:
+   - python3-wheel
+   - python3-yaml
+   - rpm2cpio
+-  - rustc-1.77
++  - rustc-1.83
+   - sed
+   - socat
+   - sparse
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+index f45f75c9602..2758f55e5a2 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+@@ -117,7 +117,7 @@ packages:
+   - python3-wheel
+   - python3-yaml
+   - rpm2cpio
+-  - rustc-1.77
++  - rustc-1.83
+   - sed
+   - socat
+   - sparse
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+index b393db55a8c..602d4196249 100644
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ b/tests/docker/dockerfiles/ubuntu2204.docker
+@@ -124,7 +124,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc-1.77 \
++                      rustc-1.83 \
+                       sed \
+                       socat \
+                       sparse \
+@@ -155,8 +155,8 @@ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+ ENV PYTHON "/usr/bin/python3"
+-ENV RUSTC=/usr/bin/rustc-1.77
+-ENV RUSTDOC=/usr/bin/rustdoc-1.77
++ENV RUSTC=/usr/bin/rustc-1.83
++ENV RUSTDOC=/usr/bin/rustdoc-1.83
+ ENV CARGO_HOME=/usr/local/cargo
+ ENV PATH=$CARGO_HOME/bin:$PATH
+ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 8f0e95e1c56..a749cf8c515 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -70,8 +70,8 @@ mappings:
  
-diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
-index bb4ea8909ad..777fc8ef45e 100644
---- a/rust/hw/timer/hpet/src/fw_cfg.rs
-+++ b/rust/hw/timer/hpet/src/fw_cfg.rs
-@@ -5,6 +5,7 @@
- use std::ptr::addr_of_mut;
+   rust:
+     Debian12: rustc-web
+-    Ubuntu2204: rustc-1.77
+-    Ubuntu2404: rustc-1.77
++    Ubuntu2204: rustc-1.83
++    Ubuntu2404: rustc-1.83
  
- use common::Zeroable;
-+use util::{self, ensure};
+ pypi_mappings:
+   # Request more recent version
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 056cfb6e9d7..273fb534cdd 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -152,8 +152,8 @@ fedora_rustup_nightly_extras = [
+ ]
  
- /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
- /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
-@@ -36,7 +37,7 @@ unsafe impl Zeroable for HPETFwConfig {}
- };
- 
- impl HPETFwConfig {
--    pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
-+    pub(crate) fn assign_hpet_id() -> util::Result<usize> {
-         assert!(bql::is_locked());
-         // SAFETY: all accesses go through these methods, which guarantee
-         // that the accesses are protected by the BQL.
-@@ -47,9 +48,7 @@ pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
-             fw_cfg.count = 0;
-         }
- 
--        if fw_cfg.count == 8 {
--            Err("Only 8 instances of HPET are allowed")?;
--        }
-+        ensure!(fw_cfg.count != 8, "Only 8 instances of HPET are allowed");
- 
-         let id: usize = fw_cfg.count.into();
-         fw_cfg.count += 1;
-diff --git a/rust/util/src/error.rs b/rust/util/src/error.rs
-index bfa5a8685bc..2a57c7fd5fd 100644
---- a/rust/util/src/error.rs
-+++ b/rust/util/src/error.rs
-@@ -86,6 +86,19 @@ fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-     }
- }
- 
-+impl From<Cow<'static, str>> for Error {
-+    #[track_caller]
-+    fn from(msg: Cow<'static, str>) -> Self {
-+        let location = panic::Location::caller();
-+        Error {
-+            msg: Some(msg),
-+            cause: None,
-+            file: location.file(),
-+            line: location.line(),
-+        }
-+    }
-+}
-+
- impl From<String> for Error {
-     #[track_caller]
-     fn from(msg: String) -> Self {
-@@ -126,6 +139,17 @@ fn from(error: anyhow::Error) -> Self {
- }
- 
- impl Error {
-+    #[track_caller]
-+    #[doc(hidden)]
-+    pub fn format(args: fmt::Arguments) -> Self {
-+        if let Some(msg) = args.as_str() {
-+            Self::from(msg)
-+        } else {
-+            let msg = fmt::format(args);
-+            Self::from(msg)
-+        }
-+    }
-+
-     /// Create a new error, prepending `msg` to the
-     /// description of `cause`
-     #[track_caller]
-@@ -311,6 +335,53 @@ unsafe fn cloned_from_foreign(c_error: *const bindings::Error) -> Self {
-     }
- }
- 
-+/// Ensure that a condition is true, returning an error if it is false.
-+///
-+/// This macro is similar to [`anyhow::ensure`] but returns a QEMU [`Result`].
-+/// If the condition evaluates to `false`, the macro returns early with an error
-+/// constructed from the provided message.
-+///
-+/// # Examples
-+///
-+/// ```
-+/// # use util::{ensure, Result};
-+/// # fn check_positive(x: i32) -> Result<()> {
-+/// ensure!(x > 0, "value must be positive");
-+/// #   Ok(())
-+/// # }
-+/// ```
-+///
-+/// ```
-+/// # use util::{ensure, Result};
-+/// # const MIN: i32 = 123;
-+/// # const MAX: i32 = 456;
-+/// # fn check_range(x: i32) -> Result<()> {
-+/// ensure!(
-+///     x >= MIN && x <= MAX,
-+///     "{} not between {} and {}",
-+///     x,
-+///     MIN,
-+///     MAX
-+/// );
-+/// #   Ok(())
-+/// # }
-+/// ```
-+#[macro_export]
-+macro_rules! ensure {
-+    ($cond:expr, $fmt:literal, $($arg:tt)*) => {
-+        if !$cond {
-+            let e = $crate::Error::format(format_args!($fmt, $($arg)*));
-+            return $crate::Result::Err(e);
-+        }
-+    };
-+    ($cond:expr, $err:expr $(,)?) => {
-+        if !$cond {
-+            let s = ::std::borrow::Cow::<'static, str>::from($err);
-+            return $crate::Result::Err(s.into());
-+        }
-+    };
-+}
-+
- #[cfg(test)]
- mod tests {
-     use std::ffi::CStr;
+ ubuntu2204_rust_extras = [
+-    "ENV RUSTC=/usr/bin/rustc-1.77\n",
+-    "ENV RUSTDOC=/usr/bin/rustdoc-1.77\n",
++    "ENV RUSTC=/usr/bin/rustc-1.83\n",
++    "ENV RUSTDOC=/usr/bin/rustdoc-1.83\n",
+     "ENV CARGO_HOME=/usr/local/cargo\n",
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+     "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
 -- 
 2.51.1
 
