@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBE0CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE9ECCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEtwK-0004DU-7S; Fri, 31 Oct 2025 14:33:32 -0400
+	id 1vEtwh-0004XB-JV; Fri, 31 Oct 2025 14:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtwI-0004CX-Pu
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:30 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1vEtwZ-0004SF-Ve
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:50 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtw9-0006B2-TN
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:30 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-427007b1fe5so1949576f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:18 -0700 (PDT)
+ id 1vEtwL-0006DZ-LD
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:47 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4711810948aso19099565e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761935596; x=1762540396; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761935608; x=1762540408; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DbjOgOkfCwrBdURCcMUb2IkYqGbbFToEjPFT+iXympU=;
- b=xEatXUGgHUjGFnLBLuGMz1wIyOLdLb99qJOLzEhxuoRG43fUzsouM3Koyy2zuqdevW
- DbU4o0dzfFVsLOg9g47rqb/A7BtI9GNn2vtY88tKsF/hGzTjG18YRKyu1752wQO115eF
- O0LpmuGsdb8PJ5crp6Dpw9h7F/A5EJX+Yybo+KWKNh2JFnY7jhQWZZUW7WANdo520xi+
- hmckkyT65TJmQyrJwFIMWgOu3TkSB4G68oq2jpSv1zxslanXME99QswTk2BX0v/JuDBs
- DpL8p8eWwUZ4+hl6m2wD3GKs8ejLJojIATYZF0vpBih1VU1aEDX2t7JH5/kHLJ1Fg67j
- P5Xw==
+ :reply-to; bh=PZmkhsZKvN6EJpvyQwrzTxRS8P0qQq1BnzId2LTKpiQ=;
+ b=qBydAEdxLeL/i6kXXgL1q/MEAyVS5WE4asmuaDMwPHoz8qNqKjmFrtTPuonFvGknEq
+ 31H/aX9o9/uX3f3eVan77vNEAXEK/GA5AEP6nzdtlAPX76PdlGVYCkek8SthvawZyazq
+ 2GCCEoAR4G/g7xh0qfn5ejdTJVQk5jXTwOc9gMNahV398klCx9wBGc6g43j/ViQPnL4U
+ 0cUZTXZCJqdMSV2t6Us6Q4+3ONFS8p0t/OlceO2BRoKddySbXAQakUXmhyuwPcwgVH9f
+ 2jy5i10SDGXGt5Np/nFhVz7nuw5wDU7hedznzl4i7y4YqcSi/CASpDtsQ3xmoB0joI6v
+ KOMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761935596; x=1762540396;
+ d=1e100.net; s=20230601; t=1761935608; x=1762540408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DbjOgOkfCwrBdURCcMUb2IkYqGbbFToEjPFT+iXympU=;
- b=Bm9lBFewZCKCwr0ByIHHlklaYnBFwjpO06AWSG9D1V5+CRMIivFCMIL42K+sUfvqe+
- 8FWKBkJ5iGl32Rjrsx3XV6QKzetD80Qt4Rd8XYw+UN1QJ757AuTVp7ns8eGEh5myTiam
- c7OtjdgOsj2gzPc8qM4YnjXXlhXTACZV88q0hVri1tN5MmFUqo57lth+8SuX7mqOeHKG
- WMMotA0m2++aWRV+5oQtdI7f7Dx2R2BIsVStDmuboddgfv5kFXddxMvzsHX0ZP7cF3BG
- t2yiEyKoNCKb/EbTKmIakAcWvJu6HT39LIzw6C8B95rOiQmLPeXgRZ4qR2uD62byDMty
- oVcg==
-X-Gm-Message-State: AOJu0YzFRVeeykbjXnnCrpFFVVsn2hdXWaSW/wCWvK1qeKtlWU0txDmb
- zjFl1l0gDZTopdmxf7RT4N5d2MTYYlyQ37zNDn/5gP7PVlEWPfwVE1vc5QwN9HN45InLP0yCB+c
- g1ix7
-X-Gm-Gg: ASbGnctVgoZTuocXM1ZiQ06bTOwLnWB3vfx7DwE0NHvEuo/+l9BEDMZ673FTmct30oe
- ze7dj9exZSN9cpPu2ZtQZh7R46sbzBnk3GWNN6gwANaSGDvi3fIfAKcAj5noKSjhrl2Ud1kgJn5
- BzRGeuju1Lwjalg2NBRSAT3x6dfvmsPof8jIoPmjDIHDxEk3UnaUUbmZPpYb2tykjRBCrwQ1+mC
- VBwLVKJKXdiHwaYZjIp3exlWzKGreFchPdVdTPdBViJVSun8hKJyHwwwcG3awha8054MnljvKJY
- jc4dbFRq5xET1Gw2NWnDudqCHKoYSXxglSSsJATULvQ8wjCprigXjb+9PN1mKTLN/xLSyPXfmvD
- wHH/lbczTXmTeAIZXA5MoTRhUMho+IRX59UB+X/HTQ2YOD4rcnHf87fyL3y55l1+tnOYqUaMkiw
- UtF5ksEnLJ48n6tCsF
-X-Google-Smtp-Source: AGHT+IFPCX5wqeU2TGO0V9X7is8dNJFVDpvQSM+8edbEqwHJi/v5dyS2Safv7gnx/lhkMC1fhaWIhQ==
-X-Received: by 2002:a05:6000:4387:b0:429:b1e4:1f74 with SMTP id
- ffacd0b85a97d-429bd683753mr4358098f8f.20.1761935595757; 
- Fri, 31 Oct 2025 11:33:15 -0700 (PDT)
+ bh=PZmkhsZKvN6EJpvyQwrzTxRS8P0qQq1BnzId2LTKpiQ=;
+ b=Of16l4cdswghrDXmHhM1iyc8wvS7dyRiMpfKTqtjzvLIdq45a7dQPiAncrhwlbJy3G
+ r0NXDH5X+blhZTivdSbEVuwxvJP412G9NRXj7a+sQ3fvIgC3hnFBZer4+rUElQ1upGTM
+ pdb9EDbmFSMvXJLUQwLTg0wwlDVCsQJphXZlgRCPgZZZ/70etzNXR4dIe7rPntRvLcm6
+ jhI/efUKz67YlR8odfD5XGKYwU2e6/brGhgxIJC4f1pFnI7d2OimIlf/UFWwNtBsPAKp
+ DHFxMPB9mNLgZrtdOnyCWw7ppRc+cWh8+DxWjHczGeJyNpCjPLU0/Zdcs4yi7KUw7sON
+ PP+g==
+X-Gm-Message-State: AOJu0YycIY2mLcnzuOzPJLO54HQ2cunjJhFVk7566+zIgg2Z3LCqtyXj
+ lyqhMjdCT7MaquhOnsM/waK+SvAjHseAaDwyQFoiiHIB3SwXz6G9MHLJYB8C6afWtv8TPsuzFa5
+ HzyVk
+X-Gm-Gg: ASbGncv30ocIqxToWxNtkVoVRyXRI89T/cCmTHPSmadTp89SWHZJNdBvGApqEcpkeBn
+ FgHAk+ieuwkzbfyRYOlwvjLPDcQeMLeFxPh7q25Vxwlkp1UXjpOgQYZ8JRgGmyrz9/T1G09K2Ni
+ /kK8mtw/8pBfQhaqBzGe3/BgAD9D3NoMZ2883JR2H150GSc4bFsv2G/vkPhQK0astY7vs3bfhnF
+ NsvQYteNb/Ba3sL6EODfMItcZ3608uflBO0UekTtQ3Gu3p1QReMSqlg+ZFkFI37FTl9BWqwW1B0
+ heApk8NwhLvtLi6rjzPFMem1UZi5hXYHZYf6FJCuA+Az9aVPSUYSg5EpXn8rPHRUIpUFcvOdxfi
+ TZANL+l5ZrFYglvUyhej3S8UB8mUSLrgpkC8YVkBO1Y62HfN/AJADK9f9MEoaXY+xa7VUsxRIXb
+ kKRsMMJg==
+X-Google-Smtp-Source: AGHT+IELf41mK8kyYCIbDwZQuZUmQQLjoUXDt24qNV3IYlU2UlyP2/Qo4Yy6MkrN/Zc4X1yqO3U8Xg==
+X-Received: by 2002:a5d:64c3:0:b0:428:436d:7d7e with SMTP id
+ ffacd0b85a97d-429bd6f08a9mr3857114f8f.60.1761935608128; 
+ Fri, 31 Oct 2025 11:33:28 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.15
+ ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 11:33:15 -0700 (PDT)
+ Fri, 31 Oct 2025 11:33:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/38] target/arm: Add assert to arm_to_core_mmu_idx()
-Date: Fri, 31 Oct 2025 18:32:36 +0000
-Message-ID: <20251031183310.3778349-5-peter.maydell@linaro.org>
+Subject: [PULL 16/38] accel/hvf: Mention hvf_arch_init_vcpu() must run on vCPU
+ thread
+Date: Fri, 31 Oct 2025 18:32:48 +0000
+Message-ID: <20251031183310.3778349-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251031183310.3778349-1-peter.maydell@linaro.org>
 References: <20251031183310.3778349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,48 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before commit f76cee647c ("target/arm: Introduce mmu indexes for
-GCS") it was impossible for arm_to_core_mmu_idx() to return an
-invalid core MMU index, because NB_MMU_MODES was 16 and
-ARM_MMU_IDX_COREIDX_MASK was 0xf.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-That commit raises ARM_MMU_IDX_COREIDX_MASK to 0x1f and NB_MMU_MODES
-to 22, so it's now possible for a bogus Arm mmu index to result in an
-out of range core mmu index (which can then get used as an array
-index in the CPUTLB struct arrays). Coverity complains that this
-might result in an out-of-bounds access.
+hvf_arch_init_vcpu(), along with hvf_put_guest_debug_registers()
+and hvf_put_gdbstub_debug_registers(), calls hv_vcpu_set_sys_reg(),
+which must run on a vCPU. Mention they also must.
 
-The out-of-bounds access can't happen because we construct all the
-ARMMMUIdx values we will use for TLBs to have valid core MMU indexes
-in the COREIDX field.  But we can add an assert() so that if we ever
-do end up operating on a corrupted or wrong ARMMMUIdx value we get an
-assert rather than silently indexing off the end of an array. This
-should also make Coverity happier.
-
-Coverity: CID 1641404
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251023101339.1983809-1-peter.maydell@linaro.org
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/internals.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/system/hvf_int.h | 3 ++-
+ target/arm/hvf/hvf.c     | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 6fbf7e1ca49..4c0fa28ef84 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -969,7 +969,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 8fce627b08c..0c335facc3b 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -71,11 +71,12 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
+ const char *hvf_return_string(hv_return_t ret);
+ int hvf_arch_init(void);
+ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range);
+-int hvf_arch_init_vcpu(CPUState *cpu);
+ void hvf_arch_vcpu_destroy(CPUState *cpu);
+ hvf_slot *hvf_find_overlap_slot(uint64_t, uint64_t);
+ void hvf_kick_vcpu_thread(CPUState *cpu);
  
- static inline int arm_to_core_mmu_idx(ARMMMUIdx mmu_idx)
++/* Must be called by the owning thread */
++int hvf_arch_init_vcpu(CPUState *cpu);
+ /* Must be called by the owning thread */
+ int hvf_arch_vcpu_exec(CPUState *);
+ /* Must be called by the owning thread */
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index fdf8df09d4b..8095cb0805a 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2119,6 +2119,7 @@ void hvf_arch_remove_all_hw_breakpoints(void)
+  * Update the vCPU with the gdbstub's view of debug registers. This view
+  * consists of all hardware breakpoints and watchpoints inserted so far while
+  * debugging the guest.
++ * Must be called by the owning thread.
+  */
+ static void hvf_put_gdbstub_debug_registers(CPUState *cpu)
  {
--    return mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
-+    int coreidx = mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
-+    assert(coreidx < NB_MMU_MODES);
-+    return coreidx;
- }
- 
- static inline ARMMMUIdx core_to_arm_mmu_idx(CPUARMState *env, int mmu_idx)
+@@ -2157,6 +2158,7 @@ static void hvf_put_gdbstub_debug_registers(CPUState *cpu)
+ /*
+  * Update the vCPU with the guest's view of debug registers. This view is kept
+  * in the environment at all times.
++ * Must be called by the owning thread.
+  */
+ static void hvf_put_guest_debug_registers(CPUState *cpu)
+ {
 -- 
 2.43.0
 
