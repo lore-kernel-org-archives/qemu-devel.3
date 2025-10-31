@@ -4,90 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DFACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C74CCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEttS-0002fu-Ez; Fri, 31 Oct 2025 14:30:34 -0400
+	id 1vEtuv-0003Jz-Ln; Fri, 31 Oct 2025 14:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEttN-0002eG-Tt
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:30:31 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEttG-0005oQ-VZ
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:30:29 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-63e0fa0571fso3264423d50.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761935413; x=1762540213; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Yce9kG3WCCPS7KgQ5TmpoUJOI415Pn1nKPG8ztlcxKU=;
- b=RzE0lHa33TiAZY4oAOug69Ts+AOJdr6q0N9SA8vdNgwErYbAmgA161l1vs+MADkOmy
- +TXJLGgEYOkGu+1ICgVUcu2zBRlTzoxu5vl5qQmbBBZl6a9cSZydO8utIXTmtlysWwPE
- 6HMkpssmvAYSlTBbQFIRagohORucC2nTAZPIpgPDofbyBYv47cGzRqcoPe+XFbiotKOd
- 7GuBg6zGJwyHmCszbE0wNImJ8gqJj7nKGRCXCjDicglVh11mDaXK7o02Il8HFIGZecWo
- 8RGvY+DaMIITFljhWCDmuGxM86BYyMP8CMcouslCdPQbvRetLsD7pD3Iiw6hOb9tItc2
- ao/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761935413; x=1762540213;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Yce9kG3WCCPS7KgQ5TmpoUJOI415Pn1nKPG8ztlcxKU=;
- b=gDWM3xaloDdIYthgZHiyZzI0cbrBKT2qICtGDm/4R39ynW7X62ZJXYsr298UacgOyU
- SK3T+ypVY/z9Ev4B2RSyoU35lWFAJVNfT79mRZgE2vUHnyTlhRODNbEPEZzavMN/lbFE
- PwmNIRy1ph0k9CHM9Lnmng5AAMXy/0j9cdgS/2CcqJICBeMbLTcBo+FjY7KKRZ/uSB1g
- XHHyTu4VNrge1CIAv0MDdS0vMCAHCtiiK68KQfajnlIVAcEvHKV3nZzWo04MVlbBNfQE
- adb+MlZPrvigNDVVbGyXynDs8KdLu5MaYglx5FiPDzZ7Wmu+ythEFcTMRk4F5ks30UXG
- aJgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUf92+A1Pt6P+wmlQUDcw2L3vWPxtKwc7/ESdXampQi1ilQhlQYTm5aiMUV7CxGfnxDJ0yx4QG0knt3@nongnu.org
-X-Gm-Message-State: AOJu0YwscpT1VBLTeCoHPzzFYhB5UqNn+wAXK5hjOdK3tDYevFA/QZit
- sG/cLDKeriuP/KKG3Oo31/Pf/DRTzbktcRtjS8pTlI/zzQGp9f2FyL2Ida7H2iE32s7gO7Q+SPQ
- 93pfmD9TvgEqlUEpuyjNVAi1SEKdLkDZWl+FVXA4/Ag==
-X-Gm-Gg: ASbGncs8Ilj1g/fpBrak2gII/kAiEKQtVbIltGwIrRB23L2AqvQ5p8zGmqQBotBn32y
- 80ejO7dp6eTCLeb2GsqjxdxWMEOOUInx3Q5HFKLudV1zvcTLGRqiE2SrmwYhiJIGKms4j8ZP0La
- Ul7uhBSdf6W+xdhQnaYXSAReQomPCujilVqPRSygg5UE4vx8CLsm8i9mq+DSmJcAOUKI79Ctukj
- KxYc9ZWNA1x7aa5JVjtxhjokE1aVpcNlGFpFGugvi4xlVidVimVjqjF0tyq5fSKJEas1jqI
-X-Google-Smtp-Source: AGHT+IGhMPGWy6khEf0ta92V6QMmBH1G3tDe78XoC+Mhpk4wKdWSy/h5T38n+kwEmoGXQtz55xL7auagtVz2jkej1Uw=
-X-Received: by 2002:a53:c059:0:20b0:63e:22b1:21a0 with SMTP id
- 956f58d0204a3-63f92271f90mr3131274d50.9.1761935413360; Fri, 31 Oct 2025
- 11:30:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vEtut-0003JM-2d
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:32:03 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vEtue-0005uT-04
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:31:59 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id CBE12C0157;
+ Fri, 31 Oct 2025 21:31:33 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id UVld3d0Gj4Y0-etopZuYF; Fri, 31 Oct 2025 21:31:32 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761935492;
+ bh=UhMiifSzE8VpldrM1dkSvTWfFrj4YgW6TUkb0IkBTvA=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=VbqO0cx6JlHIYKxm9PN7fNgMCYbklOpyOkxczsYuOD0ec5lXjsMr57x3ky6iqo6/m
+ rv0yUVo44I/XEVzqWY18vNGo8OotBiplQUZDVLBYzrX9Knyi6jJk10EIe9+64aUJ4z
+ PDDW7ZGFWYKyYPgF39FNNZ9MhsCtZjOzAJYE1s/c=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: armbru@redhat.com
+Cc: michael.roth@amd.com,
+	qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH v5] qapi: Add documentation format validation
+Date: Fri, 31 Oct 2025 21:31:29 +0300
+Message-ID: <20251031183129.246814-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-References: <20251029142311.2986-1-shentey@gmail.com>
- <CAFEAcA-CGQ2JwDoBVZNhQyBMNKXbZsy2Ds+=m0MAPq0hrsWHhA@mail.gmail.com>
- <CAFEAcA_sbvMEJ-oTxTYOutgUrH0iapNcJrsZd3=Ov6wNn-NE3w@mail.gmail.com>
- <a7f5d348-1243-4c52-8dc1-66e2c3da40ae@linaro.org>
-In-Reply-To: <a7f5d348-1243-4c52-8dc1-66e2c3da40ae@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Oct 2025 18:30:02 +0000
-X-Gm-Features: AWmQ_bmyzSqXOjI_5lqTovyn34HNCDRzT95MEicduE6UtrcoGug9An2nTPSNN2g
-Message-ID: <CAFEAcA8+=_8peJR37xoM4zarUu9cy+56rOkyF7iONFb866Ebtg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] KVM Support for imx8mp-evk Machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,109 +74,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 31 Oct 2025 at 18:18, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 31/10/25 18:12, Peter Maydell wrote:
-> > On Fri, 31 Oct 2025 at 16:57, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
-> >>
-> >> On Wed, 29 Oct 2025 at 14:23, Bernhard Beschow <shentey@gmail.com> wro=
-te:
-> >>>
-> >>> This series adds KVM support to the imx8mp-evk machine, allowing it t=
-o run
-> >>> guests with KVM acceleration. Inspiration was taken from the virt mac=
-hine. This
-> >>> required a device tree quirk for the guest clock to be kept in sync w=
-ith the
-> >>> host. Without this quirk the guest's clock would advance with factor =
-<host
-> >>> system counter> / 8Mhz.
-> >>>
-> >>> Testing done:
-> >>> * Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
-> >>>    `qemu-system-aarch64 -M virt,secure=3Don,virtualization=3Don,gic-v=
-ersion=3D4 \
-> >>>    -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx=
-8mp-evk \
-> >>>    -accel tcg -smp 4". Observe that the `date` command reflects the h=
-ost's date.
-> >>>
-> >>> v2:
-> >>> * Mention various tradeoffs in the board documentation (Peter)
-> >>> * Accommodate for single-binary (Peter, Pierrick) by having CPU defau=
-lts
-> >>>
-> >>> Bernhard Beschow (2):
-> >>>    hw/arm/imx8mp-evk: Add KVM support
-> >>>    hw/arm/imx8mp-evk: Fix guest time in KVM mode
-> >>
-> >> Thanks, I've applied this to target-arm.next.
-> >
-> > ...I've had to un-queue it, as it breaks "make check":
-> >
-> > test:         qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspec=
-t-test
-> > start time:   17:06:52
-> > duration:     3.70s
-> > result:       killed by signal 6 SIGABRT
-> > command:      MALLOC_PERTURB_=3D155
-> > UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:=
-print_stacktrace=3D1
-> > PYTHON=3D/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/pyv=
-env/bin/python3
-> > G_TEST_DBUS_DAEMON=3D/data_nvme1n1/linaro/qemu-from-laptop/qemu/tests/d=
-bus-vmstate-daemon.sh
-> > RUST_BACKTRACE=3D1
-> > MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:p=
-rint_stacktrace=3D1
-> > QTEST_QEMU_BINARY=3D./qemu-system-aarch64
-> > QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daemon
-> > ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1
-> > QTEST_QEMU_IMG=3D./qemu-img MESON_TEST_ITERATION=3D1
-> > /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/qtest/=
-device-introspect-test
-> > --tap -k
-> > ----------------------------------- stdout ----------------------------=
--------
-> > [...]
-> > # Testing device 'fsl-imx8mp'
-> > ----------------------------------- stderr ----------------------------=
--------
-> > unknown type '(null)'
-> > Broken pipe
-> > ../../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU
-> > process but encountered exit status 1 (expected 0)
-> >
-> >
-> > I think the problem is that you're trying to use ms->cpu_type
-> > in the fsl_imx8mp_init() function. This doesn't work in the
-> > device-introspect-test setup, because it is just instantiating
-> > each device for test, not running a full machine.
-> >
-> > I think the way we usually avoid this is that if an SoC
-> > device object needs to know what CPU type to instantiate
-> > it has a QOM property, and the board model tells it.
-> > (Annoyingly this then means the CPU instantiation has to
-> > move into the realize method where the property value is known.)
->
-> Correct, this is the same issue I tried to address with the Raspi
-> machines and I noted your comments:
-> https://lore.kernel.org/qemu-devel/CAFEAcA961WKB4fxwAS0WHXXKwYEO7TnmovD4z=
--BPGehr6sxBQw@mail.gmail.com/
+Add explicit validation for QAPI documentation formatting rules:
 
-I think it's different, because for the raspi case the SoC
-object is trying to create a CPU type that it can't:
-  unknown type 'cortex-a72-arm-cpu'
-(because it's the arm device-introspect-test and that CPU
-is an aarch64 one)
-whereas for this one we are in the aarch64 test, but trying to
-use a NULL pointer as our type string:
-  unknown type '(null)'
+1. Lines must not exceed 70 columns in width (including '# ' prefix)
+2. Sentences must be separated by two spaces
 
-Single binary vs compile-everything is probably a red herring here.
+Example sections and literal :: blocks (seldom case) are excluded, we
+don't require them to be <= 70, that would be too restrictive. Anyway,
+they share common 80-columns recommendations (not requirements).
 
-thanks
--- PMM
+Add two simple tests, illustrating the change.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+
+Hi all!
+
+v5: - break "literal" block at any decreasing the indent,
+      not only at no-indent
+    - add two simple tests
+
+This is based on
+[PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
+Based-on: <20251031094751.2817932-1-armbru@redhat.com>
+
+ scripts/qapi/parser.py                     | 52 +++++++++++++++++++++-
+ tests/qapi-schema/doc-bad-long-line.err    |  1 +
+ tests/qapi-schema/doc-bad-long-line.json   |  6 +++
+ tests/qapi-schema/doc-bad-long-line.out    |  0
+ tests/qapi-schema/doc-bad-whitespaces.err  |  2 +
+ tests/qapi-schema/doc-bad-whitespaces.json |  6 +++
+ tests/qapi-schema/doc-bad-whitespaces.out  |  0
+ tests/qapi-schema/meson.build              |  2 +
+ 8 files changed, 68 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qapi-schema/doc-bad-long-line.err
+ create mode 100644 tests/qapi-schema/doc-bad-long-line.json
+ create mode 100644 tests/qapi-schema/doc-bad-long-line.out
+ create mode 100644 tests/qapi-schema/doc-bad-whitespaces.err
+ create mode 100644 tests/qapi-schema/doc-bad-whitespaces.json
+ create mode 100644 tests/qapi-schema/doc-bad-whitespaces.out
+
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 9fbf80a541..ffb149850d 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -108,6 +108,11 @@ def __init__(self,
+         self.exprs: List[QAPIExpression] = []
+         self.docs: List[QAPIDoc] = []
+ 
++        # State for tracking qmp-example blocks and simple
++        # :: literal blocks.
++        self._literal_mode = False
++        self._literal_mode_indent = 0
++
+         # Showtime!
+         self._parse()
+ 
+@@ -423,12 +428,57 @@ def get_doc_line(self) -> Optional[str]:
+             if self.val != '##':
+                 raise QAPIParseError(
+                     self, "junk after '##' at end of documentation comment")
++            self._literal_mode = False
+             return None
+         if self.val == '#':
+             return ''
+         if self.val[1] != ' ':
+             raise QAPIParseError(self, "missing space after #")
+-        return self.val[2:].rstrip()
++
++        line = self.val[2:].rstrip()
++
++        if re.match(r'(\.\. +qmp-example)? *::$', line):
++            self._literal_mode = True
++            self._literal_mode_indent = 0
++        elif self._literal_mode and line:
++            indent = re.match(r'^ *', line).end()
++            if self._literal_mode_indent == 0:
++                self._literal_mode_indent = indent
++            elif indent < self._literal_mode_indent:
++                # ReST directives stop at decreasing indentation
++                self._literal_mode = False
++
++        if not self._literal_mode:
++            self._validate_doc_line_format(line)
++
++        return line
++
++    def _validate_doc_line_format(self, line: str) -> None:
++        """
++        Validate documentation format rules for a single line:
++        1. Lines should not exceed 70 columns
++        2. Sentences should be separated by two spaces
++        """
++        full_line_length = len(line) + 2  # "# " = 2 characters
++        if full_line_length > 70:
++            # Skip URL lines - they can't be broken
++            if re.match(r' *(https?|ftp)://[^ ]*$', line):
++                pass
++            else:
++                raise QAPIParseError(
++                    self, "documentation line exceeds 70 columns"
++                )
++
++        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
++        for m in list(re.finditer(single_space_pattern, line)):
++            if not m.group(2):
++                continue
++            # HACK so the error message points to the offending spot
++            self.pos = self.line_pos + 2 + m.start(2) + 1
++            raise QAPIParseError(
++                self, "Use two spaces between sentences\n"
++                "If this not the end of a sentence, please report the bug",
++            )
+ 
+     @staticmethod
+     def _match_at_name_colon(string: str) -> Optional[Match[str]]:
+diff --git a/tests/qapi-schema/doc-bad-long-line.err b/tests/qapi-schema/doc-bad-long-line.err
+new file mode 100644
+index 0000000000..611a3b1fef
+--- /dev/null
++++ b/tests/qapi-schema/doc-bad-long-line.err
+@@ -0,0 +1 @@
++doc-bad-long-line.json:4:1: documentation line exceeds 70 columns
+diff --git a/tests/qapi-schema/doc-bad-long-line.json b/tests/qapi-schema/doc-bad-long-line.json
+new file mode 100644
+index 0000000000..d7f887694d
+--- /dev/null
++++ b/tests/qapi-schema/doc-bad-long-line.json
+@@ -0,0 +1,6 @@
++##
++# @foo:
++#
++# This line has exactly 71 characters, including spaces and punctuation!
++##
++{ 'command': 'foo' }
+diff --git a/tests/qapi-schema/doc-bad-long-line.out b/tests/qapi-schema/doc-bad-long-line.out
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/qapi-schema/doc-bad-whitespaces.err b/tests/qapi-schema/doc-bad-whitespaces.err
+new file mode 100644
+index 0000000000..5cca1954c0
+--- /dev/null
++++ b/tests/qapi-schema/doc-bad-whitespaces.err
+@@ -0,0 +1,2 @@
++doc-bad-whitespaces.json:4:48: Use two spaces between sentences
++If this not the end of a sentence, please report the bug
+diff --git a/tests/qapi-schema/doc-bad-whitespaces.json b/tests/qapi-schema/doc-bad-whitespaces.json
+new file mode 100644
+index 0000000000..b0c318c670
+--- /dev/null
++++ b/tests/qapi-schema/doc-bad-whitespaces.json
+@@ -0,0 +1,6 @@
++##
++# @foo:
++#
++# Sentences should be split by two whitespaces. But here is only one.
++##
++{ 'command': 'foo' }
+diff --git a/tests/qapi-schema/doc-bad-whitespaces.out b/tests/qapi-schema/doc-bad-whitespaces.out
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+index c47025d16d..b24b27db21 100644
+--- a/tests/qapi-schema/meson.build
++++ b/tests/qapi-schema/meson.build
+@@ -61,8 +61,10 @@ schemas = [
+   'doc-bad-event-arg.json',
+   'doc-bad-feature.json',
+   'doc-bad-indent.json',
++  'doc-bad-long-line.json',
+   'doc-bad-symbol.json',
+   'doc-bad-union-member.json',
++  'doc-bad-whitespaces.json',
+   'doc-before-include.json',
+   'doc-before-pragma.json',
+   'doc-duplicate-features.json',
+-- 
+2.48.1
+
 
