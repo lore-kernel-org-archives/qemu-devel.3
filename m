@@ -4,65 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F48CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 796B4CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 19:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEu3v-0008VX-Uf; Fri, 31 Oct 2025 14:41:27 -0400
+	id 1vEuP1-00017P-Nu; Fri, 31 Oct 2025 15:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEu3k-0008NO-6r
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:41:14 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1vEuOz-00016y-CV
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:03:09 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vEu3c-0007xN-IU
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:41:11 -0400
+ id 1vEuOp-0004Xd-8U
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 15:03:09 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9CAE9C0157;
- Fri, 31 Oct 2025 21:40:54 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:546::1:17] (unknown
- [2a02:6bf:8080:546::1:17])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3F3CCC0159;
+ Fri, 31 Oct 2025 22:02:52 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id relVVi0F1Ko0-MtcLIM6r; Fri, 31 Oct 2025 21:40:54 +0300
+ ESMTPSA id m2mTmi0FnuQ0-hANvvA5b; Fri, 31 Oct 2025 22:02:51 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761936054;
- bh=ZJGAgnjDh4Wl274/GDMF4g40fWRKqyG0VF+blGd8LQE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=n5dvQ7OyHlDDGky2YsgghUCn7utX1QY9+Q7q16l/a82krPgpQGOOt37zwYijemcOE
- 6wK/NrlbJyx3b7FRtnq1+0Yr/qsvJM0SHARZa0cKMSH0gdMw6QAv9N6E6lKkS19/4H
- UpmrDU1Jza7ZbTl2D59ziVxVfugE5TfnXooJI+04=
+ s=default; t=1761937371;
+ bh=N+I1NJouYOnrrHASJrjD5TNHeMpicQO5xeT8Na9pxR0=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=BRpkslg6GtiLSS3tdVuxE0mR1XTTRjeerbYQQhOCP8yfEsJEoBBnT3LeqOisWklHB
+ GpoyrzJH/Ivyq/5kbmsaRT00uvEaBI3179b1fSKUpTE9Yo2TNbki9gDsxGac5DvJ2T
+ USCc5j7/OBpFHAGP2aWGIYFa2twW/o4JkKQQEgMM=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <b126455a-2a1a-4278-bc8f-a77d47f4cf16@yandex-team.ru>
-Date: Fri, 31 Oct 2025 21:40:53 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] qapi: Add documentation format validation
-To: Markus Armbruster <armbru@redhat.com>
-Cc: michael.roth@amd.com, qemu-devel@nongnu.org
-References: <20251031115517.79032-1-vsementsov@yandex-team.ru>
- <874irf5a3a.fsf@pond.sub.org>
-Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <874irf5a3a.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+To: berrange@redhat.com
+Cc: qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH v2 1/2] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
+Date: Fri, 31 Oct 2025 22:02:45 +0300
+Message-ID: <20251031190246.257153-2-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251031190246.257153-1-vsementsov@yandex-team.ru>
+References: <20251031190246.257153-1-vsementsov@yandex-team.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,214 +74,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31.10.25 19:07, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> Add explicit validation for QAPI documentation formatting rules:
->>
->> 1. Lines must not exceed 70 columns in width (including '# ' prefix)
->> 2. Sentences must be separated by two spaces
->>
->> Example sections and literal :: blocks (seldom case) are excluded, we
->> don't require them to be <= 70, that would be too restrictive. Anyway,
->> they share common 80-columns recommendations (not requirements).
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> Hi all!
->>
->> v4: apply suggestions by Markus:
->>   - smart regexps
->>   - simpler error messages
->>   - hack to move cursor at the place of error
->>   - support :: blocks
->>
->> This is based on
->> [PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
->> Based-on: <20251031094751.2817932-1-armbru@redhat.com>
->>
->>   scripts/qapi/parser.py | 44 +++++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 43 insertions(+), 1 deletion(-)
->>
->> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> index 9fbf80a541..2c244a3608 100644
->> --- a/scripts/qapi/parser.py
->> +++ b/scripts/qapi/parser.py
->> @@ -108,6 +108,10 @@ def __init__(self,
->>           self.exprs: List[QAPIExpression] = []
->>           self.docs: List[QAPIDoc] = []
->>   
->> +        # State for tracking qmp-example blocks and simple
->> +        # :: literal blocks.
->> +        self._literal_mode = False
->> +
->>           # Showtime!
->>           self._parse()
->>   
->> @@ -423,12 +427,50 @@ def get_doc_line(self) -> Optional[str]:
->>               if self.val != '##':
->>                   raise QAPIParseError(
->>                       self, "junk after '##' at end of documentation comment")
->> +            self._literal_mode = False
->>               return None
->>           if self.val == '#':
->>               return ''
->>           if self.val[1] != ' ':
->>               raise QAPIParseError(self, "missing space after #")
->> -        return self.val[2:].rstrip()
->> +
->> +        line = self.val[2:].rstrip()
->> +
->> +        if re.match(r'(\.\. +qmp-example)? *::$', line):
->> +            self._literal_mode = True
-> 
-> This doesn't match the contracted form of literal blocks
-> 
->      lorem ipsum ::
->          dolor sit amet
-> 
-> We don't use this form right now.  We can worry about matching it when
-> we do.
-> 
->> +        elif self._literal_mode and line and not line.startswith(' '):
->> +            # ReST directives stop at first non-blank non-indented line
->> +            self._literal_mode = False
-> 
-> This can miss the end of the literal block when the line with '::' is
-> indented.  To reproduce ...
-> 
->> +
->> +        if not self._literal_mode:
->> +            self._validate_doc_line_format(line)
-> 
-> ... tack a debug print here
-> 
->             else:
->                 print('@@@', line)
-> 
-> and run
-> 
->      $ pyvenv/bin/python3 /work/armbru/qemu/scripts/qapi-gen.py -o docs/qapi-firmware/ ../docs/interop/firmware.json
-> 
-> Relevant part of input:
-> 
->      # @executable: Identifies the firmware executable.  The @mode
->      #     indicates whether there will be an associated NVRAM template
->      #     present.  The preferred corresponding QEMU command line options
->      #     are
->      #
->      #     ::
->      #
->      #         -drive if=none,id=pflash0,readonly=on,file=@executable.@filename,format=@executable.@format
->      #         -machine pflash0=pflash0
->      #
->      #     or equivalent -blockdev instead of -drive.  When @mode is
->      #     @combined the executable must be cloned before use and
->      #     configured with readonly=off.  With QEMU versions older than
->      #     4.0, you have to use
->      #
->      #     ::
->      #
->      #         -drive if=pflash,unit=0,readonly=on,file=@executable.@filename,format=@executable.@format
->      #
-> 
-> Relevant part of output:
-> 
->      @@@     ::
->      @@@         -drive if=none,id=pflash0,readonly=on,file=@executable.@filename,format=@executable.@format
->      @@@         -machine pflash0=pflash0
->      @@@     or equivalent -blockdev instead of -drive.  When @mode is
->      @@@     @combined the executable must be cloned before use and
->      @@@     configured with readonly=off.  With QEMU versions older than
->      @@@     4.0, you have to use
->      @@@     ::
->      @@@         -drive if=pflash,unit=0,readonly=on,file=@executable.@filename,format=@executable.@format
-> 
-> Save the indentation of the line containing the '::'.  A line with less
-> indentation ends the literal block.
-> 
->> +
->> +        return line
->> +
->> +    def _validate_doc_line_format(self, line: str) -> None:
->> +        """
->> +        Validate documentation format rules for a single line:
->> +        1. Lines should not exceed 70 columns
->> +        2. Sentences should be separated by two spaces
->> +        """
->> +        full_line_length = len(line) + 2  # "# " = 2 characters
->> +        if full_line_length > 70:
->> +            # Skip URL lines - they can't be broken
->> +            if re.match(r' *(https?|ftp)://[^ ]*$', line):
->> +                pass
->> +            else:
->> +                raise QAPIParseError(
->> +                    self, "documentation line exceeds 70 columns"
->> +                )
->> +
->> +        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
->> +        for m in list(re.finditer(single_space_pattern, line)):
->> +            if not m.group(2):
->> +                continue
->> +            # HACK so the error message points to the offending spot
->> +            self.pos = self.line_pos + 2 + m.start(2) + 1
-> 
-> I have an idea for a non-hacky solution.  I'll post it when ready.
-> Until then, don't worry about it.
-> 
->> +            raise QAPIParseError(
->> +                 self, "Use two spaces between sentences")
-> 
-> Note this check is somewhat prone to false positives.
-> @single_space_pattern matches 'e.g.' to avoid the false positive
-> 'e.g. FLAT' in block-core.json.  The same could happen for other
-> abbreviations.
-> 
-> We could add more sophisticated heuristics to reduce the risk of false
-> positives.  Meh.  I'd rather KISS for now.  We can deal with the problem
-> once we have it.
-> 
-> We may want to add a hint, though.  Something like:
-> 
->                 raise QAPIParseError(
->                      self, "Use two spaces between sentences\n"
->                      "If this not the end of a sentence, please report the bug")
-> 
->>   
->>       @staticmethod
->>       def _match_at_name_colon(string: str) -> Optional[Match[str]]:
-> 
-> Negative tests would be nice, one for each new error.  Feel free to ask
-> me to write them.
-> 
+QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
+qemu_hexdump_line(). This leads to last line of the dump (when
+length is not multiply of 16) has badly aligned ASCII part.
 
-No problem, it was interesting to look, how qapi-schema tests are done.
+Let's calculate length the same way.
 
-Hmm, while making the tests I thought: it would be more convenient to have all
-err, json and out things in one file, like
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ util/hexdump.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-     @json
-     ##
-     # @foo:
-     #
-     # This line has exactly 71 characters, including spaces and punctuation!
-     ##
-     { 'command': 'foo' }
-     @out
-     @err
-     doc-bad-long-line.json:4:1: documentation line exceeds 70 columns
-
-Or something like this. That will simplify creating a new test process from
-copying (and modifying) three files to copying one.
-
-(just thinking out loud, don't mind me)
-
-
-v5 is sent. Tests are small and simple, I decided not split them out to separate
-patches.
-
+diff --git a/util/hexdump.c b/util/hexdump.c
+index f29ffceb74..7cfc547261 100644
+--- a/util/hexdump.c
++++ b/util/hexdump.c
+@@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
+     return (x < 10 ? '0' : 'a' - 10) + x;
+ }
+ 
++static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
++                                  size_t block_len)
++{
++    size_t est = buf_len * 2;
++    if (unit_len) {
++        est += buf_len / unit_len;
++    }
++    if (block_len) {
++        est += buf_len / block_len;
++    }
++    return est;
++}
++
+ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
+                            size_t unit_len, size_t block_len)
+ {
+@@ -30,14 +43,8 @@ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
+ 
+     if (str == NULL) {
+         /* Estimate the length of the output to avoid reallocs. */
+-        size_t est = len * 2;
+-        if (unit_len) {
+-            est += len / unit_len;
+-        }
+-        if (block_len) {
+-            est += len / block_len;
+-        }
+-        str = g_string_sized_new(est + 1);
++        str = g_string_sized_new(hexdump_line_length(len, unit_len, block_len)
++                                 + 1);
+     }
+ 
+     for (u = 0, b = 0; len; u++, b++, len--, buf++) {
+@@ -76,13 +83,16 @@ static void asciidump_line(char *line, const void *bufptr, size_t len)
+ }
+ 
+ #define QEMU_HEXDUMP_LINE_BYTES 16
+-#define QEMU_HEXDUMP_LINE_WIDTH \
+-    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
++#define QEMU_HEXDUMP_UNIT 1
++#define QEMU_HEXDUMP_BLOCK 4
+ 
+ void qemu_hexdump(FILE *fp, const char *prefix,
+                   const void *bufptr, size_t size)
+ {
+-    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
++    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
++                                    QEMU_HEXDUMP_UNIT,
++                                    QEMU_HEXDUMP_BLOCK);
++    g_autoptr(GString) str = g_string_sized_new(width + 1);
+     char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
+     size_t b, len;
+ 
+@@ -90,11 +100,11 @@ void qemu_hexdump(FILE *fp, const char *prefix,
+         len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
+ 
+         g_string_truncate(str, 0);
+-        qemu_hexdump_line(str, bufptr + b, len, 1, 4);
++        qemu_hexdump_line(str, bufptr + b, len,
++                          QEMU_HEXDUMP_UNIT, QEMU_HEXDUMP_BLOCK);
+         asciidump_line(ascii, bufptr + b, len);
+ 
+-        fprintf(fp, "%s: %04zx: %-*s %s\n",
+-                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, str->str, ascii);
++        fprintf(fp, "%s: %04zx: %-*s %s\n", prefix, b, width, str->str, ascii);
+     }
+ 
+ }
 -- 
-Best regards,
-Vladimir
+2.48.1
+
 
