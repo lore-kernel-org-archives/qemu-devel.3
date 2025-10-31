@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14F5CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F638CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEvkF-00034o-Rb; Fri, 31 Oct 2025 16:29:12 -0400
+	id 1vEw3m-0002cI-Tk; Fri, 31 Oct 2025 16:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEvk7-00033u-Bi
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:29:07 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEw3j-0002ZN-8Z
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:49:19 -0400
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEvju-0002fv-DO
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:29:00 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477365fbdf9so5176585e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 13:28:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEw3b-0005k7-Uy
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:49:19 -0400
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-474975af41dso20414535e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 13:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761942523; x=1762547323; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761943747; x=1762548547; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=adk+0ju45uaOjjmlt+1dUAWeLDLmgGwn0DteCOL1uUk=;
- b=GiDg5827+RBjpkFThMlABmAXrICEbvkP/IY4CD5RF9IG2bTAbKv4+j37khFQVayTWf
- R3RpdOsfCPT67vINTj6TJCBFbJVxQRy9nYjo5F4009+ZhwimfYVo7xrxCe+nAqv5PnQ+
- JqOoGI3Gd1accwvbzx8jRIAbZCZR+BqTTlHIfpoNTG+bS24QTiN5W9iEbnqig0/nZ+nl
- MYwQaxlYASP2Qx+L+N22G4SHMSzQ9PD1Ij2boZq0pCWIl9sg2lgvr2fkmIgTWFW30LkQ
- YkPFVXocnW1PoVZF+R1GzoPXuGEQqoJ0Uql0FbP6rhPf9WTrfAZWUjTctjnOi4XLnPfH
- Sr/g==
+ bh=K4vzKiOpSEPLbPdX9g4kxHhPangU7MLtZcrVapfDmrw=;
+ b=aDEWhpnzgefKUpnfWAWPY9eOVAk2Bpm9xxmD2ES9j8VhCMY6IP/EcYGGuYiNG1bAVD
+ q+B7vNKNNokZycOvk5VvsWsQzRcFclGIPCqLBrqoPvjbk/LUTRDvUdDsNnc/NMKiEtKk
+ NazsY0uzR9NW20UI177Bf1dBRtaSVgkW9WicmgII3f0C/abY8Ateduzbj7ZBbElu2+eU
+ C9sQGrWr2SHatC6KGym88W1xWprnKleRHICAbP4hoBCI6KQpE/q/Dj5xuU/Dku6jfnZK
+ CHQNrLgHPXXBwYNPdO01f8ozJibPy0k0OkH9kpraFG3HzJushu8sxXdqbVo2Wq+QrZig
+ lJxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761942523; x=1762547323;
+ d=1e100.net; s=20230601; t=1761943747; x=1762548547;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=adk+0ju45uaOjjmlt+1dUAWeLDLmgGwn0DteCOL1uUk=;
- b=HwRRAJ5rf0Mo+zaVPhePudTFnJ+fCXE67W7ftPIdycBBgMg4/+SEW/Hb8Oqs/3nzID
- NY90LwAE5uXPWKqDLUEZYlx/jmhI54m1KpYY1BO2tS+xBoU/B7mbxfsXaJM7g7toCsF9
- e+YkpnB5JLTSRsQErdwLojkzZ9ogG4oyuojwCO3OXovXHyO/YQIs95JvcRTGK2U2GG8A
- 3tgKiOFERE+ER5mMBGBCOGWbgo66OjaAhLIgVfVmJGMX1b4Tx3wakzLHAuiOHWH+1kPP
- fw7JgQwOcQPPwSFjfI8wrpvXIUQSG/7dsbuKWctb4iR3sSbtAUCcrIMtN7UzKzvTEOI/
- 6EXg==
+ bh=K4vzKiOpSEPLbPdX9g4kxHhPangU7MLtZcrVapfDmrw=;
+ b=JW03zVXk1vYxwjoDobt7VQG3+AXbIqdyLF5jZ6jfEtlaWfbkER6WS91DvW7FsHqMlb
+ 4rnPDDO6kAe7Okl7bigaqmXZUBNNWD+BZuF62Vl9X/341ItfEWuRXWp6d0OhOzJD3vR1
+ g4/2tw99LFyD/ZeiQExlGKd+J6hHodQgNeo395SADttKbIJRxbphZipj8CAz+FdBbu3C
+ 4ixTGdk+HUby3/7OLcw3XU2TJHNmFFh06NVeuOyzodOxvId+M9sKlPW8uVpn4aoLJNnI
+ Y8RFiBMroilWQJPzFk4d++jncQ0fsXIZCcJhq/2WKz0q3uzZaMiFEzllv0yMPHDmbaq3
+ Lx0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAg6/foGdCHr3Omzc4ViwkrQMwdhd3XVJJAgKi5E3aqEcqUxHQhecIeBkpTghGLq7Min655aEyJsdm@nongnu.org
-X-Gm-Message-State: AOJu0Yw7GN1JwBwySkIopyVIGV4OGwAQxo+op1Cc8B+L4k7XLrw98AY4
- zdqB+vrA6uq9Plxyr+WRXbJFO2Y16roXVeJZ8eGFAPBtG3H5oDnUBAoOHk/VCE+S5cs=
-X-Gm-Gg: ASbGnct73oba+/RTNH1kIFYjEdoe4Ej9ptNfrthXHqtZDrf/J1U9lipA+cD62MUuv6L
- maFI3CuK5IFY+iJQBkqNc1foULwmBb/XrWBgFTNLEY8gV1bJW+1aVrgRqNbAuSofNmaIdc/kAMM
- TUn3A6ux20QaM0bAnMQicTuWBY16v5PU/IJgbu03/Tssssnm4DYFIXJ0kycS9ewes7iXqmdivIk
- NwVs4WMHurHMrcwXblJ/ejL8vuyKXyTlqHDNC3nd+tMYL1CnUSs5u2EioF0rV3hYVRAr6i8/GQC
- 2f7v2iPef3qhjQVuyhW/qnMQ8vif+dG7RfDIE6pQqGjD1M7azaYdvLzENSw4o1aI6i1lknHKrc6
- gvUU4iRNVB2awW3oossoLcJykRmJKMDNKut7OWukyOtItRFcogit1QoT8VXCv45bwZ/TYNpoXPE
- Gqn5SYBInrGXWbBadlHDcX7uaxd7/6Tc1OfUz9ZnhXLeB0wRZgFSDlmtGGnHo/czRqZg==
-X-Google-Smtp-Source: AGHT+IFIkdw2MC7YszCufTbfDfBkePx6XbdYueOL3kd72fMp5NtIiTi9dSLD72jfqcHqiArpsIr1hw==
-X-Received: by 2002:a05:600c:1c1d:b0:46e:4c67:ff17 with SMTP id
- 5b1f17b1804b1-477307d0a16mr48777805e9.14.1761942523038; 
- Fri, 31 Oct 2025 13:28:43 -0700 (PDT)
+ AJvYcCV9Yg6V2oJmT4fKPiDl6cf2cMEUH/3MdnYVKWHP/A6UxYx2PnKml7vudcDUJg8OPcnvuocClm3SoqwB@nongnu.org
+X-Gm-Message-State: AOJu0Yy9UWEvrDNTXV2fFbjWbqTrBUkWhFryvCs3T4scH1SHoJufwzUv
+ RyacM57up2zvIN/IZxjj4/wHF3yFP6kjUeIwSuJSTBGpLm5DH4ICTlItUVWWHoIXgXc=
+X-Gm-Gg: ASbGncsvLN8e4Vn3gCH6FDLRCGA3yN+tJJot29JFqP1UQ1p02JBYVYzCJE8BBqXpMMJ
+ 4jPNuN15fqzWItUoNlSCyKNvntQQdNKFxbElcZD+cdWYSjARUSQajoeo31/zn/c2JhmHH8hx4A+
+ RIeYrGKJnD0Xr+sSQxJwpVY/QqNPQqpuynsbu2H46ntJmnGSioqWB163FWNPuWDmG1t8SO5DvlS
+ /8SqHjhtsoEIlr6ltp2HeKfYtg2Ge+w/5PTWXNsGEpO18x0EREUJqyiU4vdZ4eHvQ2+sNsXJSV6
+ ME/zXIF/YwfrsbI5zz8jXqqV3ayig2UGyNz4VVanDZaef6yrXjNwzjP1VfWN9LHO8YUvmahi4Ts
+ Vo/i9zT5vSxI5klw6JYcLfTfByPMqaK4JW1uTW9QbGp0JHSu37NEs/BCG227YSGfBmbAANqQw3m
+ N3u47SeMFO1h+Kg5ZgNuFQaedtiiYbSZ9zBNO2fCiJijw9NVskXAi0cVHdv4PD71sflQ==
+X-Google-Smtp-Source: AGHT+IGTm8J5MorjQnazo5DI+siLkW2PZYdFtm3Won7iNXGDYOMfmY2fBN8B3VXnbXdWMWJvW7g+fg==
+X-Received: by 2002:a05:600d:6352:b0:45f:28d2:bd38 with SMTP id
+ 5b1f17b1804b1-4773163825dmr22363895e9.18.1761943746917; 
+ Fri, 31 Oct 2025 13:49:06 -0700 (PDT)
 Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c110e77esm5055149f8f.10.2025.10.31.13.28.42
+ 5b1f17b1804b1-4773c394e6csm14053995e9.15.2025.10.31.13.49.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 13:28:42 -0700 (PDT)
-Message-ID: <bc0b52b9-19df-43b9-8f20-61f7101b7975@linaro.org>
-Date: Fri, 31 Oct 2025 21:28:41 +0100
+ Fri, 31 Oct 2025 13:49:06 -0700 (PDT)
+Message-ID: <80c53cdb-45eb-48c5-978f-bcc30fe832bf@linaro.org>
+Date: Fri, 31 Oct 2025 21:49:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rx: cpu: fix interrupts check in rx_cpu_do_interrupt()
+Subject: Re: [PATCH] hw/xen: Avoid non-inclusive language in params.h
 Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: yoshinori.sato@nifty.com, Thomas Huth <thuth@redhat.com>
-References: <20251030165932.138512-1-imammedo@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-trivial@nongnu.org
+References: <20251013111152.25807-1-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251030165932.138512-1-imammedo@redhat.com>
+In-Reply-To: <20251013111152.25807-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,21 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/10/25 17:59, Igor Mammedov wrote:
-> Commit [1] broke interrupt handling, replacing interrupts fetch with a bool
-> and then the remaining code attempting to check individual bits
-> on that bool value, which effectively masked those interrupts.
+On 13/10/25 13:11, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Fix it by checking individual interrupt bits directly instead of
-> old 'fetch then check' approach.
+> Copy the latest version of Xen's params.h to the QEMU repository:
 > 
-> 1)
-> Fixes: 87511341c30d ("add cpu_test_interrupt()/cpu_set_interrupt() helpers and use them tree wide")
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> https://xenbits.xen.org/gitweb/?p=xen.git;a=commitdiff;h=0291089f6ea81690f37035a124d54c51fa7ba097#patch8
+> 
+> With this patch, we get rid of a non-inclusive word in the comment
+> there.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   target/rx/helper.c | 41 ++++++++++++++++++-----------------------
->   1 file changed, 18 insertions(+), 23 deletions(-)
+>   include/hw/xen/interface/hvm/params.h | 9 ++-------
+>   1 file changed, 2 insertions(+), 7 deletions(-)
 
-Queued, thanks.
+Merged as commit aba49488cb4.
 
