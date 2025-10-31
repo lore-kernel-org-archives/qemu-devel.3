@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27DEECCF9FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0951FCCF9FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 11:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEnZi-0003WX-VP; Fri, 31 Oct 2025 07:45:47 -0400
+	id 1vEnbP-0004Yt-M2; Fri, 31 Oct 2025 07:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEnZe-0003Vx-GK
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:45:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEnbK-0004Rg-Ai
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:47:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEnZX-0004iE-PW
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:45:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vEnb5-00052Q-DA
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 07:47:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761911126;
+ s=mimecast20190719; t=1761911217;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pasaoZSIBQW5JTOJTdPkATiFhLGMSAynAffcEhqPWto=;
- b=KwITOxmjqKVadFcUFwCv0/aSAt/yuNPxCR//9dYQS7lwtvyGDEGeJ3+njywpIVhVZtsWS2
- 02gtDbt1pu2cNTV7d7yx2CI91MyF1+zLgbWLkSeidnpQDZwsc0q/DCqi5mqc+wzYqRp+Lo
- TLLSsUKuuZfycrxxrnGv7Y5FZEuP/Qk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=q5BitX2VwYZW8bnJ43kgA0NdqfYJ59+wwkuTDaPgyvo=;
+ b=ML7YsiVRgbVvtpxCO2/To6JU09qRJVx5QQkypIXkfHAgGwq3RT2OjtKUOzhVYf56zzqs/Z
+ 5teCWkKZvlmp7Ow2EnAU6yCaWRDt2qHIBiOHID7zRKMA2MwUxSLtz0Opy/HHwz3u/N2U68
+ pBhEH1HTfcie15NahvxUR6S4OM9TD5s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-QqmBNue_MTO3M-njY8BpBw-1; Fri,
- 31 Oct 2025 07:45:23 -0400
-X-MC-Unique: QqmBNue_MTO3M-njY8BpBw-1
-X-Mimecast-MFC-AGG-ID: QqmBNue_MTO3M-njY8BpBw_1761911122
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-fCWRxk8qPj-sLexkBXxrqw-1; Fri,
+ 31 Oct 2025 07:46:56 -0400
+X-MC-Unique: fCWRxk8qPj-sLexkBXxrqw-1
+X-Mimecast-MFC-AGG-ID: fCWRxk8qPj-sLexkBXxrqw_1761911215
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 355371805C11; Fri, 31 Oct 2025 11:45:22 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C29DB180899E; Fri, 31 Oct 2025 11:46:55 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A567C19560A2; Fri, 31 Oct 2025 11:45:21 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4983A1955BE3; Fri, 31 Oct 2025 11:46:55 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1B73C21E6A27; Fri, 31 Oct 2025 12:45:19 +0100 (CET)
+ id 9ED9021E6A27; Fri, 31 Oct 2025 12:46:52 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  jsnow@redhat.com,  eblake@redhat.com,
- thuth@redhat.com,  berrange@redhat.com,  philmd@linaro.org,
- kchamart@redhat.com,  mst@redhat.com,  sgarzare@redhat.com
-Subject: Re: [PATCH 8/8] docs/interop: Add test to keep vhost-user.json sane
-In-Reply-To: <4d7c7507-970b-4eb2-8817-f18fd3693a73@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Fri, 31 Oct 2025 13:53:21 +0300")
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
+ jsnow@redhat.com,  eblake@redhat.com,  thuth@redhat.com,
+ berrange@redhat.com,  philmd@linaro.org,  kchamart@redhat.com,
+ mst@redhat.com,  sgarzare@redhat.com
+Subject: Re: [PATCH 1/8] qapi/audio: Fix description markup of
+ AudiodevDBusOptions @nsamples
+In-Reply-To: <1313b150-57dc-4bd2-a593-63529e0026b0@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Fri, 31 Oct 2025 12:53:31 +0300")
 References: <20251031094751.2817932-1-armbru@redhat.com>
- <20251031094751.2817932-9-armbru@redhat.com>
- <4d7c7507-970b-4eb2-8817-f18fd3693a73@yandex-team.ru>
-Date: Fri, 31 Oct 2025 12:45:19 +0100
-Message-ID: <87y0or8fcg.fsf@pond.sub.org>
+ <20251031094751.2817932-2-armbru@redhat.com>
+ <1313b150-57dc-4bd2-a593-63529e0026b0@yandex-team.ru>
+Date: Fri, 31 Oct 2025 12:46:52 +0100
+Message-ID: <87tszf8f9v.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,38 +95,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
 > On 31.10.25 12:47, Markus Armbruster wrote:
->> We did this for firmware.json in commit d4181658dfb (docs: add test
->> for firmware.json QAPI).
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>   docs/meson.build | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
->> diff --git a/docs/meson.build b/docs/meson.build
->> index 3676f81c4d..7e54b01e6a 100644
->> --- a/docs/meson.build
->> +++ b/docs/meson.build
->> @@ -99,7 +99,12 @@ if build_docs
->>    alias_target('man', sphinxmans)
->>  endif
->> -test('QAPI firmware.json regression tests', qapi_gen,
->> -     args: ['-o', meson.current_build_dir() / 'qapi',
->> +test('QAPI firmware.json regression test', qapi_gen,
->> +     args: ['-o', meson.current_build_dir() / 'qapi-firmware',
->>              meson.current_source_dir() / 'interop/firmware.json'],
->>       suite: ['qapi-schema', 'qapi-interop'])
->> +
->> +test('QAPI vhost-user.json regression test', qapi_gen,
->> +     args: ['-o', meson.current_build_dir() / 'qapi-vhost-user',
->> +            meson.current_source_dir() / 'interop/vhost-user.json'],
->> +     suite: ['qapi-schema', 'qapi-interop'])
+>> The description of Member @nsamples is indented incorrectly.  Comes
+>> out like
+>>
+>>      Members:
+>>              [...]
+>> 	         nsamples (int, optional) =E2=80=93 set the number of samples p=
+er read/write calls (default to 480,
+>>      10ms at 48kHz).
+>>
+>> Fixing the indentation makes it come out like
+>>
+>>      Members:
+>>              [...]
+>> 	        nsamples (int, optional) =E2=80=93 set the number of samples pe=
+r read/write calls (default to 480, 10ms at 48kHz).
+>>=20
 >
-> Hmm, if we have more .json files in docs, we'll need some more
-> convenient and safe way to cover them all.
+> I'm not sure this example worth breaking recommendation to
+> " not use lines that are longer than 76 characters in your commit message=
+" :)
 
-Yes.  But so far it's just these two, and they're from 2018 and 2019.
+Accident, will tidy up.
 
+>> Fixes: 19c628f2f579 (dbus: add -audio dbus nsamples option)
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>
 > Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
 Thanks!
 
