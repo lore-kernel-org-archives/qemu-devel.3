@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D98CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 02:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5109FCCF9F0
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 02:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEfG6-0004DY-DG; Thu, 30 Oct 2025 22:52:58 -0400
+	id 1vEfH1-0004Ro-6p; Thu, 30 Oct 2025 22:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEfG4-0004D4-Rm
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:52:56 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1vEfGy-0004RM-OZ
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:53:52 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEfFs-0003XJ-Iw
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:52:55 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-63c4b41b38cso3562428a12.3
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 19:52:43 -0700 (PDT)
+ id 1vEfGn-0003Xx-8L
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:53:52 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-63e0cec110eso3124701a12.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 19:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761879158; x=1762483958; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761879217; x=1762484017; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DN2eO+00VwYRvZHlszZLVnLZ8vC/4eXpWquc99/6PjE=;
- b=XhB1lQNTDF18KW/YYPuDfINn1O564qm1j9vKjld19v3UTBKylagQiUnAiQRr9AEVMK
- bfNRHL8TuA8YUPYd/UGKitz1wppZHq09MDfUGCMVIh304v2La47suqaHGQM970foi6Bm
- k7Gr5gR2o/GTid61ZPJp35u/4qjPu9FXGp762Jgz+40spMmaUTmXIlPGqAxBXUpuJ5KD
- KiaqML2VK6z+jvkxDJwq0vfPjewlTR6yKEXj2r2zTS8fjOqkRvkCV1o5G+EVmEGy7QIn
- J61LG0RXj6CryKpRVyh6/jsQUDdaW5KfRGcnViVwVSUZWm89tCsQUmN+MXSrY7rIZxN4
- Hvsg==
+ bh=ln4kv2Ve8U60gg48kP+9DoZUXu6plwITpMfR9zvr2ZI=;
+ b=byZipzV0saWdj88PqgEd7ppxdBT3sNFY8qCTV17e9jjRHRwSw7MaiNw3LWILFpcvay
+ UeCRlGgLR5Ms9FJ82rX52VjXiQGhilIkl9pwS+nhjEBtJ5091CbX66hUH9XMsyO1Ta8k
+ T/M4VaWwFRqNyDBeJiZIk/z9DrDkBKr5Yp4rziL9NTAOlPzqnSNi/5aYLodv3QY1l2zq
+ c+c1U8L4Q+ylXEjvQLAzDSvK6rmbshlM02dfYi2U2+s5lBhVM0PWk0XIb/32t6St4WH3
+ Y/oVoQmcBXEA7gmP0HLd5eS5LG9Z7bk4KWUdFR55Lo95AdPY1HjcLdSDOeKdkF3bEkRE
+ GNpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761879158; x=1762483958;
+ d=1e100.net; s=20230601; t=1761879217; x=1762484017;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DN2eO+00VwYRvZHlszZLVnLZ8vC/4eXpWquc99/6PjE=;
- b=UDAqmbqcsNiYRBkKCthTLXTLUrIfcAJiw0kuqfhpK6vF5tOP/eun3TWC+D9K58lxU5
- QTsOpMcXBcPw00Re35aL6Tv50F0yioL1zdfzdSeRQwTI+Z3fq0RjWfqRjq9A/Wpk5cf6
- q3XRZoFDpoPcTf/r0oFwtlcqs2UsTCVI0hXJKDLs7p+cHKiuRkme1ks8Ig8/kz83+aPC
- etXPTFynhRQP6opsfvCIEPDQSY8yY/4dH18DuVFs3NpLu1IwxJ6GWF9Nn5EchhgwiK2y
- LtQglsPnjQtF1N13Pk61tlOUbuXGnCFlqOnZ71iHTE/3/Fyu/X2RGGPoUHiVP9I9WVte
- y56A==
-X-Gm-Message-State: AOJu0YwC0RI5WvospHN1Wdp8moXBXcjG+JkIjazDY4Oaz+ojlAMuTsCF
- wCi2K41x5yC1c/GFSJJPNFIxF6PPMwq/CW6mbp4oZZkyKKcUIf6P6ee2pOfwbURBoXU0K81hJ65
- wZTc6Oh4EL/D3ii70mCjH2xt7d2cRpfE=
-X-Gm-Gg: ASbGncuIWI1n8OIt1jplo/U6HogUgcT2aWkVGNRKkHj1oOcw10pmHfALXG+vsaN/2XO
- P/HTQrtcAdlJ8CXHdXSz4eWB7UUV5r1VJmu1L+ofKTvnoj1Vew7b9e6qlwvDicoySbzq5QopZdv
- lgw5qgRA832raXcHxDDLPsliFVM7gN/yGf+k0hMvDZzHR5++g4H+wZ5J3zUS5KHH7yCCiBIuHY4
- nEKhSudDUE0RfE2N2YWRS07OEogu0fUM7qzaq4m6/1dA46tAbSB2C+GrzuQ4082EpZHH/LaCCa+
- sbff1/xtnHI6d/U=
-X-Google-Smtp-Source: AGHT+IG0LH/E8yzlMdSzPZHD9cil0oTwz62VphYs5bywHx+5vHdasaTHUJX72z1ywjss7vvKJxMTbiToiUL8TpVfyYo=
-X-Received: by 2002:a05:6402:26c6:b0:626:4774:2420 with SMTP id
- 4fb4d7f45d1cf-64077018355mr1429909a12.20.1761879158565; Thu, 30 Oct 2025
- 19:52:38 -0700 (PDT)
+ bh=ln4kv2Ve8U60gg48kP+9DoZUXu6plwITpMfR9zvr2ZI=;
+ b=kt46f2M4MyCZOQlD3CrOG6PxnhGA8eIN/BFlirTabg/SBVEfuxuCboz70tGji7kgFD
+ 347RBsZUiiPF+c3O6fNkolPF9fz0Nxmzb2UTDC4TTd/3z1XlybpNrSB7hhodyswb/ZJn
+ ZbdIhjUxDuCHQorvdToJ8TMM9ZFHIPi+6VsGqXtLBE66PdmC6J+cYR1QvGnC2VLx9fOM
+ ATh08Wnc+v9qVTAjg2u1Ev4uwwu24NUFhaH5ONXLz+hDkO2Rn29gse4KxBtkw4nlMat0
+ egLRS0CG/zULGZemjq0e3DRpSS1Dy75Uy1nSnWh/GRDLbwZIbM9a9//c/uHptNJht3WA
+ KCFw==
+X-Gm-Message-State: AOJu0YxbS/XwSVACYORbgvBAo1BbN7Ki2UY/iZk0kiMtEvqf3Il79Q5E
+ 28pBrL2/u8ttNwA29SdfsJyxPdkYUrb+DxXxyY/VzPsjC0Jgssg5roAYAFG1QsFC8wy/fP3Oqav
+ RPEyQpoLdA0ElATnvjPd9hccfAv7zwHg=
+X-Gm-Gg: ASbGncsLOnTXV4AIPGIa+hqQ69j2RPuUX8EB505Tco8X8CSp9DAAG0JJ4zKAvAhMnn8
+ NRlaeZUlNv37BiVdjTlyTKC2IGRznG0nemMBVixVcf0H2rTxWh2gSeUqDREgMZIaMyMQkqr8UBD
+ o8TTt5YeaVunaK/Tm/04TOUWsyCajzPOCKJKYA9cnPk1pNCHgbldsUE4YKah4pU/ctdvvFN/h5n
+ WlIkpkjd5Wvf/Nd7CTlmj2XuXLwn53CPxT2Uz7TdauSJkovhDtwILdAbWbymZBfwvdYkp6qsMWK
+ buywzlfhwd1Viul9lpWEhiKHpw==
+X-Google-Smtp-Source: AGHT+IGQ+M+aJtsa13W9YCnCVW5sk26dn5TVoNWFyv4d8Ljiqzmt1CyuVjSk3+SyOi2ilZDzup+JDBZYGo3sa2De9ys=
+X-Received: by 2002:a05:6402:42c2:b0:63b:ef0e:dfca with SMTP id
+ 4fb4d7f45d1cf-64076f6605dmr1310080a12.4.1761879216532; Thu, 30 Oct 2025
+ 19:53:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251027181831.27016-1-anjo@rev.ng>
- <20251027181831.27016-25-anjo@rev.ng>
-In-Reply-To: <20251027181831.27016-25-anjo@rev.ng>
+ <20251027181831.27016-27-anjo@rev.ng>
+In-Reply-To: <20251027181831.27016-27-anjo@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 31 Oct 2025 12:52:12 +1000
-X-Gm-Features: AWmQ_bniApzw4BHgKlBRC3S01pN_Qz_wnpAjJI3BvkmKJddl8kkpdSFJUSIi_yc
-Message-ID: <CAKmqyKPvnuLRhAo-69JNaHcASmPtCJQ0CNO=zpqKC_3sL7A+kA@mail.gmail.com>
-Subject: Re: [PATCH v4 24/33] target/riscv: Fix size of irq_overflow_left
+Date: Fri, 31 Oct 2025 12:53:10 +1000
+X-Gm-Features: AWmQ_bmlISCJyOXzUbLWQEnd0TEphlfnTIhBh2Wq3hTtvMmQrdJIg8gYdjI2GC4
+Message-ID: <CAKmqyKN=mhU28qBu7Vr_6TOfTOYbsAR0KZCueH3fJEnEhs=7iQ@mail.gmail.com>
+Subject: Re: [PATCH v4 26/33] target/riscv: Replace target_ulong in
+ riscv_cpu_get_trap_name()
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
  alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
 X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,34 +101,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Oct 28, 2025 at 4:24=E2=80=AFAM Anton Johansson via
 <qemu-devel@nongnu.org> wrote:
 >
-> Fix to 64 bits to hold all relevant values.
+> Fix cause argument to 64 bit to match env->mcause.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
 >  target/riscv/cpu.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  target/riscv/cpu.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index d6ad0e1896..604a356292 100644
+> index 4c6b977ce2..c2be30795a 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -224,7 +224,7 @@ typedef struct PMUCTRState {
->      /* Snapshot value of a counter */
->      uint64_t mhpmcounter_prev;
->      /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trig=
-ger */
-> -    target_ulong irq_overflow_left;
-> +    uint64_t irq_overflow_left;
->  } PMUCTRState;
+> @@ -601,7 +601,7 @@ extern const char * const riscv_int_regnamesh[];
+>  extern const char * const riscv_fpr_regnames[];
+>  extern const char * const riscv_rvv_regnames[];
 >
->  typedef struct PMUFixedCtrState {
+> -const char *riscv_cpu_get_trap_name(target_ulong cause, bool async);
+> +const char *riscv_cpu_get_trap_name(uint64_t cause, bool async);
+>  int riscv_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>                                 int cpuid, DumpState *s);
+>  int riscv_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 353b927dd5..3378c40dbf 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -348,7 +348,7 @@ static const char * const riscv_intr_names[] =3D {
+>      "reserved"
+>  };
+>
+> -const char *riscv_cpu_get_trap_name(target_ulong cause, bool async)
+> +const char *riscv_cpu_get_trap_name(uint64_t cause, bool async)
+>  {
+>      if (async) {
+>          return (cause < ARRAY_SIZE(riscv_intr_names)) ?
 > --
 > 2.51.0
 >
