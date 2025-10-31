@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674A2CCF9F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4109CCF9FE
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 13:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEpYk-0005IY-EX; Fri, 31 Oct 2025 09:52:56 -0400
+	id 1vEpZY-0005TK-7G; Fri, 31 Oct 2025 09:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vEpYC-0005DM-Hf; Fri, 31 Oct 2025 09:52:24 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vEpZU-0005Sh-Ha
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 09:53:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vEpY5-00028b-6d; Fri, 31 Oct 2025 09:52:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761918733; x=1793454733;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=u+AukBoxYg8JPWTyx5oeq6nDXLUMwXM4oa2t6x34USc=;
- b=ancMNu+us0iO2HkmE1ZMhz0rIl8hEoEi9ZNHfGoUq3hFJzIClWfRsW7k
- 2rZNJ+jbMVJbqe9Z+xTQcO9MpGgw1GzGPOYfnzqVk0upuv+OgP2lqRw52
- cGLLnaqcacDf4KALa1DiVMiiqG9mG5sW61NM97bneG9hrAyn8uGATntok
- lGfdzGzAXapzdgXDU8LHL/6CGVyWQVTiGRzz60vTeDr/2Byiwin/laeHJ
- MJsva8VUZkQT+TGZatXF7+V/cQaZmTsV8DY8QyiuqmMklNgTIAnezkdcL
- FNw2Ol5sw/Hl/AoPFv2ET5Ku5wY/ORlpgg0m5zSF4LgIpriRSchVpQA4g w==;
-X-CSE-ConnectionGUID: A0zi6/GqS9qdKolHv1ytpQ==
-X-CSE-MsgGUID: scKzLbLpRTeK93JeXMqa/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11598"; a="81708013"
-X-IronPort-AV: E=Sophos;i="6.19,269,1754982000"; d="scan'208";a="81708013"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Oct 2025 06:51:59 -0700
-X-CSE-ConnectionGUID: Ddjw+4ofSW69aljn2c0LmQ==
-X-CSE-MsgGUID: y2mHe97wTHmEVrk392RiwA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,269,1754982000"; d="scan'208";a="185454978"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 31 Oct 2025 06:51:52 -0700
-Date: Fri, 31 Oct 2025 22:14:03 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v4 00/27] hw/i386/pc: Remove deprecated 2.6 and 2.7 PC
- machines
-Message-ID: <aQTEKyQjqIIGtyP0@intel.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20251031113344.7cb11540@imammedo-mac>
- <0942717b-214f-4e08-9e2a-6b87ded991c9@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vEpZO-0002K3-C0
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 09:53:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761918807;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BlegvYVlcib+eb4+DrTyeTwvHY1lb0LbwtGyACKkhrw=;
+ b=VMF9098aIpx3OeQmcrJPU1C2bU0q1z1gqktQ8fGdRij1HtRoqaDmJxl3I0TlSH0j8xPzfN
+ vwdg/YqX/HrhA/0yapPajSLGPAVOcm+fl3xQdUaMEzaVfhzGJ8v3GvGy9VpwjnOVuJ7cfJ
+ FYfcpE3qKcP5ohMI/ZFTz6vMwu1L7vg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-j_-Xuy9RNZSgjmEslVKeXg-1; Fri,
+ 31 Oct 2025 09:53:25 -0400
+X-MC-Unique: j_-Xuy9RNZSgjmEslVKeXg-1
+X-Mimecast-MFC-AGG-ID: j_-Xuy9RNZSgjmEslVKeXg_1761918804
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7812518002F9; Fri, 31 Oct 2025 13:53:24 +0000 (UTC)
+Received: from redhat.com (dhcp-17-192.lcy.redhat.com [10.42.17.192])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A94F19560A2; Fri, 31 Oct 2025 13:53:23 +0000 (UTC)
+Date: Fri, 31 Oct 2025 13:53:20 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] io/channel: Have read/write functions take void * buffer
+ argument
+Message-ID: <aQS_ULZEGQSPrM63@redhat.com>
+References: <20251031091351.27625-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0942717b-214f-4e08-9e2a-6b87ded991c9@linaro.org>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20251031091351.27625-1-philmd@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,28 +85,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor and Philippe,
-
-> On 31/10/25 11:33, Igor Mammedov wrote:
-> > On Thu,  8 May 2025 15:35:23 +0200
-> > Philippe Mathieu-Daud� <philmd@linaro.org> wrote:
-> > 
-> > Are you planning to resping it?
-> > (if yes, I can provide you with a fixed 2/27 patch that removes all legacy cpu hp leftovers)
+On Fri, Oct 31, 2025 at 10:13:51AM +0100, Philippe Mathieu-Daudé wrote:
+> I/O channel read/write functions can operate on any area of
+> memory, regardless of the content their represent. Do not
+> restrict to array of char, use the void* type, which is also
+> the type of the underlying iovec::iov_base field.
 > 
-> Sorry, no, I already burned all the x86 credits I had for 2025 :S
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  include/crypto/tlssession.h |  4 ++--
+>  include/io/channel.h        | 14 +++++++-------
+>  io/channel-tls.c            |  4 ++--
+>  io/channel.c                | 14 +++++++-------
+>  4 files changed, 18 insertions(+), 18 deletions(-)
 
-Don't say that, thanks for your efforts! :-)
+Also needs a change to tests:
 
-> Zhao kindly offered to help with respin :)
 
-I haven't forgotten about this. I also plan to help it move forward
-in the coming weeks.
+diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
+index d0baf3b304..0d06a6892e 100644
+--- a/tests/unit/test-crypto-tlssession.c
++++ b/tests/unit/test-crypto-tlssession.c
+@@ -36,7 +36,7 @@
+ #define KEYFILE WORKDIR "key-ctx.pem"
+ 
+ static ssize_t
+-testWrite(const char *buf, size_t len, void *opaque, Error **errp)
++testWrite(const void *buf, size_t len, void *opaque, Error **errp)
+ {
+     int *fd = opaque;
+     int ret;
+@@ -54,7 +54,7 @@ testWrite(const char *buf, size_t len, void *opaque, Error **errp)
+ }
+ 
+ static ssize_t
+-testRead(char *buf, size_t len, void *opaque, Error **errp)
++testRead(void *buf, size_t len, void *opaque, Error **errp)
+ {
+     int *fd = opaque;
+     int ret;
 
-Thanks,
-Zhao
+
+which I've made locally when queuing this patch, so no need to resend.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
