@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 623E3CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14F5CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 20:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEvd7-00014L-8A; Fri, 31 Oct 2025 16:21:49 -0400
+	id 1vEvkF-00034o-Rb; Fri, 31 Oct 2025 16:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vEvd5-00012r-BY
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:21:47 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vEvcw-00019B-5T
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:21:45 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E8D6164F71;
- Fri, 31 Oct 2025 23:21:20 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EB8B03099CF;
- Fri, 31 Oct 2025 23:21:30 +0300 (MSK)
-Message-ID: <82f3c305-bbc4-480a-9c73-ef4386e4ab3b@tls.msk.ru>
-Date: Fri, 31 Oct 2025 23:21:30 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEvk7-00033u-Bi
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:29:07 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEvju-0002fv-DO
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:29:00 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-477365fbdf9so5176585e9.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 13:28:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761942523; x=1762547323; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=adk+0ju45uaOjjmlt+1dUAWeLDLmgGwn0DteCOL1uUk=;
+ b=GiDg5827+RBjpkFThMlABmAXrICEbvkP/IY4CD5RF9IG2bTAbKv4+j37khFQVayTWf
+ R3RpdOsfCPT67vINTj6TJCBFbJVxQRy9nYjo5F4009+ZhwimfYVo7xrxCe+nAqv5PnQ+
+ JqOoGI3Gd1accwvbzx8jRIAbZCZR+BqTTlHIfpoNTG+bS24QTiN5W9iEbnqig0/nZ+nl
+ MYwQaxlYASP2Qx+L+N22G4SHMSzQ9PD1Ij2boZq0pCWIl9sg2lgvr2fkmIgTWFW30LkQ
+ YkPFVXocnW1PoVZF+R1GzoPXuGEQqoJ0Uql0FbP6rhPf9WTrfAZWUjTctjnOi4XLnPfH
+ Sr/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761942523; x=1762547323;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=adk+0ju45uaOjjmlt+1dUAWeLDLmgGwn0DteCOL1uUk=;
+ b=HwRRAJ5rf0Mo+zaVPhePudTFnJ+fCXE67W7ftPIdycBBgMg4/+SEW/Hb8Oqs/3nzID
+ NY90LwAE5uXPWKqDLUEZYlx/jmhI54m1KpYY1BO2tS+xBoU/B7mbxfsXaJM7g7toCsF9
+ e+YkpnB5JLTSRsQErdwLojkzZ9ogG4oyuojwCO3OXovXHyO/YQIs95JvcRTGK2U2GG8A
+ 3tgKiOFERE+ER5mMBGBCOGWbgo66OjaAhLIgVfVmJGMX1b4Tx3wakzLHAuiOHWH+1kPP
+ fw7JgQwOcQPPwSFjfI8wrpvXIUQSG/7dsbuKWctb4iR3sSbtAUCcrIMtN7UzKzvTEOI/
+ 6EXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAg6/foGdCHr3Omzc4ViwkrQMwdhd3XVJJAgKi5E3aqEcqUxHQhecIeBkpTghGLq7Min655aEyJsdm@nongnu.org
+X-Gm-Message-State: AOJu0Yw7GN1JwBwySkIopyVIGV4OGwAQxo+op1Cc8B+L4k7XLrw98AY4
+ zdqB+vrA6uq9Plxyr+WRXbJFO2Y16roXVeJZ8eGFAPBtG3H5oDnUBAoOHk/VCE+S5cs=
+X-Gm-Gg: ASbGnct73oba+/RTNH1kIFYjEdoe4Ej9ptNfrthXHqtZDrf/J1U9lipA+cD62MUuv6L
+ maFI3CuK5IFY+iJQBkqNc1foULwmBb/XrWBgFTNLEY8gV1bJW+1aVrgRqNbAuSofNmaIdc/kAMM
+ TUn3A6ux20QaM0bAnMQicTuWBY16v5PU/IJgbu03/Tssssnm4DYFIXJ0kycS9ewes7iXqmdivIk
+ NwVs4WMHurHMrcwXblJ/ejL8vuyKXyTlqHDNC3nd+tMYL1CnUSs5u2EioF0rV3hYVRAr6i8/GQC
+ 2f7v2iPef3qhjQVuyhW/qnMQ8vif+dG7RfDIE6pQqGjD1M7azaYdvLzENSw4o1aI6i1lknHKrc6
+ gvUU4iRNVB2awW3oossoLcJykRmJKMDNKut7OWukyOtItRFcogit1QoT8VXCv45bwZ/TYNpoXPE
+ Gqn5SYBInrGXWbBadlHDcX7uaxd7/6Tc1OfUz9ZnhXLeB0wRZgFSDlmtGGnHo/czRqZg==
+X-Google-Smtp-Source: AGHT+IFIkdw2MC7YszCufTbfDfBkePx6XbdYueOL3kd72fMp5NtIiTi9dSLD72jfqcHqiArpsIr1hw==
+X-Received: by 2002:a05:600c:1c1d:b0:46e:4c67:ff17 with SMTP id
+ 5b1f17b1804b1-477307d0a16mr48777805e9.14.1761942523038; 
+ Fri, 31 Oct 2025 13:28:43 -0700 (PDT)
+Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c110e77esm5055149f8f.10.2025.10.31.13.28.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 13:28:42 -0700 (PDT)
+Message-ID: <bc0b52b9-19df-43b9-8f20-61f7101b7975@linaro.org>
+Date: Fri, 31 Oct 2025 21:28:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Introduce and use MO_ALIGN_TLB_ONLY
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20251022001741.222499-1-richard.henderson@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251022001741.222499-1-richard.henderson@linaro.org>
+Subject: Re: [PATCH] rx: cpu: fix interrupts check in rx_cpu_do_interrupt()
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: yoshinori.sato@nifty.com, Thomas Huth <thuth@redhat.com>
+References: <20251030165932.138512-1-imammedo@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251030165932.138512-1-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,52 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/25 03:17, Richard Henderson wrote:
-> For Arm, we need 3 cases: (1) the alignment required when accessing
-> Normal memory, (2) the alignment required when accessing Device memory,
-> and (3) the atomicity of the access.
+On 30/10/25 17:59, Igor Mammedov wrote:
+> Commit [1] broke interrupt handling, replacing interrupts fetch with a bool
+> and then the remaining code attempting to check individual bits
+> on that bool value, which effectively masked those interrupts.
 > 
-> When we added TLB_CHECK_ALIGNED, we assumed that cases 2 and 3 were
-> identical, and thus used memop_atomicity_bits for TLB_CHECK_ALIGNED.
+> Fix it by checking individual interrupt bits directly instead of
+> old 'fetch then check' approach.
 > 
-> This is incorrect for multiple reasons, including that the atomicity
-> of the access is adjusted depending on whether or not we are executing
-> within a serial context.
-> 
-> For Arm, what is true is that there is an underlying alignment
-> requirement of the access, and for that access Normal memory
-> will support unalignement.
-> 
-> Introduce MO_ALIGN_TLB_ONLY to indicate that the alignment
-> specified in MO_AMASK only applies when the TLB entry has
-> TLB_CHECK_ALIGNED set; otherwise no alignment required.
-> 
-> Introduce memop_tlb_alignment_bits with an additional bool
-> argument that specifies whether TLB_CHECK_ALIGNED is set.
-> All other usage of memop_alignment_bits assumes it is not.
-> 
-> Remove memop_atomicity_bits as unused; it didn't properly
-> support MO_ATOM_SUBWORD anyway.
-> 
-> Update target/arm finalize_memop_atom to set MO_ALIGN_TLB_ONLY
-> when strict alignment isn't otherwise required.
-> 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3171
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 1)
+> Fixes: 87511341c30d ("add cpu_test_interrupt()/cpu_set_interrupt() helpers and use them tree wide")
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>   target/rx/helper.c | 41 ++++++++++++++++++-----------------------
+>   1 file changed, 18 insertions(+), 23 deletions(-)
 
-I wonder if we should pick this up for qemu-stable too (including
-10.0.x lts series).  It's a rather large change though.
-
-The patch applies cleanly to both 10.0.x and 10.1.x series, and
-seems to be working fine.  Maybe it can be picked up for a later
-release.
-
-What's the implication of this bug, anyway?
-
-Thanks,
-
-/mjt
-
-
+Queued, thanks.
 
