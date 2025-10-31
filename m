@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA05CCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF7DCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 10:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEm4Q-0004Lx-Dn; Fri, 31 Oct 2025 06:09:22 -0400
+	id 1vEm6s-0005WM-8k; Fri, 31 Oct 2025 06:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vEm4M-0004Jd-0I; Fri, 31 Oct 2025 06:09:18 -0400
+ id 1vEm6G-0005R5-4u; Fri, 31 Oct 2025 06:11:17 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vEm4E-0002V6-IJ; Fri, 31 Oct 2025 06:09:17 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4cycBp4ZJ8zJ46Dd;
- Fri, 31 Oct 2025 18:08:50 +0800 (CST)
+ id 1vEm63-0002zQ-Bz; Fri, 31 Oct 2025 06:11:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cyc8g6qSpz6M4cP;
+ Fri, 31 Oct 2025 18:06:59 +0800 (CST)
 Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 7C76E140373;
- Fri, 31 Oct 2025 18:09:03 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 8A67F140144;
+ Fri, 31 Oct 2025 18:10:53 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
  (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 31 Oct
- 2025 10:09:02 +0000
-Date: Fri, 31 Oct 2025 10:09:01 +0000
+ 2025 10:10:52 +0000
+Date: Fri, 31 Oct 2025 10:10:51 +0000
 To: Gavin Shan <gshan@redhat.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <mst@redhat.com>,
  <imammedo@redhat.com>, <anisinha@redhat.com>, <gengdongjiu1@gmail.com>,
  <peter.maydell@linaro.org>, <pbonzini@redhat.com>,
  <mchehab+huawei@kernel.org>, <shan.gavin@gmail.com>
-Subject: Re: [PATCH RESEND v2 2/3] kvm/arm/kvm: Introduce helper
- push_ghes_memory_errors()
-Message-ID: <20251031100901.00000ccf@huawei.com>
-In-Reply-To: <20251007060810.258536-3-gshan@redhat.com>
+Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
+ CPERs injection
+Message-ID: <20251031101051.00006fa3@huawei.com>
+In-Reply-To: <20251007060810.258536-4-gshan@redhat.com>
 References: <20251007060810.258536-1-gshan@redhat.com>
- <20251007060810.258536-3-gshan@redhat.com>
+ <20251007060810.258536-4-gshan@redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -75,68 +75,23 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  7 Oct 2025 16:08:09 +1000
+On Tue,  7 Oct 2025 16:08:10 +1000
 Gavin Shan <gshan@redhat.com> wrote:
 
-> Introduce helper push_ghes_memory_errors(), which sends ACPI GHES memory
-> errors, injects SEA exception or aborts on errors. This function will
-> be extended to support multiple ACPI GHES memory errors in the next
-> path.
+> In the combination of 64KB host and 4KB guest, a problematic host page
+> affects 16x guest pages. In this specific case, it's reasonable to
+> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
+> dump due to the current error can't be delivered as the previous error
+> isn't acknoledges. It's caused by the nature the host page can be
+> accessed in parallel due to the mismatched host and guest page sizes.
 > 
-> No functional changes intended.
+> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
+> for this specific case. The maximal error block size is bumped to 4KB,
+> providing enough storage space for those 16x memory CPERs.
 > 
 > Signed-off-by: Gavin Shan <gshan@redhat.com>
-> ---
->  target/arm/kvm.c | 36 ++++++++++++++++++++++++------------
->  1 file changed, 24 insertions(+), 12 deletions(-)
-> 
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 9a47ac9e3a..c5d5b3b16e 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -2429,12 +2429,34 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->      return ret;
->  }
->  
-> +static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
-> +                                    uint64_t paddr)
+Subject to tests being added and the Docs update Mauro requested + follow
+on from earlier patch reviews, this looks good to me.
 
-Why not hwaddr paddr?
-
-> +{
-> +    GArray *addresses = g_array_new(false, false, sizeof(paddr));
-
-As in previous I'd just have 
-	hwaddr paddrs[16];
-
-rather than bothering with a g_array.
-
-> +    int ret;
-> +
-> +    kvm_cpu_synchronize_state(c);
-> +    g_array_append_vals(addresses, &paddr, 1);
-> +    ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
-> +    if (ret) {
-> +        goto error;
-> +    }
-> +
-> +    kvm_inject_arm_sea(c);
-> +
-> +    g_array_free(addresses, true);
-> +
-> +    return;
-> +error:
-> +    error_report("failed to record the error");
-
-I'd just do this inline at the error case. In the next
-patch you add a more specific report of why to another path
-that would then be followed by this.
-
-> +    abort();
-
-If you do the above with the message, just duplicate this in the
-two error paths (by end of next patch).
-
-> +}
-
+Jonathan
 
