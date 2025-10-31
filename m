@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A415CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DFACCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEti8-0008Lj-Ou; Fri, 31 Oct 2025 14:18:52 -0400
+	id 1vEttS-0002fu-Ez; Fri, 31 Oct 2025 14:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEti5-0008L6-Nt
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:18:49 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vEttN-0002eG-Tt
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:30:31 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEtht-00048J-UZ
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:18:48 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-429c2f6a580so687018f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:18:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vEttG-0005oQ-VZ
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:30:29 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-63e0fa0571fso3264423d50.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761934711; x=1762539511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r1am3pKGXD9x9SZaUO2wtY7r/m8jhSkSuLVNWAPfUqs=;
- b=sQbWpkgaHiCY4gbc04HiPNv8srcP52xc7OmFzJfYryINkoP1dXf9e8leEYIvJR1i2L
- sfoFJbCfpnLWJyYCJXZBBuLIV8wRC9k83bgNYf0ps42iKQZoT6imD+uI2hZZajnzxJT+
- u3epk257/Vscw95vrCMb2LOYIfEBLncvNviZrzD3efq+97UlA54Y5bxzBVBXx728gTNA
- S6T9Yc9QIoAJ79jH2IYzUbUqVqW30wFw3BluTgfzWZNGnt+eK4imIItnIWKqRtlwSe9E
- x65E0mCnKHcGHvMaYnxEWIV3ITAj1hqCpslYnEMmlLqEWj0LpWtkrcuazgK7tGo8eMWG
- Gh7g==
+ d=linaro.org; s=google; t=1761935413; x=1762540213; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Yce9kG3WCCPS7KgQ5TmpoUJOI415Pn1nKPG8ztlcxKU=;
+ b=RzE0lHa33TiAZY4oAOug69Ts+AOJdr6q0N9SA8vdNgwErYbAmgA161l1vs+MADkOmy
+ +TXJLGgEYOkGu+1ICgVUcu2zBRlTzoxu5vl5qQmbBBZl6a9cSZydO8utIXTmtlysWwPE
+ 6HMkpssmvAYSlTBbQFIRagohORucC2nTAZPIpgPDofbyBYv47cGzRqcoPe+XFbiotKOd
+ 7GuBg6zGJwyHmCszbE0wNImJ8gqJj7nKGRCXCjDicglVh11mDaXK7o02Il8HFIGZecWo
+ 8RGvY+DaMIITFljhWCDmuGxM86BYyMP8CMcouslCdPQbvRetLsD7pD3Iiw6hOb9tItc2
+ ao/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761934711; x=1762539511;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r1am3pKGXD9x9SZaUO2wtY7r/m8jhSkSuLVNWAPfUqs=;
- b=kbdPOue1fl7/gh3jJ7b9GqHfF24Tf89FmbjG/vofCkddNqGwpljmj5QH/hyDoBQ31N
- DT7wxSN1iIh/EzYE8bW5i9OO2YdMZV14+xH3bIbGR5nP6cIbcKfHDQdwRgYY8lsieu11
- P5vK9VdcqZEiy+TH5NRIEn9fNa/dEafNlzU7XajzyGby4eyfHWfjtd8zvCkpevhaXh50
- Wg8v+PM1CY+nTThWwMamF2MbcA7sBTcmiXqWWuHnwEUwsDnAq/R6jKa11sMZIC+KiPPX
- Wg10FS3gZfYRkuNEEXMFrew6XC/VDoufoZYmix0bcB8XXfkolRum8JSk5VfdvBBgbLo8
- JHGQ==
-X-Gm-Message-State: AOJu0YwqS7zhBpf5b9EZjHyHErSF2ZlsWQVIWV4a/eYNvoKMAttB7XiV
- X1evHOm7H5Pvbi+aAf0AfVl3TrgDx8gx9hiMrH01Q1Oxhpuw7asmFDprh4Jh2iXCG6E=
-X-Gm-Gg: ASbGncsl2mpQrqE9JhCg0mLMKma7CD3yfGSFPYGkZd1XBH4lJv3MijIkFGP5qaPH/8H
- bosU9WtqCRXf9+Y1ng4XZPu34ker4Q39CtytnvmTBurKxfH8MfXOcBc1FIpWzde6spWUH6y6aL6
- +R504KxS9vpFCTpi6c8TGUS0NKA4e31jHWaPk+VBzjcxvfZAB5BxlIeV0ufgQYzaYdie5hOEJ5w
- 3rL0VI25naEYgdf+ZS3GHx3IR9I3IZICk7WlN9FBi+1lKg7nhlzu8SSO1DxT3IrS4laiqA7cCoM
- AT6Uapqde1H2ugbp1lDDFRFSFjJDdKjrOuw8+4HEKeB2TixPWouY9HAGcl9K9xp6+Z+FNrx2jCT
- S/rqWqDXTwzNTThcGR+hHgAGsJz1DZHabdALzosgSpy+V8GhUJkQn1tOt4k4INV7HRfVc8pg6vb
- gCbudzOfzzPIeGP2+ImOlLLg3hjE9AsMdIV/ztlBXC8Kx13JXdHPEiSRjVvH/inkSPGg==
-X-Google-Smtp-Source: AGHT+IHEM8C11IyAEGJe9D+DTYpOv0paYH88dJVL32W4vksAVJUm9puJPouxPATPlZpjuOZKUqSnsQ==
-X-Received: by 2002:a05:6000:2f8a:b0:428:3bf5:b3bf with SMTP id
- ffacd0b85a97d-429bd6ac07dmr4340119f8f.43.1761934710709; 
- Fri, 31 Oct 2025 11:18:30 -0700 (PDT)
-Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
- [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13eae16sm4760884f8f.32.2025.10.31.11.18.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 11:18:30 -0700 (PDT)
-Message-ID: <a7f5d348-1243-4c52-8dc1-66e2c3da40ae@linaro.org>
-Date: Fri, 31 Oct 2025 19:18:28 +0100
+ d=1e100.net; s=20230601; t=1761935413; x=1762540213;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Yce9kG3WCCPS7KgQ5TmpoUJOI415Pn1nKPG8ztlcxKU=;
+ b=gDWM3xaloDdIYthgZHiyZzI0cbrBKT2qICtGDm/4R39ynW7X62ZJXYsr298UacgOyU
+ SK3T+ypVY/z9Ev4B2RSyoU35lWFAJVNfT79mRZgE2vUHnyTlhRODNbEPEZzavMN/lbFE
+ PwmNIRy1ph0k9CHM9Lnmng5AAMXy/0j9cdgS/2CcqJICBeMbLTcBo+FjY7KKRZ/uSB1g
+ XHHyTu4VNrge1CIAv0MDdS0vMCAHCtiiK68KQfajnlIVAcEvHKV3nZzWo04MVlbBNfQE
+ adb+MlZPrvigNDVVbGyXynDs8KdLu5MaYglx5FiPDzZ7Wmu+ythEFcTMRk4F5ks30UXG
+ aJgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUf92+A1Pt6P+wmlQUDcw2L3vWPxtKwc7/ESdXampQi1ilQhlQYTm5aiMUV7CxGfnxDJ0yx4QG0knt3@nongnu.org
+X-Gm-Message-State: AOJu0YwscpT1VBLTeCoHPzzFYhB5UqNn+wAXK5hjOdK3tDYevFA/QZit
+ sG/cLDKeriuP/KKG3Oo31/Pf/DRTzbktcRtjS8pTlI/zzQGp9f2FyL2Ida7H2iE32s7gO7Q+SPQ
+ 93pfmD9TvgEqlUEpuyjNVAi1SEKdLkDZWl+FVXA4/Ag==
+X-Gm-Gg: ASbGncs8Ilj1g/fpBrak2gII/kAiEKQtVbIltGwIrRB23L2AqvQ5p8zGmqQBotBn32y
+ 80ejO7dp6eTCLeb2GsqjxdxWMEOOUInx3Q5HFKLudV1zvcTLGRqiE2SrmwYhiJIGKms4j8ZP0La
+ Ul7uhBSdf6W+xdhQnaYXSAReQomPCujilVqPRSygg5UE4vx8CLsm8i9mq+DSmJcAOUKI79Ctukj
+ KxYc9ZWNA1x7aa5JVjtxhjokE1aVpcNlGFpFGugvi4xlVidVimVjqjF0tyq5fSKJEas1jqI
+X-Google-Smtp-Source: AGHT+IGhMPGWy6khEf0ta92V6QMmBH1G3tDe78XoC+Mhpk4wKdWSy/h5T38n+kwEmoGXQtz55xL7auagtVz2jkej1Uw=
+X-Received: by 2002:a53:c059:0:20b0:63e:22b1:21a0 with SMTP id
+ 956f58d0204a3-63f92271f90mr3131274d50.9.1761935413360; Fri, 31 Oct 2025
+ 11:30:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] KVM Support for imx8mp-evk Machine
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 References: <20251029142311.2986-1-shentey@gmail.com>
  <CAFEAcA-CGQ2JwDoBVZNhQyBMNKXbZsy2Ds+=m0MAPq0hrsWHhA@mail.gmail.com>
  <CAFEAcA_sbvMEJ-oTxTYOutgUrH0iapNcJrsZd3=Ov6wNn-NE3w@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_sbvMEJ-oTxTYOutgUrH0iapNcJrsZd3=Ov6wNn-NE3w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+ <a7f5d348-1243-4c52-8dc1-66e2c3da40ae@linaro.org>
+In-Reply-To: <a7f5d348-1243-4c52-8dc1-66e2c3da40ae@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 Oct 2025 18:30:02 +0000
+X-Gm-Features: AWmQ_bmyzSqXOjI_5lqTovyn34HNCDRzT95MEicduE6UtrcoGug9An2nTPSNN2g
+Message-ID: <CAFEAcA8+=_8peJR37xoM4zarUu9cy+56rOkyF7iONFb866Ebtg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] KVM Support for imx8mp-evk Machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,102 +103,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/25 18:12, Peter Maydell wrote:
-> On Fri, 31 Oct 2025 at 16:57, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Wed, 29 Oct 2025 at 14:23, Bernhard Beschow <shentey@gmail.com> wrote:
->>>
->>> This series adds KVM support to the imx8mp-evk machine, allowing it to run
->>> guests with KVM acceleration. Inspiration was taken from the virt machine. This
->>> required a device tree quirk for the guest clock to be kept in sync with the
->>> host. Without this quirk the guest's clock would advance with factor <host
->>> system counter> / 8Mhz.
->>>
->>> Testing done:
->>> * Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
->>>    `qemu-system-aarch64 -M virt,secure=on,virtualization=on,gic-version=4 \
->>>    -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx8mp-evk \
->>>    -accel tcg -smp 4". Observe that the `date` command reflects the host's date.
->>>
->>> v2:
->>> * Mention various tradeoffs in the board documentation (Peter)
->>> * Accommodate for single-binary (Peter, Pierrick) by having CPU defaults
->>>
->>> Bernhard Beschow (2):
->>>    hw/arm/imx8mp-evk: Add KVM support
->>>    hw/arm/imx8mp-evk: Fix guest time in KVM mode
->>
->> Thanks, I've applied this to target-arm.next.
-> 
-> ...I've had to un-queue it, as it breaks "make check":
-> 
-> test:         qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspect-test
-> start time:   17:06:52
-> duration:     3.70s
-> result:       killed by signal 6 SIGABRT
-> command:      MALLOC_PERTURB_=155
-> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-> PYTHON=/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
-> G_TEST_DBUS_DAEMON=/data_nvme1n1/linaro/qemu-from-laptop/qemu/tests/dbus-vmstate-daemon.sh
-> RUST_BACKTRACE=1
-> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-> QTEST_QEMU_BINARY=./qemu-system-aarch64
-> QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon
-> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
-> QTEST_QEMU_IMG=./qemu-img MESON_TEST_ITERATION=1
-> /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/qtest/device-introspect-test
-> --tap -k
-> ----------------------------------- stdout -----------------------------------
-> [...]
-> # Testing device 'fsl-imx8mp'
-> ----------------------------------- stderr -----------------------------------
-> unknown type '(null)'
-> Broken pipe
-> ../../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU
-> process but encountered exit status 1 (expected 0)
-> 
-> 
-> I think the problem is that you're trying to use ms->cpu_type
-> in the fsl_imx8mp_init() function. This doesn't work in the
-> device-introspect-test setup, because it is just instantiating
-> each device for test, not running a full machine.
-> 
-> I think the way we usually avoid this is that if an SoC
-> device object needs to know what CPU type to instantiate
-> it has a QOM property, and the board model tells it.
-> (Annoyingly this then means the CPU instantiation has to
-> move into the realize method where the property value is known.)
+On Fri, 31 Oct 2025 at 18:18, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 31/10/25 18:12, Peter Maydell wrote:
+> > On Fri, 31 Oct 2025 at 16:57, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+> >>
+> >> On Wed, 29 Oct 2025 at 14:23, Bernhard Beschow <shentey@gmail.com> wro=
+te:
+> >>>
+> >>> This series adds KVM support to the imx8mp-evk machine, allowing it t=
+o run
+> >>> guests with KVM acceleration. Inspiration was taken from the virt mac=
+hine. This
+> >>> required a device tree quirk for the guest clock to be kept in sync w=
+ith the
+> >>> host. Without this quirk the guest's clock would advance with factor =
+<host
+> >>> system counter> / 8Mhz.
+> >>>
+> >>> Testing done:
+> >>> * Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
+> >>>    `qemu-system-aarch64 -M virt,secure=3Don,virtualization=3Don,gic-v=
+ersion=3D4 \
+> >>>    -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx=
+8mp-evk \
+> >>>    -accel tcg -smp 4". Observe that the `date` command reflects the h=
+ost's date.
+> >>>
+> >>> v2:
+> >>> * Mention various tradeoffs in the board documentation (Peter)
+> >>> * Accommodate for single-binary (Peter, Pierrick) by having CPU defau=
+lts
+> >>>
+> >>> Bernhard Beschow (2):
+> >>>    hw/arm/imx8mp-evk: Add KVM support
+> >>>    hw/arm/imx8mp-evk: Fix guest time in KVM mode
+> >>
+> >> Thanks, I've applied this to target-arm.next.
+> >
+> > ...I've had to un-queue it, as it breaks "make check":
+> >
+> > test:         qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspec=
+t-test
+> > start time:   17:06:52
+> > duration:     3.70s
+> > result:       killed by signal 6 SIGABRT
+> > command:      MALLOC_PERTURB_=3D155
+> > UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:=
+print_stacktrace=3D1
+> > PYTHON=3D/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/pyv=
+env/bin/python3
+> > G_TEST_DBUS_DAEMON=3D/data_nvme1n1/linaro/qemu-from-laptop/qemu/tests/d=
+bus-vmstate-daemon.sh
+> > RUST_BACKTRACE=3D1
+> > MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:p=
+rint_stacktrace=3D1
+> > QTEST_QEMU_BINARY=3D./qemu-system-aarch64
+> > QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daemon
+> > ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1
+> > QTEST_QEMU_IMG=3D./qemu-img MESON_TEST_ITERATION=3D1
+> > /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/qtest/=
+device-introspect-test
+> > --tap -k
+> > ----------------------------------- stdout ----------------------------=
+-------
+> > [...]
+> > # Testing device 'fsl-imx8mp'
+> > ----------------------------------- stderr ----------------------------=
+-------
+> > unknown type '(null)'
+> > Broken pipe
+> > ../../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU
+> > process but encountered exit status 1 (expected 0)
+> >
+> >
+> > I think the problem is that you're trying to use ms->cpu_type
+> > in the fsl_imx8mp_init() function. This doesn't work in the
+> > device-introspect-test setup, because it is just instantiating
+> > each device for test, not running a full machine.
+> >
+> > I think the way we usually avoid this is that if an SoC
+> > device object needs to know what CPU type to instantiate
+> > it has a QOM property, and the board model tells it.
+> > (Annoyingly this then means the CPU instantiation has to
+> > move into the realize method where the property value is known.)
+>
+> Correct, this is the same issue I tried to address with the Raspi
+> machines and I noted your comments:
+> https://lore.kernel.org/qemu-devel/CAFEAcA961WKB4fxwAS0WHXXKwYEO7TnmovD4z=
+-BPGehr6sxBQw@mail.gmail.com/
 
-Correct, this is the same issue I tried to address with the Raspi
-machines and I noted your comments:
-https://lore.kernel.org/qemu-devel/CAFEAcA961WKB4fxwAS0WHXXKwYEO7TnmovD4z-BPGehr6sxBQw@mail.gmail.com/
+I think it's different, because for the raspi case the SoC
+object is trying to create a CPU type that it can't:
+  unknown type 'cortex-a72-arm-cpu'
+(because it's the arm device-introspect-test and that CPU
+is an aarch64 one)
+whereas for this one we are in the aarch64 test, but trying to
+use a NULL pointer as our type string:
+  unknown type '(null)'
 
-> 
-> Philippe may know if there's a nicer way to deal with this.
-> (Would it be too ugly to just handle ms->cpu_type == NULL
-> as "assume default"?)
+Single binary vs compile-everything is probably a red herring here.
 
-I will think about it, but unfortunately I am not sure I'll have time
-before the freeze...
-
-This might help (untested) -- although going backward w.r.t. single
-binary but not important for the 10.2 release --:
-
----
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 61c66ee2d0b..151ed020d1a 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -62,4 +62,4 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: 
-files('armsse.c'))
-  arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: 
-files('fsl-imx7.c', 'mcimx7d-sabre.c'))
--arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: 
-files('fsl-imx8mp.c'))
--arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: 
-files('imx8mp-evk.c'))
-+arm_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
-+arm_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
-  arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
----
+thanks
+-- PMM
 
