@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B89CCF9FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB64CCF9FF
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 09:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vElOG-0008Qr-6F; Fri, 31 Oct 2025 05:25:48 -0400
+	id 1vElOK-0008Sk-U4; Fri, 31 Oct 2025 05:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vElO7-0008PV-TA
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:25:41 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1vElOH-0008Rp-CR
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:25:50 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vElNx-00031f-Fr
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:25:35 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-63c556b4e0cso4447802a12.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:25:24 -0700 (PDT)
+ id 1vElOA-00034f-7d
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 05:25:49 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b403bb7843eso438646166b.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 02:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761902722; x=1762507522; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761902732; x=1762507532; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6eCBtZUZtppW4hCPQeJRZGO4QJhLpI9/EYV0J+evNOg=;
- b=dGFkfNDQUDVfsgJ2WjFBCniXL4pWj7bE4ItTnrG1khOPhBhZB7yXRLaFyCMvti/sz8
- MTWZGth7wf65VuA3ajh1gCf/bI9AP8bhrg+mldosrrH9DuAz/YuWjRjitCN8XfE1O4KY
- ONeHv2a3fyqrP3PNUKTl8pfi2grVi3R5P86QCz3jP4pref0vfyYpBLBQbWabFhTHTXip
- fVupQgk01QKvLPNHX3kzQ4KaskzZcFVx9d/fUncVjQrYCezfz1YNsqiidLQ1MSQ5OYOF
- x6lm5Voonocp40z8UANdCQBExYMnTMnm6/vDZegB8C6wDf46zTzOUCF4xo0+w19qWNzJ
- rZaQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hA76brBIBOWePLJ/qyt2c923qtHZ55l46MKZBmq6Wvc=;
+ b=O0tZ7chB2bKYTYNWOgsMlr4ldJlxdE5MVDDJwJoRreD0cpp+dur2yq5n9UMKfRdKsO
+ rnUWFCTazTXYk4CGA75YNduBRHJ4tXGeHsZwaQBzhjuM1eGcllz/mdmHsJ5fkLPrSdIK
+ sz86kIYddTJaePSf0z5yh2aDWWil6PrE9bZLei9Y/5CPi1sGzy9qidv4uG1GXTV0e8uD
+ AWn5QRSKg/pNDpI/LRCVMfE7V8ONYlA/TCpxnw6lv9iUJypFSYd3kPok3ylA6lTCNywA
+ AJmxDGJs5VXmHH/uMtzT0lHv/626o93Yd/BPjuJJOPX+1Rc/hG5Z9iuTecUBgm59DAQq
+ 2Rog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761902722; x=1762507522;
+ d=1e100.net; s=20230601; t=1761902732; x=1762507532;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6eCBtZUZtppW4hCPQeJRZGO4QJhLpI9/EYV0J+evNOg=;
- b=ntcXiQWNjwjOrllNvnbuenYC6kx4dPSZEmUWo/7YCIogwB5jujemfz2ouzH43iV8V2
- 7IsymeFOM62nUOhQXMQrz+1eON/GSmRLyQXp2rfYfw5nbDofK7tDl2CwwC7xuAJC0+cP
- hxkqPbnSzt1qE6eJL6/y6m8O87YbGP3F0z1Yf7VZ10rd7HZRhQ38B41c2EUnx6JeWOYr
- RL+l+HdpP3yADtOzcIpxzkJmMPjBK30D4kqDROCPt6DTDIoFioTy0TNWfgI3UOYtH2Vv
- vAQEv4CPODUl0YgdBC4L7WjfEWHY/JzXDQ87aORDUd3CSmyk5O9Bfgvq8UBUDVIgXr8n
- V4wg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6PsBXGYMSpYX8OIiyrAhsVXXh0zKvx4Dg7n9gP2b/9HU6i5BG/0BLvE74SWBjDIlh0sGfA52vRbkU@nongnu.org
-X-Gm-Message-State: AOJu0YwyRoSpdj8sqEPa3vwSNsN7SjrS37M61IyuHnjXHeUz+vJX+Zy7
- Lw6HQ7VrOkLu1cHczF6drKSk6Sg0lyQQIH8U0oD9L2mXSpIGpMXfNWK7UU2BhfHg+IA=
-X-Gm-Gg: ASbGncvRiy6opqlT+dLeowjFFwGKiiPpBNacl7zfQLNzUdTwu0q5WeubetbV5RY4FXp
- 6n0LLbqhbHncyvFfRklLOJx/GiHn+1ssH19W1mrxeAGIh6CVnSZEvxBTnZRc2OC67tgICMBvHCA
- TdK22Fej7JwzjR0LWTrtp6JdJYT2Ff0GRL2AiRDLtH4yJjj2BsslyqqMynvs/aCcWpCYnUk1v9G
- pm+U5REnsadcA4J1N1zNNaau7vSX6ZDHzAczjrn8AinWlEmiYkdWNOFdBZ58GOVYL0k4Wmgu2pX
- 98z0V2hmN+xCPBu2AHo09plf/cqKG/PqipLBAFp+mImXo+k00yETiTjkQDLxiQMQAPYlBWf7MN8
- RwolGkMLSHvLdiGjxoUYTd0L1coYTO6aLtvsHrVDM0nLHUSk11SvhFcX+ZTfifoPCou5YaDXZta
- Q6ymlPzCXMzy2zsSmsnvna54kFrg6ITzxvFrjla/j+hdgUKxnXMoChSDkgF++OYA==
-X-Google-Smtp-Source: AGHT+IHhg6ZhSCttbk7Cmyi1HDo+Q9dJFbVQ9RvoVuRrEokZov+FdpXKuYiTEwVXSNqDD1bDbCcU8Q==
-X-Received: by 2002:a05:6402:3596:b0:63c:3c63:75ed with SMTP id
- 4fb4d7f45d1cf-640770bd087mr2159514a12.22.1761902722465; 
- Fri, 31 Oct 2025 02:25:22 -0700 (PDT)
+ bh=hA76brBIBOWePLJ/qyt2c923qtHZ55l46MKZBmq6Wvc=;
+ b=O22uUwqfYN8mBQcPUaAJUs1rGtKksvAR2T6s0aCtki42QzOi7R+zfSqxqE/EADmx1U
+ ZCP5HmSVhJQ1OTwF7wkYYMSywrE1AznXKzre7P3mBNX8BbNDN4wwowBrxFbjkF4TAlcO
+ MYFGjaEnaz6vi5x9rvTjtA3NJPJQkaV/BnPUA1acZcxxOTm8Iho359D2uNmecpqP7+1E
+ qI57/CC3xvFHyDdRYuUqHVu5ICoAjUD3xAIMpaF3rhh31IrKmFJIvsi2Y7d1wLVVpwUk
+ D3ipmAs3Di8h+4WXJVXLpy8TcngJEGoJrFDedMqMOweyRLPLsuGeLRQqPapXo4r7OxAU
+ syEg==
+X-Gm-Message-State: AOJu0YxHmcBaQni4NHYNsu2kPIOIrbLG7y4tg7r71s+u2KlUS/yp8wR2
+ +cer6C14qdnLKyForpYEvxB4RwZfZcj7lbvHp4vDuy4ETxBDxcW5fCMsQoPAcbbtOwAsX9eSbvo
+ 5kf6dZ2Ikzg==
+X-Gm-Gg: ASbGncvVHT4YtWloeMZKenxi+AmGv899mjTZuzhAti7zYb1J4P1dYueDr8emXXxSUNe
+ L52xeIfr7qHJI9ixyTn/nvJFZu/79bh6ghfwOjZhsvRwnOsnJ7FJBt0ZRYXW+io8hRER+spHqxX
+ hTPWn+bbOtFpHEpe4q6G6HCXWhfr0xqI2BZyEAz8D4nPi6p9UXG8F3KY95FFTHvIgQVdlhxf3Lr
+ pqW2pqG4ilY0fCmGQ0+XsX2VRBodiYUs101WVosc2lojDwUSctWcAOD85g8roEcITp9uYAVtgaB
+ TeFeXL1M2/L3hkDs5dtf9M5P1EQmZWfYTZAwdxDLtU3Okclsv+3khwSW/lHJB0k06DQwwMETMdF
+ mlfScTJ4G9Dil7lQUyagBgdxhaDHK83Cc2uotw87zVyZQAPshLqTwvfRODynkIh1kDt3/UMC+m7
+ Vrp9HirNY+X3AB3ayiH6N4GfLXFfLSg4hB7O5q2PJ32MmFeNSLU9PG+8+4ytgFFg==
+X-Google-Smtp-Source: AGHT+IHoUfO+Ftp+MV2fB9KQjJfhcwn3TKYrRntObVVgEBbItIO/MIguHDZ0SbtaVZmK/bpcXNWVmg==
+X-Received: by 2002:a17:907:3e8d:b0:b6d:3660:421a with SMTP id
+ a640c23a62f3a-b707060cb65mr289182466b.44.1761902732215; 
+ Fri, 31 Oct 2025 02:25:32 -0700 (PDT)
 Received: from [10.240.88.227] (C3239BBB.static.ziggozakelijk.nl.
  [195.35.155.187]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6407b34a728sm1156397a12.2.2025.10.31.02.25.21
+ a640c23a62f3a-b707bf79e72sm86002366b.51.2025.10.31.02.25.31
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 02:25:22 -0700 (PDT)
-Message-ID: <aa7a2bde-e18c-4f63-801e-15cd32507814@linaro.org>
-Date: Fri, 31 Oct 2025 10:25:20 +0100
+ Fri, 31 Oct 2025 02:25:31 -0700 (PDT)
+Message-ID: <39684a98-aeb4-4266-b97d-6a23d5f94450@linaro.org>
+Date: Fri, 31 Oct 2025 10:25:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v1 0/3] Microblaze signed division overflows
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
-Cc: edgar.iglesias@amd.com
-References: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
+Subject: Re: [PULL 00/35] maintainer updates (ci, plugins, semihosting)
+To: qemu-devel@nongnu.org
+References: <20251029155045.257802-1-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251029141749.1274729-1-edgar.iglesias@gmail.com>
+In-Reply-To: <20251029155045.257802-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x533.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,23 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/29/25 15:17, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias"<edgar.iglesias@amd.com>
+On 10/29/25 16:50, Alex Bennée wrote:
+> The following changes since commit e090e0312dc9030d94e38e3d98a88718d3561e4e:
 > 
-> The following changes since commit bc831f37398b51dfe65d99a67bcff9352f84a9d2:
-> 
->    Merge tag 'hw-misc-20251028' ofhttps://github.com/philmd/qemu into staging (2025-10-28 11:48:05 +0100)
+>    Merge tag 'pull-trivial-patches' ofhttps://gitlab.com/mjt0k/qemu into staging (2025-10-29 10:44:15 +0100)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/edgar.iglesias/qemu.git tags/edgar/xilinx-queue-2025-10-29.for-upstream
+>    https://gitlab.com/stsquad/qemu.git tags/pull-10.2-maintainer-291025-1
 > 
-> for you to fetch changes up to cfc1d54251d3b4c4cf21c4fa278c8aea2fe25a99:
+> for you to fetch changes up to 4f45b2c352bb72c13a8801805061b31979e3f048:
 > 
->    target/microblaze: Handle signed division overflows (2025-10-29 13:37:44 +0100)
+>    semihosting: Fix GDB File-I/O FLEN (2025-10-29 14:13:40 +0000)
 > 
 > ----------------------------------------------------------------
-> Xilinx queue
+> maintainer updates for 10.2
+> 
+>    - clean-up remaining 32 bit armhf bits in ci
+>    - rationalise build-environment.yml for Debian and Ubuntu
+>    - generate a Debian ppc64 package list
+>    - rationalise gitlab-runner.yml for Debian and Ubuntu
+>    - new TCG plugin feature to track discontinuities
+>    - add missing CFI annotation to plugin callbacks
+>    - drop SBSA_REF from minimal Arm build
+>    - format string fix for gdbstub syscall response
+>    - simplify the gdbstub flen handling for semihosting
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
