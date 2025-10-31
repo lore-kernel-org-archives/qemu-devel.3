@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674F7CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:00:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED067CCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 21:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEwDs-0005cn-Q8; Fri, 31 Oct 2025 16:59:49 -0400
+	id 1vEwPK-0007Fc-U4; Fri, 31 Oct 2025 17:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwDq-0005ce-A6
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:59:46 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwPH-0007F3-Vh
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:11:36 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwDm-0007Jn-5F
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 16:59:45 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-429bcddad32so1138625f8f.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 13:59:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEwPA-00014v-78
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 17:11:34 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-429b7ba208eso1563339f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 14:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761944378; x=1762549178; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1761945081; x=1762549881; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LUryjflOUZXkXwvlMvxUa6zvEky4v5mnX1iFHy5dTt4=;
- b=rn4mjcjJeozEk8iSjbW236Ugvrhg9zVc7r9jVOktEWKsAmaGdYZJeft0bcHy86MkMW
- 9WbVgi5h+vKPLRceZnq2H3czBjlPafAvb4rumpaMH1EsJtRN/5dDESHTc07Q43Y6BtTa
- EBDKeObAB/A0TFfpgOJjn1WmoWhqEGgZr6JMydO4YGtuOs+MR/KVrcMbco9h7v+PyZnK
- DQHKjSuzwtqotdZnW6m819ZWYEMub68rc3f+7lr8Yk7kbbuUg0kaBaTz9hVdhzSyhzUW
- d3yafAQ6CHnMF72MqwNWzvcYmlpljDxh+AtsmA09RWjmKhvgwxAUOWdQoRwYIMcWPQrH
- g/GQ==
+ bh=NOV12DNH/0tQRi8ffrmTQEuwi6cNRI+zSSaxHN0ksz4=;
+ b=GEnQNCrWp5MMH8zkRgYPX4ZPSD+SdOnMJfYxf5q3YUujuyuaYxJCDFs3W4emQZMJg6
+ 6NSKwFlhaProwV8zTS9Dg8zxj+voFnVj9qzpQlPqHQ06BC+/J/NC6qmdtqSKOQlVTe/C
+ vAKwCQbGTcVKdqjZshvQHozPID1ZrqnuWxFrmYliNU7YFbSBkLAYpo6GZ4+hhNrxRrJa
+ ISY7DBuEgnGWKO7bRkWzcg69NUsYG11VcceQPB71E4NOh8rQ6WeMtKabfkbWEkSEzVGH
+ J6pI63jrMsiUxOTl/fGN/4mNmXEam/noHHhO/M+2spxvuTY3dlSHReiFKJla+6DlOqAt
+ 0ydA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761944378; x=1762549178;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1761945081; x=1762549881;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LUryjflOUZXkXwvlMvxUa6zvEky4v5mnX1iFHy5dTt4=;
- b=BAPMgnoQXvHNqcuVJqYoG9HejEFTK0yuqdZTz/reqrrCjg2ExOICuR//HJMfwO0MBC
- daNAbcmuh4DPG5z0Ai9HCRuerlvaoioN2hcwy3W99LGIZqoewCaepVTgolRoXZ0lI7Le
- EK4CNrswogt4lWvznHVYKnjX6dabLwBd8m4bBQxmx2LBnGCftwR2zoLrryco2S7xSYQy
- Q+EX1ATl5c8Asgk1YK/LGcZzLpcYMRmi5EDBRM4ZInAE9zrMpzpKgpAkMCUlHSdXZ1K5
- aGO5rr2V1hbQ6UpVbHrk0vnZSb43tpaeCfCobF9T/OemwGqdbmVGZVs85XpphS5GKYED
- VCTA==
-X-Gm-Message-State: AOJu0YwVv4DvgwRQrgLiG6mryuaNAxANwhLJPxx1fMtJOIsk0p5XyYl0
- coMLIY2D5ghOkQ2lc+vd1RFzxBv4WbrS8rtx1TCskSuB4Hzl8yhS8KXWaUgRDBxft/c=
-X-Gm-Gg: ASbGncsUJ4sArDWH7nxVrilaHrlXevYMPOcW7x75e9MUnMJDzUQMtY98LJ21wObrgcf
- 8kM+Ur8DKYzxZtqBwuF6OPHx5opBSCltW7yDkmO7+gWoxqthShoyPMfH8h+vrVRGA2vp7SaxZae
- SbjlyE/B4JwT4TnSRpQm3TQL1KzyZ42ZOCJmlREERBa5cYHdySHc1kF2Y3IazCWmIlVrm4RUWHh
- TLxCHjKWsPDsXeMtE+kNrhLMdFPn13J4GmouGSKOSW4ZiX3xX47zmf6d8xQnG3AMkiAguvyMwhz
- 4cBGaXvmp2bt2KI5VQ5aeWPIgVFQHA8KRPfvriHT3E6aBTKF06WcxGJhyhwJy99lfjqrJArhWl9
- DZh0GmPfcAGmRKcmdjFsdJ/8ErT7pJ2jiRmz1PdINWbF7UUYp4XRhLCus6ACMzaNyw+0+H1gSyG
- cTva03OFqY4tEfAULIII8ML1n+RSkOEF7WH03MerrrvuA+yZU16cIZgCYHxiwwlsXhmA==
-X-Google-Smtp-Source: AGHT+IFQVnLVLYx2LIC6YRD7Tq8AhS9WPqqGn1XR3ji29H4TlpDE0/B1DBMNhYbJkSBWLOen/Qv31w==
-X-Received: by 2002:a05:6000:1863:b0:427:4b0:b3e5 with SMTP id
- ffacd0b85a97d-429bd6ada25mr4784267f8f.47.1761944378246; 
- Fri, 31 Oct 2025 13:59:38 -0700 (PDT)
+ bh=NOV12DNH/0tQRi8ffrmTQEuwi6cNRI+zSSaxHN0ksz4=;
+ b=RabShTXcqY2NoTUcjlb2IUJir4r9HbDcedRXSeVsO6aHbSCSwEiXWKZDZ4cLo9xm0z
+ CeBp5genDcR37QhqlPNoveS53w+937qXglRrgi4GyKRSoO4AQuE6RX/OWwdCSaR1y1wv
+ WxDaCHij9MtB0IjrNkjVL2V3of1anloaeFRF3rYtvXaNlbmslF20wGYlKQA9q4MPAN9C
+ ZOSjKBtbXR4LWQLRKG41GM4uXKlohpZhfLdKZtIIznZKBzj7R8yH2PTSo1VtgHInCYFp
+ kBX7iHqqMc4Ys73l7r9Ju5/9ofjK9SxBRq+ySAResS28YxhJQFW/b0k/zaXZa8auXnSc
+ HuOg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgzAEeLpJP7a7KdjIeTmgoTAGizVZkE/m1NN4Fc9GG29kPcvkljEUZMCQFo9Z0G/JOMt9cQInjaY1R@nongnu.org
+X-Gm-Message-State: AOJu0YztXhVuVmJ2C31o1EieJJSWrfnVLTOt7e3n9awSm7HLrsZA0obE
+ o3fhEhbL0acpgqvqlLZtxHMJeOouwpwJR32ALIv0TAN6oT2q4Pb2FgrOSzy48eWmbX2ZLSFhvbQ
+ BFhaDa2cFQw==
+X-Gm-Gg: ASbGnctkObwh//C0anwOQfYyv65XAjbPkAIfScfrQ2gUljvTHJdeFSdw8PuBM17hT+Q
+ 9+hZ/GPxdEeHZV8LFxLe9MY5yFtDtq2Ev30ZItF9znAdwi9mU+FitgavDFGFVbe5k5NPWTDyWKk
+ zGQLoDocusiy+sqNRbz0o6CUnFHYi75mxbyNir98HJY/8eggCxGZLOaA7kUWKQPa4+UevtZZkOH
+ SZjezI0VT5Hln0pCDZz7pI7YNWu0pCU4Y1sktY91XLuLwk34V7sZjapbd/IOaRwX8kPAg4CBID5
+ XcRZR289soCz9zLLb6xx942j8evyG/c5k7hYmqouFV4sWGGhwbgL5mFwBKadathMcQWu5YeeBth
+ bX6EgLX4n1Kho5Q1HJUPCjlQHyHLPnHLAV+iQiHuKdtkV23667iS5aDTVaCuHCygBoEf1+TFSP/
+ cuOnJdXt0/LPDujL7H7vIoPc72qpU7WtM4wtMr48m/e/nQ9QL0RWjxqeicSBSl1mEe0g==
+X-Google-Smtp-Source: AGHT+IF76WvlmKPKiRf/q30hFR+RCziQAN9v08UAi3OTwXjO7p/n5yQHWRZ4QcKo1hM7O+zINlC4SA==
+X-Received: by 2002:a5d:5888:0:b0:3e9:3b91:e846 with SMTP id
+ ffacd0b85a97d-429bd676a88mr4633668f8f.10.1761945081238; 
+ Fri, 31 Oct 2025 14:11:21 -0700 (PDT)
 Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
  [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13e16d8sm5418738f8f.31.2025.10.31.13.59.37
+ ffacd0b85a97d-429c1406a45sm5279532f8f.47.2025.10.31.14.11.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Oct 2025 13:59:37 -0700 (PDT)
-Message-ID: <a2b0ff97-3acb-4aed-8ad7-de6cd232e43c@linaro.org>
-Date: Fri, 31 Oct 2025 21:59:36 +0100
+ Fri, 31 Oct 2025 14:11:20 -0700 (PDT)
+Message-ID: <d07453e5-8e66-4658-8b82-84109abb88f3@linaro.org>
+Date: Fri, 31 Oct 2025 22:11:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
+Subject: Re: [RFC PATCH] timers: properly prefix init_clocks()
 Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20251030173302.1379174-1-alex.bennee@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- berrange@redhat.com
-Cc: qemu-devel@nongnu.org
-References: <20251031190246.257153-1-vsementsov@yandex-team.ru>
- <20251031190246.257153-2-vsementsov@yandex-team.ru>
- <d0f6aa76-08c6-4630-927e-358c8f81f383@linaro.org>
-In-Reply-To: <d0f6aa76-08c6-4630-927e-358c8f81f383@linaro.org>
+In-Reply-To: <20251030173302.1379174-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,63 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/25 21:54, Philippe Mathieu-Daudé wrote:
-> On 31/10/25 20:02, Vladimir Sementsov-Ogievskiy wrote:
->> QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
->> qemu_hexdump_line(). This leads to last line of the dump (when
->> length is not multiply of 16) has badly aligned ASCII part.
->>
->> Let's calculate length the same way.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   util/hexdump.c | 38 ++++++++++++++++++++++++--------------
->>   1 file changed, 24 insertions(+), 14 deletions(-)
->>
->> diff --git a/util/hexdump.c b/util/hexdump.c
->> index f29ffceb74..7cfc547261 100644
->> --- a/util/hexdump.c
->> +++ b/util/hexdump.c
->> @@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
->>       return (x < 10 ? '0' : 'a' - 10) + x;
->>   }
->> +static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
->> +                                  size_t block_len)
->> +{
->> +    size_t est = buf_len * 2;
->> +    if (unit_len) {
->> +        est += buf_len / unit_len;
->> +    }
->> +    if (block_len) {
->> +        est += buf_len / block_len;
->> +    }
->> +    return est;
->> +}
+On 30/10/25 18:33, Alex Bennée wrote:
+> Otherwise we run the risk of name clashing, for example with
+> stm32l4x5_usart-test.c should we shuffle the includes.
 > 
-> 
->>   void qemu_hexdump(FILE *fp, const char *prefix,
->>                     const void *bufptr, size_t size)
->>   {
->> -    g_autoptr(GString) str = 
->> g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
->> +    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
-> 
-> size_t
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   include/qemu/timer.h              | 5 +++--
+>   tests/unit/test-aio-multithread.c | 2 +-
+>   util/main-loop.c                  | 2 +-
+>   util/qemu-timer.c                 | 2 +-
+>   4 files changed, 6 insertions(+), 5 deletions(-)
 
-Hmm I now see why you use 'int':
-
-../../util/hexdump.c:107:36: error: field width should have type 'int', 
-but argument has type 'size_t' (aka 'unsigned long') [-Werror,-Wformat]
-   107 |         fprintf(fp, "%s: %04zx: %-*s %s\n", prefix, b, width, 
-str->str, ascii);
-       |                                 ~~~^                   ~~~~~
-
-> 
->> +                                    QEMU_HEXDUMP_UNIT,
->> +                                    QEMU_HEXDUMP_BLOCK);
->> +    g_autoptr(GString) str = g_string_sized_new(width + 1);
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-
+Queued, thanks.
 
