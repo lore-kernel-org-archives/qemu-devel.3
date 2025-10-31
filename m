@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D8CCCF9FE
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 22:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A35CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 22:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vExvX-00032Q-QY; Fri, 31 Oct 2025 18:48:59 -0400
+	id 1vExxR-0003XN-RC; Fri, 31 Oct 2025 18:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vExvV-00031Q-3M
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 18:48:57 -0400
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ id 1vExxP-0003Ww-Q3
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 18:50:55 -0400
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vExvM-000882-1L
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 18:48:56 -0400
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-28e7cd6dbc0so34545865ad.0
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 15:48:47 -0700 (PDT)
+ id 1vExxG-0008Nv-2I
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 18:50:55 -0400
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-b5a631b9c82so1805673a12.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 15:50:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761950925; x=1762555725; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761951041; x=1762555841; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=O88KYOjUwqb1BPlw/7cvHlppXwsxo2scBXj/TdGXXgk=;
- b=hWtuHC1GjS45KEXQLDsdRo0ZebQQ+hLA0dqawEpwat5XkKDM8FmBazrR6bWE19ld5b
- gmFHRBpKNb8oTFd/bHWQkT+SEevuT5rEMQYy7TAK4FqWr6ZUBVPD16vB5y6IBb5R0JsT
- nLZSvdiWq36p9RaanRuQuMbTFZDHNLCiAVJixR5ngpduq4sm1RSrBHodcTydIUOnzXew
- ojTE69KRZa0icQPl4EQwoH4SuWf9X98UnCMvdb9OHgEQ248cdTMlzPrr1Akw/u2dL1k7
- cK7wtGIHYBw2u7CmerdlII7RBHviAM5jSqhXtmurfEBO3HnakStfV8iF2Y9dh+U2FDbW
- fJSw==
+ bh=NmkZm9kpgt+I+e7k33D/Bb/9YNltO23PIaBpp8hbaG4=;
+ b=Rs3WGi5yiPPSq+buoN230EwigPkGnbBR/7gK/xPGhjW0fmJfGuEKCN7WUlj1uKpR63
+ oQ8wBKsp/LMc3/eyc8em/TGMgLTuO7/e2nO7SM0D+7jGeU3t9iP74vhO37orfb2Lppf6
+ u0FlGYWO5x/fcF+mhRmddVQ8OJt39hbc8U8XelBSbuMh+jw1v90dM11rAeZJkjwnAuGY
+ TGCUrK/6EYWF8FrreGA8qK71ArFDJUGlwDXIOBKPRhI1ZiTZwVPXr7Ss66HjW4zZoVtD
+ fIOAhWQTV25Na1BNOoNFgRNnSxMGj8tJHn3B37ri1W8HVnl83J9/3/ieSduobETH4nUT
+ IPXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761950925; x=1762555725;
+ d=1e100.net; s=20230601; t=1761951041; x=1762555841;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=O88KYOjUwqb1BPlw/7cvHlppXwsxo2scBXj/TdGXXgk=;
- b=MieXU3n9KFPR5wLdLjbGv1pCP5dtXekWHWT3U8+xtNJUZA70f4yWo7HrxoYheYPyGh
- A3Hi3HfZH4CaDK96JkjlNsw4G7pqtbb4mQeYHg29CjKHcE0PmJViOVaIiESQDTSXBiU2
- m4o9wKrRadFRjk+2kmGXdQpDprGyq6AYFDpVnT8TdKx1ahtRlxPxIGhpliK1gj9PSUiR
- N6U1phZwPkI+C68S9XvNApFRYCgv4/sEneIS8Hvxnt/ZHp1BBP3odLNnDDr13FFiiT4e
- SWS9z0w/pZs2GOMjqybEF3o8qA6uB8o18wjngZg64G9jFnCfBaT9g7f1IObEo95fYYrG
- AKYQ==
+ bh=NmkZm9kpgt+I+e7k33D/Bb/9YNltO23PIaBpp8hbaG4=;
+ b=h0iZ++aV9gieA3lqbsFnIJNnbsA4FyQUiAcXZITsDotvtSW100AGy1rXwf3hmS7kyc
+ YFyNqijLsbkX6d9elut0+UcrgMPBkloeC9gbUx/bvLp+SoU1eOA4Mu1Mm03jAXZtUYjV
+ Nd5xiE9teP54YiM1uK4E5U1/5nHhy3zZgffAsuL/N7qSBcQk4ZzonoYrV2vt60zXvEBO
+ yVCtHjUdIfUc/FWusLToEd9m/FvcXt4ZDefDuGcbEVQA3pdxqv7pTCFMWAzXBadYdzIb
+ al9t/KqwXK3V8iIIkk3wjvwlybFQ10qad69Lx789EkxDPtYbCEzva/4jMJpVEsRIJAco
+ iPRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9ji3A/0wsjVxr3T6CTUNvW8cOo1N0lAmdpzeKBg1A7AljxNJFVzhYO3haORL/wNR4uz1IYV7pujkO@nongnu.org
-X-Gm-Message-State: AOJu0Yzh6YEIiDjtFlpziIfrSogB1207bi74eqo2NrwzzBKNnHDnDlOh
- hkKl1hGA0OVwMLScuvYtT5u2vgivUMPsucOFV5XgfgsgVCzoqa91lMXV
-X-Gm-Gg: ASbGnctucUBOFIgTXsnkyLjnrddQtLYHMVDtwt+7mYwabjMK1mUyjg0Tn7G/wpA8YnW
- lOpGEte9XHVx0GsdCyevMOfAMRQhRO8CnNj4IIE+7eQkDToZzxCOoh82Y2d2TtBispK1jxn+srn
- NABmoo0WF5DA+bZefb5x0Q//5ek9/kcTko4efif7pxi0XBOES7xeIwyJi6nYRhxISQqqrHHfWSq
- Q0aiLqUD/FvkBDNl6YpTuG05VCzlsZQeteEYCCDVQ7GZn7geEZAVciB4klZTRaxMOZAGMMMKUXH
- DPaYDKX5QQvDDU/6JxyT1s8tFW/g/o69BpN1zU3Dxgd3y3mtjgz6XKNbkyhPsdXQ35wqRKqcFqL
- Q6+W141z0vKpIwHPF2clO+mmOHItLnx9Q4Jmc+bK8IXTXrJ75j7HCWnk0u2hMFDAgXfzUZEVNMp
- U5N5MdnEI1geZOQSBUkzwMQsklEBneh4IPSUdpABg=
-X-Google-Smtp-Source: AGHT+IEoefgVJTA/rHvfo9nnY6eibwlSBgP1I1bgkzLc5H4SP28QHGZsOSJbvUZO5ApHpPUSezu47g==
-X-Received: by 2002:a17:902:f542:b0:295:4d62:61a9 with SMTP id
- d9443c01a7336-2954d62663cmr17508755ad.38.1761950924850; 
- Fri, 31 Oct 2025 15:48:44 -0700 (PDT)
+ AJvYcCVYnRiW6/wxIw/+gBKJDM8fXiDXkOM3Qs+q+obDXjyiJ5/gvi7GuHdHm+Hy2GfwNjHMuyzgwZTyB2OX@nongnu.org
+X-Gm-Message-State: AOJu0YzPbicIfZjAApCTaeATL+nR7PmLUVL4St6zWOW2ZMPIRRxVOLdt
+ rvDM1fLWvlEN7sEXWv94wjcYBh3/Qjhw9sIArexwTCMCbR2UdAKMxL7Y
+X-Gm-Gg: ASbGncvC9b53uAXp3wa7S5I1mBC69h4MePKEwjAumYgkWF8YssmffhN4IMXr247SNxW
+ yqKJzyMTsaRyKwZVyfNj2lafVYF0AXIzcfx/4N/mY7v7OXp0jmNY7yHbDGFoSaeuWCbh34051AM
+ RkTPlaJxauSTqotSBge1+6oMH9YDhp+bIpm2iwK795GV6QqpMslPuWEmlF6Zbbc/6AaL60XI8qm
+ WDrbcRFGDl6Lgrebpd95aUogPnI2q8HAh7bYDlamoRr31hqAuRm9dkRKBqt3PAvRbILAPkDrcQM
+ WYH+1OqWSdLjTNY+p0TQUTy+jxQamt7qbm9PmpSIUTdtsuA7EsKpHEs4HqxY5tA/hsdcDu7J+vC
+ cVRn4JRapZHQC+bCdqBTNbnXjHaIy42yRGWD9alWWOF/rVKhFtovFG6vt+Mqh6kMy/i24xm7Mo0
+ B8sn8sBnR4XyMrmZUKmMLDolP920lytXnylsUz9XE=
+X-Google-Smtp-Source: AGHT+IFkE/Wy5pSHPg6yTWg0Vpr7sUweZZlKW8kujlK0LXzIF9O5T/mbO/JhjRv+DMNe1nJTJV4LxQ==
+X-Received: by 2002:a17:902:ea0a:b0:294:fba1:94b0 with SMTP id
+ d9443c01a7336-2951997e53emr67886055ad.0.1761951041350; 
+ Fri, 31 Oct 2025 15:50:41 -0700 (PDT)
 Received: from fedora.. ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-340a079b9e2sm920786a91.10.2025.10.31.15.48.42
+ d9443c01a7336-2952699c482sm35599365ad.80.2025.10.31.15.50.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 15:48:44 -0700 (PDT)
+ Fri, 31 Oct 2025 15:50:40 -0700 (PDT)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-To: sarkarsoumyajyoti23@gmail.com,
+To: deller@gmx.de,
+	sarkarsoumyajyoti23@gmail.com,
 	qemu-devel@nongnu.org
-Cc: Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
  RemZapCypher <soumyajyotisarkar23@gmail.com>,
  Stefan Hajnoczi <stefanha@gmail.com>
-Subject: [PATCH] hw/scsi/ncr53c710: Fixing defects reported by Coverity Scan
- for QEMU
-Date: Sat,  1 Nov 2025 04:18:38 +0530
-Message-ID: <20251031224838.229154-1-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v2] hw/scsi/ncr53c710: Fixing defects reported by Coverity
+ Scan for QEMU
+Date: Sat,  1 Nov 2025 04:20:35 +0530
+Message-ID: <20251031225035.229422-1-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pl1-x644.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pg1-x543.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,7 +106,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: RemZapCypher <soumyajyotisarkar23@gmail.com>
 
-Fixed Null pointer dereference & Async/Sync IDENTICAL_BRANCHES defects
+Fixed Null pointer dereference & Async/Sync IDENTICAL_BRANCHES issue
 reported by Coverity Scan.
 
 Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
