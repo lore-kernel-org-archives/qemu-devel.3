@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73920CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 02:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA44CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 02:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEfHl-0004ma-Kc; Thu, 30 Oct 2025 22:54:41 -0400
+	id 1vEfIF-0005LQ-8Q; Thu, 30 Oct 2025 22:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEfHi-0004el-KI
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:54:38 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1vEfIC-0005Kt-FF
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:55:08 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vEfHc-0003Z7-G2
- for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:54:37 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b3e7cc84b82so390548266b.0
- for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 19:54:30 -0700 (PDT)
+ id 1vEfI4-0003a5-Uw
+ for qemu-devel@nongnu.org; Thu, 30 Oct 2025 22:55:07 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b70406feed3so280903266b.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Oct 2025 19:54:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761879267; x=1762484067; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761879294; x=1762484094; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ALUxoWVg5lQWwxTfxTsxyHcmQ8KKQ2nKa8zJDTCjQrA=;
- b=JnDcB3Ip8HmruvowhXdSFmH+IYSsYepYqvq8oTY2GqquAZaQ8+Xyk8EeKgHpy28MTZ
- IeZnv3hsv4WdSiXRBws/jKJXLx3tkcSrQ+GfQVBEh3AtRvCvwsypaxvoGSsmmmdF6QfI
- jHw9ngWDetl1P1/uD04vixAzhFaUca07SjsCSIC5vRf6/LrnU7cbELFexcda5cEVbg1k
- w9d+PYYiaVo+pFx8rpzUCtOoy+O8caSxa/bsNxmFeMU7KhPUG93o62lYIGIwLg3D5+TD
- MlUr0v3Ia6EfK8xuFrPYImiWtcVdM0w6TReTymyPlY6eYmaeNrPd6mMiuwxytuob4CAX
- 6EKg==
+ bh=81MwG37dBH8oA6hN8D8om5ls1FQzpNFYqW7spIHJhwk=;
+ b=MaTLaZLEhzF16QvLzKXQAjdlPgUyLyxvPLrvIaxwrHtUHoL+A5bx5yUwe3rAIWqvZp
+ pcYB6yJxRMQcL/QOe+cPdFTEFg84Ho0q5pwOviat/gwv+e1IGpj0IWMOgmZu/otBAD+E
+ V3Sg5VfUa14Sbkmuk4LcZU+9C6Z0C6LQKDdPJjsnec0C4eZ0P7fZ3Su3PRdhXR5eiHUk
+ XTJ7NQ52+dXS/8+CH4UVlSlGdxCxP+lk7viKAft2TBNmyzyIfWW7iqepQvLXwP89A88S
+ u2+Kkis2UfuT05D3g2JcXWVnKfUeiExJ0E3jK2WK6loEOvdX72C/Pa26DfuiHJ7gBWzW
+ Y0Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761879267; x=1762484067;
+ d=1e100.net; s=20230601; t=1761879294; x=1762484094;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ALUxoWVg5lQWwxTfxTsxyHcmQ8KKQ2nKa8zJDTCjQrA=;
- b=kNTvJPIS8v9lJjqeT7Qo2OKtPSk7mbgSR75ov1ri8MhZ9bFZ3AdCJWnu/KcnOfHsKn
- MSriO2dhb7f8+QOWNLqNrc/ak8KTZDxlitINf+A4/kNW2zNqznN4NwqZSJdsK6bLniO+
- CpVAhNqjZsVHvdDMOLPXYpcctY+ytyo+X67ky0tKdXRmCpH6xqVhEu7YTnS6cA0jX+zE
- 40myWON4VGXSzL2Xd4eyO7UH7rV8DWuHKfSmKrc0/YOHcitTQruw+NIAbL+3hj64Plpr
- EDg7paLqxrUl/2BDtl79suPB2LuNn/BqkjQn4J+6CUrswrEcw1q0YMWOcx0Rc9PzX19q
- JPSA==
-X-Gm-Message-State: AOJu0YyG6mLpyMeNA9QIYoRjHRAvztG0c7A/b/zKPpXX3ymSfVhYnz0x
- C8FUBuavXL45bzY9DLp1Qu7q5mxR84PcafQcpz1cro+NjEDenhvnQUO+73lzLKTEJNh5Iv8f+lU
- vfQmrWskTJjoSS2jtqtrS1xENuLLDVLE=
-X-Gm-Gg: ASbGncsqilzqKAXBtYJAEBUc2W7Q5BiVNoaKUW+UeYsvJzW5tVCt+DFvdara2tHC6fF
- yLcNgYLQpreMcRsDx9RJ4bPh71T64KMiIVnSOGE3eZhvSFTC/c/aYRWEzUqAwtanLOUZPbEZ3FP
- TENjCevw/Rjc1DHJRyX1A6U4wmhEcpA/A94Rnvh02heLVln0nc8RENfXKmtPyx8aKJKoifqVijk
- xm5AHOP5gGe9H/QOs8gmo0h74Y12cMdkhGY3Q4gx6BMB/+nUfMR9lQsdeSX4xJdETbj1yLhEsQT
- bCUVb74qkNZVEMc=
-X-Google-Smtp-Source: AGHT+IG6mqpiRCc05jURzevyRNZm0Nn9YzXCmj0QSVZTo7H0oml6GgzcP2qhsyXTE03wrdpvkEhf3EkphxuUq/UNdv4=
-X-Received: by 2002:a17:907:728c:b0:b6d:2f3f:3f98 with SMTP id
- a640c23a62f3a-b70704bc291mr168184966b.41.1761879266632; Thu, 30 Oct 2025
- 19:54:26 -0700 (PDT)
+ bh=81MwG37dBH8oA6hN8D8om5ls1FQzpNFYqW7spIHJhwk=;
+ b=Ric3CMFOAHaY4cTTrGiLWuZJ66xmBOneW7N2nabAhm357qCXEYKJJqZOOaszRiS1rJ
+ Vj1AgRRbuQQZk6TQfCDjwo/qSO2/9h5OQKYuSg+hhylTcGWg5dTvwL/1Hcz1ACFG/YkJ
+ 6RjLyz385TF4wvlgCch5TjqcahCy2QJfr5usMqD569+eay+TuRKALhN5CQuR97L38ZYn
+ yYA3Mzw0kXSBLzvR1xVAXMWMv8Z9FTsQWRbphFneHU3vnTvwJ0Du6ZxbrdGRQmfW6Sov
+ iAjC/4XyxqFasfAiNpcg7ZL5wwvJ3mpJnN+sd3UzxNxBRD+ExEmf6pNw8V8aJHAPR6IT
+ +7zw==
+X-Gm-Message-State: AOJu0YzICASS35euYziOAJuASd2Xf1LtW6hMdE7r+cavkrIn9Ng0ClRd
+ VAwPbWz6zUkAtMYES38Vbyr9/ZL+WSC+VBDwT1L/jd8AiOaJ7uEAeoE8KrgkK8Zxoal9kR5G4hQ
+ o4XYeiMMJB1Ei7PxX9D4SBuBT59y2V1E=
+X-Gm-Gg: ASbGnct2E1qETtdQijuK0Cl6WyWL0UWc20FpdoxxJ5/R2zyyBZ2lVXIk4iz9+xEfKd7
+ TXMOzagTv8EbZwLKAOofdaefxSYIpH5mP6780oOMCWJdKmX+lJIYyMqu8GrcV6DUNzhbc1PuwDT
+ AGepks8SIfKjxWaeypStNiYHg1ehOriA1onn5Bic1HKQ70wgyGMnxLjWrnNork9bywzpy6MZYGV
+ WczAzEKlE202mv1IDGFs0aeQO2z3wbqDmAzDgLmYC0rg5Gvh73VNfXNN2fj13ymqTNK1rvyQ+Ql
+ 7QmgO6y2tgUx0T4=
+X-Google-Smtp-Source: AGHT+IFUHEsQg6gx3mdDAfdL3FTsrtKS6Vjr7XYIWw56bWFegHeR16WQLdkFlPtyUbW45Ey1VEwHqLGRvGcHUQvVxd0=
+X-Received: by 2002:a05:6402:26cf:b0:63e:914e:5159 with SMTP id
+ 4fb4d7f45d1cf-64076fada3bmr1404995a12.13.1761879294016; Thu, 30 Oct 2025
+ 19:54:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251027181831.27016-1-anjo@rev.ng>
- <20251027181831.27016-28-anjo@rev.ng>
-In-Reply-To: <20251027181831.27016-28-anjo@rev.ng>
+ <20251027181831.27016-29-anjo@rev.ng>
+In-Reply-To: <20251027181831.27016-29-anjo@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 31 Oct 2025 12:53:59 +1000
-X-Gm-Features: AWmQ_bmKTKMfDFfQ3y33jeKDh-qcPGkQdm75Wztb2_DAx4ZtVY07YBXRkSO3N6Y
-Message-ID: <CAKmqyKPKNhW5ux0OMXaURQCyYeCjf76dQAozS_1WTvFG-fddXQ@mail.gmail.com>
-Subject: Re: [PATCH v4 27/33] target/riscv: Replace target_ulong in
- riscv_ctr_add_entry()
+Date: Fri, 31 Oct 2025 12:54:27 +1000
+X-Gm-Features: AWmQ_bnc_HBX-hFfsnaS08cfXaaQ1ZTuKSw5kTsdsfuMMez166nk6KEE1UdcRAo
+Message-ID: <CAKmqyKNvOzEKhiD7ayuT9Kpd1gytk90=Z3jGVdKk79B8DDMWCQ@mail.gmail.com>
+Subject: Re: [PATCH v4 28/33] target/riscv: Fix size of trigger data
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
  alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,12 +98,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 4:24=E2=80=AFAM Anton Johansson via
+On Tue, Oct 28, 2025 at 4:27=E2=80=AFAM Anton Johansson via
 <qemu-devel@nongnu.org> wrote:
 >
-> Widen to 64 bits in size to hold all relevant values.  Note: src and dst
-> arguments change from signed to unsigned but no functional change is
-> incurred.
+> mcontext is at most 14 bits in size with the H extension, fix to 16
+> bits. trigger_cur indexes into tdata*[RV_MAX_TRIGGERS] which holds 2
+> elements, fix to 8 bits.
+>
+> This patch also adds a migration entry for mcontext which is used in
+> tandem with other debug data that is already migrated.
+>
+> Note, the cpu/debug VMSTATE version is bumped, breaking migration from
+> older versions.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
@@ -115,45 +120,59 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.h        | 5 +++--
->  target/riscv/cpu_helper.c | 5 +++--
->  2 files changed, 6 insertions(+), 4 deletions(-)
+>  target/riscv/cpu.h     | 10 +++++-----
+>  target/riscv/machine.c | 13 +++++++------
+>  2 files changed, 12 insertions(+), 11 deletions(-)
 >
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index c2be30795a..ee4444f22d 100644
+> index ee4444f22d..153480846a 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -662,8 +662,9 @@ RISCVException smstateen_acc_ok(CPURISCVState *env, i=
-nt index, uint64_t bit);
->  void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
->                          bool virt_en);
+> @@ -467,11 +467,11 @@ struct CPUArchState {
+>      target_ulong mseccfg;
 >
-> -void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_lon=
-g dst,
-> -    enum CTRType type, privilege_mode_t prev_priv, bool prev_virt);
-> +void riscv_ctr_add_entry(CPURISCVState *env, uint64_t src, uint64_t dst,
-> +                         enum CTRType type, privilege_mode_t prev_priv,
-> +                         bool prev_virt);
->  void riscv_ctr_clear(CPURISCVState *env);
+>      /* trigger module */
+> -    target_ulong trigger_cur;
+> -    target_ulong tdata1[RV_MAX_TRIGGERS];
+> -    target_ulong tdata2[RV_MAX_TRIGGERS];
+> -    target_ulong tdata3[RV_MAX_TRIGGERS];
+> -    target_ulong mcontext;
+> +    uint16_t mcontext;
+> +    uint8_t trigger_cur;
+> +    uint64_t tdata1[RV_MAX_TRIGGERS];
+> +    uint64_t tdata2[RV_MAX_TRIGGERS];
+> +    uint64_t tdata3[RV_MAX_TRIGGERS];
+>      struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
+>      struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
+>      QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 376075b2bd..c6ebb58882 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -239,15 +239,16 @@ static int debug_post_load(void *opaque, int versio=
+n_id)
 >
->  void riscv_translate_init(void);
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index b102f15ac6..20ff05a4b2 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -926,8 +926,9 @@ static bool riscv_ctr_check_xte(CPURISCVState *env,
->   *    entry =3D isel - CTR_ENTRIES_FIRST;
->   *    idx =3D (sctrstatus.WRPTR - entry - 1) & (depth - 1);
->   */
-> -void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_lon=
-g dst,
-> -    enum CTRType type, privilege_mode_t src_priv, bool src_virt)
-> +void riscv_ctr_add_entry(CPURISCVState *env, uint64_t src, uint64_t dst,
-> +                         enum CTRType type, privilege_mode_t src_priv,
-> +                         bool src_virt)
->  {
->      bool tgt_virt =3D env->virt_enabled;
->      uint64_t src_mask =3D riscv_ctr_priv_to_mask(src_priv, src_virt);
+>  static const VMStateDescription vmstate_debug =3D {
+>      .name =3D "cpu/debug",
+> -    .version_id =3D 2,
+> -    .minimum_version_id =3D 2,
+> +    .version_id =3D 3,
+> +    .minimum_version_id =3D 3,
+>      .needed =3D debug_needed,
+>      .post_load =3D debug_post_load,
+>      .fields =3D (const VMStateField[]) {
+> -        VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
+> +        VMSTATE_UINT16(env.mcontext, RISCVCPU),
+> +        VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
+> +        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+> +        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
+> +        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
 > --
 > 2.51.0
 >
