@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0127DCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 23:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DDFCCF9FE
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 23:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEyvt-0007zN-CI; Fri, 31 Oct 2025 19:53:25 -0400
+	id 1vEz0N-00016Z-Gv; Fri, 31 Oct 2025 19:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vEyvr-0007zA-OV; Fri, 31 Oct 2025 19:53:24 -0400
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ id 1vEz0L-00016M-Q0; Fri, 31 Oct 2025 19:58:01 -0400
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vEyvj-0000PG-1x; Fri, 31 Oct 2025 19:53:23 -0400
+ id 1vEz0I-00018x-Jv; Fri, 31 Oct 2025 19:58:00 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZovGmEUOQwr5fTimuQ803F1PWupU+iVg+lCOluMjmaTYgF5MbZQsC929DaBoEUbguXDGILX/ou65NPhPTuxFG3qiWEVG5djQ8+7VkZ2bjIaFumbkmX9j8G+X7MZzRd+NIfy6PmmxTzwzJBm3JTUXzKsgchOn+tcHvxmO/0Yq4nK++IXwAz349//4c/0VAJcm2e8vHflbVsGjhUe7rzvnNbrjHIrcTagDsLqOB5qov1C6aYVfaDnbs9dvxZGnlXxx4wV3koKw5RXrHVKaQXcwBBtKTbcd0vTP5sj5Q6URTVRbrz8t3EeGZ1EX0OFLjDW/wsS2JNdMxfCdgeQaQ+Qg6Q==
+ b=Xp45f7RQ9TQZwaUzNDopDYyfr/jY8lVG1EiLWqhU14nYnu4++0JlHPAOp3u3y35RUOVnzejMNJduPN+5yxVinsWf06jmGLdz865KC9UI5hwmWYbNad0bYcW4M7QWkb5iFBCdvCp5lytUtsxKrLzxiVNMu82LEO0OcGzp8VT89p7/jAuSp7zEf0ZB6jAqdP0osHjzg+Cq9SSM6/vgEocz411kXSI3ZFP+dZQAa++pwQzo/dB/p67EqL42rWo5kAseWwvFHwVTCfa95or7k+hDjM5MdxjVBa2870fKI6Lxi5td9VVi5ne5V+wXTyFFlSdnDLXNXnr9kb3Rb3JKoCwM8Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MxmP4MmtaadBG2VmfzBZ/3J1mYT/sC1Kscr3dKVNZGs=;
- b=LBlhEUoQxfxtWl8cE/Ya9kFDkU97vUwYnyLAhv1X0NuJnuui9ri9vmUDzqKqcTZqJtTBGN1Na72jNaTMn1o3/BAoxydm8XKloLJwhjrLBCjQpbnr9YQbwMKO70K6TaUiPBQJIS7/1TdRPI9D/Po1MTPV0pzRLEDMEtlM9XslaBBRWrU8IKSoLtSWTjU9s1TNzeT675UyLvnPStx4i6suEz9x0jGd9HLYwCWKU3OVUYn2Gh2qD39S6FrqBZKxlfziaghToanzUKKBL4LKnfHvsSJpf0DRy93ofoPmyt0L5qe16d2UkqR7zAj8kChAsNIrK9Y81prjG7JUwmz8mhTpOQ==
+ bh=yjk//b9+qPzzyB+0dgVuFGV+aOOdvO4Bqj/xQ5876NE=;
+ b=Iq2w9vlLwLp6cuQ0URVQ6F3HWGBSuBirvR1B5nwAiJtvhNBWYXs7AzcBTyYMg4QPVsJ0ZjxAIfsy1QgmvcRt88BZ+Ue02W9mLdQZOm32sLzRVkfeNgjYdkjPIjp2id6d+uW62u1Qot+IQF27/SCUBzCciagSsy8g76s64xBxnyc2Q9H5vJOrAFVjlPWX3t9dvMb+CCF5qismqvw8lNNaCn3fDgGj0PKC5CBj7Nh7UM2RRbmTTg6ZjAimmON1fh9ewwxV4Vh1z+SsuKNTm+TacsnBZ4+eXpcAVYqRoCNjcEAJMEuVzGba1vgCsU5d69q3fLPxpUCUD4FHNGOGFY2mRQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MxmP4MmtaadBG2VmfzBZ/3J1mYT/sC1Kscr3dKVNZGs=;
- b=psaQoUYPqkSnCJAY0urhSVtbjjdQhNpKs64jUTl12njbvIRqTMKnh9lvP8H2AQFZcVaZuV6dzFdjtCrK51LYxToCNhzWnKu7Fv2gHZKNKJG4HjhgpGZg3AlOjwXq1PjNqPl8HO4gnLISCB5xuv8XDZuDjytxRGJ7oJP2Fxz6i0f7uLh1vi5q/brhQsGq7rIk/Bsb9bmpOXy25ZffguD+PnIYK0zPBYUwo3JlglaKcheNRV+zSELBQt7o7+AJqARV7uO9qPyqm/zuW+DNMIrXNqFeKKb3P4S+IBM8mkLTphsQyDPMuCbm7PnDfAxPyVOccROktb6e5hLzAXpQR4rc2A==
-Received: from DS0PR17CA0005.namprd17.prod.outlook.com (2603:10b6:8:191::6) by
- LV3PR12MB9402.namprd12.prod.outlook.com (2603:10b6:408:213::21) with
- Microsoft SMTP Server (version=TLS1_2,
+ bh=yjk//b9+qPzzyB+0dgVuFGV+aOOdvO4Bqj/xQ5876NE=;
+ b=L64gwzoHAfjCKO4dmcVlWiRbxWYGXDBr3s9QTaAlFecDxpKtFM3WFn+GjDHfmBljT4YqR6ZTT3ooTiHKstiCMnE9vMXNuBPtc/Y7uZK8qtyUxVJy6ievs8r509z+/5ij8V6cVhK/jIUd/OpBWckxZvxqReseXY9Llv1700bTTK2nHwXPScVLr10hqkaJ5b+QTgakNPVmz++VM42I1Pvk17P2YjSA1E93CjrlTvFUNq8uIvBimF37VgfTbyQlp41dqQIqIuEqdHYiANX0yjq7vnErAGGk7EsTx8FssXMih7GGiduIMGMQwpinZpKT1a0D2gEVMJolc4ivXqS5J+QXpw==
+Received: from BN0PR03CA0044.namprd03.prod.outlook.com (2603:10b6:408:e7::19)
+ by MW3PR12MB4492.namprd12.prod.outlook.com (2603:10b6:303:57::10)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.15; Fri, 31 Oct
- 2025 23:53:00 +0000
-Received: from DS1PEPF0001708F.namprd03.prod.outlook.com
- (2603:10b6:8:191:cafe::7) by DS0PR17CA0005.outlook.office365.com
- (2603:10b6:8:191::6) with Microsoft SMTP Server (version=TLS1_3,
+ 2025 23:57:49 +0000
+Received: from BN2PEPF00004FBE.namprd04.prod.outlook.com
+ (2603:10b6:408:e7:cafe::5b) by BN0PR03CA0044.outlook.office365.com
+ (2603:10b6:408:e7::19) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.15 via Frontend Transport; Fri,
- 31 Oct 2025 23:53:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ 31 Oct 2025 23:57:32 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS1PEPF0001708F.mail.protection.outlook.com (10.167.17.139) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BN2PEPF00004FBE.mail.protection.outlook.com (10.167.243.184) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9275.10 via Frontend Transport; Fri, 31 Oct 2025 23:52:59 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.9275.10 via Frontend Transport; Fri, 31 Oct 2025 23:57:49 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 31 Oct
+ 2025 16:57:36 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 31 Oct
- 2025 16:52:47 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 31 Oct
- 2025 16:52:47 -0700
+ 2025 16:57:36 -0700
 Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Fri, 31 Oct 2025 16:52:46 -0700
-Date: Fri, 31 Oct 2025 16:52:45 -0700
+ Transport; Fri, 31 Oct 2025 16:57:35 -0700
+Date: Fri, 31 Oct 2025 16:57:33 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: Shameer Kolothum <skolothumtho@nvidia.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
@@ -77,75 +77,74 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
  <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [PATCH v5 13/32] hw/arm/smmuv3-accel: Add nested vSTE
- install/uninstall support
-Message-ID: <aQVLzfaxxSfw1HBL@Asurada-Nvidia>
+Subject: Re: [PATCH v5 16/32] hw/arm/smmuv3-accel: Make use of
+ get_msi_address_space() callback
+Message-ID: <aQVM7egZ43UaUODf@Asurada-Nvidia>
 References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-14-skolothumtho@nvidia.com>
+ <20251031105005.24618-17-skolothumtho@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20251031105005.24618-14-skolothumtho@nvidia.com>
+In-Reply-To: <20251031105005.24618-17-skolothumtho@nvidia.com>
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF0001708F:EE_|LV3PR12MB9402:EE_
-X-MS-Office365-Filtering-Correlation-Id: f6458a31-d861-4a21-0ba3-08de18d89f7d
+X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBE:EE_|MW3PR12MB4492:EE_
+X-MS-Office365-Filtering-Correlation-Id: 83e8deef-1947-4638-8153-08de18d94bcd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|7416014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Y9mIye+WnfGpsk81hTnW+JeNBVUzaEvNnfmsZR+pVC6JksYkl0h1eopK0Tps?=
- =?us-ascii?Q?dVXCQKTbzr7aAYI7IKxHBLvEytCsjJvO7cOxn2KZwyykVIe9TES91fFxBCEy?=
- =?us-ascii?Q?/qR0ku8iZsL84dcr6ySbB86ODGkgymVfATPiRThTSx7uZvrKFMSn5JA4me8Q?=
- =?us-ascii?Q?1of31UhggQOkIasfmxqC1TazlGmpfcrIic0elPH+wfQNX6nc/HMppdwBghIg?=
- =?us-ascii?Q?kGWKjpAozkHuLr5GTgOFQVZTbOSbNF/iCdpTkY96/AkM/7m9wS7g3bHqsuQ8?=
- =?us-ascii?Q?snhwe7+ZKUoJlVpaojLAfrMPjRND85dM9pksKMDA70h+6Sc8zYavT2i9d/TG?=
- =?us-ascii?Q?tI5yLOdvuRhih1Y0X+pmlSlTsB5Ic9QKNHDZqSXhTCKrgzLLocC5/qPia6qT?=
- =?us-ascii?Q?kuebH1QbBNeT5wTyXCXf4lzVqWevvoa7Syv1CR7AkSP9kNjlot6Vhqq/TOM6?=
- =?us-ascii?Q?q3zED2mN68N8OJzEaO//43Uh3Eawd5T5Qd3QPnRaqi9cWK3W8dNftaZCPzmC?=
- =?us-ascii?Q?stGSbRVcwku4hM9/g1aBD4pPRv3tRru2uIBuY71r0vTRgmQC6RyhMp4AJi2N?=
- =?us-ascii?Q?FYHvvUflKdzNPJ4KH0GyhG4lZbzUMgxFKZDPwJVK059gTFAPkZOgmkvHEeMi?=
- =?us-ascii?Q?oawlnlxL8rlj0YoKjFmH7pKxKle1OvEL1TeLBQgcBTags+4hBt3KR15VAX7j?=
- =?us-ascii?Q?mss33dHDQdPQlYCIcYTzaehCUwiT16+koAZ/4SL+qoY61tU9HDKb9AXneQhD?=
- =?us-ascii?Q?Ct4FI2aa147yuXBtEgsbkeP0zKaRi+o05nOlSSrUXG9Oq4KOyaJf3QGhqj6c?=
- =?us-ascii?Q?//c1n7ZIeS3+xK0wCbCXDbAU0auFaqydiWCFJKSQivWOEzxFQOxsd//RlTi6?=
- =?us-ascii?Q?5rS3CAGjynDzhq2mYPI4LcWy8+qTs05Y/16kqVzBvkx1nnDFZ0gxNOxxp9uS?=
- =?us-ascii?Q?CxwBTZxGnQWA9moOnsMAaOow3+lAJr3h0ejkHdf/SChqap8rZ5oUcYPyQ2qP?=
- =?us-ascii?Q?s12UoYp7J9aPIV135n9ZCM86VvpO3TuwuPNIfT9Vu3XW7udWN/RHqdH2CyU8?=
- =?us-ascii?Q?Hk8RSh/aJcOUXpgZ2RGyacCC9zairVGrfYCTslqRHekgarjDU32+VyhZ68YU?=
- =?us-ascii?Q?leXqIwlVMf2iXmTuMKQaPegl3qo2jtxuvdkyf/oRocwtQ9hJ4Eky/1qJ4vzC?=
- =?us-ascii?Q?0NSx5YBwAfTYzSAybD9IyhUSynkwUMXBZuDXpgtf7vmUaX0XOZIxWbfkDfs3?=
- =?us-ascii?Q?sdpnSKUQD5ae9An9w0TW01T4dAdVSTCy14tjhKfi5uJNgZnSriQdvqxS6B+P?=
- =?us-ascii?Q?p+hpqlIt8jRf41WznoATlN9R19q/AgZvVfat6wMcU/Zwk7Z64OQAWOmxSTdb?=
- =?us-ascii?Q?vJ5igK4C7a2+XZsnuKv/96pvxiQ3WIXgsdT2ETslObxBtisrI3bpMACJSfxx?=
- =?us-ascii?Q?gR4bDC+aXcdGODLwC2LKiilp9EChI3ZDBySCjr2ITmiwoz6PY+jWoPpAXdbq?=
- =?us-ascii?Q?gcClahcguHRdDJ5t0F9crHJF0UZbRE6l/coeFdQYg64wYNMpaEO2iQZ/eHAB?=
- =?us-ascii?Q?5UnFDy4z0DyZQXvyeJo=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(7416014)(1800799024)(36860700013); DIR:OUT;
+ ARA:13230040|1800799024|36860700013|82310400026|376014|7416014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Se82jWhnMOB1a2sH28PdBDgCwcvjJekq1XRfl/+iSE8crgAkrnlW+my5Exuo?=
+ =?us-ascii?Q?8chtTL21CJPQnowGyMcoZ5Mc8la82jiAtDAAGKCoK0YnI194hJyLFkFTI1pQ?=
+ =?us-ascii?Q?zuBGPRY99GzodqHUYtIKSu55Rto/iYF9PP3YPyX+UpCEi/fzJOUX58qTsYBJ?=
+ =?us-ascii?Q?5yU2FPHlKdEPPTJm7Ax0ZtCfFxGHy4CIryt9ZDe55MOZh6W/gQwGS0J30BQl?=
+ =?us-ascii?Q?CIKzO0THK+gMZqqnF2e6SEQkxEm1Kn4rL07YRl0aoqnW/6m898V2+moa541l?=
+ =?us-ascii?Q?h1Lq0Y8iK+kw7/tEzdbs2Lp6Lc7VeY9KOqGi1+rrpNP0hCaMuxTBqH2XRNxD?=
+ =?us-ascii?Q?INs/VPLK0bqY87Y1gP5XPvqlIgXFstop83xdZPu+V6jYPveFbqRicBXX/1wB?=
+ =?us-ascii?Q?KG99NeY/qR90IXHYYf/zhqaZ2mxBpm0bfDKo3lpZCCHm7edfUhZKwBEC45p1?=
+ =?us-ascii?Q?g6uAKoZVOd9H3QWLZi+zMX4ZwNWIMq7E1U5J63OfWCfz2YELiui7fjNfnTGK?=
+ =?us-ascii?Q?CfMJikgs5vWqZqaD62RbDmfow583cBUukoupOw2di1DkwnDTgGukj7YKOw4c?=
+ =?us-ascii?Q?KfVZp07+3jfdFoSEhX13xUfzDOcwklGveYgWBDu3F3cSv+kyIg+v1RL9Vhjh?=
+ =?us-ascii?Q?zGL89yiI5fABvxB95UhumIrLc4AJzc5qUXsNynm4elqe+Qd+MEPBxrkheIzy?=
+ =?us-ascii?Q?ptMkobSeumjfS6UtO1CejKjc+u0nzil5vaOhMi3lEplRyO3WCdQJdUrHt0qF?=
+ =?us-ascii?Q?hJHQdTC0a72j69ksDRgi87wOXALDV/7stMGyZdCXwwC9nZr+R3j5ajocVfjk?=
+ =?us-ascii?Q?hwspG0/PUaXPsYYWbzJoB50IDJZwR7I8QqU9aGM49LIt3TAmOl4LnByu2mxF?=
+ =?us-ascii?Q?EDrtf9PPtxe032RIgj5Qo86DnlhVA6vGaDpNIsIfqGtet9suEfFToGF0lwS3?=
+ =?us-ascii?Q?PQQ/9+t8EkOzhZcKOUNQ+XcJKm1UkqONkKhhEWPxiAEIL9o36ReYhmbK06O4?=
+ =?us-ascii?Q?A0lotlUtnfLfd60tEawzXOE4+NIlOmCH/oDP7MMjWVk7BwH8YfIe7uYJ/Cxh?=
+ =?us-ascii?Q?2GmjZB+zXT/gwgsKewrGoFXzKrPp5DoTv2LWa4KMcwGW+hM6c8lD+TnCFR9k?=
+ =?us-ascii?Q?r9XXmL0j2Ck8Uz9tdd+kmIFk7z4+SniA3ENayxwks+pwnkLh6GGEUu1V/lm5?=
+ =?us-ascii?Q?78U/Vr7tySH9uTsDkh3kE8WGlpOM8R3vGBSXIMvDF2K73ylhBeEwTRBDzOQk?=
+ =?us-ascii?Q?HdkdBvcPVkD2VnC71otDQLw1LUj6yH4HK6HrK8DfNZyABkF5wtXk29132wCy?=
+ =?us-ascii?Q?yaas5xGNHlz8Jh49hgC6prWuDnUOEqui98ERAF3UasFOshBdboNk5gqVS9hY?=
+ =?us-ascii?Q?g6INWq7IHdeGMbYZkgEXTZYoqh89OgBT8EgWwDxdYmHjnFFolSZFA+DfcZX9?=
+ =?us-ascii?Q?EgoSInnpOukB9mGaSvG5TDznKCT2nSaJsE+twucmQYG9vFu//0o5qchhSKoX?=
+ =?us-ascii?Q?s/9kjjwuzY+FKET/G0xrrFI0/DpvD4QZDirKn3oCMplcc0aaNWNG7O6HmFk5?=
+ =?us-ascii?Q?jdpM4zzcJnm8LSRDywQ=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014)(7416014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2025 23:52:59.9542 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6458a31-d861-4a21-0ba3-08de18d89f7d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2025 23:57:49.0601 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 83e8deef-1947-4638-8153-08de18d94bcd
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0001708F.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBE.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9402
-Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4492
+Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
  envelope-from=nicolinc@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,196 +160,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 31, 2025 at 10:49:46AM +0000, Shameer Kolothum wrote:
-> +static bool
-> +smmuv3_accel_alloc_vdev(SMMUv3AccelDevice *accel_dev, int sid, Error **errp)
+On Fri, Oct 31, 2025 at 10:49:49AM +0000, Shameer Kolothum wrote:
+> +static AddressSpace *smmuv3_accel_get_msi_as(PCIBus *bus, void *opaque,
+> +                                             int devfn)
 > +{
-> +    SMMUViommu *vsmmu = accel_dev->vsmmu;
-> +    IOMMUFDVdev *vdev;
-> +    uint32_t vdevice_id;
+> +    SMMUState *bs = opaque;
+> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
+> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
+> +    SMMUDevice *sdev = &accel_dev->sdev;
 > +
-> +    if (!accel_dev->idev || accel_dev->vdev) {
-> +        return true;
-> +    }
-
-We probably don't need to check !accel_dev->dev. It should have
-been blocked by its caller, which does block !accel_dev->vsmmu.
-Once we fix the missing "accel_dev->vsmmu NULL", it should work.
-
-> +
-> +    if (!iommufd_backend_alloc_vdev(vsmmu->iommufd, accel_dev->idev->devid,
-> +                                    vsmmu->viommu.viommu_id, sid,
-> +                                    &vdevice_id, errp)) {
-> +            return false;
-> +    }
-> +    if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
-> +                                               vsmmu->bypass_hwpt_id, errp)) {
-> +        iommufd_backend_free_id(vsmmu->iommufd, vdevice_id);
-> +        return false;
-> +    }
-
-This should check SMMUEN bit?
-
-Linux driver (as an example) seems to set CMDQEN and install all
-the default bypass STEs, before SMMUEN=1.
-
-In this case, the target hwpt here should follow guest's GBPA.
-
-> +static bool
-> +smmuv3_accel_dev_uninstall_nested_ste(SMMUv3AccelDevice *accel_dev, bool abort,
-> +                                      Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-> +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
-> +    uint32_t hwpt_id;
-> +
-> +    if (!s1_hwpt || !accel_dev->vsmmu) {
-> +        return true;
-> +    }
-> +
-> +    if (abort) {
-> +        hwpt_id = accel_dev->vsmmu->abort_hwpt_id;
+> +    /*
+> +     * If the assigned vfio-pci dev has S1 translation enabled by Guest,
+> +     * return IOMMU address space for MSI translation. Otherwise, return
+> +     * system address space.
+> +     */
+> +    if (accel_dev->s1_hwpt) {
+> +        return &sdev->as;
 > +    } else {
-> +        hwpt_id = accel_dev->vsmmu->bypass_hwpt_id;
-> +    }
+> +        return &address_space_memory;
 
-This should probably check SMMUEN/GBPA as well.
-
-Likely we need "enabled" and "gbpa_abort" flags in SMMUState.
-
-> +static bool
-> +smmuv3_accel_dev_install_nested_ste(SMMUv3AccelDevice *accel_dev,
-> +                                    uint32_t data_type, uint32_t data_len,
-> +                                    void *data, Error **errp)
-> +{
-> +    SMMUViommu *vsmmu = accel_dev->vsmmu;
-> +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
-> +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-> +    uint32_t flags = 0;
-> +
-> +    if (!idev || !vsmmu) {
-> +        error_setg(errp, "Device 0x%x has no associated IOMMU dev or vIOMMU",
-> +                   smmu_get_sid(&accel_dev->sdev));
-> +        return false;
-> +    }
-> +
-> +    if (s1_hwpt) {
-> +        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev, true, errp)) {
-> +            return false;
-> +        }
-> +    }
-
-I think we could have some improvements here.
-
-The current flow is:
-    (attached to s1_hwpt1)
-    attach to bypass/abort_hwpt // no issue though.
-    free s1_hwpt1
-    alloc s2_hwpt2
-    attach to s2_hwpt2
-
-It could have been a flow like replace() in the kernel:
-    (attached to s1_hwpt1)
-    alloc s2_hwpt2
-    attach to s2_hwpt2 /* skipping bypass/abort */
-    free s1_hwpt
-
-> +smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,\
-[...]
-> +    config = STE_CONFIG(&ste);
-> +    if (!STE_VALID(&ste) || !STE_CFG_S1_ENABLED(config)) {
-> +        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev,
-> +                                                   STE_CFG_ABORT(config),
-
-This smmuv3_accel_uninstall_nested_ste() feels a bit redundant now.
-
-Perhaps we could try something like this:
-
-#define accel_dev_to_smmuv3(dev) ARM_SMMUV3(&dev->sdev.smmu)
-
-static bool smmuv3_accel_dev_install_nested_ste(SMMUv3AccelDevice *accel_dev,
-                                                int sid, STE *ste)
-{
-    SMMUv3State *s = accel_dev_to_smmuv3(accel_dev);
-    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-    uint32_t config = STE_CONFIG(ste);
-    SMMUS1Hwpt *s1_hwpt = NULL;
-    uint64_t ste_0, ste_1;
-    uint32_t hwpt_id = 0;
-
-    if (!s->enabled) {
-        if (s->gbpa_abort) {
-            hwpt_id = accel_dev->vsmmu->abort_hwpt_id;
-        } else {
-            hwpt_id = accel_dev->vsmmu->bypass_hwpt_id;
-        }
-    } else {
-        if (!STE_VALID(ste) || STE_CFG_ABORT(config)) {
-            hwpt_id = accel_dev->vsmmu->abort_hwpt_id;
-        } else if (STE_CFG_BYPASS(config))
-            hwpt_id = accel_dev->vsmmu->bypass_hwpt_id;
-        } else {
-            // FIXME handle STE_CFG_S2_ENABLED()
-        }
-    }
-
-    if (!hwpt_id) {
-        uint64_t ste_0 = (uint64_t)ste->word[0] | (uint64_t)ste->word[1] << 32;
-        uint64_t ste_1 = (uint64_t)ste->word[2] | (uint64_t)ste->word[3] << 32;
-        struct iommu_hwpt_arm_smmuv3 nested_data = {
-            .ste[2] = {
-                cpu_to_le64(ste_0 & STE0_MASK),
-                cpu_to_le64(ste_1 & STE1_MASK),
-            },
-        };
-
-        trace_smmuv3_accel_install_nested_ste(sid, nested_data.ste[1],
-                                              nested_data.ste[0]);
-        s1_hwpt = g_new0(SMMUS1Hwpt, 1);
-	[...]
-	iommufd_backend_alloc_hwpt(..., &s1_hwpt->hwpt_id);
-        hwpt_id = s1_hwpt->hwpt_id;
-    }
-
-    host_iommu_device_iommufd_attach_hwpt(.., hwpt_id);
-
-    if (accel_dev->s1_hwpt) {
-        iommufd_backend_free_id(idev->iommufd, accel_dev->s1_hwpt->hwpt_id);
-    }
-    accel_dev->s1_hwpt = s1_hwpt;
-    return true;
-}
-
-> +bool smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
-> +                                           Error **errp)
-> +{
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    SMMUv3AccelDevice *accel_dev;
-> +
-> +    if (!s_accel || !s_accel->vsmmu) {
-> +        return true;
-> +    }
-> +
-> +    QLIST_FOREACH(accel_dev, &s_accel->vsmmu->device_list, next) {
-> +        uint32_t sid = smmu_get_sid(&accel_dev->sdev);
-> +
-> +        if (sid >= range->start && sid <= range->end) {
-> +            if (!smmuv3_accel_install_nested_ste(s, &accel_dev->sdev,
-> +                                                 sid, errp)) {
-> +                return false;
-> +            }
-> +        }
-
-This is a bit tricky..
-
-I think CFGI_STE_RANGE shouldn't stop in the middle, if one of the
-STEs fails. 
-
-That being said, HW doesn't seem to propagate C_BAD_STE during a
-CFGI_STE or CFGI_STE_RANGE, IIUIC. It reports C_BAD_STE event when
-a transaction starts. If we want to perfectly mimic the hardware,
-we'd have to set up a bad STE down to the HW, which will trigger a
-C_BAD_STE vevent to be forwarded by vEVENTQ.
+Should we use the global shared_as? Or is this on purpose to align
+with the "&address_space_memory" in kvm_arch_fixup_msi_route()?
 
 Nicolin
 
