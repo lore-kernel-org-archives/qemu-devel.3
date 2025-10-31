@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78893CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 17:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A415CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEsyR-0000H8-KR; Fri, 31 Oct 2025 13:31:39 -0400
+	id 1vEti8-0008Lj-Ou; Fri, 31 Oct 2025 14:18:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1vEsyN-0000Gt-8F
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 13:31:36 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1vEsyD-00052M-7T
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 13:31:34 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C58F6C0157;
- Fri, 31 Oct 2025 20:31:09 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d1b::1:d] (unknown [2a02:6bf:8080:d1b::1:d])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 7Vk0ap0FoqM0-S1xKnPZQ; Fri, 31 Oct 2025 20:31:08 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761931868;
- bh=EcuARGx6kMBz29xTUt+Kg9i4q8SWrEXC5OtpByo/tto=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=JHqxhUBdV5IxhfzTg6sSBySS8Tu8Non98SsqRKA1UCJ331x5f6Hx8yhls1QzCPpVX
- m3FumUwuj9KPnhi/4rIE0XyDhcUbxQ9HQRA8w5pM+bt+vPqnutxIEbW1geRX2X8iCG
- J+tJgPfEWW4XDwApdnRkdAHXZukrlP66HxwibPE0=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c28d5f55-fe85-4871-b5d4-af3c9e41f80d@yandex-team.ru>
-Date: Fri, 31 Oct 2025 20:31:03 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEti5-0008L6-Nt
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:18:49 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vEtht-00048J-UZ
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:18:48 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-429c2f6a580so687018f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:18:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761934711; x=1762539511; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r1am3pKGXD9x9SZaUO2wtY7r/m8jhSkSuLVNWAPfUqs=;
+ b=sQbWpkgaHiCY4gbc04HiPNv8srcP52xc7OmFzJfYryINkoP1dXf9e8leEYIvJR1i2L
+ sfoFJbCfpnLWJyYCJXZBBuLIV8wRC9k83bgNYf0ps42iKQZoT6imD+uI2hZZajnzxJT+
+ u3epk257/Vscw95vrCMb2LOYIfEBLncvNviZrzD3efq+97UlA54Y5bxzBVBXx728gTNA
+ S6T9Yc9QIoAJ79jH2IYzUbUqVqW30wFw3BluTgfzWZNGnt+eK4imIItnIWKqRtlwSe9E
+ x65E0mCnKHcGHvMaYnxEWIV3ITAj1hqCpslYnEMmlLqEWj0LpWtkrcuazgK7tGo8eMWG
+ Gh7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761934711; x=1762539511;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r1am3pKGXD9x9SZaUO2wtY7r/m8jhSkSuLVNWAPfUqs=;
+ b=kbdPOue1fl7/gh3jJ7b9GqHfF24Tf89FmbjG/vofCkddNqGwpljmj5QH/hyDoBQ31N
+ DT7wxSN1iIh/EzYE8bW5i9OO2YdMZV14+xH3bIbGR5nP6cIbcKfHDQdwRgYY8lsieu11
+ P5vK9VdcqZEiy+TH5NRIEn9fNa/dEafNlzU7XajzyGby4eyfHWfjtd8zvCkpevhaXh50
+ Wg8v+PM1CY+nTThWwMamF2MbcA7sBTcmiXqWWuHnwEUwsDnAq/R6jKa11sMZIC+KiPPX
+ Wg10FS3gZfYRkuNEEXMFrew6XC/VDoufoZYmix0bcB8XXfkolRum8JSk5VfdvBBgbLo8
+ JHGQ==
+X-Gm-Message-State: AOJu0YwqS7zhBpf5b9EZjHyHErSF2ZlsWQVIWV4a/eYNvoKMAttB7XiV
+ X1evHOm7H5Pvbi+aAf0AfVl3TrgDx8gx9hiMrH01Q1Oxhpuw7asmFDprh4Jh2iXCG6E=
+X-Gm-Gg: ASbGncsl2mpQrqE9JhCg0mLMKma7CD3yfGSFPYGkZd1XBH4lJv3MijIkFGP5qaPH/8H
+ bosU9WtqCRXf9+Y1ng4XZPu34ker4Q39CtytnvmTBurKxfH8MfXOcBc1FIpWzde6spWUH6y6aL6
+ +R504KxS9vpFCTpi6c8TGUS0NKA4e31jHWaPk+VBzjcxvfZAB5BxlIeV0ufgQYzaYdie5hOEJ5w
+ 3rL0VI25naEYgdf+ZS3GHx3IR9I3IZICk7WlN9FBi+1lKg7nhlzu8SSO1DxT3IrS4laiqA7cCoM
+ AT6Uapqde1H2ugbp1lDDFRFSFjJDdKjrOuw8+4HEKeB2TixPWouY9HAGcl9K9xp6+Z+FNrx2jCT
+ S/rqWqDXTwzNTThcGR+hHgAGsJz1DZHabdALzosgSpy+V8GhUJkQn1tOt4k4INV7HRfVc8pg6vb
+ gCbudzOfzzPIeGP2+ImOlLLg3hjE9AsMdIV/ztlBXC8Kx13JXdHPEiSRjVvH/inkSPGg==
+X-Google-Smtp-Source: AGHT+IHEM8C11IyAEGJe9D+DTYpOv0paYH88dJVL32W4vksAVJUm9puJPouxPATPlZpjuOZKUqSnsQ==
+X-Received: by 2002:a05:6000:2f8a:b0:428:3bf5:b3bf with SMTP id
+ ffacd0b85a97d-429bd6ac07dmr4340119f8f.43.1761934710709; 
+ Fri, 31 Oct 2025 11:18:30 -0700 (PDT)
+Received: from [192.168.1.17] (adijon-656-1-155-31.w90-33.abo.wanadoo.fr.
+ [90.33.190.31]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c13eae16sm4760884f8f.32.2025.10.31.11.18.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Oct 2025 11:18:30 -0700 (PDT)
+Message-ID: <a7f5d348-1243-4c52-8dc1-66e2c3da40ae@linaro.org>
+Date: Fri, 31 Oct 2025 19:18:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/23] vhost: make vhost_dev.features private
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
- <20251015145808.1112843-7-vsementsov@yandex-team.ru>
- <f6b01736-e67a-4664-b216-1c7e13c3f952@yandex-team.ru>
- <bec79b0f-58b2-4197-ad78-f20308ca1e49@yandex-team.ru>
+Subject: Re: [PATCH v2 0/2] KVM Support for imx8mp-evk Machine
 Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <bec79b0f-58b2-4197-ad78-f20308ca1e49@yandex-team.ru>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20251029142311.2986-1-shentey@gmail.com>
+ <CAFEAcA-CGQ2JwDoBVZNhQyBMNKXbZsy2Ds+=m0MAPq0hrsWHhA@mail.gmail.com>
+ <CAFEAcA_sbvMEJ-oTxTYOutgUrH0iapNcJrsZd3=Ov6wNn-NE3w@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_sbvMEJ-oTxTYOutgUrH0iapNcJrsZd3=Ov6wNn-NE3w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,341 +106,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 10/17/25 8:02 PM, Vladimir Sementsov-Ogievskiy wrote:
-> On 17.10.25 13:32, Daniil Tatianin wrote:
->> On 10/15/25 5:57 PM, Vladimir Sementsov-Ogievskiy wrote:
+On 31/10/25 18:12, Peter Maydell wrote:
+> On Fri, 31 Oct 2025 at 16:57, Peter Maydell <peter.maydell@linaro.org> wrote:
 >>
->>> It's hard to control where and how do we use this field. Let's
->>> cover all usages by getters/setters, and keep direct access to the
->>> field only in vhost.c. It will help to control migration of this
->>> field in further commits.
+>> On Wed, 29 Oct 2025 at 14:23, Bernhard Beschow <shentey@gmail.com> wrote:
 >>>
->>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>> ---
->>>   hw/display/vhost-user-gpu.c |  7 +++----
->>>   hw/net/vhost_net.c          | 18 ++++++++---------
->>>   hw/virtio/vdpa-dev.c        |  2 +-
->>>   hw/virtio/vhost-user-base.c |  8 ++++++--
->>>   hw/virtio/vhost-user.c      |  4 ++--
->>>   hw/virtio/vhost.c           |  6 +++---
->>>   hw/virtio/virtio-qmp.c      |  2 +-
->>>   include/hw/virtio/vhost.h   | 39 
->>> +++++++++++++++++++++++++++++++++++--
->>>   net/vhost-vdpa.c            |  7 +++----
->>>   9 files changed, 65 insertions(+), 28 deletions(-)
+>>> This series adds KVM support to the imx8mp-evk machine, allowing it to run
+>>> guests with KVM acceleration. Inspiration was taken from the virt machine. This
+>>> required a device tree quirk for the guest clock to be kept in sync with the
+>>> host. Without this quirk the guest's clock would advance with factor <host
+>>> system counter> / 8Mhz.
 >>>
->>> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
->>> index 79ea64b12c..146620e0a3 100644
->>> --- a/hw/display/vhost-user-gpu.c
->>> +++ b/hw/display/vhost-user-gpu.c
->>> @@ -631,17 +631,16 @@ vhost_user_gpu_device_realize(DeviceState 
->>> *qdev, Error **errp)
->>>       /* existing backend may send DMABUF, so let's add that 
->>> requirement */
->>>       g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_DMABUF_ENABLED;
->>> -    if (virtio_has_feature(g->vhost->dev.features, 
->>> VIRTIO_GPU_F_VIRGL)) {
->>> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_VIRGL)) {
->>>           g->parent_obj.conf.flags |= 1 << 
->>> VIRTIO_GPU_FLAG_VIRGL_ENABLED;
->>>       }
->>> -    if (virtio_has_feature(g->vhost->dev.features, 
->>> VIRTIO_GPU_F_EDID)) {
->>> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_EDID)) {
->>>           g->parent_obj.conf.flags |= 1 << 
->>> VIRTIO_GPU_FLAG_EDID_ENABLED;
->>>       } else {
->>>           error_report("EDID requested but the backend doesn't 
->>> support it.");
->>>           g->parent_obj.conf.flags &= ~(1 << 
->>> VIRTIO_GPU_FLAG_EDID_ENABLED);
->>>       }
->>> -    if (virtio_has_feature(g->vhost->dev.features,
->>> -        VIRTIO_GPU_F_RESOURCE_UUID)) {
->>> +    if (vhost_dev_has_feature(&g->vhost->dev, 
->>> VIRTIO_GPU_F_RESOURCE_UUID)) {
->>>           g->parent_obj.conf.flags |= 1 << 
->>> VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
->>>       }
->>> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
->>> index ca19983126..323d117735 100644
->>> --- a/hw/net/vhost_net.c
->>> +++ b/hw/net/vhost_net.c
->>> @@ -54,8 +54,8 @@ void vhost_net_ack_features_ex(struct vhost_net 
->>> *net, const uint64_t *features)
->>>   {
->>>       virtio_features_clear(net->dev.acked_features_ex);
->>>       if (net->backend == -1) {
->>> -        net->dev.acked_features =
->>> -           net->dev.features & (1ULL << 
->>> VHOST_USER_F_PROTOCOL_FEATURES);
->>> +        net->dev.acked_features = (vhost_dev_features(&net->dev) &
->>> +            (1ULL << VHOST_USER_F_PROTOCOL_FEATURES));
->>>       } else if (!qemu_has_vnet_hdr(net->nc)) {
->>>           net->dev.acked_features = 1ULL << VHOST_NET_F_VIRTIO_NET_HDR;
->>>       }
->>> @@ -282,15 +282,15 @@ struct vhost_net 
->>> *vhost_net_init(VhostNetOptions *options)
->>>       if (backend_kernel) {
->>>           if (!qemu_has_vnet_hdr_len(options->net_backend,
->>>                                  sizeof(struct 
->>> virtio_net_hdr_mrg_rxbuf))) {
->>> -            net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
->>> +            vhost_dev_clear_feature(&net->dev, 
->>> VIRTIO_NET_F_MRG_RXBUF);
->>>           }
->>>           if (!qemu_has_vnet_hdr(options->net_backend) &&
->>> -            (~net->dev.features & (1ULL << 
->>> VHOST_NET_F_VIRTIO_NET_HDR))) {
->>> -            fprintf(stderr, "vhost lacks feature mask 0x%llx for 
->>> backend\n",
->>> -                    ~net->dev.features & (1ULL << 
->>> VHOST_NET_F_VIRTIO_NET_HDR));
->>> -             goto fail;
->>> -         }
->>> +            !vhost_dev_has_feature(&net->dev, 
->>> VHOST_NET_F_VIRTIO_NET_HDR)) {
->>> +            fprintf(stderr, "vhost lacks VHOST_NET_F_VIRTIO_NET_HDR "
->>> +                    "feature for backend\n");
->>> +            goto fail;
->>> +        }
->>>       }
->>>       /* Set sane init value. Override when guest acks. */
->>> @@ -298,7 +298,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions 
->>> *options)
->>>           virtio_features_from_u64(features,
->>> options->get_acked_features(net->nc));
->>>           if (virtio_features_andnot(missing_features, features,
->>> -                                   net->dev.features_ex)) {
->>> + vhost_dev_features_ex(&net->dev))) {
->>>               fprintf(stderr, "vhost lacks feature mask 0x" 
->>> VIRTIO_FEATURES_FMT
->>>                       " for backend\n", 
->>> VIRTIO_FEATURES_PR(missing_features));
->>>               goto fail;
->>> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->>> index efd9f68420..e1a2ff433d 100644
->>> --- a/hw/virtio/vdpa-dev.c
->>> +++ b/hw/virtio/vdpa-dev.c
->>> @@ -224,7 +224,7 @@ static uint64_t 
->>> vhost_vdpa_device_get_features(VirtIODevice *vdev,
->>>                                                  Error **errp)
->>>   {
->>>       VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
->>> -    uint64_t backend_features = s->dev.features;
->>> +    uint64_t backend_features = vhost_dev_features(&s->dev);
->>>       if (!virtio_has_feature(features, VIRTIO_F_IOMMU_PLATFORM)) {
->>>           virtio_clear_feature(&backend_features, 
->>> VIRTIO_F_IOMMU_PLATFORM);
->>> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
->>> index ff67a020b4..cf311c3bfc 100644
->>> --- a/hw/virtio/vhost-user-base.c
->>> +++ b/hw/virtio/vhost-user-base.c
->>> @@ -118,9 +118,13 @@ static uint64_t vub_get_features(VirtIODevice 
->>> *vdev,
->>>                                    uint64_t requested_features, 
->>> Error **errp)
->>>   {
->>>       VHostUserBase *vub = VHOST_USER_BASE(vdev);
->>> +    uint64_t backend_features = vhost_dev_features(&vub->vhost_dev);
->>> +
->>>       /* This should be set when the vhost connection initialises */
->>> -    g_assert(vub->vhost_dev.features);
->>> -    return vub->vhost_dev.features & ~(1ULL << 
->>> VHOST_USER_F_PROTOCOL_FEATURES);
->>> +    g_assert(backend_features);
->>> +    virtio_clear_feature(&backend_features, 
->>> VHOST_USER_F_PROTOCOL_FEATURES);
->>> +
->>> +    return backend_features;
->>>   }
->>>   /*
->>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->>> index 3fd11a3b57..9f26515fd4 100644
->>> --- a/hw/virtio/vhost-user.c
->>> +++ b/hw/virtio/vhost-user.c
->>> @@ -1252,7 +1252,7 @@ static int vhost_user_set_vring_enable(struct 
->>> vhost_dev *dev, int enable)
->>>   {
->>>       int i;
->>> -    if (!virtio_has_feature(dev->features, 
->>> VHOST_USER_F_PROTOCOL_FEATURES)) {
->>> +    if (!vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES)) {
->>>           /*
->>>            * For vhost-user devices, if 
->>> VHOST_USER_F_PROTOCOL_FEATURES has not
->>>            * been negotiated, the rings start directly in the 
->>> enabled state,
->>> @@ -1469,7 +1469,7 @@ static int vhost_user_set_features(struct 
->>> vhost_dev *dev,
->>>        * Don't lose VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user
->>>        * specific.
->>>        */
->>> -    if (virtio_has_feature(dev->features, 
->>> VHOST_USER_F_PROTOCOL_FEATURES)) {
->>> +    if (vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES)) {
->>>           features |= 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
->>>       }
->>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>> index 414a48a218..94efa409aa 100644
->>> --- a/hw/virtio/vhost.c
->>> +++ b/hw/virtio/vhost.c
->>> @@ -1603,7 +1603,7 @@ int vhost_dev_init(struct vhost_dev *hdev, 
->>> void *opaque,
->>>           }
->>>       }
->>> -    virtio_features_copy(hdev->features_ex, features);
->>> +    virtio_features_copy(hdev->_features_ex, features);
+>>> Testing done:
+>>> * Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
+>>>    `qemu-system-aarch64 -M virt,secure=on,virtualization=on,gic-version=4 \
+>>>    -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx8mp-evk \
+>>>    -accel tcg -smp 4". Observe that the `date` command reflects the host's date.
+>>>
+>>> v2:
+>>> * Mention various tradeoffs in the board documentation (Peter)
+>>> * Accommodate for single-binary (Peter, Pierrick) by having CPU defaults
+>>>
+>>> Bernhard Beschow (2):
+>>>    hw/arm/imx8mp-evk: Add KVM support
+>>>    hw/arm/imx8mp-evk: Fix guest time in KVM mode
 >>
->>
->> This should probably use the vhost_dev_features_ex getter
->
-> Hmm, here we write into hdev->_features_ex.
+>> Thanks, I've applied this to target-arm.next.
+> 
+> ...I've had to un-queue it, as it breaks "make check":
+> 
+> test:         qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspect-test
+> start time:   17:06:52
+> duration:     3.70s
+> result:       killed by signal 6 SIGABRT
+> command:      MALLOC_PERTURB_=155
+> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+> PYTHON=/data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
+> G_TEST_DBUS_DAEMON=/data_nvme1n1/linaro/qemu-from-laptop/qemu/tests/dbus-vmstate-daemon.sh
+> RUST_BACKTRACE=1
+> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+> QTEST_QEMU_BINARY=./qemu-system-aarch64
+> QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon
+> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
+> QTEST_QEMU_IMG=./qemu-img MESON_TEST_ITERATION=1
+> /data_nvme1n1/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/qtest/device-introspect-test
+> --tap -k
+> ----------------------------------- stdout -----------------------------------
+> [...]
+> # Testing device 'fsl-imx8mp'
+> ----------------------------------- stderr -----------------------------------
+> unknown type '(null)'
+> Broken pipe
+> ../../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU
+> process but encountered exit status 1 (expected 0)
+> 
+> 
+> I think the problem is that you're trying to use ms->cpu_type
+> in the fsl_imx8mp_init() function. This doesn't work in the
+> device-introspect-test setup, because it is just instantiating
+> each device for test, not running a full machine.
+> 
+> I think the way we usually avoid this is that if an SoC
+> device object needs to know what CPU type to instantiate
+> it has a QOM property, and the board model tells it.
+> (Annoyingly this then means the CPU instantiation has to
+> move into the realize method where the property value is known.)
 
-Right, I missed that it returns a const pointer.
+Correct, this is the same issue I tried to address with the Raspi
+machines and I noted your comments:
+https://lore.kernel.org/qemu-devel/CAFEAcA961WKB4fxwAS0WHXXKwYEO7TnmovD4z-BPGehr6sxBQw@mail.gmail.com/
 
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> 
+> Philippe may know if there's a nicer way to deal with this.
+> (Would it be too ugly to just handle ms->cpu_type == NULL
+> as "assume default"?)
 
->
->>
->> Otherwise, LGTM:
->> Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>
->>>       hdev->memory_listener = (MemoryListener) {
->>>           .name = "vhost",
->>> @@ -1626,7 +1626,7 @@ int vhost_dev_init(struct vhost_dev *hdev, 
->>> void *opaque,
->>>       };
->>>       if (hdev->migration_blocker == NULL) {
->>> -        if (!virtio_has_feature_ex(hdev->features_ex, 
->>> VHOST_F_LOG_ALL)) {
->>> +        if (!vhost_dev_has_feature_ex(hdev, VHOST_F_LOG_ALL)) {
->>>               error_setg(&hdev->migration_blocker,
->>>                          "Migration disabled: vhost lacks 
->>> VHOST_F_LOG_ALL feature.");
->>>           } else if (vhost_dev_log_is_shared(hdev) && 
->>> !qemu_memfd_alloc_check()) {
->>> @@ -1900,7 +1900,7 @@ void vhost_get_features_ex(struct vhost_dev 
->>> *hdev,
->>>       const int *bit = feature_bits;
->>>       while (*bit != VHOST_INVALID_FEATURE_BIT) {
->>> -        if (!virtio_has_feature_ex(hdev->features_ex, *bit)) {
->>> +        if (!vhost_dev_has_feature_ex(hdev, *bit)) {
->>>               virtio_clear_feature_ex(features, *bit);
->>>           }
->>>           bit++;
->>> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
->>> index 82acb6d232..33d32720e1 100644
->>> --- a/hw/virtio/virtio-qmp.c
->>> +++ b/hw/virtio/virtio-qmp.c
->>> @@ -817,7 +817,7 @@ VirtioStatus *qmp_x_query_virtio_status(const 
->>> char *path, Error **errp)
->>>           status->vhost_dev->nvqs = hdev->nvqs;
->>>           status->vhost_dev->vq_index = hdev->vq_index;
->>>           status->vhost_dev->features =
->>> -            qmp_decode_features(vdev->device_id, hdev->features_ex);
->>> +            qmp_decode_features(vdev->device_id, 
->>> vhost_dev_features_ex(hdev));
->>>           status->vhost_dev->acked_features =
->>>               qmp_decode_features(vdev->device_id, 
->>> hdev->acked_features_ex);
->>> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
->>> index e308bc4556..1ba1af1d86 100644
->>> --- a/include/hw/virtio/vhost.h
->>> +++ b/include/hw/virtio/vhost.h
->>> @@ -98,10 +98,11 @@ struct vhost_dev {
->>>        * offered by a backend which may be a subset of the total
->>>        * features eventually offered to the guest.
->>>        *
->>> -     * @features: available features provided by the backend
->>> +     * @_features: available features provided by the backend, 
->>> private,
->>> +     *             direct access only in vhost.h/vhost.c
->>>        * @acked_features: final negotiated features with front-end 
->>> driver
->>>        */
->>> -    VIRTIO_DECLARE_FEATURES(features);
->>> +    VIRTIO_DECLARE_FEATURES(_features);
->>>       VIRTIO_DECLARE_FEATURES(acked_features);
->>>       uint64_t max_queues;
->>> @@ -403,6 +404,40 @@ int vhost_dev_get_inflight(struct vhost_dev 
->>> *dev, uint16_t queue_size,
->>>                              struct vhost_inflight *inflight);
->>>   bool vhost_dev_has_iommu(struct vhost_dev *dev);
->>> +static inline bool vhost_dev_has_feature(struct vhost_dev *dev,
->>> +                                         uint64_t feature)
->>> +{
->>> +    return virtio_has_feature(dev->_features, feature);
->>> +}
->>> +
->>> +static inline bool vhost_dev_has_feature_ex(struct vhost_dev *dev,
->>> +                                            uint64_t feature)
->>> +{
->>> +    return virtio_has_feature_ex(dev->_features_ex, feature);
->>> +}
->>> +
->>> +static inline uint64_t vhost_dev_features(struct vhost_dev *dev)
->>> +{
->>> +    return dev->_features;
->>> +}
->>> +
->>> +static inline const uint64_t *vhost_dev_features_ex(struct 
->>> vhost_dev *dev)
->>> +{
->>> +    return dev->_features_ex;
->>> +}
->>> +
->>> +static inline void vhost_dev_clear_feature(struct vhost_dev *dev,
->>> +                                           uint64_t feature)
->>> +{
->>> +    virtio_clear_feature(&dev->_features, feature);
->>> +}
->>> +
->>> +static inline void vhost_dev_clear_feature_ex(struct vhost_dev *dev,
->>> +                                              uint64_t feature)
->>> +{
->>> +    virtio_clear_feature_ex(dev->_features_ex, feature);
->>> +}
->>> +
->>>   #ifdef CONFIG_VHOST
->>>   int vhost_reset_device(struct vhost_dev *hdev);
->>>   #else
->>> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
->>> index 74d26a9497..0af0d3bdd3 100644
->>> --- a/net/vhost-vdpa.c
->>> +++ b/net/vhost-vdpa.c
->>> @@ -256,15 +256,14 @@ static bool 
->>> vhost_vdpa_get_vnet_hash_supported_types(NetClientState *nc,
->>>   {
->>>       assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
->>>       VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
->>> -    uint64_t features = s->vhost_vdpa.dev->features;
->>>       int fd = s->vhost_vdpa.shared->device_fd;
->>>       struct {
->>>           struct vhost_vdpa_config hdr;
->>>           uint32_t supported_hash_types;
->>>       } config;
->>> -    if (!virtio_has_feature(features, VIRTIO_NET_F_HASH_REPORT) &&
->>> -        !virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
->>> +    if (!vhost_dev_has_feature(s->vhost_vdpa.dev, 
->>> VIRTIO_NET_F_HASH_REPORT) &&
->>> +        !vhost_dev_has_feature(s->vhost_vdpa.dev, VIRTIO_NET_F_RSS)) {
->>>           return false;
->>>       }
->>> @@ -585,7 +584,7 @@ static int 
->>> vhost_vdpa_net_cvq_start(NetClientState *nc)
->>>        * If we early return in these cases SVQ will not be enabled. 
->>> The migration
->>>        * will be blocked as long as vhost-vdpa backends will not 
->>> offer _F_LOG.
->>>        */
->>> -    if (!vhost_vdpa_net_valid_svq_features(v->dev->features, NULL)) {
->>> +    if 
->>> (!vhost_vdpa_net_valid_svq_features(vhost_dev_features(v->dev), 
->>> NULL)) {
->>>           return 0;
->>>       }
->
->
+I will think about it, but unfortunately I am not sure I'll have time
+before the freeze...
+
+This might help (untested) -- although going backward w.r.t. single
+binary but not important for the 10.2 release --:
+
+---
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 61c66ee2d0b..151ed020d1a 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -62,4 +62,4 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: 
+files('armsse.c'))
+  arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: 
+files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+-arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: 
+files('fsl-imx8mp.c'))
+-arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: 
+files('imx8mp-evk.c'))
++arm_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
++arm_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+  arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+---
 
