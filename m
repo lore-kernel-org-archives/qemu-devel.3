@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B10CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 16:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C189CCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 16:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vErXV-00078O-1V; Fri, 31 Oct 2025 11:59:45 -0400
+	id 1vErXd-0007Ac-1s; Fri, 31 Oct 2025 11:59:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vErXL-00075v-Ux
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:36 -0400
+ id 1vErXN-00076V-Bo
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:37 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vErXC-0005zh-Bu
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:34 -0400
+ id 1vErXG-0005zy-3Z
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 11:59:37 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AF81E80825;
- Fri, 31 Oct 2025 18:59:20 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 14EF28088A;
+ Fri, 31 Oct 2025 18:59:24 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:546::1:17])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Fxip9o0FqiE0-3NuanIde; Fri, 31 Oct 2025 18:59:20 +0300
+ ESMTPSA id Fxip9o0FqiE0-bF6TNGtS; Fri, 31 Oct 2025 18:59:23 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761926360;
- bh=hth7YYgv5oIa1kzM1USTJdXw0rOKTSihTZikQSyHH3w=;
+ s=default; t=1761926363;
+ bh=K896VjWcrOPIeJ05AQfDV1xDA9uM8UKPhfeRgDqDo1E=;
  h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=nyZAZlJfkGT1ltOzJXEi0070ua6GvTp4IBBPTyNbFzRwfDbZv17OGhV7PCi8XC2Ys
- DzHu804SLMAJL36mCquZT1jh8wTuCzcZD3w2mYc6w6PhFOV15zan3wYpxuNoMtBgad
- 1idq4G6VGI8HK5j+2MVpePu9y1cxFJ/owkImD+1A=
+ b=TovYVN1YSWFtnx8HZ+/ALzZ2+Ye/bQ1/EvHSVOTCGrhGtYskXuF/kxnKmR0AJ/2dF
+ r9uWSZOpFWiAFRPB3NNF0eJflxiHPXx+1QCQYVPMsZT+XKZSjNyrC0X/6aM/+XSXs5
+ XITv8Lv1POGl3EkEGEWGJHtDYqE5pdnGlcr41LoY=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,10 +45,10 @@ To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  qemu-devel@nongnu.org, vsementsov@yandex-team.ru, raphael@enfabrica.net,
  armbru@redhat.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: [PATCH v5 2/7] chardev/char: split chardev_init_common() out of
- qemu_char_open()
-Date: Fri, 31 Oct 2025 18:59:09 +0300
-Message-ID: <20251031155914.189112-3-vsementsov@yandex-team.ru>
+Subject: [PATCH v5 5/7] chardev/char: introduce .init() + .connect()
+ initialization interface
+Date: Fri, 31 Oct 2025 18:59:12 +0300
+Message-ID: <20251031155914.189112-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251031155914.189112-1-vsementsov@yandex-team.ru>
 References: <20251031155914.189112-1-vsementsov@yandex-team.ru>
@@ -77,64 +77,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to share new chardev_init_logfd() with further
-alternative initialization interface. Let qemu_char_open() be
-a wrapper for .open(), and its artifacts (handle be_opened if
-was not set to false by backend, and filename).
+We'll need a possibility to postpone connect step to later point in
+time to implement backend-transfer migration feature for vhost-user-blk
+in further commits. Let's start with new char interface for backends.
+
+.init() takes QAPI parameters and should parse them, called early
+
+.connect() should actually establish a connection, and postponed to
+the point of attaching to frontend. Called at later point, either
+at time of attaching frontend, or from qemu_chr_wait_connected().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- chardev/char.c | 50 ++++++++++++++++++++++++++++++++------------------
- 1 file changed, 32 insertions(+), 18 deletions(-)
+ chardev/char-fe.c      |  4 ++++
+ chardev/char.c         | 39 +++++++++++++++++++++++++++++++++++++--
+ include/chardev/char.h | 30 +++++++++++++++++++++++++++++-
+ 3 files changed, 70 insertions(+), 3 deletions(-)
 
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index 34b83fc1c4..c67b4d640f 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -193,6 +193,10 @@ bool qemu_chr_fe_init(CharFrontend *c, Chardev *s, Error **errp)
+ {
+     unsigned int tag = 0;
+ 
++    if (!qemu_chr_connect(s, errp)) {
++        return false;
++    }
++
+     if (s) {
+         if (CHARDEV_IS_MUX(s)) {
+             MuxChardev *d = MUX_CHARDEV(s);
 diff --git a/chardev/char.c b/chardev/char.c
-index 3e432195a5..216c95c053 100644
+index 7a029b0eb9..33eba0cdc0 100644
 --- a/chardev/char.c
 +++ b/chardev/char.c
-@@ -250,22 +250,6 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
-                            bool *be_opened, Error **errp)
- {
-     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
--    /* Any ChardevCommon member would work */
--    ChardevCommon *common = backend ? backend->u.null.data : NULL;
--
--    if (common && common->logfile) {
--        int flags = O_WRONLY;
--        if (common->has_logappend &&
--            common->logappend) {
--            flags |= O_APPEND;
--        } else {
--            flags |= O_TRUNC;
--        }
--        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
--        if (chr->logfd < 0) {
--            return;
--        }
--    }
- 
-     if (cc->open) {
-         cc->open(chr, backend, be_opened, errp);
-@@ -1000,6 +984,29 @@ void qemu_chr_set_feature(Chardev *chr,
-     return set_bit(feature, chr->features);
+@@ -33,6 +33,7 @@
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-char.h"
+ #include "qapi/qmp/qerror.h"
++#include "qom/object.h"
+ #include "system/replay.h"
+ #include "qemu/help_option.h"
+ #include "qemu/module.h"
+@@ -338,10 +339,29 @@ static bool qemu_chr_is_busy(Chardev *s)
+     }
  }
  
-+static bool chardev_init_common(Chardev *chr, ChardevBackend *backend,
-+                                Error **errp)
++bool qemu_chr_connect(Chardev *chr, Error **errp)
 +{
-+    /* Any ChardevCommon member would work */
-+    ChardevCommon *common = backend ? backend->u.null.data : NULL;
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
 +
-+    if (common && common->logfile) {
-+        int flags = O_WRONLY;
-+        if (common->has_logappend &&
-+            common->logappend) {
-+            flags |= O_APPEND;
-+        } else {
-+            flags |= O_TRUNC;
-+        }
-+        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
-+        if (chr->logfd < 0) {
++    if (chr->connect_postponed) {
++        assert(cc->connect);
++        chr->connect_postponed = false;
++        if (!cc->connect(chr, errp)) {
 +            return false;
 +        }
 +    }
@@ -142,37 +141,105 @@ index 3e432195a5..216c95c053 100644
 +    return true;
 +}
 +
- static Chardev *chardev_new(const char *id, const char *typename,
-                             ChardevBackend *backend,
-                             GMainContext *gcontext,
-@@ -1020,11 +1027,14 @@ static Chardev *chardev_new(const char *id, const char *typename,
-     chr->label = g_strdup(id);
-     chr->gcontext = gcontext;
+ int qemu_chr_wait_connected(Chardev *chr, Error **errp)
+ {
+     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
  
-+    if (!chardev_init_common(chr, backend, errp)) {
-+        goto fail;
++    if (!qemu_chr_connect(chr, errp)) {
++        return -1;
 +    }
 +
-     qemu_char_open(chr, backend, &be_opened, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
--        object_unref(obj);
--        return NULL;
-+        goto fail;
+     if (cc->chr_wait_connected) {
+         return cc->chr_wait_connected(chr, errp);
+     }
+@@ -1030,6 +1050,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
+ {
+     Object *obj;
+     Chardev *chr = NULL;
++    ChardevClass *cc;
+ 
+     assert(g_str_has_prefix(typename, "chardev-"));
+     assert(id);
+@@ -1044,8 +1065,22 @@ static Chardev *chardev_new(const char *id, const char *typename,
+         goto fail;
      }
  
-     if (!chr->filename) {
-@@ -1035,6 +1045,10 @@ static Chardev *chardev_new(const char *id, const char *typename,
+-    if (!qemu_char_open(chr, backend, typename + 8, errp)) {
+-        goto fail;
++    cc = CHARDEV_GET_CLASS(chr);
++
++    if (cc->init) {
++        assert(!cc->open);
++        assert(cc->connect);
++
++        if (!cc->init(chr, backend, errp)) {
++            goto fail;
++        }
++        assert(chr->filename);
++
++        chr->connect_postponed = true;
++    } else {
++        if (!qemu_char_open(chr, backend, typename + 8, errp)) {
++            goto fail;
++        }
      }
  
      return chr;
-+
-+fail:
-+    object_unref(obj);
-+    return NULL;
- }
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index b65e9981c1..24c449b07b 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -63,6 +63,7 @@ struct Chardev {
+     CharFrontend *fe;
+     char *label;
+     char *filename;
++    bool connect_postponed;
+     int logfd;
+     int be_open;
+     /* used to coordinate the chardev-change special-case: */
+@@ -225,6 +226,7 @@ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
+                                 bool permit_mux_mon);
+ int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_all);
+ #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true)
++bool qemu_chr_connect(Chardev *chr, Error **errp);
+ int qemu_chr_wait_connected(Chardev *chr, Error **errp);
  
- Chardev *qemu_chardev_new(const char *id, const char *typename,
+ #define TYPE_CHARDEV "chardev"
+@@ -259,7 +261,33 @@ struct ChardevClass {
+     /* parse command line options and populate QAPI @backend */
+     void (*parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
+ 
+-    /* called after construction, open/starts the backend */
++    /*
++     * Called after construction, create the backend, mutually exclusive
++     * with @open, and should be followed by @connect().
++     * Must set the Chardev's chr->filename on success.
++     */
++    bool (*init)(Chardev *chr, ChardevBackend *backend,
++                 Error **errp);
++
++    /*
++     * Called after @init(), starts the backend, mutually exclusive
++     * with @open. Should care to send CHR_EVENT_OPENED when connected
++     * (this may happen asynchronously after .connect() call alredy
++     * returned).
++     */
++    bool (*connect)(Chardev *chr, Error **errp);
++
++    /*
++     * Called after construction, an alternative to @init + @connect
++     * and should do the work for both: create and start the backend.
++     * Mutually exclusive with @init and @connect.
++     *
++     * May not set the Chardev's chr->filename (generic code will care),
++     * and may not send CHR_EVENT_OPENED when connected (@be_opened
++     * should not be touched in this case, to signal the generic code
++     * to care about CHR_EVENT_OPENED). If the backend cares about
++     * CHR_EVENT_OPENED, it should set @be_opened to false.
++     */
+     void (*open)(Chardev *chr, ChardevBackend *backend,
+                  bool *be_opened, Error **errp);
+ 
 -- 
 2.48.1
 
