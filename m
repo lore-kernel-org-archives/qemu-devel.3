@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F15CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A09CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEtx6-0004vz-Oo; Fri, 31 Oct 2025 14:34:20 -0400
+	id 1vEtwu-0004p9-9d; Fri, 31 Oct 2025 14:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtx4-0004ut-68
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:34:18 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1vEtwq-0004lq-AO
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:34:04 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtwa-0006H0-TO
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:34:17 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so19739635e9.3
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:45 -0700 (PDT)
+ id 1vEtwP-0006EE-8F
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:34:03 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-4270a3464bcso1797482f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761935621; x=1762540421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761935612; x=1762540412; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=k1r0w/d09dhPJfEfi0bI+xoHmlX36d6WOod1Oi7dPps=;
- b=f5jSBYZEkzhGU+IrPWgVJdZF8+OwDzQyDjwOmjsPIKYplbGCc53TG5ftMujcuW644l
- hW7duTCiM32RQGEcoHIs/kLnDde17/ZAT69RBwmN86g0zWzHIBlSn5rhXXEIH1r7be4v
- I1fhZ6lncmhj7Cp60Wk7SfwKuq9W86VwimKaOQmnKXd9SAEn2qCoVofdCyi4cIdneqUh
- QaMVyysjXpO4T0EOs5PbmjRtzTpGNRR2/4SG7xl95z8W1tHVzM/Ptbxkup0gsjasPGmG
- SSqqxqkbiyh2ocSThoMDRFTQZY3Yc8ZapTlmezIxylHUZSHro6hbGXoVyLD+be+rgGJg
- cd5Q==
+ :reply-to; bh=Bcg7GXTvqWbBwUT5qCuTYDd8DaBbj7mnR+TS0dZGLf4=;
+ b=p/i773dFS7Un6WRLBpvG2UrPVot8k0G6ZZlzGe82PcuLN+3bb2pdbEmPNK+WN7Cdyl
+ vm/XfaOLAX0wEoTdFgRisbP0GNE1iwyCcjqH7o3ICiPzWCxITeF2gXLdnAdo7nBhVDh1
+ WS8pfZLzO2hLlvzki3IM4FI/oBDTLkDIGCzBlMaUCdM8GwmlCsczBsJz+607VMetbq+v
+ ejxksXFVtnfr3TPjgCvQlrQzyw0z271girbQGM968LN4FxE1QPr+9Mh0E9+h9hKJki6s
+ 6v6236Sg3qciiW9Ktl3Ybd84Z40s2gzblS8vnLHxUzMvHs4Sjui0sn8x3qcxaAsRKAAb
+ BlsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761935621; x=1762540421;
+ d=1e100.net; s=20230601; t=1761935612; x=1762540412;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k1r0w/d09dhPJfEfi0bI+xoHmlX36d6WOod1Oi7dPps=;
- b=eoL25yyyu/6n/JdZyV9hvj7pOQFaOH2qvf3IndxlUqTrsfeikvZO/SC/ED10q1GRXk
- pg7U3x96ea9zcD8NMjo4XD/JtH4IJbSPiWEj1OxeEsFd/K631qowJ6Nkj7HzCWGuuY21
- kzQX24BU8qM+ZTX5WNQ3bC63AQAZr8QRZVbiqu+FDTuASNwwH1ciCaaoD+kMmHnejkNO
- SEzckKyBLEGrF2y0DTVbetp/o4L09f3NbOycxmwfdtMYPgGdVtcH6MzxDcTno9OmvlRd
- ihI1BM5/X44KYhssARdcmjYcprihQig38ZznIP9HAYgNmuoUWWFmhnqbPqy/sN6j8Tgs
- KO1Q==
-X-Gm-Message-State: AOJu0YzfXpuFPhMEWf/XdkRX118gMZMkpoxU2jZjH8fANrSEUs9/rsBG
- 1nmGKVP4cKvTWpzPXE+k6ihbULQYZYgib8mIVwUcJhfssC2Ch/EhDT7jyt+JElCVgmFoHsUyKzp
- anTe6
-X-Gm-Gg: ASbGnct4aafBuwnQ7bHgq/9SaVG6SUpetSxubkDOlmqah3GQnpZNkVqpl7hiPjaIPC4
- pZGyI8psphbhFuy95SBbfCbtOE9DjK+EKmI3C7GwVAS4lLUSedM1tJ/frHiJZeETnmDsYhk1bN2
- viyhqTMeQhFlTPs+l4lYbBA79MVmwPCI4jTgaBSTgsa7pIdHmRV0kYVFYZ56/6aFdhYzJcptMIJ
- jKVbCuIPTRksqs3207mp9c0BxmjQIkDHdV0Jf4OfWxzJyLkms8sWUvBdyYUpghS2r/ow9uHGthi
- dI/ZZ2E+anh+segNz1CJinhtq0Yffqm+0o7W/KfOAiySqef+QUO0zOzAsVbQBKrY7P+VpqLmhRp
- XtOzB0ioZkuHOgDvv5eEVsqQ7x7rV7unRhFifaThzA2Tsx3G86X//uEvrWqXGP3Q5iEgEsg9CnF
- bOtfbJzQ==
-X-Google-Smtp-Source: AGHT+IEzEMzCbExH/o72cMb7vr+MjGB5MQOv5OXKUze7FrrGu4Jh42Jz3nQLLURZ841Fc2DueuPHiw==
-X-Received: by 2002:a05:600c:a08:b0:46f:b43a:aef4 with SMTP id
- 5b1f17b1804b1-477308c9f72mr42032085e9.38.1761935620824; 
- Fri, 31 Oct 2025 11:33:40 -0700 (PDT)
+ bh=Bcg7GXTvqWbBwUT5qCuTYDd8DaBbj7mnR+TS0dZGLf4=;
+ b=Zpc8tLZKck5FQ3UYBD9MfzlOS/HgMN/CqT8iMf6rO9sw9YynoUadEsEPs0rJDF1q9N
+ rdZsD14vQmgPKCt9d12SeAJClrL2Q5DuVV2gDoWuVRS1qdnKuHQwglPnoVN8vVLsR454
+ De1E50aA3EgNME7HOA61rtpmjJ4CkFhdRU0euprbPSPRTGzoGBkZpWkceXeGs9BYKgdS
+ KklhN4Ww26XdPcP5ohzheY6Ug2jfgx4cvWWkQZzeQrzvw+WBfal6G6FQQf7IocFzLjcd
+ 8c8+5RJ3bxIyXtjC+JKxn/WcKQHIPB6Cd88qzWVY/yJejLb1dG62wpo/wbqIQNQMgiqG
+ iIVQ==
+X-Gm-Message-State: AOJu0Yx471wdhVBoWSz5d6P9Ni8Cmu6masQdtWs6Nw3XGqtQsVQ5FGtM
+ dGCdTV0jVwlxR+r9DHe6brAjuUsdcNuXk8Gf9PANIdnaE1c9eam8yNK/0/i0naTyY5SJCaoxrd7
+ UPUMs
+X-Gm-Gg: ASbGncttHoTA1U1psL47FOIbb3iBx8jhD0PCKT7Xk2kqpieVc+1eWAfW4eYpHj/Sgl7
+ xuqoXN8195pW9oSBnjeYJ1GsNBrpC+A0HgemtB+GTvymO55WopVCWoSuK2hhg/kstt3RQ8PMmLw
+ YZZ0Vz6Vo+/BcFcHtI1OD39dfxSfJm9sVcmUYH4lEigauYAOgUNINUar7mtB4iFUUyWaebDWROI
+ KxR/2zWp3PrYYOzc251WwWRpZ8qr693Jtvu5UYhk/YLj1PXUvzDjs2pTasx3sMvZI3xNI0nietw
+ K+NTFtMV5yLbu/gKxdmk5LsEQrypE3IONZ9rahgyIXeWxSp59eAvH2owamI36ws2sOlnwyH6IPd
+ lsR191a0GNXBAdsbbOwZax1BuyN5coBa2XSLDVLwKB2tdPGKJ8jAJ1BuO2v7L3c5/T6AO7679IJ
+ w18s5Wn5lnYm2rgxZk
+X-Google-Smtp-Source: AGHT+IHZlHrdPZg48A8koWkls+EhiRx6zMsRm7dh7868mmH4iCNqx0vNFsWCHmKPG1mUhi3NYuA3KA==
+X-Received: by 2002:a5d:64c7:0:b0:429:ba36:5fa2 with SMTP id
+ ffacd0b85a97d-429bd6c1837mr3812145f8f.59.1761935611949; 
+ Fri, 31 Oct 2025 11:33:31 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.39
+ ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 11:33:39 -0700 (PDT)
+ Fri, 31 Oct 2025 11:33:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/38] cpus: Trace cpu_exec_start() and cpu_exec_end() calls
-Date: Fri, 31 Oct 2025 18:33:01 +0000
-Message-ID: <20251031183310.3778349-30-peter.maydell@linaro.org>
+Subject: [PULL 19/38] accel/hvf: Mention hvf_arch_update_guest_debug() must
+ run on vCPU
+Date: Fri, 31 Oct 2025 18:32:51 +0000
+Message-ID: <20251031183310.3778349-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251031183310.3778349-1-peter.maydell@linaro.org>
 References: <20251031183310.3778349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,48 +103,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Since hvf_arch_update_guest_debug() calls hvf_arch_set_traps()
+and hvf_arch_update_guest_debug(), which must run on a vCPU, it
+also must. Mention it.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- cpu-common.c | 3 +++
- trace-events | 2 ++
- 2 files changed, 5 insertions(+)
+ include/system/hvf_int.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/cpu-common.c b/cpu-common.c
-index 0eb5c7b8f24..988d057d844 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -249,6 +249,8 @@ void end_exclusive(void)
- /* Wait for exclusive ops to finish, and begin cpu execution.  */
- void cpu_exec_start(CPUState *cpu)
- {
-+    trace_cpu_exec_start(cpu->cpu_index);
-+
-     qatomic_set(&cpu->running, true);
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 0c335facc3b..241c668795e 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -83,6 +83,8 @@ int hvf_arch_vcpu_exec(CPUState *);
+ int hvf_arch_put_registers(CPUState *);
+ /* Must be called by the owning thread */
+ int hvf_arch_get_registers(CPUState *);
++/* Must be called by the owning thread */
++void hvf_arch_update_guest_debug(CPUState *cpu);
  
-     /* Write cpu->running before reading pending_cpus.  */
-@@ -319,6 +321,7 @@ void cpu_exec_end(CPUState *cpu)
-             }
-         }
-     }
-+    trace_cpu_exec_end(cpu->cpu_index);
- }
+ struct hvf_sw_breakpoint {
+     vaddr pc;
+@@ -109,7 +111,6 @@ void hvf_arch_remove_all_hw_breakpoints(void);
+  * handled by calling down to hvf_arch_update_guest_debug.
+  */
+ int hvf_update_guest_debug(CPUState *cpu);
+-void hvf_arch_update_guest_debug(CPUState *cpu);
  
- void async_safe_run_on_cpu(CPUState *cpu, run_on_cpu_func func,
-diff --git a/trace-events b/trace-events
-index 3ec8a6c7202..faeba6242fa 100644
---- a/trace-events
-+++ b/trace-events
-@@ -29,6 +29,8 @@
- breakpoint_insert(int cpu_index, uint64_t pc, int flags) "cpu=%d pc=0x%" PRIx64 " flags=0x%x"
- breakpoint_remove(int cpu_index, uint64_t pc, int flags) "cpu=%d pc=0x%" PRIx64 " flags=0x%x"
- breakpoint_singlestep(int cpu_index, int enabled) "cpu=%d enable=%d"
-+cpu_exec_start(int cpu_index) "cpu=%d"
-+cpu_exec_end(int cpu_index) "cpu=%d"
- 
- # job.c
- job_state_transition(void *job,  int ret, const char *legal, const char *s0, const char *s1) "job %p (ret: %d) attempting %s transition (%s-->%s)"
+ /*
+  * Return whether the guest supports debugging.
 -- 
 2.43.0
 
