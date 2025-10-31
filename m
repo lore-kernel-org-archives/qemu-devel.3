@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D31CCFA02
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DCACCFA02
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Oct 2025 18:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEtxC-0004x6-TM; Fri, 31 Oct 2025 14:34:27 -0400
+	id 1vEtwh-0004Y5-U2; Fri, 31 Oct 2025 14:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtxA-0004wh-HB
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:34:24 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1vEtwZ-0004SA-MM
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:47 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vEtwb-0006Ik-Ov
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:34:24 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so22486325e9.1
- for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:49 -0700 (PDT)
+ id 1vEtwJ-0006DA-Hh
+ for qemu-devel@nongnu.org; Fri, 31 Oct 2025 14:33:47 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-474975af41dso19434965e9.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Oct 2025 11:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761935626; x=1762540426; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761935606; x=1762540406; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1GsqUplheU28z2VHmMdZVSwjMXPlWcvaPd3oIL/UheI=;
- b=pPl8CV2dUJpBVgyUTYf8PI1ZhJFwfiOHkONrQvFBXouYqD6xss7ePGDSi8wr33jffZ
- /bOM9uuYlSgQYIKY1dzmrXhZUyiVkd0nFPFPAMfZHxSzFlD9AoIArMMEM8QihrfeqUkb
- 2qtqviyAXYQ8U2EjK4oSt6GleBl7EnbJSD7jigL8EbXMi0/20EG7PmmKpiI6KSQCPxUW
- cC6WWin0P1zHFsdyyq6gwmbcSgn+yb5jeQJZFUnlasBOcKbky9edcEKja3mXAq/oJRlj
- xyCDmCD4WnwZdlAcxQ2vsOt9O579QkLcPYQeW0Zg/0flIOferVAj05cZVZtUc6ISZwpS
- v9cg==
+ :reply-to; bh=EtLB+ZJuZimYKJnmKMi+iGzTZfn8He8nFmy5E1ucho8=;
+ b=Pw0X+4pLNbiEOEvD8CyjuIJArAf7dRxSA3Pk2P4i7SN+IRn98O/0ZzdezELDT8YzFn
+ N1JLFA7ZXraSG+aXW/PjY2fph0SfXY5E6Y4ncSCYGnBYigvI3Ki9JeMc8bz+GqJlpEDZ
+ WMXZWOys3KSZXxjp28jhZKPQPyY71Lp8a49uazGascc3bJgij2AB/laVykk0rYoLtYS8
+ CHCIqZZLBrRhSRGV903Odk8tLG0/teEmlDYEPv6gy3QKhRFqFo5AzIsAfytpO+C3xE8v
+ xbNYG0co0Sg4OJ1VtG9AJaA10A7v6ekDU6jLsmHMN8JHR2PP4L2k5vOPDMtElHnfqqq7
+ a2bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761935626; x=1762540426;
+ d=1e100.net; s=20230601; t=1761935606; x=1762540406;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1GsqUplheU28z2VHmMdZVSwjMXPlWcvaPd3oIL/UheI=;
- b=Mv2pod1zf0Q9ocP8Y6sWD+MjVKP13NOYM5TYZqSjDzuBmxmcGNx6aaBKIPVFGU7jXW
- TR0XYli7leUE+XgroovlVErW983kVFREdCklLqCdvYsPB5DD07piLriRY7MuvQBaT5KA
- 9hF3iD960NuY0/xxRvThYmJXhAkvQOqM1E99hHfDPhmC22sg545sCIQEXh7gv6GenOCR
- BeTn0UPKu2/AV1DlXKeOw7n0pPcRSf63DwMIFBDuhrf0rVCFpfbX5xQHrNb7G9FeE5BE
- M+h98m/Gl1sbLImDlyWQtfPwXuk8ZGg+aFsrJmjePzEX2qguTp5SVwuIxLfd7DAgKIuq
- 0flw==
-X-Gm-Message-State: AOJu0YwuD3iPO6exfBnPP3xU2GPtaqR9G0cH63KM4VVRj71f96kSz2he
- As1MXW8figzWAxEEUVfuju7B3uswrZxYl3HUGi3Ri2w6FKVRciUjQ9ZFMZILKNwGeTYpPxMtynr
- dQBqo
-X-Gm-Gg: ASbGncs8LR9h6UO6ETXl2iX4Cyq63xWht+Xmzf6VwChxxBqyLhQe1+g6AU57TBeGUDx
- tljBnwSoWVOLlWms0NhKow2LlzkyoIQiQpH9cDEitGxnHy1PKX2YzmLU4K9+eEam6bmSWDmy59N
- eFeiwwRdrwMFMhL9OnFQWAKuzz/8KA4NtXBkqw7qmMlKhp1szZ+778Ou0IGCg+/33TW5dW3R1n5
- vFdcYx4X5yDWzbCnN3u+S5GNzmAk2bt8uzWRPMXt9QmPDG4TsM6oMYWnz8AEnTtXM+csm+0kmA3
- fv5Jc04i8RXoeAGvb32UBeYEHCDlgCUKP2r1yAG8OlUhui6La9VWxmmEZf0I29k9tnx9LH5Z3eC
- K6tXbnlJNNPdWM3Er7lYS68Iqw1xXt9qCvTy9w8jeXGORIVpvgKkhtqugoM5dAH432mIg8cgUPR
- 6+Gv38l3rpWEpdN9ER
-X-Google-Smtp-Source: AGHT+IGHbCBKBpCScV3qeEbK7X+6hToD1chbyL4j/wL9aEmduf9HOalQ2d0AynE37oMJQl0oG3uFaw==
-X-Received: by 2002:a05:600c:5249:b0:456:1b6f:c888 with SMTP id
- 5b1f17b1804b1-47730870ba1mr45148005e9.23.1761935626590; 
- Fri, 31 Oct 2025 11:33:46 -0700 (PDT)
+ bh=EtLB+ZJuZimYKJnmKMi+iGzTZfn8He8nFmy5E1ucho8=;
+ b=DiV/3jNYvwRMiaJXnto/JDxK2JPLtn7Z2VSaYoK69QTf5IWVQjBQmpDqbHPa9vxyRz
+ gK4XqTN1SuzCTWx5gBeS3RgY95pv8+Yv+bTLW7bQXkyjkb0MKO6rz6FCKyf3oD6cArAA
+ JhTiID+08rQNHxHKvNz2I2FW8AuRu18LmjcrqdwUG//g0D2tPlTIIdKQZleZ3agNOT8k
+ exz4iEIkLymcWAlSTjkftOoQAVP0Svl+5sd9FS4wkU8JqN47hsXL3Mfr+hI9uRRnIka4
+ 0ED3A6jNyBrXJLvj7qcuof1PDWTsfKr4jR6doLhYTX9vgeL5JS7AjkNGDtKT5ZuW5mzd
+ pmDQ==
+X-Gm-Message-State: AOJu0YwAh/fwG2kjSp4kStIdPjtinnGKE5A8v60g+aTy1sF6qWpSfWNf
+ 5hFBMWJe1cNBQI+8dYHvuSFwsSikXPiWDp8fgiCeMWAhDpnnTMYXtpcXoxj9Wflg193IFtBv2d1
+ jlIFL
+X-Gm-Gg: ASbGncvEo7R1e/hES8xnmwVLRhuRQRK9gswH1MZx6Nj9Bwn0ezvnQxeJleOR8OPgPsM
+ MuD+siF3pzq2UPkzOCh9J6QGqsWZVCPxHJUteGQsCuH3xo4FYakhlrXBy+Uv9YW/wIT1E6MgHsO
+ kzQMUUwrzW1TALw8etvFTSvUPqjsgv6lhDiCzObEuCF4OEcy7ih49iYblFOULeNmCcEMe5sgz7t
+ WVqkwHOMYTAYcM1V0tAM9pkz/SsY8bPqKiLa5vDEA+K39e2PoUpp9VITWuF5HvtedzS/flO9IYW
+ fjIH67fTei1ncL9GRRXt0EOdqegVJ/MI0WVCsIGn/zNWAeMzgXiSFhwQfVPVWjj+k9EW7RL7Pom
+ gIRKsVcciAqnhA1chjxmFVfUoWQmT2Tj6zscJMHYsVV9J5+/7g9hFIBrhmkUDwDsNTRtzzzQTIf
+ 7jH0YWBA==
+X-Google-Smtp-Source: AGHT+IEdBE8juyq4UD3OmdTXf+rfOn+Qn9kAidMhTq+owbaa+nOIikXsLTvgiajs5WHDj7rzD/G9SQ==
+X-Received: by 2002:a05:600c:699a:b0:477:1326:7b4b with SMTP id
+ 5b1f17b1804b1-47730872322mr48377365e9.19.1761935606467; 
+ Fri, 31 Oct 2025 11:33:26 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.45
+ ffacd0b85a97d-429c114c944sm4859142f8f.20.2025.10.31.11.33.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Oct 2025 11:33:46 -0700 (PDT)
+ Fri, 31 Oct 2025 11:33:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/38] target/arm: Share ARM_PSCI_CALL trace event between TCG
- and HVF
-Date: Fri, 31 Oct 2025 18:33:08 +0000
-Message-ID: <20251031183310.3778349-37-peter.maydell@linaro.org>
+Subject: [PULL 14/38] accel/hvf: Rename hvf_put|get_registers ->
+ hvf_arch_put|get_registers
+Date: Fri, 31 Oct 2025 18:32:46 +0000
+Message-ID: <20251031183310.3778349-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251031183310.3778349-1-peter.maydell@linaro.org>
 References: <20251031183310.3778349-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,71 +104,138 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-It is useful to compare PSCI calls of the same guest running
-under TCG or HVF.
+hvf_put_registers() and hvf_get_registers() are implemented per
+target, rename them using the 'hvf_arch_' prefix following the
+per target pattern.
+
+Since they call hv_vcpu_set_reg() / hv_vcpu_get_reg(), mention
+they must be called on the vCPU.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/hvf/hvf.c    | 3 ++-
- target/arm/tcg/psci.c   | 3 +++
- target/arm/trace-events | 3 +++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ include/system/hvf_int.h  | 6 ++++--
+ accel/hvf/hvf-accel-ops.c | 2 +-
+ target/arm/hvf/hvf.c      | 8 +++++---
+ target/i386/hvf/hvf.c     | 2 +-
+ target/i386/hvf/x86hvf.c  | 4 ++--
+ 5 files changed, 13 insertions(+), 9 deletions(-)
 
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 32b32e1d024..8fce627b08c 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -74,12 +74,14 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range);
+ int hvf_arch_init_vcpu(CPUState *cpu);
+ void hvf_arch_vcpu_destroy(CPUState *cpu);
+ hvf_slot *hvf_find_overlap_slot(uint64_t, uint64_t);
+-int hvf_put_registers(CPUState *);
+-int hvf_get_registers(CPUState *);
+ void hvf_kick_vcpu_thread(CPUState *cpu);
+ 
+ /* Must be called by the owning thread */
+ int hvf_arch_vcpu_exec(CPUState *);
++/* Must be called by the owning thread */
++int hvf_arch_put_registers(CPUState *);
++/* Must be called by the owning thread */
++int hvf_arch_get_registers(CPUState *);
+ 
+ struct hvf_sw_breakpoint {
+     vaddr pc;
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index 005e2bd891a..3e5feecd8a7 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -81,7 +81,7 @@ hvf_slot *hvf_find_overlap_slot(uint64_t start, uint64_t size)
+ static void do_hvf_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+ {
+     if (!cpu->vcpu_dirty) {
+-        hvf_get_registers(cpu);
++        hvf_arch_get_registers(cpu);
+         cpu->vcpu_dirty = true;
+     }
+ }
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index a3bb71e63b9..f31b6e54ee7 100644
+index 9111c1d717b..f0a0e5d1a75 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -34,6 +34,7 @@
- #include "target/arm/internals.h"
- #include "target/arm/multiprocessing.h"
- #include "target/arm/gtimer.h"
-+#include "target/arm/trace.h"
- #include "trace.h"
- #include "migration/vmstate.h"
+@@ -424,7 +424,7 @@ static const hv_sys_reg_t hvf_sreg_list[] = {
  
-@@ -1025,7 +1026,7 @@ static bool hvf_handle_psci_call(CPUState *cpu)
-     int target_el = 1;
-     int32_t ret = 0;
+ #undef DEF_SYSREG
  
--    trace_hvf_psci_call(param[0], param[1], param[2], param[3],
-+    trace_arm_psci_call(param[0], param[1], param[2], param[3],
-                         arm_cpu_mp_affinity(arm_cpu));
- 
-     switch (param[0]) {
-diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
-index cabed43e8a8..2d409301578 100644
---- a/target/arm/tcg/psci.c
-+++ b/target/arm/tcg/psci.c
-@@ -25,6 +25,7 @@
- #include "internals.h"
- #include "arm-powerctl.h"
- #include "target/arm/multiprocessing.h"
-+#include "target/arm/trace.h"
- 
- bool arm_is_psci_call(ARMCPU *cpu, int excp_type)
+-int hvf_get_registers(CPUState *cpu)
++int hvf_arch_get_registers(CPUState *cpu)
  {
-@@ -79,6 +80,8 @@ void arm_handle_psci_call(ARMCPU *cpu)
-          */
-         param[i] = is_a64(env) ? env->xregs[i] : env->regs[i];
-     }
-+    trace_arm_psci_call(param[0], param[1], param[2], param[3],
-+                        arm_cpu_mp_affinity(cpu));
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+@@ -564,7 +564,7 @@ int hvf_get_registers(CPUState *cpu)
+     return 0;
+ }
  
-     if ((param[0] & QEMU_PSCI_0_2_64BIT) && !is_a64(env)) {
-         ret = QEMU_PSCI_RET_NOT_SUPPORTED;
-diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 72a2c7d0969..676d29fe516 100644
---- a/target/arm/trace-events
-+++ b/target/arm/trace-events
-@@ -23,3 +23,6 @@ arm_powerctl_set_cpu_on(uint64_t mp_aff, unsigned target_el, const char *mode, u
- arm_powerctl_set_cpu_on_and_reset(uint64_t mp_aff) "cpu %" PRIu64
- arm_powerctl_set_cpu_off(uint64_t mp_aff) "cpu %" PRIu64
- arm_powerctl_reset_cpu(uint64_t mp_aff) "cpu %" PRIu64
-+
-+# tcg/psci.c and hvf/hvf.c
-+arm_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid) "PSCI Call x0=0x%016"PRIx64" x1=0x%016"PRIx64" x2=0x%016"PRIx64" x3=0x%016"PRIx64" cpuid=0x%x"
+-int hvf_put_registers(CPUState *cpu)
++int hvf_arch_put_registers(CPUState *cpu)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+@@ -692,11 +692,12 @@ int hvf_put_registers(CPUState *cpu)
+ static void flush_cpu_state(CPUState *cpu)
+ {
+     if (cpu->vcpu_dirty) {
+-        hvf_put_registers(cpu);
++        hvf_arch_put_registers(cpu);
+         cpu->vcpu_dirty = false;
+     }
+ }
+ 
++/* Must be called by the owning thread */
+ static void hvf_set_reg(CPUState *cpu, int rt, uint64_t val)
+ {
+     hv_return_t r;
+@@ -709,6 +710,7 @@ static void hvf_set_reg(CPUState *cpu, int rt, uint64_t val)
+     }
+ }
+ 
++/* Must be called by the owning thread */
+ static uint64_t hvf_get_reg(CPUState *cpu, int rt)
+ {
+     uint64_t val = 0;
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index b2bf59cb483..76a58cb0350 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -734,7 +734,7 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+ 
+     do {
+         if (cpu->vcpu_dirty) {
+-            hvf_put_registers(cpu);
++            hvf_arch_put_registers(cpu);
+             cpu->vcpu_dirty = false;
+         }
+ 
+diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+index 3838c9f5a6f..bb480311b0f 100644
+--- a/target/i386/hvf/x86hvf.c
++++ b/target/i386/hvf/x86hvf.c
+@@ -236,7 +236,7 @@ void hvf_get_msrs(CPUState *cs)
+     env->tsc = rdtscp() + rvmcs(cs->accel->fd, VMCS_TSC_OFFSET);
+ }
+ 
+-int hvf_put_registers(CPUState *cs)
++int hvf_arch_put_registers(CPUState *cs)
+ {
+     X86CPU *x86cpu = X86_CPU(cs);
+     CPUX86State *env = &x86cpu->env;
+@@ -280,7 +280,7 @@ int hvf_put_registers(CPUState *cs)
+     return 0;
+ }
+ 
+-int hvf_get_registers(CPUState *cs)
++int hvf_arch_get_registers(CPUState *cs)
+ {
+     X86CPU *x86cpu = X86_CPU(cs);
+     CPUX86State *env = &x86cpu->env;
 -- 
 2.43.0
 
