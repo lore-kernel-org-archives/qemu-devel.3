@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B266CCCF9F0
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 09:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F08CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 09:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vF8Bi-0008Cj-D0; Sat, 01 Nov 2025 05:46:22 -0400
+	id 1vF8Ex-0000Tg-IF; Sat, 01 Nov 2025 05:49:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vF8Bg-0008CG-Qp
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 05:46:20 -0400
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vF8Be-000822-KO
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 05:46:20 -0400
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-87c1a760df5so52381166d6.1
- for <qemu-devel@nongnu.org>; Sat, 01 Nov 2025 02:46:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761990376; x=1762595176; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4Lb3hpo7+EKHeNPYqW5iGgi40d2PaiZI+drdIl4ZXuM=;
- b=NHCcVxrKi3/qgbpWadKEF9yaQHcQYNlfF5/qDH6bp20PgSzQ7wq66ro4d02SluwJbg
- xo7zphhS4zuPirIy4otGMGFGFVBIIAVqu/ODoYt0jGDoJ93CpUm0s7qiN6OIplaZ8hGh
- mB5l19cNEYhBCQn8Kqtsowaxnv8zawDeoabEKXGw6a1svCBeFYgrWgbpj5N5Gfbc0/3A
- 8KznaPqsWtoEQPO5Ew1qgEANCybSbwSKC3FG7TAdR8MH4KvTWoc4GU4zJMckllPq6pCW
- 0rg2pSNlXH3szufvPWxaiRvE7ylIg03Y4MGqzUMtnR0ORg18gRHRa8peixCpbXn+c5+z
- l9fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761990376; x=1762595176;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4Lb3hpo7+EKHeNPYqW5iGgi40d2PaiZI+drdIl4ZXuM=;
- b=pb1oDUc1N6Ew8tJ0FcbjcOPNMh8ju4MElwVtEgcRSDDpMizhwNJL3z/QO4CL3PTy67
- bg1d6qVLagI7x2znWublmuXKkJ4sxoJrTOjvPfI7xnrKVU3UUu76LVb0Jx7I+CwxW5vF
- UYtvpjqbSnEA2ZJzwvwBed4SxS3zMV2eWxkUrEQ9WBZ6oDFn/IA10ZJfc9gqU5+3fmYs
- 6qb744sVtPsfZq1c/sEznDOEeRkSD5xTJ5WsOyjjnjm/+4D6V8Hl28qBbBawWC4D2Gd9
- RtPFNmTYPm5bWHhZ1FmJVfxNFqI9BcnQxZoWKxj/mm54m/bjZRukXpy10BuRTNCvi/mJ
- QdWA==
-X-Gm-Message-State: AOJu0YyRP55Y2EguZfurLRIjK1Eh92ywCYAwjzVxToF/u1y+YP7jvt8S
- iwh5GssDJvtPOMg2JuVA+mv1uZKbzLa3Cd90BrQn4Wx557a1ShAilmNlC1gWlms42og9VC0PPqN
- hcBtYOVoFucp5sPHbCDheFBFrC8ymGlU=
-X-Gm-Gg: ASbGncs/IPuyeyhR5W5P+w2DgWXLyRmuCkEtuYZmy8D7v1628ncEtb1fPUza1ivgc0u
- 4KxRnOZXYFVYbktOnlgJs1j9Cf96l6dd1LrIW0UG+l6dUBTS5xDiOr6lbV8HlklaMyA9wk+EuDd
- zIQ4Co7ZH0Q79ziZrbe6g12PyLCBJ1XIRWW/TrxkZ1cm5th+sUwb7oVSRKBmSJj0oa4ar4XPsEG
- OogtVcDP1eMev6LIIOj3y17ge0hgDc/SIQ2UyQ6kninl+To3TOLA4iY5dN1n67/+Qvt++YnW8ZQ
- ZQ==
-X-Google-Smtp-Source: AGHT+IFf8EM6oBHMuG2Hmm+xhie/QeIs8p1NvGtHYSDnjWV+AnXQI+ZHINsCXqB1ewgCHj9QR3H/pmofTJ7mKjwAecY=
-X-Received: by 2002:a05:6214:5288:b0:877:81d2:4c27 with SMTP id
- 6a1803df08f44-8802f4ac09emr87238266d6.57.1761990375721; Sat, 01 Nov 2025
- 02:46:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vF8Ev-0000T7-IL; Sat, 01 Nov 2025 05:49:41 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vF8Et-0000H5-C4; Sat, 01 Nov 2025 05:49:41 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 388981651A4;
+ Sat, 01 Nov 2025 12:49:22 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B092E309DEB;
+ Sat, 01 Nov 2025 12:49:33 +0300 (MSK)
+Message-ID: <f2eec7e2-98b2-4f70-8514-b432e083ab6b@tls.msk.ru>
+Date: Sat, 1 Nov 2025 12:49:33 +0300
 MIME-Version: 1.0
-References: <20251031152639.294034-1-pbonzini@redhat.com>
-In-Reply-To: <20251031152639.294034-1-pbonzini@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Sat, 1 Nov 2025 13:46:04 +0400
-X-Gm-Features: AWmQ_bnpS44UMBo_cDaMajY0RaHP498_ZTQJemPaEPfPICashpfHgp0Q0MkKnD4
-Message-ID: <CAJ+F1CLe0d=97syE-J8h9yGWAAz16NQ_dpYEbQvatS8vr3qU=Q@mail.gmail.com>
-Subject: Re: [PATCH] rust: add back to Ubuntu 22.04 jobs
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: Introduce and use MO_ALIGN_TLB_ONLY
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20251022001741.222499-1-richard.henderson@linaro.org>
+ <82f3c305-bbc4-480a-9c73-ef4386e4ab3b@tls.msk.ru>
+ <1f05a80a-12ba-46b8-9681-43e9331221dc@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <1f05a80a-12ba-46b8-9681-43e9331221dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,159 +106,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 11/1/25 12:43, Richard Henderson wrote:
+> On 10/31/25 21:21, Michael Tokarev wrote:
+>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3171
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> I wonder if we should pick this up for qemu-stable too (including
+>> 10.0.x lts series).  It's a rather large change though.
+>>
+>> The patch applies cleanly to both 10.0.x and 10.1.x series, and
+>> seems to be working fine.  Maybe it can be picked up for a later
+>> release.
+> 
+> I think you should hold off for now.
 
-On Fri, Oct 31, 2025 at 7:28=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> Ubuntu is now including updated versions of Rust (up to 1.85) for
-> its LTS releases.  Adjust the CI containers and re-add --enable-rust
-> to the Ubuntu jobs.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Yeah, that's what I mentioned above - it can be picked up later.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>> What's the implication of this bug, anyway?
+> 
+> Failure to raise an alignment trap accessing Device memory when 
+> architecturally required with -smp 1.
+> 
+> Before 10.0, we had no support for raising alignment traps accessing 
+> Device memory under any conditions, so this is more filling a hole in 
+> the implementation than a fixing a regression.
 
-> ---
->  docs/about/build-platforms.rst                   | 10 +++++-----
->  .gitlab-ci.d/buildtest.yml                       |  2 +-
->  scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml |  2 +-
->  scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml   |  2 +-
->  tests/docker/dockerfiles/ubuntu2204.docker       |  6 +++---
->  tests/lcitool/mappings.yml                       |  4 ++--
->  tests/lcitool/refresh                            |  4 ++--
->  7 files changed, 15 insertions(+), 15 deletions(-)
->
-> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.=
-rst
-> index fc2743658d4..e95784cdb55 100644
-> --- a/docs/about/build-platforms.rst
-> +++ b/docs/about/build-platforms.rst
-> @@ -117,14 +117,14 @@ Rust build dependencies
->    a newer version using ``cargo install bindgen-cli``.
->
->    QEMU requires Rust 1.83.0.  This is available on all supported platfor=
-ms
-> -  with two exception: Ubuntu LTS releases 22.04 and 24.04, and the
-> -  ``mips64el`` architecture on Debian bookworm.  For all other
-> +  except for the ``mips64el`` architecture on Debian bookworm.  For all =
-other
->    architectures, Debian bookworm provides a new-enough Rust compiler
->    in the ``rustc-web`` package.
->
-> -  It is expected that in the future Ubuntu will provide updated packages
-> -  like the existing ``rustc-1.82`` package.  The path to ``rustc`` and
-> -  ``rustdoc`` will have to be provided manually to the configure script.
-> +  For Ubuntu 22.04 ("Jammy") and 24.04 ("Noble") updated versions of
-> +  Rust are available through packages such as ``rustc-1.83`` package;
-> +  the path to ``rustc`` and ``rustdoc`` has to be provided manually to
-> +  the configure script.
->
->    Some distros prefer to avoid vendored crate sources, and instead use
->    local sources from e.g. ``/usr/share/cargo/registry``.  QEMU includes =
-a
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index 21f6d7e96fe..44df116139b 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -39,7 +39,7 @@ build-system-ubuntu:
->      - job: amd64-ubuntu2204-container
->    variables:
->      IMAGE: ubuntu2204
-> -    CONFIGURE_ARGS: --enable-docs
-> +    CONFIGURE_ARGS: --enable-docs --enable-rust
->      TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
->      MAKE_CHECK_ARGS: check-build
->
-> diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/c=
-i/setup/ubuntu/ubuntu-2404-aarch64.yaml
-> index ce632d97108..8c4b71b5942 100644
-> --- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-> +++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-> @@ -119,7 +119,7 @@ packages:
->    - python3-wheel
->    - python3-yaml
->    - rpm2cpio
-> -  - rustc-1.77
-> +  - rustc-1.83
->    - sed
->    - socat
->    - sparse
-> diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/=
-setup/ubuntu/ubuntu-2404-s390x.yaml
-> index f45f75c9602..2758f55e5a2 100644
-> --- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-> +++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-> @@ -117,7 +117,7 @@ packages:
->    - python3-wheel
->    - python3-yaml
->    - rpm2cpio
-> -  - rustc-1.77
-> +  - rustc-1.83
->    - sed
->    - socat
->    - sparse
-> diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/do=
-ckerfiles/ubuntu2204.docker
-> index b393db55a8c..602d4196249 100644
-> --- a/tests/docker/dockerfiles/ubuntu2204.docker
-> +++ b/tests/docker/dockerfiles/ubuntu2204.docker
-> @@ -124,7 +124,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
->                        python3-wheel \
->                        python3-yaml \
->                        rpm2cpio \
-> -                      rustc-1.77 \
-> +                      rustc-1.83 \
->                        sed \
->                        socat \
->                        sparse \
-> @@ -155,8 +155,8 @@ ENV LANG "en_US.UTF-8"
->  ENV MAKE "/usr/bin/make"
->  ENV NINJA "/usr/bin/ninja"
->  ENV PYTHON "/usr/bin/python3"
-> -ENV RUSTC=3D/usr/bin/rustc-1.77
-> -ENV RUSTDOC=3D/usr/bin/rustdoc-1.77
-> +ENV RUSTC=3D/usr/bin/rustc-1.83
-> +ENV RUSTDOC=3D/usr/bin/rustdoc-1.83
->  ENV CARGO_HOME=3D/usr/local/cargo
->  ENV PATH=3D$CARGO_HOME/bin:$PATH
->  RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-> diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-> index 8f0e95e1c56..a749cf8c515 100644
-> --- a/tests/lcitool/mappings.yml
-> +++ b/tests/lcitool/mappings.yml
-> @@ -70,8 +70,8 @@ mappings:
->
->    rust:
->      Debian12: rustc-web
-> -    Ubuntu2204: rustc-1.77
-> -    Ubuntu2404: rustc-1.77
-> +    Ubuntu2204: rustc-1.83
-> +    Ubuntu2404: rustc-1.83
->
->  pypi_mappings:
->    # Request more recent version
-> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-> index 056cfb6e9d7..273fb534cdd 100755
-> --- a/tests/lcitool/refresh
-> +++ b/tests/lcitool/refresh
-> @@ -152,8 +152,8 @@ fedora_rustup_nightly_extras =3D [
->  ]
->
->  ubuntu2204_rust_extras =3D [
-> -    "ENV RUSTC=3D/usr/bin/rustc-1.77\n",
-> -    "ENV RUSTDOC=3D/usr/bin/rustdoc-1.77\n",
-> +    "ENV RUSTC=3D/usr/bin/rustc-1.83\n",
-> +    "ENV RUSTDOC=3D/usr/bin/rustdoc-1.83\n",
->      "ENV CARGO_HOME=3D/usr/local/cargo\n",
->      'ENV PATH=3D$CARGO_HOME/bin:$PATH\n',
->      "RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \\\n",
-> --
-> 2.51.1
->
->
+It's a defect in a (new) implementation still.
 
+But yeah, let's hold off for now.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Thanks!
+
+/mjt
 
