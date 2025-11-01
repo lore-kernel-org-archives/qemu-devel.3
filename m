@@ -4,90 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D274CCFA00
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 13:49:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8DECCFA03
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 14:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFByA-0005pZ-KI; Sat, 01 Nov 2025 09:48:38 -0400
+	id 1vFCBC-0008G0-9p; Sat, 01 Nov 2025 10:02:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vFBy9-0005pR-7R
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 09:48:37 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vFBy7-0008LL-2Y
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 09:48:36 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47112edf9f7so24905795e9.0
- for <qemu-devel@nongnu.org>; Sat, 01 Nov 2025 06:48:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762004913; x=1762609713; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9vTWT/W8ejaLX/9gBPa0QXvAgbwqGxabIeP/UifNl+4=;
- b=SAEw1UZCeIGHss+lgqMxmF6cUe3Z04LdyyBX6ExRmmbXoovV60OiBtV4snoHNz0Ogf
- qyjjq6WI404Ns8plrenzzrn2LwJkCd1JUoXNPAGtpCmFiOeAAildBggjbbV+2z4sDWiF
- SB0/ECqzrwAN+hvBwZh6FFpOWD7VXCWMyqGVPPKUI6twlhOzlmO+ERx1pe3ON0xY59hZ
- 3BW9X0CQzWgaESFmuLTtj2qlR/q34y/Ejxt0WOvioxOWm6X+4I6fEr8gttKqjg1ZoMSD
- lX5LSixle3sN7KkHhnVrhhXtVojDrqkuHR+geAA85ttufYvVT6rGPMi2TCQOdTvtTxyL
- 2pBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762004913; x=1762609713;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9vTWT/W8ejaLX/9gBPa0QXvAgbwqGxabIeP/UifNl+4=;
- b=P+4kXD6Llemob7jOMMCkKYvkvmnYR/eycRw4VzW7p9fSjpVy0vjSnP+sO+0TCQR5k1
- ti5OegeHWb38Q+pRu8sWGz5r0HdrirLuuDMmER5nBOOX/K+BGboevY4m5YWcFU2klp6m
- NTXhuApLuXOx3xzukmAPRUQqy76ijuaSDu191WoFUDW3aXae0oDsWUkjcqLNkQfnBPJo
- lVh4fYW9pM0hDGDKo7S+y8dJIN/aZ2CjwEKFzh2r6aRWgBxRmkwVvXBROSxBmfD0vguQ
- PerlU11NeFbdwpUISlnwAJ12Z359eRJ02hjduvGGwcl5YKrThd6G/VeMbeEBKG9/tgvQ
- 2f8g==
-X-Gm-Message-State: AOJu0YxLIHSTYW3gARDIIQJJJDy4JjifIdcK5oybeg4GT9dFOcv4tD6J
- l9f89LLRM4ykoye+QxPpl30LaT5sDV8OjbPFbsJQFj3sO5bxiAfIZQTM
-X-Gm-Gg: ASbGnctpeCz1jOBmpgniT0E4KDCa+ha1KUnU6kMQ/a1tv8bFpbVmB52yAYXfLVwO84x
- PlEPuUbzculLIRIM6LyYZy9/hd3KsZiyTN7yb3UPLnsthzR72qRlfRNxIIHK6etNkm+Uf6OkiBB
- 3SMQBpbDyFbsX0ehOBFduwP/zPpx1UdpjpjPxeddx29CnwdDRX1HB4JUAB3IdvqKw8AC4qFkBsZ
- +FFLdi5vZunv7NLXy8lk8BAVruh9TskjydwG1id6tnT1w5BKTWxBx12W0uJIp9HagJEwxXyNwcA
- 1rVhjyKrlAVJMu8MEYi2XAJ2tb7op/WMD6g2KlupC9cVbIBZZ4x4Pz0BRd1fN13AMgktB2cFCFZ
- 2xeXA8gKeG1FSdRBO7CTuwZ/EFzP9jPAe3NUONx3pYpUf167JwnXyF6+OWEsVSOKAKQtOXEYHMH
- LmKxluILGqbsF91ouOlFirrOWK0qK8dIGOh/HBkWThjgePu1+vu3wPyz37idsPQBHX+9GuPGOo
-X-Google-Smtp-Source: AGHT+IEMjN7+j8dj1pTfWV6BKNz9qn4I+YdFBfhXRbacre+curyQ2b3k1nS/Q/LZwrUC9zs/qAUEAg==
-X-Received: by 2002:a05:600c:3f92:b0:46e:4921:9443 with SMTP id
- 5b1f17b1804b1-477308ddbe0mr65703375e9.37.1762004912691; 
- Sat, 01 Nov 2025 06:48:32 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (p200300faaf271400bdbc21c775fcdd84.dip0.t-ipconnect.de.
- [2003:fa:af27:1400:bdbc:21c7:75fc:dd84])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773c4ac18bsm48334735e9.5.2025.11.01.06.48.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 01 Nov 2025 06:48:32 -0700 (PDT)
-Date: Sat, 01 Nov 2025 13:48:29 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_qga/vss-win32/install=3A_Re?=
- =?US-ASCII?Q?move_=5Fcom=5Futil=3A=3AConvertStringToBSTR=28=29?=
-In-Reply-To: <CAFEAcA-ycNEcZGF0kqLYBzq4xLSJikYZL_Q0JyKbuMuDtAJ7JA@mail.gmail.com>
-References: <20251101130330.1927-1-shentey@gmail.com>
- <CAFEAcA-ycNEcZGF0kqLYBzq4xLSJikYZL_Q0JyKbuMuDtAJ7JA@mail.gmail.com>
-Message-ID: <6BAB4EAC-80E2-4DA3-B344-D233C014E7EB@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vFCB9-0008Fk-Ey
+ for qemu-devel@nongnu.org; Sat, 01 Nov 2025 10:02:03 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vFCB6-0001xf-F3
+ for qemu-devel@nongnu.org; Sat, 01 Nov 2025 10:02:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0FCA0597300;
+ Sat, 01 Nov 2025 15:01:56 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id rp4d95b0A6LV; Sat,  1 Nov 2025 15:01:54 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 156A95972E9; Sat, 01 Nov 2025 15:01:54 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 139BB5972E3;
+ Sat, 01 Nov 2025 15:01:54 +0100 (CET)
+Date: Sat, 1 Nov 2025 15:01:54 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com, 
+ qemu-devel@nongnu.org
+Subject: [PATCH] ati-vga: Separate default control bit for source (fwd)
+Message-ID: <f6e2b734-e10b-fc2b-a307-47f18d2a01a2@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,34 +63,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello,
+
+Maybe you can also review (with Reviewed-by tag) and rebase on this patch 
+I've sent before. I don't know about any problem this fixes but what we 
+have now is not entirely correct.
+
+Regards,
+BALATON Zoltan
+
+---------- Forwarded message ----------
+Date: Tue, 07 Oct 2025 21:54:35 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com
+Subject: [PATCH] ati-vga: Separate default control bit for source
+
+The DP_GUI_MASTER_CNTL register has separate bits for src and dest but
+we were only looking at the dest bit. Use the correct bit for source.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+  hw/display/ati_2d.c | 11 ++++++-----
+  1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 309bb5ccb6..e69b15b570 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -43,7 +43,8 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
+      }
+  }
+
+-#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
++#define DFLT_CNTL_SRC (s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL)
++#define DFLT_CNTL_DST (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
+
+  void ati_2d_blt(ATIVGAState *s)
+  {
+@@ -63,12 +64,12 @@ void ati_2d_blt(ATIVGAState *s)
+          qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+          return;
+      }
+-    int dst_stride = DEFAULT_CNTL ? s->regs.dst_pitch : s->regs.default_pitch;
++    int dst_stride = DFLT_CNTL_DST ? s->regs.dst_pitch : s->regs.default_pitch;
+      if (!dst_stride) {
+          qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
+          return;
+      }
+-    uint8_t *dst_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
++    uint8_t *dst_bits = s->vga.vram_ptr + (DFLT_CNTL_DST ?
+                          s->regs.dst_offset : s->regs.default_offset);
+
+      if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+@@ -97,13 +98,13 @@ void ati_2d_blt(ATIVGAState *s)
+                         s->regs.src_x : s->regs.src_x + 1 - s->regs.dst_width);
+          unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+                         s->regs.src_y : s->regs.src_y + 1 - s->regs.dst_height);
+-        int src_stride = DEFAULT_CNTL ?
++        int src_stride = DFLT_CNTL_SRC ?
+                           s->regs.src_pitch : s->regs.default_pitch;
+          if (!src_stride) {
+              qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
+              return;
+          }
+-        uint8_t *src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
++        uint8_t *src_bits = s->vga.vram_ptr + (DFLT_CNTL_SRC ?
+                              s->regs.src_offset : s->regs.default_offset);
+
+          if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-- 
+2.41.3
 
 
-Am 1=2E November 2025 13:13:26 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->On Sat, 1 Nov 2025 at 13:04, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> Now that MSYS2 provides an implementation of the function it clashes wi=
-th
->> QEMU's, resulting in a compilation error=2E Remove it since it doesn't =
-seem
->> to be used anyway=2E
->
->The comment says it's used by _bstr_t, which presumably
->is in some Windows header or library that we're linking against=2E
->Our code seems to use _bstr_t a lot=2E Is this function definitely
->not required, or should we have something so we provide it only
->when MSYS2 does not?
-
-I just grepped the code and it doesn't return any users=2E And searching t=
-he git history it never did=2E Maybe some library we're linking against nee=
-ds an implementation but I can't reproduce this with my recent MSYS2 instal=
-lation=2E
-
-Best regards,
-Bernhard
-
->
->thanks
->-- PMM
 
