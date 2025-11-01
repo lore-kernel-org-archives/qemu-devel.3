@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58DFCCF9F0
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 11:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A7A3CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 11:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vF9Wj-0007uV-AU; Sat, 01 Nov 2025 07:12:12 -0400
+	id 1vF9Y0-0000I6-Jx; Sat, 01 Nov 2025 07:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vF9WU-0007st-9j
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 07:11:54 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1vF9Xy-0000HC-IC
+ for qemu-devel@nongnu.org; Sat, 01 Nov 2025 07:13:27 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vF9WP-0005S9-QN
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 07:11:51 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-63c3d913b3bso5743138a12.2
- for <qemu-devel@nongnu.org>; Sat, 01 Nov 2025 04:11:48 -0700 (PDT)
+ id 1vF9Xv-0005V7-W3
+ for qemu-devel@nongnu.org; Sat, 01 Nov 2025 07:13:26 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-640a503fbe8so77942a12.1
+ for <qemu-devel@nongnu.org>; Sat, 01 Nov 2025 04:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761995506; x=1762600306; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761995600; x=1762600400; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=51kPi4dYc3eUaVmK5npSELX9Pn2ZA6qJGcNdbBFAurU=;
- b=HxylmjS4+BKKlc6XNPcEsUFUDc1r0pv32ydO33pqcplW2NrNFa+oGJWSnbtfXgDV73
- j1ZUNHVhYTNa6PAhvtyZInRHehWy6dXe4QCWZxuSlYAS3iAy+O+uDsXdpjcklfxjjY1l
- 47/Z4AIHwTczkGI3ewoR/uxqIYMe4iupz5r4te5oe4qf/ANF6OCDKHCo0PaZfIIASAbH
- aGZ1o+EZ0iXBHyA1BeU5mgBLdWTOYzx15cZCsVcRgO5GBeFOCjq4Y+Lx5sRVU9igt/uG
- SKIEy2Xg3PxUjaI3dS1ERE+gVQi37Yf+abxKhaDXKjoM9Vyw8hUpZlFJAOlQ3LHDZ/F4
- WjKQ==
+ bh=eV8vdgw3enaRMai6uF/KG013iTjjLxBhEP/Odyd9p0w=;
+ b=E43ZPM579KBU5scWISkfwz6/wb0kOcVSwrmKPomSk1d5QLQjbzqZuwA3l3QmDgy9ec
+ ZfJFwzQNG0Crjr3Qd4rXPiFbibOi4vF8AXf6zoSOCweSQZrHfGSxkrpKqCk4so1Zytea
+ qS6kl65vrqslWSEEZGw27nYSVVUPvDseqGeuW0PIOxJwLbRXAYNuRmu4INxdQfgNs/U+
+ OmvNYbhYjvAG529ZAM+y9jSkIOPQLkPbWujsjd41pL1DJpEEiYQRbB/66A6GHNPjjcFC
+ 966kWKCVtoudTcNxcy5tJ3ZDVZCxcy1TwssEIGYHdB0SKNhlToIZ6Mxnsp3KcZx6XBPM
+ Pk+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761995506; x=1762600306;
+ d=1e100.net; s=20230601; t=1761995600; x=1762600400;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=51kPi4dYc3eUaVmK5npSELX9Pn2ZA6qJGcNdbBFAurU=;
- b=n+4yj/aK4LimYGISonDe+GbhewG8E0XVJVjexDCAWWpS+zijwLNqXjxkPPC0SFzPo/
- bHCQdegVdVTRNYxQUZL8efhkYB/ZV7svgfiigyb8Kf1f3FpeIFphPkTdRTiTPUfakHz4
- g/NE/OtGJJq1cVRjgO4l8ijRTwM8Z/F9bCi5LwVDHTRo+l7/j1zdpsCTlmsN2brnGIoM
- 87f8RO+ftTcQm3XbMWBcNJwtiIixVGiEVjOPs1dLyWiYdhtkOy/zeLcwYnIWjnRGBe7e
- Z+cZXi9lmQEZS45SgMT2Bl9lvmerKAOMtANkSys+IohDM0XUXMM5l/CFbyNGDkc+oZk1
- 6N2A==
-X-Gm-Message-State: AOJu0YxBfj9jHzflJctpUR5duDGgV0gkollbXXFcP9tv76L5+hayT9Tw
- XXy8rX+fUP/aPJzYzDIXT1DsVZ5Q0YkkX1k+9+WSJG9QOH4QxYI/Bz0UqT5jB4nt45LYHfewfTT
- x6b6yBAM=
-X-Gm-Gg: ASbGncsVBZVP5m++zoKc2DOBMbMflDATrRJ/tqRwR60/ZCT11H0uy0AXrIq3x6VCxgx
- TCmV0peWPotOJhUozLUyXRi8g32dKMriEsTXOow2COEY96NGfpeE2NrtFvOp+7oY7CnXNpXD351
- zOtX6+P3Aft5ghMDRILI/BqVyj4efpuxFfSVeFLcwLZx4ykdF/oQKKMxMKMvWkwWNY6I2/AaqTO
- /t898gAgJqWtt3kFiAVsuM3wEIa+JcM20V7omgayFXcPoAhz8aPpYvYFAwqWYKFhSsZ5I/r79h1
- FcHmUZ4esbYqP4Y/BhbLEgnXIp087CrDxLu6776etHc9iXm1ciKI6hvZPi929gTOvTF9xP53q4I
- Awarj8CNiJFcbz4Zs3DxFQdQj4by3AQibeAa5F39tyZKmcXSIaxf89NPj5zXtI8PmMnvYH1X0mv
- wN+iYdGszVtgHdtAg/zQPvoi154uwwaOpCBeZ2hyuvvx5PN4x9bhQ=
-X-Google-Smtp-Source: AGHT+IGWCkiwjI/8OSPGqxmpNYFxXRqAAbrxISuBfJCwHRn5co+VNbXpGea+5eVee+AoqNycPRVC8w==
-X-Received: by 2002:a17:907:9403:b0:b40:6d68:349a with SMTP id
- a640c23a62f3a-b70704dc16bmr621464966b.39.1761995506443; 
- Sat, 01 Nov 2025 04:11:46 -0700 (PDT)
+ bh=eV8vdgw3enaRMai6uF/KG013iTjjLxBhEP/Odyd9p0w=;
+ b=lXG2FgYKHlSp++brLApn7PjMNRnIfPEi07Yo0o+Y63HQx0/OZMD9EzbPY7YzLNYOTf
+ xye5yuEFJe3idF2WVBFV//uLkxhbxjLDYS2EaEfTtH6taCVl2WV3KdAFRiRxL5BJ7xEx
+ b+HgT606tohrAhxr8t0gjtGqUaD3qn9njI31VB/9eoInPqIdodO99IYDT8mz4BpMzXvn
+ N3bsOzM4P8Nv/MzXaxssbeQ94Hxl8ocNqBqd7ZNqOFKV1mNLgbfiiKe9GKeeINTJwX6Y
+ P37Ab03fPyw0Ov7+uSCqOKRk24nFvQGkBGWPOeQbcObM7eZWkkjwWviJC9AotxX2UyXv
+ mq5A==
+X-Gm-Message-State: AOJu0Ywt6SuuBoCK37jmi805iKaRPUut36c7QAI7tCB+oP68gEM7/uTm
+ 4lntzdHbp3KQAiOHOcpxIixW+q3Ot9ZH01h7/AvG9NIWBNMuOAxkMZ1aa6A5TDjq+PQSZ6jzY42
+ nFnqT90s=
+X-Gm-Gg: ASbGncvu72rXK23sYsxf/Y6RxaEIMbwx5+pp8B5RpJDyWohv1QxbTahULGFaWi75xcd
+ PuORY12fH+AxhSwuLUGV/uOnBcfg97wFB/qkUHaN/lWhvezQ4vkcu0xrXRrSz77OvGFKBsw9qu2
+ MESKEe2tEuu/2CMF+gkrBj6l/+K5wMZ2Q0/VaassqK8JbjOnmOCzcrEYJYZ0PvJJFFKHeXDBUVS
+ QHRnvd5QWS87sRsCsX4kIfcxb4Zz9mvnaEVNYQ1BmJXa94YV7DRY3OsNyG21nJMu7GhwshQ9IiO
+ n3hkNGucBvXlAiNjisTICUivwzt7a7Os1YhVAKazX2K3OnI1H9AXEa/s6jbFqtY8ScCGMXsPfaz
+ ZMg4uF2RhNCwj8TcgTj0xOPDIeJgwn94n/leH1ze6byHROsLbMfq/oxl1L3DMhv4P6XMIT4FHAP
+ MxkOK9ojOeTWwCuNoEid18YWi0TVT2jmbve42DRvQEUEeXxn9y+pk=
+X-Google-Smtp-Source: AGHT+IEQ6a2+wiCqp9IjVynpHPInXfFdiqGDsLNNyjsaMlP6Wo3KNq1N9+owmQkI9NG+E/9tK5sOtg==
+X-Received: by 2002:a17:907:968b:b0:b70:30c8:c35 with SMTP id
+ a640c23a62f3a-b7070870ccbmr675492566b.62.1761995600252; 
+ Sat, 01 Nov 2025 04:13:20 -0700 (PDT)
 Received: from [10.240.88.227] (C3239BBB.static.ziggozakelijk.nl.
  [195.35.155.187]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b7077d065e1sm431383266b.71.2025.11.01.04.11.45
+ 4fb4d7f45d1cf-6407b438536sm3961390a12.26.2025.11.01.04.13.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 01 Nov 2025 04:11:46 -0700 (PDT)
-Message-ID: <06e169b2-9e93-4619-9215-b36136c950a9@linaro.org>
-Date: Sat, 1 Nov 2025 12:11:44 +0100
+ Sat, 01 Nov 2025 04:13:19 -0700 (PDT)
+Message-ID: <3246d988-c89a-426e-b2c6-2f086b2578f0@linaro.org>
+Date: Sat, 1 Nov 2025 12:13:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/38] target-arm queue
+Subject: Re: [PULL 0/9] Accelerators & CPU patches for Halloween 2025
 To: qemu-devel@nongnu.org
-References: <20251031183310.3778349-1-peter.maydell@linaro.org>
+References: <20251031211518.38503-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251031183310.3778349-1-peter.maydell@linaro.org>
+In-Reply-To: <20251031211518.38503-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/31/25 19:32, Peter Maydell wrote:
-> Hi; here's an arm pullreq for the freeze. Mostly this is Philippe's
-> hvf cleanup work, but there are some other smaller things in here too.
+On 10/31/25 22:15, Philippe Mathieu-Daudé wrote:
+> The following changes since commit c494afbb7d552604ad26036127655c534a2645e5:
 > 
-> thanks
-> -- PMM
-> 
-> The following changes since commit 3728de31925ae9658e2ce3d1ff9b63c83609f310:
-> 
->    Merge tag 'single-binary-20251030' ofhttps://github.com/philmd/qemu into staging (2025-10-31 10:26:34 +0100)
+>    Merge tag 'pull-nvme-20251030' of https://gitlab.com/birkelund/qemu into staging (2025-10-31 12:56:05 +0100)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251031
+>    https://github.com/philmd/qemu.git tags/accel-cpus-20251031
 > 
-> for you to fetch changes up to 8b733be9f408f9b550fc998c790e32aded5119f1:
+> for you to fetch changes up to 0da6099730dbd44a6a96ad18774e5553d1ca7d21:
 > 
->    accel/hvf: Trace prefetch abort (2025-10-31 16:26:46 +0000)
+>    rx: cpu: fix interrupts check in rx_cpu_do_interrupt() (2025-10-31 22:10:50 +0100)
+> 
+> Following checkpatch.pl error ignored:
+> 
+>    8/9 Checking commit 46f767bd6814 (tests/unit: add unit test for qemu_hexdump())
+>    ERROR: unnecessary whitespace before a quoted newline
+>    #59: FILE: tests/unit/test-cutils.c:3662:
+>    +            "s is \n";
+> 
+>    total: 1 errors, 0 warnings, 56 lines checked
 > 
 > ----------------------------------------------------------------
-> target-arm queue:
->   *  hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
->   * docs/system/arm/virt: Document user-creatable SMMUv3
->   * docs/system/security: Restrict "virtualization use case" to specific machines
->   * target/arm: Add assert to arm_to_core_mmu_idx()
->   * hw/arm/virt: remove deprecated virt-4.1 and virt-4.2 machine types
->   * hvf: Refactorings and cleanups
+> Generic CPUs / accelerators patch queue
+> 
+> - Access CPUState::thread_kicked atomically
+> - Make async_safe_run_on_cpu() safe on HVF
+> - Fix bql_locked status with condvar APIs
+> - Document cpu_memory_rw_debug()
+> - Rename init_clocks() -> qemu_init_clocks() to avoid name clashing
+> - Fix QEMU_HEXDUMP_LINE_WIDTH logic
+> - Fix interrupts check in rx_cpu_do_interrupt()
+> ----------------------------------------------------------------
 
+This has merge conflicts with Peter's target-arm queue.
+Please rebase vs master and resend.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
 
