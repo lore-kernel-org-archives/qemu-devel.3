@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C437CCFA05
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 14:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C1ACCFA02
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 16:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFCSx-0002bZ-5M; Sat, 01 Nov 2025 10:20:27 -0400
+	id 1vFEJr-0007Gf-H8; Sat, 01 Nov 2025 12:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1vFCSv-0002ae-Gi
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 10:20:25 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vFEJj-0007GL-0x
+ for qemu-devel@nongnu.org; Sat, 01 Nov 2025 12:19:03 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1vFCSs-0004tp-6g
- for qemu-devel@nongnu.org; Sat, 01 Nov 2025 10:20:25 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-594259bc5f1so229908e87.2
- for <qemu-devel@nongnu.org>; Sat, 01 Nov 2025 07:20:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vFEJh-0000DD-0H
+ for qemu-devel@nongnu.org; Sat, 01 Nov 2025 12:19:02 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-63e330a1360so3503791d50.3
+ for <qemu-devel@nongnu.org>; Sat, 01 Nov 2025 09:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762006818; x=1762611618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762013938; x=1762618738; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=K9zp/U5Qb5Pam2E1qPmLEw9uZeK37F56N8y4Jvvc2mc=;
- b=f416JIr9nPNds2Bg42OgmTtGKGN/a22G/yyynXEX/IPZUHpU+B42WB0bFVXY2Vfy48
- W6x/swTcnGINz9F4M/FKPDOUYKHwJ6TxdOvAtsnSOYJv4c0CwxmFy4R0y5JVehnGGUxD
- 4kyY4UaAdeCeHAlsNg9DWOivUFx104JUkfyXM+3a18kOqWBQz02KvzAfVF1ukriFmPl9
- 6xnMAIFPoY23LoFRoC3vltTalpDswynjKIhl4dN22ZyNlPIZVZukIyqBrtl9XdpofX/z
- 5mchmYjFI5nfTexFb2ZAc9SjOkowiRqOmV6dH1I9T+Lo45cnITnFtSmgtocxORJO8GB/
- p58Q==
+ bh=Fyc/i2nWAzeFjWjBfbX9SaiynckeEaGBLgEtJU6TWmQ=;
+ b=J5mfuMBE8508/WJFDlRjdPlYEsy6ujamt/7fR6bJEMl2P/+kFuMtiXz22BmKmIolgg
+ 4BTDSE0imj9+cmGF7JD4znckDSY2l1lC+H+2Gdn7LsRh4AjMY9NjIrUfCTjN5Tzht0fO
+ G9GEgTI/j6URd1QldOkt3Dl6EFe8+H0r/OfTjmiR5KIcnWr3OUXa8dgYt33GFKA7Gjq3
+ Z4GZlM193EpHbv34X5GrBUXRQ78ehnb8eMWFgUy9KUkGsHgEnsnPb/Och0L4nLDcnPf4
+ hyHp4ehYk24I9OW9LWI9x4nvWCgLuwG1FqHVjyW2AyaJqRfUXlMDsuZ23cAUL4ZoiWjf
+ 1ddA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762006818; x=1762611618;
+ d=1e100.net; s=20230601; t=1762013938; x=1762618738;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=K9zp/U5Qb5Pam2E1qPmLEw9uZeK37F56N8y4Jvvc2mc=;
- b=oxKnPr3BCyk8iom40BQsZMJ9AjyprEKY124UP4Bnm0KbGuYxhawPgUvPlv1ghHDb2y
- SqRXySso8EP+74gi3qXsOukr1R1azys5+oQ0d5PsjEgmGBgTsbqHhX6XVp6HSOVVbxFU
- okws6nPOWL1fUtnEtvCoM2h5+on7+1dO7iBZPOk6HTyOGdeIDJ7eVRLoW3sBw6em4PIq
- CqLsy7kpqk9HNp7OirGQbIZZxQMc/FpnVQhFdhFzwv3K6cdwU/ZfenWMnaOPx6nQm+65
- njlQSBLTvITGGio36M1eNHApG5F+2sGuA0eTxiF23dQ8wlSWV8UsMOs1uBw/Yjj93DJp
- EQVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsQf/Z/3ezKAH6mUmUCnjfGHdFTZftSF2Ogz+gH5Cc+KHBhAQSD/m7rY98w7UvcmXKgMSYbXiTODaJ@nongnu.org
-X-Gm-Message-State: AOJu0Yz1VwUu1sDYmVMJvuTak8+r3G5VnVGA6pE1MjGaTJ6d//8IbWLg
- o3yfxp0WDZ9E+c2haJlrgxjZ1lPqj3tRse8QL+K7C6yFBP1Wkold8D9xwU6uzlxcsSzKlCbTj60
- H6tC0bEsgfbBrCHPQVtNnz9vdXcJkcG3hmQ0ohuOMsQ==
-X-Gm-Gg: ASbGncsjb7dLaMOUR/XCxVZXjVR1jAS1aqhVDc0J4gTd6K0xfnL5QEOxJQAvCONPPot
- aIPJJqD1NQW0qVIa/+iusYCbS9uOpv6PyH233e1XNvY4EYR8ZTRxfjWCh8ps7o4785EG2er3dnd
- JWtUqWDS+Za2FFPyKYFCW63+9MkmSMvskE8K9HZIZaFEI1VP52Yq5Q+ROLCRuhEAPDVxRt1J+SU
- o3RzrGswpZiiddSqvSkTW009TsLrslo+N+JqXk9GpzMru4FN4K+Mb53yTgeK0sS7ZK3sC8o26in
- Y8WGIg==
-X-Google-Smtp-Source: AGHT+IHWvCHGbVSzhFiCjoqPpq8hGci3kps+8MblsGxKlECurt4gqLtGs5kLWlDl5dZWhPcP//udpWdxIEohI6mNhCI=
-X-Received: by 2002:ac2:4e12:0:b0:592:fcad:4a11 with SMTP id
- 2adb3069b0e04-5941d50cdcemr2641210e87.7.1762006818452; Sat, 01 Nov 2025
- 07:20:18 -0700 (PDT)
+ bh=Fyc/i2nWAzeFjWjBfbX9SaiynckeEaGBLgEtJU6TWmQ=;
+ b=vfZ4ToVUgJTGN3ryzQ5K3nL40DQ2BtZvu7tdudt87q6DhnhiIhAZgUzC1E4n3jCxlL
+ rEiw6t+PjywkEyER56Rh6mIs+fsAbiIWCic8c6x3KLQRJDpsN04bgUC7xdlDI+W0AMl5
+ Zcg0F/Dzfrnpbe/anw4QMYauUE8a62vrR3WvndSbV2bEe7L8YDkMwl5DB9qn8dvMAqkj
+ 6MTV8GrB9DduMVpElVaQY/q+L7ufjHL6mEGmjr9zgesTDPZEEYsRD/Rsoc8leod1s8eq
+ WpTWKW3JzFcUyOGgVXXmCNWDTawh4LtsUOsJnXIyM8pyWfflpTk2sZYugNcFRlhdTtrP
+ C2xw==
+X-Gm-Message-State: AOJu0YwR0fvlcn/QIdEXv5O+irFtRJ/xe1Fz6Tt43bQDI+eRIlM51CWC
+ JpqAdNdybMBIdROUdrd6/3sGB4Oyb1a60R75J/UGEf/aEENXhSfVSXakOxO1T+wlfMzeu3VruQO
+ pjFAldN8bhk5SHqSomTQ1vOcIIVxVOJ9ldocVCI3W1g==
+X-Gm-Gg: ASbGncvuhahHbEe7F4Dwp4QRhP52GB5ARuIPkoWWsJeMxF7wCqjrcSb8w65dXkkPSqC
+ af/tBYI4XbbD8rXnFXPgGXtmHvS+eh5F4UbXuXFwevl1AlkkLAeopYbK7ZwgqR2WBzkytdLPRdp
+ EjHUjQZJdSuAM/RB9pbVichozI3Jq0tcUPgP5umqMcSO2dpE/W+EMT73+MdePelFDGbU2ulHPMD
+ wwwqesVEcmjTyY3VMVlUTJF1wnymOv3VDhiOabHm194tk8QVB/cb/yM56nWmR29k/8N51ic
+X-Google-Smtp-Source: AGHT+IGijqrp2V8dzTGEX3tkxiaH2MXb5dflW0HvZ6/YJVoYDRUI7c7AGwgSGwiNaVHVgaf/87mxcKjMHSQeUDRkM00=
+X-Received: by 2002:a05:690e:15c6:b0:636:5ea:a88a with SMTP id
+ 956f58d0204a3-63f922ef7e1mr4427226d50.32.1762013938281; Sat, 01 Nov 2025
+ 09:18:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-20-skolothumtho@nvidia.com>
-In-Reply-To: <20251031105005.24618-20-skolothumtho@nvidia.com>
-From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Sat, 1 Nov 2025 22:20:05 +0800
-X-Gm-Features: AWmQ_blFoW5ky7o3CKhmLVd0KWalRzH9RYdbqvefwV6SQl2F4QPzrmUXu4LKQu4
-Message-ID: <CABQgh9ENUvSJ5UiPGDbdQ_VPm5PtdFVmEM_27Z9QEb4O29cKwQ@mail.gmail.com>
-Subject: Re: [PATCH v5 19/32] hw/arm/smmuv3-accel: Get host SMMUv3 hw info and
- validate
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
- peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com, 
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com, mochs@nvidia.com, 
- smostafa@google.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com, 
- jonathan.cameron@huawei.com, zhenzhong.duan@intel.com, yi.l.liu@intel.com, 
- kjaju@nvidia.com
+References: <20251101130330.1927-1-shentey@gmail.com>
+ <CAFEAcA-ycNEcZGF0kqLYBzq4xLSJikYZL_Q0JyKbuMuDtAJ7JA@mail.gmail.com>
+ <6BAB4EAC-80E2-4DA3-B344-D233C014E7EB@gmail.com>
+In-Reply-To: <6BAB4EAC-80E2-4DA3-B344-D233C014E7EB@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 1 Nov 2025 16:18:46 +0000
+X-Gm-Features: AWmQ_bkXlqbNB7uXhJt_w2YcDKdopSMVDcrD8zq_nv1Y94hKqfhWwqyxeDTkgEw
+Message-ID: <CAFEAcA-DP8TRX8cOrMBhr4+knC+68S90F6Zd2jd2SfqifSqUFA@mail.gmail.com>
+Subject: Re: [PATCH] qga/vss-win32/install: Remove
+ _com_util::ConvertStringToBSTR()
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,52 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Shameer
+On Sat, 1 Nov 2025 at 13:48, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+>
+>
+> Am 1. November 2025 13:13:26 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
+> >On Sat, 1 Nov 2025 at 13:04, Bernhard Beschow <shentey@gmail.com> wrote:
+> >>
+> >> Now that MSYS2 provides an implementation of the function it clashes with
+> >> QEMU's, resulting in a compilation error. Remove it since it doesn't seem
+> >> to be used anyway.
+> >
+> >The comment says it's used by _bstr_t, which presumably
+> >is in some Windows header or library that we're linking against.
+> >Our code seems to use _bstr_t a lot. Is this function definitely
+> >not required, or should we have something so we provide it only
+> >when MSYS2 does not?
+>
+> I just grepped the code and it doesn't return any users. And searching
+> the git history it never did.
 
-On Fri, 31 Oct 2025 at 18:54, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
->
-> Just before the device gets attached to the SMMUv3, make sure QEMU SMMUv3
-> features are compatible with the host SMMUv3.
->
-> Not all fields in the host SMMUv3 IDR registers are meaningful for userspace.
-> Only the following fields can be used:
->
->   - IDR0: ST_LEVEL, TERM_MODEL, STALL_MODEL, TTENDIAN, CD2L, ASID16, TTF
->   - IDR1: SIDSIZE, SSIDSIZE
->   - IDR3: BBML, RIL
->   - IDR5: VAX, GRAN64K, GRAN16K, GRAN4K
->
-> For now, the check is to make sure the features are in sync to enable
-> basic accelerated SMMUv3 support.
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 100 ++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 100 insertions(+)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index a2deda3c32..8b9f88dd8e 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -28,6 +28,98 @@ MemoryRegion root;
->  MemoryRegion sysmem;
->  static AddressSpace *shared_as_sysmem;
->
-> +static bool
-> +smmuv3_accel_check_hw_compatible(SMMUv3State *s,
-> +                                 struct iommu_hw_info_arm_smmuv3 *info,
-> +                                 Error **errp)
-> +{
+The comment suggests that the user would be in the MS headers
+we're including or the library we're linking against, not in our
+own code, though, so grep wouldn't find it.
 
-> +    /* QEMU SMMUv3 supports architecture version 3.1 */
-> +    if (info->aidr < s->aidr) {
-> +        error_setg(errp, "Host SMMUv3 architecture version not compatible");
-> +        return false;
-> +    }
-
-Why has this requirement?
-We have SMMUv3 version 3.0 and info->aidr = 0.
-and qemu fails to boot here.
-
-Thanks
+-- PMM
 
