@@ -4,94 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C251DCCF9FE
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 00:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00B5CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 00:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEzRW-0006UB-3w; Fri, 31 Oct 2025 20:26:07 -0400
+	id 1vEzb7-0008SL-Lq; Fri, 31 Oct 2025 20:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEzRC-0006Rf-42
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 20:25:46 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vEzb3-0008S8-Og; Fri, 31 Oct 2025 20:35:59 -0400
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEzR7-0005ZE-5f
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 20:25:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=3ZiP9kN74M8r793mWF6kBDqexI3QI7ygBlG63bRuEFw=; b=O+lngXILAZyy5U1YACgK/sdkgF
- 9nAeeGbvWzKWmuAp7wUc5NMU5YXp40JNYlREEZQy0kXjIAOq3uHcktwwwMk2I5I4n7YKWlWir2yso
- gVU4V+1xNj+bgJg2FMdbWg3ld02jmocg01JixeltYiVvNZCR4qymYvY5OhmbwmmnjmNEXKWjgByBr
- mVmexTX/VyPWBALtzcs81pzzFCMmOa0TFbZ1skQeub2Su301kflvafb6kpVkNhHDbokXD+zVt8Eiy
- Z3TYJYKP9O6wbPbDpsv7e2qhaUI+DoJwPSdGe30UcLy48JlFbmmaKY5tMa35YiK8dey0BLPja+++L
- Z9V6Je9FwwgHSRJQ3SYh8W0ZPL4Y0hQ+jQFHveNF8EM4TGCIlU0OofKxWv8qwOPDcg3A+lye7Mb3S
- Sf+r4nq6/rCCOUTJv+jMjljsf0mgF59T8S9qdQGp/RkFQ/L6/2HKFLIz9dug66ci6yPazZ8P+ScP1
- 7hN9nA+VvXzI6To8DgbAHV+N8px1/J8ZKJtlgVImXHoJmby2oEsLo75GlgqRwjawohndWMnB0IoiJ
- 5qtGmGJrciT0fRaEpf7eNC7tHpba+HmTiKz6mUvminKkpeSV/aqiZ9JzHgm0hdVu/O7ZYkUAs7lWZ
- PfM5BAwXWcYmF5PJ6utrTs2WxPhMThkX5VwuDbJEI=;
-Received: from [2a02:8012:2f01:0:13e4:9053:ba25:9d4b]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEzOo-0006wV-5n; Sat, 01 Nov 2025 00:23:19 +0000
-Message-ID: <b19bcd55-2ac3-4f1f-a406-02c0498f3cc3@ilande.co.uk>
-Date: Sat, 1 Nov 2025 00:25:34 +0000
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vEzat-0006za-8x; Fri, 31 Oct 2025 20:35:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hI0nYuO/paLLTDKVuOZ9X+4cPAd07ytz2HreJvQwg6kOZ+v1Hjehvsslbw6m0s3gaw6hwCMy/8IJGVut24M/xzcVW3Zde4azKA2FrT+lFEBh62guFZga+/jAArrLHlf/d7t63sfHuB/JOb04Cq2Ne/m3g9Je2IIK7zuDl9wHXC0PENsGRUWWaV4QqLtmoHpsWVO+etPzqPdr3umU7LFrA14ReFUndqTmlQGWcEvAngYKiZGAt6ufld1eyitNQeujz/Mgm+UyvE8nfBCxSxXyb1StNZG2nTKr9+VGK8VI1LL2cI6NESkF9Ua6UjY+ER1kXtqzcuAI8c+66yjPKrUbiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nEeMz2PIUhA5RZVEvJOEZfWuz7wtZnrPks0JGf8Qjps=;
+ b=RIVyEvJg9QOQ51GO0tkO7JqGKqhTMzn5uikYYBLvWSbM3MnU3bfU7kXK978XxqLu2A6sNngxDfOQQ4PifAexxKZOorQrPA8LWHhHf4LrKs1sYPGCxC75xNUk/j6OgpJMjVxWdPcgd1nZw6TWzJskDvTT+tcVibpilOcYyqmK9tyQ5vKNG65ytWu/U7d7R6FkORlTfaLMnWeK36FJG+0qIDfah+J0ez7zO4VBOp/ITaWNVsfJlr/otQbbL6YkCuBDD6jqQPhP/1SKkqmWOsBLLpvLxuCWLXPXrJLd3VgyC/c3rDeSSRzqOTJ2/N7xluNHzQVjrEOpRsvuW/2pkyvGEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nEeMz2PIUhA5RZVEvJOEZfWuz7wtZnrPks0JGf8Qjps=;
+ b=Syv5b8tKs9CwltehxcZ2wcV6pJjRVQGw1Lwv3go6ZQkj8/odEczfoUPF4ogifA2AF7g6IJEwe5e6ubnq43fGJYpdydIKktB0JiheCEYEQDpKso1YZIs8gofSSkxbbJVtBQYMGahwH1rrIG0vxNMzZ4hRZNvbdgG0VE1F+fwXGmBxYMO4JDTtp/jaWSEmMvTFwa9Uq/94+zHqvukxo4YRQ9VbwNPkcqVZW4ndepaAHJHIh7tYkU1rZ718W3thqrn3gx2Bx8NbCT5VHRuvsFldGxrUXTzFzcMtcwpYW4YEnAc/uxr/qCzbABNMRfPePcu4PPBfAASI+ywXDYB6IIPGTw==
+Received: from BL0PR02CA0055.namprd02.prod.outlook.com (2603:10b6:207:3d::32)
+ by SJ5PPF4D350AC80.namprd12.prod.outlook.com
+ (2603:10b6:a0f:fc02::993) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.14; Sat, 1 Nov
+ 2025 00:35:34 +0000
+Received: from BL02EPF0001A108.namprd05.prod.outlook.com
+ (2603:10b6:207:3d:cafe::6d) by BL0PR02CA0055.outlook.office365.com
+ (2603:10b6:207:3d::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.15 via Frontend Transport; Sat,
+ 1 Nov 2025 00:35:30 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BL02EPF0001A108.mail.protection.outlook.com (10.167.241.138) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9298.6 via Frontend Transport; Sat, 1 Nov 2025 00:35:33 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 31 Oct
+ 2025 17:35:20 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Fri, 31 Oct 2025 17:35:20 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Fri, 31 Oct 2025 17:35:19 -0700
+Date: Fri, 31 Oct 2025 17:35:17 -0700
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [PATCH v5 17/32] hw/arm/smmuv3-accel: Add support to issue
+ invalidation cmd to host
+Message-ID: <aQVVxV4I/nh3aAXn@Asurada-Nvidia>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-18-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>, deller@gmx.de,
- qemu-devel@nongnu.org
-Cc: sarkarsoumyajyoti23@gmail.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>
-References: <20251031211516.208488-1-soumyajyotisarkar23@gmail.com>
- <20251031211516.208488-3-soumyajyotisarkar23@gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20251031211516.208488-3-soumyajyotisarkar23@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:13e4:9053:ba25:9d4b
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/3] i82596: Added core infrastructure and helper functions
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251031105005.24618-18-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A108:EE_|SJ5PPF4D350AC80:EE_
+X-MS-Office365-Filtering-Correlation-Id: dce36f86-8440-4dc1-01c8-08de18de916b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|7416014|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?RC3DjeetKRkRac/ikJZFVOKyD2cp6NlMgbydPEGwzSOlZAsu2fEVmqtct7?=
+ =?iso-8859-1?Q?b1fiGlAUEnxM7NpgV3/DbnCTBTHXkqNYgSgjrYipB0GWPlGLzOUwaA22AX?=
+ =?iso-8859-1?Q?x8vXsEVzzYZ2X9F5hVqORYqmJxWdpaYNq0Eyn2mDMHJZwW8cQ7I10KYI/R?=
+ =?iso-8859-1?Q?SPWrpEAIlKPFbopWp/XPgjx0YkgxfcRRVFwquqEZNLOOf//UMpCNWe1ck/?=
+ =?iso-8859-1?Q?TmFUBnwXBKnRFXOTNUgj2YAOWGn94gY12d2yOlL821KQUIJRfwWQRPiPib?=
+ =?iso-8859-1?Q?ahWaexpH4bRUJzGIGLiGUzJEMoUCy0Dvr7imaJtAikY5nZTc1T6Slfzj8o?=
+ =?iso-8859-1?Q?Ir5kstSo2Qfb18Qkt6Lm8OF+kWlVeMhPyKG+jraHHUggD0XX2AlTRipc74?=
+ =?iso-8859-1?Q?Cq3FKLk9aPYFEHCp48UY5RSqrq+c4p6CcMuIJuOlZISCcJWHDqs3djG4PA?=
+ =?iso-8859-1?Q?P3e2rtBIGakyhOV0XwYDdTAh5Y0HCme+FwmVBykcIlbreKkKRQyrwsESnv?=
+ =?iso-8859-1?Q?W3ktOJJJKQ1acSWR1RmU19n6IjIjrcQn3BruTF932iy55YbpY/emBPTXvR?=
+ =?iso-8859-1?Q?HE9je3ZwSjb2eE9vSQOTHljsy9KAw3zcdiyfN4vaN0H2G0prx6ymHgvvZd?=
+ =?iso-8859-1?Q?ot862oW0y+44pHP+MzbK1wWBxzWUDFU8OaJ5ccIWwSxHs/FilS7t3CGrld?=
+ =?iso-8859-1?Q?emwvb+l2MLFHHf7wRRIRGrxo0vpWmxsggA2AkMYW16Lpt9GKHL487KgaLQ?=
+ =?iso-8859-1?Q?m/O4BnjbmeuGKrvaQC7dG5UCyiqCA+LhaDzn0/tT23up83mOqoST62o873?=
+ =?iso-8859-1?Q?XBt5acGwhMBRMlo8Znmj0AmJleye4Iqwvnf5IBCY8zrU47HVIU8rPVKBCM?=
+ =?iso-8859-1?Q?0gy9tA6mVFwDnvSomZNJL41LHAV21Q1HOAqF2m5rdPDpWHQTZa150AuQPa?=
+ =?iso-8859-1?Q?Ik/2+oCUk6ZkMtP3vlyPjyAgHMOqSgLLLC7kuqaSkYqDAD7BbB+yaSRZx9?=
+ =?iso-8859-1?Q?JX8+pYEb1OCGEDgigXSErIJ+id/ajeVJGTgLv4enyMqeA4os1LpB4hvHkg?=
+ =?iso-8859-1?Q?gnO9Qu26/1WelKTbEpf2d5ljp4D7Bx379ZHmT8JfN5o4eLtnJ7FgKrLsOR?=
+ =?iso-8859-1?Q?wEFBj3wTcsoaLP9agfj7Hht9fQMDqgftFJ9kz1yvfTRkI1PikMaQ/ptl2u?=
+ =?iso-8859-1?Q?i1XF0i09kteSdo6XeJvbCVncI7URuJfeLLgLG/wGoRcZXJd0p2LzZqQbwR?=
+ =?iso-8859-1?Q?AziSGSYlcM5yslKqJZPGbOuYHa1quCt9KgR8TScRYgMQlL03lCZ8l84Utx?=
+ =?iso-8859-1?Q?e1SFD0IokUoLplPh1l4d0PdEVzlUwwB1mq74Owtqx9Y6WRZ/YABbL11oa9?=
+ =?iso-8859-1?Q?xnX7wagFw49qtWCNm/O+rTCpb26ikc/qOHVhdYLWhMPQCPkUz1uNNqWGlz?=
+ =?iso-8859-1?Q?224EWD/ZUMQl8KNmurt82xbfx9YMwL68LE/99Oi++aFJe5jIyNc01DJ8hz?=
+ =?iso-8859-1?Q?OIHxY4wpNwm+U+0ioz8nM0CSOJRgLEUQurBQHHTPmkH33hDaAyPnUC9k4c?=
+ =?iso-8859-1?Q?8zE08B7k7O4iYmkPGiu7HSG2MSyPwGZIKhjMyytrGsV2PlajArTLxOzUHG?=
+ =?iso-8859-1?Q?RFp6RGo2cNSuw=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(7416014)(1800799024)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2025 00:35:33.2871 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dce36f86-8440-4dc1-01c8-08de18de916b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A108.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF4D350AC80
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,998 +158,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
+From:  Nicolin Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/2025 21:15, Soumyajyotii Ssarkar wrote:
-
-> From: RemZapCypher <soumyajyotisarkar23@gmail.com>
+On Fri, Oct 31, 2025 at 10:49:50AM +0000, Shameer Kolothum wrote:
+> Provide a helper and use that to issue the invalidation cmd to host SMMUv3.
+> We only issue one cmd at a time for now.
 > 
-> As a part of GSOC 2025 I have done a massive rewrite of what was the
-> 82596 NIC. This has been done to add the missing functionality according
-> to the 82596 Manual and making the code more production
-> ready.
+> Support for batching of commands will be added later after analysing the
+> impact.
 > 
-> In this patch I have done the following:
-> - Added comprehensive 82596 constants and configuration macros
-> - Implemented address translation for segmented/linear memory modes
-> - Added error recording and statistics tracking infrastructure
-> - Implemented CRC-16/32 calculation and appending functions
-> - Added CSMA/CD collision detection and backoff logic
-> - Implemented bus throttle timer framework
-> - Added enhanced reset with full state initialization
-> - Added receive_iov and polling support functions
-> - Updated VMState for migration of all new fields
-> 
-> Note:
-> This patch primarily includes placeholder code.
-> To achieve full 82596 emulation, the complete 82596 patch series is required.
-> Nevertheless, QEMU is able to load and boot successfully with this patch.
-> 
-> ---
->   hw/net/i82596.c      | 667 ++++++++++++++++++++++++++++++++++++++-----
->   hw/net/i82596.h      |  74 ++++-
->   hw/net/lasi_i82596.c |   6 +
->   3 files changed, 655 insertions(+), 92 deletions(-)
-> 
-> diff --git a/hw/net/i82596.c b/hw/net/i82596.c
-> index c1ff3e6c56..859cc88b2e 100644
-> --- a/hw/net/i82596.c
-> +++ b/hw/net/i82596.c
-> @@ -2,10 +2,38 @@
->    * QEMU Intel i82596 (Apricot) emulation
->    *
->    * Copyright (c) 2019 Helge Deller <deller@gmx.de>
-> - * This work is licensed under the GNU GPL license version 2 or later.
->    *
-> + * Additional functionality added by:
-> + * Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-> + * During GSOC 2025 under mentorship of Helge Deller.
-> + *
-> + * This work is licensed under the GNU GPL license version 2 or later.
->    * This software was written to be compatible with the specification:
->    * https://parisc.docs.kernel.org/en/latest/_downloads/96672be0650d9fc046bbcea40b92482f/82596CA.pdf
-> + *
-> + * INDEX:
-> + * 1.  Reset
-> + * 2.  Address Translation
-> + * 3.  Transmit functions
-> + * 4.  Receive Helper functions
-> + * 5.  Receive functions
-> + * 6.  Misc Functionality Functions
-> + * 6.1 Individual Address
-> + * 6.2 Multicast Address List
-> + * 6.3 Link Status
-> + * 6.4 CSMA/CD functions
-> + * 6.5 Unified CRC Calculation
-> + * 6.6 Unified Statistics Update
-> + * 7.  Bus Throttling Timer
-> + * 8.  Dump functions
-> + * 9.  Configure
-> + * 10. Command Loop
-> + * 11. Examine SCB
-> + * 12. Channel attention (CA)
-> + * 13. LASI interface
-> + * 14. Polling functions
-> + * 15. QOM and interface functions
-> + *
->    */
->   
->   #include "qemu/osdep.h"
-> @@ -21,50 +49,90 @@
->   #include "i82596.h"
->   #include <zlib.h> /* for crc32 */
->   
-> +#define ENABLE_DEBUG 0
-> +
->   #if defined(ENABLE_DEBUG)
->   #define DBG(x)          x
->   #else
->   #define DBG(x)          do { } while (0)
->   #endif
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-All new code should use trace-events instead of #defines to enable debugging.
+I think I have given my tag in v4.. anyway..
 
-> -#define USE_TIMER       0
-> -
-> -#define BITS(n, m) (((0xffffffffU << (31 - n)) >> (31 - n + m)) << m)
-> +#define USE_TIMER       1
->   
-> -#define PKT_BUF_SZ      1536
->   #define MAX_MC_CNT      64
-> -
-> -#define ISCP_BUSY       0x0001
-> -
->   #define I596_NULL       ((uint32_t)0xffffffff)
-> -
-> -#define SCB_STATUS_CX   0x8000 /* CU finished command with I bit */
-> -#define SCB_STATUS_FR   0x4000 /* RU finished receiving a frame */
-> -#define SCB_STATUS_CNA  0x2000 /* CU left active state */
-> -#define SCB_STATUS_RNR  0x1000 /* RU left active state */
-> -
-> -#define SCB_COMMAND_ACK_MASK \
-> -        (SCB_STATUS_CX | SCB_STATUS_FR | SCB_STATUS_CNA | SCB_STATUS_RNR)
-> -
-> +#define BITS(n, m)      (((0xffffffffU << (31 - n)) >> (31 - n + m)) << m)
-> +
-> +#define SCB_STATUS_CX   0x8000  /* CU finished command with I bit */
-> +#define SCB_STATUS_FR   0x4000  /* RU finished receiving a frame */
-> +#define SCB_STATUS_CNA  0x2000  /* CU left active state */
-> +#define SCB_STATUS_RNR  0x1000  /* RU left active state */
-> +#define SCB_ACK_MASK    0xF000  /* All interrupt acknowledge bits */
-> +
-> +/* 82596 Operational Modes */
-> +#define I82586_MODE                 0x00
-> +#define I82596_MODE_SEGMENTED       0x01
-> +#define I82596_MODE_LINEAR          0x02
-> +
-> +/* Monitor Options */
-> +#define MONITOR_NORMAL      0x00
-> +#define MONITOR_FILTERED    0x01
-> +#define MONITOR_ALL         0x02
-> +#define MONITOR_DISABLED    0x03
-> +
-> +/* Operation mode flags from SYSBUS byte */
-> +#define SYSBUS_LOCK_EN         0x08
-> +#define SYSBUS_INT_ACTIVE_LOW  0x10
-> +#define SYSBUS_BIG_ENDIAN_32   0x80
-> +#define SYSBUS_THROTTLE_MASK   0x60
-> +
-> +/* SCB commands - Command Unit (CU) */
-> +#define SCB_CUC_NOP            0x00
-> +#define SCB_CUC_START          0x01
-> +#define SCB_CUC_RESUME         0x02
-> +#define SCB_CUC_SUSPEND        0x03
-> +#define SCB_CUC_ABORT          0x04
-> +#define SCB_CUC_LOAD_THROTTLE  0x05
-> +#define SCB_CUC_LOAD_START     0x06
-> +
-> +/* SCB commands - Receive Unit (RU) */
-> +#define SCB_RUC_NOP            0x00
-> +#define SCB_RUC_START          0x01
-> +#define SCB_RUC_RESUME         0x02
-> +#define SCB_RUC_SUSPEND        0x03
-> +#define SCB_RUC_ABORT          0x04
-> +
-> +/* SCB statuses - Command Unit (CU) */
->   #define CU_IDLE         0
->   #define CU_SUSPENDED    1
->   #define CU_ACTIVE       2
->   
-> -#define RX_IDLE         0
-> -#define RX_SUSPENDED    1
-> -#define RX_READY        4
-> +/* SCB statuses - Receive Unit (RU) */
-> +#define RX_IDLE         0x00
-> +#define RX_SUSPENDED    0x01
-> +#define RX_NO_RESOURCES 0x02
-> +#define RX_READY        0x04
-> +#define RX_NO_RESO_RBD  0x0A
-> +#define RX_NO_MORE_RBD  0x0C
-> +
-> +#define CMD_FLEX        0x0008
-> +#define CMD_MASK        0x0007
-> +
-> +#define CMD_EOL         0x8000
-> +#define CMD_SUSP        0x4000
-> +#define CMD_INTR        0x2000
->   
-> -#define CMD_EOL         0x8000  /* The last command of the list, stop. */
-> -#define CMD_SUSP        0x4000  /* Suspend after doing cmd. */
-> -#define CMD_INTR        0x2000  /* Interrupt after doing cmd. */
-> +#define ISCP_BUSY                   0x01
-> +#define NANOSECONDS_PER_MICROSECOND 1000
->   
-> -#define CMD_FLEX        0x0008  /* Enable flexible memory model */
-> +#define DUMP_BUF_SZ                 304
->   
->   enum commands {
->           CmdNOp = 0, CmdSASetup = 1, CmdConfigure = 2, CmdMulticastList = 3,
->           CmdTx = 4, CmdTDR = 5, CmdDump = 6, CmdDiagnose = 7
->   };
->   
-> +
->   #define STAT_C          0x8000  /* Set to 0 after execution */
->   #define STAT_B          0x4000  /* Command being executed */
->   #define STAT_OK         0x2000  /* Command executed ok */
-> @@ -73,15 +141,60 @@ enum commands {
->   #define I596_EOF        0x8000
->   #define SIZE_MASK       0x3fff
->   
-> -/* various flags in the chip config registers */
-> -#define I596_PREFETCH   (s->config[0] & 0x80)
-> -#define I596_PROMISC    (s->config[8] & 0x01)
-> -#define I596_BC_DISABLE (s->config[8] & 0x02) /* broadcast disable */
-> -#define I596_NOCRC_INS  (s->config[8] & 0x08)
-> -#define I596_CRCINM     (s->config[11] & 0x04) /* CRC appended */
-> -#define I596_MC_ALL     (s->config[11] & 0x20)
-> -#define I596_MULTIIA    (s->config[13] & 0x40)
-> -
-> +#define CSMA_SLOT_TIME         51
-> +#define CSMA_MAX_RETRIES       16
-> +#define CSMA_BACKOFF_LIMIT     10
-> +
-> +/* Global Flags fetched from config bytes */
-> +#define I596_PREFETCH       (s->config[0] & 0x80)
-> +#define SAVE_BAD_FRAMES     (s->config[2] & 0x80)
-> +#define I596_NO_SRC_ADD_IN  (s->config[3] & 0x08)
-> +#define I596_LOOPBACK       (s->config[3] >> 6)
-> +#define I596_PROMISC        (s->config[8] & 0x01)
-> +#define I596_BC_DISABLE     (s->config[8] & 0x02)
-> +#define I596_NOCRC_INS      (s->config[8] & 0x08)
-> +#define I596_CRC16_32       (s->config[8] & 0x10)
-> +#define I596_PADDING        (s->config[8] & 0x80)
-> +#define I596_MIN_FRAME_LEN  (s->config[10])
-> +#define I596_CRCINM         (s->config[11] & 0x04)
-> +#define I596_MONITOR_MODE   ((s->config[11] >> 6) & 0x03)
-> +#define I596_MC_ALL         (s->config[11] & 0x20)
-> +#define I596_FULL_DUPLEX    (s->config[12] & 0x40)
-> +#define I596_MULTIIA        (s->config[13] & 0x40)
-> +
-> +/* RX Error flags */
-> +#define RX_COLLISIONS         0x0001
-> +#define RX_LENGTH_ERRORS      0x0080
-> +#define RX_OVER_ERRORS        0x0100
-> +#define RX_FIFO_ERRORS        0x0400
-> +#define RX_FRAME_ERRORS       0x0800
-> +#define RX_CRC_ERRORS         0x1000
-> +#define RX_LENGTH_ERRORS_ALT  0x2000
-> +#define RFD_STATUS_TRUNC      0x0020
-> +#define RFD_STATUS_NOBUFS     0x0200
-> +
-> +/* TX Error flags */
-> +#define TX_COLLISIONS       0x0020
-> +#define TX_HEARTBEAT_ERRORS 0x0040
-> +#define TX_CARRIER_ERRORS   0x0400
-> +#define TX_COLLISIONS_ALT   0x0800
-> +#define TX_ABORTED_ERRORS   0x1000
-> +
-> +static void i82596_update_scb_irq(I82596State *s, bool trigger);
-> +static void i82596_update_cu_status(I82596State *s, uint16_t cmd_status,
-> +                                     bool generate_interrupt);
-> +static void update_scb_status(I82596State *s);
-> +static void examine_scb(I82596State *s);
-> +static bool i82596_check_medium_status(I82596State *s);
-> +static int i82596_csma_backoff(I82596State *s, int retry_count);
-> +static uint16_t i82596_calculate_crc16(const uint8_t *data, size_t len);
-> +static size_t i82596_append_crc(I82596State *s, uint8_t *buffer, size_t len);
-> +static void i82596_bus_throttle_timer(void *opaque);
-> +static void i82596_flush_queue_timer(void *opaque);
-> +static int i82596_flush_packet_queue(I82596State *s);
-> +static void i82596_update_statistics(I82596State *s, bool is_tx,
-> +                                      uint16_t error_flags,
-> +                                      uint16_t collision_count);
->   
->   static uint8_t get_byte(uint32_t addr)
->   {
-> @@ -116,7 +229,44 @@ static void set_uint32(uint32_t addr, uint32_t val)
->       set_uint16(addr + 2, val >> 16);
->   }
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
-What is the endianness of where this is used? I'd expect to see an stw_* function 
-being used here.
-
-> +/* Centralized error detection and update mechanism */
-> +static void i82596_record_error(I82596State *s, uint16_t error_type, bool is_tx)
-> +{
-> +    if (is_tx) {
-> +        if (error_type & TX_ABORTED_ERRORS) {
-> +            s->tx_aborted_errors++;
-> +            set_uint32(s->scb + 28, s->tx_aborted_errors);
-> +        }
-> +    } else {
-> +        if (error_type & RX_CRC_ERRORS) {
-> +            s->crc_err++;
-> +            set_uint32(s->scb + 16, s->crc_err);
-> +        }
->   
-> +        if (error_type & (RX_LENGTH_ERRORS | RX_LENGTH_ERRORS_ALT |
-> +                          RX_FRAME_ERRORS)) {
-> +            s->align_err++;
-> +            set_uint32(s->scb + 18, s->align_err);
-
-and an stl_* function here?
-
-> +        }
+>          case SMMU_CMD_TLBI_NH_VAA:
+>          case SMMU_CMD_TLBI_NH_VA:
+> +        {
+> +            Error *local_err = NULL;
 > +
-> +        if (error_type & RFD_STATUS_NOBUFS) {
-> +            s->resource_err++;
-> +            set_uint32(s->scb + 20, s->resource_err);
-> +        }
-> +
-> +        if (error_type & (RX_OVER_ERRORS | RX_FIFO_ERRORS)) {
-> +            s->over_err++;
-> +            set_uint32(s->scb + 22, s->over_err);
-> +        }
-> +
-> +        if (error_type & RFD_STATUS_TRUNC) {
-> +            s->short_fr_error++;
-> +            set_uint32(s->scb + 26, s->short_fr_error);
-> +        }
-> +    }
-> +}
-> +
-> +/* Packet Header Debugger */
->   struct qemu_ether_header {
->       uint8_t ether_dhost[6];
->       uint8_t ether_shost[6];
-> @@ -124,12 +274,122 @@ struct qemu_ether_header {
->   };
->   
->   #define PRINT_PKTHDR(txt, BUF) do {                  \
-> -    struct qemu_ether_header *hdr = (void *)(BUF); \
-> -    printf(txt ": packet dhost=" MAC_FMT ", shost=" MAC_FMT ", type=0x%04x\n",\
-> -           MAC_ARG(hdr->ether_dhost), MAC_ARG(hdr->ether_shost),        \
-> -           be16_to_cpu(hdr->ether_type));       \
->   } while (0)
->   
-> +static void i82596_cleanup(I82596State *s)
-> +{
-> +    if (s->throttle_timer) {
-> +        timer_del(s->throttle_timer);
-> +    }
-> +    if (s->flush_queue_timer) {
-> +        timer_del(s->flush_queue_timer);
-> +    }
-> +    s->queue_head = 0;
-> +    s->queue_tail = 0;
-> +    s->queue_count = 0;
-> +}
-> +
-> +static void i82596_s_reset(I82596State *s)
-> +{
-> +    trace_i82596_s_reset(s);
-> +    i82596_cleanup(s);
-> +
-> +    /* Clearing config bits */
-> +    memset(s->config, 0, sizeof(s->config));
-> +    s->scp = 0x00FFFFF4;
-> +    s->scb = 0;
-> +    s->scb_base = 0;
-> +    s->scb_status = 0;
-> +    s->cu_status = CU_IDLE;
-> +    s->rx_status = RX_IDLE;
-> +    s->cmd_p = I596_NULL;
-> +    s->lnkst = 0x8000;
-> +    s->ca = s->ca_active = 0;
-> +    s->send_irq = 0;
-> +
-> +    /* Statistical Counters */
-> +    s->crc_err = 0;
-> +    s->align_err = 0;
-> +    s->resource_err = 0;
-> +    s->over_err = 0;
-> +    s->rcvdt_err = 0;
-> +    s->short_fr_error = 0;
-> +    s->total_frames = 0;
-> +    s->total_good_frames = 0;
-> +    s->collision_events = 0;
-> +    s->total_collisions = 0;
-> +    s->tx_good_frames = 0;
-> +    s->tx_collisions = 0;
-> +    s->tx_aborted_errors = 0;
-> +    s->last_tx_len = 0;
-> +
-> +    s->last_good_rfa = 0;
-> +    s->current_rx_desc = 0;
-> +    s->current_tx_desc = 0;
-> +    s->tx_retry_addr = 0;
-> +    s->tx_retry_count = 0;
-> +
-> +    s->rnr_signaled = false;
-> +    s->flushing_queue = false;
-> +
-> +    memset(s->tx_buffer, 0, sizeof(s->tx_buffer));
-> +    memset(s->rx_buffer, 0, sizeof(s->rx_buffer));
-> +    s->tx_frame_len = 0;
-> +    s->rx_frame_len = 0;
-> +}
-> +
-> +void i82596_h_reset(void *opaque)
-> +{
-> +    I82596State *s = opaque;
-> +
-> +    i82596_s_reset(s);
-> +}
-> +
-> +/*
-> + * Address Translation Implementation
-> + * Handles segmented and linear memory modes for i82596.
-> + * Returns physical address for DMA operations.
-> + * Returns I596_NULL (0xffffffff) on invalid addresses.
-> + */
-> +static inline uint32_t i82596_translate_address(I82596State *s,
-> +                                                 uint32_t logical_addr,
-> +                                                 bool is_data_buffer)
-
-Drop the inline: for modern compilers it is a weak hint, and the compiler will just 
-do the right thing here.
-
-> +{
-> +    if (logical_addr == I596_NULL || logical_addr == 0) {
-> +        return logical_addr;
-> +    }
-> +
-> +    switch (s->mode) {
-> +    case I82596_MODE_LINEAR:
-> +        return logical_addr;
-> +
-> +    case I82596_MODE_SEGMENTED: {
-> +        uint32_t base = (logical_addr >> 16) & 0xFFFF;
-> +        uint32_t offset = logical_addr & 0xFFFF;
-> +
-> +        if (is_data_buffer) {
-> +            return (base << 4) + offset;
-> +        } else {
-> +            if (base == 0xFFFF && offset == 0xFFFF) {
-> +                return I596_NULL;
+>              if (!STAGE1_SUPPORTED(s)) {
+>                  cmd_error = SMMU_CERROR_ILL;
+>                  break;
+>              }
+>              smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
+> +            if (!smmuv3_accel_issue_inv_cmd(s, &cmd, NULL, &local_err)) {
+> +                error_report_err(local_err);
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
 > +            }
-> +            return s->scb_base + ((base << 4) + offset);
+>              break;
 > +        }
-> +    }
-> +
-> +    case I82586_MODE:
-> +    default:
-> +        if (is_data_buffer) {
-> +            return logical_addr;
-> +        } else {
-> +            if ((logical_addr & 0xFFFF0000) == 0xFFFF0000) {
-> +                return I596_NULL;
-> +            }
-> +            return s->scb_base + logical_addr;
-> +        }
-> +    }
-> +}
-> +
->   static void i82596_transmit(I82596State *s, uint32_t addr)
->   {
->       uint32_t tdb_p; /* Transmit Buffer Descriptor */
-> @@ -223,32 +483,198 @@ static void set_multicast_list(I82596State *s, uint32_t addr)
->   
->   void i82596_set_link_status(NetClientState *nc)
->   {
-> -    I82596State *d = qemu_get_nic_opaque(nc);
-> +    I82596State *s = qemu_get_nic_opaque(nc);
-> +    bool was_up = s->lnkst != 0;
-> +
-> +    s->lnkst = nc->link_down ? 0 : 0x8000;
-> +    bool is_up = s->lnkst != 0;
->   
-> -    d->lnkst = nc->link_down ? 0 : 0x8000;
-> +    if (!was_up && is_up && s->rx_status == RX_READY) {
-> +        qemu_flush_queued_packets(qemu_get_queue(s->nic));
-> +    }
->   }
->   
-> -static void update_scb_status(I82596State *s)
-> +static bool G_GNUC_UNUSED i82596_check_medium_status(I82596State *s)
 
-Generally you want to arrange the series so that you don't require G_GNUC_UNUSED: the 
-function should be defined at the point where it is first used.
+The local_err isn't used anywhere but by the error_report_err()
+alone. So, it could be moved into smmuv3_accel_issue_inv_cmd().
 
->   {
-> -    s->scb_status = (s->scb_status & 0xf000)
-> -        | (s->cu_status << 8) | (s->rx_status << 4);
-> -    set_uint16(s->scb, s->scb_status);
-> +    if (I596_FULL_DUPLEX) {
-> +        return true;
-> +    }
-> +
-> +    if (!s->throttle_state) {
-> +        return false;
-> +    }
-> +
-> +    if (!I596_LOOPBACK && (qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) % 100 < 5)) {
-> +        s->collision_events++;
-> +        return false;
-> +    }
-> +
-> +    return true;
->   }
->   
-> +static int G_GNUC_UNUSED i82596_csma_backoff(I82596State *s, int retry_count)
-> +{
-> +    int backoff_factor, slot_count, backoff_time;
-> +
-> +    backoff_factor = MIN(retry_count + 1, CSMA_BACKOFF_LIMIT);
-> +    slot_count = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) % (1 << backoff_factor);
-> +    backoff_time = slot_count * CSMA_SLOT_TIME;
->   
-> -static void i82596_s_reset(I82596State *s)
-> +    return backoff_time;
-> +}
-> +
-> +static uint16_t i82596_calculate_crc16(const uint8_t *data, size_t len)
->   {
-> -    trace_i82596_s_reset(s);
-> -    s->scp = 0;
-> -    s->scb_status = 0;
-> -    s->cu_status = CU_IDLE;
-> -    s->rx_status = RX_SUSPENDED;
-> -    s->cmd_p = I596_NULL;
-> -    s->lnkst = 0x8000; /* initial link state: up */
-> -    s->ca = s->ca_active = 0;
-> -    s->send_irq = 0;
-> +    uint16_t crc = 0xFFFF;
-> +    size_t i, j;
-> +
-> +    for (i = 0; i < len; i++) {
-> +        crc ^= data[i] << 8;
-> +        for (j = 0; j < 8; j++) {
-> +            if (crc & 0x8000) {
-> +                crc = (crc << 1) ^ 0x1021;
-> +            } else {
-> +                crc <<= 1;
-> +            }
-> +        }
-> +    }
-> +    return crc;
-> +}
-> +
-> +static size_t G_GNUC_UNUSED i82596_append_crc(I82596State *s, uint8_t *buffer, size_t len)
-> +{
-> +    if (len + 4 > PKT_BUF_SZ) {
-> +        return len;
-> +    }
-> +
-> +    if (I596_CRC16_32) {
-> +        uint32_t crc = crc32(~0, buffer, len);
-> +        crc = cpu_to_be32(crc);
-> +        memcpy(&buffer[len], &crc, sizeof(crc));
-> +        return len + sizeof(crc);
-> +    } else {
-> +        uint16_t crc = i82596_calculate_crc16(buffer, len);
-> +        crc = cpu_to_be16(crc);
-> +        memcpy(&buffer[len], &crc, sizeof(crc));
-> +        return len + sizeof(crc);
-> +    }
-> +}
-> +
-> +static void G_GNUC_UNUSED i82596_update_statistics(I82596State *s, bool is_tx,
-> +                                      uint16_t error_flags,
-> +                                      uint16_t collision_count)
-
-Same here with formatting.
-
-> +{
-> +    if (is_tx) {
-> +        if (collision_count > 0) {
-> +            s->tx_collisions += collision_count;
-> +            s->collision_events++;
-> +            s->total_collisions += collision_count;
-> +            set_uint32(s->scb + 32, s->tx_collisions);
-> +        }
-> +        if (error_flags) {
-> +            i82596_record_error(s, error_flags, true);
-> +        }
-> +        if (!(error_flags & (TX_ABORTED_ERRORS | TX_CARRIER_ERRORS))) {
-> +            s->tx_good_frames++;
-> +            set_uint32(s->scb + 36, s->tx_good_frames);
-> +        }
-> +    } else {
-> +        s->total_frames++;
-> +        set_uint32(s->scb + 40, s->total_frames);
-> +        if (error_flags) {
-> +            i82596_record_error(s, error_flags, false);
-> +        } else {
-> +            s->total_good_frames++;
-> +            set_uint32(s->scb + 44, s->total_good_frames);
-> +        }
-> +    }
-> +}
-> +
-> +/* Bus Throttle Functionality */
-> +static void G_GNUC_UNUSED i82596_bus_throttle_timer(void *opaque)
-> +{
-> +    I82596State *s = opaque;
-> +
-> +    if (s->throttle_state) {
-> +        s->throttle_state = false;
-> +        if (s->t_off > 0) {
-> +            timer_mod(s->throttle_timer,
-> +                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-> +                      (s->t_off * NANOSECONDS_PER_MICROSECOND));
-> +        }
-> +    } else {
-> +        s->throttle_state = true;
-> +        if (s->t_on > 0) {
-> +            timer_mod(s->throttle_timer,
-> +                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-> +                      (s->t_on * NANOSECONDS_PER_MICROSECOND));
-> +        }
-> +
-> +        if (s->cu_status == CU_ACTIVE || s->rx_status == RX_READY) {
-> +            examine_scb(s);
-> +        }
-> +    }
-> +}
-> +
-> +static int G_GNUC_UNUSED i82596_flush_packet_queue(I82596State *s)
-> +{
-> +    /* Stub for now - will be implemented in Patch 2 */
-> +    return 0;
-> +}
-> +
-> +static void G_GNUC_UNUSED i82596_flush_queue_timer(void *opaque)
-> +{
-> +    /* Stub for now - will be implemented in Patch 2 */
-> +}
-> +
-> +static void i82596_update_scb_irq(I82596State *s, bool trigger)
-> +{
-> +    if (trigger) {
-> +        s->send_irq = 1;
-> +        qemu_set_irq(s->irq, 1);
-> +    }
-> +}
-> +
-> +static void G_GNUC_UNUSED i82596_update_cu_status(I82596State *s, uint16_t cmd_status,
-> +                                     bool generate_interrupt)
-> +{
-> +    if (cmd_status & STAT_C) {
-> +        if (cmd_status & STAT_OK) {
-> +            if (s->cu_status == CU_ACTIVE && s->cmd_p == I596_NULL) {
-> +                s->cu_status = CU_IDLE;
-> +                s->scb_status |= SCB_STATUS_CNA;
-> +            }
-> +        } else {
-> +            s->cu_status = CU_IDLE;
-> +            s->scb_status |= SCB_STATUS_CNA;
-> +        }
-> +
-> +        if (generate_interrupt) {
-> +            s->scb_status |= SCB_STATUS_CX;
-> +            i82596_update_scb_irq(s, true);
-> +        }
-> +    }
-> +
-> +    update_scb_status(s);
->   }
->   
-> +static void update_scb_status(I82596State *s)
-> +{
-> +    s->scb_status = (s->scb_status & 0xf000)
-> +        | (s->cu_status << 8) | (s->rx_status << 4) | (s->lnkst >> 8);
-> +    set_uint16(s->scb, s->scb_status);
-> +
-> +    set_uint32(s->scb + 28, s->tx_aborted_errors);
-> +    set_uint32(s->scb + 32, s->tx_collisions);
-> +    set_uint32(s->scb + 36, s->tx_good_frames);
-> +
-> +    set_uint32(s->scb + 16, s->crc_err);
-> +    set_uint32(s->scb + 18, s->align_err);
-> +    set_uint32(s->scb + 20, s->resource_err);
-> +    set_uint32(s->scb + 22, s->over_err);
-> +    set_uint32(s->scb + 24, s->rcvdt_err);
-> +    set_uint32(s->scb + 26, s->short_fr_error);
-> +}
-
-The set_uint16() and set_uint32() functions don't look correct: you want to reference 
-all addresses through their offset from the base address rather than their absolute 
-address, since for other boards they can be mapped at other addresses.
-
->   static void command_loop(I82596State *s)
->   {
-> @@ -330,17 +756,6 @@ static void command_loop(I82596State *s)
->       qemu_flush_queued_packets(qemu_get_queue(s->nic));
->   }
->   
-> -static void i82596_flush_queue_timer(void *opaque)
-> -{
-> -    I82596State *s = opaque;
-> -    if (0) {
-> -        timer_del(s->flush_queue_timer);
-> -        qemu_flush_queued_packets(qemu_get_queue(s->nic));
-> -        timer_mod(s->flush_queue_timer,
-> -              qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 1000);
-> -    }
-> -}
-> -
->   static void examine_scb(I82596State *s)
->   {
->       uint16_t command, cuc, ruc;
-> @@ -353,7 +768,7 @@ static void examine_scb(I82596State *s)
->       /* and clear the scb command word */
->       set_uint16(s->scb + 2, 0);
->   
-> -    s->scb_status &= ~(command & SCB_COMMAND_ACK_MASK);
-> +    s->scb_status &= ~(command & SCB_ACK_MASK);
->   
->       switch (cuc) {
->       case 0:     /* no change */
-> @@ -465,13 +880,6 @@ uint32_t i82596_ioport_readw(void *opaque, uint32_t addr)
->       return -1;
->   }
->   
-> -void i82596_h_reset(void *opaque)
-> -{
-> -    I82596State *s = opaque;
-> -
-> -    i82596_s_reset(s);
-> -}
-> -
->   bool i82596_can_receive(NetClientState *nc)
->   {
->       I82596State *s = qemu_get_nic_opaque(nc);
-> @@ -595,7 +1003,6 @@ ssize_t i82596_receive(NetClientState *nc, const uint8_t *buf, size_t sz)
->       rbd = get_uint32(rfd_p + 8);
->       assert(rbd && rbd != I596_NULL);
->   
-> -    trace_i82596_receive_packet(len);
->       /* PRINT_PKTHDR("Receive", buf); */
->   
->       while (len) {
-> @@ -714,14 +1121,113 @@ ssize_t i82596_receive(NetClientState *nc, const uint8_t *buf, size_t sz)
->       return sz;
->   }
->   
-> +ssize_t i82596_receive_iov(NetClientState *nc, const struct iovec *iov,
-> +                            int iovcnt)
-> +{
-> +    size_t sz = 0;
-> +    uint8_t *buf;
-> +    int i;
-> +    for (i = 0; i < iovcnt; i++) {
-> +        sz += iov[i].iov_len;
-> +    }
-> +    if (sz == 0) {
-> +        return -1;
-> +    }
-> +    buf = g_malloc(sz);
-> +    if (!buf) {
-> +        return -1;
-> +    }
-> +    size_t offset = 0;
-> +    for (i = 0; i < iovcnt; i++) {
-> +        if (iov[i].iov_base == NULL) {
-> +            g_free(buf);
-> +            return -1;
-> +        }
-> +        memcpy(buf + offset, iov[i].iov_base, iov[i].iov_len);
-> +        offset += iov[i].iov_len;
-> +    }
-> +    DBG(PRINT_PKTHDR("Receive IOV:", buf));
-> +    i82596_receive(nc, buf, sz);
-> +    g_free(buf);
-> +    return sz;
-> +}
-> +
-> +void i82596_poll(NetClientState *nc, bool enable)
-> +{
-> +    I82596State *s = qemu_get_nic_opaque(nc);
-> +
-> +    if (!enable) {
-> +        return;
-> +    }
-> +
-> +    if (s->send_irq) {
-> +        qemu_set_irq(s->irq, 1);
-> +    }
-> +
-> +    if (s->rx_status == RX_NO_RESOURCES) {
-> +        if (s->cmd_p != I596_NULL) {
-> +            s->rx_status = RX_READY;
-> +            update_scb_status(s);
-> +        }
-> +    }
-> +
-> +    if (s->cu_status == CU_ACTIVE && s->cmd_p != I596_NULL) {
-> +        examine_scb(s);
-> +    }
-> +    qemu_set_irq(s->irq, 0);
-> +}
->   
->   const VMStateDescription vmstate_i82596 = {
->       .name = "i82596",
->       .version_id = 1,
->       .minimum_version_id = 1,
-> -    .fields = (const VMStateField[]) {
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT8(mode, I82596State),
-> +        VMSTATE_UINT16(t_on, I82596State),
-> +        VMSTATE_UINT16(t_off, I82596State),
-> +        VMSTATE_BOOL(throttle_state, I82596State),
-> +        VMSTATE_UINT32(iscp, I82596State),
-> +        VMSTATE_UINT8(sysbus, I82596State),
-> +        VMSTATE_UINT32(scb, I82596State),
-> +        VMSTATE_UINT32(scb_base, I82596State),
-> +        VMSTATE_UINT16(scb_status, I82596State),
-> +        VMSTATE_UINT8(cu_status, I82596State),
-> +        VMSTATE_UINT8(rx_status, I82596State),
->           VMSTATE_UINT16(lnkst, I82596State),
-> -        VMSTATE_TIMER_PTR(flush_queue_timer, I82596State),
-> +        VMSTATE_UINT32(cmd_p, I82596State),
-> +        VMSTATE_INT32(ca, I82596State),
-> +        VMSTATE_INT32(ca_active, I82596State),
-> +        VMSTATE_INT32(send_irq, I82596State),
-> +        VMSTATE_BUFFER(mult, I82596State),
-> +        VMSTATE_BUFFER(config, I82596State),
-> +        VMSTATE_BUFFER(tx_buffer, I82596State),
-> +        VMSTATE_UINT32(tx_retry_addr, I82596State),
-> +        VMSTATE_INT32(tx_retry_count, I82596State),
-> +        VMSTATE_UINT32(tx_good_frames, I82596State),
-> +        VMSTATE_UINT32(tx_collisions, I82596State),
-> +        VMSTATE_UINT32(tx_aborted_errors, I82596State),
-> +        VMSTATE_UINT32(last_tx_len, I82596State),
-> +        VMSTATE_UINT32(collision_events, I82596State),
-> +        VMSTATE_UINT32(total_collisions, I82596State),
-> +        VMSTATE_UINT32(crc_err, I82596State),
-> +        VMSTATE_UINT32(align_err, I82596State),
-> +        VMSTATE_UINT32(resource_err, I82596State),
-> +        VMSTATE_UINT32(over_err, I82596State),
-> +        VMSTATE_UINT32(rcvdt_err, I82596State),
-> +        VMSTATE_UINT32(short_fr_error, I82596State),
-> +        VMSTATE_UINT32(total_frames, I82596State),
-> +        VMSTATE_UINT32(total_good_frames, I82596State),
-> +        VMSTATE_BUFFER(rx_buffer, I82596State),
-> +        VMSTATE_UINT16(tx_frame_len, I82596State),
-> +        VMSTATE_UINT16(rx_frame_len, I82596State),
-> +        VMSTATE_UINT64(current_tx_desc, I82596State),
-> +        VMSTATE_UINT64(current_rx_desc, I82596State),
-> +        VMSTATE_UINT32(last_good_rfa, I82596State),
-> +        VMSTATE_INT32(queue_head, I82596State),
-> +        VMSTATE_INT32(queue_tail, I82596State),
-> +        VMSTATE_INT32(queue_count, I82596State),
-> +        VMSTATE_BOOL(rnr_signaled, I82596State),
-> +        VMSTATE_BOOL(flushing_queue, I82596State),
->           VMSTATE_END_OF_LIST()
->       }
->   };
-> @@ -736,8 +1242,15 @@ void i82596_common_init(DeviceState *dev, I82596State *s, NetClientInfo *info)
->       qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
->   
->       if (USE_TIMER) {
-> -        s->flush_queue_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> -                                    i82596_flush_queue_timer, s);
-> +        if (!s->flush_queue_timer) {
-> +            s->flush_queue_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> +                                        i82596_flush_queue_timer, s);
-> +        }
-> +        if (!s->throttle_timer) {
-> +            s->throttle_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> +                                        i82596_bus_throttle_timer, s);
-> +        }
->       }
-> +
->       s->lnkst = 0x8000; /* initial link state: up */
->   }
-> diff --git a/hw/net/i82596.h b/hw/net/i82596.h
-> index dc1fa1a1dc..67b18f957a 100644
-> --- a/hw/net/i82596.h
-> +++ b/hw/net/i82596.h
-> @@ -6,11 +6,15 @@
->   #include "system/memory.h"
->   #include "system/address-spaces.h"
->   
-> -#define PORT_RESET              0x00    /* reset 82596 */
-> -#define PORT_SELFTEST           0x01    /* selftest */
-> -#define PORT_ALTSCP             0x02    /* alternate SCB address */
-> -#define PORT_ALTDUMP            0x03    /* Alternate DUMP address */
-> -#define PORT_CA                 0x10    /* QEMU-internal CA signal */
-> +#define PACKET_QUEUE_SIZE 64
-> +#define RX_RING_SIZE    16
-> +#define PKT_BUF_SZ      1536
-> +
-> +#define PORT_RESET              0x00
-> +#define PORT_SELFTEST           0x01
-> +#define PORT_ALTSCP             0x02
-> +#define PORT_ALTDUMP            0x03
-> +#define PORT_CA                 0x10
->   
->   typedef struct I82596State_st I82596State;
->   
-> @@ -21,35 +25,75 @@ struct I82596State_st {
->       NICState *nic;
->       NICConf conf;
->       QEMUTimer *flush_queue_timer;
-> +    uint8_t mode;
-> +
-> +    QEMUTimer *throttle_timer;
-> +    uint16_t t_on;
-> +    uint16_t t_off;
-> +    bool throttle_state;
->   
-> -    hwaddr scp;         /* pointer to SCP */
-> +    hwaddr scp;
-> +    uint32_t iscp;
->       uint8_t sysbus;
-> -    uint32_t scb;       /* SCB */
-> +    uint32_t scb;
-> +    uint32_t scb_base;
->       uint16_t scb_status;
->       uint8_t cu_status, rx_status;
->       uint16_t lnkst;
-> +    uint32_t last_tx_len;
-> +    uint32_t collision_events;
-> +    uint32_t total_collisions;
-> +
-> +    uint32_t tx_retry_addr;
-> +    int tx_retry_count;
-> +    uint32_t tx_good_frames;
-> +    uint32_t tx_collisions;
-> +    uint32_t tx_aborted_errors;
->   
-> -    uint32_t cmd_p;     /* addr of current command */
-> +    uint32_t cmd_p;
->       int ca;
->       int ca_active;
->       int send_irq;
->   
-> -    /* Hash register (multicast mask array, multiple individual addresses). */
->       uint8_t mult[8];
-> -    uint8_t config[14]; /* config bytes from CONFIGURE command */
-> +    uint8_t config[14];
-> +
-> +    uint32_t crc_err;
-> +    uint32_t align_err;
-> +    uint32_t resource_err;
-> +    uint32_t over_err;
-> +    uint32_t rcvdt_err;
-> +    uint32_t short_fr_error;
-> +    uint32_t total_frames;
-> +    uint32_t total_good_frames;
-> +
-> +    uint8_t tx_buffer[PKT_BUF_SZ];
-> +    uint8_t rx_buffer[PKT_BUF_SZ];
-> +    uint16_t tx_frame_len;
-> +    uint16_t rx_frame_len;
->   
-> -    uint8_t tx_buffer[0x4000];
-> +    hwaddr current_tx_desc;
-> +    hwaddr current_rx_desc;
-> +    uint32_t last_good_rfa;
-> +    uint8_t packet_queue[PACKET_QUEUE_SIZE][PKT_BUF_SZ];
-> +    size_t packet_queue_len[PACKET_QUEUE_SIZE];
-> +    int queue_head;
-> +    int queue_tail;
-> +    int queue_count;
-> +    bool rnr_signaled;
-> +    bool flushing_queue;
->   };
->   
->   void i82596_h_reset(void *opaque);
->   void i82596_ioport_writew(void *opaque, uint32_t addr, uint32_t val);
->   uint32_t i82596_ioport_readw(void *opaque, uint32_t addr);
-> -void i82596_ioport_writel(void *opaque, uint32_t addr, uint32_t val);
-> -uint32_t i82596_ioport_readl(void *opaque, uint32_t addr);
-> -uint32_t i82596_bcr_readw(I82596State *s, uint32_t rap);
->   ssize_t i82596_receive(NetClientState *nc, const uint8_t *buf, size_t size_);
-> +ssize_t i82596_receive_iov(NetClientState *nc, const struct iovec *iov,
-> +                           int iovcnt);
->   bool i82596_can_receive(NetClientState *nc);
->   void i82596_set_link_status(NetClientState *nc);
-> -void i82596_common_init(DeviceState *dev, I82596State *s, NetClientInfo *info);
-> +void i82596_poll(NetClientState *nc, bool enable);
-> +void i82596_common_init(DeviceState *dev, I82596State *s,
-> +                        NetClientInfo *info);
->   extern const VMStateDescription vmstate_i82596;
->   #endif
-> diff --git a/hw/net/lasi_i82596.c b/hw/net/lasi_i82596.c
-> index 9e1dd21546..fc06588ade 100644
-> --- a/hw/net/lasi_i82596.c
-> +++ b/hw/net/lasi_i82596.c
-> @@ -86,6 +86,10 @@ static const MemoryRegionOps lasi_82596_mem_ops = {
->           .min_access_size = 4,
->           .max_access_size = 4,
->       },
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
->   };
->   
->   static NetClientInfo net_lasi_82596_info = {
-> @@ -93,6 +97,8 @@ static NetClientInfo net_lasi_82596_info = {
->       .size = sizeof(NICState),
->       .can_receive = i82596_can_receive,
->       .receive = i82596_receive,
-> +    .receive_iov = i82596_receive_iov,
-> +    .poll = i82596_poll,
->       .link_status_changed = i82596_set_link_status,
->   };
-
-ATB,
-
-Mark.
-
+Nicolin
 
