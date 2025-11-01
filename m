@@ -4,94 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFB0CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 00:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7108CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Nov 2025 00:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vEz8k-0002ww-3Z; Fri, 31 Oct 2025 20:06:42 -0400
+	id 1vEzMK-0004zq-TJ; Fri, 31 Oct 2025 20:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEz8b-0002wk-Eh
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 20:06:33 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vEzMA-0004vx-MM; Fri, 31 Oct 2025 20:20:35 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEz8V-0002N8-9P
- for qemu-devel@nongnu.org; Fri, 31 Oct 2025 20:06:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=dlvla6Q7xrDcG6C6E9+qzzC336rgHPPw1zm6fSy0Ssg=; b=bB4qfBsZIC2Po0w7cn2mUm1AXg
- daIJoQrkKfX/OCawY/w/5v0WmSm6Rh7BTdaAU/DjJxKug3PQvSNo9tqw173UYhwLWVhYxx5LLVjob
- P1eySjfKu2uVR8Knndbl/NQDj0ZeHlumrfM45vq5SExjBW0n0qhqyb7mvRaxW8LKVQLZZLVt14OOH
- /VFf/5ixXRFYAMqZk7cq76e+1p7B7Ti19Z4AEea5vcqTYLpIBFhCdZMakKQWjM0FlnJzDZQQFt9Yk
- +1LNDPi97NdZcQr1xSpqkiQkJ9AuNoUHnSvlzbpLGK4+xIcUyvLm+rimLkjM56AVnVESre/r3L43K
- EL/F+2eY06yAqh8GRk368s45DrUnn9OlZJvxk+F5BfRlXuEAhgZbfVT4w5XnQkptw2UBmT+NHI1Ni
- OXibITtYH++XOxBFg52/pXCJYyfhsy5OFVlBj33neE0T03rgm7CyemIi7tscYYNWKece/JpcKmkU2
- ko7U41H/453yeqIX0hnpmH5BVTqPU5IMQ2xb15Xpk2+88rClATeWKOZoMA8pzn7b7yZiEugylN2ZB
- JoHZoaz2Jl3GfngqvfxjaVh0ZzToejSf2bXec1xH3ogntYgHFWfNljVNdCCAqtlmZ4rI3qQ4FoHBM
- J5zh+xkjTQ+DqNCsCobY9YIHDDj2kp1ovkJc6ZoE8=;
-Received: from [2a02:8012:2f01:0:13e4:9053:ba25:9d4b]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vEz68-0006rJ-5p; Sat, 01 Nov 2025 00:04:00 +0000
-Message-ID: <eb8782cd-5d31-4a27-a8d7-68361025d801@ilande.co.uk>
-Date: Sat, 1 Nov 2025 00:06:13 +0000
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vEzM7-0004OB-Ns; Fri, 31 Oct 2025 20:20:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IybYDUJDj0Tzewf/jOh9shSSluXFwZ1j/78AA/Nv8UKjNuV1UZmfcAXoBmS6etAQVeVIPSoQWxmLu5UPxTmKS7NDTDMhko2BED16KvdvfeY051Xvwc78LfeytRyL9yK1BlZdYnzd9G/koB3J+Zwbl82TapbuKkVc197yg+oQ5YKBFs/H+YL24+XBAyxx36j/VG/5PC0doccPvG9/4Oz5Scox8Ml9XqnBjckM2h5lspwLXpJWiuKBs/3pQdB2aAWgmWOIpr+SEb/gqselaIpyidcxRAOIQGrpYs7aIr/oL//XgsQrdzsP0s+sOyYTDkV5oO4ypo76tls+1an4k+c0Zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N7QBAvDRAyNBPZuIkw75pCP5KHVmnd6erwe+Z730h6w=;
+ b=c0OKX3bcJNXjfZPhPLkGvRPi4WpX1b0U4M580D+gD27/tb0WUdENpb366wJV6jVOCZDNPf5sV0IFYdr6CD5C8NofB/sgbH05358T82s3dXoCiXkotzLD+9EcnYKBWbNY639zraMiJDmciwYumO2UER4JFTTYDBEnQv74d628i4ilrp5M0qS/Uc89uzn/q+T6REM5R5jfoPeS8rHn5IbLFvTP0I9x9rGy1vlD6nqQ8nrHvSdyDQaqLncPO/KHvw2mj8FKrt80uyebaw8PRGjkOPaw66IkmdfLLySDHWpIIolyTT8hy4fXdqb5W/cHjR6SZKkNRp9GzGVmLl+uAAyXsA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=N7QBAvDRAyNBPZuIkw75pCP5KHVmnd6erwe+Z730h6w=;
+ b=AE0VpL2rMipfGBNa6jhX9/W3HZHHRfG14O+Rlx66RuRCqiUzLwv8zg+kpCjnu0pwpTu4Es0f5bLMvKSHqjLHn2jpqSbmx7w4w0UUizE0XtHg4WPR9WW8GRwzr/22Az9iEi5O0z4e8OR3hIkT4yAyU7GaPviGj1FVYAnOaYb5ns2rB+bvTEkuClHaJ3EOMnErOWKTat6VwfiljAsSA9MnNXi3rwZUfH99cDN3HhSYp8I8IlChNL/lsN1IzwGgqhGoMXI7UW7daptSEbF8nunT5N+fZZ2k2hYmP7KexXZIk+fyBhfhTn8Yhreh5FAjQi7PgwhTKvxzZlgANzZ0VLLL7A==
+Received: from PH5P220CA0013.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:34a::10)
+ by SJ2PR12MB9008.namprd12.prod.outlook.com (2603:10b6:a03:543::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.14; Sat, 1 Nov
+ 2025 00:20:19 +0000
+Received: from SN1PEPF0002BA52.namprd03.prod.outlook.com
+ (2603:10b6:510:34a:cafe::80) by PH5P220CA0013.outlook.office365.com
+ (2603:10b6:510:34a::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.15 via Frontend Transport; Sat,
+ 1 Nov 2025 00:20:34 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SN1PEPF0002BA52.mail.protection.outlook.com (10.167.242.75) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9275.10 via Frontend Transport; Sat, 1 Nov 2025 00:20:19 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 31 Oct
+ 2025 17:20:07 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Fri, 31 Oct 2025 17:20:06 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Fri, 31 Oct 2025 17:20:06 -0700
+Date: Fri, 31 Oct 2025 17:20:04 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [PATCH v5 13/32] hw/arm/smmuv3-accel: Add nested vSTE
+ install/uninstall support
+Message-ID: <aQVSNCUGRCNLfSeI@Asurada-Nvidia>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-14-skolothumtho@nvidia.com>
+ <aQVLzfaxxSfw1HBL@Asurada-Nvidia>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>, deller@gmx.de,
- qemu-devel@nongnu.org
-Cc: sarkarsoumyajyoti23@gmail.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>
-References: <20251031211516.208488-1-soumyajyotisarkar23@gmail.com>
- <20251031211516.208488-2-soumyajyotisarkar23@gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20251031211516.208488-2-soumyajyotisarkar23@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:13e4:9053:ba25:9d4b
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/3] hw/hppa: Enable LASI i82596 network on 715 machine
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aQVLzfaxxSfw1HBL@Asurada-Nvidia>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA52:EE_|SJ2PR12MB9008:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1a98b1f3-9488-454f-7c24-08de18dc7070
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|7416014|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?GaSbmlo8xeF6WPq8UCJ1wLmBS4U03kIFIaQ6RjgFZui8Zh/3mVYKoI3CDceS?=
+ =?us-ascii?Q?bgmwLomYZL4/9bU3Io73wlQZX7rL14CQucJmZ8nKhbHNjeQs+PDOySXOi+s3?=
+ =?us-ascii?Q?oJP+sqZfcM5aIj60MF71zQbTUD/Y9/cEGHv3JBF1m6v9vVHzNGvT9oJpzqc9?=
+ =?us-ascii?Q?vjH0nQht04Ur1CEgePqOw7WHQ3K1SFtmGZvjkf++yJhnCeTyYZRAKb9H1eYT?=
+ =?us-ascii?Q?2nt3uFEfpFLuS7NSKFHaKXrllXVSmAABUJWdKneydEjs0K78DZvFMczOMc4E?=
+ =?us-ascii?Q?EUFBT6lgJbe6/tqtzZ7XVMJyxN/m2w1BbIYWODt9bdss4vqdUov/htOREJY3?=
+ =?us-ascii?Q?GGcrGAw5fqZiQ0bJ0G7qO0C4Ofqy/SjRygNTCYXDbGtmXHWKz+oRgL+Wg1LP?=
+ =?us-ascii?Q?twB8O93H483t6kOyPmr7y0lp7XavlJW4EkH1wLpN7VlKURt+4YtojE+DRprx?=
+ =?us-ascii?Q?WGe/Us65RsWCubyOkhty8SJdytvVkuDiesfQEGjp89x2oRNgbDckYlQXXl42?=
+ =?us-ascii?Q?wR10HeQ/xz/lwiToBZYxgby1olYlqOUf/AXKbnNYr3Is8gkvsiTAdn3RTjei?=
+ =?us-ascii?Q?6uiQBVixcVB8fdDqYdZJKez1/6c+uTQRsFTai+pcLsMmlzI48KzxDZm3PBbI?=
+ =?us-ascii?Q?8mWryJ2cgEip4kDh38DBiUrGAbQpDrDLWAErGKQudrFyScmj2k8EeM5oayUj?=
+ =?us-ascii?Q?R7+DGz3YXASzl020bwRwoKrIefGPKRCj+ObPUrNY1qcg72wPfi+lwhfCm7+g?=
+ =?us-ascii?Q?RWA9787RueXl7ns5jub0BSk6uT63BMp9dYJJmybQTLwDCJGkAJX10gnwsC4c?=
+ =?us-ascii?Q?rXXmwlEiBh4F1vAGiqPZPo4ksXcFbO9Q/q9vMXeCiRIuFDQmJs1TNw2rILjZ?=
+ =?us-ascii?Q?6RFO/0xTZkAoSmTQ+XWX+GSpPr4Q9zd3+u59LX746LHzUDuzJ1TPG0Hz/4gH?=
+ =?us-ascii?Q?1mG19b4KALyJky85x0KndySFaa5GrkOFnLRCkOe30HBfC0ilzfTXY8HC+nuI?=
+ =?us-ascii?Q?MTvThmCA884kTfeNOGkcmGUs/9KFbsSN7s1+zD2/TaD2YM16LLXOmvkAwchC?=
+ =?us-ascii?Q?MjbSNLI1LrcRjWS0ZaEdY05VpcKWu7CbQ9mhZK8OSBKbcrkDJ/2LgitdppuL?=
+ =?us-ascii?Q?Ynh29hdLW2VzuiiM9xIrOUjza3KKJtH4os+7I4vbYVUX+jPDf6u5gJqXvxdw?=
+ =?us-ascii?Q?cCebcvGrdgLYlsYP+suA1sLd1Wu7tr/yqYzuLiuy7YepHNTu+z7s/v/08OYM?=
+ =?us-ascii?Q?gSSU2IXccG0HBjk2JDe4DrGnt/ovH09Z/m6nVjH4fiS2WACx/eMzLsyZGA2e?=
+ =?us-ascii?Q?AR7tA2urJUc6wHlo0jf7oVxSnZGOVgR+rmnm5nlgClGh5MfG38u5eBO6LWwd?=
+ =?us-ascii?Q?FivVBxJfVJnIGHdVUUcZPUgb7ULxCN6DdKBb9/aZVeE7letRRuWfnqUuzR5f?=
+ =?us-ascii?Q?hfcZfuRV9c/CBN2BEBxeOz6x/hU53OXeSNQBI9KGc66fXGMhD0UF3iY0eChV?=
+ =?us-ascii?Q?F4Hms1hW1tq1zQGzOhHrYBWVOT2N2Dy9YEP9RHNE3ytM43mR6w+PhDQZXejQ?=
+ =?us-ascii?Q?e5/7GpuWExfnlXJSeM0=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(7416014)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2025 00:20:19.0193 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a98b1f3-9488-454f-7c24-08de18dc7070
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002BA52.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9008
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,157 +162,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/10/2025 21:15, Soumyajyotii Ssarkar wrote:
-
-> From: RemZapCypher <soumyajyotisarkar23@gmail.com>
+On Fri, Oct 31, 2025 at 04:52:50PM -0700, Nicolin Chen wrote:
+> On Fri, Oct 31, 2025 at 10:49:46AM +0000, Shameer Kolothum wrote:
+> > +smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,\
+> [...]
+> > +    config = STE_CONFIG(&ste);
+> > +    if (!STE_VALID(&ste) || !STE_CFG_S1_ENABLED(config)) {
+> > +        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev,
+> > +                                                   STE_CFG_ABORT(config),
 > 
-> Enable the i82596 network chip which is included in the LASI
-> multi I/O chip. Since LASI has different start addresses on
-> the various machines, always initialize the LASI components
-> by their offsets.
+> This smmuv3_accel_uninstall_nested_ste() feels a bit redundant now.
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   hw/hppa/hppa_hardware.h | 20 ++++++++++++--------
->   hw/hppa/machine.c       | 25 +++++++++++--------------
->   2 files changed, 23 insertions(+), 22 deletions(-)
+> Perhaps we could try something like this:
 > 
-> diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
-> index d422af0429..a8a496c0e1 100644
-> --- a/hw/hppa/hppa_hardware.h
-> +++ b/hw/hppa/hppa_hardware.h
-> @@ -21,14 +21,6 @@
->   #define DINO_SCSI_HPA   0xfff8c000
->   #define LASI_HPA_715    0xf0100000
->   #define LASI_HPA        0xffd00000
-> -#define LASI_UART_HPA   0xffd05000
-> -#define LASI_SCSI_HPA   0xffd06000
-> -#define LASI_LAN_HPA    0xffd07000
-> -#define LASI_RTC_HPA    0xffd09000
-> -#define LASI_LPT_HPA    0xffd02000
-> -#define LASI_AUDIO_HPA  0xffd04000
-> -#define LASI_PS2KBD_HPA 0xffd08000
-> -#define LASI_PS2MOU_HPA 0xffd08100
->   #define LASI_GFX_HPA    0xf8000000
->   #define ARTIST_FB_ADDR  0xf9000000
->   #define CPU_HPA         0xfffb0000
-> @@ -44,6 +36,18 @@
->   
->   #define SCSI_HPA        0xf1040000      /* emulated SCSI, needs to be in f region */
->   
-> +#define HPA_DISABLED_DEVICE     1       /* add to HPA to disable */
-> +
-> +/* LASI offsets */
-> +#define LASI_LPT        0x02000
-> +#define LASI_AUDIO      0x04000
-> +#define LASI_UART       0x05000
-> +#define LASI_SCSI       0x06000
-> +#define LASI_LAN        0x07000
-> +#define LASI_PS2        0x08000
-> +#define LASI_RTC        0x09000
-> +#define LASI_FDC        0x0A000
-> +
->   /* offsets to DINO HPA: */
->   #define DINO_PCI_ADDR           0x064
->   #define DINO_CONFIG_DATA        0x068
-> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> index cbca0026ab..7c5297c071 100644
-> --- a/hw/hppa/machine.c
-> +++ b/hw/hppa/machine.c
-> @@ -50,8 +50,6 @@ struct HppaMachineState {
->   #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
->   static hwaddr soft_power_reg;
->   
-> -#define enable_lasi_lan()       0
-> -
->   static DeviceState *lasi_dev;
->   
->   static void hppa_powerdown_req(Notifier *n, void *opaque)
-> @@ -376,13 +374,6 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->           }
->       }
->   
-> -    /* Network setup. */
-> -    if (lasi_dev) {
-> -        lasi_82596_init(addr_space, translate(NULL, LASI_LAN_HPA),
-> -                        qdev_get_gpio_in(lasi_dev, LASI_IRQ_LAN_HPA),
-> -                        enable_lasi_lan());
-> -    }
-> -
->       if (pci_bus) {
->           pci_init_nic_devices(pci_bus, mc->default_nic);
->   
-> @@ -595,6 +586,11 @@ static void machine_HP_715_init(MachineState *machine)
->           lasi_ncr710_handle_legacy_cmdline(dev);
->       }
->   
-> +    /* LASI i82596 network */
-> +    lasi_82596_init(addr_space, translate(NULL, LASI_HPA_715 + LASI_LAN),
-> +                    qdev_get_gpio_in(lasi_dev, LASI_IRQ_LAN_HPA),
-> +                    true);
-> +
+> #define accel_dev_to_smmuv3(dev) ARM_SMMUV3(&dev->sdev.smmu)
 
-The lasi_82596_init() function should not belong to the device in 
-hw/net/lasi_i82596.c since it attempts to wire up the NIC in a sysbus-specific way 
-which is not valid for other buses.
+Oops. This should be:
 
-Having a look at lasi_82596_init() there are a few things wrong with it:
-   - qemu_create_nic_device() should be done in lasi_82596_instance_init()
-   - s->state.irq should not be set directly, but instead be initialised
-     as a qdev gpio in lasi_82596_instance_init() and then connected by the board
+#define accel_dev_to_smmuv3(dev) ARM_SMMUV3((SMMUState *)dev->sdev.smmu)
 
-One solution might be to make these changes and then move the remainder of 
-lasi_82596_init() into hw/hppa/machine.c and then remove the function declaration 
-from the lasi_82596.h.
+But it doesn't seem to be very useful anyway. So, feel free to
+keep it inline or just drop it :)
 
->       /* Add NICs, graphics & load firmware */
->       machine_HP_common_init_tail(machine, NULL, translate);
->   }
-> @@ -638,7 +634,7 @@ static void machine_HP_B160L_init(MachineState *machine)
->       assert(isa_bus);
->   
->       /* Serial ports: Lasi and Dino use a 7.272727 MHz clock. */
-> -    serial_mm_init(addr_space, translate(NULL, LASI_UART_HPA + 0x800), 0,
-> +    serial_mm_init(addr_space, translate(NULL, LASI_HPA + LASI_UART + 0x800), 0,
->           qdev_get_gpio_in(lasi_dev, LASI_IRQ_UART_HPA), 7272727 / 16,
->           serial_hd(0), DEVICE_BIG_ENDIAN);
->   
-> @@ -647,7 +643,8 @@ static void machine_HP_B160L_init(MachineState *machine)
->           serial_hd(1), DEVICE_BIG_ENDIAN);
->   
->       /* Parallel port */
-> -    parallel_mm_init(addr_space, translate(NULL, LASI_LPT_HPA + 0x800), 0,
-> +    parallel_mm_init(addr_space,
-> +                     translate(NULL, LASI_HPA + LASI_LPT + 0x800), 0,
->                        qdev_get_gpio_in(lasi_dev, LASI_IRQ_LPT_HPA),
->                        parallel_hds[0]);
->   
-> @@ -657,11 +654,11 @@ static void machine_HP_B160L_init(MachineState *machine)
->       sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
->                          qdev_get_gpio_in(lasi_dev, LASI_IRQ_PS2KBD_HPA));
->       memory_region_add_subregion(addr_space,
-> -                                translate(NULL, LASI_PS2KBD_HPA),
-> +                                translate(NULL, LASI_HPA + LASI_PS2),
->                                   sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
->                                                          0));
->       memory_region_add_subregion(addr_space,
-> -                                translate(NULL, LASI_PS2KBD_HPA + 0x100),
-> +                                translate(NULL, LASI_HPA + LASI_PS2 + 0x100),
->                                   sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
->                                                          1));
->   
-> @@ -832,7 +829,7 @@ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
->       /* can only support up to max. 8 CPUs due inventory major numbers */
->       mc->max_cpus = MIN_CONST(HPPA_MAX_CPUS, 8);
->       mc->default_ram_size = 256 * MiB;
-> -    mc->default_nic = NULL;
-> +    mc->default_nic = "lasi_82596";
-
-This should be TYPE_LASI_82596.
-
-
-ATB,
-
-Mark.
-
+Nicolin
 
