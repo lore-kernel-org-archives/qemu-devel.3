@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294C4CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Nov 2025 22:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A635CCFA00
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Nov 2025 22:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFgJ8-0007QE-EK; Sun, 02 Nov 2025 17:12:18 -0500
+	id 1vFgLS-0007uU-6Z; Sun, 02 Nov 2025 17:14:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vFgJ7-0007Ps-1M
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:12:17 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vFgLR-0007uM-0j
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:14:41 -0500
 Received: from mout.gmx.net ([212.227.15.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vFgJ4-0003ok-Lf
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:12:16 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vFgLP-0003ub-23
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:14:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1762121515; x=1762726315; i=deller@gmx.de;
- bh=KthOien3K7GDaswl/0l/KmVDs8+fIA1z1TMGL1BLF0s=;
+ s=s31663417; t=1762121675; x=1762726475; i=deller@gmx.de;
+ bh=uAOlC5anz/kDlFmWXlVCwRYTQmXOCqSZ3VRgVEIYb4Y=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=WOna7I/UtTjPRYOgROcDC2rohC27N1NltdHo76f8gqDmSbNI9Ynu8lM96bxrGiJx
- 1h/lBIA2W8GboWMDZLGM9fYx5P+2VonbieNKD0NqWSDNKVAKp3JHZb7CzWpnmHPE5
- fgVAniOeZA3VRvpaRwTDw52RyYamS3GD1Lm4WjFIj8o4kvv33zcK7pQgHczIWiA4X
- 08LtSm8mogxDZdwMgN2wW4ouysu5H4JHM5Aj7NUAWPH4XLGBDvpUOvOPrbFaDWD+4
- EbYzTdG2r3fGBNm7wpZs2MW2wbMT2q8UtqdQBfI6YIXng+C0yQSdCgrvoQHVfsu/W
- 3TcPsQKcg6k//mqpYw==
+ b=YYtRo6PKjVuWTrXtFdimRkR48v6CnAcN0b5h7O9krP5m4GMmOlWQEwtRrmY8RZvE
+ FH3skl6K5qzVbJxfTKuo2zIaF2o6oQynRFCn3CCSLLJkMlBFwDb105CMA9wLTx85N
+ S/PN5YQVjAz3QNJ0We8BK+z1GstFqvvSdPXWkkBShjO4S9XOZVqhwu3hhkgkVjn8Z
+ c1t6wy3/XBlyj7pq9F9NmT3U56BMv3nrg1LlMwJ4p0icSKw/jfo91DL7hguJwZ3Cc
+ 0UC6mNAgJdfD64gIjU1PmyHn9JTgt4spcfjTnJRiROPjzvcZCRsAq/mIzmUEKJRXC
+ 6FnbaooksOx1TueHMw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.50.170]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYNJg-1vjsMb0K4g-00PRug; Sun, 02
- Nov 2025 23:11:55 +0100
-Message-ID: <5b672b32-cc09-4e9e-8961-efe362991a87@gmx.de>
-Date: Sun, 2 Nov 2025 23:11:53 +0100
+Received: from [192.168.20.55] ([109.250.50.170]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKKUv-1vXUJB49YF-00PmnQ; Sun, 02
+ Nov 2025 23:14:35 +0100
+Message-ID: <f1d54a7f-1cff-4684-8962-7efb872e2e98@gmx.de>
+Date: Sun, 2 Nov 2025 23:14:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 1/3] hw/hppa: Enable LASI i82596 network on 715 machine
@@ -47,7 +47,7 @@ Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk,
  Jason Wang <jasowang@redhat.com>, sarkarsoumyajyoti23@gmail.com,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20251101125726.45912-1-soumyajyotisarkar23@gmail.com>
- <07200388-ae9b-4021-afb6-5fd93584d39a@roeck-us.net>
+ <ed6aaa98-af19-40ca-ad76-e4215579b74c@roeck-us.net>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -93,86 +93,86 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <07200388-ae9b-4021-afb6-5fd93584d39a@roeck-us.net>
+In-Reply-To: <ed6aaa98-af19-40ca-ad76-e4215579b74c@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:n5wUPgW4xhZaotJbe2lJpBpGcvhWohpLKs3NgAHgZgvVcIY4FNT
- cFn0j/67WHuxDW0nVKOD9DWgD33HVJXmFwT07uUZm9Xl2grnf5S5NdqYLZVwu8pblRQxMpG
- c+lyJ4Fu0HgOiVwl2pODbIIcNsm8IEzuogurHxXGTZI1C5cBi1bGepFojQjQBM157zOVt39
- wo/hRXI1AnpM1hc15j5qw==
-UI-OutboundReport: notjunk:1;M01:P0:RIXOoWKZP+w=;QE4PGkBCaVNurOtTnByqOKyJzfX
- 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
- W7DyhWJ+hbQKjBpMm1Nml1geEZ2aynnWHCb59w
+X-Provags-ID: V03:K1:wdQWhMnKqs7ndge1j/NWLLcRhmQ86icMJO41C1FSZR/sYbclOVZ
+ Lhb7+m3U3OGcwLNbc9DteWqVBtx3CNriRyrzn/wV+eazP9QI491SdmzBsS8n8bZJmkMTwKf
+ yA+9A5EFlLB5veXN6jEb72aTgCMJJak4Hg4ZZa3I16xBxEnFBsn5WCTRXr809fWvZ4nvkZt
+ RqASMRLC044YvOcGm7z3A==
+UI-OutboundReport: notjunk:1;M01:P0:PST+0JqlGwQ=;m15VOpuILRj4iZ2PWJ/n68TnwYL
+ 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
+ k7X6/f5j5bUV3NO0g=
 Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -198,9 +198,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Guenter,
-
-On 11/2/25 18:31, Guenter Roeck wrote:
+On 11/2/25 18:40, Guenter Roeck wrote:
 > On Sat, Nov 01, 2025 at 06:27:25PM +0530, Soumyajyotii Ssarkar wrote:
 >> From: RemZapCypher <soumyajyotisarkar23@gmail.com>
 >>
@@ -213,29 +211,52 @@ On 11/2/25 18:31, Guenter Roeck wrote:
 >> Changes since v1:
 >> Added proper Qemu device initialization for LASI
 >>
->> Signed-off-by: Helge Deller <deller@gmx.de>
+> ...
+>> diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
+>> index d422af0429..a8a496c0e1 100644
+>> --- a/hw/hppa/hppa_hardware.h
+>> +++ b/hw/hppa/hppa_hardware.h
+>> @@ -21,14 +21,6 @@
+>>   #define DINO_SCSI_HPA   0xfff8c000
+>>   #define LASI_HPA_715    0xf0100000
+>>   #define LASI_HPA        0xffd00000
+>> -#define LASI_UART_HPA   0xffd05000
+>> -#define LASI_SCSI_HPA   0xffd06000
+>> -#define LASI_LAN_HPA    0xffd07000
+>> -#define LASI_RTC_HPA    0xffd09000
+>> -#define LASI_LPT_HPA    0xffd02000
+>> -#define LASI_AUDIO_HPA  0xffd04000
+>> -#define LASI_PS2KBD_HPA 0xffd08000
+>> -#define LASI_PS2MOU_HPA 0xffd08100
+>>   #define LASI_GFX_HPA    0xf8000000
+>>   #define ARTIST_FB_ADDR  0xf9000000
+>>   #define CPU_HPA         0xfffb0000
+>> @@ -44,6 +36,18 @@
+>>  =20
+>>   #define SCSI_HPA        0xf1040000      /* emulated SCSI, needs to be=
+ in f region */
+>>  =20
+>> +#define HPA_DISABLED_DEVICE     1       /* add to HPA to disable */
+>> +
+>> +/* LASI offsets */
+>> +#define LASI_LPT        0x02000
+>> +#define LASI_AUDIO      0x04000
+>> +#define LASI_UART       0x05000
+>> +#define LASI_SCSI       0x06000
+>> +#define LASI_LAN        0x07000
+>> +#define LASI_PS2        0x08000
+>> +#define LASI_RTC        0x09000
+>> +#define LASI_FDC        0x0A000
 >=20
-> Signed-off-by: is missing. Other than that,
+> One thing I noticed: Those defines are now duplicated.
+> Example:
 >=20
-> Tested-by: Guenter Roeck <linux@roeck-us.net>
+> hw/hppa/hppa_hardware.h:#define LASI_LAN        0x07000
+> include/hw/misc/lasi.h:#define LASI_LAN        0x07000
 
-Thank you so much for testing the series!
- =20
-> Only on 715, though. The LASI Ethernet interface on B160L no longer
-> instantiates for me after the SeaBIOS update to version 19.
-Have you actually used LASI Ethernet with B160L, or just enabled it?
-I'm asking, because the current breakage of LASI Ethernet on B160L is inte=
-ntional.
-LASI ethernet was mostly broken up to now. It was not enabled by default o=
-n B160L.
-Now, with Soumyajyotii's work on LASI ethernet and LASI SCSI, the goal is
-to make the LASI chip fully functional including ethernet and SCSI.
-To not break the already existing functional B160L machine for most users,
-I introduced the 715 as testbed and new machine to independently fix LASI.
-The goal is to make the virtual machines ideally 100% like the physical
-machines in the long run, so when we have LASI fully working I plan to bri=
-ng
-it back to B160L again.
+Yes. The file hppa_hardware is shared with SeaBIOS, that's why it's
+currently duplicately defined. Will try to clean up with later patches,
+but for now it's the best way.
 
 Helge
 
