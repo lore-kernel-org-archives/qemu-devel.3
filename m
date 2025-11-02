@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F3FCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 22:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA8BCCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 23:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGPCZ-00017M-Pu; Tue, 04 Nov 2025 17:08:32 -0500
+	id 1vGQYG-0000yb-JM; Tue, 04 Nov 2025 18:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPCS-00016S-Q9
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:08:26 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51])
+ (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPKd-00041Y-20
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:16:51 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPCM-00055v-CR
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:08:20 -0500
-Received: by mail-ed1-f51.google.com with SMTP id
- 4fb4d7f45d1cf-63b9da57cecso10358823a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 14:08:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPKa-0007KP-TK
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:16:50 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-afcb7ae6ed0so1099558966b.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 14:16:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762294606; x=1762899406; darn=nongnu.org;
+ h=subject:date:cc:from:message-id:from:to:cc:subject:date:message-id
+ :reply-to; bh=voo4jHzO7fTgG9Zl3uy5WwMebs0EnnF6JUdBlr2vQAg=;
+ b=GBF2OVF4D7BOKdIB/Q4hXHBPKdd0yO2hx1cc7KU1mfn8V3kJN84XRLoCCBTRXptj9P
+ rWjnuJziU8IeFzDK7H55d9J3AmX4kmDoJW9g3gXvdK8YJgYPvmpzcw5DThUflUmBEXqh
+ D8p632GFVrS0IpmFFFmTQMfh46qAG8zNSjHuUXDD3MeiVz2DKjQDbeAm6uompMyI5JD/
+ eLinqu7WNKh7qnhXIDS4vmeshBoNQ2xmBgwKL1GCZwtNT02EIQUcvaBgcqJfREvyBRFA
+ c7OkfO+6NRZmUyPlK0vVZibUXhGlE+dAOJ8SvI+lfquaDHQg/xJOcmMys7Eyxzq4TePr
+ xZww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762294096; x=1762898896;
+ d=1e100.net; s=20230601; t=1762294606; x=1762899406;
  h=subject:date:cc:from:message-id:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=voo4jHzO7fTgG9Zl3uy5WwMebs0EnnF6JUdBlr2vQAg=;
- b=BgstT42mggXBEmRbYHv9PYfPuDSg4nNqBSHWDKJEHWm2offfsFTvgM/r/XLbfROgXV
- KKDUAg/sMrzjCvtQAJuk/0xKllyP+rm2O7WnJCIkqk5P6OE2CWSeNbx/66p3rYrMC7tf
- aqIicQkOPx9oLmYJCNg7EcLHsNjB00dNU+meyF2tf6j/VMKBJ/6m/IUnY27af5WjZ9EE
- RJ/rfPIOkFguejToqDUlG3U0o9nUzc1XUOBUzhrFby/g+wPaMxv0dMh+sMnFxu45qruF
- FRnFZVIEwBkgDFYKkfew3hzqqRXUrKfysyDFy2bfXGTIUqO4xDUlZynSMpo23Tlxy86t
- m7Tg==
+ b=oyB39jxtVs+qaJhcePVy/VWLedDRgmAgHHYfA3NK8ZawZQy4JelwJkI7Wt/DckKEO6
+ oTWIc3Wi1HKcUjdrRQPELlFuiQzwvvndtnIeWDWbZYnQ2F6vo22yz6Et6Jzp1bl2Y7F/
+ InvH54vdwHiV0LD1IZBQxu6MPeolx24pJPOceTku/cyzkcOBZl3LeWbrcsFvFkyf49+3
+ dNplncHcI7UCeFcuZq1Jkx4fFt2qQFEd7ZjHff2hSARtD3eK8zKn6k3MO/7DuQXAAbQF
+ MOXyCDLtihgIDDwcZL8r9YJdP+ZrCi7MeU7HXmDFtUTIMl39oPo2cbXHGp61qgHlADQf
+ 52Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGdxIGuqyTu/UeXTsDOlkZyQ+nZ/NgqiH4IdkYYuB7QEZxEbzEluJY85JLoYOuH4gmgdMyhGsgpphD@nongnu.org
-X-Gm-Message-State: AOJu0Yz0F+0XekypTnGk5lEaUgsNt1iD5g71/mKl2T21uaIdKdXiJu35
- Kc5QPcJ/gkdXh5und8LHZt857NQIW57yH9Hqjvjq8euYinMiqH+lmHDgTN0GXuNH
-X-Gm-Gg: ASbGncvBCOWVooejue+pjOlZXmiplx4HugjV7NDJz8xzVBP0VxZEEyq+IHy2obT40pD
- KGiiomwlAFJP0ZRuV85PwIiLloCEDI5tk7XEIkIhY8cb2teq+L9IgEqg3ah7RmbxkIcJz6cKPQe
- fCIqe7IXpA3AtecxqjvWMbfr90D2gFqsEqda2Kh9Fw3bmr1U/V+4jrNP4Ar/mUFPL8rq+w5TPQn
- a1peNqtcz5D4wS7f5P7vOyAKmOKLXsnLg6waVMNl16HpieQBccQlrMXnEpyuOCY3bRV7cMjyNiB
- c5Qm3s6qUd1kFcDAivg/hlQDnhQOHaXJwSGhP/nGVO91Fn1bcacFUjmtWqz5Ctd4JXSNNaCOXpg
- 3GEFN5a7S7RzdgrDGbO4TpSgWh8K1vGVDyX6piKQ/F2tathYyJd7H2sftLoqc689iDseidOc+zi
- 8PV4Hc
-X-Google-Smtp-Source: AGHT+IGLvTEZ+fhV/Pp+Ias/3qoL8PDsjcZg+5aLIIWu77eRJmlR667KOxWu/+vmlI++9q/uefM0qQ==
-X-Received: by 2002:a05:6402:13cd:b0:640:952d:f602 with SMTP id
- 4fb4d7f45d1cf-6410589939emr802715a12.6.1762294096260; 
- Tue, 04 Nov 2025 14:08:16 -0800 (PST)
-Received: from localhost ([149.200.120.62]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6805813sm3437498a12.14.2025.11.04.14.08.15
+ AJvYcCW7Tm1aoaKDq52/x+61NTPBZfO1ef+opotwfqYMlDVRSCAfBN+qq2gPTqZPGWQo942PwA9eSpR8a2Of@nongnu.org
+X-Gm-Message-State: AOJu0YzjNrBi1YCaUs6no/AwRjo8kpjV7QzXH/K1WBIKQlvT70qmG8qf
+ hGAock6zECD3DPDTmWhuJHynZcf+5Jhr3RPLyyHkxCc36C/bpIBFvcRVkZQrWe4E
+X-Gm-Gg: ASbGncuglMbXig64nJZREu6Iza8RrfvElRLPTdViSrF9D7CEcHgGRcgBCmPe8qrXNxi
+ aoc5h778QIsP7EAHAax4cCiWQ0NKk8fQ26qEEpSN9ihru39JC4wQNsNEyoiawvTinp3lJ6Hju53
+ BCjIgRwjzGWNIFT97+Dkz5H3vo4HHj1xPyAlnF4siCy1Fdkhsnx0v6tkwbLRm/JV3jnNQb35umi
+ cycYVtB/Oru3s53gR04WTzYxR/LmMr6UbULOqlo2bLFjvj9X1FFddPIg4+BhNO5XXehKSXWL5b/
+ qM6Lx2N5yZt/9X+/SJdPyWo2a5yz6WDleJJFz0zRiKGH9mJU/e1SWY8TifA9rfvBHdvsvDdmMVs
+ Qnp1OIIGk/BWx1uVNVI0uEmjLx+YOCobF8bfOES+2jQbN1TE1FOVHOzLIkoGANavnQLeE2pXQdc
+ Kw6IxA1OmNZtmwy9LlQVw9gYA=
+X-Google-Smtp-Source: AGHT+IHpA8tlD57Y0aakU4ByChivU27L2Mi4Ajf5ok186Y7CSb9g+tmGHyHQmnnn8VIuuCeMX9/NXA==
+X-Received: by 2002:a17:907:d649:b0:b71:5079:9702 with SMTP id
+ a640c23a62f3a-b7265298431mr81988366b.21.1762294605586; 
+ Tue, 04 Nov 2025 14:16:45 -0800 (PST)
+Received: from localhost (95C8783E.dsl.pool.telekom.hu. [149.200.120.62])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b723fe3a07dsm315255166b.64.2025.11.04.14.16.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 14:08:15 -0800 (PST)
-Message-ID: <bae8d02e3d6c909c07a14b5a2ca0a816.rbalint@gmail.com>
+ Tue, 04 Nov 2025 14:16:45 -0800 (PST)
+Message-ID: <fba383dfd9b9551916b193081e9a2115.rbalint@gmail.com>
+From: Balint Reczey <rbalint@gmail.com>
 CC: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>
 Date: Sun, 2 Nov 2025 14:26:45 +0100
 Subject: [PATCH 1/1] user: add runtime switch to call safe_syscall via libc
-Received-SPF: pass client-ip=209.85.208.51; envelope-from=rbalint@gmail.com;
- helo=mail-ed1-f51.google.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, MISSING_HEADERS=1.021,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=rbalint@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 04 Nov 2025 18:34:58 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,8 +90,6 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Balint Reczey <balint@balintreczey.hu>
-From:  Balint Reczey via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
