@@ -4,114 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5B9CCFA00
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Nov 2025 22:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDBDCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Nov 2025 22:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFgvl-0005UB-9n; Sun, 02 Nov 2025 17:52:13 -0500
+	id 1vFgzX-0006Hy-OP; Sun, 02 Nov 2025 17:56:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vFgvi-0005ST-Gk
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:52:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vFgvf-0001t8-Cr
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:52:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762123923;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MDBbKutPjnr1sYwd8sdFxZCled7Fo0s/512vIMH3b3M=;
- b=jTc+Mgx2UccbTqDMESKaFlpFrbanfAsuH0wbQeiETIFnXAj61IAdnBogNwFrRxywbVx4/3
- ZMqLYNd3uvPMjPlewwcZ80e5LYcFFQi9O4BfU+5bDFJZ9V1fi3mF0dTVLBxGYfInAvFCVz
- 7gzCeFBeXXB5E0szZQOQqn8C89m1J0o=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-B1p6I-nHNFmcFSNw9HIOpQ-1; Sun, 02 Nov 2025 17:52:01 -0500
-X-MC-Unique: B1p6I-nHNFmcFSNw9HIOpQ-1
-X-Mimecast-MFC-AGG-ID: B1p6I-nHNFmcFSNw9HIOpQ_1762123921
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2955555f73dso11400055ad.0
- for <qemu-devel@nongnu.org>; Sun, 02 Nov 2025 14:52:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1vFgzM-0006Hc-Gj
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:55:57 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1vFgzH-0002FE-MH
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 17:55:54 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7a9c64dfa8aso672008b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Nov 2025 14:55:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762123920; x=1762728720; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MDBbKutPjnr1sYwd8sdFxZCled7Fo0s/512vIMH3b3M=;
- b=e8Sc85MIXHbtpX164cAXDpdDccJkg13h2rCa5Inq1Z3KSXxKrJLYV2KgF8O9KBFYGs
- yrfecp4d6cbS5wpHPv1raxRzLZM92M2z27MECb9SvhF7DahUT7byQHbi/VLKCDpHd5tS
- e1JBirdATq0S6iO+/NFxpfR3IYgiV9NkC9HPRUs5byRrG5zp2hCddYOtcr2kJwaUS4Cr
- RBQ8RwTjurUeKNTntobAZV0Ibf82/OI7DnQndJrfyrv6m9oxofadu6los3XCg/p9Cewf
- jQcuvxersgqkItEKH1j4JwnpnRaeCQcmNZe1cQymxwGd+tr2TePLdUFn15cBDAMYrGC+
- 9cvw==
+ d=gmail.com; s=20230601; t=1762124149; x=1762728949; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZClu4PJ8WFSuL/Z/8t7wWNm3KebCpCVU7T2O7POP7fQ=;
+ b=GDWJ48KtnFZwneSLBPjTi7K+/4l9M5QgLbZkzbi3D/lQughlN84ZQuPOi3HvHrGCNi
+ 0xwqVFcj2Cr+WwnX7KZULiArLsMHxmLHXxJS5DfdmAikQ/5bGWuZV+eulo9uF7GelZCN
+ vKos3AyTxlQbpZ1S2ruEn/4xnD618e8yhnThpgi/pFy5o2WA49zcjWAcCOg4KAu/t+2U
+ tjCYMIPLdTEE9No2XmMbCQxtL6Mfd3VX4G1MeolMN6Ju7+jfxfQSVtGzHG+pPazDvGeR
+ tbsXb1bThZc4ll0SDlL7be5qK+MHeXoTE+73GksI2cadW0mBMPtgl7Ewc2I4Hh/jRE8t
+ 9JEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762123920; x=1762728720;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MDBbKutPjnr1sYwd8sdFxZCled7Fo0s/512vIMH3b3M=;
- b=G84zJhqHEQV1gayqT+sAlNe8zNsXmWseQlZ2EDVl6ZshiSTXfrJ83BTdosYZZ3BBWH
- kF0dQfot0GrnFbDPmlYhH9LWunKw9w0EsQWayzRHQ57pWrDzzfzXMre3ZpJbQG9ZKVAf
- j5rAzXcdDKFQQnVfJrQXqq7vVQx5GHJUtXKW3jIohV82nktpND9jvQAj5c1YMal9VNMA
- p/bQKjc6CKAfqZTaLCeN8PxcfZ7jtcc5OKVfKcWjBnOGCbUj6f668shvNo9ws7FVeq2j
- qDFNUpVH+f/1ZJ+F253QXVGtGK33rfbarNn3BHDtp5As36mXtVKcVYkoZNK/pQA+62yM
- 5tZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtc3VpAfauxitHPQV8cERsp//WD46H1n07iuoPHM2hWOd46SrfwSO4kDE6nWLiFhyXiVXzAO/KQABW@nongnu.org
-X-Gm-Message-State: AOJu0Yw2iseq+nhAKR5fuk9JoUBkn8VJLGyF8ldao0i3Lj9nvtF/YV+B
- 7MKhxIvpCHgVdFCARLxb7Cad1D6HQWMp/DqpLXpgW6OL65N5SFYtkgR2wdWfVmLdTynkPyFo9p3
- kLS3ZKAw1eyq8+p7oHYLYWBAKNbj130CJK/FHRDHVaaPd6aCNYpvvdWVa
-X-Gm-Gg: ASbGnctDGf+gmChEfJVESJVH9aK8Sayy8BmrduDvRnrrzH3S5DhH6WNMoowAS1IaZBm
- CV758e32YWAVP40dFfb+kYi/cP2PwbJOgGQU4JrmcBFrQ8YBRm4LNjPI7dVZIke6OBw+l+0Ay7e
- O8eASood2y6tZtymQj6C4nkj47p6kC5yXnhkJGTPhoAVluSoMU7+eFesw8dm3tQoyDZbE6Nl32V
- wsOTnCmStnZTWO3W6eKxhWOS0JZA99zaj6hABn87RFrne5+o5Ndt5AOyiowm+V617BLMtNmGiyE
- fgJ/ruMMYGkiGqrSP7ED3y6ttl/RbG4f42tvAOz+mpBxN/wxuRFEn+TSfZDJ/qZH+P+edWphYvw
- uFF4/R41AHx+pFyb0FK3gmiH/MvVAa9TB6oOyhz8=
-X-Received: by 2002:a17:902:dac7:b0:295:2c8e:8e50 with SMTP id
- d9443c01a7336-2952c8e96d9mr101389055ad.31.1762123920633; 
- Sun, 02 Nov 2025 14:52:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHoygPS9sE341OJUJJCGfaRlAl8U6IHD0TgjIWFGym0KvJvlCtNlMh+x2sWH3WC4OzhhCAyg==
-X-Received: by 2002:a17:902:dac7:b0:295:2c8e:8e50 with SMTP id
- d9443c01a7336-2952c8e96d9mr101388905ad.31.1762123920219; 
- Sun, 02 Nov 2025 14:52:00 -0800 (PST)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29564fb531asm53068395ad.14.2025.11.02.14.51.55
+ d=1e100.net; s=20230601; t=1762124149; x=1762728949;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZClu4PJ8WFSuL/Z/8t7wWNm3KebCpCVU7T2O7POP7fQ=;
+ b=F/PkKvhQju7+m6yxMzaN5aNXQCs3adh+f9ao6Q6Ta2L/3M6ZlfxJJs4YgMDdQMytcF
+ 6mZkbjtZT0rwqCFCQhWfJBQAb+cNgEwuSXfiAP5weMLK4w6ryptUkZbKPsg5X5Z6F1TD
+ m+KB50I0cpMw0F1OuoPBNTXbPRpzAflpkW4g0ARgiSjDHM745U2zQAI/CLw0ofT4plAU
+ sS10Vq6xFWLWNPLkj2IXA4gPJfvM3kiRNYYeuZL7mrbpTEVqsWRixnZ+HVIYhUjJLf2O
+ XGsSYoMUcNb5u5xp6Tfpcwtn8KxIsXUl0g2wqi+GMWekf/OuQSvxZs1b8jU/0Tsw9z6x
+ TRQA==
+X-Gm-Message-State: AOJu0YzBphn79gfTnst8oGFZmkbCsqCY4hvfZPwBZeM4TrXA3orSdvrY
+ 5xMPSbtoeIciCYsIFvME9QxWpCoK+nDcrcoHIl0N4dycvIZddgHy5Rdj
+X-Gm-Gg: ASbGncs2e5gMJbUTzQrlH2FknOn/vqtEuKFao4aUxFwXVhL1kscPVbeJ4d9I0A33iCq
+ EDj/WnW6WHaWPm8imxiHzuXPyOOmFZrW6zp9D/nYlyR9mjoHwY+Rk8ftXM7BA5q/tR12pOjBMlv
+ Ir7w0GDAHZ2QsCz8DFy4m914Qo+ymBK2BcXYMOfgm7i0V6Gk3gXcikUr2SN5fyly2nekBh3Q0aV
+ m/azgLMgK+1PrhZ/+T7VjwgK4ZZmdhYUpdOg9GhQEWZVSXqgnCJ92/YbZqGbTTTcITf1FLSqDEi
+ o8cHcD5/Lhh6ghsaptEO0b25zSt+YLnGvNf4lW/i34sutH8WNIE0elKMUxaIjoPiT0D7h/rckPQ
+ ebndb+rPSAPt0aBOpxwC7lC+sINJQDJsRgzYiMoqj0LLlqwl1U5F4DLVkUpd3tpDqYB7oX+z14l
+ FVyD0zg0o7M1bBqCvvWKDeHWPdhDL0i9ZhTXzOFAZuqxiZJKM4
+X-Google-Smtp-Source: AGHT+IHGMeUobNZove8kEgJT05tAPOCL4XeFQw/1cJHq7lvi4/J0TYwzfTfFEZfKG4Qdtrt4l42clA==
+X-Received: by 2002:a05:6a00:14cb:b0:7a4:f552:b522 with SMTP id
+ d2e1a72fcca58-7a7790dae8emr12936462b3a.27.1762124149499; 
+ Sun, 02 Nov 2025 14:55:49 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
+ ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ab5ee9fde6sm690127b3a.45.2025.11.02.14.55.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Nov 2025 14:51:59 -0800 (PST)
-Message-ID: <4ea56333-ef9a-48fd-9bc1-6bba4d342318@redhat.com>
-Date: Mon, 3 Nov 2025 08:51:54 +1000
+ Sun, 02 Nov 2025 14:55:48 -0800 (PST)
+Message-ID: <1ea81494-e256-4394-80ab-1bc12db79ae9@roeck-us.net>
+Date: Sun, 2 Nov 2025 14:55:47 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v2 1/3] acpi/ghes: Extend acpi_ghes_memory_errors()
- to support multiple CPERs
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
- anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
- pbonzini@redhat.com, mchehab+huawei@kernel.org, Jonathan.Cameron@huawei.com,
- shan.gavin@gmail.com
-References: <20251007060810.258536-1-gshan@redhat.com>
- <20251007060810.258536-2-gshan@redhat.com> <20251031141721.4d336189@fedora>
+Subject: Re: [PATCH v2 1/3] hw/hppa: Enable LASI i82596 network on 715 machine
+To: Helge Deller <deller@gmx.de>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk,
+ Jason Wang <jasowang@redhat.com>, sarkarsoumyajyoti23@gmail.com,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251101125726.45912-1-soumyajyotisarkar23@gmail.com>
+ <07200388-ae9b-4021-afb6-5fd93584d39a@roeck-us.net>
+ <5b672b32-cc09-4e9e-8961-efe362991a87@gmx.de>
+ <eed77eb0-175d-4853-81ad-4a5a7390f96c@roeck-us.net>
+ <a96408bc-bb1f-4792-b3b0-b15ff86ef070@gmx.de>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20251031141721.4d336189@fedora>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <a96408bc-bb1f-4792-b3b0-b15ff86ef070@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,174 +153,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/31/25 11:17 PM, Igor Mammedov wrote:
-> On Tue,  7 Oct 2025 16:08:08 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
+On 11/2/25 14:33, Helge Deller wrote:
+> On 11/2/25 23:27, Guenter Roeck wrote:
+>> On 11/2/25 14:11, Helge Deller wrote:
+>>> Hi Guenter,
+>>>
+>>> On 11/2/25 18:31, Guenter Roeck wrote:
+>>>> On Sat, Nov 01, 2025 at 06:27:25PM +0530, Soumyajyotii Ssarkar wrote:
+>>>>> From: RemZapCypher <soumyajyotisarkar23@gmail.com>
+>>>>>
+>>>>> Enable the i82596 network chip which is included in the LASI
+>>>>> multi I/O chip. Since LASI has different start addresses on
+>>>>> the various machines, always initialize the LASI components
+>>>>> by their offsets.
+>>>>>
+>>>>> As suggested by Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>>> Changes since v1:
+>>>>> Added proper Qemu device initialization for LASI
+>>>>>
+>>>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>>>
+>>>> Signed-off-by: is missing. Other than that,
+>>>>
+>>>> Tested-by: Guenter Roeck <linux@roeck-us.net>
+>>>
+>>> Thank you so much for testing the series!
+>>>
+>>>> Only on 715, though. The LASI Ethernet interface on B160L no longer
+>>>> instantiates for me after the SeaBIOS update to version 19.
+>>> Have you actually used LASI Ethernet with B160L, or just enabled it?
+>>
+>> I do basic testing - instantiate and get an IP address. That works
+>> (or, rather, used to work in 10.1) just as good as the 715 emulation,
+>> meaning it gets an IP address and then complains about
+>>
+>> Received frame too small, 60 vs. 64 bytes
+>> qemu-system-hppa: Slirp: Failed to send packet, ret: -1
+>>
+>> I fix this up locally with
+>>
+>> diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+>> index c1ff3e6c56..26224645fc 100644
+>> --- a/hw/net/i82596.c
+>> +++ b/hw/net/i82596.c
+>> @@ -522,7 +522,8 @@ ssize_t i82596_receive(NetClientState *nc, const uint8_t *buf, size_t sz)
+>>       }
+>>
+>>       /* Received frame smaller than configured "min frame len"? */
+>> -    if (sz < s->config[10]) {
+>> +    /* Note: Add CRC to packet size */
+>> +    if (sz + 4 < s->config[10]) {
+>>           printf("Received frame too small, %zu vs. %u bytes\n",
+>>                  sz, s->config[10]);
+>>           return -1;
+>>
+>> With that, my basic LASI network interface test on B160L works with qemu 10.1.
 > 
->> In the situation where host and guest has 64KB and 4KB page sizes, one
->> error on the host's page affects 16 guest's pages. we need to send 16
->> consective errors in this specific case.
->>
->> Extend acpi_ghes_memory_errors() to support multiple CPERs after the
->> hunk of code to generate the GHES error status is pulled out from
->> ghes_gen_err_data_uncorrectable_recoverable().
->>
->> No functional changes intended.
->>
->> Signed-off-by: Gavin Shan <gshan@redhat.com>
->> ---
->>   hw/acpi/ghes-stub.c    |  2 +-
->>   hw/acpi/ghes.c         | 27 ++++++++++++++-------------
->>   include/hw/acpi/ghes.h |  2 +-
->>   target/arm/kvm.c       |  7 ++++++-
->>   4 files changed, 22 insertions(+), 16 deletions(-)
->>
->> diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
->> index 40f660c246..c1f8c9bec9 100644
->> --- a/hw/acpi/ghes-stub.c
->> +++ b/hw/acpi/ghes-stub.c
->> @@ -12,7 +12,7 @@
->>   #include "hw/acpi/ghes.h"
->>   
->>   int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->> -                            uint64_t physical_address)
->> +                            GArray *addresses)
->>   {
->>       return -1;
->>   }
->> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
->> index 06555905ce..045b77715f 100644
->> --- a/hw/acpi/ghes.c
->> +++ b/hw/acpi/ghes.c
->> @@ -214,18 +214,13 @@ static void acpi_ghes_build_append_mem_cper(GArray *table,
->>   
->>   static void
->>   ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
->> -                                            const uint8_t *section_type,
->> -                                            int data_length)
->> +                                            const uint8_t *section_type)
->>   {
->>       /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
->>        * Table 17-13 Generic Error Data Entry
->>        */
->>       QemuUUID fru_id = {};
->>   
->> -    /* Build the new generic error status block header */
->> -    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
->> -        0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
->> -
->>       /* Build this new generic error data entry header */
->>       acpi_ghes_generic_error_data(block, section_type,
->>           ACPI_CPER_SEV_RECOVERABLE, 0, 0,
->> @@ -557,19 +552,20 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
->>   }
->>   
->>   int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->> -                            uint64_t physical_address)
->> +                            GArray *addresses)
->>   {
->>       /* Memory Error Section Type */
->>       const uint8_t guid[] =
->>             UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
->>                     0xED, 0x7C, 0x83, 0xB1);
->>       Error *errp = NULL;
->> -    int data_length;
->> +    int data_length, i;
->>       GArray *block;
->>   
->>       block = g_array_new(false, true /* clear */, 1);
->>   
->> -    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
->> +    data_length = addresses->len *
->> +                  (ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH);
->>       /*
->>        * It should not run out of the preallocated memory if adding a new generic
->>        * error data entry
->> @@ -577,10 +573,15 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>       assert((data_length + ACPI_GHES_GESB_SIZE) <=
->>               ACPI_GHES_MAX_RAW_DATA_LENGTH);
->>   
->> -    ghes_gen_err_data_uncorrectable_recoverable(block, guid, data_length);
->> -
->> -    /* Build the memory section CPER for above new generic error data entry */
->> -    acpi_ghes_build_append_mem_cper(block, physical_address);
->> +    /* Build the new generic error status block header */
->> +    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE, 0, 0,
->                                               ^^^^^
-> with following loop, it might be no enough. See ACPI6.5 Tables 18.11: Status field
-> 
-> Don't we need to set multiple_foo bit(s) and also fix 'Error Data Entry Count' bits?
+> Ok, but that means you are basically the only one using it, and
+> this just because you "fixed" the source code :-)
+> I assume it's OK for you to wait until we activate LASIC NIC on
+> B160L in a later version?
+> Until then I suggest you stay with the default & out-of-box working tulip card?
 > 
 
-Ack, those two fields need to be fixed accordingly.
-
->> +                                   data_length, ACPI_CPER_SEV_RECOVERABLE);
->> +    for (i = 0; i < addresses->len; i++) {
->> +        ghes_gen_err_data_uncorrectable_recoverable(block, guid);
->> +        /* Memory section CPER on top of the generic error data entry */
->> +        acpi_ghes_build_append_mem_cper(block,
->> +                                        g_array_index(addresses, uint64_t, i));
->> +    }
-> 
->>   
->>       /* Report the error */
->>       ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
->> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
->> index df2ecbf6e4..a8cbc520d5 100644
->> --- a/include/hw/acpi/ghes.h
->> +++ b/include/hw/acpi/ghes.h
->> @@ -99,7 +99,7 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
->>   void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
->>                             GArray *hardware_errors);
->>   int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->> -                            uint64_t error_physical_addr);
->> +                            GArray *addresses);
->>   void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
->>                                uint16_t source_id, Error **errp);
->>   
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index 4f769d69b3..9a47ac9e3a 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -2434,6 +2434,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
->>       ram_addr_t ram_addr;
->>       hwaddr paddr;
->>       AcpiGhesState *ags;
->> +    GArray *addresses;
->>   
->>       assert(code == BUS_MCEERR_AR || code == BUS_MCEERR_AO);
->>   
->> @@ -2442,6 +2443,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
->>           ram_addr = qemu_ram_addr_from_host(addr);
->>           if (ram_addr != RAM_ADDR_INVALID &&
->>               kvm_physical_memory_addr_from_host(c->kvm_state, addr, &paddr)) {
->> +            addresses = g_array_new(false, false, sizeof(paddr));
->>               kvm_hwpoison_page_add(ram_addr);
->>               /*
->>                * If this is a BUS_MCEERR_AR, we know we have been called
->> @@ -2454,16 +2456,19 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
->>                * later from the main thread, so doing the injection of
->>                * the error would be more complicated.
->>                */
->> +            g_array_append_vals(addresses, &paddr, 1);
->>               if (code == BUS_MCEERR_AR) {
->>                   kvm_cpu_synchronize_state(c);
->>                   if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
->> -                                             paddr)) {
->> +                                             addresses)) {
->>                       kvm_inject_arm_sea(c);
->>                   } else {
->>                       error_report("failed to record the error");
->>                       abort();
->>                   }
->>               }
->> +
->> +            g_array_free(addresses, true);
->>               return;
->>           }
->>           if (code == BUS_MCEERR_AO) {
+Sure, NP.
 
 Thanks,
-Gavin
+Guenter
 
 
