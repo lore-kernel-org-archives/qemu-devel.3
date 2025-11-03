@@ -4,47 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B465ECCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98681CCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFy3g-0000Sc-4i; Mon, 03 Nov 2025 12:09:32 -0500
+	id 1vFy6P-0002Vs-Lp; Mon, 03 Nov 2025 12:12:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3b-0000RO-CZ
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:27 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vFy5o-0002Dv-EJ
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:11:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3T-0000rP-4O
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=yeQbonbjBSkFyDPSjjviKlOlNX70Akb/D4JXGYtklGc=; b=ZGLejCLs/SAYRPr
- IWBmgUQHbokhqD38BUB4SN2Jee0xxdW++BRLkgvPoHLN0Es+jPSDZfhj7k17Te5UnhG9GnLnF2HFr
- kJb48jtQi8b58zklKM0RGF3RIo0TPhMhe5i0QKCp+gqeqvu9M4tMjp2Qp+FymFkK5IU26QS1Vv9vn
- fw=;
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
- palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v5 02/25] target/riscv: Fix size of vector CSRs
-Date: Mon,  3 Nov 2025 18:11:45 +0100
-Message-ID: <20251103171208.24355-3-anjo@rev.ng>
-In-Reply-To: <20251103171208.24355-1-anjo@rev.ng>
-References: <20251103171208.24355-1-anjo@rev.ng>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vFy5i-0001NB-5V
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:11:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762189886;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SJ+XS2sHCI1PLpY2+jnvvaeaHzZnyp8ybozpBVWfPxw=;
+ b=VVQkritPPaWNKKbEIjU9pgGbsTdXo1kqLIgGRRZztQZxW/4yKvWBEdSkzw4gFy6J8u9pQh
+ kQyAyoujFedQcfqGTi2XPt3sgaIggNEl/8DJZQAbaH3cuR9j/Mrv2quW6dI3q9IT1iYpKM
+ QWQzubhDBuD11GebYZT6o+bieO56jzo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-626-jooE7hqbO-2Hz4Avw0jfdw-1; Mon, 03 Nov 2025 12:11:25 -0500
+X-MC-Unique: jooE7hqbO-2Hz4Avw0jfdw-1
+X-Mimecast-MFC-AGG-ID: jooE7hqbO-2Hz4Avw0jfdw_1762189883
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-475c422fd70so35011615e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 09:11:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762189883; x=1762794683;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SJ+XS2sHCI1PLpY2+jnvvaeaHzZnyp8ybozpBVWfPxw=;
+ b=vKJPxAa+tLEr+hq4K4aMzQPXVAXYORBagKsprDENmj8Rjtv81tkKdvNJmdlQtJTxs6
+ evahiuxBmReTB7I4j4QCYWeNoOVpmEAZSKAY2/Z2Iy3hCuZH9wSeF/npf2V1TATVDXkw
+ uCa/Q8rfap7b58rthX9q8M8QjeYc7MU/bqIW+PttpRjlcy7RcCjD90I5xx0/mAAD18su
+ 9Z3Fsl8udGQuRayV7+SGMjKHZKfRWBQO8U/MdIzlki6Qcld9LqNM4/gAO6ZHGm1Z6kI6
+ g+NCM8DAxzmngCKC5GxTnMBtm2PuWZEHQoZLdEdlx4xkrjwGh9K8PNlm3GQ55lFwe1TZ
+ /DgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXftlJ70CtNh9P0LlQzJ76ud2vavN4vsB6drThNra7Aq2QqBuFuvTYQ1C/mIzqMzBxFioR9J0urEiE2@nongnu.org
+X-Gm-Message-State: AOJu0YwnqB/bC0OJUWNUOWAFcsSdxOTNCQG8dxjcoaHHw1EaFz5QorJt
+ yY7LaadCMvm0Qdbni7MwXkXdjl69Q4oxKApZV+ItruQlwScVEnR6ilYhcdOP1HmPEWcG2xZfvrY
+ OCoSuicgEkoH4UWl3/JktpSLgPQp4BCkDcmsWXwqo7FwGvRNEF5tyObHF
+X-Gm-Gg: ASbGncu+rhbPmnbiKYIovCh6wAEtylQNr8CAZZpRO+Rxq7qzCf8IA7vk/jZSuma/EI/
+ Zum3V0yxQtfI2b37K8pj12WZ8KB6Qd4Umq3ZS1KATA7RoeKT2NEM/m29gegqWpf9oT2icH24aTO
+ SWHz+pXortuaP1wE9SBXLl0ZLgcdnLp2lkNC5fjp4JtsoHlBZ82Y9DCQwsBTMpqBR3HJZq6SerC
+ m2elb7EbAPbfOzeQghhoMcLsSYpF7yCsazVrZX6DQmjmvXvh9iNjseDi4hI41wkmg2d9RSw0zp/
+ o5CuJKcqvCBi0xqUDhjC25LWckLcTMvFjSAl1Wocp7eQLMFNMKaIwwvlEHGiHD5kPycGpT4vNJm
+ 0WVyMrcYd/ITK59u0G6MsGWqKXNRU6mmC7Kofaks5JEh5fA==
+X-Received: by 2002:a05:600c:3e8f:b0:475:dac3:699f with SMTP id
+ 5b1f17b1804b1-477307c1470mr120241855e9.9.1762189882614; 
+ Mon, 03 Nov 2025 09:11:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGedabXDEnfFByUbQXEj3t81LICHvjKbHh7ECKYK0pv1JUbO1t9JHHxVXai0KKMyphARJ9aww==
+X-Received: by 2002:a05:600c:3e8f:b0:475:dac3:699f with SMTP id
+ 5b1f17b1804b1-477307c1470mr120241495e9.9.1762189882135; 
+ Mon, 03 Nov 2025 09:11:22 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c8910c42sm15640484f8f.7.2025.11.03.09.11.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Nov 2025 09:11:21 -0800 (PST)
+Message-ID: <8bacc738-72f2-4771-964e-771c45693d4c@redhat.com>
+Date: Mon, 3 Nov 2025 18:11:20 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 17/32] hw/arm/smmuv3-accel: Add support to issue
+ invalidation cmd to host
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ kjaju@nvidia.com
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-18-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251031105005.24618-18-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -59,290 +120,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the unprivileged specification:
-- vtype: bits 0..7 used, bit XLEN-1 illegal, rest reserved
-  => fix to 64-bits.
 
-- vxsat: bit 0 used, vxrm which would occupy bits 1..2 is stored
-  separately, and bits 3..31 are set to 0
-  => fix to 8-bits.
 
-- vxrm: 2 lowest bits are used for rounding mode, rest set to 0
-  => fix to 8-bits.
+On 10/31/25 11:49 AM, Shameer Kolothum wrote:
+> Provide a helper and use that to issue the invalidation cmd to host SMMUv3.
+> We only issue one cmd at a time for now.
+>
+> Support for batching of commands will be added later after analysing the
+> impact.
+>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-- vstart: maximum value of VLMAX-1, where VLMAX is at most 2^16
-  => fix to 32-bits as vstart is mapped to a TCG global.
-
-- vl: maximum value of VLEN which is at most 2^16
-  => fix to 32-bits as vl is mapped to a TCG global.
-
-Fields are shuffled for reduced padding.
-
-Note, the cpu/vector VMSTATE version is bumped, breaking migration from
-older versions.
-
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/riscv/cpu.h                      | 12 ++++++------
- target/riscv/machine.c                  | 14 +++++++-------
- target/riscv/translate.c                | 12 ++++++++----
- target/riscv/vector_helper.c            | 22 ++++++++++++++++++----
- target/riscv/insn_trans/trans_rvv.c.inc | 24 ++++++++++++------------
- 5 files changed, 51 insertions(+), 33 deletions(-)
-
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 6b4edbfe9e..bd200ccad4 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -192,7 +192,7 @@ FIELD(VTYPE, VSEW, 3, 3)
- FIELD(VTYPE, VTA, 6, 1)
- FIELD(VTYPE, VMA, 7, 1)
- FIELD(VTYPE, VEDIV, 8, 2)
--FIELD(VTYPE, RESERVED, 10, sizeof(target_ulong) * 8 - 11)
-+FIELD(VTYPE, RESERVED, 10, sizeof(uint64_t) * 8 - 11)
- 
- typedef struct PMUCTRState {
-     /* Current value of a counter */
-@@ -218,11 +218,11 @@ struct CPUArchState {
- 
-     /* vector coprocessor state. */
-     uint64_t vreg[32 * RV_VLEN_MAX / 64] QEMU_ALIGNED(16);
--    target_ulong vxrm;
--    target_ulong vxsat;
--    target_ulong vl;
--    target_ulong vstart;
--    target_ulong vtype;
-+    uint64_t vtype;
-+    uint32_t vl;
-+    uint32_t vstart;
-+    uint8_t vxrm;
-+    uint8_t vxsat;
-     bool vill;
- 
-     target_ulong pc;
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 7349383eab..440b09fc32 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -137,16 +137,16 @@ static bool vector_needed(void *opaque)
- 
- static const VMStateDescription vmstate_vector = {
-     .name = "cpu/vector",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .needed = vector_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64_ARRAY(env.vreg, RISCVCPU, 32 * RV_VLEN_MAX / 64),
--        VMSTATE_UINTTL(env.vxrm, RISCVCPU),
--        VMSTATE_UINTTL(env.vxsat, RISCVCPU),
--        VMSTATE_UINTTL(env.vl, RISCVCPU),
--        VMSTATE_UINTTL(env.vstart, RISCVCPU),
--        VMSTATE_UINTTL(env.vtype, RISCVCPU),
-+        VMSTATE_UINT64(env.vtype, RISCVCPU),
-+        VMSTATE_UINT32(env.vl, RISCVCPU),
-+        VMSTATE_UINT32(env.vstart, RISCVCPU),
-+        VMSTATE_UINT8(env.vxrm, RISCVCPU),
-+        VMSTATE_UINT8(env.vxsat, RISCVCPU),
-         VMSTATE_BOOL(env.vill, RISCVCPU),
-         VMSTATE_END_OF_LIST()
-     }
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 8df1a2ed3c..15eee7f6ee 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -39,8 +39,9 @@
- #include "tcg/tcg-cpu.h"
- 
- /* global register indices */
--static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
-+static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc;
- static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
-+static TCGv_i32 cpu_vl, cpu_vstart;
- static TCGv load_res;
- static TCGv load_val;
- 
-@@ -1455,6 +1456,10 @@ void riscv_translate_init(void)
-     size_t field_offset = 0;
- #endif
- 
-+    /* 32 bits in size, no offset needed */
-+    size_t vl_offset = offsetof(CPURISCVState, vl);
-+    size_t vstart_offset = offsetof(CPURISCVState, vstart);
-+
-     for (i = 1; i < 32; i++) {
-         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
-             offsetof(CPURISCVState, gpr[i]) + field_offset,
-@@ -1470,9 +1475,8 @@ void riscv_translate_init(void)
-     }
- 
-     cpu_pc = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), "pc");
--    cpu_vl = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, vl), "vl");
--    cpu_vstart = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, vstart),
--                            "vstart");
-+    cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
-+    cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
-     load_res = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_res),
-                              "load_res");
-     load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee8..cf9a199566 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -360,6 +360,12 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-     uint32_t evl = env->vstart + elems;
-     MMUAccessType access_type = is_load ? MMU_DATA_LOAD : MMU_DATA_STORE;
- 
-+    /*
-+     * Maximum vector length is VLMAX == 2^16 == LMUL * VL / SEW, and
-+     * occurs for LMUL == 8, SEW == 8, VL == 2^16.
-+     */
-+    g_assert(env->vstart < UINT16_MAX && UINT16_MAX - env->vstart >= elems);
-+
-     /* Check page permission/pmp/watchpoint/etc. */
-     probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
-                 true);
-@@ -2594,19 +2600,27 @@ static inline uint8_t get_round(int vxrm, uint64_t v, uint8_t shift)
- 
-     d1 = extract64(v, shift - 1, 1);
-     D1 = extract64(v, 0, shift);
--    if (vxrm == 0) { /* round-to-nearest-up (add +0.5 LSB) */
-+    switch (vxrm) {
-+    case 0:
-+        /* round-to-nearest-up (add +0.5 LSB) */
-         return d1;
--    } else if (vxrm == 1) { /* round-to-nearest-even */
-+    case 1:
-+        /* round-to-nearest-even */
-         if (shift > 1) {
-             D2 = extract64(v, 0, shift - 1);
-             return d1 & ((D2 != 0) | d);
-         } else {
-             return d1 & d;
-         }
--    } else if (vxrm == 3) { /* round-to-odd (OR bits into LSB, aka "jam") */
-+    case 2:
-+        /* round-down (truncate) */
-+        return 0;
-+    case 3:
-+        /* round-to-odd (OR bits into LSB, aka "jam") */
-         return !d & (D1 != 0);
-+    default:
-+        g_assert_not_reached();
-     }
--    return 0; /* round-down (truncate) */
- }
- 
- static inline int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a,
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2a487179f6..32474a21dc 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -194,7 +194,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
- 
-     if (rd == 0 && rs1 == 0) {
-         s1 = tcg_temp_new();
--        tcg_gen_mov_tl(s1, cpu_vl);
-+        tcg_gen_ext_i32_tl(s1, cpu_vl);
-     } else if (rs1 == 0) {
-         /* As the mask is at least one bit, RV_VLEN_MAX is >= VLMAX */
-         s1 = tcg_constant_tl(RV_VLEN_MAX);
-@@ -1213,9 +1213,9 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-                             MO_LE | MO_64 | atomicity);
-                 }
-                 if (i == size - 8) {
--                    tcg_gen_movi_tl(cpu_vstart, 0);
-+                    tcg_gen_movi_i32(cpu_vstart, 0);
-                 } else {
--                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_esz);
-+                    tcg_gen_addi_i32(cpu_vstart, cpu_vstart, 8 >> log2_esz);
-                 }
-             }
-         } else {
-@@ -1231,9 +1231,9 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-                             MO_LE | MO_32 | atomicity);
-                 }
-                 if (i == size - 4) {
--                    tcg_gen_movi_tl(cpu_vstart, 0);
-+                    tcg_gen_movi_i32(cpu_vstart, 0);
-                 } else {
--                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 4 >> log2_esz);
-+                    tcg_gen_addi_i32(cpu_vstart, cpu_vstart, 4 >> log2_esz);
-                 }
-             }
-         }
-@@ -3459,7 +3459,7 @@ static bool trans_vmv_x_s(DisasContext *s, arg_vmv_x_s *a)
-         vec_element_loadi(s, t1, a->rs2, 0, true);
-         tcg_gen_trunc_i64_tl(dest, t1);
-         gen_set_gpr(s, a->rd, dest);
--        tcg_gen_movi_tl(cpu_vstart, 0);
-+        tcg_gen_movi_i32(cpu_vstart, 0);
-         finalize_rvv_inst(s);
-         return true;
-     }
-@@ -3476,7 +3476,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
-         TCGv s1;
-         TCGLabel *over = gen_new_label();
- 
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-+        tcg_gen_brcond_i32(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         t1 = tcg_temp_new_i64();
- 
-@@ -3488,7 +3488,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
-         tcg_gen_ext_tl_i64(t1, s1);
-         vec_element_storei(s, a->rd, 0, t1);
-         gen_set_label(over);
--        tcg_gen_movi_tl(cpu_vstart, 0);
-+        tcg_gen_movi_i32(cpu_vstart, 0);
-         finalize_rvv_inst(s);
-         return true;
-     }
-@@ -3516,7 +3516,7 @@ static bool trans_vfmv_f_s(DisasContext *s, arg_vfmv_f_s *a)
-         }
- 
-         mark_fs_dirty(s);
--        tcg_gen_movi_tl(cpu_vstart, 0);
-+        tcg_gen_movi_i32(cpu_vstart, 0);
-         finalize_rvv_inst(s);
-         return true;
-     }
-@@ -3536,7 +3536,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
-         TCGLabel *over = gen_new_label();
- 
-         /* if vstart >= vl, skip vector register write back */
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-+        tcg_gen_brcond_i32(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         /* NaN-box f[rs1] */
-         t1 = tcg_temp_new_i64();
-@@ -3545,7 +3545,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
-         vec_element_storei(s, a->rd, 0, t1);
- 
-         gen_set_label(over);
--        tcg_gen_movi_tl(cpu_vstart, 0);
-+        tcg_gen_movi_i32(cpu_vstart, 0);
-         finalize_rvv_inst(s);
-         return true;
-     }
-@@ -3610,7 +3610,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
-                                                                         \
-         fns[s->sew](dest, mask, src1, src2, tcg_env, desc);             \
-                                                                         \
--        tcg_gen_movi_tl(cpu_vstart, 0);                                 \
-+        tcg_gen_movi_i32(cpu_vstart, 0);                                \
-         finalize_rvv_inst(s);                                           \
-                                                                         \
-         return true;                                                    \
--- 
-2.51.0
+Eric
+> ---
+>  hw/arm/smmuv3-accel.c | 35 +++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3-accel.h |  8 ++++++++
+>  hw/arm/smmuv3.c       | 30 ++++++++++++++++++++++++++++++
+>  3 files changed, 73 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 395c8175da..a2deda3c32 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -213,6 +213,41 @@ bool smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
+>      return true;
+>  }
+>  
+> +/*
+> + * This issues the invalidation cmd to the host SMMUv3.
+> + * Note: sdev can be NULL for certain invalidation commands
+> + * e.g., SMMU_CMD_TLBI_NH_ASID, SMMU_CMD_TLBI_NH_VA etc.
+> + */
+> +bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
+> +                                Error **errp)
+> +{
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +    SMMUv3AccelState *s_accel = s->s_accel;
+> +    IOMMUFDViommu *viommu;
+> +    uint32_t entry_num = 1;
+> +
+> +    /* No vIOMMU means no VFIO/IOMMUFD devices, nothing to invalidate. */
+> +    if (!s_accel || !s_accel->vsmmu) {
+> +        return true;
+> +    }
+> +
+> +    /*
+> +     * Called for emulated bridges or root ports, but SID-based
+> +     * invalidations (e.g. CFGI_CD) apply only to vfio-pci endpoints
+> +     * with a valid vIOMMU vdev.
+> +     */
+> +    if (sdev && !container_of(sdev, SMMUv3AccelDevice, sdev)->vdev) {
+> +        return true;
+> +    }
+> +
+> +    viommu = &s_accel->vsmmu->viommu;
+> +    /* Single command (entry_num = 1); no need to check returned entry_num */
+> +    return iommufd_backend_invalidate_cache(
+> +                   viommu->iommufd, viommu->viommu_id,
+> +                   IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3,
+> +                   sizeof(Cmd), &entry_num, cmd, errp);
+> +}
+> +
+>  static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
+>                                                 PCIBus *bus, int devfn)
+>  {
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index 8931e83dc5..ee79548370 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -51,6 +51,8 @@ bool smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+>                                       Error **errp);
+>  bool smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
+>                                             Error **errp);
+> +bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+> +                                Error **errp);
+>  void smmuv3_accel_gbpa_update(SMMUv3State *s);
+>  void smmuv3_accel_reset(SMMUv3State *s);
+>  #else
+> @@ -69,6 +71,12 @@ smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
+>  {
+>      return true;
+>  }
+> +static inline bool
+> +smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+> +                           Error **errp)
+> +{
+> +    return true;
+> +}
+>  static inline void smmuv3_accel_gbpa_update(SMMUv3State *s)
+>  {
+>  }
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index cc32b618ed..15173ddc9c 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1381,6 +1381,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>          {
+>              uint32_t sid = CMD_SID(&cmd);
+>              SMMUDevice *sdev = smmu_find_sdev(bs, sid);
+> +            Error *local_err = NULL;
+>  
+>              if (CMD_SSEC(&cmd)) {
+>                  cmd_error = SMMU_CERROR_ILL;
+> @@ -1393,11 +1394,17 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>  
+>              trace_smmuv3_cmdq_cfgi_cd(sid);
+>              smmuv3_flush_config(sdev);
+> +            if (!smmuv3_accel_issue_inv_cmd(s, &cmd, sdev, &local_err)) {
+> +                error_report_err(local_err);
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+>              break;
+>          }
+>          case SMMU_CMD_TLBI_NH_ASID:
+>          {
+>              int asid = CMD_ASID(&cmd);
+> +            Error *local_err = NULL;
+>              int vmid = -1;
+>  
+>              if (!STAGE1_SUPPORTED(s)) {
+> @@ -1416,6 +1423,11 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>              trace_smmuv3_cmdq_tlbi_nh_asid(asid);
+>              smmu_inv_notifiers_all(&s->smmu_state);
+>              smmu_iotlb_inv_asid_vmid(bs, asid, vmid);
+> +            if (!smmuv3_accel_issue_inv_cmd(s, &cmd, NULL, &local_err)) {
+> +                error_report_err(local_err);
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+>              break;
+>          }
+>          case SMMU_CMD_TLBI_NH_ALL:
+> @@ -1440,18 +1452,36 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>              QEMU_FALLTHROUGH;
+>          }
+>          case SMMU_CMD_TLBI_NSNH_ALL:
+> +        {
+> +            Error *local_err = NULL;
+> +
+>              trace_smmuv3_cmdq_tlbi_nsnh();
+>              smmu_inv_notifiers_all(&s->smmu_state);
+>              smmu_iotlb_inv_all(bs);
+> +            if (!smmuv3_accel_issue_inv_cmd(s, &cmd, NULL, &local_err)) {
+> +                error_report_err(local_err);
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+>              break;
+> +        }
+>          case SMMU_CMD_TLBI_NH_VAA:
+>          case SMMU_CMD_TLBI_NH_VA:
+> +        {
+> +            Error *local_err = NULL;
+> +
+>              if (!STAGE1_SUPPORTED(s)) {
+>                  cmd_error = SMMU_CERROR_ILL;
+>                  break;
+>              }
+>              smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
+> +            if (!smmuv3_accel_issue_inv_cmd(s, &cmd, NULL, &local_err)) {
+> +                error_report_err(local_err);
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+>              break;
+> +        }
+>          case SMMU_CMD_TLBI_S12_VMALL:
+>          {
+>              int vmid = CMD_VMID(&cmd);
 
 
