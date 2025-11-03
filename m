@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33611CCF9F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C16CDCCFA05
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFlMy-0005hO-1w; Sun, 02 Nov 2025 22:36:36 -0500
+	id 1vFlMz-0005iq-LH; Sun, 02 Nov 2025 22:36:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vFlMt-0005gk-Od
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:32 -0500
+ id 1vFlMw-0005hH-7g
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:35 -0500
 Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vFlMp-0007zk-B8
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:30 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 0407414000DE;
- Sun,  2 Nov 2025 22:36:26 -0500 (EST)
+ id 1vFlMq-00080O-Vh
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:32 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 848151400100;
+ Sun,  2 Nov 2025 22:36:27 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Sun, 02 Nov 2025 22:36:26 -0500
+ by phl-compute-05.internal (MEProxy); Sun, 02 Nov 2025 22:36:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1762140986; x=
- 1762227386; bh=X51JYdqovByw+iWifxRgLEf3MHGDJowVU8SgOzqIV1Y=; b=H
- t3FZinqSMJ7m6LAppBVkFUW1P+BJue4tFpqHJwQsUF8Dc+kY1z8pXw2or3hlRTBL
- 5YguVmuRQu+zSPAdN6pE8io12084znlYlWwNisOiur3nc7a8iJqdPJaKKvi2oWx+
- bsd0X/8JOzz1fF4Ln0X5++bswK8pQ4IHUc4TLYRyfjL5UNM3dTZ1VE9NDI2Rge+S
- PCjDgs0Ye287y/CkGKJ/P6NoSZSG5bQpbOf87mU4oSYv0DEPGfWzRuwRKhsU8keK
- 9OjZ3TuFOXkBlykKKbm8ge29LmEDo3sGYBUVq9z97v1JvheOHY582HUjpGpG3HkZ
- cd00Wr/ncDiSs0/Sf5H/A==
+ :reply-to:subject:subject:to:to; s=fm2; t=1762140987; x=
+ 1762227387; bh=YlyWBdnfOsCvUMA5G3xXi4mdNN70nToWOgum6MiROdg=; b=D
+ 4Gx9/dR+bYiCGtQUSGhFG5a4tSdJWPSVWRe7+2Nys8x7368e1PY7vMONGgejxEkz
+ HwqPzv3CkqB25y39No1S1QqBQDIvW9vqQS2EQRXM4De6mzVr33fbLihnnYYgtKIo
+ A4nq0MglcS5qTrNcjpwZQqWfXBtznMq7+YaTnMrSToFhcD60JVL9I9iRRk2z8pFl
+ 2koth3uz90lk4EomzJDFQ3YrlXNx3H89UqNjBY9iMEjGXBG0hr5y3VVL68dCRAzK
+ 6tspoWOaLk/CZp4mEM/W7feQ/2gnLVobmu1b/AmzKQaNU6ys8kAbk9yWtZfMJBJv
+ jOwazL6788pAfAwKL3HoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1762140986; x=1762227386; bh=X
- 51JYdqovByw+iWifxRgLEf3MHGDJowVU8SgOzqIV1Y=; b=n12BUe2FF26Ddzp1E
- Ne4uotxhdC4h+glbpQh+qe0CFp4eZhKmZd2tq7KBx+VdoPk/ZFcao78UwoDP35SJ
- u3M0toqiEBf3S/om0gHh5Qtj7oSlLNwdu8A52TIeRYzbY7/try5+a9vRIzDbxqOc
- yz2tvoc/bw0ngl1Sb8WYSRJkTjStcoglTNQ0MdiyxcTe7YmSa2K3lnnx5QddLtJS
- /+V16IwQ+9SvXb3ltARhV5KM/TH/dS+KelzBUAO+ole5m7ybAD6sf5FT8UW6RpZf
- SgwprXPZRzPUcykRpIBF62Yqc9cLMFl+2CYzO4NmNShZJe2EOw6axIUuPEQrMOz8
- wjjeQ==
-X-ME-Sender: <xms:OSMIaZxDmSl_IBQ6t-8fhFBj2ZxHFTmK0DDEG_w-r-d_p_0E4TZEpA>
- <xme:OSMIaQvpobYHdQBrkXpRFJO9uFSEmiY4vuqeN0hnuToGJ39_1dAFh7XNCzqOdy4ln
- siZlwM1FB1OeKkCiXPEkI6QmCvagPWwoUfB4Co5xD3UowachtHEMAA>
-X-ME-Received: <xmr:OSMIaQsk8s7PGoN8DzxukW92Azftuv4VbwD7ZI6nr2wgYBlYhdkHaPmJOuoR>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1762140987; x=1762227387; bh=Y
+ lyWBdnfOsCvUMA5G3xXi4mdNN70nToWOgum6MiROdg=; b=ZsO2/xcDSjSoLl34+
+ QnKzZebVoEL6a9wIziv77Znzm1vF7grUXZPUANmjU1+eTHAcjnnJ4Q6vK4pTLDeh
+ Bllq0cuqbnlCbb87Zeye6SIWOpVAleIakFaYLxq3ySSsw3uFebISu4CAbPfiBWAg
+ Jdf4sKHS7Hpgbpkqj431jcSOHMnl67bb8inuH00g4tuBcCX3sDOJl6Ev81QIAVMZ
+ e3wTw/8PILR3xCpUZjuUgw/+QjsCpZryNiJHTFkC0+qdAmhBWJfP4JJPeyYE5yZ/
+ yAbKiTWfn8uQgjJQMI3uiKS4H3xL+lp9nKLd2XxD4ANZLmZHItkxcz99au8H88Pz
+ 8FitQ==
+X-ME-Sender: <xms:OyMIaegxSZlzTPUQ24oRJpaWCPrm6hlDAziDkIZ0MEU2Z5YMB09iLw>
+ <xme:OyMIaWensuorzvcrp1xarTlvFhf9rIcEzGxrIzHY9-bBXTVJuWTFxa6E6TvUUGIEi
+ 7SNSgK7Nd85Iy4hdI30iNRkcqvJSGwkhH7K5hpEKmAaU9Sj1V1WH6E>
+X-ME-Received: <xmr:OyMIaTfZ6Uk9mlfhcMEg67yl4x4MZrQ60B1feDHjRm9moq8HEjNd35jss8eL>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejtdejucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
@@ -61,27 +61,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejtdejucetufdote
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
  uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
- gthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehqvghmuhdquggvvhgv
- lhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:OSMIaVO-aVZ15ZVWBvzN5xGPHvVTOCo9TUT1o7wjtkdfDYutBR2i5A>
- <xmx:OSMIae0W6qQ1mYdZwdJbH1EN7wvdaIPHZbwCIC9rhnXgFvY05nEI_A>
- <xmx:OSMIaRMyUjv_FBIpQe9u5J-6jouFyjIFnlJFAXeVb7JfMymHOmSbkg>
- <xmx:OSMIae1tUyylf6Hu27hFbC7YqtwpXkh8JJtVeblNIi5IT_1yVRuabQ>
- <xmx:OSMIae59aiIAoM4ksSVNQGo34K4QuLlX9lez0_a7sVTBvzkzLlM1Koel>
+ thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
+ hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthho
+ nhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:OyMIaQ9qN2sxi4W2zHwu7OKMEFErYS0-YOOkJ5L8GZ9qDwAvKHPw2w>
+ <xmx:OyMIafkdF6I-eC2LxXNNae02nb1yRL6UJ0uB1O9uMN8IVUI-fWEzJg>
+ <xmx:OyMIaS_64mLuhGSIXxCbj-QsS9EA6k2VcxFq6tu7jz6WKkdXokcmkw>
+ <xmx:OyMIadnJkdp6En8SE_aKu-s75s2RzzqXZFrAGJV4kY37L1_b9xtRXg>
+ <xmx:OyMIaWoX5TEm5cIRc7WdIYcVuqEqZL24MagusV3C5Q6q0NIl17HnCme1>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Nov 2025 22:36:24 -0500 (EST)
+ 2 Nov 2025 22:36:26 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id a6ea2445;
+ by chomposaur (OpenSMTPD) with ESMTPA id 68dcea4f;
  Mon, 3 Nov 2025 03:36:23 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v2 1/7] ati-vga: Add scissor clipping register support
-Date: Sun,  2 Nov 2025 22:36:02 -0500
-Message-ID: <20251103033608.120908-2-chad@jablonski.xyz>
+Subject: [PATCH v2 5/7] ati-vga: Implement HOST_DATA register writes
+Date: Sun,  2 Nov 2025 22:36:06 -0500
+Message-ID: <20251103033608.120908-6-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251103033608.120908-1-chad@jablonski.xyz>
 References: <20251103033608.120908-1-chad@jablonski.xyz>
@@ -113,118 +113,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
-and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
-when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
-to default clipping.
+Writing to any of the HOST_DATA0-7 registers pushes the written data
+into a buffer. A final write to HOST_DATA_LAST writes data to the
+buffer and triggers the pending blit operation.
 
-Scissor clipping is used when rendering text in X.org. The r128 driver
-sends host data much wider than is necessary to draw a glyph and cuts it
-down to size using clipping before rendering. The actual clipping
-implementation follows in a future patch.
+The buffer for now is a static 4MiB and overflows are checked. This
+seems like a large enough value given what I've seen in testing. Future
+work could dynamically size the buffer based on the destination dimensions if
+needed.
+
+This sets things up for implementation of HOST_DATA as a blit operation
+source in a future patch.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c      | 26 ++++++++++++++++++++++++++
+ hw/display/ati.c      | 15 +++++++++++++++
+ hw/display/ati_dbg.c  |  9 +++++++++
  hw/display/ati_int.h  |  3 +++
- hw/display/ati_regs.h | 12 ++++++++++--
- 3 files changed, 39 insertions(+), 2 deletions(-)
+ hw/display/ati_regs.h |  9 +++++++++
+ 4 files changed, 36 insertions(+)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 0b4298d078..eb9b30672f 100644
+index 4ff17209c4..0a686750ae 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -510,6 +510,15 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-     case DEFAULT_SC_BOTTOM_RIGHT:
-         val = s->regs.default_sc_bottom_right;
+@@ -969,6 +969,20 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+     case SRC_SC_BOTTOM_RIGHT:
+         s->regs.src_sc_bottom_right = data;
          break;
-+    case SC_TOP_LEFT:
-+        val = s->regs.sc_top_left;
-+        break;
-+    case SC_BOTTOM_RIGHT:
-+        val = s->regs.sc_bottom_right;
-+        break;
-+    case SRC_SC_BOTTOM_RIGHT:
-+        val = s->regs.src_sc_bottom_right;
++    case HOST_DATA0 ... HOST_DATA7:
++    case HOST_DATA_LAST:
++        if (s->host_data_pos + 4 > sizeof(s->host_data_buffer)) {
++            qemu_log_mask(LOG_UNIMP, "HOST_DATA buffer overflow "
++                         "(buffer size: %zu bytes)\n",
++                          sizeof(s->host_data_buffer));
++            return;
++        }
++        stn_he_p(&s->host_data_buffer[s->host_data_pos], 4, data);
++        s->host_data_pos += 4;
++        if (addr == HOST_DATA_LAST) {
++            ati_2d_blt(s);
++        }
 +        break;
      default:
          break;
      }
-@@ -862,6 +871,14 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->regs.dp_datatype = (data & 0x0f00) >> 8 | (data & 0x30f0) << 4 |
-                               (data & 0x4000) << 16;
-         s->regs.dp_mix = (data & GMC_ROP3_MASK) | (data & 0x7000000) >> 16;
-+
-+        if ((data & GMC_SRC_CLIPPING_MASK) == GMC_SRC_CLIP_DEFAULT) {
-+            s->regs.src_sc_bottom_right = s->regs.default_sc_bottom_right;
-+        }
-+        if ((data & GMC_DST_CLIPPING_MASK) == GMC_DST_CLIP_DEFAULT) {
-+            s->regs.sc_top_left = 0;
-+            s->regs.sc_bottom_right = s->regs.default_sc_bottom_right;
-+        }
-         break;
-     case DST_WIDTH_X:
-         s->regs.dst_x = data & 0x3fff;
-@@ -937,6 +954,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DEFAULT_SC_BOTTOM_RIGHT:
-         s->regs.default_sc_bottom_right = data & 0x3fff3fff;
-         break;
-+    case SC_TOP_LEFT:
-+        s->regs.sc_top_left = data;
-+        break;
-+    case SC_BOTTOM_RIGHT:
-+        s->regs.sc_bottom_right = data;
-+        break;
-+    case SRC_SC_BOTTOM_RIGHT:
-+        s->regs.src_sc_bottom_right = data;
-+        break;
-     default:
-         break;
-     }
+@@ -1074,6 +1088,7 @@ static void ati_vga_reset(DeviceState *dev)
+     /* reset vga */
+     vga_common_reset(&s->vga);
+     s->mode = VGA_MODE;
++    s->host_data_pos = 0;
+ }
+ 
+ static void ati_vga_exit(PCIDevice *dev)
+diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
+index 3ffa7f35df..5c799d540a 100644
+--- a/hw/display/ati_dbg.c
++++ b/hw/display/ati_dbg.c
+@@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
+     {"MC_SRC1_CNTL", 0x19D8},
+     {"TEX_CNTL", 0x1800},
+     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
++    {"HOST_DATA0", 0x17c0},
++    {"HOST_DATA1", 0x17c4},
++    {"HOST_DATA2", 0x17c8},
++    {"HOST_DATA3", 0x17cc},
++    {"HOST_DATA4", 0x17d0},
++    {"HOST_DATA5", 0x17d4},
++    {"HOST_DATA6", 0x17d8},
++    {"HOST_DATA7", 0x17dc},
++    {"HOST_DATA_LAST", 0x17e0},
+     {NULL, -1}
+ };
+ 
 diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 708cc1dd3a..aab3cbf81a 100644
+index aab3cbf81a..16e5d29a5a 100644
 --- a/hw/display/ati_int.h
 +++ b/hw/display/ati_int.h
-@@ -86,6 +86,9 @@ typedef struct ATIVGARegs {
-     uint32_t default_pitch;
-     uint32_t default_tile;
-     uint32_t default_sc_bottom_right;
-+    uint32_t sc_top_left;
-+    uint32_t sc_bottom_right;
-+    uint32_t src_sc_bottom_right;
- } ATIVGARegs;
+@@ -15,6 +15,7 @@
+ #include "hw/i2c/bitbang_i2c.h"
+ #include "vga_int.h"
+ #include "qom/object.h"
++#include "qemu/units.h"
  
- struct ATIVGAState {
+ /*#define DEBUG_ATI*/
+ 
+@@ -108,6 +109,8 @@ struct ATIVGAState {
+     MemoryRegion io;
+     MemoryRegion mm;
+     ATIVGARegs regs;
++    uint32_t host_data_pos;
++    uint8_t host_data_buffer[4 * MiB];
+ };
+ 
+ const char *ati_reg_name(int num);
 diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index d7127748ff..2b56b9fb66 100644
+index 2b56b9fb66..9b52b61dcb 100644
 --- a/hw/display/ati_regs.h
 +++ b/hw/display/ati_regs.h
-@@ -392,8 +392,6 @@
- /* DP_GUI_MASTER_CNTL bit constants */
- #define GMC_SRC_PITCH_OFFSET_CNTL               0x00000001
- #define GMC_DST_PITCH_OFFSET_CNTL               0x00000002
--#define GMC_SRC_CLIP_DEFAULT                    0x00000000
--#define GMC_DST_CLIP_DEFAULT                    0x00000000
- #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
- #define GMC_SRC_DSTCOLOR                        0x00003000
- #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
-@@ -404,6 +402,16 @@
- #define GMC_WRITE_MASK_SET                      0x40000000
- #define GMC_DP_CONVERSION_TEMP_6500             0x00000000
- 
-+/* DP_GUI_MASTER_CNTL DP_SRC_CLIPPING named constants */
-+#define GMC_SRC_CLIPPING_MASK                   0x00000004
-+#define GMC_SRC_CLIP_DEFAULT                    0x00000000
-+#define GMC_SRC_CLIP_LEAVE_ALONE                0x00000004
-+
-+/* DP_GUI_MASTER_CNTL DP_DST_CLIPPING named constants */
-+#define GMC_DST_CLIPPING_MASK                   0x00000008
-+#define GMC_DST_CLIP_DEFAULT                    0x00000000
-+#define GMC_DST_CLIP_LEAVE_ALONE                0x00000008
-+
- /* DP_GUI_MASTER_CNTL ROP3 named constants */
- #define GMC_ROP3_MASK                           0x00ff0000
- #define ROP3_BLACKNESS                          0x00000000
+@@ -252,6 +252,15 @@
+ #define DP_T12_CNTL                             0x178c
+ #define DST_BRES_T1_LNTH                        0x1790
+ #define DST_BRES_T2_LNTH                        0x1794
++#define HOST_DATA0                              0x17c0
++#define HOST_DATA1                              0x17c4
++#define HOST_DATA2                              0x17c8
++#define HOST_DATA3                              0x17cc
++#define HOST_DATA4                              0x17d0
++#define HOST_DATA5                              0x17d4
++#define HOST_DATA6                              0x17d8
++#define HOST_DATA7                              0x17dc
++#define HOST_DATA_LAST                          0x17e0
+ #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
+ #define SCALE_OFFSET_0                          0x1998
+ #define SCALE_PITCH                             0x199c
 -- 
 2.51.0
 
