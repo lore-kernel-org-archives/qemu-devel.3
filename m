@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9B8CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4748CCCFA06
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFqu6-0004Vb-HN; Mon, 03 Nov 2025 04:31:12 -0500
+	id 1vFquM-0004n7-JI; Mon, 03 Nov 2025 04:31:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqte-0003uW-K3; Mon, 03 Nov 2025 04:30:44 -0500
+ id 1vFqtq-00043e-Qa; Mon, 03 Nov 2025 04:30:56 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqtV-0002S6-Ur; Mon, 03 Nov 2025 04:30:38 -0500
+ id 1vFqtk-0002S6-MM; Mon, 03 Nov 2025 04:30:52 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 3 Nov
- 2025 17:28:16 +0800
+ 2025 17:28:17 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 3 Nov 2025 17:28:16 +0800
+ Transport; Mon, 3 Nov 2025 17:28:17 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 20/30] hw/arm/aspeed: Split Fuji machine into a separate
- source file for maintainability
-Date: Mon, 3 Nov 2025 17:27:31 +0800
-Message-ID: <20251103092801.1282602-21-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 21/30] hw/arm/aspeed: Split QCOM Firework machine into a
+ separate source file for maintainability
+Date: Mon, 3 Nov 2025 17:27:32 +0800
+Message-ID: <20251103092801.1282602-22-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
 References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
@@ -67,190 +67,127 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the Facebook Fuji BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_fuji.c.
+This commit moves the QCOM Firework BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2600_qcom-firework.c.
 
 This refactor continues the modularization effort for Aspeed platform support,
-placing each board’s logic in its own dedicated source file.
-It improves maintainability, readability, and simplifies future development for
-new platforms without cluttering aspeed.c.
+placing each board’s logic in its own dedicated source file. It improves
+maintainability, readability, and simplifies future development for new
+platforms without cluttering aspeed.c.
 
 Key updates include:
-- Moved FUJI_BMC_HW_STRAP1 and FUJI_BMC_HW_STRAP2 macro definitions into the new file.
-- Moved fuji_bmc_i2c_init() and its helper get_pca9548_channels() into the new file.
-- Moved aspeed_machine_fuji_class_init() and type registration to aspeed_ast2600_fuji.c.
-- Added aspeed_ast2600_fuji.c to the build system (meson.build).
-- Cleaned up all Fuji-specific code and macros from aspeed.c.
+- Removed qcom_dc_scm_firework_i2c_init() and its Firework-specific devices
+  from aspeed.c.
+- Removed aspeed_machine_qcom_firework_class_init() and its type registration
+  ("qcom-firework-bmc") from aspeed_machine_types[].
+- Added new source file aspeed_ast2600_qcom-firework.c containing the
+  Firework-specific initialization and machine class definition.
+- Updated hw/arm/meson.build to include aspeed_ast2600_qcom-firework.c.
+- Cleaned up all Firework-specific code from aspeed.c.
+- Renamed `QCOM_DC_SCM_V1_BMC_HW_STRAP1` to
+  `QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1` to avoid dependency conflicts with
+  other QCOM DC-SCM machines.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c              | 117 -----------------------------
- hw/arm/aspeed_ast2600_fuji.c | 141 +++++++++++++++++++++++++++++++++++
- hw/arm/meson.build           |   1 +
- 3 files changed, 142 insertions(+), 117 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_fuji.c
+ hw/arm/aspeed.c                       | 57 -----------------
+ hw/arm/aspeed_ast2600_qcom-firework.c | 92 +++++++++++++++++++++++++++
+ hw/arm/meson.build                    |  1 +
+ 3 files changed, 93 insertions(+), 57 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2600_qcom-firework.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index e44aec69bd..29a036b675 100644
+index 29a036b675..f72b1e2eea 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -52,10 +52,6 @@ static struct arm_boot_info aspeed_board_binfo = {
- #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
- #define RAINIER_BMC_HW_STRAP2 0x80000848
- 
--/* Fuji hardware value */
--#define FUJI_BMC_HW_STRAP1    0x00000000
--#define FUJI_BMC_HW_STRAP2    0x00000000
--
- /* GB200NVL hardware value */
- #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
- #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
-@@ -416,95 +412,8 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     aspeed_create_pca9552(soc, 15, 0x60);
+@@ -635,38 +635,6 @@ static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
  }
  
--static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
--                                 I2CBus **channels)
--{
--    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
--    for (int i = 0; i < 8; i++) {
--        channels[i] = pca954x_i2c_get_bus(mux, i);
--    }
--}
--
- #define TYPE_LM75 TYPE_TMP105
- #define TYPE_TMP75 TYPE_TMP105
--#define TYPE_TMP422 "tmp422"
--
--static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+-static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
--    I2CBus *i2c[144] = {};
+-    I2CSlave *therm_mux, *cpuvr_mux;
 -
--    for (int i = 0; i < 16; i++) {
--        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
--    }
--    I2CBus *i2c180 = i2c[2];
--    I2CBus *i2c480 = i2c[8];
--    I2CBus *i2c600 = i2c[11];
+-    /* Create the generic DC-SCM hardware */
+-    qcom_dc_scm_bmc_i2c_init(bmc);
 -
--    get_pca9548_channels(i2c180, 0x70, &i2c[16]);
--    get_pca9548_channels(i2c480, 0x70, &i2c[24]);
--    /* NOTE: The device tree skips [32, 40) in the alias numbering */
--    get_pca9548_channels(i2c600, 0x77, &i2c[40]);
--    get_pca9548_channels(i2c[24], 0x71, &i2c[48]);
--    get_pca9548_channels(i2c[25], 0x72, &i2c[56]);
--    get_pca9548_channels(i2c[26], 0x76, &i2c[64]);
--    get_pca9548_channels(i2c[27], 0x76, &i2c[72]);
--    for (int i = 0; i < 8; i++) {
--        get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
--    }
+-    /* Now create the Firework specific hardware */
 -
--    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
--    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
+-    /* I2C7 CPUVR MUX */
+-    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
+-                                        "pca9546", 0x70);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
 -
--    /*
--     * EEPROM 24c64 size is 64Kbits or 8 Kbytes
--     *        24c02 size is 2Kbits or 256 bytes
--     */
--    at24c_eeprom_init(i2c[19], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[20], 0x50, 256);
--    at24c_eeprom_init(i2c[22], 0x52, 256);
+-    /* I2C8 Thermal Diodes*/
+-    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
+-                                        "pca9548", 0x70);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
 -
--    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
--    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
--    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
--    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
--
--    at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
--    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
--
--    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
--    at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
--    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
--    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
--
--    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
--    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
--
--    at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
--    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
--    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
--    at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
--
--    at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
--    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
--    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
--    at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[79], 0x52, 8 * KiB);
--    at24c_eeprom_init(i2c[28], 0x50, 256);
--
--    for (int i = 0; i < 8; i++) {
--        at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
--        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
--        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
--        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
--    }
+-    /* I2C9 Fan Controller (MAX31785) */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
 -}
 -
- #define TYPE_TMP421 "tmp421"
- #define TYPE_DS1338 "ds1338"
- 
-@@ -955,27 +864,6 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
-     aspeed_machine_ast2600_class_emmc_init(oc);
+ static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
+ {
+     return ASPEED_MACHINE(obj)->mmio_exec;
+@@ -1063,26 +1031,6 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
  };
  
--#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
--
--static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
+-static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+-                                                    const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc = "Facebook Fuji BMC (Cortex-A7)";
--    amc->soc_name = "ast2600-a3";
--    amc->hw_strap1 = FUJI_BMC_HW_STRAP1;
--    amc->hw_strap2 = FUJI_BMC_HW_STRAP2;
--    amc->fmc_model = "mx66l1g45g";
--    amc->spi_model = "mx66l1g45g";
--    amc->num_cs = 2;
--    amc->macs_mask = ASPEED_MAC3_ON;
--    amc->i2c_init = fuji_bmc_i2c_init;
--    amc->uart_default = ASPEED_DEV_UART1;
--    mc->default_ram_size = FUJI_BMC_RAM_SIZE;
+-    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
+-    mc->deprecation_reason = "use 'ast2600-evb' instead";
+-    amc->soc_name  = "ast2600-a3";
+-    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
+-    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
+-    amc->fmc_model = "n25q512a";
+-    amc->spi_model = "n25q512a";
+-    amc->num_cs    = 2;
+-    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+-    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
+-    mc->default_ram_size = 1 * GiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
- static void aspeed_machine_catalina_class_init(ObjectClass *oc,
-                                                const void *data)
- {
-@@ -1216,11 +1104,6 @@ static const TypeInfo aspeed_machine_types[] = {
+ static const TypeInfo aspeed_machine_types[] = {
+     {
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
+@@ -1094,11 +1042,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_rainier_class_init,
+         .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("fuji-bmc"),
+-        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_fuji_class_init,
+-        .class_init    = aspeed_machine_qcom_firework_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
+         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
+diff --git a/hw/arm/aspeed_ast2600_qcom-firework.c b/hw/arm/aspeed_ast2600_qcom-firework.c
 new file mode 100644
-index 0000000000..be5c2a17ab
+index 0000000000..d040b9c63b
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_fuji.c
-@@ -0,0 +1,141 @@
++++ b/hw/arm/aspeed_ast2600_qcom-firework.c
+@@ -0,0 +1,92 @@
 +/*
-+ * Facebook Fuji
++ * Qualcomm DC-SCM V1/Firework
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -264,141 +201,92 @@ index 0000000000..be5c2a17ab
 +#include "hw/arm/aspeed_soc.h"
 +#include "hw/i2c/i2c_mux_pca954x.h"
 +#include "hw/sensor/tmp105.h"
-+#include "hw/nvram/eeprom_at24c.h"
++
++/* Qualcomm DC-SCM Firework hardware value */
++#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1  0x00000000
++#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2  0x00000041
 +
 +#define TYPE_LM75 TYPE_TMP105
-+#define TYPE_TMP75 TYPE_TMP105
-+#define TYPE_TMP422 "tmp422"
 +
-+/* Fuji hardware value */
-+#define FUJI_BMC_HW_STRAP1    0x00000000
-+#define FUJI_BMC_HW_STRAP2    0x00000000
-+#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-+
-+static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
-+                                 I2CBus **channels)
-+{
-+    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
-+    for (int i = 0; i < 8; i++) {
-+        channels[i] = pca954x_i2c_get_bus(mux, i);
-+    }
-+}
-+
-+static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
++static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
-+    I2CBus *i2c[144] = {};
 +
-+    for (int i = 0; i < 16; i++) {
-+        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
-+    }
-+    I2CBus *i2c180 = i2c[2];
-+    I2CBus *i2c480 = i2c[8];
-+    I2CBus *i2c600 = i2c[11];
-+
-+    get_pca9548_channels(i2c180, 0x70, &i2c[16]);
-+    get_pca9548_channels(i2c480, 0x70, &i2c[24]);
-+    /* NOTE: The device tree skips [32, 40) in the alias numbering */
-+    get_pca9548_channels(i2c600, 0x77, &i2c[40]);
-+    get_pca9548_channels(i2c[24], 0x71, &i2c[48]);
-+    get_pca9548_channels(i2c[25], 0x72, &i2c[56]);
-+    get_pca9548_channels(i2c[26], 0x76, &i2c[64]);
-+    get_pca9548_channels(i2c[27], 0x76, &i2c[72]);
-+    for (int i = 0; i < 8; i++) {
-+        get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
-+    }
-+
-+    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
-+    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
-+
-+    /*
-+     * EEPROM 24c64 size is 64Kbits or 8 Kbytes
-+     *        24c02 size is 2Kbits or 256 bytes
-+     */
-+    at24c_eeprom_init(i2c[19], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[20], 0x50, 256);
-+    at24c_eeprom_init(i2c[22], 0x52, 256);
-+
-+    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
-+    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
-+    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
-+
-+    at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
-+    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
-+
-+    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
-+    at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
-+    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
-+    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
-+
-+    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
-+    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
-+
-+    at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
-+    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
-+    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
-+    at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
-+
-+    at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
-+    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
-+    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
-+    at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[79], 0x52, 8 * KiB);
-+    at24c_eeprom_init(i2c[28], 0x50, 256);
-+
-+    for (int i = 0; i < 8; i++) {
-+        at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
-+        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
-+        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
-+        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
-+    }
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
 +}
 +
-+static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
++static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++    I2CSlave *therm_mux, *cpuvr_mux;
++
++    /* Create the generic DC-SCM hardware */
++    qcom_dc_scm_bmc_i2c_init(bmc);
++
++    /* Now create the Firework specific hardware */
++
++    /* I2C7 CPUVR MUX */
++    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
++                                        "pca9546", 0x70);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
++
++    /* I2C8 Thermal Diodes*/
++    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
++                                        "pca9548", 0x70);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
++
++    /* I2C9 Fan Controller (MAX31785) */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
++}
++
++static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
++                                                    const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc = "Facebook Fuji BMC (Cortex-A7)";
-+    amc->soc_name = "ast2600-a3";
-+    amc->hw_strap1 = FUJI_BMC_HW_STRAP1;
-+    amc->hw_strap2 = FUJI_BMC_HW_STRAP2;
-+    amc->fmc_model = "mx66l1g45g";
-+    amc->spi_model = "mx66l1g45g";
-+    amc->num_cs = 2;
-+    amc->macs_mask = ASPEED_MAC3_ON;
-+    amc->i2c_init = fuji_bmc_i2c_init;
-+    amc->uart_default = ASPEED_DEV_UART1;
-+    mc->default_ram_size = FUJI_BMC_RAM_SIZE;
++    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
++    mc->deprecation_reason = "use 'ast2600-evb' instead";
++    amc->soc_name  = "ast2600-a3";
++    amc->hw_strap1 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1;
++    amc->hw_strap2 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2;
++    amc->fmc_model = "n25q512a";
++    amc->spi_model = "n25q512a";
++    amc->num_cs    = 2;
++    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
++    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
++    mc->default_ram_size = 1 * GiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2600_fuji_types[] = {
++static const TypeInfo aspeed_ast2600_qcom_firework_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("fuji-bmc"),
++        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_fuji_class_init,
++        .class_init    = aspeed_machine_qcom_firework_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_fuji_types)
++DEFINE_TYPES(aspeed_ast2600_qcom_firework_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 4abfbffb45..e6f6ab4245 100644
+index e6f6ab4245..fbe063cf0b 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -59,6 +59,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600.c',
+@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
    'aspeed_ast2600_bletchley.c',
    'aspeed_ast2600_fby35.c',
-+  'aspeed_ast2600_fuji.c',
+   'aspeed_ast2600_fuji.c',
++  'aspeed_ast2600_qcom-firework.c',
    'aspeed_ast10x0.c',
    'aspeed_eeprom.c',
    'fby35.c'))
