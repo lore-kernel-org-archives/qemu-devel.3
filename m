@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED70CCF9F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD8ECCFA04
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 18:42:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFzUD-000363-2K; Mon, 03 Nov 2025 13:41:01 -0500
+	id 1vFzU9-00033Q-Nt; Mon, 03 Nov 2025 13:40:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vFzU9-00033g-FG
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:57 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ id 1vFzU7-00032I-4v
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:55 -0500
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vFzU0-0008RT-86
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:57 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-7a226a0798cso4582036b3a.2
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 10:40:44 -0800 (PST)
+ id 1vFzU1-0008T1-3t
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:53 -0500
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-76e2ea933b7so4749274b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 10:40:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762195243; x=1762800043; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762195247; x=1762800047; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dMHF6Itji8tSyj3SeH81sPOFo7/igN7zQv9u3hJvP6Q=;
- b=iVjL44+6VciwWApcnm178eMo5NXQ3+6kiLD0o2wpxr5gk3L6LZii/xa9k1kTdWIfGj
- QdNZSDBmTDADMR8EsnBv/oMzz3op2a080J1pKsF8io7aKe4dKy5LlCVDV7GBZ1+gR3Nc
- sPMtEIG7FinKVOZ6I+/pzVXjkCe3m6kN2l3JzKofUFD3gXtR6Js28KgWAylEw6KelW2O
- KSSpCvCGzKajfX3dwVNoQgjUd5mtZ5SqrMvkA1G7Q8mIQFYjNkD2cpDhBO0iu2kpbvim
- DlaMjS1cYlmaYtzKM6Nemm0l8xXr2hw8P28MllCiryim45QzcAIOIVRZTv44voYRc7Pg
- SwgQ==
+ bh=2PPFTpvP29eV2o4+yOFXgNrhVKIhmznvuYSsfAv1arc=;
+ b=YOHRffBmcUFfQe/Yvn0LDeEoQAYjKlJKgGSaKuogY9RT8gGduBa1eUDjKfpNQaVGWb
+ zIqhKL0y5hgQdOvBHKgqCRTR3eeb05iIHXzUjLry4pAFIZxpdBB4qHoBDBHUs3KDjnGq
+ BgZBkwzrUTSfKfk4WNXLdcVCcrDQsWlDnyZBHMNM/XcS1eQrYLkQDn1y1EzXcc1KEFgG
+ P/At4cboZR2Kq3vpQasYuO6IgSRQ1GGIrfiBe11JCLSOubPL+w0oi4rjLeDCn4ay0AnC
+ SNyEy6HrWJA16asDoNXop6NCl/aJi7v7jI7nJHxyMaywDItf+V/Bl5fj0yKnBOW2c4EI
+ slYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762195243; x=1762800043;
+ d=1e100.net; s=20230601; t=1762195247; x=1762800047;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dMHF6Itji8tSyj3SeH81sPOFo7/igN7zQv9u3hJvP6Q=;
- b=elIctS42lXYQQSksQmmwnW4gJL1MBcLA4RwhxEgmzwk335Ti1tL0hW017ijG+tJFrp
- JWsYjKl7cclT1ubRKxScA6zVEJwLNK6VR8fE2x09YO8iGTYcnkhSWcEtdA3p+sANzjr9
- BYvc4yEXOyhszDZ67L5w4Lrvbp1QcLOoEeohxF5qAfm5mPePM5V6HYmhtdlRtMem+VJh
- +pjpZR8Tpl9HLwhOUn6/0zJm+eLMyOCZCr2FidQOvXExY6ZG6hzLlsM4W4fE4pc131SO
- OWx64c+VwJXkofp0HwcoeiS2kVEOzifa108OtA3XK3JR90Mg2QlqD+hK+8MBMg0wz/sl
- vkmg==
+ bh=2PPFTpvP29eV2o4+yOFXgNrhVKIhmznvuYSsfAv1arc=;
+ b=TD/ktaxt9hleusSMNDeb3uao2alaUGv7+vAuaLUg79/txtb6ROC9mu+NXnYbDu+06G
+ PVRWwS2NxYtQwfjMFWSaBT723VcgNbSe2Awf8QKg+pZe8YYKurYwCHyjufVU3DO+PMAb
+ KYrWXQmr4Io5RzqmvrRsHNc7sqkGbpmHBmvu82gxZXrLaYzVM0n1TV7eqhwG0AekFoIw
+ YVtcToqFc/osMl0I+I0Prc7vh21jEclQkONttlFqP6qIO9LOeLhW/sekTJCKyhFVWA0R
+ X9MFs9NlGbq1nis/uiykxkruQFuoizH9Mw2ytlyTiv4icHJMkXBLnDJup/ye53joccSW
+ Cfsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6P0kQXsWjVexG5MgR/ol8QNhOqZCe7k+6pnOzyFkcmfICNn9Ou8kiLV8xS+fcnd1E0BCvXAnPUAZ/@nongnu.org
-X-Gm-Message-State: AOJu0YyEWVOvFqr9v/IzbDc0ZNU2LisLdvvd5jkpojLc3PsYIj/ILP0l
- +/rbH8FIa7WmC3mnwAWPz3UuwBFWtfkCvnqrY9WJF1d1bzo9/eONGw/n
-X-Gm-Gg: ASbGnctAzOQPFs+fQUlIc0kcrP3aeyw5GaHJuosWmxKBXG64L4yND7zy/Ilzp2D5vqP
- f1OBrdG3gtkUPFvz3inlXW77w3ZNx4hPE0j3r8m0d/qzdxDTIEgs2MUY+PNnCauDx47dvhrEWyu
- O0UJZlaDY+g7r4iwUW/o9qiohsbp4R27qOsglyxY1b7WUwQhcxoT5RZZiAAYhOdkiRKPBtjUnkQ
- AtSj2+yruLxnrCJ/VJpivBt2pjQ/Lq+2cEeOT0n2/LzjkOrnRmiCwGJXTkGsn38gwGHqSsnTMOw
- LbsX1nOReVogdVt03QoGzsfPlVJ3pgh4tgNkYxJuVLVQNfYqVJTlhd60Kgy17dfXoLFyVvpqmFW
- g/3MrBgebU+3NuQtfz+2y3u9bTHl7DDuGmuqZfcdknKrdW3w4gGV9X6B7qMOTi6QtzNl9AAO0mI
- BgpPFjjE/Vt7u1HYFFhwdHgVlG0CEwkUeGoAc4HME=
-X-Google-Smtp-Source: AGHT+IEKYYes0xyNCKdFRJ+ME1cr/adajOCOgaJtGTvfn9KU9EzsjYbyYRgSqd63GeL7HszrwPUTZw==
-X-Received: by 2002:a05:6a20:a126:b0:33f:4e3d:afed with SMTP id
- adf61e73a8af0-348cc8e56dcmr17236814637.33.1762195242623; 
- Mon, 03 Nov 2025 10:40:42 -0800 (PST)
+ AJvYcCVbodQDKdtslCUT0BopKyWdmOZ+GgtfO6cTHFzbEGGOnR0czX+aG01Iu4c3Zvh0fvUaJ+0yBJZ5Urqx@nongnu.org
+X-Gm-Message-State: AOJu0YycCWEeYLDiULnI8PNntHQHks82Jd+u71Raaqlxfipm0PNlgUKn
+ EK/D4F1iae5DCOLr4OrDuww9u8u85DdsHzCQyWONlHJ7Af+QpV0AoZrrzFgcSo+wnPPj9w==
+X-Gm-Gg: ASbGncsjvv99/GBTLRbYksYc+MWmKX9bTm+MpSZfrq+p+jCO6RrA4jEoAUY80/911tj
+ yWr3ZtI0cgtFWnu2v91r96dDOQizXtmiAufkvhYtS0tND6y8jQWIGogzsC4z781yPUqUytTT3Oj
+ XkpR3fwbj50aXn6Puw7JeBkXxR2pQUAT9zTp3Hi2iJFZht1XkdQ6BW55yYNYyicmc5S/WiOP5EQ
+ OpYiZ3asqceRIJOzta8G7qTE0JPAj2uvaVe7UEfWRXJu1r/+aduxeBkrUpGyFdRvkay3PtoZuQw
+ +gN8PyoGtItTwTxdtBlxW3k3RVcrye65tpqLzKrLtaas4B/IgKo9FZJec8QMRvcWs0rpTjCtnqd
+ +lSJJtmJICxQEGctL4sUjixyQair9MIP9WDxMLDj5jzXAajNzCH8T9m3Oqyq/lITi2xja0Ur8ZW
+ lOGBnSoNgq9mhLIbwr6RQddPJcG6MnjfHk+oeWsoN+SJRH1iHqzw==
+X-Google-Smtp-Source: AGHT+IHd6zsejcK4AP53rLg0JcZIXBH9C3rw/530rwYwuYaFzZq9Czx853gMiDX/ZWWPLaI4e1/Uig==
+X-Received: by 2002:a05:6a00:4614:b0:7a2:7f45:5898 with SMTP id
+ d2e1a72fcca58-7acbf0ba05bmr521898b3a.3.1762195246459; 
+ Mon, 03 Nov 2025 10:40:46 -0800 (PST)
 Received: from fedora.. ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7acd634081dsm64255b3a.58.2025.11.03.10.40.39
+ d2e1a72fcca58-7acd634081dsm64255b3a.58.2025.11.03.10.40.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 10:40:42 -0800 (PST)
+ Mon, 03 Nov 2025 10:40:46 -0800 (PST)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 To: deller@gmx.de, mark.cave-ayland@ilande.co.uk,
  sarkarsoumyajyoti23@gmail.com, peter.maydell@linaro.org,
  zhaoguohan@kylinos.cn, qemu-devel@nongnu.org, stefanha@gmail.com
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH v4 1/2] hw/scsi/ncr53c710.c: Fixing null pointer dereference
- issue.
-Date: Tue,  4 Nov 2025 00:10:30 +0530
-Message-ID: <20251103184031.22118-2-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v4 2/2] hw/scsi/ncr53c710.c: Fixing Incorrect expression
+ (IDENTICAL_BRANCHES)
+Date: Tue,  4 Nov 2025 00:10:31 +0530
+Message-ID: <20251103184031.22118-3-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20251103184031.22118-1-soumyajyotisarkar23@gmail.com>
 References: <20251103184031.22118-1-soumyajyotisarkar23@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x441.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x443.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,41 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code dereferences s->current before checking if it is NULL. Moved the
-null check before the dereference to prevent potential crashes.
-
-This issue could occur if s->current is NULL when the function reaches
-the "Host adapter (re)connected" path, though this should not normally
-happen during correct operation.
-As suggested by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Improved upon by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-
-Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
-and GuoHan Zhao <zhaoguohan@kylinos.cn>
+The issue stems from Sync and Async if-else condition.
+The same code is executed when the condition "s->waiting != NCR710_WAIT_NONE" is true or false.
+Because the code in the if-then branch and after the if statement is identical
+So we can remove the unnecessary condition checking for Sync and Async
+cases.
+As reported by: Stefan Hajnoczi <stefanha@gmail.com>
 
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 ---
- hw/scsi/ncr53c710.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/scsi/ncr53c710.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index b3d4593b72..871f76c2a2 100644
+index 871f76c2a2..3de264fde9 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -835,12 +835,11 @@ void ncr710_transfer_data(SCSIRequest *req, uint32_t len)
-     }
- 
-     /* Host adapter (re)connected */
--    s->current->dma_len = len;
-     s->command_complete = NCR710_CMD_DATA_READY;
--
-     if (!s->current) {
-         return;
-     }
-+    s->current->dma_len = len;
- 
-     if (s->waiting) {
-         s->scntl1 |= NCR710_SCNTL1_CON;
+@@ -1366,11 +1366,6 @@ again:
+         case PHASE_DI:
+             s->waiting = NCR710_WAIT_DMA;
+             ncr710_do_dma(s, 0);
+-            if (s->waiting != NCR710_WAIT_NONE) {
+-                /* Async - stop and wait */
+-                break;
+-            }
+-            /* Sync - continue execution */
+             break;
+         case PHASE_CO:
+             ncr710_do_command(s);
 -- 
 2.49.0
 
