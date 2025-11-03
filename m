@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A42CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195ABCCFA04
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1mB-00019S-9O; Mon, 03 Nov 2025 16:07:43 -0500
+	id 1vG1m1-00017L-LH; Mon, 03 Nov 2025 16:07:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1m9-00018m-DG
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lw-00015T-VM
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1ln-0005S6-Ol
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lg-0005Qi-GG
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204034;
+ s=mimecast20190719; t=1762204030;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nEkjkfuvOhHIY1QnKh8dFMR2whXzjtCTaNgURMh8zm4=;
- b=cUeHMLPROBOxE1pQQ6xWyyW8fVcftPNoS81AVkO91uejXCVlLgWihaNMXW2Jmuv6LCVSu7
- J83NotJJrzGraARfh7irQ9jiXXuED0zJOqxsXQsFIAB3A5T0EXH3Z/dJduhfeIkfhY41Yb
- 6DnC58ahs5Ej8xcjsmiSqNqSlQQMXXE=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Q+uG4ao1eGrbOCPJUjKk7ZwyE5IKgltoWEzfBrxdGb8=;
+ b=FcVoakWsmC+X1LGZeXXoPwIBasKtNqAMa00g296C0gqj86jBwMblfZSBI2SusaOGERxiFS
+ UCv8E4qF0G2+LwkaaE7rbTaumbaYKtjM+0ZVppodxmbQLeIPrWN4lqYhm597eY03ba24fK
+ w09lmf2WbFPYP9HT68Q6lUsZEyXhWMQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-gzpa3W_pPQCj6yNMF0oShg-1; Mon, 03 Nov 2025 16:07:13 -0500
-X-MC-Unique: gzpa3W_pPQCj6yNMF0oShg-1
-X-Mimecast-MFC-AGG-ID: gzpa3W_pPQCj6yNMF0oShg_1762204033
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8a65ae81245so1487614085a.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:13 -0800 (PST)
+ us-mta-116-RRIxX-4nOeOXE_RufBQYhg-1; Mon, 03 Nov 2025 16:07:09 -0500
+X-MC-Unique: RRIxX-4nOeOXE_RufBQYhg-1
+X-Mimecast-MFC-AGG-ID: RRIxX-4nOeOXE_RufBQYhg_1762204029
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8a9b1fa8092so1332915785a.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204033; x=1762808833; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762204028; x=1762808828; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nEkjkfuvOhHIY1QnKh8dFMR2whXzjtCTaNgURMh8zm4=;
- b=hxfr4g9BxQ4BpageouL05dT/KKVVKzemOb0q4PzHIhfM78iJoJJXQMnNPHuXZPbgPR
- yOXqTU0rzEqOc4ENcgpZAmt/DGqfFFjy0kpzsRuznIA+i+damZAkeDRnJuk3/M0+ITHA
- lSCrrYzRFTlnIJJ21CoEVmhVSBrGVIQf7gZhlvv9qEjRxOIWJp1G3nS0/Qb7524wCTuk
- ew02Q6JxKnxhPJ3EdZYywgMQ3nJ137QQIn2ndJWx+OgnkxR5uL2JhTQHms0GW4JIRwmx
- 7xWNynrOVcBYTci5SpVUSRr3dtFIclAGaIJ/tZ8VzzR5kAYA35dvnkGqwM8M7ZQhz/Qw
- 7pLg==
+ bh=Q+uG4ao1eGrbOCPJUjKk7ZwyE5IKgltoWEzfBrxdGb8=;
+ b=RQgBbq+VfwFWFOOCk0DK8blZmbNvf3Kb38urYVL7b6Z5caJlJvWHX8M7zHHx+SIRtb
+ ovaBiia0HeTF906B+ELxxPohKo44FSXw4dzCY4HN2x6oocsejjqwGoTYe9pOlZhRXJ/U
+ CnbRV4j6QbyP7/s0SJN/A/MAsT3Zp/U8cudP1WVmrTs+Q+clDmw0kcvu+PkGFe7Lym0f
+ XDbXQjZjpcRb1LhS2A2NvsqqzEFBekDw3Zf52IG8m2t/MruPG0Dyy5g31BgouMP/UWe2
+ lFEwVPzlbTJ1R5LjKsVeEEOqLD28S4JtbTtPWvW3TzOfw1UrzOscOXqLARM/pqKTqN0i
+ Vr5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204033; x=1762808833;
+ d=1e100.net; s=20230601; t=1762204028; x=1762808828;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nEkjkfuvOhHIY1QnKh8dFMR2whXzjtCTaNgURMh8zm4=;
- b=IthILar+7K6w/reb+ruBQBi+8MrCcssXgSCE6RQzd6YzshTUXq8a9IozmH7LCDqXp3
- 1kOYj9OtyEs2B+mpI++TDqR5g6vl6kF05++eAOf1v5ZHIIjSsZv+EA3l/6J5UYmWZq83
- dp4W23lTU/80xTrIGCA9ruiebZwHlu+SKpMOUSgG3+Wb39wPpz0hzAksIE9PJUqgN2gy
- ONqhhPP+Ab3h0S99nk+RcC+M2Z5njaieptaWRbLV8kcR5rKeJSDCP+mJWZBNTBQ+AfCH
- 75PHpyVM8TodLspEOYwAKKOLk10lLOOmjOq1EufxiZEIoUKuRKB7Mngf/WBxQmQjoWvm
- 1p7g==
-X-Gm-Message-State: AOJu0Yz+8wyl9UEPjL/3PPeN57OX4QHxsxaCr0JE6xqJ0kVDSj665t6L
- KgtPwsZkBSItmwCC9mZTc0B8WvhYQ7B/Jag1q/Xc5UrL3KlylQVDzuuUTXo1+TzECPxS4/XhonE
- HEg2SvLw/pOJimz9apmYWcj4VloOyoNMaa5GOtMHs8x/Buydhlnbj9b4OUe4IVVFO4laXcUne4I
- E8SXtti8Xxq8ktWZFdH3GcLXM/kIPkn4m0hM8mOw==
-X-Gm-Gg: ASbGncs0Q+T4fUo2AZUpe8S3QggvMVOo+n2JpcXCC52cdbB7cyjR0p1f8a9gtfYe1Zh
- iF7vSHSOCv8nQxmexjefD2SJSjRUMTZzlV3qjy0FBr9WGPtZB2yDE6TRLZAx/wOO8WDB3GgeoEV
- 3xFEKkBKlWrj4jPXIBWf2LZdFMUnVx7fvdTeQWhiUQPJEJFhtkbgUIwCb5j5hFKk6C7tv4Hi3x0
- 6axO8OmtnmUM00Zzamm9iDhwjVGLcj7Dvd7QzA/SlPPLDonfzyBHNoJxs/sHR5VzZI/nx4IpkXL
- mFyO9oHsUrandxyd+fVDJT9Qzz9f09UX8MOdo7y8HGuer7Y+/dRZR+mTzKuOdR+v
-X-Received: by 2002:a05:620a:1a2a:b0:859:a927:e7cf with SMTP id
- af79cd13be357-8ab9997878bmr1772546385a.36.1762204032448; 
- Mon, 03 Nov 2025 13:07:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHPey1l+9g+rqRZhiy3qOL5teAswN82GBYBgdZAmKL2hr3wg7l1gvtCo503RchLhZpHnkSbLg==
-X-Received: by 2002:a05:620a:1a2a:b0:859:a927:e7cf with SMTP id
- af79cd13be357-8ab9997878bmr1772538185a.36.1762204031663; 
- Mon, 03 Nov 2025 13:07:11 -0800 (PST)
+ bh=Q+uG4ao1eGrbOCPJUjKk7ZwyE5IKgltoWEzfBrxdGb8=;
+ b=Pc0cnUazrFJcNOwLVDx3nm4IMSYvz3NX4IH+PSUwHnpujKl/fPyMS+4259ycD+j68W
+ YJE/q624s/rSzem/rNZA0XNRP3lOay8gSR38wQXLrL5r71T2wKCtPyIQR+gOQyaSVmQl
+ UGMheK1wB3WulibFQRZaFR/T6XcfN2l9ABnpxMslYzBzSkzurZlfCLbgP5G/WJCP0qfB
+ GEFeK5Y8FztVcYkH2scnL2MOSAvYznXOBurQNWuQ52csdNl4obIdXlzTuqbFlnK4BWiX
+ O0QnzYyAjCBFAjXx1GfAKceg2jXustHSuhbXgwMHVbo7XQIri9Qfi3+C9Z1/f2mGp/Ax
+ ozmw==
+X-Gm-Message-State: AOJu0YwJVzslp0SLZ4r8fPGgD3zGjTtjgJqv9bHeB4kA1mKgxMs/wGIJ
+ tk/TlArtOdgPC31J5g7DnZfqfpFmrxnxz+Qs54BUGCFgt6ldIKp0YekWsJDI+6iqhB73au+oa+1
+ x0q2vHH2ls76cWWyHZOdeccStHZ1NB9v4sxz6YRXWga+fdnL9eyOiv/iLUIXTYLxn8MK9RnYK7p
+ VVqEGC799XS3vTu9y8zzQkseRsdbL92DT0dCyQFg==
+X-Gm-Gg: ASbGnct+uaIYD/6Ai/mvBl2/YAuMXaGdq2cT9Fo4ksrDIsOXJD+3P1y7gO/zwuOIlUN
+ IlAf9hO5Qj15BovZUUkDri+OKWhBl0bqB6a5VuteSIlvivpMk27d3tjhX3BHfyUCnmvThzsvLgt
+ o13ZIElBWLk274oRRjkuQe6jH8HDdGCsGoyf0NoSq9JfJyHKm5LBeqKZZijfjmD9+o32vAOyl7t
+ 1QA7tdR2wEiwWCcVjDpMRrhJSE/FF6VyeW54aJrpcQcZhgIHpNm+/rXDZSjwGD0BqNFwXQWzcFD
+ u925qxTB0N0pLw6z/Luvp2KLOH86umfXekhFI/ECw3MmGvgmfXiS/pw9gGrtZG/u
+X-Received: by 2002:a05:620a:4445:b0:84f:110c:b6e8 with SMTP id
+ af79cd13be357-8ab9b3acc1dmr1675278685a.68.1762204028243; 
+ Mon, 03 Nov 2025 13:07:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlh6Wgw0MmE1vbQPt3vCdVXWfaLuaOuGuj3JOHizMJKFIWHGR0aGjC5kWzOFCtxVLJGcvb3A==
+X-Received: by 2002:a05:620a:4445:b0:84f:110c:b6e8 with SMTP id
+ af79cd13be357-8ab9b3acc1dmr1675272585a.68.1762204027635; 
+ Mon, 03 Nov 2025 13:07:07 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.07.10
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.07.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:07:10 -0800 (PST)
+ Mon, 03 Nov 2025 13:07:07 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 31/36] migration: Move postcopy_ram_listen_thread() to
- postcopy-ram.c
-Date: Mon,  3 Nov 2025 16:06:20 -0500
-Message-ID: <20251103210625.3689448-32-peterx@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>, Peixiu Hou <phou@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 28/36] system/physmem: mark io_mem_unassigned lockless
+Date: Mon,  3 Nov 2025 16:06:17 -0500
+Message-ID: <20251103210625.3689448-29-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,7 +106,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,263 +123,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-This patch addresses a TODO about moving postcopy_ram_listen_thread() to
-postcopy file.
+When the Bus Master bit is disabled in a PCI device's Command Register,
+the device's DMA address space becomes unassigned memory (i.e. the
+io_mem_unassigned MemoryRegion).
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20251103183301.3840862-4-jmarcin@redhat.com
+This can lead to deadlocks with IOThreads since io_mem_unassigned
+accesses attempt to acquire the Big QEMU Lock (BQL). For example,
+virtio-pci devices deadlock in virtio_write_config() ->
+virtio_pci_stop_ioeventfd() when waiting for the IOThread while holding
+the BQL. The IOThread is unable to acquire the BQL but the vcpu thread
+won't release the BQL while waiting for the IOThread.
+
+io_mem_unassigned is trivially thread-safe since it has no state, it
+simply rejects all load/store accesses. Therefore it is safe to enable
+lockless I/O on io_mem_unassigned to eliminate this deadlock.
+
+Here is the backtrace described above:
+
+  Thread 9 (Thread 0x7fccfcdff6c0 (LWP 247832) "CPU 4/KVM"):
+  #0  0x00007fcd11529d46 in ppoll () from target:/lib64/libc.so.6
+  #1  0x000056468a1a9bad in ppoll (__fds=<optimized out>, __nfds=<optimized out>, __timeout=0x0, __ss=0x0) at /usr/include/bits/poll2.h:88
+  #2  0x000056468a18f9d9 in fdmon_poll_wait (ctx=0x5646c6a1dc30, ready_list=0x7fccfcdfb310, timeout=-1) at ../util/fdmon-poll.c:79
+  #3  0x000056468a18f14f in aio_poll (ctx=<optimized out>, blocking=blocking@entry=true) at ../util/aio-posix.c:730
+  #4  0x000056468a1ad842 in aio_wait_bh_oneshot (ctx=<optimized out>, cb=cb@entry=0x564689faa420 <virtio_blk_ioeventfd_stop_vq_bh>, opaque=<optimized out>) at ../util/aio-wait.c:85
+  #5  0x0000564689faaa89 in virtio_blk_stop_ioeventfd (vdev=0x5646c8fd7e90) at ../hw/block/virtio-blk.c:1644
+  #6  0x0000564689d77880 in virtio_bus_stop_ioeventfd (bus=bus@entry=0x5646c8fd7e08) at ../hw/virtio/virtio-bus.c:264
+  #7  0x0000564689d780db in virtio_bus_stop_ioeventfd (bus=bus@entry=0x5646c8fd7e08) at ../hw/virtio/virtio-bus.c:256
+  #8  0x0000564689d7d98a in virtio_pci_stop_ioeventfd (proxy=0x5646c8fcf8e0) at ../hw/virtio/virtio-pci.c:413
+  #9  virtio_write_config (pci_dev=0x5646c8fcf8e0, address=4, val=<optimized out>, len=<optimized out>) at ../hw/virtio/virtio-pci.c:803
+  #10 0x0000564689dcb45a in memory_region_write_accessor (mr=mr@entry=0x5646c6dc2d30, addr=3145732, value=value@entry=0x7fccfcdfb528, size=size@entry=2, shift=<optimized out>, mask=mask@entry=65535, attrs=...) at ../system/memory.c:491
+  #11 0x0000564689dcaeb0 in access_with_adjusted_size (addr=addr@entry=3145732, value=value@entry=0x7fccfcdfb528, size=size@entry=2, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x564689dcb3f0 <memory_region_write_accessor>, mr=0x5646c6dc2d30, attrs=...) at ../system/memory.c:567
+  #12 0x0000564689dcb156 in memory_region_dispatch_write (mr=mr@entry=0x5646c6dc2d30, addr=addr@entry=3145732, data=<optimized out>, op=<optimized out>, attrs=attrs@entry=...) at ../system/memory.c:1554
+  #13 0x0000564689dd389a in flatview_write_continue_step (attrs=..., attrs@entry=..., buf=buf@entry=0x7fcd05b87028 "", mr_addr=3145732, l=l@entry=0x7fccfcdfb5f0, mr=0x5646c6dc2d30, len=2) at ../system/physmem.c:3266
+  #14 0x0000564689dd3adb in flatview_write_continue (fv=0x7fcadc0d8930, addr=3761242116, attrs=..., ptr=0xe0300004, len=2, mr_addr=<optimized out>, l=<optimized out>, mr=<optimized out>) at ../system/physmem.c:3296
+  #15 flatview_write (fv=0x7fcadc0d8930, addr=addr@entry=3761242116, attrs=attrs@entry=..., buf=buf@entry=0x7fcd05b87028, len=len@entry=2) at ../system/physmem.c:3327
+  #16 0x0000564689dd7191 in address_space_write (as=0x56468b433600 <address_space_memory>, addr=3761242116, attrs=..., buf=0x7fcd05b87028, len=2) at ../system/physmem.c:3447
+  #17 address_space_rw (as=0x56468b433600 <address_space_memory>, addr=3761242116, attrs=attrs@entry=..., buf=buf@entry=0x7fcd05b87028, len=2, is_write=<optimized out>) at ../system/physmem.c:3457
+  #18 0x0000564689ff1ef6 in kvm_cpu_exec (cpu=cpu@entry=0x5646c6dab810) at ../accel/kvm/kvm-all.c:3248
+  #19 0x0000564689ff32f5 in kvm_vcpu_thread_fn (arg=arg@entry=0x5646c6dab810) at ../accel/kvm/kvm-accel-ops.c:53
+  #20 0x000056468a19225c in qemu_thread_start (args=0x5646c6db6190) at ../util/qemu-thread-posix.c:393
+  #21 0x00007fcd114c5b68 in start_thread () from target:/lib64/libc.so.6
+  #22 0x00007fcd115364e4 in clone () from target:/lib64/libc.so.6
+
+  Thread 3 (Thread 0x7fcd0503a6c0 (LWP 247825) "IO iothread1"):
+  #0  0x00007fcd114c2d30 in __lll_lock_wait () from target:/lib64/libc.so.6
+  #1  0x00007fcd114c8fe2 in pthread_mutex_lock@@GLIBC_2.2.5 () from target:/lib64/libc.so.6
+  #2  0x000056468a192538 in qemu_mutex_lock_impl (mutex=0x56468b432e60 <bql>, file=0x56468a1e26a5 "../system/physmem.c", line=3198) at ../util/qemu-thread-posix.c:94
+  #3  0x0000564689dc12e2 in bql_lock_impl (file=file@entry=0x56468a1e26a5 "../system/physmem.c", line=line@entry=3198) at ../system/cpus.c:566
+  #4  0x0000564689ddc151 in prepare_mmio_access (mr=0x56468b433800 <io_mem_unassigned>) at ../system/physmem.c:3198
+  #5  address_space_lduw_internal_cached_slow (cache=<optimized out>, addr=2, attrs=..., result=0x0, endian=DEVICE_LITTLE_ENDIAN) at ../system/memory_ldst.c.inc:211
+  #6  address_space_lduw_le_cached_slow (cache=<optimized out>, addr=addr@entry=2, attrs=attrs@entry=..., result=result@entry=0x0) at ../system/memory_ldst.c.inc:253
+  #7  0x0000564689fd692c in address_space_lduw_le_cached (result=0x0, cache=<optimized out>, addr=2, attrs=...) at /var/tmp/qemu/include/exec/memory_ldst_cached.h.inc:35
+  #8  lduw_le_phys_cached (cache=<optimized out>, addr=2) at /var/tmp/qemu/include/exec/memory_ldst_phys.h.inc:66
+  #9  virtio_lduw_phys_cached (vdev=<optimized out>, cache=<optimized out>, pa=2) at /var/tmp/qemu/include/hw/virtio/virtio-access.h:166
+  #10 vring_avail_idx (vq=0x5646c8fe2470) at ../hw/virtio/virtio.c:396
+  #11 virtio_queue_split_set_notification (vq=0x5646c8fe2470, enable=0) at ../hw/virtio/virtio.c:534
+  #12 virtio_queue_set_notification (vq=0x5646c8fe2470, enable=0) at ../hw/virtio/virtio.c:595
+  #13 0x000056468a18e7a8 in poll_set_started (ctx=ctx@entry=0x5646c6c74e30, ready_list=ready_list@entry=0x7fcd050366a0, started=started@entry=true) at ../util/aio-posix.c:247
+  #14 0x000056468a18f2bb in poll_set_started (ctx=0x5646c6c74e30, ready_list=0x7fcd050366a0, started=true) at ../util/aio-posix.c:226
+  #15 try_poll_mode (ctx=0x5646c6c74e30, ready_list=0x7fcd050366a0, timeout=<synthetic pointer>) at ../util/aio-posix.c:612
+  #16 aio_poll (ctx=0x5646c6c74e30, blocking=blocking@entry=true) at ../util/aio-posix.c:689
+  #17 0x000056468a032c26 in iothread_run (opaque=opaque@entry=0x5646c69f3380) at ../iothread.c:63
+  #18 0x000056468a19225c in qemu_thread_start (args=0x5646c6c75410) at ../util/qemu-thread-posix.c:393
+  #19 0x00007fcd114c5b68 in start_thread () from target:/lib64/libc.so.6
+  #20 0x00007fcd115364e4 in clone () from target:/lib64/libc.so.6
+
+Buglink: https://issues.redhat.com/browse/RHEL-71933
+Reported-by: Peixiu Hou <phou@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20251029185224.420261-1-stefanha@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/postcopy-ram.h |   2 +
- migration/postcopy-ram.c | 105 ++++++++++++++++++++++++++++++++++++++
- migration/savevm.c       | 107 ---------------------------------------
- 3 files changed, 107 insertions(+), 107 deletions(-)
+ system/physmem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index ca19433b24..3e26db3e6b 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -199,4 +199,6 @@ bool postcopy_is_paused(MigrationStatus status);
- void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-                                    RAMBlock *rb);
- 
-+void *postcopy_ram_listen_thread(void *opaque);
+diff --git a/system/physmem.c b/system/physmem.c
+index a7e2a5d07f..c9869e4049 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3011,6 +3011,9 @@ static void io_mem_init(void)
+ {
+     memory_region_init_io(&io_mem_unassigned, NULL, &unassigned_mem_ops, NULL,
+                           NULL, UINT64_MAX);
 +
- #endif
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5471efb4f0..880b11f154 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -2077,3 +2077,108 @@ bool postcopy_is_paused(MigrationStatus status)
-     return status == MIGRATION_STATUS_POSTCOPY_PAUSED ||
-         status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
- }
-+
-+/*
-+ * Triggered by a postcopy_listen command; this thread takes over reading
-+ * the input stream, leaving the main thread free to carry on loading the rest
-+ * of the device state (from RAM).
-+ */
-+void *postcopy_ram_listen_thread(void *opaque)
-+{
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    QEMUFile *f = mis->from_src_file;
-+    int load_res;
-+    MigrationState *migr = migrate_get_current();
-+    Error *local_err = NULL;
-+
-+    object_ref(OBJECT(migr));
-+
-+    migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-+                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
-+    qemu_event_set(&mis->thread_sync_event);
-+    trace_postcopy_ram_listen_thread_start();
-+
-+    rcu_register_thread();
-+    /*
-+     * Because we're a thread and not a coroutine we can't yield
-+     * in qemu_file, and thus we must be blocking now.
-+     */
-+    qemu_file_set_blocking(f, true, &error_fatal);
-+
-+    /* TODO: sanity check that only postcopiable data will be loaded here */
-+    load_res = qemu_loadvm_state_main(f, mis, &local_err);
-+
-+    /*
-+     * This is tricky, but, mis->from_src_file can change after it
-+     * returns, when postcopy recovery happened. In the future, we may
-+     * want a wrapper for the QEMUFile handle.
-+     */
-+    f = mis->from_src_file;
-+
-+    /* And non-blocking again so we don't block in any cleanup */
-+    qemu_file_set_blocking(f, false, &error_fatal);
-+
-+    trace_postcopy_ram_listen_thread_exit();
-+    if (load_res < 0) {
-+        qemu_file_set_error(f, load_res);
-+        dirty_bitmap_mig_cancel_incoming();
-+        if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
-+            !migrate_postcopy_ram() && migrate_dirty_bitmaps())
-+        {
-+            error_report("%s: loadvm failed during postcopy: %d: %s. All states "
-+                         "are migrated except dirty bitmaps. Some dirty "
-+                         "bitmaps may be lost, and present migrated dirty "
-+                         "bitmaps are correctly migrated and valid.",
-+                         __func__, load_res, error_get_pretty(local_err));
-+            g_clear_pointer(&local_err, error_free);
-+            load_res = 0; /* prevent further exit() */
-+        } else {
-+            error_prepend(&local_err,
-+                          "loadvm failed during postcopy: %d: ", load_res);
-+            migrate_set_error(migr, local_err);
-+            g_clear_pointer(&local_err, error_report_err);
-+            migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-+                                           MIGRATION_STATUS_FAILED);
-+        }
-+    }
-+    if (load_res >= 0) {
-+        /*
-+         * This looks good, but it's possible that the device loading in the
-+         * main thread hasn't finished yet, and so we might not be in 'RUN'
-+         * state yet; wait for the end of the main thread.
-+         */
-+        qemu_event_wait(&mis->main_thread_load_event);
-+    }
-+    postcopy_ram_incoming_cleanup(mis);
-+
-+    if (load_res < 0) {
-+        /*
-+         * If something went wrong then we have a bad state so exit;
-+         * depending how far we got it might be possible at this point
-+         * to leave the guest running and fire MCEs for pages that never
-+         * arrived as a desperate recovery step.
-+         */
-+        rcu_unregister_thread();
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-+                                   MIGRATION_STATUS_COMPLETED);
-+    /*
-+     * If everything has worked fine, then the main thread has waited
-+     * for us to start, and we're the last use of the mis.
-+     * (If something broke then qemu will have to exit anyway since it's
-+     * got a bad migration state).
-+     */
-+    bql_lock();
-+    migration_incoming_state_destroy();
-+    bql_unlock();
-+
-+    rcu_unregister_thread();
-+    mis->have_listen_thread = false;
-+    postcopy_state_set(POSTCOPY_INCOMING_END);
-+
-+    object_unref(OBJECT(migr));
-+
-+    return NULL;
-+}
-diff --git a/migration/savevm.c b/migration/savevm.c
-index fa017378db..2f7ed0db64 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2088,113 +2088,6 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
-     return 0;
++    /* Trivially thread-safe since memory accesses are rejected */
++    memory_region_enable_lockless_io(&io_mem_unassigned);
  }
  
--/*
-- * Triggered by a postcopy_listen command; this thread takes over reading
-- * the input stream, leaving the main thread free to carry on loading the rest
-- * of the device state (from RAM).
-- * (TODO:This could do with being in a postcopy file - but there again it's
-- * just another input loop, not that postcopy specific)
-- */
--static void *postcopy_ram_listen_thread(void *opaque)
--{
--    MigrationIncomingState *mis = migration_incoming_get_current();
--    QEMUFile *f = mis->from_src_file;
--    int load_res;
--    MigrationState *migr = migrate_get_current();
--    Error *local_err = NULL;
--
--    object_ref(OBJECT(migr));
--
--    migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
--                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
--    qemu_event_set(&mis->thread_sync_event);
--    trace_postcopy_ram_listen_thread_start();
--
--    rcu_register_thread();
--    /*
--     * Because we're a thread and not a coroutine we can't yield
--     * in qemu_file, and thus we must be blocking now.
--     */
--    qemu_file_set_blocking(f, true, &error_fatal);
--
--    /* TODO: sanity check that only postcopiable data will be loaded here */
--    load_res = qemu_loadvm_state_main(f, mis, &local_err);
--
--    /*
--     * This is tricky, but, mis->from_src_file can change after it
--     * returns, when postcopy recovery happened. In the future, we may
--     * want a wrapper for the QEMUFile handle.
--     */
--    f = mis->from_src_file;
--
--    /* And non-blocking again so we don't block in any cleanup */
--    qemu_file_set_blocking(f, false, &error_fatal);
--
--    trace_postcopy_ram_listen_thread_exit();
--    if (load_res < 0) {
--        qemu_file_set_error(f, load_res);
--        dirty_bitmap_mig_cancel_incoming();
--        if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
--            !migrate_postcopy_ram() && migrate_dirty_bitmaps())
--        {
--            error_report("%s: loadvm failed during postcopy: %d: %s. All states "
--                         "are migrated except dirty bitmaps. Some dirty "
--                         "bitmaps may be lost, and present migrated dirty "
--                         "bitmaps are correctly migrated and valid.",
--                         __func__, load_res, error_get_pretty(local_err));
--            g_clear_pointer(&local_err, error_free);
--            load_res = 0; /* prevent further exit() */
--        } else {
--            error_prepend(&local_err,
--                          "loadvm failed during postcopy: %d: ", load_res);
--            migrate_set_error(migr, local_err);
--            g_clear_pointer(&local_err, error_report_err);
--            migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
--                                           MIGRATION_STATUS_FAILED);
--        }
--    }
--    if (load_res >= 0) {
--        /*
--         * This looks good, but it's possible that the device loading in the
--         * main thread hasn't finished yet, and so we might not be in 'RUN'
--         * state yet; wait for the end of the main thread.
--         */
--        qemu_event_wait(&mis->main_thread_load_event);
--    }
--    postcopy_ram_incoming_cleanup(mis);
--
--    if (load_res < 0) {
--        /*
--         * If something went wrong then we have a bad state so exit;
--         * depending how far we got it might be possible at this point
--         * to leave the guest running and fire MCEs for pages that never
--         * arrived as a desperate recovery step.
--         */
--        rcu_unregister_thread();
--        exit(EXIT_FAILURE);
--    }
--
--    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
--                                   MIGRATION_STATUS_COMPLETED);
--    /*
--     * If everything has worked fine, then the main thread has waited
--     * for us to start, and we're the last use of the mis.
--     * (If something broke then qemu will have to exit anyway since it's
--     * got a bad migration state).
--     */
--    bql_lock();
--    migration_incoming_state_destroy();
--    bql_unlock();
--
--    rcu_unregister_thread();
--    mis->have_listen_thread = false;
--    postcopy_state_set(POSTCOPY_INCOMING_END);
--
--    object_unref(OBJECT(migr));
--
--    return NULL;
--}
--
- /* After this message we must be able to immediately receive postcopy data */
- static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis,
-                                          Error **errp)
+ AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv)
 -- 
 2.50.1
 
