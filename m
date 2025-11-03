@@ -4,118 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D664FCCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8590CCFA04
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFr9x-0002N6-ET; Mon, 03 Nov 2025 04:47:33 -0500
+	id 1vFrEk-0004FD-BA; Mon, 03 Nov 2025 04:52:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vFr9u-0002MP-CC; Mon, 03 Nov 2025 04:47:30 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vFrEj-0004F2-4I
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:52:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vFr9n-0006Xy-1i; Mon, 03 Nov 2025 04:47:30 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5A33P4xx029163;
- Mon, 3 Nov 2025 09:47:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bPDfMg
- sWdqATbCjh6IV3uuTcpC+yd+RCZN3XxC1vgt0=; b=QA5N3dJY3ZlKA+7ARe5I5N
- Y9mGGAHOwSroVniRA2li88HSpJVjKUI2uWGKW2qvPzPtqsfWxiSbyZ2txwWyoHBu
- FO+LJvCMP2vW6D/8qMYmp1tMuYZ+g1B4b+CjLZcTbyV/LgP5BjmTcOqn4NznCH57
- N0wvK8YPDDSLMYIth0IxuLry5v0QSDeb1IzxGHl+sjPCppnnn7bUYEDxuy6g9bUA
- KZRTV+8tBB1jUezWGA9AVfE2x3fIe2iDTlPVc9uBhLPOjyKwBRKKjMgJjbvTCLrJ
- uBix57nVJaxvizv60XOdk2h8YXB2XhSiasuQTbdgCk/XcPjBo0Ut/W9MgTiK4jOQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a59q8nxny-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Nov 2025 09:47:13 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5A39i00Y027162;
- Mon, 3 Nov 2025 09:47:13 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a59q8nxnu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Nov 2025 09:47:12 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A37Wcvs018667;
- Mon, 3 Nov 2025 09:47:11 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a5whn4xxh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Nov 2025 09:47:11 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5A39kwCJ30409244
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 3 Nov 2025 09:46:58 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 77C0D58058;
- Mon,  3 Nov 2025 09:47:11 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 950E458059;
- Mon,  3 Nov 2025 09:47:09 +0000 (GMT)
-Received: from [9.124.213.97] (unknown [9.124.213.97])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  3 Nov 2025 09:47:09 +0000 (GMT)
-Message-ID: <8ad81131-3e39-4bf3-bfa3-f8011c5bada6@linux.ibm.com>
-Date: Mon, 3 Nov 2025 15:17:08 +0530
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vFrEf-0007OR-Q9
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:52:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762163541;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VcAIOZZ3d5XNJNg3P8cQJlolVFcqvq0I8RonPpmyS4Y=;
+ b=G85SdFPj1ugJsQR7O99BNCvsUFC2cad+Q8BxaVYSnitWL982QVDzNMZuSf+7m/GR842DU3
+ RQpAYlH+cQ+8BKKHxKCiZFu5iYBbQc9LpBsRWgs4Px2Pm2QqHWCbSupBxXL0TCP0SRE2/I
+ CPU0c3Bc2WOwHrDDd7RG59CVqOnE6BM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-526-UEqGaw64OyG-tBeRuNojfw-1; Mon, 03 Nov 2025 04:52:20 -0500
+X-MC-Unique: UEqGaw64OyG-tBeRuNojfw-1
+X-Mimecast-MFC-AGG-ID: UEqGaw64OyG-tBeRuNojfw_1762163539
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47113dfdd20so18098475e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 01:52:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762163539; x=1762768339; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VcAIOZZ3d5XNJNg3P8cQJlolVFcqvq0I8RonPpmyS4Y=;
+ b=RpigcgH4M+EE8EOml7DEvOXCEtqd7dmddQctrum8ghORn0fyZoJLmpHZQuP3+/qbEr
+ iFv6gyqrMvnQ8PSRAeZ4ChbuSrT1Q7kXD7EJPciToC9d+4/WnLUcskLrr+A1uRXMWlvg
+ hmf9UMb69EGM9536yMp4nzyU5hvP9xJH4nDiRrXGoX3Yn7M3Lh8vU4Tia+aqu5xDMq+w
+ hjOko9dtss3wKeDQgsetgmfQIM2WHE2v9g/pqnHF+N6dk0jWU3DpyBzP7Pzpv0p0gXGr
+ k0JCOmb6IxnQ5TzRB5vTSaNXZQKtOEM0iabG38G3ujwhkOu5biixhzs51yUi07d/8jm0
+ E0VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762163539; x=1762768339;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VcAIOZZ3d5XNJNg3P8cQJlolVFcqvq0I8RonPpmyS4Y=;
+ b=t0CGroVLlzENsuRKTzHm9klEGA+k8x7lqr/GrR0S3r07BdjwQPa/QsNaI+wNvuYbha
+ 4GoCdQQjq7JAj/0Yp4qgAdqYIyHsDgpKjQyGe2t/wgTjv75ylM9VEzR84KjgCMzoOjFU
+ j07g46AigkWLbcWZ3/tAu0T02hQi90Y4UJvLKfoXt/QI0qEH3agOP+VpFNzDo8uDfKbR
+ ftxoajI1GkfzK9q3JC+EEoqLnxK0twANPT/0wWSBnTRjVdBH3liM5iMfLGJ6RXOvnVjI
+ //xl1DlXwdpYWvQ0LCkoErBOlDR000Q+2Tt7eVf2z8C/0xelWx3QnFRLCNDGWTC7mYug
+ KUsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdTgA/E2VYj08Ze2pAbQOxGt/hOfEiXVtGwBYSPpE/cYQg+/2yg9SOlZmjt55Wwulk7rebM5VWJI1S@nongnu.org
+X-Gm-Message-State: AOJu0Yz6piF50UlD+/J1bYiIWN7sO6DAL+DzNKCbs2vzOuA/87z9kGeu
+ 9b7nHAlkQYf7mSw76IUqeUHPPOwHrmXyKcbA5+iD1+0E+OArYXdW5ZEgjTb2QcFj+LaPocsPn33
+ sasBOiS/ByP89ITbP5gVeBOBdrz/Pe9y1mP9jjHOFu79eE19drL18yQUy
+X-Gm-Gg: ASbGncvAQTRnPGes6yYwSXTug2+bfEIQTLaf7wm4eqLJbNynWICKDh2w1e3pi3GKNXX
+ TbsbR0w9y/zv7gw6r/Ah8XzpUUNqU8tUyu2Mpgo6oRiVbjtY6PC8PhgBnykzXMynP7LlA93YM1T
+ n3wpWud+c8XHbm44iDIKfx9Go4XouJ/ngxUN2ZXn2l4Lw6hjrE7aNe8HvGHXsDOe80AMrGUEAvs
+ d+IcBvIpAYS0gn2WGcS7T/zFlAQXQMMZ96kEBtNX69mBbLBIHaeVkrmY2218O8qrNnmylCMm3ze
+ QX2Ra8kn0t57tbh0xV7NowvbBVOeI4pgroyQcMlyezJp6gbKEDCvz3E2EXqdwgI9tA==
+X-Received: by 2002:a05:600d:8314:b0:477:4345:7c59 with SMTP id
+ 5b1f17b1804b1-47743458444mr34153175e9.40.1762163538866; 
+ Mon, 03 Nov 2025 01:52:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEHrpKvuEcpdjJgG2drC9CG2GulQfK0IBVYPY0JGIQAUg5kL10oY2PxuO7fAavRV3IeUgPX/g==
+X-Received: by 2002:a05:600d:8314:b0:477:4345:7c59 with SMTP id
+ 5b1f17b1804b1-47743458444mr34152935e9.40.1762163538430; 
+ Mon, 03 Nov 2025 01:52:18 -0800 (PST)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4773c374f84sm144441465e9.0.2025.11.03.01.52.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Nov 2025 01:52:18 -0800 (PST)
+Date: Mon, 3 Nov 2025 10:52:16 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, mchehab+huawei@kernel.org,
+ Jonathan.Cameron@huawei.com, shan.gavin@gmail.com
+Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
+ CPERs injection
+Message-ID: <20251103105216.1f4241d7@fedora>
+In-Reply-To: <88a41137-d5fb-4b61-a3f2-dd73133c17ec@redhat.com>
+References: <20251007060810.258536-1-gshan@redhat.com>
+ <20251007060810.258536-4-gshan@redhat.com>
+ <20251017162746.2a99015b@fedora>
+ <a635de53-71fa-4edb-87c0-8775722c284d@redhat.com>
+ <20251031145539.3551b0a5@fedora>
+ <88a41137-d5fb-4b61-a3f2-dd73133c17ec@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc/pegasos: Fix memory leak
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
-References: <20251101165236.76E8B5972E3@zero.eik.bme.hu>
- <078c2da0-ac1e-4f07-a777-d8615a4456bd@linux.ibm.com>
- <CAFEAcA-4bJaJyOYdTeBsb0KdKRj6q-ABGRzT2rQk1psNakkfLw@mail.gmail.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <CAFEAcA-4bJaJyOYdTeBsb0KdKRj6q-ABGRzT2rQk1psNakkfLw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=StmdKfO0 c=1 sm=1 tr=0 ts=69087a21 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
- a=s0EiKFZlAbcSFnNId94A:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
- a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-ORIG-GUID: iL0epHTEJQ-Ob6AiWzjmJyrLaob8sDx5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAxMDAxOCBTYWx0ZWRfXwYKCLmJYWOhM
- c3xJ4w9cfnHO+0TjmZ5A2dQMy4KeEIGaItqiEQ6loi8vShasNfr1J/ue9frpNhMKN0AKkuOiaYq
- 5fZn1eHTIE6LcEwA/90SuR2tgM+1bp3gEtY+OzNPF6Cj5V6PJ8OWVX2Q4SdiYIITHgxr3fc5n2J
- yMgpdtpDj0Sx46Gw9uChS3QnYjuTg9ukKcHHjN+b7/alzs16AOvumvyyiYHeAJF5E88bh160bWi
- 7P1RvKyhZx3U7pIQAW8hzVNjYfLAJ9oHQ8LXlC0kh/aYq95pSRnKcAan7L5Eeg6JhqN4eDNf6Et
- m6wODDlgtzVJCNFZ9cZ8hGmCW1aqWOHJKjXe36bEDqGFY9tL+BAKB4jopLc1wgjrlM/J3Vp2afA
- fTdRmdm6IRZ59WQXfKxi+Mqb4cK/9g==
-X-Proofpoint-GUID: 9i6tZ8_qdzV1TbosSVuKxh54OkzLRSNt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-02_02,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 phishscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511010018
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,32 +130,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 3 Nov 2025 09:02:54 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-
-On 11/3/25 15:09, Peter Maydell wrote:
-> On Mon, 3 Nov 2025 at 02:21, Harsh Prateek Bora <harshpb@linux.ibm.com> wrote:
->>
->> Hi Balaton,
->>
->> Thanks for taking care of this ...
->>
->> On 11/1/25 22:22, BALATON Zoltan wrote:
->>> Commit 9099b430a4 introduced an early return that caused a leak of a
->>> GString. Allocate it later to avoid the leak.
->>>
->>
->> I think we also want to mention:
->>
->> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> On 10/31/25 11:55 PM, Igor Mammedov wrote:
+> > On Sun, 19 Oct 2025 10:36:16 +1000
+> > Gavin Shan <gshan@redhat.com> wrote:  
+> >> On 10/18/25 12:27 AM, Igor Mammedov wrote:  
+> >>> On Tue,  7 Oct 2025 16:08:10 +1000
+> >>> Gavin Shan <gshan@redhat.com> wrote:
+> >>>      
+> >>>> In the combination of 64KB host and 4KB guest, a problematic host page
+> >>>> affects 16x guest pages. In this specific case, it's reasonable to
+> >>>> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
+> >>>> dump due to the current error can't be delivered as the previous error
+> >>>> isn't acknoledges. It's caused by the nature the host page can be
+> >>>> accessed in parallel due to the mismatched host and guest page sizes.  
+> >>>
+> >>> can you explain a bit more what goes wrong?
+> >>>
+> >>> I'm especially interested in parallel access you've mentioned
+> >>> and why batch adding error records is needed
+> >>> as opposed to adding records every time invalid access happens?
+> >>>
+> >>> PS:
+> >>> Assume I don't remember details on how HEST works,
+> >>> Answering it in this format also should improve commit message
+> >>> making it more digestible for uninitiated.
+> >>>      
+> >>
+> >> Thanks for your review and I'm trying to answer your question below. Please let
+> >> me know if there are more questions.
+> >>
+> >> There are two signals (BUS_MCEERR_AR and BUS_MCEERR_AO) and BUS_MCEERR_AR is
+> >> concerned here. This signal BUS_MCEERR_AR is sent by host's stage2 page fault
+> >> handler when the resolved host page has been marked as marked as poisoned.
+> >> The stage2 page fault handler is invoked on every access to the host page.
+> >>
+> >> In the combination where host and guest has 64KB and 4KB separately, A 64KB
+> >> host page corresponds to 16x consecutive 4KB guest pages. It means we're
+> >> accessing the 64KB host page when any of those 16x consecutive 4KB guest pages
+> >> is accessed. In other words, a problematic 64KB host page affects the accesses
+> >> on 16x 4KB guest pages. Those 16x 4KB guest pages can be owned by different
+> >> threads on the guest and they run in parallel, potentially to access those
+> >> 16x 4KB guest pages in parallel. It potentially leading to 16x BUS_MCEERR_AR
+> >> signals at one point.
+> >>
+> >> In current implementation, the error record is built as the following calltrace
+> >> indicates. There are 16 error records in the extreme case (parallel accesses on
+> >> 16x 4KB guest pages, mapped to one 64KB host page). However, we can't handle
+> >> multiple error records at once due to the acknowledgement mechanism in
+> >> ghes_record_cper_errors(). For example, the first error record has been sent,
+> >> but not consumed by the guest yet. We fail to send the second error record.
+> >>
+> >> kvm_arch_on_sigbus_vcpu
+> >>     acpi_ghes_memory_errors
+> >>       ghes_gen_err_data_uncorrectable_recoverable      // Generic Error Data Entry
+> >>       acpi_ghes_build_append_mem_cper                  // Memory Error
+> >>       ghes_record_cper_errors
+> >>         
+> >> So this series improves this situation by simply sending 16x error records in
+> >> one shot for the combination of 64KB host + 4KB guest.  
+> > 
+> > 1) What I'm concerned about is that it target one specific case only.
+> > Imagine if 1st cpu get error on page1 and another on page2=(page1+host_page_size)
+> > and so on for other CPUs. Then we are back where we were before this series.
+> > 
+> > Also in abstract future when ARM gets 1Gb pages, that won't scale well.
+> > 
+> > Can we instead of making up CPERs to cover whole host page,
+> > create 1/vcpu GHES source?
+> > That way when vcpu trips over bad page, it would have its own
+> > error status block to put errors in.
+> > That would address [1] and deterministically scale
+> > (well assuming that multiple SEA error sources are possible in theory)
+> >   
 > 
-> You can if you like, but it's not essential -- I just
-> forward the info from the coverity reports.
-
-Sure, thanks Peter.
-I think now that I mentioned it, b4 am will pick it anyway.
-
-regards,
-Harsh
+> I think it's a good idea to have individual error source for each vCPU. In this
+> way, the read_ack_reg won't be a limitation. I hope Jonathan is ok to this scheme.
 > 
-> -- PMM
+> Currently, we have two (fixed) error sources like below. I assume the index of
+> the error source per vCPU will starts from (ACPI_HEST_SRC_ID_QMP + 1) based on
+> CPUState::cpu_index.
+
+I'd suggest ditch cpu index and use arch_id instead.
+
+> 
+> enum AcpiGhesSourceID {
+>      ACPI_HEST_SRC_ID_SYNC,
+>      ACPI_HEST_SRC_ID_QMP,       /* Use it only for QMP injected errors */
+> };
+> 
+> 
+> > PS:
+> > I also wonder what real HW does when it gets in similar situation
+> > (i.e. error status block is not yet acknowledged but another async
+> > error arrived for the same error source)?
+> >   
+> 
+> I believe real HW also have this specific issue. As to ARM64, I ever did some
+> google search and was told the error follows the firmware-first policy and
+> handled by a component of trustfirmware-a. However, I was unable to get the
+> source code. So it's hard for me to know how this specific issue is handled
+> there.
+
+Perhaps Jonathan can help with finding how real hw works around it?
+
+My idea using per cpu source is just a speculation based on spec
+on how workaround the problem,
+I don't really know if guest OS will be able to handle it (aka,
+need to be tested is it's viable). That also probably was a reason
+in previous review, why should've waited for multiple sources
+support be be merged first before this series.
+
+ 
+> Thanks,
+> Gavin
+> 
+> >>>> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
+> >>>> for this specific case. The maximal error block size is bumped to 4KB,
+> >>>> providing enough storage space for those 16x memory CPERs.
+> >>>>
+> >>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> >>>> ---
+> >>>>    hw/acpi/ghes.c   |  2 +-
+> >>>>    target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+> >>>>    2 files changed, 46 insertions(+), 2 deletions(-)
+> >>>>
+> >>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> >>>> index 045b77715f..5c87b3a027 100644
+> >>>> --- a/hw/acpi/ghes.c
+> >>>> +++ b/hw/acpi/ghes.c
+> >>>> @@ -33,7 +33,7 @@
+> >>>>    #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+> >>>>    
+> >>>>    /* The max size in bytes for one error block */
+> >>>> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+> >>>> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
+> >>>>    
+> >>>>    /* Generic Hardware Error Source version 2 */
+> >>>>    #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+> >>>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> >>>> index c5d5b3b16e..3ecb85e4b7 100644
+> >>>> --- a/target/arm/kvm.c
+> >>>> +++ b/target/arm/kvm.c
+> >>>> @@ -11,6 +11,7 @@
+> >>>>     */
+> >>>>    
+> >>>>    #include "qemu/osdep.h"
+> >>>> +#include "qemu/units.h"
+> >>>>    #include <sys/ioctl.h>
+> >>>>    
+> >>>>    #include <linux/kvm.h>
+> >>>> @@ -2433,10 +2434,53 @@ static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
+> >>>>                                        uint64_t paddr)
+> >>>>    {
+> >>>>        GArray *addresses = g_array_new(false, false, sizeof(paddr));
+> >>>> +    uint64_t val, start, end, guest_pgsz, host_pgsz;
+> >>>>        int ret;
+> >>>>    
+> >>>>        kvm_cpu_synchronize_state(c);
+> >>>> -    g_array_append_vals(addresses, &paddr, 1);
+> >>>> +
+> >>>> +    /*
+> >>>> +     * Sort out the guest page size from TCR_EL1, which can be modified
+> >>>> +     * by the guest from time to time. So we have to sort it out dynamically.
+> >>>> +     */
+> >>>> +    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
+> >>>> +    if (ret) {
+> >>>> +        goto error;
+> >>>> +    }
+> >>>> +
+> >>>> +    switch (extract64(val, 14, 2)) {
+> >>>> +    case 0:
+> >>>> +        guest_pgsz = 4 * KiB;
+> >>>> +        break;
+> >>>> +    case 1:
+> >>>> +        guest_pgsz = 64 * KiB;
+> >>>> +        break;
+> >>>> +    case 2:
+> >>>> +        guest_pgsz = 16 * KiB;
+> >>>> +        break;
+> >>>> +    default:
+> >>>> +        error_report("unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
+> >>>> +        goto error;
+> >>>> +    }
+> >>>> +
+> >>>> +    host_pgsz = qemu_real_host_page_size();
+> >>>> +    start = paddr & ~(host_pgsz - 1);
+> >>>> +    end = start + host_pgsz;
+> >>>> +    while (start < end) {
+> >>>> +        /*
+> >>>> +         * The precise physical address is provided for the affected
+> >>>> +         * guest page that contains @paddr. Otherwise, the starting
+> >>>> +         * address of the guest page is provided.
+> >>>> +         */
+> >>>> +        if (paddr >= start && paddr < (start + guest_pgsz)) {
+> >>>> +            g_array_append_vals(addresses, &paddr, 1);
+> >>>> +        } else {
+> >>>> +            g_array_append_vals(addresses, &start, 1);
+> >>>> +        }
+> >>>> +
+> >>>> +        start += guest_pgsz;
+> >>>> +    }
+> >>>> +
+> >>>>        ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
+> >>>>        if (ret) {
+> >>>>            goto error;  
+> >>>      
+> >>  
+> >   
+> 
+
 
