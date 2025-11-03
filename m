@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A9ECCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC25CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1lw-00015Q-UL; Mon, 03 Nov 2025 16:07:28 -0500
+	id 1vG1lO-0000w6-FK; Mon, 03 Nov 2025 16:06:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1ln-000132-0v
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lL-0000uw-15
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lZ-0005NW-Iz
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:17 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lB-0005Cm-QC
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204022;
+ s=mimecast20190719; t=1762203998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TaWkrY5rCFrcQOkGSahAZsAjKVM238HQDT5pwdu9p4c=;
- b=AqKlObAsREhYrUfmVA1pQ5Isrt/7TchysGWUw8mGz/ymcj4+N+Js2qJlAw8EzU+rQnfnBu
- xg7vFFTf539LEtgcL6Uui5NnSbFHyPRKr+WH7LlyUMiwIiFz02W75TqNYbqbY76QYQdrhd
- ZYMrXxebyWF7ZRqdRm06COpZp63K+FM=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uF31ZFegjjtG5ASzXGR3Xx9ULt+da5E2N+ZHHsXG0v4=;
+ b=AlsQ2CjA/DxTTUfdVO+ZKFGZ74VaZdwrMmcX57+cw4KeMJjI424I9WMJaZmalMjlYAZiO+
+ gJ7owfk85YJeYrA2YFQQ0m3qOaCzsKqkRjZz1wAqPtajOeKebnu33TTGPPoVve7bpypa6o
+ TZG0sncApnJPkhiYWFij5nPnBf1zodk=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-466-hQgxn5pMOpWH17CxwzYa0w-1; Mon, 03 Nov 2025 16:07:01 -0500
-X-MC-Unique: hQgxn5pMOpWH17CxwzYa0w-1
-X-Mimecast-MFC-AGG-ID: hQgxn5pMOpWH17CxwzYa0w_1762204020
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8b12cde7f76so31028785a.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:01 -0800 (PST)
+ us-mta-465-dtTxbPuONwOYo7LyotS_GQ-1; Mon, 03 Nov 2025 16:06:37 -0500
+X-MC-Unique: dtTxbPuONwOYo7LyotS_GQ-1
+X-Mimecast-MFC-AGG-ID: dtTxbPuONwOYo7LyotS_GQ_1762203997
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8801c2b9ea7so130577126d6.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204020; x=1762808820; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762203997; x=1762808797; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TaWkrY5rCFrcQOkGSahAZsAjKVM238HQDT5pwdu9p4c=;
- b=A9y1eIjh8y4GYTFgSMZTGfZWjHy0gcI6sv3UJxbnu0nIKzcurc3K4u4+sDmb8UKnYk
- bIgqq748YuYPLpgU2yUUoLLSQQeLWasQLofhQwF8QZm9Avof0u4Rn1kyI8onBMP9GQHD
- S0m0ELdfFYUmYtOjBmYEkEI5WqwqSlO2iRFTJniFscgFdAbVCj5mRXL1SUZyUHNuMRMp
- yexkOf8EaN7ly/a5pmq7JWq2CiWlzT9D85iKJYHieGhLTYN+c6i/pwkwhiiqw8uBQc06
- a4Gp6gXdmqNRrPJjzxn/cH4qy2IL9tn1o72/Wt0LFdrfN+gIt+9lz4FhWg7nNYTRHcBG
- 5k6Q==
+ bh=uF31ZFegjjtG5ASzXGR3Xx9ULt+da5E2N+ZHHsXG0v4=;
+ b=beO340fQHcXuTdIOtdp2rFSAoQBX+MkvQRGDOz8BJzjDPlz6NUC8nZO4/8jQNVOaEu
+ 2jHS9fKMLYD3gKtWSRsJFfvxRpSVzhm35U30JcuDn1eIDQ4t/CHgoBsGrBD0F3NTmnCP
+ OtBDB9GFogo4dyTDz6CisAsr3sli3NsRjhF1MMQoPECB4CGCkdKsrr/L408E3Hv9dXxl
+ mA+T2DS8zFe6/5D/F5mTzSrA0XyCyc08sYrbfvc4tOUiYZrzGLtse8csKPBUIUbw2kaC
+ woUKlMACViGKBvCibaVN2USIUYil2ixyPvDd6zZv37iKS4MHhUOAjPJO3RRoyNsaBEd+
+ /97w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204020; x=1762808820;
+ d=1e100.net; s=20230601; t=1762203997; x=1762808797;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TaWkrY5rCFrcQOkGSahAZsAjKVM238HQDT5pwdu9p4c=;
- b=OD6UeoFBblCZ98nBYUd7C7Pq7moeu9zK6xrHs6NmfXDe39xxZuUzKE0d4Na01oDI1X
- YBsHfDj5EQf27C8KzeNcA1dJZr5XxE7SOfimwv47EOEYdHwvRC0FXNXWpZz6vyXErq8N
- dj8sz194rLMhWcvg6paf+2JegaPfbaHyoPw2V6uwI5Ps2qlF/qlilZBEOARWpoNd5Zma
- z1rBMzX8/+cnbQBN48H873qUc5+2Ug8gnywfRD9r/zW75IfWeBR1OEkDrQIT1/vi/+7r
- RBie/dEuyY98JUboQihAkXyzjLHgPyOCCkVlnThC5WK/hNuy5+Z5bCnDgPdtPNfwUVX2
- mj1g==
-X-Gm-Message-State: AOJu0YxIgfLnOCH5/4Jer8AcARcjf2x59HL/p2HLNIQtMru27h6EYFb2
- WQWlJXrfjPyJRkHi0RDZdISJFPHE7r3IwJqvGAWf1W0AcItiyW3NcrWgq1IjTnU8sK0dZaS23Ep
- p1p5PJFpKeb0ABReW/DSw9NfWfKPchW3J+/WseTyHe3QTfqaDat8uCnUWcjzCNkTUOohFxtvf2k
- G3itq/wd2ghBBph7shJ/DmYFVhAtpwuAZRl9OY4Q==
-X-Gm-Gg: ASbGncsHhb0k9a1KjMtMa2poCmq1Q/otXoYRjLWYj1XE0ev5dnSESUi1gc2Rcvb/SxD
- MxKTVWJ/ztiUR8/P7eSqpquUthDblozkK5mmd7Pz4aOdaGuh88ejHR/E6QZMwgIyyoW0Jo4PbWL
- GqvzwTX8glWBUoY1eQLF5pKwtNDyEHWMfJLzWzT/I6ixQduA1ES5OsG3j0DuFCMOMBD4sDStE4R
- 7MWfvSwLmUAHDVgq1gE9UYc7iaXmJS23ZdmVsvikel+6rG2YsrDQfFeMKYlJXrY+gM7TgaHbqCF
- mt3DAPX5ArYzwYgLTRBENarabht0lZRjxhlIsPdj60Ji+DPDgzdCHLL1Cq52I2V0
-X-Received: by 2002:a05:620a:223b:b0:8ad:32ae:b6d9 with SMTP id
- af79cd13be357-8b10d0aaad9mr91834285a.44.1762204020023; 
- Mon, 03 Nov 2025 13:07:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFSt6jqX3VOkDQDVSy1XqQH77EyuDFlDXC8AkYBS4nKl9NGoi+NWYfhbee9a508f4m2rHcpNw==
-X-Received: by 2002:a05:620a:223b:b0:8ad:32ae:b6d9 with SMTP id
- af79cd13be357-8b10d0aaad9mr91829185a.44.1762204019397; 
- Mon, 03 Nov 2025 13:06:59 -0800 (PST)
+ bh=uF31ZFegjjtG5ASzXGR3Xx9ULt+da5E2N+ZHHsXG0v4=;
+ b=qifMJhEE+2qjlmz7y5BJgnXQust1ihdx4qwF6gkDXvlP3MK5UdfpVOpjcjdvR1QK6Q
+ tjlXmwz8pnRuCTovIivqDjXKSy015GrHRqnIUR2Y6iUkRVW9gBUdgt9IK/0Rs3r7luf0
+ GrONo7d7GzOc0wzJ9YKbaAv6FdQb0kWdbWjr1YeHc8GgXS5dAvt5ld9PjDJ3z/aZd5DG
+ tPwJ0uhUdYF4pd/1MXNtn9Ii8/trkWStmVc+WrokF7kg9h1hHeP0ZC00Zs91sZe0ejNG
+ XyaHAclTdOWF+9yttSCBwCN8uO6Te3T4WVcYEzMIIyBm85Kb7Pqsiw67cVdJjN8seH4/
+ xWUQ==
+X-Gm-Message-State: AOJu0YxQxaWEXUe+CwP2wlfPLSwDXTuHY4u1lyutullFIC0vx8LcY2UK
+ X3YkVZPLW+Z8OZsjiF9I4Y125BoTR/ee3ww61mQri8CzHPvcq8B8Ha1F98nplPFD1CzaRm2ESpD
+ JZa5ngGlBHkgq5apVmiT9pZkirE/P5JEm67YtzoeJUheo/LzQSnqjn9b+UeRnvk0wT+s5GNrRax
+ ifgo8KKbf2/K/vRXeKa4RhQLzdZ5SqEy+vUToa+A==
+X-Gm-Gg: ASbGncuU14jTXZiyvsUJDiawuV0aJmpPYXMGO+xDR6SQw0idiLnz1TXTUIXs5Tw5YC0
+ V+f+ArSVValOyrJuLa3FeNPvYNQAIu/rQDNMVGqCIkT3M0lFqJBXGSsXba8NF1QkmzcQ3m6PCl6
+ 2UyIqmROK/z1IlViGVMmrEoYe0TpdgGquSFYYykw6WDcN+OoaI/o9knXW+SZpqYcNFFdPruIQFi
+ Pu2BDWSYDtqkbNlNjl4cyjDFREYbvXIruEjt4OV9eZFp1/ax2ddIHZJh+uKyFaMUAhh5r0tW+ox
+ hK4OhrQ8gB7ITxCc/2DDEBohwTAcsEZcVcjwm4fYmZKE41APDl7vcXt1gieVLsQd
+X-Received: by 2002:a05:622a:2b4f:b0:4eb:a228:7f4c with SMTP id
+ d75a77b69052e-4ed30f2297bmr174268351cf.35.1762203996638; 
+ Mon, 03 Nov 2025 13:06:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFsKTf4x5Sc3CYtEqvuGKBohvzR5vXyXJBekKl5JmJ2UsQXignVg50kxi5tZa+lDbCMctj8Ag==
+X-Received: by 2002:a05:622a:2b4f:b0:4eb:a228:7f4c with SMTP id
+ d75a77b69052e-4ed30f2297bmr174267831cf.35.1762203996166; 
+ Mon, 03 Nov 2025 13:06:36 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.57
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:06:58 -0800 (PST)
+ Mon, 03 Nov 2025 13:06:35 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 21/36] io: Add qio_channel_wait_cond() helper
-Date: Mon,  3 Nov 2025 16:06:10 -0500
-Message-ID: <20251103210625.3689448-22-peterx@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/36] migration: Remove unused VMSTATE_UINTTL_EQUAL[_V]()
+ macros
+Date: Mon,  3 Nov 2025 16:05:55 -0500
+Message-ID: <20251103210625.3689448-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,7 +105,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,110 +121,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the helper to wait for QIO channel's IO availability in any
-context (coroutine, or non-coroutine).  Use it tree-wide for three
-occurences.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Link: https://lore.kernel.org/r/20251022192612.2737648-2-peterx@redhat.com
+The last use of VMSTATE_UINTTL_EQUAL() was removed in commit
+16a2497bd44 ("target-ppc: Fix CPU migration from qemu-2.6 <->
+later versions"), 9 years ago; remove it.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20251016160313.25751-1-philmd@linaro.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/io/channel.h  | 15 +++++++++++++++
- io/channel.c          | 21 +++++++++++----------
- migration/qemu-file.c |  6 +-----
- 3 files changed, 27 insertions(+), 15 deletions(-)
+ include/migration/cpu.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 0f25ae0069..d6d5bf2b5f 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -871,6 +871,21 @@ void qio_channel_wake_read(QIOChannel *ioc);
- void qio_channel_wait(QIOChannel *ioc,
-                       GIOCondition condition);
+diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+index 65abe3c8cc..ca7cc0479e 100644
+--- a/include/migration/cpu.h
++++ b/include/migration/cpu.h
+@@ -19,8 +19,6 @@
  
-+/**
-+ * qio_channel_wait_cond:
-+ * @ioc: the channel object
-+ * @condition: the I/O condition to wait for
-+ *
-+ * Block execution from the current thread until
-+ * the condition indicated by @condition becomes
-+ * available.
-+ *
-+ * This will work with/without a coroutine context, by automatically select
-+ * the proper API to wait.
-+ */
-+void qio_channel_wait_cond(QIOChannel *ioc,
-+                           GIOCondition condition);
-+
- /**
-  * qio_channel_set_aio_fd_handler:
-  * @ioc: the channel object
-diff --git a/io/channel.c b/io/channel.c
-index 852e684938..b18fc346ff 100644
---- a/io/channel.c
-+++ b/io/channel.c
-@@ -159,11 +159,7 @@ int coroutine_mixed_fn qio_channel_readv_full_all_eof(QIOChannel *ioc,
-         len = qio_channel_readv_full(ioc, local_iov, nlocal_iov, local_fds,
-                                      local_nfds, flags, errp);
-         if (len == QIO_CHANNEL_ERR_BLOCK) {
--            if (qemu_in_coroutine()) {
--                qio_channel_yield(ioc, G_IO_IN);
--            } else {
--                qio_channel_wait(ioc, G_IO_IN);
--            }
-+            qio_channel_wait_cond(ioc, G_IO_IN);
-             continue;
-         }
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT64_V(_f, _s, _v)
+-#define VMSTATE_UINTTL_EQUAL_V(_f, _s, _v)                            \
+-    VMSTATE_UINT64_EQUAL_V(_f, _s, _v)
+ #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+     VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
+ #define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
+@@ -40,8 +38,6 @@
  
-@@ -268,11 +264,7 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
-                                             nfds, flags, errp);
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT32_V(_f, _s, _v)
+-#define VMSTATE_UINTTL_EQUAL_V(_f, _s, _v)                            \
+-    VMSTATE_UINT32_EQUAL_V(_f, _s, _v)
+ #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
+ #define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
+@@ -53,8 +49,6 @@
  
-         if (len == QIO_CHANNEL_ERR_BLOCK) {
--            if (qemu_in_coroutine()) {
--                qio_channel_yield(ioc, G_IO_OUT);
--            } else {
--                qio_channel_wait(ioc, G_IO_OUT);
--            }
-+            qio_channel_wait_cond(ioc, G_IO_OUT);
-             continue;
-         }
-         if (len < 0) {
-@@ -774,6 +766,15 @@ void qio_channel_wait(QIOChannel *ioc,
-     g_main_context_unref(ctxt);
- }
- 
-+void qio_channel_wait_cond(QIOChannel *ioc,
-+                           GIOCondition condition)
-+{
-+    if (qemu_in_coroutine()) {
-+        qio_channel_yield(ioc, condition);
-+    } else {
-+        qio_channel_wait(ioc, condition);
-+    }
-+}
- 
- static void qio_channel_finalize(Object *obj)
- {
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 2d4ce174a5..4b5a409a80 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -343,11 +343,7 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-                                      QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING,
-                                      &local_error);
-         if (len == QIO_CHANNEL_ERR_BLOCK) {
--            if (qemu_in_coroutine()) {
--                qio_channel_yield(f->ioc, G_IO_IN);
--            } else {
--                qio_channel_wait(f->ioc, G_IO_IN);
--            }
-+            qio_channel_wait_cond(f->ioc, G_IO_IN);
-         }
-     } while (len == QIO_CHANNEL_ERR_BLOCK);
- 
+ #define VMSTATE_UINTTL(_f, _s)                                        \
+     VMSTATE_UINTTL_V(_f, _s, 0)
+-#define VMSTATE_UINTTL_EQUAL(_f, _s)                                  \
+-    VMSTATE_UINTTL_EQUAL_V(_f, _s, 0)
+ #define VMSTATE_UINTTL_ARRAY(_f, _s, _n)                              \
+     VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, 0)
+ #define VMSTATE_UINTTL_2DARRAY(_f, _s, _n1, _n2)                      \
 -- 
 2.50.1
 
