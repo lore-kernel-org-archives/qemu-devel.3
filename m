@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BB2CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC16CCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1lS-0000xj-Hf; Mon, 03 Nov 2025 16:06:58 -0500
+	id 1vG1mF-0001B0-GM; Mon, 03 Nov 2025 16:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lR-0000xF-It
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1mC-00019s-95
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lK-0005IE-J8
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lo-0005St-Tn
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204009;
+ s=mimecast20190719; t=1762204038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZwNCvExcsouMK7Enx+vePUsZL3j/5e0nseGrkexQXYE=;
- b=X9odkwUpRVjnXQJJa0qtYeZJdsN0fjjHtOP54YsX89crzdUSCrxC9Na1Lt1/IjdPUt64vx
- qdnZMaWE0iZEu8CAWJgYreBdvqMZopovGVRU/PwoeW4iyl2PUtqpKPZO5K19hOgx2v2rQk
- 59h9eWLgCi0WjTPusRoUeX76f62ddew=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QKMPVMoNMgHMuyq+3Hjcjr8NaNmoAw5q1rOR6GQTNrk=;
+ b=LLSq1vQq89TyaIWR5/6sbtHJdDJeEmp9j4C3a236SdYOdMDroDMRlyVH9K4CxrUyXxiC9i
+ fgQXh705LvI02xaeQ3L7ALi4g5wpaQt9JE1if7tbBYFYsT76FKf8MdH3jM1FKjCG8Ub7S1
+ QZuFxnajjLI+8O5YFLuO1WeAbdcLMjA=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-LQXyx7fQPv6e1NBqFLHxeA-1; Mon, 03 Nov 2025 16:06:48 -0500
-X-MC-Unique: LQXyx7fQPv6e1NBqFLHxeA-1
-X-Mimecast-MFC-AGG-ID: LQXyx7fQPv6e1NBqFLHxeA_1762204008
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8a4ef35cc93so1433902585a.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:48 -0800 (PST)
+ us-mta-82-VJE_d9GhOxy78fv1nPvHnA-1; Mon, 03 Nov 2025 16:07:16 -0500
+X-MC-Unique: VJE_d9GhOxy78fv1nPvHnA-1
+X-Mimecast-MFC-AGG-ID: VJE_d9GhOxy78fv1nPvHnA_1762204035
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4ecf4540bb6so133880761cf.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204007; x=1762808807; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762204035; x=1762808835; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZwNCvExcsouMK7Enx+vePUsZL3j/5e0nseGrkexQXYE=;
- b=hx5ROIuZNUNjNon9TJysl+nwftVnWtyUUQG3U1iUtJXOQm6xOcBfhpFu3R8lMFPkJK
- iLr5I8nB8ayPQfEpmt0NamhUFXy7ZXh6EyPDUwOuF5ZA4qmfnvyZinNsJQg58W5AEoru
- loMdDGDEUSHqln2MvrVM7Ug+6VU+9mmdccZyuz/oJcw2XbEd9DpaZFa2EXv5uATKWPsv
- Etng6kCQw/1/WQGBvZzNhzwzOqp0oMrFVJPQGBVQOtU6XfKgeTF91E9ILr9XA8OXSYa0
- YKmrxk+MtASbW1sAZTN6jmhDufVPyHh8CmUFjcBBxqQNAR2UkhaiVfBYRCmSz7F0ATgY
- DMuQ==
+ bh=QKMPVMoNMgHMuyq+3Hjcjr8NaNmoAw5q1rOR6GQTNrk=;
+ b=Q6T0t4DDUmYYHajRf91Pta9Cp7NLTlDySYLd5AZKX8HoIzyClGUjagQ6jDmE0lCPba
+ j95Mvyy74alm+60pleEANSDAa7xISGhrvlZsToMrXYk0M5KtvTlfjsK/Ve2+jgiQnD3O
+ PpcfxtvB9U/UmQEq+1pXwmyqAwnbnCQacvq0I1knaSbliYe+fKJsdG265/7gNwaHB6jY
+ gcpRMAsO6cF5SmtnZrw2++tBWE8FuosPJ3IlO3rV5Rgf8m/yc8OyK6mw+LDI1mBBSBzh
+ sjalU5Ji+ZUB4pQlMq79uG1MVx1BoVBsaZ95494uxsHGoGDBxssZBM0Eua5raOiPs1sd
+ r8sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204007; x=1762808807;
+ d=1e100.net; s=20230601; t=1762204035; x=1762808835;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZwNCvExcsouMK7Enx+vePUsZL3j/5e0nseGrkexQXYE=;
- b=b0PhUNpA1w4zwWnOWifxSresIgprLgkWiXQrQox8i4MkL9Dmq0s4jJxZ0+3p3uY0OT
- FajWcScGjf6qHOl77k0Iut2jFvskVSBkALWZ6ka5mEP2QqpmVJ07PFBtZi+FFHBQAKxG
- LJTONPgdy6Go+J4bYVhlzs1ELKMSxWv3AYf6FwYgMDQl6uKp63llz4Bp23w7PXImslwT
- vOEJMwkuFO8PpLlwyT5nxsvLoOlX7xikF/i0K1v8uNynQyTcrIzIbjXtETPOkm1l1dPt
- wTPXG6UVKDH+zeWNPo6QwMXrb5+mbhWb1LOR0AOvpO/uEH1aEH4TTo74ZEIYHcHz88zO
- 7Kiw==
-X-Gm-Message-State: AOJu0Yy+Kjb/1jzmrDFZoNNtrX3Gd/bxA3u6QJKnPSyIXuZ5pLUVWHxY
- Sg0lmcgIKafeoKxPcHcTZN9/W3u7RUCeLKgaZizSwr9ag3jomaaUe3IDDwW12FFSCyaxIkOynZo
- RgeZhxE6kXI1mR+pwdn3CgAVOGEf/a48ETEYtph+flEWo1+hMfqHz3qy4lfPd73P46w7WBC+A/M
- l82MDNS6R/I8+HAmO5DWj5FL4wtV6oobcZnlWYQw==
-X-Gm-Gg: ASbGncsYXenLXpsNoB6NKXPOkBoClUcgkuFMD78kgMlfSf7UfkbdynVPxncwVmQZfL2
- eNVVup2LYeBEzJ3QR7ATQA1cITrOjvwVUD6HeRAMB0vMKj8y5RZimKJ6oTvCD5lgzHdrm5rxqH9
- CJMO4s03UD1T1KZp9p4gPI+9xh4gSvez0b1hsHtnZVZnI3YQvA3AoFrTISvrRjbKUuG2PV1sHZt
- zAF1BiEtSh/mmFNngI3IA/C6xckAkYkEsqyIMy+uhbyUr/uCg+Eg7VZ5d/ur7JJrsmFmqh/1xaf
- dSP8MQ9sHsw8sx5GqRLkWcvKZD+4+7uOeSwqX/xdM9yQRNMxh9SZX7RCZmVaJL2z
-X-Received: by 2002:a05:620a:454d:b0:891:9f29:2902 with SMTP id
- af79cd13be357-8ab9a534c84mr1751654085a.48.1762204007176; 
- Mon, 03 Nov 2025 13:06:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsT3kTmbkomL6GJC6W50nxcfokuqQHdz3hirQg4McVj4hMF4v65QHG+BLvOv7uKvpvvnkSIA==
-X-Received: by 2002:a05:620a:454d:b0:891:9f29:2902 with SMTP id
- af79cd13be357-8ab9a534c84mr1751649185a.48.1762204006599; 
- Mon, 03 Nov 2025 13:06:46 -0800 (PST)
+ bh=QKMPVMoNMgHMuyq+3Hjcjr8NaNmoAw5q1rOR6GQTNrk=;
+ b=fZLF+nfQvEYWvkkZa7ZUyErlFI7M++xG5Z47QB7Uc8AFsVjd5FaEgmwfLBe2PPl4+J
+ ZsHhpwTOKJ+sHk22At3DB+p+ypP6Fyt5LssOM2Jcf7EIjtUvQKpgw7B0J9nvRVZdlMSF
+ yDcoqIX3kNcnIOJiuE4bzh72WgoU5KZsdVlNrhtyBcUDB6QYwpGay2lYWlNwkwAnIRt5
+ ZQBvTYhj2t2hwfpiYHJNHVPEQPXcfJpGhv+MYodqNeMdL3uyPP1Am/E59+26nQIpk2Lc
+ Bg1zApZQjuWYMEman3U6mJfqyP29I5HxdHy72UX4yRlzYlSEU6nWPTtJTc/1Qh/k1q9O
+ q4IQ==
+X-Gm-Message-State: AOJu0YwZEMcxedlvOqA1I9RIPDRIl38rTzNMBYhGlzp9dpnXAiIpBJxt
+ DIUd/i90BB/RGpPWYrEKZuW6Fl+YO7G6n9R4X279+ZeZjDb0hNxVZKU3zdkExuUyuGym9lqoXns
+ u6eN/71gNRnsheijbZuipXjLCF30UWSEyLkRVrVHnXyupNxr7KXPvwkMhGrjQM+3/+Phnq+pnin
+ TfZ0Lv7H25wrHdRjCSMeJssvP5IkZ31zM8l8pg+w==
+X-Gm-Gg: ASbGncspy79B6NvIW5qMb2i+44/IY+89TJoUXbcJfjg1zjs4A1EeDZSqZXJ/KxlAnp6
+ 5yMUA1vrXdcQ9wtJ6kXlAbIocpYOTI64D/jbUYZRsS5mch+Q43z95gdN8+3E9EsGJ+9hTjutd22
+ H1mxEFP+9F+cw8KWzk42FOfvKhgKwxXDSYUx5hGp3m53Bbox4dvC1P7x7FQ9Zzw2A+/VgNp0H89
+ bnsOWHjQS8kDM6wgaz/uyxKf63ovCuuddgWAfx5kPXufm9cgeMTY+Us6l1Dgqf41CdWk4pg8S3s
+ B6Shy8B188tAg0YmZrcsjqjsymuLPfag4AoGmI6nkJ7nmMiBo/VANqYQyhorC0mZ
+X-Received: by 2002:a05:622a:15c2:b0:4e8:912a:bdc5 with SMTP id
+ d75a77b69052e-4ed30f57aadmr190215011cf.27.1762204034895; 
+ Mon, 03 Nov 2025 13:07:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFzXAW+9REqy2X9XkTadXyvfhgARn4v1dbo9COoQ6U+3R9zbjv6xXWoWsIY34lt3C+PSpCzyQ==
+X-Received: by 2002:a05:622a:15c2:b0:4e8:912a:bdc5 with SMTP id
+ d75a77b69052e-4ed30f57aadmr190214281cf.27.1762204034187; 
+ Mon, 03 Nov 2025 13:07:14 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.45
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.07.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:06:46 -0800 (PST)
+ Mon, 03 Nov 2025 13:07:13 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 13/36] migration/qmp: Update "resume" flag doc in "migrate"
- command
-Date: Mon,  3 Nov 2025 16:06:02 -0500
-Message-ID: <20251103210625.3689448-14-peterx@redhat.com>
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 33/36] migration: Refactor all incoming cleanup info
+ migration_incoming_destroy()
+Date: Mon,  3 Nov 2025 16:06:22 -0500
+Message-ID: <20251103210625.3689448-34-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,34 +119,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It wasn't obvious how the resume flag should be used when staring at the
-QAPI doc.  Enrich it to be crystal clear.
+From: Juraj Marcin <jmarcin@redhat.com>
 
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Link: https://lore.kernel.org/r/20251022190425.2730441-1-peterx@redhat.com
-[peterx: amended wordings, per markus]
+Currently, there are two functions that are responsible for calling the
+cleanup of the incoming migration state. With successful precopy, it's
+the incoming migration coroutine, and with successful postcopy it's the
+postcopy listen thread. However, if postcopy fails during in the device
+load, both functions will try to do the cleanup.
+
+This patch refactors all cleanup that needs to be done on the incoming
+side into a common function and defines a clear boundary, who is
+responsible for the cleanup. The incoming migration coroutine is
+responsible for calling the cleanup function, unless the listen thread
+has been started, in which case the postcopy listen thread runs the
+incoming migration cleanup in its BH.
+
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Fixes: 9535435795 ("migration: push Error **errp into qemu_loadvm_state()")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20251103183301.3840862-6-jmarcin@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- qapi/migration.json | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ migration/migration.h    |  1 +
+ migration/migration.c    | 44 +++++++++-------------------
+ migration/postcopy-ram.c | 63 +++++++++++++++++++++-------------------
+ migration/trace-events   |  2 +-
+ 4 files changed, 49 insertions(+), 61 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index be0f3fcc12..c7a6737cc1 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1732,7 +1732,10 @@
- # @detach: this argument exists only for compatibility reasons and is
- #     ignored by QEMU
- #
--# @resume: resume one paused migration, default "off".  (since 3.0)
-+# @resume: when set, use the new uri/channels specified to resume paused
-+#     postcopy migration.  This flag should only be used if the previous
-+#     postcopy migration was interrupted.  The command will fail unless
-+#     migration is in "postcopy-paused" state.  (default: false, since 3.0)
- #
- # Features:
- #
+diff --git a/migration/migration.h b/migration/migration.h
+index 01329bf824..4a37f7202c 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -254,6 +254,7 @@ struct MigrationIncomingState {
+ MigrationIncomingState *migration_incoming_get_current(void);
+ void migration_incoming_state_destroy(void);
+ void migration_incoming_transport_cleanup(MigrationIncomingState *mis);
++void migration_incoming_qemu_exit(void);
+ /*
+  * Functions to work with blocktime context
+  */
+diff --git a/migration/migration.c b/migration/migration.c
+index 9a367f717e..637be71bfe 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -438,10 +438,15 @@ void migration_incoming_transport_cleanup(MigrationIncomingState *mis)
+ 
+ void migration_incoming_state_destroy(void)
+ {
+-    struct MigrationIncomingState *mis = migration_incoming_get_current();
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    PostcopyState ps = postcopy_state_get();
+ 
+     multifd_recv_cleanup();
+ 
++    if (ps != POSTCOPY_INCOMING_NONE) {
++        postcopy_incoming_cleanup(mis);
++    }
++
+     /*
+      * RAM state cleanup needs to happen after multifd cleanup, because
+      * multifd threads can use some of its states (receivedmap).
+@@ -866,7 +871,6 @@ process_incoming_migration_co(void *opaque)
+ {
+     MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+-    PostcopyState ps;
+     int ret;
+     Error *local_err = NULL;
+ 
+@@ -883,25 +887,14 @@ process_incoming_migration_co(void *opaque)
+ 
+     trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
+ 
+-    ps = postcopy_state_get();
+-    trace_process_incoming_migration_co_end(ret, ps);
+-    if (ps != POSTCOPY_INCOMING_NONE) {
+-        if (ps == POSTCOPY_INCOMING_ADVISE) {
+-            /*
+-             * Where a migration had postcopy enabled (and thus went to advise)
+-             * but managed to complete within the precopy period, we can use
+-             * the normal exit.
+-             */
+-            postcopy_incoming_cleanup(mis);
+-        } else if (ret >= 0) {
+-            /*
+-             * Postcopy was started, cleanup should happen at the end of the
+-             * postcopy thread.
+-             */
+-            trace_process_incoming_migration_co_postcopy_end_main();
+-            goto out;
+-        }
+-        /* Else if something went wrong then just fall out of the normal exit */
++    trace_process_incoming_migration_co_end(ret);
++    if (mis->have_listen_thread) {
++        /*
++         * Postcopy was started, cleanup should happen at the end of the
++         * postcopy listen thread.
++         */
++        trace_process_incoming_migration_co_postcopy_end_main();
++        goto out;
+     }
+ 
+     if (ret < 0) {
+@@ -933,15 +926,6 @@ fail:
+         }
+ 
+         exit(EXIT_FAILURE);
+-    } else {
+-        /*
+-         * Report the error here in case that QEMU abruptly exits
+-         * when postcopy is enabled.
+-         */
+-        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+-            error_report_err(s->error);
+-            s->error = NULL;
+-        }
+     }
+ out:
+     /* Pairs with the refcount taken in qmp_migrate_incoming() */
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index b47c955763..48cbb46c27 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -2078,6 +2078,24 @@ bool postcopy_is_paused(MigrationStatus status)
+         status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
+ }
+ 
++static void postcopy_listen_thread_bh(void *opaque)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++
++    migration_incoming_state_destroy();
++
++    if (mis->state == MIGRATION_STATUS_FAILED) {
++        /*
++         * If something went wrong then we have a bad state so exit;
++         * we only could have gotten here if something failed before
++         * POSTCOPY_INCOMING_RUNNING (for example device load), otherwise
++         * postcopy migration would pause inside qemu_loadvm_state_main().
++         * Failing dirty-bitmaps won't fail the whole migration.
++         */
++        exit(1);
++    }
++}
++
+ /*
+  * Triggered by a postcopy_listen command; this thread takes over reading
+  * the input stream, leaving the main thread free to carry on loading the rest
+@@ -2131,53 +2149,38 @@ static void *postcopy_listen_thread(void *opaque)
+                          "bitmaps are correctly migrated and valid.",
+                          __func__, load_res, error_get_pretty(local_err));
+             g_clear_pointer(&local_err, error_free);
+-            load_res = 0; /* prevent further exit() */
+         } else {
++            /*
++             * Something went fatally wrong and we have a bad state, QEMU will
++             * exit depending on if postcopy-exit-on-error is true, but the
++             * migration cannot be recovered.
++             */
+             error_prepend(&local_err,
+                           "loadvm failed during postcopy: %d: ", load_res);
+             migrate_set_error(migr, local_err);
+             g_clear_pointer(&local_err, error_report_err);
+             migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+                                            MIGRATION_STATUS_FAILED);
++            goto out;
+         }
+     }
+-    if (load_res >= 0) {
+-        /*
+-         * This looks good, but it's possible that the device loading in the
+-         * main thread hasn't finished yet, and so we might not be in 'RUN'
+-         * state yet; wait for the end of the main thread.
+-         */
+-        qemu_event_wait(&mis->main_thread_load_event);
+-    }
+-    postcopy_incoming_cleanup(mis);
+-
+-    if (load_res < 0) {
+-        /*
+-         * If something went wrong then we have a bad state so exit;
+-         * depending how far we got it might be possible at this point
+-         * to leave the guest running and fire MCEs for pages that never
+-         * arrived as a desperate recovery step.
+-         */
+-        rcu_unregister_thread();
+-        exit(EXIT_FAILURE);
+-    }
++    /*
++     * This looks good, but it's possible that the device loading in the
++     * main thread hasn't finished yet, and so we might not be in 'RUN'
++     * state yet; wait for the end of the main thread.
++     */
++    qemu_event_wait(&mis->main_thread_load_event);
+ 
+     migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+                                    MIGRATION_STATUS_COMPLETED);
+-    /*
+-     * If everything has worked fine, then the main thread has waited
+-     * for us to start, and we're the last use of the mis.
+-     * (If something broke then qemu will have to exit anyway since it's
+-     * got a bad migration state).
+-     */
+-    bql_lock();
+-    migration_incoming_state_destroy();
+-    bql_unlock();
+ 
++out:
+     rcu_unregister_thread();
+     mis->have_listen_thread = false;
+     postcopy_state_set(POSTCOPY_INCOMING_END);
+ 
++    migration_bh_schedule(postcopy_listen_thread_bh, NULL);
++
+     object_unref(OBJECT(migr));
+ 
+     return NULL;
+diff --git a/migration/trace-events b/migration/trace-events
+index e8edd1fbba..772636f3ac 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -193,7 +193,7 @@ source_return_path_thread_resume_ack(uint32_t v) "%"PRIu32
+ source_return_path_thread_switchover_acked(void) ""
+ migration_thread_low_pending(uint64_t pending) "%" PRIu64
+ migrate_transferred(uint64_t transferred, uint64_t time_spent, uint64_t bandwidth, uint64_t avail_bw, uint64_t size) "transferred %" PRIu64 " time_spent %" PRIu64 " bandwidth %" PRIu64 " switchover_bw %" PRIu64 " max_size %" PRId64
+-process_incoming_migration_co_end(int ret, int ps) "ret=%d postcopy-state=%d"
++process_incoming_migration_co_end(int ret) "ret=%d"
+ process_incoming_migration_co_postcopy_end_main(void) ""
+ postcopy_preempt_enabled(bool value) "%d"
+ migration_precopy_complete(void) ""
 -- 
 2.50.1
 
