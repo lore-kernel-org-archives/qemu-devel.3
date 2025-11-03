@@ -4,77 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3053CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9420ACCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 12:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsuW-0006sx-Ju; Mon, 03 Nov 2025 06:39:44 -0500
+	id 1vFtES-0003kh-DQ; Mon, 03 Nov 2025 07:00:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vFsuS-0006sH-Vp
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:39:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vFtEI-0003iK-Rc; Mon, 03 Nov 2025 07:00:11 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vFsuN-0003Fy-P0
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:39:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762169970;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ijV0xPmPbUiyKABPTiMtHfTq4OCBxkm3DOmUHoZqyco=;
- b=F66HKPg+obejsbOzGRjfIWzFlax6RaWF0uTKhlWQcaaT9Lrn9MLDdlKauDFl56xUyfQZwQ
- YpoyKW059dIQ/RgQF9wXQ75ics4UTZT1s0ioSItsxHp0NZuwa9Xno4mnKLS0jQW+UjFtM+
- c8WnffNnfUhUVHW9AgB/pa4IVhhGHII=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-sbhruUlnPbG2cN2XB7egAg-1; Mon,
- 03 Nov 2025 06:39:29 -0500
-X-MC-Unique: sbhruUlnPbG2cN2XB7egAg-1
-X-Mimecast-MFC-AGG-ID: sbhruUlnPbG2cN2XB7egAg_1762169968
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC78518089A6; Mon,  3 Nov 2025 11:39:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.202])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A9ED180057D; Mon,  3 Nov 2025 11:39:25 +0000 (UTC)
-Date: Mon, 3 Nov 2025 11:39:21 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng@tinylab.org>
-Subject: Re: [PATCH] net: pad packets to minimum length in
- qemu_receive_packet()
-Message-ID: <aQiUaSSF4PyX6kXv@redhat.com>
-References: <20251028160042.3321933-1-peter.maydell@linaro.org>
- <1a8ea87f-41b2-40a5-8511-df019b5833c5@linaro.org>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vFtEA-0008AG-5g; Mon, 03 Nov 2025 07:00:10 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A3BxEKw024010
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 3 Nov 2025 20:59:15 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=wX/EAr9MBpwid2C1opk/j+bgbu4H3+7mhfaLpVRxrvY=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1762171155; v=1;
+ b=I7AxSWraaePRZ/Rs4A/YFERii4cE4bYglfqNlp+0/pIZbGm9Ksfyekq1YYCwjQn0
+ HnH8gJBxSY5s3Ew8T5tbs8GiYb2cyu6m0R/OdBpwfOwQPzPqP7BdpXTZ1ZRU2Buw
+ U19FPnxwKAnih86t4NF0hDCHRFW+9jalxGEPXLy+n+bs7vaL0fUVMTyMlK8Hwoq5
+ LneZBJrmrcujdg4FSofcInzKxbb0+yxqV6aMW3vRD4E8V2aQzELsAfZIJb0kMrWg
+ 7Z9c14TJTDegnES7VAZjoHz9qg4URSpkdVjTzybhztMXiwoZyVnkqinhr6JY1qDE
+ XxKxtnD64/Z0CiHJT3kmhg==
+Message-ID: <34fc930f-0ef1-42d6-9666-235ca88d9f91@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 3 Nov 2025 20:59:14 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/23] accel/hvf: Simplify hvf_set_phys_mem
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Peter Collingbourne <pcc@google.com>,
+ Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20251103101034.59039-1-philmd@linaro.org>
+ <20251103101034.59039-9-philmd@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251103101034.59039-9-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1a8ea87f-41b2-40a5-8511-df019b5833c5@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,98 +76,182 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 03, 2025 at 12:35:48PM +0100, Philippe Mathieu-Daudé wrote:
-> On 28/10/25 17:00, Peter Maydell wrote:
-> > In commits like 969e50b61a28 ("net: Pad short frames to minimum size
-> > before sending from SLiRP/TAP") we switched away from requiring
-> > network devices to handle short frames to instead having the net core
-> > code do the padding of short frames out to the ETH_ZLEN minimum size.
-> > We then dropped the code for handling short frames from the network
-> > devices in a series of commits like 140eae9c8f7 ("hw/net: e1000:
-> > Remove the logic of padding short frames in the receive path").
-> > 
-> > This missed one route where the device's receive code can still see a
-> > short frame: if the device is in loopback mode and it transmits a
-> > short frame via the qemu_receive_packet() function, this will be fed
-> > back into its own receive code without being padded.
-> > 
-> > Add the padding logic to qemu_receive_packet().
-> > 
-> > This fixes a buffer overrun which can be triggered in the
-> > e1000_receive_iov() logic via the loopback code path.
-> > 
-> > Other devices that use qemu_receive_packet() to implement loopback
-> > are cadence_gem, dp8393x, lan9118, msf2-emac, pcnet, rtl8139
-> > and sungem.
-> > 
-> > Cc: qemu-stable@nongnu.org
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3043
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > I think this is the right fix, but I'm not very familiar
-> > with the net internals...
-> > ---
-> >   net/net.c | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/net/net.c b/net/net.c
-> > index 27e0d278071..8aefdb3424f 100644
-> > --- a/net/net.c
-> > +++ b/net/net.c
-> > @@ -775,10 +775,20 @@ ssize_t qemu_send_packet(NetClientState *nc, const uint8_t *buf, int size)
-> >   ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
-> >   {
-> > +    uint8_t min_pkt[ETH_ZLEN];
-> > +    size_t min_pktsz = sizeof(min_pkt);
-> > +
-> >       if (!qemu_can_receive_packet(nc)) {
-> >           return 0;
-> >       }
-> > +    if (net_peer_needs_padding(nc)) {
-> > +        if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
-> > +            buf = min_pkt;
-> > +            size = min_pktsz;
-> > +        }
-> > +    }
-> > +
-> >       return qemu_net_queue_receive(nc->incoming_queue, buf, size);
-> >   }
+On 2025/11/03 19:10, Philippe Mathieu-Daudé wrote:
+> From: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Nitpicking, variables scope can be reduced:
+> All of the complicated parts of updating the address space
+> are handled by address_space_update_topology_pass.
+> Do not create or use hvf_slot structures.
 > 
-> -- >8 --
-> @@ -777,5 +777,2 @@ ssize_t qemu_receive_packet(NetClientState *nc, const
-> uint8_t *buf, int size)
->  {
-> -    uint8_t min_pkt[ETH_ZLEN];
-> -    size_t min_pktsz = sizeof(min_pkt);
-> -
->      if (!qemu_can_receive_packet(nc)) {
-> @@ -785,2 +782,5 @@ ssize_t qemu_receive_packet(NetClientState *nc, const
-> uint8_t *buf, int size)
->      if (net_peer_needs_padding(nc)) {
-> +        uint8_t min_pkt[ETH_ZLEN];
-> +        size_t min_pktsz = sizeof(min_pkt);
-> +
->          if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-
-That isn't desirable, as then 'buf' would be holding a stack pointer
-that has gone out of scope when qemu_net_queue_receive is called.
-
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   accel/hvf/hvf-all.c | 111 +++++++-------------------------------------
+>   1 file changed, 17 insertions(+), 94 deletions(-)
 > 
-> 
+> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+> index f203a6251f0..76b8d4d4068 100644
+> --- a/accel/hvf/hvf-all.c
+> +++ b/accel/hvf/hvf-all.c
+> @@ -87,45 +87,16 @@ void hvf_unprotect_dirty_range(hwaddr addr, size_t size)
+>                        HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
+>   }
+>   
+> -static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
+> -{
+> -    struct mac_slot *macslot;
+> -    hv_return_t ret;
+> -
+> -    macslot = &mac_slots[slot->slot_id];
+> -
+> -    if (macslot->present) {
+> -        if (macslot->size != slot->size) {
+> -            macslot->present = 0;
+> -            trace_hvf_vm_unmap(macslot->gpa_start, macslot->size);
+> -            ret = hv_vm_unmap(macslot->gpa_start, macslot->size);
+> -            assert_hvf_ok(ret);
+> -        }
+> -    }
+> -
+> -    if (!slot->size) {
+> -        return 0;
+> -    }
+> -
+> -    macslot->present = 1;
+> -    macslot->gpa_start = slot->start;
+> -    macslot->size = slot->size;
+> -    trace_hvf_vm_map(slot->start, slot->size, slot->mem, flags,
+> -                     flags & HV_MEMORY_READ ?  'R' : '-',
+> -                     flags & HV_MEMORY_WRITE ? 'W' : '-',
+> -                     flags & HV_MEMORY_EXEC ?  'X' : '-');
+> -    ret = hv_vm_map(slot->mem, slot->start, slot->size, flags);
+> -    assert_hvf_ok(ret);
+> -    return 0;
+> -}
+> -
+>   static void hvf_set_phys_mem(MemoryRegionSection *section, bool add)
+>   {
+> -    hvf_slot *mem;
+>       MemoryRegion *area = section->mr;
+>       bool writable = !area->readonly && !area->rom_device;
+>       hv_memory_flags_t flags;
+>       uint64_t page_size = qemu_real_host_page_size();
+> +    uint64_t gva = section->offset_within_address_space;
+> +    uint64_t size = int128_get64(section->size);
+> +    hv_return_t ret;
+> +    void *mem;
+>   
+>       if (!memory_region_is_ram(area)) {
+>           if (writable) {
+> @@ -139,69 +110,28 @@ static void hvf_set_phys_mem(MemoryRegionSection *section, bool add)
+>           }
+>       }
+>   
+> -    if (!QEMU_IS_ALIGNED(int128_get64(section->size), page_size) ||
+> -        !QEMU_IS_ALIGNED(section->offset_within_address_space, page_size)) {
+> +    if (!QEMU_IS_ALIGNED(size, page_size) ||
+> +        !QEMU_IS_ALIGNED(gva, page_size)) {
+>           /* Not page aligned, so we can not map as RAM */
+>           add = false;
+>       }
+>   
+> -    mem = hvf_find_overlap_slot(
+> -            section->offset_within_address_space,
+> -            int128_get64(section->size));
+> -
+> -    if (mem && add) {
+> -        if (mem->size == int128_get64(section->size) &&
+> -            mem->start == section->offset_within_address_space &&
+> -            mem->mem == (memory_region_get_ram_ptr(area) +
+> -            section->offset_within_region)) {
+> -            return; /* Same region was attempted to register, go away. */
+> -        }
+> -    }
+> -
+> -    /* Region needs to be reset. set the size to 0 and remap it. */
+> -    if (mem) {
+> -        mem->size = 0;
+> -        if (do_hvf_set_memory(mem, 0)) {
+> -            error_report("Failed to reset overlapping slot");
+> -            abort();
+> -        }
+> -    }
+> -
+>       if (!add) {
+> +        trace_hvf_vm_unmap(gva, size);
+> +        ret = hv_vm_unmap(gva, size);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+I think you meant gpa.
+
+> +        assert_hvf_ok(ret);
+>           return;
+>       }
+>   
+> -    if (area->readonly ||
+> -        (!memory_region_is_ram(area) && memory_region_is_romd(area))) {
+> -        flags = HV_MEMORY_READ | HV_MEMORY_EXEC;
+> -    } else {
+> -        flags = HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC;
+> -    }
+> +    flags = HV_MEMORY_READ | HV_MEMORY_EXEC | (writable ? HV_MEMORY_WRITE : 0);
+> +    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
+>   
+> -    /* Now make a new slot. */
+> -    int x;
+> -
+> -    for (x = 0; x < hvf_state->num_slots; ++x) {
+> -        mem = &hvf_state->slots[x];
+> -        if (!mem->size) {
+> -            break;
+> -        }
+> -    }
+> -
+> -    if (x == hvf_state->num_slots) {
+> -        error_report("No free slots");
+> -        abort();
+> -    }
+> -
+> -    mem->size = int128_get64(section->size);
+> -    mem->mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
+> -    mem->start = section->offset_within_address_space;
+> -    mem->region = area;
+> -
+> -    if (do_hvf_set_memory(mem, flags)) {
+> -        error_report("Error registering new memory slot");
+> -        abort();
+> -    }
+> +    trace_hvf_vm_map(gva, size, mem, flags,
+> +                     flags & HV_MEMORY_READ ?  'R' : '-',
+> +                     flags & HV_MEMORY_WRITE ? 'W' : '-',
+> +                     flags & HV_MEMORY_EXEC ?  'X' : '-');
+> +    ret = hv_vm_map(mem, gva, size, flags);
+> +    assert_hvf_ok(ret);
+>   }
+>   
+>   static void hvf_log_start(MemoryListener *listener,
+> @@ -260,7 +190,6 @@ static MemoryListener hvf_memory_listener = {
+>   
+>   static int hvf_accel_init(AccelState *as, MachineState *ms)
+>   {
+> -    int x;
+>       hv_return_t ret;
+>       HVFState *s = HVF_STATE(as);
+>       int pa_range = 36;
+> @@ -281,12 +210,6 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
+>       }
+>       assert_hvf_ok(ret);
+>   
+> -    s->num_slots = ARRAY_SIZE(s->slots);
+> -    for (x = 0; x < s->num_slots; ++x) {
+> -        s->slots[x].size = 0;
+> -        s->slots[x].slot_id = x;
+> -    }
+> -
+>       QTAILQ_INIT(&s->hvf_sw_breakpoints);
+>   
+>       hvf_state = s;
 
 
