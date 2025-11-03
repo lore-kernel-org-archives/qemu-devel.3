@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE10CCFA05
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5B8CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFlOQ-0006Jo-PV; Sun, 02 Nov 2025 22:38:08 -0500
+	id 1vFlOe-0006ya-9G; Sun, 02 Nov 2025 22:38:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vFlOA-00065B-Ev
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:37:50 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1vFlOF-00068H-4h
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:37:55 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vFlO4-0000E5-2G
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:37:45 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-340a5c58bf1so1573484a91.2
- for <qemu-devel@nongnu.org>; Sun, 02 Nov 2025 19:37:41 -0800 (PST)
+ id 1vFlOA-0000El-6e
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:37:54 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b608df6d2a0so3628358a12.1
+ for <qemu-devel@nongnu.org>; Sun, 02 Nov 2025 19:37:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762141060; x=1762745860; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762141065; x=1762745865; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7+ADKirZFYh3BWmDuvkt9w0xdIjzP2BapZzLBzSFQ2w=;
- b=VGWAYKBCPNRyvXGbn8nL0xd8nTQHez5tNDorYDmLZ2uSUiq/1Ixm5/F3UD9PyEjBwB
- nVz8JAWuceKwTRiArDiCAD//xJuPsFYCBC6fsQnaSjdJjFVDpDDiTD9gmRCIHeIZWP77
- LRzouGY5yP+tenXI4G+9hDbjAYx0oI8Z4pjOAZLJFrdXLIEJvhk5O8jKazJg1iJf7wqZ
- 0lOk9WTdtxwMBZyw17YlAr3SmBsXoRlCsAIJOQxuwik/A6xR4Yb9A9pSxnJ3gLl6vVgn
- fxvn8jDVtxiAdLvK6cMo9Fg5ESG8ieBp0j0yklc2er5Pp0rZ6NJNeeJ8JPUoCvHZ9Wqu
- JykA==
+ bh=NpNQdPpzfT14cCGsW3Km7XkFypzdKH+sZ2079tWFHM4=;
+ b=fJjpX0BqZyqpor89fLHrC/puDnItl4NES9OYB9ZsxFu8sT4Qbh/vyOIx3U/IVHWsQK
+ Y22Kghy/125rRGxoZT64GoXPZzpC5/zdSqr74068o3SMFIaVs33wJQ+NkmuXLgJJas4T
+ EpFZuv2YUE7jJ//Ag/uoxKRZaQOfEzvy9D3dhsFdy6xQxuvR9rOIoLNSxXgSlwpcpeph
+ I/PyZ1ujfK1Z7MbXZxibi2gOImHN4aRPjF648aNDjM7ZJzrzY3j0ChC2tKtkxBeCiykW
+ 5I8VmAPzPHAtqU617PsVqfVJXr8/ERoAP1VKV5PJ/CS+ly6dM/HSHDhbHfKKGu0RuBnN
+ RBUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762141060; x=1762745860;
+ d=1e100.net; s=20230601; t=1762141065; x=1762745865;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7+ADKirZFYh3BWmDuvkt9w0xdIjzP2BapZzLBzSFQ2w=;
- b=pLFem64wlMkB5qz91vSTiFX+WSpsk5PXwbgYjrAe33ArdjzBdO+aPTBJX6dVzvztGc
- 9bo6Fr3h1RRVtEiM7SC1WHUcXlDbM1gxUrlYfvJPXH1M5kltS92Qr9ll3WJNSQ7gchDx
- oJ9mvzU48HisZiFaAoHxL/feC+VU5K1GbINhmOLKRZBdY5uly1/mSNYiPFzLeHrxiSA8
- OZEc4sbAM6eB/9ihLNpRHUjejXkbr+qAYZXScOd9pnrNj5Xqh3tBqWQMbpTy1RKF3c8q
- x/J5P5NcUP88bBf4TqOdFdFuOWGYTkD1Z8ZNoTsFVyBllVj8SYCRWCt83aeUsEkpUAD6
- 46gg==
-X-Gm-Message-State: AOJu0YzBKDLsH+es4h3/Yk+FTgdIhfmBpas5EyhNNNDZfb3UDWpGsESI
- XpaObo7rIulut3ViKLP7umQYhbexf5P1w76RYCC0neQ1fL3rAV6p2ztiHAW9yA==
-X-Gm-Gg: ASbGncu8ugoOorRI/4eeysMaC82/Xjqn26ZwukofrXuN253Sh5TbgbMYE3UKSGlM1FR
- AouUN1PFsHS9KV79hAKfN+VUFnX32xU9vWvbjcdYOqet8BDmoJkRVXNr607/s/e09U+btvp2dy1
- 20PzJw8W/J0c8cKwooTw5VAuMZhUTUoOhNAkEkjl8GyDp0k5NHU+NmcYB/ypVrBjGmnV7cAnnca
- 4rMmy1lzElYnINRAXqIeb9mqXbR6bBHzU2LA/Vv3JAIvoF8b0tTifaWg9Fd7EnAfFAGGLreqpeD
- bvFZ/asRBnzkyvNmzGimJXnaaknL1DooYU7khXxqzNP3u10QJ2o3Dx34f4PpWXbHDxy17MG2ngK
- slld7A4B/yPpxcZm+t/4QpP7cA/L6OzZve94ZqRC7aEJ9UjHjXZa56SPFTLq8GN+4xmhnPUl4xi
- 1ylSZs5h1tX9TdW9bUheQjUk7MtS17ogoB2Y10fDBiXnnX2oOZSiyK42aQ1yL1QwiGUUCaZnLSC
- dTx4uFg7z2SPCDeB/a5B5F+MDCocw==
-X-Google-Smtp-Source: AGHT+IG4t+cgJ1ZaTlpQBBexQXuie4pc6gqZtjvzZIfPlsSk+nQiWrnwDHRJhq7sNecyd/WOgugDQQ==
-X-Received: by 2002:a17:90b:2781:b0:340:dcd4:f851 with SMTP id
- 98e67ed59e1d1-340dcd4fa95mr6689535a91.3.1762141059600; 
- Sun, 02 Nov 2025 19:37:39 -0800 (PST)
+ bh=NpNQdPpzfT14cCGsW3Km7XkFypzdKH+sZ2079tWFHM4=;
+ b=rFPoeTcW8axs54573E7s4p/hpP07MS+1SwFXJY0X+lBuk25Y46H8PYsmh7T5PaYIh8
+ Q04rlB4Wvf572YhfbKoHnQbRs/vWvAxpADY0j05NwyX3j+rh9K2GBSsc1SQ7r1nnoUcj
+ xXXeyg/ae6YWco7vsRiu93utBjeOgZ7B3Iw7fAeiyFCt+BEz6uKE31eX8zLYQVjlJcfY
+ yW3RNV+rBWtRRRV8v84IPE1dq4JSN/igPuTYCPmTvYDh1bhMLsqOasTwHgpHSX1ByM83
+ KvyeyuLHo97T6Es2E+FhV1no1s/j3RXlR2r8SY44arbm7iWIAV2hhvv8OV4gKWlfHM2v
+ bPhA==
+X-Gm-Message-State: AOJu0Yz/K13rpj/Uh3YJgNcJX9AqYKE4lrtPE62mC6a3pUCy06htQqCf
+ 9iWkojMAEhAdSen3Q0dJSN54GaSCZ09QPfKGcoY6Rg7YzMRmQ0vY2dfw6J340Q==
+X-Gm-Gg: ASbGnctqX3dttTW3xPyiLLPa5c8mXNKLwNLsNQAGoUEJ24EI/xaC7tINm/uVpMBbwPY
+ 0bfx3UuX8RdzHDeMmYXe8BxdsmX2ClTWr4vBihkEfFzJQw3vksp0QAdjpim0BZklizVMr5htfrM
+ d5QSd7QeopRKKkdePx5MpAz7xuSrkzZEOIEqsi/Lcd++lioHnQPg+3duKhWuPYwzDVwSBLyxv1n
+ 4RFjc1B3RtQj06zvxRw1SN27mfKwgmNZZaaNn3XQNFGVn2gCa2szYd4WZBrzrjxjAnjpBX2gXIk
+ unSHxqyOCEBHi3hif1VoJwjB2Q0Cn5sPQfQXAEEhlI/2+aIQ9n/t43wXGjpPSjeY74NsPeG9rwi
+ DLF9IMF/n980LobCMTzmz6XpzF2tTj4FxRHvjr0in6wRCXgT+eyL8qKnE/w8+t7HhQ1SccnXOIj
+ VWk0T3TPL4GGGm85xOE0aAgU1r7HFDcrXLcm3FkvE51kEYhogonBPnsk5pJdFFMPhgydxeAJbwP
+ k9gtcn6
+X-Google-Smtp-Source: AGHT+IFb85I+7fXJMpyl+YnydbLrzDiH/RsjR6RVVmgOH+UOu5DFx+2mrFys5vVIDgKfzJk5nRpNtw==
+X-Received: by 2002:a17:902:f60c:b0:295:9cb5:ae2a with SMTP id
+ d9443c01a7336-2959cb5b3a5mr36411915ad.9.1762141065236; 
+ Sun, 02 Nov 2025 19:37:45 -0800 (PST)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-340a460ed24sm7939641a91.16.2025.11.02.19.37.34
+ 98e67ed59e1d1-340a460ed24sm7939641a91.16.2025.11.02.19.37.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Nov 2025 19:37:38 -0800 (PST)
+ Sun, 02 Nov 2025 19:37:44 -0800 (PST)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org, anjo@rev.ng, philmd@linaro.org, palmer@dabbelt.com,
  dbarboza@ventanamicro.com, atishp@rivosinc.com
 Cc: alistair23@gmail.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- qemu-riscv@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 2/8] target/riscv: Fix size of mhartid
-Date: Mon,  3 Nov 2025 13:37:07 +1000
-Message-ID: <20251103033713.904455-3-alistair.francis@wdc.com>
+ qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 3/8] target/riscv: Bugfix make bit 62 read-only 0 for sireg*
+ cfg CSR read
+Date: Mon,  3 Nov 2025 13:37:08 +1000
+Message-ID: <20251103033713.904455-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251103033713.904455-1-alistair.francis@wdc.com>
 References: <20251103033713.904455-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,72 +111,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
-and update formatting in log.
+According to version 20250508 of the privileged specification, a read of
+cyclecfg or instretcfg through sireg* should make the MINH bit
+read-only 0, currently bit 30 is zeroed.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251027181831.27016-3-anjo@rev.ng>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20251027181831.27016-5-anjo@rev.ng>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h         | 2 +-
- target/riscv/cpu_helper.c  | 2 +-
- target/riscv/machine.c     | 2 +-
- target/riscv/tcg/tcg-cpu.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ target/riscv/csr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7ffc4dac26..adeb36abc2 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -280,7 +280,7 @@ struct CPUArchState {
-     target_ulong geilen;
-     uint64_t resetvec;
- 
--    target_ulong mhartid;
-+    uint64_t mhartid;
-     /*
-      * For RV32 this is 32-bit mstatus and 32-bit mstatush.
-      * For RV64 this is a 64-bit mstatus.
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index c4fb68b5de..dd6c861a90 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -2280,7 +2280,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                      riscv_cpu_get_trap_name(cause, async));
- 
-     qemu_log_mask(CPU_LOG_INT,
--                  "%s: hart:"TARGET_FMT_ld", async:%d, cause:"TARGET_FMT_lx", "
-+                  "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
-                   "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
-                   __func__, env->mhartid, async, cause, env->pc, tval,
-                   riscv_cpu_get_trap_name(cause, async));
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index f6ca017211..ab0bc32e1f 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -450,7 +450,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.priv, RISCVCPU),
-         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
-         VMSTATE_UINT64(env.resetvec, RISCVCPU),
--        VMSTATE_UINTTL(env.mhartid, RISCVCPU),
-+        VMSTATE_UINT64(env.mhartid, RISCVCPU),
-         VMSTATE_UINT64(env.mstatus, RISCVCPU),
-         VMSTATE_UINT64(env.mip, RISCVCPU),
-         VMSTATE_UINT64(env.miclaim, RISCVCPU),
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index d3968251fa..850a383702 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -489,7 +489,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
-                 continue;
-             }
- #ifndef CONFIG_USER_ONLY
--            warn_report("disabling %s extension for hart 0x" TARGET_FMT_lx
-+            warn_report("disabling %s extension for hart 0x%" PRIx64
-                         " because privilege spec version does not match",
-                         edata->name, env->mhartid);
- #else
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 5c91658c3d..b0917f27bb 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1544,7 +1544,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
+             wr_mask &= ~MCYCLECFG_BIT_MINH;
+             env->mcyclecfg = (new_val & wr_mask) | (env->mcyclecfg & ~wr_mask);
+         } else {
+-            *val = env->mcyclecfg &= ~MHPMEVENTH_BIT_MINH;
++            *val = env->mcyclecfg &= ~MHPMEVENT_BIT_MINH;
+         }
+         break;
+     case 2:             /* INSTRETCFG */
+@@ -1553,7 +1553,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
+             env->minstretcfg = (new_val & wr_mask) |
+                                (env->minstretcfg & ~wr_mask);
+         } else {
+-            *val = env->minstretcfg &= ~MHPMEVENTH_BIT_MINH;
++            *val = env->minstretcfg &= ~MHPMEVENT_BIT_MINH;
+         }
+         break;
+     default:
 -- 
 2.51.1
 
