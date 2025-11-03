@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA404CCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFBACCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFqtT-0003Pf-N2; Mon, 03 Nov 2025 04:30:37 -0500
+	id 1vFqri-0000na-0U; Mon, 03 Nov 2025 04:28:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqtD-0003G6-B8; Mon, 03 Nov 2025 04:30:15 -0500
+ id 1vFqrg-0000mn-5e; Mon, 03 Nov 2025 04:28:40 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqt3-0002S6-D8; Mon, 03 Nov 2025 04:30:13 -0500
+ id 1vFqrb-0001r9-Q7; Mon, 03 Nov 2025 04:28:38 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 3 Nov
- 2025 17:28:14 +0800
+ 2025 17:28:05 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 3 Nov 2025 17:28:14 +0800
+ Transport; Mon, 3 Nov 2025 17:28:05 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 18/30] hw/arm/aspeed: Split Bletchley machine into a
- separate source file for maintainability
-Date: Mon, 3 Nov 2025 17:27:29 +0800
-Message-ID: <20251103092801.1282602-19-jamin_lin@aspeedtech.com>
+ <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v3 06/30] hw/arm/aspeed: Split G220A machine into a separate
+ source file for better maintenance
+Date: Mon, 3 Nov 2025 17:27:17 +0800
+Message-ID: <20251103092801.1282602-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
 References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
@@ -67,148 +68,147 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the Facebook Bletchley BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_bletchley.c.
+This commit refactors the Bytedance G220A BMC machine by moving its
+implementation from aspeed.c into a new dedicated file
+aspeed_ast2500_g220a.c.
 
-This refactor continues the modularization effort for Aspeed platform support,
-placing each board’s logic in its own dedicated source file.
-It improves maintainability, readability, and simplifies future development for
-new platforms without cluttering aspeed.c.
+The goal is to improve modularity and maintainability of Aspeed
+machine definitions by isolating each platform into its own source
+file. This aligns with ongoing efforts to simplify aspeed.c,
+which previously contained all machine configurations.
 
 Key updates include:
-- Moved BLETCHLEY_BMC_HW_STRAP1 and BLETCHLEY_BMC_HW_STRAP2 macro definitions into the new file.
-- Moved bletchley_bmc_i2c_init() I²C initialization logic into the new file.
-- Moved aspeed_machine_bletchley_class_init() and type registration.
-- Added aspeed_ast2600_bletchley.c to the build system (meson.build).
-- Removed all Bletchley-specific code and macros from aspeed.c.
+
+- Moved G220A_BMC_HW_STRAP1 definition and
+g220a_bmc_i2c_init() function into aspeed_ast2500_g220a.c.
+- Moved aspeed_machine_g220a_class_init() and related type
+registration to the new file.
+- Added the new file to the build system (meson.build).
+- Removed all G220A-specific code from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                   | 77 ------------------------
- hw/arm/aspeed_ast2600_bletchley.c | 98 +++++++++++++++++++++++++++++++
- hw/arm/meson.build                |  1 +
- 3 files changed, 99 insertions(+), 77 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_bletchley.c
+ hw/arm/aspeed.c               | 72 ---------------------------
+ hw/arm/aspeed_ast2500_g220a.c | 93 +++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build            |  1 +
+ 3 files changed, 94 insertions(+), 72 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2500_g220a.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index ba0c9a62ff..3acb45b22c 100644
+index 3dcd5fc540..ed8ef6a2d0 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -56,10 +56,6 @@ static struct arm_boot_info aspeed_board_binfo = {
- #define FUJI_BMC_HW_STRAP1    0x00000000
- #define FUJI_BMC_HW_STRAP2    0x00000000
+@@ -117,20 +117,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+         SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+         SCU_AST2500_HW_STRAP_RESERVED1)
  
--/* Bletchley hardware value */
--#define BLETCHLEY_BMC_HW_STRAP1 0x00002000
--#define BLETCHLEY_BMC_HW_STRAP2 0x00000801
+-#define G220A_BMC_HW_STRAP1 (                                      \
+-        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
+-        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
+-        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
+-        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
+-        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+-        SCU_HW_STRAP_2ND_BOOT_WDT |                                     \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
+-        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_64M_DRAM) |                       \
+-        SCU_AST2500_HW_STRAP_RESERVED1)
 -
- /* GB200NVL hardware value */
- #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
- #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
-@@ -685,53 +681,6 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
+ /* Witherspoon hardware value: 0xF10AD216 (but use romulus definition) */
+ #define WITHERSPOON_BMC_HW_STRAP1 ROMULUS_BMC_HW_STRAP1
+ 
+@@ -635,42 +621,6 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+     /* Bus 11: TODO ucd90160@64 */
  }
  
--static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
+-static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
--    I2CBus *i2c[13] = {};
--    for (int i = 0; i < 13; i++) {
--        if ((i == 8) || (i == 11)) {
--            continue;
--        }
--        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
--    }
+-    DeviceState *dev;
 -
--    /* Bus 0 - 5 all have the same config. */
--    for (int i = 0; i < 6; i++) {
--        /* Missing model: ti,ina230 @ 0x45 */
--        /* Missing model: mps,mp5023 @ 0x40 */
--        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
--        /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
--        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
--        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
--        /* Missing model: fsc,fusb302 @ 0x22 */
--    }
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
+-                                         "emc1413", 0x4c));
+-    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 -
--    /* Bus 6 */
--    at24c_eeprom_init(i2c[6], 0x56, 65536);
--    /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
--    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 12),
+-                                         "emc1413", 0x4c));
+-    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 -
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 13),
+-                                         "emc1413", 0x4c));
+-    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 -
--    /* Bus 7 */
--    at24c_eeprom_init(i2c[7], 0x54, 65536);
--
--    /* Bus 9 */
--    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
--
--    /* Bus 10 */
--    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
--    /* Missing model: ti,hdc1080 @ 0x40 */
--    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
--
--    /* Bus 12 */
--    /* Missing model: adi,adm1278 @ 0x11 */
--    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
--    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
--    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
+-    static uint8_t eeprom_buf[2 * 1024] = {
+-            0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0xfe,
+-            0x01, 0x06, 0x00, 0xc9, 0x42, 0x79, 0x74, 0x65,
+-            0x64, 0x61, 0x6e, 0x63, 0x65, 0xc5, 0x47, 0x32,
+-            0x32, 0x30, 0x41, 0xc4, 0x41, 0x41, 0x42, 0x42,
+-            0xc4, 0x43, 0x43, 0x44, 0x44, 0xc4, 0x45, 0x45,
+-            0x46, 0x46, 0xc4, 0x48, 0x48, 0x47, 0x47, 0xc1,
+-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xa7,
+-    };
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x57,
+-                          eeprom_buf);
 -}
 -
--
- static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
+ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
  {
      AspeedSoCState *soc = bmc->soc;
-@@ -1059,27 +1008,6 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
-     aspeed_machine_class_init_cpus_defaults(mc);
+@@ -1549,23 +1499,6 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
+     aspeed_machine_ast2600_class_emmc_init(oc);
  };
  
--#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
--
--static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
--                                                const void *data)
+-static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Facebook Bletchley BMC (Cortex-A7)";
--    amc->soc_name  = "ast2600-a3";
--    amc->hw_strap1 = BLETCHLEY_BMC_HW_STRAP1;
--    amc->hw_strap2 = BLETCHLEY_BMC_HW_STRAP2;
--    amc->fmc_model = "w25q01jvq";
--    amc->spi_model = NULL;
+-    mc->desc       = "Bytedance G220A BMC (ARM1176)";
+-    amc->soc_name  = "ast2500-a1";
+-    amc->hw_strap1 = G220A_BMC_HW_STRAP1;
+-    amc->fmc_model = "n25q512a";
+-    amc->spi_model = "mx25l25635e";
 -    amc->num_cs    = 2;
--    amc->macs_mask = ASPEED_MAC2_ON;
--    amc->i2c_init  = bletchley_bmc_i2c_init;
--    mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
+-    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+-    amc->i2c_init  = g220a_bmc_i2c_init;
+-    mc->default_ram_size = 1024 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
--}
+-};
 -
- static void aspeed_machine_catalina_class_init(ObjectClass *oc,
-                                                const void *data)
+ static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
  {
-@@ -1367,11 +1295,6 @@ static const TypeInfo aspeed_machine_types[] = {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1939,11 +1872,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_fuji_class_init,
+         .class_init    = aspeed_machine_tiogapass_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
+-        .name          = MACHINE_TYPE_NAME("g220a-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_bletchley_class_init,
+-        .class_init    = aspeed_machine_g220a_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
+         .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
+diff --git a/hw/arm/aspeed_ast2500_g220a.c b/hw/arm/aspeed_ast2500_g220a.c
 new file mode 100644
-index 0000000000..f9fcdb978a
+index 0000000000..c7899ed1df
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_bletchley.c
-@@ -0,0 +1,98 @@
++++ b/hw/arm/aspeed_ast2500_g220a.c
+@@ -0,0 +1,93 @@
 +/*
-+ * Facebook Bletchley
++ * Bytedance G220A
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -220,103 +220,98 @@ index 0000000000..f9fcdb978a
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/gpio/pca9552.h"
-+#include "hw/nvram/eeprom_at24c.h"
++#include "hw/i2c/smbus_eeprom.h"
 +
-+#define TYPE_TMP421 "tmp421"
-+/* Bletchley hardware value */
-+#define BLETCHLEY_BMC_HW_STRAP1 0x00002000
-+#define BLETCHLEY_BMC_HW_STRAP2 0x00000801
-+#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
++#define G220A_BMC_HW_STRAP1 (                                      \
++        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
++        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
++        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
++        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
++        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
++        SCU_HW_STRAP_2ND_BOOT_WDT |                                     \
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
++        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_64M_DRAM) |                       \
++        SCU_AST2500_HW_STRAP_RESERVED1)
 +
-+static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
++static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
-+    I2CBus *i2c[13] = {};
-+    for (int i = 0; i < 13; i++) {
-+        if ((i == 8) || (i == 11)) {
-+            continue;
-+        }
-+        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
-+    }
++    DeviceState *dev;
 +
-+    /* Bus 0 - 5 all have the same config. */
-+    for (int i = 0; i < 6; i++) {
-+        /* Missing model: ti,ina230 @ 0x45 */
-+        /* Missing model: mps,mp5023 @ 0x40 */
-+        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
-+        /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
-+        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
-+        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
-+        /* Missing model: fsc,fusb302 @ 0x22 */
-+    }
++    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
++                                         "emc1413", 0x4c));
++    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 +
-+    /* Bus 6 */
-+    at24c_eeprom_init(i2c[6], 0x56, 65536);
-+    /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
-+    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
++    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 12),
++                                         "emc1413", 0x4c));
++    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 +
++    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 13),
++                                         "emc1413", 0x4c));
++    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
 +
-+    /* Bus 7 */
-+    at24c_eeprom_init(i2c[7], 0x54, 65536);
-+
-+    /* Bus 9 */
-+    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
-+
-+    /* Bus 10 */
-+    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
-+    /* Missing model: ti,hdc1080 @ 0x40 */
-+    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
-+
-+    /* Bus 12 */
-+    /* Missing model: adi,adm1278 @ 0x11 */
-+    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
-+    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
-+    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
++    static uint8_t eeprom_buf[2 * 1024] = {
++            0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0xfe,
++            0x01, 0x06, 0x00, 0xc9, 0x42, 0x79, 0x74, 0x65,
++            0x64, 0x61, 0x6e, 0x63, 0x65, 0xc5, 0x47, 0x32,
++            0x32, 0x30, 0x41, 0xc4, 0x41, 0x41, 0x42, 0x42,
++            0xc4, 0x43, 0x43, 0x44, 0x44, 0xc4, 0x45, 0x45,
++            0x46, 0x46, 0xc4, 0x48, 0x48, 0x47, 0x47, 0xc1,
++            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xa7,
++    };
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x57,
++                          eeprom_buf);
 +}
 +
-+static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
-+                                                const void *data)
++static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Facebook Bletchley BMC (Cortex-A7)";
-+    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = BLETCHLEY_BMC_HW_STRAP1;
-+    amc->hw_strap2 = BLETCHLEY_BMC_HW_STRAP2;
-+    amc->fmc_model = "w25q01jvq";
-+    amc->spi_model = NULL;
++    mc->desc       = "Bytedance G220A BMC (ARM1176)";
++    amc->soc_name  = "ast2500-a1";
++    amc->hw_strap1 = G220A_BMC_HW_STRAP1;
++    amc->fmc_model = "n25q512a";
++    amc->spi_model = "mx25l25635e";
 +    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC2_ON;
-+    amc->i2c_init  = bletchley_bmc_i2c_init;
-+    mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
++    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
++    amc->i2c_init  = g220a_bmc_i2c_init;
++    mc->default_ram_size = 1024 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
-+}
++};
 +
-+static const TypeInfo aspeed_ast2600_bletchley_types[] = {
++static const TypeInfo aspeed_ast2500_g220a_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
++        .name          = MACHINE_TYPE_NAME("g220a-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_bletchley_class_init,
++        .class_init    = aspeed_machine_g220a_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_bletchley_types)
++DEFINE_TYPES(aspeed_ast2500_g220a_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index e52901108b..6d80e2caf9 100644
+index ed637f2687..91bdefd203 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -57,6 +57,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2500_witherspoon.c',
-   'aspeed_ast2500_yosemitev2.c',
+@@ -45,6 +45,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
+   'aspeed_ast2500_fp5280g2.c',
++  'aspeed_ast2500_g220a.c',
    'aspeed_ast2600.c',
-+  'aspeed_ast2600_bletchley.c',
    'aspeed_ast10x0.c',
    'aspeed_eeprom.c',
-   'fby35.c'))
 -- 
 2.43.0
 
