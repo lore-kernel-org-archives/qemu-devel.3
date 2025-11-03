@@ -4,83 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A85DECCF9FE
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE127CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFuW5-0005dF-6Y; Mon, 03 Nov 2025 08:22:37 -0500
+	id 1vFuWx-0006hK-Sz; Mon, 03 Nov 2025 08:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuVt-0005YG-3B
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:22:25 -0500
-Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuVj-0001uY-Vu
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:22:23 -0500
-Received: by mail-wr1-x443.google.com with SMTP id
- ffacd0b85a97d-429c4c65485so2957638f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:22:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762176127; x=1762780927; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=iWJewuDPux2u2awuICD8ofBpDqih1Mqj5tAQcsbhGmg=;
- b=l0o7XlCI0wCJYDfkLyCbaguz61AUiwLVmy/m9AOIwOXDxKzd3A5zxSGTZbYVGHaLAm
- HJ9bv2SUFRiR8B2MyC35FKA3AlIxbE3sF+QDKsTWP6Fy3JWVNC4ixmRQjVQ5VyDYkXKr
- cN+5Vk86x65OJ9GqpSRhdcuLhP3++nP+PJX2fNTQ3028Bmxz7bw/4TLo4OSMvJw/0zLp
- MyW4gQTgZ9z11HaasgC0GfnRc7a00KDM5mdNz8XJErOtIGqnCxrP8EntSExZArdeg/d3
- vHwk2F+RFza2EGC1ArkJR3rPRkQ0uugpgnAPS8osRny1+RfKHYTyY+X4IGDE6QHiL6d+
- hZnA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vFuWv-0006gh-32
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:23:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vFuWf-00029A-51
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:23:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762176187;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PMUbQ0qTcx0H4tp2yfLeB44fxoxRDr72HkJE9bmJOjM=;
+ b=CqmlA/BZXgc1qimtKYH1tVA6WKPRUG4iNeKRh65orUdfSDaTEjPlYwhkEXFsfUlPifOlgo
+ VyrDckRJua8udDVpMGE2RSkhNA/3sSau+ZRxTa2wRA6iYZS3uaPKvckQ/xVSWnWC45PZmo
+ gtrDSqO7dnfqA+yk7UbPP8lQZAD+7Fc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-332-g54Zzgt2PdeWOlON9QugTA-1; Mon, 03 Nov 2025 08:23:06 -0500
+X-MC-Unique: g54Zzgt2PdeWOlON9QugTA-1
+X-Mimecast-MFC-AGG-ID: g54Zzgt2PdeWOlON9QugTA_1762176185
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-475dabb63f2so21173955e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:23:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762176127; x=1762780927;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iWJewuDPux2u2awuICD8ofBpDqih1Mqj5tAQcsbhGmg=;
- b=TrzPX1fqiyQfr+1jHAgI0O4EGhwGP9DxEVljNNtYPLBIXMTdg+tgk5RkRucb0C62/b
- LSbWVml2aF0vPRL1lSKLbqPX7rDo9ws2j4BJf5RjD0EUXj234KwaznPSmlsgca3N5uVn
- WVypls/hCpb80iQW1cCjYUFwF+Ycu+U3cekf3WPFqj8W9sN5id82SPmpOFISHTCjIATc
- yybLXGwMgr43FKaeGkQS/0MK1YVMjEAQxVj5hyjd+TtG5Axu6DYHuks42cEDz2pptvOH
- RsNIPBSWPOc7IsNaJG0WU1KkyM0ftiCoeyJ0z4/hkf0MWWb19Q675wyO28i+FiptHQPz
- bNZw==
-X-Gm-Message-State: AOJu0YyKoHveh9JN6RcpQWd4VOVbxK7OeJREpSXmrbDp1UYPPqPnY+77
- Wrf1sjMIt/XQJfK36lbdI5N27Js4AnnkPatW8SqnVT5vlMS8Lqy8b2XiSYW/GBmyvQGp3T1kSwL
- Y/wQmeUaeA2LT3lY=
-X-Gm-Gg: ASbGnctA/RLvW/g5LVjPBYrhVebnQlnozoJomuhh/SEwP2P+ArOzMo33VBwASytqV04
- LFizNtOf4zWyjNQGRfJx6ynvNNQr3p9kFN0wqJilTjlrML6lm7GPa76gj0GOEvuHr448w7m89JZ
- rWbIFEpSQp+WxAfS9BGzfjpEYLI946jgpnBRjxCb+Tk3SUq3G1vUt6zlrYaChD1fd2MEU2aedRU
- TqtbYTDgnHCIGZXIRUvZarHyo4KFrktjpG+ThmP4y8/oRmk980w/cd251/RAFhcctg9Ld7DKcPz
- AzeuMxo0XrKACGNPVf+iEIx+w92ENKouijKRf/mwzZPeEkfqZi+rwyrr1MzKdsmcIoiBtF/dRrS
- RO0CXG0kP4lYrgQu0EQpXa7u66qCJIWFedUwJIYBGOexmkyxU2KOpfQyqOVrlyiajBau7lXEoqf
- iMHssGmftQyq5fteMRPAD43rsLAEQ6ppOhS2KpDWZx5NSlNeOp10zwmUqlD8l/k27SGdGMew==
-X-Google-Smtp-Source: AGHT+IGeG4w+OxWAgFf1Enpd+haMQOzNuD6FWU9cVAkzTm+HQEnwAe2V/xYMO1NZhUT1zewX4xDAxA==
-X-Received: by 2002:a05:6000:1884:b0:429:d0f0:6dd1 with SMTP id
- ffacd0b85a97d-429d0f06f75mr4329630f8f.58.1762176127394; 
- Mon, 03 Nov 2025 05:22:07 -0800 (PST)
-Received: from localhost.localdomain (ip-185-104-138-156.ptr.icomera.net.
- [185.104.138.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c85ad188sm14247781f8f.20.2025.11.03.05.22.06
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 03 Nov 2025 05:22:06 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL v3 0/7] Accelerators & CPU patches for 2025-11-02
-Date: Mon,  3 Nov 2025 14:22:05 +0100
-Message-ID: <20251103132205.73931-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ d=1e100.net; s=20230601; t=1762176185; x=1762780985;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PMUbQ0qTcx0H4tp2yfLeB44fxoxRDr72HkJE9bmJOjM=;
+ b=ju7qQXNatoa1iJQKx5S8Vi2VhagZ95YdFmJx7SF0AqI7LzL3CTsLq2vdHfJRXXPE4F
+ U3SPzxSjEdd8+wo92Wi3NJE+C/72ijhWDHp/cLyr7Sx6YJ+A23MNMHoeseMNiQle9Bvx
+ dTwPtDYrX0n93aFVRD5KBDHudkopU7e3tzyQth4l6N/ijE6GsuFdzwLIxKq8cpjEvYhd
+ TVug2ksS3mor+9tEcyi9vRu0Oioo29HpsYKKcp+FzCeau6i2WeCWWEUjconfd3QFLwPz
+ JLDL8XnNES+IOFv2mZcPxELomplltozzaVJJkJKwHhHwI/6zY/yZLSfFkKRb0V3wMc04
+ R63g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWr2mpwkx0DI3rUjwawzxApOQHUjgpYlFSeEq+5zWyoe5iQGoEug0QsMEJOrMZi+zEBLVs1VjobRNfX@nongnu.org
+X-Gm-Message-State: AOJu0YyH7I36YNg0zjJqAHtHiXLzG/4qUsTGl6fMELDjWe2fwwvY3KtD
+ zdlirJ+Yd28x6jnD02Z5sFOn/Jmp4cNcSTMYKG+hUcw3+AnIvRnawxpBbLoKVY9PcCvMJ7MusaN
+ NWCsGmyqFr4pzBOWTKaYOtXQXdoShu0jrqRXEgVc2RYQ9x+0sJF1+XjTO
+X-Gm-Gg: ASbGncvBUPM6aZZitnu2HAr2ThaQyW0MqRV0YYpVQsnjPt1ANtjf2D3V9Hybq1uhGZg
+ KlKHx0IbqCVsZm9Q+ymBj0J8MH0mD9eu/CPpR1Tw5FH3PQQJtG/UPa+C06MB3/1bPklaEa94Yfk
+ TyHiw2Vceb+xCoJSXAnG0Cz9p6mwdZKGmaE0zN8k49kNgbN6SMcr1D51eemsXiuVKt7f73Hnslc
+ VjRa7KfJrbI3l8NhQg/mAtK5pW4JE/VAUApUmHxYLJuUqvSwlacxECmtFPrJRvj5zh3XzfCqS83
+ N/tYmCoNy3kxFcRsCe8COR4KwP/LtOaNqWM+lh9p3hr2fvay6xkKC0496iW+Ofc2+eIYOWx+e9V
+ 7p2W/IpyPYesuK+mBilBdbR0NezwPjO8CdXG++HlCKwNAog==
+X-Received: by 2002:a05:600c:4f93:b0:475:de05:661f with SMTP id
+ 5b1f17b1804b1-477308aa918mr119574135e9.41.1762176185181; 
+ Mon, 03 Nov 2025 05:23:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGg4g6GOp3gHFYKbrG/9AVBkt+CHn9Dw+y6oSM6xpY8Dt5PWCIdOLTQmCr9JXCep06zq4tdgg==
+X-Received: by 2002:a05:600c:4f93:b0:475:de05:661f with SMTP id
+ 5b1f17b1804b1-477308aa918mr119573835e9.41.1762176184790; 
+ Mon, 03 Nov 2025 05:23:04 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4772ff83182sm87961605e9.4.2025.11.03.05.23.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Nov 2025 05:23:04 -0800 (PST)
+Message-ID: <923f350a-1aa0-4402-b328-fa6dd5abd530@redhat.com>
+Date: Mon, 3 Nov 2025 14:23:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::443;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 23/23] docs/devel: Add IOMMUFD nesting documentation
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
+ <20251024084349.102322-24-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251024084349.102322-24-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,78 +117,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v2:
-- Dropped qemu_hexdump() unit test
+Zhenzhong,
 
-The following changes since commit a8e63c013016f9ff981689189c5b063551d04559:
+On 10/24/25 10:43 AM, Zhenzhong Duan wrote:
+> Add documentation about using IOMMUFD backed VFIO device with intel_iommu with
+> x-flts=on.
+>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  docs/devel/vfio-iommufd.rst | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+>
+> diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
+> index 3d1c11f175..f1e4d940e6 100644
+> --- a/docs/devel/vfio-iommufd.rst
+> +++ b/docs/devel/vfio-iommufd.rst
+> @@ -164,3 +164,28 @@ RAM discarding for mdev.
+>  
+>  ``vfio-ap`` and ``vfio-ccw`` devices don't have same issue as their backend
+>  devices are always mdev and RAM discarding is force enabled.
+> +
+> +Usage with intel_iommu with x-flts=on
+s/with/featuring to void repetition?
+> +-------------------------------------
+> +
+> +Only IOMMUFD backed VFIO device is supported when intel_iommu is configured
+> +with x-flts=on, for legacy container backed VFIO device, below error shows:
+> +
+> +.. code-block:: none
+> +
+> +    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when x-flts=on
+> +
+> +VFIO device under PCI bridge is unsupported, use PCIE bridge if necessary,
+> +or else below error shows:
+s/or else/otherwise
+> +
+> +.. code-block:: none
+> +
+> +    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device under PCI bridge is unsupported when x-flts=on
+s/under PCI bridge/downstream to a PCI bridge
+may have been better I think
+> +
+> +If host IOMMU has ERRATA_772415_SPR17, kexec or reboot from "intel_iommu=on,sm_on"
+> +to "intel_iommu=on,sm_off" in guest is also unsupported. Configure scalable mode
+> +off as below if it's not needed by guest.
+> +
+> +.. code-block:: bash
+> +
+> +    -device intel-iommu,x-scalable-mode=off
+Besides
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-  Merge tag 'igvm-20251103--pull-request' of https://gitlab.com/kraxel/qemu into staging (2025-11-03 10:21:01 +0100)
-
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/accel-cpus-20251103
-
-for you to fetch changes up to 6c5571e72aed54194a1a07799d8c23c90b5f229e:
-
-  rx: cpu: fix interrupts check in rx_cpu_do_interrupt() (2025-11-03 14:15:57 +0100)
-
-Following checkpatch.pl error ignored:
-
-  8/9 Checking commit 46f767bd6814 (tests/unit: add unit test for qemu_hexdump())
-  ERROR: unnecessary whitespace before a quoted newline
-  #59: FILE: tests/unit/test-cutils.c:3662:
-  +            "s is \n";
-
-  total: 1 errors, 0 warnings, 56 lines checked
-
-----------------------------------------------------------------
-Generic CPUs / accelerators patch queue
-
-- Access CPUState::thread_kicked atomically
-- Fix bql_locked status with condvar APIs
-- Document cpu_memory_rw_debug()
-- Rename init_clocks() -> qemu_init_clocks() to avoid name clashing
-- Fix QEMU_HEXDUMP_LINE_WIDTH logic
-- Fix interrupts check in rx_cpu_do_interrupt()
-----------------------------------------------------------------
-
-Alex Bennée (1):
-  timers: properly prefix init_clocks()
-
-Igor Mammedov (1):
-  rx: cpu: fix interrupts check in rx_cpu_do_interrupt()
-
-Peter Xu (1):
-  bql: Fix bql_locked status with condvar APIs
-
-Philippe Mathieu-Daudé (3):
-  cpus: Access CPUState::thread_kicked atomically
-  accel/tcg: Use cpu_is_stopped() helper to access CPUState::stopped
-  exec/cpu: Declare cpu_memory_rw_debug() in 'hw/core/cpu.h' and
-    document
-
-Vladimir Sementsov-Ogievskiy (1):
-  util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
-
- include/exec/cpu-common.h         |  4 ---
- include/hw/core/cpu.h             | 20 ++++++++++++++
- include/qemu/main-loop.h          | 18 +++++++++++++
- include/qemu/timer.h              |  5 ++--
- util/qemu-thread-common.h         |  7 +++++
- accel/tcg/tcg-accel-ops-rr.c      |  2 +-
- stubs/iothread-lock.c             |  9 +++++++
- system/cpus.c                     | 18 ++++++++++---
- target/rx/helper.c                | 45 ++++++++++++++-----------------
- tests/unit/test-aio-multithread.c |  2 +-
- util/hexdump.c                    | 38 ++++++++++++++++----------
- util/main-loop.c                  |  2 +-
- util/qemu-timer.c                 |  2 +-
- 13 files changed, 119 insertions(+), 53 deletions(-)
-
--- 
-2.51.0
+Eric
 
 
