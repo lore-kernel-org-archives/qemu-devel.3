@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50029CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 19:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC868CCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 20:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG0cW-0001l0-Ct; Mon, 03 Nov 2025 14:53:40 -0500
+	id 1vG0kX-0006DT-6x; Mon, 03 Nov 2025 15:01:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1vG0cT-0001jN-5c
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 14:53:37 -0500
-Received: from cyan.elm.relay.mailchannels.net ([23.83.212.47])
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1vG0kU-0006CS-0J
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 15:01:54 -0500
+Received: from butterfly.birch.relay.mailchannels.net ([23.83.209.27])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1vG0cH-0006ra-Vl
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 14:53:36 -0500
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1vG0kN-0000cb-Dl
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 15:01:52 -0500
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id D5D4378053C;
- Mon, 03 Nov 2025 19:53:19 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTP id 6DC20120C92;
+ Mon, 03 Nov 2025 19:53:12 +0000 (UTC)
 Received: from pdx1-sub0-mail-a475.dreamhost.com
- (100-121-221-249.trex-nlb.outbound.svc.cluster.local [100.121.221.249])
+ (100-121-54-118.trex-nlb.outbound.svc.cluster.local [100.121.54.118])
  (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 74D56780B5D;
- Mon, 03 Nov 2025 19:53:19 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762199599; a=rsa-sha256;
+ by relay.mailchannels.net (Postfix) with ESMTPA id DA6E2121B24;
+ Mon, 03 Nov 2025 19:53:11 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762199592; a=rsa-sha256;
  cv=none;
- b=PjSXy/vh3Q8vBFth0xQTuWqqgiqSnS/+LI8lJPIf26AmoBggCxrxFnmeUiZ1ivnyL0hvh0
- wrX3VUBay02QH2VRHdEKGBjruAGlCZWPvpSa56U2adJgdbJD1td8/PzgdzSi5Xzyx198VB
- 3eBDxvhiQ69fjpByYaZlRkV7Z/hiJ/40qMBZUgK8O8B+2ojTQpckyZrPkNSxG98imGcKVD
- Hv0jGSBmL+vVj3QzNHQC4w4fivbiYRiPtTjB103hIA2GrP+mfy4l8WXhvtfws16oLxvmuU
- SgYTTDpb7AhuO3DoDIJaaV4oDuu62mk7FSu4ORZYMei3dWZrFijLUHhE9D+Ddg==
+ b=Ws9uQEojG/MjLnhYdFeWX5nHFiSVoJbrvY88p8apTGSPU96fnGXeCvH3PISaRwyirNwfbD
+ nfca5qS60ui7Ep+e6gB0DGr7Tfu50nOMegc7QsDSBjBtZ1gGlu3kRTZym7Y31M7ZURiAQJ
+ j+dqMv3+yOjybo1Ija8rLCGGN8Kw5YgFgmvIkGT8nRWjoRB8K9CuTDIivciWezIpgJgi4k
+ CJQsUEckb96F9W0wv/VFMxGoIIfYXEgJ7T2qwMjIbP743JRbynaSi8o1hlGuVpWpAeSoo3
+ 0ZKCmCB5H8PJEuiCqxaLRMFdcZVwnsLdx+Q7IxYKG8oHWu4ClJ/VDfQCzMn4vA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1762199599;
+ d=mailchannels.net; s=arc-2022; t=1762199591;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=dy+16HPLQwACfYwD8nWZx5dmnnfylWeebfJGhKZEyJU=;
- b=2yCVrtpT3DcEPqnuE8UsZBLx9gVUi3xHpPRgBSCJNAaSgMwuUu04jdnrZQFGrLqiwMLcE+
- UMurD7R2My1n0XBDgDCFp2DEQPizUmEeNqJ3KLLmxk1+y3SqJ4isCU+tI8K1EMArAwUSho
- W6/XWgYpOhh3tw0jt1Ic/GOrwyyse1DpMc8iBmHgN2UrcsGIyccaWF48XYRCOjnjj9i3N4
- 7wkFbTd8XMjD62AaWLVxw46kurS8OFjNGN0n4B/Cy/+Sv/8ZHzStT/MIaNjfWCk5r6w9Gb
- OQfCnf3fVqJ7uXARf0Uo0GI4a+E+/HeEMzfcuD6CVX2K/RNjGQnI1nQRCRDTCA==
+ content-transfer-encoding:content-transfer-encoding:dkim-signature;
+ bh=AmFoDFrxSC+IPGq7rdCR2qUi0cncf4yoFgbBTnBlvy8=;
+ b=o9+HGTQoaZmadgEbYYOCWwqXdWRp7klbSYSmUfz5UVv032LlZa9xUJg/RAswj7V5Sr4lYc
+ wi8lVMdNj0wYFAzYDowM77uvTvh/gBWJMP031eBHeASuQHM3ifDwAxnXqeXFzDW8pjqMyt
+ 1CQghanDq14LyOm+RTky05gfRX2wpel7UlPu2oMRc1JCAsLcHxIp6IpdIGSLl7ZJHfzS8o
+ 2eOJQtIEXzLvEfPL2aTFJnSwOFmE1MumChx7Csb/dh603Tppovn6qiQ36FkM0qO3etUFfw
+ mfwan+Emdyjc+sq0H7m/kkx5py4C2+6FKAabHqtgve8/nejOZmc30iSZe1ZJfg==
 ARC-Authentication-Results: i=1; rspamd-768b565cdb-k86dj;
  auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
 X-MailChannels-Auth-Id: dreamhost
-X-Blushing-Cure: 11a4f7a239a2d483_1762199599768_661496187
-X-MC-Loop-Signature: 1762199599768:3503063714
-X-MC-Ingress-Time: 1762199599767
+X-Tasty-Bored: 04d8a3331abfc5d1_1762199592187_3518719076
+X-MC-Loop-Signature: 1762199592187:897472234
+X-MC-Ingress-Time: 1762199592187
 Received: from pdx1-sub0-mail-a475.dreamhost.com (pop.dreamhost.com
  [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.121.221.249 (trex/7.1.3); Mon, 03 Nov 2025 19:53:19 +0000
+ by 100.121.54.118 (trex/7.1.3); Mon, 03 Nov 2025 19:53:12 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1762199599;
- bh=dy+16HPLQwACfYwD8nWZx5dmnnfylWeebfJGhKZEyJU=;
+ s=dreamhost; t=1762199591;
+ bh=AmFoDFrxSC+IPGq7rdCR2qUi0cncf4yoFgbBTnBlvy8=;
  h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
- b=A4QFGTx/5+dmalhXlzIcEcU5fX7Ze/iueI2PdQt0P0ms5H/qLcr+JPyL9bCZzxg+m
- gm1n0KedmYjFC4lV0pVGWIDZk/pWZvDLzl/TCq3p2TzycIRVdd2zjlzLi8WsPqQvZo
- 1Zt4+mLUfChkfsJujlcYwD4GbWWxxXgC4n4jXbSY4RN8HvSDNi53YchUNEVYQN35Sd
- 7l7FeiAKy+VH4gcWhRm9eaiKphd9XC2SkDZGvEFnKSKBOzdofKttLNGPjfuLqqHdyz
- wRGsIHrDfeUvu4R8O9Rk79AiAbGWNZMEU3vX165z6gTxkzIlpElxr5wArjDLNejy7h
- o5OKrLd3qgbnA==
+ b=LO9CJrH3Ut1TrBMfRuCiVBERhuXMQUEFwF7zYQZ0GxJy3VdJFSfehgTpOU3GNqnm1
+ yy/Px/FCT+TqUfbgHH6G/DwvIW2j8tjjRKIJI/xgaVAwnBQb5hvy2RXf4743K2DR6i
+ AyrBCtHlIQUJfgwYlODWXfrEzbN2KU21IfqSzLczNhoaGUkxW36vDIixqbLjB6olET
+ a6qrWUQse6DKt485orERn76ySWmgnB6ohWZuMg3GtdvI/3RDnjnwkZt60b3v5qT7Dp
+ I4Mtl4tnirs4r15hXTcE6uISZpIbBZfQvTYxPlQzAStv0b4SWBOpmqylHYFCQdL3K1
+ 8A7mzfRI3NuJQ==
 Received: from offworld.lan (unknown [76.167.199.67])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a475.dreamhost.com (Postfix) with ESMTPSA id 4d0j1p1J8Zz1wdh;
- Mon,  3 Nov 2025 11:53:18 -0800 (PST)
+ by pdx1-sub0-mail-a475.dreamhost.com (Postfix) with ESMTPSA id 4d0j1f5rq7z1wdh;
+ Mon,  3 Nov 2025 11:53:10 -0800 (PST)
 From: Davidlohr Bueso <dave@stgolabs.net>
 To: jonathan.cameron@huawei.com
 Cc: ira.weiny@intel.com, alucerop@amd.com, a.manzanares@samsung.com,
  dongjoo.seo1@samsung.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
  armbru@redhat.com, linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
- dave@stgolabs.net, Jonathan.Cameron@huawei.com
-Subject: [PATCH 5/5] hw/cxl: Remove register special_ops->read()
-Date: Mon,  3 Nov 2025 11:52:09 -0800
-Message-Id: <20251103195209.1319917-6-dave@stgolabs.net>
+ dave@stgolabs.net
+Subject: [PATCH v4 -qemu 0/5] hw/cxl: Support Back-Invalidate
+Date: Mon,  3 Nov 2025 11:52:04 -0800
+Message-Id: <20251103195209.1319917-1-dave@stgolabs.net>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20251103195209.1319917-1-dave@stgolabs.net>
-References: <20251103195209.1319917-1-dave@stgolabs.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=23.83.212.47; envelope-from=dave@stgolabs.net;
- helo=cyan.elm.relay.mailchannels.net
+Received-SPF: softfail client-ip=23.83.209.27; envelope-from=dave@stgolabs.net;
+ helo=butterfly.birch.relay.mailchannels.net
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
 X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -114,31 +111,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-... this is unused, unlike its write counterpart.
+The following allows support for component basic back invalidation discovery
+and config, by exposing the BI routing table and decoder registers. Instead
+of going the type2[0] route, this series proposes adding support for type3
+hdm-db, which allows a more direct way of supporting BI in qemu.
 
-Suggested-by: <Jonathan.Cameron@huawei.com>
-Tested-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
----
- hw/cxl/cxl-component-utils.c | 4 ----
- 1 file changed, 4 deletions(-)
+Changes from v3 (https://lore.kernel.org/all/20250930032153.1127773-1-dave@stgolabs.net/):
+  o Fix Flexbus caps bits in patch 1. (Jonathan)
+  o Flipped the bi arg to true for hard-configured components in patch 4 (Jonathan).
+  o Expose the BI routing table only if the sw upstream port is in Flit mode.
+  o Removed the mem-path= arg in the documentation as it deals with volatile (Donjoo). 
 
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 0221479613e8..31bbedb502e7 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -69,10 +69,6 @@ static uint64_t cxl_cache_mem_read_reg(void *opaque, hwaddr offset,
- 
-     switch (size) {
-     case 4:
--        if (cregs->special_ops && cregs->special_ops->read) {
--            return cregs->special_ops->read(cxl_cstate, offset, 4);
--        }
--
-         QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
- 
-         if (offset == A_CXL_BI_RT_STATUS ||
--- 
+Changes from v2 (https://lore.kernel.org/linux-cxl/20250811033405.332295-1-dave@stgolabs.net/):
+  o Renamed 256b-flit to x-256b-flit (mst)
+  o Added a brief description of flit mode in patch 1 changelog (Markus)
+  o Added missing hdm-db parameter which went missing in v2.
+  o Replaced the new CXL3_TYPE3_DEVICE with passing 'bi' params. (Jonathan)
+  o Fixed writemask bits in patch 4. (Jonathan)
+  o Misc cleanups in patch 4. (Jonathan)
+  o New patch 5 to remove register special_ops read() cb. (Jonathan)
+
+Changes from v1 (https://lore.kernel.org/qemu-devel/20250806055708.196851-1-dave@stgolabs.net/):
+  o Further lnk training in patch 1. (Jonathan)
+  o Flit parameter changed to bool in patch 1. (Jonathan)
+  o Do not set 68B in component Flexbus Port when in flitmode in patch 1.
+  o Doc build fixlet in patch 3.
+  o Pass the exact type3 type in cxl_component_create_dvsec() - unused, but better
+    for keeping track, in patch 4.
+  o Change doc example to volatile device in patch 4.
+
+Changes from rfc (https://lore.kernel.org/qemu-devel/20250729165441.1898150-1-dave@stgolabs.net/):
+  o Added 256b-flit parameter, per Jonathan.
+  o Added window restrictions changes.
+  o Dropped rfc tag.
+
+Patch 1 introduces the flit mode parameter.
+Patch 2 is lifted from Ira's series with some small (but non-trivial) changes.
+Patch 3 updates the cfmw restrictions option.
+Patch 4 adds BI decoder/rt register support to enable type3 HDM-DB.
+Patch 5 is a small cleanup.
+
+Testing wise, this has passed relevant kernel side BI register IO flows for
+BI-ID setup and deallocation.
+
+The next step for this would be to add UIO support to qemu.
+
+Applies against branch 'origin/cxl-2025-10-03-draft' from Jonathan's repository.
+
+Thanks!
+
+Davidlohr Bueso (4):
+  hw/pcie: Support enabling flit mode
+  hw/cxl: Allow BI by default in Window restrictions
+  hw/cxl: Support type3 HDM-DB
+  hw/cxl: Remove register special_ops->read()
+
+Ira Weiny (1):
+  hw/cxl: Refactor component register initialization
+
+ docs/system/devices/cxl.rst               |  23 +++
+ hw/cxl/cxl-component-utils.c              | 211 ++++++++++++++++------
+ hw/cxl/cxl-host.c                         |   2 +-
+ hw/mem/cxl_type3.c                        |  15 +-
+ hw/pci-bridge/cxl_downstream.c            |  10 +-
+ hw/pci-bridge/cxl_root_port.c             |  11 +-
+ hw/pci-bridge/cxl_upstream.c              |  18 +-
+ hw/pci-bridge/gen_pcie_root_port.c        |   1 +
+ hw/pci-bridge/pci_expander_bridge.c       |   2 +-
+ hw/pci/pcie.c                             |  23 ++-
+ include/hw/cxl/cxl_component.h            |  87 +++++++--
+ include/hw/cxl/cxl_device.h               |   4 +
+ include/hw/pci-bridge/cxl_upstream_port.h |   1 +
+ include/hw/pci/pcie.h                     |   2 +-
+ include/hw/pci/pcie_port.h                |   1 +
+ qapi/machine.json                         |   3 +-
+ qemu-options.hx                           |   4 +-
+ 17 files changed, 319 insertions(+), 99 deletions(-)
+
+--
 2.39.5
 
 
