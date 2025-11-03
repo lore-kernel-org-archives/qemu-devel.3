@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1A9CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A759CCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFy45-0000b0-7X; Mon, 03 Nov 2025 12:09:57 -0500
+	id 1vFy3g-0000SY-17; Mon, 03 Nov 2025 12:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3z-0000ZS-Qx
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:51 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3e-0000SI-EF
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:30 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3n-0000uC-Bh
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:51 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3T-0000r8-2G
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
- In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=eev5Lo5++MldWSwigyJl/p1GZnnsmAjufLhfJFBnfBE=; b=C3esiOMK9AiW8Eg
- 0zwefiFvR5MK0VZVYr03nJUdQ/og1yM3M706x/nCoTPhIM54qTbuuOKVnwPzYPYBzWNhokgV8O1UT
- co0046X6CAlSDmTYR9ffPcJ4u+EONJrjRTZydBPt0jdFcdWO3+L/A+0sOMI3vEYU4SeMkn/vSZe9a
- 2I=;
+ List-Help; bh=xzmt7cLSz4yJS8IzF79BoJ0z6M/UFl7qXf5BHQA55gk=; b=OpICEMA5rgSB8Te
+ JABJ2IYWl3O84+3zcn+n3eupi1tEZR5nbgyIymcSdQkypr6cr/kRG07c2vQEoXqWCAypOJgkiJLTI
+ 85k00KKT+yXpGLGWyW2J1w0+5vpwWxvJCEEkQffRXzRdK/3Zeo3lfmXNN3/Hf6oJoYF+fMGU1k+/8
+ Ks=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v5 25/25] target/riscv: Make pmp.h target_ulong agnostic
-Date: Mon,  3 Nov 2025 18:12:08 +0100
-Message-ID: <20251103171208.24355-26-anjo@rev.ng>
+Subject: [PATCH v5 03/25] target/riscv: Fix size of pc, load_[val|res]
+Date: Mon,  3 Nov 2025 18:11:46 +0100
+Message-ID: <20251103171208.24355-4-anjo@rev.ng>
 In-Reply-To: <20251103171208.24355-1-anjo@rev.ng>
 References: <20251103171208.24355-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -47,7 +46,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,165 +64,116 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pmp.h header is exposed through cpu.h.  pmp_table_t is also used in
-CPUArchState.  CSR declarations are only used in target/ and are moved to
-csr.h.  In pmp.h, addr_reg is widened to 64 bits and the privilege mode
-parameter is fixed to 8 bits, similar to previous commits.
-
-Note, the cpu/pmp/entry and cpu/pmp VMSTATE versions are bumped, breaking
-migration from older versions.
+Fix to 64 bits in size and as these are mapped to TCG globals, be
+careful with host endianness when allocating globals.  Casts are
+added to logging expressions to retain the correct size for
+TARGET_RISCV32.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.h     | 12 ++++++++++++
- target/riscv/pmp.h     | 20 +++++---------------
- target/riscv/machine.c | 10 +++++-----
- target/riscv/pmp.c     | 10 ++++++----
- 4 files changed, 28 insertions(+), 24 deletions(-)
+ target/riscv/cpu.h        |  6 +++---
+ target/riscv/cpu.c        |  2 +-
+ target/riscv/cpu_helper.c |  6 +++---
+ target/riscv/machine.c    |  6 +++---
+ target/riscv/translate.c  | 12 +++++++-----
+ 5 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-index 552e6c5de5..3752a0ef43 100644
---- a/target/riscv/csr.h
-+++ b/target/riscv/csr.h
-@@ -78,4 +78,16 @@ void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
- /* In th_csr.c */
- extern const RISCVCSR th_csr_list[];
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index bd200ccad4..f00ae69e8a 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -225,9 +225,9 @@ struct CPUArchState {
+     uint8_t vxsat;
+     bool vill;
  
-+/* PMP CSRs, defined in pmp.c */
-+void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-+                      target_ulong val);
-+target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
-+
-+void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
-+uint64_t mseccfg_csr_read(CPURISCVState *env);
-+
-+void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-+                       target_ulong val);
-+target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
-+
- #endif /* RISCV_CSR_H */
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index e322904637..f5d6ec2bbf 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -22,8 +22,6 @@
- #ifndef RISCV_PMP_H
- #define RISCV_PMP_H
+-    target_ulong pc;
+-    target_ulong load_res;
+-    target_ulong load_val;
++    uint64_t pc;
++    uint64_t load_res;
++    uint64_t load_val;
  
--#include "cpu.h"
--
- typedef enum {
-     PMP_READ  = 1 << 0,
-     PMP_WRITE = 1 << 1,
-@@ -50,7 +48,7 @@ typedef enum {
- } mseccfg_field_t;
+     /* Floating-Point state */
+     uint64_t fpr[32]; /* assume both F and D extensions */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index dc97d35458..353b927dd5 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -528,7 +528,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
+     }
+ #endif
+-    qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
++    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
+ #ifndef CONFIG_USER_ONLY
+     {
+         static const int dump_csrs[] = {
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 1f791e4de3..e105dec426 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2278,9 +2278,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
  
- typedef struct {
--    target_ulong addr_reg;
-+    uint64_t addr_reg;
-     uint8_t  cfg_reg;
- } pmp_entry_t;
+     qemu_log_mask(CPU_LOG_INT,
+                   "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
+-                  "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
+-                  __func__, env->mhartid, async, cause, env->pc, tval,
+-                  riscv_cpu_get_trap_name(cause, async));
++                  "epc:0x%"PRIx64", tval:0x"TARGET_FMT_lx", desc=%s\n",
++                  __func__, env->mhartid, async, cause, env->pc,
++                  tval, riscv_cpu_get_trap_name(cause, async));
  
-@@ -65,21 +63,13 @@ typedef struct {
-     uint32_t num_rules;
- } pmp_table_t;
- 
--void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
--                      target_ulong val);
--target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
--
--void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
--uint64_t mseccfg_csr_read(CPURISCVState *env);
-+typedef struct CPUArchState CPURISCVState;
- 
--void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
--                       target_ulong val);
--target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        target_ulong size, pmp_priv_t privs,
-+                        int size, pmp_priv_t privs,
-                         pmp_priv_t *allowed_privs,
--                        target_ulong mode);
--target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
-+                        privilege_mode_t mode);
-+uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
- void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
- void pmp_update_rule_nums(CPURISCVState *env);
- uint32_t pmp_get_num_rules(CPURISCVState *env);
+     mode = env->priv <= PRV_S && cause < 64 &&
+         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 36f4c3251d..13eb292c4a 100644
+index 440b09fc32..66ed3f6504 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -48,10 +48,10 @@ static int pmp_post_load(void *opaque, int version_id)
+@@ -433,9 +433,9 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
+         VMSTATE_UINT8_ARRAY(env.miprio, RISCVCPU, 64),
+         VMSTATE_UINT8_ARRAY(env.siprio, RISCVCPU, 64),
+-        VMSTATE_UINTTL(env.pc, RISCVCPU),
+-        VMSTATE_UINTTL(env.load_res, RISCVCPU),
+-        VMSTATE_UINTTL(env.load_val, RISCVCPU),
++        VMSTATE_UINT64(env.pc, RISCVCPU),
++        VMSTATE_UINT64(env.load_res, RISCVCPU),
++        VMSTATE_UINT64(env.load_val, RISCVCPU),
+         VMSTATE_UINTTL(env.frm, RISCVCPU),
+         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
+         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 15eee7f6ee..e82805e178 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1459,6 +1459,10 @@ void riscv_translate_init(void)
+     /* 32 bits in size, no offset needed */
+     size_t vl_offset = offsetof(CPURISCVState, vl);
+     size_t vstart_offset = offsetof(CPURISCVState, vstart);
++    /* 64 bits in size mapped to TCGv, needs offset */
++    size_t pc_offset     = offsetof(CPURISCVState, pc) + field_offset;
++    size_t res_offset    = offsetof(CPURISCVState, load_res) + field_offset;
++    size_t val_offset    = offsetof(CPURISCVState, load_val) + field_offset;
  
- static const VMStateDescription vmstate_pmp_entry = {
-     .name = "cpu/pmp/entry",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(addr_reg, pmp_entry_t),
-+        VMSTATE_UINT64(addr_reg, pmp_entry_t),
-         VMSTATE_UINT8(cfg_reg, pmp_entry_t),
-         VMSTATE_END_OF_LIST()
+     for (i = 1; i < 32; i++) {
+         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
+@@ -1474,11 +1478,9 @@ void riscv_translate_init(void)
+             offsetof(CPURISCVState, fpr[i]), riscv_fpr_regnames[i]);
      }
-@@ -59,8 +59,8 @@ static const VMStateDescription vmstate_pmp_entry = {
  
- static const VMStateDescription vmstate_pmp = {
-     .name = "cpu/pmp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = pmp_needed,
-     .post_load = pmp_post_load,
-     .fields = (const VMStateField[]) {
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 0b23b4b8ed..c68c787cf2 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "cpu.h"
-+#include "csr.h"
- #include "trace.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
-@@ -298,7 +299,7 @@ static int pmp_is_in_range(CPURISCVState *env, int pmp_index, hwaddr addr)
-  */
- static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-                                        pmp_priv_t *allowed_privs,
--                                       target_ulong mode)
-+                                       privilege_mode_t mode)
- {
-     bool ret;
- 
-@@ -357,8 +358,9 @@ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-  * Return false if no match
-  */
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        target_ulong size, pmp_priv_t privs,
--                        pmp_priv_t *allowed_privs, target_ulong mode)
-+                        int size, pmp_priv_t privs,
-+                        pmp_priv_t *allowed_privs,
-+                        privilege_mode_t mode)
- {
-     int i = 0;
-     int pmp_size = 0;
-@@ -708,7 +710,7 @@ uint64_t mseccfg_csr_read(CPURISCVState *env)
-  * To avoid this we return a size of 1 (which means no caching) if the PMP
-  * region only covers partial of the TLB page.
-  */
--target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
-+uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
- {
-     hwaddr pmp_sa;
-     hwaddr pmp_ea;
+-    cpu_pc = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), "pc");
++    cpu_pc = tcg_global_mem_new(tcg_env, pc_offset, "pc");
+     cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
+     cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
+-    load_res = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_res),
+-                             "load_res");
+-    load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
+-                             "load_val");
++    load_res = tcg_global_mem_new(tcg_env, res_offset, "load_res");
++    load_val = tcg_global_mem_new(tcg_env, val_offset, "load_val");
+ }
 -- 
 2.51.0
 
