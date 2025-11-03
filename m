@@ -4,90 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29FDCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73149CCFA05
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFrnJ-0004QG-2t; Mon, 03 Nov 2025 05:28:13 -0500
+	id 1vFrzL-0007Cq-LG; Mon, 03 Nov 2025 05:40:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrnH-0004PH-5l
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:28:11 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrnC-0005gW-Kj
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:28:09 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-429c8632fcbso1239809f8f.1
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 02:28:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762165679; x=1762770479; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D221FhhK2V5kC5d1+uqYPCAzQRDlac2I97Ad+ttgngc=;
- b=mlLgnqrLxY/R1LXPaKXrGHz0zBhixcK4EUb0xyKrJxHhAp7yDiEY2/hplwBpZ3E644
- HzuYVjtcEuc00qgXbTDd6JW76ph2q3SNYwRH3k/78wZcxrv4cpSkool0r2sdS4ZVK+Tg
- q8xhq+fq8YMrE4xTh0A9zE7PWfZ/xLYHaV6Dypc9mcehzf3RX0KUB2O4QCHO04oAnVTm
- 2T6icgvTVPCEzJExGaLtKZZdKJ6aTB7icIFdLpsvKXeiouurSFf3E/XYEe+yYtU3miM9
- XRwH96O+TBRhkZgNwZ/LITN+zbMKoucm70zD2IpypW/oFZeoIO33B51YzgAk5pQTDhA/
- 8IiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762165679; x=1762770479;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D221FhhK2V5kC5d1+uqYPCAzQRDlac2I97Ad+ttgngc=;
- b=OgRLAOUD+tHhy74sgVF7KVHSMG3PbMlk5NxUJEJ5Ir4qrEgMe++SAWsPbmv2uEwtxD
- GBtiU0T1pLr93j/tdgcLWNsMPcdttvFiaFN12ITKJBDmAVBnTKc+33p2z1/Cxe4U3rGB
- DvxPTF8bFVDeKLHf+AJkzXSwR/y7E3bnMHRxydD0zg9jVGoeTmxmqlReXWfJ1ehYmkV8
- 8PesfzIl3t+KOk/hsJdqXTUrfJn7pvxeOptGyMDIv+uufEHW7qRshtfnK33R3mxyb8Gb
- HBdhQVKEsDMx+Qf5JgREv+dYdgLjmQiZUWzMRxGSsX3J1qF0ko/uBWP44TUiI8R6d71f
- 6SfQ==
-X-Gm-Message-State: AOJu0YwtHR8lGxbUVmXCv6/9nnZbvELiftXjiJRymo9fXuxLxiCFFvEs
- zQUjRKD1TGuwknRU2dKT2Pd7baS+oR33akU24OoD0jzz7qK9v0lOTyu5GXDCMSrJbTRJy3mpSnt
- 5Kb88+3J059YT
-X-Gm-Gg: ASbGncsLNKjifNtzjf2QbtExRpyo4j/vbP645DYFK4WvLF92JNyG1NM5BvLyVQlg+Mu
- 9wnsitBLvyAad8uqDiif8Mbrfy/V+/HLqkZJr7bKI7dkw86uFgcqlF7gi8CNAvAAsmycOfIRviU
- COVPnkpiLpyfs/a1vsRAwe5+YZecQRx0nUVl0nGSrqU2A94V8vxVOuQi2VRAVknprvwaN9PEpRL
- usoqYkdQhYP1a0FMD+KRBd+A25vcl9z4KGc9V8A3jB27dbBigqXsORDSR9E1EBHEkRXl+euVDE6
- puY4/abaAKBadLElqk1kIJ81F0hDTorgJim5Qy67gF3CYBkT0hxIgJSD7UYxf7Wu3yhZ2KV4igN
- nrT/gSbV59Z34l/SL/H754+fMsKBSWFWYCJNsjO5HWovKkEEfikjBeKHk2m/ZGox7nq5ZNXCjrp
- JxaWbYcbVMCN5+zvEnRie0KRvVIOr7Mf8/tAN0P86qkukLOcjhdzx40qv6qtmHhA==
-X-Google-Smtp-Source: AGHT+IHHXdm1gS9kCwzYp1pBzJQfCixGM9LpBTCaHtYt38EcGqnWUEPcC2IoMjHzkmyO9NWFoZu5DQ==
-X-Received: by 2002:a05:6000:2082:b0:426:ff8f:a0a3 with SMTP id
- ffacd0b85a97d-429bd6adbc3mr9514163f8f.34.1762165679342; 
- Mon, 03 Nov 2025 02:27:59 -0800 (PST)
-Received: from [172.18.178.65] (ip-185-104-138-122.ptr.icomera.net.
- [185.104.138.122]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429d2952653sm6288036f8f.8.2025.11.03.02.27.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 02:27:58 -0800 (PST)
-Message-ID: <862b1b6a-239a-4818-aa72-8907aaf68912@linaro.org>
-Date: Mon, 3 Nov 2025 11:27:56 +0100
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vFrzI-0007CL-SK
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:40:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vFrzB-0008Ey-5i
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:40:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762166423;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9RZjCuduV6qb0vo2V4+fGygluitclT2JwDhCFff9TV8=;
+ b=Fz5m071ijFWZrD+/5qKF1v2eFcOix4y4c51vEDGxt+x9HayQV3zWLQOWYczeepKdd3LmZV
+ g9SVHmxcsVDBT+WrrsXe41pD+H9me9IRusKLkrV/hKGMdq5nRl6svokfo9Cfe+4/iIkK80
+ ehefbxwrRzGs1+Lrbs9RAp6w8+PMTes=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-n-fWvBlONRCCCFkF0HjdrQ-1; Mon,
+ 03 Nov 2025 05:40:19 -0500
+X-MC-Unique: n-fWvBlONRCCCFkF0HjdrQ-1
+X-Mimecast-MFC-AGG-ID: n-fWvBlONRCCCFkF0HjdrQ_1762166419
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B325E19540DC; Mon,  3 Nov 2025 10:40:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.212])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C26D180045B; Mon,  3 Nov 2025 10:40:15 +0000 (UTC)
+Date: Mon, 3 Nov 2025 11:40:13 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, hibriansong@gmail.com,
+ eblake@redhat.com, qemu-block@nongnu.org
+Subject: Re: [RESEND PATCH v5 00/13] aio: add the aio_add_sqe() io_uring API
+Message-ID: <aQiGjUW59RI12Gb_@redhat.com>
+References: <20251030152150.470170-1-stefanha@redhat.com>
+ <aQOqau-bpiJiNVHI@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: Remove unused VMSTATE_UINTTL_EQUAL[_V]() macros
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Anton Johansson <anjo@rev.ng>
-References: <20251016160313.25751-1-philmd@linaro.org>
- <aPEYshE-INpg42Me@x1.local>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aPEYshE-INpg42Me@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQOqau-bpiJiNVHI@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,16 +84,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/10/25 18:09, Peter Xu wrote:
-> On Thu, Oct 16, 2025 at 06:03:13PM +0200, Philippe Mathieu-Daudé wrote:
->> The last use of VMSTATE_UINTTL_EQUAL() was removed in commit
->> 16a2497bd44 ("target-ppc: Fix CPU migration from qemu-2.6 <->
->> later versions"), 9 years ago; remove it.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Am 30.10.2025 um 19:11 hat Kevin Wolf geschrieben:
+> Am 30.10.2025 um 16:21 hat Stefan Hajnoczi geschrieben:
+> > v5:
+> > - Explain how fdmon-io_uring.c differs from other fdmon implementations
+> >   in commit message [Kevin]
+> > - Move test-nested-aio-poll aio_get_g_source() removal into commit that touches test case [Kevin]
+> > - Avoid g_source_add_poll() use-after-free in fdmon_poll_update() [Kevin]
+> > - Avoid duplication in fdmon_epoll_gsource_dispatch(), use fdmon_epoll_wait() [Kevin]
+> > - Drop unnecessary revents checks in fdmon_poll_gsource_dispatch() [Kevin]
+> > - Mention in commit message that fdmon-io_uring.c is the new default [Kevin]
+> > - Add comments explaining how to clean up resources in error paths [Kevin]
+> > - Indicate error in return value from function with Error *errp arg [Kevin]
+> > - Add patch to unindent fdmon_io_uring_destroy() [Kevin]
+> > - Add patch to introduce FDMonOps->dispatch() callback [Kevin]
+> > - Drop patch with hacky BH optimization for fdmon-io_uring.c [Kevin]
+> > - Replace cqe_handler_bh with FDMonOps->dispatch() [Kevin]
+> > - Rename AioHandler->cqe_handler field to ->internal_cqe_handler [Kevin]
+> > - Consolidate fdmon-io_uring.c trace-events changes into this commit
+> > - Reduce #ifdef HAVE_IO_URING_PREP_WRITEV2 code duplication [Kevin]
 > 
-> queued, thanks.
+> The changes look good to me.
 > 
+> However, the test cases are still failing. I just tried to see where
+> test-aio is stuck, and while I looked for a backtrace first, I noticed
+> that just attaching gdb to the process and immediately detaching again
+> makes the test unstuck. Very strange.
+> 
+> This is the backtrace, maybe a bit unsurpring:
+> 
+> (gdb) bt
+> #0  0x00007ffff7e6fec6 in __io_uring_submit () from /lib64/liburing.so.2
+> #1  0x00005555556f4394 in fdmon_io_uring_wait (ctx=0x555556409950, ready_list=0x7fffffffcda0, timeout=749993088) at ../util/fdmon-io_uring.c:410
+> #2  0x00005555556ed29f in aio_poll (ctx=0x555556409950, blocking=true) at ../util/aio-posix.c:699
+> #3  0x0000555555681547 in test_timer_schedule () at ../tests/unit/test-aio.c:413
+> #4  0x00007ffff6f30e7e in test_case_run (tc=0x55555640d340, test_run_name=0x55555640de10 "/aio/timer/schedule", path=<optimized out>) at ../glib/gtestutils.c:3115
+> #5  g_test_run_suite_internal (suite=suite@entry=0x5555558696d0, path=path@entry=0x0) at ../glib/gtestutils.c:3210
+> #6  0x00007ffff6f30df3 in g_test_run_suite_internal (suite=suite@entry=0x555555867480, path=path@entry=0x0) at ../glib/gtestutils.c:3229
+> #7  0x00007ffff6f30df3 in g_test_run_suite_internal (suite=suite@entry=0x555555867720, path=path@entry=0x0) at ../glib/gtestutils.c:3229
+> #8  0x00007ffff6f313aa in g_test_run_suite (suite=suite@entry=0x555555867720) at ../glib/gtestutils.c:3310
+> #9  0x00007ffff6f31440 in g_test_run () at ../glib/gtestutils.c:2379
+> #10 g_test_run () at ../glib/gtestutils.c:2366
+> #11 0x000055555567e204 in main (argc=1, argv=0x7fffffffd488) at ../tests/unit/test-aio.c:872
+> 
+> And running it under strace shows that we're indeed hanging in the
+> syscall:
+> 
+> write(1, "# Start of timer tests\n", 23) = 23
+> eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK)   = 9
+> io_uring_enter(7, 1, 0, 0, NULL, 8)     = 1
+> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffc239bec80) = 0
+> io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8
+> 
+> Of course, if I start the test without strace and then attach strace to
+> the running process, that gets it unstuck like attaching gdb (not very
+> surprising, I guess, it's both just ptrace).
+> 
+> Finally I tried Ctrl-C while having strace logging to a file, and now
+> the io_uring_enter() returns 1 (rather than EINTR or 0 or whatever):
+> 
+> io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8) = 1
+> --- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
+> +++ killed by SIGINT +++
+> 
+> Not sure what to make of this.
+> 
+> I think you already said you run the same kernel version, but just to be
+> sure, I'm running 6.17.5-200.fc42.x86_64.
 
-Thank you :)
+I'm at the point where I'm bisecting compiler flags...
+
+I have seen three different outcomes from test-aio:
+
+1. It hangs. This is what I saw in my normal clang build. This configure
+   line seems to be enough to trigger it:
+   ../configure '--target-list=x86_64-softmmu' '--cc=clang' '--cxx=clang++'
+
+2. An assertion failure. I haven't seen this in the actual QEMU tree
+   with clang. With gcc, it seems to happen if you use -O0:
+   ../configure '--target-list=x86_64-softmmu' '--enable-debug'
+
+   Outside of the QEMU tree with a manual Makefile, I saw this behaviour
+   with clang and -fstack-protector-strong, but without
+   -ftrivial-auto-var-init=zero. Add the latter turns it into the hang.
+
+3. It just passes. This is what I saw in my default gcc build without
+   --enable-debug. The test also passes with --disable-stack-protector
+   added to both configure lines in 1 and 2.
+
+Not sure yet where the flags make the difference, but I guess it does
+hint at something going wrong on the stack.
+
+Kevin
+
 
