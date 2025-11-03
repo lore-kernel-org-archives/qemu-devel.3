@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECD7CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A9ECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1la-000102-Ll; Mon, 03 Nov 2025 16:07:07 -0500
+	id 1vG1lw-00015Q-UL; Mon, 03 Nov 2025 16:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lX-0000yn-1Z
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:03 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1ln-000132-0v
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lL-0005I1-Sx
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:02 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lZ-0005NW-Iz
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204008;
+ s=mimecast20190719; t=1762204022;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cddgOWi5vxb2ekzhK5snv98M/SU5nsUUCc7+MBdGfjw=;
- b=I4wBOe+vHNJpQWLRpWWNQ46Pw3H4yOWlIfEqAMC9CKaHCoM5gFuUwS5zl7Nsu7J+X3hzPv
- /+AyVwstpFb3Bc5aUXyqQ7GPL/1Ha6yImwfhrN5MajwSEYlyhTXkvBiAOcfM6FTyioGay4
- TJelCz8zRevxgL3paA8YCkCgMfI7FLo=
+ bh=TaWkrY5rCFrcQOkGSahAZsAjKVM238HQDT5pwdu9p4c=;
+ b=AqKlObAsREhYrUfmVA1pQ5Isrt/7TchysGWUw8mGz/ymcj4+N+Js2qJlAw8EzU+rQnfnBu
+ xg7vFFTf539LEtgcL6Uui5NnSbFHyPRKr+WH7LlyUMiwIiFz02W75TqNYbqbY76QYQdrhd
+ ZYMrXxebyWF7ZRqdRm06COpZp63K+FM=
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-wulIexYgMy-CNQ7xU1cLRw-1; Mon, 03 Nov 2025 16:06:47 -0500
-X-MC-Unique: wulIexYgMy-CNQ7xU1cLRw-1
-X-Mimecast-MFC-AGG-ID: wulIexYgMy-CNQ7xU1cLRw_1762204007
+ us-mta-466-hQgxn5pMOpWH17CxwzYa0w-1; Mon, 03 Nov 2025 16:07:01 -0500
+X-MC-Unique: hQgxn5pMOpWH17CxwzYa0w-1
+X-Mimecast-MFC-AGG-ID: hQgxn5pMOpWH17CxwzYa0w_1762204020
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8908a248048so1185632485a.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:47 -0800 (PST)
+ af79cd13be357-8b12cde7f76so31028785a.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204006; x=1762808806; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762204020; x=1762808820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cddgOWi5vxb2ekzhK5snv98M/SU5nsUUCc7+MBdGfjw=;
- b=gQIWb6DLg/qN/n5UIsTOwRZL+EXoi089Of6OyPkWSe6svXpwJ7mk7RLlUwNFWnHFA7
- tnI4njxYg5z2HP1We1+9eiizSn1zicTJTjZctBUk8YCSOUp/sKaN6dNv1lPPWmeDxSAo
- yU9OTmXfDHx+lZ9b9jPFj2cVR+rJqmlGrfCjpRS8+ppaO5PXRp18+cz5WPF7JZwQZ1zo
- japgWoUOY/PiMCnsc9/FUa5YtvtBHpRA0RBN5S5hHiW5m/W2KtVhz1ZHe4aFkhiKQogR
- d8QlYKo63wFhXFFEapUSd8BJu9mkfAfjxh8Lq9IGQUNijgNfYccsy8/ym0OQGA8MINXL
- Ofyw==
+ bh=TaWkrY5rCFrcQOkGSahAZsAjKVM238HQDT5pwdu9p4c=;
+ b=A9y1eIjh8y4GYTFgSMZTGfZWjHy0gcI6sv3UJxbnu0nIKzcurc3K4u4+sDmb8UKnYk
+ bIgqq748YuYPLpgU2yUUoLLSQQeLWasQLofhQwF8QZm9Avof0u4Rn1kyI8onBMP9GQHD
+ S0m0ELdfFYUmYtOjBmYEkEI5WqwqSlO2iRFTJniFscgFdAbVCj5mRXL1SUZyUHNuMRMp
+ yexkOf8EaN7ly/a5pmq7JWq2CiWlzT9D85iKJYHieGhLTYN+c6i/pwkwhiiqw8uBQc06
+ a4Gp6gXdmqNRrPJjzxn/cH4qy2IL9tn1o72/Wt0LFdrfN+gIt+9lz4FhWg7nNYTRHcBG
+ 5k6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204006; x=1762808806;
+ d=1e100.net; s=20230601; t=1762204020; x=1762808820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cddgOWi5vxb2ekzhK5snv98M/SU5nsUUCc7+MBdGfjw=;
- b=groS7w9qPQpSmOAAAPbDTMZqExGMsGfH3EL75QZb3CdI/dkTrR9jb+vsDKe3Waz1Ky
- 7rKPH93BDet1D+yUZtfyOO6VJjBEnuAeAD2ZtgXR411gSr/BIYRRA76s7Us1uedhSgSU
- WAytWVfhazFWBWCWsEbxPZzyWCMkplHF0h4etclyp9nOj6zO70it4rmiywJ938JD51uT
- I7VuaG0OcBbO0qkTDLVcewZ4zE7x0f8DrEEfVAjZb5GG5dCpPUjHfxFSOXY4aBq0ARaz
- xmqHF2JTjUr4P4CJpKUOBam/XjfNbxUE+lnLy3kRIcmSYXbOy03YkTPIQOSmnqhas+q2
- PONg==
-X-Gm-Message-State: AOJu0YzbsUNr1QSUYN84DTMzXX9gZWjJ7srxufYpTdRZ2fyDUm2UGv4F
- 9lDM/RCPTf8God9Yv4h4bjIsPHSgkZcJlwAioo8tDMvIDOygavBFdcGDX1sHTY041wfjzA6Fxzb
- dRsrmmLH7RHXk9yzIMeJceuqLqEq3uOMJfKCL83xwNBcgNR3wo6+fFLLswQRvco8DqeefO0KEkp
- PEZoW7U9g+L6/wiwcbZZnMpf5+QrzhSOA9sECGRA==
-X-Gm-Gg: ASbGncu+z1alXmwEBS5/nK1YfQnqb7ORxR/+ogCxwVkZA4vBYgJXKOW4yqxDjcJ/Xwb
- 5//8wZAM0hSAt4TKg58q4qgzP+WAJmblJ0tv7kLZDSMBTCLQwk6FSTgzrDePIhQZIawr1iVeDL3
- oCe7grCfV6vc5X0rFywMvbVnlnOs3mqNZqwkubPnfUzztfs32uFMwj8OU/eLeDuevGA2SpVRv1L
- DkGIpD0NBUHe951Rvb4mhbGUO4jc2EYfb1mgP1TfYNTKh9LT9Ppzh4wYZE7hZe+6AJ+S9uhxeCD
- KQ1Kx8KUjbIDnqxGsX+SVXqycpXMs3gFMXEgubIdSQoS0gU133r9N6HkukERv9HV
-X-Received: by 2002:a05:620a:4483:b0:8a9:b0cf:fba2 with SMTP id
- af79cd13be357-8ab9b883fbdmr1636097485a.86.1762204006044; 
- Mon, 03 Nov 2025 13:06:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGLOfS1/7ozpb1CvUxcB1UwHLxPKgN4bsDiFLAUk8P9gMe5RjsXZLcimFfrXIiZ2aUE7gV3xg==
-X-Received: by 2002:a05:620a:4483:b0:8a9:b0cf:fba2 with SMTP id
- af79cd13be357-8ab9b883fbdmr1636091385a.86.1762204005454; 
- Mon, 03 Nov 2025 13:06:45 -0800 (PST)
+ bh=TaWkrY5rCFrcQOkGSahAZsAjKVM238HQDT5pwdu9p4c=;
+ b=OD6UeoFBblCZ98nBYUd7C7Pq7moeu9zK6xrHs6NmfXDe39xxZuUzKE0d4Na01oDI1X
+ YBsHfDj5EQf27C8KzeNcA1dJZr5XxE7SOfimwv47EOEYdHwvRC0FXNXWpZz6vyXErq8N
+ dj8sz194rLMhWcvg6paf+2JegaPfbaHyoPw2V6uwI5Ps2qlF/qlilZBEOARWpoNd5Zma
+ z1rBMzX8/+cnbQBN48H873qUc5+2Ug8gnywfRD9r/zW75IfWeBR1OEkDrQIT1/vi/+7r
+ RBie/dEuyY98JUboQihAkXyzjLHgPyOCCkVlnThC5WK/hNuy5+Z5bCnDgPdtPNfwUVX2
+ mj1g==
+X-Gm-Message-State: AOJu0YxIgfLnOCH5/4Jer8AcARcjf2x59HL/p2HLNIQtMru27h6EYFb2
+ WQWlJXrfjPyJRkHi0RDZdISJFPHE7r3IwJqvGAWf1W0AcItiyW3NcrWgq1IjTnU8sK0dZaS23Ep
+ p1p5PJFpKeb0ABReW/DSw9NfWfKPchW3J+/WseTyHe3QTfqaDat8uCnUWcjzCNkTUOohFxtvf2k
+ G3itq/wd2ghBBph7shJ/DmYFVhAtpwuAZRl9OY4Q==
+X-Gm-Gg: ASbGncsHhb0k9a1KjMtMa2poCmq1Q/otXoYRjLWYj1XE0ev5dnSESUi1gc2Rcvb/SxD
+ MxKTVWJ/ztiUR8/P7eSqpquUthDblozkK5mmd7Pz4aOdaGuh88ejHR/E6QZMwgIyyoW0Jo4PbWL
+ GqvzwTX8glWBUoY1eQLF5pKwtNDyEHWMfJLzWzT/I6ixQduA1ES5OsG3j0DuFCMOMBD4sDStE4R
+ 7MWfvSwLmUAHDVgq1gE9UYc7iaXmJS23ZdmVsvikel+6rG2YsrDQfFeMKYlJXrY+gM7TgaHbqCF
+ mt3DAPX5ArYzwYgLTRBENarabht0lZRjxhlIsPdj60Ji+DPDgzdCHLL1Cq52I2V0
+X-Received: by 2002:a05:620a:223b:b0:8ad:32ae:b6d9 with SMTP id
+ af79cd13be357-8b10d0aaad9mr91834285a.44.1762204020023; 
+ Mon, 03 Nov 2025 13:07:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSt6jqX3VOkDQDVSy1XqQH77EyuDFlDXC8AkYBS4nKl9NGoi+NWYfhbee9a508f4m2rHcpNw==
+X-Received: by 2002:a05:620a:223b:b0:8ad:32ae:b6d9 with SMTP id
+ af79cd13be357-8b10d0aaad9mr91829185a.44.1762204019397; 
+ Mon, 03 Nov 2025 13:06:59 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.44
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:06:44 -0800 (PST)
+ Mon, 03 Nov 2025 13:06:58 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
-Subject: [PULL 12/36] ram-block-attributes: Unify the retrieval of the block
- size
-Date: Mon,  3 Nov 2025 16:06:01 -0500
-Message-ID: <20251103210625.3689448-13-peterx@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PULL 21/36] io: Add qio_channel_wait_cond() helper
+Date: Mon,  3 Nov 2025 16:06:10 -0500
+Message-ID: <20251103210625.3689448-22-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,7 +105,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,33 +121,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chenyi Qiang <chenyi.qiang@intel.com>
+Add the helper to wait for QIO channel's IO availability in any
+context (coroutine, or non-coroutine).  Use it tree-wide for three
+occurences.
 
-There's an existing helper function designed to obtain the block size.
-Modify ram_block_attribute_create() to use this function for
-consistency.
-
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Link: https://lore.kernel.org/r/20251023095526.48365-3-chenyi.qiang@intel.com
-[peterx: fix double spaces, per david]
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Link: https://lore.kernel.org/r/20251022192612.2737648-2-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- system/ram-block-attributes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/io/channel.h  | 15 +++++++++++++++
+ io/channel.c          | 21 +++++++++++----------
+ migration/qemu-file.c |  6 +-----
+ 3 files changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
-index a7579de5b4..fb7c5c2746 100644
---- a/system/ram-block-attributes.c
-+++ b/system/ram-block-attributes.c
-@@ -390,7 +390,7 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr,
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 0f25ae0069..d6d5bf2b5f 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -871,6 +871,21 @@ void qio_channel_wake_read(QIOChannel *ioc);
+ void qio_channel_wait(QIOChannel *ioc,
+                       GIOCondition condition);
  
- RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
++/**
++ * qio_channel_wait_cond:
++ * @ioc: the channel object
++ * @condition: the I/O condition to wait for
++ *
++ * Block execution from the current thread until
++ * the condition indicated by @condition becomes
++ * available.
++ *
++ * This will work with/without a coroutine context, by automatically select
++ * the proper API to wait.
++ */
++void qio_channel_wait_cond(QIOChannel *ioc,
++                           GIOCondition condition);
++
+ /**
+  * qio_channel_set_aio_fd_handler:
+  * @ioc: the channel object
+diff --git a/io/channel.c b/io/channel.c
+index 852e684938..b18fc346ff 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -159,11 +159,7 @@ int coroutine_mixed_fn qio_channel_readv_full_all_eof(QIOChannel *ioc,
+         len = qio_channel_readv_full(ioc, local_iov, nlocal_iov, local_fds,
+                                      local_nfds, flags, errp);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+-            if (qemu_in_coroutine()) {
+-                qio_channel_yield(ioc, G_IO_IN);
+-            } else {
+-                qio_channel_wait(ioc, G_IO_IN);
+-            }
++            qio_channel_wait_cond(ioc, G_IO_IN);
+             continue;
+         }
+ 
+@@ -268,11 +264,7 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
+                                             nfds, flags, errp);
+ 
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+-            if (qemu_in_coroutine()) {
+-                qio_channel_yield(ioc, G_IO_OUT);
+-            } else {
+-                qio_channel_wait(ioc, G_IO_OUT);
+-            }
++            qio_channel_wait_cond(ioc, G_IO_OUT);
+             continue;
+         }
+         if (len < 0) {
+@@ -774,6 +766,15 @@ void qio_channel_wait(QIOChannel *ioc,
+     g_main_context_unref(ctxt);
+ }
+ 
++void qio_channel_wait_cond(QIOChannel *ioc,
++                           GIOCondition condition)
++{
++    if (qemu_in_coroutine()) {
++        qio_channel_yield(ioc, condition);
++    } else {
++        qio_channel_wait(ioc, condition);
++    }
++}
+ 
+ static void qio_channel_finalize(Object *obj)
  {
--    const int block_size  = qemu_real_host_page_size();
-+    const int block_size = ram_block_attributes_get_block_size();
-     RamBlockAttributes *attr;
-     MemoryRegion *mr = ram_block->mr;
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index 2d4ce174a5..4b5a409a80 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -343,11 +343,7 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+                                      QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING,
+                                      &local_error);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+-            if (qemu_in_coroutine()) {
+-                qio_channel_yield(f->ioc, G_IO_IN);
+-            } else {
+-                qio_channel_wait(f->ioc, G_IO_IN);
+-            }
++            qio_channel_wait_cond(f->ioc, G_IO_IN);
+         }
+     } while (len == QIO_CHANNEL_ERR_BLOCK);
  
 -- 
 2.50.1
