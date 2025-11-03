@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3595CCCFA04
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9B8CCF9F8
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFqwk-0007jI-3p; Mon, 03 Nov 2025 04:33:54 -0500
+	id 1vFqu6-0004Vb-HN; Mon, 03 Nov 2025 04:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqvH-0006AP-C8; Mon, 03 Nov 2025 04:32:28 -0500
+ id 1vFqte-0003uW-K3; Mon, 03 Nov 2025 04:30:44 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqvC-0002z3-3b; Mon, 03 Nov 2025 04:32:22 -0500
+ id 1vFqtV-0002S6-Ur; Mon, 03 Nov 2025 04:30:38 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 3 Nov
- 2025 17:28:23 +0800
+ 2025 17:28:16 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 3 Nov 2025 17:28:23 +0800
+ Transport; Mon, 3 Nov 2025 17:28:16 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 30/30] hw/arm/aspeed: Split AST1030 EVB machine into a
- separate source file for maintainability
-Date: Mon, 3 Nov 2025 17:27:41 +0800
-Message-ID: <20251103092801.1282602-31-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 20/30] hw/arm/aspeed: Split Fuji machine into a separate
+ source file for maintainability
+Date: Mon, 3 Nov 2025 17:27:31 +0800
+Message-ID: <20251103092801.1282602-21-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
 References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
@@ -67,153 +67,190 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the Aspeed AST1030 MiniBMC machine
-implementation out of aspeed.c into a new standalone file
-aspeed_ast10x0_evb.c.
+This commit moves the Facebook Fuji BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2600_fuji.c.
 
-This refactor continues the modularization effort for Aspeed platform
-support, placing each board’s logic and initialization sequence in its
-own dedicated source file. It improves maintainability, readability, and
-makes it easier to extend support for additional AST10x0-based variants.
+This refactor continues the modularization effort for Aspeed platform support,
+placing each board’s logic in its own dedicated source file.
+It improves maintainability, readability, and simplifies future development for
+new platforms without cluttering aspeed.c.
 
 Key updates include:
-- Moved aspeed_minibmc_machine_init() and
-  aspeed_minibmc_machine_ast1030_evb_class_init() from aspeed.c to
-  aspeed_ast10x0_evb.c.
-- Moved ast1030_evb_i2c_init() and associated I2C setup code.
-- Removed AST1030 EVB machine type registration from aspeed.c.
-- Added aspeed_ast10x0_evb.c to the Meson build system (meson.build).
+- Moved FUJI_BMC_HW_STRAP1 and FUJI_BMC_HW_STRAP2 macro definitions into the new file.
+- Moved fuji_bmc_i2c_init() and its helper get_pca9548_channels() into the new file.
+- Moved aspeed_machine_fuji_class_init() and type registration to aspeed_ast2600_fuji.c.
+- Added aspeed_ast2600_fuji.c to the build system (meson.build).
+- Cleaned up all Fuji-specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c             |  89 -----------------------------
- hw/arm/aspeed_ast10x0_evb.c | 109 ++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build          |   1 +
- 3 files changed, 110 insertions(+), 89 deletions(-)
- create mode 100644 hw/arm/aspeed_ast10x0_evb.c
+ hw/arm/aspeed.c              | 117 -----------------------------
+ hw/arm/aspeed_ast2600_fuji.c | 141 +++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build           |   1 +
+ 3 files changed, 142 insertions(+), 117 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2600_fuji.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 7e9cd532d1..3a5071a384 100644
+index e44aec69bd..29a036b675 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -16,14 +16,9 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/arm/machines-qom.h"
- #include "hw/block/flash.h"
--#include "hw/i2c/smbus_eeprom.h"
- #include "hw/gpio/pca9552.h"
- #include "hw/gpio/pca9554.h"
--#include "hw/sensor/tmp105.h"
--#include "hw/misc/led.h"
--#include "hw/qdev-properties.h"
- #include "system/block-backend.h"
--#include "system/reset.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
- #include "hw/qdev-clock.h"
-@@ -424,92 +419,8 @@ static void aspeed_machine_class_init(ObjectClass *oc, const void *data)
-     aspeed_machine_class_props_init(oc);
+@@ -52,10 +52,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+ #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
+ #define RAINIER_BMC_HW_STRAP2 0x80000848
+ 
+-/* Fuji hardware value */
+-#define FUJI_BMC_HW_STRAP1    0x00000000
+-#define FUJI_BMC_HW_STRAP2    0x00000000
+-
+ /* GB200NVL hardware value */
+ #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
+ #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
+@@ -416,95 +412,8 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+     aspeed_create_pca9552(soc, 15, 0x60);
  }
  
--#define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
--/* Main SYSCLK frequency in Hz (200MHz) */
--#define SYSCLK_FRQ 200000000ULL
--
--static void aspeed_minibmc_machine_init(MachineState *machine)
+-static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+-                                 I2CBus **channels)
 -{
--    AspeedMachineState *bmc = ASPEED_MACHINE(machine);
--    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
--    Clock *sysclk;
--
--    sysclk = clock_new(OBJECT(machine), "SYSCLK");
--    clock_set_hz(sysclk, SYSCLK_FRQ);
--
--    bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
--    object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
--    object_unref(OBJECT(bmc->soc));
--    qdev_connect_clock_in(DEVICE(bmc->soc), "sysclk", sysclk);
--
--    object_property_set_link(OBJECT(bmc->soc), "memory",
--                             OBJECT(get_system_memory()), &error_abort);
--    aspeed_connect_serial_hds_to_uarts(bmc);
--    qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
--
--    if (defaults_enabled()) {
--        aspeed_board_init_flashes(&bmc->soc->fmc,
--                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
--                            amc->num_cs,
--                            0);
--
--        aspeed_board_init_flashes(&bmc->soc->spi[0],
--                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
--                            amc->num_cs, amc->num_cs);
--
--        aspeed_board_init_flashes(&bmc->soc->spi[1],
--                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
--                            amc->num_cs, (amc->num_cs * 2));
+-    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
+-    for (int i = 0; i < 8; i++) {
+-        channels[i] = pca954x_i2c_get_bus(mux, i);
 -    }
--
--    if (amc->i2c_init) {
--        amc->i2c_init(bmc);
--    }
--
--    armv7m_load_kernel(ARM_CPU(first_cpu),
--                       machine->kernel_filename,
--                       0,
--                       AST1030_INTERNAL_FLASH_SIZE);
 -}
 -
--static void ast1030_evb_i2c_init(AspeedMachineState *bmc)
+ #define TYPE_LM75 TYPE_TMP105
+ #define TYPE_TMP75 TYPE_TMP105
+-#define TYPE_TMP422 "tmp422"
+-
+-static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
+-    I2CBus *i2c[144] = {};
 -
--    /* U10 24C08 connects to SDA/SCL Group 1 by default */
--    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
--    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
+-    for (int i = 0; i < 16; i++) {
+-        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
+-    }
+-    I2CBus *i2c180 = i2c[2];
+-    I2CBus *i2c480 = i2c[8];
+-    I2CBus *i2c600 = i2c[11];
 -
--    /* U11 LM75 connects to SDA/SCL Group 2 by default */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
+-    get_pca9548_channels(i2c180, 0x70, &i2c[16]);
+-    get_pca9548_channels(i2c480, 0x70, &i2c[24]);
+-    /* NOTE: The device tree skips [32, 40) in the alias numbering */
+-    get_pca9548_channels(i2c600, 0x77, &i2c[40]);
+-    get_pca9548_channels(i2c[24], 0x71, &i2c[48]);
+-    get_pca9548_channels(i2c[25], 0x72, &i2c[56]);
+-    get_pca9548_channels(i2c[26], 0x76, &i2c[64]);
+-    get_pca9548_channels(i2c[27], 0x76, &i2c[72]);
+-    for (int i = 0; i < 8; i++) {
+-        get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
+-    }
+-
+-    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
+-    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
+-
+-    /*
+-     * EEPROM 24c64 size is 64Kbits or 8 Kbytes
+-     *        24c02 size is 2Kbits or 256 bytes
+-     */
+-    at24c_eeprom_init(i2c[19], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[20], 0x50, 256);
+-    at24c_eeprom_init(i2c[22], 0x52, 256);
+-
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
+-    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
+-
+-    at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
+-    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
+-
+-    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
+-    at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
+-    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
+-    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
+-
+-    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
+-    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
+-
+-    at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
+-    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
+-    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
+-    at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
+-
+-    at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
+-    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
+-    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
+-    at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[79], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[28], 0x50, 256);
+-
+-    for (int i = 0; i < 8; i++) {
+-        at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
+-        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
+-        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
+-        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
+-    }
 -}
 -
--static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
--                                                          const void *data)
+ #define TYPE_TMP421 "tmp421"
+ #define TYPE_DS1338 "ds1338"
+ 
+@@ -955,27 +864,6 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_ast2600_class_emmc_init(oc);
+ };
+ 
+-#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+-
+-static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc = "Aspeed AST1030 MiniBMC (Cortex-M4)";
--    amc->soc_name = "ast1030-a1";
--    amc->hw_strap1 = 0;
--    amc->hw_strap2 = 0;
--    mc->init = aspeed_minibmc_machine_init;
--    amc->i2c_init = ast1030_evb_i2c_init;
--    mc->default_ram_size = 0;
--    amc->fmc_model = "w25q80bl";
--    amc->spi_model = "w25q256";
+-    mc->desc = "Facebook Fuji BMC (Cortex-A7)";
+-    amc->soc_name = "ast2600-a3";
+-    amc->hw_strap1 = FUJI_BMC_HW_STRAP1;
+-    amc->hw_strap2 = FUJI_BMC_HW_STRAP2;
+-    amc->fmc_model = "mx66l1g45g";
+-    amc->spi_model = "mx66l1g45g";
 -    amc->num_cs = 2;
--    amc->macs_mask = 0;
+-    amc->macs_mask = ASPEED_MAC3_ON;
+-    amc->i2c_init = fuji_bmc_i2c_init;
+-    amc->uart_default = ASPEED_DEV_UART1;
+-    mc->default_ram_size = FUJI_BMC_RAM_SIZE;
 -    aspeed_machine_class_init_cpus_defaults(mc);
--}
+-};
 -
- static const TypeInfo aspeed_machine_types[] = {
-     {
--        .name           = MACHINE_TYPE_NAME("ast1030-evb"),
--        .parent         = TYPE_ASPEED_MACHINE,
--        .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+ static void aspeed_machine_catalina_class_init(ObjectClass *oc,
+                                                const void *data)
+ {
+@@ -1216,11 +1104,6 @@ static const TypeInfo aspeed_machine_types[] = {
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_rainier_class_init,
+         .interfaces    = arm_machine_interfaces,
 -    }, {
-         .name          = TYPE_ASPEED_MACHINE,
-         .parent        = TYPE_MACHINE,
-         .instance_size = sizeof(AspeedMachineState),
-diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
+-        .name          = MACHINE_TYPE_NAME("fuji-bmc"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_fuji_class_init,
+-        .interfaces    = arm_machine_interfaces,
+     }, {
+         .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
+diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
 new file mode 100644
-index 0000000000..f8519d4528
+index 0000000000..be5c2a17ab
 --- /dev/null
-+++ b/hw/arm/aspeed_ast10x0_evb.c
-@@ -0,0 +1,109 @@
++++ b/hw/arm/aspeed_ast2600_fuji.c
+@@ -0,0 +1,141 @@
 +/*
-+ * ASPEED AST10x0 EVB
++ * Facebook Fuji
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -222,117 +259,149 @@ index 0000000000..f8519d4528
 +
 +#include "qemu/osdep.h"
 +#include "qapi/error.h"
-+#include "hw/arm/boot.h"
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/qdev-clock.h"
-+#include "system/system.h"
-+#include "hw/i2c/smbus_eeprom.h"
++#include "hw/i2c/i2c_mux_pca954x.h"
++#include "hw/sensor/tmp105.h"
++#include "hw/nvram/eeprom_at24c.h"
 +
-+#define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
-+/* Main SYSCLK frequency in Hz (200MHz) */
-+#define SYSCLK_FRQ 200000000ULL
++#define TYPE_LM75 TYPE_TMP105
++#define TYPE_TMP75 TYPE_TMP105
++#define TYPE_TMP422 "tmp422"
 +
-+static void aspeed_minibmc_machine_init(MachineState *machine)
++/* Fuji hardware value */
++#define FUJI_BMC_HW_STRAP1    0x00000000
++#define FUJI_BMC_HW_STRAP2    0x00000000
++#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
++
++static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
++                                 I2CBus **channels)
 +{
-+    AspeedMachineState *bmc = ASPEED_MACHINE(machine);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
-+    Clock *sysclk;
-+
-+    sysclk = clock_new(OBJECT(machine), "SYSCLK");
-+    clock_set_hz(sysclk, SYSCLK_FRQ);
-+
-+    bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
-+    object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
-+    object_unref(OBJECT(bmc->soc));
-+    qdev_connect_clock_in(DEVICE(bmc->soc), "sysclk", sysclk);
-+
-+    object_property_set_link(OBJECT(bmc->soc), "memory",
-+                             OBJECT(get_system_memory()), &error_abort);
-+    aspeed_connect_serial_hds_to_uarts(bmc);
-+    qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
-+
-+    if (defaults_enabled()) {
-+        aspeed_board_init_flashes(&bmc->soc->fmc,
-+                            bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
-+                            amc->num_cs,
-+                            0);
-+
-+        aspeed_board_init_flashes(&bmc->soc->spi[0],
-+                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
-+                            amc->num_cs, amc->num_cs);
-+
-+        aspeed_board_init_flashes(&bmc->soc->spi[1],
-+                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
-+                            amc->num_cs, (amc->num_cs * 2));
++    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
++    for (int i = 0; i < 8; i++) {
++        channels[i] = pca954x_i2c_get_bus(mux, i);
 +    }
-+
-+    if (amc->i2c_init) {
-+        amc->i2c_init(bmc);
-+    }
-+
-+    armv7m_load_kernel(ARM_CPU(first_cpu),
-+                       machine->kernel_filename,
-+                       0,
-+                       AST1030_INTERNAL_FLASH_SIZE);
 +}
 +
-+static void ast1030_evb_i2c_init(AspeedMachineState *bmc)
++static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
++    I2CBus *i2c[144] = {};
 +
-+    /* U10 24C08 connects to SDA/SCL Group 1 by default */
-+    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
-+    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
++    for (int i = 0; i < 16; i++) {
++        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
++    }
++    I2CBus *i2c180 = i2c[2];
++    I2CBus *i2c480 = i2c[8];
++    I2CBus *i2c600 = i2c[11];
 +
-+    /* U11 LM75 connects to SDA/SCL Group 2 by default */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
++    get_pca9548_channels(i2c180, 0x70, &i2c[16]);
++    get_pca9548_channels(i2c480, 0x70, &i2c[24]);
++    /* NOTE: The device tree skips [32, 40) in the alias numbering */
++    get_pca9548_channels(i2c600, 0x77, &i2c[40]);
++    get_pca9548_channels(i2c[24], 0x71, &i2c[48]);
++    get_pca9548_channels(i2c[25], 0x72, &i2c[56]);
++    get_pca9548_channels(i2c[26], 0x76, &i2c[64]);
++    get_pca9548_channels(i2c[27], 0x76, &i2c[72]);
++    for (int i = 0; i < 8; i++) {
++        get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
++    }
++
++    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
++    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
++
++    /*
++     * EEPROM 24c64 size is 64Kbits or 8 Kbytes
++     *        24c02 size is 2Kbits or 256 bytes
++     */
++    at24c_eeprom_init(i2c[19], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[20], 0x50, 256);
++    at24c_eeprom_init(i2c[22], 0x52, 256);
++
++    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
++    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
++    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
++    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
++
++    at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
++    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
++
++    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
++    at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
++    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
++
++    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
++
++    at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
++    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
++    at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
++
++    at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
++    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
++    at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[79], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[28], 0x50, 256);
++
++    for (int i = 0; i < 8; i++) {
++        at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
++        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
++        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
++        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
++    }
 +}
 +
-+static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-+                                                          const void *data)
++static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc = "Aspeed AST1030 MiniBMC (Cortex-M4)";
-+    amc->soc_name = "ast1030-a1";
-+    amc->hw_strap1 = 0;
-+    amc->hw_strap2 = 0;
-+    mc->init = aspeed_minibmc_machine_init;
-+    amc->i2c_init = ast1030_evb_i2c_init;
-+    mc->default_ram_size = 0;
-+    amc->fmc_model = "w25q80bl";
-+    amc->spi_model = "w25q256";
++    mc->desc = "Facebook Fuji BMC (Cortex-A7)";
++    amc->soc_name = "ast2600-a3";
++    amc->hw_strap1 = FUJI_BMC_HW_STRAP1;
++    amc->hw_strap2 = FUJI_BMC_HW_STRAP2;
++    amc->fmc_model = "mx66l1g45g";
++    amc->spi_model = "mx66l1g45g";
 +    amc->num_cs = 2;
-+    amc->macs_mask = 0;
++    amc->macs_mask = ASPEED_MAC3_ON;
++    amc->i2c_init = fuji_bmc_i2c_init;
++    amc->uart_default = ASPEED_DEV_UART1;
++    mc->default_ram_size = FUJI_BMC_RAM_SIZE;
 +    aspeed_machine_class_init_cpus_defaults(mc);
-+}
++};
 +
-+static const TypeInfo aspeed_ast10x0_evb_types[] = {
++static const TypeInfo aspeed_ast2600_fuji_types[] = {
 +    {
-+        .name           = MACHINE_TYPE_NAME("ast1030-evb"),
-+        .parent         = TYPE_ASPEED_MACHINE,
-+        .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
-+        .interfaces     = arm_machine_interfaces,
++        .name          = MACHINE_TYPE_NAME("fuji-bmc"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_fuji_class_init,
++        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast10x0_evb_types)
++DEFINE_TYPES(aspeed_ast2600_fuji_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 1467a2034c..aeaf654790 100644
+index 4abfbffb45..e6f6ab4245 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -67,6 +67,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_qcom-firework.c',
-   'aspeed_ast2600_rainier.c',
+@@ -59,6 +59,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2600.c',
+   'aspeed_ast2600_bletchley.c',
+   'aspeed_ast2600_fby35.c',
++  'aspeed_ast2600_fuji.c',
    'aspeed_ast10x0.c',
-+  'aspeed_ast10x0_evb.c',
+   'aspeed_eeprom.c',
    'fby35.c'))
- arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-   'aspeed_ast27x0.c',
 -- 
 2.43.0
 
