@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64AFDCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 16:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F96ECCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 16:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFxmq-0003SA-Nz; Mon, 03 Nov 2025 11:52:08 -0500
+	id 1vFxqR-0004JZ-5G; Mon, 03 Nov 2025 11:55:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFxmp-0003Rw-II
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 11:52:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vFxqP-0004Is-CN
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 11:55:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFxme-000499-0W
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 11:52:06 -0500
+ id 1vFxpy-0004v1-4f
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 11:55:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762188711;
+ s=mimecast20190719; t=1762188919;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x2mzI29oojPvR6WejxEc0b6TlzG6uFGzZY+idHVO0ow=;
- b=ezT3mRS2kbJtjpnha541zBdKDV6OU1kWhu2BOCdcBnaibfhOJX7nuZw9mT1HReBcQFQXIE
- cY7P4YpII5cSSX4rgF1nutuDjPI1/x0Wz54yTkRk2h/SJ7Ix1qaXHykSWryzRpk/HzQ30t
- ptD/SZcGpJMPqyYlqwE+c2lOO9IuS4Q=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=X2cAERQ/ID0qu6QDCSNNv+8p4SV0o7TWZjUbVHbwT8c=;
+ b=AQUJDGG8TRWIbYar6AOXUJkgEn465Nnpgo4T1SZvRwkeu7gzmYAmtR/9E8y8E4hgEcaNjI
+ rTygzImsqkXzA43dM8TI8QvXZVnypTDf5bUb/m7Dzr40MQSrAkG0XKZqqwVmcn+vNY0NO/
+ Au5upcqoMRBiI/xTn5KOKWVZA8P76WY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-ti4V5VySP4SkPZss5dCLuA-1; Mon, 03 Nov 2025 11:51:48 -0500
-X-MC-Unique: ti4V5VySP4SkPZss5dCLuA-1
-X-Mimecast-MFC-AGG-ID: ti4V5VySP4SkPZss5dCLuA_1762188707
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429cdb0706aso1547136f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 08:51:48 -0800 (PST)
+ us-mta-659-S0xxf0GLOy-PtzbzcJxm3A-1; Mon, 03 Nov 2025 11:55:17 -0500
+X-MC-Unique: S0xxf0GLOy-PtzbzcJxm3A-1
+X-Mimecast-MFC-AGG-ID: S0xxf0GLOy-PtzbzcJxm3A_1762188917
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47717c2737bso18080105e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 08:55:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762188707; x=1762793507;
+ d=1e100.net; s=20230601; t=1762188916; x=1762793716;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=x2mzI29oojPvR6WejxEc0b6TlzG6uFGzZY+idHVO0ow=;
- b=UENgqjn7iRLMEm1NnH+iTC18IGX2iZzi4evhGI7Vz9ExO/ZYHI/YkUJ8sFKv5kGhhR
- fSKZzUZl8EJSiUffFIZsDZE4M6RRET5vTTlXPLzplG7959ayRNsuPoVnjfv/0Kac/HTi
- vgkYzD+h2DvhC+SsOd3f1nBfHYBJkqQxQVn8lJTzCnWy53xCMfbfTDvEvrCsXunNhaAQ
- VGKgvbCDfkly5/bgq1nXbU+z4HZmvcDnK/gS3R15gSggu5ulTbZgPw5vg5dZmIfjam62
- 89eXU6SyYgdEDVNnxZULS9GIjxHpP2eKza2lItY1Yc5Pq+WC/VhVlk8o3ywoqFUThKbz
- e4vw==
+ bh=X2cAERQ/ID0qu6QDCSNNv+8p4SV0o7TWZjUbVHbwT8c=;
+ b=RkbYC+69iyP4dry7hK6w9HopHm67aQCdrssL1O0BaTqER73NYcKHb4CgzEFezxpeeb
+ vXf1LarBAiSrqMSSj3EcfD9BfkiZzw7yZ7xUfsnJO7RYO0YpDWsyZOp8vPWNnWtMyJhx
+ p9I9e1FzKQqJc8C7C7Gtcss7IBLlPnng/k0ib5Om6PBQ6ZfM3VrILTWLo+sDsqWhJfaK
+ QraNcfcpGBHhVpx2wh/tjFTNqVkf/ZI1HDx884xln1/olXOC4dER8jRG25HhQkWAGljA
+ ow0RdG8q1UVmyhxGN88SaGzgCWhtfluzZeI+vPNb2v7HvovCRhfWPSilb4APOp54TliQ
+ hSug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/XTFb7u/ZvipuHw2K2Ar5JeUR7yYUgYkIsewTUOxvUZ2II8JyP57Ntcge907+QtALFCX5mfAza8ks@nongnu.org
-X-Gm-Message-State: AOJu0YyUCRSKY5g7ENhOLa21lsaFkVVJX7ogXow/BBfgEmYkiFIb2IyM
- PIBjfPNHALT5Dbt+Uh9RS9q8waJ9n4IepEp7l8rBmRpM/2HwOeyi3c1Ezx2mX055S0VJxOscGYf
- Hecg2RCb4CnvmPr0529NWOgl5ldZFDb1A+UAk0hZrt33COmvVbOuhHLlw
-X-Gm-Gg: ASbGnctxZlHBAFHdy1Qc36H1315VN5TZkJTtDh9AvnayvzjQEurJ+oWhXxFfFbd4G3T
- qJdZlQvLTSHDji/h0cCa59a1QOcEACgBH0LhTKoM7lJC2ZfHTP0nfUiaAgU0oDN9LTqLnv73xgz
- pk8DcZiWaxdyNWvV1VsXdstky0mr5ubKnIDjcU9ab/gGEriGrquPxxkkCEgowCJEz1kPyRkpURM
- j6qxrCUxFsHVOVSNRBfzttj2nKs5mn+WpsfbZc0i0Mpxwn5fZyn+9uW4mC351bd8F9T2pq8XAY2
- yiq7tg1/qn50zzEWmFlLSEpF0Feouv20FVS5fE7VNQ7AI2HLHkpQEsg80KN85hssdRHwipktm9n
- jOyG4ReOtExeljIxLjFU/on7cyM3nh3SpeCWN0lr6ABVocA==
-X-Received: by 2002:a05:6000:2301:b0:429:8d46:fc40 with SMTP id
- ffacd0b85a97d-429bd682dd2mr12131313f8f.25.1762188707117; 
- Mon, 03 Nov 2025 08:51:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEotaw287g1lb2lhrTcaCRzhvp0/x8klbGbixmmi379YOwWofmKIsnkvzMMjY1Wy/z+zMVZvw==
-X-Received: by 2002:a05:6000:2301:b0:429:8d46:fc40 with SMTP id
- ffacd0b85a97d-429bd682dd2mr12131293f8f.25.1762188706691; 
- Mon, 03 Nov 2025 08:51:46 -0800 (PST)
+ AJvYcCXcuxNa3s+e+0AW+uvuLYkNhjzw8HcxYodvEL7xT/AMU28bSAPxIxLemydAELx7CetRioQG/dLQrLpL@nongnu.org
+X-Gm-Message-State: AOJu0Yw3OftHkJkIzCG+nhL6BIZRMwEuDY2LqRq2HPbs6SHCWVXGnq19
+ eqJC7YjFQU1570sddXcP670liaFp4PVok1umrI/JT/rXSWgzpiCDdHf3LWPdDSbxso4mrvIaBWM
+ BVb8HjPQtuP+hDkM/PmWUHOg8aGaeTAKqaPIKpRn2LF/o94q1daL7j+qf
+X-Gm-Gg: ASbGncuEsFdbv1pbrytxnkQM5+UIRE9uem0lL5833wqiIxwS3olheTZTgBKjJoMrE9S
+ 5qglyB/8PhAW5g1XrLr6QZNk6TkTYs1Nt9r01ZBeIaeKgjbmQSSqwXrASlGzAq9EQ6mMigM7IYb
+ NV4au9HN9FmLLDxLbaCNhmoW1xiH0rZXk65YrgOb3rb980WkwcN5Hk1Bc/bAMsSawb5cPuS/osU
+ MNLFMcNlGP6Ln8T2lN5z8UiQaz27T9olWLsxQ+EDpMC5DRQInhkj8W8oH9H8+WMivQPiT6+uiIy
+ JvVjSYonU9AdFnPXdyGBQKW2vOCB2sUvsJEo4w6u/yWJRczsLmdx4fp47hst7fJlFtkO3JUJXF3
+ NZHGXq0ZdxGsvLJZZn2IhUEXU36feyw4yfcChpsfjjfp+/g==
+X-Received: by 2002:a05:600c:3b1f:b0:45d:d505:a1c3 with SMTP id
+ 5b1f17b1804b1-477308a8988mr125449765e9.37.1762188916520; 
+ Mon, 03 Nov 2025 08:55:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGLkZKXJF91fq0KhnKiOtjkk4yg6GJ3EqFHSdGAzmmLnM1fzJTnZ+QK4fvUPTNFCqs1tT+LXg==
+X-Received: by 2002:a05:600c:3b1f:b0:45d:d505:a1c3 with SMTP id
+ 5b1f17b1804b1-477308a8988mr125449515e9.37.1762188916094; 
+ Mon, 03 Nov 2025 08:55:16 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c1406a45sm20960647f8f.47.2025.11.03.08.51.45
+ 5b1f17b1804b1-4772fabe2fbsm96917235e9.0.2025.11.03.08.55.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 08:51:46 -0800 (PST)
-Message-ID: <51afaf95-20bb-44f9-8595-8e6f699a6b75@redhat.com>
-Date: Mon, 3 Nov 2025 17:51:44 +0100
+ Mon, 03 Nov 2025 08:55:15 -0800 (PST)
+Message-ID: <118d572b-e19d-4762-bcdc-f0e8204be4ea@redhat.com>
+Date: Mon, 3 Nov 2025 17:55:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/32] hw/arm/smmuv3-accel: Restrict accelerated SMMUv3
- to vfio-pci endpoints with iommufd
+Subject: Re: [PATCH v5 11/32] hw/arm/smmuv3: Implement get_viommu_cap()
+ callback
 Content-Language: en-US
 To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
@@ -93,20 +93,21 @@ Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
  zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
  kjaju@nvidia.com
 References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-11-skolothumtho@nvidia.com>
+ <20251031105005.24618-12-skolothumtho@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251031105005.24618-11-skolothumtho@nvidia.com>
+In-Reply-To: <20251031105005.24618-12-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,147 +127,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 10/31/25 11:49 AM, Shameer Kolothum wrote:
-> Accelerated SMMUv3 is only meaningful when a device can leverage the
-> host SMMUv3 in nested mode (S1+S2 translation). To keep the model
-> consistent and correct, this mode is restricted to vfio-pci endpoint
-> devices using the iommufd backend.
+> For accelerated SMMUv3, we need nested parent domain creation. Add the
+> callback support so that VFIO can create a nested parent.
 >
-> Non-endpoint emulated devices such as PCIe root ports and bridges are
-> also permitted so that vfio-pci devices can be attached beneath them.
-s/beneath them/downstream?
-> All other device types are unsupported in accelerated mode.
->
-> Implement supports_address_space() callaback to reject all such
-callback
-> unsupported devices.
->
-> This restriction also avoids complications with IOTLB invalidations.
-> Some TLBI commands (e.g. CMD_TLBI_NH_ASID) lack an associated SID,
-> making it difficult to trace the originating device. Allowing emulated
-> endpoints would require invalidating both QEMU’s software IOTLB and the
-> host’s hardware IOTLB, which can significantly degrade performance.
->
-> For vfio-pci devices in nested mode, get_address_space() returns an
-> address space aliased to system address space so that the VFIO core
-> can set up the correct stage-2 mappings for guest RAM.
->
-> In summary:
->  - vfio-pci devices(with iommufd as backend) return an address space
->    aliased to system address space.
->  - bridges and root ports return the IOMMU address space.
->
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 > Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 66 ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 65 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index f62b6cf2c9..550a0496fe 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -7,8 +7,13 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
->  
->  #include "hw/arm/smmuv3.h"
-> +#include "hw/pci/pci_bridge.h"
-> +#include "hw/pci-host/gpex.h"
-> +#include "hw/vfio/pci.h"
-> +
->  #include "smmuv3-accel.h"
->  
->  /*
-> @@ -38,6 +43,41 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->      return accel_dev;
->  }
->  
-> +static bool smmuv3_accel_pdev_allowed(PCIDevice *pdev, bool *vfio_pci)
-> +{
-> +
-> +    if (object_dynamic_cast(OBJECT(pdev), TYPE_PCI_BRIDGE) ||
-> +        object_dynamic_cast(OBJECT(pdev), TYPE_PXB_PCIE_DEV) ||
-> +        object_dynamic_cast(OBJECT(pdev), TYPE_GPEX_ROOT_DEVICE)) {
-> +        return true;
-> +    } else if ((object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI))) {
-> +        *vfio_pci = true;
-> +        if (object_property_get_link(OBJECT(pdev), "iommufd", NULL)) {
-> +            return true;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +
-> +static bool smmuv3_accel_supports_as(PCIBus *bus, void *opaque, int devfn,
-> +                                     Error **errp)
-> +{
-> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
-> +    bool vfio_pci = false;
-> +
-> +    if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
-> +        if (vfio_pci) {
-> +            error_setg(errp, "vfio-pci endpoint devices without an iommufd "
-> +                       "backend not allowed when using arm-smmuv3,accel=on");
-> +
-> +        } else {
-> +            error_setg(errp, "Emulated endpoint devices are not allowed when "
-> +                       "using arm-smmuv3,accel=on");
-> +        }
-> +        return false;
-> +    }
-> +    return true;
-> +}
->  /*
->   * Find or add an address space for the given PCI device.
->   *
-> @@ -48,15 +88,39 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->  static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
->                                                int devfn)
->  {
-> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
->      SMMUState *bs = opaque;
->      SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
->      SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
->      SMMUDevice *sdev = &accel_dev->sdev;
-> +    bool vfio_pci = false;
->  
-> -    return &sdev->as;
-> +    if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
-> +        /* Should never be here: supports_address_space() filters these out */
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    /*
-> +     * In the accelerated mode, a vfio-pci device attached via the iommufd
-> +     * backend must remain in the system address space. Such a device is
-> +     * always translated by its physical SMMU (using either a stage-2-only
-> +     * STE or a nested STE), where the parent stage-2 page table is allocated
-> +     * by the VFIO core to back the system address space.
-> +     *
-> +     * Return the shared_as_sysmem aliased to the global system memory in this
-> +     * case. Sharing address_space_memory also allows devices under different
-> +     * vSMMU instances in the same VM to reuse a single nesting parent HWPT in
-> +     * the VFIO core.
-> +     */
-> +    if (vfio_pci) {
-> +        return shared_as_sysmem;
-> +    } else {
-> +        return &sdev->as;
-> +    }
->  }
->  
->  static const PCIIOMMUOps smmuv3_accel_ops = {
-> +    .supports_address_space = smmuv3_accel_supports_as,
->      .get_address_space = smmuv3_accel_find_add_as,
->  };
->  
-Besides
-
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 Eric
+> ---
+>  hw/arm/smmuv3-accel.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 550a0496fe..a1d672208f 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -10,6 +10,7 @@
+>  #include "qemu/error-report.h"
+>  
+>  #include "hw/arm/smmuv3.h"
+> +#include "hw/iommu.h"
+>  #include "hw/pci/pci_bridge.h"
+>  #include "hw/pci-host/gpex.h"
+>  #include "hw/vfio/pci.h"
+> @@ -119,9 +120,21 @@ static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
+>      }
+>  }
+>  
+> +static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
+> +{
+> +    /*
+> +     * We return VIOMMU_FLAG_WANT_NESTING_PARENT to inform VFIO core to create a
+> +     * nesting parent which is required for accelerated SMMUv3 support.
+> +     * The real HW nested support should be reported from host SMMUv3 and if
+> +     * it doesn't, the nesting parent allocation will fail anyway in VFIO core.
+> +     */
+> +    return VIOMMU_FLAG_WANT_NESTING_PARENT;
+> +}
+> +
+>  static const PCIIOMMUOps smmuv3_accel_ops = {
+>      .supports_address_space = smmuv3_accel_supports_as,
+>      .get_address_space = smmuv3_accel_find_add_as,
+> +    .get_viommu_flags = smmuv3_accel_get_viommu_flags,
+>  };
+>  
+>  static void smmuv3_accel_as_init(SMMUv3State *s)
 
 
