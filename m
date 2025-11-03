@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD8ECCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 18:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC9ACCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 18:42:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFzU9-00033Q-Nt; Mon, 03 Nov 2025 13:40:57 -0500
+	id 1vFzUH-00037o-7Y; Mon, 03 Nov 2025 13:41:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vFzU7-00032I-4v
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:55 -0500
+ id 1vFzUE-00037L-6B
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:41:02 -0500
 Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vFzU1-0008T1-3t
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:53 -0500
+ id 1vFzTx-0008Q4-0K
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:40:59 -0500
 Received: by mail-pf1-x443.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so4749274b3a.1
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 10:40:48 -0800 (PST)
+ d2e1a72fcca58-7a9cdf62d31so2347777b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 10:40:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762195247; x=1762800047; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2PPFTpvP29eV2o4+yOFXgNrhVKIhmznvuYSsfAv1arc=;
- b=YOHRffBmcUFfQe/Yvn0LDeEoQAYjKlJKgGSaKuogY9RT8gGduBa1eUDjKfpNQaVGWb
- zIqhKL0y5hgQdOvBHKgqCRTR3eeb05iIHXzUjLry4pAFIZxpdBB4qHoBDBHUs3KDjnGq
- BgZBkwzrUTSfKfk4WNXLdcVCcrDQsWlDnyZBHMNM/XcS1eQrYLkQDn1y1EzXcc1KEFgG
- P/At4cboZR2Kq3vpQasYuO6IgSRQ1GGIrfiBe11JCLSOubPL+w0oi4rjLeDCn4ay0AnC
- SNyEy6HrWJA16asDoNXop6NCl/aJi7v7jI7nJHxyMaywDItf+V/Bl5fj0yKnBOW2c4EI
- slYQ==
+ d=gmail.com; s=20230601; t=1762195239; x=1762800039; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VPUHH2KG3a+zlnw4jFWnJXDoqnz1r9b1MatYjBejcUw=;
+ b=cdFwzTjd4ebDll8kYCpR2dewc4MVMKy2gfoXdJOgdGIe7HYYy0ldorGHGX5h0VVvxP
+ itlMoLQItIi7QmfPhHTif3eDg+6W/I/m+GENax9X/QfyqGQsNxgLOqjtP0fGNFmCg4Xt
+ /CduqsbTu6izxEQIDUEzqMzQ6+CdiXym5EkqdAuT3dnGRD6rrNAWC+iDNZ6rAr/JKHea
+ URDgtx+/YlOZLjkU56iOwG7DZy2hTpoPk1Pa7/4YL/OGwQAGOyTC8HCI1jTFyPDUJQgO
+ gFQu6nVLsp+myCX6Jpl6KAQLVz3yZwoSjkx9zDYReCBJpZp8xDAnWDgdtMPbtX0j49dM
+ PEuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762195247; x=1762800047;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2PPFTpvP29eV2o4+yOFXgNrhVKIhmznvuYSsfAv1arc=;
- b=TD/ktaxt9hleusSMNDeb3uao2alaUGv7+vAuaLUg79/txtb6ROC9mu+NXnYbDu+06G
- PVRWwS2NxYtQwfjMFWSaBT723VcgNbSe2Awf8QKg+pZe8YYKurYwCHyjufVU3DO+PMAb
- KYrWXQmr4Io5RzqmvrRsHNc7sqkGbpmHBmvu82gxZXrLaYzVM0n1TV7eqhwG0AekFoIw
- YVtcToqFc/osMl0I+I0Prc7vh21jEclQkONttlFqP6qIO9LOeLhW/sekTJCKyhFVWA0R
- X9MFs9NlGbq1nis/uiykxkruQFuoizH9Mw2ytlyTiv4icHJMkXBLnDJup/ye53joccSW
- Cfsw==
+ d=1e100.net; s=20230601; t=1762195239; x=1762800039;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VPUHH2KG3a+zlnw4jFWnJXDoqnz1r9b1MatYjBejcUw=;
+ b=ApwM7uFYhYvsHlb767ytuzy+xAeCDvsrGrLK8J22joWk5Nmdb7VGZTsWG8fh970hKv
+ qk7N5PRl1IGFulXSzNwiHTgow3lYJ8cxWBHvL61TTcIUvh5TygFrWN6xFljerYGaeI/I
+ sf8l6A9dVPvo6WgAxyUg3YwsOqxFyKnbZ/L5Na8KeGh6DscTQc7muOclLJ48bG3Udipn
+ yzOG1pTjN6X6JMg9H6phHNNPL3KcS+FKNShxfwY8zXs7JhBRULp5E2V08QYHhi95bRsN
+ FrTiuPBuUi6qAxTrlFpAiyyIdnvQhosIVIczDwIuf6Bd3DYtWoqCjuq9OIUpWRhnALam
+ ZPsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbodQDKdtslCUT0BopKyWdmOZ+GgtfO6cTHFzbEGGOnR0czX+aG01Iu4c3Zvh0fvUaJ+0yBJZ5Urqx@nongnu.org
-X-Gm-Message-State: AOJu0YycCWEeYLDiULnI8PNntHQHks82Jd+u71Raaqlxfipm0PNlgUKn
- EK/D4F1iae5DCOLr4OrDuww9u8u85DdsHzCQyWONlHJ7Af+QpV0AoZrrzFgcSo+wnPPj9w==
-X-Gm-Gg: ASbGncsjvv99/GBTLRbYksYc+MWmKX9bTm+MpSZfrq+p+jCO6RrA4jEoAUY80/911tj
- yWr3ZtI0cgtFWnu2v91r96dDOQizXtmiAufkvhYtS0tND6y8jQWIGogzsC4z781yPUqUytTT3Oj
- XkpR3fwbj50aXn6Puw7JeBkXxR2pQUAT9zTp3Hi2iJFZht1XkdQ6BW55yYNYyicmc5S/WiOP5EQ
- OpYiZ3asqceRIJOzta8G7qTE0JPAj2uvaVe7UEfWRXJu1r/+aduxeBkrUpGyFdRvkay3PtoZuQw
- +gN8PyoGtItTwTxdtBlxW3k3RVcrye65tpqLzKrLtaas4B/IgKo9FZJec8QMRvcWs0rpTjCtnqd
- +lSJJtmJICxQEGctL4sUjixyQair9MIP9WDxMLDj5jzXAajNzCH8T9m3Oqyq/lITi2xja0Ur8ZW
- lOGBnSoNgq9mhLIbwr6RQddPJcG6MnjfHk+oeWsoN+SJRH1iHqzw==
-X-Google-Smtp-Source: AGHT+IHd6zsejcK4AP53rLg0JcZIXBH9C3rw/530rwYwuYaFzZq9Czx853gMiDX/ZWWPLaI4e1/Uig==
-X-Received: by 2002:a05:6a00:4614:b0:7a2:7f45:5898 with SMTP id
- d2e1a72fcca58-7acbf0ba05bmr521898b3a.3.1762195246459; 
- Mon, 03 Nov 2025 10:40:46 -0800 (PST)
+ AJvYcCUGCbVVVw6JWigtXUkff7ja6LT1gxH9vBOdfuZh+f6uUp1fNXIyhugcHFGnVqX4AHc4yy3kcOO+XlBE@nongnu.org
+X-Gm-Message-State: AOJu0Ywk5qVOgzmI6HR51/M0hF1HVRduqoOY6ouMWBD6qUVNr7sv3FG8
+ zRh9q/ZX5tmCSfubUY5HaNQQCQ81PamJa/2vdMVswaEtR6n7sf5czOHn
+X-Gm-Gg: ASbGncv/wowQLwqPlMSXjcPClobgo5thP038h7xs8pzY3fQemhmG744Okynhnymuq50
+ QaviqRevjBGPV1+wr1GFvQfWVYJwspijzrZQw3Ot7Ooy9HOgNnI9XRLDxOzgx8zzKypU29yT+V5
+ +prc3BgafR73wH4gp7vJmqv12NTcsIwG8fe8NluxT8tRwlfOyivcxATe87FC6l1UfSipcUFyg9U
+ ulfzpaybHW31OhHiDMJU9+mdF+uUhfjDC8GwZYt/2yt+Y4JOAua+Z1Fwd7MAAyNNOOYT5urZNdx
+ UmcwUIQmwAcOE9GfYUZzppFCdND3LgJRQ2lLAuMMw4Lq5U0/ATHzvNIv/jxCJRGm6a+WOmw+KCq
+ rvI+TgD8ZViwTdqoRj+flOfbzZ4KjQhNe+J2OV5Dlj5cZbRJWirswikky6NpzUMGYo4LsJHd2gF
+ GghCo9NtVddH1vYw6C8MOXtZxa7Bxc81is4zFFwTmkxXu3dmHKAw==
+X-Google-Smtp-Source: AGHT+IFROLwiidtGgHNOFLDS0NLic4/SfwdcLwnjJ5Ix2Pq7s+vN0gSTRHjJsor2LLomq6zsZ056WQ==
+X-Received: by 2002:aa7:8f98:0:b0:7a9:cb58:2b72 with SMTP id
+ d2e1a72fcca58-7a9cb582d32mr5583731b3a.3.1762195238714; 
+ Mon, 03 Nov 2025 10:40:38 -0800 (PST)
 Received: from fedora.. ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7acd634081dsm64255b3a.58.2025.11.03.10.40.42
+ d2e1a72fcca58-7acd634081dsm64255b3a.58.2025.11.03.10.40.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 10:40:46 -0800 (PST)
+ Mon, 03 Nov 2025 10:40:38 -0800 (PST)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 To: deller@gmx.de, mark.cave-ayland@ilande.co.uk,
  sarkarsoumyajyoti23@gmail.com, peter.maydell@linaro.org,
  zhaoguohan@kylinos.cn, qemu-devel@nongnu.org, stefanha@gmail.com
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH v4 2/2] hw/scsi/ncr53c710.c: Fixing Incorrect expression
- (IDENTICAL_BRANCHES)
-Date: Tue,  4 Nov 2025 00:10:31 +0530
-Message-ID: <20251103184031.22118-3-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v4 0/2] HP-PARISC: LASI's NCR710 SCSI Controller
+Date: Tue,  4 Nov 2025 00:10:29 +0530
+Message-ID: <20251103184031.22118-1-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20251103184031.22118-1-soumyajyotisarkar23@gmail.com>
-References: <20251103184031.22118-1-soumyajyotisarkar23@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
  envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x443.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+X-Spam_score_int: -13
+X-Spam_score: -1.4
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,34 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The issue stems from Sync and Async if-else condition.
-The same code is executed when the condition "s->waiting != NCR710_WAIT_NONE" is true or false.
-Because the code in the if-then branch and after the if statement is identical
-So we can remove the unnecessary condition checking for Sync and Async
-cases.
-As reported by: Stefan Hajnoczi <stefanha@gmail.com>
+Fixing Defects reported by Coverity Scan for NCR710 SCSI Controller in QEMU.
+QEMU runs the Coverity static analyzer to identify potential bugs in
+code that has recently been merged.
 
-Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
----
- hw/scsi/ncr53c710.c | 5 -----
- 1 file changed, 5 deletions(-)
+In view of the above these issues came to light.
+I would request you to please review the fixes for the same.
 
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 871f76c2a2..3de264fde9 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -1366,11 +1366,6 @@ again:
-         case PHASE_DI:
-             s->waiting = NCR710_WAIT_DMA;
-             ncr710_do_dma(s, 0);
--            if (s->waiting != NCR710_WAIT_NONE) {
--                /* Async - stop and wait */
--                break;
--            }
--            /* Sync - continue execution */
-             break;
-         case PHASE_CO:
-             ncr710_do_command(s);
+Reported by: Stefan Hajnoczi <stefanha@gmail.com>
+and GuoHan Zhao <zhaoguohan@kylinos.cn>
+
+Soumyajyotii Ssarkar (2):
+  hw/scsi/ncr53c710.c: Fixing null pointer dereference issue.
+  hw/scsi/ncr53c710.c: Fixing Incorrect expression  (IDENTICAL_BRANCHES)
+
+ hw/scsi/ncr53c710.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
 -- 
 2.49.0
 
