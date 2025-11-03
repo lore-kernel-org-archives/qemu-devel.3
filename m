@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6541FCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 15:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B05CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 15:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFwmj-0005OM-80; Mon, 03 Nov 2025 10:47:57 -0500
+	id 1vFwmA-0005Br-E1; Mon, 03 Nov 2025 10:47:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vFwmh-0005NJ-NB
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 10:47:55 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1vFwm8-0005B5-Ak
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 10:47:20 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vFwmX-0002r4-LR
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 10:47:55 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-63fbbad0ac3so735094d50.1
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 07:47:42 -0800 (PST)
+ id 1vFwlx-0002ip-46
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 10:47:20 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-421851bca51so3984562f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 07:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762184860; x=1762789660; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=D1kjkvSm01QnehMt7n8aEDTF3ZghshEgLjDcv+CpV6Y=;
- b=G1+1aqKjYuiThKNhX8GthRhH7c9c/WVvoDShQDvIalehYHAzwCemMmVbQGX1Nu4E1b
- 4S4I8GVXWYReNnE8L/kfcI/cawNIplOpzjMaKx1jQCB+XW8ZYP0JfgxgdtrDT5/58j7f
- +Z2hLKIP9vNyguuPx8TqKaWn4ye5gjC6KZSAWaecOWz+kaNqeQ09B67pEkWiBzWRAKh6
- YvECxV7JJIacGs+s+/cdKyICPu24syLln/jGjdPEgc4fOrURhSSpmdV6YzP5IubMx9va
- jKidnDpOs50iTD3L0CSt4hxtFWs5y49cTJgddJWGyQINEoRBQDZrNJU2jOYO/n+P/bPZ
- 7rxg==
+ d=linaro.org; s=google; t=1762184825; x=1762789625; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=hAwSv5m0SCHS7ZUiqLQkSHrP57WMiWiuegLNWilDi8Y=;
+ b=E4PDAE0endaWC2bqSoySSklGcgCZnBB71abcFqBwCUCETOBdhsxZ8GohwMqXjk5Qy4
+ ZXkBU8uHcsE/tH+IRsNADoY6Z7z18xiymnddWUG8bMmTtGlBNDXac74EEohmjlwxfMgt
+ /aJ6cy/pWAQtPkRKTjQ0mvQYBAe34NY3bjb13sT4xAeedeObSoF5d7+UtxvMiilGRlcQ
+ DinAyNf2I3sM5KJwRRHwOeGGxMSN8VCzRBgBhKxrQyCZMe1m/RiJJKKQOlE4x0qD12Ex
+ /HcRFoiBwwNhZa8hqeXtXE54pQPnDv8sl4jFxsjz2MtILjpAEgnXL1PM8j+K2NRpx018
+ Gu3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762184860; x=1762789660;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D1kjkvSm01QnehMt7n8aEDTF3ZghshEgLjDcv+CpV6Y=;
- b=tPY3aS+GAXFI28voheZ2v43xoMIKDOh3itXnGh7zii4H9mRBWaJLct1rJjA5WrUN/d
- 5SGEylGABnQvh6H0wJ/VHUc9MHk63Q+gFwqUKJy2AF4QiBvoEnrA3DfzltoQsYcI3PJ/
- cZ50qE9//8ZCkK6QavxReQy+EtUWDadZX3UPcJwh/klv43K9/6VoOFfNpA3uxvOelY4x
- FNa4smjAeHEl4trnnOnoyixUEW4S9FAbX18m99OdHGw5xceVUjS0BLb6mfu9kiCehLmi
- /iyvVcsfUCSCMX+dbgEbhgcAhOvL8inj7ctnW4uRYOa6LGq68eaucTZS2QmsZ+Se9Yrd
- sBJg==
-X-Gm-Message-State: AOJu0Yx+4WBi3CD+Q0zMI5zhl4IummTkryroX2r+rhOclACMeIWotQ3N
- m4zpDyIddG+GbPNFSSbmJcjSd5AvPX6mcYmjTFdLSC9a0d7mA2gCLTd7kK/SElUJ7tyKlm0/+TE
- rTUTpW0Qcpd3Z/zTAsQhNY2ceLrjVxV5TkU8SfY2cXw==
-X-Gm-Gg: ASbGncu4nx8hDZs5IIxqF1KQHqQ2bm1eR7sLyP1kjjrw4OMPVbCXEZFN/vrH3u84osF
- iqgArCGyeC52TJk4+gqJ5yVDut0WOj2t4OHK8Ra1h/qCpxIBAocTCAQ5hjgU1sJVXsh+bGu8cEa
- PUbsg/fzpw1bOzEW1YZrIxOnBZJTbkosEdZQfOvCKg4tMqWRGkQGYnAtCZYrZT/c13sfbJYv6WC
- rUJvo+ZlUiDbkOCaaCg3XnoYpIxVBq8+oGrVuhhdcHmQFye+gay2qS1z7eYbQ==
-X-Google-Smtp-Source: AGHT+IEBqd2EDS5Pp4oieOKzJW+Y4BeYLfgiBZEaJIk9hRuLddQ5W97WqvSOMhboXTuSR4Eru4pWOjA9qnITV/hdt1s=
-X-Received: by 2002:a05:690c:4b13:b0:786:5789:57cb with SMTP id
- 00721157ae682-78657895981mr95236537b3.50.1762184860320; Mon, 03 Nov 2025
- 07:47:40 -0800 (PST)
-MIME-Version: 1.0
-References: <20251101120130.236721-1-shentey@gmail.com>
- <4D17B8A6-28E9-4E65-B0DD-15BE2AD4AB04@gmail.com>
-In-Reply-To: <4D17B8A6-28E9-4E65-B0DD-15BE2AD4AB04@gmail.com>
+ d=1e100.net; s=20230601; t=1762184825; x=1762789625;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hAwSv5m0SCHS7ZUiqLQkSHrP57WMiWiuegLNWilDi8Y=;
+ b=kXGieXlCoSTVjaev3YT4ACLzkM1xw7p8cjsDirN0M+vPUKfZMtG5RmuLlIkONDyV4s
+ IKNWboX0ytMY1U/CFBdBa8PLIfWAx6iXjaXgk1Dwq5XRYsDlhFYA6TXNmz4d130xUb9H
+ jDBJ98xYbe+FazNBhdzSfVANUvtxEZ2B1Sb4WNdUYm1NOmuIJh+u/ONW7sHCYLbz2tfv
+ jx3Ofd5/p94WhFIqTHl8PvGyHwWTusK9dK0Xg11QjBEivuhakh0WdeufT3k4IK60pV1V
+ Fs8bZUARIG2An4joS4qsVZh2PY3WmghgpZxbUhc856Ahsmsxoj+w9+PWcSghcqsT7PE/
+ 2RvQ==
+X-Gm-Message-State: AOJu0Yxev6T4ACUghPyfYODBYxSWQUaBAJwYQCM4zrwXG9bMq2CAXmtq
+ 8UuXQpnRK6fxHCljP0lCbHRc9FPIlxCQHvZq2HzBfKxJNkRzTot9Wf3fgM0acsOZfA1oj9oDCkG
+ NtSC/
+X-Gm-Gg: ASbGncuHISyWxOZlF9SAsBjYkmRWQQ29178fR/9ZoxjccoE8qh/AKog3HcVqcVePC5B
+ wLxS8ILpd5C+kxhm8w+FhzSpWYoD46WvExb81K+IkHjzZGSMcsI16FR9ig86Owlc+sl6RMMqmO5
+ T6ss/z1Ll8en1L2ao1gWO6RO7RNuQzs+IIFzLPmJ1PGf7YcgyKlaZIhxXRANUmYlznTUiTXq78r
+ PhdK5B8HGZ7AFXKi6r1wP0lqM/bPR/XMaCSvtPDVxEeZufIlmvGcWpxSvVPQWNYmEy0ZLxxGrGs
+ DA4d9yWe41PIhBQSnM8oIYj4NViHMLwK8UUSSS+YkpsILt7NvT20dFucJQllw9rPRJUT13HxOYS
+ hEfyrwyvghxBtqWrnCbi5/KT9AHTEj0FE75yzpvkjxUWXMa1GBY8kIJSLxT/4b9ZyfgAsf/zkFU
+ jwKySc02wBwmeGW+rm
+X-Google-Smtp-Source: AGHT+IEuJAQhMZuavzQE31Va/eF6pd1l+rlSPxtlK0wBMqMqyRxzIcdjUvF/10N5Sh8N1OuWbbWCDQ==
+X-Received: by 2002:a05:6000:4312:b0:429:ce81:fe0d with SMTP id
+ ffacd0b85a97d-429ce82001emr4650123f8f.60.1762184825220; 
+ Mon, 03 Nov 2025 07:47:05 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429ce6b0c16sm10504156f8f.38.2025.11.03.07.47.04
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Nov 2025 07:47:04 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 3 Nov 2025 15:47:29 +0000
-X-Gm-Features: AWmQ_bl4nfWeFBgSFu4cOy2ckqnbpLntfAhtTUfQJYvbLUm9gx69SsQEmjtdWz4
-Message-ID: <CAFEAcA-7dMCjK2dnTP=82qtk48D4WHCP4sbyQtaxTcRsDb=t+w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] KVM Support for imx8mp-evk Machine
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 3/3] docs/devel/testing/fuzzing: Note that you can get qtest to
+ read from a file
+Date: Mon,  3 Nov 2025 15:47:00 +0000
+Message-ID: <20251103154700.4126379-4-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251103154700.4126379-1-peter.maydell@linaro.org>
+References: <20251103154700.4126379-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,54 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Nov 2025 at 08:55, Bernhard Beschow <shentey@gmail.com> wrote:
->
->
->
-> Am 1. November 2025 12:01:28 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
-> >This series adds KVM support to the imx8mp-evk machine, allowing it to run
-> >
-> >guests with KVM acceleration. Inspiration was taken from the virt machine. This
-> >
-> >required a device tree quirk for the guest clock to be kept in sync with the
-> >
-> >host. Without this quirk the guest's clock would advance with factor <host
-> >
-> >system counter> / 8Mhz.
-> >
-> >
-> >
-> >Testing done:
-> >
-> >* Run `make check`
-> >
-> >* Run Buildroot image with TCG
-> >
-> >* Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
-> >
-> >  `qemu-system-aarch64 -M virt,secure=on,virtualization=on,gic-version=4 \
-> >
-> >  -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx8mp-evk \
-> >
-> >  -accel tcg -smp 4". Observe that the `date` command reflects the host's date.
-> >
-> >
-> >
-> >v3:
-> >
-> >* Fix crash in qtest (Peter) by using cortex-a53 CPU when ms->cpu_type == NULL
-> >
-> >* Apply Peter's style fixes in board documentation
-> >
-> >* Apply Phil's R-b -- thanks!
-> >
-> >* Rebase onto master
-> >
->
-> Is there still a chance to get this series into 10.2? Soft feature freeze is tomorrow.
+It is possible to get qtest to read fuzzer reproducers from a file
+rather than directly from stdio; this is useful when you want to run
+QEMU under gdb to debug the failure.  Document how to do this, which
+was previously only written down in the commit message for
+5b18a6bf44b9 ("chardev: Allow setting file chardev input file on the
+command line").
 
-I've put this into the pullreq I've just sent out for softfreeze.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20251028165236.3327658-1-peter.maydell@linaro.org
+---
+ docs/devel/testing/fuzzing.rst | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-thanks
--- PMM
+diff --git a/docs/devel/testing/fuzzing.rst b/docs/devel/testing/fuzzing.rst
+index c3ac084311b..c43f815f320 100644
+--- a/docs/devel/testing/fuzzing.rst
++++ b/docs/devel/testing/fuzzing.rst
+@@ -263,6 +263,15 @@ generic-fuzz target.
+ 
+ - Report the bug and send a patch with the C reproducer upstream
+ 
++QEMU can also read the reproducer directly from a file rather than
++from standard input::
++
++    $QEMU_PATH $QEMU_ARGS -qtest chardev:repro \
++      -chardev file,id=repro,path=/dev/null,input-path=/tmp/reproducer
++
++This is useful if you want to run QEMU under a debugger to investigate
++the failure.
++
+ Implementation Details / Fuzzer Lifecycle
+ -----------------------------------------
+ 
+-- 
+2.43.0
+
 
