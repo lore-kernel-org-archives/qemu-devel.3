@@ -4,97 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98FCCCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCFBCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFrNm-0006ua-Kp; Mon, 03 Nov 2025 05:01:51 -0500
+	id 1vFrOF-0007KM-Tg; Mon, 03 Nov 2025 05:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrNl-0006sn-GS
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:01:49 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrNh-0000Lr-QA
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:01:48 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3ece1102998so2724502f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 02:01:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762164102; x=1762768902; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=V0kg1/AYV9jqvDNp0UcsZv457kUsXIFzZ5jwURtrm/g=;
- b=LkoLolJ5vmPTiOAW9BpKAArQL/DKCbdV+TRFKPaQXY4pYWyJV9Yy9g3i69tlmAG9wz
- R7x6qCZrohd1fAgScURmO13i4r2L8gd+DVTPhPAPsaFLtqlse2XlgGVuyADUtoB8jcHE
- 1GgDVxR9DXIfDATiZWscpYG2wvZlW12PuXHx78uX9nR1wXBUNKhIC6PtUst7oevWjZYb
- Gw4tRRH4rRtZ9AtjwQOFgwG7M5Jixu+4wYQxtxyNl+yfscsf8UcsHp+DgaDh33s85NWL
- fQQENpYlFH8FAAzUNLeSdzS2V2xbx8p1ZsOSoUbDsZ8D5qSaa06qIZ/l4Xoc5s4gttIR
- DeRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762164102; x=1762768902;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V0kg1/AYV9jqvDNp0UcsZv457kUsXIFzZ5jwURtrm/g=;
- b=U9giEpiBv32zz9+rz3HAeWQhF5cj+Lyw7nXTUFKOlJ6SRa9mfwoJktB9oKqTTkkR/W
- p1xM6o7VKr7f3JrBxk2gNIeJQ3f+P3U8LQ+qdP0Zsp5YH07AZpgeHH1cfU1fU+F0lgGK
- BikyVEYzoT6K67GlAu3ZKPQ6PTFI+MGzsK4gMr5XjhzowvnvTwozxQC6CDfnAQL0+Cte
- Z/Tskbc9Mlk3+Z/55ldkEi3I4fyTQ/rj6MoPdZqUq4NdzAG2GhHKylrgk4yoNwSfaXzz
- uvItgXVhZH6QWX5Lp+s8nzSuRKhgHdxqD7/G2oKjb/1FCiv9mGi7yZx4G/4yeFSRj7HP
- xuUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVI6iee9IQYow2xcK4V97SlPUYnzuznArrYcXHTM6Sq8Py99vRGSV4YFWSVxKJgd4RnRd0WA7Rbetav@nongnu.org
-X-Gm-Message-State: AOJu0YzTpAMtwK7TPPInu/dY5YRrNxXu+7LyjN4d7me/qZm+JjiHqcYT
- isQewx5UDxUgvy2nRvfu6HdIo1JYSfcCBqf2cElz2n/ffviDIQnpZ7KYAPZOm0caz38=
-X-Gm-Gg: ASbGncuCad74rHE306T2FDLtesmecDjLIjJbwRozGkoQcm1dY1uVwV1LzmCIjyL2Dv3
- tlRkFMNEeGeeho+aqzWHihgh8iXrW6wMkFD3USXuyoEHZUUiaQvh/QMJWZjWefW3eDrduBUxk6R
- 6FuvDgsJ9SLLFa9RzA+rDKRmGRhBmuPVb5vp+Lyxp1dGu/9YfkX/nrB7Euu6yWp/t+iXO7HOL8P
- WKmDAwvzygdI0VcoI9QPwmOrFDfqZGUOuz5ZpCqH33fSdPlgSLk7dTYwwbsFRTBuUGH95Dh4hmR
- L4Y2xIYzi2TsHVVZLjzv6wuJ3V7TPwcMkmQeraXTuf2nnh8nQnRfT3oY3A6xoWVKSUbh9G2jAbt
- ng6cEbfGaCdrCKCd8KPbBTYQrnRgx0joHImmFLZoG9Y5htSDtzzCBDKWQNqpPBi9E508J9lsJfz
- jaiOyxs0/BhbYwwMUarpMiHNiuo10+ZB/5P6CU60Ig+kFY24a6zx3IxnpexvsTow==
-X-Google-Smtp-Source: AGHT+IF3xXiY9zBjyJZywDN2GeQGBmb0BDj/R9RTXOzz1/hArawD6Ny0G2505AVDJ+LTzU1LSO5ENA==
-X-Received: by 2002:a05:6000:491c:b0:429:ca7f:8d73 with SMTP id
- ffacd0b85a97d-429ca7f8f21mr5735028f8f.26.1762164102454; 
- Mon, 03 Nov 2025 02:01:42 -0800 (PST)
-Received: from [172.18.178.65] (ip-185-104-138-122.ptr.icomera.net.
- [185.104.138.122]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429cab8575bsm12120425f8f.31.2025.11.03.02.01.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 02:01:41 -0800 (PST)
-Message-ID: <0f1a0739-69c5-4a4a-b627-17f3a3bb9824@linaro.org>
-Date: Mon, 3 Nov 2025 11:01:26 +0100
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vFrOC-0007FV-UQ
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:02:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vFrO8-0000PG-K0
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:02:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762164126;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=mJX024coPJgmrYZ3/DvCAyY8b0d9HmEy4sHo0h7sjVw=;
+ b=idYlwZZltOe9rJfMun0ULU8DZmpiEfd4xmSGFfp4S6MPHXhQMl6b3BH+mIbDsJQ4bvAgDo
+ DAlEWQ+ld8a9VQjLnoFvZAm2lfAqmjZ8KlokCUhHTl5igi3QjCHSKW2UTA0LnqZXLQ2uhu
+ noDV1Fg/g9h7ntX8XYSNvREqVahkbT0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-0pIf2gmeMyyNZzrx67Twag-1; Mon,
+ 03 Nov 2025 05:02:05 -0500
+X-MC-Unique: 0pIf2gmeMyyNZzrx67Twag-1
+X-Mimecast-MFC-AGG-ID: 0pIf2gmeMyyNZzrx67Twag_1762164124
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C02A1955F25
+ for <qemu-devel@nongnu.org>; Mon,  3 Nov 2025 10:02:04 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8C6DC1800579; Mon,  3 Nov 2025 10:02:02 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH] audio/dbus: make "dbus" the default backend when using
+ -display dbus
+Date: Mon,  3 Nov 2025 14:01:58 +0400
+Message-ID: <20251103100158.1148552-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 43/59] accel/hvf: Implement WFI without using pselect()
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Collingbourne <pcc@google.com>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
-References: <20251028054238.14949-1-philmd@linaro.org>
- <20251028054238.14949-44-philmd@linaro.org>
- <12196f65-ad1c-4753-ac15-211567c77297@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <12196f65-ad1c-4753-ac15-211567c77297@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,27 +86,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/10/25 13:01, Richard Henderson wrote:
-> On 10/28/25 06:42, Philippe Mathieu-Daudé wrote:
->> --- a/accel/hvf/hvf-accel-ops.c
->> +++ b/accel/hvf/hvf-accel-ops.c
->> @@ -128,14 +128,15 @@ static int hvf_init_vcpu(CPUState *cpu)
->>       cpu->accel = g_new0(AccelCPUState, 1);
->>       /* init cpu signals */
->> +    sigset_t unblock_ipi_mask;
-> 
-> Why introduce this?  Surely it's unused...
-> 
->>       struct sigaction sigact;
->>       memset(&sigact, 0, sizeof(sigact));
->>       sigact.sa_handler = dummy_signal;
->>       sigaction(SIG_IPI, &sigact, NULL);
->> -    pthread_sigmask(SIG_BLOCK, NULL, &cpu->accel->unblock_ipi_mask);
->> -    sigdelset(&cpu->accel->unblock_ipi_mask, SIG_IPI);
->> +    pthread_sigmask(SIG_BLOCK, NULL, &unblock_ipi_mask);
->> +    sigdelset(&unblock_ipi_mask, SIG_IPI);
-> 
-> ... apart from mere initialization.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Leftover (now removed).
+Set "using_dbus_display" during early_dbus_init(), so that we can try to
+create the "dbus" audio backend by default from audio_prio_list.
+
+This makes dbus audio work by default when using an audio device,
+without having to setup and wire up the -audiodev manually.
+
+The added FIXME is addressed in the coming up cleanup series.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/audio.c     |  3 +++
+ audio/dbusaudio.c |  8 +++++++-
+ ui/dbus.c         | 17 +++++++++++++----
+ 3 files changed, 23 insertions(+), 5 deletions(-)
+
+diff --git a/audio/audio.c b/audio/audio.c
+index 86e674410a..0f992a775c 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -57,6 +57,9 @@
+     that we generate the list.
+ */
+ const char *audio_prio_list[] = {
++#ifdef CONFIG_GIO
++    "dbus",
++#endif
+     "spice",
+     CONFIG_AUDIO_DRIVERS
+     "none",
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index d729a810aa..1fe7c4ed64 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -32,6 +32,7 @@
+ #endif
+ 
+ #include "ui/dbus.h"
++#include "ui/dbus-display.h"
+ #include "ui/dbus-display1.h"
+ 
+ #define AUDIO_CAP "dbus"
+@@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
+ static void *
+ dbus_audio_init(Audiodev *dev, Error **errp)
+ {
+-    DBusAudio *da = g_new0(DBusAudio, 1);
++    DBusAudio *da;
+ 
++    if (!qemu_using_dbus_display(errp)) {
++        return NULL;
++    }
++
++    da = g_new0(DBusAudio, 1);
+     da->dev = dev;
+     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                                 g_free, g_object_unref);
+diff --git a/ui/dbus.c b/ui/dbus.c
+index d2dff33258..45fb3c1aa3 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -35,6 +35,7 @@
+ #include "ui/egl-context.h"
+ #endif
+ #include "qemu/audio.h"
++#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
+ #include "qapi/error.h"
+ #include "trace.h"
+ 
+@@ -218,12 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+         return;
+     }
+ 
++    AudioBackend *audio_be = audio_get_default_audio_be(NULL);
++    if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
++        audio_be = NULL;
++    }
+     if (dd->audiodev && *dd->audiodev) {
+-        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
+-        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
++        audio_be = audio_be_by_name(dd->audiodev, errp);
++        if (!audio_be) {
+             return;
+         }
+     }
++    if (audio_be && !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
++        return;
++    }
++
+ 
+     consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
+     for (idx = 0;; idx++) {
+@@ -475,6 +484,8 @@ early_dbus_init(DisplayOptions *opts)
+ #endif
+     }
+ 
++    using_dbus_display = 1;
++
+     type_register_static(&dbus_vc_type_info);
+ }
+ 
+@@ -488,8 +499,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
+         exit(1);
+     }
+ 
+-    using_dbus_display = 1;
+-
+     object_new_with_props(TYPE_DBUS_DISPLAY,
+                           object_get_objects_root(),
+                           "dbus-display", &error_fatal,
+-- 
+2.51.1
+
 
