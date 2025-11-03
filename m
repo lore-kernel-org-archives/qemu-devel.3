@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B91BCCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75526CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1lC-0000t0-4P; Mon, 03 Nov 2025 16:06:42 -0500
+	id 1vG1mC-00019T-PK; Mon, 03 Nov 2025 16:07:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lA-0000sb-KT
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1m9-00018q-QU
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1l7-00059P-DR
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:40 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lp-0005TY-TX
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762203992;
+ s=mimecast20190719; t=1762204040;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HlbfcBz1rjrLqAgM/bLe8/TJucjYOTnKZj3amceTg+k=;
- b=I6+BHB0+4s3qQDm8Gz4jL+CrUrfy6tmhxwz6m5L7DQCcoXuM90Q7kPavWIId5bhwwSdpYg
- h2Fpvrc7tylFioFeSvh2kd190rklkgPmG3Ycqf98qz6axgG4rD4+cJGfnFCQItLVJp6ePf
- 88XG3XWdP6ubSiG7BqIGFedx5wZ4aZ8=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qZP2PnPKVBWQomBr97OAT4HbbncDAsu0HYbYYz3qNmQ=;
+ b=IphOitoehr2SUJ2pPN34b0euONQwCA0tx0akUDmepyYmTdIpzXyUJDj/Qa+Bn89o9RWIbJ
+ W/N4u8g85Rc1ooUQZxF1Tdd+4HbHwqdCRfsA9pkECjqQYx6dCa09Cm+/lZiQSiY0XT/BZ7
+ Af07+em/aQwQgnCudWTCvXOyNIwFk5Q=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-QoRJrcAnNTaoCC1_iF5ORw-1; Mon, 03 Nov 2025 16:06:31 -0500
-X-MC-Unique: QoRJrcAnNTaoCC1_iF5ORw-1
-X-Mimecast-MFC-AGG-ID: QoRJrcAnNTaoCC1_iF5ORw_1762203991
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8a9d56c36caso2242910185a.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:31 -0800 (PST)
+ us-mta-674-uuMiFDS6M5Cph9MyWT0EgA-1; Mon, 03 Nov 2025 16:07:18 -0500
+X-MC-Unique: uuMiFDS6M5Cph9MyWT0EgA-1
+X-Mimecast-MFC-AGG-ID: uuMiFDS6M5Cph9MyWT0EgA_1762204036
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4e8984d8833so130677351cf.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762203990; x=1762808790; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762204036; x=1762808836; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HlbfcBz1rjrLqAgM/bLe8/TJucjYOTnKZj3amceTg+k=;
- b=EA8vK6bsjK9AmCAzP+m4XMqvB2sx00LuqydP+5S4Q+tPrTUzIOIUKpSwUMOgDiiKGi
- uotMn8R1UmcQRoXnZ2foGv8lM1QJGywoMT2IDnkdC+l06I3BDN+IYn7AOhaNtsa/sZOi
- HfFMQJKucGf2P6CfarlgZ4qgu0CQ7RX5kL4yf25NH4GEioN7gmtldy2EV1mE4rLaMYpj
- +XXW1Cazp745Txz3ldEAWx2JL9yaYHGJmaqEB9FqQdlSi0ZRWnAl74DoYeAM6ZOm6t7J
- 6pf59AsIbym0oOvTH/0l+hFBBxHRd5kgEH+O0hAx42towFo0G4q9BLYHViqYskwsKebF
- 7yrQ==
+ bh=qZP2PnPKVBWQomBr97OAT4HbbncDAsu0HYbYYz3qNmQ=;
+ b=rDbKAeADPFNM7ZCeM3ZN/n73XqALGE9oCg2x9W4K+XI6YgZ+0aAugXvvHMx26pOsyb
+ dk5jpjceieTNkoUvfsx6wkK0+S1loA90JwHUPDlwLAfwclwYNcsUI0RSYJ1DKS3sFD+g
+ g/GnZ5vUBfU9iI2a5A6D3W55QKQuBWKxVQ36/eTMGPefED0lM/jUBfZmpl6at//6frGj
+ JVBMreAYnhoynbSEm1s9xKiU3UsPrmo3jAFQtyeGqfZ2nwWUXb/pp8B+aYbpnqG7L3qj
+ YKvmYeuL4+3UdLqlxtlbbn60aWUrWJMDaHeUWb9kk98tTuE5CWBY7PXhqduwqH2QrBf9
+ aimw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762203990; x=1762808790;
+ d=1e100.net; s=20230601; t=1762204036; x=1762808836;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HlbfcBz1rjrLqAgM/bLe8/TJucjYOTnKZj3amceTg+k=;
- b=r+ptbFMF4fnsZ/JboTAzB5K3QjRF3CVB6TF1XXU6gzfOg5Apte4BXXetBSZLZEzKQO
- 24U0pjLqLVa2+ROqpReG+xC7pQppmBr8t7eYfZieaPVOdutNVMmfwh/pOtlXNHNETStw
- 8qa+0aqQU7A1SbNBfiXjGdzwSwO2poalz2nlGE4T9n9mGXtloSCxO81LKARpdiLijeTU
- sLbD8N8TzypS9HD8bmnqcdLu7jb0rLv7Q2vAQASrnKuHk5yVKIJa6PMc0OR9B7tW+FcQ
- bnpU73NDoEjue2/hoEXTgz+j96zljt5GOF3XdLl7vHjg34jI25LvsiFGDgXT/lrA3XK1
- c2lQ==
-X-Gm-Message-State: AOJu0Yyz2Xpuvjqfo4xn9UtVHhk0CpGo/ZFPaTxB9ha6hoqNi/H6XNIG
- XlHibwvIm5/tscznqLIY8rm286St/lLGvILppdpOPCSO/dH2dw4sxzH8k3g6QVe0QNtobOZ4pLB
- q39mmP62zmKSeRW9xW8jYqkOjvWi99U+gBAZ9JrVDYruu0/58+CX6KyEBPns2EnON6eofntFUvL
- m5PHHN4R0VKNSGjGF4tW4WYKt/il36GytT3IA6MQ==
-X-Gm-Gg: ASbGncu8rgzojc0B5XvESwMImKDAbbXRBd0HJcFq/nHbLjP7t2KbR1z3eOub8jkcQZo
- VVnqR27BWSP0PwgaR/lk5L7uTfDCn98lLdXf9Ephqb0IYLRVlTLJaLsb2kAD3VLemXrHeusuBmD
- VPJoUAnxz0J8R2JGGHk0OHXOD1CLS2JP8MhGQJaJ6XlhjyYb83Dl5v5w1zpKvgu1hbwsKAL7x+w
- oxVKWSLRgaAzebDpBu2nxJ6NXdUDLCXoHRu8ugriPp94YNojAdoVeoX3rSepZX+aqvYzz3EVNkE
- +rwRtcLfv/dpvWqqIlXkgCVShr5rFa/Wc82fwumJtC2S1CcgPKAKfLoYEAQ/nFHM
-X-Received: by 2002:a05:620a:3193:b0:8a2:4d02:eeb3 with SMTP id
- af79cd13be357-8ab98eba6f4mr1528914185a.11.1762203990085; 
- Mon, 03 Nov 2025 13:06:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEAi6PZSb3lH+72mA2t3DewjjKP/jqPOHNARdPJnGTlNfevW6GO/eoZ4nQQP+ac80RbqPx7hQ==
-X-Received: by 2002:a05:620a:3193:b0:8a2:4d02:eeb3 with SMTP id
- af79cd13be357-8ab98eba6f4mr1528907485a.11.1762203989410; 
- Mon, 03 Nov 2025 13:06:29 -0800 (PST)
+ bh=qZP2PnPKVBWQomBr97OAT4HbbncDAsu0HYbYYz3qNmQ=;
+ b=owTo+MxkcMMQ854LwHISCvcZ3JOIGZvxs9VaPUYPs/aqXCDMLsb9n8QntqtnSH35H4
+ BUxGriYXKtFHRsDS6ItxwCKgFmteIi7ALA5enXLSQWVkbyEO4k92gj+MvQcsWLfhVEEe
+ Xv9Ob5oMF9Jh5rx8Kg+TJ3EuRyf+6QK7b9xlZDeLc/wq36aswGFnYNc5jx1XQciYuHeB
+ MuZiwy/eRv19gvTNGITll/TDsG6jvP4egMAQjN3kawnN0DAFcct6MiGX4mnsszyjx0b0
+ HByHu47xa8pTMv3bKLzMRTDCxdxCl1eFlVcc9TZzzw1V2J6o6V/uTWYCtMWEQan0te3T
+ /BYQ==
+X-Gm-Message-State: AOJu0Yz9/HQt7/7cPIaLmJFl5t8o2iUwwW7n8f1GYdUEdf4CTwx8esmc
+ ZrQA+F5u84+RLfV/y7KmygklTw2CUc41l3aX/pu9RKm/Q/yuTXnxJVdyD0iiI7h4/gSAhgVMaVZ
+ FIvmxJwrjh3U3CgQeNQtK1beAcT/8R7j6SI7N1IwpkVD5Wnx98ZQU+YFDqUmwyZOXUH47yEByxG
+ RAtDThDIQhN2DVj1K3iZny2HESAp98kPjZZZQNjw==
+X-Gm-Gg: ASbGnctsiij8yyx3oTQ02lg67UDUXeB4zhsYMQsCdfOOhAal8xXSRwIScpDxcZmjCo7
+ QI5gIBxUY0XDXzBZQ7Dg5C6KYfX8mpM/WHnsTuDpY5pcEfRfgCEDa/cZg75joMGl8aWmGXN/aRd
+ grNBzrHCQprNADVwhF8M2yV6b0W4hEVuIOI0XeK8rPDozUXLVM1RxRCgj8UNnCRkFNXEWmOmhi4
+ uyJ3D8ia3E36PNCdCpGlHzYINUY/RFZSzgL1ItLOxqKJqsLVUyi8psrc/VVyK18bpdF1gCSntnk
+ dx1LhFYrTOvwKguixPJuC2Sx0xB5ATzIWys5EwmcHD+pTW6AlC5hmVZddwv7fSjy
+X-Received: by 2002:ac8:57c3:0:b0:4eb:a07a:5fce with SMTP id
+ d75a77b69052e-4ed30d4d0b2mr187804651cf.17.1762204035986; 
+ Mon, 03 Nov 2025 13:07:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQSKS8RAzFsVO9bB3rFwZ0J+dWetBAgREtqNgyzX5gGBz4WEK5QDDmjHqOInVVmXdGY7cx3w==
+X-Received: by 2002:ac8:57c3:0:b0:4eb:a07a:5fce with SMTP id
+ d75a77b69052e-4ed30d4d0b2mr187804011cf.17.1762204035350; 
+ Mon, 03 Nov 2025 13:07:15 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.28
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.07.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:06:28 -0800 (PST)
+ Mon, 03 Nov 2025 13:07:14 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 01/36] migration/savevm: Add a compatibility check for
- capabilities
-Date: Mon,  3 Nov 2025 16:05:50 -0500
-Message-ID: <20251103210625.3689448-2-peterx@redhat.com>
+ peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 34/36] migration: Respect exit-on-error when migration fails
+ before resuming
+Date: Mon,  3 Nov 2025 16:06:23 -0500
+Message-ID: <20251103210625.3689448-35-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -119,113 +120,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Juraj Marcin <jmarcin@redhat.com>
 
-It has always been possible to enable arbitrary migration capabilities
-and attempt to take a snapshot of the VM with the savevm/loadvm
-commands as well as their QMP counterparts
-snapshot-save/snapshot-load.
+When exit-on-error was added to migration, it wasn't added to postcopy.
+Even though postcopy migration will usually pause and not fail, in cases
+it does unrecoverably fail before destination side has been started,
+exit-on-error will allow management to query the error.
 
-Most migration capabilities are not meant to be used with snapshots
-and there's a risk of crashing QEMU or producing incorrect
-behavior. Ideally, every migration capability would either be
-implemented for savevm or explicitly rejected.
-
-Add a compatibility check routine and reject the snapshot command if
-an incompatible capability is enabled. For now only act on the the two
-that actually cause a crash: multifd and mapped-ram.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2881
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20251007184213.5990-1-farosas@suse.de
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20251103183301.3840862-7-jmarcin@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/options.h |  1 +
- migration/options.c | 27 +++++++++++++++++++++++++++
- migration/savevm.c  |  8 ++++++++
- 3 files changed, 36 insertions(+)
+ migration/postcopy-ram.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/migration/options.h b/migration/options.h
-index 82d839709e..a7b3262d1e 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -59,6 +59,7 @@ bool migrate_tls(void);
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 48cbb46c27..91431f02a4 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -2080,11 +2080,16 @@ bool postcopy_is_paused(MigrationStatus status)
  
- bool migrate_rdma_caps_check(bool *caps, Error **errp);
- bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
-+bool migrate_can_snapshot(Error **errp);
- 
- /* parameters */
- 
-diff --git a/migration/options.c b/migration/options.c
-index 5183112775..d9227809d7 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -445,11 +445,38 @@ INITIALIZE_MIGRATE_CAPS_SET(check_caps_background_snapshot,
-     MIGRATION_CAPABILITY_VALIDATE_UUID,
-     MIGRATION_CAPABILITY_ZERO_COPY_SEND);
- 
-+/* Snapshot compatibility check list */
-+static const
-+INITIALIZE_MIGRATE_CAPS_SET(check_caps_savevm,
-+                            MIGRATION_CAPABILITY_MULTIFD,
-+                            MIGRATION_CAPABILITY_MAPPED_RAM,
-+);
-+
- static bool migrate_incoming_started(void)
+ static void postcopy_listen_thread_bh(void *opaque)
  {
-     return !!migration_incoming_get_current()->transport_data;
- }
- 
-+bool migrate_can_snapshot(Error **errp)
-+{
 +    MigrationState *s = migrate_get_current();
-+    int i;
-+
-+    for (i = 0; i < check_caps_savevm.size; i++) {
-+        int incomp_cap = check_caps_savevm.caps[i];
-+
-+        if (s->capabilities[incomp_cap]) {
-+            error_setg(errp,
-+                       "Snapshots are not compatible with %s",
-+                       MigrationCapability_str(incomp_cap));
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+
- bool migrate_rdma_caps_check(bool *caps, Error **errp)
- {
-     if (caps[MIGRATION_CAPABILITY_XBZRLE]) {
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 7b35ec4dd0..aafa40d779 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3322,6 +3322,10 @@ bool save_snapshot(const char *name, bool overwrite, const char *vmstate,
- 
-     GLOBAL_STATE_CODE();
- 
-+    if (!migrate_can_snapshot(errp)) {
-+        return false;
-+    }
-+
-     if (migration_is_blocked(errp)) {
-         return false;
-     }
-@@ -3507,6 +3511,10 @@ bool load_snapshot(const char *name, const char *vmstate,
-     int ret;
      MigrationIncomingState *mis = migration_incoming_get_current();
  
-+    if (!migrate_can_snapshot(errp)) {
-+        return false;
-+    }
-+
-     if (!bdrv_all_can_snapshot(has_devices, devices, errp)) {
-         return false;
-     }
+     migration_incoming_state_destroy();
+ 
+-    if (mis->state == MIGRATION_STATUS_FAILED) {
++    if (mis->state == MIGRATION_STATUS_FAILED && mis->exit_on_error) {
++        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
++            error_report_err(s->error);
++            s->error = NULL;
++        }
+         /*
+          * If something went wrong then we have a bad state so exit;
+          * we only could have gotten here if something failed before
 -- 
 2.50.1
 
