@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3888CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCC8CCFA05
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsGy-0003nc-8A; Mon, 03 Nov 2025 05:58:52 -0500
+	id 1vFsHg-0004B7-El; Mon, 03 Nov 2025 05:59:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGw-0003n8-HB
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:50 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHP-000429-B8
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGu-0004Jo-AR
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:50 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHK-0004Yq-Av
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762167527;
+ s=mimecast20190719; t=1762167551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RUKN2jl1ZyAKFU991n52ujfJQ7mv2tkxp1xJ6e+OQIM=;
- b=iSmEKucTv0li7UZRlNvMofqCAANu8cH5TlBg2B3VV3uQjcun81e/z2r3szZ7qdwrqGRcxN
- tulrsAY8V7C3o1e6nqnbp6eaEq+CfEh72NIMdYdcAzc7VVaL60vjdzwQ8pZCoUDtgZueRH
- ScQkLROwSVopNr8/Py9VSnDLc6JvGz8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=I4Fb37wScOwgmWnW1IPXgfwX3Teaam8o++ijSqOP9Qs=;
+ b=Xs86beAZB415bHuBs1tQ/BxjWMxm9uO0wPDKa5F4vj9pTgJwXNXLIwl3C6hnnTd2ub0zVL
+ TELe7ef3MCBHbIFBJU7OkxdgJBat6mspM8iYv0i7z5+SbHlkhUaRMkHWLcybsfFxXSuye0
+ 8u42kxzMINlMUd3bYlbBAh3/VTmzjx0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-1alp3uAqMm6_nsDY07sOfA-1; Mon,
- 03 Nov 2025 05:58:45 -0500
-X-MC-Unique: 1alp3uAqMm6_nsDY07sOfA-1
-X-Mimecast-MFC-AGG-ID: 1alp3uAqMm6_nsDY07sOfA_1762167524
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-t0SR7iWuMB6Kf6y6PjwEBg-1; Mon,
+ 03 Nov 2025 05:59:08 -0500
+X-MC-Unique: t0SR7iWuMB6Kf6y6PjwEBg-1
+X-Mimecast-MFC-AGG-ID: t0SR7iWuMB6Kf6y6PjwEBg_1762167547
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76ADF1955F79; Mon,  3 Nov 2025 10:58:44 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2F68195423A; Mon,  3 Nov 2025 10:59:06 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F32130001A1; Mon,  3 Nov 2025 10:58:42 +0000 (UTC)
+ id A4D6A30001A1; Mon,  3 Nov 2025 10:59:04 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 08/22] tests/functional/.../testcase.py: better socketdir
- cleanup
-Date: Mon,  3 Nov 2025 11:58:05 +0100
-Message-ID: <20251103105824.322039-9-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 18/22] hw/s390x: Use memory_region_size()
+Date: Mon,  3 Nov 2025 11:58:15 +0100
+Message-ID: <20251103105824.322039-19-thuth@redhat.com>
 In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
 References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -83,41 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-TemporaryDirectory prefer explicit call to .cleanup() (or
-use context manager). Otherwise it may produce a warning like:
+MemoryRegion::size is private data of MemoryRegion,
+use the proper memory_region_size() getter to get it.
 
-   /usr/lib/python3.10/tempfile.py:1008: \
-     ResourceWarning: Implicitly cleaning up \
-     <TemporaryDirectory '/tmp/qemu_func_test_sock_4esmf5ba'>
-
-Currently, the only test using socket_dir() is
-tests/functional/x86_64/test_vfio_user_client.py, and it does
-print this warning, at least with python 3.10.12. With this commit,
-the warning disappears.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251028181300.41475-10-philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251025165809.930670-2-vsementsov@yandex-team.ru>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 2 +-
+ hw/s390x/s390-pci-inst.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 2c0abde3957..a122acb5609 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -233,7 +233,7 @@ def tearDown(self):
-         if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
-             shutil.rmtree(self.workdir)
-         if self.socketdir is not None:
--            shutil.rmtree(self.socketdir.name)
-+            self.socketdir.cleanup()
-             self.socketdir = None
-         self.machinelog.removeHandler(self._log_fh)
-         self.log.removeHandler(self._log_fh)
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index a3bb5aa2216..5841dfc4fec 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -396,7 +396,7 @@ static MemoryRegion *s390_get_subregion(MemoryRegion *mr, uint64_t offset,
+     uint64_t subregion_size;
+ 
+     QTAILQ_FOREACH(subregion, &mr->subregions, subregions_link) {
+-        subregion_size = int128_get64(subregion->size);
++        subregion_size = memory_region_size(subregion);
+         if ((offset >= subregion->addr) &&
+             (offset + len) <= (subregion->addr + subregion_size)) {
+             mr = subregion;
 -- 
 2.51.0
 
