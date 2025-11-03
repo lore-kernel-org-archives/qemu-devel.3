@@ -4,94 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156DACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBEDCCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFuPb-0001Pf-Ls; Mon, 03 Nov 2025 08:15:55 -0500
+	id 1vFuQU-0001lG-DL; Mon, 03 Nov 2025 08:16:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuPF-0001Mg-C1
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:15:41 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuOw-0008Oa-61
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:15:33 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47114a40161so52349525e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:15:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762175707; x=1762780507; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XNK3FEOei4OPeXoSL30jwVAn9mKlOqnotO0C4Roa6Ro=;
- b=omcT+4yWrYNp6PKlvx8dr7IkWhyh9WzTXDgcJ9QDwjKAYu30ohkL0I0NhJR+BpV7LQ
- AXtXv9GQv+76nVgPhoDqqwe6t+axGjFE9iXJtq6Nvj5VIo1m0dks+CqgYBrRq0WUuD2Q
- JB9V3lomo5lJFPXvKhwD6lugGZvfNuIg2Xtym4uQSJODvgJKyeNU1TlJ7gYRnenAKH4G
- zXfk+ab0wapnLXlNtW2n262QrGE2z/tezmltpE1WCs4ilk8z6nM6AmQvZfM6UO6QCMxh
- SaJb9ZmM8HKAl7R/dV1CNm6m0g3kyeWne+vk8LuwLwr7/TS1Na0XunvTHmGT71rzFUbj
- cXog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762175707; x=1762780507;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XNK3FEOei4OPeXoSL30jwVAn9mKlOqnotO0C4Roa6Ro=;
- b=s+wNjbo3bHyZ8fSzcccZ1DTaRg60mV4KoOsC40+4iTFzodE2PdVmpvRteiPChBPzjj
- R0r5baCsU+0aAkGUad9+yp+4x7xK2I1+Z9OwU+eqbcy9vsZ3T1yNJFTWcI+lw+7gtq5n
- 6+7b2KDd5rAOUx9s+o6kQiEI68Jcot7eKijxeKyZCwyTXWT6r0Z1hMggCULyZISpwj2s
- Bs2SX1i76sLh17efTEU0eqre+yZFzl/adgPWjE/WYwifpuEMCKitC67lnjEBdcn1XqVF
- uYixMn4iAsjI4LOc6NJdRE2xJujvmSRV72T0wzxzIvbs79/alUEg6Ze8BFmHqPcEzPNG
- L0lg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfczqug1As5hogxA/MiyEWckp7i7Nj3eQ6i6rnVe73zyC0wFJGPIlgbqvz6f29LEADloHqnXtKMAvS@nongnu.org
-X-Gm-Message-State: AOJu0Yy8jgkx+5RNlFJpdEzlv2+jfcgxXytpWLu2KlaLl1VHe9P8qIUw
- lIIt9EsuGyGs0Rh3d6RMlEfNtvkhXdQ8boSy3Up5as0sEOtP7TvWQrOPc2CeWJd337XgPgBtEKN
- 77jOxeF9k+1e8
-X-Gm-Gg: ASbGncu/62rJKxnYBVR15fLA0XrG4+dvW0U2tPgktWWQYgdnp33G8JBR/uIiKh5pC0h
- tbuR/auvawwy/HYxvcmK3vg/Hh5n34r4avzOvjC95QZ52YaE+FdYGMCxBuK4QVnWyu8kdT6uT0v
- fa2t3cYY/gH07gyjICR4UwjfKkjzDzg2RnKj3lECtEZldMxRbSYAY0bOA6bbS4CmXw+S5n9Vf/d
- hCxHE6vkVPgwvJrmwHD3Vy/7Gh9mKThZB9cF396jpmpEyzcdSBoJaV8ArlROfGChuX6IwkswY9g
- m0pvzngtCoo6cFKTzzLzxsdfrtql86Or2ZHxPoBVWNyQs577a+QzrXnzdmyCZwF5NetOoGMnr6F
- Thy63AaXhOth9pUnPYmshUHNZ/csT7VagEGwbm5GoI88sCFozq3efzaErwcze1cFoUgSmyp+AkT
- p2FEKqpOj8hdH/NP5x84YZcN684GljhyJ4ivWFDPkMWVuoFBRyESfl
-X-Google-Smtp-Source: AGHT+IG0Jr/tveK4yXoFGsFWNFuHHW7JSdtbsAeIec9poMB2DP7B7ZOppRvwQ/LzgOvlgUw8kSrh+w==
-X-Received: by 2002:a05:600c:3b13:b0:45d:5c71:769a with SMTP id
- 5b1f17b1804b1-4773089c52fmr108069685e9.26.1762175706845; 
- Mon, 03 Nov 2025 05:15:06 -0800 (PST)
-Received: from [172.18.140.215] (ip-185-104-138-156.ptr.icomera.net.
- [185.104.138.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773c394f0csm153913775e9.16.2025.11.03.05.15.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 05:15:06 -0800 (PST)
-Message-ID: <a0a64cd9-7b7d-455a-ae61-d286d29aa990@linaro.org>
-Date: Mon, 3 Nov 2025 14:15:00 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vFuQR-0001kC-Qx
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:16:48 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vFuQH-0000LL-K7
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:16:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 82FD75972E8;
+ Mon, 03 Nov 2025 14:16:30 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id wqqT2tAKcGpm; Mon,  3 Nov 2025 14:16:28 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 5AA165972E3; Mon, 03 Nov 2025 14:16:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 592165972E2;
+ Mon, 03 Nov 2025 14:16:28 +0100 (CET)
+Date: Mon, 3 Nov 2025 14:16:28 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 1/7] ati-vga: Add scissor clipping register support
+In-Reply-To: <20251103033608.120908-2-chad@jablonski.xyz>
+Message-ID: <6e18e36d-fbaf-2f51-949a-666d48f14628@eik.bme.hu>
+References: <20251103033608.120908-1-chad@jablonski.xyz>
+ <20251103033608.120908-2-chad@jablonski.xyz>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/6] docs: Add eMMC device model description
-Content-Language: en-US
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>
-References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <43c6bc1a28f449e59792526319ddc5ba23fd2fbf.1760702638.git.jan.kiszka@siemens.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <43c6bc1a28f449e59792526319ddc5ba23fd2fbf.1760702638.git.jan.kiszka@siemens.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,17 +65,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/25 14:03, Jan Kiszka wrote:
-> From: Jan Kiszka <jan.kiszka@siemens.com>
-> 
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+On Sun, 2 Nov 2025, Chad Jablonski wrote:
+> Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
+> and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
+> when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
+> to default clipping.
+>
+> Scissor clipping is used when rendering text in X.org. The r128 driver
+> sends host data much wider than is necessary to draw a glyph and cuts it
+> down to size using clipping before rendering. The actual clipping
+> implementation follows in a future patch.
+>
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 > ---
->   docs/system/device-emulation.rst |  1 +
->   docs/system/devices/emmc.rst     | 53 ++++++++++++++++++++++++++++++++
->   2 files changed, 54 insertions(+)
->   create mode 100644 docs/system/devices/emmc.rst
+> hw/display/ati.c      | 26 ++++++++++++++++++++++++++
+> hw/display/ati_int.h  |  3 +++
+> hw/display/ati_regs.h | 12 ++++++++++--
+> 3 files changed, 39 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 0b4298d078..eb9b30672f 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -510,6 +510,15 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+>     case DEFAULT_SC_BOTTOM_RIGHT:
+>         val = s->regs.default_sc_bottom_right;
+>         break;
+> +    case SC_TOP_LEFT:
+> +        val = s->regs.sc_top_left;
+> +        break;
+> +    case SC_BOTTOM_RIGHT:
+> +        val = s->regs.sc_bottom_right;
+> +        break;
+> +    case SRC_SC_BOTTOM_RIGHT:
+> +        val = s->regs.src_sc_bottom_right;
+> +        break;
+>     default:
+>         break;
+>     }
+> @@ -862,6 +871,14 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>         s->regs.dp_datatype = (data & 0x0f00) >> 8 | (data & 0x30f0) << 4 |
+>                               (data & 0x4000) << 16;
+>         s->regs.dp_mix = (data & GMC_ROP3_MASK) | (data & 0x7000000) >> 16;
+> +
+> +        if ((data & GMC_SRC_CLIPPING_MASK) == GMC_SRC_CLIP_DEFAULT) {
+> +            s->regs.src_sc_bottom_right = s->regs.default_sc_bottom_right;
+> +        }
+> +        if ((data & GMC_DST_CLIPPING_MASK) == GMC_DST_CLIP_DEFAULT) {
+> +            s->regs.sc_top_left = 0;
+> +            s->regs.sc_bottom_right = s->regs.default_sc_bottom_right;
+> +        }
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Or is this what you meant by style? Now I get that. I think the bits 
+should not reset the regs just cause the operation to use the default 
+values instead but if you can verify what actual hardware does that would 
+be best.
 
+Regards,
+BALATON Zoltan
+
+>         break;
+>     case DST_WIDTH_X:
+>         s->regs.dst_x = data & 0x3fff;
+> @@ -937,6 +954,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     case DEFAULT_SC_BOTTOM_RIGHT:
+>         s->regs.default_sc_bottom_right = data & 0x3fff3fff;
+>         break;
+> +    case SC_TOP_LEFT:
+> +        s->regs.sc_top_left = data;
+> +        break;
+> +    case SC_BOTTOM_RIGHT:
+> +        s->regs.sc_bottom_right = data;
+> +        break;
+> +    case SRC_SC_BOTTOM_RIGHT:
+> +        s->regs.src_sc_bottom_right = data;
+> +        break;
+>     default:
+>         break;
+>     }
+> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+> index 708cc1dd3a..aab3cbf81a 100644
+> --- a/hw/display/ati_int.h
+> +++ b/hw/display/ati_int.h
+> @@ -86,6 +86,9 @@ typedef struct ATIVGARegs {
+>     uint32_t default_pitch;
+>     uint32_t default_tile;
+>     uint32_t default_sc_bottom_right;
+> +    uint32_t sc_top_left;
+> +    uint32_t sc_bottom_right;
+> +    uint32_t src_sc_bottom_right;
+> } ATIVGARegs;
+>
+> struct ATIVGAState {
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index d7127748ff..2b56b9fb66 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -392,8 +392,6 @@
+> /* DP_GUI_MASTER_CNTL bit constants */
+> #define GMC_SRC_PITCH_OFFSET_CNTL               0x00000001
+> #define GMC_DST_PITCH_OFFSET_CNTL               0x00000002
+> -#define GMC_SRC_CLIP_DEFAULT                    0x00000000
+> -#define GMC_DST_CLIP_DEFAULT                    0x00000000
+> #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
+> #define GMC_SRC_DSTCOLOR                        0x00003000
+> #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
+> @@ -404,6 +402,16 @@
+> #define GMC_WRITE_MASK_SET                      0x40000000
+> #define GMC_DP_CONVERSION_TEMP_6500             0x00000000
+>
+> +/* DP_GUI_MASTER_CNTL DP_SRC_CLIPPING named constants */
+> +#define GMC_SRC_CLIPPING_MASK                   0x00000004
+> +#define GMC_SRC_CLIP_DEFAULT                    0x00000000
+> +#define GMC_SRC_CLIP_LEAVE_ALONE                0x00000004
+> +
+> +/* DP_GUI_MASTER_CNTL DP_DST_CLIPPING named constants */
+> +#define GMC_DST_CLIPPING_MASK                   0x00000008
+> +#define GMC_DST_CLIP_DEFAULT                    0x00000000
+> +#define GMC_DST_CLIP_LEAVE_ALONE                0x00000008
+> +
+> /* DP_GUI_MASTER_CNTL ROP3 named constants */
+> #define GMC_ROP3_MASK                           0x00ff0000
+> #define ROP3_BLACKNESS                          0x00000000
+>
 
