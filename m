@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4191ACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A25CCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFulo-0005QY-4u; Mon, 03 Nov 2025 08:38:52 -0500
+	id 1vFuoC-0001e3-Gm; Mon, 03 Nov 2025 08:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vFulb-0005No-TE
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:38:45 -0500
+ id 1vFunu-0001Pd-89
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:41:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vFulV-0004PS-Cs
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:38:39 -0500
+ id 1vFuno-0004kk-JK
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:40:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762177111;
+ s=mimecast20190719; t=1762177252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PHH/8x8Op/Y+Frw2h9ZHPRZ5Ou7GryVz7HpBcSZAcpA=;
- b=Ga0J7/5NtfPpcvAwsnW+6WtvDYaQNUkQ+vJu7JJ1dizj+btLbQDAn5Qkg4kpn43EpIEFIZ
- 2EAtl58nGmpEFiR8iwVumb268g02a87NhxdGQ861dfWYFxOVutKmf3L+nZfrt2vaw/cIbn
- I1y9eS1uUwwQa+gKacaXIhKb0VUi1Ts=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=i+wl3Y233lrhS1xjLwDeX9h6halIAMNlbqNzecBa4Sk=;
+ b=SoY0ZiGiwa/tfIe2KruKc3MFsqgjnPF3VjyKFc++7VSQyVnrGriUCjCLh9vOa9avOkUqyO
+ FKARO1pBMtiNrQnF7nsRkOSHcVW+v+QY7npfQVdwLz5E02VCIPPFvJgZnPNqkkpMG3cCOG
+ H4JcUiNpeRduyAcGgiihHHfUOn+gShQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-gmACHiRKP4OEWKUJAJQ-hg-1; Mon,
- 03 Nov 2025 08:38:28 -0500
-X-MC-Unique: gmACHiRKP4OEWKUJAJQ-hg-1
-X-Mimecast-MFC-AGG-ID: gmACHiRKP4OEWKUJAJQ-hg_1762177106
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-218-rdWFTPlIPnmiAeQ_MwaOpQ-1; Mon,
+ 03 Nov 2025 08:40:49 -0500
+X-MC-Unique: rdWFTPlIPnmiAeQ_MwaOpQ-1
+X-Mimecast-MFC-AGG-ID: rdWFTPlIPnmiAeQ_MwaOpQ_1762177248
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB0471954B08; Mon,  3 Nov 2025 13:38:26 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35D1518009C2; Mon,  3 Nov 2025 13:40:48 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.202])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AA97B1800578; Mon,  3 Nov 2025 13:38:15 +0000 (UTC)
+ id D58AD180057A; Mon,  3 Nov 2025 13:40:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>,
- Manish Mishra <manish.mishra@nutanix.com>, Tejus GK <tejus.gk@nutanix.com>
-Subject: [PULL 06/32] io: flush zerocopy socket error queue on sendmsg failure
- due to ENOBUF
-Date: Mon,  3 Nov 2025 13:37:00 +0000
-Message-ID: <20251103133727.423041-7-berrange@redhat.com>
+ devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>
+Subject: [PULL 28/32] crypto: avoid loading the CA certs twice
+Date: Mon,  3 Nov 2025 13:37:22 +0000
+Message-ID: <20251103133727.423041-29-berrange@redhat.com>
 In-Reply-To: <20251103133727.423041-1-berrange@redhat.com>
 References: <20251103133727.423041-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,211 +88,289 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manish Mishra <manish.mishra@nutanix.com>
+The x509 TLS credentials code will load the CA certs once to perform
+sanity chcking on the certs, then discard the certificate objects
+and let gnutls load them a second time.
 
-The kernel allocates extra metadata SKBs in case of a zerocopy send,
-eventually used for zerocopy's notification mechanism. This metadata
-memory is accounted for in the OPTMEM limit. The kernel queues
-completion notifications on the socket error queue and this error queue
-is freed when userspace reads it.
+This introduces a new QCryptoTLSCredsX509Files struct which will
+hold the CA certificates loaded for sanity checking and pass them on
+to gnutls, avoiding the duplicated loading.
 
-Usually, in the case of in-order processing, the kernel will batch the
-notifications and merge the metadata into a single SKB and free the
-rest. As a result, it never exceeds the OPTMEM limit. However, if there
-is any out-of-order processing or intermittent zerocopy failures, this
-error chain can grow significantly, exhausting the OPTMEM limit. As a
-result, all new sendmsg requests fail to allocate any new SKB, leading
-to an ENOBUF error. Depending on the amount of data queued before the
-flush (i.e., large live migration iterations), even large OPTMEM limits
-are prone to failure.
-
-To work around this, if we encounter an ENOBUF error with a zerocopy
-sendmsg, flush the error queue and retry once more.
-
-Co-authored-by: Manish Mishra <manish.mishra@nutanix.com>
-Signed-off-by: Tejus GK <tejus.gk@nutanix.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[DB: change TRUE/FALSE to true/false for 'bool' type;
-     add more #ifdef QEMU_MSG_ZEROCOPY blocks]
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/io/channel-socket.h |  5 +++
- io/channel-socket.c         | 84 ++++++++++++++++++++++++++++++-------
- 2 files changed, 75 insertions(+), 14 deletions(-)
+ crypto/tlscredsx509.c | 141 ++++++++++++++++++++++++++----------------
+ 1 file changed, 87 insertions(+), 54 deletions(-)
 
-diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
-index 26319fa98b..fcfd489c6c 100644
---- a/include/io/channel-socket.h
-+++ b/include/io/channel-socket.h
-@@ -50,6 +50,11 @@ struct QIOChannelSocket {
-     ssize_t zero_copy_queued;
-     ssize_t zero_copy_sent;
-     bool blocking;
-+    /**
-+     * This flag indicates whether any new data was successfully sent with
-+     * zerocopy since the last qio_channel_socket_flush() call.
-+     */
-+    bool new_zero_copy_sent_success;
- };
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index e28fcdc6ff..911942a1a1 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -40,6 +40,35 @@ struct QCryptoTLSCredsX509 {
+ #include <gnutls/x509.h>
  
  
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 8b30d5b7f7..3053b35ad8 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -37,6 +37,12 @@
- 
- #define SOCKET_MAX_FDS 16
- 
-+#ifdef QEMU_MSG_ZEROCOPY
-+static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-+                                             bool block,
-+                                             Error **errp);
-+#endif
++typedef struct QCryptoTLSCredsX509Files QCryptoTLSCredsX509Files;
++struct QCryptoTLSCredsX509Files {
++    char *cacertpath;
++    gnutls_x509_crt_t *cacerts;
++    unsigned int ncacerts;
++};
 +
- SocketAddress *
- qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
-                                      Error **errp)
-@@ -66,6 +72,7 @@ qio_channel_socket_new(void)
-     sioc->zero_copy_queued = 0;
-     sioc->zero_copy_sent = 0;
-     sioc->blocking = false;
-+    sioc->new_zero_copy_sent_success = false;
++static QCryptoTLSCredsX509Files *
++qcrypto_tls_creds_x509_files_new(void)
++{
++    return g_new0(QCryptoTLSCredsX509Files, 1);
++}
++
++
++static void
++qcrypto_tls_creds_x509_files_free(QCryptoTLSCredsX509Files *files)
++{
++    size_t i;
++    for (i = 0; i < files->ncacerts; i++) {
++        gnutls_x509_crt_deinit(files->cacerts[i]);
++    }
++    g_free(files->cacerts);
++    g_free(files->cacertpath);
++    g_free(files);
++}
++
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoTLSCredsX509Files,
++                              qcrypto_tls_creds_x509_files_free);
++
+ static int
+ qcrypto_tls_creds_check_cert_times(gnutls_x509_crt_t cert,
+                                    const char *certFile,
+@@ -315,11 +344,9 @@ qcrypto_tls_creds_check_cert(QCryptoTLSCredsX509 *creds,
  
-     ioc = QIO_CHANNEL(sioc);
-     qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-@@ -618,6 +625,10 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
-     size_t fdsize = sizeof(int) * nfds;
-     struct cmsghdr *cmsg;
-     int sflags = 0;
-+#ifdef QEMU_MSG_ZEROCOPY
-+    bool blocking = sioc->blocking;
-+    bool zerocopy_flushed_once = false;
-+#endif
- 
-     memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
- 
-@@ -662,13 +673,30 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
-             return QIO_CHANNEL_ERR_BLOCK;
-         case EINTR:
-             goto retry;
-+#ifdef QEMU_MSG_ZEROCOPY
-         case ENOBUFS:
-             if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
--                error_setg_errno(errp, errno,
--                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
--                return -1;
-+                /**
-+                 * Socket error queueing may exhaust the OPTMEM limit. Try
-+                 * flushing the error queue once.
-+                 */
-+                if (!zerocopy_flushed_once) {
-+                    ret = qio_channel_socket_flush_internal(ioc, blocking,
-+                                                            errp);
-+                    if (ret < 0) {
-+                        return -1;
-+                    }
-+                    zerocopy_flushed_once = true;
-+                    goto retry;
-+                } else {
-+                    error_setg_errno(errp, errno,
-+                                     "Process can't lock enough memory for "
-+                                     "using MSG_ZEROCOPY");
-+                    return -1;
-+                }
+ static int
+ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
++                                        QCryptoTLSCredsX509Files *files,
+                                         gnutls_x509_crt_t *certs,
+                                         unsigned int ncerts,
+-                                        gnutls_x509_crt_t *cacerts,
+-                                        unsigned int ncacerts,
+-                                        const char *cacertFile,
+                                         bool isServer,
+                                         Error **errp)
+ {
+@@ -360,13 +387,13 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+              * reached the root of trust.
+              */
+             return qcrypto_tls_creds_check_cert(
+-                creds, cert_to_check, cacertFile,
++                creds, cert_to_check, files->cacertpath,
+                 isServer, true, errp);
+         }
+-        for (int i = 0; i < ncacerts; i++) {
++        for (int i = 0; i < files->ncacerts; i++) {
+             if (gnutls_x509_crt_check_issuer(cert_to_check,
+-                                             cacerts[i])) {
+-                cert_issuer = cacerts[i];
++                                             files->cacerts[i])) {
++                cert_issuer = files->cacerts[i];
+                 break;
              }
+         }
+@@ -374,7 +401,7 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
              break;
-+#endif
          }
  
-         error_setg_errno(errp, errno,
-@@ -777,8 +805,9 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+-        if (qcrypto_tls_creds_check_cert(creds, cert_issuer, cacertFile,
++        if (qcrypto_tls_creds_check_cert(creds, cert_issuer, files->cacertpath,
+                                          isServer, true, errp) < 0) {
+             return -1;
+         }
+@@ -394,19 +421,17 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+ }
  
- 
- #ifdef QEMU_MSG_ZEROCOPY
--static int qio_channel_socket_flush(QIOChannel *ioc,
--                                    Error **errp)
-+static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-+                                             bool block,
-+                                             Error **errp)
+ static int
+-qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t *certs,
++qcrypto_tls_creds_check_cert_pair(QCryptoTLSCredsX509Files *files,
++                                  gnutls_x509_crt_t *certs,
+                                   size_t ncerts,
+                                   const char *certFile,
+-                                  gnutls_x509_crt_t *cacerts,
+-                                  size_t ncacerts,
+-                                  const char *cacertFile,
+                                   bool isServer,
+                                   Error **errp)
  {
-     QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
-     struct msghdr msg = {};
-@@ -786,7 +815,6 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
-     struct cmsghdr *cm;
-     char control[CMSG_SPACE(sizeof(*serr))];
-     int received;
--    int ret;
+     unsigned int status;
  
-     if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
-         return 0;
-@@ -796,16 +824,25 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
-     msg.msg_controllen = sizeof(control);
-     memset(control, 0, sizeof(control));
+     if (gnutls_x509_crt_list_verify(certs, ncerts,
+-                                    cacerts, ncacerts,
++                                    files->cacerts, files->ncacerts,
+                                     NULL, 0,
+                                     0, &status) < 0) {
+         error_setg(errp, isServer ?
+@@ -414,7 +439,7 @@ qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t *certs,
+                    "CA certificate %s" :
+                    "Unable to verify client certificate %s against "
+                    "CA certificate %s",
+-                   certFile, cacertFile);
++                   certFile, files->cacertpath);
+         return -1;
+     }
  
--    ret = 1;
--
-     while (sioc->zero_copy_sent < sioc->zero_copy_queued) {
-         received = recvmsg(sioc->fd, &msg, MSG_ERRQUEUE);
-         if (received < 0) {
-             switch (errno) {
-             case EAGAIN:
--                /* Nothing on errqueue, wait until something is available */
--                qio_channel_wait(ioc, G_IO_ERR);
--                continue;
-+                if (block) {
-+                    /*
-+                     * Nothing on errqueue, wait until something is
-+                     * available.
-+                     *
-+                     * Use G_IO_ERR instead of G_IO_IN since MSG_ERRQUEUE reads
-+                     * are signaled via POLLERR, not POLLIN, as the kernel
-+                     * sets POLLERR when zero-copy notificatons appear on the
-+                     * socket error queue.
-+                     */
-+                    qio_channel_wait(ioc, G_IO_ERR);
-+                    continue;
-+                }
-+                return 0;
-             case EINTR:
-                 continue;
-             default:
-@@ -843,13 +880,32 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
-         /* No errors, count successfully finished sendmsg()*/
-         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
+@@ -439,7 +464,7 @@ qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t *certs,
  
--        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
-+        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
-         if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
--            ret = 0;
-+            sioc->new_zero_copy_sent_success = true;
+         error_setg(errp,
+                    "Our own certificate %s failed validation against %s: %s",
+-                   certFile, cacertFile, reason);
++                   certFile, files->cacertpath, reason);
+         return -1;
+     }
+ 
+@@ -490,15 +515,13 @@ qcrypto_tls_creds_load_cert_list(QCryptoTLSCredsX509 *creds,
+ 
+ static int
+ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
++                                    QCryptoTLSCredsX509Files *files,
+                                     bool isServer,
+-                                    const char *cacertFile,
+                                     const char *certFile,
+                                     Error **errp)
+ {
+     gnutls_x509_crt_t *certs = NULL;
+     unsigned int ncerts = 0;
+-    gnutls_x509_crt_t *cacerts = NULL;
+-    unsigned int ncacerts = 0;
+     size_t i;
+     int ret = -1;
+ 
+@@ -514,16 +537,6 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
          }
      }
  
--    return ret;
+-    if (qcrypto_tls_creds_load_cert_list(creds,
+-                                         cacertFile,
+-                                         &cacerts,
+-                                         &ncacerts,
+-                                         isServer,
+-                                         true,
+-                                         errp) < 0) {
+-        goto cleanup;
+-    }
+-
+     for (i = 0; i < ncerts; i++) {
+         if (qcrypto_tls_creds_check_cert(creds,
+                                          certs[i], certFile,
+@@ -533,17 +546,14 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+     }
+ 
+     if (ncerts &&
+-        qcrypto_tls_creds_check_authority_chain(creds,
++        qcrypto_tls_creds_check_authority_chain(creds, files,
+                                                 certs, ncerts,
+-                                                cacerts, ncacerts,
+-                                                cacertFile, isServer,
+-                                                errp) < 0) {
++                                                isServer, errp) < 0) {
+         goto cleanup;
+     }
+ 
+-    if (ncerts && ncacerts &&
+-        qcrypto_tls_creds_check_cert_pair(certs, ncerts, certFile,
+-                                          cacerts, ncacerts, cacertFile,
++    if (ncerts &&
++        qcrypto_tls_creds_check_cert_pair(files, certs, ncerts, certFile,
+                                           isServer, errp) < 0) {
+         goto cleanup;
+     }
+@@ -555,21 +565,53 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+         gnutls_x509_crt_deinit(certs[i]);
+     }
+     g_free(certs);
+-    for (i = 0; i < ncacerts; i++) {
+-        gnutls_x509_crt_deinit(cacerts[i]);
+-    }
+-    g_free(cacerts);
+ 
+     return ret;
+ }
+ 
+ 
++static int
++qcrypto_tls_creds_x509_load_ca(QCryptoTLSCredsX509 *creds,
++                               QCryptoTLSCredsBox *box,
++                               QCryptoTLSCredsX509Files *files,
++                               bool isServer,
++                               Error **errp)
++{
++    int ret;
++
++    if (qcrypto_tls_creds_get_path(&creds->parent_obj,
++                                   QCRYPTO_TLS_CREDS_X509_CA_CERT,
++                                   true, &files->cacertpath, errp) < 0) {
++        return -1;
++    }
++
++    if (qcrypto_tls_creds_load_cert_list(creds,
++                                         files->cacertpath,
++                                         &files->cacerts,
++                                         &files->ncacerts,
++                                         isServer,
++                                         true,
++                                         errp) < 0) {
++        return -1;
++    }
++
++    ret = gnutls_certificate_set_x509_trust(box->data.cert,
++                                            files->cacerts, files->ncacerts);
++    if (ret < 0) {
++        error_setg(errp, "Cannot set CA certificate '%s': %s",
++                   files->cacertpath, gnutls_strerror(ret));
++        return -1;
++    }
++
 +    return 0;
 +}
 +
-+static int qio_channel_socket_flush(QIOChannel *ioc,
-+                                    Error **errp)
-+{
-+    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
-+    int ret;
-+
-+    ret = qio_channel_socket_flush_internal(ioc, true, errp);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (sioc->new_zero_copy_sent_success) {
-+        sioc->new_zero_copy_sent_success = false;
-+        return 0;
-+    }
-+
-+    return 1;
- }
+ static int
+ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+                             Error **errp)
+ {
+     g_autoptr(QCryptoTLSCredsBox) box = NULL;
+-    g_autofree char *cacert = NULL;
++    g_autoptr(QCryptoTLSCredsX509Files) files = NULL;
+     g_autofree char *cacrl = NULL;
+     g_autofree char *cert = NULL;
+     g_autofree char *key = NULL;
+@@ -598,9 +640,9 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+         return -1;
+     }
  
- #endif /* QEMU_MSG_ZEROCOPY */
+-    if (qcrypto_tls_creds_get_path(&creds->parent_obj,
+-                                   QCRYPTO_TLS_CREDS_X509_CA_CERT,
+-                                   true, &cacert, errp) < 0) {
++    files = qcrypto_tls_creds_x509_files_new();
++
++    if (qcrypto_tls_creds_x509_load_ca(creds, box, files, isServer, errp) < 0) {
+         return -1;
+     }
+ 
+@@ -631,17 +673,8 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+     }
+ 
+     if (creds->sanityCheck &&
+-        qcrypto_tls_creds_x509_sanity_check(creds, isServer,
+-                                            cacert, cert, errp) < 0) {
+-        return -1;
+-    }
+-
+-    ret = gnutls_certificate_set_x509_trust_file(box->data.cert,
+-                                                 cacert,
+-                                                 GNUTLS_X509_FMT_PEM);
+-    if (ret < 0) {
+-        error_setg(errp, "Cannot load CA certificate '%s': %s",
+-                   cacert, gnutls_strerror(ret));
++        qcrypto_tls_creds_x509_sanity_check(creds, files, isServer,
++                                            cert, errp) < 0) {
+         return -1;
+     }
+ 
 -- 
 2.51.1
 
