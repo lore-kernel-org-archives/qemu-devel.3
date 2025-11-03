@@ -4,117 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8590CCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC837CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFrEk-0004FD-BA; Mon, 03 Nov 2025 04:52:31 -0500
+	id 1vFrLp-0005gF-V0; Mon, 03 Nov 2025 04:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vFrEj-0004F2-4I
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:52:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vFrLm-0005fO-Tg
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:59:46 -0500
+Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vFrEf-0007OR-Q9
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:52:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762163541;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VcAIOZZ3d5XNJNg3P8cQJlolVFcqvq0I8RonPpmyS4Y=;
- b=G85SdFPj1ugJsQR7O99BNCvsUFC2cad+Q8BxaVYSnitWL982QVDzNMZuSf+7m/GR842DU3
- RQpAYlH+cQ+8BKKHxKCiZFu5iYBbQc9LpBsRWgs4Px2Pm2QqHWCbSupBxXL0TCP0SRE2/I
- CPU0c3Bc2WOwHrDDd7RG59CVqOnE6BM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-UEqGaw64OyG-tBeRuNojfw-1; Mon, 03 Nov 2025 04:52:20 -0500
-X-MC-Unique: UEqGaw64OyG-tBeRuNojfw-1
-X-Mimecast-MFC-AGG-ID: UEqGaw64OyG-tBeRuNojfw_1762163539
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-47113dfdd20so18098475e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 01:52:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762163539; x=1762768339; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VcAIOZZ3d5XNJNg3P8cQJlolVFcqvq0I8RonPpmyS4Y=;
- b=RpigcgH4M+EE8EOml7DEvOXCEtqd7dmddQctrum8ghORn0fyZoJLmpHZQuP3+/qbEr
- iFv6gyqrMvnQ8PSRAeZ4ChbuSrT1Q7kXD7EJPciToC9d+4/WnLUcskLrr+A1uRXMWlvg
- hmf9UMb69EGM9536yMp4nzyU5hvP9xJH4nDiRrXGoX3Yn7M3Lh8vU4Tia+aqu5xDMq+w
- hjOko9dtss3wKeDQgsetgmfQIM2WHE2v9g/pqnHF+N6dk0jWU3DpyBzP7Pzpv0p0gXGr
- k0JCOmb6IxnQ5TzRB5vTSaNXZQKtOEM0iabG38G3ujwhkOu5biixhzs51yUi07d/8jm0
- E0VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762163539; x=1762768339;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VcAIOZZ3d5XNJNg3P8cQJlolVFcqvq0I8RonPpmyS4Y=;
- b=t0CGroVLlzENsuRKTzHm9klEGA+k8x7lqr/GrR0S3r07BdjwQPa/QsNaI+wNvuYbha
- 4GoCdQQjq7JAj/0Yp4qgAdqYIyHsDgpKjQyGe2t/wgTjv75ylM9VEzR84KjgCMzoOjFU
- j07g46AigkWLbcWZ3/tAu0T02hQi90Y4UJvLKfoXt/QI0qEH3agOP+VpFNzDo8uDfKbR
- ftxoajI1GkfzK9q3JC+EEoqLnxK0twANPT/0wWSBnTRjVdBH3liM5iMfLGJ6RXOvnVjI
- //xl1DlXwdpYWvQ0LCkoErBOlDR000Q+2Tt7eVf2z8C/0xelWx3QnFRLCNDGWTC7mYug
- KUsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdTgA/E2VYj08Ze2pAbQOxGt/hOfEiXVtGwBYSPpE/cYQg+/2yg9SOlZmjt55Wwulk7rebM5VWJI1S@nongnu.org
-X-Gm-Message-State: AOJu0Yz6piF50UlD+/J1bYiIWN7sO6DAL+DzNKCbs2vzOuA/87z9kGeu
- 9b7nHAlkQYf7mSw76IUqeUHPPOwHrmXyKcbA5+iD1+0E+OArYXdW5ZEgjTb2QcFj+LaPocsPn33
- sasBOiS/ByP89ITbP5gVeBOBdrz/Pe9y1mP9jjHOFu79eE19drL18yQUy
-X-Gm-Gg: ASbGncvAQTRnPGes6yYwSXTug2+bfEIQTLaf7wm4eqLJbNynWICKDh2w1e3pi3GKNXX
- TbsbR0w9y/zv7gw6r/Ah8XzpUUNqU8tUyu2Mpgo6oRiVbjtY6PC8PhgBnykzXMynP7LlA93YM1T
- n3wpWud+c8XHbm44iDIKfx9Go4XouJ/ngxUN2ZXn2l4Lw6hjrE7aNe8HvGHXsDOe80AMrGUEAvs
- d+IcBvIpAYS0gn2WGcS7T/zFlAQXQMMZ96kEBtNX69mBbLBIHaeVkrmY2218O8qrNnmylCMm3ze
- QX2Ra8kn0t57tbh0xV7NowvbBVOeI4pgroyQcMlyezJp6gbKEDCvz3E2EXqdwgI9tA==
-X-Received: by 2002:a05:600d:8314:b0:477:4345:7c59 with SMTP id
- 5b1f17b1804b1-47743458444mr34153175e9.40.1762163538866; 
- Mon, 03 Nov 2025 01:52:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEHrpKvuEcpdjJgG2drC9CG2GulQfK0IBVYPY0JGIQAUg5kL10oY2PxuO7fAavRV3IeUgPX/g==
-X-Received: by 2002:a05:600d:8314:b0:477:4345:7c59 with SMTP id
- 5b1f17b1804b1-47743458444mr34152935e9.40.1762163538430; 
- Mon, 03 Nov 2025 01:52:18 -0800 (PST)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773c374f84sm144441465e9.0.2025.11.03.01.52.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 01:52:18 -0800 (PST)
-Date: Mon, 3 Nov 2025 10:52:16 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
- anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
- pbonzini@redhat.com, mchehab+huawei@kernel.org,
- Jonathan.Cameron@huawei.com, shan.gavin@gmail.com
-Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
- CPERs injection
-Message-ID: <20251103105216.1f4241d7@fedora>
-In-Reply-To: <88a41137-d5fb-4b61-a3f2-dd73133c17ec@redhat.com>
-References: <20251007060810.258536-1-gshan@redhat.com>
- <20251007060810.258536-4-gshan@redhat.com>
- <20251017162746.2a99015b@fedora>
- <a635de53-71fa-4edb-87c0-8775722c284d@redhat.com>
- <20251031145539.3551b0a5@fedora>
- <88a41137-d5fb-4b61-a3f2-dd73133c17ec@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vFrLj-0007yf-Dy
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:59:46 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.134])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4d0Rrl5N5dz5y1k;
+ Mon,  3 Nov 2025 09:59:35 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 3 Nov
+ 2025 10:59:34 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-96R001d029e793-6f53-475d-a8c9-fa7bf9a51add,
+ 25720A756895FCE40C516A1A344E2045610AA209) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <f964800f-167f-46de-97d5-95195a59515b@kaod.org>
+Date: Mon, 3 Nov 2025 10:59:33 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v3 03/30] hw/arm/aspeed: Export and rename
+ create_pca9552() for reuse
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
+References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
+ <20251103092801.1282602-4-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251103092801.1282602-4-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.96]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: a2aeb9a6-55a6-4e9c-abab-4ecc8cf60a65
+X-Ovh-Tracer-Id: 9009169582575750066
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTE7mF+s+Mv9asiCubsXyPOCVmxdbfyGrbzrsmJtBoYHpCfVdl++dsax6YqzCX8Fy84RcdbieMHCzfAUQr7fCcdOmd/K34YObOJejouKGQnCMsFBbtjRl/JqjOzuVkBbxKjktv+2nk2Y3TN/Wvg5dTZXCISrcyYOfK2yqIVRIwQsO2V56lQAGxIMaz27o6Fix8q1IbseArjkivUJk8ILYdZM3lnfXDvVAb5vnkkfUd8cLi1C1vGzbJyDA2H7k2u0PrIMKdI90AYsK65ltt/WuUAuhcJU6f/AmTCRdYpIAVdrlArD3l4ojVp2h67SsDN0jRTuKfVGphdWt7/rVrdPrJQKn8pKrOEwTRnwBkWrDZOnjzr0pbUrCSYFg8VmdBP4sBku4ox/itWaFQFLx7VDxxASxnMbRs6GNRJYq3XjUKmlPXuNn+WYxNwOX2g6IexyhVi0r1dpyQIVkShLRPE5Te/O7i0S6uXz8BcSQ/qtIvh1Yy5EYiVk/1H/zSndKgIfwMi+5vzQAXroCpNPjv6i9OKHLhR1rr2BxUH6b5WtOcVYSNuQv9TAithaUCFqtiAyuCU6EcaofQEGgRPdGL0TdijbF3JrYNaQ36tGXyodGSJ3cJAzGDQvFmyyznao0BeHGMgaeyOe8vinitkrkAyJoaypFUVgfJMYsItuUbaUIRpX8g
+DKIM-Signature: a=rsa-sha256; bh=CV2DBiF20I0LdKLRdeTFlMucPp9SM9hExasLuy2mpg0=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1762163977; v=1;
+ b=LAtJjl1lzGueSowJjPOSbj0uE1RcfuH8VxEYug3UR+Eh5wt+ik5ykxw9YjJEvKZ0q4/zxbY6
+ UmDbawyTmuIOP+zy7uInBrEoerZJ+26OEIMTs57jPLplIiknbY1KrczQpwDmPx/0aXhhrTfnhCk
+ QTfBpKDThntcRYATYqof7YVi1dchIW+0wUDQqE+I0dBXmslX44Ml6ETSA90s1rbLts7ufAUzvUC
+ rq2qfapxO5/qCSFAZ2HCfUsa7NRqYj3jZmSNiq1tXhMjX2z7RIvtAAmK9Gys4gph5ptyGHyuiAo
+ BrIMbVtZZa+AWn2COCW7+aOhKcyvir0kS9V9HjsMA0CyQ==
+Received-SPF: pass client-ip=178.33.254.192; envelope-from=clg@kaod.org;
+ helo=3.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,216 +130,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Nov 2025 09:02:54 +1000
-Gavin Shan <gshan@redhat.com> wrote:
+On 11/3/25 10:27, Jamin Lin wrote:
+> The helper function create_pca9552() has been renamed to
+> aspeed_create_pca9552() and made non-static for reuse by other Aspeed
+> machine source files. A corresponding prototype is now declared in
+> aspeed.h.
+> 
+> This allows multiple Aspeed platforms to share PCA9552 I²C LED controller
+> initialization logic, improving code reuse and reducing duplication.
+> 
+> No functional changes.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-> On 10/31/25 11:55 PM, Igor Mammedov wrote:
-> > On Sun, 19 Oct 2025 10:36:16 +1000
-> > Gavin Shan <gshan@redhat.com> wrote:  
-> >> On 10/18/25 12:27 AM, Igor Mammedov wrote:  
-> >>> On Tue,  7 Oct 2025 16:08:10 +1000
-> >>> Gavin Shan <gshan@redhat.com> wrote:
-> >>>      
-> >>>> In the combination of 64KB host and 4KB guest, a problematic host page
-> >>>> affects 16x guest pages. In this specific case, it's reasonable to
-> >>>> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
-> >>>> dump due to the current error can't be delivered as the previous error
-> >>>> isn't acknoledges. It's caused by the nature the host page can be
-> >>>> accessed in parallel due to the mismatched host and guest page sizes.  
-> >>>
-> >>> can you explain a bit more what goes wrong?
-> >>>
-> >>> I'm especially interested in parallel access you've mentioned
-> >>> and why batch adding error records is needed
-> >>> as opposed to adding records every time invalid access happens?
-> >>>
-> >>> PS:
-> >>> Assume I don't remember details on how HEST works,
-> >>> Answering it in this format also should improve commit message
-> >>> making it more digestible for uninitiated.
-> >>>      
-> >>
-> >> Thanks for your review and I'm trying to answer your question below. Please let
-> >> me know if there are more questions.
-> >>
-> >> There are two signals (BUS_MCEERR_AR and BUS_MCEERR_AO) and BUS_MCEERR_AR is
-> >> concerned here. This signal BUS_MCEERR_AR is sent by host's stage2 page fault
-> >> handler when the resolved host page has been marked as marked as poisoned.
-> >> The stage2 page fault handler is invoked on every access to the host page.
-> >>
-> >> In the combination where host and guest has 64KB and 4KB separately, A 64KB
-> >> host page corresponds to 16x consecutive 4KB guest pages. It means we're
-> >> accessing the 64KB host page when any of those 16x consecutive 4KB guest pages
-> >> is accessed. In other words, a problematic 64KB host page affects the accesses
-> >> on 16x 4KB guest pages. Those 16x 4KB guest pages can be owned by different
-> >> threads on the guest and they run in parallel, potentially to access those
-> >> 16x 4KB guest pages in parallel. It potentially leading to 16x BUS_MCEERR_AR
-> >> signals at one point.
-> >>
-> >> In current implementation, the error record is built as the following calltrace
-> >> indicates. There are 16 error records in the extreme case (parallel accesses on
-> >> 16x 4KB guest pages, mapped to one 64KB host page). However, we can't handle
-> >> multiple error records at once due to the acknowledgement mechanism in
-> >> ghes_record_cper_errors(). For example, the first error record has been sent,
-> >> but not consumed by the guest yet. We fail to send the second error record.
-> >>
-> >> kvm_arch_on_sigbus_vcpu
-> >>     acpi_ghes_memory_errors
-> >>       ghes_gen_err_data_uncorrectable_recoverable      // Generic Error Data Entry
-> >>       acpi_ghes_build_append_mem_cper                  // Memory Error
-> >>       ghes_record_cper_errors
-> >>         
-> >> So this series improves this situation by simply sending 16x error records in
-> >> one shot for the combination of 64KB host + 4KB guest.  
-> > 
-> > 1) What I'm concerned about is that it target one specific case only.
-> > Imagine if 1st cpu get error on page1 and another on page2=(page1+host_page_size)
-> > and so on for other CPUs. Then we are back where we were before this series.
-> > 
-> > Also in abstract future when ARM gets 1Gb pages, that won't scale well.
-> > 
-> > Can we instead of making up CPERs to cover whole host page,
-> > create 1/vcpu GHES source?
-> > That way when vcpu trips over bad page, it would have its own
-> > error status block to put errors in.
-> > That would address [1] and deterministically scale
-> > (well assuming that multiple SEA error sources are possible in theory)
-> >   
-> 
-> I think it's a good idea to have individual error source for each vCPU. In this
-> way, the read_ack_reg won't be a limitation. I hope Jonathan is ok to this scheme.
-> 
-> Currently, we have two (fixed) error sources like below. I assume the index of
-> the error source per vCPU will starts from (ACPI_HEST_SRC_ID_QMP + 1) based on
-> CPUState::cpu_index.
 
-I'd suggest ditch cpu index and use arch_id instead.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> 
-> enum AcpiGhesSourceID {
->      ACPI_HEST_SRC_ID_SYNC,
->      ACPI_HEST_SRC_ID_QMP,       /* Use it only for QMP injected errors */
-> };
-> 
-> 
-> > PS:
-> > I also wonder what real HW does when it gets in similar situation
-> > (i.e. error status block is not yet acknowledged but another async
-> > error arrived for the same error source)?
-> >   
-> 
-> I believe real HW also have this specific issue. As to ARM64, I ever did some
-> google search and was told the error follows the firmware-first policy and
-> handled by a component of trustfirmware-a. However, I was unable to get the
-> source code. So it's hard for me to know how this specific issue is handled
-> there.
+Thanks,
 
-Perhaps Jonathan can help with finding how real hw works around it?
+C.
 
-My idea using per cpu source is just a speculation based on spec
-on how workaround the problem,
-I don't really know if guest OS will be able to handle it (aka,
-need to be tested is it's viable). That also probably was a reason
-in previous review, why should've waited for multiple sources
-support be be merged first before this series.
 
- 
-> Thanks,
-> Gavin
+> ---
+>   include/hw/arm/aspeed.h | 12 +++++++++++
+>   hw/arm/aspeed.c         | 44 ++++++++++++++++++++---------------------
+>   2 files changed, 34 insertions(+), 22 deletions(-)
 > 
-> >>>> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
-> >>>> for this specific case. The maximal error block size is bumped to 4KB,
-> >>>> providing enough storage space for those 16x memory CPERs.
-> >>>>
-> >>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
-> >>>> ---
-> >>>>    hw/acpi/ghes.c   |  2 +-
-> >>>>    target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
-> >>>>    2 files changed, 46 insertions(+), 2 deletions(-)
-> >>>>
-> >>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> >>>> index 045b77715f..5c87b3a027 100644
-> >>>> --- a/hw/acpi/ghes.c
-> >>>> +++ b/hw/acpi/ghes.c
-> >>>> @@ -33,7 +33,7 @@
-> >>>>    #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
-> >>>>    
-> >>>>    /* The max size in bytes for one error block */
-> >>>> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
-> >>>> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
-> >>>>    
-> >>>>    /* Generic Hardware Error Source version 2 */
-> >>>>    #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
-> >>>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> >>>> index c5d5b3b16e..3ecb85e4b7 100644
-> >>>> --- a/target/arm/kvm.c
-> >>>> +++ b/target/arm/kvm.c
-> >>>> @@ -11,6 +11,7 @@
-> >>>>     */
-> >>>>    
-> >>>>    #include "qemu/osdep.h"
-> >>>> +#include "qemu/units.h"
-> >>>>    #include <sys/ioctl.h>
-> >>>>    
-> >>>>    #include <linux/kvm.h>
-> >>>> @@ -2433,10 +2434,53 @@ static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
-> >>>>                                        uint64_t paddr)
-> >>>>    {
-> >>>>        GArray *addresses = g_array_new(false, false, sizeof(paddr));
-> >>>> +    uint64_t val, start, end, guest_pgsz, host_pgsz;
-> >>>>        int ret;
-> >>>>    
-> >>>>        kvm_cpu_synchronize_state(c);
-> >>>> -    g_array_append_vals(addresses, &paddr, 1);
-> >>>> +
-> >>>> +    /*
-> >>>> +     * Sort out the guest page size from TCR_EL1, which can be modified
-> >>>> +     * by the guest from time to time. So we have to sort it out dynamically.
-> >>>> +     */
-> >>>> +    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
-> >>>> +    if (ret) {
-> >>>> +        goto error;
-> >>>> +    }
-> >>>> +
-> >>>> +    switch (extract64(val, 14, 2)) {
-> >>>> +    case 0:
-> >>>> +        guest_pgsz = 4 * KiB;
-> >>>> +        break;
-> >>>> +    case 1:
-> >>>> +        guest_pgsz = 64 * KiB;
-> >>>> +        break;
-> >>>> +    case 2:
-> >>>> +        guest_pgsz = 16 * KiB;
-> >>>> +        break;
-> >>>> +    default:
-> >>>> +        error_report("unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
-> >>>> +        goto error;
-> >>>> +    }
-> >>>> +
-> >>>> +    host_pgsz = qemu_real_host_page_size();
-> >>>> +    start = paddr & ~(host_pgsz - 1);
-> >>>> +    end = start + host_pgsz;
-> >>>> +    while (start < end) {
-> >>>> +        /*
-> >>>> +         * The precise physical address is provided for the affected
-> >>>> +         * guest page that contains @paddr. Otherwise, the starting
-> >>>> +         * address of the guest page is provided.
-> >>>> +         */
-> >>>> +        if (paddr >= start && paddr < (start + guest_pgsz)) {
-> >>>> +            g_array_append_vals(addresses, &paddr, 1);
-> >>>> +        } else {
-> >>>> +            g_array_append_vals(addresses, &start, 1);
-> >>>> +        }
-> >>>> +
-> >>>> +        start += guest_pgsz;
-> >>>> +    }
-> >>>> +
-> >>>>        ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
-> >>>>        if (ret) {
-> >>>>            goto error;  
-> >>>      
-> >>  
-> >   
-> 
+> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
+> index 712014497e..3afb964088 100644
+> --- a/include/hw/arm/aspeed.h
+> +++ b/include/hw/arm/aspeed.h
+> @@ -68,4 +68,16 @@ struct AspeedMachineClass {
+>    */
+>   void aspeed_machine_class_init_cpus_defaults(MachineClass *mc);
+>   
+> +/*
+> + * aspeed_create_pca9552:
+> + * @soc: pointer to the #AspeedSoCState.
+> + * @bus_id: the I²C bus index to attach the device.
+> + * @addr: the I²C address of the PCA9552 device.
+> + *
+> + * Create and attach a PCA9552 LED controller device to the specified I²C bus
+> + * of the given Aspeed SoC. The device is instantiated using
+> + * i2c_slave_create_simple() with the PCA9552 device type.
+> + */
+> +void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr);
+> +
+>   #endif
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index f23af5bf8c..c6f272d986 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -537,7 +537,7 @@ static void tiogapass_bmc_i2c_init(AspeedMachineState *bmc)
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
+>   }
+>   
+> -static void create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+> +void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+>   {
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
+>                               TYPE_PCA9552, addr);
+> @@ -565,9 +565,9 @@ static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
+>       smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54,
+>                             eeprom4_54);
+>       /* PCA9539 @ 0x76, but PCA9552 is compatible */
+> -    create_pca9552(soc, 4, 0x76);
+> +    aspeed_create_pca9552(soc, 4, 0x76);
+>       /* PCA9539 @ 0x77, but PCA9552 is compatible */
+> -    create_pca9552(soc, 4, 0x77);
+> +    aspeed_create_pca9552(soc, 4, 0x77);
+>   
+>       /* bus 6 : */
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x48);
+> @@ -578,8 +578,8 @@ static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
+>       uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
+>       smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 0x56,
+>                             eeprom8_56);
+> -    create_pca9552(soc, 8, 0x60);
+> -    create_pca9552(soc, 8, 0x61);
+> +    aspeed_create_pca9552(soc, 8, 0x60);
+> +    aspeed_create_pca9552(soc, 8, 0x61);
+>       /* bus 8 : adc128d818 @ 0x1d */
+>       /* bus 8 : adc128d818 @ 0x1f */
+>   
+> @@ -710,7 +710,7 @@ static void fp5280g2_bmc_i2c_init(AspeedMachineState *bmc)
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "ds1338", 0x68);
+>   
+>       /* It expects a pca9555 but a pca9552 is compatible */
+> -    create_pca9552(soc, 8, 0x30);
+> +    aspeed_create_pca9552(soc, 8, 0x30);
+>   }
+>   
+>   static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+> @@ -720,7 +720,7 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+>   
+>       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 0), 0x51, 32 * KiB);
+>   
+> -    create_pca9552(soc, 3, 0x61);
+> +    aspeed_create_pca9552(soc, 3, 0x61);
+>   
+>       /* The rainier expects a TMP275 but a TMP105 is compatible */
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
+> @@ -734,14 +734,14 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 2), 0x52, 64 * KiB);
+> -    create_pca9552(soc, 4, 0x60);
+> +    aspeed_create_pca9552(soc, 4, 0x60);
+>   
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
+>                        0x48);
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
+>                        0x49);
+> -    create_pca9552(soc, 5, 0x60);
+> -    create_pca9552(soc, 5, 0x61);
+> +    aspeed_create_pca9552(soc, 5, 0x60);
+> +    aspeed_create_pca9552(soc, 5, 0x61);
+>       i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
+>                                         "pca9546", 0x70);
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+> @@ -760,12 +760,12 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 2), 0x50, 64 * KiB);
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 3), 0x51, 64 * KiB);
+>   
+> -    create_pca9552(soc, 7, 0x30);
+> -    create_pca9552(soc, 7, 0x31);
+> -    create_pca9552(soc, 7, 0x32);
+> -    create_pca9552(soc, 7, 0x33);
+> -    create_pca9552(soc, 7, 0x60);
+> -    create_pca9552(soc, 7, 0x61);
+> +    aspeed_create_pca9552(soc, 7, 0x30);
+> +    aspeed_create_pca9552(soc, 7, 0x31);
+> +    aspeed_create_pca9552(soc, 7, 0x32);
+> +    aspeed_create_pca9552(soc, 7, 0x33);
+> +    aspeed_create_pca9552(soc, 7, 0x60);
+> +    aspeed_create_pca9552(soc, 7, 0x61);
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "dps310", 0x76);
+>       /* Bus 7: TODO si7021-a20@20 */
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), TYPE_TMP105,
+> @@ -782,8 +782,8 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+>                             64 * KiB, rainier_bb_fruid, rainier_bb_fruid_len);
+>       at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51,
+>                             64 * KiB, rainier_bmc_fruid, rainier_bmc_fruid_len);
+> -    create_pca9552(soc, 8, 0x60);
+> -    create_pca9552(soc, 8, 0x61);
+> +    aspeed_create_pca9552(soc, 8, 0x60);
+> +    aspeed_create_pca9552(soc, 8, 0x61);
+>       /* Bus 8: ucd90320@11 */
+>       /* Bus 8: ucd90320@b */
+>       /* Bus 8: ucd90320@c */
+> @@ -804,17 +804,17 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+>                                         "pca9546", 0x70);
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+>       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
+> -    create_pca9552(soc, 11, 0x60);
+> +    aspeed_create_pca9552(soc, 11, 0x60);
+>   
+>   
+>       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 13), 0x50, 64 * KiB);
+> -    create_pca9552(soc, 13, 0x60);
+> +    aspeed_create_pca9552(soc, 13, 0x60);
+>   
+>       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 14), 0x50, 64 * KiB);
+> -    create_pca9552(soc, 14, 0x60);
+> +    aspeed_create_pca9552(soc, 14, 0x60);
+>   
+>       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 15), 0x50, 64 * KiB);
+> -    create_pca9552(soc, 15, 0x60);
+> +    aspeed_create_pca9552(soc, 15, 0x60);
+>   }
+>   
+>   static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
 
 
