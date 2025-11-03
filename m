@@ -4,106 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E544CCF9FE
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE8CCCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFuR5-0002EW-A2; Mon, 03 Nov 2025 08:17:29 -0500
+	id 1vFuTV-00040s-RD; Mon, 03 Nov 2025 08:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFuQs-00028q-KK
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:17:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFuQe-0000Pu-RE
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:17:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762175812;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/y1A7Wv9IGnQ1yrnkvyXQhjR1x6a6i3Z/9tB3vLQpg8=;
- b=MrbG3/Eeo73+LeC7wa88yPxpphKyoj5ZGnJS1rp72J1Hc4Rit5L6kJk9d6O+QDcJ8EDwpR
- HN9Jy6LVhQ3hP52JF2cEzQNgRZWNWkOgOVmLpRwECL0G+QB+en2dC8h57NuFt0AE5kcKTp
- IdiHgaeVHtVrxqimYFye6Elyi1UhNyo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-FFZ-30RXNg6A2gjIk0qMQg-1; Mon, 03 Nov 2025 08:16:51 -0500
-X-MC-Unique: FFZ-30RXNg6A2gjIk0qMQg-1
-X-Mimecast-MFC-AGG-ID: FFZ-30RXNg6A2gjIk0qMQg_1762175810
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-475dabb63f2so21143295e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:16:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuTT-00040a-GG
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:19:56 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuTN-0000zK-38
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:19:55 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-475dd559b0bso59405005e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762175978; x=1762780778; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xFKGvcUvspf53GurFP8T1yRW2JUQf5wcgEySEWv1nGY=;
+ b=q3MxB7UIlqCeldB/qrQfHIv0SdW2z9iV+vSkjMVROvOFvvFTyOsTvDI58Q43dV/j5F
+ WPLG7I4lfK6gBm/COlW297L4LjtS6rFEH/l2CzMn2ZeOAwvtwq5Us8n3SpYGEF3SYtD4
+ 6VsNhtMwyRdztL3pYU1IJ0B/YEs9+U7bbWchQb0m34BSX0RKi7MnkdLORg4DDpiGCbqS
+ crRDjcCCa3YpQkfiZZ72pDmSVYEAQ6PhNahdhXyuPZdkInoZl3uXz+hF/pOOZ7Ytg7eT
+ RX1hF5t9vgBcMdXWf/BxZpN3bi6g/n8X83B49OI/9WpfriMRfDuI1OovWaSujT1URNfN
+ zyfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762175810; x=1762780610;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/y1A7Wv9IGnQ1yrnkvyXQhjR1x6a6i3Z/9tB3vLQpg8=;
- b=scNVoMNuhWXOtZaFwKowUVvylCuhYUJ73wBIycJA+5DQrv78OFpOdwizsIDGJbVcW+
- BsVDkwC+TZ9ciFnGulfEYyBPyBUtIGGewefGNRml+PP/fkdL/fuT8Hlwl3vuUB4BpJ4w
- yyrsuL/nsoiVT1UhzpyYna7KMDWLOvMSyLtdyBtxMDQ8h8MKVBDLBDqRu7TnDFSnOhm7
- ooRx/UHzUK7Xl2vfBng9ovLVNBZgHC7mSUE3FfP4a7bELIRp+xeWI/oqsSPYgb72SQFs
- EfLOzGLBWjVCB1kLYMfEmWR3d7tB/FXGve7m+SEYMPLQ49K4X2Kh9WUnyHF3DwoPZOvn
- wSaA==
+ d=1e100.net; s=20230601; t=1762175978; x=1762780778;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xFKGvcUvspf53GurFP8T1yRW2JUQf5wcgEySEWv1nGY=;
+ b=KG/U6YchCAE0yibJyFSzR6m5L89+f1ywJVoo8T+Rt1pkLA0Lzcdzz+ZXsNfryfAJ0X
+ 8GFvYe5gAs/qOHyWdMoKwKd6llaPT1RiByQUMLXNSOfV9WW2Rlvj8WpDF0oH0r3C1jmA
+ uQcqlg260QNSreLKf9b5JsnIGR/5CGP62xdIE/jHEky0sN7WwgByBnPp8se3xdHI/fTF
+ uRiHeJHNLWLS5h2z4qxL62Kz6KNwUMWKEM4WqYtVbmioVj7ae0RWjblFHV8WRrbMFFx6
+ IlEartb60vPWFAhUSWF/EIvgkPz7XKHDT2VefgHncYzix0BejD890y1GsUkx32wJxpSQ
+ VVfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtJM1/Hf7dhtlH2Mnv3cswVz8r9aDeDfomJrUOZFPgBZ5SGl499eUBVwaepMlCVhygiZCV3GNr7Qp1@nongnu.org
-X-Gm-Message-State: AOJu0Yw59+5a9cde+Tk4NZC8uiILRCjnJi4JSP6W4XjG23lkkz1fI8OQ
- 7V0j8UI+BVN8TOji6SJgr3s5TVOim4FPRKoZnH54lvYzptA7pkVh87fA+zv/7qefstxjG4mymoY
- oSRSatKypDTN3e9lK9o54w4Dgo3DCnxi6GN/I0Y2jMaVUDvtqS4f+zOrbBmL+JF5u
-X-Gm-Gg: ASbGnctRtEAniLg9kdBxIzvG20quCqw78KErM35H5Fziyxb/uXAwlffiPbdQe6aWGi8
- p6NUd1qUtr2MO04QHJ9lEQaFmYpv7UMXT9/xyzQDVHMcXESXpz47BRtAor15kMG0D3MBXZsNd4B
- HskYz298bwUO0CruOJJvE1sVo0xI5gzLteACsywAJQSey4Zeh3A9JFyYWAiPE/FJN6HngSr4cnX
- GX2euKy7Sb9MiytXBpg78D5JjE5aoV+WV4FCLOvzTZww/p1+T7PlgR39zkkqOLYSrrGwa52MywG
- kxCkyhRA4RSnaDgN0fnK6AXDUt5rA5kpPjxn1dG3NQJJg1C9fB+ph4E8/MkLASCcTgC0mUPpwN5
- OaY/7Pp1RpQk36+lmQBJQxogEkFSj25xp5YP0JKk89rIfFA==
-X-Received: by 2002:a05:600c:a345:b0:45d:dc85:c009 with SMTP id
- 5b1f17b1804b1-477307c3595mr81274305e9.10.1762175809825; 
- Mon, 03 Nov 2025 05:16:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHnUlUTC4J0S30TjFnwwvbwlLyIfdoJ5azeQcE7dEeYPZNjiQL2ekQckwklxIXoVg4mTaZ/xw==
-X-Received: by 2002:a05:600c:a345:b0:45d:dc85:c009 with SMTP id
- 5b1f17b1804b1-477307c3595mr81274075e9.10.1762175809382; 
- Mon, 03 Nov 2025 05:16:49 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773c3a77b1sm157525835e9.17.2025.11.03.05.16.48
+ AJvYcCVGxeaf/369ocexE9oRdISdmpj3W2lawVe8F0ZFOIXlnUZFyZ+n+iNuVo6WBFdJlNqj4K8XdJuY14Vj@nongnu.org
+X-Gm-Message-State: AOJu0YweGGsgIBLsVg5kk+ajzsyrPOb8New/M2m2IUzWgxteB4DEZQ9v
+ IQVNIrLZqwGFxqKrKoLChhP/hhnfT1dQkN+2MZqUHxdgRpXzwHjSEEbBdmHrbD5723M=
+X-Gm-Gg: ASbGncvwSg16eGPQGkXar8BZ/+urqLhqs2xkLu89XRe17W6u10bZQ/PxSN8fH16WahW
+ dFIV1EaCKJhZ6vwPLjc/9qPqZ18wfCQfHc4UDBiSSISDvWBu9E+AcBpLYimbKVSAG1JUj5MMjww
+ g/23Zy40qJh1WjEWFZ02oqd6cc/nEJj8M2pldfJNARuwYnOD9TwzStt1LaCrycXLYbTNX+hsQHd
+ X7AypAEz1fVsyIe7XA4EzTL7HwmBy4gMHWy5jXHnP/qTfSzzBLcYsq/m9OeEy6CX/Gh2F5hR/0L
+ fu0yx5Zcymph6oWh5df18pOHCHjEcUeVjyhh3XGdf9YDwc1GBKobED5w/grRGj9Y/ggPxNbFAN7
+ ThR1iz73ln8wy68KfTByNJYou7fv90X9Wx95cmwqzYQ2MFzk/G/L6BxI7/hFWc8Mtr78X/v7gTn
+ +EFH84tFxNcM+P6Pq46xnn9iJP2RvUkPQ7qgYqDVnYFKoUTISekPB/9K7crLETplg=
+X-Google-Smtp-Source: AGHT+IEiVdpOaZpU0YZv3suUNuzRg1jwBvo/t+Cw65P/lWbFYNz4dkbXN+GA2vQKRSGy7/MdNnwlEg==
+X-Received: by 2002:a05:6000:4308:b0:425:7590:6a1f with SMTP id
+ ffacd0b85a97d-429bd6a949amr11264643f8f.49.1762175978335; 
+ Mon, 03 Nov 2025 05:19:38 -0800 (PST)
+Received: from [172.18.140.215] (ip-185-104-138-156.ptr.icomera.net.
+ [185.104.138.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429ce80ded1sm9822214f8f.4.2025.11.03.05.19.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 05:16:48 -0800 (PST)
-Message-ID: <ba7d04b0-a93b-4776-8c91-412367aedf2f@redhat.com>
-Date: Mon, 3 Nov 2025 14:16:47 +0100
+ Mon, 03 Nov 2025 05:19:37 -0800 (PST)
+Message-ID: <4e836608-dc06-41ea-8be0-eb34232b8b60@linaro.org>
+Date: Mon, 3 Nov 2025 14:19:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/23] intel_iommu: Add migration support with x-flts=on
+Subject: Re: [PULL v2 0/8] Accelerators & CPU patches for 2025-11-02
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-22-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251024084349.102322-22-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251102181406.51160-1-philmd@linaro.org>
+ <6aabcdbb-acdd-4b3a-8652-b9c1cf3ce435@linaro.org>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6aabcdbb-acdd-4b3a-8652-b9c1cf3ce435@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,46 +100,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/11/25 10:20, Richard Henderson wrote:
+> On 11/2/25 19:14, Philippe Mathieu-Daudé wrote:
+>> Vladimir Sementsov-Ogievskiy (2):
+>>    util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
+>>    tests/unit: add unit test for qemu_hexdump()
+> 
+> This doesn't build:
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/11947161300
+> https://gitlab.com/qemu-project/qemu/-/jobs/11947161195
+> 
+> and 10 other variations.
 
+Nice. Apologies for missing that.
 
-On 10/24/25 10:43 AM, Zhenzhong Duan wrote:
-> When x-flts=on, we set up bindings to nested HWPT in host, after
-> migration, VFIO device binds to nesting parent HWPT by default.
-> We need to re-establish the bindings to nested HWPT, or else device
-s/else/otherwise
-> DMA will break.
->
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-> ---
->  hw/i386/intel_iommu.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index edd1416382..8fec61be3e 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -4360,6 +4360,13 @@ static int vtd_post_load(void *opaque, int version_id)
->       */
->      vtd_switch_address_space_all(iommu);
->  
-> +    /*
-> +     * Bindings to nested HWPT in host is set up dynamically depending
-> +     * on pasid entry configuration from guest. After migration, we
-> +     * need to re-establish the bindings before restore device's DMA.
-restoring
-> +     */
-> +    vtd_replay_pasid_bindings_all(iommu);
-> +
->      return 0;
->  }
->  
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-
+Vladimir, please repost (only) the test:
+https://lore.kernel.org/qemu-devel/20251031211518.38503-9-philmd@linaro.org/
 
