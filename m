@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A13CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE88CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFr5e-0000kp-Fu; Mon, 03 Nov 2025 04:43:06 -0500
+	id 1vFr7i-0001Kb-Lf; Mon, 03 Nov 2025 04:45:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vFr5V-0000kT-Ne
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:42:59 -0500
+ id 1vFr7h-0001KP-EF
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:45:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vFr5M-0005h4-1n
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:42:57 -0500
+ id 1vFr7d-00063a-Oi
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:45:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762162957;
+ s=mimecast20190719; t=1762163108;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+QRBMRrNrUFmbBMt1SSPqBZIeipH55Ra1Y/Mnq8brPQ=;
- b=aYgRFlrW/TdfJUkwv19pg4F4zZpb+pZ0Gy6cUhkRnTG+2oXDl9lpZM+qNK+S5OmhEVhndF
- mkVb8Nt6UjkDz48scQQMyiyYgpk6H+c+CPkZv/XlezxXtw7H4p75RWHLvY1XWE6ZMcKeSv
- a274YdtEt5aol6V/LY5T4hAtR9OUejc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qtBIKTpv4o1EKAk97fV4bR7w0PUyneRCBxrQbcM9y+w=;
+ b=jAMN31gDyCkOczNLs0vUhHNA7hzEr9uenG56oTdckWR4NXR4XaR7zsd0PQ2us40FzS35+G
+ xMbenvGILoNPkvH8oqvuGMB6+IPcB5EkumoZu3Oe/RDHE8Nz5SvqXZFTBDKppU9iYU2ZwH
+ d7VqD+NT2LQGxUunD0xPco8pdfuo4wY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54-28h2Ga86OCee54_qmEbbNw-1; Mon, 03 Nov 2025 04:42:36 -0500
-X-MC-Unique: 28h2Ga86OCee54_qmEbbNw-1
-X-Mimecast-MFC-AGG-ID: 28h2Ga86OCee54_qmEbbNw_1762162955
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-429c95fdba8so994093f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 01:42:35 -0800 (PST)
+ us-mta-222-D0pDDAhqPM-qBI-QodYRVA-1; Mon, 03 Nov 2025 04:45:06 -0500
+X-MC-Unique: D0pDDAhqPM-qBI-QodYRVA-1
+X-Mimecast-MFC-AGG-ID: D0pDDAhqPM-qBI-QodYRVA_1762163105
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-429c5c8ae3bso1561596f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 01:45:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762162954; x=1762767754; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762163105; x=1762767905; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+QRBMRrNrUFmbBMt1SSPqBZIeipH55Ra1Y/Mnq8brPQ=;
- b=rpahMP8ZS3gbpewND3gopjMZsQiPFikWf6B2Vx0EnEvzV7VRRaKHyjQlUdxTNkeMTk
- lEq+hc3KxrJK1Jt7f3Kx+dYX7mBfM19Dj9TYgwv3owYBIkukQY1yP5xWVUDf4O5p7yg7
- GlzfJ1dq4ZH7k22a6gpWIzhTrLIxSkLdxuDHC3M7IOSzeVClxCF441JOxbOgB32kcTdY
- Sgt+/FoS601Qg/QKDjf05uBgPaoeN4qZFrRhImzT18A8mZXcaii2i6h78GKi5KFKpdCa
- S2IGLYZYuvpBSviXiEuVf+ZCQaO78ZhpWlKbK7Gm1qoNOvWrgqvS7rki8NBmuBx6/zn8
- 4Lpg==
+ bh=qtBIKTpv4o1EKAk97fV4bR7w0PUyneRCBxrQbcM9y+w=;
+ b=p6+xJ32piNJ1OCZt3UuOLN7ZTQwya/KJJnqJ1vvN9mKxieGD0aL+w7OoO+0ZwPdkfy
+ z7/ChaEzZW4SNmGcrrrDreCrItppGyAcWIH2FGw/LhAN/ByX0MSzGr5RGV9hTN8g7Xaw
+ lhsK2pAFd7VJDuzJNpAthV6qGGkcYoZMHhzL74FcuJwk91n4TsSCt1yu9AHmHLs7TG+F
+ dWarFfP2ZfjhOUIrK2GPPqAFodfgkb9yJ7Pjk0kIpnVNyNWJyqA7PPl8hpNLa4Mt4qtA
+ fVh3Ssf8iFySasMRpZlX6+RI0YFQ2HfrF5LkY5RcIHRWsTZbnqiqo6xQHPVDezqj360W
+ KhkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762162954; x=1762767754;
+ d=1e100.net; s=20230601; t=1762163105; x=1762767905;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+QRBMRrNrUFmbBMt1SSPqBZIeipH55Ra1Y/Mnq8brPQ=;
- b=DAG4cj2xuIZdDZgYWVJNKF1ikh6rCQ2O/64GxUZtWV7l7NCbpni5q91SfRZhv5pWDX
- fztIc94X8NUCd2l7DQdc1NfdKTi3ghW88pjIEhhJ5Ink+vO2NoO7UE0iY/kUdJEK2xC/
- ult7F8Horp/PVK9BZpDty/00vLtn7g8kssQZEG4tpuOFP8W0Ivh5bT40OS1DJduXAajN
- FdjGxqG6bjGeMPs2gE0J9uxybcOrorugeFFXHB05WyReT18wvR6tXlAYo3QdlNO8FvxD
- TCKYXoN2mUYHhHUII0IsouT/cMrcpk/8NhvbuCBo/DWFPm7d3i02bwrMVOHuYmjuIx+6
- A4nA==
-X-Gm-Message-State: AOJu0YyQlTfY3V9O6rAWa5ZdP/ldv9v4vIYvgAkjV0tyd5ihJbSR/vVH
- 6adiRTiLxw0+NOcYnVzshQBBbOwYd2ivq2cbcNuMQ4aciMHjJ68Mnw0cDCLikKA7iISmCcnhw37
- 1nkJiW+wFC0vsDn7j836H1jsPLlR+Hcksiug9E+F171nQVD8+7aFc9WYSnNxWzCIQ
-X-Gm-Gg: ASbGncvG64JrB1oaEkLsUmIegXAhkGf3gsKmJHw6ufheHGPwypa6iaxEQ+7lIC5e546
- VXonZsotTCnTiryeDfB8nCY7ia8J997hhikz8QPVIQMZi5Fh+kBkuwL70a/BKfPWXK85SWo1ffr
- ATadAyTuJtnc+68KfLlh/hJLrd30VGKV1pPSZ7Cs+OAwPwhkiEUEnTdq1WktkNftnhLd/NthEiD
- rg/NwN2la9MbMx8pMRAdnj1ipSQRB+V3usfYRJdr6/SZ/ObDNFD1uG8VTFr143JAMvxSc7cSQr7
- 2EGpI8CnZ0W5odgqfTiCS1OYtyqXlwV7NWrkthmCtpZHrWQKnikUfweKs7bO4fEzMw==
-X-Received: by 2002:a05:6000:2910:b0:405:ed47:b22b with SMTP id
- ffacd0b85a97d-429bd672210mr9171325f8f.10.1762162954618; 
- Mon, 03 Nov 2025 01:42:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpuKT4RfrHCBWWjdxzpuWWon9jmzWA8QrreuyyQ1hJZygqpqUNiwivqlx/6WIvErtBUZ2drw==
-X-Received: by 2002:a05:6000:2910:b0:405:ed47:b22b with SMTP id
- ffacd0b85a97d-429bd672210mr9171301f8f.10.1762162954155; 
- Mon, 03 Nov 2025 01:42:34 -0800 (PST)
+ bh=qtBIKTpv4o1EKAk97fV4bR7w0PUyneRCBxrQbcM9y+w=;
+ b=jY6aLgc4h8Pn/6FzNOUFlaXTfT/9isIMmEimW307EINNk022qhKVYomqnz6lSXTA4K
+ jCz9nBRPnm5tOng7kpForuuGHDKQZAB2EqZ8dplgTaqIEcMOEO7FbsPYWqdnTR2dFWIz
+ Nsvo/20iraTomIw+LlDZKaIe+YIAfw9zY/DdfcfV6mleAOIc+4aHO/Y/DRjOug20JUoX
+ LCsxLUq2v6xX+NgD0fghkkUTOyjxgwwiIj9DWyuQ52cltfprOzf1iND0ZN2Xz8cZ2JDU
+ TnU0STGq3QM+ARqm3yAYOwBOGJxOs7uJpDJRrmQsZy085Qqw1wiw3PRrsH7n8oBB6nYF
+ DRTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXt9fCdjqCP+DgC6/bGdcGV6ciKl7w6cRfLMSdldRiDxeWE4wvY88j65Z6PcNExSd+KVeNrmB6sYjin@nongnu.org
+X-Gm-Message-State: AOJu0Ywyc8v1YimaRFtS8XjHDsY59me6Wwsgzqo0odydFLU4NHVhKWU5
+ L+okG2ga5QRuwXg9zC3LekOy70fKF59YccyzcR3pLLgDodyo4+rh38gcOROd0id0iBuXyQm5whr
+ 2aXx3hgzW7KF0VTYOT0NZUrFV9Rng7bixcDhBisZ2UOa51mjb1awogG/7
+X-Gm-Gg: ASbGncuJg4WbkoA1P2EwRvfGMJwgB9Kvz8Nvkp/QUhfhmQq78R00fdtIOIwS0kLMDQ9
+ AKt+RmEIQwScBuJCa3zU+F2G3muehyvtZ+isSM1m0Ta4amAYBqNwonn+dGMntIKKCwNxNWfqdYl
+ 3vl66U6wZw9vxZA05ZH23wkPvxNJ35PnJmtXxZWHrMfYLZ+1Byvbl0w0kx1CLWpC/27V7La/w5e
+ LQ/gUGClS2npd1S9T3pgLbIQETPOzgiSA5x5vz97pPW3qNwqS/4Cbu4B/GxCk+c26TM9dB4aD7v
+ 6hyzvKGxiZTHxk4X5h7DcN9jQo99FHjfU471pUp0B7aIgUOeIGfP0T510R/ZdnKq9w==
+X-Received: by 2002:a5d:64e7:0:b0:429:9323:2bec with SMTP id
+ ffacd0b85a97d-429bd6a4bf4mr10227652f8f.40.1762163105412; 
+ Mon, 03 Nov 2025 01:45:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFI/Isnfg5IO61hQnMfkvDjvv0RDoI80m7l4TDxEsJsZtZEY/2w9MLpoLR0XQPsOEC69ZDByg==
+X-Received: by 2002:a5d:64e7:0:b0:429:9323:2bec with SMTP id
+ ffacd0b85a97d-429bd6a4bf4mr10227619f8f.40.1762163104889; 
+ Mon, 03 Nov 2025 01:45:04 -0800 (PST)
 Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13f2b5asm19288156f8f.40.2025.11.03.01.42.33
+ ffacd0b85a97d-429c5e19103sm16181204f8f.28.2025.11.03.01.45.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 01:42:33 -0800 (PST)
-Date: Mon, 3 Nov 2025 10:42:31 +0100
+ Mon, 03 Nov 2025 01:45:04 -0800 (PST)
+Date: Mon, 3 Nov 2025 10:45:03 +0100
 From: Igor Mammedov <imammedo@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v5] hw/i386/pc: Remove
- PCMachineClass::legacy_cpu_hotplug field
-Message-ID: <20251103104231.05121741@fedora>
-In-Reply-To: <4b92d159-1bcd-5672-977f-6741a9d26c8f@eik.bme.hu>
-References: <20250508133550.81391-3-philmd@linaro.org>
- <20251031142825.179239-1-imammedo@redhat.com>
- <4b92d159-1bcd-5672-977f-6741a9d26c8f@eik.bme.hu>
+To: Gavin Shan <gshan@redhat.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
+ gengdongjiu1@gmail.com, peter.maydell@linaro.org, pbonzini@redhat.com,
+ mchehab+huawei@kernel.org, shan.gavin@gmail.com
+Subject: Re: [PATCH RESEND v2 2/3] kvm/arm/kvm: Introduce helper
+ push_ghes_memory_errors()
+Message-ID: <20251103104503.748381a4@fedora>
+In-Reply-To: <fcf84423-9675-4293-9552-ac5f09acf171@redhat.com>
+References: <20251007060810.258536-1-gshan@redhat.com>
+ <20251007060810.258536-3-gshan@redhat.com>
+ <20251031100901.00000ccf@huawei.com>
+ <fcf84423-9675-4293-9552-ac5f09acf171@redhat.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -106,7 +112,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,69 +128,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 1 Nov 2025 00:27:36 +0100 (CET)
-BALATON Zoltan <balaton@eik.bme.hu> wrote:
+On Mon, 3 Nov 2025 09:39:50 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-[...]
-> > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> > index dfb8523c8b..7191854857 100644
-> > --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> > @@ -1 +1,43 @@  
+> On 10/31/25 8:09 PM, Jonathan Cameron wrote:
+> > On Tue,  7 Oct 2025 16:08:09 +1000
+> > Gavin Shan <gshan@redhat.com> wrote:
+> >   
+> >> Introduce helper push_ghes_memory_errors(), which sends ACPI GHES memory
+> >> errors, injects SEA exception or aborts on errors. This function will
+> >> be extended to support multiple ACPI GHES memory errors in the next
+> >> path.
+> >>
+> >> No functional changes intended.
+> >>
+> >> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> >> ---
+> >>   target/arm/kvm.c | 36 ++++++++++++++++++++++++------------
+> >>   1 file changed, 24 insertions(+), 12 deletions(-)
+> >>
+> >> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> >> index 9a47ac9e3a..c5d5b3b16e 100644
+> >> --- a/target/arm/kvm.c
+> >> +++ b/target/arm/kvm.c
+> >> @@ -2429,12 +2429,34 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+> >>       return ret;
+> >>   }
+> >>   
+> >> +static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
+> >> +                                    uint64_t paddr)  
+> > 
+> > Why not hwaddr paddr?
+> >   
 > 
-> Does this belong here?
-thanks for spotting it, it should be a separate preceding patch,
+> Because acpi_ghes_memory_errors() accepts it as uint64_t.
 
-and then expected blobs update patch after this patch,
-that would cleanup bios-tables-test-allowed-diff.h along with new blobs.
-/i.e. as per process described in bios-tables-test.c /
+ack to that, it's uint64_t in spec so I'd stick to that.
 
+> >> +{
+> >> +    GArray *addresses = g_array_new(false, false, sizeof(paddr));  
+> > 
+> > As in previous I'd just have
+> > 	hwaddr paddrs[16];
+> > 
+> > rather than bothering with a g_array.
+> >   
 > 
-> > /* List of comma-separated changed AML files to ignore */
-> > +"tests/data/acpi/x86/pc/DSDT",
-> > +"tests/data/acpi/x86/q35/DSDT",
-> > +"tests/data/acpi/x86/pc/DSDT.bridge",
-> > +"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-> > +"tests/data/acpi/x86/pc/DSDT.cphp",
-> > +"tests/data/acpi/x86/pc/DSDT.numamem",
-> > +"tests/data/acpi/x86/pc/DSDT.nohpet",
-> > +"tests/data/acpi/x86/pc/DSDT.memhp",
-> > +"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-> > +"tests/data/acpi/x86/pc/DSDT.acpihmat",
-> > +"tests/data/acpi/x86/pc/DSDT.acpierst",
-> > +"tests/data/acpi/x86/pc/DSDT.roothp",
-> > +"tests/data/acpi/x86/pc/DSDT.hpbridge",
-> > +"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-> > +"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
-> > +"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
-> > +"tests/data/acpi/x86/q35/DSDT.bridge",
-> > +"tests/data/acpi/x86/q35/DSDT.noacpihp",
-> > +"tests/data/acpi/x86/q35/DSDT.multi-bridge",
-> > +"tests/data/acpi/x86/q35/DSDT.ipmibt",
-> > +"tests/data/acpi/x86/q35/DSDT.cphp",
-> > +"tests/data/acpi/x86/q35/DSDT.numamem",
-> > +"tests/data/acpi/x86/q35/DSDT.nohpet",
-> > +"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
-> > +"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
-> > +"tests/data/acpi/x86/q35/DSDT.memhp",
-> > +"tests/data/acpi/x86/q35/DSDT.dimmpxm",
-> > +"tests/data/acpi/x86/q35/DSDT.acpihmat",
-> > +"tests/data/acpi/x86/q35/DSDT.mmio64",
-> > +"tests/data/acpi/x86/q35/DSDT.acpierst",
-> > +"tests/data/acpi/x86/q35/DSDT.applesmc",
-> > +"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
-> > +"tests/data/acpi/x86/q35/DSDT.ivrs",
-> > +"tests/data/acpi/x86/q35/DSDT.type4-count",
-> > +"tests/data/acpi/x86/q35/DSDT.core-count",
-> > +"tests/data/acpi/x86/q35/DSDT.core-count2",
-> > +"tests/data/acpi/x86/q35/DSDT.thread-count",
-> > +"tests/data/acpi/x86/q35/DSDT.thread-count2",
-> > +"tests/data/acpi/x86/q35/DSDT.viot",
-> > +"tests/data/acpi/x86/q35/DSDT.cxl",
-> > +"tests/data/acpi/x86/q35/DSDT.ipmismbus",
-> > +"tests/data/acpi/x86/q35/DSDT.xapic",  
+> Ok.
 > 
-> Regards,
-> BALATON Zoltan
+> >> +    int ret;
+> >> +
+> >> +    kvm_cpu_synchronize_state(c);
+> >> +    g_array_append_vals(addresses, &paddr, 1);
+> >> +    ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
+> >> +    if (ret) {
+> >> +        goto error;
+> >> +    }
+> >> +
+> >> +    kvm_inject_arm_sea(c);
+> >> +
+> >> +    g_array_free(addresses, true);
+> >> +
+> >> +    return;
+> >> +error:
+> >> +    error_report("failed to record the error");  
+> > 
+> > I'd just do this inline at the error case. In the next
+> > patch you add a more specific report of why to another path
+> > that would then be followed by this.
+> >   
+> 
+> Ok.
+> 
+> >> +    abort();  
+> > 
+> > If you do the above with the message, just duplicate this in the
+> > two error paths (by end of next patch).
+> >   
+> 
+> Will correct this in next revision if we still take current design. Igor suggested
+> to have individual error source per vCPU in another thread.
+> 
+> >> +}  
+> >   
+> 
+> Thanks,
+> Gavin
+> 
 
 
