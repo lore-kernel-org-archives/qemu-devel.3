@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCC8CCFA05
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5987BCCFA06
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsHg-0004B7-El; Mon, 03 Nov 2025 05:59:37 -0500
+	id 1vFsGv-0003mp-Fs; Mon, 03 Nov 2025 05:58:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHP-000429-B8
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGt-0003mL-K3
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHK-0004Yq-Av
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:16 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGr-0004HK-JF
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762167551;
+ s=mimecast20190719; t=1762167524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I4Fb37wScOwgmWnW1IPXgfwX3Teaam8o++ijSqOP9Qs=;
- b=Xs86beAZB415bHuBs1tQ/BxjWMxm9uO0wPDKa5F4vj9pTgJwXNXLIwl3C6hnnTd2ub0zVL
- TELe7ef3MCBHbIFBJU7OkxdgJBat6mspM8iYv0i7z5+SbHlkhUaRMkHWLcybsfFxXSuye0
- 8u42kxzMINlMUd3bYlbBAh3/VTmzjx0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hSBy+vv/JAIqO/yYed8i7OebcPCRF9mzIK2GU6wFWj0=;
+ b=CCcC/KgReb3n8IPTFyXrGTlHHAUt7xUbwjHIXqzXnuBMv8aVHpTC6U+JNZB4nOtzOonUVW
+ HV3PluBkMNGd4Y5jRR4NFkwPI79qBUMhDvJu4+Wf+4Rg49ZS1hzxSlUySBvKVIRzZZzLGu
+ ytI7InPve8PSwghQG6AOHIo1cBfpS6M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-t0SR7iWuMB6Kf6y6PjwEBg-1; Mon,
- 03 Nov 2025 05:59:08 -0500
-X-MC-Unique: t0SR7iWuMB6Kf6y6PjwEBg-1
-X-Mimecast-MFC-AGG-ID: t0SR7iWuMB6Kf6y6PjwEBg_1762167547
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-cjQXnXeBN6iuR526oS5Q5Q-1; Mon,
+ 03 Nov 2025 05:58:42 -0500
+X-MC-Unique: cjQXnXeBN6iuR526oS5Q5Q-1
+X-Mimecast-MFC-AGG-ID: cjQXnXeBN6iuR526oS5Q5Q_1762167522
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2F68195423A; Mon,  3 Nov 2025 10:59:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11D751955F06; Mon,  3 Nov 2025 10:58:42 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A4D6A30001A1; Mon,  3 Nov 2025 10:59:04 +0000 (UTC)
+ id 5BA6C30001A1; Mon,  3 Nov 2025 10:58:40 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 18/22] hw/s390x: Use memory_region_size()
-Date: Mon,  3 Nov 2025 11:58:15 +0100
-Message-ID: <20251103105824.322039-19-thuth@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 07/22] tests/functional/arm/test_aspeed_ast1030: Remove unused
+ import
+Date: Mon,  3 Nov 2025 11:58:04 +0100
+Message-ID: <20251103105824.322039-8-thuth@redhat.com>
 In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
 References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,33 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-MemoryRegion::size is private data of MemoryRegion,
-use the proper memory_region_size() getter to get it.
+This file does not use LinuxKernelTest directly (but AspeedTest),
+so we can remove this unnecessary import here.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251028181300.41475-10-philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251024124016.799687-1-thuth@redhat.com>
 ---
- hw/s390x/s390-pci-inst.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/functional/arm/test_aspeed_ast1030.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index a3bb5aa2216..5841dfc4fec 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -396,7 +396,7 @@ static MemoryRegion *s390_get_subregion(MemoryRegion *mr, uint64_t offset,
-     uint64_t subregion_size;
+diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional/arm/test_aspeed_ast1030.py
+index 60e2b0251c6..d1822edd8f1 100755
+--- a/tests/functional/arm/test_aspeed_ast1030.py
++++ b/tests/functional/arm/test_aspeed_ast1030.py
+@@ -6,9 +6,8 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-     QTAILQ_FOREACH(subregion, &mr->subregions, subregions_link) {
--        subregion_size = int128_get64(subregion->size);
-+        subregion_size = memory_region_size(subregion);
-         if ((offset >= subregion->addr) &&
-             (offset + len) <= (subregion->addr + subregion_size)) {
-             mr = subregion;
+-from qemu_test import LinuxKernelTest, Asset
+ from aspeed import AspeedTest
+-from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import Asset, exec_command_and_wait_for_pattern
+ 
+ 
+ class AST1030Machine(AspeedTest):
 -- 
 2.51.0
 
