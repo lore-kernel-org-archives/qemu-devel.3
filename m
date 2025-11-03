@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC0F4CCFA05
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EDFCCFA05
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsKd-00005w-N8; Mon, 03 Nov 2025 06:02:40 -0500
+	id 1vFsGq-0003l8-AC; Mon, 03 Nov 2025 05:58:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vFsJH-0007d6-Gp
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:01:24 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGn-0003kL-Le
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vFsJ9-000566-7Y
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:01:15 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id E1F8F404A5;
- Mon,  3 Nov 2025 11:00:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F806C4CEE7;
- Mon,  3 Nov 2025 11:00:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1762167646;
- bh=7KlQ6SyNHBa4lk3dkpiYR4iscB2B68Q7KOAeVXNjiSw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AhLcoQGIUn+XILCnMIYp24uIaR3p69oXI/V6fr2s4n4Ec3dMk6596cJc8JewLsa4h
- KH5DwHU+y64yKfd8NNeimWaZw1szCfwTuusS6gzNKNATMviBmyE+MoOdp3QnN28hIR
- 3E0UeStC9All56Gp2pdVeTWwenSKVRqubFlPtJ2+pS1KuzMH3B2FH0RmZ/TnN2nNyk
- EMt7J7LPi9rFPVn+cmbUk3Bv/t5UvugJbWayoVuYrfsVT6o76K8yFJd0epMFsa1XJX
- 1sQkHZGC+JKDimTmCwtmVY/gilo49irmmg9oPAnPj9OcsFleJisA43gCgRZCIYaAar
- 1djVvz8IQq03g==
-Date: Mon, 3 Nov 2025 16:25:02 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, kvm@vger.kernel.org,
- Nikunj A Dadhania <nikunj@amd.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: Re: [PATCH v2 8/9] target/i386: SEV: Add support for setting TSC
- frequency for Secure TSC
-Message-ID: <hbfmcwhus6oyggzfrjz3rdkdrzfmeeuab45bnipta2bo5wj6z3@os4yj4ywoahn>
-References: <cover.1758794556.git.naveen@kernel.org>
- <65400881e426aa0e412eb431099626dceb145ddd.1758794556.git.naveen@kernel.org>
- <6a9ce7bb-5c69-ad8b-8bfd-638122619c71@amd.com>
- <uzfmnzzhz7a7lghdpazb2sphtctphmsj2nyfqnu6erjt44h577@bjj57um7n2ze>
- <a8a324ba-e474-4733-b998-7d36be06b7f7@amd.com>
- <boyf3kr7uo7jnlratgmgaklm2a4leg37hsgfno5ywsl6qvbcvo@5dwlbncvaogv>
- <acb88951-b46f-4a08-8cd7-4e2d20e153f4@amd.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGl-0004B6-1y
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762167516;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WgK7d3BIEFcYpQw9mKYN0KzotxKf5QOsInjiFYzG/0E=;
+ b=AL494f4O5/E5BlsFKvq/Qow9CgyHy4Hz7/YaPSY8Azvsy8oGiHlNTOQYwSSqLddNH356oT
+ 0AsYVWEEDj0IGgG3vFyGela2hSyllyG0Bb1N9jmJEILH7BaScxZYw6d64zF4QIKeBhrq5X
+ TVfw6tidUtyvIAmmcjt1W706BXbudeI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-g0P2mG6CPqyWaxcSf_rq9Q-1; Mon,
+ 03 Nov 2025 05:58:34 -0500
+X-MC-Unique: g0P2mG6CPqyWaxcSf_rq9Q-1
+X-Mimecast-MFC-AGG-ID: g0P2mG6CPqyWaxcSf_rq9Q_1762167513
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A4B7180A221; Mon,  3 Nov 2025 10:58:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D83D430001A1; Mon,  3 Nov 2025 10:58:31 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 03/22] tests/functional: Fix problems in decorators.py reported
+ by pylint
+Date: Mon,  3 Nov 2025 11:58:00 +0100
+Message-ID: <20251103105824.322039-4-thuth@redhat.com>
+In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
+References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <acb88951-b46f-4a08-8cd7-4e2d20e153f4@amd.com>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,64 +84,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 10:11:13AM -0500, Tom Lendacky wrote:
-> On 10/24/25 12:16, Naveen N Rao wrote:
-> > On Fri, Oct 24, 2025 at 10:00:08AM -0500, Tom Lendacky wrote:
-> >> On 10/8/25 04:52, Naveen N Rao wrote:
-> >>> On Tue, Oct 07, 2025 at 08:31:47AM -0500, Tom Lendacky wrote:
-> >>>> On 9/25/25 05:17, Naveen N Rao (AMD) wrote:
-> >>>
-> >>> ...
-> >>>
-> >>>>> +
-> >>>>> +static void
-> >>>>> +sev_snp_guest_set_tsc_frequency(Object *obj, Visitor *v, const char *name,
-> >>>>> +                                void *opaque, Error **errp)
-> >>>>> +{
-> >>>>> +    uint32_t value;
-> >>>>> +
-> >>>>> +    if (!visit_type_uint32(v, name, &value, errp)) {
-> >>>>> +        return;
-> >>>>> +    }
-> >>>>> +
-> >>>>> +    SEV_SNP_GUEST(obj)->tsc_khz = value / 1000;
-> >>>>
-> >>>> This will cause a value that isn't evenly divisible by 1000 to be
-> >>>> rounded down, e.g.: tsc-frequency=2500000999. Should this name instead
-> >>>> just be tsc-khz or secure-tsc-khz (to show it is truly associated with
-> >>>> Secure TSC)?
-> >>>
-> >>> I modeled this after the existing tsc-frequency parameter on the cpu 
-> >>> object to keep it simple (parameter is the same, just where it is 
-> >>> specified differs). This also aligns with TDX which re-uses the 
-> >>> tsc-frequency parameter on the cpu object.
-> >>
-> >> So why aren't we using the one on the cpu object instead of creating a
-> >> duplicate parameter? There should be some way to get that value, no?
-> > 
-> > I had spent some time on this, but I couldn't figure out a simple way to 
-> > make that work.
-> > 
-> > TDX uses a vcpu pre-create hook (similar to KVM) to get access to and 
-> > set the TSC value from the cpu object. For SEV-SNP, we need the TSC 
-> > frequency during SNP_LAUNCH_START which is quite early and we don't have 
-> > access to the cpu object there.
-> > 
-> > Admittedly, my qemu understanding is limited. If there is a way to 
-> > re-use the cpu tsc-frequency field, then that would be ideal.
-> > 
-> > Any ideas/suggestions?
-> 
-> Any Qemu experts know how the SEV support would be able to access the
-> TSC value from the -cpu command line option at LAUNCH time?
+From: Thomas Huth <thuth@redhat.com>
 
-Bump. Any feedback on this, please?
+The documentation strings should follow the function definition
+lines, not precede them.
 
-Otherwise, kindly review v3 posted here:
-http://lore.kernel.org/r/cover.1761648149.git.naveen@kernel.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251015095454.1575318-3-thuth@redhat.com>
+---
+ tests/functional/qemu_test/decorators.py | 176 +++++++++++------------
+ 1 file changed, 87 insertions(+), 89 deletions(-)
 
-
-Thanks,
-Naveen
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index b2392958041..807418359ab 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -10,136 +10,134 @@
+ 
+ from .cmd import which
+ 
+-'''
+-Decorator to skip execution of a test if the provided
+-environment variables are not set.
+-Example:
+ 
+-  @skipIfMissingEnv("QEMU_ENV_VAR0", "QEMU_ENV_VAR1")
+-'''
+ def skipIfMissingEnv(*vars_):
++    '''
++    Decorator to skip execution of a test if the provided
++    environment variables are not set.
++    Example:
++
++      @skipIfMissingEnv("QEMU_ENV_VAR0", "QEMU_ENV_VAR1")
++    '''
+     missing_vars = []
+     for var in vars_:
+-        if os.getenv(var) == None:
++        if os.getenv(var) is None:
+             missing_vars.append(var)
+ 
+-    has_vars = True if len(missing_vars) == 0 else False
++    has_vars = len(missing_vars) == 0
+ 
+     return skipUnless(has_vars, f"Missing env var(s): {', '.join(missing_vars)}")
+ 
+-'''
+-
+-Decorator to skip execution of a test if the list
+-of command binaries is not available in $PATH.
+-Example:
+-
+-  @skipIfMissingCommands("mkisofs", "losetup")
+-'''
+ def skipIfMissingCommands(*args):
++    '''
++    Decorator to skip execution of a test if the list
++    of command binaries is not available in $PATH.
++    Example:
++
++      @skipIfMissingCommands("mkisofs", "losetup")
++    '''
+     has_cmds = True
+     for cmd in args:
+-         if not which(cmd):
+-             has_cmds = False
+-             break
++        if not which(cmd):
++            has_cmds = False
++            break
+ 
+     return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
+                                 ", ".join(args))
+ 
+-'''
+-Decorator to skip execution of a test if the current
+-host operating system does match one of the prohibited
+-ones.
+-Example
+-
+-  @skipIfOperatingSystem("Linux", "Darwin")
+-'''
+ def skipIfOperatingSystem(*args):
++    '''
++    Decorator to skip execution of a test if the current host
++    operating system does match one of the prohibited ones.
++    Example:
++
++      @skipIfOperatingSystem("Linux", "Darwin")
++    '''
+     return skipIf(platform.system() in args,
+                   'running on an OS (%s) that is not able to run this test' %
+                   ", ".join(args))
+ 
+-'''
+-Decorator to skip execution of a test if the current
+-host machine does not match one of the permitted
+-machines.
+-Example
+-
+-  @skipIfNotMachine("x86_64", "aarch64")
+-'''
+ def skipIfNotMachine(*args):
++    '''
++    Decorator to skip execution of a test if the current
++    host machine does not match one of the permitted machines.
++    Example:
++
++      @skipIfNotMachine("x86_64", "aarch64")
++    '''
+     return skipUnless(platform.machine() in args,
+                       'not running on one of the required machine(s) "%s"' %
+                       ", ".join(args))
+ 
+-'''
+-Decorator to skip execution of flaky tests, unless
+-the $QEMU_TEST_FLAKY_TESTS environment variable is set.
+-A bug URL must be provided that documents the observed
+-failure behaviour, so it can be tracked & re-evaluated
+-in future.
++def skipFlakyTest(bug_url):
++    '''
++    Decorator to skip execution of flaky tests, unless
++    the $QEMU_TEST_FLAKY_TESTS environment variable is set.
++    A bug URL must be provided that documents the observed
++    failure behaviour, so it can be tracked & re-evaluated
++    in future.
+ 
+-Historical tests may be providing "None" as the bug_url
+-but this should not be done for new test.
++    Historical tests may be providing "None" as the bug_url
++    but this should not be done for new test.
+ 
+-Example:
++    Example:
+ 
+-  @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
+-'''
+-def skipFlakyTest(bug_url):
++      @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
++    '''
+     if bug_url is None:
+         bug_url = "FIXME: reproduce flaky test and file bug report or remove"
+     return skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'),
+                       f'Test is unstable: {bug_url}')
+ 
+-'''
+-Decorator to skip execution of tests which are likely
+-to execute untrusted commands on the host, or commands
+-which process untrusted code, unless the
+-$QEMU_TEST_ALLOW_UNTRUSTED_CODE env var is set.
+-Example:
+-
+-  @skipUntrustedTest()
+-'''
+ def skipUntrustedTest():
++    '''
++    Decorator to skip execution of tests which are likely
++    to execute untrusted commands on the host, or commands
++    which process untrusted code, unless the
++    $QEMU_TEST_ALLOW_UNTRUSTED_CODE env var is set.
++    Example:
++
++      @skipUntrustedTest()
++    '''
+     return skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'),
+                       'Test runs untrusted code / processes untrusted data')
+ 
+-'''
+-Decorator to skip execution of tests which need large
+-data storage (over around 500MB-1GB mark) on the host,
+-unless the $QEMU_TEST_ALLOW_LARGE_STORAGE environment
+-variable is set
++def skipBigDataTest():
++    '''
++    Decorator to skip execution of tests which need large
++    data storage (over around 500MB-1GB mark) on the host,
++    unless the $QEMU_TEST_ALLOW_LARGE_STORAGE environment
++    variable is set
+ 
+-Example:
++    Example:
+ 
+-  @skipBigDataTest()
+-'''
+-def skipBigDataTest():
++      @skipBigDataTest()
++    '''
+     return skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'),
+                       'Test requires large host storage space')
+ 
+-'''
+-Decorator to skip execution of tests which have a really long
+-runtime (and might e.g. time out if QEMU has been compiled with
+-debugging enabled) unless the $QEMU_TEST_ALLOW_SLOW
+-environment variable is set
++def skipSlowTest():
++    '''
++    Decorator to skip execution of tests which have a really long
++    runtime (and might e.g. time out if QEMU has been compiled with
++    debugging enabled) unless the $QEMU_TEST_ALLOW_SLOW
++    environment variable is set
+ 
+-Example:
++    Example:
+ 
+-  @skipSlowTest()
+-'''
+-def skipSlowTest():
++      @skipSlowTest()
++    '''
+     return skipUnless(os.getenv('QEMU_TEST_ALLOW_SLOW'),
+                       'Test has a very long runtime and might time out')
+ 
+-'''
+-Decorator to skip execution of a test if the list
+-of python imports is not available.
+-Example:
+-
+-  @skipIfMissingImports("numpy", "cv2")
+-'''
+ def skipIfMissingImports(*args):
++    '''
++    Decorator to skip execution of a test if the list
++    of python imports is not available.
++    Example:
++
++      @skipIfMissingImports("numpy", "cv2")
++    '''
+     has_imports = True
+     for impname in args:
+         try:
+@@ -151,15 +149,15 @@ def skipIfMissingImports(*args):
+     return skipUnless(has_imports, 'required import(s) "%s" not installed' %
+                                    ", ".join(args))
+ 
+-'''
+-Decorator to skip execution of a test if the system's
+-locked memory limit is below the required threshold.
+-Takes required locked memory threshold in kB.
+-Example:
+-
+-  @skipLockedMemoryTest(2_097_152)
+-'''
+ def skipLockedMemoryTest(locked_memory):
++    '''
++    Decorator to skip execution of a test if the system's
++    locked memory limit is below the required threshold.
++    Takes required locked memory threshold in kB.
++    Example:
++
++      @skipLockedMemoryTest(2_097_152)
++    '''
+     # get memlock hard limit in bytes
+     _, ulimit_memory = resource.getrlimit(resource.RLIMIT_MEMLOCK)
+ 
+-- 
+2.51.0
 
 
