@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8E9CCFA05
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27177CCFA06
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsHE-0003sT-UW; Mon, 03 Nov 2025 05:59:10 -0500
+	id 1vFsHK-0003zT-2X; Mon, 03 Nov 2025 05:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHB-0003re-JK
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHI-0003xn-Lt
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsH3-0004RH-U9
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:04 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHE-0004WN-UE
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762167535;
+ s=mimecast20190719; t=1762167546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hff/k/1RIB4r6If5d41QAniZ0RCrNVZJzbv+PSn88Hw=;
- b=CAIWQFw5f1ZENgfrKRYkIVPjYVNjtqgVfDE8hZqHs9BzcSjGxMEQ37cDmFwnnw55NdTkkV
- 3/gf4iSPvIXhrZ3qQgEJSuCk/NtEulrd4oBveKQ2A8/5udAX49QAeVAeXHqmUwCBc+2HC/
- DM0M4bGngLQCXyD06lYnK8/XKdvkUd4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=IOVDcGhMCkuyVVd2jbsDowfYGThYB1elQwWqVfTLoV4=;
+ b=dDqM9dF5lWPyrEXKIZr4pQf0EdtjlzXK1lefQbWCeo1IFlYZiMSEYFNrg3iDfsMLghCqtv
+ yQLS7spqoYSVWZ1319Nmoa0U6DcXt1X3Wf74/qf3vD69HdMKNktNgfpG3wM2HPIYdfVFy0
+ wCyONvFWWBadrJR6T/PN7mbuD1Ngfqc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-q_s7PCTeNPWukrpqrIIxHg-1; Mon,
- 03 Nov 2025 05:58:51 -0500
-X-MC-Unique: q_s7PCTeNPWukrpqrIIxHg-1
-X-Mimecast-MFC-AGG-ID: q_s7PCTeNPWukrpqrIIxHg_1762167530
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-GYjWc5YxPDm-uNYWh0oLQQ-1; Mon,
+ 03 Nov 2025 05:59:04 -0500
+X-MC-Unique: GYjWc5YxPDm-uNYWh0oLQQ-1
+X-Mimecast-MFC-AGG-ID: GYjWc5YxPDm-uNYWh0oLQQ_1762167544
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE4471800669; Mon,  3 Nov 2025 10:58:50 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 166C61954230; Mon,  3 Nov 2025 10:59:04 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5625930001BC; Mon,  3 Nov 2025 10:58:49 +0000 (UTC)
+ id 8CF3330001A1; Mon,  3 Nov 2025 10:59:02 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 11/22] tests/functional/ppc64/test_mac99: Fix style issues
- reported by pylint
-Date: Mon,  3 Nov 2025 11:58:08 +0100
-Message-ID: <20251103105824.322039-12-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 17/22] tests/functional: include the lower level QMP log
+ messages
+Date: Mon,  3 Nov 2025 11:58:14 +0100
+Message-ID: <20251103105824.322039-18-thuth@redhat.com>
 In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
 References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,42 +84,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Pylint complained about lines being too long here, and mac99Test not
-following the usual CamelCase capitalization.
+We've seen a GitLab CI timeout failure in the test_pseries.py test,
+where it appears likely that the test has hung in a self.qmp('quit')
+call, but we don't have conclusive proof. Adding the QMP log category
+to what we capture should help us diagnose this, at the cost of the
+base.log file becoming significantly more verbose. The previous
+commit to include the logger category name and function should at
+least help understanding the more verbose logs.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251028182651.873256-3-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251029080502.52938-1-thuth@redhat.com>
 ---
- tests/functional/ppc64/test_mac99.py | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tests/functional/qemu_test/testcase.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tests/functional/ppc64/test_mac99.py b/tests/functional/ppc64/test_mac99.py
-index dfd9c01371d..a3261a8330a 100755
---- a/tests/functional/ppc64/test_mac99.py
-+++ b/tests/functional/ppc64/test_mac99.py
-@@ -7,14 +7,16 @@
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index d9d114e63e3..1d773dd697d 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -225,6 +225,9 @@ def setUp(self):
+         self.machinelog = logging.getLogger('qemu.machine')
+         self.machinelog.setLevel(logging.DEBUG)
+         self.machinelog.addHandler(self._log_fh)
++        self.qmplog = logging.getLogger('qemu.qmp')
++        self.qmplog.setLevel(logging.DEBUG)
++        self.qmplog.addHandler(self._log_fh)
  
--class mac99Test(LinuxKernelTest):
-+class Mac99Test(LinuxKernelTest):
- 
-     ASSET_BR2_MAC99_LINUX = Asset(
--        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux',
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main'
-+         '/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
-         'd59307437e4365f2cced0bbd1b04949f7397b282ef349b7cafd894d74aadfbff')
- 
-     ASSET_BR2_MAC99_ROOTFS = Asset(
--        'https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main//buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2',
-+        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main'
-+         '/buildroot/qemu_ppc64_mac99-2023.11-8-gdcd9f0f6eb-20240105/rootfs.ext2'),
-         'bbd5fd8af62f580bc4e585f326fe584e22856572633a8333178ea6d4ed4955a4')
- 
-     def test_ppc64_mac99_buildroot(self):
+         if not self.assets_available():
+             self.skipTest('One or more assets is not available')
+@@ -235,6 +238,7 @@ def tearDown(self):
+         if self.socketdir is not None:
+             self.socketdir.cleanup()
+             self.socketdir = None
++        self.qmplog.removeHandler(self._log_fh)
+         self.machinelog.removeHandler(self._log_fh)
+         self.log.removeHandler(self._log_fh)
+         self._log_fh.close()
 -- 
 2.51.0
 
