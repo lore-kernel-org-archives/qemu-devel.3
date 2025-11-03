@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9490ACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEEAFCCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFl6l-00032w-4N; Sun, 02 Nov 2025 22:19:51 -0500
+	id 1vFlN1-0005jM-7G; Sun, 02 Nov 2025 22:36:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vFl6j-00032X-Fg
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:19:49 -0500
+ id 1vFlMw-0005hI-7x
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:35 -0500
 Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vFl6g-0003Bk-KS
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:19:49 -0500
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.phl.internal (Postfix) with ESMTP id BE748EC022D;
- Sun,  2 Nov 2025 22:19:44 -0500 (EST)
+ id 1vFlMq-00080P-Vd
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:32 -0500
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfout.phl.internal (Postfix) with ESMTP id 7B244EC023C;
+ Sun,  2 Nov 2025 22:36:27 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Sun, 02 Nov 2025 22:19:44 -0500
+ by phl-compute-09.internal (MEProxy); Sun, 02 Nov 2025 22:36:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1762139984; x=1762226384; bh=YY4MxKQr7+momo/ZeAfvFbdJvP7x+bEe
- LQoLHiHi2EM=; b=ZZYYeom7TtKd6UiPeY7J0YP8RDyGbg62kYvXvn/7xZLV9q6u
- Ej9WLMSu8YHNTYJVt50n5nK8QbWLJRmAZK0rb8hOQ32YV1tKHybA7n/f841/3X+0
- dDgltbcD4LIZmmEWTb1sLatCHIYIVK3ozD7rI8W1f/d76LdN4XOaspsaieaj6+jh
- NjnBZOWiWHoTqu+ch5nm3devbQIHHUHIM4mdmZ/bkPh8P2NEx+IME3mPRiiqmRwX
- O+Hbw4JKc3tf54O90n0DckBo6UQ+/9RzZbzmEAl/+sSYIkTB0nKDsCoUHdCO6kP7
- oSMECIm+xqFDud5Hkrq810kyuuQ1rw3FYb8yjA==
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1762140987; x=
+ 1762227387; bh=Qp4IVbmKfSgtZtD+5ckCm3MWYAYmz+gEAZuguXtKgnI=; b=T
+ fU1GSGO28PKIVaqaDmSXKGDzZEBuVDb7i1ZhAC9ZiB42/pWKbk9Zix1dNQmGwCLf
+ HMi8kHstodCkWECTEXIJoeXeAXxbXFF0U3afGne6ENgtdnP3w8pXTFJ7Ts5T5rBZ
+ M2nYi/flIccNxOIr4TBbepV8cV4vpO5cBkst7hoPM+xylj7FqfRRtXop3ntZgLmq
+ js9z+DUHkb2DJ50OBP2EeecWfVZ1cQn7xNxseU0d/KWiwigOsZFYZ7iD9Bp3Z4j1
+ re56o9MdlHQw+p0OWuDUEHYiYzeqCDaqCIUoKo39aqQSIivMuB6Rdkp0XmcVNef8
+ ZmcUd38LWOJClarT3byhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762139984; x=
- 1762226384; bh=YY4MxKQr7+momo/ZeAfvFbdJvP7x+bEeLQoLHiHi2EM=; b=b
- PWVexN9Iot7uTj3QTda19YeLoUodTAXOwTq9vG2aw7qu9WY6rOwAMZBYD3NQMUO8
- lxtOCJWCc0GnPmpQcLQgI7cxVZku2HLroJu+ePFk4v6+wnfJ3oxWpqVDXySqzxdz
- e70A8AydEMRChreNWTkjJdIEFDAKKOOaIGwIE82Chyx4ReQ8bVzLS0xgQqs6oxy8
- Rw0MIyrrNoM4QU+76FCosSmKsNW6/IuajnAFdt1Th47liZeCdCoiCVkP5uWlPHEg
- gfvyu2jS+kkNO1fACHYEvls4sAF2BhwWdY6GJxn+Bd0vOTe3rP+f3TN/MfRZ69Ml
- 5JzXwsMH3B3xAkOpqC1oQ==
-X-ME-Sender: <xms:UB8IaQKOJgVhl_8ZMYZsxVAvbm4aaV3pNyYkqWkjFzscdO2CjXomGg>
- <xme:UB8IaXk6qiylSlid2CzIQ34H1tQ4GvgDMKyhySQ1AK5eYpTwU4_YLoBpS2UQ4crEt
- bySMyEKV79qJlMSGIOIjJeZalVKjtwBlnkd96AMxue2oxN6rFdn_0Q>
-X-ME-Received: <xmr:UB8IaeGjDf9TSC2D-c3WbeuICfHwJjFu3PO54lx50yYICMry7MAlhACiKeqt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejtdefucetufdoteggodetrf
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1762140987; x=1762227387; bh=Q
+ p4IVbmKfSgtZtD+5ckCm3MWYAYmz+gEAZuguXtKgnI=; b=nASaV90XeRYeCcgtc
+ Gk/MVrAOAuP4tCDKlt6Ke5wnQ+xEUXaNxPbMqNGJCNsidyfW2bqnwew8/SeR4u4W
+ NaD9at/UYr4LCayiiEP+8LitlcyWkoqLC333pPMG8HbDiwGYxlKFoqfJif7n6x3r
+ DWkybOcWCzEOLB5fspEAwHd1+x/uc/H4L35SqQEbyp6uXEB5l+MoyvKcW8o1wOk6
+ Jgeb3NMrAFsCjGXdKudSDVti38namES+R2PsASPujLL50Xubw5Emd5E0kARsp1Ux
+ ODsZ70JOtl6qJpDKYVAnzAxKC4WI64xi2Ga1sU999geADQymrPO2eocYJExyz/OU
+ KqLiw==
+X-ME-Sender: <xms:OyMIaUSkcCwC9OkdCHwYI9Xwn30x_8HcmTx-4fG_PrXe1qMX6ugkhg>
+ <xme:OyMIaZMADTjiIUy8clJJOf75FilkIxK99sqNuKdMMBv1nP5RI-98C2I8g8ssGKvQC
+ KgJNrnPd55JM_fqXlq8f6UMfSY1-1G0aVnSvmpNZ9YJqqPPLWZsbtdr>
+X-ME-Received: <xmr:OyMIafNYD8IkMWYoBOUlNk0795vUcMSWymnmxv4D65fC4fVjFqVkOaoP6qLv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejtdeiucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvfevuffhofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeekffekuddvtdehjeduhfekteet
- gedvfeffieeugfefffevheeggfdtkeeuteekteenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrg
- gusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehn
- ohhnghhnuhdrohhrghdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuh
-X-ME-Proxy: <xmx:UB8IaXFwQfQELI0vPmdls-zKmBucWdHK3l9Te7UBhp7D75uglGRkDg>
- <xmx:UB8IabPhb9vjLekP2m3BgwtZmehs47GMc_8Voa_uQUtwLTejREVlVg>
- <xmx:UB8IaWFs_0gtxW9bd-aDhIUB_I2xPDQykMEooYpFOJN0pTjdhVA_EA>
- <xmx:UB8IaSNVXwUbAppXKryr5qfG8IFJ_KC588BUK-FTjDJwo-OJf6L4oQ>
- <xmx:UB8IaexKV7k3BCX0alja4gMJ_U71MUtwz_LzbAC2ZDalh6kP_v1VXKJ7>
+ rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
+ ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
+ ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
+ eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+ thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
+ htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthho
+ nhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:OyMIaRu1QQ0J9Dm1eW8Lh9D7rdhftsxZPfVpuHELKFDheWMyA791LA>
+ <xmx:OyMIaRXa9XamuvH2oi2iXYOtkhAEzT8-fBpqiQOCwIuqxAEjzHHXHw>
+ <xmx:OyMIaRs6itR3bdMlLcJ6uNuDz_JROmAv7Ew2X8XVteDuQHW5CUyfYQ>
+ <xmx:OyMIaVUJxhc_2HzJ_3L6FrOimkFXUeKSi-6jyDKLrK0mZYT0TrIc4w>
+ <xmx:OyMIaTZdTe2QRd1ZIKijn6-C6OUYyQbkPo_nzzfLSh7niFi7sekocOja>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Nov 2025 22:19:43 -0500 (EST)
+ 2 Nov 2025 22:36:26 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id a8747c16;
- Mon, 3 Nov 2025 03:19:43 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 02 Nov 2025 22:19:43 -0500
-Message-Id: <DDYQHOPQ02RD.2DZ3N1Y4X4HEB@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
-Cc: <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] ati-vga: Implement HOST_DATA transfers to enable X.org
- text rendering
-From: "Chad Jablonski" <chad@jablonski.xyz>
-X-Mailer: aerc 0.21.0
-References: <20251029140112.275456-1-chad@jablonski.xyz>
- <e3e36622-94fc-b892-6283-280b3ec5292d@eik.bme.hu>
- <fabdf0f2-4dbf-488e-9bf9-1249c3154678@eik.bme.hu>
-In-Reply-To: <fabdf0f2-4dbf-488e-9bf9-1249c3154678@eik.bme.hu>
+ by chomposaur (OpenSMTPD) with ESMTPA id c430d697;
+ Mon, 3 Nov 2025 03:36:23 +0000 (UTC)
+From: Chad Jablonski <chad@jablonski.xyz>
+To: qemu-devel@nongnu.org
+Cc: balaton@eik.bme.hu,
+	Chad Jablonski <chad@jablonski.xyz>
+Subject: [PATCH v2 4/7] ati-vga: Fix DP_GUI_MASTER_CNTL register mask
+Date: Sun,  2 Nov 2025 22:36:05 -0500
+Message-ID: <20251103033608.120908-5-chad@jablonski.xyz>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251103033608.120908-1-chad@jablonski.xyz>
+References: <20251103033608.120908-1-chad@jablonski.xyz>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=103.168.172.150; envelope-from=chad@jablonski.xyz;
  helo=fout-a7-smtp.messagingengine.com
 X-Spam_score_int: -22
@@ -117,19 +113,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the feedback! And wise treating this as an RFC.
-I found a lot to improve in the process of splitting things up.
+Change the register mask from 0xf800000f to 0xff00000f to preserve bits
+24-26. This is the GMC_SRC_SOURCE field which is needed to determine
+the type of source for the blit operation.
 
-I've taken all of your suggestions and sending a v2 here shortly:
+Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+---
+ hw/display/ati.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-- Split into multiple patches
-- Integrated the host data blit into ati_2d_blt
-- Now works with the fallback (non-pixman) implementation
-- Implemented scissor clipping
-- Various other fixes/improvements
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index bf7a037e64..4ff17209c4 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -867,7 +867,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         ati_2d_blt(s);
+         break;
+     case DP_GUI_MASTER_CNTL:
+-        s->regs.dp_gui_master_cntl = data & 0xf800000f;
++        s->regs.dp_gui_master_cntl = data & 0xff00000f;
+         s->regs.dp_datatype = (data & 0x0f00) >> 8 | (data & 0x30f0) << 4 |
+                               (data & 0x4000) << 16;
+         s->regs.dp_mix = (data & GMC_ROP3_MASK) | (data & 0x7000000) >> 16;
+-- 
+2.51.0
 
-I did test this with x86_64 Solaris 10. There appear to be a lot of issues
-there but text in xterm does draw correctly now where it didn't before this
-patch series. I haven't gotten around to setting up MorphOS yet. It's
-completely new to me but I'm excited to give it a try here soon.
 
