@@ -4,73 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCFBCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5832FCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFrOF-0007KM-Tg; Mon, 03 Nov 2025 05:02:19 -0500
+	id 1vFrPQ-0008HK-6w; Mon, 03 Nov 2025 05:03:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vFrOC-0007FV-UQ
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:02:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vFrPM-0008GT-Vy; Mon, 03 Nov 2025 05:03:29 -0500
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vFrO8-0000PG-K0
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:02:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762164126;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=mJX024coPJgmrYZ3/DvCAyY8b0d9HmEy4sHo0h7sjVw=;
- b=idYlwZZltOe9rJfMun0ULU8DZmpiEfd4xmSGFfp4S6MPHXhQMl6b3BH+mIbDsJQ4bvAgDo
- DAlEWQ+ld8a9VQjLnoFvZAm2lfAqmjZ8KlokCUhHTl5igi3QjCHSKW2UTA0LnqZXLQ2uhu
- noDV1Fg/g9h7ntX8XYSNvREqVahkbT0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-0pIf2gmeMyyNZzrx67Twag-1; Mon,
- 03 Nov 2025 05:02:05 -0500
-X-MC-Unique: 0pIf2gmeMyyNZzrx67Twag-1
-X-Mimecast-MFC-AGG-ID: 0pIf2gmeMyyNZzrx67Twag_1762164124
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C02A1955F25
- for <qemu-devel@nongnu.org>; Mon,  3 Nov 2025 10:02:04 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C6DC1800579; Mon,  3 Nov 2025 10:02:02 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] audio/dbus: make "dbus" the default backend when using
- -display dbus
-Date: Mon,  3 Nov 2025 14:01:58 +0400
-Message-ID: <20251103100158.1148552-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vFrPG-0000hS-Eg; Mon, 03 Nov 2025 05:03:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1762164203; x=1793700203;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=4FQmeIYELimW4haBSnFU018/7z6jVn9vbPe5zfgrtJs=;
+ b=OOGLkTg0LlG4ugbSXV++/W8LxHB46wv3f5arJd898Ov5/Wuy+8cuWyRG
+ ebphqXlCwmihxzTiL+PFAYH+v9PCw/P3F2cnJyOVDMuwvs0olBYpg4BNp
+ 8HlqaqApw4HFxjSADHDxabn/+vccSzvJFLltXCD84ZI2Wbd5TyHDp5W80
+ zaVedOderdvg5kJGf/6UDYrSOwqAjqNPGAArmm511VIpfhFaiXykSZmqa
+ oLbqCKbCI4iydgU5JhdMJ4GyKoKsIJYoQc/hOGVYWx2+4cJgPqTpqjl75
+ 3y1lEzk3ifR0hTNJDCt4fNb3ndX29TUb0UWWvJ/cGsYIjNmX4M/BZrqjx g==;
+X-CSE-ConnectionGUID: PBqlt34nTxK9ijEgR2abxw==
+X-CSE-MsgGUID: UzGx/3NpSIGXKiPaADfAGA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11601"; a="75586926"
+X-IronPort-AV: E=Sophos;i="6.19,275,1754982000"; d="scan'208";a="75586926"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Nov 2025 02:03:14 -0800
+X-CSE-ConnectionGUID: wKNhXijpRtW3HImVL7IKvw==
+X-CSE-MsgGUID: PvUlc5scSqempIhCgFxHqQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,275,1754982000"; d="scan'208";a="186504255"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 03 Nov 2025 02:03:13 -0800
+Date: Mon, 3 Nov 2025 18:25:26 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 08/11] rust: qemu-macros: add ToMigrationState derive macro
+Message-ID: <aQiDFo0Yv6sIZsH5@intel.com>
+References: <20251001075005.1041833-1-pbonzini@redhat.com>
+ <20251001075210.1042479-8-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251001075210.1042479-8-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,118 +81,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi Paolo,
 
-Set "using_dbus_display" during early_dbus_init(), so that we can try to
-create the "dbus" audio backend by default from audio_prio_list.
+>  /// # use std::sync::Mutex;
+> -/// # use migration::Migratable;
+> +/// # use migration::{Migratable, ToMigrationState, VMState, VMStateField};
+>  ///
+> +/// #[derive(ToMigrationState)]
+>  /// pub struct DeviceRegs {
+>  ///     status: u32,
+>  /// }
+> +/// # unsafe impl VMState for DeviceRegsMigration {
+> +/// #     const BASE: VMStateField = ::common::Zeroable::ZERO;
+> +/// # }
 
-This makes dbus audio work by default when using an audio device,
-without having to setup and wire up the -audiodev manually.
+did you miss something like the following?
 
-The added FIXME is addressed in the coming up cleanup series.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/audio.c     |  3 +++
- audio/dbusaudio.c |  8 +++++++-
- ui/dbus.c         | 17 +++++++++++++----
- 3 files changed, 23 insertions(+), 5 deletions(-)
-
-diff --git a/audio/audio.c b/audio/audio.c
-index 86e674410a..0f992a775c 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -57,6 +57,9 @@
-     that we generate the list.
- */
- const char *audio_prio_list[] = {
-+#ifdef CONFIG_GIO
-+    "dbus",
-+#endif
-     "spice",
-     CONFIG_AUDIO_DRIVERS
-     "none",
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index d729a810aa..1fe7c4ed64 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -32,6 +32,7 @@
- #endif
- 
- #include "ui/dbus.h"
-+#include "ui/dbus-display.h"
- #include "ui/dbus-display1.h"
- 
- #define AUDIO_CAP "dbus"
-@@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
- static void *
- dbus_audio_init(Audiodev *dev, Error **errp)
- {
--    DBusAudio *da = g_new0(DBusAudio, 1);
-+    DBusAudio *da;
- 
-+    if (!qemu_using_dbus_display(errp)) {
-+        return NULL;
-+    }
-+
-+    da = g_new0(DBusAudio, 1);
-     da->dev = dev;
-     da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                                 g_free, g_object_unref);
-diff --git a/ui/dbus.c b/ui/dbus.c
-index d2dff33258..45fb3c1aa3 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -35,6 +35,7 @@
- #include "ui/egl-context.h"
- #endif
- #include "qemu/audio.h"
-+#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
- #include "qapi/error.h"
- #include "trace.h"
- 
-@@ -218,12 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-         return;
-     }
- 
-+    AudioBackend *audio_be = audio_get_default_audio_be(NULL);
-+    if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
-+        audio_be = NULL;
-+    }
-     if (dd->audiodev && *dd->audiodev) {
--        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
--        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-+        audio_be = audio_be_by_name(dd->audiodev, errp);
-+        if (!audio_be) {
-             return;
+diff --git a/rust/qemu-macros/src/migration_state.rs b/rust/qemu-macros/src/migration_state.rs
+index 5edf0efe687f..2064bb73a6f0 100644
+--- a/rust/qemu-macros/src/migration_state.rs
++++ b/rust/qemu-macros/src/migration_state.rs
+@@ -236,6 +236,16 @@ pub struct #name {
          }
      }
-+    if (audio_be && !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-+        return;
+
++    fn generate_vmstate_impl(&self) -> TokenStream {
++        let name = self.migration_state_name();
++
++        quote! {
++            unsafe impl ::migration::VMState for #name {
++                const BASE: ::migration::VMStateField = ::common::Zeroable::ZERO;
++            }
++        }
 +    }
 +
- 
-     consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
-     for (idx = 0;; idx++) {
-@@ -475,6 +484,8 @@ early_dbus_init(DisplayOptions *opts)
- #endif
-     }
- 
-+    using_dbus_display = 1;
+     fn generate_snapshot_migration_state(&self) -> TokenStream {
+         let fields = self
+             .fields
+@@ -275,12 +285,15 @@ fn generate(&self) -> TokenStream {
+         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+         let name = self.migration_state_name();
+         let migration_state_struct = self.generate_migration_state_struct();
++        let vmstate_impl = self.generate_vmstate_impl();
+         let snapshot_impl = self.generate_snapshot_migration_state();
+         let restore_impl = self.generate_restore_migrated_state();
+
+         quote! {
+             #migration_state_struct
+
++            #vmstate_impl
 +
-     type_register_static(&dbus_vc_type_info);
- }
- 
-@@ -488,8 +499,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
-         exit(1);
-     }
- 
--    using_dbus_display = 1;
--
-     object_new_with_props(TYPE_DBUS_DISPLAY,
-                           object_get_objects_root(),
-                           "dbus-display", &error_fatal,
--- 
-2.51.1
+             impl #impl_generics ToMigrationState for #struct_name #ty_generics #where_clause {
+                 type Migrated = #name;
 
 
