@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDE9CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E874CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsHo-0004SY-Qf; Mon, 03 Nov 2025 05:59:44 -0500
+	id 1vFsH3-0003pr-PK; Mon, 03 Nov 2025 05:58:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHj-0004Io-VM
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsH1-0003om-NA
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHf-0004m5-NN
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:39 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGz-0004Nm-KT
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762167572;
+ s=mimecast20190719; t=1762167531;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qTnH6S3Bw8xH+z2ZRrA7mhfL4V2VfEnhe8gpVHFu6sw=;
- b=iXNI8gxNJvaTP9oBS2m3ZDN+eEwKEhB3VgMKRMT9ynsd7VzSYn85xTch4S4Bm9LoPFTtk9
- mliWIpcj8cPsmAFuz159UWzURB+lfV+vd3KbUFMwZpHvCoNmjlH20Ugda0knvfc9Hte9DQ
- yD+G6NUsjZX22tKCE9dCy2kvTvg7s5E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=3LMhIyRgzgW+wyd5rEWS2BizSkkIZyVD9i9Z7R9alhA=;
+ b=EDKpb6jj6c1bJVL6WTyNC7+XDMfqWk3nK7eLmMxmEMY6WC4AnNE2SuV3XTTXYDNhm8CGdW
+ 2m4bKLt8AgYCu7s4c45kwnAjY9DrYjXtt4GlqjAq7aDZk7P6Pqu4A7ZJwbp1j0KGzh6Rg4
+ f2bYV95qPZgtQPFBbI/kotKFMyYMCsM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-462-aXnXK3L0OkCxDuck5fe0iA-1; Mon,
- 03 Nov 2025 05:59:12 -0500
-X-MC-Unique: aXnXK3L0OkCxDuck5fe0iA-1
-X-Mimecast-MFC-AGG-ID: aXnXK3L0OkCxDuck5fe0iA_1762167551
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-5cBBm6i6Ncy9ynu6oaGDfg-1; Mon,
+ 03 Nov 2025 05:58:48 -0500
+X-MC-Unique: 5cBBm6i6Ncy9ynu6oaGDfg-1
+X-Mimecast-MFC-AGG-ID: 5cBBm6i6Ncy9ynu6oaGDfg_1762167527
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD1CE180A22B; Mon,  3 Nov 2025 10:59:11 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C89B219541B2; Mon,  3 Nov 2025 10:58:46 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D063130001A8; Mon,  3 Nov 2025 10:59:09 +0000 (UTC)
+ id 19ED430001A8; Mon,  3 Nov 2025 10:58:44 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 20/22] target/s390x: Fix missing clock-comparator interrupts
- after reset
-Date: Mon,  3 Nov 2025 11:58:17 +0100
-Message-ID: <20251103105824.322039-21-thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PULL 09/22] MAINTAINERS: fix functional tests section
+Date: Mon,  3 Nov 2025 11:58:06 +0100
+Message-ID: <20251103105824.322039-10-thuth@redhat.com>
 In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
 References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,58 +83,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-After reset, CKC value is set to 0, so if clock-comparator interrupts
-are enabled, one should occur very shortly thereafter.
+Without "S: Maintained", ./scripts/get_maintainer.pl shows "unknown"
+role instead of "maintainer" for "M: " entry, it's confusing. I really
+hope that functional tests are maintained:)
 
-Currently the code that loads the respective control register does not
-set tod_timer, so this does not happen.
-
-Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
-
-Cc: qemu-stable@nongnu.org
-Suggested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20251016175954.41153-3-iii@linux.ibm.com>
+Message-ID: <20251025165809.930670-3-vsementsov@yandex-team.ru>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/tcg/mem_helper.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index f1acb1618f7..24675fc818d 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -1959,6 +1959,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-         if (env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-         env->cregs[i] = val;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
-                    i, src, val);
-@@ -1989,10 +1993,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
- 
-     for (i = r1;; i = (i + 1) % 16) {
-         uint32_t val = cpu_ldl_data_ra(env, src, ra);
-+        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
-         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
--        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-+        env->cregs[i] = val64;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
-         src += sizeof(uint32_t);
- 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a6a1d36f52d..71c86ee8ce2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4412,6 +4412,7 @@ Functional testing framework
+ M: Thomas Huth <thuth@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Daniel P. Berrange <berrange@redhat.com>
++S: Maintained
+ F: docs/devel/testing/functional.rst
+ F: scripts/clean_functional_cache.py
+ F: tests/functional/qemu_test/
 -- 
 2.51.0
 
