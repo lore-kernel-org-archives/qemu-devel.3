@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6974CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 12:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17EADCCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFu7x-00039D-72; Mon, 03 Nov 2025 07:57:42 -0500
+	id 1vFuCG-00051b-MU; Mon, 03 Nov 2025 08:02:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFu7t-00035v-EP
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 07:57:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vFuBi-0004pd-1g
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:01:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFu7m-0004cW-AP
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 07:57:37 -0500
+ id 1vFuBS-0005Ko-Un
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:01:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762174637;
+ s=mimecast20190719; t=1762174870;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iWPqOT9v6PZGzQhxEB3pVdX5Adys5VF6N2rn65Sn1NM=;
- b=fJIUafW1gF0JRGvbJvEsX2w/oC4nK39p6h2Ewwi4AjAFKUTEqS3n1PaGOqsvXdbM03vrGX
- Q91opsmZmLLFD9IUO2KI0ju1XNTuR9HG5ixX+X332znS7CP/m1yGOb/ptyT5jIa3j95US0
- hyhPzzGvpPtTeiDK5FrKsFWPRL2OrHs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=443Oxkcwzfu/N9QI2OyLDoETdIrjbmLMUQKoFX8HPOA=;
+ b=TxOW8XuIGRD7F5xV5HDAjLrQuanHTo7cOV//2mjj/u2gd0JrAei1GfbPZ7F7RgwQLqWnBw
+ aUEe2swkgvJ9iYVAKhAnV3IA/lfiW9k9c04Vi684F5I8//J0HVA9G9FtIM5OpDWMW+Ck3e
+ am1N6EAEpub7vMuE2Ga2lK2SdbsBP0A=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-yTZN6NjoPkS6ttinoXtuew-1; Mon, 03 Nov 2025 07:57:16 -0500
-X-MC-Unique: yTZN6NjoPkS6ttinoXtuew-1
-X-Mimecast-MFC-AGG-ID: yTZN6NjoPkS6ttinoXtuew_1762174635
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477212937eeso31196405e9.2
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 04:57:15 -0800 (PST)
+ us-mta-616-YO9nR_U4ORSI6Y0RVsvj2g-1; Mon, 03 Nov 2025 08:01:09 -0500
+X-MC-Unique: YO9nR_U4ORSI6Y0RVsvj2g-1
+X-Mimecast-MFC-AGG-ID: YO9nR_U4ORSI6Y0RVsvj2g_1762174868
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47113dfdd20so19251135e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:01:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762174635; x=1762779435;
+ d=1e100.net; s=20230601; t=1762174866; x=1762779666;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iWPqOT9v6PZGzQhxEB3pVdX5Adys5VF6N2rn65Sn1NM=;
- b=hmtsdnWQ/V3ERBzSj2xKaXLx3Hx9giUjYqKLVd3pFlHuCMENMF+XJAeHKTX1xH2BvN
- fLlCrxTW2iPS8Lri0CfqIv6+hDikeSXb8RrydPkBvHJdzRAyebAnhR4huhUhQ6eC/1T5
- /C1zcCDbF/xQwwD2ge6OKWNSzuEFh20Sv4biwsERFfl8h84JFjz7u8QGQN0t4cru0aF6
- DpWZOPYqg/vQWGZReyChub1QXKwWhZ+DBsvXLGS5eoJ8wh6KjtwRq/smp6/UIYk9U6Cl
- EIkcJd7BPEvIgRkHfsIDgqsBXY2JhyooCiy/gpby+YSi027GqIUrpOYBzvCD8EC5gxnE
- FFIQ==
+ bh=443Oxkcwzfu/N9QI2OyLDoETdIrjbmLMUQKoFX8HPOA=;
+ b=aDMQe8fdSCmJ/TbaBMOGN9/5PqB0P2KG/HlYl96TtyjyoTpwILfLo5fRuoZuZIcuGL
+ cu4nDGbbu6q0zcz/SMiObf06zl8siuKjy/myHHrIl1n5y0P91FRSPpVLIzJ+z9HPdvct
+ mMx2LODKsJVtXMHplh9PJA7XJvik9/y1w2iHJW/uFFCla+ieYPxH5IMcyjSWaIwSQ63e
+ vv5+xs58iXQA9eQPtdSH15vzAKHHrcK59VSfIIDZSYaqxw53gGlKj5uHooyjjlsSO0qr
+ E84YxEOHLUFzKxW2IQ3X04grwV7m8Jve3LSjEKCZp4tdKiYVIKRW7NgZ5nqO8g5wAAGX
+ cbZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6mazqJ06/V3Vf/rxtHB4ICsU5PsQd1xCoBmnFz03hbTLvuFSh8fNkHz+RAL6KXgdMPq8gL/yIzc/1@nongnu.org
-X-Gm-Message-State: AOJu0YwmO+4ntT1lUYlnJe8fc6NnTIxUR+a7bmKSWqPAGZSJDD8mNfak
- M5X1CBXnl4cERSn0LFtQ35n0Qy2BeMe3ObxqfYAHm/L2cVcaCJRO600G0GK7jEByHThyFFsDP1F
- 6db2SYW3P4BMi4u/zoMTAdmmvU5X2VflNmcufNyPqeR1MYq75demppgMa
-X-Gm-Gg: ASbGnctM1jtjE0ZFKwrML6OlO9diISqHIOnVvVrhW1HsZKVGazLbUbZXW8Fzx/bXtZJ
- 1CeSErYX8/ZF/Q1/5T4WX2WXHamwb1IVIkTLXjzouP/NvmRyFOTg5ROIf3BbE2oqRnRgjfcrF8d
- TLycRUv4TcFGZULSTefpg3HrhgEetmO7ZURvScpjknNDRyz8YwxEYFfyRgTBotglR/kR7MiPHQM
- DhGjH2LK7kB1NBI0D0MpoDeeaub7WfZITbXPIFTaLJBail6XM6ZM0wgwZb5fWnzyt2Taz/LuoFW
- K74na6JMTlFNmc5O2UeQMvKm2+TvXZOUj2OvFI+jevXtQpSewm85rS9ycepdP/mXcdmnXp6pNU1
- slyykShjNpHudp9Ci8w/bmJtE0QU+CbYYn6ALdqc7OI6Uig==
-X-Received: by 2002:a05:600c:4591:b0:471:9da:5248 with SMTP id
- 5b1f17b1804b1-4773087b19bmr101731815e9.26.1762174634785; 
- Mon, 03 Nov 2025 04:57:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEthRh8uzto4fy6BjMWPdHf4yapNiB8hIsZz3H99RBD6ZMkfxFGHb6vIP9Wqw0EqTovInwI2g==
-X-Received: by 2002:a05:600c:4591:b0:471:9da:5248 with SMTP id
- 5b1f17b1804b1-4773087b19bmr101731545e9.26.1762174634362; 
- Mon, 03 Nov 2025 04:57:14 -0800 (PST)
+ AJvYcCW6I1OR+nTffShpSwuRn1wopOpwzafYY4Yna92+VuFv8JNGBCFvbnptIW2nI5l6snEcNtcqxG31nvrs@nongnu.org
+X-Gm-Message-State: AOJu0YzqXuGJ0TiRYvJDN26WtF1dMAK4qJRuv0jp7mv7d6MegA3SJvsU
+ +14lOZIFvm3zV/EG8PJ2veAx6+rdhTsVjnrLB2WMdX1n10v6Lf5slTHhaGUbDss/KX1oCXHX9iZ
+ NCoixJxf8Q/npX/E6Ms6ZhvktjcF/+n2DJNC0obA7ve+NOjYgI7Rho3G9G2i3b+zZ
+X-Gm-Gg: ASbGncv3yPCGmHBEh8g4kRnHFBKyVxV/o5gd4K/H3rUJFBL63wPbzGVZyFaPBqLtsuO
+ 3sXXlgwuk0B0Mw2UaEef4lHg1BvbRxKec7tQpEF4X3whfZUtPV/Lsm1Nn6fZBhF/Qxok8/9IcWB
+ bh1/Ec9TB/Wghn8S6R4tiEicB4US32fXLgelaa8QnFw7osJFhOD3tLekC60C5qy/KyMPRzRb8+J
+ vkLr6Qn0juGJhZQBsiXb+XFpbaANscOOkkBeuHgGZ3YTbf62KAnTeSbd7C6RvrgBEJKpT+7d0sK
+ dNA9Zm3XHqS4Fc9gDAR2XtCG/ifOI59gt5bGpaQBAABDMzjmkTO5gqB+zZswRW64l+ue6H04XBn
+ ig7tcZmS4Cqc7pKxRqougVlnxehfHJcMw84iSNiTFGpUlKA==
+X-Received: by 2002:a05:600d:4352:b0:477:429b:3b93 with SMTP id
+ 5b1f17b1804b1-477429b3fb5mr36625295e9.18.1762174865963; 
+ Mon, 03 Nov 2025 05:01:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFfI9dEuVKL3kT/8yMG/4pgPCf5MJlpuhIklO/hZyxx03bZ8fDPUf4kE2Yr30Q3j1KtNcd1LA==
+X-Received: by 2002:a05:600d:4352:b0:477:429b:3b93 with SMTP id
+ 5b1f17b1804b1-477429b3fb5mr36624965e9.18.1762174865338; 
+ Mon, 03 Nov 2025 05:01:05 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429d2952653sm7061388f8f.8.2025.11.03.04.57.13
+ 5b1f17b1804b1-4773c2ff79bsm153756145e9.6.2025.11.03.05.01.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 04:57:13 -0800 (PST)
-Message-ID: <f2814881-370e-46ea-bd28-2d3993db5be1@redhat.com>
-Date: Mon, 3 Nov 2025 13:57:12 +0100
+ Mon, 03 Nov 2025 05:01:04 -0800 (PST)
+Message-ID: <7e7063ce-3f29-4771-a808-3fdb38ac498e@redhat.com>
+Date: Mon, 3 Nov 2025 14:01:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 17/23] iommufd: Introduce a helper function to extract
- vendor capabilities
+Subject: Re: [PATCH v7 18/23] vfio: Add a new element bypass_ro in
+ VFIOContainer
 Content-Language: en-US
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
@@ -91,21 +91,21 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-18-zhenzhong.duan@intel.com>
+ <20251024084349.102322-19-zhenzhong.duan@intel.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251024084349.102322-18-zhenzhong.duan@intel.com>
+In-Reply-To: <20251024084349.102322-19-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,105 +125,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 10/24/25 10:43 AM, Zhenzhong Duan wrote:
-> In VFIO core, we call iommufd_backend_get_device_info() to return vendor
-> specific hardware information data, but it's not good to extract this raw
-> data in VFIO core.
+> When bypass_ro is true, readonly memory section is bypassed from mapping
+> in the container.
 >
-> Introduce host_iommu_extract_quirks() to help extracting the raw data and
-> return a bitmap in iommufd.c because it's the place defining
-> iommufd_backend_get_device_info().
+> This is a preparing patch to workaround Intel ERRATA_772415, see changelog
+> in next patch for details about the errata.
 >
-> The other choice is to put vendor data extracting code in vendor vIOMMU
-> emulation file, but that will make those files mixed with vIOMMU
-> emulation and host IOMMU extracting code, also need a new callback in
-> PCIIOMMUOps. So we choose a simpler way as above.
-up to now iommufd.c was arch independent. And on the other hand you
-started to put iommufd specific info in intel_iommu.c so I am wondering
-whether this is the good place to put this helper. Again, maybe consider
-consider creating  an intel_iommu_accel.c or something alike
-
-Eric
->
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  include/hw/iommu.h                 |  5 +++++
->  include/system/host_iommu_device.h | 15 +++++++++++++++
->  backends/iommufd.c                 | 13 +++++++++++++
->  3 files changed, 33 insertions(+)
+>  include/hw/vfio/vfio-container.h |  1 +
+>  hw/vfio/listener.c               | 21 ++++++++++++++-------
+>  2 files changed, 15 insertions(+), 7 deletions(-)
 >
-> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-> index 9b8bb94fc2..6d61410703 100644
-> --- a/include/hw/iommu.h
-> +++ b/include/hw/iommu.h
-> @@ -22,4 +22,9 @@ enum viommu_flags {
->      VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
+> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+> index 9f6e8cedfc..a7d5c5ed67 100644
+> --- a/include/hw/vfio/vfio-container.h
+> +++ b/include/hw/vfio/vfio-container.h
+> @@ -52,6 +52,7 @@ struct VFIOContainer {
+>      QLIST_HEAD(, VFIODevice) device_list;
+>      GList *iova_ranges;
+>      NotifierWithReturn cpr_reboot_notifier;
+> +    bool bypass_ro;
 >  };
 >  
-> +/* Host IOMMU quirks. Extracted from host IOMMU capabilities */
-> +enum host_iommu_quirks {
-> +    HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
-> +};
-> +
->  #endif /* HW_IOMMU_H */
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index ab849a4a82..9ae7f4cc6d 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -39,6 +39,21 @@ typedef struct HostIOMMUDeviceCaps {
->      uint64_t hw_caps;
->      VendorCaps vendor_caps;
->  } HostIOMMUDeviceCaps;
-> +
-> +/**
-> + * host_iommu_extract_quirk: Extract host IOMMU quirks
-> + *
-> + * This function converts @type specific hardware information data
-> + * into a standard bitmap format.
-> + *
-> + * @type: IOMMU Hardware Info Types
-> + *
-> + * @VendorCaps: IOMMU @type specific hardware information data
-> + *
-> + * Returns: bitmap with each representing a host IOMMU quirk defined in
-s/each/each bit
-> + * enum host_iommu_quirks
-> + */
-> +uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps);
->  #endif
->  
->  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 086bd67aea..61b991ec53 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -19,6 +19,7 @@
->  #include "migration/cpr.h"
->  #include "monitor/monitor.h"
->  #include "trace.h"
-> +#include "hw/iommu.h"
->  #include "hw/vfio/vfio-device.h"
->  #include <sys/ioctl.h>
->  #include <linux/iommufd.h>
-> @@ -411,6 +412,18 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>  #define TYPE_VFIO_IOMMU "vfio-iommu"
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 2109101158..0862b2b834 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -76,8 +76,13 @@ static bool vfio_log_sync_needed(const VFIOContainer *bcontainer)
 >      return true;
 >  }
 >  
-> +uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps)
-> +{
-> +    uint64_t quirks = 0;
-> +
-> +    if (type == IOMMU_HW_INFO_TYPE_INTEL_VTD &&
-> +        caps->vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
-> +        quirks |= HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO;
+> -static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+> +static bool vfio_listener_skipped_section(MemoryRegionSection *section,
+> +                                          bool bypass_ro)
+>  {
+> +    if (bypass_ro && section->readonly) {
+> +        return true;
 > +    }
 > +
-> +    return quirks;
-> +}
-> +
->  bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
->                                        uint32_t data_type, uint32_t entry_len,
->                                        uint32_t *entry_num, void *data,
+>      return (!memory_region_is_ram(section->mr) &&
+>              !memory_region_is_iommu(section->mr)) ||
+>             memory_region_is_protected(section->mr) ||
+> @@ -368,9 +373,9 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
+>  }
+>  
+>  static bool vfio_listener_valid_section(MemoryRegionSection *section,
+> -                                        const char *name)
+> +                                        bool bypass_ro, const char *name)
+>  {
+> -    if (vfio_listener_skipped_section(section)) {
+> +    if (vfio_listener_skipped_section(section, bypass_ro)) {
+>          trace_vfio_listener_region_skip(name,
+>                  section->offset_within_address_space,
+>                  section->offset_within_address_space +
+> @@ -497,7 +502,8 @@ void vfio_container_region_add(VFIOContainer *bcontainer,
+>      int ret;
+>      Error *err = NULL;
+>  
+> -    if (!vfio_listener_valid_section(section, "region_add")) {
+> +    if (!vfio_listener_valid_section(section, bcontainer->bypass_ro,
+> +                                     "region_add")) {
+>          return;
+>      }
+>  
+> @@ -663,7 +669,8 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>      int ret;
+>      bool try_unmap = true;
+>  
+> -    if (!vfio_listener_valid_section(section, "region_del")) {
+> +    if (!vfio_listener_valid_section(section, bcontainer->bypass_ro,
+> +                                     "region_del")) {
+>          return;
+>      }
+>  
+> @@ -821,7 +828,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+>          container_of(listener, VFIODirtyRangesListener, listener);
+>      hwaddr iova, end;
+>  
+> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
+> +    if (!vfio_listener_valid_section(section, false, "tracking_update") ||
+I think you shall document in the commit msg and maybe here why we set
+bypass_ro to false in that case
+
+Eric
+>          !vfio_get_section_iova_range(dirty->bcontainer, section,
+>                                       &iova, &end, NULL)) {
+>          return;
+> @@ -1215,7 +1222,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+>      int ret;
+>      Error *local_err = NULL;
+>  
+> -    if (vfio_listener_skipped_section(section)) {
+> +    if (vfio_listener_skipped_section(section, false)) {
+>          return;
+>      }
+>  
 
 
