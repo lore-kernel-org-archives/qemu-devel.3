@@ -4,95 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB44CCFA06
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 15:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82601CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 15:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFwKE-0000Ki-Bg; Mon, 03 Nov 2025 10:18:30 -0500
+	id 1vFwLZ-0001hW-W6; Mon, 03 Nov 2025 10:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFwK4-0000FH-IM
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 10:18:24 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFwK0-0004yG-4o
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 10:18:19 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-475ca9237c2so24396655e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 07:18:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762183089; x=1762787889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BramkN4PF30fkjmnEwQADGgOeh2jVB6j0PXaGvZs9kU=;
- b=URozNBwcY/lgIVgUUusmW5j+hmMxLM5+OUBw1QVdOqKUg9+bZJzbD4GAsviu+FnAr2
- IQz0HCo17noMFUzx2Nc5hqiuvoaE4eZNE6zGDDanHZjciW6lPRD/dwk/gD78gaCa/9op
- JWjdmzsmNoMCGeT/iHkCmczCAY8kfIP4OZ18EkImRIxhc6H6amd2f//XlTs5636SnoMN
- Qjt9S7zub6y5XBJJTY8XvHYalSa3EtoRKHLUoc8YZjtq0kEy+QrYEWdxU7HpsPYLIyv6
- VfKm1vGTBuNa+84E/KAYtjmRNLd9G9DFxYv/g/bX/AV0miihTBELHZGw3eRxCaCm6Lzm
- 6ntg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762183089; x=1762787889;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BramkN4PF30fkjmnEwQADGgOeh2jVB6j0PXaGvZs9kU=;
- b=M3caiHVuLY16dgSIIncVLy3kT/cmUEW5f9yivN4s4WIjUnv+KmirXOvU83DMd2aYe7
- jUe6O2NpYMIHynv3kOY1gAQ+b8//CZtzufeIISCwGLmz0WXxY18DRllzLivCC4UFGIfG
- U6pNFBdZE7ylaKyhhkuPrxWAJHHPt29kMxqrl5qF/+3rKdKr2g7QuNOyrjmhNmgRSnJi
- oFUnAev8MBmGVCxMytnxwoRQkkGmYa8NA5tHLL+3Zd6F0hGJombYzMJYzGP0VI/7oARx
- fcDBAoAVKM8VOAVzQ4LN6x/uAYKcVg6ROa029PhQg8Qdn4GmRg/REcVrVpxIswuOJyN6
- /otQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUN8XtjgpgZjItsAtwxoJrKkRclSopv7ofOqZzAvIodADAI0qdVaK+AmGtIDZSurucbnQI5zXyT5CT@nongnu.org
-X-Gm-Message-State: AOJu0Yxx40xuhp7Rs6oNWP7XGwtcodlqUJjFBpe1n/UOwd8b7QNhujeF
- V1mmTNTJvMc8U5O+EmgfoNErMl2gj/XzH/bp6RUqvr6GVbQWtJbp4WLiFVZjC8uMy1Y=
-X-Gm-Gg: ASbGncuDlQVRaH/XdOrJVSapREvWrAMLduaVPzuJefchugByaalW06IqRdxjccHTO8J
- HUCXGKlq45OwYkKkViHC0prX5pAD/ttJ/uVY9ZDxzqoDVmXPT2cffcrDh3RyPLiGDmmrsd/2Fvy
- 1RNpog7/AB0h4Lny8lN1171p6wBeWnPxXbaxS/vZuREhZcEtaXYUVqh0Sw/R5o3hJxb5AK7SiIY
- BuqeAI9RvGFUgmVcmd+ftl/w2A58SRsyYhCNGz2zUPvL5Hop4RVxjrvC8cSDkviI3860eQrI/RF
- vklAusF/RqAfse3k/LMp9NlFa9whyy730GOO8us0HabFkaqlFC/E4gqwYEpXVNmHpfm533n/JiF
- /zPn7mcSJwGBqTWHl46wFGahpZA8DJMEO3kuSk9ZtmVZvKmoQetxmZ22lI9uFfNlWPaAkg3Bw5E
- uy+QXOad2im4CWDBgSKOsUzbnu7C9oYSdw+WyNfNsT/2ruNi7CfXk2
-X-Google-Smtp-Source: AGHT+IHDXj0M+lXUZ0ksai1T0LgirG3UvEk0B6M+Z3kpZGc8bNyQpf7lqiTy48yzEX/pZdpE6xPsaw==
-X-Received: by 2002:a05:600c:1da8:b0:477:3fcf:3651 with SMTP id
- 5b1f17b1804b1-4773fcf3b20mr62316805e9.39.1762183089281; 
- Mon, 03 Nov 2025 07:18:09 -0800 (PST)
-Received: from [172.18.140.215] (ip-185-104-138-156.ptr.icomera.net.
- [185.104.138.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c9416f82sm15350212f8f.6.2025.11.03.07.18.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 07:18:08 -0800 (PST)
-Message-ID: <40ccc01c-0ad0-499b-b2e2-4b5bbcce957d@linaro.org>
-Date: Mon, 3 Nov 2025 16:18:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/6] hw/sd/sdcard: Handle RPMB MAC field
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vFwLD-0001RX-Vn; Mon, 03 Nov 2025 10:19:34 -0500
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vFwL4-0005DK-1Q; Mon, 03 Nov 2025 10:19:28 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x2le4x7seAREgf9rT9tKDhgZHcZlWNKtH0kRgg6CS5m/qd3LwB0no43B+cFkGZnFF8hoG8A3/OQ1g9gyDhfbaSsoK7Mrv8BBm19yCK3ANJGy9AMUGlioIkOA+B6gILAlr1j/U75XWr2ohw3R5P5o2gvWFWfRzSpbKq8uifqtEHHyTbXQWth7VBFNoeiYq5iBQ530/NmnDND3ryuKT+tQdAeWZjXwMvP8Fh5Qb9Ihn9ggNtHiXcgsSnm7+1thmyNqUZZxkrmTJrpIZHz/p9+GlSPCr5uUrTSRW439F1V93o9ahXBJt/TCJN+C7H5+lMb9HpBWFUwnBp1UziStN/Qung==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tp8FBtC5vmu4E+Vum0WlONsD88Mng5eGM0hoFUqKm4s=;
+ b=M9p3w2sOZ+wkzK4s76/ngR8uvB+wCV85cowFiXwtyVGAe/aYQWG1muIhnAmcye/k787WDH0+8ohO6VOXBzEM36KlKlyb5a9knMg4LsApewvL79KA/XiK3ISRhRsGY+syLKS47dwKnjnuITBM/0X7854tLfSXbF6UR3aCR8n6PF6E55IG5qkhpNB+X7KbzltFPkXq3+xXo6fnObo2l118JHPNAs3g7vf98TVEyUVHseRFLA2r6mtmDvRG8ftzt3XpCy09M+t4nC837uzuGATOvob8nwKSrtETLJooiADca4iXz04vEVkng18cBk024WI/CPsXxn7l3HPeO/CT7oE0Pw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tp8FBtC5vmu4E+Vum0WlONsD88Mng5eGM0hoFUqKm4s=;
+ b=G1qg4++DUztBQY+wNIJxMXvdE9vPd7WfVcNn+6dVPX3GY/cPzu25ushSVyUsMJeEakE7UJAnvo9eTBBbDXyNuoQahlhuXY0iDKGH7Ep9DRqDJhUi/5E10ZItjAt/Z2pqHDR3lyAIzGT9CKsG5aTSV1NWebreYEYAOt8/S12IegSLG5XmkuXeVf6p8QpGAm0LavJtipRH5RflSzkWm4h7q8/W+V92ETbLDRAu89y95+ZddIlAb7LlTbfrnPsdAYwDDWAL182I437UDeuiaONDt8krkDFJVb8WE8/s7ahrmcQzjyGKYf75TIDi/9wjMTa+7VM+BTdx4EsIReAH1G93IA==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by DM4PR12MB7646.namprd12.prod.outlook.com (2603:10b6:8:106::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Mon, 3 Nov
+ 2025 15:19:09 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9275.015; Mon, 3 Nov 2025
+ 15:19:09 +0000
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v5 16/32] hw/arm/smmuv3-accel: Make use of
+ get_msi_address_space() callback
+Thread-Topic: [PATCH v5 16/32] hw/arm/smmuv3-accel: Make use of
+ get_msi_address_space() callback
+Thread-Index: AQHcSsIrjXBbXMOnGEeZTI7ujWw52LThEtsw
+Date: Mon, 3 Nov 2025 15:19:08 +0000
+Message-ID: <CH3PR12MB7548F44E394F3A1C93B02518ABC7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-17-skolothumtho@nvidia.com>
+ <aQVM7egZ43UaUODf@Asurada-Nvidia>
+In-Reply-To: <aQVM7egZ43UaUODf@Asurada-Nvidia>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <30efd95ad5fc54b6afac9d6a0d260c174a6718d2.1760702638.git.jan.kiszka@siemens.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <30efd95ad5fc54b6afac9d6a0d260c174a6718d2.1760702638.git.jan.kiszka@siemens.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM4PR12MB7646:EE_
+x-ms-office365-filtering-correlation-id: c3234d4e-8228-4137-bf4a-08de1aec55ec
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|38070700021|7053199007; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?X4Kj/6+zbPkZb2gm5mnjlRh5HJQIxRZlv6iPs++LmMTIjv4l25W+SB9StzqO?=
+ =?us-ascii?Q?btLKauOJPM3uaEOkVUZoxIozwCMsnM89JbS2MpcEXmQurFAZCc5LmzSvzEuN?=
+ =?us-ascii?Q?yMTJnWjTntwpeE39IGa2IsIH5GRjLpIyXnf2MqHmE5f1QmCLRQhh0mIcqlWp?=
+ =?us-ascii?Q?1ynJfZg0rgeqgEY0kH9LeScTJ+zVanpcVSrci6Jm7S9EH7L0k/J+Yi9+qzFk?=
+ =?us-ascii?Q?y9GOh7ohpje4Fk9/0UhGj0XLZ67MJ7B+/08oKeSmg6pM/2hjkEXJAQF/ZRQ9?=
+ =?us-ascii?Q?zbNa1OEcYfapYKuzSzQKp64b7F+KUCRDywNykRQqTY5owTrfkAxidEyNIVCN?=
+ =?us-ascii?Q?mkTDJd5goXrQv8bQk8D/BcEw0TPuTnR5ZS8NN9Tg0a43sO4oAYNHbywncEhe?=
+ =?us-ascii?Q?K9otzeFkyOilSrxtmCIoX+NPs4Fe3UGtwXVeq83pv+E8R5uSKaTBlNoUIKJx?=
+ =?us-ascii?Q?yaczBnjTIXuUBEGjBfeqkt5OI0myMVKHsnhDXQT+1CVHPA5rtOnjSG1EJdl9?=
+ =?us-ascii?Q?eqDBdhjVGJ165crC7Gv9bckNm31DTG4uI0EY0Iu8spWS68DxKYOWxumQuxRM?=
+ =?us-ascii?Q?RQw+yrEP+ww2NVuDa6GplcVW2OkEjfyx6zbrIfS7op1Gq/Sj1u1YmHIkiJP/?=
+ =?us-ascii?Q?zz/ZMdeuW+z2WfnIWpvHxpWBH+5VpySX0OL92nIbR+tRDMm65xJQ4Pb1sLrD?=
+ =?us-ascii?Q?KgEg+gNxmgyxffiShl+ZxDIOCXELeiviVI9P5Yjm5wDRoR3RF3SM+HiFV9/J?=
+ =?us-ascii?Q?4mjot0b654MgQRPCorcuKus3MNjvTn8Q5QbXio01jDOXLGSHHyktvhkz6vhy?=
+ =?us-ascii?Q?g6lT+smoWbJ8kpe4HAHBVYcs6+3x9CzNsC6Pt2K2fSvk+0ozQwTKwjr3L7jZ?=
+ =?us-ascii?Q?NlsMXWi/SC5fsr1/BgYOA4dFa4UOoOLDGR25uPoWVL9jhrckBDGsmW+jm/g4?=
+ =?us-ascii?Q?++5iK4s0pGLKgUD7aysKyVy5jt9tbGL0jaMIySIREFXpvxitGjkXgCD8YSW+?=
+ =?us-ascii?Q?GNk8h1DedV0tefJtrsxze8l6OF4ZMyMhnvWXcwvozPGcNihWcvLi6paJPoLq?=
+ =?us-ascii?Q?eWldjXvAz/cGuoc/Q42wE+opNwq6LABWFYn/LM9eyKyP+IXobNX31JoKB90L?=
+ =?us-ascii?Q?wTNYGjaIc1fZ0CpRP24Z63u6cfPPVa7MNLNmCUrqRCnZTGWK3ZN1VTl6tjv8?=
+ =?us-ascii?Q?VBk3ENIr1PxjYoCNeC24J4M96CL+HUguc62KqJ6r7jkLLVrNWM4spr/r9O0Y?=
+ =?us-ascii?Q?Ezn04GvcoX2Unbk2HZTZxt6vYgefn935DDuXXH79lMAMJvp8V4JUQzSMFguX?=
+ =?us-ascii?Q?WugVToloiDILcGHbHRmYkWcn2lmut8mw3WidGZDorMRPo4ukj8rBaQKrRIuY?=
+ =?us-ascii?Q?RG8624/w7P1E8UadRLPIju2P5r1//oHQLBxR27X4JqjRNUJ/OaAMFJKK+qJo?=
+ =?us-ascii?Q?dSnx4qXAhEBKZwL4Zrs3WPe1yWrnqDw7WTd2xwyKaI8BaSkjST8BvIOedMWV?=
+ =?us-ascii?Q?5vaDJC9tYTnAlv7p3NjpbvUWnB2l5Va7OhOP?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700021)(7053199007);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?cW+X6ObpYQZ+EAyA4RN5SlmmYmzVEbSQHMvN8iQocpIMkH83Gpyvf4sOxCWj?=
+ =?us-ascii?Q?tV4k7Fca1waktAOGwpFjLjeQdR02syWY/EmeTZPYnxgXSCwaPjteERRzhGys?=
+ =?us-ascii?Q?cUVVcm/bvLuPB0i5BMfEXz2qR9f07HOMLukzGpMa+VHCIbah9lQWMfepLllH?=
+ =?us-ascii?Q?bUrp1sxIIPLzVoQaf0dXEhn2JT1caeHQRTk0Pg+DkE26iAjKK/vrREO58H3l?=
+ =?us-ascii?Q?u4OdVPS50bWnx4RiyFiGZ1KiXK+sjOu7OZX8LzJEOrYi3cUq7Rcb5P3czm+L?=
+ =?us-ascii?Q?mWhWN9OYYWa/feNO2VO+ArN4Vx+G0yDR0eoSXOdLMvafbDVqG886UI+Fzqi3?=
+ =?us-ascii?Q?DLsitDI/3vLJ36JbQPYLcm+2HH8Tcwt04OU8nbhkxzxtvxhCrlTpUy3qVjUx?=
+ =?us-ascii?Q?jZOUBN0HHL160mI0+0RLEN0lp++RiyqjCCW6wBdygK/9PqB/1JbFWhfE0ibr?=
+ =?us-ascii?Q?B1wMgnfnRkxsHnec63NscrnqC3evRdibJ5VFIReOHLdbE1KWHU+G0VTgYR7R?=
+ =?us-ascii?Q?dSU6lMtWuSjHHy6B538aELqm0T29+GbMXY1C80HBjLBAnlxl+BWgst9x+IsK?=
+ =?us-ascii?Q?VmuUEw3nDvTAy3d5+4XSFUGd2qFdLixVi8WOBpgsyOvoIEibGrDbh2GibauQ?=
+ =?us-ascii?Q?HMMtetlKB0rw/1ynkClNuz2gfdEpsSWip9aWXC3bH/A8YK65XslIdaHvRwoH?=
+ =?us-ascii?Q?W4RhCTDQuPONo03d+2erPVfONkFO3OZ88H/h2A3x+ET604l0KFvxECyJqoVF?=
+ =?us-ascii?Q?Devfmc+98K+1tPyk1d4LqMTA5u36CuBX7Ck5NluFOYf/j/Nyt1n942CtfiNm?=
+ =?us-ascii?Q?Kc2+hvLWEqC1pLPuHXgOvFsc51yg1sh3qHGua6z3gzYZpn/GcSmONM+bwG3x?=
+ =?us-ascii?Q?Vanw4vCmat4hVI+uSxye2TR6MiXpdHasbntPvymBNe/zpnzCMFIaAD+5Rj5a?=
+ =?us-ascii?Q?mH3y9/vLp/zJaUL1DWyE68oLW0DPZhgOEwn+eUgi/PkKoKhZIQjuQ+NsFGNT?=
+ =?us-ascii?Q?2MfKlIP4WlesdJ55IvVSW3S/iAfhv17uOfY7OvVSWD25Ae5942gTTRCa6pVp?=
+ =?us-ascii?Q?Xub1YDf7/xqTCL247znxkkSSM73amtfgTIjrVDW25wXUzsjED0/sQa9NGNq0?=
+ =?us-ascii?Q?GPcGxzICuubN0a6/3eqdME7ttcy/pvrgz/6lYGh154jI0p9lx/KlGrpf7aNP?=
+ =?us-ascii?Q?/Lmq7o3Qv+Hc/C7ZdBPkwSJz3PqNthDXgExmv7sXY6vXdbdCYTPrFcEQxekm?=
+ =?us-ascii?Q?kwiLa1fsf6gp+IdyjOyQbV2gzmR7c8p+s4CFjEXAAijWweY8qJeWpd6sMXBd?=
+ =?us-ascii?Q?QgbVoE/USueILWcnV8xd96HIqMlETbpLmWtV7EGgL6AQ+IAlznxmipoI90LW?=
+ =?us-ascii?Q?EdKqs+DGgERHFXfHwpPBpzwNpb9Xk8369TPgSrSSwBoAUMzBheYiIXw+Wqw9?=
+ =?us-ascii?Q?W911Ii82/+SHEjvi/XGupRWL9kDhUeJ7i+z6BOklJqu5u2XHQMgU5ZAi20+l?=
+ =?us-ascii?Q?9LNN1RqQYvV17fDi6ipJep3OZwuzHKZNZlg/BfVIefUmaEELNWkuN6ZkghfZ?=
+ =?us-ascii?Q?h8bgRwCUWTQnK7wA4aTLE5xDd0Hor5dCA2VvjKgd?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3234d4e-8228-4137-bf4a-08de1aec55ec
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Nov 2025 15:19:08.8951 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IUzACd2o2S1AyKmICh/OqIMmYRJygZgIFC38ri4mlro1Yld//nNB6KR9nEI4ZNisGA2caYmzYG+26TZiGRRhEg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7646
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,256 +177,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jan,
 
-On 17/10/25 14:03, Jan Kiszka wrote:
-> From: Jan Kiszka <jan.kiszka@siemens.com>
-> 
-> Implement correct setting of the MAC field when passing RPMB frames back
-> to the guest. Also check the MAC on authenticated write requests.
-> 
-> This depends on HMAC support for QCRYPTO_HASH_ALGO_SHA256 which is
-> always available via glib - assert this, just to be safe.
-> 
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-> ---
->   hw/sd/sd.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 81 insertions(+)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 918fe9f79f..759e284ac0 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -51,6 +51,7 @@
->   #include "qemu/module.h"
->   #include "sdmmc-internal.h"
->   #include "trace.h"
-> +#include "crypto/hmac.h"
->   
->   //#define DEBUG_SD 1
->   
-> @@ -118,6 +119,7 @@ typedef struct SDProto {
->   } SDProto;
->   
->   #define RPMB_KEY_MAC_LEN    32
-> +#define RPMB_HASH_LEN       284
->   
->   typedef struct {
->       uint8_t stuff_bytes[196];
-> @@ -1120,6 +1122,66 @@ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
->       }
->   }
->   
-> +static bool rpmb_calc_hmac(SDState *sd, RPMBDataFrame *frame,
 
-const frame.
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 31 October 2025 23:58
+> To: Shameer Kolothum <skolothumtho@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
+> <jgg@nvidia.com>; ddutile@redhat.com; berrange@redhat.com; Nathan
+> Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+> smostafa@google.com; wangzhou1@hisilicon.com;
+> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+> Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v5 16/32] hw/arm/smmuv3-accel: Make use of
+> get_msi_address_space() callback
+>=20
+> On Fri, Oct 31, 2025 at 10:49:49AM +0000, Shameer Kolothum wrote:
+> > +static AddressSpace *smmuv3_accel_get_msi_as(PCIBus *bus, void
+> *opaque,
+> > +                                             int devfn)
+> > +{
+> > +    SMMUState *bs =3D opaque;
+> > +    SMMUPciBus *sbus =3D smmu_get_sbus(bs, bus);
+> > +    SMMUv3AccelDevice *accel_dev =3D smmuv3_accel_get_dev(bs, sbus, bu=
+s,
+> devfn);
+> > +    SMMUDevice *sdev =3D &accel_dev->sdev;
+> > +
+> > +    /*
+> > +     * If the assigned vfio-pci dev has S1 translation enabled by Gues=
+t,
+> > +     * return IOMMU address space for MSI translation. Otherwise, retu=
+rn
+> > +     * system address space.
+> > +     */
+> > +    if (accel_dev->s1_hwpt) {
+> > +        return &sdev->as;
+> > +    } else {
+> > +        return &address_space_memory;
+>=20
+> Should we use the global shared_as? Or is this on purpose to align
+> with the "&address_space_memory" in kvm_arch_fixup_msi_route()?
 
-> +                           unsigned int num_blocks, uint8_t *mac)
-> +{
-> +    size_t mac_len = RPMB_KEY_MAC_LEN;
-> +    bool success = true;
-> +    Error *err = NULL;
-> +    QCryptoHmac *hmac;
+Yes, that's on purpose.
 
-Preferably:
+Another way to handle is, if  "address_space_memory" is complete no-no,=20
+to return NULL here and handle it in pci_device_iommu_msi_address_space().
 
-        g_autoptr(QCryptoHmac) hmac = NULL;
+I like the current approach. Possibly can update the doc for get_msi_addres=
+s_space()
+In previous patch to make it clear that "&address_space_memory" should be=20
+returned if no msi translation is required.
 
-> +    uint64_t addr;
+Thanks,
+Shameer
 
-Maybe better named 'offset'.
 
-> +
-> +    hmac = qcrypto_hmac_new(QCRYPTO_HASH_ALGO_SHA256, sd->rpmb_key,
-> +                            RPMB_KEY_MAC_LEN, &err);
-> +    if (!hmac) {
-> +        error_report_err(err);
-> +        return false;
-> +    }
-> +
-> +    /*
-> +     * This implies a read request because we only support single-block write
-> +     * requests so far.
-> +     */
-> +    if (num_blocks > 1) {
-> +        /*
-> +         * Unfortunately, the underlying crypto libraries do not allow us to
-> +         * migrate an active QCryptoHmac state. Therefore, we have to calculate
-> +         * the HMAC in one run. To avoid buffering a complete read sequence in
-> +         * SDState, reconstruct all frames except for the last one.
-> +         */
-> +        char *buf = (char *)sd->data;
-Why not plain 'void *'? Ah, qcrypto_hmac_bytes() takes a 'char *', 
-odd... [Update, now about to be fixed:
-https://lore.kernel.org/qemu-devel/20251103133727.423041-4-berrange@redhat.com/]
 
-Better safe than sorry:
 
-            assert(RPMB_HASH_LEN <= sizeof(sd->data));
-
-> +        memcpy(buf, frame->data, RPMB_HASH_LEN);
-
-Nitpicking, no need to fill the block we'll overwrite:
-
-            memcpy(&buf[256], &frame->data[256], RPMB_HASH_LEN - 256);
-
-> +        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
-Personally I prefer the ld/st API, and I'd rather see it used
-consistently within hw/sd/. So (matter of taste):
-
-            block_index = ldw_be_p(&frame->address);
-            block_offset = block_index * 256 + sd_part_offset(sd);
-
-> +        do {
-> +            if (blk_pread(sd->blk, addr, 256, buf, 0) < 0) {
-> +                fprintf(stderr, "sd_blk_read: read error on host side\n");
-
-Although a pre-existing pattern in this file, no new fprintf(stderr)
-please. Better use the Error* API, otherwise error_report().
-
-> +                success = false;
-> +                break;
-> +            }
-> +            if (qcrypto_hmac_bytes(hmac, buf, RPMB_HASH_LEN, NULL, NULL,> +                                   &err) < 0) {
-> +                error_report_err(err);
-> +                success = false;
-> +                break;
-> +            }
-> +            addr += 256;
-> +        } while (--num_blocks > 1);
-> +    }
-> +
-> +    if (success &&
-> +        qcrypto_hmac_bytes(hmac, (const char*)frame->data, RPMB_HASH_LEN, &mac,
-> +                           &mac_len, &err) < 0) {
-> +        error_report_err(err);
-
-Ideally Error* should to be propagated to upper layers.
-
-Here SDCardClass::read_byte() and SDCardClass::write_byte()
-don't expect failure, so OK -- maybe they should ... --.
-
-> +        success = false;
-> +    }
-> +    assert(!success || mac_len == RPMB_KEY_MAC_LEN);
-> +
-> +    qcrypto_hmac_free(hmac);
-> +
-> +    return success;
-> +}
-> +
->   static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
->   {
->       uint16_t resp = be16_to_cpu(sd->rpmb_result.req_resp);
-> @@ -1142,6 +1204,17 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
->               sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_READ_FAILURE |
->                   (result & RPMB_RESULT_COUTER_EXPIRED));
->           }
-> +        if (sd->multi_blk_cnt == 1 &&
-> +            !rpmb_calc_hmac(sd, &sd->rpmb_result,
-> +                            be16_to_cpu(sd->rpmb_result.block_count),
-> +                            sd->rpmb_result.key_mac)) {
-> +            memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
-> +            sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
-> +        }
-> +    } else if (!rpmb_calc_hmac(sd, &sd->rpmb_result, 1,
-> +                               sd->rpmb_result.key_mac)) {
-> +        memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
-> +        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
->       }
->       memcpy(sd->data, &sd->rpmb_result, sizeof(sd->rpmb_result));
->   
-> @@ -1153,6 +1226,7 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
->   {
->       RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
->       uint16_t req = be16_to_cpu(frame->req_resp);
-> +    uint8_t mac[RPMB_KEY_MAC_LEN];
->   
->       if (req == RPMB_REQ_READ_RESULT) {
->           /* just return the current result register */
-> @@ -1190,6 +1264,11 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
->               sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
->               break;
->           }
-> +        if (!rpmb_calc_hmac(sd, frame, 1, mac) ||
-> +            memcmp(frame->key_mac, mac, RPMB_KEY_MAC_LEN) != 0) {
-> +            sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
-> +            break;
-> +        }
->           if (be32_to_cpu(frame->write_counter) != sd->rpmb_write_counter) {
->               sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_COUNTER_FAILURE);
->               break;
-> @@ -3115,6 +3194,8 @@ static void emmc_class_init(ObjectClass *klass, const void *data)
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
->   
-> +    assert(qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256));
-> +
->       dc->desc = "eMMC";
->       dc->realize = emmc_realize;
->       device_class_set_props(dc, emmc_properties);
-I'd like to squash on this patch:
--- >8 --
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index f2260796db8..6e4eeeda157 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1129,3 +1129,3 @@ static void sd_blk_write(SDState *sd, uint64_t 
-addr, uint32_t len)
-
--static bool rpmb_calc_hmac(SDState *sd, RPMBDataFrame *frame,
-+static bool rpmb_calc_hmac(SDState *sd, const RPMBDataFrame *frame,
-                             unsigned int num_blocks, uint8_t *mac)
-@@ -1133,5 +1133,5 @@ static bool rpmb_calc_hmac(SDState *sd, 
-RPMBDataFrame *frame,
-      size_t mac_len = RPMB_KEY_MAC_LEN;
-+    g_autoptr(QCryptoHmac) hmac = NULL;
-      bool success = true;
-      Error *err = NULL;
--    QCryptoHmac *hmac;
-      uint64_t addr;
-@@ -1156,9 +1156,12 @@ static bool rpmb_calc_hmac(SDState *sd, 
-RPMBDataFrame *frame,
-           */
--        char *buf = (char *)sd->data;
-+        void *buf = sd->data;
-
--        memcpy(buf, frame->data, RPMB_HASH_LEN);
--        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
-+        assert(RPMB_HASH_LEN <= sizeof(sd->data));
-+        memcpy(&buf[RPMB_DATA_LEN], &frame->data[RPMB_DATA_LEN],
-+               RPMB_HASH_LEN - RPMB_DATA_LEN);
-+
-+        addr = be16_to_cpu(frame->address) * RPMB_DATA_LEN + 
-sd_part_offset(sd);
-          do {
--            if (blk_pread(sd->blk, addr, 256, buf, 0) < 0) {
--                fprintf(stderr, "sd_blk_read: read error on host side\n");
-+            if (blk_pread(sd->blk, addr, RPMB_DATA_LEN, buf, 0) < 0) {
-+                error_report("sd_blk_read: read error on host side");
-                  success = false;
-@@ -1172,3 +1175,3 @@ static bool rpmb_calc_hmac(SDState *sd, 
-RPMBDataFrame *frame,
-              }
--            addr += 256;
-+            addr += RPMB_DATA_LEN;
-          } while (--num_blocks > 1);
-@@ -1177,3 +1180,3 @@ static bool rpmb_calc_hmac(SDState *sd, 
-RPMBDataFrame *frame,
-      if (success &&
--        qcrypto_hmac_bytes(hmac, (const char*)frame->data, 
-RPMB_HASH_LEN, &mac,
-+        qcrypto_hmac_bytes(hmac, frame->data, RPMB_HASH_LEN, &mac,
-                             &mac_len, &err) < 0) {
-@@ -1184,4 +1187,2 @@ static bool rpmb_calc_hmac(SDState *sd, 
-RPMBDataFrame *frame,
-
--    qcrypto_hmac_free(hmac);
--
-      return success;
----
-
-Regards,
-
-Phil.
 
