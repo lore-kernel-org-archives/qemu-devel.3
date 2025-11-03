@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44771CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764D2CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1lw-00014s-86; Mon, 03 Nov 2025 16:07:28 -0500
+	id 1vG1lQ-0000wK-0n; Mon, 03 Nov 2025 16:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1ls-00013u-1e
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:24 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lM-0000vc-D2
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lf-0005Ot-CT
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:23 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lA-0005Cc-RX
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204025;
+ s=mimecast20190719; t=1762203998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Dk1DITRQRzye86bCpuNco4jugI9gDovq529oeA29qI=;
- b=jJ1w/OEg0O1LgAU9bJWhnkTo9HBOTsQDk0nhgNa92e+ZXNz4gPjhQrgNRco1uU24MRezd4
- XLe3bSnCNqr24Bf2V7AjYXReDsuYhpEwsN5LCbZhtQZFPIA2xKO3lUQEpj0P+UaDfT7tPv
- RueVLf+LsRQewB7W+cYdyZxYuKTnp+o=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zlB0Kc90UPr6D+7Ti5JxxglMdrXTiBSo67o+zFkEX2E=;
+ b=bd4wCj/InZpJZPpRVn6S9haaZioDyCkj0bO5G0xVKu3OdRdivMO73Us/LlhvgBKudbRrUj
+ 9CuF5DKvRdewgqwhve7W7vZboYjyCjw5sj+nb7Q8W6NeM4CcRdY3Sz6PnUyfNYvc12WgWd
+ 0JqmmaXztu9QIHZmsRnGNuXj/it6VCg=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-97-EKMU21vSOLSiEZ-UjE82pA-1; Mon, 03 Nov 2025 16:07:04 -0500
-X-MC-Unique: EKMU21vSOLSiEZ-UjE82pA-1
-X-Mimecast-MFC-AGG-ID: EKMU21vSOLSiEZ-UjE82pA_1762204024
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4eceefa36d0so135200701cf.1
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:04 -0800 (PST)
+ us-mta-509-047AfHUANxCiqMCty8lQtQ-1; Mon, 03 Nov 2025 16:06:36 -0500
+X-MC-Unique: 047AfHUANxCiqMCty8lQtQ-1
+X-Mimecast-MFC-AGG-ID: 047AfHUANxCiqMCty8lQtQ_1762203996
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8904a9e94ebso1230283885a.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204024; x=1762808824; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762203996; x=1762808796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Dk1DITRQRzye86bCpuNco4jugI9gDovq529oeA29qI=;
- b=Vrn4WxRVX8YaXmRN79w0oNNbbK8fwmUsizUNNxKdYaeMt1awxxfy8VKWIm+aDXH/OB
- nk17aYHkTn2E67XXV/qc5JavjoEUWe1cBOEi6bYvvRWT6md9SQo8AckbF8liYmKsRciZ
- 9HuhCUdixcGr9a7Q2MhTCJVEO2JYZAJkliOWj9tTrlTVH4CWNTsGd30jZdDEio2txrgS
- h/6UlBQShQJpqUXmkMUdYeDT5uuiClTAIVvmQVYDytLjpEBUe3bYAws105LhD4AhY1u+
- YZABYEkT5MyH+NN7Kn6++gaeS6/U+TRBBySBzSPLrqyOpTNL2KRyyiQh3x4or69SD7b0
- NXvg==
+ bh=zlB0Kc90UPr6D+7Ti5JxxglMdrXTiBSo67o+zFkEX2E=;
+ b=aYaFGDIHOjJf0CpoPjKGP2bZZNS8ylV96Myip2dYKFr+Z8sxI6RyKIoavtSJlQyVph
+ PVDdauj3/wA8FK9npr0Em7m4wDDKH0Et0hIAM8J4fAq1nMf5lyCZYMx2LVKceHQ3ltKo
+ /KR1FCTd013wxDUg9L9jI8RqKB3uVASA6Skb2bA2LjToI6C05Q/4SKnM6ImMp6c9TQFy
+ nO5QAYIGPiZbMsD5jKG88gL7hJeOOTukzKQrCOxEAtCUQp0jUiKzIDnf0sYsokNdMeEU
+ 2SYmN5zXwDdUFofGcpjUUkSNgWIRaMTkbX865+D/ZRxHjEdumHYI6VGnS2wgQkp1jOAS
+ 11YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204024; x=1762808824;
+ d=1e100.net; s=20230601; t=1762203996; x=1762808796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8Dk1DITRQRzye86bCpuNco4jugI9gDovq529oeA29qI=;
- b=objC1Dj4QPH0S+zo5sZUqvuGTC76SV0N9aWLJB8MwzSEr8/HOcykA/K0D5TeozHKCv
- KUUO12LdrY3NyZZarI+gpYLVm7cSMnTIHtVJHlCRpxOLukhv1g3TmG83ISavt2KcMjXL
- zSqET9Q4UU/dmRVcVlsvumPaIuRGNn3CM+xqx/Dg0TX6lqNzraRxLtImrj22djXmivz0
- xg+npgomS5/sGal1JfRlQSxFFcXN+03bMgb7pzskZCf4OSVgpQRqgDq0SR83aiw1fyV1
- X8063OwaBRyBHPKxdp26Vm8Aw47Cug6j/djYLUlC5r5OOGA5HOHeF2dKLhIauz7CVRVl
- 0BFQ==
-X-Gm-Message-State: AOJu0YzqRZ4J90DDLwz/T+oWJ6VXH2n15OXyFwHRNLbkAQONTeGuD1VA
- 8piGvRMiZ6W5loz/cDaWqqrMgU0BIdb+zcv736CyTDX0sNdV7qhxOUAqLc0VQIuCJn0FZM3fFRt
- NnwUcwBCCxfnhNhG0MUmdKbop9WEESLObTYrTLUEUs61p5DHxKSbg9HH1D1fJyDJ4ODJLgeQwlY
- ibszsJ2Tuu1vtp4xP1WhTM6tvqUSrtCRevAwOOmA==
-X-Gm-Gg: ASbGncuvFquywzxYHqnzVPlxNHXaeHVNvDmN+ScPFMdA74s+KoBye7QhhflpQAoDH4q
- irHp4zDA8UpYaksOOz/d/PQi2Uf5DQloBjaaM5prJ6l0xoCGtWZluBZSodqo0QmkPc1fAcL10Ov
- Ek+hxx+0Cipdkq+WRCRRs6MYQfEBEuRHh3WmpiiuL/HR8edESLsqugBKgTlbTvi3po5PJFqoN9s
- dT83XOLu6Wp66uq4vKLimtrI8m2N0ueeqVkSS/qgIf+MxhGmVuId6o0TyhN4bsjzAi3fV1l9cde
- J+CVS789CnnvJdN7j/kT2B5G3d2b0ydvrHJyVHmbUNlBqkii0DNM0BnrR6EPuY4a
-X-Received: by 2002:a05:622a:4c88:b0:4eb:a10c:de05 with SMTP id
- d75a77b69052e-4ed31005ebamr179689471cf.55.1762204023460; 
- Mon, 03 Nov 2025 13:07:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLkpKbIsVo2kSdk/N/t8wx1OQueKE/2tB7hVkyJQ7ZePFoV4G2zqmYFYMnDLTuTyc5rsINEw==
-X-Received: by 2002:a05:622a:4c88:b0:4eb:a10c:de05 with SMTP id
- d75a77b69052e-4ed31005ebamr179688761cf.55.1762204022842; 
- Mon, 03 Nov 2025 13:07:02 -0800 (PST)
+ bh=zlB0Kc90UPr6D+7Ti5JxxglMdrXTiBSo67o+zFkEX2E=;
+ b=BaTS2kfuHb8FvTsZMJdknL/f5UqCvGv/412QM47Wi6mT7BMNZhfdn/1RQMr7nhVDhe
+ TdmD/uXea/yEEdYSYGi9cILoroiKkjvy5/uCcgm1Y0BVbgp59X8rI3SsABoALqR0gOFb
+ lPZc/mbqKlP9eX6d6UaPu211s/zKvdqx0qy6RMd2Bt//DZ9QsXl1x4Bg72mdN3pRpavB
+ OAlOuanXy2OTnmweKJ1+dVK56/qsUsDyWHnmrjmlq6rBjvMlzfNgqjmIM6aTczbFpTNy
+ 5lMIbrylWmM3TwZ8faRITBoMYY1bhlnTVFWUL/tlh5kGTVoyvt3FPsBnyBirfK7u/y7c
+ KhZQ==
+X-Gm-Message-State: AOJu0Yw+CUGNHh64lD2iQLhpZLQwGMVRwJbpqJrQvHvhTx6J+rHjpj01
+ GFfil7oow+sD7yecuxZ09ujn1Shn/MsmGqyXwVZc1X6Fa70SlBX2CV6W+1UKRHVLYzj0ZBUy8jR
+ eHdlkRni+8m8rbG+oZzrhV7wCL6Wa5GS2fNZlgVK4sih7o6tXlbbAtLZbaZpGz54SR8psMxVWKm
+ CMgKpeE6zPvq/StN+SuzKrDtzSc5YA5tnQ/hCuBQ==
+X-Gm-Gg: ASbGncskVoEOCbyqAgu+G+KXgyRtaUH0gAZcaQuMcZ6JMvbMHTsJIXQZ+kQsoA+XT/W
+ 9PoHfUyrPGVy/etbnfvXAmAVNukKfBX9KBXexqHzL8NBkucQ0V9NM4eNeyqZ9OExBB4Ck8WRTwS
+ JZkCiaL9EmClWJgQqDdDHrCnG0hqUCKknfNU0zAurRhDT705XCXWocjmMYIQdkPgZhf9KJOzffO
+ QzgEVrmQ/uUOUPvWi/C3fhooIpoF5FKX/xIB9UcI4KI4Q+qf5o9rvS47fZv0Pv+i3RBxuSEaczT
+ xK81sRkYvjlGGLPC8r7Yxcau7uWMUxIqkIN2RsGGtyUkhVkhzam89+P6Y4X7Q+Pb
+X-Received: by 2002:a05:620a:4410:b0:89a:2d9b:74ea with SMTP id
+ af79cd13be357-8ab9afd428cmr1658511685a.42.1762203995563; 
+ Mon, 03 Nov 2025 13:06:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEBccPJ2ZtzRCk96hACALrtMDOoWpI6fDmTxDKgAOLO9u8FoW2mA5LVsCIE6WvRVk92ZxL6Q==
+X-Received: by 2002:a05:620a:4410:b0:89a:2d9b:74ea with SMTP id
+ af79cd13be357-8ab9afd428cmr1658504685a.42.1762203994894; 
+ Mon, 03 Nov 2025 13:06:34 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.07.01
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:07:02 -0800 (PST)
+ Mon, 03 Nov 2025 13:06:33 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 24/36] tmp_emulator: improve and fix use of errp
-Date: Mon,  3 Nov 2025 16:06:13 -0500
-Message-ID: <20251103210625.3689448-25-peterx@redhat.com>
+ Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Subject: [PULL 05/36] migration: mapped-ram: handle zero pages
+Date: Mon,  3 Nov 2025 16:05:54 -0500
+Message-ID: <20251103210625.3689448-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
@@ -101,9 +101,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,193 +119,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Marco Cavenati <Marco.Cavenati@eurecom.fr>
 
-tpm_emulator_post_load() and tpm_emulator_set_state_blobs() has
-error paths, where they return negative value, but do not set
-errp.
+Make mapped-ram compatible with loadvm snapshot restoring by explicitly
+zeroing memory pages in this case.
+Skip zeroing for -incoming and -loadvm migrations to preserve performance.
 
-To fix that, we also have to convert several other functions to
-set errp instead of error_reporting.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Link: https://lore.kernel.org/r/20251028130738.29037-3-vsementsov@yandex-team.ru
+Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Link: https://lore.kernel.org/r/20251010115954.1995298-3-Marco.Cavenati@eurecom.fr
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- backends/tpm/tpm_emulator.c | 63 +++++++++++++++++++++++--------------
- 1 file changed, 39 insertions(+), 24 deletions(-)
+ migration/options.c |  1 -
+ migration/ram.c     | 59 ++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 58 insertions(+), 2 deletions(-)
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index f32b67dac7..da9c1056ed 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -308,22 +308,22 @@ static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
-     return 0;
+diff --git a/migration/options.c b/migration/options.c
+index d9227809d7..e78324b80c 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -449,7 +449,6 @@ INITIALIZE_MIGRATE_CAPS_SET(check_caps_background_snapshot,
+ static const
+ INITIALIZE_MIGRATE_CAPS_SET(check_caps_savevm,
+                             MIGRATION_CAPABILITY_MULTIFD,
+-                            MIGRATION_CAPABILITY_MAPPED_RAM,
+ );
+ 
+ static bool migrate_incoming_started(void)
+diff --git a/migration/ram.c b/migration/ram.c
+index 1384748193..29f016cb25 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4038,12 +4038,58 @@ static size_t ram_load_multifd_pages(void *host_addr, size_t size,
+     return size;
  }
  
--static int tpm_emulator_stop_tpm(TPMBackend *tb)
-+static int tpm_emulator_stop_tpm(TPMBackend *tb, Error **errp)
- {
-     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
-     ptm_res res;
- 
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_STOP, &res, 0,
-                              sizeof(ptm_res), sizeof(res)) < 0) {
--        error_report("tpm-emulator: Could not stop TPM: %s",
--                     strerror(errno));
-+        error_setg(errp, "tpm-emulator: Could not stop TPM: %s",
-+                   strerror(errno));
-         return -1;
-     }
- 
-     res = be32_to_cpu(res);
-     if (res) {
--        error_report("tpm-emulator: TPM result for CMD_STOP: 0x%x %s", res,
--                     tpm_emulator_strerror(res));
-+        error_setg(errp, "tpm-emulator: TPM result for CMD_STOP: 0x%x %s", res,
-+                   tpm_emulator_strerror(res));
-         return -1;
-     }
- 
-@@ -362,12 +362,13 @@ static int tpm_emulator_lock_storage(TPMEmulator *tpm_emu)
- 
- static int tpm_emulator_set_buffer_size(TPMBackend *tb,
-                                         size_t wanted_size,
--                                        size_t *actual_size)
-+                                        size_t *actual_size,
-+                                        Error **errp)
- {
-     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
-     ptm_setbuffersize psbs;
- 
--    if (tpm_emulator_stop_tpm(tb) < 0) {
-+    if (tpm_emulator_stop_tpm(tb, errp) < 0) {
-         return -1;
-     }
- 
-@@ -376,16 +377,17 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_BUFFERSIZE, &psbs,
-                              sizeof(psbs.u.req), sizeof(psbs.u.resp.tpm_result),
-                              sizeof(psbs.u.resp)) < 0) {
--        error_report("tpm-emulator: Could not set buffer size: %s",
--                     strerror(errno));
-+        error_setg(errp, "tpm-emulator: Could not set buffer size: %s",
-+                   strerror(errno));
-         return -1;
-     }
- 
-     psbs.u.resp.tpm_result = be32_to_cpu(psbs.u.resp.tpm_result);
-     if (psbs.u.resp.tpm_result != 0) {
--        error_report("tpm-emulator: TPM result for set buffer size : 0x%x %s",
--                     psbs.u.resp.tpm_result,
--                     tpm_emulator_strerror(psbs.u.resp.tpm_result));
-+        error_setg(errp,
-+                   "tpm-emulator: TPM result for set buffer size : 0x%x %s",
-+                   psbs.u.resp.tpm_result,
-+                   tpm_emulator_strerror(psbs.u.resp.tpm_result));
-         return -1;
-     }
- 
-@@ -402,7 +404,7 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
- }
- 
- static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
--                                     bool is_resume)
-+                                           bool is_resume, Error **errp)
- {
-     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
-     ptm_init init = {
-@@ -413,7 +415,7 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
-     trace_tpm_emulator_startup_tpm_resume(is_resume, buffersize);
- 
-     if (buffersize != 0 &&
--        tpm_emulator_set_buffer_size(tb, buffersize, NULL) < 0) {
-+        tpm_emulator_set_buffer_size(tb, buffersize, NULL, errp) < 0) {
-         goto err_exit;
-     }
- 
-@@ -424,15 +426,15 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_INIT, &init, sizeof(init),
-                              sizeof(init.u.resp.tpm_result),
-                              sizeof(init)) < 0) {
--        error_report("tpm-emulator: could not send INIT: %s",
--                     strerror(errno));
-+        error_setg(errp, "tpm-emulator: could not send INIT: %s",
-+                   strerror(errno));
-         goto err_exit;
-     }
- 
-     res = be32_to_cpu(init.u.resp.tpm_result);
-     if (res) {
--        error_report("tpm-emulator: TPM result for CMD_INIT: 0x%x %s", res,
--                     tpm_emulator_strerror(res));
-+        error_setg(errp, "tpm-emulator: TPM result for CMD_INIT: 0x%x %s", res,
-+                   tpm_emulator_strerror(res));
-         goto err_exit;
-     }
-     return 0;
-@@ -441,18 +443,31 @@ err_exit:
-     return -1;
- }
- 
--static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
-+static int do_tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize,
-+                                       Error **errp)
- {
-     /* TPM startup will be done from post_load hook */
-     if (runstate_check(RUN_STATE_INMIGRATE)) {
-         if (buffersize != 0) {
--            return tpm_emulator_set_buffer_size(tb, buffersize, NULL);
-+            return tpm_emulator_set_buffer_size(tb, buffersize, NULL, errp);
-         }
- 
-         return 0;
-     }
- 
--    return tpm_emulator_startup_tpm_resume(tb, buffersize, false);
-+    return tpm_emulator_startup_tpm_resume(tb, buffersize, false, errp);
-+}
-+
-+static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
++/**
++ * handle_zero_mapped_ram: Zero out a range of RAM pages if required during
++ * mapped-ram load
++ *
++ * Zeroing is only performed when restoring from a snapshot (HMP loadvm).
++ * During incoming migration or -loadvm cli snapshot load, the function is a
++ * no-op and returns true as in those cases the pages are already guaranteed to
++ * be zeroed.
++ *
++ * Returns: true on success, false on error (with @errp set).
++ * @from_bit_idx: Starting index relative to the map of the page (inclusive)
++ * @to_bit_idx:   Ending index relative to the map of the page (exclusive)
++ */
++static bool handle_zero_mapped_ram(RAMBlock *block, unsigned long from_bit_idx,
++                                   unsigned long to_bit_idx, Error **errp)
 +{
-+    Error *local_err = NULL;
-+    int ret = do_tpm_emulator_startup_tpm(tb, buffersize, &local_err);
++    ERRP_GUARD();
++    ram_addr_t offset;
++    size_t size;
++    void *host;
 +
-+    if (ret < 0) {
-+        error_report_err(local_err);
++    /*
++     * Zeroing is not needed for either -loadvm (RUN_STATE_PRELAUNCH), or
++     * -incoming (RUN_STATE_INMIGRATE).
++     */
++    if (!runstate_check(RUN_STATE_RESTORE_VM)) {
++        return true;
 +    }
 +
-+    return ret;
- }
- 
- static bool tpm_emulator_get_tpm_established_flag(TPMBackend *tb)
-@@ -546,7 +561,7 @@ static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
++    if (from_bit_idx >= to_bit_idx) {
++        return true;
++    }
++
++    size = TARGET_PAGE_SIZE * (to_bit_idx - from_bit_idx);
++    offset = from_bit_idx << TARGET_PAGE_BITS;
++    host = host_from_ram_block_offset(block, offset);
++    if (!host) {
++        error_setg(errp, "zero page outside of ramblock %s range",
++                   block->idstr);
++        return false;
++    }
++    ram_handle_zero(host, size);
++
++    return true;
++}
++
+ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+                                      long num_pages, unsigned long *bitmap,
+                                      Error **errp)
  {
-     size_t actual_size;
+     ERRP_GUARD();
+-    unsigned long set_bit_idx, clear_bit_idx;
++    unsigned long set_bit_idx, clear_bit_idx = 0;
+     ram_addr_t offset;
+     void *host;
+     size_t read, unread, size;
+@@ -4052,6 +4098,12 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+          set_bit_idx < num_pages;
+          set_bit_idx = find_next_bit(bitmap, num_pages, clear_bit_idx + 1)) {
  
--    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size) < 0) {
-+    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size, NULL) < 0) {
-         return 4096;
++        /* Zero pages */
++        if (!handle_zero_mapped_ram(block, clear_bit_idx, set_bit_idx, errp)) {
++            return false;
++        }
++
++        /* Non-zero pages */
+         clear_bit_idx = find_next_zero_bit(bitmap, num_pages, set_bit_idx + 1);
+ 
+         unread = TARGET_PAGE_SIZE * (clear_bit_idx - set_bit_idx);
+@@ -4083,6 +4135,11 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+         }
      }
  
-@@ -889,7 +904,7 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
++    /* Handle trailing 0 pages */
++    if (!handle_zero_mapped_ram(block, clear_bit_idx, num_pages, errp)) {
++        return false;
++    }
++
+     return true;
  
-     trace_tpm_emulator_set_state_blobs();
- 
--    if (tpm_emulator_stop_tpm(tb) < 0) {
-+    if (tpm_emulator_stop_tpm(tb, errp) < 0) {
-         trace_tpm_emulator_set_state_blobs_error("Could not stop TPM");
-         return -EIO;
-     }
-@@ -960,7 +975,7 @@ static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
-         return ret;
-     }
- 
--    if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
-+    if (tpm_emulator_startup_tpm_resume(tb, 0, true, errp) < 0) {
-         return -EIO;
-     }
- 
+ err:
 -- 
 2.50.1
 
