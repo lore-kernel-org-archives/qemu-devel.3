@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10513CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D9CCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFy3l-0000UT-GW; Mon, 03 Nov 2025 12:09:37 -0500
+	id 1vFy3q-0000Vp-Kc; Mon, 03 Nov 2025 12:09:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3k-0000U3-2y
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:36 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3n-0000Vc-JR
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:40 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3V-0000sD-98
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:35 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3h-0000sa-7D
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
- In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=aXQr0gN36alGHxr+qGmiqW6v4Iaeqk6Qo8uj64HlnEg=; b=Y1rwZ13DaPapL9h
- CuYQaI+vQ0ChWHANWrZayNYr6VEkHuRFRtjOvBTTdCKx+SYHQqVYib57HJ2inmGUCzBbnI6N3b0ME
- uT9fXvJbZ4WAERm4rAce80ZRPcU5HzWHYQFWZbG1EYtGA1to4DOfGeKbYz2GqrVsIYwdgZlxT/VFo
- Fc=;
+ List-Help; bh=okOiofNy7st7WsZ2e3AUHi2e/nfBmPBAYNfiTpuL2hk=; b=mxHDqSNwCDvZT9N
+ v67rhIcGLMJkRlWoRVoqoClRf8pqsgcdrZfOgCFfgMbahab6Ff87YOMX/8UQHUlM6TVCi50Y0U9CQ
+ CFUlD8Zd4um2m0lO3HTGC40WtX9Gd1CkV1HpB7ftFMa50CvKoRqH1TYvZzcj4ZesypFkhA+RGZO6+
+ sI=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v5 10/25] target/riscv: Fix size of excp_uw2
-Date: Mon,  3 Nov 2025 18:11:53 +0100
-Message-ID: <20251103171208.24355-11-anjo@rev.ng>
+Subject: [PATCH v5 13/25] target/riscv: Fix size of gei fields
+Date: Mon,  3 Nov 2025 18:11:56 +0100
+Message-ID: <20251103171208.24355-14-anjo@rev.ng>
 In-Reply-To: <20251103171208.24355-1-anjo@rev.ng>
 References: <20251103171208.24355-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -65,29 +64,90 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix to 64 bits to match size of instruction start words.
+geilen takes the values 31 or 63, fix it to 8 bits. hgeie and hgeip are
+at most 64 bits in size, fix to 64.  Update relevant function arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/cpu.h        | 10 +++++-----
+ target/riscv/cpu_helper.c |  4 ++--
+ target/riscv/machine.c    |  4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 1e4128128b..f901608d0e 100644
+index 4c42971809..5f051796f4 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -258,7 +258,7 @@ struct CPUArchState {
-     /* shadow stack register for zicfiss extension */
-     uint64_t ssp;
-     /* env place holder for extra word 2 during unwind */
--    target_ulong excp_uw2;
-+    uint64_t excp_uw2;
-     /* sw check code for sw check exception */
-     target_ulong sw_check_code;
- #ifdef CONFIG_USER_ONLY
+@@ -279,7 +279,7 @@ struct CPUArchState {
+ #ifndef CONFIG_USER_ONLY
+     /* This contains QEMU specific information about the virt state. */
+     bool virt_enabled;
+-    target_ulong geilen;
++    uint8_t geilen;
+     uint64_t resetvec;
+ 
+     uint64_t mhartid;
+@@ -356,8 +356,8 @@ struct CPUArchState {
+     uint64_t htval;
+     uint64_t htinst;
+     uint64_t hgatp;
+-    target_ulong hgeie;
+-    target_ulong hgeip;
++    uint64_t hgeie;
++    uint64_t hgeip;
+     uint64_t htimedelta;
+     uint64_t hvien;
+ 
+@@ -609,8 +609,8 @@ int riscv_cpu_mirq_pending(CPURISCVState *env);
+ int riscv_cpu_sirq_pending(CPURISCVState *env);
+ int riscv_cpu_vsirq_pending(CPURISCVState *env);
+ bool riscv_cpu_fp_enabled(CPURISCVState *env);
+-target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
+-void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
++uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
++void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
+ bool riscv_cpu_vector_enabled(CPURISCVState *env);
+ void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 38b57bc622..e0a324b401 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -661,7 +661,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+     }
+ }
+ 
+-target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
++uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
+ {
+     if (!riscv_has_ext(env, RVH)) {
+         return 0;
+@@ -670,7 +670,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
+     return env->geilen;
+ }
+ 
+-void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
++void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
+ {
+     if (!riscv_has_ext(env, RVH)) {
+         return;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index ce5e44325d..8a8f5be8d6 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -91,8 +91,8 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.htval, RISCVCPU),
+         VMSTATE_UINT64(env.htinst, RISCVCPU),
+         VMSTATE_UINT64(env.hgatp, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgeip, RISCVCPU),
++        VMSTATE_UINT64(env.hgeie, RISCVCPU),
++        VMSTATE_UINT64(env.hgeip, RISCVCPU),
+         VMSTATE_UINT64(env.hvien, RISCVCPU),
+         VMSTATE_UINT64(env.hvip, RISCVCPU),
+         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
 -- 
 2.51.0
 
