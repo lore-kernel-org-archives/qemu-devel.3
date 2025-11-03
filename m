@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D64BBCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E9ECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFy3s-0000X3-Jr; Mon, 03 Nov 2025 12:09:44 -0500
+	id 1vFy41-0000aA-M7; Mon, 03 Nov 2025 12:09:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3p-0000Vo-Ho
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:42 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3y-0000ZA-RY
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:50 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3h-0000sW-EE
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:41 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3k-0000td-QP
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
  In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=/JWX58fLEOumjtEggtpYYPCTc75FSdSeBBwvHfyqbbY=; b=TLtXghv5y0KShFq
- GTYJU3NfyW86FZHVcXYiC2mocIVR2JPUUOMGT9qn1RYnw9/2k0ocU2g5dlRtD24BlZ1A8ohbQ/fu0
- h0qTP8hKSM3VqlQ2rdaxfHqVVPd+U0zZIUXjFa8guMddi7mnumEqEzbG4OedP/zpIzq4aKzXAshwC
- oA=;
+ List-Help; bh=q6Opor7lQGZigqevcgCM7+jdNW3PiYzYgsH0ftxO0eA=; b=XPJ/G+YPstFDieE
+ aKsPSJ85WUMoOZAKmb/EC2nBnQzALUmJjqjWVNm/R353nXcOIbnYxrhcys+MW2x+Uwz6JQCVWqq/7
+ Hovo9r2DghZay9Xuzpat1RijB7dXJQ1IbHtuxQETqQl9EzWcVRBbdk1hvkWa9U8wW9Cu55Xi9u1Px
+ HI=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v5 11/25] target/riscv: Fix size of sw_check_code
-Date: Mon,  3 Nov 2025 18:11:54 +0100
-Message-ID: <20251103171208.24355-12-anjo@rev.ng>
+Subject: [PATCH v5 21/25] target/riscv: Fix size of mseccfg
+Date: Mon,  3 Nov 2025 18:12:04 +0100
+Message-ID: <20251103171208.24355-22-anjo@rev.ng>
 In-Reply-To: <20251103171208.24355-1-anjo@rev.ng>
 References: <20251103171208.24355-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -65,89 +65,69 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field only holds values of 2 and 3, fix its size to 8 bits and
-update stores from TCG.
+mseccfg is defined in version 20250508 of the privileged specification
+to be 64 bits in size.  Update relevant function arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                            | 2 +-
- target/riscv/translate.c                      | 4 ++--
- target/riscv/insn_trans/trans_rvi.c.inc       | 8 ++++----
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 4 ++--
- 4 files changed, 9 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ target/riscv/pmp.h | 4 ++--
+ target/riscv/pmp.c | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index f901608d0e..191a3fb3d9 100644
+index 153480846a..cc40d6c86c 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -260,7 +260,7 @@ struct CPUArchState {
-     /* env place holder for extra word 2 during unwind */
-     uint64_t excp_uw2;
-     /* sw check code for sw check exception */
--    target_ulong sw_check_code;
-+    uint8_t sw_check_code;
- #ifdef CONFIG_USER_ONLY
-     uint32_t elf_flags;
- #endif
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 5a6913057c..f4f0b96d0a 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1377,8 +1377,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     if (ctx->fcfi_lp_expected) {
-         /* Emit after insn_start, i.e. before the op following insn_start. */
-         tcg_ctx->emit_before_op = QTAILQ_NEXT(ctx->base.insn_start, link);
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         tcg_ctx->emit_before_op = NULL;
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 104a8ebe20..37d2f4d957 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -53,8 +53,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         /*
-          * misaligned, according to spec we should raise sw check exception
-          */
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         return true;
-@@ -66,8 +66,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         TCGv tmp = tcg_temp_new();
-         tcg_gen_extract_tl(tmp, get_gpr(ctx, xT2, EXT_NONE), 12, 20);
-         tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         gen_set_label(skip);
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 40e5a1b7df..cb9c5419fa 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -40,8 +40,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                        mxl_memop(ctx) | MO_ALIGN);
-     TCGv rs1 = get_gpr(ctx, a->rs1, EXT_NONE);
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
--    tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
--                  tcg_env, offsetof(CPURISCVState, sw_check_code));
-+    tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-+                    tcg_env, offsetof(CPURISCVState, sw_check_code));
-     gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+@@ -464,7 +464,7 @@ struct CPUArchState {
+ 
+     /* physical memory protection */
+     pmp_table_t pmp_state;
+-    target_ulong mseccfg;
++    uint64_t mseccfg;
+ 
+     /* trigger module */
+     uint16_t mcontext;
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index 271cf24169..e322904637 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -69,8 +69,8 @@ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+                       target_ulong val);
+ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+ 
+-void mseccfg_csr_write(CPURISCVState *env, target_ulong val);
+-target_ulong mseccfg_csr_read(CPURISCVState *env);
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
++uint64_t mseccfg_csr_read(CPURISCVState *env);
+ 
+ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+                        target_ulong val);
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 3ef62d26ad..0b23b4b8ed 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -643,7 +643,7 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+ /*
+  * Handle a write to a mseccfg CSR
+  */
+-void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val)
+ {
+     int i;
+     uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
+@@ -689,7 +689,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
+ /*
+  * Handle a read from a mseccfg CSR
+  */
+-target_ulong mseccfg_csr_read(CPURISCVState *env)
++uint64_t mseccfg_csr_read(CPURISCVState *env)
+ {
+     trace_mseccfg_csr_read(env->mhartid, env->mseccfg);
+     return env->mseccfg;
 -- 
 2.51.0
 
