@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFBACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1926CCFA04
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 09:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFqri-0000na-0U; Mon, 03 Nov 2025 04:28:42 -0500
+	id 1vFqs0-0000tN-R2; Mon, 03 Nov 2025 04:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqrg-0000mn-5e; Mon, 03 Nov 2025 04:28:40 -0500
+ id 1vFqrz-0000sW-2t; Mon, 03 Nov 2025 04:28:59 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vFqrb-0001r9-Q7; Mon, 03 Nov 2025 04:28:38 -0500
+ id 1vFqru-0001r9-Qe; Mon, 03 Nov 2025 04:28:58 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 3 Nov
- 2025 17:28:05 +0800
+ 2025 17:28:09 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 3 Nov 2025 17:28:05 +0800
+ Transport; Mon, 3 Nov 2025 17:28:09 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v3 06/30] hw/arm/aspeed: Split G220A machine into a separate
- source file for better maintenance
-Date: Mon, 3 Nov 2025 17:27:17 +0800
-Message-ID: <20251103092801.1282602-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 11/30] hw/arm/aspeed: Split Romulus machine into a separate
+ source file for maintainability
+Date: Mon, 3 Nov 2025 17:27:22 +0800
+Message-ID: <20251103092801.1282602-12-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
 References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
@@ -68,147 +68,116 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit refactors the Bytedance G220A BMC machine by moving its
-implementation from aspeed.c into a new dedicated file
-aspeed_ast2500_g220a.c.
+This commit moves the Romulus BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2500_romulus.c.
 
-The goal is to improve modularity and maintainability of Aspeed
-machine definitions by isolating each platform into its own source
-file. This aligns with ongoing efforts to simplify aspeed.c,
-which previously contained all machine configurations.
+The refactor continues the modularization of Aspeed platform
+definitions, separating each board into its own C source file to
+improve maintainability, readability, and reduce code clutter in
+aspeed.c.
 
 Key updates include:
-
-- Moved G220A_BMC_HW_STRAP1 definition and
-g220a_bmc_i2c_init() function into aspeed_ast2500_g220a.c.
-- Moved aspeed_machine_g220a_class_init() and related type
-registration to the new file.
+- Moved ROMULUS_BMC_HW_STRAP1 definition to the new file.
+- Moved romulus_bmc_i2c_init() and related I²C device setup.
+- Moved aspeed_machine_romulus_class_init() and type registration
+to aspeed_ast2500_romulus.c.
 - Added the new file to the build system (meson.build).
-- Removed all G220A-specific code from aspeed.c.
+- Removed all Romulus-specific code from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c               | 72 ---------------------------
- hw/arm/aspeed_ast2500_g220a.c | 93 +++++++++++++++++++++++++++++++++++
- hw/arm/meson.build            |  1 +
- 3 files changed, 94 insertions(+), 72 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2500_g220a.c
+ hw/arm/aspeed.c                 | 43 ----------------------
+ hw/arm/aspeed_ast2500_romulus.c | 63 +++++++++++++++++++++++++++++++++
+ hw/arm/meson.build              |  1 +
+ 3 files changed, 64 insertions(+), 43 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2500_romulus.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 3dcd5fc540..ed8ef6a2d0 100644
+index df1a37ca3d..c31b281f55 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -117,20 +117,6 @@ static struct arm_boot_info aspeed_board_binfo = {
-         SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
-         SCU_AST2500_HW_STRAP_RESERVED1)
+@@ -92,16 +92,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+         SCU_HW_STRAP_MAC0_RGMII) &                                      \
+         ~SCU_HW_STRAP_2ND_BOOT_WDT)
  
--#define G220A_BMC_HW_STRAP1 (                                      \
+-/* Romulus hardware value: 0xF10AD206 */
+-#define ROMULUS_BMC_HW_STRAP1 (                                         \
+-        AST2500_HW_STRAP1_DEFAULTS |                                    \
 -        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
 -        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
 -        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
--        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
 -        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
--        SCU_HW_STRAP_2ND_BOOT_WDT |                                     \
--        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
--        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
--        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
--        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
--        SCU_HW_STRAP_VGA_SIZE_SET(VGA_64M_DRAM) |                       \
--        SCU_AST2500_HW_STRAP_RESERVED1)
+-        SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
 -
- /* Witherspoon hardware value: 0xF10AD216 (but use romulus definition) */
- #define WITHERSPOON_BMC_HW_STRAP1 ROMULUS_BMC_HW_STRAP1
- 
-@@ -635,42 +621,6 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
-     /* Bus 11: TODO ucd90160@64 */
+ /* Quanta-Q71l hardware value */
+ #define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
+         SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
+@@ -452,17 +442,6 @@ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
+                      TYPE_TMP105, 0x4d);
  }
  
--static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
+-static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
--    DeviceState *dev;
 -
--    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
--                                         "emc1413", 0x4c));
--    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
--    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
--    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
--
--    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 12),
--                                         "emc1413", 0x4c));
--    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
--    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
--    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
--
--    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 13),
--                                         "emc1413", 0x4c));
--    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
--    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
--    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
--
--    static uint8_t eeprom_buf[2 * 1024] = {
--            0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0xfe,
--            0x01, 0x06, 0x00, 0xc9, 0x42, 0x79, 0x74, 0x65,
--            0x64, 0x61, 0x6e, 0x63, 0x65, 0xc5, 0x47, 0x32,
--            0x32, 0x30, 0x41, 0xc4, 0x41, 0x41, 0x42, 0x42,
--            0xc4, 0x43, 0x43, 0x44, 0x44, 0xc4, 0x45, 0x45,
--            0x46, 0x46, 0xc4, 0x48, 0x48, 0x47, 0x47, 0xc1,
--            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xa7,
--    };
--    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x57,
--                          eeprom_buf);
+-    /*
+-     * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
+-     * good enough
+-     */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
 -}
 -
- static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+ void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
  {
-     AspeedSoCState *soc = bmc->soc;
-@@ -1549,23 +1499,6 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
-     aspeed_machine_ast2600_class_emmc_init(oc);
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
+@@ -1243,23 +1222,6 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
  };
  
--static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
+-static void aspeed_machine_romulus_class_init(ObjectClass *oc,
+-                                              const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Bytedance G220A BMC (ARM1176)";
+-    mc->desc       = "OpenPOWER Romulus BMC (ARM1176)";
 -    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = G220A_BMC_HW_STRAP1;
--    amc->fmc_model = "n25q512a";
--    amc->spi_model = "mx25l25635e";
+-    amc->hw_strap1 = ROMULUS_BMC_HW_STRAP1;
+-    amc->fmc_model = "n25q256a";
+-    amc->spi_model = "mx66l1g45g";
 -    amc->num_cs    = 2;
--    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
--    amc->i2c_init  = g220a_bmc_i2c_init;
--    mc->default_ram_size = 1024 * MiB;
+-    amc->i2c_init  = romulus_bmc_i2c_init;
+-    mc->default_ram_size       = 512 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
- static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
+ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
+                                                   const void *data)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -1939,11 +1872,6 @@ static const TypeInfo aspeed_machine_types[] = {
+@@ -1625,11 +1587,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_tiogapass_class_init,
+         .class_init    = aspeed_machine_ast2500_evb_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("g220a-bmc"),
+-        .name          = MACHINE_TYPE_NAME("romulus-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_g220a_class_init,
+-        .class_init    = aspeed_machine_romulus_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2500_g220a.c b/hw/arm/aspeed_ast2500_g220a.c
+diff --git a/hw/arm/aspeed_ast2500_romulus.c b/hw/arm/aspeed_ast2500_romulus.c
 new file mode 100644
-index 0000000000..c7899ed1df
+index 0000000000..cde06894ce
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2500_g220a.c
-@@ -0,0 +1,93 @@
++++ b/hw/arm/aspeed_ast2500_romulus.c
+@@ -0,0 +1,63 @@
 +/*
-+ * Bytedance G220A
++ * OpenPOWER Romulus
 + *
 + * Copyright (C) 2025 ASPEED Technology Inc.
 + *
@@ -220,98 +189,68 @@ index 0000000000..c7899ed1df
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/i2c/smbus_eeprom.h"
 +
-+#define G220A_BMC_HW_STRAP1 (                                      \
++/* Romulus hardware value: 0xF10AD206 */
++#define ROMULUS_BMC_HW_STRAP1 (                                         \
++        AST2500_HW_STRAP1_DEFAULTS |                                    \
 +        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
 +        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
 +        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-+        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
 +        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
-+        SCU_HW_STRAP_2ND_BOOT_WDT |                                     \
-+        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
-+        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
-+        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
-+        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
-+        SCU_HW_STRAP_VGA_SIZE_SET(VGA_64M_DRAM) |                       \
-+        SCU_AST2500_HW_STRAP_RESERVED1)
++        SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
 +
-+static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
++static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
-+    DeviceState *dev;
 +
-+    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
-+                                         "emc1413", 0x4c));
-+    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
-+    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
-+    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
-+
-+    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 12),
-+                                         "emc1413", 0x4c));
-+    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
-+    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
-+    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
-+
-+    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 13),
-+                                         "emc1413", 0x4c));
-+    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
-+    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
-+    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
-+
-+    static uint8_t eeprom_buf[2 * 1024] = {
-+            0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0xfe,
-+            0x01, 0x06, 0x00, 0xc9, 0x42, 0x79, 0x74, 0x65,
-+            0x64, 0x61, 0x6e, 0x63, 0x65, 0xc5, 0x47, 0x32,
-+            0x32, 0x30, 0x41, 0xc4, 0x41, 0x41, 0x42, 0x42,
-+            0xc4, 0x43, 0x43, 0x44, 0x44, 0xc4, 0x45, 0x45,
-+            0x46, 0x46, 0xc4, 0x48, 0x48, 0x47, 0x47, 0xc1,
-+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xa7,
-+    };
-+    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x57,
-+                          eeprom_buf);
++    /*
++     * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
++     * good enough
++     */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
 +}
 +
-+static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
++static void aspeed_machine_romulus_class_init(ObjectClass *oc,
++                                              const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Bytedance G220A BMC (ARM1176)";
++    mc->desc       = "OpenPOWER Romulus BMC (ARM1176)";
 +    amc->soc_name  = "ast2500-a1";
-+    amc->hw_strap1 = G220A_BMC_HW_STRAP1;
-+    amc->fmc_model = "n25q512a";
-+    amc->spi_model = "mx25l25635e";
++    amc->hw_strap1 = ROMULUS_BMC_HW_STRAP1;
++    amc->fmc_model = "n25q256a";
++    amc->spi_model = "mx66l1g45g";
 +    amc->num_cs    = 2;
-+    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-+    amc->i2c_init  = g220a_bmc_i2c_init;
-+    mc->default_ram_size = 1024 * MiB;
++    amc->i2c_init  = romulus_bmc_i2c_init;
++    mc->default_ram_size       = 512 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2500_g220a_types[] = {
-+    {
-+        .name          = MACHINE_TYPE_NAME("g220a-bmc"),
++static const TypeInfo aspeed_ast2500_romulus_types[] = {
++     {
++        .name          = MACHINE_TYPE_NAME("romulus-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_g220a_class_init,
++        .class_init    = aspeed_machine_romulus_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2500_g220a_types)
++DEFINE_TYPES(aspeed_ast2500_romulus_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index ed637f2687..91bdefd203 100644
+index f59bfe5029..ff6a856523 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -45,6 +45,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_soc_common.c',
+@@ -46,6 +46,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
    'aspeed_ast2400.c',
    'aspeed_ast2500_fp5280g2.c',
-+  'aspeed_ast2500_g220a.c',
-   'aspeed_ast2600.c',
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
+   'aspeed_ast2500_g220a.c',
++  'aspeed_ast2500_romulus.c',
+   'aspeed_ast2500_sonorapass.c',
+   'aspeed_ast2500_tiogapass.c',
+   'aspeed_ast2500_witherspoon.c',
 -- 
 2.43.0
 
