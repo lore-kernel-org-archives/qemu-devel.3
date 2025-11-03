@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C369CCF9FE
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72318CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 03:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFlN3-0005jn-5X; Sun, 02 Nov 2025 22:36:41 -0500
+	id 1vFlOB-00065U-TR; Sun, 02 Nov 2025 22:37:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vFlMx-0005hU-HE
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:35 -0500
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vFlMr-00080v-Vr
- for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:36:34 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 3C0A21400104;
- Sun,  2 Nov 2025 22:36:28 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Sun, 02 Nov 2025 22:36:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1762140988; x=
- 1762227388; bh=dTYYFACOpdC66c5YM67Ci0gn2Q7rJnzZ0tIHdI02mts=; b=U
- CYHOY/Xk+z6NFr5o4pUA6DTwnKC09IW8RUbPZlrxhtSYEvIRjryrmrbftmsoVTHA
- HqWov9+NtrZw9YmKqK1nVb+RBXtrTTpIfrdA8jy4jX7wgdaHvr2iBaOMBHgLnaWo
- DIY2izTadx9gHkrerIsSqDyIzv+6XnRF0vSYqOnH7eIPEfRVkZDlMmytGG1yFtPt
- 3i4sGP4cAsLTMdNKN9YRKRkBt4jWsGG62M+LjyaTQaEYCop7ArUXvWjV65NlqJyK
- k38HOpOPMG3bueWwpaV+OszCwT4A0FslA/AqRtdJgcyfGs8qbTTK6Xs7GbXOoYXr
- CiOFSF1UnS5CJHReB/HTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1762140988; x=1762227388; bh=d
- TYYFACOpdC66c5YM67Ci0gn2Q7rJnzZ0tIHdI02mts=; b=1fTyR9Ns3TwqsZt8z
- KKOLltMGrMEcR6tF6aqV2JzYP9SCqfWUmHiA4Boq2zA115bkw2SNs88EEi5FJZ/b
- Z+sIncJbCHp6GGRfKmULfzXTMRevDh3gRrllz0yWwR4SvgTff8P3aB53gOZKcEUu
- FFHowzXsitW9J+OGFrcD3OVH/IZWj7MHFeMBdlPV5YV/6Y6vOqQNHusN3p+f+WKH
- Goy4dFLSDvLo2TkuBi6Xxl5IDT1UoWxcndyOmTEoiIMnbOlM3C6gE1R9dYDxtI/z
- U0zEbHwjSiGUi6F+dqTwPYXI+uiemhyQH2JS1Qf7+MEoN4A7acnnoW6ro2YtU5xC
- pycpg==
-X-ME-Sender: <xms:PCMIaTxpLix6enRULyAr8LlASTuTibVgchSzoUjKNAH9ZmUjVVdNfg>
- <xme:PCMIaei-HMLSQ1QA6fknWzhDz41QYCr0LBiYqT21aZS5PVK5XeeoQ4XZ_snr6hTLN
- L5Dgz7SJHVhjOXORfW6QI0_iMCOiEbpVBCzxTBMNqVtALUbDPqJS7c>
-X-ME-Received: <xmr:PCMIaWw8bJDoIO4RHjFRgp_3sKj3XTNNaM5zpGoOuef3ajRQ4zqIJaQ3ieMV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejtdejucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
- ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
- eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
- gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:PCMIaZI9UIKy-Ne_kVaSmfqW4ALHaZZKIdK-4nwL7npV3posiOwM8A>
- <xmx:PCMIaVTkpPz1HPILFUi-CJamViKbm742JMv6QiPj1E0P7NR35uXZXQ>
- <xmx:PCMIaZq5m3oAskSUY-uN2WJ5mZ_XwMyqVxjp-BWjgPl20W8z66NLHg>
- <xmx:PCMIaSojNSZKURXAzi-L2hULI7TMNG8C1Yu8LmW-DQtsVF5TrQwGrw>
- <xmx:PCMIaZ2MhdK8h0LiwB5kZblFO-a6PBNLiAuAA83T3Y9AY_DUNV88vwv5>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Nov 2025 22:36:27 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id c6ae8662;
- Mon, 3 Nov 2025 03:36:23 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
-To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu,
-	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v2 7/7] ati-vga: Implement HOST_DATA blit source with color
- expansion
-Date: Sun,  2 Nov 2025 22:36:08 -0500
-Message-ID: <20251103033608.120908-8-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251103033608.120908-1-chad@jablonski.xyz>
-References: <20251103033608.120908-1-chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vFlO0-00063J-4G
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:37:40 -0500
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vFlNx-0000DV-38
+ for qemu-devel@nongnu.org; Sun, 02 Nov 2025 22:37:39 -0500
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-340299fe579so4112248a91.2
+ for <qemu-devel@nongnu.org>; Sun, 02 Nov 2025 19:37:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762141054; x=1762745854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BaXGT36g7SvSKwpzPQLujfbJ9YnzSNwR6R39Co5z7eg=;
+ b=gGNWViZkZZKBs2T8QPfkKS3WBJZCL7vazlhF3bvgySnjYCTgfPLyQCylhJtDuhcUK7
+ B24hK+lr94phFjPFwC8Z1blnlRioBPiuURjFTAO2GXu+KSQ95Y5QAWGg+SC87XQ359Ce
+ I0xjmt4OXnn0CVoyma5Xovh7BD/tToF9nsPN/rjCGZsPyKvOSOZ/rGuk+YcbrDtqKW7D
+ 8HEAJ2yRxTlRkxDcMEhZWdkg9J8GNBeeF9Ng4KgdlkKR+zgmWtzFkmyAbiYUc940DfZD
+ 4I5PTpw5gyEhL6bys4IhlKWJH/3C78+HMaa06qEaxERxgXJmuIRcahDZfHl+vm+Xej1K
+ +mxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762141054; x=1762745854;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BaXGT36g7SvSKwpzPQLujfbJ9YnzSNwR6R39Co5z7eg=;
+ b=OerwMa3suxdNAWtm9/QtxGEj1VhcUOyf166toKXPEJWsy8FypBnKKQNAgIHZLaX0L8
+ 7y6aAFAjW7pnAbi/hbrKd71gA7uyxOSMlUduzagsrU/tkcI0DcaBwhvMEUsJwZ6LIDnN
+ THtZ7tDTS3sejEp86502l/fe2oDLxc8uecL+NEusiu6OKSBYs5IanHccFymiqNmD6pUm
+ Fs9cphQ2JjyJ2GaYkbrRImYp2rX+TQ1ycHRj1bwdflwwzhem2kvMty1/+O8ziL+kGAGi
+ dtwtKf2GMUZ8KkzF/EanZxlFiO40RNqbaAPliXv8cG2jh+znBCpIcboHkDBs334qQ49/
+ Pmew==
+X-Gm-Message-State: AOJu0YwcOojzRCjHtRVP3jncFlch8YkduMTd7grMnEYQXB4HYt+TavwN
+ /F/EBK1eZpWoCJq5nxXbX6Y91mXGkHvUxEIBTYls7Kc+btPUm8+XT5vbtFGDLg==
+X-Gm-Gg: ASbGncvLcVZ8Xw2tq/qvrhcy8iazZFFueaPQSL9tXT0nCmVo4a/dZwphtl9nvGKHFlX
+ pACjxdXHkdfNA1lJGgCSZXWragggNSzzXFSa6Hx+9scT6SAQA5yidrnK+md1XxAQltPi3nf3N6Y
+ ee6ZZ5i9Tl65efrBZohQTAY7/v7CCMtqsiQj+V0886NlGzIFT1D0htkxZxwafqk1IIwzyceYlFN
+ haBqdyUalyDfsWM+tGx8hoM9SIg0GkgrOzjD4ccRHvxKLAWLB8SMi2zK2pREfFv/SAJzBWCBKv7
+ f9YGsOtQt11IMfB0H5XQfTwA2L87enW7irtNReHKzKiZEbzpI9EtuvZoqoZk54DbTUt4Q/A1fmN
+ qH1mCKk/UumufZ9ob+VJLvR1lOQaVzeJPpzcJfoySIMZ7WgISu/woY74Mk8Kqr0xKi9c49Vf2ug
+ FYZAgAdKAixLnFQc4aUPFl/qgpZqoKrEUrYH1Crj4Pxsa69NCB6iOzw+p2Z1Oltu1S+jKJDKRjb
+ +PTFvPHmKAGn0U/7rs=
+X-Google-Smtp-Source: AGHT+IHpV11rg+SnpE5zmCSoHn97QFUbv/XRwkSGJTFxdZ6gaEC+A+5HcbLUEOFdSdJMeyhGHi6wdw==
+X-Received: by 2002:a17:90b:4b44:b0:340:d511:e164 with SMTP id
+ 98e67ed59e1d1-340d511e59emr6071920a91.19.1762141054413; 
+ Sun, 02 Nov 2025 19:37:34 -0800 (PST)
+Received: from toolbx.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-340a460ed24sm7939641a91.16.2025.11.02.19.37.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 02 Nov 2025 19:37:33 -0800 (PST)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org, anjo@rev.ng, philmd@linaro.org, palmer@dabbelt.com,
+ dbarboza@ventanamicro.com, atishp@rivosinc.com
+Cc: alistair23@gmail.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ qemu-riscv@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 1/8] target/riscv: Fix size of trivial CPUArchState fields
+Date: Mon,  3 Nov 2025 13:37:06 +1000
+Message-ID: <20251103033713.904455-2-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251103033713.904455-1-alistair.francis@wdc.com>
+References: <20251103033713.904455-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=chad@jablonski.xyz;
- helo=fhigh-a2-smtp.messagingengine.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,312 +108,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SRCCOPY blits using 1bpp HOST_DATA as a source are expanded
-to 32bpp ARGB. If pixman is enabled any additional color depth conversions
-are handled. The fallback path does not yet support color conversion
-and logs an error.
+From: Anton Johansson <anjo@rev.ng>
 
-Unlike VRAM sourced blits, host data blits are not triggered by writing
-to the dst width registers. They're only triggered on HOST_DATA_LAST
-writes.
+This commits groups together all CPUArchState fields whose behaviour can
+be retained by simply changing the size of the field.
 
-Supports MONO_FRGD_BKGD and COLOR datatypes. MONO_FRGD (transparent
-background) is left for future work and logged.
-GMC_SRC_SOURCE_HOST_DATA_ALIGNED is unimplemented and also logged.
-Neither of these are used for xterm text rendering.
+Note, senvcfg is defined to be SXLEN bits wide, but is widened to 64
+bits to match henvcfg and menvcfg.  Next, [m|h]edeleg are changed to
+64 bits as defined privileged specification, and hvictl is fixed to 32
+bits which holds all relevant values, see HVICTL_VALID_MASK.  The
+remaining fields touched in the commit are widened from [H|S|M]XLEN
+to 64-bit.
 
-This combines clipping, host data transfers and color expansion to
-enable text rendering in xterm under X.org.
+Note, the cpu/hyper, cpu/envcfg, cpu/jvt, and cpu VMSTATE versions are
+bumped, breaking migration from older versions.
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+References to the privileged/unprivileged RISCV specification refer to
+version 20250508.
+
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251027181831.27016-2-anjo@rev.ng>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/display/ati.c      |  28 +++++++--
- hw/display/ati_2d.c   | 135 +++++++++++++++++++++++++++++++++++-------
- hw/display/ati_regs.h |  13 ++++
- 3 files changed, 152 insertions(+), 24 deletions(-)
+ target/riscv/cpu.h     | 78 +++++++++++++++++++--------------------
+ target/riscv/machine.c | 84 +++++++++++++++++++++---------------------
+ 2 files changed, 81 insertions(+), 81 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 0a686750ae..6ec50279ed 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -813,9 +813,14 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         }
-         break;
-     case DST_WIDTH:
-+    {
-+        uint32_t src = s->regs.dp_gui_master_cntl & GMC_SRC_SOURCE_MASK;
-         s->regs.dst_width = data & 0x3fff;
--        ati_2d_blt(s);
-+        if (src != GMC_SRC_SOURCE_HOST_DATA) {
-+            ati_2d_blt(s);
-+        }
-         break;
-+    }
-     case DST_HEIGHT:
-         s->regs.dst_height = data & 0x3fff;
-         break;
-@@ -862,10 +867,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->regs.dst_y = (data >> 16) & 0x3fff;
-         break;
-     case DST_HEIGHT_WIDTH:
-+    {
-+        uint32_t src = s->regs.dp_gui_master_cntl & GMC_SRC_SOURCE_MASK;
-         s->regs.dst_width = data & 0x3fff;
-         s->regs.dst_height = (data >> 16) & 0x3fff;
--        ati_2d_blt(s);
-+        if (src != GMC_SRC_SOURCE_HOST_DATA) {
-+            ati_2d_blt(s);
-+        }
-         break;
-+    }
-     case DP_GUI_MASTER_CNTL:
-         s->regs.dp_gui_master_cntl = data & 0xff00000f;
-         s->regs.dp_datatype = (data & 0x0f00) >> 8 | (data & 0x30f0) << 4 |
-@@ -881,10 +891,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         }
-         break;
-     case DST_WIDTH_X:
-+    {
-+        uint32_t src = s->regs.dp_gui_master_cntl & GMC_SRC_SOURCE_MASK;
-         s->regs.dst_x = data & 0x3fff;
-         s->regs.dst_width = (data >> 16) & 0x3fff;
--        ati_2d_blt(s);
-+        if (src != GMC_SRC_SOURCE_HOST_DATA) {
-+            ati_2d_blt(s);
-+        }
-         break;
-+    }
-     case SRC_X_Y:
-         s->regs.src_y = data & 0x3fff;
-         s->regs.src_x = (data >> 16) & 0x3fff;
-@@ -894,10 +909,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->regs.dst_x = (data >> 16) & 0x3fff;
-         break;
-     case DST_WIDTH_HEIGHT:
-+    {
-+        uint32_t src = s->regs.dp_gui_master_cntl & GMC_SRC_SOURCE_MASK;
-         s->regs.dst_height = data & 0x3fff;
-         s->regs.dst_width = (data >> 16) & 0x3fff;
--        ati_2d_blt(s);
-+        if (src != GMC_SRC_SOURCE_HOST_DATA) {
-+            ati_2d_blt(s);
-+        }
-         break;
-+    }
-     case DST_HEIGHT_Y:
-         s->regs.dst_y = data & 0x3fff;
-         s->regs.dst_height = (data >> 16) & 0x3fff;
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 181bf634f0..c177686338 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -25,6 +25,9 @@
-  * possible.
-  */
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 36e7f10037..7ffc4dac26 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -255,7 +255,7 @@ struct CPUArchState {
+     /* 128-bit helpers upper part return value */
+     target_ulong retxh;
  
-+#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
-+#define EXPANDED_SRC_BPP 32
-+
- static int ati_bpp_from_datatype(ATIVGAState *s)
- {
-     switch (s->regs.dp_datatype & 0xf) {
-@@ -44,7 +47,6 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
+-    target_ulong jvt;
++    uint64_t jvt;
+ 
+     /* elp state for zicfilp extension */
+     bool      elp;
+@@ -272,7 +272,7 @@ struct CPUArchState {
+     target_ulong priv;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+-    target_ulong senvcfg;
++    uint64_t senvcfg;
+ 
+ #ifndef CONFIG_USER_ONLY
+     /* This contains QEMU specific information about the virt state. */
+@@ -314,18 +314,18 @@ struct CPUArchState {
+      */
+     uint64_t vsie;
+ 
+-    target_ulong satp;   /* since: priv-1.10.0 */
+-    target_ulong stval;
+-    target_ulong medeleg;
++    uint64_t satp;   /* since: priv-1.10.0 */
++    uint64_t stval;
++    uint64_t medeleg;
+ 
+-    target_ulong stvec;
+-    target_ulong sepc;
+-    target_ulong scause;
++    uint64_t stvec;
++    uint64_t sepc;
++    uint64_t scause;
+ 
+-    target_ulong mtvec;
+-    target_ulong mepc;
+-    target_ulong mcause;
+-    target_ulong mtval;  /* since: priv-1.10.0 */
++    uint64_t mtvec;
++    uint64_t mepc;
++    uint64_t mcause;
++    uint64_t mtval;  /* since: priv-1.10.0 */
+ 
+     uint64_t mctrctl;
+     uint32_t sctrdepth;
+@@ -347,13 +347,13 @@ struct CPUArchState {
+     uint64_t mvip;
+ 
+     /* Hypervisor CSRs */
+-    target_ulong hstatus;
+-    target_ulong hedeleg;
++    uint64_t hstatus;
++    uint64_t hedeleg;
+     uint64_t hideleg;
+     uint32_t hcounteren;
+-    target_ulong htval;
+-    target_ulong htinst;
+-    target_ulong hgatp;
++    uint64_t htval;
++    uint64_t htinst;
++    uint64_t hgatp;
+     target_ulong hgeie;
+     target_ulong hgeip;
+     uint64_t htimedelta;
+@@ -367,7 +367,7 @@ struct CPUArchState {
+     uint64_t hvip;
+ 
+     /* Hypervisor controlled virtual interrupt priorities */
+-    target_ulong hvictl;
++    uint32_t hvictl;
+     uint8_t hviprio[64];
+ 
+     /* Upper 64-bits of 128-bit CSRs */
+@@ -380,26 +380,26 @@ struct CPUArchState {
+      * For RV64 this is a 64-bit vsstatus.
+      */
+     uint64_t vsstatus;
+-    target_ulong vstvec;
+-    target_ulong vsscratch;
+-    target_ulong vsepc;
+-    target_ulong vscause;
+-    target_ulong vstval;
+-    target_ulong vsatp;
++    uint64_t vstvec;
++    uint64_t vsscratch;
++    uint64_t vsepc;
++    uint64_t vscause;
++    uint64_t vstval;
++    uint64_t vsatp;
+ 
+     /* AIA VS-mode CSRs */
+     target_ulong vsiselect;
+ 
+-    target_ulong mtval2;
+-    target_ulong mtinst;
++    uint64_t mtval2;
++    uint64_t mtinst;
+ 
+     /* HS Backup CSRs */
+-    target_ulong stvec_hs;
+-    target_ulong sscratch_hs;
+-    target_ulong sepc_hs;
+-    target_ulong scause_hs;
+-    target_ulong stval_hs;
+-    target_ulong satp_hs;
++    uint64_t stvec_hs;
++    uint64_t sscratch_hs;
++    uint64_t sepc_hs;
++    uint64_t scause_hs;
++    uint64_t stval_hs;
++    uint64_t satp_hs;
+     uint64_t mstatus_hs;
+ 
+     /*
+@@ -436,8 +436,8 @@ struct CPUArchState {
+ 
+     PMUFixedCtrState pmu_fixed_ctrs[2];
+ 
+-    target_ulong sscratch;
+-    target_ulong mscratch;
++    uint64_t sscratch;
++    uint64_t mscratch;
+ 
+     /* Sstc CSRs */
+     uint64_t stimecmp;
+@@ -507,11 +507,11 @@ struct CPUArchState {
+ #endif /* CONFIG_KVM */
+ 
+     /* RNMI */
+-    target_ulong mnscratch;
+-    target_ulong mnepc;
+-    target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
+-    target_ulong mnstatus;
+-    target_ulong rnmip;
++    uint64_t mnscratch;
++    uint64_t mnepc;
++    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
++    uint64_t mnstatus;
++    uint64_t rnmip;
+     uint64_t rnmi_irqvec;
+     uint64_t rnmi_excpvec;
+ };
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 18d790af0d..f6ca017211 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -80,17 +80,17 @@ static bool hyper_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_hyper = {
+     .name = "cpu/hyper",
+-    .version_id = 4,
+-    .minimum_version_id = 4,
++    .version_id = 5,
++    .minimum_version_id = 5,
+     .needed = hyper_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.hstatus, RISCVCPU),
+-        VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
++        VMSTATE_UINT64(env.hstatus, RISCVCPU),
++        VMSTATE_UINT64(env.hedeleg, RISCVCPU),
+         VMSTATE_UINT64(env.hideleg, RISCVCPU),
+         VMSTATE_UINT32(env.hcounteren, RISCVCPU),
+-        VMSTATE_UINTTL(env.htval, RISCVCPU),
+-        VMSTATE_UINTTL(env.htinst, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgatp, RISCVCPU),
++        VMSTATE_UINT64(env.htval, RISCVCPU),
++        VMSTATE_UINT64(env.htinst, RISCVCPU),
++        VMSTATE_UINT64(env.hgatp, RISCVCPU),
+         VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+         VMSTATE_UINTTL(env.hgeip, RISCVCPU),
+         VMSTATE_UINT64(env.hvien, RISCVCPU),
+@@ -98,28 +98,28 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
+         VMSTATE_UINT64(env.vstimecmp, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.hvictl, RISCVCPU),
++        VMSTATE_UINT32(env.hvictl, RISCVCPU),
+         VMSTATE_UINT8_ARRAY(env.hviprio, RISCVCPU, 64),
+ 
+         VMSTATE_UINT64(env.vsstatus, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsscratch, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.vscause, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstval, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsatp, RISCVCPU),
++        VMSTATE_UINT64(env.vstvec, RISCVCPU),
++        VMSTATE_UINT64(env.vsscratch, RISCVCPU),
++        VMSTATE_UINT64(env.vsepc, RISCVCPU),
++        VMSTATE_UINT64(env.vscause, RISCVCPU),
++        VMSTATE_UINT64(env.vstval, RISCVCPU),
++        VMSTATE_UINT64(env.vsatp, RISCVCPU),
+         VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
+         VMSTATE_UINT64(env.vsie, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.mtval2, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtinst, RISCVCPU),
++        VMSTATE_UINT64(env.mtval2, RISCVCPU),
++        VMSTATE_UINT64(env.mtinst, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.stvec_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.sscratch_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.sepc_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.scause_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.stval_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.satp_hs, RISCVCPU),
++        VMSTATE_UINT64(env.stvec_hs, RISCVCPU),
++        VMSTATE_UINT64(env.sscratch_hs, RISCVCPU),
++        VMSTATE_UINT64(env.sepc_hs, RISCVCPU),
++        VMSTATE_UINT64(env.scause_hs, RISCVCPU),
++        VMSTATE_UINT64(env.stval_hs, RISCVCPU),
++        VMSTATE_UINT64(env.satp_hs, RISCVCPU),
+         VMSTATE_UINT64(env.mstatus_hs, RISCVCPU),
+ 
+         VMSTATE_END_OF_LIST()
+@@ -291,12 +291,12 @@ static bool envcfg_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_envcfg = {
+     .name = "cpu/envcfg",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = envcfg_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(env.menvcfg, RISCVCPU),
+-        VMSTATE_UINTTL(env.senvcfg, RISCVCPU),
++        VMSTATE_UINT64(env.senvcfg, RISCVCPU),
+         VMSTATE_UINT64(env.henvcfg, RISCVCPU),
+         VMSTATE_END_OF_LIST()
      }
- }
+@@ -356,11 +356,11 @@ static bool jvt_needed(void *opaque)
  
--#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
- /* Convert 1bpp monochrome data to 32bpp ARGB using color expansion */
- static void expand_colors(uint8_t *color_dst, const uint8_t *mono_src,
-                           uint32_t width, uint32_t height,
-@@ -139,30 +141,112 @@ void ati_2d_blt(ATIVGAState *s)
-     switch (s->regs.dp_mix & GMC_ROP3_MASK) {
-     case ROP3_SRCCOPY:
-     {
-+        uint32_t src = s->regs.dp_gui_master_cntl & GMC_SRC_SOURCE_MASK;
-+        uint8_t *color_data = NULL;
-         bool fallback = false;
--        unsigned src_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
--                         s->regs.src_x + clip_left :
--                         s->regs.src_x + 1 - dst.width + clip_left);
--        unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
--                         s->regs.src_y + clip_top :
--                         s->regs.src_y + 1 - dst.height + clip_top);
--        int src_stride = DEFAULT_CNTL ?
-+        unsigned src_x, src_y, src_stride, src_bpp;
-+        uint8_t *src_bits;
-+
-+        switch (src) {
-+        case GMC_SRC_SOURCE_HOST_DATA:
-+        {
-+            unsigned src_datatype = s->regs.dp_gui_master_cntl &
-+                                    GMC_SRC_DATATYPE_MASK;
-+            switch (src_datatype) {
-+            case GMC_SRC_DATATYPE_MONO_FRGD_BKGD:
-+            {
-+                bool lsb_to_msb = s->regs.dp_gui_master_cntl &
-+                                  GMC_BYTE_ORDER_LSB_TO_MSB;
-+                /* Monochrome source is 1 bpp aligned to 32-bit rows */
-+                uint32_t mono_size = ((dst.width + 31) / 32) * 4 * dst.height;
-+                if (s->host_data_pos < mono_size) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "HOST_DATA blit requires %u bytes, buffer holds %u "
-+                                  "(increase buffer size)\n",
-+                                  mono_size, s->host_data_pos);
-+                    return;
-+                }
-+
-+                /* Expand all of the source, clipping will be applied later */
-+                color_data = g_malloc(dst.width * dst.height *
-+                                      sizeof(uint32_t));
-+                src_bpp = EXPANDED_SRC_BPP;
-+                expand_colors(color_data, s->host_data_buffer,
-+                              dst.width, dst.height, s->regs.dp_src_frgd_clr,
-+                              s->regs.dp_src_bkgd_clr, lsb_to_msb);
-+                break;
-+            }
-+            case GMC_SRC_DATATYPE_COLOR:
-+            {
-+                uint32_t color_size = dst.width * dst.height * (bpp / 8);
-+                if (s->host_data_pos < color_size) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "HOST_DATA blit requires %u bytes, buffer holds %u "
-+                                  "(increase buffer size)\n",
-+                                  color_size, s->host_data_pos);
-+                    return;
-+                }
-+                /*
-+                 * The rage128 register guide states that the bit depth in this
-+                 * case matches the bit depth of the dst. There is no
-+                 * independent bit depth register for the src.
-+                 */
-+                src_bpp = bpp;
-+                color_data = s->host_data_buffer;
-+                break;
-+            }
-+            case GMC_SRC_DATATYPE_MONO_FRGD:
-+                qemu_log_mask(LOG_UNIMP, "ati_2d blt source datatype "
-+                              "MONO_FRGD (leave-alone) not yet supported\n");
-+                return;
-+            default:
-+                qemu_log_mask(LOG_UNIMP, "ati_2d blt source datatype %x is "
-+                              "not yet supported\n", src_datatype);
-+                return;
-+            }
-+
-+            src_x = clip_left;
-+            src_y = clip_top;
-+            src_stride = dst.width * (src_bpp / 8);
-+            src_bits = color_data;
-+            s->host_data_pos = 0;
-+            break;
-+        }
-+        case GMC_SRC_SOURCE_MEMORY:
-+        {
-+            src_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
-+                     s->regs.src_x + clip_left :
-+                     s->regs.src_x + 1 - dst.width + clip_left);
-+            src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
-+                     s->regs.src_y + clip_top :
-+                     s->regs.src_y + 1 - dst.height + clip_top);
-+            src_stride = DEFAULT_CNTL ?
-                          s->regs.src_pitch : s->regs.default_pitch;
--        if (!src_stride) {
--            qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-+            src_bpp = bpp;
-+            src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
-+                       s->regs.src_offset : s->regs.default_offset);
-+            if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-+                src_bits += s->regs.crtc_offset & 0x07ffffff;
-+                src_stride *= bpp;
-+            }
-+            if (src_x > 0x3fff || src_y > 0x3fff || src_bits >= end
-+                || src_bits + src_x
-+                 + (src_y + clipped.height) * src_stride >= end) {
-+                qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-+                return;
-+            }
-+            break;
-+        }
-+        case GMC_SRC_SOURCE_HOST_DATA_ALIGNED:
-+        default:
-+            qemu_log_mask(LOG_UNIMP, "ati_2d blt source %x is not "
-+                          "yet supported\n", src);
-             return;
-         }
--        uint8_t *src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
--                            s->regs.src_offset : s->regs.default_offset);
- 
--        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--            src_bits += s->regs.crtc_offset & 0x07ffffff;
--            src_stride *= bpp;
--        }
--        if (src_x > 0x3fff || src_y > 0x3fff || src_bits >= end
--            || src_bits + src_x
--             + (src_y + clipped.height) * src_stride >= end) {
--            qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-+        if (!src_stride) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-+            g_free(color_data);
-             return;
-         }
- 
-@@ -207,6 +291,15 @@ void ati_2d_blt(ATIVGAState *s)
-             unsigned int src_pitch = src_stride * sizeof(uint32_t);
-             unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
- 
-+            if (src_bpp != bpp) {
-+                qemu_log_mask(LOG_UNIMP,
-+                              "Mismatched bit depths not yet supported "
-+                              "in the fallback (non-pixman) implementation. "
-+                              "src: %d != dst: %d\n", src_bpp, bpp);
-+                g_free(color_data);
-+                return;
-+            }
-+
-             for (y = 0; y < clipped.height; y++) {
-                 i = clipped.x * bypp;
-                 j = src_x * bypp;
-@@ -232,6 +325,8 @@ void ati_2d_blt(ATIVGAState *s)
-                          clipped.x + clipped.width : clipped.x);
-         s->regs.dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
-                          clipped.y + clipped.height : clipped.y);
-+
-+        g_free(color_data);
-         break;
+ static const VMStateDescription vmstate_jvt = {
+     .name = "cpu/jvt",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = jvt_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.jvt, RISCVCPU),
++        VMSTATE_UINT64(env.jvt, RISCVCPU),
+         VMSTATE_END_OF_LIST()
      }
-     case ROP3_PATCOPY:
-diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index 9b52b61dcb..b741c3c6b8 100644
---- a/hw/display/ati_regs.h
-+++ b/hw/display/ati_regs.h
-@@ -404,6 +404,7 @@
- #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
- #define GMC_SRC_DSTCOLOR                        0x00003000
- #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
-+#define GMC_BYTE_ORDER_LSB_TO_MSB               0x00004000
- #define GMC_DP_SRC_RECT                         0x02000000
- #define GMC_3D_FCN_EN_CLR                       0x00000000
- #define GMC_AUX_CLIP_CLEAR                      0x20000000
-@@ -421,6 +422,18 @@
- #define GMC_DST_CLIP_DEFAULT                    0x00000000
- #define GMC_DST_CLIP_LEAVE_ALONE                0x00000008
+ };
+@@ -427,8 +427,8 @@ static const VMStateDescription vmstate_sstc = {
  
-+/* DP_GUI_MASTER_CNTL DP_SRC_DATATYPE named constants */
-+#define GMC_SRC_DATATYPE_MASK                   0x00003000
-+#define GMC_SRC_DATATYPE_MONO_FRGD_BKGD         0x00000000
-+#define GMC_SRC_DATATYPE_MONO_FRGD              0x00001000
-+#define GMC_SRC_DATATYPE_COLOR                  0x00003000
-+
-+/* DP_GUI_MASTER_CNTL DP_SRC_SOURCE named constants */
-+#define GMC_SRC_SOURCE_MASK                     0x07000000
-+#define GMC_SRC_SOURCE_MEMORY                   0x02000000
-+#define GMC_SRC_SOURCE_HOST_DATA                0x03000000
-+#define GMC_SRC_SOURCE_HOST_DATA_ALIGNED        0x04000000
-+
- /* DP_GUI_MASTER_CNTL ROP3 named constants */
- #define GMC_ROP3_MASK                           0x00ff0000
- #define ROP3_BLACKNESS                          0x00000000
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+-    .version_id = 10,
+-    .minimum_version_id = 10,
++    .version_id = 11,
++    .minimum_version_id = 11,
+     .post_load = riscv_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+@@ -459,16 +459,16 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.mvip, RISCVCPU),
+         VMSTATE_UINT64(env.sie, RISCVCPU),
+         VMSTATE_UINT64(env.mideleg, RISCVCPU),
+-        VMSTATE_UINTTL(env.satp, RISCVCPU),
+-        VMSTATE_UINTTL(env.stval, RISCVCPU),
+-        VMSTATE_UINTTL(env.medeleg, RISCVCPU),
+-        VMSTATE_UINTTL(env.stvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.sepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.scause, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.mepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.mcause, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtval, RISCVCPU),
++        VMSTATE_UINT64(env.satp, RISCVCPU),
++        VMSTATE_UINT64(env.stval, RISCVCPU),
++        VMSTATE_UINT64(env.medeleg, RISCVCPU),
++        VMSTATE_UINT64(env.stvec, RISCVCPU),
++        VMSTATE_UINT64(env.sepc, RISCVCPU),
++        VMSTATE_UINT64(env.scause, RISCVCPU),
++        VMSTATE_UINT64(env.mtvec, RISCVCPU),
++        VMSTATE_UINT64(env.mepc, RISCVCPU),
++        VMSTATE_UINT64(env.mcause, RISCVCPU),
++        VMSTATE_UINT64(env.mtval, RISCVCPU),
+         VMSTATE_UINTTL(env.miselect, RISCVCPU),
+         VMSTATE_UINTTL(env.siselect, RISCVCPU),
+         VMSTATE_UINT32(env.scounteren, RISCVCPU),
+@@ -479,8 +479,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+                              vmstate_pmu_ctr_state, PMUCTRState),
+         VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+         VMSTATE_UINTTL_ARRAY(env.mhpmeventh_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+-        VMSTATE_UINTTL(env.sscratch, RISCVCPU),
+-        VMSTATE_UINTTL(env.mscratch, RISCVCPU),
++        VMSTATE_UINT64(env.sscratch, RISCVCPU),
++        VMSTATE_UINT64(env.mscratch, RISCVCPU),
+         VMSTATE_UINT64(env.stimecmp, RISCVCPU),
+ 
+         VMSTATE_END_OF_LIST()
 -- 
-2.51.0
+2.51.1
 
 
