@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27177CCFA06
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 036C2CCF9F8
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsHK-0003zT-2X; Mon, 03 Nov 2025 05:59:14 -0500
+	id 1vFsH0-0003oB-87; Mon, 03 Nov 2025 05:58:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHI-0003xn-Lt
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGy-0003nq-Po
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsHE-0004WN-UE
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:59:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGs-0004Hc-Ag
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762167546;
+ s=mimecast20190719; t=1762167524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IOVDcGhMCkuyVVd2jbsDowfYGThYB1elQwWqVfTLoV4=;
- b=dDqM9dF5lWPyrEXKIZr4pQf0EdtjlzXK1lefQbWCeo1IFlYZiMSEYFNrg3iDfsMLghCqtv
- yQLS7spqoYSVWZ1319Nmoa0U6DcXt1X3Wf74/qf3vD69HdMKNktNgfpG3wM2HPIYdfVFy0
- wCyONvFWWBadrJR6T/PN7mbuD1Ngfqc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=4skMTA8q4CKiXos5Nlm3GfRuvfkktXGVS7jbmmBo9qg=;
+ b=hSUJ16usVXHA1R3EDBcQONFScN4Iv2kmOwHnEcFXYfnTnsUeli73GGSYnlYxHpP3vieUzw
+ JpNRg1QtWE/C0mdMaBTtJljGqxCzNls7wtwPIhEFa2gfTlb+R7qj0EReHvHX6soLu6cc3S
+ qao6A1hIJ0sJP3s3G6FSJ2yJP9ZAKKI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-GYjWc5YxPDm-uNYWh0oLQQ-1; Mon,
- 03 Nov 2025 05:59:04 -0500
-X-MC-Unique: GYjWc5YxPDm-uNYWh0oLQQ-1
-X-Mimecast-MFC-AGG-ID: GYjWc5YxPDm-uNYWh0oLQQ_1762167544
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-HjJ8z68ZOwKzpv97_5xSGg-1; Mon,
+ 03 Nov 2025 05:58:40 -0500
+X-MC-Unique: HjJ8z68ZOwKzpv97_5xSGg-1
+X-Mimecast-MFC-AGG-ID: HjJ8z68ZOwKzpv97_5xSGg_1762167519
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 166C61954230; Mon,  3 Nov 2025 10:59:04 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0B9C180A236; Mon,  3 Nov 2025 10:58:39 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8CF3330001A1; Mon,  3 Nov 2025 10:59:02 +0000 (UTC)
+ id 44E1030001A1; Mon,  3 Nov 2025 10:58:37 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 17/22] tests/functional: include the lower level QMP log
- messages
-Date: Mon,  3 Nov 2025 11:58:14 +0100
-Message-ID: <20251103105824.322039-18-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/22] tests/functional: Fix problems in utils.py reported by
+ pylint
+Date: Mon,  3 Nov 2025 11:58:03 +0100
+Message-ID: <20251103105824.322039-7-thuth@redhat.com>
 In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
 References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,46 +84,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-We've seen a GitLab CI timeout failure in the test_pseries.py test,
-where it appears likely that the test has hung in a self.qmp('quit')
-call, but we don't have conclusive proof. Adding the QMP log category
-to what we capture should help us diagnose this, at the cost of the
-base.log file becoming significantly more verbose. The previous
-commit to include the logger category name and function should at
-least help understanding the more verbose logs.
+- put the doc strings in the right locations (after the "def" line)
+- use the right indentation (4 spaces)
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251028182651.873256-3-berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251015095454.1575318-7-thuth@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/functional/qemu_test/utils.py | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index d9d114e63e3..1d773dd697d 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -225,6 +225,9 @@ def setUp(self):
-         self.machinelog = logging.getLogger('qemu.machine')
-         self.machinelog.setLevel(logging.DEBUG)
-         self.machinelog.addHandler(self._log_fh)
-+        self.qmplog = logging.getLogger('qemu.qmp')
-+        self.qmplog.setLevel(logging.DEBUG)
-+        self.qmplog.addHandler(self._log_fh)
+diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
+index e7c8de81654..826c267785b 100644
+--- a/tests/functional/qemu_test/utils.py
++++ b/tests/functional/qemu_test/utils.py
+@@ -17,10 +17,10 @@ def get_usernet_hostfwd_port(vm):
+     res = vm.cmd('human-monitor-command', command_line='info usernet')
+     return get_info_usernet_hostfwd_port(res)
  
-         if not self.assets_available():
-             self.skipTest('One or more assets is not available')
-@@ -235,6 +238,7 @@ def tearDown(self):
-         if self.socketdir is not None:
-             self.socketdir.cleanup()
-             self.socketdir = None
-+        self.qmplog.removeHandler(self._log_fh)
-         self.machinelog.removeHandler(self._log_fh)
-         self.log.removeHandler(self._log_fh)
-         self._log_fh.close()
+-"""
+-Round up to next power of 2
+-"""
+ def pow2ceil(x):
++    """
++    Round up to next power of 2
++    """
+     return 1 if x == 0 else 2**(x - 1).bit_length()
+ 
+ def file_truncate(path, size):
+@@ -28,12 +28,12 @@ def file_truncate(path, size):
+         with open(path, 'ab+') as fd:
+             fd.truncate(size)
+ 
+-"""
+-Expand file size to next power of 2
+-"""
+ def image_pow2ceil_expand(path):
+-        size = os.path.getsize(path)
+-        size_aligned = pow2ceil(size)
+-        if size != size_aligned:
+-            with open(path, 'ab+') as fd:
+-                fd.truncate(size_aligned)
++    """
++    Expand file size to next power of 2
++    """
++    size = os.path.getsize(path)
++    size_aligned = pow2ceil(size)
++    if size != size_aligned:
++        with open(path, 'ab+') as fd:
++            fd.truncate(size_aligned)
 -- 
 2.51.0
 
