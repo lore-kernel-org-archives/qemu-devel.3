@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC837CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 502C0CCFA06
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFrLp-0005gF-V0; Mon, 03 Nov 2025 04:59:50 -0500
+	id 1vFrLl-0005fG-I3; Mon, 03 Nov 2025 04:59:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vFrLm-0005fO-Tg
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:59:46 -0500
-Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vFrLh-0005eB-OW; Mon, 03 Nov 2025 04:59:41 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vFrLj-0007yf-Dy
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 04:59:46 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.134])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4d0Rrl5N5dz5y1k;
- Mon,  3 Nov 2025 09:59:35 +0000 (UTC)
-Received: from kaod.org (37.59.142.96) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vFrLb-0007y5-5P; Mon, 03 Nov 2025 04:59:41 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.115])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4d0RrP6Cm7z5w87;
+ Mon,  3 Nov 2025 09:59:17 +0000 (UTC)
+Received: from kaod.org (37.59.142.114) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 3 Nov
- 2025 10:59:34 +0100
+ 2025 10:59:16 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-96R001d029e793-6f53-475d-a8c9-fa7bf9a51add,
+ (GARM-114S008ab4b56d1-1f1d-4d6b-ae0c-4afc0bf6b0cc,
  25720A756895FCE40C516A1A344E2045610AA209) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f964800f-167f-46de-97d5-95195a59515b@kaod.org>
-Date: Mon, 3 Nov 2025 10:59:33 +0100
+Message-ID: <0cb02e89-2f9b-4c12-aad7-024df507ee4f@kaod.org>
+Date: Mon, 3 Nov 2025 10:59:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 03/30] hw/arm/aspeed: Export and rename
- create_pca9552() for reuse
+Subject: Re: [SPAM] [PATCH v3 02/30] hw/arm/aspeed: Make
+ aspeed_machine_class_init_cpus_defaults() globally accessible
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
- <20251103092801.1282602-4-jamin_lin@aspeedtech.com>
+ <20251103092801.1282602-3-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,34 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251103092801.1282602-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251103092801.1282602-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.96]
-X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.114]
+X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: a2aeb9a6-55a6-4e9c-abab-4ecc8cf60a65
-X-Ovh-Tracer-Id: 9009169582575750066
+X-Ovh-Tracer-GUID: c7051019-839d-4663-8797-550045c66eb1
+X-Ovh-Tracer-Id: 9004103033784404914
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE7mF+s+Mv9asiCubsXyPOCVmxdbfyGrbzrsmJtBoYHpCfVdl++dsax6YqzCX8Fy84RcdbieMHCzfAUQr7fCcdOmd/K34YObOJejouKGQnCMsFBbtjRl/JqjOzuVkBbxKjktv+2nk2Y3TN/Wvg5dTZXCISrcyYOfK2yqIVRIwQsO2V56lQAGxIMaz27o6Fix8q1IbseArjkivUJk8ILYdZM3lnfXDvVAb5vnkkfUd8cLi1C1vGzbJyDA2H7k2u0PrIMKdI90AYsK65ltt/WuUAuhcJU6f/AmTCRdYpIAVdrlArD3l4ojVp2h67SsDN0jRTuKfVGphdWt7/rVrdPrJQKn8pKrOEwTRnwBkWrDZOnjzr0pbUrCSYFg8VmdBP4sBku4ox/itWaFQFLx7VDxxASxnMbRs6GNRJYq3XjUKmlPXuNn+WYxNwOX2g6IexyhVi0r1dpyQIVkShLRPE5Te/O7i0S6uXz8BcSQ/qtIvh1Yy5EYiVk/1H/zSndKgIfwMi+5vzQAXroCpNPjv6i9OKHLhR1rr2BxUH6b5WtOcVYSNuQv9TAithaUCFqtiAyuCU6EcaofQEGgRPdGL0TdijbF3JrYNaQ36tGXyodGSJ3cJAzGDQvFmyyznao0BeHGMgaeyOe8vinitkrkAyJoaypFUVgfJMYsItuUbaUIRpX8g
-DKIM-Signature: a=rsa-sha256; bh=CV2DBiF20I0LdKLRdeTFlMucPp9SM9hExasLuy2mpg0=; 
+X-VR-SPAMCAUSE: dmFkZTEDLsRmy/kriGTMH6u/lBQ9ULL8Eh/OVCz13Rq7snT58fT8xyyZ0dH75Q6pZPJtMn+sbLVtK83dFpEaVn2BMANRtNTjDlFIGEehUljEKBG8aB1/VlggRLZrB4j6WZ0vpDkWhqQwr51/R7FBCKHoHD1PT30oySGsBJJqGyxWsdUSiB14BlZ4+anmLoX4Vp43FJKznUpnr0P3uGxhxha6182pDemSUZpl4um/8gxc0KwkY4tAMXazpDvdpEr6v3aIRasDhcqCrBO4NX3y7kx9OWag5SMP+x0MAo3YOb3IqPATt1L5zzLJNoXfScUcxEl9BCtdDuI59+9f/cKUlT1CZqeGWoBlz4faXM3U0/wuO+7YMN4AX4cclpMvWlSap8KFIAgC/BsnH1gfJNB5BjtcNvOd8h2cEdeAWeLdENpZaeioHxf36mlpOOjyX7GfY/BwQ9lh8sDgxBBIxrHtt+6GkfuP+SaeGZyN/oPnU9s4hInAnHE0Zrsy4QB6qgVTxxs1B51wSytTeMq17FhKlrwZEonq/lGM2/ShKZRltNVLLmbshb5BruqqZlAjsnN9mLur9vvj1qRyZuoqZU0m1dh6gAhdv2n5/jtpITxzi5kGVfOo0fmpJRvWZWYaJKhV2ISzpqSsCnqECqYIC+7PzY8Z38frUrinAvN7CWCQ0Sv2RUy3Jg
+DKIM-Signature: a=rsa-sha256; bh=IzxzkEcixHXK/VySs0a3PICAlEYk5Usnn9e8Gpf+OzI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1762163977; v=1;
- b=LAtJjl1lzGueSowJjPOSbj0uE1RcfuH8VxEYug3UR+Eh5wt+ik5ykxw9YjJEvKZ0q4/zxbY6
- UmDbawyTmuIOP+zy7uInBrEoerZJ+26OEIMTs57jPLplIiknbY1KrczQpwDmPx/0aXhhrTfnhCk
- QTfBpKDThntcRYATYqof7YVi1dchIW+0wUDQqE+I0dBXmslX44Ml6ETSA90s1rbLts7ufAUzvUC
- rq2qfapxO5/qCSFAZ2HCfUsa7NRqYj3jZmSNiq1tXhMjX2z7RIvtAAmK9Gys4gph5ptyGHyuiAo
- BrIMbVtZZa+AWn2COCW7+aOhKcyvir0kS9V9HjsMA0CyQ==
-Received-SPF: pass client-ip=178.33.254.192; envelope-from=clg@kaod.org;
- helo=3.mo552.mail-out.ovh.net
+ t=1762163959; v=1;
+ b=suMfje6ApWlGYBdGUkdwHBSBPM9C0TiF+3M/us9wN8gQa1lfihWYjaYju+LVqpkmVOxt1eiE
+ UBTgztENv4hiabkdf2uYdBzUlv5+PxNRR06q6r7yKCDuJmKkknwsUkd6rEapXcsiTgpJVcbziTq
+ EzdakgztxvVL8ct0jXlGxg3WCvByiKu7VMa1UUfHuFlPinTEPhIW2uhWcs8PtoohsKyzpAPRA0s
+ h4MLPHOnMRcUW6qv4Wn3sakXFDy5W9QFV0uh5zFO6a1l45K8c8p7NxgpGmp+ta2UUeYl2lENaE+
+ AYSFQ+krAq3vdhrsCdxol6BYego20vThvBzy5UrC4mxxw==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,18 +132,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/3/25 10:27, Jamin Lin wrote:
-> The helper function create_pca9552() has been renamed to
-> aspeed_create_pca9552() and made non-static for reuse by other Aspeed
-> machine source files. A corresponding prototype is now declared in
-> aspeed.h.
+> The function aspeed_machine_class_init_cpus_defaults() is now made
+> globally visible so that it can be used by other Aspeed machine C files.
 > 
-> This allows multiple Aspeed platforms to share PCA9552 I²C LED controller
-> initialization logic, improving code reuse and reducing duplication.
+> Previously, this function was declared as static, restricting its
+> visibility to aspeed.c. Since future machine split files will also
+> need to call this helper to initialize default CPU settings, its
+> declaration has been moved to the common header aspeed.h and the
+> static keyword has been removed.
 > 
 > No functional changes.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -152,154 +153,42 @@ C.
 
 
 > ---
->   include/hw/arm/aspeed.h | 12 +++++++++++
->   hw/arm/aspeed.c         | 44 ++++++++++++++++++++---------------------
->   2 files changed, 34 insertions(+), 22 deletions(-)
+>   include/hw/arm/aspeed.h | 10 ++++++++++
+>   hw/arm/aspeed.c         |  2 +-
+>   2 files changed, 11 insertions(+), 1 deletion(-)
 > 
 > diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-> index 712014497e..3afb964088 100644
+> index 9d34be68b2..712014497e 100644
 > --- a/include/hw/arm/aspeed.h
 > +++ b/include/hw/arm/aspeed.h
-> @@ -68,4 +68,16 @@ struct AspeedMachineClass {
->    */
->   void aspeed_machine_class_init_cpus_defaults(MachineClass *mc);
+> @@ -57,5 +57,15 @@ struct AspeedMachineClass {
+>       bool vbootrom;
+>   };
 >   
 > +/*
-> + * aspeed_create_pca9552:
-> + * @soc: pointer to the #AspeedSoCState.
-> + * @bus_id: the I²C bus index to attach the device.
-> + * @addr: the I²C address of the PCA9552 device.
+> + * aspeed_machine_class_init_cpus_defaults:
+> + * @mc: the #MachineClass to be initialized.
 > + *
-> + * Create and attach a PCA9552 LED controller device to the specified I²C bus
-> + * of the given Aspeed SoC. The device is instantiated using
-> + * i2c_slave_create_simple() with the PCA9552 device type.
+> + * Initialize the default CPU configuration for an Aspeed machine class.
+> + * This function sets the default, minimum, and maximum CPU counts
+> + * to match the number of CPUs defined in the associated SoC class,
+> + * and copies its list of valid CPU types.
 > + */
-> +void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr);
-> +
+> +void aspeed_machine_class_init_cpus_defaults(MachineClass *mc);
+>   
 >   #endif
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index f23af5bf8c..c6f272d986 100644
+> index 4c92f1e1d9..f23af5bf8c 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -537,7 +537,7 @@ static void tiogapass_bmc_i2c_init(AspeedMachineState *bmc)
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
+> @@ -1339,7 +1339,7 @@ static void aspeed_machine_class_props_init(ObjectClass *oc)
+>                                             "Change the SPI Flash model");
 >   }
 >   
-> -static void create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
-> +void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+> -static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+> +void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
 >   {
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
->                               TYPE_PCA9552, addr);
-> @@ -565,9 +565,9 @@ static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
->       smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54,
->                             eeprom4_54);
->       /* PCA9539 @ 0x76, but PCA9552 is compatible */
-> -    create_pca9552(soc, 4, 0x76);
-> +    aspeed_create_pca9552(soc, 4, 0x76);
->       /* PCA9539 @ 0x77, but PCA9552 is compatible */
-> -    create_pca9552(soc, 4, 0x77);
-> +    aspeed_create_pca9552(soc, 4, 0x77);
->   
->       /* bus 6 : */
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x48);
-> @@ -578,8 +578,8 @@ static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
->       uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
->       smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 0x56,
->                             eeprom8_56);
-> -    create_pca9552(soc, 8, 0x60);
-> -    create_pca9552(soc, 8, 0x61);
-> +    aspeed_create_pca9552(soc, 8, 0x60);
-> +    aspeed_create_pca9552(soc, 8, 0x61);
->       /* bus 8 : adc128d818 @ 0x1d */
->       /* bus 8 : adc128d818 @ 0x1f */
->   
-> @@ -710,7 +710,7 @@ static void fp5280g2_bmc_i2c_init(AspeedMachineState *bmc)
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "ds1338", 0x68);
->   
->       /* It expects a pca9555 but a pca9552 is compatible */
-> -    create_pca9552(soc, 8, 0x30);
-> +    aspeed_create_pca9552(soc, 8, 0x30);
->   }
->   
->   static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-> @@ -720,7 +720,7 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
->   
->       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 0), 0x51, 32 * KiB);
->   
-> -    create_pca9552(soc, 3, 0x61);
-> +    aspeed_create_pca9552(soc, 3, 0x61);
->   
->       /* The rainier expects a TMP275 but a TMP105 is compatible */
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
-> @@ -734,14 +734,14 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 2), 0x52, 64 * KiB);
-> -    create_pca9552(soc, 4, 0x60);
-> +    aspeed_create_pca9552(soc, 4, 0x60);
->   
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
->                        0x48);
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
->                        0x49);
-> -    create_pca9552(soc, 5, 0x60);
-> -    create_pca9552(soc, 5, 0x61);
-> +    aspeed_create_pca9552(soc, 5, 0x60);
-> +    aspeed_create_pca9552(soc, 5, 0x61);
->       i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
->                                         "pca9546", 0x70);
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
-> @@ -760,12 +760,12 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 2), 0x50, 64 * KiB);
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 3), 0x51, 64 * KiB);
->   
-> -    create_pca9552(soc, 7, 0x30);
-> -    create_pca9552(soc, 7, 0x31);
-> -    create_pca9552(soc, 7, 0x32);
-> -    create_pca9552(soc, 7, 0x33);
-> -    create_pca9552(soc, 7, 0x60);
-> -    create_pca9552(soc, 7, 0x61);
-> +    aspeed_create_pca9552(soc, 7, 0x30);
-> +    aspeed_create_pca9552(soc, 7, 0x31);
-> +    aspeed_create_pca9552(soc, 7, 0x32);
-> +    aspeed_create_pca9552(soc, 7, 0x33);
-> +    aspeed_create_pca9552(soc, 7, 0x60);
-> +    aspeed_create_pca9552(soc, 7, 0x61);
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "dps310", 0x76);
->       /* Bus 7: TODO si7021-a20@20 */
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), TYPE_TMP105,
-> @@ -782,8 +782,8 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
->                             64 * KiB, rainier_bb_fruid, rainier_bb_fruid_len);
->       at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51,
->                             64 * KiB, rainier_bmc_fruid, rainier_bmc_fruid_len);
-> -    create_pca9552(soc, 8, 0x60);
-> -    create_pca9552(soc, 8, 0x61);
-> +    aspeed_create_pca9552(soc, 8, 0x60);
-> +    aspeed_create_pca9552(soc, 8, 0x61);
->       /* Bus 8: ucd90320@11 */
->       /* Bus 8: ucd90320@b */
->       /* Bus 8: ucd90320@c */
-> @@ -804,17 +804,17 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
->                                         "pca9546", 0x70);
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
->       at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
-> -    create_pca9552(soc, 11, 0x60);
-> +    aspeed_create_pca9552(soc, 11, 0x60);
->   
->   
->       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 13), 0x50, 64 * KiB);
-> -    create_pca9552(soc, 13, 0x60);
-> +    aspeed_create_pca9552(soc, 13, 0x60);
->   
->       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 14), 0x50, 64 * KiB);
-> -    create_pca9552(soc, 14, 0x60);
-> +    aspeed_create_pca9552(soc, 14, 0x60);
->   
->       at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 15), 0x50, 64 * KiB);
-> -    create_pca9552(soc, 15, 0x60);
-> +    aspeed_create_pca9552(soc, 15, 0x60);
->   }
->   
->   static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+>       AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(mc);
+>       AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
 
 
