@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261AFCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 14:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3759DCCF9FE
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 14:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFvmj-0000pf-Bq; Mon, 03 Nov 2025 09:43:53 -0500
+	id 1vFvrH-0002Qc-Ol; Mon, 03 Nov 2025 09:48:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vFvmc-0000oV-BJ; Mon, 03 Nov 2025 09:43:47 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vFvmU-0004n3-Tw; Mon, 03 Nov 2025 09:43:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1762181019; x=1793717019;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=rgzIUif7BymigCeBn3RihGliGYi9spsPrRXf4EkFZzg=;
- b=coyaW7Z8YPo+nv2u9gN3WPJy04UHnyjDg+m2eSnSKFuEYVAtYK4mngva
- drCfMqlCK4n5k9f2PmflypIgfyyj8gqr7+eK/hm9Sld3MFq3WRfPOO6XS
- lYfvGM3Qq+1CXj9l3GDjte0UBKNDmrzwU5+x/YQ6wspDZ5CcvI8+8OoRh
- QzjYaiEM8j8L+aCx1d8Tuk/DyGmzVsGyH1MQWAUsgZN6sd8fMx7Hq2XCl
- l+6r6RzYNHeKgD/KLvTkQaTIRYHtXGOxR2gMCVHHYibZDVLHm7pGMin4K
- l1Tfvr+cQsS12YU37+0hSvMoetXFCrR7m3nqRZfszFTARUkgFvSZiPQuN A==;
-X-CSE-ConnectionGUID: DPX3Ag8BRsSSen2m5PNj6A==
-X-CSE-MsgGUID: C/wY5EvjSk2F/PKDPnlaqg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="66868994"
-X-IronPort-AV: E=Sophos;i="6.19,276,1754982000"; d="scan'208";a="66868994"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Nov 2025 06:43:26 -0800
-X-CSE-ConnectionGUID: E98YbumfTHSdNpgxCn67lQ==
-X-CSE-MsgGUID: kqvQMZqJSSaMwLYQkvXNUA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,276,1754982000"; d="scan'208";a="224130157"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 03 Nov 2025 06:43:18 -0800
-Date: Mon, 3 Nov 2025 23:05:32 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v4 00/27] hw/i386/pc: Remove deprecated 2.6 and 2.7 PC
- machines
-Message-ID: <aQjEvN7zbBay8yDy@intel.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20251031113344.7cb11540@imammedo-mac>
- <0942717b-214f-4e08-9e2a-6b87ded991c9@linaro.org>
- <aQTEKyQjqIIGtyP0@intel.com> <20251031152345.65b2caed@fedora>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1vFvrB-0002KD-7i
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 09:48:31 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1vFvr3-00060C-V3
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 09:48:28 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-78af3fe5b17so4209894b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 06:48:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762181297; x=1762786097; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=SKw61mVpAFp6lKuqOcxAB8I2qG+J/81gjnniy9U7+Qw=;
+ b=L8krzmUNwZ8V1LjtBd/k8/qYRPuW/iKNTDaRG+4T5N0z/nyA1M9zqJuHfAnZ1tX1g4
+ gb/DBhrqBQxU5+IsLDqml8Xnm2eyApJ841Qr4wuJ3Tjv0qDIC3WOPkL42vxg7zYY38JA
+ OnX0YmIOZw1ruoZrHuc1Ydshy/C03V6wS/WfEVpPo2EJWlcIQjvNNKDEMjienhonvngf
+ weAanHq1IQN0QrE3Z4XnSQ+vhAkMOTLM9VjFgiZr5vbWw+rZQnPX5h101mDZ1rci39+g
+ SqfhmbNMwrl8qI1IRMBB/u5+o/C3AdB49+BKoas9gqlPI8YUJnjcqNHBjzit/6u8eDo4
+ sGtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762181297; x=1762786097;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SKw61mVpAFp6lKuqOcxAB8I2qG+J/81gjnniy9U7+Qw=;
+ b=EWs1NteTdKElYnSqsapf8GMrCm1RaGA3K0yH8WuELpxvoou+E6m/x5cvp0g2cXdPmi
+ ckIEzubCNL1aLkma6eWq7xUb63Wax6Hrg7XWWaIYDwsIfcSkcSkXys26wurgseRheuJy
+ l7CvkAkHpyEOx5N7u2SY3EJsDzqXNquWAP+Z1w5swbXZy0SHv1MyydLzrRwCLalWvCUy
+ uXGg/ZaWXuFMOQI3Iur0c4VA4QtTYrGp9IX3ty8IiiEvfWwTcx/F9Wc3G+o2Y3weU3BH
+ M3LacNL+IG7IFAtQctS4lGoYcqixcz0++sLVk+8ZZtVNeTKvxjEKtiszGci8V8vg/22K
+ jj1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWW/igWtSalcDhJ8ZXU6EDCoj61IjbStzYp5ioNSEM6r1bTUnCatwF1YpxVbfthgmO7Syaihi0TsPQK@nongnu.org
+X-Gm-Message-State: AOJu0YwnhbeWYQD9dxYFb1B8aT0SQTcB3RUDMiX/iqlXtSMeo4rh/4QC
+ M23I0sb2HI2pdr979wbW22oTkYHhQiBrZ9z5I6VQxRlw7G1oBjHf5G/s
+X-Gm-Gg: ASbGncsucXkO/bdGFm404V0KZTBNP/jhGaxpjv21AuX/6AMIRJ3pN0H9J3WIbjBcwMQ
+ snwHdmbUSg4ntIsKiDBxXualuDRgNC2NbZQG2rZofD4AvmGj+dxHtm5GqjpgoLZDoo2Bum78v/f
+ IO48BN9O558/qQoTEAInjx3qbkwxqc1iGFA94/xiNUSl9fA+sRjxmaP1KW5ol9MG8L1D8PRkjF2
+ NjlBn3HLxd+yp0sI30bj5ChYhJz6V3iwz3JElkzdEIuHHVwGD5AWCtLEa5O5MquGq3mpQWGkKSN
+ RCI+ScoTu9yy2YeI06em4WTDMfyLxmw944j4peXoS6wPJhAvnXDmRcDJBedA6R0g2boXGp30atA
+ 0Kgks/lq1al+aBi7L1f5PR6ZXB+f+yX9F2Mf0rHjJUVNuballZxQURFPNdQu5O08niA+2XJ+3+A
+ MX5dm4DSoIWc68
+X-Google-Smtp-Source: AGHT+IGu1ZfltuT54fQyY4xeGF5efLlBK1zJhVriHWY6Kgg+81ydIxXlzVNnZovpVmT/9l+zznVJJg==
+X-Received: by 2002:a05:6a00:2192:b0:7ab:242b:95d0 with SMTP id
+ d2e1a72fcca58-7ab242b9885mr4293182b3a.18.1762181296704; 
+ Mon, 03 Nov 2025 06:48:16 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7a7db197340sm11605200b3a.44.2025.11.03.06.48.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Nov 2025 06:48:16 -0800 (PST)
+Date: Mon, 3 Nov 2025 06:48:15 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Cc: mark.cave-ayland@ilande.co.uk, sarkarsoumyajyoti23@gmail.com,
+ richard.henderson@linaro.org, qemu-devel@nongnu.org, deller@gmx.de,
+ Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH v3 2/3] i82596: Added core infrastructure and helper
+ functions
+Message-ID: <68c84dea-99ab-41b7-9721-4d6b0272a1b9@roeck-us.net>
+References: <20251103112723.12256-1-soumyajyotisarkar23@gmail.com>
+ <20251103112723.12256-3-soumyajyotisarkar23@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251031152345.65b2caed@fedora>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20251103112723.12256-3-soumyajyotisarkar23@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 31, 2025 at 03:23:45PM +0100, Igor Mammedov wrote:
-> Date: Fri, 31 Oct 2025 15:23:45 +0100
-> From: Igor Mammedov <imammedo@redhat.com>
-> Subject: Re: [PATCH v4 00/27] hw/i386/pc: Remove deprecated 2.6 and 2.7 PC
->  machines
-> X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+On Mon, Nov 03, 2025 at 04:57:22PM +0530, Soumyajyotii Ssarkar wrote:
+> As a part of GSOC 2025 I have done a massive rewrite of what was the
+> 82596 NIC. This has been done to add the missing functionality according
+> to the 82596 Manual and making the code production
+> ready.
 > 
-> On Fri, 31 Oct 2025 22:14:03 +0800
-> Zhao Liu <zhao1.liu@intel.com> wrote:
+> In this patch I have added the following:
+> - Added comprehensive 82596 constants and configuration macros
+> - Implemented address translation for segmented/linear memory modes
+> - Added error recording and statistics tracking infrastructure
+> - Implemented CRC-16/32 calculation and appending functions
+> - Added CSMA/CD collision detection and backoff logic
+> - Implemented bus throttle timer framework
+> - Added enhanced reset with full state initialization
+> - Added receive_iov and polling support functions
+> - Updated VMState for migration of all new fields
 > 
-> > Hi Igor and Philippe,
-> > 
-> > > On 31/10/25 11:33, Igor Mammedov wrote:  
-> > > > On Thu,  8 May 2025 15:35:23 +0200
-> > > > Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> > > > 
-> > > > Are you planning to resping it?
-> > > > (if yes, I can provide you with a fixed 2/27 patch that removes all legacy cpu hp leftovers)  
-> > > 
-> > > Sorry, no, I already burned all the x86 credits I had for 2025 :S  
-> > 
-> > Don't say that, thanks for your efforts! :-)
-> > 
-> > > Zhao kindly offered to help with respin :)  
-> > 
-> > I haven't forgotten about this. I also plan to help it move forward
-> > in the coming weeks.
+> Note:
+> This patch primarily includes placeholder code.
+> To achieve full 82596 emulation, the complete 82596 patch series is required.
+> Nevertheless, QEMU is able to load and boot successfully with this patch.
 > 
-> in this case, I'll send reworked patch (not really tested)
-> as a reply 2/27 so you could incorporate it on respin.
+> Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+> Tested-by: Helge Deller <deller@gmx.de>
 
-Thank Igor! I'll include that patch into v5.
-
-Regards,
-Zhao
-
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
