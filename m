@@ -4,106 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FC4CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C94ECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFuIK-0007O5-SW; Mon, 03 Nov 2025 08:08:24 -0500
+	id 1vFuMS-0000AA-9U; Mon, 03 Nov 2025 08:12:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFuII-0007N6-Uo
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:08:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vFuI2-0006rf-U9
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:08:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762175277;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Jir3vW3kh1gec9YkQYXcoufMCQ2NIgSa4+jj69QVwoo=;
- b=VYry4EbhD3gc5REs9aKU/XU5TVQEQAMPmtC2vbqrNPAUzOFP7uob9VmdXEfkaSOEu9hIku
- 96hd4EeGfVyVLsJnY3DEvviYrLFiWtQ8SVQWirgOP495HZb5bP2CClb6x8FnLUHFIyBBEf
- NGksbsd9XwN7C+geIKcfuQ2jU6Iyf/Q=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-D5KIpfGhM0OUBAhphk_g6g-1; Mon, 03 Nov 2025 08:07:56 -0500
-X-MC-Unique: D5KIpfGhM0OUBAhphk_g6g-1
-X-Mimecast-MFC-AGG-ID: D5KIpfGhM0OUBAhphk_g6g_1762175275
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-429c61b0ef7so927915f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:07:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762175275; x=1762780075;
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuMN-00009r-52
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:12:35 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFuM9-0007cp-SB
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:12:34 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4298b865f84so1946597f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 05:12:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762175527; x=1762780327; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Jir3vW3kh1gec9YkQYXcoufMCQ2NIgSa4+jj69QVwoo=;
- b=stYiKqhhEFE10zqbpIoI5tPHo+05HWLJJkPyHWsRVLPg0DOi7MlJIJ8+lYj90N4v1W
- vMbp0vGUC9PIEYxHpgUbK+izVSp9kd6jSNyXNN6/y1smF8qdDfHo8uoWbVdrJnREzV31
- K7cnuYQiu1Nf22Asr30FaUnUYG+xNTobfjLsWvbuPG8A+8LpE5EwH2WOyPCY3xj+cpZp
- A9NV3auOc9+wVcn8Zgd5xEagTWyGR5wTiID6+4pag+ed8sUGquhYpTEqgFcPTLGayEla
- DWvBzADcB3tPx53vlBokqE/60zZi6jL40uIAAxAyCkh7bI3E0NL2k2Rdie98/gc0aWsd
- TY8w==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LtfshfQhKFvEMkyiqCdcBdGH7uuhRla4fx3DacJvN2w=;
+ b=HtUXZxO86CSTa4KgV5fYzvBXmCx/v5I0cyIkGYR2r6T6YBypPxkh3tM3Pe5wYJ6WCU
+ AGCftIWxlonbs5uoQVPrIP1iG/pyBPHQYtVTruGYKCVJpF+Okp5UPAPIMHNI5Q8yjMpf
+ Nk0DJm3AmS+tDhfLtm9EdI8yVCpFsv5u09Cb8cKfyllMf+ujCVoJV9urBaSo3RRnBg86
+ qNgZRKorAx7rZgPiPf517aGbXmm6jiQyeOdLuN9vIQOXC/cwTRaasUy6NCl9W+gbmxUw
+ 4l1zjAkGtmhOS5Y3JialtNuDgwrhY/izWPDoJMmYXcQ2wXEpOvrbK/QISBhBn5R23EfV
+ llxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762175527; x=1762780327;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LtfshfQhKFvEMkyiqCdcBdGH7uuhRla4fx3DacJvN2w=;
+ b=q1CX4Y0zzs49hKIXMfMj3u/lcftiyi1LH3R4jehZ5TqkkVZxpBHyWL8UvQgQkqiJUi
+ kjOCN8j8xyesBa2aB0WJh54IJIUV3mDB09UtI23jfz2bBkPDhjnRwi4tHNjyrUl8UKp9
+ BI/N6v6RCWZLk5Ilp5/ebQJl8Ww/MmKuP+OaWc43zgPhMSOLsOsAKDBVza1eUs9ASHlg
+ u5I9ccGzMCEQPOsHc10xt104E+EfMHMiRFdakly9w0bk9LP2BG3VxtBX1o3PKTby2Ajo
+ PGBG+fYCkV5Bm2DhP5LUvpupYuYpioVHG7tcywjnkOvhcm2qXCdVi3VE9A2q+jpHwEDq
+ avXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlGoZYAxPZ9NlTrV/JHJbc4yaJwpvhNlL0BQF6Rj+U0dqw19MYLrDvWwxm9gZe7JL8upTJc1fQwrVJ@nongnu.org
-X-Gm-Message-State: AOJu0Yw09BycSMZCvnKAflPTTWS5CU8n1SjRhN2NpexyNyVlyWONpvwi
- UiwWyEdehppf1FcUDVAQCBwXwUizAU/u0G8jshreRAMdX/UfM4HXuZ/1W5ThpBv5FpvLuubU1AG
- BE10ov41a7hR7ociuICVqryK9NLCpK3E56VccXaOgjkkn2gD/18bqmCuf
-X-Gm-Gg: ASbGnctpAPc0uipX5RB9lkGLM2JNVY3sQ4losGzu439/Xf2+qGU+RzyPuN9qim/czLI
- XLWHpho4Sdwmq2TREN2vPviOifGb/vwlgnxT97TI+RCfJJz83PmBjwCY2HAkDlNgtvs553O+1Dz
- mB4iJ4OjiOKislIqwh7aZ/9qWLL3K0/3h7M2bsvvJFUS2WgxzgkoF8ZXo/roBgkbmzyot0Gad+i
- KVax30WtOJshFfQt5aiRUdEFdVJvb5llwV5fEyTy8DWR/LKcknJ+6CEhdNECOjFVzYvJrQzGALu
- dgJ7Tw7TNLPuZGKVI77VfF6+ceI6+bzdyFW6D0C8zSD4N5G3J355G1EWpTIOMg4CcEPJAipyNq8
- pGU7GR3GC/2DTMKA0wz1cjMsJJj2CBaMqWFbHL7z9du76+A==
-X-Received: by 2002:a05:6000:2410:b0:3ee:3dce:f672 with SMTP id
- ffacd0b85a97d-429bd676a03mr9985273f8f.4.1762175275340; 
- Mon, 03 Nov 2025 05:07:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEkBI+5OKIiFV984u/HuyUHjc0Cpa0y1QoXSRcuM1KeCcB1Dx8F8mTKCxvTzJ825I2/+YqR4g==
-X-Received: by 2002:a05:6000:2410:b0:3ee:3dce:f672 with SMTP id
- ffacd0b85a97d-429bd676a03mr9985242f8f.4.1762175274887; 
- Mon, 03 Nov 2025 05:07:54 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429c13e0325sm21149745f8f.29.2025.11.03.05.07.52
+ AJvYcCWE1UbdJYLc9bVzjFMcvDZM9DgAWmWOWjR6NewznfOdnEw4Nm89mMKumk3Lo0hFypsNjAv5K+pYrIaU@nongnu.org
+X-Gm-Message-State: AOJu0Yyk7ek/6Z6LlfwWVWO7tNmEbvLX5WAcNSQuY1vLKdpugZY1Xf9b
+ COCgnQtNKpOweqFBgj+cMAW+PUaOK24spdS+BUHWk9IckLGJ+T9ANZgD+t/xBfALmxYi/18g2/1
+ BGm5I47ZHLF0i
+X-Gm-Gg: ASbGncuMPFwW8Vu0X/FFxiO5CnBIbJiUwYWMRFa1H+cXQUzO5valHFbAIXoHXtmbjvC
+ lqY/ijpVrP6oVQgLXsbl4+7jOTlz0UwiNeaYqUtX22vn5bV8NU3d+bWAgwghcnjb4yM51pibIKy
+ 4iZiJXL8rB1yx5vhSrTClvJKUzc1FcY0/OZpD8jDrgsXFxV3jg2zcWoxv0AY8I2uzAEW7JiMxOS
+ ZKHWaaQ5eXRVvgO1UpbU2roNNxctyriNS4trZjkgg2/FowfyesKMTZpxW5JpNDj5a2trN8dKHw2
+ c+U/eHQfEmKSoYMactfJs30QKe+b2IxeHCvNG91bFDrZESwoYEzKShRxqijXEy7T4qe5aOUPzfX
+ b2clxAb67oCEhS0kM5ypRkrTitXkTZ/5e7Wd5hKhusICxa6ut8M1aIHx6FuRrmq6vx6lCy4kcdf
+ 2jUTmQzXx0GCIA4nnfawrfQQHwjPKuaSm2jjPnyd9qD1c2DyzWPTDv5XIDiWsRf1o=
+X-Google-Smtp-Source: AGHT+IEWsgDkVvUvtLN1e0cKwdqo4yLDCUjRUWNlZxSaDcbe0i1fLqs4T6AYwNY9yhi/j+yV0elY6g==
+X-Received: by 2002:a5d:64c5:0:b0:429:cda2:a01d with SMTP id
+ ffacd0b85a97d-429cda2a2f2mr4805382f8f.26.1762175527039; 
+ Mon, 03 Nov 2025 05:12:07 -0800 (PST)
+Received: from [172.18.140.215] (ip-185-104-138-156.ptr.icomera.net.
+ [185.104.138.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429c140629dsm20392664f8f.46.2025.11.03.05.12.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 05:07:53 -0800 (PST)
-Message-ID: <8b344a67-3017-4bce-9482-09b957eafd2b@redhat.com>
-Date: Mon, 3 Nov 2025 14:07:52 +0100
+ Mon, 03 Nov 2025 05:12:06 -0800 (PST)
+Message-ID: <bfd49f9a-0a37-4e1d-b7e2-f0e59943915e@linaro.org>
+Date: Mon, 3 Nov 2025 14:12:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 20/23] vfio: Bypass readonly region for dirty tracking
+Subject: Re: [PATCH v5 5/6] scripts: Add helper script to generate eMMC block
+ device images
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-21-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251024084349.102322-21-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Eric Blake <eblake@redhat.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
+ <5c9c6495ad4afc9d11f856bafcb797fed8fccecc.1760702638.git.jan.kiszka@siemens.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5c9c6495ad4afc9d11f856bafcb797fed8fccecc.1760702638.git.jan.kiszka@siemens.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,66 +107,288 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Jan,
 
-
-On 10/24/25 10:43 AM, Zhenzhong Duan wrote:
-> When doing ditry tracking or calculating dirty tracking range, readonly
-dirty tracking or when ...
-> regions can be bypassed, because corresponding DMA mappings are readonly
-> and never become dirty.
->
-> This can optimize dirty tracking a bit for passthrough device.
->
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+On 17/10/25 14:03, Jan Kiszka wrote:
+> From: Jan Kiszka <jan.kiszka@siemens.com>
+> 
+> As an eMMC block device image may consist of more than just the user
+> data partition, provide a helper script that can compose the image from
+> boot partitions, an RPMB partition and the user data image. The script
+> also does the required size validation and/or rounding.
+> 
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 > ---
->  hw/vfio/listener.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index 0862b2b834..cbd86c79af 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -828,7 +828,8 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
->          container_of(listener, VFIODirtyRangesListener, listener);
->      hwaddr iova, end;
->  
-> -    if (!vfio_listener_valid_section(section, false, "tracking_update") ||
-> +    /* Bypass readonly section as it never become dirty */
-> +    if (!vfio_listener_valid_section(section, true, "tracking_update") ||
->          !vfio_get_section_iova_range(dirty->bcontainer, section,
->                                       &iova, &end, NULL)) {
->          return;
-> @@ -1087,6 +1088,12 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->      if (!mr) {
->          goto out_unlock;
->      }
+>   scripts/mkemmc.sh | 218 ++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 218 insertions(+)
+>   create mode 100755 scripts/mkemmc.sh
+> 
+> diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
+> new file mode 100755
+> index 0000000000..1a2b7a6193
+> --- /dev/null
+> +++ b/scripts/mkemmc.sh
+> @@ -0,0 +1,218 @@
+> +#!/bin/sh -e
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# Create eMMC block device image from boot, RPMB and user data images
+> +#
+> +# Copyright (c) Siemens, 2025
+> +#
+> +# Authors:
+> +#  Jan Kiszka <jan.kiszka@siemens.com>
+> +#
+> +# This work is licensed under the terms of the GNU GPL version 2.
+> +# See the COPYING file in the top-level directory.
+> +#
 > +
-> +    if (!(iotlb->perm & IOMMU_WO) || mr->readonly) {
-> +        rcu_read_unlock();
-> +        return;
-This change is less obvsious compared to the others. Might be worth
-explaining why you add it.
-> +    }
+> +usage() {
+> +    echo "$0 [OPTIONS] USER_IMG[:SIZE] OUTPUT_IMG"
+> +    echo ""
+> +    echo "SIZE must be a power of 2 up to 2G and multiples of 512 byte from there on."
+> +    echo "If no SIZE is specified, the size of USER_ING will be used (rounded up)."
+> +    echo ""
+> +    echo "Supported options:"
+> +    echo "  -b BOOT1_IMG[:SIZE]   Add boot partitions. SIZE must be multiples of 128K. If"
+> +    echo "                          no SIZE is specified, the size of BOOT1_IMG will be"
+> +    echo "                          used (rounded up). BOOT1_IMG will be stored in boot"
+> +    echo "                          partition 1, and a boot partition 2 of the same size"
+> +    echo "                          will be created as empty (all zeros) unless -B is"
+> +    echo "                          specified as well."
+> +    echo "  -B BOOT2_IMG          Fill boot partition 2 with BOOT2_IMG. Must be combined"
+> +    echo "                          with -b which is also defining the partition size."
+> +    echo "  -r RPMB_IMG[:SIZE]    Add RPMB partition. SIZE must be multiples of 128K. If"
+> +    echo "                          no SIZE is specified, the size of RPMB_IMG will be"
+> +    echo "                          used (rounded up)."
+> +    echo "  -h, --help            This help"
+> +    echo ""
+> +    echo "All SIZE parameters support the units K, M, G. If SIZE is smaller than the"
+> +    echo "associated image, it will be truncated in the output image."
+> +    exit "$1"
+> +}
 > +
->      translated_addr = memory_region_get_ram_addr(mr) + xlat;
->  
->      ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-> @@ -1222,7 +1229,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
->      int ret;
->      Error *local_err = NULL;
->  
-> -    if (vfio_listener_skipped_section(section, false)) {
-> +    if (vfio_listener_skipped_section(section, true)) {
-the false -> true change might be squashed into the 18/23 patch while
-explainig why you set this value.
+> +process_size() {
+> +    name=$1
+> +    image_file=$2
+> +    alignment=$3
+> +    image_arg=$4
+> +    if [ "${image_arg#*:}" = "$image_arg"  ]; then
+> +        if ! size=$(stat -L -c %s "$image_file" 2>/dev/null); then
+> +            echo "Missing $name image '$image_file'." >&2
+> +            exit 1
+> +        fi
+> +        if [ "$alignment" = 128 ]; then
+> +            size=$(( (size + 128 * 1024 - 1) & ~(128 * 1024 - 1) ))
+> +        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
+> +            size=$(( (size + 511) & ~511 ))
+> +        elif [ $(( size & (size - 1) )) -gt 0 ]; then
+> +            n=0
+> +            while [ "$size" -gt 0 ]; do
+> +                size=$((size >> 1))
+> +                n=$((n + 1))
+> +            done
+> +            size=$((1 << n))
+> +        fi
+> +    else
+> +        value="${image_arg#*:}"
+> +        if [ "${value%K}" != "$value" ]; then
+> +            size=${value%K}
+> +            multiplier=1024
+> +        elif [ "${value%M}" != "$value" ]; then
+> +            size=${value%M}
+> +            multiplier=$((1024 * 1024))
+> +        elif [ "${value%G}" != "$value" ]; then
+> +            size=${value%G}
+> +            multiplier=$((1024 * 1024 * 1024))
+> +        else
+> +            size=$value
+> +            multiplier=1
+> +        fi
+> +        if [ "$size" -eq "$size" ] 2>/dev/null; then
 
-Eric
->          return;
->      }
->  
+I don't get this check, should one be "$value"?
+
+> +            size=$((size * multiplier))
+> +        else
+> +            echo "Invalid value '$value' specified for $image_file image size." >&2
+> +            exit 1
+> +        fi
+> +        if [ "$alignment" = 128 ]; then
+> +            if [ $(( size & (128 * 1024 - 1) )) -ne 0 ]; then
+> +                echo "The $name image size must be multiples of 128K." >&2
+> +                exit 1
+> +            fi
+> +        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
+> +            if [ $(( size & 511)) -ne 0 ]; then
+> +                echo "The $name image size must be multiples of 512 (if >2G)." >&2
+> +                exit 1
+> +            fi
+> +        elif [ $(( size & (size - 1) )) -gt 0 ]; then
+> +            echo "The $name image size must be power of 2 (up to 2G)." >&2
+> +            exit 1
+> +        fi
+> +    fi
+> +    echo $size
+> +}
+> +
+> +check_truncation() {
+> +    image_file=$1
+> +    output_size=$2
+> +    if [ "$image_file" = "/dev/zero" ]; then
+> +        return
+> +    fi
+> +    if ! actual_size=$(stat -L -c %s "$image_file" 2>/dev/null); then
+> +        echo "Missing image '$image_file'." >&2
+> +        exit 1
+> +    fi
+> +    if [ "$actual_size" -gt "$output_size" ]; then
+> +        echo "Warning: image '$image_file' will be truncated on output."
+> +    fi
+> +}
+> +
+> +userimg=
+> +outimg=
+> +bootimg1=
+> +bootimg2=/dev/zero
+> +bootsz=0
+> +rpmbimg=
+> +rpmbsz=0
+> +
+> +while [ $# -gt 0 ]; do
+> +    case "$1" in
+> +        -b)
+> +            shift
+> +            [ $# -ge 1 ] || usage 1
+> +            bootimg1=${1%%:*}
+> +            bootsz=$(process_size boot "$bootimg1" 128 "$1")
+> +            shift
+> +            ;;
+> +        -B)
+> +            shift
+> +            [ $# -ge 1 ] || usage 1
+> +            bootimg2=$1
+> +            shift
+> +            ;;
+> +        -r)
+> +            shift
+> +            [ $# -ge 1 ] || usage 1
+> +            rpmbimg=${1%%:*}
+> +            rpmbsz=$(process_size RPMB "$rpmbimg" 128 "$1")
+> +            shift
+> +            ;;
+> +        -h|--help)
+> +            usage 0
+> +            ;;
+> +        *)
+> +            if [ -z "$userimg" ]; then
+> +                userimg=${1%%:*}
+> +                usersz=$(process_size user "$userimg" U "$1")
+> +            elif [ -z "$outimg" ]; then
+> +                outimg=$1
+> +            else
+> +                usage 1
+> +            fi
+> +            shift
+> +            ;;
+> +    esac
+> +done
+> +
+> +[ -n "$outimg" ] || usage 1
+> +
+> +if [ "$bootsz" -gt $((32640 * 1024)) ]; then
+
+Running on macOS:
+
+scripts/mkemmc.sh: line 165: [: : integer expression expected
+scripts/mkemmc.sh: line 169: [: : integer expression expected
+scripts/mkemmc.sh: line 179: [: : integer expression expected
+scripts/mkemmc.sh: line 191: [: : integer expression expected
+scripts/mkemmc.sh: line 200: [: : integer expression expected
+scripts/mkemmc.sh: line 202: [: : integer expression expected
+scripts/mkemmc.sh: line 204: [: : integer expression expected
+
+$ sh --version
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)
+
+When using dash:
+
+scripts/mkemmc.sh: 165: [: Illegal number:
+scripts/mkemmc.sh: 169: [: Illegal number:
+scripts/mkemmc.sh: 179: [: Illegal number:
+scripts/mkemmc.sh: 191: [: Illegal number:
+scripts/mkemmc.sh: 200: [: Illegal number:
+scripts/mkemmc.sh: 202: [: Illegal number:
+scripts/mkemmc.sh: 204: [: Illegal number:
+
+Should we replace s/[/[[/?
+
+> +    echo "Boot image size is larger than 32640K." >&2
+> +    exit 1
+> +fi
+> +if [ "$rpmbsz" -gt $((16384 * 1024)) ]; then
+> +    echo "RPMB image size is larger than 16384K." >&2
+> +    exit 1
+> +fi
+> +
+> +echo "Creating eMMC image"
+> +
+> +truncate "$outimg" -s 0
+I'd replace here by:
+    truncate -s 0 "$outimg"
+
+to avoid on macOS:
+
+usage: truncate [-c] -s [+|-|%|/]size[K|k|M|m|G|g|T|t] file ...
+        truncate [-c] -r rfile file ...
+
+> +pos=0
+> +
+> +if [ "$bootsz" -gt 0 ]; then
+> +    echo "  Boot partition 1 and 2:   $((bootsz / 1024))K each"
+> +    blocks=$(( bootsz / (128 * 1024) ))
+> +    check_truncation "$bootimg1" "$bootsz"
+> +    dd if="$bootimg1" of="$outimg" conv=sparse bs=128K count=$blocks \
+> +        status=none
+> +    check_truncation "$bootimg2" "$bootsz"
+> +    dd if="$bootimg2" of="$outimg" conv=sparse bs=128K count=$blocks \
+> +        seek=$blocks status=none
+> +    pos=$((2 * bootsz))
+> +fi
+> +
+> +if [ "$rpmbsz" -gt 0 ]; then
+> +    echo "  RPMB partition:           $((rpmbsz / 1024))K"
+> +    blocks=$(( rpmbsz / (128 * 1024) ))
+> +    check_truncation "$rpmbimg" "$rpmbsz"
+> +    dd if="$rpmbimg" of="$outimg" conv=sparse bs=128K count=$blocks \
+> +        seek=$(( pos / (128 * 1024) )) status=none
+> +    pos=$((pos + rpmbsz))
+> +fi
+> +
+> +if [ "$usersz" -lt 1024 ]; then
+> +    echo "  User data:                $usersz bytes"
+> +elif [ "$usersz" -lt $((1024 * 1024)) ]; then
+> +    echo "  User data:                $(( (usersz + 1023) / 1024 ))K ($usersz)"
+> +elif [ "$usersz" -lt $((1024 * 1024 * 1024)) ]; then
+> +    echo "  User data:                $(( (usersz + 1048575) / 1048576))M ($usersz)"
+> +else
+> +    echo "  User data:                $(( (usersz + 1073741823) / 1073741824))G ($usersz)"
+> +fi
+> +check_truncation "$userimg" "$usersz"
+> +dd if="$userimg" of="$outimg" conv=sparse bs=128K seek=$(( pos / (128 * 1024) )) \
+> +    count=$(( (usersz + 128 * 1024 - 1) / (128 * 1024) )) status=none
+> +pos=$((pos + usersz))
+> +truncate "$outimg" -s $pos
+
+truncate -s $pos "$outimg"
+
+> +
+> +echo ""
+> +echo "Instantiate by appending to the qemu command line:"
+> +echo "  -drive file=$outimg,if=none,format=raw,id=emmc-img"
+> +echo "  -device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=emmc-img"
 
 
