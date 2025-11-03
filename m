@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B4BCCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB23BCCFA08
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1m1-00017J-5A; Mon, 03 Nov 2025 16:07:33 -0500
+	id 1vG1lt-00014N-HB; Mon, 03 Nov 2025 16:07:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lu-00014t-Ta
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:28 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lr-00013t-7b
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1la-0005Ny-RQ
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:26 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lc-0005OQ-1q
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204023;
+ s=mimecast20190719; t=1762204024;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dKv6Wkq2k6ueU++W0j4Jpj9adHe/TBCqtH0wdQ1hQcY=;
- b=XhNkuqvE/4kelBpna9X+yu15ZQz05hpbYhLh2SSJ+SakeD3CNCLUuW1IbgRn/cCG5X9PZi
- bgLK15xVQBxK7dmwU+CSGZXvWb0NOx8kg+pqzYzKVquyHOWQ2mlQMaceqhSmCZ2jjxelma
- yrXDjq8Du4g8Syixw7WYMkV8kxUpuyY=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ro0rqiX7tgkkRvJEpK7ll/B4dLckc2iwMhybX5sTV6c=;
+ b=QZfmeda9QW2Gwd9cXqXPJ5EilJbK0kLVeXX/9AmSRX2hlGrndR0x5gNM3kJYozrw5OmNZ0
+ ALjbg1wDaZmA3xtA5F2OSs+t26Cfe083T3439h6Sy66DB8/k14P2wSXbku8nnZM1UdysI7
+ RqxvnDHDIurmDTi7S6slIfE08S/lbcc=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-0jqamX-kPXuYaeLx3TLLPw-1; Mon, 03 Nov 2025 16:07:02 -0500
-X-MC-Unique: 0jqamX-kPXuYaeLx3TLLPw-1
-X-Mimecast-MFC-AGG-ID: 0jqamX-kPXuYaeLx3TLLPw_1762204022
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4ecf0501ec2so100538401cf.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:02 -0800 (PST)
+ us-mta-658-LUqpTBlCPwG-vp6l_TjOUA-1; Mon, 03 Nov 2025 16:07:03 -0500
+X-MC-Unique: LUqpTBlCPwG-vp6l_TjOUA-1
+X-Mimecast-MFC-AGG-ID: LUqpTBlCPwG-vp6l_TjOUA_1762204023
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4ed5f5a2948so10153741cf.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:07:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204021; x=1762808821; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762204022; x=1762808822; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dKv6Wkq2k6ueU++W0j4Jpj9adHe/TBCqtH0wdQ1hQcY=;
- b=aaX586yEWG2SfjXHv6J3VNgXBRhhmNXsSlvw2SE/d9byeed5VqeYnVVHhnFlcN4X9m
- h9qsCJ6W/7UMxBanERr60uN0xIn1BDmPPRSuxT40GeY3LgNMgutVDmTGrqsZrVQ60K/2
- 9cmT5AksKb/FWsfOndidWe0CYHm05o2EF/qwROJYBwqahGAs3ReMvlA5rbFwBHDFs+Vy
- eef1TXBz4ER4912ox8e1AKYlWYvb2DX/17vUsfmfo+8/U8Q+uCEBTH7yz/uN6D/dPYFX
- 5DvbXur6DvS8IZBDyxa/tlApczjCyX1ukgez+vMx3GGGc2JiC+e2NEOwAAWIhX6K2KKL
- MNZw==
+ bh=Ro0rqiX7tgkkRvJEpK7ll/B4dLckc2iwMhybX5sTV6c=;
+ b=Y0m+MtrTg/6Bc3kMMyd1GrJgd3ooinGmE9JXUKZS5WJJhI9hBN43XqoVUF98xDpowh
+ E1iIbJX4/g138y7t/TGdBFtsVSp33qMHejfY6oJPAap+5O/e5Zi2qSvfBMu7/0YkGdJa
+ Ahe5du1rY4jT2HEe/3d3BcW2FXOLIquZIAlwVhaEun2PCKaN4bI4iKf9Lqm93vUyPsnq
+ 10yb3m1p+B08Y4k0Qz5AmkJVny3lWERe3PmncLsdBX4kABXPzYHUO0bJ8WSa7Y49zP6R
+ fZle+k2uNI6p2m4524RsmO90pWKTPA0AegRf93zUldghporMlbo1OTOj2DvS8/ljQTgX
+ FXug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204021; x=1762808821;
+ d=1e100.net; s=20230601; t=1762204022; x=1762808822;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dKv6Wkq2k6ueU++W0j4Jpj9adHe/TBCqtH0wdQ1hQcY=;
- b=LqjqePpVrIkdcQyFjh/uKKjAjoZeCUWum6c7v9bemEW9X8lnN3AJL0xhYKusZ6H4L8
- 6BwjqZIEdTqhhpk3QLeWhVDEz/K+GF52pELph0v98B7TbWsyFsMQoqYQniiMcRGA/vye
- s2SfhCsub9wi2G2ZGWYtgsCAjeuIpLqrzQQoBE9AuFVvAy09IYWiUD7Ub536Xni1H+R0
- 9NIvBiPUfbNRyMUND5NxDIDYBva4ESlkJhh559rZY+bkTVm5j18mEtXbbGwuOQ4QzkFM
- 8TL423N7fio+7w06cUdZpy01sRFxm8EXwP0T3LWiz3Me1MzON+8mtrPy5MZVKPfJYTx9
- +4KA==
-X-Gm-Message-State: AOJu0YyUSkBpMIJStyFUZF9IGITcHF38OYZKZrpH8cNhSHSFBDsVb8aq
- ztLtl1RVmlmprl3qt9sbqr8cUHJthKqsbkX1PCHordTZDcvKHbAF32nYrTEBuw55N4CChv83N4z
- OOajstfC3pFOHFcdw5eYTNcAOdM6qpaL7wcK5t6dRN3tPtpsTirKnqhpHGqkHonHXFvG0BDZ3gO
- 5yvJeWMLXKiYTbAY7ZQs03jSjR7/imcQsNPmnRfw==
-X-Gm-Gg: ASbGnct3WFlqrrN5bCzfL4CDSfvBVYW2xpHlcyLJXLhkDH7iNmYdVjDKJK0hFjk9bjn
- OeeTXxrjR6xh1J0yvJGW/ppPRKp1/yuwqVnVQnM1RbsXUBAh+rwEOrp9OnS6twHq3xf8fER3wJN
- bFFPaTlDO0LbqJEiVWaVIfPpNhvuRzCfusQPlPv/dHdB8te1Sfgcp6LbhRTozoqJsefHQm2Y2bW
- PX6YR997r+qsg7fvv7jF55TcCmw8o1tnIePh+T1eUUe5SvrSQnBAf37IrbKT04QKq8Hkpfgzj+h
- WiTPEKnCd61YDywE1cIWvh/6opR8lZp7PA9LTmhh74GFoJMJ872DWhl5NaglFPi9
-X-Received: by 2002:a05:622a:418e:b0:4e7:1eb9:605d with SMTP id
- d75a77b69052e-4ed30d4ef35mr164580191cf.11.1762204021048; 
+ bh=Ro0rqiX7tgkkRvJEpK7ll/B4dLckc2iwMhybX5sTV6c=;
+ b=BG9pJRLbF5/rb0fPtRdtEyhyb7+kWaJaig+WfyUpEd3NWroZ4QlgyWc+qTfTT0QQuy
+ 9Bp6YeuCQTETMxdFCROjnUCW32DD5t24QwAYpwMKmuvOeNlAMI4z1ncpwWxnwkIA3Z24
+ K1M07qfGIxt67FHYLBJIcnV6sGeFwdSawlmse+KArZx2TkuLqjybiEHzWFs2bgQG1AR2
+ GDREwVjXcHIBCtPukYF56D4kJv7xMeUeWwdBK7YG1cFGrhBWCujScHEsCJmrfOUNRj34
+ NxRgkciV/sg1uTDkqA8G6FMayqb63azN1R9dTQAGs0GawbiH6kJXnPBUujsQWrX2uvko
+ 7cow==
+X-Gm-Message-State: AOJu0YyuDuwJSajEdh8+AsBBB82mrNKvM+YOfw2j1BybiLXQG4TUYRjs
+ URJlckkmGaBernXtU4smI3pFuFTKVUiwhgWUYoJk4xRNfbqh8fU1EcmqOAMZNsOodGrvxhnqNBE
+ zKMNtQOLq3azqoLvM8O1Z3XtOwyEneaEqx0249jKB7IJogcCpkRNq4wsse2V14cAF2usje4FGne
+ ZESQFnt1dx3xRCSs+YfYR9OvdqD7SiKGJSTAIAeg==
+X-Gm-Gg: ASbGncvWdSGg5koKfP2nYlfTwxzWs23cnNcZcqVngjAEdaMlXHbzltAbosfi1Gx/iLV
+ IiR3J5Q9oD22KkdUOrnpoA66v80krgKFNHqTS5kGzhLlMFnpWa9TniEykq5cuxraB/NTqGP+eHf
+ XJznbVaFoGjZ7kWg942Qv9nkZLAuoHHiwwLXQzSqZtEEgvQVvYJGb7MkYTrW4W68/9UJE3rNIXy
+ j2FfmBOHkMCO8I3OqVt5j2bdHw+5ySnn1FzMoyxACq/34X/WGWPss0Q6aV2+507FFi4UVccurcU
+ EjCGkzRNgNz+jZFGCWlBp8O/bO/T2TOKU15+THV5upsLz2pHcWBKsIr6sh4IkP5j
+X-Received: by 2002:a05:622a:1825:b0:4ec:eecf:66fc with SMTP id
+ d75a77b69052e-4ed310a77cfmr188497381cf.51.1762204022255; 
+ Mon, 03 Nov 2025 13:07:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWrdDYk3VljiAcGnfLyWpCxCC7h8Mq0DR4iVdkwqKoIENEvVqb3X+QYYqb4rinJwo+alhoFg==
+X-Received: by 2002:a05:622a:1825:b0:4ec:eecf:66fc with SMTP id
+ d75a77b69052e-4ed310a77cfmr188496591cf.51.1762204021652; 
  Mon, 03 Nov 2025 13:07:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGBveRYy/QYvtQ7hk4nBhBNCdn+kMcMHpQPydEzNXeivQnb5dUJ8HWJY/SEhKmBDLw435N7DQ==
-X-Received: by 2002:a05:622a:418e:b0:4e7:1eb9:605d with SMTP id
- d75a77b69052e-4ed30d4ef35mr164579611cf.11.1762204020471; 
- Mon, 03 Nov 2025 13:07:00 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.59
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.07.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:07:00 -0800 (PST)
+ Mon, 03 Nov 2025 13:07:01 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 22/36] migration: Properly wait on G_IO_IN when peeking messages
-Date: Mon,  3 Nov 2025 16:06:11 -0500
-Message-ID: <20251103210625.3689448-23-peterx@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PULL 23/36] migration: vmstate_save_state_v(): fix error path
+Date: Mon,  3 Nov 2025 16:06:12 -0500
+Message-ID: <20251103210625.3689448-24-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
@@ -103,9 +104,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,36 +122,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migration_channel_read_peek() used to do explicit waits of a short period
-when peeking message needs retry.  Replace it with explicit polls on the io
-channel, exactly like what qemu_fill_buffer() does.
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Link: https://lore.kernel.org/r/20251022192612.2737648-3-peterx@redhat.com
+In case of pre_save_errp, on error, we continue processing fields,
+unlike case of pre_save, where we return immediately. Behavior
+for pre_save_errp case is wrong, we must return here, like for
+pre_save.
+
+ "migration: Add error-parameterized function variants in VMSD struct"
+
+Fixes: 40de712a89
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20251028130738.29037-2-vsementsov@yandex-team.ru
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/channel.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ migration/vmstate.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/migration/channel.c b/migration/channel.c
-index a547b1fbfe..462cc183e1 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -135,12 +135,7 @@ int migration_channel_read_peek(QIOChannel *ioc,
-             break;
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 81eadde553..fd066f910e 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -443,6 +443,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+         if (ret < 0) {
+             error_prepend(errp, "pre-save for %s failed, ret: %d: ",
+                           vmsd->name, ret);
++            return ret;
          }
- 
--        /* 1ms sleep. */
--        if (qemu_in_coroutine()) {
--            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
--        } else {
--            g_usleep(1000);
--        }
-+        qio_channel_wait_cond(ioc, G_IO_IN);
-     }
- 
-     return 0;
+     } else if (vmsd->pre_save) {
+         ret = vmsd->pre_save(opaque);
 -- 
 2.50.1
 
