@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A0ECCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D57CCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 21:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG1mz-0002FS-2n; Mon, 03 Nov 2025 16:08:33 -0500
+	id 1vG1lW-0000yQ-7q; Mon, 03 Nov 2025 16:07:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1mw-000236-Pt
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:08:30 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lU-0000y3-MF
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:07:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1mn-0005eJ-Jo
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:08:29 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vG1lJ-0005Hc-LX
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 16:06:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762204095;
+ s=mimecast20190719; t=1762204008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=75HUCE6Au07SRMomYeRAuTHnwe9a6Sk1ODLtoL1BP84=;
- b=bdtIGPNltiTF0o8yyhAJmICw+YccdQk3M+jshDNPxApQXTlDFXvEBpMMFUHhDV0QaPbcIL
- 1qKhmYu/ccOG3wDg5TME3fcYBgUquVObcILWAqHadrbbmcV96eQ1JgetuP/vopHXZsCgHu
- k0NrHB/1G8FthBm4mPNNfrhzp/mxy0w=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=v6q2Mc0njNr3TWUKu7QBTNvu5m4/u/rY7x+4Ecu4W44=;
+ b=U9vl9WBZfmwQYQWJbwU/uRlKIu1eNulXCf293T7F9EWut2KW1eyC2Qw5CYKsCw1UAz1nCp
+ SBwhOtPfH9r7TKukilKo+ARnqzJXTyPTd5yAfW7OxLgjARawMaH4rq6iepJp51kO2BJgWp
+ 0cJ3lvZQkAjxRE0qM6Rnps9MkXDvW1U=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-ScKG4onfPMq3SZINCuIb2A-1; Mon, 03 Nov 2025 16:06:43 -0500
-X-MC-Unique: ScKG4onfPMq3SZINCuIb2A-1
-X-Mimecast-MFC-AGG-ID: ScKG4onfPMq3SZINCuIb2A_1762204003
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4e884663b25so141325111cf.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:43 -0800 (PST)
+ us-mta-618-urqA6ZyZOYeYtMcVKVKcEQ-1; Mon, 03 Nov 2025 16:06:46 -0500
+X-MC-Unique: urqA6ZyZOYeYtMcVKVKcEQ-1
+X-Mimecast-MFC-AGG-ID: urqA6ZyZOYeYtMcVKVKcEQ_1762204005
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4ecf1b7686cso185871131cf.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 13:06:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762204003; x=1762808803; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762204005; x=1762808805; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=75HUCE6Au07SRMomYeRAuTHnwe9a6Sk1ODLtoL1BP84=;
- b=euMwymwLUid40PEThuKrdHVxbsbLqL/hJJfwnCFj+2JRZ6xN0QXQ6ZrrA5w6chjRgc
- HPwaTe3Ox1F0NAUwtfLPwGJ7s41vNIkdrg/bN8WxI6q6trOPH50ymJM4MA2f5W9P2Pgw
- v6TrX+LSBx/iuaMcxr9xzfpEmQuakZs7M9/rnSTsu7hR7HZkQ1INrukOhBI8uJ99ZKgh
- LmPtYDhHv6fNFynV/fh8DVzgR0NUvXrOg2LShiojyVSIxhjmckjPv1Yt/ZnWDK4JPlCP
- 7NfwH8INikax4Kaus7rYAoexXklscNla/Cs78GH3JW5RcYFZPFsoThmfzVOo3UWeID+/
- 87TQ==
+ bh=v6q2Mc0njNr3TWUKu7QBTNvu5m4/u/rY7x+4Ecu4W44=;
+ b=F/hPvq/T1AtBHr6c/uoodGUvB8OxKopnBClOsEbnHpQ02nncBD1/b1R2EmG8NQGrla
+ KiJYhejqgaQ2WRNEOiPuxtYCKR/7dCkKJk+pQWCNEOBd4643D9fvfukxJjlE0NDTdF3B
+ BjAku6RCm1uNggjo78mnpVAkk7DBGaeeXUeyTjgkkHBU/QdpsJG0kxJa2uxQeEiiAKU+
+ nkjjZG8kiBMfQuMtKtQlReGbuSSlir9q5+9Ytd3wn4mLfFRwrHQ8/w1fffoU1Gc+G/zT
+ C1d8S8SsgWWT4JpAm3TO9SNegzoC/A7sY3G8rjEJnoGUSSHYrvc7AH7vNl25C665onHO
+ ftdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762204003; x=1762808803;
+ d=1e100.net; s=20230601; t=1762204005; x=1762808805;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=75HUCE6Au07SRMomYeRAuTHnwe9a6Sk1ODLtoL1BP84=;
- b=pyBpeCEIU21J91yai1mlt+cEFpYoOtCkumXiZiSDXQJx5k7Ja0S35Hzcp/mU52L4NU
- d6PA0OMVf+THT9zR1af133iVl1B1m7kCa4zAJpe6kgBVggKGzzFOGYpXY6XlCh3xfrGN
- 0HqMGf98zoKY3AFa+6pA8GXEHp5RY09NeSo65LSx18c9fcFLHXxrVVCkn3EJlyS0cK3T
- W4arnjd5OGL2haH+S4+9M/6TK/k/ZzoLfnjoWtyUFDLiOEtgHKJACf5GNjOWwPtaGiy9
- 2bk4LVawQi/6hwKx8yWF71tg5LG8UqT+B5d/zO5NUwrpV74H4oyeWDMF90iWoBtxRvBr
- JWjg==
-X-Gm-Message-State: AOJu0YwsmLcoMTUbb68HzSAIxGONBiBxiJficXCjwnhvFXD5MTSWorXv
- 0IFw1fSULMihU2rBawZBbHs6FEJkKaILjW+jjDRZ9v4XYBm3oEUf+gnjkQwzW4PgOGAo94SbjD+
- whrD5222N1xDJCtZT4V+5qS9xESAQdMlRL6cxGPU8KA7axjW9ufFrQMLQyZ22sJZM9I98iIHov5
- NDoiyWPM0QS66MItdqejQqdboBjxXMlHNVAf50kQ==
-X-Gm-Gg: ASbGncuSj3t+PKUWR9brW8y/yNUvXL1uRfn2OobBNSuQJBOj4qGm5Xy8EEZgltEu6hw
- KtnCjqmUXBb19bUfdrXt8Kwg7xgU6FInJ4lQGV0zOGX6qfYclI6K79BWB1og5lVoo/BSwyVucDt
- lZFmNjr1rg8NN9HHAstSBc2RSfu04t9ITZZwN79jGCbLMlzXErDK1ktoTX32agZxFK9Dnzexspz
- QCxth+GytqN9Da0T7kR7S7Pu1te+AAyHfcr/q2PNcOJenmaOtrdzN4xZW+kCeQgbH80xci/yl4q
- XHn5crfcDAQjYVLsUmLk/Lsdn7+60f06KWzzpMyEgjbPK28Al7RUapgxWTrxO2xB
-X-Received: by 2002:a05:622a:8307:b0:4ed:62f5:e1fc with SMTP id
- d75a77b69052e-4ed62f5eef0mr3204321cf.75.1762204002774; 
- Mon, 03 Nov 2025 13:06:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEzcjDtRhaAc5+MuRoat9YXC6wz9fw2LxPPsgI+htkumYzq511qOktleFJzNhyTw681TNwVvQ==
-X-Received: by 2002:a05:622a:8307:b0:4ed:62f5:e1fc with SMTP id
- d75a77b69052e-4ed62f5eef0mr3203731cf.75.1762204002219; 
- Mon, 03 Nov 2025 13:06:42 -0800 (PST)
+ bh=v6q2Mc0njNr3TWUKu7QBTNvu5m4/u/rY7x+4Ecu4W44=;
+ b=aH68YSjoILZXCNJhlloXNN8f5swjmPkHK5m+eASUdC5ylZJIT2ZQ1otmbOKdGaqsCi
+ Syqu3HvQgkFw/QwcGlcraSC+Sbicsbin0paQwOBfKdDPdMvqm91MmDobMZ2nRkv1trjQ
+ rfzrRf4ab/0K9aW3w3XmEu7STiAvJHm8eErDGCj9lfZjVNCxFUOQ2k4oafpIrhXBbaNT
+ 0NGYOw7QQUVT/Tw3/NksSAlKUCbaN+E/v6DrWZRpyymCHE6wrUDpywAHBf6QVsr8Rrg7
+ +TtpXVXOY+K0SbN4TJ5zB3daIioNJ70+GmuzPQVXq+6SO89evf39ImGV38jcaMDlZd68
+ a5eg==
+X-Gm-Message-State: AOJu0YyCAZ03o5ZQRixc344OQc2AZJ6MpqRsW+cGBlOSbiQK69gIdYQ8
+ 4I0tok0nMD/IAWLtw6lFZQAZdpAFVLFnmXTdInxeQIQlUr4CjHJZ3ZA1oHgbja7BsvEkR4tLLWE
+ sOInwSkdzSMODiXsudoWZ5xROuI5h/drKv3DInxFavov9P/WzvongYru1IiAoYJGDdyQ8J3SP5F
+ adzmr5/Mt+V/3VKxhJ0xPJH8lLP/AKclimW8/vRA==
+X-Gm-Gg: ASbGncuVLnoTP9pcj/jm9JmkZ2k5X2ZoVio3NVffiT51Ocd7euLSn+o2KdWdn+Q57BD
+ 2mxRtHOh8MdYg+yZnS5hazD080u3FGhAccjWA04asFAZ7nD4n8/o697iTyTxV8LjD2WAZ8y1n2H
+ xtRJswdpQy4LCRpa6L62kvkdbz/qgVcBa40jqNFhmTAaZFNsel6EhacDWyuxwXh/p4ErUFbODSy
+ +A32kyt7DjktbSao8e19R8tNSvUzmI0KY70q+agqt9R+4ad6Pj/1YLgOPLzkzHNKi/6rmGsc5vt
+ IzdvZL+3nh9jQvePhx8xPw1/un6MOuevIeAZ3myTMxypd7xTay/1J/deWqtePBJR
+X-Received: by 2002:ac8:5fd0:0:b0:4ec:fc9a:1802 with SMTP id
+ d75a77b69052e-4ed60df079amr11088211cf.42.1762204004681; 
+ Mon, 03 Nov 2025 13:06:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEmfcajXDTtdGJKrir4F1nkVfRWq+xN8FnIIugLW0uFFIglb9+VEUWYO4j1IZ+AIGTMRqRbzw==
+X-Received: by 2002:ac8:5fd0:0:b0:4ec:fc9a:1802 with SMTP id
+ d75a77b69052e-4ed60df079amr11087361cf.42.1762204004108; 
+ Mon, 03 Nov 2025 13:06:44 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.41
+ af79cd13be357-8b0f5468968sm57428185a.19.2025.11.03.13.06.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Nov 2025 13:06:41 -0800 (PST)
+ Mon, 03 Nov 2025 13:06:42 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 10/36] migration/cpr: Avoid crashing QEMU when cpr-exec runs
- with no args
-Date: Mon,  3 Nov 2025 16:05:59 -0500
-Message-ID: <20251103210625.3689448-11-peterx@redhat.com>
+ peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PULL 11/36] ram-block-attributes: fix interaction with hugetlb
+ memory backends
+Date: Mon,  3 Nov 2025 16:06:00 -0500
+Message-ID: <20251103210625.3689448-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251103210625.3689448-1-peterx@redhat.com>
 References: <20251103210625.3689448-1-peterx@redhat.com>
@@ -119,35 +121,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If an user invokes cpr-exec without setting the exec args first, currently
-it'll crash QEMU.
+From: Chenyi Qiang <chenyi.qiang@intel.com>
 
-Avoid it, instead fail the QMP migrate command.
+Currently, CoCo VMs can perform conversion at the base page granularity,
+which is the granularity that has to be tracked. In relevant setups, the
+target page size is assumed to be equal to the host page size, thus
+fixing the block size to the host page size.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20251021220407.2662288-5-peterx@redhat.com
+However, since private memory and shared memory have different backend
+at present, users can specify shared memory with a hugetlbfs backend
+while private memory with guest_memfd backend only supports 4K page
+size. In this scenario, ram_block->page_size is different from the host
+page size which will trigger an assertion when retrieving the block
+size.
+
+To address this, return the host page size directly to relax the
+restriction. This changes fixes a regression of using hugetlbfs backend
+for shared memory within CoCo VMs, with or without VFIO devices' presence.
+
+Acked-by: David Hildenbrand <david@redhat.com>
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Link: https://lore.kernel.org/r/20251023095526.48365-2-chenyi.qiang@intel.com
+[peterx: fix subject, per david]
+Cc: qemu-stable <qemu-stable@nongnu.org>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ system/ram-block-attributes.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index c8a5712993..4ed2a2e881 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2195,6 +2195,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
-             error_setg(errp, "Cannot use %s with CPR", conflict);
-             return false;
-         }
-+
-+        if (s->parameters.mode == MIG_MODE_CPR_EXEC &&
-+            !s->parameters.cpr_exec_command) {
-+            error_setg(errp, "Parameter 'cpr-exec-command' required for cpr-exec");
-+            return false;
-+        }
-     }
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index 68e8a02703..a7579de5b4 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -22,16 +22,14 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RamBlockAttributes,
+                                           { })
  
-     if (migrate_init(s, errp)) {
+ static size_t
+-ram_block_attributes_get_block_size(const RamBlockAttributes *attr)
++ram_block_attributes_get_block_size(void)
+ {
+     /*
+      * Because page conversion could be manipulated in the size of at least 4K
+      * or 4K aligned, Use the host page size as the granularity to track the
+      * memory attribute.
+      */
+-    g_assert(attr && attr->ram_block);
+-    g_assert(attr->ram_block->page_size == qemu_real_host_page_size());
+-    return attr->ram_block->page_size;
++    return qemu_real_host_page_size();
+ }
+ 
+ 
+@@ -40,7 +38,7 @@ ram_block_attributes_rdm_is_populated(const RamDiscardManager *rdm,
+                                       const MemoryRegionSection *section)
+ {
+     const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     const uint64_t first_bit = section->offset_within_region / block_size;
+     const uint64_t last_bit =
+         first_bit + int128_get64(section->size) / block_size - 1;
+@@ -81,7 +79,7 @@ ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+ {
+     unsigned long first_bit, last_bit;
+     uint64_t offset, size;
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     int ret = 0;
+ 
+     first_bit = section->offset_within_region / block_size;
+@@ -122,7 +120,7 @@ ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
+ {
+     unsigned long first_bit, last_bit;
+     uint64_t offset, size;
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     int ret = 0;
+ 
+     first_bit = section->offset_within_region / block_size;
+@@ -163,7 +161,7 @@ ram_block_attributes_rdm_get_min_granularity(const RamDiscardManager *rdm,
+     const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+ 
+     g_assert(mr == attr->ram_block->mr);
+-    return ram_block_attributes_get_block_size(attr);
++    return ram_block_attributes_get_block_size();
+ }
+ 
+ static void
+@@ -265,7 +263,7 @@ ram_block_attributes_is_valid_range(RamBlockAttributes *attr, uint64_t offset,
+     g_assert(mr);
+ 
+     uint64_t region_size = memory_region_size(mr);
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+ 
+     if (!QEMU_IS_ALIGNED(offset, block_size) ||
+         !QEMU_IS_ALIGNED(size, block_size)) {
+@@ -322,7 +320,7 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr,
+                                       uint64_t offset, uint64_t size,
+                                       bool to_discard)
+ {
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     const unsigned long first_bit = offset / block_size;
+     const unsigned long nbits = size / block_size;
+     const unsigned long last_bit = first_bit + nbits - 1;
 -- 
 2.50.1
 
