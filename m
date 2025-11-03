@@ -4,62 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F5B6CCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 20:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A31CCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 20:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG19r-00036K-18; Mon, 03 Nov 2025 15:28:07 -0500
+	id 1vG1At-0003iS-FE; Mon, 03 Nov 2025 15:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vG19m-00034T-4x; Mon, 03 Nov 2025 15:28:02 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vG1An-0003ZR-0O
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 15:29:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vG19j-0007Qm-DC; Mon, 03 Nov 2025 15:28:01 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E0C975972E8;
- Mon, 03 Nov 2025 21:27:54 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 5PX_asHPOAhf; Mon,  3 Nov 2025 21:27:52 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 886145972E4; Mon, 03 Nov 2025 21:27:52 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 862835972E3;
- Mon, 03 Nov 2025 21:27:52 +0100 (CET)
-Date: Mon, 3 Nov 2025 21:27:52 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Yogesh Vyas <yvyas1991@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
-In-Reply-To: <5250e103-4dd1-44e4-9dcf-7c2df033ae10@gmail.com>
-Message-ID: <ebdb8442-3691-9bfe-dc0c-d3ecb3f5bf12@eik.bme.hu>
-References: <cover.1760798392.git.balaton@eik.bme.hu>
- <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
- <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
- <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
- <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
- <26f74e6c-a89f-4be0-aa6c-78ad88e2cba3@gmail.com>
- <993819c9-cf87-ec91-31ac-f8988c8d3d67@eik.bme.hu>
- <38673ed9-4690-472b-9e0f-c8a736247097@gmail.com>
- <fd804cb4-d987-5e3d-24e8-0a4fb88e092e@eik.bme.hu>
- <5250e103-4dd1-44e4-9dcf-7c2df033ae10@gmail.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vG1Ak-0007eP-Bx
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 15:29:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762201740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HWzTGc3AvYUES9HKYfYuHSoNeIyyzbhENNJcxTClcds=;
+ b=TUWNPyBFrcRDZ/UOhqcutwdfSQGzFyqPxkc7vxkIrorbp/30JcjsbI17omWko7UFmfC7Y3
+ E0EkXpKUDR/jOSKLhvyVR9vDwpEMZxv5z6SJs7WvZeRYsK+NO+0BJoNN2/bStXEm9zaYAW
+ lhP7w+9qB3VHMIG0nSVou3gYnobtZJo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-_ZorKTfSNQKk-sl1pHfREg-1; Mon,
+ 03 Nov 2025 15:28:59 -0500
+X-MC-Unique: _ZorKTfSNQKk-sl1pHfREg-1
+X-Mimecast-MFC-AGG-ID: _ZorKTfSNQKk-sl1pHfREg_1762201738
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5EC8C180057A; Mon,  3 Nov 2025 20:28:58 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.131])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 19F5E30001A1; Mon,  3 Nov 2025 20:28:56 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org,
+	berrange@redhat.com,
+	kwolf@redhat.com
+Subject: [PATCH 2/8] qio: Minor optimization when callback function is
+ unchanged
+Date: Mon,  3 Nov 2025 14:10:53 -0600
+Message-ID: <20251103202849.3687643-12-eblake@redhat.com>
+In-Reply-To: <20251103202849.3687643-10-eblake@redhat.com>
+References: <20251103202849.3687643-10-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-939391785-1762201672=:40652"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,53 +85,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+In qemu-nbd and other NBD server setups where parallel clients are
+supported, it is common that the caller will re-register the same
+callback function as long as it has not reached its limit on
+simultaneous clients.  In that case, there is no need to tear down and
+reinstall GSource watches in the GMainContext.
 
---3866299591-939391785-1762201672=:40652
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ io/net-listener.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-On Sun, 2 Nov 2025, Yogesh Vyas wrote:
-> On 10/28/25 1:48 AM, BALATON Zoltan wrote:
->> Trying to read invalid spr 1012 (0x3f4) at 00000000c0013f48
->> [    0.000000] Using CHRP machine description
->> [    0.000000] Total memory = 512MB; using 1024kB for hash table (at 
->> cff00000)
->> [    0.000000] Initializing cgroup subsys cpuset
->> [    0.000000] Initializing cgroup subsys cpu
->> [    0.000000] Initializing cgroup subsys cpuacct
->> [    0.000000] Linux version 3.16.0-6-powerpc (debian- 
->> kernel@lists.debian.org) (gcc version 4.8.4 (Debian 4.8.4-1) ) #1 Debian 
->> 3.16.56-1+deb8u1 (2018-05-08)
->> [    0.000000] Found initrd at 0xc15a2000:0xc1b0b90d
->> [    0.000000] chrp type = 6 [Genesi Pegasos]
->> 
->> Are you using this same vmlinuz-chrp.initrd?
->> 
->> $ md5sum vmlinuz-chrp.initrd
->> a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
->
-> Yes, md5sum is same as you mentioned:
-> yogi@fedora:~/work/images$ md5sum vmlinuz-chrp.initrd
-> a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
->
-> Could you please share your Qemu configure command line?
-> I can try one more time if that's different than mine.
-> I used below configure command line:
-> '../configure' '--target-list=ppc64-softmmu,ppc-softmmu' '--enable-virtfs'
+diff --git a/io/net-listener.c b/io/net-listener.c
+index 0adbc409cf2..e89286ea63c 100644
+--- a/io/net-listener.c
++++ b/io/net-listener.c
+@@ -147,6 +147,10 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+ {
+     size_t i;
 
-I don't see how configure options could have anyhing to do with that but 
-I've tested that this works on my machine:
++    if (listener->io_func == func && listener->io_data == data) {
++        return;
++    }
++
+     if (listener->io_func) {
+         trace_qio_net_listener_watch_disabled(listener, "set_client_func");
+     }
+-- 
+2.51.1
 
-configure --disable-download --disable-tools --target-list=ppc64-softmmu
-qemu-system-ppc64 -M pegasos2 -serial stdio -kernel vmlinuz-chrp.initrd -append "---" -cdrom debian-8.11.0-powerpc-netinst.iso
-
-The configure options are just to only compile what's needed but it should 
-work anyway with your or any options too as long as qemu-system-ppc or 
-qemu-system-ppc64 is compiled. Can you test on a different machine?
-
-Regards,
-BALATON Zoltan
---3866299591-939391785-1762201672=:40652--
 
