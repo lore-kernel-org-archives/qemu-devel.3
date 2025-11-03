@@ -4,51 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0BDCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 20:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F5B6CCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 20:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG15x-0001ye-6T; Mon, 03 Nov 2025 15:24:05 -0500
+	id 1vG19r-00036K-18; Mon, 03 Nov 2025 15:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <startergo@protonmail.com>)
- id 1vG15u-0001vf-NH
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 15:24:02 -0500
-Received: from mail-06.mail-europe.com ([85.9.210.45])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vG19m-00034T-4x; Mon, 03 Nov 2025 15:28:02 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <startergo@protonmail.com>)
- id 1vG15q-00060w-7G
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 15:24:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=protonmail3; t=1762201418; x=1762460618;
- bh=soC2km4V7AIup4NZTzk3H7qIu7Uh9LsazsUAmqlMPc4=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=PM3za9KssYrsOUKwiZFY1JEAu2ajJGiB0hlaDnN2xJ1nGt7CINxQqFKD7jPMU6LKv
- KTsrO9PCcF/mv7s87ivWxVIpjQ86cjGZc818W/g9sCT85D9Jn6gQ8vauINKDXSHO1z
- edD3Po33sk5qGGdh8BIHLZig6cvus9L7fPwOtxGmVDqY8thLHfoODl1dpUOhqTbf+G
- U50jWv6GJCvuI1mpUZg2yuOGX/yLJzLeAi6KP5qMWIWZfzfTTbS13kqfyGp7vI3b7U
- TWUW7tWT5ZRV7ViRx1eUPXVoJjVRXQcRppnhv1xg5Jjmc08MuqjB5rziVSX82V6uoA
- mLx1Gy73OZoRg==
-Date: Mon, 03 Nov 2025 20:23:32 +0000
-To: qemu-devel@nongnu.org
-From: startergo <startergo@protonmail.com>
-Cc: mohd.akram@outlook.com, startergo <startergo@protonmail.com>
-Subject: [PATCH v3] ui/sdl2: Fix using GL display on macOS with improvements
-Message-ID: <20251103202322.24813-1-startergo@protonmail.com>
-Feedback-ID: 25315608:user:proton
-X-Pm-Message-ID: 5b2b091d208b6cf91cdbcf9aa362838ce75ed046
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vG19j-0007Qm-DC; Mon, 03 Nov 2025 15:28:01 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E0C975972E8;
+ Mon, 03 Nov 2025 21:27:54 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 5PX_asHPOAhf; Mon,  3 Nov 2025 21:27:52 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 886145972E4; Mon, 03 Nov 2025 21:27:52 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 862835972E3;
+ Mon, 03 Nov 2025 21:27:52 +0100 (CET)
+Date: Mon, 3 Nov 2025 21:27:52 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Yogesh Vyas <yvyas1991@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+In-Reply-To: <5250e103-4dd1-44e4-9dcf-7c2df033ae10@gmail.com>
+Message-ID: <ebdb8442-3691-9bfe-dc0c-d3ecb3f5bf12@eik.bme.hu>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
+ <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
+ <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
+ <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
+ <26f74e6c-a89f-4be0-aa6c-78ad88e2cba3@gmail.com>
+ <993819c9-cf87-ec91-31ac-f8988c8d3d67@eik.bme.hu>
+ <38673ed9-4690-472b-9e0f-c8a736247097@gmail.com>
+ <fd804cb4-d987-5e3d-24e8-0a4fb88e092e@eik.bme.hu>
+ <5250e103-4dd1-44e4-9dcf-7c2df033ae10@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=85.9.210.45;
- envelope-from=startergo@protonmail.com; helo=mail-06.mail-europe.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-939391785-1762201672=:40652"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,297 +75,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SDL_GL_CONTEXT_PROFILE_MASK needs to be set before creating the window
-so that SDL can load the ANGLE library for GL ES support. The shader
-source version also needs to match the library used. Avoid falling back
-to GL ES on macOS since it will not be available if ANGLE was not the
-library loaded initially.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Enhancements in v3:
-- Add better error handling and diagnostics
-- Add GL context validation after creation
-- Improve shader version detection for better compatibility
-- Add conditional precision qualifiers for GLES vs GL
-- Add runtime ANGLE detection
-- Improve code comments and documentation
-- Fix potential memory issues with shader compilation
-- Add trace points for debugging
+--3866299591-939391785-1762201672=:40652
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Mohamed Akram <mohd.akram@outlook.com>
----
- ui/sdl2-gl.c                     | 54 ++++++++++++++++++++++-----
- ui/sdl2.c                        | 18 +++++++++
- ui/shader.c                      | 64 ++++++++++++++++++++++++++++++--
- ui/shader/texture-blit-flip.vert |  2 -
- ui/shader/texture-blit.frag      |  2 -
- ui/shader/texture-blit.vert      |  2 -
- ui/trace-events                  |  7 ++++
- 7 files changed, 130 insertions(+), 19 deletions(-)
+On Sun, 2 Nov 2025, Yogesh Vyas wrote:
+> On 10/28/25 1:48 AM, BALATON Zoltan wrote:
+>> Trying to read invalid spr 1012 (0x3f4) at 00000000c0013f48
+>> [    0.000000] Using CHRP machine description
+>> [    0.000000] Total memory = 512MB; using 1024kB for hash table (at 
+>> cff00000)
+>> [    0.000000] Initializing cgroup subsys cpuset
+>> [    0.000000] Initializing cgroup subsys cpu
+>> [    0.000000] Initializing cgroup subsys cpuacct
+>> [    0.000000] Linux version 3.16.0-6-powerpc (debian- 
+>> kernel@lists.debian.org) (gcc version 4.8.4 (Debian 4.8.4-1) ) #1 Debian 
+>> 3.16.56-1+deb8u1 (2018-05-08)
+>> [    0.000000] Found initrd at 0xc15a2000:0xc1b0b90d
+>> [    0.000000] chrp type = 6 [Genesi Pegasos]
+>> 
+>> Are you using this same vmlinuz-chrp.initrd?
+>> 
+>> $ md5sum vmlinuz-chrp.initrd
+>> a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
+>
+> Yes, md5sum is same as you mentioned:
+> yogi@fedora:~/work/images$ md5sum vmlinuz-chrp.initrd
+> a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
+>
+> Could you please share your Qemu configure command line?
+> I can try one more time if that's different than mine.
+> I used below configure command line:
+> '../configure' '--target-list=ppc64-softmmu,ppc-softmmu' '--enable-virtfs'
 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index 3be17d1..1db85d2 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -30,6 +30,11 @@
- #include "ui/input.h"
- #include "ui/sdl2.h"
-=20
-+#ifdef CONFIG_DARWIN
-+#include <TargetConditionals.h>
-+#endif
-+#include "trace.h"
-+
- static void sdl2_set_scanout_mode(struct sdl2_console *scon, bool scanout)
- {
-     if (scon->scanout_mode =3D=3D scanout) {
-@@ -147,27 +152,56 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dg=
-c,
-     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-=20
-     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
--    if (scon->opts->gl =3D=3D DISPLAY_GL_MODE_ON ||
--        scon->opts->gl =3D=3D DISPLAY_GL_MODE_CORE) {
--        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
--                            SDL_GL_CONTEXT_PROFILE_CORE);
--    } else if (scon->opts->gl =3D=3D DISPLAY_GL_MODE_ES) {
--        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
--                            SDL_GL_CONTEXT_PROFILE_ES);
--    }
-+
-+    /*
-+     * Note: SDL_GL_CONTEXT_PROFILE_MASK should be set before window creat=
-ion
-+     * (see sdl2_window_create) so SDL can load the correct GL library (AN=
-GLE
-+     * for ES support on macOS). Setting it here only affects shared conte=
-xts.
-+     */
-+
-     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, params->major_ver);
-     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, params->minor_ver);
-=20
-     ctx =3D SDL_GL_CreateContext(scon->real_window);
-=20
--    /* If SDL fail to create a GL context and we use the "on" flag,
--     * then try to fallback to GLES.
-+    if (ctx) {
-+        /* Validate the created context */
-+        SDL_GL_MakeCurrent(scon->real_window, ctx);
-+        int profile =3D 0;
-+        SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
-+
-+        trace_sdl2_gl_context_created(profile, params->major_ver,
-+                                       params->minor_ver);
-+
-+        /* Check if ANGLE is being used */
-+        const char *renderer =3D (const char *)glGetString(GL_RENDERER);
-+        if (renderer && strstr(renderer, "ANGLE")) {
-+            trace_sdl2_gl_using_angle(renderer);
-+        }
-+    } else {
-+        const char *err =3D SDL_GetError();
-+        warn_report("Failed to create GL context (v%d.%d): %s",
-+                    params->major_ver, params->minor_ver,
-+                    err ? err : "unknown error");
-+    }
-+
-+    /*
-+     * If SDL fail to create a GL context and we use the "on" flag,
-+     * then try to fallback to GLES. On macOS, this will not work because
-+     * SDL must load ANGLE at window creation time for ES support. If the
-+     * Core profile was requested initially, ANGLE was not loaded and this
-+     * fallback will fail.
-      */
-+#if !TARGET_OS_OSX
-     if (!ctx && scon->opts->gl =3D=3D DISPLAY_GL_MODE_ON) {
-         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-                             SDL_GL_CONTEXT_PROFILE_ES);
-         ctx =3D SDL_GL_CreateContext(scon->real_window);
-+        if (ctx) {
-+            trace_sdl2_gl_fallback_to_es();
-+        }
-     }
-+#endif
-     return (QEMUGLContext)ctx;
- }
-=20
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 032dc14..5522bcc 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -34,6 +34,7 @@
- #include "system/system.h"
- #include "qemu/log.h"
- #include "qemu-main.h"
-+#include "trace.h"
-=20
- static int sdl2_num_outputs;
- static struct sdl2_console *sdl2_console;
-@@ -96,6 +97,23 @@ void sdl2_window_create(struct sdl2_console *scon)
- #ifdef CONFIG_OPENGL
-     if (scon->opengl) {
-         flags |=3D SDL_WINDOW_OPENGL;
-+
-+        /*
-+         * Set GL context profile before creating the window.
-+         * This is critical on macOS where SDL needs to know which GL libr=
-ary
-+         * to load: the native OpenGL framework (for Core profile) or ANGL=
-E
-+         * (for ES profile). This cannot be changed after window creation.
-+         */
-+        if (scon->opts->gl =3D=3D DISPLAY_GL_MODE_ON ||
-+            scon->opts->gl =3D=3D DISPLAY_GL_MODE_CORE) {
-+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-+                                SDL_GL_CONTEXT_PROFILE_CORE);
-+            trace_sdl2_gl_request_core_profile();
-+        } else if (scon->opts->gl =3D=3D DISPLAY_GL_MODE_ES) {
-+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-+                                SDL_GL_CONTEXT_PROFILE_ES);
-+            trace_sdl2_gl_request_es_profile();
-+        }
-     }
- #endif
-=20
-diff --git a/ui/shader.c b/ui/shader.c
-index ab448c4..9a19ed4 100644
---- a/ui/shader.c
-+++ b/ui/shader.c
-@@ -26,6 +26,8 @@
-  */
- #include "qemu/osdep.h"
- #include "ui/shader.h"
-+#include "ui/shader/texture-blit-frag.h"
-+#include "qemu/error-report.h"
-=20
- #include "ui/shader/texture-blit-vert.h"
- #include "ui/shader/texture-blit-flip-vert.h"
-@@ -153,12 +155,68 @@ QemuGLShader *qemu_gl_init_shader(void)
- {
-     QemuGLShader *gls =3D g_new0(QemuGLShader, 1);
-=20
-+    /*
-+     * Detect GL version and set appropriate shader version.
-+     * Desktop GL: Use GLSL 1.40 (OpenGL 3.1) for broad compatibility
-+     * ES: Use GLSL ES 3.00 (OpenGL ES 3.0)
-+     */
-+    bool is_desktop =3D epoxy_is_desktop_gl();
-+    const char *version =3D is_desktop ? "140" : "300 es";
-+
-+    /*
-+     * Add precision qualifiers for GLES (required), but not for desktop G=
-L
-+     * where they may cause warnings on some drivers.
-+     */
-+    const char *precision =3D is_desktop ? "" : "precision mediump float;\=
-n";
-+
-+    /* Log GL context information for debugging */
-+    int gl_version =3D epoxy_gl_version();
-+    const char *vendor =3D (const char *)glGetString(GL_VENDOR);
-+    const char *renderer =3D (const char *)glGetString(GL_RENDERER);
-+    const char *gl_version_str =3D (const char *)glGetString(GL_VERSION);
-+
-+    info_report("Initializing shaders: %s GL %d.%d (%s / %s / %s)",
-+                is_desktop ? "Desktop" : "ES",
-+                gl_version / 10, gl_version % 10,
-+                vendor ? vendor : "unknown",
-+                renderer ? renderer : "unknown",
-+                gl_version_str ? gl_version_str : "unknown");
-+
-+    /* Check for required GL features */
-+    if (is_desktop &&
-+        !epoxy_has_gl_extension("GL_ARB_vertex_array_object")) {
-+        warn_report("GL_ARB_vertex_array_object not available, "
-+                    "rendering may fail");
-+    }
-+
-+    /* Build shader source with appropriate version and precision */
-+    const char *vert_fmt =3D "#version %s\n%s";
-+    const char *frag_fmt =3D "#version %s\n%s%s";
-+
-+    char *blit_vert_src =3D g_strdup_printf(
-+        vert_fmt, version, texture_blit_vert_src);
-+    char *blit_flip_vert_src =3D g_strdup_printf(
-+        vert_fmt, version, texture_blit_flip_vert_src);
-+    char *blit_frag_src =3D g_strdup_printf(
-+        frag_fmt, version, precision, texture_blit_frag_src);
-+
-+    /* Compile and link shader programs */
-     gls->texture_blit_prog =3D qemu_gl_create_compile_link_program
--        (texture_blit_vert_src, texture_blit_frag_src);
-+        (blit_vert_src, blit_frag_src);
-     gls->texture_blit_flip_prog =3D qemu_gl_create_compile_link_program
--        (texture_blit_flip_vert_src, texture_blit_frag_src);
-+        (blit_flip_vert_src, blit_frag_src);
-+
-+    /* Clean up temporary shader source strings */
-+    g_free(blit_vert_src);
-+    g_free(blit_flip_vert_src);
-+    g_free(blit_frag_src);
-+
-     if (!gls->texture_blit_prog || !gls->texture_blit_flip_prog) {
--        exit(1);
-+        error_report("Failed to compile GL shaders (GL %s %d.%d)",
-+                     is_desktop ? "Desktop" : "ES",
-+                     gl_version / 10, gl_version % 10);
-+        qemu_gl_fini_shader(gls);
-+        return NULL;
-     }
-=20
-     gls->texture_blit_vao =3D
-diff --git a/ui/shader/texture-blit-flip.vert b/ui/shader/texture-blit-flip=
-.vert
-index f7a448d..1e4ac4c 100644
---- a/ui/shader/texture-blit-flip.vert
-+++ b/ui/shader/texture-blit-flip.vert
-@@ -1,5 +1,3 @@
--#version 300 es
--
- in vec2  in_position;
- out vec2 ex_tex_coord;
-=20
-diff --git a/ui/shader/texture-blit.frag b/ui/shader/texture-blit.frag
-index 8ed95a4..bd296a2 100644
---- a/ui/shader/texture-blit.frag
-+++ b/ui/shader/texture-blit.frag
-@@ -1,5 +1,3 @@
--#version 300 es
--
- uniform sampler2D image;
- in  mediump vec2 ex_tex_coord;
- out mediump vec4 out_frag_color;
-diff --git a/ui/shader/texture-blit.vert b/ui/shader/texture-blit.vert
-index fb48d70..ae205f6 100644
---- a/ui/shader/texture-blit.vert
-+++ b/ui/shader/texture-blit.vert
-@@ -1,5 +1,3 @@
--#version 300 es
--
- in vec2  in_position;
- out vec2 ex_tex_coord;
-=20
-diff --git a/ui/trace-events b/ui/trace-events
-index 3eba9ca..5effcc0 100644
---- a/ui/trace-events
-+++ b/ui/trace-events
-@@ -182,5 +182,12 @@ dbus_gl_gfx_switch(void *p) "surf: %p"
- dbus_filter(unsigned int serial, unsigned int filter) "serial=3D%u (<=3D %=
-u)"
- dbus_can_share_map(bool share) "can_share_map: %d"
-=20
-+# sdl2-gl.c
-+sdl2_gl_context_created(int profile, int major, int minor) "profile=3D%d v=
-ersion=3D%d.%d"
-+sdl2_gl_using_angle(const char *renderer) "renderer=3D%s"
-+sdl2_gl_fallback_to_es(void) "Falling back to OpenGL ES"
-+sdl2_gl_request_core_profile(void) "Requesting Core profile"
-+sdl2_gl_request_es_profile(void) "Requesting ES profile"
-+
- # egl-helpers.c
- egl_init_d3d11_device(void *p) "d3d device: %p"
---=20
-2.51.1
+I don't see how configure options could have anyhing to do with that but 
+I've tested that this works on my machine:
 
+configure --disable-download --disable-tools --target-list=ppc64-softmmu
+qemu-system-ppc64 -M pegasos2 -serial stdio -kernel vmlinuz-chrp.initrd -append "---" -cdrom debian-8.11.0-powerpc-netinst.iso
 
+The configure options are just to only compile what's needed but it should 
+work anyway with your or any options too as long as qemu-system-ppc or 
+qemu-system-ppc64 is compiled. Can you test on a different machine?
+
+Regards,
+BALATON Zoltan
+--3866299591-939391785-1762201672=:40652--
 
