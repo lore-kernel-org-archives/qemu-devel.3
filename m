@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D8ECCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34820CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 11:36:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFspz-0004Ji-5R; Mon, 03 Nov 2025 06:35:03 -0500
+	id 1vFsqv-0004VS-JN; Mon, 03 Nov 2025 06:36:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vFspx-0004Iu-D0
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:35:01 -0500
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFsqs-0004VB-MR
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:35:58 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vFspo-0002mH-G4
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:34:59 -0500
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-63f97c4eccaso2460618d50.2
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 03:34:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFsqn-00030h-T6
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 06:35:57 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-4711b95226dso54698415e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 03:35:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762169688; x=1762774488; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ahqYMuaxhg5Tz0yUDhZwbC5EyzH/GynsPmQZmN3sFnY=;
- b=LcICj4rmsnqi8/mCLaIiN9sLe9VTCqpJcr6i4cSCiV8g+JGrrHlC3u/aDpnz8fawnT
- CLTGs8V4XuVsiMulNZBbLTBLWuKeXqYMck3vlZob9u5hjFjCGkLxH9X2FDSd78SNPEq1
- 71BpLSoQlH5nUFdakCtj8SKngrIzeLB2iYrqFc4zpHNa9Ljxc9S0z6PJRTR6+JSEeGw7
- 3tj+jsq2yvvfKkJHVq0gYm422l4BXCGTvSeQIWJVfCmzniE++ZGtXpQeXWq/Uk3m0XzD
- mtiiUBP0UvDZibKdzSrLviU6HXwRSuSZrnFExlqINWFOwEo8ApoQJjddArELg36T1B2y
- mCYw==
+ d=linaro.org; s=google; t=1762169750; x=1762774550; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Xdt4v+XlIdKSRF70HjuOQ8yLFm2vGhFCyM/wq2M2FbI=;
+ b=xYQCZu5JYR0wyIoHkcqJqlBzmnaD3sKfowcwCEa4aRDs+rNqA0s2/i0AVEAme+XMgr
+ lB7JY7D0mJ/bwH1h8BXaXfi+GMA729/njCgF7avtOKdr+QnwmjnPB4LHI1i811LLCfYY
+ tRtdfir4JISRrXfymHU+JNx+5VgqY0W91Ok7Omr5dEzJXZMIb4j/x1Oq6NrgtuXuJaDM
+ QfHgI2qpDUcMYo1Qn0+ty9VmrfV3WOOcqMdLbgwfqXTbpQw9fftaDbTUEJlqcymKyrA7
+ tx69o3zCt7IYqssgyMMv75aNwnzXuha8f/X5pLi5Wd4fdLpk97vsieNwY1L8KOJt8OA1
+ byVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762169688; x=1762774488;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ahqYMuaxhg5Tz0yUDhZwbC5EyzH/GynsPmQZmN3sFnY=;
- b=Z2d4+PX5QJmhh/G2tydunZuYHRUD9BnDdgwigwFx7Oh5Z4teE1M0/pfTCB6J8VmQxH
- 8RI955SsjVIhSzQJOT/Z+n+QsZJYCIlNj0AgfjLzhN7JNd40p6rx6UjqjXWPA6Nw2ybN
- nsXI8Uo7R4Qw4nm8/dZhukzg/sK6RZiKPYEr0dXAhnQHvnlV0tKSrl05ik1gRyVL6/b/
- mchE6E1uG9FvO1De1oagMIYBrM3n6T/3nktePMHT7gnPXRTj77f8UVlgMKZQQBk/VY0N
- OVTOV18NxPA7A8aypJS3+s1Gv3B5Ewl8bW7rZPUcSMKr65N27jcHgBPtl1d8ph5/N3ks
- Dtpw==
+ d=1e100.net; s=20230601; t=1762169750; x=1762774550;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xdt4v+XlIdKSRF70HjuOQ8yLFm2vGhFCyM/wq2M2FbI=;
+ b=qDOD8xUx8+aAHaI99ktUWusUJyGuInhPwaeKMfNQSEbRdvEc/bciYMluEUw/Lb3Wlq
+ paFM8P3SalQtE8kvxhZm5Su6GabBYScumZy9HcQUrm9vpMYutNKEBfjIBqeIs3zpA536
+ jINyvxx8J3R3V2DSp552pZ560qDP+t1wxN9JpaoKs0yfnwsH1DsmRn2N2yLbEHeK4SV0
+ p1mmq2jxotdEE9TgFoW4OyZg2YCfcwnKf+EYY5aKsQdB+ZZaZGbJRXfqujo/9PLSO5i5
+ l4nN791WEdtLDj3Ki9a22e+xAuSmusc79aefkgB2uWSplAXK59Sg9sl6YInMqTB74hzV
+ Y+cA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcQpp26q8h7Ke3962AY9TFX5BsR8g8h7aNrzW7tXuSJwkFQa+R4ZJ4NZZ1K8Tx3oF1NotkMtxKJkoO@nongnu.org
-X-Gm-Message-State: AOJu0YwjF61KXd0HlhhwLJ5bYA7EgNRn0lOq4LIcPzSD6OW44G1MZxH2
- V3IhX0cHXKGjk/FVefAKriR56tzagrlsBco5XA6FF6GKUnn2MNhpscXjlmJ3VOF+y3KjPc6CfFc
- zsPE4GTiHYJq3ioFG1NeMnsrJm09rVNm916CX7IuD9A==
-X-Gm-Gg: ASbGncuziq8XB5ttEc8G36SDUUW3UQXXqhs2tqBaa4iOhkyrVyZzeUfJIEEuD2wCXqk
- L6xUpQvymVHzG+qOduei+hoFLGIo6WzpEc/ZSARWw0OUMUqaQKSSNVEL9D2d/n5no6CIgQYFoWe
- RFZqxbEqGzd/uhc9SeV0m0x8C7szByH4NSH89O3ci+QTVPr9uV/soSBRp06vFg4Cv6a3PP6KBGO
- riz/e81G0RNLfds+lasoPykMj3u8+oGEswrhlgMyklr92Vd0LgKfdOfEah8eBsVECWowplf
-X-Google-Smtp-Source: AGHT+IF6nQEHBUMKXfvTh7Lr41C13foa1r+oQNF7NasKB/Q/5dzfOJMnlHa8aV9VcVry1BLxfKd6WFO5eEjmwUF4cMo=
-X-Received: by 2002:a05:690e:592:b0:63e:231a:cb5a with SMTP id
- 956f58d0204a3-63f9232c0bcmr7413126d50.48.1762169688192; Mon, 03 Nov 2025
- 03:34:48 -0800 (PST)
+ AJvYcCWNFcdimLF6G8lZRVk6TMhkNmm2WFyZEynMtjf52OwuAvzHZMsVylYdowGutJdOvvtnI40b9bLN5+Jf@nongnu.org
+X-Gm-Message-State: AOJu0YyF8y1CL87/9KALuflXzuFF8BFtRo7WGYewtwLgIMrajnc3BGHC
+ 6I+TvzuPk/rlpWRhxoq7WQcf3zW7Ok/b7WjTOENp8ro9IXz1fubhayCIKCF1553bMNA=
+X-Gm-Gg: ASbGnctLtaYz9UXSJjJMSWuPM+eSL1uDjcQ9PzQZTFWXpmH6iT7vF+joQJqvnyqVDEF
+ dvHfT8rDwVdLgQaG5IwdkAn8HZVYqMQ9iDhYcFkGD7Je4QvV/wAycMDEmn5d5kNVtbPIp0Crf7L
+ eVSaBHMWulgGEsUt9EC3EG3ilDHCuNcOiC3MPWsdqsuLPGEF/K6Q6RdNC1SMvUGP+kweq9dG0VB
+ lnjQ8mtpT1CO0hoi7/+ymSekcHXkVvOquUOyXMZNrbm22cVTrh89dCWQdKxwB8UvTS8jnKNOA8O
+ 7ur8wFzJEl6p44vAr19aXnT+/HWhpE6FQlZLDcmScczpIZni7YSfhjVZlUDcr7zc2vfUwNT++mu
+ ee+zZOzT/F2+UguyblBPpp8QTIrSuQ+30tBFeq4umhvZAWg67Nwlgi9Pu4FVrxhPNqSrNoF2Xr+
+ ynlfKqv1ae1fGG40TfoYlsln1CpXzSrVqGQahU9CYTT8sQh/kSmRA=
+X-Google-Smtp-Source: AGHT+IG7Klp5SNcHitPTgpT5hWeFG4rJi0Bqg8u13nCOgQtThpU1fiqL5QCS8REVRTOsGIjrGWPbSQ==
+X-Received: by 2002:a05:600c:3511:b0:476:4efc:8edc with SMTP id
+ 5b1f17b1804b1-477307d9920mr99932875e9.15.1762169750128; 
+ Mon, 03 Nov 2025 03:35:50 -0800 (PST)
+Received: from [172.18.178.65] (ip-185-104-138-122.ptr.icomera.net.
+ [185.104.138.122]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4773c394e33sm150837755e9.13.2025.11.03.03.35.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Nov 2025 03:35:49 -0800 (PST)
+Message-ID: <1a8ea87f-41b2-40a5-8511-df019b5833c5@linaro.org>
+Date: Mon, 3 Nov 2025 12:35:48 +0100
 MIME-Version: 1.0
-References: <20250626074529.1384114-1-clg@redhat.com>
- <20250626074529.1384114-10-clg@redhat.com>
- <CAFEAcA9+EyeWE0QSUhgd7+i3din8J76jnhTuDB7i9hu3x-urOg@mail.gmail.com>
- <CAFEAcA88jVL4Qwb4MEzdcqeXDjob1NZ3-k_ZtwPCgG+9U6fkNA@mail.gmail.com>
- <aQDKmM2FFKAusenB@movementarian.org>
-In-Reply-To: <aQDKmM2FFKAusenB@movementarian.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 3 Nov 2025 11:34:36 +0000
-X-Gm-Features: AWmQ_bneUEnptyIID9C2T6cy3HM3Usa6BmD1mkBAkAqSKbzCVoVNahgMqqjb_dU
-Message-ID: <CAFEAcA-cLQTTeuwcCfYRXwv-434_mttDO0oXr_UuaOmkHX370w@mail.gmail.com>
-Subject: Re: [PULL 09/25] vfio-user: implement message receive infrastructure
-To: John Levon <levon@movementarian.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- Alex Williamson <alex.williamson@redhat.com>,
- John Johnson <john.g.johnson@oracle.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] net: pad packets to minimum length in
+ qemu_receive_packet()
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng@tinylab.org>
+References: <20251028160042.3321933-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251028160042.3321933-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,42 +103,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Oct 2025 at 13:52, John Levon <levon@movementarian.org> wrote:
->
-> On Tue, Oct 28, 2025 at 01:35:05PM +0000, Peter Maydell wrote:
->
-> > On Thu, 10 Jul 2025 at 13:44, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
-> > >
-> > > On Thu, 26 Jun 2025 at 08:47, C=C3=A9dric Le Goater <clg@redhat.com> =
-wrote:
-> > > >
-> > > > From: John Levon <john.levon@nutanix.com>
-> > > >
-> > > > Add the basic implementation for receiving vfio-user messages from =
-the
-> > > > control socket.
-> > > >
-> > >
-> > > Hi; Coverity suggests there are some issues with this code
-> > > (CID 1611807, 1611808, 1611809):
-> >
-> > Hi; it looks like 1611807 and 1611808 (the resource leaks)
-> > are still present in this code in current git; would somebody
-> > like to have a look at this?
->
-> Please see https://lore.kernel.org/qemu-devel/aG-4hkfLDEpDsqo6@movementar=
-ian.org/
->
-> I believe them to be false positives.
+On 28/10/25 17:00, Peter Maydell wrote:
+> In commits like 969e50b61a28 ("net: Pad short frames to minimum size
+> before sending from SLiRP/TAP") we switched away from requiring
+> network devices to handle short frames to instead having the net core
+> code do the padding of short frames out to the ETH_ZLEN minimum size.
+> We then dropped the code for handling short frames from the network
+> devices in a series of commits like 140eae9c8f7 ("hw/net: e1000:
+> Remove the logic of padding short frames in the receive path").
+> 
+> This missed one route where the device's receive code can still see a
+> short frame: if the device is in loopback mode and it transmits a
+> short frame via the qemu_receive_packet() function, this will be fed
+> back into its own receive code without being padded.
+> 
+> Add the padding logic to qemu_receive_packet().
+> 
+> This fixes a buffer overrun which can be triggered in the
+> e1000_receive_iov() logic via the loopback code path.
+> 
+> Other devices that use qemu_receive_packet() to implement loopback
+> are cadence_gem, dp8393x, lan9118, msf2-emac, pcnet, rtl8139
+> and sungem.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3043
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I think this is the right fix, but I'm not very familiar
+> with the net internals...
+> ---
+>   net/net.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/net/net.c b/net/net.c
+> index 27e0d278071..8aefdb3424f 100644
+> --- a/net/net.c
+> +++ b/net/net.c
+> @@ -775,10 +775,20 @@ ssize_t qemu_send_packet(NetClientState *nc, const uint8_t *buf, int size)
+>   
+>   ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
+>   {
+> +    uint8_t min_pkt[ETH_ZLEN];
+> +    size_t min_pktsz = sizeof(min_pkt);
+> +
+>       if (!qemu_can_receive_packet(nc)) {
+>           return 0;
+>       }
+>   
+> +    if (net_peer_needs_padding(nc)) {
+> +        if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
+> +            buf = min_pkt;
+> +            size = min_pktsz;
+> +        }
+> +    }
+> +
+>       return qemu_net_queue_receive(nc->incoming_queue, buf, size);
+>   }
 
-That email only seems to talk about the locking issue (1611806,
-1611809) which we've marked as false-positives in Coverity.
-But 1611807 and 1611808 are "failed to free resources" issues:
-we allocate memory into reqfds and msg, but in the error
-exit path (e.g. if we "goto fatal" because qio_channel_read()
-failed) it doesn't look like we ever free that memory.
+Nitpicking, variables scope can be reduced:
 
-thanks
--- PMM
+-- >8 --
+@@ -777,5 +777,2 @@ ssize_t qemu_receive_packet(NetClientState *nc, 
+const uint8_t *buf, int size)
+  {
+-    uint8_t min_pkt[ETH_ZLEN];
+-    size_t min_pktsz = sizeof(min_pkt);
+-
+      if (!qemu_can_receive_packet(nc)) {
+@@ -785,2 +782,5 @@ ssize_t qemu_receive_packet(NetClientState *nc, 
+const uint8_t *buf, int size)
+      if (net_peer_needs_padding(nc)) {
++        uint8_t min_pkt[ETH_ZLEN];
++        size_t min_pktsz = sizeof(min_pkt);
++
+          if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
+---
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
