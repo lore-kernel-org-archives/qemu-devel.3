@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE54BCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E705CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFsAu-0001fj-6d; Mon, 03 Nov 2025 05:52:36 -0500
+	id 1vFsGp-0003l3-TI; Mon, 03 Nov 2025 05:58:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFsAs-0001fM-6c
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:52:34 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFsAn-0002Vn-7f
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:52:33 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-429c48e05aeso1355119f8f.1
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 02:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762167143; x=1762771943; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gu1x2Jvo2cxOYeIuXySnlCfrmNhzmsl8WxpirL+tZl8=;
- b=Av+jWS6jcQJtLLI+RB9SwMdA4yAsJQiWRPgYXkAVF4DdC8VoEgOOrGfxYr6Ru3tiAD
- hd5vGKDVDDaFTMPNglu9zY7ADndN1/m8kPqbP2PffzwKiZKuF+KmVUtZmYUsRAdtoFs/
- dKKiuJ+q+CpsLqZ6fhwWajOmFAYN8dzb6NQzsClabQLoiGCkz+TTqT+A+R0ylswhVRDJ
- fzbo+U5uKRprsMjKIn8VFJQMeHMFhKzrPvRL6qqDyl3hQh/5AXeMdtOFJstNvG/DmWtv
- QylzozbwF5Z9GuAjzbSZlr186WGpZc96/XuIV/GUD44k3Tb3zRVtelm79VPyIwv7vNW9
- 0EBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762167143; x=1762771943;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gu1x2Jvo2cxOYeIuXySnlCfrmNhzmsl8WxpirL+tZl8=;
- b=NnoPO+EogFz+CKbTLWGRmaaKLTuiFK1mSgKRokWWQ7ckTYFWERzeHC8gzESL5bL8zj
- PMUZDEjYBU9IK+ZHnwIHeAWjJQdieceIzHP96WbpZA+v8gaUzwz9SSzQcNDfFKzI17CI
- I43EhhHUFe2mDsRqMywLkX0cndLbkv3hREGKiK26c5K176l0qnMJEBQqJv9qN5blEVcO
- vFHkhgJmiHf3LapwTMLByz7cP7qWtiCcwbnnFiORG71RVJqdXr/p+26fQnucpUpELf6L
- sGkv7fAzS/QEy5X9pKBfxRx1kM4oyfqnNte6/scgle+HRoBL3Ln9dnJBJ1hwNdImUSxK
- 6+MQ==
-X-Gm-Message-State: AOJu0YzmMR0hk7pioQioFeg7Uj5pCwtIKc5nnOwPnM2lmx3dkdSOaYES
- PDVrCLLeqRaZ8wh+AkQfNCRqLAls0f5XYkN7QPgZwoYrY/kWB9xpW0V73MibRkCU1vcgjSL9WvH
- gaBOUzyX76nlO
-X-Gm-Gg: ASbGncv4l05onyWzR8sp1v3UhjBU5o3bKiOML0QcuWCpyh6wIt6RUoT1DLaZ8KVylML
- uquW9S574vrfcyQQxyn8/8waqwaoCyS6G5aXLv90fAM9SZ3pnz1EmeAnxTAmWdkm4TIFZLDutBG
- czsBiQ6vy72PvtxfXkD7ekSAw/NNokrFHGYWmWfxyQY9vRcAFO4z66rmLtN6T65W54/dpDKGHSa
- wzevZWZTHaw3olhWuUpU9cUMs6o2WSs3qb1anJXgGVWiqf5KY4Haekik3hEqT5FQwvDnwPUSP4E
- QiV4sf7NF2fZTTvmLREy6qRYOmzH2adTDFiBFomDnM9fdTqDLZmEkLtwE0z02IotuQc+ZKRhr8T
- jirVVTen7Vtuf3ZWqnYC8LwquW4JEWWdxOM2kUuVdqGgWwUKWGebNOWobQuG2n16POb9m0NoxG9
- KZ02aV/XvSCG0jQT05uTmR9iaM1EIiwZmcUmE8r/yEbyvZUeEA3T+ZjwuBH2KOC4DJ8/K3EQ==
-X-Google-Smtp-Source: AGHT+IGnFhlkhUanAo8VERPEGec32NWhEKhShTS7RpNGOJHeZ6Er/vmAAuaOykCNOOtmUnTso766JA==
-X-Received: by 2002:a5d:5d85:0:b0:429:bb77:5deb with SMTP id
- ffacd0b85a97d-429bb775fa9mr12350902f8f.31.1762167142789; 
- Mon, 03 Nov 2025 02:52:22 -0800 (PST)
-Received: from localhost.localdomain (ip-185-104-138-122.ptr.icomera.net.
- [185.104.138.122]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773c48daa0sm151530555e9.3.2025.11.03.02.52.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 03 Nov 2025 02:52:22 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGn-0003kE-Dg
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vFsGl-0004CA-CL
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:58:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762167518;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=suGlebXjfpwU4ew/WoQhKWZaxDwTD1m5Q6djyhTs2o4=;
+ b=EMNxR28ebwr+/p68p0+zTUGAcGjze0e9zS5GAXaDHt1DQsHilp0OYSCRsvRPqowdV0BWyx
+ ei5qTC4kqwYE6NeKy53CO90BM7yHoboTh7fHDFBX4Gbf3jF20+p3K8dt0oLVTIO8V/vNDc
+ FHk/Jc1iUHIwwzT+EUu5h6xFUEX+QOw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-aYvT7xT5PBef2HAwG4zD0Q-1; Mon,
+ 03 Nov 2025 05:58:36 -0500
+X-MC-Unique: aYvT7xT5PBef2HAwG4zD0Q-1
+X-Mimecast-MFC-AGG-ID: aYvT7xT5PBef2HAwG4zD0Q_1762167515
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAD211955F2D; Mon,  3 Nov 2025 10:58:35 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.12])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0D00930001A8; Mon,  3 Nov 2025 10:58:33 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] osdep: Cache getpagesize() call in
- qemu_real_host_page_size()
-Date: Mon,  3 Nov 2025 11:51:10 +0100
-Message-ID: <20251103105111.68294-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251103105111.68294-1-philmd@linaro.org>
-References: <20251103105111.68294-1-philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 04/22] tests/functional: Fix problems in linuxkernel.py
+ reported by pylint
+Date: Mon,  3 Nov 2025 11:58:01 +0100
+Message-ID: <20251103105824.322039-5-thuth@redhat.com>
+In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
+References: <20251103105824.322039-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,34 +82,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we can not know whether a libc implementation of
-getpagesize() calls syscalls -- potentially slow --, but
-we know the host page size won't change during runtime,
-we can cache its value.
+From: Thomas Huth <thuth@redhat.com>
 
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Use proper indentation here.
+
+Message-ID: <20251015095454.1575318-3-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- util/osdep.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tests/functional/qemu_test/linuxkernel.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/util/osdep.c b/util/osdep.c
-index 44fad13dcc7..9b50d00dbda 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -616,5 +616,11 @@ int qemu_fdatasync(int fd)
+diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
+index c4767527daf..eb10a813353 100644
+--- a/tests/functional/qemu_test/linuxkernel.py
++++ b/tests/functional/qemu_test/linuxkernel.py
+@@ -83,12 +83,12 @@ def launch_kernel(self, kernel, initrd=None, dtb=None, console_index=0,
+         self.vm.set_console(console_index=console_index)
+         self.vm.add_args('-kernel', kernel)
+         if initrd:
+-                self.vm.add_args('-initrd', initrd)
++            self.vm.add_args('-initrd', initrd)
+         if dtb:
+-                self.vm.add_args('-dtb', dtb)
++            self.vm.add_args('-dtb', dtb)
+         self.vm.launch()
+         if wait_for:
+-                self.wait_for_console_pattern(wait_for)
++            self.wait_for_console_pattern(wait_for)
  
- uintptr_t qemu_real_host_page_size(void)
- {
--    return getpagesize();
-+    static uintptr_t real_host_page_size;
-+
-+    if (!real_host_page_size) {
-+        real_host_page_size = getpagesize();
-+    }
-+
-+    return real_host_page_size;
- }
+     def check_http_download(self, filename, hashsum, guestport=8080,
+                             pythoncmd='python3 -m http.server'):
 -- 
 2.51.0
 
