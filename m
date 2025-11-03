@@ -4,55 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFCACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 14:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE3DCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 14:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFvHi-0004cy-Dj; Mon, 03 Nov 2025 09:11:50 -0500
+	id 1vFvHS-0004Ta-80; Mon, 03 Nov 2025 09:11:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vFryn-00072J-O6
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:40:05 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vFryk-000815-As
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:40:05 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id EA7A541526
- for <qemu-devel@nongnu.org>; Mon,  3 Nov 2025 10:39:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00831C4CEE7;
- Mon,  3 Nov 2025 10:39:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1762166390;
- bh=4jHwiL+1wC9HdU+GgZS3VLhOjPisvj2rwIR5l1J1/JI=;
- h=From:To:Cc:Subject:Date:From;
- b=VoEKfZ80OlRNzTSyQ3bjsw6qIbKhBo8IzZ2MJAi1Xmg2lqqT9WzDTTBclIY3SAGZ5
- uYNZrDhtxixgBn68e+rj08CoLg/J+3Bdn7KrGdKeTx96+h3vmiXFOauur4HKB1GUI4
- PbG+CnhBcIJ1K01SD49mgI2b8pvipqprC7Xgdaj4+wXJkRwhmxofAU5Zhjoywhl6F2
- n9GJhiCa+BIxtdxbrWcFxWVm8q7AiTB5BjrM1SPTYRAR/3uyUSdnyOQ5nyeX+8esg2
- AYqa2dJjkVxkPh9SpOHGiwrkRPWCEMJtJG11t2kaE/4tqanuKnxNdcx/XPWlttvM9e
- Vw7baaJFCdpbg==
-From: David Hildenbrand <david@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: "David Hildenbrand (Red Hat)" <david@kernel.org>
-Subject: [PATCH] MAINTAINERS: Update David Hildenbrand's email address
-Date: Mon,  3 Nov 2025 11:39:46 +0100
-Message-ID: <20251103103947.384401-1-david@kernel.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <fvogt@suse.de>) id 1vFvHP-0004TK-1A
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 09:11:31 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fvogt@suse.de>) id 1vFvHA-00055i-7x
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 09:11:30 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B9358219CD;
+ Mon,  3 Nov 2025 14:11:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1762179065; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nrz2ITbLZdpVOLmGCyaWsChGpB/Z49FUPAiNxCRis/o=;
+ b=V4m2OYo3YtjwqMR5HfT02lbhM3S2O8BHRCapOAkeDdacEi39Cn7oIr+VCjSnpWLBut5a3J
+ w+y4wsyqeN1UAY69OjQHUh2YAXV7EWRRz5Tn6cdTQDrY2BrPzefJqdW35vFw8J2jX9CGaN
+ HiuohOAURM5y5wer+i1113dCjvSOwjs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1762179065;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nrz2ITbLZdpVOLmGCyaWsChGpB/Z49FUPAiNxCRis/o=;
+ b=K7PCYHg6sWbBprdyKC4wNQZApQQOMfPJ3hSR3Ej3KerzkPvQofVVvR1sUs/bgvDmTwQ9ds
+ h3KRqZ1RCT6l4QDw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=V4m2OYo3;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=K7PCYHg6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1762179065; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nrz2ITbLZdpVOLmGCyaWsChGpB/Z49FUPAiNxCRis/o=;
+ b=V4m2OYo3YtjwqMR5HfT02lbhM3S2O8BHRCapOAkeDdacEi39Cn7oIr+VCjSnpWLBut5a3J
+ w+y4wsyqeN1UAY69OjQHUh2YAXV7EWRRz5Tn6cdTQDrY2BrPzefJqdW35vFw8J2jX9CGaN
+ HiuohOAURM5y5wer+i1113dCjvSOwjs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1762179065;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nrz2ITbLZdpVOLmGCyaWsChGpB/Z49FUPAiNxCRis/o=;
+ b=K7PCYHg6sWbBprdyKC4wNQZApQQOMfPJ3hSR3Ej3KerzkPvQofVVvR1sUs/bgvDmTwQ9ds
+ h3KRqZ1RCT6l4QDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A83D61364F;
+ Mon,  3 Nov 2025 14:11:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yjygKPm3CGkBSwAAD6G6ig
+ (envelope-from <fvogt@suse.de>); Mon, 03 Nov 2025 14:11:05 +0000
+From: Fabian Vogt <fvogt@suse.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Gabriel Somlo <somlo@cmu.edu>
+Cc: qemu-devel@nongnu.org, linux-kernel@vger.kernel.org,
+ Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH v2] firmware: qemu_fw_cfg: Do not hard depend on
+ CONFIG_HAS_IOPORT_MAP
+Date: Mon, 03 Nov 2025 15:11:05 +0100
+Message-ID: <24142953.6Emhk5qWAg@fvogt-thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=david@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+X-Rspamd-Queue-Id: B9358219CD
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; CTE_CASE(0.50)[];
+ MID_RHS_NOT_FQDN(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ MIME_TRACE(0.00)[0:+];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=fvogt@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 03 Nov 2025 09:11:45 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,119 +126,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "David Hildenbrand (Red Hat)" <david@kernel.org>
+Some configs have CONFIG_NO_IOPORT_MAP=y but support qemu_fw_cfg over
+MMIO. Currently the qemu_fw_cfg module can't be built for those as it
+needs HAS_IOPORT_MAP=y for ioport remapping.
 
-Switch to kernel.org email address as I will be leaving Red Hat. The
-old address will remain active until end of January 2026, so performing
-the change now should make sure that most mails will reach me.
+This patch allows to build qemu_fw_cfg in those cases. If
+CONFIG_HAS_IOPORT_MAP=n, qemu_fw_cfg is just built without support for
+ioport based access.
 
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Signed-off-by: Fabian Vogt <fvogt@suse.de>
 ---
- .mailmap    |  1 +
- MAINTAINERS | 18 +++++++++---------
- 2 files changed, 10 insertions(+), 9 deletions(-)
+v2: Guard ioport_unmap as well, which makes it work on archs like arm64
+in the !PCI case. Unlike arm, arm64 has no stub for ioport_unmap.
+Reword description.
 
-diff --git a/.mailmap b/.mailmap
-index 7f817d9f42..0690f7be34 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -82,6 +82,7 @@ Brian Cain <brian.cain@oss.qualcomm.com> <bcain@quicinc.com>
- Brian Cain <brian.cain@oss.qualcomm.com> <quic_bcain@quicinc.com>
- Christian Borntraeger <borntraeger@linux.ibm.com> <borntraeger@de.ibm.com>
- Damien Hedde <damien.hedde@dahe.fr> <damien.hedde@greensocs.com>
-+David Hildenbrand <david@kernel.org> <david@redhat.com>
- Filip Bozuta <filip.bozuta@syrmia.com> <filip.bozuta@rt-rk.com.com>
- Frederic Konrad <konrad.frederic@yahoo.fr> <fred.konrad@greensocs.com>
- Frederic Konrad <konrad.frederic@yahoo.fr> <konrad@adacore.com>
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a6a1d36f52..0c35509337 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -364,7 +364,7 @@ F: target/rx/
- 
- S390 TCG CPUs
- M: Richard Henderson <richard.henderson@linaro.org>
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- R: Ilya Leoshkevich <iii@linux.ibm.com>
- S: Maintained
- F: target/s390x/
-@@ -1861,7 +1861,7 @@ F: target/s390x/ioinst.c
- L: qemu-s390x@nongnu.org
- 
- S390 CPU models
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- S: Maintained
- F: target/s390x/cpu_features*.[ch]
- F: target/s390x/cpu_models.[ch]
-@@ -2383,7 +2383,7 @@ F: tests/functional/x86_64/test_virtio_version.py
- 
- virtio-balloon
- M: Michael S. Tsirkin <mst@redhat.com>
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- S: Maintained
- F: docs/interop/virtio-balloon-stats.rst
- F: hw/virtio/virtio-balloon*.c
-@@ -2531,7 +2531,7 @@ F: hw/virtio/virtio-crypto-pci.c
- F: include/hw/virtio/virtio-crypto.h
- 
- virtio based memory device
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- S: Supported
- F: hw/s390x/virtio-ccw-md.c
- F: hw/s390x/virtio-ccw-md.h
-@@ -2540,7 +2540,7 @@ F: hw/virtio/virtio-md-*.c
- F: include/hw/virtio/virtio-md-pci.h
- 
- virtio-mem
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- S: Supported
- W: https://virtio-mem.gitlab.io/
- F: hw/virtio/virtio-mem.c
-@@ -2918,7 +2918,7 @@ L: qemu-s390x@nongnu.org
- S390 floating interrupt controller
- M: Halil Pasic <pasic@linux.ibm.com>
- M: Christian Borntraeger <borntraeger@linux.ibm.com>
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- R: Jason Herne <jjherne@linux.ibm.com>
- S: Supported
- F: hw/intc/s390_flic*.c
-@@ -3246,7 +3246,7 @@ T: git https://gitlab.com/stsquad/qemu gdbstub/next
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
- M: Peter Xu <peterx@redhat.com>
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Supported
- F: include/system/ioport.h
-@@ -3266,7 +3266,7 @@ F: system/ram-block-attributes.c
- F: scripts/coccinelle/memory-region-housekeeping.cocci
- 
- Memory devices
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- M: Igor Mammedov <imammedo@redhat.com>
- R: Xiao Guangrong <xiaoguangrong.eric@gmail.com>
- S: Supported
-@@ -3369,7 +3369,7 @@ R: Ilya Maximets <i.maximets@ovn.org>
- F: net/af-xdp.c
- 
- Host Memory Backends
--M: David Hildenbrand <david@redhat.com>
-+M: David Hildenbrand <david@kernel.org>
- M: Igor Mammedov <imammedo@redhat.com>
- S: Maintained
- F: backends/hostmem*.c
+ drivers/firmware/Kconfig       | 1 -
+ drivers/firmware/qemu_fw_cfg.c | 7 +++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-base-commit: 53b41bb78950912ba2d9809eef6b45e4df30c647
+diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+index bbd2155d8483..91442f85f0f0 100644
+--- a/drivers/firmware/Kconfig
++++ b/drivers/firmware/Kconfig
+@@ -122,7 +122,6 @@ config RASPBERRYPI_FIRMWARE
+ config FW_CFG_SYSFS
+ 	tristate "QEMU fw_cfg device support in sysfs"
+ 	depends on SYSFS && (ARM || ARM64 || PARISC || PPC_PMAC || RISCV || SPARC || X86)
+-	depends on HAS_IOPORT_MAP
+ 	default n
+ 	help
+ 	  Say Y or M here to enable the exporting of the QEMU firmware
+diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
+index 0eebd572f9a5..fa4385339824 100644
+--- a/drivers/firmware/qemu_fw_cfg.c
++++ b/drivers/firmware/qemu_fw_cfg.c
+@@ -204,8 +204,10 @@ static void fw_cfg_io_cleanup(void)
+ 		iounmap(fw_cfg_dev_base);
+ 		release_mem_region(fw_cfg_p_base, fw_cfg_p_size);
+ 	} else {
++#ifdef CONFIG_HAS_IOPORT_MAP
+ 		ioport_unmap(fw_cfg_dev_base);
+ 		release_region(fw_cfg_p_base, fw_cfg_p_size);
++#endif
+ 	}
+ }
+ 
+@@ -258,6 +260,7 @@ static int fw_cfg_do_platform_probe(struct platform_device *pdev)
+ 			return -EFAULT;
+ 		}
+ 	} else {
++#ifdef CONFIG_HAS_IOPORT_MAP
+ 		if (!request_region(fw_cfg_p_base,
+ 				    fw_cfg_p_size, "fw_cfg_io"))
+ 			return -EBUSY;
+@@ -266,6 +269,10 @@ static int fw_cfg_do_platform_probe(struct platform_device *pdev)
+ 			release_region(fw_cfg_p_base, fw_cfg_p_size);
+ 			return -EFAULT;
+ 		}
++#else
++		dev_err(&pdev->dev, "IO region given but CONFIG_HAS_IOPORT_MAP=n");
++		return -EINVAL;
++#endif
+ 	}
+ 
+ 	/* were custom register offsets provided (e.g. on the command line)? */
 -- 
-2.51.0
+2.51.1
+
 
 
