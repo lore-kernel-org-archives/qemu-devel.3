@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32354CCF9F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0D9CCFA08
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 18:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFzNS-00064i-RK; Mon, 03 Nov 2025 13:34:02 -0500
+	id 1vFzNA-00060B-Vn; Mon, 03 Nov 2025 13:33:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vFzNR-00064K-PY
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:34:01 -0500
+ id 1vFzN8-0005vd-2x
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:33:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vFzNF-00075y-Po
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:33:59 -0500
+ id 1vFzMw-0006yq-LO
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 13:33:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762194827;
+ s=mimecast20190719; t=1762194806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0Vw1B+WAklixK/OgjgJ07zfBa9fc2MEiBscojqAcb3k=;
- b=hQEiCGfyq0hGBl/EpxDc/lKkNAGTyUYevv+IN5xmVUYtoUZSxGbz3lv+Lv4WjTQmGZV8uo
- WUmdFuc8XIKq9/PrsF1ylYgBX9jg7JsG91KIf6tGjA40RoE5itDENpiSDi9yb4CH++kCH2
- nvsnMtymK6ULt6KUNH01lKi4gjfdBIw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/EGZjmbie7WvN5P/atFBVzVk3p2GtY/pSoH3cMkB8LE=;
+ b=ZFFNbBJEgRfzkE8yvgpk6md1+FhOm6iMjd5zFHFbs+3shKzxCGh+/UoRMqOBXKsziqOwlh
+ 7HeWnWBqpQdr9E5B/n/1xhB2GXj98rQAC5mCIaDBAxSJC9KBaf8OFrlDJbEMs8cj6e8sNz
+ 0A47YKynxjJ/hnd3Z2MGBWDi0oec5TY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-tzFpCPrtNVm-xUTXnCt-Sw-1; Mon,
- 03 Nov 2025 13:33:44 -0500
-X-MC-Unique: tzFpCPrtNVm-xUTXnCt-Sw-1
-X-Mimecast-MFC-AGG-ID: tzFpCPrtNVm-xUTXnCt-Sw_1762194823
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-494-6jG5dWeaOI2cT_sulp1z6g-1; Mon,
+ 03 Nov 2025 13:33:22 -0500
+X-MC-Unique: 6jG5dWeaOI2cT_sulp1z6g-1
+X-Mimecast-MFC-AGG-ID: 6jG5dWeaOI2cT_sulp1z6g_1762194801
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DDC419373E6; Mon,  3 Nov 2025 18:33:27 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56EA619539B8; Mon,  3 Nov 2025 18:33:14 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.44.32.249])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3426D1800576; Mon,  3 Nov 2025 18:33:21 +0000 (UTC)
+ id 068BB180058C; Mon,  3 Nov 2025 18:33:10 +0000 (UTC)
 From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>
-Subject: [PATCH v4 5/8] migration: Refactor all incoming cleanup info
- migration_incoming_destroy()
-Date: Mon,  3 Nov 2025 19:32:54 +0100
-Message-ID: <20251103183301.3840862-6-jmarcin@redhat.com>
+Subject: [PATCH v4 2/8] migration: Do not try to start VM if disk activation
+ fails
+Date: Mon,  3 Nov 2025 19:32:51 +0100
+Message-ID: <20251103183301.3840862-3-jmarcin@redhat.com>
 In-Reply-To: <20251103183301.3840862-1-jmarcin@redhat.com>
 References: <20251103183301.3840862-1-jmarcin@redhat.com>
 MIME-Version: 1.0
@@ -70,8 +70,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,233 +87,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+From: Peter Xu <peterx@redhat.com>
 
-Currently, there are two functions that are responsible for calling the
-cleanup of the incoming migration state. With successful precopy, it's
-the incoming migration coroutine, and with successful postcopy it's the
-postcopy listen thread. However, if postcopy fails during in the device
-load, both functions will try to do the cleanup.
+If a rare split brain happens (e.g. dest QEMU started running somehow,
+taking shared drive locks), src QEMU may not be able to activate the
+drives anymore.  In this case, src QEMU shouldn't start the VM or it might
+crash the block layer later with something like:
 
-This patch refactors all cleanup that needs to be done on the incoming
-side into a common function and defines a clear boundary, who is
-responsible for the cleanup. The incoming migration coroutine is
-responsible for calling the cleanup function, unless the listen thread
-has been started, in which case the postcopy listen thread runs the
-incoming migration cleanup in its BH.
+Meanwhile, src QEMU cannot try to continue either even if dest QEMU can
+release the drive locks (e.g. by QMP "stop").  Because as long as dest QEMU
+started running, it means dest QEMU's RAM is the only version that is
+consistent with current status of the shared storage.
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-Fixes: 9535435795 ("migration: push Error **errp into qemu_loadvm_state()")
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c    | 44 +++++++++-------------------
- migration/migration.h    |  1 +
- migration/postcopy-ram.c | 63 +++++++++++++++++++++-------------------
- migration/trace-events   |  2 +-
- 4 files changed, 49 insertions(+), 61 deletions(-)
+ migration/migration.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 9a367f717e..637be71bfe 100644
+index 5e74993b46..6e647c7c4a 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -438,10 +438,15 @@ void migration_incoming_transport_cleanup(MigrationIncomingState *mis)
+@@ -3526,6 +3526,8 @@ static MigIterateState migration_iteration_run(MigrationState *s)
  
- void migration_incoming_state_destroy(void)
+ static void migration_iteration_finish(MigrationState *s)
  {
--    struct MigrationIncomingState *mis = migration_incoming_get_current();
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    PostcopyState ps = postcopy_state_get();
- 
-     multifd_recv_cleanup();
- 
-+    if (ps != POSTCOPY_INCOMING_NONE) {
-+        postcopy_incoming_cleanup(mis);
-+    }
++    Error *local_err = NULL;
 +
+     bql_lock();
+ 
      /*
-      * RAM state cleanup needs to happen after multifd cleanup, because
-      * multifd threads can use some of its states (receivedmap).
-@@ -866,7 +871,6 @@ process_incoming_migration_co(void *opaque)
- {
-     MigrationState *s = migrate_get_current();
-     MigrationIncomingState *mis = migration_incoming_get_current();
--    PostcopyState ps;
-     int ret;
-     Error *local_err = NULL;
- 
-@@ -883,25 +887,14 @@ process_incoming_migration_co(void *opaque)
- 
-     trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
- 
--    ps = postcopy_state_get();
--    trace_process_incoming_migration_co_end(ret, ps);
--    if (ps != POSTCOPY_INCOMING_NONE) {
--        if (ps == POSTCOPY_INCOMING_ADVISE) {
--            /*
--             * Where a migration had postcopy enabled (and thus went to advise)
--             * but managed to complete within the precopy period, we can use
--             * the normal exit.
--             */
--            postcopy_incoming_cleanup(mis);
--        } else if (ret >= 0) {
--            /*
--             * Postcopy was started, cleanup should happen at the end of the
--             * postcopy thread.
--             */
--            trace_process_incoming_migration_co_postcopy_end_main();
--            goto out;
--        }
--        /* Else if something went wrong then just fall out of the normal exit */
-+    trace_process_incoming_migration_co_end(ret);
-+    if (mis->have_listen_thread) {
-+        /*
-+         * Postcopy was started, cleanup should happen at the end of the
-+         * postcopy listen thread.
-+         */
-+        trace_process_incoming_migration_co_postcopy_end_main();
-+        goto out;
-     }
- 
-     if (ret < 0) {
-@@ -933,15 +926,6 @@ fail:
-         }
- 
-         exit(EXIT_FAILURE);
--    } else {
+@@ -3549,11 +3551,28 @@ static void migration_iteration_finish(MigrationState *s)
+     case MIGRATION_STATUS_FAILED:
+     case MIGRATION_STATUS_CANCELLED:
+     case MIGRATION_STATUS_CANCELLING:
 -        /*
--         * Report the error here in case that QEMU abruptly exits
--         * when postcopy is enabled.
+-         * Re-activate the block drives if they're inactivated.  Note, COLO
+-         * shouldn't use block_active at all, so it should be no-op there.
 -         */
--        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
--            error_report_err(s->error);
--            s->error = NULL;
--        }
-     }
- out:
-     /* Pairs with the refcount taken in qmp_migrate_incoming() */
-diff --git a/migration/migration.h b/migration/migration.h
-index 01329bf824..4a37f7202c 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -254,6 +254,7 @@ struct MigrationIncomingState {
- MigrationIncomingState *migration_incoming_get_current(void);
- void migration_incoming_state_destroy(void);
- void migration_incoming_transport_cleanup(MigrationIncomingState *mis);
-+void migration_incoming_qemu_exit(void);
- /*
-  * Functions to work with blocktime context
-  */
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index b47c955763..48cbb46c27 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -2078,6 +2078,24 @@ bool postcopy_is_paused(MigrationStatus status)
-         status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
- }
- 
-+static void postcopy_listen_thread_bh(void *opaque)
-+{
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+
-+    migration_incoming_state_destroy();
-+
-+    if (mis->state == MIGRATION_STATUS_FAILED) {
-+        /*
-+         * If something went wrong then we have a bad state so exit;
-+         * we only could have gotten here if something failed before
-+         * POSTCOPY_INCOMING_RUNNING (for example device load), otherwise
-+         * postcopy migration would pause inside qemu_loadvm_state_main().
-+         * Failing dirty-bitmaps won't fail the whole migration.
-+         */
-+        exit(1);
-+    }
-+}
-+
- /*
-  * Triggered by a postcopy_listen command; this thread takes over reading
-  * the input stream, leaving the main thread free to carry on loading the rest
-@@ -2131,53 +2149,38 @@ static void *postcopy_listen_thread(void *opaque)
-                          "bitmaps are correctly migrated and valid.",
-                          __func__, load_res, error_get_pretty(local_err));
-             g_clear_pointer(&local_err, error_free);
--            load_res = 0; /* prevent further exit() */
-         } else {
+-        migration_block_activate(NULL);
++        if (!migration_block_activate(&local_err)) {
 +            /*
-+             * Something went fatally wrong and we have a bad state, QEMU will
-+             * exit depending on if postcopy-exit-on-error is true, but the
-+             * migration cannot be recovered.
-+             */
-             error_prepend(&local_err,
-                           "loadvm failed during postcopy: %d: ", load_res);
-             migrate_set_error(migr, local_err);
-             g_clear_pointer(&local_err, error_report_err);
-             migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-                                            MIGRATION_STATUS_FAILED);
-+            goto out;
-         }
-     }
--    if (load_res >= 0) {
--        /*
--         * This looks good, but it's possible that the device loading in the
--         * main thread hasn't finished yet, and so we might not be in 'RUN'
--         * state yet; wait for the end of the main thread.
--         */
--        qemu_event_wait(&mis->main_thread_load_event);
--    }
--    postcopy_incoming_cleanup(mis);
--
--    if (load_res < 0) {
--        /*
--         * If something went wrong then we have a bad state so exit;
--         * depending how far we got it might be possible at this point
--         * to leave the guest running and fire MCEs for pages that never
--         * arrived as a desperate recovery step.
--         */
--        rcu_unregister_thread();
--        exit(EXIT_FAILURE);
--    }
-+    /*
-+     * This looks good, but it's possible that the device loading in the
-+     * main thread hasn't finished yet, and so we might not be in 'RUN'
-+     * state yet; wait for the end of the main thread.
-+     */
-+    qemu_event_wait(&mis->main_thread_load_event);
- 
-     migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-                                    MIGRATION_STATUS_COMPLETED);
--    /*
--     * If everything has worked fine, then the main thread has waited
--     * for us to start, and we're the last use of the mis.
--     * (If something broke then qemu will have to exit anyway since it's
--     * got a bad migration state).
--     */
--    bql_lock();
--    migration_incoming_state_destroy();
--    bql_unlock();
- 
-+out:
-     rcu_unregister_thread();
-     mis->have_listen_thread = false;
-     postcopy_state_set(POSTCOPY_INCOMING_END);
- 
-+    migration_bh_schedule(postcopy_listen_thread_bh, NULL);
-+
-     object_unref(OBJECT(migr));
- 
-     return NULL;
-diff --git a/migration/trace-events b/migration/trace-events
-index e8edd1fbba..772636f3ac 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -193,7 +193,7 @@ source_return_path_thread_resume_ack(uint32_t v) "%"PRIu32
- source_return_path_thread_switchover_acked(void) ""
- migration_thread_low_pending(uint64_t pending) "%" PRIu64
- migrate_transferred(uint64_t transferred, uint64_t time_spent, uint64_t bandwidth, uint64_t avail_bw, uint64_t size) "transferred %" PRIu64 " time_spent %" PRIu64 " bandwidth %" PRIu64 " switchover_bw %" PRIu64 " max_size %" PRId64
--process_incoming_migration_co_end(int ret, int ps) "ret=%d postcopy-state=%d"
-+process_incoming_migration_co_end(int ret) "ret=%d"
- process_incoming_migration_co_postcopy_end_main(void) ""
- postcopy_preempt_enabled(bool value) "%d"
- migration_precopy_complete(void) ""
++            * Re-activate the block drives if they're inactivated.
++            *
++            * If it fails (e.g. in case of a split brain, where dest QEMU
++            * might have taken some of the drive locks and running!), do
++            * not start VM, instead wait for mgmt to decide the next step.
++            *
++            * If dest already started, it means dest QEMU should contain
++            * all the data it needs and it properly owns all the drive
++            * locks.  Then even if src QEMU got a FAILED in migration, it
++            * normally should mean we should treat the migration as
++            * COMPLETED.
++            *
++            * NOTE: it's not safe anymore to start VM on src now even if
++            * dest would release the drive locks.  It's because as long as
++            * dest started running then only dest QEMU's RAM is consistent
++            * with the shared storage.
++            */
++            error_free(local_err);
++            break;
++        }
+         if (runstate_is_live(s->vm_old_state)) {
+             if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+                 vm_start();
 -- 
 2.51.0
 
