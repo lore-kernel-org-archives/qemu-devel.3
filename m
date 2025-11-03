@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A3BCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8D5CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 13:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFuoS-0002d5-Vy; Mon, 03 Nov 2025 08:41:38 -0500
+	id 1vFunN-0007rw-Mg; Mon, 03 Nov 2025 08:40:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vFuoN-0002Lv-2J
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:41:31 -0500
+ id 1vFunG-0007Tl-EF
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:40:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vFuoE-0004mK-L1
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:41:30 -0500
+ id 1vFun8-0004h6-Uw
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 08:40:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762177277;
+ s=mimecast20190719; t=1762177206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kMOnFs37bd9OkUmQnLjQkOBLu2AvkT/NHTBzwDCM7sA=;
- b=hVyBcHiKnD5VXauN62ImPVqLYXYICmZoQ0KlvKuOXT+nDMCucJhBkZPgR9LYzqAA6khdIS
- oaNGPvX+gz69s+4JyR7AZBS5F1ojLN2vMWODynhD572kgPp/gO+eUMlpre3/xbm5LG8p82
- lMidbGiED1BG7qys5E+Pddzy8YtXzfc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=kwX1Thnjdt/JXukp6bxeGadQ7qKel6NbmeI6Gtvbu4U=;
+ b=DbvoDI5w5fk8rz/Dbq1zMVOPFHw3MKdTn5+WytzbNzdmwLZ9e+Bn7DuD7PHwz/olu3FED/
+ 02MFHVVCNB4c5MGZWFRefA5PkqwrNa39NdInGgcJheb9K0MvKCPnekSuXVDZBM/AJQ8V/D
+ bQ/ko6wiC/+K/BOcjQgTxm3m+aObZmo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-SGQMprmjNru8xsnniRRXHg-1; Mon,
- 03 Nov 2025 08:41:14 -0500
-X-MC-Unique: SGQMprmjNru8xsnniRRXHg-1
-X-Mimecast-MFC-AGG-ID: SGQMprmjNru8xsnniRRXHg_1762177273
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-3A6rQ2cWNNmNjVNhoI8QnA-1; Mon,
+ 03 Nov 2025 08:40:03 -0500
+X-MC-Unique: 3A6rQ2cWNNmNjVNhoI8QnA-1
+X-Mimecast-MFC-AGG-ID: 3A6rQ2cWNNmNjVNhoI8QnA_1762177202
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CDF01955F04; Mon,  3 Nov 2025 13:41:13 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4FAEE19560B0; Mon,  3 Nov 2025 13:40:02 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.202])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CD09C1800576; Mon,  3 Nov 2025 13:41:08 +0000 (UTC)
+ id 2E5811800451; Mon,  3 Nov 2025 13:39:53 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -54,10 +54,9 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>
-Subject: [PULL 32/32] docs: creation of x509 certs compliant with post-quantum
- crypto
-Date: Mon,  3 Nov 2025 13:37:26 +0000
-Message-ID: <20251103133727.423041-33-berrange@redhat.com>
+Subject: [PULL 20/32] crypto: shorten the endpoint == server check in TLS creds
+Date: Mon,  3 Nov 2025 13:37:14 +0000
+Message-ID: <20251103133727.423041-21-berrange@redhat.com>
 In-Reply-To: <20251103133727.423041-1-berrange@redhat.com>
 References: <20251103133727.423041-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -71,9 +70,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,95 +87,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explain how to alter the certtool commands for creating certficates,
-so that they can use algorithms that are compliant with post-quantum
-crytography standards.
+This eliminates a number of long lines aiding readability.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/system/tls.rst | 68 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+ crypto/tlscredsx509.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/docs/system/tls.rst b/docs/system/tls.rst
-index 7cec4ac3df..03fa1d8166 100644
---- a/docs/system/tls.rst
-+++ b/docs/system/tls.rst
-@@ -345,6 +345,74 @@ example with VNC:
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index d93905ec77..7271b549ee 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -567,6 +567,8 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+     g_autofree char *cert = NULL;
+     g_autofree char *key = NULL;
+     g_autofree char *dhparams = NULL;
++    bool isServer = (creds->parent_obj.endpoint ==
++                     QCRYPTO_TLS_CREDS_ENDPOINT_SERVER);
+     int ret;
  
- .. _tls_005fpsk:
+     if (!creds->parent_obj.dir) {
+@@ -576,7 +578,7 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
  
-+TLS certificates for Post-Quantum Cryptography
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Given a new enough gnutls release, suitably integrated & configured with the
-+operating system crypto policies, QEMU is able to support post-quantum
-+crytography on TLS enabled services, either exclusively or in a hybrid mode.
-+
-+In exclusive mode, only a single set of certificates need to be configured
-+for QEMU, with PQC compliant algorithms. Such a QEMU configuration will only
-+be able to interoperate with other services (including other QEMU's) that
-+also have PQC enabled. This can result in compatibility concerns during the
-+period of transition over to PQC compliant algorithms.
-+
-+In hybrid mode, multiple sets of certificates need to be configured for QEMU,
-+at least one set with traditional (non-PQC compliant) algorithms, and at least
-+one other set with modern (PQC compliant) algorithms. At time of the TLS
-+handshake, the GNUTLS algorithm priorities should ensure that PQC compliant
-+algorithms are negotiated if both sides of the connection support PQC. If one
-+side lacks PQC, the TLS handshake should fallback to the non-PQC algorithms.
-+This can assist with interoperability during the transition to PQC, but has a
-+potential weakness wrt downgrade attacks forcing use of non-PQC algorithms.
-+Exclusive PQC mode should be preferred where both peers in the TLS connections
-+are known to support PQC.
-+
-+Key generation parameters
-+^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+To create certificates with PQC compliant algorithms, the ``--key-type``
-+argument must be passed to ``certtool`` when creating private keys. No
-+extra arguments are required for the other ``certtool`` commands, as
-+their behaviour will be determined by the private key type.
-+
-+The typical PQC compliant algorithms to use are ``ML-DSA-44``, ``ML-DSA-65``
-+and ``ML-DSA-87``, with ``ML-DSA-65`` being a suitable default choice in
-+the absence of explicit requirements.
-+
-+Taking the example earlier, for creating a key for a client certificate,
-+to use ``ML-DSA-65`` the command line would be modified to look like::
-+
-+   # certtool --generate-privkey --key-type=mldsa65 > client-hostNNN-key.pem
-+
-+The equivalent modification applies to the creation of the private keys
-+used for server certs, or root/intermediate CA certs.
-+
-+For hybrid mode, the additional indexed certificate naming must be used.
-+If multiple configured certificates are compatible with the mutually
-+supported crypto algorithms between the client and server, then the
-+first matching certificate will be used.
-+
-+IOW, to ensure that PQC certificates are preferred, they must use a
-+non-index based filename, or use an index that is smaller than any
-+non-PQC certificates. ie, ``server-cert.pem`` for PQC and ``server-cert-0.pem``
-+for non-PQC, or ``server-cert-0.pem`` for PQC and ``server-cert-1.pem`` for
-+non-PQC.
-+
-+Force disabling PQC via crypto priority
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+In the OS configuration for system crypto algorithm priorities has
-+enabled PQC, this can (optionally) be overriden in QEMU configuration
-+disable use of PQC using the ``priority`` parameter to the ``tls-creds-x509``
-+object::
-+
-+  NO_MLDSA="-SIGN-ML-DSA-65:-SIGN-ML-DSA-44:-SIGN-ML-DSA-87"
-+  NO_MLKEM="-GROUP-X25519-MLKEM768:-GROUP-SECP256R1-MLKEM768:-GROUP-SECP384R1-MLKEM1024"
-+  # qemu-nbd --object tls-creds-x509,id=tls0,endpoint=server,dir=....,priority=@SYSTEM:$NO_MLDSA:$NO_MLKEM
-+
-+
- TLS Pre-Shared Keys (PSK)
- ~~~~~~~~~~~~~~~~~~~~~~~~~
+     trace_qcrypto_tls_creds_x509_load(creds, creds->parent_obj.dir);
  
+-    if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
++    if (isServer) {
+         if (qcrypto_tls_creds_get_path(&creds->parent_obj,
+                                        QCRYPTO_TLS_CREDS_X509_CA_CERT,
+                                        true, &cacert, errp) < 0 ||
+@@ -609,9 +611,8 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+     }
+ 
+     if (creds->sanityCheck &&
+-        qcrypto_tls_creds_x509_sanity_check(creds,
+-            creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER,
+-            cacert, cert, errp) < 0) {
++        qcrypto_tls_creds_x509_sanity_check(creds, isServer,
++                                            cacert, cert, errp) < 0) {
+         return -1;
+     }
+ 
+@@ -663,7 +664,7 @@ qcrypto_tls_creds_x509_load(QCryptoTLSCredsX509 *creds,
+         }
+     }
+ 
+-    if (creds->parent_obj.endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER) {
++    if (isServer) {
+         if (qcrypto_tls_creds_get_dh_params_file(&creds->parent_obj, dhparams,
+                                                  &creds->parent_obj.dh_params,
+                                                  errp) < 0) {
 -- 
 2.51.1
 
