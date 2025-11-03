@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD387CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7DECCFA03
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 17:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFy3u-0000XM-EL; Mon, 03 Nov 2025 12:09:46 -0500
+	id 1vFy41-0000a9-L1; Mon, 03 Nov 2025 12:09:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3r-0000WE-Ai
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:43 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy40-0000Zc-Le
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:52 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3i-0000ru-As
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:42 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vFy3l-0000tO-9R
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 12:09:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+ In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=JTclVRBMtgGwr1WRYJzVLDg5Lk0+x88TQC1Cio9tuf4=; b=cgj0mIUfyMptMsI
- rfl/oi4RJrw0hsQoAiRoVxi2TbpvylVWGUHzHa9NuHfn9DfVwWJWoYaNf5fGPIhj6pT5geJ1VvNhM
- +KEtTzGfiDhK0xtO4na5Qn/eH9zyKlMFthIFXYDUaMdQ3tmi58yP1HMTuIVC31zBGKSSbk7hALW1E
- 1g=;
+ List-Help; bh=yV+bqWtAZS5pr5GZ5j9aWShDLTAV5Q6XBoKnG1ob4lY=; b=rsR0m+TN1WkEnaY
+ tF4jdMWmQOxTSN1PTW+or91KDFBQMSsyG55nXj4ucqd5LKZJlPTfFACoNUSN725mha0/xxahRx5xa
+ XnuSVqBeQnSKEEspaeyiaMJ41DE4IbHZa/IV3uT0qZsjUGEF0oO+37C+3Cr0mYmCPnCdSKD/Z3YNj
+ tA=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v5 09/25] target/riscv: Fix size of ssp
-Date: Mon,  3 Nov 2025 18:11:52 +0100
-Message-ID: <20251103171208.24355-10-anjo@rev.ng>
+Subject: [PATCH v5 19/25] target/riscv: Replace target_ulong in
+ riscv_ctr_add_entry()
+Date: Mon,  3 Nov 2025 18:12:02 +0100
+Message-ID: <20251103171208.24355-20-anjo@rev.ng>
 In-Reply-To: <20251103171208.24355-1-anjo@rev.ng>
 References: <20251103171208.24355-1-anjo@rev.ng>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -46,7 +48,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,107 +66,51 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As ssp holds a pointer, fix to 64 bits in size and make sure stores from
-TCG use the correct size to avoid problems on big endian hosts.
-
-Note, the cpu/ssp VMSTATE version is bumped, breaking migration from
-older versions.
+Widen to 64 bits in size to hold all relevant values.  Note: src and dst
+arguments change from signed to unsigned but no functional change is
+incurred.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                            |  2 +-
- target/riscv/machine.c                        |  6 +++---
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h        | 5 +++--
+ target/riscv/cpu_helper.c | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7c54a08eb4..1e4128128b 100644
+index c2be30795a..ee4444f22d 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -256,7 +256,7 @@ struct CPUArchState {
-     /* elp state for zicfilp extension */
-     bool      elp;
-     /* shadow stack register for zicfiss extension */
--    target_ulong ssp;
-+    uint64_t ssp;
-     /* env place holder for extra word 2 during unwind */
-     target_ulong excp_uw2;
-     /* sw check code for sw check exception */
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 1cf744c5f0..c55794c554 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -390,11 +390,11 @@ static bool ssp_needed(void *opaque)
+@@ -662,8 +662,9 @@ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
+                         bool virt_en);
  
- static const VMStateDescription vmstate_ssp = {
-     .name = "cpu/ssp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = ssp_needed,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(env.ssp, RISCVCPU),
-+        VMSTATE_UINT64(env.ssp, RISCVCPU),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 0b6ad57965..40e5a1b7df 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-@@ -45,7 +47,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
-     tcg_gen_addi_tl(addr, addr, tmp);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
+-void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, privilege_mode_t prev_priv, bool prev_virt);
++void riscv_ctr_add_entry(CPURISCVState *env, uint64_t src, uint64_t dst,
++                         enum CTRType type, privilege_mode_t prev_priv,
++                         bool prev_virt);
+ void riscv_ctr_clear(CPURISCVState *env);
  
-     return true;
- }
-@@ -59,12 +62,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     TCGv addr = tcg_temp_new();
-     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
-     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     tcg_gen_addi_tl(addr, addr, tmp);
-     tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -76,7 +82,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
--    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(dest, wide_addr);
-     gen_set_gpr(ctx, a->rd, dest);
- 
-     return true;
+ void riscv_translate_init(void);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index b102f15ac6..20ff05a4b2 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -926,8 +926,9 @@ static bool riscv_ctr_check_xte(CPURISCVState *env,
+  *    entry = isel - CTR_ENTRIES_FIRST;
+  *    idx = (sctrstatus.WRPTR - entry - 1) & (depth - 1);
+  */
+-void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, privilege_mode_t src_priv, bool src_virt)
++void riscv_ctr_add_entry(CPURISCVState *env, uint64_t src, uint64_t dst,
++                         enum CTRType type, privilege_mode_t src_priv,
++                         bool src_virt)
+ {
+     bool tgt_virt = env->virt_enabled;
+     uint64_t src_mask = riscv_ctr_priv_to_mask(src_priv, src_virt);
 -- 
 2.51.0
 
