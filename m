@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D6ACCFA03
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 19:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC42CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 19:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG0Lr-0004gT-ST; Mon, 03 Nov 2025 14:36:28 -0500
+	id 1vG0cS-0001iz-Vp; Mon, 03 Nov 2025 14:53:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vG0Lm-0004fa-OL
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 14:36:22 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vG0Li-0007Q6-Ol
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 14:36:22 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-429cf861327so1336395f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 11:36:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762198574; x=1762803374; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L0jWKt09ONf5CxjQo7sEz86pcFGVeF/Cx112wnRX1TE=;
- b=Y0QwzLKvjsQxCktegIpnuWDoRHt79xC3OynNzmncCYXp10SPuNYudKaL/eiTajRxb9
- JMpaabFkF9t8qQW9o66uZyXg6uBDqOeF9MtauSrpJd5uh88Y/FPUYvkQdPBK3W09Bobf
- SqWmesnkeR+6rfIJgfrluaTNPNke8uvZuEMgBitebPXQinvT3OF7Ou0d6B48JEXk42rX
- rdUfcA+WP+Pt6uvFjeLoPSC5uOID0VR8CCj8+FdfcxQfa8UdtOtin/CFsxhB4nbgvb8U
- 8nSO5o9OPkPZrGpKE4OiW1ted0ZLzL6jeLmdE2f9RUEgLOvNyii3F4u2+ZecEGKGYpK1
- E5rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762198574; x=1762803374;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L0jWKt09ONf5CxjQo7sEz86pcFGVeF/Cx112wnRX1TE=;
- b=oz7HaeoqvlN1TznDy8pz7zMR5T+DAfgTNVGfWTfAMSWEN+Wue8V+f4jnvL0fSiFq6p
- 9EVS9LfayNTHKM30JeIGCGzPfjjJq8bYxU3Jupalvv+2Z2aK3i5Py2ypeO2sogzrm1Tq
- IIlKZ46R5p32SB2d5L/YD6QUW16gTcSOhAEhcVmr8b9jcBEMkQ/4FOAElzSg3CEjczFp
- kdHQU4//zrF5FoOL81W7yXFcxqCWz5SgYeseK2QjjFjtzO6vnNdnMxAvDTSi7PTwQBZt
- BDSc65p55YJxntwlBHxjk9omaLK26s/1u0gy6SjTcDyd9czkZ24kfWsfI1P47WOeNGT/
- Tkdg==
-X-Gm-Message-State: AOJu0YzkkZHKxegctnygcS50VXeg+jKr7Qjbl8Z/GTTZV0qMWNR1EAL0
- qbMupmyhxyHyy1wTihLFHnt7qyoJFsA+X5Sh/9da4up/uKWa96a2C+mX
-X-Gm-Gg: ASbGncvO6k8o+t+IP8zJM6TL+y673crjba4z/ieYZBQN2NWMDhnC4hsa4CSW0u7TJTV
- SONAzn5r2XreR/ZQWMkgBrSfapdngzsRO3zvtbgx6jjZPYfDAxV3Xz5uARJ311+ON17zR6rRo39
- 5fXZmbEuVC6A73Rz4nifxkpIOks2y9TNHhWck9Y6qegnxY2Z9mp1Nz8/2ZZBE/SXfbxioJ5TglT
- cDkmAltJKKJcPJl8TMAPJWYblYOlMLa5bNm9kwP/JZG2dbB3aSPJE4vbfwi0Rkz0ayZGGGtVRBL
- uEH/uS/kaLXxuo6gC9JfY75yU3W9kvTI9i4pNV9RRGkgaGRHcoke80SsjRBF0fBGwED/6WDo2cy
- 75udqm/VqiBaN+rt7+LtVE86Un34/vTG7l/ng0+FONh2Mru59vTUX9OxNAD+HFzUIF3GW8a09/D
- WRo4ePO/w=
-X-Google-Smtp-Source: AGHT+IFjpjeT8AaG4ScOFbPf4tV10SBYBCjh/t8pyOnLbdXzW+ltP8stlAq3/WEs0E/0DL/XSySyag==
-X-Received: by 2002:a5d:64e7:0:b0:3e7:45c7:828e with SMTP id
- ffacd0b85a97d-429bd6a4bc8mr12175770f8f.33.1762198574089; 
- Mon, 03 Nov 2025 11:36:14 -0800 (PST)
-Received: from ehlo.thunderbird.net ([185.238.219.61])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429dc18ef59sm450806f8f.2.2025.11.03.11.36.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 11:36:13 -0800 (PST)
-Date: Mon, 03 Nov 2025 19:22:50 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 0/2] KVM Support for imx8mp-evk Machine
-In-Reply-To: <CAFEAcA-7dMCjK2dnTP=82qtk48D4WHCP4sbyQtaxTcRsDb=t+w@mail.gmail.com>
-References: <20251101120130.236721-1-shentey@gmail.com>
- <4D17B8A6-28E9-4E65-B0DD-15BE2AD4AB04@gmail.com>
- <CAFEAcA-7dMCjK2dnTP=82qtk48D4WHCP4sbyQtaxTcRsDb=t+w@mail.gmail.com>
-Message-ID: <B6033E2A-24D4-4669-8012-DD12B5F5F3FC@gmail.com>
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1vG0cO-0001hV-L6
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 14:53:32 -0500
+Received: from cyan.elm.relay.mailchannels.net ([23.83.212.47])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1vG0cF-0006qC-VY
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 14:53:31 -0500
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 36125922004;
+ Mon, 03 Nov 2025 19:53:15 +0000 (UTC)
+Received: from pdx1-sub0-mail-a475.dreamhost.com
+ (100-123-83-250.trex-nlb.outbound.svc.cluster.local [100.123.83.250])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id CA89D921CF5;
+ Mon, 03 Nov 2025 19:53:14 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762199594; a=rsa-sha256;
+ cv=none;
+ b=riZlj1mZmrTIZqR1VaSpoSlclU7ng9I1cz51O3Cc88o9m0FE6fwHlMO3TTyRTpATsxff+7
+ 0e4W1qBKhoSs9PX5EWmwjffGgzaRsQ0w/0AK1r4HmxPmxsDV7jUP2xqFR+oWhLTbHgx5va
+ aDgmu8tJ/olrCfraYqAYQCaGUnedW22SBWS5fUgL6Nyo47in7NOYFPLf7fX2VrDqdEubLY
+ F+FKH5sr76duFuy6z+ruKJKr/gRtcqnr7oI7vrO9CsWAlvUxuAz8CzcBC7qy9oOc20Fw/O
+ fIBel2Vk58IYtuNbmybHqnaQQ9od5qoCGX/vJ/CBoXb64Ad+XjSPnj7xXJAdhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1762199594;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=jatlogUs8iGl5JgYc1mTqRweb/2D60opMqZNCIazvV0=;
+ b=GsADgjs3y8TdnhXHo/hY7NVVN4J6CdikWFBotWPPkdzEaqUH/g+HGWuIB4BcStqRKwwEea
+ buFgf83oiG2oflfkJTUhrl/9NdmHHMtAoHtJVS+KjVEaQA65EeiqYcIOGmVWDqjAOAfoeQ
+ FD3ip0MEHgyr0ewFjYEAaAR74C7M+jzOaRK76vYqLrolUCeZH2dq6WRlRQkR8Dvlx22Kvk
+ ZuqXN0MHTqCqAZQkn55tLzYivmPbGzZjOg7Ze0A2q7cx1FZ/jM6MErSnx0McH47Ice4Ca/
+ 4/X36w2aesfyI9syU6yqhwFn7X6pgUbNa+O0X/BdCNGIBTerQblfy8lF+Br6+w==
+ARC-Authentication-Results: i=1; rspamd-768b565cdb-ldg28;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Hook-Cure: 7407d59a05b696d4_1762199595116_4211469106
+X-MC-Loop-Signature: 1762199595116:2378479632
+X-MC-Ingress-Time: 1762199595115
+Received: from pdx1-sub0-mail-a475.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.123.83.250 (trex/7.1.3); Mon, 03 Nov 2025 19:53:15 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+ s=dreamhost; t=1762199594;
+ bh=jatlogUs8iGl5JgYc1mTqRweb/2D60opMqZNCIazvV0=;
+ h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
+ b=ieZRFOj3zEGcdGHfh2xJuixZG32MCRmFWBjgWY0ZPkUGrMLi+9wry6DzZmgEwsoPp
+ jgVH54eHWcSEfhyVJ3bieIk/1azBiuOAya3E9tAx6HzwvlF9iDm3e0z8dPLkxvowh8
+ RKoUlpd0na+sKEVUE2aFX1dEtbRK0arqVwH1VbCuoH6xnNHGK2gNVTcqnE05KlqmeL
+ wtNRHpnqEv8AfsTjIgi5k3GJ6Keu3F4LRDgXnLACelB5P+1BAT0JAULfn2tZK0M39t
+ nAy8KfcXV+OB/XxIbNhp0Nebtur8P+Ug98l5uAo2Ltp8qDyFznPuRpV+VvmCbwtpLB
+ RXdM20BjPDA8Q==
+Received: from offworld.lan (unknown [76.167.199.67])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dave@stgolabs.net)
+ by pdx1-sub0-mail-a475.dreamhost.com (Postfix) with ESMTPSA id 4d0j1j48Knz1wdx;
+ Mon,  3 Nov 2025 11:53:13 -0800 (PST)
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: jonathan.cameron@huawei.com
+Cc: ira.weiny@intel.com, alucerop@amd.com, a.manzanares@samsung.com,
+ dongjoo.seo1@samsung.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ armbru@redhat.com, linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
+ dave@stgolabs.net
+Subject: [PATCH 2/5] hw/cxl: Refactor component register initialization
+Date: Mon,  3 Nov 2025 11:52:06 -0800
+Message-Id: <20251103195209.1319917-3-dave@stgolabs.net>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20251103195209.1319917-1-dave@stgolabs.net>
+References: <20251103195209.1319917-1-dave@stgolabs.net>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: softfail client-ip=23.83.212.47; envelope-from=dave@stgolabs.net;
+ helo=cyan.elm.relay.mailchannels.net
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,72 +114,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Ira Weiny <ira.weiny@intel.com>
 
+CXL 3.2 8.2.4 Table 8-22 defines which capabilities are mandatory, not
+permitted, or optional for each type of device.
 
-Am 3=2E November 2025 15:47:29 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->On Mon, 3 Nov 2025 at 08:55, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->>
->>
->> Am 1=2E November 2025 12:01:28 UTC schrieb Bernhard Beschow <shentey@gm=
-ail=2Ecom>:
->> >This series adds KVM support to the imx8mp-evk machine, allowing it to=
- run
->> >
->> >guests with KVM acceleration=2E Inspiration was taken from the virt ma=
-chine=2E This
->> >
->> >required a device tree quirk for the guest clock to be kept in sync wi=
-th the
->> >
->> >host=2E Without this quirk the guest's clock would advance with factor=
- <host
->> >
->> >system counter> / 8Mhz=2E
->> >
->> >
->> >
->> >Testing done:
->> >
->> >* Run `make check`
->> >
->> >* Run Buildroot image with TCG
->> >
->> >* Run `qemu-system-aarch64 -M imx8mp-evk -accel kvm -smp 4` under
->> >
->> >  `qemu-system-aarch64 -M virt,secure=3Don,virtualization=3Don,gic-ver=
-sion=3D4 \
->> >
->> >  -cpu cortex-a72 -smp 4 -accel tcg` and `qemu-system-aarch64 -M imx8m=
-p-evk \
->> >
->> >  -accel tcg -smp 4"=2E Observe that the `date` command reflects the h=
-ost's date=2E
->> >
->> >
->> >
->> >v3:
->> >
->> >* Fix crash in qtest (Peter) by using cortex-a53 CPU when ms->cpu_type=
- =3D=3D NULL
->> >
->> >* Apply Peter's style fixes in board documentation
->> >
->> >* Apply Phil's R-b -- thanks!
->> >
->> >* Rebase onto master
->> >
->>
->> Is there still a chance to get this series into 10=2E2? Soft feature fr=
-eeze is tomorrow=2E
->
->I've put this into the pullreq I've just sent out for softfreeze=2E
+cxl_component_register_init_common() uses a rather odd 'fall through'
+mechanism to define each component register set.  This assumes that any
+device or capability being added builds on the previous devices
+capabilities.  This is not true as there are mutually exclusive
+capabilities defined.  For example, downstream ports can not have snoop
+but it can have Back Invalidate capable decoders.
 
-Thanks, Peter!
+Refactor this code to make it easier to add individual capabilities as
+defined by a device type.  Any capability which is not specified by the
+type is left NULL'ed out which complies with the packed nature of the
+register array.
 
->
->thanks
->-- PMM
+Update all spec references to 3.2.
+
+No functional changes should be seen with this patch.
+
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Tested-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
+[rebased, no RAS for HBs, r3.2 references]
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+---
+ hw/cxl/cxl-component-utils.c   | 75 +++++++++++-----------------------
+ include/hw/cxl/cxl_component.h | 33 ++++++++++-----
+ 2 files changed, 46 insertions(+), 62 deletions(-)
+
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index ce42fa4a2946..a43d227336ca 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -289,32 +289,6 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+ {
+     int caps = 0;
+ 
+-    /*
+-     * In CXL 2.0 the capabilities required for each CXL component are such
+-     * that, with the ordering chosen here, a single number can be used to
+-     * define which capabilities should be provided.
+-     */
+-    switch (type) {
+-    case CXL2_DOWNSTREAM_PORT:
+-    case CXL2_DEVICE:
+-        /* RAS, Link */
+-        caps = 2;
+-        break;
+-    case CXL2_UPSTREAM_PORT:
+-    case CXL2_TYPE3_DEVICE:
+-    case CXL2_LOGICAL_DEVICE:
+-        /* + HDM */
+-        caps = 3;
+-        break;
+-    case CXL2_ROOT_PORT:
+-    case CXL2_RC:
+-        /* + Extended Security, + Snoop */
+-        caps = 5;
+-        break;
+-    default:
+-        abort();
+-    }
+-
+     memset(reg_state, 0, CXL2_COMPONENT_CM_REGION_SIZE);
+ 
+     /* CXL Capability Header Register */
+@@ -322,11 +296,12 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, VERSION,
+         CXL_CAPABILITY_VERSION);
+     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 1);
+-    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
+ 
+ #define init_cap_reg(reg, id, version)                                        \
+     do {                                                                      \
+-        int which = R_CXL_##reg##_CAPABILITY_HEADER;                          \
++        int which = CXL_##reg##_CAP_HDR_IDX;                                  \
++        if (CXL_##reg##_CAP_HDR_IDX > caps)                                   \
++            caps = CXL_##reg##_CAP_HDR_IDX;                                   \
+         reg_state[which] = FIELD_DP32(reg_state[which],                       \
+                                       CXL_##reg##_CAPABILITY_HEADER, ID, id); \
+         reg_state[which] =                                                    \
+@@ -337,37 +312,35 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+                        CXL_##reg##_REGISTERS_OFFSET);                         \
+     } while (0)
+ 
++    /* CXL r3.2 8.2.4 Table 8-22 */
+     switch (type) {
+-    case CXL2_DEVICE:
+-    case CXL2_TYPE3_DEVICE:
+-    case CXL2_LOGICAL_DEVICE:
+     case CXL2_ROOT_PORT:
++    case CXL2_RC:
++        /* + Extended Security, + Snoop */
++        init_cap_reg(EXTSEC, 6, 1);
++        init_cap_reg(SNOOP, 8, 1);
++        /* fallthrough */
+     case CXL2_UPSTREAM_PORT:
++    case CXL2_TYPE3_DEVICE:
++    case CXL2_LOGICAL_DEVICE:
++        /* + HDM */
++        init_cap_reg(HDM, 5, 1);
++        hdm_init_common(reg_state, write_msk, type);
++        /* fallthrough */
+     case CXL2_DOWNSTREAM_PORT:
+-    init_cap_reg(RAS, 2, CXL_RAS_CAPABILITY_VERSION);
+-        ras_init_common(reg_state, write_msk);
++    case CXL2_DEVICE:
++        /* RAS, Link */
++        if (type != CXL2_RC) {
++            init_cap_reg(RAS, 2, 2);
++            ras_init_common(reg_state, write_msk);
++        }
++        init_cap_reg(LINK, 4, 2);
+         break;
+     default:
+-        break;
+-    }
+-
+-    init_cap_reg(LINK, 4, CXL_LINK_CAPABILITY_VERSION);
+-
+-    if (caps < 3) {
+-        return;
+-    }
+-
+-    if (type != CXL2_ROOT_PORT) {
+-        init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
+-        hdm_init_common(reg_state, write_msk, type);
+-    }
+-    if (caps < 5) {
+-        return;
++        abort();
+     }
+ 
+-    init_cap_reg(EXTSEC, 6, CXL_EXTSEC_CAP_VERSION);
+-    init_cap_reg(SNOOP, 8, CXL_SNOOP_CAP_VERSION);
+-
++    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
+ #undef init_cap_reg
+ }
+ 
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index b721333cb7aa..cd92cb02532a 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -32,10 +32,20 @@ enum reg_type {
+ };
+ 
+ /*
+- * Capability registers are defined at the top of the CXL.cache/mem region and
+- * are packed. For our purposes we will always define the caps in the same
+- * order.
+- * CXL r3.1 Table 8-22: CXL_CAPABILITY_ID Assignment for details.
++ * CXL r3.2 - 8.2.4 Table 8-22 and 8-23
++ *
++ * Capability registers are defined at the top of the CXL.cache/mem region.
++ * They are defined to be packed and at variable offsets.  However, NULL
++ * capabilities can be added to the packed array.  To facilitate easier access
++ * within the QEMU code, define these at specified offsets.  Then NULL out any
++ * capabilities for devices which don't (or can't) have a particular capability
++ * (see cxl_component_register_init_common).  NULL capabilities are to be
++ * ignored by software.
++ *
++ * 'offsets' are based on index's which can then be used to report the array
++ * size in CXL Capability Header Register (index/offset 0).
++ *
++ * See CXL r3.2 Table 8-25 for an example of allowing a 'NULL' header.
+  */
+ 
+ /* CXL r3.1 Section 8.2.4.1: CXL Capability Header Register */
+@@ -46,16 +56,17 @@ REG32(CXL_CAPABILITY_HEADER, 0)
+     FIELD(CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 20, 4)
+     FIELD(CXL_CAPABILITY_HEADER, ARRAY_SIZE, 24, 8)
+ 
+-#define CXLx_CAPABILITY_HEADER(type, offset)                  \
+-    REG32(CXL_##type##_CAPABILITY_HEADER, offset)             \
++#define CXLx_CAPABILITY_HEADER(type, idx)                     \
++    enum { CXL_##type##_CAP_HDR_IDX = idx };                  \
++    REG32(CXL_##type##_CAPABILITY_HEADER, (idx * 0x4))        \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, ID, 0, 16)      \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, VERSION, 16, 4) \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, PTR, 20, 12)
+-CXLx_CAPABILITY_HEADER(RAS, 0x4)
+-CXLx_CAPABILITY_HEADER(LINK, 0x8)
+-CXLx_CAPABILITY_HEADER(HDM, 0xc)
+-CXLx_CAPABILITY_HEADER(EXTSEC, 0x10)
+-CXLx_CAPABILITY_HEADER(SNOOP, 0x14)
++CXLx_CAPABILITY_HEADER(RAS, 1)
++CXLx_CAPABILITY_HEADER(LINK, 2)
++CXLx_CAPABILITY_HEADER(HDM, 3)
++CXLx_CAPABILITY_HEADER(EXTSEC, 4)
++CXLx_CAPABILITY_HEADER(SNOOP, 5)
+ 
+ /*
+  * Capability structures contain the actual registers that the CXL component
+-- 
+2.39.5
+
 
