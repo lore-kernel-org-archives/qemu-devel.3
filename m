@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353F9CCFA04
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23825CCFA04
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Nov 2025 10:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vFrZ7-0005G8-7z; Mon, 03 Nov 2025 05:13:33 -0500
+	id 1vFrZT-0005eE-U3; Mon, 03 Nov 2025 05:13:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrZ0-00058F-Py
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:13:27 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrZR-0005dX-UX
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:13:53 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrYu-0002xn-Ut
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:13:24 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4711810948aso29601105e9.2
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 02:13:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vFrZM-0002zQ-Re
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 05:13:53 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-471b80b994bso54840955e9.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 02:13:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762164793; x=1762769593; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762164824; x=1762769624; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J0L1rNSBbDA68/IWNXBGkYS13/51Kd8iUuA26ASfqQc=;
- b=D4rxOSNM03I9Sc9xptgO8YrgCbSfCcUKpF9Rx6f0bILgeuuwQ5izI0WK7KO/1BG5v2
- yXnMXNZctYqoIeEkICIfGedytNBH9R3iu7dJ/nRlxAIAxRVrJ3rngyibvwMvPTE919xP
- LHSe0FNagqYysU90WM7Sq4qMq+0qXu83OkjLnQxZYt1+CzcTpRjrQJUSqMOeuO1Xwxmd
- a5GMv7YzHK/qNQarqa2Wl4U/fbrwVFHzvGSr3GRhFLD+Gdy/VisyiycHD7jrtJ6SvR44
- OmdrMy69ZI8XPvy8hSpnFLDoxJ2iVjC4/qNd8c1WTvXFUAhv5WnZ4PUc3aLmLxUd2V8m
- IJFQ==
+ bh=ZhaKZtIHcKQyEzCs44RThvX4QVJ1Sgd9Tp4DxoQS0nM=;
+ b=elQ3XncFJ1cC0c7CLhV+9zkS56AkVxbfDtfvlc1Fd8fvMFfYnPav+8wxvYDCTWfl59
+ 86RNoRzEPypDZFeVv8PmSdTRV6NTblAO/0A9dSOKLvA3agM2ppuEQOoO1UxwOdtjbtPJ
+ s41VZbG4NuAT0kzW4WMQOgkyGPmdNvu+Ml7ImgOHH13/U4g2dwgyvADxUtxEb9XITJmo
+ 5EMi2JiFnY0J4HAgDTPgRhUasp0hXcLT2+Tu5CU/wyO+PLpoLHH2cl7zXo8fHvzAIDa5
+ +NhXcJ4VYhl4Njh3NdSFFhxHygQKFXEdmfBAdcUa+n2Rp7ytDfQ6fsCDAxg2rzWjkExW
+ GjhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762164793; x=1762769593;
+ d=1e100.net; s=20230601; t=1762164824; x=1762769624;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J0L1rNSBbDA68/IWNXBGkYS13/51Kd8iUuA26ASfqQc=;
- b=OaYXLI/UdjrbpphPGFaGAUNI5pMDdmAhaq7QbBQS8thHqgTh//5MduowufDWPbi7Kv
- zCyE3jMZhmBs6VMW0lQ+TuIWlKrHVYwFyBJOItTHSWHmy3lPIU9Ez8l8qev1HJyERTlF
- 4Q+DybKbT5x5IRoa9Kvb6H/LP/H2WGCcd0lUA5wjCCnFyXGHakmI10pTx1DjubYF1aLs
- FX9J/uTFfGYh1L+KnCpM9PL9EvHtMR0cs9ttj9s/lJGU0GiXfypgRVCNvn6WNWXRsdGY
- Qd1Z9XTa94ZpF2i/39XYb6AbRkMa/RmkbCjb349QPVhr9zMmhfn7TT0PRi3PANgIiCli
- 0Wmg==
-X-Gm-Message-State: AOJu0Yxwe9a8w6NULHfiJjCqFTlXBiXDQfH6mnlA27IWGz30VGLa50Fe
- Vbqcyoc34TTr/Sm/V65xAfwSUDBg41LOcs+D+/qN8u04a5d1eqR2JWolxp6S0uw3nqlWs2YY+Vv
- GejKIq8I=
-X-Gm-Gg: ASbGncugGUmAHFTu4m/OEcDOWHVpEj/LNkNRVzopy03Fv/ex46zWGuFhybiC7QH2ghA
- XW1gh9hY8heRRLkB9ZlKcPqFzg+YQs4k26MKcqU7c8kdSi2d3wl6jO+BMbXTID8m1Ib4uuNc8qn
- ug/rUOr6j+OJBr6hgeQyC3/hSSh7ZwISC/5D7tEEuKZHuLGTWL4qMNU+oZvIr6j/DlQbiWItM69
- T/8jxelEoR5CuFYBOJFS5M31YKCYYmFzDxcKuEGr+e2Hd3RyTav3bqkMb8QTpLW65h6xbZrNw2Z
- 2A/kaEmB11ic4vKwdUDY8D43/mBl/2YC7CBa4d6XnUh5nOjvlAeMZE3UdKVTQ5f6jvPunPlFQz5
- 3TyBSFHEA0+4qB+BtfEiUcL/fB8SwGjoYW+MRRZ5NZmijr4BtxwSFulAk1IDY3WXfYOxG+58+zD
- c9lvOuVfsCVy/fKNCbXgMpXwdjljxP3vXQbncUX+d8Cw1YT7ZQnAigfyDk2yc=
-X-Google-Smtp-Source: AGHT+IFKiOsfs/H1/75JT2DpnBWXcqBuFxoYVJwBciVYxXmT59enPvZavBdmyeUIw6Lgw3CSqAnydg==
-X-Received: by 2002:a05:600c:8415:b0:471:1765:839c with SMTP id
- 5b1f17b1804b1-47730871f97mr85060715e9.20.1762164793101; 
- Mon, 03 Nov 2025 02:13:13 -0800 (PST)
+ bh=ZhaKZtIHcKQyEzCs44RThvX4QVJ1Sgd9Tp4DxoQS0nM=;
+ b=p+nIjlSkAqH0/DL2j8zVGCTg9GLtT0dozNugpMvmO0dDZ6XB13nwRaHk/QtmL0wH1k
+ h/EKT+4ycUMVwfg7mgNJFWnCQ9rp/IRoCBqQGw7H0KyE6+dX/88v3a0OQvXr0qLZON3p
+ gKMQWBfU73xziA+C7Q16pM02u3th1YXcBfUma8JzwcodElWXLGcbKnYNXmPKBZGnF1iw
+ x8SPMfvD6lwwRVXMuYwdCnIjHNbXkmVaEeQtcshhwmkbn0hBh9l0wLRJjkTo5m9fyZr7
+ vtcbARy03/2YG5bVwWjsFieQHyc5X0v5u9y4VmxNR1askE5mViv/YG/G9EUnpyUCXR06
+ FkPw==
+X-Gm-Message-State: AOJu0Yz4x54Ai3KliA17/PYz7xhoQcKrDiXmYqjP+wtbcuy6eNs9qcpt
+ mhEtIqzZSlJbiyhbkh2yWRQcL3tqDGPFyDq3gV4O3FQGHo4aFDu75TYLF4d6LcBimDVfH07vzSK
+ 6HlqYhQ0=
+X-Gm-Gg: ASbGnctw4Od3zgDGlBiTCRXbVg6JOt7r8/pwbrIgEcFn70+SlF5VSm86thYyFgkaZPS
+ G+Pe6sMIO/aAZhOVeZMsmQauKlZgemcmx4ZH6WHxSOfJKeFYr1DcjGiVpqkug76X+dRxj5f81er
+ F4rLmG/KaT3lfcYSzwoReiVmVXFA1SYCQ6Gxsr6+OK260hVGA3RM3cnrx4kOYEBvyoegXRo4LYc
+ yjUzwRwZEBg1k9QEWowGpIB5CvoNXd/0ukHuWxWFDTuo2pzNJWMd3o8tLC3aCYvyQjrqiY9lcoj
+ IbXesa3g4MdiLIO0dggRIoLl/bj9+kRVqO08LNMU+qN9PlUBnsOB3T8/SP6kd9HhrVac+dEfdnv
+ zCFyP3Hlj55o+drzmbkRy1D8FUUfJ2nAjZTWJC4riU15c+siav/mfaszpj9zDLPgUfsHbQNRaEE
+ jSR8RLmPZzpO7aCLwdAsEbhZYXr1foWKzjY56AX905XNx053JtAYoBiGnUuPg=
+X-Google-Smtp-Source: AGHT+IEOGKIgKnlbDQiyqHsOaaJCd31NLapA+qxZRnHzn1WG4l/u8lZPmyrB01DywGkze+48j6mTTQ==
+X-Received: by 2002:a05:600c:3e8f:b0:475:dac3:699f with SMTP id
+ 5b1f17b1804b1-477307c1470mr105999275e9.9.1762164824081; 
+ Mon, 03 Nov 2025 02:13:44 -0800 (PST)
 Received: from localhost.localdomain (ip-185-104-138-122.ptr.icomera.net.
  [185.104.138.122]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4772fe0da3asm85728615e9.6.2025.11.03.02.13.10
+ 5b1f17b1804b1-4773c3a77b1sm148140115e9.17.2025.11.03.02.13.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 03 Nov 2025 02:13:12 -0800 (PST)
+ Mon, 03 Nov 2025 02:13:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
@@ -75,17 +75,17 @@ Cc: Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Peter Collingbourne <pcc@google.com>, Cameron Esfahani <dirty@apple.com>,
  Mads Ynddal <mads@ynddal.dk>, Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v4 06/23] accel/hvf: Simplify hvf_log_*
-Date: Mon,  3 Nov 2025 11:10:15 +0100
-Message-ID: <20251103101034.59039-7-philmd@linaro.org>
+Subject: [PATCH v4 07/23] accel/hvf: Move hvf_log_sync to hvf_log_clear
+Date: Mon,  3 Nov 2025 11:10:16 +0100
+Message-ID: <20251103101034.59039-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251103101034.59039-1-philmd@linaro.org>
 References: <20251103101034.59039-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,100 +110,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Rely on the AddressSpace and MemoryRegion structures
-rather than hvf_slot.
+Right idea, wrong hook.  log_sync is called before using
+dirty bit data (which for hvf is already up-to-date),
+whereas log_clear is called before cleaning the range.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/hvf_int.h |  3 ---
- accel/hvf/hvf-all.c      | 40 ++++++++++------------------------------
- 2 files changed, 10 insertions(+), 33 deletions(-)
+ accel/hvf/hvf-all.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 5a57691885f..ee7ab689f45 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -24,9 +24,6 @@ typedef hv_vcpu_t hvf_vcpuid;
- typedef hv_vcpuid_t hvf_vcpuid;
- #endif
- 
--/* hvf_slot flags */
--#define HVF_SLOT_LOG (1 << 0)
--
- typedef struct hvf_slot {
-     uint64_t start;
-     uint64_t size;
 diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index cb029e4dd4b..601e63c7f9a 100644
+index 601e63c7f9a..f203a6251f0 100644
 --- a/accel/hvf/hvf-all.c
 +++ b/accel/hvf/hvf-all.c
-@@ -204,45 +204,24 @@ static void hvf_set_phys_mem(MemoryRegionSection *section, bool add)
+@@ -224,12 +224,13 @@ static void hvf_log_stop(MemoryListener *listener,
      }
  }
  
--static void hvf_set_dirty_tracking(MemoryRegionSection *section, bool on)
--{
--    hvf_slot *slot;
--
--    slot = hvf_find_overlap_slot(
--            section->offset_within_address_space,
--            int128_get64(section->size));
--
--    /* protect region against writes; begin tracking it */
--    if (on) {
--        slot->flags |= HVF_SLOT_LOG;
--        hv_vm_protect((uintptr_t)slot->start, (size_t)slot->size,
--                      HV_MEMORY_READ | HV_MEMORY_EXEC);
--    /* stop tracking region*/
--    } else {
--        slot->flags &= ~HVF_SLOT_LOG;
--        hv_vm_protect((uintptr_t)slot->start, (size_t)slot->size,
--                      HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
--    }
--}
--
- static void hvf_log_start(MemoryListener *listener,
-                           MemoryRegionSection *section, int old, int new)
+-static void hvf_log_sync(MemoryListener *listener,
+-                         MemoryRegionSection *section)
++static void hvf_log_clear(MemoryListener *listener,
++                          MemoryRegionSection *section)
  {
--    if (old != 0) {
--        return;
-+    assert(new != 0);
-+    if (old == 0) {
-+        hvf_protect_clean_range(section->offset_within_address_space,
-+                                int128_get64(section->size));
-     }
--
--    hvf_set_dirty_tracking(section, 1);
- }
- 
- static void hvf_log_stop(MemoryListener *listener,
-                          MemoryRegionSection *section, int old, int new)
- {
--    if (new != 0) {
--        return;
-+    assert(old != 0);
-+    if (new == 0) {
-+        hvf_unprotect_dirty_range(section->offset_within_address_space,
-+                                  int128_get64(section->size));
-     }
--
--    hvf_set_dirty_tracking(section, 0);
- }
- 
- static void hvf_log_sync(MemoryListener *listener,
-@@ -252,7 +231,8 @@ static void hvf_log_sync(MemoryListener *listener,
-      * sync of dirty pages is handled elsewhere; just make sure we keep
-      * tracking the region.
+     /*
+-     * sync of dirty pages is handled elsewhere; just make sure we keep
+-     * tracking the region.
++     * The dirty page bits within section are being cleared.
++     * Some number of those pages may have been dirtied and
++     * the write permission enabled.  Reset the range read-only.
       */
--    hvf_set_dirty_tracking(section, 1);
-+    hvf_protect_clean_range(section->offset_within_address_space,
-+                            int128_get64(section->size));
- }
+     hvf_protect_clean_range(section->offset_within_address_space,
+                             int128_get64(section->size));
+@@ -254,7 +255,7 @@ static MemoryListener hvf_memory_listener = {
+     .region_del = hvf_region_del,
+     .log_start = hvf_log_start,
+     .log_stop = hvf_log_stop,
+-    .log_sync = hvf_log_sync,
++    .log_clear = hvf_log_clear,
+ };
  
- static void hvf_region_add(MemoryListener *listener,
+ static int hvf_accel_init(AccelState *as, MachineState *ms)
 -- 
 2.51.0
 
