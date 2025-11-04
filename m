@@ -4,139 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382DECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB5FFCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLNN-0001pI-Tx; Tue, 04 Nov 2025 13:03:26 -0500
+	id 1vGLL8-0006r7-NA; Tue, 04 Nov 2025 13:01:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGLIM-0003Wz-9s
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:58:18 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFF-0001CM-Q9
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGLIK-0007Zv-DF
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:58:14 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFB-0006oh-TR
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762279089;
+ s=mimecast20190719; t=1762278895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hO2ZxDGcAKZ23Ssu3WVWsw3gf9apnZ9oT5yGcKkd1Qk=;
- b=iS99C/pxbCJM6NSL9irEUqS8GPi1FgZJhivy/ntNmcdOqa825mfTO/WvGpeUyJekhyQTo8
- oljTVtnupq2IzsZTTGMv+cy0Jb5Ojat7wAkKaL+3VGSTtn/kIcKTkCOZJ69Nn5eNRoO+V6
- Y6VsLsnsXYtmFj64Ac6gdI3WiUp/V9o=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-ZrIOKdP1NQGlFSYMJcXLgA-1; Tue, 04 Nov 2025 12:58:08 -0500
-X-MC-Unique: ZrIOKdP1NQGlFSYMJcXLgA-1
-X-Mimecast-MFC-AGG-ID: ZrIOKdP1NQGlFSYMJcXLgA_1762279087
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b4813c6cbeeso543153066b.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:58:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762279087; x=1762883887; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hO2ZxDGcAKZ23Ssu3WVWsw3gf9apnZ9oT5yGcKkd1Qk=;
- b=n1+o//z7NyUhQgNiK/+xvu2D282YOvqNqGz14vrfq7zvd0E/IdkQgTg4mOx/nqyD2C
- bvbhM+1w+Wyw6D/5zjiqnLmLew6YFDwlX7m4+I8GFpvBf+zB02UwLMK3CWVGWuUTqpzh
- gFIVxbvJChR88inyPsJU87xMiiP/QFh6kKpg6zqfmfzwZxATERMQJ1eB0SZJSdlXspd5
- LSdld/xMFnK4GNZuzaEfC3A+kRpPz8dlOyXY8UrVLnzIk8W7I5SbPnD5VZpOrdm01JFk
- HQywc/P+EcC7xDPxJfeeAiGOwwzA18hVymWaufw3/LJzIR+t3x3zmfQ3w/UXFehiH+sI
- 3vnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762279087; x=1762883887;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hO2ZxDGcAKZ23Ssu3WVWsw3gf9apnZ9oT5yGcKkd1Qk=;
- b=WNByDKA+3mYgDD0b4nhhQ+suuRe3kZWqJ10K+TT9u12cAmsmPrR+q4lNDuyq8tuePm
- CirM0HqN7IjY/pky3NS31lMekaoqIkOSGT7oVlV2kE8hF+AqPnnjEZDuJVZa1HLz5Z/O
- oNm635Y29TpHQ0hS7ks0Tso0C/SnVK4OdF7h5nym/AqthpjY0gzs324tlDisKltEBGQP
- EmKsglGTdatnRHHlcP9/fez1ltRDTd3EG8yRhmkLRdI6np/A5NeRbgKhzdgR6dbyCxT+
- qngtrhpeMgPgqtPTiltVB1BvFp4dYzu8e/mRW6wM2SauAKCCu3s3DrgwMpVHzwUFpOTY
- 1j0A==
-X-Gm-Message-State: AOJu0Yyt4jkVPk9xZ4MzTmXBbMp7rnxT77fZRTHox31j9mEFlDY/ItM5
- hAxMPqqsxFhlx5FA5pD47GhD7q+Kk2IwLbh8mgI1q+FwG2t9YQJheERm5boPUjyABMuF0AXMfei
- aNhlMhDqRkbiX/SglPtKNvQHb0stZljsH2mdKGNsB4LCT4qQmMppQaBBt
-X-Gm-Gg: ASbGnctwo05JLdjQX513lUIuGG5UbNwKo0zxcM7kpHv2NK52TnpTBa34mCyqTAM6UiE
- fir1EuDb0ZpAaKqIQuk0Pe4jCW8ij5o91IDLTqngWT+U3GkDBYsKmvrZ2UiC/eGM72shd6WKaIY
- RU+KyV1XaL8EfyMmrERU51Mj6jd1Vdpby72y0YwU1R2LQ55xyTx3Iqro6N+3oG8rAiOElFqOadm
- Mj8awi2T0Jdo7F6UMSCnzgDbzZVxvMah7VzJ8sPp8F3lMhmWHUnsSNimoE6W519RugBQAzuW3vO
- zTJXeDzm/6Us/IMqj/8juzr4lrbytApkiFS2wIg4AI+kRtHA2LRKC1dbG7I8h5Nu4WBHrNye
-X-Received: by 2002:a17:907:9815:b0:b71:854:4e49 with SMTP id
- a640c23a62f3a-b72655edfabmr1373666b.56.1762279087352; 
- Tue, 04 Nov 2025 09:58:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE9kCSGNpSpk5q5qDuT96lHeb8DjD7rNeEdqqO3Ycf1S5xW1IrzUcE/+D81rfvmSgqmxkWs5w==
-X-Received: by 2002:a17:907:9815:b0:b71:854:4e49 with SMTP id
- a640c23a62f3a-b72655edfabmr1372266b.56.1762279087003; 
- Tue, 04 Nov 2025 09:58:07 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.171])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723da0f43dsm268456166b.30.2025.11.04.09.58.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 09:58:06 -0800 (PST)
-Message-ID: <c4004238-eb2f-4862-8ccf-5cf181db01f9@redhat.com>
-Date: Tue, 4 Nov 2025 18:58:05 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=e3Twk6+8ae4PwFeo7u1w75GEqQK8dI54LHe5+TXEM+Q=;
+ b=aMTdg3e0EG4hc4AMTpwekjsOMyCm1nolGIzq1Pkdm4UySxzQxjrq3cGeuSznM8cIvXKA6H
+ yk7yiExyjG7VeAe0pbFt6elKVVUIVCYAp3MHEb64X2YIAnNaWgflFW+Z3SicBPJ+UQJVze
+ ijhfs5Hz1eidUmucyQJmavkaXgY8z0c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-7KLqlofRMpaNu7QlC1cMkg-1; Tue,
+ 04 Nov 2025 12:54:54 -0500
+X-MC-Unique: 7KLqlofRMpaNu7QlC1cMkg-1
+X-Mimecast-MFC-AGG-ID: 7KLqlofRMpaNu7QlC1cMkg_1762278893
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6856B1955F45; Tue,  4 Nov 2025 17:54:53 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.45.226.47])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 250931800451; Tue,  4 Nov 2025 17:54:51 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL 16/27] block: replace TABs with space
+Date: Tue,  4 Nov 2025 18:54:04 +0100
+Message-ID: <20251104175415.525388-17-kwolf@redhat.com>
+In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
+References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: MAINTAINERS spring-cleaning
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <CAFEAcA9oUfFSFXrN+swbCtr4LV+S+-DuUjdP5miGnSbkCt2ZYA@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Cc: qemu-devel@nongnu.org
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA9oUfFSFXrN+swbCtr4LV+S+-DuUjdP5miGnSbkCt2ZYA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -161,25 +82,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/11/2025 18.36, Peter Maydell wrote:
-> I just did some analysis of our MAINTAINERS file with the aid of a
-> local copy of the public-inbox archive of qemu-devel, and (unless my
-> scripting is broken ;-)) of the 258 emails listed in MAINTAINERS,
-> 50 have not sent an email to qemu-devel in the last three years.
-> 
-> Some of that will be things like "the address somebody uses to send
-> to the list is not quite the same as the one they have listed", so
-> it will need some manual checking, but I think this shows we could
-> use a bit of spring-cleaning of the file to remove stale entries.
-> 
-> I propose to send some (not cc'd the list) emails to these people,
-> asking (politely!) if they're still interested in being in the
-> MAINTAINERS file, and treating "email bounces", "no" and "no reply
-> within a month" as "I'm no longer interested in being cc'd on patches".
-> Then we can update the file accordingly.
+From: Yeqi Fu <fufuyqqqqqq@gmail.com>
 
-+1 from my side - sounds like a good idea!
+Bring the block files in line with the QEMU coding style, with spaces
+for indentation. This patch partially resolves the issue 371.
 
-  Thomas
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/371
+Signed-off-by: Yeqi Fu <fufuyqqqqqq@gmail.com>
+Message-ID: <20230325085224.23842-1-fufuyqqqqqq@gmail.com>
+[thuth: Rebased the patch to the current master branch]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251007163511.334178-1-thuth@redhat.com>
+[kwolf: Fixed up vertical alignemnt]
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ include/block/nbd.h |  2 +-
+ block/bochs.c       | 14 +++++------
+ block/file-posix.c  | 58 ++++++++++++++++++++++-----------------------
+ block/file-win32.c  | 38 ++++++++++++++---------------
+ block/qcow.c        | 10 ++++----
+ 5 files changed, 61 insertions(+), 61 deletions(-)
+
+diff --git a/include/block/nbd.h b/include/block/nbd.h
+index 92987c76fd..ab40842da9 100644
+--- a/include/block/nbd.h
++++ b/include/block/nbd.h
+@@ -296,7 +296,7 @@ enum {
+     NBD_CMD_BLOCK_STATUS = 7,
+ };
+ 
+-#define NBD_DEFAULT_PORT	10809
++#define NBD_DEFAULT_PORT 10809
+ 
+ /* Maximum size of a single READ/WRITE data buffer */
+ #define NBD_MAX_BUFFER_SIZE (32 * 1024 * 1024)
+diff --git a/block/bochs.c b/block/bochs.c
+index b099fb52fe..bfda88017d 100644
+--- a/block/bochs.c
++++ b/block/bochs.c
+@@ -300,15 +300,15 @@ static void bochs_close(BlockDriverState *bs)
+ }
+ 
+ static BlockDriver bdrv_bochs = {
+-    .format_name	= "bochs",
+-    .instance_size	= sizeof(BDRVBochsState),
+-    .bdrv_probe		= bochs_probe,
+-    .bdrv_open		= bochs_open,
++    .format_name         = "bochs",
++    .instance_size       = sizeof(BDRVBochsState),
++    .bdrv_probe          = bochs_probe,
++    .bdrv_open           = bochs_open,
+     .bdrv_child_perm     = bdrv_default_perms,
+     .bdrv_refresh_limits = bochs_refresh_limits,
+-    .bdrv_co_preadv = bochs_co_preadv,
+-    .bdrv_close		= bochs_close,
+-    .is_format          = true,
++    .bdrv_co_preadv      = bochs_co_preadv,
++    .bdrv_close          = bochs_close,
++    .is_format           = true,
+ };
+ 
+ static void bdrv_bochs_init(void)
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 8b7c02d19a..12d12970fa 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -133,7 +133,7 @@
+ #define FTYPE_FILE   0
+ #define FTYPE_CD     1
+ 
+-#define MAX_BLOCKSIZE	4096
++#define MAX_BLOCKSIZE 4096
+ 
+ /* Posix file locking bytes. Libvirt takes byte 0, we start from higher bytes,
+  * leaving a few more bytes for its future use. */
+@@ -4562,20 +4562,20 @@ static void coroutine_fn cdrom_co_lock_medium(BlockDriverState *bs, bool locked)
+ }
+ 
+ static BlockDriver bdrv_host_cdrom = {
+-    .format_name        = "host_cdrom",
+-    .protocol_name      = "host_cdrom",
+-    .instance_size      = sizeof(BDRVRawState),
+-    .bdrv_needs_filename = true,
+-    .bdrv_probe_device	= cdrom_probe_device,
+-    .bdrv_parse_filename = cdrom_parse_filename,
+-    .bdrv_open          = cdrom_open,
+-    .bdrv_close         = raw_close,
+-    .bdrv_reopen_prepare = raw_reopen_prepare,
+-    .bdrv_reopen_commit  = raw_reopen_commit,
+-    .bdrv_reopen_abort   = raw_reopen_abort,
+-    .bdrv_co_create_opts = bdrv_co_create_opts_simple,
+-    .create_opts         = &bdrv_create_opts_simple,
+-    .mutable_opts        = mutable_opts,
++    .format_name            = "host_cdrom",
++    .protocol_name          = "host_cdrom",
++    .instance_size          = sizeof(BDRVRawState),
++    .bdrv_needs_filename    = true,
++    .bdrv_probe_device      = cdrom_probe_device,
++    .bdrv_parse_filename    = cdrom_parse_filename,
++    .bdrv_open              = cdrom_open,
++    .bdrv_close             = raw_close,
++    .bdrv_reopen_prepare    = raw_reopen_prepare,
++    .bdrv_reopen_commit     = raw_reopen_commit,
++    .bdrv_reopen_abort      = raw_reopen_abort,
++    .bdrv_co_create_opts    = bdrv_co_create_opts_simple,
++    .create_opts            = &bdrv_create_opts_simple,
++    .mutable_opts           = mutable_opts,
+     .bdrv_co_invalidate_cache = raw_co_invalidate_cache,
+ 
+     .bdrv_co_preadv         = raw_co_preadv,
+@@ -4688,20 +4688,20 @@ static void coroutine_fn cdrom_co_lock_medium(BlockDriverState *bs, bool locked)
+ }
+ 
+ static BlockDriver bdrv_host_cdrom = {
+-    .format_name        = "host_cdrom",
+-    .protocol_name      = "host_cdrom",
+-    .instance_size      = sizeof(BDRVRawState),
+-    .bdrv_needs_filename = true,
+-    .bdrv_probe_device	= cdrom_probe_device,
+-    .bdrv_parse_filename = cdrom_parse_filename,
+-    .bdrv_open          = cdrom_open,
+-    .bdrv_close         = raw_close,
+-    .bdrv_reopen_prepare = raw_reopen_prepare,
+-    .bdrv_reopen_commit  = raw_reopen_commit,
+-    .bdrv_reopen_abort   = raw_reopen_abort,
+-    .bdrv_co_create_opts = bdrv_co_create_opts_simple,
+-    .create_opts         = &bdrv_create_opts_simple,
+-    .mutable_opts       = mutable_opts,
++    .format_name            = "host_cdrom",
++    .protocol_name          = "host_cdrom",
++    .instance_size          = sizeof(BDRVRawState),
++    .bdrv_needs_filename    = true,
++    .bdrv_probe_device      = cdrom_probe_device,
++    .bdrv_parse_filename    = cdrom_parse_filename,
++    .bdrv_open              = cdrom_open,
++    .bdrv_close             = raw_close,
++    .bdrv_reopen_prepare    = raw_reopen_prepare,
++    .bdrv_reopen_commit     = raw_reopen_commit,
++    .bdrv_reopen_abort      = raw_reopen_abort,
++    .bdrv_co_create_opts    = bdrv_co_create_opts_simple,
++    .create_opts            = &bdrv_create_opts_simple,
++    .mutable_opts           = mutable_opts,
+ 
+     .bdrv_co_preadv         = raw_co_preadv,
+     .bdrv_co_pwritev        = raw_co_pwritev,
+diff --git a/block/file-win32.c b/block/file-win32.c
+index af9aea631c..0efb609e1d 100644
+--- a/block/file-win32.c
++++ b/block/file-win32.c
+@@ -741,16 +741,16 @@ static QemuOptsList raw_create_opts = {
+ };
+ 
+ BlockDriver bdrv_file = {
+-    .format_name	= "file",
+-    .protocol_name	= "file",
+-    .instance_size	= sizeof(BDRVRawState),
+-    .bdrv_needs_filename = true,
+-    .bdrv_parse_filename = raw_parse_filename,
+-    .bdrv_open          = raw_open,
+-    .bdrv_refresh_limits = raw_probe_alignment,
+-    .bdrv_close         = raw_close,
+-    .bdrv_co_create_opts = raw_co_create_opts,
+-    .bdrv_has_zero_init = bdrv_has_zero_init_1,
++    .format_name            = "file",
++    .protocol_name          = "file",
++    .instance_size          = sizeof(BDRVRawState),
++    .bdrv_needs_filename    = true,
++    .bdrv_parse_filename    = raw_parse_filename,
++    .bdrv_open              = raw_open,
++    .bdrv_refresh_limits    = raw_probe_alignment,
++    .bdrv_close             = raw_close,
++    .bdrv_co_create_opts    = raw_co_create_opts,
++    .bdrv_has_zero_init     = bdrv_has_zero_init_1,
+ 
+     .bdrv_reopen_prepare = raw_reopen_prepare,
+     .bdrv_reopen_commit  = raw_reopen_commit,
+@@ -914,15 +914,15 @@ done:
+ }
+ 
+ static BlockDriver bdrv_host_device = {
+-    .format_name	= "host_device",
+-    .protocol_name	= "host_device",
+-    .instance_size	= sizeof(BDRVRawState),
+-    .bdrv_needs_filename = true,
+-    .bdrv_parse_filename = hdev_parse_filename,
+-    .bdrv_probe_device	= hdev_probe_device,
+-    .bdrv_open     	= hdev_open,
+-    .bdrv_close		= raw_close,
+-    .bdrv_refresh_limits = hdev_refresh_limits,
++    .format_name            = "host_device",
++    .protocol_name          = "host_device",
++    .instance_size          = sizeof(BDRVRawState),
++    .bdrv_needs_filename    = true,
++    .bdrv_parse_filename    = hdev_parse_filename,
++    .bdrv_probe_device      = hdev_probe_device,
++    .bdrv_open              = hdev_open,
++    .bdrv_close             = raw_close,
++    .bdrv_refresh_limits    = hdev_refresh_limits,
+ 
+     .bdrv_aio_preadv    = raw_aio_preadv,
+     .bdrv_aio_pwritev   = raw_aio_pwritev,
+diff --git a/block/qcow.c b/block/qcow.c
+index 8a3e7591a9..b442bfe835 100644
+--- a/block/qcow.c
++++ b/block/qcow.c
+@@ -1184,11 +1184,11 @@ static const char *const qcow_strong_runtime_opts[] = {
+ };
+ 
+ static BlockDriver bdrv_qcow = {
+-    .format_name	= "qcow",
+-    .instance_size	= sizeof(BDRVQcowState),
+-    .bdrv_probe		= qcow_probe,
+-    .bdrv_open		= qcow_open,
+-    .bdrv_close		= qcow_close,
++    .format_name            = "qcow",
++    .instance_size          = sizeof(BDRVQcowState),
++    .bdrv_probe             = qcow_probe,
++    .bdrv_open              = qcow_open,
++    .bdrv_close             = qcow_close,
+     .bdrv_child_perm        = bdrv_default_perms,
+     .bdrv_reopen_prepare    = qcow_reopen_prepare,
+     .bdrv_co_create         = qcow_co_create,
+-- 
+2.51.1
 
 
