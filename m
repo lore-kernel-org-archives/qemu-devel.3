@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26921CCFA03
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 03:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79CB0CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 03:15:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG7Vs-0005UE-FJ; Mon, 03 Nov 2025 22:15:16 -0500
+	id 1vG7VF-0003L1-31; Mon, 03 Nov 2025 22:14:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG7Vp-0005DK-8A; Mon, 03 Nov 2025 22:15:13 -0500
+ id 1vG7Up-0002XX-IC; Mon, 03 Nov 2025 22:14:13 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG7Vn-00040K-BZ; Mon, 03 Nov 2025 22:15:12 -0500
+ id 1vG7Uj-00031V-RO; Mon, 03 Nov 2025 22:14:08 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 4 Nov
- 2025 11:13:39 +0800
+ 2025 11:13:32 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 4 Nov 2025 11:13:39 +0800
+ Transport; Tue, 4 Nov 2025 11:13:32 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v4 21/30] hw/arm/aspeed: Split QCOM Firework machine into a
+ <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v4 10/30] hw/arm/aspeed: Split Sonorapass machine into a
  separate source file for maintainability
-Date: Tue, 4 Nov 2025 11:12:59 +0800
-Message-ID: <20251104031325.146374-22-jamin_lin@aspeedtech.com>
+Date: Tue, 4 Nov 2025 11:12:48 +0800
+Message-ID: <20251104031325.146374-11-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251104031325.146374-1-jamin_lin@aspeedtech.com>
 References: <20251104031325.146374-1-jamin_lin@aspeedtech.com>
@@ -67,127 +68,156 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the QCOM Firework BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_qcom-firework.c.
+This commit moves the Sonorapass BMC machine implementation out of
+aspeed.c and into a new standalone file aspeed_ast2500_sonorapass.c.
 
-This refactor continues the modularization effort for Aspeed platform support,
-placing each board’s logic in its own dedicated source file. It improves
-maintainability, readability, and simplifies future development for new
-platforms without cluttering aspeed.c.
+The refactor continues the effort to modularize Aspeed platform support
+by separating each board’s implementation into its own source file.
+This improves maintainability, readability, and simplifies future
+updates to individual machine configurations.
 
 Key updates include:
-- Removed qcom_dc_scm_firework_i2c_init() and its Firework-specific devices
-  from aspeed.c.
-- Removed aspeed_machine_qcom_firework_class_init() and its type registration
-  ("qcom-firework-bmc") from aspeed_machine_types[].
-- Added new source file aspeed_ast2600_qcom-firework.c containing the
-  Firework-specific initialization and machine class definition.
-- Updated hw/arm/meson.build to include aspeed_ast2600_qcom-firework.c.
-- Cleaned up all Firework-specific code from aspeed.c.
-- Renamed `QCOM_DC_SCM_V1_BMC_HW_STRAP1` to
-  `QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1` to avoid dependency conflicts with
-  other QCOM DC-SCM machines.
+- Moved SONORAPASS_BMC_HW_STRAP1 definition into the new file.
+- Moved sonorapass_bmc_i2c_init() and all I²C device initialization
+logic from aspeed.c into aspeed_ast2500_sonorapass.c.
+- Moved aspeed_machine_sonorapass_class_init() and type registration
+into the new file.
+- Added the new file to the build system (meson.build).
+- Removed all Sonorapass-specific code and definitions from aspeed.c
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                       | 57 -----------------
- hw/arm/aspeed_ast2600_qcom-firework.c | 92 +++++++++++++++++++++++++++
- hw/arm/meson.build                    |  1 +
- 3 files changed, 93 insertions(+), 57 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_qcom-firework.c
+ hw/arm/aspeed.c                    |  82 -----------------------
+ hw/arm/aspeed_ast2500_sonorapass.c | 103 +++++++++++++++++++++++++++++
+ hw/arm/meson.build                 |   1 +
+ 3 files changed, 104 insertions(+), 82 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2500_sonorapass.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 29a036b675..f72b1e2eea 100644
+index 74eb8077da..df1a37ca3d 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -635,38 +635,6 @@ static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
+@@ -102,21 +102,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+         SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
+         SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
+ 
+-/* Sonorapass hardware value: 0xF100D216 */
+-#define SONORAPASS_BMC_HW_STRAP1 (                                      \
+-        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
+-        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
+-        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
+-        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
+-        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
+-        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
+-        SCU_HW_STRAP_VGA_BIOS_ROM |                                     \
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+-        SCU_AST2500_HW_STRAP_RESERVED1)
+-
+ /* Quanta-Q71l hardware value */
+ #define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
+         SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
+@@ -490,50 +475,6 @@ I2CSlave *aspeed_create_pca9554(AspeedSoCState *soc, int bus_id, int addr)
+                             TYPE_PCA9554, addr);
  }
  
--static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
+-static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
--    I2CSlave *therm_mux, *cpuvr_mux;
 -
--    /* Create the generic DC-SCM hardware */
--    qcom_dc_scm_bmc_i2c_init(bmc);
+-    /* bus 2 : */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x49);
+-    /* bus 2 : pca9546 @ 0x73 */
 -
--    /* Now create the Firework specific hardware */
+-    /* bus 3 : pca9548 @ 0x70 */
 -
--    /* I2C7 CPUVR MUX */
--    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
--                                        "pca9546", 0x70);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
+-    /* bus 4 : */
+-    uint8_t *eeprom4_54 = g_malloc0(8 * 1024);
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54,
+-                          eeprom4_54);
+-    /* PCA9539 @ 0x76, but PCA9552 is compatible */
+-    aspeed_create_pca9552(soc, 4, 0x76);
+-    /* PCA9539 @ 0x77, but PCA9552 is compatible */
+-    aspeed_create_pca9552(soc, 4, 0x77);
 -
--    /* I2C8 Thermal Diodes*/
--    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
--                                        "pca9548", 0x70);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
+-    /* bus 6 : */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x49);
+-    /* bus 6 : pca9546 @ 0x73 */
 -
--    /* I2C9 Fan Controller (MAX31785) */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
+-    /* bus 8 : */
+-    uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 0x56,
+-                          eeprom8_56);
+-    aspeed_create_pca9552(soc, 8, 0x60);
+-    aspeed_create_pca9552(soc, 8, 0x61);
+-    /* bus 8 : adc128d818 @ 0x1d */
+-    /* bus 8 : adc128d818 @ 0x1f */
+-
+-    /*
+-     * bus 13 : pca9548 @ 0x71
+-     *      - channel 3:
+-     *          - tmm421 @ 0x4c
+-     *          - tmp421 @ 0x4e
+-     *          - tmp421 @ 0x4f
+-     */
+-
 -}
 -
- static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
+ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
  {
-     return ASPEED_MACHINE(obj)->mmio_exec;
-@@ -1063,26 +1031,6 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+     AspeedSoCState *soc = bmc->soc;
+@@ -1319,24 +1260,6 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
      aspeed_machine_class_init_cpus_defaults(mc);
  };
  
--static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
--                                                    const void *data)
+-static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
+-                                                 const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
--    mc->deprecation_reason = "use 'ast2600-evb' instead";
--    amc->soc_name  = "ast2600-a3";
--    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
--    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
--    amc->fmc_model = "n25q512a";
--    amc->spi_model = "n25q512a";
+-    mc->desc       = "OCP SonoraPass BMC (ARM1176)";
+-    mc->deprecation_reason = "use 'ast2500-evb' instead";
+-    amc->soc_name  = "ast2500-a1";
+-    amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
+-    amc->fmc_model = "mx66l1g45g";
+-    amc->spi_model = "mx66l1g45g";
 -    amc->num_cs    = 2;
--    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
--    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
--    mc->default_ram_size = 1 * GiB;
+-    amc->i2c_init  = sonorapass_bmc_i2c_init;
+-    mc->default_ram_size       = 512 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
- static const TypeInfo aspeed_machine_types[] = {
-     {
-         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
-@@ -1094,11 +1042,6 @@ static const TypeInfo aspeed_machine_types[] = {
+ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
+                                                   const void *data)
+ {
+@@ -1707,11 +1630,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
+         .class_init    = aspeed_machine_romulus_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
+-        .name          = MACHINE_TYPE_NAME("sonorapass-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_qcom_firework_class_init,
+-        .class_init    = aspeed_machine_sonorapass_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("rainier-bmc"),
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_qcom-firework.c b/hw/arm/aspeed_ast2600_qcom-firework.c
+diff --git a/hw/arm/aspeed_ast2500_sonorapass.c b/hw/arm/aspeed_ast2500_sonorapass.c
 new file mode 100644
-index 0000000000..84abc345eb
+index 0000000000..dca9aa9206
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_qcom-firework.c
-@@ -0,0 +1,92 @@
++++ b/hw/arm/aspeed_ast2500_sonorapass.c
+@@ -0,0 +1,103 @@
 +/*
-+ * Qualcomm DC-SCM V1/Firework
++ * OCP SonoraPass
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -199,97 +229,108 @@ index 0000000000..84abc345eb
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/i2c/i2c_mux_pca954x.h"
-+#include "hw/sensor/tmp105.h"
++#include "hw/i2c/smbus_eeprom.h"
 +
-+/* Qualcomm DC-SCM Firework hardware value */
-+#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1  0x00000000
-+#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2  0x00000041
++/* Sonorapass hardware value: 0xF100D216 */
++#define SONORAPASS_BMC_HW_STRAP1 (                                      \
++        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
++        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
++        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
++        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
++        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
++        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
++        SCU_HW_STRAP_VGA_BIOS_ROM |                                     \
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
++        SCU_AST2500_HW_STRAP_RESERVED1)
 +
-+#define TYPE_LM75 TYPE_TMP105
-+
-+static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
++static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
 +
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
++    /* bus 2 : */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x48);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x49);
++    /* bus 2 : pca9546 @ 0x73 */
++
++    /* bus 3 : pca9548 @ 0x70 */
++
++    /* bus 4 : */
++    uint8_t *eeprom4_54 = g_malloc0(8 * 1024);
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54,
++                          eeprom4_54);
++    /* PCA9539 @ 0x76, but PCA9552 is compatible */
++    aspeed_create_pca9552(soc, 4, 0x76);
++    /* PCA9539 @ 0x77, but PCA9552 is compatible */
++    aspeed_create_pca9552(soc, 4, 0x77);
++
++    /* bus 6 : */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x48);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x49);
++    /* bus 6 : pca9546 @ 0x73 */
++
++    /* bus 8 : */
++    uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 0x56,
++                          eeprom8_56);
++    aspeed_create_pca9552(soc, 8, 0x60);
++    aspeed_create_pca9552(soc, 8, 0x61);
++    /* bus 8 : adc128d818 @ 0x1d */
++    /* bus 8 : adc128d818 @ 0x1f */
++
++    /*
++     * bus 13 : pca9548 @ 0x71
++     *      - channel 3:
++     *          - tmm421 @ 0x4c
++     *          - tmp421 @ 0x4e
++     *          - tmp421 @ 0x4f
++     */
++
 +}
 +
-+static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
-+{
-+    AspeedSoCState *soc = bmc->soc;
-+    I2CSlave *therm_mux, *cpuvr_mux;
-+
-+    /* Create the generic DC-SCM hardware */
-+    qcom_dc_scm_bmc_i2c_init(bmc);
-+
-+    /* Now create the Firework specific hardware */
-+
-+    /* I2C7 CPUVR MUX */
-+    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
-+                                        "pca9546", 0x70);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
-+
-+    /* I2C8 Thermal Diodes*/
-+    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
-+                                        "pca9548", 0x70);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
-+
-+    /* I2C9 Fan Controller (MAX31785) */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
-+}
-+
-+static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
-+                                                    const void *data)
++static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
++                                                 const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
-+    mc->deprecation_reason = "use 'ast2600-evb' instead";
-+    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1;
-+    amc->hw_strap2 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2;
-+    amc->fmc_model = "n25q512a";
-+    amc->spi_model = "n25q512a";
++    mc->desc       = "OCP SonoraPass BMC (ARM1176)";
++    mc->deprecation_reason = "use 'ast2500-evb' instead";
++    amc->soc_name  = "ast2500-a1";
++    amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
++    amc->fmc_model = "mx66l1g45g";
++    amc->spi_model = "mx66l1g45g";
 +    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-+    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
-+    mc->default_ram_size = 1 * GiB;
++    amc->i2c_init  = sonorapass_bmc_i2c_init;
++    mc->default_ram_size       = 512 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2600_qcom_firework_types[] = {
++static const TypeInfo aspeed_ast2500_sonorapass_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
++        .name          = MACHINE_TYPE_NAME("sonorapass-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_qcom_firework_class_init,
++        .class_init    = aspeed_machine_sonorapass_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_qcom_firework_types)
++DEFINE_TYPES(aspeed_ast2500_sonorapass_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index e6f6ab4245..fbe063cf0b 100644
+index c235c8aed3..f59bfe5029 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_bletchley.c',
-   'aspeed_ast2600_fby35.c',
-   'aspeed_ast2600_fuji.c',
-+  'aspeed_ast2600_qcom-firework.c',
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
-   'fby35.c'))
+@@ -46,6 +46,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2400.c',
+   'aspeed_ast2500_fp5280g2.c',
+   'aspeed_ast2500_g220a.c',
++  'aspeed_ast2500_sonorapass.c',
+   'aspeed_ast2500_tiogapass.c',
+   'aspeed_ast2500_witherspoon.c',
+   'aspeed_ast2500_yosemitev2.c',
 -- 
 2.43.0
 
