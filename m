@@ -4,65 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37ABCCFA0C
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 14:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4975CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 14:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGIE6-00020d-Gb; Tue, 04 Nov 2025 09:41:38 -0500
+	id 1vGIFY-0002Wz-1J; Tue, 04 Nov 2025 09:43:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vGIE4-0001z9-Un
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 09:41:36 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vGIFW-0002Wf-MQ; Tue, 04 Nov 2025 09:43:06 -0500
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vGIE0-0000Nt-Pe
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 09:41:36 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8EFBEC0117;
- Tue, 04 Nov 2025 17:41:28 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Rfl7bk1FDa60-j2awPBB6; Tue, 04 Nov 2025 17:41:27 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1762267288;
- bh=7QfHHN3cIWYAeUQ9bjqQ8/rUVWxsqurQCg8JeB7A7sQ=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=VZbN5Zj9/aQoQ1R6eWRM8Ai1ONBOCPlSA83Dj2/rE09l02kgX06WkzWEXVGw66Bng
- zgyj2Th73LLJ1pEqAtTphJKNjIV2qLCzqAdWJp1fdmObpSfBF4tDGKycFLt1zMfBNb
- tkkPsvbbcVBLlq5c99eRVajzIS1Uuw0t1l/5gxrQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <b5cd5ae3-53c2-483d-af00-a55868c7b78b@yandex-team.ru>
-Date: Tue, 4 Nov 2025 17:41:27 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] qapi: Add documentation format validation
-To: Markus Armbruster <armbru@redhat.com>
-Cc: michael.roth@amd.com, qemu-devel@nongnu.org
-References: <20251031183129.246814-1-vsementsov@yandex-team.ru>
- <87pl9yun57.fsf@pond.sub.org>
- <f1e50de9-912d-430e-ac0d-8341e003be13@yandex-team.ru>
- <87wm46t401.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vGIFT-0000aY-VO; Tue, 04 Nov 2025 09:43:06 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pLENT9/HZW3BaOpFOnvFHHGud4bOpMApi5WWCXH+Bb8WHpKooeoxCNcbMDFBx5pHNMrQ6JNJfjGk03iLAxLuz6JEthDl8SQBlewf5IX6LzbWsmsjmxP4uK0I5I9nShsryqrh5Un1kn+gbucQqPnqfUgl+KuW8eEl6holh+KmoRhWiBLLzq65iDsU1E/h9VjnM2TvCUKo3Ior+PRNUfC0azHyL+t4ncoIKQcpiz1RSeg3gM/ceu0bLUZaDEE5/Yqe3kJktURaqfzqXR5o4YMcfkeM6vcvAeGYPLjDdOOzJhMq0uvmqc2ekqVWs8AYcv6fMWip0KpSHGzGCcNGpbPDtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=36OMKxfggyelqifcsLlHe50cRfEQ5J6hP4yT56HkM9w=;
+ b=AmNrS6taQPjakj30lhwcuBaRBp6Z5Li4oyXcCVnwO032jSgD0hMJvTnwLlDd8owa4I97NvzxlK5TVYPTnznCASJcIbmvX+ssbnQcWKZROWUxpodQ2y9sCQs4KJ+t599DKL+Yyd0Dh/zzIVfFe8W/YKd4Vv4w1HtKr3pXQEYElih5011YTbnE8i/Z/zpeEiXlCR8Y0/jPd8+s+wPDT9mbE13M70cZJzlDXPESfJtlvTdi8FxxjkmPEWcIKhxPrNBZHDpH/kT02hpMQsujSEEdJCZNNWHsn7IdB+G4Jy43hDk14R3b9FjH91xirp/KfoDfaubpQ9J77cH2r+QktNIn8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=36OMKxfggyelqifcsLlHe50cRfEQ5J6hP4yT56HkM9w=;
+ b=B3G+UB+pzNuuuZCFs6F7MpVsU2KEz28Bpd3Iv+RhrTsIbg+b/uhGnurFawoQCo5oXLrQRxjKSvtyvyPSHpYItXIIcjz7XO6dTrd4WL3FNvGPBVQMqkNe/32UbwUJ/mGPpthAuHCInNMK7ukYhy2amq/ilg1qOJVl41QXJEPHUGlRthbJ4oRh+mwMdvcCba0S+oQPw4L6lS5bBEeuEa+w3cmSlpJ09JYngbbYKXJG3SohDDADQigMGjRTWmdP9Zeu5CeC2jqvo5jb5mTkaSIfV+Tpi0g2g77ivtPpVYrxNV4zmU6JlmOoqOhqpUY4kNV+aXbnO2yZ2E2fj97c2bXEdA==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by IA0PR12MB7604.namprd12.prod.outlook.com (2603:10b6:208:438::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Tue, 4 Nov
+ 2025 14:42:57 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9275.015; Tue, 4 Nov 2025
+ 14:42:57 +0000
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, Eric Auger <eric.auger@redhat.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>, "jiangkunkun@huawei.com"
+ <jiangkunkun@huawei.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Thread-Topic: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Thread-Index: AQHcTZUAOcFtPNqTvke2OSuQhL/9/rTikUkAgAAEzmA=
+Date: Tue, 4 Nov 2025 14:42:57 +0000
+Message-ID: <CH3PR12MB7548E5E1A2DFE297C4C65E0AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-16-skolothumtho@nvidia.com>
+ <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
+ <20251104142052.GD1537560@nvidia.com>
+In-Reply-To: <20251104142052.GD1537560@nvidia.com>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87wm46t401.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|IA0PR12MB7604:EE_
+x-ms-office365-filtering-correlation-id: 8ddac3a3-b789-46eb-7e71-08de1bb0722a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?bXf//H0qL88k7W8C/IU6IqaUGw1UQQYOzlwZ/E0+o2lH+CG4lxXrM1G/H7Jz?=
+ =?us-ascii?Q?wlgULLw1CIuUUCeGL8VPYtC3CsC23IQNjlHfgtlNdzb3N+XKrtJQbOqhoTJ1?=
+ =?us-ascii?Q?R/DBza7/RZ1j0hWP2TLCMDrwv8fGAcsJYuWqMKavlqRbbmBo3dc0GxyOkzHJ?=
+ =?us-ascii?Q?pyuj37F7Wvc6soLysVDjLQWCvYGvabkYujMDT2wQ04l1mB8KJi9GT0sC6TOS?=
+ =?us-ascii?Q?sAoQQOgDUw3Mu+8LbsnXmz7qlDuLpPEJM0FT02n446W34VqblpA3g9pKByFz?=
+ =?us-ascii?Q?cy0LieubJOnd+oY8yJn1yKUF9+4Fy2mSaEtvoKZLrfmHfGD3NJpU2KOSmcfh?=
+ =?us-ascii?Q?Csu34Mved2VKjcLuaCKwGxsWEpLFJKcvlNbR5iD1nCA5aMXaigIbM3hJQ3G2?=
+ =?us-ascii?Q?0SjirYmFyuXgvAW9ynF5bAeLzu6yTriIbz0nABw1vqg7tQdYs/eGq2jYyFSr?=
+ =?us-ascii?Q?WMqhdaGC1qSJrI06H/S9cl9hBR3s9OntaUVgjgD1Z94eOhdIGDirPCDs7hAY?=
+ =?us-ascii?Q?9KsAbCH7A1CxDyO1E1L1ASIfCdaD+Up7/c/xUKkCDiYTOV9nRzUgGsXUuvri?=
+ =?us-ascii?Q?wdohrUxvAZATiL25dDVxdqemPBIK0gwEoauQtED/YKohIO5xr+z73DpZGUA9?=
+ =?us-ascii?Q?l/gTiFwiJgSSE7hXa2x6tcAqSXUeZ23bviBsiF8/lAwtroYm3FBqHZI4IgzU?=
+ =?us-ascii?Q?VOQjsds/+bXzpi2dwGsAYXgaHZqRsvqIcKVZWB//4SO9CYVQcaYk8pfiyOLj?=
+ =?us-ascii?Q?PPPQQhHUB+xj20phTlhHswnfIRE4WlUd/lTJYuVxVZ9dF84/tYq9aHMmQfrK?=
+ =?us-ascii?Q?IZI7R/5kAzyhAPULZWwQFkbV+XNFJUZhmGzo0GuQOss5f1qx0hZRSeiMJXBy?=
+ =?us-ascii?Q?CqiaTn09ZcQMGvO1xkX0fGws3lQU/8UsK8ub8hqhc99wrdvHZkStN/7nP3AC?=
+ =?us-ascii?Q?9cZ6P6rAh3F0X8PqljxODK8U+3DNmZwpBKDigRsmeDrDZWZ7ETvrJjyd0hlK?=
+ =?us-ascii?Q?N9y92RZFlIPxplboDl4BpwVKDCK4Iag8yeDq6puu0SOi1uCw38fDVMtDL+6d?=
+ =?us-ascii?Q?BL3Cy8wLPv0XkgSSpYAbmwK9/XfIGKUzeiSo9vWNGR7rcl4Sq0UBm/tkVH22?=
+ =?us-ascii?Q?I540zvarvMsqKOCnoNpyGgKvtuj/MU7C83cFCF32LAMBFoaaDidKS28IiH+s?=
+ =?us-ascii?Q?7qE8d8F4fzYUqxXspb/Tww4u0/AT3vyu0JsKlGfQ9f05WXp51Tk4wY0snRTy?=
+ =?us-ascii?Q?67DX56WsdOqGeJY0SK35HIomg29fux+7WuXvKEbbM8iBhSgDwkDdq6R89r2+?=
+ =?us-ascii?Q?/rZaS+0fpjGMkgFAkaQNDRG274EN/RhSAclQ2pMN1XcfXGVi7Y//aXGEuz6G?=
+ =?us-ascii?Q?KL9QCW3tSoMNGcuNF9sD/HnAWNKyml1MyvgLSNH/xkVXPtxnKZBoQ6H9+2M/?=
+ =?us-ascii?Q?/ij3P3hXuPWgx134KmJMHxkTlEWfDDN8lY7JLY41c2DxA12UgxsWvrsGv+Qx?=
+ =?us-ascii?Q?b7TUYo3njiHI99GSfwqDPk6sN2k6gSDgebza?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LbFIdtmNMpgV9ZsKPNoKsf2oMJWrTPjlOlUmGWp0sirZ1//KRhV9KXGi/4Jt?=
+ =?us-ascii?Q?Asgq8l19JS6JALUOdrC1tL9I+q6wnUvKOlBE3FQJMpqHo+P7HOjgfROMdz8E?=
+ =?us-ascii?Q?i/o8vj+k2Moym/vWioWzqFn17y3xyM3SlfuRehZ75XCDLRluNAUAlhh1W+Lk?=
+ =?us-ascii?Q?Pbk8H5ObKy7all/JsKFNj9tiTcbYw0qyorUtqZPiJAIltoMKr0sQC3SDQOVh?=
+ =?us-ascii?Q?toeMECGaBtREY56ZcN0JpiDWPA9iH+6W9FCy+iq5EX6Em9+j0AAiYjhW0nkB?=
+ =?us-ascii?Q?kLkF55oCRln/CTupQdwBankGubatAa2Pka6bE6LOj/nSPfgdT4n6XSgOwABr?=
+ =?us-ascii?Q?e/zNcUntH3QzzQp0IqfNCWPQO44BNLQn1ePrU5F48t2wIfDCj9ojj+MPWmzy?=
+ =?us-ascii?Q?V3ypMfyu4Qq60htKC8x2NsO1J3x7OqaKY4DGAXZpOj9b0G22fQq/HCPh0wSu?=
+ =?us-ascii?Q?/hfu5mQ8v9AnNOL71Gy5mFsh59rHDDrMwGsM2Wft5Rd9bhMFAjrr14+Hvtsg?=
+ =?us-ascii?Q?9rai2wgBmpF3ZJATawKm/3A8p2cKKEeTFgzqozcmA0XghqlyJj6lfkUzieCO?=
+ =?us-ascii?Q?ltEGc01UIHu4sTLRrut3i8N0gT7s52qKU3M1OYtWo6LsieEVDDt2MCWtbk7T?=
+ =?us-ascii?Q?CuFaDDQKLph0NEL9KVrQe3So7CauVc6B2R8BZA4GDF80IBm++4FEPiLgNZfq?=
+ =?us-ascii?Q?JTU3C/RrOEQveQgHDwjKBsjcszELQkDU0iPhnkxMH7FDz2NhKd/eYi199sHT?=
+ =?us-ascii?Q?WGby3MBNEdUiGS9AMRKwgFBFPLWT7oXqa94tGZV+Kv1Zlb2az9LEVBNCszKD?=
+ =?us-ascii?Q?vegqON9QSWBBn7M9ZBFw8EYI7y1BjyimJMsB94PMt/RnSAk5ry8262QRlr8w?=
+ =?us-ascii?Q?jjtxpNOnh8rqDUegBE2+5D/QzSYip1ucSYHVQ4rM0QthtkuhM8FFpJ8QXgyT?=
+ =?us-ascii?Q?Gt38RFOaAvtrIWnP3y1XQ25z3u3vgJnYWgEubqu9P6zi+COpF39rSiHCqxFu?=
+ =?us-ascii?Q?psF5xcmNvH0CJZqfEmFWBnAIQMrP0oaE4wGf94kQke9objZZCCFVdXh/3w+E?=
+ =?us-ascii?Q?qUsALqe5xowHKjEzNDL/jvs+aXJtiq2BTRAcXitijKIoGlnN7+S3Dclz6DPb?=
+ =?us-ascii?Q?hpq9Ouk8KHntWFUKEo7AWDiAAB/xgtH9+CS8plyCucGvkoZF2LBEy0HIJ/zq?=
+ =?us-ascii?Q?qkYTyWIn3a7GHrPtzxkQ1BRzd5oJfT51WhatZJDWoHDB9lPcOpcg9qGcSRNy?=
+ =?us-ascii?Q?ER/wH6rAuH65M4u2B9O1+xvORk12gdffdTueeeozI2NxTlmUytezM+Ueb2Xg?=
+ =?us-ascii?Q?/OYurjnsjxPgSpwQ0+7yRtY448/UrL/SzqHvQ3xzwS2Yvyl5PCcrGXxqf7gy?=
+ =?us-ascii?Q?8UO29pfmyB8DY8rNeiMzzTNIS8UBWs2VwpdAo6ydhLoPEK5RaPwm/xOoPX+F?=
+ =?us-ascii?Q?J86nfhy20OP6orimiSul6Ua0CVHeewfFShHffsCsfHkparb9FI7xflVsg4aI?=
+ =?us-ascii?Q?eLtF7oOw/Wvn8ezxLIFovk68bA+hkLs1IV50qOTyxoAIWcHgkwUvXRUi2aIe?=
+ =?us-ascii?Q?F8PXpQcxOBKvnLVjVC8X+Wq7iQ2vJHI9MMt6kFd4?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ddac3a3-b789-46eb-7e71-08de1bb0722a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2025 14:42:57.6569 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XsOel4lt+rjexNqYkUeSnGJ8W2r6HNBsGuQwYFMqmCTv4FazG7wIh8t9Bpzp+RZNGuVz0N6GIaPXEFKprxbNCQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7604
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,267 +178,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.11.25 14:46, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> On 04.11.25 13:07, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> Add explicit validation for QAPI documentation formatting rules:
->>>>
->>>> 1. Lines must not exceed 70 columns in width (including '# ' prefix)
->>>> 2. Sentences must be separated by two spaces
->>>>
->>>> Example sections and literal :: blocks (seldom case) are excluded, we
->>>> don't require them to be <= 70, that would be too restrictive. Anyway,
->>>> they share common 80-columns recommendations (not requirements).
->>>>
->>>> Add two simple tests, illustrating the change.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> ---
->>>>
->>>> Hi all!
->>>>
->>>> v5: - break "literal" block at any decreasing the indent,
->>>>         not only at no-indent
->>>>       - add two simple tests
->>>>
->>>> This is based on
->>>> [PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
->>>> Based-on: <20251031094751.2817932-1-armbru@redhat.com>
->>>>
->>>>    scripts/qapi/parser.py                     | 52 +++++++++++++++++++++-
->>>>    tests/qapi-schema/doc-bad-long-line.err    |  1 +
->>>>    tests/qapi-schema/doc-bad-long-line.json   |  6 +++
->>>>    tests/qapi-schema/doc-bad-long-line.out    |  0
->>>>    tests/qapi-schema/doc-bad-whitespaces.err  |  2 +
->>>>    tests/qapi-schema/doc-bad-whitespaces.json |  6 +++
->>>>    tests/qapi-schema/doc-bad-whitespaces.out  |  0
->>>>    tests/qapi-schema/meson.build              |  2 +
->>>>    8 files changed, 68 insertions(+), 1 deletion(-)
->>>>    create mode 100644 tests/qapi-schema/doc-bad-long-line.err
->>>>    create mode 100644 tests/qapi-schema/doc-bad-long-line.json
->>>>    create mode 100644 tests/qapi-schema/doc-bad-long-line.out
->>>>    create mode 100644 tests/qapi-schema/doc-bad-whitespaces.err
->>>>    create mode 100644 tests/qapi-schema/doc-bad-whitespaces.json
->>>>    create mode 100644 tests/qapi-schema/doc-bad-whitespaces.out
->>>>
->>>> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->>>> index 9fbf80a541..ffb149850d 100644
->>>> --- a/scripts/qapi/parser.py
->>>> +++ b/scripts/qapi/parser.py
->>>> @@ -108,6 +108,11 @@ def __init__(self,
->>>>            self.exprs: List[QAPIExpression] = []
->>>>            self.docs: List[QAPIDoc] = []
->>>>    
->>>> +        # State for tracking qmp-example blocks and simple
->>>> +        # :: literal blocks.
->>>> +        self._literal_mode = False
->>>> +        self._literal_mode_indent = 0
->>>> +
->>>>            # Showtime!
->>>>            self._parse()
->>>>    
->>>> @@ -423,12 +428,57 @@ def get_doc_line(self) -> Optional[str]:
->>>>                if self.val != '##':
->>>>                    raise QAPIParseError(
->>>>                        self, "junk after '##' at end of documentation comment")
->>>> +            self._literal_mode = False
->>>>                return None
->>>>            if self.val == '#':
->>>>                return ''
->>>>            if self.val[1] != ' ':
->>>>                raise QAPIParseError(self, "missing space after #")
->>>> -        return self.val[2:].rstrip()
->>>> +
->>>> +        line = self.val[2:].rstrip()
->>>> +
->>>> +        if re.match(r'(\.\. +qmp-example)? *::$', line):
->>>
->>> After a closer reading of ReST docs and some testing: this isn't quite
->>> right, although it works okay for what we have.
->>>
->>> A directive's '::' need not be at the end of a line.  The regexp fails
->>> to match a qmp-example directive with text after '::'.  No such
->>> directives exist right now.
->>>
->>> A literal block starts after a '::' at the end of a paragraph,
->>> i.e. after '::' and a blank line.  The regexp only matches '::' on its
->>> own line, not at the end of a line of text.  It matches it even when
->>> it's not followed by a blank line.
->>>
->>> In review of v4, I claimed we don't use the contracted form "text::".
->>> Not true.  For instance, in block-core.json:
->>>
->>>      # @bins: list of io request counts corresponding to histogram
->>>      #     intervals, one more element than @boundaries has.  For the
->>>      #     example above, @bins may be something like [3, 1, 5, 2], and
->>>      #     corresponding histogram looks like::
->>>      #
->>>      #        5|           *
->>>      #        4|           *
->>>      #        3| *         *
->>>      #        2| *         *    *
->>>      #        1| *    *    *    *
->>>      #         +------------------
->>>      #             10   50   100
->>>      #
->>
->> Ow, my old histograms)
-> 
-> Haha!
-> 
->>>      # Since: 4.0
->>>      ##
->>>
->>> The literal block starts after "like::" and ends before "Since:'.
->>>
->>>> +            self._literal_mode = True
->>>> +            self._literal_mode_indent = 0
->>>> +        elif self._literal_mode and line:
->>>> +            indent = re.match(r'^ *', line).end()
->>>> +            if self._literal_mode_indent == 0:
->>>> +                self._literal_mode_indent = indent
->>>> +            elif indent < self._literal_mode_indent:
->>>> +                # ReST directives stop at decreasing indentation
->>>> +                self._literal_mode = False
->>>
->>> This isn't quite right, either.  We need to stop when indentation of
->>> non-blank lines drops below the indentation of the line containing the
->>> '::'.
->>>
->>> Perhaps it's easier for both of us if I fix this on top.  Thoughts?
->>
->> No objections, good for me!
-> 
-> I can merge this with a brief note, like so:
-> 
->      Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> 
->      The detection of example and literal blocks isn't quite correct, but
->      it works well enough, and we can improve on top.
-> 
->      Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
-
-Ok, thanks!
-
->>>> +
->>>> +        if not self._literal_mode:
->>>> +            self._validate_doc_line_format(line)
->>>> +
->>>> +        return line
->>>> +
->>>> +    def _validate_doc_line_format(self, line: str) -> None:
->>>> +        """
->>>> +        Validate documentation format rules for a single line:
->>>> +        1. Lines should not exceed 70 columns
->>>> +        2. Sentences should be separated by two spaces
->>>> +        """
->>>> +        full_line_length = len(line) + 2  # "# " = 2 characters
->>>> +        if full_line_length > 70:
->>>> +            # Skip URL lines - they can't be broken
->>>> +            if re.match(r' *(https?|ftp)://[^ ]*$', line):
->>>> +                pass
->>>> +            else:
->>>> +                raise QAPIParseError(
->>>> +                    self, "documentation line exceeds 70 columns"
->>>> +                )
->>>> +
->>>> +        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
->>>> +        for m in list(re.finditer(single_space_pattern, line)):
->>>> +            if not m.group(2):
->>>> +                continue
->>>> +            # HACK so the error message points to the offending spot
->>>> +            self.pos = self.line_pos + 2 + m.start(2) + 1
->>>> +            raise QAPIParseError(
->>>> +                self, "Use two spaces between sentences\n"
->>>> +                "If this not the end of a sentence, please report the bug",
->>>> +            )
->>>>    
->>>>        @staticmethod
->>>>        def _match_at_name_colon(string: str) -> Optional[Match[str]]:
->>>> diff --git a/tests/qapi-schema/doc-bad-long-line.err b/tests/qapi-schema/doc-bad-long-line.err
->>>> new file mode 100644
->>>> index 0000000000..611a3b1fef
->>>> --- /dev/null
->>>> +++ b/tests/qapi-schema/doc-bad-long-line.err
->>>> @@ -0,0 +1 @@
->>>> +doc-bad-long-line.json:4:1: documentation line exceeds 70 columns
->>>> diff --git a/tests/qapi-schema/doc-bad-long-line.json b/tests/qapi-schema/doc-bad-long-line.json
->>>> new file mode 100644
->>>> index 0000000000..d7f887694d
->>>> --- /dev/null
->>>> +++ b/tests/qapi-schema/doc-bad-long-line.json
->>>> @@ -0,0 +1,6 @@
->>>> +##
->>>> +# @foo:
->>>> +#
->>>> +# This line has exactly 71 characters, including spaces and punctuation!
->>>
->>> Really?
->>
->> Oh, it's 72 characters actually! AI tricked me. Didn't I check it out?
->>
->> Maybe:
->>
->> # This line has exactly 71 chars, including the leading hash and space.
-> 
-> Works!
-> 
->>>> +##
->>>> +{ 'command': 'foo' }
->>>> diff --git a/tests/qapi-schema/doc-bad-long-line.out b/tests/qapi-schema/doc-bad-long-line.out
->>>> new file mode 100644
->>>> index 0000000000..e69de29bb2
->>>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.err b/tests/qapi-schema/doc-bad-whitespaces.err
->>>> new file mode 100644
->>>> index 0000000000..5cca1954c0
->>>> --- /dev/null
->>>> +++ b/tests/qapi-schema/doc-bad-whitespaces.err
->>>> @@ -0,0 +1,2 @@
->>>> +doc-bad-whitespaces.json:4:48: Use two spaces between sentences
->>>> +If this not the end of a sentence, please report the bug
->>>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.json b/tests/qapi-schema/doc-bad-whitespaces.json
->>>> new file mode 100644
->>>> index 0000000000..b0c318c670
->>>> --- /dev/null
->>>> +++ b/tests/qapi-schema/doc-bad-whitespaces.json
->>>> @@ -0,0 +1,6 @@
->>>> +##
->>>> +# @foo:
->>>> +#
->>>> +# Sentences should be split by two whitespaces. But here is only one.
->>>
->>> two spaces
->>>
->>>> +##
->>>> +{ 'command': 'foo' }
->>>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.out b/tests/qapi-schema/doc-bad-whitespaces.out
->>>> new file mode 100644
->>>> index 0000000000..e69de29bb2
->>>> diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
->>>> index c47025d16d..b24b27db21 100644
->>>> --- a/tests/qapi-schema/meson.build
->>>> +++ b/tests/qapi-schema/meson.build
->>>> @@ -61,8 +61,10 @@ schemas = [
->>>>      'doc-bad-event-arg.json',
->>>>      'doc-bad-feature.json',
->>>>      'doc-bad-indent.json',
->>>> +  'doc-bad-long-line.json',
->>>>      'doc-bad-symbol.json',
->>>>      'doc-bad-union-member.json',
->>>> +  'doc-bad-whitespaces.json',
->>>>      'doc-before-include.json',
->>>>      'doc-before-pragma.json',
->>>>      'doc-duplicate-features.json',
-> 
-> Thanks!
-> 
 
 
--- 
-Best regards,
-Vladimir
+> -----Original Message-----
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: 04 November 2025 14:21
+> To: Eric Auger <eric.auger@redhat.com>
+> Cc: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+> arm@nongnu.org; qemu-devel@nongnu.org; peter.maydell@linaro.org;
+> Nicolin Chen <nicolinc@nvidia.com>; ddutile@redhat.com;
+> berrange@redhat.com; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> <mochs@nvidia.com>; smostafa@google.com; wangzhou1@hisilicon.com;
+> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+> Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+> get_msi_address_space() callback
+>=20
+> On Tue, Nov 04, 2025 at 03:11:55PM +0100, Eric Auger wrote:
+> > > However, QEMU/KVM also calls this callback when resolving
+> > > MSI doorbells:
+> > >
+> > >   kvm_irqchip_add_msi_route()
+> > >     kvm_arch_fixup_msi_route()
+> > >       pci_device_iommu_address_space()
+> > >         get_address_space()
+> > >
+> > > VFIO device in the guest with a SMMUv3 is programmed with a gIOVA for
+> > > MSI doorbell. This gIOVA can't be used to setup the MSI doorbell
+> > > directly. This needs to be translated to vITS gPA. In order to do the
+> > > doorbell transalation it needs IOMMU address space.
+>=20
+> Why does qemu do anything with the msi address? It is opaque and qemu
+> cannot determine anything meaningful from it. I expect it to ignore it?
+
+I am afraid not. Guest MSI table write gets trapped and it then configures =
+the=20
+doorbell( this is where this patch comes handy) and sets up the KVM=20
+routing etc.
+
+Thanks,
+Shameer
+
 
