@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6114DCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D27BECCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLFa-0001Dv-MS; Tue, 04 Nov 2025 12:55:37 -0500
+	id 1vGLFv-0001dg-5n; Tue, 04 Nov 2025 12:55:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEp-0000r2-NO
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:38 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEn-0000pA-D4
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEo-0006iw-2A
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:35 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEl-0006i9-O5
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762278873;
+ s=mimecast20190719; t=1762278871;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l+CpWO3JCH0B/CwO232sJN6EEvF1wViIZzhnu7FRhIc=;
- b=jIFtBWCJ9hJ82VoUo9jXfS9o3g0PRvnoJWSNzJkXOA4+t5yW8st4hNAGrgZpIQSgCr5zf0
- dLQbWlEMrczLquJ9Xt9p8T7cBZ0hJG6bux8TS9D6jVpaVrin+1yHgZ7gL1ia/7Gfqnl91p
- fnezeYzeJrof3zQKy5VPl/K3UWSB+ng=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=d540xW7kcf/XZsdXpMIXfUvUMGaAPCvGJQycBSdnHGA=;
+ b=WSZ86dZcknYdwufY+neCH4J8cDE/xcuXJfAOUxT+PqTAXwPtJCDYrGWLw7TlfYY9HYuBEQ
+ 22YRXrqtmvbJ7XstIhPpiRmkE6JoAmeA4QXzMHy2l2ISPbGZnQLLYalJr0M3V77XQ+QkQs
+ HloZjn++2tgT1aJEqHF0egAsta6E4XU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-b4318xe2O6eVBT_fpTfHeA-1; Tue,
- 04 Nov 2025 12:54:30 -0500
-X-MC-Unique: b4318xe2O6eVBT_fpTfHeA-1
-X-Mimecast-MFC-AGG-ID: b4318xe2O6eVBT_fpTfHeA_1762278868
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-cPAhdbn8N4i7RvNLUfJAlQ-1; Tue,
+ 04 Nov 2025 12:54:27 -0500
+X-MC-Unique: cPAhdbn8N4i7RvNLUfJAlQ-1
+X-Mimecast-MFC-AGG-ID: cPAhdbn8N4i7RvNLUfJAlQ_1762278866
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 40E6D19560B0; Tue,  4 Nov 2025 17:54:28 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 705B01956075; Tue,  4 Nov 2025 17:54:26 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA434180044F; Tue,  4 Nov 2025 17:54:26 +0000 (UTC)
+ id 2BEAE180044F; Tue,  4 Nov 2025 17:54:24 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 02/27] aio-posix: fix fdmon-io_uring.c timeout stack variable
- lifetime
-Date: Tue,  4 Nov 2025 18:53:50 +0100
-Message-ID: <20251104175415.525388-3-kwolf@redhat.com>
+Subject: [PULL 01/27] aio-posix: fix race between io_uring CQE and AioHandler
+ deletion
+Date: Tue,  4 Nov 2025 18:53:49 +0100
+Message-ID: <20251104175415.525388-2-kwolf@redhat.com>
 In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
 References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -67,7 +67,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,78 +85,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-io_uring_prep_timeout() stashes a pointer to the timespec struct rather
-than copying its fields. That means the struct must live until after the
-SQE has been submitted by io_uring_enter(2). add_timeout_sqe() violates
-this constraint because the SQE is not submitted within the function.
+When an AioHandler is enqueued on ctx->submit_list for removal, the
+fill_sq_ring() function will submit an io_uring POLL_REMOVE operation to
+cancel the in-flight POLL_ADD operation.
 
-Inline add_timeout_sqe() into fdmon_io_uring_wait() so that the struct
-lives at least as long as io_uring_enter(2).
+There is a race when another thread enqueues an AioHandler for deletion
+on ctx->submit_list when the POLL_ADD CQE has already appeared. In that
+case POLL_REMOVE is unnecessary. The code already handled this, but
+forgot that the AioHandler itself is still on ctx->submit_list when the
+POLL_ADD CQE is being processed. It's unsafe to delete the AioHandler at
+that point in time (use-after-free).
 
-This fixes random hangs (bogus timeout values) when the kernel loads
-undefined timespec struct values from userspace after the original
-struct on the stack has been destroyed.
+Solve this problem by keeping the AioHandler alive but setting a flag so
+that it will be deleted by fill_sq_ring() when it runs.
 
-Reported-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20251104022933.618123-3-stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251104022933.618123-2-stefanha@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- util/fdmon-io_uring.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ util/fdmon-io_uring.c | 33 ++++++++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 7 deletions(-)
 
 diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index ad89160f31..b64ce42513 100644
+index b0d68bdc44..ad89160f31 100644
 --- a/util/fdmon-io_uring.c
 +++ b/util/fdmon-io_uring.c
-@@ -188,20 +188,6 @@ static void add_poll_remove_sqe(AioContext *ctx, AioHandler *node)
-     io_uring_sqe_set_data(sqe, NULL);
+@@ -52,9 +52,10 @@ enum {
+     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
+ 
+     /* AioHandler::flags */
+-    FDMON_IO_URING_PENDING  = (1 << 0),
+-    FDMON_IO_URING_ADD      = (1 << 1),
+-    FDMON_IO_URING_REMOVE   = (1 << 2),
++    FDMON_IO_URING_PENDING            = (1 << 0),
++    FDMON_IO_URING_ADD                = (1 << 1),
++    FDMON_IO_URING_REMOVE             = (1 << 2),
++    FDMON_IO_URING_DELETE_AIO_HANDLER = (1 << 3),
+ };
+ 
+ static inline int poll_events_from_pfd(int pfd_events)
+@@ -218,6 +219,16 @@ static void fill_sq_ring(AioContext *ctx)
+         if (flags & FDMON_IO_URING_REMOVE) {
+             add_poll_remove_sqe(ctx, node);
+         }
++        if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
++            /*
++             * process_cqe() sets this flag after ADD and REMOVE have been
++             * cleared. They cannot be set again, so they must be clear.
++             */
++            assert(!(flags & FDMON_IO_URING_ADD));
++            assert(!(flags & FDMON_IO_URING_REMOVE));
++
++            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        }
+     }
  }
  
--/* Add a timeout that self-cancels when another cqe becomes ready */
--static void add_timeout_sqe(AioContext *ctx, int64_t ns)
--{
--    struct io_uring_sqe *sqe;
--    struct __kernel_timespec ts = {
--        .tv_sec = ns / NANOSECONDS_PER_SECOND,
--        .tv_nsec = ns % NANOSECONDS_PER_SECOND,
--    };
--
--    sqe = get_sqe(ctx);
--    io_uring_prep_timeout(sqe, &ts, 1, 0);
--    io_uring_sqe_set_data(sqe, NULL);
--}
--
- /* Add sqes from ctx->submit_list for submission */
- static void fill_sq_ring(AioContext *ctx)
- {
-@@ -291,13 +277,24 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
- static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
-                                int64_t timeout)
- {
-+    struct __kernel_timespec ts;
-     unsigned wait_nr = 1; /* block until at least one cqe is ready */
-     int ret;
- 
-     if (timeout == 0) {
-         wait_nr = 0; /* non-blocking */
-     } else if (timeout > 0) {
--        add_timeout_sqe(ctx, timeout);
-+        /* Add a timeout that self-cancels when another cqe becomes ready */
-+        struct io_uring_sqe *sqe;
-+
-+        ts = (struct __kernel_timespec){
-+            .tv_sec = timeout / NANOSECONDS_PER_SECOND,
-+            .tv_nsec = timeout % NANOSECONDS_PER_SECOND,
-+        };
-+
-+        sqe = get_sqe(ctx);
-+        io_uring_prep_timeout(sqe, &ts, 1, 0);
-+        io_uring_sqe_set_data(sqe, NULL);
+@@ -241,7 +252,12 @@ static bool process_cqe(AioContext *ctx,
+      */
+     flags = qatomic_fetch_and(&node->flags, ~FDMON_IO_URING_REMOVE);
+     if (flags & FDMON_IO_URING_REMOVE) {
+-        QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        if (flags & FDMON_IO_URING_PENDING) {
++            /* Still on ctx->submit_list, defer deletion until fill_sq_ring() */
++            qatomic_or(&node->flags, FDMON_IO_URING_DELETE_AIO_HANDLER);
++        } else {
++            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        }
+         return false;
      }
  
-     fill_sq_ring(ctx);
+@@ -347,10 +363,13 @@ void fdmon_io_uring_destroy(AioContext *ctx)
+             unsigned flags = qatomic_fetch_and(&node->flags,
+                     ~(FDMON_IO_URING_PENDING |
+                       FDMON_IO_URING_ADD |
+-                      FDMON_IO_URING_REMOVE));
++                      FDMON_IO_URING_REMOVE |
++                      FDMON_IO_URING_DELETE_AIO_HANDLER));
+ 
+-            if (flags & FDMON_IO_URING_REMOVE) {
+-                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++            if ((flags & FDMON_IO_URING_REMOVE) ||
++                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
++                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers,
++                                      node, node_deleted);
+             }
+ 
+             QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
 -- 
 2.51.1
 
