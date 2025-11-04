@@ -4,123 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FCF5CCFA00
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D54ACCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCq7-0004Hn-4J; Tue, 04 Nov 2025 03:56:33 -0500
+	id 1vGCrU-00076e-Pp; Tue, 04 Nov 2025 03:57:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGCpW-00040R-Id
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:55:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vGCrR-00070G-Ek
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:57:53 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGCpU-00073U-Ni
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:55:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762246551;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HN62QGwthL8facCp3VPYNlRtyyweQYgUZyqjYbLgJVk=;
- b=K9ZiRxel1OndwEZShsJyVAdevZ7iHrLAdgk2N6BRH9SZnGPNqbzJwvaYY7I3mZbhO9FdiR
- MAnE7NA1jLe1Rg4ZiFnFOCkTUDLbYr+eWD77rVLRoQbE1cZ08UpHDmyufWFc95DmIMwr/m
- SixF0/tWUXwLLyuLypSewWYJVzMnaSM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-xuJtucddPg2kIcA4ldiHMg-1; Tue, 04 Nov 2025 03:55:49 -0500
-X-MC-Unique: xuJtucddPg2kIcA4ldiHMg-1
-X-Mimecast-MFC-AGG-ID: xuJtucddPg2kIcA4ldiHMg_1762246549
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-470fd92ad57so61063655e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 00:55:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762246548; x=1762851348;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HN62QGwthL8facCp3VPYNlRtyyweQYgUZyqjYbLgJVk=;
- b=RgWh3+xIo8z+PBTUA6VacgY+vsFeh8hAT+9/Ye7u/qiS3klfgvLL4Q6ykISmdaEkgK
- qq6gtTobbljkSrVmtlcH3MNjl0GYJeO17LQbq8QdUo66w70ZB5pvKL5VSJC9JPW3zWl0
- kV5ne3r/uuO9nXw4C5jDXbi3Mv1YoFIYEwGctNgOsiaXgD0XN6Z39abdYK3wzigUVnDj
- XB2NcLBo6uJkoHt5uFdfGUyVbapk9M/U0T+4S5vBuy9TohuoDeAhKXvlMsLtjUJVt2jO
- vv6CZfI06cDcQeHp1GEskDZe+2M1VVdSgNGmnYWjSUedaKlyLJo4xZ40CAFvT/tLi4AJ
- S8DQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWobcAH5hhpJG4u7heHgkSYrnp9ShOZB6ffPi1a1UlUvPKYX2K9YyUlfqoy64+52ASQ8sTtr2eWlX3X@nongnu.org
-X-Gm-Message-State: AOJu0YwvKGKryDn/O6OkihS/yZtczUkJ/fEsn2/HKD9V0kZ+0ojYtFc+
- mjegPvu5qOwfQd/L/FzPtAbUMG5Ph0DoPo+vu/ylcAiwOXrNq1q1h6EInsdJ9g24glq2U3nwlfH
- sAEr6hauOyDYL2vaCFKWct80LCQYFg8J37vYZMPCtaAA+9Dd7AN0SqXxB
-X-Gm-Gg: ASbGncteYWdJMp91X/+9YZxQ1RcDu0SDz+YFDmkyl/1Fd9LX7VTNXrrqH6z8oiVnctq
- XBpU2z/ZybJ9amL58l1lEn3L16hk730oG54YdkXAJGD7tkrwggh1ZkecZINJyy4Q2v9XfChp8Ys
- K70A3I97fEC24ry6GtJrLRlcKN1ae2fMBFMxCvSRvzpq2CKT0koCrQdkUtkumbSfkdlBYv//9Iu
- 7tLW00lBpWtejbWD8MQ69bCHdlOax7pZgISn/WV3j6axyAm2JQQ4RjkTbxveDYam1ZNcpmfwl3+
- x7pzhXko2Gy08VoUgoR1rAj5ZUNRA9oaIQy3Ksfv8Wlsi78u60GJ5BJEj7zIypGXir4jG21ljQA
- b7Z//byG6EFTyH4mXMLkz7y071hlq5ZuLpe1IZ7gD7hMnZw==
-X-Received: by 2002:a05:600c:3b13:b0:45d:5c71:769a with SMTP id
- 5b1f17b1804b1-4773089c52fmr133016675e9.26.1762246548624; 
- Tue, 04 Nov 2025 00:55:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHcS2niz5q7n38UG7b36aWFaAXXGFxK9u+bsbaWFxlhpVxtx4o48KibCE+hx/yFWkssgPfBWA==
-X-Received: by 2002:a05:600c:3b13:b0:45d:5c71:769a with SMTP id
- 5b1f17b1804b1-4773089c52fmr133016405e9.26.1762246548165; 
- Tue, 04 Nov 2025 00:55:48 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477563e25e1sm18275215e9.5.2025.11.04.00.55.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 00:55:47 -0800 (PST)
-Message-ID: <b0a02ca2-6115-4313-88b2-f3218aa2b686@redhat.com>
-Date: Tue, 4 Nov 2025 09:55:46 +0100
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vGCrO-0007ar-1t
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:57:53 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A488qx4015421
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 4 Nov 2025 17:08:52 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=0cIml4HlJH+GRxor4hDn/Tpd4VMgzt4OnsdEL1Ari/Q=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1762243732; v=1;
+ b=KMY2nKXhTpm3kJ6WJZnLZgoqO608XeILzSyDHUxj1Hcn95cGCPEnIoJY80NnaJhx
+ jc37oCgIsmuqtE55XqctqOKF20aGzdQO9Nq0mXfSitNuV6G5fHHnMtnjQLzNMbqf
+ mBLpLSF21Cu0GnjkRB8nBTgHSCZe8wBJinD3Oqb0VtU0FhXpqPlj98QJuOXRcmfm
+ OX/q7T+KeEKOcN9gWyFjYA+5BDmpbGK1wL9fyoXupis723JyPtcPhWCGE5RqrtwZ
+ h7UlgQPP+eROsjNpt0FRlrkO2OKl6UehnJnzMNQjzvyDcZkns4CI1bzkYxfdULlW
+ yAo5ms8xy/zlRtFs/rcXXg==
+Message-ID: <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 4 Nov 2025 17:08:51 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 17/32] hw/arm/smmuv3-accel: Add support to issue
- invalidation cmd to host
+Subject: Re: Regression with the "replay" test on target alpha
+To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251028173430.2180057-1-pbonzini@redhat.com>
+ <20251028173430.2180057-4-pbonzini@redhat.com>
+ <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
+ <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
+ <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
 Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Jason Gunthorpe <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-18-skolothumtho@nvidia.com>
- <aQVVxV4I/nh3aAXn@Asurada-Nvidia>
- <CH3PR12MB75481D898FF28E9832B0013EABC7A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aQjpzdwbJVPN7AqF@Asurada-Nvidia>
- <CH3PR12MB7548CBA8B4C962BE867C9362ABC7A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aQj5xQwsq/kBaJP/@Asurada-Nvidia>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <aQj5xQwsq/kBaJP/@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,67 +76,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 11/3/25 7:51 PM, Nicolin Chen wrote:
-> On Mon, Nov 03, 2025 at 10:17:20AM -0800, Shameer Kolothum wrote:
->>>> The general
->>>> idea is, we will pass the errp to accel functions and report or
->>>> propagate from here.
->>> But there is no "errp" in smmuv3_cmdq_consume() to propagate the these
->>> local_errs further? It ends at the error_report_err().
+On 2025/11/04 16:41, Thomas Huth wrote:
+> On 04/11/2025 02.45, Akihiko Odaki wrote:
+>> On 2025/11/03 22:59, Thomas Huth wrote:
+>>> On 28/10/2025 18.34, Paolo Bonzini wrote:
+>>>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>
+>>>> Borrow the concept of force quiescent state from Linux to ensure 
+>>>> readers
+>>>> remain fast during normal operation and to avoid stalls.
 >>>
->>> If we only get local_err and print them, why not just print them inside the
->>> _accel functions?
->> Right, we don’t propagate error now. But in future it might come
->> handy. I would personally keep the error propagation facility if possible.
-> smmuv3_cmdq_consume() is called in smmu_writel() only. Where do we
-> plan to propagate that in the future?
->
->> Also, this was added as per Eric's comment on RFC v3.
+>>>   Hi Akihiko,
+>>>
+>>> looks like this commit has introduced a regression with the "replay" 
+>>> functional test on the alpha target.
+>>> When I run something like:
+>>>
+>>>   pyvenv/bin/meson test --no-rebuild -t 1 --setup thorough \
+>>>    --num-processes 1 --repeat 10 func-alpha-replay
+>>>
+>>> in the build folder, approx. half of the test runs are failing for me 
+>>> now.
+>>>
+>>> I bisected the issue to this patch here - when I rebuild qemu-system- 
+>>> alpha with the commit right before this change here, the above test 
+>>> runs work fine, so I'm pretty sure that the problem has been 
+>>> introduced by this commit here.
+>>>
+>>> Could you please have a look?
 >>
->> https://lore.kernel.org/qemu-devel/41ceadf1-07de-4c8a-8935-d709ac7cf6bc@redhat.com/
-> If only we have a top function that does error_report_err() in one
-> place.. Duplicating error_report_err(local_err) doesn't look clean
-> to me.
->
-> Maybe smmu_writel() could do:
-> {
-> +   Error *errp = NULL;
->
->     switch (offset) {
->     case A_XXX:
->         smmuv3_cmdq_consume(..., errp);
-> +       return MEMTX_OK;
-> -       break;
->     ...
->     case A_YYY:
->         smmuv3_cmdq_consume(..., errp);
-> +       return MEMTX_OK;
-> -       break;
->     }
-> +   error_report_err(errp);
-> +   return MEMTX_OK;
-> }
->
-> Any better idea, Eric?
+>> I cannot reproduce it with commit 55d98e3edeeb ("rcu: Unify force 
+>> quiescent state").
+>>
+>> Can you provide meson-logs/testlog-thorough.txt so that I can look 
+>> into the failure you are facing? If you think you have something 
+>> useful for debugging, please share it to me too.
+> 
+> There's not much in that testlog-thorough.txt that could be helpful here,
+> it's basically just the information that the test has been killed due to
+> the timeout:
+> 
+> ==================================== 1/1 
+> ===================================
+> test:         qemu:func-thorough+func-alpha-thorough+thorough / func- 
+> alpha-replay
+> start time:   07:25:26
+> duration:     90.01s
+> result:       killed by signal 15 SIGTERM
+> command:      RUST_BACKTRACE=1 QEMU_TEST_QEMU_IMG=/tmp/qemu-rcu/qemu-img 
+> QEMU_TEST_GDB=/usr/bin/gdb MALLOC_PERTURB_=255 MESON_TEST_ITERATION=1 
+> PYTHONPATH=/home/thuth/devel/qemu/python:/home/thuth/devel/qemu/tests/ 
+> functional G_TEST_SLOW=1 SPEED=thorough QEMU_TEST_QEMU_BINARY=/tmp/qemu- 
+> rcu/qemu-system-alpha 
+> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 
+> LD_LIBRARY_PATH=/tmp/qemu-rcu/tests/tcg/plugins:/tmp/qemu-rcu/contrib/ 
+> plugins 
+> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QEMU_BUILD_ROOT=/tmp/qemu-rcu /tmp/qemu-rcu/pyvenv/bin/python3 /home/thuth/devel/qemu/tests/functional/alpha/test_replay.py
+> =============================================================================
+> 
+> Summary of Failures:
+> 
+> 1/1 qemu:func-thorough+func-alpha-thorough+thorough / func-alpha-replay 
+> TIMEOUT        90.01s   killed by signal 15 SIGTERM
+> 
+> 
+> There is also not that much helpful information in
+> tests/functional/alpha/test_replay.AlphaReplay.test_clipper, apart from
+> the console.log file. For a good run, the console log looks like this:
+> 
+> 2025-11-04 08:16:46,148: PCI: 00:01:0 class 0101 id 1095:0646
+> 2025-11-04 08:16:46,149: PCI:   region 0: 0000c000
+> 2025-11-04 08:16:46,149: PCI:   region 1: 0000c008
+> 2025-11-04 08:16:46,149: PCI:   region 2: 0000c010
+> 2025-11-04 08:16:46,149: PCI:   region 3: 0000c018
+> 2025-11-04 08:16:46,149: PCI:   region 4: 0000c020
+> 2025-11-04 08:16:46,149: PCI: 00:07:0 class 0601 id 8086:0484
+> 2025-11-04 08:16:48,149: [    0.000000] Initializing cgroup subsys cpu
+> 2025-11-04 08:16:48,149: [    0.000000] Linux version 2.6.26-2-alpha- 
+> generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 
+> 20080704 (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
+> 2025-11-04 08:16:48,150: [    0.000000] Booting GENERIC on Tsunami 
+> variation Clipper using machine vector Clipper from SRM
+> 2025-11-04 08:16:48,150: [    0.000000] Major Options: MAGIC_SYSRQ
+> 2025-11-04 08:16:48,150: [    0.000000] Command line: printk.time=0 
+> console=ttyS0
+> 2025-11-04 08:16:48,150: [    0.000000] memcluster 0, usage 1, 
+> start        0, end       15
+> 2025-11-04 08:16:48,150: [    0.000000] memcluster 1, usage 0, 
+> start       15, end    16384
+> 2025-11-04 08:16:48,150: [    0.000000] freeing pages 15:2048
+> 2025-11-04 08:16:48,150: [    0.000000] freeing pages 2987:16384
+> 2025-11-04 08:16:48,151: [    0.000000] reserving pages 2987:2988
+> 2025-11-04 08:16:48,151: [    0.000000] Built 1 zonelists in Zone order, 
+> mobility grouping on.  Total pages: 16272
+> 2025-11-04 08:16:48,151: [    0.000000] Kernel command line: 
+> printk.time=0 console=ttyS0
+> 2025-11-04 08:16:57,358: PCI: 00:01:0 class 0101 id 1095:0646
+> 2025-11-04 08:16:57,358: PCI:   region 0: 0000c000
+> 2025-11-04 08:16:57,358: PCI:   region 1: 0000c008
+> 2025-11-04 08:16:57,359: PCI:   region 2: 0000c010
+> 2025-11-04 08:16:57,359: PCI:   region 3: 0000c018
+> 2025-11-04 08:16:57,359: PCI:   region 4: 0000c020
+> 2025-11-04 08:16:57,360: PCI: 00:07:0 class 0601 id 8086:0484
+> 2025-11-04 08:17:08,468: [    0.000000] Initializing cgroup subsys cpu
+> 2025-11-04 08:17:08,470: [    0.000000] Linux version 2.6.26-2-alpha- 
+> generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 
+> 20080704 (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
+> 2025-11-04 08:17:08,471: [    0.000000] Booting GENERIC on Tsunami 
+> variation Clipper using machine vector Clipper from SRM
+> 2025-11-04 08:17:08,471: [    0.000000] Major Options: MAGIC_SYSRQ
+> 2025-11-04 08:17:08,472: [    0.000000] Command line: printk.time=0 
+> console=ttyS0
+> 2025-11-04 08:17:08,472: [    0.000000] memcluster 0, usage 1, 
+> start        0, end       15
+> 2025-11-04 08:17:08,473: [    0.000000] memcluster 1, usage 0, 
+> start       15, end    16384
+> 2025-11-04 08:17:08,473: [    0.000000] freeing pages 15:2048
+> 2025-11-04 08:17:08,474: [    0.000000] freeing pages 2987:16384
+> 2025-11-04 08:17:08,474: [    0.000000] reserving pages 2987:2988
+> 2025-11-04 08:17:08,475: [    0.000000] Built 1 zonelists in Zone order, 
+> mobility grouping on.  Total pages: 16272
+> 2025-11-04 08:17:08,476: [    0.000000] Kernel command line: 
+> printk.time=0 console=ttyS0
+> 
+> I.e. the replay worked as expected. When it fails, console.log only 
+> contains:
+> 
+> 2025-11-04 08:25:26,601: PCI: 00:01:0 class 0101 id 1095:0646
+> 2025-11-04 08:25:26,601: PCI:   region 0: 0000c000
+> 2025-11-04 08:25:26,601: PCI:   region 1: 0000c008
+> 2025-11-04 08:25:26,601: PCI:   region 2: 0000c010
+> 2025-11-04 08:25:26,601: PCI:   region 3: 0000c018
+> 2025-11-04 08:25:26,601: PCI:   region 4: 0000c020
+> 2025-11-04 08:25:26,602: PCI: 00:07:0 class 0601 id 8086:0484
+> 2025-11-04 08:25:28,601: [    0.000000] Initializing cgroup subsys cpu
+> 2025-11-04 08:25:28,602: [    0.000000] Linux version 2.6.26-2-alpha- 
+> generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 
+> 20080704 (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
+> 2025-11-04 08:25:28,602: [    0.000000] Booting GENERIC on Tsunami 
+> variation Clipper using machine vector Clipper from SRM
+> 2025-11-04 08:25:28,602: [    0.000000] Major Options: MAGIC_SYSRQ
+> 2025-11-04 08:25:28,602: [    0.000000] Command line: printk.time=0 
+> console=ttyS0
+> 2025-11-04 08:25:28,602: [    0.000000] memcluster 0, usage 1, 
+> start        0, end       15
+> 2025-11-04 08:25:28,602: [    0.000000] memcluster 1, usage 0, 
+> start       15, end    16384
+> 2025-11-04 08:25:28,602: [    0.000000] freeing pages 15:2048
+> 2025-11-04 08:25:28,603: [    0.000000] freeing pages 2987:16384
+> 2025-11-04 08:25:28,603: [    0.000000] reserving pages 2987:2988
+> 2025-11-04 08:25:28,603: [    0.000000] Built 1 zonelists in Zone order, 
+> mobility grouping on.  Total pages: 16272
+> 2025-11-04 08:25:28,603: [    0.000000] Kernel command line: 
+> printk.time=0 console=ttyS0
+> 
+> I.e. the replay did not work.
+> 
+> Could this RCU stuff somehow influence the replay mechanism in QEMU?
 
-Can't we move local_err outside of case block and after the switch,
+I don't know (yet).
 
- if (cmd_error) {
-   if (local_err) {
-      error_report_err(local_err);
-   }
-../..  
+Can you attach gdb and show a backtrace for each thread? It often 
+reveals deadlock among threads.
 
-Eric
- 
->
-> Nicolin
->
-
+Regards,
+Akihiko Odaki
 
