@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCF0CCFA05
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 03:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F42CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 03:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG7VH-0003V1-Tn; Mon, 03 Nov 2025 22:14:39 -0500
+	id 1vG7VB-0002x5-Au; Mon, 03 Nov 2025 22:14:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG7Uy-0002b4-Df; Mon, 03 Nov 2025 22:14:22 -0500
+ id 1vG7V9-0002nj-0N; Mon, 03 Nov 2025 22:14:31 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG7Uv-00034Q-55; Mon, 03 Nov 2025 22:14:19 -0500
+ id 1vG7V6-00034Q-Qa; Mon, 03 Nov 2025 22:14:30 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 4 Nov
- 2025 11:13:33 +0800
+ 2025 11:13:35 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 4 Nov 2025 11:13:33 +0800
+ Transport; Tue, 4 Nov 2025 11:13:35 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v4 12/30] hw/arm/aspeed: Split Supermicro X11SPI machine into
- a separate file for maintainability
-Date: Tue, 4 Nov 2025 11:12:50 +0800
-Message-ID: <20251104031325.146374-13-jamin_lin@aspeedtech.com>
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v4 15/30] hw/arm/aspeed: Split Supermicro X11 machine into a
+ separate source file for maintainability
+Date: Tue, 4 Nov 2025 11:12:53 +0800
+Message-ID: <20251104031325.146374-16-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251104031325.146374-1-jamin_lin@aspeedtech.com>
 References: <20251104031325.146374-1-jamin_lin@aspeedtech.com>
@@ -68,107 +67,103 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the Supermicro X11SPI BMC machine definition from
-aspeed.c into a new standalone file aspeed_ast2500_supermicro-x11spi.c,
-and adds a dedicated I²C initialization function for the platform.
+This commit moves the Supermicro X11 BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2400_supermicrox11.c and
+removes its dependency on the Palmetto platform’s I²C initialization.
 
-The refactor continues the effort to modularize Aspeed platform support,
-ensuring each machine model is defined in its own source file. This improves
-code organization, readability, and simplifies maintenance when adding or
-modifying platform-specific behavior.
-
-Previously, the Supermicro X11SPI machine reused
-palmetto_bmc_i2c_init() for its I²C setup. To make the machine
-definition fully self-contained, the function was copied and renamed
-to supermicro_x11spi_bmc_i2c_init(). This ensures that the machine
-can evolve independently without depending on Palmetto’s board logi
+This refactor continues the modularization effort for Aspeed platform support,
+ensuring that each board’s configuration resides in its own dedicated source file.
+By duplicating and renaming the palmetto_bmc_i2c_init() logic into
+supermicrox11_bmc_i2c_init(), this change removes unwanted coupling between
+the two board definitions.
 
 Key updates include:
-- Moved SUPERMICRO_X11SPI_BMC_HW_STRAP1 macro and machine class init
-(aspeed_machine_supermicro_x11spi_bmc_class_init) into a new file.
-- Added new function supermicro_x11spi_bmc_i2c_init() copied from
-palmetto_bmc_i2c_init() for independent control.
-- Updated the machine definition to use the new I²C init function.
-- Registered the new source file in meson.build.
-- Removed all Supermicro X11SPI-related definitions from aspeed.c.
+- Moved SUPERMICROX11_BMC_HW_STRAP1 macro definition into a new file.
+- Moved aspeed_machine_supermicrox11_bmc_class_init() and type registration into a new file.
+- Added a dedicated supermicrox11_bmc_i2c_init() function (copied and renamed from Palmetto’s version).
+- Added the new file aspeed_ast2400_supermicrox11.c to the build system (meson.build).
+- Removed all Supermicro X11–specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                           | 33 ----------
- hw/arm/aspeed_ast2500_supermicro-x11spi.c | 78 +++++++++++++++++++++++
- hw/arm/meson.build                        |  1 +
- 3 files changed, 79 insertions(+), 33 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2500_supermicro-x11spi.c
+ hw/arm/aspeed.c                       | 37 ------------
+ hw/arm/aspeed_ast2400_supermicrox11.c | 82 +++++++++++++++++++++++++++
+ hw/arm/meson.build                    |  1 +
+ 3 files changed, 83 insertions(+), 37 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2400_supermicrox11.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index c31b281f55..e1fa95b2c3 100644
+index f9e6d8c4c6..fbd27020bd 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -71,16 +71,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+@@ -57,20 +57,6 @@ static struct arm_boot_info aspeed_board_binfo = {
          SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
          SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
  
 -/* TODO: Find the actual hardware value */
--#define SUPERMICRO_X11SPI_BMC_HW_STRAP1 (                               \
--        AST2500_HW_STRAP1_DEFAULTS |                                    \
--        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
--        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
--        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
--        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+-#define SUPERMICROX11_BMC_HW_STRAP1 (                                   \
+-        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
+-        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2) |                           \
+-        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
+-        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_48M_IN) |       \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN) |                \
+-        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
 -        SCU_HW_STRAP_SPI_WIDTH |                                        \
--        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN))
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+-        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 -
- /* AST2500 evb hardware value: 0xF100C2E6 */
- #define AST2500_EVB_HW_STRAP1 ((                                        \
-         AST2500_HW_STRAP1_DEFAULTS |                                    \
-@@ -1187,24 +1177,6 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+ /* AST2600 evb hardware value */
+ #define AST2600_EVB_HW_STRAP1 0x000000C0
+ #define AST2600_EVB_HW_STRAP2 0x00000003
+@@ -1073,24 +1059,6 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
      aspeed_machine_class_init_cpus_defaults(mc);
- }
+ };
  
--static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
--                                                            const void *data)
+-static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+-                                                        const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Supermicro X11 SPI BMC (ARM1176)";
--    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = SUPERMICRO_X11SPI_BMC_HW_STRAP1;
+-    mc->desc       = "Supermicro X11 BMC (ARM926EJ-S)";
+-    amc->soc_name  = "ast2400-a1";
+-    amc->hw_strap1 = SUPERMICROX11_BMC_HW_STRAP1;
 -    amc->fmc_model = "mx25l25635e";
 -    amc->spi_model = "mx25l25635e";
 -    amc->num_cs    = 1;
 -    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
 -    amc->i2c_init  = palmetto_bmc_i2c_init;
--    mc->default_ram_size = 512 * MiB;
+-    mc->default_ram_size = 256 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -}
 -
- static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc,
+ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
                                                    const void *data)
  {
-@@ -1577,11 +1549,6 @@ static const TypeInfo aspeed_machine_types[] = {
+@@ -1441,11 +1409,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_supermicrox11_bmc_class_init,
+         .class_init    = aspeed_machine_palmetto_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("supermicro-x11spi-bmc"),
+-        .name          = MACHINE_TYPE_NAME("supermicrox11-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_supermicro_x11spi_bmc_class_init,
+-        .class_init    = aspeed_machine_supermicrox11_bmc_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("ast2500-evb"),
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2500_supermicro-x11spi.c b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
+diff --git a/hw/arm/aspeed_ast2400_supermicrox11.c b/hw/arm/aspeed_ast2400_supermicrox11.c
 new file mode 100644
-index 0000000000..2217bcd017
+index 0000000000..fe2f886825
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
-@@ -0,0 +1,78 @@
++++ b/hw/arm/aspeed_ast2400_supermicrox11.c
+@@ -0,0 +1,82 @@
 +/*
-+ * Supermicro X11 SPI
++ * Supermicro X11
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -183,16 +178,20 @@ index 0000000000..2217bcd017
 +#include "hw/i2c/smbus_eeprom.h"
 +
 +/* TODO: Find the actual hardware value */
-+#define SUPERMICRO_X11SPI_BMC_HW_STRAP1 (                               \
-+        AST2500_HW_STRAP1_DEFAULTS |                                    \
-+        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
-+        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
-+        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-+        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
++#define SUPERMICROX11_BMC_HW_STRAP1 (                                   \
++        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
++        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2) |                           \
++        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
++        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_48M_IN) |       \
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN) |                \
++        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
 +        SCU_HW_STRAP_SPI_WIDTH |                                        \
-+        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN))
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
++        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 +
-+static void supermicro_x11spi_bmc_i2c_init(AspeedMachineState *bmc)
++static void supermicrox11_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
 +    DeviceState *dev;
@@ -216,47 +215,47 @@ index 0000000000..2217bcd017
 +    object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
 +}
 +
-+static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
-+                                                            const void *data)
++static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
++                                                        const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Supermicro X11 SPI BMC (ARM1176)";
-+    amc->soc_name  = "ast2500-a1";
-+    amc->hw_strap1 = SUPERMICRO_X11SPI_BMC_HW_STRAP1;
++    mc->desc       = "Supermicro X11 BMC (ARM926EJ-S)";
++    amc->soc_name  = "ast2400-a1";
++    amc->hw_strap1 = SUPERMICROX11_BMC_HW_STRAP1;
 +    amc->fmc_model = "mx25l25635e";
 +    amc->spi_model = "mx25l25635e";
 +    amc->num_cs    = 1;
 +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-+    amc->i2c_init  = supermicro_x11spi_bmc_i2c_init;
-+    mc->default_ram_size = 512 * MiB;
++    amc->i2c_init  = supermicrox11_bmc_i2c_init;
++    mc->default_ram_size = 256 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +}
 +
-+static const TypeInfo aspeed_ast2500_supermicro_x11spi_types[] = {
++static const TypeInfo aspeed_ast2400_supermicrox11_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("supermicro-x11spi-bmc"),
++        .name          = MACHINE_TYPE_NAME("supermicrox11-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_supermicro_x11spi_bmc_class_init,
++        .class_init    = aspeed_machine_supermicrox11_bmc_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2500_supermicro_x11spi_types)
++DEFINE_TYPES(aspeed_ast2400_supermicrox11_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index ff6a856523..76a456c33f 100644
+index 5467ee673d..ea2d24af88 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -48,6 +48,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+@@ -45,6 +45,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
+   'aspeed_ast2400_quanta-q71l.c',
++  'aspeed_ast2400_supermicrox11.c',
+   'aspeed_ast2500_evb.c',
+   'aspeed_ast2500_fp5280g2.c',
    'aspeed_ast2500_g220a.c',
-   'aspeed_ast2500_romulus.c',
-   'aspeed_ast2500_sonorapass.c',
-+  'aspeed_ast2500_supermicro-x11spi.c',
-   'aspeed_ast2500_tiogapass.c',
-   'aspeed_ast2500_witherspoon.c',
-   'aspeed_ast2500_yosemitev2.c',
 -- 
 2.43.0
 
