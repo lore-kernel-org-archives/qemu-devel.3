@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCAA4CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F599CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGH00-0001Fw-Ft; Tue, 04 Nov 2025 08:23:00 -0500
+	id 1vGH03-0001Ue-M6; Tue, 04 Nov 2025 08:23:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyj-0000En-HQ
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:21:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyr-0000Fo-GY
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:22:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyh-0001cz-LK
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:21:41 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyk-0001mx-Ka
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:21:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762262497;
+ s=mimecast20190719; t=1762262502;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nB9bHUOCLBvQ5g3WUO0uBsAxrycGoa4Rljt33VyM9xs=;
- b=QKRLqjc53oyGMz0YkFTNau2/3XLf9GNLZehYXP9yjEcrq/h+HGmaCA158kT4RZsqnDtnYh
- 3yN+VMltqzutI6fX0sMRw9WctMKs4cYQn2KTEV93daTM+mpQdc9k9csPqrLlZhL6AC3eW/
- he7RBMO/mcVa4Dje8dhCIwsMm9SuBeQ=
+ bh=DbPunWjCdIEGNYJxq3sm3OF/+0sle+N/9uByCP49iRw=;
+ b=SEyBCnUnlAdjlrPdEeCPDNAa+oci9nL9fOwmZ/RXw6i+lg/W/b9XaE+g6S4HkNdXASJTvY
+ xdNYLN7qtjXlxx/XNs02f4yYAqtbPFjGwcCKzZHIwrXy1Q5ODjsvUFQprnM8e0PfBBQI4+
+ c03bZPC9yUNU8UFoFaYAQZXmMaaZqZ0=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-Jk7V5KHnMg-KQg-prgrCZA-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-VJ-04rsfMZWUTsqfDwT7-g-1; Tue,
  04 Nov 2025 08:21:33 -0500
-X-MC-Unique: Jk7V5KHnMg-KQg-prgrCZA-1
-X-Mimecast-MFC-AGG-ID: Jk7V5KHnMg-KQg-prgrCZA_1762262492
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+X-MC-Unique: VJ-04rsfMZWUTsqfDwT7-g-1
+X-Mimecast-MFC-AGG-ID: VJ-04rsfMZWUTsqfDwT7-g_1762262492
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14D961956070; Tue,  4 Nov 2025 13:21:32 +0000 (UTC)
+ id 0F66119560B0; Tue,  4 Nov 2025 13:21:32 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C64219540DB; Tue,  4 Nov 2025 13:21:31 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4148C19560A2; Tue,  4 Nov 2025 13:21:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8DFDB21E66E4; Tue, 04 Nov 2025 14:21:25 +0100 (CET)
+ id 759E721E6774; Tue, 04 Nov 2025 14:21:25 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 12/12] qapi: Add documentation format validation
-Date: Tue,  4 Nov 2025 14:21:25 +0100
-Message-ID: <20251104132125.4134730-13-armbru@redhat.com>
+Subject: [PULL 06/12] qga/qapi-schema: Refill doc comments to conform to
+ conventions
+Date: Tue,  4 Nov 2025 14:21:19 +0100
+Message-ID: <20251104132125.4134730-7-armbru@redhat.com>
 In-Reply-To: <20251104132125.4134730-1-armbru@redhat.com>
 References: <20251104132125.4134730-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -84,183 +85,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Sweep the entire documentation again.  Last done in commit
+7270819384c (qga/qapi-schema: Refill doc comments to conform to
+current conventions).
 
-Add explicit validation for QAPI documentation formatting rules:
+To check the generated documentation does not change, I compared the
+generated HTML before and after this commit with "wdiff -3".  Finds no
+differences.  Comparing with diff is not useful, as the reflown
+paragraphs are visible there.
 
-1. Lines must not exceed 70 columns in width (including '# ' prefix)
-2. Sentences must be separated by two spaces
-
-Example sections and literal :: blocks (seldom case) are excluded, we
-don't require them to be <= 70, that would be too restrictive. Anyway,
-they share common 80-columns recommendations (not requirements).
-
-Add two simple tests, illustrating the change.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20251031183129.246814-1-vsementsov@yandex-team.ru>
-
-The detection of example and literal blocks isn't quite correct, but
-it works well enough, and we can improve on top.
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[Comments, error messages, and test file names tweaked]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Message-ID: <20251103082354.3273027-5-armbru@redhat.com>
 ---
- scripts/qapi/parser.py                        | 50 ++++++++++++++++++-
- .../doc-bad-space-between-sentences.err       |  2 +
- .../doc-bad-space-between-sentences.json      |  6 +++
- .../doc-bad-space-between-sentences.out       |  0
- tests/qapi-schema/doc-long-line.err           |  1 +
- tests/qapi-schema/doc-long-line.json          |  6 +++
- tests/qapi-schema/doc-long-line.out           |  0
- tests/qapi-schema/meson.build                 |  2 +
- 8 files changed, 66 insertions(+), 1 deletion(-)
- create mode 100644 tests/qapi-schema/doc-bad-space-between-sentences.err
- create mode 100644 tests/qapi-schema/doc-bad-space-between-sentences.json
- create mode 100644 tests/qapi-schema/doc-bad-space-between-sentences.out
- create mode 100644 tests/qapi-schema/doc-long-line.err
- create mode 100644 tests/qapi-schema/doc-long-line.json
- create mode 100644 tests/qapi-schema/doc-long-line.out
+ qga/qapi-schema.json | 87 ++++++++++++++++++++++++--------------------
+ 1 file changed, 47 insertions(+), 40 deletions(-)
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 9fbf80a541..1bb1af7051 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -108,6 +108,11 @@ def __init__(self,
-         self.exprs: List[QAPIExpression] = []
-         self.docs: List[QAPIDoc] = []
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 8162d888bb..af75f12a28 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -2,8 +2,8 @@
+ # vim: filetype=python
  
-+        # State for tracking qmp-example blocks and simple
-+        # :: literal blocks.
-+        self._literal_mode = False
-+        self._literal_mode_indent = 0
-+
-         # Showtime!
-         self._parse()
- 
-@@ -423,12 +428,55 @@ def get_doc_line(self) -> Optional[str]:
-             if self.val != '##':
-                 raise QAPIParseError(
-                     self, "junk after '##' at end of documentation comment")
-+            self._literal_mode = False
-             return None
-         if self.val == '#':
-             return ''
-         if self.val[1] != ' ':
-             raise QAPIParseError(self, "missing space after #")
--        return self.val[2:].rstrip()
-+
-+        line = self.val[2:].rstrip()
-+
-+        if re.match(r'(\.\. +qmp-example)? *::$', line):
-+            self._literal_mode = True
-+            self._literal_mode_indent = 0
-+        elif self._literal_mode and line:
-+            indent = re.match(r'^ *', line).end()
-+            if self._literal_mode_indent == 0:
-+                self._literal_mode_indent = indent
-+            elif indent < self._literal_mode_indent:
-+                # ReST directives stop at decreasing indentation
-+                self._literal_mode = False
-+
-+        if not self._literal_mode:
-+            self._validate_doc_line_format(line)
-+
-+        return line
-+
-+    def _validate_doc_line_format(self, line: str) -> None:
-+        """
-+        Validate documentation format rules for a single line:
-+        1. Lines should not exceed 70 characters
-+        2. Sentences should be separated by two spaces
-+        """
-+        full_line_length = len(line) + 2  # "# " = 2 characters
-+        if full_line_length > 70:
-+            # Skip URL lines - they can't be broken
-+            if re.match(r' *(https?|ftp)://[^ ]*$', line):
-+                pass
-+            else:
-+                raise QAPIParseError(
-+                    self, "documentation line longer than 70 characters")
-+
-+        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
-+        for m in list(re.finditer(single_space_pattern, line)):
-+            if not m.group(2):
-+                continue
-+            # HACK so the error message points to the offending spot
-+            self.pos = self.line_pos + 2 + m.start(2) + 1
-+            raise QAPIParseError(
-+                self, "Use two spaces between sentences\n"
-+                "If this not the end of a sentence, please report a bug.")
- 
-     @staticmethod
-     def _match_at_name_colon(string: str) -> Optional[Match[str]]:
-diff --git a/tests/qapi-schema/doc-bad-space-between-sentences.err b/tests/qapi-schema/doc-bad-space-between-sentences.err
-new file mode 100644
-index 0000000000..479982ce22
---- /dev/null
-+++ b/tests/qapi-schema/doc-bad-space-between-sentences.err
-@@ -0,0 +1,2 @@
-+doc-bad-space-between-sentences.json:4:47: Use two spaces between sentences
-+If this not the end of a sentence, please report a bug.
-diff --git a/tests/qapi-schema/doc-bad-space-between-sentences.json b/tests/qapi-schema/doc-bad-space-between-sentences.json
-new file mode 100644
-index 0000000000..87b6f6eb4e
---- /dev/null
-+++ b/tests/qapi-schema/doc-bad-space-between-sentences.json
-@@ -0,0 +1,6 @@
-+##
-+# @foo:
-+#
-+# Sentences should be separated by two spaces. But here is only one.
-+##
-+{ 'command': 'foo' }
-diff --git a/tests/qapi-schema/doc-bad-space-between-sentences.out b/tests/qapi-schema/doc-bad-space-between-sentences.out
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qapi-schema/doc-long-line.err b/tests/qapi-schema/doc-long-line.err
-new file mode 100644
-index 0000000000..7baa5297cf
---- /dev/null
-+++ b/tests/qapi-schema/doc-long-line.err
-@@ -0,0 +1 @@
-+doc-long-line.json:4:1: documentation line longer than 70 characters
-diff --git a/tests/qapi-schema/doc-long-line.json b/tests/qapi-schema/doc-long-line.json
-new file mode 100644
-index 0000000000..c10153b0d5
---- /dev/null
-+++ b/tests/qapi-schema/doc-long-line.json
-@@ -0,0 +1,6 @@
-+##
-+# @foo:
-+#
-+# This line has exactly 71 chars, including the leading hash and space.
-+##
-+{ 'command': 'foo' }
-diff --git a/tests/qapi-schema/doc-long-line.out b/tests/qapi-schema/doc-long-line.out
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
-index c47025d16d..debff633ac 100644
---- a/tests/qapi-schema/meson.build
-+++ b/tests/qapi-schema/meson.build
-@@ -61,6 +61,7 @@ schemas = [
-   'doc-bad-event-arg.json',
-   'doc-bad-feature.json',
-   'doc-bad-indent.json',
-+  'doc-bad-space-between-sentences.json',
-   'doc-bad-symbol.json',
-   'doc-bad-union-member.json',
-   'doc-before-include.json',
-@@ -81,6 +82,7 @@ schemas = [
-   'doc-invalid-return2.json',
-   'doc-invalid-section.json',
-   'doc-invalid-start.json',
-+  'doc-long-line.json',
-   'doc-missing-colon.json',
-   'doc-missing-expr.json',
-   'doc-missing-space.json',
+ ##
+-# This manual describes the commands supported by the QEMU Guest
+-# Agent Protocol.
++# This manual describes the commands supported by the QEMU Guest Agent
++# Protocol.
+ #
+ # For locating  a particular item, please see the `qapi-qga-index`.
+ #
+@@ -96,8 +96,8 @@
+ # In cases where a partial stale response was previously received by
+ # the client, this cannot always be done reliably.  One particular
+ # scenario being if qemu-ga responses are fed character-by-character
+-# into a JSON parser.  In these situations, using `guest-sync-delimited`
+-# may be optimal.
++# into a JSON parser.  In these situations, using
++# `guest-sync-delimited` may be optimal.
+ #
+ # For clients that fetch responses line by line and convert them to
+ # JSON objects, `guest-sync` should be sufficient, but note that in
+@@ -153,9 +153,9 @@
+ # This command tries to set guest's System Time to the given value,
+ # then sets the Hardware Clock (RTC) to the current System Time.  This
+ # will make it easier for a guest to resynchronize without waiting for
+-# NTP. If no @time is specified, then the time to set is read from
+-# RTC. However, this may not be supported on all platforms (i.e.
+-# Windows). If that's the case users are advised to always pass a
++# NTP.  If no @time is specified, then the time to set is read from
++# RTC.  However, this may not be supported on all platforms (i.e.
++# Windows).  If that's the case users are advised to always pass a
+ # value.
+ #
+ # @time: time of nanoseconds, relative to the Epoch of 1970-01-01 in
+@@ -444,8 +444,8 @@
+ # Returns: Number of file systems currently frozen.
+ #
+ # .. note:: On Windows, the command is implemented with the help of a
+-#    Volume Shadow-copy Service DLL helper.  The frozen state is limited
+-#    for up to 10 seconds by VSS.
++#    Volume Shadow-copy Service DLL helper.  The frozen state is
++#    limited for up to 10 seconds by VSS.
+ #
+ # Since: 0.15.0
+ ##
+@@ -482,9 +482,9 @@
+ # Returns: Number of file systems thawed by this call
+ #
+ # .. note:: If the return value does not match the previous call to
+-#    `guest-fsfreeze-freeze`, this likely means some freezable filesystems
+-#    were unfrozen before this call, and that the filesystem state may
+-#    have changed before issuing this command.
++#    `guest-fsfreeze-freeze`, this likely means some freezable
++#    filesystems were unfrozen before this call, and that the
++#    filesystem state may have changed before issuing this command.
+ #
+ # Since: 0.15.0
+ ##
+@@ -513,7 +513,8 @@
+ ##
+ # @GuestFilesystemTrimResponse:
+ #
+-# @paths: list of `GuestFilesystemTrimResult` per path that was trimmed
++# @paths: list of `GuestFilesystemTrimResult` per path that was
++#     trimmed
+ #
+ # Since: 2.4
+ ##
+@@ -557,16 +558,16 @@
+ #
+ # This command does NOT return a response on success.  There is a high
+ # chance the command succeeded if the VM exits with a zero exit status
+-# or, when running with --no-shutdown, by issuing the `query-status` QMP
+-# command to to confirm the VM status is "shutdown". However, the VM
+-# could also exit (or set its status to "shutdown") due to other
++# or, when running with --no-shutdown, by issuing the `query-status`
++# QMP command to to confirm the VM status is "shutdown".  However, the
++# VM could also exit (or set its status to "shutdown") due to other
+ # reasons.
+ #
+ # Errors:
+ #     - If suspend to disk is not supported, Unsupported
+ #
+-# .. note:: It's strongly recommended to issue the `guest-sync` command
+-#    before sending commands when the guest resumes.
++# .. note:: It's strongly recommended to issue the `guest-sync`
++#    command before sending commands when the guest resumes.
+ #
+ # Since: 1.1
+ ##
+@@ -586,7 +587,7 @@
+ # - manual write into sysfs
+ #
+ # IMPORTANT: `guest-suspend-ram` requires working wakeup support in
+-# QEMU. You should check QMP command `query-current-machine` returns
++# QEMU.  You should check QMP command `query-current-machine` returns
+ # wakeup-suspend-support: true before issuing this command.  Failure
+ # in doing so can result in a suspended guest that QEMU will not be
+ # able to awaken, forcing the user to power cycle the guest to bring
+@@ -602,8 +603,8 @@
+ # Errors:
+ #     - If suspend to ram is not supported, Unsupported
+ #
+-# .. note:: It's strongly recommended to issue the `guest-sync` command
+-#    before sending commands when the guest resumes.
++# .. note:: It's strongly recommended to issue the `guest-sync`
++#    command before sending commands when the guest resumes.
+ #
+ # Since: 1.1
+ ##
+@@ -622,7 +623,7 @@
+ # - pm-utils (via pm-suspend-hybrid)
+ #
+ # IMPORTANT: `guest-suspend-hybrid` requires working wakeup support in
+-# QEMU. You should check QMP command `query-current-machine` returns
++# QEMU.  You should check QMP command `query-current-machine` returns
+ # wakeup-suspend-support: true before issuing this command.  Failure
+ # in doing so can result in a suspended guest that QEMU will not be
+ # able to awaken, forcing the user to power cycle the guest to bring
+@@ -638,8 +639,8 @@
+ # Errors:
+ #     - If hybrid suspend is not supported, Unsupported
+ #
+-# .. note:: It's strongly recommended to issue the `guest-sync` command
+-#    before sending commands when the guest resumes.
++# .. note:: It's strongly recommended to issue the `guest-sync`
++#    command before sending commands when the guest resumes.
+ #
+ # Since: 1.1
+ ##
+@@ -1048,10 +1049,11 @@
+ #
+ # @used-bytes: file system used bytes (since 3.0)
+ #
+-# @total-bytes: filesystem capacity in bytes for unprivileged users (since 3.0)
++# @total-bytes: filesystem capacity in bytes for unprivileged users
++#     (since 3.0)
+ #
+-# @total-bytes-privileged: filesystem capacity in bytes for privileged users
+-#     (since 9.1)
++# @total-bytes-privileged: filesystem capacity in bytes for privileged
++#     users (since 9.1)
+ #
+ # @disk: an array of disk hardware information that the volume lies
+ #     on, which may be empty if the disk type is not supported
+@@ -1171,7 +1173,8 @@
+ ##
+ # @GuestMemoryBlockResponse:
+ #
+-# @phys-index: same with the 'phys-index' member of `GuestMemoryBlock`.
++# @phys-index: same with the 'phys-index' member of
++#     `GuestMemoryBlock`.
+ #
+ # @response: the result of memory block operation.
+ #
+@@ -1491,10 +1494,11 @@
+ #
+ # .. note:: On POSIX systems the fields @id, @name, @pretty-name,
+ #    @version, @version-id, @variant and @variant-id follow the
+-#    definition specified in os-release(5). Refer to the manual page for
+-#    exact description of the fields.  Their values are taken from the
+-#    os-release file.  If the file is not present in the system, or the
+-#    values are not present in the file, the fields are not included.
++#    definition specified in os-release(5).  Refer to the manual page
++#    for exact description of the fields.  Their values are taken from
++#    the os-release file.  If the file is not present in the system,
++#    or the values are not present in the file, the fields are not
++#    included.
+ #
+ #    On Windows the values are filled from information gathered from
+ #    the system.
+@@ -1639,7 +1643,7 @@
+ # @guest-ssh-remove-authorized-keys:
+ #
+ # Remove public keys from the user .ssh/authorized_keys on Unix
+-# systems (not implemented for other systems). It's not an error if
++# systems (not implemented for other systems).  It's not an error if
+ # the key is already missing.
+ #
+ # @username: the user account to remove the authorized keys
+@@ -1862,10 +1866,10 @@
+ #
+ # Retrieve CPU process load information
+ #
+-# .. note:: Windows does not have load average API, so QGA emulates it by
+-#           calculating the average CPU usage in the last 1, 5, 15 minutes
+-#           similar as Linux does this.
+-#           Calculation starts from the first time this command is called.
++# .. note:: Windows does not have load average API, so QGA emulates it
++#    by calculating the average CPU usage in the last 1, 5, 15 minutes
++#    similar as Linux does this.  Calculation starts from the first
++#    time this command is called.
+ #
+ # Returns: load information
+ #
+@@ -1881,9 +1885,11 @@
+ #
+ # Route information, currently, only linux supported.
+ #
+-# @iface: The destination network or host's egress network interface in the routing table
++# @iface: The destination network or host's egress network interface
++#     in the routing table
+ #
+-# @destination: The IP address of the target network or host, The final destination of the packet
++# @destination: The IP address of the target network or host, The
++#     final destination of the packet
+ #
+ # @metric: Route metric
+ #
+@@ -1899,7 +1905,8 @@
+ #
+ # @use: Route usage count (not for windows)
+ #
+-# @window: TCP window size, used for flow control (not for windows, IPv4 only)
++# @window: TCP window size, used for flow control (not for windows,
++#     IPv4 only)
+ #
+ # @mtu: Data link layer maximum packet size (not for windows)
+ #
 -- 
 2.49.0
 
