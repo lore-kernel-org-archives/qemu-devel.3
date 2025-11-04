@@ -4,81 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0691CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 10:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E92CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 10:56:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGEfy-0004Q6-QW; Tue, 04 Nov 2025 05:54:10 -0500
+	id 1vGEhl-00053w-Sp; Tue, 04 Nov 2025 05:56:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGEfx-0004Pl-0g
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 05:54:09 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGEfv-00063I-GT
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 05:54:08 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7866aca9e25so21949717b3.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 02:54:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762253646; x=1762858446; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IzZ7SuZ7t7bfsmmCugQ23TNFJAFSK4U00LSWWPJjhjc=;
- b=nNsnIqWeMrnqcLaDayZH97oeI298excwzmU/UWBH65HAtsYgdO8w4ZNfyNI3a7vSje
- ltw4yQO4ZRp9Ru4xOx7Q/949jNHkg9zPxVXQC+GJRWkh5Xe3alhPhyeu8IT/DfrstBKz
- YHpxwZOTX381AqXp9hCeQtD3leyIV3vil97OIZGUk0udi1/nukI3ualjOFv0M4xARVyn
- K/FjcOWsjatY2esIOOd9PytmEUEb0/7OW8dFe4DpkFR8c+W1yXhNsuM+9f8DtrNUMvxi
- G7O9eSSduC5Qzw/8CKaWJp/NHIgWD8Pbib4CClzUpblNJo+gw/HY8DEAZ2L2liwtYWAJ
- uCiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762253646; x=1762858446;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IzZ7SuZ7t7bfsmmCugQ23TNFJAFSK4U00LSWWPJjhjc=;
- b=L03+1+YB9CynI9SpDJ7S7/HQVFHCVV+ymATR5CDmlKWi+ohg+wJUVJd/TFMB28TNKk
- XHLTWFuNjJPRVnC8qWgyydEam3wx9KSks9gXWfkNRlHwaEygILKP482OiBtcjWjETaQr
- 5PD5daBlPLer+PArMwdYILeBQGFoG9mErvbpNMx5JwX2uo/dc+wOCUCku8+4YFOU7Nch
- kdnIeDw8okAh39QnQnYsLvrmOmAXf5DFRMHTHNtZHHx9EQahOTM0cBfGnyBNnPfVexs2
- pYxpGOH43BEGcs20Ji8qFi/HafFp7T7kW8YQNFKGS4N+43m0NIeDraRQRdNYdMu5PkTA
- /RnA==
-X-Gm-Message-State: AOJu0YwrUGoFAP8NeS2P/JUdxZBIXNPRODheP5IXkd56vYoUJ9lAjTCW
- o+HqzUmM/TVQnE9p2J0AXn7tRmGBmTCAOKymuKRBC7LE03n+LDNq47blm/QECk3691LE5xjKSF2
- fl5GmbX52nitJ+/KgVmS5IodZ3jFqQiQ/xZ9di3lhGw==
-X-Gm-Gg: ASbGncv6je+SDGGdKwkxGgL1beAm9Hy6wQGKeZ2kpZwQPmYbsm52cugVXKouKjxTzR6
- Trx5p25OFSWVx23wZnXcxZavo9LGuYU+iUBevBtq7/BbBwGou523FnA/d7xBrtGEJMAIG0Mp1mm
- hrh6P3Bj7zIwwskMHbuo46J/OXekde/8S9P1uJGBpe2j/xiqCQ8YqiXfuTTI445371dUDdyzyli
- tBydLlZSZNG5oQ0ZVbO/v65aSOjW2kskFimKK+OoR+KrOlyMdgRgOEPqrawMw==
-X-Google-Smtp-Source: AGHT+IFoKbTjaPhyVKrWQFRm76sqAsS1X6Y4FZ6s6KnCnDZDLKa92ECOOOtD5Lhdy1D9qR38Q28HI6e40DDz8XMDG30=
-X-Received: by 2002:a53:d058:0:20b0:63f:ba88:e8f7 with SMTP id
- 956f58d0204a3-63fba88efb9mr3999881d50.27.1762253646006; Tue, 04 Nov 2025
- 02:54:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vGEhi-00053b-N6
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 05:55:59 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vGEhg-0006Om-1y
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 05:55:58 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id DA90AC00D8;
+ Tue, 04 Nov 2025 13:55:51 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id pthVtd1GpmI0-Dh5D7m8w; Tue, 04 Nov 2025 13:55:51 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1762253751;
+ bh=oK3coXkP4VC1NFgpPQ6doZteV5F8BnYvZ3YOZXffHyA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Ftj9R2d55rUYieU0BNoRgN+YhEneayI0Kee6G3ABpDIewq2nc9YKCu7plheueNAKS
+ o+7juayEJEO8FrpL++aa9Rp0ZpiacKmtPbH2solajxuVSLpqSYJgGAr3+XmW3pVAjy
+ lReZySPRNs2FjT5U24HVudMpGr74dHheXT2sU2dc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <f1e50de9-912d-430e-ac0d-8341e003be13@yandex-team.ru>
+Date: Tue, 4 Nov 2025 13:55:51 +0300
 MIME-Version: 1.0
-References: <20250129160059.6987-1-farosas@suse.de>
- <20250129160059.6987-8-farosas@suse.de>
-In-Reply-To: <20250129160059.6987-8-farosas@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 4 Nov 2025 10:53:54 +0000
-X-Gm-Features: AWmQ_bkRtRoiabEpvVBWJtsdoKbL2mfDZ9PT7_hnIJ4mbGovYab5w9CPuL2kLhU
-Message-ID: <CAFEAcA8_zO0MmyN2nQDZsmiWssoiSUvKRMVYfRLrz6TsNejQFA@mail.gmail.com>
-Subject: Re: [PULL 07/42] machine: aux-ram-share option
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] qapi: Add documentation format validation
+To: Markus Armbruster <armbru@redhat.com>
+Cc: michael.roth@amd.com, qemu-devel@nongnu.org
+References: <20251031183129.246814-1-vsementsov@yandex-team.ru>
+ <87pl9yun57.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87pl9yun57.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,64 +76,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Jan 2025 at 16:03, Fabiano Rosas <farosas@suse.de> wrote:
->
-> From: Steve Sistare <steven.sistare@oracle.com>
->
-> Allocate auxilliary guest RAM as an anonymous file that is shareable
-> with an external process.  This option applies to memory allocated as
-> a side effect of creating various devices. It does not apply to
-> memory-backend-objects, whether explicitly specified on the command
-> line, or implicitly created by the -m command line option.
->
-> This option is intended to support new migration modes, in which the
-> memory region can be transferred in place to a new QEMU process, by sending
-> the memfd file descriptor to the process.  Memory contents are preserved,
-> and if the mode also transfers device descriptors, then pages that are
-> locked in memory for DMA remain locked.  This behavior is a pre-requisite
-> for supporting vfio, vdpa, and iommufd devices with the new modes.
+On 04.11.25 13:07, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> Add explicit validation for QAPI documentation formatting rules:
+>>
+>> 1. Lines must not exceed 70 columns in width (including '# ' prefix)
+>> 2. Sentences must be separated by two spaces
+>>
+>> Example sections and literal :: blocks (seldom case) are excluded, we
+>> don't require them to be <= 70, that would be too restrictive. Anyway,
+>> they share common 80-columns recommendations (not requirements).
+>>
+>> Add two simple tests, illustrating the change.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>
+>> Hi all!
+>>
+>> v5: - break "literal" block at any decreasing the indent,
+>>        not only at no-indent
+>>      - add two simple tests
+>>
+>> This is based on
+>> [PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
+>> Based-on: <20251031094751.2817932-1-armbru@redhat.com>
+>>
+>>   scripts/qapi/parser.py                     | 52 +++++++++++++++++++++-
+>>   tests/qapi-schema/doc-bad-long-line.err    |  1 +
+>>   tests/qapi-schema/doc-bad-long-line.json   |  6 +++
+>>   tests/qapi-schema/doc-bad-long-line.out    |  0
+>>   tests/qapi-schema/doc-bad-whitespaces.err  |  2 +
+>>   tests/qapi-schema/doc-bad-whitespaces.json |  6 +++
+>>   tests/qapi-schema/doc-bad-whitespaces.out  |  0
+>>   tests/qapi-schema/meson.build              |  2 +
+>>   8 files changed, 68 insertions(+), 1 deletion(-)
+>>   create mode 100644 tests/qapi-schema/doc-bad-long-line.err
+>>   create mode 100644 tests/qapi-schema/doc-bad-long-line.json
+>>   create mode 100644 tests/qapi-schema/doc-bad-long-line.out
+>>   create mode 100644 tests/qapi-schema/doc-bad-whitespaces.err
+>>   create mode 100644 tests/qapi-schema/doc-bad-whitespaces.json
+>>   create mode 100644 tests/qapi-schema/doc-bad-whitespaces.out
+>>
+>> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+>> index 9fbf80a541..ffb149850d 100644
+>> --- a/scripts/qapi/parser.py
+>> +++ b/scripts/qapi/parser.py
+>> @@ -108,6 +108,11 @@ def __init__(self,
+>>           self.exprs: List[QAPIExpression] = []
+>>           self.docs: List[QAPIDoc] = []
+>>   
+>> +        # State for tracking qmp-example blocks and simple
+>> +        # :: literal blocks.
+>> +        self._literal_mode = False
+>> +        self._literal_mode_indent = 0
+>> +
+>>           # Showtime!
+>>           self._parse()
+>>   
+>> @@ -423,12 +428,57 @@ def get_doc_line(self) -> Optional[str]:
+>>               if self.val != '##':
+>>                   raise QAPIParseError(
+>>                       self, "junk after '##' at end of documentation comment")
+>> +            self._literal_mode = False
+>>               return None
+>>           if self.val == '#':
+>>               return ''
+>>           if self.val[1] != ' ':
+>>               raise QAPIParseError(self, "missing space after #")
+>> -        return self.val[2:].rstrip()
+>> +
+>> +        line = self.val[2:].rstrip()
+>> +
+>> +        if re.match(r'(\.\. +qmp-example)? *::$', line):
+> 
+> After a closer reading of ReST docs and some testing: this isn't quite
+> right, although it works okay for what we have.
+> 
+> A directive's '::' need not be at the end of a line.  The regexp fails
+> to match a qmp-example directive with text after '::'.  No such
+> directives exist right now.
+> 
+> A literal block starts after a '::' at the end of a paragraph,
+> i.e. after '::' and a blank line.  The regexp only matches '::' on its
+> own line, not at the end of a line of text.  It matches it even when
+> it's not followed by a blank line.
+> 
+> In review of v4, I claimed we don't use the contracted form "text::".
+> Not true.  For instance, in block-core.json:
+> 
+>     # @bins: list of io request counts corresponding to histogram
+>     #     intervals, one more element than @boundaries has.  For the
+>     #     example above, @bins may be something like [3, 1, 5, 2], and
+>     #     corresponding histogram looks like::
+>     #
+>     #        5|           *
+>     #        4|           *
+>     #        3| *         *
+>     #        2| *         *    *
+>     #        1| *    *    *    *
+>     #         +------------------
+>     #             10   50   100
+>     #
 
-Hi; I've just noticed that in this patch:
+Ow, my old histograms)
+
+>     # Since: 4.0
+>     ##
+> 
+> The literal block starts after "like::" and ends before "Since:'.
+> 
+>> +            self._literal_mode = True
+>> +            self._literal_mode_indent = 0
+>> +        elif self._literal_mode and line:
+>> +            indent = re.match(r'^ *', line).end()
+>> +            if self._literal_mode_indent == 0:
+>> +                self._literal_mode_indent = indent
+>> +            elif indent < self._literal_mode_indent:
+>> +                # ReST directives stop at decreasing indentation
+>> +                self._literal_mode = False
+> 
+> This isn't quite right, either.  We need to stop when indentation of
+> non-blank lines drops below the indentation of the line containing the
+> '::'.
+> 
+> Perhaps it's easier for both of us if I fix this on top.  Thoughts?
+
+No objections, good for me!
+
+> 
+>> +
+>> +        if not self._literal_mode:
+>> +            self._validate_doc_line_format(line)
+>> +
+>> +        return line
+>> +
+>> +    def _validate_doc_line_format(self, line: str) -> None:
+>> +        """
+>> +        Validate documentation format rules for a single line:
+>> +        1. Lines should not exceed 70 columns
+>> +        2. Sentences should be separated by two spaces
+>> +        """
+>> +        full_line_length = len(line) + 2  # "# " = 2 characters
+>> +        if full_line_length > 70:
+>> +            # Skip URL lines - they can't be broken
+>> +            if re.match(r' *(https?|ftp)://[^ ]*$', line):
+>> +                pass
+>> +            else:
+>> +                raise QAPIParseError(
+>> +                    self, "documentation line exceeds 70 columns"
+>> +                )
+>> +
+>> +        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
+>> +        for m in list(re.finditer(single_space_pattern, line)):
+>> +            if not m.group(2):
+>> +                continue
+>> +            # HACK so the error message points to the offending spot
+>> +            self.pos = self.line_pos + 2 + m.start(2) + 1
+>> +            raise QAPIParseError(
+>> +                self, "Use two spaces between sentences\n"
+>> +                "If this not the end of a sentence, please report the bug",
+>> +            )
+>>   
+>>       @staticmethod
+>>       def _match_at_name_colon(string: str) -> Optional[Match[str]]:
+>> diff --git a/tests/qapi-schema/doc-bad-long-line.err b/tests/qapi-schema/doc-bad-long-line.err
+>> new file mode 100644
+>> index 0000000000..611a3b1fef
+>> --- /dev/null
+>> +++ b/tests/qapi-schema/doc-bad-long-line.err
+>> @@ -0,0 +1 @@
+>> +doc-bad-long-line.json:4:1: documentation line exceeds 70 columns
+>> diff --git a/tests/qapi-schema/doc-bad-long-line.json b/tests/qapi-schema/doc-bad-long-line.json
+>> new file mode 100644
+>> index 0000000000..d7f887694d
+>> --- /dev/null
+>> +++ b/tests/qapi-schema/doc-bad-long-line.json
+>> @@ -0,0 +1,6 @@
+>> +##
+>> +# @foo:
+>> +#
+>> +# This line has exactly 71 characters, including spaces and punctuation!
+> 
+> Really?
+
+Oh, it's 72 characters actually! AI tricked me. Didn't I check it out?
+
+Maybe:
+
+# This line has exactly 71 chars, including the leading hash and space.
 
 
-> @@ -1162,6 +1178,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
->      object_class_property_set_description(oc, "mem-merge",
->          "Enable/disable memory merge support");
->
-> +#ifdef CONFIG_POSIX
-> +    object_class_property_add_bool(oc, "aux-ram-share",
-> +                                   machine_get_aux_ram_share,
-> +                                   machine_set_aux_ram_share);
-> +#endif
 
-we added a new class property to the machine, but we don't
-call object_class_property_set_description() to give it any
-help text (compare how we handle the other properties in this
-function).
+> 
+>> +##
+>> +{ 'command': 'foo' }
+>> diff --git a/tests/qapi-schema/doc-bad-long-line.out b/tests/qapi-schema/doc-bad-long-line.out
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.err b/tests/qapi-schema/doc-bad-whitespaces.err
+>> new file mode 100644
+>> index 0000000000..5cca1954c0
+>> --- /dev/null
+>> +++ b/tests/qapi-schema/doc-bad-whitespaces.err
+>> @@ -0,0 +1,2 @@
+>> +doc-bad-whitespaces.json:4:48: Use two spaces between sentences
+>> +If this not the end of a sentence, please report the bug
+>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.json b/tests/qapi-schema/doc-bad-whitespaces.json
+>> new file mode 100644
+>> index 0000000000..b0c318c670
+>> --- /dev/null
+>> +++ b/tests/qapi-schema/doc-bad-whitespaces.json
+>> @@ -0,0 +1,6 @@
+>> +##
+>> +# @foo:
+>> +#
+>> +# Sentences should be split by two whitespaces. But here is only one.
+> 
+> two spaces
+> 
+>> +##
+>> +{ 'command': 'foo' }
+>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.out b/tests/qapi-schema/doc-bad-whitespaces.out
+>> new file mode 100644
+>> index 0000000000..e69de29bb2
+>> diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+>> index c47025d16d..b24b27db21 100644
+>> --- a/tests/qapi-schema/meson.build
+>> +++ b/tests/qapi-schema/meson.build
+>> @@ -61,8 +61,10 @@ schemas = [
+>>     'doc-bad-event-arg.json',
+>>     'doc-bad-feature.json',
+>>     'doc-bad-indent.json',
+>> +  'doc-bad-long-line.json',
+>>     'doc-bad-symbol.json',
+>>     'doc-bad-union-member.json',
+>> +  'doc-bad-whitespaces.json',
+>>     'doc-before-include.json',
+>>     'doc-before-pragma.json',
+>>     'doc-duplicate-features.json',
+> 
 
-> +
->      object_class_property_add_bool(oc, "usb",
->          machine_get_usb, machine_set_usb);
->      object_class_property_set_description(oc, "usb",
 
-This means that if you run "qemu-system-x86_64 -M q35,help"
-you'll see that this option is missing help text:
-
-pc-q35-10.2-machine options:
-  acpi=<OnOffAuto>       - Enable ACPI
-  append=<string>        - Linux kernel command line
-  aux-ram-share=<bool>
-  boot=<BootConfiguration> - Boot configuration
-  bus-lock-ratelimit=<uint64_t> - Set the ratelimit for the bus locks
-acquired in VMs
-  confidential-guest-support=<link<confidential-guest-support>> - Set
-confidential guest scheme to support
-  default-bus-bypass-iommu=<bool>
-[etc]
-
-Would somebody like to write a patch to add the missing
-description ?
-
-thanks
--- PMM
+-- 
+Best regards,
+Vladimir
 
