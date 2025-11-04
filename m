@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89640CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D436DCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLJC-0004lk-VB; Tue, 04 Nov 2025 12:59:07 -0500
+	id 1vGLKM-0005ve-PK; Tue, 04 Nov 2025 13:00:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFJ-0001EB-6J
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFR-0001Ld-Qc
  for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFH-0006tc-Es
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:04 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFP-00074F-Vi
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762278902;
+ s=mimecast20190719; t=1762278911;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dhD6yXzsyjJ2UbHXYb+eLNCm6MRXpg+VIswlV1nXwjc=;
- b=SthLjymMsZnduYVZa1b7sPMdxwb9sDL9YL5PpTqnchkJnlgrbwagicJYhUmjctZbLyS5YZ
- PENWc4K8IP4giZYfCwYWw7iPdcX1+C3vt++fP3IbqdzlB0Znv39Gh5/AKjZvBUNcw7/0SC
- IwKElBtETIKwDRO4stevZIK3LTVmaik=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=CmefoS00iD0l2Q3juNsgx+lS0LSZfmBCRBRzku/u+p0=;
+ b=VHjC2GO3QwQjTFsYJdRL5SS9+1Nme6WM4IHPB3Gn2iukE/NK/6xldc7JxMFEYxobIwxRUP
+ O+97ENM7+Z4mL0eNCNL6ZjCi7UN4U+gBrSMBZnDFg2F5Z2XrFHU5MFl6YyMQyyJpFTwh/i
+ ZhN/xVae4/pnlBq3zm+NKIkQg13SCBQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-241-JdxA8Qc5OH6tciwqlHNESA-1; Tue,
- 04 Nov 2025 12:54:59 -0500
-X-MC-Unique: JdxA8Qc5OH6tciwqlHNESA-1
-X-Mimecast-MFC-AGG-ID: JdxA8Qc5OH6tciwqlHNESA_1762278898
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-ZVt-u9xPNlOZeWIa1AJ6GA-1; Tue,
+ 04 Nov 2025 12:55:05 -0500
+X-MC-Unique: ZVt-u9xPNlOZeWIa1AJ6GA-1
+X-Mimecast-MFC-AGG-ID: ZVt-u9xPNlOZeWIa1AJ6GA_1762278904
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEA731800365; Tue,  4 Nov 2025 17:54:58 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 049971956096; Tue,  4 Nov 2025 17:55:04 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6B007180045B; Tue,  4 Nov 2025 17:54:57 +0000 (UTC)
+ id B57CE1800451; Tue,  4 Nov 2025 17:55:02 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 19/27] qemu-img: Fix amend option parse error handling
-Date: Tue,  4 Nov 2025 18:54:07 +0100
-Message-ID: <20251104175415.525388-20-kwolf@redhat.com>
+Subject: [PULL 22/27] qcow2: put discards in discard queue when
+ discard-no-unref is enabled
+Date: Tue,  4 Nov 2025 18:54:10 +0100
+Message-ID: <20251104175415.525388-23-kwolf@redhat.com>
 In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
 References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -82,39 +83,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Jean-Louis Dupond <jean-louis@dupond.be>
 
-qemu_opts_del(opts) dereferences opts->list, which is the old amend_opts
-pointer that can be dangling after executing
-qemu_opts_append(amend_opts, bs->drv->create_opts) and cause
-use-after-free.
+When discard-no-unref is enabled, discards are not queued like it
+should.
+This was broken since discard-no-unref was added.
 
-Fix the potential use-after-free by moving the qemu_opts_del() call
-before the qemu_opts_append() call.
+Add a helper function qcow2_discard_cluster which handles some common
+checks and calls the queue_discards function if needed to add the
+discard request to the queue.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20251023-iotests-v1-1-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Message-ID: <20250513132628.1055549-3-jean-louis@dupond.be>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- qemu-img.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/qcow2.h          |  4 ++++
+ block/qcow2-cluster.c  | 16 ++++++----------
+ block/qcow2-refcount.c | 17 +++++++++++++++++
+ 3 files changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/qemu-img.c b/qemu-img.c
-index a7791896c1..7a32d2d16c 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -4597,9 +4597,9 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
-     amend_opts = qemu_opts_append(amend_opts, bs->drv->amend_opts);
-     opts = qemu_opts_create(amend_opts, NULL, 0, &error_abort);
-     if (!qemu_opts_do_parse(opts, options, NULL, &err)) {
-+        qemu_opts_del(opts);
-         /* Try to parse options using the create options */
-         amend_opts = qemu_opts_append(amend_opts, bs->drv->create_opts);
--        qemu_opts_del(opts);
-         opts = qemu_opts_create(amend_opts, NULL, 0, &error_abort);
-         if (qemu_opts_do_parse(opts, options, NULL, NULL)) {
-             error_append_hint(&err,
+diff --git a/block/qcow2.h b/block/qcow2.h
+index a9e3481c6e..547bb2b814 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -880,6 +880,10 @@ void GRAPH_RDLOCK qcow2_free_clusters(BlockDriverState *bs,
+ void GRAPH_RDLOCK
+ qcow2_free_any_cluster(BlockDriverState *bs, uint64_t l2_entry,
+                        enum qcow2_discard_type type);
++void GRAPH_RDLOCK
++qcow2_discard_cluster(BlockDriverState *bs, uint64_t offset,
++                      uint64_t length, QCow2ClusterType ctype,
++                      enum qcow2_discard_type dtype);
+ 
+ int GRAPH_RDLOCK
+ qcow2_update_snapshot_refcount(BlockDriverState *bs, int64_t l1_table_offset,
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index ce8c0076b3..c655bf6df4 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1978,12 +1978,10 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
+         if (!keep_reference) {
+             /* Then decrease the refcount */
+             qcow2_free_any_cluster(bs, old_l2_entry, type);
+-        } else if (s->discard_passthrough[type] &&
+-                   (cluster_type == QCOW2_CLUSTER_NORMAL ||
+-                    cluster_type == QCOW2_CLUSTER_ZERO_ALLOC)) {
++        } else {
+             /* If we keep the reference, pass on the discard still */
+-            bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
+-                          s->cluster_size);
++            qcow2_discard_cluster(bs, old_l2_entry & L2E_OFFSET_MASK,
++                                  s->cluster_size, cluster_type, type);
+         }
+     }
+ 
+@@ -2092,12 +2090,10 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
+             if (!keep_reference) {
+                 /* Then decrease the refcount */
+                 qcow2_free_any_cluster(bs, old_l2_entry, QCOW2_DISCARD_REQUEST);
+-            } else if (s->discard_passthrough[QCOW2_DISCARD_REQUEST] &&
+-                       (type == QCOW2_CLUSTER_NORMAL ||
+-                        type == QCOW2_CLUSTER_ZERO_ALLOC)) {
++            } else {
+                 /* If we keep the reference, pass on the discard still */
+-                bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
+-                            s->cluster_size);
++                qcow2_discard_cluster(bs, old_l2_entry & L2E_OFFSET_MASK,
++                            s->cluster_size, type, QCOW2_DISCARD_REQUEST);
+             }
+         }
+     }
+diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+index 8fb210501c..6512cda407 100644
+--- a/block/qcow2-refcount.c
++++ b/block/qcow2-refcount.c
+@@ -1205,6 +1205,23 @@ void qcow2_free_any_cluster(BlockDriverState *bs, uint64_t l2_entry,
+     }
+ }
+ 
++void qcow2_discard_cluster(BlockDriverState *bs, uint64_t offset,
++                           uint64_t length, QCow2ClusterType ctype,
++                           enum qcow2_discard_type dtype)
++{
++    BDRVQcow2State *s = bs->opaque;
++
++    if (s->discard_passthrough[dtype] &&
++        (ctype == QCOW2_CLUSTER_NORMAL ||
++         ctype == QCOW2_CLUSTER_ZERO_ALLOC)) {
++        if (has_data_file(bs)) {
++            bdrv_pdiscard(s->data_file, offset, length);
++        } else {
++            queue_discard(bs, offset, length);
++        }
++    }
++}
++
+ int qcow2_write_caches(BlockDriverState *bs)
+ {
+     BDRVQcow2State *s = bs->opaque;
 -- 
 2.51.1
 
