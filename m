@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B43F1CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE60CCFA05
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLGI-0002Ai-18; Tue, 04 Nov 2025 12:56:15 -0500
+	id 1vGLGi-0002cz-PL; Tue, 04 Nov 2025 12:56:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEo-0000q2-Qu
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFE-0001C9-1l
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEn-0006iZ-58
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:34 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLF9-0006oY-QT
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762278872;
+ s=mimecast20190719; t=1762278895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RhVA0YubTi5SGRuSN0fM7JVsTglFF5gQoqp/tSqn62I=;
- b=MVi6KrYPPkQN1WGXe1nBkXzjwa23ThQBml1PPtiKNsIWAFRVs7dcvIXtZTRW+MsHdH+6DK
- llBhUeQYPCg0CE1QN/zJq01VYTJv0Wn1ktsPe+zHADiJhhRSOo22b3fhEmEc06cN6KbW5W
- 8Z0MpgRuGaZdy+WVVut/9h8tcMd96qw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VTY5t+mi42Og4AXvn+4mUT3pJyYT+KoDFmfS0kG2Pro=;
+ b=gbqDMIGMjhCo0mFQ+pYmOVeVGFJEemIc/77sDL1s6Yc+el+c2H/RSpaiEu0JSOiL0jr1Tp
+ uQTCfAye9965W8P3G0RYnx5ZVCgUdedFd3XpC2fj4U72v/mHK1VdMnCpjMAII1peQXJ0N4
+ Wdq1MHCm95wr6e8fRoQFWLkeNln0IR0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-A7m4YXY_MaO2vCl-nPpWtA-1; Tue,
- 04 Nov 2025 12:54:31 -0500
-X-MC-Unique: A7m4YXY_MaO2vCl-nPpWtA-1
-X-Mimecast-MFC-AGG-ID: A7m4YXY_MaO2vCl-nPpWtA_1762278870
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-Jec2Fq_dNr-kFQmDE-8CRw-1; Tue,
+ 04 Nov 2025 12:54:52 -0500
+X-MC-Unique: Jec2Fq_dNr-kFQmDE-8CRw-1
+X-Mimecast-MFC-AGG-ID: Jec2Fq_dNr-kFQmDE-8CRw_1762278891
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 34028180060D; Tue,  4 Nov 2025 17:54:30 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A249A1800378; Tue,  4 Nov 2025 17:54:51 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E4711180044F; Tue,  4 Nov 2025 17:54:28 +0000 (UTC)
+ id 5F3F91800451; Tue,  4 Nov 2025 17:54:50 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 03/27] aio-posix: fix spurious return from ->wait() due to
- signals
-Date: Tue,  4 Nov 2025 18:53:51 +0100
-Message-ID: <20251104175415.525388-4-kwolf@redhat.com>
+Subject: [PULL 15/27] block/io_uring: use non-vectored read/write when possible
+Date: Tue,  4 Nov 2025 18:54:03 +0100
+Message-ID: <20251104175415.525388-16-kwolf@redhat.com>
 In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
 References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -85,66 +84,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-io_uring_enter(2) only returns -EINTR in some cases when interrupted by
-a signal. Therefore the while loop in fdmon_io_uring_wait() is
-incomplete and can lead to a spurious early return.
+The io_uring_prep_readv2/writev2() man pages recommend using the
+non-vectored read/write operations when possible for performance
+reasons.
 
-Handle the case when a signal interrupts io_uring_enter(2) but the
-syscall returns the number of SQEs submitted (that takes priority over
--EINTR).
+I didn't measure a significant difference but it doesn't hurt to have
+this optimization in place.
 
-This patch probably makes little difference for QEMU, but the test suite
-relies on the exact pattern of aio_poll() return values, so it's best to
-hide this io_uring syscall interface quirk.
-
-Here is the strace of test-aio receiving 3 SIGCONT signals after this
-fix has been applied. Notice how the io_uring_enter(2) return value is 1
-the first time because an SQE was submitted, but -EINTR the other times:
-
-  eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK) = 9
-  io_uring_enter(7, 1, 0, 0, NULL, 8) = 1
-  clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffe38a46240) = 0
-  io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8) = 1
-  --- SIGCONT {si_signo=SIGCONT, si_code=SI_USER, si_pid=596096, si_uid=1000} ---
-  io_uring_enter(7, 0, 1, IORING_ENTER_GETEVENTS, NULL, 8) = -1 EINTR (Interrupted system call)
-  --- SIGCONT {si_signo=SIGCONT, si_code=SI_USER, si_pid=596096, si_uid=1000} ---
-  io_uring_enter(7, 0, 1, IORING_ENTER_GETEVENTS, NULL, 8 <unfinished ...>
-  <... io_uring_enter resumed>) = -1 EINTR (Interrupted system call)
-  --- SIGCONT {si_signo=SIGCONT, si_code=SI_USER, si_pid=596096, si_uid=1000} ---
-  io_uring_enter(7, 0, 1, IORING_ENTER_GETEVENTS, NULL, 8 <unfinished ...>
-  <... io_uring_enter resumed>) = 0
-
-Reported-by: Kevin Wolf <kwolf@redhat.com>
+Suggested-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20251104022933.618123-4-stefanha@redhat.com>
+Message-ID: <20251104022933.618123-16-stefanha@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- util/fdmon-io_uring.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ block/io_uring.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index b64ce42513..3d8638b0e5 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -299,9 +299,16 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
+diff --git a/block/io_uring.c b/block/io_uring.c
+index dd930ee57e..f1514cf024 100644
+--- a/block/io_uring.c
++++ b/block/io_uring.c
+@@ -46,17 +46,28 @@ static void luring_prep_sqe(struct io_uring_sqe *sqe, void *opaque)
  
-     fill_sq_ring(ctx);
- 
-+    /*
-+     * Loop to handle signals in both cases:
-+     * 1. If no SQEs were submitted, then -EINTR is returned.
-+     * 2. If SQEs were submitted then the number of SQEs submitted is returned
-+     *    rather than -EINTR.
-+     */
-     do {
-         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
--    } while (ret == -EINTR);
-+    } while (ret == -EINTR ||
-+             (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)));
- 
-     assert(ret >= 0);
- 
+     switch (req->type) {
+     case QEMU_AIO_WRITE:
+-#ifdef HAVE_IO_URING_PREP_WRITEV2
+     {
+         int luring_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+-        io_uring_prep_writev2(sqe, fd, qiov->iov,
+-                              qiov->niov, offset, luring_flags);
+-    }
++        if (luring_flags != 0 || qiov->niov > 1) {
++#ifdef HAVE_IO_URING_PREP_WRITEV2
++            io_uring_prep_writev2(sqe, fd, qiov->iov,
++                                  qiov->niov, offset, luring_flags);
+ #else
+-        assert(flags == 0);
+-        io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
++            /*
++             * FUA should only be enabled with HAVE_IO_URING_PREP_WRITEV2, see
++             * luring_has_fua().
++             */
++            assert(luring_flags == 0);
++
++            io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
+ #endif
++        } else {
++            /* The man page says non-vectored is faster than vectored */
++            struct iovec *iov = qiov->iov;
++            io_uring_prep_write(sqe, fd, iov->iov_base, iov->iov_len, offset);
++        }
+         break;
++    }
+     case QEMU_AIO_ZONE_APPEND:
+         io_uring_prep_writev(sqe, fd, qiov->iov, qiov->niov, offset);
+         break;
+@@ -65,8 +76,15 @@ static void luring_prep_sqe(struct io_uring_sqe *sqe, void *opaque)
+         if (req->resubmit_qiov.iov != NULL) {
+             qiov = &req->resubmit_qiov;
+         }
+-        io_uring_prep_readv(sqe, fd, qiov->iov, qiov->niov,
+-                            offset + req->total_read);
++        if (qiov->niov > 1) {
++            io_uring_prep_readv(sqe, fd, qiov->iov, qiov->niov,
++                                offset + req->total_read);
++        } else {
++            /* The man page says non-vectored is faster than vectored */
++            struct iovec *iov = qiov->iov;
++            io_uring_prep_read(sqe, fd, iov->iov_base, iov->iov_len,
++                               offset + req->total_read);
++        }
+         break;
+     }
+     case QEMU_AIO_FLUSH:
 -- 
 2.51.1
 
