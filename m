@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3F5CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B43F1CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLG7-0001s7-IJ; Tue, 04 Nov 2025 12:55:56 -0500
+	id 1vGLGI-0002Ai-18; Tue, 04 Nov 2025 12:56:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEu-0000xd-An
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEo-0000q2-Qu
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEs-0006k7-Q7
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:39 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLEn-0006iZ-58
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762278878;
+ s=mimecast20190719; t=1762278872;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tab4CtFFHM98XVix6uSAQ4RulcmwiYQiWx2dY6YSd5o=;
- b=HgE88bkIrVkZOWHIa6VAHJNlO0WyV5MQW2Oly3okyrL5Z1bM2mcZXM3qX4m2WAYsPLhCM7
- eSuj9t+oWhhQD5SVcTj4+EyYi53y3KvT1j4sYuMkHlxr72JkILAW9peo0z8/+xCLfEbPfz
- +UM8GEcn6wDwI61e1cokeAjtqElaHzY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=RhVA0YubTi5SGRuSN0fM7JVsTglFF5gQoqp/tSqn62I=;
+ b=MVi6KrYPPkQN1WGXe1nBkXzjwa23ThQBml1PPtiKNsIWAFRVs7dcvIXtZTRW+MsHdH+6DK
+ llBhUeQYPCg0CE1QN/zJq01VYTJv0Wn1ktsPe+zHADiJhhRSOo22b3fhEmEc06cN6KbW5W
+ 8Z0MpgRuGaZdy+WVVut/9h8tcMd96qw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-5wXo2t5iMQKgI6vIthT-YA-1; Tue,
- 04 Nov 2025 12:54:34 -0500
-X-MC-Unique: 5wXo2t5iMQKgI6vIthT-YA-1
-X-Mimecast-MFC-AGG-ID: 5wXo2t5iMQKgI6vIthT-YA_1762278873
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-A7m4YXY_MaO2vCl-nPpWtA-1; Tue,
+ 04 Nov 2025 12:54:31 -0500
+X-MC-Unique: A7m4YXY_MaO2vCl-nPpWtA-1
+X-Mimecast-MFC-AGG-ID: A7m4YXY_MaO2vCl-nPpWtA_1762278870
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC87F195609E; Tue,  4 Nov 2025 17:54:33 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34028180060D; Tue,  4 Nov 2025 17:54:30 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 72D62180044F; Tue,  4 Nov 2025 17:54:32 +0000 (UTC)
+ id E4711180044F; Tue,  4 Nov 2025 17:54:28 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 05/27] tests/unit: skip test-nested-aio-poll with io_uring
-Date: Tue,  4 Nov 2025 18:53:53 +0100
-Message-ID: <20251104175415.525388-6-kwolf@redhat.com>
+Subject: [PULL 03/27] aio-posix: fix spurious return from ->wait() due to
+ signals
+Date: Tue,  4 Nov 2025 18:53:51 +0100
+Message-ID: <20251104175415.525388-4-kwolf@redhat.com>
 In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
 References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -66,7 +67,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,68 +85,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-test-nested-aio-poll relies on internal details of how fdmon-poll.c
-handles AioContext polling. Skip it when other fdmon implementations are
-in use.
+io_uring_enter(2) only returns -EINTR in some cases when interrupted by
+a signal. Therefore the while loop in fdmon_io_uring_wait() is
+incomplete and can lead to a spurious early return.
 
-The reason why fdmon-io_uring.c behaves differently from fdmon-poll.c is
-that its fdmon_ops->need_wait() function returns true when
-io_uring_enter(2) must be called (e.g. to submit pending SQEs).
-AioContext polling is skipped when ->need_wait() returns true, so the
-test case will never enter AioContext polling mode with
-fdmon-io_uring.c.
+Handle the case when a signal interrupts io_uring_enter(2) but the
+syscall returns the number of SQEs submitted (that takes priority over
+-EINTR).
 
-Restrict this test to fdmon-poll.c and drop the
-aio_context_use_g_source() call since it's no longer necessary.
+This patch probably makes little difference for QEMU, but the test suite
+relies on the exact pattern of aio_poll() return values, so it's best to
+hide this io_uring syscall interface quirk.
 
-Note that this test is only built on POSIX systems so it is safe to
-include "util/aio-posix.h".
+Here is the strace of test-aio receiving 3 SIGCONT signals after this
+fix has been applied. Notice how the io_uring_enter(2) return value is 1
+the first time because an SQE was submitted, but -EINTR the other times:
 
+  eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK) = 9
+  io_uring_enter(7, 1, 0, 0, NULL, 8) = 1
+  clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffe38a46240) = 0
+  io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8) = 1
+  --- SIGCONT {si_signo=SIGCONT, si_code=SI_USER, si_pid=596096, si_uid=1000} ---
+  io_uring_enter(7, 0, 1, IORING_ENTER_GETEVENTS, NULL, 8) = -1 EINTR (Interrupted system call)
+  --- SIGCONT {si_signo=SIGCONT, si_code=SI_USER, si_pid=596096, si_uid=1000} ---
+  io_uring_enter(7, 0, 1, IORING_ENTER_GETEVENTS, NULL, 8 <unfinished ...>
+  <... io_uring_enter resumed>) = -1 EINTR (Interrupted system call)
+  --- SIGCONT {si_signo=SIGCONT, si_code=SI_USER, si_pid=596096, si_uid=1000} ---
+  io_uring_enter(7, 0, 1, IORING_ENTER_GETEVENTS, NULL, 8 <unfinished ...>
+  <... io_uring_enter resumed>) = 0
+
+Reported-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20251104022933.618123-6-stefanha@redhat.com>
+Message-ID: <20251104022933.618123-4-stefanha@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/unit/test-nested-aio-poll.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ util/fdmon-io_uring.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tests/unit/test-nested-aio-poll.c b/tests/unit/test-nested-aio-poll.c
-index d8fd92c43b..d13ecccd8c 100644
---- a/tests/unit/test-nested-aio-poll.c
-+++ b/tests/unit/test-nested-aio-poll.c
-@@ -15,6 +15,7 @@
- #include "qemu/osdep.h"
- #include "block/aio.h"
- #include "qapi/error.h"
-+#include "util/aio-posix.h"
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index b64ce42513..3d8638b0e5 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -299,9 +299,16 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
  
- typedef struct {
-     AioContext *ctx;
-@@ -71,17 +72,17 @@ static void test(void)
-         .ctx = aio_context_new(&error_abort),
-     };
+     fill_sq_ring(ctx);
  
-+    if (td.ctx->fdmon_ops != &fdmon_poll_ops) {
-+        /* This test is tied to fdmon-poll.c */
-+        g_test_skip("fdmon_poll_ops not in use");
-+        return;
-+    }
-+
-     qemu_set_current_aio_context(td.ctx);
++    /*
++     * Loop to handle signals in both cases:
++     * 1. If no SQEs were submitted, then -EINTR is returned.
++     * 2. If SQEs were submitted then the number of SQEs submitted is returned
++     *    rather than -EINTR.
++     */
+     do {
+         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+-    } while (ret == -EINTR);
++    } while (ret == -EINTR ||
++             (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)));
  
-     /* Enable polling */
-     aio_context_set_poll_params(td.ctx, 1000000, 2, 2, &error_abort);
+     assert(ret >= 0);
  
--    /*
--     * The GSource is unused but this has the side-effect of changing the fdmon
--     * that AioContext uses.
--     */
--    aio_get_g_source(td.ctx);
--
-     /* Make the event notifier active (set) right away */
-     event_notifier_init(&td.poll_notifier, 1);
-     aio_set_event_notifier(td.ctx, &td.poll_notifier,
 -- 
 2.51.1
 
