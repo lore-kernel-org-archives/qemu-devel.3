@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F440CCF9E3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE0DCCFA04
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCTB-00015c-1M; Tue, 04 Nov 2025 03:32:50 -0500
+	id 1vGCSi-0000XN-Uh; Tue, 04 Nov 2025 03:32:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCT0-0000mw-WF
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:39 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSf-0000VC-70
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSw-0003Y1-Cq
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:37 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSb-0003Sp-Pq
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762245153;
+ s=mimecast20190719; t=1762245133;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rDaB/IsENP/Y0ThuPfjXCrXO0e2vMI2w9CGr/c7whgE=;
- b=AnnGUxIYF37uCQ5KLnAT5umXK0Lk5UkgBtV9edZOtUBv9Hv/OhUh1LbVexKqmilFEprkwB
- Yo6qcEKk0h+9C3pMIDmFzYr/08wMv7pNnGOnqESSowiOCpOhkQovo9kSepApbInHpSDL5P
- AMSx43Kp0ExTMiMff7OxXKesX1WTpQE=
+ bh=QyFTJB1QBHVGeZb4FgP0gQkfBUrAsEdCsQO0SpCbTHY=;
+ b=RXrUDqROLkSCpSrhOBzdME+ofptMG3H0JYAMEZlp5VZFMCHB0Q/LI6SrOSOI2NDR7LZgHj
+ T2xXPaC4p9HV9a4cR+UuAXRYcYNIR+oKtnz8Db9wsABZ21krz25AVMXkaB3w1/EASzMAyU
+ qksTIm6XeBwXKqW57IKDojdeyPaz240=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-PEmda5ecNeyxTylJh7Rzdg-1; Tue,
- 04 Nov 2025 03:32:31 -0500
-X-MC-Unique: PEmda5ecNeyxTylJh7Rzdg-1
-X-Mimecast-MFC-AGG-ID: PEmda5ecNeyxTylJh7Rzdg_1762245150
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-J4XvQFT6OHGsVj5x9Iz7HQ-1; Tue,
+ 04 Nov 2025 03:32:08 -0500
+X-MC-Unique: J4XvQFT6OHGsVj5x9Iz7HQ-1
+X-Mimecast-MFC-AGG-ID: J4XvQFT6OHGsVj5x9Iz7HQ_1762245127
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B6231955F04; Tue,  4 Nov 2025 08:32:30 +0000 (UTC)
+ id 8A6EB195608D; Tue,  4 Nov 2025 08:32:07 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8560319560A2; Tue,  4 Nov 2025 08:32:28 +0000 (UTC)
+ id A530A19560A2; Tue,  4 Nov 2025 08:32:05 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 18/30] hw/arm/aspeed: Split Bletchley machine into a separate
+Subject: [PULL 08/30] hw/arm/aspeed: Split YosemiteV2 machine into a separate
  source file for maintainability
-Date: Tue,  4 Nov 2025 09:31:32 +0100
-Message-ID: <20251104083144.187806-19-clg@redhat.com>
+Date: Tue,  4 Nov 2025 09:31:22 +0100
+Message-ID: <20251104083144.187806-9-clg@redhat.com>
 In-Reply-To: <20251104083144.187806-1-clg@redhat.com>
 References: <20251104083144.187806-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -69,7 +69,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,151 +87,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This commit moves the Facebook Bletchley BMC machine implementation out of
-aspeed.c into a new standalone file aspeed_ast2600_bletchley.c.
+This commit moves the YosemiteV2 BMC machine implementation from
+aspeed.c into a new standalone file aspeed_ast2500_yosemitev2.c.
 
-This refactor continues the modularization effort for Aspeed platform support,
-placing each board’s logic in its own dedicated source file.
-It improves maintainability, readability, and simplifies future development for
-new platforms without cluttering aspeed.c.
+To support splitting YosemiteV2 into a dedicated source file,
+a new YOSEMITEV2_BMC_HW_STRAP1 macro is added as a copy of
+AST2500_EVB_HW_STRAP1.
+
+The refactor is part of an ongoing effort to modularize Aspeed
+machine definitions by separating each board into its own source
+file. This improves code readability, maintainability, and simplifies
+future platform-specific changes.
 
 Key updates include:
-- Moved BLETCHLEY_BMC_HW_STRAP1 and BLETCHLEY_BMC_HW_STRAP2 macro definitions into the new file.
-- Moved bletchley_bmc_i2c_init() I²C initialization logic into the new file.
-- Moved aspeed_machine_bletchley_class_init() and type registration.
-- Added aspeed_ast2600_bletchley.c to the build system (meson.build).
-- Removed all Bletchley-specific code and macros from aspeed.c.
+
+- Moved yosemitev2_bmc_i2c_init() and its FRU data into a new file.
+- Removed aspeed_machine_yosemitev2_class_init() and type registration
+from aspeed.c.
+- Removed YosemiteV2 FRUID data and declarations from
+aspeed_eeprom.c and aspeed_eeprom.h.
+- Added aspeed_ast2500_yosemitev2.c to the build system
+(meson.build).
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-19-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-9-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                   | 77 ------------------------
- hw/arm/aspeed_ast2600_bletchley.c | 97 +++++++++++++++++++++++++++++++
- hw/arm/meson.build                |  1 +
- 3 files changed, 98 insertions(+), 77 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2600_bletchley.c
+ hw/arm/aspeed_eeprom.h             |  3 -
+ hw/arm/aspeed.c                    | 37 ------------
+ hw/arm/aspeed_ast2500_yosemitev2.c | 91 ++++++++++++++++++++++++++++++
+ hw/arm/aspeed_eeprom.c             | 22 --------
+ hw/arm/meson.build                 |  1 +
+ 5 files changed, 92 insertions(+), 62 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2500_yosemitev2.c
 
+diff --git a/hw/arm/aspeed_eeprom.h b/hw/arm/aspeed_eeprom.h
+index a9ae95940c5f..5448eeeab7ab 100644
+--- a/hw/arm/aspeed_eeprom.h
++++ b/hw/arm/aspeed_eeprom.h
+@@ -14,9 +14,6 @@ extern const size_t fby35_nic_fruid_len;
+ extern const size_t fby35_bb_fruid_len;
+ extern const size_t fby35_bmc_fruid_len;
+ 
+-extern const uint8_t yosemitev2_bmc_fruid[];
+-extern const size_t yosemitev2_bmc_fruid_len;
+-
+ extern const uint8_t rainier_bb_fruid[];
+ extern const size_t rainier_bb_fruid_len;
+ extern const uint8_t rainier_bmc_fruid[];
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index ba0c9a62ff66..3acb45b22c28 100644
+index 42f4203f9d85..731ca7a1aa59 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -56,10 +56,6 @@ static struct arm_boot_info aspeed_board_binfo = {
- #define FUJI_BMC_HW_STRAP1    0x00000000
- #define FUJI_BMC_HW_STRAP2    0x00000000
- 
--/* Bletchley hardware value */
--#define BLETCHLEY_BMC_HW_STRAP1 0x00002000
--#define BLETCHLEY_BMC_HW_STRAP2 0x00000801
--
- /* GB200NVL hardware value */
- #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
- #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
-@@ -685,53 +681,6 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
+@@ -470,20 +470,6 @@ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
+                      TYPE_TMP105, 0x4d);
  }
  
--static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
+-static void yosemitev2_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
--    I2CBus *i2c[13] = {};
--    for (int i = 0; i < 13; i++) {
--        if ((i == 8) || (i == 11)) {
--            continue;
--        }
--        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
--    }
 -
--    /* Bus 0 - 5 all have the same config. */
--    for (int i = 0; i < 6; i++) {
--        /* Missing model: ti,ina230 @ 0x45 */
--        /* Missing model: mps,mp5023 @ 0x40 */
--        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
--        /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
--        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
--        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
--        /* Missing model: fsc,fusb302 @ 0x22 */
--    }
+-    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 4), 0x51, 128 * KiB);
+-    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 128 * KiB,
+-                          yosemitev2_bmc_fruid, yosemitev2_bmc_fruid_len);
+-    /* TMP421 */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
 -
--    /* Bus 6 */
--    at24c_eeprom_init(i2c[6], 0x56, 65536);
--    /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
--    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
--
--
--    /* Bus 7 */
--    at24c_eeprom_init(i2c[7], 0x54, 65536);
--
--    /* Bus 9 */
--    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
--
--    /* Bus 10 */
--    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
--    /* Missing model: ti,hdc1080 @ 0x40 */
--    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
--
--    /* Bus 12 */
--    /* Missing model: adi,adm1278 @ 0x11 */
--    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
--    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
--    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
 -}
 -
--
- static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
+ static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
  {
      AspeedSoCState *soc = bmc->soc;
-@@ -1059,27 +1008,6 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
+@@ -1376,24 +1362,6 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc,
      aspeed_machine_class_init_cpus_defaults(mc);
  };
  
--#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
--
--static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
--                                                const void *data)
+-static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc,
+-                                                 const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Facebook Bletchley BMC (Cortex-A7)";
--    amc->soc_name  = "ast2600-a3";
--    amc->hw_strap1 = BLETCHLEY_BMC_HW_STRAP1;
--    amc->hw_strap2 = BLETCHLEY_BMC_HW_STRAP2;
--    amc->fmc_model = "w25q01jvq";
--    amc->spi_model = NULL;
+-    mc->desc       = "Facebook YosemiteV2 BMC (ARM1176)";
+-    amc->soc_name  = "ast2500-a1";
+-    amc->hw_strap1 = AST2500_EVB_HW_STRAP1;
+-    amc->hw_strap2 = 0;
+-    amc->fmc_model = "n25q256a";
+-    amc->spi_model = "mx25l25635e";
 -    amc->num_cs    = 2;
--    amc->macs_mask = ASPEED_MAC2_ON;
--    amc->i2c_init  = bletchley_bmc_i2c_init;
--    mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
+-    amc->i2c_init  = yosemitev2_bmc_i2c_init;
+-    mc->default_ram_size       = 512 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
--}
+-};
 -
- static void aspeed_machine_catalina_class_init(ObjectClass *oc,
-                                                const void *data)
+ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
+                                               const void *data)
  {
-@@ -1367,11 +1295,6 @@ static const TypeInfo aspeed_machine_types[] = {
+@@ -1831,11 +1799,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_fuji_class_init,
+         .class_init    = aspeed_machine_ast2600_evb_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
+-        .name          = MACHINE_TYPE_NAME("yosemitev2-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_bletchley_class_init,
+-        .class_init    = aspeed_machine_yosemitev2_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
+         .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
+diff --git a/hw/arm/aspeed_ast2500_yosemitev2.c b/hw/arm/aspeed_ast2500_yosemitev2.c
 new file mode 100644
-index 000000000000..b7e84db1438a
+index 000000000000..eaa75bcccbbc
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2600_bletchley.c
-@@ -0,0 +1,97 @@
++++ b/hw/arm/aspeed_ast2500_yosemitev2.c
+@@ -0,0 +1,91 @@
 +/*
-+ * Facebook Bletchley
++ * Facebook YosemiteV2
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -243,102 +219,136 @@ index 000000000000..b7e84db1438a
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/gpio/pca9552.h"
 +#include "hw/nvram/eeprom_at24c.h"
 +
-+#define TYPE_TMP421 "tmp421"
-+/* Bletchley hardware value */
-+#define BLETCHLEY_BMC_HW_STRAP1 0x00002000
-+#define BLETCHLEY_BMC_HW_STRAP2 0x00000801
-+#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
++/* value: 0xF100C2E6 */
++#define YOSEMITEV2_BMC_HW_STRAP1 ((                                        \
++        AST2500_HW_STRAP1_DEFAULTS |                                    \
++        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
++        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
++        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
++        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
++        SCU_HW_STRAP_MAC1_RGMII |                                       \
++        SCU_HW_STRAP_MAC0_RGMII) &                                      \
++        ~SCU_HW_STRAP_2ND_BOOT_WDT)
 +
-+static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
++/* Yosemite V2 BMC FRU */
++static const uint8_t yosemitev2_bmc_fruid[] = {
++    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x00, 0x36,
++    0xe6, 0xd0, 0xc6, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x42, 0x61,
++    0x73, 0x65, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x20, 0x4d, 0x50, 0x00, 0x00,
++    0x00, 0x00, 0x00, 0x00, 0xcd, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e,
++    0x30, 0xc9, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc1, 0x39, 0x01, 0x0c, 0x00, 0xc6,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x59, 0x6f, 0x73, 0x65, 0x6d,
++    0x69, 0x74, 0x65, 0x20, 0x56, 0x32, 0x20, 0x4d, 0x50, 0x00, 0x00, 0x00,
++    0x00, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
++    0x58, 0x58, 0x58, 0x58, 0xc4, 0x45, 0x56, 0x54, 0x32, 0xcd, 0x58, 0x58,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc7,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e, 0x30, 0xc9,
++    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc8, 0x43, 0x6f,
++    0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
++};
++
++static const size_t yosemitev2_bmc_fruid_len = sizeof(yosemitev2_bmc_fruid);
++
++static void yosemitev2_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
-+    I2CBus *i2c[13] = {};
-+    for (int i = 0; i < 13; i++) {
-+        if ((i == 8) || (i == 11)) {
-+            continue;
-+        }
-+        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
-+    }
 +
-+    /* Bus 0 - 5 all have the same config. */
-+    for (int i = 0; i < 6; i++) {
-+        /* Missing model: ti,ina230 @ 0x45 */
-+        /* Missing model: mps,mp5023 @ 0x40 */
-+        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
-+        /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
-+        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
-+        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
-+        /* Missing model: fsc,fusb302 @ 0x22 */
-+    }
++    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 4), 0x51, 128 * KiB);
++    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 128 * KiB,
++                          yosemitev2_bmc_fruid, yosemitev2_bmc_fruid_len);
++    /* TMP421 */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
 +
-+    /* Bus 6 */
-+    at24c_eeprom_init(i2c[6], 0x56, 65536);
-+    /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
-+    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
-+
-+
-+    /* Bus 7 */
-+    at24c_eeprom_init(i2c[7], 0x54, 65536);
-+
-+    /* Bus 9 */
-+    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
-+
-+    /* Bus 10 */
-+    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
-+    /* Missing model: ti,hdc1080 @ 0x40 */
-+    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
-+
-+    /* Bus 12 */
-+    /* Missing model: adi,adm1278 @ 0x11 */
-+    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
-+    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
-+    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
 +}
 +
-+static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
-+                                                const void *data)
++static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc,
++                                                 const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Facebook Bletchley BMC (Cortex-A7)";
-+    amc->soc_name  = "ast2600-a3";
-+    amc->hw_strap1 = BLETCHLEY_BMC_HW_STRAP1;
-+    amc->hw_strap2 = BLETCHLEY_BMC_HW_STRAP2;
-+    amc->fmc_model = "w25q01jvq";
-+    amc->spi_model = NULL;
++    mc->desc       = "Facebook YosemiteV2 BMC (ARM1176)";
++    amc->soc_name  = "ast2500-a1";
++    amc->hw_strap1 = YOSEMITEV2_BMC_HW_STRAP1;
++    amc->hw_strap2 = 0;
++    amc->fmc_model = "n25q256a";
++    amc->spi_model = "mx25l25635e";
 +    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC2_ON;
-+    amc->i2c_init  = bletchley_bmc_i2c_init;
-+    mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
++    amc->i2c_init  = yosemitev2_bmc_i2c_init;
++    mc->default_ram_size       = 512 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
-+}
++};
 +
-+static const TypeInfo aspeed_ast2600_bletchley_types[] = {
++static const TypeInfo aspeed_ast2500_yosemitev2_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
++        .name          = MACHINE_TYPE_NAME("yosemitev2-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_bletchley_class_init,
++        .class_init    = aspeed_machine_yosemitev2_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2600_bletchley_types)
++DEFINE_TYPES(aspeed_ast2500_yosemitev2_types)
+diff --git a/hw/arm/aspeed_eeprom.c b/hw/arm/aspeed_eeprom.c
+index f0ced29cf15b..124277eaca1a 100644
+--- a/hw/arm/aspeed_eeprom.c
++++ b/hw/arm/aspeed_eeprom.c
+@@ -78,27 +78,6 @@ const uint8_t fby35_bmc_fruid[] = {
+     0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
+ };
+ 
+-/* Yosemite V2 BMC FRU */
+-const uint8_t yosemitev2_bmc_fruid[] = {
+-    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x00, 0x36,
+-    0xe6, 0xd0, 0xc6, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x42, 0x61,
+-    0x73, 0x65, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x20, 0x4d, 0x50, 0x00, 0x00,
+-    0x00, 0x00, 0x00, 0x00, 0xcd, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e,
+-    0x30, 0xc9, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc1, 0x39, 0x01, 0x0c, 0x00, 0xc6,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x59, 0x6f, 0x73, 0x65, 0x6d,
+-    0x69, 0x74, 0x65, 0x20, 0x56, 0x32, 0x20, 0x4d, 0x50, 0x00, 0x00, 0x00,
+-    0x00, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
+-    0x58, 0x58, 0x58, 0x58, 0xc4, 0x45, 0x56, 0x54, 0x32, 0xcd, 0x58, 0x58,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc7,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e, 0x30, 0xc9,
+-    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc8, 0x43, 0x6f,
+-    0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
+-};
+-
+ const uint8_t rainier_bb_fruid[] = {
+     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x84,
+     0x28, 0x00, 0x52, 0x54, 0x04, 0x56, 0x48, 0x44, 0x52, 0x56, 0x44, 0x02,
+@@ -163,7 +142,6 @@ const uint8_t gb200nvl_bmc_fruid[] = {
+ const size_t fby35_nic_fruid_len = sizeof(fby35_nic_fruid);
+ const size_t fby35_bb_fruid_len = sizeof(fby35_bb_fruid);
+ const size_t fby35_bmc_fruid_len = sizeof(fby35_bmc_fruid);
+-const size_t yosemitev2_bmc_fruid_len = sizeof(yosemitev2_bmc_fruid);
+ const size_t rainier_bb_fruid_len = sizeof(rainier_bb_fruid);
+ const size_t rainier_bmc_fruid_len = sizeof(rainier_bmc_fruid);
+ const size_t gb200nvl_bmc_fruid_len = sizeof(gb200nvl_bmc_fruid);
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index e52901108be2..6d80e2caf9c5 100644
+index 870202ce8530..8d9f1e160908 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -57,6 +57,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2500_witherspoon.c',
-   'aspeed_ast2500_yosemitev2.c',
+@@ -47,6 +47,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2500_fp5280g2.c',
+   'aspeed_ast2500_g220a.c',
+   'aspeed_ast2500_tiogapass.c',
++  'aspeed_ast2500_yosemitev2.c',
    'aspeed_ast2600.c',
-+  'aspeed_ast2600_bletchley.c',
    'aspeed_ast10x0.c',
    'aspeed_eeprom.c',
-   'fby35.c'))
 -- 
 2.51.1
 
