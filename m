@@ -4,156 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1ACECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79637CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCYb-0006Xv-2z; Tue, 04 Nov 2025 03:38:25 -0500
+	id 1vGCZ6-00077r-PE; Tue, 04 Nov 2025 03:38:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGCYY-0006X1-EY
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:38:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vGCZ4-00075b-S4
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:38:54 -0500
+Received: from mail-westcentralusazon11010014.outbound.protection.outlook.com
+ ([40.93.198.14] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGCYV-0005Pi-O3
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:38:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762245497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RBxl96VvIKgtXPsH6iKaWsKYX1KeOafMFXnfBoWkLNs=;
- b=NwecBC/QvSb76SKnmJ0FQcZC1QkQ5G/AsckMydBJr8RbfwWPLxj9qYrl1Pcn6RhpHVQowZ
- EmtQmL49o6ufSaXfUXBxdlZFdFeOmurWSFFlOaD5Dq3Qudws6+TQQTS79KkNmNYPWATmGr
- rT0XAZPG4WpekVoPk1hvM9cP7gdTmJw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-zz3kAD1PPYei4KOz1p_bsA-1; Tue, 04 Nov 2025 03:38:15 -0500
-X-MC-Unique: zz3kAD1PPYei4KOz1p_bsA-1
-X-Mimecast-MFC-AGG-ID: zz3kAD1PPYei4KOz1p_bsA_1762245494
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-429c17b29f3so2607257f8f.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 00:38:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762245494; x=1762850294; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RBxl96VvIKgtXPsH6iKaWsKYX1KeOafMFXnfBoWkLNs=;
- b=YVPU6w0hljZEiHUlHZwoPdpcu8rjEY+L/bXp57MRaKRnCsoVOFDTHxD6Gobaz/82Nu
- i8fHnNuBBuMf2+TU4rVFr02rBzGrSzf1bPTShTBVqTWVRcmtGk5h+8OaUjvjV9OY/Qzw
- owd2NwiXcT9I5yrcD88hT/O96Thau2G10Up8bLGhfjI9LiZfDOw2HgZR+BhVrT7Bd23H
- oQcVghPsYwVRj8HXPSEmOfizDV0t7goa4caMM+q5xeSZWnhc08NAlTOV2hrV9bQMpiAf
- 6GZT0bq8FHTrnZLqNFVCVSb4A+mBtvoey8hhTCNgch1ZwBi8NQmHM38oCHD0LuB9QOOZ
- znLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762245494; x=1762850294;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RBxl96VvIKgtXPsH6iKaWsKYX1KeOafMFXnfBoWkLNs=;
- b=wdHgeT2B33qUpYtU0GjQP5UhKzDZfxwDodSr+b4Ap0+8GaVbOejL446Jwe3pbAtroh
- iG6lz56DL19omjiodWnPyhFQ1aYy5pAdU/T8Ho0ZnQjrM1tg26ARu/hcCg7QB+6tP+Mn
- kNB5BRPUjI0ITIAnSW0EodaFTVDzQ7EX3mdTXWxVOEY0x+r3rQ5hvptKYNwblaNX4nTm
- pvQbTho+5PSvBOLrQLT/ePtY8NO/u5pGf2PuqO4nYFoY11P3jT4pIlGUPLWmQkTgzuRN
- gvp0aZAGy5H75oO/51YpN/LzLCRERubtld0XUUmKY0qQ3e1+OJIrvbuCUBao1nceFdZT
- CAPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJb0HZnJAfYWzrBF+PyssBs+wB7cEvWEed2l86kGNSNyvjpXiTo+vskV9iRvxHsgYawFvfQlFKECsL@nongnu.org
-X-Gm-Message-State: AOJu0Yx9VOBPmoU+Ndq7PoTytnK1Fvw647iFPhbx9w9FSgK28v5JD9s+
- pCuvdIBfK2bqdVOd72kwD9kEYebHqMXgz/73XDlBvcOQ2xxe3RPNuvVq5b6igQhOv7hVqe5NHzC
- 2X+a+gKJwu13dUmXlAI/bf/+2F8jwrJSnxrdu3E57R6Vlp//nOWZ/q9UJ
-X-Gm-Gg: ASbGncspLB4jn5cMCZZvdoT98XTm1OwoGWncsjhIcSZzXTzlr6dIOG8kLWYps8mV/qF
- W9n2Eoz1v/NuRxn8WAU6Q58g1YU+pu9For4oEJ1DR6BMVMlQ07yTYzJgYTXqawBnOvlfhRP9+vw
- v56djajXSBQJQ7cXlJIvJjsiYibLX5uILaloOy76k/HUPxiNhPxEM9agpS09zlAmJvL7agjqkdR
- krcCK4yoDvhRK7CQXIH8RT3V/+sxIpXDJkd8gXSGgvaIRJ7LhmvvtHS6vy0dqiTbyEKN7nv9yhA
- 5VI6k1S6aPerzwvbf3VpQMcBjlyTtKEi3uhc8eqgj2U66/xI3Z9m6iiawP2tfUbVfY+ZPOrM
-X-Received: by 2002:a05:6000:178d:b0:429:b6e2:1ecf with SMTP id
- ffacd0b85a97d-429bd682973mr14191662f8f.22.1762245493642; 
- Tue, 04 Nov 2025 00:38:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHo6I23zpNjvOsOlrM4fhPbChL7bdu9yrG/lMYtsCsICgJLGN+2uuIAvV9im3pFDSwh9vCgiw==
-X-Received: by 2002:a05:6000:178d:b0:429:b6e2:1ecf with SMTP id
- ffacd0b85a97d-429bd682973mr14191635f8f.22.1762245493140; 
- Tue, 04 Nov 2025 00:38:13 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.171])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429dc192a96sm3321382f8f.13.2025.11.04.00.38.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 00:38:12 -0800 (PST)
-Message-ID: <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
-Date: Tue, 4 Nov 2025 09:38:11 +0100
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vGCYy-0005T2-S8
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:38:53 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W/sRZARWWAiSPf8ysVguH9n/eJws6/ZCvwezPDiRbpxh55RR9NBNe5w0l/vysaWFz7IhPmFCleOsxct14YymNXQNjK14Pu2VMQ5hyLXEHAajrAWTtaY0jqDhZEcG5rfWSXNpdGS3DNawBJjuETcYjWh1T2fYpjJGWCFniQ+kaGrOTKWFt9KXX+TQGHYN9u0tI8gpctx4G1g2YAUVVwMX/VwAY0ihMDgz4Rstu1UYc+tTXidGz+HlrDqpSvW9hdCfepbfRtmqVMWFvmS0foWoZ/lE2VvAgHDpkbVNpnfHxmopvImTxdvKjKJ5n5sKts3x2zLugQVRw0m2FUIfLgcDUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/fNrKvzhFqd16G37IJDpQggYPs44U662hy5HQzBVpKA=;
+ b=i9NO9DyXIENURJJqvP2fJYo7tAiVmXOE/Pl1rW0sFq5s8XmxNGKeKOxI0DaF9ET1K7SRpTPMTirTZn0f7WDukaYUm6cnmfxqUHuuGU+V0XkBkFdoBHiZRFJYx4TJp8s6mwU2UFFi1v2LY4ouZ1do1lclyRl4WNzDXP7zdE7yXhLaGFSnkJV/6VQMxNe5R84CNAmJZDvelSR/NQI/mdteSkzL+KdymUf0O8NPncqBHcjCLbl7Px+jhAl6aB1q5XHiojBvt8WRVB2/Z5fgDAewAcdzATUlJB+Jbd4xrIA8uhpUgazCmKBQVLljb8RMjfR8ANppnYWIt5W7vaSVHWq1wg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/fNrKvzhFqd16G37IJDpQggYPs44U662hy5HQzBVpKA=;
+ b=3NyZojoYSAUeKtVgFXeFuS9AVLdIVyuxv+OUJRrqtLVVnoESw6GBzo+A5GFFpDEuetnVzPzJCWVQn1xGkDvwTvv/1ck9ho71nkoYOuVmeif+nrAZw9Y4xG0RrxFnElByb4Cfzd6k+IRpa3O2RzDiBdUOnfc/vuR9o1svHrSBWJI=
+Received: from BYAPR06CA0037.namprd06.prod.outlook.com (2603:10b6:a03:14b::14)
+ by BL3PR12MB6452.namprd12.prod.outlook.com (2603:10b6:208:3bb::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Tue, 4 Nov
+ 2025 08:00:40 +0000
+Received: from SJ1PEPF000026C8.namprd04.prod.outlook.com
+ (2603:10b6:a03:14b:cafe::91) by BYAPR06CA0037.outlook.office365.com
+ (2603:10b6:a03:14b::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.16 via Frontend Transport; Tue,
+ 4 Nov 2025 08:00:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF000026C8.mail.protection.outlook.com (10.167.244.105) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9298.6 via Frontend Transport; Tue, 4 Nov 2025 08:00:40 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 4 Nov
+ 2025 00:00:39 -0800
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 4 Nov
+ 2025 00:00:39 -0800
+Received: from [10.65.99.107] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Tue, 4 Nov 2025 00:00:37 -0800
+Message-ID: <286f685c-0694-46d1-a8cb-13c77fc598a1@amd.com>
+Date: Tue, 4 Nov 2025 16:00:37 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Regression with the "replay" test on target alpha
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-4-pbonzini@redhat.com>
- <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
- <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
- <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
- <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2] numa: add 'spm' option for Specific Purpose Memory
+To: David Hildenbrand <david@redhat.com>, <qemu-devel@nongnu.org>,
+ <imammedo@redhat.com>
+CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20251020090701.4036748-1-FangSheng.Huang@amd.com>
+ <20251020090701.4036748-2-FangSheng.Huang@amd.com>
+ <9362d717-0c04-4145-a2a4-49230ff5c19c@redhat.com>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <9362d717-0c04-4145-a2a4-49230ff5c19c@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000026C8:EE_|BL3PR12MB6452:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8a47c262-defe-48a7-06e3-08de1b783f17
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?KzdPajQvbFBTeFp3VlpyMEhDR1p3U1ZkWUJmNnQyN3VWcWZHWW4zVWpoVGlT?=
+ =?utf-8?B?ek01aTl1QTN0RWhTeVJLVnlIcmV0SlArWENxcmFFOWZ4M1QraURyWFFMRzRB?=
+ =?utf-8?B?elUreDBlRzFJdUtZVHJ3MzZaTmlLa012VzdjamJmTGFqS2E3eC9RbEJISnR6?=
+ =?utf-8?B?ODRYSC95WjFBYWJlT0srUnlXZTF2T2RwaG9UdVR1SEYxbUptRVJLWGFieU1y?=
+ =?utf-8?B?Y01Bdmg3NXRkVFF1MFlCSGdYS3RDd0pMVzJWTUVkNVBYejJsOWJnNnEvM2hJ?=
+ =?utf-8?B?MkNyM1d6dG0vTlJBMXd2ZWFsVXdRUnFsOURvbGkvMHovbVFLc1BCeWdGNS9V?=
+ =?utf-8?B?OVdkYUVDb2JRcHc5YjhwTXBmWWhCb1hGbHVxSUJoM1l3cktxS2dmMEErQWVq?=
+ =?utf-8?B?WGJrY3B4NCtkN1FaUDdSeHA0VnhFN0dKbjFMczhraFJsUzdEcXV4cGFyck1r?=
+ =?utf-8?B?ZWp3Z3VQbk8zQ1MzY0Jhak55UjAwVXM0aUlhUnZaczE3OUdhenBaOHFpdjlW?=
+ =?utf-8?B?NkxRVnFsUzdIcDFJUTJPS2Qxa2h0UTM2TDFEd283QWMzS29US0VFdURDeHdX?=
+ =?utf-8?B?SjBXc0FmSFp6VFRqalA0N3pCbTBiRTdKNERyTmJaTHZaSm00eXRuTk9QTkly?=
+ =?utf-8?B?eFA2eGo5QkhueXhVek1xbXh5Tm9zVklZODVublpzaUxLVEtsd2p3OEVjdDBW?=
+ =?utf-8?B?UzdwbGpWKzZtdTNST3c2b1JhM1Nua1Y3RGNVWXZwSDk3c3VKZWlFSlhUVnF4?=
+ =?utf-8?B?REZkVlZWNExJdnBENCtMRVRCTC9LK0g5K0R0eHZqY0VVR0V3YnBIMzk3TFNV?=
+ =?utf-8?B?bmFvSDZxZkVjSTF6QjlMSWFpWXhTMjJNVmFnUGlEWit3Smt0NUJ6eE1JQ25v?=
+ =?utf-8?B?UjZKemNNV1JydGFiTUVxOUJNR0VEbVNxNmJKWUpZK2pBb05ON3RzSlAweTNE?=
+ =?utf-8?B?d1NpQnJtaDBMUFBoR1drdjB1bU1uWlA5UkhNUENmajQ2YnBQNmt6SzRkeURz?=
+ =?utf-8?B?UWZUSGFCTlMyZ3F6TDhTS3FxWHRDNkkwbWVrT2F2eWl1R0hiOWJ0NlI4UldE?=
+ =?utf-8?B?V1FyVHcwbzRJU0lwR1VheWZOcnNmTzZ0V1VYeXdEcTFpNjVQMU9GOTIxM09R?=
+ =?utf-8?B?bHIzOTlhU2piRHduZkZxYzZNSnMxRlBQd2RRdlpEckp0eUZQa3NVeWdwUXhk?=
+ =?utf-8?B?blY2Qmw5dW40WWxXV2ticTBhK05LQ2I3V09ESStaeVo2OVpzS1ZwNytOMVhV?=
+ =?utf-8?B?a3NsWFlVRldzNWpBYUhWaTRPNWdrT1J0SU1Zejd6NEs5dVA0aS9iVDMyb2lh?=
+ =?utf-8?B?ZWxGNFl3em8yY0poRmtxdk5tS1d5c29paFJSWmZtUGJ3ZEljcUUwWCtNcUFh?=
+ =?utf-8?B?YkhHMk9PTWFpSDVYWXE1Mm9HS2FLU0xBaytEOWlyd1RLZHpTZE4rb3IrSTRz?=
+ =?utf-8?B?cDVDVS9XdlNmZXk0aWhUSGM5WXYrRkhyMnJQYnN2aXNEMkZmd05ZR1pFdGJZ?=
+ =?utf-8?B?TWhoVlRKN0YxWWZ1a3ZSRzVFTDRrbVRzSzZnRUtOUnhCS0l4T0hQclZOajJi?=
+ =?utf-8?B?UTd2cmp3ZHRFQkpzODFGSmk4dXF6RDhNQkwyUVFrUnJ5TE5zMkJlZDBMNXJS?=
+ =?utf-8?B?dXZ3R001cHdsM3VrdWtiTXpWekpWcjdueTdJajJwakYxTTFYWk01U2E2NDMz?=
+ =?utf-8?B?S0ZRVkt6SnY5Wk1tNlJNYUIwalZXaWpRVEgzVnZPNGkvbDZobWZvbVpoWWw3?=
+ =?utf-8?B?VjUwTWRMaUQvbDdVUFBickRGOU00dmYyTDMrbVlyT29PTkRKQ1pWeGhpYmln?=
+ =?utf-8?B?V081dFE1RWErQXE1bVRpQVBYNE1RN1hLOHNGWk5wVW1JcUtGVFB3Z0FwSTZM?=
+ =?utf-8?B?NmlHelpvOE9hOVI2cXpwdmpsK1BQalVXcFRHSWg3NkxwUE00OFprOFIvem1x?=
+ =?utf-8?B?Y3hrOEpESVQ3Y1B2RjRNVDFqUnRFa3lpbW1zVi9CNFVYQ0hPNko5MFVpbGtt?=
+ =?utf-8?B?UGgyTUR1a01IRXA4RlhTd1pEZ3pOMThyc21oNnNydnN0YitQKy9KM3JGZUgy?=
+ =?utf-8?B?ZDVjRUZ1WjN2UUgzVHN4emxVNFJSZk5oRTFNays0S2FtSExVeWZSNGhzcW4v?=
+ =?utf-8?Q?iT5A=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 08:00:40.0354 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8a47c262-defe-48a7-06e3-08de1b783f17
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000026C8.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6452
+Received-SPF: permerror client-ip=40.93.198.14;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -171,222 +166,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/11/2025 09.08, Akihiko Odaki wrote:
-> On 2025/11/04 16:41, Thomas Huth wrote:
->> On 04/11/2025 02.45, Akihiko Odaki wrote:
->>> On 2025/11/03 22:59, Thomas Huth wrote:
->>>> On 28/10/2025 18.34, Paolo Bonzini wrote:
->>>>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>>
->>>>> Borrow the concept of force quiescent state from Linux to ensure readers
->>>>> remain fast during normal operation and to avoid stalls.
->>>>
->>>>   Hi Akihiko,
->>>>
->>>> looks like this commit has introduced a regression with the "replay" 
->>>> functional test on the alpha target.
->>>> When I run something like:
->>>>
->>>>   pyvenv/bin/meson test --no-rebuild -t 1 --setup thorough \
->>>>    --num-processes 1 --repeat 10 func-alpha-replay
->>>>
->>>> in the build folder, approx. half of the test runs are failing for me now.
->>>>
->>>> I bisected the issue to this patch here - when I rebuild qemu-system- 
->>>> alpha with the commit right before this change here, the above test runs 
->>>> work fine, so I'm pretty sure that the problem has been introduced by 
->>>> this commit here.
->>>>
->>>> Could you please have a look?
->>>
->>> I cannot reproduce it with commit 55d98e3edeeb ("rcu: Unify force 
->>> quiescent state").
->>>
->>> Can you provide meson-logs/testlog-thorough.txt so that I can look into 
->>> the failure you are facing? If you think you have something useful for 
->>> debugging, please share it to me too.
+
+
+On 11/3/2025 8:32 PM, David Hildenbrand wrote:
+> On 20.10.25 11:07, fanhuang wrote:
+>> This patch adds support for Specific Purpose Memory (SPM) through the
+>> NUMA node configuration. When 'spm=on' is specified for a NUMA node,
+>> QEMU will:
 >>
->> There's not much in that testlog-thorough.txt that could be helpful here,
->> it's basically just the information that the test has been killed due to
->> the timeout:
+>> 1. Set the RAM_SPM flag in the RAM block of the corresponding memory 
+>> region
+>> 2. Update the overlapping E820 RAM entries before adding 
+>> E820_SOFT_RESERVED
+>> 3. Set the E820 type to E820_SOFT_RESERVED for this memory region
 >>
->> ==================================== 1/1 ===================================
->> test:         qemu:func-thorough+func-alpha-thorough+thorough / func- 
->> alpha-replay
->> start time:   07:25:26
->> duration:     90.01s
->> result:       killed by signal 15 SIGTERM
->> command:      RUST_BACKTRACE=1 QEMU_TEST_QEMU_IMG=/tmp/qemu-rcu/qemu-img 
->> QEMU_TEST_GDB=/usr/bin/gdb MALLOC_PERTURB_=255 MESON_TEST_ITERATION=1 
->> PYTHONPATH=/home/thuth/devel/qemu/python:/home/thuth/devel/qemu/tests/ 
->> functional G_TEST_SLOW=1 SPEED=thorough QEMU_TEST_QEMU_BINARY=/tmp/qemu- 
->> rcu/qemu-system-alpha 
->> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 
->> LD_LIBRARY_PATH=/tmp/qemu-rcu/tests/tcg/plugins:/tmp/qemu-rcu/contrib/ 
->> plugins 
->> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QEMU_BUILD_ROOT=/tmp/qemu-rcu /tmp/qemu-rcu/pyvenv/bin/python3 /home/thuth/devel/qemu/tests/functional/alpha/test_replay.py
->> =============================================================================
+>> This allows guest operating systems to recognize the memory as soft 
+>> reserved
+>> memory, which can be used for device-specific memory management without
+>> E820 table conflicts.
 >>
->> Summary of Failures:
+>> Usage:
+>>    -numa node,nodeid=0,memdev=m1,spm=on
 >>
->> 1/1 qemu:func-thorough+func-alpha-thorough+thorough / func-alpha-replay 
->> TIMEOUT        90.01s   killed by signal 15 SIGTERM
+>> Signed-off-by: fanhuang <FangSheng.Huang@amd.com>
+>> ---
+>>   hw/core/numa.c               |  3 ++
+>>   hw/i386/e820_memory_layout.c | 73 ++++++++++++++++++++++++++++++++++++
+>>   hw/i386/e820_memory_layout.h |  2 +
+>>   hw/i386/pc.c                 | 37 ++++++++++++++++++
+>>   include/exec/cpu-common.h    |  1 +
+>>   include/system/memory.h      |  3 ++
+>>   include/system/numa.h        |  1 +
+>>   qapi/machine.json            |  6 +++
+>>   system/physmem.c             |  7 +++-
+>>   9 files changed, 132 insertions(+), 1 deletion(-)
 >>
->>
->> There is also not that much helpful information in
->> tests/functional/alpha/test_replay.AlphaReplay.test_clipper, apart from
->> the console.log file. For a good run, the console log looks like this:
->>
->> 2025-11-04 08:16:46,148: PCI: 00:01:0 class 0101 id 1095:0646
->> 2025-11-04 08:16:46,149: PCI:   region 0: 0000c000
->> 2025-11-04 08:16:46,149: PCI:   region 1: 0000c008
->> 2025-11-04 08:16:46,149: PCI:   region 2: 0000c010
->> 2025-11-04 08:16:46,149: PCI:   region 3: 0000c018
->> 2025-11-04 08:16:46,149: PCI:   region 4: 0000c020
->> 2025-11-04 08:16:46,149: PCI: 00:07:0 class 0601 id 8086:0484
->> 2025-11-04 08:16:48,149: [    0.000000] Initializing cgroup subsys cpu
->> 2025-11-04 08:16:48,149: [    0.000000] Linux version 2.6.26-2-alpha- 
->> generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 20080704 
->> (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
->> 2025-11-04 08:16:48,150: [    0.000000] Booting GENERIC on Tsunami 
->> variation Clipper using machine vector Clipper from SRM
->> 2025-11-04 08:16:48,150: [    0.000000] Major Options: MAGIC_SYSRQ
->> 2025-11-04 08:16:48,150: [    0.000000] Command line: printk.time=0 
->> console=ttyS0
->> 2025-11-04 08:16:48,150: [    0.000000] memcluster 0, usage 1, 
->> start        0, end       15
->> 2025-11-04 08:16:48,150: [    0.000000] memcluster 1, usage 0, start       
->> 15, end    16384
->> 2025-11-04 08:16:48,150: [    0.000000] freeing pages 15:2048
->> 2025-11-04 08:16:48,150: [    0.000000] freeing pages 2987:16384
->> 2025-11-04 08:16:48,151: [    0.000000] reserving pages 2987:2988
->> 2025-11-04 08:16:48,151: [    0.000000] Built 1 zonelists in Zone order, 
->> mobility grouping on.  Total pages: 16272
->> 2025-11-04 08:16:48,151: [    0.000000] Kernel command line: printk.time=0 
->> console=ttyS0
->> 2025-11-04 08:16:57,358: PCI: 00:01:0 class 0101 id 1095:0646
->> 2025-11-04 08:16:57,358: PCI:   region 0: 0000c000
->> 2025-11-04 08:16:57,358: PCI:   region 1: 0000c008
->> 2025-11-04 08:16:57,359: PCI:   region 2: 0000c010
->> 2025-11-04 08:16:57,359: PCI:   region 3: 0000c018
->> 2025-11-04 08:16:57,359: PCI:   region 4: 0000c020
->> 2025-11-04 08:16:57,360: PCI: 00:07:0 class 0601 id 8086:0484
->> 2025-11-04 08:17:08,468: [    0.000000] Initializing cgroup subsys cpu
->> 2025-11-04 08:17:08,470: [    0.000000] Linux version 2.6.26-2-alpha- 
->> generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 20080704 
->> (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
->> 2025-11-04 08:17:08,471: [    0.000000] Booting GENERIC on Tsunami 
->> variation Clipper using machine vector Clipper from SRM
->> 2025-11-04 08:17:08,471: [    0.000000] Major Options: MAGIC_SYSRQ
->> 2025-11-04 08:17:08,472: [    0.000000] Command line: printk.time=0 
->> console=ttyS0
->> 2025-11-04 08:17:08,472: [    0.000000] memcluster 0, usage 1, 
->> start        0, end       15
->> 2025-11-04 08:17:08,473: [    0.000000] memcluster 1, usage 0, start       
->> 15, end    16384
->> 2025-11-04 08:17:08,473: [    0.000000] freeing pages 15:2048
->> 2025-11-04 08:17:08,474: [    0.000000] freeing pages 2987:16384
->> 2025-11-04 08:17:08,474: [    0.000000] reserving pages 2987:2988
->> 2025-11-04 08:17:08,475: [    0.000000] Built 1 zonelists in Zone order, 
->> mobility grouping on.  Total pages: 16272
->> 2025-11-04 08:17:08,476: [    0.000000] Kernel command line: printk.time=0 
->> console=ttyS0
->>
->> I.e. the replay worked as expected. When it fails, console.log only contains:
->>
->> 2025-11-04 08:25:26,601: PCI: 00:01:0 class 0101 id 1095:0646
->> 2025-11-04 08:25:26,601: PCI:   region 0: 0000c000
->> 2025-11-04 08:25:26,601: PCI:   region 1: 0000c008
->> 2025-11-04 08:25:26,601: PCI:   region 2: 0000c010
->> 2025-11-04 08:25:26,601: PCI:   region 3: 0000c018
->> 2025-11-04 08:25:26,601: PCI:   region 4: 0000c020
->> 2025-11-04 08:25:26,602: PCI: 00:07:0 class 0601 id 8086:0484
->> 2025-11-04 08:25:28,601: [    0.000000] Initializing cgroup subsys cpu
->> 2025-11-04 08:25:28,602: [    0.000000] Linux version 2.6.26-2-alpha- 
->> generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 20080704 
->> (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
->> 2025-11-04 08:25:28,602: [    0.000000] Booting GENERIC on Tsunami 
->> variation Clipper using machine vector Clipper from SRM
->> 2025-11-04 08:25:28,602: [    0.000000] Major Options: MAGIC_SYSRQ
->> 2025-11-04 08:25:28,602: [    0.000000] Command line: printk.time=0 
->> console=ttyS0
->> 2025-11-04 08:25:28,602: [    0.000000] memcluster 0, usage 1, 
->> start        0, end       15
->> 2025-11-04 08:25:28,602: [    0.000000] memcluster 1, usage 0, start       
->> 15, end    16384
->> 2025-11-04 08:25:28,602: [    0.000000] freeing pages 15:2048
->> 2025-11-04 08:25:28,603: [    0.000000] freeing pages 2987:16384
->> 2025-11-04 08:25:28,603: [    0.000000] reserving pages 2987:2988
->> 2025-11-04 08:25:28,603: [    0.000000] Built 1 zonelists in Zone order, 
->> mobility grouping on.  Total pages: 16272
->> 2025-11-04 08:25:28,603: [    0.000000] Kernel command line: printk.time=0 
->> console=ttyS0
->>
->> I.e. the replay did not work.
->>
->> Could this RCU stuff somehow influence the replay mechanism in QEMU?
+>> diff --git a/hw/core/numa.c b/hw/core/numa.c
+>> index 218576f745..e680130460 100644
+>> --- a/hw/core/numa.c
+>> +++ b/hw/core/numa.c
+>> @@ -163,6 +163,9 @@ static void parse_numa_node(MachineState *ms, 
+>> NumaNodeOptions *node,
+>>           numa_info[nodenr].node_memdev = MEMORY_BACKEND(o);
+>>       }
+>> +    /* Store spm configuration for later processing */
+>> +    numa_info[nodenr].is_spm = node->has_spm && node->spm;
+>> +
+>>       numa_info[nodenr].present = true;
+>>       max_numa_nodeid = MAX(max_numa_nodeid, nodenr + 1);
+>>       ms->numa_state->num_nodes++;
+>> diff --git a/hw/i386/e820_memory_layout.c b/hw/i386/e820_memory_layout.c
+>> index 3e848fb69c..5b090ac6df 100644
+>> --- a/hw/i386/e820_memory_layout.c
+>> +++ b/hw/i386/e820_memory_layout.c
+>> @@ -46,3 +46,76 @@ bool e820_get_entry(int idx, uint32_t type, 
+>> uint64_t *address, uint64_t *length)
+>>       }
+>>       return false;
+>>   }
+>> +
+>> +bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t 
+>> new_type)
+>> +{
+>> +    uint64_t end = start + length;
+>> +    bool updated = false;
+>> +    assert(!e820_done);
+>> +
+>> +    /* For E820_SOFT_RESERVED, validate range is within E820_RAM */
+>> +    if (new_type == E820_SOFT_RESERVED) {
+>> +        bool range_in_ram = false;
+>> +        for (size_t j = 0; j < e820_entries; j++) {
+>> +            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
+>> +            uint64_t ram_end = ram_start + 
+>> le64_to_cpu(e820_table[j].length);
+>> +            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
+>> +
+>> +            if (ram_type == E820_RAM && ram_start <= start && ram_end 
+>> >= end) {
+>> +                range_in_ram = true;
+>> +                break;
+>> +            }
+>> +        }
+>> +        if (!range_in_ram) {
+>> +            return false;
+>> +        }
+>> +    }
+>> +
+>> +    /* Find entry that contains the target range and update it */
+>> +    for (size_t i = 0; i < e820_entries; i++) {
+>> +        uint64_t entry_start = le64_to_cpu(e820_table[i].address);
+>> +        uint64_t entry_length = le64_to_cpu(e820_table[i].length);
+>> +        uint64_t entry_end = entry_start + entry_length;
+>> +
+>> +        if (entry_start <= start && entry_end >= end) {
+>> +            uint32_t original_type = e820_table[i].type;
+>> +
+>> +            /* Remove original entry */
+>> +            memmove(&e820_table[i], &e820_table[i + 1],
+>> +                    (e820_entries - i - 1) * sizeof(struct e820_entry));
+>> +            e820_entries--;
+>> +
+>> +            /* Add split parts inline */
+>> +            if (entry_start < start) {
+>> +                e820_table = g_renew(struct e820_entry, e820_table,
+>> +                                     e820_entries + 1);
+>> +                e820_table[e820_entries].address = 
+>> cpu_to_le64(entry_start);
+>> +                e820_table[e820_entries].length =
+>> +                    cpu_to_le64(start - entry_start);
+>> +                e820_table[e820_entries].type = original_type;
+>> +                e820_entries++;
+>> +            }
+>> +
+>> +            e820_table = g_renew(struct e820_entry, e820_table,
+>> +                                 e820_entries + 1);
+>> +            e820_table[e820_entries].address = cpu_to_le64(start);
+>> +            e820_table[e820_entries].length = cpu_to_le64(length);
+>> +            e820_table[e820_entries].type = cpu_to_le32(new_type);
+>> +            e820_entries++;
+>> +
+>> +            if (end < entry_end) {
+>> +                e820_table = g_renew(struct e820_entry, e820_table,
+>> +                                     e820_entries + 1);
+>> +                e820_table[e820_entries].address = cpu_to_le64(end);
+>> +                e820_table[e820_entries].length = 
+>> cpu_to_le64(entry_end - end);
+>> +                e820_table[e820_entries].type = original_type;
+>> +                e820_entries++;
+>> +            }
+>> +
+>> +            updated = true;
+>> +            break;
+>> +        }
+>> +    }
+>> +
+>> +    return updated;
+>> +}
+>> diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
+>> index b50acfa201..657cc679e2 100644
+>> --- a/hw/i386/e820_memory_layout.h
+>> +++ b/hw/i386/e820_memory_layout.h
+>> @@ -15,6 +15,7 @@
+>>   #define E820_ACPI       3
+>>   #define E820_NVS        4
+>>   #define E820_UNUSABLE   5
+>> +#define E820_SOFT_RESERVED  0xEFFFFFFF
+>>   struct e820_entry {
+>>       uint64_t address;
+>> @@ -26,5 +27,6 @@ void e820_add_entry(uint64_t address, uint64_t 
+>> length, uint32_t type);
+>>   bool e820_get_entry(int index, uint32_t type,
+>>                       uint64_t *address, uint64_t *length);
+>>   int e820_get_table(struct e820_entry **table);
+>> +bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t 
+>> new_type);
+>>   #endif
+>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+>> index bc048a6d13..3e50570484 100644
+>> --- a/hw/i386/pc.c
+>> +++ b/hw/i386/pc.c
+>> @@ -26,6 +26,7 @@
+>>   #include "qemu/units.h"
+>>   #include "exec/target_page.h"
+>>   #include "hw/i386/pc.h"
+>> +#include "system/ramblock.h"
+>>   #include "hw/char/serial-isa.h"
+>>   #include "hw/char/parallel.h"
+>>   #include "hw/hyperv/hv-balloon.h"
+>> @@ -787,6 +788,41 @@ static hwaddr pc_max_used_gpa(PCMachineState 
+>> *pcms, uint64_t pci_hole64_size)
+>>       return pc_above_4g_end(pcms) - 1;
+>>   }
+>> +static int pc_update_spm_memory(RAMBlock *rb, void *opaque)
+>> +{
+>> +    X86MachineState *x86ms = opaque;
+>> +    MachineState *ms = MACHINE(x86ms);
+>> +    ram_addr_t offset;
+>> +    ram_addr_t length;
+>> +    bool is_spm = false;
+>> +
+>> +    /* Check if this RAM block belongs to a NUMA node with spm=on */
+>> +    for (int i = 0; i < ms->numa_state->num_nodes; i++) {
+>> +        NodeInfo *numa_info = &ms->numa_state->nodes[i];
+>> +        if (numa_info->is_spm && numa_info->node_memdev) {
+>> +            MemoryRegion *mr = &numa_info->node_memdev->mr;
+>> +            if (mr->ram_block == rb) {
+>> +                /* Mark this RAM block as SPM and set the flag */
+>> +                rb->flags |= RAM_SPM;
+>> +                is_spm = true;
+>> +                break;
+>> +            }
+>> +        }
+>> +    }
+>> +
+>> +    if (is_spm) {
+>> +        offset = qemu_ram_get_offset(rb) +
+>> +                 (0x100000000ULL - x86ms->below_4g_mem_size);
+>> +        length = qemu_ram_get_used_length(rb);
+>> +        if (!e820_update_entry_type(offset, length, 
+>> E820_SOFT_RESERVED)) {
+>> +            warn_report("Failed to update E820 entry for SPM at 0x%" 
+>> PRIx64
+>> +                        " length 0x%" PRIx64, offset, length);
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   /*
+>>    * AMD systems with an IOMMU have an additional hole close to the
+>>    * 1Tb, which are special GPAs that cannot be DMA mapped. Depending
+>> @@ -901,6 +937,7 @@ void pc_memory_init(PCMachineState *pcms,
+>>       if (pcms->sgx_epc.size != 0) {
+>>           e820_add_entry(pcms->sgx_epc.base, pcms->sgx_epc.size, 
+>> E820_RESERVED);
+>>       }
+>> +    qemu_ram_foreach_block(pc_update_spm_memory, x86ms);
+>>       if (!pcmc->has_reserved_memory &&
+>>           (machine->ram_slots ||
+>> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+>> index 9b658a3f48..9b437eaa10 100644
+>> --- a/include/exec/cpu-common.h
+>> +++ b/include/exec/cpu-common.h
+>> @@ -89,6 +89,7 @@ ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
+>>   ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
+>>   ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
+>>   bool qemu_ram_is_shared(RAMBlock *rb);
+>> +bool qemu_ram_is_spm(RAMBlock *rb);
+>>   bool qemu_ram_is_noreserve(RAMBlock *rb);
+>>   bool qemu_ram_is_uf_zeroable(RAMBlock *rb);
+>>   void qemu_ram_set_uf_zeroable(RAMBlock *rb);
+>> diff --git a/include/system/memory.h b/include/system/memory.h
+>> index aa85fc27a1..0d36cbd30d 100644
+>> --- a/include/system/memory.h
+>> +++ b/include/system/memory.h
+>> @@ -275,6 +275,9 @@ typedef struct IOMMUTLBEvent {
+>>    */
+>>   #define RAM_PRIVATE (1 << 13)
+>> +/* RAM is Specific Purpose Memory */
+>> +#define RAM_SPM (1 << 14)
+>> +
+>>   static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify 
+>> fn,
+>>                                          IOMMUNotifierFlag flags,
+>>                                          hwaddr start, hwaddr end,
+>> diff --git a/include/system/numa.h b/include/system/numa.h
+>> index 1044b0eb6e..438511a756 100644
+>> --- a/include/system/numa.h
+>> +++ b/include/system/numa.h
+>> @@ -41,6 +41,7 @@ typedef struct NodeInfo {
+>>       bool present;
+>>       bool has_cpu;
+>>       bool has_gi;
+>> +    bool is_spm;
+>>       uint8_t lb_info_provided;
+>>       uint16_t initiator;
+>>       uint8_t distance[MAX_NODES];
+>> diff --git a/qapi/machine.json b/qapi/machine.json
+>> index 038eab281c..1fa31b0224 100644
+>> --- a/qapi/machine.json
+>> +++ b/qapi/machine.json
+>> @@ -500,6 +500,11 @@
+>>   # @memdev: memory backend object.  If specified for one node, it must
+>>   #     be specified for all nodes.
+>>   #
+>> +# @spm: if true, mark the memory region of this node as Specific
+>> +#     Purpose Memory (SPM). This will set the RAM_SPM flag for the
+>> +#     corresponding memory region and set the E820 type to
+>> +#     E820_SOFT_RESERVED. (default: false, since 9.2)
+>> +#
+>>   # @initiator: defined in ACPI 6.3 Chapter 5.2.27.3 Table 5-145, points
+>>   #     to the nodeid which has the memory controller responsible for
+>>   #     this NUMA node.  This field provides additional information as
+>> @@ -514,6 +519,7 @@
+>>      '*cpus':   ['uint16'],
+>>      '*mem':    'size',
+>>      '*memdev': 'str',
+>> +   '*spm':    'bool',
+>>      '*initiator': 'uint16' }}
+>>   ##
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index ae8ecd50ea..0090d9955d 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -1611,6 +1611,11 @@ bool qemu_ram_is_noreserve(RAMBlock *rb)
+>>       return rb->flags & RAM_NORESERVE;
+>>   }
+>> +bool qemu_ram_is_spm(RAMBlock *rb)
+>> +{
+>> +    return rb->flags & RAM_SPM;
+>> +}
+>> +
 > 
-> I don't know (yet).
+> IIUC, this function is unused, and the only setter is in 
+> pc_update_spm_memory().
 > 
-> Can you attach gdb and show a backtrace for each thread? It often reveals 
-> deadlock among threads.
+> Why do we have to modify the RAMBlock at all or walk over them?
+> 
+> Shouldn't it be sufficient to just walk over all &ms->numa_state- 
+>  >nodes[i] and update e820 accordingly?
+> 
+Hi David,
 
-Sure, it looks like this:
+Thank you for the excellent review and the insightful suggestion!
 
-(gdb) thread apply all bt
+You're absolutely right - I've simplified the implementation to
+directly iterate over NUMA nodes instead of RAMBlocks.
 
-Thread 4 (Thread 0x7f31bd1ff6c0 (LWP 89223) "qemu-system-alp"):
-#0  0x00007f31c47150cd in syscall () at /lib64/libc.so.6
-#1  0x00005593dd2b578d in qemu_futex_wait (f=0x5593ddad9e50 <rcu_call_ready_event>, val=4294967295) at /home/thuth/devel/qemu/include/qemu/futex.h:47
-#2  0x00005593dd2b59a1 in qemu_event_wait (ev=0x5593ddad9e50 <rcu_call_ready_event>) at ../../home/thuth/devel/qemu/util/event.c:162
-#3  0x00005593dd2c12e3 in call_rcu_thread (opaque=0x0) at ../../home/thuth/devel/qemu/util/rcu.c:304
-#4  0x00005593dd2b3311 in qemu_thread_start (args=0x5594051010c0) at ../../home/thuth/devel/qemu/util/qemu-thread-posix.c:393
-#5  0x00007f31c4693f54 in start_thread () at /lib64/libc.so.6
-#6  0x00007f31c471732c in __clone3 () at /lib64/libc.so.6
+I'll send v3 after internal review. I also understand Igor's
+feedback would be valuable - I'll wait to hear if he has any
+concerns.
 
-Thread 3 (Thread 0x7f31bc8fd6c0 (LWP 89224) "qemu-system-alp"):
-#0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
-#1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/libc.so.6
-#2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
-#3  0x00007f31c470a7c6 in ppoll () at /lib64/libc.so.6
-#4  0x00007f31c6916890 in g_main_context_iterate_unlocked.isra () at /lib64/libglib-2.0.so.0
-#5  0x00007f31c6916a4f in g_main_loop_run () at /lib64/libglib-2.0.so.0
-#6  0x00005593dd0d1ab0 in iothread_run (opaque=0x559405a567a0) at ../../home/thuth/devel/qemu/iothread.c:70
-#7  0x00005593dd2b3311 in qemu_thread_start (args=0x559405a571a0) at ../../home/thuth/devel/qemu/util/qemu-thread-posix.c:393
-#8  0x00007f31c4693f54 in start_thread () at /lib64/libc.so.6
-#9  0x00007f31c471732c in __clone3 () at /lib64/libc.so.6
-
-Thread 2 (Thread 0x7f3137fff6c0 (LWP 89225) "qemu-system-alp"):
-#0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
-#1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/libc.so.6
-#2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
-#3  0x00007f31c470b2be in write () at /lib64/libc.so.6
-#4  0x00005593dd2af441 in event_notifier_set (e=0x559405a56a54) at ../../home/thuth/devel/qemu/util/event_notifier-posix.c:117
-#5  0x00005593dd2cdcde in aio_notify (ctx=0x559405a56980) at ../../home/thuth/devel/qemu/util/async.c:506
-#6  0x00005593dd2cdd2a in aio_timerlist_notify (opaque=0x559405a56980, type=QEMU_CLOCK_VIRTUAL) at ../../home/thuth/devel/qemu/util/async.c:524
-#7  0x00005593dd2d4014 in timerlist_notify (timer_list=0x559405a56d50) at ../../home/thuth/devel/qemu/util/qemu-timer.c:293
-#8  0x00005593dd2d3aaf in qemu_clock_notify (type=QEMU_CLOCK_VIRTUAL) at ../../home/thuth/devel/qemu/util/qemu-timer.c:147
-#9  0x00005593dcf92c2c in icount_notify_aio_contexts () at ../../home/thuth/devel/qemu/accel/tcg/tcg-accel-ops-icount.c:72
-#10 0x00005593dcf92c92 in icount_handle_deadline () at ../../home/thuth/devel/qemu/accel/tcg/tcg-accel-ops-icount.c:88
-#11 0x00005593dcf93c45 in rr_cpu_thread_fn (arg=0x559405ce47d0) at ../../home/thuth/devel/qemu/accel/tcg/tcg-accel-ops-rr.c:251
-#12 0x00005593dd2b3311 in qemu_thread_start (args=0x559405ce4720) at ../../home/thuth/devel/qemu/util/qemu-thread-posix.c:393
-#13 0x00007f31c4693f54 in start_thread () at /lib64/libc.so.6
-#14 0x00007f31c471732c in __clone3 () at /lib64/libc.so.6
-
-Thread 1 (Thread 0x7f31bd82bb00 (LWP 89222) "qemu-system-alp"):
-#0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
-#1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/libc.so.6
-#2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
-#3  0x00007f31c470a7c6 in ppoll () at /lib64/libc.so.6
-#4  0x00005593dd2d418e in qemu_poll_ns (fds=0x5594064aad30, nfds=5, timeout=993592000) at ../../home/thuth/devel/qemu/util/qemu-timer.c:342
-#5  0x00005593dd2cf1bd in os_host_main_loop_wait (timeout=993592000) at ../../home/thuth/devel/qemu/util/main-loop.c:308
-#6  0x00005593dd2cf30f in main_loop_wait (nonblocking=0) at ../../home/thuth/devel/qemu/util/main-loop.c:592
-#7  0x00005593dce7edf6 in qemu_main_loop () at ../../home/thuth/devel/qemu/system/runstate.c:903
-#8  0x00005593dd1e212e in qemu_default_main (opaque=0x0) at ../../home/thuth/devel/qemu/system/main.c:50
-#9  0x00005593dd1e21e8 in main (argc=25, argv=0x7ffdad60bf18) at ../../home/thuth/devel/qemu/system/main.c:93
-
-
-  HTH,
-   Thomas
-
+Best regards,
+Jerry Huang
 
