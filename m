@@ -4,98 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3CBCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 20:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C60CCFA07
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 22:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGNzh-0005V3-J0; Tue, 04 Nov 2025 15:51:09 -0500
+	id 1vGPTV-0005Ay-9o; Tue, 04 Nov 2025 17:26:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1vGNzg-0005Ue-Cu
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 15:51:08 -0500
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vGPTQ-0005AM-8p
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:25:57 -0500
+Received: from mail-io1-xd2f.google.com ([2607:f8b0:4864:20::d2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1vGNze-0000pH-IQ
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 15:51:08 -0500
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-8b144ec3aa8so121749885a.2
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 12:51:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vGPTO-0002hO-R4
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:25:56 -0500
+Received: by mail-io1-xd2f.google.com with SMTP id
+ ca18e2360f4ac-9483ece8d4aso143920839f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 14:25:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762289465; x=1762894265; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HwpoKRNQubiQXOMEiN9Sz+GbWi7OVAAuwKAREllNUqU=;
- b=L8FRl9/TUs5v9BJJpi6/+kdMlBYW0VrokYQOMbrjN7RXgjSGjRFaBI0ow8iyMkfZ98
- cdjwg8A8QLK8l6PYTRjygw4RZD6CDTTXwl/CNr56BLCAiJ8cgsT1j3gJC791Wu18qBlg
- NdA8OLHNvLTNry7IibCRGctTwp3nJRR0PuAfsF4x4knbnN63V6DA55IN0S6t+VZxtUOy
- gKU/A1ojclL1eY56ot7g5IhYyQ/QsZ6+k4Jb0rmyqNn+/yFuwlx92peoNDw4I6SOkydo
- EL89AmBPFWT1Jfxf57jaJyqMVrxhL3NIR+IHq0WbKsTpaYPOiMKq0T2N943rRAuI6YU1
- N4Ug==
+ d=gmail.com; s=20230601; t=1762295150; x=1762899950; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ad+01ZEwhsE8gjLnxNHNZX5rtgi6IEtaEAFRT9B9mCc=;
+ b=g58v+VRibWy07iWYPaQxthzD/RUQHVg2m5SacB2mQOywhJIod/Fmiza3A2Bzxfdznn
+ tB9q0/04N8oe2LDQB8xl/nazHjje54A107YCd/Y6EVA+Thw2ah5PiTencDrFoepme5MH
+ J2c8uqwRdPi1J+kNSF2asftpmn0ARtrQjejhormS1fwOBmCUbvcRe8PP8OtHp+vZHMpv
+ 2ilWOqIzg2o1xuT1Cmk5qQlfupQEWPOJmWF5AAw/QUfKtkE7HDz++QF/MXPQAjRDko9w
+ cYN5cBWMy1gbH7vAgotjzQCNBWnJAUUjSPNEgVv3DhoEAp7eM1EtPQ6qEAKwJQYzKFkc
+ qBuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762289465; x=1762894265;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1762295150; x=1762899950;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HwpoKRNQubiQXOMEiN9Sz+GbWi7OVAAuwKAREllNUqU=;
- b=JoZKxenFCufRcrdzHcZ6iq/tiQfWPk9I8xTf5A4nuGO/sZF15aOv38Oj7IagcJJTwR
- AZodq+e5CYH3TdhXoi0ldHf6m2aYiOxH8YbANHwDa3MpwExZ2Hg5f2xoNMIWjIe2k87P
- WeMf5/KYPOwR/tHFfIcq1M/Mam7jM8OP8o9WiL3p4RdDoFTjTnIwgxAvL+98W6T7iok0
- 5jVF6l6Sp7KMARcLs1Fxq488i1WonOGopImR+UvKNx7N9cyuhsVjhbDeVocOQirBlg8b
- uoo4iLf8LpN6U59wcLU7qfOhalAQfZy+daIiw6kQP1nyXj6m00Md6jX0FDzy9Wnd1dQ9
- cL2w==
-X-Gm-Message-State: AOJu0YyWd0s05MQUdHgvrZhYLk6gnZ3oMST0C9jd2TXqbdFG6uS8FIky
- jWftnWWweFp9hRTmbJdVfNmOJMl7NMl+TtbdezVlH05XIQtR+drLSrIY
-X-Gm-Gg: ASbGncvbs6mxNb9OJrGkU2/gpFK7fp07HxoBkCosd1A5U+GewjseM1B7pFj+/CLGpBV
- bmLBFQ9ZSB7myScVjR6Yw+sMQC7q1Cjfb014wOVmieRtdNXESV3cua0ZYAypceqjEIiX0Hb/d8w
- JCzEBkr4W1bkNLj3fcE59UjS0x5iP/kteSSd0qsMy+IdIivQwSCBLewPaRaEhxOqzUcD34PNF2b
- m1crOHTznOVMJ8d+JqetQFsvSU+3WI08b5NBHIUkjYiXNI7Zyy9mre+aWoki5evNaO/gDDQ8z9V
- pt6jHahhX+0tNOOXGOk+v4SdJYlroY4FST2wVpRPzWT+jbH24rVlxf99ssD9ER1SZ1a1pzFC78R
- Yk5nyppl39QxKabVg+mBvvOK3Bm+GuJw8G/4Fvq0A2xTd7MDblcwqZyOOG5vmhrFp0CdNC968uO
- jpzV1UDF2aaGgFC99K8P+xPuDl
-X-Google-Smtp-Source: AGHT+IHn+L3zCfByUl/Niw82n/+LOrjv4axpM5Dow0VFCtnqR8C/XGM5sCaXxwCLvjEFo5Io/JsNLA==
-X-Received: by 2002:a05:620a:4483:b0:8b1:83b:e5a6 with SMTP id
- af79cd13be357-8b220af1abamr131051185a.75.1762289464499; 
- Tue, 04 Nov 2025 12:51:04 -0800 (PST)
-Received: from [10.50.205.198] ([185.213.193.149])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b0f8478b9csm263788085a.52.2025.11.04.12.51.03
+ bh=Ad+01ZEwhsE8gjLnxNHNZX5rtgi6IEtaEAFRT9B9mCc=;
+ b=KlXjvkixNoKwZLCjWzToKT3yq6WSCeVPhWuJM9LtHYK7blXGeqGzpnLVrN8n3JvK2i
+ Mhp1rLdSistSE3n0YczouydJS8LpTY/0hmOarXSVTx1oYx8itGj0Y75iISUfEhpP2rr7
+ N/UeSAf3fGBRpF5FjQU1QSFmcDiDvMJqI61sgTAdmflMPJeBc4ubHXxaIM53u9fBTGgj
+ YvgcODik/Sl4yKJNrTsiXugs8PHHuiV8O1tbWLf7cfJ9jlrJGB7dfvK4NNIbwLuwmiD+
+ jdSaQNqUG5BtC00L+LJyzSJG+GTAoGUxgxoH6vR9E4gtfui4MhzDOpiop/8Q7J28fNC7
+ AsTw==
+X-Gm-Message-State: AOJu0Yxp7fBmYJjqfDuUmMO4qquIZtmbA01WgSWoApXk6nV66uH5HNZI
+ B7RZqxWpFJDnCXM+qCA8QRXQB8Z2K+tUnCsHJ4nIsKZ3OLa490upRY86ZdYj4ntBO5Q=
+X-Gm-Gg: ASbGncuJn6+jkzMcoMUNkZowWL1R1K8/R96kh3xdy6cJqJwKBF5dJUSImN/jY+gvQdd
+ Ap4m2Got4sOvLtbtJLZt1vnm5nexStEP9mUbrDhMuDsb1FlCND4S9DKfWK3uwsaMMln7AoBQSeA
+ yATU4kjt15mh/qKhSsowRFUY4AiIZMJBEtpxC1/58i0XaG3eu5Be+vyrRFx72rQP/HOF2JKzG8A
+ 8Q+2rmyY3EAIrjPgcJPRre2T/qt8ixf4MlhJGGuSInf2Ay9shYFcYOASZ3U4jMlZ9yJc0UfBzWq
+ cz+f0NtHpb/ia8NS5bvDNfe04Oqvxr07oqzavFGR74YVCxGbxeVQanh5YHXv0Ep6siNTWGHjOs8
+ 7vXJHzU+0GyMZipa5BadX1P3IkHnk39eFuqiX+IFNseQtV7pYU7/RNxEGymjkYcDHn6Z4j/pFcK
+ DmVWdZjc66XV2gVPn9ieLpxZNUFHDDmZ4a/o9chfK3rEVJl6daxSZmTtoah+aWERsYkh0rD2Tyi
+ YC0
+X-Google-Smtp-Source: AGHT+IHRb9WrtmmVMG7qHVJHymZADbhsAMCH9reJWpr1+F6q+kOJ4NeKmZX9194e8b5eAHRMdwEMTg==
+X-Received: by 2002:a05:6e02:1c08:b0:433:2dbd:e93c with SMTP id
+ e9e14a558f8ab-433407a6f3emr14604735ab.4.1762295150273; 
+ Tue, 04 Nov 2025 14:25:50 -0800 (PST)
+Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
+ [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-5b7224a84c3sm1755789173.0.2025.11.04.14.25.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 12:51:04 -0800 (PST)
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Tue, 04 Nov 2025 15:50:00 -0500
-Subject: [PATCH] target/arm: add support for FEAT_MTE_TAGGED_FAR
+ Tue, 04 Nov 2025 14:25:49 -0800 (PST)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+Subject: [PATCH v2 0/3] Hexagon (target/hexagon) Improve USR handling
+Date: Tue,  4 Nov 2025 15:25:45 -0700
+Message-ID: <20251104222548.108264-1-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251104-feat-mte-tagged-far-v1-1-cdfd7db40397@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAPdmCmkC/x3MQQqAIBBA0avIrBtQK5CuEi2GHG0WWahEEN09a
- fkW/z9QOAsXmNQDmS8pcqQG0ylYN0qRUXwzWG1HY/SAganiXhkrxcgeA2Vcne+1JecceWjlmTn
- I/V/n5X0/koOOuGUAAAA=
-X-Change-ID: 20251104-feat-mte-tagged-far-c8d302a888ad
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org, 
- Gabriel Brookman <brookmangabriel@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762289463; l=3805;
- i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=AmAGdnlPNeY/wfLgYtaHqGABhjeGNyiiTYow65UsP1E=;
- b=dO9yd/A9m+bfodyCw8TDAnw2vCJ4XrQM7sM+qr+6wYfycD+bkLtM7tuZYw6Ns3MFz7yF04NKk
- tX9c1ENtssTD+2Dynrw3kYpAX9iwtJiZqrgAm/GB7vPlMdoanYYOXWx
-X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
- pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=brookmangabriel@gmail.com; helo=mail-qk1-x72c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,96 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_MTE_TAGGED_FAR is a feature required for MTE4. The feature
-guarantees that the full address (including tag bits) is reported after
-a SEGV_MTESERR, and advertises itself in the ID_AA64PFR2_EL1 system
-register. QEMU was already reporting the full address, so this commit
-simply advertises the feature by setting that register, and unsets the
-register if MTE is disabled.
+Currently, any instruction that writes USR disables short-circuiting a
+packet.  When the write is implicit, we can allow the short-circuit.
 
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
----
-This patch is the first step toward implementing ARM's Enhanced Memory
-Tagging Extension (MTE4). MTE4 guarantees the presence of several
-subfeatures: FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR,
-FEAT_MTE_STORE_ONLY, FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM,
-none of which are currently implemented in QEMU.
+Changes in v2:
+- Properly handle implicit USR writes when packet commit is necessary
+- Added test case
 
-According to the ARM ARM, the presence of any of these features (except
-FEAT_MTE_PERM) implies the presence of all the others. For simplicity
-and ease of review, I plan to introduce them one at a time. This first
-patch focuses on FEAT_MTE_TAGGED_FAR.
+Taylor Simpson (3):
+  Hexagon (target/hexagon) Add pkt_need_commit argument to arch_fpop_end
+  Hexagon (target/hexagon) Implicit writes to USR don't force packet
+    commit
+  Hexagon (tests/tcg/hexagon) Add test for USR changes in packet
 
-FEAT_MTE_TAGGED_FAR guarantees that the full fault address (including
-tag bits) is reported after a SEGV_MTESERR, and exposes itself in the
-ID_AA64PFR2_EL1 register. QEMU already reports the full address in this
-case, so this change only advertises the feature by setting the
-appropriate field in ID_AA64PFR2_EL1. The field is cleared when MTE
-support is disabled or rolled back to instruction-only.
+ target/hexagon/arch.h              |   2 +-
+ target/hexagon/gen_tcg.h           | 114 ++++++------
+ target/hexagon/helper.h            | 114 ++++++------
+ target/hexagon/translate.h         |   1 +
+ target/hexagon/arch.c              |   3 +-
+ target/hexagon/op_helper.c         | 287 +++++++++++++++++------------
+ target/hexagon/translate.c         |  35 ++--
+ tests/tcg/hexagon/usr.c            |  26 +++
+ target/hexagon/gen_helper_funcs.py |   8 +-
+ target/hexagon/gen_tcg_funcs.py    |   4 +
+ 10 files changed, 343 insertions(+), 251 deletions(-)
 
-Testing:
-- Verified in system mode that the MTEFAR field in ID_AA64PFR2_EL1
-is set to 1 when running with mte=on and cleared with mte=off.
-- Verified in user mode test that SEGV_MTESERR faults report the full
-tagged address as expected.
-
-I didn’t include these checks as formal tests since the functionality is
-simple, but I can add them in follow-up versions if reviewers prefer.
-
-Follow-up patches will implement the remaining MTE4 subfeatures listed
-above.
-
-Thanks,
-Gabriel Brookman
----
- target/arm/cpu.c       | 4 +++-
- target/arm/tcg/cpu64.c | 4 ++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 39292fb9bc..804e70b235 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2020,6 +2020,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-          */
-         if (tcg_enabled() && cpu->tag_memory == NULL) {
-             FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 1);
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR2, MTEFAR, 0);
-         }
- 
-         /*
-@@ -2027,7 +2028,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-          * enabled on the guest (i.e mte=off), clear guest's MTE bits."
-          */
-         if (kvm_enabled() && !cpu->kvm_mte) {
--                FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR2, MTEFAR, 0);
-         }
- #endif
-     }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 6871956382..27f0b43256 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1283,6 +1283,10 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64PFR1, GCS, 1);       /* FEAT_GCS */
-     SET_IDREG(isar, ID_AA64PFR1, t);
- 
-+    t = GET_IDREG(isar, ID_AA64PFR2);
-+    t = FIELD_DP64(t, ID_AA64PFR2, MTEFAR, 1);    /* FEAT_MTE_TAGGED_FAR */
-+    SET_IDREG(isar, ID_AA64PFR2, t);
-+
-     t = GET_IDREG(isar, ID_AA64MMFR0);
-     t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16, 1);   /* 16k pages supported */
-
----
-base-commit: e9c692eabbbb7f395347605a6ef33a32d398ea25
-change-id: 20251104-feat-mte-tagged-far-c8d302a888ad
-
-Best regards,
 -- 
-Gabriel Brookman <brookmangabriel@gmail.com>
+2.43.0
 
 
