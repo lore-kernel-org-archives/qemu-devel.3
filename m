@@ -4,100 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996F1CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C641CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGH5S-0006jG-Rt; Tue, 04 Nov 2025 08:28:38 -0500
+	id 1vGH7D-0007L0-SG; Tue, 04 Nov 2025 08:30:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGH5P-0006iY-4N
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:28:36 -0500
+ id 1vGH7B-0007KP-2f
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:30:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGH5L-0006Vj-2G
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:28:33 -0500
+ id 1vGH78-0006td-PR
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:30:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762262907;
+ s=mimecast20190719; t=1762263022;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PMvpD8RG5IOLUwsScffHHMVrs1zIFbBwA3oGpgyCADo=;
- b=AOxfDWBT+SXf3Sy+OfkzZu+u7CIDDfBFdN8JVnpF7y/igzR+J4mCemcON3+NNVnOss3d3D
- dFWP6Jfsm1gTaxdozlbLSoiy3JhBmdCctCIvhwRAMnqDQCb8bHUm+WW/xgoiIXh3vu1lBF
- 36qbDrg0j9Glx5It88gcnCyTuQC6/X8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JQMpFI1rvT0VsnOfwmarg5zR4Dxv/jlNvuXJjZnei8Y=;
+ b=jMhazkB6ig5yxExtbPe74PAPTwLX4qB8TQV3v+3G89gjxCXpeRGJ/XqiwCgqb15L3auhvC
+ bSa1zFisnZTcshy5mnVYikBbb8STIfGwrKAx2RCE1kqs5uPYbiK9jLgZzWBHsx8PlqKxSx
+ tPZcQV9eXZI5Cz3veZ06e8FFsJ7p6Ok=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-AhlhH-_6NP2Hj9sXCeVK_A-1; Tue, 04 Nov 2025 08:28:26 -0500
-X-MC-Unique: AhlhH-_6NP2Hj9sXCeVK_A-1
-X-Mimecast-MFC-AGG-ID: AhlhH-_6NP2Hj9sXCeVK_A_1762262905
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-476b8c02445so44715285e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 05:28:26 -0800 (PST)
+ us-mta-16-G8zIaOyBNNm087lZnnyp0Q-1; Tue, 04 Nov 2025 08:30:20 -0500
+X-MC-Unique: G8zIaOyBNNm087lZnnyp0Q-1
+X-Mimecast-MFC-AGG-ID: G8zIaOyBNNm087lZnnyp0Q_1762263019
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-428567f67c5so2703848f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 05:30:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762262905; x=1762867705;
+ d=1e100.net; s=20230601; t=1762263019; x=1762867819;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PMvpD8RG5IOLUwsScffHHMVrs1zIFbBwA3oGpgyCADo=;
- b=eGGg7+SWiKhUIrVleAanqSE0NVjJKHGwVk5RkcTArG0JvytG6hkE8F/ZFOqV4DuIGw
- TVAdk2zJ9qGwamET6iVQl7EUFOcuP8vFHO/HPCD9FOi8Cx24KCZaoRqN5qoq8C8mLjff
- vnQ27bee+Cvh2ThyLQr/sgKNEleNeK/jGKJAYTa9emEiThNCDc4LeS5vKSVsP2UbtwMJ
- /MsbEkU+3SiH+Ronc0VV70AXOrauUeqxanHkyeBdGaYETzozwOxLu+YngTZJ0Q/bh/ye
- lDybhqQXY2/hF65SgEIigDneHwd5AShPQmx0UeWHwdHSBy2ldLc7+MdE+SYAVMYG5gka
- 0+KQ==
+ bh=JQMpFI1rvT0VsnOfwmarg5zR4Dxv/jlNvuXJjZnei8Y=;
+ b=ZtnXzLofiAPrrohToHrcJyrZhPrmVv/P+7eHE0idaf++M2xAO8eNjEi3q0RnEkzqkE
+ ThqTMWeaIPCzeU4z5wg3jrusTfxWNjOX7zx0NIoKaTtv3kowcWZnYd549K8tTJLJ5f2q
+ m5rgb9SvwabIG1YYTMRgAi2SCHl8aGllvj5wig3LHkuM4SHo0L+1wCR3tuA78hNChNjQ
+ 1F5xk9lGRiS/ha5pgrm9jWoJanupPuCi4UJv2B0wC/53e+g3d685BbK78E/cnJJoE2lk
+ 9yzlY5AqEkN9/bcAeSupKOvXrIgepD8TPknp0WIbP+S1gNwGaJArF9It+GFFfBmubSdC
+ Pt6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0KraWwRZ6dFDg4ZQPXhCKrDybnNa6RaGFNZEofzVMUxUKEuf1qRDBaumevJ1uHX9GZx/kSanF9K9X@nongnu.org
-X-Gm-Message-State: AOJu0YykfJme67UFkQhIaW3THt8uq+ugiDBKWSmI7R71EVwdPFpv2WaH
- fcultn4K6CrqvQ1iFmUDFquZE/np+8oiHFvGPztUiplEURC7NlaVK8S+qgUKzd6keJMTryyuwmY
- ZZ3Fguy4U2MOQPDOk1btTOMdksVLx7BUHsEQ3Iwm60+1Qp5y7lUnM+jkl
-X-Gm-Gg: ASbGncucxi1NnrTn54kXugg///o2MqhrY/rHa0M180SF+CFPKmiW5htsyVyre8ZqPD2
- UezsZifjDaZD/x99MfWpsLSD9iH8UY8SvmS2WEuLEhT4xc7YWImgYsdUxHWl+XnlA3wIBT/e6jS
- H+9qDaz1d2GFydJPkM5tHhoyUJt32+BYw5O94Zf0Jed8e2Pc8L1jfjPbAgqoBMMg/QAJ+ACxqDk
- jwZAQOgAg4WLOPw/1sJ7euc+oKA+yJR801DYr407o6QPI/J/wmkCkN91Je1mH0Pjpe1gdODxAn8
- 4ttT4RVBeJJzi6GKJxXiOBZGu5phicppFM/df7QPs2zialT4QYHPUXyloKC9SZwcABFZwgxWUSs
- nHRi0x64sxKjRqcuO7E7CFtIifel3MzGf2ovSeoJBD2vl7A==
-X-Received: by 2002:a05:600c:190e:b0:477:557b:6917 with SMTP id
- 5b1f17b1804b1-477557b7939mr21697075e9.18.1762262905160; 
- Tue, 04 Nov 2025 05:28:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqEdJPWOAbE4tEpkHuv7cnvFks1VMz/3iqI/nSU52vM2RuJvBCe2V199bCve1l2I19fZAKtw==
-X-Received: by 2002:a05:600c:190e:b0:477:557b:6917 with SMTP id
- 5b1f17b1804b1-477557b7939mr21696765e9.18.1762262904716; 
- Tue, 04 Nov 2025 05:28:24 -0800 (PST)
+ AJvYcCVWlyZlxsAnrIE5NwdrVYIJfze7TPbbmps2G/axshpMyARv+vU5Aw6kjdBVh7MuDjwzhFBZ9sKoTe3m@nongnu.org
+X-Gm-Message-State: AOJu0Yyfy7c0aoRhzKp0IsyLs6oJWQMk5nLpdpVqW6kHimfkkMcwgSMa
+ xspGNBWFQooGObNoowIvM5CtAQjHbzZkvOsq1NUxXI8qjfYsjSWV3s0Zo8fFjG6nfD/+9YD57NS
+ c4Uf5rb7I1gIvabvuZpdcDXD9DVmlg5JwulP6Ry4j5JC/Tv/MFIXwT5Tk
+X-Gm-Gg: ASbGnctxLXMfGfz2UCDdh/99cmdwBhLUDwQH8WTGYcJtyd2M9FbAcIN5cQl0laCtg1H
+ w6ua9Hg0BPPHXRuFtWeJsk8A8DDITkfUVayKfFwGGoDZtSbjTsao7GC9Q7YY/wu8ZMjMb/DB0kZ
+ 0Z1Y1PsvHaXT5fmOVglRIA9RLAqmcTNus+oJHdSRHRhaQhgB0H/4ViGP7sJ4UafIUARJ/RsqNeS
+ FjC73mRfu4YtrlZbyKJfFAEpnUihw/pR3gaKzDogwzsBAVFMIAPIg0PYfkMEUeNXhJ/ow4wk++U
+ +a2HXdcDZf4r8rCSKpvDmWPoDaUdOG5UJ4zkClBkTAikIM56f+ye9S1lKzYvfQFo+CCdyCSDp3a
+ AhepSc7xw2NJckUt4bVkwaVps7sZIv+H4Kwb+VJOFs3pedw==
+X-Received: by 2002:a05:6000:25c7:b0:428:4b76:c8cd with SMTP id
+ ffacd0b85a97d-429bd6faf24mr14805385f8f.62.1762263019418; 
+ Tue, 04 Nov 2025 05:30:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGbfgs89karEmbF53UeRNZpKgdpIcoxZXL7bpXCVh+zcc6LshRSM8JJ4QRE+sNUcQgRDBowjg==
+X-Received: by 2002:a05:6000:25c7:b0:428:4b76:c8cd with SMTP id
+ ffacd0b85a97d-429bd6faf24mr14805337f8f.62.1762263018852; 
+ Tue, 04 Nov 2025 05:30:18 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4775592226fsm17725095e9.11.2025.11.04.05.28.23
+ ffacd0b85a97d-429dc1f5b93sm4481252f8f.27.2025.11.04.05.30.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 05:28:24 -0800 (PST)
-Message-ID: <21bcd8a4-53ad-4b00-baa4-98bccd08f2f2@redhat.com>
-Date: Tue, 4 Nov 2025 14:28:23 +0100
+ Tue, 04 Nov 2025 05:30:17 -0800 (PST)
+Message-ID: <e9346763-0df0-4495-9d20-4cf15cfa1124@redhat.com>
+Date: Tue, 4 Nov 2025 14:30:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/32] hw/arm/smmuv3-accel: Install SMMUv3 GBPA based
- hwpt
+Subject: Re: [PATCH v5 13/32] hw/arm/smmuv3-accel: Add nested vSTE
+ install/uninstall support
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- kjaju@nvidia.com
+To: Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
 References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-15-skolothumtho@nvidia.com>
+ <20251031105005.24618-14-skolothumtho@nvidia.com>
+ <987614d8-de6b-4cb5-b5a8-1723e24502f3@redhat.com>
+ <CH3PR12MB7548B864AF133DEFFCFCBB2BABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251031105005.24618-15-skolothumtho@nvidia.com>
+In-Reply-To: <CH3PR12MB7548B864AF133DEFFCFCBB2BABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
@@ -107,7 +117,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,130 +134,271 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
 
-On 10/31/25 11:49 AM, Shameer Kolothum wrote:
-> When the Guest reboots or updates the GBPA we need to attach a nested HWPT
-> based on the GBPA register values.
-In practice you only take into account GPBA.ABORT bit. Also reminds what
-this latter does, ie.
-"attach a nested HWPT based on the new GPBA.ABORT bit which either
-aborts all incoming transactions or bypass them"
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->  hw/arm/smmuv3-accel.h |  8 ++++++++
->  hw/arm/smmuv3.c       |  2 ++
->  3 files changed, 52 insertions(+)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index c74e95a0ea..0573ae3772 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -479,6 +479,48 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
->      .unset_iommu_device = smmuv3_accel_unset_iommu_device,
->  };
->  
-> +
-> +/* Based on SMUUv3 GBPA configuration, attach a corresponding HWPT */
-> +void smmuv3_accel_gbpa_update(SMMUv3State *s)
-> +{
-> +    SMMUv3AccelDevice *accel_dev;
-> +    Error *local_err = NULL;
-> +    SMMUViommu *vsmmu;
-> +    uint32_t hwpt_id;
-> +
-> +    if (!s->accel || !s->s_accel->vsmmu) {
-> +        return;
-> +    }
-> +
-> +    vsmmu = s->s_accel->vsmmu;
-> +    /*
-> +     * The Linux kernel does not allow configuring GBPA MemAttr, MTCFG,
-> +     * ALLOCCFG, SHCFG, PRIVCFG, or INSTCFG fields for a vSTE. Host kernel
-I think in general we shall avoid doing any assumptions about linux
-kernel capability.
-> +     * has final control over these parameters. Hence, use one of the
-It seems to be contradictory to the above statement.
-> +     * pre-allocated HWPTs depending on GBPA.ABORT value.
-I would remove the comment
-> +     */
-> +    if (s->gbpa & SMMU_GBPA_ABORT) {
-> +        hwpt_id = vsmmu->abort_hwpt_id;
-> +    } else {
-> +        hwpt_id = vsmmu->bypass_hwpt_id;
-> +    }
-> +
-> +    QLIST_FOREACH(accel_dev, &vsmmu->device_list, next) {
-> +        if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev, hwpt_id,
-> +                                                   &local_err)) {
-> +            error_append_hint(&local_err, "Failed to attach GBPA hwpt id %u "
-> +                              "for dev id %u", hwpt_id, accel_dev->idev->devid);
-> +            error_report_err(local_err);
-> +        }
-> +    }
-> +}
-> +
-> +void smmuv3_accel_reset(SMMUv3State *s)
-> +{
-> +     /* Attach a HWPT based on GBPA reset value */
-> +     smmuv3_accel_gbpa_update(s);
-> +}
-> +
->  static void smmuv3_accel_as_init(SMMUv3State *s)
->  {
->  
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 73b44cd7be..8931e83dc5 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -51,6 +51,8 @@ bool smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
->                                       Error **errp);
->  bool smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
->                                             Error **errp);
-> +void smmuv3_accel_gbpa_update(SMMUv3State *s);
-> +void smmuv3_accel_reset(SMMUv3State *s);
->  #else
->  static inline void smmuv3_accel_init(SMMUv3State *s)
->  {
-> @@ -67,6 +69,12 @@ smmuv3_accel_install_nested_ste_range(SMMUv3State *s, SMMUSIDRange *range,
->  {
->      return true;
->  }
-> +static inline void smmuv3_accel_gbpa_update(SMMUv3State *s)
-> +{
-> +}
-> +static inline void smmuv3_accel_reset(SMMUv3State *s)
-> +{
-> +}
->  #endif
->  
->  #endif /* HW_ARM_SMMUV3_ACCEL_H */
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 1fd8aaa0c7..cc32b618ed 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1603,6 +1603,7 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->          if (data & R_GBPA_UPDATE_MASK) {
->              /* Ignore update bit as write is synchronous. */
->              s->gbpa = data & ~R_GBPA_UPDATE_MASK;
-> +            smmuv3_accel_gbpa_update(s);
->          }
->          return MEMTX_OK;
->      case A_STRTAB_BASE: /* 64b */
-> @@ -1885,6 +1886,7 @@ static void smmu_reset_exit(Object *obj, ResetType type)
->      }
->  
->      smmuv3_init_regs(s);
-> +    smmuv3_accel_reset(s);
->  }
->  
->  static void smmu_realize(DeviceState *d, Error **errp)
-Besides
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+On 11/4/25 1:26 PM, Shameer Kolothum wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 04 November 2025 11:06
+>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> smostafa@google.com; wangzhou1@hisilicon.com;
+>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+>> Krishnakant Jaju <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v5 13/32] hw/arm/smmuv3-accel: Add nested vSTE
+>> install/uninstall support
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hi Shameer,
+>>
+>> On 10/31/25 11:49 AM, Shameer Kolothum wrote:
+>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>
+>>> A device placed behind a vSMMU instance must have corresponding vSTEs
+>>> (bypass, abort, or translate) installed. The bypass and abort proxy
+>>> nested HWPTs are pre-allocated.
+>>>
+>>> For translat HWPT, a vDEVICE object is allocated and associated with
+>>> the vIOMMU for each guest device. This allows the host kernel to
+>>> establish a virtual SID to physical SID mapping, which is required for
+>>> handling invalidations and event reporting.
+>>>
+>>> An translate HWPT is allocated based on the guest STE configuration
+>>> and attached to the device when the guest issues SMMU_CMD_CFGI_STE or
+>>> SMMU_CMD_CFGI_STE_RANGE, provided the STE enables S1 translation.
+>>>
+>>> If the guest STE is invalid or S1 translation is disabled, the device
+>>> is attached to one of the pre-allocated ABORT or BYPASS HWPTs instead.
+>>>
+>>> While at it, export both smmu_find_ste() and smmuv3_flush_config() for
+>>> use here.
+>>>
+>>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+>>> Signed-off-by: Shameer Kolothum
+>> <shameerali.kolothum.thodi@huawei.com>
+>>> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>>> ---
+>>>  hw/arm/smmuv3-accel.c    | 193
+>> +++++++++++++++++++++++++++++++++++++++
+>>>  hw/arm/smmuv3-accel.h    |  23 +++++
+>>>  hw/arm/smmuv3-internal.h |  20 ++++
+>>>  hw/arm/smmuv3.c          |  18 +++-
+>>>  hw/arm/trace-events      |   2 +
+>>>  5 files changed, 253 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c index
+>>> d4d65299a8..c74e95a0ea 100644
+>>> --- a/hw/arm/smmuv3-accel.c
+>>> +++ b/hw/arm/smmuv3-accel.c
+>>> @@ -28,6 +28,191 @@ MemoryRegion root;  MemoryRegion sysmem;
+>> static
+>>> AddressSpace *shared_as_sysmem;
+>>>
+>>> +static bool
+>>> +smmuv3_accel_alloc_vdev(SMMUv3AccelDevice *accel_dev, int sid, Error
+>>> +**errp) {
+>>> +    SMMUViommu *vsmmu = accel_dev->vsmmu;
+>>> +    IOMMUFDVdev *vdev;
+>>> +    uint32_t vdevice_id;
+>>> +
+>>> +    if (!accel_dev->idev || accel_dev->vdev) {
+>>> +        return true;
+>>> +    }
+>>> +
+>>> +    if (!iommufd_backend_alloc_vdev(vsmmu->iommufd, accel_dev->idev-
+>>> devid,
+>>> +                                    vsmmu->viommu.viommu_id, sid,
+>>> +                                    &vdevice_id, errp)) {
+>>> +            return false;
+>>> +    }
+>>> +    if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
+>>> +                                               vsmmu->bypass_hwpt_id, errp)) {
+>>> +        iommufd_backend_free_id(vsmmu->iommufd, vdevice_id);
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    vdev = g_new(IOMMUFDVdev, 1);
+>>> +    vdev->vdevice_id = vdevice_id;
+>>> +    vdev->virt_id = sid;
+>>> +    accel_dev->vdev = vdev;
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static bool
+>>> +smmuv3_accel_dev_uninstall_nested_ste(SMMUv3AccelDevice *accel_dev,
+>> bool abort,
+>>> +                                      Error **errp)+{
+>>> +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
+>>> +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
+>>> +    uint32_t hwpt_id;
+>>> +
+>>> +    if (!s1_hwpt || !accel_dev->vsmmu) {
+>>> +        return true;
+>>> +    }
+>>> +
+>>> +    if (abort) {
+>>> +        hwpt_id = accel_dev->vsmmu->abort_hwpt_id;
+>>> +    } else {
+>>> +        hwpt_id = accel_dev->vsmmu->bypass_hwpt_id;
+>>> +    }
+>>> +
+>>> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
+>>> +        return false;
+>>> +    }
+>>> +    trace_smmuv3_accel_uninstall_nested_ste(smmu_get_sid(&accel_dev-
+>>> sdev),
+>>> +                                            abort ? "abort" : "bypass",
+>>> +                                            hwpt_id);
+>>> +
+>>> +    iommufd_backend_free_id(s1_hwpt->iommufd, s1_hwpt->hwpt_id);
+>>> +    accel_dev->s1_hwpt = NULL;
+>>> +    g_free(s1_hwpt);
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static bool
+>>> +smmuv3_accel_dev_install_nested_ste(SMMUv3AccelDevice *accel_dev,
+>>> +                                    uint32_t data_type, uint32_t data_len,
+>>> +                                    void *data, Error **errp)
+>> the name is very close to the caller function, ie.
+>> smmuv3_accel_install_nested_ste which also takes a sdev.
+>> I would rename to smmuv3_accel_install_hwpt() or something alike
+> This one is going to change a bit based on Nicolin's feedback on taking 
+> care of SMMUEN/GBPA values.
+> https://lore.kernel.org/all/aQVLzfaxxSfw1HBL@Asurada-Nvidia/
+
+OK
+>
+> Probably smmuv3_accel_attach_nested_hwpt() suits better considering
+> that’s what it finally ends up doing.
+>
+>>> +{
+>>> +    SMMUViommu *vsmmu = accel_dev->vsmmu;
+>>> +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
+>>> +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
+>>> +    uint32_t flags = 0;
+>>> +
+>>> +    if (!idev || !vsmmu) {
+>>> +        error_setg(errp, "Device 0x%x has no associated IOMMU dev or
+>> vIOMMU",
+>>> +                   smmu_get_sid(&accel_dev->sdev));
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    if (s1_hwpt) {
+>>> +        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev, true, errp)) {
+>>> +            return false;
+>>> +        }
+>>> +    }
+>>> +
+>>> +    s1_hwpt = g_new0(SMMUS1Hwpt, 1);
+>>> +    s1_hwpt->iommufd = idev->iommufd;
+>>> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
+>>> +                                    vsmmu->viommu.viommu_id, flags,
+>>> +                                    data_type, data_len, data,
+>>> +                                    &s1_hwpt->hwpt_id, errp)) {
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, s1_hwpt-
+>>> hwpt_id, errp)) {
+>>> +        iommufd_backend_free_id(idev->iommufd, s1_hwpt->hwpt_id);
+>>> +        return false;
+>>> +    }
+>>> +    accel_dev->s1_hwpt = s1_hwpt;
+>>> +    return true;
+>>> +}
+>>> +
+>>> +bool
+>>> +smmuv3_accel_install_nested_ste(SMMUv3State *s, SMMUDevice *sdev,
+>> int sid,
+>>> +                                Error **errp) {
+>>> +    SMMUv3AccelDevice *accel_dev;
+>>> +    SMMUEventInfo event = {.type = SMMU_EVT_NONE, .sid = sid,
+>>> +                           .inval_ste_allowed = true};
+>>> +    struct iommu_hwpt_arm_smmuv3 nested_data = {};
+>>> +    uint64_t ste_0, ste_1;
+>>> +    uint32_t config;
+>>> +    STE ste;
+>>> +    int ret;
+>>> +
+>>> +    if (!s->accel) {
+>> don't you want to check !s->vsmmu as well done in
+>> smmuv3_accel_install_nested_ste_range()
+> Nicolin has a suggestion to merge struct SMMUViommu and
+> SMMUv3AccelState into one and avoid the extra layering. I will
+> attempt that and all these checking might change as a result.
+
+interesting idea indeed.
+>
+>>> +        return true;
+>>> +    }
+>>> +
+>>> +    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
+>>> +    if (!accel_dev->vsmmu) {
+>>> +        return true;
+>>> +    }
+>>> +
+>>> +    if (!smmuv3_accel_alloc_vdev(accel_dev, sid, errp)) {
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    ret = smmu_find_ste(sdev->smmu, sid, &ste, &event);
+>>> +    if (ret) {
+>>> +        error_setg(errp, "Failed to find STE for Device 0x%x", sid);
+>>> +        return true;
+>> returning true while setting errp looks wrong to me.
+> Right, will just return true from here. I am not sure under what circumstances
+> we will hit here though.
+>
+>> +    }
+>> +
+>> +    config = STE_CONFIG(&ste);
+>> +    if (!STE_VALID(&ste) || !STE_CFG_S1_ENABLED(config)) {
+>> +        if (!smmuv3_accel_dev_uninstall_nested_ste(accel_dev,
+>> +                                                   STE_CFG_ABORT(config),
+>> +                                                   errp)) {
+>> +            return false;
+>> +        }
+>> +        smmuv3_flush_config(sdev);
+>> +        return true;
+>> +    }
+>> +
+>> +    ste_0 = (uint64_t)ste.word[0] | (uint64_t)ste.word[1] << 32;
+>> +    ste_1 = (uint64_t)ste.word[2] | (uint64_t)ste.word[3] << 32;
+>> +    nested_data.ste[0] = cpu_to_le64(ste_0 & STE0_MASK);
+>> +    nested_data.ste[1] = cpu_to_le64(ste_1 & STE1_MASK);
+>> +
+>> +    if (!smmuv3_accel_dev_install_nested_ste(accel_dev,
+>> +                                             IOMMU_HWPT_DATA_ARM_SMMUV3,
+>> +                                             sizeof(nested_data),
+>> +                                             &nested_data, errp)) {
+>> +        error_append_hint(errp, "Unable to install sid=0x%x nested STE="
+>> +                          "0x%"PRIx64":=0x%"PRIx64"", sid,
+> nit: why ":=" between both 64b?
+>> +                          (uint64_t)le64_to_cpu(nested_data.ste[1]),
+>> +                          (uint64_t)le64_to_cpu(nested_data.ste[0]));
+>> +        return false;
+> in case of various failure cases, do we need to free the vdev?
+>
+> I don't think we need to fee the vdev corresponding to this vSID on failures
+> here. I think the association between vSID and host SID can remain
+> intact even if the nested HWPT alloc/attach fails for whatever reason.
+
+OK then worth a comment
 
 Eric
+>
+> Thanks,
+> Shameer
 
 
