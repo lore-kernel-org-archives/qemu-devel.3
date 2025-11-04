@@ -4,99 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD37CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 12:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67146CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 12:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGGDr-00061U-QQ; Tue, 04 Nov 2025 07:33:15 -0500
+	id 1vGGGf-0006sC-Uk; Tue, 04 Nov 2025 07:36:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGGDq-00061H-EZ
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 07:33:14 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGGDo-0003Qr-LM
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 07:33:13 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b725ead5800so15084666b.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 04:33:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1vGGGe-0006rV-7O
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 07:36:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1vGGGX-0004D3-7g
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 07:36:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762259758;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5MHTJnkdKp5lFO3+UjSL6dV4AD70SZhsWOnY88YlpQA=;
+ b=dJOLH3demzzp39uT3XW+QvQIQT5fe69w3S1IKC8BSMbN7ZVp2AnjOabYLH8zY+Bu5is0ZW
+ 9Nunl/CObDthGvBVYyhC6j2Wps9JD+HfHxrVrZHlzM9YIaN9VXuwVpyj/NpVFgjhM3V1YI
+ +ykd7Ti0SZu3RWK8YiG64NLcKEWqpr4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-434-wv1KdExYODyNQA3PfdwH4w-1; Tue, 04 Nov 2025 07:35:57 -0500
+X-MC-Unique: wv1KdExYODyNQA3PfdwH4w-1
+X-Mimecast-MFC-AGG-ID: wv1KdExYODyNQA3PfdwH4w_1762259756
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-475ddd57999so55622415e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 04:35:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762259590; x=1762864390; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EhPqbtEQzDSV9X3vnxbm9qLczrJw9XOdOcGOPrrG9G4=;
- b=ByVd1x2AMbbaJbiR3KJtWaBX7Qlz/hQuk9nDXjbMhV7K9XxGYQ0T84ZolNYtm3xYEv
- xlXXTCXTqgFjNazcQXXXLHRf3KNBwnrz6iRfRw6TThmZinNKKNSy7VolWI0Yjg7NvqHq
- x1H0T+iTN9Y/0S/+om0Z10H2RxpI02IzxsqzelziLPpDRP+z+HFs7KEqVViwnGxDy7/M
- h9f5SsYqw25BPbaiRmFF63499nlvP5x3jc/ARUyd9FQHjxLOu8fO3Vq0f/yXMZ8HT42m
- Z98kR9ONIYJbktMPxtKUevwllR9T/YNr9oEP3ULsC9QAT/ny+OmcUTvdjbf+98ILHCHv
- Eyaw==
+ d=redhat.com; s=google; t=1762259756; x=1762864556; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5MHTJnkdKp5lFO3+UjSL6dV4AD70SZhsWOnY88YlpQA=;
+ b=AhOTOH0uW1blIEwAMWD+8Tp+01FXn7QVL9rrgYAvdg3skVp+wwdRTlnsXuwuTFFOiE
+ pMOtOP6y6pKUxfI9WAeDKu0seV7SoTOd7NnUQxw0hE+psr5lrcyMK9dLsa3OFfmQUth7
+ eiOuxijkz+EyeTQHSIfLn+BDPCsA25IJuYQpHWyX4ORUhz9bjzz9n49i5DpnrbkKhXoK
+ d4lJ336wkpRTVcZAhb/o9G0UkvdOLN22IJQo4TeMgLSGH2fff/BS0H4fLmAAkC7f1Roh
+ 1lNibmNb9/HIa1ZAogLsoXHB6s2LrmIIKMocCzPNZPsf0Inw9BtfZ1nKt58BVlPj+Eqv
+ YaWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762259590; x=1762864390;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EhPqbtEQzDSV9X3vnxbm9qLczrJw9XOdOcGOPrrG9G4=;
- b=tQ2oBokmsig/lQDSprgMzGFEvFhuu9CexfOTnq2H9OsXuQrdbJ/kJeu1n/DOThCZjS
- pVCJubg69aV73vjw3TCcqzzEtNs9IKBiFgTcQazYlE4T4kqrhH98HsGM3ilNeCBmz9FA
- SP9fH7ueP81o3bwF0XDD91ia+ipFse1ciFUNi7Hx8sBvgNR58Dn5PXzFB52SRL46gqd9
- D0dIl0U2nzuqpYnQ52ivv0vfwNvsACsQBOz0T9wvzQgklcMua4FU8gfLo+OVU35F835X
- ou8xpYpbtkC9pl5DTc+MD/12bKTDaELMuhXZBBt4RAXoGBenUwjOhZp/qSNrxvWNhAW+
- vUng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4Y1O70XB8G/56ZFarzyj+yuSopdnHFulFBuYXj/gxrs6GRb3Oc3N2oGyfXqHkYE6+uzkn+o4FaM9i@nongnu.org
-X-Gm-Message-State: AOJu0Ywpo+MYQ1lqwoxGAt6545hQahGkQGOsj0zqkMoPNpn+LWQVKADY
- dgigl0vkrIXXHKupAj8fNSzwAUJMUzePQVjwD8SpjY0gs+wGGYxDnN20p6+tz4AdpAw=
-X-Gm-Gg: ASbGncsXhkPjubs2hIjl2Dodvn41cmbJOze6da6Rdk6nQwCTf+hkplulvGYQjBE8QVo
- sQmDlxGQ7iK7ZwzLgZ7I4EbEzoBH6bq3bn6y1ijvb4LxffAgYv/CavJxPx1+DYp+OKNNYhtmHBH
- Mr+P0BCa6aFOxl2+EYk8DsRyvY1uzGjy5kWbcYYlZ8VoY5fXMJfyVcHRszyDVzKq0wiYzJPDtYA
- CcEXRmDp3ZWw+Q9iwXzpaplW8l2HlW7KsvmD/Sp0o9gVLX3S9q7i3RfqzYI8GSczDK1MCa2X56G
- ICPLvkovyjnTu4xom19/U6DtzEOhX2X9oqcY8a/oBFtqGAdwztlphAPNoCDObzvQgENa3JDq06l
- Magd6LfKpyzRys4z9J7P3cKMdnyoXeB65wbWeztQsPzTv9HoKu2EBhCsBFfNHTeA3ZgoDzPlckz
- I3BKiczEAaM1Oxrw==
-X-Google-Smtp-Source: AGHT+IG0TxJ6+0K9MtVYWqBu58WugjnnMO2+Ie67gXKR4dZXKdZy4PDYs0+jibTLk545dhJ7zG608g==
-X-Received: by 2002:a17:907:3d0a:b0:b3d:200a:bd6e with SMTP id
- a640c23a62f3a-b7070732726mr1553619266b.47.1762259590182; 
- Tue, 04 Nov 2025 04:33:10 -0800 (PST)
-Received: from [172.20.148.75] ([87.213.113.147])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723d6f33aesm198031266b.19.2025.11.04.04.33.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 04:33:09 -0800 (PST)
-Message-ID: <dcb21299-f6b1-489b-b952-aafd64dba31a@linaro.org>
-Date: Tue, 4 Nov 2025 13:33:07 +0100
+ d=1e100.net; s=20230601; t=1762259756; x=1762864556;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5MHTJnkdKp5lFO3+UjSL6dV4AD70SZhsWOnY88YlpQA=;
+ b=r9mKKcgOd55Gdw39u7QFRuFiZEqbmsYNNO7ZAvRul7IIMgzDev3NBg7O1W0o2lIbNu
+ VaSM9rQDZWiwoAYxq5Ev8wXRQtrC4+PAm8GARZLdJCgQgHBYaoguYwwDhUG2RwnuGjAA
+ 14+xLGh76+qGA8scUwcn8sy8YorLSXv+p4hzqDhnB0wJkXVsQ8slESh14JtG8cX9iPWI
+ qBCOhib+TcZQogBVOB7lilwQzjwAsAfuy9Lc4omQybnsno0u3c5XxmBj2Bc1VKK7FICF
+ qXRmXgyFQ5taugOkR0xD+2i7c7TVcUWctqFfw5tkMlckr1K0k4B1cmTRzLgFzTRenY61
+ pwGA==
+X-Gm-Message-State: AOJu0YzqbiPIByDMzbEqVS/PiKo3MQBKSMSXjec4xz17tEVthKQiuXYj
+ y7wYKcqkKzf3+tlK2DOMzFn3NN6kb7KFdeWJTJb5UHDg6ilkpMSykaLJv3iJdOcGSyPJ8bV18fF
+ UCogOtgeUojYvWfhAffNs2NdNJX+OemmQbU9xPIEv8oIdp+74wACeRhUA
+X-Gm-Gg: ASbGncsOGMROCPnSKsJH9mWBiPCYbrWFVrT0nByXFGtZPzJRdbPs/LNgTVAjjd9z/gP
+ +9rPY0PWUtG20qXrTEHnrv/WhpIMm1Xj6fsId2gekfUv+spQnrCAi3wgnfFPYCN7QHyDLSOi1Bk
+ 8FjQK7wPTNiMm63jGmn/bVdGw8Md4q5TEM9UIC2v5bAqzmjTSJo09QktPBUVZPLBMyvGcPPw4Ed
+ K+7yFKu8/JP8Kng7jTKPcn6ie1MQPoKT4/KOVDJaUNf2ghGBPV+7eL6Y7halwbbfIJa5YJIxVw9
+ 97StjkqgJkVtT1gwXqb8BJKx9VE3x8DdUPcagE+yoE+n99kIMsrgDn/UcbejVW7j
+X-Received: by 2002:a05:600c:4f51:b0:477:59f0:5b61 with SMTP id
+ 5b1f17b1804b1-47759f05d3bmr7446145e9.2.1762259756284; 
+ Tue, 04 Nov 2025 04:35:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYN7+Av9KfkNbtyVXVSKdQglAUQuoCie+YRQvhwedodR4V6OgMhC+NsI+1+ak18wYOlg3cMg==
+X-Received: by 2002:a05:600c:4f51:b0:477:59f0:5b61 with SMTP id
+ 5b1f17b1804b1-47759f05d3bmr7445885e9.2.1762259755830; 
+ Tue, 04 Nov 2025 04:35:55 -0800 (PST)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4773c383b75sm260269585e9.11.2025.11.04.04.35.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Nov 2025 04:35:55 -0800 (PST)
+Date: Tue, 4 Nov 2025 13:35:53 +0100
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] tests/migration-test: Check error-desc after pre-switch
+ cancel tests
+Message-ID: <4r5wbhkkk346usjdgvnc3epcom3he3y547p3smxbkvvnk677tz@e4hsizwn5sfp>
+References: <20251031164956.3409661-1-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/6] scripts: Add helper script to generate eMMC block
- device images
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Eric Blake <eblake@redhat.com>
-References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <5c9c6495ad4afc9d11f856bafcb797fed8fccecc.1760702638.git.jan.kiszka@siemens.com>
- <bfd49f9a-0a37-4e1d-b7e2-f0e59943915e@linaro.org>
- <08287450-4889-4329-b21c-87fde274b13f@siemens.com>
- <b4becb69-cf74-4e1b-97f3-52756b8a69d2@siemens.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b4becb69-cf74-4e1b-97f3-52756b8a69d2@siemens.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251031164956.3409661-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,53 +117,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/25 10:26, Jan Kiszka wrote:
-> On 04.11.25 07:30, Jan Kiszka wrote:
->> On 03.11.25 14:12, Philippe Mathieu-Daudé wrote:
->>> Hi Jan,
->>>
->>> On 17/10/25 14:03, Jan Kiszka wrote:
->>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+Hi Peter,
 
-
->>>> +if [ "$bootsz" -gt $((32640 * 1024)) ]; then
->>>
->>> Running on macOS:
->>>
->>> scripts/mkemmc.sh: line 165: [: : integer expression expected
->>> scripts/mkemmc.sh: line 169: [: : integer expression expected
->>> scripts/mkemmc.sh: line 179: [: : integer expression expected
->>> scripts/mkemmc.sh: line 191: [: : integer expression expected
->>> scripts/mkemmc.sh: line 200: [: : integer expression expected
->>> scripts/mkemmc.sh: line 202: [: : integer expression expected
->>> scripts/mkemmc.sh: line 204: [: : integer expression expected
->>>
->>> $ sh --version
->>> GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)
->>>
->>> When using dash:
->>>
->>> scripts/mkemmc.sh: 165: [: Illegal number:
->>> scripts/mkemmc.sh: 169: [: Illegal number:
->>> scripts/mkemmc.sh: 179: [: Illegal number:
->>> scripts/mkemmc.sh: 191: [: Illegal number:
->>> scripts/mkemmc.sh: 200: [: Illegal number:
->>> scripts/mkemmc.sh: 202: [: Illegal number:
->>> scripts/mkemmc.sh: 204: [: Illegal number:
->>>
->>> Should we replace s/[/[[/?
->>
->> No, that would be invalid outside of bash. There must be a logical error.
->>
->> How did you invoke the script? What was the value of bootsz then?
->>
+On 2025-10-31 12:49, Peter Xu wrote:
+> error-desc should present on dest QEMU after migration failed on dest when
+> exit-on-error is set to FALSE.  Check the error message.
 > 
-> I tried with dash from debian trixie, and there is no issue like yours
-> visible.
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  tests/qtest/migration/precopy-tests.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
-> What problem could macOS have here? Will need your help, don't have
-> anything mac-like around right now.
+> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+> index 57ca623de5..5f02e35324 100644
+> --- a/tests/qtest/migration/precopy-tests.c
+> +++ b/tests/qtest/migration/precopy-tests.c
+> @@ -759,6 +759,14 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
+>      wait_for_migration_complete(to);
+>  }
+>  
+> +static void assert_migration_error(QTestState *vm)
+> +{
+> +    QDict *rep = migrate_query(vm);
+> +
+> +    g_assert(qdict_get_str(rep, "error-desc"));
 
-Don't worry, we can merge v6 code part, and add the script / doc
-during the freeze period.
+I think it would be beneficial to also check if there even is
+"error-desc". That way if the "error-desc" is missing, it fails on
+assert with SIGABRT instead of SIGSEGV inside qdict_get_str().
+
+With this change you can add my:
+
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+
+
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index 5f02e35324..87e33b8965 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -763,6 +763,7 @@ static void assert_migration_error(QTestState *vm)
+ {
+     QDict *rep = migrate_query(vm);
+
++    g_assert(qdict_get(rep, "error-desc"));
+     g_assert(qdict_get_str(rep, "error-desc"));
+     qobject_unref(rep);
+ }
+
+
+> +    qobject_unref(rep);
+> +}
+> +
+>  static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+>                                             const char *uri, const char *phase)
+>  {
+> @@ -784,6 +792,7 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+>  
+>      wait_for_migration_status(to, "failed",
+>                                (const char * []) { "completed", NULL });
+> +    assert_migration_error(to);
+>  }
+>  
+>  static void test_cancel_src_after_status(void *opaque)
+> -- 
+> 2.50.1
+> 
+
 
