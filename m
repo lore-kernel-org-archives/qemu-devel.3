@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8D8CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5923CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGKGH-0007UL-PV; Tue, 04 Nov 2025 11:52:01 -0500
+	id 1vGKHM-0007wF-6c; Tue, 04 Nov 2025 11:53:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKFl-00077O-91
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:51:38 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKG9-0007JB-AJ
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:51:56 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKFj-0005nP-NV
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:51:28 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b70fb7b531cso378152666b.2
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:51:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKG6-0005ox-UZ
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:51:52 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-641018845beso318951a12.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:51:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762275086; x=1762879886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762275108; x=1762879908; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bLK5zPOn2Qd+fIBciZykhnynu1KprR6IZOpUKkfwkq0=;
- b=k2F4HOpc0lrBRUo/hVPYgv7Qlk4iE3OndjGYBctF/zBBjBbVlv/7+pKDWx8ikKpufp
- uL0cBQOhwL8P2RmzbH9y0SqApH3PYF9+qa9vCPGOyieP7ZVTtatqTrKxJo+vuf1OAE+T
- Ck1B2S3edQbm0JpPngjFzUQGpGX2BcmSrmJ89vFzpTlVZ7bGGHcLKJ6reOXZnUS8XwWb
- NAYmBnBrlYDf1kx+/TzfEcQVajc+J8l9LQPQ0N7IQcPjTYhTcsVvLhJPw3aalyHXcCB/
- Scp7Uhxh3wU/dEAQoVJo885AUrSChJwGoaHOfseYTXTos6I5OgyoFR+WujdZYevcfB56
- SDHQ==
+ bh=4xw9jV5dUzwgWaY3RhOJnldzK2ZbH/nthsM2NH1c714=;
+ b=wlT6h1HKFs0zvEgjE80s3TY89aiTC8p2Ir2DxCJDYFFYKiZsO/3VDrF1FF32FxzP1A
+ Ybfx3DwC9LtP4gIijjN4n8UilP3Gsihn3S8hjRU8ZqaHwfMLutt4x7ucmWfvPOBZUJNu
+ OELUgOpJCoJaQ17jNim4Dq4Ky0pu+34vaNu2aMv2aDiL+6DqW9sYGF3XfoEwc7IIVrGm
+ vPJkHrvT2WAdv6a43hlOPiDpu4sYdnhYT1qbTO4fFZ+JtNvl18G2bmgS+QSVGbHONm2O
+ q5AJQNYapLcVV8fufOtDx93peVKeANSj6jB/mdd2eVEUbeiljpvTV6fmtmub6JQDgfXs
+ kb/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762275086; x=1762879886;
+ d=1e100.net; s=20230601; t=1762275108; x=1762879908;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bLK5zPOn2Qd+fIBciZykhnynu1KprR6IZOpUKkfwkq0=;
- b=sJMS3pTGjVBPjVQ+sSTcNjxcWJTb1VTZ0oMSnVnpGqI9571NPMb46MU0C1wKrv6woq
- 6i3zHxxJ4NZ8jBFVkIXPvW8HB3seBgC2/W2M9FV+g95I/1pCcP6QaH6dRqtfmBf94JTZ
- Py/kiULm1bOLurBBBV/ncqKuVb5Ac3T8sEHDx5VGoTYAyJFVfOFJhubdjayvISqdqEQo
- fHjZgtqOWCMolXZ/YcOUQ7i1Fqa7M+JUxga5kkO6Ltb9hOGipgRldHwj47u/dX+eovWh
- qDimtm+TzZ9eZx4Uix60NZ/cVpjhm9qWOCCA/nlUBH5dm+N7ocw+bMJqfpPvt8aRcV/C
- i+zg==
+ bh=4xw9jV5dUzwgWaY3RhOJnldzK2ZbH/nthsM2NH1c714=;
+ b=TMLA/UAzDUhDbtd3bLE1Vd/yWWjXmBFHoHU4L9aONm/SIBmUtJDZPoekvS+VZf8uLc
+ fuJkLsF7fAVlva3LoXD/at8CJDtB9wFcdLVlVK6vtVASoZ+dTKo9IkmH0l6WuN17KmsM
+ 8U8QvI5UBlYvt7Wxs7fgYK+Ixa6bMhAW5zfsbDM3ylrZP/LpCL8Lx0HSi4QRUrAEwrGL
+ 8OyJHUvL+Kl/HLPUM2N1yG2/qyCARjJeEExwX2XnBq9RqmprHCGYu4w/pRkLQnq9utJt
+ nU+ovKTLrdMAuwBprcw7R6cfY3SEgqArknObaXiYj2ytonWhAgbgfZrIdS0bZng+JkJ3
+ Oghg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+A6hfzP3sSUH1AjG6dqseC0hvJlJOeZ12xrE5d6b8kBlXB0H6/oVhnEVginvy5nbyfh3OyTNG0Hbj@nongnu.org
-X-Gm-Message-State: AOJu0YxIOFMioF4dHQ7y9Yts1gBWrMJWTqjcKoBGjRtqICTPIQHYOmWb
- G2D/77Rw4DuipydcunGsANpyi41d/AtojoI4PnjgjStK/fh0/AZDocM7YqTkmtOD3wg=
-X-Gm-Gg: ASbGnctZH4b8tCK/IvwnsN7knPNjCWcZ9NO9VsUhWuuqDvnWokhguv0ZSDV7+LvHuuK
- eWH2RFJ0Iyw4w5yGn3pByfT9PVqU3u+14+gGSg0a31myqOqWa1yZDSUbiRNyshNKimhw21cVlXf
- tZQD0IHzZ8PvgXboCsKhEbI1h/SxeMUNGRCsbVJYQaiK1FGh4MdT/xR/h4DgGXqy27yqdBvAcSF
- 3dTXWVu+tPIe1namHSKITEdb/JxWde+gb1zdsgY3gamPCywmKNi7Gh5rzFy2BdQcVegv1MiPEl1
- QFC9JbVBkUEEyaUZOBSsIYuTG7Az/riwUMVS+AZzV7WDclc6gl21dMWln+6AqWf4Sl5ZEXzhSei
- A5QVX82jjrN4MZUFM/xe5LMHo9bpxLNvDgOzHN1u/hitPKmy7yt13S/vC8TW6khvOEJef5imZl+
- Rsgb/SIlww8AU6LlPFAGc=
-X-Google-Smtp-Source: AGHT+IG5IX7b/CwbWhY61zOyPf3DcKiVetnHaDyjOYkBdHJCOz9TLsuDs0gKsji4Wwn8/8Ot5w3r4Q==
-X-Received: by 2002:a17:906:c10c:b0:b40:5752:16b7 with SMTP id
- a640c23a62f3a-b707063e279mr1861244666b.51.1762275086055; 
- Tue, 04 Nov 2025 08:51:26 -0800 (PST)
+ AJvYcCXGk0O9l3VwFVRvKU+v/axinnvPbq1LxWKBKyYAN4ZzbtRpy2QdCsc7YU8YZM+rPuh3XPyONkirP2Cx@nongnu.org
+X-Gm-Message-State: AOJu0YxVfY8FUdveZefWaxU+2UIZRAqMsMyXVVNskKealwOR9CX8K2kU
+ 0ctwhvGy/E3kpLZiz7oiq1GBKhTfz9MJZRiPHlv9MHW7iuczxz1t0iuqyiRWRD/TEKE=
+X-Gm-Gg: ASbGncu32fzf4Tx/kfSSxRmPnr2lM/1VqHbUhbkvWgUjAYGIErGO6nYRfXBqsz6M7Bd
+ 8FspS6BXgCJ3CCSBgkpu6IlBQP7jw/Nx6S1KIYuYIbQWffcun6MfISGlUvevN45wBPu+t7TTUWK
+ fv5KBHpd+wq2fsbIRKmRXglHsErMnZXp3ytp/aWmMlM25BfX/pBLpFgXfbAnyBVgM93xj8491hG
+ Twxy/hC3VJw0gbZKfafzKp3JDwoBzWCwuO0lp4UoMxJT66/DI8oIx4klrC9c32Yx6deAqZiVlO8
+ HwOUPo9thkKMWpVUzV/Ap0StAePqXBFkotsqVgOi65Art6mwjstGDOqvuwHiq+gBeFXHgsBtiqh
+ dOwa24P01fr94tO4bV4rX5r1piNcsr24MSep40IQGISKGTXVHjPZodQvh7B3IzjXWFRz1FAcjFg
+ SZNzdUlZ8xblZN3gR+ZNQ=
+X-Google-Smtp-Source: AGHT+IF6TzSwUuowCHHeB1tMdgxFRXf4H6WQl1JUJPJZQzmnpaPWJ8R8JxG5rD/zpjmJaHTRGOKSZA==
+X-Received: by 2002:a17:907:a4e:b0:b6d:51f1:beee with SMTP id
+ a640c23a62f3a-b706fe36da8mr1619239666b.0.1762275108409; 
+ Tue, 04 Nov 2025 08:51:48 -0800 (PST)
 Received: from [172.20.148.75] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723da0e6acsm258341566b.29.2025.11.04.08.51.25
+ a640c23a62f3a-b72404470e9sm249483566b.70.2025.11.04.08.51.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 08:51:25 -0800 (PST)
-Message-ID: <7d7bc82d-5d99-4499-95ec-f21f60b52ddd@linaro.org>
-Date: Tue, 4 Nov 2025 17:51:24 +0100
+ Tue, 04 Nov 2025 08:51:47 -0800 (PST)
+Message-ID: <65e5b3d5-af01-44f8-8fa5-480ed3f91e47@linaro.org>
+Date: Tue, 4 Nov 2025 17:51:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] cxl: Clean up includes
+Subject: Re: [PATCH 8/9] vfio: Clean up includes
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
@@ -78,13 +78,13 @@ Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Alex Williamson <alex@shazbot.org>
 References: <20251104160943.751997-1-peter.maydell@linaro.org>
- <20251104160943.751997-8-peter.maydell@linaro.org>
+ <20251104160943.751997-9-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251104160943.751997-8-peter.maydell@linaro.org>
+In-Reply-To: <20251104160943.751997-9-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,7 +109,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/11/25 17:09, Peter Maydell wrote:
 > This commit was created with scripts/clean-includes:
->   ./scripts/clean-includes --git cxl hw/cxl hw/mem
+>   ./scripts/clean-includes --git vfio hw/vfio hw/vfio-user
 > 
 > All .c should include qemu/osdep.h first.  The script performs three
 > related cleanups:
@@ -122,9 +122,15 @@ On 4/11/25 17:09, Peter Maydell wrote:
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/cxl/cxl-mailbox-utils.c | 2 +-
->   hw/mem/cxl_type3.c         | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   hw/vfio-user/container.h | 1 -
+>   hw/vfio-user/device.h    | 1 -
+>   hw/vfio/pci-quirks.h     | 1 -
+>   hw/vfio-user/container.c | 2 +-
+>   hw/vfio-user/pci.c       | 2 +-
+>   hw/vfio/ap.c             | 1 -
+>   hw/vfio/container.c      | 2 +-
+>   hw/vfio/cpr-legacy.c     | 2 +-
+>   8 files changed, 4 insertions(+), 8 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
