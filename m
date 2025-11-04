@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598F0CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A21CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGKhJ-0005lG-Rm; Tue, 04 Nov 2025 12:19:57 -0500
+	id 1vGKhR-0005xE-ST; Tue, 04 Nov 2025 12:20:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKhA-0005eR-3H
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:19:52 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKhN-0005rp-Mh
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:20:02 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKh1-00006g-Kl
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:19:40 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-640e9a53ff6so1918802a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:19:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKhM-00008j-2M
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:20:01 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6407e617ad4so90271a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762276778; x=1762881578; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1762276798; x=1762881598; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KwUp2ZMe1TEIIv4KhcautXniKKRQYzPFp1wYKrxtKjM=;
- b=VzRhNWmeHKp8M8DwxOAiCJvvHz9Dy+EIhA/5hT/Wr9nzyj2td2kqDCNROqqc7fcN4O
- DN0rG3tIVvM/3AySnZwiy8heWHly3ctbdDasmCSzgEUBENamo8cVZQOsyjr4Sv9r6jvY
- KELf/Gp8bXiS5STtzb/wBb/wWuy9s0N32PJ9+hLwIGXojaO+A37BH0ki1nkAx1Jcdqy1
- Ce3eClFffHvW4albtWtca6TBnZCDfpIUH17YvwuJRrxlEo9hIjXkVjGoySvjUBvuKCSe
- YrQPWEnN/QJNv/sNI9rn15iEJN4gc7fd4Uvhk8S7QNnVVyPi4kXD3jzgx9dUmmZeIZjt
- Cndg==
+ bh=fIAY4ElKgmvL72m/DosK8VmaaV8hFDN0PPGvt6NgA6g=;
+ b=FpNynusd709iyqy7RhYA6K6GK2VwxR/kQmwyyZylCPLgIeZFbgHaWpTw3l1+uHMsHH
+ njBce7ExpMxiMV0AmdaC+VwWCpN5mnRiEbttnnIuoA49g28EI7sw7Vz6Y+H58Yuu75qb
+ DZBop7xrpFA+vMtDG22cr/Yx+3AGLnRK2caon9/dt8/p5ZPvJdtDZzOUxJds07R3LWWD
+ IAnxvnz8sUsCyFJZdpfKAuUlqKaBNflEAjuErLJdn1xz/3cee6GAeQk1mXSS19vqZYMN
+ fJMi2I9Ca3qT8DJZhnUHZWtIvbNyyVM2KtFeXjbUO+PkWnUTDIIG4bI5+RsBS7e3y6//
+ eWaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762276778; x=1762881578;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1762276798; x=1762881598;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KwUp2ZMe1TEIIv4KhcautXniKKRQYzPFp1wYKrxtKjM=;
- b=ahKeG+LFPcw28e7eb5b+jP5Gd8AKOtK7lH2K88SIeQrTXuJOTW+icHWJVoNuJQZkgG
- I55sod7w4PNKYHh1Ns44OQY17/5boH/y8rlMUp5nLnnz9KlUvm/VJRk/WzBTd5jIehnA
- f4WRq9OlPim05jY+pp1+3b33sAmG1IOyEScq2EMWem2CAKtSb2w/+HWIBUe+ulNqVuvh
- Y2va47S6p+O0MjZZPSOcoLSDkQxw/6js3vIcILUBx6IXEtHNHkeFXl99W2mxEQ17irBI
- tpoikpKeSEmdjm8ENm6lgKKGJszhPiBWJ1aFbMD+YWJR9avludCeJHVh0R015Q9Pr8cW
- vwOA==
+ bh=fIAY4ElKgmvL72m/DosK8VmaaV8hFDN0PPGvt6NgA6g=;
+ b=SGr3qPCAvVDl9Jp9QxEPpbAFWcP3t6OagNA5WK/H4W3k89EJW2v2AQ4H8STGn5BDs8
+ F881CsSJCJ4yGFmzR5zt02IyANSlb1vzjscTYjXIHHchZxCyTrHef2LZpIhF4EcVnyiF
+ fQQlqS4t97DfGMnLru5elJORBXiMuJy0BOStHp0zw4Xi5lahsXDi8rfZqV9MibkXIUBg
+ CJFsFB5pq0zdynzWm8wbum9K4BSMCOXBpA9oZOfX5f41knRrjkvfMztw3AbgEM9RJ9bv
+ DKCYhlELUhrpBchJ+BvhcjopDk7DBLwJGRw9TNM3WAsZtNrEX+Zq8nD6yVDtIJFiKDgW
+ by4A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoXXeMSIePAOIR8Tm5MHNTxpxBWIGwQHjkp0f2uYPB8QwsUsDV9Vooku7zei9QL9YnsD29oYUoFNFo@nongnu.org
-X-Gm-Message-State: AOJu0Yw7RqsX2TkkFUEeVuUHoGiFTc0vPQFhb99Yj0RKoEo/1GafuXgQ
- 7s8j5DoHB5wkH6jJf7G1tZDii10NRnVYav9rdylnQP7VDYxGCFIyzR/f5cZhcvXhnxs=
-X-Gm-Gg: ASbGncveti9HZw9SOfuxUBHBwGhyDBHpoVx6k58t9JeAotQTG2clBI/YeUqCR6+5uLN
- 0xLGtW3NtJH5L/F1eIxyhgHghl4CyS04NvrVMhE3VM4tCvAKA0iTIwcFzC889eBtONhyZ/NZMKX
- Cs4qb4H9uOZRO+a3bNfJWGaNuHPQEvdCVAYM6MTNqXVd5hemQSXio4gca4SkygCVSfOhimeJ06V
- R/fJ/aSP9rOVdVwTpKWHmpfRCvuIWBg2liiaQcJevi92bBrT8DW8LHvdsJQssbgdljnre43nDuz
- 6C7qaTyBFcDLPMXtUFdXHcEUCyS6AzMLqUqbiphUJmTYdLkO5qi8CxICkEsxGxD0PgfGjB1l77p
- c6MmjyziaoXHcfssC9PDFMRSlezvZlXnk67B3mxuC13Uh1q2bJeRM8V7J3C01dgwln+NhS4Dpay
- 4A1PFBR4UjaHPQrJpAazE=
-X-Google-Smtp-Source: AGHT+IEY6xM9Hqizzs/kVBXbt+teH0skvVWBn0VHaQN1hVm18BFmURhYWFWFY5+nH5FgXi9m47SaXQ==
-X-Received: by 2002:a17:907:3e16:b0:b6d:8557:19a with SMTP id
- a640c23a62f3a-b70704c3e8amr2027914266b.30.1762276777989; 
- Tue, 04 Nov 2025 09:19:37 -0800 (PST)
+ AJvYcCWKaVnetSh6O3wfxX0wB7MJhKIj4R/SBP0fCAG8uf+l/tQ80o5oMLdHVjtExPoF2QafjxSeEW0dIN7z@nongnu.org
+X-Gm-Message-State: AOJu0Yy1s24WrthBG2XimALbZKHQtIvFxx2RcH9EY2AsNapuTKeR11UL
+ DQVtS6kdxU0VoipPC+bx4PFhYWInL7hO+WSfpLQ4R0r+HqC3V5AAJpearqItn1D/+rA=
+X-Gm-Gg: ASbGncvViH1GV/0GWUSfsp3QcC0LHsIroawTkjpI3CZZSrocmQEIzKOsp1gHyVX/Pws
+ BhhKLMYeWkH93Z5y0RmxciklBMCBZE26WQ8F9YSfp2+ZkMsGVWz7G59SsuQZWuHxFKhrRg85a8J
+ k6iPUYejVFAFR7+YPpQmihWMFctRJI3NqSrnWcvjXoOW9FuWd5YXcWVAw5APCdSkHXpEEeIbvq5
+ n0ZqIkI0ajwLRDOKnBCMI7/aG7gGkvERPeQL0JfUnuOzVILdgqgGsv7vs5d6rBZuBoj8p+wS6bm
+ shzIlUD6bdmrW/BObJKxdm8e1mh6Hn+ULTPLp5c5rc/PowRDEQ/oQUWTdWAtgW7QYsGOzl+C+ZL
+ c0WOa5F8YhYsln9hEO2MCIXIVAmUpyZ5Gca5ZbOe6a8o5GMRjmyXkE0bMu+/TU4pASiq1dz4Lxy
+ UUw2jTNFBoM2NmA+K/EZs=
+X-Google-Smtp-Source: AGHT+IFHvXfvfkhjwpRvJLaGp330RHmc6oKVYHccMpksxGQpec8HZVDPiLWvuOKf0lOE0L00IhdCHg==
+X-Received: by 2002:a50:ee06:0:b0:640:9611:99d3 with SMTP id
+ 4fb4d7f45d1cf-640e5a044bbmr2912540a12.18.1762276798472; 
+ Tue, 04 Nov 2025 09:19:58 -0800 (PST)
 Received: from [172.20.148.75] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723f6e06edsm271530066b.47.2025.11.04.09.19.37
+ 4fb4d7f45d1cf-640e68057e8sm2908749a12.13.2025.11.04.09.19.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 09:19:37 -0800 (PST)
-Message-ID: <41caf11f-8f6a-40cf-8292-e7200a028d20@linaro.org>
-Date: Tue, 4 Nov 2025 18:19:36 +0100
+ Tue, 04 Nov 2025 09:19:57 -0800 (PST)
+Message-ID: <92164cea-f80f-4235-9946-1ca0621919e7@linaro.org>
+Date: Tue, 4 Nov 2025 18:19:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/microvm: Use fdt field from MachineState
+Subject: Re: [PATCH] hw/audio: Remove dead code from ac97_realize
 Content-Language: en-US
-To: Luigi Leonardi <leonardi@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
+To: Osama Abdelkader <osama.abdelkader@gmail.com>, qemu-devel@nongnu.org,
+ kraxel@redhat.com
+References: <20251102231903.65409-1-osama.abdelkader@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
+In-Reply-To: <20251102231903.65409-1-osama.abdelkader@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,26 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/10/25 15:32, Luigi Leonardi wrote:
-> MachineState already provides an fdt field, remove it from
-> MicrovmMachineState and use that instead.
+On 3/11/25 00:19, Osama Abdelkader wrote:
+> Remove unnecessary PCI configuration register initialization that was
+> marked with TODO comments indicating it's redundant:
+> - PCI_COMMAND register is already 0x00 by default, no need to override
+> - PCI_BASE_ADDRESS_0 registers are automatically set by pci_register_bar()
 > 
-> This is useful when using the `dumpdtb` option, as QEMU expects the
-> device tree to be stored in the MachineState struct, othwise it will
-> return this error:
+> This aligns the code with the pattern used by other PCI audio devices
+> in QEMU (via-ac97, intel-hda, es1370) and removes 15 lines of dead code.
 > 
-> qemu-system-x86_64: This machine doesn't have an FDT
-> 
-> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
 > ---
-> `fdt` field is already available in `MachineState` but
-> `MicrovmMachineState` uses its own.
-> 
-> This prevents the "dumpdtb" option from working.
-> ---
->   hw/i386/microvm-dt.c      | 96 +++++++++++++++++++++++++----------------------
->   include/hw/i386/microvm.h |  2 -
->   2 files changed, 52 insertions(+), 46 deletions(-)
+>   hw/audio/ac97.c | 19 -------------------
+>   1 file changed, 19 deletions(-)
 
-Queued (typo fixed), thanks!
+Queued, thanks!
 
