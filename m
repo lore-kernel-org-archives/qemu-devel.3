@@ -4,110 +4,219 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 931E7CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 14:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA8FCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 14:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGHlX-0000el-Cd; Tue, 04 Nov 2025 09:12:07 -0500
+	id 1vGHoC-0001cx-DX; Tue, 04 Nov 2025 09:14:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGHlV-0000e0-6G
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 09:12:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1vGHoA-0001ce-Qh; Tue, 04 Nov 2025 09:14:50 -0500
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGHlS-0003qo-0g
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 09:12:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762265521;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+W/rlbcUCIlG2wZMrAl39YK3Gxl6GXuNT8/hI5nrCms=;
- b=SB1JUZb0eGzCYBaKojq2uqSisc6MtR2w5ZuHUB3v+Jxb16ktbqnrsFOGVB+4ByT+u7GmJU
- L8IU+3hVUoXVQ12Ckf22GT2j3lc+W2Sx+3f64cjUb68QMrs3rrmXyUrM8azknNDyr179tg
- 9McJmFlg3MvHTwwi7AosFa7z2fn3Bbg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-95ZJVRQcMMeJxld2acKF7w-1; Tue, 04 Nov 2025 09:11:59 -0500
-X-MC-Unique: 95ZJVRQcMMeJxld2acKF7w-1
-X-Mimecast-MFC-AGG-ID: 95ZJVRQcMMeJxld2acKF7w_1762265518
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ecdb10a612so4406232f8f.2
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 06:11:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762265518; x=1762870318;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+W/rlbcUCIlG2wZMrAl39YK3Gxl6GXuNT8/hI5nrCms=;
- b=npWADuZOqJJsyG5NAGV6LWtBQOQzzXuzn6YpZckjG/NCokGQ2aZ8DMfWGiGlaWBizm
- 76m6401m8UfNiSDX1/4h/5SgS3MOeseKPlU1QOdyZ5Ncw4lC8VUYEMrLIPasFxUQaTG3
- orbI8liyOtFlU5gnq25tB9iOyu4Ye292gOlXZYEG5hlTxYbzKg4ZSRao2cQbieGqwKta
- RPW2aK+En8UrDrLemSEzcYLoZBBExr7STewIqBmdB6EN+xsMVHh1yVT9RWoYdsnCz/5N
- AEghM8cTKyHKoE8k/zx/0/PBIZARX4AEiVbFrxpFUC5YaAGrEDgaHX8vmw63goF+zjH/
- BVNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUpDVl/9TfiOJav+i6r3whA6WjvjAe7BZYjsIWeOr53jKjLOw+Qd3OPHQGlUtPTDNvHMR5dVtkwNbSv@nongnu.org
-X-Gm-Message-State: AOJu0YwMzW8OfXdDmXeLH2LbROp9JmUKplgIYZOeQZ/ndtLt13ws8qOK
- r+/JCtcQADEIptAub/Vtb1W0IwWSulSwwdSaxv4QsT7AL2AkYOjuP4CCTeuPDW2widcwPrmRrL7
- y3j1X+YKO4f5PwFvEUcNotOFqkdx7xRqOAERJ4huhIaz7TLrpWKzSWAp3
-X-Gm-Gg: ASbGncvkr9XptOl05ggWl5/0WgExSmeRDSaiEnqq6BMMG/E/uqgQ59Lb1zKKGKUuWyW
- iuHWA30tqE01xYWdiTbO6t8wkYjdwSf1Vnsj6p/1PtnXoIk7yL4Rh8iWyhxZEfRz83vyWOtfkr1
- Xxv3plas+/M8Afwax9oRtvJ9jYjNcEhOYQjJ7/QtzTLwZdvTZu2bZ8YDcyEIF9ICLxvJHxccE/E
- A4vKESlISBy6Z372Y/wgs4sEhqjGd5p+u4lYuQLA9VOR3QE3pJPyO0zoqzLDqhNwAr+gWgFoip5
- XscKAJSL8VbZYPxsJC4HL+1TkxD+LAgCdU5fWUfgnFLyMCiy88RCH8hCTKO5lpDXN/WkJwauiOd
- t8oHwk4hWgvJw0jaKECRs9uvRUeT/3UlFrMKRLE2z48e/OA==
-X-Received: by 2002:a05:6000:1a8a:b0:429:d19f:d922 with SMTP id
- ffacd0b85a97d-429d19fdff8mr8238757f8f.11.1762265517660; 
- Tue, 04 Nov 2025 06:11:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdsxE2ONO79JJE6ndykx6hmefcPbbe3rGe4soyRyb0AJo30Vn6ixBIGKovyJFPrgvUzEBxwA==
-X-Received: by 2002:a05:6000:1a8a:b0:429:d19f:d922 with SMTP id
- ffacd0b85a97d-429d19fdff8mr8238712f8f.11.1762265517103; 
- Tue, 04 Nov 2025 06:11:57 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429dc192ac4sm5087448f8f.17.2025.11.04.06.11.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 06:11:56 -0800 (PST)
-Message-ID: <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
-Date: Tue, 4 Nov 2025 15:11:55 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1vGHo8-0004o8-S4; Tue, 04 Nov 2025 09:14:50 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OUxT9A3vdy9wi+mnQvahoiDkschXOe405jjAyJL4PfzHtnjlnFBUIC2yNhw6S5VZ5uQzHlk2ZaN+dG+1+PSER29IGFKKizgTq/89ohoPCNzlUyZTDWnjMjNT01WBSMIMYPonoX7vXsyVk/oHENtvatToC2xPGB+Uj5uAp2v5E5+Mc5K6slh3VdxNvvmBCsiZbhP3A3oNMa5Zu0HxZnCDchrfK36HxB/ZeGlxZIHrNkQKPiWfp+iUszlw7z/ak8fz6ekZ9k4mK0gQEqmH9XhZf1kLu27FRd6TCqgq+4s9voceJOXo456IPc6yDl6a/K/FRWhZBuHBIqdBFjzV/DSxsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=62II8EE4mPrPECgEX8QpZlvPGMRyuXe+updoAcR5TWQ=;
+ b=qsfEnrL1kyBTggbnoxpWdYo2ZQgMBYvETnGyshHmqTZwhdy9nQ08SSIHNzkK/7BWTGLreuGBeg97wExZU6NFb8PCZsfZuo5S9llEDx2clOAiTMtqZ5aE/G1QLC1GaZKVxC0jiZCNoxenUvSc/fz0CQWairRt0szW/IiF5yLx2jgE1sgaZ9EGsdd13Q1CZbecKstTNiVPLEVknadXAnUFy7fWGtgStxf11tJTj4r/mKeLl2d6LIg/h+sJF1sGFpiLd4Q5fPnVreAc3rV3yKGFOAaDU7yuF71tvyaYn6TeqiMM+WbJAqMDYVZCeWIioSUa5Nvo/qUzqPamdc3SJ2/pqQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=62II8EE4mPrPECgEX8QpZlvPGMRyuXe+updoAcR5TWQ=;
+ b=rHsm1sw2pc5o4W1pVd/yjJW40cH4WUSHzBcYjgG0bzvXSdJdX6b5R9zqB4sG1HLvMR+ih8TwVB6UykuDcnCK8+pAicCLiBq/x32YQ7PuuBzHKzwFmjH87rmpoo/JNd1l0XVUg6lPB5TFb5eAeFwGaJ/Wl6ndeEVRsWwJb1qSYJ/hpYbbcjtEdj1WaXe9GuEQDvUlOcNzdXfnHjXgs/GhZBdvE7FWer6OKzuTZAuD1aRiw7hjAqJ1Tts6qRNGs99UdJtbVEKZ2QCYH4fHxWzbdOfFj7iKW9O5yr6ok5Oc/mOLNobDiIYzvVFt0MsVNDxiek7yT/UAI78G7+s8PEhYNg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
+ by GV2PR10MB7535.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:dc::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Tue, 4 Nov
+ 2025 14:14:41 +0000
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::8fe1:7e71:cf4a:7408]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::8fe1:7e71:cf4a:7408%6]) with mapi id 15.20.9275.015; Tue, 4 Nov 2025
+ 14:14:41 +0000
+Message-ID: <278cae30-6852-4089-84b3-f4d4710143dc@siemens.com>
+Date: Tue, 4 Nov 2025 15:14:40 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
+Subject: Re: [PATCH v5 5/6] scripts: Add helper script to generate eMMC block
+ device images
+From: Jan Kiszka <jan.kiszka@siemens.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Eric Blake <eblake@redhat.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
+ <5c9c6495ad4afc9d11f856bafcb797fed8fccecc.1760702638.git.jan.kiszka@siemens.com>
+ <bfd49f9a-0a37-4e1d-b7e2-f0e59943915e@linaro.org>
+ <08287450-4889-4329-b21c-87fde274b13f@siemens.com>
+ <b4becb69-cf74-4e1b-97f3-52756b8a69d2@siemens.com>
+ <dcb21299-f6b1-489b-b952-aafd64dba31a@linaro.org>
+ <55f73b5c-a4c5-463b-a507-6617ebde67b0@siemens.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- kjaju@nvidia.com
-References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-16-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251031105005.24618-16-skolothumtho@nvidia.com>
+Autocrypt: addr=jan.kiszka@siemens.com; keydata=
+ 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
+In-Reply-To: <55f73b5c-a4c5-463b-a507-6617ebde67b0@siemens.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+X-ClientProxiedBy: FR5P281CA0024.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f1::16) To AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:588::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|GV2PR10MB7535:EE_
+X-MS-Office365-Filtering-Correlation-Id: a44110da-1147-4acf-51ba-08de1bac7f2d
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UW5teFp1MHMvb2hHdEpFYTU0THVpbjlzUmZJY0dOQkFEZVhDUFFhTmJabXI4?=
+ =?utf-8?B?cVRSME5XVGlSUnFOc0FQR2lSdUVIWGM0SEtUYUtzSDF2cFRkSURxT04zMlkv?=
+ =?utf-8?B?R0R0Slh1OWNmOXhQKy9mdDVvZmZMWHVTV1VFZFd2eHN0SjlWOTlrTzZMblht?=
+ =?utf-8?B?YStZWGlRNFI2VEIvUVh2Yms5TE5WZEcwcXlzbmFuelJnNlVFRk03aSs1T0Q1?=
+ =?utf-8?B?aGNYSGVhTXJueW5CT0pnTjFneVBGUUxPK3lFOWVvL3ZQdkdOKzJmOHdyL2JQ?=
+ =?utf-8?B?K3NVVlJWNGcxMzlPL3hxN0FwaXBIcDlXZjlEK2R0RTdtalN2Q0x4b0F0bUtE?=
+ =?utf-8?B?ekMrOEM5ODFOSHZtN3ZLSHJnK1pLNVJqT3UvL3pOaTdDV0JFUXpTbGhMdmF0?=
+ =?utf-8?B?SmVYMFJCVTFqWGRWbUVxVlAyZjkxRCt1S1piOG5FMzJWV2h0RWZXNDkrai9H?=
+ =?utf-8?B?VVhVV2xTZktma2hNcGREV0JvZlJqRnNLYmxYQzVaNGVBaG9Dc1FuQitPMm83?=
+ =?utf-8?B?M2VBblZCSS9NQmd4NWtmN0hEZFo2MjkxQUVkSUVqMSsyb1haQmpCYXhSa21F?=
+ =?utf-8?B?bFp2SmFybm5yZTArODBDNDNBWDM1Nkt2YkVqanR5NTF2eHZIT1JNazBRS0x2?=
+ =?utf-8?B?UWh2TWZXTUxManFVaFlQQ28wYm5IcWxVWVNDdkxoSXFyQldlakNPWHh4cFF4?=
+ =?utf-8?B?ajlUYnZKazZYNE1saVE2NzUvbEFzcUxjQTAyRUR3T3ZXU0o0YXgxUWZjd3A5?=
+ =?utf-8?B?WjF2bnAvV25ET1JqblZ4VGRSNkxHTE5WUUxzRXl1L1NxV2tDSDlFZUowQVhE?=
+ =?utf-8?B?UzZST0hMLzlGWmRxdFRpK0IyOG43SHFnSGUxYXNyYUlLZnN4UVg1emF3RXAr?=
+ =?utf-8?B?NXFHR1NEVStYN3lOZVNYQkovdUlOcDJWU1lTWURGWjRRdndicDl5eHk4ZG5Q?=
+ =?utf-8?B?R3NNak1sUGZBVlFjdTYycTNyVkwwTjBvazgyUnhMSDdtakRuMC84ZXArdmdv?=
+ =?utf-8?B?TklMOFQvMjhQNlVoWmRxeTlnd2FQUmJXenlvSTBPdmxrd0tubXkzd0hQSk1I?=
+ =?utf-8?B?NzZ1blVQSmlNdFBuUlVyVDN5NXpOV2FqY1Y0ZVRLVGoxRVk5Q1cvUHpzdzdY?=
+ =?utf-8?B?NndObFZzNVRxZ0lxSHZGb3Y4ZjQ2aVllOTVzb1IrazYvWExwVHBSeVEwOE45?=
+ =?utf-8?B?di9kNnIvTmlIVEJqV1NOeTFBdDVWSk5oMXVod0lOSWV1SWFSeitMTFNSeGw1?=
+ =?utf-8?B?SkQ3YjlMZTJkL08wS1RFd1dtcGVlVlR6T3psNjRMbE9sWXJrWGNzWFlVZHpo?=
+ =?utf-8?B?bkI1VmZTWjB0S1Q5NnpET1RpS1pQcG5YZEtVQnZPR3RyazVubm9PRTZSUnU3?=
+ =?utf-8?B?dU8yYjN3NHdicnRzV1BETVdHK2J1YXFZdlNPbk9iQWl5YnAwU1IyeTlhZTZE?=
+ =?utf-8?B?eGZWSGdwQzZLOENpMTc5T28vZnV3eVY1VXl1cm03L2QwekIrNy9kblRNRzk5?=
+ =?utf-8?B?b1NaRm53TVdjNW5pYUR5eERoVGI5WldlVnF5VkdrUXN1dHpEUTM4Q3BsR3pt?=
+ =?utf-8?B?U2xRVGJPTndmakRCazFVcm9pVGZwQ1dqZmw0d2JLVzNtaVFJY28xZDlKMGs3?=
+ =?utf-8?B?UmFzUElrNjJUUVhMUy9oNmplZFBBajkxelFvdldyTndhUGJmc2VrWDE2WlVU?=
+ =?utf-8?B?eGdFemZxRmlHelQwUHhDRDA5OXdFQ3ZFcWlvN1QraEZWLzJMWmE4ZTliU0Nn?=
+ =?utf-8?B?UXJzOW0wMWJYN0J5bVAzZ0wyTFIrODFyQjlZSjVwbGpEeVl0dC9HNUF1UVNY?=
+ =?utf-8?B?TGowU3Q4TldQRDNIVGVGTDdpSUYrOTNwMDU3WjhmKzBicUxCOEg0cjMvaUM5?=
+ =?utf-8?B?aytyZUY0UnBoZDZQU1JwUFZhZCtTOXo4MEtvRHlRM2hTaDZqZjdzL1U0N1Fn?=
+ =?utf-8?Q?0E8Z+9zERcuA2TkzWPcNOVucmWJRGggq?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TkNVcy9sQ0t0WWtUelpnQlpQLzNlVjk2WXQ5WmFYcFMvNFNKUFZZaEpaWjhI?=
+ =?utf-8?B?QWd6Q3ZvRmpwQmN2OFJmWTBQNkluS3NKeXp2QmtiNTF6QjJMTXVFOEVCVlRr?=
+ =?utf-8?B?ZmFVVmE4aWJtYlR6dW9LT09oRjJmSVpvQjhXeUgvaE4xTFpxbDFjRkxpYjhm?=
+ =?utf-8?B?TS81YTNjN2l2dmVrVXpSekFJWmpiUzVuR3Z0UCt1eSs5SnlRdnB1VTFtbU1M?=
+ =?utf-8?B?WmRWSEN1YTRXZjdrdFRRNXBIWGdQSjJyYlBtcG5KQ2xKOFBEeVVnblhMU1BF?=
+ =?utf-8?B?VitWMEFPQWxudnB3T3JqM2pIbFRlU0FIQk9ZZ3hLNENuaHE1ME1RWmMyZHBV?=
+ =?utf-8?B?TjJ1VXFaMUhhQXoyaWlWa2NkREZaWW1WU1JBN3VLTElmbzVmSk1uTDJHSkJm?=
+ =?utf-8?B?WGpkREI4QnZZaTBXMVQzZEZGRWx3VTdxa0ZxbCs4anNBSm1Qb3c3eTFoc0JY?=
+ =?utf-8?B?eUtPVnNqa3I4TEF6dk1oRk1QNGJUaG16THZUbTdxTlU1elZ5YzFYbEdFMnFl?=
+ =?utf-8?B?Q2NtMU8rengreTMyQ3NROHFzZ1JjamdJWkkwaldTMzlQZlA5S3JwUWU2ZUVM?=
+ =?utf-8?B?QkgyQkg0VzFhSVNqa0ZDWjlyNVJRVGpReW42WW1OTlNwUkkvVzBRdnVGNkpq?=
+ =?utf-8?B?cDZXeXdXaWVnem9qeUM3c2FDMEk2Sk0xaU9MRTlDeGhSSDM1YlpoV0RVa3lr?=
+ =?utf-8?B?dXlCM1pDa1NnZ3RFRHgwWDBMeG40Vmw3T2I1MW5MdDl0UWlmc3FlVmQvVHFw?=
+ =?utf-8?B?RTkwRlVSajlRNjFVU25LMlZKNnpzWmVWTnJKd09ZbWJVdGVuNWcxOTNNQ0ps?=
+ =?utf-8?B?cmd4NllhWkN2SGZRbTVhb0ZTMkRQSTR3N3dLZjNXSTIxYkdCZkhyekp4Z0dv?=
+ =?utf-8?B?bzVlNC9obmg2a01SL1ZyRE9uT0FyalRiekRxeTdQVFM0UEtPL2FLRitmbTlD?=
+ =?utf-8?B?Yk9hY0hLbFBwT09zOE45ODR0d2hWenQ5TmxxQVNuaTlTSkdaK25ORks3ODlV?=
+ =?utf-8?B?K2JVWThMd0RUZXh6QmJlNHJWbE55V21CcWt2ZXBSdkFLRitQTzJaVjB3OHdt?=
+ =?utf-8?B?N205VHQyazdNZHJ1aGQ3c1lLdWlOb3dsaktCajJkd0RUakRHTnQ4ZnAxaFFm?=
+ =?utf-8?B?bjkzbHNCUnRCTm9tZVBIMVhqWEIwbDI0Yy96THNXK2cvaFRZMzRHOUVXMm5i?=
+ =?utf-8?B?R29pbHN6SVA3Rkh0NU5WT1A1alVSUW9FYk1abkU0OFlDY3RjRDF6T2RSaHhv?=
+ =?utf-8?B?SEU0clY2TG5LN3RJZERtUDhoN1hBNDFYTU5zdGxxemZkNkExeFJEWDdIazlk?=
+ =?utf-8?B?RFhYaWdjaTJWb3o3NUI2MnJqWHliVStKYnNESDNaVjNDTlFNUWM2d2lLYTFt?=
+ =?utf-8?B?eHRXMC9yVmF1UDZzd1BabU9IaVM3WmpHeHBJTHhmWURlOTl2Rnc3SWdIYlJL?=
+ =?utf-8?B?YmY1YkpzMzN4RjhMSTNlK3l1eXkvNGdSN1RIMDZnVnNXMHlvWjV4SnJpcDZm?=
+ =?utf-8?B?NkNFNklldVc1VkZnMkluUVZSb1BNNzlXTjNtTnllODlkdXVtdTVQQlp2ZVZj?=
+ =?utf-8?B?cFFiZnhqRGpwQjJaRStjY29TVVYvL2J1b2JKWnBpYWdTUDhvL29zMFNTV2Fi?=
+ =?utf-8?B?R2gwT0tGSHFoMHA4b3RFKzJMMDZlOVpwNkE2b3JSZXV0bS92U1RaTlM1aXhm?=
+ =?utf-8?B?NWJuK2VUamVhNXV4VmJtanF1T25yNFkvM0g2NWlaUEpEcWRsQ0RvN09pT3Zv?=
+ =?utf-8?B?aVB4YjF4SmJ6MEZKUFIrR0pZQzFPZktYK1dYM1hvWkp2QXZielBKejlhb21L?=
+ =?utf-8?B?S0g1eVhNWlhXNTlveEh2amRLaTZjZENPemtFajJBck4ySnhoWElINGM3U3Ey?=
+ =?utf-8?B?WklPay9MbFpRdVdOU012d1l6OUt6ZW8yRVpqaXE5ZWVBeGV2ZVdFcTBsUHUr?=
+ =?utf-8?B?NmY5Y1JKcDlFZGtRUCtJOVhhUzJWSFFJbDRHaUsrMWw2UzZMVEQ1eG40ZzFO?=
+ =?utf-8?B?MitjLzg4YkI4Wm15ZWEwV0tqVGJmYWEyMnRtSmZJM3docU9JWFRmZ0FTT0Nq?=
+ =?utf-8?B?cGZqWlFaVWgrb2kwYU9OcTVSeE04eDRhZUNucWxNLzhURjI3WXJ5aGlYS0w5?=
+ =?utf-8?Q?W4yOClszd4fdFnxdqpX2Oh9N0?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a44110da-1147-4acf-51ba-08de1bac7f2d
+X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 14:14:41.7049 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ar8/HFyPrvFYoaTd6C2zs5bWxZ27v18hNjaUMLFml4AG8PBj6IRLgF3xIwjQ7u4BGKr5KDYDophLv8+LiM90wQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR10MB7535
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=jan.kiszka@siemens.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,140 +229,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer, Nicolin,
+On 04.11.25 13:40, Jan Kiszka wrote:
+> On 04.11.25 13:33, Philippe Mathieu-Daudé wrote:
+>> On 4/11/25 10:26, Jan Kiszka wrote:
+>>> On 04.11.25 07:30, Jan Kiszka wrote:
+>>>> On 03.11.25 14:12, Philippe Mathieu-Daudé wrote:
+>>>>> Hi Jan,
+>>>>>
+>>>>> On 17/10/25 14:03, Jan Kiszka wrote:
+>>>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>
+>>
+>>>>>> +if [ "$bootsz" -gt $((32640 * 1024)) ]; then
+>>>>>
+>>>>> Running on macOS:
+>>>>>
+>>>>> scripts/mkemmc.sh: line 165: [: : integer expression expected
+>>>>> scripts/mkemmc.sh: line 169: [: : integer expression expected
+>>>>> scripts/mkemmc.sh: line 179: [: : integer expression expected
+>>>>> scripts/mkemmc.sh: line 191: [: : integer expression expected
+>>>>> scripts/mkemmc.sh: line 200: [: : integer expression expected
+>>>>> scripts/mkemmc.sh: line 202: [: : integer expression expected
+>>>>> scripts/mkemmc.sh: line 204: [: : integer expression expected
+>>>>>
+>>>>> $ sh --version
+>>>>> GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)
+>>>>>
+>>>>> When using dash:
+>>>>>
+>>>>> scripts/mkemmc.sh: 165: [: Illegal number:
+>>>>> scripts/mkemmc.sh: 169: [: Illegal number:
+>>>>> scripts/mkemmc.sh: 179: [: Illegal number:
+>>>>> scripts/mkemmc.sh: 191: [: Illegal number:
+>>>>> scripts/mkemmc.sh: 200: [: Illegal number:
+>>>>> scripts/mkemmc.sh: 202: [: Illegal number:
+>>>>> scripts/mkemmc.sh: 204: [: Illegal number:
+>>>>>
+>>>>> Should we replace s/[/[[/?
+>>>>
+>>>> No, that would be invalid outside of bash. There must be a logical
+>>>> error.
+>>>>
+>>>> How did you invoke the script? What was the value of bootsz then?
+>>>>
+>>>
+>>> I tried with dash from debian trixie, and there is no issue like yours
+>>> visible.
+>>>
+>>> What problem could macOS have here? Will need your help, don't have
+>>> anything mac-like around right now.
+>>
+>> Don't worry, we can merge v6 code part, and add the script / doc
+>> during the freeze period.
+> 
+> I will send out v6 then. It passed local testing, and I addressed some
+> further details.
+> 
+> A colleague with a Mac offered to have look tomorrow on this. It is
+> always a pain there regarding the subtle differences...
+> 
 
-On 10/31/25 11:49 AM, Shameer Kolothum wrote:
-> On ARM, devices behind an IOMMU have their MSI doorbell addresses
-> translated by the IOMMU. In nested mode, this translation happens in
-> two stages (gIOVA → gPA → ITS page).
->
-> In accelerated SMMUv3 mode, both stages are handled by hardware, so
-> get_address_space() returns the system address space so that VFIO
-> can setup stage-2 mappings for system address space.
+Linux:     stat -c format
+mac (BSD): stat -f format
 
-Sorry but I still don't catch the above. Can you explain (most probably
-again) why this is a requirement to return the system as so that VFIO
-can setup stage-2 mappings for system address space. I am sorry for
-insisting (at the risk of being stubborn or dumb) but I fail to
-understand the requirement. As far as I remember the way I integrated it
-at the old times did not require that change:
-https://lore.kernel.org/all/20210411120912.15770-1-eric.auger@redhat.com/
-I used a vfio_prereg_listener to force the S2 mapping.
+Seems like "wc -c < file" could be a portable alternative to "stat -L -c
+%s file".
 
-What has changed that forces us now to have this gym
+Jan
 
-
->
-> However, QEMU/KVM also calls this callback when resolving
-> MSI doorbells:
->
->   kvm_irqchip_add_msi_route()
->     kvm_arch_fixup_msi_route()
->       pci_device_iommu_address_space()
->         get_address_space()
->
-> VFIO device in the guest with a SMMUv3 is programmed with a gIOVA for
-> MSI doorbell. This gIOVA can't be used to setup the MSI doorbell
-> directly. This needs to be translated to vITS gPA. In order to do the
-> doorbell transalation it needs IOMMU address space.
->
-> Add an optional get_msi_address_space() callback and use it in this
-> path to return the correct address space for such cases.
->
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Reviewed-by Nicolin Chen <nicolinc@nvidia.com>
-> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/pci/pci.c         | 18 ++++++++++++++++++
->  include/hw/pci/pci.h | 16 ++++++++++++++++
->  target/arm/kvm.c     |  2 +-
->  3 files changed, 35 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index fa9cf5dab2..1edd711247 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2982,6 +2982,24 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
->      return &address_space_memory;
->  }
->  
-> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev)
-> +{
-> +    PCIBus *bus;
-> +    PCIBus *iommu_bus;
-> +    int devfn;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-> +    if (iommu_bus) {
-> +        if (iommu_bus->iommu_ops->get_msi_address_space) {
-> +            return iommu_bus->iommu_ops->get_msi_address_space(bus,
-> +                                 iommu_bus->iommu_opaque, devfn);
-> +        }
-> +        return iommu_bus->iommu_ops->get_address_space(bus,
-> +                                 iommu_bus->iommu_opaque, devfn);
-> +    }
-> +    return &address_space_memory;
-> +}
-> +
->  int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
->                                    IOMMUNotify fn, void *opaque)
->  {
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index dfeba8c9bd..b731443c67 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -664,6 +664,21 @@ typedef struct PCIIOMMUOps {
->                              uint32_t pasid, bool priv_req, bool exec_req,
->                              hwaddr addr, bool lpig, uint16_t prgi, bool is_read,
->                              bool is_write);
-> +    /**
-> +     * @get_msi_address_space: get the address space for MSI doorbell address
-> +     * for devices
-> +     *
-> +     * Optional callback which returns a pointer to an #AddressSpace. This
-> +     * is required if MSI doorbell also gets translated through vIOMMU(eg: ARM)
-> +     *
-> +     * @bus: the #PCIBus being accessed.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number
-> +     */
-> +    AddressSpace * (*get_msi_address_space)(PCIBus *bus, void *opaque,
-> +                                            int devfn);
->  } PCIIOMMUOps;
->  
->  bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-> @@ -672,6 +687,7 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
->  bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
->                                   Error **errp);
->  void pci_device_unset_iommu_device(PCIDevice *dev);
-> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev);
->  
->  /**
->   * pci_device_get_viommu_flags: get vIOMMU flags.
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 0d57081e69..0df41128d0 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -1611,7 +1611,7 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level)
->  int kvm_arch_fixup_msi_route(struct kvm_irq_routing_entry *route,
->                               uint64_t address, uint32_t data, PCIDevice *dev)
->  {
-> -    AddressSpace *as = pci_device_iommu_address_space(dev);
-> +    AddressSpace *as = pci_device_iommu_msi_address_space(dev);
->      hwaddr xlat, len, doorbell_gpa;
->      MemoryRegionSection mrs;
->      MemoryRegion *mr;
-
-Eric
-
+-- 
+Siemens AG, Foundational Technologies
+Linux Expert Center
 
