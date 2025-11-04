@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C783CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1E5CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGJwe-0007fo-1T; Tue, 04 Nov 2025 11:31:44 -0500
+	id 1vGJwq-0007ku-2A; Tue, 04 Nov 2025 11:31:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vGJwM-0007cn-Ir
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vGJwR-0007dB-FN
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vGJwH-0003z5-GF
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:24 -0500
+ id 1vGJwN-00040T-4t
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762273877;
+ s=mimecast20190719; t=1762273882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jWcRKatFGdRs6oGcB9rOvC9PoikvUkyBckrYRemBUEA=;
- b=DqH1b6OkgmsUMdkYKRWq4JtU5cdrp/fEO+ikc6Kq34VGOVW5u7y6KP9PP2wQTXUFsgWoNN
- asf7KoGuAvPWlHey0QXpZenbotHZR/AS7nvALGKbArYjzkrI3QrGRytU5xtqV7qg5vkgKt
- +NBrXijgkw4yyYE7VTlMMgjJs8V78nk=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DMqnHq9v41T505uDGP7K/juFTfDSG9AnMF+W/uZJiCk=;
+ b=TeyulT68JoKsUMfKj2Y+esvumWfaEL+nO6Va+RTyqsNobFqVwEfXCNkXqKvhOfJC2qmKQG
+ lB66VCBmwAf+rGG6mwS49ghsrot2EAaKohWa19bWThlMrWE33prxzitOlgT5OZ1RjQdg15
+ i7p7FR30QuZru1qDfpG5WRDyvd5zRQw=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-Qmifns6QOT-cgTucMem2yw-1; Tue, 04 Nov 2025 11:31:14 -0500
-X-MC-Unique: Qmifns6QOT-cgTucMem2yw-1
-X-Mimecast-MFC-AGG-ID: Qmifns6QOT-cgTucMem2yw_1762273873
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b70b21e6cdbso257046966b.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:31:13 -0800 (PST)
+ us-mta-663-3Zo_9J8hM6u4w0GjFrtR4A-1; Tue, 04 Nov 2025 11:31:20 -0500
+X-MC-Unique: 3Zo_9J8hM6u4w0GjFrtR4A-1
+X-Mimecast-MFC-AGG-ID: 3Zo_9J8hM6u4w0GjFrtR4A_1762273879
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b721aa1dac9so402866b.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:31:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762273871; x=1762878671; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762273879; x=1762878679; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jWcRKatFGdRs6oGcB9rOvC9PoikvUkyBckrYRemBUEA=;
- b=GyU6guDzXuFE9qANJQ9SLtBAJH9WkOUjhoPuFiD5xCkVyNvr+kW6p0dnEZKm3H/aoV
- ZEWMlcuOywkc9HEkoi0KggX/CUqZ086LpHBi+hmCwu6ja4WYJs3HRCV5x7EHTPF8YYIO
- h6OxBh9wWtLdB4IT6CM1GhoHTYM2FZisaZcw/VG9Waezeso8ggNGkcXwXs2i+5a9jChV
- yNYSjdipStPlXHTWIw2VhQWNBbAr8hVhSGwx15MZ4FMeRe02zQzUrfVkmahZqxfMA1CX
- 2SyNkIwxYSt6p8ERjctLDJNyJWpv76jlDtEUl3SavF+0H6Ym2flGymFzyxoDI3z/3wog
- Sp5Q==
+ bh=DMqnHq9v41T505uDGP7K/juFTfDSG9AnMF+W/uZJiCk=;
+ b=j5YO44Ryki//cCDo8JCdlMBTN7xvT8WqGrVnTaX0nAvJAw9jryH5zMsev2SAudox2m
+ vapDfEfKXcIGyqTBFtaBioIhAHLXWX8SWn+/RadRlN4VYVDX/omr/4vR1f65MFXWYkWO
+ f/V4z+NdpTn2OCxYNrvY7UGToRv8n/t54czAJlVudqNtH4SOfs9kmh62JIOE1u/HP6vQ
+ Ec69hROTNAwM7NjrsO2OII0ivQepUwePZNWqVpN1raMDxHTdzk3ZyGiqhISXofsQosnp
+ OW0VPnT5D5egtAD9p/GcphlWxId23Ek3oVOevTX/yctuvK0E9NZe56jarKsd4bEOFDdS
+ 6fsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762273871; x=1762878671;
+ d=1e100.net; s=20230601; t=1762273879; x=1762878679;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jWcRKatFGdRs6oGcB9rOvC9PoikvUkyBckrYRemBUEA=;
- b=RDAWlcmFJ8xrza7ym0inZrNx3fSpK9cztQ/VAxidwNpXNgDIy+4xMZiKJaJsxaz0iG
- 4RDfXgGwFK03AErgcMzujYiYbQ/U1BJMsLISBrIbAo/kI3lJrn53VbPjEf3MC6L/z8SP
- +M/9vSNH8vX6iLeEMcaePh6oLW/3Mwpv0bsHQoKeWVZZG0z0DCwq3LfWmzomMcO9OruN
- iVlPDnZ4czaZkk1cAWIZXQn43KWhxeGUH4yz41udtZtO3EyzQY0mxnBCaUy1VVDfuj+0
- AYx6g1aWJQNBjhPAKiH0FxR7U11PONc+DDjzSbl2eYAbfADui0ZCHQu0jAxRgvrqbJVI
- keUA==
-X-Gm-Message-State: AOJu0YwfplYWqHaI1uoMNgky4a5rYIMq7FRnFBDn/tFC0Mc2eorZbVAY
- hnZaCdmfOn8CVoSEXXDUEODthwoSkAged00pI1RAlNMzjpUqlf3UNsTpHL6LrLzgJ84zfzWm3qJ
- 6OCMcfG1AWq6Fxs836CRkPf5aG/jCdQOIiSPli0rsKQ4T3o+UfYDRQ0lfctZjAYfrr0WcjHdiQ/
- 6oJCGAXXaryBT0LeJha7rW0qLpZKzMCojey+dOe7Ut
-X-Gm-Gg: ASbGncv9w1TBL5sbffcl+bySPjYcHBSNCa+E1HXttfT/78WTR+HKLCuLI3DgpZKq/bO
- u32AE4xWLOfKWiX14gOEvhMLQ3c6Gm0SYOKabk6nkgQZ+0ZTL8fWQVhlcAlj79tnIhDMGUDcgTA
- 9CTrASaLMNAs/K81mkL5yLscNgN286it9lX0iZBD11dG7WsDXZYWEUPK1ypDQyKiyZ0HyrVFnlH
- iNE1TJxPNX4BZrLHbS2XoM6MwaYRfRzenHnHmlk/OrBw+Xk/gLWKi9XdN1eTQ/FKnAVp4g0p4QO
- 8LzhZ2CkKVouSfXMBbD+5G+8FdtOksxQ/VPa7wE9tNyhpkPTWb/enq67j+QjXCX4uX7tXzYu9xN
- Pay7pk8CblKcRo3M1AMsQACI+jJD/nv3sGhw9T3SMt6aLq688nE6aWOh8K+gBnYfNcVPt0XNFK8
- rmQY0H
-X-Received: by 2002:a17:907:7241:b0:b57:d5de:444a with SMTP id
- a640c23a62f3a-b7216f64864mr475080666b.15.1762273871320; 
- Tue, 04 Nov 2025 08:31:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGwjeR0HetxvAdI7EBecZiGIzZqrGtoblzDM8oCs5j+nR3r0Rv8iru+MOii/fH7kTP54D8v3g==
-X-Received: by 2002:a17:907:7241:b0:b57:d5de:444a with SMTP id
- a640c23a62f3a-b7216f64864mr475076566b.15.1762273870711; 
- Tue, 04 Nov 2025 08:31:10 -0800 (PST)
+ bh=DMqnHq9v41T505uDGP7K/juFTfDSG9AnMF+W/uZJiCk=;
+ b=w33vXgTEYlVvzv4Qri91/TYflwsfemrsASTbTJzCKyXLlUDEO29lRZpA1UX26hjBU9
+ mEYOUpZ0hbmhdWOoycuNfITEjGSupGbsjIkAg/Ic6DARk94jRKdLd+ZH8VolazF60BFk
+ VCUHQz0mK8MGl6Rnpnnc4cNI1nSsp0q4e4VH/PLSi9E3ME7f1wGquhGy3WJ1aDCSZpO7
+ jikMRfAkwjoFSC/bBQrsBmZdm/CUxiRTric3mz39CYxf8/9eIF/JKKgoN8PxN+JYA9X/
+ HvA37D+K4LKG/wP9OV1JYdU2JlNAMmgo15PmQos1KybYV0UR7vVfssnsEf2m44BNpPFr
+ KUZA==
+X-Gm-Message-State: AOJu0YzFizqQiPmJma0kIPdfGutgcwS+qujriFYHlIUV05s7nnhyG1s9
+ /WbJrDUBerLAlqBNMDgX10Eon/TQ6YTbihjxeLSM0oR/nqJ5wdQrkLq4Wo89X5rZVAp7sItmGHK
+ zK7wDBCmwfIZwYlX2m6N+fPrp0Ty04BcESR9aDfrWxCzS/vqo/R5hdhZOAMHj+NrgCAlCSAsSqQ
+ gR2XqVQ8jNdrN2Ugw5T8ltvYsrw2ULyJC3yPWmPN7B
+X-Gm-Gg: ASbGncu0yr682Tm+RipyLB4faVR3KEepr+lEmIF4X5SYkywQZe6e71GzQ9mpfCOUWgl
+ XziGRrj4wT4TVAjTwEDAGvSPOgLypx8/F8WB0Ih2XEat0LKC9dBmuLr4DZJoq0Z8xifE7Q86iv0
+ IonAbNttZLkBkC/RhudxGKLP0ghbThKw0gp2Bp5MmaIJ806OJGM9yKsEToQ4/yIRL7F3DMykOf8
+ bKWQ6K8p1nwUmppeIybRp00tttclcrC5QMz9+cyHIfrFe5S7ppb+/IT9d9JFIAcYoni6einCT7y
+ 6GKxYDowvtCb9GYfU1dVnwtxYSg1Y83JXlH03vYvpM0P5PFBRZwvjej9T5oFWh7a/cyHzt5hXbO
+ ApKZN7073eNxEZwXa7zNUWGDoahbHD7M/+HVn0Yp9hZqvP8PMX5fi2khsAaCDYjzuGfdNYPdR8/
+ psNnzj
+X-Received: by 2002:a17:907:6eac:b0:b72:6224:7e95 with SMTP id
+ a640c23a62f3a-b7263023406mr23199266b.1.1762273878749; 
+ Tue, 04 Nov 2025 08:31:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEfw016HcquvKrYf/zzyMx9Rm4uJTB/FIZpL0vjHt2v+/2iYxu5o7Fvq5GZaugD11XJsYqoA==
+X-Received: by 2002:a17:907:6eac:b0:b72:6224:7e95 with SMTP id
+ a640c23a62f3a-b7263023406mr23195966b.1.1762273878169; 
+ Tue, 04 Nov 2025 08:31:18 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.110.222])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6a7f2a5sm2394441a12.34.2025.11.04.08.31.09
+ a640c23a62f3a-b723f6e26d1sm245777666b.35.2025.11.04.08.31.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 08:31:09 -0800 (PST)
+ Tue, 04 Nov 2025 08:31:16 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 3/8] rust/util: use anyhow's native chaining capabilities
-Date: Tue,  4 Nov 2025 17:30:57 +0100
-Message-ID: <20251104163102.738889-4-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 6/8] rust: do not add qemuutil to Rust crates
+Date: Tue,  4 Nov 2025 17:31:00 +0100
+Message-ID: <20251104163102.738889-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251104163102.738889-1-pbonzini@redhat.com>
 References: <20251104163102.738889-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -122,263 +123,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This simplifies conversions, making it possible to convert any error
-into a QEMU util::Error with ".into()" (and therefore with "?").
+This fails due to https://github.com/mesonbuild/meson/pull/15076.
+The config-host.h file from the qemuutil dependency ends up on the
+rustc command line for targets that do not use structured sources.
 
-The cost is having a separate constructor for when the error is a simple
-string, but that is made easier by the ensure! macro.  If necessary,
-another macro similar to "anyhow!" can be returned, but for now there
-is no need for that.
+It will be reverted once Meson 1.9.2 is released.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/util/src/error.rs | 160 +++++++++++++++--------------------------
- 1 file changed, 59 insertions(+), 101 deletions(-)
+ rust/chardev/meson.build | 2 +-
+ rust/util/meson.build    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/util/src/error.rs b/rust/util/src/error.rs
-index 2a57c7fd5fd..11b574ca593 100644
---- a/rust/util/src/error.rs
-+++ b/rust/util/src/error.rs
-@@ -38,6 +38,7 @@
-     borrow::Cow,
-     ffi::{c_char, c_int, c_void, CStr},
-     fmt::{self, Display},
-+    ops::Deref,
-     panic, ptr,
- };
+diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
+index d365d8dd0f4..36ada7c4546 100644
+--- a/rust/chardev/meson.build
++++ b/rust/chardev/meson.build
+@@ -39,4 +39,4 @@ _chardev_rs = static_library(
+   dependencies: [glib_sys_rs, common_rs, qemu_macros],
+ )
  
-@@ -49,118 +50,85 @@
+-chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [chardev, qemuutil])
++chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [chardev])
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index b0b75e93ff6..8ad344dccbd 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -43,7 +43,7 @@ _util_rs = static_library(
+   dependencies: [anyhow_rs, libc_rs, foreign_rs, glib_sys_rs, common_rs, qom, qemuutil],
+ )
  
- #[derive(Debug)]
- pub struct Error {
--    msg: Option<Cow<'static, str>>,
--    /// Appends the print string of the error to the msg if not None
--    cause: Option<anyhow::Error>,
-+    cause: anyhow::Error,
-     file: &'static str,
-     line: u32,
- }
+-util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil, qom])
++util_rs = declare_dependency(link_with: [_util_rs])
  
--impl std::error::Error for Error {
--    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
--        self.cause.as_ref().map(AsRef::as_ref)
--    }
-+impl Deref for Error {
-+    type Target = anyhow::Error;
- 
--    #[allow(deprecated)]
--    fn description(&self) -> &str {
--        self.msg
--            .as_deref()
--            .or_else(|| self.cause.as_deref().map(std::error::Error::description))
--            .expect("no message nor cause?")
-+    fn deref(&self) -> &Self::Target {
-+        &self.cause
-     }
- }
- 
- impl Display for Error {
-     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
--        let mut prefix = "";
--        if let Some(ref msg) = self.msg {
--            write!(f, "{msg}")?;
--            prefix = ": ";
--        }
--        if let Some(ref cause) = self.cause {
--            write!(f, "{prefix}{cause}")?;
--        } else if prefix.is_empty() {
--            panic!("no message nor cause?");
--        }
--        Ok(())
-+        Display::fmt(&format_args!("{:#}", self.cause), f)
-     }
- }
- 
--impl From<Cow<'static, str>> for Error {
-+impl<E> From<E> for Error
-+where
-+    anyhow::Error: From<E>,
-+{
-     #[track_caller]
--    fn from(msg: Cow<'static, str>) -> Self {
--        let location = panic::Location::caller();
--        Error {
--            msg: Some(msg),
--            cause: None,
--            file: location.file(),
--            line: location.line(),
--        }
--    }
--}
--
--impl From<String> for Error {
--    #[track_caller]
--    fn from(msg: String) -> Self {
--        let location = panic::Location::caller();
--        Error {
--            msg: Some(Cow::Owned(msg)),
--            cause: None,
--            file: location.file(),
--            line: location.line(),
--        }
--    }
--}
--
--impl From<&'static str> for Error {
--    #[track_caller]
--    fn from(msg: &'static str) -> Self {
--        let location = panic::Location::caller();
--        Error {
--            msg: Some(Cow::Borrowed(msg)),
--            cause: None,
--            file: location.file(),
--            line: location.line(),
--        }
--    }
--}
--
--impl From<anyhow::Error> for Error {
--    #[track_caller]
--    fn from(error: anyhow::Error) -> Self {
--        let location = panic::Location::caller();
--        Error {
--            msg: None,
--            cause: Some(error),
--            file: location.file(),
--            line: location.line(),
--        }
-+    fn from(src: E) -> Self {
-+        Self::new(anyhow::Error::from(src))
-     }
- }
- 
- impl Error {
-+    /// Create a new error from an [`anyhow::Error`].
-+    ///
-+    /// This wraps the error with QEMU's location tracking information.
-+    /// Most code should use the `?` operator instead of calling this directly.
-+    #[track_caller]
-+    pub fn new(cause: anyhow::Error) -> Self {
-+        let location = panic::Location::caller();
-+        Self {
-+            cause,
-+            file: location.file(),
-+            line: location.line(),
-+        }
-+    }
-+
-+    /// Create a new error from a string message.
-+    ///
-+    /// This is a convenience wrapper around [`Error::new`] for simple string
-+    /// errors. Most code should use the [`ensure!`](crate::ensure) macro
-+    /// instead of calling this directly.
-+    #[track_caller]
-+    pub fn msg(src: impl Into<Cow<'static, str>>) -> Self {
-+        Self::new(anyhow::Error::msg(src.into()))
-+    }
-+
-     #[track_caller]
-     #[doc(hidden)]
-+    #[inline(always)]
-     pub fn format(args: fmt::Arguments) -> Self {
--        if let Some(msg) = args.as_str() {
--            Self::from(msg)
--        } else {
--            let msg = fmt::format(args);
--            Self::from(msg)
--        }
-+        // anyhow::Error::msg will allocate anyway, might as well let fmt::format doit.
-+        let msg = fmt::format(args);
-+        Self::new(anyhow::Error::msg(msg))
-     }
- 
-     /// Create a new error, prepending `msg` to the
-     /// description of `cause`
-     #[track_caller]
-     pub fn with_error(msg: impl Into<Cow<'static, str>>, cause: impl Into<anyhow::Error>) -> Self {
--        let location = panic::Location::caller();
--        Error {
--            msg: Some(msg.into()),
--            cause: Some(cause.into()),
--            file: location.file(),
--            line: location.line(),
-+        fn do_with_error(
-+            msg: Cow<'static, str>,
-+            cause: anyhow::Error,
-+            location: &'static panic::Location<'static>,
-+        ) -> Error {
-+            Error {
-+                cause: cause.context(msg),
-+                file: location.file(),
-+                line: location.line(),
-+            }
-         }
-+        do_with_error(msg.into(), cause.into(), panic::Location::caller())
-     }
- 
-     /// Consume a result, returning `false` if it is an error and
-@@ -326,8 +294,7 @@ unsafe fn cloned_from_foreign(c_error: *const bindings::Error) -> Self {
-             };
- 
-             Error {
--                msg: FromForeign::cloned_from_foreign(error.msg),
--                cause: None,
-+                cause: anyhow::Error::msg(String::cloned_from_foreign(error.msg)),
-                 file: file.unwrap(),
-                 line: error.line as u32,
-             }
-@@ -376,8 +343,8 @@ macro_rules! ensure {
-     };
-     ($cond:expr, $err:expr $(,)?) => {
-         if !$cond {
--            let s = ::std::borrow::Cow::<'static, str>::from($err);
--            return $crate::Result::Err(s.into());
-+            let e = $crate::Error::msg($err);
-+            return $crate::Result::Err(e);
-         }
-     };
- }
-@@ -416,19 +383,10 @@ unsafe fn error_get_pretty<'a>(local_err: *mut bindings::Error) -> &'a CStr {
-         unsafe { CStr::from_ptr(bindings::error_get_pretty(local_err)) }
-     }
- 
--    #[test]
--    #[allow(deprecated)]
--    fn test_description() {
--        use std::error::Error;
--
--        assert_eq!(super::Error::from("msg").description(), "msg");
--        assert_eq!(super::Error::from("msg".to_owned()).description(), "msg");
--    }
--
-     #[test]
-     fn test_display() {
--        assert_eq!(&*format!("{}", Error::from("msg")), "msg");
--        assert_eq!(&*format!("{}", Error::from("msg".to_owned())), "msg");
-+        assert_eq!(&*format!("{}", Error::msg("msg")), "msg");
-+        assert_eq!(&*format!("{}", Error::msg("msg".to_owned())), "msg");
-         assert_eq!(&*format!("{}", Error::from(anyhow!("msg"))), "msg");
- 
-         assert_eq!(
-@@ -445,7 +403,7 @@ fn test_bool_or_propagate() {
-             assert!(Error::bool_or_propagate(Ok(()), &mut local_err));
-             assert_eq!(local_err, ptr::null_mut());
- 
--            let my_err = Error::from("msg");
-+            let my_err = Error::msg("msg");
-             assert!(!Error::bool_or_propagate(Err(my_err), &mut local_err));
-             assert_ne!(local_err, ptr::null_mut());
-             assert_eq!(error_get_pretty(local_err), c"msg");
-@@ -462,7 +420,7 @@ fn test_ptr_or_propagate() {
-             assert_eq!(String::from_foreign(ret), "abc");
-             assert_eq!(local_err, ptr::null_mut());
- 
--            let my_err = Error::from("msg");
-+            let my_err = Error::msg("msg");
-             assert_eq!(
-                 Error::ptr_or_propagate(Err::<String, _>(my_err), &mut local_err),
-                 ptr::null_mut()
+ rust.test('rust-util-tests', _util_rs,
+           dependencies: [qemuutil, qom],
 -- 
 2.51.1
 
