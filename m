@@ -4,52 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3149FCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 12:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8A5CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 12:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGFip-0004Ea-9j; Tue, 04 Nov 2025 07:01:11 -0500
+	id 1vGFzb-00017s-Cj; Tue, 04 Nov 2025 07:18:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1vGFiY-0004Co-JM; Tue, 04 Nov 2025 07:00:54 -0500
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vGFzZ-00017R-6u
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 07:18:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1vGFiV-0004ry-Ma; Tue, 04 Nov 2025 07:00:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:In-Reply-To:
- References; bh=ibZRCFk2kipCAd+0+yWJjniT71+ohB8gCWcyrrZG754=; b=eEu1JmedBaWqHB
- q7h8Kzd/9QZIGDz2lVpxAU9wA8Vb2r2r+lQ1BtxbpxEzdv8R756NrbVOIrYy+MaYxHT9vDfhiVcod
- 6EN5JUhYSajJubJbwO5XK4Sn6nlxmaXrQBXRSkBHcPl4nVIoipBcmRhPOonZJ+Cs/KE07NGq6pbBt
- weKyQ8wdZMvpAgJuUc7ULJtkIAeLCVSKMR0Ob85L5yyiSrsGO/WPrFKQv8oB+05imcHY2hB8CE/yH
- RtVfDvQxAd2/xDkcETI+tD9Rhn0ZYZyBoznCLhpdNSnp/yqZVK33r+oer7UF5jBMMd2Q6Kghw0Ifx
- CS2hfyIupxeYxVCu2GvQ==;
-Received: from [167.98.27.226] (helo=codethink.guest.codethink.co.uk)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1vGFi1-000gr8-GJ; Tue, 04 Nov 2025 12:00:21 +0000
-From: Roan Richmond <roan.richmond@codethink.co.uk>
-To: qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- qemu-devel@nongnu.org, alistair23@gmail.com,
- Roan Richmond <roan.richmond@codethink.co.uk>
-Subject: [PATCH] Add RISCV Zilsd extension
-Date: Tue,  4 Nov 2025 11:59:57 +0000
-Message-ID: <20251104120012.194899-1-roan.richmond@codethink.co.uk>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vGFzW-0005ud-T9
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 07:18:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762258705;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XW6AoeCc0tA2lUHElnC/IOwbdbsyLS2iPla2MgiGwZc=;
+ b=Q6yD0X2TxsKLjwuL8Xotx7t2nJtA3NUpLV/EPoERf7mGUQX2eOwpwZyQUWBa4vl7S6/yDa
+ 88/6RKK3ZgNnuQmVg5ffz7KTSY6m2KEPsMrjMB83nHhKOGKknXExiZpMibUICzOQfn5u5S
+ GMsb3z8thXnXf7u3Mw+wo3bH8PWBBoQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-494-PAHw_ibVPVWDpCR3KyrXcg-1; Tue, 04 Nov 2025 07:18:23 -0500
+X-MC-Unique: PAHw_ibVPVWDpCR3KyrXcg-1
+X-Mimecast-MFC-AGG-ID: PAHw_ibVPVWDpCR3KyrXcg_1762258702
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b6d7405e6a8so704541166b.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 04:18:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762258702; x=1762863502; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=XW6AoeCc0tA2lUHElnC/IOwbdbsyLS2iPla2MgiGwZc=;
+ b=HvXfSOmjo9ovsc7bdBaFHWdMWq0QZSbT2MKWEJfHI5VkvLkJ0g5kwD1CpIRzW3PC/n
+ Iauqc3Jgw9VbFw5QrYFX2ztLtkODs0r+5fnMZHETPIXFKKmdAAccUDkiGvC6sqymSNxF
+ AvWLkwDgd246OZdDMxR6gyoahtv2UlkALFyjDLIWpvurngLuOggCeeK1AW5ufibjedgr
+ ejChbqL6TvyqHvNR728RJqaMk2awT7GWvNYR6zZNAtCmhqVY3c6gbJE+q5IhTVeKxB2z
+ zdTTsSrkpgq84wmIxl8ETwCBYUG4LZlmHYYLJQaUWksB3MCwf1Q+xWVyENksbJrDadh9
+ 7Pag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762258702; x=1762863502;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XW6AoeCc0tA2lUHElnC/IOwbdbsyLS2iPla2MgiGwZc=;
+ b=oDp4HhPo4FRfhYvtPba1xF7O8RjYDSKsCh/0VjVd+iBvt3FVB84B+tpFN7ZZWArNY/
+ FnSmJBpHVPhKpo5PqzPObS2hGM/lT/QM6EQ1kSCsj9MjXADU0EplDeIL96dyQnk+hvyK
+ JutAHSoWkWEpThAqZQGCvtNzjZODe7LZZ3IOSpMzCeHHB/HXUrgz3P5fHu64BsXYp5e+
+ EWDKlUFrpqcI5/tIox3zI5OOwXEJHYnTEApSblO2TmbeNnsZBo3+VWn2msFolG9h6Ekr
+ E4uE7ybJwlUmFatILxO/+1Soijr+yFwiEFLADdaiAt66AamodE1VV/U36/5CK/TsQABM
+ /Zfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1pkBMhjsxFF/EvIvQ7PryzcqpdPEn/XEi39qxaBLjUaXF9HdcqJdn+1r9wCigrXAAeHhOXqn9coR0@nongnu.org
+X-Gm-Message-State: AOJu0Yy2UtQ/MS3Eh1y9HGOqYXNQh9YicByPxwQDBaFQqfxFcSndUd/U
+ 31yG6p2vN7wkJRQZ/D7xITDpZMn8o7RqaxqDcdFD7EsFDuUr7s6fPA46NcvjOnFhvb83BwrTWUU
+ plicG91RwLsEj2noDNonqcIjfQe0/aZGfDYHwfhcV0sYEm7bqs9oJht0S
+X-Gm-Gg: ASbGncsU82Iu9v4tSabFxpfamSqzpR89BYWQUqsykOmczJnz2mQBzspE2GwrMm+d4EJ
+ m2MYlKjSOxGfCoch0q0Nx6U/I/SgKjYkYAcM6++tc2CvsBBYdAo1kj6188PIKKaXd41ToZrxWjb
+ wBB8a+pK9bmWVLpCZQoMpcgqEWq7V8BgP6KUP9EDi9Tw+nhK8DamYrLEPME6oawfaB7+BOYl9gF
+ oQ0zNzk9SECZ/DXm125A4BCIQiLA9XZFMu+TO47UlXH3ZghK2f4+PYnyOQkB44Hvbm0DvaCAQrb
+ Eu6mBoPEN8BLpZPXmpFf4HMuyI3Td5yElqDznguByg8v3E+2zpurAlxoYrt3umXZ6LQIkC77MHz
+ OkvzK54Xdqftnv6NweRgCrE79subegpxTdYFU2REBv2he6cydtSGZzdQdXMpnTsndm66r7kruX3
+ fWTh1K
+X-Received: by 2002:a17:907:1c16:b0:b70:4f7d:24f8 with SMTP id
+ a640c23a62f3a-b72169f503emr297588266b.22.1762258702285; 
+ Tue, 04 Nov 2025 04:18:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEfDSV9tVvxQXnVdrjmsw8trglOs3NpscnDnqdwxwhzv+2rXkRcHczMW1pq3K5s82FB/RoRAQ==
+X-Received: by 2002:a17:907:1c16:b0:b70:4f7d:24f8 with SMTP id
+ a640c23a62f3a-b72169f503emr297585766b.22.1762258701878; 
+ Tue, 04 Nov 2025 04:18:21 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.110.222])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b723fa03d3esm202269366b.53.2025.11.04.04.18.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Nov 2025 04:18:21 -0800 (PST)
+Message-ID: <d4921688-b3b3-45f2-a3c9-dee2977750cd@redhat.com>
+Date: Tue, 4 Nov 2025 13:18:19 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Regression with the "replay" test on target alpha
+To: Thomas Huth <thuth@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251028173430.2180057-1-pbonzini@redhat.com>
+ <20251028173430.2180057-4-pbonzini@redhat.com>
+ <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
+ <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
+ <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
+ <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
+ <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=roan.richmond@codethink.co.uk; helo=imap5.colo.codethink.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,155 +169,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is based on v1.0 of the Zilsd extension [1].
-The specification is listed as in the Ratified state [2],
- since Jan 30, 2025.
+On 11/4/25 09:38, Thomas Huth wrote:
+> Thread 4 (Thread 0x7f31bd1ff6c0 (LWP 89223) "qemu-system-alp"):
+> #0  0x00007f31c47150cd in syscall () at /lib64/libc.so.6
+> #1  0x00005593dd2b578d in qemu_futex_wait (f=0x5593ddad9e50 
+> <rcu_call_ready_event>, val=4294967295) at /home/thuth/devel/qemu/ 
+> include/qemu/futex.h:47
+> #2  0x00005593dd2b59a1 in qemu_event_wait (ev=0x5593ddad9e50 
+> <rcu_call_ready_event>) at ../../home/thuth/devel/qemu/util/event.c:162
+> #3  0x00005593dd2c12e3 in call_rcu_thread (opaque=0x0) at ../../home/ 
+> thuth/devel/qemu/util/rcu.c:304
 
-[1]: https://github.com/riscv/riscv-zilsd
-[2]: https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154861/RISC-V+Specs+Under+Development
+The RCU thread is simply waiting.
 
-Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
----
- target/riscv/cpu.c                      |  2 +
- target/riscv/cpu_cfg_fields.h.inc       |  1 +
- target/riscv/insn_trans/trans_rvi.c.inc | 56 ++++++++++++++++++++++++-
- 3 files changed, 57 insertions(+), 2 deletions(-)
+> Thread 3 (Thread 0x7f31bc8fd6c0 (LWP 89224) "qemu-system-alp"):
+> #0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
+> #1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/libc.so.6
+> #2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
+> #3  0x00007f31c470a7c6 in ppoll () at /lib64/libc.so.6
+> #4  0x00007f31c6916890 in g_main_context_iterate_unlocked.isra () at / 
+> lib64/libglib-2.0.so.0
+> #5  0x00007f31c6916a4f in g_main_loop_run () at /lib64/libglib-2.0.so.0
+> #6  0x00005593dd0d1ab0 in iothread_run (opaque=0x559405a567a0) at ../../ 
+> home/thuth/devel/qemu/iothread.c:70
+> #7  0x00005593dd2b3311 in qemu_thread_start (args=0x559405a571a0) 
+> at ../../home/thuth/devel/qemu/util/qemu-thread-posix.c:393
+> #8  0x00007f31c4693f54 in start_thread () at /lib64/libc.so.6
+> #9  0x00007f31c471732c in __clone3 () at /lib64/libc.so.6
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280d7c..6e0d37fb96 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -121,6 +121,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
-     ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
-     ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
-+    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_13_0, ext_zilsd),
-     ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
-     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
-     ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
-@@ -1247,6 +1248,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
-     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
-+    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
-     MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
-     MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
-     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index a154ecdc79..8d8e35e4cf 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -41,6 +41,7 @@ BOOL_FIELD(ext_zicond)
- BOOL_FIELD(ext_zihintntl)
- BOOL_FIELD(ext_zihintpause)
- BOOL_FIELD(ext_zihpm)
-+BOOL_FIELD(ext_zilsd)
- BOOL_FIELD(ext_zimop)
- BOOL_FIELD(ext_zcmop)
- BOOL_FIELD(ext_ztso)
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 54b9b4f241..dcbb3811d9 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -370,6 +370,27 @@ static bool gen_load_tl(DisasContext *ctx, arg_lb *a, MemOp memop)
-     return true;
- }
- 
-+/* Zilsd extension adds load/store double for 32bit arch */
-+static bool gen_load_zilsd(DisasContext *ctx, arg_lb *a)
-+{
-+    TCGv dest_1 = dest_gpr(ctx, a->rd);
-+    TCGv dest_2 = dest_gpr(ctx, (a->rd)+1);
-+    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
-+    TCGv addr_2 = get_address(ctx, a->rs1, (a->imm)+4);
-+    
-+    tcg_gen_qemu_ld_tl(dest_1, addr_1, ctx->mem_idx, MO_SL);
-+    tcg_gen_qemu_ld_tl(dest_2, addr_2, ctx->mem_idx, MO_SL);
-+
-+    /* If destination is x0 then result of the load is discarded */
-+    if (a->rd == 0) {
-+        return true;
-+    }
-+
-+    gen_set_gpr(ctx, a->rd, dest_1);
-+    gen_set_gpr(ctx, a->rd+1, dest_2);
-+    return true;
-+}
-+
- /* Compute only 64-bit addresses to use the address translation mechanism */
- static bool gen_load_i128(DisasContext *ctx, arg_lb *a, MemOp memop)
- {
-@@ -409,6 +430,8 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
-     decode_save_opc(ctx, 0);
-     if (get_xl(ctx) == MXL_RV128) {
-         out = gen_load_i128(ctx, a, memop);
-+    } else if (memop == MO_SQ && get_xl(ctx) == MXL_RV32) {
-+        out = gen_load_zilsd(ctx, a);
-     } else {
-         out = gen_load_tl(ctx, a, memop);
-     }
-@@ -437,7 +460,10 @@ static bool trans_lw(DisasContext *ctx, arg_lw *a)
- 
- static bool trans_ld(DisasContext *ctx, arg_ld *a)
- {
--    REQUIRE_64_OR_128BIT(ctx);
-+    /* Check for Zilsd extension if 32bit */
-+    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
-+        return false;
-+    }
-     return gen_load(ctx, a, MO_SQ);
- }
- 
-@@ -482,6 +508,27 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
-     return true;
- }
- 
-+/* Zilsd extension adds load/store double for 32bit arch */
-+static bool gen_store_zilsd(DisasContext *ctx, arg_sb *a)
-+{
-+    TCGv data_1 = tcg_temp_new();
-+    TCGv data_2 = tcg_temp_new();
-+    if (a->rs2 != 0) {
-+        data_1 = get_gpr(ctx, a->rs2, EXT_NONE);
-+        data_2 = get_gpr(ctx, (a->rs2)+1, EXT_NONE);
-+    }
-+    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
-+    TCGv addr_2 = get_address(ctx, a->rs1, (a->imm)+4);
-+
-+    if (ctx->ztso) {
-+        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
-+    }
-+
-+    tcg_gen_qemu_st_tl(data_1, addr_1, ctx->mem_idx, MO_SL);
-+    tcg_gen_qemu_st_tl(data_2, addr_2, ctx->mem_idx, MO_SL);
-+    return true;
-+}
-+
- static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
- {
-     TCGv src1l = get_gpr(ctx, a->rs1, EXT_NONE);
-@@ -511,6 +558,8 @@ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
-     decode_save_opc(ctx, 0);
-     if (get_xl(ctx) == MXL_RV128) {
-         return gen_store_i128(ctx, a, memop);
-+    } else if (memop == MO_UQ && get_xl(ctx) == MXL_RV32) {
-+        return gen_store_zilsd(ctx, a);
-     } else {
-         return gen_store_tl(ctx, a, memop);
-     }
-@@ -533,7 +582,10 @@ static bool trans_sw(DisasContext *ctx, arg_sw *a)
- 
- static bool trans_sd(DisasContext *ctx, arg_sd *a)
- {
--    REQUIRE_64_OR_128BIT(ctx);
-+    /* Check for Zilsd extension if 32bit */
-+    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
-+        return false;
-+    }
-     return gen_store(ctx, a, MO_UQ);
- }
- 
--- 
-2.43.0
+This iothread is doing nothing.
+
+> Thread 2 (Thread 0x7f3137fff6c0 (LWP 89225) "qemu-system-alp"):
+> #0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
+> #1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/libc.so.6
+> #2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
+> #3  0x00007f31c470b2be in write () at /lib64/libc.so.6
+> #4  0x00005593dd2af441 in event_notifier_set (e=0x559405a56a54) 
+> at ../../home/thuth/devel/qemu/util/event_notifier-posix.c:117
+> #5  0x00005593dd2cdcde in aio_notify (ctx=0x559405a56980) at ../../home/ 
+> thuth/devel/qemu/util/async.c:506
+In this backtrace the CPU is waking up the main loop (thread 1), but the 
+main loop is running so I don't think it's really a deadlock.  It's more 
+likely that the replay is not matching the record, or there's a similar 
+reason why the replay is not proceeding.
+
+Paolo
 
 
