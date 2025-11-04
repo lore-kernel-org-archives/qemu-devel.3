@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A10CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5C9CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGGrU-0002vK-2q; Tue, 04 Nov 2025 08:14:12 -0500
+	id 1vGGrU-0002vJ-2P; Tue, 04 Nov 2025 08:14:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-2025110413035315aaa1fd07000207fc-ELuPtv@rts-flowmailer.siemens.com>)
- id 1vGGrN-0002qw-D9
+ <fm-294854-202511041303518f1fd7a6a600020793-O_4y_1@rts-flowmailer.siemens.com>)
+ id 1vGGrN-0002qz-PE
  for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:14:06 -0500
-Received: from mta-65-226.siemens.flowmailer.net ([185.136.65.226])
+Received: from mta-65-228.siemens.flowmailer.net ([185.136.65.228])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-2025110413035315aaa1fd07000207fc-ELuPtv@rts-flowmailer.siemens.com>)
- id 1vGGrG-0005VS-S0
+ <fm-294854-202511041303518f1fd7a6a600020793-O_4y_1@rts-flowmailer.siemens.com>)
+ id 1vGGrJ-0005WN-T4
  for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:14:05 -0500
-Received: by mta-65-226.siemens.flowmailer.net with ESMTPSA id
- 2025110413035315aaa1fd07000207fc for <qemu-devel@nongnu.org>;
- Tue, 04 Nov 2025 14:03:53 +0100
+Received: by mta-65-228.siemens.flowmailer.net with ESMTPSA id
+ 202511041303518f1fd7a6a600020793 for <qemu-devel@nongnu.org>;
+ Tue, 04 Nov 2025 14:03:51 +0100
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm1;
  d=siemens.com; i=jan.kiszka@siemens.com;
- h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
- bh=Aa16IkTRH9wGRMcu8vItbojNNj/gEEQnYnW57vAlPSA=;
- b=H3l6VBrh1DY426vkI8yN4v8MnXz9awskKkbmP5DjNV+gy6cueUMXbNdT/IsjfjTOLR3FZM
- GNiu5O2i5WMI8hEMe1yBJ05Al60TcfwVJ+MPsb9/cVLJD5DU0CKL/cpyxYrTYnFETAWXV9oS
- kGFA5QattwXCXRXT9/jqXptRcfxPsMqwq17tyi99AJ3xwCpwXV3bqaiUtzWnSewb44OXEHzX
- h1biCcd0AsUgJZTfegmAt8GIAgFHDL+1kGvQ52FNOdPcQyhXLIxzk/5G5HJ7OE14k+QskqxD
- QdigAU77+yDv9JurU2+56JgC0ZVrItMnUHItNy4W5tdzT0rtsptIvVqQ==;
+ h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc;
+ bh=QRjz38RMCOPwtzK5Ros2NlGg2xruTpx/oGUIXM85cf0=;
+ b=mND+q0wNRgRcFu0vK+OV0nehk5SiPCUm3EVAEUXPx26j6JPZnACuygzD4f7jzTPzie/qyi
+ MOW8rBjFy0xjZMakQeZQmHgBo0brOniR9M4Ihe3pfcty039E+s4/Z/8kYTDqGvN6ZXWCu8bu
+ TBfqsfk0+OQo0O2htdOnLv+T5KUFRTO6z1nXWh6C/qc3Yhw6X5pdPkAS6aF1KVIZ2FYZ5pod
+ 8wUmaoDUb/qvPfvEmZ6CmfuosM6H8nsfhcNhwwnFNzXeg6z41KWNZ0I7dwNHL94CxGlcTNH/
+ ogiAzOvSrxJhN+RshmfzbbAlQpGuqRA2iqmMUHnYc8dwSf80/iyDzRuQ==;
 From: Jan Kiszka <jan.kiszka@siemens.com>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -41,26 +41,28 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>
-Subject: [PATCH v6 6/6] docs: Add eMMC device model description
-Date: Tue,  4 Nov 2025 14:03:50 +0100
-Message-ID: <b9c3ff21e7170fef5d0e7d08698a113d2a64e649.1762261430.git.jan.kiszka@siemens.com>
-In-Reply-To: <cover.1762261430.git.jan.kiszka@siemens.com>
-References: <cover.1762261430.git.jan.kiszka@siemens.com>
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Alexander Bulekov <alxndr@bu.edu>,
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Joel Stanley <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
+Subject: [PATCH v6 0/6] sd: Add RPMB emulation to eMMC model
+Date: Tue,  4 Nov 2025 14:03:44 +0100
+Message-ID: <cover.1762261430.git.jan.kiszka@siemens.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Flowmailer-Platform: Siemens
 Feedback-ID: 519:519-294854:519-21489:flowmailer
-Received-SPF: pass client-ip=185.136.65.226;
- envelope-from=fm-294854-2025110413035315aaa1fd07000207fc-ELuPtv@rts-flowmailer.siemens.com;
- helo=mta-65-226.siemens.flowmailer.net
+Received-SPF: pass client-ip=185.136.65.228;
+ envelope-from=fm-294854-202511041303518f1fd7a6a600020793-O_4y_1@rts-flowmailer.siemens.com;
+ helo=mta-65-228.siemens.flowmailer.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -78,88 +80,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+Changes in v6 [1]:
+ - incorporated review suggestions, specifically
+    - style and structuring suggestion for sd.c changes
+    - usage of lduw_be_p, ldl_be_p, stw_be_p, stl_be_p
+    - usage of QEMU_IS_ALIGNED
+    - optimized rpmb_calc_hmac
+    - introduction of further RPMB_*_LEN constants
+    - truncate argument ordering in mkemmc.sh
+    - comment for unclear code in mkemmc.sh
+    - improvide description of patch 2
+ - rebased over master + [2]
 
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/system/device-emulation.rst |  1 +
- docs/system/devices/emmc.rst     | 53 ++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+Changes in v5:
+ - fix regression of patch 1 with unplugged SD cards
+ - address review comments on documentation
+
+Changes in v4:
+ - add truncation warning to mkemmc.sh
+ - fix typos in doc and mkemmc.sh
+
+Changes in v3:
+ - rebased, dropping merged patches
+ - rework image alignment rules to match hardware
+ - improve/fix mkemmc script
+ - add emmc documentation
+
+Changes in v2:
+ - handle write counter expiry
+ - assert() availability of QCRYPTO_HASH_ALGO_SHA256
+ - add missing SPDX-License-Identifier
+
+This closes an old gap in system integration testing for the very
+complex ARM firmware stacks by adding fairly advanced Replay Protected
+Memory Block (RPMB) emulation to the eMMC device model. Key programming
+and message authentication are working, so is the write counter. Known
+users are happy with the result. What is missing, but not only for RPMB-
+related registers, is state persistence across QEMU restarts. This is OK
+at this stage for most test scenarios, though, and could still be added
+later on.
+
+What can already be done with it is demonstrated in the WIP branch of
+isar-cip-core at [3]: TF-A + OP-TEE + StandaloneMM TA + fTPM TA, used by
+U-Boot and Linux for UEFI variable storage and TPM scenarios. If you
+want to try: build qemu-arm64 target for trixie with 6.12-cip *head*
+kernel, enable secure boot and disk encryption, then run
+
+$ QEMU_PATH=/path/to/qemu-build/ ./start-qemu.sh
+
+Deploy snakeoil keys into PK, KEK and db after first boot to enable
+secure booting:
+
+root@demo:~# cert-to-efi-sig-list PkKek-1-snakeoil.pem PK.esl
+root@demo:~# sign-efi-sig-list -k PkKek-1-snakeoil.key -c PkKek-1-snakeoil.pem PK PK.esl PK.auth
+root@demo:~# efi-updatevar -f PK.auth db
+root@demo:~# efi-updatevar -f PK.auth KEK
+root@demo:~# efi-updatevar -f PK.auth PK
+
+Note that emulation is a bit slow in general, and specifically the
+partition encryption on first boot is taking 20 min. - we should
+probably reduce its size or understand if there is still something to
+optimize.
+
+Jan
+
+[1] https://github.com/siemens/qemu/commits/queues/emmc/
+[2] https://patchwork.kernel.org/project/qemu-devel/patch/20251103133727.423041-4-berrange@redhat.com/
+[3] https://gitlab.com/cip-project/cip-core/isar-cip-core/-/commits/next
+
+CC: Alexander Bulekov <alxndr@bu.edu>
+CC: Alistair Francis <alistair@alistair23.me>
+CC: Cédric Le Goater <clg@kaod.org>
+CC: Joel Stanley <joel@jms.id.au>
+CC: Warner Losh <imp@bsdimp.com>
+
+Jan Kiszka (6):
+  hw/sd/sdcard: Fix size check for backing block image
+  hw/sd/sdcard: Allow user-instantiated eMMC
+  hw/sd/sdcard: Add basic support for RPMB partition
+  hw/sd/sdcard: Handle RPMB MAC field
+  scripts: Add helper script to generate eMMC block device images
+  docs: Add eMMC device model description
+
+ docs/system/device-emulation.rst |   1 +
+ docs/system/devices/emmc.rst     |  53 +++++
+ hw/sd/sd.c                       | 369 ++++++++++++++++++++++++++++---
+ hw/sd/sdmmc-internal.h           |  22 ++
+ hw/sd/trace-events               |   2 +
+ scripts/mkemmc.sh                | 219 ++++++++++++++++++
+ 6 files changed, 636 insertions(+), 30 deletions(-)
  create mode 100644 docs/system/devices/emmc.rst
+ create mode 100755 scripts/mkemmc.sh
 
-diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-index db714ad47a..971325527a 100644
---- a/docs/system/device-emulation.rst
-+++ b/docs/system/device-emulation.rst
-@@ -88,6 +88,7 @@ Emulated Devices
-    devices/canokey.rst
-    devices/ccid.rst
-    devices/cxl.rst
-+   devices/emmc.rst
-    devices/igb.rst
-    devices/ivshmem-flat.rst
-    devices/ivshmem.rst
-diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
-new file mode 100644
-index 0000000000..7e15b62270
---- /dev/null
-+++ b/docs/system/devices/emmc.rst
-@@ -0,0 +1,53 @@
-+==============
-+eMMC Emulation
-+==============
-+
-+Besides SD card emulation, QEMU also offers an eMMC model as found on many
-+embedded boards. An eMMC, just like an SD card, is connected to the machine
-+via an SDHCI controller.
-+
-+Create eMMC Images
-+==================
-+
-+A recent eMMC consists of 4 partitions: 2 boot partitions, 1 Replay protected
-+Memory Block (RPMB), and the user data area. QEMU expects backing images for
-+the eMMC to contain those partitions concatenated in exactly that order.
-+However, the boot partitions as well as the RPMB might be absent if their sizes
-+are configured to zero.
-+
-+The eMMC specification defines alignment constraints for the partitions. The
-+two boot partitions must be of the same size. Furthermore, boot and RPMB
-+partitions must be multiples of 128 KB with a maximum of 32640 KB for each
-+boot partition and 16384K for the RPMB partition.
-+
-+The alignment constrain of the user data area depends on its size. Up to 2
-+GByte, the size must be a power of 2. From 2 GByte onward, the size has to be
-+multiples of 512 byte.
-+
-+QEMU is enforcing those alignment rules before instantiating the device.
-+Therefore, the provided image has to strictly follow them as well. The helper
-+script ``scripts/mkemmc.sh`` can be used to create compliant images, with or
-+without pre-filled partitions. E.g., to create an eMMC image from a firmware
-+image and an OS image with an empty 2 MByte RPMB, use the following command:
-+
-+.. code-block:: console
-+
-+    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
-+
-+This will take care of rounding up the partition sizes to the next valid value
-+and will leave the RPMB and the second boot partition empty (zeroed).
-+
-+Adding eMMC Devices
-+===================
-+
-+An eMMC is either automatically created by a machine model (e.g. Aspeed boards)
-+or can be user-created when using a PCI-attached SDHCI controller. To
-+instantiate the eMMC image from the example above in a machine without other
-+SDHCI controllers while assuming that the firmware needs a boot partitions of
-+1 MB, use the following options:
-+
-+.. code-block:: console
-+
-+    -drive file=emmc.img,if=none,format=raw,id=emmc-img
-+    -device sdhci-pci
-+    -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-partition-size=2097152
 -- 
 2.51.0
 
