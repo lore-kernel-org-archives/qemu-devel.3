@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDFCDCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02707CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 14:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGHXD-0003r1-SY; Tue, 04 Nov 2025 08:57:20 -0500
+	id 1vGHlE-0000d1-Bn; Tue, 04 Nov 2025 09:11:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGHXB-0003qm-AG
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:57:17 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1vGHl9-0000cV-Kd
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 09:11:43 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGHX9-0002NQ-La
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:57:16 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-63c0c9a408aso8120541a12.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 05:57:15 -0800 (PST)
+ id 1vGHl7-0003mO-Qc
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 09:11:43 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-640c6577120so3470954a12.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 06:11:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762264634; x=1762869434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762265499; x=1762870299; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=l1DoROmVTnmZn/oUcTFsIS1PhOB4W7F4KNYx76Pffoc=;
- b=I+RKvBOuYw3s4YmDrDulThU778LNkcY7uL9vXvSqeUZEoNWxe3Jj/l48wnc7i2nvnD
- 5b0HBdzRHGtDCaWJsnvTR+YRtyM9ZWigZHZ37WnSya4QrXd/YeqVi/CmlCyw0wAcCOGM
- DuqCecqmy2b9kT1/Hhh8KB78LXUGyAD8GkfNU2GA5Js06alDTtDMLySKyz08zfH6THfG
- oWRwh91XgtJJBrChjw3WylUFQIpax+7AWmZzFDZc5DZONT4eaHvMcAZY5ADsRB6JCcJL
- M5oN7Mft9YMR7oH09QPvOLrV6jEgVPioc4QPMXTWRMSbkzF2ae7ovPp0qme3RJfjFtAL
- gqcA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xwmPbXAAhBV6jVn1buwKJR6G9pVvYjuLW6bCrItipB8=;
+ b=j9JMiq9aodrnoXcVk5wQGDZW+XqreYsumKiEQgWHZt9D+e+YcEXsHKivHjiA4+i8Y4
+ 9blZW4fteAxhMhjcpaarxYl8vg0nMFj0ogtfoOsDOjB6TfKPR7ohwgsRin8NEvHWeoQ5
+ WS/iwFITpJEdrvrEk+at73JFazNJspwAKgb/Uhz2M8SoHnAoTWnNLcazj6q79plmRjCf
+ aFQAqfthgOeSKU2wvow2yETwkWsEr+1kU3LjLlD7iW7wMy4vBViwNOxuJSqU5+oritoa
+ bVGYE6HxSc9043r5r6HSR6Bo8M0/xlrJd6l6Y3cqiy0vKHC9/MkAeEA60AsRi/xmo0om
+ K03A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762264634; x=1762869434;
+ d=1e100.net; s=20230601; t=1762265499; x=1762870299;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l1DoROmVTnmZn/oUcTFsIS1PhOB4W7F4KNYx76Pffoc=;
- b=dg/U0OAfJQF49AKa3Cj4vdKtYPVUMgjYG2gf06eXLtU4JJ9lcmIMG9OsLyaopoAKHu
- J2mZCECHNWVpY9/mP/hMVL9aWLztrOp5OJRHnJwzCt65YYGTtYqgSgc+aCB1RakWkiJ0
- uEkl32sqfGr8I1VXZv6m7vZSjDsU9Phz1I1VeXSGLZtcKaEgrFAyUUqPNwUgm3HPyQSg
- 0FrlPG/2Rzw1cVKzg1KXhfNbyoW1Q+HvH+v1IQZ1/fttzU4NExFPGMkdbFZGyuC6F+ZV
- PVO+CDKzpkdFnt7JmZHc0hg6zYM7XjrGwo5Q4jLC6RVvnoXDuokYW/dsvJJ+lY3DZ9YZ
- Fb9w==
+ bh=xwmPbXAAhBV6jVn1buwKJR6G9pVvYjuLW6bCrItipB8=;
+ b=i7R9wXK+5ptjSO6U+ws09jluw+9gYREIDuBe3UzEc+3djmUsOPlP5/YQhTGc4tBRkb
+ eKcXwFXat3s3syviYYk/0Ch5WaILr4H8JCYm+mEDQUAqor1WgWuiXbgHdNpT1AO3XL/m
+ PpUvFRI9HOgM1Tg/sB5f5v5+ijJOnJVZj6yX8j9brs8pWhFZmi/jE+rHricX9XWiWrzd
+ 7WW2XEUZUKZIGMKyuL9SZPYCe0+zomFLEyp73dAW96yZAipTjDlOEMtFbu0a2LWsVlsQ
+ 3bcE/o39UzZJacdeiZstzQGjmUOvEdeFPzXOD+qvBLKURi2ClokgSDTnDQErEF6hVVp6
+ 5F0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOJalnLEo/Bqm/C99wNlb2fMssxJFLWpXPQrY4ie20wSvMDaWfOlmhZ6vwym0TiuHQQldO9ZJfi4N+@nongnu.org
-X-Gm-Message-State: AOJu0Yx3o9BKfjBqT5QFktgRAlKU9YmgXdIF89ICk4ew4+2kIIpt3OIf
- mZzAjnpzxw3IZxIQs+OLecO7bikZycS+B1n7VjAMHn8ahZT8/fN0UAvx9SQcUxOS+54=
-X-Gm-Gg: ASbGncuF+yJQPGYOXLAWVVgketsNokrLry01aweFORBXyvIOO8PZv8UAALllpw9Us+7
- PQSp0eUx6JWljh7YfHYk+2KVYvYUV5ON3xIqebElu8r0ufZjOlegbS0HveBhheKBvokWk6mfwKD
- mlx6Jp6zdauJvuF0saDA1ArjTq11XeehhizVsz1E7eIAU2V4WGnwFwISmBP6xE8W7Nf8vPjDtPe
- qK38FYcjlxd1fHp2lDUEej8N55erlxxOcNtwaITknd31wQMYIbRMGmnYaJmmt72wK2BVaSwIxKq
- xGsBAvoUO6Q9EY4aILyGD1d1UAykJSz6bJkueGj95+5b4EZ9QmsEMWXTOtixyFG2C+BO5+qvAqP
- jjY1jWF2Fser09nKNT30ClKuou0MZQyxz6zeGA4hAfIlqgw8IvG2b42S6KVGbeQoPFHRvmRA4R9
- xCiKSR//8pNKiLjFIiovmDh0z1BA11I0Cd8J+f6w==
-X-Google-Smtp-Source: AGHT+IFljxa7CQmrM0oXXWnCW/yU9Tp/+ipTZzmd3ZZ9tGwSpCwu7ozsYSE4XuILml9tIVwj8XrjFg==
-X-Received: by 2002:a05:6402:144d:b0:640:ee09:bfc1 with SMTP id
- 4fb4d7f45d1cf-640ee09c190mr1647266a12.37.1762264633876; 
- Tue, 04 Nov 2025 05:57:13 -0800 (PST)
+ AJvYcCViCN/mPMCf8iEHFWd9xDpzKbIHeOvkJdMa0xFOk8NfB+d4GyDv68lPAuSsIKtMsi2onCatPjMwcswS@nongnu.org
+X-Gm-Message-State: AOJu0Yy9rxeCtmwQJjsc/rtcinbYAFj6/Q2NUfHao/rBhwWUQVHK5rKm
+ WkDc/pD4pCdn9vZU6jZw4NZn9xA/Q+w3cLrDVxnaIkQFJO+5JjUMeG5Ik46jqJiqusQ=
+X-Gm-Gg: ASbGnctRlHixne3ryay9qgYxQl5M2D/4n7BJgT+3voZEhy7s97PaK6DC7dSU1/wMH20
+ SW9dSer/81+Ss8uaNU7TFYFhx732LahXOBjvdq1IE8HpSk8flX4DmwTlCkHJ2ddixceWZViUzFy
+ UUOerLMlGigmxrxEdC3LvgyP71wfSrnKEHFwuvuSZ6ak1WfogGbiwPP9MzE/lBlSNn4hymsNd6E
+ pshEJ/Uh2v+Ngx86yLtZ2sAB+8QAyWoILEK2QRLqH/1QsmB4WEaL9K0ehfVsEn5kwXC5G92j/He
+ ax6TmY858lIs0jC+fjhJsFsDhEUAYc5yHYlTy90Jk4xTWgfC+9ZiDjSyCoC3NZLBaOciRg5iVVX
+ 1i5MkeOGL4UL91VBifAXDJbRoaVVhzoKkTYXxF26A53Zt2ADISxw9bzT4bdFKm9WkJFCvAJ2Xlj
+ 7sdyBBef59O+UVB9J+Iu8YO3Q8CxCUbQtgUUQaQQ==
+X-Google-Smtp-Source: AGHT+IH+wim3NQ8IMWK8ddgW7r/qA8a5o/WgiSrJtkAGntA7Iw8FrCvYkINtO+6FAtIELXQeTVhZgQ==
+X-Received: by 2002:a17:907:6d0c:b0:b70:be84:5186 with SMTP id
+ a640c23a62f3a-b70be845e68mr697321266b.44.1762265499474; 
+ Tue, 04 Nov 2025 06:11:39 -0800 (PST)
 Received: from [172.20.148.100] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6a5cd09sm2088050a12.20.2025.11.04.05.57.13
+ a640c23a62f3a-b723da0e6acsm222559266b.29.2025.11.04.06.11.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 05:57:13 -0800 (PST)
-Message-ID: <a6169e3c-e4bd-47eb-a569-e1ec99f08400@linaro.org>
-Date: Tue, 4 Nov 2025 14:57:11 +0100
+ Tue, 04 Nov 2025 06:11:38 -0800 (PST)
+Message-ID: <8374b2ef-6edf-4a22-8c4b-8c1ccb56851c@linaro.org>
+Date: Tue, 4 Nov 2025 15:11:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/22] Functional tests and s390x patches for the softfreeze
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20251103105824.322039-1-thuth@redhat.com>
+Subject: Re: [PULL 3/3] i82596: Implement enhanced TX/RX with packet queuing
+ and filtering
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Helge Deller <deller@gmx.de>
+References: <20251103132029.6725-1-deller@kernel.org>
+ <20251103132029.6725-4-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251103105824.322039-1-thuth@redhat.com>
+In-Reply-To: <20251103132029.6725-4-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,29 +107,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/25 11:57, Thomas Huth wrote:
->   Hi Richard!
-> 
-> The following changes since commit 53b41bb78950912ba2d9809eef6b45e4df30c647:
-> 
->    Merge tag 'pull-target-arm-20251031' ofhttps://gitlab.com/pm215/qemu into staging (2025-11-01 10:52:48 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/thuth/qemu.git tags/pull-request-2025-11-03
-> 
-> for you to fetch changes up to 0408c61e27aca56c2d40aeb6ca0e5c5f8b8c3845:
-> 
->    tests/tcg/s390x: Test SET CLOCK COMPARATOR (2025-11-03 08:27:59 +0100)
-> 
-> ----------------------------------------------------------------
-> * Fix spurious EOFError messages from the device-crash-test script
-> * Fix various issues in the functional tests that pylint complained about
-> * Improve logging information in the functional tests
-> * Fix issue in the s390x clock-comparator code
-> * Use address generation for register branch targets on s390x
+On 11/3/25 14:20, deller@kernel.org wrote:
+> +static void i82596_init_dump_area(I82596State *s, uint8_t *buffer)
+> +{
+> +    memset(buffer, 0, DUMP_BUF_SZ);
+> +
+> +    printf("This is the dump area function for i82596 QEMU side\n"
+> +            "If you are seeing this message, pleasecontact:\n"
+> +            "Soumyajyotii Sarkar<soumyajyotisarkar23@gmail.com>\n"
+> +"With the process in which you encountered this issue:\n"
+> +            "This still needs developement so,\n"
+> +            "I will be more than delighted to help you out!\n"
+> +        );
+> +
+> +    auto void write_uint16(int offset, uint16_t value)
+> +    {
+> +        buffer[offset] = value >> 8;
+> +        buffer[offset + 1] = value & 0xFF;
+> +    }
+> +    auto void write_uint32(int offset, uint32_t value)
+> +    {
+> +        write_uint16(offset, value >> 16);
+> +        write_uint16(offset + 2, value & 0xFFFF);
+> +    }
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Doesn't build with macos clang.
+
+https://gitlab.com/qemu-project/qemu/-/jobs/11967951995
+
+../hw/net/i82596.c:1468:5: error: function definition is not allowed here
+  1468 |     {
+       |     ^
+../hw/net/i82596.c:1473:5: error: function definition is not allowed here
+  1473 |     {
+       |     ^
+../hw/net/i82596.c:1478:5: error: call to undeclared function 'write_uint16'; ISO C99 and 
+later do not support implicit function declarations [-Wimplicit-function-declaration]
+  1478 |     write_uint16(0x00, (s->config[5] << 8) | s->config[4]);
+       |     ^
+../hw/net/i82596.c:1503:5: error: call to undeclared function 'write_uint32'; ISO C99 and 
+later do not support implicit function declarations [-Wimplicit-function-declaration]
+  1503 |     write_uint32(0xB4, s->crc_err);
+       |     ^
+4 errors generated.
+
+
+Anyway, nested functions doesn't seem like a great idea.
+
 
 r~
 
