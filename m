@@ -4,175 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96140CCFA03
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 02:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD4DCCFA03
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 02:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG6NU-0001q7-DL; Mon, 03 Nov 2025 21:02:32 -0500
+	id 1vG6TM-0003k6-Qb; Mon, 03 Nov 2025 21:08:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG6NR-0001lX-2O; Mon, 03 Nov 2025 21:02:29 -0500
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vG6TC-0003jQ-77
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:08:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG6NO-0000NL-G8; Mon, 03 Nov 2025 21:02:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QEHz18ijcYKZIXl9zFPtcO2yYB27gPR+LNzjZ9lCNKrtdrQ2NcmEWDOheOqG/Pi2ItOP+9bDVd7DCttv9hYAkYifo5ARF4lgQGvPq3hBBY5LUQseh/Ftrz92yXV4IvqINyEVRknFfmBBQR4tHU7mmxb2kW5h2mNO3pXaPqW3PxzsYDH+LBAT7I1sZOQlKLdh0LUbVKCTfnxctfV7UeJPkX1kWiI/0VeoNh3tz3yywaxT2YwcrwmtNUV1Ya+gH7H874yOACIMu6gUyF94ZLiX6D69uUZs4VBTrgUWIokj4wLbuYjIS5sNfaGQinVDOYK8HcCj/VdS/uGQBqeciLJChw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lDMnpDWw6mdG6JXWM46L2LqcGtsQuvVLqMllggb3gcc=;
- b=CAcKg8acZ6u82ktugYUlcFGUJtyhFZ7WIEgPpNXq8GIvNtXaQoYMGMtms7Kg6xUihsbVx2W5b7IH1DZcwtf0QnD2Y/SrPwJ/QAcnNhC8ICiGzppG50CtgACGsJF3LHcOJ4798y/hwiENX/rWtcUAIq7n0hL4moUs9YfVb4j/DpEgGe0Jyk5EorMwrriRZcatnFvyFge42uJryjJbah+KcbxXBCAAOdk4ep+/u4sG2Uo3MeUCWpYykoqBUo0TldtzSbzoo6WxpZTLDg54WsP2RsGjB/Y8Ydezb/7XcnxDWn+YQX+G/zMR2jAjZTatFr+eS2wZZx0gNQ/03QNlUYzqLw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lDMnpDWw6mdG6JXWM46L2LqcGtsQuvVLqMllggb3gcc=;
- b=as62nvZZgqqrIv8RsiftFGEUdyzZdRPrulWfrT6EVBskk/mi3Tp9zPJeITlCIMhqoJqvOQqhehjwHalY+eizbknyD5zy4pphcs1OzQTBKzWKWiipkAFB/kG/FybhUpBUBN/ISLNRxUdqmUa1iG1kK+exISzTUwOJ8ayTi997bVERL5bpOjhKYs0Khsd99yxwYJ0kf3GvMA76N6RKLe58zOnbMSzz4hQHcnqcevrUMxr6upONVSje2Sj7PvmRTfN1ue0y584Bi1+mytBGFAcY2gdIcZhbWm5CxqG0peqo+dZK3WGELO7GpTBftUkI/rhXrHdNpmQHx4ShBZjD//Jlsw==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by SG2PR06MB5033.apcprd06.prod.outlook.com (2603:1096:4:1c4::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Tue, 4 Nov
- 2025 02:02:19 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::b420:4392:6eb0:91e5]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::b420:4392:6eb0:91e5%3]) with mapi id 15.20.9275.013; Tue, 4 Nov 2025
- 02:02:19 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: RE: [SPAM] [PATCH v3 00/30] Split AST2400, AST2500, AST2600, AST2700
- and AST1030 SoC machines into separate source files for
- maintainability
-Thread-Topic: [SPAM] [PATCH v3 00/30] Split AST2400, AST2500, AST2600, AST2700
- and AST1030 SoC machines into separate source files for
- maintainability
-Thread-Index: AQHcTKQokSWe8EX7u0y7G22SxvC4tLTgvoWAgAEGFtA=
-Date: Tue, 4 Nov 2025 02:02:19 +0000
-Message-ID: <TYPPR06MB820669473C2AC9A710632CA6FCC4A@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20251103092801.1282602-1-jamin_lin@aspeedtech.com>
- <731294a8-bc5d-4cc8-be7e-1354db393d0f@kaod.org>
-In-Reply-To: <731294a8-bc5d-4cc8-be7e-1354db393d0f@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SG2PR06MB5033:EE_
-x-ms-office365-filtering-correlation-id: 7a4488be-860e-4283-4446-08de1b462fd2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|38070700021|217643003; 
-x-microsoft-antispam-message-info: =?utf-8?B?aGFzQmVsUDRHYkJpeFJzWlQwR2NyTFVyNG1SbVMyb0lHc3dsc2xoOHlVWlM2?=
- =?utf-8?B?aWw2ZVJZS29HYTlVTU56cXR0WGd3NTRza1I0bVZzK0tOTmxMNmVIWGE4MFI1?=
- =?utf-8?B?b0dDM3htREp4SUY3ZWpIZVNvYm0yQ2JxUVFVWldUTTJScE94dEtCZFRRWVBT?=
- =?utf-8?B?RUUyaXdjc20rYm5JSEtDRGxBRGpyMTZ2NmZ5VzZhZWxraVI2M2g5OW5xT2lY?=
- =?utf-8?B?VGg2KzgrdzNOMldHVlEvU1FudXp3Njk2RG5Bd0FkdTFCVUo1aUZaSUhLVGVl?=
- =?utf-8?B?UksxSzhRS0Y3SjJjcWdPYzVyc2RqUlI2bWZjaEpUSlRPMlZaVUEyRWhXeFpi?=
- =?utf-8?B?cHBraUkyaCtwNlhpbHhkNXErYmRlOWtRUTk3cVlZOE12eG9OeWlMRE4ySVZn?=
- =?utf-8?B?UmZkaEthMFFGMENhbnJYRFREUnMzUXh2ejBIZGhUY2NXVEZCVlRkc081WjZp?=
- =?utf-8?B?OEJOZzUzVGdBemlsTHdyS0Y4RWxEYld1UDlyUVVBUDFTb0thK3pJMGlIQ3Jt?=
- =?utf-8?B?YWNhYTJHbnQvNjN4YlAvQnp2cXloRmlGVmhJM05tWGFvRGE1bmxlUklXUENV?=
- =?utf-8?B?L3BxR0kzdzBtSlJwcDFpRGVZZU1uM2ZRYkZSRHVrU2FhSjF1bnlQRmJNUDlp?=
- =?utf-8?B?QXFNQ1l6Q0o5aDRCVXNub0FxbitsWGZSREtnVVhqVGVzcXduaGFhRUczclIx?=
- =?utf-8?B?MDl3MHorTk53eUJoNGRXTFV5V0JJajcwS1d0aHNRSURNMHk2RWk0czlmN1Rp?=
- =?utf-8?B?OTZsNytsN1owY1dWR2h1SUFBdTUzUVJRdDZIbTlLSUUrOUxubHdUb041V0VM?=
- =?utf-8?B?cHQ2Y0JURS9CcVZ3L01YZWZMak9kTGNpc2EzSXhhUUdsN01qQUhxK0hQcGVN?=
- =?utf-8?B?ajNmK0RMTW1ubmpjMkVTcURlRnhoT3V5MEQ3QmphRFlpd3lNNzMyektLdnFL?=
- =?utf-8?B?TzJta0VjMXV5TEw5RzhBdVpXYXErWUJXNHplbG5Wb1Y4aTh3RWFkbUpscWdE?=
- =?utf-8?B?d0l6Y1k4Y1gwaG5SZlJvMGlKcWNIb1d2STlVQit3VWdKYTRHcUpoZVNWS09Q?=
- =?utf-8?B?UmwxN3ZzeVJ4TGgyM1Vod1E3NDg3UDgrdkJlb0lzQ2NVU2hWOVRLRUVZeGlj?=
- =?utf-8?B?dTdYUlk2QkFCcGxTRHlQamJhcGQ5NzArYjhxN3FJaHZiUHo5cjF1VFNVY002?=
- =?utf-8?B?WUUxUXJ2SkZ5dGhoNGJ2OUZRMDZib09ESExiRnE0QWc4T2hEbGE5Y2tkeFFh?=
- =?utf-8?B?MUtxV0ZubTZhdW1qS0x0UHFUNU5MS2s1d2hjWlNiY1FaaG1aRE9wN3FOYndL?=
- =?utf-8?B?SWJNSEdocHRjRlRaUmNjZ1dlcmNmMTMyMnJLelg1UnpGNUoyTG9MUmJVNDlQ?=
- =?utf-8?B?UUUvNjdveUhadDJ6TUlXd3VtZGx5emhBY1NsT0IwYnNlRFVEOWhKaHFJTjFl?=
- =?utf-8?B?YU5Cd3E2dzJoRHNLbUhOOG1xZWY1OEFoZnE3OXgwY0E0eWdhajhVQnQ4ZC9U?=
- =?utf-8?B?dUdIK2ZZTjlSQ2UzUFRxd0MwSzlMOW1lYjZGRGJ6eXJDbHpqMFdMWFVJdU40?=
- =?utf-8?B?SVNYdUNJRGQ0dlJpWkhvbUV3MEd4WWR5bGRhVmZ3WTZ1a29ESWpVYVdKRC9x?=
- =?utf-8?B?RU82RXY4NGZhVGw1Z0F4UFRobElKWUpwRkUvNkFEVW9zUzJUMVFYdWZoWDg4?=
- =?utf-8?B?MEFmVXJraGRtUXpCMGx5K05WckQyekRsMGlyRnQxMmtObmdOaWt5OCthK0Jj?=
- =?utf-8?B?Z0huZ2o3eE1JM2tNb2tqVWpDS0pjTFFNSU00WWFJc3lkdVlERjFPT011OS9U?=
- =?utf-8?B?MzRJb3M5MnlvMEJ2UWtEaC9oaTNmTFVFZDZvMTNMZkVHSDhYazFDUEVJWkt5?=
- =?utf-8?B?ZU1iTi9mNFJsVGtUeC9sTnNQS1VjTWlCOTV4a1lUUUNiNXY1cnhzTEhYM0ti?=
- =?utf-8?B?ZWh3YmNXT0J5WWdWbzhnaGhiVEpHWUs4ekczN3BySER3OTdMVmN3MmtzWGpj?=
- =?utf-8?B?L0ZxK0VMeWE1OE5uVTdac1ZqWHRpakphVHFiUnh6MWpYdjVmOWg4WmU5Ukdr?=
- =?utf-8?B?d2o2Z0hRL081RlRCZnB0UFJYUjlPVUF3YTM2QT09?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(217643003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NnEycXdodzlFc25nOWVDTlJ1K0VDam9SVk00dm5ib09Bd283NU80eUFyWnYy?=
- =?utf-8?B?S3BZbGFBWlpTVmI5Q2hYTmZuUnpUOVFGczIxQVdES2pFU1NWNkFvb05mVytT?=
- =?utf-8?B?MFlSYVVHVVhKamNlTW1TVDRYMC9NMzgrWUY5SUI2NWZBRDVSWUZvMTJFcUFU?=
- =?utf-8?B?ZkJqSXpXNThiQnRQY1F0eCtQVFY2eUpFbUtPaFNjR1BpUFZ3cEViQ3E5YXJT?=
- =?utf-8?B?VU96OEwxcVkrQ2ZDS1JmRUdXZUJ1SUtqY1JSQUhxYXNPOTl5RzF6czh6bENH?=
- =?utf-8?B?Rk5qd1VwWWZONlJ4dlZBamxoT3QzRUl0YW1IbHJFOHBjQkpWYmtTa2U0QkJD?=
- =?utf-8?B?UHkrQWs2THBEQ3hRRUJmU2FUTkVUWWJSZ2hqTVJwNUhkb0RlQTZNa05RL01n?=
- =?utf-8?B?R3lCaEoyYWErczdFcXNpbmxPR1dnUzRscmpiVjRLYWtEN2NnaGh3TTdEVi94?=
- =?utf-8?B?SGo2N3NzZFkyRy9GRUp2MWkxaUFKSWlGYXRRalZRQ0c0N2pITC9LcVVha0dT?=
- =?utf-8?B?Z042WTJBUUhXcHhkS2pXQWU1Ti9TNWZpSTNEMkhhU1VNTWxrV3k3SjRLWUhm?=
- =?utf-8?B?Qnh1Rm8vSVJ4MmJMdFRKWlpQOWx5bGNWRXZVWEJ6TUFPbGpvVlltdTRRU2FV?=
- =?utf-8?B?VE81b0lZYUp3NmJNZ1JFclBXalJ5Z2lMTTNRb0xZT2JkVGd1cXo3MFM3UWFn?=
- =?utf-8?B?UWMwVDV3cWh6eUQ2OEJUbG1tcmtoUEFObGt3TTJEVzNqVURud3E5dk9QN05z?=
- =?utf-8?B?UWdEbHJ0NUpHclFKdzhESUlneTQ0ZTJtTXcrZ0dXUHUzOGpSSGprcWd5c1BX?=
- =?utf-8?B?Sm9qN1VqS2NBV1JJeVA3V0NKT3JjTEhGV2plTExNZDV4dzY4ZUpyakJRbnlx?=
- =?utf-8?B?aTBNYTYxLzhUTEp3ZkZUTlJuekhaU0VLcnlscmNmR0hxWVZrZm15d0MySkZF?=
- =?utf-8?B?RjVTcDNtRUZyNnluQnl0UWI2SHJvQlYwNXNqcXZRSkVmT3NLeUVWdGZ6VC9k?=
- =?utf-8?B?Mm5kZ2J1clZDZUNOdmlGYThBTCtQUGd3Z1lJSWxOQjVZQlp0c2dhMXUvRVE4?=
- =?utf-8?B?YVAxRm9ZSVd3aHp4NDRDTzlCSGR1Y0pJZW9mcitYMG8vN25kVWtGcVRnalF3?=
- =?utf-8?B?d08xaDYwSTBtcnR5Mml3eC9lMTJvM0tWdlhiYkpSMTZKSTVlSXBoR1lOOGE3?=
- =?utf-8?B?M2pka1JPTDViR3JwR2ZEOUNsNnBlUDdvdFc1S1FwaDdjSEFkeHVZeExKZlZ3?=
- =?utf-8?B?U1UzcHRwUm1JY3QzU0FkN0VHcFo0NlgzYmZNb2NSZ041dWcwY0pUNkNMZEtF?=
- =?utf-8?B?cmNSNGpicXdNbTZJWkUrMUpUaEhsamluQ1pjZ25hcXg4K0FDUEMyWVZlcmVG?=
- =?utf-8?B?NmlXQlJUclJ3dWhKZVpNalNwa3U4RSs3TzByQXF4d2thTGxOdDQzb29IL0ZI?=
- =?utf-8?B?ZkVadmNWN09kUjZQaFluWS8xYWgyRWE4Rmh5dDFiNXBGa0hkWjdBKzNyaFd5?=
- =?utf-8?B?NUNFclo2ZXJiVkVWb3VqdUhtZ0pFVnh5TE1WWmdCQzl6d21UWEFMem5TMFZw?=
- =?utf-8?B?bDRCdjNyaVVNUklFLzYwSUw3bE1XVCtwY09ML1c5dlhSRXE0aWlRNm1GWmh5?=
- =?utf-8?B?YUV3MkhxdnA5VitvRlBrTlQ4VDh2cjlVMzcvM2QwYUk3TU5MNFlpR216WFRl?=
- =?utf-8?B?cnRNMlVGcjM4cDk2V3dXb2Q2TTUzTEpnWjVRN2pzZWVFRGw4QnBnaGJzeE51?=
- =?utf-8?B?SnJib2xlSmJtSUsxcTcvY0Z2Nk4rOFlWaFY0NTZockVDeHJneXVVVVB0S1ZW?=
- =?utf-8?B?Q3krS0JEQlVrM3dXVERXcVlYWEw5V1VNZmJ6Rm1qK056U25UdUYyYWJhMHd5?=
- =?utf-8?B?ZVNVVjlZSTNvSkdTSjhRVkFqWko0QVFpN3pNSHJ3S29ueU54bXA3aTRWL095?=
- =?utf-8?B?NmZqVTlxVFlhejQwZDBLME1xVWM3Yk81Mmo1T281cWFuNzEzOC9iUDRoQk9U?=
- =?utf-8?B?T0JFYmo0TzE4M1hBWFE2YkhDUlJTM0t6NVY1WUsraTNvNnFmSDA0bytWbDMw?=
- =?utf-8?B?ZzYwNGFNeGNTWXRnZ3ZBcFVjeHNmNllSMURQUzFMQ0krRzhpWHp2L25iVVhQ?=
- =?utf-8?Q?iD+yFLk4NqNgrEVRF0qbO7gDa?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vG6T9-0002cX-Qq
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:08:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762222101;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DaEUoXQtprXRljEa/AO3eufwxiT841MmdEmlqbsAhd0=;
+ b=EYS9PdZdZK8QotZoFlGgNAwE9tgMeXNNi3fBwJr9KTpNrcjYxnQePWypa38bV4/kYXflxW
+ 10wdtLyBe1FrD/mzPsnVUdr38Uasx9+DJQ0V2a/iVIoduMyp7UL4NnEhwTpRMcfZN+qcSI
+ /E7JRrNiOUoxR2WTs+2R+f74NuhXA0w=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695--FjJJP0wPseyqCgY8yknbw-1; Mon,
+ 03 Nov 2025 21:08:19 -0500
+X-MC-Unique: -FjJJP0wPseyqCgY8yknbw-1
+X-Mimecast-MFC-AGG-ID: -FjJJP0wPseyqCgY8yknbw_1762222098
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28C9D1956095; Tue,  4 Nov 2025 02:08:18 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6CD7B1800451; Tue,  4 Nov 2025 02:08:17 +0000 (UTC)
+Date: Mon, 3 Nov 2025 21:08:16 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, hibriansong@gmail.com,
+ eblake@redhat.com, qemu-block@nongnu.org
+Subject: Re: [RESEND PATCH v5 00/13] aio: add the aio_add_sqe() io_uring API
+Message-ID: <20251104020816.GA114652@fedora>
+References: <20251030152150.470170-1-stefanha@redhat.com>
+ <aQOqau-bpiJiNVHI@redhat.com> <aQiGjUW59RI12Gb_@redhat.com>
+ <aQiuenOKNLPzYtGb@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a4488be-860e-4283-4446-08de1b462fd2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Nov 2025 02:02:19.6830 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Sjj0tsQi3WzVoYtcdbLnDHI24/KhTBT3mnhNTC55cVMdYRR85s6TFA7t0u7HRD5epdhylVpi8eswloyPy4PxVFsa9mCbBIQfL2oO3QiXrDA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB5033
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="d9RfUKa2a2howWXm"
+Content-Disposition: inline
+In-Reply-To: <aQiuenOKNLPzYtGb@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,145 +88,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywNCg0KPiBTdWJqZWN0OiBSZTogW1NQQU1dIFtQQVRDSCB2MyAwMC8zMF0gU3Bs
-aXQgQVNUMjQwMCwgQVNUMjUwMCwgQVNUMjYwMCwNCj4gQVNUMjcwMCBhbmQgQVNUMTAzMCBTb0Mg
-bWFjaGluZXMgaW50byBzZXBhcmF0ZSBzb3VyY2UgZmlsZXMgZm9yDQo+IG1haW50YWluYWJpbGl0
-eQ0KPiANCj4gSmFtaW4sDQo+IA0KPiBPbiAxMS8zLzI1IDEwOjI3LCBKYW1pbiBMaW4gd3JvdGU6
-DQo+ID4gdjE6DQo+ID4gICAxLiBTcGxpdCBlYWNoIEFzcGVlZCBtYWNoaW5lIGludG8gaXRzIG93
-biBzb3VyY2UgZmlsZSBmb3IgYmV0dGVyDQo+ID4gICAgICByZWFkYWJpbGl0eSBhbmQgbWFpbnRh
-aW5hYmlsaXR5Og0KPiA+ICAgICAgLSBRdWFudGEtUTcxTA0KPiA+ICAgICAgLSBTdXBlcm1pY3Jv
-IFgxMQ0KPiA+ICAgICAgLSBQYWxtZXR0bw0KPiA+ICAgICAgLSBCbGV0Y2hsZXkNCj4gPiAgICAg
-IC0gZmJ5MzUgQk1DDQo+ID4gICAgICAtIEZhY2Vib29rIEZ1amkNCj4gPiAgICAgIC0gUUNPTSBG
-aXJld29yaw0KPiA+ICAgICAgLSBRQ09NIERDLVNDTSBWMQ0KPiA+ICAgICAgLSBHQjIwME5WTA0K
-PiA+ICAgICAgLSBSYWluaWVyDQo+ID4gICAgICAtIENhdGFsaW5hDQo+ID4gICAgICAtIEFTVDI2
-MDAgRVZCDQo+ID4gICAgICAtIEFTVDI3MDAgRVZCDQo+ID4gICAgICAtIEFTVDEwMzAgRVZCDQo+
-ID4gICAyLiBNYWtlIGFzcGVlZF9tYWNoaW5lX2FzdDI2MDBfY2xhc3NfZW1tY19pbml0KCkgYSBz
-aGFyZWQgQVBJDQo+ID4gICAgICBmb3IgZU1NQyBib290IHNldHVwLg0KPiA+ICAgMy4gUHJvbW90
-ZSBjb25uZWN0X3NlcmlhbF9oZHNfdG9fdWFydHMoKSB0byBhIHB1YmxpYyBtYWNoaW5lIEFQSQ0K
-PiA+ICAgICAgZm9yIHJldXNlIGFjcm9zcyBwbGF0Zm9ybXMuDQo+ID4NCj4gPiB2MjoNCj4gPiAg
-IDEuIFJlc3RvcmUgQVNQRUVEX1JBTV9TSVpFKCkgbWFjcm8NCj4gPg0KPiA+IHYzOg0KPiA+ICAg
-IDEuIE1lcmdlZCBBU1QyNTAwIFNvQyBtYWNoaW5lIGNoYW5nZXMgaW50byB0aGlzIHBhdGNoIHNl
-cmllcy4NCj4gPiAgICAgU3BsaXQgZWFjaCBBU1QyNTAwIG1hY2hpbmUgaW50byBpdHMgb3duIHNv
-dXJjZSBmaWxlOg0KPiA+ICAgICAtIEZQNTI4MEcyDQo+ID4gICAgIC0gRzIyMEENCj4gPiAgICAg
-LSBUaW9nYXBhc3MNCj4gPiAgICAgLSBZb3NlbWl0ZVYyDQo+ID4gICAgIC0gV2l0aGVyc3Bvb24N
-Cj4gPiAgICAgLSBTb25vcmFwYXNzDQo+ID4gICAgIC0gUm9tdWx1cw0KPiA+ICAgICAtIFN1cGVy
-bWljcm8gWDExU1BJDQo+ID4gICAgIC0gQVNUMjUwMCBFVkINCj4gPiAgICAyLiBSZW5hbWVkIGNv
-bW1vbiBBUEkgZnVuY3Rpb25zIHdpdGggdGhlIGFzcGVlZF8gcHJlZml4IGZvcg0KPiBjb25zaXN0
-ZW5jeS4NCj4gPiAgICAzLiBBZGRlZCBkZXRhaWxlZCBkZXNjcmlwdGlvbnMgZm9yIHRoZSBjb21t
-b24gQVBJIGZ1bmN0aW9ucy4NCj4gPg0KPiA+IEphbWluIExpbiAoMzApOg0KPiA+ICAgIGh3L2Fy
-bS9hc3BlZWQ6IE1vdmUgQXNwZWVkTWFjaGluZVN0YXRlIGRlZmluaXRpb24gdG8gY29tbW9uDQo+
-IGhlYWRlciBmb3INCj4gPiAgICAgIHJldXNlDQo+ID4gICAgaHcvYXJtL2FzcGVlZDogTWFrZSBh
-c3BlZWRfbWFjaGluZV9jbGFzc19pbml0X2NwdXNfZGVmYXVsdHMoKQ0KPiBnbG9iYWxseQ0KPiA+
-ICAgICAgYWNjZXNzaWJsZQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IEV4cG9ydCBhbmQgcmVuYW1l
-IGNyZWF0ZV9wY2E5NTUyKCkgZm9yIHJldXNlDQo+ID4gICAgaHcvYXJtL2FzcGVlZDogUmVuYW1l
-IGFuZCBleHBvcnQgY3JlYXRlX3BjYTk1NTQoKSBhcw0KPiA+ICAgICAgYXNwZWVkX2NyZWF0ZV9w
-Y2E5NTU0KCkNCj4gPiAgICBody9hcm0vYXNwZWVkOiBTcGxpdCBGUDUyODBHMiBtYWNoaW5lIGlu
-dG8gYSBzZXBhcmF0ZSBzb3VyY2UgZmlsZSBmb3INCj4gPiAgICAgIG1haW50ZW5hbmNlDQo+ID4g
-ICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgRzIyMEEgbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUgc291
-cmNlIGZpbGUgZm9yDQo+ID4gICAgICBiZXR0ZXIgbWFpbnRlbmFuY2UNCj4gPiAgICBody9hcm0v
-YXNwZWVkOiBTcGxpdCBUaW9nYXBhc3MgbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUgc291cmNlIGZp
-bGUgZm9yDQo+ID4gICAgICBjbGVhbnVwDQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgWW9z
-ZW1pdGVWMiBtYWNoaW5lIGludG8gYSBzZXBhcmF0ZSBzb3VyY2UgZmlsZQ0KPiA+ICAgICAgZm9y
-IG1haW50YWluYWJpbGl0eQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IFNwbGl0IFdpdGhlcnNwb29u
-IG1hY2hpbmUgaW50byBhIHNlcGFyYXRlIHNvdXJjZSBmaWxlDQo+ID4gICAgICBmb3IgbWFpbnRh
-aW5hYmlsaXR5DQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgU29ub3JhcGFzcyBtYWNoaW5l
-IGludG8gYSBzZXBhcmF0ZSBzb3VyY2UgZmlsZQ0KPiA+ICAgICAgZm9yIG1haW50YWluYWJpbGl0
-eQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IFNwbGl0IFJvbXVsdXMgbWFjaGluZSBpbnRvIGEgc2Vw
-YXJhdGUgc291cmNlIGZpbGUgZm9yDQo+ID4gICAgICBtYWludGFpbmFiaWxpdHkNCj4gPiAgICBo
-dy9hcm0vYXNwZWVkOiBTcGxpdCBTdXBlcm1pY3JvIFgxMVNQSSBtYWNoaW5lIGludG8gYSBzZXBh
-cmF0ZSBmaWxlDQo+ID4gICAgICBmb3IgbWFpbnRhaW5hYmlsaXR5DQo+ID4gICAgaHcvYXJtL2Fz
-cGVlZDogU3BsaXQgQVNUMjUwMCBFVkIgbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUgc291cmNlIGZp
-bGUNCj4gPiAgICAgIGZvciBtYWludGFpbmFiaWxpdHkNCj4gPiAgICBody9hcm0vYXNwZWVkOiBT
-cGxpdCBRdWFudGEtUTcxTCBtYWNoaW5lIGludG8gYSBzZXBhcmF0ZSBzb3VyY2UgZmlsZQ0KPiA+
-ICAgICAgZm9yIG1haW50YWluYWJpbGl0eQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IFNwbGl0IFN1
-cGVybWljcm8gWDExIG1hY2hpbmUgaW50byBhIHNlcGFyYXRlIHNvdXJjZQ0KPiA+ICAgICAgZmls
-ZSBmb3IgbWFpbnRhaW5hYmlsaXR5DQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgUGFsbWV0
-dG8gbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUgc291cmNlIGZpbGUgZm9yDQo+ID4gICAgICBtYWlu
-dGFpbmFiaWxpdHkNCj4gPiAgICBody9hcm0vYXNwZWVkOiBNb3ZlIEFTUEVFRF9SQU1fU0laRSgp
-IG1hY3JvIHRvIGNvbW1vbiBoZWFkZXINCj4gZm9yIHJldXNlDQo+ID4gICAgaHcvYXJtL2FzcGVl
-ZDogU3BsaXQgQmxldGNobGV5IG1hY2hpbmUgaW50byBhIHNlcGFyYXRlIHNvdXJjZSBmaWxlIGZv
-cg0KPiA+ICAgICAgbWFpbnRhaW5hYmlsaXR5DQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQg
-RkJZMzUgQk1DIG1hY2hpbmUgaW50byBhIHNlcGFyYXRlIHNvdXJjZSBmaWxlDQo+IGZvcg0KPiA+
-ICAgICAgbWFpbnRhaW5hYmlsaXR5DQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgRnVqaSBt
-YWNoaW5lIGludG8gYSBzZXBhcmF0ZSBzb3VyY2UgZmlsZSBmb3INCj4gPiAgICAgIG1haW50YWlu
-YWJpbGl0eQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IFNwbGl0IFFDT00gRmlyZXdvcmsgbWFjaGlu
-ZSBpbnRvIGEgc2VwYXJhdGUgc291cmNlDQo+IGZpbGUNCj4gPiAgICAgIGZvciBtYWludGFpbmFi
-aWxpdHkNCj4gPiAgICBody9hcm0vYXNwZWVkOiBTcGxpdCBRQ09NIERDLVNDTSBWMSBtYWNoaW5l
-IGludG8gYSBzZXBhcmF0ZQ0KPiBzb3VyY2UNCj4gPiAgICAgIGZpbGUgZm9yIG1haW50YWluYWJp
-bGl0eQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IE1ha2UgYXNwZWVkX21hY2hpbmVfYXN0MjYwMF9j
-bGFzc19lbW1jX2luaXQoKSBhDQo+IGNvbW1vbg0KPiA+ICAgICAgQVBJIGZvciBlTU1DIGJvb3Qg
-c2V0dXANCj4gPiAgICBody9hcm0vYXNwZWVkOiBTcGxpdCBHQjIwME5WTCBtYWNoaW5lIGludG8g
-YSBzZXBhcmF0ZSBzb3VyY2UgZmlsZSBmb3INCj4gPiAgICAgIG1haW50YWluYWJpbGl0eQ0KPiA+
-ICAgIGh3L2FybS9hc3BlZWQ6IFNwbGl0IFJhaW5pZXIgbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUg
-c291cmNlIGZpbGUgZm9yDQo+ID4gICAgICBtYWludGFpbmFiaWxpdHkNCj4gPiAgICBody9hcm0v
-YXNwZWVkOiBTcGxpdCBDYXRhbGluYSBtYWNoaW5lIGludG8gYSBzZXBhcmF0ZSBzb3VyY2UgZmls
-ZSBmb3INCj4gPiAgICAgIG1haW50YWluYWJpbGl0eQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IFNw
-bGl0IEFTVDI2MDAgRVZCIG1hY2hpbmUgaW50byBhIHNlcGFyYXRlIHNvdXJjZSBmaWxlDQo+ID4g
-ICAgICBmb3IgbWFpbnRhaW5hYmlsaXR5DQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgQVNU
-MjcwMCBFVkIgbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUgc291cmNlIGZpbGUNCj4gPiAgICAgIGZv
-ciBtYWludGFpbmFiaWxpdHkNCj4gPiAgICBody9hcm0vYXNwZWVkOiBSZW5hbWUgYW5kIGV4cG9y
-dCBjb25uZWN0X3NlcmlhbF9oZHNfdG9fdWFydHMoKSBhcw0KPiA+ICAgICAgYXNwZWVkX2Nvbm5l
-Y3Rfc2VyaWFsX2hkc190b191YXJ0cygpDQo+ID4gICAgaHcvYXJtL2FzcGVlZDogU3BsaXQgQVNU
-MTAzMCBFVkIgbWFjaGluZSBpbnRvIGEgc2VwYXJhdGUgc291cmNlIGZpbGUNCj4gPiAgICAgIGZv
-ciBtYWludGFpbmFiaWxpdHkNCj4gPg0KPiA+ICAgaHcvYXJtL2FzcGVlZF9lZXByb20uaCAgICAg
-ICAgICAgICAgICAgICAgfCAgIDMyIC0NCj4gPiAgIGluY2x1ZGUvaHcvYXJtL2FzcGVlZC5oICAg
-ICAgICAgICAgICAgICAgIHwgICA3OSArDQo+ID4gICBody9hcm0vYXNwZWVkLmMgICAgICAgICAg
-ICAgICAgICAgICAgICAgICB8IDE2NzgNCj4gKy0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+ID4gICBo
-dy9hcm0vYXNwZWVkX2FzdDEweDBfZXZiLmMgICAgICAgICAgICAgICB8ICAxMDkgKysNCj4gPiAg
-IGh3L2FybS9hc3BlZWRfYXN0MjQwMF9wYWxtZXR0by5jICAgICAgICAgIHwgICA4MSArDQo+ID4g
-ICBody9hcm0vYXNwZWVkX2FzdDI0MDBfcXVhbnRhLXE3MWwuYyAgICAgICB8ICAgODcgKysNCj4g
-PiAgIGh3L2FybS9hc3BlZWRfYXN0MjQwMF9zdXBlcm1pY3JveDExLmMgICAgIHwgICA4MiArDQo+
-ID4gICBody9hcm0vYXNwZWVkX2FzdDI1MDBfZXZiLmMgICAgICAgICAgICAgICB8ICAgNjggKw0K
-PiA+ICAgaHcvYXJtL2FzcGVlZF9hc3QyNTAwX2ZwNTI4MGcyLmMgICAgICAgICAgfCAgIDg5ICsr
-DQo+ID4gICBody9hcm0vYXNwZWVkX2FzdDI1MDBfZzIyMGEuYyAgICAgICAgICAgICB8ICAgOTMg
-KysNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjUwMF9yb211bHVzLmMgICAgICAgICAgIHwgICA2
-MyArDQo+ID4gICBody9hcm0vYXNwZWVkX2FzdDI1MDBfc29ub3JhcGFzcy5jICAgICAgICB8ICAx
-MDMgKysNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjUwMF9zdXBlcm1pY3JvLXgxMXNwaS5jIHwg
-ICA3OCArDQo+ID4gICBody9hcm0vYXNwZWVkX2FzdDI1MDBfdGlvZ2FwYXNzLmMgICAgICAgICB8
-ICAgOTEgKysNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjUwMF93aXRoZXJzcG9vbi5jICAgICAg
-IHwgIDExMyArKw0KPiA+ICAgaHcvYXJtL2FzcGVlZF9hc3QyNTAwX3lvc2VtaXRldjIuYyAgICAg
-ICAgfCAgIDkyICsrDQo+ID4gICBody9hcm0vYXNwZWVkX2FzdDI2MDBfYmxldGNobGV5LmMgICAg
-ICAgICB8ICAgOTggKysNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjYwMF9jYXRhbGluYS5jICAg
-ICAgICAgIHwgIDIyNiArKysNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjYwMF9ldmIuYyAgICAg
-ICAgICAgICAgIHwgICA2NiArDQo+ID4gICBody9hcm0vYXNwZWVkX2FzdDI2MDBfZmJ5MzUuYyAg
-ICAgICAgICAgICB8ICAxNzkgKysrDQo+ID4gICBody9hcm0vYXNwZWVkX2FzdDI2MDBfZnVqaS5j
-ICAgICAgICAgICAgICB8ICAxNDEgKysNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjYwMF9nYjIw
-MG52bC5jICAgICAgICAgIHwgIDExMiArKw0KPiA+ICAgaHcvYXJtL2FzcGVlZF9hc3QyNjAwX3Fj
-b20tZGMtc2NtLXYxLmMgICAgfCAgIDU2ICsNCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MjYwMF9x
-Y29tLWZpcmV3b3JrLmMgICAgIHwgICA5MiArKw0KPiA+ICAgaHcvYXJtL2FzcGVlZF9hc3QyNjAw
-X3JhaW5pZXIuYyAgICAgICAgICAgfCAgMTk5ICsrKw0KPiA+ICAgaHcvYXJtL2FzcGVlZF9hc3Qy
-N3gwX2V2Yi5jICAgICAgICAgICAgICAgfCAgIDg5ICsrDQo+ID4gICBody9hcm0vYXNwZWVkX2Vl
-cHJvbS5jICAgICAgICAgICAgICAgICAgICB8ICAxOTIgLS0tDQo+ID4gICBody9hcm0vbWVzb24u
-YnVpbGQgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMjQgKy0NCj4gPiAgIDI4IGZpbGVzIGNo
-YW5nZWQsIDI1MTUgaW5zZXJ0aW9ucygrKSwgMTg5NyBkZWxldGlvbnMoLSkNCj4gPiAgIGRlbGV0
-ZSBtb2RlIDEwMDY0NCBody9hcm0vYXNwZWVkX2VlcHJvbS5oDQo+ID4gICBjcmVhdGUgbW9kZSAx
-MDA2NDQgaHcvYXJtL2FzcGVlZF9hc3QxMHgwX2V2Yi5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2
-NDQgaHcvYXJtL2FzcGVlZF9hc3QyNDAwX3BhbG1ldHRvLmMNCj4gPiAgIGNyZWF0ZSBtb2RlIDEw
-MDY0NCBody9hcm0vYXNwZWVkX2FzdDI0MDBfcXVhbnRhLXE3MWwuYw0KPiA+ICAgY3JlYXRlIG1v
-ZGUgMTAwNjQ0IGh3L2FybS9hc3BlZWRfYXN0MjQwMF9zdXBlcm1pY3JveDExLmMNCj4gPiAgIGNy
-ZWF0ZSBtb2RlIDEwMDY0NCBody9hcm0vYXNwZWVkX2FzdDI1MDBfZXZiLmMNCj4gPiAgIGNyZWF0
-ZSBtb2RlIDEwMDY0NCBody9hcm0vYXNwZWVkX2FzdDI1MDBfZnA1MjgwZzIuYw0KPiA+ICAgY3Jl
-YXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9hc3BlZWRfYXN0MjUwMF9nMjIwYS5jDQo+ID4gICBjcmVh
-dGUgbW9kZSAxMDA2NDQgaHcvYXJtL2FzcGVlZF9hc3QyNTAwX3JvbXVsdXMuYw0KPiA+ICAgY3Jl
-YXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9hc3BlZWRfYXN0MjUwMF9zb25vcmFwYXNzLmMNCj4gPiAg
-IGNyZWF0ZSBtb2RlIDEwMDY0NCBody9hcm0vYXNwZWVkX2FzdDI1MDBfc3VwZXJtaWNyby14MTFz
-cGkuYw0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9hc3BlZWRfYXN0MjUwMF90aW9n
-YXBhc3MuYw0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9hc3BlZWRfYXN0MjUwMF93
-aXRoZXJzcG9vbi5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvYXJtL2FzcGVlZF9hc3Qy
-NTAwX3lvc2VtaXRldjIuYw0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9hc3BlZWRf
-YXN0MjYwMF9ibGV0Y2hsZXkuYw0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9hc3Bl
-ZWRfYXN0MjYwMF9jYXRhbGluYS5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvYXJtL2Fz
-cGVlZF9hc3QyNjAwX2V2Yi5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvYXJtL2FzcGVl
-ZF9hc3QyNjAwX2ZieTM1LmMNCj4gPiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBody9hcm0vYXNwZWVk
-X2FzdDI2MDBfZnVqaS5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvYXJtL2FzcGVlZF9h
-c3QyNjAwX2diMjAwbnZsLmMNCj4gPiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBody9hcm0vYXNwZWVk
-X2FzdDI2MDBfcWNvbS1kYy1zY20tdjEuYw0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2Fy
-bS9hc3BlZWRfYXN0MjYwMF9xY29tLWZpcmV3b3JrLmMNCj4gPiAgIGNyZWF0ZSBtb2RlIDEwMDY0
-NCBody9hcm0vYXNwZWVkX2FzdDI2MDBfcmFpbmllci5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2
-NDQgaHcvYXJtL2FzcGVlZF9hc3QyN3gwX2V2Yi5jDQo+ID4gICBkZWxldGUgbW9kZSAxMDA2NDQg
-aHcvYXJtL2FzcGVlZF9lZXByb20uYw0KPiA+DQo+IA0KPiBJdCBsb29rcyBnb29kLg0KPiANCj4g
-Q291bGQgeW91IHBsZWFzZSBtYWludGFpbiA6DQo+IA0KPiAgICBDb3B5cmlnaHQgMjAxNiBJQk0g
-Q29ycC4NCj4gDQo+IGluIHRoZSBuZXcgZmlsZXMgc2luY2UgdGhlIGNvZGUgaXMgY29waWVkIGZy
-b20gYXNwZWVkLmMuDQo+IA0KV2lsbCBkbw0KDQpUaGFua3MsDQpKYW1pbg0KPiBUaGFua3MsDQo+
-IA0KPiBDLg0KPiANCg0K
+
+--d9RfUKa2a2howWXm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Nov 03, 2025 at 02:30:34PM +0100, Kevin Wolf wrote:
+> Am 03.11.2025 um 11:40 hat Kevin Wolf geschrieben:
+> > Am 30.10.2025 um 19:11 hat Kevin Wolf geschrieben:
+> > > Am 30.10.2025 um 16:21 hat Stefan Hajnoczi geschrieben:
+> > > > v5:
+> > > > - Explain how fdmon-io_uring.c differs from other fdmon implementat=
+ions
+> > > >   in commit message [Kevin]
+> > > > - Move test-nested-aio-poll aio_get_g_source() removal into commit =
+that touches test case [Kevin]
+> > > > - Avoid g_source_add_poll() use-after-free in fdmon_poll_update() [=
+Kevin]
+> > > > - Avoid duplication in fdmon_epoll_gsource_dispatch(), use fdmon_ep=
+oll_wait() [Kevin]
+> > > > - Drop unnecessary revents checks in fdmon_poll_gsource_dispatch() =
+[Kevin]
+> > > > - Mention in commit message that fdmon-io_uring.c is the new defaul=
+t [Kevin]
+> > > > - Add comments explaining how to clean up resources in error paths =
+[Kevin]
+> > > > - Indicate error in return value from function with Error *errp arg=
+ [Kevin]
+> > > > - Add patch to unindent fdmon_io_uring_destroy() [Kevin]
+> > > > - Add patch to introduce FDMonOps->dispatch() callback [Kevin]
+> > > > - Drop patch with hacky BH optimization for fdmon-io_uring.c [Kevin]
+> > > > - Replace cqe_handler_bh with FDMonOps->dispatch() [Kevin]
+> > > > - Rename AioHandler->cqe_handler field to ->internal_cqe_handler [K=
+evin]
+> > > > - Consolidate fdmon-io_uring.c trace-events changes into this commit
+> > > > - Reduce #ifdef HAVE_IO_URING_PREP_WRITEV2 code duplication [Kevin]
+> > >=20
+> > > The changes look good to me.
+> > >=20
+> > > However, the test cases are still failing. I just tried to see where
+> > > test-aio is stuck, and while I looked for a backtrace first, I noticed
+> > > that just attaching gdb to the process and immediately detaching again
+> > > makes the test unstuck. Very strange.
+> > >=20
+> > > This is the backtrace, maybe a bit unsurpring:
+> > >=20
+> > > (gdb) bt
+> > > #0  0x00007ffff7e6fec6 in __io_uring_submit () from /lib64/liburing.s=
+o.2
+> > > #1  0x00005555556f4394 in fdmon_io_uring_wait (ctx=3D0x555556409950, =
+ready_list=3D0x7fffffffcda0, timeout=3D749993088) at ../util/fdmon-io_uring=
+=2Ec:410
+> > > #2  0x00005555556ed29f in aio_poll (ctx=3D0x555556409950, blocking=3D=
+true) at ../util/aio-posix.c:699
+> > > #3  0x0000555555681547 in test_timer_schedule () at ../tests/unit/tes=
+t-aio.c:413
+> > > #4  0x00007ffff6f30e7e in test_case_run (tc=3D0x55555640d340, test_ru=
+n_name=3D0x55555640de10 "/aio/timer/schedule", path=3D<optimized out>) at .=
+=2E/glib/gtestutils.c:3115
+> > > #5  g_test_run_suite_internal (suite=3Dsuite@entry=3D0x5555558696d0, =
+path=3Dpath@entry=3D0x0) at ../glib/gtestutils.c:3210
+> > > #6  0x00007ffff6f30df3 in g_test_run_suite_internal (suite=3Dsuite@en=
+try=3D0x555555867480, path=3Dpath@entry=3D0x0) at ../glib/gtestutils.c:3229
+> > > #7  0x00007ffff6f30df3 in g_test_run_suite_internal (suite=3Dsuite@en=
+try=3D0x555555867720, path=3Dpath@entry=3D0x0) at ../glib/gtestutils.c:3229
+> > > #8  0x00007ffff6f313aa in g_test_run_suite (suite=3Dsuite@entry=3D0x5=
+55555867720) at ../glib/gtestutils.c:3310
+> > > #9  0x00007ffff6f31440 in g_test_run () at ../glib/gtestutils.c:2379
+> > > #10 g_test_run () at ../glib/gtestutils.c:2366
+> > > #11 0x000055555567e204 in main (argc=3D1, argv=3D0x7fffffffd488) at .=
+=2E/tests/unit/test-aio.c:872
+> > >=20
+> > > And running it under strace shows that we're indeed hanging in the
+> > > syscall:
+> > >=20
+> > > write(1, "# Start of timer tests\n", 23) =3D 23
+> > > eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK)   =3D 9
+> > > io_uring_enter(7, 1, 0, 0, NULL, 8)     =3D 1
+> > > clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=3D1, tv_nsec=3D0}, 0x7ffc2=
+39bec80) =3D 0
+> > > io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8
+> > >=20
+> > > Of course, if I start the test without strace and then attach strace =
+to
+> > > the running process, that gets it unstuck like attaching gdb (not very
+> > > surprising, I guess, it's both just ptrace).
+> > >=20
+> > > Finally I tried Ctrl-C while having strace logging to a file, and now
+> > > the io_uring_enter() returns 1 (rather than EINTR or 0 or whatever):
+> > >=20
+> > > io_uring_enter(7, 1, 1, IORING_ENTER_GETEVENTS, NULL, 8) =3D 1
+> > > --- SIGINT {si_signo=3DSIGINT, si_code=3DSI_KERNEL} ---
+> > > +++ killed by SIGINT +++
+> > >=20
+> > > Not sure what to make of this.
+> > >=20
+> > > I think you already said you run the same kernel version, but just to=
+ be
+> > > sure, I'm running 6.17.5-200.fc42.x86_64.
+> >=20
+> > I'm at the point where I'm bisecting compiler flags...
+> >=20
+> > I have seen three different outcomes from test-aio:
+> >=20
+> > 1. It hangs. This is what I saw in my normal clang build. This configure
+> >    line seems to be enough to trigger it:
+> >    ../configure '--target-list=3Dx86_64-softmmu' '--cc=3Dclang' '--cxx=
+=3Dclang++'
+> >=20
+> > 2. An assertion failure. I haven't seen this in the actual QEMU tree
+> >    with clang. With gcc, it seems to happen if you use -O0:
+> >    ../configure '--target-list=3Dx86_64-softmmu' '--enable-debug'
+> >=20
+> >    Outside of the QEMU tree with a manual Makefile, I saw this behaviour
+> >    with clang and -fstack-protector-strong, but without
+> >    -ftrivial-auto-var-init=3Dzero. Add the latter turns it into the han=
+g.
+> >=20
+> > 3. It just passes. This is what I saw in my default gcc build without
+> >    --enable-debug. The test also passes with --disable-stack-protector
+> >    added to both configure lines in 1 and 2.
+> >=20
+> > Not sure yet where the flags make the difference, but I guess it does
+> > hint at something going wrong on the stack.
+>=20
+> Ok, that was quite some debugging, but I think I have it. The problem is
+> add_timeout_sqe():
+>=20
+> static void add_timeout_sqe(AioContext *ctx, int64_t ns)
+> {
+>     struct io_uring_sqe *sqe;
+>     ts =3D (struct __kernel_timespec) {
+>         .tv_sec =3D ns / NANOSECONDS_PER_SECOND,
+>         .tv_nsec =3D ns % NANOSECONDS_PER_SECOND,
+>     };
+>=20
+>     sqe =3D get_sqe(ctx);
+>     io_uring_prep_timeout(sqe, &ts, 1, 0);
+>     io_uring_sqe_set_data(sqe, NULL);
+> }
+>=20
+> What io_uring_prep_timeout() does is that it just stores the ts pointer
+> in the SQE, the timeout is never copied anywhere. Obviously, by the time
+> that we submit the SQE, ts has been out of scope for a long time, so the
+> kernel reads random data as a timeout.
+>=20
+> # bpftrace -e 'kfunc:io_timeout { printf("%s: io_timeout %lld s + %lld ns=
+\n", comm, ((struct io_timeout_data *)args.req->async_data)->ts.tv_sec, ((s=
+truct io_timeout_data *)args.req->async_data)->ts.tv_nsec ) }'
+> Attaching 1 probe...
+> test-aio: io_timeout 0 s + 140736377549872 ns
+>=20
+> >>> hex(140736377549872)
+> '0x7fffbdca7430'
+>=20
+> That looked a bit suspicious for a timeout. :-)
+>=20
+> After fixing this, we still have the problem that io_uring_enter() can
+> return early without failing with EINTR when something like a signal
+> arrives. This means that a blocking aio_poll(true) can actually return
+> without any progress.  Not sure if it matters in practice, but it can
+> make test cases fail.
+>=20
+> Not completely sure when this happens, though. When running the aio-test
+> under strace, kill -CONT makes it return early and fail the assertion,
+> but without strace, I can't seem to reproduce the problem at the moment.
+> Attaching strace or gdb to the running process that is waiting for the
+> timeout also makes it return early and fail the assertion.
+
+Thanks again for debugging the test failures. I am sending a new
+revision with the timeout variable lifetime fixed and a stronger loop
+condition that retries io_uring_submit_and_wait() when the awaited CQE
+is still missing.
+
+Thoughts on what you found:
+
+I've upgraded to Fedora 43 (kernel-6.17.5-300.fc43.x86_64) but I think
+the behavior is still the same.
+
+The difference in ptraced vs normal SIGCONT behavior is because the
+signal only actually interrupts processes that are stopped or ptraced.
+Otherwise SIGCONT disappears without interrupting the system call.
+
+When ptraced, io_uring_enter()'s return value will be 1 and not -EINTR
+because of how io_uring/io_uring.c:io_uring_enter() is implemented.
+There are two variables: ret is the return value from submitting SQEs
+and ret2 is the return value from waiting for CQEs. The first variable
+takes precendence, so even though ret2 can be -EINTR, it is overriden:
+
+                  if (!ret) {
+                          ret =3D ret2;
+  			...
+                  }
+          }
+  out:
+          ...
+          return ret;
+
+In our case ret is be >0, so ret2 =3D -EINTR is ignored and the
+io_uring_enter(2) return value is 1. This explains the behavior when
+SIGCONT is received while a ptraced io_uring_enter(2) is waiting.
+
+I confirmed in userspace that there are no CQEs ready when
+io_uring_enter(2) returns 1 after SIGCONT. This can be fixed in
+userspace by retrying when the expected CQE is missing.
+
+Regarding aio_poll(ctx, true) returning false: it happens when
+aio_notify() is called while aio_poll(ctx, true) is waiting. The tests
+rely on the internal details of when exactly false can be returned, so
+it will help if fdmon-io_uring.c avoids returning false in situations
+where other fdmon implementations wait longer.
+
+Stefan
+
+--d9RfUKa2a2howWXm
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmkJYA8ACgkQnKSrs4Gr
+c8iQZwgAlM3KATs+InUeGc2m5XyBT7ZFRxlLMBeN5RmDUEDIRYYG+YojVF6LEovA
+j6KAhKoJ+QOKGdvYqfSsEE05g7ydphkeD/ocio+7U/FV/dDsK6ChIPZ9i26I5SEp
+J3ZhDwRJWs8pjFimuH03kpi6vBqsmNmRsAJAr0kpryH1YH6kODTKruEaFW6Q3t2W
+YJhe9SgUoyweMB5gOu9Zba127sbjgjmjH0RDug0iFrannDxpXkb7Egu5SdzJ02UH
+uZKtQWjGaaptJIdJ1S5NAauljYt/shxOa/QAj08nvSoAlxjABvQ+GXttctq14aBn
+uKNp824WbELo2+N2jdMNEswh63fV8w==
+=tbzM
+-----END PGP SIGNATURE-----
+
+--d9RfUKa2a2howWXm--
+
 
