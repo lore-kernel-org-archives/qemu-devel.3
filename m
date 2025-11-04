@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC36DCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45B8CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGKbZ-0003Hh-7m; Tue, 04 Nov 2025 12:14:03 -0500
+	id 1vGKgD-0005BM-GF; Tue, 04 Nov 2025 12:18:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKbS-0003EP-92
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:13:54 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKg3-00055B-Lp
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:18:42 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKbM-0005ni-Cg
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:13:52 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-640c1fda178so3669568a12.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:13:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKg0-0008Oe-5p
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:18:39 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b6d345d7ff7so4866666b.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:18:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762276426; x=1762881226; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762276709; x=1762881509; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ft0gBvtyOQH6FyOUJfwzOoqV18xrHBjh5Rs307pXpnA=;
- b=Zz/rav2hMOiK8PgcWTK13gPk3Hkl2JxB/2IoTbxXMAsZUm6YHdy+QCGYhj4WObEPNX
- TktNGnnUn1SYFOIzogD5yh7fUSQnJtaxmyZKJOJazJj87DtoKrxkt1FLw7Ji8TKHQm0B
- bC1YiUv0nx2JolB+XdbhLzu7fVtIwZZZ3ERvwXzIA3N+YyGkpBWj+2DPooYPzPs7YISe
- 7dSQ4JNnCQnjvQFWRP8cTkWZQcacOPR9GDnkb+foloQDYofXYXrME7/tYetFreygqTDe
- 5K36es2XSitnWhb7coPY5XMHAcDZFW8fdgJPqk54q1Wn4ki52Mb43YVtWsR5v/7cN9i9
- /PXg==
+ bh=LHdmdazXI12j/p9HCzPD6NwJ3C9waOah2X0YeNtGq4M=;
+ b=ukOt/U/JJBqon6xRy1lDaxl09esB0BF6rhSa50i2McbN7G5FWEuSJY+BufsWX5PXna
+ iiscBM/QI41qSxHUDMv+OCM5jZN9dmRnMIfC7DXCr4YhssFXjoTIH5PGdyNLV6uS6b74
+ CvnLZ1FG894SbhAlnoqEGST+N1p460PwJ9Bh3BuO67ubIwoXc7jd42vaMqQTFi7A3rsA
+ z2w3yvbOmYTPElKfxPDpa7WhlujzNK7bnrdFEYJCUH4zGcYXdPiOWTUbNk6gbvmgNHEn
+ iLtgjXDlrUmUxDgDGL6gYoYPO73mQEuarWbbJvVkDuorHJtHGgzK7CjS7dmt0Oy0GSgC
+ ZPVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762276426; x=1762881226;
+ d=1e100.net; s=20230601; t=1762276709; x=1762881509;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ft0gBvtyOQH6FyOUJfwzOoqV18xrHBjh5Rs307pXpnA=;
- b=aTSWCFv67662SoLebvN+EX8wv/uoBJrGEOE+d7S8HMifQwkOVVUGHApaC1ks5pkeBS
- BKmrwKOgcvcpaZwS743qlsyqBFFNniQ3ujCC+bh92tx4pesGg6y7GWWveBuHENgdVTlu
- vVttZ2K3B9KJF5/jrCkA859AFQQGKEiPOYxaxrhux2bOFkB5kcfU2JYEJseW8P6cP0S6
- kaH8G1/6D9z/+U5mEUue68Pr6Oas2H/T8kpUlU4dg8bD2WLFgWPK287wS+iKHAzM+3jt
- MBG8Llcqn0/mkU0Yltwxi7/6Y4f2lAKCc++MaF6NqNNtD5sS9Efe62QyLGG9mIn3Y6JP
- 9BeA==
+ bh=LHdmdazXI12j/p9HCzPD6NwJ3C9waOah2X0YeNtGq4M=;
+ b=j3vF9KiDlAZWcwybORC1adjT7tzOyKxGH24KykrbeLbS4l/PI763KlYZT8t7e8QtD8
+ aYweYsurxPmyr5VTDTlql5bM8u/7JiCE+yVlz3sxSKRhFbOhL9I8RYaBZzalIaWopHhR
+ lpx4ODWaLU6268V6K3wYTWyc29bjs+BRJj11EoQD6vMvtvyU2SfLLSHysrz2eEDRe3ib
+ g+p7M+yiu9X0S3lisZleYJGbkeQGx9krghR9KfFCTESQ72/VBlxnPBbxdU+lD/H2hxO8
+ DalDZHx3/H2J7nMZrSIRR+HIexea9+N/P2hlCCg+ENWGM3q4MbiNnTSIWxwSLjsJdsRz
+ thEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdaVsgJT573Owy/K6NEKorO9q++TxCysgb9UbNPVtd8OH9xtg7lAgGhvs+FA9SuE+YZoq9a999YmCs@nongnu.org
-X-Gm-Message-State: AOJu0YwqaOeMReKGxV8qzhhEovniXuWQHGPrFLRV2DajYmdvw4uoKvU9
- c1dr2b38U1l76o3gS1qqTlaDImozxTmzutOHeMaHi9dWtJ7OML9wZlBkYRbvPL8bkKo=
-X-Gm-Gg: ASbGncuK6WqAAL1cItJNNRhR70Coe3Q8Z8SQmSy7dqdGo4H2nTLLIdTe6xr97t1iXT0
- 0biauhiM7maXKYiEaAeDekkKzvolEV4hPgS+FeoMkU1yUbtQ5zhrMIFYvrTKAuhSsC/RxXA5nUk
- 2imw/V0nHEglnEmMVeGXQXEG6w1IrQyKEilcb3X1VOzSCAnAE4WeHs/hAYrkijTOZB0H1eZMmYJ
- EAMJKBIBbiIBQOoHkswz8MR4de4R5Hg/lIywfvLbMKBA0yjf4uxeq8PYNJv4g0w+ILw4fKtmbwi
- aM6kVO0XUQGn+ihqpp6+UVH9eY7/ZtX6QGe1l1Fig9td/VEx6/Oxc8Svbo2yDXhmGt9bNM1PgtU
- DDymRPZLC0ek5omHq3AP1ATj84Z3Q36zfJU0aLrYxaA8inuEqMzXh8IWTJ0OLfQDKdwgynk+i9q
- Jj9EotJAo/S3Sp556ASMP7GsSslbq8mQ==
-X-Google-Smtp-Source: AGHT+IESzfQ9/3E5ilt3TvT3efhzNaIoODdFRSAWPyzPJi9QygZ3pv5BjHjdQQSVJdec+aWRd4UI8g==
-X-Received: by 2002:a05:6402:35d6:b0:640:b736:6c2f with SMTP id
- 4fb4d7f45d1cf-640b7366e62mr7958271a12.18.1762276426180; 
- Tue, 04 Nov 2025 09:13:46 -0800 (PST)
+ AJvYcCVPv6fvZNE7RGTKvHrjS16vcGwtw76SlY7gDZSIDXpOJBOcGqq61lDDYBwAq5H2XBP+Zu1YqvmdP675@nongnu.org
+X-Gm-Message-State: AOJu0YxA3PlSGpQ3QmaJJVhuG8tCXDojAlHnaChD+zOsQQgA73v2Tc3+
+ 3F5HU3NrJyBxTD53g/pUtqUC82Dbl/3lcnV9c/zYupWMNUL6D8EuVoSwY7RhON3nrmw=
+X-Gm-Gg: ASbGncvY6XdhBFnXuN2euQV0NW0QoAhxukRnQHYqSE3PVSAcyeEtt6ABNXyFuZkQ7Ba
+ k4qV+aRdiKf5QW02gaoGK+2ibBX8QMJaIs4wmtV6NedA4h07Tl6lmiy8MlDJoZu+JTq6dOr0bgs
+ yEtJf9KcjzjC1sGjsrRP2lHo/4l910+rQZ+EUbdn3uorn/NA3qcAl/CS0wBj2+1jQIWW7GYD4L/
+ BWppa8Lr/luKe3hMSHgrgVuo5MIzhIgnY6NWH+Q0rrF7hg7DWTQsjhLyR4vFjQR8nt9cwI/8Rcj
+ K5J6q0Tw8HM8e7UGUy3oOAdKKZSutNLwJZWHETyshAWSFLBZLdbN5paZUDeLugs3zPVQEjbXp41
+ 7qJYRzNjdFGUysjDMOLxGuxIxwQO1fDMvvXNUyOBxh/GOpaiaTeis3mDCDh+PTByLeOasrkD1IV
+ sReSnSKmUD9MMt5VKE5hI=
+X-Google-Smtp-Source: AGHT+IEj95ymzoTeG0RFz44DkVYkppyVWLZAwu2K8O8AOZ9ha0z5CiMa6DqS3lMvkNXthytKPUjMYw==
+X-Received: by 2002:a17:906:4fcf:b0:b70:aa3e:3b60 with SMTP id
+ a640c23a62f3a-b7217a69377mr394594666b.27.1762276709371; 
+ Tue, 04 Nov 2025 09:18:29 -0800 (PST)
 Received: from [172.20.148.75] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e67eb64dsm2511086a12.5.2025.11.04.09.13.45
+ 4fb4d7f45d1cf-640e6a711dcsm2489438a12.29.2025.11.04.09.18.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 09:13:45 -0800 (PST)
-Message-ID: <218924b2-215e-4762-8d52-2b75dcfac8f1@linaro.org>
-Date: Tue, 4 Nov 2025 18:13:44 +0100
+ Tue, 04 Nov 2025 09:18:28 -0800 (PST)
+Message-ID: <b38ee8cc-8d9a-4398-b6df-3857a0994d0c@linaro.org>
+Date: Tue, 4 Nov 2025 18:18:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/6] sd: Add RPMB emulation to eMMC model
+Subject: Re: [PATCH v6.1 5/6] scripts: Add helper script to generate eMMC
+ block device images
 Content-Language: en-US
 To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, Alistair Francis
- <alistair@alistair23.me>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Joel Stanley <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
+ Jerome Forissier <jerome.forissier@linaro.org>
 References: <cover.1762261430.git.jan.kiszka@siemens.com>
+ <60f265e0b2bea18fe6ef41742600a7e933e3c47f.1762261430.git.jan.kiszka@siemens.com>
+ <eecefa8e-44ae-45ff-85d0-3f9b786948e0@siemens.com>
+ <8884e7f9-eff4-4bbd-be5e-9d6d2012ff6c@linaro.org>
+ <c3bfb192-aad0-4fcb-a787-78f3a2d19695@siemens.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cover.1762261430.git.jan.kiszka@siemens.com>
+In-Reply-To: <c3bfb192-aad0-4fcb-a787-78f3a2d19695@siemens.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,74 +111,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jan,
+On 4/11/25 18:00, Jan Kiszka wrote:
+> On 04.11.25 17:27, Philippe Mathieu-Daudé wrote:
+>> On 4/11/25 15:45, Jan Kiszka wrote:
+>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>>
+>>> As an eMMC block device image may consist of more than just the user
+>>> data partition, provide a helper script that can compose the image from
+>>> boot partitions, an RPMB partition and the user data image. The script
+>>> also does the required size validation and/or rounding.
+>>>
+>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>>> ---
 
-On 4/11/25 14:03, Jan Kiszka wrote:
 
-> Jan Kiszka (6):
->    hw/sd/sdcard: Fix size check for backing block image
->    hw/sd/sdcard: Allow user-instantiated eMMC
->    hw/sd/sdcard: Add basic support for RPMB partition
->    hw/sd/sdcard: Handle RPMB MAC field
->    scripts: Add helper script to generate eMMC block device images
->    docs: Add eMMC device model description
+>> Still:
+>>
+>> $ dash scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
+>                                                           ^^
+> User error ;-). This must be just "...:2M".
 
-Series queued with the following squashed to please checkpatch:
+Per the doc:
 
--- >8 --
-diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
-index 7e15b622706..8fcb47e25b2 100644
---- a/docs/system/devices/emmc.rst
-+++ b/docs/system/devices/emmc.rst
-@@ -0,0 +1,2 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
++.. code-block:: console
 +
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 61754bf1083..9c86c016cc9 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1166,2 +1166 @@ static bool rpmb_calc_hmac(SDState *sd, const 
-RPMBDataFrame *frame,
--        offset = lduw_be_p(&frame->address) * RPMB_DATA_LEN +
--            sd_part_offset(sd);
-+        offset = lduw_be_p(&frame->address) * RPMB_DATA_LEN + 
-sd_part_offset(sd);
-@@ -1207,2 +1206,2 @@ static void emmc_rpmb_blk_read(SDState *sd, 
-uint64_t addr, uint32_t len)
--            curr_block += lduw_be_p(&sd->rpmb.result.block_count) -
--                sd->multi_blk_cnt;
-+            curr_block += lduw_be_p(&sd->rpmb.result.block_count);
-+            curr_block -= sd->multi_blk_cnt;
-@@ -1211 +1210,2 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t 
-addr, uint32_t len)
--        if (blk_pread(sd->blk, addr, RPMB_DATA_LEN, 
-sd->rpmb.result.data, 0) < 0) {
-+        if (blk_pread(sd->blk, addr, RPMB_DATA_LEN,
-+                      sd->rpmb.result.data, 0) < 0) {
-@@ -1215,2 +1215,2 @@ static void emmc_rpmb_blk_read(SDState *sd, 
-uint64_t addr, uint32_t len)
--                     RPMB_RESULT_READ_FAILURE |
--                     (result & RPMB_RESULT_COUTER_EXPIRED));
-+                     RPMB_RESULT_READ_FAILURE
-+                     | (result & RPMB_RESULT_COUTER_EXPIRED));
-@@ -1308,2 +1308 @@ exit:
--                 lduw_be_p(&sd->rpmb.result.result) |
--                 RPMB_RESULT_COUTER_EXPIRED);
-+                 lduw_be_p(&sd->rpmb.result.result) | 
-RPMB_RESULT_COUTER_EXPIRED);
-diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
-index 45dc3f08fa5..429388213c6 100755
---- a/scripts/mkemmc.sh
-+++ b/scripts/mkemmc.sh
-@@ -11,3 +10,0 @@
--# This work is licensed under the terms of the GNU GPL version 2.
--# See the COPYING file in the top-level directory.
--#
----
++    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
 
-I apologize it took me so long to review, I needed to study the spec.
+(I'll update it)
 
-Thanks for this high quality contribution!
-
-Phil.
+> 
+>> Invalid value '2MB' specified for /dev/zero image size.
+>> scripts/mkemmc.sh: 170: [: Illegal number:
+>> Creating eMMC image
+>>    Boot partition 1 and 2:   128K each
+>> scripts/mkemmc.sh: 192: [: Illegal number:
+>>    User data:                4 bytes
+>>
+>> $ bash scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
+>> Invalid value '2MB' specified for /dev/zero image size.
+>> scripts/mkemmc.sh: line 170: [: : integer expression expected
+>> Creating eMMC image
+>>    Boot partition 1 and 2:   128K each
+>> scripts/mkemmc.sh: line 192: [: : integer expression expected
+>>    User data:                4 bytes
+>>
+>> But now the file is generated :)
+> 
+> ...which is actually a bug as well: We are not terminating the script
+> inside the process_size function when calling "exit" there. Deviates
+> from the behavior under Linux. Sigh.
+If you have a diff I can test & squash.
 
