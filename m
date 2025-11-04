@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A572FCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 09:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2DD9CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 09:42:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGDX6-0001wp-Hm; Tue, 04 Nov 2025 04:40:56 -0500
+	id 1vGDYT-0002fI-Hp; Tue, 04 Nov 2025 04:42:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vGDX3-0001wc-IF
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 04:40:53 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
+ id 1vGDYR-0002eo-Dh
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 04:42:19 -0500
+Received: from canpmsgout07.his.huawei.com ([113.46.200.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vGDX1-0004KE-AY
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 04:40:53 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:7888:0:640:a8fd:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B8BD5C00DB;
- Tue, 04 Nov 2025 12:40:47 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id kegu0d1GrGk0-ZcGeO6Q1; Tue, 04 Nov 2025 12:40:47 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1762249247;
- bh=yaKlWvBJrOJzePNm658H57Asufyh6V3nM6z4flH/DSc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=epBZOdiepAcWzW8yhr02o5JuY0kP+LomyGy+IgLr4GXZCrkLSW6Dya5Ck7HMg7LqV
- YEWoz4HuqdIElXE8/qeutwo0Py9iEsR2CF62UZeA0EnRLKu1S0SJ9cDG47mrzMmcVu
- iY3vzch9bb+HL+qkEXG5NZmdTCTJ7zhacYoVuIaU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2ac9b536-b935-4bdc-b9f9-ea5e6a40f901@yandex-team.ru>
-Date: Tue, 4 Nov 2025 12:40:45 +0300
+ (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
+ id 1vGDYO-0004X5-1l
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 04:42:19 -0500
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=iPpYtZ/lTtwmH62GzLLo/whDCVzM7t2N22oAv2IRjMg=;
+ b=VdTmKM5Jax/X2DIEOCGcTzJdbNDSPW5JRSis4KxkEY94FtUjvSEzyUlKalylfkmoei6mhayJF
+ bNtL4xcG/MZkr74D4raE63JH3UBQNpsXnVe1hnFTCf5+OuZi9I7PvsN28SXUpXQfcR8SvAfe29x
+ J80Wpu4lCBmeFssg/VkwnBw=
+Received: from mail.maildlp.com (unknown [172.19.162.112])
+ by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4d13N70XN3zLlSN;
+ Tue,  4 Nov 2025 17:40:23 +0800 (CST)
+Received: from kwepemf200001.china.huawei.com (unknown [7.202.181.227])
+ by mail.maildlp.com (Postfix) with ESMTPS id 54110140230;
+ Tue,  4 Nov 2025 17:41:57 +0800 (CST)
+Received: from huawei.com (10.175.104.170) by kwepemf200001.china.huawei.com
+ (7.202.181.227) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 4 Nov
+ 2025 17:41:56 +0800
+From: zoudongjie <zoudongjie@huawei.com>
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <alex.chen@huawei.com>, <luolongmin@huawei.com>, <mujinsheng@huawei.com>,
+ <chenjianfei3@huawei.com>, <eric.fangyi@huawei.com>, <renxuming@huawei.com>,
+ <suxiaodong1@huawei.com>, <wangjian161@huawei.com>,
+ <liuxiangdong5@huawei.com>, <zoudongjie@huawei.com>
+Subject: [PATCH] hw/usb/host-libusb: cancel the processing of inflight packets
+ correctly
+Date: Tue, 4 Nov 2025 17:41:51 +0800
+Message-ID: <20251104094151.2218252-1-zoudongjie@huawei.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/7] chardev: introduce DEFINE_PROP_CHR_NO_CONNECT
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20251031155914.189112-1-vsementsov@yandex-team.ru>
- <20251031155914.189112-8-vsementsov@yandex-team.ru>
- <CAMxuvawdBHuHEkZSQw0LtLmNGwuBAYsh-k8CwX=jfH5T+BFWfA@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAMxuvawdBHuHEkZSQw0LtLmNGwuBAYsh-k8CwX=jfH5T+BFWfA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Originating-IP: [10.175.104.170]
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ kwepemf200001.china.huawei.com (7.202.181.227)
+Received-SPF: pass client-ip=113.46.200.222;
+ envelope-from=zoudongjie@huawei.com; helo=canpmsgout07.his.huawei.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -80,91 +78,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.11.25 14:39, Marc-André Lureau wrote:
-> Hi
-> 
-> On Fri, Oct 31, 2025 at 7:59 PM Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> wrote:
-> 
->     For further vhost-user-blk backend-transfer migration realization we
->     want to give it (vhost-user-blk) a possibility (and responsibility) to
->     decide when do connect.
-> 
->     For incoming migration we'll need to postpone connect at least until
->     early stage of migrate-incoming command, when we already know all
->     migration parameters and can decide, are we going to do incoming
->     backend-transfer (and get chardev fd from incoming stream), or we
->     finally need to connect.
-> 
->     Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>>
->     ---
->       chardev/char-fe.c                   | 32 ++++++++++++++++++++++++-----
->       hw/core/qdev-properties-system.c    | 26 ++++++++++++++++++++---
->       include/chardev/char-fe.h           |  8 ++++++--
->       include/hw/qdev-properties-system.h |  3 +++
->       4 files changed, 59 insertions(+), 10 deletions(-)
-> 
->     diff --git a/chardev/char-fe.c b/chardev/char-fe.c
->     index c67b4d640f..1132ec0501 100644
->     --- a/chardev/char-fe.c
->     +++ b/chardev/char-fe.c
->     @@ -189,15 +189,26 @@ bool qemu_chr_fe_backend_open(CharFrontend *c)
->           return c->chr && c->chr->be_open;
->       }
-> 
->     -bool qemu_chr_fe_init(CharFrontend *c, Chardev *s, Error **errp)
->     +bool qemu_chr_fe_init_ex(CharFrontend *c, Chardev *s, bool connect,
->     +                         Error **errp)
->       {
->           unsigned int tag = 0;
-> 
->     -    if (!qemu_chr_connect(s, errp)) {
->     -        return false;
->     -    }
->     -
->           if (s) {
->     +        if (connect) {
->     +            if (!qemu_chr_connect(s, errp)) {
->     +                return false;
->     +            }
->     +        } else {
->     +            /* DEFINE_PROP_CHR_NO_CONNECT */
->     +            if (!s->connect_postponed) {
->     +                error_setg(errp,
->     +                           "Chardev %s does not support postponed connect",
->     +                           s->label);
->     +                return false;
->     +            }
->     +        }
->     +
->               if (CHARDEV_IS_MUX(s)) {
->                   MuxChardev *d = MUX_CHARDEV(s);
-> 
->     @@ -210,6 +221,12 @@ bool qemu_chr_fe_init(CharFrontend *c, Chardev *s, Error **errp)
->               } else {
->                   s->fe = c;
->               }
->     +    } else {
->     +        /*
->     +         * connect=false comes only from DEFINE_PROP_CHR_NO_CONNECT,
->     +         * through do_set_chr, which provides chardev ptr.
->     +         */
->     +        assert(connect);
-> 
-> 
-> Is this useful to assert?
+The EHCI controller in QEMU seems to cause a UAF (Use-After-Free) issue when
+handling packets from abnormal USB devices. Specifically, when the USB device's
+firmware behaves abnormally and causes some initialization requests to block
+and time out, passing that USB device through to QEMU's EHCI controller appears
+to make the do-while loop in ehci_advance_state repeatedly submit multiple
+requests to handle the same packet (this do-while loop is quite complex;
+I confirmed the issue by adding logs in usb_host_cancel_packet).
 
+When the virtual machine restarts, QEMU receives the IADD instruction issued
+by the VM's kernel and will clean up in-flight packets in ehci_advance_async_state:
+ehci_advance_async_state
+└── ehci_queues_rip_unseen
+    └── ehci_free_queue
+        └── ehci_cancel_queue
+            └── ehci_free_packet
+                └── usb_cancel_packet
+                    └── usb_device_cancel_packet
+                        └── usb_host_cancel_packet
 
-Hmm. I started to write "yes, because, if in future we introduce code path, which will
-somehow pass s=NULL and connect=false, we'll do a wrong thing.."
+The cleanup actions in usb_host_cancel_packet mainly include:
+1. Finding the first request in the device corresponding to the packet
+2. Setting r->p of that request to NULL
+3. Calling libusb_cancel_transfer for asynchronous cleanup
 
-But looking more closely at semantics of s=0, looks like connect could be just ignored:
-no backend, nothing to connect.. So connect=true with s=0 looks maybe more wrong
-than connect=false.
+In the callback function usb_host_req_complete_ctrl registered to r->xfer, r->p
+is checked, and if r->p is NULL, the corresponding handling is skipped. However,
+since usb_host_cancel_packet only cleans up the first request handling the
+corresponding packet, when there are multiple requests handling the same packet,
+after the packet is cleared, other requests triggering the callback will cause
+a UAF problem and trigger various QEMU cores.
 
-I'll drop the assertion, and add not into qemu_chr_fe_init_ex(), that @connect is ignored
-for s=NULL case.
+We've verified that canceling all related requests when canceling a packet can
+avoid this issue, but we haven't figured out why QEMU submits multiple requests
+to handle the same packet. Do you have any suggestions? Thank you.
 
+Reported by: yefenzheng1@h-partners.com
+
+Signed-off-by: zoudongjie <zoudongjie@huawei.com>
+---
+ hw/usb/host-libusb.c | 29 ++++++++++++-----------------
+ 1 file changed, 12 insertions(+), 17 deletions(-)
+
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index b74670ae25..b5aab12aee 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -406,18 +406,6 @@ static void usb_host_req_free(USBHostRequest *r)
+     g_free(r);
+ }
+ 
+-static USBHostRequest *usb_host_req_find(USBHostDevice *s, USBPacket *p)
+-{
+-    USBHostRequest *r;
+-
+-    QTAILQ_FOREACH(r, &s->requests, next) {
+-        if (r->p == p) {
+-            return r;
+-        }
+-    }
+-    return NULL;
+-}
+-
+ static void LIBUSB_CALL usb_host_req_complete_ctrl(struct libusb_transfer *xfer)
+ {
+     USBHostRequest *r = xfer->user_data;
+@@ -1276,7 +1264,7 @@ static void usb_host_unrealize(USBDevice *udev)
+ static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
+ {
+     USBHostDevice *s = USB_HOST_DEVICE(udev);
+-    USBHostRequest *r;
++    USBHostRequest *r, *next_entry;
+ 
+     if (p->combined) {
+         usb_combined_packet_cancel(udev, p);
+@@ -1285,10 +1273,17 @@ static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
+ 
+     trace_usb_host_req_canceled(s->bus_num, s->addr, p);
+ 
+-    r = usb_host_req_find(s, p);
+-    if (r && r->p) {
+-        r->p = NULL; /* mark as dead */
+-        libusb_cancel_transfer(r->xfer);
++    QTAILQ_FOREACH_SAFE(r, &s->requests, next, next_entry) {
++        if (r->p == p) {
++            if (unlikely(r && r->fake_in_flight)) {
++                usb_host_req_free(r);
++                continue;
++            }
++            if (r && r->p) {
++                r->p = NULL; /* mark as dead */
++                libusb_cancel_transfer(r->xfer);
++            }
++        }
+     }
+ }
+ 
 -- 
-Best regards,
-Vladimir
+2.33.0
+
 
