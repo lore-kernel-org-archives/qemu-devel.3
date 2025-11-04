@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BA4CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A7BCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGGgg-0000Xy-B7; Tue, 04 Nov 2025 08:03:02 -0500
+	id 1vGGnv-00025F-7r; Tue, 04 Nov 2025 08:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <engguopeng@buaa.edu.cn>)
- id 1vGGgb-0000Xa-LN; Tue, 04 Nov 2025 08:02:58 -0500
-Received: from azure-sdnproxy.icoremail.net ([52.229.205.26])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <engguopeng@buaa.edu.cn>)
- id 1vGGgV-00032k-9y; Tue, 04 Nov 2025 08:02:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=buaa.edu.cn; s=buaa; h=Received:From:To:Cc:Subject:Date:
- Message-ID:MIME-Version:Content-Transfer-Encoding; bh=hDsYJwSrUQ
- SIKlAGcFW4ij8ryQIk3foonnnymDpdnyA=; b=bsFq1vl8EmgmhOV8SqkpfH0WRM
- KKq6YEC2/IxSsu2hd0jrg4Nr7UHL8NA8at9wxHntOxQBJXqxsMn7lJfaQZ5kcesR
- Okwa30BbTseODa1X2j3ccs346gXq3hJxpP3RPN98JYo9XdH4ZdqkVqQ12+S3c4UE
- hpQNznQA6okD2P3Nw=
-Received: from gp-VMware-Virtual-Platform.com (unknown [223.166.13.12])
- by coremail-app1 (Coremail) with SMTP id OCz+CgCnag1r+QlpczgiAA--.13617S2;
- Tue, 04 Nov 2025 21:02:35 +0800 (CST)
-To: mst@redhat.com
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org,
- Jonathan.Cameron@huawei.com, qemu-stable@nongnu.org, wyguopeng@163.com,
- peng guo <engguopeng@buaa.edu.cn>
-Subject: [PATCH Backport] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU 10.0.x
-Date: Tue,  4 Nov 2025 21:02:27 +0800
-Message-ID: <20251104130227.19183-1-engguopeng@buaa.edu.cn>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vGGnr-00024R-E2
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:10:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vGGnn-00055e-OH
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:10:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762261820;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=0NlBOm1T8Hfdsw/aIBdJGE3Ec1MX6AjeHJd4fMcoWUc=;
+ b=NKYTnE0Kj1eXWSBojIlT3N35KEsNkXZudInMOil628mfc6PdnkkzjV9TmRQp+9afQFK0WU
+ +N8RCEzSSTY8EPseZV/SSI0O1+nOs1a39fLQJhf+2YgczbRxhz8pR73Fx1TVNgHM81AnoD
+ Xp/5FfiwMPE32hnipflkDtH0SYAtlXE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-M8G2XoNnNiKg7seb7eNUkg-1; Tue,
+ 04 Nov 2025 08:10:18 -0500
+X-MC-Unique: M8G2XoNnNiKg7seb7eNUkg-1
+X-Mimecast-MFC-AGG-ID: M8G2XoNnNiKg7seb7eNUkg_1762261817
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A42F19560A5; Tue,  4 Nov 2025 13:10:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D16F4180045B; Tue,  4 Nov 2025 13:10:15 +0000 (UTC)
+Date: Tue, 4 Nov 2025 13:10:12 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 4/8] qio: Factor out helpers qio_net_listener_[un]watch
+Message-ID: <aQn7NF8bVZ3TO3Zo@redhat.com>
+References: <20251103202849.3687643-10-eblake@redhat.com>
+ <20251103202849.3687643-14-eblake@redhat.com>
+ <aQnzjtDgSakaTgPi@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: OCz+CgCnag1r+QlpczgiAA--.13617S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxZF1DCF4DGrWktry8ArW7twb_yoWrCrW3pF
- 9rJFy5GF4rKr17GFs7Za4v9a48uF4vk3W5CF92kw1v9FnxKrn5A34jy3yYv348Zrs3JFy7
- XF98JF95tw1DZaUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9S1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
- w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
- IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
- z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcV
- Aq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j
- 6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
- vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04v7MxkIecxE
- wVAFwVW5GwCF04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26F1DJr1UJwCFx2IqxV
- CFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r10
- 6r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxV
- WUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG
- 6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
- 1UYxBIdaVFxhVjvjDU0xZFpf9x0JU-_-PUUUUU=
-X-CM-SenderInfo: d2isijirrujqpexdthxhgxhubq/
-Received-SPF: pass client-ip=52.229.205.26;
- envelope-from=engguopeng@buaa.edu.cn; helo=azure-sdnproxy.icoremail.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aQnzjtDgSakaTgPi@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,118 +84,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  peng guo <engguopeng@buaa.edu.cn>
-From:  peng guo via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a backport of the fix from commit 8b1c560937467d0d9 to the QEMU
-10.0.x LTS series.
+On Tue, Nov 04, 2025 at 01:37:34PM +0100, Kevin Wolf wrote:
+> Am 03.11.2025 um 21:10 hat Eric Blake geschrieben:
+> > The code had three similar repetitions of an iteration over one or all
+> > of nsiocs to set up a GSource, and likewise for teardown.  Since an
+> > upcoming patch wants to tweak whether GSource or AioContext is used,
+> > its better to consolidate that into one helper function for fewer
+> > places to edit later.
+> > 
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> > ---
+> >  io/net-listener.c | 109 +++++++++++++++++++---------------------------
+> >  1 file changed, 45 insertions(+), 64 deletions(-)
+> 
+> > @@ -145,15 +174,11 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+> >                                             GDestroyNotify notify,
+> >                                             GMainContext *context)
+> >  {
+> > -    size_t i;
+> > -
+> >      if (listener->io_func == func && listener->io_data == data) {
+> >          return;
+> >      }
+> > 
+> > -    if (listener->io_func) {
+> > -        trace_qio_net_listener_watch_disabled(listener, "set_client_func");
+> > -    }
+> > +    qio_net_listener_unwatch(listener, "set_client_func");
+> >      if (listener->io_notify) {
+> >          listener->io_notify(listener->io_data);
+> >      }
+> 
+> This changes the order between the io_notify() call and the unwatch. Is
+> this intentional? If so, maybe mention it in the commit message and why
+> it's safe.
 
-When using a CXL Type 3 device together with a virtio 9p device in QEMU on a
-physical server, the 9p device fails to initialize properly. The kernel reports
-the following error:
+At least conceptually I think this ordering is better, and I don't think
+there should be any functional consequences from the change.
 
-    virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
-    9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
-
-Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-device was overlapped by the memory window allocated for the CXL devices. As a
-result, the kernel could not correctly access the BAR region, causing the
-virtio device to malfunction.
-
-An excerpt from /proc/iomem shows:
-
-    480010000-cffffffff : CXL Window 0
-      480010000-4bfffffff : PCI Bus 0000:00
-      4c0000000-4c01fffff : PCI Bus 0000:0c
-        4c0000000-4c01fffff : PCI Bus 0000:0d
-      4c0200000-cffffffff : PCI Bus 0000:00
-        4c0200000-4c0203fff : 0000:00:03.0
-          4c0200000-4c0203fff : virtio-pci-modern
-
-To address this issue, this patch adds the reserved memory end calculation
-for cxl devices to reserve sufficient address space and ensure that CXL memory
-windows are allocated beyond all PCI 64-bit BARs. This prevents overlap with
-64-bit BARs regions such as those used by virtio or other pcie devices,
-resolving the conflict.
-
-Tested on intel Granite Rapids(GNR) servers using QEMU 10.0 LTS,
-resolving the issue without causing regressions.
-
-QEMU Build Configuration:
-
-    ./configure --prefix=/home/work/qemu_master/build/ \
-                --target-list=x86_64-softmmu \
-                --enable-kvm \
-                --enable-virtfs
-
-QEMU Boot Command:
-
-    sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
-        -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
-        -hda /home/work/gp_qemu/rootfs.img \
-        -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
-        -kernel /home/work/linux_output/arch/x86/boot/bzImage \
-        --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
-        -device pci-testdev,membar=2G \
-        -object memory-backend-ram,id=vmem0,share=on,size=4096M \
-        -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-        -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
-        -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
-        -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-
-Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter")
-Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-Tested-by: peng guo <engguopeng@buaa.edu.cn>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit d1193481dee63442fc41e47ca6ebc4cd34f1f69c)
----
- hw/i386/pc.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 01d0581f62a3..502cf8a47dfb 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -840,6 +840,7 @@ void pc_memory_init(PCMachineState *pcms,
-     hwaddr maxphysaddr, maxusedaddr;
-     hwaddr cxl_base, cxl_resv_end = 0;
-     X86CPU *cpu = X86_CPU(first_cpu);
-+    uint64_t res_mem_end;
- 
-     assert(machine->ram_size == x86ms->below_4g_mem_size +
-                                 x86ms->above_4g_mem_size);
-@@ -993,17 +994,19 @@ void pc_memory_init(PCMachineState *pcms,
- 
-     rom_set_fw(fw_cfg);
- 
--    if (machine->device_memory) {
--        uint64_t *val = g_malloc(sizeof(*val));
--        uint64_t res_mem_end = machine->device_memory->base;
--
-+    if (pcms->cxl_devices_state.is_enabled) {
-+        res_mem_end = cxl_resv_end;
-+    } else if (machine->device_memory) {
-+        res_mem_end = machine->device_memory->base;
-         if (!pcmc->broken_reserved_end) {
-             res_mem_end += memory_region_size(&machine->device_memory->mr);
-         }
-+    } else {
-+        res_mem_end = 0;
-+    }
- 
--        if (pcms->cxl_devices_state.is_enabled) {
--            res_mem_end = cxl_resv_end;
--        }
-+    if (res_mem_end) {
-+        uint64_t *val = g_malloc(sizeof(*val));
-         *val = cpu_to_le64(ROUND_UP(res_mem_end, 1 * GiB));
-         fw_cfg_add_file(fw_cfg, "etc/reserved-memory-end", val, sizeof(*val));
-     }
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
