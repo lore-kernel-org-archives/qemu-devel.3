@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230D4CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 02:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF10CCFA03
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 02:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG6nv-0006xf-7g; Mon, 03 Nov 2025 21:29:51 -0500
+	id 1vG6yh-0007DA-1s; Mon, 03 Nov 2025 21:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vG6nt-0006wR-Aj
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:29:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vG6np-0003sw-PY
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:29:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762223384;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zQ1JudMm7bKHTZ9ZI5j4eCSVpiXjE8mvU+hhW2Wueqs=;
- b=NZNgqzhv0M5STXlZRnj6/mHjQY0VbdhRAmHWHhicVF1j+07No6zPo+DzUf4IUb2HjVNiXh
- 5ZFARVCCnqro/W81sBeGXtg8OfOdiGH7UGm7CYb0nmkxHaP6OX/JcaNXRfEU+y0TAJU6sj
- g/YnKJBgiZDwEF64b9vDllThN3lxX2s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-981FXoFGNA-y8Y7Q2U_5zg-1; Mon,
- 03 Nov 2025 21:29:41 -0500
-X-MC-Unique: 981FXoFGNA-y8Y7Q2U_5zg-1
-X-Mimecast-MFC-AGG-ID: 981FXoFGNA-y8Y7Q2U_5zg_1762223380
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33E2919560B1; Tue,  4 Nov 2025 02:29:40 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 49C4030001A1; Tue,  4 Nov 2025 02:29:38 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- eblake@redhat.com, Hanna Czenczek <hreitz@redhat.com>,
- qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, hibriansong@gmail.com
-Subject: [PATCH v6 01/15] aio-posix: fix race between io_uring CQE and
- AioHandler deletion
-Date: Mon,  3 Nov 2025 21:29:19 -0500
-Message-ID: <20251104022933.618123-2-stefanha@redhat.com>
-In-Reply-To: <20251104022933.618123-1-stefanha@redhat.com>
-References: <20251104022933.618123-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vG6ye-0007D2-QS
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:40:56 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vG6yd-0006Po-1Q
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:40:56 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b70406feed3so1126700766b.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 18:40:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762224052; x=1762828852; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NyMCcojKz9XKybxE+3pwKpMUzaz6QiQSBxuaFAbidg4=;
+ b=Jt0tKQ8gUTxIDxqV5M2i0p/19N0HJCLF7O7Te5woZxcuLRb8d05IsKbOTfgK+iwhyT
+ y2CA8UvvifOxD1yPE9A3bMso/wyGLiTtE6k4j4/DUuDSctfLEi1ZqQc4sssggpIFO/0I
+ x63mJAP4uMNVYXiohAs+TEOo9MRBXFdZplDxqmkhUzBOL00prXGwTCwbtE+FhdxYYffS
+ 6jMSuEskWq1xrkgywRnhoopw1MRoEpLyAKp+0u6ZSbf5DAkElG6JCXItdiWHSzB7Ao/i
+ gvqHODwHD/vlwTP62StETEk5BgI15eQPokjEfRnWf8iyWmNoFh+K4E3tGqBmeAW+xfuI
+ vk9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762224052; x=1762828852;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NyMCcojKz9XKybxE+3pwKpMUzaz6QiQSBxuaFAbidg4=;
+ b=Mz1+k04mRwXsDswj5ynhE6Q8tMvRJ5PTBW2qLOouHDbXUlMIf5OwqKIQ6F2kdwSYye
+ acXasUiLMXSE8CATp/6UaP0NBGder36AGPChNzl+sqCQV3XYQQCweck8BK8y241Ms4B7
+ KyxYa87rCTs743XrBJTtqIMnyzPgkZ5hoB/u8JhVq1nQI0TjhniahMQI9UgrNln38RMR
+ tdkbMvZgze4hrCxmp81ChCkR9uzgbZSHD5hIgXrbuOaYozsaB/Xs1kDfrlY96rZSV8am
+ vHnQ3TqMdGndA94r76veJJ39FlKdn+6VJHPuo2/LwXzrxCPIRa5uifbRO/UnZZPy8hVR
+ rjXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmAdHo7r9YZbtW0KuGjxQ+0ydvIwP5vOclOQ7W44ObEvaix7pyC4tP5S2M/HJuPRQtr3YlbkgSCPYj@nongnu.org
+X-Gm-Message-State: AOJu0Yyvy3I6kdR6mYHxZzIf46gXT6dOGGrcbvtTFjoOx+Etsmv7nmeR
+ HWFV2p5Ncz9YYiSApCJvADf/3mM49Zak7/8UbaTMiBssHsSgxv0kIZ9QIJwZMxBD7A94/0tzN/+
+ VZLLUaITkuE+k01TjM//4yHEaFQuKvwM=
+X-Gm-Gg: ASbGncve2t4cVM1dkTWQ3o8qKSasMwXcw8OtaDg7+PYvh9bSnQuA1cUGJ0rtgK0SCfT
+ +VxZ5NwTAGshkW15tZ66RIZNwx5IvxFCVMVwGRkHwxfrs2+JJlwlXAdM8Rae8H0Jz3CnMEoy0PD
+ XGSuWPQDdy3GJd0GFMF8PzIbz/8xXMSkqGK3RkMdqDrYOTCfd+yFx+ypC8Czj5x53SFBeCw76+1
+ sX+ny/U6mhCsfQG+ooRFxcAR7uSXwj21VeLJCO/oLlTNBrnrKOOkuPasXYHmQ==
+X-Google-Smtp-Source: AGHT+IFedAykftALRkaiK0CnVRNt7jWwxsTFKZLz9QlfHuh60IqHtaFFma3N7fKRB7Q0nRs45MagVYsyv8ofxrd/ZcU=
+X-Received: by 2002:a17:906:f586:b0:b72:134a:48c8 with SMTP id
+ a640c23a62f3a-b72134a5137mr174752766b.14.1762224052056; Mon, 03 Nov 2025
+ 18:40:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251104013606.1937764-1-lizhijian@fujitsu.com>
+In-Reply-To: <20251104013606.1937764-1-lizhijian@fujitsu.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 4 Nov 2025 10:40:15 +0800
+X-Gm-Features: AWmQ_bmqPafiTtomhcKlqUFnDwgPzSI17dVv1TyVm5xi6VU4RaFK_S71AqC0uv8
+Message-ID: <CAK3tnvLy-Bw2skxOUqcT=4gdbL4YF8xueVGWaqWDw_i41-b01A@mail.gmail.com>
+Subject: Re: [PATCH] migration: Fix transition to COLO state from precopy
+To: Li Zhijian <lizhijian@fujitsu.com>
+Cc: peterx@redhat.com, farosas@suse.de, zhanghailiang@xfusion.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,94 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When an AioHandler is enqueued on ctx->submit_list for removal, the
-fill_sq_ring() function will submit an io_uring POLL_REMOVE operation to
-cancel the in-flight POLL_ADD operation.
+On Tue, Nov 4, 2025 at 9:34=E2=80=AFAM Li Zhijian <lizhijian@fujitsu.com> w=
+rote:
+>
+> Commit 4881411136 ("migration: Always set DEVICE state") set a new DEVICE
+> state before completed during migration, which broke the original transit=
+ion
+> to COLO. The migration flow for precopy has changed to:
+> active -> pre-switchover -> device -> completed.
+>
+> This patch updates the transition state to ensure that the Pre-COLO
+> state corresponds to DEVICE state correctly.
+>
+> Fixes: 4881411136 ("migration: Always set DEVICE state")
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 
-There is a race when another thread enqueues an AioHandler for deletion
-on ctx->submit_list when the POLL_ADD CQE has already appeared. In that
-case POLL_REMOVE is unnecessary. The code already handled this, but
-forgot that the AioHandler itself is still on ctx->submit_list when the
-POLL_ADD CQE is being processed. It's unsafe to delete the AioHandler at
-that point in time (use-after-free).
+LGTM~ Thanks Zhijian.
 
-Solve this problem by keeping the AioHandler alive but setting a flag so
-that it will be deleted by fill_sq_ring() when it runs.
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Tested-by: Zhang Chen <zhangckid@gmail.com>
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
----
- util/fdmon-io_uring.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
-
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index b0d68bdc44..ad89160f31 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -52,9 +52,10 @@ enum {
-     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
- 
-     /* AioHandler::flags */
--    FDMON_IO_URING_PENDING  = (1 << 0),
--    FDMON_IO_URING_ADD      = (1 << 1),
--    FDMON_IO_URING_REMOVE   = (1 << 2),
-+    FDMON_IO_URING_PENDING            = (1 << 0),
-+    FDMON_IO_URING_ADD                = (1 << 1),
-+    FDMON_IO_URING_REMOVE             = (1 << 2),
-+    FDMON_IO_URING_DELETE_AIO_HANDLER = (1 << 3),
- };
- 
- static inline int poll_events_from_pfd(int pfd_events)
-@@ -218,6 +219,16 @@ static void fill_sq_ring(AioContext *ctx)
-         if (flags & FDMON_IO_URING_REMOVE) {
-             add_poll_remove_sqe(ctx, node);
-         }
-+        if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
-+            /*
-+             * process_cqe() sets this flag after ADD and REMOVE have been
-+             * cleared. They cannot be set again, so they must be clear.
-+             */
-+            assert(!(flags & FDMON_IO_URING_ADD));
-+            assert(!(flags & FDMON_IO_URING_REMOVE));
-+
-+            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
-+        }
-     }
- }
- 
-@@ -241,7 +252,12 @@ static bool process_cqe(AioContext *ctx,
-      */
-     flags = qatomic_fetch_and(&node->flags, ~FDMON_IO_URING_REMOVE);
-     if (flags & FDMON_IO_URING_REMOVE) {
--        QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
-+        if (flags & FDMON_IO_URING_PENDING) {
-+            /* Still on ctx->submit_list, defer deletion until fill_sq_ring() */
-+            qatomic_or(&node->flags, FDMON_IO_URING_DELETE_AIO_HANDLER);
-+        } else {
-+            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
-+        }
-         return false;
-     }
- 
-@@ -347,10 +363,13 @@ void fdmon_io_uring_destroy(AioContext *ctx)
-             unsigned flags = qatomic_fetch_and(&node->flags,
-                     ~(FDMON_IO_URING_PENDING |
-                       FDMON_IO_URING_ADD |
--                      FDMON_IO_URING_REMOVE));
-+                      FDMON_IO_URING_REMOVE |
-+                      FDMON_IO_URING_DELETE_AIO_HANDLER));
- 
--            if (flags & FDMON_IO_URING_REMOVE) {
--                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
-+            if ((flags & FDMON_IO_URING_REMOVE) ||
-+                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
-+                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers,
-+                                      node, node_deleted);
-             }
- 
-             QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
--- 
-2.51.1
-
+> ---
+>  migration/migration.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index a63b46bbef..6ec7f3cec8 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3095,9 +3095,9 @@ static void migration_completion(MigrationState *s)
+>          goto fail;
+>      }
+>
+> -    if (migrate_colo() && s->state =3D=3D MIGRATION_STATUS_ACTIVE) {
+> +    if (migrate_colo() && s->state =3D=3D MIGRATION_STATUS_DEVICE) {
+>          /* COLO does not support postcopy */
+> -        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+> +        migrate_set_state(&s->state, MIGRATION_STATUS_DEVICE,
+>                            MIGRATION_STATUS_COLO);
+>      } else {
+>          migration_completion_end(s);
+> --
+> 2.44.0
+>
 
