@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAF0CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 15:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ABF0CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 15:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGIru-0002rs-VO; Tue, 04 Nov 2025 10:22:47 -0500
+	id 1vGIuO-0004kT-Gj; Tue, 04 Nov 2025 10:25:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vGIrr-0002lB-Hi; Tue, 04 Nov 2025 10:22:44 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1vGIuN-0004kH-D0; Tue, 04 Nov 2025 10:25:19 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vGIro-00041Y-JS; Tue, 04 Nov 2025 10:22:43 -0500
+ id 1vGIuL-0006Bm-U3; Tue, 04 Nov 2025 10:25:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1762269760; x=1793805760;
+ t=1762269918; x=1793805918;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=/BnBQU1LtkrdDTDb4VMuCD1GoL9kIYaFPhX1uKSNDG4=;
- b=gifhfElhyPdVlbH1kV3ap0wiurTI2tUrB8mz4Eob+saK5joWBEOjX8xe
- sffljIKEuQg8HrYGfNkfr9N6idbQBMwY93rM+ePuq6b3O7t3J+sEwKNGW
- AVJ4da525N02b+byj9owU5GFECq1oAil3euk6Nvp40kjjw4izEVWaJ1fo
- yBphZFMGr5xWOyZ7kEaDtSmB3UjUqStKuB6JFS8OSrgCTT6iPVNysqdOM
- 7pLq5FmcRoB79ws5QLXMQ9k/TH72n1VMPR2JcCVUOGk+Z3imeoPNPDlfb
- UcuFIgdStOClegyJDTL7Rkuj4NcGsHv3lfV32cGzYgiK7PSCAyu8RNaqu A==;
-X-CSE-ConnectionGUID: 7Ft5pF5pQdmlRB2Z9zwtrQ==
-X-CSE-MsgGUID: kPZXPNsgQZOnF2GBC+2iLw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="64251258"
-X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; d="scan'208";a="64251258"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2025 07:22:37 -0800
-X-CSE-ConnectionGUID: cKZZ++qKTA+JrgagRzGEDw==
-X-CSE-MsgGUID: 3sEjBQPWRbOYc17tTPChwg==
+ bh=qUUC5QUd+RXOioX6icW/Nm4Uoqzz0t3Mh29VeMqiGNA=;
+ b=Ve7yNg40f13u3uRSTryViaVOo2/KJ2fWosMEhqeTaLTT9AEE75uijM2W
+ 6uIvsEBaZLJGS1t0NitRsg6ZdSqSGVNpK5cVMVRQ7ovMLaori+pgX6RTb
+ lEsAGHMHF2RIep5DWfin50wOu6yZC4Ty3MvKuNoV7y4f77S65HNj1LSgt
+ 3TfaHkdPseAjnvoRHFomjMNpB+ESO13xEETjs5ON4hfMvmmctSCUgIzsB
+ R4+iTQi4vVemQomWZzHr1+mPdOnINKBXHf/zrwyipWuSnBNOeODHgc5EQ
+ dUKAGFUXzEfXvkZSvUsIVMjGQP+CijOXrkQFdsqz4OZczc5T6MXppxfkO A==;
+X-CSE-ConnectionGUID: CoHvEu28QJ+Km2mnlEeoiA==
+X-CSE-MsgGUID: fPKE4leHSLOXjmVAZPr4Cw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="64517041"
+X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; d="scan'208";a="64517041"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Nov 2025 07:25:15 -0800
+X-CSE-ConnectionGUID: uLFUgQsYSdaD3QplbeBNEw==
+X-CSE-MsgGUID: u/M/x0X0SH6dybvgi/DJkQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; d="scan'208";a="191535833"
+X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; d="scan'208";a="187630256"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 04 Nov 2025 07:22:36 -0800
-Date: Tue, 4 Nov 2025 23:44:50 +0800
+ by fmviesa009.fm.intel.com with ESMTP; 04 Nov 2025 07:25:14 -0800
+Date: Tue, 4 Nov 2025 23:47:28 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 3/4] rust/util: replace Error::err_or_unit/err_or_else
- with Error::with_errp
-Message-ID: <aQofcuaXMzkzqTGE@intel.com>
+Subject: Re: [PATCH 4/4] rust: pull error_fatal out of
+ SysbusDeviceMethods::sysbus_realize
+Message-ID: <aQogELmilW9KZlSH@intel.com>
 References: <20251031152540.293293-1-pbonzini@redhat.com>
- <20251031152540.293293-4-pbonzini@redhat.com>
+ <20251031152540.293293-5-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251031152540.293293-4-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20251031152540.293293-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -51
 X-Spam_score: -5.2
@@ -82,19 +82,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 31, 2025 at 04:25:38PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 31 Oct 2025 16:25:38 +0100
+On Fri, Oct 31, 2025 at 04:25:39PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 31 Oct 2025 16:25:39 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 3/4] rust/util: replace Error::err_or_unit/err_or_else with
->  Error::with_errp
+> Subject: [PATCH 4/4] rust: pull error_fatal out of
+>  SysbusDeviceMethods::sysbus_realize
 > X-Mailer: git-send-email 2.51.1
 > 
-> Introduce a simpler function that hides the creation of the Error**.
+> Return a Result<()> from the method, and "unwrap" it into error_fatal
+> in the caller.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/util/src/error.rs | 52 ++++++++++++++++--------------------------
->  1 file changed, 20 insertions(+), 32 deletions(-)
+>  rust/hw/char/pl011/src/device.rs |  4 ++--
+>  rust/hw/core/src/sysbus.rs       | 13 ++++++-------
+>  rust/util/src/error.rs           | 31 ++++++++++++++++++++++++++++++-
+>  rust/util/src/lib.rs             |  2 +-
+>  4 files changed, 39 insertions(+), 11 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
