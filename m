@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE38DCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233CECCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGL9R-0004MZ-Qx; Tue, 04 Nov 2025 12:49:14 -0500
+	id 1vGL9k-0004Mf-OP; Tue, 04 Nov 2025 12:49:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL97-0004Jj-N8
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:44 -0500
-Received: from mail-ej1-x644.google.com ([2a00:1450:4864:20::644])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9E-0004Ko-Oa
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:49 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL95-0005jB-VZ
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:41 -0500
-Received: by mail-ej1-x644.google.com with SMTP id
- a640c23a62f3a-b6d4e44c54aso770497566b.2
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9C-0005kJ-3k
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:48 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-63b9da57cecso10000938a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762278518; x=1762883318; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762278524; x=1762883324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xFKz61NgOTDe44iZ8PiV1I49jlxgeapCPlVrsJSbdmY=;
- b=jkI9PR9ks1YXPFGS7RcXSbAWOv6o2JkCdnJSDAA9SigX4KA/q8V2veq2gUZ3qlR+c1
- DGU+guL0daSU346x8mw7kMOYDIe+WaX8Df6S27vzD+n3lJd4KpqcfHoqZGAYmT66m9NT
- WHyVgV5HRPunNvX2Wkrfo8rNBiEQMDUJ8xCc3tDL4jaaGnNhz9YMIAFKornlas+8QRFm
- 78clNrW0zxoR07lDrcehWjtXosty3XCoZXzGF/3izOCD0v6h4monH5otjRzZAezbsY9+
- 4xggJslLsXZQiq7edWBPGCUIVryRVajHkMPQ1xq9/ullyAV5KZIWxnsKKh6ei4Q3uYMq
- /zug==
+ :reply-to; bh=YpbbKSWDlqLK/iFXVepkQyVZxIs53mvNqY/oK9a5cLQ=;
+ b=XVdkhJnEiFN2jsskSSDuAXZrujG3wfdXRPo58UJIR3Qr5ZM0FUyJer3s7y/CB9ymAr
+ j0dyQsAJxplDLAupnGotj3mMLrKJ1SuSq1mrwaPXQptt4h1duqx7DGczNvxRUTr8tt+D
+ VcicS+q8AaFEAy0tmfV1G6bciaSVFPZ61LLUz3B5DPPe1ZAW+Z8LOTfJG3Nu+7vYdWMO
+ L38wmNx695Q8D4Gx4TykYFNKXzQigfJ9uPMr3LAzp74HgacdRFc7NxCJobmBtw0JCXMD
+ Mmtx9nA92sNeJ/sAUT4BIjLZenXuTAuy95920c0AMtHCxQHvpq7tvbsg839zgdkJKyyD
+ Lklw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762278518; x=1762883318;
+ d=1e100.net; s=20230601; t=1762278524; x=1762883324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xFKz61NgOTDe44iZ8PiV1I49jlxgeapCPlVrsJSbdmY=;
- b=L5azOaPzlwF/NEpeiUoUhNwHoRcN4bGtSQ6vI7sqE3HoE3b5cPPEJ9zhYjebT24bss
- 4ptpcW8UDsvTvuxNXkx8twrfqJ8/aeeBnpZ1OqwrXdvqf3s39Mv9LurjSkkYDO47Lnfu
- Q6MIVPX5iW+8ziUoJ37XWqjMHA3jwGHSe8yUx2Q0sV/5O60ABf0+ljC2mlJVA9RP0jaI
- V8wQ84f5Ij4RcBK7PGWF1XnmmZJcjdCf5njBMpKySHTF6Qh3S0y+AHVURcWs3CqK/ueG
- qNvxBFompSwZKvvOF81kaepahXm2W+vb/rFiBSgu5ukdkvcqxpAIKS941bxI3LtaYqFW
- J8SQ==
-X-Gm-Message-State: AOJu0YxiLiAFx9nnQuKxQdAi1OJocUtuszAwFjsyEwzRbCf9pSNAWn6X
- jvY+PE8P7e1nskgo2+KpJ2aa+JALuybw3DDKqW0rMEe0IbJ/tSQ2DctXDiQNhS3IPPCDdysyVif
- P4D7aUx2mPpW5
-X-Gm-Gg: ASbGnct/t1+M2I7kPPrmJeiHGmqGcMEpTZXmvgyUONxzw2ZuP9uBOldjstED0pE8JkT
- A/K3kYLjR3VzwkjbK0B6yDKQNtTQQAzAtzlKzCMaHuSVTxuroqJ1whRVz4PA4K8Y0sBrpfGoVPs
- 8bNcg5tUZgIAh+OyS/j7WJhrjLoci2cJH9fKqrLe2TdMEWS54ahQPS6xHzErFz3/9kTB55CGauA
- EmvxE1VDqL6FiGNHkXYWVe38rwv1eKoexVtP5lspNdiNjLzqoftKXpZZIMQlKURl5VpHAJ58hGA
- 3vz7/wkHqDZOmHeZqQWECAFlu5T0IPPuYTYwkip1LPs9YBLNgSBt2TStEk9g0cTN6YoH8enTD8I
- SWWNSoyfP5ysvgVauANS//w6CPG2Unp6Mx4Gv+d6gX6kFldU77SSFFX2lB2uhMu7gCZfqQnDAGy
- qpqYu0sf02GZ8ZVts6KAyvy2CMhWslIfCz
-X-Google-Smtp-Source: AGHT+IFQkNyitbDt1Rfz6PJ4xvZRonZCWtQcPsC4M5IRB0oZks/3p3dYVB+PXDoVNpxbUQGc7zZeUQ==
-X-Received: by 2002:a17:907:3e11:b0:b6d:2c75:3c57 with SMTP id
- a640c23a62f3a-b70704b5225mr1879203466b.39.1762278517720; 
- Tue, 04 Nov 2025 09:48:37 -0800 (PST)
+ bh=YpbbKSWDlqLK/iFXVepkQyVZxIs53mvNqY/oK9a5cLQ=;
+ b=volf8HWBbs26VAhiOprN8r0BL9VP993G1sBoG7PgqlfvhNI7iG2BiA3pWyNY8EdDa2
+ 87gEW7fR4SIPaq2Fq6FHFZWS9nUHUzSAjDsmjWK0mwDigCUEeKU5fj4N8xFp0Qasm/3N
+ 7yLs1e1+qbb/H46wfY9Fb3vsYKm6iCTkpomy/iOuBHcWHkXvptGptF620/uBjfSw53xz
+ tQ2RhI+Uv6ZQxM6oe6W/whw+nh0VNuRn5rGY9qJpdqduqYIbLJPZlZQRgZ3HLm3bIVgw
+ fu68OvSaJLq3S9XsTYn90LR8hMzhscHgVwPJNwng1aNY+HYQl+bW6JbDpK315Esz63wM
+ 21ew==
+X-Gm-Message-State: AOJu0Yz7TAeWrMZfs7y5Z6jRex+trHHSLVZdkm4OrRnFTLete7ZacDoy
+ aXt6B7TJp1bjXypxArwk3BLgSDwjWxOlJXt5YeOkfaizZUrckHtwKyBFHGCuuJqtwUNaW1u/GVc
+ i5Ta33g44bw==
+X-Gm-Gg: ASbGnct4A68ao27qqRkpRmEx1eA9tbxv3DSU8W0m+c2W7oJ7FHiwY2j2j9W7JZw7Dam
+ 0VQalSYZDlaNDTegj46iRgImWYkCu/lJ1FRsEWGhnZCKh1UM5wjCC/gB44vWYdvEVCKQblil7z/
+ 2IFCV8D4Lz1QrwViCuyZnZrb46MGjDtm4y9e/J1eoqUL8c+fHCcKqYGLNkc4ntKROPAiFUMoikf
+ UxRbqDjIYXhpyi5H1rVcvbdjlyQs9eWGw73W13P5tzia9q7MaWiPcCW9EpyNr61v7lQhY3TFnBD
+ DMotBNTesNR0la8GNhlkXsSz2EAZVqPbhez1WrXvuR4kJeXidqcJSKbenVZ0dfK18p10x1MehC3
+ q8R+P7OR02W4+OmwFUSY82Ctcw0qlG7roHQUIOBhcFkkXNGMMkPEk6BXuSOUCkMyrSDIhihcZ+Q
+ rzJlTO3eyrEADkkIdm2LzNpg==
+X-Google-Smtp-Source: AGHT+IEqQ4EuEvDFsTm4ML8s2LCyGSLJE99dragkR+MNohUGb2FxjNe5Ey+eEaz2/xiTTDZc4+QkNg==
+X-Received: by 2002:a05:6402:5342:20b0:63c:4d42:992b with SMTP id
+ 4fb4d7f45d1cf-641058b9d71mr78556a12.13.1762278523995; 
+ Tue, 04 Nov 2025 09:48:43 -0800 (PST)
 Received: from localhost.localdomain ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723ff45831sm268855366b.67.2025.11.04.09.48.37
+ 4fb4d7f45d1cf-640ee0b4f4esm1710250a12.11.2025.11.04.09.48.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Nov 2025 09:48:37 -0800 (PST)
+ Tue, 04 Nov 2025 09:48:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/8] hw/sd/sdcard: Allow user creation of eMMCs
-Date: Tue,  4 Nov 2025 18:48:17 +0100
-Message-ID: <20251104174823.92412-3-philmd@linaro.org>
+Subject: [PULL 3/8] hw/sd/sdcard: Add basic support for RPMB partition
+Date: Tue,  4 Nov 2025 18:48:18 +0100
+Message-ID: <20251104174823.92412-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251104174823.92412-1-philmd@linaro.org>
 References: <20251104174823.92412-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::644;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x644.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,55 +99,442 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Luebbe <jlu@pengutronix.de>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-For testing eMMC-specific functionality (such as handling boot
-partitions), it would be very useful to attach them to generic VMs such
-as x86_64 via the sdhci-pci device:
- ...
- -drive if=none,id=emmc-drive,file=emmc.img,format=raw \
- -device sdhci-pci \
- -device emmc,id=emmc0,drive=emmc-drive,boot-partition-size=1048576 \
- ...
+The Replay Protected Memory Block (RPMB) is available since eMMC 4.4
+which has been obsoleted by 4.41. Therefore lift the provided
+EXT_CSD_REV to 5 (4.41) and provide the basic logic to implement basic
+support for it. This allows to set the authentication key, read the
+write counter and authenticated perform data read and write requests.
+Those aren't actually authenticated yet, support for that will be added
+later.
 
-While most eMMCs are soldered to boards, they can also be connected to
-SD controllers with just a passive adapter, such as:
- https://docs.radxa.com/en/accessories/emmc-to-usd
- https://github.com/voltlog/emmc-wfbga153-microsd
+The RPMB image needs to be added to backing block images after potential
+boot partitions and before the user data. It's size is controlled by
+the rpmb-partition-size property.
 
-The only change necessary to make the options above work is to avoid
-disabling user_creatable, so do that. The SDHCI-PCI driver in the Linux
-kernel already supports this just fine.
-
-Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241015135649.4189256-1-jlu@pengutronix.de>
-
-Enable user-instantiation so that eMMCs can be created for PCI-attached
-SD/MMC host controllers (such as sdhci-pci) on virt machines, for QA
-purposes for the eMMC model itself and for complex firmware/OS
-integrations using the upcoming RPMB partition support.
+Also missing in this version (and actually not only for RPMB bits) is
+persistence of registers that are supposed to survive power cycles. Most
+prominent are the write counters or the authentication key. This feature
+can be added later, e.g. by append a state structure to the backing
+block image.
 
 Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Message-ID: <e515cc80de261ff03b3141724298f20313259a85.1762261430.git.jan.kiszka@siemens.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <d57388b599e47f5c95f30be7571b77f9016289eb.1762261430.git.jan.kiszka@siemens.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/sd/sdmmc-internal.h |  22 +++++
+ hw/sd/sd.c             | 217 +++++++++++++++++++++++++++++++++++++++--
+ hw/sd/trace-events     |   2 +
+ 3 files changed, 233 insertions(+), 8 deletions(-)
 
+diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
+index ce6bc4e6ec4..c115f472efe 100644
+--- a/hw/sd/sdmmc-internal.h
++++ b/hw/sd/sdmmc-internal.h
+@@ -118,9 +118,31 @@ DECLARE_OBJ_CHECKERS(SDState, SDCardClass, SDMMC_COMMON, TYPE_SDMMC_COMMON)
+ #define EXT_CSD_PART_CONFIG_ACC_DEFAULT         (0x0)
+ #define EXT_CSD_PART_CONFIG_ACC_BOOT1           (0x1)
+ #define EXT_CSD_PART_CONFIG_ACC_BOOT2           (0x2)
++#define EXT_CSD_PART_CONFIG_ACC_RPMB            (0x3)
+ 
+ #define EXT_CSD_PART_CONFIG_EN_MASK             (0x7 << 3)
+ #define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
+ #define EXT_CSD_PART_CONFIG_EN_USER             (0x7 << 3)
+ 
++#define RPMB_REQ_PROGRAM_AUTH_KEY       (1)
++#define RPMB_REQ_READ_WRITE_COUNTER     (2)
++#define RPMB_REQ_AUTH_DATA_WRITE        (3)
++#define RPMB_REQ_AUTH_DATA_READ         (4)
++#define RPMB_REQ_READ_RESULT            (5)
++#define RPMB_REQ_AUTH_CONFIG_WRITE      (6)
++#define RPMB_REQ_AUTH_CONFIG_READ       (7)
++
++#define RPMB_RESP(__req__)              ((__req__) << 8)
++
++#define RPMB_RESULT_OK                  (0)
++#define RPMB_RESULT_GENERAL_FAILURE     (1)
++#define RPMB_RESULT_AUTH_FAILURE        (2)
++#define RPMB_RESULT_COUNTER_FAILURE     (3)
++#define RPMB_RESULT_ADDRESS_FAILURE     (4)
++#define RPMB_RESULT_WRITE_FAILURE       (5)
++#define RPMB_RESULT_READ_FAILURE        (6)
++#define RPMB_RESULT_NO_AUTH_KEY         (7)
++
++#define RPMB_RESULT_COUTER_EXPIRED      (0x80)
++
+ #endif
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 76e915e1900..e43e1a10ebb 100644
+index e43e1a10ebb..aa57c858cbb 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -2930,8 +2930,6 @@ static void emmc_class_init(ObjectClass *klass, const void *data)
-     dc->desc = "eMMC";
-     dc->realize = emmc_realize;
-     device_class_set_props(dc, emmc_properties);
--    /* Reason: Soldered on board */
--    dc->user_creatable = false;
+@@ -117,6 +117,26 @@ typedef struct SDProto {
+     } cmd[SDMMC_CMD_MAX], acmd[SDMMC_CMD_MAX];
+ } SDProto;
  
-     sc->proto = &sd_proto_emmc;
++#define RPMB_STUFF_LEN      196
++#define RPMB_KEY_MAC_LEN    32
++#define RPMB_DATA_LEN       256     /* one RPMB block is half a sector */
++#define RPMB_NONCE_LEN      16
++
++typedef struct QEMU_PACKED {
++    uint8_t stuff_bytes[RPMB_STUFF_LEN];
++    uint8_t key_mac[RPMB_KEY_MAC_LEN];
++    uint8_t data[RPMB_DATA_LEN];
++    uint8_t nonce[RPMB_NONCE_LEN];
++    uint32_t write_counter;
++    uint16_t address;
++    uint16_t block_count;
++    uint16_t result;
++    uint16_t req_resp;
++} RPMBDataFrame;
++
++QEMU_BUILD_BUG_MSG(sizeof(RPMBDataFrame) != 512,
++                   "invalid RPMBDataFrame size");
++
+ struct SDState {
+     DeviceState parent_obj;
  
+@@ -140,6 +160,7 @@ struct SDState {
+ 
+     uint8_t spec_version;
+     uint64_t boot_part_size;
++    uint64_t rpmb_part_size;
+     BlockBackend *blk;
+     uint8_t boot_config;
+ 
+@@ -172,6 +193,12 @@ struct SDState {
+     uint32_t data_offset;
+     size_t data_size;
+     uint8_t data[512];
++    struct {
++        uint32_t write_counter;
++        uint8_t key[RPMB_KEY_MAC_LEN];
++        uint8_t key_set;
++        RPMBDataFrame result;
++    } rpmb;
+     QEMUTimer *ocr_power_timer;
+     uint8_t dat_lines;
+     bool cmd_line;
+@@ -506,7 +533,9 @@ static void emmc_set_ext_csd(SDState *sd, uint64_t size)
+     sd->ext_csd[205] = 0x46; /* Min read perf for 4bit@26Mhz */
+     sd->ext_csd[EXT_CSD_CARD_TYPE] = 0b11;
+     sd->ext_csd[EXT_CSD_STRUCTURE] = 2;
+-    sd->ext_csd[EXT_CSD_REV] = 3;
++    sd->ext_csd[EXT_CSD_REV] = 5;
++    sd->ext_csd[EXT_CSD_RPMB_MULT] = sd->rpmb_part_size / (128 * KiB);
++    sd->ext_csd[EXT_CSD_PARTITION_SUPPORT] = 0b111;
+ 
+     /* Mode segment (RW) */
+     sd->ext_csd[EXT_CSD_PART_CONFIG] = sd->boot_config;
+@@ -834,7 +863,8 @@ static uint32_t sd_blk_len(SDState *sd)
+ /*
+  * This requires a disk image that has two boot partitions inserted at the
+  * beginning of it, followed by an RPMB partition. The size of the boot
+- * partitions is the "boot-partition-size" property.
++ * partitions is the "boot-partition-size" property, the one of the RPMB
++ * partition is 'rpmb-partition-size'.
+  */
+ static uint32_t sd_part_offset(SDState *sd)
+ {
+@@ -848,11 +878,13 @@ static uint32_t sd_part_offset(SDState *sd)
+                                  & EXT_CSD_PART_CONFIG_ACC_MASK;
+     switch (partition_access) {
+     case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
+-        return sd->boot_part_size * 2;
++        return sd->boot_part_size * 2 + sd->rpmb_part_size;
+     case EXT_CSD_PART_CONFIG_ACC_BOOT1:
+         return 0;
+     case EXT_CSD_PART_CONFIG_ACC_BOOT2:
+         return sd->boot_part_size * 1;
++    case EXT_CSD_PART_CONFIG_ACC_RPMB:
++        return sd->boot_part_size * 2;
+     default:
+          g_assert_not_reached();
+     }
+@@ -891,7 +923,7 @@ static void sd_reset(DeviceState *dev)
+     }
+     size = sect << HWBLOCK_SHIFT;
+     if (sd_is_emmc(sd)) {
+-        size -= sd->boot_part_size * 2;
++        size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
+     }
+ 
+     sect = sd_addr_to_wpnum(size) + 1;
+@@ -979,6 +1011,34 @@ static const VMStateDescription sd_ocr_vmstate = {
+     },
+ };
+ 
++static bool vmstate_needed_for_rpmb(void *opaque)
++{
++    SDState *sd = opaque;
++
++    return sd->rpmb_part_size > 0;
++}
++
++static const VMStateDescription emmc_rpmb_vmstate = {
++    .name = "sd-card/ext_csd_modes-state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = vmstate_needed_for_rpmb,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT8_ARRAY(rpmb.result.key_mac, SDState, RPMB_KEY_MAC_LEN),
++        VMSTATE_UINT8_ARRAY(rpmb.result.data, SDState, RPMB_DATA_LEN),
++        VMSTATE_UINT8_ARRAY(rpmb.result.nonce, SDState, RPMB_NONCE_LEN),
++        VMSTATE_UINT32(rpmb.result.write_counter, SDState),
++        VMSTATE_UINT16(rpmb.result.address, SDState),
++        VMSTATE_UINT16(rpmb.result.block_count, SDState),
++        VMSTATE_UINT16(rpmb.result.result, SDState),
++        VMSTATE_UINT16(rpmb.result.req_resp, SDState),
++        VMSTATE_UINT32(rpmb.write_counter, SDState),
++        VMSTATE_UINT8_ARRAY(rpmb.key, SDState, 32),
++        VMSTATE_UINT8(rpmb.key_set, SDState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static bool vmstate_needed_for_emmc(void *opaque)
+ {
+     SDState *sd = opaque;
+@@ -1045,6 +1105,7 @@ static const VMStateDescription sd_vmstate = {
+     .subsections = (const VMStateDescription * const []) {
+         &sd_ocr_vmstate,
+         &emmc_extcsd_vmstate,
++        &emmc_rpmb_vmstate,
+         NULL
+     },
+ };
+@@ -1067,6 +1128,108 @@ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+     }
+ }
+ 
++static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
++{
++    uint16_t resp = lduw_be_p(&sd->rpmb.result.req_resp);
++    uint16_t result = lduw_be_p(&sd->rpmb.result.result);
++    unsigned int curr_block = 0;
++
++    if ((result & ~RPMB_RESULT_COUTER_EXPIRED) == RPMB_RESULT_OK &&
++        resp == RPMB_RESP(RPMB_REQ_AUTH_DATA_READ)) {
++        curr_block = lduw_be_p(&sd->rpmb.result.address);
++        if (sd->rpmb.result.block_count == 0) {
++            stw_be_p(&sd->rpmb.result.block_count, sd->multi_blk_cnt);
++        } else {
++            curr_block += lduw_be_p(&sd->rpmb.result.block_count);
++            curr_block -= sd->multi_blk_cnt;
++        }
++        addr = curr_block * RPMB_DATA_LEN + sd_part_offset(sd);
++        if (blk_pread(sd->blk, addr, RPMB_DATA_LEN,
++                      sd->rpmb.result.data, 0) < 0) {
++            error_report("sd_blk_read: read error on host side");
++            memset(sd->rpmb.result.data, 0, sizeof(sd->rpmb.result.data));
++            stw_be_p(&sd->rpmb.result.result,
++                     RPMB_RESULT_READ_FAILURE
++                     | (result & RPMB_RESULT_COUTER_EXPIRED));
++        }
++    }
++    memcpy(sd->data, &sd->rpmb.result, sizeof(sd->rpmb.result));
++
++    trace_sdcard_rpmb_read_block(resp, curr_block,
++                                 lduw_be_p(&sd->rpmb.result.result));
++}
++
++static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
++{
++    RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
++    uint16_t req = lduw_be_p(&frame->req_resp);
++
++    if (req == RPMB_REQ_READ_RESULT) {
++        /* just return the current result register */
++        goto exit;
++    }
++    memset(&sd->rpmb.result, 0, sizeof(sd->rpmb.result));
++    memcpy(sd->rpmb.result.nonce, frame->nonce, sizeof(sd->rpmb.result.nonce));
++    stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_OK);
++    stw_be_p(&sd->rpmb.result.req_resp, RPMB_RESP(req));
++
++    if (!sd->rpmb.key_set && req != RPMB_REQ_PROGRAM_AUTH_KEY) {
++        stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_NO_AUTH_KEY);
++        goto exit;
++    }
++
++    switch (req) {
++    case RPMB_REQ_PROGRAM_AUTH_KEY:
++        if (sd->rpmb.key_set) {
++            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_WRITE_FAILURE);
++            break;
++        }
++        memcpy(sd->rpmb.key, frame->key_mac, sizeof(sd->rpmb.key));
++        sd->rpmb.key_set = 1;
++        break;
++    case RPMB_REQ_READ_WRITE_COUNTER:
++        stl_be_p(&sd->rpmb.result.write_counter, sd->rpmb.write_counter);
++        break;
++    case RPMB_REQ_AUTH_DATA_WRITE:
++        /* We only support single-block writes so far */
++        if (sd->multi_blk_cnt != 1) {
++            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_GENERAL_FAILURE);
++            break;
++        }
++        if (sd->rpmb.write_counter == 0xffffffff) {
++            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_WRITE_FAILURE);
++            break;
++        }
++        if (ldl_be_p(&frame->write_counter) != sd->rpmb.write_counter) {
++            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_COUNTER_FAILURE);
++            break;
++        }
++        sd->rpmb.result.address = frame->address;
++        addr = lduw_be_p(&frame->address) * RPMB_DATA_LEN + sd_part_offset(sd);
++        if (blk_pwrite(sd->blk, addr, RPMB_DATA_LEN, frame->data, 0) < 0) {
++            error_report("sd_blk_write: write error on host side");
++            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_WRITE_FAILURE);
++        } else {
++            sd->rpmb.write_counter++;
++        }
++        stl_be_p(&sd->rpmb.result.write_counter, sd->rpmb.write_counter);
++        break;
++    case RPMB_REQ_AUTH_DATA_READ:
++        sd->rpmb.result.address = frame->address;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "RPMB request %d not implemented\n", req);
++        stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_GENERAL_FAILURE);
++        break;
++    }
++exit:
++    if (sd->rpmb.write_counter == 0xffffffff) {
++        stw_be_p(&sd->rpmb.result.result,
++                 lduw_be_p(&sd->rpmb.result.result) | RPMB_RESULT_COUTER_EXPIRED);
++    }
++    trace_sdcard_rpmb_write_block(req, lduw_be_p(&sd->rpmb.result.result));
++}
++
+ static void sd_erase(SDState *sd)
+ {
+     uint64_t erase_start = sd->erase_start;
+@@ -1180,6 +1343,19 @@ static void emmc_function_switch(SDState *sd, uint32_t arg)
+         break;
+     }
+ 
++    if (index == EXT_CSD_PART_CONFIG) {
++        uint8_t part = b & EXT_CSD_PART_CONFIG_ACC_MASK;
++
++        if (((part == EXT_CSD_PART_CONFIG_ACC_BOOT1 ||
++              part == EXT_CSD_PART_CONFIG_ACC_BOOT2) && !sd->boot_part_size) ||
++            (part == EXT_CSD_PART_CONFIG_ACC_RPMB && !sd->rpmb_part_size)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "MMC switching to illegal partition\n");
++            sd->card_status |= R_CSR_SWITCH_ERROR_MASK;
++            return;
++        }
++    }
++
+     trace_sdcard_ext_csd_update(index, sd->ext_csd[index], b);
+     sd->ext_csd[index] = b;
+ }
+@@ -2378,6 +2554,7 @@ static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
+ 
+ static void sd_write_byte(SDState *sd, uint8_t value)
+ {
++    unsigned int partition_access;
+     int i;
+ 
+     if (!sd->blk || !blk_is_inserted(sd->blk)) {
+@@ -2427,7 +2604,13 @@ static void sd_write_byte(SDState *sd, uint8_t value)
+         if (sd->data_offset >= sd->blk_len) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+-            sd_blk_write(sd, sd->data_start, sd->data_offset);
++            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                    & EXT_CSD_PART_CONFIG_ACC_MASK;
++            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++                emmc_rpmb_blk_write(sd, sd->data_start, sd->data_offset);
++            } else {
++                sd_blk_write(sd, sd->data_start, sd->data_offset);
++            }
+             sd->blk_written++;
+             sd->data_start += sd->blk_len;
+             sd->data_offset = 0;
+@@ -2510,6 +2693,7 @@ static uint8_t sd_read_byte(SDState *sd)
+ {
+     /* TODO: Append CRCs */
+     const uint8_t dummy_byte = 0x00;
++    unsigned int partition_access;
+     uint8_t ret;
+     uint32_t io_len;
+ 
+@@ -2553,7 +2737,13 @@ static uint8_t sd_read_byte(SDState *sd)
+                                   sd->data_start, io_len)) {
+                 return dummy_byte;
+             }
+-            sd_blk_read(sd, sd->data_start, io_len);
++            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                    & EXT_CSD_PART_CONFIG_ACC_MASK;
++            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
++                emmc_rpmb_blk_read(sd, sd->data_start, io_len);
++            } else {
++                sd_blk_read(sd, sd->data_start, io_len);
++            }
+         }
+         ret = sd->data[sd->data_offset ++];
+ 
+@@ -2805,7 +2995,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+         blk_size = blk_getlength(sd->blk);
+     }
+     if (blk_size >= 0) {
+-        blk_size -= sd->boot_part_size * 2;
++        blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
+         if (blk_size > SDSC_MAX_CAPACITY) {
+             if (sd_is_emmc(sd) &&
+                 !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
+@@ -2846,13 +3036,23 @@ static void sd_realize(DeviceState *dev, Error **errp)
+                           "The boot partition size must be multiples of 128K"
+                           "and not larger than 32640K.\n");
+     }
++    if (!QEMU_IS_ALIGNED(sd->rpmb_part_size, 128 * KiB) ||
++        sd->rpmb_part_size > 128 * 128 * KiB) {
++        char *size_str = size_to_str(sd->boot_part_size);
++
++        error_setg(errp, "Invalid RPMB partition size: %s", size_str);
++        g_free(size_str);
++        error_append_hint(errp,
++                          "The RPMB partition size must be multiples of 128K"
++                          "and not larger than 16384K.\n");
++    }
+ }
+ 
+ static void emmc_realize(DeviceState *dev, Error **errp)
+ {
+     SDState *sd = SDMMC_COMMON(dev);
+ 
+-    sd->spec_version = SD_PHY_SPECv3_01_VERS; /* Actually v4.3 */
++    sd->spec_version = SD_PHY_SPECv3_01_VERS; /* Actually v4.5 */
+ 
+     sd_realize(dev, errp);
+ }
+@@ -2869,6 +3069,7 @@ static const Property sd_properties[] = {
+ static const Property emmc_properties[] = {
+     DEFINE_PROP_UINT64("boot-partition-size", SDState, boot_part_size, 0),
+     DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
++    DEFINE_PROP_UINT64("rpmb-partition-size", SDState, rpmb_part_size, 0),
+ };
+ 
+ static void sdmmc_common_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+index 8d49840917e..d30daa21431 100644
+--- a/hw/sd/trace-events
++++ b/hw/sd/trace-events
+@@ -59,6 +59,8 @@ sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t
+ sdcard_set_voltage(uint16_t millivolts) "%u mV"
+ sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
+ sdcard_switch(unsigned access, unsigned index, unsigned value, unsigned set) "SWITCH acc:%u idx:%u val:%u set:%u"
++sdcard_rpmb_read_block(uint16_t resp, uint16_t read_addr, uint16_t result) "resp 0x%x read_addr 0x%x result 0x%x"
++sdcard_rpmb_write_block(uint16_t req, uint16_t result) "req 0x%x result 0x%x"
+ 
+ # pl181.c
+ pl181_command_send(uint8_t cmd, uint32_t arg) "sending CMD%02d arg 0x%08" PRIx32
 -- 
 2.51.0
 
