@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3D8CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FDC3CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGL9z-0004h7-2O; Tue, 04 Nov 2025 12:49:35 -0500
+	id 1vGLAY-0005Eo-Q8; Tue, 04 Nov 2025 12:50:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9L-0004Me-6o
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:01 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9e-0004RR-B9
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:20 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9J-0005ku-As
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:54 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-63c489f1e6cso115309a12.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9b-0005md-Fj
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:13 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b4aed12cea3so1041347966b.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762278530; x=1762883330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762278549; x=1762883349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4m9XBKHrSokyQj4SZIgLFfxIj2nTWsT3jcVMG05ZVi8=;
- b=oWKGcH4n9lCs5pn/8kiPYAnht5B5KQi76HQ4HybGFnzEKVQKs5nTFC4aKOoSWb8aF6
- m1NcYOiFLPCe2uCry0Rn0ThWSTIZIhSbT+l2MqMxIDJvngMsU3HJ+8LrEeRX4afKALC3
- kjbz2TzuQyjANu21earY2osBPuoMIJCEMKREkDs7fwSfvnazrIL65M51W1KDLcaQ9u4d
- k3fIT72GbZYQLA0UkhhuPYC4HZrCzqURWBXeBSA+gtl79tA/As7aUgfY09CbmMha1fhI
- eV6B0IHW8o3prb25B2cpLJ5O9pbEr8MJy/jV2DaSjOtL19PVV2LKKCxim/BPKJ2Ylujd
- WdOQ==
+ :reply-to; bh=PVcoZgZLsYK/XnxRN+C/AtxnAFpsEr/gg/xT7dn67wo=;
+ b=ZiWiVMWjPBylG4gQ6tU3ym6bQM/jaj33w9iYiJVvB7tTbTmbc6dELt/pWrryfky13/
+ 2ZOVPdzAe6vYwkVmpbaj+6kTn8IzeFrnYWDjgsYzWIz/pq9WSp76fBflhXp+LB6DWhMF
+ /ROFX71m6RpIHkGlfa68E6mie4mNTKhzaO7te0e+rOMlcK2akwHZNM/FncPhZtycC3Li
+ QCLQhitEFT3zzQahQifXEJ9PDngx3YmSt6LoUZdGa+Mnn8Cd+/5dDFO2bHSZ45OLjwR1
+ jeAYjqW9bUIKC8ZTMzSwDXNvwQVh3/mZQ4fhrj/u5XGt7dNtcxtI8QWnaFEMyvpyGeGx
+ blpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762278530; x=1762883330;
+ d=1e100.net; s=20230601; t=1762278549; x=1762883349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4m9XBKHrSokyQj4SZIgLFfxIj2nTWsT3jcVMG05ZVi8=;
- b=ZAgC67jfVyY0hn9TUKuoDAQPX4TdvN2pRTXETOtItrplMVRkV9ST+U4F0Un02ZYQLG
- ZfY77v0EgdsXzATpzD5yHA1c78i/nZnSKMZh4pepCCjH1aFMxZD6ne1W56OmsRslYo7g
- V1GaEZw/xkyuhrN4BuxtL1OOf5zV6Tz0ycDO/NfqLo+U9p8a/uF2ShzZCwI7DTZcF3V7
- 11HtLKl1yIzmFxN4ZEOncrAtVS4jiYw52zb5Itm/hc8Uf/hMYkxmYKbD4xXGH4igNYX0
- 3cJSYt6gmC5Xqa8NEtNybptZuJZOUmg3TAhf0RdjqTLr2rNlLw9VHTnkhTvA2p+mk+b2
- P8ZA==
-X-Gm-Message-State: AOJu0Yx1DTXFrfV2kbdVn3dFojIEzxbEBXm7Dg+T8wAsS9kpJrPmd7GJ
- Klov0O/CdCndcyICHpDPZz9fTPFDV0n5X3SQclAd15xlJ6Bl+GJuZs8WA2ln6TrMfFf+ZEryIXu
- vTXIZgT+VoA==
-X-Gm-Gg: ASbGncvlnl13S30Axold73RV6Tob3f6tAWMlFPzxC4sOCZPhW4V+AwzFBi1CgNoYtN0
- NgYyVEScEiqlDOyPac2vnAN1i8WTnXl7UjJfr7T0tJztYAJFsaKqIuscgFI1QHsuUFayPyf1bs/
- qvHZO0zQ+Qli4WOHRZ4YwrxyC/ZeQBjrgtO6xeW+e3Vob678V//WXg9TjOqpsFvfSyh4s4GEyQR
- bU9OgnkHQC2tIlrYaiZfOiDjuu30Oojl572jM0gjsQAaXirvtQ0fdx7dakLme4ZvnKC8Wnlc+rk
- lukOCqxMHSGQ8evv0uYdh3+7IVB2RNCwMPCZzHqitT1gRYe2ziCrm/3bPWbNQ0ypQ7uYwCNnQEw
- pESUMIyWKbGCyZ7umGL4NAgp+u8cL1j1FtxJfy3/kX9IPJNV1QcGf3ac7feUOMfnXOkuz8+Ry4O
- HKmYzLoQ5f13Q7MmRf3yKzPOvKMqveV+TR
-X-Google-Smtp-Source: AGHT+IG2Pn0B7yTrd5zKWx9RF7J4pT55eO69TFIWBC0uto8HgN8Bnf4AOTxzwglxASr1XeQBjy/ojQ==
-X-Received: by 2002:a17:907:c28:b0:b6d:51d4:802 with SMTP id
- a640c23a62f3a-b721777986fmr440787066b.25.1762278530249; 
- Tue, 04 Nov 2025 09:48:50 -0800 (PST)
+ bh=PVcoZgZLsYK/XnxRN+C/AtxnAFpsEr/gg/xT7dn67wo=;
+ b=hM7DSFSE7B71UlPw9qBQ7c3xQcnrt8qqCWUetFw/erVg1cUe4uUNLhenSGeAE+zghN
+ N0snYOAgAyV5xbCZ0QYif7VnPt/fTPNaiAXuADFVmhsEMu9ywD+TjfVFyo4mBA+F1y7x
+ b3yAnaAUf3he+ZGle4bvoPqJAH4bbf7gqHc64GgD5NuRelMQhw3s2aWX6eFvgoSpQKoW
+ tyJBMqcl84MFxL0uFFPTjOaL0gZCgVukYo3e7yJ4oRTJoWw+RVbTv0Uvk5C0uBFGiNVe
+ Sz/bTjgQx2o1mb9xz6GzVC+y+S2sesfTVE44TSL6mXWTWPEPwUfdXWXDjGjtzWiqFj43
+ LrUg==
+X-Gm-Message-State: AOJu0Yy4l9YCyG/jQ/FNV2u6+2l1eCOZxzlQMflWKwQJxLSCx5bnV3rA
+ qeEZOymhjH0gDaD2MCPOR01NO2V28LSg57EcG/onSPAzkMwWh6TpkYjCN9rbHYCiQo4NC6ssLiL
+ hXt2dPkk2WA==
+X-Gm-Gg: ASbGnctzCdgzd774FqkAFZjOA9kv4e2+WOZTz1oihzOUvYzOcj/hqy1remREeMdm3n0
+ ClTHQQreVY/iLQqsVoprv4RRv2ze3/ko5K+w95ixD1OSrSdBYCAjqPvfaCMKhy+0WErxzz84JjO
+ pogLZ4djY7LZIpVmFWBD50fOwnulSxuzkKsndJlogh7aPFFWc6efJvxvKLZNOKIN6tNRvYuwwTz
+ NrdkcpZzLOykv5GH3uMfHmVwbHw97KKxI3UaMHxjqqco/gl3KZ3YZUBUzw9Aai2ao2FoAbAyi3a
+ sEYu9+1oi2OzJmIEgPiDOGcLlzU72wTKpBAo769VroSw0oLcnIyQqLaikH7KpKkaXXs+mZdqGu5
+ vMg8OOX/TJbr8DexsTycrPNOzWnLPHlKKR2eyjmvOINMzUOaaV3alNtkvT7f+wOXaJj1Hnh1tLs
+ ozpYMBEGsMbjJ9jGoEuSGTuQ==
+X-Google-Smtp-Source: AGHT+IGTtX+DMoX+GrRqC8Ft9Ho9BdvRJh340sE1u9E6ZlSJvrT7fOFV8ksM5buWg5CFwGolzWYTQw==
+X-Received: by 2002:a17:907:d92:b0:b70:b324:6eed with SMTP id
+ a640c23a62f3a-b7264e12516mr6053366b.0.1762278549257; 
+ Tue, 04 Nov 2025 09:49:09 -0800 (PST)
 Received: from localhost.localdomain ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723fa0828dsm268129766b.50.2025.11.04.09.48.49
+ a640c23a62f3a-b723d3a2fe7sm287924366b.4.2025.11.04.09.49.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Nov 2025 09:48:49 -0800 (PST)
+ Tue, 04 Nov 2025 09:49:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 4/8] hw/sd/sdcard: Handle RPMB MAC field
-Date: Tue,  4 Nov 2025 18:48:19 +0100
-Message-ID: <20251104174823.92412-5-philmd@linaro.org>
+Subject: [PULL 7/8] hw/i386/microvm: Use fdt field from MachineState
+Date: Tue,  4 Nov 2025 18:48:22 +0100
+Message-ID: <20251104174823.92412-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251104174823.92412-1-philmd@linaro.org>
 References: <20251104174823.92412-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,157 +99,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Luigi Leonardi <leonardi@redhat.com>
 
-Implement correct setting of the MAC field when passing RPMB frames back
-to the guest. Also check the MAC on authenticated write requests.
+MachineState already provides an fdt field, remove it from
+MicrovmMachineState and use that instead.
 
-This depends on HMAC support for QCRYPTO_HASH_ALGO_SHA256 which is
-always available via glib - assert this, just to be safe.
+This is useful when using the `dumpdtb` option, as QEMU expects the
+device tree to be stored in the MachineState struct, otherwise it
+will return this error:
 
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+  qemu-system-x86_64: This machine doesn't have an FDT
+
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <b6f5698c0ca017871d54834f0c7bd4b4b6316bbd.1762261430.git.jan.kiszka@siemens.com>
+Message-ID: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 82 insertions(+)
+ include/hw/i386/microvm.h |  2 -
+ hw/i386/microvm-dt.c      | 96 +++++++++++++++++++++------------------
+ 2 files changed, 52 insertions(+), 46 deletions(-)
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index aa57c858cbb..9c86c016cc9 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -51,6 +51,7 @@
- #include "qemu/module.h"
- #include "sdmmc-internal.h"
- #include "trace.h"
-+#include "crypto/hmac.h"
+diff --git a/include/hw/i386/microvm.h b/include/hw/i386/microvm.h
+index b9ac34a3ef1..e73d1e65de8 100644
+--- a/include/hw/i386/microvm.h
++++ b/include/hw/i386/microvm.h
+@@ -102,8 +102,6 @@ struct MicrovmMachineState {
+     Notifier powerdown_req;
+     struct GPEXConfig gpex;
  
- //#define DEBUG_SD 1
+-    /* device tree */
+-    void *fdt;
+     uint32_t ioapic_phandle[2];
+ };
  
-@@ -121,6 +122,7 @@ typedef struct SDProto {
- #define RPMB_KEY_MAC_LEN    32
- #define RPMB_DATA_LEN       256     /* one RPMB block is half a sector */
- #define RPMB_NONCE_LEN      16
-+#define RPMB_HASH_LEN       284
+diff --git a/hw/i386/microvm-dt.c b/hw/i386/microvm-dt.c
+index cb27dfd732e..81eaddafc8b 100644
+--- a/hw/i386/microvm-dt.c
++++ b/hw/i386/microvm-dt.c
+@@ -48,6 +48,7 @@ static bool debug;
+ static void dt_add_microvm_irq(MicrovmMachineState *mms,
+                                const char *nodename, uint32_t irq)
+ {
++    MachineState *ms = MACHINE(mms);
+     int index = 0;
  
- typedef struct QEMU_PACKED {
-     uint8_t stuff_bytes[RPMB_STUFF_LEN];
-@@ -1128,6 +1130,67 @@ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+     if (irq >= IO_APIC_SECONDARY_IRQBASE) {
+@@ -55,13 +56,14 @@ static void dt_add_microvm_irq(MicrovmMachineState *mms,
+         index++;
      }
+ 
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "interrupt-parent",
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+                           mms->ioapic_phandle[index]);
+-    qemu_fdt_setprop_cells(mms->fdt, nodename, "interrupts", irq, 0);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0);
  }
  
-+static bool rpmb_calc_hmac(SDState *sd, const RPMBDataFrame *frame,
-+                           unsigned int num_blocks, uint8_t *mac)
-+{
-+    g_autoptr(QCryptoHmac) hmac = NULL;
-+    size_t mac_len = RPMB_KEY_MAC_LEN;
-+    bool success = true;
-+    Error *err = NULL;
-+    uint64_t offset;
-+
-+    hmac = qcrypto_hmac_new(QCRYPTO_HASH_ALGO_SHA256, sd->rpmb.key,
-+                            RPMB_KEY_MAC_LEN, &err);
-+    if (!hmac) {
-+        error_report_err(err);
-+        return false;
-+    }
-+
-+    /*
-+     * This implies a read request because we only support single-block write
-+     * requests so far.
-+     */
-+    if (num_blocks > 1) {
-+        /*
-+         * Unfortunately, the underlying crypto libraries do not allow us to
-+         * migrate an active QCryptoHmac state. Therefore, we have to calculate
-+         * the HMAC in one run. To avoid buffering a complete read sequence in
-+         * SDState, reconstruct all frames except for the last one.
-+         */
-+        void *buf = sd->data;
-+
-+        assert(RPMB_HASH_LEN <= sizeof(sd->data));
-+
-+        memcpy((uint8_t *)buf + RPMB_DATA_LEN, &frame->data[RPMB_DATA_LEN],
-+               RPMB_HASH_LEN - RPMB_DATA_LEN);
-+        offset = lduw_be_p(&frame->address) * RPMB_DATA_LEN + sd_part_offset(sd);
-+        do {
-+            if (blk_pread(sd->blk, offset, RPMB_DATA_LEN, buf, 0) < 0) {
-+                error_report("sd_blk_read: read error on host side");
-+                success = false;
-+                break;
-+            }
-+            if (qcrypto_hmac_bytes(hmac, buf, RPMB_HASH_LEN, NULL, NULL,
-+                                   &err) < 0) {
-+                error_report_err(err);
-+                success = false;
-+                break;
-+            }
-+            offset += RPMB_DATA_LEN;
-+        } while (--num_blocks > 1);
-+    }
-+
-+    if (success &&
-+        qcrypto_hmac_bytes(hmac, frame->data, RPMB_HASH_LEN, &mac,
-+                           &mac_len, &err) < 0) {
-+        error_report_err(err);
-+        success = false;
-+    }
-+    assert(!success || mac_len == RPMB_KEY_MAC_LEN);
-+
-+    return success;
-+}
-+
- static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+ static void dt_add_virtio(MicrovmMachineState *mms, VirtIOMMIOProxy *mmio)
  {
-     uint16_t resp = lduw_be_p(&sd->rpmb.result.req_resp);
-@@ -1152,6 +1215,17 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
-                      RPMB_RESULT_READ_FAILURE
-                      | (result & RPMB_RESULT_COUTER_EXPIRED));
-         }
-+        if (sd->multi_blk_cnt == 1 &&
-+            !rpmb_calc_hmac(sd, &sd->rpmb.result,
-+                            lduw_be_p(&sd->rpmb.result.block_count),
-+                            sd->rpmb.result.key_mac)) {
-+            memset(sd->rpmb.result.data, 0, sizeof(sd->rpmb.result.data));
-+            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_AUTH_FAILURE);
-+        }
-+    } else if (!rpmb_calc_hmac(sd, &sd->rpmb.result, 1,
-+                               sd->rpmb.result.key_mac)) {
-+        memset(sd->rpmb.result.data, 0, sizeof(sd->rpmb.result.data));
-+        stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_AUTH_FAILURE);
++    MachineState *ms = MACHINE(mms);
+     SysBusDevice *dev = SYS_BUS_DEVICE(mmio);
+     VirtioBusState *mmio_virtio_bus = &mmio->bus;
+     BusState *mmio_bus = &mmio_virtio_bus->parent_obj;
+@@ -77,10 +79,10 @@ static void dt_add_virtio(MicrovmMachineState *mms, VirtIOMMIOProxy *mmio)
+     uint32_t irq = mms->virtio_irq_base + index;
+ 
+     nodename = g_strdup_printf("/virtio_mmio@%" PRIx64, base);
+-    qemu_fdt_add_subnode(mms->fdt, nodename);
+-    qemu_fdt_setprop_string(mms->fdt, nodename, "compatible", "virtio,mmio");
+-    qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "reg", 2, base, 2, size);
+-    qemu_fdt_setprop(mms->fdt, nodename, "dma-coherent", NULL, 0);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "virtio,mmio");
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
+     dt_add_microvm_irq(mms, nodename, irq);
+     g_free(nodename);
+ }
+@@ -88,40 +90,42 @@ static void dt_add_virtio(MicrovmMachineState *mms, VirtIOMMIOProxy *mmio)
+ static void dt_add_xhci(MicrovmMachineState *mms)
+ {
+     const char compat[] = "generic-xhci";
++    MachineState *ms = MACHINE(mms);
+     uint32_t irq = MICROVM_XHCI_IRQ;
+     hwaddr base = MICROVM_XHCI_BASE;
+     hwaddr size = XHCI_LEN_REGS;
+     char *nodename;
+ 
+     nodename = g_strdup_printf("/usb@%" PRIx64, base);
+-    qemu_fdt_add_subnode(mms->fdt, nodename);
+-    qemu_fdt_setprop(mms->fdt, nodename, "compatible", compat, sizeof(compat));
+-    qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "reg", 2, base, 2, size);
+-    qemu_fdt_setprop(mms->fdt, nodename, "dma-coherent", NULL, 0);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop(ms->fdt, nodename, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
+     dt_add_microvm_irq(mms, nodename, irq);
+     g_free(nodename);
+ }
+ 
+ static void dt_add_pcie(MicrovmMachineState *mms)
+ {
++    MachineState *ms = MACHINE(mms);
+     hwaddr base = PCIE_MMIO_BASE;
+     int nr_pcie_buses;
+     char *nodename;
+ 
+     nodename = g_strdup_printf("/pcie@%" PRIx64, base);
+-    qemu_fdt_add_subnode(mms->fdt, nodename);
+-    qemu_fdt_setprop_string(mms->fdt, nodename,
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_string(ms->fdt, nodename,
+                             "compatible", "pci-host-ecam-generic");
+-    qemu_fdt_setprop_string(mms->fdt, nodename, "device_type", "pci");
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "#address-cells", 3);
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "#size-cells", 2);
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "linux,pci-domain", 0);
+-    qemu_fdt_setprop(mms->fdt, nodename, "dma-coherent", NULL, 0);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "pci");
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#address-cells", 3);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#size-cells", 2);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "linux,pci-domain", 0);
++    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
+ 
+-    qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "reg",
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                  2, PCIE_ECAM_BASE, 2, PCIE_ECAM_SIZE);
+     if (mms->gpex.mmio64.size) {
+-        qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "ranges",
++        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "ranges",
+ 
+                                      1, FDT_PCI_RANGE_MMIO,
+                                      2, mms->gpex.mmio32.base,
+@@ -133,7 +137,7 @@ static void dt_add_pcie(MicrovmMachineState *mms)
+                                      2, mms->gpex.mmio64.base,
+                                      2, mms->gpex.mmio64.size);
+     } else {
+-        qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "ranges",
++        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "ranges",
+ 
+                                      1, FDT_PCI_RANGE_MMIO,
+                                      2, mms->gpex.mmio32.base,
+@@ -142,7 +146,7 @@ static void dt_add_pcie(MicrovmMachineState *mms)
      }
-     memcpy(sd->data, &sd->rpmb.result, sizeof(sd->rpmb.result));
  
-@@ -1163,6 +1237,7 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+     nr_pcie_buses = PCIE_ECAM_SIZE / PCIE_MMCFG_SIZE_MIN;
+-    qemu_fdt_setprop_cells(mms->fdt, nodename, "bus-range", 0,
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "bus-range", 0,
+                            nr_pcie_buses - 1);
+ 
+     g_free(nodename);
+@@ -150,6 +154,7 @@ static void dt_add_pcie(MicrovmMachineState *mms)
+ 
+ static void dt_add_ioapic(MicrovmMachineState *mms, SysBusDevice *dev)
  {
-     RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
-     uint16_t req = lduw_be_p(&frame->req_resp);
-+    uint8_t mac[RPMB_KEY_MAC_LEN];
++    MachineState *ms = MACHINE(mms);
+     hwaddr base = dev->mmio[0].addr;
+     char *nodename;
+     uint32_t ph;
+@@ -168,18 +173,18 @@ static void dt_add_ioapic(MicrovmMachineState *mms, SysBusDevice *dev)
+     }
  
-     if (req == RPMB_REQ_READ_RESULT) {
-         /* just return the current result register */
-@@ -1200,6 +1275,11 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
-             stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_WRITE_FAILURE);
-             break;
+     nodename = g_strdup_printf("/ioapic%d@%" PRIx64, index + 1, base);
+-    qemu_fdt_add_subnode(mms->fdt, nodename);
+-    qemu_fdt_setprop_string(mms->fdt, nodename,
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_string(ms->fdt, nodename,
+                             "compatible", "intel,ce4100-ioapic");
+-    qemu_fdt_setprop(mms->fdt, nodename, "interrupt-controller", NULL, 0);
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "#interrupt-cells", 0x2);
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "#address-cells", 0x2);
+-    qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "reg",
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 0x2);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#address-cells", 0x2);
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+                                  2, base, 2, 0x1000);
+ 
+-    ph = qemu_fdt_alloc_phandle(mms->fdt);
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "phandle", ph);
+-    qemu_fdt_setprop_cell(mms->fdt, nodename, "linux,phandle", ph);
++    ph = qemu_fdt_alloc_phandle(ms->fdt);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", ph);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "linux,phandle", ph);
+     mms->ioapic_phandle[index] = ph;
+ 
+     g_free(nodename);
+@@ -190,17 +195,18 @@ static void dt_add_isa_serial(MicrovmMachineState *mms, ISADevice *dev)
+     const char compat[] = "ns16550";
+     uint32_t irq = object_property_get_int(OBJECT(dev), "irq", &error_fatal);
+     hwaddr base = object_property_get_int(OBJECT(dev), "iobase", &error_fatal);
++    MachineState *ms = MACHINE(mms);
+     hwaddr size = 8;
+     char *nodename;
+ 
+     nodename = g_strdup_printf("/serial@%" PRIx64, base);
+-    qemu_fdt_add_subnode(mms->fdt, nodename);
+-    qemu_fdt_setprop(mms->fdt, nodename, "compatible", compat, sizeof(compat));
+-    qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop(ms->fdt, nodename, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
+     dt_add_microvm_irq(mms, nodename, irq);
+ 
+     if (base == 0x3f8 /* com1 */) {
+-        qemu_fdt_setprop_string(mms->fdt, "/chosen", "stdout-path", nodename);
++        qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+     }
+ 
+     g_free(nodename);
+@@ -211,13 +217,14 @@ static void dt_add_isa_rtc(MicrovmMachineState *mms, ISADevice *dev)
+     const char compat[] = "motorola,mc146818";
+     uint32_t irq = object_property_get_uint(OBJECT(dev), "irq", &error_fatal);
+     hwaddr base = object_property_get_uint(OBJECT(dev), "iobase", &error_fatal);
++    MachineState *ms = MACHINE(mms);
+     hwaddr size = 8;
+     char *nodename;
+ 
+     nodename = g_strdup_printf("/rtc@%" PRIx64, base);
+-    qemu_fdt_add_subnode(mms->fdt, nodename);
+-    qemu_fdt_setprop(mms->fdt, nodename, "compatible", compat, sizeof(compat));
+-    qemu_fdt_setprop_sized_cells(mms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop(ms->fdt, nodename, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
+     dt_add_microvm_irq(mms, nodename, irq);
+     g_free(nodename);
+ }
+@@ -317,27 +324,28 @@ static void dt_setup_sys_bus(MicrovmMachineState *mms)
+ void dt_setup_microvm(MicrovmMachineState *mms)
+ {
+     X86MachineState *x86ms = X86_MACHINE(mms);
++    MachineState *ms = MACHINE(mms);
+     int size = 0;
+ 
+-    mms->fdt = create_device_tree(&size);
++    ms->fdt = create_device_tree(&size);
+ 
+     /* root node */
+-    qemu_fdt_setprop_string(mms->fdt, "/", "compatible", "linux,microvm");
+-    qemu_fdt_setprop_cell(mms->fdt, "/", "#address-cells", 0x2);
+-    qemu_fdt_setprop_cell(mms->fdt, "/", "#size-cells", 0x2);
++    qemu_fdt_setprop_string(ms->fdt, "/", "compatible", "linux,microvm");
++    qemu_fdt_setprop_cell(ms->fdt, "/", "#address-cells", 0x2);
++    qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
+ 
+-    qemu_fdt_add_subnode(mms->fdt, "/chosen");
++    qemu_fdt_add_subnode(ms->fdt, "/chosen");
+     dt_setup_sys_bus(mms);
+ 
+     /* add to fw_cfg */
+     if (debug) {
+         fprintf(stderr, "%s: add etc/fdt to fw_cfg\n", __func__);
+     }
+-    fw_cfg_add_file(x86ms->fw_cfg, "etc/fdt", mms->fdt, size);
++    fw_cfg_add_file(x86ms->fw_cfg, "etc/fdt", ms->fdt, size);
+ 
+     if (debug) {
+         fprintf(stderr, "%s: writing microvm.fdt\n", __func__);
+-        if (!g_file_set_contents("microvm.fdt", mms->fdt, size, NULL)) {
++        if (!g_file_set_contents("microvm.fdt", ms->fdt, size, NULL)) {
+             fprintf(stderr, "%s: writing microvm.fdt failed\n", __func__);
+             return;
          }
-+        if (!rpmb_calc_hmac(sd, frame, 1, mac) ||
-+            memcmp(frame->key_mac, mac, RPMB_KEY_MAC_LEN) != 0) {
-+            stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_AUTH_FAILURE);
-+            break;
-+        }
-         if (ldl_be_p(&frame->write_counter) != sd->rpmb.write_counter) {
-             stw_be_p(&sd->rpmb.result.result, RPMB_RESULT_COUNTER_FAILURE);
-             break;
-@@ -3128,6 +3208,8 @@ static void emmc_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
- 
-+    assert(qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256));
-+
-     dc->desc = "eMMC";
-     dc->realize = emmc_realize;
-     device_class_set_props(dc, emmc_properties);
 -- 
 2.51.0
 
