@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77AD0CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FF2CCFA06
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGGrV-0002vQ-Oy; Tue, 04 Nov 2025 08:14:13 -0500
+	id 1vGGso-0004Wf-OK; Tue, 04 Nov 2025 08:15:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <fm-294854-2025110413035384b4b423dd000207ab-4whYDc@rts-flowmailer.siemens.com>)
- id 1vGGrO-0002r0-2X
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:14:06 -0500
-Received: from mta-64-226.siemens.flowmailer.net ([185.136.64.226])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGGsg-0004IP-JN
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:15:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <fm-294854-2025110413035384b4b423dd000207ab-4whYDc@rts-flowmailer.siemens.com>)
- id 1vGGrK-0005VP-CN
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:14:05 -0500
-Received: by mta-64-226.siemens.flowmailer.net with ESMTPSA id
- 2025110413035384b4b423dd000207ab for <qemu-devel@nongnu.org>;
- Tue, 04 Nov 2025 14:03:53 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm1;
- d=siemens.com; i=jan.kiszka@siemens.com;
- h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
- bh=qzuERtfVpQ9KnPl0uoWW5kiXEgutyokNa0zOFc5427o=;
- b=STKrJ61wCkrcrPEsvj3pBU0SeZeh+Nj1RBJZKw2b/hWf0Ja1WqbSZ48ug2CL2DmNfBi4t2
- VaBPxzYwyKFMAg/USaGiCekzzx1p6vYXV5XrJFiQtOLCPZj4lBEVkQFTCt7QQaARnTk3EHSB
- SBgYBUQj1OaXDPi+VubeOuK8zbI7IUfHtK9PiWzGTEuImL9y8xH1vz5Ev2aop65azIGENpCq
- xumvKDxLVg3kBwu01mGMokMdZT+usoU/bHpWZ7YXdUleUv/gvxzoY5lahJsyTJ79sXzhiizj
- gwQwnSVgrWUuKh7a88edDjCktFqZrZWQ5hunqEF+yl91f0C6oFpv9mcQ==;
-From: Jan Kiszka <jan.kiszka@siemens.com>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>
-Subject: [PATCH v6 5/6] scripts: Add helper script to generate eMMC block
- device images
-Date: Tue,  4 Nov 2025 14:03:49 +0100
-Message-ID: <60f265e0b2bea18fe6ef41742600a7e933e3c47f.1762261430.git.jan.kiszka@siemens.com>
-In-Reply-To: <cover.1762261430.git.jan.kiszka@siemens.com>
-References: <cover.1762261430.git.jan.kiszka@siemens.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGGse-0006sW-Fp
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:15:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762262122;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u6NJ/4YZf51p1NXprw/LPKiiug67Gz5cHGvR9SFQ2Zs=;
+ b=FtDCvMpmAN9I9xNpIE1Swt3EuOLGXoB3Ne8XMMyjJ5kyAaOmUJQD6Ksxg11DpUv1iAutYS
+ VmMpCRRPS21AyLx/kdGFuQsy2llC1v2bg9QzN8ET9Cf/W/hdTT9+Eif/Lvg5zmA7oMJZrQ
+ yPoioK8azePM81yzTkBXrZdd5GwFYGE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-jX2NtskBN8isXQGF379NYQ-1; Tue,
+ 04 Nov 2025 08:15:21 -0500
+X-MC-Unique: jX2NtskBN8isXQGF379NYQ-1
+X-Mimecast-MFC-AGG-ID: jX2NtskBN8isXQGF379NYQ_1762262120
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7DE31956066; Tue,  4 Nov 2025 13:15:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.47])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4ABB30001A1; Tue,  4 Nov 2025 13:15:18 +0000 (UTC)
+Date: Tue, 4 Nov 2025 14:15:16 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 4/8] qio: Factor out helpers qio_net_listener_[un]watch
+Message-ID: <aQn8ZITZmk3IWpED@redhat.com>
+References: <20251103202849.3687643-10-eblake@redhat.com>
+ <20251103202849.3687643-14-eblake@redhat.com>
+ <aQndkQ3knp-5d-YJ@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Flowmailer-Platform: Siemens
-Feedback-ID: 519:519-294854:519-21489:flowmailer
-Received-SPF: pass client-ip=185.136.64.226;
- envelope-from=fm-294854-2025110413035384b4b423dd000207ab-4whYDc@rts-flowmailer.siemens.com;
- helo=mta-64-226.siemens.flowmailer.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <aQndkQ3knp-5d-YJ@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,245 +86,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+Am 04.11.2025 um 12:03 hat Daniel P. Berrangé geschrieben:
+> On Mon, Nov 03, 2025 at 02:10:55PM -0600, Eric Blake wrote:
+> > The code had three similar repetitions of an iteration over one or all
+> > of nsiocs to set up a GSource, and likewise for teardown.  Since an
+> > upcoming patch wants to tweak whether GSource or AioContext is used,
+> > its better to consolidate that into one helper function for fewer
+> > places to edit later.
+> > 
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> > ---
+> >  io/net-listener.c | 109 +++++++++++++++++++---------------------------
+> >  1 file changed, 45 insertions(+), 64 deletions(-)
+> > 
+> > diff --git a/io/net-listener.c b/io/net-listener.c
+> > index 15df673fb6e..e1378b9a612 100644
+> > --- a/io/net-listener.c
+> > +++ b/io/net-listener.c
+> > @@ -106,6 +106,45 @@ int qio_net_listener_open_sync(QIONetListener *listener,
+> >      }
+> >  }
+> 
+> >  void qio_net_listener_add(QIONetListener *listener,
+> >                            QIOChannelSocket *sioc)
+> > @@ -125,17 +164,7 @@ void qio_net_listener_add(QIONetListener *listener,
+> >      object_ref(OBJECT(sioc));
+> >      listener->connected = true;
+> > 
+> > -    if (listener->io_func != NULL) {
+> > -        trace_qio_net_listener_watch_enabled(listener, listener->io_func,
+> > -                                             "add");
+> > -        object_ref(OBJECT(listener));
+> > -        listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
+> > -            QIO_CHANNEL(listener->sioc[listener->nsioc]), G_IO_IN,
+> > -            qio_net_listener_channel_func,
+> > -            listener, (GDestroyNotify)object_unref, listener->context);
+> > -    }
+> > -
+> > -    listener->nsioc++;
+> > +    qio_net_listener_watch(listener, listener->nsioc++, "add");
+> 
+> Nit-picking, I'd have a slight preference to keep the 'nsioc' increment
+> on the following line from the qio_net_listener_watch call, as I don't
+> like side effects in passing the function arguments.
 
-As an eMMC block device image may consist of more than just the user
-data partition, provide a helper script that can compose the image from
-boot partitions, an RPMB partition and the user data image. The script
-also does the required size validation and/or rounding.
+It actually wouldn't work any more because qio_net_listener_watch()
+iterates up to listener->nsioc. It needs the increased value in
+listener->nsioc, and the previous one for i, so that we get exactly one
+loop iteration.
 
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
----
- scripts/mkemmc.sh | 219 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 219 insertions(+)
- create mode 100755 scripts/mkemmc.sh
-
-diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
-new file mode 100755
-index 0000000000..558548ffc7
---- /dev/null
-+++ b/scripts/mkemmc.sh
-@@ -0,0 +1,219 @@
-+#!/bin/sh -e
-+# SPDX-License-Identifier: GPL-2.0-only
-+#
-+# Create eMMC block device image from boot, RPMB and user data images
-+#
-+# Copyright (c) Siemens, 2025
-+#
-+# Authors:
-+#  Jan Kiszka <jan.kiszka@siemens.com>
-+#
-+# This work is licensed under the terms of the GNU GPL version 2.
-+# See the COPYING file in the top-level directory.
-+#
-+
-+usage() {
-+    echo "$0 [OPTIONS] USER_IMG[:SIZE] OUTPUT_IMG"
-+    echo ""
-+    echo "SIZE must be a power of 2 up to 2G and multiples of 512 byte from there on."
-+    echo "If no SIZE is specified, the size of USER_ING will be used (rounded up)."
-+    echo ""
-+    echo "Supported options:"
-+    echo "  -b BOOT1_IMG[:SIZE]   Add boot partitions. SIZE must be multiples of 128K. If"
-+    echo "                          no SIZE is specified, the size of BOOT1_IMG will be"
-+    echo "                          used (rounded up). BOOT1_IMG will be stored in boot"
-+    echo "                          partition 1, and a boot partition 2 of the same size"
-+    echo "                          will be created as empty (all zeros) unless -B is"
-+    echo "                          specified as well."
-+    echo "  -B BOOT2_IMG          Fill boot partition 2 with BOOT2_IMG. Must be combined"
-+    echo "                          with -b which is also defining the partition size."
-+    echo "  -r RPMB_IMG[:SIZE]    Add RPMB partition. SIZE must be multiples of 128K. If"
-+    echo "                          no SIZE is specified, the size of RPMB_IMG will be"
-+    echo "                          used (rounded up)."
-+    echo "  -h, --help            This help"
-+    echo ""
-+    echo "All SIZE parameters support the units K, M, G. If SIZE is smaller than the"
-+    echo "associated image, it will be truncated in the output image."
-+    exit "$1"
-+}
-+
-+process_size() {
-+    name=$1
-+    image_file=$2
-+    alignment=$3
-+    image_arg=$4
-+    if [ "${image_arg#*:}" = "$image_arg"  ]; then
-+        if ! size=$(stat -L -c %s "$image_file" 2>/dev/null); then
-+            echo "Missing $name image '$image_file'." >&2
-+            exit 1
-+        fi
-+        if [ "$alignment" = 128 ]; then
-+            size=$(( (size + 128 * 1024 - 1) & ~(128 * 1024 - 1) ))
-+        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
-+            size=$(( (size + 511) & ~511 ))
-+        elif [ $(( size & (size - 1) )) -gt 0 ]; then
-+            n=0
-+            while [ "$size" -gt 0 ]; do
-+                size=$((size >> 1))
-+                n=$((n + 1))
-+            done
-+            size=$((1 << n))
-+        fi
-+    else
-+        value="${image_arg#*:}"
-+        if [ "${value%K}" != "$value" ]; then
-+            size=${value%K}
-+            multiplier=1024
-+        elif [ "${value%M}" != "$value" ]; then
-+            size=${value%M}
-+            multiplier=$((1024 * 1024))
-+        elif [ "${value%G}" != "$value" ]; then
-+            size=${value%G}
-+            multiplier=$((1024 * 1024 * 1024))
-+        else
-+            size=$value
-+            multiplier=1
-+        fi
-+        # check if "$size" is a valid integer by doing a self-comparison
-+        if [ "$size" -eq "$size" ] 2>/dev/null; then
-+            size=$((size * multiplier))
-+        else
-+            echo "Invalid value '$value' specified for $image_file image size." >&2
-+            exit 1
-+        fi
-+        if [ "$alignment" = 128 ]; then
-+            if [ $(( size & (128 * 1024 - 1) )) -ne 0 ]; then
-+                echo "The $name image size must be multiples of 128K." >&2
-+                exit 1
-+            fi
-+        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
-+            if [ $(( size & 511)) -ne 0 ]; then
-+                echo "The $name image size must be multiples of 512 (if >2G)." >&2
-+                exit 1
-+            fi
-+        elif [ $(( size & (size - 1) )) -gt 0 ]; then
-+            echo "The $name image size must be power of 2 (up to 2G)." >&2
-+            exit 1
-+        fi
-+    fi
-+    echo $size
-+}
-+
-+check_truncation() {
-+    image_file=$1
-+    output_size=$2
-+    if [ "$image_file" = "/dev/zero" ]; then
-+        return
-+    fi
-+    if ! actual_size=$(stat -L -c %s "$image_file" 2>/dev/null); then
-+        echo "Missing image '$image_file'." >&2
-+        exit 1
-+    fi
-+    if [ "$actual_size" -gt "$output_size" ]; then
-+        echo "Warning: image '$image_file' will be truncated on output."
-+    fi
-+}
-+
-+userimg=
-+outimg=
-+bootimg1=
-+bootimg2=/dev/zero
-+bootsz=0
-+rpmbimg=
-+rpmbsz=0
-+
-+while [ $# -gt 0 ]; do
-+    case "$1" in
-+        -b)
-+            shift
-+            [ $# -ge 1 ] || usage 1
-+            bootimg1=${1%%:*}
-+            bootsz=$(process_size boot "$bootimg1" 128 "$1")
-+            shift
-+            ;;
-+        -B)
-+            shift
-+            [ $# -ge 1 ] || usage 1
-+            bootimg2=$1
-+            shift
-+            ;;
-+        -r)
-+            shift
-+            [ $# -ge 1 ] || usage 1
-+            rpmbimg=${1%%:*}
-+            rpmbsz=$(process_size RPMB "$rpmbimg" 128 "$1")
-+            shift
-+            ;;
-+        -h|--help)
-+            usage 0
-+            ;;
-+        *)
-+            if [ -z "$userimg" ]; then
-+                userimg=${1%%:*}
-+                usersz=$(process_size user "$userimg" U "$1")
-+            elif [ -z "$outimg" ]; then
-+                outimg=$1
-+            else
-+                usage 1
-+            fi
-+            shift
-+            ;;
-+    esac
-+done
-+
-+[ -n "$outimg" ] || usage 1
-+
-+if [ "$bootsz" -gt $((32640 * 1024)) ]; then
-+    echo "Boot image size is larger than 32640K." >&2
-+    exit 1
-+fi
-+if [ "$rpmbsz" -gt $((16384 * 1024)) ]; then
-+    echo "RPMB image size is larger than 16384K." >&2
-+    exit 1
-+fi
-+
-+echo "Creating eMMC image"
-+
-+truncate -s 0 "$outimg"
-+pos=0
-+
-+if [ "$bootsz" -gt 0 ]; then
-+    echo "  Boot partition 1 and 2:   $((bootsz / 1024))K each"
-+    blocks=$(( bootsz / (128 * 1024) ))
-+    check_truncation "$bootimg1" "$bootsz"
-+    dd if="$bootimg1" of="$outimg" conv=sparse bs=128K count=$blocks \
-+        status=none
-+    check_truncation "$bootimg2" "$bootsz"
-+    dd if="$bootimg2" of="$outimg" conv=sparse bs=128K count=$blocks \
-+        seek=$blocks status=none
-+    pos=$((2 * bootsz))
-+fi
-+
-+if [ "$rpmbsz" -gt 0 ]; then
-+    echo "  RPMB partition:           $((rpmbsz / 1024))K"
-+    blocks=$(( rpmbsz / (128 * 1024) ))
-+    check_truncation "$rpmbimg" "$rpmbsz"
-+    dd if="$rpmbimg" of="$outimg" conv=sparse bs=128K count=$blocks \
-+        seek=$(( pos / (128 * 1024) )) status=none
-+    pos=$((pos + rpmbsz))
-+fi
-+
-+if [ "$usersz" -lt 1024 ]; then
-+    echo "  User data:                $usersz bytes"
-+elif [ "$usersz" -lt $((1024 * 1024)) ]; then
-+    echo "  User data:                $(( (usersz + 1023) / 1024 ))K ($usersz)"
-+elif [ "$usersz" -lt $((1024 * 1024 * 1024)) ]; then
-+    echo "  User data:                $(( (usersz + 1048575) / 1048576))M ($usersz)"
-+else
-+    echo "  User data:                $(( (usersz + 1073741823) / 1073741824))G ($usersz)"
-+fi
-+check_truncation "$userimg" "$usersz"
-+dd if="$userimg" of="$outimg" conv=sparse bs=128K seek=$(( pos / (128 * 1024) )) \
-+    count=$(( (usersz + 128 * 1024 - 1) / (128 * 1024) )) status=none
-+pos=$((pos + usersz))
-+truncate -s $pos "$outimg"
-+
-+echo ""
-+echo "Instantiate by appending to the qemu command line:"
-+echo "  -drive file=$outimg,if=none,format=raw,id=emmc-img"
-+echo "  -device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=emmc-img"
--- 
-2.51.0
+Kevin
 
 
