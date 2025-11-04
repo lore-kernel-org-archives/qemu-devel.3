@@ -4,169 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70417CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93422CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGL8l-0004HO-BB; Tue, 04 Nov 2025 12:48:21 -0500
+	id 1vGL9G-0004LT-L0; Tue, 04 Nov 2025 12:48:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vGL8P-0004GZ-Fs; Tue, 04 Nov 2025 12:47:58 -0500
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vGL8N-0005fF-BG; Tue, 04 Nov 2025 12:47:57 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UZTQzmVH4rUaeB4V7q3FnrFpGNPeRDt56eyufsv5vfjwoXFIK5nAg1CrMrhFXa7prF7tsQyq4zQwimApSTSqeFof1C+hMEV7aejawRRbCdetBLv6gw9Og37+6RcSFWD054jaVflCExSJ7oMXEAJsX1LWk/5a+Gpt7G9y3SCSr0dFCgNT7tkUtwV3RA8W7YvIsaoyWVjpuhIJdqDThWAHdiK7ht/8MxfuHz4PpNRKuXjGv4wX1Q6PB/kRtESV3WcyMST0xRdRGS/1QUs/vChtH9QP5RGzCFlmxJYh39VBDbw060Bwi1fVSwugy/h9w6/M+filXuzv0GENFf5ug1mh7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e/2DVVwZ4ejt9foNMpWj92mYVr+xQCtC67rbsAkzzww=;
- b=npaOlNwFZgyzSgKuyNyHRkJ74WKGrVeAuABW25LZ0IqKye03ELl7MJBcD45bJi1XOWi0F4xFM9ggfIKzCV3N5zjJUqUBQLNLbUnW4bxmYSLTjQRctD1kVxUPZkfZQy5Dt6SCWZ4T+WOUzlUvdaYJI8sEwX4rDBaRuHY/r3escY5YbrtyHlFDK5XoQG5tjISO9vvFKdsbZBIq2fpB4pIW+no6dqknhR+h5R8sZRTb/HEGrjY4ifGZ/9ORw+eaY9X4SU43M9Lyn4l1vmWeWo2S19zaxt8th3bL+hAhukNo1/JvmQpcQfKo+bEYwxrn02h2Hyjc3aAJJeNb5k0fLEsvgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e/2DVVwZ4ejt9foNMpWj92mYVr+xQCtC67rbsAkzzww=;
- b=Je1keBlj+JpS32hng5spLDpcJvV4WvUrTW3O1QuKK7VxO1wtS1bcalN114Wgt2BNlmYI0vB1Y36yFvYorh/JzWijDTqIomVvKK6YsTHI3t2MkXd+odhlRStnVgLw3muGBHKJIz9SDuBYyphfnoF03z8X5sfjKwCAe/xmA20rP7+CHMu5OlTak87/hSHyrrjuJ46vgQwXT/xtnlatUf0iwR8llT5M3/jojH4q6o/YAnzFX7hBTq7/jKwW8LrKWPnO3E8BPIBlUauHv8hK2W/KLdyIZSIkvoP8JOgHRoonn/+sg5XiEMfFdxa4pxa5HoCZeTFuvBXmLGSfZDFja/nq0g==
-Received: from SJ0P220CA0017.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:41b::27)
- by BN5PR12MB9486.namprd12.prod.outlook.com (2603:10b6:408:2ac::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Tue, 4 Nov
- 2025 17:47:48 +0000
-Received: from SJ5PEPF000001E9.namprd05.prod.outlook.com
- (2603:10b6:a03:41b:cafe::b7) by SJ0P220CA0017.outlook.office365.com
- (2603:10b6:a03:41b::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.16 via Frontend Transport; Tue,
- 4 Nov 2025 17:47:44 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- SJ5PEPF000001E9.mail.protection.outlook.com (10.167.242.197) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9298.6 via Frontend Transport; Tue, 4 Nov 2025 17:47:47 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 4 Nov
- 2025 09:47:30 -0800
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Tue, 4 Nov 2025 09:47:30 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Tue, 4 Nov 2025 09:47:29 -0800
-Date: Tue, 4 Nov 2025 09:47:28 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <skolothumtho@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
-Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
-Message-ID: <aQo8MPCrr82wh3LI@Asurada-Nvidia>
-References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-16-skolothumtho@nvidia.com>
- <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
- <CH3PR12MB754815B9B902E7EF66B0A1B9ABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <85f315a2-e49a-4330-9419-48a8a3a4a3e3@redhat.com>
- <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <3c9e00f5-de9e-4e5c-8312-75eb4fcef81b@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL8v-0004IR-KF
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:32 -0500
+Received: from mail-ed1-x542.google.com ([2a00:1450:4864:20::542])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL8t-0005ht-Jv
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:29 -0500
+Received: by mail-ed1-x542.google.com with SMTP id
+ 4fb4d7f45d1cf-640a0812658so2833534a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762278505; x=1762883305; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/zhoairPLtQSrbGeNqEjZd+Q/UzplYaMRB9A0sulArY=;
+ b=jdE9Z6dJUwom7pd0Owz8iws2ipC6ENz4Koe+CmKJz8vEsyypw/hxsXPeOssw+B+fhA
+ pKToNh123fZD10mj3bRPPgFR6aHjCv03YsJgNs8iPqTTVy/Nx47aaycigWGrvL/1vuTV
+ bxmItZeelB0uHvDsp9IgdJ4H38OfIcIu2wxLn9jUztdVA29XMi01ub822F1VkKVAkbiU
+ Pmt5ZFIDX1ykoiRCtiUnNcE3z7wtKpMdK/LMIRvQBSYfNXgL1jSTPzEinnMEwt7lMZdY
+ RnebkoTjAinvYlp6UIjPeWw8G8PXC5MYDBkWQqO8cR++6m8a8p3gaFch7UQicsKjXHPK
+ vszw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762278505; x=1762883305;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/zhoairPLtQSrbGeNqEjZd+Q/UzplYaMRB9A0sulArY=;
+ b=Vpy9HJF8lw6sAoFqmPiO3LKs+t0jgsuqqB5H+GKmuRfK7ZD+VVo5/Gra17rQN/UXH+
+ vxknVt1RHBas0ZxEuvGlUxe0+GBhKMosDqKnvuIeN9CKaLtiZzMuGqtEeuEo29o0BhQg
+ upP26sC/SMbRxBFTFX+Hx6hvY3WXrS0AYZHrp85T40nuNAFFSyyYc0Rcp9++OiCtTGco
+ tLkDzAnnyOpf3o5pUVbFrppYxtl5t9502ikgEmlSv1sFNwkGYA5nbDx3DWZaEalECbaj
+ F6ayWD9XvgvfeybxeNXkp8y2tIrFZ8+VQ2Rc41skUyn8NnMFysOAQ8654sV7C/4mlv8X
+ bE0Q==
+X-Gm-Message-State: AOJu0Yw6Zmc1pqCdpIpNDgkSAuGdhZkymF6bbzfhWiFp3bU9TP/UuV8v
+ pss/1wWV4cc9r6JfWaN5HrF/04Bt3dQDHcVvVRrAgh4ajOPVMK/4Jja1mkOoA12+es1YEsfC/Vj
+ nqoh0nTQ53x9v
+X-Gm-Gg: ASbGncvA8iYaAnghB5ep2aAfbKvElPHdkKbbanxTKifvnvRpofMb7AkPQXN5gc1tfoL
+ ox57rFoBgBwbQi8hTh6Zewp8vAsxARV3xBbdENjAGvthFvD+1Wtq0mb1F6lfDu5fQ8sAKOpkZXt
+ 1rQdP+SZ7MXjVuU4/C4HJVCThXKLWqYkzXsF5deLDVXvjxx4on9OENu8ZWk9OrDy7Ji/WbBaFm4
+ 80UFXbhfeDgtGzvLmS6BLSoODFHk+MPFaL7oaOutf24SksxmxGTy4RIMDHOLCMoN902KxH8G0hq
+ /bY8u1vJmkmXJg1KQ0J8tJOO7kyo8YVPr75eOFxUvV5cixjagcOVzA6Wbk+uHYrm29DTd59Sxfb
+ ip0lJSm0Vzdk3tDjaROHTo2+XuX8t+54chs4aM3pDdQ4azvkUdOsRv6wCmMYk6H3xyE3LMLuPaU
+ JE/krvE2w8rWqQLmsZeYcsvQ==
+X-Google-Smtp-Source: AGHT+IFP7bJ8czVPMCYPIaa4nrIlccRC6qFxDFZX1aVnUpZFj+axnjz8BP2V1EU3J4G3j3H861Lp6Q==
+X-Received: by 2002:a05:6402:3509:b0:640:b2a1:8199 with SMTP id
+ 4fb4d7f45d1cf-64105b7a131mr47411a12.36.1762278505100; 
+ Tue, 04 Nov 2025 09:48:25 -0800 (PST)
+Received: from localhost.localdomain ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-640e6a5cb47sm2599698a12.19.2025.11.04.09.48.24
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 04 Nov 2025 09:48:24 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/8] Misc HW patches for 2025-11-04
+Date: Tue,  4 Nov 2025 18:48:15 +0100
+Message-ID: <20251104174823.92412-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3c9e00f5-de9e-4e5c-8312-75eb4fcef81b@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001E9:EE_|BN5PR12MB9486:EE_
-X-MS-Office365-Filtering-Correlation-Id: af3990cc-c2ab-484f-4321-08de1bca4417
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|36860700013|1800799024|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bkZMTVByUDY4aGZIOTduQUpZWGlxeWxPODllbUlKckxCSjRQZjhPSEp6dnVj?=
- =?utf-8?B?Zk8yL3ZmajQ5OXRvWlFJNXZ4L1d4d1VDUzhUSUNmT3k2Qmp6NlhHa21CMmZT?=
- =?utf-8?B?STFUTzFqZ3lPeHdMYjhTZkVocVNZMm9tSXlVSE83b3FIWGZRclhUMzgxTTN3?=
- =?utf-8?B?L1FhTUFlajZwdkZtajdaTU1IVWxqTEZCK1lTTXFJWlRackc5S3EzaWJ2K1E4?=
- =?utf-8?B?NWZkVEZwdWJpcU1hcXZHQStYZEdwUW00d0VwNVNYcTd3WGtxL0JIY1VOcXRD?=
- =?utf-8?B?QnlOZGpkL2Z4ZVk4YVNLSnkyRDVaUG95ZzJ2STdaTFJQMnNTamlESElkRmtN?=
- =?utf-8?B?TjhLaTZmTTdVcmJnVGUyTVA4UXFJbjRDZ1dhdWFNUStqbDBiWGx5S08vUGtK?=
- =?utf-8?B?SXZDcTdIem9ZQy9UQ0huVXRVWWZLK09ZRndiWFh1cXdyVDhSUW8xSUNNUWxF?=
- =?utf-8?B?L1FWWUlWbEdxd3JsTUlyL0hlbC9MSG9RV2RKeiswanBnZVp5dkkwWjJqT1Zv?=
- =?utf-8?B?SWtTUEYxVmt5bFU2dlY2VnJqZ2t5TThUaHZBOEdndmZVbmhEUDltRjhiYm94?=
- =?utf-8?B?UDJyRTRwbFpUZ3FyTExDUkVhY0ZPb29vcm83MHNhUkxnZkxMVXRQY0ZrZXAv?=
- =?utf-8?B?Q0hZd3JTVzVHeHFnL0dWT3lIMk94ZVgvMWkxeFAycHA2RHQ5R29oanFxRFNo?=
- =?utf-8?B?eEJBcW0yNVQ5WGJhWFpZS2IwS0FMSzcxVEZ2VlhYVlBSNm5wUk54SDJkbFFy?=
- =?utf-8?B?U1M4Yk8yTDdHTVdGcHV2UzIyalU0bzRjMmVqRXdpbEl4UWh4TnpTdWJkTy8r?=
- =?utf-8?B?b3FBUDZ3MEtqTTlxYlprTER1YzlCemlTcFZUbU5mLzB2L3h3SHM0cC9HUW9I?=
- =?utf-8?B?QURQODIwNHltVDNBZzZRUFhhSmVacDMvNnZjZjZLUXJVcDBIRWE2V0g1K2wz?=
- =?utf-8?B?SktDdDgzR0VONGwzT3JLVldRVm11L1lCS3k5dW5KaWVWMGM5THc5SGEyaXpl?=
- =?utf-8?B?OXBFcW5DL1ZKU1ZlRVJybldBMU1EMXorSGxpMlUyM0tZMXdrb3cvWkpTRkh0?=
- =?utf-8?B?VlFYVzJoT3pzdE1UK2xlNTkwVlA0THBjeWpNZHdZLytENjBvYWZvOEpPcUd2?=
- =?utf-8?B?L29udzFWZkpxbHFaZ3ZVWUZsUGJWNmlsQ1dXUVArUEZHZHBtMWlWV01ZdTh2?=
- =?utf-8?B?QVdtT0J2Rm1nMVlpUHRkaHV6MkwwKzE2T2NpZWFpRUF6VytLN3JPb2twRDVQ?=
- =?utf-8?B?cFFzQkRXNUFOU3BXelBMLzFwRElnOFFPRGdVdXBuRXdFbmdBaVJ0SngyOTRQ?=
- =?utf-8?B?QUlYNFdpVFoyNW1NdUxXTC93QnhHZEVYTGMrek5JOFRXWCtrd0NBcmRqVzl2?=
- =?utf-8?B?SzBSTURRVUFaS3o1MGNoanBOZk1QYlpFb0dEK1UvU0VNaEtYTEF2c0hDQ2tQ?=
- =?utf-8?B?cVhMSHRBRllraEdNMkc1L3JjV3N5VXl4MnRGYjFzTUJCWUNNNE4ySUlkYWVW?=
- =?utf-8?B?aWpHSVViTnNZL2FFVjdUUXBNSmRYZFVCZjZ6VFZTQlJxUDM4Q1VrbnRNSFNa?=
- =?utf-8?B?aTdoZVZCWDBKNERoZmZHak9ZZk05NkZZOVdKazd5ekdZTkdsNmdoVnd2blVW?=
- =?utf-8?B?WWZveTdxVkFDN0FvM2tXaGkrb0RvTGV5UG5vRU1GVWc5SHFLaWsxYjgzMUM2?=
- =?utf-8?B?NUt2cEtteXJUdVRLcmwzeDlNZ2NwbmMyNmN0QzI2S3haN3VBaFhFQUFjbUht?=
- =?utf-8?B?eC9VQnNxR05EWDdQRzMrUTR2dElsRGFWeThzUmZWSE5VTVJhK3AvRmNCQWNH?=
- =?utf-8?B?N2xvd2Q1bGRYSHpuNEtGNXdqaGNRTUc2N1BrN1Y5dGM3cXluNmRDUlk0WXVD?=
- =?utf-8?B?c2FIQzBROGVVQVE2R0RrdHd5WVJ2STlTa3FqYkNZd3g1b3Y0V0tKc1NkYVFh?=
- =?utf-8?B?K1RPYXRBcFlDRjVvK0lIZmt4MFVDVE5YN2ZHcHNFT3FBdnhvVGlleXUwTFNp?=
- =?utf-8?B?ZkdqdEVhQ1lsVU5aVFlzZ2dUcmdrN3BHWVJIejZhd0lrc0Q4RmNBdEpITDNl?=
- =?utf-8?B?N2VkeER0T0J0cnc3RHJHVmhEc2M4N0N1QmVOaEh2dXI0VjRXbC9Fb1ZvRnRK?=
- =?utf-8?Q?jvT0=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(36860700013)(1800799024)(82310400026)(7053199007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 17:47:47.2680 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: af3990cc-c2ab-484f-4321-08de1bca4417
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001E9.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9486
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
- envelope-from=nicolinc@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::542;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x542.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,90 +96,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 05:01:57PM +0100, Eric Auger wrote:
-> >>>> On 10/31/25 11:49 AM, Shameer Kolothum wrote:
-> >>>>> On ARM, devices behind an IOMMU have their MSI doorbell addresses
-> >>>>> translated by the IOMMU. In nested mode, this translation happens in
-> >>>>> two stages (gIOVA → gPA → ITS page).
-> >>>>>
-> >>>>> In accelerated SMMUv3 mode, both stages are handled by hardware, so
-> >>>>> get_address_space() returns the system address space so that VFIO
-> >>>>> can setup stage-2 mappings for system address space.
-> >>>> Sorry but I still don't catch the above. Can you explain (most probably
-> >>>> again) why this is a requirement to return the system as so that VFIO
-> >>>> can setup stage-2 mappings for system address space. I am sorry for
-> >>>> insisting (at the risk of being stubborn or dumb) but I fail to
-> >>>> understand the requirement. As far as I remember the way I integrated it
-> >>>> at the old times did not require that change:
-> >>>> https://lore.kernel.org/all/20210411120912.15770-1-
-> >>>> eric.auger@redhat.com/
-> >>>> I used a vfio_prereg_listener to force the S2 mapping.
-> >>> Yes I remember that.
-> >>>
-> >>>> What has changed that forces us now to have this gym
-> >>> This approach achieves the same outcome, but through a
-> >>> different mechanism. Returning the system address space
-> >>> here ensures that VFIO sets up the Stage-2 mappings for
-> >>> devices behind the accelerated SMMUv3.
-> >>>
-> >>> I think, this makes sense because, in the accelerated case, the
-> >>> device is no longer managed by QEMU’s SMMUv3 model. The
-> >> On the other hand, as we discussed on v4 by returning system as you
-> >> pretend there is no translation in place which is not true. Now we use
-> >> an alias for it but it has not really removed its usage. Also it forces
-> >> use to hack around the MSI mapping and introduce new PCIIOMMUOps.
-> >> Have
-> >> you assessed the feasability of using vfio_prereg_listener to force the
-> >> S2 mapping. Is it simply not relevant anymore or could it be used also
-> >> with the iommufd be integration? Eric
-> > IIUC, the prereg_listener mechanism just enables us to setup the s2
-> > mappings. For MSI, In your version, I see that smmu_find_add_as()
-> > always returns IOMMU as. How is that supposed to work if the Guest
-> > has s1 bypass mode STE for the device?
-> 
-> I need to delve into it again as I forgot the details. Will come back to
-> you ...
+The following changes since commit e9c692eabbbb7f395347605a6ef33a32d398ea25:
 
-We aligned with Intel previously about this system address space.
-You might know these very well, yet here are the breakdowns:
+  Merge tag 'next-pr-pull-request' of https://gitlab.com/berrange/qemu into staging (2025-11-04 15:17:31 +0100)
 
-1. VFIO core has a container that manages an HWPT. By default, it
-   allocates a stage-1 normal HWPT, unless vIOMMU requests for a
-   nesting parent HWPT for accelerated cases.
-2. VFIO core adds a listener for that HWPT and sets up a handler
-   vfio_container_region_add() where it checks the memory region
-   whether it is iommu or not.
-   a. In case of !IOMMU as (i.e. system address space), it treats
-      the address space as a RAM region, and handles all stage-2
-      mappings for the core allocated nesting parent HWPT.
-   b. In case of IOMMU as (i.e. a translation type) it sets up
-      the IOTLB notifier and translation replay while bypassing
-      the listener for RAM region.
+are available in the Git repository at:
 
-In an accelerated case, we need stage-2 mappings to match with the
-nesting parent HWPT. So, returning system address space or an alias
-of that notifies the vfio core to take the 2.a path.
+  https://github.com/philmd/qemu.git tags/hw-misc-20251104
 
-If we take 2.b path by returning IOMMU as in smmu_find_add_as, the
-VFIO core would no longer listen to the RAM region for us, i.e. no
-stage-2 HWPT nor mappings. vIOMMU would have to allocate a nesting
-parent and manage the stage-2 mappings by adding a listener in its
-own code, which is largely duplicated with the core code.
+for you to fetch changes up to f79fec0275ee7a5151ced9b893c4af676c7f5db6:
 
--------------- so far this works for Intel and ARM--------------
+  hw/audio: Remove dead code from ac97_realize (2025-11-04 18:19:16 +0100)
 
-3. On ARM, vPCI device is programmed with gIOVA, so KVM has to
-   follow what the vPCI is told to inject vIRQs. This requires
-   a translation at the nested stage-1 address space. Note that
-   vSMMU in this case doesn't manage translation as it doesn't
-   need to. But there is no other sane way for KVM to know the
-   vITS page corresponding to the given gIOVA. So, we invented
-   the get_msi_address_space op.
+----------------------------------------------------------------
+Misc HW patches
 
-(3) makes sense because there is a complication in the MSI that
-does a 2-stage translation on ARM and KVM must follow the stage-1
-input address, leaving us no choice to have two address spaces.
+- Add RPMB emulation to eMMC model :)
+- Use generic MachineState::fdt field in microvm machine
+- Remove dead code in ac97_realize()
+----------------------------------------------------------------
 
-Thanks
-Nicolin
+Jan Kiszka (5):
+  hw/sd/sdcard: Fix size check for backing block image
+  hw/sd/sdcard: Add basic support for RPMB partition
+  hw/sd/sdcard: Handle RPMB MAC field
+  scripts: Add helper script to generate eMMC block device images
+  docs: Add eMMC device model description
+
+Jan Luebbe (1):
+  hw/sd/sdcard: Allow user creation of eMMCs
+
+Luigi Leonardi (1):
+  hw/i386/microvm: Use fdt field from MachineState
+
+Osama Abdelkader (1):
+  hw/audio: Remove dead code from ac97_realize
+
+ docs/system/device-emulation.rst |   1 +
+ docs/system/devices/emmc.rst     |  55 +++++
+ hw/sd/sdmmc-internal.h           |  22 ++
+ include/hw/i386/microvm.h        |   2 -
+ hw/audio/ac97.c                  |  19 --
+ hw/i386/microvm-dt.c             |  96 ++++----
+ hw/sd/sd.c                       | 368 ++++++++++++++++++++++++++++---
+ hw/sd/trace-events               |   2 +
+ scripts/mkemmc.sh                | 216 ++++++++++++++++++
+ 9 files changed, 686 insertions(+), 95 deletions(-)
+ create mode 100644 docs/system/devices/emmc.rst
+ create mode 100755 scripts/mkemmc.sh
+
+-- 
+2.51.0
+
 
