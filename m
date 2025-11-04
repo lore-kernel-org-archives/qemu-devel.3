@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE0DCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E33BCCFA07
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCSi-0000XN-Uh; Tue, 04 Nov 2025 03:32:21 -0500
+	id 1vGCTP-0001uY-Ug; Tue, 04 Nov 2025 03:33:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSf-0000VC-70
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSw-0000eZ-Bs
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSb-0003Sp-Pq
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:16 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSs-0003XM-Py
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762245133;
+ s=mimecast20190719; t=1762245150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QyFTJB1QBHVGeZb4FgP0gQkfBUrAsEdCsQO0SpCbTHY=;
- b=RXrUDqROLkSCpSrhOBzdME+ofptMG3H0JYAMEZlp5VZFMCHB0Q/LI6SrOSOI2NDR7LZgHj
- T2xXPaC4p9HV9a4cR+UuAXRYcYNIR+oKtnz8Db9wsABZ21krz25AVMXkaB3w1/EASzMAyU
- qksTIm6XeBwXKqW57IKDojdeyPaz240=
+ bh=JGbxK9zq5GxFA12ijW9fLMcAXtmiPZpiixW4WSdcj9I=;
+ b=NTzsJk+eihfcBH7MaXzMga4WNwWjaOsoa97O9kmYN1vlbju8DywjQQGVEPiNDY/yOiGxU/
+ XLfS/kaEP5Pgdow/88H4vLgdwIZfVRjZrC1acVZCu4tPXFD0xNVGPdGbZNNFT8ex2H1fLP
+ ENZH1uT7Mju+jGNQqhD2lxjb/H1Q14Q=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-J4XvQFT6OHGsVj5x9Iz7HQ-1; Tue,
- 04 Nov 2025 03:32:08 -0500
-X-MC-Unique: J4XvQFT6OHGsVj5x9Iz7HQ-1
-X-Mimecast-MFC-AGG-ID: J4XvQFT6OHGsVj5x9Iz7HQ_1762245127
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-Uk4JV9OuM72wX9jGzojxMw-1; Tue,
+ 04 Nov 2025 03:32:26 -0500
+X-MC-Unique: Uk4JV9OuM72wX9jGzojxMw-1
+X-Mimecast-MFC-AGG-ID: Uk4JV9OuM72wX9jGzojxMw_1762245146
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A6EB195608D; Tue,  4 Nov 2025 08:32:07 +0000 (UTC)
+ id D671119560B6; Tue,  4 Nov 2025 08:32:25 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A530A19560A2; Tue,  4 Nov 2025 08:32:05 +0000 (UTC)
+ id 0124E19540DE; Tue,  4 Nov 2025 08:32:23 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 08/30] hw/arm/aspeed: Split YosemiteV2 machine into a separate
+Subject: [PULL 16/30] hw/arm/aspeed: Split Palmetto machine into a separate
  source file for maintainability
-Date: Tue,  4 Nov 2025 09:31:22 +0100
-Message-ID: <20251104083144.187806-9-clg@redhat.com>
+Date: Tue,  4 Nov 2025 09:31:30 +0100
+Message-ID: <20251104083144.187806-17-clg@redhat.com>
 In-Reply-To: <20251104083144.187806-1-clg@redhat.com>
 References: <20251104083144.187806-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,127 +87,134 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This commit moves the YosemiteV2 BMC machine implementation from
-aspeed.c into a new standalone file aspeed_ast2500_yosemitev2.c.
+This commit moves the OpenPOWER Palmetto BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2400_palmetto.c.
 
-To support splitting YosemiteV2 into a dedicated source file,
-a new YOSEMITEV2_BMC_HW_STRAP1 macro is added as a copy of
-AST2500_EVB_HW_STRAP1.
-
-The refactor is part of an ongoing effort to modularize Aspeed
-machine definitions by separating each board into its own source
-file. This improves code readability, maintainability, and simplifies
-future platform-specific changes.
+This refactor continues the modularization effort for Aspeed platform support,
+placing each board’s logic in its own dedicated source file.
+It improves maintainability, readability, and simplifies future development for
+new platforms without cluttering aspeed.c.
 
 Key updates include:
-
-- Moved yosemitev2_bmc_i2c_init() and its FRU data into a new file.
-- Removed aspeed_machine_yosemitev2_class_init() and type registration
-from aspeed.c.
-- Removed YosemiteV2 FRUID data and declarations from
-aspeed_eeprom.c and aspeed_eeprom.h.
-- Added aspeed_ast2500_yosemitev2.c to the build system
-(meson.build).
+- Moved PALMETTO_BMC_HW_STRAP1 macro definition from into the new file.
+- Moved palmetto_bmc_i2c_init() I²C initialization logic into the new file.
+- Moved aspeed_machine_palmetto_class_init() and type registration.
+- Added aspeed_ast2400_palmetto.c to the build system (meson.build).
+- Removed all Palmetto-specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-9-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-17-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_eeprom.h             |  3 -
- hw/arm/aspeed.c                    | 37 ------------
- hw/arm/aspeed_ast2500_yosemitev2.c | 91 ++++++++++++++++++++++++++++++
- hw/arm/aspeed_eeprom.c             | 22 --------
- hw/arm/meson.build                 |  1 +
- 5 files changed, 92 insertions(+), 62 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2500_yosemitev2.c
+ hw/arm/aspeed.c                  | 60 ------------------------
+ hw/arm/aspeed_ast2400_palmetto.c | 80 ++++++++++++++++++++++++++++++++
+ hw/arm/meson.build               |  1 +
+ 3 files changed, 81 insertions(+), 60 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2400_palmetto.c
 
-diff --git a/hw/arm/aspeed_eeprom.h b/hw/arm/aspeed_eeprom.h
-index a9ae95940c5f..5448eeeab7ab 100644
---- a/hw/arm/aspeed_eeprom.h
-+++ b/hw/arm/aspeed_eeprom.h
-@@ -14,9 +14,6 @@ extern const size_t fby35_nic_fruid_len;
- extern const size_t fby35_bb_fruid_len;
- extern const size_t fby35_bmc_fruid_len;
- 
--extern const uint8_t yosemitev2_bmc_fruid[];
--extern const size_t yosemitev2_bmc_fruid_len;
--
- extern const uint8_t rainier_bb_fruid[];
- extern const size_t rainier_bb_fruid_len;
- extern const uint8_t rainier_bmc_fruid[];
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 42f4203f9d85..731ca7a1aa59 100644
+index fbd27020bd2d..15d3b045ac44 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -470,20 +470,6 @@ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
-                      TYPE_TMP105, 0x4d);
+@@ -43,20 +43,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+ #define ASPEED_RAM_SIZE(sz) (sz)
+ #endif
+ 
+-/* Palmetto hardware value: 0x120CE416 */
+-#define PALMETTO_BMC_HW_STRAP1 (                                        \
+-        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_256MB) |               \
+-        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2 /* DDR3 with CL=6, CWL=5 */) | \
+-        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
+-        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_48M_IN) |       \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN) |                \
+-        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
+-        SCU_HW_STRAP_SPI_WIDTH |                                        \
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+-        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
+-
+ /* AST2600 evb hardware value */
+ #define AST2600_EVB_HW_STRAP1 0x000000C0
+ #define AST2600_EVB_HW_STRAP2 0x00000003
+@@ -312,30 +298,6 @@ static void aspeed_machine_init(MachineState *machine)
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
  }
  
--static void yosemitev2_bmc_i2c_init(AspeedMachineState *bmc)
+-static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
+-    DeviceState *dev;
+-    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
 -
--    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 4), 0x51, 128 * KiB);
--    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 128 * KiB,
--                          yosemitev2_bmc_fruid, yosemitev2_bmc_fruid_len);
--    /* TMP421 */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
+-    /*
+-     * The palmetto platform expects a ds3231 RTC but a ds1338 is
+-     * enough to provide basic RTC features. Alarms will be missing
+-     */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
 -
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+-                          eeprom_buf);
+-
+-    /* add a TMP423 temperature sensor */
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
+-                                         "tmp423", 0x4c));
+-    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
 -}
 -
- static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
+ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
  {
      AspeedSoCState *soc = bmc->soc;
-@@ -1376,24 +1362,6 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
+@@ -1042,23 +1004,6 @@ static void aspeed_machine_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_class_props_init(oc);
+ }
  
--static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc,
--                                                 const void *data)
+-static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
+-                                               const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Facebook YosemiteV2 BMC (ARM1176)";
--    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = AST2500_EVB_HW_STRAP1;
--    amc->hw_strap2 = 0;
+-    mc->desc       = "OpenPOWER Palmetto BMC (ARM926EJ-S)";
+-    amc->soc_name  = "ast2400-a1";
+-    amc->hw_strap1 = PALMETTO_BMC_HW_STRAP1;
 -    amc->fmc_model = "n25q256a";
--    amc->spi_model = "mx25l25635e";
--    amc->num_cs    = 2;
--    amc->i2c_init  = yosemitev2_bmc_i2c_init;
--    mc->default_ram_size       = 512 * MiB;
+-    amc->spi_model = "mx25l25635f";
+-    amc->num_cs    = 1;
+-    amc->i2c_init  = palmetto_bmc_i2c_init;
+-    mc->default_ram_size       = 256 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
- static void aspeed_machine_romulus_class_init(ObjectClass *oc,
-                                               const void *data)
+ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
+                                                   const void *data)
  {
-@@ -1831,11 +1799,6 @@ static const TypeInfo aspeed_machine_types[] = {
+@@ -1405,11 +1350,6 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+ 
+ static const TypeInfo aspeed_machine_types[] = {
+     {
+-        .name          = MACHINE_TYPE_NAME("palmetto-bmc"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_palmetto_class_init,
+-        .interfaces    = arm_machine_interfaces,
+-    }, {
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
          .parent        = TYPE_ASPEED_MACHINE,
          .class_init    = aspeed_machine_ast2600_evb_class_init,
-         .interfaces    = arm_machine_interfaces,
--    }, {
--        .name          = MACHINE_TYPE_NAME("yosemitev2-bmc"),
--        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_yosemitev2_class_init,
--        .interfaces    = arm_machine_interfaces,
-     }, {
-         .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
-         .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2500_yosemitev2.c b/hw/arm/aspeed_ast2500_yosemitev2.c
+diff --git a/hw/arm/aspeed_ast2400_palmetto.c b/hw/arm/aspeed_ast2400_palmetto.c
 new file mode 100644
-index 000000000000..eaa75bcccbbc
+index 000000000000..776aa43a45de
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2500_yosemitev2.c
-@@ -0,0 +1,91 @@
++++ b/hw/arm/aspeed_ast2400_palmetto.c
+@@ -0,0 +1,80 @@
 +/*
-+ * Facebook YosemiteV2
++ * OpenPOWER Palmetto
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -219,136 +226,85 @@ index 000000000000..eaa75bcccbbc
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/nvram/eeprom_at24c.h"
++#include "hw/i2c/smbus_eeprom.h"
 +
-+/* value: 0xF100C2E6 */
-+#define YOSEMITEV2_BMC_HW_STRAP1 ((                                        \
-+        AST2500_HW_STRAP1_DEFAULTS |                                    \
-+        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
-+        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
-+        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-+        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
-+        SCU_HW_STRAP_MAC1_RGMII |                                       \
-+        SCU_HW_STRAP_MAC0_RGMII) &                                      \
-+        ~SCU_HW_STRAP_2ND_BOOT_WDT)
++/* Palmetto hardware value: 0x120CE416 */
++#define PALMETTO_BMC_HW_STRAP1 (                                        \
++        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_256MB) |               \
++        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2 /* DDR3 with CL=6, CWL=5 */) | \
++        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
++        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_48M_IN) |       \
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN) |                \
++        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
++        SCU_HW_STRAP_SPI_WIDTH |                                        \
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
++        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 +
-+/* Yosemite V2 BMC FRU */
-+static const uint8_t yosemitev2_bmc_fruid[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x00, 0x36,
-+    0xe6, 0xd0, 0xc6, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x42, 0x61,
-+    0x73, 0x65, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x20, 0x4d, 0x50, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0xcd, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e,
-+    0x30, 0xc9, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc1, 0x39, 0x01, 0x0c, 0x00, 0xc6,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x59, 0x6f, 0x73, 0x65, 0x6d,
-+    0x69, 0x74, 0x65, 0x20, 0x56, 0x32, 0x20, 0x4d, 0x50, 0x00, 0x00, 0x00,
-+    0x00, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0xc4, 0x45, 0x56, 0x54, 0x32, 0xcd, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc7,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e, 0x30, 0xc9,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc8, 0x43, 0x6f,
-+    0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
-+};
-+
-+static const size_t yosemitev2_bmc_fruid_len = sizeof(yosemitev2_bmc_fruid);
-+
-+static void yosemitev2_bmc_i2c_init(AspeedMachineState *bmc)
++static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
++    DeviceState *dev;
++    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
 +
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 4), 0x51, 128 * KiB);
-+    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 128 * KiB,
-+                          yosemitev2_bmc_fruid, yosemitev2_bmc_fruid_len);
-+    /* TMP421 */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
++    /*
++     * The palmetto platform expects a ds3231 RTC but a ds1338 is
++     * enough to provide basic RTC features. Alarms will be missing
++     */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
 +
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
++                          eeprom_buf);
++
++    /* add a TMP423 temperature sensor */
++    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
++                                         "tmp423", 0x4c));
++    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
 +}
 +
-+static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc,
-+                                                 const void *data)
++static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
++                                               const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Facebook YosemiteV2 BMC (ARM1176)";
-+    amc->soc_name  = "ast2500-a1";
-+    amc->hw_strap1 = YOSEMITEV2_BMC_HW_STRAP1;
-+    amc->hw_strap2 = 0;
++    mc->desc       = "OpenPOWER Palmetto BMC (ARM926EJ-S)";
++    amc->soc_name  = "ast2400-a1";
++    amc->hw_strap1 = PALMETTO_BMC_HW_STRAP1;
 +    amc->fmc_model = "n25q256a";
-+    amc->spi_model = "mx25l25635e";
-+    amc->num_cs    = 2;
-+    amc->i2c_init  = yosemitev2_bmc_i2c_init;
-+    mc->default_ram_size       = 512 * MiB;
++    amc->spi_model = "mx25l25635f";
++    amc->num_cs    = 1;
++    amc->i2c_init  = palmetto_bmc_i2c_init;
++    mc->default_ram_size       = 256 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2500_yosemitev2_types[] = {
++static const TypeInfo aspeed_ast2400_palmetto_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("yosemitev2-bmc"),
++        .name          = MACHINE_TYPE_NAME("palmetto-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_yosemitev2_class_init,
++        .class_init    = aspeed_machine_palmetto_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2500_yosemitev2_types)
-diff --git a/hw/arm/aspeed_eeprom.c b/hw/arm/aspeed_eeprom.c
-index f0ced29cf15b..124277eaca1a 100644
---- a/hw/arm/aspeed_eeprom.c
-+++ b/hw/arm/aspeed_eeprom.c
-@@ -78,27 +78,6 @@ const uint8_t fby35_bmc_fruid[] = {
-     0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
- };
- 
--/* Yosemite V2 BMC FRU */
--const uint8_t yosemitev2_bmc_fruid[] = {
--    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x00, 0x36,
--    0xe6, 0xd0, 0xc6, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x42, 0x61,
--    0x73, 0x65, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x20, 0x4d, 0x50, 0x00, 0x00,
--    0x00, 0x00, 0x00, 0x00, 0xcd, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e,
--    0x30, 0xc9, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc1, 0x39, 0x01, 0x0c, 0x00, 0xc6,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x59, 0x6f, 0x73, 0x65, 0x6d,
--    0x69, 0x74, 0x65, 0x20, 0x56, 0x32, 0x20, 0x4d, 0x50, 0x00, 0x00, 0x00,
--    0x00, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0xc4, 0x45, 0x56, 0x54, 0x32, 0xcd, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc7,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e, 0x30, 0xc9,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc8, 0x43, 0x6f,
--    0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
--};
--
- const uint8_t rainier_bb_fruid[] = {
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x84,
-     0x28, 0x00, 0x52, 0x54, 0x04, 0x56, 0x48, 0x44, 0x52, 0x56, 0x44, 0x02,
-@@ -163,7 +142,6 @@ const uint8_t gb200nvl_bmc_fruid[] = {
- const size_t fby35_nic_fruid_len = sizeof(fby35_nic_fruid);
- const size_t fby35_bb_fruid_len = sizeof(fby35_bb_fruid);
- const size_t fby35_bmc_fruid_len = sizeof(fby35_bmc_fruid);
--const size_t yosemitev2_bmc_fruid_len = sizeof(yosemitev2_bmc_fruid);
- const size_t rainier_bb_fruid_len = sizeof(rainier_bb_fruid);
- const size_t rainier_bmc_fruid_len = sizeof(rainier_bmc_fruid);
- const size_t gb200nvl_bmc_fruid_len = sizeof(gb200nvl_bmc_fruid);
++DEFINE_TYPES(aspeed_ast2400_palmetto_types)
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 870202ce8530..8d9f1e160908 100644
+index ea2d24af88a0..e52901108be2 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -47,6 +47,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2500_fp5280g2.c',
-   'aspeed_ast2500_g220a.c',
-   'aspeed_ast2500_tiogapass.c',
-+  'aspeed_ast2500_yosemitev2.c',
-   'aspeed_ast2600.c',
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
+@@ -44,6 +44,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed.c',
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
++  'aspeed_ast2400_palmetto.c',
+   'aspeed_ast2400_quanta-q71l.c',
+   'aspeed_ast2400_supermicrox11.c',
+   'aspeed_ast2500_evb.c',
 -- 
 2.51.1
 
