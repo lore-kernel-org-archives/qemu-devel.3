@@ -4,77 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF5FCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 01:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D0C3CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 01:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG5wJ-0002Tv-5A; Mon, 03 Nov 2025 20:34:27 -0500
+	id 1vG67O-00065z-Cs; Mon, 03 Nov 2025 20:45:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1vG5wG-0002TZ-OL
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 20:34:24 -0500
-Received: from esa4.hc1455-7.c3s2.iphmx.com ([68.232.139.117])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vG67F-00065e-GE
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 20:45:45 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1vG5wB-0007Lu-6P
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 20:34:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1762220059; x=1793756059;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=AIUWjy6jb3RCtAzhW965OPha/0p0ABul/nwNI5TWDz0=;
- b=eluc3gdBRUsBOwFado5NiEpVc/e+LMTC6z/qio1pc7YspFeQ7XUAbqUi
- +xG3uQs0RYZ42TxWegqo95Y2AXjIKE9gniE/hC2+IZo7DtbEP7rlplJRW
- 0XUNrkgqLFSjZvxhbHL2Z9mLBMs1diEV/WiVZUp8UU36G78ld8VOKrfnz
- KiO/mRVCllOEkbk/uItqwRRXifJB+F17dF4bJom/DDI3ibH+rcP1qIZMP
- T5u82qPFYFD450HDUFRz7kJQItPFwx2PtsVImU2zb0KVDJCbGZkUJ4FqY
- iHbGDjJrJRPZPfpcH198wVstOMd6JDU41jS625opdHZROmSY8QT7q8vNf A==;
-X-CSE-ConnectionGUID: jgug/Iw0RbyiVPlJo1gplA==
-X-CSE-MsgGUID: 9Dw3ubLrShuJuJUTu6XgVg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="218574705"
-X-IronPort-AV: E=Sophos;i="6.19,277,1754924400"; d="scan'208";a="218574705"
-Received: from unknown (HELO az2uksmgr2.o.css.fujitsu.com) ([52.151.125.19])
- by esa4.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2025 10:34:10 +0900
-Received: from az2uksmgm1.o.css.fujitsu.com (unknown [10.151.22.198])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by az2uksmgr2.o.css.fujitsu.com (Postfix) with ESMTPS id 6675D8203FC
- for <qemu-devel@nongnu.org>; Tue,  4 Nov 2025 01:34:10 +0000 (UTC)
-Received: from az2nlsmom3.fujitsu.com (az2nlsmom3.o.css.fujitsu.com
- [10.150.26.199])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by az2uksmgm1.o.css.fujitsu.com (Postfix) with ESMTPS id 1B9718D29C2
- for <qemu-devel@nongnu.org>; Tue,  4 Nov 2025 01:34:10 +0000 (UTC)
-Received: from iaas-rdma.. (unknown [10.167.135.44])
- by az2nlsmom3.fujitsu.com (Postfix) with ESMTP id 99E19101BB7A;
- Tue,  4 Nov 2025 01:34:06 +0000 (UTC)
-To: peterx@redhat.com,
-	farosas@suse.de
-Cc: zhangckid@gmail.com, zhanghailiang@xfusion.com, qemu-devel@nongnu.org,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH] migration: Fix transition to COLO state from precopy
-Date: Tue,  4 Nov 2025 09:36:06 +0800
-Message-ID: <20251104013606.1937764-1-lizhijian@fujitsu.com>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vG676-0002yH-TS
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 20:45:45 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A41jKno006433
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 4 Nov 2025 10:45:21 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=+vcwEBs5aVKP++vMmN7Wp5skzSxIfKTKloJVWm0AGx0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1762220721; v=1;
+ b=cyI6MFghNpIu70S98t6TIlK+8WhaDYZr7+kTPBoy7Ge7v3Y4Y+RsJrLqLhmcggtM
+ Ba8EDQJRDzj1npoyv38tBVem3Vn0WjLbXtZ+zqyxG++Kj79mISKuYllbcnFpAXM6
+ XgC8+eCgIydxv78Hxs9lWguS9bAf4s7P09n2ycEOx+V+srBfEqN7TvRt6GVDhKaP
+ xBepyTKlQGY0j6EQwkzPQwkymVILd8sFfFwzXctzfIB3eeUcfVAJAoJY/ofrBlb2
+ UaLyOAnhcVjS/SOJ6A17q+KOMu6ujguMmDmt8ErTYHiA+F3ZG2aQx3AyerQV3cS7
+ YvXpKo2809Ts5SH0xsBcfA==
+Message-ID: <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 4 Nov 2025 10:45:20 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Regression with the "replay" test on target alpha
+To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251028173430.2180057-1-pbonzini@redhat.com>
+ <20251028173430.2180057-4-pbonzini@redhat.com>
+ <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=68.232.139.117;
- envelope-from=lizhijian@fujitsu.com; helo=esa4.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,42 +74,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
-From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 4881411136 ("migration: Always set DEVICE state") set a new DEVICE
-state before completed during migration, which broke the original transition
-to COLO. The migration flow for precopy has changed to:
-active -> pre-switchover -> device -> completed.
+On 2025/11/03 22:59, Thomas Huth wrote:
+> On 28/10/2025 18.34, Paolo Bonzini wrote:
+>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+>> Borrow the concept of force quiescent state from Linux to ensure readers
+>> remain fast during normal operation and to avoid stalls.
+> 
+>   Hi Akihiko,
+> 
+> looks like this commit has introduced a regression with the "replay" 
+> functional test on the alpha target.
+> When I run something like:
+> 
+>   pyvenv/bin/meson test --no-rebuild -t 1 --setup thorough \
+>    --num-processes 1 --repeat 10 func-alpha-replay
+> 
+> in the build folder, approx. half of the test runs are failing for me now.
+> 
+> I bisected the issue to this patch here - when I rebuild qemu-system- 
+> alpha with the commit right before this change here, the above test runs 
+> work fine, so I'm pretty sure that the problem has been introduced by 
+> this commit here.
+> 
+> Could you please have a look?
 
-This patch updates the transition state to ensure that the Pre-COLO
-state corresponds to DEVICE state correctly.
+I cannot reproduce it with commit 55d98e3edeeb ("rcu: Unify force 
+quiescent state").
 
-Fixes: 4881411136 ("migration: Always set DEVICE state")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
----
- migration/migration.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Can you provide meson-logs/testlog-thorough.txt so that I can look into 
+the failure you are facing? If you think you have something useful for 
+debugging, please share it to me too.
 
-diff --git a/migration/migration.c b/migration/migration.c
-index a63b46bbef..6ec7f3cec8 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3095,9 +3095,9 @@ static void migration_completion(MigrationState *s)
-         goto fail;
-     }
- 
--    if (migrate_colo() && s->state == MIGRATION_STATUS_ACTIVE) {
-+    if (migrate_colo() && s->state == MIGRATION_STATUS_DEVICE) {
-         /* COLO does not support postcopy */
--        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-+        migrate_set_state(&s->state, MIGRATION_STATUS_DEVICE,
-                           MIGRATION_STATUS_COLO);
-     } else {
-         migration_completion_end(s);
--- 
-2.44.0
-
+Regards,
+Akihiko Odaki
 
