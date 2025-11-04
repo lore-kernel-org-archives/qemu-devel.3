@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45B8CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598F0CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGKgD-0005BM-GF; Tue, 04 Nov 2025 12:18:49 -0500
+	id 1vGKhJ-0005lG-Rm; Tue, 04 Nov 2025 12:19:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKg3-00055B-Lp
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:18:42 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKhA-0005eR-3H
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:19:52 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKg0-0008Oe-5p
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:18:39 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b6d345d7ff7so4866666b.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:18:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGKh1-00006g-Kl
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:19:40 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-640e9a53ff6so1918802a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762276709; x=1762881509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762276778; x=1762881578; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LHdmdazXI12j/p9HCzPD6NwJ3C9waOah2X0YeNtGq4M=;
- b=ukOt/U/JJBqon6xRy1lDaxl09esB0BF6rhSa50i2McbN7G5FWEuSJY+BufsWX5PXna
- iiscBM/QI41qSxHUDMv+OCM5jZN9dmRnMIfC7DXCr4YhssFXjoTIH5PGdyNLV6uS6b74
- CvnLZ1FG894SbhAlnoqEGST+N1p460PwJ9Bh3BuO67ubIwoXc7jd42vaMqQTFi7A3rsA
- z2w3yvbOmYTPElKfxPDpa7WhlujzNK7bnrdFEYJCUH4zGcYXdPiOWTUbNk6gbvmgNHEn
- iLtgjXDlrUmUxDgDGL6gYoYPO73mQEuarWbbJvVkDuorHJtHGgzK7CjS7dmt0Oy0GSgC
- ZPVA==
+ bh=KwUp2ZMe1TEIIv4KhcautXniKKRQYzPFp1wYKrxtKjM=;
+ b=VzRhNWmeHKp8M8DwxOAiCJvvHz9Dy+EIhA/5hT/Wr9nzyj2td2kqDCNROqqc7fcN4O
+ DN0rG3tIVvM/3AySnZwiy8heWHly3ctbdDasmCSzgEUBENamo8cVZQOsyjr4Sv9r6jvY
+ KELf/Gp8bXiS5STtzb/wBb/wWuy9s0N32PJ9+hLwIGXojaO+A37BH0ki1nkAx1Jcdqy1
+ Ce3eClFffHvW4albtWtca6TBnZCDfpIUH17YvwuJRrxlEo9hIjXkVjGoySvjUBvuKCSe
+ YrQPWEnN/QJNv/sNI9rn15iEJN4gc7fd4Uvhk8S7QNnVVyPi4kXD3jzgx9dUmmZeIZjt
+ Cndg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762276709; x=1762881509;
+ d=1e100.net; s=20230601; t=1762276778; x=1762881578;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LHdmdazXI12j/p9HCzPD6NwJ3C9waOah2X0YeNtGq4M=;
- b=j3vF9KiDlAZWcwybORC1adjT7tzOyKxGH24KykrbeLbS4l/PI763KlYZT8t7e8QtD8
- aYweYsurxPmyr5VTDTlql5bM8u/7JiCE+yVlz3sxSKRhFbOhL9I8RYaBZzalIaWopHhR
- lpx4ODWaLU6268V6K3wYTWyc29bjs+BRJj11EoQD6vMvtvyU2SfLLSHysrz2eEDRe3ib
- g+p7M+yiu9X0S3lisZleYJGbkeQGx9krghR9KfFCTESQ72/VBlxnPBbxdU+lD/H2hxO8
- DalDZHx3/H2J7nMZrSIRR+HIexea9+N/P2hlCCg+ENWGM3q4MbiNnTSIWxwSLjsJdsRz
- thEQ==
+ bh=KwUp2ZMe1TEIIv4KhcautXniKKRQYzPFp1wYKrxtKjM=;
+ b=ahKeG+LFPcw28e7eb5b+jP5Gd8AKOtK7lH2K88SIeQrTXuJOTW+icHWJVoNuJQZkgG
+ I55sod7w4PNKYHh1Ns44OQY17/5boH/y8rlMUp5nLnnz9KlUvm/VJRk/WzBTd5jIehnA
+ f4WRq9OlPim05jY+pp1+3b33sAmG1IOyEScq2EMWem2CAKtSb2w/+HWIBUe+ulNqVuvh
+ Y2va47S6p+O0MjZZPSOcoLSDkQxw/6js3vIcILUBx6IXEtHNHkeFXl99W2mxEQ17irBI
+ tpoikpKeSEmdjm8ENm6lgKKGJszhPiBWJ1aFbMD+YWJR9avludCeJHVh0R015Q9Pr8cW
+ vwOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPv6fvZNE7RGTKvHrjS16vcGwtw76SlY7gDZSIDXpOJBOcGqq61lDDYBwAq5H2XBP+Zu1YqvmdP675@nongnu.org
-X-Gm-Message-State: AOJu0YxA3PlSGpQ3QmaJJVhuG8tCXDojAlHnaChD+zOsQQgA73v2Tc3+
- 3F5HU3NrJyBxTD53g/pUtqUC82Dbl/3lcnV9c/zYupWMNUL6D8EuVoSwY7RhON3nrmw=
-X-Gm-Gg: ASbGncvY6XdhBFnXuN2euQV0NW0QoAhxukRnQHYqSE3PVSAcyeEtt6ABNXyFuZkQ7Ba
- k4qV+aRdiKf5QW02gaoGK+2ibBX8QMJaIs4wmtV6NedA4h07Tl6lmiy8MlDJoZu+JTq6dOr0bgs
- yEtJf9KcjzjC1sGjsrRP2lHo/4l910+rQZ+EUbdn3uorn/NA3qcAl/CS0wBj2+1jQIWW7GYD4L/
- BWppa8Lr/luKe3hMSHgrgVuo5MIzhIgnY6NWH+Q0rrF7hg7DWTQsjhLyR4vFjQR8nt9cwI/8Rcj
- K5J6q0Tw8HM8e7UGUy3oOAdKKZSutNLwJZWHETyshAWSFLBZLdbN5paZUDeLugs3zPVQEjbXp41
- 7qJYRzNjdFGUysjDMOLxGuxIxwQO1fDMvvXNUyOBxh/GOpaiaTeis3mDCDh+PTByLeOasrkD1IV
- sReSnSKmUD9MMt5VKE5hI=
-X-Google-Smtp-Source: AGHT+IEj95ymzoTeG0RFz44DkVYkppyVWLZAwu2K8O8AOZ9ha0z5CiMa6DqS3lMvkNXthytKPUjMYw==
-X-Received: by 2002:a17:906:4fcf:b0:b70:aa3e:3b60 with SMTP id
- a640c23a62f3a-b7217a69377mr394594666b.27.1762276709371; 
- Tue, 04 Nov 2025 09:18:29 -0800 (PST)
+ AJvYcCVoXXeMSIePAOIR8Tm5MHNTxpxBWIGwQHjkp0f2uYPB8QwsUsDV9Vooku7zei9QL9YnsD29oYUoFNFo@nongnu.org
+X-Gm-Message-State: AOJu0Yw7RqsX2TkkFUEeVuUHoGiFTc0vPQFhb99Yj0RKoEo/1GafuXgQ
+ 7s8j5DoHB5wkH6jJf7G1tZDii10NRnVYav9rdylnQP7VDYxGCFIyzR/f5cZhcvXhnxs=
+X-Gm-Gg: ASbGncveti9HZw9SOfuxUBHBwGhyDBHpoVx6k58t9JeAotQTG2clBI/YeUqCR6+5uLN
+ 0xLGtW3NtJH5L/F1eIxyhgHghl4CyS04NvrVMhE3VM4tCvAKA0iTIwcFzC889eBtONhyZ/NZMKX
+ Cs4qb4H9uOZRO+a3bNfJWGaNuHPQEvdCVAYM6MTNqXVd5hemQSXio4gca4SkygCVSfOhimeJ06V
+ R/fJ/aSP9rOVdVwTpKWHmpfRCvuIWBg2liiaQcJevi92bBrT8DW8LHvdsJQssbgdljnre43nDuz
+ 6C7qaTyBFcDLPMXtUFdXHcEUCyS6AzMLqUqbiphUJmTYdLkO5qi8CxICkEsxGxD0PgfGjB1l77p
+ c6MmjyziaoXHcfssC9PDFMRSlezvZlXnk67B3mxuC13Uh1q2bJeRM8V7J3C01dgwln+NhS4Dpay
+ 4A1PFBR4UjaHPQrJpAazE=
+X-Google-Smtp-Source: AGHT+IEY6xM9Hqizzs/kVBXbt+teH0skvVWBn0VHaQN1hVm18BFmURhYWFWFY5+nH5FgXi9m47SaXQ==
+X-Received: by 2002:a17:907:3e16:b0:b6d:8557:19a with SMTP id
+ a640c23a62f3a-b70704c3e8amr2027914266b.30.1762276777989; 
+ Tue, 04 Nov 2025 09:19:37 -0800 (PST)
 Received: from [172.20.148.75] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6a711dcsm2489438a12.29.2025.11.04.09.18.28
+ a640c23a62f3a-b723f6e06edsm271530066b.47.2025.11.04.09.19.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Nov 2025 09:18:28 -0800 (PST)
-Message-ID: <b38ee8cc-8d9a-4398-b6df-3857a0994d0c@linaro.org>
-Date: Tue, 4 Nov 2025 18:18:28 +0100
+ Tue, 04 Nov 2025 09:19:37 -0800 (PST)
+Message-ID: <41caf11f-8f6a-40cf-8292-e7200a028d20@linaro.org>
+Date: Tue, 4 Nov 2025 18:19:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6.1 5/6] scripts: Add helper script to generate eMMC
- block device images
+Subject: Re: [PATCH] hw/i386/microvm: Use fdt field from MachineState
 Content-Language: en-US
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>
-References: <cover.1762261430.git.jan.kiszka@siemens.com>
- <60f265e0b2bea18fe6ef41742600a7e933e3c47f.1762261430.git.jan.kiszka@siemens.com>
- <eecefa8e-44ae-45ff-85d0-3f9b786948e0@siemens.com>
- <8884e7f9-eff4-4bbd-be5e-9d6d2012ff6c@linaro.org>
- <c3bfb192-aad0-4fcb-a787-78f3a2d19695@siemens.com>
+To: Luigi Leonardi <leonardi@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Sergio Lopez <slp@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c3bfb192-aad0-4fcb-a787-78f3a2d19695@siemens.com>
+In-Reply-To: <20251030-fix_microvm-v1-1-f89544a04be3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,54 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/25 18:00, Jan Kiszka wrote:
-> On 04.11.25 17:27, Philippe Mathieu-Daudé wrote:
->> On 4/11/25 15:45, Jan Kiszka wrote:
->>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>
->>> As an eMMC block device image may consist of more than just the user
->>> data partition, provide a helper script that can compose the image from
->>> boot partitions, an RPMB partition and the user data image. The script
->>> also does the required size validation and/or rounding.
->>>
->>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>> ---
-
-
->> Still:
->>
->> $ dash scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
->                                                           ^^
-> User error ;-). This must be just "...:2M".
-
-Per the doc:
-
-+.. code-block:: console
-+
-+    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
-
-(I'll update it)
-
+On 30/10/25 15:32, Luigi Leonardi wrote:
+> MachineState already provides an fdt field, remove it from
+> MicrovmMachineState and use that instead.
 > 
->> Invalid value '2MB' specified for /dev/zero image size.
->> scripts/mkemmc.sh: 170: [: Illegal number:
->> Creating eMMC image
->>    Boot partition 1 and 2:   128K each
->> scripts/mkemmc.sh: 192: [: Illegal number:
->>    User data:                4 bytes
->>
->> $ bash scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
->> Invalid value '2MB' specified for /dev/zero image size.
->> scripts/mkemmc.sh: line 170: [: : integer expression expected
->> Creating eMMC image
->>    Boot partition 1 and 2:   128K each
->> scripts/mkemmc.sh: line 192: [: : integer expression expected
->>    User data:                4 bytes
->>
->> But now the file is generated :)
+> This is useful when using the `dumpdtb` option, as QEMU expects the
+> device tree to be stored in the MachineState struct, othwise it will
+> return this error:
 > 
-> ...which is actually a bug as well: We are not terminating the script
-> inside the process_size function when calling "exit" there. Deviates
-> from the behavior under Linux. Sigh.
-If you have a diff I can test & squash.
+> qemu-system-x86_64: This machine doesn't have an FDT
+> 
+> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+> ---
+> `fdt` field is already available in `MachineState` but
+> `MicrovmMachineState` uses its own.
+> 
+> This prevents the "dumpdtb" option from working.
+> ---
+>   hw/i386/microvm-dt.c      | 96 +++++++++++++++++++++++++----------------------
+>   include/hw/i386/microvm.h |  2 -
+>   2 files changed, 52 insertions(+), 46 deletions(-)
+
+Queued (typo fixed), thanks!
 
