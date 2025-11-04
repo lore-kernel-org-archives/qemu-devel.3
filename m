@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D0BCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 02:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230D4CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 02:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG6oi-0007HQ-RR; Mon, 03 Nov 2025 21:30:40 -0500
+	id 1vG6nv-0006xf-7g; Mon, 03 Nov 2025 21:29:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vG6oA-00072A-3Y
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:30:07 -0500
+ id 1vG6nt-0006wR-Aj
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:29:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vG6o5-0003x6-Pr
- for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:30:03 -0500
+ id 1vG6np-0003sw-PY
+ for qemu-devel@nongnu.org; Mon, 03 Nov 2025 21:29:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762223401;
+ s=mimecast20190719; t=1762223384;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=83mg90DAHJekDEGfk77SRVGe+JX1WWsWhalbVbY2mAg=;
- b=VCTYDYjmpRmlm7HMrFOZSqYxLJkAFhvmdMbWQD8jCx16fw3bs8KIEQn/wJ7rzmmDHWeaVW
- nu+PJXgycztatTsQVoz3sceplu+KmAtdJRblIYWjcPQxJ6zejJDw4h6XFQ8vPl0MZxNcQb
- gNnHlYj93erPnkzv0MsHAe1z2pWx7Ls=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=zQ1JudMm7bKHTZ9ZI5j4eCSVpiXjE8mvU+hhW2Wueqs=;
+ b=NZNgqzhv0M5STXlZRnj6/mHjQY0VbdhRAmHWHhicVF1j+07No6zPo+DzUf4IUb2HjVNiXh
+ 5ZFARVCCnqro/W81sBeGXtg8OfOdiGH7UGm7CYb0nmkxHaP6OX/JcaNXRfEU+y0TAJU6sj
+ g/YnKJBgiZDwEF64b9vDllThN3lxX2s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-cIqv3GeNMxKS0tpzOGu9fg-1; Mon,
- 03 Nov 2025 21:29:59 -0500
-X-MC-Unique: cIqv3GeNMxKS0tpzOGu9fg-1
-X-Mimecast-MFC-AGG-ID: cIqv3GeNMxKS0tpzOGu9fg_1762223398
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-981FXoFGNA-y8Y7Q2U_5zg-1; Mon,
+ 03 Nov 2025 21:29:41 -0500
+X-MC-Unique: 981FXoFGNA-y8Y7Q2U_5zg-1
+X-Mimecast-MFC-AGG-ID: 981FXoFGNA-y8Y7Q2U_5zg_1762223380
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CDA81800654; Tue,  4 Nov 2025 02:29:58 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33E2919560B1; Tue,  4 Nov 2025 02:29:40 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 09C1B1956056; Tue,  4 Nov 2025 02:29:57 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 49C4030001A1; Tue,  4 Nov 2025 02:29:38 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  eblake@redhat.com, Hanna Czenczek <hreitz@redhat.com>,
  qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Fam Zheng <fam@euphon.net>, hibriansong@gmail.com
-Subject: [PATCH v6 08/15] aio: free AioContext when aio_context_new() fails
-Date: Mon,  3 Nov 2025 21:29:26 -0500
-Message-ID: <20251104022933.618123-9-stefanha@redhat.com>
+Subject: [PATCH v6 01/15] aio-posix: fix race between io_uring CQE and
+ AioHandler deletion
+Date: Mon,  3 Nov 2025 21:29:19 -0500
+Message-ID: <20251104022933.618123-2-stefanha@redhat.com>
 In-Reply-To: <20251104022933.618123-1-stefanha@redhat.com>
 References: <20251104022933.618123-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -86,118 +87,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_source_destroy() only removes the GSource from the GMainContext it's
-attached to, if any. It does not free it.
+When an AioHandler is enqueued on ctx->submit_list for removal, the
+fill_sq_ring() function will submit an io_uring POLL_REMOVE operation to
+cancel the in-flight POLL_ADD operation.
 
-Use g_source_unref() instead so that the AioContext (which embeds a
-GSource) is freed. There is no need to call g_source_destroy() in
-aio_context_new() because the GSource isn't attached to a GMainContext
-yet.
+There is a race when another thread enqueues an AioHandler for deletion
+on ctx->submit_list when the POLL_ADD CQE has already appeared. In that
+case POLL_REMOVE is unnecessary. The code already handled this, but
+forgot that the AioHandler itself is still on ctx->submit_list when the
+POLL_ADD CQE is being processed. It's unsafe to delete the AioHandler at
+that point in time (use-after-free).
 
-aio_ctx_finalize() expects everything to be set up already, so introduce
-the new ctx->initialized boolean and do nothing when called with
-!initialized. This also requires moving aio_context_setup() down after
-event_notifier_init() since aio_ctx_finalize() won't release any
-resources that aio_context_setup() acquired.
+Solve this problem by keeping the AioHandler alive but setting a flag so
+that it will be deleted by fill_sq_ring() when it runs.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
-v5:
-- Added comments explaining how to clean up resources in error paths [Kevin]
-v2:
-- Fix spacing in aio_ctx_finalize() argument list [Eric]
----
- include/block/aio.h |  3 +++
- util/async.c        | 31 ++++++++++++++++++++++++++++---
- 2 files changed, 31 insertions(+), 3 deletions(-)
+ util/fdmon-io_uring.c | 33 ++++++++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index 1657740a0e..2760f308f5 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -291,6 +291,9 @@ struct AioContext {
-     gpointer epollfd_tag;
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index b0d68bdc44..ad89160f31 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -52,9 +52,10 @@ enum {
+     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
  
-     const FDMonOps *fdmon_ops;
-+
-+    /* Was aio_context_new() successful? */
-+    bool initialized;
+     /* AioHandler::flags */
+-    FDMON_IO_URING_PENDING  = (1 << 0),
+-    FDMON_IO_URING_ADD      = (1 << 1),
+-    FDMON_IO_URING_REMOVE   = (1 << 2),
++    FDMON_IO_URING_PENDING            = (1 << 0),
++    FDMON_IO_URING_ADD                = (1 << 1),
++    FDMON_IO_URING_REMOVE             = (1 << 2),
++    FDMON_IO_URING_DELETE_AIO_HANDLER = (1 << 3),
  };
  
- /**
-diff --git a/util/async.c b/util/async.c
-index cb72ad3777..7d06ff98f3 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -366,12 +366,16 @@ aio_ctx_dispatch(GSource     *source,
- }
- 
- static void
--aio_ctx_finalize(GSource     *source)
-+aio_ctx_finalize(GSource *source)
- {
-     AioContext *ctx = (AioContext *) source;
-     QEMUBH *bh;
-     unsigned flags;
- 
-+    if (!ctx->initialized) {
-+        return;
-+    }
+ static inline int poll_events_from_pfd(int pfd_events)
+@@ -218,6 +219,16 @@ static void fill_sq_ring(AioContext *ctx)
+         if (flags & FDMON_IO_URING_REMOVE) {
+             add_poll_remove_sqe(ctx, node);
+         }
++        if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
++            /*
++             * process_cqe() sets this flag after ADD and REMOVE have been
++             * cleared. They cannot be set again, so they must be clear.
++             */
++            assert(!(flags & FDMON_IO_URING_ADD));
++            assert(!(flags & FDMON_IO_URING_REMOVE));
 +
-     thread_pool_free_aio(ctx->thread_pool);
- 
- #ifdef CONFIG_LINUX_AIO
-@@ -579,16 +583,35 @@ AioContext *aio_context_new(Error **errp)
-     int ret;
-     AioContext *ctx;
- 
-+    /*
-+     * ctx is freed by g_source_unref() (e.g. aio_context_unref()). ctx's
-+     * resources are freed as follows:
-+     *
-+     * 1. By aio_ctx_finalize() after aio_context_new() has returned and set
-+     *    ->initialized = true.
-+     *
-+     * 2. By manual cleanup code in this function's error paths before goto
-+     *    fail.
-+     *
-+     * Be careful to free resources in both cases!
-+     */
-     ctx = (AioContext *) g_source_new(&aio_source_funcs, sizeof(AioContext));
-     QSLIST_INIT(&ctx->bh_list);
-     QSIMPLEQ_INIT(&ctx->bh_slice_list);
--    aio_context_setup(ctx);
- 
-     ret = event_notifier_init(&ctx->notifier, false);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Failed to initialize event notifier");
-         goto fail;
++            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        }
      }
-+
-+    /*
-+     * Resources cannot easily be freed manually after aio_context_setup(). If
-+     * you add any new resources to AioContext, it's probably best to acquire
-+     * them before aio_context_setup().
-+     */
-+    aio_context_setup(ctx);
-+
-     g_source_set_can_recurse(&ctx->source, true);
-     qemu_lockcnt_init(&ctx->list_lock);
- 
-@@ -622,9 +645,11 @@ AioContext *aio_context_new(Error **errp)
- 
-     register_aiocontext(ctx);
- 
-+    ctx->initialized = true;
-+
-     return ctx;
- fail:
--    g_source_destroy(&ctx->source);
-+    g_source_unref(&ctx->source);
-     return NULL;
  }
  
+@@ -241,7 +252,12 @@ static bool process_cqe(AioContext *ctx,
+      */
+     flags = qatomic_fetch_and(&node->flags, ~FDMON_IO_URING_REMOVE);
+     if (flags & FDMON_IO_URING_REMOVE) {
+-        QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        if (flags & FDMON_IO_URING_PENDING) {
++            /* Still on ctx->submit_list, defer deletion until fill_sq_ring() */
++            qatomic_or(&node->flags, FDMON_IO_URING_DELETE_AIO_HANDLER);
++        } else {
++            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        }
+         return false;
+     }
+ 
+@@ -347,10 +363,13 @@ void fdmon_io_uring_destroy(AioContext *ctx)
+             unsigned flags = qatomic_fetch_and(&node->flags,
+                     ~(FDMON_IO_URING_PENDING |
+                       FDMON_IO_URING_ADD |
+-                      FDMON_IO_URING_REMOVE));
++                      FDMON_IO_URING_REMOVE |
++                      FDMON_IO_URING_DELETE_AIO_HANDLER));
+ 
+-            if (flags & FDMON_IO_URING_REMOVE) {
+-                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++            if ((flags & FDMON_IO_URING_REMOVE) ||
++                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
++                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers,
++                                      node, node_deleted);
+             }
+ 
+             QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
 -- 
 2.51.1
 
