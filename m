@@ -4,64 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51AA5CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 11:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC044CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 11:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGFUV-00010r-7M; Tue, 04 Nov 2025 06:46:23 -0500
+	id 1vGFWa-0001av-CG; Tue, 04 Nov 2025 06:48:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGFUQ-00010U-97
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 06:46:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vGFWZ-0001aZ-DZ
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 06:48:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGFUN-0004Id-Tr
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 06:46:17 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vGFWX-0005Dx-Ot
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 06:48:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762256774;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1762256908;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8qH2RJgQUX2i0sEq4uzSoYJSzcUQ/+7h4z3TZgfymMM=;
- b=RbbFQ6XZJ0snI4gQcYlLIIDocGtEvEMFjCU0Eai33X4AcBRBX1t5O+eNfxu2bVckxIQF/0
- 8i7KlK6AtLJJh5vKgS8lhIrVlJn87gjuEZ7YQdVGoSbkFfWR03mZ64bq3KVINcrsMjbELq
- AL3FL9UuhjYzpstY20B/gtNNyIkdO5U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Y33RQK4PxXYEUupzVXKQ9q6yHJC8VLgotoz3rU1+dx4=;
+ b=gBxyFXFAOeBfcBCaVIKTiruoP/qN4+iJ46EkYtt7YrT4m8Qce1ofm4ne8Ux1HFDGswtn4m
+ W4EDzD0W6WPeA0LChtwlU0shL97StzlMqU27PGt44/UwjWbtNDS3zxKOoO0lf40yOxb/l0
+ jzLOQYzgnGvdHO/AlB3gABfEHljKMQM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-clNpoLlwNNGf6EwtMIGBMw-1; Tue,
- 04 Nov 2025 06:46:11 -0500
-X-MC-Unique: clNpoLlwNNGf6EwtMIGBMw-1
-X-Mimecast-MFC-AGG-ID: clNpoLlwNNGf6EwtMIGBMw_1762256770
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-mUyAUewJNuOgFBto3lcLVw-1; Tue,
+ 04 Nov 2025 06:48:23 -0500
+X-MC-Unique: mUyAUewJNuOgFBto3lcLVw-1
+X-Mimecast-MFC-AGG-ID: mUyAUewJNuOgFBto3lcLVw_1762256902
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B74AC1956052; Tue,  4 Nov 2025 11:46:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D9F81955DD9; Tue,  4 Nov 2025 11:48:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CA6F19540DB; Tue,  4 Nov 2025 11:46:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 58F2021E6A27; Tue, 04 Nov 2025 12:46:06 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ id 2791219540DA; Tue,  4 Nov 2025 11:48:17 +0000 (UTC)
+Date: Tue, 4 Nov 2025 11:48:14 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: michael.roth@amd.com,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v5] qapi: Add documentation format validation
-In-Reply-To: <f1e50de9-912d-430e-ac0d-8341e003be13@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 4 Nov 2025 13:55:51 +0300")
-References: <20251031183129.246814-1-vsementsov@yandex-team.ru>
- <87pl9yun57.fsf@pond.sub.org>
- <f1e50de9-912d-430e-ac0d-8341e003be13@yandex-team.ru>
-Date: Tue, 04 Nov 2025 12:46:06 +0100
-Message-ID: <87wm46t401.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ pbonzini@redhat.com, eduardo@habkost.net, qemu-devel@nongnu.org,
+ raphael@enfabrica.net, armbru@redhat.com, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru
+Subject: Re: [PATCH v6 0/7] chardev: postpone connect
+Message-ID: <aQnn_n0AuBjl4qQ_@redhat.com>
+References: <20251104101715.76691-1-vsementsov@yandex-team.ru>
+ <CAMxuvazmJ+0fUDae-W4ZFFKAgtZLBFrxtZCrTT8sgBCmNirW2g@mail.gmail.com>
+ <aQnmW2NskQtEfsGe@redhat.com>
+ <966c338b-8302-4583-be9b-bb683ce3f3c5@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <966c338b-8302-4583-be9b-bb683ce3f3c5@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,261 +90,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On Tue, Nov 04, 2025 at 02:44:49PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 04.11.25 14:41, Daniel P. Berrangé wrote:
+> > On Tue, Nov 04, 2025 at 03:35:17PM +0400, Marc-André Lureau wrote:
+> > > Hi Vladimir
+> > > 
+> > > On Tue, Nov 4, 2025 at 2:17 PM Vladimir Sementsov-Ogievskiy <
+> > > vsementsov@yandex-team.ru> wrote:
+> > > 
+> > > > Hi all!
+> > > > 
+> > > > That's a preparation for backend-transfer migration of
+> > > > vhost-user-blk, and introduced DEFINE_PROP_CHR_NO_CONNECT()
+> > > > is unused now.
+> > > > 
+> > > > v3 of "vhost-user-blk: live-backend local migration" is coming
+> > > > soon, and will be based on this series (and will use
+> > > > DEFINE_PROP_CHR_NO_CONNECT of course).
+> > > > 
+> > > > changes in v6:
+> > > > 05: move connect() call into "if (s)"
+> > > > 07: - drop assertion
+> > > >      - improve doc comment, to cover @s==NULL relations with @connect
+> > > >      - add r-b by Marc-André
+> > > > 
+> > > > Vladimir Sementsov-Ogievskiy (7):
+> > > >    chardev/char-socket: simplify reconnect-ms handling
+> > > >    chardev/char: split chardev_init_common() out of qemu_char_open()
+> > > >    chardev/char: qemu_char_open(): add return value
+> > > >    chardev/char: move filename and be_opened handling to qemu_char_open()
+> > > >    chardev/char: introduce .init() + .connect() initialization interface
+> > > >    chardev/char-socket: move to .init + .connect api
+> > > >    chardev: introduce DEFINE_PROP_CHR_NO_CONNECT
+> > > > 
+> > > 
+> > > Do you need this series in 10.2? We are at soft-freeze today, this is
+> > > closer to a feature than a simple refactoring, we may just wait for the
+> > > next dev phase.
+> > 
+> > Back in v2, I had a request to convert the other chardev backends
+> > to the new model too, as IMHO it is undesirable to introduce the
+> > technical debt by only touching 1 backend:
+> > 
+> >    https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg03272.html
+> > 
+> 
+> Right. I remember it, and have a draft converting series. It turned out to be more than expected,
+> about 24 commits, and personally I'm not sure, that it worth doing.. I'll send an RFC too look at.
 
-> On 04.11.25 13:07, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->>> Add explicit validation for QAPI documentation formatting rules:
->>>
->>> 1. Lines must not exceed 70 columns in width (including '# ' prefix)
->>> 2. Sentences must be separated by two spaces
->>>
->>> Example sections and literal :: blocks (seldom case) are excluded, we
->>> don't require them to be <= 70, that would be too restrictive. Anyway,
->>> they share common 80-columns recommendations (not requirements).
->>>
->>> Add two simple tests, illustrating the change.
->>>
->>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>> ---
->>>
->>> Hi all!
->>>
->>> v5: - break "literal" block at any decreasing the indent,
->>>        not only at no-indent
->>>      - add two simple tests
->>>
->>> This is based on
->>> [PATCH 0/8] A QAPI schema doc markup fix, and style cleanup
->>> Based-on: <20251031094751.2817932-1-armbru@redhat.com>
->>>
->>>   scripts/qapi/parser.py                     | 52 +++++++++++++++++++++-
->>>   tests/qapi-schema/doc-bad-long-line.err    |  1 +
->>>   tests/qapi-schema/doc-bad-long-line.json   |  6 +++
->>>   tests/qapi-schema/doc-bad-long-line.out    |  0
->>>   tests/qapi-schema/doc-bad-whitespaces.err  |  2 +
->>>   tests/qapi-schema/doc-bad-whitespaces.json |  6 +++
->>>   tests/qapi-schema/doc-bad-whitespaces.out  |  0
->>>   tests/qapi-schema/meson.build              |  2 +
->>>   8 files changed, 68 insertions(+), 1 deletion(-)
->>>   create mode 100644 tests/qapi-schema/doc-bad-long-line.err
->>>   create mode 100644 tests/qapi-schema/doc-bad-long-line.json
->>>   create mode 100644 tests/qapi-schema/doc-bad-long-line.out
->>>   create mode 100644 tests/qapi-schema/doc-bad-whitespaces.err
->>>   create mode 100644 tests/qapi-schema/doc-bad-whitespaces.json
->>>   create mode 100644 tests/qapi-schema/doc-bad-whitespaces.out
->>>
->>> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->>> index 9fbf80a541..ffb149850d 100644
->>> --- a/scripts/qapi/parser.py
->>> +++ b/scripts/qapi/parser.py
->>> @@ -108,6 +108,11 @@ def __init__(self,
->>>           self.exprs: List[QAPIExpression] = []
->>>           self.docs: List[QAPIDoc] = []
->>>   
->>> +        # State for tracking qmp-example blocks and simple
->>> +        # :: literal blocks.
->>> +        self._literal_mode = False
->>> +        self._literal_mode_indent = 0
->>> +
->>>           # Showtime!
->>>           self._parse()
->>>   
->>> @@ -423,12 +428,57 @@ def get_doc_line(self) -> Optional[str]:
->>>               if self.val != '##':
->>>                   raise QAPIParseError(
->>>                       self, "junk after '##' at end of documentation comment")
->>> +            self._literal_mode = False
->>>               return None
->>>           if self.val == '#':
->>>               return ''
->>>           if self.val[1] != ' ':
->>>               raise QAPIParseError(self, "missing space after #")
->>> -        return self.val[2:].rstrip()
->>> +
->>> +        line = self.val[2:].rstrip()
->>> +
->>> +        if re.match(r'(\.\. +qmp-example)? *::$', line):
->> 
->> After a closer reading of ReST docs and some testing: this isn't quite
->> right, although it works okay for what we have.
->> 
->> A directive's '::' need not be at the end of a line.  The regexp fails
->> to match a qmp-example directive with text after '::'.  No such
->> directives exist right now.
->> 
->> A literal block starts after a '::' at the end of a paragraph,
->> i.e. after '::' and a blank line.  The regexp only matches '::' on its
->> own line, not at the end of a line of text.  It matches it even when
->> it's not followed by a blank line.
->> 
->> In review of v4, I claimed we don't use the contracted form "text::".
->> Not true.  For instance, in block-core.json:
->> 
->>     # @bins: list of io request counts corresponding to histogram
->>     #     intervals, one more element than @boundaries has.  For the
->>     #     example above, @bins may be something like [3, 1, 5, 2], and
->>     #     corresponding histogram looks like::
->>     #
->>     #        5|           *
->>     #        4|           *
->>     #        3| *         *
->>     #        2| *         *    *
->>     #        1| *    *    *    *
->>     #         +------------------
->>     #             10   50   100
->>     #
->
-> Ow, my old histograms)
+Yep, I'd be interested to see what it looks like, even if it is not
+finished / not functional.
 
-Haha!
 
->>     # Since: 4.0
->>     ##
->> 
->> The literal block starts after "like::" and ends before "Since:'.
->> 
->>> +            self._literal_mode = True
->>> +            self._literal_mode_indent = 0
->>> +        elif self._literal_mode and line:
->>> +            indent = re.match(r'^ *', line).end()
->>> +            if self._literal_mode_indent == 0:
->>> +                self._literal_mode_indent = indent
->>> +            elif indent < self._literal_mode_indent:
->>> +                # ReST directives stop at decreasing indentation
->>> +                self._literal_mode = False
->> 
->> This isn't quite right, either.  We need to stop when indentation of
->> non-blank lines drops below the indentation of the line containing the
->> '::'.
->> 
->> Perhaps it's easier for both of us if I fix this on top.  Thoughts?
->
-> No objections, good for me!
-
-I can merge this with a brief note, like so:
-
-    Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-    The detection of example and literal blocks isn't quite correct, but
-    it works well enough, and we can improve on top.
-
-    Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
->>> +
->>> +        if not self._literal_mode:
->>> +            self._validate_doc_line_format(line)
->>> +
->>> +        return line
->>> +
->>> +    def _validate_doc_line_format(self, line: str) -> None:
->>> +        """
->>> +        Validate documentation format rules for a single line:
->>> +        1. Lines should not exceed 70 columns
->>> +        2. Sentences should be separated by two spaces
->>> +        """
->>> +        full_line_length = len(line) + 2  # "# " = 2 characters
->>> +        if full_line_length > 70:
->>> +            # Skip URL lines - they can't be broken
->>> +            if re.match(r' *(https?|ftp)://[^ ]*$', line):
->>> +                pass
->>> +            else:
->>> +                raise QAPIParseError(
->>> +                    self, "documentation line exceeds 70 columns"
->>> +                )
->>> +
->>> +        single_space_pattern = r'(\be\.g\.|^ *\d\.|([.!?])) [A-Z0-9(]'
->>> +        for m in list(re.finditer(single_space_pattern, line)):
->>> +            if not m.group(2):
->>> +                continue
->>> +            # HACK so the error message points to the offending spot
->>> +            self.pos = self.line_pos + 2 + m.start(2) + 1
->>> +            raise QAPIParseError(
->>> +                self, "Use two spaces between sentences\n"
->>> +                "If this not the end of a sentence, please report the bug",
->>> +            )
->>>   
->>>       @staticmethod
->>>       def _match_at_name_colon(string: str) -> Optional[Match[str]]:
->>> diff --git a/tests/qapi-schema/doc-bad-long-line.err b/tests/qapi-schema/doc-bad-long-line.err
->>> new file mode 100644
->>> index 0000000000..611a3b1fef
->>> --- /dev/null
->>> +++ b/tests/qapi-schema/doc-bad-long-line.err
->>> @@ -0,0 +1 @@
->>> +doc-bad-long-line.json:4:1: documentation line exceeds 70 columns
->>> diff --git a/tests/qapi-schema/doc-bad-long-line.json b/tests/qapi-schema/doc-bad-long-line.json
->>> new file mode 100644
->>> index 0000000000..d7f887694d
->>> --- /dev/null
->>> +++ b/tests/qapi-schema/doc-bad-long-line.json
->>> @@ -0,0 +1,6 @@
->>> +##
->>> +# @foo:
->>> +#
->>> +# This line has exactly 71 characters, including spaces and punctuation!
->> 
->> Really?
->
-> Oh, it's 72 characters actually! AI tricked me. Didn't I check it out?
->
-> Maybe:
->
-> # This line has exactly 71 chars, including the leading hash and space.
-
-Works!
-
->>> +##
->>> +{ 'command': 'foo' }
->>> diff --git a/tests/qapi-schema/doc-bad-long-line.out b/tests/qapi-schema/doc-bad-long-line.out
->>> new file mode 100644
->>> index 0000000000..e69de29bb2
->>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.err b/tests/qapi-schema/doc-bad-whitespaces.err
->>> new file mode 100644
->>> index 0000000000..5cca1954c0
->>> --- /dev/null
->>> +++ b/tests/qapi-schema/doc-bad-whitespaces.err
->>> @@ -0,0 +1,2 @@
->>> +doc-bad-whitespaces.json:4:48: Use two spaces between sentences
->>> +If this not the end of a sentence, please report the bug
->>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.json b/tests/qapi-schema/doc-bad-whitespaces.json
->>> new file mode 100644
->>> index 0000000000..b0c318c670
->>> --- /dev/null
->>> +++ b/tests/qapi-schema/doc-bad-whitespaces.json
->>> @@ -0,0 +1,6 @@
->>> +##
->>> +# @foo:
->>> +#
->>> +# Sentences should be split by two whitespaces. But here is only one.
->> 
->> two spaces
->> 
->>> +##
->>> +{ 'command': 'foo' }
->>> diff --git a/tests/qapi-schema/doc-bad-whitespaces.out b/tests/qapi-schema/doc-bad-whitespaces.out
->>> new file mode 100644
->>> index 0000000000..e69de29bb2
->>> diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
->>> index c47025d16d..b24b27db21 100644
->>> --- a/tests/qapi-schema/meson.build
->>> +++ b/tests/qapi-schema/meson.build
->>> @@ -61,8 +61,10 @@ schemas = [
->>>     'doc-bad-event-arg.json',
->>>     'doc-bad-feature.json',
->>>     'doc-bad-indent.json',
->>> +  'doc-bad-long-line.json',
->>>     'doc-bad-symbol.json',
->>>     'doc-bad-union-member.json',
->>> +  'doc-bad-whitespaces.json',
->>>     'doc-before-include.json',
->>>     'doc-before-pragma.json',
->>>     'doc-duplicate-features.json',
-
-Thanks!
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
