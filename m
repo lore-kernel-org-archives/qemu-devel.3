@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF8ACCFA04
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1648CCF9E3
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGL9t-0004VM-R3; Tue, 04 Nov 2025 12:49:31 -0500
+	id 1vGL9F-0004Kr-CZ; Tue, 04 Nov 2025 12:48:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9S-0004NA-4E
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:12 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL92-0004Iv-PZ
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:38 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9Q-0005lR-1A
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:01 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-640e9a53ff6so1978789a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL8z-0005ia-Ju
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:36 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-640a0812658so2833751a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762278537; x=1762883337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762278511; x=1762883311; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yILkf0T8P7LvQ7q+vTBoHw4z3M0o0Y7BvJLfczUoIPQ=;
- b=UWegAhQaCZb/abTL3JEeJDU19DE8LmrJoeHSEeSFdabK41hb9waHQ2YLxtI15oyW/8
- S9tMsVR8GZDQ+re+9PT5BgARexzRjjJudEToek+s6hKSbSUuaKhHCBXeUqVZL1C+dkTG
- dR0LoRwJSs6RSCVjbi6tsxTfSTUdRdKt1FvTzYCjH4XIbgAnmQT56NWDUGzOyr+aKj4g
- ZPbAs7fnOjGJL6+fYRR1NBMsClKTRt/aataOOVAZp0jquqtL/ZPb2ul73k+Mgdycsz0B
- tJeW9yL05Z7/3lihxGYuahu6JdFIDAhMxzD/V1uLmFMUWRGGaTo6m0kPgtj/G+hxzITF
- 9niw==
+ :reply-to; bh=6MvoNhO2a1p+1DZ/73vKddsN0uJ0hFh1RW/xrJuC5yo=;
+ b=FfoaIMRNEJsrx1EJu6AV191DG4TW0fuzWWSiwJOTfcVXgw+34hcAqTXMCmMV5GvHI+
+ RNZ8if1E05mHNdaJ9PhJjtz2w62a0sTCWGdXj3pFimaLHIBx8fVTrRT4fHp/JP1McGKy
+ 43uIzNtpFfsahweOiDRkC5nNe//QfNm9sen+N46hNgF+8E4d+ta8t2XMzoTKZ/rFKE0d
+ IhMpF4x1GUg3x5Ag2jb/YZ9Y6RfM97QQOx5/V+EQnqhHW0gFL80l+YVobgOYk5kygCYs
+ xl3iunmzKEY9HdTIKzkskmBpAHQzJudiLZbLgngQJMdy8S+DiGHjag+ZhWrG/37rbkPz
+ Xnmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762278537; x=1762883337;
+ d=1e100.net; s=20230601; t=1762278511; x=1762883311;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yILkf0T8P7LvQ7q+vTBoHw4z3M0o0Y7BvJLfczUoIPQ=;
- b=IKEfiU5UsCaGibeygxuRQOLACD5DjYAtbRZlAzju4UZCl0Wiu2hLT5Y0LNN3PNq/e/
- whOCpjdOuX9xLzET80F3AQBew7i1zuS04HtTWAwDAlK71/tb9PXna8D3eBKkGWcl4mYn
- lfPlaRxmKKw1jVPB8ppLEQ6mcz0dpqjaHsf15qktssigkrl790n8r7aIhwPqNUXYItnV
- rnCJ7pev4sTyn5gP0pPKs2jkHuYfWeB74078L3kaZ0fA2wcLXOprvvpkUHOVK9ELePhF
- 3RK7m8LG4ABI9hHJ6YU7JJ/w651ij31y+ZvSKYd7Z4oQ/tQ50xGcyfwc0f32kpKMEg5X
- 0AwQ==
-X-Gm-Message-State: AOJu0YzwBEJI06NK3aSAauk4DjyiWx83fPTLjlo78YKlgS7iTLdIpPS+
- RhqDlDM/XVG3cJYBTJuj2tN0F6c59NwX33M0KXelP+Zt78hGDRhm7SKRKSnzJY+8zKCheDtt/On
- BtECufT+7mg==
-X-Gm-Gg: ASbGncsr2LwytYL/eAAeDKgXOhIPweCElE6ZFIaj9S8WxW6zNIANZzKng69Qe4BTWaC
- VqDNJXbYsw6kdRzXYtWem9Otj81578EoP5MeOZZH/bBtiv71CehXvAVKqWfvtSCIJNU/9WKE9bt
- Kn3TgmO6GajOJPvDPp6Jl/4pxRuUbY8Hvju61ELXRtwc2xJZ8Q7ZvNZR3xf9YdGbOdig05NbGmh
- Evhu3m46ySVlG7S/EkcZNJpRNaTgs8MWYP3yRPy4jPO64VROqNJQRdciWN4GFhKzyTyXJGLZ670
- VgBnxbDcMOzA01Dx6Psl6+66lVs4Ok/MceEisoC68brD+WB1SGdEIeyHmxBCWz24LvE6x1C+pd5
- 2Qpxytig28YYpfKroajA7fqvbGuHfhPDoGqAbrVojWPcze5AOkkIK2Yamrgu/WkPLzAPPQrqlgl
- SjnG6pG9kGZIhL3JAcs0jQGg==
-X-Google-Smtp-Source: AGHT+IHuxkydOGlIXGjtwpqfsdvJvR+JXJ9f3GWwoXPGDASM3isHjZ4w1HIz3iGPaTOt45dEaioyyg==
-X-Received: by 2002:a05:6402:13cb:b0:640:9ce9:a8e6 with SMTP id
- 4fb4d7f45d1cf-641058a22c3mr79564a12.4.1762278536551; 
- Tue, 04 Nov 2025 09:48:56 -0800 (PST)
+ bh=6MvoNhO2a1p+1DZ/73vKddsN0uJ0hFh1RW/xrJuC5yo=;
+ b=Mj33M8tJdBE6MyDP4JcPF0OsWoCxo68uDWigWULY/reeMf9npSpesPU6GcIlDBWr5X
+ EjNrgL38zxorB8sNVNgCc/uhJ+wmjyjU5jX/hTZ4/MUFIr4UKHWmG/uicbLsA6flhLtX
+ 3mFDpNyfD+sUxu4NtnTR2A30QubEEBxLhXFWrXuQVEhW5fwZEL2vEtSVWr+1XLUIuOck
+ Bfy3lp3mEy9fu8lPqgbUyX9TQoIMw5z7wUbPvnnGc5tirQwYaz9FJNocLTCFeGlMpRli
+ sp+5EKCcrneR/w9A0Feaz+qsEAwY2FLSKlRWgLvN0wHzBqUXYNwoimDp/C26QZtIwhpl
+ Z+Gw==
+X-Gm-Message-State: AOJu0Yz/j8p6H6UTQXici8h0PyXnewzzAY7RyQ9jtecNbyPTMTu5ZCoJ
+ 27LMKifRoiGZd+hAL/WePdS7BJwis7xi31GuJkHQdf+jBl+FFj346Nnoqfau/wkVmtpwob4xWhP
+ TUBxocSC5Wg==
+X-Gm-Gg: ASbGncvf4qTAPDBE52fgS5X9DecEtzDTVRe/z5ELB5dhOdhxLPrJhgmalkrnykA/DBr
+ 6Akt6n4PWyyxV5bW8nsqAOP/rg/W+JYR43CGPTlJkh70Atjc2TxO+FcM5RZFi750R2qbRqwIMYq
+ yzHPLcGjo/vqWUJycwdu8OV5drkSrIyuBqQwfDpfnDB5gf6GjhNUgaZOK8/twyfmTR7Xlf3N+de
+ 6FBpjJMpoF621rMgg9obiz8DRZJu7t55RLhurwUqMlm4Y6mIedJMyXUzt9MIy/ki6WPJSs7qj0+
+ hVYKBVGf2gn+pLLX9Af+Cos6tPA71GXOjL4jZ2v4Vm3fplsykGFzdYmiEDLjpV/cGz8IbvkFW9S
+ mXuOsD/eFikU+brjMPyfg/v4SfFmGe9cORlmMhkODWjB4kiDHBobEOuZg1ySFU+XUQV43xs+WwX
+ JmnU/74VLKqHvajwUR6ITfAMl6/+wbMJDW
+X-Google-Smtp-Source: AGHT+IHb7epuEjqrGSCfuBPFVg7kwU/R9U8BmDOoq8QQaiOWN3TBrnlt9oo/DmvbnAPVXADxVUUEqw==
+X-Received: by 2002:a05:6402:1ecf:b0:63c:1066:8bec with SMTP id
+ 4fb4d7f45d1cf-64105b7a621mr51174a12.35.1762278511372; 
+ Tue, 04 Nov 2025 09:48:31 -0800 (PST)
 Received: from localhost.localdomain ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e67eb64dsm2578187a12.5.2025.11.04.09.48.55
+ 4fb4d7f45d1cf-640e6806d82sm2602219a12.16.2025.11.04.09.48.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Nov 2025 09:48:56 -0800 (PST)
+ Tue, 04 Nov 2025 09:48:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 5/8] scripts: Add helper script to generate eMMC block device
- images
-Date: Tue,  4 Nov 2025 18:48:20 +0100
-Message-ID: <20251104174823.92412-6-philmd@linaro.org>
+Subject: [PULL 1/8] hw/sd/sdcard: Fix size check for backing block image
+Date: Tue,  4 Nov 2025 18:48:16 +0100
+Message-ID: <20251104174823.92412-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251104174823.92412-1-philmd@linaro.org>
 References: <20251104174823.92412-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,243 +101,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jan Kiszka <jan.kiszka@siemens.com>
 
-As an eMMC block device image may consist of more than just the user
-data partition, provide a helper script that can compose the image from
-boot partitions, an RPMB partition and the user data image. The script
-also does the required size validation and/or rounding.
+Alignment rules apply the the individual partitions (user, boot, later
+on also RPMB) and depend both on the size of the image and the type of
+the device. Up to and including 2GB, the power-of-2 rule applies to the
+user data area. For larger images, multiples of 512 sectors must be used
+for eMMC and multiples of 512K for SD-cards. Fix the check accordingly
+and also detect if the image is too small to even hold the boot
+partitions.
 
 Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <eecefa8e-44ae-45ff-85d0-3f9b786948e0@siemens.com>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Message-ID: <591f6d8a9dc86428723cb6876df6e717cc41a70e.1762261430.git.jan.kiszka@siemens.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- scripts/mkemmc.sh | 216 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 216 insertions(+)
- create mode 100755 scripts/mkemmc.sh
+ hw/sd/sd.c | 69 +++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 48 insertions(+), 21 deletions(-)
 
-diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
-new file mode 100755
-index 00000000000..429388213c6
---- /dev/null
-+++ b/scripts/mkemmc.sh
-@@ -0,0 +1,216 @@
-+#!/bin/sh -e
-+# SPDX-License-Identifier: GPL-2.0-only
-+#
-+# Create eMMC block device image from boot, RPMB and user data images
-+#
-+# Copyright (c) Siemens, 2025
-+#
-+# Authors:
-+#  Jan Kiszka <jan.kiszka@siemens.com>
-+#
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index d7a496d77c9..76e915e1900 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2759,9 +2759,32 @@ static void sd_instance_finalize(Object *obj)
+     timer_free(sd->ocr_power_timer);
+ }
+ 
++static void sd_blk_size_error(SDState *sd, int64_t blk_size,
++                              int64_t blk_size_aligned, const char *rule,
++                              Error **errp)
++{
++    const char *dev_type = sd_is_emmc(sd) ? "eMMC" : "SD card";
++    char *blk_size_str;
 +
-+usage() {
-+    echo "$0 [OPTIONS] USER_IMG[:SIZE] OUTPUT_IMG"
-+    echo ""
-+    echo "SIZE must be a power of 2 up to 2G and multiples of 512 byte from there on."
-+    echo "If no SIZE is specified, the size of USER_ING will be used (rounded up)."
-+    echo ""
-+    echo "Supported options:"
-+    echo "  -b BOOT1_IMG[:SIZE]   Add boot partitions. SIZE must be multiples of 128K. If"
-+    echo "                          no SIZE is specified, the size of BOOT1_IMG will be"
-+    echo "                          used (rounded up). BOOT1_IMG will be stored in boot"
-+    echo "                          partition 1, and a boot partition 2 of the same size"
-+    echo "                          will be created as empty (all zeros) unless -B is"
-+    echo "                          specified as well."
-+    echo "  -B BOOT2_IMG          Fill boot partition 2 with BOOT2_IMG. Must be combined"
-+    echo "                          with -b which is also defining the partition size."
-+    echo "  -r RPMB_IMG[:SIZE]    Add RPMB partition. SIZE must be multiples of 128K. If"
-+    echo "                          no SIZE is specified, the size of RPMB_IMG will be"
-+    echo "                          used (rounded up)."
-+    echo "  -h, --help            This help"
-+    echo ""
-+    echo "All SIZE parameters support the units K, M, G. If SIZE is smaller than the"
-+    echo "associated image, it will be truncated in the output image."
-+    exit "$1"
++    blk_size_str = size_to_str(blk_size);
++    error_setg(errp, "Invalid %s size: %s", dev_type, blk_size_str);
++    g_free(blk_size_str);
++
++    blk_size_str = size_to_str(blk_size_aligned);
++    error_append_hint(errp,
++                      "%s size has to be %s, e.g. %s.\n"
++                      "You can resize disk images with"
++                      " 'qemu-img resize <imagefile> <new-size>'\n"
++                      "(note that this will lose data if you make the"
++                      " image smaller than it currently is).\n",
++                      dev_type, rule, blk_size_str);
++    g_free(blk_size_str);
 +}
 +
-+process_size() {
-+    name=$1
-+    image_file=$2
-+    alignment=$3
-+    image_arg=$4
-+    if [ "${image_arg#*:}" = "$image_arg"  ]; then
-+        if ! size=$(wc -c < "$image_file" 2>/dev/null); then
-+            echo "Missing $name image '$image_file'." >&2
-+            exit 1
-+        fi
-+        if [ "$alignment" = 128 ]; then
-+            size=$(( (size + 128 * 1024 - 1) & ~(128 * 1024 - 1) ))
-+        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
-+            size=$(( (size + 511) & ~511 ))
-+        elif [ $(( size & (size - 1) )) -gt 0 ]; then
-+            n=0
-+            while [ "$size" -gt 0 ]; do
-+                size=$((size >> 1))
-+                n=$((n + 1))
-+            done
-+            size=$((1 << n))
-+        fi
-+    else
-+        value="${image_arg#*:}"
-+        if [ "${value%K}" != "$value" ]; then
-+            size=${value%K}
-+            multiplier=1024
-+        elif [ "${value%M}" != "$value" ]; then
-+            size=${value%M}
-+            multiplier=$((1024 * 1024))
-+        elif [ "${value%G}" != "$value" ]; then
-+            size=${value%G}
-+            multiplier=$((1024 * 1024 * 1024))
-+        else
-+            size=$value
-+            multiplier=1
-+        fi
-+        # check if "$size" is a valid integer by doing a self-comparison
-+        if [ "$size" -eq "$size" ] 2>/dev/null; then
-+            size=$((size * multiplier))
-+        else
-+            echo "Invalid value '$value' specified for $image_file image size." >&2
-+            exit 1
-+        fi
-+        if [ "$alignment" = 128 ]; then
-+            if [ $(( size & (128 * 1024 - 1) )) -ne 0 ]; then
-+                echo "The $name image size must be multiples of 128K." >&2
-+                exit 1
-+            fi
-+        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
-+            if [ $(( size & 511)) -ne 0 ]; then
-+                echo "The $name image size must be multiples of 512 (if >2G)." >&2
-+                exit 1
-+            fi
-+        elif [ $(( size & (size - 1) )) -gt 0 ]; then
-+            echo "The $name image size must be power of 2 (up to 2G)." >&2
-+            exit 1
-+        fi
-+    fi
-+    echo $size
-+}
-+
-+check_truncation() {
-+    image_file=$1
-+    output_size=$2
-+    if [ "$image_file" = "/dev/zero" ]; then
-+        return
-+    fi
-+    if ! actual_size=$(wc -c < "$image_file" 2>/dev/null); then
-+        echo "Missing image '$image_file'." >&2
-+        exit 1
-+    fi
-+    if [ "$actual_size" -gt "$output_size" ]; then
-+        echo "Warning: image '$image_file' will be truncated on output."
-+    fi
-+}
-+
-+userimg=
-+outimg=
-+bootimg1=
-+bootimg2=/dev/zero
-+bootsz=0
-+rpmbimg=
-+rpmbsz=0
-+
-+while [ $# -gt 0 ]; do
-+    case "$1" in
-+        -b)
-+            shift
-+            [ $# -ge 1 ] || usage 1
-+            bootimg1=${1%%:*}
-+            bootsz=$(process_size boot "$bootimg1" 128 "$1")
-+            shift
-+            ;;
-+        -B)
-+            shift
-+            [ $# -ge 1 ] || usage 1
-+            bootimg2=$1
-+            shift
-+            ;;
-+        -r)
-+            shift
-+            [ $# -ge 1 ] || usage 1
-+            rpmbimg=${1%%:*}
-+            rpmbsz=$(process_size RPMB "$rpmbimg" 128 "$1")
-+            shift
-+            ;;
-+        -h|--help)
-+            usage 0
-+            ;;
-+        *)
-+            if [ -z "$userimg" ]; then
-+                userimg=${1%%:*}
-+                usersz=$(process_size user "$userimg" U "$1")
-+            elif [ -z "$outimg" ]; then
-+                outimg=$1
-+            else
-+                usage 1
-+            fi
-+            shift
-+            ;;
-+    esac
-+done
-+
-+[ -n "$outimg" ] || usage 1
-+
-+if [ "$bootsz" -gt $((32640 * 1024)) ]; then
-+    echo "Boot image size is larger than 32640K." >&2
-+    exit 1
-+fi
-+if [ "$rpmbsz" -gt $((16384 * 1024)) ]; then
-+    echo "RPMB image size is larger than 16384K." >&2
-+    exit 1
-+fi
-+
-+echo "Creating eMMC image"
-+
-+truncate -s 0 "$outimg"
-+pos=0
-+
-+if [ "$bootsz" -gt 0 ]; then
-+    echo "  Boot partition 1 and 2:   $((bootsz / 1024))K each"
-+    blocks=$(( bootsz / (128 * 1024) ))
-+    check_truncation "$bootimg1" "$bootsz"
-+    dd if="$bootimg1" of="$outimg" conv=sparse bs=128K count=$blocks \
-+        status=none
-+    check_truncation "$bootimg2" "$bootsz"
-+    dd if="$bootimg2" of="$outimg" conv=sparse bs=128K count=$blocks \
-+        seek=$blocks status=none
-+    pos=$((2 * bootsz))
-+fi
-+
-+if [ "$rpmbsz" -gt 0 ]; then
-+    echo "  RPMB partition:           $((rpmbsz / 1024))K"
-+    blocks=$(( rpmbsz / (128 * 1024) ))
-+    check_truncation "$rpmbimg" "$rpmbsz"
-+    dd if="$rpmbimg" of="$outimg" conv=sparse bs=128K count=$blocks \
-+        seek=$(( pos / (128 * 1024) )) status=none
-+    pos=$((pos + rpmbsz))
-+fi
-+
-+if [ "$usersz" -lt 1024 ]; then
-+    echo "  User data:                $usersz bytes"
-+elif [ "$usersz" -lt $((1024 * 1024)) ]; then
-+    echo "  User data:                $(( (usersz + 1023) / 1024 ))K ($usersz)"
-+elif [ "$usersz" -lt $((1024 * 1024 * 1024)) ]; then
-+    echo "  User data:                $(( (usersz + 1048575) / 1048576))M ($usersz)"
-+else
-+    echo "  User data:                $(( (usersz + 1073741823) / 1073741824))G ($usersz)"
-+fi
-+check_truncation "$userimg" "$usersz"
-+dd if="$userimg" of="$outimg" conv=sparse bs=128K seek=$(( pos / (128 * 1024) )) \
-+    count=$(( (usersz + 128 * 1024 - 1) / (128 * 1024) )) status=none
-+pos=$((pos + usersz))
-+truncate -s $pos "$outimg"
-+
-+echo ""
-+echo "Instantiate by appending to the qemu command line:"
-+echo "  -drive file=$outimg,if=none,format=raw,id=emmc-img"
-+echo "  -device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=emmc-img"
+ static void sd_realize(DeviceState *dev, Error **errp)
+ {
+     SDState *sd = SDMMC_COMMON(dev);
++    int64_t blk_size = -ENOMEDIUM;
+     int ret;
+ 
+     switch (sd->spec_version) {
+@@ -2774,32 +2797,36 @@ static void sd_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     if (sd->blk) {
+-        int64_t blk_size;
+-
+         if (!blk_supports_write_perm(sd->blk)) {
+             error_setg(errp, "Cannot use read-only drive as SD card");
+             return;
+         }
+ 
+         blk_size = blk_getlength(sd->blk);
+-        if (blk_size > 0 && !is_power_of_2(blk_size)) {
+-            int64_t blk_size_aligned = pow2ceil(blk_size);
+-            char *blk_size_str;
+-
+-            blk_size_str = size_to_str(blk_size);
+-            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
+-            g_free(blk_size_str);
+-
+-            blk_size_str = size_to_str(blk_size_aligned);
+-            error_append_hint(errp,
+-                              "SD card size has to be a power of 2, e.g. %s.\n"
+-                              "You can resize disk images with"
+-                              " 'qemu-img resize <imagefile> <new-size>'\n"
+-                              "(note that this will lose data if you make the"
+-                              " image smaller than it currently is).\n",
+-                              blk_size_str);
+-            g_free(blk_size_str);
+-
++    }
++    if (blk_size >= 0) {
++        blk_size -= sd->boot_part_size * 2;
++        if (blk_size > SDSC_MAX_CAPACITY) {
++            if (sd_is_emmc(sd) &&
++                !QEMU_IS_ALIGNED(blk_size, 1 << HWBLOCK_SHIFT)) {
++                int64_t blk_size_aligned =
++                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
++                sd_blk_size_error(sd, blk_size, blk_size_aligned,
++                                  "multiples of 512", errp);
++                return;
++            } else if (!sd_is_emmc(sd) &&
++                !QEMU_IS_ALIGNED(blk_size, 512 * KiB)) {
++                int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
++                sd_blk_size_error(sd, blk_size, blk_size_aligned,
++                                  "multiples of 512K", errp);
++                return;
++            }
++        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
++            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power of 2",
++                              errp);
++            return;
++        } else if (blk_size < 0) {
++            error_setg(errp, "eMMC image smaller than boot partitions");
+             return;
+         }
+ 
+@@ -2810,7 +2837,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+         }
+         blk_set_dev_ops(sd->blk, &sd_block_ops, sd);
+     }
+-    if (sd->boot_part_size % (128 * KiB) ||
++    if (!QEMU_IS_ALIGNED(sd->boot_part_size, 128 * KiB) ||
+         sd->boot_part_size > 255 * 128 * KiB) {
+         g_autofree char *size_str = size_to_str(sd->boot_part_size);
+ 
 -- 
 2.51.0
 
