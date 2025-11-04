@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93422CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF8ACCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGL9G-0004LT-L0; Tue, 04 Nov 2025 12:48:51 -0500
+	id 1vGL9t-0004VM-R3; Tue, 04 Nov 2025 12:49:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL8v-0004IR-KF
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:32 -0500
-Received: from mail-ed1-x542.google.com ([2a00:1450:4864:20::542])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9S-0004NA-4E
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:12 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL8t-0005ht-Jv
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:48:29 -0500
-Received: by mail-ed1-x542.google.com with SMTP id
- 4fb4d7f45d1cf-640a0812658so2833534a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGL9Q-0005lR-1A
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:49:01 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-640e9a53ff6so1978789a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 09:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762278505; x=1762883305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=/zhoairPLtQSrbGeNqEjZd+Q/UzplYaMRB9A0sulArY=;
- b=jdE9Z6dJUwom7pd0Owz8iws2ipC6ENz4Koe+CmKJz8vEsyypw/hxsXPeOssw+B+fhA
- pKToNh123fZD10mj3bRPPgFR6aHjCv03YsJgNs8iPqTTVy/Nx47aaycigWGrvL/1vuTV
- bxmItZeelB0uHvDsp9IgdJ4H38OfIcIu2wxLn9jUztdVA29XMi01ub822F1VkKVAkbiU
- Pmt5ZFIDX1ykoiRCtiUnNcE3z7wtKpMdK/LMIRvQBSYfNXgL1jSTPzEinnMEwt7lMZdY
- RnebkoTjAinvYlp6UIjPeWw8G8PXC5MYDBkWQqO8cR++6m8a8p3gaFch7UQicsKjXHPK
- vszw==
+ d=linaro.org; s=google; t=1762278537; x=1762883337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=yILkf0T8P7LvQ7q+vTBoHw4z3M0o0Y7BvJLfczUoIPQ=;
+ b=UWegAhQaCZb/abTL3JEeJDU19DE8LmrJoeHSEeSFdabK41hb9waHQ2YLxtI15oyW/8
+ S9tMsVR8GZDQ+re+9PT5BgARexzRjjJudEToek+s6hKSbSUuaKhHCBXeUqVZL1C+dkTG
+ dR0LoRwJSs6RSCVjbi6tsxTfSTUdRdKt1FvTzYCjH4XIbgAnmQT56NWDUGzOyr+aKj4g
+ ZPbAs7fnOjGJL6+fYRR1NBMsClKTRt/aataOOVAZp0jquqtL/ZPb2ul73k+Mgdycsz0B
+ tJeW9yL05Z7/3lihxGYuahu6JdFIDAhMxzD/V1uLmFMUWRGGaTo6m0kPgtj/G+hxzITF
+ 9niw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762278505; x=1762883305;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/zhoairPLtQSrbGeNqEjZd+Q/UzplYaMRB9A0sulArY=;
- b=Vpy9HJF8lw6sAoFqmPiO3LKs+t0jgsuqqB5H+GKmuRfK7ZD+VVo5/Gra17rQN/UXH+
- vxknVt1RHBas0ZxEuvGlUxe0+GBhKMosDqKnvuIeN9CKaLtiZzMuGqtEeuEo29o0BhQg
- upP26sC/SMbRxBFTFX+Hx6hvY3WXrS0AYZHrp85T40nuNAFFSyyYc0Rcp9++OiCtTGco
- tLkDzAnnyOpf3o5pUVbFrppYxtl5t9502ikgEmlSv1sFNwkGYA5nbDx3DWZaEalECbaj
- F6ayWD9XvgvfeybxeNXkp8y2tIrFZ8+VQ2Rc41skUyn8NnMFysOAQ8654sV7C/4mlv8X
- bE0Q==
-X-Gm-Message-State: AOJu0Yw6Zmc1pqCdpIpNDgkSAuGdhZkymF6bbzfhWiFp3bU9TP/UuV8v
- pss/1wWV4cc9r6JfWaN5HrF/04Bt3dQDHcVvVRrAgh4ajOPVMK/4Jja1mkOoA12+es1YEsfC/Vj
- nqoh0nTQ53x9v
-X-Gm-Gg: ASbGncvA8iYaAnghB5ep2aAfbKvElPHdkKbbanxTKifvnvRpofMb7AkPQXN5gc1tfoL
- ox57rFoBgBwbQi8hTh6Zewp8vAsxARV3xBbdENjAGvthFvD+1Wtq0mb1F6lfDu5fQ8sAKOpkZXt
- 1rQdP+SZ7MXjVuU4/C4HJVCThXKLWqYkzXsF5deLDVXvjxx4on9OENu8ZWk9OrDy7Ji/WbBaFm4
- 80UFXbhfeDgtGzvLmS6BLSoODFHk+MPFaL7oaOutf24SksxmxGTy4RIMDHOLCMoN902KxH8G0hq
- /bY8u1vJmkmXJg1KQ0J8tJOO7kyo8YVPr75eOFxUvV5cixjagcOVzA6Wbk+uHYrm29DTd59Sxfb
- ip0lJSm0Vzdk3tDjaROHTo2+XuX8t+54chs4aM3pDdQ4azvkUdOsRv6wCmMYk6H3xyE3LMLuPaU
- JE/krvE2w8rWqQLmsZeYcsvQ==
-X-Google-Smtp-Source: AGHT+IFP7bJ8czVPMCYPIaa4nrIlccRC6qFxDFZX1aVnUpZFj+axnjz8BP2V1EU3J4G3j3H861Lp6Q==
-X-Received: by 2002:a05:6402:3509:b0:640:b2a1:8199 with SMTP id
- 4fb4d7f45d1cf-64105b7a131mr47411a12.36.1762278505100; 
- Tue, 04 Nov 2025 09:48:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1762278537; x=1762883337;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yILkf0T8P7LvQ7q+vTBoHw4z3M0o0Y7BvJLfczUoIPQ=;
+ b=IKEfiU5UsCaGibeygxuRQOLACD5DjYAtbRZlAzju4UZCl0Wiu2hLT5Y0LNN3PNq/e/
+ whOCpjdOuX9xLzET80F3AQBew7i1zuS04HtTWAwDAlK71/tb9PXna8D3eBKkGWcl4mYn
+ lfPlaRxmKKw1jVPB8ppLEQ6mcz0dpqjaHsf15qktssigkrl790n8r7aIhwPqNUXYItnV
+ rnCJ7pev4sTyn5gP0pPKs2jkHuYfWeB74078L3kaZ0fA2wcLXOprvvpkUHOVK9ELePhF
+ 3RK7m8LG4ABI9hHJ6YU7JJ/w651ij31y+ZvSKYd7Z4oQ/tQ50xGcyfwc0f32kpKMEg5X
+ 0AwQ==
+X-Gm-Message-State: AOJu0YzwBEJI06NK3aSAauk4DjyiWx83fPTLjlo78YKlgS7iTLdIpPS+
+ RhqDlDM/XVG3cJYBTJuj2tN0F6c59NwX33M0KXelP+Zt78hGDRhm7SKRKSnzJY+8zKCheDtt/On
+ BtECufT+7mg==
+X-Gm-Gg: ASbGncsr2LwytYL/eAAeDKgXOhIPweCElE6ZFIaj9S8WxW6zNIANZzKng69Qe4BTWaC
+ VqDNJXbYsw6kdRzXYtWem9Otj81578EoP5MeOZZH/bBtiv71CehXvAVKqWfvtSCIJNU/9WKE9bt
+ Kn3TgmO6GajOJPvDPp6Jl/4pxRuUbY8Hvju61ELXRtwc2xJZ8Q7ZvNZR3xf9YdGbOdig05NbGmh
+ Evhu3m46ySVlG7S/EkcZNJpRNaTgs8MWYP3yRPy4jPO64VROqNJQRdciWN4GFhKzyTyXJGLZ670
+ VgBnxbDcMOzA01Dx6Psl6+66lVs4Ok/MceEisoC68brD+WB1SGdEIeyHmxBCWz24LvE6x1C+pd5
+ 2Qpxytig28YYpfKroajA7fqvbGuHfhPDoGqAbrVojWPcze5AOkkIK2Yamrgu/WkPLzAPPQrqlgl
+ SjnG6pG9kGZIhL3JAcs0jQGg==
+X-Google-Smtp-Source: AGHT+IHuxkydOGlIXGjtwpqfsdvJvR+JXJ9f3GWwoXPGDASM3isHjZ4w1HIz3iGPaTOt45dEaioyyg==
+X-Received: by 2002:a05:6402:13cb:b0:640:9ce9:a8e6 with SMTP id
+ 4fb4d7f45d1cf-641058a22c3mr79564a12.4.1762278536551; 
+ Tue, 04 Nov 2025 09:48:56 -0800 (PST)
 Received: from localhost.localdomain ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6a5cb47sm2599698a12.19.2025.11.04.09.48.24
+ 4fb4d7f45d1cf-640e67eb64dsm2578187a12.5.2025.11.04.09.48.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Nov 2025 09:48:24 -0800 (PST)
+ Tue, 04 Nov 2025 09:48:56 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/8] Misc HW patches for 2025-11-04
-Date: Tue,  4 Nov 2025 18:48:15 +0100
-Message-ID: <20251104174823.92412-1-philmd@linaro.org>
+Subject: [PULL 5/8] scripts: Add helper script to generate eMMC block device
+ images
+Date: Tue,  4 Nov 2025 18:48:20 +0100
+Message-ID: <20251104174823.92412-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251104174823.92412-1-philmd@linaro.org>
+References: <20251104174823.92412-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::542;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x542.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,55 +100,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e9c692eabbbb7f395347605a6ef33a32d398ea25:
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-  Merge tag 'next-pr-pull-request' of https://gitlab.com/berrange/qemu into staging (2025-11-04 15:17:31 +0100)
+As an eMMC block device image may consist of more than just the user
+data partition, provide a helper script that can compose the image from
+boot partitions, an RPMB partition and the user data image. The script
+also does the required size validation and/or rounding.
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20251104
-
-for you to fetch changes up to f79fec0275ee7a5151ced9b893c4af676c7f5db6:
-
-  hw/audio: Remove dead code from ac97_realize (2025-11-04 18:19:16 +0100)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Add RPMB emulation to eMMC model :)
-- Use generic MachineState::fdt field in microvm machine
-- Remove dead code in ac97_realize()
-----------------------------------------------------------------
-
-Jan Kiszka (5):
-  hw/sd/sdcard: Fix size check for backing block image
-  hw/sd/sdcard: Add basic support for RPMB partition
-  hw/sd/sdcard: Handle RPMB MAC field
-  scripts: Add helper script to generate eMMC block device images
-  docs: Add eMMC device model description
-
-Jan Luebbe (1):
-  hw/sd/sdcard: Allow user creation of eMMCs
-
-Luigi Leonardi (1):
-  hw/i386/microvm: Use fdt field from MachineState
-
-Osama Abdelkader (1):
-  hw/audio: Remove dead code from ac97_realize
-
- docs/system/device-emulation.rst |   1 +
- docs/system/devices/emmc.rst     |  55 +++++
- hw/sd/sdmmc-internal.h           |  22 ++
- include/hw/i386/microvm.h        |   2 -
- hw/audio/ac97.c                  |  19 --
- hw/i386/microvm-dt.c             |  96 ++++----
- hw/sd/sd.c                       | 368 ++++++++++++++++++++++++++++---
- hw/sd/trace-events               |   2 +
- scripts/mkemmc.sh                | 216 ++++++++++++++++++
- 9 files changed, 686 insertions(+), 95 deletions(-)
- create mode 100644 docs/system/devices/emmc.rst
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <eecefa8e-44ae-45ff-85d0-3f9b786948e0@siemens.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ scripts/mkemmc.sh | 216 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 216 insertions(+)
  create mode 100755 scripts/mkemmc.sh
 
+diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
+new file mode 100755
+index 00000000000..429388213c6
+--- /dev/null
++++ b/scripts/mkemmc.sh
+@@ -0,0 +1,216 @@
++#!/bin/sh -e
++# SPDX-License-Identifier: GPL-2.0-only
++#
++# Create eMMC block device image from boot, RPMB and user data images
++#
++# Copyright (c) Siemens, 2025
++#
++# Authors:
++#  Jan Kiszka <jan.kiszka@siemens.com>
++#
++
++usage() {
++    echo "$0 [OPTIONS] USER_IMG[:SIZE] OUTPUT_IMG"
++    echo ""
++    echo "SIZE must be a power of 2 up to 2G and multiples of 512 byte from there on."
++    echo "If no SIZE is specified, the size of USER_ING will be used (rounded up)."
++    echo ""
++    echo "Supported options:"
++    echo "  -b BOOT1_IMG[:SIZE]   Add boot partitions. SIZE must be multiples of 128K. If"
++    echo "                          no SIZE is specified, the size of BOOT1_IMG will be"
++    echo "                          used (rounded up). BOOT1_IMG will be stored in boot"
++    echo "                          partition 1, and a boot partition 2 of the same size"
++    echo "                          will be created as empty (all zeros) unless -B is"
++    echo "                          specified as well."
++    echo "  -B BOOT2_IMG          Fill boot partition 2 with BOOT2_IMG. Must be combined"
++    echo "                          with -b which is also defining the partition size."
++    echo "  -r RPMB_IMG[:SIZE]    Add RPMB partition. SIZE must be multiples of 128K. If"
++    echo "                          no SIZE is specified, the size of RPMB_IMG will be"
++    echo "                          used (rounded up)."
++    echo "  -h, --help            This help"
++    echo ""
++    echo "All SIZE parameters support the units K, M, G. If SIZE is smaller than the"
++    echo "associated image, it will be truncated in the output image."
++    exit "$1"
++}
++
++process_size() {
++    name=$1
++    image_file=$2
++    alignment=$3
++    image_arg=$4
++    if [ "${image_arg#*:}" = "$image_arg"  ]; then
++        if ! size=$(wc -c < "$image_file" 2>/dev/null); then
++            echo "Missing $name image '$image_file'." >&2
++            exit 1
++        fi
++        if [ "$alignment" = 128 ]; then
++            size=$(( (size + 128 * 1024 - 1) & ~(128 * 1024 - 1) ))
++        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
++            size=$(( (size + 511) & ~511 ))
++        elif [ $(( size & (size - 1) )) -gt 0 ]; then
++            n=0
++            while [ "$size" -gt 0 ]; do
++                size=$((size >> 1))
++                n=$((n + 1))
++            done
++            size=$((1 << n))
++        fi
++    else
++        value="${image_arg#*:}"
++        if [ "${value%K}" != "$value" ]; then
++            size=${value%K}
++            multiplier=1024
++        elif [ "${value%M}" != "$value" ]; then
++            size=${value%M}
++            multiplier=$((1024 * 1024))
++        elif [ "${value%G}" != "$value" ]; then
++            size=${value%G}
++            multiplier=$((1024 * 1024 * 1024))
++        else
++            size=$value
++            multiplier=1
++        fi
++        # check if "$size" is a valid integer by doing a self-comparison
++        if [ "$size" -eq "$size" ] 2>/dev/null; then
++            size=$((size * multiplier))
++        else
++            echo "Invalid value '$value' specified for $image_file image size." >&2
++            exit 1
++        fi
++        if [ "$alignment" = 128 ]; then
++            if [ $(( size & (128 * 1024 - 1) )) -ne 0 ]; then
++                echo "The $name image size must be multiples of 128K." >&2
++                exit 1
++            fi
++        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
++            if [ $(( size & 511)) -ne 0 ]; then
++                echo "The $name image size must be multiples of 512 (if >2G)." >&2
++                exit 1
++            fi
++        elif [ $(( size & (size - 1) )) -gt 0 ]; then
++            echo "The $name image size must be power of 2 (up to 2G)." >&2
++            exit 1
++        fi
++    fi
++    echo $size
++}
++
++check_truncation() {
++    image_file=$1
++    output_size=$2
++    if [ "$image_file" = "/dev/zero" ]; then
++        return
++    fi
++    if ! actual_size=$(wc -c < "$image_file" 2>/dev/null); then
++        echo "Missing image '$image_file'." >&2
++        exit 1
++    fi
++    if [ "$actual_size" -gt "$output_size" ]; then
++        echo "Warning: image '$image_file' will be truncated on output."
++    fi
++}
++
++userimg=
++outimg=
++bootimg1=
++bootimg2=/dev/zero
++bootsz=0
++rpmbimg=
++rpmbsz=0
++
++while [ $# -gt 0 ]; do
++    case "$1" in
++        -b)
++            shift
++            [ $# -ge 1 ] || usage 1
++            bootimg1=${1%%:*}
++            bootsz=$(process_size boot "$bootimg1" 128 "$1")
++            shift
++            ;;
++        -B)
++            shift
++            [ $# -ge 1 ] || usage 1
++            bootimg2=$1
++            shift
++            ;;
++        -r)
++            shift
++            [ $# -ge 1 ] || usage 1
++            rpmbimg=${1%%:*}
++            rpmbsz=$(process_size RPMB "$rpmbimg" 128 "$1")
++            shift
++            ;;
++        -h|--help)
++            usage 0
++            ;;
++        *)
++            if [ -z "$userimg" ]; then
++                userimg=${1%%:*}
++                usersz=$(process_size user "$userimg" U "$1")
++            elif [ -z "$outimg" ]; then
++                outimg=$1
++            else
++                usage 1
++            fi
++            shift
++            ;;
++    esac
++done
++
++[ -n "$outimg" ] || usage 1
++
++if [ "$bootsz" -gt $((32640 * 1024)) ]; then
++    echo "Boot image size is larger than 32640K." >&2
++    exit 1
++fi
++if [ "$rpmbsz" -gt $((16384 * 1024)) ]; then
++    echo "RPMB image size is larger than 16384K." >&2
++    exit 1
++fi
++
++echo "Creating eMMC image"
++
++truncate -s 0 "$outimg"
++pos=0
++
++if [ "$bootsz" -gt 0 ]; then
++    echo "  Boot partition 1 and 2:   $((bootsz / 1024))K each"
++    blocks=$(( bootsz / (128 * 1024) ))
++    check_truncation "$bootimg1" "$bootsz"
++    dd if="$bootimg1" of="$outimg" conv=sparse bs=128K count=$blocks \
++        status=none
++    check_truncation "$bootimg2" "$bootsz"
++    dd if="$bootimg2" of="$outimg" conv=sparse bs=128K count=$blocks \
++        seek=$blocks status=none
++    pos=$((2 * bootsz))
++fi
++
++if [ "$rpmbsz" -gt 0 ]; then
++    echo "  RPMB partition:           $((rpmbsz / 1024))K"
++    blocks=$(( rpmbsz / (128 * 1024) ))
++    check_truncation "$rpmbimg" "$rpmbsz"
++    dd if="$rpmbimg" of="$outimg" conv=sparse bs=128K count=$blocks \
++        seek=$(( pos / (128 * 1024) )) status=none
++    pos=$((pos + rpmbsz))
++fi
++
++if [ "$usersz" -lt 1024 ]; then
++    echo "  User data:                $usersz bytes"
++elif [ "$usersz" -lt $((1024 * 1024)) ]; then
++    echo "  User data:                $(( (usersz + 1023) / 1024 ))K ($usersz)"
++elif [ "$usersz" -lt $((1024 * 1024 * 1024)) ]; then
++    echo "  User data:                $(( (usersz + 1048575) / 1048576))M ($usersz)"
++else
++    echo "  User data:                $(( (usersz + 1073741823) / 1073741824))G ($usersz)"
++fi
++check_truncation "$userimg" "$usersz"
++dd if="$userimg" of="$outimg" conv=sparse bs=128K seek=$(( pos / (128 * 1024) )) \
++    count=$(( (usersz + 128 * 1024 - 1) / (128 * 1024) )) status=none
++pos=$((pos + usersz))
++truncate -s $pos "$outimg"
++
++echo ""
++echo "Instantiate by appending to the qemu command line:"
++echo "  -drive file=$outimg,if=none,format=raw,id=emmc-img"
++echo "  -device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=emmc-img"
 -- 
 2.51.0
 
