@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E14CCFA05
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 03:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D23CCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 03:14:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vG7V4-0002dz-5C; Mon, 03 Nov 2025 22:14:26 -0500
+	id 1vG7VY-00043o-7I; Mon, 03 Nov 2025 22:14:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG7Uj-0002WW-SD; Mon, 03 Nov 2025 22:14:11 -0500
+ id 1vG7VW-0003wq-9o; Mon, 03 Nov 2025 22:14:54 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vG7Ud-00034Q-Qe; Mon, 03 Nov 2025 22:14:03 -0500
+ id 1vG7VU-00034Q-4A; Mon, 03 Nov 2025 22:14:53 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 4 Nov
- 2025 11:13:31 +0800
+ 2025 11:13:35 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 4 Nov 2025 11:13:31 +0800
+ Transport; Tue, 4 Nov 2025 11:13:35 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v4 09/30] hw/arm/aspeed: Split Witherspoon machine into a
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v4 16/30] hw/arm/aspeed: Split Palmetto machine into a
  separate source file for maintainability
-Date: Tue, 4 Nov 2025 11:12:47 +0800
-Message-ID: <20251104031325.146374-10-jamin_lin@aspeedtech.com>
+Date: Tue, 4 Nov 2025 11:12:54 +0800
+Message-ID: <20251104031325.146374-17-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251104031325.146374-1-jamin_lin@aspeedtech.com>
 References: <20251104031325.146374-1-jamin_lin@aspeedtech.com>
@@ -68,160 +67,131 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit moves the Witherspoon BMC machine implementation out of
-aspeed.c and into a new dedicated file aspeed_ast2500_witherspoon.c.
+This commit moves the OpenPOWER Palmetto BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2400_palmetto.c.
 
-To support splitting Witherspoon into a dedicated source file,
-a new WITHERSPOON_BMC_HW_STRAP1 macro is added as a copy of
-ROMULUS_BMC_HW_STRAP1.
-
-The change is part of a broader effort to modularize Aspeed board
-definitions, allowing each machine type to be maintained and updated
-independently. By isolating Witherspoon logic, the aspeed.c file
-becomes cleaner and easier to manage as more platforms are added.
+This refactor continues the modularization effort for Aspeed platform support,
+placing each board’s logic in its own dedicated source file.
+It improves maintainability, readability, and simplifies future development for
+new platforms without cluttering aspeed.c.
 
 Key updates include:
-
-- Moved witherspoon_bmc_i2c_init() and related LED setup code into
-aspeed_ast2500_witherspoon.c.
-- Added WITHERSPOON_BMC_HW_STRAP1 replacement macro for local use.
-- Removed aspeed_machine_witherspoon_class_init() and type
-registration from aspeed.c.
-- Added the new file to meson.build for compilation.
+- Moved PALMETTO_BMC_HW_STRAP1 macro definition from into the new file.
+- Moved palmetto_bmc_i2c_init() I²C initialization logic into the new file.
+- Moved aspeed_machine_palmetto_class_init() and type registration.
+- Added aspeed_ast2400_palmetto.c to the build system (meson.build).
+- Removed all Palmetto-specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                     |  82 --------------------
- hw/arm/aspeed_ast2500_witherspoon.c | 113 ++++++++++++++++++++++++++++
- hw/arm/meson.build                  |   1 +
- 3 files changed, 114 insertions(+), 82 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2500_witherspoon.c
+ hw/arm/aspeed.c                  | 60 -----------------------
+ hw/arm/aspeed_ast2400_palmetto.c | 81 ++++++++++++++++++++++++++++++++
+ hw/arm/meson.build               |  1 +
+ 3 files changed, 82 insertions(+), 60 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2400_palmetto.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 731ca7a1aa..74eb8077da 100644
+index fbd27020bd..15d3b045ac 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -117,9 +117,6 @@ static struct arm_boot_info aspeed_board_binfo = {
-         SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
-         SCU_AST2500_HW_STRAP_RESERVED1)
+@@ -43,20 +43,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+ #define ASPEED_RAM_SIZE(sz) (sz)
+ #endif
  
--/* Witherspoon hardware value: 0xF10AD216 (but use romulus definition) */
--#define WITHERSPOON_BMC_HW_STRAP1 ROMULUS_BMC_HW_STRAP1
+-/* Palmetto hardware value: 0x120CE416 */
+-#define PALMETTO_BMC_HW_STRAP1 (                                        \
+-        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_256MB) |               \
+-        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2 /* DDR3 with CL=6, CWL=5 */) | \
+-        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
+-        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_48M_IN) |       \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN) |                \
+-        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
+-        SCU_HW_STRAP_SPI_WIDTH |                                        \
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+-        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 -
- /* Quanta-Q71l hardware value */
- #define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
-         SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
-@@ -537,63 +534,6 @@ static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
- 
+ /* AST2600 evb hardware value */
+ #define AST2600_EVB_HW_STRAP1 0x000000C0
+ #define AST2600_EVB_HW_STRAP2 0x00000003
+@@ -312,30 +298,6 @@ static void aspeed_machine_init(MachineState *machine)
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
  }
  
--static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+-static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
 -{
--    static const struct {
--        unsigned gpio_id;
--        LEDColor color;
--        const char *description;
--        bool gpio_polarity;
--    } pca1_leds[] = {
--        {13, LED_COLOR_GREEN, "front-fault-4",  GPIO_POLARITY_ACTIVE_LOW},
--        {14, LED_COLOR_GREEN, "front-power-3",  GPIO_POLARITY_ACTIVE_LOW},
--        {15, LED_COLOR_GREEN, "front-id-5",     GPIO_POLARITY_ACTIVE_LOW},
--    };
 -    AspeedSoCState *soc = bmc->soc;
--    uint8_t *eeprom_buf = g_malloc0(8 * 1024);
 -    DeviceState *dev;
--    LEDState *led;
--
--    /* Bus 3: TODO bmp280@77 */
--    dev = DEVICE(i2c_slave_new(TYPE_PCA9552, 0x60));
--    qdev_prop_set_string(dev, "description", "pca1");
--    i2c_slave_realize_and_unref(I2C_SLAVE(dev),
--                                aspeed_i2c_get_bus(&soc->i2c, 3),
--                                &error_fatal);
--
--    for (size_t i = 0; i < ARRAY_SIZE(pca1_leds); i++) {
--        led = led_create_simple(OBJECT(bmc),
--                                pca1_leds[i].gpio_polarity,
--                                pca1_leds[i].color,
--                                pca1_leds[i].description);
--        qdev_connect_gpio_out(dev, pca1_leds[i].gpio_id,
--                              qdev_get_gpio_in(DEVICE(led), 0));
--    }
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "dps310", 0x76);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "max31785", 0x52);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "tmp423", 0x4c);
--
--    /* The Witherspoon expects a TMP275 but a TMP105 is compatible */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
--                     0x4a);
+-    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
 -
 -    /*
--     * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
--     * good enough
+-     * The palmetto platform expects a ds3231 RTC but a ds1338 is
+-     * enough to provide basic RTC features. Alarms will be missing
 -     */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
 -
--    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
 -                          eeprom_buf);
--    dev = DEVICE(i2c_slave_new(TYPE_PCA9552, 0x60));
--    qdev_prop_set_string(dev, "description", "pca0");
--    i2c_slave_realize_and_unref(I2C_SLAVE(dev),
--                                aspeed_i2c_get_bus(&soc->i2c, 11),
--                                &error_fatal);
--    /* Bus 11: TODO ucd90160@64 */
+-
+-    /* add a TMP423 temperature sensor */
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
+-                                         "tmp423", 0x4c));
+-    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
+-    object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
 -}
 -
- static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
  {
      AspeedSoCState *soc = bmc->soc;
-@@ -1397,23 +1337,6 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
- };
+@@ -1042,23 +1004,6 @@ static void aspeed_machine_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_class_props_init(oc);
+ }
  
--static void aspeed_machine_witherspoon_class_init(ObjectClass *oc,
--                                                  const void *data)
+-static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
+-                                               const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "OpenPOWER Witherspoon BMC (ARM1176)";
--    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = WITHERSPOON_BMC_HW_STRAP1;
--    amc->fmc_model = "mx25l25635f";
--    amc->spi_model = "mx66l1g45g";
--    amc->num_cs    = 2;
--    amc->i2c_init  = witherspoon_bmc_i2c_init;
--    mc->default_ram_size = 512 * MiB;
+-    mc->desc       = "OpenPOWER Palmetto BMC (ARM926EJ-S)";
+-    amc->soc_name  = "ast2400-a1";
+-    amc->hw_strap1 = PALMETTO_BMC_HW_STRAP1;
+-    amc->fmc_model = "n25q256a";
+-    amc->spi_model = "mx25l25635f";
+-    amc->num_cs    = 1;
+-    amc->i2c_init  = palmetto_bmc_i2c_init;
+-    mc->default_ram_size       = 256 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
  static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
                                                    const void *data)
  {
-@@ -1789,11 +1712,6 @@ static const TypeInfo aspeed_machine_types[] = {
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_sonorapass_class_init,
-         .interfaces    = arm_machine_interfaces,
--    }, {
--        .name          = MACHINE_TYPE_NAME("witherspoon-bmc"),
+@@ -1405,11 +1350,6 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+ 
+ static const TypeInfo aspeed_machine_types[] = {
+     {
+-        .name          = MACHINE_TYPE_NAME("palmetto-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_witherspoon_class_init,
+-        .class_init    = aspeed_machine_palmetto_class_init,
 -        .interfaces    = arm_machine_interfaces,
-     }, {
+-    }, {
          .name          = MACHINE_TYPE_NAME("ast2600-evb"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2500_witherspoon.c b/hw/arm/aspeed_ast2500_witherspoon.c
+         .class_init    = aspeed_machine_ast2600_evb_class_init,
+diff --git a/hw/arm/aspeed_ast2400_palmetto.c b/hw/arm/aspeed_ast2400_palmetto.c
 new file mode 100644
-index 0000000000..52f7ced70a
+index 0000000000..1f49fdaab4
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2500_witherspoon.c
-@@ -0,0 +1,113 @@
++++ b/hw/arm/aspeed_ast2400_palmetto.c
+@@ -0,0 +1,81 @@
 +/*
-+ * OpenPOWER Witherspoon
++ * OpenPOWER Palmetto
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -233,118 +203,86 @@ index 0000000000..52f7ced70a
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/misc/led.h"
-+#include "hw/sensor/tmp105.h"
 +#include "hw/i2c/smbus_eeprom.h"
-+#include "hw/gpio/pca9552.h"
 +
-+/* Witherspoon hardware value: 0xF10AD216 */
-+#define WITHERSPOON_BMC_HW_STRAP1 (                                     \
-+        AST2500_HW_STRAP1_DEFAULTS |                                    \
-+        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
-+        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
-+        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-+        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
-+        SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
-+        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
++/* Palmetto hardware value: 0x120CE416 */
++#define PALMETTO_BMC_HW_STRAP1 (                                        \
++        SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_256MB) |               \
++        SCU_AST2400_HW_STRAP_DRAM_CONFIG(2 /* DDR3 with CL=6, CWL=5 */) | \
++        SCU_AST2400_HW_STRAP_ACPI_DIS |                                 \
++        SCU_AST2400_HW_STRAP_SET_CLK_SOURCE(AST2400_CLK_48M_IN) |       \
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_M_S_EN) |                \
++        SCU_AST2400_HW_STRAP_SET_CPU_AHB_RATIO(AST2400_CPU_AHB_RATIO_2_1) | \
++        SCU_HW_STRAP_SPI_WIDTH |                                        \
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
++        SCU_AST2400_HW_STRAP_BOOT_MODE(AST2400_SPI_BOOT))
 +
-+static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
++static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
 +{
-+    static const struct {
-+        unsigned gpio_id;
-+        LEDColor color;
-+        const char *description;
-+        bool gpio_polarity;
-+    } pca1_leds[] = {
-+        {13, LED_COLOR_GREEN, "front-fault-4",  GPIO_POLARITY_ACTIVE_LOW},
-+        {14, LED_COLOR_GREEN, "front-power-3",  GPIO_POLARITY_ACTIVE_LOW},
-+        {15, LED_COLOR_GREEN, "front-id-5",     GPIO_POLARITY_ACTIVE_LOW},
-+    };
 +    AspeedSoCState *soc = bmc->soc;
-+    uint8_t *eeprom_buf = g_malloc0(8 * 1024);
 +    DeviceState *dev;
-+    LEDState *led;
-+
-+    /* Bus 3: TODO bmp280@77 */
-+    dev = DEVICE(i2c_slave_new(TYPE_PCA9552, 0x60));
-+    qdev_prop_set_string(dev, "description", "pca1");
-+    i2c_slave_realize_and_unref(I2C_SLAVE(dev),
-+                                aspeed_i2c_get_bus(&soc->i2c, 3),
-+                                &error_fatal);
-+
-+    for (size_t i = 0; i < ARRAY_SIZE(pca1_leds); i++) {
-+        led = led_create_simple(OBJECT(bmc),
-+                                pca1_leds[i].gpio_polarity,
-+                                pca1_leds[i].color,
-+                                pca1_leds[i].description);
-+        qdev_connect_gpio_out(dev, pca1_leds[i].gpio_id,
-+                              qdev_get_gpio_in(DEVICE(led), 0));
-+    }
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "dps310", 0x76);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "max31785", 0x52);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "tmp423", 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "tmp423", 0x4c);
-+
-+    /* The Witherspoon expects a TMP275 but a TMP105 is compatible */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
-+                     0x4a);
++    uint8_t *eeprom_buf = g_malloc0(32 * 1024);
 +
 +    /*
-+     * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
-+     * good enough
++     * The palmetto platform expects a ds3231 RTC but a ds1338 is
++     * enough to provide basic RTC features. Alarms will be missing
 +     */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
 +
-+    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
 +                          eeprom_buf);
-+    dev = DEVICE(i2c_slave_new(TYPE_PCA9552, 0x60));
-+    qdev_prop_set_string(dev, "description", "pca0");
-+    i2c_slave_realize_and_unref(I2C_SLAVE(dev),
-+                                aspeed_i2c_get_bus(&soc->i2c, 11),
-+                                &error_fatal);
-+    /* Bus 11: TODO ucd90160@64 */
++
++    /* add a TMP423 temperature sensor */
++    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
++                                         "tmp423", 0x4c));
++    object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
++    object_property_set_int(OBJECT(dev), "temperature3", 110000, &error_abort);
 +}
 +
-+static void aspeed_machine_witherspoon_class_init(ObjectClass *oc,
-+                                                  const void *data)
++static void aspeed_machine_palmetto_class_init(ObjectClass *oc,
++                                               const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "OpenPOWER Witherspoon BMC (ARM1176)";
-+    amc->soc_name  = "ast2500-a1";
-+    amc->hw_strap1 = WITHERSPOON_BMC_HW_STRAP1;
-+    amc->fmc_model = "mx25l25635f";
-+    amc->spi_model = "mx66l1g45g";
-+    amc->num_cs    = 2;
-+    amc->i2c_init  = witherspoon_bmc_i2c_init;
-+    mc->default_ram_size = 512 * MiB;
++    mc->desc       = "OpenPOWER Palmetto BMC (ARM926EJ-S)";
++    amc->soc_name  = "ast2400-a1";
++    amc->hw_strap1 = PALMETTO_BMC_HW_STRAP1;
++    amc->fmc_model = "n25q256a";
++    amc->spi_model = "mx25l25635f";
++    amc->num_cs    = 1;
++    amc->i2c_init  = palmetto_bmc_i2c_init;
++    mc->default_ram_size       = 256 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2500_witherspoon_types[] = {
++static const TypeInfo aspeed_ast2400_palmetto_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("witherspoon-bmc"),
++        .name          = MACHINE_TYPE_NAME("palmetto-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_witherspoon_class_init,
++        .class_init    = aspeed_machine_palmetto_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2500_witherspoon_types)
++DEFINE_TYPES(aspeed_ast2400_palmetto_types)
 +
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 8d9f1e1609..c235c8aed3 100644
+index ea2d24af88..e52901108b 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -47,6 +47,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2500_fp5280g2.c',
-   'aspeed_ast2500_g220a.c',
-   'aspeed_ast2500_tiogapass.c',
-+  'aspeed_ast2500_witherspoon.c',
-   'aspeed_ast2500_yosemitev2.c',
-   'aspeed_ast2600.c',
-   'aspeed_ast10x0.c',
+@@ -44,6 +44,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed.c',
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
++  'aspeed_ast2400_palmetto.c',
+   'aspeed_ast2400_quanta-q71l.c',
+   'aspeed_ast2400_supermicrox11.c',
+   'aspeed_ast2500_evb.c',
 -- 
 2.43.0
 
