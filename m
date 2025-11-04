@@ -4,155 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AF6CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D703BCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCHd-0000Ba-AD; Tue, 04 Nov 2025 03:20:53 -0500
+	id 1vGBR9-0007wc-PW; Tue, 04 Nov 2025 02:26:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGCHZ-0000Ab-8Q
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:20:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGCHC-0006Sb-Vu
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:20:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762244424;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RpqdAlQH+1jtuGUAWA2p6JR97+Pl955HMmQrBkYG6dQ=;
- b=PW7k69NQSyjaYs9OVtBQ75dzwkNEFe/w+cOKWQ8dCZ9vAmj0VcTgNjIeQBhmUZAL89avD9
- UVKr9SeFjEo3yEaqldV1XyWoAYagDVCBEjjl7SllJ7Uls6+Ax7B/T++AU/zeMZpHq+3Bcw
- eIF1wuNB8Wy1s9v5VzZ0EzKxv24QvWI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-jGnzyArUOwaVB2cZGqI8RA-1; Tue, 04 Nov 2025 02:41:21 -0500
-X-MC-Unique: jGnzyArUOwaVB2cZGqI8RA-1
-X-Mimecast-MFC-AGG-ID: jGnzyArUOwaVB2cZGqI8RA_1762242080
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429cd08586cso1150535f8f.3
- for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 23:41:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vGBR7-0007wD-VG
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 02:26:37 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vGBQw-0007qj-3T
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 02:26:37 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b8c0c0cdd61so5117502a12.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Nov 2025 23:26:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762242080; x=1762846880; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RpqdAlQH+1jtuGUAWA2p6JR97+Pl955HMmQrBkYG6dQ=;
- b=BRmvi3eIqwSuHtAIlrVGrx6CNTiLgI6bA/8Qspphn41b0TIUYzUgGl5MdhXzKu8Q+C
- oQ4l7yZ1YMGKQH2AVpRrx1iUKmmGT+mFANan1dkC5YZ6bwpi5ToGQUxyvm4K6Bk4/0SB
- kqDeEmzR3q11Dz4+DIoPwTp4o+aDdzP+uAozjS4S9FWUUECCFioqWwdEgWcpErPw0lW2
- mTsJhx7GINt6WRCSpwHbh3EONTV4JLKBvEv5JItzmnoscmD9ZqkfhqTnsWRHQWxKYxGZ
- KWMQ70rn9CpK3T4PAf7/IYp7KfjBWwKV79Wzpaipl1AqHgMrUb6YADqxjh8tUxSIEZW7
- c9Fg==
+ d=sifive.com; s=google; t=1762241182; x=1762845982; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OxJXv9m3iIscnCjpxt+cOm1/YTFgQwOZ+IIvIJ5aN38=;
+ b=JER1qiinrPg/rh1oi01iqBn3BkHfVpQF+dGJRUIhAYzNGL5+x0qU3drlIuyiojI2pz
+ qfOnSt+oJtt9d+GxOdREiRT0Gw9aa2TUpPLRu6UnnlsIhfyEnNWut9c/Z6CVKNFpk34W
+ SFAoO1Lb5/hzayrIaY7Ve8a3fDEQ3swPACZKTWvQOQMHKBKuAx+Db35nUe2OrAh43pUy
+ kQPc9kDgcZDvNDWp01Al8IS38SGY+Hqj5inVjNrl7jPSuVlsbSQh21zqNd8eVtKrqWH1
+ meCYoHKtQ/CuntUL11cgYIC30gBHRwjFMbAcVXfTE/KW1XxyGEt4W5cCykhOm21fHWjf
+ 0Cqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762242080; x=1762846880;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RpqdAlQH+1jtuGUAWA2p6JR97+Pl955HMmQrBkYG6dQ=;
- b=ZTiVbFAm0lcy2yj6vo6i0fY0QOzF3E+4Sl7BQTONUL1AzxJdLDn5bpU8pQQSAObae/
- 0FwnF7buDRLKhmGIzUMdDXKWx3ttaLo5+O8iayaM0S1SuJydBH+F4QVKJawMr9XtZe+T
- gH1leRCLWK/R+T7t+ifWyvTEpMYjWvVaSIkWwrc8VEQUg+a3Nx2pK9nKJOuOakC+EbYo
- Bkiu1MuXDAaN1AoSpsZ+df4hEd41WmKYK0REKIx5D1YDOAZxzjSzrDjzkhAnzg1wNlvw
- ijVvjl5e5QGdtV0+6G13Y3B1Rl8h6F9GNp/bjWZpEnawSf79MPfgFSGnB5voByguw0r4
- T1vg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhXRN51Vhmn9pvueM96aIH3RQwqf8oBIYCrxrlfJ0TM1kOR76vlZ8kdDSEOzvUGJeG6UZqP5jvPJAS@nongnu.org
-X-Gm-Message-State: AOJu0YzX/pUlDv3NYU2Q5JQBNkYKEjQlsYMbt1h9QXG+Y4HbV3SGOpjf
- ul1Y8+dehp9L0Cxu6rdN3Y3P7sPoCRT9JyNrRIz9uopjNNPg4bygzzMGAI9zMts2cH4qjOn1XKG
- YRmdD2uiga/UHJQqiZfbrUk+qOWMU5Wg3zJtxkGoFLIlTE21ADtEhcZd9
-X-Gm-Gg: ASbGncv5UgzBCLGQ8dNTFPU6Zk9ae3SnugjsAtSLa9Fea3i+wmMEO1iGTQebEHrZxzV
- hfdjgI9ycSIWMotmENpvUKe13wjpBAlOTNgUePy0BUqtXiccw/8MUu4eVpixa9xalD4gaaMWmuQ
- XhpdXdQ9SUQX8cgAS5aEi74o6R3FXAVD0v7BtDGUErs2kEgaGU+MC4LkbyfAMmrbAHwzI+eKcXA
- AF2PcLiwnKFYxz/IBgMfvbOsoGMandIfd8Wzfw2M5QFcpaYbvUg06/gkimIalUMkANbRhR1OQwP
- CxHgvl6kiFmTVZUSxrgIJCtH4na+owC+uqnhxkxPSmH3iGMujVDw1mLRLoo+MRKP+oCsx0Qz
-X-Received: by 2002:a05:6000:26c1:b0:429:8b01:c093 with SMTP id
- ffacd0b85a97d-429bd680c85mr12362474f8f.15.1762242079718; 
- Mon, 03 Nov 2025 23:41:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFEBduTRObamzJWM6WVJLhbFF2quqadBk3SSMj1hkVuKXqPq/WqHIThWeUczPeR6DlQE/vE1A==
-X-Received: by 2002:a05:6000:26c1:b0:429:8b01:c093 with SMTP id
- ffacd0b85a97d-429bd680c85mr12362433f8f.15.1762242079174; 
- Mon, 03 Nov 2025 23:41:19 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.171])
+ d=1e100.net; s=20230601; t=1762241182; x=1762845982;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OxJXv9m3iIscnCjpxt+cOm1/YTFgQwOZ+IIvIJ5aN38=;
+ b=l+Gq0P1A7a7HdclmDpisJub8chQvf8BMOm8AHwi5K9wRFgcew9nDfKb1QfM7798Hwo
+ pdQRusGesp3CugYg/GDv+wdkfGROh+nU2zDofQPJgHEl/vfCoPhjNQeGQ5V15ptdcnUi
+ w3+PE8gCSmxwSMUcdfYS5sTtSqnnhF8inNuAi9NZRY0ESf+T//xIz+Hd6G0k+7TPqiYx
+ 0mFdNUupomAnYOUeeWRpHFBeMtGzEN//QhB8XklNKSY+hK5bSmB6UZsuqU9pNlIYtvuU
+ R7X2EeKpNVK/oPekYBLrL7kKzl76VKQD3JfeVPjSfU8sZisiumcdPBSUAaf2ol4EKgTf
+ WJdA==
+X-Gm-Message-State: AOJu0YwqjX14Re3LEiddyuKAJOVhR/BAiV0JsW+BnPiDNeANMHre3kMX
+ +6t5VNLO1A/KCuBRruJugKIKxTTFbkIWVGh3RXIzIsF0xluFG7y/MuChZjE+kVBQwbac99VI2sG
+ DyckjW/Vn1oLvba4x6OkqP8Ih5oitFPzAyNKtTlPqrTI2qz3KcmNih5RV2WEHa+m6VtIC+ey1V/
+ p1t3X6JHJ7+PZwUemKkxiWpxOQCZaVArTKwsbVgHwn
+X-Gm-Gg: ASbGncu3jWqLl5vHdj4fRPQO4O6prfigPPACCDSDs6unquPGXzHetG4mlzlK2+1dT6N
+ +ptekMHHRiAM4N4lTH0axc7aQ8zSRT9yoL9MF+05M5hpmw6jHUEuWhogwdIkPD9goEvyXxQoUMF
+ aM2FKzn+3mcn+vLiBtSUXeHAqkcDBNqxh2SlmEpJ6FQic7GoMqADp5xfdmV8CVUmLdDhIM4aR/6
+ pqQN5jvuKaMN5jGV4tzPIKBQEUNJvQZWlmXwKn2KUHiyDjByhKOZaeB6RnPo75NjyzOD43rQ0k6
+ S99rhKLtAeN79xPKpwdUWPraxGpgtJUxobdHzjNxQ9EDUmm6CfybE03uieUSt2hUmBrAx+U4roC
+ +LY2369cCcs/G7F4PVFag/HzXzjG5PH3e6dXDfaRhJMCK7a4u4HBx6xGF9cO3xXl3gPll65WWA1
+ F5nJiMKqu4HlJGIKhhZE6bW/CPclr913nFDHxa6ihzWiYCdZgcZg==
+X-Google-Smtp-Source: AGHT+IH/oFHcEkBhKj2GPpzteDukhvwSFIjjpLCBONi/uUqwkeCsyvr8IyD45ibVW1hqsEqxIZHvwA==
+X-Received: by 2002:a17:903:38c5:b0:269:d978:7ec0 with SMTP id
+ d9443c01a7336-2951a45a15emr220079735ad.28.1762241181667; 
+ Mon, 03 Nov 2025 23:26:21 -0800 (PST)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.200])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4773d81cb03sm189975675e9.13.2025.11.03.23.41.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Nov 2025 23:41:18 -0800 (PST)
-Message-ID: <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
-Date: Tue, 4 Nov 2025 08:41:17 +0100
+ d9443c01a7336-296019729c0sm15431765ad.18.2025.11.03.23.26.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 03 Nov 2025 23:26:21 -0800 (PST)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v1] target/riscv: Support Smpmpmt extension
+Date: Tue,  4 Nov 2025 15:26:14 +0800
+Message-ID: <20251104072614.20983-1-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Regression with the "replay" test on target alpha
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-4-pbonzini@redhat.com>
- <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
- <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=jay.chang@sifive.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,125 +105,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/11/2025 02.45, Akihiko Odaki wrote:
-> On 2025/11/03 22:59, Thomas Huth wrote:
->> On 28/10/2025 18.34, Paolo Bonzini wrote:
->>> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>
->>> Borrow the concept of force quiescent state from Linux to ensure readers
->>> remain fast during normal operation and to avoid stalls.
->>
->>   Hi Akihiko,
->>
->> looks like this commit has introduced a regression with the "replay" 
->> functional test on the alpha target.
->> When I run something like:
->>
->>   pyvenv/bin/meson test --no-rebuild -t 1 --setup thorough \
->>    --num-processes 1 --repeat 10 func-alpha-replay
->>
->> in the build folder, approx. half of the test runs are failing for me now.
->>
->> I bisected the issue to this patch here - when I rebuild qemu-system- 
->> alpha with the commit right before this change here, the above test runs 
->> work fine, so I'm pretty sure that the problem has been introduced by this 
->> commit here.
->>
->> Could you please have a look?
-> 
-> I cannot reproduce it with commit 55d98e3edeeb ("rcu: Unify force quiescent 
-> state").
-> 
-> Can you provide meson-logs/testlog-thorough.txt so that I can look into the 
-> failure you are facing? If you think you have something useful for 
-> debugging, please share it to me too.
+The Smpmpmt extension provides a mechanism to control memory attributes
+at the granularity of PMP (Physical Memory Protection) registers, similar
+to how Svpbmt controls memory attributes at the page level.
 
-There's not much in that testlog-thorough.txt that could be helpful here,
-it's basically just the information that the test has been killed due to
-the timeout:
+Version 0.6
+https://github.com/riscv/riscv-isa-manual/blob/smpmpmt/src/smpmpmt.adoc#svpbmt
 
-==================================== 1/1 ===================================
-test:         qemu:func-thorough+func-alpha-thorough+thorough / func-alpha-replay
-start time:   07:25:26
-duration:     90.01s
-result:       killed by signal 15 SIGTERM
-command:      RUST_BACKTRACE=1 QEMU_TEST_QEMU_IMG=/tmp/qemu-rcu/qemu-img QEMU_TEST_GDB=/usr/bin/gdb MALLOC_PERTURB_=255 MESON_TEST_ITERATION=1 PYTHONPATH=/home/thuth/devel/qemu/python:/home/thuth/devel/qemu/tests/functional G_TEST_SLOW=1 SPEED=thorough QEMU_TEST_QEMU_BINARY=/tmp/qemu-rcu/qemu-system-alpha ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 LD_LIBRARY_PATH=/tmp/qemu-rcu/tests/tcg/plugins:/tmp/qemu-rcu/contrib/plugins UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QEMU_BUILD_ROOT=/tmp/qemu-rcu /tmp/qemu-rcu/pyvenv/bin/python3 /home/thuth/devel/qemu/tests/functional/alpha/test_replay.py
-=============================================================================
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+---
+ target/riscv/cpu.c                |  2 ++
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ target/riscv/pmp.c                | 12 ++++++++++++
+ target/riscv/pmp.h                |  1 +
+ 4 files changed, 16 insertions(+)
 
-Summary of Failures:
-
-1/1 qemu:func-thorough+func-alpha-thorough+thorough / func-alpha-replay TIMEOUT        90.01s   killed by signal 15 SIGTERM
-
-
-There is also not that much helpful information in
-tests/functional/alpha/test_replay.AlphaReplay.test_clipper, apart from
-the console.log file. For a good run, the console log looks like this:
-
-2025-11-04 08:16:46,148: PCI: 00:01:0 class 0101 id 1095:0646
-2025-11-04 08:16:46,149: PCI:   region 0: 0000c000
-2025-11-04 08:16:46,149: PCI:   region 1: 0000c008
-2025-11-04 08:16:46,149: PCI:   region 2: 0000c010
-2025-11-04 08:16:46,149: PCI:   region 3: 0000c018
-2025-11-04 08:16:46,149: PCI:   region 4: 0000c020
-2025-11-04 08:16:46,149: PCI: 00:07:0 class 0601 id 8086:0484
-2025-11-04 08:16:48,149: [    0.000000] Initializing cgroup subsys cpu
-2025-11-04 08:16:48,149: [    0.000000] Linux version 2.6.26-2-alpha-generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 20080704 (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
-2025-11-04 08:16:48,150: [    0.000000] Booting GENERIC on Tsunami variation Clipper using machine vector Clipper from SRM
-2025-11-04 08:16:48,150: [    0.000000] Major Options: MAGIC_SYSRQ
-2025-11-04 08:16:48,150: [    0.000000] Command line: printk.time=0 console=ttyS0
-2025-11-04 08:16:48,150: [    0.000000] memcluster 0, usage 1, start        0, end       15
-2025-11-04 08:16:48,150: [    0.000000] memcluster 1, usage 0, start       15, end    16384
-2025-11-04 08:16:48,150: [    0.000000] freeing pages 15:2048
-2025-11-04 08:16:48,150: [    0.000000] freeing pages 2987:16384
-2025-11-04 08:16:48,151: [    0.000000] reserving pages 2987:2988
-2025-11-04 08:16:48,151: [    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 16272
-2025-11-04 08:16:48,151: [    0.000000] Kernel command line: printk.time=0 console=ttyS0
-2025-11-04 08:16:57,358: PCI: 00:01:0 class 0101 id 1095:0646
-2025-11-04 08:16:57,358: PCI:   region 0: 0000c000
-2025-11-04 08:16:57,358: PCI:   region 1: 0000c008
-2025-11-04 08:16:57,359: PCI:   region 2: 0000c010
-2025-11-04 08:16:57,359: PCI:   region 3: 0000c018
-2025-11-04 08:16:57,359: PCI:   region 4: 0000c020
-2025-11-04 08:16:57,360: PCI: 00:07:0 class 0601 id 8086:0484
-2025-11-04 08:17:08,468: [    0.000000] Initializing cgroup subsys cpu
-2025-11-04 08:17:08,470: [    0.000000] Linux version 2.6.26-2-alpha-generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 20080704 (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
-2025-11-04 08:17:08,471: [    0.000000] Booting GENERIC on Tsunami variation Clipper using machine vector Clipper from SRM
-2025-11-04 08:17:08,471: [    0.000000] Major Options: MAGIC_SYSRQ
-2025-11-04 08:17:08,472: [    0.000000] Command line: printk.time=0 console=ttyS0
-2025-11-04 08:17:08,472: [    0.000000] memcluster 0, usage 1, start        0, end       15
-2025-11-04 08:17:08,473: [    0.000000] memcluster 1, usage 0, start       15, end    16384
-2025-11-04 08:17:08,473: [    0.000000] freeing pages 15:2048
-2025-11-04 08:17:08,474: [    0.000000] freeing pages 2987:16384
-2025-11-04 08:17:08,474: [    0.000000] reserving pages 2987:2988
-2025-11-04 08:17:08,475: [    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 16272
-2025-11-04 08:17:08,476: [    0.000000] Kernel command line: printk.time=0 console=ttyS0
-
-I.e. the replay worked as expected. When it fails, console.log only contains:
-
-2025-11-04 08:25:26,601: PCI: 00:01:0 class 0101 id 1095:0646
-2025-11-04 08:25:26,601: PCI:   region 0: 0000c000
-2025-11-04 08:25:26,601: PCI:   region 1: 0000c008
-2025-11-04 08:25:26,601: PCI:   region 2: 0000c010
-2025-11-04 08:25:26,601: PCI:   region 3: 0000c018
-2025-11-04 08:25:26,601: PCI:   region 4: 0000c020
-2025-11-04 08:25:26,602: PCI: 00:07:0 class 0601 id 8086:0484
-2025-11-04 08:25:28,601: [    0.000000] Initializing cgroup subsys cpu
-2025-11-04 08:25:28,602: [    0.000000] Linux version 2.6.26-2-alpha-generic (Debian 2.6.26-29) (dannf@debian.org) (gcc version 4.1.3 20080704 (prerelease) (Debian 4.1.2-25)) #1 Sun Mar 4 21:08:03 UTC 2012
-2025-11-04 08:25:28,602: [    0.000000] Booting GENERIC on Tsunami variation Clipper using machine vector Clipper from SRM
-2025-11-04 08:25:28,602: [    0.000000] Major Options: MAGIC_SYSRQ
-2025-11-04 08:25:28,602: [    0.000000] Command line: printk.time=0 console=ttyS0
-2025-11-04 08:25:28,602: [    0.000000] memcluster 0, usage 1, start        0, end       15
-2025-11-04 08:25:28,602: [    0.000000] memcluster 1, usage 0, start       15, end    16384
-2025-11-04 08:25:28,602: [    0.000000] freeing pages 15:2048
-2025-11-04 08:25:28,603: [    0.000000] freeing pages 2987:16384
-2025-11-04 08:25:28,603: [    0.000000] reserving pages 2987:2988
-2025-11-04 08:25:28,603: [    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 16272
-2025-11-04 08:25:28,603: [    0.000000] Kernel command line: printk.time=0 console=ttyS0
-
-I.e. the replay did not work.
-
-Could this RCU stuff somehow influence the replay mechanism in QEMU?
-
-  Thomas
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ae8b721e55..a0290f06f6 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -230,6 +230,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
+     ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
++    ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
+     ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
+     ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
+     ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
+@@ -1262,6 +1263,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
+     MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
+     MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
++    MULTI_EXT_CFG_BOOL("smpmpmt", ext_smpmpmt, false),
+     MULTI_EXT_CFG_BOOL("svrsw60t59b", ext_svrsw60t59b, false),
+     MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
+ 
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index a154ecdc79..b1096da664 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -57,6 +57,7 @@ BOOL_FIELD(ext_svadu)
+ BOOL_FIELD(ext_svinval)
+ BOOL_FIELD(ext_svnapot)
+ BOOL_FIELD(ext_svpbmt)
++BOOL_FIELD(ext_smpmpmt)
+ BOOL_FIELD(ext_svrsw60t59b)
+ BOOL_FIELD(ext_svvptc)
+ BOOL_FIELD(ext_svukte)
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 3ef62d26ad..52a7677683 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -165,6 +165,18 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+                           "ignoring pmpcfg write - invalid\n");
+         } else {
+             uint8_t a_field = pmp_get_a_field(val);
++
++            if (!riscv_cpu_cfg(env)->ext_smpmpmt) {
++                /* If smpmpmt not supported, clear the MTMATCH bit */
++                val &= ~PMP_MTMATCH;
++            } else if ((val & PMP_MTMATCH) == PMP_MTMATCH) {
++                /*
++                 * If trying to set reserved value (0x3) for MT field,
++                 * preserve the original MT field from current config.
++                 */
++                val = (val & ~PMP_MTMATCH) |
++                    (env->pmp_state.pmp[pmp_index].cfg_reg & PMP_MTMATCH);
++            }
+             /*
+              * When granularity g >= 1 (i.e., granularity > 4 bytes),
+              * the NA4 (Naturally Aligned 4-byte) mode is not selectable
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index 271cf24169..467fb6b4b1 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -29,6 +29,7 @@ typedef enum {
+     PMP_WRITE = 1 << 1,
+     PMP_EXEC  = 1 << 2,
+     PMP_AMATCH = (3 << 3),
++    PMP_MTMATCH = (3 << 5),
+     PMP_LOCK  = 1 << 7
+ } pmp_priv_t;
+ 
+-- 
+2.48.1
 
 
