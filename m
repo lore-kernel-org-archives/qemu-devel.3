@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA8BCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 23:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B69ECCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 23:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGQYG-0000yb-JM; Tue, 04 Nov 2025 18:35:00 -0500
+	id 1vGQYF-0000yB-Uk; Tue, 04 Nov 2025 18:34:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPKd-00041Y-20
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:16:51 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPKS-00040j-0c
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:16:40 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPKa-0007KP-TK
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:16:50 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-afcb7ae6ed0so1099558966b.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 14:16:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rbalint@gmail.com>) id 1vGPKQ-0007Ig-Kb
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 17:16:39 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-640b2a51750so5554704a12.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 14:16:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762294606; x=1762899406; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762294596; x=1762899396; darn=nongnu.org;
  h=subject:date:cc:from:message-id:from:to:cc:subject:date:message-id
- :reply-to; bh=voo4jHzO7fTgG9Zl3uy5WwMebs0EnnF6JUdBlr2vQAg=;
- b=GBF2OVF4D7BOKdIB/Q4hXHBPKdd0yO2hx1cc7KU1mfn8V3kJN84XRLoCCBTRXptj9P
- rWjnuJziU8IeFzDK7H55d9J3AmX4kmDoJW9g3gXvdK8YJgYPvmpzcw5DThUflUmBEXqh
- D8p632GFVrS0IpmFFFmTQMfh46qAG8zNSjHuUXDD3MeiVz2DKjQDbeAm6uompMyI5JD/
- eLinqu7WNKh7qnhXIDS4vmeshBoNQ2xmBgwKL1GCZwtNT02EIQUcvaBgcqJfREvyBRFA
- c7OkfO+6NRZmUyPlK0vVZibUXhGlE+dAOJ8SvI+lfquaDHQg/xJOcmMys7Eyxzq4TePr
- xZww==
+ :reply-to; bh=HTF7/P+G6vQPwKuUcJEOsNzczUX4QA4ntI8YilOM9Dc=;
+ b=ZiERxoHOktMc9JhSgViCdkURq5hwuO1DxEYbrJ5VBPpowV9HGxOdoJnzzZzZfMvGeF
+ qbiypVVntPCZTSjYXkcOPzRySP3T4Q24/TyT19RuaLzdIpQn0rYBIyq90rgtU5uuoBFR
+ PK5zEl5otRIm43Cb+WSPJ0QPfh6kHXNg14wkR2vurmvLP4yyg7qwnk3gn47zn2ZTGLrP
+ TD9P9qGPhEHVUE0aXMeVrNU+PxtJ2SMqoQL4QOYTNydWaGC8ECP2JGEFLMeo2lG7OPh6
+ uNN7/85QiRz4XbDGqo+8FKfGpGbo1i3VhXhuXFElmdnDP9AhItnGF4cOmslzTPvvOlB0
+ YMag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762294606; x=1762899406;
+ d=1e100.net; s=20230601; t=1762294596; x=1762899396;
  h=subject:date:cc:from:message-id:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=voo4jHzO7fTgG9Zl3uy5WwMebs0EnnF6JUdBlr2vQAg=;
- b=oyB39jxtVs+qaJhcePVy/VWLedDRgmAgHHYfA3NK8ZawZQy4JelwJkI7Wt/DckKEO6
- oTWIc3Wi1HKcUjdrRQPELlFuiQzwvvndtnIeWDWbZYnQ2F6vo22yz6Et6Jzp1bl2Y7F/
- InvH54vdwHiV0LD1IZBQxu6MPeolx24pJPOceTku/cyzkcOBZl3LeWbrcsFvFkyf49+3
- dNplncHcI7UCeFcuZq1Jkx4fFt2qQFEd7ZjHff2hSARtD3eK8zKn6k3MO/7DuQXAAbQF
- MOXyCDLtihgIDDwcZL8r9YJdP+ZrCi7MeU7HXmDFtUTIMl39oPo2cbXHGp61qgHlADQf
- 52Pg==
+ bh=HTF7/P+G6vQPwKuUcJEOsNzczUX4QA4ntI8YilOM9Dc=;
+ b=NNRNcmI8HmAjSSGqPeqzN5zCEBhwhPr/0rCG+A2+VnoQgC53jH8O5kJMGczum8HRJk
+ ZZaHci3Bc8+GQUBod+9rHKwlzJkpv5vAREbZzx5ihmHdU4kLT9vjYwaTt5upGffphl9W
+ W1K9y6hRCFt3w4QL4SuPC2rSSNkl+qsseb7isMRgGYxmvmpR58Iaq37Iue74F3J9nXSv
+ he/Kg3cPOEJaOdzExQs7NNdJFYWCKTibowpXOXDz4FOMYfU9rV4kHn2SEUsRAhis7+55
+ w2zRE8GqffB3asKZoxBb0RjuEHBtqYl5r3cKTbfBj1n4xaxMOxUXlSZaDAdF2WBNX9jI
+ UK2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7Tm1aoaKDq52/x+61NTPBZfO1ef+opotwfqYMlDVRSCAfBN+qq2gPTqZPGWQo942PwA9eSpR8a2Of@nongnu.org
-X-Gm-Message-State: AOJu0YzjNrBi1YCaUs6no/AwRjo8kpjV7QzXH/K1WBIKQlvT70qmG8qf
- hGAock6zECD3DPDTmWhuJHynZcf+5Jhr3RPLyyHkxCc36C/bpIBFvcRVkZQrWe4E
-X-Gm-Gg: ASbGncuglMbXig64nJZREu6Iza8RrfvElRLPTdViSrF9D7CEcHgGRcgBCmPe8qrXNxi
- aoc5h778QIsP7EAHAax4cCiWQ0NKk8fQ26qEEpSN9ihru39JC4wQNsNEyoiawvTinp3lJ6Hju53
- BCjIgRwjzGWNIFT97+Dkz5H3vo4HHj1xPyAlnF4siCy1Fdkhsnx0v6tkwbLRm/JV3jnNQb35umi
- cycYVtB/Oru3s53gR04WTzYxR/LmMr6UbULOqlo2bLFjvj9X1FFddPIg4+BhNO5XXehKSXWL5b/
- qM6Lx2N5yZt/9X+/SJdPyWo2a5yz6WDleJJFz0zRiKGH9mJU/e1SWY8TifA9rfvBHdvsvDdmMVs
- Qnp1OIIGk/BWx1uVNVI0uEmjLx+YOCobF8bfOES+2jQbN1TE1FOVHOzLIkoGANavnQLeE2pXQdc
- Kw6IxA1OmNZtmwy9LlQVw9gYA=
-X-Google-Smtp-Source: AGHT+IHpA8tlD57Y0aakU4ByChivU27L2Mi4Ajf5ok186Y7CSb9g+tmGHyHQmnnn8VIuuCeMX9/NXA==
-X-Received: by 2002:a17:907:d649:b0:b71:5079:9702 with SMTP id
- a640c23a62f3a-b7265298431mr81988366b.21.1762294605586; 
- Tue, 04 Nov 2025 14:16:45 -0800 (PST)
-Received: from localhost (95C8783E.dsl.pool.telekom.hu. [149.200.120.62])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723fe3a07dsm315255166b.64.2025.11.04.14.16.44
+ AJvYcCVz46mceIFCgFlQyOs1jLbUYDawuZEPwJ2IEXNKTXRi9MjRZfJT0FNZIWMTJ5Bzv9GM0OjoBy1QW0rS@nongnu.org
+X-Gm-Message-State: AOJu0YxRZW4t0aO083Egh2onHMgnioBnXH9K5l9uDMfgNU11yKeAd4PC
+ nR9PJatlC12LxmQeHb13fmjY3IH497xzApdEwL4Nk1+FKXvJPtd2pBAYwaW3Vokk
+X-Gm-Gg: ASbGnctLCN96h421TJNtX3nsBi7ZX6FRq8Smx7AVslZRPyQKUEefpiXEAnmlF7dJnbK
+ adCVHoa5GK9srHmZ+xAWq5EcPLs35Rwv9A8lFD7ArqfD577rcfhGNYVyx3O2R6fFtoPUAm0/zfB
+ FTJFz0taVn3X8lRxQiP+YhXE3EB/EGMLhjJT1xyKPmXASsTEYL/E4Uf+JEZEZJAK8ilU4ICJfUm
+ zqplYgisytJnV6wQlIcETJPbC5oYTQKQOcRqeXqvKsij3A0ihcSOcpUp+QkRGQFhmp/QGiXUYA/
+ 8XZWb9kgmWu7m/XKJOcy6ZZXK0TM+/bhX+DTKXZkASfYfTfYb1J69jbo6up5I4HKMTRbzOpJMtx
+ eQ+kCk8NCskI3JVabbYj7iA+/kKEXO39My+ZN7mRGyL2A8QOQhUDiZ2ZJOoVTpwvDvJE/zQ==
+X-Google-Smtp-Source: AGHT+IFLT+J82dndokLlu4KCoMxp7Wq/VYM273XopMJagmtUvCKU5s/6MyZq+LcRVGs1B1Hqpuq2+g==
+X-Received: by 2002:a05:6402:24ce:b0:640:bafb:3598 with SMTP id
+ 4fb4d7f45d1cf-64105b990b5mr643406a12.38.1762294595781; 
+ Tue, 04 Nov 2025 14:16:35 -0800 (PST)
+Received: from localhost ([149.200.120.62]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-640e6805813sm3450824a12.14.2025.11.04.14.16.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 14:16:45 -0800 (PST)
-Message-ID: <fba383dfd9b9551916b193081e9a2115.rbalint@gmail.com>
+ Tue, 04 Nov 2025 14:16:35 -0800 (PST)
+Message-ID: <cddc5c730b912a058b54100b19adf552.rbalint@gmail.com>
 From: Balint Reczey <rbalint@gmail.com>
 CC: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>
-Date: Sun, 2 Nov 2025 14:26:45 +0100
-Subject: [PATCH 1/1] user: add runtime switch to call safe_syscall via libc
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=rbalint@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Tue, 4 Nov 2025 14:54:23 +0100
+Subject: [PATCH 0/1] user: add runtime switch to call safe_syscall via libc
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=rbalint@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FROM=0.001, MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 04 Nov 2025 18:34:58 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,18 +91,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a libc-backed path for safe_syscall() that make syscalls via
-libc's syscall(). This enables interposing syscalls via LD_PRELOAD when
-running static guest binaries under a dynamically linked qemu-user.
+Hi,
 
-The assembly implementation (safe_syscall_base()) remains the default.
-A runtime switch or a set environment variable changes the behavior:
+qemu-user implements calling signal-race-safe syscalls for the guest
+in assembly directly to the kernel instead of going through the host's libc.
 
-Command line: -libc-syscall
-Environment: QEMU_LIBC_SYSCALL
+The proposed patch adds a switch to go through libc, which allows interposition
+of libc's syscall(), even when the guest program is statically linked.
 
-Signed-off-by: Balint Reczey <balint@balintreczey.hu>
----
+The motivation behind the change is intercepting statically linked binaries [1]
+with firebuild [2], a build accelerator implemented in userspace.
+
+I have tested the Linux changes, but not not BSD ones.
+I think they are trivial enough to work and I'd like to port firebuild
+to BSD, too, in the future.
+
+Cheers,
+Balint
+
+[1] https://github.com/firebuild/firebuild/pull/1334
+[2] https://github.com/firebuild/firebuild
+
+Balint Reczey (1):
+  user: add runtime switch to call safe_syscall via libc
+
  bsd-user/main.c             | 11 +++++++
  common-user/meson.build     |  1 +
  common-user/safe-syscall.c  | 57 +++++++++++++++++++++++++++++++++++++
@@ -114,273 +124,6 @@ Signed-off-by: Balint Reczey <balint@balintreczey.hu>
  6 files changed, 122 insertions(+), 9 deletions(-)
  create mode 100644 common-user/safe-syscall.c
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 73aae8c327..9b3ff67859 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -38,6 +38,7 @@
- #include "qemu/plugin.h"
- #include "user/guest-base.h"
- #include "user/page-protection.h"
-+#include "user/safe-syscall.h"
- #include "accel/accel-ops.h"
- #include "tcg/startup.h"
- #include "qemu/timer.h"
-@@ -166,6 +167,7 @@ static void usage(void)
-            "-E var=value      sets/modifies targets environment variable(s)\n"
-            "-U var            unsets targets environment variable(s)\n"
-            "-B address        set guest_base address to address\n"
-+           "-libc-syscall     use libc syscall() instead of assembly safe-syscall\n"
-            "\n"
-            "Debug options:\n"
-            "-d item1[,...]    enable logging of specified items\n"
-@@ -183,6 +185,8 @@ static void usage(void)
-            "Environment variables:\n"
-            "QEMU_STRACE       Print system calls and arguments similar to the\n"
-            "                  'strace' program.  Enable by setting to any value.\n"
-+           "QEMU_LIBC_SYSCALL Use libc syscall() instead of assembly safe-syscall.\n"
-+           "                  Enable by setting to any value.\n"
-            "You can use -E and -U options to set/unset environment variables\n"
-            "for target process.  It is possible to provide several variables\n"
-            "by repeating the option.  For example:\n"
-@@ -310,6 +314,11 @@ int main(int argc, char **argv)
-     qemu_add_opts(&qemu_trace_opts);
-     qemu_plugin_add_opts();
- 
-+    /* Check QEMU_LIBC_SYSCALL environment variable */
-+    if (getenv("QEMU_LIBC_SYSCALL")) {
-+        qemu_use_libc_syscall = true;
-+    }
-+
-     optind = 1;
-     for (;;) {
-         if (optind >= argc) {
-@@ -380,6 +389,8 @@ int main(int argc, char **argv)
-             have_guest_base = true;
-         } else if (!strcmp(r, "drop-ld-preload")) {
-             (void) envlist_unsetenv(envlist, "LD_PRELOAD");
-+        } else if (!strcmp(r, "libc-syscall")) {
-+            qemu_use_libc_syscall = true;
-         } else if (!strcmp(r, "seed")) {
-             seed_optarg = optarg;
-         } else if (!strcmp(r, "one-insn-per-tb")) {
-diff --git a/common-user/meson.build b/common-user/meson.build
-index ac9de5b9e3..d44ffe1f56 100644
---- a/common-user/meson.build
-+++ b/common-user/meson.build
-@@ -7,4 +7,5 @@ common_user_inc += include_directories('host/' / host_arch)
- user_ss.add(files(
-   'safe-syscall.S',
-   'safe-syscall-error.c',
-+  'safe-syscall.c',
- ))
-diff --git a/common-user/safe-syscall.c b/common-user/safe-syscall.c
-new file mode 100644
-index 0000000000..d1476c3113
---- /dev/null
-+++ b/common-user/safe-syscall.c
-@@ -0,0 +1,57 @@
-+/*
-+ * safe-syscall.c: C implementation using libc's syscall()
-+ * to handle signals occurring at the same time as system calls.
-+ *
-+ * Written by Balint Reczey <balint@balintreczey.hu>
-+ *
-+ * Copyright (C) 2025 Balint Reczey
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#if defined(__linux__)
-+# include "special-errno.h"
-+#elif defined(__FreeBSD__)
-+# include "errno_defs.h"
-+#endif
-+#include "user/safe-syscall.h"
-+#include <stdarg.h>
-+#include <unistd.h>
-+#include <sys/syscall.h>
-+#include "qemu/atomic.h"
-+
-+/* Global runtime toggle (default: false). */
-+bool qemu_use_libc_syscall;
-+
-+/*
-+ * libc-backed implementation: Make a system call via libc's syscall()
-+ * if no guest signal is pending.
-+ */
-+long safe_syscall_libc(int *pending, long number, ...)
-+{
-+    va_list ap;
-+    long arg1, arg2, arg3, arg4, arg5, arg6;
-+    long ret;
-+
-+    /* Check if a guest signal is pending */
-+    if (qatomic_read(pending)) {
-+        errno = QEMU_ERESTARTSYS;
-+        return -1;
-+    }
-+
-+    va_start(ap, number);
-+    /* Extract up to 6 syscall arguments */
-+    arg1 = va_arg(ap, long);
-+    arg2 = va_arg(ap, long);
-+    arg3 = va_arg(ap, long);
-+    arg4 = va_arg(ap, long);
-+    arg5 = va_arg(ap, long);
-+    arg6 = va_arg(ap, long);
-+    va_end(ap);
-+
-+    /* Make the actual system call using libc's syscall() */
-+    ret = syscall(number, arg1, arg2, arg3, arg4, arg5, arg6);
-+
-+    return ret;
-+}
-diff --git a/docs/user/main.rst b/docs/user/main.rst
-index a8ddf91424..6b7e76dfe1 100644
---- a/docs/user/main.rst
-+++ b/docs/user/main.rst
-@@ -70,7 +70,7 @@ Command line options
- 
- ::
- 
--   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g endpoint] [-B offset] [-R size] program [arguments...]
-+   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g endpoint] [-B offset] [-R size] [-libc-syscall] program [arguments...]
- 
- ``-h``
-    Print the help
-@@ -101,6 +101,15 @@ Command line options
-    bytes). \"G\", \"M\", and \"k\" suffixes may be used when specifying
-    the size.
- 
-+``-libc-syscall``
-+   Use the host C library's ``syscall()`` entry point for guest system calls
-+   instead of QEMU's built-in safe-syscall trampoline. By default this option
-+   is disabled and QEMU uses its internal assembly implementation for
-+   performance and precise control of signal-restart semantics. This switch is
-+   primarily intended for debugging and integration scenarios (for example
-+   when interposing on ``syscall()`` via ``LD_PRELOAD``). Available on Linux
-+   and BSD user-mode builds.
-+
- Debug options:
- 
- ``-d item1,...``
-@@ -135,6 +144,10 @@ QEMU_STRACE
-    format are printed with information for six arguments. Many
-    flag-style arguments don't have decoders and will show up as numbers.
- 
-+QEMU_LIBC_SYSCALL
-+   When set to a non-empty value, behave as if ``-libc-syscall`` was specified
-+   on the command line. Defaults to disabled.
-+
- Other binaries
- ~~~~~~~~~~~~~~
- 
-@@ -231,7 +244,7 @@ Command line options
- 
- ::
- 
--   qemu-sparc64 [-h] [-d] [-L path] [-s size] [-bsd type] program [arguments...]
-+   qemu-sparc64 [-h] [-d] [-L path] [-s size] [-bsd type] [-libc-syscall] program [arguments...]
- 
- ``-h``
-    Print the help
-@@ -256,6 +269,11 @@ Command line options
-    Set the type of the emulated BSD Operating system. Valid values are
-    FreeBSD, NetBSD and OpenBSD (default).
- 
-+``-libc-syscall``
-+   Use the host C library's ``syscall()`` entry point for guest system calls
-+   instead of QEMU's built-in safe-syscall trampoline. See the Linux user-mode
-+   option of the same name for details. Defaults to disabled.
-+
- Debug options:
- 
- ``-d item1,...``
-@@ -266,3 +284,9 @@ Debug options:
-    Run the emulation with one guest instruction per translation block.
-    This slows down emulation a lot, but can be useful in some situations,
-    such as when trying to analyse the logs produced by the ``-d`` option.
-+
-+Environment variables:
-+
-+QEMU_LIBC_SYSCALL
-+   When set to a non-empty value, behave as if ``-libc-syscall`` was specified
-+   on the command line. Defaults to disabled.
-diff --git a/include/user/safe-syscall.h b/include/user/safe-syscall.h
-index aa075f4d5c..02a95c24e9 100644
---- a/include/user/safe-syscall.h
-+++ b/include/user/safe-syscall.h
-@@ -125,16 +125,27 @@
-  * kinds of restartability.
-  */
- 
--/* The core part of this function is implemented in assembly */
--long safe_syscall_base(int *pending, long number, ...);
--long safe_syscall_set_errno_tail(int value);
-+/*
-+ * The core part remains implemented in assembly; a C dispatcher selects
-+ * runtime path.
-+ */
-+extern long safe_syscall_base(int *pending, long number, ...);
-+extern long safe_syscall_set_errno_tail(int value);
-+extern long safe_syscall_libc(int *pending, long number, ...);
-+extern bool qemu_use_libc_syscall;
- 
--/* These are defined by the safe-syscall.inc.S file */
-+/*
-+ * These symbols are defined for compatibility with signal handling code.
-+ * In the C implementation, they are dummy symbols.
-+ */
- extern char safe_syscall_start[];
- extern char safe_syscall_end[];
- 
--#define safe_syscall(...)                                                 \
--    safe_syscall_base(&get_task_state(thread_cpu)->signal_pending,        \
--                      __VA_ARGS__)
-+#define safe_syscall(...)                                               \
-+    (qemu_use_libc_syscall ?                                            \
-+     safe_syscall_libc(&get_task_state(thread_cpu)->signal_pending,     \
-+                       __VA_ARGS__) :                                   \
-+     safe_syscall_base(&get_task_state(thread_cpu)->signal_pending,     \
-+                       __VA_ARGS__))
- 
- #endif
-diff --git a/linux-user/main.c b/linux-user/main.c
-index db751c0757..de2a20efb4 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -40,6 +40,7 @@
- #include "qemu/plugin.h"
- #include "user/guest-base.h"
- #include "user/page-protection.h"
-+#include "user/safe-syscall.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/user.h"
- #include "accel/accel-ops.h"
-@@ -456,6 +457,12 @@ static void handle_arg_jitdump(const char *arg)
-     perf_enable_jitdump();
- }
- 
-+static void handle_arg_libc_syscall(const char *arg)
-+{
-+    /* Enable libc-backed syscall implementation */
-+    qemu_use_libc_syscall = true;
-+}
-+
- static QemuPluginList plugins = QTAILQ_HEAD_INITIALIZER(plugins);
- 
- #ifdef CONFIG_PLUGIN
-@@ -534,6 +541,8 @@ static const struct qemu_argument arg_table[] = {
-      "",           "Generate a /tmp/perf-${pid}.map file for perf"},
-     {"jitdump",    "QEMU_JITDUMP",     false, handle_arg_jitdump,
-      "",           "Generate a jit-${pid}.dump file for perf"},
-+    {"libc-syscall", "QEMU_LIBC_SYSCALL", false, handle_arg_libc_syscall,
-+     "",           "use libc syscall() instead of assembly safe-syscall"},
-     {NULL, NULL, false, NULL, NULL, NULL}
- };
- 
 -- 
 2.43.0
 
