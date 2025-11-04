@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53175CCFA0E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E35CCFA15
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCSa-0000Ss-Rr; Tue, 04 Nov 2025 03:32:12 -0500
+	id 1vGCU7-0002Em-50; Tue, 04 Nov 2025 03:33:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSX-0000S3-NF
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCT5-0000wN-45
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSU-0003R4-Az
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:09 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCT2-0003ZZ-Kb
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762245125;
+ s=mimecast20190719; t=1762245159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kMPTLEvCndFw94CWkZNCn1Y7IntPSYyFo4J60Z/rGXk=;
- b=HYqv9OD1HaVMRWJK/P9/MHlGwgxGRuLCpB8DAmdMbRjEKVU+Zxce+vXsvycFM7g2MJnkn4
- vJHxx8yr0nscsLN6CwYJIp1ASMOdDRGoPGHQo6HmHA6010zDYeO/ki82zluXIoJ5UeJ7cA
- 9qfojp5UhCY+eQsPJQzXDzfQQPU7VZo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=nU1bjCS796FgGMCNpFXyZhrKM4JsNNsAasa/KCb9pI8=;
+ b=ALfsanweHaEK2dBUUQbAjLr045JIpvRYYyNof+T+JuCaUyWetYZCbcdbkxXrVe46PHYuDO
+ klhaVrzaplfLOpmBG1jugwN43ppS6/xVr6PgEGe5zYvg1mgHsUIeUVWyU5VYWxJ6WGogi3
+ TCLdMejRkFIMNLSBL3+jpHbo8VZX1C4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-dS3zAaxrODuHVVfAR5qXKw-1; Tue,
- 04 Nov 2025 03:32:01 -0500
-X-MC-Unique: dS3zAaxrODuHVVfAR5qXKw-1
-X-Mimecast-MFC-AGG-ID: dS3zAaxrODuHVVfAR5qXKw_1762245120
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-218-VuvA8ZC4OVeNoX3u7StvLg-1; Tue,
+ 04 Nov 2025 03:32:36 -0500
+X-MC-Unique: VuvA8ZC4OVeNoX3u7StvLg-1
+X-Mimecast-MFC-AGG-ID: VuvA8ZC4OVeNoX3u7StvLg_1762245155
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87B5619560AD; Tue,  4 Nov 2025 08:32:00 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3074418001E3; Tue,  4 Nov 2025 08:32:35 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BFDB019560A2; Tue,  4 Nov 2025 08:31:58 +0000 (UTC)
+ id 4D50819560B7; Tue,  4 Nov 2025 08:32:33 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 05/30] hw/arm/aspeed: Split FP5280G2 machine into a separate
- source file for maintenance
-Date: Tue,  4 Nov 2025 09:31:19 +0100
-Message-ID: <20251104083144.187806-6-clg@redhat.com>
+Subject: [PULL 20/30] hw/arm/aspeed: Split Fuji machine into a separate source
+ file for maintainability
+Date: Tue,  4 Nov 2025 09:31:34 +0100
+Message-ID: <20251104083144.187806-21-clg@redhat.com>
 In-Reply-To: <20251104083144.187806-1-clg@redhat.com>
 References: <20251104083144.187806-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,137 +87,193 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This commit moves the FP5280G2 BMC machine implementation from
-aspeed.c into a new standalone file aspeed_ast2500_fp5280g2.c.
+This commit moves the Facebook Fuji BMC machine implementation out of
+aspeed.c into a new standalone file aspeed_ast2600_fuji.c.
 
-The change improves code organization and prepares the Aspeed
-machine framework for future expansion and easier maintenance.
+This refactor continues the modularization effort for Aspeed platform support,
+placing each board’s logic in its own dedicated source file.
+It improves maintainability, readability, and simplifies future development for
+new platforms without cluttering aspeed.c.
 
 Key updates include:
-- Moved fp5280g2_bmc_i2c_init() and related machine class init
-functions into aspeed_ast2500_fp5280g2.c.
-- Added new file to hw/arm/meson.build for compilation.
-- Removed obsolete FP5280G2 definitions from aspeed.c
+- Moved FUJI_BMC_HW_STRAP1 and FUJI_BMC_HW_STRAP2 macro definitions into the new file.
+- Moved fuji_bmc_i2c_init() and its helper get_pca9548_channels() into the new file.
+- Moved aspeed_machine_fuji_class_init() and type registration to aspeed_ast2600_fuji.c.
+- Added aspeed_ast2600_fuji.c to the build system (meson.build).
+- Cleaned up all Fuji-specific code and macros from aspeed.c.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-6-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-21-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c                  | 66 ------------------------
- hw/arm/aspeed_ast2500_fp5280g2.c | 88 ++++++++++++++++++++++++++++++++
- hw/arm/meson.build               |  1 +
- 3 files changed, 89 insertions(+), 66 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2500_fp5280g2.c
+ hw/arm/aspeed.c              | 117 -----------------------------
+ hw/arm/aspeed_ast2600_fuji.c | 140 +++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build           |   1 +
+ 3 files changed, 141 insertions(+), 117 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2600_fuji.c
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 59416eb5ae6c..3dcd5fc54040 100644
+index e44aec69bd2b..29a036b675ea 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -131,21 +131,6 @@ static struct arm_boot_info aspeed_board_binfo = {
-         SCU_HW_STRAP_VGA_SIZE_SET(VGA_64M_DRAM) |                       \
-         SCU_AST2500_HW_STRAP_RESERVED1)
+@@ -52,10 +52,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+ #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
+ #define RAINIER_BMC_HW_STRAP2 0x80000848
  
--/* FP5280G2 hardware value: 0XF100D286 */
--#define FP5280G2_BMC_HW_STRAP1 (                                      \
--        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
--        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
--        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
--        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
--        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
--        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
--        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
--        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
--        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
--        SCU_HW_STRAP_MAC1_RGMII |                                       \
--        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
--        SCU_AST2500_HW_STRAP_RESERVED1)
+-/* Fuji hardware value */
+-#define FUJI_BMC_HW_STRAP1    0x00000000
+-#define FUJI_BMC_HW_STRAP2    0x00000000
 -
- /* Witherspoon hardware value: 0xF10AD216 (but use romulus definition) */
- #define WITHERSPOON_BMC_HW_STRAP1 ROMULUS_BMC_HW_STRAP1
- 
-@@ -686,33 +671,6 @@ static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
-                           eeprom_buf);
+ /* GB200NVL hardware value */
+ #define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
+ #define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
+@@ -416,95 +412,8 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+     aspeed_create_pca9552(soc, 15, 0x60);
  }
  
--static void fp5280g2_bmc_i2c_init(AspeedMachineState *bmc)
+-static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+-                                 I2CBus **channels)
 -{
--    AspeedSoCState *soc = bmc->soc;
--    I2CSlave *i2c_mux;
--
--    /* The at24c256 */
--    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x50, 32768);
--
--    /* The fp5280g2 expects a TMP112 but a TMP105 is compatible */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
--                     0x49);
--
--    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
--                     "pca9546", 0x70);
--    /* It expects a TMP112 but a TMP105 is compatible */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), TYPE_TMP105,
--                     0x4a);
--
--    /* It expects a ds3232 but a ds1338 is good enough */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "ds1338", 0x68);
--
--    /* It expects a pca9555 but a pca9552 is compatible */
--    aspeed_create_pca9552(soc, 8, 0x30);
+-    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
+-    for (int i = 0; i < 8; i++) {
+-        channels[i] = pca954x_i2c_get_bus(mux, i);
+-    }
 -}
 -
- static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     AspeedSoCState *soc = bmc->soc;
-@@ -1608,25 +1566,6 @@ static void aspeed_machine_g220a_class_init(ObjectClass *oc, const void *data)
-     aspeed_machine_class_init_cpus_defaults(mc);
+ #define TYPE_LM75 TYPE_TMP105
+ #define TYPE_TMP75 TYPE_TMP105
+-#define TYPE_TMP422 "tmp422"
+-
+-static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-    I2CBus *i2c[144] = {};
+-
+-    for (int i = 0; i < 16; i++) {
+-        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
+-    }
+-    I2CBus *i2c180 = i2c[2];
+-    I2CBus *i2c480 = i2c[8];
+-    I2CBus *i2c600 = i2c[11];
+-
+-    get_pca9548_channels(i2c180, 0x70, &i2c[16]);
+-    get_pca9548_channels(i2c480, 0x70, &i2c[24]);
+-    /* NOTE: The device tree skips [32, 40) in the alias numbering */
+-    get_pca9548_channels(i2c600, 0x77, &i2c[40]);
+-    get_pca9548_channels(i2c[24], 0x71, &i2c[48]);
+-    get_pca9548_channels(i2c[25], 0x72, &i2c[56]);
+-    get_pca9548_channels(i2c[26], 0x76, &i2c[64]);
+-    get_pca9548_channels(i2c[27], 0x76, &i2c[72]);
+-    for (int i = 0; i < 8; i++) {
+-        get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
+-    }
+-
+-    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
+-    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
+-
+-    /*
+-     * EEPROM 24c64 size is 64Kbits or 8 Kbytes
+-     *        24c02 size is 2Kbits or 256 bytes
+-     */
+-    at24c_eeprom_init(i2c[19], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[20], 0x50, 256);
+-    at24c_eeprom_init(i2c[22], 0x52, 256);
+-
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
+-    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
+-
+-    at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
+-    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
+-
+-    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
+-    at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
+-    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
+-    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
+-
+-    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
+-    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
+-
+-    at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
+-    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
+-    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
+-    at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
+-
+-    at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
+-    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
+-    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
+-    at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[79], 0x52, 8 * KiB);
+-    at24c_eeprom_init(i2c[28], 0x50, 256);
+-
+-    for (int i = 0; i < 8; i++) {
+-        at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
+-        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
+-        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
+-        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
+-    }
+-}
+-
+ #define TYPE_TMP421 "tmp421"
+ #define TYPE_DS1338 "ds1338"
+ 
+@@ -955,27 +864,6 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
+     aspeed_machine_ast2600_class_emmc_init(oc);
  };
  
--static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc,
--                                               const void *data)
+-#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+-
+-static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Inspur FP5280G2 BMC (ARM1176)";
--    mc->deprecation_reason = "use 'ast2500-evb' instead";
--    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = FP5280G2_BMC_HW_STRAP1;
--    amc->fmc_model = "n25q512a";
--    amc->spi_model = "mx25l25635e";
--    amc->num_cs    = 2;
--    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
--    amc->i2c_init  = fp5280g2_bmc_i2c_init;
--    mc->default_ram_size = 512 * MiB;
+-    mc->desc = "Facebook Fuji BMC (Cortex-A7)";
+-    amc->soc_name = "ast2600-a3";
+-    amc->hw_strap1 = FUJI_BMC_HW_STRAP1;
+-    amc->hw_strap2 = FUJI_BMC_HW_STRAP2;
+-    amc->fmc_model = "mx66l1g45g";
+-    amc->spi_model = "mx66l1g45g";
+-    amc->num_cs = 2;
+-    amc->macs_mask = ASPEED_MAC3_ON;
+-    amc->i2c_init = fuji_bmc_i2c_init;
+-    amc->uart_default = ASPEED_DEV_UART1;
+-    mc->default_ram_size = FUJI_BMC_RAM_SIZE;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
- static void aspeed_machine_rainier_class_init(ObjectClass *oc, const void *data)
+ static void aspeed_machine_catalina_class_init(ObjectClass *oc,
+                                                const void *data)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -2015,11 +1954,6 @@ static const TypeInfo aspeed_machine_types[] = {
+@@ -1216,11 +1104,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_qcom_firework_class_init,
+         .class_init    = aspeed_machine_rainier_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("fp5280g2-bmc"),
+-        .name          = MACHINE_TYPE_NAME("fuji-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_fp5280g2_class_init,
+-        .class_init    = aspeed_machine_fuji_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("quanta-q71l-bmc"),
+         .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2500_fp5280g2.c b/hw/arm/aspeed_ast2500_fp5280g2.c
+diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
 new file mode 100644
-index 000000000000..858e0388714b
+index 000000000000..37db252e2769
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2500_fp5280g2.c
-@@ -0,0 +1,88 @@
++++ b/hw/arm/aspeed_ast2600_fuji.c
+@@ -0,0 +1,140 @@
 +/*
-+ * Inspur FP5280G2
++ * Facebook Fuji
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -229,93 +285,145 @@ index 000000000000..858e0388714b
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/nvram/eeprom_at24c.h"
 +#include "hw/i2c/i2c_mux_pca954x.h"
 +#include "hw/sensor/tmp105.h"
++#include "hw/nvram/eeprom_at24c.h"
 +
-+/* FP5280G2 hardware value: 0XF100D286 */
-+#define FP5280G2_BMC_HW_STRAP1 (                                      \
-+        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
-+        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
-+        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
-+        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
-+        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
-+        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
-+        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
-+        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
-+        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
-+        SCU_HW_STRAP_MAC1_RGMII |                                       \
-+        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
-+        SCU_AST2500_HW_STRAP_RESERVED1)
++#define TYPE_LM75 TYPE_TMP105
++#define TYPE_TMP75 TYPE_TMP105
++#define TYPE_TMP422 "tmp422"
 +
-+static void fp5280g2_bmc_i2c_init(AspeedMachineState *bmc)
++/* Fuji hardware value */
++#define FUJI_BMC_HW_STRAP1    0x00000000
++#define FUJI_BMC_HW_STRAP2    0x00000000
++#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
++
++static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
++                                 I2CBus **channels)
 +{
-+    AspeedSoCState *soc = bmc->soc;
-+    I2CSlave *i2c_mux;
-+
-+    /* The at24c256 */
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x50, 32768);
-+
-+    /* The fp5280g2 expects a TMP112 but a TMP105 is compatible */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
-+                     0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
-+                     0x49);
-+
-+    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
-+                     "pca9546", 0x70);
-+    /* It expects a TMP112 but a TMP105 is compatible */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), TYPE_TMP105,
-+                     0x4a);
-+
-+    /* It expects a ds3232 but a ds1338 is good enough */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "ds1338", 0x68);
-+
-+    /* It expects a pca9555 but a pca9552 is compatible */
-+    aspeed_create_pca9552(soc, 8, 0x30);
++    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
++    for (int i = 0; i < 8; i++) {
++        channels[i] = pca954x_i2c_get_bus(mux, i);
++    }
 +}
 +
-+static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc,
-+                                               const void *data)
++static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++    I2CBus *i2c[144] = {};
++
++    for (int i = 0; i < 16; i++) {
++        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
++    }
++    I2CBus *i2c180 = i2c[2];
++    I2CBus *i2c480 = i2c[8];
++    I2CBus *i2c600 = i2c[11];
++
++    get_pca9548_channels(i2c180, 0x70, &i2c[16]);
++    get_pca9548_channels(i2c480, 0x70, &i2c[24]);
++    /* NOTE: The device tree skips [32, 40) in the alias numbering */
++    get_pca9548_channels(i2c600, 0x77, &i2c[40]);
++    get_pca9548_channels(i2c[24], 0x71, &i2c[48]);
++    get_pca9548_channels(i2c[25], 0x72, &i2c[56]);
++    get_pca9548_channels(i2c[26], 0x76, &i2c[64]);
++    get_pca9548_channels(i2c[27], 0x76, &i2c[72]);
++    for (int i = 0; i < 8; i++) {
++        get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
++    }
++
++    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
++    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
++
++    /*
++     * EEPROM 24c64 size is 64Kbits or 8 Kbytes
++     *        24c02 size is 2Kbits or 256 bytes
++     */
++    at24c_eeprom_init(i2c[19], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[20], 0x50, 256);
++    at24c_eeprom_init(i2c[22], 0x52, 256);
++
++    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
++    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
++    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
++    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
++
++    at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
++    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
++
++    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
++    at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
++    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
++
++    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
++
++    at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
++    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
++    at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
++
++    at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
++    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
++    at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[79], 0x52, 8 * KiB);
++    at24c_eeprom_init(i2c[28], 0x50, 256);
++
++    for (int i = 0; i < 8; i++) {
++        at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
++        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
++        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
++        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
++    }
++}
++
++static void aspeed_machine_fuji_class_init(ObjectClass *oc, const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Inspur FP5280G2 BMC (ARM1176)";
-+    mc->deprecation_reason = "use 'ast2500-evb' instead";
-+    amc->soc_name  = "ast2500-a1";
-+    amc->hw_strap1 = FP5280G2_BMC_HW_STRAP1;
-+    amc->fmc_model = "n25q512a";
-+    amc->spi_model = "mx25l25635e";
-+    amc->num_cs    = 2;
-+    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-+    amc->i2c_init  = fp5280g2_bmc_i2c_init;
-+    mc->default_ram_size = 512 * MiB;
++    mc->desc = "Facebook Fuji BMC (Cortex-A7)";
++    amc->soc_name = "ast2600-a3";
++    amc->hw_strap1 = FUJI_BMC_HW_STRAP1;
++    amc->hw_strap2 = FUJI_BMC_HW_STRAP2;
++    amc->fmc_model = "mx66l1g45g";
++    amc->spi_model = "mx66l1g45g";
++    amc->num_cs = 2;
++    amc->macs_mask = ASPEED_MAC3_ON;
++    amc->i2c_init = fuji_bmc_i2c_init;
++    amc->uart_default = ASPEED_DEV_UART1;
++    mc->default_ram_size = FUJI_BMC_RAM_SIZE;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2500_fp5280g2_types[] = {
++static const TypeInfo aspeed_ast2600_fuji_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("fp5280g2-bmc"),
++        .name          = MACHINE_TYPE_NAME("fuji-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_fp5280g2_class_init,
++        .class_init    = aspeed_machine_fuji_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2500_fp5280g2_types)
++DEFINE_TYPES(aspeed_ast2600_fuji_types)
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 61c66ee2d0bc..ed637f268725 100644
+index 4abfbffb45fa..e6f6ab424547 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -44,6 +44,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed.c',
-   'aspeed_soc_common.c',
-   'aspeed_ast2400.c',
-+  'aspeed_ast2500_fp5280g2.c',
+@@ -59,6 +59,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
    'aspeed_ast2600.c',
+   'aspeed_ast2600_bletchley.c',
+   'aspeed_ast2600_fby35.c',
++  'aspeed_ast2600_fuji.c',
    'aspeed_ast10x0.c',
    'aspeed_eeprom.c',
+   'fby35.c'))
 -- 
 2.51.1
 
