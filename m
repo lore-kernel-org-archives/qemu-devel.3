@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F43CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E9ACCFA00
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCSc-0000TU-VV; Tue, 04 Nov 2025 03:32:15 -0500
+	id 1vGCSi-0000XF-Hu; Tue, 04 Nov 2025 03:32:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSa-0000Sa-D1
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:12 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSf-0000VH-Pm
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSW-0003Ra-Ot
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:11 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSc-0003T2-Sr
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762245128;
+ s=mimecast20190719; t=1762245134;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=54eWRRLPna7O6L7wAWtTbW9Z1vertnEh7LO+u2prt1c=;
- b=Ov7wbV/TRyHwRxx+RZoeo7iuCOHN2nwUU/yhUC/UuozoIvibwuSkEW66oMxXME6DsF7i2G
- 79SEIJGBYWdoDM4WQkTtbYmgPZDuXHe4DaCbfWDIr27U4e6dpMrmcnStpq+0KOpmG8I7Xl
- QmoG3vpKlA+hOquX/96JG0Zayd1cf9I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8u4I1GqOE0j33vBDxsm9fJKnbZ6jvTLb/MOmjtBDH0w=;
+ b=SwYE4UgvdaZlcjhDCzWSJb4+yaQesjRvCs71xKOqRpYiPj0Sr69IKPV3e1iuNMbMnnZf0p
+ v91srCE+7nFoyYMdPWav6A1rDikouuj2j03/V93adRjzPuTn2D3FIVpXxr2igO97yrxI7p
+ Qiqa9GipWhXsWmg8VNIlP8qI7IpKx3Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-nDHriQIOOa-wV2fDw2VxIw-1; Tue,
- 04 Nov 2025 03:32:06 -0500
-X-MC-Unique: nDHriQIOOa-wV2fDw2VxIw-1
-X-Mimecast-MFC-AGG-ID: nDHriQIOOa-wV2fDw2VxIw_1762245125
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-Zv6KWiEGON28E9sxG37Y4Q-1; Tue,
+ 04 Nov 2025 03:32:12 -0500
+X-MC-Unique: Zv6KWiEGON28E9sxG37Y4Q-1
+X-Mimecast-MFC-AGG-ID: Zv6KWiEGON28E9sxG37Y4Q_1762245131
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2809C195608F; Tue,  4 Nov 2025 08:32:05 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9850318002C0; Tue,  4 Nov 2025 08:32:11 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1851819560A2; Tue,  4 Nov 2025 08:32:02 +0000 (UTC)
+ id F112019560A2; Tue,  4 Nov 2025 08:32:09 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 07/30] hw/arm/aspeed: Split Tiogapass machine into a separate
- source file for cleanup
-Date: Tue,  4 Nov 2025 09:31:21 +0100
-Message-ID: <20251104083144.187806-8-clg@redhat.com>
+Subject: [PULL 10/30] hw/arm/aspeed: Split Sonorapass machine into a separate
+ source file for maintainability
+Date: Tue,  4 Nov 2025 09:31:24 +0100
+Message-ID: <20251104083144.187806-11-clg@redhat.com>
 In-Reply-To: <20251104083144.187806-1-clg@redhat.com>
 References: <20251104083144.187806-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,124 +87,158 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This commit moves the Tiogapass BMC machine implementation out of
-aspeed.c into a new dedicated file aspeed_ast2500_tiogapass.c.
+This commit moves the Sonorapass BMC machine implementation out of
+aspeed.c and into a new standalone file aspeed_ast2500_sonorapass.c.
 
-To support splitting Tiogapass into a dedicated source file,
-a new TIOGAPASS_BMC_HW_STRAP1 macro is added as a copy of
-AST2500_EVB_HW_STRAP1.
-
-The change follows the ongoing effort to modularize Aspeed platform
-support by splitting each machine definition into its own source file.
-This makes aspeed.c cleaner, easier to maintain, and simplifies
-future feature additions or refactoring for individual machines.
+The refactor continues the effort to modularize Aspeed platform support
+by separating each board’s implementation into its own source file.
+This improves maintainability, readability, and simplifies future
+updates to individual machine configurations.
 
 Key updates include:
-- Removed tiogapass_bmc_i2c_init() and its FRU data from aspeed.c
-and aspeed_eeprom.c.
-- Removed Tiogapass type registration from aspeed_machine_types[].
-- Added new source file aspeed_ast2500_tiogapass.c to meson.build.
-- Removed unused Tiogapass FRUID declarations from aspeed_eeprom.h.
+- Moved SONORAPASS_BMC_HW_STRAP1 definition into the new file.
+- Moved sonorapass_bmc_i2c_init() and all I²C device initialization
+logic from aspeed.c into aspeed_ast2500_sonorapass.c.
+- Moved aspeed_machine_sonorapass_class_init() and type registration
+into the new file.
+- Added the new file to the build system (meson.build).
+- Removed all Sonorapass-specific code and definitions from aspeed.c
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-8-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-11-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_eeprom.h            |  4 --
- hw/arm/aspeed.c                   | 36 -------------
- hw/arm/aspeed_ast2500_tiogapass.c | 90 +++++++++++++++++++++++++++++++
- hw/arm/aspeed_eeprom.c            | 22 --------
- hw/arm/meson.build                |  1 +
- 5 files changed, 91 insertions(+), 62 deletions(-)
- create mode 100644 hw/arm/aspeed_ast2500_tiogapass.c
+ hw/arm/aspeed.c                    |  82 -----------------------
+ hw/arm/aspeed_ast2500_sonorapass.c | 102 +++++++++++++++++++++++++++++
+ hw/arm/meson.build                 |   1 +
+ 3 files changed, 103 insertions(+), 82 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast2500_sonorapass.c
 
-diff --git a/hw/arm/aspeed_eeprom.h b/hw/arm/aspeed_eeprom.h
-index 3ed9bc1d9a82..a9ae95940c5f 100644
---- a/hw/arm/aspeed_eeprom.h
-+++ b/hw/arm/aspeed_eeprom.h
-@@ -7,10 +7,6 @@
- #ifndef ASPEED_EEPROM_H
- #define ASPEED_EEPROM_H
- 
--
--extern const uint8_t tiogapass_bmc_fruid[];
--extern const size_t tiogapass_bmc_fruid_len;
--
- extern const uint8_t fby35_nic_fruid[];
- extern const uint8_t fby35_bb_fruid[];
- extern const uint8_t fby35_bmc_fruid[];
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index ed8ef6a2d01a..42f4203f9d85 100644
+index 74eb8077da7d..df1a37ca3df7 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -495,19 +495,6 @@ static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+@@ -102,21 +102,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+         SCU_AST2500_HW_STRAP_ACPI_ENABLE |                              \
+         SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER))
+ 
+-/* Sonorapass hardware value: 0xF100D216 */
+-#define SONORAPASS_BMC_HW_STRAP1 (                                      \
+-        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
+-        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
+-        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
+-        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
+-        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
+-        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
+-        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
+-        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
+-        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
+-        SCU_HW_STRAP_VGA_BIOS_ROM |                                     \
+-        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
+-        SCU_AST2500_HW_STRAP_RESERVED1)
+-
+ /* Quanta-Q71l hardware value */
+ #define QUANTA_Q71L_BMC_HW_STRAP1 (                                     \
+         SCU_AST2400_HW_STRAP_DRAM_SIZE(DRAM_SIZE_128MB) |               \
+@@ -490,50 +475,6 @@ I2CSlave *aspeed_create_pca9554(AspeedSoCState *soc, int bus_id, int addr)
+                             TYPE_PCA9554, addr);
  }
  
--static void tiogapass_bmc_i2c_init(AspeedMachineState *bmc)
+-static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
 -{
 -    AspeedSoCState *soc = bmc->soc;
 -
--    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54, 128 * KiB);
--    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 6), 0x54, 128 * KiB,
--                          tiogapass_bmc_fruid, tiogapass_bmc_fruid_len);
--    /* TMP421 */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), "tmp421", 0x1f);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4f);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
+-    /* bus 2 : */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x49);
+-    /* bus 2 : pca9546 @ 0x73 */
+-
+-    /* bus 3 : pca9548 @ 0x70 */
+-
+-    /* bus 4 : */
+-    uint8_t *eeprom4_54 = g_malloc0(8 * 1024);
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54,
+-                          eeprom4_54);
+-    /* PCA9539 @ 0x76, but PCA9552 is compatible */
+-    aspeed_create_pca9552(soc, 4, 0x76);
+-    /* PCA9539 @ 0x77, but PCA9552 is compatible */
+-    aspeed_create_pca9552(soc, 4, 0x77);
+-
+-    /* bus 6 : */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x49);
+-    /* bus 6 : pca9546 @ 0x73 */
+-
+-    /* bus 8 : */
+-    uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 0x56,
+-                          eeprom8_56);
+-    aspeed_create_pca9552(soc, 8, 0x60);
+-    aspeed_create_pca9552(soc, 8, 0x61);
+-    /* bus 8 : adc128d818 @ 0x1d */
+-    /* bus 8 : adc128d818 @ 0x1f */
+-
+-    /*
+-     * bus 13 : pca9548 @ 0x71
+-     *      - channel 3:
+-     *          - tmm421 @ 0x4c
+-     *          - tmp421 @ 0x4e
+-     *          - tmp421 @ 0x4f
+-     */
+-
 -}
 -
- void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
  {
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
-@@ -1424,24 +1411,6 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
+     AspeedSoCState *soc = bmc->soc;
+@@ -1319,24 +1260,6 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
      aspeed_machine_class_init_cpus_defaults(mc);
  };
  
--static void aspeed_machine_tiogapass_class_init(ObjectClass *oc,
--                                                const void *data)
+-static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
+-                                                 const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
 -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Facebook Tiogapass BMC (ARM1176)";
+-    mc->desc       = "OCP SonoraPass BMC (ARM1176)";
+-    mc->deprecation_reason = "use 'ast2500-evb' instead";
 -    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = AST2500_EVB_HW_STRAP1;
--    amc->hw_strap2 = 0;
--    amc->fmc_model = "n25q256a";
--    amc->spi_model = "mx25l25635e";
+-    amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
+-    amc->fmc_model = "mx66l1g45g";
+-    amc->spi_model = "mx66l1g45g";
 -    amc->num_cs    = 2;
--    amc->i2c_init  = tiogapass_bmc_i2c_init;
--    mc->default_ram_size       = 1 * GiB;
+-    amc->i2c_init  = sonorapass_bmc_i2c_init;
+-    mc->default_ram_size       = 512 * MiB;
 -    aspeed_machine_class_init_cpus_defaults(mc);
 -};
 -
- static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
-                                                  const void *data)
+ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc,
+                                                   const void *data)
  {
-@@ -1867,11 +1836,6 @@ static const TypeInfo aspeed_machine_types[] = {
+@@ -1707,11 +1630,6 @@ static const TypeInfo aspeed_machine_types[] = {
          .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_yosemitev2_class_init,
+         .class_init    = aspeed_machine_romulus_class_init,
          .interfaces    = arm_machine_interfaces,
 -    }, {
--        .name          = MACHINE_TYPE_NAME("tiogapass-bmc"),
+-        .name          = MACHINE_TYPE_NAME("sonorapass-bmc"),
 -        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_tiogapass_class_init,
+-        .class_init    = aspeed_machine_sonorapass_class_init,
 -        .interfaces    = arm_machine_interfaces,
      }, {
-         .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
+         .name          = MACHINE_TYPE_NAME("ast2600-evb"),
          .parent        = TYPE_ASPEED_MACHINE,
-diff --git a/hw/arm/aspeed_ast2500_tiogapass.c b/hw/arm/aspeed_ast2500_tiogapass.c
+diff --git a/hw/arm/aspeed_ast2500_sonorapass.c b/hw/arm/aspeed_ast2500_sonorapass.c
 new file mode 100644
-index 000000000000..186dbc1da30b
+index 000000000000..84de4f56b376
 --- /dev/null
-+++ b/hw/arm/aspeed_ast2500_tiogapass.c
-@@ -0,0 +1,90 @@
++++ b/hw/arm/aspeed_ast2500_sonorapass.c
+@@ -0,0 +1,102 @@
 +/*
-+ * Facebook Tiogapass
++ * OCP SonoraPass
 + *
 + * Copyright 2016 IBM Corp.
 + *
@@ -216,135 +250,107 @@ index 000000000000..186dbc1da30b
 +#include "hw/arm/machines-qom.h"
 +#include "hw/arm/aspeed.h"
 +#include "hw/arm/aspeed_soc.h"
-+#include "hw/nvram/eeprom_at24c.h"
++#include "hw/i2c/smbus_eeprom.h"
 +
-+/* value: 0xF100C2E6 */
-+#define TIOGAPASS_BMC_HW_STRAP1 ((                                        \
-+        AST2500_HW_STRAP1_DEFAULTS |                                    \
++/* Sonorapass hardware value: 0xF100D216 */
++#define SONORAPASS_BMC_HW_STRAP1 (                                      \
 +        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
 +        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
 +        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
++        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
 +        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
-+        SCU_HW_STRAP_MAC1_RGMII |                                       \
-+        SCU_HW_STRAP_MAC0_RGMII) &                                      \
-+        ~SCU_HW_STRAP_2ND_BOOT_WDT)
++        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
++        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
++        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
++        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
++        SCU_HW_STRAP_VGA_BIOS_ROM |                                     \
++        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
++        SCU_AST2500_HW_STRAP_RESERVED1)
 +
-+/* Tiogapass BMC FRU */
-+static const uint8_t tiogapass_bmc_fruid[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x00, 0x36,
-+    0xe6, 0xd0, 0xc6, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x42, 0x4d,
-+    0x43, 0x20, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x20, 0x4d, 0x6f,
-+    0x64, 0x75, 0x6c, 0x65, 0xcd, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e,
-+    0x30, 0xc9, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc1, 0x39, 0x01, 0x0c, 0x00, 0xc6,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x54, 0x69, 0x6f, 0x67, 0x61,
-+    0x20, 0x50, 0x61, 0x73, 0x73, 0x20, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65,
-+    0x32, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0xc4, 0x58, 0x58, 0x58, 0x32, 0xcd, 0x58, 0x58,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc7,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e, 0x30, 0xc9,
-+    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc8, 0x43, 0x6f,
-+    0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
-+};
-+
-+static const size_t tiogapass_bmc_fruid_len = sizeof(tiogapass_bmc_fruid);
-+
-+static void tiogapass_bmc_i2c_init(AspeedMachineState *bmc)
++static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
 +{
 +    AspeedSoCState *soc = bmc->soc;
 +
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54, 128 * KiB);
-+    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 6), 0x54, 128 * KiB,
-+                          tiogapass_bmc_fruid, tiogapass_bmc_fruid_len);
-+    /* TMP421 */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), "tmp421", 0x1f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4f);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
++    /* bus 2 : */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x48);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "tmp105", 0x49);
++    /* bus 2 : pca9546 @ 0x73 */
++
++    /* bus 3 : pca9548 @ 0x70 */
++
++    /* bus 4 : */
++    uint8_t *eeprom4_54 = g_malloc0(8 * 1024);
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x54,
++                          eeprom4_54);
++    /* PCA9539 @ 0x76, but PCA9552 is compatible */
++    aspeed_create_pca9552(soc, 4, 0x76);
++    /* PCA9539 @ 0x77, but PCA9552 is compatible */
++    aspeed_create_pca9552(soc, 4, 0x77);
++
++    /* bus 6 : */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x48);
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp105", 0x49);
++    /* bus 6 : pca9546 @ 0x73 */
++
++    /* bus 8 : */
++    uint8_t *eeprom8_56 = g_malloc0(8 * 1024);
++    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 0x56,
++                          eeprom8_56);
++    aspeed_create_pca9552(soc, 8, 0x60);
++    aspeed_create_pca9552(soc, 8, 0x61);
++    /* bus 8 : adc128d818 @ 0x1d */
++    /* bus 8 : adc128d818 @ 0x1f */
++
++    /*
++     * bus 13 : pca9548 @ 0x71
++     *      - channel 3:
++     *          - tmm421 @ 0x4c
++     *          - tmp421 @ 0x4e
++     *          - tmp421 @ 0x4f
++     */
++
 +}
 +
-+static void aspeed_machine_tiogapass_class_init(ObjectClass *oc,
-+                                                const void *data)
++static void aspeed_machine_sonorapass_class_init(ObjectClass *oc,
++                                                 const void *data)
 +{
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 +
-+    mc->desc       = "Facebook Tiogapass BMC (ARM1176)";
++    mc->desc       = "OCP SonoraPass BMC (ARM1176)";
++    mc->deprecation_reason = "use 'ast2500-evb' instead";
 +    amc->soc_name  = "ast2500-a1";
-+    amc->hw_strap1 = TIOGAPASS_BMC_HW_STRAP1;
-+    amc->hw_strap2 = 0;
-+    amc->fmc_model = "n25q256a";
-+    amc->spi_model = "mx25l25635e";
++    amc->hw_strap1 = SONORAPASS_BMC_HW_STRAP1;
++    amc->fmc_model = "mx66l1g45g";
++    amc->spi_model = "mx66l1g45g";
 +    amc->num_cs    = 2;
-+    amc->i2c_init  = tiogapass_bmc_i2c_init;
-+    mc->default_ram_size       = 1 * GiB;
++    amc->i2c_init  = sonorapass_bmc_i2c_init;
++    mc->default_ram_size       = 512 * MiB;
 +    aspeed_machine_class_init_cpus_defaults(mc);
 +};
 +
-+static const TypeInfo aspeed_ast2500_tiogapass_types[] = {
++static const TypeInfo aspeed_ast2500_sonorapass_types[] = {
 +    {
-+        .name          = MACHINE_TYPE_NAME("tiogapass-bmc"),
++        .name          = MACHINE_TYPE_NAME("sonorapass-bmc"),
 +        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_tiogapass_class_init,
++        .class_init    = aspeed_machine_sonorapass_class_init,
 +        .interfaces    = arm_machine_interfaces,
 +    }
 +};
 +
-+DEFINE_TYPES(aspeed_ast2500_tiogapass_types)
-diff --git a/hw/arm/aspeed_eeprom.c b/hw/arm/aspeed_eeprom.c
-index 8bbbdec8349b..f0ced29cf15b 100644
---- a/hw/arm/aspeed_eeprom.c
-+++ b/hw/arm/aspeed_eeprom.c
-@@ -7,27 +7,6 @@
- #include "qemu/osdep.h"
- #include "aspeed_eeprom.h"
- 
--/* Tiogapass BMC FRU */
--const uint8_t tiogapass_bmc_fruid[] = {
--    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x00, 0x36,
--    0xe6, 0xd0, 0xc6, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x42, 0x4d,
--    0x43, 0x20, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x20, 0x4d, 0x6f,
--    0x64, 0x75, 0x6c, 0x65, 0xcd, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e,
--    0x30, 0xc9, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc1, 0x39, 0x01, 0x0c, 0x00, 0xc6,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xd2, 0x54, 0x69, 0x6f, 0x67, 0x61,
--    0x20, 0x50, 0x61, 0x73, 0x73, 0x20, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65,
--    0x32, 0xce, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0xc4, 0x58, 0x58, 0x58, 0x32, 0xcd, 0x58, 0x58,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc7,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc3, 0x31, 0x2e, 0x30, 0xc9,
--    0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xc8, 0x43, 0x6f,
--    0x6e, 0x66, 0x69, 0x67, 0x20, 0x41, 0xc1, 0x45,
--};
--
- const uint8_t fby35_nic_fruid[] = {
-     0x01, 0x00, 0x00, 0x01, 0x0f, 0x20, 0x00, 0xcf, 0x01, 0x0e, 0x19, 0xd7,
-     0x5e, 0xcf, 0xc8, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0x58, 0xdd,
-@@ -181,7 +160,6 @@ const uint8_t gb200nvl_bmc_fruid[] = {
- 
- };
- 
--const size_t tiogapass_bmc_fruid_len = sizeof(tiogapass_bmc_fruid);
- const size_t fby35_nic_fruid_len = sizeof(fby35_nic_fruid);
- const size_t fby35_bb_fruid_len = sizeof(fby35_bb_fruid);
- const size_t fby35_bmc_fruid_len = sizeof(fby35_bmc_fruid);
++DEFINE_TYPES(aspeed_ast2500_sonorapass_types)
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 91bdefd2037f..870202ce8530 100644
+index c235c8aed34d..f59bfe5029dc 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
 @@ -46,6 +46,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
    'aspeed_ast2400.c',
    'aspeed_ast2500_fp5280g2.c',
    'aspeed_ast2500_g220a.c',
-+  'aspeed_ast2500_tiogapass.c',
-   'aspeed_ast2600.c',
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
++  'aspeed_ast2500_sonorapass.c',
+   'aspeed_ast2500_tiogapass.c',
+   'aspeed_ast2500_witherspoon.c',
+   'aspeed_ast2500_yosemitev2.c',
 -- 
 2.51.1
 
