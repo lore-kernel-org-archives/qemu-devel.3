@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9060FCCFA07
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A69CCFA07
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGJc0-0006rK-He; Tue, 04 Nov 2025 11:10:24 -0500
+	id 1vGJbs-0006nx-IJ; Tue, 04 Nov 2025 11:10:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGJbf-0006hr-3y
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:05 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1vGJbf-0006hp-36
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:04 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGJbb-0007L6-4n
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:02 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47112edf9f7so46285835e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:09:55 -0800 (PST)
+ id 1vGJbY-0007Kt-Vi
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:00 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4775ae5684fso1765915e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:09:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762272595; x=1762877395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762272593; x=1762877393; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/5jT1nanV2HTon+gYa/5KcgwK7C7VkPnRzMePhdCgTY=;
- b=nwrdCwc5ls6sg6CzMLOwhMtNv7DFaTdy59KcbY3Y9yvX28+/oiMV9/Iz0tuvKtwUOq
- WdqNGBO7ZFN4OLFKR0VRFOemr4HW31wj3qMEgUrrDL/fpea4AfebWwzVStzZF0p77/Wf
- VXNZoynTuuMmSBXYHS8gsQFWrABoe9+OJxeTLo1xbOqg5lR5Fxw2x/HseF245cqfi0I5
- OROHvesJT6QgQbJy2InSUT7pE/lu0i4OHGnoUL5oaebp45m4/3yV6S9/HmmxFzZs7HfD
- eUa+ot0Ws+AhFakdrnpYaxVJ4uN+HpaMgVw1IXN1epyS/UMQBep8VviVCS4YYhdCibiP
- YDxg==
+ bh=/9TOmFmIqhyuzG6e0MA/YDMsMgH5yDWNQ+TpSTSyVlM=;
+ b=Bs56HUKH2nG5hbzhOsWryzm5lFyYOeOD4V4tb1uOmYOE+GjYTJIAXzo6aBcZoXZZ9n
+ trSVH1morn+tMx4CQJIFinKhq4nTZZVAbS0zBtlyJyab+ufyvDUbRwWALQgv8ix3RqRS
+ 3ofUyRug0U42s//FP0tkPZ6RcUy3YgKv+tzU5nCPMAKtyF6QPMfjuY9U5B2dOTBdRzEH
+ 4vSW/72O1Tv0/PSXC01ZXPlKKxZEFgmRoGgmzfmrsJpHGb4OY1tb3/zUCyJaV1JjSrD4
+ 51PBKXNp1gjrftGher+iMjX7TrfG+rEGu6OTNKEqkPBJQVYswaZklo5OxkVJXw4VeudL
+ b6xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762272595; x=1762877395;
+ d=1e100.net; s=20230601; t=1762272593; x=1762877393;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/5jT1nanV2HTon+gYa/5KcgwK7C7VkPnRzMePhdCgTY=;
- b=FFAvzqdBFeH7BhPoBCblSu//uB9iDpk5UN8/bstCzXZuqah792ve3hCmExHEj6qvGY
- YWXgIKp7QJHer79T2XfARrFOaxcdG944Naq1/VMpeJv2TqyX1rKx5IpAWdPieuWmNvFE
- VOcQwDhnvQFdmtSpi7kILHyPVE3vTryKMCeh7ERgWgPb4SheBmfiATFYyxLa9/LRa/81
- +mHJMkaSiXFLUe2jdqu6GQvFWsUv63v8/15eL9VOYhS9AcCQ2wnk+eaUxgjU/ILAgiAG
- fnULJOjgpt2b0Seu2oKtEA3d9yTwu+543CqpbDiU1E5V9+MNf3HLG+shJiHsshdOSMmM
- tZ/g==
-X-Gm-Message-State: AOJu0Yz+HBS7OuPGBmsed5H23K/Nz10gcPHQI9UgvC3LkphzUwre8Lql
- DZdtPdgo7Dw94pkP8dPSuXE8QuAoAPOc8TjDuF5fXIpoTW/NKYLXBa9W4VbZwdUn48MVmOg7VVp
- cSy07
-X-Gm-Gg: ASbGncvH23L2XtjH01p7pQmAxTWcSlU4NYGvNbQUUkMPFdzf6w/zelNMJiRyf3ZEJCx
- rEvNlxJmn3txOsfAJWAqRRxFaMq9sR1pBeNwUbtXw0zo4TrxucAwjG9zW5r7S42/4+hhylXA33B
- Xxt6zc+GJDtrEAK4/Ep63PDASV3BWKJXd/YERwlKlkHnKD46iZ2IfZjhXdFkpADxwLvS1WqJ97I
- jtdgbUjtIVZwYSKf5+KrwiGdr3ODRLQL3cyvI1iBNo0wjTz7qOvuoW+7CpDcQ1d8uHuawTKuqMB
- E+T8v5EldT9TNR2oOjDrYSGjyTHfnulErVM9Vitct2EZJRoY5QU1xCdUqrjx19/SlX17spnKY1Z
- +Gt9sb3y3oFBmuqMIdyCk6mjWGV2I0wo4Dpwr1NmRfmk1Bp6NLCMePWTuLPRt/QPcsvL3BMWkZT
- elCVE/T7a8r/xEZkuo
-X-Google-Smtp-Source: AGHT+IFw0mHTVNQTPpVDHWOwRPNu28SoSm3vy3a0r7q4kvLWFQ2x1D7XC+YLnA6naNfmkaD+uC53Zg==
-X-Received: by 2002:a05:600c:190d:b0:46f:aac5:daf with SMTP id
- 5b1f17b1804b1-477308dbefdmr162934445e9.35.1762272594606; 
- Tue, 04 Nov 2025 08:09:54 -0800 (PST)
+ bh=/9TOmFmIqhyuzG6e0MA/YDMsMgH5yDWNQ+TpSTSyVlM=;
+ b=XwDf/iedh/5bUwpkG43kotVfk2HkH/FQJA0WksGL5qDHEBw2YGOphgRV6H9kLT151A
+ 3tFeXaqXotv97z59mXcamIykxJdpEqwuHIWDAUh1KzNyRaks2fUJNfn3LuYkBMuUq/Ez
+ J9FpLcKPcs3RQ90pcYXxvEf99AFBV7cpE6P5JEjIdAjV5JN0P7+hWGINz89Hi/x7frpT
+ tmiEpjOWO3QAgX5t1F7Jy2hdFRCfUNiteBwNRpciZGiOhXne0EcNJ9Ue0Yi6b6ZO+aj1
+ NiSuyPQTEOCnpZSRVoPoj1l2juo0ykwxgpa20sgoLiGI2eAiyigM1nvY++bFXEvr4hQl
+ 18WA==
+X-Gm-Message-State: AOJu0YwlQnjLVVxYjC3EYtt728/LoAt/aRlqbW69gRH2CCPd0dhk2BpL
+ RYrMPGhyAjRWXqKo0k+GcALmCEZBPXFKHRucVRco49QiYXumv/uTVrVUs9sRmVdVITSkTBm2cHv
+ DY9pP
+X-Gm-Gg: ASbGncsSCLBgsWRlbBXuGztOgg9E8sXPBUFIzcdA99aXnjPGeE+Lo4DUsU6jo8vX2GT
+ +0B88L3taoJD/moStwLpDy/GTsJltYlgWVvJ78EkoSMLzNvhZrmgMmjHMeprBNxruFh8ftfiS3g
+ Dw5+7laEnXdy6CsiGEWQMgm9zngfii0yUf1XivELeL81NBH/YFya6gF+zjgCvg7u4xUetwFbe/6
+ AZJ4dA3OVPqPgt0tQAQjVkdk6wpo9zEtyVPZz0LI0r77OnCwbyWkDFU/F5vqdYpDmimeZKFXKTr
+ tvH1+4Lq8Ob2OlTxIlNEJAjiEbM4rwikjLeqCsZq7G+al9sfH9CH6w52zUqj3ovwFTVepoEYhql
+ wxqTY3h4jpOYr4CuD3m7hit1x8bZCv6z6yj7ztUcxs/N2Os5PjeKg6pAE2xz2+NscUVASWBuk93
+ O5jgh1Ag==
+X-Google-Smtp-Source: AGHT+IEboKozT2T2SPgevny/csOvI2uGVEwGbCoFmhWGnzRiVRI6S1l0aXX30LlFysEsypR7bOYY9w==
+X-Received: by 2002:a05:600c:3511:b0:476:4efc:8edc with SMTP id
+ 5b1f17b1804b1-477307d9920mr141491715e9.15.1762272593390; 
+ Tue, 04 Nov 2025 08:09:53 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47754adcd08sm57314455e9.5.2025.11.04.08.09.53
+ 5b1f17b1804b1-47754adcd08sm57314455e9.5.2025.11.04.08.09.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 08:09:53 -0800 (PST)
+ Tue, 04 Nov 2025 08:09:52 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
@@ -73,16 +73,16 @@ Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 8/9] vfio: Clean up includes
-Date: Tue,  4 Nov 2025 16:09:42 +0000
-Message-ID: <20251104160943.751997-9-peter.maydell@linaro.org>
+Subject: [PATCH 7/9] cxl: Clean up includes
+Date: Tue,  4 Nov 2025 16:09:41 +0000
+Message-ID: <20251104160943.751997-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251104160943.751997-1-peter.maydell@linaro.org>
 References: <20251104160943.751997-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,7 +106,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This commit was created with scripts/clean-includes:
- ./scripts/clean-includes --git vfio hw/vfio hw/vfio-user
+ ./scripts/clean-includes --git cxl hw/cxl hw/mem
 
 All .c should include qemu/osdep.h first.  The script performs three
 related cleanups:
@@ -119,124 +119,40 @@ related cleanups:
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/vfio-user/container.h | 1 -
- hw/vfio-user/device.h    | 1 -
- hw/vfio/pci-quirks.h     | 1 -
- hw/vfio-user/container.c | 2 +-
- hw/vfio-user/pci.c       | 2 +-
- hw/vfio/ap.c             | 1 -
- hw/vfio/container.c      | 2 +-
- hw/vfio/cpr-legacy.c     | 2 +-
- 8 files changed, 4 insertions(+), 8 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 2 +-
+ hw/mem/cxl_type3.c         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio-user/container.h b/hw/vfio-user/container.h
-index a2b42e3169d..c952e090631 100644
---- a/hw/vfio-user/container.h
-+++ b/hw/vfio-user/container.h
-@@ -7,7 +7,6 @@
- #ifndef HW_VFIO_USER_CONTAINER_H
- #define HW_VFIO_USER_CONTAINER_H
- 
--#include "qemu/osdep.h"
- 
- #include "hw/vfio/vfio-container.h"
- #include "hw/vfio-user/proxy.h"
-diff --git a/hw/vfio-user/device.h b/hw/vfio-user/device.h
-index d183a3950e2..49c05848f1a 100644
---- a/hw/vfio-user/device.h
-+++ b/hw/vfio-user/device.h
-@@ -9,7 +9,6 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
--#include "qemu/osdep.h"
- #include "linux/vfio.h"
- 
- #include "hw/vfio-user/proxy.h"
-diff --git a/hw/vfio/pci-quirks.h b/hw/vfio/pci-quirks.h
-index d1532e379b1..a6282e063a1 100644
---- a/hw/vfio/pci-quirks.h
-+++ b/hw/vfio/pci-quirks.h
-@@ -12,7 +12,6 @@
- #ifndef HW_VFIO_VFIO_PCI_QUIRKS_H
- #define HW_VFIO_VFIO_PCI_QUIRKS_H
- 
--#include "qemu/osdep.h"
- #include "exec/memop.h"
- 
- /*
-diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-index e45192fef65..dab7a23224c 100644
---- a/hw/vfio-user/container.c
-+++ b/hw/vfio-user/container.c
-@@ -6,9 +6,9 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 68c7cc98912..6cfdd98168f 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -7,9 +7,9 @@
+  * COPYING file in the top-level directory.
   */
  
 +#include "qemu/osdep.h"
- #include <sys/ioctl.h>
- #include <linux/vfio.h>
+ #include <math.h>
+ 
 -#include "qemu/osdep.h"
- 
- #include "hw/vfio-user/container.h"
- #include "hw/vfio-user/device.h"
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index b53ed3b456f..353d07e7819 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -6,8 +6,8 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "hw/cxl/cxl.h"
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index be609ff9d03..4f3688a71b6 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -8,9 +8,9 @@
+  *
+  * SPDX-License-Identifier: GPL-v2-only
   */
++#include "qemu/osdep.h"
+ #include <math.h>
  
--#include <sys/ioctl.h>
- #include "qemu/osdep.h"
-+#include <sys/ioctl.h>
- #include "qapi-visit-sockets.h"
+-#include "qemu/osdep.h"
+ #include "qemu/units.h"
  #include "qemu/error-report.h"
- 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 7719f245797..3368ac89150 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -10,7 +10,6 @@
-  * directory.
-  */
- 
--#include <stdbool.h>
- #include "qemu/osdep.h"
- #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
- #include <linux/vfio.h>
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 9ddec300e35..013a691bc5a 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -10,10 +10,10 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-+#include "qemu/osdep.h"
- #include <sys/ioctl.h>
- #include <linux/vfio.h>
- 
--#include "qemu/osdep.h"
- #include "system/tcg.h"
- #include "system/ram_addr.h"
- #include "qapi/error.h"
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index 7184c939912..273b5978806 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -4,9 +4,9 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-+#include "qemu/osdep.h"
- #include <sys/ioctl.h>
- #include <linux/vfio.h>
--#include "qemu/osdep.h"
- #include "hw/vfio/vfio-container-legacy.h"
- #include "hw/vfio/vfio-device.h"
- #include "hw/vfio/vfio-listener.h"
+ #include "qapi/qapi-commands-cxl.h"
 -- 
 2.43.0
 
