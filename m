@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A732CCCFA00
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43811CCFA00
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCJf-0002vr-Ak; Tue, 04 Nov 2025 03:22:59 -0500
+	id 1vGCJl-00030Y-Ko; Tue, 04 Nov 2025 03:23:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1vGCJd-0002uW-8V; Tue, 04 Nov 2025 03:22:57 -0500
+ id 1vGCJh-0002yS-Qp; Tue, 04 Nov 2025 03:23:01 -0500
 Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1vGCJa-0000nf-9T; Tue, 04 Nov 2025 03:22:56 -0500
+ id 1vGCJd-0000nf-Uh; Tue, 04 Nov 2025 03:23:01 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IFTN8ppuQccrcwk+rFJJBi+nbc1o7QAy/OIDxTinA7GnLdM4kT7anEsbdDPAmLENsmS5DcKG9cQNDrhjQKKHmgf4YEj/KMZ5S3xDGUcP6xlbeVBYUInj6QQ9dBHgIToMd9DB1HBa4U15a7MTmDdvC6PpcPwtN42n3nJjrjtVLYsbYiT+Aw1vehaeB7VLXUhxhsuzgVnYl4x4ahoqWQxymphOhwIRGhWzsVvCipUElubpvgSNO6ASodciEF8KPwYK6sIEaUo/Cj9U7Y/HjQ3KscJg9rsoiXIw67Yom9r2VvJzRbro7lzXXnbWwLL+ORRT07ubKIhY6KZxvrEZBceWNQ==
+ b=EdMxKHfk0uFK7LxCPohMDnwvX80/9Esc/SfYhxnm69oQLV6kUCYUO06YxJUnAO231i4c5E5JD5UYW3hfELu/baB5ylhlTn+Qi1EMF8fyJX+YxZi9wFmKF4QfsOwtOUeSaIzwGvbbSxpBBuVHkIWup8j1Fvc7VroSP4Yr/WsTXR3zsvM04dgbEC3rGrR+ZFUYdmnzOdmxDhGEiwPDRGk5bnNiASOdTDWFROKXI6TEXgpiapcXMzQskTuDtuGqhlLcsKsXTGgeae2R+/ab6JGarmfVUC4r6bf5lWE9ATgwpsT78EOa9/5E8WRCPOhi4VZLzoLBMUML6HkGPaP+gHbiUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SDQn7I2+Aj0AmX71RUDxbXCfyYCl0rIOAqy0Wx0LybA=;
- b=fJSykFFT3+3I/4rUYU05hAosWv8EdlWBNdkp93OXddfgtB63CRWrCuLnkrywBqiwvDW/TUWUb6+rdSnGopRqMJUHMwdPtDvcOF0bZlXhcunhjrqZW5QbvtYKCroZ7AmAmyEXtoH+mW5N8IAIV4MCF3/w59sdx3/1nZhG7ca75quoF2byQkANdLgkoZdkw+3X5RhUp7eRoQWxnfofKZrtealL8i9mvb9pnuDYVEwcnmTBkgoivjycs//wos2DAIDhabxtHyoz61vMEVOb1vRRTYkXFdIgEHVH7UhWx5+i52d0Tz31jewgz+Ng7IwDsSzUnBUa8yvKmnnWgKo5p4FoFA==
+ bh=jBK4sm64MSAGqZaQCKJX66b4t9wqQR37v1ty9NPNgzA=;
+ b=EyNJHwyLJUgu6P1FNrBLGDGh39DBFleg2g3wE96Hhmg8+v2iUXNzuQ6Ul1KWmhuPQAYbNSXCvRcGVyImeQdCLKhl9dnlnFVt3F1Vr9jUcRwe8x8FKd1oavxMAioGEnHURBe3XYwhY/JFKGz3njyBTAVx7YeXCnF0DN+fYphCHZ0vd8I9gAfsClvj/7PbzA4hIf3bvSrB+QBH+c5ylbcAzPPhohYdwP4zBI4vINSB2+13z2Em/VsrMQLH65wrWHE79GRoWxuBq5QMzGLW4wvOW5jZzJOkJx64TplUfcf5PqbsdPP3/BsI2vXRoyse8Wb1ZeG+a1lLqdeIQ0x0qoFyBA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
  dkim=pass header.d=siemens.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SDQn7I2+Aj0AmX71RUDxbXCfyYCl0rIOAqy0Wx0LybA=;
- b=h6YDxwR7okPvCtmDSkpi/f/R69PpOadBAQ46/53Ngtn334orO3s9nVxdT/oNmZ8/FR2f2mdxYLa0O5cKoqZjYKKLBKoSOP0C26H7DGMcaAn/omZVt/POxmnJ4GxRYJcQ2N6AruFhZ2Hx1wNbgAdPLFIN82DIplYV59zfwZpM2qj8EWLgsGJwiNDNz+AWF1vCPRDwmRYem7u4D+z5dHdJJ5BlvtTLH7ro8SqHHMMV9uvf8mLB/BBXnM1k3RYhJpZ8jOCPuziIWEq7trIUWeDLY54na9LzB1WwEsadSQyB9+6OLYBbGXnBMubkZIBULs+o6IGrB4UVdTS0IIJZcaM++w==
+ bh=jBK4sm64MSAGqZaQCKJX66b4t9wqQR37v1ty9NPNgzA=;
+ b=gpkhWfyBPYblEmwu0olVIssuJcdZiVmDyLdvrJmoKoo8FLE5H3MfjNa4daR9FRzglgrvJkHQVF28AzutxziBqvdDed4pWPbGaM2VADKEB11UwyEy7t1kSBElroEWkdabyC1NzFwjN0wsZotcAq56UAIboDvhhdcgNmyF8vYLYnGvqqSvgBIl+GpKg0+GjwQpEebRlAxNO6CAA40ULt8H1OU8C7wm+6LqOa87cokvLQNTQb6ZiX1M1IcTXe4NIGjjd9BIAZZWjQtysim7cfyqIpbo66xVXO1CTH5iQ0IOksncjlMpSNciRJl6vsFEMJgxws0lRiX/1td+DaYuZXg3yA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=siemens.com;
 Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
  by AS1PR10MB5261.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:4a5::17)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Tue, 4 Nov
- 2025 06:43:09 +0000
+ 2025 06:34:30 +0000
 Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::8fe1:7e71:cf4a:7408]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::8fe1:7e71:cf4a:7408%6]) with mapi id 15.20.9275.015; Tue, 4 Nov 2025
- 06:43:09 +0000
-Message-ID: <79abc402-7a80-4595-b43d-49cbc37bf7dc@siemens.com>
-Date: Tue, 4 Nov 2025 07:43:08 +0100
+ 06:34:29 +0000
+Message-ID: <9b8a47a1-a2f0-4299-a35e-0d2272ba7818@siemens.com>
+Date: Tue, 4 Nov 2025 07:34:28 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/6] hw/sd/sdcard: Handle RPMB MAC field
+Subject: Re: [PATCH v5 3/6] hw/sd/sdcard: Add basic support for RPMB partition
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ Jerome Forissier <jerome.forissier@linaro.org>
 References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <30efd95ad5fc54b6afac9d6a0d260c174a6718d2.1760702638.git.jan.kiszka@siemens.com>
- <40ccc01c-0ad0-499b-b2e2-4b5bbcce957d@linaro.org>
+ <091d69e0e15b951f6110938c8ebffc988204f52c.1760702638.git.jan.kiszka@siemens.com>
+ <66a62dd7-e4b7-407a-8402-8b9b5b08833e@linaro.org>
 From: Jan Kiszka <jan.kiszka@siemens.com>
 Content-Language: en-US
 Autocrypt: addr=jan.kiszka@siemens.com; keydata=
@@ -105,7 +104,7 @@ Autocrypt: addr=jan.kiszka@siemens.com; keydata=
  qH4kDzsqKX8zzTzfAWFxrkXA/kFpR3JsMzNmvextkN2kOLCCHkym0zz5Y3vxaYtbXG2wTrqJ
  8WpkWIE8STUhQa9AkezgucXN7r6uSrzW8IQXxBInZwFIyBgM0f/fzyNqzThFT15QMrYUqhhW
  ZffO4PeNJOUYfXdH13A6rbU0y6xE7Okuoa01EqNi9yqyLA8gPgg/DhOpGtK8KokCsdYsTbk=
-In-Reply-To: <40ccc01c-0ad0-499b-b2e2-4b5bbcce957d@linaro.org>
+In-Reply-To: <66a62dd7-e4b7-407a-8402-8b9b5b08833e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: FR4P281CA0435.DEUP281.PROD.OUTLOOK.COM
@@ -114,94 +113,94 @@ X-ClientProxiedBy: FR4P281CA0435.DEUP281.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|AS1PR10MB5261:EE_
-X-MS-Office365-Filtering-Correlation-Id: 33dc554a-9e33-4cd4-d742-08de1b6d6b1d
+X-MS-Office365-Filtering-Correlation-Id: 14ab7581-2a90-4901-aa14-08de1b6c3524
 X-MS-Exchange-AtpMessageProperties: SA
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OEY2RHBnb24vaGVxK3RHTjZwUWhBcXh6L2ZWcjJQcjhKWndFdmFYakxGSFRY?=
- =?utf-8?B?Sk1kZ0NnZjdnUnBhZEZlQVhxY29lT3k3ZnhlRmM3VkhieXB3VkdtVFN5OWlq?=
- =?utf-8?B?c2l6REhyVHJXMEE1aWgrdnlrN1U3MEZOb2dDNHg5cG1JQ3VPajNmN3FhbzFx?=
- =?utf-8?B?MEhCUG96OGNBeWZmdDkwVE10bk51MEVrbnVoanV1dmxYUDdwNXg1dDhWN1l5?=
- =?utf-8?B?Uk9Oa3kvOFNOSC9XV2hIYzRuU1NDNXV0OGdublhWRkJ1TW50TUdqMmJiQkFu?=
- =?utf-8?B?ZnlkM2R2N3VqRkMvZDlJOXZEcWlITGxMUVVIVzkzMHR3bkl5RFlNZ2ErTTI2?=
- =?utf-8?B?UVE4YTM4UzFURSs0WUxkQVZNWThNRk82eUdQWDBSOG04SkpuUTlOcGxhQUdE?=
- =?utf-8?B?K1RuMG1aNzRXd2RkMkFiV3BKQk1TMTBGVFVscEo2TFBsM0tBcm5yNHUwbTNU?=
- =?utf-8?B?Tm5OeGp5MHRyS3c3V09pOEU4MFFpdjNVWXhKQ3Z4VXVycnpQTVVEcEljZmN2?=
- =?utf-8?B?eVZKMDVyYUhMNWw0aFMxWUxBU0ZWTlI0amVIcWNTWG0rZXJqVFNtYXpGOW80?=
- =?utf-8?B?TFExVGQrTVNHeUczc3h6VnpodHF1Z2VUSEV2T1Q3NHBlZ1RmdUI4SnhGNFNH?=
- =?utf-8?B?emhaQmpCR09tbEZUSnp5bmltL2hIWjVadlY0WWNyUUE0QmswYmgrRkY3SUtx?=
- =?utf-8?B?WElPRVFEZVFyZDZISnBieWlkVStsZlhDZHJpVUpSZmkzV1N2ZW4zTTFVcDZJ?=
- =?utf-8?B?VVFlNGFaQk5GMktEZHhYRmx3SHRGb081aXpEWW50RkpOWWhjMk05dXBqR3Y4?=
- =?utf-8?B?MHE5aFdheGpZTTNqOFhhb0x5UkFJUGpIVStXUStsdFRpUEdicllRYkMzT25k?=
- =?utf-8?B?R1JoY3N1alpJT05lNE8rSkJQQm00L1EvaUZ5NjY1M3hEK2Y4UU5RTUh3NW5T?=
- =?utf-8?B?cUpzbGV6TXR1R0VYVFBDeUc0YUtrSTJ3eS9YaE5vT3dmSXZkOER4b01VQ0Fi?=
- =?utf-8?B?SG1ya0E2disyVWgwNGtRZGpQNjFPUWZTcDlFZ29YajhkWWthTkRES2k5eElq?=
- =?utf-8?B?R1BvVTBUdEJvbW0xRURKd0VyT2lvZC9RTG5FME5LYlJhRWFMUWtEUTNDUFE4?=
- =?utf-8?B?Tm1OMDQyc2p5RXJWclBKWUliU2drWDl3bTZpMFRJeUIvWXVXODVpVEMwS0xQ?=
- =?utf-8?B?bVFwd0gycmdzZXJBMHBsTjFMOG4vM096YkoyVUR2Y1FZSHFBdnQycEgzRUxk?=
- =?utf-8?B?QW9xd3RBMytHMVNQd1ZkRFB6UUhFY3J2ZEljRWhuR2NtZ3kzSGplQzlzWTVx?=
- =?utf-8?B?TU1INDdnMlRXSzBYVWNDTnFlenRpREU5aUdEbjZyMWZ1QUZTbjdra2JWME01?=
- =?utf-8?B?bUJRSHY1emFOY3VVYWpXbnh0K3Uyb0I3S2pUYWd5V09XcTQ5VWJCdFRjZU5Z?=
- =?utf-8?B?eVlXRmJ3V1p3bld2M2ZZNitjVXpMNFluWmZlckFRTjRoYWRVSkF4eTBhZzBs?=
- =?utf-8?B?QWNBMkJ6SEpYcUdSUjNtQndPMUdIb3NldXFPaUUzbGZBNzJ6N2NXRkZQZUpR?=
- =?utf-8?B?TjRERkJCTHBZcGplZ3JCcUJFWVhTNXJZeUVEOEptU3JQTkVKbUhsUEdwNzBF?=
- =?utf-8?B?eG1zUWw2NTQwbWZHRWh3WjRCR05OTklXbmsyb3B1V3FUdDNKeUc1U25SSGk4?=
- =?utf-8?B?QkRmU2FnRThDVmwrRDRUb05PNURESHBGRFRBNDY5U1hnSGl6VVQvZHhKbXNB?=
- =?utf-8?B?WnV3MmtlTTZ5NFNJbHlFUnNLblZ1dXYybGhsSndhTlA5QWp2L3Z5RDB3VXZ4?=
- =?utf-8?B?RGs2TGJYRXM1SGNMSkxNbUE4ZUxqY0h0amRTKzI1TXhnYzRRbW12NTVaWmxx?=
- =?utf-8?B?N0Z6eWZwTzh3ckd6MjhCYi9DRUwyQm9tTEZOaGVUeWt2b21RSVlYV2c2R2k0?=
- =?utf-8?B?OWFqZ2xGZjZSQXRyTnZITTg3Z0pJeXpoUk9qdnp5cFdBdmNDNEJnc3QyaUhx?=
- =?utf-8?B?akpmSnp3Ly9RPT0=?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Zyt1azljbGF4MFA0VjREekJyL3RlS2NDejB1TmlUTWp2bEIyZm5QSTA0cXF0?=
+ =?utf-8?B?YzJFMVo1VjQ4V001R1cvT3lxQ0loQXpHNGsrSWppSStlRmhOTGhiZ2RyVFg0?=
+ =?utf-8?B?bmdKRmdmWVIyWWZ3TXIrQjlEd0gxVVpSeWVrVU8xY0FqZ2FNWlRuN1JBT00r?=
+ =?utf-8?B?MDlLWms5cExDdlpxOVdHeDY3eDFCSW5XZ24rMi9TQjFqWStXRThobGRYalNR?=
+ =?utf-8?B?TFNOdVZsWHBwUFBHK3dSRHMyNXluMXQ0WklkMGxmSWpQVE81VFJtMTVmNDFY?=
+ =?utf-8?B?YnVTM2w4N2FDbWxDQjZKUmdMeGpIc3d2VXZZQVZWeDkrZTYyMEY1SFkydCti?=
+ =?utf-8?B?cllaMk5vYlhxN2prclhVcnE4c0ZPTTdIVDlRQmVBampPNlNXWENscDFpZmVp?=
+ =?utf-8?B?NnN2Y0tPcSt0TGVXRFBwUmhRUHYvaHo0Mm1qV0ZTUjA0SnJ6SHJQNWxYSW03?=
+ =?utf-8?B?N3dMbXcvc1piWUZ5NEFQcWgzcjRVS0cwbmxJOFk1aDBUSjNua2VOMnlkTm5l?=
+ =?utf-8?B?d0w3bzVRWlBIRENKT3dFRXM5K21mS0NOR280cmtqMkVXWU5DZ0tWem9NZUV2?=
+ =?utf-8?B?NlBzTXpqTWJmL1E5MWF4YU5vUEJnc05Zcm83U3JZaUR0K2NkMHJnblgzWkpo?=
+ =?utf-8?B?cU1uZlJKZnZJbDZzMVpPSnR5UllkRGp1ZW9PYzI1SStKYy9kajhUVmRwVVdH?=
+ =?utf-8?B?V2JnU2NVM21BdzNKRUZzSHZqTGFpMzdEdkV3OFpLaFNlbXF3QjJsZHlsMXk0?=
+ =?utf-8?B?YVczUy9iQ2lHaTlYUDJNdEVpZ3lObXJDUVllZHFKZVQ2QmxWN0pzQS9iUHcy?=
+ =?utf-8?B?Z3MxdkRBTldCelFGTVFqVFN2eWI0NzBWMzlxODRjMUQwN0JTL0Rub1VSQ3FS?=
+ =?utf-8?B?eS9wZ2tpT3FOYnBLY2dabFRKYVBiUjJrUmtaTG1qWWx5QmtxaDZPWEl3RGl2?=
+ =?utf-8?B?TGZnUFFScXZ5V05DbWY0VzU1N0xVRHV6SEc1d2ViSDhLWVlvM20rU3BWakh2?=
+ =?utf-8?B?SUtKaU9EWWcwL2wwdXkzbmIxYkpHbzFDUEJRQTlQeWd2a0Y1cUFWdTEybWxR?=
+ =?utf-8?B?VWxGNHRNcXVGK2FTZjJiMHk0N0tGZjh3MElLQnBqaUJUcWZJRlk3T1JGb2Fx?=
+ =?utf-8?B?VlRIVWJBdTZsNThnNk9UMHJ3MHB3YmNFWldNMU5GMS8yUWFzdnVYUXExV0FD?=
+ =?utf-8?B?UWJOcml0ZlJkU3poTVFXNTdKQ2FzZjJjMDFoWUlHcnZ4dXpPOHREVXUyNzlE?=
+ =?utf-8?B?OW1oYitPTXl6QjZuV2NEdVRFcVhmOW5QVEh6WjVlVUMvdXZjdjQ4eEpJd2g0?=
+ =?utf-8?B?TWpOcEx6WGF4M2g2L1I2WDBTbU5USXZiT1VXY21rTXVZVk5jNzRadmFJZnVm?=
+ =?utf-8?B?NGtmRHRGZVhoTGthMG9LSm85SGtzc1FWUTZiVkdJaEFSY0VFTkdRRmYrN0FD?=
+ =?utf-8?B?RzFxbS92RDljM25EK3k0OWttL3JUL05mdTJoWWxIRzB2dEZ0Q1N4RnhwQVB4?=
+ =?utf-8?B?R0hOVTgvcXpWNDRONHQ2dW9iL0VrdmJRSllwSXA4WllHTlBBd1M1cTkyMjJE?=
+ =?utf-8?B?SlFBS1NjWisxR0ZkMlhZdFczSHloUzdncnoyb2Vuek5YMnNqK29HUGJIUnNz?=
+ =?utf-8?B?RXc2UXRtZlFUQ28rYndNcm5naXYwb2ExbG5lWWZyS2ROK2tLdHBFZjkzZ3NF?=
+ =?utf-8?B?WkFSMk45bkVFUStLVExNOUlSQXByT2JlSTcwMEROWVJaMkhXOVBQS3VyVTlS?=
+ =?utf-8?B?RmJVd1FmWUdMWHV6OW5WOWhwVllDMGJNM2xTVHFlLzU4a2kzcEpxZnVFV3Rx?=
+ =?utf-8?B?TVNsU2sveWM3RmxiZ3dIMHRqWnFHWWpMYUV6c09nM0h2TWZsYUx2RGg5SW1t?=
+ =?utf-8?B?OEVhaXZjNm4xdTFGUEw3Z0lncWRLUytvczJCbTZpRGgxWndQeU9ENVhDbjIr?=
+ =?utf-8?Q?oAIQjyb5bfHgpY7qY3pWIrURG1n7LAr6?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WmNmcWUxMFc2WXJweGNlOFZaNnFSN3dnNFJ3WW9KTExuVGcwSHIxSkoyWEx6?=
- =?utf-8?B?MUtLMlRaREZiZlBmSXEyOVdMNmI5Wk8ySVZMRzkwMW5Zck1xWGtVZFpuSEJv?=
- =?utf-8?B?N1NVY0pTa3dJUDZMMVFDVE9LUG9jdW9lNmQyUmJWdWZVK0JlNkJGcnRMK2cw?=
- =?utf-8?B?alFOQnRkeXBzTGtIT0VqdjU2TThDbERYYWJINTJZbWV3blkraXNBYW5xN09Q?=
- =?utf-8?B?L081WjN1SEU1Uk9uRXhZYVhXR0RuODlYWGdDKzV4TFdnVkJNbFFib1U4WDFu?=
- =?utf-8?B?cFZQazR4aUp5d2NrMEVtSERXYi9Id2xzM2k2ajk5QzdwQlBBNXRUbmd5T1hn?=
- =?utf-8?B?S2szcFlmOTE0SHV3bkVNdnpHakF0d21oS2p2OFRURGtQTXdvbjdOL3ZkT0N3?=
- =?utf-8?B?OGcydnhFLzF6c3J2WitlbUtWazRGK2gyOVVGc3cxRWxtdGJXOTQ3cXhUdTNQ?=
- =?utf-8?B?QTRTbDMxbmZWZUFzL2dBUzF5VFY1TkpNdldCOXM1Vi9WOXpaTTZzNkJpRFZW?=
- =?utf-8?B?Y296WThxZGlyU2lHTWxXR3BNeXZkRUVmZFJiay90K3ZITGJOclVOdU1naUFM?=
- =?utf-8?B?elB0ZC91NnpCWVV2QVFPMzY1a1g4TnBjQnJGU2EvVlJEWGdGVFpHY2ZIN01K?=
- =?utf-8?B?UXBrdFVIRm9xSzBGcW9WZXVqQUFQdXFCR0V4VXdrdkpCekVKMHhqRFBGajR4?=
- =?utf-8?B?R2dKanVjUHNWQkZvRUVhcENWR3pGK215LzRSUkhkajkySTdsSmRXRUxiMFRk?=
- =?utf-8?B?dVNidUhINjFDZlQ1cFB1VWRObW1lNXF5RU4yc3dEUHZ1aDU0SWRyUzM1Qk5l?=
- =?utf-8?B?QXZvRjk1aDlzL0Q3WjFrVlA3WXVlQlc3dzZSUHFSUXBKdEFSMEJVUUI4SkhM?=
- =?utf-8?B?NENSY1NWZlI1S1R5Sms3dXZDRFVtRlFuR2Nra1owN0l4WFV4ZnZTTXg1S3Qy?=
- =?utf-8?B?WnFNWDZUVG5BcDk0SzhQakkyN0NLRjdqeUplRmRCTjllT0NrUjNsejUzVkt5?=
- =?utf-8?B?OGtXWUR5cU9DYjhwaHRPdm1BTjQrNWZlaEJ5YUI5cFp2Tmx4QmhBVkJsQ3N4?=
- =?utf-8?B?MTZ4ejVJNmx1SUtkSnJXMm1QdjdLNDJTd3NNVmkrbmRhL0hoSzJPUWQ2OEJE?=
- =?utf-8?B?Q2FFV3hsWHllNmdSenVpRU9wdHZpQWV0L2xoNlpUUE9BaVp0b0xZVmpMOXNT?=
- =?utf-8?B?WUM0SDI1VFkyTVhiUzY3Q05zc3B4QlpnTUo5WFpUZ0MzTUllcW9mbkNxSDhz?=
- =?utf-8?B?RVgveGdLYW9hbUh6Y05lVEl4cDdXNUhQa2FwUk5HMEFqU0tGZmpqUnRvUG16?=
- =?utf-8?B?TTBhTjRidVVJQS9BZ1NjWjJ1T2pqa1ZEemhTY1hpS0lBVDVwZHdKazdJazZr?=
- =?utf-8?B?K0NQMUJKQnJWbXQxYVEyTURIekNsRXk5YWw1MzhzWlVlc21FaFcxVHp6aHdX?=
- =?utf-8?B?dUJ2UzlDOG8ybHhTSm9kRmNCUW9ZOUlsYUlZMzNUT2Q0QmRTTmJUdTlvWk5W?=
- =?utf-8?B?OWJTd0U1ZlhzZUgzMlYvMEs0bEtJdXN5SUxHSm5SaFFtNk5sR1FURFVUeXVp?=
- =?utf-8?B?VlRuVG5vc0dnYnZJWmhBNVN2MHpKSVFuTlRSZnE2d2ptZVNUNG5jczVjZG56?=
- =?utf-8?B?clYydHBLZ2FDQXBNTGk3UzVoNHY2aTV2Rk04a05FcmVsUUVvSVRtY2dRbVZE?=
- =?utf-8?B?SytYc3JCZWE5eVk1WURuWVowN3RIYm9WT1B0OHJOU0Q2Z0xUQUFCM0d6K1pm?=
- =?utf-8?B?TmVCYUR6YmpWVS8yL3VDaXNyaGZQOHdzK21QQVpNNElNU25xaXQ5WDdVaU5k?=
- =?utf-8?B?QkNBSXA0VTVtSkEvQ1VwbmRDU3lvSXhjZWFab21yNXhoODdRMjc2MjZDZ1RR?=
- =?utf-8?B?RHgyT2UzdnRSaVNUelg0clFMcVFoaGZ4RUNNZWIzblQzei9zRGxuZkVETFJx?=
- =?utf-8?B?b3Y3OVk1dE1CWWpieFVmL254bmRLeW1WMDhualM4NXBVRWFZRUdQaHQyVDJX?=
- =?utf-8?B?SzBYOC9GaW02eDFocGsxZmNmS3lHZ0piTitHR0Jsajl4VW5HVU15SXRUcG02?=
- =?utf-8?B?Z21UOVVHTU9oa3NWU2hoYjAreHl0NUZoNDdQNXkxMXhIOUhEVkxJYTMwVEVU?=
- =?utf-8?Q?icDejaYKpEiDXFz8xbjV8L/V3?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UzJBVFBxc0lmeS81Qm5oU1Qrd2JEZWF3SGtvMmdJYm0xNTUyZHFSVWZQMHZJ?=
+ =?utf-8?B?K2hTV0x3eG9kejdCYjloWHFBUk1Nc1hVNFZYV042bTRIcXJZU2owRHF5Wklu?=
+ =?utf-8?B?WkdsbUJSR0tmUVMvaUwrVnlOZlpNZ2phdHE3WXpvYSs3MUgvSjAzNnVQYmJZ?=
+ =?utf-8?B?VEp1cmhPSTRUWTdTRmUydUJoRWxZRE1KR1lRY05zbDQrazFaT2s1c2ZYWmxm?=
+ =?utf-8?B?SkZrZnV0TUt5YzBNdER3WFgzdlV6NWduaGJUMnltZGh3NHk0MjRWcU0zcS9m?=
+ =?utf-8?B?a0J4ckJtT0tWRjVCSzhYY3ZwQ05PWWhMVFJZV2dnL1daVHNJY2pOUVB3UDV3?=
+ =?utf-8?B?VnJwWFlGS2VBZWExVXYvOHB2TzlvMlFMeERmRUpTbzBNL0dPNjBOWC95ZXlQ?=
+ =?utf-8?B?NmxQM0w5NEV5dS9QdWZpQm9JbVVkUXZtT1c0NHRZazFaR2F2MHdyZ0JIV1FP?=
+ =?utf-8?B?eDBTZkJlODZqNEg0NGVXYnJOeGVHN21HanNWcUNoeGpSb1JWb3oxZDBmOWdV?=
+ =?utf-8?B?cTFWQlN6UEo1Y2lPcDhsTFBNK2tCaVgrT0UrUU0yQWVYRFlNalZFcjB1dzMz?=
+ =?utf-8?B?NGc4S3ZrUkRPZkQvWlk4YklqKzdSYXJXcmwwbXEyQXd4eGNaQ0xCYXpSKzZO?=
+ =?utf-8?B?ZHBLSTAxTUdqY0dRVXdubHFYQkdNOFk5UkVQZExrdFFuanVmMjhXZTR6Vmxk?=
+ =?utf-8?B?Q1liZHpmNDJSRDI0VHZ0S3lWM1FLRllCcnFROEVOL1R4V0d4YUQ3YUVwNlR6?=
+ =?utf-8?B?WCtKUzdldHhMSkNJUUFwVzVTZFJFQ2luOUp2amR0K2J1bTZsZjJrSHIvQ1hF?=
+ =?utf-8?B?R2UxTXJ3WEx6RW5tWmxzQ1poQlhJVmtaZzB6VzVldk52TTVEOVRCNWZBYWZh?=
+ =?utf-8?B?L1l5ek90WFZ1L0tkV0FYb1JtU0lmSGs0NkJTOTZ1dkREZklnWDBMVll6RHh1?=
+ =?utf-8?B?VENIeDVPN3pDc2RxenFlM2l3TklkMXhTMkVxY3pQekc3RzBRU2t2N1pISjBS?=
+ =?utf-8?B?b01aSjRqMmFhNEsyWXQ1VUJpY2E1REt0THhPbFc3dklPWG1VOVFlSURML0lm?=
+ =?utf-8?B?Y0xncXlWWDZTRWFlbDlYWldGL2xBaXpYeDZ0VVJEbmpqU2kyWnpUcDhtOEVZ?=
+ =?utf-8?B?Nk5pNk1RSHVUdHdWZ3R2TjhTZVB6elR2MmZ4Q0tMeXRUQ0Y2YlVaS3JRcmpI?=
+ =?utf-8?B?REFCOFhMTThsUDdDNXRWdDg0bHdieUM0OE5XdU9OZ2UzbDk5bEQ2WnJhT0FY?=
+ =?utf-8?B?d2JBMlg4dUpLVlArMHdBZFFndTcvQ0dmcDZKUUNoS1dLM1p3ZjlEV0NZNmd0?=
+ =?utf-8?B?aTlkamFyM2dKQWlFZldNYWtFVFpVb1FtRjFoVmttemlEWTBZYzdaNk1DVkpU?=
+ =?utf-8?B?MEc4S1V3RGxpc1ZMYy9NU0tVSlc2Zk4yQXAyalJhaTFhSGJsb21mR3ZkM3Ur?=
+ =?utf-8?B?M05jSG5wZmo4YWM5UkVrbS9ISFV3MlNVWkkvYm05dmdmdWlZN05ScHdIYXFW?=
+ =?utf-8?B?UHE4S09rSzBadngrZ0Nqa09PWWFjTUJKMk5zYWV1WmFBTHhOV0lNK2JUMDBp?=
+ =?utf-8?B?eHY3QjFoeGhCS3VLVVNTSTJQS3BBR3dHemZKK3FKVWgxR01YWnBBdlZRdGNZ?=
+ =?utf-8?B?dkJHQmlHUFdWOVk2aEJjR013MGhqU0tycVU2RHhsUmxaYXo4NjY4M3o0L3dM?=
+ =?utf-8?B?clBqL3lyejV2YVd4N3pGVzZRWmcvOHhsbmhuR1hSa1FIdVlLQVFkNDNVS3J0?=
+ =?utf-8?B?NmJxVWZXUG9hU2tHN2ppeVIzQVVuSzBIUzdMWjlQN2I1L0Q1U2g4R3M3WmZo?=
+ =?utf-8?B?MFhmZjZ3L3ZZOUNpQmxzSTJXYXorV05XSnF6ZkNaTkdZeHFRZWQvd3Ivdksz?=
+ =?utf-8?B?OWY2dVBZZ0xXTjJKWmV0NUpjeFNQRk5LMzRhM1FNUnY4MkJCakNRNmh1L3dR?=
+ =?utf-8?B?a1IrZWI2YzZJbXhtS2U5aC90R3JPTWFLclJFdmk1Wk1GWmN2elRpNlMyWnk4?=
+ =?utf-8?B?VjBJNlFUcXd1dVJZb09OTXp2VFNMVjdRREgyMGRrQ2NmbldITUtaWVVZOWNh?=
+ =?utf-8?B?VlpyS1FYWGsxOGtZY3FrRmFDbWtVdjRoNFJwUkgwK04zNGhlNzc1bWpRNnll?=
+ =?utf-8?B?VzBnNHlQa1FHbUdGUVpNblprWGZsQXdMZGp5aDlsR0hiUlQxeWUrODN1cWJk?=
+ =?utf-8?B?U0E9PQ==?=
 X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33dc554a-9e33-4cd4-d742-08de1b6d6b1d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 14ab7581-2a90-4901-aa14-08de1b6c3524
 X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 06:43:09.7659 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 06:34:29.7151 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: exB9sWcJAN3/UfLFNDI6LPIQF6In0+aNTlbeNh8ZGB0BgdYVkJQjT31LKkEghgCbvWZCSiU1ou7cKVMozLtZaw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: Gs97gT7sZSqSmxDXv5+rrdfQdE32GdlEf3HNfCQBpSUQ4AmXaj5qNcBPAOQXXQE9tVtpatIpvYkbXcAYqkwvNA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR10MB5261
 Received-SPF: pass client-ip=2a01:111:f403:c201::1;
  envelope-from=jan.kiszka@siemens.com;
@@ -228,278 +227,749 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.11.25 16:18, Philippe Mathieu-Daudé wrote:
+On 03.11.25 16:08, Philippe Mathieu-Daudé wrote:
 > Hi Jan,
 > 
 > On 17/10/25 14:03, Jan Kiszka wrote:
 >> From: Jan Kiszka <jan.kiszka@siemens.com>
 >>
->> Implement correct setting of the MAC field when passing RPMB frames back
->> to the guest. Also check the MAC on authenticated write requests.
+>> The Replay Protected Memory Block (RPMB) is available since eMMC 4.4
+>> which has been obsoleted by 4.41. Therefore lift the provided
+>> EXT_CSD_REV to 5 (4.41) and provide the basic logic to implement basic
+>> support for it. This allows to set the authentication key, read the
+>> write counter and authenticated perform data read and write requests.
+>> Those aren't actually authenticated yet, support for that will be added
+>> later.
 >>
->> This depends on HMAC support for QCRYPTO_HASH_ALGO_SHA256 which is
->> always available via glib - assert this, just to be safe.
+>> The RPMB image needs to be added to backing block images after potential
+>> boot partitions and before the user data. It's size is controlled by
+>> the rpmb-partition-size property.
+>>
+>> Also missing in this version (and actually not only for RPMB bits) is
+>> persistence of registers that are supposed to survive power cycles. Most
+>> prominent are the write counters or the authentication key. This feature
+>> can be added later, e.g. by append a state structure to the backing
+>> block image.
 >>
 >> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 >> ---
->>   hw/sd/sd.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 81 insertions(+)
+>>   hw/sd/sd.c             | 206 +++++++++++++++++++++++++++++++++++++++--
+>>   hw/sd/sdmmc-internal.h |  21 +++++
+>>   hw/sd/trace-events     |   2 +
+>>   3 files changed, 221 insertions(+), 8 deletions(-)
 >>
 >> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->> index 918fe9f79f..759e284ac0 100644
+>> index 305ea251cb..918fe9f79f 100644
 >> --- a/hw/sd/sd.c
 >> +++ b/hw/sd/sd.c
->> @@ -51,6 +51,7 @@
->>   #include "qemu/module.h"
->>   #include "sdmmc-internal.h"
->>   #include "trace.h"
->> +#include "crypto/hmac.h"
->>     //#define DEBUG_SD 1
->>   @@ -118,6 +119,7 @@ typedef struct SDProto {
+>> @@ -117,6 +117,20 @@ typedef struct SDProto {
+>>       } cmd[SDMMC_CMD_MAX], acmd[SDMMC_CMD_MAX];
 >>   } SDProto;
->>     #define RPMB_KEY_MAC_LEN    32
->> +#define RPMB_HASH_LEN       284
->>     typedef struct {
->>       uint8_t stuff_bytes[196];
->> @@ -1120,6 +1122,66 @@ static void sd_blk_write(SDState *sd, uint64_t
+>>   
+> 
+>   #define RPMB_STUFF_LEN      196
+> 
+>> +#define RPMB_KEY_MAC_LEN    32
+>> +
+>> +typedef 
+> 
+> QEMU_PACKED (better safe than sorry).
+> 
+>> struct {
+>> +    uint8_t stuff_bytes[196];
+>> +    uint8_t key_mac[RPMB_KEY_MAC_LEN];
+>> +    uint8_t data[256];
+>> +    uint8_t nonce[16];
+>> +    uint32_t write_counter;
+>> +    uint16_t address;
+>> +    uint16_t block_count;
+>> +    uint16_t result;
+>> +    uint16_t req_resp;
+>> +} RPMBDataFrame;
+>> +
+>>   struct SDState {
+>>       DeviceState parent_obj;
+>>   @@ -140,6 +154,7 @@ struct SDState {
+>>         uint8_t spec_version;
+>>       uint64_t boot_part_size;
+>> +    uint64_t rpmb_part_size;
+>>       BlockBackend *blk;
+>>       uint8_t boot_config;
+>>   @@ -172,6 +187,10 @@ struct SDState {
+>>       uint32_t data_offset;
+>>       size_t data_size;
+>>       uint8_t data[512];
+>> +    RPMBDataFrame rpmb_result;
+>> +    uint32_t rpmb_write_counter;
+>> +    uint8_t rpmb_key[32];
+>> +    uint8_t rpmb_key_set;
+> 
+> Matter of style:
+> 
+>        struct {
+>            uint32_t write_counter;
+>            uint8_t key[RPMB_KEY_MAC_LEN];
+>            uint8_t key_set;
+>            RPMBDataFrame result;
+>        } rpmb;
+> 
+>>       QEMUTimer *ocr_power_timer;
+>>       uint8_t dat_lines;
+>>       bool cmd_line;
+>> @@ -506,7 +525,9 @@ static void emmc_set_ext_csd(SDState *sd, uint64_t
+>> size)
+>>       sd->ext_csd[205] = 0x46; /* Min read perf for 4bit@26Mhz */
+>>       sd->ext_csd[EXT_CSD_CARD_TYPE] = 0b11;
+>>       sd->ext_csd[EXT_CSD_STRUCTURE] = 2;
+>> -    sd->ext_csd[EXT_CSD_REV] = 3;
+>> +    sd->ext_csd[EXT_CSD_REV] = 5;
+>> +    sd->ext_csd[EXT_CSD_RPMB_MULT] = sd->rpmb_part_size / (128 * KiB);
+>> +    sd->ext_csd[EXT_CSD_PARTITION_SUPPORT] = 0b111;
+>>         /* Mode segment (RW) */
+>>       sd->ext_csd[EXT_CSD_PART_CONFIG] = sd->boot_config;
+>> @@ -834,7 +855,8 @@ static uint32_t sd_blk_len(SDState *sd)
+>>   /*
+>>    * This requires a disk image that has two boot partitions inserted
+>> at the
+>>    * beginning of it, followed by an RPMB partition. The size of the boot
+>> - * partitions is the "boot-partition-size" property.
+>> + * partitions is the "boot-partition-size" property, the one of the RPMB
+>> + * partition is 'rpmb-partition-size'.
+>>    */
+>>   static uint32_t sd_part_offset(SDState *sd)
+>>   {
+>> @@ -848,11 +870,13 @@ static uint32_t sd_part_offset(SDState *sd)
+>>                                    & EXT_CSD_PART_CONFIG_ACC_MASK;
+>>       switch (partition_access) {
+>>       case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
+>> -        return sd->boot_part_size * 2;
+>> +        return sd->boot_part_size * 2 + sd->rpmb_part_size;
+>>       case EXT_CSD_PART_CONFIG_ACC_BOOT1:
+>>           return 0;
+>>       case EXT_CSD_PART_CONFIG_ACC_BOOT2:
+>>           return sd->boot_part_size * 1;
+>> +    case EXT_CSD_PART_CONFIG_ACC_RPMB:
+>> +        return sd->boot_part_size * 2;
+>>       default:
+>>            g_assert_not_reached();
+>>       }
+>> @@ -891,7 +915,7 @@ static void sd_reset(DeviceState *dev)
+>>       }
+>>       size = sect << HWBLOCK_SHIFT;
+>>       if (sd_is_emmc(sd)) {
+>> -        size -= sd->boot_part_size * 2;
+>> +        size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
+>>       }
+>>         sect = sd_addr_to_wpnum(size) + 1;
+>> @@ -979,6 +1003,34 @@ static const VMStateDescription sd_ocr_vmstate = {
+>>       },
+>>   };
+>>   +static bool vmstate_needed_for_rpmb(void *opaque)
+>> +{
+>> +    SDState *sd = opaque;
+>> +
+>> +    return sd->rpmb_part_size > 0;
+>> +}
+>> +
+>> +static const VMStateDescription emmc_rpmb_vmstate = {
+>> +    .name = "sd-card/ext_csd_modes-state",
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .needed = vmstate_needed_for_rpmb,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_UINT8_ARRAY(rpmb_result.key_mac, SDState,
+>> RPMB_KEY_MAC_LEN),
+>> +        VMSTATE_UINT8_ARRAY(rpmb_result.data, SDState, 256),
+>> +        VMSTATE_UINT8_ARRAY(rpmb_result.nonce, SDState, 16),
+>> +        VMSTATE_UINT32(rpmb_result.write_counter, SDState),
+>> +        VMSTATE_UINT16(rpmb_result.address, SDState),
+>> +        VMSTATE_UINT16(rpmb_result.block_count, SDState),
+>> +        VMSTATE_UINT16(rpmb_result.result, SDState),
+>> +        VMSTATE_UINT16(rpmb_result.req_resp, SDState),
+>> +        VMSTATE_UINT32(rpmb_write_counter, SDState),
+>> +        VMSTATE_UINT8_ARRAY(rpmb_key, SDState, 32),
+>> +        VMSTATE_UINT8(rpmb_key_set, SDState),
+>> +        VMSTATE_END_OF_LIST()
+>> +    },
+>> +};
+>> +
+>>   static bool vmstate_needed_for_emmc(void *opaque)
+>>   {
+>>       SDState *sd = opaque;
+>> @@ -1045,6 +1097,7 @@ static const VMStateDescription sd_vmstate = {
+>>       .subsections = (const VMStateDescription * const []) {
+>>           &sd_ocr_vmstate,
+>>           &emmc_extcsd_vmstate,
+>> +        &emmc_rpmb_vmstate,
+>>           NULL
+>>       },
+>>   };
+>> @@ -1067,6 +1120,105 @@ static void sd_blk_write(SDState *sd, uint64_t
 >> addr, uint32_t len)
 >>       }
 >>   }
->>   +static bool rpmb_calc_hmac(SDState *sd, RPMBDataFrame *frame,
-> 
-> const frame.
-> 
->> +                           unsigned int num_blocks, uint8_t *mac)
+>>   +static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t
+>> len)
 >> +{
->> +    size_t mac_len = RPMB_KEY_MAC_LEN;
->> +    bool success = true;
->> +    Error *err = NULL;
->> +    QCryptoHmac *hmac;
-> 
-> Preferably:
-> 
->        g_autoptr(QCryptoHmac) hmac = NULL;
-> 
->> +    uint64_t addr;
-> 
-> Maybe better named 'offset'.
-> 
+>> +    uint16_t resp = be16_to_cpu(sd->rpmb_result.req_resp);
+>> +    uint16_t result = be16_to_cpu(sd->rpmb_result.result);
+>> +    unsigned int curr_block = 0;
 >> +
->> +    hmac = qcrypto_hmac_new(QCRYPTO_HASH_ALGO_SHA256, sd->rpmb_key,
->> +                            RPMB_KEY_MAC_LEN, &err);
->> +    if (!hmac) {
->> +        error_report_err(err);
->> +        return false;
->> +    }
->> +
->> +    /*
->> +     * This implies a read request because we only support single-
->> block write
->> +     * requests so far.
->> +     */
->> +    if (num_blocks > 1) {
->> +        /*
->> +         * Unfortunately, the underlying crypto libraries do not
->> allow us to
->> +         * migrate an active QCryptoHmac state. Therefore, we have to
->> calculate
->> +         * the HMAC in one run. To avoid buffering a complete read
->> sequence in
->> +         * SDState, reconstruct all frames except for the last one.
->> +         */
->> +        char *buf = (char *)sd->data;
-> Why not plain 'void *'? Ah, qcrypto_hmac_bytes() takes a 'char *',
-> odd... [Update, now about to be fixed:
-> https://lore.kernel.org/qemu-devel/20251103133727.423041-4-
-> berrange@redhat.com/]
+>> +    if ((result & ~RPMB_RESULT_COUTER_EXPIRED) == RPMB_RESULT_OK &&
+>> +        resp == RPMB_RESP(RPMB_REQ_AUTH_DATA_READ)) {
+>> +        curr_block = be16_to_cpu(sd->rpmb_result.address);
+>> +        if (sd->rpmb_result.block_count == 0) {
+>> +            sd->rpmb_result.block_count = cpu_to_be16(sd-
+>> >multi_blk_cnt);
+>> +        } else {
+>> +            curr_block += be16_to_cpu(sd->rpmb_result.block_count) -
+>> +                sd->multi_blk_cnt;
+>> +        }
+>> +        addr = curr_block * 256 + sd_part_offset(sd);
+>> +        if (blk_pread(sd->blk, addr, 256, sd->rpmb_result.data, 0) <
+>> 0) {
 > 
-> Better safe than sorry:
+> Would be nice to re-use sd_blk_read(), but I notice we want to read the
+> frame data to then copy the whole message into sd->data.
 > 
->            assert(RPMB_HASH_LEN <= sizeof(sd->data));
-> 
->> +        memcpy(buf, frame->data, RPMB_HASH_LEN);
-> 
-> Nitpicking, no need to fill the block we'll overwrite:
-> 
->            memcpy(&buf[256], &frame->data[256], RPMB_HASH_LEN - 256);
-> 
->> +        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
-> Personally I prefer the ld/st API, and I'd rather see it used
-> consistently within hw/sd/. So (matter of taste):
-> 
->            block_index = ldw_be_p(&frame->address);
->            block_offset = block_index * 256 + sd_part_offset(sd);
-> 
->> +        do {
->> +            if (blk_pread(sd->blk, addr, 256, buf, 0) < 0) {
->> +                fprintf(stderr, "sd_blk_read: read error on host
->> side\n");
+>> +            fprintf(stderr, "sd_blk_read: read error on host side\n");
 > 
 > Although a pre-existing pattern in this file, no new fprintf(stderr)
 > please. Better use the Error* API, otherwise error_report().
 > 
->> +                success = false;
->> +                break;
->> +            }
->> +            if (qcrypto_hmac_bytes(hmac, buf, RPMB_HASH_LEN, NULL,
->> NULL,> +                                   &err) < 0) {
->> +                error_report_err(err);
->> +                success = false;
->> +                break;
->> +            }
->> +            addr += 256;
->> +        } while (--num_blocks > 1);
->> +    }
->> +
->> +    if (success &&
->> +        qcrypto_hmac_bytes(hmac, (const char*)frame->data,
->> RPMB_HASH_LEN, &mac,
->> +                           &mac_len, &err) < 0) {
->> +        error_report_err(err);
+>               error_report("sd_blk_read: read error on host side");
 > 
-> Ideally Error* should to be propagated to upper layers.
-> 
-> Here SDCardClass::read_byte() and SDCardClass::write_byte()
-> don't expect failure, so OK -- maybe they should ... --.
-> 
-
-So, leave it like it is for now?
-
->> +        success = false;
->> +    }
->> +    assert(!success || mac_len == RPMB_KEY_MAC_LEN);
->> +
->> +    qcrypto_hmac_free(hmac);
->> +
->> +    return success;
->> +}
->> +
->>   static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t
->> len)
->>   {
->>       uint16_t resp = be16_to_cpu(sd->rpmb_result.req_resp);
->> @@ -1142,6 +1204,17 @@ static void emmc_rpmb_blk_read(SDState *sd,
->> uint64_t addr, uint32_t len)
->>               sd->rpmb_result.result =
->> cpu_to_be16(RPMB_RESULT_READ_FAILURE |
->>                   (result & RPMB_RESULT_COUTER_EXPIRED));
->>           }
->> +        if (sd->multi_blk_cnt == 1 &&
->> +            !rpmb_calc_hmac(sd, &sd->rpmb_result,
->> +                            be16_to_cpu(sd->rpmb_result.block_count),
->> +                            sd->rpmb_result.key_mac)) {
 >> +            memset(sd->rpmb_result.data, 0, sizeof(sd-
 >> >rpmb_result.data));
 >> +            sd->rpmb_result.result =
->> cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
+>> cpu_to_be16(RPMB_RESULT_READ_FAILURE |
+>> +                (result & RPMB_RESULT_COUTER_EXPIRED));
 >> +        }
->> +    } else if (!rpmb_calc_hmac(sd, &sd->rpmb_result, 1,
->> +                               sd->rpmb_result.key_mac)) {
->> +        memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
->> +        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
->>       }
->>       memcpy(sd->data, &sd->rpmb_result, sizeof(sd->rpmb_result));
->>   @@ -1153,6 +1226,7 @@ static void emmc_rpmb_blk_write(SDState *sd,
->> uint64_t addr, uint32_t len)
->>   {
->>       RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
->>       uint16_t req = be16_to_cpu(frame->req_resp);
->> +    uint8_t mac[RPMB_KEY_MAC_LEN];
->>         if (req == RPMB_REQ_READ_RESULT) {
->>           /* just return the current result register */
->> @@ -1190,6 +1264,11 @@ static void emmc_rpmb_blk_write(SDState *sd,
->> uint64_t addr, uint32_t len)
->>               sd->rpmb_result.result =
->> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
->>               break;
->>           }
->> +        if (!rpmb_calc_hmac(sd, frame, 1, mac) ||
->> +            memcmp(frame->key_mac, mac, RPMB_KEY_MAC_LEN) != 0) {
+>> +    }
+>> +    memcpy(sd->data, &sd->rpmb_result, sizeof(sd->rpmb_result));
+>> +
+>> +    trace_sdcard_rpmb_read_block(resp, curr_block,
+>> +                                 be16_to_cpu(sd->rpmb_result.result));
+>> +}
+>> +
+>> +static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t
+>> len)
+>> +{
+>> +    RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
+>> +    uint16_t req = be16_to_cpu(frame->req_resp);
+>> +
+>> +    if (req == RPMB_REQ_READ_RESULT) {
+>> +        /* just return the current result register */
+>> +        goto exit;
+>> +    }
+>> +    memset(&sd->rpmb_result, 0, sizeof(sd->rpmb_result));
+>> +    memcpy(sd->rpmb_result.nonce, frame->nonce, sizeof(sd-
+>> >rpmb_result.nonce));
+>> +    sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_OK);
+>> +    sd->rpmb_result.req_resp = cpu_to_be16(RPMB_RESP(req));
+>> +
+>> +    if (!sd->rpmb_key_set && req != RPMB_REQ_PROGRAM_AUTH_KEY) {
+>> +        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_NO_AUTH_KEY);
+>> +        goto exit;
+>> +    }
+>> +
+>> +    switch (req) {
+>> +    case RPMB_REQ_PROGRAM_AUTH_KEY:
+>> +        if (sd->rpmb_key_set) {
 >> +            sd->rpmb_result.result =
->> cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
+>> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
 >> +            break;
 >> +        }
->>           if (be32_to_cpu(frame->write_counter) != sd-
+>> +        memcpy(sd->rpmb_key, frame->key_mac, sizeof(sd->rpmb_key));
+>> +        sd->rpmb_key_set = 1;
+>> +        break;
+>> +    case RPMB_REQ_READ_WRITE_COUNTER:
+>> +        sd->rpmb_result.write_counter = cpu_to_be32(sd-
+>> >rpmb_write_counter);
+>> +        break;
+>> +    case RPMB_REQ_AUTH_DATA_WRITE:
+>> +        /* We only support single-block writes so far */
+>> +        if (sd->multi_blk_cnt != 1) {
+>> +            sd->rpmb_result.result =
+>> cpu_to_be16(RPMB_RESULT_GENERAL_FAILURE);
+>> +            break;
+>> +        }
+>> +        if (sd->rpmb_write_counter == 0xffffffff) {
+>> +            sd->rpmb_result.result =
+>> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+>> +            break;
+>> +        }
+>> +        if (be32_to_cpu(frame->write_counter) != sd-
 >> >rpmb_write_counter) {
->>               sd->rpmb_result.result =
+>> +            sd->rpmb_result.result =
 >> cpu_to_be16(RPMB_RESULT_COUNTER_FAILURE);
->>               break;
->> @@ -3115,6 +3194,8 @@ static void emmc_class_init(ObjectClass *klass,
->> const void *data)
->>       DeviceClass *dc = DEVICE_CLASS(klass);
->>       SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
->>   +    assert(qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256));
+>> +            break;
+>> +        }
+>> +        sd->rpmb_result.address = frame->address;
+>> +        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
+>> +        if (blk_pwrite(sd->blk, addr, 256, frame->data, 0) < 0) {
+>> +            fprintf(stderr, "sd_blk_write: write error on host side\n");
+> 
+>                error_report("sd_blk_write: write error on host side");
+> 
+>> +            sd->rpmb_result.result =
+>> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+>> +        } else {
+>> +            sd->rpmb_write_counter++;
+>> +        }
+>> +        sd->rpmb_result.write_counter = cpu_to_be32(sd-
+>> >rpmb_write_counter);
+>> +        break;
+>> +    case RPMB_REQ_AUTH_DATA_READ:
+>> +        sd->rpmb_result.address = frame->address;
+>> +        break;
+>> +    default:
+>> +        qemu_log_mask(LOG_UNIMP, "RPMB request %d not implemented\n",
+>> req);
+>> +        sd->rpmb_result.result =
+>> cpu_to_be16(RPMB_RESULT_GENERAL_FAILURE);
+>> +        break;
+>> +    }
+>> +exit:
+>> +    if (sd->rpmb_write_counter == 0xffffffff) {
+>> +        sd->rpmb_result.result |=
+>> cpu_to_be16(RPMB_RESULT_COUTER_EXPIRED);
+>> +    }
+>> +    trace_sdcard_rpmb_write_block(req, be16_to_cpu(sd-
+>> >rpmb_result.result));
+>> +}
 >> +
->>       dc->desc = "eMMC";
->>       dc->realize = emmc_realize;
->>       device_class_set_props(dc, emmc_properties);
-> I'd like to squash on this patch:
-> -- >8 --
+>>   static void sd_erase(SDState *sd)
+>>   {
+>>       uint64_t erase_start = sd->erase_start;
+>> @@ -1180,6 +1332,19 @@ static void emmc_function_switch(SDState *sd,
+>> uint32_t arg)
+>>           break;
+>>       }
+>>   +    if (index == EXT_CSD_PART_CONFIG) {
+>> +        uint8_t part = b & EXT_CSD_PART_CONFIG_ACC_MASK;
+>> +
+>> +        if (((part == EXT_CSD_PART_CONFIG_ACC_BOOT1 ||
+>> +              part == EXT_CSD_PART_CONFIG_ACC_BOOT2) && !sd-
+>> >boot_part_size) ||
+>> +            (part == EXT_CSD_PART_CONFIG_ACC_RPMB && !sd-
+>> >rpmb_part_size)) {
+>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>> +                          "MMC switching to illegal partition\n");
+>> +            sd->card_status |= R_CSR_SWITCH_ERROR_MASK;
+>> +            return;
+>> +        }
+>> +    }
+>> +
+>>       trace_sdcard_ext_csd_update(index, sd->ext_csd[index], b);
+>>       sd->ext_csd[index] = b;
+>>   }
+>> @@ -2378,6 +2543,7 @@ static bool sd_generic_read_byte(SDState *sd,
+>> uint8_t *value)
+>>     static void sd_write_byte(SDState *sd, uint8_t value)
+>>   {
+>> +    unsigned int partition_access;
+>>       int i;
+>>         if (!sd->blk || !blk_is_inserted(sd->blk)) {
+>> @@ -2427,7 +2593,13 @@ static void sd_write_byte(SDState *sd, uint8_t
+>> value)
+>>           if (sd->data_offset >= sd->blk_len) {
+>>               /* TODO: Check CRC before committing */
+>>               sd->state = sd_programming_state;
+>> -            sd_blk_write(sd, sd->data_start, sd->data_offset);
+>> +            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+>> +                    & EXT_CSD_PART_CONFIG_ACC_MASK;
+>> +            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+>> +                emmc_rpmb_blk_write(sd, sd->data_start, sd-
+>> >data_offset);
+>> +            } else {
+>> +                sd_blk_write(sd, sd->data_start, sd->data_offset);
+>> +            }
+>>               sd->blk_written++;
+>>               sd->data_start += sd->blk_len;
+>>               sd->data_offset = 0;
+>> @@ -2510,6 +2682,7 @@ static uint8_t sd_read_byte(SDState *sd)
+>>   {
+>>       /* TODO: Append CRCs */
+>>       const uint8_t dummy_byte = 0x00;
+>> +    unsigned int partition_access;
+>>       uint8_t ret;
+>>       uint32_t io_len;
+>>   @@ -2553,7 +2726,13 @@ static uint8_t sd_read_byte(SDState *sd)
+>>                                     sd->data_start, io_len)) {
+>>                   return dummy_byte;
+>>               }
+>> -            sd_blk_read(sd, sd->data_start, io_len);
+>> +            partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+>> +                    & EXT_CSD_PART_CONFIG_ACC_MASK;
+>> +            if (partition_access == EXT_CSD_PART_CONFIG_ACC_RPMB) {
+>> +                emmc_rpmb_blk_read(sd, sd->data_start, io_len);
+>> +            } else {
+>> +                sd_blk_read(sd, sd->data_start, io_len);
+>> +            }
+>>           }
+>>           ret = sd->data[sd->data_offset ++];
+>>   @@ -2805,7 +2984,7 @@ static void sd_realize(DeviceState *dev, Error
+>> **errp)
+>>           blk_size = blk_getlength(sd->blk);
+>>       }
+>>       if (blk_size >= 0) {
+>> -        blk_size -= sd->boot_part_size * 2;
+>> +        blk_size -= sd->boot_part_size * 2 + sd->rpmb_part_size;
+>>           if (blk_size > SDSC_MAX_CAPACITY) {
+>>               if (sd_is_emmc(sd) && blk_size % (1 << HWBLOCK_SHIFT) !=
+>> 0) {
+>>                   int64_t blk_size_aligned =
+>> @@ -2844,13 +3023,23 @@ static void sd_realize(DeviceState *dev, Error
+>> **errp)
+>>                             "The boot partition size must be multiples
+>> of 128K"
+>>                             "and not larger than 32640K.\n");
+>>       }
+>> +    if (sd->rpmb_part_size % (128 * KiB) ||
+>> +        sd->rpmb_part_size > 128 * 128 * KiB) {
+>> +        char *size_str = size_to_str(sd->boot_part_size);
+>> +
+>> +        error_setg(errp, "Invalid RPMB partition size: %s", size_str);
+>> +        g_free(size_str);
+>> +        error_append_hint(errp,
+>> +                          "The RPMB partition size must be multiples
+>> of 128K"
+>> +                          "and not larger than 16384K.\n");
+>> +    }
+>>   }
+>>     static void emmc_realize(DeviceState *dev, Error **errp)
+>>   {
+>>       SDState *sd = SDMMC_COMMON(dev);
+>>   -    sd->spec_version = SD_PHY_SPECv3_01_VERS; /* Actually v4.3 */
+>> +    sd->spec_version = SD_PHY_SPECv3_01_VERS; /* Actually v4.5 */
+>>         sd_realize(dev, errp);
+>>   }
+>> @@ -2867,6 +3056,7 @@ static const Property sd_properties[] = {
+>>   static const Property emmc_properties[] = {
+>>       DEFINE_PROP_UINT64("boot-partition-size", SDState,
+>> boot_part_size, 0),
+>>       DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
+>> +    DEFINE_PROP_UINT64("rpmb-partition-size", SDState,
+>> rpmb_part_size, 0),
+>>   };
+>>     static void sdmmc_common_class_init(ObjectClass *klass, const void
+>> *data)
+>> diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
+>> index ce6bc4e6ec..c4a9aa8edf 100644
+>> --- a/hw/sd/sdmmc-internal.h
+>> +++ b/hw/sd/sdmmc-internal.h
+>> @@ -118,9 +118,30 @@ DECLARE_OBJ_CHECKERS(SDState, SDCardClass,
+>> SDMMC_COMMON, TYPE_SDMMC_COMMON)
+>>   #define EXT_CSD_PART_CONFIG_ACC_DEFAULT         (0x0)
+>>   #define EXT_CSD_PART_CONFIG_ACC_BOOT1           (0x1)
+>>   #define EXT_CSD_PART_CONFIG_ACC_BOOT2           (0x2)
+>> +#define EXT_CSD_PART_CONFIG_ACC_RPMB            (0x3)
+>>     #define EXT_CSD_PART_CONFIG_EN_MASK             (0x7 << 3)
+>>   #define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
+>>   #define EXT_CSD_PART_CONFIG_EN_USER             (0x7 << 3)
+>>   +#define RPMB_REQ_PROGRAM_AUTH_KEY       (1)
+>> +#define RPMB_REQ_READ_WRITE_COUNTER     (2)
+>> +#define RPMB_REQ_AUTH_DATA_WRITE        (3)
+>> +#define RPMB_REQ_AUTH_DATA_READ         (4)
+>> +#define RPMB_REQ_READ_RESULT            (5)
+>> +#define RPMB_REQ_AUTH_CONFIG_WRITE      (6)
+>> +#define RPMB_REQ_AUTH_CONFIG_READ       (7)
+>> +
+>> +#define RPMB_RESP(__req__)              ((__req__) << 8)
+>> +
+>> +#define RPMB_RESULT_OK                  (0)
+>> +#define RPMB_RESULT_GENERAL_FAILURE     (1)
+>> +#define RPMB_RESULT_AUTH_FAILURE        (2)
+>> +#define RPMB_RESULT_COUNTER_FAILURE     (3)
+>> +#define RPMB_RESULT_ADDRESS_FAILURE     (4)
+>> +#define RPMB_RESULT_WRITE_FAILURE       (5)
+>> +#define RPMB_RESULT_READ_FAILURE        (6)
+>> +#define RPMB_RESULT_NO_AUTH_KEY         (7)
+> 
+>> +#define RPMB_RESULT_COUTER_EXPIRED      (0x80)
+>> +
+>>   #endif
+> 
+> If you are OK, I'd like to squash:
+> 
+> -- >8 --diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
+> index c4a9aa8edf6..c115f472efe 100644
+> --- a/hw/sd/sdmmc-internal.h
+> +++ b/hw/sd/sdmmc-internal.h
+> @@ -144,2 +144,3 @@ DECLARE_OBJ_CHECKERS(SDState, SDCardClass,
+> SDMMC_COMMON, TYPE_SDMMC_COMMON)
+>  #define RPMB_RESULT_NO_AUTH_KEY         (7)
+> +
+>  #define RPMB_RESULT_COUTER_EXPIRED      (0x80)
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index f2260796db8..6e4eeeda157 100644
+> index f8883860fb1..ac8f6b94746 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -1129,3 +1129,3 @@ static void sd_blk_write(SDState *sd, uint64_t
-> addr, uint32_t len)
+> @@ -119,8 +119,10 @@ typedef struct SDProto {
 > 
-> -static bool rpmb_calc_hmac(SDState *sd, RPMBDataFrame *frame,
-> +static bool rpmb_calc_hmac(SDState *sd, const RPMBDataFrame *frame,
->                             unsigned int num_blocks, uint8_t *mac)
-> @@ -1133,5 +1133,5 @@ static bool rpmb_calc_hmac(SDState *sd,
-> RPMBDataFrame *frame,
->      size_t mac_len = RPMB_KEY_MAC_LEN;
-> +    g_autoptr(QCryptoHmac) hmac = NULL;
->      bool success = true;
->      Error *err = NULL;
-> -    QCryptoHmac *hmac;
->      uint64_t addr;
-> @@ -1156,9 +1156,12 @@ static bool rpmb_calc_hmac(SDState *sd,
-> RPMBDataFrame *frame,
->           */
-> -        char *buf = (char *)sd->data;
-> +        void *buf = sd->data;
+> +#define RPMB_STUFF_LEN      196
+>  #define RPMB_KEY_MAC_LEN    32
+> +#define RPMB_DATA_LEN       256     /* one RPMB block is half a sector */
 > 
-> -        memcpy(buf, frame->data, RPMB_HASH_LEN);
-> -        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
-> +        assert(RPMB_HASH_LEN <= sizeof(sd->data));
-> +        memcpy(&buf[RPMB_DATA_LEN], &frame->data[RPMB_DATA_LEN],
-> +               RPMB_HASH_LEN - RPMB_DATA_LEN);
+> -typedef struct {
+> -    uint8_t stuff_bytes[196];
+> +typedef struct QEMU_PACKED {
+> +    uint8_t stuff_bytes[RPMB_STUFF_LEN];
+>      uint8_t key_mac[RPMB_KEY_MAC_LEN];
+> -    uint8_t data[256];
+> +    uint8_t data[RPMB_DATA_LEN];
+>      uint8_t nonce[16];
+
+You left the nonce length without a constant now.
+
+> @@ -133,2 +135,5 @@ typedef struct {
+> 
+> +QEMU_BUILD_BUG_MSG(sizeof(RPMBDataFrame) != 512,
+> +                   "invalid RPMBDataFrame size");
 > +
+>  struct SDState {
+> @@ -191,3 +196,3 @@ struct SDState {
+>      uint32_t rpmb_write_counter;
+> -    uint8_t rpmb_key[32];
+> +    uint8_t rpmb_key[RPMB_KEY_MAC_LEN];
+>      uint8_t rpmb_key_set;
+> @@ -1019,3 +1024,3 @@ static const VMStateDescription emmc_rpmb_vmstate = {
+>          VMSTATE_UINT8_ARRAY(rpmb_result.key_mac, SDState,
+> RPMB_KEY_MAC_LEN),
+> -        VMSTATE_UINT8_ARRAY(rpmb_result.data, SDState, 256),
+> +        VMSTATE_UINT8_ARRAY(rpmb_result.data, SDState, RPMB_DATA_LEN),
+>          VMSTATE_UINT8_ARRAY(rpmb_result.nonce, SDState, 16),
+> @@ -1137,5 +1142,6 @@ static void emmc_rpmb_blk_read(SDState *sd,
+> uint64_t addr, uint32_t len)
+>          }
+> -        addr = curr_block * 256 + sd_part_offset(sd);
+> -        if (blk_pread(sd->blk, addr, 256, sd->rpmb_result.data, 0) < 0) {
+> -            fprintf(stderr, "sd_blk_read: read error on host side\n");
+> +        addr = curr_block * RPMB_DATA_LEN + sd_part_offset(sd);
+> +        if (blk_pread(sd->blk, addr, RPMB_DATA_LEN,
+> +                      sd->rpmb_result.data, 0) < 0) {
+> +            error_report("sd_blk_read: read error on host side");
+>              memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
+> @@ -1197,5 +1203,5 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+>          sd->rpmb_result.address = frame->address;
+> -        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
+> -        if (blk_pwrite(sd->blk, addr, 256, frame->data, 0) < 0) {
+> -            fprintf(stderr, "sd_blk_write: write error on host side\n");
 > +        addr = be16_to_cpu(frame->address) * RPMB_DATA_LEN +
 > sd_part_offset(sd);
->          do {
-> -            if (blk_pread(sd->blk, addr, 256, buf, 0) < 0) {
-> -                fprintf(stderr, "sd_blk_read: read error on host side\n");
-> +            if (blk_pread(sd->blk, addr, RPMB_DATA_LEN, buf, 0) < 0) {
-> +                error_report("sd_blk_read: read error on host side");
->                  success = false;
-> @@ -1172,3 +1175,3 @@ static bool rpmb_calc_hmac(SDState *sd,
-> RPMBDataFrame *frame,
->              }
-> -            addr += 256;
-> +            addr += RPMB_DATA_LEN;
->          } while (--num_blocks > 1);
-> @@ -1177,3 +1180,3 @@ static bool rpmb_calc_hmac(SDState *sd,
-> RPMBDataFrame *frame,
->      if (success &&
-> -        qcrypto_hmac_bytes(hmac, (const char*)frame->data,
-> RPMB_HASH_LEN, &mac,
-> +        qcrypto_hmac_bytes(hmac, frame->data, RPMB_HASH_LEN, &mac,
->                             &mac_len, &err) < 0) {
-> @@ -1184,4 +1187,2 @@ static bool rpmb_calc_hmac(SDState *sd,
-> RPMBDataFrame *frame,
+> +        if (blk_pwrite(sd->blk, addr, RPMB_DATA_LEN, frame->data, 0) <
+> 0) {
+> +            error_report("sd_blk_write: write error on host side");
+>              sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> @@ -3027,3 +3033,3 @@ static void sd_realize(DeviceState *dev, Error
+> **errp)
+>      }
+> -    if (sd->rpmb_part_size % (128 * KiB) ||
+> +    if (!QEMU_IS_ALIGNED(sd->rpmb_part_size, 128 * KiB) ||
+>          sd->rpmb_part_size > 128 * 128 * KiB) {
+> ---
 > 
-> -    qcrypto_hmac_free(hmac);
-> -
->      return success;
+> And on top, if you don't mind (but can do that later):
+> 
+> -- >8 --
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index ac8f6b94746..71f396cb4d6 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -195,4 +195,6 @@ struct SDState {
+> -    RPMBDataFrame rpmb_result;
+> -    uint32_t rpmb_write_counter;
+> -    uint8_t rpmb_key[RPMB_KEY_MAC_LEN];
+> -    uint8_t rpmb_key_set;
+> +    struct {
+> +        uint32_t write_counter;
+> +        uint8_t key[RPMB_KEY_MAC_LEN];
+> +        uint8_t key_set;
+> +        RPMBDataFrame result;
+> +    } rpmb;
+> @@ -1024,11 +1026,11 @@ static const VMStateDescription
+> emmc_rpmb_vmstate = {
+> -        VMSTATE_UINT8_ARRAY(rpmb_result.key_mac, SDState,
+> RPMB_KEY_MAC_LEN),
+> -        VMSTATE_UINT8_ARRAY(rpmb_result.data, SDState, RPMB_DATA_LEN),
+> -        VMSTATE_UINT8_ARRAY(rpmb_result.nonce, SDState, 16),
+> -        VMSTATE_UINT32(rpmb_result.write_counter, SDState),
+> -        VMSTATE_UINT16(rpmb_result.address, SDState),
+> -        VMSTATE_UINT16(rpmb_result.block_count, SDState),
+> -        VMSTATE_UINT16(rpmb_result.result, SDState),
+> -        VMSTATE_UINT16(rpmb_result.req_resp, SDState),
+> -        VMSTATE_UINT32(rpmb_write_counter, SDState),
+> -        VMSTATE_UINT8_ARRAY(rpmb_key, SDState, 32),
+> -        VMSTATE_UINT8(rpmb_key_set, SDState),
+> +        VMSTATE_UINT8_ARRAY(rpmb.result.key_mac, SDState,
+> RPMB_KEY_MAC_LEN),
+> +        VMSTATE_UINT8_ARRAY(rpmb.result.data, SDState, RPMB_DATA_LEN),
+> +        VMSTATE_UINT8_ARRAY(rpmb.result.nonce, SDState, 16),
+> +        VMSTATE_UINT32(rpmb.result.write_counter, SDState),
+> +        VMSTATE_UINT16(rpmb.result.address, SDState),
+> +        VMSTATE_UINT16(rpmb.result.block_count, SDState),
+> +        VMSTATE_UINT16(rpmb.result.result, SDState),
+> +        VMSTATE_UINT16(rpmb.result.req_resp, SDState),
+> +        VMSTATE_UINT32(rpmb.write_counter, SDState),
+> +        VMSTATE_UINT8_ARRAY(rpmb.key, SDState, 32),
+> +        VMSTATE_UINT8(rpmb.key_set, SDState),
+> @@ -1130,2 +1132,2 @@ static void emmc_rpmb_blk_read(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -    uint16_t resp = be16_to_cpu(sd->rpmb_result.req_resp);
+> -    uint16_t result = be16_to_cpu(sd->rpmb_result.result);
+> +    uint16_t resp = be16_to_cpu(sd->rpmb.result.req_resp);
+> +    uint16_t result = be16_to_cpu(sd->rpmb.result.result);
+> @@ -1136,3 +1138,3 @@ static void emmc_rpmb_blk_read(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -        curr_block = be16_to_cpu(sd->rpmb_result.address);
+> -        if (sd->rpmb_result.block_count == 0) {
+> -            sd->rpmb_result.block_count = cpu_to_be16(sd->multi_blk_cnt);
+> +        curr_block = be16_to_cpu(sd->rpmb.result.address);
+> +        if (sd->rpmb.result.block_count == 0) {
+> +            sd->rpmb.result.block_count = cpu_to_be16(sd->multi_blk_cnt);
+> @@ -1140 +1142 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -            curr_block += be16_to_cpu(sd->rpmb_result.block_count) -
+> +            curr_block += be16_to_cpu(sd->rpmb.result.block_count) -
+> @@ -1144,2 +1146 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -        if (blk_pread(sd->blk, addr, RPMB_DATA_LEN,
+> -                      sd->rpmb_result.data, 0) < 0) {
+> +        if (blk_pread(sd->blk, addr, RPMB_DATA_LEN, sd-
+>>rpmb.result.data, 0) < 0) {
+> @@ -1147,2 +1148,2 @@ static void emmc_rpmb_blk_read(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -            memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
+> -            sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_READ_FAILURE |
+> +            memset(sd->rpmb.result.data, 0, sizeof(sd->rpmb.result.data));
+> +            sd->rpmb.result.result =
+> cpu_to_be16(RPMB_RESULT_READ_FAILURE |
+> @@ -1152 +1153 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -    memcpy(sd->data, &sd->rpmb_result, sizeof(sd->rpmb_result));
+> +    memcpy(sd->data, &sd->rpmb.result, sizeof(sd->rpmb.result));
+> @@ -1155 +1156 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -                                 be16_to_cpu(sd->rpmb_result.result));
+> +                                 be16_to_cpu(sd->rpmb.result.result));
+> @@ -1167,4 +1168,4 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -    memset(&sd->rpmb_result, 0, sizeof(sd->rpmb_result));
+> -    memcpy(sd->rpmb_result.nonce, frame->nonce, sizeof(sd-
+>>rpmb_result.nonce));
+> -    sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_OK);
+> -    sd->rpmb_result.req_resp = cpu_to_be16(RPMB_RESP(req));
+> +    memset(&sd->rpmb.result, 0, sizeof(sd->rpmb.result));
+> +    memcpy(sd->rpmb.result.nonce, frame->nonce, sizeof(sd-
+>>rpmb.result.nonce));
+> +    sd->rpmb.result.result = cpu_to_be16(RPMB_RESULT_OK);
+> +    sd->rpmb.result.req_resp = cpu_to_be16(RPMB_RESP(req));
+> @@ -1172,2 +1173,2 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -    if (!sd->rpmb_key_set && req != RPMB_REQ_PROGRAM_AUTH_KEY) {
+> -        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_NO_AUTH_KEY);
+> +    if (!sd->rpmb.key_set && req != RPMB_REQ_PROGRAM_AUTH_KEY) {
+> +        sd->rpmb.result.result = cpu_to_be16(RPMB_RESULT_NO_AUTH_KEY);
+> @@ -1179,2 +1180,2 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -        if (sd->rpmb_key_set) {
+> -            sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> +        if (sd->rpmb.key_set) {
+> +            sd->rpmb.result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> @@ -1183,2 +1184,2 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -        memcpy(sd->rpmb_key, frame->key_mac, sizeof(sd->rpmb_key));
+> -        sd->rpmb_key_set = 1;
+> +        memcpy(sd->rpmb.key, frame->key_mac, sizeof(sd->rpmb.key));
+> +        sd->rpmb.key_set = 1;
+> @@ -1187 +1188 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -        sd->rpmb_result.write_counter = cpu_to_be32(sd-
+>>rpmb_write_counter);
+> +        sd->rpmb.result.write_counter = cpu_to_be32(sd-
+>>rpmb.write_counter);
+> @@ -1192 +1193 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -            sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_GENERAL_FAILURE);
+> +            sd->rpmb.result.result =
+> cpu_to_be16(RPMB_RESULT_GENERAL_FAILURE);
+> @@ -1195,2 +1196,2 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -        if (sd->rpmb_write_counter == 0xffffffff) {
+> -            sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> +        if (sd->rpmb.write_counter == 0xffffffff) {
+> +            sd->rpmb.result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> @@ -1199,2 +1200,2 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -        if (be32_to_cpu(frame->write_counter) != sd->rpmb_write_counter) {
+> -            sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_COUNTER_FAILURE);
+> +        if (be32_to_cpu(frame->write_counter) != sd->rpmb.write_counter) {
+> +            sd->rpmb.result.result =
+> cpu_to_be16(RPMB_RESULT_COUNTER_FAILURE);
+> @@ -1203,3 +1204,3 @@ static void emmc_rpmb_blk_write(SDState *sd,
+> uint64_t addr, uint32_t len)
+> -        sd->rpmb_result.address = frame->address;
+> -        addr = be16_to_cpu(frame->address) * RPMB_DATA_LEN +
+> sd_part_offset(sd);
+> -        if (blk_pwrite(sd->blk, addr, RPMB_DATA_LEN, frame->data, 0) <
+> 0) {
+> +        sd->rpmb.result.address = frame->address;
+> +        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
+> +        if (blk_pwrite(sd->blk, addr, 256, frame->data, 0) < 0) {
+> @@ -1207 +1208 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -            sd->rpmb_result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> +            sd->rpmb.result.result =
+> cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+> @@ -1209 +1210 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -            sd->rpmb_write_counter++;
+> +            sd->rpmb.write_counter++;
+> @@ -1211 +1212 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -        sd->rpmb_result.write_counter = cpu_to_be32(sd-
+>>rpmb_write_counter);
+> +        sd->rpmb.result.write_counter = cpu_to_be32(sd-
+>>rpmb.write_counter);
+> @@ -1214 +1215 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -        sd->rpmb_result.address = frame->address;
+> +        sd->rpmb.result.address = frame->address;
+> @@ -1218 +1219 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t
+> addr, uint32_t len)
+> -        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_GENERAL_FAILURE);
+> +        sd->rpmb.result.result = cpu_to_be16(RPMB_RESULT_GENERAL_FAILURE);
+> @@ -1222,2 +1223,2 @@ exit:
+> -    if (sd->rpmb_write_counter == 0xffffffff) {
+> -        sd->rpmb_result.result |= cpu_to_be16(RPMB_RESULT_COUTER_EXPIRED);
+> +    if (sd->rpmb.write_counter == 0xffffffff) {
+> +        sd->rpmb.result.result |= cpu_to_be16(RPMB_RESULT_COUTER_EXPIRED);
+> @@ -1225 +1226 @@ exit:
+> -    trace_sdcard_rpmb_write_block(req, be16_to_cpu(sd-
+>>rpmb_result.result));
+> +    trace_sdcard_rpmb_write_block(req, be16_to_cpu(sd-
+>>rpmb.result.result));
 > ---
 > 
 > Regards,
 > 
 > Phil.
 
-Same story: Will pick it up and test.
+Let me pick up and test those changes for v6.
 
+Thanks,
 Jan
 
 -- 
