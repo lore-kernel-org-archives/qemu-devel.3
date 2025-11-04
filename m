@@ -4,76 +4,214 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B26CCFA00
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8455CCFA04
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCMo-0005lr-Aj; Tue, 04 Nov 2025 03:26:14 -0500
+	id 1vGCFi-0007AG-GD; Tue, 04 Nov 2025 03:18:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eawazilalwataniuh7@gmail.com>)
- id 1vGCMc-0005kf-VY
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:26:03 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <eawazilalwataniuh7@gmail.com>)
- id 1vGCMa-0002AO-QS
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:26:02 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-63f945d2060so3533499d50.3
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 00:25:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762244758; x=1762849558; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=bVwawnG7J577i/3revDBQ4pL60oK39vuFWtXkK1PJu8=;
- b=UML2bKqA1Z/vunUUTgSUoH3sQR7ZtEV0Gnqw0N3duGD2ON4+uInq0COmTc0fxCPvxi
- soFvZaMYBdbbxjFJv5EUzIFR4pRRSMSHvlK37hiH/cmPNRNE2NNEsvLWWIgnkRIUy84H
- qH0nks309yRfY38CrIFy8GdGQbu1yMYJyRelgmINWt0d6g3lqn+0lQ9/9F7N1G9ILnFn
- rU+GQMZ+mdflu6OSqhipI3Xk08xmJJp3I0+dLEjHgyGdge+C0b7l9vzhAeIAphdyV6Gw
- JRbqK4YxNPN5FWpCrNHiCR4xCch6xITYjf/fbPJIik9Af4uTNEyMNustbu1Ur+bp282C
- T79g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762244758; x=1762849558;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bVwawnG7J577i/3revDBQ4pL60oK39vuFWtXkK1PJu8=;
- b=MxWiMV45JnTYhmqOZ0X82rvTEv1i5vpTtJ3DhHRjEOM94Iw/tBzQ0gZbdDE3Z/k6xd
- UGC0h3miG5967w4eu3u+0cID3HSRisAFxNA/5h/QKSmrAV+0HIJr+xoJJZiSMkiARGkF
- 4EvHiUwZL1O/+uxzeC4rvIDbWIH6KDeCdl0fDvOuql4MCeSZjfs6Dkd1m1BWGHvpW466
- HOitHX3dadKBH3t7q0r7sDJvHITc6FP5zCOy59GaUeMz9KQDaFF1vRcUaTQgxRlolpPf
- VYJ2jurWHQFdLmExzz2mx1n44Aa30P4fPo1o4rVp6W4VAj2gWRWE4qGQ+l7Bp9z8ul10
- 5eSQ==
-X-Gm-Message-State: AOJu0YxHpDLocklxFLt9FIgj6eDgxQPxv+67pa6v3h4H3J3uFnMcX9Dl
- b3A16Fi2pkTEbU64u/DVbcWNlQhHaUik2//ojY+H1W8YpzCU+Xnr3ERq2eRy2JvBzIrggZrruTP
- 8x7xpWaDgBzy4CTdgMVSI4uMnEpq27H4/k0c2
-X-Gm-Gg: ASbGnctw4mmlISROufTZ9Gdr7/rCR71JrOwTTXn9ZfGafS//7C7OCMBd2GEBZS6JTTn
- 18ojDs/qfj346GqEeD0nYPrYW4M+S6Wi3BBOFB4iWbxzEhEAFFS1QMHPEN38xXqvMlIRX6bjh1A
- 66gRQp2H19OMDfzgr8hS+Fp0xdTt2JuSVuckeWgq4NX3n6hDnIdg+N/ojS6/9JAxum0dhQIHyGR
- /T7sMqLeufxNdQvIBnpH16JxC9ywc/C45KGwy5BLgjjApdPwGXTth6EhjQEdqTvSvSo2elaAg==
-X-Google-Smtp-Source: AGHT+IFcrfeaqMU2I07QMtRRRoZF3G1B6JIDLusQdDQ00HveBy4OnO/VtD+lhmG9sb+j3VAoR8MBWbRo4NHq3mu5vMU=
-X-Received: by 2002:a05:690e:150b:b0:63f:c019:23ee with SMTP id
- 956f58d0204a3-63fc0192d97mr3553356d50.21.1762244758473; Tue, 04 Nov 2025
- 00:25:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1vGCFh-0007A3-6s; Tue, 04 Nov 2025 03:18:53 -0500
+Received: from mail-northeuropeazon11010057.outbound.protection.outlook.com
+ ([52.101.84.57] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1vGCFV-00007Z-72; Tue, 04 Nov 2025 03:18:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oBrIQYO5NNz9T9UKvzZ8D22+dISMkzfcfGT1nu/PEWbSMXATGVvQQ5KovEUfnRZXMCB9AGobHKuFYPXGd0gkeaXEA4B98pDVkIC2pxQ0rmSxf+Ty5xmnlfz/ZqlgApIdfT8I3XRO7C9/0crPbfQ4kmNqBF5dpJ0zwvvEipKyqnEvRNraEx23ui15pCTRkLmJnpLcr75jekGx4evlX+9OYkGznuDKdiXznvmeokp6XfZnBpb738uy5Bz/jcBnma+cOML3SbFR+SMn3uGKoE5fvCfyHDk0Lg0M9q9kyeTgHh1bzp4RcTADLYtAGIE9/g+K16jaIBpav1jWHhMdhRFF/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2Qk4i6IqPj69Jjnt9BAHAAZPKCl/IR//ofugLVpoLew=;
+ b=HIxP7oEyaEiTJfbebTnYZWtAp01nAMKyd7//2J3w/BzJpwOA346622A7YI+bp90YnTQ9NvgZigq+9lIeJubqQUWGmBXta2JT35n4yorZCch0w07FE1T4Mx3VT/XtrWq01/AAEse5tZZw+X8sXLVi+gQ5x8ShJLv1/hPnH561ekmXlCohU1FdRTl5A9QytvhOlZb0UsTsPXTYtE2Qnk/zzx26rMvTqT9xqgOLpmhX6LoSCQfKNrhGiZgphnugpGzokrF9Tc321vUlb3bgo+PPkScZyB5VGIupjnpt8bf7Hrsw+iiuOx0LUHtul1/WKxCys6awa9NkmFqh2Jnlmz9T9g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2Qk4i6IqPj69Jjnt9BAHAAZPKCl/IR//ofugLVpoLew=;
+ b=zslzJc0miOjo5PDqkqLV35Qq9kg4nysyqD5ynzFTkXqXSTBI1p49CR+sq+V92SilErqux7PswOJ5jaIg0sXsOEM1Hu9wMLBMgtOGw+fQ1xafq2lDNUBNSxBPtVV+UpOgl1kQ6RLU2JwbYA+zVyOXJkeT7CLxLBZCT6ODxc+IhgsWG2DAno+mVpGfJ2b/ABh+VjrgXtd6ua3RF7d2R8Pv6URZ37UL/bO/p2gUpvdi77afZmZ9ibKRgVroZdyg+mpn0JYSva+TmxQ8yH6ExdjxqNov6suZYJdFENnnzMjjTcpZ8SVm2HCv21XdFsReNBnf9fI/sn9m4a4g5JIqWPwpQw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
+ by VI0PR10MB9249.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:800:2bc::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.15; Tue, 4 Nov
+ 2025 06:30:29 +0000
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::8fe1:7e71:cf4a:7408]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::8fe1:7e71:cf4a:7408%6]) with mapi id 15.20.9275.015; Tue, 4 Nov 2025
+ 06:30:29 +0000
+Message-ID: <08287450-4889-4329-b21c-87fde274b13f@siemens.com>
+Date: Tue, 4 Nov 2025 07:30:28 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/6] scripts: Add helper script to generate eMMC block
+ device images
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Eric Blake <eblake@redhat.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
+ <5c9c6495ad4afc9d11f856bafcb797fed8fccecc.1760702638.git.jan.kiszka@siemens.com>
+ <bfd49f9a-0a37-4e1d-b7e2-f0e59943915e@linaro.org>
+From: Jan Kiszka <jan.kiszka@siemens.com>
+Content-Language: en-US
+Autocrypt: addr=jan.kiszka@siemens.com; keydata=
+ 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
+In-Reply-To: <bfd49f9a-0a37-4e1d-b7e2-f0e59943915e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AS4P251CA0012.EURP251.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5d2::13) To AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:588::19)
 MIME-Version: 1.0
-From: eawazilalwataniuh <eawazilalwataniuh7@gmail.com>
-Date: Tue, 4 Nov 2025 10:25:45 +0200
-X-Gm-Features: AWmQ_bnAp6uLIOSzj54W0b4iARejwiHofMpz7Ui2rfrfkO9g1VSSE6imlEc2PHw
-Message-ID: <CAA+HuEwgbTyJxKhCEDctScuKaaOMGTNp_Td5ss0TSTR97zE49w@mail.gmail.com>
-Subject: =?UTF-8?B?2LnYstmEINin2LPYt9it?=
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000d610650642c094e7"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=eawazilalwataniuh7@gmail.com; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|VI0PR10MB9249:EE_
+X-MS-Office365-Filtering-Correlation-Id: 71bc1139-f567-4c5a-dcfd-08de1b6ba61f
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YXJ4TmlLTjZhbnFXeVloVzJ2MDluU3NtYnE5TzBVWlh4ZHEzL2wvRHhKWnBY?=
+ =?utf-8?B?MlpBR1RtdmlWcnExbDRnSmt1S3FodWkyZ3pzTm5lZmxoUCs0YUU2QitJVFAr?=
+ =?utf-8?B?algzbTBYRFp1bzlFY3hFVC95V2lXeW41RnhqN1A1SUlEYzBKMVhPSlk0Q3Iz?=
+ =?utf-8?B?cUUycStONm5WU3Z3VXhFdFNFVExaYWE2eXdzMmdMdjV3NmhzbmFhWUJXRHMv?=
+ =?utf-8?B?NXFuY1VWYTVzUno0ZTE0bHFhSEs1ZmxmUjJYYVF0Q1N0eXhRZ3Y3QTZIaDds?=
+ =?utf-8?B?UzVhOWpMMkN4dW1HNENVdHpUSXJxVmZjVG1QN2wyb1lJRzZTakIwaHhEcUQx?=
+ =?utf-8?B?aVQ4TWpwbEYvS0xYU1FaWVBNcmN3QjNNNUdYR0toOEgyOUV4NzB2eEVQSEN5?=
+ =?utf-8?B?MUl6dzRjdEZjS1lnT2Z6VzV4TlYvclVoV2FhOGdVY3V6ZFVtd2U3TUd6bjNh?=
+ =?utf-8?B?TFRDd3JTYkJoUS81QkFOVlg4Tk5IRzBaYVgyd1JmOXBQOGpEUmRYSG5PdmUw?=
+ =?utf-8?B?TGZGaWNHaHJCaGxOT3EvbHZiYzd1Q2w4ZUlMcFNrSlBEVzdTeHJHRVhRRlVo?=
+ =?utf-8?B?MXFlcm9SZlQyVVJ6UXlQNGh5R1lUQ3p1RnJHdVVvaGxYZ0NLWVpPUXRsZFpS?=
+ =?utf-8?B?Mi9BRkNBMTNpR2tkV0E5c0hLa1k3Mzg3YTZHMEVRTlhvYU5KUjcwTDJScWRO?=
+ =?utf-8?B?SFFlVzhBKzNMVU1hNHJsTHNhZFVOQ0dZZkxoVFpSS2o3eTE1ZDB0b1p6bWFX?=
+ =?utf-8?B?NUxYS1VKbXcxVXFkUG82VlVvWU5oYlZTRzczc0hZZUpCWElVMlJNd1Nrc2xW?=
+ =?utf-8?B?b2Z5WSs5a20vcG1TWXplbnhTSUEzNjY0UjlkdFM2ZTErSEZXWnc5NFE0TG5S?=
+ =?utf-8?B?VTYwelJmNWE4RndLb29vOE14MG8zZWRvZFdMVjhKM251Qlk2L2NOSlBMdklk?=
+ =?utf-8?B?eHRENDgwMXltSWZsYzR0Zk0rSnQrZk9PNzBtaFloVFpnNkpRMmlubm1FMlBD?=
+ =?utf-8?B?UStMZTVSL0pxNEhWYllwV2htS1VZRktpMmtXQ1YybG9vT0N4REg4U1U0U2or?=
+ =?utf-8?B?N0Z6cStaa3hScCt2MlUvZHUwL0YrNHhrMFhBVjdaNCtQSEpaTFVCaXpNZzlp?=
+ =?utf-8?B?Q3FKR1JXUDVRSGFIMFNVWVZ5bEZwT2dWMVJUcjNVandGOWNLR2MySTRpUnh1?=
+ =?utf-8?B?UlFQd0wrNStWM01uazF3T2NKMWhxeVNGaDlhVGdKcFlEZ0d4M2xucUNCSHJC?=
+ =?utf-8?B?SVhmL055aGVpRWE1VVA0ZVJzR1JwR0pnMTdBY083cHFEVkFJWVZjcUtGNVhl?=
+ =?utf-8?B?eXZWdU5yRS9NRGh6VjRsbXpHalozRGY2WlFuSFZIb3puMXJPQjVZQlZxTVdG?=
+ =?utf-8?B?ZzhZS3ltQTBveE1SS0dZVmtTTlZuc3BXejlCK2xvMkNSVWRnaWQyWkc0YXp3?=
+ =?utf-8?B?ak5heE81K1JJemhVT2dIRzRyV0g1RHFpbFhvVGZ0STdyWExnbDY4Zm5YNjA3?=
+ =?utf-8?B?S1c2TkdHMUZXRzFia0RIckY2TWVIdFJVT09jbXN1cnRSQmF5djN0dGdZbEJi?=
+ =?utf-8?B?N2MrMG8zdFRIR3dydnNUaFFNeHVUZG03WTAwZTVYRGZJYTBwRkY1TTdHNXZ1?=
+ =?utf-8?B?djUyMUhWMXpzMzVwK2NvOXJ3Y2Jhb1BXVHgvT2lkR2E4MkhzZGltVS9NamRx?=
+ =?utf-8?B?Y2hFQnFkMzh1aTV6Q3JYNFplK0tQWW1ZRjY1cWkya3BEUjZ1V081dzFFZWph?=
+ =?utf-8?B?aVdJSzZTOUFuTUJsRG9Kb3Q2cnJXZnVyV3EvZGo1d0s0b05YTUdiMWR4MnVO?=
+ =?utf-8?B?TjZWSHhrU0ZZVVhVeW5sZFR6UDg1TmV0RVVHSnU2V3pGRlVKTk9MVWpoV0FS?=
+ =?utf-8?B?ZGltKzFSNEU1MFg5TnR0S0tFNVBuZExWWlpJbEt2NjBPajdNOVc5NTlFOXlE?=
+ =?utf-8?Q?QVwv8k6nj9MNWdmRCHo+lkZrgQ7ngLwg?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YjRNQ29ZMmlvQkxqNkE1MnYrRG41bHFzbW1IWUdkUU5KaHVUaUVpK2xLejI5?=
+ =?utf-8?B?V0c0QmtDR1RyejVWSXB4U3E1c0JnNlBWU1l3UG1yenhiY0hYbGRZRUcyeS9Q?=
+ =?utf-8?B?VUpGWTAvSVhadllSQlRyT29lTGRpQWQvajl6NUZkSFdIQmNBQ3NLREMrS0U4?=
+ =?utf-8?B?VTZZS29mVTVWamxGUEdFUFpPenhYNTdWVVBmcGsrSWlMV25Ub3pFY2t0dEFa?=
+ =?utf-8?B?TEwxNXpoZ1dVUlRQUG9oaE1mMkp6R2thMExZYjF6elFxTm1zNDVkMFp2ZzZp?=
+ =?utf-8?B?cC85bmtmT3JHUlhtUUJucjlOV0h3WXJ2ZzB5OXNaYmgxUTAyRlFpV2FqTnNV?=
+ =?utf-8?B?RTNtQmgzSW9iRVhPT21Ja0xXQTE5cVJsZVo5bGRvLzdFTTNzTk5XYzZHYXZ1?=
+ =?utf-8?B?eTZlaGpEdGI0bUsxZzMxTTJWZGR6VFB1N0JxRm9CT3Y3WlJwRVY0OUlIaHYr?=
+ =?utf-8?B?T3dWMkliS2sySnVlRE9LN3hNenlJOFVVMnhtaFFOSENmTjdYRmxnT0JFNzFS?=
+ =?utf-8?B?Vm84MEozMHczSlAwMXJmYXMxakpSRGtjdW8wQjJ5bC9PREdMdHJTR3hEWXFs?=
+ =?utf-8?B?YnQ0KzVab3lJOXRONktkcy83d1JRMVFMeUpBQzVHdCtmS21nMGQzQ1BrZU1C?=
+ =?utf-8?B?djljVFpXYk1JbGViMmNEOEpmbFc3SnBmM3dSM0dTZ3lrUEF5VWM0Q3o0UUky?=
+ =?utf-8?B?eUd4amMzbktyVit6NFFoLzh1cGlzMDVQWnpwL0ZuY0ZibU1vNzJxR2hTUlJX?=
+ =?utf-8?B?V3BWVnRlMUt3cmJqZTV2dUIySkNjQ0IrWFJiSVkvRDErZEE5cjhEc3FaT085?=
+ =?utf-8?B?eEQ3WFZneGdJWnV1SUV2OW5YclFDVTZjRS9PUDc1Z1J0MzNmNVAzaGw3NnRl?=
+ =?utf-8?B?TlNXV0hMcW1hK2VSdzE0WjFIMFQ5eWpiOVllYnZCdkh6MTE1TEhPNkZocjB2?=
+ =?utf-8?B?dXF3dDVuenRpeW9ldEg1Ukd3SEVYSU4xN2lUdTFpSmNvSmFOazB5QTRINFVI?=
+ =?utf-8?B?amkxcktEVUJYaEUvM3RiSExBZXlRUTFhTmo1eTZnZWVidkg5WDJHeDBkaW8x?=
+ =?utf-8?B?SUFBNHEyN2RSSXQyMUtqNGNJUVl5c3JWdHVhdDd6and0YUZ1Nmt4OC82Wml6?=
+ =?utf-8?B?NzRYWEQwWmFYbkNqNVBCQ1hMQ0RNNlJSQnNEamlEM0FGMVpWVStMMzFXUlF1?=
+ =?utf-8?B?WW1OUjZzbHdCbXR3UjllLy9zQTFYOHN2ZHUzS29keHErZ0FMVldRcGpZTHFm?=
+ =?utf-8?B?U0U0WnVvc1VmTVdDWU01SEdOZE5TVFhTR3FxWEsxVGFPQ21TQldGMW1mWVBj?=
+ =?utf-8?B?UzVDYlVKQ0I0bzViNi9tQ0VTSk43UlhjZmd3bzYxaW5DaWdHMVNSSU9kWDZ3?=
+ =?utf-8?B?U1lMdjNVaGd5R2NqQ0dyeEJCbmk4UU1HL1BuTWk4OVZCWWhuTGJzcWR6YTh3?=
+ =?utf-8?B?N0txbVRLdjEzNldPUDM4LzBFb0o5eEhIMlRJNXl6UkhQcnNxMElxMnlySGlR?=
+ =?utf-8?B?ekJpeVFhaXhQV0N1ZVdWQXV0MWF0QXEySXVUNjFpYnVFdnVlQ3ByQSswWHdj?=
+ =?utf-8?B?TDRSTEJkNmNTd2Fqc2ErMzRib3Awci9lYmlIdWNsWFFGc2E3QWhteER5bzg3?=
+ =?utf-8?B?R3VLZFZtelV6NkdXd3gzUFg0RzhNSXNZeFpKSlU5UWJwTForUFp4K004VENL?=
+ =?utf-8?B?Yjh1MUw0VDlSbjhWdWJLQmNXTFcwbkxXWFlHR1VBVmFBOG1ueERQU05aQ2tv?=
+ =?utf-8?B?ZGY5QjcvSi9YbmxuUlpVZkkwV01EdjZTZTA5N3FaY0lpTzZwL1RwUnVpMzBT?=
+ =?utf-8?B?bDY5Y3BXK3pOaE9uVnBsaW5oTGl6YmhMbUk4RmtjRHJSMStLRGdXWHFQT3dQ?=
+ =?utf-8?B?ZG5IUGhNZkdkY20yN0pia1hCODcxbUwyU2JETDhrWllEeHEzU0ZyRTNIOUF5?=
+ =?utf-8?B?cUswWkxsU09kc2ZIV2crcGtOL00wMWlXRmFKdkdwR29Tckx0UDV3TGdBNjkr?=
+ =?utf-8?B?ZG5ibC80U3ZjV2VjYkovU201RDE0VUpxMkZVeW9wQmtHTi9zQVhYckIydDRo?=
+ =?utf-8?B?WHJFYjQ3eWszKzRGL0VMNEcvRlJ5ZWhadlZ0Uzc0Wjhxdld1eUh3VkY3S1la?=
+ =?utf-8?Q?WbnNVGjq6j+82ahpAce3+lcKR?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 71bc1139-f567-4c5a-dcfd-08de1b6ba61f
+X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 06:30:29.8133 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QzLhw8/i8w9lZ8hKPbwq6OXwkx9qURGT+i7wH7s1/H9zPrYbS2/6y5qFRG4yTDD9cVYeWe/EAm47rqs6tc5FWA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR10MB9249
+Received-SPF: pass client-ip=52.101.84.57; envelope-from=jan.kiszka@siemens.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,207 +227,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d610650642c094e7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+On 03.11.25 14:12, Philippe Mathieu-Daudé wrote:
+> Hi Jan,
+> 
+> On 17/10/25 14:03, Jan Kiszka wrote:
+>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>
+>> As an eMMC block device image may consist of more than just the user
+>> data partition, provide a helper script that can compose the image from
+>> boot partitions, an RPMB partition and the user data image. The script
+>> also does the required size validation and/or rounding.
+>>
+>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>> ---
+>>   scripts/mkemmc.sh | 218 ++++++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 218 insertions(+)
+>>   create mode 100755 scripts/mkemmc.sh
+>>
+>> diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
+>> new file mode 100755
+>> index 0000000000..1a2b7a6193
+>> --- /dev/null
+>> +++ b/scripts/mkemmc.sh
+>> @@ -0,0 +1,218 @@
+>> +#!/bin/sh -e
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +#
+>> +# Create eMMC block device image from boot, RPMB and user data images
+>> +#
+>> +# Copyright (c) Siemens, 2025
+>> +#
+>> +# Authors:
+>> +#  Jan Kiszka <jan.kiszka@siemens.com>
+>> +#
+>> +# This work is licensed under the terms of the GNU GPL version 2.
+>> +# See the COPYING file in the top-level directory.
+>> +#
+>> +
+>> +usage() {
+>> +    echo "$0 [OPTIONS] USER_IMG[:SIZE] OUTPUT_IMG"
+>> +    echo ""
+>> +    echo "SIZE must be a power of 2 up to 2G and multiples of 512
+>> byte from there on."
+>> +    echo "If no SIZE is specified, the size of USER_ING will be used
+>> (rounded up)."
+>> +    echo ""
+>> +    echo "Supported options:"
+>> +    echo "  -b BOOT1_IMG[:SIZE]   Add boot partitions. SIZE must be
+>> multiples of 128K. If"
+>> +    echo "                          no SIZE is specified, the size of
+>> BOOT1_IMG will be"
+>> +    echo "                          used (rounded up). BOOT1_IMG will
+>> be stored in boot"
+>> +    echo "                          partition 1, and a boot partition
+>> 2 of the same size"
+>> +    echo "                          will be created as empty (all
+>> zeros) unless -B is"
+>> +    echo "                          specified as well."
+>> +    echo "  -B BOOT2_IMG          Fill boot partition 2 with
+>> BOOT2_IMG. Must be combined"
+>> +    echo "                          with -b which is also defining
+>> the partition size."
+>> +    echo "  -r RPMB_IMG[:SIZE]    Add RPMB partition. SIZE must be
+>> multiples of 128K. If"
+>> +    echo "                          no SIZE is specified, the size of
+>> RPMB_IMG will be"
+>> +    echo "                          used (rounded up)."
+>> +    echo "  -h, --help            This help"
+>> +    echo ""
+>> +    echo "All SIZE parameters support the units K, M, G. If SIZE is
+>> smaller than the"
+>> +    echo "associated image, it will be truncated in the output image."
+>> +    exit "$1"
+>> +}
+>> +
+>> +process_size() {
+>> +    name=$1
+>> +    image_file=$2
+>> +    alignment=$3
+>> +    image_arg=$4
+>> +    if [ "${image_arg#*:}" = "$image_arg"  ]; then
+>> +        if ! size=$(stat -L -c %s "$image_file" 2>/dev/null); then
+>> +            echo "Missing $name image '$image_file'." >&2
+>> +            exit 1
+>> +        fi
+>> +        if [ "$alignment" = 128 ]; then
+>> +            size=$(( (size + 128 * 1024 - 1) & ~(128 * 1024 - 1) ))
+>> +        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
+>> +            size=$(( (size + 511) & ~511 ))
+>> +        elif [ $(( size & (size - 1) )) -gt 0 ]; then
+>> +            n=0
+>> +            while [ "$size" -gt 0 ]; do
+>> +                size=$((size >> 1))
+>> +                n=$((n + 1))
+>> +            done
+>> +            size=$((1 << n))
+>> +        fi
+>> +    else
+>> +        value="${image_arg#*:}"
+>> +        if [ "${value%K}" != "$value" ]; then
+>> +            size=${value%K}
+>> +            multiplier=1024
+>> +        elif [ "${value%M}" != "$value" ]; then
+>> +            size=${value%M}
+>> +            multiplier=$((1024 * 1024))
+>> +        elif [ "${value%G}" != "$value" ]; then
+>> +            size=${value%G}
+>> +            multiplier=$((1024 * 1024 * 1024))
+>> +        else
+>> +            size=$value
+>> +            multiplier=1
+>> +        fi
+>> +        if [ "$size" -eq "$size" ] 2>/dev/null; then
+> 
+> I don't get this check, should one be "$value"?
+> 
 
-2KPZgdi22YQg2YXZiNin2K8g2KfZhNi52LLZhCDZhNmE2KPYs9i32K0g2YHZiiDYp9mE2LPYudmI
-2K/ZitipIOKAkyDYr9mE2YrZhNmDINmE2KfYrtiq2YrYp9ixINin2YTYo9mG2LPYqA0KDQrZgdmK
-INi42YQg2KfZhNiq2LrZitix2KfYqiDYp9mE2YXZhtin2K7ZitipINin2YTYqtmKINiq2LTZh9iv
-2YfYpyDYp9mE2YXZhdmE2YPYqSDYp9mE2LnYsdio2YrYqSDYp9mE2LPYudmI2K/Zitip2Iwg2KjY
-p9iqINmF2YYNCtin2YTYttix2YjYsdmKINmE2KPYtdit2KfYqCDYp9mE2YXYqNin2YbZiiDYp9mE
-2KfYs9iq2KvZhdin2LEg2YHZiiDYudiy2YQg2KfZhNij2LPYt9itINio2LTZg9mEINmF2YbYp9iz
-2Kgg2YTYttmF2KfZhiDYrdmF2KfZitipDQrYp9mE2LnZgtin2LEg2YjYqtit2YLZitmCINij2YPY
-qNixINmC2K/YsSDZhdmGINin2YTYsdin2K3YqSDYp9mE2K/Yp9iu2YTZitipLiDZiNmF2Lkg2KrZ
-htmI2Lkg2YXZiNin2K8g2KfZhNi52LLZhCDYp9mE2YXYqtmI2YHYsdipINmB2YoNCtin2YTYs9mI
-2YLYjCDZiti12KjYrSDYp9mE2KfYrtiq2YrYp9ixINi12LnYqNmL2Kcg2KPYrdmK2KfZhtmL2KfY
-jCDYrtin2LXYqdmLINmF2Lkg2KrYqNin2YrZhiDYp9mE2KzZiNiv2Kkg2YjZhdmE2KfYodmF2Kkg
-2KfZhNmF2YjYp9ivDQrZhNi42LHZiNmBINin2YTYqNmK2KbYqSDYp9mE2LPYudmI2K/ZitipLg0K
-DQrZgdmKINmH2LDYpyDYp9mE2YXZgtin2YTYjCDYs9mG2LPYqti52LHYtiDYo9mB2LbZhCDZhdmI
-2KfYryDYp9mE2LnYstmEINmE2YTYo9iz2LfYrSDZiNmG2YjYttitINmF2LLYp9mK2Kcg2YPZhCDZ
-hdmG2YfYpyDZiNmD2YrZgdmK2KkNCtin2K7YqtmK2KfYsSDYp9mE2KPZhtiz2Kgg2K3Ys9ioINmG
-2YjYuSDYp9mE2YXYqNmG2Ykg2YjZhdmK2LLYp9mG2YrYqtmDLg0KMS4g2KfZhNmB2YjZhSAo2KfZ
-hNio2YjZhNmKINmK2YjYsdmK2KvYp9mGKQ0KDQrZiti52KrYqNixINin2YTZgdmI2YUg2YXZhiDY
-o9i02YfYsSDYp9mE2YXZiNin2K8g2KfZhNmF2LPYqtiu2K/ZhdipINmF2KTYrtix2YvYpyDZgdmK
-INin2YTYs9i52YjYr9mK2KnYjCDYrtin2LXYqSDZhNij2YbZhyDZitiu2K/ZhQ0K2YPYudin2LLZ
-hCDZhdin2KbZiiDZiNit2LHYp9ix2Yog2YHZiiDZhtmB2LMg2KfZhNmI2YLYqi4g2YrYqtmF2YrY
-siDYqNmC2KfYqNmE2YrYqtmHINmE2YTYqti32KjZitmCINi52YTZiSDYp9mE2KPYs9i32K0g2LrZ
-itixDQrYp9mE2YXYs9iq2YjZitip2Iwg2YjYs9ix2LnYqSDYp9mE2KrYsdmD2YrYqNiMINmI2KrY
-uti32YrYqtmHINmE2KzZhdmK2Lkg2KfZhNi02YLZiNmCLiDYpdiw2Kcg2YPZhtiqINiq2KjYrdir
-INi52YYg2K3ZhCDYtNin2YXZhA0K2YTZhdi02YPZhNin2Kog2KfZhNit2LHYp9ix2Kkg2YjYp9mE
-2YXZitin2YfYjCDZgdil2YYg2KfZhNiq2LnYp9mF2YQg2YXYuSAq2KfZgdi22YQg2LTYsdmD2Kkg
-2LnYstmEINin2LPYt9itDQo8aHR0cHM6Ly9lYXdhemlsYWx3YXRhbml1aC5jb20vPiog2YrYudiv
-INiu2YrYp9ix2YvYpyDZhdir2KfZhNmK2YvYp9iMINit2YrYqyDYqtmI2YHYsSDYrdmE2YjZhCDY
-p9mE2YHZiNmFDQrYqNis2YjYr9ipINi52KfZhNmK2KkuDQoyLiDZhNmB2KfYptmBINin2YTYudiy
-2YQg2KfZhNio2YrYqtmI2YXZitmG2YrYqQ0KDQrYqtmP2LPYqtiu2K/ZhSDZh9iw2Ycg2KfZhNmF
-2KfYr9ipINio2LTZg9mEINij2LPYp9iz2Yog2YTZhNi52LLZhCDYp9mE2YXYp9im2YrYjCDZiNmH
-2Yog2YHYudin2YTYqSDZgdmKINit2YXYp9mK2Kkg2KfZhNij2LPYt9itINmF2YYNCtin2YTYo9mF
-2LfYp9ixINmI2KfZhNiq2LPYsdio2KfYqi4g2KrZj9i52KrYqNixINmF2KvYp9mE2YrYqSDZhNmE
-2KPZhdin2YPZhiDYp9mE2KrZiiDYqtiq2LnYsdi2INmE2YXZitin2Ycg2KfZhNij2YXYt9in2LEg
-2KjYtNmD2YQNCtmD2KjZitix2Iwg2YPZhdinINij2YbZh9inINiq2K/ZiNmFINmE2LPZhtmI2KfY
-qiDYt9mI2YrZhNipINil2LDYpyDYqtmFINiq2LHZg9mK2KjZh9inINio2KfZhNi02YPZhCDYp9mE
-2LXYrdmK2K0uDQozLiDYp9mE2LnYstmEINio2KfYs9iq2K7Yr9in2YUg2KPZhNmI2KfYrSDYp9mE
-2KjZiNmE2YrYs9iq2YrYsdmK2YYgKNin2YTZgdmI2YUg2KfZhNij2KjZiti2KQ0KDQrZh9mKINij
-2YTZiNin2K0g2K7ZgdmK2YHYqSDYp9mE2YjYstmGINiq2Y/Ys9iq2K7Yr9mFINio2LTZg9mEINmI
-2KfYs9i5INmD2LnYp9iy2YQg2K3Ysdin2LHZitiMINmI2KrZiNi22Lkg2LnYp9iv2Kkg2KrYrdiq
-INio2YTYp9i3DQrYp9mE2KPYs9i32K0g2KPZiCDYqNi52K8g2KrZhtmB2YrYsCDYp9mE2LnYstmE
-INin2YTZhdin2KbZii4g2KrZj9mC2YTZhCDYqNi02YPZhCDZg9io2YrYsSDZhdmGINin2YbYqtmC
-2KfZhCDYp9mE2K3Ysdin2LHYqSDYpdmE2YkNCtiv2KfYrtmEINin2YTZhdio2YbZidiMINmI2KrZ
-j9i52KrYqNixINiu2YrYp9ix2YvYpyDYp9mC2KrYtdin2K/ZitmL2Kcg2YXZgtin2LHZhtipINio
-2LrZitix2YfYpy4NCjQuINiv2YfYp9mG2KfYqiDYp9mE2LnYstmEINin2YTYpdiz2YXZhtiq2YrY
-qSDZiNin2YTYp9mD2LHZitmE2YrZg9mK2KkNCg0K2YfZiiDYt9io2YLYp9iqINiq2Y/Yr9mH2YYg
-2YHZiNmCINin2YTYs9i32K3YjCDZiNiq2LnYqtio2LEg2YXZhtin2LPYqNipINmE2YTYudiy2YQg
-2KfZhNmF2KfYptmKINin2YTYrtmB2YrZgdiMINmD2YXYpyDYqtmI2YHYsSDYrdmF2KfZitipDQrY
-pdi22KfZgdmK2Kkg2YXZhiDYp9mE2KrYtNmC2YLYp9iqINin2YTYqNiz2YrYt9ipLiDZiNiq2Y/Y
-udivINiu2YrYp9ix2YvYpyDYrNmK2K/Zi9inINmE2YTZhdio2KfZhtmKINiw2KfYqiDYp9mE2KPY
-s9i32K0g2KfZhNiu2LHYs9in2YbZitipDQrYp9mE2KrZiiDYqtit2KrYp9isINil2YTZiSDYrdmF
-2KfZitipINil2LbYp9mB2YrYqSDYqNiq2YPZhNmB2Kkg2YXZhtin2LPYqNipLg0KNS4g2KfZhNi5
-2LLZhCDYqNin2YTZgdmI2YUg2KfZhNix2LQg2KfZhNmF2KfYptmKINin2YTYrdix2KfYsdmKDQoN
-CtmI2YrYqti22YXZhiDYsdi0INmF2KfYr9ipINi52KfYstmE2Kkg2LPYp9im2YTYqSDYqtiq2K3Z
-iNmEINil2YTZiSDYt9io2YLYqSDYtdmE2KjYqSDYqti02YPZhCDYrdin2KzYstmL2Kcg2YLZiNmK
-2YvYpyDYttivINin2YTZhdin2KENCtmI2KfZhNit2LHYp9ix2Kkg2YXYudmL2KcuINmK2Y/Yudiq
-2KjYsSDYrtmK2KfYsdmL2Kcg2YXYqti32YjYsdmL2Kcg2YrZj9mC2K/ZhSDZhdmGINi02LHZg9in
-2Kog2YXYqtmC2K/ZhdipINmB2Yog2YfYsNinINin2YTZhdis2KfZhA0K2YXYq9mEICrYtNix2YPY
-qSDYudiy2YQg2YXYp9im2YogPGh0dHBzOi8vZWF3YXppbGFsd2F0YW5pdWguY29tLz4qLg0K2YPZ
-itmBINiq2K7Yqtin2LEg2KfZhNmF2KfYr9ipINin2YTZhdmG2KfYs9io2KnYnw0KDQrZiti52KrZ
-hdivINin2K7YqtmK2KfYsSDZhdin2K/YqSDYp9mE2LnYstmEINi52YTZiSDYudiv2Kkg2LnZiNin
-2YXZhNiMINmF2KvZhDoNCg0KICAgLQ0KDQogICDZhtmI2Lkg2KfZhNiz2LfYrSAo2K7Ysdiz2KfZ
-htmK2Iwg2YXYudiv2YbZitiMINmF2KjZhNi3Li4uINil2YTYrikNCiAgIC0NCg0KICAg2KfZhNi4
-2LHZiNmBINin2YTZhdmG2KfYrtmK2Kkg2KfZhNmF2K3Ziti32KkNCiAgIC0NCg0KICAg2YXZitiy
-2KfZhtmK2KrZgyDYp9mE2YXYqtin2K3YqQ0KICAgLQ0KDQogICDYp9mE2K3Yp9is2Kkg2KXZhNmJ
-INi52LLZhCDZhdin2KbZiiDZgdmC2Lcg2KPZhSDYrdix2KfYsdmKINmI2YXYp9im2Yog2YXYudmL
-2KcNCg0K2YTZh9iw2KfYjCDZgdil2YYg2KfYs9iq2LTYp9ix2Kkg2LTYsdmD2Kkg2YXYrdiq2LHZ
-gdipINmF2KvZhCAq2LnZiNin2LLZhCDYp9mE2YjYt9mG2YrYqQ0KPGh0dHBzOi8vZWF3YXppbGFs
-d2F0YW5pdWguY29tLz4q2Iwg2KfZhNiq2Yog2KrZgtiv2YUg2K3ZhNmI2YTYp9mLINmF2K7Ytdi1
-2Kkg2K3Ys9ioINit2KfZhNipINin2YTYs9i32K0NCtmI2YXZitiy2KfZhtmK2Kkg2KfZhNi52YXZ
-itmE2Iwg2YfZiiDYrti32YjYqSDZhdmH2YXYqSDZgdmKINin2KrYrtin2LAg2KfZhNmC2LHYp9ix
-INin2YTYtdit2YrYrS4NCtin2YTYrtmE2KfYtdipDQoNCtmF2YjYp9ivINin2YTYudiy2YQg2YXY
-qtmG2YjYudipINmI2YTZg9mEINmF2YbZh9inINmF2YXZitiy2KfYqtmHINmI2KfYs9iq2K7Yr9in
-2YXYp9iq2YcuINmE2YPZhiDYp9mE2KrYrdiv2Yog2YrZg9mF2YYg2YHZiiDYp9iu2KrZitin2LEN
-Ctin2YTYo9mB2LbZhCDZhNin2K3YqtmK2KfYrNin2KrZgyDYp9mE2YHYudmE2YrYqS4g2YTYsNin
-INin2K3Ysdi1INi52YTZiSDYp9mE2KfYs9iq2LnYp9mG2Kkg2KjYtNix2YPYqSDZhdmI2KvZiNmC
-2Kkg2KrZiNmB2LEg2YTZgw0K2KfYs9iq2LTYp9ix2Kkg2YHZhtmK2Kkg2YjZhdmI2KfYryDZhdi5
-2KrZhdiv2Kkg2YjYqtmG2YHZitiwINio2KzZiNiv2Kkg2LnYp9mE2YrYqSDZhNi22YXYp9mGINit
-2YXYp9mK2Kkg2LfZiNmK2YTYqSDYp9mE2KPZhdivINmE2LPYt9itDQrZhdio2YbYp9mDLg0K
---000000000000d610650642c094e7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Likely deserves a comment, I had to refresh my own memory as well:
+This checks if $size is a valid integer value. If we just run the
+multiplication below, we won't be able to react properly.
 
-PGRpdiBkaXI9Imx0ciI+PGRpdiBjbGFzcz0iZ21haWwtdGV4dC1iYXNlIGdtYWlsLW15LWF1dG8g
-Z21haWwtbXgtYXV0byBnbWFpbC1wYi0xMCBnbWFpbC1bLS10aHJlYWQtY29udGVudC1tYXJnaW46
-LS1zcGFjaW5nKDQpXSBnbWFpbC10aHJlYWQtc206Wy0tdGhyZWFkLWNvbnRlbnQtbWFyZ2luOi0t
-c3BhY2luZyg2KV0gZ21haWwtdGhyZWFkLWxnOlstLXRocmVhZC1jb250ZW50LW1hcmdpbjotLXNw
-YWNpbmcoMTYpXSBnbWFpbC1weC0oLS10aHJlYWQtY29udGVudC1tYXJnaW4pIj48ZGl2IGNsYXNz
-PSJnbWFpbC1bLS10aHJlYWQtY29udGVudC1tYXgtd2lkdGg6NDByZW1dIGdtYWlsLXRocmVhZC1s
-ZzpbLS10aHJlYWQtY29udGVudC1tYXgtd2lkdGg6NDhyZW1dIGdtYWlsLW14LWF1dG8gZ21haWwt
-bWF4LXctKC0tdGhyZWFkLWNvbnRlbnQtbWF4LXdpZHRoKSBnbWFpbC1mbGV4LTEgZ21haWwtZ3Jv
-dXAvdHVybi1tZXNzYWdlcyBnbWFpbC1mb2N1cy12aXNpYmxlOm91dGxpbmUtaGlkZGVuIGdtYWls
-LXJlbGF0aXZlIGdtYWlsLWZsZXggZ21haWwtdy1mdWxsIGdtYWlsLW1pbi13LTAgZ21haWwtZmxl
-eC1jb2wgZ21haWwtYWdlbnQtdHVybiIgdGFiaW5kZXg9Ii0xIj48ZGl2IGNsYXNzPSJnbWFpbC1m
-bGV4IGdtYWlsLW1heC13LWZ1bGwgZ21haWwtZmxleC1jb2wgZ21haWwtZ3JvdyI+PGRpdiBkaXI9
-ImF1dG8iIGNsYXNzPSJnbWFpbC1taW4taC04IGdtYWlsLXRleHQtbWVzc2FnZSBnbWFpbC1yZWxh
-dGl2ZSBnbWFpbC1mbGV4IGdtYWlsLXctZnVsbCBnbWFpbC1mbGV4LWNvbCBnbWFpbC1pdGVtcy1l
-bmQgZ21haWwtZ2FwLTIgZ21haWwtdGV4dC1zdGFydCBnbWFpbC1icmVhay13b3JkcyBnbWFpbC13
-aGl0ZXNwYWNlLW5vcm1hbCBnbWFpbC1bLnRleHQtbWVzc2FnZSsmYW1wO106bXQtMSI+PGRpdiBj
-bGFzcz0iZ21haWwtZmxleCBnbWFpbC13LWZ1bGwgZ21haWwtZmxleC1jb2wgZ21haWwtZ2FwLTEg
-ZW1wdHk6aGlkZGVuIGdtYWlsLWZpcnN0OnB0LVsxcHhdIj48ZGl2IGNsYXNzPSJnbWFpbC1tYXJr
-ZG93biBnbWFpbC1wcm9zZSBnbWFpbC1kYXJrOnByb3NlLWludmVydCBnbWFpbC13LWZ1bGwgZ21h
-aWwtYnJlYWstd29yZHMgZ21haWwtbGlnaHQgZ21haWwtbWFya2Rvd24tbmV3LXN0eWxpbmciPjxo
-Mz7Yo9mB2LbZhCDZhdmI2KfYryDYp9mE2LnYstmEINmE2YTYo9iz2LfYrSDZgdmKINin2YTYs9i5
-2YjYr9mK2Kkg4oCTINiv2YTZitmE2YMg2YTYp9iu2KrZitin2LEg2KfZhNij2YbYs9ioPC9oMz4N
-CjxwPtmB2Yog2LjZhCDYp9mE2KrYutmK2LHYp9iqINin2YTZhdmG2KfYrtmK2Kkg2KfZhNiq2Yog
-2KrYtNmH2K/Zh9inINin2YTZhdmF2YTZg9ipINin2YTYudix2KjZitipINin2YTYs9i52YjYr9mK
-2KnYjCDYqNin2Kog2YXZhiDYp9mE2LbYsdmI2LHZiiDZhNij2LXYrdin2Kgg2KfZhNmF2KjYp9mG
-2Yog2KfZhNin2LPYqtir2YXYp9ixINmB2Yog2LnYstmEINin2YTYo9iz2LfYrSDYqNi02YPZhCDZ
-hdmG2KfYs9ioINmE2LbZhdin2YYg2K3Zhdin2YrYqSDYp9mE2LnZgtin2LEg2YjYqtit2YLZitmC
-INij2YPYqNixINmC2K/YsSDZhdmGINin2YTYsdin2K3YqSDYp9mE2K/Yp9iu2YTZitipLiDZiNmF
-2Lkg2KrZhtmI2Lkg2YXZiNin2K8g2KfZhNi52LLZhCDYp9mE2YXYqtmI2YHYsdipINmB2Yog2KfZ
-hNiz2YjZgtiMINmK2LXYqNitINin2YTYp9iu2KrZitin2LEg2LXYudio2YvYpyDYo9it2YrYp9mG
-2YvYp9iMINiu2KfYtdip2Ysg2YXYuSDYqtio2KfZitmGINin2YTYrNmI2K/YqSDZiNmF2YTYp9ih
-2YXYqSDYp9mE2YXZiNin2K8g2YTYuNix2YjZgSDYp9mE2KjZitim2Kkg2KfZhNiz2LnZiNiv2YrY
-qS48L3A+DQo8cD7ZgdmKINmH2LDYpyDYp9mE2YXZgtin2YTYjCDYs9mG2LPYqti52LHYtiDYo9mB
-2LbZhCDZhdmI2KfYryDYp9mE2LnYstmEINmE2YTYo9iz2LfYrSDZiNmG2YjYttitINmF2LLYp9mK
-2Kcg2YPZhCDZhdmG2YfYpyDZiNmD2YrZgdmK2Kkg2KfYrtiq2YrYp9ixINin2YTYo9mG2LPYqCDY
-rdiz2Kgg2YbZiNi5INin2YTZhdio2YbZiSDZiNmF2YrYstin2YbZitiq2YMuPC9wPg0KPGg0PjEu
-INin2YTZgdmI2YUgKNin2YTYqNmI2YTZiiDZitmI2LHZitir2KfZhik8L2g0Pg0KPHA+2YrYudiq
-2KjYsSDYp9mE2YHZiNmFINmF2YYg2KPYtNmH2LEg2KfZhNmF2YjYp9ivINin2YTZhdiz2KrYrtiv
-2YXYqSDZhdik2K7YsdmL2Kcg2YHZiiDYp9mE2LPYudmI2K/Zitip2Iwg2K7Yp9i12Kkg2YTYo9mG
-2Ycg2YrYrtiv2YUg2YPYudin2LLZhCDZhdin2KbZiiDZiNit2LHYp9ix2Yog2YHZiiDZhtmB2LMg
-2KfZhNmI2YLYqi4g2YrYqtmF2YrYsiDYqNmC2KfYqNmE2YrYqtmHINmE2YTYqti32KjZitmCINi5
-2YTZiSDYp9mE2KPYs9i32K0g2LrZitixINin2YTZhdiz2KrZiNmK2KnYjCDZiNiz2LHYudipINin
-2YTYqtix2YPZitio2Iwg2YjYqti62LfZitiq2Ycg2YTYrNmF2YrYuSDYp9mE2LTZgtmI2YIuINil
-2LDYpyDZg9mG2Kog2KrYqNit2Ksg2LnZhiDYrdmEINi02KfZhdmEINmE2YXYtNmD2YTYp9iqINin
-2YTYrdix2KfYsdipINmI2KfZhNmF2YrYp9mH2Iwg2YHYpdmGINin2YTYqti52KfZhdmEINmF2Lkg
-PHN0cm9uZz48YSByZWw9Im5vb3BlbmVyIiBjbGFzcz0iZ21haWwtZGVjb3JhdGVkLWxpbmsiIGhy
-ZWY9Imh0dHBzOi8vZWF3YXppbGFsd2F0YW5pdWguY29tLyI+2KfZgdi22YQg2LTYsdmD2Kkg2LnY
-stmEINin2LPYt9itPHNwYW4gYXJpYS1oaWRkZW49InRydWUiIGNsYXNzPSJnbWFpbC1tcy0wLjUg
-Z21haWwtaW5saW5lLWJsb2NrIGdtYWlsLWFsaWduLW1pZGRsZSBnbWFpbC1sZWFkaW5nLW5vbmUi
-Pjwvc3Bhbj48L2E+PC9zdHJvbmc+INmK2LnYryDYrtmK2KfYsdmL2Kcg2YXYq9in2YTZitmL2KfY
-jCDYrdmK2Ksg2KrZiNmB2LEg2K3ZhNmI2YQg2KfZhNmB2YjZhSDYqNis2YjYr9ipINi52KfZhNmK
-2KkuPC9wPg0KPGg0PjIuINmE2YHYp9im2YEg2KfZhNi52LLZhCDYp9mE2KjZitiq2YjZhdmK2YbZ
-itipPC9oND4NCjxwPtiq2Y/Ys9iq2K7Yr9mFINmH2LDZhyDYp9mE2YXYp9iv2Kkg2KjYtNmD2YQg
-2KPYs9in2LPZiiDZhNmE2LnYstmEINin2YTZhdin2KbZitiMINmI2YfZiiDZgdi52KfZhNipINmB
-2Yog2K3Zhdin2YrYqSDYp9mE2KPYs9i32K0g2YXZhiDYp9mE2KPZhdi32KfYsSDZiNin2YTYqtiz
-2LHYqNin2KouINiq2Y/Yudiq2KjYsSDZhdir2KfZhNmK2Kkg2YTZhNij2YXYp9mD2YYg2KfZhNiq
-2Yog2KrYqti52LHYtiDZhNmF2YrYp9mHINin2YTYo9mF2LfYp9ixINio2LTZg9mEINmD2KjZitix
-2Iwg2YPZhdinINij2YbZh9inINiq2K/ZiNmFINmE2LPZhtmI2KfYqiDYt9mI2YrZhNipINil2LDY
-pyDYqtmFINiq2LHZg9mK2KjZh9inINio2KfZhNi02YPZhCDYp9mE2LXYrdmK2K0uPC9wPg0KPGg0
-PjMuINin2YTYudiy2YQg2KjYp9iz2KrYrtiv2KfZhSDYo9mE2YjYp9itINin2YTYqNmI2YTZitiz
-2KrZitix2YrZhiAo2KfZhNmB2YjZhSDYp9mE2KPYqNmK2LYpPC9oND4NCjxwPtmH2Yog2KPZhNmI
-2KfYrSDYrtmB2YrZgdipINin2YTZiNiy2YYg2KrZj9iz2KrYrtiv2YUg2KjYtNmD2YQg2YjYp9iz
-2Lkg2YPYudin2LLZhCDYrdix2KfYsdmK2Iwg2YjYqtmI2LbYuSDYudin2K/YqSDYqtit2Kog2KjZ
-hNin2Lcg2KfZhNij2LPYt9itINij2Ygg2KjYudivINiq2YbZgdmK2LAg2KfZhNi52LLZhCDYp9mE
-2YXYp9im2YouINiq2Y/ZgtmE2YQg2KjYtNmD2YQg2YPYqNmK2LEg2YXZhiDYp9mG2KrZgtin2YQg
-2KfZhNit2LHYp9ix2Kkg2KXZhNmJINiv2KfYrtmEINin2YTZhdio2YbZidiMINmI2KrZj9i52KrY
-qNixINiu2YrYp9ix2YvYpyDYp9mC2KrYtdin2K/ZitmL2Kcg2YXZgtin2LHZhtipINio2LrZitix
-2YfYpy48L3A+DQo8aDQ+NC4g2K/Zh9in2YbYp9iqINin2YTYudiy2YQg2KfZhNil2LPZhdmG2KrZ
-itipINmI2KfZhNin2YPYsdmK2YTZitmD2YrYqTwvaDQ+DQo8cD7Zh9mKINi32KjZgtin2Kog2KrZ
-j9iv2YfZhiDZgdmI2YIg2KfZhNiz2LfYrdiMINmI2KrYudiq2KjYsSDZhdmG2KfYs9io2Kkg2YTZ
-hNi52LLZhCDYp9mE2YXYp9im2Yog2KfZhNiu2YHZitmB2Iwg2YPZhdinINiq2YjZgdixINit2YXY
-p9mK2Kkg2KXYttin2YHZitipINmF2YYg2KfZhNiq2LTZgtmC2KfYqiDYp9mE2KjYs9mK2LfYqS4g
-2YjYqtmP2LnYryDYrtmK2KfYsdmL2Kcg2KzZitiv2YvYpyDZhNmE2YXYqNin2YbZiiDYsNin2Kog
-2KfZhNij2LPYt9itINin2YTYrtix2LPYp9mG2YrYqSDYp9mE2KrZiiDYqtit2KrYp9isINil2YTZ
-iSDYrdmF2KfZitipINil2LbYp9mB2YrYqSDYqNiq2YPZhNmB2Kkg2YXZhtin2LPYqNipLjwvcD4N
-CjxoND41LiDYp9mE2LnYstmEINio2KfZhNmB2YjZhSDYp9mE2LHYtCDYp9mE2YXYp9im2Yog2KfZ
-hNit2LHYp9ix2Yo8L2g0Pg0KPHA+2YjZitiq2LbZhdmGINix2LQg2YXYp9iv2Kkg2LnYp9iy2YTY
-qSDYs9in2KbZhNipINiq2KrYrdmI2YQg2KXZhNmJINi32KjZgtipINi12YTYqNipINiq2LTZg9mE
-INit2KfYrNiy2YvYpyDZgtmI2YrZi9inINi22K8g2KfZhNmF2KfYoSDZiNin2YTYrdix2KfYsdip
-INmF2LnZi9inLiDZitmP2LnYqtio2LEg2K7Zitin2LHZi9inINmF2KrYt9mI2LHZi9inINmK2Y/Z
-gtiv2YUg2YXZhiDYtNix2YPYp9iqINmF2KrZgtiv2YXYqSDZgdmKINmH2LDYpyDYp9mE2YXYrNin
-2YQg2YXYq9mEIDxzdHJvbmc+PGEgcmVsPSJub29wZW5lciIgY2xhc3M9ImdtYWlsLWRlY29yYXRl
-ZC1saW5rIiBocmVmPSJodHRwczovL2Vhd2F6aWxhbHdhdGFuaXVoLmNvbS8iPti02LHZg9ipINi5
-2LLZhCDZhdin2KbZijxzcGFuIGFyaWEtaGlkZGVuPSJ0cnVlIiBjbGFzcz0iZ21haWwtbXMtMC41
-IGdtYWlsLWlubGluZS1ibG9jayBnbWFpbC1hbGlnbi1taWRkbGUgZ21haWwtbGVhZGluZy1ub25l
-Ij48L3NwYW4+PC9hPjwvc3Ryb25nPi48L3A+DQo8aDQ+2YPZitmBINiq2K7Yqtin2LEg2KfZhNmF
-2KfYr9ipINin2YTZhdmG2KfYs9io2KnYnzwvaDQ+DQo8cD7Ziti52KrZhdivINin2K7YqtmK2KfY
-sSDZhdin2K/YqSDYp9mE2LnYstmEINi52YTZiSDYudiv2Kkg2LnZiNin2YXZhNiMINmF2KvZhDo8
-L3A+DQo8dWw+DQo8bGk+DQo8cD7ZhtmI2Lkg2KfZhNiz2LfYrSAo2K7Ysdiz2KfZhtmK2Iwg2YXY
-udiv2YbZitiMINmF2KjZhNi3Li4uINil2YTYrik8L3A+DQo8L2xpPg0KPGxpPg0KPHA+2KfZhNi4
-2LHZiNmBINin2YTZhdmG2KfYrtmK2Kkg2KfZhNmF2K3Ziti32Kk8L3A+DQo8L2xpPg0KPGxpPg0K
-PHA+2YXZitiy2KfZhtmK2KrZgyDYp9mE2YXYqtin2K3YqTwvcD4NCjwvbGk+DQo8bGk+DQo8cD7Y
-p9mE2K3Yp9is2Kkg2KXZhNmJINi52LLZhCDZhdin2KbZiiDZgdmC2Lcg2KPZhSDYrdix2KfYsdmK
-INmI2YXYp9im2Yog2YXYudmL2Kc8L3A+DQo8L2xpPg0KPC91bD4NCjxwPtmE2YfYsNin2Iwg2YHY
-pdmGINin2LPYqti02KfYsdipINi02LHZg9ipINmF2K3Yqtix2YHYqSDZhdir2YQgPHN0cm9uZz48
-YSByZWw9Im5vb3BlbmVyIiBjbGFzcz0iZ21haWwtZGVjb3JhdGVkLWxpbmsiIGhyZWY9Imh0dHBz
-Oi8vZWF3YXppbGFsd2F0YW5pdWguY29tLyI+2LnZiNin2LLZhCDYp9mE2YjYt9mG2YrYqTxzcGFu
-IGFyaWEtaGlkZGVuPSJ0cnVlIiBjbGFzcz0iZ21haWwtbXMtMC41IGdtYWlsLWlubGluZS1ibG9j
-ayBnbWFpbC1hbGlnbi1taWRkbGUgZ21haWwtbGVhZGluZy1ub25lIj48L3NwYW4+PC9hPjwvc3Ry
-b25nPtiMINin2YTYqtmKINiq2YLYr9mFINit2YTZiNmE2KfZiyDZhdiu2LXYtdipINit2LPYqCDY
-rdin2YTYqSDYp9mE2LPYt9itINmI2YXZitiy2KfZhtmK2Kkg2KfZhNi52YXZitmE2Iwg2YfZiiDY
-rti32YjYqSDZhdmH2YXYqSDZgdmKINin2KrYrtin2LAg2KfZhNmC2LHYp9ixINin2YTYtdit2YrY
-rS48L3A+DQo8aDQ+2KfZhNiu2YTYp9i12Kk8L2g0Pg0KPHA+2YXZiNin2K8g2KfZhNi52LLZhCDZ
-hdiq2YbZiNi52Kkg2YjZhNmD2YQg2YXZhtmH2Kcg2YXZhdmK2LLYp9iq2Ycg2YjYp9iz2KrYrtiv
-2KfZhdin2KrZhy4g2YTZg9mGINin2YTYqtit2K/ZiiDZitmD2YXZhiDZgdmKINin2K7YqtmK2KfY
-sSDYp9mE2KPZgdi22YQg2YTYp9it2KrZitin2KzYp9iq2YMg2KfZhNmB2LnZhNmK2KkuINmE2LDY
-pyDYp9it2LHYtSDYudmE2Ykg2KfZhNin2LPYqti52KfZhtipINio2LTYsdmD2Kkg2YXZiNir2YjZ
-gtipINiq2YjZgdixINmE2YMg2KfYs9iq2LTYp9ix2Kkg2YHZhtmK2Kkg2YjZhdmI2KfYryDZhdi5
-2KrZhdiv2Kkg2YjYqtmG2YHZitiwINio2KzZiNiv2Kkg2LnYp9mE2YrYqSDZhNi22YXYp9mGINit
-2YXYp9mK2Kkg2LfZiNmK2YTYqSDYp9mE2KPZhdivINmE2LPYt9itINmF2KjZhtin2YMuPC9wPjwv
-ZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjxkaXYgY2xhc3M9ImdtYWlsLXotMCBnbWFpbC1mbGV4IGdt
-YWlsLW1pbi1oLVs0NnB4XSBnbWFpbC1qdXN0aWZ5LXN0YXJ0Ij48L2Rpdj48ZGl2IGNsYXNzPSJn
-bWFpbC1tdC0zIGdtYWlsLXctZnVsbCBlbXB0eTpoaWRkZW4iPjxkaXYgY2xhc3M9ImdtYWlsLXRl
-eHQtY2VudGVyIj48L2Rpdj48L2Rpdj48L2Rpdj48L2Rpdj48ZGl2IGFyaWEtaGlkZGVuPSJ0cnVl
-IiBjbGFzcz0iZ21haWwtcG9pbnRlci1ldmVudHMtbm9uZSBnbWFpbC1oLXB4IGdtYWlsLXctcHgi
-PjwvZGl2PjwvZGl2Pg0K
---000000000000d610650642c094e7--
+>> +            size=$((size * multiplier))
+>> +        else
+>> +            echo "Invalid value '$value' specified for $image_file
+>> image size." >&2
+>> +            exit 1
+>> +        fi
+>> +        if [ "$alignment" = 128 ]; then
+>> +            if [ $(( size & (128 * 1024 - 1) )) -ne 0 ]; then
+>> +                echo "The $name image size must be multiples of
+>> 128K." >&2
+>> +                exit 1
+>> +            fi
+>> +        elif [ $size -gt $((2 * 1024 * 1024 * 1024)) ]; then
+>> +            if [ $(( size & 511)) -ne 0 ]; then
+>> +                echo "The $name image size must be multiples of 512
+>> (if >2G)." >&2
+>> +                exit 1
+>> +            fi
+>> +        elif [ $(( size & (size - 1) )) -gt 0 ]; then
+>> +            echo "The $name image size must be power of 2 (up to
+>> 2G)." >&2
+>> +            exit 1
+>> +        fi
+>> +    fi
+>> +    echo $size
+>> +}
+>> +
+>> +check_truncation() {
+>> +    image_file=$1
+>> +    output_size=$2
+>> +    if [ "$image_file" = "/dev/zero" ]; then
+>> +        return
+>> +    fi
+>> +    if ! actual_size=$(stat -L -c %s "$image_file" 2>/dev/null); then
+>> +        echo "Missing image '$image_file'." >&2
+>> +        exit 1
+>> +    fi
+>> +    if [ "$actual_size" -gt "$output_size" ]; then
+>> +        echo "Warning: image '$image_file' will be truncated on output."
+>> +    fi
+>> +}
+>> +
+>> +userimg=
+>> +outimg=
+>> +bootimg1=
+>> +bootimg2=/dev/zero
+>> +bootsz=0
+>> +rpmbimg=
+>> +rpmbsz=0
+>> +
+>> +while [ $# -gt 0 ]; do
+>> +    case "$1" in
+>> +        -b)
+>> +            shift
+>> +            [ $# -ge 1 ] || usage 1
+>> +            bootimg1=${1%%:*}
+>> +            bootsz=$(process_size boot "$bootimg1" 128 "$1")
+>> +            shift
+>> +            ;;
+>> +        -B)
+>> +            shift
+>> +            [ $# -ge 1 ] || usage 1
+>> +            bootimg2=$1
+>> +            shift
+>> +            ;;
+>> +        -r)
+>> +            shift
+>> +            [ $# -ge 1 ] || usage 1
+>> +            rpmbimg=${1%%:*}
+>> +            rpmbsz=$(process_size RPMB "$rpmbimg" 128 "$1")
+>> +            shift
+>> +            ;;
+>> +        -h|--help)
+>> +            usage 0
+>> +            ;;
+>> +        *)
+>> +            if [ -z "$userimg" ]; then
+>> +                userimg=${1%%:*}
+>> +                usersz=$(process_size user "$userimg" U "$1")
+>> +            elif [ -z "$outimg" ]; then
+>> +                outimg=$1
+>> +            else
+>> +                usage 1
+>> +            fi
+>> +            shift
+>> +            ;;
+>> +    esac
+>> +done
+>> +
+>> +[ -n "$outimg" ] || usage 1
+>> +
+>> +if [ "$bootsz" -gt $((32640 * 1024)) ]; then
+> 
+> Running on macOS:
+> 
+> scripts/mkemmc.sh: line 165: [: : integer expression expected
+> scripts/mkemmc.sh: line 169: [: : integer expression expected
+> scripts/mkemmc.sh: line 179: [: : integer expression expected
+> scripts/mkemmc.sh: line 191: [: : integer expression expected
+> scripts/mkemmc.sh: line 200: [: : integer expression expected
+> scripts/mkemmc.sh: line 202: [: : integer expression expected
+> scripts/mkemmc.sh: line 204: [: : integer expression expected
+> 
+> $ sh --version
+> GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)
+> 
+> When using dash:
+> 
+> scripts/mkemmc.sh: 165: [: Illegal number:
+> scripts/mkemmc.sh: 169: [: Illegal number:
+> scripts/mkemmc.sh: 179: [: Illegal number:
+> scripts/mkemmc.sh: 191: [: Illegal number:
+> scripts/mkemmc.sh: 200: [: Illegal number:
+> scripts/mkemmc.sh: 202: [: Illegal number:
+> scripts/mkemmc.sh: 204: [: Illegal number:
+> 
+> Should we replace s/[/[[/?
+
+No, that would be invalid outside of bash. There must be a logical error.
+
+How did you invoke the script? What was the value of bootsz then?
+
+> 
+>> +    echo "Boot image size is larger than 32640K." >&2
+>> +    exit 1
+>> +fi
+>> +if [ "$rpmbsz" -gt $((16384 * 1024)) ]; then
+>> +    echo "RPMB image size is larger than 16384K." >&2
+>> +    exit 1
+>> +fi
+>> +
+>> +echo "Creating eMMC image"
+>> +
+>> +truncate "$outimg" -s 0
+> I'd replace here by:
+>    truncate -s 0 "$outimg"
+> 
+> to avoid on macOS:
+> 
+> usage: truncate [-c] -s [+|-|%|/]size[K|k|M|m|G|g|T|t] file ...
+>        truncate [-c] -r rfile file ...
+> 
+
+Will do.
+
+>> +pos=0
+>> +
+>> +if [ "$bootsz" -gt 0 ]; then
+>> +    echo "  Boot partition 1 and 2:   $((bootsz / 1024))K each"
+>> +    blocks=$(( bootsz / (128 * 1024) ))
+>> +    check_truncation "$bootimg1" "$bootsz"
+>> +    dd if="$bootimg1" of="$outimg" conv=sparse bs=128K count=$blocks \
+>> +        status=none
+>> +    check_truncation "$bootimg2" "$bootsz"
+>> +    dd if="$bootimg2" of="$outimg" conv=sparse bs=128K count=$blocks \
+>> +        seek=$blocks status=none
+>> +    pos=$((2 * bootsz))
+>> +fi
+>> +
+>> +if [ "$rpmbsz" -gt 0 ]; then
+>> +    echo "  RPMB partition:           $((rpmbsz / 1024))K"
+>> +    blocks=$(( rpmbsz / (128 * 1024) ))
+>> +    check_truncation "$rpmbimg" "$rpmbsz"
+>> +    dd if="$rpmbimg" of="$outimg" conv=sparse bs=128K count=$blocks \
+>> +        seek=$(( pos / (128 * 1024) )) status=none
+>> +    pos=$((pos + rpmbsz))
+>> +fi
+>> +
+>> +if [ "$usersz" -lt 1024 ]; then
+>> +    echo "  User data:                $usersz bytes"
+>> +elif [ "$usersz" -lt $((1024 * 1024)) ]; then
+>> +    echo "  User data:                $(( (usersz + 1023) / 1024 ))K
+>> ($usersz)"
+>> +elif [ "$usersz" -lt $((1024 * 1024 * 1024)) ]; then
+>> +    echo "  User data:                $(( (usersz + 1048575) /
+>> 1048576))M ($usersz)"
+>> +else
+>> +    echo "  User data:                $(( (usersz + 1073741823) /
+>> 1073741824))G ($usersz)"
+>> +fi
+>> +check_truncation "$userimg" "$usersz"
+>> +dd if="$userimg" of="$outimg" conv=sparse bs=128K seek=$(( pos / (128
+>> * 1024) )) \
+>> +    count=$(( (usersz + 128 * 1024 - 1) / (128 * 1024) )) status=none
+>> +pos=$((pos + usersz))
+>> +truncate "$outimg" -s $pos
+> 
+> truncate -s $pos "$outimg"
+> 
+>> +
+>> +echo ""
+>> +echo "Instantiate by appending to the qemu command line:"
+>> +echo "  -drive file=$outimg,if=none,format=raw,id=emmc-img"
+>> +echo "  -device emmc,boot-partition-size=$bootsz,rpmb-partition-
+>> size=$rpmbsz,drive=emmc-img"
+> 
+
+Jan
+
+-- 
+Siemens AG, Foundational Technologies
+Linux Expert Center
 
