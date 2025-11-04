@@ -4,170 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8736CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E456CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGK6N-0004TX-7M; Tue, 04 Nov 2025 11:41:47 -0500
+	id 1vGKAQ-000656-Ub; Tue, 04 Nov 2025 11:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vGK6F-0004Rx-MS; Tue, 04 Nov 2025 11:41:40 -0500
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vGK6D-0000x9-Qa; Tue, 04 Nov 2025 11:41:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hiD7vHc+CsUatHI+6SVKP89fzcXLYBG633U2Bl/Xg9kvTFqAjzXeL8IUlPM7teld0SrZGHOEWUdWoiFzO5u0yx3i3uwZiEpqbNrCYwpaOOnpa4P2aaF5jI7+8jDJQ4+Xwl5+hD1xe8eUYzZ8SqoHJkCC5jHgQcfdUtuX/QF2oZSyoAv2BIB8onn6HPw/2BpA7+p6BtksQEk3tTB7Y4bxk8vmkRY0Ea2wrSknaH/jVVdfe3eaYsBhkZBt0Om8b8HsQTGmBTbAlvmuc4ynXMNwUChopy8Yzcux2CAYIcD+L5buFm5EmEo7o2XofUPFgnyDfiSKd2GvmdG9vdWE2+VoVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=W/JnQhkydP56+xCfisz+rerb7ezvYuiKJ+OOCeYunJI=;
- b=jPUQ3ZxwkILBXI8zM7Z1oqsGwF86kHd4tKC3ndz7pSuXl4rYuDnIhKbcVxGDAQcSWO+7vCahglQ/DZeDHMlFrxErakh/HQJp8tziHNCS/jDmtnHbeTnhRYGwCun+jXgleIT+ODX/xTCQCTBfr65ues4mHDW96CmnqRNIsoIXwugRU7dN2p9aIimWW2b5okfxqG9ZOwkC11X3/c/pCpqoE+ept5+g6Hf2uoHYyaKaDdQ/s16mLB5xo6Al6FhVY5VdDfetKpg3JvG6kIU7PVY2GeB+Egz5uPQOEIM/8YK7Y3uiSVJPrc1FXJlKCMc3KXS8zfT3nCGueD1BrUgSenZBRA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W/JnQhkydP56+xCfisz+rerb7ezvYuiKJ+OOCeYunJI=;
- b=utSdG1i//lPp1bugx9nOakoN1FXoH61lB0J6PH4uVidgiTrTHYBgvsxhROg8lEtMZSIW1n8Wm6KbY5QA21yJcDQkSXm0HYKkW5dputa+W2Dmek2OpNEC9Yg4mevfzBP+XfTdhh0U8j+NIW6j786xk9aKSe9NLUfY/zBRQAXGy5r2lvHuB1dtd+WPgzLxhqF30wVKjszYsdcdd1CXMU9UvsvdnK6F4cPatCLbwI3Tr4LQzvxjhGshYKNYCeQcWv+JRbbckI8nvk3xrh7Mi7AIQ0vH2ahGAOgCwIngEOvjIidZBRmjouxm3m+HSvWBOsL6rzDPOZCuEsGlGOJFU8bqkw==
-Received: from MN2PR19CA0021.namprd19.prod.outlook.com (2603:10b6:208:178::34)
- by CY1PR12MB9583.namprd12.prod.outlook.com (2603:10b6:930:fe::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.15; Tue, 4 Nov
- 2025 16:41:29 +0000
-Received: from BL02EPF00021F6A.namprd02.prod.outlook.com
- (2603:10b6:208:178:cafe::4d) by MN2PR19CA0021.outlook.office365.com
- (2603:10b6:208:178::34) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.16 via Frontend Transport; Tue,
- 4 Nov 2025 16:41:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL02EPF00021F6A.mail.protection.outlook.com (10.167.249.6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9298.6 via Frontend Transport; Tue, 4 Nov 2025 16:41:26 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 4 Nov
- 2025 08:41:03 -0800
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 4 Nov
- 2025 08:41:03 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Tue, 4 Nov 2025 08:41:01 -0800
-Date: Tue, 4 Nov 2025 08:41:00 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <skolothumtho@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
-Subject: Re: [PATCH v5 17/32] hw/arm/smmuv3-accel: Add support to issue
- invalidation cmd to host
-Message-ID: <aQosnAjTXAmxq9LB@Asurada-Nvidia>
-References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-18-skolothumtho@nvidia.com>
- <aQVVxV4I/nh3aAXn@Asurada-Nvidia>
- <CH3PR12MB75481D898FF28E9832B0013EABC7A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aQjpzdwbJVPN7AqF@Asurada-Nvidia>
- <CH3PR12MB7548CBA8B4C962BE867C9362ABC7A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aQj5xQwsq/kBaJP/@Asurada-Nvidia>
- <b0a02ca2-6115-4313-88b2-f3218aa2b686@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGK9L-0005rZ-C5
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:45:01 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGK9H-0001DQ-NC
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:44:49 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b719ca8cb8dso228725366b.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:44:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762274685; x=1762879485; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QNaUOObV524kDt6FbGD+R0SMCZN1ZSuzVPtvd7pwwK4=;
+ b=S9UcWievqZHxCp78uBFxveR2myY7ib0giqxN9/oPQMEJLp4wvDUPBikupgYhd12zRY
+ 8up+8jHGCQCedNyNH8SJ94Emtnz2D1wIFgh//ZI8adl5/Ye6ShUHK1pdVwUfSlS38nUW
+ PU0ImHBHGurQsdKXwTf+bdu8UZM9VBvcww7UYnmbUaGHDm6GKsAdbGwY9iPZHl/prjZV
+ he2GBtYcOdntTyXG4yoZGnoD1n+s8N3D0eoDoxfpMOLP9k+C0LZNudoN9xVE8M042TMJ
+ kA9OF9+KqczFZjjH/KTQBnWqVwJ4ntRDyFZDQUrJev+WbOrPjlSoPkRsGIWs4/R59UyK
+ cKsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762274685; x=1762879485;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QNaUOObV524kDt6FbGD+R0SMCZN1ZSuzVPtvd7pwwK4=;
+ b=ONN1YiwIY+PerOdcdi+ot/+iAJX4UCS+UBoci5iLMymztxWUdSfBcb3ZhyswdyYu3T
+ obdqFWrT9BvntVZtCYAbJI5U1V2jPEhS3gZQ1kMHxlqvTsCL/aug/11cewI/+XgiTap5
+ QUtI/m6PGyI0bYTlvMjFgduTi3hXMFalEijis28tTaY5Kk2g6TCsVcUz+EHRdQgBjWr0
+ dWTSsBQlstGlYKM5OySPigcdW+A8o7Ub/wkcA73E7uzCETAHWirK0khyReLgtcrSWGdY
+ SR5jC+zs449B1Dq5gxxe66QtLvb1PePnPHky34OJNRTWyDPz+rCyQtmO5DEwrZhcrToH
+ 6PFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjD184yQ3iWFJElu/TlHy3b+QVwpuyKVOFBX59e2VmTZ9dD0xs+QW8vJTLQFTflhT48NZzLROIdQ+T@nongnu.org
+X-Gm-Message-State: AOJu0Ywr+e+fpmhyW9x+eFDT8t4acnHeuoh/hEwkxuLqkP/zzj6h8WTt
+ BtPL5SNapln6QKHz/WZKUhuwt3+rEaj1UKPzgrxMy3K7Nfn3vaWwok/AOMgfdIscn5HJKgKiADZ
+ U43520gA7ow==
+X-Gm-Gg: ASbGncs/zIwYnDvAUUpVOHnxoOUNM2vRQ/Hw6Yaw9bFYjQ6xsY7NeoNASCMx5MrH5XY
+ 0AYEr3Lm9VUIIRYyvUAuNeN8QQ9rjaAFXEOK9qS/sFqMSfd4sfGcvb+c8y1VYn5GH3cW+UWTp/0
+ 7W/q0AsOF4srINsu6AX908IwkWWQSkKLo4Tg2JR024PMuPLusRET1kfilaHbRsoBQUHFTG096iV
+ nb/F8q8dUCEzJu7rfNDfAOmrH4wLM+LVnVXjS3mzOaMiwFL2Z372t02E45ecAMGyoXxOWPhRgEb
+ VzU3N4uIuwPEVOCi1pYLl0NzrskICPkAwVCtdmE134hIb2Dvjxp9zTqzl2sf4vjHC+EWnoiP2lO
+ BwkRs8S1HQ1cS49xL9pb5BBAfVewg4zlvhihkzDFAMLpPMBZa8FkAGHmhBN4Zt/WKEbfxnju7Mn
+ 9MNvfjnHU2Tw1GYXAXChyGuCh1GvowCQ==
+X-Google-Smtp-Source: AGHT+IHU27deO5w5HCzcS+pVkBpawhzXcUeX1I4C6mdARczKbf+gde4sWR/Sx2pMtwECDH8D9CIVLg==
+X-Received: by 2002:a17:906:64a:b0:b32:8943:7884 with SMTP id
+ a640c23a62f3a-b7070624338mr1256166566b.45.1762274685020; 
+ Tue, 04 Nov 2025 08:44:45 -0800 (PST)
+Received: from [172.20.148.75] ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b723fa0219fsm253336066b.56.2025.11.04.08.44.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Nov 2025 08:44:44 -0800 (PST)
+Message-ID: <397eb924-34c9-4349-812b-528342be12c6@linaro.org>
+Date: Tue, 4 Nov 2025 17:44:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/net/e1000e_core: Don't advance desc_offset for
+ NULL buffer RX descriptors
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>
+References: <20251103175851.428816-1-peter.maydell@linaro.org>
+ <20251103175851.428816-2-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251103175851.428816-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b0a02ca2-6115-4313-88b2-f3218aa2b686@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF00021F6A:EE_|CY1PR12MB9583:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1e10104e-9d92-4043-bf84-08de1bc0ff65
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aFdOTFhhUWZPcTNTbzJRRUR5eUZYeG9aNHhSTEtTUjhCQnBJTUpENnJKVU5u?=
- =?utf-8?B?L1B2blc5ZGRLQ0loM0xQSnBuZnY2ZHdZVGlnSHVBcVl6eXZYQVVlQkRwa1Fw?=
- =?utf-8?B?cTlIN2xJckpnRkRVa0RuTE1sTUt1RnlHZE1TN2dtWmwwT2podW9FVnhDbFpz?=
- =?utf-8?B?VU5kbmlRZ0hzZ1cxUXN6cWQ3MzRueUxPVEZ3WU9HcWVKdHV1T3h1MDRrb3V4?=
- =?utf-8?B?eVZ5L3pLek8ycDRiS1kxK0RrTGkybUZrS0FmdTRLenp6Z3Qvc3pmbVNUS2Jm?=
- =?utf-8?B?TU1BK1pCaXhOSWJTMnY0THZldEV5blpZbzJOZHVWNW5aaHRWZ1VUdVdmK2ZN?=
- =?utf-8?B?Z0hlWmNWc2NyUEQvWG5tWXlNQ3Bva0o3YUVodXBvNjNGTkcrMmtCVUFmS0xG?=
- =?utf-8?B?anpaQ3pscjIrRC8xNTZDU0xwa2gxU0lWdDkzbnNFejZ6WUpodHJjNlVnSi90?=
- =?utf-8?B?TDEwcklhZ1Z6a0ZvRkpyNjR6dFEwNkZhREhsVWVDZ3pHYkFNeml6SVA2SE5w?=
- =?utf-8?B?SHpUTmw4YlNVcU0rVk44QmtENFFyUWtXUnBhckx4Z1gwd3NqbzJvY1FFSUlV?=
- =?utf-8?B?QWdjd212aVpmakhOaVEwYWF0U0Q4cmgxZDF1SkxhaWlhMWlWVWJPWFMwWXU3?=
- =?utf-8?B?c0MyekorVEc1ckcrckxSV2FvNlF0a09TaTRZOXNZRVJwYmpQdUFRaDQwL0xo?=
- =?utf-8?B?OU9BaUhmUWNEdzUzTGd5SmRsbmltd0pTZG5vUFAzSjc2MGZwYW9aN1lEbk9R?=
- =?utf-8?B?VHMwZXByR2U0L1dwekZNNUpnZGRFQUZ2WlhkdDMvQ3JLVWpWdmtXajJJTkxP?=
- =?utf-8?B?elBlcHBQYlVoSEkwUWZVZmNUZE0xdFVBajVRaDc0Y00rekoybTNXQS9CR29Y?=
- =?utf-8?B?aUdJUzI4SXJ6ZVhLTUozKzNybktMbWIremlqNmk1N2dBK3RBUnhiTC8xVTFZ?=
- =?utf-8?B?djBVaFNBalVGNnJEbVM2K2NnV0g5S2NKK1FVOCs0c25kVHJXNTE0YitmcHFH?=
- =?utf-8?B?RkxBZDAxYndsRnZBakR5bW15ZUZPOTgzRjhaaVMvNUY5c3FqVFBhZDFBVWJk?=
- =?utf-8?B?ZEloMmp2Z0haUHRpR21uVU9CajM5WTFXOTNZc0tlUlNtaGxkUmpVYTNMYllO?=
- =?utf-8?B?Qi9uR1dTTEpOV2toMmpJN0paSFJjYkpQc1g4K28zTlZ3T1lUWUdMcTlQT2pY?=
- =?utf-8?B?Sy9QelFnYmJna0p2L0l1aS9Eck5vRmZBZ3k0aHNFSkYwQmowWmtvcHFIdU5m?=
- =?utf-8?B?cVBrMWNGVmdsbXFnazdYRXo0VFljeko0ZnAzb1NKNTFKdGxGQUVEbTgrdkQv?=
- =?utf-8?B?dnliWmxLcFh5dVdPaFNqdG5uMEhxVXVDTHQzUnpXNG9aKzZwNDRjVzZGanZJ?=
- =?utf-8?B?TE40c3JTaWo0cGxLQmx4WU5YTDBCVVhLdUgrZldENkFyelVsNmxIYVYvQ3FU?=
- =?utf-8?B?eUJnaFhKTFBjbzlQaC9kRkpKVWVCZ3R0cndzNjZZdzVLUU9YWXNpSTVZWFh2?=
- =?utf-8?B?eDAzN2hxMThDUVdKY0FlZUlGdlBsQmwvVCtIWVVxKzR2SE9XbWl4ZEhNaE9w?=
- =?utf-8?B?aXZTcEdNTVEyeUJrT2laeWxnSzNNazN6amp6L2ZEaTJ0U1pKejh1WXdQMElu?=
- =?utf-8?B?dkw3YzZnWG5HaDUza2RtUGp1WHpSWisyVTFZbm9LV2NTVVhTZ2J4THpaYmlm?=
- =?utf-8?B?QVlpSTVFUGg0WEdRUkpLOUtsMkdNMlkydWhoR1JWSXZkbjk5c05tdG9WVlBB?=
- =?utf-8?B?SDQ0TUtYV3QrRWE3NDJ2bHJ2bWliclBVUFdZL2NENmhwYnIxaTVJL3o2M0Fx?=
- =?utf-8?B?YVNnTng4eUhiVUhTZmlidVh5M21iUjI2TDgrc0ZGRWhyRjVISFJNcTJwYTd1?=
- =?utf-8?B?RXVXS2F2KzcvVG54Z3VMKysxb21ZejNBRnd4RXFFWTBwaG52KzE1YWs2c0VC?=
- =?utf-8?B?bUpXNlI4UGs4c0RMeWU4NngrOGFmcytQZnUrNHpEZHlDTUlNeDJsZnNFK0lq?=
- =?utf-8?B?TG0vRlE0ZURDZVVVZlNIZlhCbkgrMzdacld6MVNtSHkxZHpvK2VLQ1BqY3RT?=
- =?utf-8?B?UG5Oc3RtY05qN0RFY2NFT3NuVXUrTFhBTFdRbFR1UmU0ak9kK2t1UExTSkd6?=
- =?utf-8?Q?cW+0=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2025 16:41:26.3855 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e10104e-9d92-4043-bf84-08de1bc0ff65
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF00021F6A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR12MB9583
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=nicolinc@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,64 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 09:55:46AM +0100, Eric Auger wrote:
-> On 11/3/25 7:51 PM, Nicolin Chen wrote:
-> > On Mon, Nov 03, 2025 at 10:17:20AM -0800, Shameer Kolothum wrote:
-> >>>> The general
-> >>>> idea is, we will pass the errp to accel functions and report or
-> >>>> propagate from here.
-> >>> But there is no "errp" in smmuv3_cmdq_consume() to propagate the these
-> >>> local_errs further? It ends at the error_report_err().
-> >>>
-> >>> If we only get local_err and print them, why not just print them inside the
-> >>> _accel functions?
-> >> Right, we don’t propagate error now. But in future it might come
-> >> handy. I would personally keep the error propagation facility if possible.
-> > smmuv3_cmdq_consume() is called in smmu_writel() only. Where do we
-> > plan to propagate that in the future?
-> >
-> >> Also, this was added as per Eric's comment on RFC v3.
-> >>
-> >> https://lore.kernel.org/qemu-devel/41ceadf1-07de-4c8a-8935-d709ac7cf6bc@redhat.com/
-> > If only we have a top function that does error_report_err() in one
-> > place.. Duplicating error_report_err(local_err) doesn't look clean
-> > to me.
-> >
-> > Maybe smmu_writel() could do:
-> > {
-> > +   Error *errp = NULL;
-> >
-> >     switch (offset) {
-> >     case A_XXX:
-> >         smmuv3_cmdq_consume(..., errp);
-> > +       return MEMTX_OK;
-> > -       break;
-> >     ...
-> >     case A_YYY:
-> >         smmuv3_cmdq_consume(..., errp);
-> > +       return MEMTX_OK;
-> > -       break;
-> >     }
-> > +   error_report_err(errp);
-> > +   return MEMTX_OK;
-> > }
-> >
-> > Any better idea, Eric?
+On 3/11/25 18:58, Peter Maydell wrote:
+> In e1000e_write_packet_to_guest() we don't write data for RX descriptors
+> where the buffer address is NULL (as required by the i82574 datasheet
+> section 7.1.7.2). However, when we do this we still update desc_offset
+> by the amount of data we would have written to the RX descriptor if
+> it had a valid buffer pointer, resulting in our dropping that data
+> entirely. The data sheet is not 100% clear on the subject, but this
+> seems unlikely to be the correct behaviour.
 > 
-> Can't we move local_err outside of case block and after the switch,
+> Rearrange the null-descriptor logic so that we don't treat these
+> do-nothing descriptors as if we'd really written the data.
 > 
->  if (cmd_error) {
->    if (local_err) {
->       error_report_err(local_err);
->    }
-> ../..  
+> This both fixes a bug and also is a prerequisite to cleaning up
+> the size calculation logic in the next patch.
+> 
+> (Cc to stable largely because it will be needed for the next patch,
+> which fixes a more serious bug.)
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/net/e1000e_core.c | 21 ++++++++++-----------
+>   1 file changed, 10 insertions(+), 11 deletions(-)
 
-I see Shameer's vEVENTQ patch (WIP) has errp also that will end
-up an error_report_err() in the smmu_writel() for A_EVENTQ_BASE.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-So, it seems to be cleaner to do in the top function? I am fine
-with adding in cmdq function for now and moving later though.
-
-Thanks
-Nicolin
 
