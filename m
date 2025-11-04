@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F599CCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C0F7CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 13:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGH03-0001Ue-M6; Tue, 04 Nov 2025 08:23:04 -0500
+	id 1vGGzx-00011V-IP; Tue, 04 Nov 2025 08:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyr-0000Fo-GY
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:22:07 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyg-0000DJ-TE
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:21:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyk-0001mx-Ka
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:21:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGGyf-0001XA-1h
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 08:21:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762262502;
+ s=mimecast20190719; t=1762262496;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DbPunWjCdIEGNYJxq3sm3OF/+0sle+N/9uByCP49iRw=;
- b=SEyBCnUnlAdjlrPdEeCPDNAa+oci9nL9fOwmZ/RXw6i+lg/W/b9XaE+g6S4HkNdXASJTvY
- xdNYLN7qtjXlxx/XNs02f4yYAqtbPFjGwcCKzZHIwrXy1Q5ODjsvUFQprnM8e0PfBBQI4+
- c03bZPC9yUNU8UFoFaYAQZXmMaaZqZ0=
+ bh=nJBTANZrox/EOxgJEjxHDEWqXov+5Bm5C6u5yx+hH2s=;
+ b=QXK/y8OJoUWqbe0p5fM00JqMKx00CI+C06Da7zRBEZITIwc6FAxSAc32+0dUtklGnaSi/m
+ RZjqWo0DgUtvL6Umar13jEDzFRyk0s0H892NVUijXYBDA/ofwbXd3pPO2SEAey4eUFx7Bg
+ e67rj3zt6mqVQrwUT2m6IbJf14b0hSw=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-VJ-04rsfMZWUTsqfDwT7-g-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-aEU22SXqNDqike1YTD7bPw-1; Tue,
  04 Nov 2025 08:21:33 -0500
-X-MC-Unique: VJ-04rsfMZWUTsqfDwT7-g-1
-X-Mimecast-MFC-AGG-ID: VJ-04rsfMZWUTsqfDwT7-g_1762262492
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: aEU22SXqNDqike1YTD7bPw-1
+X-Mimecast-MFC-AGG-ID: aEU22SXqNDqike1YTD7bPw_1762262492
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F66119560B0; Tue,  4 Nov 2025 13:21:32 +0000 (UTC)
+ id 1B0871956095; Tue,  4 Nov 2025 13:21:32 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4148C19560A2; Tue,  4 Nov 2025 13:21:31 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C51D1956056; Tue,  4 Nov 2025 13:21:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 759E721E6774; Tue, 04 Nov 2025 14:21:25 +0100 (CET)
+ id 717F621E6773; Tue, 04 Nov 2025 14:21:25 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 06/12] qga/qapi-schema: Refill doc comments to conform to
- conventions
-Date: Tue,  4 Nov 2025 14:21:19 +0100
-Message-ID: <20251104132125.4134730-7-armbru@redhat.com>
+Subject: [PULL 05/12] qapi: Clean up whitespace between definitions
+Date: Tue,  4 Nov 2025 14:21:18 +0100
+Message-ID: <20251104132125.4134730-6-armbru@redhat.com>
 In-Reply-To: <20251104132125.4134730-1-armbru@redhat.com>
 References: <20251104132125.4134730-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
@@ -85,246 +86,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sweep the entire documentation again.  Last done in commit
-7270819384c (qga/qapi-schema: Refill doc comments to conform to
-current conventions).
-
-To check the generated documentation does not change, I compared the
-generated HTML before and after this commit with "wdiff -3".  Finds no
-differences.  Comparing with diff is not useful, as the reflown
-paragraphs are visible there.
+Consistently separate definitions with a single blank line.
+Consistently separate member descriptions with a blank line.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20251103082354.3273027-5-armbru@redhat.com>
+Message-ID: <20251103082354.3273027-4-armbru@redhat.com>
 ---
- qga/qapi-schema.json | 87 ++++++++++++++++++++++++--------------------
- 1 file changed, 47 insertions(+), 40 deletions(-)
+ qapi/acpi-hest.json | 1 -
+ qapi/char.json      | 1 -
+ qapi/crypto.json    | 1 +
+ qapi/cxl.json       | 1 -
+ qapi/migration.json | 3 +++
+ qapi/misc-i386.json | 2 --
+ qapi/net.json       | 3 ---
+ qapi/qom.json       | 3 ---
+ qapi/run-state.json | 1 -
+ qapi/ui.json        | 2 +-
+ qapi/virtio.json    | 2 --
+ 11 files changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 8162d888bb..af75f12a28 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -2,8 +2,8 @@
- # vim: filetype=python
+diff --git a/qapi/acpi-hest.json b/qapi/acpi-hest.json
+index 88c53eaf1b..a01f1dee09 100644
+--- a/qapi/acpi-hest.json
++++ b/qapi/acpi-hest.json
+@@ -11,7 +11,6 @@
+ # https://uefi.org/sites/default/files/resources/ACPI_6_1.pdf
+ ##
  
+-
  ##
--# This manual describes the commands supported by the QEMU Guest
--# Agent Protocol.
-+# This manual describes the commands supported by the QEMU Guest Agent
-+# Protocol.
+ # @inject-ghes-v2-error:
  #
- # For locating  a particular item, please see the `qapi-qga-index`.
- #
-@@ -96,8 +96,8 @@
- # In cases where a partial stale response was previously received by
- # the client, this cannot always be done reliably.  One particular
- # scenario being if qemu-ga responses are fed character-by-character
--# into a JSON parser.  In these situations, using `guest-sync-delimited`
--# may be optimal.
-+# into a JSON parser.  In these situations, using
-+# `guest-sync-delimited` may be optimal.
- #
- # For clients that fetch responses line by line and convert them to
- # JSON objects, `guest-sync` should be sufficient, but note that in
-@@ -153,9 +153,9 @@
- # This command tries to set guest's System Time to the given value,
- # then sets the Hardware Clock (RTC) to the current System Time.  This
- # will make it easier for a guest to resynchronize without waiting for
--# NTP. If no @time is specified, then the time to set is read from
--# RTC. However, this may not be supported on all platforms (i.e.
--# Windows). If that's the case users are advised to always pass a
-+# NTP.  If no @time is specified, then the time to set is read from
-+# RTC.  However, this may not be supported on all platforms (i.e.
-+# Windows).  If that's the case users are advised to always pass a
- # value.
- #
- # @time: time of nanoseconds, relative to the Epoch of 1970-01-01 in
-@@ -444,8 +444,8 @@
- # Returns: Number of file systems currently frozen.
- #
- # .. note:: On Windows, the command is implemented with the help of a
--#    Volume Shadow-copy Service DLL helper.  The frozen state is limited
--#    for up to 10 seconds by VSS.
-+#    Volume Shadow-copy Service DLL helper.  The frozen state is
-+#    limited for up to 10 seconds by VSS.
- #
- # Since: 0.15.0
+diff --git a/qapi/char.json b/qapi/char.json
+index b07e3bb827..140614f82c 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -681,7 +681,6 @@
+ { 'struct': 'ChardevRingbufWrapper',
+   'data': { 'data': 'ChardevRingbuf' } }
+ 
+-
  ##
-@@ -482,9 +482,9 @@
- # Returns: Number of file systems thawed by this call
+ # @ChardevPtyWrapper:
  #
- # .. note:: If the return value does not match the previous call to
--#    `guest-fsfreeze-freeze`, this likely means some freezable filesystems
--#    were unfrozen before this call, and that the filesystem state may
--#    have changed before issuing this command.
-+#    `guest-fsfreeze-freeze`, this likely means some freezable
-+#    filesystems were unfrozen before this call, and that the
-+#    filesystem state may have changed before issuing this command.
- #
- # Since: 0.15.0
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index 72ac718147..2b55befef9 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -547,6 +547,7 @@
+   'base': 'TlsCredsProperties',
+   'data': { '*sanity-check': 'bool',
+             '*passwordid': 'str' } }
++
  ##
-@@ -513,7 +513,8 @@
+ # @QCryptoAkCipherAlgo:
+ #
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 52cc5d4f33..eeddb58d1d 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -262,7 +262,6 @@
+ #
+ # Since: 8.0
  ##
- # @GuestFilesystemTrimResponse:
- #
--# @paths: list of `GuestFilesystemTrimResult` per path that was trimmed
-+# @paths: list of `GuestFilesystemTrimResult` per path that was
-+#     trimmed
- #
- # Since: 2.4
+-
+ { 'enum': 'CxlUncorErrorType',
+   'data': ['cache-data-parity',
+            'cache-address-parity',
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 4dd1098219..022ac0c4ed 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -177,6 +177,7 @@
+             'postcopy-recover-setup',
+             'postcopy-recover', 'completed', 'failed', 'colo',
+             'pre-switchover', 'device', 'wait-unplug' ] }
++
  ##
-@@ -557,16 +558,16 @@
+ # @VfioStats:
  #
- # This command does NOT return a response on success.  There is a high
- # chance the command succeeded if the VM exits with a zero exit status
--# or, when running with --no-shutdown, by issuing the `query-status` QMP
--# command to to confirm the VM status is "shutdown". However, the VM
--# could also exit (or set its status to "shutdown") due to other
-+# or, when running with --no-shutdown, by issuing the `query-status`
-+# QMP command to to confirm the VM status is "shutdown".  However, the
-+# VM could also exit (or set its status to "shutdown") due to other
- # reasons.
+@@ -523,6 +524,7 @@
+ # Features:
  #
- # Errors:
- #     - If suspend to disk is not supported, Unsupported
+ # @unstable: Members @x-colo and @x-ignore-shared are experimental.
++#
+ # @deprecated: Member @zero-blocks is deprecated as being part of
+ #     block migration which was already removed.
  #
--# .. note:: It's strongly recommended to issue the `guest-sync` command
--#    before sending commands when the guest resumes.
-+# .. note:: It's strongly recommended to issue the `guest-sync`
-+#    command before sending commands when the guest resumes.
+@@ -1702,6 +1704,7 @@
+ # The migration channel-type request options.
  #
- # Since: 1.1
+ # @main: Main outbound migration channel.
++#
+ # @cpr: Checkpoint and restart state channel.
+ #
+ # Since: 8.1
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index d1ce8caf25..05a94d6c41 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -122,7 +122,6 @@
+       'sev': 'SevGuestInfo',
+       'sev-snp': 'SevSnpGuestInfo' } }
+ 
+-
  ##
-@@ -586,7 +587,7 @@
- # - manual write into sysfs
+ # @query-sev:
  #
- # IMPORTANT: `guest-suspend-ram` requires working wakeup support in
--# QEMU. You should check QMP command `query-current-machine` returns
-+# QEMU.  You should check QMP command `query-current-machine` returns
- # wakeup-suspend-support: true before issuing this command.  Failure
- # in doing so can result in a suspended guest that QEMU will not be
- # able to awaken, forcing the user to power cycle the guest to bring
-@@ -602,8 +603,8 @@
- # Errors:
- #     - If suspend to ram is not supported, Unsupported
- #
--# .. note:: It's strongly recommended to issue the `guest-sync` command
--#    before sending commands when the guest resumes.
-+# .. note:: It's strongly recommended to issue the `guest-sync`
-+#    command before sending commands when the guest resumes.
- #
- # Since: 1.1
+@@ -418,7 +417,6 @@
+            'pending': 'bool',
+            'masked': 'bool'} }
+ 
+-
  ##
-@@ -622,7 +623,7 @@
- # - pm-utils (via pm-suspend-hybrid)
+ # @xen-event-list:
  #
- # IMPORTANT: `guest-suspend-hybrid` requires working wakeup support in
--# QEMU. You should check QMP command `query-current-machine` returns
-+# QEMU.  You should check QMP command `query-current-machine` returns
- # wakeup-suspend-support: true before issuing this command.  Failure
- # in doing so can result in a suspended guest that QEMU will not be
- # able to awaken, forcing the user to power cycle the guest to bring
-@@ -638,8 +639,8 @@
- # Errors:
- #     - If hybrid suspend is not supported, Unsupported
+diff --git a/qapi/net.json b/qapi/net.json
+index 4c6cc5ca8d..118bd34965 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -1055,7 +1055,6 @@
  #
--# .. note:: It's strongly recommended to issue the `guest-sync` command
--#    before sending commands when the guest resumes.
-+# .. note:: It's strongly recommended to issue the `guest-sync`
-+#    command before sending commands when the guest resumes.
- #
- # Since: 1.1
+ # Since: 4.0
  ##
-@@ -1048,10 +1049,11 @@
- #
- # @used-bytes: file system used bytes (since 3.0)
- #
--# @total-bytes: filesystem capacity in bytes for unprivileged users (since 3.0)
-+# @total-bytes: filesystem capacity in bytes for unprivileged users
-+#     (since 3.0)
- #
--# @total-bytes-privileged: filesystem capacity in bytes for privileged users
--#     (since 9.1)
-+# @total-bytes-privileged: filesystem capacity in bytes for privileged
-+#     users (since 9.1)
- #
- # @disk: an array of disk hardware information that the volume lies
- #     on, which may be empty if the disk type is not supported
-@@ -1171,7 +1173,8 @@
+-
+ { 'struct': 'AnnounceParameters',
+   'data': { 'initial': 'int',
+             'max': 'int',
+@@ -1171,7 +1170,6 @@
+ #     <- { "timestamp": {"seconds": 1739538638, "microseconds": 354181 },
+ #          "event": "NETDEV_VHOST_USER_CONNECTED",
+ #          "data": { "netdev-id": "netdev0", "chardev-id": "chr0" } }
+-#
  ##
- # @GuestMemoryBlockResponse:
+ { 'event': 'NETDEV_VHOST_USER_CONNECTED',
+   'data': { 'netdev-id': 'str', 'chardev-id': 'str' } }
+@@ -1190,7 +1188,6 @@
+ #     <- { "timestamp": { "seconds": 1739538634, "microseconds": 920450 },
+ #          "event": "NETDEV_VHOST_USER_DISCONNECTED",
+ #          "data": { "netdev-id": "netdev0" } }
+-#
+ ##
+ { 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
+   'data': { 'netdev-id': 'str' } }
+diff --git a/qapi/qom.json b/qapi/qom.json
+index d7dceaf2f8..6f5c9de0f0 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -75,7 +75,6 @@
+ { 'struct': 'ObjectPropertiesValues',
+   'data': { 'properties': [ 'ObjectPropertyValue' ] }}
+ 
+-
+ ##
+ # @qom-list:
  #
--# @phys-index: same with the 'phys-index' member of `GuestMemoryBlock`.
-+# @phys-index: same with the 'phys-index' member of
-+#     `GuestMemoryBlock`.
+@@ -244,7 +243,6 @@
  #
- # @response: the result of memory block operation.
+ # @typename: the type name of an object
  #
-@@ -1491,10 +1494,11 @@
+-#
+ # .. note:: Objects can create properties at runtime, for example to
+ #    describe links between different devices and/or objects.  These
+ #    properties are not included in the output of this command.
+@@ -1169,7 +1167,6 @@
+   'data': { '*cpu-affinity': ['uint16'],
+             '*node-affinity': ['uint16'] } }
+ 
+-
+ ##
+ # @ObjectType:
  #
- # .. note:: On POSIX systems the fields @id, @name, @pretty-name,
- #    @version, @version-id, @variant and @variant-id follow the
--#    definition specified in os-release(5). Refer to the manual page for
--#    exact description of the fields.  Their values are taken from the
--#    os-release file.  If the file is not present in the system, or the
--#    values are not present in the file, the fields are not included.
-+#    definition specified in os-release(5).  Refer to the manual page
-+#    for exact description of the fields.  Their values are taken from
-+#    the os-release file.  If the file is not present in the system,
-+#    or the values are not present in the file, the fields are not
-+#    included.
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index 2872bee06e..a6bc94a44b 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -618,7 +618,6 @@
+ #     error information, as zero-terminated string.  Present when the
+ #     "GPA valid" bit (bit 63) is set in @error-code.
  #
- #    On Windows the values are filled from information gathered from
- #    the system.
-@@ -1639,7 +1643,7 @@
- # @guest-ssh-remove-authorized-keys:
+-#
+ # Since: 10.1
+ ##
+ {'struct': 'GuestPanicInformationTdx',
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 804b1ecc3b..e3da77632a 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -682,6 +682,7 @@
+ ##
+ { 'command': 'query-vnc', 'returns': 'VncInfo',
+   'if': 'CONFIG_VNC' }
++
+ ##
+ # @query-vnc-servers:
  #
- # Remove public keys from the user .ssh/authorized_keys on Unix
--# systems (not implemented for other systems). It's not an error if
-+# systems (not implemented for other systems).  It's not an error if
- # the key is already missing.
+@@ -1094,7 +1095,6 @@
+ { 'enum'  : 'InputMultiTouchType',
+   'data'  : [ 'begin', 'update', 'end', 'cancel', 'data' ] }
+ 
+-
+ ##
+ # @InputKeyEvent:
  #
- # @username: the user account to remove the authorized keys
-@@ -1862,10 +1866,10 @@
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 72790bcfb0..cd67c4f52e 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -964,7 +964,6 @@
  #
- # Retrieve CPU process load information
+ # Since: 9.0
+ ##
+-
+ { 'struct': 'IOThreadVirtQueueMapping',
+   'data': { 'iothread': 'str', '*vqs': ['uint16'] } }
+ 
+@@ -989,7 +988,6 @@
  #
--# .. note:: Windows does not have load average API, so QGA emulates it by
--#           calculating the average CPU usage in the last 1, 5, 15 minutes
--#           similar as Linux does this.
--#           Calculation starts from the first time this command is called.
-+# .. note:: Windows does not have load average API, so QGA emulates it
-+#    by calculating the average CPU usage in the last 1, 5, 15 minutes
-+#    similar as Linux does this.  Calculation starts from the first
-+#    time this command is called.
- #
- # Returns: load information
- #
-@@ -1881,9 +1885,11 @@
- #
- # Route information, currently, only linux supported.
- #
--# @iface: The destination network or host's egress network interface in the routing table
-+# @iface: The destination network or host's egress network interface
-+#     in the routing table
- #
--# @destination: The IP address of the target network or host, The final destination of the packet
-+# @destination: The IP address of the target network or host, The
-+#     final destination of the packet
- #
- # @metric: Route metric
- #
-@@ -1899,7 +1905,8 @@
- #
- # @use: Route usage count (not for windows)
- #
--# @window: TCP window size, used for flow control (not for windows, IPv4 only)
-+# @window: TCP window size, used for flow control (not for windows,
-+#     IPv4 only)
- #
- # @mtu: Data link layer maximum packet size (not for windows)
- #
+ # Since: 9.0
+ ##
+-
+ { 'struct': 'DummyVirtioForceArrays',
+   'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'],
+             'unused-virtio-gpu-output': ['VirtIOGPUOutput'] } }
 -- 
 2.49.0
 
