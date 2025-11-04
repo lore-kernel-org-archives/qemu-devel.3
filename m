@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01464CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 17:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69756CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLJF-00050B-4X; Tue, 04 Nov 2025 12:59:09 -0500
+	id 1vGLJ3-00048U-QB; Tue, 04 Nov 2025 12:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFH-0001Ca-AA
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:12 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLF2-00010R-2B
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFE-0006pP-V7
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:03 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLF0-0006mM-H3
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:54:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762278899;
+ s=mimecast20190719; t=1762278885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p2EMYiwxj/oVBU9VEtcLL37qDHoCJVDZD5yuGv+nPBQ=;
- b=Z4NVntCXUena4O38sABFqG/mIJWLnNOshtf27UZbwuFYC6drHGCkSmgJ72rtbXJTWNRbuX
- nIGUPKFCrUZOsYF1Fxfj2Uv+y8wEsExVGRiFXcrbdQdNDBFJoGq6jr+SGwrV+0nt2FoJgs
- v0B16zKi1lMnkOY3yP7pgjfxWZ7+mEA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qpHxihogj8h+yMIXX+DuGnTIF0C4jAPL+8wqSX+UNzw=;
+ b=JoNIQK5uOYnGKmNAKX4sQ4lXIRVm1+hZUcKVsT/uXe/lV9923DrohbWxA7ZLp+iSD1/053
+ rmKp+8fR68NchOUhs47pyQS9KKtE+FA8t3I0sI36dtqkQhJIYuQFyC+NfJSnCL00/x9WbB
+ E6sFm7nSUeTFRYiIruM9mlZPYBz+eR0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-M1NXqHl_MXqEC06QF-M_GQ-1; Tue,
- 04 Nov 2025 12:54:57 -0500
-X-MC-Unique: M1NXqHl_MXqEC06QF-M_GQ-1
-X-Mimecast-MFC-AGG-ID: M1NXqHl_MXqEC06QF-M_GQ_1762278897
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-3s3mAvs_NLi8bH4x5DttEw-1; Tue,
+ 04 Nov 2025 12:54:43 -0500
+X-MC-Unique: 3s3mAvs_NLi8bH4x5DttEw-1
+X-Mimecast-MFC-AGG-ID: 3s3mAvs_NLi8bH4x5DttEw_1762278882
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA89019560B2; Tue,  4 Nov 2025 17:54:56 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F74A195608D; Tue,  4 Nov 2025 17:54:42 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A2D051800451; Tue,  4 Nov 2025 17:54:55 +0000 (UTC)
+ id 4C4121800451; Tue,  4 Nov 2025 17:54:41 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 18/27] iotests: Test resizing file node under raw with
- size/offset
-Date: Tue,  4 Nov 2025 18:54:06 +0100
-Message-ID: <20251104175415.525388-19-kwolf@redhat.com>
+Subject: [PULL 10/27] aio-posix: gracefully handle io_uring_queue_init()
+ failure
+Date: Tue,  4 Nov 2025 18:53:58 +0100
+Message-ID: <20251104175415.525388-11-kwolf@redhat.com>
 In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
 References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -83,120 +83,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds some more tests for using the 'size' and 'offset' options of
-raw to the recently added resize-below-raw test.
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20251028094328.17919-1-kwolf@redhat.com>
+io_uring may not be available at runtime due to system policies (e.g.
+the io_uring_disabled sysctl) or creation could fail due to file
+descriptor resource limits.
+
+Handle failure scenarios as follows:
+
+If another AioContext already has io_uring, then fail AioContext
+creation so that the aio_add_sqe() API is available uniformly from all
+QEMU threads. Otherwise fall back to epoll(7) if io_uring is
+unavailable.
+
+Notes:
+- Update the comment about selecting the fastest fdmon implementation.
+  At this point it's not about speed anymore, it's about aio_add_sqe()
+  API availability.
+- Uppercase the error message when converting from error_report() to
+  error_setg_errno() for consistency (but there are instances of
+  lowercase in the codebase).
+- It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251104022933.618123-11-stefanha@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/tests/resize-below-raw     | 51 +++++++++++++++++--
- tests/qemu-iotests/tests/resize-below-raw.out |  4 +-
- 2 files changed, 49 insertions(+), 6 deletions(-)
+ util/aio-posix.h      | 12 ++----------
+ util/aio-posix.c      | 28 +++++++++++++++++++++++++---
+ util/fdmon-io_uring.c |  5 +++--
+ 3 files changed, 30 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/resize-below-raw b/tests/qemu-iotests/tests/resize-below-raw
-index 3c9241c918..41d21c83b7 100755
---- a/tests/qemu-iotests/tests/resize-below-raw
-+++ b/tests/qemu-iotests/tests/resize-below-raw
-@@ -14,10 +14,19 @@ from iotests import imgfmt, qemu_img_create, QMPTestCase
- image_size = 1 * 1024 * 1024
- image = os.path.join(iotests.test_dir, 'test.img')
+diff --git a/util/aio-posix.h b/util/aio-posix.h
+index f9994ed79e..dfa1a51c0b 100644
+--- a/util/aio-posix.h
++++ b/util/aio-posix.h
+@@ -18,6 +18,7 @@
+ #define AIO_POSIX_H
  
--class TestResizeBelowRaw(QMPTestCase):
-+class BaseResizeBelowRaw(QMPTestCase):
-+    raw_size = None
-+    raw_offset = None
-+
-     def setUp(self) -> None:
-         qemu_img_create('-f', imgfmt, image, str(image_size))
+ #include "block/aio.h"
++#include "qapi/error.h"
  
-+        extra_options = {}
-+        if self.raw_size is not None:
-+            extra_options['size'] = str(self.raw_size)
-+        if self.raw_offset is not None:
-+            extra_options['offset'] = str(self.raw_offset)
-+
-         self.vm = iotests.VM()
-         self.vm.add_blockdev(self.vm.qmp_to_opts({
-             'driver': imgfmt,
-@@ -26,7 +35,8 @@ class TestResizeBelowRaw(QMPTestCase):
-                 'driver': 'file',
-                 'filename': image,
-                 'node-name': 'file0',
--            }
-+            },
-+            **extra_options
-         }))
-         self.vm.launch()
+ struct AioHandler {
+     GPollFD pfd;
+@@ -72,17 +73,8 @@ static inline void fdmon_epoll_disable(AioContext *ctx)
+ #endif /* !CONFIG_EPOLL_CREATE1 */
  
-@@ -34,14 +44,16 @@ class TestResizeBelowRaw(QMPTestCase):
-         self.vm.shutdown()
-         os.remove(image)
+ #ifdef CONFIG_LINUX_IO_URING
+-bool fdmon_io_uring_setup(AioContext *ctx);
++bool fdmon_io_uring_setup(AioContext *ctx, Error **errp);
+ void fdmon_io_uring_destroy(AioContext *ctx);
+-#else
+-static inline bool fdmon_io_uring_setup(AioContext *ctx)
+-{
+-    return false;
+-}
+-
+-static inline void fdmon_io_uring_destroy(AioContext *ctx)
+-{
+-}
+ #endif /* !CONFIG_LINUX_IO_URING */
  
--    def assert_size(self, size: int) -> None:
-+    def assert_size(self, size: int, file_size: int|None = None) -> None:
-         nodes = self.vm.qmp('query-named-block-nodes', flat=True)['return']
-         self.assertEqual(len(nodes), 2)
-         for node in nodes:
--            if node['drv'] == 'file':
-+            if node['drv'] == 'file' and file_size is not None:
-+                self.assertEqual(node['image']['virtual-size'], file_size)
-                 continue
-             self.assertEqual(node['image']['virtual-size'], size)
+ #endif /* AIO_POSIX_H */
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index 9806a75c12..c0285a26a3 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "block/block.h"
+ #include "block/thread-pool.h"
++#include "qapi/error.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/lockcnt.h"
+ #include "qemu/rcu.h"
+@@ -724,10 +725,29 @@ bool aio_context_setup(AioContext *ctx, Error **errp)
+     ctx->epollfd = -1;
+     ctx->epollfd_tag = NULL;
  
-+class TestResizeBelowUnlimitedRaw(BaseResizeBelowRaw):
-     def test_resize_below_raw(self) -> None:
-         self.assert_size(image_size)
-         self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
-@@ -49,5 +61,36 @@ class TestResizeBelowRaw(QMPTestCase):
-         self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
-         self.assert_size(3*image_size)
+-    /* Use the fastest fd monitoring implementation if available */
+-    if (fdmon_io_uring_setup(ctx)) {
+-        return true;
++#ifdef CONFIG_LINUX_IO_URING
++    {
++        static bool need_io_uring;
++        Error *local_err = NULL; /* ERRP_GUARD() doesn't handle error_abort */
++
++        /* io_uring takes precedence because it provides aio_add_sqe() support */
++        if (fdmon_io_uring_setup(ctx, &local_err)) {
++            /*
++             * If one AioContext gets io_uring, then all AioContexts need io_uring
++             * so that aio_add_sqe() support is available across all threads.
++             */
++            need_io_uring = true;
++            return true;
++        }
++        if (need_io_uring) {
++            error_propagate(errp, local_err);
++            return false;
++        }
++
++        /* Silently fall back on systems where io_uring is unavailable */
++        error_free(local_err);
+     }
++#endif /* CONFIG_LINUX_IO_URING */
  
-+# offset = 0 behaves the same as absent offset
-+class TestResizeBelowRawWithZeroOffset(TestResizeBelowUnlimitedRaw):
-+    raw_offset = 0
-+
-+class TestResizeBelowRawWithSize(BaseResizeBelowRaw):
-+    raw_size = image_size // 2
-+
-+    def test_resize_below_raw_with_size(self) -> None:
-+        self.assert_size(image_size // 2, image_size)
-+
-+        # This QMP command fails because node0 unshares RESIZE
-+        self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
-+        self.assert_size(image_size // 2, image_size)
-+
-+        # This QMP command fails because node0 is a fixed-size disk
-+        self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
-+        self.assert_size(image_size // 2, image_size)
-+
-+class TestResizeBelowRawWithOffset(BaseResizeBelowRaw):
-+    raw_offset = image_size // 4
-+
-+    def test_resize_below_raw_with_offset(self) -> None:
-+        self.assert_size(image_size * 3 // 4, image_size)
-+
-+        # This QMP command fails because node0 unshares RESIZE
-+        self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
-+        self.assert_size(image_size * 3 // 4, image_size)
-+
-+        self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
-+        self.assert_size(3 * image_size, image_size * 13 // 4)
-+
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['raw'], supported_protocols=['file'])
-diff --git a/tests/qemu-iotests/tests/resize-below-raw.out b/tests/qemu-iotests/tests/resize-below-raw.out
-index ae1213e6f8..89968f35d7 100644
---- a/tests/qemu-iotests/tests/resize-below-raw.out
-+++ b/tests/qemu-iotests/tests/resize-below-raw.out
-@@ -1,5 +1,5 @@
--.
-+....
- ----------------------------------------------------------------------
--Ran 1 tests
-+Ran 4 tests
+     fdmon_epoll_setup(ctx);
+     return true;
+@@ -735,7 +755,9 @@ bool aio_context_setup(AioContext *ctx, Error **errp)
  
- OK
+ void aio_context_destroy(AioContext *ctx)
+ {
++#ifdef CONFIG_LINUX_IO_URING
+     fdmon_io_uring_destroy(ctx);
++#endif
+ 
+     qemu_lockcnt_lock(&ctx->list_lock);
+     fdmon_epoll_disable(ctx);
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index 0a5ec5ead6..9f25d6d6db 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -45,6 +45,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include <poll.h>
++#include "qapi/error.h"
+ #include "qemu/rcu_queue.h"
+ #include "aio-posix.h"
+ 
+@@ -373,7 +374,7 @@ static const FDMonOps fdmon_io_uring_ops = {
+     .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
+ };
+ 
+-bool fdmon_io_uring_setup(AioContext *ctx)
++bool fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+ {
+     int ret;
+ 
+@@ -381,6 +382,7 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+ 
+     ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+     if (ret != 0) {
++        error_setg_errno(errp, -ret, "Failed to initialize io_uring");
+         return false;
+     }
+ 
+@@ -388,7 +390,6 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+     ctx->fdmon_ops = &fdmon_io_uring_ops;
+     ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
+             ctx->fdmon_io_uring.ring_fd, G_IO_IN);
+-
+     return true;
+ }
+ 
 -- 
 2.51.1
 
