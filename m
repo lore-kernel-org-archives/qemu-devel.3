@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A48FCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC32CCFA00
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 08:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGCUQ-0002hA-8I; Tue, 04 Nov 2025 03:34:06 -0500
+	id 1vGCSQ-0000JB-E3; Tue, 04 Nov 2025 03:32:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCTA-0001Bg-8B
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:50 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSM-0000Gz-Ss
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:31:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCT7-0003b2-QW
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:32:47 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGCSL-0003Oo-BH
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 03:31:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762245164;
+ s=mimecast20190719; t=1762245115;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JTctBV+Hm2wIlHFFLKRwxqt9V/P4J88g4cqcpG/RzOA=;
- b=X9fHdtHJz7j+T11On+500yXImfnSrGX/WtVwegcOtZYbUui/0DfHMICrtVUa2jSySuGyz1
- voP0/E8nt5RToQDlfkCU+5phUMZP2+0mxGFSODHsf4Tzg4oT8uwMu11TNqmk1E9ajlmG85
- 4KviMR71Mus2pwWn9eU7sL8/GVkZ9YM=
+ bh=FTIgutNUjXiAKsujqsIDkgcCTQi3L2/Jgs5XBHJrSA4=;
+ b=ZBNPoxsgyuVnSJ/FWdc+B0hBpebFs0BACjv2AtYpOYgswIfXXq2V6ammPu+PLzCCPjH9eI
+ wzlRnlDnRpz4PelpMLISdxzIyf9ppCOpatGrhbtHDZN4kqYDQscxoiQ+rx4LV0XSNBAXNZ
+ xZyvz8a9SIkkDCcyL+Dazb5QHXdppRM=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-69e1BZBIPAig3DGh7On8EA-1; Tue,
- 04 Nov 2025 03:32:42 -0500
-X-MC-Unique: 69e1BZBIPAig3DGh7On8EA-1
-X-Mimecast-MFC-AGG-ID: 69e1BZBIPAig3DGh7On8EA_1762245162
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-WWk0crlYNbaX1u-O4bgjcg-1; Tue,
+ 04 Nov 2025 03:31:52 -0500
+X-MC-Unique: WWk0crlYNbaX1u-O4bgjcg-1
+X-Mimecast-MFC-AGG-ID: WWk0crlYNbaX1u-O4bgjcg_1762245112
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF4E918001D1; Tue,  4 Nov 2025 08:32:41 +0000 (UTC)
+ id 970841800675; Tue,  4 Nov 2025 08:31:51 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 43F5C19560A2; Tue,  4 Nov 2025 08:32:40 +0000 (UTC)
+ id B9C7019560A2; Tue,  4 Nov 2025 08:31:49 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 23/30] hw/arm/aspeed: Make
- aspeed_machine_ast2600_class_emmc_init() a common API for eMMC boot setup
-Date: Tue,  4 Nov 2025 09:31:37 +0100
-Message-ID: <20251104083144.187806-24-clg@redhat.com>
+Subject: [PULL 01/30] hw/arm/aspeed: Move AspeedMachineState definition to
+ common header for reuse
+Date: Tue,  4 Nov 2025 09:31:15 +0100
+Message-ID: <20251104083144.187806-2-clg@redhat.com>
 In-Reply-To: <20251104083144.187806-1-clg@redhat.com>
 References: <20251104083144.187806-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,58 +87,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-This commit exposes the function aspeed_machine_ast2600_class_emmc_init() as
-a common API so that other AST2600-based machine implementations can reuse it
-to enable the "boot-emmc" property.
+Aspeed machines will be moved into split C files for better
+modularization and future maintenance.
 
-Previously, this function was defined as a static helper within aspeed.c,
-limiting its visibility to that file. By making it global and declaring it in
-aspeed.h, other machine definition files (e.g., for specific AST2600 boards)
-can now easily call this API to register eMMC boot configuration support.
+To allow all machine implementations to reuse the same
+AspeedMachineState structure, the struct definition is moved
+from aspeed.c to the shared header aspeed.h.
+
+This change centralizes the common state structure used across
+all Aspeed machine models, reduces redundancy, and simplifies
+future refactoring work for new machines.
 
 No functional changes.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-24-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251104031325.146374-2-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed.h | 10 ++++++++++
- hw/arm/aspeed.c         |  2 +-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ include/hw/arm/aspeed.h | 12 ++++++++++++
+ hw/arm/aspeed.c         | 14 --------------
+ 2 files changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index 84620f49ed2d..87dcadab264f 100644
+index 6c364556565a..9d34be68b2b3 100644
 --- a/include/hw/arm/aspeed.h
 +++ b/include/hw/arm/aspeed.h
-@@ -101,4 +101,14 @@ void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr);
-  */
- I2CSlave *aspeed_create_pca9554(AspeedSoCState *soc, int bus_id, int addr);
+@@ -11,6 +11,7 @@
  
-+/*
-+ * aspeed_machine_ast2600_class_emmc_init:
-+ * @oc: the #ObjectClass to initialize.
-+ *
-+ * Initialize eMMC-related properties for the AST2600 Aspeed machine class.
-+ * This function is typically invoked during class initialization to set up
-+ * default configuration or attach eMMC-specific devices for AST2600 platforms.
-+ */
-+void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc);
+ #include "hw/boards.h"
+ #include "qom/object.h"
++#include "hw/arm/aspeed_soc.h"
+ 
+ typedef struct AspeedMachineState AspeedMachineState;
+ 
+@@ -24,6 +25,17 @@ DECLARE_OBJ_CHECKERS(AspeedMachineState, AspeedMachineClass,
+ #define ASPEED_MAC2_ON   (1 << 2)
+ #define ASPEED_MAC3_ON   (1 << 3)
+ 
++struct AspeedMachineState {
++    MachineState parent_obj;
 +
- #endif
++    AspeedSoCState *soc;
++    MemoryRegion boot_rom;
++    bool mmio_exec;
++    uint32_t uart_chosen;
++    char *fmc_model;
++    char *spi_model;
++    uint32_t hw_strap1;
++};
+ 
+ struct AspeedMachineClass {
+     MachineClass parent_obj;
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 89a463242567..2f385290a419 100644
+index ecc7272e67c2..4c92f1e1d953 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -755,7 +755,7 @@ static void aspeed_machine_ast2600_set_boot_from_emmc(Object *obj, bool value,
-     }
- }
+@@ -36,20 +36,6 @@ static struct arm_boot_info aspeed_board_binfo = {
+     .board_id = -1, /* device-tree-only board */
+ };
  
--static void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc)
-+void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc)
- {
-     object_class_property_add_bool(oc, "boot-emmc",
-                                    aspeed_machine_ast2600_get_boot_from_emmc,
+-struct AspeedMachineState {
+-    /* Private */
+-    MachineState parent_obj;
+-    /* Public */
+-
+-    AspeedSoCState *soc;
+-    MemoryRegion boot_rom;
+-    bool mmio_exec;
+-    uint32_t uart_chosen;
+-    char *fmc_model;
+-    char *spi_model;
+-    uint32_t hw_strap1;
+-};
+-
+ /* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
+ #if HOST_LONG_BITS == 32
+ #define ASPEED_RAM_SIZE(sz) MIN((sz), 1 * GiB)
 -- 
 2.51.1
 
