@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598A5CCF9E3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9060FCCFA07
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGJbp-0006nc-7n; Tue, 04 Nov 2025 11:10:13 -0500
+	id 1vGJc0-0006rK-He; Tue, 04 Nov 2025 11:10:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGJbb-0006gs-Bo
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:00 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1vGJbf-0006hr-3y
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:05 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGJbV-0007Kb-Ub
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:09:55 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-477442b1de0so19493335e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:09:53 -0800 (PST)
+ id 1vGJbb-0007L6-4n
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:10:02 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47112edf9f7so46285835e9.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:09:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762272592; x=1762877392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762272595; x=1762877395; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hQ8xqxIo4Z4GSnuU1F/D5K+ZGMDOJ+2wlLbVuuSt0QQ=;
- b=lJs/atpzrsvl4WFrt6Rmfvy/TVEFivsZCNOw9RC/FzfjK3GwFwSZHH6RRr/usNHidg
- Qd45skgBEWLPtCYheKybhQlUJ+bICXBwM3DfQBkFlgb7L7P/S1CSO+SpAlhj8/rZ+62e
- JQcyenhMY129jfSxV6h3v/vCkrwYrmKyaFA/ivlZ4kCSxHkzBtDASHR6+EU28B0SHlsu
- 7zhvu+yVUfPQNoRZcXp11SlRkjx5hk51InNLxwPpINJOX0NG6zn0HjW++kjZMXf+wV8+
- POAwMn0j0S1qw4pUT/hMzEwt1AewoFnRYh9wBlv55bOYjlg2M2852K1KmURITsqOsvZ0
- nomg==
+ bh=/5jT1nanV2HTon+gYa/5KcgwK7C7VkPnRzMePhdCgTY=;
+ b=nwrdCwc5ls6sg6CzMLOwhMtNv7DFaTdy59KcbY3Y9yvX28+/oiMV9/Iz0tuvKtwUOq
+ WdqNGBO7ZFN4OLFKR0VRFOemr4HW31wj3qMEgUrrDL/fpea4AfebWwzVStzZF0p77/Wf
+ VXNZoynTuuMmSBXYHS8gsQFWrABoe9+OJxeTLo1xbOqg5lR5Fxw2x/HseF245cqfi0I5
+ OROHvesJT6QgQbJy2InSUT7pE/lu0i4OHGnoUL5oaebp45m4/3yV6S9/HmmxFzZs7HfD
+ eUa+ot0Ws+AhFakdrnpYaxVJ4uN+HpaMgVw1IXN1epyS/UMQBep8VviVCS4YYhdCibiP
+ YDxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762272592; x=1762877392;
+ d=1e100.net; s=20230601; t=1762272595; x=1762877395;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hQ8xqxIo4Z4GSnuU1F/D5K+ZGMDOJ+2wlLbVuuSt0QQ=;
- b=PMQCNlE/quydktlXOkkn5N4tuUACBbtAL+rFOpiDXLqWoxX8wwtngR79+VMidUuKWg
- n55/k1Gs3ZjbKwGGlIUei3SLVdNYSPw3G7qRAwgxlnRrqVhjIJNViMRKQ+natSnQYnc6
- DTy4pL0ep0IXMDqqWUmTTL5ZwsPomaz352UD8hU53YuGfmav1FToSzA81R/F5DnBouwb
- Nsf2AIcVvriMjv5GHcQVpOQN24Quh/ig8FbBzw9YK233xJVPGN2RmbkSN30jbJh4FORL
- fYibmrHMLheLt1WsKDO4dyKIgThx2nNGdIQl0JiHjgG38l3z7z+lb1ogWzQG/InJC74/
- /L8g==
-X-Gm-Message-State: AOJu0YwCHZxLloj0r6UnuN67meAocxVZAZ/BgMTnH+dz9ra2JmLm/O+w
- l21OYX4hdaid21kqB/ilk5eQxnr9sAAff+FWJOoXNagFkQIrCil0klpyroY0V/yW7oe1aPnsW/3
- TPzrS
-X-Gm-Gg: ASbGncuJ7wlDSFavt/G/hyfFd2EwnDbuwRGgteAkDJmZPh8EyquHgMAkW8d4XDAgtnJ
- Dr/GkrtTJ7VsV2VVI8ky7rNLDpoFOzkEi/b7dTOSX8x1tibnT5Uh0HXi9IjYw+1mvonfLmOx4O3
- GIQYpb2WAyIJtLAjSYcliokgdyoBdDCmODwx6s+ca+WbIREK7Iq6nZQyEBQKeZOQYv9z3LFDhKR
- VP7POS2ppu1p04uDGaY5O3Birv+SDWIvel79v1UgLRj3kV8BAjkoRp5AVJO1Np8/obZnhCkGnih
- a8Mv32j4cGlutRSpYzIzY0JQ+0KkFQ/2Ig3L1SHNb8Aiu4/yo5sBrJ2Duw5nh8fk5v2FL1wyS9B
- D5ugNMjn1wZJX/2++QVSERPAxziVIq4H4rz5y3POpbzuvueEQNRWBhHq7P2BtPg/uXHVudCNy9C
- E8H2OfXA==
-X-Google-Smtp-Source: AGHT+IGk1gKa08nlqPCZgi0XcgjZv8+HX7TF1+VVlbSzoxj1aWiBlgy+Y59OGW/LjGzj+oOliOnWnA==
-X-Received: by 2002:a05:600c:3485:b0:471:13dd:bae7 with SMTP id
- 5b1f17b1804b1-4773bfb51f8mr128886035e9.30.1762272592414; 
- Tue, 04 Nov 2025 08:09:52 -0800 (PST)
+ bh=/5jT1nanV2HTon+gYa/5KcgwK7C7VkPnRzMePhdCgTY=;
+ b=FFAvzqdBFeH7BhPoBCblSu//uB9iDpk5UN8/bstCzXZuqah792ve3hCmExHEj6qvGY
+ YWXgIKp7QJHer79T2XfARrFOaxcdG944Naq1/VMpeJv2TqyX1rKx5IpAWdPieuWmNvFE
+ VOcQwDhnvQFdmtSpi7kILHyPVE3vTryKMCeh7ERgWgPb4SheBmfiATFYyxLa9/LRa/81
+ +mHJMkaSiXFLUe2jdqu6GQvFWsUv63v8/15eL9VOYhS9AcCQ2wnk+eaUxgjU/ILAgiAG
+ fnULJOjgpt2b0Seu2oKtEA3d9yTwu+543CqpbDiU1E5V9+MNf3HLG+shJiHsshdOSMmM
+ tZ/g==
+X-Gm-Message-State: AOJu0Yz+HBS7OuPGBmsed5H23K/Nz10gcPHQI9UgvC3LkphzUwre8Lql
+ DZdtPdgo7Dw94pkP8dPSuXE8QuAoAPOc8TjDuF5fXIpoTW/NKYLXBa9W4VbZwdUn48MVmOg7VVp
+ cSy07
+X-Gm-Gg: ASbGncvH23L2XtjH01p7pQmAxTWcSlU4NYGvNbQUUkMPFdzf6w/zelNMJiRyf3ZEJCx
+ rEvNlxJmn3txOsfAJWAqRRxFaMq9sR1pBeNwUbtXw0zo4TrxucAwjG9zW5r7S42/4+hhylXA33B
+ Xxt6zc+GJDtrEAK4/Ep63PDASV3BWKJXd/YERwlKlkHnKD46iZ2IfZjhXdFkpADxwLvS1WqJ97I
+ jtdgbUjtIVZwYSKf5+KrwiGdr3ODRLQL3cyvI1iBNo0wjTz7qOvuoW+7CpDcQ1d8uHuawTKuqMB
+ E+T8v5EldT9TNR2oOjDrYSGjyTHfnulErVM9Vitct2EZJRoY5QU1xCdUqrjx19/SlX17spnKY1Z
+ +Gt9sb3y3oFBmuqMIdyCk6mjWGV2I0wo4Dpwr1NmRfmk1Bp6NLCMePWTuLPRt/QPcsvL3BMWkZT
+ elCVE/T7a8r/xEZkuo
+X-Google-Smtp-Source: AGHT+IFw0mHTVNQTPpVDHWOwRPNu28SoSm3vy3a0r7q4kvLWFQ2x1D7XC+YLnA6naNfmkaD+uC53Zg==
+X-Received: by 2002:a05:600c:190d:b0:46f:aac5:daf with SMTP id
+ 5b1f17b1804b1-477308dbefdmr162934445e9.35.1762272594606; 
+ Tue, 04 Nov 2025 08:09:54 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47754adcd08sm57314455e9.5.2025.11.04.08.09.51
+ 5b1f17b1804b1-47754adcd08sm57314455e9.5.2025.11.04.08.09.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 08:09:51 -0800 (PST)
+ Tue, 04 Nov 2025 08:09:53 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
@@ -73,16 +73,16 @@ Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 6/9] scripts/clean-includes: Update exclude list
-Date: Tue,  4 Nov 2025 16:09:40 +0000
-Message-ID: <20251104160943.751997-7-peter.maydell@linaro.org>
+Subject: [PATCH 8/9] vfio: Clean up includes
+Date: Tue,  4 Nov 2025 16:09:42 +0000
+Message-ID: <20251104160943.751997-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251104160943.751997-1-peter.maydell@linaro.org>
 References: <20251104160943.751997-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,74 +105,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove from the exclude list:
- * tests/plugin, which is a non-existent directory. This was
-   probably intended to exclude tests/tcg/plugins/, which is caught
-   by the tests/tcg exclude pattern anyway
-Add to the exclude list:
- * rust/ -- the headers in here are purely for input to bindgen
- * target/hexagon has some standalone tools used at build time
- * linux-user/gen-vsdo.c -- another standalone tool
- * linux-user/mips64/elfload.c just includes mips/elfload.c
- * scripts/xen-detect.c is feature-detection code used by meson.build
- * tests/tracetool/simple.c is autogenerated
- * tests/unit/ has some "C file just includes another one" files
- * include/system/os-wasm.h is like os-posix.h and os-win32.h and
-   shouldn't be adjusted
+This commit was created with scripts/clean-includes:
+ ./scripts/clean-includes --git vfio hw/vfio hw/vfio-user
+
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
+
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- scripts/clean-includes | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ hw/vfio-user/container.h | 1 -
+ hw/vfio-user/device.h    | 1 -
+ hw/vfio/pci-quirks.h     | 1 -
+ hw/vfio-user/container.c | 2 +-
+ hw/vfio-user/pci.c       | 2 +-
+ hw/vfio/ap.c             | 1 -
+ hw/vfio/container.c      | 2 +-
+ hw/vfio/cpr-legacy.c     | 2 +-
+ 8 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/scripts/clean-includes b/scripts/clean-includes
-index 694e12f062c..256ff5b5faa 100755
---- a/scripts/clean-includes
-+++ b/scripts/clean-includes
-@@ -96,10 +96,12 @@ trap 'rm -f -- "$COCCIFILE" "$REGEXFILE"' INT TERM HUP EXIT
- # Comments starting with '#' are permitted
- grep -v '^#' >"$REGEXFILE" <<EOT
- # These tests are generally standalone binaries
--^tests/(tcg|multiboot|fp|plugin|uefi-test-tools)
-+^tests/(tcg|multiboot|fp|uefi-test-tools|qtest/migration/s390x)
- # BIOS sources and third-party subprojects don't follow our rules
- ^pc-bios
- ^subprojects
-+# headers under rust are only used for input to bindgen
-+^rust
- # plugin binaries are standalone
- ^contrib/plugins
- # the ebpf tool is standalone, and the skeleton header is autogenerated
-@@ -107,15 +109,28 @@ grep -v '^#' >"$REGEXFILE" <<EOT
- ^ebpf/rss.bpf.skeleton.h
- # These files just include some other .c file and have no content themselves
- ^linux-user/(mips64|x86_64)/(cpu_loop|signal).c
-+^linux-user/mips64/elfload.c
- # These are autogenerated headers
- ^include/standard-headers/
- # osdep.h itself and its friends are expected to include system headers
- ^include/qemu/osdep.h
- ^include/qemu/compiler.h
- ^include/glib-compat.h
--^include/system/os-(posix|win32).h
-+^include/system/os-(posix|win32|wasm).h
- # This is for use by plugins, which are standalone binaries
- ^include/qemu/qemu-plugin.h
-+# standalone tools used in building the hexagon target code
-+^target/hexagon/(idef-parser|gen_semantics.c|gen_dectree_import.c)
-+# standalone tool
-+^target/s390x/gen-features.c
-+# gen-vdso is a standalone tool
-+^linux-user/gen-vdso.c
-+# feature-detection code used by meson.bulid
-+^scripts/xen-detect.c
-+# autogenerated by tracetool
-+^tests/tracetool/simple.c
-+# these just include another C file
-+^tests/unit/test-rcu-(simpleq|slist|tailq).c
- EOT
+diff --git a/hw/vfio-user/container.h b/hw/vfio-user/container.h
+index a2b42e3169d..c952e090631 100644
+--- a/hw/vfio-user/container.h
++++ b/hw/vfio-user/container.h
+@@ -7,7 +7,6 @@
+ #ifndef HW_VFIO_USER_CONTAINER_H
+ #define HW_VFIO_USER_CONTAINER_H
  
- # We assume there are no files in the tree with spaces in their name
+-#include "qemu/osdep.h"
+ 
+ #include "hw/vfio/vfio-container.h"
+ #include "hw/vfio-user/proxy.h"
+diff --git a/hw/vfio-user/device.h b/hw/vfio-user/device.h
+index d183a3950e2..49c05848f1a 100644
+--- a/hw/vfio-user/device.h
++++ b/hw/vfio-user/device.h
+@@ -9,7 +9,6 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#include "qemu/osdep.h"
+ #include "linux/vfio.h"
+ 
+ #include "hw/vfio-user/proxy.h"
+diff --git a/hw/vfio/pci-quirks.h b/hw/vfio/pci-quirks.h
+index d1532e379b1..a6282e063a1 100644
+--- a/hw/vfio/pci-quirks.h
++++ b/hw/vfio/pci-quirks.h
+@@ -12,7 +12,6 @@
+ #ifndef HW_VFIO_VFIO_PCI_QUIRKS_H
+ #define HW_VFIO_VFIO_PCI_QUIRKS_H
+ 
+-#include "qemu/osdep.h"
+ #include "exec/memop.h"
+ 
+ /*
+diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
+index e45192fef65..dab7a23224c 100644
+--- a/hw/vfio-user/container.c
++++ b/hw/vfio-user/container.c
+@@ -6,9 +6,9 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+-#include "qemu/osdep.h"
+ 
+ #include "hw/vfio-user/container.h"
+ #include "hw/vfio-user/device.h"
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index b53ed3b456f..353d07e7819 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -6,8 +6,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#include <sys/ioctl.h>
+ #include "qemu/osdep.h"
++#include <sys/ioctl.h>
+ #include "qapi-visit-sockets.h"
+ #include "qemu/error-report.h"
+ 
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index 7719f245797..3368ac89150 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -10,7 +10,6 @@
+  * directory.
+  */
+ 
+-#include <stdbool.h>
+ #include "qemu/osdep.h"
+ #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+ #include <linux/vfio.h>
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 9ddec300e35..013a691bc5a 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -10,10 +10,10 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+ 
+-#include "qemu/osdep.h"
+ #include "system/tcg.h"
+ #include "system/ram_addr.h"
+ #include "qapi/error.h"
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index 7184c939912..273b5978806 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -4,9 +4,9 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+-#include "qemu/osdep.h"
+ #include "hw/vfio/vfio-container-legacy.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/vfio-listener.h"
 -- 
 2.43.0
 
