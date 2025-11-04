@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E6CCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B558CCFA04
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 16:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGJwg-0007fz-Ou; Tue, 04 Nov 2025 11:31:46 -0500
+	id 1vGJwp-0007jg-Dh; Tue, 04 Nov 2025 11:31:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vGJwM-0007co-Im
+ id 1vGJwI-0007cd-7D
  for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vGJwG-0003z2-RS
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:24 -0500
+ id 1vGJwA-0003xw-MB
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 11:31:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762273877;
+ s=mimecast20190719; t=1762273872;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yyCxCICrU/SDz5D9OgrxQf/TXwBgksmHHfJEONyqPro=;
- b=RHI57N1Ys7g9itu9gmtKj6AOMFtNUggHSaDMdGwFfvad5sNpsBHGP2Ev5+/eWno5aYNgTo
- ScgA6yHGq5yiRzi3U3vI0jalaT+xwwr1KUKAoUGoqCxVhjDKqlHzh6YR75EFsBhWVz13Z3
- AdLtiR01MUMRm58CoFG2qyS7Fl1CSi4=
+ bh=y5zycgEsXQM6pRKEG7JhYUW0ECHZFhS5oVojreimnMA=;
+ b=TfTPqXt9fgROtMKIR+l7UnYeysQ6uLm7fu4WTWm+h/wVoDlI4mL+/zNUqrmOSJkepxwpO4
+ ffPYeNUXTR/0EH6Wf/Nr21qXgPjtEahsOQUQEb9FA9BvXw06CVgPtWpk8pIbEbmGClm+Wo
+ 2bydusWRODL0LWyOHbfL8Fsq+4hPB2Q=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-570-2wQZ-jcQNpu6TY_P9VINcw-1; Tue, 04 Nov 2025 11:31:15 -0500
-X-MC-Unique: 2wQZ-jcQNpu6TY_P9VINcw-1
-X-Mimecast-MFC-AGG-ID: 2wQZ-jcQNpu6TY_P9VINcw_1762273874
+ us-mta-90-4oQdSMysOqKfWR0uoR8T3g-1; Tue, 04 Nov 2025 11:31:11 -0500
+X-MC-Unique: 4oQdSMysOqKfWR0uoR8T3g-1
+X-Mimecast-MFC-AGG-ID: 4oQdSMysOqKfWR0uoR8T3g_1762273870
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b70b974b818so226714366b.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:31:15 -0800 (PST)
+ a640c23a62f3a-b707e22ebeeso695253766b.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 08:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762273873; x=1762878673; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762273869; x=1762878669; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yyCxCICrU/SDz5D9OgrxQf/TXwBgksmHHfJEONyqPro=;
- b=BhiLZWrWTGr49iYI60hW3yzO4cb7xSCWi8H5/VscGQL+HGB41zL6IM0i7sjacLH40B
- OjHWSdp/c66ogXkGnrO2bM92kQciZ0JXRNdFPenr8vkn3xgC43iwOIZM8E/nF335r229
- TEGZa86fFA8j1MLjjF5v8+RjW1yvSLcyhPK0RHh3XXYomPDLghzjqpdRcKe5JYBD+nFh
- 5jcxnw1w/tbpQXbixEr6JAyKsiLPpQuAsuqTUeoKfNKMfCrg3rTT/glXRQ11nRqlz+sX
- G/cJfkWoW15z4ORWKl/fIlD46erBtyvz4TZDFEfHMqPbYBpLR7BCCiqhVqFU4yh5Kuky
- Z7tQ==
+ bh=y5zycgEsXQM6pRKEG7JhYUW0ECHZFhS5oVojreimnMA=;
+ b=gmZHZU52hrQmQOq2jMOQS9GfbxEyxczqySFw7tffhLRbbb5t0wsbQK1LJtxILikCtF
+ iS8EkGn8d/kf42412i1RfBKByEJimbIb8Zu5/EO/2W5WUH4u8k2GmLC5JaAXiGMYOUGu
+ i4WHEiOenpqlcSfgWyssyNcr7jMgTDQSvWhmHlA+gJXwFENlH68V9Es16pvjVeCiTMIY
+ EhaRRAar9qQ/8fofUkbRB9bdhCI0mHYdEqD8UhJQ3OT5l6K4DsGQVJbSLp7X1NmMzCc8
+ KkA+dwshmaJSih88gGhTzxcYUJNRmdhARClkn8qOzvsM6Xx3vuaI2P/ow27hUnYXeIf3
+ nQpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762273873; x=1762878673;
+ d=1e100.net; s=20230601; t=1762273869; x=1762878669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yyCxCICrU/SDz5D9OgrxQf/TXwBgksmHHfJEONyqPro=;
- b=YtrvUJ0bVk25K3WL98rn6Qg3l/UmPE/A4PtUgqbi/5fktApNE/vzz4kyHp3T7syMxM
- VcDUaaMB58dzkt2lElsxZVEUOJmK/DMR0EOy/GNCRsgYJhHWBZGn+WeDqC+XU7delKdU
- OlQ5YX/vUd4xQlyVSuHMqItpOwJYgMEiU2c9zIi22C+g4qMargh9OBrV9fXCrpmvDRkz
- lBKzCH+yuLna0VjLQCTxKcbTADMjIfLBDzGP1f4lmavQBw7cxh3rOV1qOHXAcgXrD1pL
- 93rN4swws5GxSkpM/Vc1CxJgG5F7lFrtGOCRG6XQ28cV0yQCf4Gb1E7cyM0gwU1ZE6gq
- WNig==
-X-Gm-Message-State: AOJu0YyTrvfBNBxt0XTC35V6FVGq2zinisSQRvk2MF1/CL/EXsSgqOJx
- otKBdsBLvZq6v8YI8MMb/MonqFokiRJXHWoQaj1QXKbv1vb2AGWfJxTSFbpdcCyqch4tja4FnBA
- MI7yV2HzprgSa0LtkxXapSQLbyrDLMuliz/0Dws4mBc/by2/ss504IeccgJII7RT+j8Pt5NOT7g
- 4po3dGtJWUppa4vLDcrUwniIhmQBzXbY1WY0mxBTnf
-X-Gm-Gg: ASbGncsldw3CoXBNx+jc7Ia8vhT1NjWEsjBY4c2svS/kCVO3lJqPV2PUFpffUtwv0cG
- HSTPwNLR+vimNb/rQAVP3RbgcG1fBiply5un3xSp+pSqtUp9DcrdAiX009BADnfB9UjM4BQ9vuP
- ADFq9jtwc64cMJufmMKmxiLJUe6RBNKSTAgBMFZieS/qo/CRUATVZ2dCGS5+cYhxgFcHQvxi7Yo
- fhN6bxcyCULIJKXbumedCNvZ9a2UxET9OkhanHU0O/y7zm1chQ09Ela745SHenUY+PH23dNptnw
- 2erJnsBUScX/g7s6VNWWKIsv52KFzTI9a9xbZEGkF69S5LZ8bKnxiAgdZJ83A9l6G3cimpqpkuW
- X+w/UR6BLArDSejJFzGHCS7ndwGDIupnS8UaDeG5bY8IKJLx2/rIPg0NFyTqRT60+MVX/OVCCaH
- 0ihig2
-X-Received: by 2002:a17:907:6d20:b0:b70:b83a:73e5 with SMTP id
- a640c23a62f3a-b70b83a8c35mr824454766b.44.1762273872940; 
- Tue, 04 Nov 2025 08:31:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFdlbU944pOfr+uBd52FjeS2yoL85K6gDfy6iDRgAm/01jC2vbIewQPGSPt1k68q/yicnURaw==
-X-Received: by 2002:a17:907:6d20:b0:b70:b83a:73e5 with SMTP id
- a640c23a62f3a-b70b83a8c35mr824451666b.44.1762273872157; 
- Tue, 04 Nov 2025 08:31:12 -0800 (PST)
+ bh=y5zycgEsXQM6pRKEG7JhYUW0ECHZFhS5oVojreimnMA=;
+ b=LaaZybtom/M+25lhSrGoP0KpqGRBCQh8RCMMr27qQ6TsHvZ0ycVXktTJKylN2NCe6P
+ ajGN7I9Aq7iTRjh5LN5oKZjBJJHLGoKj94eya6vNcymItGaUKXcYNLXc6ocdj1wPZoTl
+ cUP3Zbw1eXYXMsuU/QI7f8bOF+kaHG9wVc/yavtQGBc3uFho3nd2tXePgg/drP3crk1f
+ JHANldSbzFMe2DB1v39tSzB6ZOWt9zTb22u19Ra4C00+yM7JAEsleGT5fdNC0JvH/wWX
+ NS5xp6mHPzcry0GBQkdiWHocV4tyrxMJ5w25L72+mflk2btIPEPtV0P0zr2XUkyi3pf2
+ vKPA==
+X-Gm-Message-State: AOJu0YySm7M8KKReptizV6ACJl+5p4/WXHd1WyBKjUXlv6wH14Gpg9wd
+ UcT5ua02hU9S2AZVEMLw1YeGs58t6XhLPYIMb/CXrvrBWxcUN3WiZEuDoey8EgM6d6DWKdlgTEg
+ MZGwmnQIfWxxKx+BBKloKzo8OgNBtnQ27R4oqRmPPaYlnOkh5UsytKdch5dNfGI/8/rEyyIpVPg
+ gcRXcBSyheSrI0xCDtEk9DHFb6jbhLmmYocSQ/VMBA
+X-Gm-Gg: ASbGnctMjLCGi7YU9CdBMCyikmHaxJ5K1Kbr18l9n/dLUamoG1j63jzkXt5jKSxXfrQ
+ aTzndoxA4h8k1a0x67f45KZbsV/yy235IHw47HESWywrl1McX9Hk9H1K6yGoznPOD5R5/fiXHmw
+ t3wp3xNdCWgDE4iKHfeTfKPxMuTLQHGDYGqzKRIE/5UJTtP83NU+aAYZfJsSoj516nYdn6onJCg
+ rZtvG4xDP7oz7UnbbwRixltTocfqq+5divo7H2IN+c2yBLibuYm+udgHsyuSr7V+EtT2Z0FrxMW
+ KFezXcjdUbW8vZR1ocuOIq4T/LCJv6TOy435NF8Q6PQSumpUK4hDuquP4kSI/i+V+gpsLUttEYZ
+ KRzigTJTrfxJdL9JAqSp9J24HGtFMmGujtacMzKz6kSy8mi0/gidPbULrRI3Py7NPlkdo9KmBgH
+ YlSUmR
+X-Received: by 2002:a17:907:1c11:b0:b72:5640:ac15 with SMTP id
+ a640c23a62f3a-b725640b0dcmr238405066b.26.1762273868950; 
+ Tue, 04 Nov 2025 08:31:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGcUxRkaAmXVlf6EtOp0/PfR6MwhnGZAM7MiUYN4UCAdpSDqkK7O15ewQZempzi+oh53FJbhw==
+X-Received: by 2002:a17:907:1c11:b0:b72:5640:ac15 with SMTP id
+ a640c23a62f3a-b725640b0dcmr238401966b.26.1762273868370; 
+ Tue, 04 Nov 2025 08:31:08 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.110.222])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723d3a3082sm251379166b.11.2025.11.04.08.31.11
+ a640c23a62f3a-b7240348d93sm244411266b.68.2025.11.04.08.31.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 08:31:11 -0800 (PST)
+ Tue, 04 Nov 2025 08:31:07 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 4/8] rust/util: replace Error::err_or_unit/err_or_else with
- Error::with_errp
-Date: Tue,  4 Nov 2025 17:30:58 +0100
-Message-ID: <20251104163102.738889-5-pbonzini@redhat.com>
+Subject: [PULL 2/8] rust/util: add ensure macro
+Date: Tue,  4 Nov 2025 17:30:56 +0100
+Message-ID: <20251104163102.738889-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251104163102.738889-1-pbonzini@redhat.com>
 References: <20251104163102.738889-1-pbonzini@redhat.com>
@@ -123,97 +122,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a simpler function that hides the creation of the Error**.
+The macro is similar to anyhow::ensure but uses QEMU's variation
+on anyhow::Error.  It can be used to easily check a condition
+and format an error message.
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/util/src/error.rs | 52 ++++++++++++++++--------------------------
- 1 file changed, 20 insertions(+), 32 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 21 ++++++----
+ rust/hw/timer/hpet/src/fw_cfg.rs |  7 ++--
+ rust/util/src/error.rs           | 71 ++++++++++++++++++++++++++++++++
+ 3 files changed, 86 insertions(+), 13 deletions(-)
 
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 23f2eefd1cd..3564aa79c6e 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -25,7 +25,10 @@
+     bindings::{address_space_memory, address_space_stl_le, hwaddr},
+     MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder, MEMTXATTRS_UNSPECIFIED,
+ };
+-use util::timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND};
++use util::{
++    ensure,
++    timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
++};
+ 
+ use crate::fw_cfg::HPETFwConfig;
+ 
+@@ -728,14 +731,14 @@ fn post_init(&self) {
+     }
+ 
+     fn realize(&self) -> util::Result<()> {
+-        if self.num_timers < HPET_MIN_TIMERS || self.num_timers > HPET_MAX_TIMERS {
+-            Err(format!(
+-                "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
+-            ))?;
+-        }
+-        if self.int_route_cap == 0 {
+-            Err("hpet.hpet-intcap property not initialized")?;
+-        }
++        ensure!(
++            (HPET_MIN_TIMERS..=HPET_MAX_TIMERS).contains(&self.num_timers),
++            "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
++        );
++        ensure!(
++            self.int_route_cap != 0,
++            "hpet.hpet-intcap property not initialized"
++        );
+ 
+         self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
+ 
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index bb4ea8909ad..777fc8ef45e 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -5,6 +5,7 @@
+ use std::ptr::addr_of_mut;
+ 
+ use common::Zeroable;
++use util::{self, ensure};
+ 
+ /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
+ /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
+@@ -36,7 +37,7 @@ unsafe impl Zeroable for HPETFwConfig {}
+ };
+ 
+ impl HPETFwConfig {
+-    pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
++    pub(crate) fn assign_hpet_id() -> util::Result<usize> {
+         assert!(bql::is_locked());
+         // SAFETY: all accesses go through these methods, which guarantee
+         // that the accesses are protected by the BQL.
+@@ -47,9 +48,7 @@ pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
+             fw_cfg.count = 0;
+         }
+ 
+-        if fw_cfg.count == 8 {
+-            Err("Only 8 instances of HPET are allowed")?;
+-        }
++        ensure!(fw_cfg.count != 8, "Only 8 instances of HPET are allowed");
+ 
+         let id: usize = fw_cfg.count.into();
+         fw_cfg.count += 1;
 diff --git a/rust/util/src/error.rs b/rust/util/src/error.rs
-index 11b574ca593..346577e2e53 100644
+index bfa5a8685bc..2a57c7fd5fd 100644
 --- a/rust/util/src/error.rs
 +++ b/rust/util/src/error.rs
-@@ -14,8 +14,7 @@
- //!   [`ptr_or_propagate`](crate::Error::ptr_or_propagate) can be used to build
- //!   a C return value while also propagating an error condition
- //!
--//! * [`err_or_else`](crate::Error::err_or_else) and
--//!   [`err_or_unit`](crate::Error::err_or_unit) can be used to build a `Result`
-+//! * [`with_errp`](crate::Error::with_errp) can be used to build a `Result`
- //!
- //! This module is most commonly used at the boundary between C and Rust code;
- //! other code will usually access it through the
-@@ -213,35 +212,21 @@ pub unsafe fn propagate(self, errp: *mut *mut bindings::Error) {
-         }
-     }
- 
--    /// Convert a C `Error*` into a Rust `Result`, using
--    /// `Ok(())` if `c_error` is NULL.  Free the `Error*`.
-+    /// Pass a C `Error*` to the closure, and convert the result
-+    /// (either the return value of the closure, or the error)
-+    /// into a Rust `Result`.
-     ///
-     /// # Safety
-     ///
--    /// `c_error` must be `NULL` or valid; typically it was initialized
--    /// with `ptr::null_mut()` and passed by reference to a C function.
--    pub unsafe fn err_or_unit(c_error: *mut bindings::Error) -> Result<()> {
--        // SAFETY: caller guarantees c_error is valid
--        unsafe { Self::err_or_else(c_error, || ()) }
--    }
-+    /// One exit from `f`, `c_error` must be unchanged or point to a
-+    /// valid C [`struct Error`](bindings::Error).
-+    pub unsafe fn with_errp<T, F: FnOnce(&mut *mut bindings::Error) -> T>(f: F) -> Result<T> {
-+        let mut c_error: *mut bindings::Error = ptr::null_mut();
- 
--    /// Convert a C `Error*` into a Rust `Result`, calling `f()` to
--    /// obtain an `Ok` value if `c_error` is NULL.  Free the `Error*`.
--    ///
--    /// # Safety
--    ///
--    /// `c_error` must be `NULL` or point to a valid C [`struct
--    /// Error`](bindings::Error); typically it was initialized with
--    /// `ptr::null_mut()` and passed by reference to a C function.
--    pub unsafe fn err_or_else<T, F: FnOnce() -> T>(
--        c_error: *mut bindings::Error,
--        f: F,
--    ) -> Result<T> {
--        // SAFETY: caller guarantees c_error is valid
--        let err = unsafe { Option::<Self>::from_foreign(c_error) };
--        match err {
--            None => Ok(f()),
--            Some(err) => Err(err),
-+        // SAFETY: guaranteed by the postcondition of `f`
-+        match (f(&mut c_error), unsafe { c_error.into_native() }) {
-+            (result, None) => Ok(result),
-+            (_, Some(err)) => Err(err),
-         }
+@@ -86,6 +86,19 @@ fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
      }
  }
-@@ -432,13 +417,16 @@ fn test_ptr_or_propagate() {
-     }
  
-     #[test]
--    fn test_err_or_unit() {
-+    fn test_with_errp() {
-         unsafe {
--            let result = Error::err_or_unit(ptr::null_mut());
--            assert_match!(result, Ok(()));
-+            let result = Error::with_errp(|_errp| true);
-+            assert_match!(result, Ok(true));
++impl From<Cow<'static, str>> for Error {
++    #[track_caller]
++    fn from(msg: Cow<'static, str>) -> Self {
++        let location = panic::Location::caller();
++        Error {
++            msg: Some(msg),
++            cause: None,
++            file: location.file(),
++            line: location.line(),
++        }
++    }
++}
++
+ impl From<String> for Error {
+     #[track_caller]
+     fn from(msg: String) -> Self {
+@@ -126,6 +139,17 @@ fn from(error: anyhow::Error) -> Self {
+ }
  
--            let err = error_for_test(c"msg");
--            let err = Error::err_or_unit(err.into_inner()).unwrap_err();
-+            let err = Error::with_errp(|errp| {
-+                *errp = error_for_test(c"msg").into_inner();
-+                false
-+            })
-+            .unwrap_err();
-             assert_eq!(&*format!("{err}"), "msg");
-         }
+ impl Error {
++    #[track_caller]
++    #[doc(hidden)]
++    pub fn format(args: fmt::Arguments) -> Self {
++        if let Some(msg) = args.as_str() {
++            Self::from(msg)
++        } else {
++            let msg = fmt::format(args);
++            Self::from(msg)
++        }
++    }
++
+     /// Create a new error, prepending `msg` to the
+     /// description of `cause`
+     #[track_caller]
+@@ -311,6 +335,53 @@ unsafe fn cloned_from_foreign(c_error: *const bindings::Error) -> Self {
      }
+ }
+ 
++/// Ensure that a condition is true, returning an error if it is false.
++///
++/// This macro is similar to [`anyhow::ensure`] but returns a QEMU [`Result`].
++/// If the condition evaluates to `false`, the macro returns early with an error
++/// constructed from the provided message.
++///
++/// # Examples
++///
++/// ```
++/// # use util::{ensure, Result};
++/// # fn check_positive(x: i32) -> Result<()> {
++/// ensure!(x > 0, "value must be positive");
++/// #   Ok(())
++/// # }
++/// ```
++///
++/// ```
++/// # use util::{ensure, Result};
++/// # const MIN: i32 = 123;
++/// # const MAX: i32 = 456;
++/// # fn check_range(x: i32) -> Result<()> {
++/// ensure!(
++///     x >= MIN && x <= MAX,
++///     "{} not between {} and {}",
++///     x,
++///     MIN,
++///     MAX
++/// );
++/// #   Ok(())
++/// # }
++/// ```
++#[macro_export]
++macro_rules! ensure {
++    ($cond:expr, $fmt:literal, $($arg:tt)*) => {
++        if !$cond {
++            let e = $crate::Error::format(format_args!($fmt, $($arg)*));
++            return $crate::Result::Err(e);
++        }
++    };
++    ($cond:expr, $err:expr $(,)?) => {
++        if !$cond {
++            let s = ::std::borrow::Cow::<'static, str>::from($err);
++            return $crate::Result::Err(s.into());
++        }
++    };
++}
++
+ #[cfg(test)]
+ mod tests {
+     use std::ffi::CStr;
 -- 
 2.51.1
 
