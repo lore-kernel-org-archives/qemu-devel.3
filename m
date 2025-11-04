@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ADAFCCFA04
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D094CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Nov 2025 18:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGLKw-0006jh-P9; Tue, 04 Nov 2025 13:00:58 -0500
+	id 1vGLLA-0006yL-WC; Tue, 04 Nov 2025 13:01:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFL-0001KO-5g
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:16 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFa-0001UT-Ve
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFI-00070X-LL
- for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:06 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGLFX-00075n-4A
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 12:55:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762278903;
+ s=mimecast20190719; t=1762278918;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/JyZOAu8kJZG1l3piTbT+IR3lNXsnQ6tJXrxHnnA3CY=;
- b=O1ZvQ682A0hvpwfMZAS8ZiLIBclOviMZC8HVHP8W0F0nWL+1UGBLAjAQLzPR3uU2Zn4h9G
- yZrinqNLR9tUXH0US3yPfWD7t9+5z0zu/XHBAWPY0YhFLIB43sP1BmTzOF18UNCZ8bIEwb
- PnXmGTFWLFPtcfjw42KWhtkPH3MnK6g=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=fDFRarAf5ZaB6K/52baQUM68FuJ2NxkUnuHxok7x0jE=;
+ b=QRKtsvU2yjK/pDuDTBZcjO91V7M6FJE9Z+yKSSPHWQzlPkl2QBxoVs6GVL86D/7EGHKQdq
+ PPgQb6b1ibFd86sfNvM/a664Mf/LgwwrgQYxoJwNRwiXu1ahB3APQFoWGUjKODZu6WxWPl
+ /AeNImnPoGfppiIs0azVpoZEk00sAJw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-b1m9NJHSMhmM6S18MRXiyg-1; Tue,
- 04 Nov 2025 12:55:01 -0500
-X-MC-Unique: b1m9NJHSMhmM6S18MRXiyg-1
-X-Mimecast-MFC-AGG-ID: b1m9NJHSMhmM6S18MRXiyg_1762278900
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-WJYgmD02P4CznJlCEZh7hg-1; Tue,
+ 04 Nov 2025 12:55:13 -0500
+X-MC-Unique: WJYgmD02P4CznJlCEZh7hg-1
+X-Mimecast-MFC-AGG-ID: WJYgmD02P4CznJlCEZh7hg_1762278911
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7596C18002F9; Tue,  4 Nov 2025 17:55:00 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 331521956048; Tue,  4 Nov 2025 17:55:11 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.226.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 30170180044F; Tue,  4 Nov 2025 17:54:58 +0000 (UTC)
+ id E54311800577; Tue,  4 Nov 2025 17:55:09 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 20/27] iotests: Run iotests with sanitizers
-Date: Tue,  4 Nov 2025 18:54:08 +0100
-Message-ID: <20251104175415.525388-21-kwolf@redhat.com>
+Subject: [PULL 26/27] block: Allow drivers to control protocol prefix at
+ creation
+Date: Tue,  4 Nov 2025 18:54:14 +0100
+Message-ID: <20251104175415.525388-27-kwolf@redhat.com>
 In-Reply-To: <20251104175415.525388-1-kwolf@redhat.com>
 References: <20251104175415.525388-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
@@ -83,92 +83,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Eric Blake <eblake@redhat.com>
 
-Commit 2cc4d1c5eab1 ("tests/check-block: Skip iotests when sanitizers
-are enabled") changed iotests to skip when sanitizers are enabled.
-The rationale is that AddressSanitizer emits warnings and reports leaks,
-which results in test breakage. Later, sanitizers that are enabled for
-production environments (safe-stack and cfi-icall) were exempted.
+This patch is pure refactoring: instead of hard-coding permission to
+use a protocol prefix when creating an image, the drivers can now pass
+in a parameter, comparable to what they could already do for opening a
+pre-existing image.  This patch is purely mechanical (all drivers pass
+in true for now), but it will enable the next patch to cater to
+drivers that want to differ in behavior for the primary image vs. any
+secondary images that are opened at the same time as creating the
+primary image.
 
-However, this approach has a few problems.
-
-- It requires rebuild to disable sanitizers if the existing build has
-  them enabled.
-- It disables other useful non-production sanitizers.
-- The exemption of safe-stack and cfi-icall is not correctly
-  implemented, so qemu-iotests are incorrectly enabled whenever either
-  safe-stack or cfi-icall is enabled *and*, even if there is another
-  sanitizer like AddressSanitizer.
-
-To solve these problems, direct AddressSanitizer warnings to separate
-files to avoid changing the test results, and selectively disable
-leak detection at runtime instead of requiring to disable all
-sanitizers at buildtime.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20251023-iotests-v1-2-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20250915213919.3121401-5-eblake@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/testrunner.py | 12 ++++++++++++
- tests/qemu-iotests/meson.build   |  8 --------
- 2 files changed, 12 insertions(+), 8 deletions(-)
+ include/block/block-global-state.h | 3 ++-
+ block.c                            | 4 ++--
+ block/crypto.c                     | 2 +-
+ block/parallels.c                  | 2 +-
+ block/qcow.c                       | 2 +-
+ block/qcow2.c                      | 4 ++--
+ block/qed.c                        | 2 +-
+ block/raw-format.c                 | 2 +-
+ block/vdi.c                        | 2 +-
+ block/vhdx.c                       | 2 +-
+ block/vmdk.c                       | 2 +-
+ block/vpc.c                        | 2 +-
+ 12 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
-index 14cc8492f9..e2a3658994 100644
---- a/tests/qemu-iotests/testrunner.py
-+++ b/tests/qemu-iotests/testrunner.py
-@@ -263,10 +263,21 @@ def do_run_test(self, test: str) -> TestResult:
-             Path(env[d]).mkdir(parents=True, exist_ok=True)
+diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
+index 62da83c616..479ca2858e 100644
+--- a/include/block/block-global-state.h
++++ b/include/block/block-global-state.h
+@@ -65,7 +65,8 @@ int co_wrapper bdrv_create(BlockDriver *drv, const char *filename,
+                            QemuOpts *opts, Error **errp);
  
-         test_dir = env['TEST_DIR']
-+        f_asan = Path(test_dir, f_test.name + '.out.asan')
-         f_bad = Path(test_dir, f_test.name + '.out.bad')
-         f_notrun = Path(test_dir, f_test.name + '.notrun')
-         f_casenotrun = Path(test_dir, f_test.name + '.casenotrun')
+ int coroutine_fn GRAPH_UNLOCKED
+-bdrv_co_create_file(const char *filename, QemuOpts *opts, Error **errp);
++bdrv_co_create_file(const char *filename, QemuOpts *opts,
++                    bool allow_protocol_prefix, Error **errp);
  
-+        env['ASAN_OPTIONS'] = f'detect_leaks=0:log_path={f_asan}'
-+
-+        def unlink_asan():
-+            with os.scandir(test_dir) as it:
-+                for entry in it:
-+                    if entry.name.startswith(f_asan.name):
-+                        os.unlink(entry)
-+
-+        unlink_asan()
-+
-         for p in (f_notrun, f_casenotrun):
-             silent_unlink(p)
+ BlockDriverState *bdrv_new(void);
+ int bdrv_append(BlockDriverState *bs_new, BlockDriverState *bs_top,
+diff --git a/block.c b/block.c
+index 0fe0152a7c..4f1581cedf 100644
+--- a/block.c
++++ b/block.c
+@@ -693,7 +693,7 @@ out:
+ }
  
-@@ -312,6 +323,7 @@ def do_run_test(self, test: str) -> TestResult:
-                               description=f'output mismatch (see {f_bad})',
-                               diff=diff, casenotrun=casenotrun)
-         else:
-+            unlink_asan()
-             f_bad.unlink()
-             return TestResult(status='pass', elapsed=elapsed,
-                               casenotrun=casenotrun)
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index fad340ad59..56b0446827 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -2,14 +2,6 @@ if not have_tools or host_os == 'windows'
-   subdir_done()
- endif
+ int coroutine_fn bdrv_co_create_file(const char *filename, QemuOpts *opts,
+-                                     Error **errp)
++                                     bool allow_protocol_prefix, Error **errp)
+ {
+     QemuOpts *protocol_opts;
+     BlockDriver *drv;
+@@ -702,7 +702,7 @@ int coroutine_fn bdrv_co_create_file(const char *filename, QemuOpts *opts,
  
--foreach cflag: qemu_ldflags
--  if cflag.startswith('-fsanitize') and \
--     not cflag.contains('safe-stack') and not cflag.contains('cfi-icall')
--    message('Sanitizers are enabled ==> Disabled the qemu-iotests.')
--    subdir_done()
--  endif
--endforeach
--
- bash = find_program('bash', required: false, version: '>= 4.0')
- if not bash.found()
-   message('bash >= v4.0 not available ==> Disabled the qemu-iotests.')
+     GLOBAL_STATE_CODE();
+ 
+-    drv = bdrv_find_protocol(filename, true, errp);
++    drv = bdrv_find_protocol(filename, allow_protocol_prefix, errp);
+     if (drv == NULL) {
+         return -ENOENT;
+     }
+diff --git a/block/crypto.c b/block/crypto.c
+index 7c37b23e36..b97d027444 100644
+--- a/block/crypto.c
++++ b/block/crypto.c
+@@ -835,7 +835,7 @@ block_crypto_co_create_opts_luks(BlockDriver *drv, const char *filename,
+     }
+ 
+     /* Create protocol layer */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto fail;
+     }
+diff --git a/block/parallels.c b/block/parallels.c
+index 3a375e2a8a..7a90fb5220 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -1117,7 +1117,7 @@ parallels_co_create_opts(BlockDriver *drv, const char *filename,
+     }
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto done;
+     }
+diff --git a/block/qcow.c b/block/qcow.c
+index b442bfe835..3d37d26ee8 100644
+--- a/block/qcow.c
++++ b/block/qcow.c
+@@ -978,7 +978,7 @@ qcow_co_create_opts(BlockDriver *drv, const char *filename,
+     }
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto fail;
+     }
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 4aa9f9e068..ec72e27214 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -3956,7 +3956,7 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+     }
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto finish;
+     }
+@@ -3971,7 +3971,7 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+     /* Create and open an external data file (protocol layer) */
+     val = qdict_get_try_str(qdict, BLOCK_OPT_DATA_FILE);
+     if (val) {
+-        ret = bdrv_co_create_file(val, opts, errp);
++        ret = bdrv_co_create_file(val, opts, true, errp);
+         if (ret < 0) {
+             goto finish;
+         }
+diff --git a/block/qed.c b/block/qed.c
+index 4a36fb3929..da23a83d62 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -788,7 +788,7 @@ bdrv_qed_co_create_opts(BlockDriver *drv, const char *filename,
+     }
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto fail;
+     }
+diff --git a/block/raw-format.c b/block/raw-format.c
+index df16ac1ea2..a57c2922d5 100644
+--- a/block/raw-format.c
++++ b/block/raw-format.c
+@@ -463,7 +463,7 @@ static int coroutine_fn GRAPH_UNLOCKED
+ raw_co_create_opts(BlockDriver *drv, const char *filename,
+                    QemuOpts *opts, Error **errp)
+ {
+-    return bdrv_co_create_file(filename, opts, errp);
++    return bdrv_co_create_file(filename, opts, true, errp);
+ }
+ 
+ static int raw_open(BlockDriverState *bs, QDict *options, int flags,
+diff --git a/block/vdi.c b/block/vdi.c
+index 3ddc62a569..87b874a7ef 100644
+--- a/block/vdi.c
++++ b/block/vdi.c
+@@ -938,7 +938,7 @@ vdi_co_create_opts(BlockDriver *drv, const char *filename,
+     qdict = qemu_opts_to_qdict_filtered(opts, NULL, &vdi_create_opts, true);
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto done;
+     }
+diff --git a/block/vhdx.c b/block/vhdx.c
+index b2a4b813a0..c16e4a00c8 100644
+--- a/block/vhdx.c
++++ b/block/vhdx.c
+@@ -2096,7 +2096,7 @@ vhdx_co_create_opts(BlockDriver *drv, const char *filename,
+     }
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto fail;
+     }
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 7b98debc2b..eb3c174eca 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -2334,7 +2334,7 @@ vmdk_create_extent(const char *filename, int64_t filesize, bool flat,
+     int ret;
+     BlockBackend *blk = NULL;
+ 
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto exit;
+     }
+diff --git a/block/vpc.c b/block/vpc.c
+index 801ff5793f..07e8ae0309 100644
+--- a/block/vpc.c
++++ b/block/vpc.c
+@@ -1118,7 +1118,7 @@ vpc_co_create_opts(BlockDriver *drv, const char *filename,
+     }
+ 
+     /* Create and open the file (protocol layer) */
+-    ret = bdrv_co_create_file(filename, opts, errp);
++    ret = bdrv_co_create_file(filename, opts, true, errp);
+     if (ret < 0) {
+         goto fail;
+     }
 -- 
 2.51.1
 
