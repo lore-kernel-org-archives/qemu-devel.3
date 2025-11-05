@@ -4,93 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB07CCFA0D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E300DCCF9F8
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 19:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGjYX-00032D-C4; Wed, 05 Nov 2025 14:52:33 -0500
+	id 1vGjYX-00032G-UP; Wed, 05 Nov 2025 14:52:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vGjYV-00031e-JF
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:52:31 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vGjYT-0008Lo-M8
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:52:31 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b3c2c748bc8so22973466b.2
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 11:52:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGjYW-000325-Ld
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:52:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGjYU-0008Lu-Ig
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:52:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762372348;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xT31G+VtBwjotY7JhJBcOLI2zPc5gCVMHjIcDcGeHpY=;
+ b=WiyT2ROa0OQFcDIf6YKRl/Rj4YYVjUpwKF0P52dGUIRAF0OC0wLZbvXTAtdZc1ogrnEGRq
+ L68VLIh1jrVO5k8lyIZTXd9QcDCl/cYoC3fqILH1ApYqw/VWw+S/xrz+GPSH+wBcq3pfS4
+ GvHyjEEP6YYWco3UsZn9ESRA9GjZ+SM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-672-4YdKilMSPDiVjdJ0YVuvsg-1; Wed, 05 Nov 2025 14:52:27 -0500
+X-MC-Unique: 4YdKilMSPDiVjdJ0YVuvsg-1
+X-Mimecast-MFC-AGG-ID: 4YdKilMSPDiVjdJ0YVuvsg_1762372347
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8b228c484d8so55962085a.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 11:52:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762372348; x=1762977148; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5gXmES6vJZwCjqUC/zDfnWqDCTHuhj/G64WNmTGcO5M=;
- b=fnoMA5WlKMf5sWOWW0Mc5M7RG3qPiEPEoJtqESQZf0C6TP1/mtCBsN05hqtOIoMw1x
- nhe6JYVtYlEn7SP3l5SfTyoB6uzwzZ5Mblw0P45vLMkPByAEiNM4nB0JtoM521UtUVpi
- /lRF+wda4mnXRaXGt7sHDr19CsylFVWXkI96XNgE8mvF44vftVRnWUerBIQ/rVKSbnZU
- EUufbHiPyk9JsWfIWsh+Khr0mwCn1q9EfI2DrEqg3NwoVibbLJ1Ax2eZphTgNCkzpNHy
- 5iYhGx4+a4XSqJs0bTL9R+a2Jd/0wObt41avIuXeCzqnurb323BB1jyba5YsSuLmPHJE
- x0FA==
+ d=redhat.com; s=google; t=1762372347; x=1762977147; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=xT31G+VtBwjotY7JhJBcOLI2zPc5gCVMHjIcDcGeHpY=;
+ b=opUKNsY+NjZ3tPQDWtrLnrRw2rBWFW0xGPEC8DasGeeQ5f/MtkuSRk4N+TaFVX+0I0
+ HgV39sR0yD765Lri+L2R5LQnZ2s6bmQD9qBznwFs6VBvUbqpn3VkHDRbhx3DYBiZUoii
+ 4iGTBJqttfXaqIYAG23rSXDZJLrciyxuGzO/M3eLrpncq6StGJL2AH09lNIwFm6U7BHA
+ efD77vvaSAP7ghbJ8aqJn/4MsqmXqItjGOvr17u6GBNV85AK3rcv3L0XVkaWSE11eNcQ
+ /xBsXvEC/SeOP5bIOpmFwpmtHDiM3esMTdVBQCXserOUsxXsRMuNGJG/XDqvf8bUgGgr
+ MvbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762372348; x=1762977148;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5gXmES6vJZwCjqUC/zDfnWqDCTHuhj/G64WNmTGcO5M=;
- b=Kel6kUhH97Nw/Uf+heFC8ks35XCvYEVQuToyynMx4H+Fu4GD0DOSst9IRLpqixGXjY
- 1TGwky+fn/pfpf5Sno4TlslxMvYe6CoAGVfZp+b47IMrRsakXPFCgo0/6Q/6iXpJ1O36
- juo73IkznZL4WGz91oB5g7ddsNJ18oIrB7Y5rVf5hJ9xYacLTSP/HuSli+6e+E6SQdLr
- +YWBL8zqmjUEcizcRrzTw3udlaAmGamkwDmX6wKpAzDHFwyPfzhnLwCTqvVbIt2cSYj/
- 60ler5DKpPiQ9roGGLhj/xMdOywL9DJT9VpweZjUXTVTcNrFHdJer4Wupo/5djKGOvbb
- yGxQ==
-X-Gm-Message-State: AOJu0YxGMXm+RSii3xjcONuLEbD8MLSw4PpNblqdgivFLvYrRlqIX7hS
- BD167U9mWy13yVJ4H+hggou5ZveKtrJgmtjeDTmj0DWxiTn5kVEUf/xxkAhIeTzVB3A=
-X-Gm-Gg: ASbGnctSzqj8JD2jyv9epohX3nbCOSUDgYUOCnZU8Y86VM953OYKQ1MmUfy6d2Jl5dy
- RaFxsjq2Hrgu4gpeXd2VeJBCqnH3FGX1sIjgiDQpaNSJA541X9Ut7Ba6P08iaL82PFf22SgJNG+
- XOUW3k6hgRK+c/IH+nAEYiTaoseJyazJn0wVc/CTDfvFgpo3u3rvTsaD5oWoAyaTXsxV3YdqSyz
- akIYxkKr8MRL8112OcOtEREDBeuOUYmgMAkzGOEnGRCZoFB4QY3MT1Kvqh9zO37liXVay+Ea3tq
- d0EaIq0OsenZesToGxDMDZOoisDkEhAWGypXXy8tRfoYT8CNiqGrOWe9w2X9UQh05+nbyav5XqG
- jRabquroZKPd7+bJzuPXviNywKZYhizVF3ntUGLNTindehC6kkH5w9ZerkIw0j20MS4lxS2AOLp
- aiYWX9pzbcguM=
-X-Google-Smtp-Source: AGHT+IHlh+6y4ng7X+7hWFUO6Pl87/M0xtbRdXr6xYEu5Re5laTrEcedebrejwHhP6b5lY2P0J6K+g==
-X-Received: by 2002:a17:907:3f24:b0:b42:9840:eac1 with SMTP id
- a640c23a62f3a-b726553b597mr430898566b.49.1762372347760; 
- Wed, 05 Nov 2025 11:52:27 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72893cc686sm46862466b.32.2025.11.05.11.52.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20230601; t=1762372347; x=1762977147;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xT31G+VtBwjotY7JhJBcOLI2zPc5gCVMHjIcDcGeHpY=;
+ b=oTOUgwgUorZairdu6tTEKO3krVkyNmpu21B9U8bvq66fJ3iIkMsA/QRh7rdQoNaSKg
+ tqOda7KBKgUK/RiVQoxfe7KNfJgFx44zNUDQrOoWxNbVUHaiscmW2cbHXTnvmLGGZ+41
+ LfRx43pHdgdk45YZz5wlpFCwQJvsoYto5hgSyaCSiv/EAHWiBCxg5OruaNEoXIaun6fg
+ tA+p/SXZ0DGpS5SXiaBdxwPVJ+7S76tPWO/o2l+Kd3ke38ENUveQSGw1IorFdJYnBzQ5
+ UtM/lYuLjP7w+hYUFwRQkVwkDcCa1iEcLKBKbn8HXbi75t4HDKrghgP9XOnINn6Um0iZ
+ nnHw==
+X-Gm-Message-State: AOJu0YzSROQ7q9t4esgSUFAEdzAFMyOQ9KKyxsVpUaSy8gi5wjEgAeJh
+ KH/ftFLayRT4E9oLeJnNDn+joO0ZWzEH5QFO7q0RbnKWKrklx1b15GG0YK23GelUA1tRqj/ZaNg
+ o+mqVmw54/MvY1QP+SZXs2PizGGiMKnny5CEkmVHWhzZyTCv9IM2oAeEhF1W/vqYH
+X-Gm-Gg: ASbGncsDkkDkjDM5WREVqMH3pQwBMF5//scmoLwwlQWew9F9r8hD6APRShL2za9sBNH
+ Qjr6agIbiKhBGlOwyRVn/no673DmTT8UoK/p7xnq/RNAiKYZ1kYud7Vz23uGCIcKw8hRUPuBuKu
+ bBwHegrZwjMrv6iD2mlO7S/sqaG4ElHDfESLmLBFjm8HvMntmiK9156avRYXGKwVvuRnSu2qDTc
+ 4rQUn3dMs0MAuw0ipmbviX/QBb6n6o41FpOwfw7LE15IWlnnG66z3g2+g942rtmPZ/yRKAGuMtJ
+ AQwDPhp2Zgi3kSvm1o+kltaEPNu1nXO+nYfr4Zx8xRSlSIPaLo+eTMtgqiEnP+o33GI=
+X-Received: by 2002:a05:620a:3947:b0:8a9:135e:d2e0 with SMTP id
+ af79cd13be357-8b220ac0750mr609913485a.41.1762372346786; 
  Wed, 05 Nov 2025 11:52:26 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0D40E5F88E;
- Wed, 05 Nov 2025 19:52:26 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: qemu-devel@nongnu.org,  mst@redhat.com,  bill.mills@linaro.org,
- edgar.iglesias@amd.com
-Subject: Re: [PATCH v1 5/5] docs: Describe virtio-msg-amp-pci
-In-Reply-To: <20251028152351.1247812-6-edgar.iglesias@gmail.com> (Edgar E.
- Iglesias's message of "Tue, 28 Oct 2025 16:23:50 +0100")
-References: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
- <20251028152351.1247812-6-edgar.iglesias@gmail.com>
-User-Agent: mu4e 1.12.14-dev2; emacs 30.1
-Date: Wed, 05 Nov 2025 19:52:25 +0000
-Message-ID: <87tsz8tfye.fsf@draig.linaro.org>
+X-Google-Smtp-Source: AGHT+IFcqdFnCqOPQArsjorNlOXQxEYj9UZaJ1JZcife3w05eEJ79Kbon3tiQHkacsgGebFQwQYSSw==
+X-Received: by 2002:a05:620a:3947:b0:8a9:135e:d2e0 with SMTP id
+ af79cd13be357-8b220ac0750mr609909885a.41.1762372346245; 
+ Wed, 05 Nov 2025 11:52:26 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b2358224d2sm30661785a.49.2025.11.05.11.52.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Nov 2025 11:52:25 -0800 (PST)
+Date: Wed, 5 Nov 2025 14:52:24 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] tests/migration-test: Check error-desc after pre-switch
+ cancel tests
+Message-ID: <aQuq-ONNdEEJKmId@x1.local>
+References: <20251031164956.3409661-1-peterx@redhat.com>
+ <4r5wbhkkk346usjdgvnc3epcom3he3y547p3smxbkvvnk677tz@e4hsizwn5sfp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+In-Reply-To: <4r5wbhkkk346usjdgvnc3epcom3he3y547p3smxbkvvnk677tz@e4hsizwn5sfp>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,113 +116,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Edgar E. Iglesias" <edgar.iglesias@gmail.com> writes:
+On Tue, Nov 04, 2025 at 01:35:53PM +0100, Juraj Marcin wrote:
+> Hi Peter,
+> 
+> On 2025-10-31 12:49, Peter Xu wrote:
+> > error-desc should present on dest QEMU after migration failed on dest when
+> > exit-on-error is set to FALSE.  Check the error message.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  tests/qtest/migration/precopy-tests.c | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> > 
+> > diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+> > index 57ca623de5..5f02e35324 100644
+> > --- a/tests/qtest/migration/precopy-tests.c
+> > +++ b/tests/qtest/migration/precopy-tests.c
+> > @@ -759,6 +759,14 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
+> >      wait_for_migration_complete(to);
+> >  }
+> >  
+> > +static void assert_migration_error(QTestState *vm)
+> > +{
+> > +    QDict *rep = migrate_query(vm);
+> > +
+> > +    g_assert(qdict_get_str(rep, "error-desc"));
+> 
+> I think it would be beneficial to also check if there even is
+> "error-desc". That way if the "error-desc" is missing, it fails on
+> assert with SIGABRT instead of SIGSEGV inside qdict_get_str().
 
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
->
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
->  .../devices/virtio/virtio-msg-amp-pci.rst     | 70
-> +++++++++++++++++++
+IMHO it doesn't matter on how the test would crash.
 
-You also need to add this to index.rst otherwise the docs build will
-fail.
+> 
+> With this change you can add my:
+> 
+> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
+I would go ahead and merge a test patch if it had both lines, definitely
+not a huge deal.
 
->  1 file changed, 70 insertions(+)
->  create mode 100644 docs/system/devices/virtio/virtio-msg-amp-pci.rst
->
-> diff --git a/docs/system/devices/virtio/virtio-msg-amp-pci.rst b/docs/sys=
-tem/devices/virtio/virtio-msg-amp-pci.rst
-> new file mode 100644
-> index 0000000000..c73f7a878b
-> --- /dev/null
-> +++ b/docs/system/devices/virtio/virtio-msg-amp-pci.rst
-> @@ -0,0 +1,70 @@
-> +Virtio-msg AMP PCI
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +This document explains the setup and usage of the virtio-msg-amp-pci dev=
-ice..
-> +The virtio-msg-amp-pci, is an emulated PCI device that provides a small
-> +set of features to enable virtio-msg over shared-memory queue's.
-> +
-> +Usecase
-> +-------
-> +
-> +Virtio-msg is a virtio transport where driver and device communicate over
-> +messages rather than using memory accesses that get trapped and emulated.
-> +Virtio-msg depends on a lower lever virtio-msg-bus responsible for deliv=
-ering
-> +these messages. In this case, we're using the Virtio-msg AMP bus which m=
-oves
-> +messages back and forth using a FIFO on top of shared-memory and interru=
-pts.
-> +
-> +The virtio-msg-amp-pci device exposes a BAR with RAM and doorbell regist=
-ers
-> +so guests can implement the shared-memory FIFO protocol and QEMU impleme=
-nts
-> +the backend side of it.
-> +
-> +Virtio pmem allows to bypass the guest page cache and directly use
-> +host page cache. This reduces guest memory footprint as the host can
-> +make efficient memory reclaim decisions under memory pressure.
-> +
-> +Virtio-msg-amp-pci PCI device
-> +-----------------------------
-> +
-> +The virtio-msg-amp-pci device has the following layout:
-> +
-> +- BAR 0: Registers (Version, features and notification/doorbell regs)
-> +- BAR 1: RAM for FIFOs
-> +
-> +Each FIFO gets an MSI-X interrupt reserved for it and a dedicated doorbe=
-ll
-> +register::
-> +
-> +        REG32(VERSION,  0x00)
-> +        REG32(FEATURES, 0x04)
-> +        REG32(NOTIFY0,  0x20)
-> +        REG32(NOTIFY1,  0x24)
-> +        REG32(NOTIFY2,  0x28)
-> +        And so on.
-> +
-> +How does virtio-msg-amp-pci compare to virtio-pci emulation?
-> +------------------------------------------------------------
-> +
-> +Both virtio-msg-amp-pci and virtio-pci emulate PCI devices and allow use=
-rs
-> +to plug virtio devices behind them. The main difference is in how the
-> +guest uses virtio-msg vs virtio-pci to discover and configure the virtio=
- dev.
-> +
-> +virtio pmem usage
-> +-----------------
-> +
-> +A virtio-msg-amp-pci can be greated by adding the following to the QEMU
-> +command-line::
-> +
-> +    -device virtio-msg-amp-pci
-> +
-> +Virtio devices can then be attached to the virtio-msg bus with for examp=
-le
-> +the following::
-> +
-> +    -device virtio-rng-device,bus=3D/gpex-pcihost/pcie.0/virtio-msg-amp-=
-pci/fifo0/virtio-msg/bus0/virtio-msg-dev
-> +
-> +Multiple virtio devices can be connected by using bus1, bus2 and so on.
-> +
-> +Device properties
-> +-----------------
-> +
-> +The virtio-msg-amp-pci  device can be configured with the following prop=
-erties:
-> +
-> + * ``num-fifos`` number of fifos (default 2).
+However strictly speaking, qdict_get_str() is actually pretty efficient to
+make sure both that exists && is_string when used in testings. Would you
+agree?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I definitely still want your R-b one way or another!
+
+> 
+> 
+> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+> index 5f02e35324..87e33b8965 100644
+> --- a/tests/qtest/migration/precopy-tests.c
+> +++ b/tests/qtest/migration/precopy-tests.c
+> @@ -763,6 +763,7 @@ static void assert_migration_error(QTestState *vm)
+>  {
+>      QDict *rep = migrate_query(vm);
+> 
+> +    g_assert(qdict_get(rep, "error-desc"));
+>      g_assert(qdict_get_str(rep, "error-desc"));
+>      qobject_unref(rep);
+>  }
+> 
+> 
+> > +    qobject_unref(rep);
+> > +}
+> > +
+> >  static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+> >                                             const char *uri, const char *phase)
+> >  {
+> > @@ -784,6 +792,7 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+> >  
+> >      wait_for_migration_status(to, "failed",
+> >                                (const char * []) { "completed", NULL });
+> > +    assert_migration_error(to);
+> >  }
+> >  
+> >  static void test_cancel_src_after_status(void *opaque)
+> > -- 
+> > 2.50.1
+> > 
+> 
+
+-- 
+Peter Xu
+
 
