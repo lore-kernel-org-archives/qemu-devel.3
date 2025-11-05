@@ -4,88 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77273CCFA04
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 07:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB7BCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 07:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGXnC-0002WB-Dt; Wed, 05 Nov 2025 02:18:55 -0500
+	id 1vGYFT-0007Bd-D1; Wed, 05 Nov 2025 02:48:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jerry.zhangjian@sifive.com>)
- id 1vGXn5-0002Tr-9M
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 02:18:48 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jerry.zhangjian@sifive.com>)
- id 1vGXn3-0000dG-Bs
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 02:18:47 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-29555415c5fso53050455ad.1
- for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 23:18:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1762327123; x=1762931923; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MlG5rnOvUQA75NWfv4D3M3eKo3Ku1ZTp/yqLDnLUGQA=;
- b=Q4lKJAScPO10oN4jIfLuCvfthxrwMnIEdl5vcT6I0N1ErhIlpKRJBcMMM2INung5k8
- tP2TCNvM9lgFIzyVLDCQmUC33lTfk4t5mpQFRvpZI/HyV5onjk/YWTGFO9GCp/GQv97p
- VW4Ao2cj+lpd27PL9Obd/h8MHz/aFi3DApyx+T6RtINCG5pKnqPdtlcC9Q+6ypud/VR8
- 1REjZfJFjHKb8yUdsswnwEP7eAlpdtNiUgRvQVAsygtV8qArJMfzgQo4PPoojCHB/dJ/
- x2wa6FiHlBGbyQRMz2VXr5Aly2gZJGD5gBbS/mROPK3d7pmceseDM3y2EGrPxuxQ6U21
- 586g==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vGYFS-0007An-Ap
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 02:48:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vGYFP-0004yX-Bz
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 02:48:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762328881;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/+URNvpmOhOpLByQMwBQsqRi6zQqDbVw1Rv4S1E6+8Y=;
+ b=hGO8BP4DucXEhAz5g798PFcCjiQtKMxLUw01VbDEVEd8h+Fw8o+XeEfg11CWSMlk2A6x07
+ MA0xUD9wAaGTqOuenAVYbNyxpKP+exiICRjW9atHgg+vxPeBNLLmlS1NB3lxggr9kjRjwc
+ xobu68YA5WE3+j/mg4AUzSargCLKX5Q=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-204-V4ZLc_IKMU2hBX-DZm6Yrw-1; Wed, 05 Nov 2025 02:48:00 -0500
+X-MC-Unique: V4ZLc_IKMU2hBX-DZm6Yrw-1
+X-Mimecast-MFC-AGG-ID: V4ZLc_IKMU2hBX-DZm6Yrw_1762328879
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4298da9fc21so3330173f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 23:48:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762327123; x=1762931923;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1762328879; x=1762933679;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MlG5rnOvUQA75NWfv4D3M3eKo3Ku1ZTp/yqLDnLUGQA=;
- b=P2h2DVgp1etm/7/mArV9xY2XPxojGx35/KAEDEOTdjFXIgtFtbouXX93qGg6yDQ6kV
- oR9yqza/8krRu828US8kJC+ueG0Us0sL5L2qfuP4h3AVaK/vkUBgDXh5n49psRkWo+EX
- 7/HUYgt8wzxmXtbjT4CdTN3vM25LbI/wwoCoU+mX70bMhgb8w45zxshoxRyhxBVaFo3a
- dEBFoNE09IhqNCuLItuQv49yxc3wHqLqw/auorKlUezbTC7E8e5NR6dTLbj6hwg7wMYS
- KzKPxCpS7lv4SLd1P12bsuGJw3/rTTUip6glUBZteqoigSiZegR2p/0GjRt57RFpyECw
- t+qw==
-X-Gm-Message-State: AOJu0YwyD0m24N092Q4ioZOLpSvdrnPkk41mpbY/Jb34KM6GuPSSQAP3
- A/5M+lwFEFA4bsLa3ZDuiNRmRajDHKLsb5GeeS9MpyXJYe+X6GpogSAsVGGtE9H8TfFmPPVmRZt
- 91Ez/zT8qImlGlTleGMwOSTfboC3l65X0oq/8xML9HbWgBKdaMamX2Um0ocEhmrfkJp6AgPy7Od
- ahjb7H9g8RQbP2eAqALuINJRKg2A1T0YthWWUeYxIc5OO+Oq/MGJ5NfJle
-X-Gm-Gg: ASbGnct7weNKFTurlVRt9v31c9xrs2RWau4St69b3TFLULsH2uoAeq541XOsCddqwaH
- 3K607kXdAGWggEr9+uZjz9RGm9sECSlIolucsctKSNKTWoRitsjtmxfwFBVPDzZE5/fFb75P/0n
- 8Omf5SuSpmcNOiKJuIgSV/RN6Dq3/dpgHmovgnBk0VOr6S7EsFD0uw645wdq5Oj7adgsshM5+2W
- pDJhlV8pqDz8KMHEXScMXAUcm8iU0XcLSpepfJcg2VBzef3ZVhNcuibO8gQbKQdpUt70ksUJDjc
- k9vyrSpD3nQA++8Mjp6v+z8yHqt4uCtoTM7FTpO09o+9URYv2K/AB6tSXO17YspkJg1bcQqQD8c
- m4y+zcEgCVEttAZtYgMa1IsaR8242Ni6W+afUoe3SRNZO1uObmU8HHHRbNuXCZ98M4FgaAujkby
- AR5OmT+EqJUZiKxLG+wIUKJYE=
-X-Google-Smtp-Source: AGHT+IHJntEwTcX6/7fTPo2BtkxbxCQp100jH5FoEsAJ52HMWGiy3hcrGH656V5IZaBl/ivf08qIUQ==
-X-Received: by 2002:a17:902:d505:b0:290:c0ed:de42 with SMTP id
- d9443c01a7336-2962ada2117mr35771225ad.36.1762327122701; 
- Tue, 04 Nov 2025 23:18:42 -0800 (PST)
-Received: from sw08.internal.sifive.com ([4.53.31.132])
+ bh=/+URNvpmOhOpLByQMwBQsqRi6zQqDbVw1Rv4S1E6+8Y=;
+ b=X5XU6arZ3Xf/6ALE6o8tiuW1Z8C9u/XjzHnccuFF0mTl2uJqsKIWXupof2EaRpNx7X
+ anzymLxMUMzurPx+MNb2YCm0HZmVGroNPFplbazgzGgRrs7CtTfHQlVakOgyHkjwkhL7
+ RhkHENMatdusJE4AwNRNnPcQeLNuM4IWFKVCXuafOD07w3S3vEgxyTRgOjYNuyI58omZ
+ GUOTUV6V8BhU1WLeYyIXEcIXOrIr1RXNvIsJNAA29vC1o41fx92aPHtIy5oLHnGNv+j+
+ GpSf9XGqIq6KvIVYJqz9vrIh/1wHdzU+CFdHBFZRvlPzY64yvtej5rkLFy13S1be7a3L
+ 0w+w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYbdT7LK3Jsjxvxl7vBVTUC7J0Ljxu5N5IO066+32VRkKSQHTBIlA35Jz9Gk9gzNaXpIeeZCwSb5ay@nongnu.org
+X-Gm-Message-State: AOJu0Yx0GNn89NifMhQeu+aQiWXPcRja0OltkspF1UEZ+3XKYgaDrFVU
+ 3BCctyTQXHqKbAdNfvNROBqIVMaD+y0FFk8GgZI0dTrpOvOvvEKFq1sjRM4rOxssC8XmahfKg4k
+ 8gV3DDiunkbjtFdoR3Ajjmmp7DwPJWmf6DTRVZ7Zc+dev8ZLIo5wcXb1N
+X-Gm-Gg: ASbGnct5BQ5PPvvewHxLsJwHaus5bPW/VQREHS5yRW115WdCTBSV6a88xZLdZpVXQ1f
+ PWdOhi/FQ014G0W8d+GfauGtK8VRScwFqptYhWXqfPzyy/cy3k18nfCBgfXvm2YWHL+SxL6V5Kc
+ F4dmTcSzkHUmUNOEcRAib1Zg+MlI3GsJmF3IPwYhqVewefjpA1QaG7Z5Yf8Q/znbkxcU0u/laBJ
+ CSM07wKu2vYh90lzrm4dh/vb2u0Cx5Wj8xpdDiaN8UBZOw6hhJB+J6rX4FL0WXvJ6v7r1vwYn25
+ cvnGrqIhasxVinq+FpEthb1WJ8rnFZcCDvfD6dadyCnD6U5VUWSk2hOcZ8AiGqv1jTFvzEHUfpX
+ JVhd9c+zT0n1f/9ZmT6TyteWu6bVAh2x+hGUSAxwrVUzU1A==
+X-Received: by 2002:a05:6000:616:b0:3ec:dd12:54d3 with SMTP id
+ ffacd0b85a97d-429e33063cbmr1659859f8f.35.1762328878891; 
+ Tue, 04 Nov 2025 23:47:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQzeV1UkXf5f8N0jjf5Sf+vsSXULrwOZNuNgFNVC6CZXahXUeBACfWQzHlL4hyh6rEKei1sg==
+X-Received: by 2002:a05:6000:616:b0:3ec:dd12:54d3 with SMTP id
+ ffacd0b85a97d-429e33063cbmr1659829f8f.35.1762328878355; 
+ Tue, 04 Nov 2025 23:47:58 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29601a741e3sm49708465ad.98.2025.11.04.23.18.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Nov 2025 23:18:42 -0800 (PST)
-From: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, palmer@dabbelt.com,
- alistair.francis@wdc.com, qemu-riscv@nongnu.org, kito.cheng@gmail.com,
- frank.chang@sifive.com, Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-Subject: [PATCH] target/riscv: Add bfloat16 and half-float support to GDB stub
-Date: Tue,  4 Nov 2025 23:18:30 -0800
-Message-ID: <20251105071830.946163-1-jerry.zhangjian@sifive.com>
-X-Mailer: git-send-email 2.51.0
+ ffacd0b85a97d-429dc1fbeadsm8856800f8f.37.2025.11.04.23.47.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Nov 2025 23:47:57 -0800 (PST)
+Message-ID: <413ca488-1301-4f0c-90bf-ab3ef5a0791e@redhat.com>
+Date: Wed, 5 Nov 2025 08:47:56 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-16-skolothumtho@nvidia.com>
+ <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
+ <CH3PR12MB754815B9B902E7EF66B0A1B9ABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <85f315a2-e49a-4330-9419-48a8a3a4a3e3@redhat.com>
+ <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <3c9e00f5-de9e-4e5c-8312-75eb4fcef81b@redhat.com>
+ <aQo8MPCrr82wh3LI@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aQo8MPCrr82wh3LI@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=jerry.zhangjian@sifive.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,132 +134,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add bfloat16 and ieee_half fields to the RISC-V FPU register unions
-in the GDB target description XML files. This allows GDB to access
-FPU registers as BFloat16 or IEEE half-precision floating-point values
-in addition to the existing single and double precision formats.
+Hi Nicolin,
 
-For 64-bit FPU (riscv-64bit-fpu.xml):
-- Add bfloat16 field to riscv_double union
-- Add half (ieee_half) field to riscv_double union
+On 11/4/25 6:47 PM, Nicolin Chen wrote:
+> On Tue, Nov 04, 2025 at 05:01:57PM +0100, Eric Auger wrote:
+>>>>>> On 10/31/25 11:49 AM, Shameer Kolothum wrote:
+>>>>>>> On ARM, devices behind an IOMMU have their MSI doorbell addresses
+>>>>>>> translated by the IOMMU. In nested mode, this translation happens in
+>>>>>>> two stages (gIOVA → gPA → ITS page).
+>>>>>>>
+>>>>>>> In accelerated SMMUv3 mode, both stages are handled by hardware, so
+>>>>>>> get_address_space() returns the system address space so that VFIO
+>>>>>>> can setup stage-2 mappings for system address space.
+>>>>>> Sorry but I still don't catch the above. Can you explain (most probably
+>>>>>> again) why this is a requirement to return the system as so that VFIO
+>>>>>> can setup stage-2 mappings for system address space. I am sorry for
+>>>>>> insisting (at the risk of being stubborn or dumb) but I fail to
+>>>>>> understand the requirement. As far as I remember the way I integrated it
+>>>>>> at the old times did not require that change:
+>>>>>> https://lore.kernel.org/all/20210411120912.15770-1-
+>>>>>> eric.auger@redhat.com/
+>>>>>> I used a vfio_prereg_listener to force the S2 mapping.
+>>>>> Yes I remember that.
+>>>>>
+>>>>>> What has changed that forces us now to have this gym
+>>>>> This approach achieves the same outcome, but through a
+>>>>> different mechanism. Returning the system address space
+>>>>> here ensures that VFIO sets up the Stage-2 mappings for
+>>>>> devices behind the accelerated SMMUv3.
+>>>>>
+>>>>> I think, this makes sense because, in the accelerated case, the
+>>>>> device is no longer managed by QEMU’s SMMUv3 model. The
+>>>> On the other hand, as we discussed on v4 by returning system as you
+>>>> pretend there is no translation in place which is not true. Now we use
+>>>> an alias for it but it has not really removed its usage. Also it forces
+>>>> use to hack around the MSI mapping and introduce new PCIIOMMUOps.
+>>>> Have
+>>>> you assessed the feasability of using vfio_prereg_listener to force the
+>>>> S2 mapping. Is it simply not relevant anymore or could it be used also
+>>>> with the iommufd be integration? Eric
+>>> IIUC, the prereg_listener mechanism just enables us to setup the s2
+>>> mappings. For MSI, In your version, I see that smmu_find_add_as()
+>>> always returns IOMMU as. How is that supposed to work if the Guest
+>>> has s1 bypass mode STE for the device?
+>> I need to delve into it again as I forgot the details. Will come back to
+>> you ...
+> We aligned with Intel previously about this system address space.
+> You might know these very well, yet here are the breakdowns:
+>
+> 1. VFIO core has a container that manages an HWPT. By default, it
+>    allocates a stage-1 normal HWPT, unless vIOMMU requests for a
+You may precise this stage-1 normal HWPT is used to map GPA to HPA (so
+eventually implements stage 2).
+>    nesting parent HWPT for accelerated cases.
+> 2. VFIO core adds a listener for that HWPT and sets up a handler
+>    vfio_container_region_add() where it checks the memory region
+>    whether it is iommu or not.
+>    a. In case of !IOMMU as (i.e. system address space), it treats
+>       the address space as a RAM region, and handles all stage-2
+>       mappings for the core allocated nesting parent HWPT.
+>    b. In case of IOMMU as (i.e. a translation type) it sets up
+>       the IOTLB notifier and translation replay while bypassing
+>       the listener for RAM region.
+yes S1+S2 are combined through vfio_iommu_map_notify()
+>
+> In an accelerated case, we need stage-2 mappings to match with the
+> nesting parent HWPT. So, returning system address space or an alias
+> of that notifies the vfio core to take the 2.a path.
+>
+> If we take 2.b path by returning IOMMU as in smmu_find_add_as, the
+> VFIO core would no longer listen to the RAM region for us, i.e. no
+> stage-2 HWPT nor mappings. vIOMMU would have to allocate a nesting
+except if you change the VFIO common.c as I did the past to force the S2
+mapping in the nested config.
+See
+https://lore.kernel.org/all/20210411120912.15770-16-eric.auger@redhat.com/
+and vfio_prereg_listener()
+Again I do not say this is the right way to do but using system address
+space is not the "only" implementation choice I think and it needs to be
+properly justified, especially has it has at least 2 side effects:
+- somehow abusing the semantic of returned address space and pretends
+there is no IOMMU translation in place and
+- also impacting the way MSIs are handled (introduction of a new
+PCIIOMMUOps).
+This kind of explanation you wrote is absolutely needed in the commit
+msg for reviewers to understand the design choice I think.
 
-For 32-bit FPU (riscv-32bit-fpu.xml):
-- Create new riscv_single union with bfloat16, half, and float fields
-- Update all 32 FPU registers to use riscv_single type instead of
-  ieee_single
-
-This enables GDB users to inspect and modify FPU registers using
-different floating-point formats:
-  (gdb) print \.bfloat16
-  (gdb) print \.half
-  (gdb) print \.float
-  (gdb) print \.double
-
-This change corresponds to the GDB-side support for these formats:
-https://sourceware.org/pipermail/gdb-patches/2025-November/222353.html
-
-Signed-off-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
----
- gdb-xml/riscv-32bit-fpu.xml | 70 ++++++++++++++++++++-----------------
- gdb-xml/riscv-64bit-fpu.xml |  2 ++
- 2 files changed, 40 insertions(+), 32 deletions(-)
-
-diff --git a/gdb-xml/riscv-32bit-fpu.xml b/gdb-xml/riscv-32bit-fpu.xml
-index 24aa087031..f0439c626e 100644
---- a/gdb-xml/riscv-32bit-fpu.xml
-+++ b/gdb-xml/riscv-32bit-fpu.xml
-@@ -7,36 +7,42 @@
- 
- <!DOCTYPE feature SYSTEM "gdb-target.dtd">
- <feature name="org.gnu.gdb.riscv.fpu">
--  <reg name="ft0" bitsize="32" type="ieee_single"/>
--  <reg name="ft1" bitsize="32" type="ieee_single"/>
--  <reg name="ft2" bitsize="32" type="ieee_single"/>
--  <reg name="ft3" bitsize="32" type="ieee_single"/>
--  <reg name="ft4" bitsize="32" type="ieee_single"/>
--  <reg name="ft5" bitsize="32" type="ieee_single"/>
--  <reg name="ft6" bitsize="32" type="ieee_single"/>
--  <reg name="ft7" bitsize="32" type="ieee_single"/>
--  <reg name="fs0" bitsize="32" type="ieee_single"/>
--  <reg name="fs1" bitsize="32" type="ieee_single"/>
--  <reg name="fa0" bitsize="32" type="ieee_single"/>
--  <reg name="fa1" bitsize="32" type="ieee_single"/>
--  <reg name="fa2" bitsize="32" type="ieee_single"/>
--  <reg name="fa3" bitsize="32" type="ieee_single"/>
--  <reg name="fa4" bitsize="32" type="ieee_single"/>
--  <reg name="fa5" bitsize="32" type="ieee_single"/>
--  <reg name="fa6" bitsize="32" type="ieee_single"/>
--  <reg name="fa7" bitsize="32" type="ieee_single"/>
--  <reg name="fs2" bitsize="32" type="ieee_single"/>
--  <reg name="fs3" bitsize="32" type="ieee_single"/>
--  <reg name="fs4" bitsize="32" type="ieee_single"/>
--  <reg name="fs5" bitsize="32" type="ieee_single"/>
--  <reg name="fs6" bitsize="32" type="ieee_single"/>
--  <reg name="fs7" bitsize="32" type="ieee_single"/>
--  <reg name="fs8" bitsize="32" type="ieee_single"/>
--  <reg name="fs9" bitsize="32" type="ieee_single"/>
--  <reg name="fs10" bitsize="32" type="ieee_single"/>
--  <reg name="fs11" bitsize="32" type="ieee_single"/>
--  <reg name="ft8" bitsize="32" type="ieee_single"/>
--  <reg name="ft9" bitsize="32" type="ieee_single"/>
--  <reg name="ft10" bitsize="32" type="ieee_single"/>
--  <reg name="ft11" bitsize="32" type="ieee_single"/>
-+  <union id="riscv_single">
-+    <field name="bfloat16" type="bfloat16"/>
-+    <field name="half" type="ieee_half"/>
-+    <field name="float" type="ieee_single"/>
-+  </union>
-+
-+  <reg name="ft0" bitsize="32" type="riscv_single"/>
-+  <reg name="ft1" bitsize="32" type="riscv_single"/>
-+  <reg name="ft2" bitsize="32" type="riscv_single"/>
-+  <reg name="ft3" bitsize="32" type="riscv_single"/>
-+  <reg name="ft4" bitsize="32" type="riscv_single"/>
-+  <reg name="ft5" bitsize="32" type="riscv_single"/>
-+  <reg name="ft6" bitsize="32" type="riscv_single"/>
-+  <reg name="ft7" bitsize="32" type="riscv_single"/>
-+  <reg name="fs0" bitsize="32" type="riscv_single"/>
-+  <reg name="fs1" bitsize="32" type="riscv_single"/>
-+  <reg name="fa0" bitsize="32" type="riscv_single"/>
-+  <reg name="fa1" bitsize="32" type="riscv_single"/>
-+  <reg name="fa2" bitsize="32" type="riscv_single"/>
-+  <reg name="fa3" bitsize="32" type="riscv_single"/>
-+  <reg name="fa4" bitsize="32" type="riscv_single"/>
-+  <reg name="fa5" bitsize="32" type="riscv_single"/>
-+  <reg name="fa6" bitsize="32" type="riscv_single"/>
-+  <reg name="fa7" bitsize="32" type="riscv_single"/>
-+  <reg name="fs2" bitsize="32" type="riscv_single"/>
-+  <reg name="fs3" bitsize="32" type="riscv_single"/>
-+  <reg name="fs4" bitsize="32" type="riscv_single"/>
-+  <reg name="fs5" bitsize="32" type="riscv_single"/>
-+  <reg name="fs6" bitsize="32" type="riscv_single"/>
-+  <reg name="fs7" bitsize="32" type="riscv_single"/>
-+  <reg name="fs8" bitsize="32" type="riscv_single"/>
-+  <reg name="fs9" bitsize="32" type="riscv_single"/>
-+  <reg name="fs10" bitsize="32" type="riscv_single"/>
-+  <reg name="fs11" bitsize="32" type="riscv_single"/>
-+  <reg name="ft8" bitsize="32" type="riscv_single"/>
-+  <reg name="ft9" bitsize="32" type="riscv_single"/>
-+  <reg name="ft10" bitsize="32" type="riscv_single"/>
-+  <reg name="ft11" bitsize="32" type="riscv_single"/>
- </feature>
-diff --git a/gdb-xml/riscv-64bit-fpu.xml b/gdb-xml/riscv-64bit-fpu.xml
-index d0f17f9984..7d6a44e145 100644
---- a/gdb-xml/riscv-64bit-fpu.xml
-+++ b/gdb-xml/riscv-64bit-fpu.xml
-@@ -9,6 +9,8 @@
- <feature name="org.gnu.gdb.riscv.fpu">
- 
-   <union id="riscv_double">
-+    <field name="bfloat16" type="bfloat16"/>
-+    <field name="half" type="ieee_half"/>
-     <field name="float" type="ieee_single"/>
-     <field name="double" type="ieee_double"/>
-   </union>
--- 
-2.51.0
+Eric
+> parent and manage the stage-2 mappings by adding a listener in its
+> own code, which is largely duplicated with the core code.
+>
+> -------------- so far this works for Intel and ARM--------------
+>
+> 3. On ARM, vPCI device is programmed with gIOVA, so KVM has to
+>    follow what the vPCI is told to inject vIRQs. This requires
+>    a translation at the nested stage-1 address space. Note that
+>    vSMMU in this case doesn't manage translation as it doesn't
+>    need to. But there is no other sane way for KVM to know the
+>    vITS page corresponding to the given gIOVA. So, we invented
+>    the get_msi_address_space op.
+>
+> (3) makes sense because there is a complication in the MSI that
+> does a 2-stage translation on ARM and KVM must follow the stage-1
+> input address, leaving us no choice to have two address spaces.
+>
+> Thanks
+> Nicolin
+>
 
 
