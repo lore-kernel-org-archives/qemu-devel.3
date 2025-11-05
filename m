@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC409CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2C4CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGdq0-0005pk-4m; Wed, 05 Nov 2025 08:46:12 -0500
+	id 1vGdqZ-0006GK-JF; Wed, 05 Nov 2025 08:46:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdpm-0005ot-4u
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:45:59 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1vGdqW-0006Ah-8k
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:46:44 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdpk-0003Hv-H5
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:45:57 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b7277324054so69757466b.0
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:45:56 -0800 (PST)
+ id 1vGdqU-0003N8-FK
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:46:44 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b70fb7b531cso543979266b.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:46:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762350355; x=1762955155; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hOWY8zcxAbuKabgDxLPO4hMnLQ6i4N9rNRsLp0x8CNw=;
- b=s/lz1HkPmc8LRoXLNMy8XVoKYlD/7hPnrbp1mTvT3j/Vm/Hj5f9YgNj2EkTiAo/zEi
- 5vFzCZMPHy9vEKTMinqQhMs0bX+A7nzlR8h6289jJz/GKWmXeqgfyZomJ79m5f/FPhRb
- 5BVkN5e1xKDrfZFXVlSsXVOFf8YhuRvp10919lZvlGiDWGhUDJXCiRctO55MKJm7U4hl
- 4oN+VE42pzkz7nMNCmEIr7czjKE4fcIWsMX9Wz3xNWcxD4JsICMUhB0FlrY1zVlp5a1K
- YF83ADNNGJTDYVtvu1+d+R+puO0aVr7mhXfj6vEG2edQUxyfvm8fZ4RnpJyLFTdur54Q
- 2oOw==
+ d=linaro.org; s=google; t=1762350400; x=1762955200; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rGsKN+q9CeP2ytSVjJhUPhfEzEadWHIXhtZJUJYtF+k=;
+ b=t7wQn3O6dJXoSSaC6TBxjtsUxPRbAvpFQaOgbD/cpfbS7Fjej5Gj4jjVZRTYVHEN11
+ dBXYydra73if124O0hd/87udmq+PuZGrtloKcFTkIozTf+t/r83UNhTFCDI0m1g1uN3/
+ tu4u506DQo29OylVHSb79CQW3DBYYAppJYGLWfsU2UhMAhu09U4hEVFSlt6R2gvYRjEE
+ jBNDldHZd2iVMEfyWzl/7Tdtf4Jgvzb/NxTUvZQeyOM8UBPo89fx9NwLd2eC6Gkd3Vyr
+ ML0xmfXt19sC7wxNb4/dc34H2OMUZi8pX6ByYJG57nspHiG0Id+ZtXtGAc3CWvRWCSo9
+ T6pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762350355; x=1762955155;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hOWY8zcxAbuKabgDxLPO4hMnLQ6i4N9rNRsLp0x8CNw=;
- b=hSlRnLhkoBY0cYdN1mb+uGgmyhofYCFrYcqU07AsH3LJB4DXGyry0Fo0ds+8iYnkTn
- vz4mVchD0icDJMB0Qwj6U3AYYWclNuxIZxriD5NIWGwYkQXD2oylqBJnr0kUopOMUK3o
- PdPciIFLZOp84G93CV9FyWDUEoHUB0h7FTJbNo6wQm5135BxGrsdKZt/gksvKKULV//z
- QIYO2Tt2mfrzlSOxAbWukrJ8GPXTvbr4AwvDIaZVdvrsFNNdtrcKEKhflv8+qv8PDaKb
- HgC0Rtp8QP9cwqkK/o5tVgyqSUfhmRuwzqGa9rToF/psuXuUPyo7E9YtdPrtvuR8k5Z9
- Hx5g==
-X-Gm-Message-State: AOJu0YwncYEkp7iQtWXgSspcQyQBvWKRX2etAV7n3wukvvTkLa5JRg4a
- q7SClI4jogNzqAh+KpDj05cJzPObP0EjEodiviYCAdhviRTVCkypZpKYvTLqpQ5xflC3cHvVJxt
- 2L2c95K4=
-X-Gm-Gg: ASbGncuThWJ3sFOE+CGPSDNsBOom14sw3W5MDrXB7MnWZ81r1sBJRRNM4fmcr97BRET
- olSuIR05fLFNKOGTBYrYKl3NhsbWgBmIWoOjq0rYkqnjeESo0NzJ6rKjz/eCQzLPdqj2qFxGGut
- Cyff20jf7XM2lSj0CxiBuPOlqcjPUJrogSL8NhuZs+XQnzRm4mS/N6DuWVHvQ3FjHYcP7yUNwNP
- kZVb4hd/+L7DsM6DRX9xNypWonvI2pOhV9rbpaHjJ8r44W9HdCQDNYBUMDm6rGtVRroXTH4Sxjs
- eDB5vSd4Jpxe9PxyO+kU5sUpnokn5SaXSJhPwNv4P+UmqxliF40rpgUnO6hPVacwOUldFq+n6wK
- VpYEs+Nc3P7trjoxSOv/0WtpkkdRqx2/zyx8eLKI5Hrea+XLzJgPI4ac1n/oLaCUvEbDHsRHZe4
- PTzigU2pSwRm1mSVw=
-X-Google-Smtp-Source: AGHT+IF053uVFsgyy+rQ/FgjesWWxAYnS2UEbnF52c0F/DitvsuO9CFbuv1wkpAYpHf4+oAR2yp3pQ==
-X-Received: by 2002:a17:906:dc95:b0:b3f:ccac:af47 with SMTP id
- a640c23a62f3a-b72654d3d65mr337495966b.31.1762350354840; 
- Wed, 05 Nov 2025 05:45:54 -0800 (PST)
-Received: from stoup.. ([87.213.113.147]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723d3a3496sm506764566b.8.2025.11.05.05.45.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Nov 2025 05:45:54 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	armbru@redhat.com
-Subject: [PATCH] qapi/migration: Rewrap to 70 columns
-Date: Wed,  5 Nov 2025 14:45:53 +0100
-Message-ID: <20251105134553.354886-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1762350400; x=1762955200;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rGsKN+q9CeP2ytSVjJhUPhfEzEadWHIXhtZJUJYtF+k=;
+ b=Siq2eFrn3IblSuPkVyNg2muSXQ3VomJ4X03P4hmN+d5DvVtfvbtdXdeZ+/5up+vAiX
+ uz73q6izeHs4Pnallxkxag7vM39Gp4ZG3L7DFDKQyRQOyctG8sNCsUyLIHk4PIVogW6Z
+ m0gkytlU2c78mVfol4XAklmy9ndnJcO1jilJg/7BlF1cYH0yKPQyVhOH4GZMyuxtlO8I
+ FBCiQUSh4kF2eWg6wDcIpN1eo4oCAjbjdtiQH3xU2ZNtQ2HEV8GH3iMhRKsBgR9DYqKd
+ fEt8SYQYD4lWkTFmzKp5sFPO2DcbuNXrF3AOutsmFN4zm/9hXH+B4M4hAuF2wL7JAOqN
+ 2rWg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTYl9sz+zsvimw9qP8moTtLqY8mu9LeJT3rdlK6lhBAlZrUSi+WNMCa5gkOTqpPxMR5b2Wm1gXwhh9@nongnu.org
+X-Gm-Message-State: AOJu0Yxk9DP/XJAJZiR1ACCaLdL5IedNHzJfx/4IXZiAOuOPrQ7bUorI
+ y295ZiTpEMv9N/eIw4nCadFAdGlqk1UgL4hKCDcvOcCB3ceKDamupp43BoDlmPl8Wb8=
+X-Gm-Gg: ASbGncs4Dg4+6rhDAo5jqC1uFBWJNIMGv6U8/sYDOv8gZQn7X43jW0E3ET4U9jL1YZ6
+ 4nmOufpmdmUjuH+6gLS631UmcixoEGCuKx9V+aUnU2qo0rfRBOYieUB1QpZWV8Uet+MJkQSCD4U
+ mJqvodBPoL8O+vdUXBa/+xXoseeXiG8itaFKp95GR9Bc4ipUNoW8c3VorGiYD7tdgYNO/szHDj/
+ +lQ0Ba7YSwltrSaextBoAeanvgSp/6MY0BvGFVXNgM0QrYbSOLdB23CWuqjuNJYggE6DtoP/dto
+ uSRba1Tuu1IH7H7GDDzPG31Ayw1sVX+l2Ye8ioi917l7fKE+ZFSaNWqRFA57FRsyep8fGHiuQS0
+ 0WqoZbjvUjNMGdx8SnzujjytIZ0oJ9SzwnI/fUHovuykRH/MqcYXe81w0QGNB4WnuJa99Jf4v5P
+ zvNHPqd2jCvcEiQRMg+aACs7euiPc=
+X-Google-Smtp-Source: AGHT+IGKgfj7DV/BgqOsqXI5eIJDrUl+wQ4S0TchzvtSiUj3BT0E7it7eurxCUcI7O7HoQWmSoN3bw==
+X-Received: by 2002:a17:907:1c84:b0:b04:830f:822d with SMTP id
+ a640c23a62f3a-b7265648907mr336318866b.63.1762350400273; 
+ Wed, 05 Nov 2025 05:46:40 -0800 (PST)
+Received: from [172.20.148.100] ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b724064d25csm487978266b.72.2025.11.05.05.46.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Nov 2025 05:46:39 -0800 (PST)
+Message-ID: <ee1bb8e2-135a-4166-892f-bc81fa54315f@linaro.org>
+Date: Wed, 5 Nov 2025 14:46:38 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 0/3] I82596 fixes patches
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Jason Wang <jasowang@redhat.com>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+References: <20251104152204.6261-1-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251104152204.6261-1-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,42 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid
+On 11/4/25 16:22, deller@kernel.org wrote:
+> From: Helge Deller<deller@gmx.de>
+> 
+> The following changes since commit a8e63c013016f9ff981689189c5b063551d04559:
+> 
+>    Merge tag 'igvm-20251103--pull-request' ofhttps://gitlab.com/kraxel/qemu into staging (2025-11-03 10:21:01 +0100)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/hdeller/qemu-hppa.git tags/i82596-fixes-pull-request
+> 
+> for you to fetch changes up to fec69f17be25db71f9cd4001b920da21cc71b283:
+> 
+>    i82596: Implement enhanced TX/RX with packet queuing and filtering (2025-11-04 16:14:51 +0100)
+> 
+> ----------------------------------------------------------------
+> LASI i82596 network driver fixes
+> 
+> As part of the Google Summer of Code 2025 program "Implementing LASI Network
+> Card and NCR 710 SCSI Controller Device Models" Soumyajyotii Ssarkar fixed
+> various bugs and enhanced the existing Qemu i82596 network card implementation.
+> 
+> Specifically he added or fixed the following functionality:
+> - Monitor Mode
+> - Promiscuous Mode
+> - Support for linear mode, segmented mode, and flexible memory models
+> - RX Timer
+> - Bus Throttle Timers
+> - Support for Little Endian mode
+> - Accurate CU and RU transition State
+> - HP-UX Specific Behavior Support
+>      - Support for Loopback mode
+>      - Self test
+> - Statistical counters
+> - VMstate descriptors
+> - Polling mechanism
+> - Transmit and Receive functions
 
-In file included from ../publish/qapi/qapi-schema.json:53:
-.../qapi/migration.json:1750:1: documentation line longer than 70 characters
 
-Fixes: ae00f0088ff ("migration/qmp: Update "resume" flag doc in "migrate" command")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-Applied directly to master as a build fix.
-
----
- qapi/migration.json | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 6acd9e4b16..cf023bd29d 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1747,10 +1747,11 @@
- # @detach: this argument exists only for compatibility reasons and is
- #     ignored by QEMU
- #
--# @resume: when set, use the new uri/channels specified to resume paused
--#     postcopy migration.  This flag should only be used if the previous
--#     postcopy migration was interrupted.  The command will fail unless
--#     migration is in "postcopy-paused" state.  (default: false, since 3.0)
-+# @resume: when set, use the new uri/channels specified to resume
-+#     paused postcopy migration.  This flag should only be used if
-+#     the previous postcopy migration was interrupted.  The command
-+#     will fail unless migration is in "postcopy-paused" state.
-+#     (default: false, since 3.0)
- #
- # Features:
- #
--- 
-2.43.0
-
+r~
 
