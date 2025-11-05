@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D4FCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 21:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC049CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 21:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGkvo-0000cP-St; Wed, 05 Nov 2025 16:20:40 -0500
+	id 1vGl13-0002RD-KE; Wed, 05 Nov 2025 16:26:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vGkvn-0000bF-Cm
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 16:20:39 -0500
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vGl11-0002Pw-NT
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 16:26:03 -0500
+Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vGkvl-0008TP-QV
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 16:20:39 -0500
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-4ea12242d2eso20181cf.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 13:20:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vGl0z-0002DH-Ua
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 16:26:03 -0500
+Received: by mail-io1-xd29.google.com with SMTP id
+ ca18e2360f4ac-94868b991easo12450539f.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 13:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1762377635; x=1762982435; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1762377960; x=1762982760; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PhEhkTq+LWTFHumUurvyRKjhtRaQVEgS+gmAOWh95t8=;
- b=nM7PCSUCZX6dsAosBll1kEYMuAwo/Mn8elQmhVcjqJ72mQmlix5N08L8r8+qhR/ht8
- HQJm5LXvVtpK48T0dlzMGzGO5CXxnn72jNFHdT4NykX+gz6go8Jiev0+TkCPCIAkmdQ2
- PI8VUHvJDxmWDnixi24SEtM0h/TdgTY59md7M9I6d2fAjR9LKOPWK7rC1qluJko9jhhq
- S9n4WmMydMBdmneLMA/sYlBwwfef6O5/kp+DW7HdkEdI2+HRGdnJC0LCicodAGEO1Q7O
- H+1sFoMPz2q92Te6nYTTkjLmX8pgESLLa8cMq4ETWNwuIDw4qKtt1Dw+32lpGSaIBWKD
- EvTQ==
+ bh=T/z+TNYYhCgAI/BfGtM/5w/zFoSuf4sdupwu/B7KwfM=;
+ b=AUCCUdHaMsFJStrPJ1GVnvCOvV1dMsPbySnowqEeSyvVH292H3us2fVd/TT3B7tBVj
+ zl75kl8tAxs8IkkUmNnHi0HqzN7vEvn3e/ybkT29trp6HEgAprDOsYzMM98kbUvmzjYM
+ SVRKPint2Dnf6/hwYDWOSCWkTDQ0C0oq5/IBW03vUWlR2i/7nA9QGu7+AOoXMe6EFOrP
+ 1b4HmdOS24uBKAYUWbR2mcGjkBmVHl0yjXh1rTnQCzRtm7GBXHPK5hU2xjdVbFetGYCI
+ 2PyvqGjqFAKolAPAv54QtizXWqayXn07mtcNRvfosgjRLugL8lanliDWpCbZd3ggJTCM
+ wq5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762377635; x=1762982435;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PhEhkTq+LWTFHumUurvyRKjhtRaQVEgS+gmAOWh95t8=;
- b=hzeXY7EA0it5kifAaNqKX0d5590QaERzPzcbdUt90sZsBBhv03zaCACtyrGHt7tAfO
- dYVGcKHuqV6qNY9jens4EFaRxk1O6F1VjWFKxnU4OOKPWSgn0UHuTRYBxClKd0vJNyoF
- z7+53NffYpHjFGmI8xhMWG6eP3Lo03CX6RGpwMncuXsX8u3S4v36A4XAh1WsjEW6WbOk
- LhABg2RLukVlGPhR6khcnqGbRyfdVKHo6nxk6XIbphyQl6euTgtokhJ6e3oTkHsnHNkz
- SwOyR3R/oLoi4zwLH8EJAKSlZj8tIzgB7WmY5AqtFEAbt+ENkhOulTEd5JpK7y0mrW/o
- LdiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWb1T/Fp+nm66I4QqXkF4nkKGqPZPpEF3xTCv0zNZd7JbGVV+oDHH3tIl/t/bSlsG6zkkasTQccZ/z+@nongnu.org
-X-Gm-Message-State: AOJu0YxTyWpP7RFLirBvX4D1DoepdH/8MtSE42ABn+bQLa6yJhCDXhwB
- MD3ucbU+yW1PBn3QR0OCTBAL4Q9AuNNZhyFlyEcMc+DcoHMVTlnEErAR7CKJTupuBwMEm6W3dVb
- mSyN1vXtukzSIgq9Rw8F5yUA6vjqSWh09etSG6Ga8
-X-Gm-Gg: ASbGncuYArSZh61ImvVluoInP/C7bQBIgIYdhrMe1n6iDye2O2X6xIDnqFViTufRPdI
- PcKi1jEJOfA/p0xOIdGQacsibbQ8goVilDiJdBfoDPxclYRDx7WRsFWgzGkEG8HdI5d79dKcet8
- wrrc4SvNDZpKnPdQ9RDxGhLuzOKQs84KY83Ryk477V6xJjjpg4dF38deehHdDxjsZkbCc11IMVm
- OAqLc3BeS3OUJouryqy/7A2eb4cl0d9XgevpJSmlWy/lR4cUXiMIRHWku+uzZ1Zf5jBdbAmjOYh
- I/A6FAJpZ3nwMQE=
-X-Google-Smtp-Source: AGHT+IEfM+v9iGGdx1BYEBwrRxtuS1IfwFGY7+A9Bzfd7OccCZyoCqyFApq6x9U8ocZGZEY1QDlFrRUSsgzipV8XIDA=
-X-Received: by 2002:ac8:5810:0:b0:4b7:9c77:6ba5 with SMTP id
- d75a77b69052e-4ed82c07764mr197451cf.15.1762377635248; Wed, 05 Nov 2025
- 13:20:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1762377960; x=1762982760;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T/z+TNYYhCgAI/BfGtM/5w/zFoSuf4sdupwu/B7KwfM=;
+ b=jpm8LhKegcK+kms2fyqKstnBUQTN7ubTUEBvtuDkbE3JanNHGQORwZVs3q2Y+kNTdg
+ 6TUX7E1J3d29ypIZSYMgL3NEvTKZG4D69zJuXHlELsKDEPbB1t4nLa6MtfbJ0usXJyU4
+ jK9i89wGewffC1i27GO3MKkjEl0Ep2TCiVQ/xFvEAOMz3lf94A6R8ZmxYzWVRTwj3+ug
+ 2bPM3H8cwwB9E5W0nk4ILoiJ4Meymk/FotvrEs5LJ8qpT/XLclvuVM5FUlUfbUAMgz3d
+ Hm9kvWihCsS7ddSmpMjBI8GPxE+IUfClB6t43MsN0/1pKX41FW2hX7miFw9TX8Hsgrg8
+ xVLQ==
+X-Gm-Message-State: AOJu0YxusAS4NPDn6jAmc+slEbnn6EiPu80nXrTI/JFXaWsOiTKmh6u0
+ yG+hQdvqnun+8nqqPEUpq3FtEWOtIAe5yEElb5CWLx/JNCG5JJFmzcoT0KPIau5Mf6I=
+X-Gm-Gg: ASbGncsl1TVsGt0ZiTLH6GY/zqaE1eCjxGLJ8tB500RC8rm39bW3UZgtX8j449zDza+
+ SzfKneszsDfiUXY3j604sEr5pf7M4LDIijpSnlc5bh12wCqclCAcnliIKF7iE0+3H4pw4eGkDQv
+ rOW7MUOTeGaG1xMZ+UaN+zsaRPq269ITKBibJ4LH1C5Z4Hx8fVAIoaqlMEK3MZnXDTN0S9d6pzJ
+ 21QZkRExtiepgcQMgKdbyRjWurB1aqKl28naTAl8q9BUixf6v8v0u6tIvsKLPGIJBMwrk8z2OEJ
+ bqTtL7HFVAEcfO1fWRT1Ss5ujTcTL17nbXg74QGeiKJVKoXRgTTT1VMhqqb74Gob3yV3oSVU5rg
+ YwcefMKwxK5W61T8ien3aVb9Jdttn/OLAlFqbf5g2+7WxsrsESHr1fdyTPdU3bAC7q+fX+E1G2S
+ 9qk/hvgVGxibPe/wg8qn1pWeXIXHV0qdsjC84LIluM1iDNeVS/zz2thJTYteoQLSxgeA==
+X-Google-Smtp-Source: AGHT+IEHFd/0/FtiPFmTJmda58ZN7FaagZN7Qv5pKeF0pi6sKCErkgY96ZByFDg7AIIg1xYw54aEmw==
+X-Received: by 2002:a05:6e02:2141:b0:433:31a0:4e6d with SMTP id
+ e9e14a558f8ab-433407af6c9mr71164675ab.10.1762377960087; 
+ Wed, 05 Nov 2025 13:26:00 -0800 (PST)
+Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
+ [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-5b7467d5a0asm127785173.2.2025.11.05.13.25.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Nov 2025 13:25:59 -0800 (PST)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+Subject: [PATCH v3 2/3] Hexagon (target/hexagon) Implicit writes to USR don't
+ force packet commit
+Date: Wed,  5 Nov 2025 14:25:53 -0700
+Message-ID: <20251105212554.127017-3-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251105212554.127017-1-ltaylorsimpson@gmail.com>
+References: <20251105212554.127017-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
-References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
- <20251105035859.3709907-10-kane_chen@aspeedtech.com>
-In-Reply-To: <20251105035859.3709907-10-kane_chen@aspeedtech.com>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Wed, 5 Nov 2025 13:20:22 -0800
-X-Gm-Features: AWmQ_bnP7JNqj7KbVxp3ah6m6IwtsK35PCrb5dKXPq7p42YEX2kdxz3PVMsGt2I
-Message-ID: <CA+QoejUqmspVZG=-T8TRbbc5nRXy0YQsLg6A4M54o6k=EkW6kA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/17] hw/arm/aspeed: Attach SPI device to AST1700 model
-To: Kane Chen <kane_chen@aspeedtech.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- troy_lee@aspeedtech.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=nabihestefan@google.com; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,164 +105,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch seems to break qtest-arm
-```
-37/56 qemu:qtest+qtest-arm / qtest-arm/device-introspect-test ERROR
-5.18s killed by signal 6 SIGABRT
->>> QTEST_QEMU_IMG=3D./qemu-img G_TEST_DBUS_DAEMON=3D/b/f/w/src/git/qemu/te=
-sts/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=3D./qemu-system-arm PYTHON=3D/=
-b/f/w/src/git/qemu/build/pyvenv/bin/python3 MSAN_OPTIONS=3Dhalt_on_error=3D=
-1:abort_on_error=3D1:print_summary=3D1:print_stacktrace=3D1 MESON_TEST_ITER=
-ATION=3D1 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summar=
-y=3D1:print_stacktrace=3D1 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-dae=
-mon/qemu-storage-daemon RUST_BACKTRACE=3D1 ASAN_OPTIONS=3Dhalt_on_error=3D1=
-:abort_on_error=3D1:print_summary=3D1 MALLOC_PERTURB_=3D175 /b/f/w/src/git/=
-qemu/build/tests/qtest/device-introspect-test --tap -k
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80 =E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95
-stderr:
-**
-ERROR:../hw/misc/aspeed_ast1700.c:113:aspeed_ast1700_instance_init:
-code should not be reached
-Broken pipe
-../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from
-signal 6 (Aborted) (core dumped)
+Implicit writes to USR are only to specific fields of USR to indicate
+side effects (e.g., saturation overflow, floating point status).
+In these cases, we don't force a packet commit. This will allow more
+packets to be short-circuited (avoid writing the results to temporaries).
 
-(test program exited with status code -6)
-```
+When there is a packet commit with an implicit write to USR, we initialize
+new_value_usr during gen_start_packet and write to USR in gen_reg_writes.
 
-Failed by running:
-```
-./configure \
-  --target-list=3Darm-softmmu,arm-linux-user,aarch64-softmmu,aarch64-linux-=
-user,i386-softmmu
-\
-  --cc=3Dclang-18 --extra-cflags=3D-Wno-deprecated-declarations \
-  --cxx=3Dclang++-18 --extra-cxxflags=3D-Wno-deprecated-declarations
-make -j 32 all check-report-unit.junit.xml
-check-report-qtest-arm.junit.xml check-report-qtest-aarch64.junit.xml
-check-report-qtest-i386.junit.xml
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/translate.h |  1 +
+ target/hexagon/translate.c | 35 ++++++++++++++++++++++-------------
+ 2 files changed, 23 insertions(+), 13 deletions(-)
 
-Thanks,
-Nabih
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index d251e2233f..a0102b6cbd 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -39,6 +39,7 @@ typedef struct DisasContext {
+     int reg_log_idx;
+     DECLARE_BITMAP(regs_written, TOTAL_PER_THREAD_REGS);
+     DECLARE_BITMAP(predicated_regs, TOTAL_PER_THREAD_REGS);
++    bool implicit_usr_write;
+     int preg_log[PRED_WRITES_MAX];
+     int preg_log_idx;
+     DECLARE_BITMAP(pregs_written, NUM_PREGS);
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 8fce219c0d..f3240953b5 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -272,12 +272,7 @@ static void mark_implicit_reg_write(DisasContext *ctx, int attrib, int rnum)
+ {
+     uint16_t opcode = ctx->insn->opcode;
+     if (GET_ATTRIB(opcode, attrib)) {
+-        /*
+-         * USR is used to set overflow and FP exceptions,
+-         * so treat it as conditional
+-         */
+-        bool is_predicated = GET_ATTRIB(opcode, A_CONDEXEC) ||
+-                             rnum == HEX_REG_USR;
++        bool is_predicated = GET_ATTRIB(opcode, A_CONDEXEC);
+ 
+         /* LC0/LC1 is conditionally written by endloop instructions */
+         if ((rnum == HEX_REG_LC0 || rnum == HEX_REG_LC1) &&
+@@ -291,6 +286,14 @@ static void mark_implicit_reg_write(DisasContext *ctx, int attrib, int rnum)
+     }
+ }
+ 
++static void mark_implicit_usr_write(DisasContext *ctx, int attrib)
++{
++    uint16_t opcode = ctx->insn->opcode;
++    if (GET_ATTRIB(opcode, attrib)) {
++        ctx->implicit_usr_write = true;
++    }
++}
++
+ static void mark_implicit_reg_writes(DisasContext *ctx)
+ {
+     mark_implicit_reg_write(ctx, A_IMPLICIT_WRITES_FP,  HEX_REG_FP);
+@@ -300,8 +303,9 @@ static void mark_implicit_reg_writes(DisasContext *ctx)
+     mark_implicit_reg_write(ctx, A_IMPLICIT_WRITES_SA0, HEX_REG_SA0);
+     mark_implicit_reg_write(ctx, A_IMPLICIT_WRITES_LC1, HEX_REG_LC1);
+     mark_implicit_reg_write(ctx, A_IMPLICIT_WRITES_SA1, HEX_REG_SA1);
+-    mark_implicit_reg_write(ctx, A_IMPLICIT_WRITES_USR, HEX_REG_USR);
+-    mark_implicit_reg_write(ctx, A_FPOP, HEX_REG_USR);
++
++    mark_implicit_usr_write(ctx, A_IMPLICIT_WRITES_USR);
++    mark_implicit_usr_write(ctx, A_FPOP);
+ }
+ 
+ static void mark_implicit_pred_write(DisasContext *ctx, int attrib, int pnum)
+@@ -351,11 +355,6 @@ static bool need_commit(DisasContext *ctx)
+         }
+     }
+ 
+-    /* Floating point instructions are hard-coded to use new_value */
+-    if (check_for_attrib(pkt, A_FPOP)) {
+-        return true;
+-    }
+-
+     if (ctx->read_after_write || ctx->has_hvx_overlap) {
+         return true;
+     }
+@@ -467,6 +466,12 @@ static void gen_start_packet(DisasContext *ctx)
+         }
+     }
+ 
++    /* Preload usr to new_value_usr */
++    if (ctx->need_commit && ctx->implicit_usr_write &&
++        !test_bit(HEX_REG_USR, ctx->regs_written)) {
++        tcg_gen_mov_tl(hex_new_value_usr, hex_gpr[HEX_REG_USR]);
++    }
++
+     /*
+      * Preload the predicated pred registers into ctx->new_pred_value[pred_num]
+      * Only endloop instructions conditionally write to pred registers
+@@ -587,6 +592,10 @@ static void gen_reg_writes(DisasContext *ctx)
+             ctx->is_tight_loop = false;
+         }
+     }
++
++    if (ctx->implicit_usr_write && !test_bit(HEX_REG_USR, ctx->regs_written)) {
++        tcg_gen_mov_tl(hex_gpr[HEX_REG_USR], hex_new_value_usr);
++    }
+ }
+ 
+ static void gen_pred_writes(DisasContext *ctx)
+-- 
+2.43.0
 
-Nabih Estefan (he/him) |  Software Engineer |
-nabihestefan@google.com |  857-308-9574
-
-
-
-On Tue, Nov 4, 2025 at 8:03=E2=80=AFPM Kane Chen via <qemu-devel@nongnu.org=
-> wrote:
->
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
->
-> Connect the SPI device to AST1700 model.
->
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> ---
->  include/hw/misc/aspeed_ast1700.h |  1 +
->  hw/misc/aspeed_ast1700.c         | 28 ++++++++++++++++++++++++++++
->  2 files changed, 29 insertions(+)
->
-> diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/aspeed_as=
-t1700.h
-> index 391c8687f5..e55deea67a 100644
-> --- a/include/hw/misc/aspeed_ast1700.h
-> +++ b/include/hw/misc/aspeed_ast1700.h
-> @@ -33,6 +33,7 @@ struct AspeedAST1700SoCState {
->      AspeedLTPIState ltpi;
->      SerialMM uart;
->      MemoryRegion sram;
-> +    AspeedSMCState spi;
->  };
->
->  #endif /* ASPEED_AST1700_H */
-> diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
-> index 6f7ff625b5..ba44e484e8 100644
-> --- a/hw/misc/aspeed_ast1700.c
-> +++ b/hw/misc/aspeed_ast1700.c
-> @@ -20,15 +20,19 @@
->  #define AST1700_SOC_SRAM_SIZE        0x00040000
->
->  enum {
-> +    ASPEED_AST1700_DEV_SPI0,
->      ASPEED_AST1700_DEV_SRAM,
->      ASPEED_AST1700_DEV_UART12,
->      ASPEED_AST1700_DEV_LTPI_CTRL,
-> +    ASPEED_AST1700_DEV_SPI0_MEM,
->  };
->
->  static const hwaddr aspeed_ast1700_io_memmap[] =3D {
-> +    [ASPEED_AST1700_DEV_SPI0]      =3D  0x00030000,
->      [ASPEED_AST1700_DEV_SRAM]      =3D  0x00BC0000,
->      [ASPEED_AST1700_DEV_UART12]    =3D  0x00C33B00,
->      [ASPEED_AST1700_DEV_LTPI_CTRL] =3D  0x00C34000,
-> +    [ASPEED_AST1700_DEV_SPI0_MEM]  =3D  0x04000000,
->  };
->  static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
->  {
-> @@ -76,6 +80,20 @@ static void aspeed_ast1700_realize(DeviceState *dev, E=
-rror **errp)
->                          aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART=
-12],
->                          sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart),=
- 0));
->
-> +    /* SPI */
-> +    object_property_set_link(OBJECT(&s->spi), "dram",
-> +                             OBJECT(&s->iomem), &error_abort);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi), errp)) {
-> +        return;
-> +    }
-> +    memory_region_add_subregion(&s->iomem,
-> +                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SPI0=
-],
-> +                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->spi), =
-0));
-> +
-> +    memory_region_add_subregion(&s->iomem,
-> +                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SPI0=
-_MEM],
-> +                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->spi), =
-1));
-> +
->      /* LTPI controller */
->      if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
->          return;
-> @@ -88,11 +106,21 @@ static void aspeed_ast1700_realize(DeviceState *dev,=
- Error **errp)
->  static void aspeed_ast1700_instance_init(Object *obj)
->  {
->      AspeedAST1700SoCState *s =3D ASPEED_AST1700(obj);
-> +    char socname[8];
-> +    char typename[64];
-> +
-> +    if (sscanf(object_get_typename(obj), "aspeed.ast1700-%7s", socname) =
-!=3D 1) {
-> +        g_assert_not_reached();
-> +    }
->
->      /* UART */
->      object_initialize_child(obj, "uart[*]", &s->uart,
->                              TYPE_SERIAL_MM);
->
-> +    /* SPI */
-> +    snprintf(typename, sizeof(typename), "aspeed.spi%d-%s", 0, socname);
-> +    object_initialize_child(obj, "ioexp-spi[*]", &s->spi,
-> +                            typename);
->      /* LTPI controller */
->      object_initialize_child(obj, "ltpi-ctrl",
->                              &s->ltpi, TYPE_ASPEED_LTPI);
-> --
-> 2.43.0
->
->
 
