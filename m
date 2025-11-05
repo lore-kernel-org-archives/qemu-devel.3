@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2472CCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93077CCFA04
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGUfv-0007S5-SL; Tue, 04 Nov 2025 22:59:12 -0500
+	id 1vGUgv-0008O4-O5; Tue, 04 Nov 2025 23:00:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUft-0007Ro-LV; Tue, 04 Nov 2025 22:59:09 -0500
+ id 1vGUgs-0008HA-8j; Tue, 04 Nov 2025 23:00:10 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUfr-0006sZ-14; Tue, 04 Nov 2025 22:59:09 -0500
+ id 1vGUgq-0000YI-LP; Tue, 04 Nov 2025 23:00:10 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 5 Nov
- 2025 11:59:00 +0800
+ 2025 11:59:04 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 5 Nov 2025 11:59:00 +0800
+ Transport; Wed, 5 Nov 2025 11:59:04 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,11 +32,12 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 00/17] hw/arm/aspeed: AST1700 LTPI support and device
- hookups
-Date: Wed, 5 Nov 2025 11:58:38 +0800
-Message-ID: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 14/17] hw/arm/aspeed: Attach WDT device to AST1700 model
+Date: Wed, 5 Nov 2025 11:58:52 +0800
+Message-ID: <20251105035859.3709907-15-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -67,97 +68,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Hi all,
+Connect the WDT device to AST1700 model.
 
-LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
-2.0 specification (see Figure 2):
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
-
-LTPI provides a protocol and physical interface for tunneling various
-low-speed signals between the Host Processor Module (HPM) and the
-Satellite Controller Module (SCM). In Figure 2 of the specification,
-the AST27x0 SoC (left) integrates two LTPI controllers, allowing it to
-connect to up to two AST1700 boards. On the other side, the AST1700
-consolidates HPM FPGA functions and multiple peripheral interfaces
-(GPIO, UART, I2C, I3C, etc.) onto a single board.
-
-Because the AST1700 exposes additional I/O interfaces (GPIO, I2C, I3C,
-and others), it acts as an I/O expander. Once connected over LTPI,
-the AST27x0 can control additional downstream devices through this link.
-
-This patch series introduces a basic LTPI controller model and wires it
-into the AST27x0 SoC. It also adds the AST1700-specific LTPI expander
-device and gradually connects common peripherals on the AST1700 model.
-For blocks that are not yet functionally implemented (I3C, SGPIOM, PWM),
-their MMIO regions are modeled as unimplemented devices to reserve
-address space and make the missing functionality explicit, ensuring that
-guest probing remains stable.
-
-In the official release images, the AST1700 functions are not included
-by default. To test the AST1700-related functionality, please include
-the following DTS files for probing:
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi0.dtsi
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi1.dtsi
-
-After including these DTS files in the BMC image, you can verify LTPI
-functionality using the following scenarios:
-
-1. In U-Boot:
-   Run the ltpi command to trigger the LTPI connection and display the
-   current connection status.
-2. In BMC Linux:
-   Run i2cdetect -y <16-38> to scan and test the I2C buses exposed by
-   the AST1700.
-
-Any feedback or suggestions are appreciated!
-
-Kane
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
+ include/hw/misc/aspeed_ast1700.h |  3 +++
+ hw/misc/aspeed_ast1700.c         | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-ChangeLog
----------
-v2:
-- Separate the AST1700 model into a standalone implementation
-- Refine the mechanism for assigning the AST1700 board number
-
-v1:
-- Initial version
----
-
-Kane-Chen-AS (17):
-  hw/arm/aspeed: Add LTPI controller
-  hw/arm/aspeed: Attach LTPI controller to AST27X0 platform
-  hw/arm/aspeed: Add AST1700 LTPI expander device model
-  hw/arm/aspeed: Integrate AST1700 device into AST27X0
-  hw/arm/aspeed: Integrate interrupt controller for AST1700
-  hw/arm/aspeed: Attach LTPI controller to AST1700 model
-  hw/arm/aspeed: Attach UART device to AST1700 model
-  hw/arm/aspeed: Attach SRAM device to AST1700 model
-  hw/arm/aspeed: Attach SPI device to AST1700 model
-  hw/arm/aspeed: Attach ADC device to AST1700 model
-  hw/arm/aspeed: Attach SCU device to AST1700 model
-  hw/arm/aspeed: Attach GPIO device to AST1700 model
-  hw/arm/aspeed: Attach I2C device to AST1700 model
-  hw/arm/aspeed: Attach WDT device to AST1700 model
-  hw/arm/aspeed: Model AST1700 I3C block as unimplemented device
-  hw/arm/aspeed: Model AST1700 SGPIOM block as unimplemented device
-  hw/arm/aspeed: Model AST1700 PWM block as unimplemented device
-
- include/hw/arm/aspeed_soc.h      |  20 +-
- include/hw/intc/aspeed_intc.h    |   2 +
- include/hw/misc/aspeed_ast1700.h |  51 ++++++
- include/hw/misc/aspeed_ltpi.h    |  25 +++
- hw/arm/aspeed_ast27x0.c          | 154 ++++++++++++++--
- hw/intc/aspeed_intc.c            |  60 ++++++
- hw/misc/aspeed_ast1700.c         | 303 +++++++++++++++++++++++++++++++
- hw/misc/aspeed_ltpi.c            |  98 ++++++++++
- hw/misc/meson.build              |   2 +
- 9 files changed, 700 insertions(+), 15 deletions(-)
- create mode 100644 include/hw/misc/aspeed_ast1700.h
- create mode 100644 include/hw/misc/aspeed_ltpi.h
- create mode 100644 hw/misc/aspeed_ast1700.c
- create mode 100644 hw/misc/aspeed_ltpi.c
-
+diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/aspeed_ast1700.h
+index 4aefb7ea35..f89de44539 100644
+--- a/include/hw/misc/aspeed_ast1700.h
++++ b/include/hw/misc/aspeed_ast1700.h
+@@ -19,6 +19,8 @@
+ #include "hw/char/serial-mm.h"
+ #include "hw/misc/unimp.h"
+ 
++#define AST1700_WDT_NUM              9
++
+ #define TYPE_ASPEED_AST1700 "aspeed.ast1700"
+ #define TYPE_ASPEED_AST1700_AST2700 "aspeed.ast1700-ast2700"
+ 
+@@ -39,6 +41,7 @@ struct AspeedAST1700SoCState {
+     AspeedSCUState scu;
+     AspeedGPIOState gpio;
+     AspeedI2CState i2c;
++    AspeedWDTState wdt[AST1700_WDT_NUM];
+ };
+ 
+ #endif /* ASPEED_AST1700_H */
+diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
+index 6c7483c88c..c2dc834b4f 100644
+--- a/hw/misc/aspeed_ast1700.c
++++ b/hw/misc/aspeed_ast1700.c
+@@ -28,6 +28,7 @@ enum {
+     ASPEED_AST1700_DEV_I2C,
+     ASPEED_AST1700_DEV_UART12,
+     ASPEED_AST1700_DEV_LTPI_CTRL,
++    ASPEED_AST1700_DEV_WDT,
+     ASPEED_AST1700_DEV_SPI0_MEM,
+ };
+ 
+@@ -40,10 +41,13 @@ static const hwaddr aspeed_ast1700_io_memmap[] = {
+     [ASPEED_AST1700_DEV_I2C]       =  0x00C0F000,
+     [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+     [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
++    [ASPEED_AST1700_DEV_WDT]       =  0x00C37000,
+     [ASPEED_AST1700_DEV_SPI0_MEM]  =  0x04000000,
+ };
++
+ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+ {
++    int i;
+     AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+     hwaddr uart_base;
+@@ -145,10 +149,27 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->iomem,
+                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_LTPI_CTRL],
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ltpi), 0));
++
++    /* WDT */
++    for (i = 0; i < AST1700_WDT_NUM; i++) {
++        AspeedWDTClass *awc = ASPEED_WDT_GET_CLASS(&s->wdt[i]);
++        hwaddr wdt_offset = aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_WDT] +
++                            i * awc->iosize;
++
++        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu),
++                                 &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
++        memory_region_add_subregion(&s->iomem,
++                        wdt_offset,
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->wdt[i]), 0));
++    }
+ }
+ 
+ static void aspeed_ast1700_instance_init(Object *obj)
+ {
++    int i;
+     AspeedAST1700SoCState *s = ASPEED_AST1700(obj);
+     char socname[8];
+     char typename[64];
+@@ -187,6 +208,13 @@ static void aspeed_ast1700_instance_init(Object *obj)
+     object_initialize_child(obj, "ltpi-ctrl",
+                             &s->ltpi, TYPE_ASPEED_LTPI);
+ 
++    /* WDT */
++    for (i = 0; i < AST1700_WDT_NUM; i++) {
++        snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
++        object_initialize_child(obj, "ioexp-wdt[*]",
++                                &s->wdt[i], typename);
++    }
++
+     return;
+ }
+ 
 -- 
 2.43.0
 
