@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB112CCFA07
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 09:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F7FCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 09:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGZT3-0005z0-8k; Wed, 05 Nov 2025 04:06:13 -0500
+	id 1vGZbZ-00074k-Lw; Wed, 05 Nov 2025 04:15:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vGZT0-0005yX-UQ
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 04:06:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vGZbR-000745-Pl; Wed, 05 Nov 2025 04:14:54 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vGZSy-0007k7-Q8
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 04:06:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762333567;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JT3lY+gkcP7vA8o48OfuF4DrzIjw7+cLZeuS47LLdC4=;
- b=Rntkx5SnT1U+g4yc4SJW+whjoe6r/QBqZd1JW/C519SReH9//ZGMTEPCmInqR/Y1k577XN
- IUjzYJo0WG3pp/240CDhibx68gaVcgyKDCaEP4mgEpVElUkOfdTGxJGMnDfIdwmKEwkvoL
- Zrw47dbGBbzo/xs3hZ/JvnhjSlMagf4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-z4qS2qghPB2ZenxXVlko_Q-1; Wed,
- 05 Nov 2025 04:06:03 -0500
-X-MC-Unique: z4qS2qghPB2ZenxXVlko_Q-1
-X-Mimecast-MFC-AGG-ID: z4qS2qghPB2ZenxXVlko_Q_1762333562
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A37AE1956060; Wed,  5 Nov 2025 09:06:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C372F1956095; Wed,  5 Nov 2025 09:06:00 +0000 (UTC)
-Date: Wed, 5 Nov 2025 09:05:56 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jon Kohler <jon@nutanix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "ankur.a.arora@oracle.com" <ankur.a.arora@oracle.com>
-Subject: Re: [PATCH] util/oslib-posix: increase memprealloc thread count to 32
-Message-ID: <aQsTdMyp6aPmhjDY@redhat.com>
-References: <20251103185750.1394036-1-jon@nutanix.com>
- <aQka0DTrVsJrfU5z@redhat.com>
- <545E78A6-6013-45E1-9C3B-7D027FF12E00@nutanix.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vGZbP-0002PK-Ow; Wed, 05 Nov 2025 04:14:53 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 49E9B1661FE;
+ Wed, 05 Nov 2025 12:14:40 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A7A2830C5E1;
+ Wed, 05 Nov 2025 12:14:47 +0300 (MSK)
+Message-ID: <02f20cb3-c9f5-481c-b34e-bc56b4724f68@tls.msk.ru>
+Date: Wed, 5 Nov 2025 12:14:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_?=
+ =?UTF-8?Q?=E2=86=92_8=2E2=2E10_due_to_virtio-net_feature_mismatch_=28VIRTIO?=
+ =?UTF-8?Q?=5FF=5FRING=5FRESET_/_USO_features=29?=
+To: Jinpu Wang <jinpu.wang@ionos.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Peter Xu <peterx@redhat.com>, qemu-stable@nongnu.org,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Yu Zhang <yu.zhang@ionos.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <545E78A6-6013-45E1-9C3B-7D027FF12E00@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,84 +104,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 08:33:05PM +0000, Jon Kohler wrote:
+On 11/5/25 11:49, Jinpu Wang wrote:
+> Hello QEMU developers,
 > 
-> 
-> > On Nov 3, 2025, at 4:14 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > 
-> > On Mon, Nov 03, 2025 at 11:57:50AM -0700, Jon Kohler wrote:
-> >> Increase MAX_MEM_PREALLOC_THREAD_COUNT from 16 to 32. This was last
-> >> touched in 2017 [1] and, since then, physical machine sizes and VMs
-> >> therein have continue to get even bigger, both on average and on the
-> >> extremes.
-> >> 
-> >> For very large VMs, using 16 threads to preallocate memory can be a
-> >> non-trivial bottleneck during VM start-up and migration. Increasing
-> >> this limit to 32 threads reduces the time taken for these operations.
-> >> 
-> >> Test results from quad socket Intel 8490H (4x 60 cores) show a fairly
-> >> linear gain of 50% with the 2x thread count increase.
-> >> 
-> >> ---------------------------------------------
-> >> Idle Guest w/ 2M HugePages   | Start-up time
-> >> ---------------------------------------------
-> >> 240 vCPU, 7.5TB (16 threads) | 2m41.955s
-> >> ---------------------------------------------
-> >> 240 vCPU, 7.5TB (32 threads) | 1m19.404s
-> >> ---------------------------------------------
-> > 
-> > If we're configuring a guest with 240 vCPUs, then this implies the admin
-> > is expecting that the guest will consume upto 240 host CPUs worth of
-> > compute time.
-> > 
-> > What is the purpose of limiting the number of prealloc threads to a
-> > value that is an order of magnitude less than the number of vCPUs the
-> > guest has been given ?
-> 
-> Daniel - thanks for the quick review and thoughts here.
-> 
-> I looked back through the original commits that led up to the current 16
-> thread max, and it wasn’t immediately clear to me why we clamped it at
-> 16. Perhaps there was some other contention at the time.
-> 
-> > Have you measured what startup time would look like with 240 prealloc
-> > threads ? Do we hit some scaling limit before that point making more
-> > prealloc threads counter-productive ?
-> 
-> I have, and it isn’t wildly better, it comes down to about 50-ish seconds,
-> as you start running into practical limitations on the speed of memory, as
-> well as context switching if you’re doing other things on the host at the
-> same time.
-> 
-> In playing around with some other values, here’s how they shake out:
-> 32 threads: 1m19s
-> 48 threads: 1m4s
-> 64 threads: 59s
-> …
-> 240 threads: 50s
-> 
-> This also looks much less exciting when the amount of memory is
-> smaller. For smaller memory sizes (I’m testing with 7.5TB), anything
-> smaller than that gets less and less fun from a speedup perspective.
-> 
-> Putting that all together, 32 seemed like a sane number with a solid
-> speedup on fairly modern hardware.
+> I’m encountering a migration failure when trying to live-migrate a VM
+> from a newer host (kernel 6.12 + QEMU 9.2.4) to an older one (kernel
+> 6.1 + QEMU 8.2.10).
 
-Yep, that's useful background, I've no objectino to picking 32.
+This is just to note - both 9.2.x and 8.2.x series are end-of-line now
+from the qemu PoV, there are no further releases planned.
 
-Perhaps worth putting a bit more of this details into the
-commit message as background.
+It'd be nice to find out what's going on here anyway.  Maybe you can
+patch this on your side.
 
+Thanks,
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+/mjt
 
