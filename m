@@ -4,88 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF62CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 10:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFCDCCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 10:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGaY6-0006Qm-8i; Wed, 05 Nov 2025 05:15:30 -0500
+	id 1vGajY-0008U9-18; Wed, 05 Nov 2025 05:27:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1vGaY4-0006QM-Vr
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:15:29 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1vGaY3-0008M2-A9
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:15:28 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-63bea08a326so9204136a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 02:15:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGajW-0008Tp-D6
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:27:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGajT-0001sX-22
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:27:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762338433;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=UnZQXnRZTyOFsbACApF2SNHIrXKgGwFGrsQwhjKWgwI=;
+ b=QVMyO+5PxE2MCj1FGskW0ZjU39H158mBYuxuY+gZZTkbCkR5dhpabhoaK4LOxn2z6QQDun
+ 5L6AJrYbcpT7wn3jtlLgTgFqpahl+psQOIXFOkkXFCyLSjgMJbspmBK/c/wPG9wsrcgBlT
+ 7+E7BgzukbQOIFT1ie7/C1l7LO9n3TY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-112-93UIQOqFPMOAwW0b2UDgRw-1; Wed, 05 Nov 2025 05:27:11 -0500
+X-MC-Unique: 93UIQOqFPMOAwW0b2UDgRw-1
+X-Mimecast-MFC-AGG-ID: 93UIQOqFPMOAwW0b2UDgRw_1762338431
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477212937eeso44606745e9.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 02:27:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1762337725; x=1762942525; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tswx9d+CI2f78KOpXEW8SmE1eY0NZdXjebel8U0Z1eY=;
- b=ZvboFxajbcykZvAY3iDoUGNReQId85gBr11O5eHGZQqp4bITWRaal2tku7LiacpwLw
- swREibErco0RwyIC7oRa2pUoo3EgpUgroNbZAERZQaSx3RtoiXybrurhzb1iqFgdkvQW
- q8FbabB9fyyD/HnFkEmkxHW3UGZaZuxOSIkGWaP6ecRSs9fbs+6WTKduK/vWQVj+TuZT
- 40yDPo5ZbkStTQkgCSV4eFU/QMvsEv/V6iU+9ygCotshcgZsELzI6Wsou1ZImaFwaYSc
- HWELP0YuQvZLy1Em47NsRARRceLuK3Ta3ilhHn839gNKK4/XTH2SSvrmCdqULnCEmx60
- GEEw==
+ d=redhat.com; s=google; t=1762338430; x=1762943230; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=UnZQXnRZTyOFsbACApF2SNHIrXKgGwFGrsQwhjKWgwI=;
+ b=Hq1nGnA9y76ozlkA1+4JsJJePB3bEI7jyXmsFswWee2TU+d3PrUnwXmb9NUNq25vdh
+ YvcbSJUTnaZjlI+oTMBZnINm4cIjVp8eO5m0wU09T7nHlj2OWPDZPIAvrNcQZhvd8OfT
+ S/1xXmTBvDzf7Aba/vDup38e9vd4wweQvjQIAsSuFcCxQ0+f+crAE9nKx10TTfqd1Pfj
+ w5XpgbhMLWPJNYR7sMKU7E16inilaSKrypVDkHsO35GYI53DXXesgQu8mpjn4uKl6g/C
+ MN3ILbYdZ65P+oLbEIt/Icp0DZkLSWHB8W9/Zre7BUDKKq3eFPNRm3TulDreqkyZ5iWs
+ eFjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762337725; x=1762942525;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tswx9d+CI2f78KOpXEW8SmE1eY0NZdXjebel8U0Z1eY=;
- b=GiQsbs185QmJjJYT1eG5qlVoSDxMumG9+hloPAgaJT48artc3yHVw1HpFi+QdHhlU4
- 1Fop7zFR2CvAAXKRIXLgXbgFDWYLZhRjmDJjhvZqyHJsGruHnEL99I32ycdrkGY6SWPh
- KYheXAvNiPz8l27xcdHRKdoXjp3IYFAvZ4pu+Pxa2rqedkWuPOaKf9eiboUZEY0ArobB
- FkrFZBeXS4Gt+yH69zFOemzyJ7wpUPZbB+swZyG/6twjfWexLwXZaKRDkg7S3uDgjtqM
- y0cZRxYxxqVhcRMK6TuQLgnz6qbisTcMNmltkzLp7uWeKpLEZJcu2MR/1dNINAsE7fHg
- 1bgg==
+ d=1e100.net; s=20230601; t=1762338430; x=1762943230;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UnZQXnRZTyOFsbACApF2SNHIrXKgGwFGrsQwhjKWgwI=;
+ b=cNcnSmXYxTfyIteMHueCmkrHkm19Km4hgqKL41sUeQJ6q6SXqBphujw55JEBjgoPCA
+ yx8M6FXkHmiWvNc9DC61L6+XrWW8KKIiJ8+nAwtVWns5gJlcNgd378xRlMfKikOm3GQN
+ Hg1U+sspmB+tpnN0ireqba66REvBNiqin8xiCfRzI2ScAFruFidxcx/dWCWwo7Lbg5yO
+ wwbKz5ogTsdsz0C4gAgQ5EAcwscEUMoW4FuEqQsDcan6JXkvGP11bkXcY+wnDEl8P/3I
+ pjsBNIPV9IksamKAN9dbRGdojnQUF5CM0vtOR2qxjRtNMVcbSoxgJf4iSUatNeGCGRSJ
+ jBYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVlxISNY4KxreCmuZm9PjMEnm71MfujuOEzLK0VDdRObw8AI4UV8sHt582P+V7B/+GM3QB3gZUieq1@nongnu.org
-X-Gm-Message-State: AOJu0YyucKEIIa7gxyMs4G7dF5egnCh1qR9psopxWEFxitYa/pTVFIDX
- JR6+c3iocbvADANmzH3pJihawQw7TdRgv3DRDhLNRTMXWTCeLuGpcH8cCAQnAsAYlaWPyv5Qf79
- Ol7yCXoq8+7fzgyqN4ayhFZOJbLlKL/WDO3LQJvsH
-X-Gm-Gg: ASbGncvjGZDDgt3JxbJlpxgpKAL7ExwGZTVUI+ksKjCvXHKQcigAJnl38s3b3YtZ2eU
- NozphTim1/8ZKNIL38abyXEwz66EvOhFiMXUIc2VRpbB4Zb1x1jAHvb3BI4VvCy5xC2ZD27YRTl
- DmbEcXv6msYskHoIN4mw5R6fSkxxzO9LeK26oiYG650B4ajZGbvyP9/pVl5tzr1qAxmpTEqWiox
- ZJhRZT3JNtr39Nv9HJg5A6CpGRmKLRe00mGnD93swhvtCma8bU1Ll0rdfdJsjFe7YmTcgKRNP5J
- +S+A4GgRoLdZ9rbACT4=
-X-Google-Smtp-Source: AGHT+IGnm/8ANrobJhYofRD3ZyHYEYVsQQiBR3bZF7Q49v10jV6HnigXMVfdtUOpUz/q/7KAckUVQR8O/XkBzd54uOE=
-X-Received: by 2002:a17:907:9694:b0:b72:1b8b:cc3 with SMTP id
- a640c23a62f3a-b72654c9882mr242217866b.33.1762337724759; Wed, 05 Nov 2025
- 02:15:24 -0800 (PST)
+ AJvYcCUMlZnXO87lepHRnUdUef1+yo3Dy+1WioY0MvCIVmpLGt3dvDDpOAnbqtyBcWvwyAUJ5bPHm6H+v5EF@nongnu.org
+X-Gm-Message-State: AOJu0YwOSS3jLsNTDmUF3jC/0rYt2ta7fc2NUb58e3H0b2ccms8EJcpI
+ e0qvVwRC91KHOhJcf1jv0T+rSbEoaU/pneTAdSJrc2ZukjL8e5NKgB6h/jiqXLifd4evybe9OfZ
+ iIG2+rrVW2ulGIXCQ8ia9HFvFMylsKOmiKR3gWReMMGIznji2LEXmVCO4
+X-Gm-Gg: ASbGnct9Zl1k3P73YVGRbVpna9+RxonozMKsM/onJLPecmjEs9IZ+FPysFJfL56MTR4
+ 5LlvBHvGOCnZC9OBiOkQsl/PQoi7rht1IL+eMkoAPf0CrEBuVpZtittdm97lzQYHVJrxCNdglvJ
+ CQpkKNoFhM65HVomBo2GYZ4yQt7ghAqfqv5haVuZ1ata1to+fCEG/rjKowMimGQi7vsz0MQMZNB
+ phMnDioLFCCHoexTuP+1/1QIh0d5ENnIen3BgMUWlWCe9k294RsATS5/RYmL3TfY8l1DcYK46G3
+ fzdSwovmp4H+TCFpktPe7ZVPdfe24mMVEqJqEMoW4BRZe3J0JSL7FR9U2CEC+DDKt9NwVuTLoKL
+ u7gGR1c3c42HAIBeGYz++c6sr4qoiafAe3w6Jew==
+X-Received: by 2002:a05:600c:8b77:b0:471:7a:791a with SMTP id
+ 5b1f17b1804b1-4775cdbe2bemr21285825e9.7.1762338430535; 
+ Wed, 05 Nov 2025 02:27:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7QBmyEMy7IuUwX0Z7DeqgLvwYeTauMNQBs+RrlrAdgoaSE7pow6l9RDSaiUYtnQa7fwRM2Q==
+X-Received: by 2002:a05:600c:8b77:b0:471:7a:791a with SMTP id
+ 5b1f17b1804b1-4775cdbe2bemr21285515e9.7.1762338430034; 
+ Wed, 05 Nov 2025 02:27:10 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4775ce211d8sm41895315e9.11.2025.11.05.02.27.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Nov 2025 02:27:08 -0800 (PST)
+Message-ID: <5e69d550-fc52-43e0-9437-cc8600fc65c7@redhat.com>
+Date: Wed, 5 Nov 2025 11:27:08 +0100
 MIME-Version: 1.0
-References: <20250903075721.77623-1-chigot@adacore.com>
- <20250903075721.77623-6-chigot@adacore.com>
- <aPqCJRNCjxcZ6jq5@redhat.com> <874ir9ot1a.fsf@pond.sub.org>
- <aQsafmFOrfEmOc0M@redhat.com>
-In-Reply-To: <aQsafmFOrfEmOc0M@redhat.com>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Wed, 5 Nov 2025 11:15:12 +0100
-X-Gm-Features: AWmQ_blYMyBgohxmROGPZb-U3vXj2OarOFYI5xs2KtTDD2lRHlAywk-WZPiIMOM
-Message-ID: <CAJ307EgQBvuPVTDNiq-rL8D+n2iBPvbXVXhRGUGvv2Mm5Hrh+Q@mail.gmail.com>
-Subject: Re: [PATCH 5/5] vvfat: add support for "size" options
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- hreitz@redhat.com, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=chigot@adacore.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/17] hw/arm/aspeed: AST1700 LTPI support and device
+ hookups
+To: Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +174,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 5, 2025 at 10:36=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote=
-:
->
-> Am 05.11.2025 um 08:08 hat Markus Armbruster geschrieben:
-> > Kevin Wolf <kwolf@redhat.com> writes:
-> >
-> > [...]
-> >
-> > > To me it looks a bit like what we really want is an enum for floppy
-> > > sizes (though is there any real reason why we have only those two?), =
-but
-> > > an arbitrary size for hard disks.
-> > >
-> > > Without the enum, obviously, users could specify 1440k and that would=
- do
-> > > the right thing. Maybe special casing whatever 1.44M and 2.88M result
-> > > in and translating them into 1440k and 2880k could be more justifiabl=
-e
-> > > than special casing 1M and 2M, but it would still be ugly.
-> > >
-> > > Markus, do you have any advice how this should be represented in QAPI=
-?
-> >
-> > Still want answers here?
->
-> Yes, I'm still not sure how we could best represent both hard disk and
-> floppy sizes in vvfat in a way that isn't completely counterintuitive
-> for users, that also isn't just arbitrary magic and that works on the
-> command line.
+On 11/5/25 04:58, Kane Chen wrote:
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> 
+> Hi all,
+> 
+> LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
+> 2.0 specification (see Figure 2):
+> https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+> 
+> LTPI provides a protocol and physical interface for tunneling various
+> low-speed signals between the Host Processor Module (HPM) and the
+> Satellite Controller Module (SCM). In Figure 2 of the specification,
+> the AST27x0 SoC (left) integrates two LTPI controllers, allowing it to
+> connect to up to two AST1700 boards. On the other side, the AST1700
+> consolidates HPM FPGA functions and multiple peripheral interfaces
+> (GPIO, UART, I2C, I3C, etc.) onto a single board.
+> 
+> Because the AST1700 exposes additional I/O interfaces (GPIO, I2C, I3C,
+> and others), it acts as an I/O expander. Once connected over LTPI,
+> the AST27x0 can control additional downstream devices through this link.
+> 
+> This patch series introduces a basic LTPI controller model and wires it
+> into the AST27x0 SoC. It also adds the AST1700-specific LTPI expander
+> device and gradually connects common peripherals on the AST1700 model.
+> For blocks that are not yet functionally implemented (I3C, SGPIOM, PWM),
+> their MMIO regions are modeled as unimplemented devices to reserve
+> address space and make the missing functionality explicit, ensuring that
+> guest probing remains stable.
+> 
+> In the official release images, the AST1700 functions are not included
+> by default. To test the AST1700-related functionality, please include
+> the following DTS files for probing:
+> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi0.dtsi
+> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi1.dtsi
+> 
+> After including these DTS files in the BMC image, you can verify LTPI
+> functionality using the following scenarios:
+> 
+> 1. In U-Boot:
+>     Run the ltpi command to trigger the LTPI connection and display the
+>     current connection status.
+> 2. In BMC Linux:
+>     Run i2cdetect -y <16-38> to scan and test the I2C buses exposed by
+>     the AST1700.
+> 
+> Any feedback or suggestions are appreciated!
+> 
 
-For v2 (probably pushed sometimes this week), I've changed the
-command-line approach to allow only `fat-size=3D1440K` and
-`fat-size=3D2880K`. Other values will be rejected (including `1.44M` or
-`2.88M`).
-I'm not familiar with QAPI to see if that approach would fit properly.
+Thanks for the update. The models look better. Let's consider them
+for QEMU 11.0.
 
-> Unless the need for different sizes has gone away, but I don't think we
-> found any other solution for the problem that would not require a
-> configurable disk/file system size?
->
-> Kevin
->
+
+Did you run "make check" and "make check-functional" ?
+
+Thanks,
+
+C.
+
 
