@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D5FCCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 21:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A97DCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 22:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGlVe-0002X7-GR; Wed, 05 Nov 2025 16:57:42 -0500
+	id 1vGlea-0004xc-EL; Wed, 05 Nov 2025 17:06:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGlVc-0002Wl-Rc
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 16:57:40 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGleZ-0004xP-Do
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 17:06:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGlVb-0002y9-0z
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 16:57:40 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGleX-00029s-JF
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 17:06:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762379857;
+ s=mimecast20190719; t=1762380412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aW3vx8ffi1fYnnYSZTl/WISJH3ArnsB3Za8fKayQ/P0=;
- b=hr8JGEfvXZRWB1vq9MokzMWDWpPxDmI+Mv2L9PKGwQ9pWCqqcaWFforShMmNEJVZaa+Fgu
- GRybzwnkyWmoWvHNC6VZqpg+K/pZ+4JyE4lV26nZpzeXxtBgLYeh5PDn9ukB3yOLWQ8uAc
- vXQLxnjiWaCl2uYVormJ2jsApcRdCS4=
+ bh=XEknK60kWuIToVr5a/bhtVHLWh19eGPX/zwfkZSvRFo=;
+ b=CJsNAAgNj6rXWehTbGDCXraQ7zphpNQMnFdrHu2v8DQB/l6sX817aQqyGQEfYBFUrLdRU6
+ JCah0DxxC1Q8Q/xKjRIbnhsIa1aw1NXBBHgq8QJHUVD/4fgkj98jOEy52yXWflXAcE1DrF
+ YaAq1i8h21ADoLQhesG5u5RHmzhGXlk=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-fSBbUOkCMnqy0icdl6gTGA-1; Wed,
- 05 Nov 2025 16:57:34 -0500
-X-MC-Unique: fSBbUOkCMnqy0icdl6gTGA-1
-X-Mimecast-MFC-AGG-ID: fSBbUOkCMnqy0icdl6gTGA_1762379853
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-0ZCmevIWMsKmEm8dG0toXw-1; Wed,
+ 05 Nov 2025 17:06:51 -0500
+X-MC-Unique: 0ZCmevIWMsKmEm8dG0toXw-1
+X-Mimecast-MFC-AGG-ID: 0ZCmevIWMsKmEm8dG0toXw_1762380410
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACCAC195608F; Wed,  5 Nov 2025 21:57:33 +0000 (UTC)
+ id 2BAA5195608A; Wed,  5 Nov 2025 22:06:50 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.131])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFF921800451; Wed,  5 Nov 2025 21:57:31 +0000 (UTC)
-Date: Wed, 5 Nov 2025 15:57:29 -0600
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65B5419560B2; Wed,  5 Nov 2025 22:06:48 +0000 (UTC)
+Date: Wed, 5 Nov 2025 16:06:45 -0600
 From: Eric Blake <eblake@redhat.com>
 To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com
-Subject: Re: [PATCH 6/8] qio: Hoist ref of listener outside loop
-Message-ID: <wscvm5qo2muser5hiwwl5wrvesuzacifdpgkh33shodxvltdas@lidjzqixmqpv>
+Subject: Re: [PATCH 7/8] qio: Use AioContext for default-context QIONetListener
+Message-ID: <3gbdsutrugfyt4llt2f24kw36kogfj532qtxhapj2pglulnubs@ia5k2lidbsm7>
 References: <20251103202849.3687643-10-eblake@redhat.com>
- <20251103202849.3687643-16-eblake@redhat.com>
- <aQnf7AVY17zEKl84@redhat.com>
+ <20251103202849.3687643-17-eblake@redhat.com>
+ <aQnlcVBqlfVMHE8I@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aQnf7AVY17zEKl84@redhat.com>
+In-Reply-To: <aQnlcVBqlfVMHE8I@redhat.com>
 User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -86,75 +86,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 11:13:48AM +0000, Daniel P. Berrangé wrote:
-> On Mon, Nov 03, 2025 at 02:10:57PM -0600, Eric Blake wrote:
-> > The point of QIONetListener is to allow a server to listen to more
-> > than one socket address at a time, and respond to clients in a
-> > first-come-first-serve order across any of those addresses.  While
-> > some servers (like NBD) really do want to serve multiple simultaneous
-> > clients, many other servers only care about the first client to
-> > connect, and will immediately deregister the callback, possibly by
-> > dropping their reference to the QIONetListener.  The existing code
-> > ensures that all other pending callbacks remain safe once the first
-> > callback drops the listener, by adding an extra reference to the
-> > listener for each GSource created, where those references pair to the
-> > eventual teardown of each GSource after a given callbacks has been
-> > serviced or aborted.  But it is equally acceptable to hoist the
-> > reference to the listener outside the loop - as long as there is a
-> > callback function registered, it is sufficient to have a single
-> > reference live for the entire array of sioc, rather than one reference
-> > per sioc in the array.
-> > 
-> > Hoisting the reference like this will make it easier for an upcoming
-> > patch to still ensure the listener cannot be prematurely garbage
-> > collected during the user's callback, even when the callback no longer
-> > uses a per-sioc GSource.
+On Tue, Nov 04, 2025 at 11:37:21AM +0000, Daniel P. Berrangé wrote:
+> On Mon, Nov 03, 2025 at 02:10:58PM -0600, Eric Blake wrote:
+> >      for ( ; i < listener->nsioc; i++) {
+> > -        listener->io_source[i] = qio_channel_add_watch_source(
+> > -            QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
+> > -            qio_net_listener_channel_func,
+> > -            listener, NULL, listener->context);
+> > +        if (listener->context) {
+> > +            /*
+> > +             * The user passed a GMainContext with the async callback;
+> > +             * they plan on running their own g_main_loop.
+> > +             */
+> > +            listener->io_source[i] = qio_channel_add_watch_source(
+> > +                QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
+> > +                qio_net_listener_channel_func,
+> > +                listener, NULL, listener->context);
+> > +        } else {
+> > +            /*
+> > +             * The user is fine with the default context. But by doing
+> > +             * it in the main thread's AioContext rather than
+> > +             * specifically in a GMainContext, we can remain
+> > +             * responsive even if another AioContext depends on
+> > +             * connecting to this server.
+> > +             */
+> > +            aio_set_fd_handler(qemu_get_aio_context(), listener->sioc[i]->fd,
+> > +                               qio_net_listener_aio_func, NULL, NULL, NULL,
+> > +                               listener->sioc[i]);
+> > +        }
 > 
-> It isn't quite this simple. Glib reference counts the callback
-> func / data, holding a reference when dispatching the callback.
+> I'm not really happy with the listener directly accessing the 'fd'
+> fields in the QIOSocketChannel, as compared to the GSource approach
+> where the underlying transport is not exposed to the caller.
 > 
-> IOW, even if the GSource is unrefed, the callback 'notify'
-> function won't be called if the main loop is in the process
-> of dispatching.
+> If we want to use an AioContext instead of a GSource, then I think
+> we need to add a method to either QIOChannelSocket, or QIOChannel
+> base, as an alternative to the GSource watches, and then have the
+> listener conditionally use the AioContext APIs.
+> 
+> 
+> Also in QIOChannel base, we have a io_set_aio_fd_handler() method
+> that we use elsewhere. Can we perhaps leverage that in some way.
 
-I'm not sure I follow your argument.  Glib holds a reference on the
-GSource object, not on the opaque data that is handed to the GSource.
-It is possible to use g_source_set_callback_indirect() where GSource
-can learn how to use the same reference counting on data as external
-code, by the use of function pointers for ref and unref, but QIO uses
-merely g_source_set_callback().
-https://gitlab.gnome.org/GNOME/glib/-/blob/main/glib/gmain.c#L1844
-shows that glib then wraps that opaque pointer into an internal
-GSourceCallback object which itself is reference counted, so that the
-notify function is not called until the GSource is finalized, but that
-is reference counting on the container, not on the opaque object
-itself (which in this patch is the QIONetListener).
+I will explore that idea for v2.
 
 > 
-> With this change, the reference on 'listener' can now be
-> released even if the callback is currently dispatching.
+> eg, instead of taking the AioContext code path based off
+> "if (listener->context)", take the code path based on whether
+> the QIOChannel has had a call qio_channel_set_aio_fd_handler
+> to register AIO handlers ? Maybe that method doesn't quite fit,
+> but conceptually I would be more comfortable with an approach
+> that explicitly associates an AioContext with either the
+> channel or the listener object, rather than this heuristic
+> of "if (listener->context)".
 
-So if I'm understanding your concern, you're worried that the unwatch
-code can finish looping through the g_source_destroy and then reach
-the point where it unrefs listener, but that a late-breaking client
-connection can trigger a callback that can still be executing in
-another thread/coroutine after the listener is unref'ed but before the
-GSource has been finalized?  If so, would squashing this in fix the
-problem you are seeing?
-
-diff --git i/io/net-listener.c w/io/net-listener.c
-index 9f4e3c0be0c..1fcbbeb7a76 100644
---- i/io/net-listener.c
-+++ w/io/net-listener.c
-@@ -67,8 +67,10 @@ static void qio_net_listener_aio_func(void *opaque)
- {
-     QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(opaque);
-
-+    object_ref(OBJECT(sioc->listener));
-     qio_net_listener_channel_func(QIO_CHANNEL(sioc), G_IO_IN,
-                                   sioc->listener);
-+    object_unref(OBJECT(sioc->listener));
- }
+I wonder if qio_channel_set_follow_coroutine_ctx() might be the
+trigger point you are thinking of. NBD code already calls this, but
+only AFTER the client has connected.  Would having
+ioc->follow_coroutine_ctx is a better witness that the caller
+specifically wants the channel behind NetListener to run in an
+AioContext, rather than blindly declaring that all NetListeners get
+AioContext unless they use qio_net_listener_set_client_func_full(),
+and where I change the NBD code to call follow_coroutine_ctx() sooner?
 
 
 -- 
