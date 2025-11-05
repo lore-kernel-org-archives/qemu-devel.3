@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB12CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 19:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FC0CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 19:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGiuv-0003Vd-T7; Wed, 05 Nov 2025 14:11:38 -0500
+	id 1vGiwU-0004Z9-Ex; Wed, 05 Nov 2025 14:13:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGiuu-0003Tx-Jo
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:11:36 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGiwR-0004YD-A5
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:13:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGius-0006Zd-H1
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:11:36 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGiwP-0006nc-OW
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:13:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762369892;
+ s=mimecast20190719; t=1762369988;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=qsYU4Gw/ezc9iVquBadYorstNJZqdzAxMM5vBETHEA0=;
- b=aBnH47MR0wFJLg/+6DFYIaKbK8SxwnEwFzvIgR7coLyLQN2BQ8lZB9VqYIaNcDwKGi2hZ+
- KOIOesD7mCJlvl7/JWpIZiZQB3EOJ+f6LZbPixJlh+MPk7kPfLfvq7oYpHhNBxWPnDJtSG
- XOUznVeV6VVxavAbQEC27HV68oS/14M=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XAjuNcKljn/c1T5RfxgqKqF8DyPB/yTqKDAm312+qHA=;
+ b=XQIfkU0XFSt4ZBX8oUFevQmQj9Mvp2rLLQMK0wEuRH3rrLwVJjAFVfbsHygdrw5zU/7geQ
+ rbgzxKU6DIe/yjX+pPU9ZzMCluzTbWx8AxJmtbzQGpdkl8uJwaV+QuvTC/73cls0W6vuIW
+ IIyKbsJLKlAbbO3CvXGMVWjZ7Mx6mn4=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-JHfA1ZI_OwmIPiFlBXjf8A-1; Wed, 05 Nov 2025 14:11:31 -0500
-X-MC-Unique: JHfA1ZI_OwmIPiFlBXjf8A-1
-X-Mimecast-MFC-AGG-ID: JHfA1ZI_OwmIPiFlBXjf8A_1762369890
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-89ee646359cso47340785a.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 11:11:30 -0800 (PST)
+ us-mta-382-fYrrCrwmMtG1moAJnK-efA-1; Wed, 05 Nov 2025 14:13:05 -0500
+X-MC-Unique: fYrrCrwmMtG1moAJnK-efA-1
+X-Mimecast-MFC-AGG-ID: fYrrCrwmMtG1moAJnK-efA_1762369985
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88041f9e686so5480876d6.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 11:13:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762369889; x=1762974689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qsYU4Gw/ezc9iVquBadYorstNJZqdzAxMM5vBETHEA0=;
- b=GK8i5MHUbelEwytU4zQGLdpNRNZNu6dIhOMl6uccHz7ppB/5Nqo8jfAc66NWkHKazC
- n/hrKi09GxfSI9InkNI6s/e/rRCGQ/41fZak85Ocn4WYmEZkI/bs54pUwI/y2T18isEY
- YzdhuyRWwY29igCxV9/aRx7O6PLn6CCC2utyL/oX5o1rrWWCHMGVY80r/9yMQrlOZMPy
- yVycX1nmTjUGdjx657UbpAy/wLI8Cbos72ehegTPjSLo0d5+5xYBnFPamzXeIlmmKz+y
- lExSpSB9Rh35l8JodU1R059LkWrtfIocT69saeM0v4IO6A+PpT7fLg/NRvk+64vK8wDC
- Hbxg==
+ d=redhat.com; s=google; t=1762369985; x=1762974785; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XAjuNcKljn/c1T5RfxgqKqF8DyPB/yTqKDAm312+qHA=;
+ b=IanD9E/Xl0tNt5K5i4B1FsdMc1kVD4NZeh9MTHKDegkhF7/0tEoCOJfQ9mBgIEn+If
+ dUpltDswEifJcIo5keuTQ1FoEzjRRUqXvZ6/4whp34BcqEa1cs1OQ2iOC4T0iOmnKoRy
+ QIuB+zjs3duGDvLyvVpNEjG9DJkzjvF99gZ8hTh9DnJNN0ZqIrvLI3eSYIfuHj0eEtiW
+ 5dQRg34obn3Xy5gfDdB2x7PGGOw5IU0piEufXzAOiI5ZgZEu176WmZe9Rfg3mk52y9hP
+ MU8Rebwb8b6jp2rCF5ow4J8H32wq7mf7MzAa9hoqihvtpmUXytW+3vQWRV0COJlEa4v7
+ m1qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762369889; x=1762974689;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qsYU4Gw/ezc9iVquBadYorstNJZqdzAxMM5vBETHEA0=;
- b=xNRjbC/cEyWIu6482VDN5cHwqCiQEewZ5wXQVA8y970001wMtqvzNVzc93ksYo+x39
- SHCufUDqpRVpbvepAC+WbluICQoMWE7W3CMbs8LCYq2UnTLQct71CJLHQV7CH0tYww0Q
- bwxz0wls6+sqMxqSJTh5Z3LbWvR+ZmajNmtGvTLzzllTzNaQiPDBDmvMqCbVDMbUd6vc
- awh0ctCLAcWKTnXQTnffmFPF4bVeUugHyZgXUp95G8JEFLulB1cwMltZa7W0eMg6t/LD
- CzZyDDKZZ1IGsF6v17pIfJo7+Bzh64ha1nQqYt4f+Qwq0+7Y0w1uLPwktKY5OQrGbBrC
- Vhvg==
-X-Gm-Message-State: AOJu0YyUsmbacF2Ad3z2kxfc2QC3U/km8SnpB7JlMunpt5RyEiwu7IQg
- SrDpVftt2fJ3RMAnQ7x/liNDTU8OtqIEwU9fZr4HeemK6yD2lIMbpJk2d/uYIZQeH5xmCN2vY+B
- z92vx/IJDK+gfYb5CY+/N2qOV1U8pqDEyquVcqVvAN9D+XqQutlsMPLz67leXAlu41NP+9+yZMG
- SQVTFHap3RYBUmbjSqHtfd06lwzLp7N9tgJUZpjA==
-X-Gm-Gg: ASbGncsS8fmbugrfF9e1dl99TNtMFkbeC/D+i9p4U2smeLyGkzviSmUT1jmwLcXb40F
- DJ4WNmWAayhWtkj70BNkhTw69mpz/n9Nh6wq4M8c4ytrb1W6LrAFphDn000BxfLEuzjdQ0qHTXa
- JtCdKfqtZFkGdNgIe09aCAzcKtYrJq4GrFOjXbvMr7wb+NZCV1fMZN3/Ccxab4c8t+/Mtr2KvLA
- 1a7kkL916YPCsEbK9CgFbu6g49nxGgILia2ksCI8KL1LNSDniHaD2laWLEQ7x3GZELOUT1pJlBP
- 68sqQXPtaipGVz+2GI6cSYuUqz8OGhio3GCX/wk1UhUVAt2crhqgROVjQTJ9BZ1v
-X-Received: by 2002:a05:620a:31a8:b0:891:adc4:f9a1 with SMTP id
- af79cd13be357-8b220abeea2mr527744685a.55.1762369889409; 
- Wed, 05 Nov 2025 11:11:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEACFvxBoIdlvZwH1FfwNhEkXSyIU09BPqfthC4lH4YuRjyGgTCtX8KTncoOvWwnJSNFfBksA==
-X-Received: by 2002:a05:620a:31a8:b0:891:adc4:f9a1 with SMTP id
- af79cd13be357-8b220abeea2mr527738985a.55.1762369888836; 
- Wed, 05 Nov 2025 11:11:28 -0800 (PST)
-Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b23580a00fsm22669785a.43.2025.11.05.11.11.26
+ d=1e100.net; s=20230601; t=1762369985; x=1762974785;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XAjuNcKljn/c1T5RfxgqKqF8DyPB/yTqKDAm312+qHA=;
+ b=gGBlkdRhsFy5Lqhj8wajHPAyiBBWNFtFNBpSLpr0O+Ilt/Xg6y7KXNP2979xBDTKGG
+ MlGc+ou9mGDPkmJ1z44P/0LP8TTc+vpZcxGP3/8pTZEhd3jeKxYzVlTM5OqTHLt6crj7
+ XPIIDXKm8BCY4sGm+/DYeUvGlqH/F3hBHYlP6jGHMAhwuQW6zrTGQkduOawiGZwIkxqh
+ ZX7NTtL5aDq6dz/KdZUEA5UOeHfXU1suQS02E0xM2PLbFrS4eBpaD/W0y6gAcBTL8tON
+ SX7OFJlb57nxfuP/vHngvYfuvh+jqXN7BzjS5ORvgu/6akQim7qAjW/GITwYLYYBeOor
+ iMhA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4BOMNcl+igdH8vJmLPFoDe+DSCNQQ2mOiIFwoH749tVTPVAHxwganDM25oD964woudTtI/o89M9cE@nongnu.org
+X-Gm-Message-State: AOJu0YyOilc8EnF8Ehio51Cg82qNhRUnCWZh+T8RVkC5jhKKHc5ie2EF
+ HUGjOz8TM1D6Kf8X+Uan2w90Eme7JpsrMgTa2B9/OHP8IuhqN5oX6KYtiTrh/oJZTF+F22HnvZD
+ VgMEcUfnFLF7+WoprXJkUZMJXatySyqYQvBKDf0mAqsUZry1LJRE/QSQa
+X-Gm-Gg: ASbGncv6VtCEpfsLeKIpPKlspblcpgLHwFGZ81T56VSYCqnZSXwdomBl3eYKwJ0P+RK
+ QLbWvFa8hM5IF4QVzYvojM44y+XB/rJy4wsLPycLmGJFE4Vqyzi/AdjSO69OuJOjv1/3/TxI21c
+ 1WX/WnyBlJ4dOdFrugHAeqgjldkucdJ8mKM1V2DCrCXKi5ZSTEkukIaO3VVmKggUWyfdwMUQJ5R
+ T+yRbOw3LXiFFelJKm5dAHe7kJcb0v91TmaHSOUvCvRAe7qCLkMTS0u2oiSr6BXpCNjv2Clz46c
+ rAG/qhBP2R98ilQRkBFSt+56T/NOZh56JikkRzL1KqXNCYgV93j2cY7X3TxQG9w3ibU=
+X-Received: by 2002:a05:6214:caa:b0:87f:fbe1:2c2a with SMTP id
+ 6a1803df08f44-8807116cb65mr68006046d6.26.1762369984715; 
+ Wed, 05 Nov 2025 11:13:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE2j190PgLW6XGp9pjP2UF6JidT0Cqkdnx2ivHdhKysbhV/U7W80a23UmeSEWdxoBpJaGSdow==
+X-Received: by 2002:a05:6214:caa:b0:87f:fbe1:2c2a with SMTP id
+ 6a1803df08f44-8807116cb65mr68004666d6.26.1762369983537; 
+ Wed, 05 Nov 2025 11:13:03 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-880828f62absm2844166d6.19.2025.11.05.11.13.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Nov 2025 11:11:27 -0800 (PST)
+ Wed, 05 Nov 2025 11:13:02 -0800 (PST)
+Date: Wed, 5 Nov 2025 14:13:01 -0500
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- peterx@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH] machine: Provide a description for aux-ram-share property
-Date: Wed,  5 Nov 2025 14:11:20 -0500
-Message-ID: <20251105191120.3820787-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: Re: [PULL 07/42] machine: aux-ram-share option
+Message-ID: <aQuhvURPy3qhY64-@x1.local>
+References: <20250129160059.6987-1-farosas@suse.de>
+ <20250129160059.6987-8-farosas@suse.de>
+ <CAFEAcA8_zO0MmyN2nQDZsmiWssoiSUvKRMVYfRLrz6TsNejQFA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8_zO0MmyN2nQDZsmiWssoiSUvKRMVYfRLrz6TsNejQFA@mail.gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -118,29 +119,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It was forgotten when being introduced in commit 91792807d1 ("machine:
-aux-ram-share option").
+On Tue, Nov 04, 2025 at 10:53:54AM +0000, Peter Maydell wrote:
+> On Wed, 29 Jan 2025 at 16:03, Fabiano Rosas <farosas@suse.de> wrote:
+> >
+> > From: Steve Sistare <steven.sistare@oracle.com>
+> >
+> > Allocate auxilliary guest RAM as an anonymous file that is shareable
+> > with an external process.  This option applies to memory allocated as
+> > a side effect of creating various devices. It does not apply to
+> > memory-backend-objects, whether explicitly specified on the command
+> > line, or implicitly created by the -m command line option.
+> >
+> > This option is intended to support new migration modes, in which the
+> > memory region can be transferred in place to a new QEMU process, by sending
+> > the memfd file descriptor to the process.  Memory contents are preserved,
+> > and if the mode also transfers device descriptors, then pages that are
+> > locked in memory for DMA remain locked.  This behavior is a pre-requisite
+> > for supporting vfio, vdpa, and iommufd devices with the new modes.
+> 
+> Hi; I've just noticed that in this patch:
+> 
+> 
+> > @@ -1162,6 +1178,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
+> >      object_class_property_set_description(oc, "mem-merge",
+> >          "Enable/disable memory merge support");
+> >
+> > +#ifdef CONFIG_POSIX
+> > +    object_class_property_add_bool(oc, "aux-ram-share",
+> > +                                   machine_get_aux_ram_share,
+> > +                                   machine_set_aux_ram_share);
+> > +#endif
+> 
+> we added a new class property to the machine, but we don't
+> call object_class_property_set_description() to give it any
+> help text (compare how we handle the other properties in this
+> function).
+> 
+> > +
+> >      object_class_property_add_bool(oc, "usb",
+> >          machine_get_usb, machine_set_usb);
+> >      object_class_property_set_description(oc, "usb",
+> 
+> This means that if you run "qemu-system-x86_64 -M q35,help"
+> you'll see that this option is missing help text:
+> 
+> pc-q35-10.2-machine options:
+>   acpi=<OnOffAuto>       - Enable ACPI
+>   append=<string>        - Linux kernel command line
+>   aux-ram-share=<bool>
+>   boot=<BootConfiguration> - Boot configuration
+>   bus-lock-ratelimit=<uint64_t> - Set the ratelimit for the bus locks
+> acquired in VMs
+>   confidential-guest-support=<link<confidential-guest-support>> - Set
+> confidential guest scheme to support
+>   default-bus-bypass-iommu=<bool>
+> [etc]
+> 
+> Would somebody like to write a patch to add the missing
+> description ?
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- hw/core/machine.c | 2 ++
- 1 file changed, 2 insertions(+)
+Thanks for reporting, sent "[PATCH] machine: Provide a description for
+aux-ram-share property" just now.
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 0580550e12..8dd8ce4cac 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1200,6 +1200,8 @@ static void machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_bool(oc, "aux-ram-share",
-                                    machine_get_aux_ram_share,
-                                    machine_set_aux_ram_share);
-+    object_class_property_set_description(oc, "aux-ram-share",
-+        "Use anonymous shared memory for auxilliary guest RAMs");
- #endif
- 
-     object_class_property_add_bool(oc, "usb",
+PS: for q35 there's another one fd-bootchk=..
+
 -- 
-2.50.1
+Peter Xu
 
 
