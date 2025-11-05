@@ -4,91 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF95CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 18:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD08CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 18:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGic7-0004Mz-Ol; Wed, 05 Nov 2025 13:52:11 -0500
+	id 1vGiiD-0008SL-Qn; Wed, 05 Nov 2025 13:58:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@videogpu.com>)
- id 1vGib3-0003zW-Mb
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 13:51:06 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael@videogpu.com>)
- id 1vGiaz-0003C0-5I
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 13:51:05 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47755de027eso1083125e9.0
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 10:51:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=videogpu-com.20230601.gappssmtp.com; s=20230601; t=1762368659; x=1762973459;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9kEAytXiAZieewyrZPC8a4xUKmBzYD9xvtE9UlfGJ7s=;
- b=EFhzQbbv0wPlWykprjP3WKV6CmO+27CXO3CmArVK+u9jl8is1/7IErjbmBb5oYYaos
- OhXU8AWnL+P0ABXDugPA64dKfztoZW/uC9kZuX/nAMyf+aeT2Rj2q17Wm/oV+GPq5m5K
- MA0N5af18KTnbDLSVBOUSiC1GdIDPpkh6bhfLVbXaJ17cPztfVtlvgG7sumhV+ABoT+Z
- KzsqyHyCOVdm69/ykmEbO4WrFr9LL/wsjavTQ1DQQCHzK7ZeBCK3SifhYaJYMWAjEXTS
- UdP1bN41pZMqrrZ0KgLRaG9SiLq6mdKSIR4CUKHjHWzmHvvYxnIeyhEEVSLamonclYHe
- a/Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762368659; x=1762973459;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9kEAytXiAZieewyrZPC8a4xUKmBzYD9xvtE9UlfGJ7s=;
- b=j6EeavBCFdrTlxD1wxIds8tOBlwB67PoERTrBSjvo723dLgkPWWanPYBE2q12K5okg
- iYTqe4zBNfZ/vBl/3Emb9J1Nry3SGkQDHTO81TI9TwifIabQN5KPleoOL5ndv1sNwjzN
- Y1Zd2FYa/T4WSq0eCpiTKxtVyCme/o4IzGJs1OVLsQwuftFfM2JUtXXM2o0+murqszd7
- vNpfrkiluipuQebYpcrZW/eR8D5asnYNqQYNhAoTqDUogT99fYbHoLarRIn4cuvvrnp0
- FDICk9kKT9FXnb1cLKXdW/+qqW5R+EJ91QmQXuO3dU6V3yvf646BFvFU0QSCt0jIc2oV
- /71g==
-X-Gm-Message-State: AOJu0YwwCn39K3OKfVRhmiebLJaI9BoG/FBu9C0lHjlZ4KmDl12iay3x
- nfWC3Uz3g8GK/Xbd6Cc903IV6/jBIGXsJAFc+np/D04Rm8cSPRN6w76OebgesWjrp6swrHDgduo
- EOAwvMgk=
-X-Gm-Gg: ASbGncuyTThAIbabqx7UYUaivDxoeGve0PpCf4mXvBnkKjStGuAg+FzMbCD/NTMzZiu
- JRsfIWBRKAHFGNt+0gZiSqNuS+ymgvZvD5yglwxGw4KJFnVMu3D7HyyWbrZQlrBmj18w3vff3JP
- /sxwbLLNsAdFblagMj6Vq7JybHEgtw0O8i4JPWWbv0JbQAbDu6yyVIT94fbbQ0XSeh+6I/fQz2+
- 2O/uUBFVf5tGpFClneqz0AYq/BzfqKe9ht8N+ao0cd+xVK6FGHwH6Xd7DDL6Z3/j68E/aHQH3ju
- 2WjZYQqqljxAzF2x4eW/sLQIHJXrpc7E9sr9hNk1qv/72LSqON3gdFzUGd0k9+/qWvyrqAhsefT
- zakMJMWFiBqq9y0ma4PZwc/9gFxD4dR8izkRVNInOaXxLf0H5Dd67RtScnlspqCnOUfNbAX3g+G
- YEVhyq
-X-Google-Smtp-Source: AGHT+IFr3rNa2xQ4e9vLjx1Y/rvEMSbm9dL0Zbqa9OTH9Dnzfb9Wt0IYMagpbyuMQh9ZJht7z2oaxg==
-X-Received: by 2002:a05:600c:6288:b0:471:1717:40f with SMTP id
- 5b1f17b1804b1-4775cdf4317mr34076545e9.22.1762368659324; 
- Wed, 05 Nov 2025 10:50:59 -0800 (PST)
-Received: from DDesktop.local ([2a10:8012:d:eea4:f4de:376b:66b1:d7b5])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429eb42a354sm270622f8f.20.2025.11.05.10.50.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Nov 2025 10:50:58 -0800 (PST)
-From: Michael Levit <michael@videogpu.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- liwei1518@gmail.com, smishash@gmail.com
-Subject: [PATCH v3 1/5] target/riscv: add NEORV32 RV32 CPU type and vendor CSR
- hooks
-Date: Wed,  5 Nov 2025 20:50:52 +0200
-Message-ID: <20251105185056.23565-2-michael@videogpu.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251105185056.23565-1-michael@videogpu.com>
-References: <20251105185056.23565-1-michael@videogpu.com>
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1vGiiB-0008Rr-Q2; Wed, 05 Nov 2025 13:58:27 -0500
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1vGiiA-0007e9-5W; Wed, 05 Nov 2025 13:58:27 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WnEKxERg2bcoKe0Gl+As8CYIoAsbl9Du6ajxm7YVH3NRPK5j6oEOpDM4K9NWfmXOD45pqwiQCTHSW+Dp/5yr4S35uMXFG+x32m+uo7WAzxgKkIyC3xwA/UgA3KZih05jwGVxpTdZ8D2GjILUV5gN60aOOZluMJgSQ7XLAFZ3zYE2bdRkp89Gioxh523nunLNtEBqnjFwrUzF6nnAzgWx8QcqgxScE7yrwdbxETO02BHEfyZC2VPxslGpQw5/N8bSsQApA5bpOlbaj161H0wLX2rqhvR651eMDTkmICG4QziSZsrzZ4EOvC/AikumunHo5hhvVvUgdRT0Q6ghHhofHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=k5j410Bo1UD6AoN/fZR3WEL6fDPrzNL/U6dAcfIfqkE=;
+ b=YjJSf7kFQGMHFOC0gP8Ry9+SXSGc429YSmxinNE8Gn31/eAVnQPlj7xLjcN5wiMSpleS2+q0eyPJVbHyc7HTQE9QKog4IqRK0G73TtrhcOkSxHO4HZQqdEk7T2ffKwMj9gRK/4eo8Sh02gU5WpynB4ti8Dsu4qcUCwBoZT5TgTyBjj6v1bRe0Ejdi76YgnqDaWS+Tys9R6bm7M2GZnNxOyCVafQeTKLefYHKn8lmD2I3pTzdluuK5pFXSur+sfeE7SZtHS3ln6xa5ybiz5Aa7ZQA3n6CrLZ19bCau7730f9G0ELhKm6wHijgxiK7Juq/7FPOPnIG9Xv0HCNrbeBI1Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k5j410Bo1UD6AoN/fZR3WEL6fDPrzNL/U6dAcfIfqkE=;
+ b=W77L/V74sSib1ebFiXTiCPMC14P6CEAuMgpyhWSdZmiKNAE83mgIQ46lTfqFP6D+KZqxQ/0XVt9PI2e/Z9SCYu1L3NzVuKzL94rM1rZ9ui8sPZlGAD1aJFMDUVDRzPY10wZ3Eh8b9tGi9ypnDT9fh5k96Zteh+hmEV871cpDusoUCVGR/QsG2rbiSW1RsDW2V+KV/r0UJmp61wIIatRjPaLwm8sU3g9Cm54ujw+WJUSpL1iwUnWjx4PHcEO7vRuxjN/Mj0zKSAjorWtE8hSq2oZ/9wFyAbaCJKLVn3qrs9PEGuXDu3FfYnMXf+xDDBTGJxuf7tYoaZEvVXXg4OeHKA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by MN2PR12MB4439.namprd12.prod.outlook.com (2603:10b6:208:262::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.7; Wed, 5 Nov
+ 2025 18:58:17 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9298.006; Wed, 5 Nov 2025
+ 18:58:17 +0000
+Date: Wed, 5 Nov 2025 14:58:16 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Message-ID: <20251105185816.GW1537560@nvidia.com>
+References: <20251031105005.24618-16-skolothumtho@nvidia.com>
+ <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
+ <CH3PR12MB754815B9B902E7EF66B0A1B9ABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <85f315a2-e49a-4330-9419-48a8a3a4a3e3@redhat.com>
+ <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <e4fd6d1e-3fca-457b-ac6a-69e721d799f4@redhat.com>
+ <CH3PR12MB75489F2161213432D34688D2ABC5A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <7ac24d9a-0caf-48cb-832c-812fecc5c82c@redhat.com>
+ <20251105181049.GU1537560@nvidia.com>
+ <aQuYZM/8SX+RtDtv@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQuYZM/8SX+RtDtv@Asurada-Nvidia>
+X-ClientProxiedBy: MN2PR15CA0008.namprd15.prod.outlook.com
+ (2603:10b6:208:1b4::21) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:20::335;
- envelope-from=michael@videogpu.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|MN2PR12MB4439:EE_
+X-MS-Office365-Filtering-Correlation-Id: 299cb526-112e-4a20-f11f-08de1c9d4776
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?J3wfJ+CupEojpEsVN5JOsDpv9npjm7d0xigUgMcXDd6YXoQtMPiawHdYShLR?=
+ =?us-ascii?Q?tqxWyoZDfvaDkTEOEdKxKMF2SoIDDMVU6WQ6bI/Fp8TMsGFnLVXfSrd5qq4r?=
+ =?us-ascii?Q?v+qR8QgmiQvC/N2sj8ZiwlopgXxVwC3dfSVRCcn7R2qcXWA1vJukBffd44MJ?=
+ =?us-ascii?Q?2MG6mQhKL/69L3t5GpxCo3mof8/I7ya7LRrG0scsAqUW3eeD9f+0CNtSJ4jZ?=
+ =?us-ascii?Q?J/oC2pyNaPswYpe0KZZtJi+0Fi33Ylh96KTfHFKYhyha5YayeIFhuepzyFP9?=
+ =?us-ascii?Q?p+RpZjXXUcbUkgtCJSP8X5EVXUbTsiV342yAh9IAx2pubFFqQSyoOH+d0tid?=
+ =?us-ascii?Q?RnqtvkwSoy4/tJ+Gn3HdZZb0rcr40DOC8ligE9ZdOYZWtfJ7wyMu0IjLLIEV?=
+ =?us-ascii?Q?iXFHxDB3FcKEwRbkpKld5H6NOKdW806AyG+oWrq+E5Mzu6JimQ9NHSdFRMvJ?=
+ =?us-ascii?Q?uI8i2jgkyvDGihV9Znz19GAqHBqh2WDrAI8MfpxD/9OnI61/D/OUoRr6Ka81?=
+ =?us-ascii?Q?wXXgXDFO3M9EzuEU/+hoD/MJqVTB/jMha/F1s4Mfa2+T0AGRt5HlaSWz2lm0?=
+ =?us-ascii?Q?VJEKUSZCe5U+IyjlLCTE5qL3cwtwBZqcRdkvbU7l4bW4lt9NOhpkNMX3OUJP?=
+ =?us-ascii?Q?i3774nqqxqxzmNbeunnXSyl9jUH9O3k1tnlluk0tCpYrQ5mmvcnsrp0dGHkR?=
+ =?us-ascii?Q?eBclRZ4jJqMhRcC9fXk+jDmRq4dT/BwDPWWRcCeJtk1bjKT5ns/SSiUWY4KH?=
+ =?us-ascii?Q?hzVmx24Vgxe+SgJc6TFZ+xEIKm5SszjafKe1lk+zhr3WB0CjooRw4Sds7fJS?=
+ =?us-ascii?Q?+E8+5pIoIZ/zUBSkNdnCRWu1StpLQ5ptczXgmiOsojYyFodzxh+X4OZPWiD+?=
+ =?us-ascii?Q?x7H3t289oZOfhjFEjpf1UojmdvZvZTut74yFfb56FCPUVXvSuxaBbIFwiP1Q?=
+ =?us-ascii?Q?thNrdJ3AD8wH1rGn+QeLbK15KaqBYUH/PpEa4fg11UIdelvSpLM3rL63+joy?=
+ =?us-ascii?Q?MSa+qWdW+fedhrmBMlmbhP7eIJNb9Lneei0eavhzsWVsxpIhoSZiVlZsv3WT?=
+ =?us-ascii?Q?Ng/ZmEOh8IYRK38qxV/gbGb84K7LDxsUFGVtGyFS8PXLmZAXo3QPNESN9WSD?=
+ =?us-ascii?Q?I6WAi9ESadef6b/Cr9rL2L8rO16OdRGzHAXMdsjDO8erWRkx7ArhSHeXHE50?=
+ =?us-ascii?Q?pQi2NG/3hhHa50dPKWx5lfJmmlyeyRMmqxF0GDdsE2Cpfw7QUYuffXIAGMYa?=
+ =?us-ascii?Q?RTSa+1WFh4TljJFZxgPFFGRQ6bK/b5xaGI+5IORa6+eo1yETxQ57k/KghmIv?=
+ =?us-ascii?Q?3WEpnk7ryVXchsQy7nDKi+KTcDgsIWw26Sz8QNx9z/x/09ZPp7wUv8+PrgOy?=
+ =?us-ascii?Q?OG2zSXr65wjS8Y6qxxLjJ2gjEgF4t7jocTgExtHc7QLWDLs4sQJKKlDsi8kK?=
+ =?us-ascii?Q?vncQ5EF9cY14IWYTwmd/Ln/m9TT90lzK?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MN2PR12MB3613.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?e2xrV8v4AP0th3iekCoRekq6HjoZZQqp3dl5oCYjru97PaC3quC4pTbKeeAy?=
+ =?us-ascii?Q?m46NdROg7ixHMd+WQbKM2R4UfB82qHXu7bfufRjQbUQw7n/PKKz8ONCgOOza?=
+ =?us-ascii?Q?iWAxOmiW0IJYiIl8ZTStqvu8ejbdw8VFSKId2owlWxpKJcpAZNorfapCXh7V?=
+ =?us-ascii?Q?q+aSgjnTLPsX10yty2uDoVHXGphBip27bs1pKvAQeWn1KwJ7H/77NqJQvxap?=
+ =?us-ascii?Q?irdNRJdz6agH5hzGo7nFpda0beAgGBHAO6rRFythhwj0XjoQMAOYV2wStQA+?=
+ =?us-ascii?Q?JYnHeuPuqsJ4JrWy+ZpZM29XiE8lP2IGuP6E2PxcvjF+0hBSHIUAOYm5T9kC?=
+ =?us-ascii?Q?lbBJ1wkyRCxAIYu5MmbWm/eYWwgW/nI0NvYJ1OxbzKZE/0KnrQwXKF53PN05?=
+ =?us-ascii?Q?slKTIDColz7O++y8qwxwM/JvM4M3L+Kq2Jawc3KNcJTXCgvX173/yhmDS2/X?=
+ =?us-ascii?Q?OQaxT9KC97Y7Ql2DokvyeAoqOjeFdmSf2YrIZ5qqzNimbGS/y40Njpu6cBom?=
+ =?us-ascii?Q?k3OUEhwBRcp81DdaMld7ndW6NKa6TsXKfe4jXOo2pzQ9OckD3ljybL6ZStMk?=
+ =?us-ascii?Q?mini8Kj4+JRGEP/4lu1JCU83954X2v69LbpuI76tKaBv+Skc+15i6jdeMuou?=
+ =?us-ascii?Q?vVRLCzNdXda8Z+P+YSBfxK4IFtY6RFf9HKgF29ta07oEb+4VdThxh7IisCJT?=
+ =?us-ascii?Q?VzIX9h9oMz0X4AwDZeYtD0rJVIEob+xnAXwoFA3XEdH54uwvQaie6W/yqcaU?=
+ =?us-ascii?Q?Uh5BpTKR6tNIOmSFwWvNu9eBqXW/v8rub2QEMLo7UXNqk1o+jr2rj4RQ/lWn?=
+ =?us-ascii?Q?HlJ+02aw5qOHe36wsNpS1A0k3ljwNlVcswLQJrgtbxTKN/FlZ2ZHWf6QhAgv?=
+ =?us-ascii?Q?1nF/GavOynMxexV7yObPz99rh6Sb9YpL6E798OhLcDb0nIBIs+BM+KyapXBx?=
+ =?us-ascii?Q?Mw+59qa7VAeQjc65oDqC2NZ0Cmq+UXVvDj5uAICb8yX/e8M/ngRNOR/95Lag?=
+ =?us-ascii?Q?yRwDokYsReYkpHxlkt+zkV+tOA7mcLdmwoCd+8pX3dHowQmL7UxFuBYw1+fA?=
+ =?us-ascii?Q?h2NKaXH1SQ54XkHQlCyQhT6mYK6Q2MGJ3STXYNq4agjpdTSTbcisSD1LBjNJ?=
+ =?us-ascii?Q?YGLUns0vw46H/Ks3JZqJPwDIcPSKpM2+ABqNSdkaTkIaiDoRGNZDXmrda9dX?=
+ =?us-ascii?Q?bwm/pK0GesPAEDmW9FukMjbrEiWpxWmHa5jXSXrZsOGZ1tu7MmI79LyLt4Dz?=
+ =?us-ascii?Q?Bv1pVTadWoPg8z/HXpiIPcTLhFTJyiNitxs7uU1svwoNhg3pmTd86F0bhPSu?=
+ =?us-ascii?Q?WEs9MRSvoNmoqzBwUhOAb97E3PrVtHDrWthPgSDMTOXaezkgIGU422DXthm7?=
+ =?us-ascii?Q?0dJJoFg5g1FuTwMit1tIoBfodyOw6ZpItaDPgDjdVvB4NWTOgplyqEe5afnQ?=
+ =?us-ascii?Q?Vymm0ntwor2nFn9BXyEgEzxlIpwc1DsLNkmEEN7UJx0M3KcDNUJxEu2VGdvQ?=
+ =?us-ascii?Q?FFIGHwGcXaErqj7zwBvE1s41JHkSvpG0mWab7Y4jYmERbJ/fwSSRJiCLobMi?=
+ =?us-ascii?Q?ckvcPUHNlgm6Idl7ezI=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 299cb526-112e-4a20-f11f-08de1c9d4776
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2025 18:58:16.9550 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7wi7ruLKpOmqdtalTG9q7NA21YNPwa/GenBdI4MKpOM9hBZOuTQqShYT99yfe4Qp
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4439
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=jgg@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,200 +181,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael <michael@videogpu.com>
+On Wed, Nov 05, 2025 at 10:33:08AM -0800, Nicolin Chen wrote:
+> On Wed, Nov 05, 2025 at 02:10:49PM -0400, Jason Gunthorpe wrote:
+> > On Wed, Nov 05, 2025 at 06:25:05PM +0100, Eric Auger wrote:
+> > > if the guest doorbell address is wrong because not properly translated,
+> > > vgic_msi_to_its() will fail to identify the ITS to inject the MSI in.
+> > > See kernel kvm/vgic/vgic-its.c vgic_msi_to_its and
+> > > vgic_its_inject_msi
+> > 
+> > Which has been exactly my point to Nicolin. There is no way to
+> > "properly translate" the vMSI address in a HW accelerated SMMU
+> > emulation.
+> 
+> Hmm, I still can't connect the dots here. QEMU knows where the
+> guest CD table is to get the stage-1 translation table to walk
+> through. We could choose to not let it walk through. Yet, why?
 
-Introduce NEORV32 RV32 CPU type under target/riscv, wire NEORV32 vendor ID,
-and add a vendor CSR (CSR_MXISA) guarded by mvendorid match, plus meson glue.
+You cannot walk any tables in guest memory without fully trapping all
+invalidation on all command queues. Like real HW qemu needs to fence
+its walks with any concurrent invalidate & sync to ensure it doesn't
+walk into a UAF situation.
 
-Signed-off-by: Michael Levit <michael@videogpu.com>
----
- target/riscv/cpu-qom.h            |  2 ++
- target/riscv/cpu.c                | 18 ++++++++++++++
- target/riscv/cpu.h                |  3 +++
- target/riscv/cpu_cfg.h            |  1 +
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- target/riscv/cpu_vendorid.h       |  2 ++
- target/riscv/meson.build          |  1 +
- target/riscv/neorv32_csr.c        | 40 +++++++++++++++++++++++++++++++
- 8 files changed, 68 insertions(+)
- create mode 100644 target/riscv/neorv32_csr.c
+Since we can't trap or mediate vCMDQ the walking simply cannot be
+done.
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 75f4e43408..d091807160 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -43,6 +43,7 @@
- #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
- #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
- #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
-+#define TYPE_RISCV_CPU_NEORV32          RISCV_CPU_TYPE_NAME("neorv32")
- #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
- #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
- #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
-@@ -58,6 +59,7 @@
- #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
- #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
- 
-+
- OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
- 
- #endif /* RISCV_CPU_QOM_H */
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280d7c..ffe99f71e1 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -233,6 +233,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
-     ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
-     ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-+    ISA_EXT_DATA_ENTRY(xneorv32xisa, PRIV_VERSION_1_10_0, ext_xneorv32xisa),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-@@ -1366,6 +1367,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
-     MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
-     MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
-     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
-+    MULTI_EXT_CFG_BOOL("xneorv32xisa", ext_xneorv32xisa, false),
- 
-     { },
- };
-@@ -3032,6 +3034,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.pmp_regions = 8
-     ),
- 
-+
- #if defined(TARGET_RISCV32) || \
-     (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
-@@ -3075,6 +3078,21 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .misa_mxl_max = MXL_RV32,
-         .misa_ext = RVE
-     ),
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_NEORV32, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV32,
-+        .misa_ext = RVI | RVM | RVA | RVC | RVU,
-+        .priv_spec = PRIV_VERSION_1_10_0,
-+
-+        .cfg.max_satp_mode = VM_1_10_MBARE,
-+        .cfg.ext_zifencei = true,
-+        .cfg.ext_zicsr = true,
-+        .cfg.pmp = true,
-+        .cfg.pmp_regions = 16,
-+        .cfg.mvendorid = NEORV32_VENDOR_ID,
-+#ifndef CONFIG_USER_ONLY
-+        .custom_csrs = neorv32_csr_list
-+#endif
-+    ),
- #endif
- 
- #if (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 36e7f10037..6a9918a25a 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -985,5 +985,8 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
- /* In th_csr.c */
- extern const RISCVCSR th_csr_list[];
- 
-+/* Implemented in neorv32_csr.c */
-+extern const RISCVCSR neorv32_csr_list[];
-+
- const char *priv_spec_to_str(int priv_version);
- #endif /* RISCV_CPU_H */
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index aa28dc8d7e..9ad38506e4 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -64,5 +64,6 @@ MATERIALISE_EXT_PREDICATE(xtheadmemidx)
- MATERIALISE_EXT_PREDICATE(xtheadmempair)
- MATERIALISE_EXT_PREDICATE(xtheadsync)
- MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
-+MATERIALISE_EXT_PREDICATE(xneorv32xisa)
- 
- #endif
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index a154ecdc79..b84e1bd287 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -147,6 +147,7 @@ BOOL_FIELD(ext_xtheadmemidx)
- BOOL_FIELD(ext_xtheadmempair)
- BOOL_FIELD(ext_xtheadsync)
- BOOL_FIELD(ext_XVentanaCondOps)
-+BOOL_FIELD(ext_xneorv32xisa)
- 
- BOOL_FIELD(mmu)
- BOOL_FIELD(pmp)
-diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-index 96b6b9c2cb..66a8f30b81 100644
---- a/target/riscv/cpu_vendorid.h
-+++ b/target/riscv/cpu_vendorid.h
-@@ -7,4 +7,6 @@
- #define VEYRON_V1_MIMPID        0x111
- #define VEYRON_V1_MVENDORID     0x61f
- 
-+#define NEORV32_VENDOR_ID       0xF0000001
-+
- #endif /*  TARGET_RISCV_CPU_VENDORID_H */
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index fdefe88ccd..44e706ad3f 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -40,6 +40,7 @@ riscv_system_ss.add(files(
-   'th_csr.c',
-   'time_helper.c',
-   'riscv-qmp-cmds.c',
-+  'neorv32_csr.c',
- ))
- 
- subdir('tcg')
-diff --git a/target/riscv/neorv32_csr.c b/target/riscv/neorv32_csr.c
-new file mode 100644
-index 0000000000..3b0f0cab05
---- /dev/null
-+++ b/target/riscv/neorv32_csr.c
-@@ -0,0 +1,40 @@
-+/*
-+ * NEORV32-specific CSR.
-+ *
-+ * Copyright (c) 2025 Michael Levit
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "cpu_vendorid.h"
-+
-+#define    CSR_MXISA    (0xfc0)
-+
-+static RISCVException smode(CPURISCVState *env, int csrno)
-+{
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_neorv32_xisa(CPURISCVState *env, int csrno,
-+                                       target_ulong *val)
-+{
-+    /* We don't support any extension for now on QEMU */
-+    *val = 0x00;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static bool test_neorv32_mvendorid(RISCVCPU *cpu)
-+{
-+    return cpu->cfg.mvendorid == NEORV32_VENDOR_ID;
-+}
-+
-+const RISCVCSR neorv32_csr_list[] = {
-+    {
-+        .csrno = CSR_MXISA,
-+        .insertion_test = test_neorv32_mvendorid,
-+        .csr_ops = { "neorv32.xisa", smode, read_neorv32_xisa }
-+    },
-+    { }
-+};
-+
--- 
-2.51.1
+Thus, the general principle of the HW accelerated vSMMU is that it
+NEVER walks any of these guest tables for any reason.
 
+Thus, we cannot do anything with vMSI address beyond program it
+directly into a real PCI device so it undergoes real HW translation.
+
+Jason
 
