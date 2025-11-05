@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E0D3CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 12:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 446DFCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 12:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGccu-0008AF-Cd; Wed, 05 Nov 2025 07:28:36 -0500
+	id 1vGcdX-0008Sl-Ut; Wed, 05 Nov 2025 07:29:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGccr-00089O-Rb
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:28:34 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1vGcd8-0008Ja-Hb
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:28:54 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGccq-0000Ud-03
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:28:33 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b713c7096f9so490366266b.3
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 04:28:31 -0800 (PST)
+ id 1vGcd6-0000WU-Pi
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:28:50 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b713c7096f9so490411666b.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 04:28:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762345710; x=1762950510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762345727; x=1762950527; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=I5IFJSjcP2PIBnX3Hmyr7f47ed8b0kaOA+DQtf3T8+I=;
- b=NYBQuVs4JmQ+EWVfW5PEkCLVwOg8TsB9H+C7N5IPdx8PBoZy+AbxhfTHQAPPc0MEb6
- gbvPQIfT4b7S/eDIhnbfc6vMFULRA8OW3mgbTZbxSoH8YXEoYIZxyQVvNig04b5G2PWc
- 5QEF+nubUWUpiYJrYNCFxI5vyY9graE6OopRb8zaUROqA4cquCrjFJSEjsHzTmRx6vZq
- LWNpiwuxO+BUPuRCJCf4AOxISF3MB9j3yFm2nF3jzG2R0fouQTRElnBdfmBnryTfH7Ql
- PS1/jUXwnwz6FZpk+SBpfo4YNwzDb8qfGfbyv61vVyTz5/coMMsVHBlUyo1xYAmhWlVu
- Bw6A==
+ bh=jB3SchOueo86jNN7lX9TwsisWrHgnL185wSSa3bCRjI=;
+ b=jICc5oPiRsZwAkRUndiuDrTiRRxm/+v9jGMCPoS8miQkaMpYuwAmM/zfE8H5NA+7kw
+ cq+rGMmI5uFYGk5bPybYdnEe9lR0m5HYr1xp43egPrIH5TSWbyPyQAuqmjVrpOMx6H8W
+ xBKxAM7qpOVKHgQy42N18BFGbpX3yFKRQkdGp022yTgj6DdVzgFKFGuyzWDyHnRZeXqX
+ 7Pp8JmUl45yrHC+nMOmJCUAuwjTmSH4DS6AbCViLF6U7ZFrC8s0zgD3Y5gB81iQLCNl4
+ h5Fe8MbHBpKHu6Gyc/an1GwOUpz3YPCFObCJIzZ0AFlmu2zUFtvsQ/YzxzC6z7rAdbkW
+ 2/6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762345710; x=1762950510;
+ d=1e100.net; s=20230601; t=1762345727; x=1762950527;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I5IFJSjcP2PIBnX3Hmyr7f47ed8b0kaOA+DQtf3T8+I=;
- b=RZ/roA3aO6ac8EfmGTi3AKi3Tfmp8+UFz1FHG8u/n0OXvnKHIpFF1jKIzwqww158hT
- ZiUGYf8wq4yrHmiAOErK9PxYzpo4k+cW/hpsMxl/Vi9AztRBfqgdxg/dNaOiEVRkEaih
- 5FBiUexk8SKXQQ6A9kMOtgQuz3u7sh4uSt+sR8H6wNU0XV69Lg3snbpAEDJf889pw6AQ
- GeTEFfUnR/tx5HUCgM2HpLHfoOSjtfKRNqU1f/cNqpB+BLV1CpCXnB63bbSwVfuBtZ/g
- qf1eNcONJyvDjCXTHkmQrk1lgLByBnBMMsRRB9eWDv+PNwt81tOficTHFRu4WNgfnGIH
- YVkQ==
-X-Gm-Message-State: AOJu0YzoO0XdzDfkGEW/1nnVYiKLrTqAnKovuSUApE57FESJRcN8aFvf
- X2AeT+dcM/Pw99FH+W5Hq/REn6fEhKJ+8+rUD1NvGORV9ZZZnJgieITMVZI99zUn6VQaH7j63eN
- pcMn6cX0=
-X-Gm-Gg: ASbGncszyd8CNa1OFQdDN6wj1EnWiyQet0Yu9iR8BxiXBccapF1j3qypXL/LOEUz2JB
- A/K7YlpxTBtdZlRnXbIBWJ7uU0+640QeFUz5mkpOf/p9KWYolExk1rA6bdXOGQkkFpR5Ag4lT9G
- PwyRtoLBlnQFPf5oVh91D63gFBGXPbC8OuW3mrXZ7MW3dsYsvLhJacUHGxWN/bvBm8qIRmFcPT7
- H08Y2qgIwBHjEms4xzjOHLr6PVX9se/Gq3hnGsp7mrFr3xGQ6WHkAllyv4OX6QU0l4mJsAzjD3O
- nfq1QBQC7hC45Vs66Y+WTK9hXx6b9en8E4uRb0h05B3DOMm/RESmW8YeckRGJISXbC3UZBH5tXQ
- 3GcI7VsecGB4PmUcPbV0tI6c4BDlPpKLJ6cNRZn56ZNOOgCgwfQPvqxuVYAGco8DNHfjfRssf51
- obQVTKHsW0pkOggto30RtSU5JEXqM=
-X-Google-Smtp-Source: AGHT+IF8sd3Khk/oc0LSL6XEg9v6jwjP9jRQkSSg+cktXZoTCI5olQPUjz9tMhMEeX0XhzxosrBgkw==
-X-Received: by 2002:a17:907:3d4f:b0:b70:df0d:e2e9 with SMTP id
- a640c23a62f3a-b726552ff76mr302737266b.44.1762345710391; 
- Wed, 05 Nov 2025 04:28:30 -0800 (PST)
+ bh=jB3SchOueo86jNN7lX9TwsisWrHgnL185wSSa3bCRjI=;
+ b=vkuXQiJskHloPAo9WbIhAeCx/DBVlIPdRDCwk6+sOzabRUqRKuv0vI3ShO1rTSEldB
+ ODg9xpcpAqJzMCSIsbGWGVBSI8GbaxInza1Tm4l8XzwMG6dPzU22GCkFOzqfF7Z7sQJl
+ cQgrkItxm9jaVIfU4+PRygeAtJzSfYhyOxr4ZUMqvv/KWa1fviMyFi3ltUIK1w6awiVi
+ 6GOb1O4STGJit39ucivRW7ZkGxpyqxzU9mIYG7zb1YkNkq6l1l2gIc6xfUG2TaqRITVG
+ W4ewQlH0aFQS5M2d3QMmqWkXplst2Hgj3iXgcHQ90zcK58+O+mnueCyEjzqZCasSMcfG
+ /lqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5qM+lG7E+QtcG54q0rprenBuWtukHiE314EmLsColpFZfwgj+YxOpmQoZJxVlnb+okRaYKO6vH0eP@nongnu.org
+X-Gm-Message-State: AOJu0YyKIQFDMQgOhyztYmS5kQr281jnVqsbaXw6TAcvnTnD+VWoqGRX
+ cp67pdBYoWrSg3FhSPgpz0WfqYH/vC+RiprsR6pePDu+aSNoUqyCbZF4V2plartEPOQ=
+X-Gm-Gg: ASbGncv8uZ4ew1PBFjksb1HJzorrH0aTRgzSc2IsAJRzfje3fuZjOfaykoRhZdCYzKN
+ 8ZxS5ml9DHvw/SEzeUQJ9/Q2YiHBBAID48KafxISY4C1LOQp1czG7fatPy65Fxn+BNeWHfFtK8c
+ oIDySI41fiGX4kP4NAgJ4d9PilxbHOLCwMGNwJESqy54PQwfkokgVZpEDPlYlLfGedCHW6hZvoj
+ IwbhkrFqYwwfHUMcCR7lR7bMU0XcoJpHh4pC4xro8Wxd1D4L3WvOiySMu7YY8skT8/O1q42q8DC
+ V+h4OLtNSGl/x8KUAtKajin87ou4V42k7EawzTboZvrITnlLokX9W6EXTbcZBxfsbS29gxPO/uV
+ 8qOfStGxL/1m8PjB7BMAzxI/5Z972xCkF29ZKXv7NLFZZA67BJYYWYqSt9YdiJqzrORSXrcQu5t
+ VQSvRMAVKVjLecQlpeS41mf71K4JM=
+X-Google-Smtp-Source: AGHT+IG7sRiMIDye8D+iyN6+JFhFUuox0ploLgrLqjct8ax7p47qpl2Dyv4jbYqxc0DRUJI+f2LNeA==
+X-Received: by 2002:a17:907:268c:b0:b72:607b:1868 with SMTP id
+ a640c23a62f3a-b7265297ed6mr299452066b.21.1762345727258; 
+ Wed, 05 Nov 2025 04:28:47 -0800 (PST)
 Received: from [172.20.148.100] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723d3a2fe7sm501702066b.4.2025.11.05.04.28.29
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-b723f6e3764sm479783666b.48.2025.11.05.04.28.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 04:28:30 -0800 (PST)
-Message-ID: <72efd084-a2c9-44da-9bbb-966414923748@linaro.org>
-Date: Wed, 5 Nov 2025 13:28:27 +0100
+ Wed, 05 Nov 2025 04:28:46 -0800 (PST)
+Message-ID: <c3a97601-7c8b-49d1-b005-f6a819bc0e40@linaro.org>
+Date: Wed, 5 Nov 2025 13:28:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/30] aspeed queue
-To: qemu-devel@nongnu.org
-References: <20251104083144.187806-1-clg@redhat.com>
+Subject: Re: [PULL 00/12] QAPI patches for 2025-11-04
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20251104132125.4134730-1-armbru@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251104083144.187806-1-clg@redhat.com>
+In-Reply-To: <20251104132125.4134730-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,23 +103,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/25 09:31, Cédric Le Goater wrote:
+On 11/4/25 14:21, Markus Armbruster wrote:
 > The following changes since commit a8e63c013016f9ff981689189c5b063551d04559:
 > 
 >    Merge tag 'igvm-20251103--pull-request' ofhttps://gitlab.com/kraxel/qemu into staging (2025-11-03 10:21:01 +0100)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/legoater/qemu/ tags/pull-aspeed-20251104
+>    https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2025-11-04
 > 
-> for you to fetch changes up to 1d2a5f8f5d6478504e80be0fcee5ca88adac5921:
+> for you to fetch changes up to 8107ba47fd78bcf8c3206de42dbfb5ba8184d706:
 > 
->    hw/arm/aspeed: Split AST1030 EVB machine into a separate source file for maintainability (2025-11-04 09:27:59 +0100)
+>    qapi: Add documentation format validation (2025-11-04 13:55:27 +0100)
 > 
 > ----------------------------------------------------------------
-> aspeed queue:
-> 
-> * Move Aspeed machine models in separate source files to ease maintenance
+> QAPI patches for 2025-11-04
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
