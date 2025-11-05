@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E379CCFA05
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6261DCCFA04
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGUg5-0007Uo-RT; Tue, 04 Nov 2025 22:59:21 -0500
+	id 1vGUgz-0008T1-33; Tue, 04 Nov 2025 23:00:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUg1-0007Tx-Lb; Tue, 04 Nov 2025 22:59:17 -0500
+ id 1vGUgx-0008S5-Bu; Tue, 04 Nov 2025 23:00:15 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUfz-0006sZ-Ub; Tue, 04 Nov 2025 22:59:17 -0500
+ id 1vGUgv-0000YI-RS; Tue, 04 Nov 2025 23:00:15 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 5 Nov
- 2025 11:59:00 +0800
+ 2025 11:59:05 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 5 Nov 2025 11:59:00 +0800
+ Transport; Wed, 5 Nov 2025 11:59:05 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 03/17] hw/arm/aspeed: Add AST1700 LTPI expander device model
-Date: Wed, 5 Nov 2025 11:58:41 +0800
-Message-ID: <20251105035859.3709907-4-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 16/17] hw/arm/aspeed: Model AST1700 SGPIOM block as
+ unimplemented device
+Date: Wed, 5 Nov 2025 11:58:54 +0800
+Message-ID: <20251105035859.3709907-17-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
 References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
@@ -68,143 +69,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Introduce a minimal QEMU device model for the ASPEED AST1700, an
-MCU-less I/O expander used in the LTPI topology defined by the
-DC-SCM 2.0 specification (see figure 2):
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
-
-This initial implementation includes:
-
-* Definition of aspeed.ast1700 as a SysBusDevice
-
-* Setup of a basic memory region to reserve I/O space for future
-  peripheral modeling
-
-This stub establishes the foundation for LTPI-related device emulation,
-without implementing any functional peripherals at this stage.
+AST1700 includes an SGPIOM block, but QEMU has no functional model yet.
+Expose it as an unimplemented device so the address space is reserved and
+the missing functionality is explicit to users/guests.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
- include/hw/misc/aspeed_ast1700.h | 32 ++++++++++++++++++
- hw/misc/aspeed_ast1700.c         | 57 ++++++++++++++++++++++++++++++++
- hw/misc/meson.build              |  1 +
- 3 files changed, 90 insertions(+)
- create mode 100644 include/hw/misc/aspeed_ast1700.h
- create mode 100644 hw/misc/aspeed_ast1700.c
+ include/hw/misc/aspeed_ast1700.h |  1 +
+ hw/misc/aspeed_ast1700.c         | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
 
 diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/aspeed_ast1700.h
-new file mode 100644
-index 0000000000..b7c666eef2
---- /dev/null
+index 4048d31154..8ada3a7775 100644
+--- a/include/hw/misc/aspeed_ast1700.h
 +++ b/include/hw/misc/aspeed_ast1700.h
-@@ -0,0 +1,32 @@
-+/*
-+ * ASPEED AST1700 IO Expander
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_AST1700_H
-+#define ASPEED_AST1700_H
-+
-+#include "hw/sysbus.h"
-+#include "hw/misc/aspeed_scu.h"
-+#include "hw/adc/aspeed_adc.h"
-+#include "hw/gpio/aspeed_gpio.h"
-+#include "hw/i2c/aspeed_i2c.h"
-+#include "hw/misc/aspeed_ltpi.h"
-+#include "hw/ssi/aspeed_smc.h"
-+#include "hw/watchdog/wdt_aspeed.h"
-+#include "hw/char/serial-mm.h"
-+#include "hw/misc/unimp.h"
-+
-+#define TYPE_ASPEED_AST1700 "aspeed.ast1700"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedAST1700SoCState, ASPEED_AST1700)
-+
-+struct AspeedAST1700SoCState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+};
-+
-+#endif /* ASPEED_AST1700_H */
+@@ -44,6 +44,7 @@ struct AspeedAST1700SoCState {
+     AspeedWDTState wdt[AST1700_WDT_NUM];
+ 
+     UnimplementedDeviceState i3c;
++    UnimplementedDeviceState sgpiom;
+ };
+ 
+ #endif /* ASPEED_AST1700_H */
 diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
-new file mode 100644
-index 0000000000..bb05e392f4
---- /dev/null
+index 37b2946fc0..66a5f21d27 100644
+--- a/hw/misc/aspeed_ast1700.c
 +++ b/hw/misc/aspeed_ast1700.c
-@@ -0,0 +1,57 @@
-+/*
-+ * ASPEED AST1700 IO Expander
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+@@ -19,6 +19,7 @@
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
+ #define AST1700_SOC_SRAM_SIZE        0x00040000
+ #define AST1700_SOC_I3C_SIZE         0x00010000
++#define AST1700_SOC_SGPIOM_SIZE      0x00002000
+ 
+ enum {
+     ASPEED_AST1700_DEV_SPI0,
+@@ -26,6 +27,7 @@ enum {
+     ASPEED_AST1700_DEV_ADC,
+     ASPEED_AST1700_DEV_SCU,
+     ASPEED_AST1700_DEV_GPIO,
++    ASPEED_AST1700_DEV_SGPIOM,
+     ASPEED_AST1700_DEV_I2C,
+     ASPEED_AST1700_DEV_I3C,
+     ASPEED_AST1700_DEV_UART12,
+@@ -40,6 +42,7 @@ static const hwaddr aspeed_ast1700_io_memmap[] = {
+     [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
+     [ASPEED_AST1700_DEV_SCU]       =  0x00C02000,
+     [ASPEED_AST1700_DEV_GPIO]      =  0x00C0B000,
++    [ASPEED_AST1700_DEV_SGPIOM]    =  0x00C0C000,
+     [ASPEED_AST1700_DEV_I2C]       =  0x00C0F000,
+     [ASPEED_AST1700_DEV_I3C]       =  0x00C20000,
+     [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+@@ -162,6 +165,15 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_LTPI_CTRL],
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ltpi), 0));
+ 
++    /* SGPIOM */
++    qdev_prop_set_string(DEVICE(&s->sgpiom), "name", "ioexp-sgpiom");
++    qdev_prop_set_uint64(DEVICE(&s->sgpiom), "size", AST1700_SOC_SGPIOM_SIZE);
++    sysbus_realize(SYS_BUS_DEVICE(&s->sgpiom), errp);
++    memory_region_add_subregion_overlap(&s->iomem,
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SGPIOM],
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sgpiom), 0),
++                        -1000);
 +
-+#include "qemu/osdep.h"
-+#include "hw/boards.h"
-+#include "hw/qdev-core.h"
-+#include "qom/object.h"
-+#include "hw/qdev-properties.h"
-+#include "qemu/log.h"
-+#include "migration/vmstate.h"
-+#include "hw/misc/aspeed_ast1700.h"
+     /* WDT */
+     for (i = 0; i < AST1700_WDT_NUM; i++) {
+         AspeedWDTClass *awc = ASPEED_WDT_GET_CLASS(&s->wdt[i]);
+@@ -225,6 +237,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+     object_initialize_child(obj, "ltpi-ctrl",
+                             &s->ltpi, TYPE_ASPEED_LTPI);
+ 
++    /* SGPIOM */
++    object_initialize_child(obj, "ioexp-sgpiom[*]", &s->sgpiom,
++                            TYPE_UNIMPLEMENTED_DEVICE);
 +
-+#define AST2700_SOC_LTPI_SIZE        0x01000000
-+static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    /* Occupy memory space for all controllers in AST1700 */
-+    memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
-+                       AST2700_SOC_LTPI_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+
-+}
-+
-+static void aspeed_ast1700_instance_init(Object *obj)
-+{
-+    return;
-+}
-+
-+static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = aspeed_ast1700_realize;
-+}
-+
-+static const TypeInfo aspeed_ast1700_info = {
-+    .name          = TYPE_ASPEED_AST1700,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedAST1700SoCState),
-+    .class_init    = aspeed_ast1700_class_init,
-+    .instance_init = aspeed_ast1700_instance_init,
-+};
-+
-+
-+static void aspeed_ast1700_register_types(void)
-+{
-+    type_register_static(&aspeed_ast1700_info);
-+}
-+
-+type_init(aspeed_ast1700_register_types);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 45b16e7797..9477e63cdf 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -133,6 +133,7 @@ system_ss.add(when: 'CONFIG_PVPANIC_PCI', if_true: files('pvpanic-pci.c'))
- system_ss.add(when: 'CONFIG_PVPANIC_MMIO', if_true: files('pvpanic-mmio.c'))
- system_ss.add(when: 'CONFIG_AUX', if_true: files('auxbus.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-+  'aspeed_ast1700.c',
-   'aspeed_hace.c',
-   'aspeed_i3c.c',
-   'aspeed_lpc.c',
+     /* WDT */
+     for (i = 0; i < AST1700_WDT_NUM; i++) {
+         snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
 -- 
 2.43.0
 
