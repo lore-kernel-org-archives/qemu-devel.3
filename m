@@ -4,74 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080F8CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 19:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A970CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 19:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGj5O-00085I-V1; Wed, 05 Nov 2025 14:22:27 -0500
+	id 1vGjC1-0002ZG-7G; Wed, 05 Nov 2025 14:29:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGj5F-00082p-JF
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:22:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vGjBx-0002XL-Fw
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:29:13 -0500
+Received: from fout-b5-smtp.messagingengine.com ([202.12.124.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGj5B-0000fg-3t
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:22:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762370531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lxYYgFjcakMAdK4SuDQqyF5bnL/821jd7KC4tRUWH6Q=;
- b=BSFwTFX9MKZQr/JHl3uXVLVpeEC0SYWcEFqguymCQshfMkYBF6LmkAJL2OQw46X1XvEYe9
- kuVfhViVm0cFaVDZpKMEvwevIxqDtr1PDXvuN2AlBCzLZwzMXN9+ltGWSUmy/Kq6Obpl9a
- zaltkQr0Lk2Lj2PDGt4fD2LAb85jMh0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-OFhgn5bYPPW8DUMGqs7ZVw-1; Wed,
- 05 Nov 2025 14:22:09 -0500
-X-MC-Unique: OFhgn5bYPPW8DUMGqs7ZVw-1
-X-Mimecast-MFC-AGG-ID: OFhgn5bYPPW8DUMGqs7ZVw_1762370528
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE8051956095; Wed,  5 Nov 2025 19:22:08 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.131])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1C831955F1A; Wed,  5 Nov 2025 19:22:06 +0000 (UTC)
-Date: Wed, 5 Nov 2025 13:22:04 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 4/8] qio: Factor out helpers qio_net_listener_[un]watch
-Message-ID: <udi2mpwibg43sbhgbcpvemzeznucgrwfezv7wfxr3pqod4anza@vuf6xmliutzv>
-References: <20251103202849.3687643-10-eblake@redhat.com>
- <20251103202849.3687643-14-eblake@redhat.com>
- <aQndkQ3knp-5d-YJ@redhat.com> <aQn8ZITZmk3IWpED@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aQn8ZITZmk3IWpED@redhat.com>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vGjBv-0005vt-40
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 14:29:12 -0500
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.stl.internal (Postfix) with ESMTP id 89E731D001B8;
+ Wed,  5 Nov 2025 14:29:08 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Wed, 05 Nov 2025 14:29:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1762370948; x=1762457348; bh=CY0+7zZc0GGMEX1V0iNzCtpwakx28HTK
+ c+bIpG9anmY=; b=EdYZHDAX6VNSOJaeY8ADCs27A4qGnVeX1NwFWyKmrlKOA9q+
+ RUM65s6IiY5XFSHaCIqlAXaVCVH0nJ64apL3bZfLBlDS/IOJggH/HUXVItJWi121
+ B8ONL1sIiN4Vhrm8m8BC+sIHpNwdiXogeoNiNsB8jg+lVBwCcyTtcW99GxRXdPY6
+ Ls616GOGXYagLDkZd4NyPCOjLOh5Km+Ua4mRfSamO1tKp/A9BAIbPCreH0QWR++j
+ 6POtM9PWiI5oTVURWNLBI2aimCypNsIKdz3WZ8HFb59r8d/vTRZVn9JyDBZTQ2Sk
+ 57lPqn0ac3sWBPytC3mqvY50BEcy3+RTcLQ3NA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762370948; x=
+ 1762457348; bh=CY0+7zZc0GGMEX1V0iNzCtpwakx28HTKc+bIpG9anmY=; b=K
+ g+WXjwO0Fo8gtHcZOjOJopKSEqzsLE2WaJ6d6M0qyOQTuG8+xXUyWKwSBNi2VynB
+ NBojVOZKivzElc+Gs2T9jIItLez/Qm88iL/9028TYLGVLmYy8w1qks1OxBYD+96f
+ hw5z8IA14DccA4sc3FecJcPoRiWC2H+do6pMTg4uOnkqtCCgMKB3joZscHJqnKSN
+ mEyuLd4ra2g5ekLHjWp89YybB4LFFqkNTmAGLaiZRidn8sIFIRUbUOWmHpIJohRN
+ VqhnQnhRNxer4HMqdElpQQ0ch3u9jHLWTYl+xeJK7VwTNNXAarnGhiK0nQfHuzWa
+ dprK2MTwGadBbw8uvNhuA==
+X-ME-Sender: <xms:g6ULaZYrGe214OFyHov2Xu-y8BMKHH5HkA2C4OZ-_vgpYrqNajUfmg>
+ <xme:g6ULaX1K-oQp5u6lrza_DrIUUBcn6EItSaCGbBjelhzMGhfyoeiy12bn-BRD_vISd
+ XjrNWD5_HDUqzDAV9xglhIIfGbu5RKDsFZWpASuwhoec_RSeyVZxUjx>
+X-ME-Received: <xmr:g6ULaZUNOMNfmjL_eXZKTamU-fmrjJQbKuCjAIo5xs5Ph66yK5jDksIp23X0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeegjeegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+ hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
+ jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
+ tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
+ nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmh
+ huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegthhgrugesjhgrsghl
+ ohhnshhkihdrgiihiidprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuh
+X-ME-Proxy: <xmx:g6ULaRUqOB_69tUFS6MwziT65E-LnjzsNfnlaWsrLjF9XIYfgzIcZQ>
+ <xmx:g6ULaYdEdiyNlxHUBvwISwlBh0I9IcPC_RIQWkzyZvIXEpMe6eTMAA>
+ <xmx:g6ULaaX48Xi89VUfrmdfTNBFYGSY9nNWICdAK-IBiwX6V3q2WIxdxQ>
+ <xmx:g6ULaRcmWqDe2DIIZTDeq1cqDrugHKpTpp8ZuRByRoIIJQtOHt_kIQ>
+ <xmx:hKULadA8t3ua0F_IG1K15zR23HFEn3_0_ZP2oA42zJMapz9plES86j7A>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Nov 2025 14:29:06 -0500 (EST)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id a3e48ac8;
+ Wed, 5 Nov 2025 19:29:05 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 05 Nov 2025 14:29:05 -0500
+Message-Id: <DE10CZ7I52GT.32EF03GV1QTNB@jablonski.xyz>
+Cc: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 2/7] ati-vga: Implement scissor rectangle clipping
+ for 2D operations
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
+X-Mailer: aerc 0.21.0
+References: <20251103033608.120908-1-chad@jablonski.xyz>
+ <20251103033608.120908-3-chad@jablonski.xyz>
+ <c083bd27-f105-1837-2dfe-0ea60a0f49de@eik.bme.hu>
+In-Reply-To: <c083bd27-f105-1837-2dfe-0ea60a0f49de@eik.bme.hu>
+Received-SPF: pass client-ip=202.12.124.148; envelope-from=chad@jablonski.xyz;
+ helo=fout-b5-smtp.messagingengine.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,37 +117,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 02:15:16PM +0100, Kevin Wolf wrote:
-> Am 04.11.2025 um 12:03 hat Daniel P. Berrangé geschrieben:
-> > On Mon, Nov 03, 2025 at 02:10:55PM -0600, Eric Blake wrote:
-> > > The code had three similar repetitions of an iteration over one or all
-> > > of nsiocs to set up a GSource, and likewise for teardown.  Since an
-> > > upcoming patch wants to tweak whether GSource or AioContext is used,
-> > > its better to consolidate that into one helper function for fewer
-> > > places to edit later.
-> > > 
+>> +
+>> +    QemuRect dst;
+>> +    {
+>> +        unsigned dst_width =3D s->regs.dst_width;
+>> +        unsigned dst_height =3D s->regs.dst_height;
+>> +        unsigned dst_x =3D (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
+>> +                          s->regs.dst_x : s->regs.dst_x + 1 - dst_width=
+);
+>> +        unsigned dst_y =3D (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+>> +                          s->regs.dst_y : s->regs.dst_y + 1 - dst_heigh=
+t);
+>> +        qemu_rect_init(&dst, dst_x, dst_y, dst_width, dst_height);
+>> +    }
+>
+> This is a bit unusual style putting variable init in a block. I'm not sur=
+e=20
+> it's acceptable for QEMU, maybe you could put it in a static helper=20
+> function which is more usual style.
+>
 
-> > > -    listener->nsioc++;
-> > > +    qio_net_listener_watch(listener, listener->nsioc++, "add");
-> > 
-> > Nit-picking, I'd have a slight preference to keep the 'nsioc' increment
-> > on the following line from the qio_net_listener_watch call, as I don't
-> > like side effects in passing the function arguments.
-> 
-> It actually wouldn't work any more because qio_net_listener_watch()
-> iterates up to listener->nsioc. It needs the increased value in
-> listener->nsioc, and the previous one for i, so that we get exactly one
-> loop iteration.
+Not a problem, I'll break these out into a helper in v3.
 
-I'm happy to change it to this in v2, to avoid the side-effect in the
-function call:
+>> +
+>> +    QemuRect scissor;
+>> +    {
+>> +        uint16_t sc_left =3D s->regs.sc_top_left & 0x3fff;
+>> +        uint16_t sc_top =3D (s->regs.sc_top_left >> 16) & 0x3fff;
+>> +        uint16_t sc_right =3D s->regs.sc_bottom_right & 0x3fff;
+>> +        uint16_t sc_bottom =3D (s->regs.sc_bottom_right >> 16) & 0x3fff=
+;
+>> +        qemu_rect_init(&scissor, sc_left, sc_top,
+>> +                       sc_right - sc_left + 1, sc_bottom - sc_top + 1);
+>> +    }
+>
+> This could be checked on real hardware too what happens if you store=20
+> something in reserved bits (the docs may suggest that e.g. SC_BOTTOM,=20
+> SC_RIGHT and SC_BOTTOM_RIGHT might be the same register so writing=20
+> reserved bits may overwrite others or masked out by hardware but it's not=
+=20
+> clear from docs; the rage128pro docs aren't even clear on what the limits=
+=20
+> are as the summary text in the section 3.28 gives different limits than=
+=20
+> individual register descriptions right after that). To simplify using=20
+> these values I generally tried to apply reserved bits mask on write so no=
+=20
+> need to do that at read and using the values. Maybe these should do the=
+=20
+> same?
+>
 
-listener->nsioc++;
-qio_net_listener_watch(listener, listener->nsioc - 1, "add");
+It looks like the scissor registers are masked at write! Bits 13:0 are set
+on write and writing to reserved bits are just ignored. So you're absolutel=
+y
+right we shouldn't be bothering with this on read. I'll update this in v3.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+# Tested On: ATI Technologies Inc Rage 128 Pro Ultra TF
 
+reserved scissor bits
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+** Initializing SC_BOTTOM to 0x0 **
+** Initializing SC_RIGHT to 0x0 **
+** Initializing SC_TOP to 0x0 **
+** Initializing SC_LEFT to 0x0 **
+
+Initial State
+------------------------------------
+SC_BOTTOM:               0x00000000
+SC_RIGHT:                0x00000000
+SC_TOP:                  0x00000000
+SC_LEFT:                 0x00000000
+
+** Setting SC_BOTTOM to 0xffffffff **
+** Setting SC_TOP to 0xffffffff **
+
+After State
+------------------------------------
+SC_BOTTOM:               0x00003fff  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+SC_RIGHT:                0x00000000
+SC_TOP:                  0x00003fff  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+SC_LEFT:                 0x00000000
+
+** Setting SC_RIGHT to 0xffffffff **
+** Setting SC_LEFT to 0xffffffff **
+
+After State
+------------------------------------
+SC_BOTTOM:               0x00003fff
+SC_RIGHT:                0x00003fff  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+SC_TOP:                  0x00003fff
+SC_LEFT:                 0x00003fff  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+
+** Setting SC_BOTTOM_RIGHT to 0xfeeefeee **
+** Setting SC_TOP_LEFT to 0xfeeefeee **
+
+After State
+------------------------------------
+SC_BOTTOM:               0x00003eee  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+SC_RIGHT:                0x00003eee  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+SC_TOP:                  0x00003eee  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
+SC_LEFT:                 0x00003eee  <=3D=3D=3D=3D=3D=3D Masked at write (1=
+4-bit)
 
