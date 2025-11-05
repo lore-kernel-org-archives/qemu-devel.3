@@ -4,71 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429F8CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 06:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A383CCFA04
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 06:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGWb5-0006hp-WE; Wed, 05 Nov 2025 01:02:20 -0500
+	id 1vGWu8-0000Rc-Uj; Wed, 05 Nov 2025 01:22:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGWb3-0006hS-RT
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 01:02:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vGWu6-0000RD-30
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 01:21:58 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGWb1-0007Vi-LY
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 01:02:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762322533;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kKauCUJzYVtBm7uuGDn1t5g4punLzkr3Dsj4cxV28hw=;
- b=iuqPRc2lnryddFVWW7o6R9qC6J63JKWyklFuUsBigJnqaxOtEvLKaD0UwHhHzWOnkWqnRW
- s3NlfrpTpLQjJxJkY3HfBxcpyuDqXngaF84ePk3yCpsKI5F2yQmv5hjiEfwHf7vepMMzPx
- DBKG36AmmhDWuC9M7nYG3LWL1CilA9U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-j9FuNuQwOx2BRgwelb2DLw-1; Wed,
- 05 Nov 2025 01:02:12 -0500
-X-MC-Unique: j9FuNuQwOx2BRgwelb2DLw-1
-X-Mimecast-MFC-AGG-ID: j9FuNuQwOx2BRgwelb2DLw_1762322531
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6000B180049F; Wed,  5 Nov 2025 06:02:11 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4DF43000198; Wed,  5 Nov 2025 06:02:10 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2DBB521E6A27; Wed, 05 Nov 2025 07:02:08 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: MAINTAINERS spring-cleaning
-In-Reply-To: <CAFEAcA9oUfFSFXrN+swbCtr4LV+S+-DuUjdP5miGnSbkCt2ZYA@mail.gmail.com>
- (Peter Maydell's message of "Tue, 4 Nov 2025 17:36:47 +0000")
-References: <CAFEAcA9oUfFSFXrN+swbCtr4LV+S+-DuUjdP5miGnSbkCt2ZYA@mail.gmail.com>
-Date: Wed, 05 Nov 2025 07:02:07 +0100
-Message-ID: <87ikfpow4g.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vGWu2-0003pl-Ss
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 01:21:57 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A56LYYL088662
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 5 Nov 2025 15:21:34 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=YgRjsf5FkEyT0uTQfJQWcgei5Bb8PzG4OZp1Ywmp0dU=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1762323694; v=1;
+ b=WAUfIMYVer8teZjFEcQ+4+Y+ZstBMLxppqLYNej8ojiNT5kWP4BK8DnWj87tAWfK
+ M/ucP5SIDmNMdG/bBszoQEUej3pozLZIBN6eyVvvhzwKCYHmjC//psFNTvwh6BZO
+ X2eDcCd61ujbVafrk8Wofek+XYyl1ZoHJcrsJuWw5bfFkw9qo7tD5n6WwDwe7oCf
+ FybQ7ARmu8MCa2mntOd747OHvE5g4YegvfETkp1nVtM/tr046OkJ60wrGJJ3wCCN
+ E7t5bkyxPrbJMCfjAl36EufpWwpDlFMgjFuyKoYXwuqvJgZJNe7COW+HunRPlg5p
+ 4010xVEH2Wesu2pVpZ1FUQ==
+Message-ID: <ee140cb1-3041-4f38-acb2-43d73101ed3c@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 5 Nov 2025 15:21:33 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] hw/net/e1000e: Fix assertion failures in
+ e1000e_write_payload_frag_to_rx_buffers()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowang@redhat.com>
+References: <20251103175851.428816-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251103175851.428816-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,41 +75,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 2025/11/04 2:58, Peter Maydell wrote:
+> This patchset fixes assertion failures in
+> e1000e_write_payload_frag_to_rx_buffers().  There turn out to be two
+> ways this assert could be triggered.
+> 
+> The first is the one reported in
+> https://gitlab.com/qemu-project/qemu/-/issues/537 where a malicious
+> guest could set up the device into loopback mode and then send a
+> carefully sized packet that trips a bug in the logic in
+> e1000e_write_packet_to_guest() that tries to calculate how much data
+> it is going to put into an RX descriptor, causing us to hit the
+> assertion.
+> 
+> The second is one I spotted by code inspection, where the assert is
+> slightly over-eager and could assert in one valid case of a just
+> exactly large enough packet.
+> 
+> Patch 1 fixes what I believe to be an incorrect-behaviour bug
+> for descriptors with NULL buffer addresses, largely because
+> that makes the following patch to fix the assertion less awkward.
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (3):
+>    hw/net/e1000e_core: Don't advance desc_offset for NULL buffer RX
+>      descriptors
+>    hw/net/e1000e_core: Correct rx oversize packet checks
+>    hw/net/e1000e_core: Adjust e1000e_write_payload_frag_to_rx_buffers()
+>      assert
+> 
+>   hw/net/e1000e_core.c | 85 ++++++++++++++++++++++++++++++--------------
+>   1 file changed, 59 insertions(+), 26 deletions(-)
+> 
 
-> I just did some analysis of our MAINTAINERS file with the aid of a
-> local copy of the public-inbox archive of qemu-devel, and (unless my
-> scripting is broken ;-)) of the 258 emails listed in MAINTAINERS,
-> 50 have not sent an email to qemu-devel in the last three years.
->
-> Some of that will be things like "the address somebody uses to send
-> to the list is not quite the same as the one they have listed", so
-> it will need some manual checking, but I think this shows we could
-> use a bit of spring-cleaning of the file to remove stale entries.
->
-> I propose to send some (not cc'd the list) emails to these people,
-> asking (politely!) if they're still interested in being in the
-> MAINTAINERS file, and treating "email bounces", "no" and "no reply
-> within a month" as "I'm no longer interested in being cc'd on patches".
-> Then we can update the file accordingly.
->
-> (This was prompted by a series I sent out earlier today getting
-> a load of "address unknown" bounce-mails from a corporate server;
-> that's not a particularly rare thing to happen IME. And I also
-> have developed a habit of manually curating cc lists to drop
-> people I suspect of not actually being involved any more...)
+For the whole series:
 
-Yes, please!
-
-We talked about the issue of stale MAINTAINERS entries before, mostly
-when e-mail bounces get sufficiently annoying for somebody to submit or
-ask for a MAINTAINERS correction, but as far as I know it always stopped
-at talk.
-
-Ignored e-mail is arguably worse than bouncing e-mail.  50 entries out
-of 258 is a lot.
-
-If the cleaning you propose works, we should consider repeating it
-regularly, to avoid backsliding.  Annually?
-
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
