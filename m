@@ -4,169 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3742CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 01:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99678CCFA04
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 02:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGSJ0-0006Nv-9i; Tue, 04 Nov 2025 20:27:23 -0500
+	id 1vGTQT-00006p-Mg; Tue, 04 Nov 2025 21:39:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGSIw-0006NZ-3m; Tue, 04 Nov 2025 20:27:18 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vGTQR-00006e-LJ
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 21:39:08 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGSIt-0002vi-PC; Tue, 04 Nov 2025 20:27:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jiZstUfJUZVqoXMV9h/w47T6yQ4aFz3QXZrdGcgmlP+l8LbkbZVMi5q4VT+zGPFrs4rBsl5e9/cYJqEbwSaKMgTUWLoEWOQeGQnTE1AhbO0wtT4n8N0O8tgWIfWZpgryW/olb3Y1TXVLpR4JS0uJiK9Bct2y8MM03d0IZSKtu+n6qa7lecJAd1alFrlrfSgcE7KK+ZYSsxXh4uTPhoq0x6hrcLHRSvA55uOsntWloSfplrqKfYtn4zUt8+r12Qre+zuifeiVtqYjvge0AbRXX31nR5yk8bWjojTKLzXgob9cnYzhMZyZZy0dKv0iTSM5CgbBuXAlEPtv/VV623Zj1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TtgW6dXsNeRZgOgk0kUZPO4hJNaJAyrY38Nki+38YL0=;
- b=gtYlC31YKsC8GDnPjr7KLjauVoCqp4LQXyJeTi89FgxXG8sMcaKejt0PTW6UP7VqexLwP6jEcofmaB19EoSWmZ17j9ixvXgtjpR/Sq4jT7dLdVQoCpLyGz+1a4V1hV1BekE5NjDE0yO51Pl9gYqh+rHagnDnovETaGfgn9N011cDt73IK7Qt6nBVDwSHrulacxJ2zltigbMYgEncNAmv+72csUtdonD1c2X/Bc2NEmPllmvW76y+rYfWFtWNrbQQrs6q7hEllZKMCXU2Ze9O2B54hFn7GqF6+u5Jb/ghiG/QO17M6AWAKvoW+Zbb3XXGKBt4ldOgNAhoBuHjrJMORA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TtgW6dXsNeRZgOgk0kUZPO4hJNaJAyrY38Nki+38YL0=;
- b=TZVO+Wm0sdV2G/BLiWFIxMcsxJ8mA9TJgeIYzmfFBVK74IMED5jYUi1K3iCQFYPDGSEuLhhv1lYFMe5xyyLfzPLgdb0OmaN0wqoQ4d3aEEJ3K25xQhjaQC3pmVtncFuqiJfMVu5AblG1MF3aZEsGtYRKKXA2oJhB9f5IXPP7IVytdYwbZNQo5N8hoNBMs+08n9w2LCO+k4vlh6HJi2+HsOkoaJp2vcp9Ak6TpXrsHoBMTzqLBNwU0v6XcjwqYUkqdf+hfkgiKvH9m2t81DbONm2mrsG01E9cMzDdXwPXF2je5MzUi3ssFslRpSdmV21jc6KczyWYhn4bj68xxoipgQ==
-Received: from SEZPR06MB7619.apcprd06.prod.outlook.com (2603:1096:101:249::5)
- by TYZPR06MB7189.apcprd06.prod.outlook.com (2603:1096:405:b9::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.15; Wed, 5 Nov
- 2025 01:27:05 +0000
-Received: from SEZPR06MB7619.apcprd06.prod.outlook.com
- ([fe80::8ee8:6bc3:1cd7:9020]) by SEZPR06MB7619.apcprd06.prod.outlook.com
- ([fe80::8ee8:6bc3:1cd7:9020%6]) with mapi id 15.20.9275.015; Wed, 5 Nov 2025
- 01:27:05 +0000
-From: Kane Chen <kane_chen@aspeedtech.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "clg@kaod.org" <clg@kaod.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
- "leetroy@gmail.com" <leetroy@gmail.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>
-Subject: RE: [PATCH] hw/arm/ast27x0: Fix typo in LTPI address
-Thread-Topic: [PATCH] hw/arm/ast27x0: Fix typo in LTPI address
-Thread-Index: AQHcTeQI2jslWiB++EigOGYQzXj01bTjRgCggAABGoA=
-Date: Wed, 5 Nov 2025 01:27:05 +0000
-Message-ID: <SEZPR06MB76199F82F5B0D106C85E3080F7C5A@SEZPR06MB7619.apcprd06.prod.outlook.com>
-References: <20251104233742.2147367-1-nabihestefan@google.com>
- <TYPPR06MB820663370307D783EA2AF733FCC5A@TYPPR06MB8206.apcprd06.prod.outlook.com>
-In-Reply-To: <TYPPR06MB820663370307D783EA2AF733FCC5A@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7619:EE_|TYZPR06MB7189:EE_
-x-ms-office365-filtering-correlation-id: 85474d7a-dc58-479a-eda8-08de1c0a6dd7
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?dDdBN1VEeTFKV1ptL3cyWGJuVXNacDZoNExKOVJoVW1naVZXSWNMMGc0bnFD?=
- =?utf-8?B?ZmZmdlJEZTNNZjJXVVR3ekc4NlI0bmoxRlFrUEJEd3IzSi9XYWNvK0ZvZFJK?=
- =?utf-8?B?UE92blgzYittdzcvVE00WEJpZ1lNVURsYzVGMGdXRkJzUDdhTmxvR3N6aU1X?=
- =?utf-8?B?MHpBckdnUmVud0M4S0Z0RVZrTFZtSndnM3FCQ245akR6YWJxSTVPVFhoYzJE?=
- =?utf-8?B?NzlJcnU5UE1BblVrQkc4eFBNQWFEampmMUVuaXd1RjRIcHpLTFVBNmlxVkJJ?=
- =?utf-8?B?MWtFTkZ4RS9Sbk9yZi9zMTkyYjdUT1NJQ1N5SGVucm9yNmNkUmMyMjNhREdq?=
- =?utf-8?B?Wlh0bWd5SFhFTnU5NXRLVVVreXVMcTFpWkIxTVhiRURXRjRhdWhnc3RrSUQy?=
- =?utf-8?B?MnlDVE9OOWJYOGpmUU82OS81T3ZiZFg2cytWSkhNbWg0eHdlbnZJNHVycXEr?=
- =?utf-8?B?SCtVanoreGI4cGhOQUdsWWNHY0NnSDd1WC9YWXBwd3FQVnd1akxxa2tpS1lW?=
- =?utf-8?B?SEVtWG5CZTZTamtieXBrclIxeVdGSkJnN0lTL2RUWnZ4OWpJNGRQRVlnTlhr?=
- =?utf-8?B?S2ZzYUhKTzcxdDVCNzd1VTJSOUtmWThmdWdjTmFSbkI3WTVUL1p0V05RY242?=
- =?utf-8?B?S3lNMjFyWmg0VEVROXRwcStNMXZEODNLdlpZT3RRdDlPZ2xEWjEvVGpGVTdr?=
- =?utf-8?B?c1RVbGpnSUgvUWF1eW9qZVdqdGd6R1h1VE1xbkpjTzBhOG91R3ZLeUhsUUhw?=
- =?utf-8?B?QStpY0hyREk5VWxab2kvOEdmbW9LTUR4anpnZ1lmRjdzNjZJTzlpU1ZWZ1d3?=
- =?utf-8?B?OXNyTHhxT3d3b3EwNnh2SWpWTWZzUHNlYVB3bzJIbU9rTGJKbEhQVmV2T2pv?=
- =?utf-8?B?WThsVmttNlVnd1dGWGpWNWllVGlCQlhkamg3aDF0UkhudW5TNVBEOTdoY04v?=
- =?utf-8?B?WDJNZmRDSVJxVVp5RFlraUxvV09xQVNMckdsZXRUMlpZOEhsdG9VUnovS0hp?=
- =?utf-8?B?U0dEV1A4alFIbk1zZm1QTGRkT3hTV0R4RDBrY1M1RUNMY1ptN2Rxa2ZFU3hO?=
- =?utf-8?B?bGwwdXE2WU1DN0hQbHRnem5sZ3BGRlJVandHSS9TdmF2UzA4YXFXWnVrMW9m?=
- =?utf-8?B?eXJqcTNoK2xoTHJQYXlHMFRxUlllOGtxcnhJbmliTkJ5U2ZrMUZkaE9Md0t4?=
- =?utf-8?B?REZ5bzA0V3Rtai8zVWhxSCtnU3lGN0wxOUhyU0FqM09aNUJoZnZWVU1aRFA3?=
- =?utf-8?B?QUdKbStHNkdCN04rQTQydUJoWUFXZjRYWDJnekFKbmlEOVRJdEZVT0hyU1hi?=
- =?utf-8?B?NW5ienhMZUpudGhLOXphekRkeVJDdzZ5VjBBZEJNZzJOU0ZIa2czVElUZWFy?=
- =?utf-8?B?VFVBcGJqVkdhVFJSZ0tVQ1ZEVVdySy92WEtsZWZLc1I0TE5QR3RuK2R5YzBk?=
- =?utf-8?B?UWRnaXB5V04xZEQ1R3hOYmx5T2w0aGIrTHpydHhvSHRDQmhpRkVCMVg1REl0?=
- =?utf-8?B?bktoTXNpbWhNeUFHS0l1UkJHSmJ5ZlpnOC9BeUlpeVNJTWxEWnJxZnVZU1F6?=
- =?utf-8?B?NnRVemt1blN5S3BTaXFxNitCUnJGOXhVdVBSdEdGNTU5ZTdobHlkTWxLQlhK?=
- =?utf-8?B?UFo5YVE2c1pzT01HaHR1a1VYNUVKSjE3ZXhmTG41Z0dJVUI4bmFiUUo4bmtW?=
- =?utf-8?B?VVhCOWlTWnNJSkRvc1daRzk4ZU96M0JvSjZFZk5RR3ZTU3BwNGJoUkFWcm1t?=
- =?utf-8?B?NTBDTmFreUkvVGZhM1dnT0I3SG9yaWo1a1FiNzU1dTR1MFlyTGowVk1VVm5o?=
- =?utf-8?B?WHJ6aWJ1d1JEbTBEOVdJVEZKdzQzL2JvSHUzdmliVE9tcGlYVWsrVVowQytY?=
- =?utf-8?B?TVhFWWIrUUxNSFdEcHlhekRnSUxsVWJ1dFVEVDVHNUh2czRSUDlDaUM4M0ho?=
- =?utf-8?B?MVcwSXJhWjduY0RBdmNjeVF5MFFTL21BeWZYaG16L2RYeHVtMXRvUWhMYmQ2?=
- =?utf-8?B?d0lvMFZTbzYvSUMvZjZsaW1zVU9PZnI2Q3hIc1ZGanRYTjlOWUtSeTloZllI?=
- =?utf-8?Q?YFyuQc?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7619.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ekg0cUxHYzNLLzVYejM2QWhSby9YSy9rTXZUMGFpMUQrdWZFb0Nod0k0dlU3?=
- =?utf-8?B?SjRxQWk2WTR3dVpyRU8yMjQxZkk5bWUzcTFvaVpOWFUvRHBNSzExeVVaS2Yv?=
- =?utf-8?B?anNvMmNZRUpScktvMUFmZmZSMFliR2t3cGtCdWVBNTQyVDBLT2dDSFU3MW5s?=
- =?utf-8?B?S0lReWFUdXNyMkZQdXBhRzZURVNwaXovYjZPWDVHYkNyZElOSjNVeER5d0hJ?=
- =?utf-8?B?endOVDVkakpzVUlISVo3blRYaG9XdG1KUy84N2EzRjB2TmJuTXJOTTJIOHYv?=
- =?utf-8?B?RTJhRUxNb21rMjI4MG1xK0N6ejliMGN0YjBuUmhzcEpGVGZtcmVxeWRuWTRW?=
- =?utf-8?B?eElwTUhmTlF0Qm5KUnRaYllzc3RyRlBvYTF5VU9yanV3TWQzUUVlUjNudmhO?=
- =?utf-8?B?S2FGaTBsQzVWZXkvaWJncHhyUEdHdjdsaTU2NEkwdW5ZLzRaQUFETGdRTDFG?=
- =?utf-8?B?RFhtSXc4dlM2SzdzY0VtMWZQMGo2bStrNlhtcnY1UEJBR1dQR0pTZnh6ajhO?=
- =?utf-8?B?RzhHOGNEeGY0VTBZUjJieVZsdHlhNmpRL0YzNHBFNHlNR1JYRllsaWltUnlp?=
- =?utf-8?B?MmRadDJpZmNxd2JaclBQK2dqSTRWZmlUQmF5ek4veVdPeFdrME9JODJSK3Z2?=
- =?utf-8?B?TEdWZ2hBaS9IOTB5UGR0Y1BtMVd0TWdUb2tzaUJlUzhrNHlHNnRldCtPZGZn?=
- =?utf-8?B?ekFCVFF5NVBJRitnaVRWYTNTaW9yVDVSN3RvOEtJd2hqbUtQUEZ0cWhiaitB?=
- =?utf-8?B?U1ZJOW91ODJabHBaQklCWmlBZ2g5UDBjY0N1a2VWWHhXS1B5RWZaYWZ6ZjBh?=
- =?utf-8?B?OEI2YWVyTHhPMCs4QTE2VGd3STJtTDMyZnFrYWlmNlp6NysrVXh3ZDJCZUd5?=
- =?utf-8?B?NWMyK3QxT3pDSlFYS01iMmlZYUZBeTl5akxORWV1WXk2YXJZTlJhSm9XTEc4?=
- =?utf-8?B?bVdYOGt5WDVkWkVYd3BBM2J2cVJxL2hsSHdvZHVvVElhZTBUV0tJOVJjODZN?=
- =?utf-8?B?QlRZb2dKZGJMU1I0REZFYllMQ296ME1LMmtUNjlqanZYdnJjbUViclc0VGUy?=
- =?utf-8?B?UUplN2U0cEFCTEdlRndYREhPaEswYjh3SWpLQW5GRGczdFpRY0tSemt1M1Fr?=
- =?utf-8?B?ME56WWtsYU02QW0rZndzR0JLdzZmcWZCMFpUQzlvcmUwYThNU2NnSFNXMHlF?=
- =?utf-8?B?bG9JVlk1a2R1cXBWNGtONzBQdDdpaG5lSDJFd2o3b3dWY2NnVS9XVGF4aS9P?=
- =?utf-8?B?dzc1MTRzeTlHV2tESzVtOGx5bXNWWm9IL05ZcmJCekMzb2hCT0FBeWVrdXFp?=
- =?utf-8?B?ZEh2WEpmREd5N01UNTVTZTBHN285STk0aUExcUMrckxNWE9TOUFNTXEwclNM?=
- =?utf-8?B?REFQUlV0SDIvMklCTTVEaVplYk5QbEd0WWIyY3c2QUNCWWNZbzIyOUlvVzdw?=
- =?utf-8?B?eWRhME9CY1YxV21ZbWxvOFMvUjVCeUh3a3BZWk53QTQzb3duTldnN2lsRzFG?=
- =?utf-8?B?aXJya2hwVlZvT0JOVEZnTEtZaHFKN0N5NldiMHJwUFduRWhjMkZNY0NIQlZV?=
- =?utf-8?B?dFJJbm9nUkJRRHh6TFd1YzUrYTVEQkp1Q2lHeEVLVm00T3p2U0lhblh6c1dP?=
- =?utf-8?B?eU9LYkZSR0lldG9lMDJycmIxczU5UHA5M3FnSjN0UmxqUng0K05aL2p6bFhY?=
- =?utf-8?B?dEtTNzZueENucGxubWMvVGM4TWFTek1pOHZObmZWelRsU1NrMUc3bkE1dzVj?=
- =?utf-8?B?UFBSN1hqZUUySk1nN0xSd0NJc0NUNHNxVG0zdlFwVXJWSmkzSENkTWJLc21j?=
- =?utf-8?B?UnFnbm5rR3Z2NXhmdDBWQUI3Wmp3WUs2SVBoS1NhZGFMaHJLUzNCQVMxNzFy?=
- =?utf-8?B?ajVqWVkrdk54KzJQQ0RZRS9ZUURiOXUyaUNwR096cWp2YkhWS2JJWUZxZ0RY?=
- =?utf-8?B?b0lPZVB3anNNdVVwelE2UjBkdTFTSkhtYmJmNkZQQUkzSXBXQTlOeFZCZ0FN?=
- =?utf-8?B?V1BWci83Vm1PUnBEd3lCdkxZanRIYTlBa3RrK0s4OWNrRnkxYkY5eUhPc1pZ?=
- =?utf-8?B?S1Y1ayt5Zk96d3FnNEtUUWZNbU5WbzlEWnRnNG5ZSkpDdTVFZzl5cUFFTVNP?=
- =?utf-8?Q?LFUpUaOvYSGYmDZeTxoZNka78?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vGTQP-0002lG-Pc
+ for qemu-devel@nongnu.org; Tue, 04 Nov 2025 21:39:07 -0500
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 5A4KgD8T3086279
+ for <qemu-devel@nongnu.org>; Wed, 5 Nov 2025 02:39:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=/ETbt/xaGAwqObNPvgEAeAR8
+ 5R4jREWFHm1Wg/m+8AY=; b=pWyxYCdAZ+PmP2pWNXYNW50+rYIfxj11c8O9fkYS
+ y1VbDrtsP+N6dPBIseLkRTFSm9kFe9kXa2b7uQA6M0qRkd6dBGo/Z4LcPek4hjnb
+ B28aKPJyEFYzRp17KR28prtgaBnEfqjK8YixCdwmsR/YePYO+w8B62gIF8opmy0U
+ rJ9y2y2XsBmvp6L7s3IRzaTIR9QNpVzXuUnUF7W+cPqlQJgck8W0bl+HE0yKkr4W
+ 7XnYpJ5QOx2ETRBuo8cC/ybWTiQlpu+IyFUjNGhzCqnKKWOVnquCJfBzEzIrco6x
+ ws88bLV18Mdy50+kiVaGI6Y8dDY/OQi/LHxEDDKEndEgoQ==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a79jjus4x-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 02:39:02 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-5dbef2bbf85so3932865137.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Nov 2025 18:39:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1762310341; x=1762915141; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/ETbt/xaGAwqObNPvgEAeAR85R4jREWFHm1Wg/m+8AY=;
+ b=OcHCuGs8gM1pTqEKJUgcq8ir2CkNtKwYVmuvIQng2NVuddGYXKr/TOn4Gl9SeVwHfD
+ t6BNiC8drwvw3fXgcOTbjO+RzxwIXCG/fz0mKe9ZxpdMW9mvlx2RuosS6UkxIWeE2fVM
+ 0G9tWT0vCtDjmmerZPXyEk24l1vWMivviIALcRvdFXor0G7YgcjRDZ5gEQgdwXdAZpP4
+ AeisnzCRhJWohJXNuQSVhga+zvhO+uSipw7HJrV5MmC28YHWHuXjXaH9biyFKZbHXRey
+ vW/DNkTkeDyUmlRjkin/wvpOVRFGMa352ZuYUo5JOBffNjHysyATRN8SsZcsbYAYTgwk
+ sf/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762310341; x=1762915141;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/ETbt/xaGAwqObNPvgEAeAR85R4jREWFHm1Wg/m+8AY=;
+ b=i+9H6RXAkKpuh20KVTFVzY27QoO0y7xS+xVzyhg0gRueLL/OrCSSlSoXMvY3l6Cz0y
+ vlgKraZ+rQVsSxzfQrQgEKIfMl7l+pZEZowAl4ue1WXBIvscivdkf6IYS62wCJPcA/ll
+ JQv1LHAW07Fvhko8YoP5uGw1+772+A2dgFYRWKn1HGvxfxFPIZrJ2hMUEyeigU38vhOQ
+ oA2wxewnMHVp96JZZ1LjCjcD+ErBMcgzj7lHQs43GAt68xArAFESj6JaM/rZYQ3ZCAJD
+ TjHYJouONghDYMITyUySysQXrPAqfFjt2rxahBlHmB0UW9jhMk/uLCAKfTgO+6xNRua2
+ OUxg==
+X-Gm-Message-State: AOJu0YwX7yMF3D0mqhIaWorUbFme64r8ynKp3/iCp/v/1hXA/HuVtRl2
+ uSnD2yVkQfOm6QbszYzB6pmFJko9wgqH9234gvWyjVc0AFP3z7naVKNZBvVuct34jmJ2hoN8+MG
+ C4gTFp+bSwYNDYxptiCHtr74SMqdNbiCQHPcf/ZhVG8r6J+Nca722hzboYV50+pKuNey9Mm5zBC
+ zjGV5JUSulbz6zcw5CyMJwJ4wjNMWjdKjp
+X-Gm-Gg: ASbGnctkxaa1je4bh9rkFAEJtqKAl9FA7vn7pqD2qtXN0CBQIakk1UKwx12qb4hBlNc
+ yC6LOBbw7cqtj6gFuM9Tb/LOQ++szgV28lip1rRSoCTMhp0e1bXvbr+Rts5GsITm3VtGOrEN+0D
+ gnoyVnLCDKgg2bgrGUFiRTw1qO+8WJepHJCT5jNdmrhqFQ+mqH196Npw8+W3sSneNl0QumxagjM
+ W49fMhsrRLo5g21zg==
+X-Received: by 2002:a05:6102:3713:b0:5d6:27c7:e6b2 with SMTP id
+ ada2fe7eead31-5dd88e88862mr690544137.3.1762310341171; 
+ Tue, 04 Nov 2025 18:39:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH5gXvzchZB/hAijVUx7anPp54FzX8q0icORl4okqLVn90893epRyBBkSNjeQ5t+8MUE9fZniUezeHNguIWefY=
+X-Received: by 2002:a05:6102:3713:b0:5d6:27c7:e6b2 with SMTP id
+ ada2fe7eead31-5dd88e88862mr690537137.3.1762310340782; Tue, 04 Nov 2025
+ 18:39:00 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7619.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85474d7a-dc58-479a-eda8-08de1c0a6dd7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Nov 2025 01:27:05.1183 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ww8v7Ik3w52UJ334vPVVmzPOtrQBug+jjaqY3B202nFsfU2gNi5RsK5pclAWiXHg/aAyorstzeU2IcmcWOCyieQYSPqqb+UKGLMINRj5heU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB7189
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=kane_chen@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20251104222548.108264-1-ltaylorsimpson@gmail.com>
+ <20251104222548.108264-4-ltaylorsimpson@gmail.com>
+In-Reply-To: <20251104222548.108264-4-ltaylorsimpson@gmail.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Tue, 4 Nov 2025 20:38:49 -0600
+X-Gm-Features: AWmQ_bk4SpjCDQCPndklAuu_q412ueKpq-nsFVP1zePhDENfWZndj7N07fLq1OY
+Message-ID: <CAEqNhNa8+uyyh9ObO4TTvherZn4HQvv3GBqXdF4q048PSNqsWg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] Hexagon (tests/tcg/hexagon) Add test for USR
+ changes in packet
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
+Content-Type: multipart/alternative; boundary="000000000000d8bb6c0642cfd9df"
+X-Proofpoint-GUID: HucTIfTo_Elraflf0zwvVX4a9PHgoGXW
+X-Proofpoint-ORIG-GUID: HucTIfTo_Elraflf0zwvVX4a9PHgoGXW
+X-Authority-Analysis: v=2.4 cv=TuPrRTXh c=1 sm=1 tr=0 ts=690ab8c6 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=84_yY5o3KLoiLSIGzrQA:9
+ a=QEXdDO2ut3YA:10 a=r5dkzwHvhJxZtFKaVSsA:9 a=ztc34KS9XAsYfMoo:21
+ a=lqcHg5cX4UMA:10 a=-aSRE8QhW-JAV6biHavz:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA1MDAxNSBTYWx0ZWRfX0SBkGwrYil4H
+ H7ZOeIz10wERRE4fhpMG7UAv+oh0lxROgGHxH+rngjgYN9tm9SKiEDLIKqBjVhTG8YNmQ++rnHK
+ kII+l+z4WozUVrCBEJS25/OFKJXCCAFA7J0J4rS1anTU6tG/TVf87w1Kf0eFrNtWq3ydxk8Mnte
+ O8GtcW5BsVHDMf1QvzBHDCtf+I0Lp44+Urb0Qj7lyIH2RXuIQSjYr1hVE72bX7ALCKwDJFdR+xz
+ JiyaTkCg0Tx0tnA2CcpPKiMZFAUQA+U7FJSYHZ/Xtg2lggSYvN8tHA1gbtgeEadptBcuFNJO84m
+ N1dZg2krqGVpBOy+CRL0r8hk5JYaPWWlNAeNUMjq9f92ORGzX5NKt0ReX2cUGFnfzTcxdvbOTxs
+ uS9I+sekb0Kfu4YPY8ak9m2As3ngWQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-05_01,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511050015
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -183,38 +142,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTmFiaWgsDQoNCkkgd2lsbCBzdWJtaXQgYW5vdGhlciBwYXRjaCBmb3IgdGhlIExUUEkgY29u
-dHJvbGxlciBzb29uLCBhbmQgSSdsbCBhbHNvIGZpeCB0aGlzIHR5cG8gdGhlcmUuDQpJZiB0aGVy
-ZSBhcmUgbm8gZnVydGhlciBjb25jZXJucywgY291bGQgd2UgbGVhdmUgdGhpcyBjaGFuZ2UgYXMg
-aXM/DQoNCkJlc3QgUmVnYXJkcywNCkthbmUNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0N
-Cj4gRnJvbTogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+IFNlbnQ6IFdl
-ZG5lc2RheSwgTm92ZW1iZXIgNSwgMjAyNSA5OjExIEFNDQo+IFRvOiBOYWJpaCBFc3RlZmFuIDxu
-YWJpaGVzdGVmYW5AZ29vZ2xlLmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsNCj4gS2FuZSBD
-aGVuIDxrYW5lX2NoZW5AYXNwZWVkdGVjaC5jb20+DQo+IENjOiBjbGdAa2FvZC5vcmc7IHBldGVy
-Lm1heWRlbGxAbGluYXJvLm9yZzsgU3RldmVuIExlZQ0KPiA8c3RldmVuX2xlZUBhc3BlZWR0ZWNo
-LmNvbT47IGxlZXRyb3lAZ21haWwuY29tOyBxZW11LWFybUBub25nbnUub3JnDQo+IFN1YmplY3Q6
-IFJFOiBbUEFUQ0hdIGh3L2FybS9hc3QyN3gwOiBGaXggdHlwbyBpbiBMVFBJIGFkZHJlc3MNCj4g
-DQo+ICsgS2FuZQ0KPiANCj4gSGkgS2FuZSwNCj4gDQo+IENvdWxkIHlvdSBwbGVhc2UgaGVscCB0
-byByZXZpZXcgaXQ/DQo+IFRoYW5rcy1KYW1pbg0KPiANCj4gPiBTdWJqZWN0OiBbUEFUQ0hdIGh3
-L2FybS9hc3QyN3gwOiBGaXggdHlwbyBpbiBMVFBJIGFkZHJlc3MNCj4gPg0KPiA+IFRoZSBhZGRy
-ZXNzIGZvciBMVFBJIGhhcyBvbmUgbW9yZSAwIHRoYXQgaXQgc2hvdWxkLCBidWcgaW50cm9kdWNl
-ZCBpbg0KPiA+IGNvbW1pdCA5MTA2NGJlYTZiMmQ3NDdhOTgxY2IzYmQyOTA0ZTU2ZjQ0M2U2YzY3
-Lg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogTmFiaWggRXN0ZWZhbiA8bmFiaWhlc3RlZmFuQGdv
-b2dsZS5jb20+DQo+ID4gLS0tDQo+ID4gIGh3L2FybS9hc3BlZWRfYXN0Mjd4MC5jIHwgMiArLQ0K
-PiA+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkNCj4gPg0K
-PiA+IGRpZmYgLS1naXQgYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYyBiL2h3L2FybS9hc3BlZWRf
-YXN0Mjd4MC5jIGluZGV4DQo+ID4gYzQ4NGJjZDRlMi4uMWU2ZjQ2OTUzOCAxMDA2NDQNCj4gPiAt
-LS0gYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYw0KPiA+ICsrKyBiL2h3L2FybS9hc3BlZWRfYXN0
-Mjd4MC5jDQo+ID4gQEAgLTg3LDExICs4NywxMSBAQCBzdGF0aWMgY29uc3QgaHdhZGRyDQo+IGFz
-cGVlZF9zb2NfYXN0MjcwMF9tZW1tYXBbXSA9DQo+ID4gew0KPiA+ICAgICAgW0FTUEVFRF9ERVZf
-VUFSVDExXSAgICA9ICAweDE0QzMzQTAwLA0KPiA+ICAgICAgW0FTUEVFRF9ERVZfVUFSVDEyXSAg
-ICA9ICAweDE0QzMzQjAwLA0KPiA+ICAgICAgW0FTUEVFRF9ERVZfV0RUXSAgICAgICA9ICAweDE0
-QzM3MDAwLA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfTFRQSV0gICAgICA9ICAweDMwMDAwMDAwLA0K
-PiA+ICAgICAgW0FTUEVFRF9ERVZfUENJRV9NTUlPMF0gPSAweDYwMDAwMDAwLA0KPiA+ICAgICAg
-W0FTUEVFRF9ERVZfUENJRV9NTUlPMV0gPSAweDgwMDAwMDAwLA0KPiA+ICAgICAgW0FTUEVFRF9E
-RVZfUENJRV9NTUlPMl0gPSAweEEwMDAwMDAwLA0KPiA+ICAgICAgW0FTUEVFRF9ERVZfU1BJX0JP
-T1RdICA9ICAweDEwMDAwMDAwMCwNCj4gPiAtICAgIFtBU1BFRURfREVWX0xUUEldICAgICAgPSAg
-MHgzMDAwMDAwMDAsDQo+ID4gICAgICBbQVNQRUVEX0RFVl9TRFJBTV0gICAgID0gIDB4NDAwMDAw
-MDAwLA0KPiA+ICB9Ow0KPiA+DQo+ID4gLS0NCj4gPiAyLjUxLjIuMTAwNi5nYTUwYTQ5M2M0OS1n
-b29nDQoNCg==
+--000000000000d8bb6c0642cfd9df
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Nov 4, 2025 at 4:25=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmail=
+.com>
+wrote:
+
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>  tests/tcg/hexagon/usr.c | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>
+> diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c
+> index f0b23d312b..8becd8195d 100644
+> --- a/tests/tcg/hexagon/usr.c
+> +++ b/tests/tcg/hexagon/usr.c
+> @@ -608,6 +608,30 @@ TEST_CMP_xx(uint32_t, uint32_t, FUNC, SRC1, SRC2,
+> RES, USR_RES)
+>  #define TEST_CMP_PP(FUNC, SRC1, SRC2, RES, USR_RES) \
+>  TEST_CMP_xx(uint64_t, uint64_t, FUNC, SRC1, SRC2, RES, USR_RES)
+>
+> +static void test_usr_packets(void)
+> +{
+> +    uint32_t usr;
+> +    /* Test setting USR bits inside and outside packets */
+> +    asm(CLEAR_USRBITS \
+> +        "r10 =3D satub(%1)              /* Set usr.OVF */\n\t"
+> +        "{\n\t"
+> +        "    r11 =3D convert_uw2sf(%4)  /* Set usr.FPINPF */\n\t"
+> +        "    r10 =3D memw(%5)           /* Force pkt commit */\n\t"
+> +        "}\n\t"
+> +        "{\n\t"
+> +        "    r11 =3D sfadd(%2, %3)      /* Set usr.FPINVF */\n\t"
+> +        "    r10 =3D add(r10, #1)       /* Doesn't force pkt commit */\n=
+\t"
+> +        "}\n\t"
+> +        "%0 =3D usr\n\t"
+> +        : "=3Dr"(usr)
+> +        : "r"(0xfff),
+> +          "r"(SF_one), "r"(SF_SNaN),
+> +          "r"(0x010020a5),
+> +          "m"(err)
+> +        : "r2", "r10", "r11", "usr");
+>
+
+For the inline asm, how about using the symbolic/named operands instead of
+the enumerated ones?  Should be easier to read.
+
+Something like:
+
+    uint32_t usr;
+    /* Test setting USR bits inside and outside packets */
+    asm(CLEAR_USRBITS
+        "r10 =3D satub(%[val])              /* Set usr.OVF */\n\t"
+        "{\n\t"
+        "    r11 =3D convert_uw2sf(%[fp_input])  /* Set usr.FPINPF */\n\t"
+        "    r10 =3D memw(%[err_mem])           /* Force pkt commit */\n\t"
+        "}\n\t"
+        "{\n\t"
+        "    r11 =3D sfadd(%[sf_one], %[sf_snan])  /* Set usr.FPINVF */\n\t=
+"
+        "    r10 =3D add(r10, #1)                 /* Doesn't force pkt comm=
+it
+*/\n\t"
+        "}\n\t"
+        "%[usr_out] =3D usr\n\t"
+        : [usr_out] "=3Dr" (usr)
+        : [val] "r" (0xfff),
+          [sf_one] "r" (SF_one),
+          [sf_snan] "r" (SF_SNaN),
+          [fp_input] "r" (0x010020a5),
+          [err_mem] "m" (err)
+        : "r2", "r10", "r11", "usr");
+
+
+
+
+> +    check32(usr & 0x3f, USR_OVF | USR_FPINVF | USR_FPINPF);
+> +}
+> +
+>  int main()
+>  {
+>      TEST_R_OP_R(satub,       0,         0,         USR_CLEAR);
+> @@ -1097,6 +1121,8 @@ int main()
+>      TEST_Rp_OP_R(sfinvsqrta, SF_small_neg,  SF_HEX_NaN,       0x00,
+> USR_FPINVF);
+>      TEST_Rp_OP_R(sfinvsqrta, SF_SNaN,       SF_HEX_NaN,       0x00,
+> USR_FPINVF);
+>
+> +    test_usr_packets();
+> +
+>      puts(err ? "FAIL" : "PASS");
+>      return err;
+>  }
+> --
+> 2.43.0
+>
+>
+
+--000000000000d8bb6c0642cfd9df
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 4, =
+2025 at 4:25=E2=80=AFPM Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson=
+@gmail.com">ltaylorsimpson@gmail.com</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">Signed-off-by: Taylor Simpson &lt;<a hr=
+ef=3D"mailto:ltaylorsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gma=
+il.com</a>&gt;<br>
+---<br>
+=C2=A0tests/tcg/hexagon/usr.c | 26 ++++++++++++++++++++++++++<br>
+=C2=A01 file changed, 26 insertions(+)<br>
+<br>
+diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c<br>
+index f0b23d312b..8becd8195d 100644<br>
+--- a/tests/tcg/hexagon/usr.c<br>
++++ b/tests/tcg/hexagon/usr.c<br>
+@@ -608,6 +608,30 @@ TEST_CMP_xx(uint32_t, uint32_t, FUNC, SRC1, SRC2, RES,=
+ USR_RES)<br>
+=C2=A0#define TEST_CMP_PP(FUNC, SRC1, SRC2, RES, USR_RES) \<br>
+=C2=A0TEST_CMP_xx(uint64_t, uint64_t, FUNC, SRC1, SRC2, RES, USR_RES)<br>
+<br>
++static void test_usr_packets(void)<br>
++{<br>
++=C2=A0 =C2=A0 uint32_t usr;<br>
++=C2=A0 =C2=A0 /* Test setting USR bits inside and outside packets */<br>
++=C2=A0 =C2=A0 asm(CLEAR_USRBITS \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r10 =3D satub(%1)=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Set usr.OVF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r11 =3D convert_uw2sf(%4)=
+=C2=A0 /* Set usr.FPINPF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r10 =3D memw(%5)=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Force pkt commit */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r11 =3D sfadd(%2, %3)=C2=
+=A0 =C2=A0 =C2=A0 /* Set usr.FPINVF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r10 =3D add(r10, #1)=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0/* Doesn&#39;t force pkt commit */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%0 =3D usr\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;=3Dr&quot;(usr)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r&quot;(0xfff),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r&quot;(SF_one), &quot;r&quot;(SF=
+_SNaN),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r&quot;(0x010020a5),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;m&quot;(err)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r2&quot;, &quot;r10&quot;, &quot;r11&q=
+uot;, &quot;usr&quot;);<br></blockquote><div><br></div><div>For the inline =
+asm, how about using the symbolic/named operands instead of the enumerated =
+ones?=C2=A0 Should be easier to read.</div><div><br></div><div>Something li=
+ke:</div><div><br></div><div>=C2=A0 =C2=A0 uint32_t usr;<br>=C2=A0 =C2=A0 /=
+* Test setting USR bits inside and outside packets */<br>=C2=A0 =C2=A0 asm(=
+CLEAR_USRBITS<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r10 =3D satub(%[val]) =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Set usr.OVF */\n\t&quot;=
+<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 &quot; =C2=A0 =C2=A0r11 =3D convert_uw2sf(%[fp_input]) =C2=A0/* Set =
+usr.FPINPF */\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot; =C2=A0 =C2=A0=
+r10 =3D memw(%[err_mem]) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Force pkt co=
+mmit */\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &=
+quot; =C2=A0 =C2=A0r11 =3D sfadd(%[sf_one], %[sf_snan]) =C2=A0/* Set usr.FP=
+INVF */\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot; =C2=A0 =C2=A0r10 =
+=3D add(r10, #1) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*=
+ Doesn&#39;t force pkt commit */\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &=
+quot;}\n\t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[usr_out] =3D usr\n\=
+t&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [usr_out] &quot;=3Dr&quot; (usr)<b=
+r>=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [val] &quot;r&quot; (0xfff),<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 [sf_one] &quot;r&quot; (SF_one),<br>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 [sf_snan] &quot;r&quot; (SF_SNaN),<br>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 [fp_input] &quot;r&quot; (0x010020a5),<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 [err_mem] &quot;m&quot; (err)<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 : &quot;r2&quot;, &quot;r10&quot;, &quot;r11&quot;, &quot;usr&qu=
+ot;);<br></div><div><br></div><div><br></div><div>=C2=A0</div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 check32(usr &amp; 0x3f, USR_OVF | USR_FPINVF | USR_FPINPF);<=
+br>
++}<br>
++<br>
+=C2=A0int main()<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0TEST_R_OP_R(satub,=C2=A0 =C2=A0 =C2=A0 =C2=A00,=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A00,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0USR_CLEAR);<=
+br>
+@@ -1097,6 +1121,8 @@ int main()<br>
+=C2=A0 =C2=A0 =C2=A0TEST_Rp_OP_R(sfinvsqrta, SF_small_neg,=C2=A0 SF_HEX_NaN=
+,=C2=A0 =C2=A0 =C2=A0 =C2=A00x00, USR_FPINVF);<br>
+=C2=A0 =C2=A0 =C2=A0TEST_Rp_OP_R(sfinvsqrta, SF_SNaN,=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0SF_HEX_NaN,=C2=A0 =C2=A0 =C2=A0 =C2=A00x00, USR_FPINVF);<br>
+<br>
++=C2=A0 =C2=A0 test_usr_packets();<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0puts(err ? &quot;FAIL&quot; : &quot;PASS&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0return err;<br>
+=C2=A0}<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div></div>
+
+--000000000000d8bb6c0642cfd9df--
 
