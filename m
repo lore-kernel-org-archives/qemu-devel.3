@@ -4,64 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBB5CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 17:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046B0CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 17:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGhEc-0006Hq-CK; Wed, 05 Nov 2025 12:23:50 -0500
+	id 1vGhG0-0006pm-PX; Wed, 05 Nov 2025 12:25:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGhEQ-0006C9-L4
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:23:40 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vGhFz-0006pQ-6b
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:25:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGhEO-0003tV-U7
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:23:38 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vGhFx-0005LV-HO
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:25:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762363415;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1762363511;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IFgw0/iwfRyWWBieintj411YlV49KaKmaUC5PPtrCrA=;
- b=QKQ7zb0FOYyEyqUoWZ9G3f8BDAZZh01M8F0J263hwAnL4Ei/DhHcqCuRcKOn+DAWzGlZxB
- mnnGuiEsCv4w+hWd0rDCuNJy9JfZNDh/L4Gnx2Gt50AEr+BUrzXKdljYg21+tSdevse+vY
- q3479yvszjFokDRlOhUAQ0U88ycpkOE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-BMVQnFCaPRy-p8MYktBE2A-1; Wed,
- 05 Nov 2025 12:23:33 -0500
-X-MC-Unique: BMVQnFCaPRy-p8MYktBE2A-1
-X-Mimecast-MFC-AGG-ID: BMVQnFCaPRy-p8MYktBE2A_1762363413
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14805195606D; Wed,  5 Nov 2025 17:23:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.131])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07DCD300018D; Wed,  5 Nov 2025 17:23:30 +0000 (UTC)
-Date: Wed, 5 Nov 2025 11:23:28 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, berrange@redhat.com
-Subject: Re: [PATCH 2/8] qio: Minor optimization when callback function is
- unchanged
-Message-ID: <emxeau4ezaaz2ekufiu4lyiuw2qs2dc5wwvebiughorornn4oz@gn53wczz5nmg>
-References: <20251103202849.3687643-10-eblake@redhat.com>
- <20251103202849.3687643-12-eblake@redhat.com>
- <aQnf8N1jv56390bF@redhat.com>
+ bh=F7kvwDLXFkP0drhhbVeUYkZax+HxH2jYez81iitq5qY=;
+ b=Mrdm9AAQmluhlJh4I98ls3rC4SCVH7LFqCn27AufcDr0m9HuHmxdH7wo/cF/ivIsWn9wb4
+ +oE2Y42aMlYqX6eCKU1B25ZIwkeTH+A+xV0d/iRQ/Sf0Xpg4Tdqk/d4rTMi5CEjV6ECuPw
+ 818HKymdERXsbtLSkAHY6MmKmz2y+QQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-227-5jXpE2j5M4aGK4Zyn4DFeA-1; Wed, 05 Nov 2025 12:25:09 -0500
+X-MC-Unique: 5jXpE2j5M4aGK4Zyn4DFeA-1
+X-Mimecast-MFC-AGG-ID: 5jXpE2j5M4aGK4Zyn4DFeA_1762363508
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-471201dc0e9so373515e9.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 09:25:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762363508; x=1762968308;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F7kvwDLXFkP0drhhbVeUYkZax+HxH2jYez81iitq5qY=;
+ b=XMGdRhO/2W1fP4dIQBOQzEnFsYO8aFwhRE9Ge9/kk8VR38xYpjUUeedmemTIIuNgPV
+ baKS0i02mxRAxbQqrlMmC0lsMM2XOLxfPfXIjVY4sPhos2E3RUVIUaib9SFAVcDbPuu0
+ P3MATZraWoDiElzH7hsdxGO3soCliOnU5knstTD8wMB8pHry7BQ2+oJh1fg9Z2BtSMbj
+ o638VkXmWbyO7aMElyuKe581icObG2grWtw+/YeFQ/q3oZrtHPh2Yu4kU+ljdIJ/Nauw
+ bOKv3nQjOtfPCEEYtiWTj2LAW+JniiZur7SBp5f1M3EqfODh9Bpg7eGIHjR6wuKz8MXl
+ qEXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQ4y9LFy2vp+WASHKPkonbAFvnOPHDmW1rIptNG6mDZLE7GVMuN5AR58PId62TvUbTqaCPOCPvtppA@nongnu.org
+X-Gm-Message-State: AOJu0YyMLJ5eSBYzGNzu365Fl43ODFi+UpMUFLBeW1gziJ4D8p30tOHT
+ vRUXwOMlzkvmBbcxgOUdYwOC4IMogl3dLvuuBQmr3z+ZMvU32P0uaAExlOGXG1o+EMuXcCh6J9P
+ PjA+yd30DNG+JAjr2bmaRGkp2cWUumRwEniMLolW+Y5S/k/ejZAA5F1hU
+X-Gm-Gg: ASbGnctB4iiFOV12m3suXUfBLkDOn9/Baog3Oksw6lcCP6RiAf7YAN4jbio0byC4UCQ
+ M92b4zCVDDR9gJATlK84Nk1HSg42p9yrNDk2JAPGd+EWZtdXErQsZbYM4avysqD+DSIvdsBH2uR
+ TTrBvDPZ2UuR+93xvd95yjbqn7vJ6HYMxaU9jre5b0UN3P4QM4NWAkpGXj2W+K+3xYEb5EHbgBM
+ z+w0GtrA4hJiTJtR25nccOsRZXhx4J5W6FV/tZclN97Q5M6eTltL61eXcgHfOmM+a+r5JbFpnbp
+ Mv4PqWYPpj9hT8yDWdsaWi3QsNTc+SBjFYxASvPC8FAWb4PAGIWU3ARRK4RGdaL+DypzsB47CkO
+ uvxnw7CiWrDVitFFbthSdNRYkR8NPaUyp5Lsr5eUI/dfM2w==
+X-Received: by 2002:a05:600c:4e88:b0:477:fcb:2267 with SMTP id
+ 5b1f17b1804b1-4775cdad1edmr31847155e9.8.1762363507924; 
+ Wed, 05 Nov 2025 09:25:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFU++5s7kTrEHO9Vp8w9FCtiSLdXLMaNfAfBPgzQ9szxug3ri0KZkJvmJv8mLgUlL75KIxZcg==
+X-Received: by 2002:a05:600c:4e88:b0:477:fcb:2267 with SMTP id
+ 5b1f17b1804b1-4775cdad1edmr31846895e9.8.1762363507526; 
+ Wed, 05 Nov 2025 09:25:07 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429dc20198csm11976889f8f.47.2025.11.05.09.25.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Nov 2025 09:25:07 -0800 (PST)
+Message-ID: <7ac24d9a-0caf-48cb-832c-812fecc5c82c@redhat.com>
+Date: Wed, 5 Nov 2025 18:25:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aQnf8N1jv56390bF@redhat.com>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-16-skolothumtho@nvidia.com>
+ <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
+ <CH3PR12MB754815B9B902E7EF66B0A1B9ABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <85f315a2-e49a-4330-9419-48a8a3a4a3e3@redhat.com>
+ <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <e4fd6d1e-3fca-457b-ac6a-69e721d799f4@redhat.com>
+ <CH3PR12MB75489F2161213432D34688D2ABC5A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB75489F2161213432D34688D2ABC5A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
@@ -82,53 +134,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 12:13:52PM +0100, Kevin Wolf wrote:
-> Am 03.11.2025 um 21:10 hat Eric Blake geschrieben:
-> > In qemu-nbd and other NBD server setups where parallel clients are
-> > supported, it is common that the caller will re-register the same
-> > callback function as long as it has not reached its limit on
-> > simultaneous clients.  In that case, there is no need to tear down and
-> > reinstall GSource watches in the GMainContext.
-> > 
-> > Signed-off-by: Eric Blake <eblake@redhat.com>
-> > ---
-> >  io/net-listener.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/io/net-listener.c b/io/net-listener.c
-> > index 0adbc409cf2..e89286ea63c 100644
-> > --- a/io/net-listener.c
-> > +++ b/io/net-listener.c
-> > @@ -147,6 +147,10 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
-> >  {
-> >      size_t i;
-> > 
-> > +    if (listener->io_func == func && listener->io_data == data) {
-> > +        return;
-> > +    }
-> 
-> Wouldn't a change of listener->io_notify also be significant?
 
-On paper, yes.  In practice: io_notify is usually either a free-like
-function (including obect_unref in this bucket), or NULL.  In the
-former, you are passing in a malloc'd or reference-counted object,
-where the cleanup action at notify time will never vary (the nature of
-the object being passed in determines how to clean up when it is no
-longer in use).  In the latter, passing NULL means no cleanup is
-necessary.  I struggle to see a scenario where you would register a
-callback opaque pointer with one cleanup function, and then change
-your mind to re-register the same object but a different io_notify
-cleanup function.
 
-But I'm not opposed to adding the additional check for an unchanged
-io_notify in v2.
+On 11/5/25 12:41 PM, Shameer Kolothum wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 05 November 2025 08:57
+>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> smostafa@google.com; wangzhou1@hisilicon.com;
+>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+>> Krishnakant Jaju <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
+>> get_msi_address_space() callback
+> [...]
+>>> IIUC, the prereg_listener mechanism just enables us to setup the s2
+>>> mappings. For MSI, In your version, I see that smmu_find_add_as()
+>>> always returns IOMMU as. How is that supposed to work if the Guest
+>>> has s1 bypass mode STE for the device?
+>> in kvm_arch_fixup_msi_route(), as we have as != &address_space_memory in
+>> my case, we proceed with the actual translation for the doorbell gIOVA
+>> using address_space_translate(). I  guess if the S1 is in bypass mode
+>> you get the flat translation, no?
+> Yes, I noted that and replied as well.
+>
+> Again, coming back to kvm_arch_fixup_msi_route(), I see that this was introduced
+> as part of your " ARM SMMUv3 Emulation Support" here,
+> https://lore.kernel.org/qemu-devel/1523518688-26674-12-git-send-email-eric.auger@redhat.com/
+>
+> The VFIO support was not there at that time. I am trying to understand why
+> we need this MSI translation for vfio-pci in this accelerated case. My understanding
+> was that this is to setup the KVM MSI routings via KVM_SET_GSI_ROUTING ioctl.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+yes that's correct. This was first needed for vhost integration. And
+obviously this is also needed for VFIO.
+
+allows vhost irqfd to trigger a gsi that will be routed by KVM to the
+actual guest doorbell. On top of that it registers the guest PCI BDF for
+GiCv2m or GICv3 MSI translation setup.
+if the guest doorbell address is wrong because not properly translated,
+vgic_msi_to_its() will fail to identify the ITS to inject the MSI in.
+See kernel kvm/vgic/vgic-its.c vgic_msi_to_its and vgic_its_inject_msi
+
+Eric
+>
+> Is that right?
+>
+> Thanks,
+> Shameer
+>
+>
+>
 
 
