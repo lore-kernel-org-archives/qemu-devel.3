@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA2CCCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B66CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGdqp-0006eF-C2; Wed, 05 Nov 2025 08:47:03 -0500
+	id 1vGdrA-0006t1-8A; Wed, 05 Nov 2025 08:47:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdqn-0006Wd-83
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:47:01 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1vGdr7-0006sL-Sc
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:47:22 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdqk-0003Pf-U5
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:47:00 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-640c1fda178so5148038a12.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:46:58 -0800 (PST)
+ id 1vGdr6-0003R0-BW
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:47:21 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b6d402422c2so438505366b.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:47:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762350417; x=1762955217; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762350439; x=1762955239; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zxrXHHC3/5F7YgaA3N69oT6RADgDFMo6NhEAbU0odQM=;
- b=N9Bd25k5uODyQSRjAJWm9mafZxQOP9s3FeE2jVJJplla4e04oLVRxCov60L+1k3o+e
- OBWGJ1ckjAvup5E0AoWHcUWuMXPdsIj1irknhRo5FfdZvVtd8BSKlTGHs0wCTX7oyKaj
- YSQRZGNHql1NbDMQxfwauxX78eR7zpXACzjXSgi54NoMboF7aKKRCBjoynArcwhfnvqg
- Nhu8hIx0fSwNJb/okHtxqOzimO15EPNAmiRAM9RvnXEOZzDzSYKB3ita9omfA5pqba9Z
- arL7WUoy5a70Qn+LouSt69l6EUwoNZKLfzpwXEvvi/g9jM9Re5A4EUWx39FboLZh466g
- d9lQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SE8ujVEEsGDzJz5HQhQqCEUAuZw4B0wKwXYz0ENvS6c=;
+ b=nmdL1pqmZd/5KKPZI2aLJPuv5YM+YGQ7uA19tZ3zMpDWBXuVlfqIqKLsSC48TgTQUP
+ XKmX/DG+TI88nfcMIm+oGc5gDsiN0GFy/n+22Gj+EnBxqQBkfyRzLb8qASmjbcxI9afB
+ +dbSF02/LBMQgFrl2ZlfEq9CT7zjgxqFlCDPIl3L3OUUV/53PDAR1GdyE2m3dUwha6Qs
+ o6rY3Da60fdrb7Vn+QyBHJ3aZvrbSGE9kiao/9kWiISxsR/oBweqUnWIPOVSkQGY86g8
+ BhnLpOnxwQXS9W9tS3PnF/FhzEhw+dJD2Q2EVFsxZZ8ALVnorTLVbUozZWxRjQ9Fx6Tm
+ gTRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762350417; x=1762955217;
+ d=1e100.net; s=20230601; t=1762350439; x=1762955239;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zxrXHHC3/5F7YgaA3N69oT6RADgDFMo6NhEAbU0odQM=;
- b=XmTWCdLLVMYh7dDy+iae/wGu3Kf4Izq5S2SoQowpHchmyXhwUagHC3iPnIFd1vda/n
- wFjpMDhhp7PI8OTXmQDB9ufzkv6I1R19CFERfh+DLiGmKE7n/R35Uy3hURPn+w2s8vWI
- hYXLG+T/5S8lIJ7KEJ4BS+tDM+nDshoHIU7FtAGFhUSOP9lr7lORABit/HZILW8OoBFW
- 0h9D/GqZF7n176CGeNccE36q2E1JgIjrGT3R5erRJHkEUBNmYUBrdgsOz5oIZpgOBv11
- PWnMd4Y343X5pHV9iDxnP7BNVqCf3QcN+K3i8P9GnFaVaA9wIuUC8/AhbKL1QPuK4Mg+
- Yp6A==
-X-Gm-Message-State: AOJu0YyXqz1vMfDXFkZsOMxfwCpWcRIFrL4irea9i8pTFEQLuXmlZI5D
- JPhd4S0bnuubcG0QMFT1sPueXIxJIhTGpTskrBLAYKdf9l7nXYxTvn/qxQJgiru/4BQqYFVrPz6
- fEu8I8gY=
-X-Gm-Gg: ASbGncvQTZ1agnBat3ckpukI5Bwu7hHli0LqjhX0/N20kPjy7zVygX+j4BsFhbkubqX
- FfxveKmfu0+5J5o4wMaHbSs/6XGjevJ4ThENHS5OA72H9CxVyOuMLFJKtvTzTKuFgAkZEmh5FaC
- y4idML3StnvwKShmeNBmujwASQHQgm5ssz6VWZBcGLM9vI1tYw7Yt0Bl2VcuDvRSMZK3IXmEsnf
- ZZC5iQ34WkS63jKirjRNLZUFlU9g545dtsdzsOwV2I71K9VP1nGiZlDJ91s/cP7En3ZV4xEiC8/
- r0IQHbutB8RqR6DCozRVE0ntuaXi/x13CBmqxx1NqDWRi4aSJwfzlNOoGFTtJxYmE5VVd3UjErG
- Brw6G/js0u65OczUNwzcLFECzH73p5oqAUnR9xFzHDb2pdcapxGl3PjfmaA/IJSpELio6ZF9PXm
- QihH6Cb18egVSxKEeORLEOELKhW80=
-X-Google-Smtp-Source: AGHT+IFY0kxExx86VNMvqUkeBIiF/3psCzsrAaxQ5hX1XRlpf+RrMT53ZpClhCcrht3rAIlhY/jbRQ==
-X-Received: by 2002:a05:6402:84d:b0:640:36d9:54fe with SMTP id
- 4fb4d7f45d1cf-64105a4cce7mr2811752a12.24.1762350417326; 
- Wed, 05 Nov 2025 05:46:57 -0800 (PST)
+ bh=SE8ujVEEsGDzJz5HQhQqCEUAuZw4B0wKwXYz0ENvS6c=;
+ b=G3C3WCJqoIhouyws/snH/URVKVaOuQIUjESXpR1AOMGrBLOXOalWuyh99aAP1GzZmA
+ IlOnA+Thex6IuF6gHWuCn5uPLVVlt1FMUDNaHEVvhcZj6LCeFmGWJogt3sy2NPErMqz7
+ zhJu2G5f5A1pHK1d2tuIKcw/Gu3kk5QH1I3iUIMQ8FGv2SuglqHIG7gnvvrj80d/b9n/
+ iGxqnqlozDqt6bZWyczdulrVHssgDDrLJFxpRKgdJDY2TWrYT+gha7stqQ1iELWDbSp6
+ td0bdUOHamz+EQSyrMlofgQ2jS37PjaIQ9ZWv6K1LlhMeotx7Yjs/VoKfGo2QzeM563K
+ Ffyw==
+X-Gm-Message-State: AOJu0YzXMV6amuxD4kdm2tV3wY89QxhxxTSxoe1eU8nuseCjGKV862kx
+ PdrshfkbUfRa2/zO4My4+h7K0qRS66v0glAaa22LOcXfEokKueqoIfj/Q9la0E03ErE=
+X-Gm-Gg: ASbGnctZtOGvxNVpldq4AtlXIyskT7SBRFR38+ik6kzr7IE4dtw2fl0gI6dNAYUMtOf
+ NSIM6lTDYR44aeAyxOPSAGI0gpCW+/oKWIe2Do6X+knJRNrVVH/rW6VwnaRzU1nC0EypF9PwtA5
+ qaklEtyIi/KJLZQzXLwTF65zZg1IKEcreJeCJxOFz51XX8/XVZ5p2gn8lflRgokHnPppQ0cw8RT
+ z+ms5ujGvh9CyQeQIVPY+t0NqTyHJ71cnqBhgDojGbhyIr0i9mYS0qMYAsevHf5dEBOmIv1yiOk
+ xNdU3bZ4xwGviUA7shimgYjU4XRis6TZ60RygCS+wQevvExt154tdnP1yZMq8dHWLMMyhJWSuhQ
+ DDES465n3al4lODGynkUwmS6dY0qE1YjLai6zJ8zlvjr8K7ioD7bji1tZtLHnHbo+wzedgcIfQF
+ O6k7gSxrzK78pNzqa1mG2XQoqi/B8=
+X-Google-Smtp-Source: AGHT+IGXpc84J67LP/rEGZJEPHh6Pyv92ewXT7bZhQuKm9H0rY9TuAj6VvtomPVT2RgsgsUrGD9oFQ==
+X-Received: by 2002:a17:907:da5:b0:b41:b0c4:e74c with SMTP id
+ a640c23a62f3a-b72654e1f0cmr343145666b.33.1762350438880; 
+ Wed, 05 Nov 2025 05:47:18 -0800 (PST)
 Received: from [172.20.148.100] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6a721f1sm4761013a12.32.2025.11.05.05.46.56
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-b723d3a3292sm498997266b.6.2025.11.05.05.47.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 05:46:56 -0800 (PST)
-Message-ID: <e7bd713d-7fc4-4d7e-a136-c4bf5edffc90@linaro.org>
-Date: Wed, 5 Nov 2025 14:46:55 +0100
+ Wed, 05 Nov 2025 05:47:18 -0800 (PST)
+Message-ID: <a0331285-dc74-4943-aede-d870f01ec81b@linaro.org>
+Date: Wed, 5 Nov 2025 14:47:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] Cleanup patches for QEMU 10.2 soft freeze
-To: qemu-devel@nongnu.org
-References: <20251104163102.738889-1-pbonzini@redhat.com>
+Subject: Re: [PULL 0/8] Misc HW patches for 2025-11-04
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20251104174823.92412-1-philmd@linaro.org>
+ <8a7d477e-269d-4e68-9fc4-6c881cf9393f@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251104163102.738889-1-pbonzini@redhat.com>
+In-Reply-To: <8a7d477e-269d-4e68-9fc4-6c881cf9393f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,25 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/25 17:30, Paolo Bonzini wrote:
-> The following changes since commit a8e63c013016f9ff981689189c5b063551d04559:
+On 11/5/25 10:00, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
->    Merge tag 'igvm-20251103--pull-request' ofhttps://gitlab.com/kraxel/qemu into staging (2025-11-03 10:21:01 +0100)
+> On 4/11/25 18:48, Philippe Mathieu-Daudé wrote:
+>> The following changes since commit e9c692eabbbb7f395347605a6ef33a32d398ea25:
+>>
+>>    Merge tag 'next-pr-pull-request' of https://gitlab.com/berrange/qemu into staging 
+>> (2025-11-04 15:17:31 +0100)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://github.com/philmd/qemu.git tags/hw-misc-20251104
+>>
+>> for you to fetch changes up to f79fec0275ee7a5151ced9b893c4af676c7f5db6:
 > 
-> are available in the Git repository at:
+> I missed Cédric Le Goater provided his Tested-by tag via IRC, so
+> amended to the relevant commits and regenerated the tag (no other
+> change). New tag hash is 1eb18789f8863e7ee89c1dc06b2de806442b4927.
 > 
->    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> Note I also ignore this checkpatch error:
 > 
-> for you to fetch changes up to fdeeb448458f0ed808a62314b57974ab16d3592e:
+> ERROR: line over 90 characters
+> #242: FILE: scripts/mkemmc.sh:216:
+> +echo "  -device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=emmc-img"
 > 
->    rust: add back to Ubuntu 22.04 jobs (2025-11-04 17:13:25 +0100)
+>> ----------------------------------------------------------------
+>> Misc HW patches
+>>
+>> - Add RPMB emulation to eMMC model :)
+>> - Use generic MachineState::fdt field in microvm machine
+>> - Remove dead code in ac97_realize()
+>> ----------------------------------------------------------------
+> Regards,
 > 
-> ----------------------------------------------------------------
-> * rust: cleanup Error, add &error_fatal bindings
-> * rust: do not add qemuutil to Rust crates
-> * rust: migration: allow nested offset_of
-> * rust: add back to Ubuntu 22.04 jobs
-> * checkpatch: remove bogus patch prefix warning
+> Phil.
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
