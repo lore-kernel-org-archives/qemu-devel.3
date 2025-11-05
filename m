@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2EDCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 18:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2E4CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 18:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGibJ-00047G-P2; Wed, 05 Nov 2025 13:51:22 -0500
+	id 1vGibQ-000486-8Z; Wed, 05 Nov 2025 13:51:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <michael@videogpu.com>)
- id 1vGib2-0003zO-2j
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 13:51:04 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vGib5-0003zb-DZ
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 13:51:10 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <michael@videogpu.com>)
- id 1vGiay-0003Bl-JV
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 13:51:03 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-429b7ba208eso118022f8f.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 10:50:59 -0800 (PST)
+ id 1vGib1-0003CR-Ew
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 13:51:07 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4775895d69cso739165e9.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 10:51:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=videogpu-com.20230601.gappssmtp.com; s=20230601; t=1762368658; x=1762973458;
+ d=videogpu-com.20230601.gappssmtp.com; s=20230601; t=1762368662; x=1762973462;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2if4ozVw8yt5djDJE9vZL0DPZmNx/MlAw6CBcParLWA=;
- b=iB/ce8X5G6XFkuqe8b2tFoVeVJzvTVka5rboPE0hrSRZgD7dJOJvihYBoMMvE99iIM
- wzZKh4x53HxbPWa4q0UVqdplk844LIzuwX0hBACn6Ab7tAet97fv2t/fJLH5cfEdgN4f
- bQSeVE2gbz0LDQvO7afWsdejjcyd2Xj85Wh9Zh9BYuoIumyKvoMZJLgudzXVJnpGbz1g
- cY3Thf8yLvJBZXRlIJ8oy0i5gc+cM8R2Zy61QL7V5VGaoEhNRVzKYOZ7aSFzsG8fqc0j
- LenLw+RflGjrzMjkRZFqDERzcy1IieNl+q3shj49mZSzt91B9C4LPl0HsDBAaofW0/uM
- YDnQ==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=coXM3aabJBT21GBiTqQtXzlDQRzt3k5zaMleXYUcg/A=;
+ b=28JqkVzo6laD33qWHbvEnGvgE56xMTqkfNUKSEE5+9OFfcvWvEow41wYI7RY2l7+yH
+ qCdrIWB+nGrpXcVwe6lFNb4+jTHM6hjc5JfMzxNKAS190qTL6dwvFsX5qMoSuJ6RTcu9
+ zOhsmjgm/hR1Y62bnC2oT+Ckgu0geBWYUZSXWdg6448X71eeZ2sHFsChFossxK38a22/
+ uNFWC5niqa9Glh+z29V7lFgZ1mrwJDGvLLP/oT7sYY2IiSmoyhoLbfiPWNJgVgIeVyVI
+ mvUTAWP66GGlVUPvgR/hVX8uXOeL0Nwb/QC40LMIUELgHumOf3/QPDQGNGMaWu5eJmk7
+ BAlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762368658; x=1762973458;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2if4ozVw8yt5djDJE9vZL0DPZmNx/MlAw6CBcParLWA=;
- b=uoMkN549kWxm1hDBbLae2uGuow0P8gCLi69UUyemVccyw8Z28V/MUqi87GAUxKIQmt
- EW6I5+TKPmpOtJNxZgDOT/6q/cwtDZXBLw+mXAJL2zcKri6xzA03g9vn51wKsftUMUdI
- vBmcX79tybfq0RLk3QbrnF5LYrPwEcxlK1rm+cjhiqlQBa/LYnAoj3IpsUAq09ISpkWG
- BTW2GqY88FFnGAEb5KdjYSQNvtDQaNmHqjZQJ/xodrkZJSqMNVsae3YTTui0UzIOQPXj
- /5TVK9cHTSBG2SYjoOxWLzXqgO2BmN6EW4qyPFcRGeh/rOFj/D9JXcrFbQj13CWl3uf2
- npqA==
-X-Gm-Message-State: AOJu0YyEwWhSIBMIU24oQcYHPSBY3eFYTHyXOe+fomkhgIePX//eDY6e
- qjmsjoNxmp4gZ9yVN7g6Q1mDkoqP0nfnksZaE2WwbH7cBlZZ/IXDWNu28TV3vgNIA3X08t0ShUH
- OjL/Rn3I=
-X-Gm-Gg: ASbGnctk8NiGMEssr7OWGIlGrFmynDn2Ef4MYA+IVTZ+dm7AbdDDyrM9Qr8alVNo+cw
- qJKVMRNS7BUVsfkJK/VxfIbGvmeua2JHOhkbSO4Z3xJAI/DwzmuVgNoK9plppHZpGv73ketQCEm
- bBAxIVfWc/hxH28hbVDLLZmZWhBhaZKg3aD4fhPLkEtYe2cJqzjCK6ZLGlZvy6HoPI+akav6bBz
- VQtW0Q6+CjIyWGwyBZmbhEhnGlEot9eIgPZWzaXvVRXvUvkNSqQrPewX5nX5pX9tFfNS96TQBM8
- r1G1+dLM3JNHYUs4RWwztQzxE3O78L1bahaiQmpAfAKulVLUL0c09WQNawSOrMUpKb1bHMO+wlR
- KYpVUkOAfbQH74hzwD/wy0FwijdcRba+yww+UeOMxvKsESiqXNTlIJSvg6NrDbWzIYkccAN9MD0
- 8Y4LMs
-X-Google-Smtp-Source: AGHT+IFlpPTMNUnO9qYRrTXBi9prP4yQo/YngAVNjhCrIYbFUhXLhWGnp6vE80c6bZ44QKdQuGRruw==
-X-Received: by 2002:a05:6000:310d:b0:429:ba48:4d8 with SMTP id
- ffacd0b85a97d-429e32f478emr3892703f8f.25.1762368658174; 
- Wed, 05 Nov 2025 10:50:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1762368662; x=1762973462;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=coXM3aabJBT21GBiTqQtXzlDQRzt3k5zaMleXYUcg/A=;
+ b=nOXfoyT8baqT+qejKrVuwBrSBgsJXXnO9db0JvbZBWN9zlTuffTJZTH6U/XadBzKOf
+ DULb6w1VlYd3oUhgnyZVeGeQik8jQ0QbOA1+vOoGVd1zhPwR76pkDMicUFZodp4Jn7Un
+ veQ0s7TnZ/wqI0v0YGyEJXWGwr4JrAPHrfglIHtFJLmAtVnIMx1TVOO5JAwHHCHf2tqe
+ lp7yPfDkS5WRdZrQ63Kp49KJpX5hnH/qD46oLVlHAoliZq+pTUB9YaJbkk2JBV7dUR6K
+ EW1O0rqq5tfvscx3Z++n8Hpn+fkieidfBLEizi0qzLiZmkPXt3Vr6jhOdotGApQtXs7d
+ HpXg==
+X-Gm-Message-State: AOJu0YznatakrNaT89TYIl7NRnf5IWWnyUMIuCQrp1ZcjtJeg3d8pqtt
+ ly5CxetOkApKEbMZvGkoc6UR6dxidwTtb+VEBcLqVPJRzmHKrSJTIrvVoBFPjqLqsiJmjJZuwUt
+ 0+cehiC8=
+X-Gm-Gg: ASbGncsMP04kVYFPwXr2Q+qe+lbr0ARBkJUHZ4YTsUCHqFC7XKpKBFeW8+EzZR6VBZy
+ 5Y9QjtIQqjvatbZg2fg7QHPCjgrX8bRPr4OLyi3Ww8wqV3TPFjgLw2UKVIr8me2daWNUqodqhsU
+ cqDCyuPWz/jzYtepFCGtOljngkW5X7TG6yie6TlHIB2hUD5+4e5e7VJL4QV85LYOYA1oJY0jsgF
+ aStDgtVdj4DFTgtiYxyYTnm4CCvtQ6zuEo+iKCWI+r+Q59je+pdsKSo+zjDQsVlRNHGr+xWCj4q
+ A+t8kgPhI/VPcBVgsrTHxjkc+N949RJ/lYSQ0zC11aCTPIbOjJhnIUuRlMt9LVel/b1govHdk/U
+ NdMuiz2VXkprE5yUQF4lol8ZIZn4be1mQ5/IunG9LJJB2cJUe1R0IsJpM6VZ9Yc/nptpYfU1Qji
+ LFEjf/
+X-Google-Smtp-Source: AGHT+IGUpsQef6CswpzqnC03cj5TO5S5MaTiNXw8E+nSB9nEM787Ddm0M2MFcpG5ecy8AZ+G/ilOmw==
+X-Received: by 2002:a05:600c:1e1d:b0:477:a9e:859a with SMTP id
+ 5b1f17b1804b1-4775cdf54e7mr39292695e9.22.1762368661666; 
+ Wed, 05 Nov 2025 10:51:01 -0800 (PST)
 Received: from DDesktop.local ([2a10:8012:d:eea4:f4de:376b:66b1:d7b5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429eb42a354sm270622f8f.20.2025.11.05.10.50.57
+ ffacd0b85a97d-429eb42a354sm270622f8f.20.2025.11.05.10.51.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Nov 2025 10:50:57 -0800 (PST)
+ Wed, 05 Nov 2025 10:51:01 -0800 (PST)
 From: Michael Levit <michael@videogpu.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
  liwei1518@gmail.com, smishash@gmail.com
-Subject: [PATCH v3 0/5] RISC-V: NEORV32 CPU, peripherials, and machine
-Date: Wed,  5 Nov 2025 20:50:51 +0200
-Message-ID: <20251105185056.23565-1-michael@videogpu.com>
+Subject: [PATCH v3 3/5] hw/char: add NEORV32 UART (CTRL/DATA, fifo, chardev)
+Date: Wed,  5 Nov 2025 20:50:54 +0200
+Message-ID: <20251105185056.23565-4-michael@videogpu.com>
 X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251105185056.23565-1-michael@videogpu.com>
+References: <20251105185056.23565-1-michael@videogpu.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:20::433;
- envelope-from=michael@videogpu.com; helo=mail-wr1-x433.google.com
+Received-SPF: none client-ip=2a00:1450:4864:20::32d;
+ envelope-from=michael@videogpu.com; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,104 +103,395 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+From: Michael <michael@videogpu.com>
 
-This v3 reworks my initial NEORV32 submissions.
+Add NEORV32 UART device: CTRL/DATA registers, RX FIFO, TX to chardev.
+Includes Kconfig/meson and public header.
 
-The series introduces:
-  * a minimal NEORV32 RV32 CPU type and vendor CSR hook,
-  * the SYSINFO MMIO block,
-  * a small UART device,
-  * an SPI controller with command-mode chip-select,
-  * and the 'neorv32' RISC-V board wiring the above, plus docs.
-
-Tested by booting the NEORV32 bootloader as -bios and chaining into a
-Hello World from an MTD-backed SPI flash image, with UART on stdio.
-
-Changes since v2:
-  * Clean-up all errors and most of the warnings generated by scripts/checkpatch.pl 
-  * Sync with master, fix compile error
-  * No intentional functional changes; only file organization and clarity.
-  * Kept default.mak entry off by default (n).
-
-Patch layout
-============
-  1/5  target/riscv: add NEORV32 RV32 CPU type and vendor CSR hooks
-  2/5  hw/misc: add NEORV32 SYSINFO block (CLK/MISC/SOC/CACHE)
-  3/5  hw/char: add NEORV32 UART (CTRL/DATA, fifo, chardev)
-  4/5  hw/ssi: add NEORV32 SPI controller (SSI master, CS command)
-  5/5  hw/riscv: introduce 'neorv32' board, docs, and riscv32 device config
-
-Quick usage
-===========
-  $ ./configure --target-list=riscv32-softmmu --enable-debug --enable-fdt
-  $ make -j$(nproc)
-
-Prepare a flash image (64MiB) and place your app at 4MiB offset:
-  $ dd if=/dev/zero of=$HOME/flash_contents.bin bs=1 count=$((0x04000000))
-  $ dd if=/path/to/neorv32_exe.bin of=$HOME/flash_contents.bin \\
-       bs=1 seek=$((0x00400000)) conv=notrunc
-
-Run bootloader and chain-load your app:
-  $ ./build/qemu-system-riscv32 -nographic -machine neorv32 \\
-      -bios /path/to/neorv32/bootloader/neorv32_raw_exe.bin \\
-      -drive file=$HOME/flash_contents.bin,if=mtd,format=raw
-
-Debugging:
-  $ ... -s -S   # gdbstub on :1234, start paused
-
-
-
-Thanks for reviewing!
-Michael
-
-Michael (5):
-  target/riscv: add NEORV32 RV32 CPU type and vendor CSR hooks
-  hw/misc: add NEORV32 SYSINFO block (CLK/MISC/SOC/CACHE)
-  hw/char: add NEORV32 UART (CTRL/DATA, fifo, chardev)
-  hw/ssi: add NEORV32 SPI controller (SSI master, CS command)
-  hw/riscv: introduce 'neorv32' board, docs, and riscv32 device config
-
- configs/devices/riscv32-softmmu/default.mak |   1 +
- docs/system/riscv/neorv32.rst               | 110 +++++
- hw/char/Kconfig                             |   3 +
- hw/char/meson.build                         |   1 +
- hw/char/neorv32_uart.c                      | 285 ++++++++++++
- hw/misc/Kconfig                             |   2 +
- hw/misc/meson.build                         |   1 +
- hw/misc/neorv32_sysinfo.c                   | 201 ++++++++
- hw/misc/neorv32_sysinfo.h                   |  88 ++++
- hw/misc/neorv32_sysinfo_rtl.h               | 239 ++++++++++
- hw/riscv/Kconfig                            |   8 +
- hw/riscv/meson.build                        |   1 +
- hw/riscv/neorv32.c                          | 215 +++++++++
- hw/ssi/Kconfig                              |   4 +
- hw/ssi/meson.build                          |   1 +
- hw/ssi/neorv32_spi.c                        | 478 ++++++++++++++++++++
- include/hw/char/neorv32_uart.h              |  54 +++
- include/hw/riscv/neorv32.h                  |  54 +++
- include/hw/ssi/neorv32_spi.h                |  57 +++
- target/riscv/cpu-qom.h                      |   2 +
- target/riscv/cpu.c                          |  18 +
- target/riscv/cpu.h                          |   3 +
- target/riscv/cpu_cfg.h                      |   1 +
- target/riscv/cpu_cfg_fields.h.inc           |   1 +
- target/riscv/cpu_vendorid.h                 |   2 +
- target/riscv/meson.build                    |   1 +
- target/riscv/neorv32_csr.c                  |  40 ++
- 27 files changed, 1871 insertions(+)
- create mode 100644 docs/system/riscv/neorv32.rst
+Signed-off-by: Michael Levit <michael@videogpu.com>
+---
+ hw/char/Kconfig                |   3 +
+ hw/char/meson.build            |   1 +
+ hw/char/neorv32_uart.c         | 285 +++++++++++++++++++++++++++++++++
+ include/hw/char/neorv32_uart.h |  54 +++++++
+ 4 files changed, 343 insertions(+)
  create mode 100644 hw/char/neorv32_uart.c
- create mode 100644 hw/misc/neorv32_sysinfo.c
- create mode 100644 hw/misc/neorv32_sysinfo.h
- create mode 100644 hw/misc/neorv32_sysinfo_rtl.h
- create mode 100644 hw/riscv/neorv32.c
- create mode 100644 hw/ssi/neorv32_spi.c
  create mode 100644 include/hw/char/neorv32_uart.h
- create mode 100644 include/hw/riscv/neorv32.h
- create mode 100644 include/hw/ssi/neorv32_spi.h
- create mode 100644 target/riscv/neorv32_csr.c
 
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 020c0a84bb..1fd39c2b30 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -95,3 +95,6 @@ config IP_OCTAL_232
+     bool
+     default y
+     depends on IPACK
++
++config NEORV32_UART
++    bool
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index a9e1dc26c0..2f5bf827a7 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -31,6 +31,7 @@ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_uart.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_aux.c'))
+ system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: files('renesas_sci.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_UART', if_true: files('sifive_uart.c'))
++system_ss.add(when: 'CONFIG_NEORV32_UART', if_true: files('neorv32_uart.c'))
+ system_ss.add(when: 'CONFIG_SH_SCI', if_true: files('sh_serial.c'))
+ system_ss.add(when: 'CONFIG_STM32F2XX_USART', if_true: files('stm32f2xx_usart.c'))
+ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'))
+diff --git a/hw/char/neorv32_uart.c b/hw/char/neorv32_uart.c
+new file mode 100644
+index 0000000000..a21066d194
+--- /dev/null
++++ b/hw/char/neorv32_uart.c
+@@ -0,0 +1,285 @@
++/*
++ * Neorv32-specific UART.
++ *
++ * Copyright (c) 2025 Michael Levit
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/log.h"
++#include "migration/vmstate.h"
++#include "chardev/char.h"
++#include "chardev/char-fe.h"
++#include "hw/irq.h"
++#include "hw/char/neorv32_uart.h"
++#include "hw/qdev-properties-system.h"
++
++#define NEORV32_UART_IO_REGION_SIZE  (32)
++
++static Property neorv32_uart_properties[] = {
++    DEFINE_PROP_CHR("chardev", Neorv32UARTState, chr),
++};
++
++enum {
++    NEORV32_UART_CTRL = 0,  /**< offset 0: control register */
++    NEORV32_UART_DATA = 4  /**< offset 4: data register  */
++};
++
++/** UART control register bits */
++enum NEORV32_UART_CTRL_enum {
++    UART_CTRL_EN            = 0,  /* enable */
++    UART_CTRL_SIM_MODE      = 1,  /* sim override */
++    UART_CTRL_HWFC_EN       = 2,  /* RTS/CTS */
++    UART_CTRL_PRSC_LSB      = 3,  /* prescaler sel LSB */
++    UART_CTRL_PRSC_MSB      = 5,  /* prescaler sel MSB */
++    UART_CTRL_BAUD_LSB      = 6,  /* baud div LSB */
++    UART_CTRL_BAUD_MSB      = 15, /* baud div MSB */
++    UART_CTRL_RX_NEMPTY     = 16, /* RX not empty */
++    UART_CTRL_RX_FULL       = 17, /* RX full */
++    UART_CTRL_TX_EMPTY      = 18, /* TX empty */
++    UART_CTRL_TX_NFULL      = 19, /* TX not full */
++    UART_CTRL_IRQ_RX_NEMPTY = 20, /* IRQ on RX not empty */
++    UART_CTRL_IRQ_RX_FULL   = 21, /* IRQ on RX full */
++    UART_CTRL_IRQ_TX_EMPTY  = 22, /* IRQ on TX empty */
++    UART_CTRL_IRQ_TX_NFULL  = 23, /* IRQ on TX not full */
++
++    UART_CTRL_RX_OVER       = 30, /* RX overflow */
++    UART_CTRL_TX_BUSY       = 31  /* TX busy or not empty */
++};
++
++/**  bits */
++enum NEORV32_UART_DATA_enum {
++    UART_DATA_RTX_LSB = 0, /**< (r/w): UART rx/tx data, LSB */
++    UART_DATA_RTX_MSB = 7, /**< (r/w): UART rx/tx data, MSB */
++
++    UART_DATA_RX_FIFO_SIZE_LSB = 8, /**< (r/-): log2(RX FIFO size), LSB */
++    UART_DATA_RX_FIFO_SIZE_MSB = 11, /**< (r/-): log2(RX FIFO size), MSB */
++
++    UART_DATA_TX_FIFO_SIZE_LSB = 12, /**< (r/-): log2(RX FIFO size), LSB */
++    UART_DATA_TX_FIFO_SIZE_MSB = 15, /**< (r/-): log2(RX FIFO size), MSB */
++};
++/**@}*/
++
++static void neorv32_uart_update_irq(Neorv32UARTState *s)
++{
++    int cond = 0;
++    if ((s->ie & NEORV32_UART_IE_TXWM) ||
++       ((s->ie & NEORV32_UART_IE_RXWM) && s->rx_fifo_len)) {
++        cond = 1;
++    }
++    if (cond) {
++        qemu_irq_raise(s->irq);
++    } else {
++        qemu_irq_lower(s->irq);
++    }
++}
++
++static uint64_t
++neorv32_uart_read(void *opaque, hwaddr addr, unsigned int size)
++{
++  Neorv32UARTState *s = opaque;
++  unsigned char r;
++
++    switch (addr) {
++    case NEORV32_UART_CTRL:
++        if (s->rx_fifo_len) {
++            s->CTRL |= (1 << UART_CTRL_RX_NEMPTY); /* set data available */
++        } else {
++            s->CTRL &= ~(1 << UART_CTRL_RX_NEMPTY); /* clear data available */
++        }
++        /* TODO: assuming here TX is always avalable, fix it. */
++        s->CTRL |= (1 << UART_CTRL_TX_NFULL); /* set TX not full */
++
++        return s->CTRL;
++
++    case NEORV32_UART_DATA:
++        if (s->rx_fifo_len) {
++            r = s->rx_fifo[0];
++            memmove(s->rx_fifo, s->rx_fifo + 1, s->rx_fifo_len - 1);
++            s->rx_fifo_len--;
++            qemu_chr_fe_accept_input(&s->chr);
++            s->DATA = r;
++
++            neorv32_uart_update_irq(s); /* TODO: check if need to call */
++            return r;
++        }
++    }
++
++    qemu_log_mask(LOG_GUEST_ERROR, "%s: bad read: addr = 0x%x\n",
++    __func__, (int)addr);
++    return 0;
++}
++
++
++
++static void
++neorv32_uart_write(void *opaque, hwaddr addr, uint64_t val64, unsigned int size)
++{
++    Neorv32UARTState *s = opaque;
++    uint32_t value = val64;
++    unsigned char ch = value;
++
++    /* TODO: check if need to update data and control bits */
++    switch (addr) {
++    case NEORV32_UART_CTRL:
++        s->CTRL = value;
++        /* TODO: check if need to call, depending on IRQ flags */
++        /* neorv32_uart_update_irq(s); */
++        return;
++    case NEORV32_UART_DATA:
++        s->DATA = value;
++        qemu_chr_fe_write(&s->chr, &ch, 1);
++        /* neorv32_uart_update_irq(s); TODO: check if need to call */
++    return;
++    }
++
++    qemu_log_mask(LOG_GUEST_ERROR, "%s: bad write: addr = 0x%x v = 0x%x\n",
++    __func__, (int)addr, (int)value);
++}
++
++static const MemoryRegionOps neorv32_uart_ops = {
++    .read = neorv32_uart_read,
++    .write = neorv32_uart_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++    .min_access_size = 4,
++    .max_access_size = 4
++    }
++};
++
++static void neorv32_uart_init(Object *obj)
++{
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++    Neorv32UARTState *s = NEORV32_UART(obj);
++
++    memory_region_init_io(&s->mmio, OBJECT(s), &neorv32_uart_ops, s,
++    TYPE_NEORV32_UART, NEORV32_UART_IO_REGION_SIZE);
++    sysbus_init_mmio(sbd, &s->mmio);
++    sysbus_init_irq(sbd, &s->irq);
++}
++
++
++static void neorv32_uart_rx(void *opaque, const uint8_t *buf, int size)
++{
++    Neorv32UARTState *s = opaque;
++
++    /* Got a byte.  */
++    if (s->rx_fifo_len >= sizeof(s->rx_fifo)) {
++        printf("WARNING: UART dropped char.\n");
++        return;
++    }
++    s->rx_fifo[s->rx_fifo_len++] = *buf;
++
++    neorv32_uart_update_irq(s);
++}
++
++static int neorv32_uart_can_rx(void *opaque)
++{
++    Neorv32UARTState *s = opaque;
++
++    return s->rx_fifo_len < sizeof(s->rx_fifo);
++}
++
++static void neorv32_uart_event(void *opaque, QEMUChrEvent event)
++{
++}
++
++static int  neorv32_uart_be_change(void *opaque)
++{
++    Neorv32UARTState *s = opaque;
++
++    qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_rx,
++    neorv32_uart_event, neorv32_uart_be_change, s,
++    NULL, true);
++
++    return 0;
++}
++
++static void neorv32_uart_realize(DeviceState *dev, Error **errp)
++{
++    Neorv32UARTState *s = NEORV32_UART(dev);
++
++    qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_rx,
++    neorv32_uart_event, neorv32_uart_be_change, s,
++    NULL, true);
++}
++
++static const VMStateDescription vmstate_neorv32_uart = {
++    .name = TYPE_NEORV32_UART,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (VMStateField[]) {
++    VMSTATE_UINT8_ARRAY(rx_fifo, Neorv32UARTState,
++    NEORV32_UART_RX_FIFO_SIZE),
++    VMSTATE_UINT8(rx_fifo_len, Neorv32UARTState),
++    VMSTATE_UINT32(ie, Neorv32UARTState),
++    VMSTATE_END_OF_LIST()
++    },
++};
++
++static void neorv32_uart_reset_enter(Object *obj, ResetType type)
++{
++    Neorv32UARTState *s = NEORV32_UART(obj);
++    s->rx_fifo_len = 0;
++    s->ie = 0;
++}
++
++static void neorv32_uart_reset_hold(Object *obj, ResetType type)
++{
++    Neorv32UARTState *s = NEORV32_UART(obj);
++    qemu_irq_lower(s->irq);
++}
++
++static void neorv32_uart_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
++
++    dc->realize = neorv32_uart_realize;
++    dc->vmsd = &vmstate_neorv32_uart;
++    rc->phases.enter = neorv32_uart_reset_enter;
++    rc->phases.hold = neorv32_uart_reset_hold;
++    device_class_set_props(dc, neorv32_uart_properties);
++    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
++}
++
++static const TypeInfo neorv32_uart_info = {
++    .name = TYPE_NEORV32_UART,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(Neorv32UARTState),
++    .instance_init = neorv32_uart_init,
++    .class_init = neorv32_uart_class_init,
++};
++
++static void neorv32_uart_register_types(void)
++{
++    type_register_static(&neorv32_uart_info);
++}
++
++type_init(neorv32_uart_register_types)
++/*
++ * Create UART device.
++ */
++Neorv32UARTState *neorv32_uart_create(MemoryRegion *address_space, hwaddr base,
++  Chardev *chr)
++{
++    DeviceState *dev;
++    SysBusDevice *s;
++    bool succed = false;
++
++    dev = qdev_new("riscv.neorv32.uart");
++
++    qdev_prop_set_chr(dev, "chardev", chr);
++    s = SYS_BUS_DEVICE(dev);
++    succed = sysbus_realize_and_unref(s, &error_fatal);
++
++    if (succed) {
++        memory_region_add_subregion(address_space, base,
++        sysbus_mmio_get_region(s, 0));
++        return NEORV32_UART(dev);
++    } else {
++        return NULL;
++    }
++} /* neorv32_uart_create */
+diff --git a/include/hw/char/neorv32_uart.h b/include/hw/char/neorv32_uart.h
+new file mode 100644
+index 0000000000..fa33906724
+--- /dev/null
++++ b/include/hw/char/neorv32_uart.h
+@@ -0,0 +1,54 @@
++/*
++ * Neorv32-specific UART.
++ *
++ * Copyright (c) 2025 Michael Levit
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_NEORV32_UART_H
++#define HW_NEORV32_UART_H
++
++#include "chardev/char-fe.h"
++#include "hw/qdev-properties.h"
++#include "hw/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_NEORV32_UART "riscv.neorv32.uart"
++OBJECT_DECLARE_SIMPLE_TYPE(Neorv32UARTState, NEORV32_UART)
++
++#define QEMU_UART_DATA_RX_FIFO_SIZE_LSB  8  /* log2 RX FIFO size LSB */
++#define QEMU_UART_DATA_RX_FIFO_SIZE_MSB  11  /* log2 RX FIFO size MSB */
++
++#define NEORV32_UART_RX_FIFO_SIZE  32 /* in HW it is 2048 + 256 = _MSB + _LSB */
++
++enum {
++    NEORV32_UART_IE_TXWM = 1, /* Transmit watermark interrupt enable */
++    NEORV32_UART_IE_RXWM = 2  /* Receive watermark interrupt enable */
++};
++
++enum {
++    NEORV32_UART_IP_TXWM = 1, /* Transmit watermark interrupt pending */
++    NEORV32_UART_IP_RXWM = 2  /* Receive watermark interrupt pending */
++};
++
++
++
++struct Neorv32UARTState {
++    /*< private >*/
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    qemu_irq irq;
++    MemoryRegion mmio;
++    CharFrontend chr;
++    uint8_t rx_fifo[NEORV32_UART_RX_FIFO_SIZE];
++    uint8_t rx_fifo_len;
++    uint32_t ie; /* interrupt enable */
++    uint32_t CTRL;
++    uint32_t DATA;
++};
++
++Neorv32UARTState *neorv32_uart_create(MemoryRegion *address_space, hwaddr base,
++    Chardev *chr);
++
++#endif /* HW_NEORV32_UART_H */
 -- 
 2.51.1
 
