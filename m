@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF9ACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609ADCCFA04
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGUfy-0007Sr-A5; Tue, 04 Nov 2025 22:59:14 -0500
+	id 1vGUfz-0007To-Ti; Tue, 04 Nov 2025 22:59:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUfw-0007SY-7M; Tue, 04 Nov 2025 22:59:12 -0500
+ id 1vGUfy-0007Sv-L0; Tue, 04 Nov 2025 22:59:14 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUfu-0006sZ-Fe; Tue, 04 Nov 2025 22:59:11 -0500
+ id 1vGUfx-0006sZ-1l; Tue, 04 Nov 2025 22:59:14 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 5 Nov
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 01/17] hw/arm/aspeed: Add LTPI controller
-Date: Wed, 5 Nov 2025 11:58:39 +0800
-Message-ID: <20251105035859.3709907-2-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 02/17] hw/arm/aspeed: Attach LTPI controller to AST27X0
+ platform
+Date: Wed, 5 Nov 2025 11:58:40 +0800
+Message-ID: <20251105035859.3709907-3-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
 References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
@@ -68,179 +69,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
-2.0 specification:
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+Connect the LTPI controller device (representing the AST1700 I/O
+expander) to the AST27X0 SoC model. This patch sets up the memory
+mapping and device registration according to the AST2700 SoC design,
+where the LTPI controller is exposed at fixed MMIO regions.
 
-LTPI is a protocol and physical interface for tunneling various low-speed
-signals between the HPM and SCM. As shown in Figure 2, the AST27x0 (left)
-integrates two LTPI controllers, allowing it to connect to up to two
-extended boards.
-
-This commit introduces a simple device model for the ASPEED LTPI
-controller in QEMU.
-
-The model includes basic MMIO read/write operations and sets default
-register values during reset to emulate a link-up state.
-
-Implements register space with read/write callbacks.
+This change only handles device instantiation and integration,
+without implementing the controller's internal logic.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
- include/hw/misc/aspeed_ltpi.h | 25 +++++++++
- hw/misc/aspeed_ltpi.c         | 98 +++++++++++++++++++++++++++++++++++
- hw/misc/meson.build           |  1 +
- 3 files changed, 124 insertions(+)
- create mode 100644 include/hw/misc/aspeed_ltpi.h
- create mode 100644 hw/misc/aspeed_ltpi.c
+ include/hw/arm/aspeed_soc.h |  5 +++++
+ hw/arm/aspeed_ast27x0.c     | 18 ++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/include/hw/misc/aspeed_ltpi.h b/include/hw/misc/aspeed_ltpi.h
-new file mode 100644
-index 0000000000..2c31a555dd
---- /dev/null
-+++ b/include/hw/misc/aspeed_ltpi.h
-@@ -0,0 +1,25 @@
-+/*
-+ * ASPEED LTPI Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_LTPI_H
-+#define ASPEED_LTPI_H
-+
-+#include "hw/sysbus.h"
-+
-+#define TYPE_ASPEED_LTPI "aspeed.ltpi-ctrl"
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedLTPIState, ASPEED_LTPI)
-+
-+#define ASPEED_LTPI_NR_REGS  (0x900 >> 2)
-+
-+struct AspeedLTPIState {
-+    SysBusDevice parent;
-+    MemoryRegion mmio;
-+
-+    uint32_t regs[ASPEED_LTPI_NR_REGS];
-+};
-+
-+#endif /* ASPEED_LTPI_H */
-diff --git a/hw/misc/aspeed_ltpi.c b/hw/misc/aspeed_ltpi.c
-new file mode 100644
-index 0000000000..fdb71077a4
---- /dev/null
-+++ b/hw/misc/aspeed_ltpi.c
-@@ -0,0 +1,98 @@
-+/*
-+ * ASPEED LTPI Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "migration/vmstate.h"
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 4b8e599f1a..bae60d85ea 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -42,6 +42,7 @@
+ #include "hw/fsi/aspeed_apb2opb.h"
+ #include "hw/char/serial-mm.h"
+ #include "hw/intc/arm_gicv3.h"
 +#include "hw/misc/aspeed_ltpi.h"
-+
-+#define LTPI_LINK_MNG 0x42
-+#define LTPI_PHY_MODE 0x80
-+
-+static uint64_t aspeed_ltpi_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->regs[idx];
-+}
-+
-+static void aspeed_ltpi_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->regs[idx] = (uint32_t)val;
-+        break;
+ 
+ #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+ 
+@@ -53,6 +54,7 @@
+ #define ASPEED_UARTS_NUM 13
+ #define ASPEED_JTAG_NUM  2
+ #define ASPEED_PCIE_NUM  3
++#define ASPEED_IOEXP_NUM 2
+ 
+ struct AspeedSoCState {
+     DeviceState parent;
+@@ -110,6 +112,7 @@ struct AspeedSoCState {
+     UnimplementedDeviceState ltpi;
+     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+     AspeedAPB2OPBState fsi[2];
++    AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
+ };
+ 
+ #define TYPE_ASPEED_SOC "aspeed-soc"
+@@ -275,6 +278,8 @@ enum {
+     ASPEED_GIC_REDIST,
+     ASPEED_DEV_IPC0,
+     ASPEED_DEV_IPC1,
++    ASPEED_DEV_LTPI_CTRL1,
++    ASPEED_DEV_LTPI_CTRL2,
+ };
+ 
+ const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index c484bcd4e2..c0d8639bde 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -86,6 +86,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_UART10]    =  0x14C33900,
+     [ASPEED_DEV_UART11]    =  0x14C33A00,
+     [ASPEED_DEV_UART12]    =  0x14C33B00,
++    [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
++    [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
+     [ASPEED_DEV_WDT]       =  0x14C37000,
+     [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
+     [ASPEED_DEV_PCIE_MMIO1] = 0x80000000,
+@@ -543,6 +545,10 @@ static void aspeed_soc_ast2700_init(Object *obj)
+         object_property_set_int(OBJECT(&s->pcie[i]), "id", i, &error_abort);
+     }
+ 
++    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
++        object_initialize_child(obj, "ltpi-ctrl[*]",
++                                &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
 +    }
-+}
+     object_initialize_child(obj, "dpmcu", &s->dpmcu,
+                             TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "ltpi", &s->ltpi,
+@@ -688,6 +694,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     g_autofree char *name = NULL;
+     qemu_irq irq;
+     int uart;
++    AspeedLTPIState *ltpi_ctrl;
++    hwaddr ltpi_base;
+ 
+     /* Default boot region (SPI memory or ROMs) */
+     memory_region_init(&s->spi_boot_container, OBJECT(s),
+@@ -1021,6 +1029,16 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    /* LTPI controller */
++    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
++        ltpi_ctrl = ASPEED_LTPI(&s->ltpi_ctrl[i]);
++        ltpi_base = sc->memmap[ASPEED_DEV_LTPI_CTRL1 + i];
 +
-+static const MemoryRegionOps aspeed_ltpi_ops = {
-+    .read = aspeed_ltpi_read,
-+    .write = aspeed_ltpi_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void aspeed_ltpi_reset(DeviceState *dev)
-+{
-+    AspeedLTPIState *s = ASPEED_LTPI(dev);
-+    memset(s->regs, 0, sizeof(s->regs));
-+    /* set default values */
-+    s->regs[LTPI_LINK_MNG] = 0x11900007;
-+    s->regs[LTPI_PHY_MODE] = 0x2;
-+}
-+
-+
-+static const VMStateDescription vmstate_aspeed_ltpi = {
-+    .name = TYPE_ASPEED_LTPI,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, AspeedLTPIState,
-+                             ASPEED_LTPI_NR_REGS),
-+        VMSTATE_END_OF_LIST()
++        if (!sysbus_realize(SYS_BUS_DEVICE(ltpi_ctrl), errp)) {
++            return;
++        }
++        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_base);
 +    }
-+};
-+
-+static void aspeed_ltpi_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedLTPIState *s = ASPEED_LTPI(dev);
-+
-+    memory_region_init_io(&s->mmio, OBJECT(s), &aspeed_ltpi_ops, s,
-+                          TYPE_ASPEED_LTPI, ASPEED_LTPI_NR_REGS);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->mmio);
-+}
-+
-+static void aspeed_ltpi_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = aspeed_ltpi_realize;
-+    dc->vmsd = &vmstate_aspeed_ltpi;
-+    device_class_set_legacy_reset(dc, aspeed_ltpi_reset);
-+}
-+
-+static const TypeInfo aspeed_ltpi_info = {
-+    .name          = TYPE_ASPEED_LTPI,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedLTPIState),
-+    .class_init    = aspeed_ltpi_class_init,
-+};
-+
-+static void aspeed_ltpi_register_types(void)
-+{
-+    type_register_static(&aspeed_ltpi_info);
-+}
-+
-+type_init(aspeed_ltpi_register_types);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index b1d8d8e5d2..45b16e7797 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_hace.c',
-   'aspeed_i3c.c',
-   'aspeed_lpc.c',
-+  'aspeed_ltpi.c',
-   'aspeed_scu.c',
-   'aspeed_sbc.c',
-   'aspeed_sdmc.c',
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+                                   "aspeed.dpmcu",
+                                   sc->memmap[ASPEED_DEV_DPMCU],
 -- 
 2.43.0
 
