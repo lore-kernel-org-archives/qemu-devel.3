@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB4ECCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E18CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGdlX-00049D-D0; Wed, 05 Nov 2025 08:41:35 -0500
+	id 1vGdnq-0004xL-VF; Wed, 05 Nov 2025 08:43:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdlV-00046t-CQ
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:41:33 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vGdno-0004wm-Su
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:43:56 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdlT-0001Wi-Iw
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:41:33 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-640c1fda178so5139679a12.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:41:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vGdnn-0002vM-B5
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:43:56 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b6ce6d1d3dcso4625520a12.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762350089; x=1762954889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/t4QrW/FFpcbQ+jUgW9Lup50X2QqdxT2HneJHiSeyJw=;
- b=bUqrIdl8kV06+tXMEJPGzZZzzOB/QRKWVvH63ry7SmHFuZv3IOls5PrMrp4KUUyyri
- kcqlfLomV0fuDnZScu1lYx4XvU8tNB11bibgsFYyx6khXZdqJOx+4i4ijxvvfBwTUeQz
- hXYFe0wJl0i4zXpsjY4PIq6Ju+34o9hcWZrGjxmYS+ovqrzVE7E7Xlt/sNMItAAN+Om+
- +CGDcZJ2pzQVs5tqbKlsm1DErs8w+gx9JYYOjMlUwIDbSDXqKAlTZk2eDS0jhCixSuaN
- wk3/S3yrbB3CgTiykOVQ+OrxjWkjm9486ST0vyExfv0r1uGTzJ4DHSg69S9LFKCMj52f
- HRXQ==
+ d=sifive.com; s=google; t=1762350233; x=1762955033; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D26vXv+8Ed1orfqhFfArUAxk2oGjpGYqrtarHGtxK4I=;
+ b=hQzfOsRa1w0uKpk+nrcPIdYsJp8PVf+bc0KXwihoch9HQo/J8AWTiu5Op+T3BhAwyZ
+ 03uhi01R6B22SjW8pnrpJRNmna6M1CmkfL4F8SI/pfz5v+mAqmuR1/Cv6DLteQ6PhEsf
+ at5NNEJcHpmcAOBOhK2wx7n5tHpGuHUEji9AA7Gi4Ql05r4hxJgqeqLRBla0REql5a8C
+ pR9mm6zNXWZIFsKc6sASsAWsNGy45tO4pgm8F6otRwcnTqqipXK2snRtb2Hp5TAAPjLl
+ JijpEtQuNdWYPJMloFvnn/NuoA8nBoosDJ5fRJ7pt+wXA5Pcr6elaIa8hHMdSh8kI7UB
+ qKQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762350089; x=1762954889;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/t4QrW/FFpcbQ+jUgW9Lup50X2QqdxT2HneJHiSeyJw=;
- b=vMuAbwSjwvD0a6e4IZF2S0sT82VNO+b4mgxfO95Rf8bDYIQZ99T9LH4mSOY2C9FAYo
- 8XGiGgzcIoTj59f7+3Y+vXyRXtmLuBLF4vOHAiUyl0D4lL/JCmHqXbbbKgPUwiGAvPLY
- qrY6jfH0SFUA7jnbjQx2jwBdY9kjaAn92Mk54p0yCuxxUXlBd+BFOEBVoBi3M9JGFlF0
- n1RDY+7X39HrFI55w4MnVX/Bkogpv8NwqPwp44Vqhi1TM96XlrHHKOysM3DYKMkvObnw
- jvZrs2YQSZZImI/CmFCDSdB1NF/dHejtk50zseT2ZTPQ641mwhOMPNfqshaxNuWdEEnl
- S6hg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLZVAiSKJvESjP9R/61kIW7w4WxiIeFtXJiIS+Bm2EmeD7Pjmihn7l2UjzpUN3r+9ewqRM3rDpH5gr@nongnu.org
-X-Gm-Message-State: AOJu0YxVA7jDPlQRsvvvuuRg3U3YUPJA8lF1CHQWLXzFJ5Sutf2NyUB6
- kcZllCKRZYk/hTsN5m6ANlk0LxF3cUVpvef4hvwJ7KlIBW2C5VggxD5+YHlFnhF89g0=
-X-Gm-Gg: ASbGncvvCIFcZ4qw0Bd+Qz0qyZxNnb4MbQUWM7/Rf0n+rG4U+smJrPJGLDs8cS5ojyi
- 4Ssaj2iDHfEDJRPhm8sS0Xn+kqnaKExg71aTF6DYmX9SSB7/AbVaABOk05sQG0feTkYsRKblg7x
- xdAG9srlQ3lWQYjkDXB81+rHc+5PW4vY7rpxOX+cFt8ETUWSY5jfiwNJqixeaLd8KU0qs4tmHVi
- VwkcT+DARRyhKzSv+fOGtWZZGSc+yE69rVXh7g0gc2bki/VP72JAN1cajsi3dhK8OWAcecgdxxV
- nBNXxYtBOyHnLp1cwnpA5XFmqB6rogrm5Oj0Q8jRXWlVkhmPEmLLjLGDK43zCfniCtlCxPFq6Se
- 1eRDn3Jvs9yB07vgh+hLgjsLcb/RcsAj2QHxq7z5DCh0wq0lb192DWzS9BLTCRm0AzSE3NU/4qB
- NKBSbnnmnmCdqosFkn8N/tFPWKZyQ=
-X-Google-Smtp-Source: AGHT+IEqqLkVpSnxrKhnHLYyPXKdClNeyVWhC4VerClL8lTJ9/l9R65RE4GHLpFKCz39ALUqBvWJjw==
-X-Received: by 2002:a05:6402:254f:b0:640:ebca:e680 with SMTP id
- 4fb4d7f45d1cf-64105ca691amr2562463a12.37.1762350089489; 
- Wed, 05 Nov 2025 05:41:29 -0800 (PST)
-Received: from [172.20.148.100] ([87.213.113.147])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-640e6a5ea78sm4670844a12.21.2025.11.05.05.41.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 05:41:28 -0800 (PST)
-Message-ID: <dfa1aec7-3449-48bf-867d-14b9b2cfeddb@linaro.org>
-Date: Wed, 5 Nov 2025 14:41:26 +0100
+ d=1e100.net; s=20230601; t=1762350233; x=1762955033;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D26vXv+8Ed1orfqhFfArUAxk2oGjpGYqrtarHGtxK4I=;
+ b=fkQat9ho1FgXvcQ36Evu8BBfaZW91njCxSWQI2qi4o4O1vb/fLsPM0f+4csP4xSS7p
+ YAewxZknNcGaj1JLENDDh1ALyNm4WVV5KJPiZlwd/3PwltLfTz8b+XRo1aW+o9jaZKkA
+ oTWnzwnjZ7dmwGVptF33u1uNSmVKNA/xdvOG5lMfOMmcp2BvhMnRtoEgLFeVe0jjzndP
+ J0q/t+frHIZXOdbz8lX/xqQLfyEFxIE2Svr8WFYm7BMkev3nswvKawuWj+rvTCJSDrLO
+ 8jsi4LNGEZV+EwnGBPS9bCAFsxg703GMFokkl9WcE6NEiCjDZxdlkAHcyfhzw584foyA
+ HgHg==
+X-Gm-Message-State: AOJu0Yx99K7B6aXNpWboI+bTg+H9kwhYoR/csz2YfEtaOUTJ2s8io5BM
+ leBceao84HW9U4MReWYcjYyp43EEjjO2jSiPyIO9EW4wr0hup/mDn/4IhfxniuaNL51oX0h4mSK
+ D1sBxSItnBgryhud7TFQjkS9Ay49vpZzDZKdSxBxFHAB846iJQXoOSanzI89JbO1EXp/AW57e00
+ ymFXu6im0u9SKQnSKYxsEpxdw2Ixz5pZdz1xIkIAdbmQ==
+X-Gm-Gg: ASbGncsfa9nXXW0YUU7bnlbzK2jFfJzClFYaNr1CeaS3VU5ndMV4rIGUY1lKWkequuu
+ KntHvNiS/OVJ5k9qrZzDj/erCMDWFkaH5MaPRF6BNRUHHaWWmbn1wfvrbs/XhAxPkRpJ/IIgtVm
+ +Ns7ge3eYqMiijwlCgfKR0qBMHzO4cEu8PvTBVnFpWjSLzxAqyXZp7NMA4v2CEjYO44md8mqizD
+ tje7v23usAIfSLHJi3JXkkcuuuz3KGcyuVRM6zavPv68kQJu/k7JvBN4pyJETWoYjdUy2MnJxnZ
+ uem2YdwnnFHeEr6Pet73HCJV1lsrlPxrv0PaJAB8ake8CYOw63a0Gh8p87fdDR/EW1Y0yiBlqAr
+ jvP4MNeFhnqY4fzUfhqNQ8UFd0i7ftQ2UZDXyVclrEYdsIRKhijquFpwXlg17cF2ThG2c+DOiTW
+ 1Yj7u4XKlVXkcGDKRFXSd1R+gUInzOZd/Yr3PNRGbsB+7fxhVZw2yrmMk=
+X-Google-Smtp-Source: AGHT+IGYah24Y0s/NK6v+G6at5eKCyU5E4fM7XlHmy4bkrY2d+b1grd+elfj34qh1Sopd/vKvj5z+w==
+X-Received: by 2002:a05:6a20:3d95:b0:349:c80b:d5e9 with SMTP id
+ adf61e73a8af0-34f8400875fmr4208076637.23.1762350233055; 
+ Wed, 05 Nov 2025 05:43:53 -0800 (PST)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-ba1f87a6155sm5556501a12.29.2025.11.05.05.43.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Nov 2025 05:43:52 -0800 (PST)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH] target/riscv: Fix PC sync in trans_sspopchk for CFI exception
+ handling
+Date: Wed,  5 Nov 2025 21:43:31 +0800
+Message-ID: <20251105134331.2865581-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 12/12] qapi: Add documentation format validation
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-References: <20251104132125.4134730-1-armbru@redhat.com>
- <20251104132125.4134730-13-armbru@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251104132125.4134730-13-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x533.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=max.chou@sifive.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,34 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/25 14:21, Markus Armbruster wrote:
-> @@ -423,12 +428,55 @@ def get_doc_line(self) -> Optional[str]:
->               if self.val != '##':
->                   raise QAPIParseError(
->                       self, "junk after '##' at end of documentation comment")
-> +            self._literal_mode = False
->               return None
->           if self.val == '#':
->               return ''
->           if self.val[1] != ' ':
->               raise QAPIParseError(self, "missing space after #")
-> -        return self.val[2:].rstrip()
-> +
-> +        line = self.val[2:].rstrip()
-> +
-> +        if re.match(r'(\.\. +qmp-example)? *::$', line):
-> +            self._literal_mode = True
-> +            self._literal_mode_indent = 0
-> +        elif self._literal_mode and line:
-> +            indent = re.match(r'^ *', line).end()
+Move gen_update_pc call before conditional logic to ensure consistent
+PC state regardless of execution path.
 
-Another failure from my incomplete testing last night:
+Previously, the host instructions generated to update the cpu_pc were
+only executed in the failure path when shadow stack validation failed.
+This created inconsistent PC synchronization.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/11982687207#L127
+This inconsistency caused issues in CF_PCREL mode where subsequent
+instructions calculated wrong relative offsets from stale pc_save
+values, and could lead to incorrect exception return addresses.
 
-../scripts/qapi/parser.py:444: error: Item "None" of "Optional[Match[str]]" has no 
-attribute "end"  [union-attr]
+This fix ensures PC is always synchronized before any helper that
+might raise an exception, maintaining consistent translator state
+across all execution paths.
 
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-r~
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index 0b6ad57965c..f76697b8a11 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -32,6 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     TCGLabel *skip = gen_new_label();
+     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
+     TCGv data = tcg_temp_new();
++
++    gen_update_pc(ctx, 0);
++
+     tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
+@@ -40,7 +43,6 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
+     tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
+                   tcg_env, offsetof(CPURISCVState, sw_check_code));
+-    gen_update_pc(ctx, 0);
+     gen_helper_raise_exception(tcg_env,
+                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+     gen_set_label(skip);
+-- 
+2.43.0
+
 
