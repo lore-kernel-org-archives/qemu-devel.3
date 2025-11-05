@@ -4,80 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646C4CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 20:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F086DCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 20:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGkYK-0002ae-5b; Wed, 05 Nov 2025 15:56:24 -0500
+	id 1vGkaD-0003bG-5T; Wed, 05 Nov 2025 15:58:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.repko@syntacore.com>)
- id 1vGjcK-0005LC-7F; Wed, 05 Nov 2025 14:56:28 -0500
-Received: from m.syntacore.com ([178.249.69.228])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.repko@syntacore.com>)
- id 1vGjcI-0000uk-Ii; Wed, 05 Nov 2025 14:56:27 -0500
-Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
- by m.syntacore.com (Postfix) with ESMTP id CB4EC1A0004;
- Wed,  5 Nov 2025 19:56:15 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com CB4EC1A0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
- t=1762372575; bh=G1q86/DgqPNjCWBa7TyF1koxVFpglV1ohFFAZyKfyBs=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=HZkAzBDjqtvmZxgoj7TCx8vxmWwbZnW9IkwQpg2uvNMkj0WIljLmgs/RUTBEGAsS9
- YrhEY9jFoLaLc69PIrocOBwUgj3Ty+GdAEcDCQvPs9kaxzNxN6pp7XJSxlQPsOXUvd
- G8HRPoDAKHHzjJLa5bMJfRr92LztP34dn+xB8UWJL6heSWEHAgsJM0vbYBHwfrgnI1
- r7uV1ppGgUIHtKS1119OyqV/8GfmgmBgz93KDFz0wnWCWzohKDxFg8KPZF8b4vdhAv
- Rmfu79lzWmiV0XR+zVBBI4E0HQHyGv+91JCEL+wWTzT6heJ7bl6C6ba+JddZyTRt0Y
- 1FLGw3pXofpZA==
-Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
- [10.76.202.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by m.syntacore.com (Postfix) with ESMTPS;
- Wed,  5 Nov 2025 19:56:15 +0000 (UTC)
-Received: from NB-8361.lan (172.27.13.83) by S-SC-EXCH-01.corp.syntacore.com
- (10.76.202.20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.29; Wed, 5 Nov
- 2025 22:55:22 +0300
-From: Ilya Repko <i.repko@syntacore.com>
-To: 
-CC: Ilya Repko <i.repko@syntacore.com>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Alistair Francis <alistair@alistair23.me>, Peter
- Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>, "open
- list:Xilinx Zynq" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Subject: [PATCH] Revert "hw/net: Fix the transmission return size"
-Date: Wed, 5 Nov 2025 22:55:30 +0300
-Message-ID: <20251105195532.347555-1-i.repko@syntacore.com>
-X-Mailer: git-send-email 2.51.1
+ (Exim 4.90_1) (envelope-from <ilias.apalodimas@linaro.org>)
+ id 1vGka9-0003aq-KN
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 15:58:17 -0500
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ilias.apalodimas@linaro.org>)
+ id 1vGka7-0001H3-K0
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 15:58:16 -0500
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-63f94733d6cso255335d50.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 12:58:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762376293; x=1762981093; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A8Nuj+YloYbxd/MPJzDOHP+XYQn6PrGqtXs47yrgkb8=;
+ b=pHdYk+Op2Szsgh6HV/F7amj20o4ZaGj3ws3sv6COaoVUkF6QKs0mnYiFW/ur72CY6X
+ YisYTcsNt4XyOUj7mWKUYTGbnL/XZ3+q2ouMkkBVq1X4aDC6R+V7Dxpdut8kHbW9fR/u
+ aSsrmVmEEpF1XPweOvoS+YwZnQDhC/xfyGK9CG+ZGdnWCkVMsKYzi9nVDx8Bg18AqYPy
+ Gn6wuGNlPchPNQth+yyllERZ963Y23CmRWSbaXCxuSLaCX15IXnPuIPc5/2IiA+ynU6F
+ JJOzgIE4I09Av/1CbuuY443O/wzRfjzxhrvLJLgd6jFydnvASbQ1I/RGWFusk3j7T9vw
+ xHIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762376293; x=1762981093;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A8Nuj+YloYbxd/MPJzDOHP+XYQn6PrGqtXs47yrgkb8=;
+ b=W6LNvuSuqrQZBGr4n6Rqn8gVN9huvgIY9JIJfW/+vKqj1zz5mFB+k97+BEVxPZEVRZ
+ /FbHUJtF0EP2uMvwfFfjXaigoUjJ/94T+LbCG/V65fYqhTikpSgtrRHjrPIap6YIGlPq
+ q6TYxBikJCoKWU63Q7bjK8HqO3CuvhqyMJ8BcXLGpZ0YbfJZfXcIYGisybQqNwqIXDZR
+ Yo1ocz1aXmar01htt/p9UqMdDYMdK08eWrTvV8GexXWDl7+GEFm1+yxouXQ2f0XJLdyT
+ AR9bCXV6i8m1RUxsT3kzdl4Q4kLNnVExYuO7oQeHsWu3CKuXZ5xifeOw588iICYrqvKY
+ aUNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULa/e2Ha/f3FZSWD/14N8juMSjmbscA9MhyBnn/2pU6NmVDfaz5m4oQ9U6wUSzP64ksbG+RsxJ0rK2@nongnu.org
+X-Gm-Message-State: AOJu0Yw0309vVOdgZI5s3GTMJg2UK85twVZhcIe3SZd2HUaNsxlmcXRi
+ KykoGlftER8f0ND6dC2Swqiqk4jttnsAPd2XSX/PofIkl+rDhDiamWTsfFousDXxvUu/0D3l/6t
+ cVEu24+sdBFFmvfU0Aq1on/jaPVqmM3BAC941ZafFrw==
+X-Gm-Gg: ASbGncvCBdvUvOqnFVNuZks7Z5uaUxSfk7IRtht3AoGtxhzPiFrK7rL3gzGXXSDVPa6
+ Hqm2n2hhOOWyX7Y3dXV2UAk7r6WdRwYxlfB6LvlTkeQLmcY9Z68jrsR8n12rhXiVrJx0i2bj+fV
+ Bl0zBFP1beEoMD22/rSUe/QZ3RV9CPte2sSvh/iWhkDH/Tcq5n06frnG27Lat+SWWyv4AH7ubhU
+ VeXIAZ5DwPGb9iJqqIs34Q11TwlBqKSMypneNHZ2hPit/OwiN+KmCZmhs+YaduWFuqdIaeGYZGa
+ NjiV0T60JTfXf3qMxDeJE7EN2hbU3FLHSsqC97/w2w==
+X-Google-Smtp-Source: AGHT+IF/eB+4MmKrVHw7FHO0Zr+0A5OtE2m3ikF65UiKsEJM/MHBlzMMy99+Tu22TFsPWKq2F7UBaGz9T7XyrfqHznE=
+X-Received: by 2002:a05:690c:30b:b0:786:1e02:6349 with SMTP id
+ 00721157ae682-786a41bfd6emr73457987b3.34.1762376293359; Wed, 05 Nov 2025
+ 12:58:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [172.27.13.83]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-X-KSMG-AntiPhishing: not scanned, disabled by settings
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
- bases: 2025/11/05 19:22:00 #27886012
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=i.repko@syntacore.com; helo=m.syntacore.com
+References: <cover.1762261430.git.jan.kiszka@siemens.com>
+ <8176d000-92cb-4c10-ab75-3e2d4dee4c29@linaro.org>
+In-Reply-To: <8176d000-92cb-4c10-ab75-3e2d4dee4c29@linaro.org>
+From: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Date: Wed, 5 Nov 2025 22:57:37 +0200
+X-Gm-Features: AWmQ_blQJEh0fKWbTm2c2CuKbiI5O0HNljt0mirW7myreij6HpeucM0xmpQIu1w
+Message-ID: <CAC_iWjLwsmPck96zRHYt_gWZf-+8dz4N6bBwFr77_afjYnSfdg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] sd: Add RPMB emulation to eMMC model
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>, 
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Alexander Bulekov <alxndr@bu.edu>, 
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Joel Stanley <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=ilias.apalodimas@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 05 Nov 2025 15:56:12 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,42 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 3a6d374b754b4b345195ff6846eeaffedc96a7c5.
+If the patches haven't landed yet feel free to add my acked-by as well
 
-During axienet_eth_rx_notify(), s->rxpos is modified to indicate how much
-data was pushed to AXI DMA. eth_rx() would then return this value.
-If at 0, network subsystem would consider packet reception as failed
-and put the packet in a queue for later.
+On Wed, 5 Nov 2025 at 18:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> On 4/11/25 14:03, Jan Kiszka wrote:
+>
+> > This closes an old gap in system integration testing for the very
+> > complex ARM firmware stacks by adding fairly advanced Replay Protected
+> > Memory Block (RPMB) emulation to the eMMC device model. Key programming
+> > and message authentication are working, so is the write counter. Known
+> > users are happy with the result. What is missing, but not only for RPMB=
+-
+> > related registers, is state persistence across QEMU restarts. This is O=
+K
+> > at this stage for most test scenarios, though, and could still be added
+> > later on.
+>
+>
+> > Jan Kiszka (6):
+> >    hw/sd/sdcard: Fix size check for backing block image
+> >    hw/sd/sdcard: Allow user-instantiated eMMC
+> >    hw/sd/sdcard: Add basic support for RPMB partition
+> >    hw/sd/sdcard: Handle RPMB MAC field
+> >    scripts: Add helper script to generate eMMC block device images
+> >    docs: Add eMMC device model description
+>
+> FTR:
+> Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>
+> and also for u-boot I got a late:
+> Tested-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
 
-Before we attempt to push packet data to AXI DMA, the packet is stored
-in s->rxmem buffer. If an attempt to push data fails, we will reattempt
-to deliver it from s->rxmem buffer once s2mm stream gets a new descriptor.
-s->rxmem would not be overwritten by a subsequent eth_rx() call, because
-eth_can_rx() protects it in case it has any data at all. Leaving the packet
-in a NetQueue though effectively duplicates it.
-
-Therefore, eth_rx() must indicate successful packet reception in case
-data push to AXI DMA fails.
-
-Signed-off-by: Ilya Repko <i.repko@syntacore.com>
----
- hw/net/xilinx_axienet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-index 31e7708082..101b3f260a 100644
---- a/hw/net/xilinx_axienet.c
-+++ b/hw/net/xilinx_axienet.c
-@@ -867,7 +867,7 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
-     axienet_eth_rx_notify(s);
- 
-     enet_update_irq(s);
--    return s->rxpos;
-+    return size;
- }
- 
- static size_t
--- 
-2.51.1
-
+cheers
+/Ilias
 
