@@ -4,59 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605B8CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 09:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4D8CCFA07
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 09:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGZsX-0001FC-0t; Wed, 05 Nov 2025 04:32:33 -0500
+	id 1vGZw2-0001rr-T3; Wed, 05 Nov 2025 04:36:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vGZsU-0001F0-NU
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 04:32:30 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGZw1-0001rI-2F
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 04:36:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vGZsR-000633-Pe
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 04:32:30 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4d1g8M0ZlLzHnGcR;
- Wed,  5 Nov 2025 17:32:19 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 276FD140278;
- Wed,  5 Nov 2025 17:32:24 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 5 Nov
- 2025 09:32:23 +0000
-Date: Wed, 5 Nov 2025 09:32:21 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-devel@nongnu.org>, Michael Tsirkin <mst@redhat.com>, "Markus
- Armbruster" <armbru@redhat.com>, <linux-cxl@vger.kernel.org>,
- <linuxarm@huawei.com>, <nifan.cxl@gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Add Fan Ni as Compute eXpress Link QEMU
- reviewer
-Message-ID: <20251105093221.00007b80@huawei.com>
-In-Reply-To: <CAFEAcA_Dm89kafy028KWjbtxTRdCKLgc4KGCPJwxLdXf6monjg@mail.gmail.com>
-References: <20230228113926.11485-1-Jonathan.Cameron@huawei.com>
- <CAFEAcA_Dm89kafy028KWjbtxTRdCKLgc4KGCPJwxLdXf6monjg@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vGZvz-0003rk-LY
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 04:36:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762335367;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PpiUqJ/fKYb4Uj7yuzvAcCDApHA/FZYjMKAsh0QT2JQ=;
+ b=MLqF4Sk20RsN7NLR85WKs46l0oZxvSN2Qj3O7JaKZko7DqA3blWytIFGlpRt9xsRYLL+32
+ LjiCCYqjhKZXoiAoqwrmwqBndXdz2X7UE5Y9yatvINze9d0NEj5kV0i1CZVwoe8x4GbzXs
+ RmfzSowGQvbEd8bjmyLgmUgSwkJvU3Y=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-2OtX0n7VOGGmTpZP1v9zlA-1; Wed,
+ 05 Nov 2025 04:36:04 -0500
+X-MC-Unique: 2OtX0n7VOGGmTpZP1v9zlA-1
+X-Mimecast-MFC-AGG-ID: 2OtX0n7VOGGmTpZP1v9zlA_1762335363
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 14F8F1800473; Wed,  5 Nov 2025 09:36:03 +0000 (UTC)
+Received: from redhat.com (stefkas-mbp.str.redhat.com [10.33.192.245])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35EAE300018D; Wed,  5 Nov 2025 09:36:01 +0000 (UTC)
+Date: Wed, 5 Nov 2025 10:35:58 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>,
+ qemu-devel@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
+Subject: Re: [PATCH 5/5] vvfat: add support for "size" options
+Message-ID: <aQsafmFOrfEmOc0M@redhat.com>
+References: <20250903075721.77623-1-chigot@adacore.com>
+ <20250903075721.77623-6-chigot@adacore.com>
+ <aPqCJRNCjxcZ6jq5@redhat.com> <874ir9ot1a.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <874ir9ot1a.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,68 +81,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Nov 2025 16:17:07 +0000
-Peter Maydell <peter.maydell@linaro.org> wrote:
-
-> On Tue, 28 Feb 2023 at 11:39, Jonathan Cameron via
-> <qemu-devel@nongnu.org> wrote:
-> >
-> > Fan Ni has offered to help out with QEMU CXL emulation reviewing.
-> > Add him as a designated reviewer.
-> >
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >
-> > --
-> > Thanks to Fan for stepping up after I requested help following Ben
-> > stepping down as co-maintainer. Fan base been active in testing
-> > and review recently so great to have Fan on board.
-> >
-> > Based on patch [PATCH] MAINTAINERS: Remove CXL maintainer Ben Widawsky
-> >
-> > Based-of: Message-id: 20230220212437.1462314-1-armbru@redhat.com
-> > ---
-> >  MAINTAINERS | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 7ea56c6ccc..838e1a91a4 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -2633,6 +2633,7 @@ T: git https://gitlab.com/vsementsov/qemu.git block
-> >
-> >  Compute Express Link
-> >  M: Jonathan Cameron <jonathan.cameron@huawei.com>
-> > +R: Fan Ni <fan.ni@samsung.com>
-> >  S: Supported
-> >  F: hw/cxl/
-> >  F: hw/mem/cxl_type3.c  
+Am 05.11.2025 um 08:08 hat Markus Armbruster geschrieben:
+> Kevin Wolf <kwolf@redhat.com> writes:
 > 
-> Hi; I noticed today that Fan's samsung email is now bouncing
-> with "550 5.1.1 Recipient address rejected: User unknown".
-> Do we have a altenate email for him, or should we remove
-> his entry from the QEMU MAINTAINERS file; and if so is there
-> anybody else we should add as a reviewer for CXL ?
-
-My bad. I've had this on my todo list since Fan moved.
-
-nifan.cxl@gmail.com
-is the address Fan asked me to use.
-
-I do plan to add a second reviewer (more welcome!) as Fan's time is
-limited (not the day job any more), but wanted to let them ramp up
-and review informally for a bit first.
-
-Thanks,
-
-Jonathan
-
+> [...]
 > 
-> thanks
-> -- PMM
+> > To me it looks a bit like what we really want is an enum for floppy
+> > sizes (though is there any real reason why we have only those two?), but
+> > an arbitrary size for hard disks.
+> >
+> > Without the enum, obviously, users could specify 1440k and that would do
+> > the right thing. Maybe special casing whatever 1.44M and 2.88M result
+> > in and translating them into 1440k and 2880k could be more justifiable
+> > than special casing 1M and 2M, but it would still be ugly.
+> >
+> > Markus, do you have any advice how this should be represented in QAPI?
+> 
+> Still want answers here?
+
+Yes, I'm still not sure how we could best represent both hard disk and
+floppy sizes in vvfat in a way that isn't completely counterintuitive
+for users, that also isn't just arbitrary magic and that works on the
+command line.
+
+Unless the need for different sizes has gone away, but I don't think we
+found any other solution for the problem that would not require a
+configurable disk/file system size?
+
+Kevin
 
 
