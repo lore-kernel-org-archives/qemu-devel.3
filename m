@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C98CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 10:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE2DCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 10:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGaTZ-0005jr-FK; Wed, 05 Nov 2025 05:10:49 -0500
+	id 1vGaXm-0006PF-Uj; Wed, 05 Nov 2025 05:15:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGaTX-0005jR-6X
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:10:47 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGaXk-0006Ny-S8
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:15:08 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGaTV-0004lS-Gk
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:10:46 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b3e9d633b78so147439266b.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 02:10:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGaXi-0008JI-Qm
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 05:15:08 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-afcb7ae6ed0so1170371366b.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 02:15:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762337443; x=1762942243; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762337705; x=1762942505; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OxDu0BZXPK1pUujWXOYNC0CI29ChSmse7//KeYhOe8w=;
- b=vJPo/aNLJ83+lX5PuFcUTQrCMgZrUtW6kASCIuroscbOgj2xQoZ85VKb6UTukrhWXa
- DEOEU0CWiDnQMWUQVp1P8U1Q4WOxztoDSnHM1L+75+t7oLaQjmHYwLmPJAMTPCDFS80U
- oEs35maVqsj0KcTYvmSGSKcTQQ4yQuDRamvRETWl8Y/vKR/dgUs6TlQBN2R9ZGPjM7B6
- kkLWHd7N0eYyIjDNNOPYJU19KyVdw9NbmKUW0cdbM5lL0I5Vb71mbJDDd7I6HLpVlODd
- UkPQxuP+cl6L+F7H1qP/nsuSfIvmYAW+G2LWETT5nZFwxyEfVMiIyEpMXihR3Jn8iDae
- j2rA==
+ bh=XMsgdSS4Tcr3Gxt4VgHCnYoa6pVVtT+xGEQriq95MyM=;
+ b=HTgZIHEsF7Etk0wGTR/m3cxh0M6BHHGkrQnljZUwoLscJsFKobd1JF3I3RwYdvhIC3
+ TEUhaHqg3mRAHCQeclF939eHpJJf9EUw0CrZQzk/UxFMpjF2cmpIyaI3xaXhF80LNwty
+ TE/L57lKGsbM/xdImEQ74YYarJoVuQlzchh8uGpaVtfujhyWvYDA5yUfGMnSgfw2qTG6
+ +JfOoRFegMobBZvEW8U6Ze21M+SURhynHMwPR3lKfEOa9JJ5qTaxevTKwrdKNCeMO7+P
+ bLBllByV7ZYpGrGDwvWHh1pF1B1zxTeTRScxW72CDQppAlOkli9A422/i9nozJsDzwIH
+ IZKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762337443; x=1762942243;
+ d=1e100.net; s=20230601; t=1762337705; x=1762942505;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OxDu0BZXPK1pUujWXOYNC0CI29ChSmse7//KeYhOe8w=;
- b=MRtRAQaX3f9GZNoElvY0dDDj54aF4clueSix5v4bUbmifo5DHf8rNq/QbO85mNieH/
- yum9cZTQp3X0Si5phxwCV6RdPcxD6QGb1MU0fnro2SXVxyrBXi0HkUTEYDtxRw0uq1JI
- 0CUVkEPF9ZeuQg2VtE1mZyChmkZKmcKwDCGp52sgQgfgk+IDN9YCYBxjbwK/1QbmZZjY
- zJr1ZIXLstKOHKOvw2ZCYhWacav1Tc4vBF2rHjNzl3HHuQWokNQpHrh1GdqV4rFIqYGa
- JC0fAZunJLxtEXKCk/Pu13q+524fNbM6/d/kntYJ6LmbSOExKsrjXr7GoyfoC4N+5E9v
- UTLQ==
+ bh=XMsgdSS4Tcr3Gxt4VgHCnYoa6pVVtT+xGEQriq95MyM=;
+ b=FW+c+DRuSH/brFYivVYkPwHX8GNIjlfSGPYO8uS1i3r6uePlwbENgzKwc1NdiyeY7q
+ +hdSXuP7bWqOMW2FcDQVLWPUyTHiZoxh5nIfDc9ysdRDZ8O725qnZKJmdBnysNO68c5G
+ h3kaWFX3j2wgb+5HTp1D8l1b/o7WAhILb3yk8VFywNGKwis+WUdv/c2GQXJ9ojcQvybv
+ m079hsfz2Gxzv4LNUO2X3qKUyNF6jn256Snr17k2Q40/WPJbHT/xdvZgCSmGK6vX73D3
+ I3yu3GTsdwDNpfAcp7YrolImxcq0fFvblLKOMwnRwUuwsH62NV8aos+zk9Y95vt1TCI1
+ D83Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJGVLofAaXb7YN3/Ik5QA1QTC2Oq/2xVV+6oVboTUO9mL2/YRhmDR/+U3A//5HJXyqPepuTezk+19z@nongnu.org
-X-Gm-Message-State: AOJu0YzA0vZJU4fKcC/nf9Pcs3zDse0w4WwaWmkNRDMuDIFu+sY2i2k5
- iwR8EgcN5doG0EVARWR6Z2A0SUsTUZ/xEcL4+HcwYo0U5v4BZEpc7XGoA+++PorWf18=
-X-Gm-Gg: ASbGncuo+pCbWXTaFkxl6A55yO0nECnhgjT3E+kaRECptmMziYwiMRobbwFN3yywdKA
- kP7l/uxcwSnn76B6X8tbWshtvb6KiCKMF+1TVDC7KOeemgeooBlqFPt3VZLl3Q7pgRJ6t0qPk+D
- qFHXmdokuEYzf8XU7VxN0FUpGE3fGC7ApycH2LFiha2Qgg18qTnL88LYuTUrcFN7cC4bhAGiD2c
- ZNhK8Q428g2fgXYlX1UbsBcEs2CqbtOx55O6SW03xTLvBP28RK0Sc4pzEXuEufzCZBq8Kd7rXDt
- eb6keb1FOcPwSQfdhDkQLOnvKVM+4T5eIGMhOeadK5SpaLRPJ2rbGKdGqsSkDEVGrjyzMWOLYVn
- uX4+n4aFRwah0euku9JhHin/6Zc0Q05uUeZbAIRrCzBE98P18Aqc03cURuesvJzlE+XT+3iPA64
- 2n/NBoCZY70vVloAvvMkU=
-X-Google-Smtp-Source: AGHT+IGD6+nEwMVhVzjoC0nPmiijvTMXUi8w46QtiHeSXMPMqJqaXxqFNsltb+2vvs6kndJ3K+yw8w==
-X-Received: by 2002:a17:906:e2cc:b0:b72:6330:e651 with SMTP id
- a640c23a62f3a-b7263311eb3mr232652266b.21.1762337443505; 
- Wed, 05 Nov 2025 02:10:43 -0800 (PST)
+ AJvYcCU7Gnk1CpH3vZ5z4kLirSbY8tfgu5MiLNo0EHor7tx+kPIH0JgxvUfAWN+lJt1cNqkuL8N3pU30VwgM@nongnu.org
+X-Gm-Message-State: AOJu0YzYhJByWTWTJfcxlu0Z87WSACZSwklzn4dKrWx0nqMNYpm5I60/
+ BRBdzyLOmXwnT1wq/jdx0FnmUqW0x4biqlPudSugUl2PIdtK07uYOrtp6zndjfcSpw8=
+X-Gm-Gg: ASbGncsJrrXZRxlH9/AeAOShH6Lmwc5+7kEAHXfjyC8iZhkUAEMtzNhlbsdlJ+aKEgN
+ VaGmYDGCjhZF4znCnWpqGWAKpq50ClDn/nkgXV4pqmkMFQ7qIINIBX+o4wbCE4zWVMyHfZa2dxw
+ 8lWaVZ0+CNG6MvLBnu63RotQKDzQ9rm+vsKZH/4Ykyesz2YXuW3fY8HxxPUUorDgSYzuuFjlA5y
+ bgClR9khPK5gxgJb5Jbektx+1rgHy3e/u/P1H6AseZRv8G/2fbrWkUjt5j/lNvjW6Q+eAMF48bq
+ ZXClmlsAdpp+7he3Okiajs+v4zvHEn7WNSlFtTmpPOB7Z/GeQKsrajVx1rI90mAptuhrUjqjqJu
+ CzcUZ/ESHSsuaJ12R49DaRSjkX4Af/Gx3ZWgvF1NPyp42HEXcSLRdi38oRk0iBgcY3SAN1wPZ/X
+ KTM6WP90VZLSZqGAyfqKA=
+X-Google-Smtp-Source: AGHT+IFfdCZ9VfCkYK9qr19GEnfhtOyAtutFYGKArYLd/4vxgsdkycrvmoAiKGuBcyyVtRBEiCKojw==
+X-Received: by 2002:a17:907:da5:b0:b3e:babd:f263 with SMTP id
+ a640c23a62f3a-b7265155cffmr260747166b.3.1762337704893; 
+ Wed, 05 Nov 2025 02:15:04 -0800 (PST)
 Received: from [172.20.148.75] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723fd40da4sm440635866b.59.2025.11.05.02.10.42
+ a640c23a62f3a-b723db0fd12sm445599266b.32.2025.11.05.02.15.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 02:10:42 -0800 (PST)
-Message-ID: <93dc298b-f352-49db-8e67-2c5f47db6fad@linaro.org>
-Date: Wed, 5 Nov 2025 11:10:42 +0100
+ Wed, 05 Nov 2025 02:15:04 -0800 (PST)
+Message-ID: <a8e88aaa-02ef-406e-9737-bbe017e420d3@linaro.org>
+Date: Wed, 5 Nov 2025 11:15:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 26/37] hw/misc: Add RISC-V CMGCR device implementation
 Content-Language: en-US
-To: alistair23@gmail.com, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+To: alistair23@gmail.com, qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
 Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  Chao-ying Fu <cfu@mips.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -83,8 +82,8 @@ From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20251023043520.1777130-5-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,29 +131,95 @@ On 23/10/25 06:35, alistair23@gmail.com wrote:
 >   4 files changed, 309 insertions(+)
 >   create mode 100644 include/hw/misc/riscv_cmgcr.h
 >   create mode 100644 hw/misc/riscv_cmgcr.c
-> 
-> diff --git a/include/hw/misc/riscv_cmgcr.h b/include/hw/misc/riscv_cmgcr.h
-> new file mode 100644
-> index 0000000000..c57d4ada1c
-> --- /dev/null
-> +++ b/include/hw/misc/riscv_cmgcr.h
-> @@ -0,0 +1,50 @@
-> +/*
-> + * This file is subject to the terms and conditions of the GNU General Public
-> + * License.  See the file "COPYING" in the main directory of this archive
-> + * for more details.
 
-Apparently another variant, not included in commit 1f59381d6c0
-("scripts/checkpatch: reject license boilerplate on new files")
-checks.
 
-> + *
-> + * Copyright (C) 2015 Imagination Technologies
-> + *
-> + * Copyright (C) 2025 MIPS
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + */
+> +static inline void update_gcr_base(RISCVGCRState *gcr, uint64_t val)
+> +{
+> +    gcr->gcr_base = val & GCR_BASE_GCRBASE_MSK;
+> +    memory_region_set_address(&gcr->iomem, gcr->gcr_base);
+> +
+> +    /*
+> +     * For boston-aia, cpc_base is set to gcr_base + 0x8001 to enable
+> +     * cpc automatically.
+> +     */
+> +    update_cpc_base(gcr, val + 0x8001);
+> +}
+> +
+> +/* Read GCR registers */
+> +static uint64_t gcr_read(void *opaque, hwaddr addr, unsigned size)
+> +{
+> +    RISCVGCRState *gcr = (RISCVGCRState *) opaque;
+> +
+> +    switch (addr) {
+> +    /* Global Control Block Register */
+> +    case GCR_CONFIG_OFS:
+> +        /* Set PCORES to 0 */
+> +        return 0;
+> +    case GCR_BASE_OFS:
+> +        return gcr->gcr_base;
+> +    case GCR_REV_OFS:
+> +        return gcr->gcr_rev;
+> +    case GCR_CPC_STATUS_OFS:
+> +        return is_cpc_connected(gcr);
+> +    case GCR_L2_CONFIG_OFS:
+> +        /* L2 BYPASS */
+> +        return GCR_L2_CONFIG_BYPASS_MSK;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "Read %d bytes at GCR offset 0x%" HWADDR_PRIx
+> +                      "\n", size, addr);
+> +    }
+> +    return 0;
+> +}
+> +
+> +static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
+> +{
+> +    return vps->reset_base & GCR_CL_RESET_BASE_RESETBASE_MSK;
+> +}
+> +
+> +/* Write GCR registers */
+> +static void gcr_write(void *opaque, hwaddr addr, uint64_t data, unsigned size)
+> +{
+> +    RISCVGCRState *gcr = (RISCVGCRState *)opaque;
+> +    RISCVGCRVPState *current_vps;
+> +    int cpu_index, c, h;
+> +
+> +    for (c = 0; c < gcr->num_core; c++) {
+> +        for (h = 0; h < gcr->num_hart; h++) {
+> +            if (addr == RISCV_CLCB_OFS + c * RISCV_CORE_REG_STRIDE + h * 8) {
+> +                cpu_index = c * gcr->num_hart + h;
+> +                current_vps = &gcr->vps[cpu_index];
+> +                current_vps->reset_base = data & GCR_CL_RESET_BASE_MSK;
+> +                cpu_set_exception_base(cpu_index + gcr->cluster_id *
+> +                                       gcr->num_core * gcr->num_hart,
+> +                                       get_exception_base(current_vps));
+> +                return;
+> +            }
+> +        }
+> +    }
+> +
+> +    switch (addr) {
+> +    case GCR_BASE_OFS:
+> +        update_gcr_base(gcr, data);
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "Write %d bytes at GCR offset 0x%" HWADDR_PRIx
+> +                      " 0x%" PRIx64 "\n", size, addr, data);
+> +        break;
+> +    }
+> +}
+> +
+> +static const MemoryRegionOps gcr_ops = {
+> +    .read = gcr_read,
+> +    .write = gcr_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
 
+Dubious DEVICE_NATIVE_ENDIAN use, do you mean DEVICE_LITTLE_ENDIAN?
+
+Maybe we can alter checkpatch to no accept new DEVICE_NATIVE_ENDIAN
+in our code base.
+
+> +    .impl = {
+> +        .max_access_size = 8,
+> +    },
+> +};
 
