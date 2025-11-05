@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7E2CCFA04
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98367CCFA17
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 04:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGUgN-0007bf-3t; Tue, 04 Nov 2025 22:59:39 -0500
+	id 1vGUgF-0007Z7-Gs; Tue, 04 Nov 2025 22:59:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUgK-0007bG-OS; Tue, 04 Nov 2025 22:59:36 -0500
+ id 1vGUgD-0007YF-UW; Tue, 04 Nov 2025 22:59:29 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vGUgJ-0008AS-C9; Tue, 04 Nov 2025 22:59:36 -0500
+ id 1vGUgC-0006sZ-Hq; Tue, 04 Nov 2025 22:59:29 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 5 Nov
- 2025 11:59:03 +0800
+ 2025 11:59:02 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 5 Nov 2025 11:59:03 +0800
+ Transport; Wed, 5 Nov 2025 11:59:02 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,9 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 10/17] hw/arm/aspeed: Attach ADC device to AST1700 model
-Date: Wed, 5 Nov 2025 11:58:48 +0800
-Message-ID: <20251105035859.3709907-11-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 08/17] hw/arm/aspeed: Attach SRAM device to AST1700 model
+Date: Wed, 5 Nov 2025 11:58:46 +0800
+Message-ID: <20251105035859.3709907-9-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
 References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
@@ -68,89 +68,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Connect the ADC device to AST1700 model.
+Map the SRAM device to AST1700 model
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
  include/hw/misc/aspeed_ast1700.h |  1 +
- hw/arm/aspeed_ast27x0.c          |  4 ++++
- hw/misc/aspeed_ast1700.c         | 15 +++++++++++++++
- 3 files changed, 20 insertions(+)
+ hw/misc/aspeed_ast1700.c         | 25 +++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
 diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/aspeed_ast1700.h
-index e55deea67a..dc9aa08c24 100644
+index e105ceb027..391c8687f5 100644
 --- a/include/hw/misc/aspeed_ast1700.h
 +++ b/include/hw/misc/aspeed_ast1700.h
-@@ -34,6 +34,7 @@ struct AspeedAST1700SoCState {
+@@ -32,6 +32,7 @@ struct AspeedAST1700SoCState {
+ 
+     AspeedLTPIState ltpi;
      SerialMM uart;
-     MemoryRegion sram;
-     AspeedSMCState spi;
-+    AspeedADCState adc;
++    MemoryRegion sram;
  };
  
  #endif /* ASPEED_AST1700_H */
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 7151feb35d..75bb18b9c1 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -1092,6 +1092,10 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-             sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[2 + i]), j,
-                                irq);
-         }
-+
-+        /* ADC */
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ioexp[i].adc), 0,
-+                           aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_ADC));
-     }
- 
-     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
 diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
-index ba44e484e8..d06603a048 100644
+index 1c2d367cdb..6f7ff625b5 100644
 --- a/hw/misc/aspeed_ast1700.c
 +++ b/hw/misc/aspeed_ast1700.c
-@@ -22,6 +22,7 @@
+@@ -15,14 +15,18 @@
+ #include "migration/vmstate.h"
+ #include "hw/misc/aspeed_ast1700.h"
+ 
++#define AST1700_BOARD1_MEM_ADDR      0x30000000
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
++#define AST1700_SOC_SRAM_SIZE        0x00040000
+ 
  enum {
-     ASPEED_AST1700_DEV_SPI0,
-     ASPEED_AST1700_DEV_SRAM,
-+    ASPEED_AST1700_DEV_ADC,
++    ASPEED_AST1700_DEV_SRAM,
      ASPEED_AST1700_DEV_UART12,
      ASPEED_AST1700_DEV_LTPI_CTRL,
-     ASPEED_AST1700_DEV_SPI0_MEM,
-@@ -30,6 +31,7 @@ enum {
+ };
+ 
  static const hwaddr aspeed_ast1700_io_memmap[] = {
-     [ASPEED_AST1700_DEV_SPI0]      =  0x00030000,
-     [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
-+    [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
++    [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
      [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
      [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
-     [ASPEED_AST1700_DEV_SPI0_MEM]  =  0x04000000,
-@@ -94,6 +96,14 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SPI0_MEM],
-                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->spi), 1));
+ };
+@@ -31,12 +35,33 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+     AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+     hwaddr uart_base;
++    Error *err = NULL;
++    int board_idx;
++    char sram_name[32];
++
++    if (s->mapped_base == AST1700_BOARD1_MEM_ADDR) {
++        board_idx = 0;
++    } else {
++        board_idx = 1;
++    }
  
-+    /* ADC */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->adc), errp)) {
+     /* Occupy memory space for all controllers in AST1700 */
+     memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
+                        AST2700_SOC_LTPI_SIZE);
+     sysbus_init_mmio(sbd, &s->iomem);
+ 
++    /* SRAM */
++    snprintf(sram_name, sizeof(sram_name), "aspeed.ioexp-sram.%d", board_idx);
++    memory_region_init_ram(&s->sram, OBJECT(s), sram_name,
++                           AST1700_SOC_SRAM_SIZE, &err);
++    if (err != NULL) {
++        error_propagate(errp, err);
 +        return;
 +    }
 +    memory_region_add_subregion(&s->iomem,
-+                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_ADC],
-+                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->adc), 0));
++                                aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SRAM],
++                                &s->sram);
 +
-     /* LTPI controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
-         return;
-@@ -121,6 +131,11 @@ static void aspeed_ast1700_instance_init(Object *obj)
-     snprintf(typename, sizeof(typename), "aspeed.spi%d-%s", 0, socname);
-     object_initialize_child(obj, "ioexp-spi[*]", &s->spi,
-                             typename);
-+
-+    /* ADC */
-+    snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
-+    object_initialize_child(obj, "ioexp-adc[*]", &s->adc,
-+                            typename);
-     /* LTPI controller */
-     object_initialize_child(obj, "ltpi-ctrl",
-                             &s->ltpi, TYPE_ASPEED_LTPI);
+     /* UART */
+     uart_base = s->mapped_base +
+                aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12];
 -- 
 2.43.0
 
