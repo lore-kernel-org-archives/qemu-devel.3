@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64EC8CCFA05
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 11:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDAD8CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 12:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGbzL-0006wP-8F; Wed, 05 Nov 2025 06:47:44 -0500
+	id 1vGcM0-0004gY-R1; Wed, 05 Nov 2025 07:11:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vGbyb-00064u-Tf
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 06:47:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGcL2-0004Zn-Po
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:10:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vGbyZ-00047C-AI
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 06:46:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGcKv-0007Nc-SP
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:10:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762343214;
+ s=mimecast20190719; t=1762344600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=29LUfHiShuavtJENtMDfqPVZdMKOAjQ5KT9Nqx8YzVU=;
- b=YipcYHaeo9WYTBPl7dXxGvjcaYifYogXoWg4ySbiMkFxIqRYQk44kC95V9AeeeEthFFy5O
- JuOq/cv9RLjW/NdxOJDWswucUziWZiPifNPZxGp5Fjzew0FX99La+Qar8gHwfrWrtBXRC+
- sR9k13Cl8yf3x+Soq7QhdkYzEbyt6RY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Or1AQ8Vt42YOOBGKccWYFLF+48IAdRAE22GPCSD2pQ4=;
+ b=MiDhYiEzTW4AXXc9Lxn8m4mgVUU46ZEnvDbC548rqANJFuDZyR3KlL5V1ToyxV3QHgC+SH
+ LtfE716UAoaMYfoYPd4XoBlaxGcsg9/6BmNbMm6P4obVj6ZyDcKF6GyvQeLFXQ90fBwC/O
+ Kp5WR8ZraK2F8n/c4cYi3TpwJqbgQ2E=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-JHugRRm5P_qQes0t7qSjWg-1; Wed,
- 05 Nov 2025 06:46:51 -0500
-X-MC-Unique: JHugRRm5P_qQes0t7qSjWg-1
-X-Mimecast-MFC-AGG-ID: JHugRRm5P_qQes0t7qSjWg_1762343209
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-eiqFnNhlMiieQyeq6xBGJw-1; Wed,
+ 05 Nov 2025 07:09:56 -0500
+X-MC-Unique: eiqFnNhlMiieQyeq6xBGJw-1
+X-Mimecast-MFC-AGG-ID: eiqFnNhlMiieQyeq6xBGJw_1762344595
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2A1719560B7; Wed,  5 Nov 2025 11:46:49 +0000 (UTC)
-Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A8B641800451; Wed,  5 Nov 2025 11:46:44 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
-To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- mchehab+huawei@kernel.org, gengdongjiu1@gmail.com, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, peter.maydell@linaro.org,
- pbonzini@redhat.com, shan.gavin@gmail.com
-Subject: [PATCH v3 8/8] target/arm/kvm: Support multiple memory CPERs injection
-Date: Wed,  5 Nov 2025 21:44:53 +1000
-Message-ID: <20251105114453.2164073-9-gshan@redhat.com>
-In-Reply-To: <20251105114453.2164073-1-gshan@redhat.com>
-References: <20251105114453.2164073-1-gshan@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63DEA1800447; Wed,  5 Nov 2025 12:09:55 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.72])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C020D1800451; Wed,  5 Nov 2025 12:09:52 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] tests/functional/x86_64/test_virtio_gpu: Fix various issues
+ reported by pylint
+Date: Wed,  5 Nov 2025 13:09:51 +0100
+Message-ID: <20251105120951.15815-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -69,7 +66,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,100 +82,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the combination of 64KiB host and 4KiB guest, a problematic host
-page affects 16x guest pages that can be owned by different threads.
-It means 16x memory errors can be raised at once due to the parallel
-accesses to those 16x guest pages on the guest. Unfortunately, QEMU
-can't deliver them one by one because we just one GHES error block,
-corresponding one read acknowledgement register. It can eventually
-cause QEMU crash dump due to the contention on that register, meaning
-the current memory error can't be delivered before the previous error
-isn't acknowledged.
+From: Thomas Huth <thuth@redhat.com>
 
-Imporve push_ghes_memory_errors() to push 16x consecutive memory errors
-under this situation to avoid the contention on the read acknowledgement
-register.
+Use the recommended order for import statements, specify the kind of
+exceptions that we try to catch, use f-strings where it makes sense,
+rewrite the vug_log_file part with a proper "with" statement and
+fix some FIXMEs by checking for the availability of the devices, etc.
 
-Signed-off-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/arm/kvm.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ tests/functional/x86_64/test_virtio_gpu.py | 46 +++++++++++-----------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 5b151eda3c..d7de8262da 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -11,6 +11,7 @@
-  */
+diff --git a/tests/functional/x86_64/test_virtio_gpu.py b/tests/functional/x86_64/test_virtio_gpu.py
+index be96de24da2..a25f15cdb00 100755
+--- a/tests/functional/x86_64/test_virtio_gpu.py
++++ b/tests/functional/x86_64/test_virtio_gpu.py
+@@ -5,22 +5,23 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
  
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
- #include <sys/ioctl.h>
++import os
++import socket
++import subprocess
  
- #include <linux/kvm.h>
-@@ -2432,12 +2433,59 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
- static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
-                                     uint64_t paddr, Error **errp)
- {
-+    uint64_t val, start, end, guest_pgsz, host_pgsz;
-     uint64_t addresses[16];
-+    uint32_t num_of_addresses;
-+    int ret;
-+
-+    /*
-+     * Sort out the guest page size from TCR_EL1, which can be modified
-+     * by the guest from time to time. So we have to sort it out dynamically.
-+     */
-+    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
-+    if (ret) {
-+        error_setg(errp, "Error %" PRId32 " to read TCR_EL1 register", ret);
-+        return;
-+    }
-+
-+    switch (extract64(val, 14, 2)) {
-+    case 0:
-+        guest_pgsz = 4 * KiB;
-+        break;
-+    case 1:
-+        guest_pgsz = 64 * KiB;
-+        break;
-+    case 2:
-+        guest_pgsz = 16 * KiB;
-+        break;
-+    default:
-+        error_setg(errp, "Unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
-+        return;
-+    }
-+
-+    host_pgsz = qemu_real_host_page_size();
-+    start = paddr & ~(host_pgsz - 1);
-+    end = start + host_pgsz;
-+    num_of_addresses = 0;
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test import is_readable_executable_file
  
--    addresses[0] = paddr;
-+    while (start < end) {
-+        /*
-+         * The precise physical address is provided for the affected
-+         * guest page that contains @paddr. Otherwise, the starting
-+         * address of the guest page is provided.
-+         */
-+        if (paddr >= start && paddr < (start + guest_pgsz)) {
-+            addresses[num_of_addresses++] = paddr;
-+        } else {
-+            addresses[num_of_addresses++] = start;
-+        }
-+
-+        start += guest_pgsz;
-+    }
+-
+-import os
+-import socket
+-import subprocess
++from qemu.machine.machine import VMLaunchFailure
  
-     kvm_cpu_synchronize_state(c);
--    acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses, 1, errp);
-+    acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
-+                            addresses, num_of_addresses, errp);
-     kvm_inject_arm_sea(c);
- }
  
+ def pick_default_vug_bin(test):
+     bld_dir_path = test.build_file("contrib", "vhost-user-gpu", "vhost-user-gpu")
+     if is_readable_executable_file(bld_dir_path):
+         return bld_dir_path
++    return None
+ 
+ 
+ class VirtioGPUx86(QemuSystemTest):
+@@ -46,8 +47,8 @@ def wait_for_console_pattern(self, success_message, vm=None):
+         )
+ 
+     def test_virtio_vga_virgl(self):
+-        # FIXME: should check presence of virtio, virgl etc
+         self.require_accelerator('kvm')
++        self.require_device('virtio-vga-gl')
+ 
+         kernel_path = self.ASSET_KERNEL.fetch()
+         initrd_path = self.ASSET_INITRD.fetch()
+@@ -68,7 +69,7 @@ def test_virtio_vga_virgl(self):
+         )
+         try:
+             self.vm.launch()
+-        except:
++        except VMLaunchFailure:
+             # TODO: probably fails because we are missing the VirGL features
+             self.skipTest("VirGL not enabled?")
+ 
+@@ -78,8 +79,8 @@ def test_virtio_vga_virgl(self):
+         )
+ 
+     def test_vhost_user_vga_virgl(self):
+-        # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+         self.require_accelerator('kvm')
++        self.require_device('vhost-user-vga')
+ 
+         vug = pick_default_vug_bin(self)
+         if not vug:
+@@ -95,27 +96,26 @@ def test_vhost_user_vga_virgl(self):
+         os.set_inheritable(qemu_sock.fileno(), True)
+         os.set_inheritable(vug_sock.fileno(), True)
+ 
+-        self._vug_log_path = self.log_file("vhost-user-gpu.log")
+-        self._vug_log_file = open(self._vug_log_path, "wb")
+-        self.log.info('Complete vhost-user-gpu.log file can be '
+-                      'found at %s', self._vug_log_path)
+-
+-        vugp = subprocess.Popen(
+-            [vug, "--virgl", "--fd=%d" % vug_sock.fileno()],
+-            stdin=subprocess.DEVNULL,
+-            stdout=self._vug_log_file,
+-            stderr=subprocess.STDOUT,
+-            shell=False,
+-            close_fds=False,
+-        )
+-        self._vug_log_file.close()
++        vug_log_path = self.log_file("vhost-user-gpu.log")
++        self.log.info('Complete vhost-user-gpu.log file can be found at %s',
++                      vug_log_path)
++        with open(vug_log_path, "wb") as vug_log_file:
++            # pylint: disable=consider-using-with
++            vugp = subprocess.Popen(
++                [vug, "--virgl", f"--fd={vug_sock.fileno()}"],
++                stdin=subprocess.DEVNULL,
++                stdout=vug_log_file,
++                stderr=subprocess.STDOUT,
++                shell=False,
++                close_fds=False,
++            )
+ 
+         self.vm.set_console()
+         self.vm.add_args("-cpu", "host")
+         self.vm.add_args("-m", "2G")
+         self.vm.add_args("-object", "memory-backend-memfd,id=mem,size=2G")
+         self.vm.add_args("-machine", "pc,memory-backend=mem,accel=kvm")
+-        self.vm.add_args("-chardev", "socket,id=vug,fd=%d" % qemu_sock.fileno())
++        self.vm.add_args("-chardev", f"socket,id=vug,fd={qemu_sock.fileno()}")
+         self.vm.add_args("-device", "vhost-user-vga,chardev=vug")
+         self.vm.add_args("-display", "egl-headless")
+         self.vm.add_args(
+@@ -128,7 +128,7 @@ def test_vhost_user_vga_virgl(self):
+         )
+         try:
+             self.vm.launch()
+-        except:
++        except VMLaunchFailure:
+             # TODO: probably fails because we are missing the VirGL features
+             self.skipTest("VirGL not enabled?")
+         self.wait_for_console_pattern("as init process")
 -- 
-2.51.0
+2.51.1
 
 
