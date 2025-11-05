@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52070CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 12:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B09CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 12:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGcnP-0001a3-GX; Wed, 05 Nov 2025 07:39:29 -0500
+	id 1vGcvh-0004Ew-S4; Wed, 05 Nov 2025 07:48:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vGcnE-0001ZQ-Fs
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:39:16 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGcvc-0004Cn-LB
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:47:57 -0500
+Received: from mail-ed1-x544.google.com ([2a00:1450:4864:20::544])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vGcnC-00044w-Uz
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:39:16 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-640b06fa959so6049016a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 04:39:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vGcvY-0001Q1-Uk
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 07:47:55 -0500
+Received: by mail-ed1-x544.google.com with SMTP id
+ 4fb4d7f45d1cf-640ace5f283so4242023a12.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 04:47:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762346353; x=1762951153; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ln9SzCuPTtvoPf9iZzeFHd3CaqYThr5+Q6LZSHThtXU=;
- b=oag+xCgpXYui+LAhQ03I17hadNazLxe+abilCh+911VIMEA7RjwWHj2eu6AFbmwcD9
- d9fEC6Q8bRExAG1fCWbbWc99tT/mVjS5bOp/nnbxc6YOEcOAqvTIBElbEYOZ6+whcC6K
- reGrxC9nihlwo7UXTWMyKkiWsD+R72B8o3DYgA+cx7aIxnHKd3AAhLrHitcW8ZZCGdW0
- C79KE+qh0TlfieqJZIxJeey+KK9z1jf1soq1BEL62+UNywSD6uEDdBuK3ZivI1OVl/k5
- e9on6foMiGuRL+nZNkv026mzu+h9rfFvrJvShpy+QrasUTtk4bgd/hOnGilF246txLPm
- 3qAA==
+ d=linaro.org; s=google; t=1762346869; x=1762951669; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NMy4LBWJUHJKwFmoOUA7Js6JPiPfmzwchzLclgHPvP4=;
+ b=kcjeTvrGn6hrYZVup3LwFjOlO9yqAdI3fr0RfvEVc0h8AXOSiX9fuanhcJyU2ghiVX
+ F3HC42QuLTPSm//QdX1idpSQ30XMG1QsIN9VZfLzWPOGqtisrLmv5xK+Dz7tCUUnGCcL
+ Jqo9sTv6EtsteKuvBYSTsEi+dtM/zP46w94APcFwZpnkE8UVoZhS2sKyN+W1J2CEHP9Q
+ g1o7qP1zwA2jiyGQlsQ+0QhDWDS8ACWiwFBz7ONSJsjhqjgJPuXwJzpGmssUUw22vdei
+ 3OzLhQWOOQJnuz6UgsmQGuILstqABUEyUAOe0buQw2qIEL/kMxouRkN027PB8ZpOp/jJ
+ oxNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762346353; x=1762951153;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ln9SzCuPTtvoPf9iZzeFHd3CaqYThr5+Q6LZSHThtXU=;
- b=Q5qnKYokUee1etzQ8AXJS+59eXRj9Mtn+YNW68ihHtn7lO7Rz1VaKNjAa6zTnqcMxd
- TEgmBY+qvvrS8hhjiFu48HxYTawLimLSoURujTCEvmBxE72B0BLk+Z4OQSrBtWrc5JiU
- SGnm/auYpGP0Ls3tW2naDo+ndrpLIePcWM+HWSj/uBknVEYcpdArTa5OpDGBLUlbQ8zJ
- vas+hVfibWp3UNA6ZYOPumg6eQ+7szOce/5B5lj+/+JGfHpE9UIcsoarRR1Miehrz7Rf
- 1ILWcQx1gW6J5aZKjCMGjHw9v9n1cqK/+7dChFLvT+hVJyuC+0SO+RZrZTw6tGj9oZCf
- dvBA==
-X-Gm-Message-State: AOJu0YwaHPJgBPGCPnx/3X7R+tAoNhICbjRVn9jHGQ2JgVDiF+rr4COi
- 7wfycyPsPiVIzoQ14on50jqMdKbGjW7aWX6/l7bdX2Hbz/3jjULfr+lW4MAnnztdwIc=
-X-Gm-Gg: ASbGncspq9a8oJzPxWWkSFuEkiaIcDh2HuoUM2FYxzYAESttb+ixUVbksxNBDKXKH+E
- hz3sF9NbqPx/SocDZf0Kge45fKSRs/YRf0I6Wt90axi8MFUAQDvwGWi6sd8+J36CZg+tRKJwxGU
- 4iBXuHJLOWiiPDnzuZ0tbqr6o4k4pkvlsEXZUDcOIbefPnTCTzDP+jZ0gGr7vQQ8Dw5wuflnkHX
- 0WLyA/iBDn5hEzUuWaNnzzJXb4AIo4SuMZk9EIzbfZCsUZpkjHddk+nrQmFO5qige4/1LpA+sFD
- Kp8xZ1dhCunLrJFLFLRtO1casy2AxdyAWQdzRVSCT8GWw6AKVSy1cvo5ONpQTBR1wwx7c+QfO0q
- VaEI5wLIYEZzCRMmSlFyXPXZB3vmrcLifG4Dqa4YB5WzoQ2ZEv/pLflJIWtfHr4PehsktT20rD5
- fITXhgHG4qx3Y=
-X-Google-Smtp-Source: AGHT+IFnUGiplE9xpsmMKyHevGs/41+kxGvCKFudJE4u07+D1bl84urwVb93qBecn4nUoo5T5BewOA==
-X-Received: by 2002:a17:907:94d4:b0:b47:2be3:bc75 with SMTP id
- a640c23a62f3a-b72655a6fa5mr331112966b.60.1762346352869; 
- Wed, 05 Nov 2025 04:39:12 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723fe37cb9sm478099766b.61.2025.11.05.04.39.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Nov 2025 04:39:12 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7DFB35F88E;
- Wed, 05 Nov 2025 12:39:11 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,
- bill.mills@linaro.org,  edgar.iglesias@amd.com
-Subject: Re: [PATCH v1 2/5] virtio: Add virtio_queue_get_rings
-In-Reply-To: <20251028152351.1247812-3-edgar.iglesias@gmail.com> (Edgar E.
- Iglesias's message of "Tue, 28 Oct 2025 16:23:47 +0100")
-References: <20251028152351.1247812-1-edgar.iglesias@gmail.com>
- <20251028152351.1247812-3-edgar.iglesias@gmail.com>
-User-Agent: mu4e 1.12.14-dev2; emacs 30.1
-Date: Wed, 05 Nov 2025 12:39:11 +0000
-Message-ID: <875xbovekw.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1762346869; x=1762951669;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NMy4LBWJUHJKwFmoOUA7Js6JPiPfmzwchzLclgHPvP4=;
+ b=e66QQ8pW+gZwLW8UnH9EtiOCZASIzdwWvD8CfeMiOGaoZUmxTCm1o7e+sbx6yDMPYA
+ eZk9guMR8c4G2w7EXyQPyOuHqM2PTL+WyUxFNcCMk6x6U3ONvbq/XOdSH3idVLJnFsR+
+ +Nrz178xEljSntIsTSXIBapowxiACezG5Ov++qoZrKdmEr9HvzLJn9N1ZufIpse/0+1E
+ r99puIwe9X22mKQ68yen1eqd2JvM+X93M86/nKm2TbOHgbUTNg2LtKtd6UfG+EOrquHe
+ FCspNwpcKozMXmKS/scBNv5EXwulGh3jFw8oHcRb0hpsBNVJKjkiDivtzCdmhLEbbonm
+ Kfqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbvc7Dn1YY9WFbn6f6pVdMqDz7RKCzTHJL9H6IPF2SGJ8FDt5cUz4Zi1gInGcyWITFhV6QDa40D+K4@nongnu.org
+X-Gm-Message-State: AOJu0YyRzTf3GmCQLRm88v/2oRVx4uO1y3lmmQl49GxeLIKhAQzlNd1f
+ qtZEHt9a/jdQck6PrCaf+T8+Vzh/GQ5FjRdsvuHxPvKFZHxMXSFU16zZVtgbpPI7S3xbCMJN30h
+ Zk3JxtRXbMWGi
+X-Gm-Gg: ASbGnctkWg+JWtJzXRhX+bTXfLrsfkggGcO7M3Djlij+V+7qgZICZbJQAJprJyPd+57
+ 70P4DO+fWh70HeGWbolO30SAQtNINuwv0R8ckFaD9TXQNbhZLPBr+aD5BaRbiNdXT3gPAX5fuK6
+ To3DGo+fov+YpNoLqU3nktR9a8bWMOd3UgTN4YC7fc+m3oO++Qx1fKx5s+Zx+6YLhH2NdK++Wlb
+ zUEi1yXuLNL1ajpoL7nkWf3A+Zhtjv7HUK2PlZFFJ2rE1n4CpENjtOdHIRcKnQqZxZyr57grYHv
+ hPBho+XH8DSt4+T9oEhQyUrycABvYK4L2QZSXR2+lZIHQ6y4SNXFsqQ4oZQWfofwBGCrFLYg1hf
+ tF1K6qj4DA6OTD9+gHOe8haMHvZYCr80iibcjS8xMjlEDgJGo9K3nBBCemtbl0twCJiwWZuL4zB
+ YvGptyeEXHKgmqwm21+DCO9I4BCaZ8eA==
+X-Google-Smtp-Source: AGHT+IF0gldEwZHUq1GZ0I7A320JoHep2EDnOimMSUvyHvdAI/m8b0HxHLg7Pr4/7eruNOjSK9hpmA==
+X-Received: by 2002:a05:6402:3507:b0:640:b3c4:c22 with SMTP id
+ 4fb4d7f45d1cf-64105a47acbmr2347268a12.18.1762346869257; 
+ Wed, 05 Nov 2025 04:47:49 -0800 (PST)
+Received: from [172.20.148.75] ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-640ec115269sm3966387a12.30.2025.11.05.04.47.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Nov 2025 04:47:48 -0800 (PST)
+Message-ID: <73fcec53-7c57-46d6-a0af-70ebf8215e8d@linaro.org>
+Date: Wed, 5 Nov 2025 13:47:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] scripts: detect another GPL license boilerplate variant
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20251105114325.1362006-1-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251105114325.1362006-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::544;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x544.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,63 +103,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Edgar E. Iglesias" <edgar.iglesias@gmail.com> writes:
-
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
->
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+On 5/11/25 12:43, Daniel P. Berrangé wrote:
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  hw/virtio/virtio.c         | 16 ++++++++++++++++
->  include/hw/virtio/virtio.h |  2 ++
->  2 files changed, 18 insertions(+)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 8a53fb5f93..fe7c635390 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -2379,6 +2379,22 @@ void virtio_queue_set_rings(VirtIODevice *vdev, in=
-t n, hwaddr desc,
->      virtio_init_region_cache(vdev, n);
->  }
->=20=20
-> +void virtio_queue_get_rings(VirtIODevice *vdev, int n, hwaddr *desc,
-> +                            hwaddr *avail, hwaddr *used)
-> +{
-> +    assert(vdev->vq[n].vring.num);
-> +
-> +    if (desc) {
-> +        *desc =3D vdev->vq[n].vring.desc;
-> +    }
-> +    if (avail) {
-> +        *avail =3D vdev->vq[n].vring.avail;
-> +    }
-> +    if (used) {
-> +        *used =3D vdev->vq[n].vring.used;
-> +    }
-> +}
-> +
->  void virtio_queue_set_num(VirtIODevice *vdev, int n, int num)
->  {
->      /* Don't allow guest to flip queue between existent and
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index d97529c3f1..8bceb115a3 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -361,6 +361,8 @@ int virtio_queue_get_max_num(VirtIODevice *vdev, int =
-n);
->  int virtio_get_num_queues(VirtIODevice *vdev);
->  void virtio_queue_set_rings(VirtIODevice *vdev, int n, hwaddr desc,
->                              hwaddr avail, hwaddr used);
-> +void virtio_queue_get_rings(VirtIODevice *vdev, int n, hwaddr *desc,
-> +                            hwaddr *avail, hwaddr *used);
+>   scripts/checkpatch.pl | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
-Same as last comment, lets start documenting the API.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
->  void virtio_queue_update_rings(VirtIODevice *vdev, int n);
->  void virtio_init_region_cache(VirtIODevice *vdev, int n);
->  void virtio_queue_set_align(VirtIODevice *vdev, int n, int align);
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks for the quick patch :)
 
