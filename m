@@ -4,126 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3886CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 17:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B9ECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 17:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGhNR-0000Mv-Cn; Wed, 05 Nov 2025 12:32:58 -0500
+	id 1vGhdJ-0004hs-JG; Wed, 05 Nov 2025 12:49:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGhNJ-0000Lp-TC
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:32:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGhNI-0006Gx-25
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:32:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762363966;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ETut4KkNWT/BCT5wy0gh0ieCKE10jSt3ObhCH+eQVFo=;
- b=Rwbnk65V/0nJgaGQ2lDArceXmsYYOObocBxeUX2KnXC9D4QcrPiHChOO6SAAG0hatBesXP
- R5CjDOQHKbwtpDPuDbCgLjAEYJVuuUWXa5C06HBK2hkFNda1LQiWQ8G5aD2fpFoYu6I/dT
- mWJh8rOuE2WxCsJkHtB4KRyYYT6RxZk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-nDoZe5z5OoaI6kyFwL73Aw-1; Wed, 05 Nov 2025 12:32:44 -0500
-X-MC-Unique: nDoZe5z5OoaI6kyFwL73Aw-1
-X-Mimecast-MFC-AGG-ID: nDoZe5z5OoaI6kyFwL73Aw_1762363964
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4773e108333so508825e9.0
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 09:32:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vGhdF-0004gY-9z
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:49:17 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vGhdD-00017w-H8
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 12:49:17 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b6d402422c2so17257766b.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 09:49:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762364953; x=1762969753; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lXNN36xnDiP8tAFeM51P9BC0hLY1MVgx2GJDI54N4Fc=;
+ b=CH2kDwAtf+/a204QyTypkpafA578cUT6eON6zRBwarJGQQcP5LSXrd+F/fQPYXnRCy
+ Y+M/9p2vvkMfJb9N3TQ11dAhra2wzS8JiJppnwf4N5hzIBNAevDOzHXMtUG+cYdfVjlM
+ UsOMa+d17rDzTMD36w2Eq/dcbNVjVFpsE08Fw3Y6skYIGRIo8ibfjsxYSqfuLHO8f3f8
+ DPUQYPUbjTY0tPI6guS/MQAq7qEIdMtq3e1mRBXs9Aj0rpVe0EKONtAsNgtrs05w7xBy
+ mOAuoW8agiG9vuUu8Vc2ldsrYqTgfs1nGkhco3R3UMJH0lfGkxQCiMFCh9OKfFd0yZ5N
+ eYWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762363963; x=1762968763;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ETut4KkNWT/BCT5wy0gh0ieCKE10jSt3ObhCH+eQVFo=;
- b=AqwEcKYuAzrMqwkJOGeqT3OY2XHNvyUabg+S/NGctx/PTsxs7Bulb8aaL11oJn0Zeg
- hHKL+eZSAt+ppH9UguNUdIPhOR8nUkRPz1IkXVTKHHLI2P7FvBqc/ofhF58TknnPv5Fh
- bffTOJ80Vd8HXridoxYBuSdrPHXSTVGbmgX7jX/OuH0ANsa8p0LeEbmexK1lAaCQ3hbX
- X02PQhr9YzRBe9zptvKQnYec537V8HuXsThVbnbWWG74FsbRkifRsJ6DHRTJ0s45v5Ri
- 9/Gl3OPGZGKZ90jjYi6m5CurGDzAOP68G6MR4xOxiKvHDhpZ8zGWX4i8cnZDUIh9xQsC
- HtXA==
+ d=1e100.net; s=20230601; t=1762364953; x=1762969753;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lXNN36xnDiP8tAFeM51P9BC0hLY1MVgx2GJDI54N4Fc=;
+ b=SQx1jQW0ANxxi6WfYoICJh8W9AGLB1ySXMBTQrSrPp/guY0Ii3dARv2HS6D7uIL/ZR
+ 0VyPUA1vqw6gb+Kv1d5fedsbgp3HF8dVTFLZFklOq8btsdCgPkR+z7wPlxxfC62Wcpy1
+ ZSWBJMwaK2pT1BNHZ39UF6AHpxBDeDpE7dcBgKAXHCxzhlVfhJ9WwZT0H72ANBmat1rK
+ 9bnlD2Sa4FPPMZeBq/zpfZDWor5XUu7AvN1KTshsoeRZeZYXnpnMnsuDcXlBkgAOEymo
+ izaeoNQp8tR8sLlbEOq7hzXpeBx0MBAgCjypbTpE94IRkEJL+qmshSxCsbWNJtK+aXqa
+ sozw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXr6jMl+q2lC/PEdDyfd5E81zjSp3aMzMuUHqQ52X6QfwCBLTH3SuDe0RUmnJdJer6HD5Ea56B0q7La@nongnu.org
-X-Gm-Message-State: AOJu0YzfBtHBKOVCvr1sRaPJx/fmdPVsmlyW1frmq3wSaSPBPxb/bcpL
- DFqnqY2Pm7zi/LgOGfcb5HXT4SqNPwsBKHpZrW7pwHAdA+BGtQq/mz0SF7kFviYTIckNIG66rIT
- hVciXPUbNo2G/z57b9N57LpL+d35afvMa7vldvW9fmW0FgGJZ8GG5BBZA
-X-Gm-Gg: ASbGnctpVfEynPS/Kven934xdXj7o5y9EgscIT2SGXv0Tc4yknaJevY7qRWxnuLxS1N
- UWTR4x/2hG7Z+omG30Cfu2AcsHPA7phiL4LyYJkkmx8TcnYqPjkgbpOy91rWh6FjRBsL/ksg4ol
- mK6UZRzTs0nyycGic8vNnbO+wQgO+wxqn8hFYqZF07zKK+vsUAkTj6PBaj567lTyqVlSFPoXlbk
- uH4bAJPtu3Rw5+pfViVDGvA3angNE7rB5byndoqYiWuHefmN9zxBJC7BLuJGE+rTcIPDhu7h2GA
- 3DLylUFyp6kUl+ElVYa8AHUI/i5/vM/hoYvuUk2sKwwGjJs9x4qnV4yrYpIx4mlAl4/Sjl9D+Mn
- eC+0ljjOCDKrQP65Vd4FVRDW2RozChojElBkT4Q16ccLKeg==
-X-Received: by 2002:a05:600c:348f:b0:477:54f9:6ac2 with SMTP id
- 5b1f17b1804b1-4775cd3bd61mr43957785e9.0.1762363963564; 
- Wed, 05 Nov 2025 09:32:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG2gTPfMaLwxZaRw0Z4Nl7Bp9jmdrjyUSPZTDYdLSX9khLuz+6HeMLAlGkR+PPci8tJzlc8IA==
-X-Received: by 2002:a05:600c:348f:b0:477:54f9:6ac2 with SMTP id
- 5b1f17b1804b1-4775cd3bd61mr43957475e9.0.1762363963190; 
- Wed, 05 Nov 2025 09:32:43 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AJvYcCXIznU5LPbZq/EOmIqC89AaxOGO3LRywJx7Wm65FxvuwrOL44/ypjaRrbY2GoRoqDusVhVjbTPrQUu3@nongnu.org
+X-Gm-Message-State: AOJu0YyV/VdNA6YTJsN26HxmixHBgp+KnjA4/9K1P/sMIb9WPTvxR4NL
+ +XYrMYPhjVaBgSqkxRX0b7BVN4ee2aRFyeXByVvhWdMlK9ztx/HU2ra53Tr4n8iTZX4=
+X-Gm-Gg: ASbGncvGKV9ppvTWwqTyKsLbjpernaYiNtdL7AceiRsHZM3WhnYfP5Mx1n/OlSl4LuZ
+ Vtn4MpUWjXJ6gh66h+DhA1/O8UZGrZyBzkb8jxmnjwLA/L7BJ1pQLZ+uNSBugA/lufX+wew+SSa
+ LRw0nPUQvLn+baXbXe7Bx+Y/jB44WHSRLAMlF5zHgdfzrP9nQesqFpDhYAqYHYIEIhtMl2WoBec
+ szp7wwqZkHZqSbsOyfEOuCA9pd877ddrW2G9vqTDMIIJjKY4J2m6+/Af1fpwnETT3yTWTyFe2ML
+ XFN5SO/v1PLHylUPIiMHyk+950uSTodRKDEh/q/UE2kW4hWCvaHkuub2nvnbKrXEz6C1xNGQ3gP
+ YpNrGBFPkgXlK3sPaVA07NFnANIBA89tJf7V7hvGdFodsGUpAGA6CL1Sh6hdv1iiScou6MJ4VIm
+ hu2hms54Fk98sjeHr+4aO4/8s=
+X-Google-Smtp-Source: AGHT+IFBJC9F2Fs5mgGKwqa8JOU0t2gmPQb/OrwiUBSYjcxBRn1MLtnrd21cpzOMhkJJoSD4gCEgzQ==
+X-Received: by 2002:a17:907:948a:b0:b71:df18:9fd6 with SMTP id
+ a640c23a62f3a-b72655cdf8bmr415992166b.50.1762364953098; 
+ Wed, 05 Nov 2025 09:49:13 -0800 (PST)
+Received: from [172.20.148.161] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4775592eeaasm49683145e9.3.2025.11.05.09.32.41
+ a640c23a62f3a-b7289684873sm11957566b.58.2025.11.05.09.49.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 09:32:42 -0800 (PST)
-Message-ID: <e9d5300a-6aab-4b17-828f-3d3a4d3071df@redhat.com>
-Date: Wed, 5 Nov 2025 18:32:41 +0100
+ Wed, 05 Nov 2025 09:49:12 -0800 (PST)
+Message-ID: <9b196058-a0e3-422e-86a6-7c405681bf42@linaro.org>
+Date: Wed, 5 Nov 2025 18:49:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
+Subject: Re: [PATCH] target/arm: add support for FEAT_MTE_TAGGED_FAR
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20251104-feat-mte-tagged-far-v1-1-cdfd7db40397@gmail.com>
 Content-Language: en-US
-To: Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-Cc: Shameer Kolothum <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-References: <20251031105005.24618-16-skolothumtho@nvidia.com>
- <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
- <20251104142052.GD1537560@nvidia.com>
- <CH3PR12MB7548E5E1A2DFE297C4C65E0AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <20251104145157.GF1537560@nvidia.com>
- <CH3PR12MB7548379E64E7A12904B5BF7AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <20251104151234.GG1537560@nvidia.com>
- <CH3PR12MB754877D400D19E57AFB16D0BABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <20251104153535.GH1537560@nvidia.com> <aQoz2+bLMJWNoVwx@Asurada-Nvidia>
- <20251104174152.GI1537560@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251104174152.GI1537560@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20251104-feat-mte-tagged-far-v1-1-cdfd7db40397@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,55 +101,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Gabriel,
+
+Thanks for your contribution.
+
+On 11/4/25 21:50, Gabriel Brookman wrote:
+> FEAT_MTE_TAGGED_FAR is a feature required for MTE4. The feature
+> guarantees that the full address (including tag bits) is reported after
+> a SEGV_MTESERR, and advertises itself in the ID_AA64PFR2_EL1 system
+> register. QEMU was already reporting the full address, so this commit
+> simply advertises the feature by setting that register, and unsets the
+> register if MTE is disabled.
+> 
+> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+> ---
+> This patch is the first step toward implementing ARM's Enhanced Memory
+> Tagging Extension (MTE4). MTE4 guarantees the presence of several
+> subfeatures: FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR,
+> FEAT_MTE_STORE_ONLY, FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM,
+> none of which are currently implemented in QEMU.
+> 
+> According to the ARM ARM, the presence of any of these features (except
+> FEAT_MTE_PERM) implies the presence of all the others. For simplicity
+> and ease of review, I plan to introduce them one at a time. This first
+> patch focuses on FEAT_MTE_TAGGED_FAR.
+
+I think it's ok to add these "subfeatures" separately.
+
+You need another patch to add FEAT_MTE_TAGGED_FAR to:
+
+docs/system/arm/emulation.rst
+
+Also, please adjust the title to something:
+
+target/arm: Advertise FEAT_MTE_TAGGED_FAR for -cpu max
+
+instead of "add support...", I think it's a better description for
+the changes done here.
 
 
-On 11/4/25 6:41 PM, Jason Gunthorpe wrote:
-> On Tue, Nov 04, 2025 at 09:11:55AM -0800, Nicolin Chen wrote:
->> On Tue, Nov 04, 2025 at 11:35:35AM -0400, Jason Gunthorpe wrote:
->>> On Tue, Nov 04, 2025 at 03:20:59PM +0000, Shameer Kolothum wrote:
->>>>> On Tue, Nov 04, 2025 at 02:58:44PM +0000, Shameer Kolothum wrote:
->>>>>>> Sure it is trapped, but nothing should be looking at the MSI address
->>>>>>> from the guest, it is meaningless and wrong information. Just ignore
->>>>>>> it.
->>>>>> Hmm.. we need to setup the doorbell address correctly.
->>>>>> If we don't do the translation here, it will use the Guest IOVA
->>>>>> address. Remember, we are using the IORT RMR identity mapping to get
->>>>>> MSI working.
->>>>> Either you use the RMR value, which is forced by the kernel into the
->>>>> physical MSI through iommufd and kernel ignores anything qemu
->>>>> does. So fully ignore the guest's vMSI address.
->>>> Well, we are sort of trying to do the same through this patch here. 
->>>> But to avoid a "translation" completely it will involve some changes to
->>>> Qemu pci subsystem. I think this is the least intrusive path I can think
->>>> of now. And this is a one time setup mostly.
->>> Should be explained in the commit message that the translation is
->>> pointless. I'm not sure about this, any translation seems risky
->>> because it could fail. The guest can use any IOVA for MSI and none may
->>> fail.
-in general the translation is not pointless (I mean when RMR are not
-applied). In case a vhost device (virtio-net) for instance is protected
-by SMMU, vhost triggers irqfds upon which a gsi is injected in vgic.
-This latter does irq_routing mapping and this gsi is associated to an
-MSI address/data. If the MSI address is wrong, ie. not corresponding to
-the vITS gpa doorbell, kernel kvm/vgic/vgic-its.c vgic_its_trigger_msi
-will fail to inject the MSI on guest since
-vgic_msi_to_its/__vgic_doorbell_to_its will fail to find the ITS
-instance to inject in.
+> FEAT_MTE_TAGGED_FAR guarantees that the full fault address (including
+> tag bits) is reported after a SEGV_MTESERR, and exposes itself in the
+> ID_AA64PFR2_EL1 register. QEMU already reports the full address in this
+> case, so this change only advertises the feature by setting the
+> appropriate field in ID_AA64PFR2_EL1. The field is cleared when MTE
+> support is disabled or rolled back to instruction-only.
+> 
+> Testing:
+> - Verified in system mode that the MTEFAR field in ID_AA64PFR2_EL1
+> is set to 1 when running with mte=on and cleared with mte=off.
 
-Thanks
+If you want to add a test like that it's good, yeah, but we don't usually
+test the features this way.
 
-Eric
->> In the current design of KVM in QEMU, it does a generic translation
->> from gIOVA->gPA for the doorbell location to inject IRQ, whether VM
->> has an accelerated IOMMU or an emulated IOMMU.
-> And what happens if the translation fails because there is no mapping?
-> It should be ignored for this case and not ignored for others.
->
-> Jason
->
 
+> - Verified in user mode test that SEGV_MTESERR faults report the full
+> tagged address as expected.
+
+Yeah, that would be good if you can add a test like that. Maybe use
+as a starting point some test in the mte-[1-8].c tests.
+
+  > I didn’t include these checks as formal tests since the functionality is
+> simple, but I can add them in follow-up versions if reviewers prefer.
+> 
+> Follow-up patches will implement the remaining MTE4 subfeatures listed
+> above.
+> 
+> Thanks,
+> Gabriel Brookman
+> ---
+>   target/arm/cpu.c       | 4 +++-
+>   target/arm/tcg/cpu64.c | 4 ++++
+>   2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 39292fb9bc..804e70b235 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2020,6 +2020,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>            */
+>           if (tcg_enabled() && cpu->tag_memory == NULL) {
+>               FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 1);
+> +            FIELD_DP64_IDREG(isar, ID_AA64PFR2, MTEFAR, 0);
+>           }
+>   
+>           /*
+> @@ -2027,7 +2028,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>            * enabled on the guest (i.e mte=off), clear guest's MTE bits."
+>            */
+>           if (kvm_enabled() && !cpu->kvm_mte) {
+> -                FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
+> +            FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
+> +            FIELD_DP64_IDREG(isar, ID_AA64PFR2, MTEFAR, 0);
+>           }
+>   #endif
+>       }
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index 6871956382..27f0b43256 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -1283,6 +1283,10 @@ void aarch64_max_tcg_initfn(Object *obj)
+>       t = FIELD_DP64(t, ID_AA64PFR1, GCS, 1);       /* FEAT_GCS */
+>       SET_IDREG(isar, ID_AA64PFR1, t);
+>   
+> +    t = GET_IDREG(isar, ID_AA64PFR2);
+> +    t = FIELD_DP64(t, ID_AA64PFR2, MTEFAR, 1);    /* FEAT_MTE_TAGGED_FAR */
+> +    SET_IDREG(isar, ID_AA64PFR2, t);
+> +
+>       t = GET_IDREG(isar, ID_AA64MMFR0);
+>       t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
+>       t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16, 1);   /* 16k pages supported */
+
+The changes in code above look good to me.
+
+
+Cheers,
+Gustavo
 
