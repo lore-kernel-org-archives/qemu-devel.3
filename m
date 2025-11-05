@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12663CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 14:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57D9CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 14:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGeJU-00039S-QO; Wed, 05 Nov 2025 09:16:40 -0500
+	id 1vGeK4-0004EW-4H; Wed, 05 Nov 2025 09:17:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vGeJT-00037B-3x; Wed, 05 Nov 2025 09:16:39 -0500
+ id 1vGeJz-0004B7-ND; Wed, 05 Nov 2025 09:17:11 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vGeJR-0007wW-Il; Wed, 05 Nov 2025 09:16:38 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4d1nMt6Tftz6L4wx;
- Wed,  5 Nov 2025 22:12:42 +0800 (CST)
+ id 1vGeJy-0007yJ-Bc; Wed, 05 Nov 2025 09:17:11 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4d1nSv0dHbzHnGhH;
+ Wed,  5 Nov 2025 22:17:03 +0800 (CST)
 Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 5B02B1402F2;
- Wed,  5 Nov 2025 22:16:35 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 877771402E9;
+ Wed,  5 Nov 2025 22:17:08 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
  (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 5 Nov
- 2025 14:16:34 +0000
-Date: Wed, 5 Nov 2025 14:16:33 +0000
+ 2025 14:17:07 +0000
+Date: Wed, 5 Nov 2025 14:17:06 +0000
 To: Gavin Shan <gshan@redhat.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
  <mchehab+huawei@kernel.org>, <gengdongjiu1@gmail.com>, <mst@redhat.com>,
  <imammedo@redhat.com>, <anisinha@redhat.com>, <peter.maydell@linaro.org>,
  <pbonzini@redhat.com>, <shan.gavin@gmail.com>
-Subject: Re: [PATCH v3 2/8] acpi/ghes: Increase GHES raw data maximal length
- to 4KiB
-Message-ID: <20251105141633.00007b99@huawei.com>
-In-Reply-To: <20251105114453.2164073-3-gshan@redhat.com>
+Subject: Re: [PATCH v3 3/8] tests/qtest/bios-tables-test: Update HEST table
+Message-ID: <20251105141706.00000436@huawei.com>
+In-Reply-To: <20251105114453.2164073-4-gshan@redhat.com>
 References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-3-gshan@redhat.com>
+ <20251105114453.2164073-4-gshan@redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -73,18 +72,15 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  5 Nov 2025 21:44:47 +1000
+On Wed,  5 Nov 2025 21:44:48 +1000
 Gavin Shan <gshan@redhat.com> wrote:
 
-> The current GHES raw data maximal length isn't enough for 16 consecutive
-> CPER errors, which will be sent to a guest with 4KiB page size on a
-> erroneous 64KiB host page. Note those 16 CPER errors will be contained
-> in one single error block, meaning all CPER errors should be identical
-> in terms of type and severity and all of them should be delivered in
-> one shot.
-> 
-> Increase GHES raw data maximal length from 1KiB to 4KiB so that the
-> error block has enough storage space for 16 consecutive CPER errors.
+> Update HEST table since GHES raw data maximal length has been increased
+...
+
+> -    00C0: 00 04 00 00 00 40 00 04 18 00 DA 43 00 00 00 00  // .....@.....C....
+> +    00C0: 00 10 00 00 00 40 00 04 18 00 DA 43 00 00 00 00  // .....@.....C....
+>      00D0: FE FF FF FF FF FF FF FF 01 00 00 00 00 00 00 00  // ................
 > 
 > Signed-off-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
