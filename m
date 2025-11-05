@@ -4,114 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F18BCCFA04
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 08:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D19CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 09:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGZJu-0003Of-89; Wed, 05 Nov 2025 03:56:46 -0500
+	id 1vGZN0-00041D-Nq; Wed, 05 Nov 2025 03:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGZJt-0003OP-0F
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 03:56:45 -0500
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vGZMz-00040M-8L
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 03:59:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGZJq-0000g7-15
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 03:56:44 -0500
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vGZMw-0006XL-GA
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 03:59:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762332999;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1762333193;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oV0eH2fnsHPKBZMKWQmLdWCFgLGJVUO5pHkQrBWUa3c=;
- b=NOa0MwVH1hRSNvJrKaNhPdQ6mgU6XoFjIvClCISGj772w+WDEhHSl+72z8B7QIiqkc/iWQ
- ypb//VF07cK+byl+dpp4GkboChNkgeRkJ//ZLOyY66VoCObTxh4KtYUM6w3GqjDpYUL49S
- OsOhHBZzbn5nNsViMcl3Bl6ztzlJDyY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7J9+FJGUzDuoRCqJt5OmLLNzFub+q8zB++TMx5ZiWAY=;
+ b=aLBbzJpvtEhqtMpcxCzEqcyoeTFSDC9F/P0SqYSrHSBk5Yzn84B9zcQunMc9NEP/6la7le
+ z6/6xAYqfvX8bn/ph0Hkd9rynGgjGMvOE+DBfu7lhgExIAKDRtDVowNlwN0H129jbMrOyP
+ 4qaEam55BTL3DpmO5MlhEq9m5CkvgFY=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-7cyujMP9N7Ouwhr273G_rA-1; Wed, 05 Nov 2025 03:56:38 -0500
-X-MC-Unique: 7cyujMP9N7Ouwhr273G_rA-1
-X-Mimecast-MFC-AGG-ID: 7cyujMP9N7Ouwhr273G_rA_1762332997
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-471001b980eso46693695e9.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 00:56:38 -0800 (PST)
+ us-mta-394-WJQfyalON7ywolFIg3lVPQ-1; Wed, 05 Nov 2025 03:59:50 -0500
+X-MC-Unique: WJQfyalON7ywolFIg3lVPQ-1
+X-Mimecast-MFC-AGG-ID: WJQfyalON7ywolFIg3lVPQ_1762333189
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3405c46a22eso7063521a91.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 00:59:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762333189; x=1762937989; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7J9+FJGUzDuoRCqJt5OmLLNzFub+q8zB++TMx5ZiWAY=;
+ b=X137kf9lIKWt8XeHhEIw8rM2yzcDm9gx6QiE1PHJcNYmw1m9UvBQ3rU3c0pNVUiteK
+ 4d1uTtH+k9Nlmyfhhr2fQMaohQAlY+mr10cr3QK8uJAfwuCKuGey/pF8f17QUAxwKv7v
+ PNA4iD7m4wBU48zXoD7Z8IyAEd/FJWTDyRkPxXxAVj30uMHl0ZGM2fDi3Rm7bhYJnICC
+ gN9bk9sEzpMMY1pJvjf3htoXhSJTcu40LcZoHKDeH5wtVQ/gqt6V65b+/nKJLBrzvZzc
+ guHC0Ecj2bzfVZMaELbECvz6ON8cF3dBZr7kGLatXzYi1ZEzNBPRJJhz9T64VZ3iXqQf
+ yT2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762332997; x=1762937797;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oV0eH2fnsHPKBZMKWQmLdWCFgLGJVUO5pHkQrBWUa3c=;
- b=dNaoPQLBiQ3lHqnemJ5omyg9TwJavSOJU/30tQ8BC7YpaHPtnPcAL/Om1GxB/0QcYc
- 96mf4W8fc0PpqObqEYx/OLnEeNW5wHLZuATw6HOQ8N2CwE4NpvHRTn2sRGjiuUSt3SHz
- Ra4do+7stTildveBj88ieutLC74mAKLFFL/ZP28oMA32F54OuGKibIPPcz4ROXEzx47R
- RPZSjWYurQaXhBZ8MLu1Ii4wwR8LWG7D18kWnacotRbufnnmr8qoSv5akf2IlQTUXsHO
- WEpXxw23rGHmRSx6dElpWlkRAAD0fCRTEEbX6ox1a80OkMOFhgk7mlAaPCEP/b5p3/b8
- a9dw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXwk7KXPZQQ3Lg8B8QzBDDftvgnOX3hMYOBgdcDc39v7cxp+uXc2HNgLMbSlfVpVGwoPfVNTBh1KXsX@nongnu.org
-X-Gm-Message-State: AOJu0YzQstnXnfB59yKRhXNByWXN2qzfAzdv/T/dgLqE0e1p7UoygCEO
- CYb3uqfo3gy6L4u8vmOs+dC+2tA+2aWmVCuYxWyWPMVtn9PA+9KOomY6EKN0ziYklm1qCi+zK9Y
- xg+81L/N0YgQmmKo2KCzIg76RrFefJnqC/g2UExn7jGCFg9+Fc+byl/xs
-X-Gm-Gg: ASbGnct+zUVcMs4R4oHrGKVUCEl97cMg/Ar7TfxKAHaQBErE/etpoUMQhxZRraIZAjk
- oTknKIgNbQXWFMBLBBzsgQivYP2vOpfFfp19bG2O5GDt/3QT/gifVB+OATGv6EpnFQ8k6orM8L/
- CI/3Nljh+OqeGSbHgEXeKVF11/bpa/8j3VWhR6A8aopLvO23MwY+Iu/oymHJcQEUPTuuM3ryvtZ
- 5m2fwF2RV2qNYxNsQOQkeE32J8bXAJn7JuJj2h/m+vNPKOZ93hVufx2ILd/hgWtd4L4ribIuoj3
- xYmNFegGBkA7iBNrhyPDMgHXAQznf0NDPtcbDNhc3QHApYTZtnKlV77J6DJ4LNhqSH1s4Xw8JMM
- VGjAbtesBvqG5QbnKJQ+om9jN67rosKXzoJlY30W69W+SFw==
-X-Received: by 2002:a05:600c:1d88:b0:477:54cd:202e with SMTP id
- 5b1f17b1804b1-4775cdad6aamr19599905e9.2.1762332997267; 
- Wed, 05 Nov 2025 00:56:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHPeRD7UuhtxIsBnds0goi9YLmW1c7okpmgUFqWx34NsYUJL9GSYeKfaQ4hXYjW/Cv4QYUalw==
-X-Received: by 2002:a05:600c:1d88:b0:477:54cd:202e with SMTP id
- 5b1f17b1804b1-4775cdad6aamr19599495e9.2.1762332996774; 
- Wed, 05 Nov 2025 00:56:36 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4775cdc96edsm36138835e9.6.2025.11.05.00.56.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 00:56:36 -0800 (PST)
-Message-ID: <e4fd6d1e-3fca-457b-ac6a-69e721d799f4@redhat.com>
-Date: Wed, 5 Nov 2025 09:56:35 +0100
+ d=1e100.net; s=20230601; t=1762333189; x=1762937989;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7J9+FJGUzDuoRCqJt5OmLLNzFub+q8zB++TMx5ZiWAY=;
+ b=jyr4h4m3lMnRSu7cgF6DIBOPVUGVl7kRM/n0I6m6buD0IV5wW42D0WtyFGDChyDI8t
+ 5CJkGlU1FAgfJkEoy8XkGpaS6iPrXDGkm4LdZTwDug1MIVpCeLU9Wc31TRZGuEVe6gmv
+ dVd2joRveFOKRbQAAmJUkXUvys7hRqivDxyqjxZRYQXTZ6GYO+oIGR21coBlTN/2PgvM
+ 2J4lMhwNQK/ClWF+PMilYKV7gEcLUJknQGWxzBGAg7xLlVPzLGOIYTzv69ihkAre03he
+ zHPWk5ZVGgI0DZxgyb9oHh7fi6OMpTGexfrpYclxBGANLhv5aTXJUdrsTGu7pR0glHtF
+ pm8w==
+X-Gm-Message-State: AOJu0Yy7q66y1N3wEuJVp6dr15hzIpVCV247JOyImoLIwLB4Nfw6hxCl
+ iCvxhv3N4XmZ8MCQIQwgRKbIIEhVh3gTjt7xPvLfY05QR87b41yd7j+Rj7BHV+SIFZMN+ZqwODL
+ ZrUyytPYHPKxiBrywNsC1woh0Ihph+DBT6wqj/MQcXA77cs7OzSGKlLqw/ff6HlBwYRxuV5lcW+
+ 0eXiAkVzI2XEUfDEDfb0UiPzY6SvDTZJs=
+X-Gm-Gg: ASbGncvTSJ5jWCWNiXhInYbe5umldoaUfQYtlGPpH0+X+pQqJiUYaeObbnGlGijO3IE
+ EKf9pJtUJGiTee4l0oTzqK0z8Unbqe4Y1xUzKUucCgL1ZYjwkJHams9VvSzT5+d5smsSUsv60mc
+ 6qXYdKzNqIIMal5SAWoctTZhp2eabq1C4b3pE+X858cHs9fiTP3QFDCq38
+X-Received: by 2002:a17:90b:2d92:b0:32e:e18a:3691 with SMTP id
+ 98e67ed59e1d1-341a700d610mr3006017a91.35.1762333189209; 
+ Wed, 05 Nov 2025 00:59:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFovKJPabs6rB7CVPU9wBWmcNSGRkzCVeGWuUd0HCQhJ0lyd4iFIeLYwotQq4f4G8O46hiSF1TP86IKcnIjn0c=
+X-Received: by 2002:a17:90b:2d92:b0:32e:e18a:3691 with SMTP id
+ 98e67ed59e1d1-341a700d610mr3006000a91.35.1762333188770; Wed, 05 Nov 2025
+ 00:59:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-References: <20251031105005.24618-1-skolothumtho@nvidia.com>
- <20251031105005.24618-16-skolothumtho@nvidia.com>
- <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
- <CH3PR12MB754815B9B902E7EF66B0A1B9ABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <85f315a2-e49a-4330-9419-48a8a3a4a3e3@redhat.com>
- <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+In-Reply-To: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 5 Nov 2025 16:59:36 +0800
+X-Gm-Features: AWmQ_bmdE8oFktdARDAYn3jKEJf21_cOs6qtGIUtpR1uvI7EtwW_YoIaPjlN8xM
+Message-ID: <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_=E2=86=92_8?=
+ =?UTF-8?Q?=2E2=2E10_due_to_virtio=2Dnet_feature_mismatch_=28VIRTIO=5FF=5FRING=5FRESE?=
+ =?UTF-8?Q?T_=2F_USO_features=29?=
+To: Jinpu Wang <jinpu.wang@ionos.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
+ qemu-stable@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Yu Zhang <yu.zhang@ionos.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -132,104 +115,169 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
-
-On 11/4/25 4:14 PM, Shameer Kolothum wrote:
+On Wed, Nov 5, 2025 at 4:49=E2=80=AFPM Jinpu Wang <jinpu.wang@ionos.com> wr=
+ote:
 >
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 04 November 2025 14:44
->> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
->> arm@nongnu.org; qemu-devel@nongnu.org
->> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
->> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
->> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
->> smostafa@google.com; wangzhou1@hisilicon.com;
->> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
->> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
->> Krishnakant Jaju <kjaju@nvidia.com>
->> Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
->> get_msi_address_space() callback
->>
->> External email: Use caution opening links or attachments
->>
->>
->> On 11/4/25 3:37 PM, Shameer Kolothum wrote:
->>> Hi Eric,
->>>
->>>> -----Original Message-----
->>>> From: Eric Auger <eric.auger@redhat.com>
->>>> Sent: 04 November 2025 14:12
->>>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
->>>> arm@nongnu.org; qemu-devel@nongnu.org
->>>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
->>>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
->>>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
->>>> smostafa@google.com; wangzhou1@hisilicon.com;
->>>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
->>>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
->>>> Krishnakant Jaju <kjaju@nvidia.com>
->>>> Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
->>>> get_msi_address_space() callback
->>>>
->>>> External email: Use caution opening links or attachments
->>>>
->>>>
->>>> Hi Shameer, Nicolin,
->>>>
->>>> On 10/31/25 11:49 AM, Shameer Kolothum wrote:
->>>>> On ARM, devices behind an IOMMU have their MSI doorbell addresses
->>>>> translated by the IOMMU. In nested mode, this translation happens in
->>>>> two stages (gIOVA → gPA → ITS page).
->>>>>
->>>>> In accelerated SMMUv3 mode, both stages are handled by hardware, so
->>>>> get_address_space() returns the system address space so that VFIO
->>>>> can setup stage-2 mappings for system address space.
->>>> Sorry but I still don't catch the above. Can you explain (most probably
->>>> again) why this is a requirement to return the system as so that VFIO
->>>> can setup stage-2 mappings for system address space. I am sorry for
->>>> insisting (at the risk of being stubborn or dumb) but I fail to
->>>> understand the requirement. As far as I remember the way I integrated it
->>>> at the old times did not require that change:
->>>> https://lore.kernel.org/all/20210411120912.15770-1-
->>>> eric.auger@redhat.com/
->>>> I used a vfio_prereg_listener to force the S2 mapping.
->>> Yes I remember that.
->>>
->>>> What has changed that forces us now to have this gym
->>> This approach achieves the same outcome, but through a
->>> different mechanism. Returning the system address space
->>> here ensures that VFIO sets up the Stage-2 mappings for
->>> devices behind the accelerated SMMUv3.
->>>
->>> I think, this makes sense because, in the accelerated case, the
->>> device is no longer managed by QEMU’s SMMUv3 model. The
->> On the other hand, as we discussed on v4 by returning system as you
->> pretend there is no translation in place which is not true. Now we use
->> an alias for it but it has not really removed its usage. Also it forces
->> use to hack around the MSI mapping and introduce new PCIIOMMUOps.
->> Have
->> you assessed the feasability of using vfio_prereg_listener to force the
->> S2 mapping. Is it simply not relevant anymore or could it be used also
->> with the iommufd be integration? Eric
-> IIUC, the prereg_listener mechanism just enables us to setup the s2
-> mappings. For MSI, In your version, I see that smmu_find_add_as()
-> always returns IOMMU as. How is that supposed to work if the Guest
-> has s1 bypass mode STE for the device?
-in kvm_arch_fixup_msi_route(), as we have as != &address_space_memory in
-my case, we proceed with the actual translation for the doorbell gIOVA
-using address_space_translate(). I  guess if the S1 is in bypass mode
-you get the flat translation, no?
+> Hello QEMU developers,
+>
+> I=E2=80=99m encountering a migration failure when trying to live-migrate =
+a VM
+> from a newer host (kernel 6.12 + QEMU 9.2.4) to an older one (kernel
+> 6.1 + QEMU 8.2.10).
+> Migration in the forward direction (old =E2=86=92 new) works fine, but af=
+ter
+> rebooting the guest on the new host, migration back to the old host
+> fails.
+>
+> ________________________________
+>
+> Issue summary
+>
+> Source host: kernel 6.12, QEMU 9.2.4
+>
+> Destination host: kernel 6.1, QEMU 8.2.10
+>
+> VM type: pc-q35-8.2, using virtio-net-pci with vhost backend
+>
+> Symptom: Migration from 9.2.4 =E2=86=92 8.2.10 fails with virtio-net load=
+ error.
+>
+> Error log (destination):
+>
+> 2025-09-23T07:06:14.915708Z qemu-8.2: Features 0x1c0010130afffa7
+> unsupported. Allowed features: 0x179bfffe7
+> 2025-09-23T07:06:14.915843Z qemu-8.2: Failed to load virtio-net:virtio
+> 2025-09-23T07:06:14.915851Z qemu-8.2: error while loading state for
+> instance 0x0 of device '0000:00:02.0:06.0/virtio-net'
+> 2025-09-23T07:06:14.917894Z qemu-8.2: load of migration failed:
+> Operation not permitted
+>
+> ________________________________
+>
+> Analysis
+>
+> It appears that virtio-net feature bits differ between the two versions.
+> On QEMU 9.2.4, virtio-net reports additional features:
+>
+> VIRTIO_F_RING_RESET
+>
+> VIRTIO_NET_F_HOST_USO
+>
+> VIRTIO_NET_F_GUEST_USO4
+>
+> VIRTIO_NET_F_GUEST_USO6
+>
+> These are not present (or not supported) on QEMU 8.2.10, which causes
+> the migration state load to fail.
 
-Eric
+Interesting, we've already done the compat work:
+
+GlobalProperty hw_compat_8_1[] =3D {
+    { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" },
+    { "ramfb", "x-migrate", "off" },
+    { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
+    { "igb", "x-pcie-flr-init", "off" },
+    { TYPE_VIRTIO_NET, "host_uso", "off"},
+    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
+    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
+};
+const size_t hw_compat_8_1_len =3D G_N_ELEMENTS(hw_compat_8_1);
+
+>
+> The issue seems related to the introduction of these features and how
+> they are handled during incoming migration when the target QEMU does
+> not recognize them.
+>
+> ________________________________
+>
+> Reproduction steps
+>
+> Start VM on host with QEMU 8.2.10 (kernel 6.1).
+>
+> Migrate to host with QEMU 9.2.4 (kernel 6.12).
+> =E2=86=92 Migration succeeds.
+>
+> Reboot the guest on the 9.2.4 host.
+>
+> Attempt to migrate back to QEMU 8.2.10 host.
+> =E2=86=92 Migration fails with virtio-net load error (see log above).
+>
+> ________________________________
+>
+> Expected behavior
+>
+> Migration from newer QEMU to older version should either:
+>
+> gracefully ignore unsupported virtio-net features, or
+>
+> fail with a clear compatibility message before starting migration.
+>
+> Currently, migration starts and fails during device state load.
+>
+> ________________________________
+>
+> Related patch
+>
+> I found this commit that looks relevant but is already included in
+> both 8.2.10 and 9.2.4:
+>
+> https://lore.kernel.org/qemu-devel/20240527072435.52812-15-mjt@tls.msk.ru=
+/
+>
+> ________________________________
+>
+> VM configuration
+>
+> -uuid dbaf0b1f-4dc5-4462-86b1-d82107b58599
+> -name Serverwittchendbaf0b1f-4dc5-4462-86b1-d82107b58599
+> -M pc-q35-8.2
+
+Could you double check if this is used in both source and destination?
+
+> -accel kvm,kernel-irqchip=3Dsplit
+> -cpu SierraForest-v2
+> -smp 7,sockets=3D128,cores=3D1,maxcpus=3D128,threads=3D1
+> -m 4096,slots=3D252,maxmem=3D256G
+> -bios /usr/share/ovmf/OVMF.fd
+> -device virtio-net-pci,netdev=3Dhostnet6,id=3Dnet6,mac=3D02:01:17:9b:9a:3=
+5,bus=3Dpci.0,addr=3D0x6
+> -netdev tap,ifname=3Dn0201179b9a35,id=3Dhostnet6,script=3Dno,downscript=
+=3Dno
+>
+> ________________________________
+>
+> Question
+>
+> Is this expected behavior (i.e. migration incompatibility due to newer
+> virtio-net feature bits)?
+
+No.
+
+Could you check if
+
+1) those features were enabled or not via "info qtree" when using pc-q35-8.=
+2.
+2) whether the migration with if you disabled those features explicitly in =
+9.2.4
+
+> Or should QEMU handle such feature mismatches more gracefully (e.g.,
+> automatically disable unsupported virtio features during migration)?
+
+This would break guests as it could be noticed by guests.
+
+>
+> Any guidance on how to make migration between these versions work
+> would be appreciated.
+>
+> ________________________________
 >
 > Thanks,
-> Shameer
+> Jinpu Wang @ IONOS Cloud
 >
->
+
+Thanks
 
 
