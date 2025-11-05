@@ -4,101 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430EECCFA05
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 11:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B18CCCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 11:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGbVN-0000Lu-Dz; Wed, 05 Nov 2025 06:16:45 -0500
+	id 1vGblR-0002gf-9z; Wed, 05 Nov 2025 06:33:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGbVC-0000LI-1a
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 06:16:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGblO-0002gB-9u
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 06:33:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGbV9-00021K-5H
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 06:16:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vGblL-0004Xb-1D
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 06:33:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762341388;
+ s=mimecast20190719; t=1762342393;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9x/Y83/Y4VGd12E8Vin7a9f+380gHh/E/JVOpnek/Kc=;
- b=KIKjrf+5OyTMgt02tNkaE00axm87asXJSzW/E9s/E3h9/v5sZMd6+b4MthE6R9V2ZtqSQs
- 9CWl1b51ksuWJebEISQCuJk+5APD2rosoLTDD24bE28qOlCJKUtn4k/+DEFDf11mbjvGax
- IymGQwvF2PydNOYe4p2Luliawt+W2AI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/UMw9nswHEb4maATm3SJYi5gYDjZ2TkJAPA+qlGlTwY=;
+ b=VWBY9MfqJ7wOYq1UFgYvMbOgaslXMA1KugUVgP4DugaKxDH87eKXzWikWC6zuYlnT/SjjN
+ hQvjF4O/x8mYnYNGR16ssPWxhit5aUTGm1woQnN4JrFgNGbXjZH6vEUxEENHcHgIDoOgCK
+ XnGgYfSK7Kv6wQaRyaAx6SBJfmLjONI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375-hgsMEWUaOO6jKaOx-dy0Qg-1; Wed, 05 Nov 2025 06:16:27 -0500
-X-MC-Unique: hgsMEWUaOO6jKaOx-dy0Qg-1
-X-Mimecast-MFC-AGG-ID: hgsMEWUaOO6jKaOx-dy0Qg_1762341386
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b7267543bc9so59427566b.2
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 03:16:27 -0800 (PST)
+ us-mta-584-kHJU6hBAOhqZYzZXXmAxhw-1; Wed, 05 Nov 2025 06:33:12 -0500
+X-MC-Unique: kHJU6hBAOhqZYzZXXmAxhw-1
+X-Mimecast-MFC-AGG-ID: kHJU6hBAOhqZYzZXXmAxhw_1762342391
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477563e531cso17936655e9.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 03:33:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762341386; x=1762946186; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762342391; x=1762947191; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9x/Y83/Y4VGd12E8Vin7a9f+380gHh/E/JVOpnek/Kc=;
- b=qLy8d6K3km1pk9pr7KJQCdCjCZDSvYMI+hq3Z+5bgvY3T9Z7ILVWxYpxCu/NaTcTs5
- BgHWtUQe97S2QrqwE+gcoLfwHWnAD0kntohiJqDzJD4qCjq8UYRlF+uV0J+dCcnWW9qi
- 2zTDaGa0Nve8YFIO+ol2+NRefX/DL7yt9jQU2OYvujVnr9g60EHs+Qf99Vj6SgfQm4ov
- NzVxUCj7s510KNt+teiGZjLDf3wR+rVI3RDVhXwID8doSTayzYX56+/EczBEa9TgYVoC
- Hwqd5FGGNQHgd7X8c4S4sLpO1+VT3jqD+viz6BzN+nw7YBwq7gQfs1JVOlUWxC8JBDQQ
- vyeg==
+ bh=/UMw9nswHEb4maATm3SJYi5gYDjZ2TkJAPA+qlGlTwY=;
+ b=UtPp540h48kBpwQyko4rBKgNdE3CPK19mW16ytwPythIhiYjH49TkqODgxGq3yQHWk
+ ibNfVil0RukF1p1YdVmFVjCohQrewmFsAkd/7HcFsF6RwmfHSKKIP5eplIRA9yA6a05G
+ PjtR8ZWQhKV1vHnxY1tXdZqH8ch7DzSyPbzA8/0GhPhuDLIZIsMRn9McP8ww65UVEnYK
+ c+fbDl7UvPiKVoM3y+NbjiCVDXk5FZtXYD8d2hKLOHRI6XPp/SeXPPxeQ8MTKU1lz2X9
+ rl40EAtZ0+E/NFpEk8KsdrrxOONUOUgnwgOcjRYky53aFYMBULUQ2Eb3uoNQMpIuWERc
+ ajUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762341386; x=1762946186;
+ d=1e100.net; s=20230601; t=1762342391; x=1762947191;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9x/Y83/Y4VGd12E8Vin7a9f+380gHh/E/JVOpnek/Kc=;
- b=bWBHATsi5Et93Qwf7CKTwXxNaiCTgdds0lmcQiUSuWp7hPkO9CbMGYO94Uu2NCm9Lc
- lwsQyYh29SXqSUN8VyyBv8SKeWSAb+mVzZ50upR+TqyBUsjmejTUezvqCI1GtzboXJtZ
- xo9AXiRjKNguiFnpRykxedH8SDTls4FZbfw0zApmJTKvpLgrjCouMv1QSgns/xdqBvsj
- 2H65tcyKsSDKPNm2XYssSLdx3H3hNDGg6fk/nLx3EtgH9XB76zI71exbpZ2/M5jPZhtf
- Zs5uIWbQMtRF6kCLouBePQpz3q/mmgDR6BnZmtSYfMLlo4SvuyfNjSFxfvV1P0rPd1DB
- iPAQ==
+ bh=/UMw9nswHEb4maATm3SJYi5gYDjZ2TkJAPA+qlGlTwY=;
+ b=eMbk5Vv0O23kv1oF1m/zzvGSlnTZYddh0BJhExooGXgfaTb88XNpTj6m8DVQEc0TbU
+ 1i29VoUp6k2H8mO00ducQ7IaLT4tSjHXOiEZZH4Bj1CG7idT3LW6OqF9z7FMkYQTfmW2
+ 27b0MFcbAM1FNwXF2c9bkPyxaLKcqHPjDrZ8PJkzulZU/IPfSoFyKG50txAWNSuvhAg7
+ GEyfno8GHBX9QXEUBQyup2jqkNrNWKu1xOslYxuuCO6hYvytnoLrcDAtwtCxkBfdYId2
+ wjs5CE0evIY0lndw3z0PPUJosAYeaclrqb1VbQ0WNi89maXu6NSQZakaOQzAJPftuq/6
+ U3SQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWtjyGw3UrpwiE8OWEHEcFYXfEsJ/F+jD8ucTM3f8lvf5wF5G/JcuFpojmhaVpaxBoeLsTezqV5bQ8@nongnu.org
-X-Gm-Message-State: AOJu0YxJAYBtz6bZyiUkVnGU84iEXCWwYAEcY/7k8GjJ0FPlS4XGOAoT
- zTGQw6wNd0y419fE8T52wuOiHu29SuAQMmCYOfleFRwhvRp/fHQY7MQg/7ac6yuP7YJZpmzwHQs
- oxmcElNSAoX50HtbP2F2+eJr0/1NqSy5wAW3We6AKUK3dw0K0izWBgjYN
-X-Gm-Gg: ASbGncum2NH58xW9xa7acobGOMea0Yf+XXFtTabQ4e6ZLDW0rsi6ri1K+34tUMeNsUK
- fEpixnv79q0XQBklsgpItnUVkdfGMXLHcp3bKPBJQuu5tQxZBaBWaHD92ZeI/shvvmoBmOAFMyX
- 3Tnx/q3GC0ur04LzqRpulCB4GiYJlMWiWvvQY4oj+FXbdOgcLH9zlSyh5hXetHxbXkIhmfdzQc9
- U8iMA9gANFGX59mHXmvSKY+rdjaGcsGz9EXP6guLSQKkygcGMpuOSCnDC8daMTLjP5H7eIhlY8s
- dpuNVDAjHev3JHenuBR3TQ35FZQMIkkQFpDIZ85b/s1pM6rlr3MoFbGbh86EnsCCOUsdEArCtK3
- sRFWp0ts6BVsixCDdyYyT34984eL18wJVbg0Sh7I=
-X-Received: by 2002:a17:907:9494:b0:b6d:519f:2384 with SMTP id
- a640c23a62f3a-b726554c530mr291788466b.46.1762341386025; 
- Wed, 05 Nov 2025 03:16:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFJZow/anRANWEYGKNEdoff5p5GHJgaf1NFU6Y6wvhCtUDVcluCAan3l/0Jqn8+VSk0eI+ig==
-X-Received: by 2002:a17:907:9494:b0:b6d:519f:2384 with SMTP id
- a640c23a62f3a-b726554c530mr291784266b.46.1762341385598; 
- Wed, 05 Nov 2025 03:16:25 -0800 (PST)
+ AJvYcCXrgWncYcaJd1MDhIAB60lhpdvtNWJewFv6k23HIUniTbVc6kyvG/6ofZ7myfcFQCam+/yUiaKAhkYx@nongnu.org
+X-Gm-Message-State: AOJu0YyaWVA0gXBw8ywdBaMFsMezNj0QZwmACQh8c1BLpyQM9Yv8ttRk
+ o41gDEettIy57EDTPw7bud0l10gYECvW388QuxlbgwcyV8WgAhnPetA8Qi11+psWa8FTthNvlQn
+ HAtrHgQ/uphXotm3UFoamuM8BTKqjgSFWJ/2+CNKCsdLlDF+0NCa7N9eV
+X-Gm-Gg: ASbGncvVHKt23BcKFkUxD1dlMlJibqc99FtEiMaj92Heo2KCTdxWFH+tzuQDB/82ZeF
+ BzDtFL1ARWkws3117R4Fr+wbZjjnpam9WdR5EkAKo3d1DY34Rc9KBXyCnh3n/vI4tj+C6BTc5IG
+ TOI/PpBvwq0F2UWf4DsH4o69vkZsMbxeIugvDut2HvUKjBu6TLH1JkDjAAPRpy8o5CQJmdfTA31
+ xMaH4zFBkvdqrTMKq3rrNVPsVUGQi48x98doMMPlkEsxVUYKGsyeIt8Jd8nSDSkclM5p7Gx/aUA
+ ToCag8pHn6p4+JzVou5kE6fazcPX8QzVBSz3rbzMuCleVp8iKBmNoT43mjHCXnebrwpFtp1E5pz
+ 39U0tkIQ3Qh94VY0ZF4RISamImQmQfq6zgkIv7XA=
+X-Received: by 2002:a05:600c:348f:b0:477:4345:7c59 with SMTP id
+ 5b1f17b1804b1-4775ce52355mr25184435e9.40.1762342390967; 
+ Wed, 05 Nov 2025 03:33:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFBOfuPPGIty97KiLNatjfhIeG6CmPAjo/k8tuG9j4+onNNOvEicP9awECT7uMCaNj+iwvBw==
+X-Received: by 2002:a05:600c:348f:b0:477:4345:7c59 with SMTP id
+ 5b1f17b1804b1-4775ce52355mr25184245e9.40.1762342390599; 
+ Wed, 05 Nov 2025 03:33:10 -0800 (PST)
 Received: from [192.168.42.203] (tmo-083-103.customers.d1-online.com.
  [80.187.83.103]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b723d3a3496sm473046366b.8.2025.11.05.03.16.24
+ 5b1f17b1804b1-4775ce2cde0sm45283105e9.15.2025.11.05.03.33.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 03:16:25 -0800 (PST)
-Message-ID: <ae368b2a-4acb-4cbe-a629-ad19e4ebf767@redhat.com>
-Date: Wed, 5 Nov 2025 12:16:23 +0100
+ Wed, 05 Nov 2025 03:33:10 -0800 (PST)
+Message-ID: <c0e39e96-c2c6-4cf6-b614-f54a3f9c7bb8@redhat.com>
+Date: Wed, 5 Nov 2025 12:33:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 26/37] hw/misc: Add RISC-V CMGCR device implementation
+Subject: Re: [PATCH] tests/functional/mips64el: Silence issues reported by
+ pylint
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- alistair23@gmail.com, qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
-Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Chao-ying Fu <cfu@mips.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20251023043520.1777130-1-alistair.francis@wdc.com>
- <20251023043520.1777130-5-alistair.francis@wdc.com>
- <a8e88aaa-02ef-406e-9737-bbe017e420d3@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-trivial@nongnu.org
+References: <20251103192430.63278-1-thuth@redhat.com>
+ <5dfe6daf-b8d6-4371-a4a4-6cf98977349f@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,19 +142,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <a8e88aaa-02ef-406e-9737-bbe017e420d3@linaro.org>
+In-Reply-To: <5dfe6daf-b8d6-4371-a4a4-6cf98977349f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.788,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,126 +170,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/11/2025 11.15, Philippe Mathieu-Daudé wrote:
-> On 23/10/25 06:35, alistair23@gmail.com wrote:
->> From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+On 04/11/2025 16.02, Philippe Mathieu-Daudé wrote:
+> On 3/11/25 20:24, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
 >>
->> Add RISC-V implementation of the Coherent Manager Global Control
->> Register (CMGCR) device. It is based on the existing MIPS CMGCR
->> implementation but adapted for RISC-V systems.
+>> Drop unused imports, annotate imports that are not at the top, but done
+>> on purpose in other locations, use f-strings where it makes sense, etc.
 >>
->> The CMGCR device provides global system control for multi-core
->> configurations in RISC-V systems.
->>
->> This is needed for the MIPS BOSTON AIA board.
->>
->> Signed-off-by: Chao-ying Fu <cfu@mips.com>
->> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
->> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> Message-ID: <20251018154522.745788-9-djordje.todorovic@htecgroup.com>
->> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
 >> ---
->>   include/hw/misc/riscv_cmgcr.h |  50 +++++++
->>   hw/misc/riscv_cmgcr.c         | 248 ++++++++++++++++++++++++++++++++++
->>   hw/misc/Kconfig               |   9 ++
->>   hw/misc/meson.build           |   2 +
->>   4 files changed, 309 insertions(+)
->>   create mode 100644 include/hw/misc/riscv_cmgcr.h
->>   create mode 100644 hw/misc/riscv_cmgcr.c
+>>   tests/functional/mips64el/test_malta.py  | 15 ++++++++-------
+>>   tests/functional/mips64el/test_replay.py |  4 ++--
+>>   2 files changed, 10 insertions(+), 9 deletions(-)
 > 
 > 
->> +static inline void update_gcr_base(RISCVGCRState *gcr, uint64_t val)
->> +{
->> +    gcr->gcr_base = val & GCR_BASE_GCRBASE_MSK;
->> +    memory_region_set_address(&gcr->iomem, gcr->gcr_base);
->> +
->> +    /*
->> +     * For boston-aia, cpc_base is set to gcr_base + 0x8001 to enable
->> +     * cpc automatically.
->> +     */
->> +    update_cpc_base(gcr, val + 0x8001);
->> +}
->> +
->> +/* Read GCR registers */
->> +static uint64_t gcr_read(void *opaque, hwaddr addr, unsigned size)
->> +{
->> +    RISCVGCRState *gcr = (RISCVGCRState *) opaque;
->> +
->> +    switch (addr) {
->> +    /* Global Control Block Register */
->> +    case GCR_CONFIG_OFS:
->> +        /* Set PCORES to 0 */
->> +        return 0;
->> +    case GCR_BASE_OFS:
->> +        return gcr->gcr_base;
->> +    case GCR_REV_OFS:
->> +        return gcr->gcr_rev;
->> +    case GCR_CPC_STATUS_OFS:
->> +        return is_cpc_connected(gcr);
->> +    case GCR_L2_CONFIG_OFS:
->> +        /* L2 BYPASS */
->> +        return GCR_L2_CONFIG_BYPASS_MSK;
->> +    default:
->> +        qemu_log_mask(LOG_UNIMP, "Read %d bytes at GCR offset 0x%" 
->> HWADDR_PRIx
->> +                      "\n", size, addr);
->> +    }
->> +    return 0;
->> +}
->> +
->> +static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
->> +{
->> +    return vps->reset_base & GCR_CL_RESET_BASE_RESETBASE_MSK;
->> +}
->> +
->> +/* Write GCR registers */
->> +static void gcr_write(void *opaque, hwaddr addr, uint64_t data, unsigned 
->> size)
->> +{
->> +    RISCVGCRState *gcr = (RISCVGCRState *)opaque;
->> +    RISCVGCRVPState *current_vps;
->> +    int cpu_index, c, h;
->> +
->> +    for (c = 0; c < gcr->num_core; c++) {
->> +        for (h = 0; h < gcr->num_hart; h++) {
->> +            if (addr == RISCV_CLCB_OFS + c * RISCV_CORE_REG_STRIDE + h * 
->> 8) {
->> +                cpu_index = c * gcr->num_hart + h;
->> +                current_vps = &gcr->vps[cpu_index];
->> +                current_vps->reset_base = data & GCR_CL_RESET_BASE_MSK;
->> +                cpu_set_exception_base(cpu_index + gcr->cluster_id *
->> +                                       gcr->num_core * gcr->num_hart,
->> +                                       get_exception_base(current_vps));
->> +                return;
->> +            }
->> +        }
->> +    }
->> +
->> +    switch (addr) {
->> +    case GCR_BASE_OFS:
->> +        update_gcr_base(gcr, data);
->> +        break;
->> +    default:
->> +        qemu_log_mask(LOG_UNIMP, "Write %d bytes at GCR offset 0x%" 
->> HWADDR_PRIx
->> +                      " 0x%" PRIx64 "\n", size, addr, data);
->> +        break;
->> +    }
->> +}
->> +
->> +static const MemoryRegionOps gcr_ops = {
->> +    .read = gcr_read,
->> +    .write = gcr_write,
->> +    .endianness = DEVICE_NATIVE_ENDIAN,
+>> -    def test_mips64el_malta_5KEc_cpio(self):
+>> +    def test_mips64el_malta_5kec_cpio(self):
 > 
-> Dubious DEVICE_NATIVE_ENDIAN use, do you mean DEVICE_LITTLE_ENDIAN?
-> 
-> Maybe we can alter checkpatch to no accept new DEVICE_NATIVE_ENDIAN
-> in our code base.
+> I don't see how helpful this warning is... Can't we disable it too?
 
-Yes, please. Apart from some very rare cases, DEVICE_NATIVE_ENDIAN should 
-never be used in new device code.
+It's the preferred Python coding style:
 
-  Thomas
+  https://peps.python.org/pep-0008/#function-and-variable-names
+
+Question is whether we want to follow/enforce it in QEMU or not?
+
+> Otherwise:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+  Thanks,
+   Thomas
 
 
