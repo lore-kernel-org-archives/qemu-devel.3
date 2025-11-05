@@ -4,63 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9A6CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 22:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550B3CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 22:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGli5-0005to-Fm; Wed, 05 Nov 2025 17:10:33 -0500
+	id 1vGloo-0007WR-Ju; Wed, 05 Nov 2025 17:17:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGli3-0005ta-EN
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 17:10:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGloi-0007VT-DM
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 17:17:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vGli1-00031G-M0
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 17:10:30 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vGlof-0000Pc-MJ
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 17:17:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762380628;
+ s=mimecast20190719; t=1762381040;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=UU6SEqCQCQCYygF9DARCnliX0+KIg1jMvn7WW9Gaijc=;
- b=ME46zxADFWmcUvsY5Y4hiWOQ4S6eVwsVBdR++3CHajCJU2QnCIgV+q+ZHwWGKY0zCxjhWk
- MnEwV+AnBu9e1oQP9AP63eEnYOSH1w2ZifzO78nCYWHEeLAawIqT2Or6B92JFsP0cO4Ful
- TFwA9DOr/EIctjMu1GDxs579pGzzYk8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-_iNHhetzM-WPTkVLIaiZKA-1; Wed,
- 05 Nov 2025 17:10:23 -0500
-X-MC-Unique: _iNHhetzM-WPTkVLIaiZKA-1
-X-Mimecast-MFC-AGG-ID: _iNHhetzM-WPTkVLIaiZKA_1762380622
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 754CE180057A; Wed,  5 Nov 2025 22:10:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.131])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C0511800584; Wed,  5 Nov 2025 22:10:20 +0000 (UTC)
-Date: Wed, 5 Nov 2025 16:10:17 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, berrange@redhat.com, 
- kwolf@redhat.com, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 8/8] iotests: Add coverage of recent NBD qio deadlock fix
-Message-ID: <2cdptk665ijo3ioo7qdjf54qtnmgq5xvib4whtueqosrqzax4j@nhf2ayky7fvr>
-References: <20251103202849.3687643-10-eblake@redhat.com>
- <20251103202849.3687643-18-eblake@redhat.com>
- <98abcae5-9768-4a7b-af5a-1cdaa84020af@yandex-team.ru>
+ bh=b5TEZP3l9CYqiCCjrh7XZkVlff+R66ITMOHNmnCGmM8=;
+ b=BeonXD/iBi7k7WNyP2WXbxvBJCYyOmYqtECLepb6/eA+nqOwjzy7j54bsocZ6qYNGgv03r
+ 7IcLYdmMrMtrIPjAWZgv1suJaiHLpx7qGrl0KoE3DcliO+ZWOysjN39sAVbu6zuaXqJYW/
+ R0XkTRtjewLJLX3LQb2Ce74hm/JOM1E=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-152-WK0GRGEWPxi_p5xsZWhdkw-1; Wed, 05 Nov 2025 17:17:18 -0500
+X-MC-Unique: WK0GRGEWPxi_p5xsZWhdkw-1
+X-Mimecast-MFC-AGG-ID: WK0GRGEWPxi_p5xsZWhdkw_1762381038
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b22c87f005so97447585a.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 14:17:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762381038; x=1762985838; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=b5TEZP3l9CYqiCCjrh7XZkVlff+R66ITMOHNmnCGmM8=;
+ b=DfP9EbcRZyQbvou9w0i5gZUiKN84XTxx2Q5YvjM8WkqwAoj7rT4yXvIwINzn0tgjZl
+ 5od1nqGvpeHZXhTYdYrDq+yliR7EcdMvgaV2iXan51e970gRHWRQP3TgpIxsUFr6GM/o
+ /KHskUUcSJfpeQDwGdCfkISp1KNr1rCyx/QlUjf8QeCBaXMyVsVCap+2w07RCF/mlrkj
+ iKD6qD2uoNu0YiERXI7MVw5VIaI4F4AUa+6CO5dYXLPLHpV7yMVyyqjIWgY407GVmAaQ
+ vvxZbprNVFwbIBjYGTFTjtk982DXwbgR0hXQ6TpVXQlP7TLhIr4p8TNoizhSSut/g7Nb
+ Lw5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762381038; x=1762985838;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=b5TEZP3l9CYqiCCjrh7XZkVlff+R66ITMOHNmnCGmM8=;
+ b=A4NxMMwGEIQh+ozUtj0DyqF+y6O0DVm3Pf9f2k1E/TP/LyWkHOUekTza1Qzl3vJVcy
+ +LevlKo05tIdCI/73sd2HcJAZdcMaj9sob1t0zx+i8ihdO7nBODFKqayDGSUstjw+9h6
+ eU+pGr734ZZNSUuUofbgOaHzLyDDVlFDXxZ/Cfd3zEJcD/3GkB36GSTJFQwHACoasxfZ
+ PgZL8RHATX2Q+zox0/teHIKNFwoLZaWPXjxSEh4hPYAP/jV5vmXD+vosNS0bDJT3QDYa
+ JTwRnSuCNEXnbLMmiEmCrEyGleQhGfU7l5TnWMpYKXWbX5p0Gx1v0AGiFAEonTLtf/f+
+ cBYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6+blqVKdTcljZQhpRspFMNBD8h39j737IB/u0VI0QBhHhOXQHxBe/sg4rJ666h21vd2tNxv1QVqm5@nongnu.org
+X-Gm-Message-State: AOJu0YxdJASJpBr4AlUtxHruxw8PmZb2z0WkidsotR0NTpj9AtZJ+z9k
+ /kQBUjR9zCQU1z38BpHL69+Tg5B/Uus4flwGvMpV1Of7y8YEzJ8DvzyJjLRe6kOe7PYmalVNpn6
+ Vgdomd9F9LrOhcfh4mScWAKsVkTkqdmS/lfZacAF++b3Si+ODIr58Bkwh
+X-Gm-Gg: ASbGncswNOdqPda4oY/o7GGcKNzTM3jTzqWEIZYHurbDLXZUEr1jTcMFrYkysDy8wUj
+ CPOkaIgleMZqMPnSybsBnEOd+In89Y4/YtXufm/Hul/Xxf1AAz25NW8zV/aHk+LPKB6A/LyrHRN
+ 49MbWE4SyOSWoqt+LIVwdhryri7kxZPe15TGzDKs/rBiMnBz5+0vEpBkqcPJLWJk+zRbY9R+yqV
+ mVIpnr+WSXMHDQN45qZcmTQf+uHe3hJcWpsDKh/8UDJfxcrbhJ6eoeSnfKpwIceIWCoYj1JDNsI
+ YZiFGhwvmsGrf7ZEgDDmakydJLs+iwKqv8FA8ieIwrP9dySPJkjZ+C5miYfsewqduls=
+X-Received: by 2002:a05:620a:1992:b0:862:3e8d:e4ec with SMTP id
+ af79cd13be357-8b220bb1d60mr678989385a.60.1762381038047; 
+ Wed, 05 Nov 2025 14:17:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGK8+4aw40RMS0Lo3ZMrgMF0/wmVZfY7etRagC7eXruRnPU30/N1aRrQXPxEaaqQ46cUfParQ==
+X-Received: by 2002:a05:620a:1992:b0:862:3e8d:e4ec with SMTP id
+ af79cd13be357-8b220bb1d60mr678985485a.60.1762381037512; 
+ Wed, 05 Nov 2025 14:17:17 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b2357d8842sm62323585a.38.2025.11.05.14.17.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Nov 2025 14:17:16 -0800 (PST)
+Date: Wed, 5 Nov 2025 17:17:14 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Jinpu Wang <jinpu.wang@ionos.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Yu Zhang <yu.zhang@ionos.com>
+Subject: Re: [BUG] Migration failure =?utf-8?Q?betw?=
+ =?utf-8?Q?een_QEMU_9=2E2=2E4_=E2=86=92_8=2E2=2E10_due_to_virtio-ne?=
+ =?utf-8?Q?t?= feature mismatch (VIRTIO_F_RING_RESET / USO features)
+Message-ID: <aQvM6l04VeZwbUOf@x1.local>
+References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+ <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
+ <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <98abcae5-9768-4a7b-af5a-1cdaa84020af@yandex-team.ru>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+In-Reply-To: <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -69,7 +106,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,64 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 04, 2025 at 02:38:22PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 03.11.25 23:10, Eric Blake wrote:
-> > Test that all images in a qcow2 chain using an NBD backing file can be
-> > served by the same process.  Prior to the recent QIONetListener fixes,
-> > this test would demonstrate deadlock.
-> > 
-> > The test borrows heavily from the original formula by "John Doe" in
-> > the gitlab bug, but uses a Unix socket rather than TCP to avoid port
-> > contention, and uses a full-blown QEMU rather than qemu-storage-daemon
-> > since both programs were impacted.
-> > 
-> > [While preparing this patch by making the new test executable, I
-> > noticed vvfat.out does not need execute permissions]
-> > 
-> > Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3169
-> > Signed-off-by: Eric Blake <eblake@redhat.com>
-> > ---
-> >   tests/qemu-iotests/tests/nbd-in-qcow2-chain   | 84 +++++++++++++++++++
-> >   .../qemu-iotests/tests/nbd-in-qcow2-chain.out | 56 +++++++++++++
-> >   tests/qemu-iotests/tests/vvfat.out            |  0
-> >   3 files changed, 140 insertions(+)
-> >   create mode 100755 tests/qemu-iotests/tests/nbd-in-qcow2-chain
-> >   create mode 100644 tests/qemu-iotests/tests/nbd-in-qcow2-chain.out
-> >   mode change 100755 => 100644 tests/qemu-iotests/tests/vvfat.out
+On Wed, Nov 05, 2025 at 10:27:59AM +0100, Jinpu Wang wrote:
+> > > These are not present (or not supported) on QEMU 8.2.10, which causes
+> > > the migration state load to fail.
+> >
+> > Interesting, we've already done the compat work:
+> >
+> > GlobalProperty hw_compat_8_1[] = {
+> >     { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" },
+> >     { "ramfb", "x-migrate", "off" },
+> >     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
+> >     { "igb", "x-pcie-flr-init", "off" },
+> >     { TYPE_VIRTIO_NET, "host_uso", "off"},
+> >     { TYPE_VIRTIO_NET, "guest_uso4", "off"},
+> >     { TYPE_VIRTIO_NET, "guest_uso6", "off"},
+> > };
+> > const size_t hw_compat_8_1_len = G_N_ELEMENTS(hw_compat_8_1);
+> Yeah, I noticed the same.
 
-Should I split out that file mode change to a separate cleanup patch?
+AFAICT, this is a known issue..
 
-> > 
-> > diff --git a/tests/qemu-iotests/tests/nbd-in-qcow2-chain b/tests/qemu-iotests/tests/nbd-in-qcow2-chain
-> > new file mode 100755
-> > index 00000000000..b89f74d4552
-> > --- /dev/null
-> > +++ b/tests/qemu-iotests/tests/nbd-in-qcow2-chain
+Thomas and I used to suggest we should not turn on USO* by default by
+probing kernel, but only allow user choosing it explicitly in a VM
+setup. IOW, dest qemu should stop booting at all when kernel is too old
+(when user chose the feature).
 
-> > +echo
-> > +echo "=== Creating wrapper image ==="
-> > +
-> > +_make_test_img -F raw -b "nbd+unix:///base?socket=$SOCK_DIR/nbd" $size
-> > +
-> > +echo
-> > +echo "=== Adding wrapper image ==="
-> > +
-> > +_send_qemu_cmd $QEMU_HANDLE '{"execute": "blockdev-add",
-> > +  "arguments": {"node-name":"wrap", "driver":"qcow2",
-> > +     "file":{"driver":"file", "filename":"'"$TEST_IMG"'"}}}' 'return'
-> 
-> Hmm. Why don't you specify "backing": "base" here?
+See:
 
-Because the original bug report didn't either.  However, I can see the
-wisdom in enhancing the test to cover multiple scenarios: both a
-backing chain learned only by what is in the qcow2 file, and an
-explicit backing chain where the NBD client is spelled out in the QMP
-code.  I'll see if I can enhance that for v2.
+https://lore.kernel.org/all/ZqQNKZ9_OPhDq2AK@x1n/
 
+Thanks,
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Peter Xu
 
 
