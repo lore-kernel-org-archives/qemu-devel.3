@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2C4CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA2CCCFA0D
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Nov 2025 13:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGdqZ-0006GK-JF; Wed, 05 Nov 2025 08:46:47 -0500
+	id 1vGdqp-0006eF-C2; Wed, 05 Nov 2025 08:47:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdqW-0006Ah-8k
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:46:44 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1vGdqn-0006Wd-83
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:47:01 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGdqU-0003N8-FK
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:46:44 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b70fb7b531cso543979266b.2
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:46:41 -0800 (PST)
+ id 1vGdqk-0003Pf-U5
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 08:47:00 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-640c1fda178so5148038a12.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 05:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762350400; x=1762955200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762350417; x=1762955217; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rGsKN+q9CeP2ytSVjJhUPhfEzEadWHIXhtZJUJYtF+k=;
- b=t7wQn3O6dJXoSSaC6TBxjtsUxPRbAvpFQaOgbD/cpfbS7Fjej5Gj4jjVZRTYVHEN11
- dBXYydra73if124O0hd/87udmq+PuZGrtloKcFTkIozTf+t/r83UNhTFCDI0m1g1uN3/
- tu4u506DQo29OylVHSb79CQW3DBYYAppJYGLWfsU2UhMAhu09U4hEVFSlt6R2gvYRjEE
- jBNDldHZd2iVMEfyWzl/7Tdtf4Jgvzb/NxTUvZQeyOM8UBPo89fx9NwLd2eC6Gkd3Vyr
- ML0xmfXt19sC7wxNb4/dc34H2OMUZi8pX6ByYJG57nspHiG0Id+ZtXtGAc3CWvRWCSo9
- T6pg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zxrXHHC3/5F7YgaA3N69oT6RADgDFMo6NhEAbU0odQM=;
+ b=N9Bd25k5uODyQSRjAJWm9mafZxQOP9s3FeE2jVJJplla4e04oLVRxCov60L+1k3o+e
+ OBWGJ1ckjAvup5E0AoWHcUWuMXPdsIj1irknhRo5FfdZvVtd8BSKlTGHs0wCTX7oyKaj
+ YSQRZGNHql1NbDMQxfwauxX78eR7zpXACzjXSgi54NoMboF7aKKRCBjoynArcwhfnvqg
+ Nhu8hIx0fSwNJb/okHtxqOzimO15EPNAmiRAM9RvnXEOZzDzSYKB3ita9omfA5pqba9Z
+ arL7WUoy5a70Qn+LouSt69l6EUwoNZKLfzpwXEvvi/g9jM9Re5A4EUWx39FboLZh466g
+ d9lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762350400; x=1762955200;
+ d=1e100.net; s=20230601; t=1762350417; x=1762955217;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rGsKN+q9CeP2ytSVjJhUPhfEzEadWHIXhtZJUJYtF+k=;
- b=Siq2eFrn3IblSuPkVyNg2muSXQ3VomJ4X03P4hmN+d5DvVtfvbtdXdeZ+/5up+vAiX
- uz73q6izeHs4Pnallxkxag7vM39Gp4ZG3L7DFDKQyRQOyctG8sNCsUyLIHk4PIVogW6Z
- m0gkytlU2c78mVfol4XAklmy9ndnJcO1jilJg/7BlF1cYH0yKPQyVhOH4GZMyuxtlO8I
- FBCiQUSh4kF2eWg6wDcIpN1eo4oCAjbjdtiQH3xU2ZNtQ2HEV8GH3iMhRKsBgR9DYqKd
- fEt8SYQYD4lWkTFmzKp5sFPO2DcbuNXrF3AOutsmFN4zm/9hXH+B4M4hAuF2wL7JAOqN
- 2rWg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTYl9sz+zsvimw9qP8moTtLqY8mu9LeJT3rdlK6lhBAlZrUSi+WNMCa5gkOTqpPxMR5b2Wm1gXwhh9@nongnu.org
-X-Gm-Message-State: AOJu0Yxk9DP/XJAJZiR1ACCaLdL5IedNHzJfx/4IXZiAOuOPrQ7bUorI
- y295ZiTpEMv9N/eIw4nCadFAdGlqk1UgL4hKCDcvOcCB3ceKDamupp43BoDlmPl8Wb8=
-X-Gm-Gg: ASbGncs4Dg4+6rhDAo5jqC1uFBWJNIMGv6U8/sYDOv8gZQn7X43jW0E3ET4U9jL1YZ6
- 4nmOufpmdmUjuH+6gLS631UmcixoEGCuKx9V+aUnU2qo0rfRBOYieUB1QpZWV8Uet+MJkQSCD4U
- mJqvodBPoL8O+vdUXBa/+xXoseeXiG8itaFKp95GR9Bc4ipUNoW8c3VorGiYD7tdgYNO/szHDj/
- +lQ0Ba7YSwltrSaextBoAeanvgSp/6MY0BvGFVXNgM0QrYbSOLdB23CWuqjuNJYggE6DtoP/dto
- uSRba1Tuu1IH7H7GDDzPG31Ayw1sVX+l2Ye8ioi917l7fKE+ZFSaNWqRFA57FRsyep8fGHiuQS0
- 0WqoZbjvUjNMGdx8SnzujjytIZ0oJ9SzwnI/fUHovuykRH/MqcYXe81w0QGNB4WnuJa99Jf4v5P
- zvNHPqd2jCvcEiQRMg+aACs7euiPc=
-X-Google-Smtp-Source: AGHT+IGKgfj7DV/BgqOsqXI5eIJDrUl+wQ4S0TchzvtSiUj3BT0E7it7eurxCUcI7O7HoQWmSoN3bw==
-X-Received: by 2002:a17:907:1c84:b0:b04:830f:822d with SMTP id
- a640c23a62f3a-b7265648907mr336318866b.63.1762350400273; 
- Wed, 05 Nov 2025 05:46:40 -0800 (PST)
+ bh=zxrXHHC3/5F7YgaA3N69oT6RADgDFMo6NhEAbU0odQM=;
+ b=XmTWCdLLVMYh7dDy+iae/wGu3Kf4Izq5S2SoQowpHchmyXhwUagHC3iPnIFd1vda/n
+ wFjpMDhhp7PI8OTXmQDB9ufzkv6I1R19CFERfh+DLiGmKE7n/R35Uy3hURPn+w2s8vWI
+ hYXLG+T/5S8lIJ7KEJ4BS+tDM+nDshoHIU7FtAGFhUSOP9lr7lORABit/HZILW8OoBFW
+ 0h9D/GqZF7n176CGeNccE36q2E1JgIjrGT3R5erRJHkEUBNmYUBrdgsOz5oIZpgOBv11
+ PWnMd4Y343X5pHV9iDxnP7BNVqCf3QcN+K3i8P9GnFaVaA9wIuUC8/AhbKL1QPuK4Mg+
+ Yp6A==
+X-Gm-Message-State: AOJu0YyXqz1vMfDXFkZsOMxfwCpWcRIFrL4irea9i8pTFEQLuXmlZI5D
+ JPhd4S0bnuubcG0QMFT1sPueXIxJIhTGpTskrBLAYKdf9l7nXYxTvn/qxQJgiru/4BQqYFVrPz6
+ fEu8I8gY=
+X-Gm-Gg: ASbGncvQTZ1agnBat3ckpukI5Bwu7hHli0LqjhX0/N20kPjy7zVygX+j4BsFhbkubqX
+ FfxveKmfu0+5J5o4wMaHbSs/6XGjevJ4ThENHS5OA72H9CxVyOuMLFJKtvTzTKuFgAkZEmh5FaC
+ y4idML3StnvwKShmeNBmujwASQHQgm5ssz6VWZBcGLM9vI1tYw7Yt0Bl2VcuDvRSMZK3IXmEsnf
+ ZZC5iQ34WkS63jKirjRNLZUFlU9g545dtsdzsOwV2I71K9VP1nGiZlDJ91s/cP7En3ZV4xEiC8/
+ r0IQHbutB8RqR6DCozRVE0ntuaXi/x13CBmqxx1NqDWRi4aSJwfzlNOoGFTtJxYmE5VVd3UjErG
+ Brw6G/js0u65OczUNwzcLFECzH73p5oqAUnR9xFzHDb2pdcapxGl3PjfmaA/IJSpELio6ZF9PXm
+ QihH6Cb18egVSxKEeORLEOELKhW80=
+X-Google-Smtp-Source: AGHT+IFY0kxExx86VNMvqUkeBIiF/3psCzsrAaxQ5hX1XRlpf+RrMT53ZpClhCcrht3rAIlhY/jbRQ==
+X-Received: by 2002:a05:6402:84d:b0:640:36d9:54fe with SMTP id
+ 4fb4d7f45d1cf-64105a4cce7mr2811752a12.24.1762350417326; 
+ Wed, 05 Nov 2025 05:46:57 -0800 (PST)
 Received: from [172.20.148.100] ([87.213.113.147])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b724064d25csm487978266b.72.2025.11.05.05.46.39
+ 4fb4d7f45d1cf-640e6a721f1sm4761013a12.32.2025.11.05.05.46.56
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 05:46:39 -0800 (PST)
-Message-ID: <ee1bb8e2-135a-4166-892f-bc81fa54315f@linaro.org>
-Date: Wed, 5 Nov 2025 14:46:38 +0100
+ Wed, 05 Nov 2025 05:46:56 -0800 (PST)
+Message-ID: <e7bd713d-7fc4-4d7e-a136-c4bf5edffc90@linaro.org>
+Date: Wed, 5 Nov 2025 14:46:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 0/3] I82596 fixes patches
-To: deller@kernel.org, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Jason Wang <jasowang@redhat.com>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-References: <20251104152204.6261-1-deller@kernel.org>
+Subject: Re: [PULL 0/8] Cleanup patches for QEMU 10.2 soft freeze
+To: qemu-devel@nongnu.org
+References: <20251104163102.738889-1-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251104152204.6261-1-deller@kernel.org>
+In-Reply-To: <20251104163102.738889-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,43 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/25 16:22, deller@kernel.org wrote:
-> From: Helge Deller<deller@gmx.de>
-> 
+On 11/4/25 17:30, Paolo Bonzini wrote:
 > The following changes since commit a8e63c013016f9ff981689189c5b063551d04559:
 > 
 >    Merge tag 'igvm-20251103--pull-request' ofhttps://gitlab.com/kraxel/qemu into staging (2025-11-03 10:21:01 +0100)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/hdeller/qemu-hppa.git tags/i82596-fixes-pull-request
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
 > 
-> for you to fetch changes up to fec69f17be25db71f9cd4001b920da21cc71b283:
+> for you to fetch changes up to fdeeb448458f0ed808a62314b57974ab16d3592e:
 > 
->    i82596: Implement enhanced TX/RX with packet queuing and filtering (2025-11-04 16:14:51 +0100)
+>    rust: add back to Ubuntu 22.04 jobs (2025-11-04 17:13:25 +0100)
 > 
 > ----------------------------------------------------------------
-> LASI i82596 network driver fixes
-> 
-> As part of the Google Summer of Code 2025 program "Implementing LASI Network
-> Card and NCR 710 SCSI Controller Device Models" Soumyajyotii Ssarkar fixed
-> various bugs and enhanced the existing Qemu i82596 network card implementation.
-> 
-> Specifically he added or fixed the following functionality:
-> - Monitor Mode
-> - Promiscuous Mode
-> - Support for linear mode, segmented mode, and flexible memory models
-> - RX Timer
-> - Bus Throttle Timers
-> - Support for Little Endian mode
-> - Accurate CU and RU transition State
-> - HP-UX Specific Behavior Support
->      - Support for Loopback mode
->      - Self test
-> - Statistical counters
-> - VMstate descriptors
-> - Polling mechanism
-> - Transmit and Receive functions
+> * rust: cleanup Error, add &error_fatal bindings
+> * rust: do not add qemuutil to Rust crates
+> * rust: migration: allow nested offset_of
+> * rust: add back to Ubuntu 22.04 jobs
+> * checkpatch: remove bogus patch prefix warning
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
