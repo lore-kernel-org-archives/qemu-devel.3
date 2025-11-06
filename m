@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB576CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 14:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E42CCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 14:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH1IZ-0005Vz-PM; Thu, 06 Nov 2025 09:49:15 -0500
+	id 1vH1LX-0006HZ-0u; Thu, 06 Nov 2025 09:52:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vH1IY-0005Vc-4O
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 09:49:14 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vH1LU-0006GS-TH
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 09:52:17 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vH1IW-0005UJ-IZ
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 09:49:13 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-b7272012d30so180476066b.2
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 06:49:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vH1LS-0006c8-Rp
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 09:52:16 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4711b95226dso12549785e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 06:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762440551; x=1763045351; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=I0etlvZbNwYaPLzX0lVKmatPCLOUs+kyAR7zZ+B1IME=;
- b=mmZ9O/0GnzfxUY609YRnb8oMkVNffqozPlFk2kGc7Et2rF+t5vEC1SoEkINbwQLOMo
- 1WX5S0EnT1arENr/MBU7JIeMdhTpuBGvOdTVONND2QZRG9jp/eAM3l8cqDf6bvj/xSfC
- 2LDB4VUTwd2nr6Y+Pr1sCYqEN1iSom+3F2mS2BpBVno+yuzoUtkfIKXHASfTvVVHZMHg
- ug8cp+TpD7VWlps5W2g/D1wuit5gyleppDixnp8wGFOZN8POqcSp7w6hdoGw9MvPumOL
- 1q1P7mg4pQ5/SQXl8YyxjcLqFE117S+HPGk1zgopHzWMhcwR2ZzlNVXb1F2rRqGqbPd7
- DwNA==
+ d=linaro.org; s=google; t=1762440733; x=1763045533; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IKfGG8WVNqNZfFZk1k6i3v3Lr9Uq/tsY8S+cA/a7uyA=;
+ b=Uh1YqubzaMGNnQia3ygb9l5iIfyd4WvD04uxKkKotup147RAznumuiXpfZLOrYuNN0
+ CbOgvkkk/ArSAiA3WTXCAodZAtvedD2bB+vfKW6Tad9tJuoMOKrTZ1Q2l0WF9Q0XQRZz
+ 3I0zCTkVsNbz5fa9ujD3BgQ3GpswDedgEwlRxys9FBRqvtLKS0v4/eLXxYt50ktRswzj
+ hzD4Qg0ZeKqoIRZq6oB844nD9Si+zp5QmRr12GBmJ03zDW1WDUvLhofpVnZCPQGmR4SH
+ b9E/Vbcnwn7elvSdvTvHUtE2xWj+yP5chlyfoOIdG4xyKdYhGyIaEPTb5hKo04Z7pzFT
+ CkMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762440551; x=1763045351;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I0etlvZbNwYaPLzX0lVKmatPCLOUs+kyAR7zZ+B1IME=;
- b=ZsFJTZ5aSjcmOKMVbD0tvp9eM31e47tpzHzQXLjJ4PQfX3cdBX5AX5yfovoVWHrpjH
- w21cDS51Z1ig0PZyEIYxiyOhTWLlN/rKkU1ekSlJ+AOkfey1IcxuXFrXHAF9p/dPzoAg
- p/tz9y9/etWQVoPP03ZYAjS174bMA72h4ZlF1tJ9Ur6ba7uemYAwZISogkT8QQ1Uq3pB
- vqUy+OVDnr+KvUVNEi6MdcraC8a4kx2bIFibWtONE8AX8ESLuYD/kTLc48b2d2ngYQPh
- thfp9xeR+JGfgUQFKBCVZpdScwGQXQCQ8BJoiVyxyd7Cwy9onwnqqXkD30cHuVUaJ/Ty
- E6EA==
-X-Gm-Message-State: AOJu0Yx9FLjGcQP3DMU6nw+Dfz8U9pT5PTaLXLBq3ltax75+2KlEwZoQ
- t6H0OaPZXAw4w4iA5TZpCL2GFdkGnKFLIoKbhPx2gAZQEUroX1fQNCb3Khqw1b/FmAE5FTBWUHI
- P2pp9PsQ=
-X-Gm-Gg: ASbGnctxW/etyv9L1UI8K0/XkUx5Phi0v3DUPrtNybb6ZgkXAxeZH3PWfjoi/5orZZj
- oM3hEp4O9BJHutMxsKznvnU/3aWCqB2Sb6HMNc3hRaaIJZUSBwO5OKMntYLM1Mpt0oKsh7gpsu2
- vf1zJlVj+vAIY5IV0CHxrfW+PZBZtMIwlWJLFGDUEyVbXyI6qxXiVjhEkSTOijGiwHoozqnB8Bn
- J0kSyIkYhLbHY7pS3lGwH4BNYctmgDh3c1VpliA/pnT6CGCMDBz5guPgC/BaPcbZ+3qYKDysQRD
- LkyyYlNahvqQ73IW8Rdfy8hA/ivBYEPesVyHDSvZac9pWiLrHyPbuPPY9pTZ/7QD5ZkwgFMNnHw
- WFm+Azo6jctpZtOsTmQ6bbCJiRPtGx+EFf+FmjyxUiUmdBkhDA+Z7D/ILAXlK2hmXqKUemuYCm3
- xyYOiW+TUg0eZ7TMWdhqzcdTCoXg==
-X-Google-Smtp-Source: AGHT+IFrrrJcfx/rA/QRrXL/E51LYSIMvbrRvA35T2k2fxTbvQdqmLizVXJbhz/Z6HOV2kiTteQd0Q==
-X-Received: by 2002:a17:907:3e0b:b0:b70:b3cb:3b30 with SMTP id
- a640c23a62f3a-b726567fa67mr727274266b.59.1762440550804; 
- Thu, 06 Nov 2025 06:49:10 -0800 (PST)
-Received: from stoup.. ([87.213.113.147]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b728933429fsm231990266b.9.2025.11.06.06.49.10
+ d=1e100.net; s=20230601; t=1762440733; x=1763045533;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IKfGG8WVNqNZfFZk1k6i3v3Lr9Uq/tsY8S+cA/a7uyA=;
+ b=QM4oWEokMuIpHoiP/k0cBqvo+9jV+lgyQReauCDOOgAJrl1R04SE2YVpPPEGRxgTUZ
+ rQq1Z86kDoK/anocDiOD5w3LMJO2pYP/CjxbwMpklUhe0PpwKLVxaU0ddnxEwizb3MOz
+ djSdjqgfdCH6e0gU34l4S7cbfM6ibvVSsV7eFsX17fxZaEYg/8C7qdubG80mpBTgj9O9
+ AZBKYCk0NqcAsr6hZO/t5m2cYY+80XL1sXa8LgWAbKXfPZEmXi3RbM9PFiOq/kLgj9sU
+ 9dlKIh4JzVuEFQhEO88EEKq8wMwbFNlsHBNdsg40HVVB0xjGf8KOs0QRyoWmniuvcz8K
+ MBdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUV2dWWHuoWVVk8Qlh3D99+LL6KY7g9YPrTJc3FnbliF6a/sIUO33Qq2mQ/TGOkIUaS5j2cp2KWklAS@nongnu.org
+X-Gm-Message-State: AOJu0YyAtn1u4c7HaqyB40Jt/be/hQ02Upbtw6rYQXLQscjz9G2tiEFZ
+ tIJ8oN0Gq0Jq4IkImLC4j2+0+yy+9cAFA+vmSF501NQ3nurnwcCl2PfZOqzscm0KJIo=
+X-Gm-Gg: ASbGncsugsUPqSZLS+qyljcS0SzPcqAQyE1etEAODjIV39uzEh13GIU968qZ0XEpruK
+ CakswZGhGpfKBDHuZewukEWPomKtx4UCky1UWC05qFS3E6qnJbEAxCk62G6/OU3t3BP4zg7x7VJ
+ YeRQWmZWulbuShJhmYEd5r7+dvsKf5W20sAc/2Yrq6pokiBDygotoEUiz32qo0sv+AzV9otgoDN
+ FgeY+Cb7DaaWOjJWtyh+3bL76B77a5peCDYZigo2wFWoI3lGO4ru47znX/9oGW7lU4mIHg2DUi5
+ ExoSO03B5QQ1Yr8MDh9zpRPvPerG7dQlY+iTHVGGnW40nP6TrB2OHwGdIhZAylwg66EheIaNhfL
+ tvcLQ/iu/fa8mdkFEpjHpXmDo4PIPzyn1k/nILZjf/uNySHFK/Ar7NDxjl1GsEBmTB73yusa+9N
+ W5uSUhXA==
+X-Google-Smtp-Source: AGHT+IHrUnXNTboMwEy6K8qkByy9T1L6SjfDoI8enMrKRBk+COkRTdXL0Trghf+prklqWM/Nb29Asw==
+X-Received: by 2002:a05:600c:4e41:b0:46f:b42e:e392 with SMTP id
+ 5b1f17b1804b1-4775ce51fc6mr64683235e9.39.1762440733112; 
+ Thu, 06 Nov 2025 06:52:13 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429eb47721bsm5694891f8f.25.2025.11.06.06.52.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Nov 2025 06:49:10 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: gustavo.romero@linaro.org,
-	Anton Johansson <anjo@rev.ng>
-Subject: [PATCH] target/arm: Fix accidental write to TCG constant
-Date: Thu,  6 Nov 2025 15:49:09 +0100
-Message-ID: <20251106144909.533997-1-richard.henderson@linaro.org>
+ Thu, 06 Nov 2025 06:52:12 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 1/2] hw/display/xlnx_dp.c: Don't abort on AUX FIFO
+ overrun/underrun
+Date: Thu,  6 Nov 2025 14:52:08 +0000
+Message-ID: <20251106145209.1083998-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251106145209.1083998-1-peter.maydell@linaro.org>
+References: <20251106145209.1083998-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,58 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently an unpredictable movw such as
+The documentation of the Xilinx DisplayPort subsystem at
+https://www.xilinx.com/support/documents/ip_documentation/v_dp_txss1/v3_1/pg299-v-dp-txss1.pdf
+doesn't say what happens if a guest tries to issue an AUX write
+command with a length greater than the amount of data in the AUX
+write FIFO, or tries to write more data to the write FIFO than it can
+hold, or issues multiple commands that put data into the AUX read
+FIFO without reading it such that it overflows.
 
-  movw pc, 0x123
+Currently QEMU will abort() in these guest-error situations, either
+in xlnx_dp.c itself or in the fifo8 code.  Make these cases all be
+logged as guest errors instead.  We choose to ignore the new data on
+overflow, and return 0 on underflow. This is in line with how we handled
+the "read from empty RX FIFO" case in commit a09ef5040477.
 
-results in the tinycode
-
-   and_i32 $0x123,$0x123,$0xfffffffc
-   mov_i32 pc,$0x123
-   exit_tb $0x0
-
-which is clearly a bug, writing to a constant is incorrect and discards
-the result of the mask.  Fix this by adding a temporary in store_reg().
-
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-[rth: Avoid an extra temp and extra move.]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1418
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1419
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1424
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ hw/display/xlnx_dp.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 5f64fed220..63735d9789 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -303,20 +303,23 @@ TCGv_i32 add_reg_for_lit(DisasContext *s, int reg, int ofs)
-    marked as dead.  */
- void store_reg(DisasContext *s, int reg, TCGv_i32 var)
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 96cbb1b3a7d..c2bf692e7b1 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -435,7 +435,18 @@ static void xlnx_dp_aux_clear_rx_fifo(XlnxDPState *s)
+ 
+ static void xlnx_dp_aux_push_rx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
  {
-+    uint32_t mask = 0;
-+
-     if (reg == 15) {
--        /* In Thumb mode, we must ignore bit 0.
++    size_t avail = fifo8_num_free(&s->rx_fifo);
+     DPRINTF("Push %u data in rx_fifo\n", (unsigned)len);
++    if (len > avail) {
 +        /*
-+         * In Thumb mode, we must ignore bit 0.
-          * In ARM mode, for ARMv4 and ARMv5, it is UNPREDICTABLE if bits [1:0]
-          * are not 0b00, but for ARMv6 and above, we must ignore bits [1:0].
-          * We choose to ignore [1:0] in ARM mode for all architecture versions.
-          */
--        tcg_gen_andi_i32(var, var, s->thumb ? ~1 : ~3);
-+        mask = s->thumb ? 1 : 3;
-         s->base.is_jmp = DISAS_JUMP;
-         s->pc_save = -1;
-     } else if (reg == 13 && arm_dc_feature(s, ARM_FEATURE_M)) {
-         /* For M-profile SP bits [1:0] are always zero */
--        tcg_gen_andi_i32(var, var, ~3);
-+        mask = 3;
-     }
--    tcg_gen_mov_i32(cpu_R[reg], var);
-+    tcg_gen_andi_i32(cpu_R[reg], var, ~mask);
++         * Data sheet doesn't specify behaviour here: we choose to ignore
++         * the excess data.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignoring %zu bytes pushed to full RX_FIFO\n",
++                      __func__, len - avail);
++        len = avail;
++    }
+     fifo8_push_all(&s->rx_fifo, buf, len);
  }
  
- /*
+@@ -466,7 +477,18 @@ static void xlnx_dp_aux_clear_tx_fifo(XlnxDPState *s)
+ 
+ static void xlnx_dp_aux_push_tx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+ {
++    size_t avail = fifo8_num_free(&s->tx_fifo);
+     DPRINTF("Push %u data in tx_fifo\n", (unsigned)len);
++    if (len > avail) {
++        /*
++         * Data sheet doesn't specify behaviour here: we choose to ignore
++         * the excess data.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignoring %zu bytes pushed to full TX_FIFO\n",
++                      __func__, len - avail);
++        len = avail;
++    }
+     fifo8_push_all(&s->tx_fifo, buf, len);
+ }
+ 
+@@ -475,8 +497,10 @@ static uint8_t xlnx_dp_aux_pop_tx_fifo(XlnxDPState *s)
+     uint8_t ret;
+ 
+     if (fifo8_is_empty(&s->tx_fifo)) {
+-        error_report("%s: TX_FIFO underflow", __func__);
+-        abort();
++        /* Data sheet doesn't specify behaviour here: we choose to return 0 */
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: attempt to read empty TX_FIFO\n",
++                      __func__);
++        return 0;
+     }
+     ret = fifo8_pop(&s->tx_fifo);
+     DPRINTF("pop 0x%2.2X from tx_fifo.\n", ret);
 -- 
 2.43.0
 
