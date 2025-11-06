@@ -4,54 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1D5CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 14:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D665BCCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 14:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH120-00084i-RE; Thu, 06 Nov 2025 09:32:08 -0500
+	id 1vH12T-0008Ly-EB; Thu, 06 Nov 2025 09:32:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1vH11i-0007pe-9i; Thu, 06 Nov 2025 09:31:51 -0500
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vH12N-0008K1-CI
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 09:32:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1vH11f-0005hU-DO; Thu, 06 Nov 2025 09:31:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:
- Reply-To; bh=QxoVkjrrwSFvorZu1RQW5dBJPak1j9UpQhyBJQk3dEs=; b=gAH1M5NP7gph8Vp4
- uOYU5zNTTQMl2ZTmrssQUAlh8dNPT3aqzNO+T0CUwUa72fDVx1I1nWGEUjz2GRztysltPUxZZyHrR
- dm5hvWn6T0hwSXxoF3x6/9agKWPbdoQWjY6KrJ8Oe3xuTCbk9xxR00KP1Ar1hOhdwTzp/5vTYePZ5
- Jnb9rPzYf59uYwcbCEVRwsCNqWseZZeRfEHBZFGiX/4pMsd0uCmcin+JW71X+bQgvdNqginD8yw+3
- MKPrgHEp+CYqTtqTPcDpGDPS4wJMhCyX6kaMaAyaFO5go6mXIqO5PZXJUR0T0Aa7FXA+MKI8JrJVX
- b1cAUVZ2LgKpx/s8SA==;
-Received: from [167.98.27.226] (helo=[10.35.4.173])
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1vH11Q-007HaE-Jw; Thu, 06 Nov 2025 14:31:32 +0000
-Message-ID: <6d00d026-25e7-40a7-ad44-348a7aa4fc1a@codethink.co.uk>
-Date: Thu, 6 Nov 2025 14:31:32 +0000
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vH12J-0005kV-M6
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 09:32:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762439545;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iH/u78Yn1gdXcehix/fpXUcBGOTBioZ+JnzyJrUEyWM=;
+ b=X7JHQNaVu/7N8/ZsPYIB+2WL/8TG4hKR567xwekx5LHlVAXTraa6UurI54uGSqeNJysYSZ
+ hR+Dser84zY6/bpH6BPdjQ905+dbxaOGknq8Du4y2vLUm1Vomq/wJrFmr2jAdw1vrB5q9Z
+ Jt0EURiXMk+Ptp7ARx1vG8Dbli63OLc=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-427-tcYzcB7uOy2g8-t58wy9ww-1; Thu, 06 Nov 2025 09:32:24 -0500
+X-MC-Unique: tcYzcB7uOy2g8-t58wy9ww-1
+X-Mimecast-MFC-AGG-ID: tcYzcB7uOy2g8-t58wy9ww_1762439542
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-429f0907e13so343401f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 06:32:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762439542; x=1763044342; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=iH/u78Yn1gdXcehix/fpXUcBGOTBioZ+JnzyJrUEyWM=;
+ b=PGeqn5RrxUqJ31izGI+TfP55f3+VNowNKhNoyl78ZiAgX3A/s2d81PZCFj/EpvIhAl
+ +vVBLwtz0i5a8DdRgoaw676nia9wBblP5O4/GllPHZCRXJ0KjLIpyl49V+4YTuaFDhoS
+ OK+fdI5jOoqb6VW7lTrwgYdtvgJIjppFjaXZKxHRribbUXee8kdMRQ6NGs7BPkIfEQkP
+ n4yN22kVIq4sBgdY8d0f3UpO4Gsgeac2ACRqS0bHvpC/JIfB668vUS4/s7/ddUU1B1zh
+ BMSFDZkEU5xQZnri1epbCvuSQzYaUK0JHSfpibYm9mKcWJ/kDEYsTOG2LJM/VRIN6iIL
+ XFsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762439542; x=1763044342;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iH/u78Yn1gdXcehix/fpXUcBGOTBioZ+JnzyJrUEyWM=;
+ b=EuJbKwDP0RDQaUgFuOQuo9KmgZbctVTyAo6Gyis3BfenfiyR7CzxuXbYYRhtBwc+/R
+ 0NuVwBc9On4O12ADDd1N1nWADP2rKDQFCTFEFzQiVb0/KEIQ8iD/fNDi7gzVVe6KP8SW
+ EoEAAlIjr6wQZVYjrEJ95zlVsHMx0s23iL23h4hDSdMUhtbNCphO+hw4hVV/K+Nj95ko
+ xnBEnUDQfCabEJvZx8q+yHdos5NSrBmdZ4q/GyqYR3gRYYJrpw31GDM3ERcgpecsdKKF
+ w9LWmQ0v9W6AEJO1+AEdgWOlMLr31fwODVYrIGHiT8CUnVKwcEEqmrrb77VUU2c4RpHM
+ tbYw==
+X-Gm-Message-State: AOJu0Ywre/H5iW9/2Lo8K6AitH15B9YdTD4+DP52XtgjfLHJ858/gK6B
+ 6AqA9u2SEXJBhm0NwJVajk7ul106ER6gjt5GOsPgIUlSNbh8EJZpQzwpbR8fsiTsCRPpTsLr9zZ
+ g5o5ANNJgnBOTZLpX137aJIUjxt6QceaO6n5PG0k+IdbvkX0kJUCVB5eR
+X-Gm-Gg: ASbGncsXD3+S1XS246OLzLMvAbSzllNE++SKf1VO9zLQPsMGcbeAGF3UMpGtcbSDzFm
+ peq2pkNVF0TApjTOR1eT9vlKnwWG/bqzEvWhG5j4+GzESAvISHImCXz5A0iHNd/gBVlCOQ4D4yC
+ UJAvNgdzOcftHC9soqxTkspOxgSLhiZCCGmAs/WTka/Xfuqbiy35Jvr35KqgADf21F9/pSI09z6
+ zQ6iwy4ffHqIt4Zxp+l4bBBYmCj0a4qfZLKwEiJphelDBqfs32Rw4nrhQ0hFdsyKjjZ6of//iiR
+ OETEjrnakXf98SaSxMDIW+1rv0zz06v0xoqZl6DEWIiQ3EU37sROfTYsd6HMohevk01o5Fo1GWo
+ isQ==
+X-Received: by 2002:a05:6000:641:b0:427:603:715 with SMTP id
+ ffacd0b85a97d-429e32e468bmr5345712f8f.18.1762439542106; 
+ Thu, 06 Nov 2025 06:32:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6ZbjgDx/LRerXtliRAW1ebDp/cemckfkUjYUktLCitYiqURjwOymIox8RQiiq3G80CDy0MQ==
+X-Received: by 2002:a05:6000:641:b0:427:603:715 with SMTP id
+ ffacd0b85a97d-429e32e468bmr5345683f8f.18.1762439541664; 
+ Thu, 06 Nov 2025 06:32:21 -0800 (PST)
+Received: from sgarzare-redhat ([78.209.9.120])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429eb477203sm5542734f8f.29.2025.11.06.06.32.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Nov 2025 06:32:20 -0800 (PST)
+Date: Thu, 6 Nov 2025 15:32:14 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Robert Hoo <robert.hoo.linux@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: vsock support for communication between guests
+Message-ID: <pkglizwznrfj6fm7tdyew4tzmomgtp2cetxwfj2fx7ge4vtwhv@kdlj2jdxqheo>
+References: <1943ea16-c3cb-4442-be72-5719026ee13a@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Add RISCV Zilsd extension
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, alistair23@gmail.com
-References: <20251104120012.194899-1-roan.richmond@codethink.co.uk>
- <710d9b96-ac43-4d51-b210-65917bf91aa0@ventanamicro.com>
-Content-Language: en-US
-From: Roan Richmond <roan.richmond@codethink.co.uk>
-In-Reply-To: <710d9b96-ac43-4d51-b210-65917bf91aa0@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=roan.richmond@codethink.co.uk; helo=imap5.colo.codethink.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <1943ea16-c3cb-4442-be72-5719026ee13a@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,211 +118,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I understand your point about doing the check before the 2 ld_tl() and 
-the 2 dst_gpr() calls.
+On Fri, Oct 10, 2025 at 09:00:21PM +0800, Robert Hoo wrote:
+>Hi,
+>
+>Does vsock support communication between guests?
+>From man page, and my experiment, seems it doesn't.
+>But why not?
+>
 
-My reasoning for doing the check after was the wording of the specification:
-"LD instructions with destination x0 are processed as any other load, 
-but the result is discarded entirely and x1 is not written"
-This suggests that a load instruction is still dispatched but the result 
-is then discarded.
+It depends, vhost-user vsock device, supports it.
+See 
+https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock#sibling-vm-communication
 
-I am happy to move the check if you think it is definitely necessary, 
-otherwise I would prefer to leave it as happening after the calls to 
-ld_tl() and dst_gpr, so we are closer the the expected behavior.
+The vhost-vsock in-kernel device doesn't support it.
 
-Thanks,
-Roan
+The main problem is that vsock is designed for host<->guest 
+communication, so implementing a guest<->guest communication is 
+possible, but requires more configuration (e.g. some kind of firewall, 
+etc.) and also an extension to the address (see the required
+`.svm_flags = VMADDR_FLAG_TO_HOST` in the link).
 
-On 06/11/2025 12:17, Daniel Henrique Barboza wrote:
->
->
-> On 11/4/25 8:59 AM, Roan Richmond wrote:
->> This is based on v1.0 of the Zilsd extension [1].
->> The specification is listed as in the Ratified state [2],
->>   since Jan 30, 2025.
->>
->> [1]: https://github.com/riscv/riscv-zilsd
->> [2]: 
->> https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154861/RISC-V+Specs+Under+Development
->>
->> Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
->> ---
->>   target/riscv/cpu.c                      |  2 +
->>   target/riscv/cpu_cfg_fields.h.inc       |  1 +
->>   target/riscv/insn_trans/trans_rvi.c.inc | 56 ++++++++++++++++++++++++-
->>   3 files changed, 57 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index 73d4280d7c..6e0d37fb96 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -121,6 +121,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>       ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
->>       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, 
->> ext_zihintpause),
->>       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
->> +    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_13_0, ext_zilsd),
->>       ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
->>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
->>       ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
->> @@ -1247,6 +1248,7 @@ const RISCVCPUMultiExtConfig 
->> riscv_cpu_extensions[] = {
->>       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
->>       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
->>       MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
->> +    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
->>       MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
->>       MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
->>       MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
->> diff --git a/target/riscv/cpu_cfg_fields.h.inc 
->> b/target/riscv/cpu_cfg_fields.h.inc
->> index a154ecdc79..8d8e35e4cf 100644
->> --- a/target/riscv/cpu_cfg_fields.h.inc
->> +++ b/target/riscv/cpu_cfg_fields.h.inc
->> @@ -41,6 +41,7 @@ BOOL_FIELD(ext_zicond)
->>   BOOL_FIELD(ext_zihintntl)
->>   BOOL_FIELD(ext_zihintpause)
->>   BOOL_FIELD(ext_zihpm)
->> +BOOL_FIELD(ext_zilsd)
->>   BOOL_FIELD(ext_zimop)
->>   BOOL_FIELD(ext_zcmop)
->>   BOOL_FIELD(ext_ztso)
->> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc 
->> b/target/riscv/insn_trans/trans_rvi.c.inc
->> index 54b9b4f241..dcbb3811d9 100644
->> --- a/target/riscv/insn_trans/trans_rvi.c.inc
->> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
->> @@ -370,6 +370,27 @@ static bool gen_load_tl(DisasContext *ctx, 
->> arg_lb *a, MemOp memop)
->>       return true;
->>   }
->>   +/* Zilsd extension adds load/store double for 32bit arch */
->> +static bool gen_load_zilsd(DisasContext *ctx, arg_lb *a)
->> +{
->> +    TCGv dest_1 = dest_gpr(ctx, a->rd);
->> +    TCGv dest_2 = dest_gpr(ctx, (a->rd)+1);
->> +    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
->> +    TCGv addr_2 = get_address(ctx, a->rs1, (a->imm)+4);
->> +
->> +    tcg_gen_qemu_ld_tl(dest_1, addr_1, ctx->mem_idx, MO_SL);
->> +    tcg_gen_qemu_ld_tl(dest_2, addr_2, ctx->mem_idx, MO_SL);
->> +
->> +    /* If destination is x0 then result of the load is discarded */
->> +    if (a->rd == 0) {
->> +        return true;
->> +    }
->
-> Can't we exit earlier in this case? We're doing 2 dst_gpr() calls, 2 
-> get_address() and
-> 2 ld_tl() loads before checking a->rd == 0. Maybe something like this:
->
->
->> +    TCGv addr_1, addr_2, dest_1, dest_2;
->> +
->> +    /* If destination is x0 then result of the load is discarded */
->> +    if (a->rd == 0) {
->> +        return true;
->> +    }
->> +
->> +    dest_1 = dest_gpr(ctx, a->rd);
->> +    dest_2 = dest_gpr(ctx, (a->rd)+1);
->> +    addr_1 = get_address(ctx, a->rs1, a->imm);
->> +    addr_2 = get_address(ctx, a->rs1, (a->imm)+4);
->> +
->> +    tcg_gen_qemu_ld_tl(dest_1, addr_1, ctx->mem_idx, MO_SL);
->> +    tcg_gen_qemu_ld_tl(dest_2, addr_2, ctx->mem_idx, MO_SL);
->
->
-> Thanks,
->
-> Daniel
->
->
->
->> +
->> +    gen_set_gpr(ctx, a->rd, dest_1);
->> +    gen_set_gpr(ctx, a->rd+1, dest_2);
->> +    return true;
->> +}
->> +
->>   /* Compute only 64-bit addresses to use the address translation 
->> mechanism */
->>   static bool gen_load_i128(DisasContext *ctx, arg_lb *a, MemOp memop)
->>   {
->> @@ -409,6 +430,8 @@ static bool gen_load(DisasContext *ctx, arg_lb 
->> *a, MemOp memop)
->>       decode_save_opc(ctx, 0);
->>       if (get_xl(ctx) == MXL_RV128) {
->>           out = gen_load_i128(ctx, a, memop);
->> +    } else if (memop == MO_SQ && get_xl(ctx) == MXL_RV32) {
->> +        out = gen_load_zilsd(ctx, a);
->>       } else {
->>           out = gen_load_tl(ctx, a, memop);
->>       }
->> @@ -437,7 +460,10 @@ static bool trans_lw(DisasContext *ctx, arg_lw *a)
->>     static bool trans_ld(DisasContext *ctx, arg_ld *a)
->>   {
->> -    REQUIRE_64_OR_128BIT(ctx);
->> +    /* Check for Zilsd extension if 32bit */
->> +    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
->> +        return false;
->> +    }
->>       return gen_load(ctx, a, MO_SQ);
->>   }
->>   @@ -482,6 +508,27 @@ static bool gen_store_tl(DisasContext *ctx, 
->> arg_sb *a, MemOp memop)
->>       return true;
->>   }
->>   +/* Zilsd extension adds load/store double for 32bit arch */
->> +static bool gen_store_zilsd(DisasContext *ctx, arg_sb *a)
->> +{
->> +    TCGv data_1 = tcg_temp_new();
->> +    TCGv data_2 = tcg_temp_new();
->> +    if (a->rs2 != 0) {
->> +        data_1 = get_gpr(ctx, a->rs2, EXT_NONE);
->> +        data_2 = get_gpr(ctx, (a->rs2)+1, EXT_NONE);
->> +    }
->> +    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
->> +    TCGv addr_2 = get_address(ctx, a->rs1, (a->imm)+4);
->> +
->> +    if (ctx->ztso) {
->> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
->> +    }
->> +
->> +    tcg_gen_qemu_st_tl(data_1, addr_1, ctx->mem_idx, MO_SL);
->> +    tcg_gen_qemu_st_tl(data_2, addr_2, ctx->mem_idx, MO_SL);
->> +    return true;
->> +}
->> +
->>   static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
->>   {
->>       TCGv src1l = get_gpr(ctx, a->rs1, EXT_NONE);
->> @@ -511,6 +558,8 @@ static bool gen_store(DisasContext *ctx, arg_sb 
->> *a, MemOp memop)
->>       decode_save_opc(ctx, 0);
->>       if (get_xl(ctx) == MXL_RV128) {
->>           return gen_store_i128(ctx, a, memop);
->> +    } else if (memop == MO_UQ && get_xl(ctx) == MXL_RV32) {
->> +        return gen_store_zilsd(ctx, a);
->>       } else {
->>           return gen_store_tl(ctx, a, memop);
->>       }
->> @@ -533,7 +582,10 @@ static bool trans_sw(DisasContext *ctx, arg_sw *a)
->>     static bool trans_sd(DisasContext *ctx, arg_sd *a)
->>   {
->> -    REQUIRE_64_OR_128BIT(ctx);
->> +    /* Check for Zilsd extension if 32bit */
->> +    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
->> +        return false;
->> +    }
->>       return gen_store(ctx, a, MO_UQ);
->>   }
->
->
--- 
-Roan Richmond (he/him)
-Software Engineer
-Codethink Ltd
+The easy way to do that with vhost-vsock, is to use socat in the host to 
+concatenate 2 VMs (some examples here: 
+https://stefano-garzarella.github.io/posts/2021-01-22-socat-vsock/)
+
+Cheers,
+Stefano
 
 
