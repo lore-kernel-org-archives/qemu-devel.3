@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BABBCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E0C8CCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH22R-0000lc-Pu; Thu, 06 Nov 2025 10:36:39 -0500
+	id 1vH22U-0000uF-66; Thu, 06 Nov 2025 10:36:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vH22M-0000ix-Jp
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:34 -0500
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ id 1vH22P-0000la-Sx
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:38 -0500
+Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vH22L-0004VY-3K
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:34 -0500
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-27d3540a43fso11744275ad.3
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 07:36:32 -0800 (PST)
+ id 1vH22O-0004at-FI
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:37 -0500
+Received: by mail-pj1-x1044.google.com with SMTP id
+ 98e67ed59e1d1-3304dd2f119so940370a91.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 07:36:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762443391; x=1763048191; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VwA0RV+grU0SwvTFaw9mxNY1tj7GneKX5j6VPvaxFcs=;
- b=AX24XKF/Jw7vaddCb6z83ZJCsQqnI2QIGs+MjmvZNMbXezG9jNRZYD8he7gPDUcWxO
- yeQECO6oEwdur4D3FYn3SS5jGB+bi/7DWIFR9BVS0h2iua3j/sYtv8+rdTBxNWVKmQl3
- fRaN0jTwJcOSaDGfXI6VQo3kzudagGx3dOp2OUGZbkCVEPyL8STyef/jaFGRPqmhuYCX
- Kv/4m40YXhM9uhkGCifOtIkcj1kOwKdifGvDWNTrFjdugfEZG9qaS42HyAhKWxVOIIdL
- ZEKe6Jw8/g6jp8+IZmgf7uFDI++LYM+lhfBai6H4aiSj2UvVkdFbmJHcCg/8bonA6yCd
- 1NAA==
+ d=gmail.com; s=20230601; t=1762443395; x=1763048195; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aGOZc/fcqXpTWSt4XHsoE8Nyfs0gaudxJSOVopQZf0Y=;
+ b=YyCaGLBOJBrS37D01/xIdmCaWBeWDhf7NXQek6Hszrk9tGYQxD0Dc/s9sB+0L/mX9H
+ jrBx+s5wub2huN4vecgfQgf2H8n0LQcdnsjA5wZiNeSuN/goixAeStSwhP3ENX/w+qWS
+ Na5R2s6JA3A1JsdfqFAhIWAnQQOr9k1zBPFRRI7XgY8KGgzuWDdSIznFLUQErelEIxLY
+ S+teMki06Nr4VNO+VjF2TNm+e9X4xSvvVGXkA9s5Zb3JvrUJmWdi5vSfcZQmyEcDVXmt
+ lBHW976kLwdLaEu17hYnq5Slv+XPz7CYg9IsJTpKEkpFnWi1m37mj9t2DSOq12RAI6Xy
+ cMkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762443391; x=1763048191;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VwA0RV+grU0SwvTFaw9mxNY1tj7GneKX5j6VPvaxFcs=;
- b=k4ILs6wBzR+4P+IiHgRLXHpHqd+nEeML8DXT2+utiqf/Cw168jPt9cEh3S4YzY/P0+
- /9Ruvn9WGeyPV09FsHXDJydH+f659M7CgUwL3YOrqA0H6aiuweIHW/MQet4MqlEFjKUd
- Z4/gyfVCqPfUIVNswmFIsJ/wEpmwuHDuLio3KYaw8EYwSu/5mejSJ5V1TDs4sR+UqnHD
- cf6xFhHzwR4UOzjx3Do9xy8cIkLOrOKrbnLCwC0/3jlV/2fXRBVW1A/qdLbPlmzuVPBX
- YXZfv0UZei6CZ73gIrnzteKdZoiahzMyVqY34fhC4yDZcgPlYP5polFrpiVhKsABG5ED
- Fb8Q==
+ d=1e100.net; s=20230601; t=1762443395; x=1763048195;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aGOZc/fcqXpTWSt4XHsoE8Nyfs0gaudxJSOVopQZf0Y=;
+ b=YesbDEgzlc2dYaHIEchvaKiXcj/mfugtg1/vUWanF+SwEnB6URsqYtOFlhuHeYZo+J
+ RlsJe8ZRNFv52w5ddmG1Z41ltEz5Sl/QEBnR8h6/2+hOGIvUaOgWHHszf65jx+GvpD9J
+ p+J2jB/briHesqx2gq6IcOq3p1qKb/yhlcWZihYI/Y8K+ikC5KpiqavxvFO3RKlu7Gjc
+ GY3kc1Df594I5qsLHqiHu277fy/PvcEBxusEx9m98tRm57FZV50RxxNnWuG4Jf0bVQms
+ 6fXAX1I9VzlQ5/Yn9Ahzugku1fz4AeEbt8tTPsVWcEd8+EtrD5wqNyTtR8leeYeizyEg
+ icxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmq08MWpS8UsmALd9gYGtevNJ0JRc5oYq1IqJAwBgkd9imwLhQY0J4BfYIgN6hHRa3tbQmEHwVjxjM@nongnu.org
-X-Gm-Message-State: AOJu0YzujKkJ5Sg0ARwyEMuQXx5KOF5rBw7rToE+GVTJOcbdeucEAue5
- gBMKr0hGJkzaTbOkvNnSTXRN1l/hTvtPbaeVfk5BZM1GvAE1EgXECbU+
-X-Gm-Gg: ASbGncuyGLTRm9Kr7jh03pHKv4QxWp+JXgszaO/DXzNhYuzDfeYmoCoRuRRDTweqQtW
- Q9WVKt2donrT/eYu9oyYTlaKBFct0UNkbweYhZX3D2ldT73HVRGS9HkhXMdCdjlYvqnV7K39Mdk
- 2+vBVFQQTZZzEN4UKX5ZbU4h5OAYO2K0NtJyibUzHIDKJs2DXSg4hUQ4MZ+seHT6JU9s208nSL0
- 3EmGYjgvYVPCY8uX1LIEI1I/fxVX0PuHMu3Rk7i1ZR4LpFJgN82Y0pZASjzJHz3y5Inx286az6t
- Kek79RI1e+a1Sa5y+iux+Xyec77DGZB+kNlM+0JeIze96pjLH2XsR+bcsxuJ+KvadKtJnOJQr2x
- XDVp3lljVnTRN3QnXQsa+6xClbYPbpgcuFwhmV1hdvb/+UQxMLpTF4mNLCamLCzmPldodMMG+8j
- QDeEvrSCavcsXDz/lRW6nF7Sc8Qg2oVe4SbAan08yTeTqJYp68bw==
-X-Google-Smtp-Source: AGHT+IFQ4DG8A4GUr+83sXSQFMmSvkZfDPrtlgUA/iEBmuVQfzhd1NntyNLpl4D6LdZ/WpIWeahPzQ==
-X-Received: by 2002:a17:902:ec90:b0:295:68dd:4ebf with SMTP id
- d9443c01a7336-2962ad26752mr109444795ad.16.1762443391059; 
- Thu, 06 Nov 2025 07:36:31 -0800 (PST)
+ AJvYcCX7xjiux404l9x2TaVxNohB1lUW8VzUDestE/3e5Pojkg4zsd+ys/t1E1lcBcUG62WieyY3EpnsrLd7@nongnu.org
+X-Gm-Message-State: AOJu0Yw67wuPGmx69qX0d76ESYm/ZcBnMcgEYc2Agpae3iiOl/VMqReu
+ dUosN9nQyH25vpQv84D0ZjJY2EponpZcREk83OPoo4nUfZgga4Q8lZFd
+X-Gm-Gg: ASbGnctawfU1TPe7vMjnC/lvNLZ+vqkDRzTKaVGNyIC2+t9Rszfaw55U0B/HJGQdJr/
+ 0obBRw0MhtRaiyg1ckx1jUEnJL/fx3rFS9weTeXTcDGnAGCIIhQW+Kgt2xPrwt/KQR2XevxTXGl
+ hvDf/RGb63Q4RhsXMAqspDAd0P1n/DLQQCdsMY3nHnhqogz+A+rvNENdVZ09s0IVPECYdsMFquS
+ OyFCTugU/EQUGDecx3zaeGBu2Sr1ycsIKQQOrNODFdTJL7W6zlyvvha1GenPZLebuPX/DRWgLk8
+ k7te8aEOR4bUkrDYS47zeU20AcOG5xzrx7ZaMc7YEV3MI76yFh50+Lm0Wq4ZB1GrAAW9brpzf0x
+ 5ZHLD2teVKkkbP0umc+Z1plDsquWllKE7cLl7svlMtoIp4Mw3zqhVPceZc7XwTDrLU/miyH9If4
+ l8CqFQH+uMwbhju4GS7ryntNvthpWHpPS1/xKsW6s=
+X-Google-Smtp-Source: AGHT+IEWSqIuNmmqb/XkLYrY299c44JVi5aY0vub1MQQtPVxV2EDd8pDnyOPv1HJlyR5eJlGczaWIw==
+X-Received: by 2002:a17:90b:5250:b0:33b:ba40:c3f with SMTP id
+ 98e67ed59e1d1-341a6c091cfmr8472542a91.5.1762443394853; 
+ Thu, 06 Nov 2025 07:36:34 -0800 (PST)
 Received: from fedora.. ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-341a6993b43sm6643437a91.15.2025.11.06.07.36.27
+ 98e67ed59e1d1-341a6993b43sm6643437a91.15.2025.11.06.07.36.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Nov 2025 07:36:30 -0800 (PST)
+ Thu, 06 Nov 2025 07:36:34 -0800 (PST)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 To: mark.cave-ayland@ilande.co.uk, sarkarsoumyajyoti23@gmail.com,
  richard.henderson@linaro.org, peter.maydell@linaro.org, deller@gmx.de,
  qemu-devel@nongnu.org, linux@roeck-us.net
 Cc: Jason Wang <jasowang@redhat.com>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH v4 1/2] i82596: Removing crc_valid variable
-Date: Thu,  6 Nov 2025 21:06:23 +0530
-Message-ID: <20251106153624.29424-1-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v4 2/2] i82596: Adding proper break-statement functionality in
+ RX functions
+Date: Thu,  6 Nov 2025 21:06:24 +0530
+Message-ID: <20251106153624.29424-2-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20251106153624.29424-1-soumyajyotisarkar23@gmail.com>
+References: <20251106153624.29424-1-soumyajyotisarkar23@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pl1-x644.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pj1-x1044.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,59 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While testing and developing for the HPUX 10.20 the crc_valid variable
-was used in performing CRC checks for the loopback ,and expected the
-CRC to be absent on specific condition and would skip some
-functional checks for the loopback packet, so initially it added
-a if-clause that would skip the checks preventing HPUX from
-getting stuck at phase loopback.
+The initial issue was the break statement exited out of the for loop
+unconditionally.
+Now, the break only happens if rfd is null, out_of_resources or
+bytes_copied < payload_size.
 
-However, we can remove it.
-
-Signed-off-by:Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 ---
- hw/net/i82596.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ hw/net/i82596.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/hw/net/i82596.c b/hw/net/i82596.c
-index 0d9129cb68..f0b22093f9 100644
+index f0b22093f9..541ad7dad3 100644
 --- a/hw/net/i82596.c
 +++ b/hw/net/i82596.c
-@@ -992,7 +992,6 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
-     size_t payload_size = 0;
-     size_t bytes_copied = 0;
-     const uint8_t *packet_data = buf;
--    bool crc_valid = true;
-     bool out_of_resources = false;
-     size_t crc_size = i82596_get_crc_size(s);
+@@ -1092,6 +1092,7 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+                     rx_status |= RFD_STATUS_TRUNC | RFD_STATUS_NOBUFS;
+                     i82596_record_error(s, RFD_STATUS_NOBUFS, false);
+                     packet_completed = true;
++                    break;
+                 } else {
+                     hwaddr remaining_rbd = I596_NULL;
+                     size_t rbd_bytes = i82596_rx_copy_to_rbds(
+@@ -1118,17 +1119,18 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+                         i82596_record_error(s, RFD_STATUS_NOBUFS, false);
+                         rx_status |= RFD_STATUS_TRUNC | RFD_STATUS_NOBUFS;
+                         packet_completed = true;
++                        break;
+                     }
  
-@@ -1155,16 +1154,11 @@ rx_complete:
+                     if (bytes_copied < payload_size) {
+                         trace_i82596_rx_incomplete(bytes_copied, payload_size);
+                         rx_status |= RFD_STATUS_TRUNC;
+                         packet_completed = true;
++                        break;
+                     }
+                 }
+             }
          }
-     }
+-        break;
  
--    if (packet_completed && crc_valid) {
-+    if (packet_completed) {
-         rx_status |= STAT_C | STAT_OK;
-         if (is_broadcast) {
-             rx_status |= 0x0001;
-         }
--    } else if (packet_completed) {
--        rx_status |= STAT_C;
--        if (!crc_valid) {
--            rx_status |= RX_CRC_ERRORS;
--        }
-     } else {
-         rx_status |= STAT_B;
-     }
-@@ -1187,7 +1181,7 @@ rx_complete:
-         return size;
-     }
+     } while (bytes_copied < payload_size);
  
--    if (packet_completed && crc_valid && s->rx_status == RX_READY) {
-+    if (packet_completed && s->rx_status == RX_READY) {
-         uint32_t next_rfd_addr = i82596_translate_address(s, rfd.link, false);
-         if (next_rfd_addr != 0 && next_rfd_addr != I596_NULL) {
-             set_uint32(s->scb + 8, next_rfd_addr);
 -- 
 2.49.0
 
