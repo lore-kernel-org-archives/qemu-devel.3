@@ -4,112 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C218BCCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 21:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BD4CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 21:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH7lf-000810-IK; Thu, 06 Nov 2025 16:43:43 -0500
+	id 1vH7ui-0002Ry-LS; Thu, 06 Nov 2025 16:53:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vH7ld-00080X-8e
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 16:43:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vH7ug-0002Rq-2n
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 16:53:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vH7la-0004LT-Rl
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 16:43:41 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vH7uc-00077y-Ii
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 16:53:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762465416;
+ s=mimecast20190719; t=1762465976;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hhyMxYpvVV8QSljFVPm/lgTaYlsrg58A49h/Yxit8mU=;
- b=gptA6gwNpJn6NNpaJdnbf44yorcP0scMx3bHlS7fdfD8XRmxy2XNUSBwcWX1RneqKdYTdn
- F6KYXlJ9/MMRvFPR0iIRk9iZCC72bGbIokK4omDIKCHqxpg53S6/Y69Iu7Y++PS/OtvFN0
- Up0syt1ZLEgbAvXHrbizKC7dP9Fbcgs=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sFqQ3k8ew5sAZC8AgtUBIqhAthez3TA7YBxoFYPmzV8=;
+ b=Y4kEnfErdXX/VHerCv8NFoieAaeAxgJrE0UYjZ8E2KS+PaDCop2uuBZAcAdUPVITbw7696
+ nGwxVjaEQrs9aNeee25ODOeah8VwwgpZ1UDnZTw2KCA/59KEB94VlBx3v4JCq/h2hcBy1f
+ ziSRn0N/bApf/n0LTuAHDoqOAS9M2xw=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-uggWsNBCO9KYsncMuSVw6Q-1; Thu, 06 Nov 2025 16:43:34 -0500
-X-MC-Unique: uggWsNBCO9KYsncMuSVw6Q-1
-X-Mimecast-MFC-AGG-ID: uggWsNBCO9KYsncMuSVw6Q_1762465414
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-28eb14e3cafso2015015ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 13:43:34 -0800 (PST)
+ us-mta-267-WC3Sdux_PxS0mwYsFEMlKw-1; Thu, 06 Nov 2025 16:52:55 -0500
+X-MC-Unique: WC3Sdux_PxS0mwYsFEMlKw-1
+X-Mimecast-MFC-AGG-ID: WC3Sdux_PxS0mwYsFEMlKw_1762465975
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8805713e84fso3231456d6.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 13:52:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762465413; x=1763070213; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hhyMxYpvVV8QSljFVPm/lgTaYlsrg58A49h/Yxit8mU=;
- b=PHl/7gzPLfTTK8aOAuqBJvLdd25TU7IGX3aoqz/7VYIzvJ+avjfygYjaNiN8+2F3cn
- HB5hbwXLdEWJhKp0pQ4vM3wBpknfkl9JiiHWgY+ALgiv1QRJVEeM979vRpChi9P/pANz
- 0gVMo7pQLTpolI4APRxN8TUw0pN7OzbAQFHkpQKv0Kg/6dCNER4S3F71SaA8CfS179vK
- g9bA5nhjhL4kLPP8un1OKsI4Yyn6wAFDGGejo5k0yZPOS9A6BvDf/koeLR2Wxb+FyGwV
- xUOY/iNPvrP5+YH/uWketcqQoD5hYbe9Idw9wYlnSAxgclIB0kC6aLQUDyEeggvdMPlu
- IGPw==
+ d=redhat.com; s=google; t=1762465975; x=1763070775; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=sFqQ3k8ew5sAZC8AgtUBIqhAthez3TA7YBxoFYPmzV8=;
+ b=lXT+ooKq+7i2hlnueLCcMBlMl7oxJ3WqVq7mqsLkzxD3OqvhWBQZ1pQoI81lXndP9S
+ PMMicaIpoDNTQIs+RJBmLbDudEvJw8cC73SdhjVtlpT29oNhUWSdaAtvwLg8m+jrEUII
+ Omeupy3iHI3juuYM534gq14hKRZWGdVSW+eGjnW5EiycOEguqDK+MRwhybYZ+cn6elOs
+ Qwq5PefWjOke85NcIqo3ZssJLPIlJ/WN8Dtq4OeZ/BytIDZLSbUtEgKK1527LohckT0m
+ pPRmeh6JgJsLwyLC5fHMUdA4wSEJHqUCvjvKTKiSPYzfIrpiPPQ1Y2Hk7zMjfD1aX033
+ TlJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762465413; x=1763070213;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hhyMxYpvVV8QSljFVPm/lgTaYlsrg58A49h/Yxit8mU=;
- b=KsgsLpYu1z54NaKrG/GIXutuQGgDHpEzSNFKtiVS5IFf/JzYOJ+SRkHCedCqJnIKoz
- V5qzmwq8Ptu8YKGBjp63h5rLH6kgjXafD0IO6bch3rrabW/X3PeeNB8U4zsLYf1WcLEM
- /4ru1PRajfZL2pTDkhqytYiDflUBgwrY9GObSwolnZsheMWHbxACzu0AXX7J0ndrn0ss
- xVPbGZe2dOhEfk7B8H10AWzCLn6K7KB+yaI4nlqWcA773dctQlCceoVX5t1j70ZmhLDf
- tzWXVMV1Zk07PuqNaKAzJO0mvJQ0Kr9D+eZyFRFjTD6OcY9LAlBuYpP9LreyKvNOvafz
- MTMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUjzVk0ESOvJmciJCjQ3aJ+CF5G6yk/WOd0xh5DAhJ2/bBfosigYyCyljvQ1shyt2ztquOh0dDHslB@nongnu.org
-X-Gm-Message-State: AOJu0YwdNX47iNuP6Qlzh+/ZnoEkOV0/W43tummTDOWHqmn/bcGIPfKv
- yROKR9P3n3w2fIaMS1VYE0w/ZnvKE8jlGgHCF5Sct48GpYomdnQfkJuVTEf1AZgFco176oqHeTh
- jOjy76pKU1staJLkGaatJgzjoxEpPM3QlrkKDORhr5cvKCOnq/meLTGQK
-X-Gm-Gg: ASbGncuKWe4WPSSmuI8c/fib1j+rCPsFMSoNP1828Zg0HAEWJ45A57tr5hiE/O3cpc6
- mcvxkS48DcMjZ1ZcXZSVLWHO+gJBib1AvTgo+rXBBWlQmJ/bAFh5teylCoehM0HtqMm/Gf2b+Xo
- SlXMHtVb7ipHlI+67wq+uDRSvd4nvFWJSxmzE23dA4HdT/osUDYt6iRZE35AZkjltSI7mAgBmlK
- 90UjYbYZtu5DY3ApbHkhB6EinPJo7djAnijoFajoOj5rHaLDfligTEfOWZKiKs6UPWHteCSLy85
- jxVksIB9eShItICCWauJwmz55OOEmmjN1Ih9r0EQYLVpdPX/UhmyBMvIR7Z7e3mi6fta3fjK1fP
- H0p+nDsrsOP3IAqU/0wdqaTNZxeaGO7NG+ygZBkU=
-X-Received: by 2002:a17:902:d50e:b0:295:8662:6a4e with SMTP id
- d9443c01a7336-297c046b8e1mr12465405ad.47.1762465413482; 
- Thu, 06 Nov 2025 13:43:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEiJevJOlGLgiNfSl78pGIFviTorTwqx4hz2n5lSPpdiz5x2HB/+WLFMBR0Tt7QCZ8C2mowOg==
-X-Received: by 2002:a17:902:d50e:b0:295:8662:6a4e with SMTP id
- d9443c01a7336-297c046b8e1mr12465005ad.47.1762465412949; 
- Thu, 06 Nov 2025 13:43:32 -0800 (PST)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29651ca1eb7sm38931385ad.89.2025.11.06.13.43.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Nov 2025 13:43:32 -0800 (PST)
-Message-ID: <bc9c67c9-3fda-4e90-b13d-d6c25cfa8f8c@redhat.com>
-Date: Fri, 7 Nov 2025 07:43:26 +1000
+ d=1e100.net; s=20230601; t=1762465975; x=1763070775;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sFqQ3k8ew5sAZC8AgtUBIqhAthez3TA7YBxoFYPmzV8=;
+ b=mt+yt3Ep3myvWSkWR52c+vaouwOg9Bi7sKAX6w5fbA5ov8ZYNiPGV7ONc1NjE6479/
+ ZEkLvnR8/MZ7UrIyLX+gfhSnWLZpqNGZGY2MfoBx2DLUoN47r8g1xN7Q3ylhccgW3FH5
+ 6YcA9PW2rkI8kq0/j7oPquIGhQl1d05G+TqH9zLV/9tb7MjneK0NILhdLSal+Q1veEbl
+ yzTyyzac+eh1aVXZNvBPeX31r0pd6P5WaqMF4+2upokFSV2JnjZ5gNYBefqYT7ETtlXM
+ XXfHouv0uOcTaLu1sUUFwQhpFKQROo+nbS6j44alU0Hof+GrksYCOwZ9VwrXmuztQsgs
+ cI+g==
+X-Gm-Message-State: AOJu0Yyy+ATofpKELJUVZTP+EvD6qnRiT7RCiM0LzGBOJf6Jnz7X/J3x
+ RTsSO7rxuHzvJFlz93LUrZgzdvfKlZ5kmCmtTHJbTYdGvsgmC1TxrqGc2bHwFJcTZd0LFNHdufW
+ A/rgOqo5ZwBmMylRocgRDFFi6AJQj9bS1xzJy6udWNPjzk5HggQqEXzqO
+X-Gm-Gg: ASbGnct/4iw89pqhLCV/TVd4DT97XDHoyXLsR0oyqwCzy2DL5Xm4Zj6UKo9R/c0saJV
+ SrNP3G7a06tPhxyluzmv77D81BXyVByge09JtWUAA/2trNiHEIvxui7Ud9JYQLj2nG57/JzGdKY
+ lfgjXEyc/L2jy4pziT8z/xNeIYKwkiGTwXA5OI2x13+Z2Biprvtaq1zLwRjFr/qUk1cGvZhg7NG
+ IPp+d0/VOkAt1mlYV5jhUGa/KhbC01MWBT3MHTfRuBtfbJPanlY8ecvfmWRfywgnRzQXjbFPGvP
+ 9PFVqgVg8nzwUG2XmsOs3iVSPtTBiS+XxYRPLDoUVksOUCdOz66o5UgetQ9UIX3gqzw=
+X-Received: by 2002:a05:6214:20c4:b0:880:545b:ab72 with SMTP id
+ 6a1803df08f44-8817674011bmr15494746d6.36.1762465974661; 
+ Thu, 06 Nov 2025 13:52:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQqm4NA5lcp1wm3QBHHIiQNGE4ghkxw5zdcFSwzJ3BNRvEzkcEitVHR/d0G8Lr+u2ji1mSbQ==
+X-Received: by 2002:a05:6214:20c4:b0:880:545b:ab72 with SMTP id
+ 6a1803df08f44-8817674011bmr15494526d6.36.1762465974143; 
+ Thu, 06 Nov 2025 13:52:54 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-880829c55ddsm26208866d6.37.2025.11.06.13.52.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Nov 2025 13:52:53 -0800 (PST)
+Date: Thu, 6 Nov 2025 16:52:51 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+Message-ID: <aQ0Ys09WtlSPoapm@x1.local>
+References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <aQJbd5qYR10qcbr7@x1.local>
+ <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
+ <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
- CPERs injection
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
- anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
- pbonzini@redhat.com, mchehab+huawei@kernel.org, Jonathan.Cameron@huawei.com,
- shan.gavin@gmail.com
-References: <20251007060810.258536-1-gshan@redhat.com>
- <20251007060810.258536-4-gshan@redhat.com> <20251017162746.2a99015b@fedora>
- <a635de53-71fa-4edb-87c0-8775722c284d@redhat.com>
- <20251031145539.3551b0a5@fedora>
- <88a41137-d5fb-4b61-a3f2-dd73133c17ec@redhat.com>
- <20251103105216.1f4241d7@fedora>
- <1cde8845-d72f-494f-b7b2-3d7329a7d1c0@redhat.com>
- <20251106085748.2e5f6681@fedora>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20251106085748.2e5f6681@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -118,7 +105,7 @@ X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,256 +121,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+On Thu, Nov 06, 2025 at 10:40:52AM +0900, Akihiko Odaki wrote:
+> > > > > +        /*
+> > > > > +         * Ensure that the forced variable has not been set after fetching
+> > > > > +         * rcu_call_count; otherwise we may get confused by a force quiescent
+> > > > > +         * state request for an element later than n.
+> > > > > +         */
+> > > > > +        while (qatomic_xchg(&forced, false)) {
+> > > > > +            sleep = false;
+> > > > > +            n = qatomic_read(&rcu_call_count);
+> > > > >            }
+> > > > 
+> > > > This is pretty tricky, and I wonder if it will make the code easier to read
+> > > > if we convert the sync_event to be a semaphore instead.  When as a sem, it
+> > > > will take account of whatever kick to it, either a call_rcu1() or an
+> > > > enforced rcu flush, so that we don't need to reset it.  Meanwhile, we don't
+> > > > worry on an slightly outdated "n" read because the 2nd round of sem_wait()
+> > > > will catch that new "n".
+> > > > 
+> > > > Instead, worst case is rcu thread runs one more round without seeing
+> > > > callbacks on the queue.
+> > > > 
+> > > > I'm not sure if that could help simplying code, maybe also make it less
+> > > > error-prone.
+> > > 
+> > > Semaphore is not applicable here because it will not de-duplicate concurrent
+> > > kicks of RCU threads.
+> > 
+> > Why concurrent kicks of rcu threads is a problem?  QemuSemaphore is
+> > thread-safe itself, meanwhile IIUC it only still causes call_rcu_thread()
+> > loops some more rounds reading "n", which looks all safe. No?
+> 
+> It is safe but incurs overheads and confusing. QemuEvent represents the
+> boolean semantics better.
+> 
+> I also have difficulty to understand how converting sync_event to a
+> semaphore simplifies the code. Perhaps some (pseudo)code to show how the
+> code will look like may be useful.
 
-On 11/6/25 5:57 PM, Igor Mammedov wrote:
-> On Tue, 4 Nov 2025 09:51:42 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
-> 
->> On 11/3/25 7:52 PM, Igor Mammedov wrote:
->>> On Mon, 3 Nov 2025 09:02:54 +1000
->>> Gavin Shan <gshan@redhat.com> wrote:
->>>    
->>>> On 10/31/25 11:55 PM, Igor Mammedov wrote:
->>>>> On Sun, 19 Oct 2025 10:36:16 +1000
->>>>> Gavin Shan <gshan@redhat.com> wrote:
->>>>>> On 10/18/25 12:27 AM, Igor Mammedov wrote:
->>>>>>> On Tue,  7 Oct 2025 16:08:10 +1000
->>>>>>> Gavin Shan <gshan@redhat.com> wrote:
->>>>>>>          
->>>>>>>> In the combination of 64KB host and 4KB guest, a problematic host page
->>>>>>>> affects 16x guest pages. In this specific case, it's reasonable to
->>>>>>>> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
->>>>>>>> dump due to the current error can't be delivered as the previous error
->>>>>>>> isn't acknoledges. It's caused by the nature the host page can be
->>>>>>>> accessed in parallel due to the mismatched host and guest page sizes.
->>>>>>>
->>>>>>> can you explain a bit more what goes wrong?
->>>>>>>
->>>>>>> I'm especially interested in parallel access you've mentioned
->>>>>>> and why batch adding error records is needed
->>>>>>> as opposed to adding records every time invalid access happens?
->>>>>>>
->>>>>>> PS:
->>>>>>> Assume I don't remember details on how HEST works,
->>>>>>> Answering it in this format also should improve commit message
->>>>>>> making it more digestible for uninitiated.
->>>>>>>          
->>>>>>
->>>>>> Thanks for your review and I'm trying to answer your question below. Please let
->>>>>> me know if there are more questions.
->>>>>>
->>>>>> There are two signals (BUS_MCEERR_AR and BUS_MCEERR_AO) and BUS_MCEERR_AR is
->>>>>> concerned here. This signal BUS_MCEERR_AR is sent by host's stage2 page fault
->>>>>> handler when the resolved host page has been marked as marked as poisoned.
->>>>>> The stage2 page fault handler is invoked on every access to the host page.
->>>>>>
->>>>>> In the combination where host and guest has 64KB and 4KB separately, A 64KB
->>>>>> host page corresponds to 16x consecutive 4KB guest pages. It means we're
->>>>>> accessing the 64KB host page when any of those 16x consecutive 4KB guest pages
->>>>>> is accessed. In other words, a problematic 64KB host page affects the accesses
->>>>>> on 16x 4KB guest pages. Those 16x 4KB guest pages can be owned by different
->>>>>> threads on the guest and they run in parallel, potentially to access those
->>>>>> 16x 4KB guest pages in parallel. It potentially leading to 16x BUS_MCEERR_AR
->>>>>> signals at one point.
->>>>>>
->>>>>> In current implementation, the error record is built as the following calltrace
->>>>>> indicates. There are 16 error records in the extreme case (parallel accesses on
->>>>>> 16x 4KB guest pages, mapped to one 64KB host page). However, we can't handle
->>>>>> multiple error records at once due to the acknowledgement mechanism in
->>>>>> ghes_record_cper_errors(). For example, the first error record has been sent,
->>>>>> but not consumed by the guest yet. We fail to send the second error record.
->>>>>>
->>>>>> kvm_arch_on_sigbus_vcpu
->>>>>>       acpi_ghes_memory_errors
->>>>>>         ghes_gen_err_data_uncorrectable_recoverable      // Generic Error Data Entry
->>>>>>         acpi_ghes_build_append_mem_cper                  // Memory Error
->>>>>>         ghes_record_cper_errors
->>>>>>           
->>>>>> So this series improves this situation by simply sending 16x error records in
->>>>>> one shot for the combination of 64KB host + 4KB guest.
->>>>>
->>>>> 1) What I'm concerned about is that it target one specific case only.
->>>>> Imagine if 1st cpu get error on page1 and another on page2=(page1+host_page_size)
->>>>> and so on for other CPUs. Then we are back where we were before this series.
->>>>>
->>>>> Also in abstract future when ARM gets 1Gb pages, that won't scale well.
->>>>>
->>>>> Can we instead of making up CPERs to cover whole host page,
->>>>> create 1/vcpu GHES source?
->>>>> That way when vcpu trips over bad page, it would have its own
->>>>> error status block to put errors in.
->>>>> That would address [1] and deterministically scale
->>>>> (well assuming that multiple SEA error sources are possible in theory)
->>>>>       
->>>>
->>>> I think it's a good idea to have individual error source for each vCPU. In this
->>>> way, the read_ack_reg won't be a limitation. I hope Jonathan is ok to this scheme.
->>>>
->>>> Currently, we have two (fixed) error sources like below. I assume the index of
->>>> the error source per vCPU will starts from (ACPI_HEST_SRC_ID_QMP + 1) based on
->>>> CPUState::cpu_index.
->>>
->>> I'd suggest ditch cpu index and use arch_id instead.
->>>    
->>
->> arch_id, which is returned from CPUClass::get_arch_id(), is uint64_t. The error
->> source index is uint16_t, as defined in ACPI spec 6.5 (section 18.3.2.7 Generic
->> Hardware Error Source). So I think CPUState::cpu_index is the appropriate error
->> source index.
-> 
-> while for ARM cpu_index might work, it's not stable on targets where CPU hotplug
-> exists. Given it's generic ACPI code, It would be better to take this consideration
-> into account.
-> 
-> (aka make a map of arch_id to src_id if necessary)
-> 
+I prepared a patch on top of your current patchset to show what I meant.  I
+also added comments and some test results showing why I think it might be
+fine that the sem overhead should be small.
 
-Yes, but it's a another factor that I prefer the current design (send 16x errors
-at once). Igor, v3 has been posted, please help to review when getting a chance,
-thanks a lot.
+In short, I tested a VM with 8 vCPUs and 4G mem, booting Linux and properly
+poweroff, I only saw <1000 rcu_call1 users in total.  That should be the
+max-bound of sem overhead on looping in rcu thread.
 
-https://lists.nongnu.org/archive/html/qemu-arm/2025-11/msg00264.html
+It's in patch format but still treat it as a comment instead to discuss
+with you.  Attaching it is just easier for me.
+
+===8<===
+From 71f15ed19050a973088352a8d71b6cc6b7b5f7cf Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Thu, 6 Nov 2025 16:03:00 -0500
+Subject: [PATCH] rcu: Make sync_event a semaphore
+
+It could simply all reset logic, especially after enforced rcu is
+introduced we'll also need a tweak to re-read "n", which can be avoided too
+when with a sem.
+
+However, the sem can introduce an overhead in high frequecy rcu frees.
+This patch is drafted with the assumption that rcu free is at least very
+rare in QEMU, hence it's not a problem.
+
+When I tested with this command:
+
+qemu-system-x86_64 -M q35,kernel-irqchip=split,suppress-vmdesc=on -smp 8 \
+  -m 4G -msg timestamp=on -name peter-vm,debug-threads=on -cpu Nehalem \
+  -accel kvm -qmp unix:/tmp/peter.sock,server,nowait -nographic \
+  -monitor telnet::6666,server,nowait -netdev user,id=net0,hostfwd=tcp::5555-:22
+  -device e1000,netdev=net0 -device virtio-balloon $DISK
+
+I booted a pre-installed Linux, login and poweroff, wait until VM
+completely shutdowns.  I captured less than 1000 rcu_free1() calls in
+summary.  It means for the whole lifetime of such VM the max overhead of
+the call_rcu_thread() loop reading rcu_call_count will be 1000 loops.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ util/rcu.c | 36 ++++++++----------------------------
+ 1 file changed, 8 insertions(+), 28 deletions(-)
+
+diff --git a/util/rcu.c b/util/rcu.c
+index 85f9333f5d..dfe031a5c9 100644
+--- a/util/rcu.c
++++ b/util/rcu.c
+@@ -54,7 +54,7 @@ static int rcu_call_count;
+ static QemuMutex rcu_registry_lock;
+ 
+ /* Set when the forced variable is set or rcu_call_count becomes non-zero. */
+-static QemuEvent sync_event;
++static QemuSemaphore sync_event;
+ 
+ /*
+  * Check whether a quiescent state was crossed between the beginning of
+@@ -80,7 +80,7 @@ static ThreadList registry = QLIST_HEAD_INITIALIZER(registry);
+ void force_rcu(void)
+ {
+     qatomic_set(&forced, true);
+-    qemu_event_set(&sync_event);
++    qemu_sem_post(&sync_event);
+ }
+ 
+ /* Wait for previous parity/grace period to be empty of readers.  */
+@@ -148,7 +148,7 @@ static void wait_for_readers(bool sleep)
+              */
+             qemu_event_reset(&rcu_gp_event);
+         } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+-                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
++                   !sleeps || qemu_sem_timedwait(&sync_event, 10)) {
+             /*
+              * Now one of the following heuristical conditions is satisfied:
+              * - A decent number of callbacks piled up.
+@@ -286,7 +286,6 @@ static void *call_rcu_thread(void *opaque)
+     rcu_register_thread();
+ 
+     for (;;) {
+-        bool sleep = true;
+         int n;
+ 
+         /*
+@@ -294,7 +293,6 @@ static void *call_rcu_thread(void *opaque)
+          * added before enter_qs() starts.
+          */
+         for (;;) {
+-            qemu_event_reset(&sync_event);
+             n = qatomic_read(&rcu_call_count);
+             if (n) {
+                 break;
+@@ -303,36 +301,19 @@ static void *call_rcu_thread(void *opaque)
+ #if defined(CONFIG_MALLOC_TRIM)
+             malloc_trim(4 * 1024 * 1024);
+ #endif
+-            qemu_event_wait(&sync_event);
++            qemu_sem_wait(&sync_event);
+         }
+ 
+-        /*
+-         * Ensure that an event for a rcu_call_count change will not interrupt
+-         * wait_for_readers().
+-         */
+-        qemu_event_reset(&sync_event);
+-
+-        /*
+-         * Ensure that the forced variable has not been set after fetching
+-         * rcu_call_count; otherwise we may get confused by a force quiescent
+-         * state request for an element later than n.
+-         */
+-        while (qatomic_xchg(&forced, false)) {
+-            sleep = false;
+-            n = qatomic_read(&rcu_call_count);
+-        }
+-
+-        enter_qs(sleep);
++        enter_qs(!qatomic_xchg(&forced, false));
+         qatomic_sub(&rcu_call_count, n);
+         bql_lock();
+         while (n > 0) {
+             node = try_dequeue();
+             while (!node) {
+                 bql_unlock();
+-                qemu_event_reset(&sync_event);
+                 node = try_dequeue();
+                 if (!node) {
+-                    qemu_event_wait(&sync_event);
++                    qemu_sem_wait(&sync_event);
+                     node = try_dequeue();
+                 }
+                 bql_lock();
+@@ -352,7 +333,7 @@ void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
+     enqueue(node);
+ 
+     if (!qatomic_fetch_inc(&rcu_call_count)) {
+-        qemu_event_set(&sync_event);
++        qemu_sem_post(&sync_event);
+     }
+ }
+ 
+@@ -456,8 +437,7 @@ static void rcu_init_complete(void)
+ 
+     qemu_mutex_init(&rcu_registry_lock);
+     qemu_event_init(&rcu_gp_event, true);
+-
+-    qemu_event_init(&sync_event, false);
++    qemu_sem_init(&sync_event, 0);
+ 
+     /* The caller is assumed to have BQL, so the call_rcu thread
+      * must have been quiescent even after forking, just recreate it.
+-- 
+2.50.1
+===8<===
+
+When I was having a closer look, I found some other issues, I'll list it
+all here.
+
+1. I found that rcu_gp_event was initialized as "true".  I'm not sure
+   whether it should be false.  This has nothing to do with your series as
+   well, only some observation of mine.
+   
+    qemu_event_init(&rcu_gp_event, true);
+
+2. It looks to me your patch here checked the wrong retval of
+   qemu_event_timedwait()..
+
+        } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   should it be "!qemu_event_timedwait(&sync_event, 10)"?  Side note: maybe
+   we should cleanup all _timedwait() for QEMU's eventfd, sem, cond,
+   ... because they don't return the same retval.. but if you think sem is
+   good, then we don't need eventfd's timedwait() in this series (your
+   initial two patches).
+
+3. I doubt if malloc_trim() feature is broken with your current patchset,
+   because now the loop looks like:
+
+        for (;;) {
+            qemu_event_reset(&sync_event);
+            n = qatomic_read(&rcu_call_count);
+            if (n) {
+                break;
+            }
+#if defined(CONFIG_MALLOC_TRIM)
+            malloc_trim(4 * 1024 * 1024);
+#endif
+            qemu_event_wait(&sync_event);
+        }
+
+  I don't know if n can be zero here at all.. if you use the sem change
+  this might trigger but it's not designed for it.  When using sem we may
+  want to periodically trim.  But I'd like to know how you think in general
+  on the sem idea first (e.g. do we need to be prepared for high freq rcu
+  frees).
 
 Thanks,
-Gavin
 
->>
->>>>
->>>> enum AcpiGhesSourceID {
->>>>        ACPI_HEST_SRC_ID_SYNC,
->>>>        ACPI_HEST_SRC_ID_QMP,       /* Use it only for QMP injected errors */
->>>> };
->>>>
->>>>   
->>>>> PS:
->>>>> I also wonder what real HW does when it gets in similar situation
->>>>> (i.e. error status block is not yet acknowledged but another async
->>>>> error arrived for the same error source)?
->>>>>       
->>>>
->>>> I believe real HW also have this specific issue. As to ARM64, I ever did some
->>>> google search and was told the error follows the firmware-first policy and
->>>> handled by a component of trustfirmware-a. However, I was unable to get the
->>>> source code. So it's hard for me to know how this specific issue is handled
->>>> there.
->>>
->>> Perhaps Jonathan can help with finding how real hw works around it?
->>>
->>> My idea using per cpu source is just a speculation based on spec
->>> on how workaround the problem,
->>> I don't really know if guest OS will be able to handle it (aka,
->>> need to be tested is it's viable). That also probably was a reason
->>> in previous review, why should've waited for multiple sources
->>> support be be merged first before this series.
->>>    
->>
->> Well, the point is the guest won't be full functional until the the problematic
->> host page is isolated and replaced by another host page. To avoid crash the qemu
->> still gives customer a chance to collect important information from the guest
->> by luck.
->>
->> Thanks,
->> Gavin
->>
->>
->>>>   
->>>>>>>> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
->>>>>>>> for this specific case. The maximal error block size is bumped to 4KB,
->>>>>>>> providing enough storage space for those 16x memory CPERs.
->>>>>>>>
->>>>>>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
->>>>>>>> ---
->>>>>>>>      hw/acpi/ghes.c   |  2 +-
->>>>>>>>      target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
->>>>>>>>      2 files changed, 46 insertions(+), 2 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
->>>>>>>> index 045b77715f..5c87b3a027 100644
->>>>>>>> --- a/hw/acpi/ghes.c
->>>>>>>> +++ b/hw/acpi/ghes.c
->>>>>>>> @@ -33,7 +33,7 @@
->>>>>>>>      #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
->>>>>>>>      
->>>>>>>>      /* The max size in bytes for one error block */
->>>>>>>> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
->>>>>>>> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
->>>>>>>>      
->>>>>>>>      /* Generic Hardware Error Source version 2 */
->>>>>>>>      #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
->>>>>>>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->>>>>>>> index c5d5b3b16e..3ecb85e4b7 100644
->>>>>>>> --- a/target/arm/kvm.c
->>>>>>>> +++ b/target/arm/kvm.c
->>>>>>>> @@ -11,6 +11,7 @@
->>>>>>>>       */
->>>>>>>>      
->>>>>>>>      #include "qemu/osdep.h"
->>>>>>>> +#include "qemu/units.h"
->>>>>>>>      #include <sys/ioctl.h>
->>>>>>>>      
->>>>>>>>      #include <linux/kvm.h>
->>>>>>>> @@ -2433,10 +2434,53 @@ static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
->>>>>>>>                                          uint64_t paddr)
->>>>>>>>      {
->>>>>>>>          GArray *addresses = g_array_new(false, false, sizeof(paddr));
->>>>>>>> +    uint64_t val, start, end, guest_pgsz, host_pgsz;
->>>>>>>>          int ret;
->>>>>>>>      
->>>>>>>>          kvm_cpu_synchronize_state(c);
->>>>>>>> -    g_array_append_vals(addresses, &paddr, 1);
->>>>>>>> +
->>>>>>>> +    /*
->>>>>>>> +     * Sort out the guest page size from TCR_EL1, which can be modified
->>>>>>>> +     * by the guest from time to time. So we have to sort it out dynamically.
->>>>>>>> +     */
->>>>>>>> +    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
->>>>>>>> +    if (ret) {
->>>>>>>> +        goto error;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    switch (extract64(val, 14, 2)) {
->>>>>>>> +    case 0:
->>>>>>>> +        guest_pgsz = 4 * KiB;
->>>>>>>> +        break;
->>>>>>>> +    case 1:
->>>>>>>> +        guest_pgsz = 64 * KiB;
->>>>>>>> +        break;
->>>>>>>> +    case 2:
->>>>>>>> +        guest_pgsz = 16 * KiB;
->>>>>>>> +        break;
->>>>>>>> +    default:
->>>>>>>> +        error_report("unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
->>>>>>>> +        goto error;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    host_pgsz = qemu_real_host_page_size();
->>>>>>>> +    start = paddr & ~(host_pgsz - 1);
->>>>>>>> +    end = start + host_pgsz;
->>>>>>>> +    while (start < end) {
->>>>>>>> +        /*
->>>>>>>> +         * The precise physical address is provided for the affected
->>>>>>>> +         * guest page that contains @paddr. Otherwise, the starting
->>>>>>>> +         * address of the guest page is provided.
->>>>>>>> +         */
->>>>>>>> +        if (paddr >= start && paddr < (start + guest_pgsz)) {
->>>>>>>> +            g_array_append_vals(addresses, &paddr, 1);
->>>>>>>> +        } else {
->>>>>>>> +            g_array_append_vals(addresses, &start, 1);
->>>>>>>> +        }
->>>>>>>> +
->>>>>>>> +        start += guest_pgsz;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>>          ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
->>>>>>>>          if (ret) {
->>>>>>>>              goto error;
->>>>>>>          
->>>>>>      
->>>>>       
->>>>   
->>>    
->>
-> 
+-- 
+Peter Xu
 
 
