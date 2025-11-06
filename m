@@ -4,66 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED76ACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 01:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCDBCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 01:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGp00-0002YU-R0; Wed, 05 Nov 2025 20:41:19 -0500
+	id 1vGpC5-0005Wu-Ji; Wed, 05 Nov 2025 20:53:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vGozx-0002Xu-Ca
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 20:41:13 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vGpC1-0005Wc-1W
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 20:53:41 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vGozr-0003uC-P8
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 20:41:13 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A61er9K091623
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 6 Nov 2025 10:40:53 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=tLEMRfHmaIFRi+wwHZWk5NukHRRtFwFkRDnt3Dl/w9M=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1762393253; v=1;
- b=uXYeJKG09thGM/pIi/bUJLHEnkUGbeDhr4q/gPdqXsG5l6VhxD60yGnnYeNse4RG
- 6YF+A3kwq8lY1LEBFYiwXOxm944aPH1PviDPnmmmN/+WpSjIx4eAWP56BNKe2DKS
- 1gc9PAYPPNb2pM1LSGEwfmwNI8atqEj1NNhS2Tz1IpTqLKppwspm0VihKKucoGS5
- XR8vjx3MnWRSMX8SAkuKU50TU8b0ay1xxIqclQk/zfdMjBJXFIdpsEgdhBBSMh6O
- acTFo/vpAR7M9PUo2/Jms4MiF/AF5ISTy6ynD7d5veg5i1w+bS+lJPfun5Xuom/D
- jeg4tEc40f1qbYKGG1MxCQ==
-Message-ID: <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 6 Nov 2025 10:40:52 +0900
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vGpBz-000231-0o
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 20:53:40 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 5A5KFUlR1726766
+ for <qemu-devel@nongnu.org>; Thu, 6 Nov 2025 01:53:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=75Vnj5nF6T/S8UkfDh5FRd77
+ 2W3WLJOyW0ybYt/7l/w=; b=iQf7dWXUktOET0NGJ+qoXXqzYKiFD1WB6pS/qsBk
+ P3/1VDhVWqRIJ0h1PLAdQ27FTglWLaX+ztgkwR8OwxM9inzsbaI6QvGEYfeeL8ah
+ 2d0glgsG/UuaVB45wprQpOw4LqxvFpRLYxKCBxC7Ank7NTnPMq5UznwJJS53G4Rd
+ LJCNbsqvEIbIOmWqxevFLEBYjTf1egGf22j/nCssY40aAPhAUaG+h9kzPpM7NXBY
+ ZysDFelhUhYpcOVyzDF5QeeCPsuGS8SMr2Kb80hLcKJBrv764VhEBPIPi37oEb0Y
+ z29/XM2EyybkEZz4csOXrxNqEdsvxdlx38dT11ArNOEc+Q==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a82mt2x2c-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 01:53:36 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-5b736eca1c7so840244137.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 17:53:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1762394015; x=1762998815; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=75Vnj5nF6T/S8UkfDh5FRd772W3WLJOyW0ybYt/7l/w=;
+ b=cCHS7SnxiXJwtLW3gUJ7V4qtcV9MaQx9Rhr7722efd87PZTemS1ZlGfIiOXbFkdwMt
+ BX+/82fO2o1aDSmG33vYPbM3obIOSk0tfRAr4fkieMtOtHMclIQXtu8wsAvgI0gge8HA
+ d6sVqM5GKOV++XY0l1CVyMRvYk01Od+5rCoPFALghCtL/CGx0m82fjzJu2C4NIH8AjTI
+ dV1PT6FE/dB8gRwEs5M8YHSPvxVeFi3pIbzYpu1AIgloTqPMODFoJ1qAqQiiNAVNgz6J
+ IE6vHokAc40fsDIHY5eEF7C5WaPazg8L7dH+hY9nu9ZHxAZjg655TmxbvsfU10NMGoaS
+ exjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762394015; x=1762998815;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=75Vnj5nF6T/S8UkfDh5FRd772W3WLJOyW0ybYt/7l/w=;
+ b=vjDHNETtsUnmIWnvH2cUd1kzEzTeKVYrm332/wDd325Ags+QmlAUZdNHh1Ktme38xI
+ VRiep9gyrdmrIWChl4k0rcga/I4X8ZDZvadkdhQ1w1NMJTbkkd5XhTOIPDBVDsIFmrgd
+ RexUOrfy3plAdcs+OkDLaJlfkQtn1tmhUgMfwcQd2cfHryq6lKuvvTs8PjpdesW5yHnJ
+ Dhh3/c1hongl4NIHPK+bL7zsVjJ73D2e2EZuyv4qkbaTaXutMX610a0rFmgXJAL68ZB+
+ Y4/5nUY2U2flVe3X27fZi8f0+qEa8MFwvUauzgAuqNPvELbIbZ/oyAUrRhBp8moX57I7
+ RRzA==
+X-Gm-Message-State: AOJu0YyudyS1zeBTlhHVYeuIoWoLQeoyKQxVBcK9M2WkP9dLISLFmEza
+ a7H9b9Le86rpqS5rmt2NaivjEG5ZzZhC7WBd12jCOvOa0HJjN3MbvX1SXDuiGIWLs7mqqfod/00
+ 3zo8Go75sCQrCejQSNzljl7ac89nCZHN4QyqSh13MGstvL+bkIU8QDwNBAEjCVP3SLx9rW2RiTN
+ LgYEcVtbm95okYmb93tyqn3U28awHdUmTp
+X-Gm-Gg: ASbGnct1b/5Dj58QxHiIFSjNTGor8xdL3EYSD4u73EELljo6CH9koiX2O53frH6yUme
+ 30Y2R8MJU6pVw318WIjzDS4XJXb/YjPB+ZQBUL6Qz4IWSCzsGOso5nGnB+cOW33VagZUBJdwHv4
+ la5prr+B4A4RnT58BR4JJQtiJ3zvDGPJTrgGlTLKqa6mRiDBFZIFDf8+QDn2VtWXEWaJ0hutNBI
+ ya8tp68+cgd6Q2EoQ==
+X-Received: by 2002:a05:6102:3913:b0:5d5:f79b:e93b with SMTP id
+ ada2fe7eead31-5dd891eb177mr2312735137.32.1762394015422; 
+ Wed, 05 Nov 2025 17:53:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhu0Qud9+p8HbQUYfOnnKaJLBOZCqsYn5jnSCu+boo1qp3Etbf0SNKDoiQD84LZGMooSbPzuaTEQ1QgfCvdlE=
+X-Received: by 2002:a05:6102:3913:b0:5d5:f79b:e93b with SMTP id
+ ada2fe7eead31-5dd891eb177mr2312724137.32.1762394014914; Wed, 05 Nov 2025
+ 17:53:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
- <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
- <aQJbd5qYR10qcbr7@x1.local>
- <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
- <aQu2_izqViAbJ3A9@x1.local>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aQu2_izqViAbJ3A9@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20251105212554.127017-1-ltaylorsimpson@gmail.com>
+ <20251105212554.127017-4-ltaylorsimpson@gmail.com>
+In-Reply-To: <20251105212554.127017-4-ltaylorsimpson@gmail.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Wed, 5 Nov 2025 19:53:24 -0600
+X-Gm-Features: AWmQ_bkhvIizDYOHHnJX013P5iFNcVD6CHJS4Z_AE2GaF6IfNHbjODuLrSgM3J0
+Message-ID: <CAEqNhNbsXjZHwTOSMVSVX1mP0kFogT0PAaWy-qPXPyEXGjHtJg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] Hexagon (tests/tcg/hexagon) Add test for USR
+ changes in packet
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
+Content-Type: multipart/alternative; boundary="00000000000036a9b50642e355ba"
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDAxNCBTYWx0ZWRfXyQ40zMBCZOk3
+ 9HiKHND7siYEyRzjx6BOPpuyzA4y5iyN4swXYPqmtFPd4t7Nr5c+RI67NqvdPLHZgaiSu+EpPcU
+ 6Xsvel1akYk8FA/Tygi+XwzK8ThUVg1BhnVJGW8+4hCmC8/RYkkW8RLeClSwbCaBcOIghNJ17uD
+ KUT3BuFJz5mD65D8PnaktsZV9+6X/4WtxrcOpNoxIuD/UL+gQQ4rIcWxSgJhzokwythJz0kEReo
+ M8udApe+SsHyuMCfFROeEfhd+Woq0JS/0TK398wR9mR5rBM4FMmEBvu5IHCue7ttG5p4s0cUZsX
+ PTx5tdQ5nVlcLYBTiXpOryCMp95KfuuSti4UrlafW/CE1e1fmbXCn2kJDKZtGOt2mv2wi1X20vK
+ ms868EnTW1Per098T/H3A/1w6r4/BQ==
+X-Proofpoint-GUID: zLVpdthLmIlNVVbWcsrX4iqIQbwXOktp
+X-Authority-Analysis: v=2.4 cv=LLtrgZW9 c=1 sm=1 tr=0 ts=690bffa0 cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=XjY1MN0gPw5wHsYsS9MA:9 a=QEXdDO2ut3YA:10 a=GHvY5Ttzp4-mifQX6oYA:9
+ a=b30wk7Iho03O0O3t:21 a=lqcHg5cX4UMA:10 a=gYDTvv6II1OnSo0itH1n:22
+X-Proofpoint-ORIG-GUID: zLVpdthLmIlNVVbWcsrX4iqIQbwXOktp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-05_09,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511060014
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,339 +142,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/06 5:43, Peter Xu wrote:
-> On Mon, Nov 03, 2025 at 06:45:30PM +0900, Akihiko Odaki wrote:
->> On 2025/10/30 3:22, Peter Xu wrote:
->>> On Wed, Oct 29, 2025 at 03:12:48PM +0900, Akihiko Odaki wrote:
->>>> drain_call_rcu() triggers the force quiescent state, but it can be
->>>> delayed if the RCU thread is sleeping. Ensure the force quiescent state
->>>> is immediately triggered by waking the RCU thread up.
->>>>
->>>> The logic to trigger the force quiescent state is decoupled as
->>>> force_rcu() so that it can be used independently.
->>>>
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> ---
->>>>    include/qemu/rcu.h |   1 +
->>>>    util/rcu.c         | 106 ++++++++++++++++++++++++++++++++---------------------
->>>>    2 files changed, 65 insertions(+), 42 deletions(-)
->>>>
->>>> diff --git a/include/qemu/rcu.h b/include/qemu/rcu.h
->>>> index 020dbe4d8b77..d6aa4e5854d3 100644
->>>> --- a/include/qemu/rcu.h
->>>> +++ b/include/qemu/rcu.h
->>>> @@ -118,6 +118,7 @@ static inline void rcu_read_unlock(void)
->>>>        }
->>>>    }
->>>> +void force_rcu(void);
->>>>    void synchronize_rcu(void);
->>>>    /*
->>>> diff --git a/util/rcu.c b/util/rcu.c
->>>> index 3c4af9d213c8..85f9333f5dff 100644
->>>> --- a/util/rcu.c
->>>> +++ b/util/rcu.c
->>>> @@ -49,10 +49,13 @@
->>>>    unsigned long rcu_gp_ctr = RCU_GP_LOCKED;
->>>>    QemuEvent rcu_gp_event;
->>>> -static int in_drain_call_rcu;
->>>> +static bool forced;
->>>>    static int rcu_call_count;
->>>>    static QemuMutex rcu_registry_lock;
->>>> +/* Set when the forced variable is set or rcu_call_count becomes non-zero. */
->>>> +static QemuEvent sync_event;
->>>> +
->>>>    /*
->>>>     * Check whether a quiescent state was crossed between the beginning of
->>>>     * update_counter_and_wait and now.
->>>> @@ -74,36 +77,21 @@ QEMU_DEFINE_CO_TLS(struct rcu_reader_data, rcu_reader)
->>>>    typedef QLIST_HEAD(, rcu_reader_data) ThreadList;
->>>>    static ThreadList registry = QLIST_HEAD_INITIALIZER(registry);
->>>> +void force_rcu(void)
->>>> +{
->>>> +    qatomic_set(&forced, true);
->>>> +    qemu_event_set(&sync_event);
->>>> +}
->>>> +
->>>>    /* Wait for previous parity/grace period to be empty of readers.  */
->>>> -static void wait_for_readers(void)
->>>> +static void wait_for_readers(bool sleep)
->>>>    {
->>>>        ThreadList qsreaders = QLIST_HEAD_INITIALIZER(qsreaders);
->>>>        struct rcu_reader_data *index, *tmp;
->>>> -    int sleeps = 0;
->>>> -    bool forced = false;
->>>> +    int sleeps = sleep ? 5 : 0;
->>>> +    bool waiting = false;
->>>>        for (;;) {
->>>> -        /*
->>>> -         * Force the grace period to end and wait for it if any of the
->>>> -         * following heuristical conditions are satisfied:
->>>> -         * - A decent number of callbacks piled up.
->>>> -         * - It timed out.
->>>> -         * - It is in a drain_call_rcu() call.
->>>> -         *
->>>> -         * Otherwise, periodically poll the grace period, hoping it ends
->>>> -         * promptly.
->>>> -         */
->>>> -        if (!forced &&
->>>> -            (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
->>>> -             sleeps >= 5 || qatomic_read(&in_drain_call_rcu))) {
->>>> -            forced = true;
->>>> -
->>>> -            QLIST_FOREACH(index, &registry, node) {
->>>> -                notifier_list_notify(&index->force_rcu, NULL);
->>>> -                qatomic_set(&index->waiting, true);
->>>> -            }
->>>> -        }
->>>
->>> IIUC this is the part to set index->waiting first whenever necessary, then
->>> that'll guarantee the wait(rcu_gp_event) will be notified in rcu unlock.
->>>
->>> Now we removed this chunk, then could it happen if waiting=true and the
->>> wait(rcu_gp_event) may wait for more than it should (as nobody will wake it
->>> up if all threads have waiting=false)?
->>
->> It is not removed, but it is moved along with the assignment of the waiting
->> variable. So index->waiting is still set whenever the waiting variable is
->> set and no hang up will happen.
-> 
-> Ah, I noticed the "waiting" is actually the global variable and I think
-> when I read it last time I somehow misread it with "sleep" (which was
-> passed down from the caller).
+--00000000000036a9b50642e355ba
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-waiting is local. There are several variables and some are global and 
-the others are local so please be careful.
+On Wed, Nov 5, 2025 at 3:26=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmail=
+.com>
+wrote:
 
-> 
->          if (waiting) {  <--------------------
->              qemu_event_wait(&rcu_gp_event);
->              qemu_event_reset(&rcu_gp_event);
->          } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
-> 
-> Yeah, I think it's non-issue.  Please ignore my question.
-> 
->>
->>>
->>> The other thing is, right below here there's the code and comment:
->>>
->>>           /* Here, order the stores to index->waiting before the loads of
->>>            * index->ctr.  Pairs with smp_mb_placeholder() in rcu_read_unlock(),
->>>            * ensuring that the loads of index->ctr are sequentially consistent.
->>>            *
->>>            * If this is the last iteration, this barrier also prevents
->>>            * frees from seeping upwards, and orders the two wait phases
->>>            * on architectures with 32-bit longs; see enter_qs().
->>>            */
->>>           smp_mb_global();
->>>
->>> IIUC it explains the mb_global() to order the updates of waiting and the
->>> reads of index->ctr.  It doesn't look like applicable anymore.  Said that,
->>> I think we should indeed still need some barrier to make sure we read
->>> index->ctr at least to be after we update global gp_ctr (done before
->>> calling wait_for_readers()).  I'm not sure if it means the mb is needed,
->>> however maybe at least the comment is outdated if so.
->>
->> It is still applicable. The stores to index->waiting is still present and
->> needs to be ordered before the loads of index->ctr.
->>
->>>
->>>> -
->>>>            /* Here, order the stores to index->waiting before the loads of
->>>>             * index->ctr.  Pairs with smp_mb_placeholder() in rcu_read_unlock(),
->>>>             * ensuring that the loads of index->ctr are sequentially consistent.
->>>> @@ -150,7 +138,8 @@ static void wait_for_readers(void)
->>>>             */
->>>>            qemu_mutex_unlock(&rcu_registry_lock);
->>>> -        if (forced) {
->>>> +        if (waiting) {
->>>> +            /* Wait for the forced quiescent state. */
->>>>                qemu_event_wait(&rcu_gp_event);
->>>>                /*
->>>> @@ -158,9 +147,25 @@ static void wait_for_readers(void)
->>>>                 * while we walk the list.
->>>>                 */
->>>>                qemu_event_reset(&rcu_gp_event);
->>>> +        } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
->>>> +                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
->>>> +            /*
->>>> +             * Now one of the following heuristical conditions is satisfied:
->>>> +             * - A decent number of callbacks piled up.
->>>> +             * - It timed out.
->>>> +             * - force_rcu() was called.
->>>> +             *
->>>> +             * Force a quiescent state.
->>>> +             */
->>>> +            waiting = true;
->>>> +
->>>> +            QLIST_FOREACH(index, &registry, node) {
->>>> +                notifier_list_notify(&index->force_rcu, NULL);
->>>> +                qatomic_set(&index->waiting, true);
->>>> +            }
->>>>            } else {
->>>> -            g_usleep(10000);
->>>> -            sleeps++;
->>>> +            /* Try again. */
->>>> +            sleeps--;
->>>>            }
->>>>            qemu_mutex_lock(&rcu_registry_lock);
->>>> @@ -170,7 +175,7 @@ static void wait_for_readers(void)
->>>>        QLIST_SWAP(&registry, &qsreaders, node);
->>>>    }
->>>> -static void enter_qs(void)
->>>> +static void enter_qs(bool sleep)
->>>>    {
->>>>        /* Write RCU-protected pointers before reading p_rcu_reader->ctr.
->>>>         * Pairs with smp_mb_placeholder() in rcu_read_lock().
->>>> @@ -189,14 +194,14 @@ static void enter_qs(void)
->>>>                 * Switch parity: 0 -> 1, 1 -> 0.
->>>>                 */
->>>>                qatomic_set(&rcu_gp_ctr, rcu_gp_ctr ^ RCU_GP_CTR);
->>>> -            wait_for_readers();
->>>> +            wait_for_readers(sleep);
->>>>                qatomic_set(&rcu_gp_ctr, rcu_gp_ctr ^ RCU_GP_CTR);
->>>>            } else {
->>>>                /* Increment current grace period.  */
->>>>                qatomic_set(&rcu_gp_ctr, rcu_gp_ctr + RCU_GP_CTR);
->>>>            }
->>>> -        wait_for_readers();
->>>> +        wait_for_readers(sleep);
->>>>        }
->>>>    }
->>>> @@ -205,7 +210,6 @@ static void enter_qs(void)
->>>>     */
->>>>    static struct rcu_head dummy;
->>>>    static struct rcu_head *head = &dummy, **tail = &dummy.next;
->>>> -static QemuEvent rcu_call_ready_event;
->>>>    static void enqueue(struct rcu_head *node)
->>>>    {
->>>> @@ -282,6 +286,7 @@ static void *call_rcu_thread(void *opaque)
->>>>        rcu_register_thread();
->>>>        for (;;) {
->>>> +        bool sleep = true;
->>>>            int n;
->>>>            /*
->>>> @@ -289,7 +294,7 @@ static void *call_rcu_thread(void *opaque)
->>>>             * added before enter_qs() starts.
->>>>             */
->>>>            for (;;) {
->>>> -            qemu_event_reset(&rcu_call_ready_event);
->>>> +            qemu_event_reset(&sync_event);
->>>>                n = qatomic_read(&rcu_call_count);
->>>>                if (n) {
->>>>                    break;
->>>> @@ -298,20 +303,36 @@ static void *call_rcu_thread(void *opaque)
->>>>    #if defined(CONFIG_MALLOC_TRIM)
->>>>                malloc_trim(4 * 1024 * 1024);
->>>>    #endif
->>>> -            qemu_event_wait(&rcu_call_ready_event);
->>>> +            qemu_event_wait(&sync_event);
->>>> +        }
->>>> +
->>>> +        /*
->>>> +         * Ensure that an event for a rcu_call_count change will not interrupt
->>>> +         * wait_for_readers().
->>>> +         */
->>>> +        qemu_event_reset(&sync_event);
->>>> +
->>>> +        /*
->>>> +         * Ensure that the forced variable has not been set after fetching
->>>> +         * rcu_call_count; otherwise we may get confused by a force quiescent
->>>> +         * state request for an element later than n.
->>>> +         */
->>>> +        while (qatomic_xchg(&forced, false)) {
->>>> +            sleep = false;
->>>> +            n = qatomic_read(&rcu_call_count);
->>>>            }
->>>
->>> This is pretty tricky, and I wonder if it will make the code easier to read
->>> if we convert the sync_event to be a semaphore instead.  When as a sem, it
->>> will take account of whatever kick to it, either a call_rcu1() or an
->>> enforced rcu flush, so that we don't need to reset it.  Meanwhile, we don't
->>> worry on an slightly outdated "n" read because the 2nd round of sem_wait()
->>> will catch that new "n".
->>>
->>> Instead, worst case is rcu thread runs one more round without seeing
->>> callbacks on the queue.
->>>
->>> I'm not sure if that could help simplying code, maybe also make it less
->>> error-prone.
->>
->> Semaphore is not applicable here because it will not de-duplicate concurrent
->> kicks of RCU threads.
-> 
-> Why concurrent kicks of rcu threads is a problem?  QemuSemaphore is
-> thread-safe itself, meanwhile IIUC it only still causes call_rcu_thread()
-> loops some more rounds reading "n", which looks all safe. No?
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>
 
-It is safe but incurs overheads and confusing. QemuEvent represents the 
-boolean semantics better.
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-I also have difficulty to understand how converting sync_event to a 
-semaphore simplifies the code. Perhaps some (pseudo)code to show how the 
-code will look like may be useful.
 
-> 
->>
->>>
->>>> -        enter_qs();
->>>> +        enter_qs(sleep);
->>>>            qatomic_sub(&rcu_call_count, n);
->>>>            bql_lock();
->>>>            while (n > 0) {
->>>>                node = try_dequeue();
->>>>                while (!node) {
->>>
->>> I have a pure question here not relevant to your changes.. do you know when
->>> this "if" will trigger?  It seems to me the enqueue() should always happen
->>> before the increment of rcu_call_count:
->>>
->>> void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
->>> {
->>>       node->func = func;
->>>       enqueue(node);
->>>
->>>       if (!qatomic_fetch_inc(&rcu_call_count)) {
->>>           qemu_event_set(&sync_event);
->>>       }
->>> }>
->>> I believe qatomic_fetch_inc() is RMW so it's strong mb and order
->>> guaranteed.  Then here why the node can be null even if we're sure >=n have
->>> been enqueued?
->>
->> Indeed, enqueue() always happens before the increment of rcu_call_count
->> performed by the same thread.
->>
->> The node can still be NULL when there are two concurrent call_rcu1()
->> executions. In the following example, rcu_call_count will be greater than
->> the number of visible nodes after (A) and before (B):
->>
->> Thread T                 Thread U
->> call_rcu1(O)
->>   enqueue(O)
->>    Load N from tail
->>    tail = O->next
->>                           call_rcu1(P)
->>                            enqueue(P)
->>                             Load O->next from tail
->>                             tail = P
->>                             O->next = P
->>                            rcu_call_count++ (A)
->>    N->next = O (B)
->>    rcu_call_count++
-> 
-> Thanks, yeah it makes sense.  If you think worthwhile, maybe we could add a
-> comment after the first try_dequeue().
-> 
 
-try_dequeue() and enqueue() do have comments that say that enqueue() is 
-asynchronous and explain why, but perhaps they can be expanded by adding 
-the example I showed.
+>  tests/tcg/hexagon/usr.c | 54 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+>
+> diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c
+> index f0b23d312b..ef1787c64c 100644
+> --- a/tests/tcg/hexagon/usr.c
+> +++ b/tests/tcg/hexagon/usr.c
+> @@ -608,6 +608,58 @@ TEST_CMP_xx(uint32_t, uint32_t, FUNC, SRC1, SRC2,
+> RES, USR_RES)
+>  #define TEST_CMP_PP(FUNC, SRC1, SRC2, RES, USR_RES) \
+>  TEST_CMP_xx(uint64_t, uint64_t, FUNC, SRC1, SRC2, RES, USR_RES)
+>
+> +static void test_usr_packets(void)
+> +{
+> +    uint32_t usr_out;
+> +    /* Test setting USR bits inside and outside packets */
+> +    asm(CLEAR_USRBITS \
+> +        "r10 =3D satub(%[val_0xfff])                   /* Set usr.OVF
+> */\n\t"
+> +        "{\n\t"
+> +        "    r11 =3D convert_uw2sf(%[val_0x010020a5])  /* Set usr.FPINPF
+> */\n\t"
+> +        "    r10 =3D memw(%[err])                      /* Force pkt comm=
+it
+> */\n\t"
+> +        "}\n\t"
+> +        "{\n\t"
+> +        "    r11 =3D sfadd(%[SF_one], %[SF_SNaN])      /* Set usr.FPINVF
+> */\n\t"
+> +        "    r10 =3D add(r10, #1)                      /* No pkt commit
+> */\n\t"
+> +        "}\n\t"
+> +        "%[usr_out] =3D usr\n\t"
+> +        : [usr_out]"=3Dr"(usr_out)
+> +        : [val_0xfff]"r"(0xfff),
+> +          [SF_one]"r"(SF_one), [SF_SNaN]"r"(SF_SNaN),
+> +          [val_0x010020a5]"r"(0x010020a5),
+> +          [err]"m"(err)
+> +        : "r2", "r10", "r11", "usr");
+> +    check32(usr_out & 0x3f, USR_OVF | USR_FPINVF | USR_FPINPF);
+> +
+> +    /* Test setting several USR bits in the same packet (no pkt commit) =
+*/
+> +    asm(CLEAR_USRBITS \
+> +        "{\n\t"
+> +        "    r10 =3D satub(%[val_0xfff])               /* Set usr.OVF
+> */\n\t"
+> +        "    r12 =3D sfadd(%[SF_one], %[SF_SNaN])      /* Set usr.FPINVF
+> */\n\t"
+> +        "}\n\t"
+> +        "%[usr_out] =3D usr\n\t"
+> +        : [usr_out]"=3Dr"(usr_out)
+> +        : [val_0xfff]"r"(0xfff),
+> +          [SF_one]"r"(SF_one), [SF_SNaN]"r"(SF_SNaN)
+> +        : "r2", "r10", "r11", "r12", "usr");
+> +    check32(usr_out & 0x3f, USR_OVF | USR_FPINVF);
+> +
+> +    /* Test setting several USR bits in the same packet (with pkt commit=
+)
+> */
+> +    asm(CLEAR_USRBITS \
+> +        "{\n\t"
+> +        "    r10 =3D satub(%[val_0xfff])               /* Set usr.OVF
+> */\n\t"
+> +        "    r11 =3D convert_uw2sf(%[val_0x010020a5])  /* Set usr.FPINPF
+> */\n\t"
+> +        "    r12 =3D memw(%[err])                      /* Force pkt comm=
+it
+> */\n\t"
+> +        "}\n\t"
+> +        "%[usr_out] =3D usr\n\t"
+> +        : [usr_out]"=3Dr"(usr_out)
+> +        : [val_0xfff]"r"(0xfff),
+> +          [val_0x010020a5]"r"(0x010020a5),
+> +          [err]"m"(err)
+> +        : "r2", "r10", "r11", "r12", "usr");
+> +    check32(usr_out & 0x3f, USR_OVF | USR_FPINPF);
+> +}
+> +
+>  int main()
+>  {
+>      TEST_R_OP_R(satub,       0,         0,         USR_CLEAR);
+> @@ -1097,6 +1149,8 @@ int main()
+>      TEST_Rp_OP_R(sfinvsqrta, SF_small_neg,  SF_HEX_NaN,       0x00,
+> USR_FPINVF);
+>      TEST_Rp_OP_R(sfinvsqrta, SF_SNaN,       SF_HEX_NaN,       0x00,
+> USR_FPINVF);
+>
+> +    test_usr_packets();
+> +
+>      puts(err ? "FAIL" : "PASS");
+>      return err;
+>  }
+> --
+> 2.43.0
+>
+>
 
-Besides enqueue() may be renamed like enqueue_async() so that it will be 
-clear that enqueuing does not happen immediately when you look at 
-call_rcu1(). If you wonder enqueue_async() is asynchronous, you will 
-look into enqueue_async() and find the explanatory comments.
+--00000000000036a9b50642e355ba
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Akihiko Odaki
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 5, =
+2025 at 3:26=E2=80=AFPM Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson=
+@gmail.com">ltaylorsimpson@gmail.com</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">Signed-off-by: Taylor Simpson &lt;<a hr=
+ef=3D"mailto:ltaylorsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gma=
+il.com</a>&gt;<br>
+---<br></blockquote><div><br></div><div class=3D"gmail-gs" style=3D"margin:=
+0px;min-width:0px;padding:0px 0px 20px;width:auto;font-family:&quot;Google =
+Sans&quot;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:medium">=
+<div class=3D"gmail-"><div id=3D"gmail-:2xw" class=3D"gmail-ii gmail-gt gma=
+il-adO" style=3D"direction:ltr;margin:8px 0px 0px;padding:0px;font-size:0.8=
+75rem;overflow-x:hidden"><div id=3D"gmail-:2xv" class=3D"gmail-a3s gmail-ai=
+L" style=3D"direction:ltr;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning=
+:auto;font-feature-settings:normal;font-stretch:normal;font-size:small;line=
+-height:1.5;font-family:Arial,Helvetica,sans-serif;overflow:auto hidden"><d=
+iv><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_quote"><div>Review=
+ed-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com" target=
+=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;</div></div></div></div></di=
+v></div></div><div class=3D"gmail-WhmR8e" id=3D"gmail-avWBGd-559" style=3D"=
+clear:both"></div></div></div><br class=3D"gmail-Apple-interchange-newline"=
+><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0tests/tcg/hexagon/usr.c | 54 ++++++++++++++++++++++++++++++++++++++++=
++<br>
+=C2=A01 file changed, 54 insertions(+)<br>
+<br>
+diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c<br>
+index f0b23d312b..ef1787c64c 100644<br>
+--- a/tests/tcg/hexagon/usr.c<br>
++++ b/tests/tcg/hexagon/usr.c<br>
+@@ -608,6 +608,58 @@ TEST_CMP_xx(uint32_t, uint32_t, FUNC, SRC1, SRC2, RES,=
+ USR_RES)<br>
+=C2=A0#define TEST_CMP_PP(FUNC, SRC1, SRC2, RES, USR_RES) \<br>
+=C2=A0TEST_CMP_xx(uint64_t, uint64_t, FUNC, SRC1, SRC2, RES, USR_RES)<br>
+<br>
++static void test_usr_packets(void)<br>
++{<br>
++=C2=A0 =C2=A0 uint32_t usr_out;<br>
++=C2=A0 =C2=A0 /* Test setting USR bits inside and outside packets */<br>
++=C2=A0 =C2=A0 asm(CLEAR_USRBITS \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r10 =3D satub(%[val_0xfff])=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Set usr.OVF */\n=
+\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r11 =3D convert_uw2sf(%[va=
+l_0x010020a5])=C2=A0 /* Set usr.FPINPF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r10 =3D memw(%[err])=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* F=
+orce pkt commit */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r11 =3D sfadd(%[SF_one], %=
+[SF_SNaN])=C2=A0 =C2=A0 =C2=A0 /* Set usr.FPINVF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r10 =3D add(r10, #1)=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* N=
+o pkt commit */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[usr_out] =3D usr\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [usr_out]&quot;=3Dr&quot;(usr_out)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [val_0xfff]&quot;r&quot;(0xfff),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [SF_one]&quot;r&quot;(SF_one), [SF_SNaN=
+]&quot;r&quot;(SF_SNaN),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [val_0x010020a5]&quot;r&quot;(0x010020a=
+5),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [err]&quot;m&quot;(err)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r2&quot;, &quot;r10&quot;, &quot;r11&q=
+uot;, &quot;usr&quot;);<br>
++=C2=A0 =C2=A0 check32(usr_out &amp; 0x3f, USR_OVF | USR_FPINVF | USR_FPINP=
+F);<br>
++<br>
++=C2=A0 =C2=A0 /* Test setting several USR bits in the same packet (no pkt =
+commit) */<br>
++=C2=A0 =C2=A0 asm(CLEAR_USRBITS \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r10 =3D satub(%[val_0xfff]=
+)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Set usr.OVF */\n=
+\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r12 =3D sfadd(%[SF_one], %=
+[SF_SNaN])=C2=A0 =C2=A0 =C2=A0 /* Set usr.FPINVF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[usr_out] =3D usr\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [usr_out]&quot;=3Dr&quot;(usr_out)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [val_0xfff]&quot;r&quot;(0xfff),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [SF_one]&quot;r&quot;(SF_one), [SF_SNaN=
+]&quot;r&quot;(SF_SNaN)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r2&quot;, &quot;r10&quot;, &quot;r11&q=
+uot;, &quot;r12&quot;, &quot;usr&quot;);<br>
++=C2=A0 =C2=A0 check32(usr_out &amp; 0x3f, USR_OVF | USR_FPINVF);<br>
++<br>
++=C2=A0 =C2=A0 /* Test setting several USR bits in the same packet (with pk=
+t commit) */<br>
++=C2=A0 =C2=A0 asm(CLEAR_USRBITS \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r10 =3D satub(%[val_0xfff]=
+)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Set usr.OVF */\n=
+\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r11 =3D convert_uw2sf(%[va=
+l_0x010020a5])=C2=A0 /* Set usr.FPINPF */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 r12 =3D memw(%[err])=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* F=
+orce pkt commit */\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[usr_out] =3D usr\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [usr_out]&quot;=3Dr&quot;(usr_out)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [val_0xfff]&quot;r&quot;(0xfff),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [val_0x010020a5]&quot;r&quot;(0x010020a=
+5),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [err]&quot;m&quot;(err)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r2&quot;, &quot;r10&quot;, &quot;r11&q=
+uot;, &quot;r12&quot;, &quot;usr&quot;);<br>
++=C2=A0 =C2=A0 check32(usr_out &amp; 0x3f, USR_OVF | USR_FPINPF);<br>
++}<br>
++<br>
+=C2=A0int main()<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0TEST_R_OP_R(satub,=C2=A0 =C2=A0 =C2=A0 =C2=A00,=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A00,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0USR_CLEAR);<=
+br>
+@@ -1097,6 +1149,8 @@ int main()<br>
+=C2=A0 =C2=A0 =C2=A0TEST_Rp_OP_R(sfinvsqrta, SF_small_neg,=C2=A0 SF_HEX_NaN=
+,=C2=A0 =C2=A0 =C2=A0 =C2=A00x00, USR_FPINVF);<br>
+=C2=A0 =C2=A0 =C2=A0TEST_Rp_OP_R(sfinvsqrta, SF_SNaN,=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0SF_HEX_NaN,=C2=A0 =C2=A0 =C2=A0 =C2=A00x00, USR_FPINVF);<br>
+<br>
++=C2=A0 =C2=A0 test_usr_packets();<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0puts(err ? &quot;FAIL&quot; : &quot;PASS&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0return err;<br>
+=C2=A0}<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div></div>
+
+--00000000000036a9b50642e355ba--
 
