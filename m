@@ -4,60 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3892CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 08:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71F9CCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 08:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGvGO-0005b0-KQ; Thu, 06 Nov 2025 03:22:36 -0500
+	id 1vGvYC-0007T9-RD; Thu, 06 Nov 2025 03:41:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vGvGM-0005ar-Ha
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 03:22:34 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vGvGK-00059E-S9
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 03:22:34 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7032F80873;
- Thu, 06 Nov 2025 11:22:30 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id TMhjIE0F7Gk0-yY7PEPCQ; Thu, 06 Nov 2025 11:22:30 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1762417350;
- bh=IwWgIQDcoEUu9TkZkp0lPQQVqLU8PsW/RnXAin27/3w=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=mVWw/H22wfXQLRFqoORD1O+GqnZazfD2zYjA7NFc897bBM/OrMkcdDdqSwXomU2Hv
- 1ZryTamkUTvWXDbruwfJDNArxCPmjAomCtmItW5TMz5kxeX980kJtFdiyvs37DRWFV
- yWAyTGX4N0+EfjEgZkqbXcXFMKSW9gtSF544V9i0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a4f3eedb-85fa-4310-b93f-660f70948581@yandex-team.ru>
-Date: Thu, 6 Nov 2025 11:22:29 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vGvY6-0007SC-T0
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 03:40:54 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vGvY4-00082H-O7
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 03:40:54 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Cx778NXwxpUJ8fAA--.1194S3;
+ Thu, 06 Nov 2025 16:40:45 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJBxpeQMXwxpVnIpAQ--.58291S3;
+ Thu, 06 Nov 2025 16:40:44 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 1/3] target/loongarch: Add detailed information with CPU
+ Product ID
+Date: Thu,  6 Nov 2025 16:40:41 +0800
+Message-Id: <20251106084043.2453749-2-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20251106084043.2453749-1-maobibo@loongson.cn>
+References: <20251106084043.2453749-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qapi/parser: Mollify mypy
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20251105152219.311154-1-armbru@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251105152219.311154-1-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJBxpeQMXwxpVnIpAQ--.58291S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,21 +66,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.11.25 18:22, Markus Armbruster wrote:
-> re.match(r'^ *', ...) can't fail, but mypy doesn't know that and
-> complains:
-> 
->      scripts/qapi/parser.py:444: error: Item "None" of "Match[str] | None" has no attribute "end"  [union-attr]
-> 
-> Work around by using must_match() instead.
-> 
-> Fixes: 8107ba47fd78 (qapi: Add documentation format validation)
-> Signed-off-by: Markus Armbruster<armbru@redhat.com>
+CPUCFG0 is LoongArch CPU Product ID, it is a combination of Vendor ID,
+Series ID and Product ID, here is the layout:
+ +-------------+----------------+------------+----------------+
+ | Reserved    | Vendor  ID     | Series ID  |  Product ID    |
+ +-------------+----------------+------------+----------------+
+  31         24 23            16 15        12 11              0
 
+Here adds detailed information with CPUCFG0, it is convenient to add
+such information with host or LA664 CPU type in future.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.c | 12 ++++++++++--
+ target/loongarch/cpu.h | 10 +++++++++-
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index d74c3c3766..68ae3aff97 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -278,8 +278,12 @@ static void loongarch_la464_initfn(Object *obj)
+     }
+ 
+     cpu->dtb_compatible = "loongarch,Loongson-3A5000";
+-    env->cpucfg[0] = 0x14c010;  /* PRID */
++    data = FIELD_DP32(data, CPUCFG0, PRID, 0x10);
++    data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA464);
++    data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
++    env->cpucfg[0] = data;
+ 
++    data = 0;
+     data = FIELD_DP32(data, CPUCFG1, ARCH, 2);
+     data = FIELD_DP32(data, CPUCFG1, PGMMU, 1);
+     data = FIELD_DP32(data, CPUCFG1, IOCSR, 1);
+@@ -385,8 +389,12 @@ static void loongarch_la132_initfn(Object *obj)
+     }
+ 
+     cpu->dtb_compatible = "loongarch,Loongson-1C103";
+-    env->cpucfg[0] = 0x148042;  /* PRID */
++    data = FIELD_DP32(data, CPUCFG0, PRID, 0x42);
++    data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA132);
++    data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
++    env->cpucfg[0] = data;
+ 
++    data = 0;
+     data = FIELD_DP32(data, CPUCFG1, ARCH, 1); /* LA32 */
+     data = FIELD_DP32(data, CPUCFG1, PGMMU, 1);
+     data = FIELD_DP32(data, CPUCFG1, IOCSR, 1);
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 1a14469b3b..c00ad67457 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -97,7 +97,15 @@ FIELD(FCSR0, CAUSE, 24, 5)
+ #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
+ 
+ /* cpucfg[0] bits */
+-FIELD(CPUCFG0, PRID, 0, 32)
++FIELD(CPUCFG0, PRID, 0, 12)
++FIELD(CPUCFG0, SERID, 12, 4)
++FIELD(CPUCFG0, VENID, 16, 8)
++#define PRID_SERIES_LA132            0x8  /* Loongson 32bit */
++#define PRID_SERIES_LA264            0xa  /* Loongson 64bit, 2-issue */
++#define PRID_SERIES_LA364            0xb  /* Loongson 64bit, 3-issue */
++#define PRID_SERIES_LA464            0xc  /* Loongson 64bit, 4-issue */
++#define PRID_SERIES_LA664            0xd  /* Loongson 64bit, 6-issue */
++#define PRID_VENDOR_LOONGSON         0x14
+ 
+ /* cpucfg[1] bits */
+ FIELD(CPUCFG1, ARCH, 0, 2)
+
+base-commit: a8e63c013016f9ff981689189c5b063551d04559
 -- 
-Best regards,
-Vladimir
+2.39.3
+
 
