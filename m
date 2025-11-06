@@ -4,110 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6677ECCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 04:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5473CCFA1E
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 04:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGrGA-0003UA-Ut; Wed, 05 Nov 2025 23:06:07 -0500
+	id 1vGrUU-0006be-5S; Wed, 05 Nov 2025 23:20:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vGrFx-0003N4-B4
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:05:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vGrUS-0006bG-B5
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:20:52 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vGrFv-00010V-0g
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:05:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762401949;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bLCHF2XuXvn0xb4ZmI+5MP+bJp3VZCBuyiVnUCjv2P4=;
- b=ElA1F4yS7lYTmNOOkQG9+myVLP/jgbmZEhDKlrhGxO00GdGTUUDveE192vz/jDIt4X55hr
- vhLjQBwXcrgDu1t6HUEO8tKxHKuLHEpJiYvzyyNmQKBfkziF89xAKI2Q7ikXKBeU22JpNK
- i7xkc9EODQQYUa99G2sQnaXezpdIv0Y=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-sMIaLFGON_WElXzPrTKxQw-1; Wed, 05 Nov 2025 23:05:48 -0500
-X-MC-Unique: sMIaLFGON_WElXzPrTKxQw-1
-X-Mimecast-MFC-AGG-ID: sMIaLFGON_WElXzPrTKxQw_1762401947
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-29557f43d56so6996725ad.3
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 20:05:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762401947; x=1763006747; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bLCHF2XuXvn0xb4ZmI+5MP+bJp3VZCBuyiVnUCjv2P4=;
- b=cMhQep8wlOFdF/BBVxyamwGCKSdy2H5uZ8BKMJBgMr7+D9yO/opfICLmHbXEtSlEDR
- kNy3sdXFOZITyd2kbxkjbXtjYSAgE6MCNIprG0uVfGU/jD1UmlReFCqvZp9nS9AfQicE
- YLZxcetQuY23M88grVfTVXy2OeaeejGaAazYpB5LUTHCtRnyY0xhcolt1vc57CBxX7Ab
- nO2ENZxwet/2UsYuP3GxmEex1LRMdKDwN2d3v34vC577a8YZTxDXgcXnSoDqyN2FGgeO
- 8b3jg5f4qy4TGgMx4+oEOVhRq/TLP4T4meaUpho/rSxYqSRfuqkYX9yiVhW8WWyMWmnv
- qCUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762401947; x=1763006747;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bLCHF2XuXvn0xb4ZmI+5MP+bJp3VZCBuyiVnUCjv2P4=;
- b=tfHtsw8laf20zhz20+aLBDuGXxsD6srMZnTu9WGa+b8M09q1QN6E59Eoi3zaKvt0Mj
- gKEHfNfGfiE77qmjEtGJpqdfYyqCpOAdaG4plqJAU62pirPzP+2Xx3HJtoDDb7k0S0AF
- oyUHIWOYF7SlGbgrRn0YVjNnVCEwgm7mTxGOzcFeG7DtB6hEPmhHqEXObinFYHbkbi0q
- QGnrQKux/kwyLcQyyPgvZSudYGPYP3CTACmaHkxjWR2y8LuJEXopAunoD/U78nd7fImH
- RKDtjE3IhWExmitp6ffDRGb5NUFnc/4eOUOEQw9l6oojuO7WNscYEeRsw/VhiBJ9pxko
- MX8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBdClMLBzzrubpyXvibXI5vU9naCjnZipLdNadonp8NE2ypXQZR8poMUu1c56R1YDTCGfJZf4NJ3Qc@nongnu.org
-X-Gm-Message-State: AOJu0YxHJu1MmQLxyqpkkGWjWdn/868SeZ/Qnz1/OFrbhH/E1UwHizHA
- dtlObvvCrdLAeZ9kOrlj7dI4JWSNQRV88upgILe1/NpolPi7j5FwGnzUq0vTeVY7jo+91h632nH
- XBTgqWizTK+b95RFctINlIc0tmg0+BrsgzlBrdAJ3VlqBeaJzwCKN06+ZgSOavNO/AsPIM4WLnd
- RbjRmT709+YpB2RiFiUNl53CFD5bnNzX4=
-X-Gm-Gg: ASbGncuKX+d+2v1K5QyJDtGPFpqzb8USSERVtfSiffCHGwHz7VJeE6Fc38wdHfAOaKL
- odLiPMiX/I7mZ6deYERcXPQe5YTWFIBWGTOjQAZSNh0Bi0OKRxPwu04xeys+pgTQxEHUVUO9K1h
- 9OCDvllaur/ZMv4vfTgB5ET31412RPFe2FBxNMnOcnxhvIt1ehWvN2v0cn
-X-Received: by 2002:a17:903:228a:b0:295:9b9a:6a7f with SMTP id
- d9443c01a7336-2962ae755c1mr83045395ad.49.1762401946931; 
- Wed, 05 Nov 2025 20:05:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEjBqG+gRyEo1DCsgmusQT446k5ZvcUx4Divd46fkn5cG8qjad7VINwbtHSLw9Vq08kxm6GF0MX8QTN5Lv34bA=
-X-Received: by 2002:a17:903:228a:b0:295:9b9a:6a7f with SMTP id
- d9443c01a7336-2962ae755c1mr83044985ad.49.1762401946512; Wed, 05 Nov 2025
- 20:05:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vGrUQ-0000oW-QC
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:20:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1762402850; x=1793938850;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=93oEgf+zdiZpD+biukGcjZo4Huny7L8LpmDi2MZ++qY=;
+ b=BhbK0WYIYm11OZnIZcGC2/lNvpjLdowHoJBjxzdVa+PRo5d53id01kvB
+ 3XWobfl+uaEsqGtQg/yfsQCat6KEdT8rO/z+vpmtxnyGEU3H4LH7F8rvO
+ YIFafMRbnWvOQ6N7FqUmEVGcPFwPSM1hjsG7e9jnamxZjh3sqpItfCVRv
+ QCUcJWlgmu4uu1vmr9glUDfka/zYo8eXL4zuHcjarDyH0ZKpL6PJsNJpe
+ B7dxSD7Q3JUizOVEapdduDxtSkpf1mRdhblf+Lbk0Ho2mm+ElVammPOgk
+ wu/bIhlYf07xLUh+BdbMziXgmmm8bY/Nm83OYSQGItgF6FopzvGLrs/QU Q==;
+X-CSE-ConnectionGUID: 9xsFNbCbT5iOmTjIE+jCrQ==
+X-CSE-MsgGUID: v7ThuxbnSuSbgOBIal+NPg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11604"; a="64412854"
+X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; d="scan'208";a="64412854"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Nov 2025 20:20:49 -0800
+X-CSE-ConnectionGUID: ytz2ZX6LTTylw1RE7vdD8w==
+X-CSE-MsgGUID: CWKSwFI5Rui4bcPbQnMYEA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; d="scan'208";a="186901227"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Nov 2025 20:20:45 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
+ yi.l.liu@intel.com, clement.mathieu--drif@eviden.com,
+ eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
+ xudong.hao@intel.com, giovanni.cabiddu@intel.com, rohith.s.r@intel.com,
+ mark.gross@intel.com, arjan.van.de.ven@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v5 2/9] vfio/iommufd: Query dirty bitmap before DMA unmap
+Date: Wed,  5 Nov 2025 23:20:19 -0500
+Message-ID: <20251106042027.856594-3-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20251106042027.856594-1-zhenzhong.duan@intel.com>
+References: <20251106042027.856594-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
- <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
- <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
- <aQvM6l04VeZwbUOf@x1.local>
-In-Reply-To: <aQvM6l04VeZwbUOf@x1.local>
-From: Jason Wang <jasowang@redhat.com>
-Date: Thu, 6 Nov 2025 12:05:35 +0800
-X-Gm-Features: AWmQ_blKcIbPAd040m9YsABFslwarM5beCY1vPbhd2M7AvT2AYhwZEpSBqZR2Qo
-Message-ID: <CACGkMEs4ES0a_Dzn7LmnthGuL=96XxOmncb5VDV195cxWTCChg@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_=E2=86=92_8?=
- =?UTF-8?Q?=2E2=2E10_due_to_virtio=2Dnet_feature_mismatch_=28VIRTIO=5FF=5FRING=5FRESE?=
- =?UTF-8?Q?T_=2F_USO_features=29?=
-To: Peter Xu <peterx@redhat.com>
-Cc: Jinpu Wang <jinpu.wang@ionos.com>, qemu-devel <qemu-devel@nongnu.org>,
- qemu-stable@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Yu Zhang <yu.zhang@ionos.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,72 +88,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x
+When an existing mapping is unmapped, there could already be dirty bits
+which need to be recorded before unmap.
 
-On Thu, Nov 6, 2025 at 6:17=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
->
-> On Wed, Nov 05, 2025 at 10:27:59AM +0100, Jinpu Wang wrote:
-> > > > These are not present (or not supported) on QEMU 8.2.10, which caus=
-es
-> > > > the migration state load to fail.
-> > >
-> > > Interesting, we've already done the compat work:
-> > >
-> > > GlobalProperty hw_compat_8_1[] =3D {
-> > >     { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" },
-> > >     { "ramfb", "x-migrate", "off" },
-> > >     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-> > >     { "igb", "x-pcie-flr-init", "off" },
-> > >     { TYPE_VIRTIO_NET, "host_uso", "off"},
-> > >     { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-> > >     { TYPE_VIRTIO_NET, "guest_uso6", "off"},
-> > > };
-> > > const size_t hw_compat_8_1_len =3D G_N_ELEMENTS(hw_compat_8_1);
-> > Yeah, I noticed the same.
->
-> AFAICT, this is a known issue..
->
-> Thomas and I used to suggest we should not turn on USO* by default by
-> probing kernel, but only allow user choosing it explicitly in a VM
-> setup. IOW, dest qemu should stop booting at all when kernel is too old
-> (when user chose the feature).
->
-> See:
->
-> https://lore.kernel.org/all/ZqQNKZ9_OPhDq2AK@x1n/
->
-> Thanks,
+If query dirty bitmap fails, we still need to do unmapping or else there
+is stale mapping and it's risky to guest.
 
-I see, so the reason is that the destination doesn't support USO in
-the kernel. For those kinds of features that depend on the kernel, I
-agree to disable them by default. But I'm not sure if it's too late or
-maybe we can do strict peer feature check like this in
-virtio_net_get_features():
+Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+Tested-by: Rohith S R <rohith.s.r@intel.com>
+---
+ hw/vfio/iommufd.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-     if (!peer_has_uso(n)) {
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-+        if (n->strict_peer_feature_check) {
-+            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6))
-+                error_setg(errp, "virtio_net: peer doesn't support USO");
-+        } else {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-+        }
-     }
-
-So qemu would fail earlier than fail the migration.
-
-Thanks
-
-
->
-> --
-> Peter Xu
->
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 806ca6ef14..5f96a41246 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -65,7 +65,7 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+     uint32_t ioas_id = container->ioas_id;
+     bool need_dirty_sync = false;
+     Error *local_err = NULL;
+-    int ret;
++    int ret, unmap_ret;
+ 
+     if (unmap_all) {
+         size = UINT64_MAX;
+@@ -74,8 +74,21 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+-            /* TODO: query dirty bitmap before DMA unmap */
+-            return iommufd_backend_unmap_dma(be, ioas_id, iova, size);
++            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++                                                    iotlb->translated_addr,
++                                                    &local_err);
++            if (ret) {
++                error_report_err(local_err);
++            }
++            /* Unmap stale mapping even if query dirty bitmap fails */
++            unmap_ret = iommufd_backend_unmap_dma(be, ioas_id, iova, size);
++
++            /*
++             * If dirty tracking fails, return the failure to VFIO core to
++             * fail the migration, or else there will be dirty pages missed
++             * to be migrated.
++             */
++            return unmap_ret ? : ret;
+         }
+ 
+         need_dirty_sync = true;
+-- 
+2.47.1
 
 
