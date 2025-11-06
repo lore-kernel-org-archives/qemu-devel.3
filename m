@@ -4,155 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8A8CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 607BFCCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:52:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGxYI-0001Rb-Rb; Thu, 06 Nov 2025 05:49:14 -0500
+	id 1vGxb0-00032i-Ro; Thu, 06 Nov 2025 05:52:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jslaby@suse.cz>) id 1vGxYF-0001QW-Fk
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:49:11 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jslaby@suse.cz>) id 1vGxYB-0002AI-Se
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:49:10 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGxb0-00031O-6Y
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:52:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vGxay-0002go-Rp
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:52:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762426319;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=kxG4bcSIcVh95gyP/1qKSKNMarnpO4PpjXeU41lxtDY=;
+ b=PUxTqTUgqp5JFIQ4cVtpQ+qA5RbL4pyAqZqNERjOomjUEPaQ9u0gnNUEV5gEyF2o1D2roK
+ lsCg+Tr1PzD2jN71OfjDyTpR8JR07fSUGJgKeUbLKIDsE1J8ddbpwrTUWrRXcA5dwDXMtG
+ CnepuuMLjGF7dw5xwN2SkhX2/c4T2Hc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-ZG-23U1NOTeLNDTo-i-LrA-1; Thu,
+ 06 Nov 2025 05:51:56 -0500
+X-MC-Unique: ZG-23U1NOTeLNDTo-i-LrA-1
+X-Mimecast-MFC-AGG-ID: ZG-23U1NOTeLNDTo-i-LrA_1762426315
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A0B0F21182;
- Thu,  6 Nov 2025 10:48:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1762426137; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iEe1j5iDcWYovFSkkzB01PtZOJSIkack2URieeV42Jc=;
- b=dZflPalrb5lQlgAkLXB6enARZi+Lga+LIi0EE4v2wdlBgmmQXrZ7he0msu4Xu3dWNFoTGV
- I8aQrkg0cumtVshwenZkO0ZGLVp90hAElM+h6ob5djMjbIscA2E4xrCVFXk5ibk02fCFZO
- W/WO8Ide5DDBAp+P1nza+9v5J2ZoACg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1762426137;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iEe1j5iDcWYovFSkkzB01PtZOJSIkack2URieeV42Jc=;
- b=ZQajOFXK6YO5IKv36rhF7adXn0EpVMgeQiG9pZWsYfT94Ok2ICAL1bpptfj6ChdNWZ5NIA
- WX+RQ7mOXFCcp0DA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1762426137; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iEe1j5iDcWYovFSkkzB01PtZOJSIkack2URieeV42Jc=;
- b=dZflPalrb5lQlgAkLXB6enARZi+Lga+LIi0EE4v2wdlBgmmQXrZ7he0msu4Xu3dWNFoTGV
- I8aQrkg0cumtVshwenZkO0ZGLVp90hAElM+h6ob5djMjbIscA2E4xrCVFXk5ibk02fCFZO
- W/WO8Ide5DDBAp+P1nza+9v5J2ZoACg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1762426137;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iEe1j5iDcWYovFSkkzB01PtZOJSIkack2URieeV42Jc=;
- b=ZQajOFXK6YO5IKv36rhF7adXn0EpVMgeQiG9pZWsYfT94Ok2ICAL1bpptfj6ChdNWZ5NIA
- WX+RQ7mOXFCcp0DA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5967013A31;
- Thu,  6 Nov 2025 10:48:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id m5hYFRl9DGmbZgAAD6G6ig
- (envelope-from <jslaby@suse.cz>); Thu, 06 Nov 2025 10:48:57 +0000
-Message-ID: <7a64a3a7-a820-4f0f-9d7c-837965c5b46c@suse.cz>
-Date: Thu, 6 Nov 2025 11:48:57 +0100
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B0DF51956088; Thu,  6 Nov 2025 10:51:55 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.134])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DAD9180049F; Thu,  6 Nov 2025 10:51:53 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PATCH] hw/intc/ioapic: Fix ACCEL_KERNEL_GSI_IRQFD_POSSIBLE typo
+Date: Thu,  6 Nov 2025 11:51:48 +0100
+Message-ID: <20251106105148.737093-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/edu: restrict dma access to dma buffer
-From: Jiri Slaby <jslaby@suse.cz>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Torin Carey <torin@tcarey.uk>, qemu-devel@nongnu.org,
- Chris Friedt <chrisfriedt@gmail.com>
-References: <aQtAotYvzFY0Vpft@tcarey.uk>
- <5c356c12-55b8-4d01-bc0f-025d3a3b9293@suse.cz>
- <CAFEAcA9c0Y=ndvd-yV5tTr_+nbBO7W-TDcF4+=qCoknzyGPxAg@mail.gmail.com>
- <508e699e-ba3e-4977-9507-8da7da14fa28@suse.cz>
-Content-Language: en-US
-Autocrypt: addr=jslaby@suse.cz; keydata=
- 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
-In-Reply-To: <508e699e-ba3e-4977-9507-8da7da14fa28@suse.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[tcarey.uk,nongnu.org,gmail.com];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=jslaby@suse.cz;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,58 +81,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06. 11. 25, 11:45, Jiri Slaby wrote:
-> On 06. 11. 25, 11:38, Peter Maydell wrote:
->> On Thu, 6 Nov 2025 at 06:29, Jiri Slaby <jslaby@suse.cz> wrote:
->>>
->>> On 05. 11. 25, 13:18, Torin Carey wrote:
->>>> The EDU device doesn't enforce any bound checks on the addresses 
->>>> provided,
->>>> allowing users of the device to perform arbitrary reads and writes 
->>>> to QEMU's
->>>> address space.
->>>
->>> Hmm, it was the intention to crash qemu before:
->>> commit 7b608e5d6c1d61430e81cd5c71b0277b99b03f3a
->>> Author: Chris Friedt <chrisfriedt@gmail.com>
->>> Date:   Tue Oct 18 08:25:51 2022 -0400
->>>
->>>       hw: misc: edu: use qemu_log_mask instead of hw_error
->>>
->>>       Log a guest error instead of a hardware error when
->>>       the guest tries to DMA to / from an invalid address.
->>>
->>>
->>>
->>> As with a standard device when you program it badly. I don't understand
->>> why the commit changed it to log only and let the code to corrupt the
->>> memory?
->>
->> It's a PCI device. Unless something in the spec of
->> the device says "if you try to DMA outside this range
->> it will be ignored", then typically devices will let you
->> DMA anywhere in the address space. If the guest chooses
->> to program the device to DMA somewhere silly, that's its choice.
->>
->> Is there a spec for this device anywhere? If so, we should
->> follow that. If not, then it's a "make a best guess", and
->> "don't arbitrarily constrain DMA" is a reasonable guess.
-> 
-> It's an educational, fictional device, there is of course no spec for that.
-> 
->> The reason for the commit above is that devices should
->> not call hw_error() as that crashes QEMU itself.
-> 
-> But that was exactly my intention. Students should see an immediate 
-> crash, not random, undebuggable (in the given class hours) writes 
-> somewhere. And crashing a qemu instance was an intended pun.
+Commit 638ac1c78457 introduced a regression in interrupt remapping
+when running a VM configured with an intel-iommu device and an
+assigned PCI VF. During boot, Linux reports repeated messages :
 
-Which effectively translates the intent into: either we crash again 
-(revert the commit above), or we only log a warning (is it by default 
-logged at all?), but won't corrupt memory = no write happens.
+ [   15.416794] __common_interrupt: 2.37 No irq handler for vector
+ [   15.417266] __common_interrupt: 2.37 No irq handler for vector
+ [   15.417733] __common_interrupt: 2.37 No irq handler for vector
+ [   15.418202] __common_interrupt: 2.37 No irq handler for vector
+ [   15.418670] __common_interrupt: 2.37 No irq handler for vector
 
-> thanks,
+and may eventually hang.
+
+The issue is caused by the incorrect use of the macro
+ACCEL_KERNEL_GSI_IRQFD_POSSIBLE, which should instead be
+ACCEL_GSI_IRQFD_POSSIBLE.
+
+Fixes: 638ac1c78457 ("hw/intc: Generalize APIC helper names from kvm_* to accel_*")
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/intc/ioapic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
+index e431d0031176800753795d6d29ccc22982e4f63b..38e438464861040341f73c576c3214e2ceab2f8a 100644
+--- a/hw/intc/ioapic.c
++++ b/hw/intc/ioapic.c
+@@ -216,7 +216,7 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
+ #endif
+ }
+ 
+-#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
++#ifdef ACCEL_GSI_IRQFD_POSSIBLE
+ static void ioapic_iec_notifier(void *private, bool global,
+                                 uint32_t index, uint32_t mask)
+ {
+@@ -434,7 +434,7 @@ static const MemoryRegionOps ioapic_io_ops = {
+ 
+ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
+ {
+-#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
++#ifdef ACCEL_GSI_IRQFD_POSSIBLE
+     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
+                                         machine_done);
+ 
 -- 
-js
-suse labs
+2.51.1
+
 
