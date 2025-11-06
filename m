@@ -4,95 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60281CCFA1C
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 12:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC85CCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 12:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGzKT-00010I-Q9; Thu, 06 Nov 2025 07:43:05 -0500
+	id 1vGzYk-0005pz-Vb; Thu, 06 Nov 2025 07:57:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vGzKS-0000zj-OG
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 07:43:04 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vGzKQ-0002Vm-Nk
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 07:43:04 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7c6d1ebb0c4so535271a34.1
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 04:43:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1762432981; x=1763037781; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=K8L4HHWl5xKlF96QsmT1vm7FXuet16ligCF/DGn2KOM=;
- b=YpRaLDvXwSArZ3GFembnklff64NOPIuxEH6q2CFUG/CQZ2wDTea3E7YQYqktYltodr
- 90rfG7w+rEEvJl1AHht7fy8k3eT5iY87kJNhHoznOzrRezR97vsqXxbZpYQQ3TSGUlxV
- ZlrJcCZcn6X3JoUC+BKq1MguvFAuio3PX0qfvIK0qQiXhQqH8YWV7hQJVKab3Dj1bYvy
- +S+xSud3we6m2qNM+dbrTRAI9qPZN1oRFdTN+hiLgY9DKlIWJNFpK2Zsh6Ylp3456vgf
- fSqx1tECtFeZLpBb3a0s+MaeMoZSgvwvXPJRoxWHqJA78A87SFacFINyrP/cyPrgd+o7
- w0/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762432981; x=1763037781;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K8L4HHWl5xKlF96QsmT1vm7FXuet16ligCF/DGn2KOM=;
- b=CwMfYT+ID+VJlmvIr5t3+O1uEWyh5j6SQKpHhoQWvJBUoe/RgoE7TQsoN+KFyAiME+
- OgVNoJnc3HSGyvNd0EKQ/jVpsALkjKJtzbPla/CEm5oejSlaodk9rNN1WOKjMgHgxeen
- ZW4cF0Ojy9ah9wpyEC+5eDXeiyaOQzzlofC5kMXbafuf0Rh4asg8QVD/enNNLkNpH7bO
- O2Mi+6w/iuHjyThDgz5rJuy32P6dojduLGlQh8hePVxk8DWeVsk8grUiLAfxxrpCtkjW
- n9p+jZLhRIwE91EPBe1JklJb1ZfF3+sMgrpy9VKIgna3QhkuDwM3tKFI7b/yUmmmUzdM
- MysQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAapJtogYriknTrfZK5hjGpuSt4VVz6URO7CIcRInkLB+zdVxJH/PcIk+fMszuA0YzVSjMNv24ouP1@nongnu.org
-X-Gm-Message-State: AOJu0YzVdoISTcFP5zfp4BCXnUkZk+Gln40m54RsuxfLHQlt5GNqXQJT
- q7DJLM+qusGCc200u9CfE+HvwxcHRGFKCFwZMyPlUXGB+xUoEKD5aIVMmD9RhNJl2cyywqA7MPo
- BV/NVQa0=
-X-Gm-Gg: ASbGncswQ7eoBoFYQeTJFp8oCEtrIIXhKVDSvuMzohDbAZe0Y9PdI9/Quv2OqyxZ8+r
- d5HPKuXVn+dPv3LfobkZNrF5/aLNLNrZ/cOfmiZ4+7z8VbhSmDLyLet6+pmhiapi4RuyGEyHRvM
- 8K8vJ9xwgWhe1wi1o3zrwG1bsmACG1hHU4Eo21QzkcJ1riPOMytKHwUna3TrapvMYkGPw/S/ki0
- yHVu0hNKZMp3sIy3N0fZgn24jFr9fsHeaL8kaqZmRzWkRRENMfYNFq0KRa+/cHbEqhbWMG5Dzos
- ZBxf2C1vWLqR5qiWSp/ACMffBQuw/GFF3A250ixUY3rlkvRtXDJnV+xv6WGf382aQumq6URGnz5
- divCfcInTsWR1+ozrZqfrBakzQ9+o6hZmouc1WT/5yH2Co9VJINgvJeekMumHodZhT1l7Q8xDfc
- j7lipFKi1DsAS41z9QYe9GjQP6
-X-Google-Smtp-Source: AGHT+IFLuJ++zUSVpw33vpc9mja/7tlvKFSHEDwCUvpXExJQyOY0jPZBUUDP3pStg7iyLWHRGEzbew==
-X-Received: by 2002:a05:6808:181e:b0:44f:6dcf:e9c3 with SMTP id
- 5614622812f47-44fed42b920mr3817198b6e.66.1762432981209; 
- Thu, 06 Nov 2025 04:43:01 -0800 (PST)
-Received: from [192.168.68.110] ([179.93.21.233])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3e30857db14sm1018293fac.9.2025.11.06.04.42.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Nov 2025 04:43:00 -0800 (PST)
-Message-ID: <8102ecad-fe07-4d58-9a7b-b39fa2624921@ventanamicro.com>
-Date: Thu, 6 Nov 2025 09:42:56 -0300
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vGzYi-0005pY-GL
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 07:57:48 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vGzYe-0006pL-OV
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 07:57:48 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3A103808C1;
+ Thu, 06 Nov 2025 15:57:40 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id cvlYSH0F7eA0-qS5nFoyS; Thu, 06 Nov 2025 15:57:39 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1762433859;
+ bh=dtHSHRzdotPRbJB+kBNqgV1ttm4pxQ57lu0vemL9cnA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=v4zEm/M6MGWxO47finlSZ6eLsDA8d2Vs/YVEolOMVE3TLEZJ4Ejg7Vc6eJRq7jY63
+ ufFdGA8seOyqg/igFV2jGB2exOOK/arQPEWEHSdzf+T8S6gQby+yp9WK44OYFrDmu2
+ +sI+pM1UlygNWLLP/xxuv+iRhNMd3qi4DEWpikss=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <98b852a1-257e-4059-a1b9-c1d23b82b75c@yandex-team.ru>
+Date: Thu, 6 Nov 2025 15:57:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] target/riscv: add NEORV32 RV32 CPU type and vendor
- CSR hooks
-To: Michael Levit <michael@videogpu.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
- zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, smishash@gmail.com
-References: <20251105185056.23565-1-michael@videogpu.com>
- <20251105185056.23565-2-michael@videogpu.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v4 2/2] tmp_emulator: improve and fix use of errp
+To: Markus Armbruster <armbru@redhat.com>
+Cc: peterx@redhat.com, stefanb@linux.vnet.ibm.com, farosas@suse.de,
+ qemu-devel@nongnu.org, berrange@redhat.com, armenon@redhat.com
+References: <20251028130738.29037-1-vsementsov@yandex-team.ru>
+ <20251028130738.29037-3-vsementsov@yandex-team.ru>
+ <87zf8zfioe.fsf@pond.sub.org>
 Content-Language: en-US
-In-Reply-To: <20251105185056.23565-2-michael@videogpu.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87zf8zfioe.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,213 +78,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/5/25 3:50 PM, Michael Levit wrote:
-> From: Michael <michael@videogpu.com>
+On 06.11.25 15:29, Markus Armbruster wrote:
+> I know this has been committed already, but I'd like to point out a few
+> things anyway.
 > 
-> Introduce NEORV32 RV32 CPU type under target/riscv, wire NEORV32 vendor ID,
-> and add a vendor CSR (CSR_MXISA) guarded by mvendorid match, plus meson glue.
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> Signed-off-by: Michael Levit <michael@videogpu.com>
-> ---
->   target/riscv/cpu-qom.h            |  2 ++
->   target/riscv/cpu.c                | 18 ++++++++++++++
->   target/riscv/cpu.h                |  3 +++
->   target/riscv/cpu_cfg.h            |  1 +
->   target/riscv/cpu_cfg_fields.h.inc |  1 +
->   target/riscv/cpu_vendorid.h       |  2 ++
->   target/riscv/meson.build          |  1 +
->   target/riscv/neorv32_csr.c        | 40 +++++++++++++++++++++++++++++++
->   8 files changed, 68 insertions(+)
->   create mode 100644 target/riscv/neorv32_csr.c
+>> tpm_emulator_post_load() and tpm_emulator_set_state_blobs() has
+>> error paths, where they return negative value, but do not set
+>> errp.
+>>
+>> To fix that, we also have to convert several other functions to
+>> set errp instead of error_reporting.
 > 
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 75f4e43408..d091807160 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -43,6 +43,7 @@
->   #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
->   #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
->   #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
-> +#define TYPE_RISCV_CPU_NEORV32          RISCV_CPU_TYPE_NAME("neorv32")
->   #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
->   #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
->   #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
-> @@ -58,6 +59,7 @@
->   #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
->   #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
->   
-> +
+> Missing Fixes: tag.  Next time :)
+> 
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   backends/tpm/tpm_emulator.c | 63 +++++++++++++++++++++++--------------
+>>   1 file changed, 39 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+>> index dacfca5ab7..6abe9872e6 100644
+>> --- a/backends/tpm/tpm_emulator.c
+>> +++ b/backends/tpm/tpm_emulator.c
+>> @@ -308,22 +308,22 @@ static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
+>>       return 0;
+>>   }
+>>   
+>> -static int tpm_emulator_stop_tpm(TPMBackend *tb)
+>> +static int tpm_emulator_stop_tpm(TPMBackend *tb, Error **errp)
+>>   {
+>>       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+>>       ptm_res res;
+>>   
+>>       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_STOP, &res, 0,
+>>                                sizeof(ptm_res), sizeof(res)) < 0) {
+>> -        error_report("tpm-emulator: Could not stop TPM: %s",
+>> -                     strerror(errno));
+>> +        error_setg(errp, "tpm-emulator: Could not stop TPM: %s",
+>> +                   strerror(errno));
+> 
+> Not this patch's fault: use of @errno is dubious.
+> tpm_emulator_ctrlcmd() fails when qemu_chr_fe_write_all() or
+> qemu_chr_fe_read_all() fails.  These functions are not documented to set
+> errno on failure, and I doubt they do in all cases.
+> 
+>>           return -1;
+>>       }
+>>   
+>>       res = be32_to_cpu(res);
+>>       if (res) {
+>> -        error_report("tpm-emulator: TPM result for CMD_STOP: 0x%x %s", res,
+>> -                     tpm_emulator_strerror(res));
+>> +        error_setg(errp, "tpm-emulator: TPM result for CMD_STOP: 0x%x %s", res,
+>> +                   tpm_emulator_strerror(res));
+>>           return -1;
+>>       }
+>>   
+>> @@ -362,12 +362,13 @@ static int tpm_emulator_lock_storage(TPMEmulator *tpm_emu)
+>>   
+>>   static int tpm_emulator_set_buffer_size(TPMBackend *tb,
+>>                                           size_t wanted_size,
+>> -                                        size_t *actual_size)
+>> +                                        size_t *actual_size,
+>> +                                        Error **errp)
+>>   {
+>>       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+>>       ptm_setbuffersize psbs;
+>>   
+>> -    if (tpm_emulator_stop_tpm(tb) < 0) {
+>> +    if (tpm_emulator_stop_tpm(tb, errp) < 0) {
+>>           return -1;
+>>       }
+>>   
+>> @@ -376,16 +377,17 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
+>>       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_BUFFERSIZE, &psbs,
+>>                                sizeof(psbs.u.req), sizeof(psbs.u.resp.tpm_result),
+>>                                sizeof(psbs.u.resp)) < 0) {
+>> -        error_report("tpm-emulator: Could not set buffer size: %s",
+>> -                     strerror(errno));
+>> +        error_setg(errp, "tpm-emulator: Could not set buffer size: %s",
+>> +                   strerror(errno));
+> 
+> Likewise.
+> 
+>>           return -1;
+>>       }
+>>   
+>>       psbs.u.resp.tpm_result = be32_to_cpu(psbs.u.resp.tpm_result);
+>>       if (psbs.u.resp.tpm_result != 0) {
+>> -        error_report("tpm-emulator: TPM result for set buffer size : 0x%x %s",
+>> -                     psbs.u.resp.tpm_result,
+>> -                     tpm_emulator_strerror(psbs.u.resp.tpm_result));
+>> +        error_setg(errp,
+>> +                   "tpm-emulator: TPM result for set buffer size : 0x%x %s",
+>> +                   psbs.u.resp.tpm_result,
+>> +                   tpm_emulator_strerror(psbs.u.resp.tpm_result));
+>>           return -1;
+>>       }
+>>   
+>> @@ -402,7 +404,7 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
+>>   }
+>>   
+>>   static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
+>> -                                     bool is_resume)
+>> +                                           bool is_resume, Error **errp)
+>>   {
+>>       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+>>       ptm_init init = {
+>> @@ -413,7 +415,7 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
+>>       trace_tpm_emulator_startup_tpm_resume(is_resume, buffersize);
+>>   
+>>       if (buffersize != 0 &&
+>> -        tpm_emulator_set_buffer_size(tb, buffersize, NULL) < 0) {
+>> +        tpm_emulator_set_buffer_size(tb, buffersize, NULL, errp) < 0) {
+>>           goto err_exit;
+>>       }
+>>   
+>> @@ -424,15 +426,15 @@ static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
+>>       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_INIT, &init, sizeof(init),
+>>                                sizeof(init.u.resp.tpm_result),
+>>                                sizeof(init)) < 0) {
+>> -        error_report("tpm-emulator: could not send INIT: %s",
+>> -                     strerror(errno));
+>> +        error_setg(errp, "tpm-emulator: could not send INIT: %s",
+>> +                   strerror(errno));
+>>           goto err_exit;
+>>       }
+>>   
+>>       res = be32_to_cpu(init.u.resp.tpm_result);
+>>       if (res) {
+>> -        error_report("tpm-emulator: TPM result for CMD_INIT: 0x%x %s", res,
+>> -                     tpm_emulator_strerror(res));
+>> +        error_setg(errp, "tpm-emulator: TPM result for CMD_INIT: 0x%x %s", res,
+>> +                   tpm_emulator_strerror(res));
+>>           goto err_exit;
+>>       }
+>>       return 0;
+>> @@ -441,18 +443,31 @@ err_exit:
+>>       return -1;
+>>   }
+>>   
+>> -static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
+>> +static int do_tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize,
+>> +                                       Error **errp)
+>>   {
+>>       /* TPM startup will be done from post_load hook */
+>>       if (runstate_check(RUN_STATE_INMIGRATE)) {
+>>           if (buffersize != 0) {
+>> -            return tpm_emulator_set_buffer_size(tb, buffersize, NULL);
+>> +            return tpm_emulator_set_buffer_size(tb, buffersize, NULL, errp);
+>>           }
+>>   
+>>           return 0;
+>>       }
+>>   
+>> -    return tpm_emulator_startup_tpm_resume(tb, buffersize, false);
+>> +    return tpm_emulator_startup_tpm_resume(tb, buffersize, false, errp);
+>> +}
+>> +
+>> +static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
+>> +{
+>> +    Error *local_err = NULL;
+>> +    int ret = do_tpm_emulator_startup_tpm(tb, buffersize, &local_err);
+>> +
+>> +    if (ret < 0) {
+>> +        error_report_err(local_err);
+>> +    }
+>> +
+>> +    return ret;
+>>   }
+>>   
+>>   static bool tpm_emulator_get_tpm_established_flag(TPMBackend *tb)
+>> @@ -546,7 +561,7 @@ static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
+>>   {
+>>       size_t actual_size;
+>>   
+>> -    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size) < 0) {
+>> +    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size, NULL) < 0) {
+> 
+> As Stefan pointed out, this loses an error report.  Before the patch,
+> tpm_emulator_set_buffer_size() reports errors with error_report().  Now
+> it ignores errors.  Please fix.
+> 
+>>           return 4096;
+>>       }
+>>   
+>> @@ -889,7 +904,7 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+>>   
+>>       trace_tpm_emulator_set_state_blobs();
+>>   
+>> -    if (tpm_emulator_stop_tpm(tb) < 0) {
+>> +    if (tpm_emulator_stop_tpm(tb, errp) < 0) {
+> 
+> Big fix here, ...
+> 
+>>           trace_tpm_emulator_set_state_blobs_error("Could not stop TPM");
+>>           return -EIO;
+>>       }
+>> @@ -960,7 +975,7 @@ static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+>>           return ret;
+>>       }
+>>   
+>> -    if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
+>> +    if (tpm_emulator_startup_tpm_resume(tb, 0, true, errp) < 0) {
+> 
+> ... and here.  Good.
+> 
+>>           return -EIO;
+>>       }
+> 
 
-Extra blank line.
+I'll send a follow-up fix, thanks for looking at it!
 
->   OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
->   
->   #endif /* RISCV_CPU_QOM_H */
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 73d4280d7c..ffe99f71e1 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -233,6 +233,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
->       ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
->       ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-> +    ISA_EXT_DATA_ENTRY(xneorv32xisa, PRIV_VERSION_1_10_0, ext_xneorv32xisa),
->       ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
->       ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
->       ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-> @@ -1366,6 +1367,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
->       MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
->       MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
->       MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
-> +    MULTI_EXT_CFG_BOOL("xneorv32xisa", ext_xneorv32xisa, false),
->   
->       { },
->   };
-> @@ -3032,6 +3034,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->           .cfg.pmp_regions = 8
->       ),
->   
-> +
-
-Extra blank line here too.
-
-
-
-Without the extra blank lines:
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   #if defined(TARGET_RISCV32) || \
->       (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
->       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
-> @@ -3075,6 +3078,21 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->           .misa_mxl_max = MXL_RV32,
->           .misa_ext = RVE
->       ),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_NEORV32, TYPE_RISCV_VENDOR_CPU,
-> +        .misa_mxl_max = MXL_RV32,
-> +        .misa_ext = RVI | RVM | RVA | RVC | RVU,
-> +        .priv_spec = PRIV_VERSION_1_10_0,
-> +
-> +        .cfg.max_satp_mode = VM_1_10_MBARE,
-> +        .cfg.ext_zifencei = true,
-> +        .cfg.ext_zicsr = true,
-> +        .cfg.pmp = true,
-> +        .cfg.pmp_regions = 16,
-> +        .cfg.mvendorid = NEORV32_VENDOR_ID,
-> +#ifndef CONFIG_USER_ONLY
-> +        .custom_csrs = neorv32_csr_list
-> +#endif
-> +    ),
->   #endif
->   
->   #if (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 36e7f10037..6a9918a25a 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -985,5 +985,8 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
->   /* In th_csr.c */
->   extern const RISCVCSR th_csr_list[];
->   
-> +/* Implemented in neorv32_csr.c */
-> +extern const RISCVCSR neorv32_csr_list[];
-> +
->   const char *priv_spec_to_str(int priv_version);
->   #endif /* RISCV_CPU_H */
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index aa28dc8d7e..9ad38506e4 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -64,5 +64,6 @@ MATERIALISE_EXT_PREDICATE(xtheadmemidx)
->   MATERIALISE_EXT_PREDICATE(xtheadmempair)
->   MATERIALISE_EXT_PREDICATE(xtheadsync)
->   MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
-> +MATERIALISE_EXT_PREDICATE(xneorv32xisa)
->   
->   #endif
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index a154ecdc79..b84e1bd287 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -147,6 +147,7 @@ BOOL_FIELD(ext_xtheadmemidx)
->   BOOL_FIELD(ext_xtheadmempair)
->   BOOL_FIELD(ext_xtheadsync)
->   BOOL_FIELD(ext_XVentanaCondOps)
-> +BOOL_FIELD(ext_xneorv32xisa)
->   
->   BOOL_FIELD(mmu)
->   BOOL_FIELD(pmp)
-> diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-> index 96b6b9c2cb..66a8f30b81 100644
-> --- a/target/riscv/cpu_vendorid.h
-> +++ b/target/riscv/cpu_vendorid.h
-> @@ -7,4 +7,6 @@
->   #define VEYRON_V1_MIMPID        0x111
->   #define VEYRON_V1_MVENDORID     0x61f
->   
-> +#define NEORV32_VENDOR_ID       0xF0000001
-> +
->   #endif /*  TARGET_RISCV_CPU_VENDORID_H */
-> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-> index fdefe88ccd..44e706ad3f 100644
-> --- a/target/riscv/meson.build
-> +++ b/target/riscv/meson.build
-> @@ -40,6 +40,7 @@ riscv_system_ss.add(files(
->     'th_csr.c',
->     'time_helper.c',
->     'riscv-qmp-cmds.c',
-> +  'neorv32_csr.c',
->   ))
->   
->   subdir('tcg')
-> diff --git a/target/riscv/neorv32_csr.c b/target/riscv/neorv32_csr.c
-> new file mode 100644
-> index 0000000000..3b0f0cab05
-> --- /dev/null
-> +++ b/target/riscv/neorv32_csr.c
-> @@ -0,0 +1,40 @@
-> +/*
-> + * NEORV32-specific CSR.
-> + *
-> + * Copyright (c) 2025 Michael Levit
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "cpu.h"
-> +#include "cpu_vendorid.h"
-> +
-> +#define    CSR_MXISA    (0xfc0)
-> +
-> +static RISCVException smode(CPURISCVState *env, int csrno)
-> +{
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException read_neorv32_xisa(CPURISCVState *env, int csrno,
-> +                                       target_ulong *val)
-> +{
-> +    /* We don't support any extension for now on QEMU */
-> +    *val = 0x00;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static bool test_neorv32_mvendorid(RISCVCPU *cpu)
-> +{
-> +    return cpu->cfg.mvendorid == NEORV32_VENDOR_ID;
-> +}
-> +
-> +const RISCVCSR neorv32_csr_list[] = {
-> +    {
-> +        .csrno = CSR_MXISA,
-> +        .insertion_test = test_neorv32_mvendorid,
-> +        .csr_ops = { "neorv32.xisa", smode, read_neorv32_xisa }
-> +    },
-> +    { }
-> +};
-> +
-
+-- 
+Best regards,
+Vladimir
 
