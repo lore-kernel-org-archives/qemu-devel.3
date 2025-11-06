@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0903BCCFA19
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 08:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B67CCFA1B
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 08:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGvga-0002xi-Qk; Thu, 06 Nov 2025 03:49:40 -0500
+	id 1vGvgm-00035v-PL; Thu, 06 Nov 2025 03:49:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vGvgZ-0002vw-2f; Thu, 06 Nov 2025 03:49:39 -0500
+ id 1vGvgk-00035X-Ke; Thu, 06 Nov 2025 03:49:50 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vGvgX-0005Sg-ES; Thu, 06 Nov 2025 03:49:38 -0500
+ id 1vGvgj-0005Sg-7D; Thu, 06 Nov 2025 03:49:50 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 6 Nov
- 2025 16:49:25 +0800
+ 2025 16:49:27 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 6 Nov 2025 16:49:25 +0800
+ Transport; Thu, 6 Nov 2025 16:49:27 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,10 +34,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 01/12] hw/arm/aspeed: Fix missing SPI IRQ connection
- causing DMA interrupt failure
-Date: Thu, 6 Nov 2025 16:49:10 +0800
-Message-ID: <20251106084925.1253704-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 05/12] hw/arm/aspeed_ast10x0: Add common init function for
+ AST10x0 SoCs
+Date: Thu, 6 Nov 2025 16:49:14 +0800
+Message-ID: <20251106084925.1253704-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
 References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
@@ -69,60 +69,66 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It did not connect SPI IRQ to the Interrupt Controller, so even the SPI
-model raised the IRQ, the interrupt was not received. The CPU therefore
-did not trigger an interrupt via the controller, and the firmware never
-received the interrupt.
+Introduce a new common initialization function
+aspeed_soc_ast10x0_init() for AST10x0 series SoCs. This separates the
+shared initialization logic from the AST1030-specific part, allowing
+reuse by future SoCs such as AST1060.
 
-Fixes: 356b230ed13889e09d087a96498887de695df17e ("aspeed/soc: Add AST1030 support")
-Fixes: f25c0ae1079dc0b9de02676eb3e3949a09df9f41 ("aspeed/soc: Add AST2600 support")
-Fixes: 5dd883ab0635c9f715c77cc32622e458a0724581 ("aspeed/soc: Add AST2700 support")
+The AST1060 does not include the LPC and PECI models, so the common
+initializer is used for all shared modules, while
+aspeed_soc_ast1030_init() adds initialization of LPC and PECI, which
+are unique to AST1030.
+
+This refactor improves code reuse and prepares the codebase for
+supporting the AST1060 platform.
+
+No functional changes.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast10x0.c | 2 ++
- hw/arm/aspeed_ast2600.c | 2 ++
- hw/arm/aspeed_ast27x0.c | 2 ++
- 3 files changed, 6 insertions(+)
+ hw/arm/aspeed_ast10x0.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index 7f49c13391..ca487774ae 100644
+index ca487774ae..5941ebe00c 100644
 --- a/hw/arm/aspeed_ast10x0.c
 +++ b/hw/arm/aspeed_ast10x0.c
-@@ -372,6 +372,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-                         sc->memmap[ASPEED_DEV_SPI1 + i]);
-         aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
-+                           aspeed_soc_ast1030_get_irq(s, ASPEED_DEV_SPI1 + i));
+@@ -107,7 +107,7 @@ static qemu_irq aspeed_soc_ast1030_get_irq(AspeedSoCState *s, int dev)
+     return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
+ }
+ 
+-static void aspeed_soc_ast1030_init(Object *obj)
++static void aspeed_soc_ast10x0_init(Object *obj)
+ {
+     Aspeed10x0SoCState *a = ASPEED10X0_SOC(obj);
+     AspeedSoCState *s = ASPEED_SOC(obj);
+@@ -150,10 +150,6 @@ static void aspeed_soc_ast1030_init(Object *obj)
+         object_initialize_child(obj, "spi[*]", &s->spi[i], typename);
      }
  
-     /* Secure Boot Controller */
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 498d1ecc07..4c5a42ea17 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -557,6 +557,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-                         sc->memmap[ASPEED_DEV_SPI1 + i]);
-         aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
-+                           aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_SPI1 + i));
-     }
+-    object_initialize_child(obj, "lpc", &s->lpc, TYPE_ASPEED_LPC);
+-
+-    object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
+-
+     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST10X0_SBC);
  
-     /* EHCI */
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index c484bcd4e2..e02a674b13 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -831,6 +831,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-                         sc->memmap[ASPEED_DEV_SPI0 + i]);
-         aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->spi[i]), 1,
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
-+                           aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_SPI0 + i));
-     }
+     for (i = 0; i < sc->wdts_num; i++) {
+@@ -185,6 +181,15 @@ static void aspeed_soc_ast1030_init(Object *obj)
+                             TYPE_UNIMPLEMENTED_DEVICE);
+ }
  
-     /* EHCI */
++static void aspeed_soc_ast1030_init(Object *obj)
++{
++    AspeedSoCState *s = ASPEED_SOC(obj);
++
++    aspeed_soc_ast10x0_init(obj);
++    object_initialize_child(obj, "lpc", &s->lpc, TYPE_ASPEED_LPC);
++    object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
++}
++
+ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
+ {
+     Aspeed10x0SoCState *a = ASPEED10X0_SOC(dev_soc);
 -- 
 2.43.0
 
