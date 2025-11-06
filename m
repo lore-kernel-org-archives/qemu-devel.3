@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A01B5CCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 03:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC07CCFA0D
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 03:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGqa7-0005Dd-4d; Wed, 05 Nov 2025 22:22:39 -0500
+	id 1vGqc7-0005n7-Gn; Wed, 05 Nov 2025 22:24:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vGqa5-0005DF-Gd
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 22:22:37 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1vGqc6-0005mk-5J
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 22:24:42 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vGqa3-0005Aq-OC
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 22:22:37 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b3e9d633b78so90932666b.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 19:22:34 -0800 (PST)
+ id 1vGqc4-0000NX-9Y
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 22:24:41 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b71397df721so85152066b.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 19:24:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762399353; x=1763004153; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762399479; x=1763004279; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GJIH4GTj+IphAqTfdFNYa6VrzMoLdcLGUsSF9hSFVeU=;
- b=JMao7juVBn8tzwFsvYOHaPLgLk5d0Nbru5tg32HjcLzBZcrb54dFPbtDwSvuA1dbgu
- BDb5aOxUjgYjrwgNA7sRuKS27a6lCiiIOJsqCnnR5f0MDRNGueFA1772Pz2ahA4T9TZD
- 8AJ7qoFw3XzQWyonfJJzM+JhfVZo7wlAtGy/Ycm3EfSiN5VrG20dxy78L3+hLHumZPdP
- mKErZoGuhV/49qZc9ziP2qqwMlIrxKzqQDlXOhQC0o+nTVF1VG/qkcUP7KQ6L5ZPim3K
- BJxBZJ6o/4sN9wel0FNJ/2T6/A3dGWeMONl9vUWkwMmw3827FzmQJ8Q3XqAHwXTB0LI5
- z8BA==
+ bh=DgoU9sDGSZR4/SQJMiz/nPsbPORCwpHS5x9UIvmLjlI=;
+ b=RLoluePomQ648Lsh3m2cUNMswedHVDlVwm7ZxvJx+0vOGarTtHCyEifut/KKqueO9/
+ U0Pu0U7HSgXhi4YbAqpUVzVQ52a3qAUDSTbegR8r3slqQDU06FrGymq3/oOGzr3OlGCc
+ 3B+q+UrJOWOku0AJ7NaT1ll6bCehSk4Dgrv+g9WzW5zOWP/eZFnZNoHPaaKEnymjr3Lt
+ IkmJP7ylpAN3fjMZN1yTFpI0O6MP9J5z7r4H8vQyTfwRZJBN136moBkpAVp6wOWuWy73
+ 6schski2D3ji5xgcuQ7GLm3fyeBm7DnudaJKNNf2Bjwd0RigC67kzLG2uBOi0wdfB0YY
+ 2bYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762399353; x=1763004153;
+ d=1e100.net; s=20230601; t=1762399479; x=1763004279;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GJIH4GTj+IphAqTfdFNYa6VrzMoLdcLGUsSF9hSFVeU=;
- b=LOex5sbm8Cr63GCPNTFIMLFfa6YF3n0J8ohp+bayBA3qDEoDQvl5SR295s9OhEj0vZ
- DkJoXG69t6JpnBFa23r8kJqMdVVczxMXrnlQ3NF53UjJEdRClxvuk0vxzcsm74TZT7mn
- F4lbiwaoUug3TI9TtAG/3UacCKE6VFzeVGFuFK60MIXQz6wdrgegbaPUpI6uFXXTPZsL
- EQdcL+8z+D1dkdrywkXNtg4KY/DMXRNLMLrvhSua9PQ3nRHnMjpigdsCrYjvrwoWeh7m
- XyQrss0DQmGKOsgbnzhXnxDUCwZYeCCDRADmAFwN27JGqmDEby1Dodbs7DoQbu+UwyC8
- Stbw==
+ bh=DgoU9sDGSZR4/SQJMiz/nPsbPORCwpHS5x9UIvmLjlI=;
+ b=vMbe9I2yX2ReBcGqlOgyvzB7RCv61hWNyEAmOZhj/3Bcl9Ooyv4Gra/iMQEoZZLeen
+ ttMQczretSfrwcY9KwdGtK49SmNfXD4mdICVqpbXUjX4wGSpLKf1oh8HyaMKQkwvI3lS
+ 9zxWZ/74KBVdk1WDOrGdf68ICoHCv5qEIvNXc5wayVADuI94Sp59OYdmtnId6PBj+mFn
+ KMl/q7+DlzqE0T64PGUfheewqPjQeQhKBP8WFZljmW4MhZQXeVl0G77R/7d5Frp3vYwn
+ atNYQkfXhLeQdwWxSQUz3B+ciHdbykR47H/9PrPoXf9SQz7EcmRJio3wPKz9UfddRCDO
+ U+Xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7qgSioW+c58pqJCT5BDfhtYQ8lOgMNDpSwzDu9ao9zGNQ32loHLne0yXIrcLg41tvIDUDlMrNZw1Q@nongnu.org
-X-Gm-Message-State: AOJu0Yz/5ancN/ZM8LZKEfdSR9FoxUW92M6ei6vH33vYWmxK9B4E3f0N
- fZN7bbWRTXUwtb0q2fjfETjzWQLBwVbvE+AStB7D2eoGOjXMEwCpOBEjCieUugEXzKyA26UwCUK
- VkrELSEP6R0U/5I5WzyYQwlMHoqrQIIU=
-X-Gm-Gg: ASbGnctjyBCOzrvzJ0ZWwL1vK2jzyfHNdnwiIHy9ClVYw5WdWAo+4EWpSUoIesL0oNW
- WF2/3th+qove1UkJb+MqNHUycSzjlAsIKu4xjn2iME1JXyxhHrRrNP8T87mPQucerWd+3J1xKsz
- 3u1x1DvrEsCn75+n9/C7aQX9TLDCcGeOVlyCTaE392f5UnJEZar2zRt5aTrGW9M/f1o8xRWox4Z
- DGoQpqoQXLK0FEWDG2KELEhDTx60Yl0LJaPdYTXQ6sVLM5dBucnKmG38iHpMw==
-X-Google-Smtp-Source: AGHT+IF/f5vY3ucGvc8tJFNCBHzG8oOb4UiRRvFuz4m9Yb9zkiWqp/roWogywqL3y71MOjL41o2qW+YqPyL6PK9y2lo=
-X-Received: by 2002:a17:907:9607:b0:b6d:671d:8814 with SMTP id
- a640c23a62f3a-b72895c5efcmr199465366b.27.1762399353023; Wed, 05 Nov 2025
- 19:22:33 -0800 (PST)
+ AJvYcCUSBOo6l/7ZWP7nSipijL/wGpQyLyoDdZr2Eu7BEMb4p5JEc9BDas4LlO/mfDvLjp/eLurPuIVKvwqa@nongnu.org
+X-Gm-Message-State: AOJu0YyAUAKR8UD8oI4QmFgerkHWisNh2xHzuEfkm5SK7FS/NqNNJScW
+ dz+URUp2I6Wai46xx7IZbQBlXXyLZbvlSXLBlsFpptOJ9SiXksm337Rrxh4/nsQCinwpbJXyAKV
+ mtmI++inrAfgCaRutfROHsKJfXrmrJtg=
+X-Gm-Gg: ASbGncvKq+LbIva/Z1sLa+/kGHsS3BeTqzpO6bMn7ITw0UYLD37et+FTBDsPdQYeRrS
+ CGBKCFqqBkRKxqURQy8sbOBJacqxLut4K8XiIOP5KLrHkflVciRNp1wNDoWllEgUDlMWItYodUl
+ cRJf1a7VeACYTyH8v8fuat30ZDkOEQ9mOo4ioSaa2vJfTiTcZzVWbhQz0fBGxfltwXS+k1Ev48J
+ u8I5HQ1f7ApLE7HJHHDsezI9UXZFIkqXhs/xPloTEHojm+f8VzA4eZJ6rXdxQ==
+X-Google-Smtp-Source: AGHT+IEpqDFL24diHoVgbz4Z+6wgRIrtrSPg8d3mRzIyJGTt5cir3j3A9PdGAe8GZytxDEo9plw3EglWr4I4LjRA1js=
+X-Received: by 2002:a17:907:6e88:b0:b72:5983:db0f with SMTP id
+ a640c23a62f3a-b726529e643mr524651066b.16.1762399478539; Wed, 05 Nov 2025
+ 19:24:38 -0800 (PST)
 MIME-Version: 1.0
 References: <20251104013606.1937764-1-lizhijian@fujitsu.com>
  <aQu6bDAA7hnIPg-y@x1.local> <b2eadde7-57e9-426c-8487-e500ba06410e@fujitsu.com>
-In-Reply-To: <b2eadde7-57e9-426c-8487-e500ba06410e@fujitsu.com>
+ <CAK3tnvK2h4gDYZn_P-mQPhM5qvSkPy2FJ_EzKqyMU9ZcyT8TTA@mail.gmail.com>
+In-Reply-To: <CAK3tnvK2h4gDYZn_P-mQPhM5qvSkPy2FJ_EzKqyMU9ZcyT8TTA@mail.gmail.com>
 From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 6 Nov 2025 11:21:56 +0800
-X-Gm-Features: AWmQ_bnnvvXj6qHts1Cz0yLc_umbceXjZf42b3piYvJXBtmYYpVEwZCOXn_jqWs
-Message-ID: <CAK3tnvK2h4gDYZn_P-mQPhM5qvSkPy2FJ_EzKqyMU9ZcyT8TTA@mail.gmail.com>
+Date: Thu, 6 Nov 2025 11:24:01 +0800
+X-Gm-Features: AWmQ_bkrToLxq3SNMqyNqIFFhVVQ8BlP6nZOcxqG_abZKtcpI77p_lw1Dw0iOKM
+Message-ID: <CAK3tnvJQcie33+XG1BaDUvEtVKhC_2Z7qoMn8NzhwwNXp4XHbQ@mail.gmail.com>
 Subject: Re: [PATCH] migration: Fix transition to COLO state from precopy
 To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
 Cc: Peter Xu <peterx@redhat.com>, 
@@ -77,8 +78,8 @@ Cc: Peter Xu <peterx@redhat.com>,
  Lukas Straub <lukasstraub2@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,125 +102,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 6, 2025 at 9:10=E2=80=AFAM Zhijian Li (Fujitsu)
-<lizhijian@fujitsu.com> wrote:
+On Thu, Nov 6, 2025 at 11:21=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> wr=
+ote:
 >
->
->
-> On 06/11/2025 04:58, Peter Xu wrote:
-> > On Tue, Nov 04, 2025 at 09:36:06AM +0800, Li Zhijian wrote:
-> >> Commit 4881411136 ("migration: Always set DEVICE state") set a new DEV=
-ICE
-> >> state before completed during migration, which broke the original tran=
-sition
-> >> to COLO. The migration flow for precopy has changed to:
-> >> active -> pre-switchover -> device -> completed.
-> >>
-> >> This patch updates the transition state to ensure that the Pre-COLO
-> >> state corresponds to DEVICE state correctly.
-> >>
-> >> Fixes: 4881411136 ("migration: Always set DEVICE state")
-> >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> >> ---
-> >>   migration/migration.c | 4 ++--
-> >>   1 file changed, 2 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/migration/migration.c b/migration/migration.c
-> >> index a63b46bbef..6ec7f3cec8 100644
-> >> --- a/migration/migration.c
-> >> +++ b/migration/migration.c
-> >> @@ -3095,9 +3095,9 @@ static void migration_completion(MigrationState =
-*s)
-> >>           goto fail;
-> >>       }
-> >>
-> >> -    if (migrate_colo() && s->state =3D=3D MIGRATION_STATUS_ACTIVE) {
-> >> +    if (migrate_colo() && s->state =3D=3D MIGRATION_STATUS_DEVICE) {
-> >>           /* COLO does not support postcopy */
-> >> -        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-> >> +        migrate_set_state(&s->state, MIGRATION_STATUS_DEVICE,
-> >>                             MIGRATION_STATUS_COLO);
-> >>       } else {
-> >>           migration_completion_end(s);
+> On Thu, Nov 6, 2025 at 9:10=E2=80=AFAM Zhijian Li (Fujitsu)
+> <lizhijian@fujitsu.com> wrote:
 > >
-> > Thanks a lot for fixing it, Zhijian.  It means I broke COLO already for
-> > 10.0/10.1..
 > >
-> > Hailiang/Chen, do you still know anyone who is using COLO, especially i=
+> >
+> > On 06/11/2025 04:58, Peter Xu wrote:
+> > > On Tue, Nov 04, 2025 at 09:36:06AM +0800, Li Zhijian wrote:
+> > >> Commit 4881411136 ("migration: Always set DEVICE state") set a new D=
+EVICE
+> > >> state before completed during migration, which broke the original tr=
+ansition
+> > >> to COLO. The migration flow for precopy has changed to:
+> > >> active -> pre-switchover -> device -> completed.
+> > >>
+> > >> This patch updates the transition state to ensure that the Pre-COLO
+> > >> state corresponds to DEVICE state correctly.
+> > >>
+> > >> Fixes: 4881411136 ("migration: Always set DEVICE state")
+> > >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> > >> ---
+> > >>   migration/migration.c | 4 ++--
+> > >>   1 file changed, 2 insertions(+), 2 deletions(-)
+> > >>
+> > >> diff --git a/migration/migration.c b/migration/migration.c
+> > >> index a63b46bbef..6ec7f3cec8 100644
+> > >> --- a/migration/migration.c
+> > >> +++ b/migration/migration.c
+> > >> @@ -3095,9 +3095,9 @@ static void migration_completion(MigrationStat=
+e *s)
+> > >>           goto fail;
+> > >>       }
+> > >>
+> > >> -    if (migrate_colo() && s->state =3D=3D MIGRATION_STATUS_ACTIVE) =
+{
+> > >> +    if (migrate_colo() && s->state =3D=3D MIGRATION_STATUS_DEVICE) =
+{
+> > >>           /* COLO does not support postcopy */
+> > >> -        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+> > >> +        migrate_set_state(&s->state, MIGRATION_STATUS_DEVICE,
+> > >>                             MIGRATION_STATUS_COLO);
+> > >>       } else {
+> > >>           migration_completion_end(s);
+> > >
+> > > Thanks a lot for fixing it, Zhijian.  It means I broke COLO already f=
+or
+> > > 10.0/10.1..
+> > >
+> > > Hailiang/Chen, do you still know anyone who is using COLO, especially=
+ in
+> > > enterprise?  I don't expect any individual using it.. It definitely
+> > > complicates migration logics all over the places.  Fabiano and I disc=
+ussed
+> > > a few times on removing legacy code and COLO was always in the list.
+> > >
+> > > We used to discuss RDMA obsoletion too, that's when Huawei developers=
+ at
+> > > least tried to re-implement the whole RDMA using rsocket, that didn't=
+ land
+> > > only because of a perf regression.  Meanwhile, Zhijian also provided =
+an
+> > > unit test, which we rely on recently to not break RDMA at the minimum=
+.
+> > >
+> > > If we do not have known users, I sincerely want to discuss with you o=
 n
-> > enterprise?  I don't expect any individual using it.. It definitely
-> > complicates migration logics all over the places.  Fabiano and I discus=
-sed
-> > a few times on removing legacy code and COLO was always in the list.
+> > > obsoletion and removal of COLO from qemu codebase.  Do you see feasib=
+le?
+> > >
+> > > Zhijian, do you have any input here?
 > >
-> > We used to discuss RDMA obsoletion too, that's when Huawei developers a=
-t
-> > least tried to re-implement the whole RDMA using rsocket, that didn't l=
-and
-> > only because of a perf regression.  Meanwhile, Zhijian also provided an
-> > unit test, which we rely on recently to not break RDMA at the minimum.
 > >
-> > If we do not have known users, I sincerely want to discuss with you on
-> > obsoletion and removal of COLO from qemu codebase.  Do you see feasible=
-?
+> > If we don't have any known users, I personally have no objection to rem=
+oving COLO.
 > >
-> > Zhijian, do you have any input here?
+> >  From my previous understanding, its use cases are rather limited, and =
+the checkpointing overhead is significant.
+> > Moreover, with the continuous development of Cloud Native over the past=
+ decade, service-based
+> > FT/HA solutions have become very mature, which shrinks the use cases fo=
+r VM-based FT solutions even further.
+> >
+> > I think it's worth keeping if we have:
+> >
+> > - Active users who depend on it.
+> > - A unit test for the COLO framework.
+> >
+> > Thanks
+> > Zhijian
+> >
+> >
 >
+> Add CC Lukas.
 >
-> If we don't have any known users, I personally have no objection to remov=
-ing COLO.
+> From technical point, I agree Zhijian's comments. We can probably do
+> this gradually.
+> In my side, I know some local companies build thier HA/FT product based o=
+n COLO.
+> In this case, I think most of them already forked QEMU upstream code
+> to a private repo for internal mantained.
+> It may caused some upgrade issues in the future.
 >
->  From my previous understanding, its use cases are rather limited, and th=
-e checkpointing overhead is significant.
-> Moreover, with the continuous development of Cloud Native over the past d=
-ecade, service-based
-> FT/HA solutions have become very mature, which shrinks the use cases for =
-VM-based FT solutions even further.
+> And another part is Lukas covered pacemaker project integrated COLO,
+> and I don't know users status for pacemaker.
+> Maybe Lukas can input some comments?
 >
-> I think it's worth keeping if we have:
+> For the implementation, COLO not only have migration part of code(it
+> is the core of COLO), it also including network and block replication
+> for co-working.
+> If we remove migration related code need to consider how to handle
+> other parts, network maybe change to general QEMU netfilter?  block
+> replication ?
 >
-> - Active users who depend on it.
-> - A unit test for the COLO framework.
+> For the COLO framework unit test,  I think it need to add some "#if
+> defined(qtest)" in migration code for testing(COLO proxy/netfilter
+> already have independent qtest).
 >
 > Thanks
-> Zhijian
+> Chen
 >
 >
 
-Add CC Lukas.
-
-From technical point, I agree Zhijian's comments. We can probably do
-this gradually.
-In my side, I know some local companies build thier HA/FT product based on =
-COLO.
-In this case, I think most of them already forked QEMU upstream code
-to a private repo for internal mantained.
-It may caused some upgrade issues in the future.
-
-And another part is Lukas covered pacemaker project integrated COLO,
-and I don't know users status for pacemaker.
-Maybe Lukas can input some comments?
-
-For the implementation, COLO not only have migration part of code(it
-is the core of COLO), it also including network and block replication
-for co-working.
-If we remove migration related code need to consider how to handle
-other parts, network maybe change to general QEMU netfilter?  block
-replication ?
-
-For the COLO framework unit test,  I think it need to add some "#if
-defined(qtest)" in migration code for testing(COLO proxy/netfilter
-already have independent qtest).
-
-Thanks
-Chen
+Add pacemaker/corosync related details for COLO:
+https://wiki.qemu.org/Features/COLO/Managed_HOWTO
 
 
-
-
-
+>
+>
 >
 > >
-> > Thanks,
-> >
+> > >
+> > > Thanks,
+> > >
 
