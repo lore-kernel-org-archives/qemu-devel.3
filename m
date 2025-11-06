@@ -4,97 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512C0CCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 16:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E38CCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 16:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH2eL-0004zt-Ja; Thu, 06 Nov 2025 11:15:49 -0500
+	id 1vH386-0007Vb-5p; Thu, 06 Nov 2025 11:46:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vH2eJ-0004z7-BW
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 11:15:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vH384-0007VJ-6z
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 11:46:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vH2eG-0004sL-Vu
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 11:15:47 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vH381-0002NQ-Na
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 11:46:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762445743;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1762447587;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DX3uaLp12ba8vcNsVZdABz/k+raMplVYGO6GWTdfqrY=;
- b=Jxl93ADndLsV6VR8ot24PHOH1Lo6VlMgiYH9O3hdy1vE0hrgWS/K/JhCGbIyevefNos/aV
- tLRKo5xqcpBWo4p+HRGa9xrfTCASLA1cEBlNKPqa5tf0P9/UDG5v6rsbQdtDwm8VjayJdu
- 8L9gOBq0lKdKy4szDfgrzjjdO8D4DwY=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=19iq9qE1ZChXg4I/pn5kVRivi2ULDlFEcZp19p8feX4=;
+ b=XD6MCtzK/COt83G82IQySsEvt1jClmpubuf4HMJ+Dtz1eY1PJeiWZS7fonpySxzk5VUeRo
+ fYZsktyZwgovmzVQiENJT7pO0p2n6C8MpK6lVDffTcHurT1gD+ECEdaqfDvdshHszujEwe
+ dtiemG+Bez9yVfPbmgmotcaUhVa3OGo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-mME_6xa_M2mrIH5upCuC5A-1; Thu, 06 Nov 2025 11:15:42 -0500
-X-MC-Unique: mME_6xa_M2mrIH5upCuC5A-1
-X-Mimecast-MFC-AGG-ID: mME_6xa_M2mrIH5upCuC5A_1762445741
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-89eb8ee2a79so255560385a.2
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 08:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762445741; x=1763050541; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=DX3uaLp12ba8vcNsVZdABz/k+raMplVYGO6GWTdfqrY=;
- b=nE4Zi0Y9AXTkB85yJmMJxyKcI9F5qYwnO3SeAiwrolp16tfdcbqhgTwf8Qe/su2MxM
- K4Nkkw9b2N05seIkyGKq/nFj8TBUvD7Rcw7uDI9TejPQ/JHv/OfzyyNiJVV3rNpveqwU
- /QnYuWWKr09sHO0c5twJt0HG4Zheydb6dhUgD4KyVxng8fuOemb+7NYy9BDScKoRrC6D
- dzT5DFKnD8D7+fwo1OLt0a0QYccti09rKDbE70BFwiv+IcOr1vx3aFdjDDtwUpSW6xeL
- OHW/Q1XWrNVHpWJ/nxTPNIaVuPFTxHveJyF1SGWyGK0UQCrlSS92ElbbAFiX03s3+M5u
- a4eA==
+ us-mta-652-yICw0BmwP-C1XiQnJx9U4w-1; Thu, 06 Nov 2025 11:46:26 -0500
+X-MC-Unique: yICw0BmwP-C1XiQnJx9U4w-1
+X-Mimecast-MFC-AGG-ID: yICw0BmwP-C1XiQnJx9U4w_1762447584
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-471168953bdso13787445e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 08:46:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762445741; x=1763050541;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DX3uaLp12ba8vcNsVZdABz/k+raMplVYGO6GWTdfqrY=;
- b=L/soXf0noVPnhvu3h7zOHVI9pqHO9KV9YgHnmC/bn8BzdlMv8Zabz6WvwRoGUDzw8e
- nCj4n2B6a0S0xrkT5nMoLiqHuC+J5bJpQguQ+LI5frGS+AYZb0V0fqoeUoRXdfhoHCcn
- 4WehSp9jTTLqNYpNwiQpKkuQla7HmfBZ95I2mq3HCLLTDiZJOCTynfEZ+nal3hPpXMhx
- COckkFskkcjx17jq0fXPyoKCyzQ3DM/MZdJiiPa9R35SSxViYH/fSVnWrlm/pZcif61L
- /CsPhVJru+8Jkn4PUuuLcfdTwNnq/liW1+LcaCOCo/2SoqdcWbLDQ+LDSLypZMy/cQFJ
- xuhg==
-X-Gm-Message-State: AOJu0YyeN8nchbmRZIuQA/eR2gOxbDH0FASxFJseVITwyvqpMjwzEnKm
- VuLWNkN4/1tqd/dWj9/l2FTd0K1paQ2ItlwuNHc3yhzGpoBBin7SSRSZJen2n8fi89Q1EmCQ9d7
- kpX+sWawVLovSR8xqB/EWmASXmGg4/HP03c04B6l83hNjCL+TdTxR73c9
-X-Gm-Gg: ASbGncvmx0TXm6H682MMR0HPuqjA/kOmCzzazeHKB1wAuqLa0A44k3f1TlZK2BWQ2TW
- fwOZS1/q1Nsu/1KyZvGoZ37FaOye+KJtaToHxqg1gYuOmURyQuehPzAVdAmfEneMSU5yF6dNe6A
- I6YzFJSFrhPuavu3Ol8sGgrjePSXj3mJK76rKaPPChaLeBWIBZP1sFDzHNVJcpgdK8KaJPAPqlD
- TR+QG2/e5ACTRST476hXaDmJB4EvKVTI2FzKzZNoPma2N9Wadvr5aYleksTf2WrR00hHrTX/4XJ
- Z+LjxqwXlv2x1dfORCD+d3awIsVp+DvHpZHrI60WIypNsYu26mAgv5j7kUPDN1XiUZU=
-X-Received: by 2002:a05:620a:7107:b0:8a2:7cda:f03f with SMTP id
- af79cd13be357-8b24528af5dmr21486485a.16.1762445741210; 
- Thu, 06 Nov 2025 08:15:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3udJ968grNRsWcHG+yfb/kok3f1cjW54CwHJf8UXORKXLutS0r59S7J/hrUqOg9iNrK9bkQ==
-X-Received: by 2002:a05:620a:7107:b0:8a2:7cda:f03f with SMTP id
- af79cd13be357-8b24528af5dmr21478885a.16.1762445740531; 
- Thu, 06 Nov 2025 08:15:40 -0800 (PST)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b2357dbebasm225619185a.31.2025.11.06.08.15.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Nov 2025 08:15:39 -0800 (PST)
-Date: Thu, 6 Nov 2025 11:15:32 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] tests/migration-test: Check error-desc after pre-switch
- cancel tests
-Message-ID: <aQzJpBZNzwoL8na0@x1.local>
-References: <20251031164956.3409661-1-peterx@redhat.com>
- <4r5wbhkkk346usjdgvnc3epcom3he3y547p3smxbkvvnk677tz@e4hsizwn5sfp>
- <aQuq-ONNdEEJKmId@x1.local>
- <zwihgptp2i2syyyakkwefg2pfhihurf6c5wlrvgtlzfydxjzmc@vvwjl6gk373e>
+ d=1e100.net; s=20230601; t=1762447584; x=1763052384;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=19iq9qE1ZChXg4I/pn5kVRivi2ULDlFEcZp19p8feX4=;
+ b=NpGle+dB1P4rNdT4xaCq8VMLbeP+q8EtOP8xzLSRt814/dvo9uwWVay2hxFvWOXFta
+ vnVG7FbE8mXy9HMaLo2YpXM34R7mOLBJMqHeqYahfmIFHXWhNn6nEesVwjg/2m/W/Ozq
+ 6malckb0DP5SDeh/2sDLj79t99azOPvUjHt0116uoK2+xrHYAEb9wAWyuYaTyu3GhsR1
+ k4g7A5kL0RzTdZcTLF76wRNAZE+wCbYJYZnfB31L0yAy8l3Uer9IvAGbjedeKFfia7Hm
+ mtUo0yMzQCbZje+jr1GYru8Wy1Fd0t1GGKbv8GfD9oO3+KS7o1weKRO6/m1GbEWJrXrr
+ 8dWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoGpZXUTpNfxWQJOc4WoFPt+fDwYZFKeVYnniyFTTl9RCFHnXg6z0rOt2NEPrMFHd2LFAg0i7fD5uo@nongnu.org
+X-Gm-Message-State: AOJu0YymMbLS3wglgOid8aQdH4yidYKyFSXz7ERbvBdbcZJa2rnPB3L4
+ o/YiOhFAy4pRK4rVciB9FBuptwWvEz5s0mxTp6ujYzpFdeXwDYtzibuFb7xoyw5stz2q9dgArda
+ 4e2yUL7+nndocT+1b6sXal3DGx6x68NO0CcWKT9os0Yiz46UpFoSQemRS
+X-Gm-Gg: ASbGncs81HfJnb9ma6Pnh8ufB3MaMf6oet1Wg2r6+Ay3yiGM7jHz1em8lsRFfkC5IaA
+ KNybKbbjBoCk1btGka9MSf1rpMFiWkzh0pIiQ1PemAFY81UeLNEB7z5XfCWTeDywEdQhoDJIRK4
+ 4huuc5q4N8Te7B7NEbjh7VT/HW128f1PK4mLiKc3rAwsVCQ848EXOlqlJzwQ3rD0UWnzMudZy/C
+ lQ34HknS4XqorQnA8aNCsUOcHeIesFQZ0EvkAnQJk9r/WhEPcuDJwzNx0wi+zYESg4um2D6ENXW
+ 8GLUS+hD9mFaKSPl4Ee+1dHFk26mR4Spck7itLHIva5P1Z9ArrHrUcz32eQxEfesqMshEUPIuPr
+ jh7+TLgnoxEbJ36tudjYY+AxfDQ6jl/E+rsNEFDSO+MRvsg==
+X-Received: by 2002:a05:600c:154a:b0:477:63b4:e77f with SMTP id
+ 5b1f17b1804b1-4776ba0510amr3232935e9.0.1762447583578; 
+ Thu, 06 Nov 2025 08:46:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZJvR3WklxVXiLVT2xk4JOMUlCh7Z8Vc4vu/1Aq5ychnWftE8UDvvzI3TnOWlSB0ujMwNl5Q==
+X-Received: by 2002:a05:600c:154a:b0:477:63b4:e77f with SMTP id
+ 5b1f17b1804b1-4776ba0510amr3232405e9.0.1762447583057; 
+ Thu, 06 Nov 2025 08:46:23 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47763e16db8sm19804555e9.1.2025.11.06.08.46.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Nov 2025 08:46:22 -0800 (PST)
+Message-ID: <fb20b62f-c2e7-452e-8185-4e4d21c011cf@redhat.com>
+Date: Thu, 6 Nov 2025 17:46:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <zwihgptp2i2syyyakkwefg2pfhihurf6c5wlrvgtlzfydxjzmc@vvwjl6gk373e>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 32/32] hw/arm/smmuv3-accel: Add support for PASID enable
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ kjaju@nvidia.com
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-33-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251031105005.24618-33-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -115,67 +119,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 06, 2025 at 12:27:49PM +0100, Juraj Marcin wrote:
-> On 2025-11-05 14:52, Peter Xu wrote:
-> > On Tue, Nov 04, 2025 at 01:35:53PM +0100, Juraj Marcin wrote:
-> > > Hi Peter,
-> > > 
-> > > On 2025-10-31 12:49, Peter Xu wrote:
-> > > > error-desc should present on dest QEMU after migration failed on dest when
-> > > > exit-on-error is set to FALSE.  Check the error message.
-> > > > 
-> > > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > > ---
-> > > >  tests/qtest/migration/precopy-tests.c | 9 +++++++++
-> > > >  1 file changed, 9 insertions(+)
-> > > > 
-> > > > diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> > > > index 57ca623de5..5f02e35324 100644
-> > > > --- a/tests/qtest/migration/precopy-tests.c
-> > > > +++ b/tests/qtest/migration/precopy-tests.c
-> > > > @@ -759,6 +759,14 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
-> > > >      wait_for_migration_complete(to);
-> > > >  }
-> > > >  
-> > > > +static void assert_migration_error(QTestState *vm)
-> > > > +{
-> > > > +    QDict *rep = migrate_query(vm);
-> > > > +
-> > > > +    g_assert(qdict_get_str(rep, "error-desc"));
-> > > 
-> > > I think it would be beneficial to also check if there even is
-> > > "error-desc". That way if the "error-desc" is missing, it fails on
-> > > assert with SIGABRT instead of SIGSEGV inside qdict_get_str().
-> > 
-> > IMHO it doesn't matter on how the test would crash.
-> > 
-> > > 
-> > > With this change you can add my:
-> > > 
-> > > Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-> > 
-> > I would go ahead and merge a test patch if it had both lines, definitely
-> > not a huge deal.
-> > 
-> > However strictly speaking, qdict_get_str() is actually pretty efficient to
-> > make sure both that exists && is_string when used in testings. Would you
-> > agree?
-> 
-> It is an efficient way, I just thought the less efficient might be a
-> little bit easier to deduce why the test failed. But if nobody else
-> opposes, you can also keep it as proposed,
-> 
-> > 
-> > I definitely still want your R-b one way or another!
-> 
-> and also add my R-b.
+Hi Shameer,
 
-Thanks.  I wanted to have this coverage asap, so I collected it for -rc.
+On 10/31/25 11:50 AM, Shameer Kolothum wrote:
+> QEMU SMMUv3 currently forces SSID (Substream ID) to zero. One key use case
+> for accelerated mode is Shared Virtual Addressing (SVA), which requires
+> SSID support so the guest can maintain multiple context descriptors per
+> substream ID.
+>
+> Provide an option for user to enable PASID support. A SSIDSIZE of 16
+> is currently used as default.
+>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c    | 23 ++++++++++++++++++++++-
+>  hw/arm/smmuv3-internal.h |  1 +
+>  hw/arm/smmuv3.c          | 10 +++++++++-
+>  include/hw/arm/smmuv3.h  |  1 +
+>  4 files changed, 33 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index caa4a1d82d..1f206be8e4 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -68,6 +68,12 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>          error_setg(errp, "Host SMMUv3 SIDSIZE not compatible");
+>          return false;
+>      }
+> +    /* If user enables PASID support(pasid=on), QEMU sets SSIDSIZE to 16 */
+> +    if (FIELD_EX32(info->idr[1], IDR1, SSIDSIZE) <
+> +                FIELD_EX32(s->idr[1], IDR1, SSIDSIZE)) {
+> +        error_setg(errp, "Host SMMUv3 SSIDSIZE not compatible");
+> +        return false;
+> +    }
+>  
+>      /* User can disable QEMU SMMUv3 Range Invalidation support */
+>      if (FIELD_EX32(info->idr[3], IDR3, RIL) !=
+> @@ -642,7 +648,14 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
+>       * The real HW nested support should be reported from host SMMUv3 and if
+>       * it doesn't, the nesting parent allocation will fail anyway in VFIO core.
+>       */
+> -    return VIOMMU_FLAG_WANT_NESTING_PARENT;
+> +    uint64_t flags = VIOMMU_FLAG_WANT_NESTING_PARENT;
+> +    SMMUState *bs = opaque;
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +
+> +    if (s->pasid) {
+> +        flags |= VIOMMU_FLAG_PASID_SUPPORTED;
+> +    }
+> +    return flags;
+>  }
+>  
+>  static const PCIIOMMUOps smmuv3_accel_ops = {
+> @@ -672,6 +685,14 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+>      if (s->oas == 48) {
+>          s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
+>      }
+> +
+> +    /*
+> +     * By default QEMU SMMUv3 has no PASID(SSID) support. Update IDR1 if user
+> +     * has enabled it.
+> +     */
+> +    if (s->pasid) {
+> +        s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE, SMMU_IDR1_SSIDSIZE);
+> +    }
+>  }
+>  
+>  /* Based on SMUUv3 GBPA configuration, attach a corresponding HWPT */
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index cfc5897569..2e0d8d538b 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -81,6 +81,7 @@ REG32(IDR1,                0x4)
+>      FIELD(IDR1, ECMDQ,        31, 1)
+>  
+>  #define SMMU_IDR1_SIDSIZE 16
+> +#define SMMU_IDR1_SSIDSIZE 16
+>  #define SMMU_CMDQS   19
+>  #define SMMU_EVENTQS 19
+>  
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index c4d28a3786..e1140fe087 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -611,7 +611,8 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+>          }
+>      }
+>  
+> -    if (STE_S1CDMAX(ste) != 0) {
+> +    /* If pasid enabled, we report SSIDSIZE = 16 */
+> +    if (!FIELD_EX32(s->idr[1], IDR1, SSIDSIZE) && STE_S1CDMAX(ste) != 0) {
+can't you directly check s->pasid instead of decoding the IDR1?
+>          qemu_log_mask(LOG_UNIMP,
+>                        "SMMUv3 does not support multiple context descriptors yet\n");
+you may suggest to add pasid= option then.
+>          goto bad_ste;
+> @@ -1966,6 +1967,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+>              error_setg(errp, "OAS can only be set to 44 bits if accel=off");
+>              return false;
+>          }
+> +        if (s->pasid) {
+> +            error_setg(errp, "pasid can only be enabled if accel=on");
+> +            return false;
+> +        }
+>          return false;
+>      }
+>  
+> @@ -2098,6 +2103,7 @@ static const Property smmuv3_properties[] = {
+>      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
+>      DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
+>      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
+> +    DEFINE_PROP_BOOL("pasid", SMMUv3State, pasid, false),
+>  };
+>  
+>  static void smmuv3_instance_init(Object *obj)
+> @@ -2133,6 +2139,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>      object_class_property_set_description(klass, "oas",
+>          "Specify Output Address Size (for accel =on). Supported values "
+>          "are 44 or 48 bits. Defaults to 44 bits");
+> +    object_class_property_set_description(klass, "pasid",
+> +        "Enable/disable PASID support (for accel=on)");
+>  }
+>  
+>  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index e4226b66f3..ee0b5ed74f 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -71,6 +71,7 @@ struct SMMUv3State {
+>      bool ril;
+>      bool ats;
+>      uint8_t oas;
+> +    bool pasid;
+>  };
+>  
+>  typedef enum {
+Otherwise looks good to me
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
--- 
-Peter Xu
+Eric
 
 
