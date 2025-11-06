@@ -4,73 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66459CCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 17:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34351CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 17:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH46D-00058z-0n; Thu, 06 Nov 2025 12:48:41 -0500
+	id 1vH487-0005y6-Fo; Thu, 06 Nov 2025 12:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vH466-000587-T6
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 12:48:37 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vH485-0005xo-1w
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 12:50:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vH464-0001FS-6F
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 12:48:34 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 98CAE807BE;
- Thu, 06 Nov 2025 20:48:26 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id OmqoLK0FGiE0-ItbOhPQU; Thu, 06 Nov 2025 20:48:25 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1762451305;
- bh=aVTgqwazdpJyb7kW51QfFml7QkHzWIOhgoTpGwExTOc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=MM/m2TDxvoWmp/jLey24xexfmjPZ2GOxnBWJBlzR9s+cbH6Xnz5WOt1XVaVXiTRO3
- m6QOWG4vCi9+Oav6ezRvIRhvgam5kJZFaVMrR4buyoTml0g91IrjyyySAufA1bikqW
- SSzcfgkVLpNAmu7id04R0JBcjDGPzE3zhHZ003Y4=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <e775fb07-651c-4f9f-be1a-cd80396586cd@yandex-team.ru>
-Date: Thu, 6 Nov 2025 20:48:24 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vH481-0001oy-5i
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 12:50:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762451429;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mQit1QfXrciKTkMLH6MtH/dQJjKELHFfkDu3E09pJK8=;
+ b=am0/+ZD/mRo/wnk1/6wTaTrEHJRki0tlwzFfXHtTEgaJ3jHjnx3xZprMQQsP9KxjXGmy02
+ hCuh93KYmgmurNfHfyh1VHohmtoEls7T15DpQNY10PK68ecDkNb1ITRL0soMu1q2vCN7jL
+ RDOX2fuvM/0RRpFK8/oZ6FoiPDfJHlE=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-pmRF_9KkMRiBFSdHFzrBNQ-1; Thu, 06 Nov 2025 12:50:28 -0500
+X-MC-Unique: pmRF_9KkMRiBFSdHFzrBNQ-1
+X-Mimecast-MFC-AGG-ID: pmRF_9KkMRiBFSdHFzrBNQ_1762451428
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4e88ddf3cd0so670751cf.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 09:50:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762451427; x=1763056227; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=mQit1QfXrciKTkMLH6MtH/dQJjKELHFfkDu3E09pJK8=;
+ b=rI5mZEj47D+zDIfVcROBtz9uABV2Zu3QHbB0WZ7DJ2rPBATHfjt/VC59YbxQ3Ucyj0
+ osm3HvV9tmQB63Lc84q8tSY9mYOHmB6qIOuQjqzTVIZaotRT6MseF1QkiRGopKsXhztO
+ VyfxYQn3zVS1B+qizrq+EpapujCtBqcucz55xerr7KdsxisqyGDrRWijZbJZG0TQusmT
+ 26a18SvGw7LXSigoAFEB4G8MrzuFpOjy/m3IhURW6+rXPjeoGlyBNL+S2rMCASRr26B0
+ TLs9G2wFQ6lnFJMHdDYfjKXJ4GggFzRotS1SxRcsPTH01nNPkP5daseYv/wJMft21RmC
+ E0aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762451428; x=1763056228;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mQit1QfXrciKTkMLH6MtH/dQJjKELHFfkDu3E09pJK8=;
+ b=rWShpgmXV8x2QClnSQHn/vb1f+xJBrADdx2yLsOpLTkguoG21PUiNUFkpJ6bk9bVWH
+ 3dUziAA13k7gPG+zJPWyEnYH52HmkpENDpZnYrd7+YdymU2gbPcYdvPz0Xt+J6cwAr3K
+ 45QRhTIXmRgz4eXDzeDHjG4DaiyAMnGU77ClC2tvoLAUiXxAY3B5da5HTkqLBrGvYCg+
+ xbnXmF0DUp8qHcKGRGTKU29Jz7pln0dYX8wxd7XewTwC5m0sCmKrXtYIqL2aYWyE3BrN
+ JabN6g27QhgkQ9UrnO7MsIoiLiYGaTMiIT08mQe+vhbVVgviDQKOtrMLX2yigOkutMkV
+ KPJw==
+X-Gm-Message-State: AOJu0YzKY8x4lxyuOWgjCT/agEQukxAJg5hNMfvfKugV4S7GMBtt3meC
+ 83uoonqSbu6H3OsZva+XszTfGisTGV/41lC3C4NLq4KbUqiP2gZn3ws3sX48cMFw/pdHUog+kuv
+ ziAQQJSFWUhU6WJSebzCb8RV9x6sWVzvuOcsVEmNvSloFNuPCbrWMJFQ4
+X-Gm-Gg: ASbGncvqZMIwLtX0mToJ4fFczsHKNs8lb9si+lsH19W/wRniQozKh4ZtR1hetqqsMVP
+ EzUPwWhkUlQPomqICunLRqu3NApSPIUYpHW7c988iTgSycfHNhnrWNsgdoFWDuZN1+xFDyEGeqJ
+ sv5me4yJohB1hMdGhFcVrTEOEJy4C3UQavXTcESm/lyd/Wuf5Qoq+7QHJylgUjlloRT8nFiDs7s
+ uB5UV3PuB2Bl8TwE8abbaUKijmFjGzp2HqV/odror9EAKln4s1sZmtmikxmBNeX8g34pO02lHlm
+ PjdFiF6tiUmgnrurb2QuG/PNwLq3YX5O/jJKDrFbBM7sFvsJZ/Lezo+EPfWbo1IcM6A=
+X-Received: by 2002:a05:622a:1a29:b0:4ed:6324:f544 with SMTP id
+ d75a77b69052e-4ed94a6904amr596871cf.43.1762451427602; 
+ Thu, 06 Nov 2025 09:50:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFYa+y0pD4mo872jVMQYyhnfx/KCrj0V0Fx7qoiJYMmclGDZC9P99GrMTJH/NR1U++ndoSj0Q==
+X-Received: by 2002:a05:622a:1a29:b0:4ed:6324:f544 with SMTP id
+ d75a77b69052e-4ed94a6904amr596421cf.43.1762451426979; 
+ Thu, 06 Nov 2025 09:50:26 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4ed813da43asm21758541cf.27.2025.11.06.09.50.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Nov 2025 09:50:26 -0800 (PST)
+Date: Thu, 6 Nov 2025 12:50:24 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] memory: Make FlatView root references weak
+Message-ID: <aQzf4F6RgkzYWkeM@x1.local>
+References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
+ <aQE_M1qsr78RrQaw@x1.local>
+ <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
+ <aQIxA8MzkSO7qm4Z@x1.local>
+ <13cb4e7e-1949-4dc6-b5d6-a976f6f280e4@rsg.ci.i.u-tokyo.ac.jp>
+ <aQuuhSL6rXmyqm8x@x1.local>
+ <f1e40576-67ef-41e7-8131-6a022c9d5fc4@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/7] chardev: postpone connect
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- pbonzini@redhat.com, eduardo@habkost.net, qemu-devel@nongnu.org,
- raphael@enfabrica.net, armbru@redhat.com, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru
-References: <20251104101715.76691-1-vsementsov@yandex-team.ru>
- <CAMxuvazmJ+0fUDae-W4ZFFKAgtZLBFrxtZCrTT8sgBCmNirW2g@mail.gmail.com>
- <aQnmW2NskQtEfsGe@redhat.com>
- <966c338b-8302-4583-be9b-bb683ce3f3c5@yandex-team.ru>
- <aQnn_n0AuBjl4qQ_@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aQnn_n0AuBjl4qQ_@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f1e40576-67ef-41e7-8131-6a022c9d5fc4@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -82,82 +122,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.11.25 14:48, Daniel P. Berrangé wrote:
-> On Tue, Nov 04, 2025 at 02:44:49PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 04.11.25 14:41, Daniel P. Berrangé wrote:
->>> On Tue, Nov 04, 2025 at 03:35:17PM +0400, Marc-André Lureau wrote:
->>>> Hi Vladimir
->>>>
->>>> On Tue, Nov 4, 2025 at 2:17 PM Vladimir Sementsov-Ogievskiy <
->>>> vsementsov@yandex-team.ru> wrote:
->>>>
->>>>> Hi all!
->>>>>
->>>>> That's a preparation for backend-transfer migration of
->>>>> vhost-user-blk, and introduced DEFINE_PROP_CHR_NO_CONNECT()
->>>>> is unused now.
->>>>>
->>>>> v3 of "vhost-user-blk: live-backend local migration" is coming
->>>>> soon, and will be based on this series (and will use
->>>>> DEFINE_PROP_CHR_NO_CONNECT of course).
->>>>>
->>>>> changes in v6:
->>>>> 05: move connect() call into "if (s)"
->>>>> 07: - drop assertion
->>>>>       - improve doc comment, to cover @s==NULL relations with @connect
->>>>>       - add r-b by Marc-André
->>>>>
->>>>> Vladimir Sementsov-Ogievskiy (7):
->>>>>     chardev/char-socket: simplify reconnect-ms handling
->>>>>     chardev/char: split chardev_init_common() out of qemu_char_open()
->>>>>     chardev/char: qemu_char_open(): add return value
->>>>>     chardev/char: move filename and be_opened handling to qemu_char_open()
->>>>>     chardev/char: introduce .init() + .connect() initialization interface
->>>>>     chardev/char-socket: move to .init + .connect api
->>>>>     chardev: introduce DEFINE_PROP_CHR_NO_CONNECT
->>>>>
->>>>
->>>> Do you need this series in 10.2? We are at soft-freeze today, this is
->>>> closer to a feature than a simple refactoring, we may just wait for the
->>>> next dev phase.
->>>
->>> Back in v2, I had a request to convert the other chardev backends
->>> to the new model too, as IMHO it is undesirable to introduce the
->>> technical debt by only touching 1 backend:
->>>
->>>     https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg03272.html
->>>
->>
->> Right. I remember it, and have a draft converting series. It turned out to be more than expected,
->> about 24 commits, and personally I'm not sure, that it worth doing.. I'll send an RFC too look at.
+On Thu, Nov 06, 2025 at 11:23:32AM +0900, Akihiko Odaki wrote:
+> Generally speaking, we will not necessarily "always" get an issue report
+> when things went wrong with memory management. A bug in memory management
+> may not cause an immediate crash but corrupt the memory state which you will
+> find only later. The end result of memory corruption may look random and
+> result in a hard-to-debug issue report. A user may not even bother writing
+> an issue report at all; this is especially true for this kind of corner
+> cases that rarely happen.
 > 
-> Yep, I'd be interested to see what it looks like, even if it is not
-> finished / not functional.
-> 
+> There should have been no such a hazard of memory corruption if the code did
+> exactly what the documentation said in the first place. The consistency of
+> the code and the documentation is essential, especially for this kind of
+> complex and fundamental code.
 
-Hmm. Looking through my draft, and in parallel, moving char-socket vmsd
-into correct layer (into char-socket), I now see the following:
+Do you have encountered such case before?
 
-1. splitting open() logic into init() and connect() make sense only
-if it done for and together with implementing vmsd for that chardev
-(as we do the split exactly in a manner which makes implementing of
-migration possible)
+I wasn't expecting that, because what you were saying looks more like what
+Linux kernel would have a bug in mm.  QEMU is still special as it has the
+default unassigned MR trapping everything by default, meanwhile normally
+what is moving is MMIO / alias regions rather than real ramblocks.  It
+means when things go wrong we have much higher chance to trap them
+properly.
 
-2. implementing backend-transfer for all chardevs is too much for me.
+I also confess though that I'm pretty conservative on fixing things with
+hypothetical issues.  In general, I prefer fixing things with explicit
+problems, so we know how to measure and justify a fix (depending on how
+aggressive the fix is and how much maintanence burden it will bring to
+QEMU).  Without a real problem, it's harder to quantify that even if such
+evaluation will also normally be subjective too.
 
-So, seems, correct way is to allow chardevs have only .init, without
-.connect when no support for migration.
-
-And, converting all chardevs would be simply rename .open() to .init().
-And I'll keep .open() semantics for .init() (i.e. additional handling
-.filename and CHR_EVENT_OPENED for chardevs that don't care of it)
-
-So, I can do the rename as first patch of v7 of this series, and we'll
-keep common interaface for all chadevs (except for that most of them
-will not support migration, and therefore don't implement .connect()
-and .vmsd)
+Thanks,
 
 -- 
-Best regards,
-Vladimir
+Peter Xu
+
 
