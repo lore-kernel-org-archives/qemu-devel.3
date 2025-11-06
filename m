@@ -4,76 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F77CCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5067CCCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 16:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH2NO-00017c-1o; Thu, 06 Nov 2025 10:58:18 -0500
+	id 1vH2QL-0001yD-Kt; Thu, 06 Nov 2025 11:01:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vH2NK-00015s-7R
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:58:14 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vH2Q9-0001xy-CI
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 11:01:09 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vH2NF-0004Fs-Ui
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:58:13 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-7866dcf50b1so10467257b3.3
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 07:58:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vH2Q7-00056L-Lw
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 11:01:09 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6399328ff1fso1716147a12.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 08:01:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762444688; x=1763049488; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rgWktmS5q1huT6oe4k17o70+9vTjaN8rRb1/H4J9qLs=;
- b=DzmiGSjYBGLBphMO/wc2ExN48xPYV0IXdeZ5qBWXS0gUZ9Y1f4gj+VWb67wZlndrsQ
- Y02KQenHwI6L2q1oPR6ZaPxqIK1KbvQY/si6y/JEuHPt6GfqWy+6xLkTOvmz+jHzSps5
- b5UIKZfNbJTbB4A72iZbA+mcHyf1VGl+SLCDFyaYXvz+A8hj96wL7NKqK04Rl0kZgzsh
- EofkLPqEnnLBt1w1N90GysNYl9iUkN2Tw8i2ABtMvxaTbAzZl8+SVnjBJqfMV0K6sKA2
- 4N1GadGklLjU46WtfhwCsUm9rSJ3j6V/kVHP87ilgGL77bZZFRjrx2Imn/T2eUk22YhD
- BvIQ==
+ d=linaro.org; s=google; t=1762444865; x=1763049665; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DJVRT0UFdOFrSp9oGWjSJS5v/sHehnZWwIJQnJtn7hI=;
+ b=YCgqLEgLmbeSOthNdd6FtnZExWwO3xlFinICjxGdo2TjybktZgrMYUFclP3t7IN+lX
+ SXrnmU6kVaJvy/gDHsnP4rQbGri33YVNe4UMiW/jSg0UldwYF1LSC0eNbAK4u6+0/Hxd
+ /YAr9WD8G9sT3NP7ZssHrQwOBxU1fhe9aNjN39hWwYU34eoR89UM3OGqiaLfpPskiHTm
+ 6MhzDdpTurSSXiPb3OSwLJdHESo9ipUINUzlF0zP+Bv20lq6MZNng7x/7bQgyc5wKxgo
+ gwWfHexLsr9EBGE3PH8A6+OFzbpRaAnlIBYoccxV+j399hbOP5m//Jwk/Gr1dsoLp0bp
+ hRVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762444688; x=1763049488;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rgWktmS5q1huT6oe4k17o70+9vTjaN8rRb1/H4J9qLs=;
- b=tGGIDYU4YNr5CL0tUMkB9PyOZyy+PioO0tm+S3wX6MyRFHlGoyheVIZKA3FpT6i7UQ
- D+HpQDPuIBT5JLltnV/5439yARh0NTy7r0A+V5ZBxoAKTk+flvPLh8XU+UQDDZTX65Zd
- Nq2gnzV9Xzwxy8VttJQK44LiHMTq1hNzRdOtofZnf0nB2gJMUzVJL2CzyTun03xC2ECE
- hUdhf3PBljxNhDdPGw4RJQg6gZlA+rESsLTfEaQToaR2KG8KZIbeZbbtdmuuEGjwTT+k
- 3DMYvDpllkI5yfPPDW2WSFpzZ/oTbAyJlD+1Q4sRORUC+OSyRUtIqgPB+tHA4disp1WS
- wRbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgmZyzPGeOn9X7SCmcZ9IIhTzw681PtAp6mOBD4ufXJIxJOdc5Eme0jjNig68GPye8xoLzDTk4wyTQ@nongnu.org
-X-Gm-Message-State: AOJu0Yyuuoyprx8pdB3c3BFsdJUpcvVm64dxD2Wx9BeDbVKUKdSo604l
- KareILmfz0SgSqAa67AQCwWq+MvFIwcJxfG6yefKf/fCYJzoZsNMPl6YZVzweJN9eV1fdfKrKGg
- JUynROBTAvetrgobAlHN0VFHfOLcGr437n0dikdRP6w==
-X-Gm-Gg: ASbGnctDcXABG5dYjzp6n1jollNNweMhTyLydelUWZ05kq6bjk0m6QR+yEhu3HpskXV
- pX9OIPmZhmFBB9FC2jb5g0M4c66tzVJnxGUqP8qoZj8wlEwKmSp3D9/748oIiM3ag+sGw+jOhzY
- FnVHeYaP8AR4AAu6z9W0aQxzmsA2/l1+Me0pe+YA+6uSD5ysgHw/Q0y7Aut/zthKakpzh4i1qch
- F3hqQ2me+2JHyVibe/gQ6nIrdYVlJE/c6frnZDW9DAwEeK5OpRwRQ7WdbajRQ==
-X-Google-Smtp-Source: AGHT+IE7eBz/i+/M0lq0vBQEM133eq744VSyNC3af/xbDcX2XChnVCmnpBhDnZXkQQpdoaMmVJ3nSMBABupFvcYF+Ts=
-X-Received: by 2002:a05:690e:dc5:b0:63c:c4f4:53cc with SMTP id
- 956f58d0204a3-63fd34c5101mr6226340d50.22.1762444688207; Thu, 06 Nov 2025
- 07:58:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1762444865; x=1763049665;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DJVRT0UFdOFrSp9oGWjSJS5v/sHehnZWwIJQnJtn7hI=;
+ b=kyFMUc61G8W1CMtyymT6uD3yGV6I0tLW5UcnnCbIKq1kTTaawsHzhYa84YBrw7Vdbi
+ 20IlIty+Wraf7GhsQCuybx21ZqbHtUYIDnsfRINBdH511toU/jsdK3eIzlQw1u5gQObE
+ sCelRDzuwToAOjKundVICv5hgiIlrRKYKhD3l0E2hE9m35qeklCXfBMk8iPeVbYnDPia
+ B0HtSJq6XBAvkTUAfvofibVgCnHhrqVAp77U6K+rxfsulahP2TdHRSZLDBwXIZFZ0TiZ
+ 9s90gJ8S/MEyrGWSgGuiZQp5vOccKKN3fNEtIYryEYSNhxJna0djj7ndT2nWQvhayBT5
+ uwAw==
+X-Gm-Message-State: AOJu0YySCyLA8Rl9aZrXB5F+8r2c356RW/kCRaPPQAnSF+l3lFTW4eUm
+ gtpKovtOiqgTty5betiqXrXaKIH9c/XSe5pE+4pyEd/niqmgAAirzXGGODyHJQdXcSc=
+X-Gm-Gg: ASbGncv4noO+m5OkhYzdawE5Pr9IaMYZTY+9R0pUn7xRHlx9wNy7jf3WwOxHP4hQrEP
+ /jfZmjnR8gIDGhW3l5Nt6GLmCiO1QNgwX5pn71O4W1VR3qMdor1NPnpjzRlKIrovkvSR6MXX7uD
+ kgqK8RQFRNwxNjQ1HvGoYse3jBwDRM6Fxm+YeQwCKHOSnFMgjfM0ONSHhMDll7Xek8FedGOV4rr
+ NZNyS2SZIobLLn7fSIntjbCOj07TenugMvESw+tRwDQxQAU1WFPmOEJCDtxSUAENuciCP4dY2Ea
+ afBfy/IOhVKPuvmY0PKRlX/I7pZmT0z//hw6pNpXs/Xl0+u9sAvB3lg2D6AWGGWK23gOw3/Pvly
+ AtgFxMw4mC6nQg+HfAMcRy9VhvNZyXCExlpeszbclSila++jgGKCoYldc5Nsf6D+T+z0YC+FY6w
+ eqSzTRAxEDJ5ubpWYVx4Zthj2zbH3OdsNT+x/vuw==
+X-Google-Smtp-Source: AGHT+IHxU9cxyG2o9WRicLBRDy5e5nbukyJK3KjtLqHStND0frNtL3b23jrf41fyF6P0nXMgtBqPgg==
+X-Received: by 2002:a05:6402:2688:b0:640:b373:205e with SMTP id
+ 4fb4d7f45d1cf-641058d6595mr7056709a12.15.1762444865197; 
+ Thu, 06 Nov 2025 08:01:05 -0800 (PST)
+Received: from [172.20.148.100] ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6411f8578dfsm2135641a12.24.2025.11.06.08.01.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Nov 2025 08:01:04 -0800 (PST)
+Message-ID: <40afd528-ece1-42eb-8d02-d2094ebc58c9@linaro.org>
+Date: Thu, 6 Nov 2025 17:01:03 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Fix accidental write to TCG constant
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
 References: <20251106144909.533997-1-richard.henderson@linaro.org>
  <5ad511f4-eb36-4d49-90a6-fbb1e5f67c6c@linaro.org>
-In-Reply-To: <5ad511f4-eb36-4d49-90a6-fbb1e5f67c6c@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Nov 2025 15:57:56 +0000
-X-Gm-Features: AWmQ_bkOdnkuBG7lJD7Jod0BIZKK8pKvKwGArC3Iv5qgU64faiyv6WX3gnoie1w
-Message-ID: <CAFEAcA_gkyMTynt6ndVCDaq1RwwvpOUbYNm-=RjE17xuuTTCyw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Fix accidental write to TCG constant
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- Anton Johansson <anjo@rev.ng>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+ <CAFEAcA_gkyMTynt6ndVCDaq1RwwvpOUbYNm-=RjE17xuuTTCyw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA_gkyMTynt6ndVCDaq1RwwvpOUbYNm-=RjE17xuuTTCyw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,53 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Nov 2025 at 15:48, Gustavo Romero <gustavo.romero@linaro.org> wrote:
->
-> Hi folks,
->
-> On 11/6/25 15:49, Richard Henderson wrote:
-> > Currently an unpredictable movw such as
-> >
-> >    movw pc, 0x123
->
-> bah, how did you get this insn.? Are you using any fuzzer? :P
->
->
-> > results in the tinycode
-> >
-> >     and_i32 $0x123,$0x123,$0xfffffffc
-> >     mov_i32 pc,$0x123
-> >     exit_tb $0x0
-> >
-> > which is clearly a bug, writing to a constant is incorrect and discards
-> > the result of the mask.  Fix this by adding a temporary in store_reg().
+On 11/6/25 16:57, Peter Maydell wrote:
+> On Thu, 6 Nov 2025 at 15:48, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+>>
+>> Hi folks,
+>>
+>> On 11/6/25 15:49, Richard Henderson wrote:
+>>> Currently an unpredictable movw such as
+>>>
+>>>     movw pc, 0x123
+>>
+>> bah, how did you get this insn.? Are you using any fuzzer? :P
+>>
+>>
+>>> results in the tinycode
+>>>
+>>>      and_i32 $0x123,$0x123,$0xfffffffc
+>>>      mov_i32 pc,$0x123
+>>>      exit_tb $0x0
+>>>
+>>> which is clearly a bug, writing to a constant is incorrect and discards
+>>> the result of the mask.  Fix this by adding a temporary in store_reg().
+> 
+>> The difference between v1 and v2 is:
+>>
+>> v1:
+>>    mov_i32 tmp3,$0x123
+>>    and_i32 tmp3,tmp3,$0xfffffffc
+>>    mov_i32 pc,tmp3
+>>
+>> v2 (this version)
+>> and_i32 pc,$0x123,$0xfffffffc
+>>
+>>
+>> I think we need only a v3 that updates the commit message since we
+>> are not adding a temporary anymore.
+>>
+>> Interestingly, I was not able to crash the host when native code
+>> was generated from:
+>>
+>> and_i32 $0x123,$0x123,$0xfffffffc
+> 
+> The commit message doesn't say this crashes, it says it
+> discards the result of the mask. (That is, we intended to
+> clear the low bits of the guest PC but don't.)
+> 
+> Should there be a TCG debug assert for "TCGv for the
+> result of an operation is a constant" ?
 
-> The difference between v1 and v2 is:
->
-> v1:
->   mov_i32 tmp3,$0x123
->   and_i32 tmp3,tmp3,$0xfffffffc
->   mov_i32 pc,tmp3
->
-> v2 (this version)
-> and_i32 pc,$0x123,$0xfffffffc
->
->
-> I think we need only a v3 that updates the commit message since we
-> are not adding a temporary anymore.
->
-> Interestingly, I was not able to crash the host when native code
-> was generated from:
->
-> and_i32 $0x123,$0x123,$0xfffffffc
+There is, at least with --enable-debug-tcg.
+I assumed there was a crash from the description,
+but I haven't yet tried the test case Gustavo put together.
 
-The commit message doesn't say this crashes, it says it
-discards the result of the mask. (That is, we intended to
-clear the low bits of the guest PC but don't.)
 
-Should there be a TCG debug assert for "TCGv for the
-result of an operation is a constant" ?
+r~
 
-thanks
--- PMM
 
