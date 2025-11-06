@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831A9CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 18:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0C9CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 19:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH4yC-00016x-SA; Thu, 06 Nov 2025 13:44:30 -0500
+	id 1vH5I5-0008Jy-5I; Thu, 06 Nov 2025 14:05:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <navidem@google.com>)
- id 1vH4y7-00016d-4G
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 13:44:24 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vH5I4-0008Jj-Fy
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 14:05:00 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <navidem@google.com>)
- id 1vH4y4-0003hg-Te
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 13:44:22 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b719ca8cb8dso277593966b.0
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 10:44:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vH5I2-0002vl-LJ
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 14:05:00 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-592f7e50da2so1727164e87.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 11:04:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1762454659; x=1763059459; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1762455896; x=1763060696; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dliXUtXyDUESoe+5EnrivXiNFZZUf89xHzNP2/xdQTU=;
- b=wOcPKpl7leVgOjYrh9Brz/CvPjqaRrKvbq4jWjjQAhcNcdXEqjPDVl8BM7FPT0/P7a
- yfjNOnsNmxdvMXIQcJH9L2vAu84BYq/S/2PoT7tnmBUlYnXxCZH/DbIDSZdQn7xhWRIN
- jIq5p4JZYlS+eHhNGo/QpdCo3AFkFVRULZdK3OFq2bN7d6n4vPGjtOI6qSj42wN11j+M
- /4QUgKo86Rrrvs6EtZrUM7PHsbUeUleiirz8oghibudY1gpzKbF6XfYHEMUzFXEhWZV1
- 1Nhar6zekc728KgieWoJkEafv/0yoCQBguYBaVCR83IqMU89gZgo2YurqZpuxxieuvUa
- XITg==
+ bh=LORaMpTGbswR1A2Fei/jOHaMP4ZrlLklzwa6vGKXH3Q=;
+ b=JU40yEqDy/myQ9+Io6FbTtBO+MH/MwBMOMZE+bgccq9drlblVUgjmpZxX1LV/4aHK/
+ XE2hA10C5loy94SXXqCz6kf6pTVaz0EHqwsZWHC2CjrNrk/6wldM87NJu76Kc8qIWoUB
+ vzCUO+1mAhg6iYDqsHkOL7wcNp72dLEu/LOfG3OxZI5Kjf7L6cJIIjkQ2oq737M57EMn
+ nnQ18S1HNhYntS54lvCFE/4zMMe5c9/uEapcNltuJDBLLlkQ2OqPDDvrNjxrvWOxQZQu
+ 5HNeCZBpQ9nNZruMdA7izOp0q6TCt6HOZfqrGuoWn4oob1U74y88PrGWcmUCLOxo/yPq
+ UStg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762454659; x=1763059459;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1762455896; x=1763060696;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dliXUtXyDUESoe+5EnrivXiNFZZUf89xHzNP2/xdQTU=;
- b=Rveev/LPwmx1P8Hibjyf3wnBpNgvBTFN8D8lVduy4gW3ZR4zxRMGmjfmejzFBkrM0X
- 8q0C1lfVzTy8dJbvMRYP2+pX9Aa7BRTNg+11NBLEMByJxAMmF/OFaymhLNz5/X/IfWgO
- P+QkBFTh5DDEo9raIooNaI44/1sT9WdF/Ayk2aMk+aYPWSVX7H7x7RLrKAhbNeFRN23p
- JTBXTqPVqdParyhonT3TwwDfQ4/HK0uGIKiAcXte6tBLNmZLj7m23j8lKEm0zXYjds8o
- aF+zq7iBMXlhQYxFt+UuWI/xgo7DdK4iqIWXazrQMEP1EZnSQiOfXeoTGkDEM+jpbXB6
- vHug==
-X-Gm-Message-State: AOJu0YzJnE6hXULK/DdtbZJQrChnl/LWIXOyCYtcx71tnIGbncKY3hYM
- P9gUPzZETmvW0WmP3HVjCo7WqNeb71LhDJkP8gL/9CHbWIxs2+A/tUGO5Eyhxmlnt2v3zTgEORw
- 9rqLk6O6FNp3C4sExUmLSxzrxGVlV5jdxaoGmIRjtsPpEI/J5vTrY19YGqrc=
-X-Gm-Gg: ASbGncvSQ/BOgzLrh4wKujB9Siwu+/y1/iYn1Qo4nrxvSe/Z47HAiCO4Fbp3k0FyFZo
- HLDlU+3x+ePDlc+EzS4YHOGlM8uM1/S9RH7yUpQnGpaG3Dwt7mTysYQaopuZaTyi7ObfI3foNcK
- k0IEAbF0Tfhff+a3m61N05p+WqzH9fqkWQVxfqLGoGKvTTgrkewjmZCxeYOpK0W2atLsNZI2e/D
- 6VTKV0ea6HoMh8G/zbepOhuMrn8LjUlJCeotzO0boW5O+QiWgQWZ75bLm3yXBTVaQ7pEZjvBRld
- OL/wWgoErGp34W0=
-X-Google-Smtp-Source: AGHT+IHb7ytWFbZte9t5xgvofRF14rifFQIui14x0+J5M8ctehrRlSQAn1+BZ9EcQXqgXFRTFDh0V1wpU8gKes9G+mc=
-X-Received: by 2002:a17:907:3fa5:b0:b3f:a960:e057 with SMTP id
- a640c23a62f3a-b72c090e626mr25432966b.31.1762454658671; Thu, 06 Nov 2025
- 10:44:18 -0800 (PST)
+ bh=LORaMpTGbswR1A2Fei/jOHaMP4ZrlLklzwa6vGKXH3Q=;
+ b=OQht7Htv6S0YdOAEi+Y3aHTPoeKEkF0XJCfCPPudDxMROjTrO0/VTvgP4XeUjjQ+30
+ RhEOsm9Dyuil9JKWBO4zCZjnVwxMbZ4wUWOaxIRVGp4N/WM82EkxyuzMzT/bkv36up3j
+ mx/sRepVmDKyIfw6GgtSNSyLYUTueFSmcb49VbjC/JxIjbuW0Fwr/j3cornniqRq+kuV
+ WS6sN7Z+yrQLY0uyTgqJRnqAzHSxk96uhj74Pv15u60reIMbLkQ6+GJ3ALd32PFdxgaz
+ G+Lr56TH+/Z1BOyZtZBQjpYbKnNNMwL17/aC9b/+2p/g4R1PhjnC2yZ7V9d0y0kDD8pG
+ /n9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmah+H8jK9nRtm3g/UMsOSslVxKYo2wk0Uxr3u2R1+IDWAONqI6bIDdF1uLKckhAQOFlo/HMj0v8d+@nongnu.org
+X-Gm-Message-State: AOJu0YxkeROOKS+mZMiIYg+agxEpdUOQN3aJDPbcTQA+a3s7w3zah2mP
+ pT1yyRi1vuQyeVJuptsa5uTVFjwYV7uNv0CP+4SRMpaNiH5PUQBsIg+DA24dgX9mloM=
+X-Gm-Gg: ASbGncsDpk1osAdq+fz1TyOCnoK8OZvGGI4Gn91zvAQf+OlmeuDjUPAWRCVlGhrxR+U
+ cIvGytkz/0ReVxhg9vzYVBTe56k9CFFwH53UcC86BMTMEQhG6Yyb8lM99z/DFlbD0ZzJcng3zeK
+ bHsAdQeBNj5P335wqXLAYni9AlfAyCiANkjTvX6SfSiCGuY0J3FqIuXn1/j2xQEm6WhnqCRxKkH
+ 6WqI1MMlOWX5C/3DcQ2Ur8+g2YXmYgLXld3drXDyoSPz3XoLkqpyIfUWgLDAR6eBHEvAuefBvqA
+ 4UM9qUIFgA8Rg121/1+p++x6MLUTm2JNXA5d0bbE2pGQIjPealkx+VopZ/87s7WjXSOwXAwitUp
+ Gpuingqy5IxA349KTRgCAEXGxvdEN0UugvadQsgGdlBTgqyLDcFrfhbiz3BkDyJgTWRKISJtCWq
+ bv/SHg8lskCMkFPsfPw8IOTicsTYBcXMKGYBW3
+X-Google-Smtp-Source: AGHT+IGYRRk2lC9ApZf4rbZUSV8EBscaFwzGGII+h4oQB9rgW+5W3hQxinvyKeY9oQ1iNqdQ4Gnfew==
+X-Received: by 2002:a05:6512:4028:b0:594:3b76:f6a1 with SMTP id
+ 2adb3069b0e04-59456337104mr261643e87.0.1762455895707; 
+ Thu, 06 Nov 2025 11:04:55 -0800 (PST)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5944a0b7790sm897581e87.52.2025.11.06.11.04.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Nov 2025 11:04:52 -0800 (PST)
+Date: Thu, 6 Nov 2025 20:04:50 +0100
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>
+Subject: Re: [PATCH 1/2] hw/display/xlnx_dp.c: Don't abort on AUX FIFO
+ overrun/underrun
+Message-ID: <aQzxUjre04FEka8z@zapote>
+References: <20251106145209.1083998-1-peter.maydell@linaro.org>
+ <20251106145209.1083998-2-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <CAHUE=o-aypvXPxZXssD8nMJm+Qa9Nsp1HRcNVbC27tNkpV75fg@mail.gmail.com>
- <20251014003008.2520701-1-navidem@google.com>
- <20251014003008.2520701-2-navidem@google.com>
-In-Reply-To: <20251014003008.2520701-2-navidem@google.com>
-From: Navid Emamdoost <navidem@google.com>
-Date: Thu, 6 Nov 2025 10:44:06 -0800
-X-Gm-Features: AWmQ_blfPC4sbYdqHXdPOR5p25SaPTpnk6maHu2TubHITumE6-TLu3nk69vAGtE
-Message-ID: <CAGXevkhGhKbrQRVb6euaNWA-a+zCfz8K6NnToVOwFd8iQK3Mgw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] tests/qtest/fuzz: Add generic fuzzer for VNC
-To: qemu-devel@nongnu.org, alxndr@bu.edu
-Cc: berrange@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Bandan Das <bsd@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>, 
- Laurent Vivier <lvivier@redhat.com>, Zubin Mithra <zsm@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=navidem@google.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251106145209.1083998-2-peter.maydell@linaro.org>
+User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,164 +106,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Friendly ping.
+On Thu, Nov 06, 2025 at 02:52:08PM +0000, Peter Maydell wrote:
+> The documentation of the Xilinx DisplayPort subsystem at
+> https://www.xilinx.com/support/documents/ip_documentation/v_dp_txss1/v3_1/pg299-v-dp-txss1.pdf
+> doesn't say what happens if a guest tries to issue an AUX write
+> command with a length greater than the amount of data in the AUX
+> write FIFO, or tries to write more data to the write FIFO than it can
+> hold, or issues multiple commands that put data into the AUX read
+> FIFO without reading it such that it overflows.
+> 
+> Currently QEMU will abort() in these guest-error situations, either
+> in xlnx_dp.c itself or in the fifo8 code.  Make these cases all be
+> logged as guest errors instead.  We choose to ignore the new data on
+> overflow, and return 0 on underflow. This is in line with how we handled
+> the "read from empty RX FIFO" case in commit a09ef5040477.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1418
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1419
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1424
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-On Mon, Oct 13, 2025 at 5:30=E2=80=AFPM Navid Emamdoost <navidem@google.com=
-> wrote:
->
-> Add a new generic fuzz target for the QEMU VNC server. This target
-> exercises both the standard VNC protocol and the VNC-over-WebSocket
-> transport layer, increasing coverage of a primary remote attack surface.
->
-> To support parallel fuzzing (e.g., with oss-fuzz), the VNC unix
-> socket paths are generated dynamically. The fuzzer harness inspects the
-> command line for placeholders and replaces them with unique paths
-> created by mkstemp() before execution.
->
+
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
 > ---
->
-> This new target increases code coverage in the VNC subsystem
-> and related networking and I/O code.
-> The baseline coverage below was generated by running all existing fuzz
-> targets with the oss-fuzz corpus. The new target shows significant gains:
->
-> -------------------------------------------------------------------------=
----
-> File                       New Target                Baseline        Chan=
-ge
-> -------------------------------------------------------------------------=
----
-> vnc.c                      339/3212 (10.6%)     3/3212 (0.1%)        +336
-> keymaps.c                  91/184 (49.5%)       0/184 (0.0%)         +91
-> net-listener.c             76/198 (38.4%)       3/198 (1.5%)         +73
-> channel-socket.c           73/575 (12.7%)       19/575 (3.3%)        +54
-> qemu-sockets.c             44/1019 (4.3%)       0/1019 (0.0%)        +44
-> vnc-jobs.c                 41/219 (18.7%)       0/219 (0.0%)         +41
-> dns-resolver.c             28/145 (19.3%)       3/145 (2.1%)         +25
->
-> Signed-off-by: Navid Emamdoost <navidem@google.com>
-> ---
->  tests/qtest/fuzz/fuzz.c                 | 65 +++++++++++++++++++++++++
->  tests/qtest/fuzz/generic_fuzz_configs.h |  5 ++
->  2 files changed, 70 insertions(+)
->
-> diff --git a/tests/qtest/fuzz/fuzz.c b/tests/qtest/fuzz/fuzz.c
-> index ca248a51a6..b77c3ceb2b 100644
-> --- a/tests/qtest/fuzz/fuzz.c
-> +++ b/tests/qtest/fuzz/fuzz.c
-> @@ -126,6 +126,46 @@ static FuzzTarget *fuzz_get_target(char* name)
->      return NULL;
+>  hw/display/xlnx_dp.c | 28 ++++++++++++++++++++++++++--
+>  1 file changed, 26 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+> index 96cbb1b3a7d..c2bf692e7b1 100644
+> --- a/hw/display/xlnx_dp.c
+> +++ b/hw/display/xlnx_dp.c
+> @@ -435,7 +435,18 @@ static void xlnx_dp_aux_clear_rx_fifo(XlnxDPState *s)
+>  
+>  static void xlnx_dp_aux_push_rx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+>  {
+> +    size_t avail = fifo8_num_free(&s->rx_fifo);
+>      DPRINTF("Push %u data in rx_fifo\n", (unsigned)len);
+> +    if (len > avail) {
+> +        /*
+> +         * Data sheet doesn't specify behaviour here: we choose to ignore
+> +         * the excess data.
+> +         */
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: ignoring %zu bytes pushed to full RX_FIFO\n",
+> +                      __func__, len - avail);
+> +        len = avail;
+> +    }
+>      fifo8_push_all(&s->rx_fifo, buf, len);
 >  }
->
-> +/*
-> + * Global variables to hold the unique socket paths for cleanup.
-> + */
-> +static char g_vnc_socket_path[sizeof("/tmp/qemu-vnc.XXXXXX")];
-> +static char g_vnc_ws_socket_path[sizeof("/tmp/qemu-vnc-ws.XXXXXX")];
-> +
-> +/*
-> + * atexit() handler to clean up both socket files.
-> + */
-> +static void cleanup_vnc_sockets(void)
-> +{
-> +    if (g_vnc_socket_path[0] !=3D '\0') {
-> +        unlink(g_vnc_socket_path);
+>  
+> @@ -466,7 +477,18 @@ static void xlnx_dp_aux_clear_tx_fifo(XlnxDPState *s)
+>  
+>  static void xlnx_dp_aux_push_tx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+>  {
+> +    size_t avail = fifo8_num_free(&s->tx_fifo);
+>      DPRINTF("Push %u data in tx_fifo\n", (unsigned)len);
+> +    if (len > avail) {
+> +        /*
+> +         * Data sheet doesn't specify behaviour here: we choose to ignore
+> +         * the excess data.
+> +         */
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: ignoring %zu bytes pushed to full TX_FIFO\n",
+> +                      __func__, len - avail);
+> +        len = avail;
 > +    }
-> +    if (g_vnc_ws_socket_path[0] !=3D '\0') {
-> +        unlink(g_vnc_ws_socket_path);
-> +    }
-> +}
-> +
-> +/* Helper function to find and replace a placeholder in a GString */
-> +static bool replace_socket_placeholder(GString *cmd_line, const char *pl=
-aceholder,
-> +                                       const char *path_template, char *=
-global_path_out)
-> +{
-> +    char *placeholder_ptr =3D strstr(cmd_line->str, placeholder);
-> +    if (placeholder_ptr) {
-> +        int fd;
-> +        strcpy(global_path_out, path_template);
-> +        fd =3D mkstemp(global_path_out);
-> +        if (fd =3D=3D -1) {
-> +            perror("mkstemp failed");
-> +            return false;
-> +        }
-> +        close(fd);
-> +
-> +        gssize pos =3D placeholder_ptr - cmd_line->str;
-> +        g_string_erase(cmd_line, pos, strlen(placeholder));
-> +        g_string_insert(cmd_line, pos, global_path_out);
-> +    }
-> +    return true;
-> +}
->
->  /* Sometimes called by libfuzzer to mutate two inputs into one */
->  size_t LLVMFuzzerCustomCrossOver(const uint8_t *data1, size_t size1,
-> @@ -213,6 +253,31 @@ int LLVMFuzzerInitialize(int *argc, char ***argv, ch=
-ar ***envp)
->      g_string_append_printf(cmd_line, " %s -qtest /dev/null ",
->                             getenv("QTEST_LOG") ? "" : "-qtest-log none")=
-;
->
-> +    /*
-> +     * For the VNC fuzzer, we replace placeholders for both the standard
-> +     * and WebSocket VNC listeners with unique socket paths.
-> +     */
-> +    if (strcmp(fuzz_target->name, "generic-fuzz-vnc") =3D=3D 0) {
-> +        bool success =3D true;
-> +        success &=3D replace_socket_placeholder(cmd_line, "VNC_SOCKET_PA=
-TH",
-> +                                              "/tmp/qemu-vnc.XXXXXX", g_=
-vnc_socket_path);
-> +        success &=3D replace_socket_placeholder(cmd_line, "VNC_WS_SOCKET=
-_PATH",
-> +                                              "/tmp/qemu-vnc-ws.XXXXXX",=
- g_vnc_ws_socket_path);
-> +
-> +        if (!success) {
-> +            exit(1);
-> +        }
-> +
-> +        /* Check that placeholders were actually found and replaced */
-> +        if (g_vnc_socket_path[0] =3D=3D '\0' || g_vnc_ws_socket_path[0] =
-=3D=3D '\0') {
-> +            fprintf(stderr, "ERROR: VNC fuzzer is missing a socket place=
-holder\n");
-> +            exit(1);
-> +        }
-> +
-> +        /* Register a single cleanup handler for both sockets */
-> +        atexit(cleanup_vnc_sockets);
-> +    }
-> +
->      /* Split the runcmd into an argv and argc */
->      wordexp_t result;
->      wordexp(cmd_line->str, &result, 0);
-> diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/g=
-eneric_fuzz_configs.h
-> index ef0ad95712..bd2d875dd8 100644
-> --- a/tests/qtest/fuzz/generic_fuzz_configs.h
-> +++ b/tests/qtest/fuzz/generic_fuzz_configs.h
-> @@ -247,6 +247,11 @@ const generic_fuzz_config predefined_configs[] =3D {
->          .args =3D "-machine q35 -nodefaults "
->          "-parallel file:/dev/null",
->          .objects =3D "parallel*",
-> +    },{
-> +        .name =3D "vnc",
-> +        .args =3D "-machine q35 -nodefaults "
-> +               "-vnc vnc=3Dunix:VNC_SOCKET_PATH,websocket=3Dunix:VNC_WS_=
-SOCKET_PATH",
-> +        .objects =3D "*",
+>      fifo8_push_all(&s->tx_fifo, buf, len);
+>  }
+>  
+> @@ -475,8 +497,10 @@ static uint8_t xlnx_dp_aux_pop_tx_fifo(XlnxDPState *s)
+>      uint8_t ret;
+>  
+>      if (fifo8_is_empty(&s->tx_fifo)) {
+> -        error_report("%s: TX_FIFO underflow", __func__);
+> -        abort();
+> +        /* Data sheet doesn't specify behaviour here: we choose to return 0 */
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: attempt to read empty TX_FIFO\n",
+> +                      __func__);
+> +        return 0;
 >      }
->  };
->
-> --
-> 2.51.0.760.g7b8bcc2412-goog
->
-
-
---=20
-Thank you,
-Navid.
+>      ret = fifo8_pop(&s->tx_fifo);
+>      DPRINTF("pop 0x%2.2X from tx_fifo.\n", ret);
+> -- 
+> 2.43.0
+> 
 
