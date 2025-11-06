@@ -4,117 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE28CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 07:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C59CCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 07:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGudp-0003Tx-8t; Thu, 06 Nov 2025 02:42:45 -0500
+	id 1vGup3-0006h1-Rc; Thu, 06 Nov 2025 02:54:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGudk-0003TA-Eo
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 02:42:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vGup1-0006ge-JN
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 02:54:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vGudi-0000ZR-GJ
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 02:42:40 -0500
+ id 1vGuox-0000Ul-5o
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 02:54:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762414956;
+ s=mimecast20190719; t=1762415651;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wtZkFzJvAWKRTuLvfQKCt2G5L1fwhTXwQ3aqq8468eo=;
- b=B4iISV3AKvMN8aKSuVX41uv6eeWoQ8tFEH83ZZg+1S9YPt7fSoQD7z6iM+0f4U3izJwEN/
- wxC9EUfmwHLJZeP7gQCs/gIwS1eg2R8Xpo0cCtnuEjhmFPLoNnidWMM/wxOET6y3Eho6yN
- KYkhP6Ppl4ySjkU9cnRJLLmcm0oX0+0=
+ bh=tVL7hZ4j2kAuKul0PBILcZSs61/aRtgQLFDp1GSjUgM=;
+ b=DRLYw3tChqznJVFMlLH4XowLwr8fVlU1BOTLLMbKQpcklfpVJibpQZqAfHznyosHG5mZ1i
+ I6nVdKsDnaUy4+HIX4f+TgNu5oCYkxV10n+UJhbS9JL8345W64N8t56aGlRvE60gtTpqrI
+ 0iQimxQfBiGlZn4v8OnsOPn+YGuDx8k=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-mOUpOzViMz6vQlH2zxrQcg-1; Thu, 06 Nov 2025 02:42:35 -0500
-X-MC-Unique: mOUpOzViMz6vQlH2zxrQcg-1
-X-Mimecast-MFC-AGG-ID: mOUpOzViMz6vQlH2zxrQcg_1762414954
+ us-mta-312-7fKEGa-yPbiXh0g8Mqs-ug-1; Thu, 06 Nov 2025 02:54:10 -0500
+X-MC-Unique: 7fKEGa-yPbiXh0g8Mqs-ug-1
+X-Mimecast-MFC-AGG-ID: 7fKEGa-yPbiXh0g8Mqs-ug_1762415649
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4710d174c31so5124335e9.0
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 23:42:34 -0800 (PST)
+ 5b1f17b1804b1-47496b3c1dcso4866635e9.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 23:54:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762414954; x=1763019754;
+ d=1e100.net; s=20230601; t=1762415648; x=1763020448;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wtZkFzJvAWKRTuLvfQKCt2G5L1fwhTXwQ3aqq8468eo=;
- b=gL6HrgI7VQbAYSnPtzvRbAiqKHBawQW40un6KnHAVrwb4vOCrB3aQUOw5HpB3VgvmJ
- zxBLRCzZ0KxU3ECbagE7zGCpSVRpzEyNsrIrMSD+f8kU+z3alaf7th6ZczDgVl5IMDjg
- aHrS32y4huqhrl+RjWfhAIszETZfYcTQFwH9cTOCt+MjbvwcKNXs29twhsTHel+k+WNq
- PVYOwNuIzS7n1S+9MXXWmKS7kGJ/fDCZe2L3fUqdDjeh3PZbsMH8pezGNHNvAu758Zw3
- YsdAqeEWf5rmKo8hAflJMMaLpPtbFHvsvShzFO39BP25KTYzgQIQisTnjMpDKSd6/yVm
- EPwQ==
+ bh=tVL7hZ4j2kAuKul0PBILcZSs61/aRtgQLFDp1GSjUgM=;
+ b=gZIyubKtUuSWn0RHxbh66beXQ4mm6EcIe1XqzTUufCTXO8T6/IT3D3RMJI4FmhO8AV
+ JfoSMrTS4/Dn9sfM13ACfStof9pulSpyiCan+Z+l9gBwXXri96im6uyzsZKa+JAJuL3u
+ GNG995sdzlx7o+RewlizFDnxZmkO7R91L7b2/fYF3V8PJ+/O5yr4Hh4Wp3jLvhMh3ISp
+ ycgWGUYKDNVuUKkaWglxfUSlcIbn36NpujkKp0FouNk1q4MewgBhrb7A9prP5Xiwh0gw
+ zrXgQxc/wNklLUvYmVxbdcxzbnxJuUpOMDxmW1j7RWH02i02vTxNBy5gZrpk5oMUkrWp
+ 4RIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtaB5Wp0Iwhb0drATntdkg0+Sxy+Y9zKZCPk/wSMoQ7wqls+S1xsocywk6on3bOv/I0qBecrfV1a34@nongnu.org
-X-Gm-Message-State: AOJu0YyURQbZP+gq6lruZYAPmHqxBl3nWt75dUK+41694ZCNwQPo4T/W
- axa4q0ailVOgmtAX7gSKmOKQmqt/tcUuOjn4XzPm6p3azkVVSVT60PKShPoGq/Z5gr9eOcIYgbH
- Z515EjHY3Wa2xZyKvl/juO9ppnpMnejALhJlUaynUiQXVsUjv+MhItJVP
-X-Gm-Gg: ASbGncuZe6rdUmOk1nvaiihRlJr2USKqkjfaA6maR0xdMbSnLKM/pohmtL5gcF/VRWQ
- KoEcHYQG2z2MmbtOmL7O7EUEFsiW2kQ8pYoaqs9Jg6ZnWKgeg1X7nca38bdZWpbYY8J70FLDmsU
- G4xxm9dHyUAFMBYArJtR8DTYsnMdLdDmYSY9YFmVboC/lwMWow6jFiBY7jpjvXyavXv/gTsewXK
- 17EVfIZowHXlWfGkd2ntiqsxLdATqJLYz36flrpMSoB5xL/nMHUEMELWEutdkx+DTkXe/gOz97d
- nziSsCQtHOz4Oqd3iW23k63ekdEjNJ68geeQN9hrMBGHN3/LUXMaStdi8iyA9SlqAlANNsDKTfn
- D+D/uhCrvt/HDvGq4c04vckjss6mhxUQOFLASi+VYMPUlLg==
-X-Received: by 2002:a05:600c:37c8:b0:475:dd04:1289 with SMTP id
- 5b1f17b1804b1-4775ce61f4amr49182445e9.20.1762414953714; 
- Wed, 05 Nov 2025 23:42:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZ6PIRyBdIoS3GRYmeIHD82Ao6Vjc3D23Q0MnHcaBrNJ1C0qX6rZrUIYwbWjUG9OKdDVQcGA==
-X-Received: by 2002:a05:600c:37c8:b0:475:dd04:1289 with SMTP id
- 5b1f17b1804b1-4775ce61f4amr49182135e9.20.1762414953325; 
- Wed, 05 Nov 2025 23:42:33 -0800 (PST)
+ AJvYcCWjtpD6o3VQKi3iyk22FFIavKL6eVdQJIV6QharSzoLD4GrhoabWZELlr5mm/JLQ+Ge73UuZsEp+NIw@nongnu.org
+X-Gm-Message-State: AOJu0Yx4JXfYjwCpLHRUdpuTenSfEIWXCOf/sgtMEvetg7mmqG6uiTxB
+ 3z9bIUo48phg2Cnpwm3RtSv0vTCY6GBm+u+YTadN2sVvySgfsDEa4be0foISUR74XOvS3TwhC3r
+ B0YAwXLHhcHYMq7pXqvCoJUcjUUEZDWP22z8lRGvaZP7WKkF2xDiWo9Yr1Wz0CsQl
+X-Gm-Gg: ASbGncsAK7rwfoaI6kJklWvzq1yaJqyuZgY0kXQ0tVpamIeTrHgUri6jYk7pMFeYXxZ
+ 0ltWTxD61WP9zzkH0dXd9tGz0Yo99DavM6RfPJvzYGaXddM5xxW1q1kPhxZXBsDqTmsnl4RtSV+
+ Mx+koOS3mYYIj9CyNKq4EXHcbfjoAvJheG2cYvlVGN7kTKlsih6Xs1z9mo2ewO9kmtAqUiCUqb0
+ PrTs2GwL77cNX/x5cZPHWEBF3hW4hKjlUg/e3l+sDYltjSIT2u+ytMYD5QezrM1U3m3AsK5K7kD
+ 5qWNTAhdh7qgwmIxKcf9EfEaL11ZCYDe+pcz3KSiLn/fg++CkwpVDm9B8L++x33iOilMgbELfAn
+ v4gCIdU4sF/LJg/zAo+CSH5Fyo6yzOTClI5QJObGznkBD3w==
+X-Received: by 2002:a05:600c:5291:b0:477:c71:1fc1 with SMTP id
+ 5b1f17b1804b1-4775cdf76d3mr58571925e9.19.1762415648206; 
+ Wed, 05 Nov 2025 23:54:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH+2ZvyuTHT6PZfX7p3dbGMOYj+5he1F6P5Wccv1LQq9yrpXLYJG4Delw84HlJ0LMhaYsxfmQ==
+X-Received: by 2002:a05:600c:5291:b0:477:c71:1fc1 with SMTP id
+ 5b1f17b1804b1-4775cdf76d3mr58571595e9.19.1762415647815; 
+ Wed, 05 Nov 2025 23:54:07 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477641b622asm9655905e9.4.2025.11.05.23.42.32
+ 5b1f17b1804b1-477632bda1asm27432985e9.3.2025.11.05.23.54.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 23:42:32 -0800 (PST)
-Message-ID: <f0c5945d-ec24-4bb9-827c-c3e57abdea36@redhat.com>
-Date: Thu, 6 Nov 2025 08:42:31 +0100
+ Wed, 05 Nov 2025 23:54:07 -0800 (PST)
+Message-ID: <d58b17ae-ed38-4012-9da7-7c3efd484428@redhat.com>
+Date: Thu, 6 Nov 2025 08:54:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/32] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
+Subject: Re: [PATCH v5 28/32] hw/arm/smmuv3-accel: Add property to specify OAS
+ bits
 Content-Language: en-US
-To: Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-Cc: Shameer Kolothum <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-References: <20251031105005.24618-16-skolothumtho@nvidia.com>
- <318947de-4467-4ced-a5d2-929e3df210ef@redhat.com>
- <CH3PR12MB754815B9B902E7EF66B0A1B9ABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <85f315a2-e49a-4330-9419-48a8a3a4a3e3@redhat.com>
- <CH3PR12MB754844745DF256D7FF2CB07AABC4A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <e4fd6d1e-3fca-457b-ac6a-69e721d799f4@redhat.com>
- <CH3PR12MB75489F2161213432D34688D2ABC5A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <7ac24d9a-0caf-48cb-832c-812fecc5c82c@redhat.com>
- <20251105181049.GU1537560@nvidia.com> <aQuYZM/8SX+RtDtv@Asurada-Nvidia>
- <20251105185816.GW1537560@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, peter.maydell@linaro.org, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ kjaju@nvidia.com
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-29-skolothumtho@nvidia.com>
+ <49215c9d-feb1-4f72-bfe0-799572ecfac2@redhat.com>
+ <20251104145041.GE1537560@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251105185816.GW1537560@nvidia.com>
+In-Reply-To: <20251104145041.GE1537560@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -123,7 +109,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,44 +126,59 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Jason,
 
+On 11/4/25 3:50 PM, Jason Gunthorpe wrote:
+> On Tue, Nov 04, 2025 at 03:35:42PM +0100, Eric Auger wrote:
+>>> +    /*
+>>> +     * TODO: OAS is not something Linux kernel doc says meaningful for user.
+>>> +     * But looks like OAS needs to be compatible for accelerator support. Please
+>>> +     * check.
+>> would remove that comment. Either it is requested or not.
+>>> +     */
+>>> +    if (FIELD_EX32(info->idr[5], IDR5, OAS) <
+>>> +                FIELD_EX32(s->idr[5], IDR5, OAS)) {
+>>> +        error_setg(errp, "Host SMMUv3 OAS(%d) bits not compatible",
+>>> +                   smmuv3_oas_bits(FIELD_EX32(info->idr[5], IDR5, OAS)));
+>> let's be more explicit then and say
+>>
+>> Host SMMUv3 OAS (%d bits) is less that OAS bits advertised by SMMU (%d)
+> It isn't OAS that is being checked here, this is now IPA. OAS is for
+> use by the hypervisor.
+>
+> When the guest looks at the vSMMU the "OAS" it sees is the IPS
+> supported by the HW.
+>
+> Aside from the raw HW limit, it also shouldn't exceed the configured
+> size of the S2 HWPT.
+>
+> So the above should refer to this detail because it is a bit subtle
+> that OAS and IPS are often the same. See "3.4 Address sizes"
+>
+> * IAS reflects the maximum usable IPA of an implementation that is
+>   generated by stage 1 and input to stage 2:
+>
+> - This term is defined to illustrate the handling of intermediate
+>   addresses in this section and is not a configurable parameter.
+>
+> - The maximum usable IPA size of an SMMU is defined in terms of other SMMU implementation choices,
+>   as:
+>     IAS = MAX(SMMU_IDR0.TTF[0]==1 ? 40 : 0), SMMU_IDR0.TTF[1]==1 ? OAS : 0));
+>
+> - An IPA of 40 bits is required to support of AArch32 LPAE translations, and AArch64 limits the
+> maximum IPA size to the maximum PA size. Otherwise, when AArch32 LPAE is not implemented, the
+> IPA size equals OAS, the PA size, and might be smaller than 40 bits.
+>
+> - The purpose of definition of the IAS term is to abstract away from these implementation variables.
+Thank you for the clarification and pointer. I fully agree.
+maybe we can rephrase the error msg as:
 
-On 11/5/25 7:58 PM, Jason Gunthorpe wrote:
-> On Wed, Nov 05, 2025 at 10:33:08AM -0800, Nicolin Chen wrote:
->> On Wed, Nov 05, 2025 at 02:10:49PM -0400, Jason Gunthorpe wrote:
->>> On Wed, Nov 05, 2025 at 06:25:05PM +0100, Eric Auger wrote:
->>>> if the guest doorbell address is wrong because not properly translated,
->>>> vgic_msi_to_its() will fail to identify the ITS to inject the MSI in.
->>>> See kernel kvm/vgic/vgic-its.c vgic_msi_to_its and
->>>> vgic_its_inject_msi
->>> Which has been exactly my point to Nicolin. There is no way to
->>> "properly translate" the vMSI address in a HW accelerated SMMU
->>> emulation.
->> Hmm, I still can't connect the dots here. QEMU knows where the
->> guest CD table is to get the stage-1 translation table to walk
->> through. We could choose to not let it walk through. Yet, why?
-> You cannot walk any tables in guest memory without fully trapping all
-> invalidation on all command queues. Like real HW qemu needs to fence
-> its walks with any concurrent invalidate & sync to ensure it doesn't
-> walk into a UAF situation.
-But at the moment we do trap IOTLB invalidates so logically we can still
-do the translate in that config. The problem you describe will show up
-with vCMDQ which is not part of this series.
->
-> Since we can't trap or mediate vCMDQ the walking simply cannot be
-> done.
->
-> Thus, the general principle of the HW accelerated vSMMU is that it
-> NEVER walks any of these guest tables for any reason.
->
-> Thus, we cannot do anything with vMSI address beyond program it
-> directly into a real PCI device so it undergoes real HW translation.
-But anyway you need to provide KVM a valid info about the guest doorbell
-for this latter to setup irqfd gsi routing and also program ITS
-translation tables. At the moment we have a single vITS in qemu so maybe
-we can cheat.
+"Host SMMUv3 OAS (%d bits) is less that physical SMMU maximum usable IPA (%d)"
+which is more accurate despite in practice here we assimilate max IPA to OAS (
+TTF[1]==1 case)
 
 Eric
+
 >
 > Jason
 >
