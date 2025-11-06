@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98629CCFA1E
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 04:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E0D6CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 04:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGrUy-0006lg-PS; Wed, 05 Nov 2025 23:21:24 -0500
+	id 1vGrUX-0006c8-Ji; Wed, 05 Nov 2025 23:20:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vGrUu-0006ka-Nr
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:21:20 -0500
+ id 1vGrUV-0006bg-Ao
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:20:55 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vGrUs-0000q1-RS
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:21:20 -0500
+ id 1vGrUT-0000oW-Oo
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:20:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1762402878; x=1793938878;
+ t=1762402853; x=1793938853;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=tw0GHH7ztua7zIFtDdonO246+ESWS3VvHDZdO2IAxe0=;
- b=hwMN7aigpm0puC19Dhlzc8GAPRA7v0Fvgq0TBWtyepLT/0sR4Y6fT4LI
- 3Y+w1lCeFjz0iVW/uh2Ci8OBcZ2McoFXfiEJv6Z3+IehC5YBTRBDb6Ayw
- Wj6XUP2zbyE0jQmQ0f+ioWnr/KFWdu6YzraQSyo5X2evQu5j8/FCX3E/k
- UyY/LWu1jyxUe/k2PZDAbrUn3lH8IPXYL/mDt+ufvNHd78RRVLETkCkcL
- GKjUwuYoumw5x5aotksX0BrBHHIIPFQ3+uUGYu0hZWUOieesMQrl7ac7b
- xiHN67YSnyVduZ1y22pIpzbNihT+AGEwl1JnV0jG9C6BbFUc8SxzxXFVf A==;
-X-CSE-ConnectionGUID: zyWdC+2/SUauk+1bSdqLhQ==
-X-CSE-MsgGUID: Yk2GNyoZSiiegF3Qj1YEDA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11604"; a="64412878"
-X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; d="scan'208";a="64412878"
+ bh=sWFP8vLQRxvAEHPHjVjl5GexzADnjgDNlD5EWccfP88=;
+ b=Ek+lCvC1Pk+zHvPTB1/8RkexeWJGetT0c4/+Yhn4ds2AXX/CLTMDWyh7
+ n4SXY3crMmD+e/zVaI8zXh4v/J3gCRiOwMLluNBSPtFcPS1/bKJApiHXQ
+ gf2L98n1A7YaFuJuiFFKD9cdfvr3PUlh5HuV/2QwWwfj3O6woWZrnV+yK
+ 6JHI6yW6CBi3q9goY2JuBqih0lMYty5CEQACKFNhqoKeKsIBA3N3e54v7
+ dtySy2QYk2zVV73CGr3e4t0Y3XH1J3es09LF7wmUv78jnLrD+0uV2Q/JC
+ ND+TDrqs7Db2WEEYKGT/9wB3LnUvM8wlfQDB+aJrGoF93N6DcJI20Xs6k A==;
+X-CSE-ConnectionGUID: AiJpYZoQR16ueVmWuRLhtg==
+X-CSE-MsgGUID: +xeJmsJ3TvuSTbF9AGDw4g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11604"; a="64412855"
+X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; d="scan'208";a="64412855"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2025 20:21:17 -0800
-X-CSE-ConnectionGUID: GJl2Q+qZSLWyegxrvbCQJw==
-X-CSE-MsgGUID: zTU64HUzSd2tjv9Hj5At5w==
+ 05 Nov 2025 20:20:53 -0800
+X-CSE-ConnectionGUID: ODLWnrJoQF6S2IcZvaZAlw==
+X-CSE-MsgGUID: P6V6rs9fQAGyYRYHgbHaQQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; d="scan'208";a="186901307"
+X-IronPort-AV: E=Sophos;i="6.19,283,1754982000"; d="scan'208";a="186901232"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2025 20:21:14 -0800
+ 05 Nov 2025 20:20:49 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
@@ -53,16 +53,16 @@ Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
  eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
  xudong.hao@intel.com, giovanni.cabiddu@intel.com, rohith.s.r@intel.com,
  mark.gross@intel.com, arjan.van.de.ven@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jason Zeng <jason.zeng@intel.com>
-Subject: [PATCH v5 9/9] vfio/migration: Allow live migration with vIOMMU
- without VFs using device dirty tracking
-Date: Wed,  5 Nov 2025 23:20:26 -0500
-Message-ID: <20251106042027.856594-10-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v5 3/9] vfio/container-legacy: rename vfio_dma_unmap_bitmap()
+ to vfio_legacy_dma_unmap_get_dirty_bitmap()
+Date: Wed,  5 Nov 2025 23:20:20 -0500
+Message-ID: <20251106042027.856594-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251106042027.856594-1-zhenzhong.duan@intel.com>
 References: <20251106042027.856594-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.19;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -89,108 +89,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e46883204c38 ("vfio/migration: Block migration with vIOMMU")
-introduces a migration blocker when vIOMMU is enabled, because we need
-to calculate the IOVA ranges for device dirty tracking. But this is
-unnecessary for iommu dirty tracking.
+This is to follow naming style in container-legacy.c to have low level functions
+with vfio_legacy_ prefix.
 
-Limit the vfio_viommu_preset() check to those devices which use device
-dirty tracking. This allows live migration with VFIO devices which use
-iommu dirty tracking.
+No functional changes.
 
-Suggested-by: Jason Zeng <jason.zeng@intel.com>
-Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
-Tested-by: Rohith S R <rohith.s.r@intel.com>
 ---
- include/hw/vfio/vfio-device.h | 10 ++++++++++
- hw/vfio/container.c           |  5 +----
- hw/vfio/device.c              |  6 ++++++
- hw/vfio/migration.c           |  6 +++---
- 4 files changed, 20 insertions(+), 7 deletions(-)
+ hw/vfio/container-legacy.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 0fe6c60ba2..a0b8fc2eb6 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -148,6 +148,16 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
- 
- void vfio_device_reset_handler(void *opaque);
- bool vfio_device_is_mdev(VFIODevice *vbasedev);
-+/**
-+ * vfio_device_dirty_pages_disabled: Check if device dirty tracking will be
-+ * used for a VFIO device
-+ *
-+ * @vbasedev: The VFIODevice to transform
-+ *
-+ * Return: true if either @vbasedev doesn't support device dirty tracking or
-+ * is forcedly disabled from command line, otherwise false.
-+ */
-+bool vfio_device_dirty_pages_disabled(VFIODevice *vbasedev);
- bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
-                                          const char *typename, Error **errp);
- bool vfio_device_attach(char *name, VFIODevice *vbasedev,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 7706603c1c..8879da78c8 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -178,10 +178,7 @@ bool vfio_container_devices_dirty_tracking_is_supported(
-     VFIODevice *vbasedev;
- 
-     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
--        if (vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) {
--            return false;
--        }
--        if (!vbasedev->dirty_pages_supported) {
-+        if (vfio_device_dirty_pages_disabled(vbasedev)) {
-             return false;
-         }
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index 8e9639603e..b7e3b892b9 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -68,9 +68,10 @@ static int vfio_ram_block_discard_disable(VFIOLegacyContainer *container,
      }
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 8b63e765ac..5ed3103e72 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -411,6 +411,12 @@ bool vfio_device_is_mdev(VFIODevice *vbasedev)
-     return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
  }
  
-+bool vfio_device_dirty_pages_disabled(VFIODevice *vbasedev)
-+{
-+    return (!vbasedev->dirty_pages_supported ||
-+            vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF);
-+}
-+
- bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
-                                          const char *typename, Error **errp)
+-static int vfio_dma_unmap_bitmap(const VFIOLegacyContainer *container,
+-                                 hwaddr iova, uint64_t size,
+-                                 IOMMUTLBEntry *iotlb)
++static int
++vfio_legacy_dma_unmap_get_dirty_bitmap(const VFIOLegacyContainer *container,
++                                       hwaddr iova, uint64_t size,
++                                       IOMMUTLBEntry *iotlb)
  {
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 86e5b7ab55..c0b7d3434f 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -1210,8 +1210,7 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         return !vfio_block_migration(vbasedev, err, errp);
-     }
+     const VFIOContainer *bcontainer = VFIO_IOMMU(container);
+     struct vfio_iommu_type1_dma_unmap *unmap;
+@@ -141,7 +142,8 @@ static int vfio_legacy_dma_unmap_one(const VFIOLegacyContainer *container,
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+-            return vfio_dma_unmap_bitmap(container, iova, size, iotlb);
++            return vfio_legacy_dma_unmap_get_dirty_bitmap(container, iova, size,
++                                                          iotlb);
+         }
  
--    if ((!vbasedev->dirty_pages_supported ||
--         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) &&
-+    if (vfio_device_dirty_pages_disabled(vbasedev) &&
-         !vbasedev->iommu_dirty_tracking) {
-         if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
-             error_setg(&err,
-@@ -1236,7 +1235,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         goto out_deinit;
-     }
- 
--    if (vfio_viommu_preset(vbasedev)) {
-+    if (!vfio_device_dirty_pages_disabled(vbasedev) &&
-+        vfio_viommu_preset(vbasedev)) {
-         error_setg(&err, "%s: Migration is currently not supported "
-                    "with vIOMMU enabled", vbasedev->name);
-         goto add_blocker;
+         need_dirty_sync = true;
 -- 
 2.47.1
 
