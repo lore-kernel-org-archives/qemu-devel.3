@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E97DCCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 18:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831A9CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 18:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH4vc-0000PA-CM; Thu, 06 Nov 2025 13:41:50 -0500
+	id 1vH4yC-00016x-SA; Thu, 06 Nov 2025 13:44:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <navidem@google.com>)
- id 1vH4vX-0000Ow-Uj
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 13:41:43 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1vH4y7-00016d-4G
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 13:44:24 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <navidem@google.com>)
- id 1vH4vV-0003Q5-Uk
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 13:41:43 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-640b4a52950so1966517a12.1
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 10:41:40 -0800 (PST)
+ id 1vH4y4-0003hg-Te
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 13:44:22 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b719ca8cb8dso277593966b.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 10:44:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1762454499; x=1763059299; darn=nongnu.org;
+ d=google.com; s=20230601; t=1762454659; x=1763059459; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HNZifspKyNTtUk32EI+/S9xIdPILpe63RytC9kZ3Z+o=;
- b=Ulx6XRsodV0QwT2+RMIoA+X1n75IKYXZwjhc9W4holmsHA7481zgbfauYkCKR4jx4d
- aXsg8xJOKDCwz2TPL1XH/k1/j/VYai87SebwDXES/hw/Hu3X0HNTRh3Z7O1dWuzNqkN/
- w3iLe7QOdHsrucdpWGMhM9kc3UVOzReehD/QR9Xr2X9w5GHkYeoYOULrssROOvrxCZ67
- sTyD8aWA6/zFSa7B2hO4kV/nJzur4bB/4vljugm868IAk76KFHzubbXIdYP79SxmxarP
- VWcaxZOI2VpXPSFSQbKRKC+wbQ5Fk8pnJG9CEX9SeoVMaBgNPyScw/XND13A/JPNlWVV
- oIlQ==
+ bh=dliXUtXyDUESoe+5EnrivXiNFZZUf89xHzNP2/xdQTU=;
+ b=wOcPKpl7leVgOjYrh9Brz/CvPjqaRrKvbq4jWjjQAhcNcdXEqjPDVl8BM7FPT0/P7a
+ yfjNOnsNmxdvMXIQcJH9L2vAu84BYq/S/2PoT7tnmBUlYnXxCZH/DbIDSZdQn7xhWRIN
+ jIq5p4JZYlS+eHhNGo/QpdCo3AFkFVRULZdK3OFq2bN7d6n4vPGjtOI6qSj42wN11j+M
+ /4QUgKo86Rrrvs6EtZrUM7PHsbUeUleiirz8oghibudY1gpzKbF6XfYHEMUzFXEhWZV1
+ 1Nhar6zekc728KgieWoJkEafv/0yoCQBguYBaVCR83IqMU89gZgo2YurqZpuxxieuvUa
+ XITg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762454499; x=1763059299;
+ d=1e100.net; s=20230601; t=1762454659; x=1763059459;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HNZifspKyNTtUk32EI+/S9xIdPILpe63RytC9kZ3Z+o=;
- b=seji1ojWEviBqE0o7CcG89sWWCIozP0gfvPT5YTx/0W9/Lok7LDI5/FHXQzMjA1f68
- xyMfvAdb1hLAaQSblOHs4qzor4YZGyetNseGfetat/T7O8nDcH65T0vslK86Np3vdBhO
- PeM2lP/uc5Wc/Vt3drG2pdMQldeNp8nxrjd4HEXRtYx+f89Z3aLrK1b8WElWepxYy8do
- 8eysw2h5GYqCsVF7Q49+G+vW+RNdsElUhuKBDMra2JWdDk22djpmbTIPZY2VsUZMhrbO
- qcP+RJicRGRH1Zr0skZddeULNGS3DbYt72bFYI5PaQ17TCMq+EEhh6LiJ7k2TTewrtgB
- 6kIw==
-X-Gm-Message-State: AOJu0Yxcw7ZXsg+lyyRoav6Uktop4WNN+x/CggSXdALaRuj8ZCpoHdYU
- H1pjBt7Jj2q8NLefFsahp2Q+WXCOLCeIIlb1qI2NXqQNtLNq44q8CDczlhDs9r0ljBsp7OExUsG
- pgBc9mUFxrKNH9+NDqws2AEgkQCWcskbB19jlGVz8
-X-Gm-Gg: ASbGncv/Tlb8ihQ603McddTPxYMf47B0Zj8T4WjFG3Br4sXsXJLewM/V+lh7zw0Ke8/
- 8UdqYwcOM2retVBcR3POwHPfVXzQoREnwrZPAqr/SsNsbVwDkTRgpzjA6hwOHBnSRNPgzl1UvTr
- 5avh5hZW04yHTM1OttuhjyHSiBM0a5BDgsm02+vMZqosSC8cqP4DI08E08iSYvO5B+3sYhQGvRT
- unk7tqlmr4ancu8as3aIx79gluZTxUT5Uvn2yOXhrNupihyoC1YIhhqm4yNh20YyU8aX3q9+9HS
- ZcYfhQ+H0MKrtxI=
-X-Google-Smtp-Source: AGHT+IEPogCfwTh60fi3isNVjx3pBfMnxApRrOPwcHZh++MQkMjCnTGi/9r1Ecfj4ZHTGj62Te1ZOexqFZyp5+cwgxM=
-X-Received: by 2002:a05:6402:430a:b0:640:9cdc:abbc with SMTP id
- 4fb4d7f45d1cf-6413eee1029mr418791a12.10.1762454498683; Thu, 06 Nov 2025
- 10:41:38 -0800 (PST)
+ bh=dliXUtXyDUESoe+5EnrivXiNFZZUf89xHzNP2/xdQTU=;
+ b=Rveev/LPwmx1P8Hibjyf3wnBpNgvBTFN8D8lVduy4gW3ZR4zxRMGmjfmejzFBkrM0X
+ 8q0C1lfVzTy8dJbvMRYP2+pX9Aa7BRTNg+11NBLEMByJxAMmF/OFaymhLNz5/X/IfWgO
+ P+QkBFTh5DDEo9raIooNaI44/1sT9WdF/Ayk2aMk+aYPWSVX7H7x7RLrKAhbNeFRN23p
+ JTBXTqPVqdParyhonT3TwwDfQ4/HK0uGIKiAcXte6tBLNmZLj7m23j8lKEm0zXYjds8o
+ aF+zq7iBMXlhQYxFt+UuWI/xgo7DdK4iqIWXazrQMEP1EZnSQiOfXeoTGkDEM+jpbXB6
+ vHug==
+X-Gm-Message-State: AOJu0YzJnE6hXULK/DdtbZJQrChnl/LWIXOyCYtcx71tnIGbncKY3hYM
+ P9gUPzZETmvW0WmP3HVjCo7WqNeb71LhDJkP8gL/9CHbWIxs2+A/tUGO5Eyhxmlnt2v3zTgEORw
+ 9rqLk6O6FNp3C4sExUmLSxzrxGVlV5jdxaoGmIRjtsPpEI/J5vTrY19YGqrc=
+X-Gm-Gg: ASbGncvSQ/BOgzLrh4wKujB9Siwu+/y1/iYn1Qo4nrxvSe/Z47HAiCO4Fbp3k0FyFZo
+ HLDlU+3x+ePDlc+EzS4YHOGlM8uM1/S9RH7yUpQnGpaG3Dwt7mTysYQaopuZaTyi7ObfI3foNcK
+ k0IEAbF0Tfhff+a3m61N05p+WqzH9fqkWQVxfqLGoGKvTTgrkewjmZCxeYOpK0W2atLsNZI2e/D
+ 6VTKV0ea6HoMh8G/zbepOhuMrn8LjUlJCeotzO0boW5O+QiWgQWZ75bLm3yXBTVaQ7pEZjvBRld
+ OL/wWgoErGp34W0=
+X-Google-Smtp-Source: AGHT+IHb7ytWFbZte9t5xgvofRF14rifFQIui14x0+J5M8ctehrRlSQAn1+BZ9EcQXqgXFRTFDh0V1wpU8gKes9G+mc=
+X-Received: by 2002:a17:907:3fa5:b0:b3f:a960:e057 with SMTP id
+ a640c23a62f3a-b72c090e626mr25432966b.31.1762454658671; Thu, 06 Nov 2025
+ 10:44:18 -0800 (PST)
 MIME-Version: 1.0
-References: <20251008191936.3069950-1-navidem@google.com>
- <CAHUE=o-X1sJXn6SWATUUjX2GHUsh8mufk3MZHVkKDzzFGtbSyA@mail.gmail.com>
- <CAGXevkjvVQE98WqE6-QcWc5jYvgycymhJYmVnEGUTdwNwNyH6w@mail.gmail.com>
-In-Reply-To: <CAGXevkjvVQE98WqE6-QcWc5jYvgycymhJYmVnEGUTdwNwNyH6w@mail.gmail.com>
+References: <CAHUE=o-aypvXPxZXssD8nMJm+Qa9Nsp1HRcNVbC27tNkpV75fg@mail.gmail.com>
+ <20251014003008.2520701-1-navidem@google.com>
+ <20251014003008.2520701-2-navidem@google.com>
+In-Reply-To: <20251014003008.2520701-2-navidem@google.com>
 From: Navid Emamdoost <navidem@google.com>
-Date: Thu, 6 Nov 2025 10:41:27 -0800
-X-Gm-Features: AWmQ_bnMQHTAmuoldBKKIVKPP9sUHlMv7xLYea1AbC-KxbYn6fF-sB7SRX8Ld_M
-Message-ID: <CAGXevki76WoXWV8P3HSo9vq09FXzKBi+xQoxCLKWAU4AjXF39w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] libqos: pci: Avoid fatal assert on zero-sized BARs in
- fuzz builds
-To: Alexander Bulekov <alxndr@bu.edu>
-Cc: qemu-devel@nongnu.org, zsm@google.com, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 6 Nov 2025 10:44:06 -0800
+X-Gm-Features: AWmQ_blfPC4sbYdqHXdPOR5p25SaPTpnk6maHu2TubHITumE6-TLu3nk69vAGtE
+Message-ID: <CAGXevkhGhKbrQRVb6euaNWA-a+zCfz8K6NnToVOwFd8iQK3Mgw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] tests/qtest/fuzz: Add generic fuzzer for VNC
+To: qemu-devel@nongnu.org, alxndr@bu.edu
+Cc: berrange@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Bandan Das <bsd@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Zubin Mithra <zsm@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=navidem@google.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=navidem@google.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -175
 X-Spam_score: -17.6
 X-Spam_bar: -----------------
@@ -100,95 +102,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 6:14=E2=80=AFPM Navid Emamdoost <navidem@google.com=
-> wrote:
->
-> Hi Alexander,
->
-> On Fri, Oct 10, 2025 at 8:59=E2=80=AFAM Alexander Bulekov <alxndr@bu.edu>=
- wrote:
-> >
-> > On 251008 1919, Navid Emamdoost wrote:
-> > > The qpci_iomap() function fails with a fatal g_assert(addr) if it
-> > > probes a PCI BAR that has a size of zero. This is expected behavior
-> > > for certain devices, like the Q35 PCI Host Bridge, which have valid b=
-ut
-> > > unimplemented BARs.
-> > > This assertion blocks the creation of fuzz targets for complex machin=
-e
-> > > types that include these devices.
-> > > Make the check conditional on !CONFIG_FUZZ. In fuzzing builds, a
-> > > zero-sized BAR is now handled gracefully by returning an empty BAR
-> > > struct, allowing fuzzing to proceed. The original assertion is kept f=
-or
-> > > all other builds to maintain strict checking for qtest and production
-> > > environments.
-> >
-> > Is there a way to determine whether a BAR is unimplememnted from the
-> > PCIDev in generic_fuzz.c:pci_enum so that we can skip the call to iomap=
-?
-> >
->
-> Fair point. I don't think we have a reliable way to determine if a BAR
-> is truly unimplemented from the PCIDevice model without probing it. If
-> we moved that hardware probe into pci_enum, it would become
-> inefficient for all the BARs that are implemented, as they would be
-> probed twice: once in pci_enum just to check, and then again inside
-> qpci_iomap to do the actual mapping. That's why I think delegating
-> this check to qpci_iomap is the cleaner approach.
->
-
 Friendly ping.
 
-> > >
-> > > Signed-off-by: Navid Emamdoost <navidem@google.com>
-> > > ---
-> > >  tests/qtest/libqos/pci.c | 16 ++++++++++++++++
-> > >  1 file changed, 16 insertions(+)
-> > >
-> > > diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-> > > index a59197b992..df9e2a3993 100644
-> > > --- a/tests/qtest/libqos/pci.c
-> > > +++ b/tests/qtest/libqos/pci.c
-> > > @@ -541,6 +541,22 @@ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, u=
-int64_t *sizeptr)
-> > >          addr &=3D PCI_BASE_ADDRESS_MEM_MASK;
-> > >      }
-> > >
-> > > +#ifdef CONFIG_FUZZ
-> > > +    /*
-> > > +     * During fuzzing runs, an unimplemented BAR (addr=3D0) is not a=
- fatal
-> > > +     * error. This occurs when probing devices like the Q35 host bri=
-dge. We
-> > > +     * return gracefully to allow fuzzing to continue. In non-fuzzin=
-g builds,
-> > > +     * we retain the original g_assert() to catch unexpected behavio=
-r.
-> > > +     */
-> > > +    if (!addr) {
-> > > +        if (sizeptr) {
-> > > +            *sizeptr =3D 0;
-> > > +        }
-> > > +        memset(&bar, 0, sizeof(bar));
-> > > +        return bar;
-> > > +    }
-> > > +#endif
-> > > +
-> > >      g_assert(addr); /* Must have *some* size bits */
-> > >
-> > >      size =3D 1U << ctz32(addr);
-> > > --
-> > > 2.51.0.710.ga91ca5db03-goog
-> > >
-> > >
+On Mon, Oct 13, 2025 at 5:30=E2=80=AFPM Navid Emamdoost <navidem@google.com=
+> wrote:
 >
+> Add a new generic fuzz target for the QEMU VNC server. This target
+> exercises both the standard VNC protocol and the VNC-over-WebSocket
+> transport layer, increasing coverage of a primary remote attack surface.
 >
+> To support parallel fuzzing (e.g., with oss-fuzz), the VNC unix
+> socket paths are generated dynamically. The fuzzer harness inspects the
+> command line for placeholders and replaces them with unique paths
+> created by mkstemp() before execution.
+>
+> ---
+>
+> This new target increases code coverage in the VNC subsystem
+> and related networking and I/O code.
+> The baseline coverage below was generated by running all existing fuzz
+> targets with the oss-fuzz corpus. The new target shows significant gains:
+>
+> -------------------------------------------------------------------------=
+---
+> File                       New Target                Baseline        Chan=
+ge
+> -------------------------------------------------------------------------=
+---
+> vnc.c                      339/3212 (10.6%)     3/3212 (0.1%)        +336
+> keymaps.c                  91/184 (49.5%)       0/184 (0.0%)         +91
+> net-listener.c             76/198 (38.4%)       3/198 (1.5%)         +73
+> channel-socket.c           73/575 (12.7%)       19/575 (3.3%)        +54
+> qemu-sockets.c             44/1019 (4.3%)       0/1019 (0.0%)        +44
+> vnc-jobs.c                 41/219 (18.7%)       0/219 (0.0%)         +41
+> dns-resolver.c             28/145 (19.3%)       3/145 (2.1%)         +25
+>
+> Signed-off-by: Navid Emamdoost <navidem@google.com>
+> ---
+>  tests/qtest/fuzz/fuzz.c                 | 65 +++++++++++++++++++++++++
+>  tests/qtest/fuzz/generic_fuzz_configs.h |  5 ++
+>  2 files changed, 70 insertions(+)
+>
+> diff --git a/tests/qtest/fuzz/fuzz.c b/tests/qtest/fuzz/fuzz.c
+> index ca248a51a6..b77c3ceb2b 100644
+> --- a/tests/qtest/fuzz/fuzz.c
+> +++ b/tests/qtest/fuzz/fuzz.c
+> @@ -126,6 +126,46 @@ static FuzzTarget *fuzz_get_target(char* name)
+>      return NULL;
+>  }
+>
+> +/*
+> + * Global variables to hold the unique socket paths for cleanup.
+> + */
+> +static char g_vnc_socket_path[sizeof("/tmp/qemu-vnc.XXXXXX")];
+> +static char g_vnc_ws_socket_path[sizeof("/tmp/qemu-vnc-ws.XXXXXX")];
+> +
+> +/*
+> + * atexit() handler to clean up both socket files.
+> + */
+> +static void cleanup_vnc_sockets(void)
+> +{
+> +    if (g_vnc_socket_path[0] !=3D '\0') {
+> +        unlink(g_vnc_socket_path);
+> +    }
+> +    if (g_vnc_ws_socket_path[0] !=3D '\0') {
+> +        unlink(g_vnc_ws_socket_path);
+> +    }
+> +}
+> +
+> +/* Helper function to find and replace a placeholder in a GString */
+> +static bool replace_socket_placeholder(GString *cmd_line, const char *pl=
+aceholder,
+> +                                       const char *path_template, char *=
+global_path_out)
+> +{
+> +    char *placeholder_ptr =3D strstr(cmd_line->str, placeholder);
+> +    if (placeholder_ptr) {
+> +        int fd;
+> +        strcpy(global_path_out, path_template);
+> +        fd =3D mkstemp(global_path_out);
+> +        if (fd =3D=3D -1) {
+> +            perror("mkstemp failed");
+> +            return false;
+> +        }
+> +        close(fd);
+> +
+> +        gssize pos =3D placeholder_ptr - cmd_line->str;
+> +        g_string_erase(cmd_line, pos, strlen(placeholder));
+> +        g_string_insert(cmd_line, pos, global_path_out);
+> +    }
+> +    return true;
+> +}
+>
+>  /* Sometimes called by libfuzzer to mutate two inputs into one */
+>  size_t LLVMFuzzerCustomCrossOver(const uint8_t *data1, size_t size1,
+> @@ -213,6 +253,31 @@ int LLVMFuzzerInitialize(int *argc, char ***argv, ch=
+ar ***envp)
+>      g_string_append_printf(cmd_line, " %s -qtest /dev/null ",
+>                             getenv("QTEST_LOG") ? "" : "-qtest-log none")=
+;
+>
+> +    /*
+> +     * For the VNC fuzzer, we replace placeholders for both the standard
+> +     * and WebSocket VNC listeners with unique socket paths.
+> +     */
+> +    if (strcmp(fuzz_target->name, "generic-fuzz-vnc") =3D=3D 0) {
+> +        bool success =3D true;
+> +        success &=3D replace_socket_placeholder(cmd_line, "VNC_SOCKET_PA=
+TH",
+> +                                              "/tmp/qemu-vnc.XXXXXX", g_=
+vnc_socket_path);
+> +        success &=3D replace_socket_placeholder(cmd_line, "VNC_WS_SOCKET=
+_PATH",
+> +                                              "/tmp/qemu-vnc-ws.XXXXXX",=
+ g_vnc_ws_socket_path);
+> +
+> +        if (!success) {
+> +            exit(1);
+> +        }
+> +
+> +        /* Check that placeholders were actually found and replaced */
+> +        if (g_vnc_socket_path[0] =3D=3D '\0' || g_vnc_ws_socket_path[0] =
+=3D=3D '\0') {
+> +            fprintf(stderr, "ERROR: VNC fuzzer is missing a socket place=
+holder\n");
+> +            exit(1);
+> +        }
+> +
+> +        /* Register a single cleanup handler for both sockets */
+> +        atexit(cleanup_vnc_sockets);
+> +    }
+> +
+>      /* Split the runcmd into an argv and argc */
+>      wordexp_t result;
+>      wordexp(cmd_line->str, &result, 0);
+> diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/g=
+eneric_fuzz_configs.h
+> index ef0ad95712..bd2d875dd8 100644
+> --- a/tests/qtest/fuzz/generic_fuzz_configs.h
+> +++ b/tests/qtest/fuzz/generic_fuzz_configs.h
+> @@ -247,6 +247,11 @@ const generic_fuzz_config predefined_configs[] =3D {
+>          .args =3D "-machine q35 -nodefaults "
+>          "-parallel file:/dev/null",
+>          .objects =3D "parallel*",
+> +    },{
+> +        .name =3D "vnc",
+> +        .args =3D "-machine q35 -nodefaults "
+> +               "-vnc vnc=3Dunix:VNC_SOCKET_PATH,websocket=3Dunix:VNC_WS_=
+SOCKET_PATH",
+> +        .objects =3D "*",
+>      }
+>  };
 >
 > --
-> Thank you,
-> Navid.
-
+> 2.51.0.760.g7b8bcc2412-goog
+>
 
 
 --=20
