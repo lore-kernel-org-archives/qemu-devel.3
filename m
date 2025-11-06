@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B96CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8D6CCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGxHo-0004ke-8W; Thu, 06 Nov 2025 05:32:12 -0500
+	id 1vGxJ6-0005Tc-MV; Thu, 06 Nov 2025 05:33:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGxHm-0004k8-8b
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:32:10 -0500
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ id 1vGxJ5-0005Su-Ql
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:33:31 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGxHk-0004Ct-JE
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:32:09 -0500
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-63e19642764so766906d50.1
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 02:32:07 -0800 (PST)
+ id 1vGxJ2-0004Ju-Iq
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:33:31 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-63e336b1ac4so1091452d50.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 02:33:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762425126; x=1763029926; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762425207; x=1763030007; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0qUTVtkkVIeWkiwu2fshGWRQNdoVaE4OvRpHTH8UH4Q=;
- b=r5s9JzjQcCJ/POqYTMFTtC4U0MYhnDjxSA2HusDGglSRWiKNO9vsXxPPF+RLxO+alB
- 4GjTEKKMbM2HDxqoZZJb1ewV1a0kOq2QYMCh6cLV5ALUvr6nwnL0xfJnSSDA4G84vLJP
- 8Mv1fw+FzFynQesqkEFNaMpB0tftvFnihfwwtFIl4geDRf6P9brZ7htwUZLiLj6jondE
- S7JV0gfufEeKmjMsgQMejG1/UMaE/cQC+WBZnU5ikQFNwrX7nrf1dbMFrlQA3HiyB3T/
- qOpNEscqnnMg8kD3LdtyW5Uthp1okNc271yDFQ8STYuVpoF2bhSxW2D77PDjJv7g3kv8
- 8i6A==
+ bh=BvCHELAhMlngvHmdCqWKZIHEvGaRU5uQaDtuWSFHUIA=;
+ b=DMVNjb5txrP//mSiK6Vrzli9UTbXRy8DOTp6n6+d18B9M2oCb1vHebbcOWSw34/E7j
+ XApwDm5eLPeBWL4wDdSKk2oenf8sngArKkctpCp5BREQk3w8XKG+TR/jDOhSL076v7Ju
+ bZAX2eYsFoK1iE/u+ZktmOkudDBVOnMqhG/XGuWexbXcwSeKR3oPu+i0H8kBVh1zi7uw
+ 4dp5orTQZFS9JyGknWeKUH3vCbks4V4lt2ZsKgN7oMMxcI6NlrrGMsFZpXSZ6BWJAWwQ
+ dFp+tA1izi85dckKmav9GzHYM2zclkpjAQEBq1Iwcx56WZ8jRaIVwjt7god184gJ+cmt
+ u70w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762425126; x=1763029926;
+ d=1e100.net; s=20230601; t=1762425207; x=1763030007;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0qUTVtkkVIeWkiwu2fshGWRQNdoVaE4OvRpHTH8UH4Q=;
- b=ZZt1JPmZQPvjgWShf6GSKwg732CRda6JgqJZ4kSeeGHW+/NXFJIKt3FJnhyoAIbkgZ
- nnXpfQQU9JpDzMGE/Z81yw4an3vmU/lhcnpkJuC7abXbKfPFdvrACngLMThyJC+khhf4
- IGgdp7ldx6WbzE5iV7KVkO3eh0jDv8yUvynGvF4BvzXsk3L9IUXwN3Y1iji7j+m2/GN5
- maikB4EaL0H1QC7VckH0T2E9BXZBOwf2tDGqCJ4PvU2Jp3iGJOMb6RYvemUTOCAPaNo0
- 5XtH3gXCbPTfaZsEuBcIslax8h7EDYQyaeJImB3/2NizPso39bCKMf8HBVAPdVFBgS+R
- lk9Q==
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BvCHELAhMlngvHmdCqWKZIHEvGaRU5uQaDtuWSFHUIA=;
+ b=msbBHcJ07IAnmSVbUjJQJ491F2OJqXcJzZtZ/joX+yXdsYhsmr8RJBryVydFB4/JWN
+ RdgzCyGezToSpTTnnJ6/VO7utkMeygX0tMcNiens7cHipb6HDi+e+6bvP3YmKjyMeKNo
+ hpF7OIoKgGT7CLB4U/qnIHB5vG84+3r9+2Dff5+1yZUdPiMrDIigMjBwq++0ZMgcMX5F
+ jWhDJLqgG1SNbqRblvpY8UbRrvF9T2u9uFjoQcZTzOH1iWYnOdX2LyR3noTxLcRIJzz0
+ qoSfcNzyVwowt9fTeuYwEZfSw8ICpPBW9TPgZMLqThDOtUcgHTVVFQrHUIT1ZLQlv+/i
+ gp1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9SUBYjLW+Juj5XuQ08y5Z574jNNIKv/OFjEkxUc2p/Rys7Qa8l2NHw1oKPQfsJ60zAnZfvhFCz+Y2@nongnu.org
-X-Gm-Message-State: AOJu0YxWuCOfegJOpAotiyiD839IVdK4ql47nSKbVEjFZlPc6O4KEn0e
- IMsMKjNQGTTcg0s8BF+G+4RtCfFPw7eayrkSkOxYKfLZ4lpwcexlFMyY+Ce8pAAe1HvTEV0WvmO
- r3ZnvGrC1le7AVt+hiG7DPEJ3j/2XX+5MzjvcxO2ibw==
-X-Gm-Gg: ASbGncsGPM4cfMqOlU7lffbVQMbMdaNgtbIbUCCF4S5yL30G0UOS29uhl0FA7XXGlkW
- Psq/Fkpwe98VDAUaYgCo36aCWB2/Xa5IHS97Q0FJ7+97+dwJdeStsxErMUHVWGwYK2oELg47hn8
- LGRoFfykSOi/g7mw7V6xmy5ZIKEjT/4/qCVnXa3E4VJ1ylLljmDKnWm47peNozQ5jGipDCwsXiT
- +XjR57XOhxdnd8yQc3fRKPGkH6+ZV+vYjpQvg1KJQRro+iuHpcuA9+CXgR6dQ==
-X-Google-Smtp-Source: AGHT+IHBf4Ud1HMNrFd+DrvdV0UvNiwH7w5CiIVR1XpTovjVDm6LdA/O8Kb+QG1cJITDz59kn3z22J9XwIrjw9wIPcw=
-X-Received: by 2002:a05:690e:4248:b0:63f:a727:8403 with SMTP id
- 956f58d0204a3-63fd355c052mr4300610d50.38.1762425126277; Thu, 06 Nov 2025
- 02:32:06 -0800 (PST)
+ AJvYcCUEEtAxzhzawcuLLFLJpDV15c/voVBFN+Ycpvh2G/pSP44iwmWcODLN8PQGMGKSTr9Q0Q1K45JVyj2p@nongnu.org
+X-Gm-Message-State: AOJu0YxQPBeKZ23GcOJgHIAfTRtfPv+CF/FvOAuFqb5nBKO3NjO0Ofxw
+ zcNCzWNItVcLoFAiZnAd5f3TeDKur0ykEobRPjA3Pm8g9mKqWYF2sexlgEAB7r9iMD+4x1ygDr2
+ 5x+gTdeNfsM111b/MzdMdlLD8/U1HOs+2q9tsnFerYw==
+X-Gm-Gg: ASbGncufAi993uuZ44Rdzhjo7ULrKS38fUVVVtL4+AAOlzie+GD68Ii17w7HptKkYh7
+ /iWWZHsm6ncsCATJYKkPNsWJlxjZymLbQedPn3U1wOnAyiUm8BHuOsqDrcIjMM0S88xTdh2/hXf
+ y/HihhqPrbPHGXo2FkxVEVZ9KE7TscuYvZDKl2bX27KJPOmit6m1N1eIaUh0uvf8NdAB99z6yVK
+ tx79CNWZNp1atlCRCtn7sn0uJIEJYqtyTXdhzq5mKRkFqxgmPekuQx3SR3qxFhnx7C1/FK6
+X-Google-Smtp-Source: AGHT+IEco8bLn1SdsB2OCkJpWIfdZBvI5/OErgSrP53wCT4iJ+XywXWMoNjSSasx+XgSBb/f9znUSYlrdFNoTdVV73w=
+X-Received: by 2002:a53:acce:0:20b0:63e:29af:bd23 with SMTP id
+ 956f58d0204a3-640b53db810mr1707371d50.4.1762425206886; Thu, 06 Nov 2025
+ 02:33:26 -0800 (PST)
 MIME-Version: 1.0
-References: <20251104-feat-mte-tagged-far-v1-1-cdfd7db40397@gmail.com>
- <9b196058-a0e3-422e-86a6-7c405681bf42@linaro.org>
-In-Reply-To: <9b196058-a0e3-422e-86a6-7c405681bf42@linaro.org>
+References: <20250129160059.6987-1-farosas@suse.de>
+ <20250129160059.6987-8-farosas@suse.de>
+ <CAFEAcA8_zO0MmyN2nQDZsmiWssoiSUvKRMVYfRLrz6TsNejQFA@mail.gmail.com>
+ <aQuhvURPy3qhY64-@x1.local>
+In-Reply-To: <aQuhvURPy3qhY64-@x1.local>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Nov 2025 10:31:55 +0000
-X-Gm-Features: AWmQ_bn3naln20q-4M_XF_Kwll009HdD_p629bS3VMrEXzO1iMwLExhZXk-Ysc8
-Message-ID: <CAFEAcA_wOPO-BsMUB7_CtLKgb2HQEx4K62WJxoekabQ5Mo=Cpw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: add support for FEAT_MTE_TAGGED_FAR
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
+Date: Thu, 6 Nov 2025 10:33:14 +0000
+X-Gm-Features: AWmQ_bky7DlME38t5MRB4i-2-okJS38qIGD4aGOz9w08m0TIkT4Uj2JR_gJQALE
+Message-ID: <CAFEAcA8-oboPd1VemPJb4v1qXAnBO07JbBrhdNfZ5Dy00brhPg@mail.gmail.com>
+Subject: Re: [PULL 07/42] machine: aux-ram-share option
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, 
+ Steve Sistare <steven.sistare@oracle.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,43 +98,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 5 Nov 2025 at 17:49, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+On Wed, 5 Nov 2025 at 19:13, Peter Xu <peterx@redhat.com> wrote:
 >
-> Hi Gabriel,
->
-> Thanks for your contribution.
->
-> On 11/4/25 21:50, Gabriel Brookman wrote:
-> > FEAT_MTE_TAGGED_FAR is a feature required for MTE4. The feature
-> > guarantees that the full address (including tag bits) is reported after
-> > a SEGV_MTESERR, and advertises itself in the ID_AA64PFR2_EL1 system
-> > register. QEMU was already reporting the full address, so this commit
-> > simply advertises the feature by setting that register, and unsets the
-> > register if MTE is disabled.
+> On Tue, Nov 04, 2025 at 10:53:54AM +0000, Peter Maydell wrote:
+> > On Wed, 29 Jan 2025 at 16:03, Fabiano Rosas <farosas@suse.de> wrote:
+> > >
+> > > From: Steve Sistare <steven.sistare@oracle.com>
+> > >
+> > > Allocate auxilliary guest RAM as an anonymous file that is shareable
+> > > with an external process.  This option applies to memory allocated as
+> > > a side effect of creating various devices. It does not apply to
+> > > memory-backend-objects, whether explicitly specified on the command
+> > > line, or implicitly created by the -m command line option.
+> > >
+> > > This option is intended to support new migration modes, in which the
+> > > memory region can be transferred in place to a new QEMU process, by sending
+> > > the memfd file descriptor to the process.  Memory contents are preserved,
+> > > and if the mode also transfers device descriptors, then pages that are
+> > > locked in memory for DMA remain locked.  This behavior is a pre-requisite
+> > > for supporting vfio, vdpa, and iommufd devices with the new modes.
 > >
-> > Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-> > ---
-> > This patch is the first step toward implementing ARM's Enhanced Memory
-> > Tagging Extension (MTE4). MTE4 guarantees the presence of several
-> > subfeatures: FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR,
-> > FEAT_MTE_STORE_ONLY, FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM,
-> > none of which are currently implemented in QEMU.
+> > Hi; I've just noticed that in this patch:
 > >
-> > According to the ARM ARM, the presence of any of these features (except
-> > FEAT_MTE_PERM) implies the presence of all the others. For simplicity
-> > and ease of review, I plan to introduce them one at a time. This first
-> > patch focuses on FEAT_MTE_TAGGED_FAR.
+> >
+> > > @@ -1162,6 +1178,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
+> > >      object_class_property_set_description(oc, "mem-merge",
+> > >          "Enable/disable memory merge support");
+> > >
+> > > +#ifdef CONFIG_POSIX
+> > > +    object_class_property_add_bool(oc, "aux-ram-share",
+> > > +                                   machine_get_aux_ram_share,
+> > > +                                   machine_set_aux_ram_share);
+> > > +#endif
+> >
+> > we added a new class property to the machine, but we don't
+> > call object_class_property_set_description() to give it any
+> > help text (compare how we handle the other properties in this
+> > function).
+> >
+> > > +
+> > >      object_class_property_add_bool(oc, "usb",
+> > >          machine_get_usb, machine_set_usb);
+> > >      object_class_property_set_description(oc, "usb",
+> >
+> > This means that if you run "qemu-system-x86_64 -M q35,help"
+> > you'll see that this option is missing help text:
+> >
+> > pc-q35-10.2-machine options:
+> >   acpi=<OnOffAuto>       - Enable ACPI
+> >   append=<string>        - Linux kernel command line
+> >   aux-ram-share=<bool>
+> >   boot=<BootConfiguration> - Boot configuration
+> >   bus-lock-ratelimit=<uint64_t> - Set the ratelimit for the bus locks
+> > acquired in VMs
+> >   confidential-guest-support=<link<confidential-guest-support>> - Set
+> > confidential guest scheme to support
+> >   default-bus-bypass-iommu=<bool>
+> > [etc]
+> >
+> > Would somebody like to write a patch to add the missing
+> > description ?
 >
-> I think it's ok to add these "subfeatures" separately.
+> Thanks for reporting, sent "[PATCH] machine: Provide a description for
+> aux-ram-share property" just now.
+>
+> PS: for q35 there's another one fd-bootchk=..
 
-We can add the implementation of the subfeatures separately,
-but we should not enable them in 'max' until they're all
-present. (We don't always adhere strictly to the architecture's
-"feature X implies Y exists" rules, but in this case
-because they're really a tightly linked bundle that add
-up to "MTE4" I think that presnting only a subset to guests
-is likely to result in them not behaving correctly.)
+Yes; it was looking at the bug report about that
+https://gitlab.com/qemu-project/qemu/-/issues/3193
+that led me to spot the aux-ram-share option.
 
-thanks
 -- PMM
 
