@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882F2CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 08:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80676CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 08:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGvgj-00034U-2T; Thu, 06 Nov 2025 03:49:49 -0500
+	id 1vGvh6-0003ri-C4; Thu, 06 Nov 2025 03:50:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vGvgh-000342-Mm; Thu, 06 Nov 2025 03:49:47 -0500
+ id 1vGvh4-0003nL-SA; Thu, 06 Nov 2025 03:50:10 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vGvgg-0005Sg-AY; Thu, 06 Nov 2025 03:49:47 -0500
+ id 1vGvh3-0005ZE-AL; Thu, 06 Nov 2025 03:50:10 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 6 Nov
- 2025 16:49:27 +0800
+ 2025 16:49:30 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 6 Nov 2025 16:49:27 +0800
+ Transport; Thu, 6 Nov 2025 16:49:30 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,10 +34,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 04/12] hhw/misc/aspeed_scu: Add AST1060 A2 silicon revision
- definition
-Date: Thu, 6 Nov 2025 16:49:13 +0800
-Message-ID: <20251106084925.1253704-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 11/12] docs/system/arm/aspeed: Update Aspeed and 2700
+ family boards list
+Date: Thu, 6 Nov 2025 16:49:20 +0800
+Message-ID: <20251106084925.1253704-12-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
 References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
@@ -69,41 +69,38 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new silicon revision constant AST1060_A2_SILICON_REV for the
-AST1060 SoC. This allows the SCU model and related SoC layers to
-identify and handle AST1060 A2 revision properly in the same way as
-other Aspeed SoC families.
+Remove the ast2700-evb entry from the Aspeed family boards list in
+the documentation. The AST2700 platform now belongs to the new Aspeed
+2700 family group, which has its own dedicated documentation section
+and board definitions.
+
+Update the Aspeed 2700 family boards list in the documentation to include
+the new ast2700fc board entry.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/misc/aspeed_scu.h | 1 +
- hw/misc/aspeed_scu.c         | 1 +
- 2 files changed, 2 insertions(+)
+ docs/system/arm/aspeed.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-index 684b48b722..76ef8dc592 100644
---- a/include/hw/misc/aspeed_scu.h
-+++ b/include/hw/misc/aspeed_scu.h
-@@ -51,6 +51,7 @@ struct AspeedSCUState {
- #define AST2600_A3_SILICON_REV   0x05030303U
- #define AST1030_A0_SILICON_REV   0x80000000U
- #define AST1030_A1_SILICON_REV   0x80010000U
-+#define AST1060_A2_SILICON_REV   0xA0030000U
- #define AST2700_A0_SILICON_REV   0x06000103U
- #define AST2720_A0_SILICON_REV   0x06000203U
- #define AST2750_A0_SILICON_REV   0x06000003U
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 1f996d5398..300571256a 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -565,6 +565,7 @@ static uint32_t aspeed_silicon_revs[] = {
-     AST2600_A3_SILICON_REV,
-     AST1030_A0_SILICON_REV,
-     AST1030_A1_SILICON_REV,
-+    AST1060_A2_SILICON_REV,
-     AST2700_A0_SILICON_REV,
-     AST2720_A0_SILICON_REV,
-     AST2750_A0_SILICON_REV,
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 6317c0e910..a0c05a6f73 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,4 +1,4 @@
+-Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+ ====================================================================================================================================================================================================================================================================================================================================================================================================================================
+ 
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+@@ -274,7 +274,7 @@ configuration file for OTP memory:
+     done > otpmem.img
+   fi
+ 
+-Aspeed 2700 family boards (``ast2700-evb``)
++Aspeed 2700 family boards (``ast2700-evb``, ``ast2700fc``)
+ ==================================================================
+ 
+ The QEMU Aspeed machines model BMCs of Aspeed evaluation boards.
 -- 
 2.43.0
 
