@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F27CCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3305CCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:48:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH2Ba-0003ob-0T; Thu, 06 Nov 2025 10:46:06 -0500
+	id 1vH2Dj-0004ey-1A; Thu, 06 Nov 2025 10:48:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vH2BY-0003oR-Pi
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:46:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vH2BX-0006TG-0H
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:46:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762443961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1fruWoZzRF6uN8gIgmdyy9gHwZ61THyow0OOWWweOCQ=;
- b=OpmUWjF3GE9YEapPk0tFyMaT8QLdFJEVBtQUqCOLfj+IZjRI5lYO9m4CrRpT/63tO0zDyS
- TxK5MzSsrhsRtYRBFFB4Y9IJ13tgmB3OK3+m0e4cl3FCeM1Ov3EXIHRc75qpMUSp06tY82
- haBy5O9FZNm17EfdvmAdzfLR7d35ogQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-jUOCLHxZMleZU0u5_r_gig-1; Thu,
- 06 Nov 2025 10:44:47 -0500
-X-MC-Unique: jUOCLHxZMleZU0u5_r_gig-1
-X-Mimecast-MFC-AGG-ID: jUOCLHxZMleZU0u5_r_gig_1762443886
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 564601801233; Thu,  6 Nov 2025 15:44:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED0EC1945110; Thu,  6 Nov 2025 15:44:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 96C7B21E6A27; Thu, 06 Nov 2025 16:44:41 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com,  jasowang@redhat.com,  pbonzini@redhat.com,
- berrange@redhat.com,  eduardo@habkost.net,  peterx@redhat.com,
- farosas@suse.de,  eblake@redhat.com,  thuth@redhat.com,
- philmd@linaro.org,  zhao1.liu@intel.com,  qemu-devel@nongnu.org,
- leiyang@redhat.com,  davydov-max@yandex-team.ru,  yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-Subject: Re: [PATCH v9 3/8] qapi: add backend-transfer migration parameter
-In-Reply-To: <20251030203116.870742-4-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Thu, 30 Oct 2025 23:31:10 +0300")
-References: <20251030203116.870742-1-vsementsov@yandex-team.ru>
- <20251030203116.870742-4-vsementsov@yandex-team.ru>
-Date: Thu, 06 Nov 2025 16:44:41 +0100
-Message-ID: <87ecqbf9na.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vH2Dh-0004eK-1n
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:48:17 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vH2Df-000771-Gx
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:48:16 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-641018845beso1770629a12.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 07:48:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762444093; x=1763048893; darn=nongnu.org;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eXIEWeMkepcz8wHGMCwaPQIWSj8kSf13l4VllygB0Yw=;
+ b=lRjExJ+gynuLLwujaXbhg04GYsJAYZ+M7WToASA27zfrth/q+JcaQ+LF1I2QMdqVGY
+ ycZJosxInTOt2TnwqJ9E3vb1DXEp29lW+BlPawtVTkHvvpQn1VyAScRq+TNKQ7jkwVVJ
+ cQUefQNkKhTbvSnv7qRYbKDSbLkjBPclxrpysJkpvbzHuDBcHtg0LsFd9KDbfjn58A5Z
+ g3HgtmzQquzov+hgSkJI9i1B+MtWqsMfF0dt04gCJ23A2TexonIPkijwkZPxUPcZ1h4k
+ hqjBh5vP37Engcx3bKQbdx5nzQY9ucEL0/Agq687IH2bzQ/j+wdiyDmR0JrovrAH31mf
+ ljGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762444093; x=1763048893;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=eXIEWeMkepcz8wHGMCwaPQIWSj8kSf13l4VllygB0Yw=;
+ b=bBFhbwMGCSFvOeWSOpiuI2kXWr/aoOMvU4xBcjFxtLdH50KtBVNDjStX5ltIIiuDNs
+ lygLq2l0zAkhmd2OeMhlBPR3saViW2mxNLa0e3LA+M4mreJbUyxZ9XCE/EfzKXvbY71E
+ 3/ql8raQdZrnHjTIHfZw/ZGtSeb8hAtLOMKdZ1SDNmOKkjXEc95xuToFTphB0Q6skLmc
+ xe/l33oYL8OgVdmO0ZE/0Rhehqxxdo3NHpYsd1BQ1JAc7fZQXAykoncK1dHokvdasMTD
+ aId7Wt64utixnePvkXlXEoiCin1SS4qRnvzOi9lBnkEkxw5KyaK2mt6aApuKfQsZG+uw
+ nMKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWY7hC1rEOjPyjvqaJ+ryZe1LW9mnoj9YIMOeGNu4YhA0C6G/vPQUUmTNYu72/YGKw4VHjCqrBFZeRm@nongnu.org
+X-Gm-Message-State: AOJu0YyKSjCWArvcwBs7+pBqw+vjd3xdoZkVLKZ5aHLlWmcdz8jaPnK0
+ TqJhtgipVHpzW0yIxNWr1a7j1cvO28ZIJqXPrUGS+QaxhDXNRrFyMpz77r6z7dgcVkI=
+X-Gm-Gg: ASbGnct77haca+uTPWTZxzEjh7rtQfXvpQ1/S81GskYcJ3+x4Giy84CzbK4Yd/dwNty
+ ytmBnn+Qslr4hQp9m0BaIKGIUUZPwfeOCo7rvBXHpbHTGUW/mBlMxaS9ES36vnWzc5G7GuNTU0L
+ W6QSsdBXgKjo9PaSOIMNlAM+DDLGKZRmLyFuuS2CXhe55+TK5HkVmlLzSpa0ncXQqvzOMZqwBzb
+ eaWY4CniHIKJX/D/g03vHfxarKLrhgrmx4TSq81qM9BDql1unXoP+LjFZf/8XjIhv9/TZrhdHLO
+ qdHYyZx+OrSLki4AnylqPRSWlZDvZSJfI8RCOHMnd9kvBCB15LECIUmGBS+zG9FgVj9L+U6Jj3U
+ EqFNxw17un56y1GsEKhD0yUMhTiFSdOwxO2VF/J/a0kacC+dS1ueE1kLZVSSjbYp7H3lEFcI50J
+ Ao08omMqVjRWRoJYWZQC30PPe6aS/YKJCh2g==
+X-Google-Smtp-Source: AGHT+IGtxibGHBsNeVJcwGC1l9I/+B0+fVJ3e03QCKZrghyxx0BNtt3wod+slr43JiwJ8NYPA/X+zA==
+X-Received: by 2002:a17:907:3da3:b0:b70:7cd8:9098 with SMTP id
+ a640c23a62f3a-b72655ee49emr814782266b.61.1762444093373; 
+ Thu, 06 Nov 2025 07:48:13 -0800 (PST)
+Received: from [172.20.148.161] ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b7289682544sm241617366b.53.2025.11.06.07.48.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Nov 2025 07:48:12 -0800 (PST)
+Content-Type: multipart/mixed; boundary="------------hCW7Tf1Yz1wRSbXxvfiSGDBt"
+Message-ID: <5ad511f4-eb36-4d49-90a6-fbb1e5f67c6c@linaro.org>
+Date: Thu, 6 Nov 2025 16:48:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Fix accidental write to TCG constant
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
+References: <20251106144909.533997-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20251106144909.533997-1-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,186 +103,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+This is a multi-part message in MIME format.
+--------------hCW7Tf1Yz1wRSbXxvfiSGDBt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> We are going to implement backend-transfer feature: some devices
-> will be able to transfer their backend through migration stream
-> for local migration through UNIX domain socket. For example,
-> virtio-net will migrate its attached TAP netdev, with all its
-> connected file descriptors.
->
-> In this commit we introduce a migration parameter, which pick
-> devices for backend-transfer migration in context of next
-> outgoing or incoming migration. Of course, user is responsible
-> to pick same set of devices on source and target.
->
-> QMP command query-backend-transfer-support command may help
-> to prepare such set as intersection of
-> query-backend-transfer-support results on source and target.
->
-> With this commit, no device yet support backend-transfer,
-> so passing something other then empty list to backend-transfer
-> migration parameter will fail.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Hi folks,
 
-[...]
+On 11/6/25 15:49, Richard Henderson wrote:
+> Currently an unpredictable movw such as
+> 
+>    movw pc, 0x123
 
->  void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index be0f3fcc12..9478c4ddab 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -951,9 +951,15 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @backend-transfer: List of devices (IDs or QOM paths) for
-> +#     backend-transfer migration.  When enabled, device backends
-> +#     including opened fds will be passed to the destination in the
-> +#     migration channel (which must be a UNIX domain socket).  Default
-> +#     is no backend-transfer migration. (Since 10.2)
+bah, how did you get this insn.? Are you using any fuzzer? :P
 
-Two spaces after '.', please.
 
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @backend-transfer, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -978,7 +984,8 @@
->             'mode',
->             'zero-page-detection',
->             'direct-io',
-> -           'cpr-exec-command'] }
-> +           'cpr-exec-command',
-> +           { 'name': 'backend-transfer', 'features': ['unstable'] } ] }
->  
->  ##
->  # @MigrateSetParameters:
-> @@ -1137,9 +1144,15 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @backend-transfer: List of devices (IDs or QOM paths) for
-> +#     backend-transfer migration.  When enabled, device backends
-> +#     including opened fds will be passed to the destination in the
-> +#     migration channel (which must be a UNIX domain socket).  Default
-> +#     is no backend-transfer migration. (Since 10.2)
-
-Likewise.
-
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @backend-transfer, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # TODO: either fuse back into `MigrationParameters`, or make
-> @@ -1179,7 +1192,9 @@
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
->              '*direct-io': 'bool',
-> -            '*cpr-exec-command': [ 'str' ]} }
-> +            '*cpr-exec-command': [ 'str' ],
-> +            '*backend-transfer': { 'type': [ 'str' ],
-> +                                   'features': [ 'unstable' ] } } }
->  
->  ##
->  # @migrate-set-parameters:
-> @@ -1352,9 +1367,15 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @backend-transfer: List of devices (IDs or QOM paths) for
-> +#     backend-transfer migration.  When enabled, device backends
-> +#     including opened fds will be passed to the destination in the
-> +#     migration channel (which must be a UNIX domain socket).  Default
-> +#     is no backend-transfer migration. (Since 10.2)
-
-Two spaces after '.', please.
-
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @backend-transfer, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -1391,7 +1412,9 @@
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
->              '*direct-io': 'bool',
-> -            '*cpr-exec-command': [ 'str' ]} }
-> +            '*cpr-exec-command': [ 'str' ],
-> +            '*backend-transfer': { 'type': [ 'str' ],
-> +                                   'features': [ 'unstable' ] } } }
->  
->  ##
->  # @query-migrate-parameters:
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 9d3d961c15..549c77b2f0 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -939,6 +939,19 @@ void qmp_device_del(const char *id, Error **errp)
->      }
->  }
->  
-> +bool migrate_backend_transfer(DeviceState *dev)
-> +{
-> +    const strList *el = migrate_backend_transfer_list();
+> results in the tinycode
+> 
+>     and_i32 $0x123,$0x123,$0xfffffffc
+>     mov_i32 pc,$0x123
+>     exit_tb $0x0
+> 
+> which is clearly a bug, writing to a constant is incorrect and discards
+> the result of the mask.  Fix this by adding a temporary in store_reg().
+> 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> [rth: Avoid an extra temp and extra move.]
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/translate.c | 11 +++++++----
+>   1 file changed, 7 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+> index 5f64fed220..63735d9789 100644
+> --- a/target/arm/tcg/translate.c
+> +++ b/target/arm/tcg/translate.c
+> @@ -303,20 +303,23 @@ TCGv_i32 add_reg_for_lit(DisasContext *s, int reg, int ofs)
+>      marked as dead.  */
+>   void store_reg(DisasContext *s, int reg, TCGv_i32 var)
+>   {
+> +    uint32_t mask = 0;
 > +
-> +    for ( ; el; el = el->next) {
+>       if (reg == 15) {
+> -        /* In Thumb mode, we must ignore bit 0.
+> +        /*
+> +         * In Thumb mode, we must ignore bit 0.
+>            * In ARM mode, for ARMv4 and ARMv5, it is UNPREDICTABLE if bits [1:0]
+>            * are not 0b00, but for ARMv6 and above, we must ignore bits [1:0].
+>            * We choose to ignore [1:0] in ARM mode for all architecture versions.
+>            */
+> -        tcg_gen_andi_i32(var, var, s->thumb ? ~1 : ~3);
+> +        mask = s->thumb ? 1 : 3;
+>           s->base.is_jmp = DISAS_JUMP;
+>           s->pc_save = -1;
+>       } else if (reg == 13 && arm_dc_feature(s, ARM_FEATURE_M)) {
+>           /* For M-profile SP bits [1:0] are always zero */
+> -        tcg_gen_andi_i32(var, var, ~3);
+> +        mask = 3;
+>       }
+> -    tcg_gen_mov_i32(cpu_R[reg], var);
+> +    tcg_gen_andi_i32(cpu_R[reg], var, ~mask);
+>   }
 
-Please use
+The difference between v1 and v2 is:
 
-       const strList *el;
+v1:
+  mov_i32 tmp3,$0x123
+  and_i32 tmp3,tmp3,$0xfffffffc
+  mov_i32 pc,tmp3
 
-       for (el = migrate_backend_transfer_list(); el; el = el->next) {
+v2 (this version)
+and_i32 pc,$0x123,$0xfffffffc
 
-> +        if (find_device_state(el->value, false, NULL) == dev) {
-> +            return true;
-> +        }
-> +    }
-> +
-> +    return false;
-> +}
-> +
->  static bool qdev_backend_transfer_support(DeviceState *dev, Error **errp)
->  {
->      DeviceClass *dc = DEVICE_GET_CLASS(dev);
-> @@ -952,6 +965,24 @@ static bool qdev_backend_transfer_support(DeviceState *dev, Error **errp)
->      return dc->backend_transfer_support(dev, errp);
->  }
->  
-> +bool migrate_backend_transfer_check_list(const strList *list, Error **errp)
-> +{
-> +    const strList *el = list;
-> +
-> +    for ( ; el; el = el->next) {
 
-Likewise.
+I think we need only a v3 that updates the commit message since we
+are not adding a temporary anymore.
 
-> +        DeviceState *dev = find_device_state(el->value, true, errp);
-> +        if (!dev) {
-> +            return false;
-> +        }
-> +
-> +        if (!qdev_backend_transfer_support(dev, errp)) {
-> +            return false;
-> +        }
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  static int qdev_add_if_backend_transfer_supported(Object *obj, void *opaque)
->  {
->      DevPathList **list = opaque;
+Interestingly, I was not able to crash the host when native code
+was generated from:
 
+and_i32 $0x123,$0x123,$0xfffffffc
+
+I'm sending the binary I used to test it attached for convenience.
+
+Anyways:
+
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+
+and with the commit message updated:
+
+Reviewed-by: <gustavo.romero@linaro.org>
+--------------hCW7Tf1Yz1wRSbXxvfiSGDBt
+Content-Type: application/octet-stream; name="movw_pc.bin"
+Content-Disposition: attachment; filename="movw_pc.bin"
+Content-Transfer-Encoding: base64
+
+I/EA4w==
+
+--------------hCW7Tf1Yz1wRSbXxvfiSGDBt--
 
