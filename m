@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E30CCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BABBCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 15:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH21w-0000Vf-E7; Thu, 06 Nov 2025 10:36:08 -0500
+	id 1vH22R-0000lc-Pu; Thu, 06 Nov 2025 10:36:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vH21u-0000SW-NH
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:06 -0500
-Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1vH22M-0000ix-Jp
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:34 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vH21s-0003fD-Du
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:06 -0500
-Received: by mail-ej1-x642.google.com with SMTP id
- a640c23a62f3a-b72134a5125so105211966b.0
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 07:36:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1vH22L-0004VY-3K
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 10:36:34 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-27d3540a43fso11744275ad.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 07:36:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762443359; x=1763048159; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=USW+KWepaiP6dhVS8miNlW4VqVFRYFFw1EyWfJnZGbg=;
- b=ZTMOxe+gdB+DpsxzuK9UXeUebhD2kFqBFNmbVVZJwjPREtAMzvgLLR8UN2yc97v6RG
- ESkmjxyhKS40Gs02THQxntLSyn4AC4g717zQczxXL429crtqJ1sCBIut0Kbz82i9C+Cs
- ISLoT0wR7IV6Isr6J7zxzofDIxvGbCL38MmT3cD2O6VnJJuZRc1gcz1YemhingukJmvO
- ypVys8IQs01bt2g3m2Stoi1XV75CY+DgMXKv+ur1HBwkin426UYcxxKzoc26N2b+tiUB
- abNc3GFTl0WuwCNl3Qdt7LEgB7uaW0ry//zRb8UXvADIY9tnbUY7Z6GiHWscbtK4Q/+u
- j66g==
+ d=gmail.com; s=20230601; t=1762443391; x=1763048191; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VwA0RV+grU0SwvTFaw9mxNY1tj7GneKX5j6VPvaxFcs=;
+ b=AX24XKF/Jw7vaddCb6z83ZJCsQqnI2QIGs+MjmvZNMbXezG9jNRZYD8he7gPDUcWxO
+ yeQECO6oEwdur4D3FYn3SS5jGB+bi/7DWIFR9BVS0h2iua3j/sYtv8+rdTBxNWVKmQl3
+ fRaN0jTwJcOSaDGfXI6VQo3kzudagGx3dOp2OUGZbkCVEPyL8STyef/jaFGRPqmhuYCX
+ Kv/4m40YXhM9uhkGCifOtIkcj1kOwKdifGvDWNTrFjdugfEZG9qaS42HyAhKWxVOIIdL
+ ZEKe6Jw8/g6jp8+IZmgf7uFDI++LYM+lhfBai6H4aiSj2UvVkdFbmJHcCg/8bonA6yCd
+ 1NAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762443359; x=1763048159;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=USW+KWepaiP6dhVS8miNlW4VqVFRYFFw1EyWfJnZGbg=;
- b=H39Vs1CAqo627CPlUtxGt7awVT9eJn/+Q5c86YYU/KELxv7MXEnesKP/3zUv4M9lxm
- o0TC/TosGHup01UEeioqyxkl7z3VUfOhJV8iJdbRZk5Vf1QV47f+eYMPwkSeeM8jj4/Y
- gAmstRG8L0bmxDavkM9vlWwdbE5eHyz/+C6Tw0tZMRsOeDh7WJOIWJMnfrj/6AM/S/A8
- OfVz2GDQiVYsIZ6o4q74hwP6kUqmO5D88VgszVlgrVPy+dC9yTpspS71ZDmACJGvhzuv
- rqvkaD69sHgTjarAeWwVeZpW0V6I4nhZpqTYvftshBtqNvyip5WMzuElSyTYoyh4Pcgs
- yXBg==
+ d=1e100.net; s=20230601; t=1762443391; x=1763048191;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VwA0RV+grU0SwvTFaw9mxNY1tj7GneKX5j6VPvaxFcs=;
+ b=k4ILs6wBzR+4P+IiHgRLXHpHqd+nEeML8DXT2+utiqf/Cw168jPt9cEh3S4YzY/P0+
+ /9Ruvn9WGeyPV09FsHXDJydH+f659M7CgUwL3YOrqA0H6aiuweIHW/MQet4MqlEFjKUd
+ Z4/gyfVCqPfUIVNswmFIsJ/wEpmwuHDuLio3KYaw8EYwSu/5mejSJ5V1TDs4sR+UqnHD
+ cf6xFhHzwR4UOzjx3Do9xy8cIkLOrOKrbnLCwC0/3jlV/2fXRBVW1A/qdLbPlmzuVPBX
+ YXZfv0UZei6CZ73gIrnzteKdZoiahzMyVqY34fhC4yDZcgPlYP5polFrpiVhKsABG5ED
+ Fb8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmWHiYJ5TwnPgTqZQNIqxkltjSk9XNp9fZ0Bm2rhf82UhN6cu28PLTptG6Wh9wjwz0IF9ZiAjW6uWr@nongnu.org
-X-Gm-Message-State: AOJu0YxGAmS0vg5/v0Qq4Q6rSVC0BOmuA/MmCJTy3s943NU7FmhC5mZu
- fN8K9gxZbtfLthnnAipWwIpRNB0PP2brovorhgOk42/PUZXZ/lvZjZDsXSMQIJ+Awyk=
-X-Gm-Gg: ASbGncsIGhAwxYOUBtdGKv9ojCSdAWV5g4vE6tCdzcPvj+fI2McCAcIB62nSWMflxDF
- 84Bw2fMo1dvhlsPuX8WfjLUr4xUKMudim8WdbRKlQIaKZNjWdkqPjqRYRxtTs09zbWK1FmT+p6k
- +AdmpA6CRrh/B7scxRKozdydd5hmTGFq4feC/wB9//ARZjDTa9YRPVFrgEKxbBIZGI1QFZjCKT9
- 1ynyGuYLolC3JwwyHParxW/pZ3vOAD5YHJqysp7birkibemCbDAqGOjRrVL7Sg/EfOv8od9NWKF
- /CmG20r5+y7XydOZzrMyn0k3/HyrecaWFQybQA56jI4JHOHZ43hV3e9y6OXIZlPkVBpAhu3xAaL
- C/p+EgeGpXi9dBWJAuG/cVAAoW1wLgdY2yEiJeSaU6aJLPQOkHAPpQzSbkPKSW8JT+MqJc75MF/
- LVUOIefg+H1R22yw0g+4b5hH1R
-X-Google-Smtp-Source: AGHT+IFeaJhd91Dp/D5auUd0xCgfNgMHM+Kae1yjbuTeJ4y3+oQTg3CS/UU4hx9AMbgoBGdIdlaTkA==
-X-Received: by 2002:a17:907:6096:b0:b6d:73f8:3168 with SMTP id
- a640c23a62f3a-b7265155843mr952815066b.3.1762443358811; 
- Thu, 06 Nov 2025 07:35:58 -0800 (PST)
-Received: from [172.20.148.75] ([87.213.113.147])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b7289684a48sm242339666b.63.2025.11.06.07.35.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Nov 2025 07:35:58 -0800 (PST)
-Message-ID: <4948f1c6-db23-4880-b982-1cffcdfd48a9@linaro.org>
-Date: Thu, 6 Nov 2025 16:35:57 +0100
+ AJvYcCUmq08MWpS8UsmALd9gYGtevNJ0JRc5oYq1IqJAwBgkd9imwLhQY0J4BfYIgN6hHRa3tbQmEHwVjxjM@nongnu.org
+X-Gm-Message-State: AOJu0YzujKkJ5Sg0ARwyEMuQXx5KOF5rBw7rToE+GVTJOcbdeucEAue5
+ gBMKr0hGJkzaTbOkvNnSTXRN1l/hTvtPbaeVfk5BZM1GvAE1EgXECbU+
+X-Gm-Gg: ASbGncuyGLTRm9Kr7jh03pHKv4QxWp+JXgszaO/DXzNhYuzDfeYmoCoRuRRDTweqQtW
+ Q9WVKt2donrT/eYu9oyYTlaKBFct0UNkbweYhZX3D2ldT73HVRGS9HkhXMdCdjlYvqnV7K39Mdk
+ 2+vBVFQQTZZzEN4UKX5ZbU4h5OAYO2K0NtJyibUzHIDKJs2DXSg4hUQ4MZ+seHT6JU9s208nSL0
+ 3EmGYjgvYVPCY8uX1LIEI1I/fxVX0PuHMu3Rk7i1ZR4LpFJgN82Y0pZASjzJHz3y5Inx286az6t
+ Kek79RI1e+a1Sa5y+iux+Xyec77DGZB+kNlM+0JeIze96pjLH2XsR+bcsxuJ+KvadKtJnOJQr2x
+ XDVp3lljVnTRN3QnXQsa+6xClbYPbpgcuFwhmV1hdvb/+UQxMLpTF4mNLCamLCzmPldodMMG+8j
+ QDeEvrSCavcsXDz/lRW6nF7Sc8Qg2oVe4SbAan08yTeTqJYp68bw==
+X-Google-Smtp-Source: AGHT+IFQ4DG8A4GUr+83sXSQFMmSvkZfDPrtlgUA/iEBmuVQfzhd1NntyNLpl4D6LdZ/WpIWeahPzQ==
+X-Received: by 2002:a17:902:ec90:b0:295:68dd:4ebf with SMTP id
+ d9443c01a7336-2962ad26752mr109444795ad.16.1762443391059; 
+ Thu, 06 Nov 2025 07:36:31 -0800 (PST)
+Received: from fedora.. ([103.2.232.250]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-341a6993b43sm6643437a91.15.2025.11.06.07.36.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Nov 2025 07:36:30 -0800 (PST)
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+To: mark.cave-ayland@ilande.co.uk, sarkarsoumyajyoti23@gmail.com,
+ richard.henderson@linaro.org, peter.maydell@linaro.org, deller@gmx.de,
+ qemu-devel@nongnu.org, linux@roeck-us.net
+Cc: Jason Wang <jasowang@redhat.com>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v4 1/2] i82596: Removing crc_valid variable
+Date: Thu,  6 Nov 2025 21:06:23 +0530
+Message-ID: <20251106153624.29424-1-soumyajyotisarkar23@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/display/xlnx_dp.c: Don't abort on AUX FIFO
- overrun/underrun
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20251106145209.1083998-1-peter.maydell@linaro.org>
- <20251106145209.1083998-2-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251106145209.1083998-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::642;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x642.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pl1-x644.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,29 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/11/25 15:52, Peter Maydell wrote:
-> The documentation of the Xilinx DisplayPort subsystem at
-> https://www.xilinx.com/support/documents/ip_documentation/v_dp_txss1/v3_1/pg299-v-dp-txss1.pdf
-> doesn't say what happens if a guest tries to issue an AUX write
-> command with a length greater than the amount of data in the AUX
-> write FIFO, or tries to write more data to the write FIFO than it can
-> hold, or issues multiple commands that put data into the AUX read
-> FIFO without reading it such that it overflows.
-> 
-> Currently QEMU will abort() in these guest-error situations, either
-> in xlnx_dp.c itself or in the fifo8 code.  Make these cases all be
-> logged as guest errors instead.  We choose to ignore the new data on
-> overflow, and return 0 on underflow. This is in line with how we handled
-> the "read from empty RX FIFO" case in commit a09ef5040477.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1418
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1419
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1424
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/display/xlnx_dp.c | 28 ++++++++++++++++++++++++++--
->   1 file changed, 26 insertions(+), 2 deletions(-)
+While testing and developing for the HPUX 10.20 the crc_valid variable
+was used in performing CRC checks for the loopback ,and expected the
+CRC to be absent on specific condition and would skip some
+functional checks for the loopback packet, so initially it added
+a if-clause that would skip the checks preventing HPUX from
+getting stuck at phase loopback.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+However, we can remove it.
+
+Signed-off-by:Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+---
+ hw/net/i82596.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index 0d9129cb68..f0b22093f9 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -992,7 +992,6 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+     size_t payload_size = 0;
+     size_t bytes_copied = 0;
+     const uint8_t *packet_data = buf;
+-    bool crc_valid = true;
+     bool out_of_resources = false;
+     size_t crc_size = i82596_get_crc_size(s);
+ 
+@@ -1155,16 +1154,11 @@ rx_complete:
+         }
+     }
+ 
+-    if (packet_completed && crc_valid) {
++    if (packet_completed) {
+         rx_status |= STAT_C | STAT_OK;
+         if (is_broadcast) {
+             rx_status |= 0x0001;
+         }
+-    } else if (packet_completed) {
+-        rx_status |= STAT_C;
+-        if (!crc_valid) {
+-            rx_status |= RX_CRC_ERRORS;
+-        }
+     } else {
+         rx_status |= STAT_B;
+     }
+@@ -1187,7 +1181,7 @@ rx_complete:
+         return size;
+     }
+ 
+-    if (packet_completed && crc_valid && s->rx_status == RX_READY) {
++    if (packet_completed && s->rx_status == RX_READY) {
+         uint32_t next_rfd_addr = i82596_translate_address(s, rfd.link, false);
+         if (next_rfd_addr != 0 && next_rfd_addr != I596_NULL) {
+             set_uint32(s->scb + 8, next_rfd_addr);
+-- 
+2.49.0
+
 
