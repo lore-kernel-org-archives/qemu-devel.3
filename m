@@ -4,106 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E27CCFA0D
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 03:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6677ECCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 04:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGqe4-0006P7-Eh; Wed, 05 Nov 2025 22:26:44 -0500
+	id 1vGrGA-0003UA-Ut; Wed, 05 Nov 2025 23:06:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vGqe2-0006Oq-T7
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 22:26:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vGrFx-0003N4-B4
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:05:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vGqe0-0000hT-RL
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 22:26:42 -0500
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vGrFv-00010V-0g
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 23:05:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762399599;
+ s=mimecast20190719; t=1762401949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oRag6wziRdgZUwX9iqrzGiFz4QSgtuzykdahY0fkwvc=;
- b=NlJxR346Occ5e9dbVZl731y0lvTT+iAxOCTu3rBcj5VCsr9gay5rlJ8ULbEcu1h5KQgSMR
- 4EJWDqFwFSBCjBz22peh5wrPZQdmMJL9/jW5TLRxhGhymAumrhzg+UbphEep0ZeyYYiqiR
- NXTZh0ysBeq9nbhG8SySwjWGFRh4Lc8=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bLCHF2XuXvn0xb4ZmI+5MP+bJp3VZCBuyiVnUCjv2P4=;
+ b=ElA1F4yS7lYTmNOOkQG9+myVLP/jgbmZEhDKlrhGxO00GdGTUUDveE192vz/jDIt4X55hr
+ vhLjQBwXcrgDu1t6HUEO8tKxHKuLHEpJiYvzyyNmQKBfkziF89xAKI2Q7ikXKBeU22JpNK
+ i7xkc9EODQQYUa99G2sQnaXezpdIv0Y=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-5UQIS2vGMpG8C2WPi5lT1A-1; Wed, 05 Nov 2025 22:26:37 -0500
-X-MC-Unique: 5UQIS2vGMpG8C2WPi5lT1A-1
-X-Mimecast-MFC-AGG-ID: 5UQIS2vGMpG8C2WPi5lT1A_1762399597
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3418ada9e6cso702346a91.1
- for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 19:26:37 -0800 (PST)
+ us-mta-621-sMIaLFGON_WElXzPrTKxQw-1; Wed, 05 Nov 2025 23:05:48 -0500
+X-MC-Unique: sMIaLFGON_WElXzPrTKxQw-1
+X-Mimecast-MFC-AGG-ID: sMIaLFGON_WElXzPrTKxQw_1762401947
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-29557f43d56so6996725ad.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Nov 2025 20:05:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762399596; x=1763004396; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oRag6wziRdgZUwX9iqrzGiFz4QSgtuzykdahY0fkwvc=;
- b=MT8WQ3D20YJFKe3iAfnSX6nmk31PnS6IRyANRUo+kD3u+sEUCllBaMzjNhPR7Zwe0o
- HgqOTLzGaYNCVIAxdVkedn8kw64NtM+ROFnyxESuscHIiqwBxvePZeB/QGPLX2z8KYkh
- oy5ZDoxtTDkGrVJH4MYDOruQPuzcw2kgI0NEwHq4DYKifwgm2Xma2UmLtn2krpt85vD5
- 9o8Kk7Io9VSZy1GfvNnPIYVMfIzt0k0103YeNc/ovFxNuzEF30VuS0qPHQgIvrzzhEIt
- 92wLvChdnlRN2QRgXcn4Nj9/YNdNrESjjupVgP82r7izyaijjC/26nSXRbuDXd45tTks
- CrSQ==
+ d=redhat.com; s=google; t=1762401947; x=1763006747; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bLCHF2XuXvn0xb4ZmI+5MP+bJp3VZCBuyiVnUCjv2P4=;
+ b=cMhQep8wlOFdF/BBVxyamwGCKSdy2H5uZ8BKMJBgMr7+D9yO/opfICLmHbXEtSlEDR
+ kNy3sdXFOZITyd2kbxkjbXtjYSAgE6MCNIprG0uVfGU/jD1UmlReFCqvZp9nS9AfQicE
+ YLZxcetQuY23M88grVfTVXy2OeaeejGaAazYpB5LUTHCtRnyY0xhcolt1vc57CBxX7Ab
+ nO2ENZxwet/2UsYuP3GxmEex1LRMdKDwN2d3v34vC577a8YZTxDXgcXnSoDqyN2FGgeO
+ 8b3jg5f4qy4TGgMx4+oEOVhRq/TLP4T4meaUpho/rSxYqSRfuqkYX9yiVhW8WWyMWmnv
+ qCUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762399596; x=1763004396;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oRag6wziRdgZUwX9iqrzGiFz4QSgtuzykdahY0fkwvc=;
- b=H0Sf1M3qZ7zJFN+OojyJSfttXDK26yeifiqf1I6BEsRwhaKLKZ+6yVFRGLz9dBgsJw
- atMk6lG6tGLZnEKXM4l/MVq4dFjhnlyGzw+erMExdxtNj3SowfNYQqm8i7f0cwAZf3Rg
- 2DX3JeqnlVHf51BpKsNzlncR+zU3GiOfUdbkPHI+nte28YAFFjjqsIsiun3llkfo6BI6
- /+AxiPYXIt155X+KMAghboqiL4r9a4j/ltSSMbHe5VjHPc2JCg06Fb9tdR5jQ1ro3Goo
- MNq2fN0FJumPthGGeXVp78BdkC7O0okWnmW5rD2nLUGW3sRkLQm4B5zwffYlxvocMVzH
- fxeQ==
+ d=1e100.net; s=20230601; t=1762401947; x=1763006747;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bLCHF2XuXvn0xb4ZmI+5MP+bJp3VZCBuyiVnUCjv2P4=;
+ b=tfHtsw8laf20zhz20+aLBDuGXxsD6srMZnTu9WGa+b8M09q1QN6E59Eoi3zaKvt0Mj
+ gKEHfNfGfiE77qmjEtGJpqdfYyqCpOAdaG4plqJAU62pirPzP+2Xx3HJtoDDb7k0S0AF
+ oyUHIWOYF7SlGbgrRn0YVjNnVCEwgm7mTxGOzcFeG7DtB6hEPmhHqEXObinFYHbkbi0q
+ QGnrQKux/kwyLcQyyPgvZSudYGPYP3CTACmaHkxjWR2y8LuJEXopAunoD/U78nd7fImH
+ RKDtjE3IhWExmitp6ffDRGb5NUFnc/4eOUOEQw9l6oojuO7WNscYEeRsw/VhiBJ9pxko
+ MX8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJRyxq5rcbFTfIV+XQ1Hb2fPGDTIzQI4ep5FhVcT9w+pwUHU+Z3tly8g54sqNixIFXnLM/IZTsxyGY@nongnu.org
-X-Gm-Message-State: AOJu0YzpQiWo/FIb7H+jiYlUPVV6jzjbe5X38PIeKkIiKmqs7lSE43u5
- 8vw4N2p3gohRKkX4N1CeoJc+rvAH5vm98s/9RIc03QmQtW4WgfTTIJRVStoeDjgqfk1OKO5Pzku
- xU8TsPO44S+Re76QSMgRAD7uOIuef4QxvR6poqvWdqTooi2xgXo8Qqmi8NoqxOrrc
-X-Gm-Gg: ASbGncvAwRod9GAVsiCWJSkJtp5WL8AAw+6Tzfe4SErM6XYayv4UaD5qYXsxeAsQDPp
- c5QTz6sYM7iBnlssSkQlGOMCoo08Mj6chjTebjIrUDdx0UZsr6hNytHxyskdgyTACd4diHmVjz1
- ZU3NZFOLfHF9Ye+G+e3QvnZA/PqhBoA677r0HBtV/bYEzk+m5/mIgF0XrYuIk/HeG42LCwBe9se
- cxeBIHBU9Ij48orECkUZB8UdDAoLyG2U/O3G/HSC8dtWFM/g8HKInLii/Ki5RcQeN4hLwwpF54a
- sMosyHeX4NNWA3xt6YRyggab0w5BZZtfEJsN4wZFUq9K8DERNWtq4KkC6MwDiz98/c623imAJYb
- fGEoPRUzR3Y1qK74LdFLDf5m35C0/BxqXHA+rWMU=
-X-Received: by 2002:a17:90b:3b52:b0:340:54a1:d703 with SMTP id
- 98e67ed59e1d1-341a7002455mr6686012a91.35.1762399595657; 
- Wed, 05 Nov 2025 19:26:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHga/MElz4trTOnHJ1w9E+SKAP3VZ5HAdAMo8EtY3k4eVhVjgy78NWyn7+SoZUryrogjfMKow==
-X-Received: by 2002:a17:90b:3b52:b0:340:54a1:d703 with SMTP id
- 98e67ed59e1d1-341a7002455mr6685989a91.35.1762399595179; 
- Wed, 05 Nov 2025 19:26:35 -0800 (PST)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-341d048e1d9sm767330a91.6.2025.11.05.19.26.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Nov 2025 19:26:34 -0800 (PST)
-Message-ID: <9fbd5344-947d-46bd-8754-16fc9e3fff05@redhat.com>
-Date: Thu, 6 Nov 2025 13:26:27 +1000
+ AJvYcCVBdClMLBzzrubpyXvibXI5vU9naCjnZipLdNadonp8NE2ypXQZR8poMUu1c56R1YDTCGfJZf4NJ3Qc@nongnu.org
+X-Gm-Message-State: AOJu0YxHJu1MmQLxyqpkkGWjWdn/868SeZ/Qnz1/OFrbhH/E1UwHizHA
+ dtlObvvCrdLAeZ9kOrlj7dI4JWSNQRV88upgILe1/NpolPi7j5FwGnzUq0vTeVY7jo+91h632nH
+ XBTgqWizTK+b95RFctINlIc0tmg0+BrsgzlBrdAJ3VlqBeaJzwCKN06+ZgSOavNO/AsPIM4WLnd
+ RbjRmT709+YpB2RiFiUNl53CFD5bnNzX4=
+X-Gm-Gg: ASbGncuKX+d+2v1K5QyJDtGPFpqzb8USSERVtfSiffCHGwHz7VJeE6Fc38wdHfAOaKL
+ odLiPMiX/I7mZ6deYERcXPQe5YTWFIBWGTOjQAZSNh0Bi0OKRxPwu04xeys+pgTQxEHUVUO9K1h
+ 9OCDvllaur/ZMv4vfTgB5ET31412RPFe2FBxNMnOcnxhvIt1ehWvN2v0cn
+X-Received: by 2002:a17:903:228a:b0:295:9b9a:6a7f with SMTP id
+ d9443c01a7336-2962ae755c1mr83045395ad.49.1762401946931; 
+ Wed, 05 Nov 2025 20:05:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjBqG+gRyEo1DCsgmusQT446k5ZvcUx4Divd46fkn5cG8qjad7VINwbtHSLw9Vq08kxm6GF0MX8QTN5Lv34bA=
+X-Received: by 2002:a17:903:228a:b0:295:9b9a:6a7f with SMTP id
+ d9443c01a7336-2962ae755c1mr83044985ad.49.1762401946512; Wed, 05 Nov 2025
+ 20:05:46 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] target/arm/kvm: Support multiple memory CPERs
- injection
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mchehab+huawei@kernel.org,
- gengdongjiu1@gmail.com, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org, pbonzini@redhat.com,
- shan.gavin@gmail.com
-References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-9-gshan@redhat.com>
- <20251105143710.000041f5@huawei.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20251105143710.000041f5@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+ <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
+ <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
+ <aQvM6l04VeZwbUOf@x1.local>
+In-Reply-To: <aQvM6l04VeZwbUOf@x1.local>
+From: Jason Wang <jasowang@redhat.com>
+Date: Thu, 6 Nov 2025 12:05:35 +0800
+X-Gm-Features: AWmQ_blKcIbPAd040m9YsABFslwarM5beCY1vPbhd2M7AvT2AYhwZEpSBqZR2Qo
+Message-ID: <CACGkMEs4ES0a_Dzn7LmnthGuL=96XxOmncb5VDV195cxWTCChg@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_=E2=86=92_8?=
+ =?UTF-8?Q?=2E2=2E10_due_to_virtio=2Dnet_feature_mismatch_=28VIRTIO=5FF=5FRING=5FRESE?=
+ =?UTF-8?Q?T_=2F_USO_features=29?=
+To: Peter Xu <peterx@redhat.com>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-stable@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Yu Zhang <yu.zhang@ionos.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -112,7 +107,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,156 +123,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
+x
 
-On 11/6/25 12:37 AM, Jonathan Cameron wrote:
-> On Wed,  5 Nov 2025 21:44:53 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
-> 
->> In the combination of 64KiB host and 4KiB guest, a problematic host
->> page affects 16x guest pages that can be owned by different threads.
->> It means 16x memory errors can be raised at once due to the parallel
->> accesses to those 16x guest pages on the guest. Unfortunately, QEMU
->> can't deliver them one by one because we just one GHES error block,
-> 
-> we have just one
-> 
+On Thu, Nov 6, 2025 at 6:17=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Wed, Nov 05, 2025 at 10:27:59AM +0100, Jinpu Wang wrote:
+> > > > These are not present (or not supported) on QEMU 8.2.10, which caus=
+es
+> > > > the migration state load to fail.
+> > >
+> > > Interesting, we've already done the compat work:
+> > >
+> > > GlobalProperty hw_compat_8_1[] =3D {
+> > >     { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" },
+> > >     { "ramfb", "x-migrate", "off" },
+> > >     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
+> > >     { "igb", "x-pcie-flr-init", "off" },
+> > >     { TYPE_VIRTIO_NET, "host_uso", "off"},
+> > >     { TYPE_VIRTIO_NET, "guest_uso4", "off"},
+> > >     { TYPE_VIRTIO_NET, "guest_uso6", "off"},
+> > > };
+> > > const size_t hw_compat_8_1_len =3D G_N_ELEMENTS(hw_compat_8_1);
+> > Yeah, I noticed the same.
+>
+> AFAICT, this is a known issue..
+>
+> Thomas and I used to suggest we should not turn on USO* by default by
+> probing kernel, but only allow user choosing it explicitly in a VM
+> setup. IOW, dest qemu should stop booting at all when kernel is too old
+> (when user chose the feature).
+>
+> See:
+>
+> https://lore.kernel.org/all/ZqQNKZ9_OPhDq2AK@x1n/
+>
+> Thanks,
 
-Thanks, fixed locally.
+I see, so the reason is that the destination doesn't support USO in
+the kernel. For those kinds of features that depend on the kernel, I
+agree to disable them by default. But I'm not sure if it's too late or
+maybe we can do strict peer feature check like this in
+virtio_net_get_features():
 
->> corresponding one read acknowledgement register. It can eventually
->> cause QEMU crash dump due to the contention on that register, meaning
->> the current memory error can't be delivered before the previous error
->> isn't acknowledged.
->>
->> Imporve push_ghes_memory_errors() to push 16x consecutive memory errors
-> Improve
-> 
+     if (!peer_has_uso(n)) {
+-        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
+-        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+-        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
++        if (n->strict_peer_feature_check) {
++            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
++                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
++                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6))
++                error_setg(errp, "virtio_net: peer doesn't support USO");
++        } else {
++            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
++            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
++            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
++        }
+     }
 
-Thanks, fixed locally.
+So qemu would fail earlier than fail the migration.
 
->> under this situation to avoid the contention on the read acknowledgement
->> register.
->>
->> Signed-off-by: Gavin Shan <gshan@redhat.com>
-> Hi Gavin
-> 
-> Silly question that never occurred to me before:
-> What happens if we just report a single larger error?
-> 
-> The CPER record has a Physical Address Mask that I think lets us say we
-> are only reporting at a 64KiB granularity.
-> 
-> In linux drivers/edac/ghes_edac.c seems to handle this via e->grain.
-> https://elixir.bootlin.com/linux/v6.18-rc4/source/drivers/edac/ghes_edac.c#L346
-> 
-> I haven't chased the whole path through to whether this does appropriate poisoning
-> on the guest though.
-> 
+Thanks
 
-We have the following call trace to handle CPER error record. The e->grain
-originated from the Physical Address Mask is used to come up with the size
-for memory scrubbing at (a). The page isolation happens at (b) bases on the
-reported Physical Address. So a larger Physical Address Mask won't help to
-isolate more pages per my understanding.
 
-do_sea
-   apei_claim_sea
-     ghes_notify_sea
-       ghes_in_nmi_spool_from_list
-         ghes_in_nmi_queue_one_entry
-         irq_work_queue                          // ghes_proc_irq_work
-           ghes_proc_in_irq
-             ghes_do_proc
-               atomic_notifier_call_chain        // (a) ghes_report_chain
-                 ghes_edac_report_mem_error
-                   edac_raw_mc_handle_error
-                ghes_handle_memory_failure
-                  ghes_do_memory_failure
-                    memory_failure_cb
-                      memory_failure             // (b) Isolate the page
-
-Thanks,
-Gavin
-
->> ---
->>   target/arm/kvm.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++--
->>   1 file changed, 50 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index 5b151eda3c..d7de8262da 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -11,6 +11,7 @@
->>    */
->>   
->>   #include "qemu/osdep.h"
->> +#include "qemu/units.h"
->>   #include <sys/ioctl.h>
->>   
->>   #include <linux/kvm.h>
->> @@ -2432,12 +2433,59 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->>   static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
->>                                       uint64_t paddr, Error **errp)
->>   {
->> +    uint64_t val, start, end, guest_pgsz, host_pgsz;
->>       uint64_t addresses[16];
->> +    uint32_t num_of_addresses;
->> +    int ret;
->> +
->> +    /*
->> +     * Sort out the guest page size from TCR_EL1, which can be modified
->> +     * by the guest from time to time. So we have to sort it out dynamically.
->> +     */
->> +    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
->> +    if (ret) {
->> +        error_setg(errp, "Error %" PRId32 " to read TCR_EL1 register", ret);
->> +        return;
->> +    }
->> +
->> +    switch (extract64(val, 14, 2)) {
->> +    case 0:
->> +        guest_pgsz = 4 * KiB;
->> +        break;
->> +    case 1:
->> +        guest_pgsz = 64 * KiB;
->> +        break;
->> +    case 2:
->> +        guest_pgsz = 16 * KiB;
->> +        break;
->> +    default:
->> +        error_setg(errp, "Unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
->> +        return;
->> +    }
->> +
->> +    host_pgsz = qemu_real_host_page_size();
->> +    start = paddr & ~(host_pgsz - 1);
->> +    end = start + host_pgsz;
->> +    num_of_addresses = 0;
->>   
->> -    addresses[0] = paddr;
->> +    while (start < end) {
->> +        /*
->> +         * The precise physical address is provided for the affected
->> +         * guest page that contains @paddr. Otherwise, the starting
->> +         * address of the guest page is provided.
->> +         */
->> +        if (paddr >= start && paddr < (start + guest_pgsz)) {
->> +            addresses[num_of_addresses++] = paddr;
->> +        } else {
->> +            addresses[num_of_addresses++] = start;
->> +        }
->> +
->> +        start += guest_pgsz;
->> +    }
->>   
->>       kvm_cpu_synchronize_state(c);
->> -    acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses, 1, errp);
->> +    acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
->> +                            addresses, num_of_addresses, errp);
->>       kvm_inject_arm_sea(c);
->>   }
->>   
-> 
+>
+> --
+> Peter Xu
+>
 
 
