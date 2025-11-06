@@ -4,98 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D0DCCFA05
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 11:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D43ACCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 12:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGyVR-0005zJ-IY; Thu, 06 Nov 2025 06:50:21 -0500
+	id 1vGyoO-0001W1-Ny; Thu, 06 Nov 2025 07:09:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vGyVQ-0005z0-By
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 06:50:20 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGyoI-0001VZ-IQ
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 07:09:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vGyVO-00084G-5v
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 06:50:20 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vGyoG-0001iK-Jw
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 07:09:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762429816;
+ s=mimecast20190719; t=1762430986;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8aaUR6WzSNP4cK/DMriqb/j4Ba2z3R/UyBF2bczQJeI=;
- b=CWm3axmOIAjDt0WMAqpO4rSE2csi0wJequkDcfuT8ZIEdqZxlClFBrLZUM/w0DL2y+XCoI
- isgzBWpjXxk3HWliGlx7etGa7NAKuzXKxIrZTFOLTY4MdBBDdGyWpblXSO86qKiZWrLIQx
- FJk6ZMfUOIRzdd2tv93T4efJnHBG+kA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-427-62OlJdJUMQOZf7EKshzvUg-1; Thu, 06 Nov 2025 06:50:15 -0500
-X-MC-Unique: 62OlJdJUMQOZf7EKshzvUg-1
-X-Mimecast-MFC-AGG-ID: 62OlJdJUMQOZf7EKshzvUg_1762429814
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-429c7b0ae36so960164f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 03:50:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762429813; x=1763034613; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8aaUR6WzSNP4cK/DMriqb/j4Ba2z3R/UyBF2bczQJeI=;
- b=MnFtRRsINTJuA73SLuSMqgJJvyu0t0QMuaAMxNLQ/X+GXeaQRGgJFvjxd0GIQKaiXP
- pYqzfxLmX+jtwfNZL2R9nz8OirqMktqdcD462w+TXh/kDyZEJ7BtMcM96Sm1jHo8uZF9
- AcF8PSiYBfkgmrgwR77q2FFeWUbWxauq4aUxFzRTSNGh2p6f2MLLb3YVBEnwbV9982G0
- adJ/bZCnf7/RJg1WTFc40mQltAQVSBSl8t+nIiHZmPn3dzm2rFpjujysjd7pB6rWD835
- ZqH6grwegjxl4ZjroO0V+tx3jMn+5WdGROgKYbi+iIa+k8kPMSOriZNKy3Juj5CSR0uf
- FdUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762429813; x=1763034613;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8aaUR6WzSNP4cK/DMriqb/j4Ba2z3R/UyBF2bczQJeI=;
- b=aGXQnYFFG4Q7IGvdPGmd5cyRRzjSvI0zWUqJ4lqXjZy+CHAj0f4pCkmMM3Py1wKHkV
- tqIZuxqsnzvQ5vlIfSNb2VHae198jIQAjjHcvY7VeFIS+HExGYyc5sek9NSf8ayNhrH+
- pnX5bSPe3Z+hjZLWW4yd0D30HtfI1IPDxfye+lstkocrMsj78x35W8fKDmnSQ1TKWUs0
- 3ou/i3ErRtRDaW9AEifeejcSMDcrEAyAScS+tL9Tv/18XmJfZ+aQoOW4SrnVEKKb65qZ
- +B07jV8kjbSnWZ38SFixNN8bjYfqU5SJdWW90hWJVoTB7lHjSwR5z53TgH7WsXuyjR59
- 6ZXA==
-X-Gm-Message-State: AOJu0YwTQrtHDouv/DUFjizPEv/sxNIh7zmbiDlTQxeUth3pMRe+1XRO
- vJdqZeD/yiopujQk0tkQ64yVlxrMvTUpWr78Q7BmJqMXJVg9UhNOnQ9F/YEZdLXxEklnjJZ7fmj
- aNMp10M/gbxm0x7l1YS8CNNkitoaZ8cP17t3uCvlDnangUfmbNHwlcwTrcJhtmq9iFVswwik0Qc
- qRZ5X/o64CW7ZN/s854BodeWNOxgyxUPrC0wdSHNGa
-X-Gm-Gg: ASbGncuASjf9KQCGFCJz0A+PDYPtVWNKq2LZjK6AbBfPr0qOMreZYp8vo1BJvX19CZI
- EWvJWzLGHBwDqFb70NBa5e64q+yt5upEv+dmEnuCLaMxIHnweqJrdbpPWNDOk5gc7WpgBI6JbVJ
- Msj5BYII92T7sfRLew39wU/jGHvKjx7c2EctVFUZ8Z/Tds9TPhJ91TTeVc/wzZUtDQ/CEm7hjEL
- GNNxEb0m+Rm81ZL32wNuyjBBZbkCxfzCBLaRP4FGh7qnWeaqGD/wfkmw010pONxmH6miTGaPmO/
- Msqmg3brR1RUtieaTszDOCRcwx56khE6lvIZkFOeKhRiWLNTXCYFHKmLSsSE6J9Gvo1DFwKxeeW
- 1RRIA8wwxknACU9ENyX1Jy0gFM8tMJF1ZIdXe2LqL8OVSfN48hS+boDXTQW0zeQZOHN5cOnZ1q/
- 0TZCu1
-X-Received: by 2002:a5d:5f54:0:b0:429:bb77:5deb with SMTP id
- ffacd0b85a97d-429eb1d0d12mr2856557f8f.31.1762429812925; 
- Thu, 06 Nov 2025 03:50:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWvnSe9D8bIEdfVpN1I1RPB787808e8hvkxlNS8rk9htpMfI/CUKY9yGYuFwNfX3anRkkrEg==
-X-Received: by 2002:a5d:5f54:0:b0:429:bb77:5deb with SMTP id
- ffacd0b85a97d-429eb1d0d12mr2856539f8f.31.1762429812567; 
- Thu, 06 Nov 2025 03:50:12 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.110.222])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429ebdab56bsm4211124f8f.36.2025.11.06.03.50.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Nov 2025 03:50:11 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH] ioapic: fix typo in irqfd check
-Date: Thu,  6 Nov 2025 12:50:10 +0100
-Message-ID: <20251106115010.1141851-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.1
+ in-reply-to:in-reply-to:references:references;
+ bh=AIbqbdHXIO8IcVXazQV+xyUSTY5N91eC14TQuUWVu38=;
+ b=QYJXh0mJj40KgJrfhODZEGRdvzFdU8S2J/UN3+ZPb0ovg0MVVx7m6NtqcnZ9QbZw8bbA7a
+ DAvgb3DURvpfC917/VlwbI4Ps2mp1HQJJFRMT9F2vLdftxCwlSRQ7N6H6QLQYY55Nc2qOm
+ 4YSUYL/oi3yEO1wPB1cavM+QpIDvSvU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-Bci6kUb5POaXeKovcy5Gpw-1; Thu,
+ 06 Nov 2025 07:09:43 -0500
+X-MC-Unique: Bci6kUb5POaXeKovcy5Gpw-1
+X-Mimecast-MFC-AGG-ID: Bci6kUb5POaXeKovcy5Gpw_1762430981
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31E2F18002CA; Thu,  6 Nov 2025 12:09:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A939180049F; Thu,  6 Nov 2025 12:09:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D620F21E6A27; Thu, 06 Nov 2025 13:09:37 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Naveen N Rao (AMD)" <naveen@kernel.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Nikunj A
+ Dadhania <nikunj@amd.com>,  Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,  Roy Hopkins
+ <roy.hopkins@randomman.co.uk>,  Srikanth Aithal <srikanth.aithal@amd.com>
+Subject: Re: [PATCH v3 8/9] target/i386: SEV: Add support for setting TSC
+ frequency for Secure TSC
+In-Reply-To: <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
+ (Naveen N. Rao's message of "Tue, 28 Oct 2025 16:13:33 +0530")
+References: <cover.1761648149.git.naveen@kernel.org>
+ <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
+Date: Thu, 06 Nov 2025 13:09:37 +0100
+Message-ID: <87cy5vgy66.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -120,42 +93,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Not registering the IEC notifier results in a regression with interrupt remapping
-when running a VM configured with an intel-iommu device and an assigned
-PCI VF. At boot, Linux complains with :
+Pardon my ignorance...
 
-[   15.416794] __common_interrupt: 2.37 No irq handler for vector
+"Naveen N Rao (AMD)" <naveen@kernel.org> writes:
 
-Reported-by: Cédric Le Goater <clg@redhat.com>
-Analyzed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/intc/ioapic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Add support for configuring the TSC frequency when Secure TSC is enabled
+> in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
+> guest objects, similar to the vCPU-specific property used by regular
+> guests and TDX.
 
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index e431d003117..38e43846486 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -216,7 +216,7 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
- #endif
- }
- 
--#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
-+#ifdef ACCEL_GSI_IRQFD_POSSIBLE
- static void ioapic_iec_notifier(void *private, bool global,
-                                 uint32_t index, uint32_t mask)
- {
-@@ -434,7 +434,7 @@ static const MemoryRegionOps ioapic_io_ops = {
- 
- static void ioapic_machine_done_notify(Notifier *notifier, void *data)
- {
--#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
-+#ifdef ACCEL_GSI_IRQFD_POSSIBLE
-     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
-                                         machine_done);
- 
--- 
-2.51.1
+Which property exactly?
+
+>                 A new property is needed since SEV-SNP guests require
+> the TSC frequency to be specified during early SNP_LAUNCH_START command
+> before any vCPUs are created.
+
+Sounds awkward.
+
+Do the two properties set the same thing at different times?
+
+> The user-provided TSC frequency is set through KVM_SET_TSC_KHZ before
+> issuing KVM_SEV_SNP_LAUNCH_START.
+>
+> Attempts to set TSC frequency on both the SEV_SNP object and the cpu
+> object result in an error from KVM (on the vCPU ioctl), so do not add
+> separate checks for the same.
+>
+> Sample command-line:
+>   -machine q35,confidential-guest-support=sev0 \
+>   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on,tsc-frequency=2500000000
+>
+> Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+> Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+> Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
+> Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+> Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index c7dd2dd1b095..5daaf065b6b7 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1104,6 +1104,9 @@
+>  # @secure-tsc: enable Secure TSC
+>  #     (default: false) (since 10.2)
+>  #
+> +# @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
+> +#     is enabled (default: zero) (since 10.2)
+
+Is this likely to remain the only property that's only valied when
+@secure-tsc is true?
+
+> +#
+>  # Since: 9.1
+>  ##
+>  { 'struct': 'SevSnpGuestProperties',
+> @@ -1116,7 +1119,8 @@
+>              '*author-key-enabled': 'bool',
+>              '*host-data': 'str',
+>              '*vcek-disabled': 'bool',
+> -            '*secure-tsc': 'bool' } }
+> +            '*secure-tsc': 'bool',
+> +            '*tsc-frequency': 'uint32' } }
+>  
+>  ##
+>  # @TdxGuestProperties:
 
 
