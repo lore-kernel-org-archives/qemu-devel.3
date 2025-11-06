@@ -4,155 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD7E1CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 11:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3538CCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 11:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGxkC-0007GF-7x; Thu, 06 Nov 2025 06:01:32 -0500
+	id 1vGxlC-0007gA-SB; Thu, 06 Nov 2025 06:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jslaby@suse.cz>) id 1vGxk8-0007Fg-DH
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 06:01:30 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vGxl4-0007fA-BW
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 06:02:30 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jslaby@suse.cz>) id 1vGxk6-0003R6-CA
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 06:01:27 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4C8432117F;
- Thu,  6 Nov 2025 11:01:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1762426884; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ig1LNL+l0BPYx/gYFjVnx0NyFjIKYO2+8AtqMUHI6qc=;
- b=wNb8nJEJZfitcaPXHtDuqleWTdDD4lxl2RGx4IpiK27WhdCwvUix1rD27F0HbkUaMrBnQp
- /2NNOxBJWKAlXH9QU9qAaWGqSeCgw+IJUXQ7IOaQpDHg0nLV/GNdSbDrqUnbSRimPPkczt
- 7LMibHXykZaRLbkXqQ2VKwV4eXwDAnw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1762426884;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ig1LNL+l0BPYx/gYFjVnx0NyFjIKYO2+8AtqMUHI6qc=;
- b=wGoSNNAvJA8cPeHu+KK9OvpLR2qKYh3ROjCOgWcYwUH6Y6XYkuVijCc3wOWzzKwqJFjK44
- 44Od7RvlOd83PqCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1762426883; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ig1LNL+l0BPYx/gYFjVnx0NyFjIKYO2+8AtqMUHI6qc=;
- b=eh+Zlg92I61t97zIjiTXWztswelkcPUZlX1nNlsXWs88qcVbnFhwSVnA4KeB+m3tkWuEuW
- c6BZpp0Xm/a6Bb77PHGK8GC4xoK4LOP+KTjWz0y1L06VHVAXpjVWMXx0BxqagNXPvHUY4i
- D8783LbkdDvi5c2M+xI15+sD3u0plYs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1762426883;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ig1LNL+l0BPYx/gYFjVnx0NyFjIKYO2+8AtqMUHI6qc=;
- b=0ID7sWW61HgydxAN3wt8M1edm3/8ULoSThEoCnZGpuDn7h8ch+qXEnmTrcywEsJMeAlsdb
- Hzi3KHXxp14OdDCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 36CF3139A9;
- Thu,  6 Nov 2025 11:01:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QYelDAOADGnocgAAD6G6ig
- (envelope-from <jslaby@suse.cz>); Thu, 06 Nov 2025 11:01:23 +0000
-Message-ID: <1e8e6966-cc2d-4970-9529-510ad91622c9@suse.cz>
-Date: Thu, 6 Nov 2025 12:01:22 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vGxl1-0003yS-Lh
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 06:02:26 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-7866e9e62e1so8049777b3.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 03:02:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762426941; x=1763031741; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=53c3RoZT9XRhHiOUA88/exc9m6q0Ch4NtH4tYxUC5UA=;
+ b=c1J02ya4p+JlpMGdC8ZC3575wQdrrpiHEp6N+oiVVdptFKljYusrHHrln880B1G7Gy
+ 56GUZRC/9NKF3HpU8hKRlpdz6ICe77XiGgspabmTBNH9KjaTKtv/ItWLSFXIdNKb7Ovb
+ gvA3m8spKmrOMGUzWbiMqdXJn+sXyrrb+m88Yy42MSaChLpSljDA4RJttTvwg+W2ac87
+ LwFxy4PcATMLuOY6DidPMIYlCTi/+CyOp4wvV5+XGVU+uds93g+rA3hhcX4UmoYKTaZi
+ ca/QdWvDgU2croFH91mGJfpg8u3HaMDHrxIn1mGfYhf5Hh0fej6pkKZYb4KrwDDWoaBG
+ wDXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762426942; x=1763031742;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=53c3RoZT9XRhHiOUA88/exc9m6q0Ch4NtH4tYxUC5UA=;
+ b=Wn3Bcj+C34++r+tt6ISoBL40u2vUxUSM7plYNXkr+e6LTnHpST2HUXIelqggGcMzgg
+ e/7lylECHRmVnMbFx5NUGN7agjSrxds2gks3HcFJ8+kbH1ThP2g+3Dp+ieY40XUmVgCl
+ PXrgaQBpdu6QlURffJxtrCci4yo60z5Z3CZoPrfdrmU/CGjJqrX77g4xLmZ/DoMY2bFg
+ f7to7U7yQv2DdydCouLIN+uTk6Y0l1wkXh8WYTrEwMGHIZ221Pnxg/APNcLjniaYVYi0
+ ZvKxduePT394sFOZKwC1o/7TC/Wapmo8UsfTnKjaDyUSB4zIy9YmYIACIoD4lt1VRK+l
+ +pGQ==
+X-Gm-Message-State: AOJu0Yz9Ea/vXepeVhkgrVvrZgRLpsO5fVOgBfqqHrdKb2P72oZRIGbA
+ 56FsUJJsFOpG/5Rr3+oqTZLjehgji1nP9ywROYp+ZynHEC62rYaUOSJ854nXfTbzoWZJSNcVUs9
+ BGd80sCb4NOp5rN/oC89T58JytAN/d36VFyYKlmHyww==
+X-Gm-Gg: ASbGncsjtZc8NekqEfGhgmiKHb52a4sr1I2PWNM+jeuspaBMjD707jg+xbq5tlAnqYv
+ jJ/p6+56/ewp2IwXWe7dIpqwCmXRofZwC06PfICH6zWL8QfpKLT/9Z6Jzo1uIVHLgpDB5ai5nmH
+ Ci0r/PPBzRDDQ/1ayuGKVw3uEbiA/l6v8zJKyFh7e/PWGXD3FsoGeOPw7KEDpCgupIS9vKBwcNm
+ zkBMWca9le/+b9Ne3A1o9L80UwuPsZElcCLCBLXxGiykYXj8GgcAvfvx6YKEg==
+X-Google-Smtp-Source: AGHT+IFXLgzA694K0jcUKnxQdw2X8GayHjotqUMrV8AxlEXUOHr+5fKWAq+c8+ruZJHrywBpx5CVV3ocfLud3ilHGlE=
+X-Received: by 2002:a05:690e:4282:20b0:63f:abbe:3964 with SMTP id
+ 956f58d0204a3-63fd34a876emr5139403d50.13.1762426941650; Thu, 06 Nov 2025
+ 03:02:21 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/edu: restrict dma access to dma buffer
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Torin Carey <torin@tcarey.uk>, qemu-devel@nongnu.org,
- Chris Friedt <chrisfriedt@gmail.com>
-References: <aQtAotYvzFY0Vpft@tcarey.uk>
- <5c356c12-55b8-4d01-bc0f-025d3a3b9293@suse.cz>
- <CAFEAcA9c0Y=ndvd-yV5tTr_+nbBO7W-TDcF4+=qCoknzyGPxAg@mail.gmail.com>
- <508e699e-ba3e-4977-9507-8da7da14fa28@suse.cz>
- <CAFEAcA8z-voiUiBx2bTjUq-GuYJgL96ai81aPAyhYTJvg-uieg@mail.gmail.com>
-Content-Language: en-US
-From: Jiri Slaby <jslaby@suse.cz>
-Autocrypt: addr=jslaby@suse.cz; keydata=
- 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
-In-Reply-To: <CAFEAcA8z-voiUiBx2bTjUq-GuYJgL96ai81aPAyhYTJvg-uieg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[tcarey.uk,nongnu.org,gmail.com];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.cz:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=jslaby@suse.cz;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20251104152204.6261-1-deller@kernel.org>
+ <20251104152204.6261-4-deller@kernel.org>
+In-Reply-To: <20251104152204.6261-4-deller@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 6 Nov 2025 11:02:09 +0000
+X-Gm-Features: AWmQ_bkQJ9SO78clO8WtjhDJnYK7uDf-WNvv2nyWF9sA4fHk43TnQVCL5s3HqwU
+Message-ID: <CAFEAcA889hm1xyRBQFVzfvrz4OQfKZZAaZEciQe+r5wB4CuRhQ@mail.gmail.com>
+Subject: Re: [PULL v2 3/3] i82596: Implement enhanced TX/RX with packet
+ queuing and filtering
+To: deller@kernel.org
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Jason Wang <jasowang@redhat.com>, 
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,39 +96,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06. 11. 25, 11:53, Peter Maydell wrote:
->>> The reason for the commit above is that devices should
->>> not call hw_error() as that crashes QEMU itself.
->>
->> But that was exactly my intention. Students should see an immediate
->> crash, not random, undebuggable (in the given class hours) writes
->> somewhere. And crashing a qemu instance was an intended pun.
-> 
-> Sorry, your educational device doesn't get to break QEMU's
-> usual rules.
+On Tue, 4 Nov 2025 at 15:22, <deller@kernel.org> wrote:
+>
+> From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+>
+> In this patch I have added the following:
+> - Rewrote transmit path with CSMA/CD collision handling and retry logic
+> - Implemented flexible TX buffer descriptor (TBD) chain processing
+> - Rewrote receive path with packet filtering and monitor mode support
+> - Added RX packet queue for handling resource exhaustion
+> - Implemented queue flush timer and management
+> - Added RX state machine with proper state transitions
+> - Implemented packet filtering (unicast, broadcast, multicast, promiscuous)
+> - Added SCB RU_START enhancement to find usable RFDs
+> - Implemented dump command support
+> - Added bus throttle timer loading (LOAD_THROTTLE/LOAD_START commands)
+> - Enhanced signal_ca with proper initialization sequence
+> - Finally, adding self-test functionality
+>
+> Note:
+> With this patch, and the previous ones in the patch series, we are able
+> to achive proper 82596 NIC emulation.
 
-The device is unusual.
+Hi; Coverity spotted an issue in this code (CID 1642868):
 
-> (Eventually we might be able to get rid of
-> hw_error() altogether, though it's hardly a high priority.)
+> +static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+> +                                      size_t size, bool from_queue)
+> +{
+> +    struct i82596_rx_descriptor rfd;
+> +    uint32_t rfd_addr, rbd_addr;
+> +    uint16_t rx_status = 0;
+> +    uint16_t is_broadcast = 0;
+> +    bool packet_completed = true;
+> +    bool simplified_mode = false;
+> +    size_t frame_size = size;
+> +    size_t payload_size = 0;
+> +    size_t bytes_copied = 0;
+> +    const uint8_t *packet_data = buf;
+> +    bool crc_valid = true;
 
-OK, then plan B, don't corrupt.
+Here we set crc_valid to true...
 
-> People debugging drivers can turn on the GUEST_ERROR logging
-> which should be a big clue.
+> +    bool out_of_resources = false;
+> +    size_t crc_size = i82596_get_crc_size(s);
+> +
+> +    trace_i82596_receive_packet(buf, size);
 
-Hm, so errors are not logged by default? Neither the man page, nor 
-google yields anything useful on how to enable this. This does not look 
-very promising.
+[snipped]
 
-> Incidentally, restricting DMA to "4K starting at 0x40000"
-> makes the device not usable on all machine types -- there is
-> no guarantee that the machine even has any RAM there at all.
+> +rx_complete:
+> +    if (I596_CRCINM && !I596_LOOPBACK && packet_completed) {
+> +        uint8_t crc_data[4];
+> +        size_t crc_len = crc_size;
+> +
+> +        if (I596_CRC16_32) {
+> +            uint32_t crc = crc32(~0, packet_data, frame_size);
+> +            crc = cpu_to_be32(crc);
+> +            memcpy(crc_data, &crc, 4);
+> +        } else {
+> +            uint16_t crc = i82596_calculate_crc16(packet_data, frame_size);
+> +            crc = cpu_to_be16(crc);
+> +            memcpy(crc_data, &crc, 2);
+>          }
+>
+> -        if (s->cu_status != CU_ACTIVE) {
+> -            break;
+> +        if (simplified_mode) {
+> +            address_space_write(&address_space_memory,
+> +                                rfd_addr + 0x1E + bytes_copied,
+> +                                MEMTXATTRS_UNSPECIFIED, crc_data, crc_len);
+> +        }
+> +    }
 
-It's not 0x40000 in the physical space at all.
+...but nowhere in any of this code do we ever set crc_valid to
+anything else...
 
-thanks,
--- 
-js
-suse labs
+> +
+> +    if (packet_completed && crc_valid) {
+
+...so this condition is the same as "if (packet_completed)"...
+
+> +        rx_status |= STAT_C | STAT_OK;
+> +        if (is_broadcast) {
+> +            rx_status |= 0x0001;
+> +        }
+> +    } else if (packet_completed) {
+
+...and the code in this block is unreachable.
+
+
+> +        rx_status |= STAT_C;
+> +        if (!crc_valid) {
+> +            rx_status |= RX_CRC_ERRORS;
+> +        }
+> +    } else {
+> +        rx_status |= STAT_B;
+> +    }
+> +
+
+What was the intention here?
+
+thanks
+-- PMM
 
