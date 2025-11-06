@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC7FCCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF37CCFA03
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGxcd-0004V9-K5; Thu, 06 Nov 2025 05:53:43 -0500
+	id 1vGxcd-0004Vo-Nk; Thu, 06 Nov 2025 05:53:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGxcb-0004S4-85
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vGxcb-0004T7-Qk
  for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:53:41 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vGxcZ-0003aC-No
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vGxca-0003aG-Ce
  for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:53:41 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7868b7b90b8so7151447b3.1
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 02:53:38 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-640b2a51750so1398187a12.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 02:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1762426418; x=1763031218; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=q5UqKqzixkyhCrmKyU16eLnEU5O1ewEKG2IZTjLJxng=;
- b=m8wZF5qxW4pCEWuxJmWD5YSUvEjZZXLVdmqmfrLS/4CyWBWioPhfZAbGhw1aN5aNvu
- ZmYi4vyWEKbqkuZtr0tYsU6DO+Y439Q5s78Xnrv5HQceEG2VjbW/D4KxFmYZRBy9IV3N
- m7m/r2wiXE/+99lxC0thnBUJ5bPXuh13iOwF2Jt78TPenthvv7PIeLX49OzMYpmDLUdp
- PQtPHyucEV3j97s3wG5njHqjQWOVeRZ0PavY6M472jZvMBgFaRI09LVW9vUnHC0aywq9
- EH+gUhyc62qFX4/qLsjRYuL+LHK0YHpI5wIBtusZOsDl8GKTEduDRX9cYl8RSbOWEnI7
- mEJw==
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eyURELlwRwzcUSYbKuGtX0DFL8sd2gq4u0DGvH/VbXM=;
+ b=PxIgIfdurUD07xjum8X0P2pow4CHxZ0yytJkFKihqx+cz/ooYd0Q43m2mAhb2iQtvY
+ ZUeNKtmppqYitVfJvqCOs5jNJP6/ynFggV4PzBtWNORaq7jCK4yKvo0l8XgiXyMQkJbw
+ l4zTRbHkmAr+p/UajAqYu5m0AnuAmiUNVtouVqiqXCY1L19+uzdh9oAIWhJ9NqGlzsul
+ 4anmM9q1l3coMwv9SzJixOkN/Na8n/MQu+W3iox/tHNp+i23Qmu1QFZaBzgWYxWORSBj
+ LgiVE0MapDZYPeWB33VO0zmOBQgIMkN+VBp38EDeNT7oqaIpDnVbfQaFTNf1bryP6ie2
+ 8DXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1762426418; x=1763031218;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=q5UqKqzixkyhCrmKyU16eLnEU5O1ewEKG2IZTjLJxng=;
- b=ZlJeApgdrfxdKz8rGy7/2PTzx7zc3oRQr1ZenMpUD9U5/Hi1TGfp4ZO9jAroiNZKAT
- bJFZgg6LPggQsi190HdA+mXUAwYbxl+at/KWAzV2P3jq4Ic8sovKm70n6bCWSeU9ZPfJ
- bZfjv9lqMFao2WvwUAkhpaAMdhQE42eXjnxXl13VnIuO3aMC5dEHSEAuxc90hEHsqncw
- SZU0kN4nmWKbrxFtTEmzRPgHhTq+3bIJQD5Tbt1+WSV0WDOsgZHb1FQLTc3894+onb/Y
- 6HhzYjrTXmqrMix2qGeKMw1Rl06IdmM7ekM508PV3bBkiBKACiLSJleAX9oo8P4usioX
- Mmmw==
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eyURELlwRwzcUSYbKuGtX0DFL8sd2gq4u0DGvH/VbXM=;
+ b=Vl5mYL0hhucQNACWKz4HLMG6wWEqlkELvUdt8nZKAVdyQHnjpkjGSpM7aXTjF+BEw0
+ u6wuO6lqYeC6WZ7xIha6ulUwsLGybK/ua91U/LSCKnyLvGLDCMlam8SSD2vK+KRcNI7V
+ 7xmBPinNl/WGkMALjmlMlGQrCesDn51ha1ULJ2xQdFQ+gGfKaf8v6uC/5EGmj+4a/Nxj
+ r+6r5eOvqgyZAi/v/gA+a53UTvqLkRyqXPHtdcBBAOiCpaQj1NZSL/bpTsNdsz7eEEvN
+ TzyWBKz54EEDwDbelc5uPaBuhK2VzhoL9wDCC90tlE+YLK9guaSgLrSGMAQq6VLVEhqc
+ vC/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1O+PQA0P6BEs9sGAnzAO8s5iEMES8mmaZt11+IfGPqiMTKM9y33lqVgjmfFDSuDHnGgk74Vz25G8O@nongnu.org
-X-Gm-Message-State: AOJu0YwRn0vzkh6WKW5opGaCr4ENMCaQ4HGK5H+pcw8aRwgDY++W/MyC
- xfBLeMn4dt3HzbJjIv3Jlrve9OGsAYk0RmAOq4Yiksw9vwhP0H607Y8cvdtsev6Gr3U2hQtkeN4
- O0D6nsXAhYkhWrgOYdnv3c8VDxUk7KHrzIajSYIOH6g==
-X-Gm-Gg: ASbGncvV9eYpXsw8ZY/v5oEXy9+J6cbb38hIl5RY05EyNRaMa8ObIK5rMNNkx6gzlxl
- u/fPmMTUijh7aJb4cvxpxUgsb+Fk+MXB5Pi6URMbAyK0ITGBZTvsKZWEUHjcrh6+Iz9sGiZuffT
- 9B/s9XkIVhwZmQcAmc0ZgCVdRj/fFyHNda3aVcHzBFdHMtWFT1ze6Ar4qGdKPXyxGCWyCEMr+Cd
- wgAuI4ugEVw3JNSXA2qqq1J1R7rG21eQqSmuIp1nSG4j+8iniHThIwYmpfelJxyMIGB5xw0
-X-Google-Smtp-Source: AGHT+IHoo/kEocXEMBcNoNO3/UPShnET6BvkUK+1C47bKr6biOi57sVEFqXxU86/MsBn1vlqTx5SHZ2M0zF2+Eh5IJU=
-X-Received: by 2002:a53:d04a:0:20b0:63f:9dba:355e with SMTP id
- 956f58d0204a3-63fd34db325mr4836273d50.29.1762426418002; Thu, 06 Nov 2025
- 02:53:38 -0800 (PST)
+ AJvYcCW8KHAILewPNkIcd0PHz67u+MYe5bOumcWzsLAR2yNi+pg0L6LTakbHrNCjLj8E9O1PHXpypo/NRMit@nongnu.org
+X-Gm-Message-State: AOJu0YyYh9xCF11hjZPHNwxDEHF5q07x6+KL9GbN6tWwPY+VG0QCJVCc
+ gCE3tymFDvrnE6A+/bfB80Kr+FIxUYpqqPAOIsjY5wjCdCnx2jQtcO72dC3YuSXY0qU=
+X-Gm-Gg: ASbGnctBV6ZLvYMU4Co5YlBicO+VDb735krC3L+tOjjA03AdS32q2wEx9aNslSTEI3S
+ RnK3Olp663kjDk/09/c0+R638mw3lQlOPt4vGIelVjC8fA+D4aHRmvf+HrDk+wud8JG5wROl7iP
+ p5GMFviJ5lhkHCs0GCWHqppnuF22IHoy4GoaMk80THZNyJ1jTN0TsUxp6/umfbGfKWQjCtgNxGk
+ cFzMcMeROAysWT4V1ClA/72IZ+gQU/jYY4z3CXm9/Fi4EA5irEs+zOajA3QgmgTUPCRDej9Vxpr
+ eHTymTEE0pUyH1VWZaLIAPM6ePc3MyvtEYIzqmvDs7APThwBkk8bf1Kl9DvPFM9jFN3uTAAO/IX
+ aqKURktDGB3aNNJwqNEhbbnOmsbhRAMSM+JwE+Ytba66GqBw0HyM6YDYKRMwU9U8kJSTJsTIIaw
+ /hHLhgS0Y9fcZN8PuyL9TnOxCiz4+rz1H5dI5LIA==
+X-Google-Smtp-Source: AGHT+IFCq2qBl22N7SWY73+LubaoKLtRcCN2Lr1H11cwVxKMoTpLaULm8vNTn46D9dfsETYI4B/CwA==
+X-Received: by 2002:a05:6402:3489:b0:640:9cdc:aba7 with SMTP id
+ 4fb4d7f45d1cf-64105a5b16amr6154552a12.26.1762426418665; 
+ Thu, 06 Nov 2025 02:53:38 -0800 (PST)
+Received: from [172.20.148.100] ([87.213.113.147])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6411f8578d4sm1523440a12.18.2025.11.06.02.53.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Nov 2025 02:53:38 -0800 (PST)
+Message-ID: <caed003d-1adb-4df7-8642-edbd1610a2f0@linaro.org>
+Date: Thu, 6 Nov 2025 11:53:33 +0100
 MIME-Version: 1.0
-References: <aQtAotYvzFY0Vpft@tcarey.uk>
- <5c356c12-55b8-4d01-bc0f-025d3a3b9293@suse.cz>
- <CAFEAcA9c0Y=ndvd-yV5tTr_+nbBO7W-TDcF4+=qCoknzyGPxAg@mail.gmail.com>
- <508e699e-ba3e-4977-9507-8da7da14fa28@suse.cz>
-In-Reply-To: <508e699e-ba3e-4977-9507-8da7da14fa28@suse.cz>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Nov 2025 10:53:25 +0000
-X-Gm-Features: AWmQ_bnhdfKQTKhrXJzgngfR1vyhxXf-LJuq4ktt0Xcm0yV5Ln0Zy0AYssfgHE4
-Message-ID: <CAFEAcA8z-voiUiBx2bTjUq-GuYJgL96ai81aPAyhYTJvg-uieg@mail.gmail.com>
-Subject: Re: [PATCH] hw/misc/edu: restrict dma access to dma buffer
-To: Jiri Slaby <jslaby@suse.cz>
-Cc: Torin Carey <torin@tcarey.uk>, qemu-devel@nongnu.org, 
- Chris Friedt <chrisfriedt@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] osdep: Cache getpagesize() call in
+ qemu_real_host_page_size()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251103105111.68294-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251103105111.68294-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,69 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Nov 2025 at 10:45, Jiri Slaby <jslaby@suse.cz> wrote:
->
-> On 06. 11. 25, 11:38, Peter Maydell wrote:
-> > On Thu, 6 Nov 2025 at 06:29, Jiri Slaby <jslaby@suse.cz> wrote:
-> >>
-> >> On 05. 11. 25, 13:18, Torin Carey wrote:
-> >>> The EDU device doesn't enforce any bound checks on the addresses provided,
-> >>> allowing users of the device to perform arbitrary reads and writes to QEMU's
-> >>> address space.
-> >>
-> >> Hmm, it was the intention to crash qemu before:
-> >> commit 7b608e5d6c1d61430e81cd5c71b0277b99b03f3a
-> >> Author: Chris Friedt <chrisfriedt@gmail.com>
-> >> Date:   Tue Oct 18 08:25:51 2022 -0400
-> >>
-> >>       hw: misc: edu: use qemu_log_mask instead of hw_error
-> >>
-> >>       Log a guest error instead of a hardware error when
-> >>       the guest tries to DMA to / from an invalid address.
-> >>
-> >>
-> >>
-> >> As with a standard device when you program it badly. I don't understand
-> >> why the commit changed it to log only and let the code to corrupt the
-> >> memory?
-> >
-> > It's a PCI device. Unless something in the spec of
-> > the device says "if you try to DMA outside this range
-> > it will be ignored", then typically devices will let you
-> > DMA anywhere in the address space. If the guest chooses
-> > to program the device to DMA somewhere silly, that's its choice.
-> >
-> > Is there a spec for this device anywhere? If so, we should
-> > follow that. If not, then it's a "make a best guess", and
-> > "don't arbitrarily constrain DMA" is a reasonable guess.
->
-> It's an educational, fictional device, there is of course no spec for that.
+On 11/3/25 11:51, Philippe Mathieu-Daudé wrote:
+> Cache getpagesize() call once, so we don't have to worry
+> how often we can call qemu_real_host_page_size() and
+> qemu_real_host_page_mask().
+> 
+> Philippe Mathieu-Daudé (2):
+>    osdep: Un-inline qemu_real_host_page_size()
+>    osdep: Cache getpagesize() call in qemu_real_host_page_size()
 
-I think that for teaching purposes you would want a decent
-spec for the device: there will be a steady stream of new
-students who need to know how it works.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-In fact I've just noticed we do have a spec, in docs/specs/edu.rst.
-(It doesn't specify the behaviour if you attempt to DMA outside
-the range it documents.)
+That's a step up, certainly.  I had been thinking of making it a faux const variable, akin 
+to how we manage page-vary-common.c, and a high priority constructor.
 
-> > The reason for the commit above is that devices should
-> > not call hw_error() as that crashes QEMU itself.
->
-> But that was exactly my intention. Students should see an immediate
-> crash, not random, undebuggable (in the given class hours) writes
-> somewhere. And crashing a qemu instance was an intended pun.
+With less efford you could mark the function __attribute__((const)), so that the compiler 
+will CSE calls.
 
-Sorry, your educational device doesn't get to break QEMU's
-usual rules. (Eventually we might be able to get rid of
-hw_error() altogether, though it's hardly a high priority.)
-People debugging drivers can turn on the GUEST_ERROR logging
-which should be a big clue.
 
-Incidentally, restricting DMA to "4K starting at 0x40000"
-makes the device not usable on all machine types -- there is
-no guarantee that the machine even has any RAM there at all.
-
-thanks
--- PMM
+r~
 
