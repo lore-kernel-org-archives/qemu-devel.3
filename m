@@ -4,93 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF37CCFA03
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAC6CCFA05
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 10:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGxcd-0004Vo-Nk; Thu, 06 Nov 2025 05:53:43 -0500
+	id 1vGxfo-0006Xd-Cq; Thu, 06 Nov 2025 05:57:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGxcb-0004T7-Qk
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:53:41 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vGxca-0003aG-Ce
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:53:41 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-640b2a51750so1398187a12.0
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 02:53:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762426418; x=1763031218; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eyURELlwRwzcUSYbKuGtX0DFL8sd2gq4u0DGvH/VbXM=;
- b=PxIgIfdurUD07xjum8X0P2pow4CHxZ0yytJkFKihqx+cz/ooYd0Q43m2mAhb2iQtvY
- ZUeNKtmppqYitVfJvqCOs5jNJP6/ynFggV4PzBtWNORaq7jCK4yKvo0l8XgiXyMQkJbw
- l4zTRbHkmAr+p/UajAqYu5m0AnuAmiUNVtouVqiqXCY1L19+uzdh9oAIWhJ9NqGlzsul
- 4anmM9q1l3coMwv9SzJixOkN/Na8n/MQu+W3iox/tHNp+i23Qmu1QFZaBzgWYxWORSBj
- LgiVE0MapDZYPeWB33VO0zmOBQgIMkN+VBp38EDeNT7oqaIpDnVbfQaFTNf1bryP6ie2
- 8DXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762426418; x=1763031218;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eyURELlwRwzcUSYbKuGtX0DFL8sd2gq4u0DGvH/VbXM=;
- b=Vl5mYL0hhucQNACWKz4HLMG6wWEqlkELvUdt8nZKAVdyQHnjpkjGSpM7aXTjF+BEw0
- u6wuO6lqYeC6WZ7xIha6ulUwsLGybK/ua91U/LSCKnyLvGLDCMlam8SSD2vK+KRcNI7V
- 7xmBPinNl/WGkMALjmlMlGQrCesDn51ha1ULJ2xQdFQ+gGfKaf8v6uC/5EGmj+4a/Nxj
- r+6r5eOvqgyZAi/v/gA+a53UTvqLkRyqXPHtdcBBAOiCpaQj1NZSL/bpTsNdsz7eEEvN
- TzyWBKz54EEDwDbelc5uPaBuhK2VzhoL9wDCC90tlE+YLK9guaSgLrSGMAQq6VLVEhqc
- vC/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8KHAILewPNkIcd0PHz67u+MYe5bOumcWzsLAR2yNi+pg0L6LTakbHrNCjLj8E9O1PHXpypo/NRMit@nongnu.org
-X-Gm-Message-State: AOJu0YyYh9xCF11hjZPHNwxDEHF5q07x6+KL9GbN6tWwPY+VG0QCJVCc
- gCE3tymFDvrnE6A+/bfB80Kr+FIxUYpqqPAOIsjY5wjCdCnx2jQtcO72dC3YuSXY0qU=
-X-Gm-Gg: ASbGnctBV6ZLvYMU4Co5YlBicO+VDb735krC3L+tOjjA03AdS32q2wEx9aNslSTEI3S
- RnK3Olp663kjDk/09/c0+R638mw3lQlOPt4vGIelVjC8fA+D4aHRmvf+HrDk+wud8JG5wROl7iP
- p5GMFviJ5lhkHCs0GCWHqppnuF22IHoy4GoaMk80THZNyJ1jTN0TsUxp6/umfbGfKWQjCtgNxGk
- cFzMcMeROAysWT4V1ClA/72IZ+gQU/jYY4z3CXm9/Fi4EA5irEs+zOajA3QgmgTUPCRDej9Vxpr
- eHTymTEE0pUyH1VWZaLIAPM6ePc3MyvtEYIzqmvDs7APThwBkk8bf1Kl9DvPFM9jFN3uTAAO/IX
- aqKURktDGB3aNNJwqNEhbbnOmsbhRAMSM+JwE+Ytba66GqBw0HyM6YDYKRMwU9U8kJSTJsTIIaw
- /hHLhgS0Y9fcZN8PuyL9TnOxCiz4+rz1H5dI5LIA==
-X-Google-Smtp-Source: AGHT+IFCq2qBl22N7SWY73+LubaoKLtRcCN2Lr1H11cwVxKMoTpLaULm8vNTn46D9dfsETYI4B/CwA==
-X-Received: by 2002:a05:6402:3489:b0:640:9cdc:aba7 with SMTP id
- 4fb4d7f45d1cf-64105a5b16amr6154552a12.26.1762426418665; 
- Thu, 06 Nov 2025 02:53:38 -0800 (PST)
-Received: from [172.20.148.100] ([87.213.113.147])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6411f8578d4sm1523440a12.18.2025.11.06.02.53.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Nov 2025 02:53:38 -0800 (PST)
-Message-ID: <caed003d-1adb-4df7-8642-edbd1610a2f0@linaro.org>
-Date: Thu, 6 Nov 2025 11:53:33 +0100
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vGxfj-0006XJ-FN
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:56:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vGxfh-0006ZQ-8u
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 05:56:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762426610;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5ZliaAzIL0/XsEs0zQXoK22rXGo24lUlSn1S6cRytrA=;
+ b=MXAO/3S7+nQIogpiBNEUy0xH4J6QqiOaXRD3d2RPnLj/qAqK0/t+9eimxLMtR0dh/L9oUd
+ DzExgfAHxouHbv3Pl96+MXY32U8IKyaH9D37K2GwI1TjfWqd31o4JCgMdlgiOP4NtUU40x
+ D+5l4o1fYJIUKTaP1Lc55BMAlYzIK1Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-PegsU3D0PXigelTsXYoCRQ-1; Thu,
+ 06 Nov 2025 05:56:45 -0500
+X-MC-Unique: PegsU3D0PXigelTsXYoCRQ-1
+X-Mimecast-MFC-AGG-ID: PegsU3D0PXigelTsXYoCRQ_1762426604
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE71D1800473; Thu,  6 Nov 2025 10:56:43 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.33.5])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 105441945110; Thu,  6 Nov 2025 10:56:43 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id C522D1800080; Thu, 06 Nov 2025 11:56:40 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH] q35: increase default tseg size
+Date: Thu,  6 Nov 2025 11:56:40 +0100
+Message-ID: <20251106105640.1642109-1-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] osdep: Cache getpagesize() call in
- qemu_real_host_page_size()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251103105111.68294-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251103105111.68294-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.517,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +84,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/25 11:51, Philippe Mathieu-Daudé wrote:
-> Cache getpagesize() call once, so we don't have to worry
-> how often we can call qemu_real_host_page_size() and
-> qemu_real_host_page_mask().
-> 
-> Philippe Mathieu-Daudé (2):
->    osdep: Un-inline qemu_real_host_page_size()
->    osdep: Cache getpagesize() call in qemu_real_host_page_size()
+With virtual machines becoming larger (more CPUs, more memory) the
+memory needed by the SMM code in OVMF to manage page tables and vcpu
+state grows too.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Default SMM memory (aka TSEG) size is 16 MB, and this often is not
+enough.  Bump it to 64 MB for new machine types.
 
-That's a step up, certainly.  I had been thinking of making it a faux const variable, akin 
-to how we manage page-vary-common.c, and a high priority constructor.
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ hw/i386/pc.c      | 4 +++-
+ hw/pci-host/q35.c | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-With less efford you could mark the function __attribute__((const)), so that the compiler 
-will CSE calls.
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4d6bcbb846a0..f8b919cb6c47 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -81,7 +81,9 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
+-GlobalProperty pc_compat_10_1[] = {};
++GlobalProperty pc_compat_10_1[] = {
++    { "mch", "extended-tseg-mbytes", "16" },
++};
+ const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
+ 
+ GlobalProperty pc_compat_10_0[] = {
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 1951ae440cce..a708758d3615 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -663,7 +663,7 @@ static void mch_realize(PCIDevice *d, Error **errp)
+ 
+ static const Property mch_props[] = {
+     DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
+-                       16),
++                       64),
+     DEFINE_PROP_BOOL("smbase-smram", MCHPCIState, has_smram_at_smbase, true),
+ };
+ 
+-- 
+2.51.1
 
-
-r~
 
