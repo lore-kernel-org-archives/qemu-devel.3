@@ -4,56 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E079ECCFA0D
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 02:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADDECCF9F8
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 02:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vGpf9-0001Gy-7a; Wed, 05 Nov 2025 21:23:47 -0500
+	id 1vGpq7-0003NK-NK; Wed, 05 Nov 2025 21:35:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vGpf7-0001Gq-Gw
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 21:23:45 -0500
+ id 1vGpq4-0003N6-Ll
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 21:35:04 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vGpf4-0007eF-Oq
- for qemu-devel@nongnu.org; Wed, 05 Nov 2025 21:23:45 -0500
+ id 1vGpq1-0003Su-F7
+ for qemu-devel@nongnu.org; Wed, 05 Nov 2025 21:35:04 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A62NWlR012547
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A62YjhZ017440
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 6 Nov 2025 11:23:33 +0900 (JST)
+ Thu, 6 Nov 2025 11:34:46 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=xvHaFHik6aAJRUFvn4mVSkt/90XNMj2Les3UULLY4mQ=; 
+DKIM-Signature: a=rsa-sha256; bh=0UF09S8T5hR7aRzEZDlf6+Uzj1KQusY+JJrSFW2Pec0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1762395813; v=1;
- b=gX/ul2iDcQfCYAINxqC+PxVF++C997dDgXow3X8cR2MuLjiV8XakLaHkr1jdfnRo
- KwqSiZO/GFSjZ9CSnJxn8dPT8108StwOT2bBWqEJtAItlYazjBuTaOISxvszUEkk
- zEXVxiKRlVW7+bHXly0VQ+4sRM9qkjMfQ6Ok6P6QfGCBcNNfZklIIskGdrULCwux
- 7pUTeXtY5L7vgt+pde2zTqeKCbSwacfDl2zsYvS+mcII/K1fmNCJCcuTijhJgKA5
- +cjj3XfIqA3Pm12yp6eUBguYKZK7I6NO1qfHihzvzuaXvUJhDpKBx6YbAtXhX+tD
- MuGu68l5Od0uhgIrYB+J+w==
-Message-ID: <f1e40576-67ef-41e7-8131-6a022c9d5fc4@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 6 Nov 2025 11:23:32 +0900
+ s=rs20250326; t=1762396486; v=1;
+ b=fmd4o7ZTWdyAeuYE/zvbPOCS5WCAL8IBjn1UjGQBQjHayTEHXbixAbqJkOqmcDyF
+ /I9ZC6rH34W9yjgn4caCbOjYaQfiVuPVMtZDfsFGpu9nOF4qswBTgxQxTAaH74oI
+ RMgkXO+xZ66x5xy+xRTdQHhk2ikfbgGe/8kxmmxRmCiOHAxZoTJQRCL7mmZoOhq9
+ Aad86BWh1Lq98LcFgrF6JBT9GDjnFx6oyoJQQ+R7faUhiGkP4ZNTDN4TOe0Yk6sO
+ b2oLzz6kGIzZ8iLU/6tkmpS0Wz+3arVSNp4q9fIo3ZpdImIS5VbiOkAFjJB9q0Jz
+ eIYGmbAxXFyiKm+ecZdycQ==
+Message-ID: <7e87716a-45e6-47c0-8d74-8fc87b2e61ee@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 6 Nov 2025 11:34:45 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] memory: Make FlatView root references weak
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
- <aQE_M1qsr78RrQaw@x1.local>
- <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
- <aQIxA8MzkSO7qm4Z@x1.local>
- <13cb4e7e-1949-4dc6-b5d6-a976f6f280e4@rsg.ci.i.u-tokyo.ac.jp>
- <aQuuhSL6rXmyqm8x@x1.local>
+Subject: Re: [PATCH] tests/functional/x86_64/test_virtio_gpu: Fix various
+ issues reported by pylint
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20251105120951.15815-1-thuth@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aQuuhSL6rXmyqm8x@x1.local>
+In-Reply-To: <20251105120951.15815-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,76 +76,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/06 5:07, Peter Xu wrote:
-> On Mon, Nov 03, 2025 at 08:18:00PM +0900, Akihiko Odaki wrote:
->> It unfortunately does not work for pci-bridge. It has the following
->> function:
->>
->> void pci_bridge_update_mappings(PCIBridge *br)
->> {
->>      PCIBridgeWindows *w = &br->windows;
->>
->>      /* Make updates atomic to: handle the case of one VCPU updating the
->> bridge
->>       * while another accesses an unaffected region. */
->>      memory_region_transaction_begin();
->>      pci_bridge_region_del(br, w);
->>      pci_bridge_region_cleanup(br, w);
->>      pci_bridge_region_init(br);
->>      memory_region_transaction_commit();
->> }
->>
->> object_unparent() happens in pci_bridge_region_cleanup().
->> pci_bridge_region_init() reuses the storage.
->> memory_region_transaction_commit() triggers flatview_unref(), but it needs
->> to happen before pci_bridge_region_init().
->>
->> memory_region_transaction_commit() also has an undesirable characteristic
->> that its effect may be delayed due to nesting. To make sure flatview_unref()
->> happens with a particular call of memory_region_transaction_commit(), you
->> need to traverse the possible call graph that lead to the function.
->>
->> So I'm afraid but I don't think there is a better way to ensure correctness
->> without a codebase-wide audit.
+On 2025/11/05 21:09, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Ah indeed, I missed that. :(
+> Use the recommended order for import statements, specify the kind of
+> exceptions that we try to catch, use f-strings where it makes sense,
+> rewrite the vug_log_file part with a proper "with" statement and
+> fix some FIXMEs by checking for the availability of the devices, etc.
 > 
-> One way to work this around is providing a helper (abstraction from the
-> current memory_region_transaction_commit) to enforce a flatview reset
-> before reusing.  However I feel like it's an overkill too, but at least
-> that would also avoid weak-refs.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/x86_64/test_virtio_gpu.py | 46 +++++++++++-----------
+>   1 file changed, 23 insertions(+), 23 deletions(-)
+> 
+> diff --git a/tests/functional/x86_64/test_virtio_gpu.py b/tests/functional/x86_64/test_virtio_gpu.py
+> index be96de24da2..a25f15cdb00 100755
+> --- a/tests/functional/x86_64/test_virtio_gpu.py
+> +++ b/tests/functional/x86_64/test_virtio_gpu.py
+> @@ -5,22 +5,23 @@
+>   # This work is licensed under the terms of the GNU GPL, version 2 or
+>   # later.  See the COPYING file in the top-level directory.
+>   
+> +import os
+> +import socket
+> +import subprocess
+>   
+>   from qemu_test import QemuSystemTest, Asset
+>   from qemu_test import wait_for_console_pattern
+>   from qemu_test import exec_command_and_wait_for_pattern
+>   from qemu_test import is_readable_executable_file
+>   
+> -
+> -import os
+> -import socket
+> -import subprocess
+> +from qemu.machine.machine import VMLaunchFailure
+>   
+>   
+>   def pick_default_vug_bin(test):
+>       bld_dir_path = test.build_file("contrib", "vhost-user-gpu", "vhost-user-gpu")
+>       if is_readable_executable_file(bld_dir_path):
+>           return bld_dir_path
+> +    return None
+>   
+>   
+>   class VirtioGPUx86(QemuSystemTest):
+> @@ -46,8 +47,8 @@ def wait_for_console_pattern(self, success_message, vm=None):
+>           )
+>   
+>       def test_virtio_vga_virgl(self):
+> -        # FIXME: should check presence of virtio, virgl etc
+>           self.require_accelerator('kvm')
+> +        self.require_device('virtio-vga-gl')
+>   
+>           kernel_path = self.ASSET_KERNEL.fetch()
+>           initrd_path = self.ASSET_INITRD.fetch()
+> @@ -68,7 +69,7 @@ def test_virtio_vga_virgl(self):
+>           )
+>           try:
+>               self.vm.launch()
+> -        except:
+> +        except VMLaunchFailure:
+>               # TODO: probably fails because we are missing the VirGL features
+>               self.skipTest("VirGL not enabled?")
+>   
+> @@ -78,8 +79,8 @@ def test_virtio_vga_virgl(self):
+>           )
+>   
+>       def test_vhost_user_vga_virgl(self):
+> -        # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+>           self.require_accelerator('kvm')
+> +        self.require_device('vhost-user-vga')
+>   
+>           vug = pick_default_vug_bin(self)
+>           if not vug:
+> @@ -95,27 +96,26 @@ def test_vhost_user_vga_virgl(self):
+>           os.set_inheritable(qemu_sock.fileno(), True)
+>           os.set_inheritable(vug_sock.fileno(), True)
+>   
+> -        self._vug_log_path = self.log_file("vhost-user-gpu.log")
+> -        self._vug_log_file = open(self._vug_log_path, "wb")
+> -        self.log.info('Complete vhost-user-gpu.log file can be '
+> -                      'found at %s', self._vug_log_path)
+> -
+> -        vugp = subprocess.Popen(
+> -            [vug, "--virgl", "--fd=%d" % vug_sock.fileno()],
+> -            stdin=subprocess.DEVNULL,
+> -            stdout=self._vug_log_file,
+> -            stderr=subprocess.STDOUT,
+> -            shell=False,
+> -            close_fds=False,
+> -        )
+> -        self._vug_log_file.close()
+> +        vug_log_path = self.log_file("vhost-user-gpu.log")
+> +        self.log.info('Complete vhost-user-gpu.log file can be found at %s',
+> +                      vug_log_path)
+> +        with open(vug_log_path, "wb") as vug_log_file:
+> +            # pylint: disable=consider-using-with
+> +            vugp = subprocess.Popen(
+> +                [vug, "--virgl", f"--fd={vug_sock.fileno()}"],
+> +                stdin=subprocess.DEVNULL,
+> +                stdout=vug_log_file,
+> +                stderr=subprocess.STDOUT,
+> +                shell=False,
+> +                close_fds=False,
+> +            )
 
-Enforcing a FlatView reset for *one* memory_region_transaction_commit() 
-call is incompatible with nesting, which require delaying it until all 
-memory_region_transaction_commit() calls to finish.
+Let's use with for subproces.Popen() too.
 
-> 
-> I think in practise I'd vote we fix pci-bridge only, either with your other
-> proposal to dynamically allocate the alias MRs, or something like you
-> posted previously:
-> 
-> https://lore.kernel.org/all/20250906-use-v1-3-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp/#t
-> 
-> Personally, I don't mind fixing pci-bridge only even if we don't audit the
-> whole code base.  The audit work is time consuming, and I'd simply trust
-> the tests from all the QEMU users covering whatever devices are still being
-> used. We will always get an issue report when something was wrong.
-> 
-> What do you think?
+You may leave vug_log_file.close() after subprocess.Popen(); if 
+subprocess.Popen() raises an exception, the with statement for 
+vug_log_file will close the file. Otherwise, the vug_log_file.close() 
+after subprocess.Popen() will close it and the with statement for 
+vug_log_file will be no-op; the documentation says it is allowed to call 
+IOBase.call() twice:
+https://docs.python.org/3.14/library/io.html#io.IOBase.close
 
-Generally speaking, we will not necessarily "always" get an issue report 
-when things went wrong with memory management. A bug in memory 
-management may not cause an immediate crash but corrupt the memory state 
-which you will find only later. The end result of memory corruption may 
-look random and result in a hard-to-debug issue report. A user may not 
-even bother writing an issue report at all; this is especially true for 
-this kind of corner cases that rarely happen.
+>   
+>           self.vm.set_console()
+>           self.vm.add_args("-cpu", "host")
+>           self.vm.add_args("-m", "2G")
+>           self.vm.add_args("-object", "memory-backend-memfd,id=mem,size=2G")
+>           self.vm.add_args("-machine", "pc,memory-backend=mem,accel=kvm")
+> -        self.vm.add_args("-chardev", "socket,id=vug,fd=%d" % qemu_sock.fileno())
+> +        self.vm.add_args("-chardev", f"socket,id=vug,fd={qemu_sock.fileno()}")
+>           self.vm.add_args("-device", "vhost-user-vga,chardev=vug")
+>           self.vm.add_args("-display", "egl-headless")
+>           self.vm.add_args(
+> @@ -128,7 +128,7 @@ def test_vhost_user_vga_virgl(self):
+>           )
+>           try:
+>               self.vm.launch()
+> -        except:
+> +        except VMLaunchFailure:
+>               # TODO: probably fails because we are missing the VirGL features
+>               self.skipTest("VirGL not enabled?")
+>           self.wait_for_console_pattern("as init process")
 
-There should have been no such a hazard of memory corruption if the code 
-did exactly what the documentation said in the first place. The 
-consistency of the code and the documentation is essential, especially 
-for this kind of complex and fundamental code.
-
-Regards,
-Akihiko Odaki
 
