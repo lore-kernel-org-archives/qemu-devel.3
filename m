@@ -4,97 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674C0CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 19:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE87CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 19:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH5Xw-0007kt-Rj; Thu, 06 Nov 2025 14:21:24 -0500
+	id 1vH5eB-00014N-R5; Thu, 06 Nov 2025 14:27:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vH5Xu-0007kh-Dx
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 14:21:22 -0500
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vH5e6-00013n-R2
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 14:27:48 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vH5Xs-0004jM-Jk
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 14:21:22 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id AB5CF7A0070;
- Thu,  6 Nov 2025 14:21:17 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Thu, 06 Nov 2025 14:21:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-transfer-encoding:content-type:date:date:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to; s=fm2; t=1762456877; x=1762543277; bh=UbXNd4Ht3LrkAFOizDjyR
- Ssbi+eC2VASAyLRUbb+nPg=; b=X4EQZWhpJjeTJc8OJmp93LPRi8KpGr6Qe+v0J
- BlgTLMrlFswW0CYDMYHBk1MeAYRnFTpGQ8LlUO5g3Fr8YptC9CAgcHSoYr0MKd3X
- vbRECjivXn6W/Rr1i1NyNFxAWZT6mrd8lUR2tbu1/AUB9vaMdH4O0qntT99zttuq
- hJElhT8skKVbkuB0KWw5aQhUnrhNQGEhr0mZoB1qkLuH/5MZr/Pxzw3z+YbWZUuK
- arf/krex3QRUSmXtcG/Nsq7PoNDmL45h09hGJf3WCt8x0pn9lOyzXSbhGempLc6A
- ESpER0ToM254B/9ovdNf+jfaxFOTtMp/NDSZN6VySvSpnDXAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1762456877; x=1762543277; bh=UbXNd4Ht3LrkAFOizDjyRSsbi+eC2VASAyL
- RUbb+nPg=; b=aX9hkIB2vaDAXENbgeOqkLMxNaO8pd3ps/hYa0xTtFAEn/dMrqE
- 5m0xmN3V/3FAvjI/6m9S9N0c/OoGFKstcRCgtfi+46EyxO+2adPfk3QBqKCdPGFp
- FgyROeGK9hAbCTx61wzBENmlGEZWeMOc7Y6/XAvh5hHckdBxl0mwiPG9Kd/6TWmG
- Ku2eyqJW3kR/u0uyAL5ZRgqwx63ol6KIld5uJSsX3Vzuu0W4McIRxBHEoEfPcWk7
- ybJK/e5t89I78q7uuid1+DJmToORrCmVL8JWRP48Hj0kJPqRgqz433KXE8/y5qml
- KiXty9rur5FJkbuxtubsNbuUPQnbKftLnjg==
-X-ME-Sender: <xms:LPUMafbWuX4QDZ5prgXJp-JcGVPkRhmG15fNOP4mD5hePP7S0gvn_g>
- <xme:LPUMaegLm3W98GZtfXzFvj7gxNCiCCPP0saoNkcbnwZAeP4NplcIS484uKnKUDxLt
- RmRV4Uo6qUC1wUGw2bOrAgX2IWqzb0ZEhkrYY5B_CbVIHIgmrfl>
-X-ME-Received: <xmr:LPUMaZ6LafdjwqiembF8ggAWF2iHB2tXWDT9gVKdb1HBaZaLnM6FLOa0wFTu0NPI-Fsiy6XmAJVdDFbz_zyTiwVx2M-sfobfR24wdx9b>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeejieduucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheptehlhihsshgrucft
- ohhsshcuoehhihesrghlhihsshgrrdhisheqnecuggftrfgrthhtvghrnhepheekgfdtve
- ettdekuddugeeugfdujeehuefgleegtedthfffudfhheduhfduuefhnecuvehluhhsthgv
- rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhephhhisegrlhihshhsrgdrih
- hspdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeih
- uhhrvghkrgestgihsggvrhgthhgrohhsrdguvghvpdhrtghpthhtohepqhgvmhhuqdguvg
- hvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehmshhtsehrvgguhhgrthdrtgho
- mhdprhgtphhtthhopehsghgrrhiirghrvgesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:LfUMad4mN0hgYxsTjP8X7v1hLpjASBaZzBSiZSJCp-NvkSzYG56ksg>
- <xmx:LfUMaVcO-RI5EcyHwExJPMqECeg85OkzLhoS2gw7xGTXD6T6W0xDLA>
- <xmx:LfUMaRBTQVoPVjxIHQE5YUDMR7g4-2R-Bq1MhwJ5Om5pW7RsfqnrYw>
- <xmx:LfUMaY_zcT4VaIGk3kigJjUO8YIxPkiUqQ3q4cdwm2Sqz2kIxGBwyQ>
- <xmx:LfUMae12G8sar1U1Wx-HzXgfoRh_Lx3hnfbfJ7UJMllRq3DsrRliGUjX>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Nov 2025 14:21:16 -0500 (EST)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id 268BA68079E9; Thu, 06 Nov 2025 20:21:15 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: qemu-devel@nongnu.org
-Cc: Yureka Lilian <yureka@cyberchaos.dev>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH] vhost-user.rst: clarify when FDs can be sent
-Date: Thu,  6 Nov 2025 20:21:05 +0100
-Message-ID: <20251106192105.3456755-1-hi@alyssa.is>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vH5e4-00004t-31
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 14:27:46 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D43AC80939;
+ Thu, 06 Nov 2025 22:27:38 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:95c::1:2] (unknown [2a02:6bf:8080:95c::1:2])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id aRsGUL0FA0U0-Cgq2wvDS; Thu, 06 Nov 2025 22:27:38 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1762457258;
+ bh=21xygvQLnr6Xx0Fj6rZ8qAmz0dUbCHS0eYQ60EeWmE0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=P/IH7jLc1K4flSJXbR0axCmZprnqFL9mmcTo4pvH4cdfhexLG2zIyCWZVZO1FkNem
+ uJAamPMKxNV3aD4nHCO1cGc/B7DpjpLIwyVcRRPikOqJEaM7Cf+ce6xJCsLtlIQztj
+ SJ8rzoMf2zU/pUvUlpQOr7+OybiZ9nOMAFvwjBCQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <75cd160f-2f70-4522-aaa0-6e8a2a3b7c01@yandex-team.ru>
+Date: Thu, 6 Nov 2025 22:27:36 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=hi@alyssa.is;
- helo=fhigh-b4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 2/8] qapi: introduce query-backend-transfer-support
+To: Markus Armbruster <armbru@redhat.com>
+Cc: mst@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, peterx@redhat.com,
+ farosas@suse.de, eblake@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ zhao1.liu@intel.com, qemu-devel@nongnu.org, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+References: <20251030203116.870742-1-vsementsov@yandex-team.ru>
+ <20251030203116.870742-3-vsementsov@yandex-team.ru>
+ <87jz03fab2.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87jz03fab2.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -106,42 +82,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously the spec did not say where in a message the FDs should be
-sent.  As I understand it, FDs transferred in ancilliary data will
-always be received along with the first byte of the data they were
-sent with, so we should define which byte that is.  Going by both
-libvhost-user in QEMU and the rust-vmm crate, that byte is the first
-byte of the message header.  This is important to specify because it
-would make back-end implementation significantly more complicated if
-receiving file descriptors in the middle of a message had to be
-handled.
+On 06.11.25 18:30, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> We are going to implement backend-transfer feature: some devices
+>> will be able to transfer their backend through migration stream
+>> for local migration through UNIX domain socket. For example,
+>> virtio-net will migrate its attached TAP netdev, with all its
+>> connected file descriptors.
+>>
+>> Let's add a command to list supporting devices (no one for now),
+>> together with necessary infrastructure in qdev code.
+> 
+> Use case?
 
-Signed-off-by: Alyssa Ross <hi@alyssa.is>
----
- docs/interop/vhost-user.rst | 7 +++++++
- 1 file changed, 7 insertions(+)
+Will add:
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 2e50f2ddfa..93a9c8df2b 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -411,6 +411,13 @@ in the ancillary data:
- * ``VHOST_USER_SET_INFLIGHT_FD`` (if ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD``)
- * ``VHOST_USER_SET_DEVICE_STATE_FD``
- 
-+When sending file descriptors in ancilliary data, *front-end* should
-+associate the ancilliary data with a ``sendmsg`` operation (or
-+equivalent) that sends bytes starting with the first byte of the
-+message header.  *back-end* can therefore expect that file descriptors
-+will only be received in the first ``recvmsg`` operation for a message
-+header.
-+
- If *front-end* is unable to send the full message or receives a wrong
- reply it will close the connection. An optional reconnection mechanism
- can be implemented.
+With this command management tool can query such lists on source and
+target, and get intersection of them, to now the set of devices, for
+which we can enable backend-transfer for given source and target QEMUs.
 
-base-commit: 917ac07f9aef579b9538a81d45f45850aba42906
+
+> 
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   include/hw/qdev-core.h |  7 +++++++
+>>   qapi/qdev.json         | 26 +++++++++++++++++++++++++
+>>   system/qdev-monitor.c  | 43 ++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 76 insertions(+)
+>>
+>> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+>> index 2caa0cbd26..0551fbaa6c 100644
+
+
+
+
 -- 
-2.51.0
-
+Best regards,
+Vladimir
 
