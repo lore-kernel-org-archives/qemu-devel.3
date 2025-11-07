@@ -4,112 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07FB7CCFA13
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 01:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F7FCCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 01:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHAtj-0007tV-Pn; Thu, 06 Nov 2025 20:04:15 -0500
+	id 1vHBZz-0007sO-OF; Thu, 06 Nov 2025 20:47:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vHAti-0007qf-0h
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 20:04:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vHBZy-0007s6-BY
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 20:47:54 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vHAtf-0003Bn-LW
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 20:04:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762477445;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fBQ0NKoEqRwvdzDImx33izYXqMaADhT76/dwIJ29BkI=;
- b=VWEj8wThXXyQTmJoG7uv0rqhtQRloXK/FAA+oUx8Rx6LWnUJNH9Un9PjzXUp8afChRnUgy
- MUMvEEpG4k5I2XIGLdv6d+a6fdQjn+qX1bz+mrx9kZ+Fuh3/CaONcR2ne5b6ieSl+j3P4x
- CoIg7sQFom7pQRUUHEU5DHgbEFCQlPU=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-snvA1QwnPIi3EGoNEP3FBQ-1; Thu, 06 Nov 2025 20:04:03 -0500
-X-MC-Unique: snvA1QwnPIi3EGoNEP3FBQ-1
-X-Mimecast-MFC-AGG-ID: snvA1QwnPIi3EGoNEP3FBQ_1762477442
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2958a134514so2855285ad.2
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 17:04:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762477442; x=1763082242; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fBQ0NKoEqRwvdzDImx33izYXqMaADhT76/dwIJ29BkI=;
- b=kpPSFJqzVDiiFLgFsCRFZTFMWJ5kJlGrEvW3lRQbRHf/QFcpqnCX/D5tw75kf7TC5N
- oQi9KmF4uZSd/ODrYPetCDyEiGUzd56FeH3Ejs/vjJc6z/mBZder8HgpYn0Ai3nDpIXH
- QjRFFQntBzoxpe4+moeT592p1BAhx7bw0aRfgH1GOX7xR1yDZwr5D1HOUzUwFFrGguQA
- QsCjjnG3v52nqYkdHV1wzJkELrXxtbas0wfNpjUsSBOwIXOO5dZLh3QW+YhwljyGnWju
- 1ts8lHHKmx2Y8/wCyBdQsovsx5e4y1X0P+kVKQrPAGLFpak46Rljr6WYUBXjJueUHSRS
- C9fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762477442; x=1763082242;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fBQ0NKoEqRwvdzDImx33izYXqMaADhT76/dwIJ29BkI=;
- b=QyvlIkQIvY9bIHa3SwjlA2xpcyrrZ6LzUOlIDrM+XH5Ozu3OrahqN84rpw/rlzAS+i
- Be/2EFMdsVXLZGInTzx2d8zWYVdVEDuAWhZLE+0yLTo9Ut9B2QTdw8UMzAvqVGMvkmF0
- c9agmUrQnjKKNRxZmAWpUt7yThp93PE1Il0R2Rie071BuuqfP1oFrClEV31b024h8TKK
- ECqlQ/G0PJWYZy/DMMWk1vvcyNVGNDYdjgjpXq3inCJxldHpAmGihGfvHffxQ5k/vPsv
- /qa68L30fLofB7FKhDDgVlNvu47cyqBe9bzt4hemZjrQHahq9zrrDZTAtTlhaTHkO2rr
- ljQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXfPvnEDUND0AwKWHSgf12h66hmNlTeMQtKfOPxl6j/zgtETZAufl77CgEJZd1DJNrDqocZpufebxfe@nongnu.org
-X-Gm-Message-State: AOJu0YxU1ZbocrNcPyxXHrM7TmRhHVNyq6aKVbBgabaLY3dMrTkNlE/G
- J6wHd2n5WWRcG3djlpBvoMzKh6cwJkZW9Va70T5DxVuj7yq8zFpE4mYrPpUfhGpt3B5QXAWYfWN
- VctgGKcVQdkU9wx4kQ/QK6yXsFuYtyvvDMhIhq8cXTzT4DFT/mk7pE/1x+hIpg9BvuPypetZO0i
- AL5COBpq2OF3OSO0hGFE4pkqhsw6OsozQ=
-X-Gm-Gg: ASbGncvo6zFGkHNgygiM2lm9PMru/qDHWlw4O5x34JolG5NocNKzTlfqt+KYVSvCZmC
- Y9FeK7C2j4K0LXS6JZ9D3UfvZdGPs0I/5gANHthvAPwrIVGQoXZ8Hq8HeNgSuNyR4/UpOmSW5SA
- MTJ2EiFXgKpdHptUFMX1ikNPB4TxoKZlFpWjQmCMmg+t3l126/Y01SAff2
-X-Received: by 2002:a17:903:384f:b0:270:e595:a440 with SMTP id
- d9443c01a7336-297c040a72bmr17720035ad.25.1762477442285; 
- Thu, 06 Nov 2025 17:04:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQPnLNVEUET8tRcPU+UB0Vr+sisxfOHSrzHH9/2KwS3ZquRM+Ykz/y4HjTIuy8Iw570YOBxn7xjL9VM1N7xXU=
-X-Received: by 2002:a17:903:384f:b0:270:e595:a440 with SMTP id
- d9443c01a7336-297c040a72bmr17719635ad.25.1762477441832; Thu, 06 Nov 2025
- 17:04:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vHBZu-0003DD-TN
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 20:47:54 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A71lZPV096851
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 7 Nov 2025 10:47:36 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=CqpWQr9274Ja2x+xHWUcg3G4Fi6aIIb1KLB512p9WU0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1762480056; v=1;
+ b=Qrp+7p80m1TlRa/xLmROdjFHN7ViQCiTr1aanqcGES6jwV4Davgjb3p4cMFB8NHr
+ DNwb3tHv4rV/tTuUnqwLNFFamPuMVjWvV+7JXRwTFP+NI0JYcGzoJLHF1DTcINxV
+ oVze32ijL6jaLf2SqWq9Yj9exuXUl5gHIjQ821Jquj1tsGFGZzy1kfn2R++wOaai
+ X29nfN+gVCSdcniq5bYhgqGoztwudYnyjuMNK/Odrci/GfIPJPVMcZFfc1zK9IHU
+ 2jyZCdZw9xVzVCpWEBX8qYrnFGaSzmhI3fMNIlF8Qjktz79ue68liL26kvTd9fZ/
+ ztVQOX1UkLmDnwNVM5Z5yw==
+Message-ID: <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 7 Nov 2025 10:47:35 +0900
 MIME-Version: 1.0
-References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
- <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
- <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
- <aQvM6l04VeZwbUOf@x1.local>
- <CACGkMEs4ES0a_Dzn7LmnthGuL=96XxOmncb5VDV195cxWTCChg@mail.gmail.com>
- <CAMGffEm+eh9jv_CUPb_WAmfJ+dQRRp_ecvSJm60uQSnvS63Acg@mail.gmail.com>
-In-Reply-To: <CAMGffEm+eh9jv_CUPb_WAmfJ+dQRRp_ecvSJm60uQSnvS63Acg@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 7 Nov 2025 09:03:49 +0800
-X-Gm-Features: AWmQ_bmTGTb1YR4vT7E1Ikrmv6nRKNEVOX_bx6gq13RsKpYP5jQtFiwgn8zRsLk
-Message-ID: <CACGkMEucL27ukk1ayxuGewv=rk8_WrqhDSiESWX6USihTc-enw@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_=E2=86=92_8?=
- =?UTF-8?Q?=2E2=2E10_due_to_virtio=2Dnet_feature_mismatch_=28VIRTIO=5FF=5FRING=5FRESE?=
- =?UTF-8?Q?T_=2F_USO_features=29?=
-To: Jinpu Wang <jinpu.wang@ionos.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- qemu-stable@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Yu Zhang <yu.zhang@ionos.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <aQJbd5qYR10qcbr7@x1.local>
+ <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
+ <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ0Ys09WtlSPoapm@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aQ0Ys09WtlSPoapm@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,108 +81,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 6, 2025 at 10:33=E2=80=AFPM Jinpu Wang <jinpu.wang@ionos.com> w=
-rote:
->
-> Hi Jason,
->
-> On Thu, Nov 6, 2025 at 5:05=E2=80=AFAM Jason Wang <jasowang@redhat.com> w=
-rote:
-> >
-> > x
-> >
-> > On Thu, Nov 6, 2025 at 6:17=E2=80=AFAM Peter Xu <peterx@redhat.com> wro=
-te:
-> > >
-> > > On Wed, Nov 05, 2025 at 10:27:59AM +0100, Jinpu Wang wrote:
-> > > > > > These are not present (or not supported) on QEMU 8.2.10, which =
-causes
-> > > > > > the migration state load to fail.
-> > > > >
-> > > > > Interesting, we've already done the compat work:
-> > > > >
-> > > > > GlobalProperty hw_compat_8_1[] =3D {
-> > > > >     { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" =
-},
-> > > > >     { "ramfb", "x-migrate", "off" },
-> > > > >     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-> > > > >     { "igb", "x-pcie-flr-init", "off" },
-> > > > >     { TYPE_VIRTIO_NET, "host_uso", "off"},
-> > > > >     { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-> > > > >     { TYPE_VIRTIO_NET, "guest_uso6", "off"},
-> > > > > };
-> > > > > const size_t hw_compat_8_1_len =3D G_N_ELEMENTS(hw_compat_8_1);
-> > > > Yeah, I noticed the same.
-> > >
-> > > AFAICT, this is a known issue..
-> > >
-> > > Thomas and I used to suggest we should not turn on USO* by default by
-> > > probing kernel, but only allow user choosing it explicitly in a VM
-> > > setup. IOW, dest qemu should stop booting at all when kernel is too o=
-ld
-> > > (when user chose the feature).
-> > >
-> > > See:
-> > >
-> > > https://lore.kernel.org/all/ZqQNKZ9_OPhDq2AK@x1n/
-> > >
-> > > Thanks,
-> >
-> > I see, so the reason is that the destination doesn't support USO in
-> > the kernel. For those kinds of features that depend on the kernel, I
-> > agree to disable them by default. But I'm not sure if it's too late or
-> > maybe we can do strict peer feature check like this in
-> > virtio_net_get_features():
-> >
-> >      if (!peer_has_uso(n)) {
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> > +        if (n->strict_peer_feature_check) {
-> > +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO)=
- |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO=
-4) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO=
-6))
-> > +                error_setg(errp, "virtio_net: peer doesn't support USO=
-");
-> > +        } else {
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4)=
-;
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6)=
-;
-> > +        }
-> >      }
-> >
-> is there any document to learn how the feature checking works,
-> function like peer_has_uso, what is the peer exactly in this context,
+On 2025/11/07 6:52, Peter Xu wrote:
+> On Thu, Nov 06, 2025 at 10:40:52AM +0900, Akihiko Odaki wrote:
+>>>>>> +        /*
+>>>>>> +         * Ensure that the forced variable has not been set after fetching
+>>>>>> +         * rcu_call_count; otherwise we may get confused by a force quiescent
+>>>>>> +         * state request for an element later than n.
+>>>>>> +         */
+>>>>>> +        while (qatomic_xchg(&forced, false)) {
+>>>>>> +            sleep = false;
+>>>>>> +            n = qatomic_read(&rcu_call_count);
+>>>>>>             }
+>>>>>
+>>>>> This is pretty tricky, and I wonder if it will make the code easier to read
+>>>>> if we convert the sync_event to be a semaphore instead.  When as a sem, it
+>>>>> will take account of whatever kick to it, either a call_rcu1() or an
+>>>>> enforced rcu flush, so that we don't need to reset it.  Meanwhile, we don't
+>>>>> worry on an slightly outdated "n" read because the 2nd round of sem_wait()
+>>>>> will catch that new "n".
+>>>>>
+>>>>> Instead, worst case is rcu thread runs one more round without seeing
+>>>>> callbacks on the queue.
+>>>>>
+>>>>> I'm not sure if that could help simplying code, maybe also make it less
+>>>>> error-prone.
+>>>>
+>>>> Semaphore is not applicable here because it will not de-duplicate concurrent
+>>>> kicks of RCU threads.
+>>>
+>>> Why concurrent kicks of rcu threads is a problem?  QemuSemaphore is
+>>> thread-safe itself, meanwhile IIUC it only still causes call_rcu_thread()
+>>> loops some more rounds reading "n", which looks all safe. No?
+>>
+>> It is safe but incurs overheads and confusing. QemuEvent represents the
+>> boolean semantics better.
+>>
+>> I also have difficulty to understand how converting sync_event to a
+>> semaphore simplifies the code. Perhaps some (pseudo)code to show how the
+>> code will look like may be useful.
+> 
+> I prepared a patch on top of your current patchset to show what I meant.  I
+> also added comments and some test results showing why I think it might be
+> fine that the sem overhead should be small.
+> 
+> In short, I tested a VM with 8 vCPUs and 4G mem, booting Linux and properly
+> poweroff, I only saw <1000 rcu_call1 users in total.  That should be the
+> max-bound of sem overhead on looping in rcu thread.
+> 
+> It's in patch format but still treat it as a comment instead to discuss
+> with you.  Attaching it is just easier for me.
+> 
+> ===8<===
+>  From 71f15ed19050a973088352a8d71b6cc6b7b5f7cf Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 6 Nov 2025 16:03:00 -0500
+> Subject: [PATCH] rcu: Make sync_event a semaphore
+> 
+> It could simply all reset logic, especially after enforced rcu is
+> introduced we'll also need a tweak to re-read "n", which can be avoided too
+> when with a sem.
+> 
+> However, the sem can introduce an overhead in high frequecy rcu frees.
+> This patch is drafted with the assumption that rcu free is at least very
+> rare in QEMU, hence it's not a problem.
+> 
+> When I tested with this command:
+> 
+> qemu-system-x86_64 -M q35,kernel-irqchip=split,suppress-vmdesc=on -smp 8 \
+>    -m 4G -msg timestamp=on -name peter-vm,debug-threads=on -cpu Nehalem \
+>    -accel kvm -qmp unix:/tmp/peter.sock,server,nowait -nographic \
+>    -monitor telnet::6666,server,nowait -netdev user,id=net0,hostfwd=tcp::5555-:22
+>    -device e1000,netdev=net0 -device virtio-balloon $DISK
+> 
+> I booted a pre-installed Linux, login and poweroff, wait until VM
+> completely shutdowns.  I captured less than 1000 rcu_free1() calls in
+> summary.  It means for the whole lifetime of such VM the max overhead of
+> the call_rcu_thread() loop reading rcu_call_count will be 1000 loops.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   util/rcu.c | 36 ++++++++----------------------------
+>   1 file changed, 8 insertions(+), 28 deletions(-)
+> 
+> diff --git a/util/rcu.c b/util/rcu.c
+> index 85f9333f5d..dfe031a5c9 100644
+> --- a/util/rcu.c
+> +++ b/util/rcu.c
+> @@ -54,7 +54,7 @@ static int rcu_call_count;
+>   static QemuMutex rcu_registry_lock;
+>   
+>   /* Set when the forced variable is set or rcu_call_count becomes non-zero. */
+> -static QemuEvent sync_event;
+> +static QemuSemaphore sync_event;
+>   
+>   /*
+>    * Check whether a quiescent state was crossed between the beginning of
+> @@ -80,7 +80,7 @@ static ThreadList registry = QLIST_HEAD_INITIALIZER(registry);
+>   void force_rcu(void)
+>   {
+>       qatomic_set(&forced, true);
+> -    qemu_event_set(&sync_event);
+> +    qemu_sem_post(&sync_event);
+>   }
+>   
+>   /* Wait for previous parity/grace period to be empty of readers.  */
+> @@ -148,7 +148,7 @@ static void wait_for_readers(bool sleep)
+>                */
+>               qemu_event_reset(&rcu_gp_event);
+>           } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+> -                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
+> +                   !sleeps || qemu_sem_timedwait(&sync_event, 10)) {
+>               /*
+>                * Now one of the following heuristical conditions is satisfied:
+>                * - A decent number of callbacks piled up.
+> @@ -286,7 +286,6 @@ static void *call_rcu_thread(void *opaque)
+>       rcu_register_thread();
+>   
+>       for (;;) {
+> -        bool sleep = true;
+>           int n;
+>   
+>           /*
+> @@ -294,7 +293,6 @@ static void *call_rcu_thread(void *opaque)
+>            * added before enter_qs() starts.
+>            */
+>           for (;;) {
+> -            qemu_event_reset(&sync_event);
+>               n = qatomic_read(&rcu_call_count);
+>               if (n) {
+>                   break;
+> @@ -303,36 +301,19 @@ static void *call_rcu_thread(void *opaque)
+>   #if defined(CONFIG_MALLOC_TRIM)
+>               malloc_trim(4 * 1024 * 1024);
+>   #endif
+> -            qemu_event_wait(&sync_event);
+> +            qemu_sem_wait(&sync_event);
+>           }
+>   
+> -        /*
+> -         * Ensure that an event for a rcu_call_count change will not interrupt
+> -         * wait_for_readers().
+> -         */
+> -        qemu_event_reset(&sync_event);
+> -
+> -        /*
+> -         * Ensure that the forced variable has not been set after fetching
+> -         * rcu_call_count; otherwise we may get confused by a force quiescent
+> -         * state request for an element later than n.
+> -         */
+> -        while (qatomic_xchg(&forced, false)) {
+> -            sleep = false;
+> -            n = qatomic_read(&rcu_call_count);
+> -        }
+> -
+> -        enter_qs(sleep);
+> +        enter_qs(!qatomic_xchg(&forced, false));
 
-It's the peer of virtio-net NIC which is the "backend". In your
-context, it should be tap.
+This is not OK; the forced variable may be set after rcu_call_count is 
+fetched. In that case, we should avoid unsetting the force quiescent 
+state request for the elements later than "n" or refetch "n".
 
-> is it the migration target or host kernel?
-
-This aims to fail the qemu launch if the feature required is not
-satisfied by the perr.
-
-Let me post a formal RFC for this.
-
-Thanks
-
-> > So qemu would fail earlier than fail the migration.
-> >
-> > Thanks
->
-> Thx!
-> >
-> >
-> > >
-> > > --
-> > > Peter Xu
-> > >
-> >
->
+>           qatomic_sub(&rcu_call_count, n);
+>           bql_lock();
+>           while (n > 0) {
+>               node = try_dequeue();
+>               while (!node) {
+>                   bql_unlock();
+> -                qemu_event_reset(&sync_event);
+>                   node = try_dequeue();
+>                   if (!node) {
+> -                    qemu_event_wait(&sync_event);
+> +                    qemu_sem_wait(&sync_event);
+>                       node = try_dequeue();
+>                   }
+>                   bql_lock();
+> @@ -352,7 +333,7 @@ void call_rcu1(struct rcu_head *node, void (*func)(struct rcu_head *node))
+>       enqueue(node);
+>   
+>       if (!qatomic_fetch_inc(&rcu_call_count)) {
+> -        qemu_event_set(&sync_event);
+> +        qemu_sem_post(&sync_event);
+>       }
+>   }
+>   
+> @@ -456,8 +437,7 @@ static void rcu_init_complete(void)
+>   
+>       qemu_mutex_init(&rcu_registry_lock);
+>       qemu_event_init(&rcu_gp_event, true);
+> -
+> -    qemu_event_init(&sync_event, false);
+> +    qemu_sem_init(&sync_event, 0);
+>   
+>       /* The caller is assumed to have BQL, so the call_rcu thread
+>        * must have been quiescent even after forking, just recreate it.
 
 
