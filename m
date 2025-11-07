@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1BCCCFA05
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 02:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F624CCFA13
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 02:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHBoT-0001rO-Bk; Thu, 06 Nov 2025 21:02:53 -0500
+	id 1vHC2G-0003hn-Mq; Thu, 06 Nov 2025 21:17:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vHBoR-0001rD-CC
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 21:02:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vHC2E-0003hQ-B9
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 21:17:06 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vHBoO-0001qg-Ct
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 21:02:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762480966;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=lUzEpz5kGOdPdDJlLTFr3b8YB9vkZu4jiNYvdmwIlzk=;
- b=GMf74LwIk35dN3m9oF7WIjb1FbELoEafLXPQYC4CgwjQJm5XIJkvtZdxpDpoVb/s+7q1TO
- kfsvUgwGqIFjSr+aJMK/p4LQ7hSm8aKxRw28w1yPJ+nfLTztptKL4w+9mVgI4ulxbd1u/C
- ceIyU7I89Y7wQ3cM31nlEWyXa/i/qFw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-UOKMSpdSO6Ozu4j_Or2KcA-1; Thu,
- 06 Nov 2025 21:02:44 -0500
-X-MC-Unique: UOKMSpdSO6Ozu4j_Or2KcA-1
-X-Mimecast-MFC-AGG-ID: UOKMSpdSO6Ozu4j_Or2KcA_1762480963
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 914561884A9C; Fri,  7 Nov 2025 02:02:06 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.72.120.31])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7F9191971EC1; Fri,  7 Nov 2025 02:01:57 +0000 (UTC)
-From: Jason Wang <jasowang@redhat.com>
-To: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, mst@redhat.com,
- jasowang@redhat.com, qemu-devel@nongnu.org, peterx@redhat.com
-Cc: farosas@suse.de, jinpu.wang@ionos.com, thuth@redhat.com,
- berrange@redhat.com
-Subject: [RFC PATCH] virtio-net: introduce strict peer feature check
-Date: Fri,  7 Nov 2025 10:01:49 +0800
-Message-ID: <20251107020149.3223-1-jasowang@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vHC2B-0006qM-DP
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 21:17:06 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A72GufY011735
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 7 Nov 2025 11:16:57 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/HD9wTbDQ1I3k5RDurFFBparun+t4XVtB+1HKQBuv2w=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1762481817; v=1;
+ b=RpMU1YItJGK26M5zaqeXy09jXtW/kffyF31nQqiZ8STGZBiVzvgen26g2YGvSFn2
+ +PHFr0jJnFKRE75wY75rP7Mz7YYixQgUjKz8A8b5pTVoUxzGO4jbZpsZaNM3aQ2p
+ wG/bKrGsYlAoJuQpf2aNCZ/oBqJqG55rkK4oXVN+Rgmzsg6peikUxPA2Z5cYoq7h
+ /0B42HQA5ed4vV+ijZ7nORu6l7LEom4mcR/kPr1KFIUJ6k/2Ou+HlZc/TNed4aBF
+ kZhK7LtsvsB8LXG09vfGog1RVcdpz5ZZnOn5L1DK20DujeLKZX4jwFuSVdw48Vzz
+ o4cL9z88Sr1IK5x2PqvvDQ==
+Message-ID: <6d9caf51-df32-4c83-9b62-1c99dfea2e50@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 7 Nov 2025 11:16:56 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] memory: Make FlatView root references weak
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
+ <aQE_M1qsr78RrQaw@x1.local>
+ <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
+ <aQIxA8MzkSO7qm4Z@x1.local>
+ <13cb4e7e-1949-4dc6-b5d6-a976f6f280e4@rsg.ci.i.u-tokyo.ac.jp>
+ <aQuuhSL6rXmyqm8x@x1.local>
+ <f1e40576-67ef-41e7-8131-6a022c9d5fc4@rsg.ci.i.u-tokyo.ac.jp>
+ <aQzf4F6RgkzYWkeM@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aQzf4F6RgkzYWkeM@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,246 +82,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We used to clear features silently in virtio_net_get_features() even
-if it is required. This complicates the live migration compatibility
-as the management layer may think the feature is enabled but in fact
-not.
+On 2025/11/07 2:50, Peter Xu wrote:
+> On Thu, Nov 06, 2025 at 11:23:32AM +0900, Akihiko Odaki wrote:
+>> Generally speaking, we will not necessarily "always" get an issue report
+>> when things went wrong with memory management. A bug in memory management
+>> may not cause an immediate crash but corrupt the memory state which you will
+>> find only later. The end result of memory corruption may look random and
+>> result in a hard-to-debug issue report. A user may not even bother writing
+>> an issue report at all; this is especially true for this kind of corner
+>> cases that rarely happen.
+>>
+>> There should have been no such a hazard of memory corruption if the code did
+>> exactly what the documentation said in the first place. The consistency of
+>> the code and the documentation is essential, especially for this kind of
+>> complex and fundamental code.
+> 
+> Do you have encountered such case before?
+> 
+> I wasn't expecting that, because what you were saying looks more like what
+> Linux kernel would have a bug in mm.  QEMU is still special as it has the
+> default unassigned MR trapping everything by default, meanwhile normally
+> what is moving is MMIO / alias regions rather than real ramblocks.  It
+> means when things go wrong we have much higher chance to trap them
+> properly.
 
-Let's add a strict feature check to make sure if there's a mismatch
-between the required feature and peer, fail the get_features()
-immediately instead of waiting until the migration to fail. This
-offload the migration compatibility completely to the management
-layer.
+When I said "memory management" I meant the methods we use to allocate 
+and free memory (the Linux equivalents would be kmalloc()/free()/kref), 
+not the MM tracking or unassigned MR trapping behavior you mentioned. 
+The unassigned MR trap and MMIO/alias movement are a separate concern 
+and don’t change the underlying risk.
 
-Signed-off-by: Jason Wang <jasowang@redhat.com>
----
- hw/core/machine.c              |   1 +
- hw/net/virtio-net.c            | 153 +++++++++++++++++++++++++--------
- include/hw/virtio/virtio-net.h |   1 +
- 3 files changed, 119 insertions(+), 36 deletions(-)
+Concrete example: imagine an alias is allocated with g_new() and freed 
+immediately after object_unparent(). If that alias accidentally becomes 
+the FlatView root, destroying the FlatView later will call 
+memory_region_unref() and produce a use-after-free. We cannot predict 
+what memory_region_unref() will read or write in that scenario — the 
+result can be arbitrary memory corruption that surfaces much later as a 
+hard-to-debug, intermittent problem. Users often won’t file an issue for 
+these rare corner cases.
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 681adbb7ac..a9e43c4990 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -40,6 +40,7 @@
- 
- GlobalProperty hw_compat_10_1[] = {
-     { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-+    { TYPE_VIRTIO_NET, "strict-peer-feature-check", "false"},
- };
- const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
- 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 33116712eb..3acc5ed4a6 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3090,53 +3090,120 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
- 
-     if (!peer_has_vnet_hdr(n)) {
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
--
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
--
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
--
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
--        virtio_clear_feature_ex(features,
--                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
--        virtio_clear_feature_ex(features,
--                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-+        if (n->strict_peer_feature_check) {
-+            if (virtio_has_feature_ex(features, VIRTIO_NET_F_CSUM) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO4) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO6) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_ECN) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_ECN) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_HASH_REPORT)) {
-+                error_setg(errp, "virtio_net: peer doesn't support vnet hdr");
-+                return;
-+            }
-+        } else {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
-+
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
-+
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-+
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-+            virtio_clear_feature_ex(features,
-+                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-+            virtio_clear_feature_ex(features,
-+                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
- 
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-+        }
-     }
- 
-     if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-+        if (n->strict_peer_feature_check) {
-+            if (virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UFO) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UFO)) {
-+                error_setg(errp, "virtio_net: peer doesn't support UFO");
-+                return;
-+            }
-+        } else {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-+        }
-     }
-     if (!peer_has_uso(n)) {
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-+        if (n->strict_peer_feature_check) {
-+            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6)) {
-+                error_setg(errp, "virtio_net: peer doesn't support USO");
-+                return;
-+            }
-+        } else {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-+        }
-     }
- 
-     if (!peer_has_tunnel(n)) {
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
--        virtio_clear_feature_ex(features,
--                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
--        virtio_clear_feature_ex(features,
--                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-+        if (n->strict_peer_feature_check) {
-+            if (virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
-+                virtio_has_feature_ex(features,
-+                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM)) {
-+                error_setg(errp, "virtio_net: peer doesn't support tunnel GSO");
-+                return;
-+            }
-+        } else {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-+            virtio_clear_feature_ex(features,
-+                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-+            virtio_clear_feature_ex(features,
-+                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-+        }
-     }
- 
-     if (!get_vhost_net(nc->peer)) {
-         if (!use_own_hash) {
--            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
--            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-+            if (n->strict_peer_feature_check) {
-+                if (virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT) |
-+                    virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-+                    error_setg(errp,
-+                               "virtio_net: peer doesn't support RSS/HASH_REPORT");
-+                    return;
-+                }
-+            } else {
-+                virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-+                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-+            }
-         } else if (virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-             virtio_net_load_ebpf(n, errp);
-         }
-@@ -3145,14 +3212,26 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-     }
- 
-     if (!use_peer_hash) {
--        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-+        if (n->strict_peer_feature_check &&
-+            virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT)) {
-+            error_setg(errp, "virtio_net: peer doesn't HASH_REPORT");
-+            return;
-+        } else {
-+            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-+        }
- 
-         if (!use_own_hash || !virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
-             if (!virtio_net_load_ebpf(n, errp)) {
-                 return;
-             }
- 
--            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-+            if (n->strict_peer_feature_check &&
-+                virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-+                error_setg(errp, "virtio_net: fail to attach eBPF for RSS");
-+                return;
-+            } else {
-+                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-+            }
-         }
-     }
- 
-@@ -4313,6 +4392,8 @@ static const Property virtio_net_properties[] = {
-                                host_features_ex,
-                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
-                                false),
-+    DEFINE_PROP_BOOL("strict-peer-feature-check", VirtIONet,
-+                     strict_peer_feature_check, true),
- };
- 
- static void virtio_net_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 5b8ab7bda7..abd4ca4bb0 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -222,6 +222,7 @@ struct VirtIONet {
-     /* primary failover device is hidden*/
-     bool failover_primary_hidden;
-     bool failover;
-+    bool strict_peer_feature_check;
-     DeviceListener primary_listener;
-     QDict *primary_opts;
-     bool primary_opts_from_json;
--- 
-2.34.1
+> 
+> I also confess though that I'm pretty conservative on fixing things with
+> hypothetical issues.  In general, I prefer fixing things with explicit
+> problems, so we know how to measure and justify a fix (depending on how
+> aggressive the fix is and how much maintanence burden it will bring to
+> QEMU).  Without a real problem, it's harder to quantify that even if such
+> evaluation will also normally be subjective too.
 
+Regarding your preference to fix only explicit problems: I understand 
+the conservatism, but here are the facts we need to weigh:
+
+- The documentation claims we may free aliases because
+   memory_region_ref() is never called, yet there is code that does call
+   memory_region_ref().
+- The patch adds code to align behavior with the documentation.
+
+The significance of both potential impacts (the behavioral divergence 
+for devices other than pci-bridge, and the added complexity needed for 
+consistency) may be subjective and hypothetical, but that applies 
+equally to both sides.
+
+In this case, the long-term reliability and maintainability of QEMU 
+depend on having the code behave as documented. Correctness should take 
+precedence over simplicity.
+
+Regards,
+Akihiko Odaki
 
