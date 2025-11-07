@@ -4,60 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFDDCCFA05
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 09:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 363F9CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 09:50:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHIcs-0006tx-US; Fri, 07 Nov 2025 04:19:22 -0500
+	id 1vHJ6I-0003W8-IH; Fri, 07 Nov 2025 04:49:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1vHIcZ-0006ib-Jt; Fri, 07 Nov 2025 04:19:04 -0500
-Received: from fanzine2.igalia.com ([213.97.179.56])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vHJ6F-0003Vs-V1
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 04:49:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1vHIcP-0003Sy-Ve; Fri, 07 Nov 2025 04:19:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
- s=20170329;
- h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
- Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=52WhEql8AgWmBXcdnE9GlEQPDOyrgWmIotlo9Rxs1Vc=; b=om4BknDCm/z0dnxU5L4djc0lDN
- PzwR5RjgN974IyEammtK+PNmDegXTZXM4J0wMa1Wvhc8UVfKNMp0Uho0Hc+WLeCTeYdGQrkUzBUwZ
- s+NQ9pA01AB8ReNDjN4ta+FqcWgkYr8Sp3JUplDDBAI0GIvhUulfgMx4YCkUO/vxREiRpRcgC4pd4
- v2LfqacwOsVDm+hupF68L3kexW4gtZxp9zNLooxzukHaqg+lx5FxyRJ4wB0i7EgoT5tZ94Utyw/EW
- 160SnVp7oRSunji4JzaRFT8BNyXUWrScDtN2/bZgKRmyBiyeB3j9YeL5+z3uwppMGFechaJfzR/2B
- 1FiPwx8g==;
-Received: from 116.pool92-176-6.dynamic.orange.es ([92.176.6.116]
- helo=perseus.local) by fanzine2.igalia.com with esmtpsa 
- (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1vHIcJ-003NbT-Dh; Fri, 07 Nov 2025 10:18:47 +0100
-Received: from berto by perseus.local with local (Exim 4.98.2)
- (envelope-from <berto@igalia.com>) id 1vHIcH-00000001bqr-1jdZ;
- Fri, 07 Nov 2025 10:18:45 +0100
-From: Alberto Garcia <berto@igalia.com>
-To: qemu-devel@nongnu.org
-Cc: Alberto Garcia <berto@igalia.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH] qemu-img rebase: don't exceed IO_BUF_SIZE in one operation
-Date: Fri,  7 Nov 2025 10:18:30 +0100
-Message-ID: <20251107091834.383781-1-berto@igalia.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vHJ6D-0003Pi-MS
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 04:49:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762508980;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=P5JPrmE54bBoiG07+D2HHESsXQavu4mWXxGdHUi6mTA=;
+ b=D1wxVK+ptxGnCsqQZSsw5xd0ZU+jMTwuQSVsfRrv5g75hy9EM1h4/Xb24r6DRFY6zTAhHq
+ xwnjA8NlBDxipPShw23FV4FAuQtBG5VhYVjaX3RlFmzyYSGBqVnQvll95W+UrnMWPH0Yu6
+ f9jWr6tbgPND1dqVhp6McYPSspnzMCY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-284--XzvYnxKOBmeDFpKu0yOCg-1; Fri,
+ 07 Nov 2025 04:49:35 -0500
+X-MC-Unique: -XzvYnxKOBmeDFpKu0yOCg-1
+X-Mimecast-MFC-AGG-ID: -XzvYnxKOBmeDFpKu0yOCg_1762508974
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB05F180034A; Fri,  7 Nov 2025 09:49:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF61A3001E83; Fri,  7 Nov 2025 09:49:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 48A9E21E6A27; Fri, 07 Nov 2025 10:49:30 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Naveen N Rao <naveen@kernel.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Nikunj A
+ Dadhania <nikunj@amd.com>,  Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,  Roy Hopkins
+ <roy.hopkins@randomman.co.uk>,  Srikanth Aithal <srikanth.aithal@amd.com>
+Subject: Re: [PATCH v3 8/9] target/i386: SEV: Add support for setting TSC
+ frequency for Secure TSC
+In-Reply-To: <ot37mpc4y2oferchx6yroyriqickajnkiouok7quaaijq25c7n@cpqitwnuwyz2>
+ (Naveen N. Rao's message of "Fri, 7 Nov 2025 14:21:24 +0530")
+References: <cover.1761648149.git.naveen@kernel.org>
+ <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
+ <87cy5vgy66.fsf@pond.sub.org>
+ <ot37mpc4y2oferchx6yroyriqickajnkiouok7quaaijq25c7n@cpqitwnuwyz2>
+Date: Fri, 07 Nov 2025 10:49:30 +0100
+Message-ID: <87ecqacgut.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.97.179.56; envelope-from=berto@igalia.com;
- helo=fanzine2.igalia.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,146 +95,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During a rebase operation data is copied from the backing chain into
-the target image using a loop, and each iteration looks for a
-contiguous region of allocated data of at most IO_BUF_SIZE (2 MB).
+Naveen N Rao <naveen@kernel.org> writes:
 
-Once that region is found, and in order to avoid partial writes, its
-boundaries are extended so they are aligned to the (sub)clusters of
-the target image (see commit 12df580b).
+> On Thu, Nov 06, 2025 at 01:09:37PM +0100, Markus Armbruster wrote:
+>> Pardon my ignorance...
+>> 
+>> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
+>> 
+>> > Add support for configuring the TSC frequency when Secure TSC is enabled
+>> > in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
+>> > guest objects, similar to the vCPU-specific property used by regular
+>> > guests and TDX.
+>> 
+>> Which property exactly?
+>
+> Same name: tsc-frequency specified with '-cpu'
 
-This operation can however result in a region that exceeds the maximum
-allowed IO_BUF_SIZE, crashing qemu-img.
+Thanks.  It's x86_64-cpu property tsc-frequency.
 
-This can be easily reproduced when the source image has a smaller
-cluster size than the target image:
+>> 
+>> >                 A new property is needed since SEV-SNP guests require
+>> > the TSC frequency to be specified during early SNP_LAUNCH_START command
+>> > before any vCPUs are created.
+>> 
+>> Sounds awkward.
+>> 
+>> Do the two properties set the same thing at different times?
+>
+> Yes. For regular guests, TSC frequency is set using a vCPU ioctl.  
+> However, TDX and SEV-SNP (with Secure TSC) require the TSC frequency to 
+> be set as a VM property (there is a VM ioctl for this purpose).
+>
+> This was Tom's question too (see v2): is there any way to re-use 
+> 'tsc-frequency' specified with '-cpu' for Secure TSC.
 
-base <- int <- active
+Hmm, let's see whether I can guess how this stuff works.  Please correct
+my misunderstandings.
 
-$ qemu-img create -f qcow2 base.qcow2 4M
-$ qemu-img create -f qcow2 -F qcow2 -b base.qcow2 -o cluster_size=1M int.qcow2
-$ qemu-img create -f qcow2 -F qcow2 -b int.qcow2  -o cluster_size=2M active.qcow2
-$ qemu-io -c "write -P 0xff 1M 2M" int.qcow2
-$ qemu-img rebase -F qcow2 -b base.qcow2 active.qcow2
-qemu-img: qemu-img.c:4102: img_rebase: Assertion `written + pnum <= IO_BUF_SIZE' failed.
-Aborted
+When machine property confidential-guest-support is null, it's a regular
+guest.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3174
-Fixes: 12df580b3b7f ("qemu-img: rebase: avoid unnecessary COW operations")
-Signed-off-by: Alberto Garcia <berto@igalia.com>
----
- qemu-img.c                 |  2 +-
- tests/qemu-iotests/024     | 46 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/024.out | 27 ++++++++++++++++++++++
- 3 files changed, 74 insertions(+), 1 deletion(-)
+If it points to a sev-guest object, it's SEV.
 
-diff --git a/qemu-img.c b/qemu-img.c
-index a7791896c1..454da88c73 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -4081,7 +4081,7 @@ static int img_rebase(const img_cmd_t *ccmd, int argc, char **argv)
-             n += offset - QEMU_ALIGN_DOWN(offset, write_align);
-             offset = QEMU_ALIGN_DOWN(offset, write_align);
-             n += QEMU_ALIGN_UP(offset + n, write_align) - (offset + n);
--            n = MIN(n, size - offset);
-+            n = MIN(n, MIN(size - offset, IO_BUF_SIZE));
-             assert(!bdrv_is_allocated(unfiltered_bs, offset, n, &n_alloc) &&
-                    n_alloc == n);
- 
-diff --git a/tests/qemu-iotests/024 b/tests/qemu-iotests/024
-index b29c76e161..b59d825b42 100755
---- a/tests/qemu-iotests/024
-+++ b/tests/qemu-iotests/024
-@@ -315,6 +315,52 @@ echo
- 
- $QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
- 
-+# Check that the region to copy to the overlay during a rebase
-+# operation does not exceed the I/O buffer size.
-+#
-+# backing_new <-- backing_old <-- overlay
-+#
-+# Backing (new): -- -- -- --    <-- Empty image, size 4MB
-+# Backing (old):|--|ff|ff|--|   <-- 4 clusters, 1MB each
-+# Overlay:      |-- --|-- --|   <-- 2 clusters, 2MB each
-+#
-+# The data at [1MB, 3MB) must be copied from the old backing image to
-+# the overlay. However the rebase code will extend that region to the
-+# overlay's (sub)cluster boundaries to avoid CoW (see commit 12df580b).
-+# This test checks that IO_BUF_SIZE (2 MB) is taken into account.
-+
-+echo
-+echo "=== Test that the region to copy does not exceed 2MB (IO_BUF_SIZE) ==="
-+echo
-+
-+echo "Creating backing chain"
-+echo
-+
-+TEST_IMG=$BASE_NEW _make_test_img 4M
-+TEST_IMG=$BASE_OLD CLUSTER_SIZE=1M _make_test_img -b "$BASE_NEW" -F $IMGFMT
-+TEST_IMG=$OVERLAY  CLUSTER_SIZE=2M _make_test_img -b "$BASE_OLD" -F $IMGFMT
-+
-+echo
-+echo "Writing data to region [1MB, 3MB)"
-+echo
-+
-+$QEMU_IO "$BASE_OLD" -c "write -P 0xff 1M 2M" | _filter_qemu_io
-+
-+echo
-+echo "Rebasing"
-+echo
-+
-+$QEMU_IMG rebase -b "$BASE_NEW" -F $IMGFMT "$OVERLAY"
-+
-+echo "Verifying the data"
-+echo
-+
-+$QEMU_IO "$OVERLAY" -c "read -P 0x00  0 1M" | _filter_qemu_io
-+$QEMU_IO "$OVERLAY" -c "read -P 0xff 1M 2M" | _filter_qemu_io
-+$QEMU_IO "$OVERLAY" -c "read -P 0x00 2M 1M" | _filter_qemu_io
-+
-+$QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
-+
- echo
- 
- # success, all done
-diff --git a/tests/qemu-iotests/024.out b/tests/qemu-iotests/024.out
-index 3d1e31927a..cc18ee0290 100644
---- a/tests/qemu-iotests/024.out
-+++ b/tests/qemu-iotests/024.out
-@@ -243,4 +243,31 @@ Offset          Length          File
- 0               0x20000         TEST_DIR/subdir/t.IMGFMT
- 0x40000         0x20000         TEST_DIR/subdir/t.IMGFMT
- 
-+=== Test that the region to copy does not exceed 2MB (IO_BUF_SIZE) ===
-+
-+Creating backing chain
-+
-+Formatting 'TEST_DIR/subdir/t.IMGFMT.base_new', fmt=IMGFMT size=4194304
-+Formatting 'TEST_DIR/subdir/t.IMGFMT.base_old', fmt=IMGFMT size=4194304 backing_file=TEST_DIR/subdir/t.IMGFMT.base_new backing_fmt=IMGFMT
-+Formatting 'TEST_DIR/subdir/t.IMGFMT', fmt=IMGFMT size=4194304 backing_file=TEST_DIR/subdir/t.IMGFMT.base_old backing_fmt=IMGFMT
-+
-+Writing data to region [1MB, 3MB)
-+
-+wrote 2097152/2097152 bytes at offset 1048576
-+2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+Rebasing
-+
-+Verifying the data
-+
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 2097152/2097152 bytes at offset 1048576
-+2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Pattern verification failed at offset 2097152, 1048576 bytes
-+read 1048576/1048576 bytes at offset 2097152
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Offset          Length          File
-+0               0x400000        TEST_DIR/subdir/t.IMGFMT
-+
- *** done
--- 
-2.47.3
+If it points to a sev-snp-guest object, it's SEV-SNP.
+
+If it points to a tdx-guest object, it's TDX.
+
+Normally, the TSC frequency is specified with x86_64-cpu property
+tsc-frequency.
+
+Can different CPUs have different frequencies?
+
+In certain cases (SEV-SNP or TDX guest with Secure TSC), tsc-frequency
+needs to be configured before any CPUs are created.  You're implementing
+this for SEV-SNP, and you chose to create a sev-snp property
+tsc-frequency for this.
+
+What happens when I enable Secure TSC with sev-snp property
+"secure-tsc": true, but don't set property tsc-frequency?
+
+What happens when I do set it, and then also set the CPU property?  To
+the same frequency?  To a different frequency?
+
+>> > The user-provided TSC frequency is set through KVM_SET_TSC_KHZ before
+>> > issuing KVM_SEV_SNP_LAUNCH_START.
+>> >
+>> > Attempts to set TSC frequency on both the SEV_SNP object and the cpu
+>> > object result in an error from KVM (on the vCPU ioctl), so do not add
+>> > separate checks for the same.
+>> >
+>> > Sample command-line:
+>> >   -machine q35,confidential-guest-support=sev0 \
+>> >   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on,tsc-frequency=2500000000
+>> >
+>> > Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+>> > Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+>> > Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
+>> > Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+>> > Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+>> 
+>> [...]
+>> 
+>> > diff --git a/qapi/qom.json b/qapi/qom.json
+>> > index c7dd2dd1b095..5daaf065b6b7 100644
+>> > --- a/qapi/qom.json
+>> > +++ b/qapi/qom.json
+>> > @@ -1104,6 +1104,9 @@
+>> >  # @secure-tsc: enable Secure TSC
+>> >  #     (default: false) (since 10.2)
+>> >  #
+>> > +# @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
+>> > +#     is enabled (default: zero) (since 10.2)
+>> 
+>> Is this likely to remain the only property that's only valied when
+>> @secure-tsc is true?
+>
+> At this stage, yes. I am not aware of anything else that is specific to 
+> Secure TSC.
+
+Alright, this makes "only valid if" reasonable.
 
 
