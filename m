@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F93BCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 18:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A21CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 19:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHRDe-0003CH-Or; Fri, 07 Nov 2025 13:29:54 -0500
+	id 1vHS7w-00082W-Ck; Fri, 07 Nov 2025 14:28:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vHRCK-0002fF-Fi
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 13:28:32 -0500
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vHRCI-0004Ww-ML
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 13:28:32 -0500
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-43337f526dbso9105ab.0
- for <qemu-devel@nongnu.org>; Fri, 07 Nov 2025 10:28:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1762540108; x=1763144908; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uO5g1jU0AlZUCCAZkhlWxfxPSBtSAw5OnO86ze8xJFo=;
- b=gRtBXv5VFeWGVcRsxsRg5h6qoZSuNK4fhen+nN60usnQGIefumJv8lNUVhD7f+qReW
- alcM6GqFamBlmzI0AKrcRBO8KA/lP+cFn3SAyrNgs90ZbH7vpA/+wh3wKOVnrYm8k6Z4
- JqYza9VMGHJdSQrPycVE7JFm1bWN+Iu96kCWIXDtnIRjzCO8qfied2W+nPRdFKGfXdwP
- A7v/lkAoXhxSzDyoPIhJgkoTRWRptNWxHoGshGAzASeVQGD5fXlCKF2IAFeblXG/TxdA
- 3qsAVaEiHmyk2/ztOvr4JqG62G/xraa0GFsRFPdnjF8akMVJyki1tuj3n43/7hhJxHub
- 7GSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762540108; x=1763144908;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uO5g1jU0AlZUCCAZkhlWxfxPSBtSAw5OnO86ze8xJFo=;
- b=l9TXFqZa/BV2Y+i+VmFCaqRbIl5nsYFeDmpBx+bW/Wd4k4rJLlHQPjOfoyeQ7Rh5eE
- IjiYvlxoOdWRTKsMhy5I40FdjRnoyGjUZ97Ps8bQwDIjuV39hdKjw5tspQ9p7KnYFbK/
- ZTzlmHPw8pqxntfut8t2HK88nH5rTKyk1GRDlLdrhEFsApUlVzyYFF4V2eWfhmFczMlJ
- PRFnHWBK9Axm5fbxXIIa7jJxHJEFlEeavj34RHiym6x6QNf2MVRvJ6UN59GnApLToWhB
- GvmLKlA6oXwI4GhLM2NVvy5fTgylbV1XeQ3AXh2VjNKgWpCU7ddbf6W/AOM0Fd1v/1Yd
- x6pQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBxOKmw59czg6Xu8IxPqfa/f6RmC2etrBt1DxJZ9hJr0NCZZw6y2nKvg1Ontqh2fhRqLFrtbuyyXDS@nongnu.org
-X-Gm-Message-State: AOJu0Yx2HEV+kqj/V35Yd6um+5SHgji2oFjC50DzVySS62ZTTMUMokG6
- z6Q5U055SiQ035BZ3XaAbP7UktKVCdbUKHNgrqySRVKg0w+3Ons0wB+OhCEsYLKAazN5ubrkHec
- f+rF51M2eckAbuhWaCBP6/BXZL3b2ScXqZSoNdQJ6
-X-Gm-Gg: ASbGnctmceQSawdgQ8AM87fRFsLXx9Fg4Q3zs75+IhM6vNhtUEYRFhlWAuVX+CzPPmL
- eKN2q8QefBAAUU9jQsSrgxfHkook7EX7/xKnLyufu6iPnMRqtCkSqebG3Kz5okudog0fRaWk9Q8
- JG/vAxy4v6ZNvr3qjNnOH4+zOmmVkGanotNAXkQiSupKmuWh2InYj4D0fXX8nh4jZ+LoxSmv7+q
- 8qL1E6Q0ap+zxYucFLZVZK2kQAoXFq66iFsFpIGEy7r4zGurlJDrdk8gr0vad1JHdnL6JLMaUSZ
- 4jZSZgU7dH1xOIvA6XJ+tUa1dQ==
-X-Google-Smtp-Source: AGHT+IG7BAvNKMSggrFvGNI1abet3JbYEQYFaIj2adAOV3o8lmSyWvmYGgEjZszJUHKRihhitHy0qQdQz+reEYCvT60=
-X-Received: by 2002:a05:6e02:1d98:b0:430:ccfa:1620 with SMTP id
- e9e14a558f8ab-433689a957bmr217225ab.12.1762540107984; Fri, 07 Nov 2025
- 10:28:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vHS7u-00082J-CF
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 14:28:02 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1vHS7s-0004WQ-CP
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 14:28:02 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5A7HWbRV032159;
+ Fri, 7 Nov 2025 19:27:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=giV2zc
+ iYLhnDQ9Fvo3R6ifNrOm2uVyM3n3T/MlAtMbM=; b=qkEb/9Lgd6Mlo6mNIIJFVR
+ AWk8jCK604ZNOs6fUkNJWiN2F1h0c5XeCwzMdbFmazfqEHMGPlWW37IuY+odklQn
+ xWIAOXPqm0B0DRIG2bV58UbHOZa/rqnINU0bplrjqOjPl0W3RdPqCd6JRHNR2S+H
+ 2S++Rg9ZUk2IHCWL2vvH/uZDPsQI0VesXHhVCuzmYwB98UO77ac1cp3q9AjXbXyR
+ 3rgw8wS9pI2cJkbyOMRZB2q+POAURReBwgBRJ6hwBn5JxsLZ4Xzv0dGjuK3N3lLF
+ xORT5TiK6KZTKcH/A/5pY/CL5WAzXXfTOttkEEMurlb4k96MFM0ZweNAIth7NKbw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a59vuxx71-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Nov 2025 19:27:56 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A7IVl2A018784;
+ Fri, 7 Nov 2025 19:27:55 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a5whnvftc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Nov 2025 19:27:55 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5A7JRsH832899684
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Nov 2025 19:27:55 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C4D785805A;
+ Fri,  7 Nov 2025 19:27:54 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7439258051;
+ Fri,  7 Nov 2025 19:27:54 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Nov 2025 19:27:54 +0000 (GMT)
+Message-ID: <b3b6fda3-2910-4a66-96c0-fe7c3ac52202@linux.ibm.com>
+Date: Fri, 7 Nov 2025 14:27:54 -0500
 MIME-Version: 1.0
-References: <20251104233742.2147367-1-nabihestefan@google.com>
- <TYPPR06MB820663370307D783EA2AF733FCC5A@TYPPR06MB8206.apcprd06.prod.outlook.com>
- <SEZPR06MB76199F82F5B0D106C85E3080F7C5A@SEZPR06MB7619.apcprd06.prod.outlook.com>
-In-Reply-To: <SEZPR06MB76199F82F5B0D106C85E3080F7C5A@SEZPR06MB7619.apcprd06.prod.outlook.com>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Fri, 7 Nov 2025 10:28:16 -0800
-X-Gm-Features: AWmQ_bnqy8553CEXuTyX5lQw9FXv3NVP_WbfVTTbcnAS8_dVE7ietSKVHPmhI3I
-Message-ID: <CA+QoejVLkP6g43PJYpJacqVcNB+VRkQwSa3HYQbA1zJxT1d9Cw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/ast27x0: Fix typo in LTPI address
-To: Kane Chen <kane_chen@aspeedtech.com>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "clg@kaod.org" <clg@kaod.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- "leetroy@gmail.com" <leetroy@gmail.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=nabihestefan@google.com; helo=mail-il1-x133.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] tpm_emulator: print error on error-ignore path
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ stefanb@linux.vnet.ibm.com
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com
+References: <20251106194126.569037-1-vsementsov@yandex-team.ru>
+ <20251106194126.569037-2-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20251106194126.569037-2-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -tONcedYmOsORB6KSjTV3Mpl1pWzMVhn
+X-Proofpoint-GUID: -tONcedYmOsORB6KSjTV3Mpl1pWzMVhn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAxMDAyMSBTYWx0ZWRfX0pk27T2IVEDx
+ BD5Nmh0xMGysJ3x+9GWf/gtP2OTckJhjuY+XIXhVaSDf59rGnkMxloioJCQWGtk8Bp0icJC1yuk
+ QC6UAqBR+jrAmlheHn1vEbXIbWNk3SO1ytYmE4Nl1NPtrIoUN6z2uO8rQh/B4y1x+4sLJZcqf8n
+ sPGyP38inFxVe9emhAg66p/H0SHyvK0uxHLRR+VJTGqo2Ijf0IMdXSciF3quiEQuD1rJLpyY6wf
+ W4IHcN51tJRBwVeUfMP1qUrAASdClt7FcQyn85LAfjGaBv5BlfTjcNqRxeBGnrixXlqi7KPT/fh
+ rCMvMOfbd/3lCQ50u1ATSwOBlWEhs8vobjVbJ28iPJCPIM9k8O3O+dQR4GiZgFRoNCyG3sFGxza
+ aKWQH+pK9fWadKDR75JIOVN7xhE7Dg==
+X-Authority-Analysis: v=2.4 cv=U6qfzOru c=1 sm=1 tr=0 ts=690e483c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=6R7veym_AAAA:8 a=VnNF1IyMAAAA:8 a=0Onw2Fa-JIaQeuQxtZ4A:9 a=QEXdDO2ut3YA:10
+ a=ILCOIF4F_8SzUMnO7jNM:22 a=poXaRoVlC6wW9_mwW8W4:22 a=pHzHmUro8NiASowvMSCR:22
+ a=nt3jZW36AmriUCFCBwmW:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-07_05,2025-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 impostorscore=0 spamscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2511010021
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,74 +125,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Given that 10.2 is closed for features, but not for bug fixes: should
-we try and land this in 10.1, and get the LTPI patches in for 11.0?
-
-Thanks,
-Nabih
-
-Nabih Estefan (he/him) |  Software Engineer |
-nabihestefan@google.com |  857-308-9574
 
 
+On 11/6/25 2:41 PM, Vladimir Sementsov-Ogievskiy wrote:
+> Commit 3469a56fa3dc985 introduced errp passthrough for many
+> errors in the file. But in this specific case in
+> tpm_emulator_get_buffer_size(), it simply used errp=NULL, so we lose
+> printed error. Let's bring it back
+> 
+> Note also, that 3469a56fa3dc985 was fixing another commit,
+> 42e556fa3f7a "backends/tpm: Propagate vTPM error on migration failure"
+> and didn't mention it.
+> 
+> Fixes: 3469a56fa3dc985 "tmp_emulator: improve and fix use of errp"
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>   backends/tpm/tpm_emulator.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+> index f10b9074fb..24aa18302e 100644
+> --- a/backends/tpm/tpm_emulator.c
+> +++ b/backends/tpm/tpm_emulator.c
+> @@ -560,8 +560,10 @@ static TPMVersion tpm_emulator_get_tpm_version(TPMBackend *tb)
+>   static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
+>   {
+>       size_t actual_size;
+> +    Error *local_err = NULL;
+>   
+> -    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size, NULL) < 0) {
+> +    if (tpm_emulator_set_buffer_size(tb, 0, &actual_size, &local_err) < 0) {
+> +        error_report_err(local_err);
+>           return 4096;
+>       }
+>   
 
-On Tue, Nov 4, 2025 at 5:27=E2=80=AFPM Kane Chen <kane_chen@aspeedtech.com>=
- wrote:
->
-> Hi Nabih,
->
-> I will submit another patch for the LTPI controller soon, and I'll also f=
-ix this typo there.
-> If there are no further concerns, could we leave this change as is?
->
-> Best Regards,
-> Kane
-> > -----Original Message-----
-> > From: Jamin Lin <jamin_lin@aspeedtech.com>
-> > Sent: Wednesday, November 5, 2025 9:11 AM
-> > To: Nabih Estefan <nabihestefan@google.com>; qemu-devel@nongnu.org;
-> > Kane Chen <kane_chen@aspeedtech.com>
-> > Cc: clg@kaod.org; peter.maydell@linaro.org; Steven Lee
-> > <steven_lee@aspeedtech.com>; leetroy@gmail.com; qemu-arm@nongnu.org
-> > Subject: RE: [PATCH] hw/arm/ast27x0: Fix typo in LTPI address
-> >
-> > + Kane
-> >
-> > Hi Kane,
-> >
-> > Could you please help to review it?
-> > Thanks-Jamin
-> >
-> > > Subject: [PATCH] hw/arm/ast27x0: Fix typo in LTPI address
-> > >
-> > > The address for LTPI has one more 0 that it should, bug introduced in
-> > > commit 91064bea6b2d747a981cb3bd2904e56f443e6c67.
-> > >
-> > > Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-> > > ---
-> > >  hw/arm/aspeed_ast27x0.c | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c index
-> > > c484bcd4e2..1e6f469538 100644
-> > > --- a/hw/arm/aspeed_ast27x0.c
-> > > +++ b/hw/arm/aspeed_ast27x0.c
-> > > @@ -87,11 +87,11 @@ static const hwaddr
-> > aspeed_soc_ast2700_memmap[] =3D
-> > > {
-> > >      [ASPEED_DEV_UART11]    =3D  0x14C33A00,
-> > >      [ASPEED_DEV_UART12]    =3D  0x14C33B00,
-> > >      [ASPEED_DEV_WDT]       =3D  0x14C37000,
-> > > +    [ASPEED_DEV_LTPI]      =3D  0x30000000,
-> > >      [ASPEED_DEV_PCIE_MMIO0] =3D 0x60000000,
-> > >      [ASPEED_DEV_PCIE_MMIO1] =3D 0x80000000,
-> > >      [ASPEED_DEV_PCIE_MMIO2] =3D 0xA0000000,
-> > >      [ASPEED_DEV_SPI_BOOT]  =3D  0x100000000,
-> > > -    [ASPEED_DEV_LTPI]      =3D  0x300000000,
-> > >      [ASPEED_DEV_SDRAM]     =3D  0x400000000,
-> > >  };
-> > >
-> > > --
-> > > 2.51.2.1006.ga50a493c49-goog
->
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+
+
 
