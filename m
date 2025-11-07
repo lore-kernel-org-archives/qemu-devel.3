@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60420CCFA05
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 13:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 182C0CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 13:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHMBh-0005To-W1; Fri, 07 Nov 2025 08:07:34 -0500
+	id 1vHMCe-0005zt-Vy; Fri, 07 Nov 2025 08:08:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vHMBX-0005MY-5Q
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 08:07:24 -0500
-Received: from 8.mo552.mail-out.ovh.net ([46.105.37.156])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vHMCc-0005zd-VF
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 08:08:30 -0500
+Received: from 6.mo552.mail-out.ovh.net ([188.165.49.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vHMBT-0003Mr-Un
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 08:07:22 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.104])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4d2zqP6Z6nz5xbl;
- Fri,  7 Nov 2025 13:07:13 +0000 (UTC)
-Received: from kaod.org (37.59.142.111) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vHMCa-0003pO-MV
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 08:08:30 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.178])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4d2zrp0935z6PgJ;
+ Fri,  7 Nov 2025 13:08:26 +0000 (UTC)
+Received: from kaod.org (37.59.142.110) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 7 Nov
- 2025 14:07:13 +0100
+ 2025 14:08:25 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-111S0050f59d8bd-9e8f-49c7-a095-d7ef59166425,
+ (GARM-110S004049ce4fe-3185-4661-b4f8-67b931c64e90,
  22B515FCB2325FA901564F8AB94FB8FB00D14EB6) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <325c9c29-2ff0-4623-ba1f-5061b1ae3df3@kaod.org>
-Date: Fri, 7 Nov 2025 14:07:12 +0100
+Message-ID: <570ec70e-1f00-4649-9cd4-fa3e8acab251@kaod.org>
+Date: Fri, 7 Nov 2025 14:08:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/17] hw/arm/aspeed: Add LTPI controller
+Subject: Re: [PATCH v2 02/17] hw/arm/aspeed: Attach LTPI controller to AST27X0
+ platform
 To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -42,7 +43,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
- <20251105035859.3709907-2-kane_chen@aspeedtech.com>
+ <20251105035859.3709907-3-kane_chen@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251105035859.3709907-2-kane_chen@aspeedtech.com>
+In-Reply-To: <20251105035859.3709907-3-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.111]
-X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.110]
+X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 58e99346-6ce7-4751-814f-4cf0571620d6
-X-Ovh-Tracer-Id: 17222046451377540018
+X-Ovh-Tracer-GUID: afa33f2e-cf31-48c0-bae3-e81f14c57ea4
+X-Ovh-Tracer-Id: 17242312649889516466
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFngLPu69BEgtFmW7VNIuVa61RFLeTB+3sJb1bpfV/WhAyQOdx3l7QBE9/aydgjo/IYiDhbNGZVlVMU+pD15AQ+nVwTrWykg/0NRkcrV/nso6FCI8VHm7ggOnlf5AmfOX5ScE0mqcs6hDFypNzS1U1c4e6O8OJ4sLMWxipaiKFUPI1kbImAV2rh2v3PDulIvCQ8MsF2dUeFkfNWtt1AaEgJ+g6f0YFXMjWr/AHX4XyHaHdEUqgjYMsETqE/IHvaYuAPYr8f65vtXrT8AY8bWMyMIFA10mxJ23Hn05vKzIx3pkf61BgaNvzH/vhYZuP0qsCN0CtPyMMuNMzrRI0spJ9XhjvqrdaCaKM/5pfsEth3p/DBFObltl6rsLaF9aSh/3AO6cV8iTmeEGq2Z20TtJjfU0E5+leixGYnmtzPbcpNuzxyM3t4k8nXDgulVQqhOnDHThlnTG1NIIX9CSYbVBxVPYsk/SD3NHWqwtkcX/1AnQLoFH44wUBmiWx8BdpYJ1cZab4axMPmRD9fzhnQoH4xtvMxJoUdlBSl4VYrZ3kPl2Kn5wRxY61E3w3qk3ktgIIHtZIZKaQ8xIUcm5fQDfMRgZtjO1tzC2qpc+HeRYS3QRSftyFJp5dGjqPCX0brYqMdL3rQw0NJcZzEVZT9fI2hI+hoQwFgcpKb4++H0Q8iSg
-DKIM-Signature: a=rsa-sha256; bh=9XGaOAGT//nN2u5DOG0AHqs/nIMu7wTSckhpua9pu3Y=; 
+X-VR-SPAMCAUSE: dmFkZTG2jesCy/e0YJf+nF+KVlQAUyehFIVAJHV6oee6jvD6ttuy+gSweyOaKFyprWp63/tEXdO3fXlDSgLFLGLaLCG1ugbR3+2zZGS39ccfUOJIoimqnpbCMgB6x85Jh+o8TdcGFCCi4kbnhzApNb4NSL0tM0zqMWWzUx1fkZgqt8Rd+YVDIjpL9TUFjfAk01rGa3ao4S3XraGTKc943KJIYvDaOVKHIG0S4u73sIBaDCbGRb0OOlXlaP499w3b/dGqopA+3xc5NSsQqEzm4IDiRBpr+Fb4O0EYctI1EM0VEKgn5e+AEu6EnWuUTN/q7Un9YQgcVhknWrh3GIkTNggobketraraB8JvHcRlA0zaC69BjuT2YQgMM/l0vaaRUuK4/fvco8Gin4fvervsYQANr8QgzfaxdWkQSkA/cmUjvV+z3oBelKRIYh4Tz6u8Rrgfrhpqvhhwl5PpcCTB1XBD4nench3i3/yLnDYvcN8EEa2LciabFYHbvyEXu3eGrtZgPpqzphoZRaCd0kSR3cmGqO+Gwqb9/jsG6jAMOxWB5WR3k2p6inAU/zg+FGmc1DCSGMDZyrkAjEAJSjppUmN9ktaPd+zEexgzOmAyMXUGFRUS980RrmxZV4DSTkILMDc9LIVpvSrhjDRAAoKz8qehTdeu62bBIv2Cn7yFkXHmNIszCw
+DKIM-Signature: a=rsa-sha256; bh=7vbg/C8jBpBYvX2Q3L7xOhADtcKPUXy86OCDeBblRx8=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1762520835; v=1;
- b=uPsdt8Nt8g+7PfCSQ4zaDqpLoEUN32rUJNwJHjStmLu34IggTAVYGZi0TavtWpH0m18IgEm5
- sRcutyinfgqCHlsk1FATOxbm+QaQHU+dTnbcUWVd74/Ul06ZG+7nRS0j5VDUmVXC0rEndqVVvPE
- KyyOLrDTyWWiHV9ayAp+AT8VSpY0thbUiJ4W7kMdTK+4kKNu50FpAjGYdJ7O8c/q1ryE5VuUdYP
- nWJyjN6Jkgn+rOOUsH0mTjGUcHfMRSBuAOmtZhmb4KNncSBr59HQvjCHhZ/xDzlYLl0or87t34M
- E9xDpBRqX8XC8ifDqMOUYRdbHw2/doY1RRP3DA0z/UVsg==
-Received-SPF: pass client-ip=46.105.37.156; envelope-from=clg@kaod.org;
- helo=8.mo552.mail-out.ovh.net
+ t=1762520906; v=1;
+ b=gz3sV43AKEjSbJ7jnIQXnF9xsNp7o+nLyjx5Ja0UKQLueQJVLUWaJ8FlAhVd4h75ewm64Yye
+ yHib/dByvvz4s5q0E3eIxFUV7YSRWjBKQ8SwS5o4JnC7GmXGy5ur5BDUHzrkoL04vneVFqx9Dun
+ b6Oifch0yxGxI/V8wEPh9gXY6S/irarf582aap7lYsa2hpqazdAITDg4914qPeTzkP5gitRlTk4
+ IzZMdPkWslrWcAKhSXJqTKnG4XDxt3Tp9YMsrHoLnSrHI16+8pjFXFoP6GRfsEJpEA7mtGZygP4
+ +PzKpIj8t+e0aad/GW6EaM2VaRmcVncQ1mnkZCLJrzZsw==
+Received-SPF: pass client-ip=188.165.49.222; envelope-from=clg@kaod.org;
+ helo=6.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,148 +135,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 11/5/25 04:58, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
-> 2.0 specification:
-> https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+> Connect the LTPI controller device (representing the AST1700 I/O
+> expander) to the AST27X0 SoC model. This patch sets up the memory
+> mapping and device registration according to the AST2700 SoC design,
+> where the LTPI controller is exposed at fixed MMIO regions.
 > 
-> LTPI is a protocol and physical interface for tunneling various low-speed
-> signals between the HPM and SCM. As shown in Figure 2, the AST27x0 (left)
-> integrates two LTPI controllers, allowing it to connect to up to two
-> extended boards.
-> 
-> This commit introduces a simple device model for the ASPEED LTPI
-> controller in QEMU.
-> 
-> The model includes basic MMIO read/write operations and sets default
-> register values during reset to emulate a link-up state.
-> 
-> Implements register space with read/write callbacks.
+> This change only handles device instantiation and integration,
+> without implementing the controller's internal logic.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > ---
->   include/hw/misc/aspeed_ltpi.h | 25 +++++++++
->   hw/misc/aspeed_ltpi.c         | 98 +++++++++++++++++++++++++++++++++++
->   hw/misc/meson.build           |  1 +
->   3 files changed, 124 insertions(+)
->   create mode 100644 include/hw/misc/aspeed_ltpi.h
->   create mode 100644 hw/misc/aspeed_ltpi.c
+>   include/hw/arm/aspeed_soc.h |  5 +++++
+>   hw/arm/aspeed_ast27x0.c     | 18 ++++++++++++++++++
+>   2 files changed, 23 insertions(+)
 > 
-> diff --git a/include/hw/misc/aspeed_ltpi.h b/include/hw/misc/aspeed_ltpi.h
-> new file mode 100644
-> index 0000000000..2c31a555dd
-> --- /dev/null
-> +++ b/include/hw/misc/aspeed_ltpi.h
-> @@ -0,0 +1,25 @@
-> +/*
-> + * ASPEED LTPI Controller
-> + *
-> + * Copyright (C) 2025 ASPEED Technology Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef ASPEED_LTPI_H
-> +#define ASPEED_LTPI_H
-> +
-> +#include "hw/sysbus.h"
-> +
-> +#define TYPE_ASPEED_LTPI "aspeed.ltpi-ctrl"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedLTPIState, ASPEED_LTPI)
-> +
-> +#define ASPEED_LTPI_NR_REGS  (0x900 >> 2)
-> +
-> +struct AspeedLTPIState {
-> +    SysBusDevice parent;
-> +    MemoryRegion mmio;
-> +
-> +    uint32_t regs[ASPEED_LTPI_NR_REGS];
-> +};
-> +
-> +#endif /* ASPEED_LTPI_H */
-> diff --git a/hw/misc/aspeed_ltpi.c b/hw/misc/aspeed_ltpi.c
-> new file mode 100644
-> index 0000000000..fdb71077a4
-> --- /dev/null
-> +++ b/hw/misc/aspeed_ltpi.c
-> @@ -0,0 +1,98 @@
-> +/*
-> + * ASPEED LTPI Controller
-> + *
-> + * Copyright (C) 2025 ASPEED Technology Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "migration/vmstate.h"
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 4b8e599f1a..bae60d85ea 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -42,6 +42,7 @@
+>   #include "hw/fsi/aspeed_apb2opb.h"
+>   #include "hw/char/serial-mm.h"
+>   #include "hw/intc/arm_gicv3.h"
 > +#include "hw/misc/aspeed_ltpi.h"
-> +
-> +#define LTPI_LINK_MNG 0x42
-> +#define LTPI_PHY_MODE 0x80
-> +
-> +static uint64_t aspeed_ltpi_read(void *opaque, hwaddr offset, unsigned size)
-> +{
-> +    AspeedLTPIState *s = opaque;
-> +    uint32_t idx = offset >> 2;
-> +
-> +    return s->regs[idx];
-> +}
-> +
-> +static void aspeed_ltpi_write(void *opaque, hwaddr offset,
-> +                              uint64_t val, unsigned size)
-> +{
-> +    AspeedLTPIState *s = opaque;
-> +    uint32_t idx = offset >> 2;
-> +
-> +    switch (offset) {
-> +    default:
-> +        s->regs[idx] = (uint32_t)val;
-> +        break;
+>   
+>   #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+>   
+> @@ -53,6 +54,7 @@
+>   #define ASPEED_UARTS_NUM 13
+>   #define ASPEED_JTAG_NUM  2
+>   #define ASPEED_PCIE_NUM  3
+> +#define ASPEED_IOEXP_NUM 2
+>   
+>   struct AspeedSoCState {
+>       DeviceState parent;
+> @@ -110,6 +112,7 @@ struct AspeedSoCState {
+>       UnimplementedDeviceState ltpi;
+>       UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+>       AspeedAPB2OPBState fsi[2];
+> +    AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
+>   };
+>   
+>   #define TYPE_ASPEED_SOC "aspeed-soc"
+> @@ -275,6 +278,8 @@ enum {
+>       ASPEED_GIC_REDIST,
+>       ASPEED_DEV_IPC0,
+>       ASPEED_DEV_IPC1,
+> +    ASPEED_DEV_LTPI_CTRL1,
+> +    ASPEED_DEV_LTPI_CTRL2,
+>   };
+>   
+>   const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index c484bcd4e2..c0d8639bde 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -86,6 +86,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_UART10]    =  0x14C33900,
+>       [ASPEED_DEV_UART11]    =  0x14C33A00,
+>       [ASPEED_DEV_UART12]    =  0x14C33B00,
+> +    [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
+> +    [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
+>       [ASPEED_DEV_WDT]       =  0x14C37000,
+>       [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
+>       [ASPEED_DEV_PCIE_MMIO1] = 0x80000000,
+> @@ -543,6 +545,10 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>           object_property_set_int(OBJECT(&s->pcie[i]), "id", i, &error_abort);
+>       }
+>   
+> +    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
+> +        object_initialize_child(obj, "ltpi-ctrl[*]",
+> +                                &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
 > +    }
-> +}
-> +
-> +static const MemoryRegionOps aspeed_ltpi_ops = {
-> +    .read = aspeed_ltpi_read,
-> +    .write = aspeed_ltpi_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 1,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void aspeed_ltpi_reset(DeviceState *dev)
-> +{
-> +    AspeedLTPIState *s = ASPEED_LTPI(dev);
-> +    memset(s->regs, 0, sizeof(s->regs));
-> +    /* set default values */
-> +    s->regs[LTPI_LINK_MNG] = 0x11900007;
-> +    s->regs[LTPI_PHY_MODE] = 0x2;
-> +}
-> +
-> +
-> +static const VMStateDescription vmstate_aspeed_ltpi = {
-> +    .name = TYPE_ASPEED_LTPI,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT32_ARRAY(regs, AspeedLTPIState,
-> +                             ASPEED_LTPI_NR_REGS),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static void aspeed_ltpi_realize(DeviceState *dev, Error **errp)
-> +{
-> +    AspeedLTPIState *s = ASPEED_LTPI(dev);
-> +
-> +    memory_region_init_io(&s->mmio, OBJECT(s), &aspeed_ltpi_ops, s,
-> +                          TYPE_ASPEED_LTPI, ASPEED_LTPI_NR_REGS);
+>       object_initialize_child(obj, "dpmcu", &s->dpmcu,
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+>       object_initialize_child(obj, "ltpi", &s->ltpi,
+> @@ -688,6 +694,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>       g_autofree char *name = NULL;
+>       qemu_irq irq;
+>       int uart;
+> +    AspeedLTPIState *ltpi_ctrl;
+> +    hwaddr ltpi_base;
 
-The MMIO aperture is not number of registers. It should be 0x900.
-
-Also, AIUI, there are 3 different register sets under this controller.
-Don't we want to model them with sub regions ?
+These 2 variable declarations could be moved under the loop introduced
+below.
 
 
 Thanks,
@@ -283,43 +226,25 @@ Thanks,
 C.
 
 
-
-
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->mmio);
-> +}
+>   
+>       /* Default boot region (SPI memory or ROMs) */
+>       memory_region_init(&s->spi_boot_container, OBJECT(s),
+> @@ -1021,6 +1029,16 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    /* LTPI controller */
+> +    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
+> +        ltpi_ctrl = ASPEED_LTPI(&s->ltpi_ctrl[i]);
+> +        ltpi_base = sc->memmap[ASPEED_DEV_LTPI_CTRL1 + i];
 > +
-> +static void aspeed_ltpi_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    dc->realize = aspeed_ltpi_realize;
-> +    dc->vmsd = &vmstate_aspeed_ltpi;
-> +    device_class_set_legacy_reset(dc, aspeed_ltpi_reset);
-> +}
-> +
-> +static const TypeInfo aspeed_ltpi_info = {
-> +    .name          = TYPE_ASPEED_LTPI,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(AspeedLTPIState),
-> +    .class_init    = aspeed_ltpi_class_init,
-> +};
-> +
-> +static void aspeed_ltpi_register_types(void)
-> +{
-> +    type_register_static(&aspeed_ltpi_info);
-> +}
-> +
-> +type_init(aspeed_ltpi_register_types);
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index b1d8d8e5d2..45b16e7797 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed_hace.c',
->     'aspeed_i3c.c',
->     'aspeed_lpc.c',
-> +  'aspeed_ltpi.c',
->     'aspeed_scu.c',
->     'aspeed_sbc.c',
->     'aspeed_sdmc.c',
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(ltpi_ctrl), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_base);
+> +    }
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+>                                     "aspeed.dpmcu",
+>                                     sc->memmap[ASPEED_DEV_DPMCU],
 
 
