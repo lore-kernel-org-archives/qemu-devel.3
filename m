@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA352CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 07:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2052CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 07:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHH6Z-0006ny-TL; Fri, 07 Nov 2025 02:41:57 -0500
+	id 1vHHEX-0000gr-VA; Fri, 07 Nov 2025 02:50:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vHH6W-0006mo-Mm
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:41:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vHHER-0000g8-2W
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:50:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vHH6U-0002dM-1K
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:41:52 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vHHEM-0006k8-Ln
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:50:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762501307;
+ s=mimecast20190719; t=1762501796;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eYaTNPftnqRwGBqW4bzktRKdVKSxJpsDIArFa9YOrug=;
- b=bd6BAfWkqYDCG+eHguqs3JriwqDLlKLgiQU+SsZFhW2S/+tCK0job2Rz+x8yhVh6VIIt+4
- ZWlGu/JeX+DO+xVNpk4CouJ+wR9Ou6jz2RKTNyV0aJk2IqX7hUrGF/Cq9vkYabfDmyWZjI
- 7r2WDEzKHoK9p/IohCnO63neLzGBn5I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7xcgrHcR2eDvhDkXXGORgQlyTRASDz3Np1zev6dFUuw=;
+ b=Z+u7t5UT3ScZAOqpVTYL4S96h1YcyQ2MckXFme2baNjT1TdYRIBo+/wtRKNZ49BuTdUfCu
+ RuxSTqVarQNwKOhidiIWJViczdY/FkyTHNz//RoZfPIr0bH6ZNel7d8ytLepgI/01Jgtbi
+ s5mb4XUgiB/5kruxoVw/ylmyoTFjjvc=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-iA1m5bypM8qRJ0UVhqpJ2w-1; Fri, 07 Nov 2025 02:41:46 -0500
-X-MC-Unique: iA1m5bypM8qRJ0UVhqpJ2w-1
-X-Mimecast-MFC-AGG-ID: iA1m5bypM8qRJ0UVhqpJ2w_1762501305
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-475dabb63f2so1909795e9.3
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 23:41:45 -0800 (PST)
+ us-mta-680-C30PtGKnOfam7XV-5GS01g-1; Fri, 07 Nov 2025 02:49:55 -0500
+X-MC-Unique: C30PtGKnOfam7XV-5GS01g-1
+X-Mimecast-MFC-AGG-ID: C30PtGKnOfam7XV-5GS01g_1762501794
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b72aa7eb745so38078166b.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 23:49:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762501305; x=1763106105; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762501794; x=1763106594; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=eYaTNPftnqRwGBqW4bzktRKdVKSxJpsDIArFa9YOrug=;
- b=kXLlqBMbeSGe9kJA2f/A3OUvje2LcJZDDhAhy7exp68M/jWexyilBI4x5mb9eS+dMO
- twodM2q9Cr88oE+nSDNrvyl8MVtiaVZWp+L1dIebKpydwAHVtzGc3/juvcMqZW9/AT+d
- ua2htGWFidg5dnFGPGfA1dmX25aUkNN+hWHDbxnHBeffm7vVon1N9PO6saa0I4k6ivvF
- 1pS7UWcM+HsnepOx+QygbgssPM7ARpOGp/WHbPOSkuGGZso8OiANwoXtrJ1zpacAMBmy
- IfqsobxYEUc90EdpXwvBbkO2QuXTApVGYxom9d1ickLrzDYQzwDsnMiCQXYrkm7RMFNm
- 9Y2g==
+ bh=7xcgrHcR2eDvhDkXXGORgQlyTRASDz3Np1zev6dFUuw=;
+ b=luqMPvDgGz6yCXdzI62wZ54X3Px9SybflGXeDU1kAsBFHjlM8hjVs31htVBF4SKNXT
+ 4pkpMlxA3KUokSjV1cLxibyNZekoodUyIU8E/wcj6xs5NBOA9zA6Ja76xlHtBLtuEDrC
+ 7iVqw6ELCLo6H41uOL1bybSLfuy4fOZzjmqBMYWp2ZlIFR8GM9HBVTbCtI4oRY2kYWup
+ psaymUtGm0TbmUr3evlV89nF/S4Xl/W7KoI1oNZqHMqVL78SZ79tAgX4HU2bOl/9s0gF
+ 56r0wwXe1GZqIRIw2oGc78bB1G6bttIZxqSZasuVZlWxsS6g/EM2QJvLOOgV774qm2Yk
+ 8NFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762501305; x=1763106105;
+ d=1e100.net; s=20230601; t=1762501794; x=1763106594;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eYaTNPftnqRwGBqW4bzktRKdVKSxJpsDIArFa9YOrug=;
- b=J7wyMubs0x03YmUmTunFOPCuImNv1lnStgSLzTwKI0wLD3jPSe22NZFwKUiLwr0ddB
- xgTFTYbIBezchpVrO4nvIFWYyljMYcFUytL3FwPjIltUE2rwKCPLU82/BZE2dDnAiiKa
- SwzZdvb93FCGYwUE5qJ1iLn5miFty29kuINnTnaf3FefAIlYscp1cCl25IXGiROJv/Z+
- v0nXLrJYTtFbTT9lX54tx2+uxU2ZvKK/E+Ffyhfqvyi0unvOro/0q8psllpu+aihoH3Y
- bdiVFZ0pEHCJVAkzyExG/M/mxCO9+Z0rLF0OQU4OegnpAWcHbRh5t2nqjztXlN6bYxOe
- 4t+w==
+ bh=7xcgrHcR2eDvhDkXXGORgQlyTRASDz3Np1zev6dFUuw=;
+ b=kN0EJOAGMkvKJbKtNjUBAy+R98GUpQwczbgllrFMwEx9U9j2JO/957B4FEu47Mkn0z
+ a1Elql3owKLQgbi69iI9vKBSnu8uncfajvIn1xr0Y5Xkhgkv/YjpgB3k8R5lszPhhYJf
+ ExpRSGo6KiCtCUtLw4JUk386AjElZ0U9LLCI2FnPrT7p0Qi3fwxRm/TZDM76fL2DdoTm
+ o2RktTa/L8CHLb141y//rhPEZbHp9nU07JW6tZoigaIOUZogjPlClvHIsvFJKBbmk51s
+ PM73QqSToNRwwbzwOKlmQYrae5CkhQuoyi+Lh72SIaALiznctJgYzmqKbKihiHs7ytFi
+ 6toQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXi0qBArHIZNau1W5xD6bg0D55sc4FcANzi2zGXiG+1rJJhnHKKoyV5OHsM4pJvofHvUQhYgdKeNIJm@nongnu.org
-X-Gm-Message-State: AOJu0YzKeth7LdXpykL0Pc/4DZ6CEsYQA4nMNnSFQeHu++9gxgJpmV+t
- E5AkkE60a2MBnL0DqhV2n2tvs+CTmeJU+r9YD0wU1Mq/oHM/aY4aYjfR/QkcNOfvMdxMchDG9xI
- 8crJgR/leHrmHKpnjLATbXuFDd02p3Se5ArLrUrQfbfOxATO/beyev9k51PkKQH+T
-X-Gm-Gg: ASbGncv3Wh3NeoV4UmLoACTvYi0Os5ftRp0szyu9E/fI6pmuRWSC4zgUWLhFhs47LKP
- 2GBaPLdHw7BXk7P+hFTksT/vld8wkzgY2fcbc6E5LiqVuJN1DUJ8INOr62dao5f62ghK1Zu18/A
- qgDevJGPxiyh+krRTEuDzoe4dugcKgMgq6o7cMWEZSQlCdWQfxlyUY76+qumMgXrNqhWVIMxqd9
- lWCMnIHVu0SZdm/BHgBJhUgajh6OZwCgUOWPRMOpH3oQ9ddLHyh55eVgNtSWr/0dvyx022dmWXC
- QyAe6L8D77GFqfsngC2MR02FNihPTySUMddV4FsS7YbpZiS4LQlC7cW5mXvl43Rim/WCYOjk
-X-Received: by 2002:a05:600c:354c:b0:46e:37fc:def0 with SMTP id
- 5b1f17b1804b1-4776bcba3e5mr14268295e9.9.1762501304888; 
- Thu, 06 Nov 2025 23:41:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/h6LZouWCehGqAdzNIwwy5sv/7SIfQwWxezhYnrqwLenp9x24gfrktXmp9CSq2fiT9lUT2A==
-X-Received: by 2002:a05:600c:354c:b0:46e:37fc:def0 with SMTP id
- 5b1f17b1804b1-4776bcba3e5mr14268115e9.9.1762501304516; 
- Thu, 06 Nov 2025 23:41:44 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.171])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4776bd08834sm32571895e9.15.2025.11.06.23.41.43
+ AJvYcCUqHp/lHUnyTEOT5+tIGV05pAeTFbHQILINkpQROrWtDj6uspAjPbi/kxl2fYVmuU+CX0wflgGZWoyf@nongnu.org
+X-Gm-Message-State: AOJu0YzPTpDeNNtaALC0b57kqXpuOIrr2M4ynOJnC6wtWubveJHG+k3l
+ E7GLbh/C8hknlgQfX9suA/ijR2+i+HnGh8ujpnPYdRA0aN7S0TO2uEkzuF+hlY3I4ApE0DrkH5u
+ V/mtEUftRpYzDvalEVXyBu2SmI9HAS8JGeXQM0qOuB6ZM6qR5uiO1DPQB
+X-Gm-Gg: ASbGncvf1yVtOR4OApmsGpQH6/Xe8c98R0MvSBh5oQWcjY0WNZJFWINQqhidGICGsdt
+ w+aYhbwVIlPMht5rpWQVFWM0kuJtbiwDuzadeqUQG3g1CW4se8j7VtgYayuWDZDSrPLswNxsB90
+ J8xwAwWxFLGACwhls0Fou2WamALAly089jbsM5+8OBkdbp/st9NKhh3jdsIBg2dh/VUfSWCRw/S
+ XXtru7WeJ4Vcvct76MOu7Z0xXTUPxYqTv0O5Q+o2IOkcWdJZiCH1rCw0WKcGhxnq9R+xMN+qLRZ
+ /7yhZiZZqpDdJZE3aGlOGHmgHUtv7xy2dBDEB6ErRFgJDZMIUvno8JVbxX/igGyP1Lk/6YRNESw
+ lIlwVDH+Z38OhunOmYtZKgZkq+IsA32gVHKHfAnVVxQ4pMoQZVCl6PMRh0EdhV0B1LG6SUJD/Pb
+ mYLDJJ
+X-Received: by 2002:a17:907:724a:b0:b3f:9b9c:d49e with SMTP id
+ a640c23a62f3a-b72c0e9ae41mr228210666b.57.1762501794089; 
+ Thu, 06 Nov 2025 23:49:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHwn5g0yPiqE4sfJxroEygSupCO6+aFMNCs+RC7Fgxg4WsNdGqh4PQ3BLz5e3VIKMFvbfeYvQ==
+X-Received: by 2002:a17:907:724a:b0:b3f:9b9c:d49e with SMTP id
+ a640c23a62f3a-b72c0e9ae41mr228208366b.57.1762501793696; 
+ Thu, 06 Nov 2025 23:49:53 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.110.222])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b72bf72337dsm170885766b.33.2025.11.06.23.49.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Nov 2025 23:41:44 -0800 (PST)
-Message-ID: <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
-Date: Fri, 7 Nov 2025 08:41:42 +0100
+ Thu, 06 Nov 2025 23:49:53 -0800 (PST)
+Message-ID: <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
+Date: Fri, 7 Nov 2025 08:49:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Regression with the "replay" test on target alpha
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+To: Thomas Huth <thuth@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 References: <20251028173430.2180057-1-pbonzini@redhat.com>
@@ -102,54 +106,48 @@ References: <20251028173430.2180057-1-pbonzini@redhat.com>
  <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
  <d4921688-b3b3-45f2-a3c9-dee2977750cd@redhat.com>
  <889e6be6-0cef-4a23-9d57-2e0611f9588a@rsg.ci.i.u-tokyo.ac.jp>
-From: Thomas Huth <thuth@redhat.com>
+ <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <889e6be6-0cef-4a23-9d57-2e0611f9588a@rsg.ci.i.u-tokyo.ac.jp>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -174,63 +172,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/11/2025 07.29, Akihiko Odaki wrote:
-> On 2025/11/04 21:18, Paolo Bonzini wrote:
->> On 11/4/25 09:38, Thomas Huth wrote:
->>> Thread 4 (Thread 0x7f31bd1ff6c0 (LWP 89223) "qemu-system-alp"):
->>> #0  0x00007f31c47150cd in syscall () at /lib64/libc.so.6
->>> #1  0x00005593dd2b578d in qemu_futex_wait (f=0x5593ddad9e50 
->>> <rcu_call_ready_event>, val=4294967295) at /home/thuth/devel/qemu/ 
->>> include/qemu/futex.h:47
->>> #2  0x00005593dd2b59a1 in qemu_event_wait (ev=0x5593ddad9e50 
->>> <rcu_call_ready_event>) at ../../home/thuth/devel/qemu/util/event.c:162
->>> #3  0x00005593dd2c12e3 in call_rcu_thread (opaque=0x0) at ../../home/ 
->>> thuth/devel/qemu/util/rcu.c:304
+On 11/7/25 08:41, Thomas Huth wrote:
+> On 05/11/2025 07.29, Akihiko Odaki wrote:
+>> On 2025/11/04 21:18, Paolo Bonzini wrote:
+>>> In this backtrace the CPU is waking up the main loop (thread 1), but 
+>>> the main loop is running so I don't think it's really a deadlock.  
+>>> It's more likely that the replay is not matching the record, or 
+>>> there's a similar reason why the replay is not proceeding.
 >>
->> The RCU thread is simply waiting.
->>
->>> Thread 3 (Thread 0x7f31bc8fd6c0 (LWP 89224) "qemu-system-alp"):
->>> #0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
->>> #1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/ libc.so.6
->>> #2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
->>> #3  0x00007f31c470a7c6 in ppoll () at /lib64/libc.so.6
->>> #4  0x00007f31c6916890 in g_main_context_iterate_unlocked.isra () at / 
->>> lib64/libglib-2.0.so.0
->>> #5  0x00007f31c6916a4f in g_main_loop_run () at /lib64/libglib-2.0.so.0
->>> #6  0x00005593dd0d1ab0 in iothread_run (opaque=0x559405a567a0) at ../../ 
->>> home/thuth/devel/qemu/iothread.c:70
->>> #7  0x00005593dd2b3311 in qemu_thread_start (args=0x559405a571a0) 
->>> at ../../home/thuth/devel/qemu/util/qemu-thread-posix.c:393
->>> #8  0x00007f31c4693f54 in start_thread () at /lib64/libc.so.6
->>> #9  0x00007f31c471732c in __clone3 () at /lib64/libc.so.6
->>
->> This iothread is doing nothing.
->>
->>> Thread 2 (Thread 0x7f3137fff6c0 (LWP 89225) "qemu-system-alp"):
->>> #0  0x00007f31c469c462 in __syscall_cancel_arch () at /lib64/libc.so.6
->>> #1  0x00007f31c469075c in __internal_syscall_cancel () at /lib64/ libc.so.6
->>> #2  0x00007f31c46907a4 in __syscall_cancel () at /lib64/libc.so.6
->>> #3  0x00007f31c470b2be in write () at /lib64/libc.so.6
->>> #4  0x00005593dd2af441 in event_notifier_set (e=0x559405a56a54) at ../../ 
->>> home/thuth/devel/qemu/util/event_notifier-posix.c:117
->>> #5  0x00005593dd2cdcde in aio_notify (ctx=0x559405a56980) at ../../ home/ 
->>> thuth/devel/qemu/util/async.c:506
->> In this backtrace the CPU is waking up the main loop (thread 1), but the 
->> main loop is running so I don't think it's really a deadlock.  It's more 
->> likely that the replay is not matching the record, or there's a similar 
->> reason why the replay is not proceeding.
+>> I agree. It is more likely that debugging the replay code instead of 
+>> the RCU change will lead to the real cause.
 > 
-> I agree. It is more likely that debugging the replay code instead of the RCU 
-> change will lead to the real cause.
+> This now also impacts the Gitlab-CI :
+> 
+>   https://gitlab.com/qemu-project/qemu/-/jobs/11984309870
+> 
+> How do we tackle this? It feels bad that we have such a subtle problem 
+> at the beginning of the freeze period. Shall we revert the RCU patch 
+> 'til the problem is understood?
 
-This now also impacts the Gitlab-CI :
+I'll look at it today; if I can't make heads or tails of it we'll revert 
+it, yes.
 
-  https://gitlab.com/qemu-project/qemu/-/jobs/11984309870
-
-How do we tackle this? It feels bad that we have such a subtle problem at 
-the beginning of the freeze period. Shall we revert the RCU patch 'til the 
-problem is understood?
-
-  Thomas
+Paolo
 
 
