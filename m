@@ -4,71 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C06CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 09:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFDDCCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 09:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHISj-0003cm-HG; Fri, 07 Nov 2025 04:08:53 -0500
+	id 1vHIcs-0006tx-US; Fri, 07 Nov 2025 04:19:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1vHISh-0003cQ-0D; Fri, 07 Nov 2025 04:08:51 -0500
-Received: from mail.avm.de ([212.42.244.119])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1vHISe-0002Rw-CC; Fri, 07 Nov 2025 04:08:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
- t=1762506522; bh=hajdHmPU/rv2sjcsRpHPelEIpjWizr5FM89Rfm9uTxU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AaqVz6UeoV74+hDh7pfke/1XRZIbdLWnr2kKB/Pxvs2thtNnKyMShXAUhbWFtMbVE
- GiU3p9N74BhqinIDhoJYQe+SFdK9eoPCk4h36z9i9YfRYkG/sc3oXfemsiRecTbZGS
- 4ZRZtIKILEjBRWjGW6CEEYWpVMwIbw2urnuB+AZQ=
-Received: from [172.16.0.1] (helo=mail.avm.de)
- by mail.avm.de with ESMTP (eXpurgate 4.53.4)
- (envelope-from <c.speich@avm.de>)
- id 690db71a-ed76-7f0000032729-7f000001d060-1
- for <multiple-recipients>; Fri, 07 Nov 2025 10:08:42 +0100
-Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
- by mail.avm.de (Postfix) with ESMTP;
- Fri,  7 Nov 2025 10:08:42 +0100 (CET)
-Received: from l-cspeich ([172.17.89.139])
- by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2025110710084203-4244 ; Fri, 7 Nov 2025 10:08:42 +0100 
-Date: Fri, 7 Nov 2025 10:08:40 +0100
-From: Christian Speich <c.speich@avm.de>
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1vHIcZ-0006ib-Jt; Fri, 07 Nov 2025 04:19:04 -0500
+Received: from fanzine2.igalia.com ([213.97.179.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1vHIcP-0003Sy-Ve; Fri, 07 Nov 2025 04:19:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
+ s=20170329;
+ h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+ Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=52WhEql8AgWmBXcdnE9GlEQPDOyrgWmIotlo9Rxs1Vc=; b=om4BknDCm/z0dnxU5L4djc0lDN
+ PzwR5RjgN974IyEammtK+PNmDegXTZXM4J0wMa1Wvhc8UVfKNMp0Uho0Hc+WLeCTeYdGQrkUzBUwZ
+ s+NQ9pA01AB8ReNDjN4ta+FqcWgkYr8Sp3JUplDDBAI0GIvhUulfgMx4YCkUO/vxREiRpRcgC4pd4
+ v2LfqacwOsVDm+hupF68L3kexW4gtZxp9zNLooxzukHaqg+lx5FxyRJ4wB0i7EgoT5tZ94Utyw/EW
+ 160SnVp7oRSunji4JzaRFT8BNyXUWrScDtN2/bZgKRmyBiyeB3j9YeL5+z3uwppMGFechaJfzR/2B
+ 1FiPwx8g==;
+Received: from 116.pool92-176-6.dynamic.orange.es ([92.176.6.116]
+ helo=perseus.local) by fanzine2.igalia.com with esmtpsa 
+ (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+ id 1vHIcJ-003NbT-Dh; Fri, 07 Nov 2025 10:18:47 +0100
+Received: from berto by perseus.local with local (Exim 4.98.2)
+ (envelope-from <berto@igalia.com>) id 1vHIcH-00000001bqr-1jdZ;
+ Fri, 07 Nov 2025 10:18:45 +0100
+From: Alberto Garcia <berto@igalia.com>
 To: qemu-devel@nongnu.org
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
- <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH 0/4] hw/sd: Improve performance of read/write/erase
-Message-ID: <4eal54pkozivg367yzt76irxmxn46pjtexvbm2xl7qpbiyfyah@n6milralmryq>
-References: <20250919-sdcard-performance-b4-v1-0-e1037e481a19@avm.de>
+Cc: Alberto Garcia <berto@igalia.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH] qemu-img rebase: don't exceed IO_BUF_SIZE in one operation
+Date: Fri,  7 Nov 2025 10:18:30 +0100
+Message-ID: <20251107091834.383781-1-berto@igalia.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-In-Reply-To: <20250919-sdcard-performance-b4-v1-0-e1037e481a19@avm.de>
-X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
- 2025) at 07.11.2025 10:08:42,
- Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 07.11.2025 10:08:42, Serialize complete at 07.11.2025 10:08:42
-X-TNEFEvaluated: 1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-purgate-ID: 149429::1762506522-72CCD0DA-10CAE116/0/0
-X-purgate-type: clean
-X-purgate-size: 2099
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for
- further information)
-X-purgate: clean
-Received-SPF: pass client-ip=212.42.244.119; envelope-from=c.speich@avm.de;
- helo=mail.avm.de
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.97.179.56; envelope-from=berto@igalia.com;
+ helo=fanzine2.igalia.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,62 +73,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping, I've not received any reaction on this series[1]. Is there anything I can do to
-move this forward?
+During a rebase operation data is copied from the backing chain into
+the target image using a loop, and each iteration looks for a
+contiguous region of allocated data of at most IO_BUF_SIZE (2 MB).
 
-Greetings,
-Christian
+Once that region is found, and in order to avoid partial writes, its
+boundaries are extended so they are aligned to the (sub)clusters of
+the target image (see commit 12df580b).
 
-[1]: https://patchew.org/QEMU/20250919-sdcard-performance-b4-v1-0-e1037e481a19@avm.de/
+This operation can however result in a region that exceeds the maximum
+allowed IO_BUF_SIZE, crashing qemu-img.
 
-On Fri, Sep 19, 2025 at 02:34:39PM +0200, Christian Speich wrote:
-> This patch series improves the performance of read/write/erase operations
-> on sdcards.
-> 
-> This is done by increasing the maximum buffer size that is worked on.
-> >From 1 byte (master) to 512 bytes (first commit) to larger than 512
-> (adma commit).
-> 
-> Testing on my system with fio I see the following rough performance 
-> values in MiB/s.
-> 
->               read write readwrite 
->        master:   6     6     3/  3
->  first commit:  51    43    23/ 23
-> second commit: 392   180   144/143
-> 
-> Tested on a 2GiB raw image with:
->   fio --filename=/dev/mmcblk0 --direct=1 --runtime=60 --time_based --bs=128k --rw={mode}
-> 
-> The adma values are somewhat unstable but always >100MiB/s, I'm not sure
-> why but I guess it has something to do with the host side caching.
-> 
-> For erasing the third commit changes the erase operation to write zeros,
-> as indicated by DATA_STAT_AFTER_ERASE in SCR.
-> 
-> The fourth commit allows erasure in large blocks, to speed it up
-> significantly. Erasing 2GiB now takes 0.1s instead of 26s.
-> 
-> Signed-off-by: Christian Speich <c.speich@avm.de>
-> ---
-> Christian Speich (4):
->       hw/sd: Switch from byte-wise to buf+len read/writes
->       hw/sd/sdhci: Don't use bounce buffer for ADMA
->       hw/sd/sdcard: Erase blocks to zero
->       hw/sd/sdcard: Erase in large blocks
-> 
->  hw/sd/core.c       |  16 +---
->  hw/sd/sd.c         | 277 ++++++++++++++++++++++++++++++++++++++++-------------
->  hw/sd/sdhci.c      | 102 +++++++++++---------
->  include/hw/sd/sd.h |  13 +--
->  4 files changed, 277 insertions(+), 131 deletions(-)
-> ---
-> base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
-> change-id: 20250912-sdcard-performance-b4-d908bbb5a004
-> 
-> Best regards,
-> -- 
-> Christian Speich <c.speich@avm.de>
-> 
-> 
+This can be easily reproduced when the source image has a smaller
+cluster size than the target image:
+
+base <- int <- active
+
+$ qemu-img create -f qcow2 base.qcow2 4M
+$ qemu-img create -f qcow2 -F qcow2 -b base.qcow2 -o cluster_size=1M int.qcow2
+$ qemu-img create -f qcow2 -F qcow2 -b int.qcow2  -o cluster_size=2M active.qcow2
+$ qemu-io -c "write -P 0xff 1M 2M" int.qcow2
+$ qemu-img rebase -F qcow2 -b base.qcow2 active.qcow2
+qemu-img: qemu-img.c:4102: img_rebase: Assertion `written + pnum <= IO_BUF_SIZE' failed.
+Aborted
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3174
+Fixes: 12df580b3b7f ("qemu-img: rebase: avoid unnecessary COW operations")
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+---
+ qemu-img.c                 |  2 +-
+ tests/qemu-iotests/024     | 46 ++++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/024.out | 27 ++++++++++++++++++++++
+ 3 files changed, 74 insertions(+), 1 deletion(-)
+
+diff --git a/qemu-img.c b/qemu-img.c
+index a7791896c1..454da88c73 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -4081,7 +4081,7 @@ static int img_rebase(const img_cmd_t *ccmd, int argc, char **argv)
+             n += offset - QEMU_ALIGN_DOWN(offset, write_align);
+             offset = QEMU_ALIGN_DOWN(offset, write_align);
+             n += QEMU_ALIGN_UP(offset + n, write_align) - (offset + n);
+-            n = MIN(n, size - offset);
++            n = MIN(n, MIN(size - offset, IO_BUF_SIZE));
+             assert(!bdrv_is_allocated(unfiltered_bs, offset, n, &n_alloc) &&
+                    n_alloc == n);
+ 
+diff --git a/tests/qemu-iotests/024 b/tests/qemu-iotests/024
+index b29c76e161..b59d825b42 100755
+--- a/tests/qemu-iotests/024
++++ b/tests/qemu-iotests/024
+@@ -315,6 +315,52 @@ echo
+ 
+ $QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
+ 
++# Check that the region to copy to the overlay during a rebase
++# operation does not exceed the I/O buffer size.
++#
++# backing_new <-- backing_old <-- overlay
++#
++# Backing (new): -- -- -- --    <-- Empty image, size 4MB
++# Backing (old):|--|ff|ff|--|   <-- 4 clusters, 1MB each
++# Overlay:      |-- --|-- --|   <-- 2 clusters, 2MB each
++#
++# The data at [1MB, 3MB) must be copied from the old backing image to
++# the overlay. However the rebase code will extend that region to the
++# overlay's (sub)cluster boundaries to avoid CoW (see commit 12df580b).
++# This test checks that IO_BUF_SIZE (2 MB) is taken into account.
++
++echo
++echo "=== Test that the region to copy does not exceed 2MB (IO_BUF_SIZE) ==="
++echo
++
++echo "Creating backing chain"
++echo
++
++TEST_IMG=$BASE_NEW _make_test_img 4M
++TEST_IMG=$BASE_OLD CLUSTER_SIZE=1M _make_test_img -b "$BASE_NEW" -F $IMGFMT
++TEST_IMG=$OVERLAY  CLUSTER_SIZE=2M _make_test_img -b "$BASE_OLD" -F $IMGFMT
++
++echo
++echo "Writing data to region [1MB, 3MB)"
++echo
++
++$QEMU_IO "$BASE_OLD" -c "write -P 0xff 1M 2M" | _filter_qemu_io
++
++echo
++echo "Rebasing"
++echo
++
++$QEMU_IMG rebase -b "$BASE_NEW" -F $IMGFMT "$OVERLAY"
++
++echo "Verifying the data"
++echo
++
++$QEMU_IO "$OVERLAY" -c "read -P 0x00  0 1M" | _filter_qemu_io
++$QEMU_IO "$OVERLAY" -c "read -P 0xff 1M 2M" | _filter_qemu_io
++$QEMU_IO "$OVERLAY" -c "read -P 0x00 2M 1M" | _filter_qemu_io
++
++$QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
++
+ echo
+ 
+ # success, all done
+diff --git a/tests/qemu-iotests/024.out b/tests/qemu-iotests/024.out
+index 3d1e31927a..cc18ee0290 100644
+--- a/tests/qemu-iotests/024.out
++++ b/tests/qemu-iotests/024.out
+@@ -243,4 +243,31 @@ Offset          Length          File
+ 0               0x20000         TEST_DIR/subdir/t.IMGFMT
+ 0x40000         0x20000         TEST_DIR/subdir/t.IMGFMT
+ 
++=== Test that the region to copy does not exceed 2MB (IO_BUF_SIZE) ===
++
++Creating backing chain
++
++Formatting 'TEST_DIR/subdir/t.IMGFMT.base_new', fmt=IMGFMT size=4194304
++Formatting 'TEST_DIR/subdir/t.IMGFMT.base_old', fmt=IMGFMT size=4194304 backing_file=TEST_DIR/subdir/t.IMGFMT.base_new backing_fmt=IMGFMT
++Formatting 'TEST_DIR/subdir/t.IMGFMT', fmt=IMGFMT size=4194304 backing_file=TEST_DIR/subdir/t.IMGFMT.base_old backing_fmt=IMGFMT
++
++Writing data to region [1MB, 3MB)
++
++wrote 2097152/2097152 bytes at offset 1048576
++2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++Rebasing
++
++Verifying the data
++
++read 1048576/1048576 bytes at offset 0
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 2097152/2097152 bytes at offset 1048576
++2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++Pattern verification failed at offset 2097152, 1048576 bytes
++read 1048576/1048576 bytes at offset 2097152
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++Offset          Length          File
++0               0x400000        TEST_DIR/subdir/t.IMGFMT
++
+ *** done
+-- 
+2.47.3
+
 
