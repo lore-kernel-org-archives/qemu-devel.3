@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B41CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 15:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCEECCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 15:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHO3b-0002Hj-50; Fri, 07 Nov 2025 10:07:19 -0500
+	id 1vHOaZ-00044w-Qh; Fri, 07 Nov 2025 10:41:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1vHO3W-0002H6-Vq
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 10:07:14 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vHOaY-00043R-5o
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 10:41:22 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1vHO3U-0004Ul-RV
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 10:07:14 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-64124874e6dso142076a12.3
- for <qemu-devel@nongnu.org>; Fri, 07 Nov 2025 07:07:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vHOaW-0006Z7-EA
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 10:41:21 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-471191ac79dso9962885e9.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Nov 2025 07:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1762528029; x=1763132829; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0JJwupwRF+cr+b1FUuaStgPmA3yH9/l/xxsmiHeQjLk=;
- b=AFfUfGnQP/z8COCIl7PHSJ8/Rfzkn0Sjhc1PxKOpqK3EUFlW4oe9xuRU1a/pHer0GH
- J29clMF5SMU9DX/54fbEMFAVRq3UGOKcXt8WuOHhm9Tm4v5VoxevKQVOUoOErpExiZ6l
- J1PkJ8SWTeKIOwgXTVllgSMZJjBHr+ibHvPhXPbjCQcKujthn4d4XbiLBmB/2QPsaujO
- ZASNnklcgu9W9PaPNhTNjUkGLUDSjqDcNBXeYWLvG6tf063bQRmhfQ6RbU3uAzJZjNWu
- Sy/Dy3lblMpRrfcYG8RW5XNvQMkTzd5yi3k4ZAQyZzJ4JoWdqIEtYRGwjyb37Ypml893
- U+dA==
+ d=linaro.org; s=google; t=1762530079; x=1763134879; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nuGfmGIOi/f93VH0xYyt82y1wWGEqtuylmuk5z+5d64=;
+ b=sUj0g+fH76cwXd8dPzEhtZie07CTmGR6I0rgv88ly16NyPvF2gM4TcSFkIC9GbETkL
+ LGsAHglWR62OoNSDNzpn6WjoirM4BX7+4lFReqGKYgxbHc4CW2MyZmd6h0RVQhQx3dqD
+ tPwA7jIo1Rr6dnZ0W7p+aglWXZBa+68yuFY9bruuI49aTcKJAPjFWyMFTMsUJ7Dmb8SV
+ mcz/G8MzekddPAEoZkrsBri6XWy+ZYhdp2dapjhJKkiARxfC+E35aDJndeAccXzCDPh1
+ /H5qNDihbOaeRdkTE3BcVIqwGcKXaCx72tOJ5x/5IllGgP+LyDgGiRrVvPmNlR2an/SH
+ JwTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762528029; x=1763132829;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0JJwupwRF+cr+b1FUuaStgPmA3yH9/l/xxsmiHeQjLk=;
- b=Q9CeqH+2chwi6xKxsahwo+HVYIAqsHb1IUnut7hj81P0loDK0iSc9kaewVyNHpz5yo
- 5ZdVk0Hv8pm9qtWeceCZiH81tSurudzxI9rVQfV8DFJH9/UXvjw5x+XdcZzGG2gmlkDG
- PjBcutRgdz/Vc5qPpRt3xCx8GMvuXYu47XpFmMk0dg2YGYIuBGShYp4BFM+fYyU1NioE
- TOh3OU8uP/14OQwNcD8os/saoxIiHghDkEMeK8/TsEAagVz54OSca3jnVwpq29izyIWz
- Zp6nTHX2Ro8aHeXD305hu0xx9OsoAyPpKOuH+pjDDLzQLsz1ww22FXFT9soZd/Fu7swS
- LY4w==
+ d=1e100.net; s=20230601; t=1762530079; x=1763134879;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nuGfmGIOi/f93VH0xYyt82y1wWGEqtuylmuk5z+5d64=;
+ b=gGtVXJkFIQk6lpWF4npSQeGBHc5km5GTzzgNDyxj7D1mSCaKz5HMO9PzXP/lFKDXj1
+ 0vHHhIN/jdkIB3FduXJFXwlKaCMmxnxqV6iiI1YV80Io0Emma/rTw1O2MdtF2+tXkZRC
+ HyGLrYuVUAeFdfRATpwBxuSGb0Iy6HhBhuMJ0C4s1e3y06oI0GQD84dDPpor8iAEfqYM
+ dUoZsvjHKji5M0f0fh70o0QE4v3Mubwod+P1+7+11JB6O0oOVb9Y2PfG9Qc10YBNdUfu
+ WARtEgnEzuMdlANmcp7DY19i2Vm5f2CdLPFZzm13JiUeTfAlLfgmEN8L8UrFV6LzaBGX
+ PQ5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQYAE73XyPf6bjdC7HS1s9gGAWKLICD6HbLAtpXgvSGdqzZbSyYiHUmNUhG1c8YgfKZbbBSLFWWQRU@nongnu.org
-X-Gm-Message-State: AOJu0YyPvclyM7f3IOVUtgrw9rM2Qm6qh5XW6PwSN2+smx+Qlrh5eTSl
- DLNLuenmXm0lyjbvDwk4gjb1gbUffzDGZJuleLZfKMqDnuJKhLba6Zs69m9F1q4onfAJTtrWNjc
- U/37wtLC//IXKyJuzRxvDnWQ9ZzTzFGPWMaqyGa0bFA==
-X-Gm-Gg: ASbGncv550NZyTA+KUbqDtMatqTldJgsBeomvwaJXfEXu7Z3FZ5KPD21QogcrR1DjDy
- NFNY9P2CQOSTsBhSlIWuYa06Px67a5DldDl6CPTQAv5O8gWO7O41K4Q2EeAxojdmpO9FsnF8do9
- Q9rbruMStfqvuLg+M6Y9+eH4P4z7k5c1tGwMx4TXKOCzj5YiB2AHQwyARlRcvgoYN4wdinThlqo
- 1VNipki+tSeSvsOuoHsOpjPc2H/8WKn4wYoD6+/Bj7aXsKRnyDVrbmSBrWsrjzKK7OIGqX9s/Jd
- 2KdalECmmmXDAIN2e5dBpdqLtlxF
-X-Google-Smtp-Source: AGHT+IEkggfSE0etbYGoP9N5n6fxV6MlEap3K5scHnznJQJ+6rZ6wrMIBTCcylnYfnORJe5uDJTUFqzyNwD1bNEOMCA=
-X-Received: by 2002:a05:6402:50cb:b0:641:103:e632 with SMTP id
- 4fb4d7f45d1cf-6413f1f39fcmr1855953a12.4.1762528029429; Fri, 07 Nov 2025
- 07:07:09 -0800 (PST)
+ AJvYcCUylJSNVtsyc1OOgPCtzDCscLr3j3h8tyjtuTdFxfXLAtD1YAbAOvbA3ZVg013qho95xIMxaSErqgzU@nongnu.org
+X-Gm-Message-State: AOJu0YxPkMVqDpfoUis/y6MWZiTOCZhORGa+JE98ARGTKlAl+vcDMU+Y
+ a4AYYI2Zp46bY6iTq02YHr2t1kKfpoghYdFQD1o49IhDdW/PdZ8lvkSykmLLkUxzPaE=
+X-Gm-Gg: ASbGncvN81I6Vz23v7oQSVsimaef3w0wIxAspD//GKhFLSe2wFhBhpbJctwjECtSCO4
+ Si+OxbXIo8IYTyzEgFoEBMty3XeiNYdwgN2adULSKyGkSIazFOU+5nx1PQP6tLfXaR8sVVwnC54
+ Rs5MByTfo65UqFUfmhm1pZ/dbs7Zf0p/QbmxmzvWHJ4ISQbcjsFCE914M5w6iUSb59xpVcpCi7c
+ YOas1eIH6PAGaF5XufNk5kwAvd8nk6KX4PpTfGVoXjNVG7r/W+Ham2zcsJ5hyYiS28rhQQYiApq
+ KHfitPCI6AnypCM9qcslJJhz0NAj5V372+7Wl0AClFB0sDKjNgHLgXxoS+fAHcg7Tkn5SV/CHzx
+ bEClbOmFctJF8WIkQb6vZLIk7qeGwoGBfy6XLl+/KSGYW+qEk9diLCGxp7iBUoyqtVaUStXTMEm
+ IML46SYw==
+X-Google-Smtp-Source: AGHT+IGTO6MM+4/pcJXcmdcWMDyIfir1doeK09Gqd5ZqunId5b2R7YiLxJKTNeC50LXvXnrNXcAcHg==
+X-Received: by 2002:a05:600c:4fcb:b0:477:59e8:507d with SMTP id
+ 5b1f17b1804b1-4776bcc537amr30259395e9.31.1762530078536; 
+ Fri, 07 Nov 2025 07:41:18 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42ac67845ccsm5779183f8f.36.2025.11.07.07.41.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Nov 2025 07:41:17 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] hw/audio/lm4549: Don't try to open a zero-frequency audio
+ voice
+Date: Fri,  7 Nov 2025 15:41:16 +0000
+Message-ID: <20251107154116.1396769-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
- <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
- <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
- <aQvM6l04VeZwbUOf@x1.local>
- <CAMGffE=VdsQSTOOpBvaDc=RQ98cMDHYemF7nS5pnqJ7Rsvafug@mail.gmail.com>
- <CACGkMEtMK1_QJM7x33sLO-QOtdttV=8hBfH8YbYSB_-GDE6CTg@mail.gmail.com>
-In-Reply-To: <CACGkMEtMK1_QJM7x33sLO-QOtdttV=8hBfH8YbYSB_-GDE6CTg@mail.gmail.com>
-From: Jinpu Wang <jinpu.wang@ionos.com>
-Date: Fri, 7 Nov 2025 16:06:57 +0100
-X-Gm-Features: AWmQ_bkPOwz4D9aHbFY_YTK6zHcwKA8xQw4bh9Mh1ahWOoV3lR5jT_mcP_onOQs
-Message-ID: <CAMGffE=Z=tRJG9knPURmPDHtANQa5szysXvpmpes57f2C228Og@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_=E2=86=92_8?=
- =?UTF-8?Q?=2E2=2E10_due_to_virtio=2Dnet_feature_mismatch_=28VIRTIO=5FF=5FRING=5FRESE?=
- =?UTF-8?Q?T_=2F_USO_features=29?=
-To: Jason Wang <jasowang@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- qemu-stable@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Yu Zhang <yu.zhang@ionos.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::534;
- envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x534.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,82 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jason,
+If the guest incorrectly programs the lm4549 audio chip with a zero
+frequency, we will pass this to AUD_open_out(), which will complain:
 
-On Fri, Nov 7, 2025 at 2:02=E2=80=AFAM Jason Wang <jasowang@redhat.com> wro=
-te:
->
-> On Thu, Nov 6, 2025 at 10:28=E2=80=AFPM Jinpu Wang <jinpu.wang@ionos.com>=
- wrote:
-> >
-> > Hi Peter,
-> > On Wed, Nov 5, 2025 at 11:17=E2=80=AFPM Peter Xu <peterx@redhat.com> wr=
-ote:
-> > >
-> > > On Wed, Nov 05, 2025 at 10:27:59AM +0100, Jinpu Wang wrote:
-> > > > > > These are not present (or not supported) on QEMU 8.2.10, which =
-causes
-> > > > > > the migration state load to fail.
-> > > > >
-> > > > > Interesting, we've already done the compat work:
-> > > > >
-> > > > > GlobalProperty hw_compat_8_1[] =3D {
-> > > > >     { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" =
-},
-> > > > >     { "ramfb", "x-migrate", "off" },
-> > > > >     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-> > > > >     { "igb", "x-pcie-flr-init", "off" },
-> > > > >     { TYPE_VIRTIO_NET, "host_uso", "off"},
-> > > > >     { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-> > > > >     { TYPE_VIRTIO_NET, "guest_uso6", "off"},
-> > > > > };
-> > > > > const size_t hw_compat_8_1_len =3D G_N_ELEMENTS(hw_compat_8_1);
-> > > > Yeah, I noticed the same.
-> > >
-> > > AFAICT, this is a known issue..
-> > >
-> > > Thomas and I used to suggest we should not turn on USO* by default by
-> > > probing kernel, but only allow user choosing it explicitly in a VM
-> > > setup. IOW, dest qemu should stop booting at all when kernel is too o=
-ld
-> > > (when user chose the feature).
-> > I feel this is the approach we should have picked.
-> > >
-> > > See:
-> > >
-> > > https://lore.kernel.org/all/ZqQNKZ9_OPhDq2AK@x1n/
-> > Is there any effort to allow migration from new OS support the USO
-> > features to old OS doesn't support it?
->
-> You can teach your management to disable USO via the qemu command line.
+   A bug was just triggered in AUD_open_out
+   Save all your work and restart without audio
+   I am sorry
+   Context:
+   audio: frequency=0 nchannels=2 fmt=S16 endianness=little
 
-I added "host_uso=3Dfalse,guest_uso4=3Dfalse,guest_uso6=3Dfalse" for -devic=
-e
-virtio-net-pci
-But migration still fails with slightly different error:
-char device redirected to /dev/pts/1 (label charserial0)
-2025-11-07T15:00:45.528098Z qemu-8.2: Features 0x10130afffa7
-unsupported. Allowed features: 0x179bfffe7
-2025-11-07T15:00:45.528245Z qemu-8.2: Failed to load virtio-net:virtio
-2025-11-07T15:00:45.528253Z qemu-8.2: error while loading state for
-instance 0x0 of device '0000:00:02.0:06.0/virtio-net'
+The datasheet doesn't say what we should do here, only that the valid
+range for the freqency is 8000 to 48000 Hz; we choose to log the
+guest error and ignore an attempt to change the DAC rate to something
+outside the valid range.
 
-I suppose it is VIRTIO_F_RING_RESET?
-Any idea? I didn't find option to disable it
->
-> > Any hint to make it work?
->
-> Thanks
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/410
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+This bug has been around for so long and is a weird edge case whose
+only effect is to print a debug message, so it doesn't really seem
+worth cc'ing stable on.
+---
+ hw/audio/lm4549.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-Thx!
->
-> > >
-> > > Thanks,
-> > >
-> > > --
-> > > Peter Xu
-> > >
-> > Thx for the help.
-> >
->
+diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
+index 745441bd790..bf711c49c04 100644
+--- a/hw/audio/lm4549.c
++++ b/hw/audio/lm4549.c
+@@ -15,6 +15,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/hw.h"
++#include "qemu/log.h"
+ #include "qemu/audio.h"
+ #include "lm4549.h"
+ #include "migration/vmstate.h"
+@@ -179,9 +180,23 @@ void lm4549_write(lm4549_state *s,
+         break;
+ 
+     case LM4549_PCM_Front_DAC_Rate:
+-        regfile[LM4549_PCM_Front_DAC_Rate] = value;
+         DPRINTF("DAC rate change = %i\n", value);
+ 
++        /*
++         * Valid sample rates are 4kHz to 48kHz.
++         * The datasheet doesn't say what happens if you try to
++         * set the frequency to zero. AUD_open_out() will print
++         * a bug message if we pass it a zero frequency, so just
++         * ignore attempts to set the DAC frequency to zero.
++         */
++        if (value < 4000 || value > 48000) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: DAC sample rate %d Hz is invalid, ignoring it\n",
++                          __func__, value);
++            break;
++        }
++        regfile[LM4549_PCM_Front_DAC_Rate] = value;
++
+         /* Re-open a voice with the new sample rate */
+         struct audsettings as;
+         as.freq = value;
+-- 
+2.43.0
+
 
