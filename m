@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3AF0CCFA05
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 14:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B86CCFA18
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 14:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHNqM-0003Sr-Fz; Fri, 07 Nov 2025 09:53:38 -0500
+	id 1vHNqO-0003Z8-U5; Fri, 07 Nov 2025 09:53:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1vHNqI-0003Qi-JS
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 09:53:34 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1vHNqM-0003To-MO
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 09:53:39 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1vHNqG-0001ti-VE
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 09:53:34 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-429bf011e6cso839038f8f.1
- for <qemu-devel@nongnu.org>; Fri, 07 Nov 2025 06:53:31 -0800 (PST)
+ id 1vHNqK-0001uk-Aa
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 09:53:38 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-429b7eecf7cso616320f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Nov 2025 06:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1762527210; x=1763132010; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yp8KMMgUvKnxKtL9QZHGuo+bT1CzG82i3SYFL2gwN24=;
- b=KY2UOA0ykEVOawt1gTPjQvgDRD/X9uU0F5Umdo6+Y+dyc0DCLUk6LxZ9jkWBDuC7cN
- DbqJ4ILAFl4e20rK55A0A2zy/I0+d23GFcqmZqurRVbEnDLAR6PQgZXGz1R8WMFs7teH
- YLCrka3Q3SdoFoqhYzP+eNsO8bnRCV+tG3tNlPL4irgrGkNRx+Xm7Kb+3G7IWQ5qwyU0
- pxipU0aIJva4GmRSevhynyhgRZNGdIfu4ignu7+3FEb56Z22qsAvHF/NhkiCwDK3iuzr
- obnmTsOcQvvxU+M/siRAihCj1WdzpYGdiB/pNcWLVC5zephaW1RoFOE3nsOISVo+KQvP
- p/ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762527210; x=1763132010;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=adacore.com; s=google; t=1762527213; x=1763132013; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yp8KMMgUvKnxKtL9QZHGuo+bT1CzG82i3SYFL2gwN24=;
- b=h8jqDJ2KYnVPKZJOvP10QxpkM7W+W/m/XGGtwyzSXWBUI6+9HnDoWB+t5HBJ8PYLh7
- oX9j/gjGA6Xy0fuT80N9SK2HNlL9owVYiTNvUgjKMUVnwaWUZDJO6s6HJ7RPeVnl8Y7s
- 4EhjK8NuSp7sl0BotG7B7WmHRoXsUU0jgiBHltmesuH7uxLiXmhb9sL6fTEtIVYxVLPH
- WxdRKe0MgSQhPiA+mrdUWla8VKRH6A0YJIxIKijjoWdLTQvObjxXZ7s1uPZcEqV+X39H
- 5kUGeb9cpJVEIOzJN50TRd383CVhcpQTVBcmI0k6yijqDGVnUdZZWLUDyLFHCv6W5zu0
- lfdQ==
-X-Gm-Message-State: AOJu0YzXypkC5YQMjmh4R2/0wJObMw2g2dqYh/lYuQSSaoEorkRT0nrE
- UkVGW3rlCNblGKH4U6X99IIA/XSKWWIbEQvXgPxKFs082x1WZm734n3yVjmguW4jKw==
-X-Gm-Gg: ASbGncvDFDlNzTaWl6S0kw7UZ2a6TXSzblczFQ4OBFRM3vz7WHZTCOg5ubeUR1Am1qW
- aMBmq4igo5i05yc9Yros9qaY1o+hJFyIGnJTlimSFI+nJNs7QoljCIO7KhCGDPcOKdrsM2xxhaM
- XAeU8NZut2qQv2Q5ritDuPfSllxn3kDaj+XtOYh6fHOmytVbHzFgIfvCuvKVe/0knFAASvfbZz/
- 1d5/FY68NYeqpCvAFYFTae6zfe5rcnubUeFUCD598KlX4HVOeU0iy92OXwfFnkxl7jdM9vJtlQb
- Q9oTN02FV7CPq0ZBSe5vvTzaHZwtxEnZfO3TRsyk46UCsl0A2nPqVWWHXZ0Ybreb0PBobjFAGys
- vY+/TtiuecI5n7I91yY6ds3KCVPeOoqOd/zuv8Hqx1/rhZJtC2TQglj2OrMJR2cR7XaUmH47SX7
- rrmjtm0HE5RIzToCdDKQ==
-X-Google-Smtp-Source: AGHT+IHDNaymfK26JdBKgkh/r0KSyFZ7NKBOp8Aruazz2+D4HabuQDffGuq5jfeEawU/uK3GNbWeSw==
-X-Received: by 2002:a05:6000:220e:b0:429:d3e9:661 with SMTP id
- ffacd0b85a97d-42ae588157fmr3089086f8f.15.1762527210369; 
- Fri, 07 Nov 2025 06:53:30 -0800 (PST)
+ bh=NgRV3D7A6AU7eoGPkfrJPq4UVKzASaP5OU2HV5V5XwY=;
+ b=MzAChgCbhm8idL0k5WIWQHcq52R5Pq4rLEpXJVuYi2ApCI3bQnrPl7nuB7+f+a3ohN
+ xrblK1x30ShjOpy+VMqxdbrx7TENRkvySkCChuq/E8K5Hmyj6DnIgu8NqPNeqk0BuNrT
+ RQjX4tkqiZWAUoZWZReA3DKUo1zf5NhGPPDuHVcenA/Xc4MRMOEovRs0gagbiJceQimV
+ 7uGt2od57Fi45lxR9oDJ6NQ30+VgTX7iHxkZxbHfylXX38IL9p3FLtWNkS2Wav706NBb
+ OGcqW3/NXvG6oPn/5kF+wC4NYTI3yLCJnaaB6BpMcd33jW0lEV2lzb+3T14XELOXPN7s
+ 3CHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762527213; x=1763132013;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NgRV3D7A6AU7eoGPkfrJPq4UVKzASaP5OU2HV5V5XwY=;
+ b=Fof99qBelkgN72k8zuBx3KOEo8Yy7NigGE558MHeVWE20FkAISZHt3gSbRVzXByKzU
+ 353aleC+Rf5F8hcRNdIJkEu1qK0r4pxl0C5gWl2BiFdTWco1JBvOiUhYvtJoEZ4DO4Aw
+ mFdnRKP7g4LYQL1n9w3q0rClChe4Rq1/0Gx0jDZqqZ8AH9iYiDfKMe1CZrhnK53IQWMf
+ E17jh2DLjTTLY2bLoVACgDkad+82nIFUW/cMZ5WhZDxBcTlQvcoKegmAWTJWAozEEqsn
+ jq8HkVNdA3wmYoQwrdf1AgR2OpYlWZwuyc0kUT1whv3G+c+pco4CjoKrEuJuytV1hgib
+ Pk0Q==
+X-Gm-Message-State: AOJu0YyC1Likl2vDH78Z0a3hqdw46hAtICunbNHc/X3MUyeNVtbBjoM2
+ O0kqEg8AVkD7ksglIsSw4/7LJzPVEsrFeXeiwY4jpS9ZFtPBh8xRDSi1REwlP594mw==
+X-Gm-Gg: ASbGncuJ+XMpp20TuaRTfkF+zb984p7v5lOYzE9+oeCx886+c9uaUD9mj7wes95S25N
+ 2IyXDyZSOJvcw2jzoFQOWf4TSLug9Uo3VcpDq6gNcrFnyC/htNEJ+/w7OD2hhOH3x9oXjkFFYG1
+ xu6PQLajKfuKrv/FYZ9a1SoDzY6c7Lu4yX2c7jvI8vx1j7mCaCk0C0ltk29lWOL62jxt295W3pD
+ IM1ioVLS23KiLSaRC9pftFQ+UcPAkQCyWKlcmdbJaVkz9QqXSQCJxV/LuLWRyOESBD1NhTH13Bp
+ GMnt4ybHr+xQufe/t4yzVtXGyRMzdYBT1y2PL/6fG+8I/9wJR8M9U8RWM4MQBZ4dHvfv8o5S0ry
+ ldl2GKS1U3vvOKsAzajQdMqtwMxL5l24nUReGfUpHHe4s7AcgEsGHK9D5OK3lM8SC+bBVSKuFWD
+ 1QMZFrWBU=
+X-Google-Smtp-Source: AGHT+IE9lrmPZkbZj+aG13ojPgDeArQzWU0HveRwgo8YI6t+ocODNiDJQTZqUO9jvYS6iotXoOQQ4w==
+X-Received: by 2002:a5d:5f83:0:b0:429:c6ba:d94e with SMTP id
+ ffacd0b85a97d-42b26f689c6mr2243709f8f.12.1762527213269; 
+ Fri, 07 Nov 2025 06:53:33 -0800 (PST)
 Received: from chigot-Dell.home ([2a01:cb15:80db:7c00:e453:acd:db85:b66e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42abe63e131sm5922435f8f.20.2025.11.07.06.53.29
+ ffacd0b85a97d-42abe63e131sm5922435f8f.20.2025.11.07.06.53.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Nov 2025 06:53:30 -0800 (PST)
+ Fri, 07 Nov 2025 06:53:32 -0800 (PST)
 From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
  eblake@redhat.com, armbru@redhat.com,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH v2 0/5] block/vvfat: introduce "fat-size" option
-Date: Fri,  7 Nov 2025 15:53:22 +0100
-Message-ID: <20251107145327.539481-1-chigot@adacore.com>
+Subject: [PATCH v2 4/5] vvfat: move size parameters within driver structure
+Date: Fri,  7 Nov 2025 15:53:26 +0100
+Message-ID: <20251107145327.539481-5-chigot@adacore.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251107145327.539481-1-chigot@adacore.com>
+References: <20251107145327.539481-1-chigot@adacore.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=chigot@adacore.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=chigot@adacore.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,48 +103,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The main goal of this series is to introduce a new option "fat-size"
-within the vvfat backend (patch 5).
+At the same time, rename them to match bootsector fields.
 
-This series also includes minor patches:
- - patch 1 introduces another option to create unpartitionned disks.
- - patch 2-4 are minor improvements easing the introducing of
-   "fat-size" option
+Signed-off-by: Clément Chigot <chigot@adacore.com>
+---
+ block/vvfat.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-This was tested on with a aarch64-linux kernel taken from
-functional/aarch64/test-virt and on aarch64-qnx over raspi4b with a
-workaround, not included here (the SD bus must be associated to the EMMC2
-port instead of through GPIOs).
-
-Changes since v1:
- - patch 1:
-   - rename option "partitioned"
-   - add qapi entries
-   - add option in vvfat_strong_runtime_opts
- - patch 2:
-   - make FAT12 1440K the default instead of FAT12 2880K
- - patch 3:
-   - introduce rename VVFAT_SECTOR_SIZE
-   - replace BRDV_SECTOR_SIZE as those are actually VVFAT_SECTOR_SIZE
-   - introduce VVFAT_SECTOR_BITS
- - patch 5
-   - rename option "fat-size"
-   - add qapi entries
-   - add option in vvfat_strong_runtime_opts
-   - replace floppy 1M/2M size limitation by 1440K or 2880K
-   - correctly round up when "fat-size" cannot be expressed by CHS values.
-
-Clément Chigot (5):
-  vvfat: introduce partitioned option
-  vvfat: move fat_type check prior to size setup
-  vvfat: add a define for VVFAT_SECTOR_BITS and VVFAT_SECTOR_SIZE
-  vvfat: move size parameters within driver structure
-  vvfat: add support for "fat-size" options
-
- block/vvfat.c        | 353 +++++++++++++++++++++++++++++++------------
- qapi/block-core.json |  16 +-
- 2 files changed, 273 insertions(+), 96 deletions(-)
-
+diff --git a/block/vvfat.c b/block/vvfat.c
+index 1c51dfa561..b0e591e35e 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -312,7 +312,10 @@ typedef struct BDRVVVFATState {
+     /* 0x3f for partitioned disk, 0x0 otherwise */
+     uint32_t offset_to_bootsector;
+ 
++    unsigned int cylinders;
+     unsigned int cluster_size;
++    unsigned int number_of_heads;
++    unsigned int sectors_per_track;
+     unsigned int sectors_per_cluster;
+     unsigned int sectors_per_fat;
+     uint32_t last_cluster_of_root_directory;
+@@ -366,7 +369,7 @@ static int sector2CHS(mbr_chs_t *chs, int spos, int cyls, int heads, int secs)
+     return 0;
+ }
+ 
+-static void init_mbr(BDRVVVFATState *s, int cyls, int heads, int secs)
++static void init_mbr(BDRVVVFATState *s)
+ {
+     /* TODO: if the files mbr.img and bootsect.img exist, use them */
+     mbr_t* real_mbr=(mbr_t*)s->first_sectors;
+@@ -382,9 +385,9 @@ static void init_mbr(BDRVVVFATState *s, int cyls, int heads, int secs)
+ 
+     /* LBA is used when partition is outside the CHS geometry */
+     lba  = sector2CHS(&partition->start_CHS, s->offset_to_bootsector,
+-                     cyls, heads, secs);
++                      s->cylinders, s->number_of_heads, s->sectors_per_track);
+     lba |= sector2CHS(&partition->end_CHS,   s->bs->total_sectors - 1,
+-                     cyls, heads, secs);
++                      s->cylinders, s->number_of_heads, s->sectors_per_track);
+ 
+     /*LBA partitions are identified only by start/length_sector_long not by CHS*/
+     partition->start_sector_long  = cpu_to_le32(s->offset_to_bootsector);
+@@ -896,8 +899,7 @@ static inline off_t cluster2sector(BDRVVVFATState* s, uint32_t cluster_num)
+     return s->offset_to_root_dir + s->sectors_per_cluster * cluster_num;
+ }
+ 
+-static int init_directories(BDRVVVFATState* s,
+-                            const char *dirname, int heads, int secs,
++static int init_directories(BDRVVVFATState *s, const char *dirname,
+                             Error **errp)
+ {
+     bootsector_t* bootsector;
+@@ -1031,8 +1033,8 @@ static int init_directories(BDRVVVFATState* s,
+     bootsector->media_type = (s->offset_to_bootsector > 0 ? 0xf8 : 0xf0);
+     s->fat.pointer[0] = bootsector->media_type;
+     bootsector->sectors_per_fat=cpu_to_le16(s->sectors_per_fat);
+-    bootsector->sectors_per_track = cpu_to_le16(secs);
+-    bootsector->number_of_heads = cpu_to_le16(heads);
++    bootsector->sectors_per_track = cpu_to_le16(s->sectors_per_track);
++    bootsector->number_of_heads = cpu_to_le16(s->number_of_heads);
+     bootsector->hidden_sectors = cpu_to_le32(s->offset_to_bootsector);
+     bootsector->total_sectors=cpu_to_le32(s->sector_count>0xffff?s->sector_count:0);
+ 
+@@ -1154,7 +1156,6 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
+                       Error **errp)
+ {
+     BDRVVVFATState *s = bs->opaque;
+-    int cyls, heads, secs;
+     bool floppy;
+     const char *dirname, *label;
+     QemuOpts *opts;
+@@ -1221,18 +1222,18 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
+ 
+     if (floppy) {
+         /* Choose floppy size. 1440 KiB for FAT 12, 2880 KiB for FAT-16 */
+-        secs = s->fat_type == 12 ? 18 : 36;
+-        cyls = 80;
+-        heads = 2;
++        s->sectors_per_track = s->fat_type == 12 ? 18 : 36;
++        s->cylinders = 80;
++        s->number_of_heads = 2;
+     } else {
+         /* Reserver space for MBR */
+         if (qemu_opt_get_bool(opts, "partitioned", true)) {
+             s->offset_to_bootsector = 0x3f;
+         }
+         /* 32MB or 504MB disk*/
+-        cyls = s->fat_type == 12 ? 64 : 1024;
+-        heads = 16;
+-        secs = 63;
++        s->cylinders = s->fat_type == 12 ? 64 : 1024;
++        s->number_of_heads = 16;
++        s->sectors_per_track = 63;
+     }
+ 
+ 
+@@ -1249,10 +1250,13 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
+     s->downcase_short_names = 1;
+ 
+     DLOG(fprintf(stderr, "vvfat %s chs %d,%d,%d\n",
+-                 dirname, cyls, heads, secs));
++                 dirname, s->cylinders, s->number_of_heads,
++                 s->sectors_per_track));
+ 
+-    s->sector_count = cyls * heads * secs - s->offset_to_bootsector;
+-    bs->total_sectors = cyls * heads * secs;
++    s->sector_count = s->cylinders * s->number_of_heads *
++        s->sectors_per_track - s->offset_to_bootsector;
++    bs->total_sectors = s->cylinders * s->number_of_heads *
++        s->sectors_per_track;
+ 
+     if (qemu_opt_get_bool(opts, "rw", false)) {
+         if (!bdrv_is_read_only(bs)) {
+@@ -1273,7 +1277,7 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
+         }
+     }
+ 
+-    if (init_directories(s, dirname, heads, secs, errp)) {
++    if (init_directories(s, dirname, errp)) {
+         ret = -EIO;
+         goto fail;
+     }
+@@ -1294,7 +1298,7 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
+     }
+ 
+     if (s->offset_to_bootsector > 0) {
+-        init_mbr(s, cyls, heads, secs);
++        init_mbr(s);
+     }
+ 
+     qemu_co_mutex_init(&s->lock);
 -- 
 2.43.0
 
