@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEBBCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 07:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B62CCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 07:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHGp3-0001sY-M3; Fri, 07 Nov 2025 02:23:49 -0500
+	id 1vHGv1-0002ti-5U; Fri, 07 Nov 2025 02:29:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vHGp0-0001p9-Qx
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:23:47 -0500
-Received: from p-east3-cluster5-host11-snip4-10.eps.apple.com ([57.103.86.241]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vHGut-0002tG-E6
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:29:53 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vHGoy-0007JD-Ti
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:23:46 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-10-percent-0 (Postfix) with ESMTPS id
- 58CC71800143; Fri,  7 Nov 2025 07:23:40 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=nDzxdNvPMbkKihCrPo/2QZNzRevpnavezbFvV21gJNk=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=O3YddpEYpfCr0To37k+iYB4bQBCgb+Zk9Kgt6U1y3fszm/LQK0fT4CKM+lCRL/7YslonW12+8lYs5SXBymE6lEg/mqMJ7p1cDzkYq1C9S6a1nqTuJ2PeP5UVAz8EW3gMkJ5GlrNZ7PwRfDdPs+VqUl829R9UtexQugRdhHpVb3vtAmS1EMXM1ZzIi4xVMCW2hwTi7YQUaeGsZtNZAdFHBqWhEtdZDvkSy1BDAV/u1F3xuf2YNqc8n7+tHPq3r+/OYYkphTu6gvxUMBJwT5RzhgN+rZUSfO2VuDKNqnORl2jZj6iZYq2eut93odfZGfYXOkH4Vu6/9ObDlnjuuV11Sg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-10-percent-0 (Postfix) with ESMTPSA id
- A9F95180010E; Fri,  7 Nov 2025 07:23:39 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] MAINTAINERS: update maintainers for WHPX
-Date: Fri,  7 Nov 2025 08:23:37 +0100
-Message-ID: <20251107072337.28932-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vHGuq-00005a-N6
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:29:51 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id F0236C01AE;
+ Fri, 07 Nov 2025 10:29:43 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d76::1:1a] (unknown
+ [2a02:6bf:8080:d76::1:1a])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id gTh2nM0FEeA0-pgiuFhnY; Fri, 07 Nov 2025 10:29:43 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1762500583;
+ bh=jT57MX+Hxw4H3E4bkuYZb5RG2nG7fqOZiJ/e1hkjfBc=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=JEPW3NdP+2omTGKPg4be3084MWSbN86KdrojcDIPjg/j/vPjJK4ZzEB4kTXV2su/G
+ vd4ndMApQJghFtoaCchtjX8uKIlfx1uGYHNMFWFW7e2OOXTSX58rndgkhLMB1jnY8A
+ P13WIKXBBiERWRTNwhVnfcv7FkvgaZRlF/PRK384=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <463a9d4a-300a-4259-9efd-7e5670f79cc4@yandex-team.ru>
+Date: Fri, 7 Nov 2025 10:29:42 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/7] chardev/char: split chardev_init_common() out of
+ qemu_char_open()
+To: marcandre.lureau@redhat.com
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+References: <20251104101715.76691-1-vsementsov@yandex-team.ru>
+ <20251104101715.76691-3-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251104101715.76691-3-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: mpXUsRvU2KnzT7gv-sAwMBfgqSeIU7oX
-X-Authority-Info: v=2.4 cv=ApvjHe9P c=1 sm=1 tr=0 ts=690d9e7d cx=c_apl:c_pps
- a=bsP7O+dXZ5uKcj+dsLqiMw==:117 a=bsP7O+dXZ5uKcj+dsLqiMw==:17
- a=6UeiqGixMTsA:10 a=yMhMjlubAAAA:8 a=kv-9D5d5aYtht4lzJZ0A:9
- a=U4hE3kul-ix6n922hGs7:22
-X-Proofpoint-GUID: mpXUsRvU2KnzT7gv-sAwMBfgqSeIU7oX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDA1OCBTYWx0ZWRfX75lJIa37Fp3d
- 7WUWC2IQ+IsYXco7ujgd+duE+fwS/afHYYMtRUsJZDK+ZMLTYwSnUwigK0ICRLBGqhJ+65QUsxm
- ICjt4Xov6T4+LZdGTvcDUb6BLS3TnR5eWmGbq3DYVeKs1R3Bp6055PSjLp776bmoyzPAOmlmz8g
- 59HQOMLt1ydZqNaiwSUKl2Txyx1N43qcSwZH/i9iu8ywTKqcg3HgA4vLIEcAGNfD7A9I97CidmZ
- jVtFeqPZQZP3g6XaEQZFDPcXZU+8hOUvFJrpunDiDVN5CPKeX7YUFBUwR0kjYabpLz8kh7NVurM
- PjWKzgc8HCVKX0TqO+k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-07_01,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- suspectscore=0 mlxlogscore=686 adultscore=0 clxscore=1030 mlxscore=0
- malwarescore=0 spamscore=0 bulkscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2509250000 definitions=main-2511070058
-X-JNJ: AAAAAAAB7so9mBjgO0plwl1qDcQT1PMNb/c+LGPuhtqAQi/VSoxv2D8ggD3gLDlHNW7HLQWumvNEXGe+h2Qcv6Faa3uoJNIwcMZcc+IVoeCC7Y44wiKiQrTgkt8y9lwLtcMWbYXaewufIEgcijX8pAAoZlIYvjAoURMh4Y9p49KmPRmHFAGCiexyP+zTctRbJCX0nMGMNlssO9G1Xu6EibtTgIbrtI/EzJZqrh6o4hcM5xtddAWvNsydEYxtz39zQvuMJo+kF6eouIGbStOb5jDJ2PijG65JP4Br2GbsgQAPJVxQg1UxaSJBgGDIxYc/nY1FMHNHIkXhcOoPZXzx0XKQaNufWEhkvFB3OnRObPmhV1N3QvAOZ/13YhWk5vt99SkU9jq0e1zOkZJgTNvNBp5Hcb9WSRGAQ1dNRN2tecDpsCWFNgCyVhQFWm9YmJvaLPRTRbI3GTiB4L3KtzccQTsk4FlyLf0w3gT/vG1a57F0mkfXrK7oy2cN7Qct3mkE0g03TQu3gGq9Jhv1VRVaN1ynMJBHoe8HtRVT1qntvlCJ1Gi0kV5bOicnImBtToMjhX9GWJ7MwJLRDeY5ZbJjEXjP5l2cWeqkRuoe
-Received-SPF: pass client-ip=57.103.86.241;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -86,30 +81,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From Pedro Barbuda (on Teams):
+On 04.11.25 13:17, Vladimir Sementsov-Ogievskiy wrote:
+> We are going to share new chardev_init_logfd() with further
+> alternative initialization interface. Let qemu_char_open() be
+> a wrapper for .open(), and its artifacts (handle be_opened if
+> was not set to false by backend, and filename).
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   chardev/char.c | 50 ++++++++++++++++++++++++++++++++------------------
+>   1 file changed, 32 insertions(+), 18 deletions(-)
+> 
+> diff --git a/chardev/char.c b/chardev/char.c
+> index 3e432195a5..216c95c053 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -250,22 +250,6 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
+>                              bool *be_opened, Error **errp)
+>   {
+>       ChardevClass *cc = CHARDEV_GET_CLASS(chr);
+> -    /* Any ChardevCommon member would work */
+> -    ChardevCommon *common = backend ? backend->u.null.data : NULL;
+> -
+> -    if (common && common->logfile) {
+> -        int flags = O_WRONLY;
+> -        if (common->has_logappend &&
+> -            common->logappend) {
+> -            flags |= O_APPEND;
+> -        } else {
+> -            flags |= O_TRUNC;
+> -        }
+> -        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
+> -        if (chr->logfd < 0) {
+> -            return;
+> -        }
+> -    }
+>   
+>       if (cc->open) {
+>           cc->open(chr, backend, be_opened, errp);
+> @@ -1000,6 +984,29 @@ void qemu_chr_set_feature(Chardev *chr,
+>       return set_bit(feature, chr->features);
+>   }
+>   
+> +static bool chardev_init_common(Chardev *chr, ChardevBackend *backend,
+> +                                Error **errp)
+> +{
+> +    /* Any ChardevCommon member would work */
+> +    ChardevCommon *common = backend ? backend->u.null.data : NULL;
+> +
+> +    if (common && common->logfile) {
+> +        int flags = O_WRONLY;
+> +        if (common->has_logappend &&
+> +            common->logappend) {
+> +            flags |= O_APPEND;
+> +        } else {
+> +            flags |= O_TRUNC;
+> +        }
+> +        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
+> +        if (chr->logfd < 0) {
+> +            return false;
+> +        }
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static Chardev *chardev_new(const char *id, const char *typename,
+>                               ChardevBackend *backend,
+>                               GMainContext *gcontext,
+> @@ -1020,11 +1027,14 @@ static Chardev *chardev_new(const char *id, const char *typename,
+>       chr->label = g_strdup(id);
+>       chr->gcontext = gcontext;
+>   
+> +    if (!chardev_init_common(chr, backend, errp)) {
+> +        goto fail;
+> +    }
+> +
+>       qemu_char_open(chr, backend, &be_opened, &local_err);
+>       if (local_err) {
+>           error_propagate(errp, local_err);
+> -        object_unref(obj);
+> -        return NULL;
+> +        goto fail;
+>       }
+>   
+>       if (!chr->filename) {
+> @@ -1035,6 +1045,10 @@ static Chardev *chardev_new(const char *id, const char *typename,
+>       }
+>   
+>       return chr;
+> +
+> +fail:
+> +    object_unref(obj);
+> +    return NULL;
+>   }
+>   
+>   Chardev *qemu_chardev_new(const char *id, const char *typename,
 
-> we meant to have that switched a while back. you can add me as the maintainer. Pedro Barbuda (pbarbuda@microsoft.com)
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This commit means that we'll not migrate the logfd.. But why not? I have not current plans
+to support migration of serial port devices, but seems good to save a possibility for it
+now.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index be6efff80c..c75b1a4d07 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -547,7 +547,8 @@ F: include/system/hvf.h
- F: include/system/hvf_int.h
- 
- WHPX CPUs
--M: Sunil Muthuswamy <sunilmut@microsoft.com>
-+M: Pedro Barbuda <pbarbuda@microsoft.com>
-+M: Mohamed Mediouni <mohamed@unpredictable.fr>
- S: Supported
- F: target/i386/whpx/
- F: accel/stubs/whpx-stub.c
+At least, if not support now, I should explicitly error-out on trying to migreate chardev
+with logfd, instead of silently recreate the file on target (which will actually break
+source, which continue writing to it)
+
 -- 
-2.50.1 (Apple Git-155)
-
+Best regards,
+Vladimir
 
