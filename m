@@ -4,62 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A11CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 09:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4428CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 09:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHIKU-0000ej-3N; Fri, 07 Nov 2025 04:00:22 -0500
+	id 1vHIO4-00025y-LF; Fri, 07 Nov 2025 04:04:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vHIKR-0000eP-Ki
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 04:00:19 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <i.repko@syntacore.com>)
+ id 1vHIO2-00025I-DR; Fri, 07 Nov 2025 04:04:02 -0500
+Received: from m.syntacore.com ([178.249.69.228])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vHIKM-0007GZ-UH
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 04:00:19 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id F26CA403CB;
- Fri,  7 Nov 2025 09:00:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18860C4CEF8;
- Fri,  7 Nov 2025 09:00:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1762506009;
- bh=3e8g68W/EBHINx1+9ERUwS9Z4JKlywnF/1EVtlhfhvs=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AMB9o4TlKKdbWEws1cUYXReyg9cEGb4WrnFC6M9LYksPfzlB078kJyZr7bX+BEIOa
- jHWiskxF7GSiLfrHWzoCv8eJLdY8WPsYfIZvIg2a1bM5I2EyV2p5NSQlmeLKJseHsX
- 1paI0sYlrAqQptmrsuVnS7UIDRzv69Kpgk/q8n7uFzCVtvDLq6dZqAh2slYTolY7v2
- OxNnx6GH2F1qyOgz0OEt6HYULfdXZIZ2t40comHsrwyJkhQmUUC8VshpCCM6ntL4YK
- jfm/rXedQ4tGEwATaBI/K3z2V2BFh9q+Q99lByxtday8R84mUln3YjTvXsoWGDVtKC
- JM71rJCjfPCSA==
-Date: Fri, 7 Nov 2025 14:21:24 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>
-Subject: Re: [PATCH v3 8/9] target/i386: SEV: Add support for setting TSC
- frequency for Secure TSC
-Message-ID: <ot37mpc4y2oferchx6yroyriqickajnkiouok7quaaijq25c7n@cpqitwnuwyz2>
-References: <cover.1761648149.git.naveen@kernel.org>
- <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
- <87cy5vgy66.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <i.repko@syntacore.com>)
+ id 1vHIO0-0007ld-O4; Fri, 07 Nov 2025 04:04:02 -0500
+Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
+ by m.syntacore.com (Postfix) with ESMTP id 2068B1A0003;
+ Fri,  7 Nov 2025 09:03:57 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com 2068B1A0003
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
+ t=1762506237; bh=AK7xB5Y/yPhO4FGOBbeUDBXhCsU7iDNfgllIVaiAISs=;
+ h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version:From;
+ b=YhLEQ8bOUkRfJr+Bthjv7fPCnUfjSiVoPn8SlNIq2bPqH+OfyzZFhBuXLho2JMezu
+ 98w4VZ99W2oFJIN7eRvdcVO279Ix21QAADDRdJbTwYElKvcdGFBfJkjaqBOB2oui0X
+ /M6clDYgKX4o6M9YFEjhx5kr8zX+PRIBkmVy4fBom93pX5gC4XXKrqRW/36ZbquG/e
+ oJmdZZpqOsMNRkMeq/0aNy9Rl17+We3ri93p33GVbM0tcSqkPlsmNhDcqeGyeJHOwI
+ WDips0HxttvDZfYSKF7C9ZBCoROdOeJFUyDXvBJ+4WOr8V+zNVbbpjoDPxLhW+uuDi
+ g7rLJQ0EodDlQ==
+Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
+ [10.76.202.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by m.syntacore.com (Postfix) with ESMTPS;
+ Fri,  7 Nov 2025 09:03:56 +0000 (UTC)
+Received: from [172.27.13.83] (172.27.13.83) by
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Fri, 7 Nov 2025 12:03:54 +0300
+Message-ID: <da835a64878e9eae03c7fb8f79577fa2d5b762df.camel@syntacore.com>
+Subject: Re: [PATCH] Revert "hw/net: Fix the transmission return size"
+From: Ilya Repko <i.repko@syntacore.com>
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, <fea.wang@sifive.com>
+CC: Alistair Francis <alistair@alistair23.me>, Peter Maydell
+ <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>, "open
+ list:Xilinx Zynq" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Date: Fri, 7 Nov 2025 12:03:23 +0300
+In-Reply-To: <aQz0CiFKPCNbO76m@zapote>
+References: <20251106094837.431976-1-i.repko@syntacore.com>
+ <aQz0CiFKPCNbO76m@zapote>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.1 (3.58.1-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87cy5vgy66.fsf@pond.sub.org>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Originating-IP: [172.27.13.83]
+X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
+X-KSMG-AntiPhishing: not scanned, disabled by settings
+X-KSMG-AntiSpam-Interceptor-Info: not scanned
+X-KSMG-AntiSpam-Status: not scanned, disabled by settings
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
+ bases: 2025/11/07 07:41:00 #27891535
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 5
+Received-SPF: pass client-ip=178.249.69.228;
+ envelope-from=i.repko@syntacore.com; helo=m.syntacore.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,74 +93,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 06, 2025 at 01:09:37PM +0100, Markus Armbruster wrote:
-> Pardon my ignorance...
-> 
-> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
-> 
-> > Add support for configuring the TSC frequency when Secure TSC is enabled
-> > in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
-> > guest objects, similar to the vCPU-specific property used by regular
-> > guests and TDX.
-> 
-> Which property exactly?
+Hi,
 
-Same name: tsc-frequency specified with '-cpu'
+We encountered this issue with U-Boot driver. It implements a single RX
+buffer, which gets resubmitted to s2mm once the network stack is done
+handling a packet, so for a while the DMA engine has no buffers to
+store incoming packets into, and that's why we're seeing AXI DMA data
+push failures, which lead to packets duplicating and NetQueue growing
+indefinitely.
 
-> 
-> >                 A new property is needed since SEV-SNP guests require
-> > the TSC frequency to be specified during early SNP_LAUNCH_START command
-> > before any vCPUs are created.
-> 
-> Sounds awkward.
-> 
-> Do the two properties set the same thing at different times?
+Haven't really tested with Linux. What was the problem with the kernel
+driver?
 
-Yes. For regular guests, TSC frequency is set using a vCPU ioctl.  
-However, TDX and SEV-SNP (with Secure TSC) require the TSC frequency to 
-be set as a VM property (there is a VM ioctl for this purpose).
+Ilya
 
-This was Tom's question too (see v2): is there any way to re-use 
-'tsc-frequency' specified with '-cpu' for Secure TSC.
-
-> 
-> > The user-provided TSC frequency is set through KVM_SET_TSC_KHZ before
-> > issuing KVM_SEV_SNP_LAUNCH_START.
-> >
-> > Attempts to set TSC frequency on both the SEV_SNP object and the cpu
-> > object result in an error from KVM (on the vCPU ioctl), so do not add
-> > separate checks for the same.
-> >
-> > Sample command-line:
-> >   -machine q35,confidential-guest-support=sev0 \
-> >   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on,tsc-frequency=2500000000
-> >
-> > Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-> > Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-> > Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
-> > Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-> > Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
-> 
-> [...]
-> 
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index c7dd2dd1b095..5daaf065b6b7 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -1104,6 +1104,9 @@
-> >  # @secure-tsc: enable Secure TSC
-> >  #     (default: false) (since 10.2)
-> >  #
-> > +# @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
-> > +#     is enabled (default: zero) (since 10.2)
-> 
-> Is this likely to remain the only property that's only valied when
-> @secure-tsc is true?
-
-At this stage, yes. I am not aware of anything else that is specific to 
-Secure TSC.
-
-
-- Naveen
-
+On Thu, 2025-11-06 at 20:16 +0100, Edgar E. Iglesias wrote:
+> On Thu, Nov 06, 2025 at 12:48:37PM +0300, Ilya Repko wrote:
+> > This reverts commit 3a6d374b754b4b345195ff6846eeaffedc96a7c5.
+> >=20
+> > During axienet_eth_rx_notify(), s->rxpos is modified to indicate
+> > how much
+> > data was pushed to AXI DMA. eth_rx() would then return this value.
+> > If at 0, network subsystem would consider packet reception as
+> > failed
+> > and put the packet in a queue for later.
+> >=20
+> > Before we attempt to push packet data to AXI DMA, the packet is
+> > stored
+> > in s->rxmem buffer. If an attempt to push data fails, we will
+> > reattempt
+> > to deliver it from s->rxmem buffer once s2mm stream gets a new
+> > descriptor.
+> > s->rxmem would not be overwritten by a subsequent eth_rx() call,
+> > because
+> > eth_can_rx() protects it in case it has any data at all. Leaving
+> > the packet
+> > in a NetQueue though effectively duplicates it.
+> >=20
+> > Therefore, eth_rx() must indicate successful packet reception in
+> > case
+> > data push to AXI DMA fails.
+>=20
+> Hi,
+>=20
+> Adding Fea since we're reverting his patch, he may have some
+> insights.
+>=20
+> What you describe sounds reasonable but I think we've seen issues
+> with
+> both your version (the original one) and Fea's version.
+>=20
+> What machine are you running? Are you running Linux guests?
+>=20
+> Cheers,
+> Edgar
+>=20
+>=20
+>=20
+>=20
+> >=20
+> > Signed-off-by: Ilya Repko <i.repko@syntacore.com>
+> > ---
+> > =C2=A0hw/net/xilinx_axienet.c | 2 +-
+> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+> > index 31e7708082..101b3f260a 100644
+> > --- a/hw/net/xilinx_axienet.c
+> > +++ b/hw/net/xilinx_axienet.c
+> > @@ -867,7 +867,7 @@ static ssize_t eth_rx(NetClientState *nc, const
+> > uint8_t *buf, size_t size)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 axienet_eth_rx_notify(s);
+> > =C2=A0
+> > =C2=A0=C2=A0=C2=A0=C2=A0 enet_update_irq(s);
+> > -=C2=A0=C2=A0=C2=A0 return s->rxpos;
+> > +=C2=A0=C2=A0=C2=A0 return size;
+> > =C2=A0}
+> > =C2=A0
+> > =C2=A0static size_t
+> > --=20
+> > 2.51.1
+> >=20
 
