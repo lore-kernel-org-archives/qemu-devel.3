@@ -4,89 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D891CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Nov 2025 22:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 564BBCCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 01:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vH8v8-00072r-Hp; Thu, 06 Nov 2025 17:57:34 -0500
+	id 1vHAsP-00075h-Nb; Thu, 06 Nov 2025 20:02:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vH8v7-00072A-3y
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 17:57:33 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vH8v4-0000sf-Uq
- for qemu-devel@nongnu.org; Thu, 06 Nov 2025 17:57:32 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b728a43e410so30565466b.1
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 14:57:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vHAsO-00075O-FJ
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 20:02:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vHAsL-000328-8T
+ for qemu-devel@nongnu.org; Thu, 06 Nov 2025 20:02:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762477366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iA6R51NppfR5cHA1/MFKh6KbuPuatj6OSELOYsrOzT4=;
+ b=avAe5GUAWEY8OoqtRjAoFhGzgzDbFHL34x/5FbyWSAZ8ibBZDQ7hVCw+Fxkk4GFeJvdRjS
+ Xp4e/WY1vr3LCriS4l00m6vD1xcX0azM/ud0QMIpDVXDJ3QHd9FRR5xAOvjjyA3K8fM7/0
+ 4Jh/VkrfLAwN577pqSAecatsSMv+xtA=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681-Di9P-URSPKifkmRc-W0KdQ-1; Thu, 06 Nov 2025 20:02:44 -0500
+X-MC-Unique: Di9P-URSPKifkmRc-W0KdQ-1
+X-Mimecast-MFC-AGG-ID: Di9P-URSPKifkmRc-W0KdQ_1762477364
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-32eb18b5500so436681a91.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 17:02:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762469849; x=1763074649; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762477364; x=1763082164; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/Wfq0K+HffqXQsz5FZlocW3EX0vjFeyipwMJgKbrtFE=;
- b=WBmRCelAsZ02WFfHUEWuiPKjmD7lsfqnuZNXzVrlZVUmsp5FdPEjthBa0deC8J4+DV
- 1QUbHlQFpFNf5yxJoIBL8OIkCKRt0LwSXKHvZpSDJOHtpr1JHYMWUpR0w/2h6KHCS5Iu
- MjLhr2it0vOErzZHrT/azz8qJkByhaZpPVO+4RO87qvdTEPPwI0+2t2ywNnZh0JwjDa1
- hsI70HMZb5xe3JtaaKgsB7NgtQXs2eLXGgBiB4cKki7m3Bqn2SIs4fXQKUG5eseDtwA3
- zifYejeQPF7VOwr4WBA3s0gj3DiTYX4QA5zlB6OS8J+waWuePMzi+WIl1wCLqWtNikeZ
- E1YQ==
+ bh=iA6R51NppfR5cHA1/MFKh6KbuPuatj6OSELOYsrOzT4=;
+ b=lMZ+fLoLchJPIJo0OhYT96nFHXLCjnSXLzXAJG0ZOb2yneLAMjhKX3t1dIDLT4c2EU
+ qyYGP+N7o2As4qvgCz0BkDrkDQw32Qw9TAXT3tIAtOFWqWbMaSDxeVWcylquXmzWxrjh
+ QjLXzk3Ai44XtAVTFNEqt2io5iJBQUWhimZnes98l8WfbzY7rXeXTdB44K7jMjZrRJAU
+ Gw5AdJ2SzFSgh8iV4FkkV/kiJGPafUS9tCPW+EzebVgxEzkdEeFvOSfLa9IBgNxmolD2
+ wHyDj1EIZyiHpx9VFP6EY56vNLG2ayXAqzrmF2DPEg7COHUKA0K2CK2GnKuMTrvJvPVg
+ N4Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762469849; x=1763074649;
+ d=1e100.net; s=20230601; t=1762477364; x=1763082164;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/Wfq0K+HffqXQsz5FZlocW3EX0vjFeyipwMJgKbrtFE=;
- b=YwBlj3UEeFdzkJsUY5MmlF+uTLC5EULSSkTSWDYMZckJeYxTi05Q2iCK4YAFrF3fAI
- 76AMpxFBQGMW7qND98Cmvm5rkeckMpPkdVtHq6Z8m9HEW4JfhPVwn2CQZWn8U15vEpJ+
- UNjvzT+PsJ0Emg6xY9TdxoUogihO4OtkYVPUOJNdoKTYO+HSVOswYv1jeViT7HW9QcMA
- ZrF2zVZ8AUJxUOue7PrMzF/jWM36++GSU5UwSUuDShk2kntNfgLjjsrZzxhq2WHlJmHb
- I71oE8eVnqt2Dbo73FJ1eZgo8wNfqC2bPhhDRZNQTCRVzyXDBDYL2euir82yiqyvIlvw
- l3XQ==
-X-Gm-Message-State: AOJu0Yx5omeLO21FYXfJ4I3sptTgrds/njZX6YNGhV6M3/blW6XTOdtF
- PSdzMEmhrfQql6wWieB3JFYw+dtrfynpMS8GcwFRvu9tfvpvY164i4bXkzQqveHJ74lpVUm1ylq
- vEEGF4ZB4Qe+MSsTCz8CiaJAT4LCPYuQ=
-X-Gm-Gg: ASbGncv+nPV5FL0V+KjpgjTTvib2PFUzRmV0vVaLPrIxQvjLhzg1kOva1vCUC6DtYyj
- QFmyBl5bWXGkYPc/sKoCebDsL9CwZNv2EU1BS9NHXQ0MT9RkHR68C82+Y/Rtv/uuvTRg3SOmyy6
- /IJYToNWeNsYNQ+37sbC+BfRWdGERf+K8PQpiG/eFlmg51k+ChR38oVG6WC/7h8DvsABuqU9d7Q
- bcSSM3kMHq+zfOMzhxJ2oX5mtez+HiLBqojgvxIWBotrf6JxYMyCZ1e9Ap+zlAqMvOntTql0moC
- o50iN+vVdE/861Y=
-X-Google-Smtp-Source: AGHT+IHaQOE/9fc1kp6h2lF7CrmtLI6iQ3+ytMEIFkh+TAkuVpzxmnWSlIALcXwN5+8IVqrzqwdlWXOldq5pCdUS74U=
-X-Received: by 2002:a17:907:2d13:b0:b71:854:4e49 with SMTP id
- a640c23a62f3a-b72c0d7079emr107865966b.56.1762469848494; Thu, 06 Nov 2025
- 14:57:28 -0800 (PST)
+ bh=iA6R51NppfR5cHA1/MFKh6KbuPuatj6OSELOYsrOzT4=;
+ b=dBGZ6Rg5gVhE8zW2c9Utiqb67+dG+1tPxZ2nk5hlDxiBpanIxtq4PgRhIpn2vkKXo2
+ DLiPmmkK9BxHayOn0x66vRhFTwNYR2uJ4QblBP7qCmHfw6UYm3TCSMqN3hOOHMlO9x59
+ j8n3N3wvJvc4OmvLpYs9FmnR9w0YWQL5eLsbjf/N2/TMJw6luuZHrp3XYe5xkZoWoMNG
+ l2qIxkqU7F+yDoHNm+H3fKhNc7l6zM3bc9hJRTSFzwbJUhtsuzuAgaqIYZSv9WqDBA3j
+ 9z2yCsnq0ILesqomXPN90V7xj5FOrNQydig43+0Nw8gLu7BEqZb+uzVQ5Umue4qpQnT4
+ shkQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRs+azNOE6dN7WaYRf52JcpZFCLVCDwAt0Hqib0XLkmU8LuwMgatBILI+CvyzxGmxdarNZkQ8PJuvL@nongnu.org
+X-Gm-Message-State: AOJu0YwRRu7yr4Co/6HVQgEyCEYuF6sJZEuThzdtzIWiReeXYcv2obgE
+ dzOcea/RmAIEthK3pffgsNWzPMOhSd7omJoCf8gvUa6r1bk1kI+iHeMJjsP50lahdkVBNe6QqYd
+ bW4Ci9rUaMaoSl17AWI0hIUchxlD6MI26kd241H0fHdY+dgvj45jIAwNwas2tuY60hZDiCg5ZeK
+ U2Dm6iQ1hR3iDjWXIasuo6TOulPRPNY3I=
+X-Gm-Gg: ASbGnctQe2oCxBvszNyRr9j9Dw1to7NEAxeZ5MqCxeEKJg/SnZUZtgnFi6aHBUCKpJI
+ wfgE2QhRByXdT+5jrLZxzi8R2K7gxt98dTajCqxP6poicYFvgxyutihJFGd0fiJ0vt2gR6Lc12d
+ HoSKlkytPITL4apGXZtJ7cCFpUdG6PxMWt1BYr58qC48fEPC+BiBtEkCK8
+X-Received: by 2002:a17:90b:3c86:b0:33b:be31:8194 with SMTP id
+ 98e67ed59e1d1-3434c595d5amr1433947a91.34.1762477363699; 
+ Thu, 06 Nov 2025 17:02:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEextbh87DM57SQGIS+bcXmmzLiZFjKMMT4cF29KgvAO4KKGvFJW1udPbK1OdaTSv/0fF+8p9NLlsDIPasE5dY=
+X-Received: by 2002:a17:90b:3c86:b0:33b:be31:8194 with SMTP id
+ 98e67ed59e1d1-3434c595d5amr1433892a91.34.1762477363210; Thu, 06 Nov 2025
+ 17:02:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20251023043520.1777130-1-alistair.francis@wdc.com>
- <20251023043520.1777130-5-alistair.francis@wdc.com>
- <a8e88aaa-02ef-406e-9737-bbe017e420d3@linaro.org>
-In-Reply-To: <a8e88aaa-02ef-406e-9737-bbe017e420d3@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 7 Nov 2025 08:57:02 +1000
-X-Gm-Features: AWmQ_bnshogGwpVdFDf7vtdDLuIaDNoa1QEHq3c2dah8nzZujVJX3VArCpnH5zk
-Message-ID: <CAKmqyKPEg6tpyxfZK7z+nsM-wYUiuzr8i7D2jZOQWmrxnNfwNQ@mail.gmail.com>
-Subject: Re: [PULL 26/37] hw/misc: Add RISC-V CMGCR device implementation
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Chao-ying Fu <cfu@mips.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
+References: <CAMGffE=cZ_TgG=Ae+oVE+emWwuDNssozKNDsidS1+yTrh=cZXQ@mail.gmail.com>
+ <CACGkMEtUx0PigJrJSWY8n2N7+znc02aqotNq+Y5w3aOMOvUvjQ@mail.gmail.com>
+ <CAMGffE=cqr1awRmhAMg3V82_g1-2aM36oV+hWPuczs6VUCQkgw@mail.gmail.com>
+ <aQvM6l04VeZwbUOf@x1.local>
+ <CAMGffE=VdsQSTOOpBvaDc=RQ98cMDHYemF7nS5pnqJ7Rsvafug@mail.gmail.com>
+In-Reply-To: <CAMGffE=VdsQSTOOpBvaDc=RQ98cMDHYemF7nS5pnqJ7Rsvafug@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 7 Nov 2025 09:02:31 +0800
+X-Gm-Features: AWmQ_bme-68IsSDAXWBwh0C1EuuXbrNbdgcwI9arPT4a35udKD21kDMFSKIjcn4
+Message-ID: <CACGkMEtMK1_QJM7x33sLO-QOtdttV=8hBfH8YbYSB_-GDE6CTg@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BBUG=5D_Migration_failure_between_QEMU_9=2E2=2E4_=E2=86=92_8?=
+ =?UTF-8?Q?=2E2=2E10_due_to_virtio=2Dnet_feature_mismatch_=28VIRTIO=5FF=5FRING=5FRESE?=
+ =?UTF-8?Q?T_=2F_USO_features=29?=
+To: Jinpu Wang <jinpu.wang@ionos.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-stable@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Yu Zhang <yu.zhang@ionos.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,132 +124,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 5, 2025 at 8:15=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
+On Thu, Nov 6, 2025 at 10:28=E2=80=AFPM Jinpu Wang <jinpu.wang@ionos.com> w=
+rote:
 >
-> On 23/10/25 06:35, alistair23@gmail.com wrote:
-> > From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+> Hi Peter,
+> On Wed, Nov 5, 2025 at 11:17=E2=80=AFPM Peter Xu <peterx@redhat.com> wrot=
+e:
 > >
-> > Add RISC-V implementation of the Coherent Manager Global Control
-> > Register (CMGCR) device. It is based on the existing MIPS CMGCR
-> > implementation but adapted for RISC-V systems.
+> > On Wed, Nov 05, 2025 at 10:27:59AM +0100, Jinpu Wang wrote:
+> > > > > These are not present (or not supported) on QEMU 8.2.10, which ca=
+uses
+> > > > > the migration state load to fail.
+> > > >
+> > > > Interesting, we've already done the compat work:
+> > > >
+> > > > GlobalProperty hw_compat_8_1[] =3D {
+> > > >     { TYPE_PCI_BRIDGE, "x-pci-express-writeable-slt-bug", "true" },
+> > > >     { "ramfb", "x-migrate", "off" },
+> > > >     { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
+> > > >     { "igb", "x-pcie-flr-init", "off" },
+> > > >     { TYPE_VIRTIO_NET, "host_uso", "off"},
+> > > >     { TYPE_VIRTIO_NET, "guest_uso4", "off"},
+> > > >     { TYPE_VIRTIO_NET, "guest_uso6", "off"},
+> > > > };
+> > > > const size_t hw_compat_8_1_len =3D G_N_ELEMENTS(hw_compat_8_1);
+> > > Yeah, I noticed the same.
 > >
-> > The CMGCR device provides global system control for multi-core
-> > configurations in RISC-V systems.
+> > AFAICT, this is a known issue..
 > >
-> > This is needed for the MIPS BOSTON AIA board.
+> > Thomas and I used to suggest we should not turn on USO* by default by
+> > probing kernel, but only allow user choosing it explicitly in a VM
+> > setup. IOW, dest qemu should stop booting at all when kernel is too old
+> > (when user chose the feature).
+> I feel this is the approach we should have picked.
 > >
-> > Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> > Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > Message-ID: <20251018154522.745788-9-djordje.todorovic@htecgroup.com>
-> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> > ---
-> >   include/hw/misc/riscv_cmgcr.h |  50 +++++++
-> >   hw/misc/riscv_cmgcr.c         | 248 +++++++++++++++++++++++++++++++++=
-+
-> >   hw/misc/Kconfig               |   9 ++
-> >   hw/misc/meson.build           |   2 +
-> >   4 files changed, 309 insertions(+)
-> >   create mode 100644 include/hw/misc/riscv_cmgcr.h
-> >   create mode 100644 hw/misc/riscv_cmgcr.c
->
->
-> > +static inline void update_gcr_base(RISCVGCRState *gcr, uint64_t val)
-> > +{
-> > +    gcr->gcr_base =3D val & GCR_BASE_GCRBASE_MSK;
-> > +    memory_region_set_address(&gcr->iomem, gcr->gcr_base);
-> > +
-> > +    /*
-> > +     * For boston-aia, cpc_base is set to gcr_base + 0x8001 to enable
-> > +     * cpc automatically.
-> > +     */
-> > +    update_cpc_base(gcr, val + 0x8001);
-> > +}
-> > +
-> > +/* Read GCR registers */
-> > +static uint64_t gcr_read(void *opaque, hwaddr addr, unsigned size)
-> > +{
-> > +    RISCVGCRState *gcr =3D (RISCVGCRState *) opaque;
-> > +
-> > +    switch (addr) {
-> > +    /* Global Control Block Register */
-> > +    case GCR_CONFIG_OFS:
-> > +        /* Set PCORES to 0 */
-> > +        return 0;
-> > +    case GCR_BASE_OFS:
-> > +        return gcr->gcr_base;
-> > +    case GCR_REV_OFS:
-> > +        return gcr->gcr_rev;
-> > +    case GCR_CPC_STATUS_OFS:
-> > +        return is_cpc_connected(gcr);
-> > +    case GCR_L2_CONFIG_OFS:
-> > +        /* L2 BYPASS */
-> > +        return GCR_L2_CONFIG_BYPASS_MSK;
-> > +    default:
-> > +        qemu_log_mask(LOG_UNIMP, "Read %d bytes at GCR offset 0x%" HWA=
-DDR_PRIx
-> > +                      "\n", size, addr);
-> > +    }
-> > +    return 0;
-> > +}
-> > +
-> > +static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
-> > +{
-> > +    return vps->reset_base & GCR_CL_RESET_BASE_RESETBASE_MSK;
-> > +}
-> > +
-> > +/* Write GCR registers */
-> > +static void gcr_write(void *opaque, hwaddr addr, uint64_t data, unsign=
-ed size)
-> > +{
-> > +    RISCVGCRState *gcr =3D (RISCVGCRState *)opaque;
-> > +    RISCVGCRVPState *current_vps;
-> > +    int cpu_index, c, h;
-> > +
-> > +    for (c =3D 0; c < gcr->num_core; c++) {
-> > +        for (h =3D 0; h < gcr->num_hart; h++) {
-> > +            if (addr =3D=3D RISCV_CLCB_OFS + c * RISCV_CORE_REG_STRIDE=
- + h * 8) {
-> > +                cpu_index =3D c * gcr->num_hart + h;
-> > +                current_vps =3D &gcr->vps[cpu_index];
-> > +                current_vps->reset_base =3D data & GCR_CL_RESET_BASE_M=
-SK;
-> > +                cpu_set_exception_base(cpu_index + gcr->cluster_id *
-> > +                                       gcr->num_core * gcr->num_hart,
-> > +                                       get_exception_base(current_vps)=
-);
-> > +                return;
-> > +            }
-> > +        }
-> > +    }
-> > +
-> > +    switch (addr) {
-> > +    case GCR_BASE_OFS:
-> > +        update_gcr_base(gcr, data);
-> > +        break;
-> > +    default:
-> > +        qemu_log_mask(LOG_UNIMP, "Write %d bytes at GCR offset 0x%" HW=
-ADDR_PRIx
-> > +                      " 0x%" PRIx64 "\n", size, addr, data);
-> > +        break;
-> > +    }
-> > +}
-> > +
-> > +static const MemoryRegionOps gcr_ops =3D {
-> > +    .read =3D gcr_read,
-> > +    .write =3D gcr_write,
-> > +    .endianness =3D DEVICE_NATIVE_ENDIAN,
->
-> Dubious DEVICE_NATIVE_ENDIAN use, do you mean DEVICE_LITTLE_ENDIAN?
->
-> Maybe we can alter checkpatch to no accept new DEVICE_NATIVE_ENDIAN
-> in our code base.
+> > See:
+> >
+> > https://lore.kernel.org/all/ZqQNKZ9_OPhDq2AK@x1n/
+> Is there any effort to allow migration from new OS support the USO
+> features to old OS doesn't support it?
 
-Ah good catch, this could be the s390 issue.
+You can teach your management to disable USO via the qemu command line.
 
-This patch was dropped in the v2 pull request, @Djordje can you fix
-this in the next patch submission
+> Any hint to make it work?
 
-Alistair
+Thanks
+
+> >
+> > Thanks,
+> >
+> > --
+> > Peter Xu
+> >
+> Thx for the help.
+>
+
 
