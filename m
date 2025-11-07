@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB0F5CCFA05
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 10:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0713FCCFA05
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 10:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHJGM-0004QQ-4t; Fri, 07 Nov 2025 05:00:10 -0500
+	id 1vHJN0-0005LI-Lr; Fri, 07 Nov 2025 05:07:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vHJGK-0004Q1-0L
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 05:00:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vHJGG-0004fQ-R4
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 05:00:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762509602;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Dmmv2c/Zhjm4ukamgxhQU+o21mAuVZsjrQ062leqzZw=;
- b=RIQVrnQ1g+eXGDfm9757/2eKe2mHzah9kWumACfi9qhb2TpMCruI8gGN/85bUfrsBe7SpD
- EQIXwhrauB+D0Ow1l+zTSrUBW7H8DIt8hVk1CBSoGu1ZlzeyJ0P7beofu2lIwzYztOnA6Y
- R4bgOM0xAUrlwDAyXhsV+E2zgShQzIk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-84zePJ-aOMS3teb0xAYc7Q-1; Fri,
- 07 Nov 2025 04:59:59 -0500
-X-MC-Unique: 84zePJ-aOMS3teb0xAYc7Q-1
-X-Mimecast-MFC-AGG-ID: 84zePJ-aOMS3teb0xAYc7Q_1762509597
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4926519560B5; Fri,  7 Nov 2025 09:59:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 829AF19560A7; Fri,  7 Nov 2025 09:59:51 +0000 (UTC)
-Date: Fri, 7 Nov 2025 09:59:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Naveen N Rao <naveen@kernel.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Nikunj A Dadhania <nikunj@amd.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>
-Subject: Re: [PATCH v3 8/9] target/i386: SEV: Add support for setting TSC
- frequency for Secure TSC
-Message-ID: <aQ3DEiKtuRf_bfqS@redhat.com>
-References: <cover.1761648149.git.naveen@kernel.org>
- <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
- <87cy5vgy66.fsf@pond.sub.org>
- <ot37mpc4y2oferchx6yroyriqickajnkiouok7quaaijq25c7n@cpqitwnuwyz2>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vHJMz-0005L2-D8
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 05:07:01 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vHJMx-0006Bj-Ru
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 05:07:01 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-63fd2b18c40so450101d50.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Nov 2025 02:06:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762510018; x=1763114818; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Kzn5dgDShaETWr++9NNSL6YhtukhSIhCmdYfBHNhS00=;
+ b=XN2EM3Jwmk+rq42nf4dgbdFQmEekuvFkq/AdI+vm4Oo2LFcUUROd6HbS4AvEIYhOCE
+ cgOTQcJGIZHrulYMNqlgzLJ28r4JkrPbZlU3JFsFyMQZaQdKnRCeRvDC3Mhw/C3rZOpg
+ vQWl+5bhxBm1a2objY5LUPOb1fWo7y/Sim6PI6EVuwxLqZGpqW81v9cuDQL5AK5EXj/Y
+ aODxwIJIDAsOT9nTJhLICsh3nNJBwTncI5NE5twdqw90E5Y9W8u7CAU/eQ7Jyai8aOFW
+ am7FrFVlUFvmm1tuLCoXV2ola6QmSUOG33PaqI6uPrYc64eDazGHgjmwl+HcYTSaEql1
+ +tiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762510018; x=1763114818;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Kzn5dgDShaETWr++9NNSL6YhtukhSIhCmdYfBHNhS00=;
+ b=Mi1Hqnmo7AcAB3ij4cXQmMD7PQPdi/HpBAVrNuaAIIl88ekppfLkwviMyEqG0FpCBS
+ L5P3XvnB0ugkG+jaGWDjRelyd31z+XLcFmVSW6L+nKUbgtIanbDJE9l/gpxM4KvXq7Gc
+ WaCQnO3InpubBbLGw1FVquUs9ecfFwRevzT5fPVq4jdjcEzrt/cBtswRQkQFbcjt9voN
+ VhPfwNU4h5TU7Ba19kFDhzTqpaw8aeeo7pcjaUPr/+u3+BQp5jg5VbbaicYMLpxCvmW3
+ ffUkNPdMpv0IEiUBiHIZB/UncA3fiUzW28s8e7YQmb4Zk3WfvR8HWzkIf1YowoOrRK/u
+ UGrA==
+X-Gm-Message-State: AOJu0YwaXLXxI0XBOCS4MIBVbcg9TycEoJ2/OPTmhkKWeajd900Rnmo/
+ EnG2cr03xDuMz3hdIlTAXQCA2cDrko8JtCtkzmNbxPbnyux2fBXqWFf4xXnnQqaFoTRfudnZs5L
+ xAeRkfSWAweXLmpXwMqFHAqcPTYcbFjwjVCbv2eJxiQ==
+X-Gm-Gg: ASbGncuYKQi0o9KyeAZM7GEcL/0gF1Ut0yLWMEfMrE++F9oG69KK7mUWR8DJwZcHKLE
+ Hy/RRSY7d+gLbHzpK7z/JFd9Sf8rQONt4nG4MPwwMi1UrWzXluYkZtensj6ns2qvPegYf5OJRU5
+ /lHnH7SgegPumNvCt4nnDN8ee+dM27jbx0h/Rp69lMd/PGVTNSsIZFQ1cmIvXRaPgs9ud2Fj0N8
+ XIzHRMno6zzFB9K2k7nIPazEz0Gff6rXnjgTk7xrsrU6OWwoHdql5gn1mhcRA==
+X-Google-Smtp-Source: AGHT+IFzdVFg8UyP1BX34wkn4nnoaq4RDZClaEwEkVfj7MPhptwMYLmC5HIv32Z7ZSux8tWWAXgfjAAn5t4ZN02g5LY=
+X-Received: by 2002:a05:690e:2513:10b0:63e:b41:cebc with SMTP id
+ 956f58d0204a3-640c41ccb6emr1874974d50.17.1762510018348; Fri, 07 Nov 2025
+ 02:06:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ot37mpc4y2oferchx6yroyriqickajnkiouok7quaaijq25c7n@cpqitwnuwyz2>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20251103175851.428816-1-peter.maydell@linaro.org>
+ <20251103175851.428816-3-peter.maydell@linaro.org>
+ <CACGkMEsU=kz+SXo=L3JUzuNTqVK_pyGh8xhU6aiAKjnwSR8YfQ@mail.gmail.com>
+In-Reply-To: <CACGkMEsU=kz+SXo=L3JUzuNTqVK_pyGh8xhU6aiAKjnwSR8YfQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Nov 2025 10:06:46 +0000
+X-Gm-Features: AWmQ_bk3aoysczcheWyBv7FgcBaSpGYjGGwLZUQskT9ykG0omEXQaUhg2XMeDKI
+Message-ID: <CAFEAcA8EyX4rPvJSUH-ZfxCLvXd68Xg5wPVedk6UzTHgSK5p6w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] hw/net/e1000e_core: Correct rx oversize packet checks
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,56 +94,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 07, 2025 at 02:21:24PM +0530, Naveen N Rao wrote:
-> On Thu, Nov 06, 2025 at 01:09:37PM +0100, Markus Armbruster wrote:
-> > Pardon my ignorance...
-> > 
-> > "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
-> > 
-> > > Add support for configuring the TSC frequency when Secure TSC is enabled
-> > > in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
-> > > guest objects, similar to the vCPU-specific property used by regular
-> > > guests and TDX.
-> > 
-> > Which property exactly?
-> 
-> Same name: tsc-frequency specified with '-cpu'
-> 
-> > 
-> > >                 A new property is needed since SEV-SNP guests require
-> > > the TSC frequency to be specified during early SNP_LAUNCH_START command
-> > > before any vCPUs are created.
-> > 
-> > Sounds awkward.
-> > 
-> > Do the two properties set the same thing at different times?
-> 
-> Yes. For regular guests, TSC frequency is set using a vCPU ioctl.  
-> However, TDX and SEV-SNP (with Secure TSC) require the TSC frequency to 
-> be set as a VM property (there is a VM ioctl for this purpose).
+On Fri, 7 Nov 2025 at 03:50, Jason Wang <jasowang@redhat.com> wrote:
+>
+> On Tue, Nov 4, 2025 at 1:59=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+> >
+> >      do {
+> > +        /*
+> > +         * Loop processing descriptors while we have packet data to
+> > +         * DMA to the guest.  desc_offset tracks how much data we have
+> > +         * sent to the guest in total over all descriptors, and goes
+> > +         * from 0 up to total_size (the size of everything to send to
+> > +         * the guest including possible trailing 4 bytes of CRC data).
+> > +         */
+> >          hwaddr ba[MAX_PS_BUFFERS];
+> >          E1000EBAState bastate =3D { { 0 } };
+> >          bool is_last =3D false;
+> > @@ -1512,23 +1519,27 @@ e1000e_write_packet_to_guest(E1000ECore *core, =
+struct NetRxPkt *pkt,
+> >          e1000e_read_rx_descr(core, &desc, ba);
+> >
+> >          if (ba[0]) {
+> > -            size_t desc_size =3D total_size - desc_offset;
+> > -
+> > -            if (desc_size > core->rx_desc_buf_size) {
+> > -                desc_size =3D core->rx_desc_buf_size;
+> > -            }
+> > +            /* Total amount of data DMA'd to the guest in this iterati=
+on */
+> > +            size_t desc_size =3D 0;
+> > +            /*
+> > +             * Total space available in this descriptor (we will updat=
+e
+> > +             * this as we use it up)
+> > +             */
+> > +            size_t rx_desc_buf_size =3D core->rx_desc_buf_size;
+> >
+> >              if (desc_offset < size) {
+> > -                static const uint32_t fcs_pad;
+> >                  size_t iov_copy;
+> > +                /* Amount of data to copy from the incoming packet */
+> >                  size_t copy_size =3D size - desc_offset;
+> > -                if (copy_size > core->rx_desc_buf_size) {
+> > -                    copy_size =3D core->rx_desc_buf_size;
+> > -                }
+> >
+> >                  /* For PS mode copy the packet header first */
+> >                  if (do_ps) {
+> >                      if (is_first) {
+> > +                        /*
+> > +                         * e1000e_do_ps() guarantees that buffer 0 has=
+ enough
+> > +                         * space for the header; otherwise we will not=
+ split
+> > +                         * the packet (i.e. do_ps is false).
+> > +                         */
+> >                          size_t ps_hdr_copied =3D 0;
+> >                          do {
+> >                              iov_copy =3D MIN(ps_hdr_len - ps_hdr_copie=
+d,
+> > @@ -1550,14 +1561,26 @@ e1000e_write_packet_to_guest(E1000ECore *core, =
+struct NetRxPkt *pkt,
+> >                          } while (ps_hdr_copied < ps_hdr_len);
+> >
+> >                          is_first =3D false;
+> > +                        desc_size +=3D ps_hdr_len;
+> >                      } else {
+> >                          /* Leave buffer 0 of each descriptor except fi=
+rst */
+> >                          /* empty as per spec 7.1.5.1                  =
+    */
+> >                          e1000e_write_hdr_frag_to_rx_buffers(core, ba, =
+&bastate,
+> >                                                              NULL, 0);
+> >                      }
+> > +                    rx_desc_buf_size -=3D core->rxbuf_sizes[0];
+> >                  }
+> >
+> > +                /*
+> > +                 * Clamp the amount of packet data we copy into what w=
+ill fit
+> > +                 * into the remaining buffers in the descriptor.
+> > +                 */
+> > +                if (copy_size > rx_desc_buf_size) {
+> > +                    copy_size =3D rx_desc_buf_size;
+> > +                }
+> > +                desc_size +=3D copy_size;
+> > +                rx_desc_buf_size -=3D copy_size;
+> > +
+> >                  /* Copy packet payload */
+> >                  while (copy_size) {
+> >                      iov_copy =3D MIN(copy_size, iov->iov_len - iov_ofs=
+);
+> > @@ -1574,12 +1597,22 @@ e1000e_write_packet_to_guest(E1000ECore *core, =
+struct NetRxPkt *pkt,
+> >                          iov_ofs =3D 0;
+> >                      }
+> >                  }
+> > +            }
+> >
+> > -                if (desc_offset + desc_size >=3D total_size) {
+> > -                    /* Simulate FCS checksum presence in the last desc=
+riptor */
+> > -                    e1000e_write_payload_frag_to_rx_buffers(core, ba, =
+&bastate,
+> > -                          (const char *) &fcs_pad, e1000x_fcs_len(core=
+->mac));
+> > -                }
+> > +            if (rx_desc_buf_size &&
+> > +                desc_offset >=3D size && desc_offset < total_size) {
+> > +                /*
+> > +                 * We are in the last 4 bytes corresponding to the FCS=
+ checksum.
+> > +                 * We only ever write zeroes here (unlike the hardware=
+).
+> > +                 */
+> > +                static const uint32_t fcs_pad;
+> > +                /* Amount of space for the trailing checksum */
+> > +                size_t fcs_len =3D MIN(rx_desc_buf_size,
+> > +                                     total_size - desc_offset);
+> > +                e1000e_write_payload_frag_to_rx_buffers(core, ba, &bas=
+tate,
+> > +                                                        (const char *)=
+&fcs_pad,
+> > +                                                        fcs_len);
+> > +                desc_size +=3D fcs_len;
+> >              }
+> >              desc_offset +=3D desc_size;
+>
+> This should be done before the if (rx_desc_bufs_size && ... ?
 
-The '-cpu' arg is global to the VM, so even though the ioctl is per-VCPU,
-a single '-cpu ...,tsc-frequency=NNN' argument applies universally to all
-the vCPUs in regular guests. 
+No. That if() block deals with adding (possibly part of) the 4
+checksum bytes. Those are part of the total data we DMA to
+the guest, and so the if() block adds fcs_len to desc_size,
+and those extra bytes need to be added to desc_offset.
 
-> This was Tom's question too (see v2): is there any way to re-use 
-> 'tsc-frequency' specified with '-cpu' for Secure TSC.
+> >              if (desc_offset >=3D total_size) {
 
-I see no reason why we can't simply use the existing '-cpu tsc-frequency'
-value. Fetch the CPU 0 object and query its "tsc-frequency" property,
-and just assume all non-0 CPUs have the same tsc-frequency, since we
-don't provide a way to set it differently per-CPU IIUC.
+Otherwise conditions like this and the loop termination condition
+would not fire, because desc_offset would not get up to total_size.
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
