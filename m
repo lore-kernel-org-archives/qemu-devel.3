@@ -4,159 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2052CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 07:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0379CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Nov 2025 07:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHHEX-0000gr-VA; Fri, 07 Nov 2025 02:50:10 -0500
+	id 1vHHId-00035C-Eo; Fri, 07 Nov 2025 02:54:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vHHER-0000g8-2W
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:50:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vHHIb-000350-Cg; Fri, 07 Nov 2025 02:54:21 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vHHEM-0006k8-Ln
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 02:50:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762501796;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7xcgrHcR2eDvhDkXXGORgQlyTRASDz3Np1zev6dFUuw=;
- b=Z+u7t5UT3ScZAOqpVTYL4S96h1YcyQ2MckXFme2baNjT1TdYRIBo+/wtRKNZ49BuTdUfCu
- RuxSTqVarQNwKOhidiIWJViczdY/FkyTHNz//RoZfPIr0bH6ZNel7d8ytLepgI/01Jgtbi
- s5mb4XUgiB/5kruxoVw/ylmyoTFjjvc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-C30PtGKnOfam7XV-5GS01g-1; Fri, 07 Nov 2025 02:49:55 -0500
-X-MC-Unique: C30PtGKnOfam7XV-5GS01g-1
-X-Mimecast-MFC-AGG-ID: C30PtGKnOfam7XV-5GS01g_1762501794
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b72aa7eb745so38078166b.0
- for <qemu-devel@nongnu.org>; Thu, 06 Nov 2025 23:49:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762501794; x=1763106594; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=7xcgrHcR2eDvhDkXXGORgQlyTRASDz3Np1zev6dFUuw=;
- b=luqMPvDgGz6yCXdzI62wZ54X3Px9SybflGXeDU1kAsBFHjlM8hjVs31htVBF4SKNXT
- 4pkpMlxA3KUokSjV1cLxibyNZekoodUyIU8E/wcj6xs5NBOA9zA6Ja76xlHtBLtuEDrC
- 7iVqw6ELCLo6H41uOL1bybSLfuy4fOZzjmqBMYWp2ZlIFR8GM9HBVTbCtI4oRY2kYWup
- psaymUtGm0TbmUr3evlV89nF/S4Xl/W7KoI1oNZqHMqVL78SZ79tAgX4HU2bOl/9s0gF
- 56r0wwXe1GZqIRIw2oGc78bB1G6bttIZxqSZasuVZlWxsS6g/EM2QJvLOOgV774qm2Yk
- 8NFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762501794; x=1763106594;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7xcgrHcR2eDvhDkXXGORgQlyTRASDz3Np1zev6dFUuw=;
- b=kN0EJOAGMkvKJbKtNjUBAy+R98GUpQwczbgllrFMwEx9U9j2JO/957B4FEu47Mkn0z
- a1Elql3owKLQgbi69iI9vKBSnu8uncfajvIn1xr0Y5Xkhgkv/YjpgB3k8R5lszPhhYJf
- ExpRSGo6KiCtCUtLw4JUk386AjElZ0U9LLCI2FnPrT7p0Qi3fwxRm/TZDM76fL2DdoTm
- o2RktTa/L8CHLb141y//rhPEZbHp9nU07JW6tZoigaIOUZogjPlClvHIsvFJKBbmk51s
- PM73QqSToNRwwbzwOKlmQYrae5CkhQuoyi+Lh72SIaALiznctJgYzmqKbKihiHs7ytFi
- 6toQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqHp/lHUnyTEOT5+tIGV05pAeTFbHQILINkpQROrWtDj6uspAjPbi/kxl2fYVmuU+CX0wflgGZWoyf@nongnu.org
-X-Gm-Message-State: AOJu0YzPTpDeNNtaALC0b57kqXpuOIrr2M4ynOJnC6wtWubveJHG+k3l
- E7GLbh/C8hknlgQfX9suA/ijR2+i+HnGh8ujpnPYdRA0aN7S0TO2uEkzuF+hlY3I4ApE0DrkH5u
- V/mtEUftRpYzDvalEVXyBu2SmI9HAS8JGeXQM0qOuB6ZM6qR5uiO1DPQB
-X-Gm-Gg: ASbGncvf1yVtOR4OApmsGpQH6/Xe8c98R0MvSBh5oQWcjY0WNZJFWINQqhidGICGsdt
- w+aYhbwVIlPMht5rpWQVFWM0kuJtbiwDuzadeqUQG3g1CW4se8j7VtgYayuWDZDSrPLswNxsB90
- J8xwAwWxFLGACwhls0Fou2WamALAly089jbsM5+8OBkdbp/st9NKhh3jdsIBg2dh/VUfSWCRw/S
- XXtru7WeJ4Vcvct76MOu7Z0xXTUPxYqTv0O5Q+o2IOkcWdJZiCH1rCw0WKcGhxnq9R+xMN+qLRZ
- /7yhZiZZqpDdJZE3aGlOGHmgHUtv7xy2dBDEB6ErRFgJDZMIUvno8JVbxX/igGyP1Lk/6YRNESw
- lIlwVDH+Z38OhunOmYtZKgZkq+IsA32gVHKHfAnVVxQ4pMoQZVCl6PMRh0EdhV0B1LG6SUJD/Pb
- mYLDJJ
-X-Received: by 2002:a17:907:724a:b0:b3f:9b9c:d49e with SMTP id
- a640c23a62f3a-b72c0e9ae41mr228210666b.57.1762501794089; 
- Thu, 06 Nov 2025 23:49:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHwn5g0yPiqE4sfJxroEygSupCO6+aFMNCs+RC7Fgxg4WsNdGqh4PQ3BLz5e3VIKMFvbfeYvQ==
-X-Received: by 2002:a17:907:724a:b0:b3f:9b9c:d49e with SMTP id
- a640c23a62f3a-b72c0e9ae41mr228208366b.57.1762501793696; 
- Thu, 06 Nov 2025 23:49:53 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.110.222])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b72bf72337dsm170885766b.33.2025.11.06.23.49.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Nov 2025 23:49:53 -0800 (PST)
-Message-ID: <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
-Date: Fri, 7 Nov 2025 08:49:52 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vHHIY-0003Wp-If; Fri, 07 Nov 2025 02:54:21 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.203])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4d2rtF2m0Lz5wtw;
+ Fri,  7 Nov 2025 07:54:12 +0000 (UTC)
+Received: from kaod.org (37.59.142.100) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 7 Nov
+ 2025 08:54:12 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-100R0035d1fe1ca-55dc-4def-acee-2ed2c0f8fd2c,
+ 22B515FCB2325FA901564F8AB94FB8FB00D14EB6) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <4fb9caf3-0661-499c-98a9-20cb434ba853@kaod.org>
+Date: Fri, 7 Nov 2025 08:54:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Regression with the "replay" test on target alpha
-To: Thomas Huth <thuth@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-4-pbonzini@redhat.com>
- <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
- <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
- <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
- <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
- <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
- <d4921688-b3b3-45f2-a3c9-dee2977750cd@redhat.com>
- <889e6be6-0cef-4a23-9d57-2e0611f9588a@rsg.ci.i.u-tokyo.ac.jp>
- <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 09/17] hw/arm/aspeed: Attach SPI device to AST1700 model
+To: Kane Chen <kane_chen@aspeedtech.com>, Nabih Estefan
+ <nabihestefan@google.com>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, Troy Lee
+ <troy_lee@aspeedtech.com>
+References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+ <20251105035859.3709907-10-kane_chen@aspeedtech.com>
+ <CA+QoejUqmspVZG=-T8TRbbc5nRXy0YQsLg6A4M54o6k=EkW6kA@mail.gmail.com>
+ <SEZPR06MB7619311D7021C5112BAF664AF7C2A@SEZPR06MB7619.apcprd06.prod.outlook.com>
+ <99b099b0-e28d-4fc3-b2d3-5e9f08d1d6f2@kaod.org>
+ <SI6PR06MB7631B9585407C002183D6787F7C3A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <SI6PR06MB7631B9585407C002183D6787F7C3A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Originating-IP: [37.59.142.100]
+X-ClientProxiedBy: DAG8EX2.mxp5.local (172.16.2.72) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 0f0654e3-c726-413e-a21a-b83994ef3eac
+X-Ovh-Tracer-Id: 11935664915086347253
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTE4Ab8of8XsDcEKKy9/rFTC+2ZoNMGdSPc3ipwmRZO6ijSntVVGc4SIQZoB4T+6ebG1oBoEHkWK8ubVkIhqsOWZ2LQA0mes1LIWV9eRE5Ml6dDuSJYUCVmlKR/EpJJ0sBDLPSOIG0imlb/QnbA8TJBxrKU22OORpgQ/ZNOgcgoyPhzvpSgzAYjMl+uawGJM2KPMWU/yBZWZBYUIRLsmOey9E9a1xrmBFTeTuIPEd9iJ67WTSnlnE8+CO5KaCi9U9tDX4bbSmdlVqxz8HNbCa5V6ucXRACCA8PW7kFkPb2EbCK7SKzR7dmMwrNJi0dXpDzqj6bbV+fCUwWB1QMWwFlHODfsD3jepW5Wc0VdZ0y8TRFIViUXU2STtswiTVB8lUR28vQk7j5zIqoX9hH6stmLethMUT6iBWXw2Vv3OzisNAnAr5RPh4BZPCXdT9apgatFQf7CYd0WIlEF4EEFHQGIOVBSXPrcb64MI19jm1Mw02Uv7LyBvGDu4zwx1O4Vxx4E+H8Z2eQAKKAOkexy+8i/5qxN0FELyG1u30zUfmuEjcI3Km0iDh0kBuU1nVKZAQzXjAH3Vnpc9BsmZKRFY0hTOrkRzvwygJa6PQdpcF++0I0dXr24acdntLFbSKNItnA+v8o1aEr+wU1u3YOAfO5RZlKniUimWqZ+VnHQn9op0sQ
+DKIM-Signature: a=rsa-sha256; bh=eze5mLUr2f1BSnGUfenmCrbRJz9UNK9UMa6I6QkDmAs=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1762502054; v=1;
+ b=YuFzy/IQ3arZ2t39E+bP8CAVB8qQrNikMfDc23kiQacBrwRBfEhCQt+sQNyQGaBZ5H5OnN15
+ x2XtHuAPWormK68PZPDJ0nCX44rbO7BQiVOc81hZz5ooXtjxoad90k6EhYLoA48B/BpqpoynmXg
+ 2jOx5M7uNVsahzbYgFjBZffRw5YuCEOPSrrNMuvEzwOdfvw8NJIrFiTUeRFDFa2NEvhQidZ8IpP
+ PPtZMHZdY881ctFClpXVDlFL/7QYF4IBoZAzoEJoO+9Zbh5wu4+7iYsRbPKTfdTsIgiGBexuqEy
+ yqel+lGHWv4WwhYv/9n850G0gFChhmZf8z3zbDkOPLumA==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.271,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,28 +136,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/7/25 08:41, Thomas Huth wrote:
-> On 05/11/2025 07.29, Akihiko Odaki wrote:
->> On 2025/11/04 21:18, Paolo Bonzini wrote:
->>> In this backtrace the CPU is waking up the main loop (thread 1), but 
->>> the main loop is running so I don't think it's really a deadlock.  
->>> It's more likely that the replay is not matching the record, or 
->>> there's a similar reason why the replay is not proceeding.
->>
->> I agree. It is more likely that debugging the replay code instead of 
->> the RCU change will lead to the real cause.
-> 
-> This now also impacts the Gitlab-CI :
-> 
->   https://gitlab.com/qemu-project/qemu/-/jobs/11984309870
-> 
-> How do we tackle this? It feels bad that we have such a subtle problem 
-> at the beginning of the freeze period. Shall we revert the RCU patch 
-> 'til the problem is understood?
+Hello Kane,
 
-I'll look at it today; if I can't make heads or tails of it we'll revert 
-it, yes.
+On 11/7/25 06:39, Kane Chen wrote:
+> Hi Cédric,
+> 
+> The reason I registered TypeInfo aspeed_ast1700_ast2700_info is that AST1700
+> may be connected to another SoC in the future. As you mentioned, at the current
+> stage it should be fine to use a fixed type name, since we only have AST2700
+> supporting AST1700. 
 
-Paolo
+It is good to prepare ground but it's a bit early. Let's keep it simple for
+now.
+
+> I'll update the related code and remove aspeed_ast1700_ast2700_info
+> accordingly.
+> 
+> If you have any other comments on the remaining patches, please let me know.
+> I'll wait for feedback from you or others before proceeding further.
+
+I will review in the following weeks.
+
+Current focus is on QEMU 10.2 fixes. Please test !
+
+Thanks,
+
+C.
+
+  
 
 
