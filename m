@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478BCCCFA13
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 12:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186B4CCFA13
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 12:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHhbr-0002yR-Ku; Sat, 08 Nov 2025 06:59:59 -0500
+	id 1vHhd4-0003ah-2D; Sat, 08 Nov 2025 07:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vHhbm-0002y5-Sc
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 06:59:56 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vHhcq-0003Qn-5x
+ for qemu-devel@nongnu.org; Sat, 08 Nov 2025 07:01:00 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vHhbk-000341-SG
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 06:59:54 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-640a3317b89so2539392a12.0
- for <qemu-devel@nongnu.org>; Sat, 08 Nov 2025 03:59:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vHhcn-0003V4-3f
+ for qemu-devel@nongnu.org; Sat, 08 Nov 2025 07:00:59 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b3e9d633b78so288427766b.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Nov 2025 04:00:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762603191; x=1763207991; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762603254; x=1763208054; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hT3p6OfgwKgSkm8BBZgkKQfP33RLRR2VG+H9dHVlSM0=;
- b=e0TlpsaT9oIoPZWOciUuYheB+qedjg9SXr0sraQO7HMX9W3dnWI8qOkC9XDHo8Rkxa
- 2U4JW03Wa3UO0ZewTn5PGxsw4KrypSZxL+qYyzz9aLSIMZgFRlFswyQmz11ayUCwRDLC
- aFjGHSdi8+wMmsA9Hgz20L2aL0pGouXzXKgdQySr0qJCs0WfmpECgrTKShVycAWZvh/9
- XoqKviOw1pucpQnX4CURPI6hl6goyJizjr1kj1Wmm73t+VXCgvNtsOo19/MYPC2nyw7k
- TwKfIHA8Cz+KL6yc4rV8BABvznSb6KUrune7G4Ue/3YzpxUpW1jSPN7AWlTmECOgGh4x
- 7w3Q==
+ bh=JpVrbZEnX82NBOxqZe4YJ85tlDw01p0dL/YVnF/lX3c=;
+ b=dIvWZ2MYsE28e95n/7twZzGuxHaXTX4eFRxfUN5vG4KzekvcIsgt1kA950UOoaCUPS
+ fOWRb3E37tg7cMsJgVGrdUCjD3GAfRVRMbwIzlEdkmL3g9Ygc5uU+9yoYT5G85FahhP0
+ KGiNN+fwj5uU5/bC/j1xxdeyfoCmAVg/5CQquP4+3SJadoK0cH/2A2V0lJFbtYwkBFIZ
+ /G15dYNzFOpd72kthESVzbaiJFBsOWZPzGeVSPy9IqyjoemhaNtnvsYLNKJOI6Fp36Ds
+ 5p76Nf5kfOlZLK/N09Js5vIVDV7fN+7eB1/iy1T73aWOQh7biHS6wg9ijt/1pIrFpO+V
+ pbbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762603191; x=1763207991;
+ d=1e100.net; s=20230601; t=1762603254; x=1763208054;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hT3p6OfgwKgSkm8BBZgkKQfP33RLRR2VG+H9dHVlSM0=;
- b=uOBsmxqVDcz0fpFokCHkqiQSVQpHm8M1fV2vv0P95YbG5lPP85JFCofmrrp+6n5OuH
- /vV2fR0yzXSVfTrhOvrp/2lvd6nrxTDRsjVUeuSiFtHmirCtERbawViOD8fBPnPl4tQH
- uF8FR4lx8/sWPK1aSBB2ZFqF9HJnY5LIiWvLYVYB+fuLqfDV9MeMaIQtEd88AvZrl51I
- xW5dPgQVxUVPDkD64v0Sbi5B5/3B4BI2wTUbmnDpfAnQqYnDJIv5J99g/9vtJ7bVTnbU
- 5yFF98IvL5o0Jys49NFCe2Uy0W0+oxebFvoHiYUxTEbn/kN0krc7D0aQTkrqn0mn12oC
- 8R+Q==
+ bh=JpVrbZEnX82NBOxqZe4YJ85tlDw01p0dL/YVnF/lX3c=;
+ b=oskZvN6FsZMxZ758Q088JxDcUs8rFqwVg+7K2EL1i6OBRbYFUV2KN0tH3XcXy3LL9Z
+ +N3crmmpqcw660vcFJjRhTqq/VoddHccl5GeqA7z/1S444MxjRmTx6Q448QJeUjCMaef
+ wv31bVNVTabF0Xzo4RLVET8IKk15pu7ddo14j0u5bgpSeMyPrm1U68pnh9c4NHkn9k2F
+ g+T6Ms/znGlEJzQ6Q/z8O/tjizaTQ4CJw3nOlX8WDXi/lvOX2kTQOodl42iJp4dbJzcJ
+ 8WwgIJ6luAJ/Y7yPnh1pmdIcjgimu5F+dQlbSPEWhfqphDZQ8ESioz0Y8kzRYqfwQJ0M
+ i0FQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmevI6fB7qI4eX9bhEugLwb7H9HKP5WF0CdCTwgTCTyxnOF/6vwO/OPCGxBzDNh3SQSj0ErrqBk0YT@nongnu.org
-X-Gm-Message-State: AOJu0YwtdGZ+W8q7Jy2Amwc0lfYL7EhlrYCwV2/rJv4vTfCRL3wtzAUq
- AKyp/j4pJUNogxmNFjP2K+cuPbQsqVjrwfYEB/iHut15ozlWyoI2b4/reLYJUzDiRrbcp9anIY5
- yDHQWizy8bPW4YHA/fqMZxW4kZETfFoc=
-X-Gm-Gg: ASbGncuiAUW9bzxVJ1XrLWsjaFv9T3ncJr4LBx7f3qd4UpNBLZ+/mZyYE6PJHW9ccpZ
- EEia3IUlUthwbD1RWfQqXwqyTYH1ZZ5JRxpdNwLlVtHok05Vr0/Dqx8ExxyrmMPzfEVF3lF6cuB
- 7OhAlmGYpF0UPZO6LCz6lX3MSYR/felvWpHUvE/5fVfeZqOmRbQmmLWjC4LxyPnjdVufsMn97Dd
- xyNZ8XXXj0B8/MI0xqG4PJTAStORepcZP1u1dTTpKAqWq55MjJBi+jHhd3zoOGDEQBHUaMK6CTF
- fWZ7Wdepf1+5OJxD+fpc13M4h4yB
-X-Google-Smtp-Source: AGHT+IGH0fB6Nbyesd1Cp3IwuO6W09rjHeQTzzndo7kNzv9TGTU14T+XZ/7GunjKubsLmbfPM4xqmNTa0Yb51JMqHmk=
-X-Received: by 2002:a17:906:794d:b0:b72:6728:5bb1 with SMTP id
- a640c23a62f3a-b72e053d447mr250147766b.56.1762603190936; Sat, 08 Nov 2025
- 03:59:50 -0800 (PST)
+ AJvYcCUowW30KcUoJBfXwW2kokiny9q+Qj4zJgtRdgZtScg7IDJ6K2AJTq5QY3bqriv6b3S91BkEgI2XyxcF@nongnu.org
+X-Gm-Message-State: AOJu0YxbUOSRadcshY0dlydtQXEnfumstTkGP0mujuWdo0HY8r5ei7Ok
+ NnG87bm6Uc1UDdIdy6lbpH7w8bnkaqWvJpDqGnrAmkwFLVseCztzPo1mYzhFfppTGWQJNCYs0df
+ XQBavXrfG2XeUj+BGN+JMqPeayfPl5JQ=
+X-Gm-Gg: ASbGncvYsW9U97yCC23MAE9PH7cTnL3AqUdbNVs1K1CxyUk0UDXx6boWbbZfRH3Z3y3
+ +F23KlZsz5j7xoXK4sVfFN9jRLAf50Y8XHRSFu/8s6pHPIKvrpOmxxcXemMnPpfjtlfb/IXHoYI
+ WfzwqSkTtbDyqSeCfZtrghdY/0kKeiDjtSu/nv74+zDXKR+fA1ojmgWmDjADqqey439zIEP2+c0
+ RFOnVs7eQDKAJh65NAjhhy+XB+4roAka7ZLU/Yu8inNOKDqNhgYBZrWUISfg9wGYHt79ew3WyJp
+ UUmozoikBsOCbTNTSHryavZBV2sJ
+X-Google-Smtp-Source: AGHT+IEajwkekfk8+YHXgFdrhSUsX2gybPaJYXaq5eUqY8tjM+hl/2V92Jsmm0wpDkBes5k4wh1vp65kB6Gox5e5BSw=
+X-Received: by 2002:a17:907:db16:b0:b72:d577:11cc with SMTP id
+ a640c23a62f3a-b72df98c024mr256577066b.12.1762603253750; Sat, 08 Nov 2025
+ 04:00:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
- <20251020233949.506088-6-dmitry.osipenko@collabora.com>
-In-Reply-To: <20251020233949.506088-6-dmitry.osipenko@collabora.com>
+ <20251020233949.506088-9-dmitry.osipenko@collabora.com>
+In-Reply-To: <20251020233949.506088-9-dmitry.osipenko@collabora.com>
 From: Yiwei Zhang <zzyiwei@gmail.com>
-Date: Sat, 8 Nov 2025 03:59:56 -0800
-X-Gm-Features: AWmQ_bmloFC77_4cNmFT05jS9ONkITRnrjIqFzq__Es6ZbCxRqdQ_jRWdLQR0rI
-Message-ID: <CAJ+hS_jFpBerU9cU9wz2OOGdvZELiaP6Pmf+7RzSB6dy2YGY_w@mail.gmail.com>
-Subject: Re: [PATCH v14 05/10] virtio-gpu: Support DRM native context
+Date: Sat, 8 Nov 2025 04:00:58 -0800
+X-Gm-Features: AWmQ_bloqyaEYrVxqeOD_hl3TC_MU2TxU9k5UJ_WQmpgHv1y_CHluXrsotE5xJ4
+Message-ID: <CAJ+hS_i11mP_FoEzw=40xq1noW4DHWwySWFOWtWD-crru0Vh7A@mail.gmail.com>
+Subject: Re: [PATCH v14 08/10] docs/system: virtio-gpu: Add link to Mesa VirGL
+ doc
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Huang Rui <ray.huang@amd.com>,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -86,12 +87,11 @@ Cc: Huang Rui <ray.huang@amd.com>,
  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, 
  Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
- Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=zzyiwei@gmail.com; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,173 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 20, 2025 at 4:42=E2=80=AFPM Dmitry Osipenko
+On Mon, Oct 20, 2025 at 4:43=E2=80=AFPM Dmitry Osipenko
 <dmitry.osipenko@collabora.com> wrote:
 >
-> Add support for DRM native contexts to VirtIO-GPU. DRM context is enabled
-> using a new virtio-gpu-gl device option "drm_native_context=3Don".
+> Extend virtio-gpu documentation with a link to the Mesa VirGL
+> documentation.
 >
-> Unlike Virgl and Venus contexts that operate on application API level,
-> DRM native contexts work on a kernel UAPI level. This lower level results
-> in a lightweight context implementations that yield better performance.
->
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
->  docs/system/devices/virtio-gpu.rst | 11 +++++++++++
->  hw/display/virtio-gpu-gl.c         |  2 ++
->  hw/display/virtio-gpu-virgl.c      | 28 ++++++++++++++++++++++++++++
->  hw/display/virtio-gpu.c            | 15 +++++++++++++++
->  include/hw/virtio/virtio-gpu.h     |  3 +++
->  5 files changed, 59 insertions(+)
+>  docs/system/devices/virtio-gpu.rst | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/vir=
 tio-gpu.rst
-> index b7eb0fc0e727..f20c60016376 100644
+> index f20c60016376..f8963c1f13cf 100644
 > --- a/docs/system/devices/virtio-gpu.rst
 > +++ b/docs/system/devices/virtio-gpu.rst
-> @@ -82,6 +82,17 @@ of virtio-gpu host memory window. This is typically be=
-tween 256M and 8G.
+> @@ -59,7 +59,7 @@ on typical modern Linux distributions.
+>  virtio-gpu virglrenderer
+>  ------------------------
 >
->  .. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
+> -When using virgl accelerated graphics mode in the guest, OpenGL API call=
+s
+> +When using `virgl`_ accelerated graphics mode in the guest, OpenGL API c=
+alls
+>  are translated into an intermediate representation (see `Gallium3D`_). T=
+he
+>  intermediate representation is communicated to the host and the
+>  `virglrenderer`_ library on the host translates the intermediate
+> @@ -68,6 +68,7 @@ representation back to OpenGL API calls.
+>  .. parsed-literal::
+>      -device virtio-gpu-gl
 >
-> +DRM native context is supported since release of `virglrenderer`_ v1.0.0
-> +using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") req=
-uires
-> +host blob support (``hostmem`` and ``blob`` fields) and should be enable=
-d
-> +using ``drm_native_context`` field.  The ``hostmem`` field specifies the=
- size
-> +of virtio-gpu host memory window. This is typically between 256M and 8G.
-> +
-> +.. parsed-literal::
-> +    -device virtio-gpu-gl,hostmem=3D8G,blob=3Don,drm_native_context=3Don
-> +
-> +.. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/=
-src/drm
-> +
->  virtio-gpu rutabaga
->  -------------------
+> +.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+>  .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+>  .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
 >
-> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-> index 1468c6ed1467..b640900fc6f1 100644
-> --- a/hw/display/virtio-gpu-gl.c
-> +++ b/hw/display/virtio-gpu-gl.c
-> @@ -159,6 +159,8 @@ static const Property virtio_gpu_gl_properties[] =3D =
-{
->                      VIRTIO_GPU_FLAG_STATS_ENABLED, false),
->      DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
->                      VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
-> +    DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.fla=
-gs,
-> +                    VIRTIO_GPU_FLAG_DRM_ENABLED, false),
->  };
->
->  static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
-c
-> index 0320d6deca76..ccba1d8ee4f4 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -1298,6 +1298,25 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->      if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
->          flags |=3D VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
->      }
-> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-> +        flags |=3D VIRGL_RENDERER_DRM;
-> +
-> +        if (!(flags & VIRGL_RENDERER_ASYNC_FENCE_CB)) {
-> +            /*
-> +             * Virglrenderer skips enabling DRM context support without
-> +             * enabled async-fence feature. VirtIO-GPU will initialize
-> +             * successfully, but DRM context won't be available in guest=
-.
-> +             *
-> +             * For vrend async-fencing can be enabled only if EGL displa=
-y
-> +             * is used. Vrend can't be disabled in QEMU, hence DRM impli=
-citly
-> +             * requires EGL too.
-> +             *
-> +             * Async-fence was bugged in virglrenderer versions <=3D 1.1=
-.1.
-> +             */
-> +            error_report("drm requires egl display and virglrenderer >=
-=3D 1.2.0");
-> +            return -EINVAL;
-> +        }
-> +    }
->  #endif
->
->      ret =3D virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
-> @@ -1361,5 +1380,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
->          }
->      }
->
-> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-> +        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
-> +                                   &capset_max_ver,
-> +                                   &capset_max_size);
-> +        if (capset_max_size) {
-> +            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DR=
-M);
-> +        }
-> +    }
-> +
->      return capset_ids;
->  }
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 3a555125be60..ad36ea6ee319 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1510,6 +1510,21 @@ void virtio_gpu_device_realize(DeviceState *qdev, =
-Error **errp)
->  #endif
->      }
->
-> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-> +#ifdef VIRGL_VERSION_MAJOR
-> +    #if VIRGL_VERSION_MAJOR >=3D 1
-> +        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
-> +            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-> +            error_setg(errp, "drm requires enabled blob and hostmem opti=
-ons");
-> +            return;
-> +        }
-> +    #else
-> +        error_setg(errp, "old virglrenderer, drm unsupported");
-> +        return;
-> +    #endif
-> +#endif
-> +    }
-> +
->      if (!virtio_gpu_base_device_realize(qdev,
->                                          virtio_gpu_handle_ctrl_cb,
->                                          virtio_gpu_handle_cursor_cb,
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
-u.h
-> index e15c16aa5945..a4963508a469 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -100,6 +100,7 @@ enum virtio_gpu_base_conf_flags {
->      VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
->      VIRTIO_GPU_FLAG_VENUS_ENABLED,
->      VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
-> +    VIRTIO_GPU_FLAG_DRM_ENABLED,
->  };
->
->  #define virtio_gpu_virgl_enabled(_cfg) \
-> @@ -122,6 +123,8 @@ enum virtio_gpu_base_conf_flags {
->      (_cfg.hostmem > 0)
->  #define virtio_gpu_venus_enabled(_cfg) \
->      (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
-> +#define virtio_gpu_drm_enabled(_cfg) \
-> +    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
->
->  struct virtio_gpu_base_conf {
->      uint32_t max_outputs;
 > --
 > 2.51.0
 >
