@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5E4CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 01:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDEACCF9E3
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 02:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHY3B-0006hc-VK; Fri, 07 Nov 2025 20:47:34 -0500
+	id 1vHYN2-0002VE-Dz; Fri, 07 Nov 2025 21:08:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vHY39-0006h7-SQ
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 20:47:31 -0500
+ id 1vHYN0-0002Um-6h
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 21:08:02 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vHY36-00037s-3Q
- for qemu-devel@nongnu.org; Fri, 07 Nov 2025 20:47:31 -0500
+ id 1vHYMw-0002Sq-40
+ for qemu-devel@nongnu.org; Fri, 07 Nov 2025 21:08:01 -0500
 Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A81lGKO048456
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5A827l8E028162
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 8 Nov 2025 10:47:16 +0900 (JST)
+ Sat, 8 Nov 2025 11:07:47 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=WrfuSnAtzLINx19NOjcE7a6JPV4ekkDUQxKcgIx647g=; 
+DKIM-Signature: a=rsa-sha256; bh=ItFclBnt2vKWiKeWO4aqQU0k9WyuVB0xzjpV0PiOeSM=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1762566436; v=1;
- b=Gl7ViWe+/VukLklz5l9cEuamqbse3UPlQXUhRZzM+/vkAHPvnpGf3RKyKJUTJwJb
- Qmpxa1X3eVZy77YPP9AjvzJKuzM0KsB5g3ijtWDrGgDBLQg4BU+ouCpxvoqsaL1p
- n6lxFB5xHzKvNPYiWX+srqTQW2YZCpdBLWQNFHMR7UNJRv6lM3oSxvyxFcXxjybg
- 48hx42K3HueYJdUZNrlWc2vn+x4P4yqTR51auG3IfkwgOQWskJ1c6y7iedKnkvd7
- uJQX98K/kzH2xekSgnAKdlvBnVFigs//NtQYNJJHTr7xEgRrXJCQK5/ivhTFnUmZ
- WKKhML4p3IERgMURGi34bA==
-Message-ID: <5002e5b4-0493-4dff-af11-402cebecbcc2@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 8 Nov 2025 10:47:16 +0900
+ s=rs20250326; t=1762567667; v=1;
+ b=afESkhrgqxQCfwQTX1f/wAIA8WuG3tN0KpNofj9WAkC5f3Ytfsk0iWxh79WJfj3S
+ AFvXAgp4jyQc01BHze5qUuuE02kZPIpAjjqEowOXjMmvhGFF1wEz4Jbx6+mzWCtq
+ N5qvAujbUha8g4bHGV2766NrsK5miiMQUUOui4xu2drReG4oCJgjcplM4l4eLokg
+ yyvExmF6l29NucZAeQ1BtDKklcqgY/WZ1LPyNPzRjp9rzbMJk6bc+FjCben7Vvud
+ hidokOcTydZVOCI1sRGcBqBaZAyiuv+/IdnucSUfiNoUGM5fpF4i7S5uXPxu7vdO
+ KFZwE7LErnSLGX0KxthBAQ==
+Message-ID: <e7cb25c1-d43d-4729-8b43-6adcc343149b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 8 Nov 2025 11:07:46 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+Subject: Re: [PATCH] memory: Make FlatView root references weak
 To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
- <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
- <aQJbd5qYR10qcbr7@x1.local>
- <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
- <aQu2_izqViAbJ3A9@x1.local>
- <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
- <aQ0Ys09WtlSPoapm@x1.local>
- <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
- <aQ37hd0fVJltYtt-@x1.local>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
+ <aQE_M1qsr78RrQaw@x1.local>
+ <376f8d41-6ffb-4e1b-b50b-93a0f307d017@rsg.ci.i.u-tokyo.ac.jp>
+ <aQIxA8MzkSO7qm4Z@x1.local>
+ <13cb4e7e-1949-4dc6-b5d6-a976f6f280e4@rsg.ci.i.u-tokyo.ac.jp>
+ <aQuuhSL6rXmyqm8x@x1.local>
+ <f1e40576-67ef-41e7-8131-6a022c9d5fc4@rsg.ci.i.u-tokyo.ac.jp>
+ <aQzf4F6RgkzYWkeM@x1.local>
+ <6d9caf51-df32-4c83-9b62-1c99dfea2e50@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ4g_UsDhTBYiQSZ@x1.local>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aQ37hd0fVJltYtt-@x1.local>
+In-Reply-To: <aQ4g_UsDhTBYiQSZ@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -83,228 +84,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/07 23:00, Peter Xu wrote:
-> On Fri, Nov 07, 2025 at 10:47:35AM +0900, Akihiko Odaki wrote:
->> On 2025/11/07 6:52, Peter Xu wrote:
->>> On Thu, Nov 06, 2025 at 10:40:52AM +0900, Akihiko Odaki wrote:
->>>>>>>> +        /*
->>>>>>>> +         * Ensure that the forced variable has not been set after fetching
->>>>>>>> +         * rcu_call_count; otherwise we may get confused by a force quiescent
->>>>>>>> +         * state request for an element later than n.
->>>>>>>> +         */
->>>>>>>> +        while (qatomic_xchg(&forced, false)) {
->>>>>>>> +            sleep = false;
->>>>>>>> +            n = qatomic_read(&rcu_call_count);
->>>>>>>>              }
->>>>>>>
->>>>>>> This is pretty tricky, and I wonder if it will make the code easier to read
->>>>>>> if we convert the sync_event to be a semaphore instead.  When as a sem, it
->>>>>>> will take account of whatever kick to it, either a call_rcu1() or an
->>>>>>> enforced rcu flush, so that we don't need to reset it.  Meanwhile, we don't
->>>>>>> worry on an slightly outdated "n" read because the 2nd round of sem_wait()
->>>>>>> will catch that new "n".
->>>>>>>
->>>>>>> Instead, worst case is rcu thread runs one more round without seeing
->>>>>>> callbacks on the queue.
->>>>>>>
->>>>>>> I'm not sure if that could help simplying code, maybe also make it less
->>>>>>> error-prone.
->>>>>>
->>>>>> Semaphore is not applicable here because it will not de-duplicate concurrent
->>>>>> kicks of RCU threads.
->>>>>
->>>>> Why concurrent kicks of rcu threads is a problem?  QemuSemaphore is
->>>>> thread-safe itself, meanwhile IIUC it only still causes call_rcu_thread()
->>>>> loops some more rounds reading "n", which looks all safe. No?
+On 2025/11/08 1:40, Peter Xu wrote:
+> On Fri, Nov 07, 2025 at 11:16:56AM +0900, Akihiko Odaki wrote:
+>> On 2025/11/07 2:50, Peter Xu wrote:
+>>> On Thu, Nov 06, 2025 at 11:23:32AM +0900, Akihiko Odaki wrote:
+>>>> Generally speaking, we will not necessarily "always" get an issue report
+>>>> when things went wrong with memory management. A bug in memory management
+>>>> may not cause an immediate crash but corrupt the memory state which you will
+>>>> find only later. The end result of memory corruption may look random and
+>>>> result in a hard-to-debug issue report. A user may not even bother writing
+>>>> an issue report at all; this is especially true for this kind of corner
+>>>> cases that rarely happen.
 >>>>
->>>> It is safe but incurs overheads and confusing. QemuEvent represents the
->>>> boolean semantics better.
->>>>
->>>> I also have difficulty to understand how converting sync_event to a
->>>> semaphore simplifies the code. Perhaps some (pseudo)code to show how the
->>>> code will look like may be useful.
+>>>> There should have been no such a hazard of memory corruption if the code did
+>>>> exactly what the documentation said in the first place. The consistency of
+>>>> the code and the documentation is essential, especially for this kind of
+>>>> complex and fundamental code.
 >>>
->>> I prepared a patch on top of your current patchset to show what I meant.  I
->>> also added comments and some test results showing why I think it might be
->>> fine that the sem overhead should be small.
+>>> Do you have encountered such case before?
 >>>
->>> In short, I tested a VM with 8 vCPUs and 4G mem, booting Linux and properly
->>> poweroff, I only saw <1000 rcu_call1 users in total.  That should be the
->>> max-bound of sem overhead on looping in rcu thread.
->>>
->>> It's in patch format but still treat it as a comment instead to discuss
->>> with you.  Attaching it is just easier for me.
->>>
->>> ===8<===
->>>   From 71f15ed19050a973088352a8d71b6cc6b7b5f7cf Mon Sep 17 00:00:00 2001
->>> From: Peter Xu <peterx@redhat.com>
->>> Date: Thu, 6 Nov 2025 16:03:00 -0500
->>> Subject: [PATCH] rcu: Make sync_event a semaphore
->>>
->>> It could simply all reset logic, especially after enforced rcu is
->>> introduced we'll also need a tweak to re-read "n", which can be avoided too
->>> when with a sem.
->>>
->>> However, the sem can introduce an overhead in high frequecy rcu frees.
->>> This patch is drafted with the assumption that rcu free is at least very
->>> rare in QEMU, hence it's not a problem.
->>>
->>> When I tested with this command:
->>>
->>> qemu-system-x86_64 -M q35,kernel-irqchip=split,suppress-vmdesc=on -smp 8 \
->>>     -m 4G -msg timestamp=on -name peter-vm,debug-threads=on -cpu Nehalem \
->>>     -accel kvm -qmp unix:/tmp/peter.sock,server,nowait -nographic \
->>>     -monitor telnet::6666,server,nowait -netdev user,id=net0,hostfwd=tcp::5555-:22
->>>     -device e1000,netdev=net0 -device virtio-balloon $DISK
->>>
->>> I booted a pre-installed Linux, login and poweroff, wait until VM
->>> completely shutdowns.  I captured less than 1000 rcu_free1() calls in
->>> summary.  It means for the whole lifetime of such VM the max overhead of
->>> the call_rcu_thread() loop reading rcu_call_count will be 1000 loops.
->>>
->>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>> ---
->>>    util/rcu.c | 36 ++++++++----------------------------
->>>    1 file changed, 8 insertions(+), 28 deletions(-)
->>>
->>> diff --git a/util/rcu.c b/util/rcu.c
->>> index 85f9333f5d..dfe031a5c9 100644
->>> --- a/util/rcu.c
->>> +++ b/util/rcu.c
->>> @@ -54,7 +54,7 @@ static int rcu_call_count;
->>>    static QemuMutex rcu_registry_lock;
->>>    /* Set when the forced variable is set or rcu_call_count becomes non-zero. */
->>> -static QemuEvent sync_event;
->>> +static QemuSemaphore sync_event;
->>>    /*
->>>     * Check whether a quiescent state was crossed between the beginning of
->>> @@ -80,7 +80,7 @@ static ThreadList registry = QLIST_HEAD_INITIALIZER(registry);
->>>    void force_rcu(void)
->>>    {
->>>        qatomic_set(&forced, true);
->>> -    qemu_event_set(&sync_event);
->>> +    qemu_sem_post(&sync_event);
->>>    }
->>>    /* Wait for previous parity/grace period to be empty of readers.  */
->>> @@ -148,7 +148,7 @@ static void wait_for_readers(bool sleep)
->>>                 */
->>>                qemu_event_reset(&rcu_gp_event);
->>>            } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
->>> -                   !sleeps || qemu_event_timedwait(&sync_event, 10)) {
->>> +                   !sleeps || qemu_sem_timedwait(&sync_event, 10)) {
->>>                /*
->>>                 * Now one of the following heuristical conditions is satisfied:
->>>                 * - A decent number of callbacks piled up.
->>> @@ -286,7 +286,6 @@ static void *call_rcu_thread(void *opaque)
->>>        rcu_register_thread();
->>>        for (;;) {
->>> -        bool sleep = true;
->>>            int n;
->>>            /*
->>> @@ -294,7 +293,6 @@ static void *call_rcu_thread(void *opaque)
->>>             * added before enter_qs() starts.
->>>             */
->>>            for (;;) {
->>> -            qemu_event_reset(&sync_event);
->>>                n = qatomic_read(&rcu_call_count);
->>>                if (n) {
->>>                    break;
->>> @@ -303,36 +301,19 @@ static void *call_rcu_thread(void *opaque)
->>>    #if defined(CONFIG_MALLOC_TRIM)
->>>                malloc_trim(4 * 1024 * 1024);
->>>    #endif
->>> -            qemu_event_wait(&sync_event);
->>> +            qemu_sem_wait(&sync_event);
->>>            }
->>> -        /*
->>> -         * Ensure that an event for a rcu_call_count change will not interrupt
->>> -         * wait_for_readers().
->>> -         */
->>> -        qemu_event_reset(&sync_event);
->>> -
->>> -        /*
->>> -         * Ensure that the forced variable has not been set after fetching
->>> -         * rcu_call_count; otherwise we may get confused by a force quiescent
->>> -         * state request for an element later than n.
->>> -         */
->>> -        while (qatomic_xchg(&forced, false)) {
->>> -            sleep = false;
->>> -            n = qatomic_read(&rcu_call_count);
->>> -        }
->>> -
->>> -        enter_qs(sleep);
->>> +        enter_qs(!qatomic_xchg(&forced, false));
+>>> I wasn't expecting that, because what you were saying looks more like what
+>>> Linux kernel would have a bug in mm.  QEMU is still special as it has the
+>>> default unassigned MR trapping everything by default, meanwhile normally
+>>> what is moving is MMIO / alias regions rather than real ramblocks.  It
+>>> means when things go wrong we have much higher chance to trap them
+>>> properly.
 >>
->> This is not OK; the forced variable may be set after rcu_call_count is
->> fetched. In that case, we should avoid unsetting the force quiescent state
->> request for the elements later than "n" or refetch "n".
+>> When I said "memory management" I meant the methods we use to allocate and
+>> free memory (the Linux equivalents would be kmalloc()/free()/kref), not the
+>> MM tracking or unassigned MR trapping behavior you mentioned. The unassigned
+>> MR trap and MMIO/alias movement are a separate concern and don’t change the
+>> underlying risk.
+>>
+>> Concrete example: imagine an alias is allocated with g_new() and freed
+>> immediately after object_unparent(). If that alias accidentally becomes the
+>> FlatView root, destroying the FlatView later will call memory_region_unref()
+>> and produce a use-after-free. We cannot predict what memory_region_unref()
+>> will read or write in that scenario — the result can be arbitrary memory
+>> corruption that surfaces much later as a hard-to-debug, intermittent
+>> problem. Users often won’t file an issue for these rare corner cases.
 > 
-> Indeed I missed that part, but it should be trivial to fix, on top of my
-> previous patch:
+> OK I see what you meant now.  Yes it's a valid concern.
+> 
+>>
+>>>
+>>> I also confess though that I'm pretty conservative on fixing things with
+>>> hypothetical issues.  In general, I prefer fixing things with explicit
+>>> problems, so we know how to measure and justify a fix (depending on how
+>>> aggressive the fix is and how much maintanence burden it will bring to
+>>> QEMU).  Without a real problem, it's harder to quantify that even if such
+>>> evaluation will also normally be subjective too.
+>>
+>> Regarding your preference to fix only explicit problems: I understand the
+>> conservatism, but here are the facts we need to weigh:
+>>
+>> - The documentation claims we may free aliases because
+>>    memory_region_ref() is never called, yet there is code that does call
+>>    memory_region_ref().
+>> - The patch adds code to align behavior with the documentation.
+>>
+>> The significance of both potential impacts (the behavioral divergence for
+>> devices other than pci-bridge, and the added complexity needed for
+>> consistency) may be subjective and hypothetical, but that applies equally to
+>> both sides.
+>>
+>> In this case, the long-term reliability and maintainability of QEMU depend
+>> on having the code behave as documented. Correctness should take precedence
+>> over simplicity.
+> 
+> Fair enough.
+> 
+> Let's then still try to see whether we can brainstorm something that can
+> still at least avoid the "let's clear a remote pointer in a finalize(),
+> because it looks safe" approach.. I'm not sure if I'm the only one that
+> feels nervous with it.
+> 
+> Fundamentally, if you can remotely clear a pointer, it means it's not used
+> at all. In practise, that's correct because as I also discussed before I
+> don't think RCU readers use flatview->root at all.  It was almost only
+> because we have some very light references on flatview->root.  The major
+> "hidden" reference is actually the key in flat_views hash, however I don't
+> think it will have any stale root MR VA as key, as long as after a proper
+> commit() completes.
+
+"As long as after a proper commit() completes" is what we are trying to 
+avoid. Think of the following sequence:
+
+memory_region_transaction_begin()
+object_unparent(mr)
+g_free(mr)
+mr = g_new0(MemoryRegion, 1) // reuse the storage for another MR
+address_space_init(as, mr, "as")
+memory_region_transaction_commit()
+
+address_space_init() will use the value keyed with the dangling pointer 
+in flat_views.
+
+Removing a dangling reference is safer than leaving it. Some code that 
+assumes the reference will not be gone may get surprised and cause a 
+NULL dereference, but that almost always result in SIGSEGV instead of 
+memory corruptions. Such segfault is as easy to debug as SIGABRT 
+triggered by assertions.
+
+> 
+> In short, I want to discuss with you on whether we can completely remove
+> the flatview->root reference, instead of resetting it in finalize().
+> 
+> Since that'll need to be justified, I prepared some sample patches myself.
+> It survives all my smoke tests.  Once again, please treat them as comments
+> only.  Would you think that's slightly better?  Attached at the end.
+> 
+> IMHO removing view->root makes sure nothing will surprise us in the future
+> v.s. remote resets.
+> 
+> Thanks,
 > 
 > ===8<===
-> diff --git a/util/rcu.c b/util/rcu.c
-> index dfe031a5c9..aff98d9ee2 100644
-> --- a/util/rcu.c
-> +++ b/util/rcu.c
-> @@ -286,6 +286,7 @@ static void *call_rcu_thread(void *opaque)
->       rcu_register_thread();
+> 
+>  From 4b495d935dfb145ed7ff57b3f6e4d6b9cb5ce038 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Fri, 7 Nov 2025 10:47:40 -0500
+> Subject: [PATCH 1/3] memory: Remove flatview root reference in
+>   mtree_print_dispatch()
+> 
+> This is so far only used to dump an extra "[ROOT]" tag when the termination
+> MR is the root MR.  This is so far the only real necessary reference to
+> flatview's root.  Remove it.  We lose this tag, but the hope is with the
+> MR's name still being available it's still clear on what it represents.
+> 
+> This paves way for a complete removal of root MR reference on flatviews.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   system/memory-internal.h | 3 +--
+>   system/memory.c          | 4 ++--
+>   system/physmem.c         | 5 ++---
+>   3 files changed, 5 insertions(+), 7 deletions(-)
+> 
+> diff --git a/system/memory-internal.h b/system/memory-internal.h
+> index 46f758fa7e..c5841a603c 100644
+> --- a/system/memory-internal.h
+> +++ b/system/memory-internal.h
+> @@ -35,8 +35,7 @@ AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv);
+>   void address_space_dispatch_compact(AddressSpaceDispatch *d);
+>   void address_space_dispatch_free(AddressSpaceDispatch *d);
 >   
->       for (;;) {
-> +        bool sleep;
->           int n;
+> -void mtree_print_dispatch(struct AddressSpaceDispatch *d,
+> -                          MemoryRegion *root);
+> +void mtree_print_dispatch(struct AddressSpaceDispatch *d);
 >   
->           /*
-> @@ -293,6 +294,7 @@ static void *call_rcu_thread(void *opaque)
->            * added before enter_qs() starts.
->            */
->           for (;;) {
-> +            sleep = !qatomic_xchg(&forced, false);
-
-This doesn't work either; the following sequence may happen (assume 
-forced is false at beginning):
-
-qatomic_xchg(&forced, false)  |
-                               | call_rcu1()
-                               |     qatomic_fetch_inc(&rcu_call_count)
-                               | force_rcu()
-                               |     qatomic_set(&forced, true)
-qatomic_read(&rcu_call_count)
-
-We need to enter the force quiescent state for the node added with the 
-call_rcu1() call in this sequence, but this code doesn't.
-
->               n = qatomic_read(&rcu_call_count);
->               if (n) {
->                   break;
-> @@ -304,7 +306,7 @@ static void *call_rcu_thread(void *opaque)
->               qemu_sem_wait(&sync_event);
->           }
+>   /* returns true if end is big endian. */
+>   static inline bool devend_big_endian(enum device_endian end)
+> diff --git a/system/memory.c b/system/memory.c
+> index 8b84661ae3..0d14e60d26 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3573,8 +3573,8 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+>       }
 >   
-> -        enter_qs(!qatomic_xchg(&forced, false));
-> +        enter_qs(sleep);
->           qatomic_sub(&rcu_call_count, n);
->           bql_lock();
->           while (n > 0) {
-> ===8<===
-> 
-> The idea is still the same, using semaphore can avoid explicit resets and a
-> lot of other ordering constraints like reading call_count, etc.
-> 
-> E.g. even before this series, we still need to properly reset at explicit
-> time to make sure we can capture a set() correct.  When with sem, all these
-> issues are gone simply because we won't miss post() when it's a counter not
-> boolean.
-> 
-> Also, would you please also have a look at other comments I left in the
-> same email (after the patch I attached)?
-> 
-> https://lore.kernel.org/qemu-devel/aQ0Ys09WtlSPoapm@x1.local/
-> 
-> Can search "When I was having a closer look, I found some other issues".
+>   #if !defined(CONFIG_USER_ONLY)
+> -    if (fvi->dispatch_tree && view->root) {
+> -        mtree_print_dispatch(view->dispatch, view->root);
+> +    if (fvi->dispatch_tree) {
+> +        mtree_print_dispatch(view->dispatch);
+>       }
+>   #endif
+>   
+> diff --git a/system/physmem.c b/system/physmem.c
+> index c9869e4049..26ae6e3acd 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -4257,7 +4257,7 @@ static void mtree_print_phys_entries(int start, int end, int skip, int ptr)
+>   #define MR_SIZE(size) (int128_nz(size) ? (hwaddr)int128_get64( \
+>                              int128_sub((size), int128_one())) : 0)
+>   
+> -void mtree_print_dispatch(AddressSpaceDispatch *d, MemoryRegion *root)
+> +void mtree_print_dispatch(AddressSpaceDispatch *d)
+>   {
+>       int i;
+>   
+> @@ -4270,13 +4270,12 @@ void mtree_print_dispatch(AddressSpaceDispatch *d, MemoryRegion *root)
+>                                   " [ROM]", " [watch]" };
+>   
+>           qemu_printf("      #%d @" HWADDR_FMT_plx ".." HWADDR_FMT_plx
+> -                    " %s%s%s%s%s",
+> +                    " %s%s%s%s",
+>               i,
+>               s->offset_within_address_space,
+>               s->offset_within_address_space + MR_SIZE(s->size),
+>               s->mr->name ? s->mr->name : "(noname)",
+>               i < ARRAY_SIZE(names) ? names[i] : "",
+> -            s->mr == root ? " [ROOT]" : "",
+>               s == d->mru_section ? " [MRU]" : "",
+>               s->mr->is_iommu ? " [iommu]" : "");
+>   
 
-I have just replied to the email. My mailer ignored the part after "--".
-
-Regards,
-Akihiko Odaki
 
