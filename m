@@ -4,96 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A65CCFA13
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 20:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C605FCCFA13
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 23:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHpIC-0000Ay-It; Sat, 08 Nov 2025 15:12:12 -0500
+	id 1vHs0P-0005nD-Eh; Sat, 08 Nov 2025 18:06:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1vHpI8-00009m-PM
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 15:12:10 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1vHpI4-00074f-FZ
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 15:12:08 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-b997ae045b7so178872a12.2
- for <qemu-devel@nongnu.org>; Sat, 08 Nov 2025 12:12:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762632722; x=1763237522; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mWAxk6Zt5RXepaT53mIPHPmeq+SCDJKNGcs1Y4tqsjA=;
- b=RYBsOIui1I/cMxVlf4la8/xPl/j4UrHN/0usmFJi3Hv6iEC7kOR7F07EeZgd200mBP
- 6BCdPwQcM60h5vqmc4xSc7cQQ/UY4em8eEqEqL/0Smk8FQyRdpzDstRmpeNfLSqISDmD
- s3jwPr6/MBSBvVq0hlwmBX687B7ykK3YZipyZllXstNYyOpdpeFuutZ4txksfYWXkCe4
- b+f9DZ3WT3Ln6CbrMtex+JQtWAbITqzzVVS3/Oq++S76mcw/XTbR2oAiarb3SUMnez7K
- M84d3U5xZo5HI0lQcsr/ErijDzs6YYItrEXuQQ+6tFFK7D8PeeR1k1lpNyJGhksq/cRt
- 7tSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762632722; x=1763237522;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mWAxk6Zt5RXepaT53mIPHPmeq+SCDJKNGcs1Y4tqsjA=;
- b=Gn8D+9fN25/cUdTiWhdgYPJJNWvtjm2hwWWrCA7Mjsgwvf5I6jRndAlO94vANI0Le8
- J9VrRrugGgN5PirSZ/vXgjEM2uJb6J+ldJFCgbU8qKj8tjwI/w30asUUm+CS5xEypZt9
- mYNRiXu9Wufd4VKJ7bt4QFHU+VeCDV1n7QtcZ1B7zH+mPgpOEZYQR63hc0TkviZcoi07
- 4ezfhFSeKDTjvSdS7Mst9P5qxOlhuj2ePx7jqfOUvCcgybFi7UTx1DEXKTOC+7j1kNZc
- m588wkgoZ1DxLO63xZaHiuANtmuLxnlSHdRmZ86pA9WwgcS0wj/kR05WAD5XHgLTtIbZ
- Xipg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbQ8MytZ+RHN06AF1LKZYfbk1RKWssSc5CccjzuNOW9hdertC03YRo4GNfesSs57KtqFQ/TQxrOHQU@nongnu.org
-X-Gm-Message-State: AOJu0YzzRR2Yd3MwcWBqG6V/vWEpjBcqU2oHgJ0i1rm7RNmgAjLdaBEk
- r149sIddoWWRzK74mUXsOgNC9oW5ohDU9Pssg12uNRo5paG2xeEHgVJT
-X-Gm-Gg: ASbGncv5f+Ln5bwUho96j+WJEIjxWrqXI8rI9uhS/Sv8trO6M7XDtdYTI9U5pwOLv/B
- Uy32QxbtDxzL5eSP0Sz9sE0Hqwja2MBTJ3y79epdJNDTTYotjoXXitRoAJ2KC1TGGcveANigL1n
- DWEYUrs9qzZQVeRLBf7WkCSuI+I0dR938eVhB04hKRzmIeHDXAwSd3TIve8I5SLB60ME+B6eyrt
- ibAxaIE9UBQQMcetK+LEzKswsznzD/nsd+djl3hJk5725v+iAaceaPjm35gKO8IXkR50O91noUf
- RR64norvUN5dQcPmiA4kRXwXchdDmACFvg6ctA1HYCuP+vbn6T+aHNWxuHVIZOFRaUa5HsLRe00
- YAd0uqM7z/n7xFVS5K1MFI7Kbo4mmV9DZ535pNcWb6XjX7+jE2cN6ZSwf+zLgIRMXG3C+chmQuO
- ynnSEvpVUIO62brlYiyMcXNvx/N4CBZ5Mw6+Nz3534Q9UdOm+iK7HR37bK
-X-Google-Smtp-Source: AGHT+IEGwpN1tezFI8TPqFipzmgfiFhkztUbbb1dets93RAKPLe2vmimKhUkkQGhsrWPq1Ahn771Yw==
-X-Received: by 2002:a17:902:e353:b0:297:e604:598 with SMTP id
- d9443c01a7336-297e60407famr14268285ad.4.1762632722456; 
- Sat, 08 Nov 2025 12:12:02 -0800 (PST)
-Received: from ?IPV6:2402:e280:2177:35:a77f:15f7:4845:1af9?
- ([2402:e280:2177:35:a77f:15f7:4845:1af9])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-297ed6808ddsm23068205ad.17.2025.11.08.12.12.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Nov 2025 12:12:02 -0800 (PST)
-Message-ID: <b32eeb42-66b4-4dff-accd-cab187ef073b@gmail.com>
-Date: Sun, 9 Nov 2025 01:41:59 +0530
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vHs0I-0005dE-L5
+ for qemu-devel@nongnu.org; Sat, 08 Nov 2025 18:05:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vHs0F-0001jr-PG
+ for qemu-devel@nongnu.org; Sat, 08 Nov 2025 18:05:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762643151;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tYCfZAH2P4JWJ/fPjO7E2/nMVRBEkEBOTpeY5IMD+Kk=;
+ b=CIhL2u5r21EgWV75F8tZ5MoVAIkie35rS0PDolm8uxdiCF/LtLn0X0yR9UGaSGIlpaVqh5
+ UodyLH+suXym4ThfIhxyjE7x7CXk1BXIs9LXN9x+4AC4iHBmy0W2EK7bF3/3oJfGl3Gq6z
+ ssPgMqmeuKYk83Mk1BTlE1ema/esdXE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-LCp15DMhNISCGmbZrNUSCA-1; Sat,
+ 08 Nov 2025 18:05:47 -0500
+X-MC-Unique: LCp15DMhNISCGmbZrNUSCA-1
+X-Mimecast-MFC-AGG-ID: LCp15DMhNISCGmbZrNUSCA_1762643147
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E19D5195608F; Sat,  8 Nov 2025 23:05:46 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B6A6819560B0; Sat,  8 Nov 2025 23:05:45 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org,
+	berrange@redhat.com,
+	kwolf@redhat.com
+Subject: [PATCH v2 09/12] qio: Prepare NetListener to use AioContext
+Date: Sat,  8 Nov 2025 16:59:30 -0600
+Message-ID: <20251108230525.3169174-23-eblake@redhat.com>
+In-Reply-To: <20251108230525.3169174-14-eblake@redhat.com>
+References: <20251108230525.3169174-14-eblake@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] pc-bios/dtb/pegasos*.dtb: Fix compiled dtb blobs
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20251108193717.DADA9597302@zero.eik.bme.hu>
-Content-Language: en-US
-From: Yogesh Vyas <yvyas1991@gmail.com>
-In-Reply-To: <20251108193717.DADA9597302@zero.eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=yvyas1991@gmail.com; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,90 +84,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Balaton,
+For ease of review, this patch adds an AioContext pointer to the
+QIONetListener struct, the code to trace it, and refactors
+listener->io_source to instead be an array of utility structs; but the
+aio_context pointer is always NULL until the next patch adds an API to
+set it.  There should be no semantic change in this patch.
 
-I just tested after applying this patch and it seems to solve the issue.
-Thank you very much.
+Signed-off-by: Eric Blake <eblake@redhat.com>
 
-Reported-by: Yogesh Vyas <yvyas1991@gmail.com>
-Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
+---
+v2: new patch, replacing the earlier "qio: Let listening sockets remember
+their owning QIONetListener"
+---
+ include/io/net-listener.h |   6 ++-
+ io/net-listener.c         | 102 ++++++++++++++++++++++++++------------
+ io/trace-events           |   6 +--
+ 3 files changed, 76 insertions(+), 38 deletions(-)
 
-On 11/9/25 1:07 AM, BALATON Zoltan wrote:
-> When adding these files somehow an incomplete version was committed.
-> Regenerate and update these dtb files to match the dts which fixes
-> problems caused by missing nodes in the dtb.
-> 
-> Fixes: 9099b430a4 (hw/ppc/pegasos2: Change device tree generation)
-> Fixes: 3c21f9dfcf (hw/ppc/pegasos2: Add VOF support for pegasos1)
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
-> v2: updated commit message to mention the two commits fixed here
-> 
->   pc-bios/dtb/pegasos1.dtb | Bin 857 -> 1975 bytes
->   pc-bios/dtb/pegasos2.dtb | Bin 1701 -> 2963 bytes
->   2 files changed, 0 insertions(+), 0 deletions(-)
-> 
-> diff --git a/pc-bios/dtb/pegasos1.dtb b/pc-bios/dtb/pegasos1.dtb
-> index 3b863b25288a59bcede9459ff42afad713dde741..b776861602055ed068cac103ad8b2e9faad1e6e5 100644
-> GIT binary patch
-> literal 1975
-> zcmZuyO=}ZD7@lplwWzFuUaE&kE=9W9q^(VFE48#BXiz-$&~A1o>5~1*%%&xRwE8<d
-> z2%bHA@!}5<Jo*Pb3O#sG(Bk{d&Lr!$FT6AF^US<oGn38NtEWF0oBhZbYcVzx(Y!!<
-> zo%9+hiS?NHmBRjSv^1Kg`GU5=0beAw{e6*X9^56;TW#L+WGX>}gWhR81XT8An(ub9
-> z$V+Nlac6tX!*{*ndz-i|&DA!xpS5f4^pK18M(z1X<~)Y8m1aE2M5+K`<U?Pkj>V;W
-> zjZUMvOca|Uwfy~5@&vHJF^^L*a+efS_|KAU7rbIkZ##MqrXp50RE-kG9-PrGDa2sd
-> z=FG6(*I4;?y)cqqmtzwNd{l19Md;zCbe_x)-PTeeik-x_X$@34A8dnB4{{kiu>QPz
-> zQNpiJPY4z3xPzTz8jeUw;DZ}_YaRl~Qw)&fBCs|AmAs-62_b*A!qzbm6M5c)(_)3v
-> zbJq%B>ij@YbcQH{>HWTGl<;S=anEM`3!70H4F1O0{Lj+*_u|Q`{WplGyQH7PSuy@L
-> z)r3`pVVBPl=Zb`8{Wms{7(8G{3pXd&!reox;%?or*;V<mzk283u8`urQI4r!G~>*`
-> z(`?z=rm2(<sHo9uEv+=&@Im=aqgMDqD)HGKarixhN1X#w2r&6s^9oJY0n5GPEFjw7
-> zx=%LF3TpNFsFQjksMIq@YqnV<8v_4Q-)xVtsmt_@ybu*z<h~oOsWx?PW)p|?YOGBA
-> zfH$#lrV!&>?wh_-mK(^%a%<JmA&Z=O7<1u<EBbKZi+5@(9?{O`c8No-Y97@?H=rJt
-> zyXCvW9oWRvRPAH>gg6t+^nv`4bK^%@PVqY`SZR+<yzwcW`Sd3utMTzZA?L+6_l$Y2
-> z?gfG1QaV15BFO@N5c+&KA7z}yX}}{Uh>>BMu#KmWHn%pPEFSPANW~bcmoi2Hm%a$I
-> z91eo_SY3uMxsF};@$L1a)bBf8!3RU0_#@V8uC6;_l5-)3S?+j#KS>WG9`ra9Uee=|
-> zb%xSWCM!}qVW8`TW$J_NM;<z%x|tkyr25AJKLL{noW2&0jM7{(j85Xklxti_$)tcu
-> XF48FCg4M?xbW?sBXI>t5BF_E++M@cs
-> 
-> delta 53
-> zcmdnaf0Iq)0`I@K3=GVX3=9kw3=B+bfV2h>3j(nK5QD&4pm@nfjcTUJ$!yyIEp7@-
-> 
-> diff --git a/pc-bios/dtb/pegasos2.dtb b/pc-bios/dtb/pegasos2.dtb
-> index 29c35216ec2d77e4083a3ef618ca185925fb5d61..a6935a8c23d85e0251e7f424cf59c8fe54fe593a 100644
-> GIT binary patch
-> literal 2963
-> zcmb_ezmFU>6!z>v$dN?L@k2t8V$o5A=my<Sa;aDmP8X#JClI1Yk$64c-Qi|uCid)I
-> z79<E%bSY?&prW8dqNGS9{s0g)5*?yIA`%6WAmaNx_U_z5l!hmH=6%o4?|b&MJ@fsk
-> z`@acs;!`2Swh)WY;(Z2f3GE3qNb7wej{oe`qmRhL1-u{eI&H*{qP5k~l-^F;BHHtN
-> zdLV6K*Bf^By|Dh8vrs>QcD7e$GVkn;dKag5jz9k&<4?oB>+PKj7vJ3L>=lRF>|N-*
-> zHL;Z*F+fz5IxkJ(05Ew@p-uByS$la6n9@Rv)UdERpW%@n6=u?1b(VVkW6;~R-B}s)
-> zINBA5>PH=`99wUr57+AI93~8F$Nqhf-FQ>U`SI81{67GG8ZE^C1Ue<)&uTcuU(ez1
-> z=I{@|&3t|WW-cM#uU-%M9x(IvIAX1iH86AIdWHTMp>wSQ-h|FE0q;P6yn)|=&V3R3
-> zHT0zhE}%czz=zPEYT%EcGY7YxeVJxf_8Ei1n68#qn^b1b=KM;PcDGk+an>onXrqrN
-> zpO5RM9x&_MSg+_-^w$?}`+n@9=yNV^ko!S_k%K5VeWTvxV;Vd9@~$}fjmK`k-2~{O
-> zK|FtSr-ly0C;HK2zM|C1uBr{eAN5^o*6SA`K3;=M=)Vh{_d&pai(_sE9=E{p+#j?4
-> z)-!c^oIlqcXW|-O{}Ml5w2>1#1E$_sKX+b882DbI1H|L#miX`tI0J5Nx?aq+u4y-2
-> z@8f!_`{!%T7$?zqZo$#|6YsD$@ov2eOdraO?{p_%?90}rGB5Wo@2zaDa@FeGqwUqr
-> z^=|q~^UmNL+Rmen)!-G^VCTI#<ER~paTZ#ac%QB?=*-T1xvwaGoYNa?HGkK%-h~I(
-> zmMz-XlU^ZBGM6XMVmtIfr!fA5@(t@mUJ8Ai>$0)B;p~pnRH~bvbITHPZo?MFH91Nc
-> z!#)TctPRDFMeS>uawc|dV|y$1A?tZo=}4Pyy6KBSU+(v|v(Lsixw|lv>w!GJ=4-2U
-> zP&c=Jg1K$<Jxv%Z+OU&_u^Jo;zXJ!3FhAx+c^L1xCT~_&;O#k**;vtrJ;ZAAehcF~
-> zFV6+#VZ56SUe4Lgn|G!9pYF<qd)=>m9$3etcO?&}6YhMk-o~4a(s55W2hQ)xZ9F<?
-> zkT9=1&@npr9Jw3Ad={5wk{E4mtaO%Hk?4a|>8sVG)M8X5IuiyKn-;ma@W$&qyE~Ux
-> z4s@OrW(wV@nxaHoWzw?Z0HX(D*{1JlAA4Ex|9~I)_&^&M(*e5F<|MWF9h$^-7PU=-
-> zuZpdbd2D3m9knrqiL+u5kK_#y*-DxU2Lb;N`GJw6xUVZU^t!DIqs2g1F%Lmp^y5TM
-> zgq_1P9-)R>?Z^6tR$(GCiBb4i6?s1$h(nWBx@ib`tD!VfRob}dX`ZA?f?SmRPXlpZ
-> z*s;YAS|WyNPn(?cvF_h3Ho8|7l~7p$>b}v}$2wONVPrngR&1|tosZKTk<GZQVyX7?
-> z;xN<6Knv#8Gbz+KACC}K^u`uTg>j-TRh%ZiuGB(3sjEz~@~ATs>-kJzpMhBfjW1Vh
-> nv!b$s&p4MOBsR^-3RR3sS*5*9&#YXr$`o0Kw3es7en0#J=mwZO
-> 
-> delta 54
-> zcmbO%zLZzv0`I@K3=C{b85kHW7#LVi0BH>%76f7eAO-@)yFl>?8#PWdZ+7O`!~_68
-> C$qNtw
-> 
+diff --git a/include/io/net-listener.h b/include/io/net-listener.h
+index 2605d6aae1e..7188721cb34 100644
+--- a/include/io/net-listener.h
++++ b/include/io/net-listener.h
+@@ -28,6 +28,7 @@
+ OBJECT_DECLARE_SIMPLE_TYPE(QIONetListener,
+                            QIO_NET_LISTENER)
 
++typedef struct QIONetListenerSource QIONetListenerSource;
+
+ typedef void (*QIONetListenerClientFunc)(QIONetListener *listener,
+                                          QIOChannelSocket *sioc,
+@@ -47,10 +48,11 @@ struct QIONetListener {
+     Object parent;
+
+     char *name;
+-    QIOChannelSocket **sioc;
+-    GSource **io_source;
++    QIONetListenerSource **source;
+     size_t nsioc;
++    /* At most one of context or aio_context will be set */
+     GMainContext *context;
++    AioContext *aio_context;
+
+     bool connected;
+
+diff --git a/io/net-listener.c b/io/net-listener.c
+index 83c977ecca2..ebc61f81ed6 100644
+--- a/io/net-listener.c
++++ b/io/net-listener.c
+@@ -23,8 +23,15 @@
+ #include "io/dns-resolver.h"
+ #include "qapi/error.h"
+ #include "qemu/module.h"
++#include "qemu/main-loop.h"
+ #include "trace.h"
+
++struct QIONetListenerSource {
++    QIOChannelSocket *sioc;
++    GSource *io_source;
++    QIONetListener *listener;
++};
++
+ QIONetListener *qio_net_listener_new(void)
+ {
+     return QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
+@@ -52,7 +59,7 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
+     }
+
+     trace_qio_net_listener_callback(listener, listener->io_func,
+-                                    listener->context);
++                                    listener->context, listener->aio_context);
+     if (listener->io_func) {
+         object_ref(OBJECT(listener));
+         listener->io_func(listener, sioc, listener->io_data);
+@@ -121,15 +128,25 @@ qio_net_listener_watch(QIONetListener *listener, size_t i, const char *caller)
+     }
+
+     trace_qio_net_listener_watch(listener, listener->io_func,
+-                                 listener->context, caller);
++                                 listener->context, listener->aio_context,
++                                 caller);
+     if (i == 0) {
+         object_ref(OBJECT(listener));
+     }
+     for ( ; i < listener->nsioc; i++) {
+-        listener->io_source[i] = qio_channel_add_watch_source(
+-            QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
+-            qio_net_listener_channel_func,
+-            listener, NULL, listener->context);
++        if (!listener->aio_context) {
++            /*
++             * The user passed a GMainContext with the async callback;
++             * they plan on running the default or their own g_main_loop.
++             */
++            listener->source[i]->io_source = qio_channel_add_watch_source(
++                QIO_CHANNEL(listener->source[i]->sioc), G_IO_IN,
++                qio_net_listener_channel_func,
++                listener, NULL, listener->context);
++        } else {
++            /* The user passed an AioContext. Not supported yet. */
++            g_assert_not_reached();
++        }
+     }
+ }
+
+@@ -143,12 +160,17 @@ qio_net_listener_unwatch(QIONetListener *listener, const char *caller)
+     }
+
+     trace_qio_net_listener_unwatch(listener, listener->io_func,
+-                                   listener->context, caller);
++                                   listener->context, listener->aio_context,
++                                   caller);
+     for (i = 0; i < listener->nsioc; i++) {
+-        if (listener->io_source[i]) {
+-            g_source_destroy(listener->io_source[i]);
+-            g_source_unref(listener->io_source[i]);
+-            listener->io_source[i] = NULL;
++        if (!listener->aio_context) {
++            if (listener->source[i]->io_source) {
++                g_source_destroy(listener->source[i]->io_source);
++                g_source_unref(listener->source[i]->io_source);
++                listener->source[i]->io_source = NULL;
++            }
++        } else {
++            g_assert_not_reached();
+         }
+     }
+     object_unref(OBJECT(listener));
+@@ -161,13 +183,12 @@ void qio_net_listener_add(QIONetListener *listener,
+         qio_channel_set_name(QIO_CHANNEL(sioc), listener->name);
+     }
+
+-    listener->sioc = g_renew(QIOChannelSocket *, listener->sioc,
+-                             listener->nsioc + 1);
+-    listener->io_source = g_renew(typeof(listener->io_source[0]),
+-                                  listener->io_source,
+-                                  listener->nsioc + 1);
+-    listener->sioc[listener->nsioc] = sioc;
+-    listener->io_source[listener->nsioc] = NULL;
++    listener->source = g_renew(typeof(listener->source[0]),
++                               listener->source,
++                               listener->nsioc + 1);
++    listener->source[listener->nsioc] = g_new0(QIONetListenerSource, 1);
++    listener->source[listener->nsioc]->sioc = sioc;
++    listener->source[listener->nsioc]->listener = listener;
+
+     object_ref(OBJECT(sioc));
+     listener->connected = true;
+@@ -177,14 +198,17 @@ void qio_net_listener_add(QIONetListener *listener,
+ }
+
+
+-void qio_net_listener_set_client_func_full(QIONetListener *listener,
+-                                           QIONetListenerClientFunc func,
+-                                           gpointer data,
+-                                           GDestroyNotify notify,
+-                                           GMainContext *context)
++static void
++qio_net_listener_set_client_func_internal(QIONetListener *listener,
++                                          QIONetListenerClientFunc func,
++                                          gpointer data,
++                                          GDestroyNotify notify,
++                                          GMainContext *context,
++                                          AioContext *aio_context)
+ {
+     if (listener->io_func == func && listener->io_data == data &&
+-        listener->io_notify == notify && listener->context == context) {
++        listener->io_notify == notify && listener->context == context &&
++        listener->aio_context == aio_context) {
+         return;
+     }
+
+@@ -196,17 +220,28 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+     listener->io_data = data;
+     listener->io_notify = notify;
+     listener->context = context;
++    listener->aio_context = aio_context;
+
+     qio_net_listener_watch(listener, 0, "set_client_func");
+ }
+
++void qio_net_listener_set_client_func_full(QIONetListener *listener,
++                                           QIONetListenerClientFunc func,
++                                           gpointer data,
++                                           GDestroyNotify notify,
++                                           GMainContext *context)
++{
++    qio_net_listener_set_client_func_internal(listener, func, data,
++                                              notify, context, NULL);
++}
++
+ void qio_net_listener_set_client_func(QIONetListener *listener,
+                                       QIONetListenerClientFunc func,
+                                       gpointer data,
+                                       GDestroyNotify notify)
+ {
+-    qio_net_listener_set_client_func_full(listener, func, data,
+-                                          notify, NULL);
++    qio_net_listener_set_client_func_internal(listener, func, data,
++                                              notify, NULL, NULL);
+ }
+
+ struct QIONetListenerClientWaitData {
+@@ -253,8 +288,8 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
+
+     sources = g_new0(GSource *, listener->nsioc);
+     for (i = 0; i < listener->nsioc; i++) {
+-        sources[i] = qio_channel_create_watch(QIO_CHANNEL(listener->sioc[i]),
+-                                              G_IO_IN);
++        sources[i] = qio_channel_create_watch(
++            QIO_CHANNEL(listener->source[i]->sioc), G_IO_IN);
+
+         g_source_set_callback(sources[i],
+                               (GSourceFunc)qio_net_listener_wait_client_func,
+@@ -287,7 +322,7 @@ void qio_net_listener_disconnect(QIONetListener *listener)
+
+     qio_net_listener_unwatch(listener, "disconnect");
+     for (i = 0; i < listener->nsioc; i++) {
+-        qio_channel_close(QIO_CHANNEL(listener->sioc[i]), NULL);
++        qio_channel_close(QIO_CHANNEL(listener->source[i]->sioc), NULL);
+     }
+     listener->connected = false;
+ }
+@@ -308,8 +343,9 @@ QIOChannelSocket *qio_net_listener_sioc(QIONetListener *listener, size_t n)
+     if (n > listener->nsioc) {
+         return NULL;
+     }
+-    return listener->sioc[n];
++    return listener->source[n]->sioc;
+ }
++
+ static void qio_net_listener_finalize(Object *obj)
+ {
+     QIONetListener *listener = QIO_NET_LISTENER(obj);
+@@ -321,10 +357,10 @@ static void qio_net_listener_finalize(Object *obj)
+     }
+
+     for (i = 0; i < listener->nsioc; i++) {
+-        object_unref(OBJECT(listener->sioc[i]));
++        object_unref(OBJECT(listener->source[i]->sioc));
++        g_free(listener->source[i]);
+     }
+-    g_free(listener->io_source);
+-    g_free(listener->sioc);
++    g_free(listener->source);
+     g_free(listener->name);
+ }
+
+diff --git a/io/trace-events b/io/trace-events
+index 0cb77d579b6..ec91453335a 100644
+--- a/io/trace-events
++++ b/io/trace-events
+@@ -74,6 +74,6 @@ qio_channel_command_abort(void *ioc, int pid) "Command abort ioc=%p pid=%d"
+ qio_channel_command_wait(void *ioc, int pid, int ret, int status) "Command abort ioc=%p pid=%d ret=%d status=%d"
+
+ # net-listener.c
+-qio_net_listener_watch(void *listener, void *func, void *ctx, const char *extra) "Net listener=%p watch enabled func=%p ctx=%p by %s"
+-qio_net_listener_unwatch(void *listener, void *func, void *ctx, const char *extra) "Net listener=%p watch disabled func=%p ctx=%p by %s"
+-qio_net_listener_callback(void *listener, void *func, void *ctx) "Net listener=%p callback forwarding to func=%p ctx=%p"
++qio_net_listener_watch(void *listener, void *func, void *gctx, void *actx, const char *extra) "Net listener=%p watch enabled func=%p ctx=%p/%p by %s"
++qio_net_listener_unwatch(void *listener, void *func, void *gctx, void *actx, const char *extra) "Net listener=%p watch disabled func=%p ctx=%p/%p by %s"
++qio_net_listener_callback(void *listener, void *func, void *gctx, void *actx) "Net listener=%p callback forwarding to func=%p ctx=%p/%p"
 -- 
-Regards,
-Yogesh Vyas
+2.51.1
 
 
