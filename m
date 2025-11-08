@@ -4,74 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D74CCFA18
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 09:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22D3CCFA13
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 10:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHfM6-00085P-7x; Sat, 08 Nov 2025 04:35:34 -0500
+	id 1vHgVB-00087s-UQ; Sat, 08 Nov 2025 05:49:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vHfLt-00080f-2j
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 04:35:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vHfLp-000458-3N
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 04:35:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762594514;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yN0YWcIGW81FOzx98FEXhDhtiOpVnwKI02S6x38GJKk=;
- b=GvX3tXN+OvUScN5uPPTgE/3Qk7qNS20RRwlqQn/TCyICycqA/GH/EBfNUslHs48GhUCEXf
- IhrYqnud9L9W73p1nYZ6nY4f6TcHIfybwbg+M2a6NAVU5L2vUhpS6GInbo4U6jN5bhYSPt
- GTAo2TEbnw1RPdnezTQDRPmmhjd0fB8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-HofitqD4OdO8mG7PSaS0iA-1; Sat,
- 08 Nov 2025 04:35:09 -0500
-X-MC-Unique: HofitqD4OdO8mG7PSaS0iA-1
-X-Mimecast-MFC-AGG-ID: HofitqD4OdO8mG7PSaS0iA_1762594508
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F22291956096; Sat,  8 Nov 2025 09:35:07 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3086230044E0; Sat,  8 Nov 2025 09:35:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 802A521E6A27; Sat, 08 Nov 2025 10:35:04 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- stefanb@linux.vnet.ibm.com,  qemu-devel@nongnu.org,  peterx@redhat.com
-Subject: Re: [PATCH 2/3] tpm_emulator: drop direct use of errno variable
-In-Reply-To: <bd855481-a93a-4406-bd0d-a02896b93296@linux.ibm.com> (Stefan
- Berger's message of "Fri, 7 Nov 2025 14:31:48 -0500")
-References: <20251106194126.569037-1-vsementsov@yandex-team.ru>
- <20251106194126.569037-3-vsementsov@yandex-team.ru>
- <bd855481-a93a-4406-bd0d-a02896b93296@linux.ibm.com>
-Date: Sat, 08 Nov 2025 10:35:04 +0100
-Message-ID: <87tsz46f5j.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vHgVA-00086d-EV
+ for qemu-devel@nongnu.org; Sat, 08 Nov 2025 05:49:00 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vHgV8-0007fo-JS
+ for qemu-devel@nongnu.org; Sat, 08 Nov 2025 05:49:00 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-63fbbad0ac3so1510273d50.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Nov 2025 02:48:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762598937; x=1763203737; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/7PzARsi/fJbtsIP4ReGVPzOE5ErTpCvAzEkeJbnX3w=;
+ b=fa4W4kIX08fwIXY/mWMWY+nx91Jah+zAaFPkk+mXJ+6bLHx0alqI6lDk5j9Nt/PRur
+ xfV2zoRo3Ler+aUvoEuBNOOsFgHIrbAKfKEoi5i6Kw7fcfn0jCl+MWxJteHyTwdKyAat
+ 1uK/v6Us0kJEunmEoTW1/qRyl/pTzA/EZxUnFG80hLgQsJLUVkJnxyoKDb0Sa7ncbOEj
+ YiGceq2kKbGjCVediatsX/TqPDuNqwGidtnjMxW+DJ/b7c7lwoxDdf+VkyC+MXvLIF4y
+ waAUzQcGr0YuZu7UuCLwPCZ8FTqX6p0hQqX3gLq1Zf8lldMnfPfaWSMTNPYD/N1Q6+z3
+ Rfqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762598937; x=1763203737;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/7PzARsi/fJbtsIP4ReGVPzOE5ErTpCvAzEkeJbnX3w=;
+ b=AfEI93OKIRwGk27UORpONDdY08+Rx3K/FvIXuKIWSLmQoGCf4uuZXXsrp2XACBNXm9
+ nX60D8fFxBKWg0tFkX/PovzrDrCydDcWQp+LX95rpRq8qqz761z6DH76AIXcIW9kBvHW
+ Omm0/JNHLlbkGuORxzxkyqRySYamBAJgnkvL9Le/UwSlzsTa9OGAe8HDjbfHGjhIq39h
+ lLJc2+h/IuPUv3OUon6c+h98o6fHvOoaz0t2qezhzz4jD29J/Q6uy6D99OrBaOfgUdIG
+ vJO4mb/aCI2PoASFC1vzXI95Ei5KPntBMH+I60D3P6/IEkyhB5+5mkWlBPRr/PGhTHUy
+ Z3gA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVp1KHH8X0BQTBlHn1RND9rU28VQK8+dlIJgIxwAqYAeIsJK3xo+iJUWWkJxfgwIp7fXHde0U25AKpp@nongnu.org
+X-Gm-Message-State: AOJu0YxLDh+ixIOogxp3cfuZYWoqLETPCqonO2hCyYehb1KEoWXZlVMI
+ 3AWZDcq6P7oVpkRj0T/UeFPLszLAx057eSpWN+v0pjCjNvghKZ4QZ1oMf3dpve99vluAWyLAnbj
+ EZOYZ6/7ZoV44RTOzs2ASFWuJ0f819lSHeXBriqNA0A==
+X-Gm-Gg: ASbGnctXpt4DIWnRMApmZruYxLP52k06CPq5Mh6OvoDFFmwau3bTpvdyrMaEPPGzd8V
+ 6HstK7FO5D8IW+W4kkHPQMfXjkicSGx42u6+x+m5sKok6mIji8dfCfEZls30pICioMwQhaAVpZk
+ c/AEdjnEGcaFdjnuzveB9Wxfnby89FDC/zyIMuhCP5w0LorOAYqS6ePjrGgSkggXp/L0yXIJYpC
+ KWLMSSE6b8OpitPc8K6tfQ5Qpa9AeWXGju6tSjS+oJuIz4BwJCH76z0hAjodw==
+X-Google-Smtp-Source: AGHT+IFtLRRgYVqK330VsT30yfLTVJ47sYTAD0x3DCMm0R2lJ+xLGt8Vg4b69olpAd5JiBrUqk+TOPUuor2PnGWiAg0=
+X-Received: by 2002:a05:690e:42d2:b0:63f:a705:ea9 with SMTP id
+ 956f58d0204a3-640d45eeeebmr1467188d50.62.1762598937067; Sat, 08 Nov 2025
+ 02:48:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251107154116.1396769-1-peter.maydell@linaro.org>
+ <5da4fd2b-6c5b-e2f4-b421-0a440718af7b@eik.bme.hu>
+In-Reply-To: <5da4fd2b-6c5b-e2f4-b421-0a440718af7b@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 8 Nov 2025 10:48:45 +0000
+X-Gm-Features: AWmQ_bkwnAxcUb4K5WNsKGiwGMJnYeNt0lxxdnJWrRXftSmiyiKnuB1bhuMsuUo
+Message-ID: <CAFEAcA-chUva0qpzxsyRd65rtWMHhqC2A6XbNnQ1so3RtCjArA@mail.gmail.com>
+Subject: Re: [PATCH] hw/audio/lm4549: Don't try to open a zero-frequency audio
+ voice
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,54 +96,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Berger <stefanb@linux.ibm.com> writes:
-
-> On 11/6/25 2:41 PM, Vladimir Sementsov-Ogievskiy wrote:
->> The code tends to include errno into error messages after
->> tpm_util_test_tpmdev() and tpm_emulator_ctrlcmd() calls.
->> Both has error paths, where errno is not set, examples:
+On Sat, 8 Nov 2025 at 00:22, BALATON Zoltan <balaton@eik.bme.hu> wrote:
 >
-> Both have ...>
->> tpm_emulator_ctrlcmd()
->>    qemu_chr_fe_write_all()
->>      qemu_chr_write()
->>        replay_char_write_event_load()
->>          ...
->>          *res = replay_get_dword();
->>          ...
->> tpm_util_test_tpmdev()
->>    tpm_util_test()
->>      tpm_util_request()
->>        ...
->>        if (n != requestlen) {
->>            return -EFAULT;
->>        }
->>        ...
->> Both doesn't document that they set errno.
+> On Fri, 7 Nov 2025, Peter Maydell wrote:
+> > If the guest incorrectly programs the lm4549 audio chip with a zero
+> > frequency, we will pass this to AUD_open_out(), which will complain:
+> >
+> >   A bug was just triggered in AUD_open_out
+> >   Save all your work and restart without audio
+> >   I am sorry
+> >   Context:
+> >   audio: frequency=0 nchannels=2 fmt=S16 endianness=little
+> >
+> > The datasheet doesn't say what we should do here, only that the valid
+> > range for the freqency is 8000 to 48000 Hz; we choose to log the
+> > guest error and ignore an attempt to change the DAC rate to something
+> > outside the valid range.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/410
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > This bug has been around for so long and is a weird edge case whose
+> > only effect is to print a debug message, so it doesn't really seem
+> > worth cc'ing stable on.
+> > ---
+> > hw/audio/lm4549.c | 17 ++++++++++++++++-
+> > 1 file changed, 16 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
+> > index 745441bd790..bf711c49c04 100644
+> > --- a/hw/audio/lm4549.c
+> > +++ b/hw/audio/lm4549.c
+> > @@ -15,6 +15,7 @@
+> >
+> > #include "qemu/osdep.h"
+> > #include "hw/hw.h"
+> > +#include "qemu/log.h"
+> > #include "qemu/audio.h"
+> > #include "lm4549.h"
+> > #include "migration/vmstate.h"
+> > @@ -179,9 +180,23 @@ void lm4549_write(lm4549_state *s,
+> >         break;
+> >
+> >     case LM4549_PCM_Front_DAC_Rate:
+> > -        regfile[LM4549_PCM_Front_DAC_Rate] = value;
+> >         DPRINTF("DAC rate change = %i\n", value);
+> >
+> > +        /*
+> > +         * Valid sample rates are 4kHz to 48kHz.
 >
-> Both do not ...
->
->> Let's drop these explicit usage of errno. If we need this information,
->> it should be added to errp deeper in the stack.
->
-> It's not clear to me why this is an actual problem. Is it better to now not set this error message?
+> Commit message says minimum is 8kHz. One of these is likely incorrect.
+> Maybe a typo in commit message?
 
-Error messages lacking information are bad.  Error messages with
-incorrect information are *worse*.  When the error message lacks
-information I need, I usually realize it immediately.  When it lies to
-me, I don't.
+Whoops; yes, you're right, the commit message is the one
+that's wrong. The datasheet for this is at
+https://www.ti.com/lit/ds/symlink/lm4549b.pdf
+and it says 4kHz.
 
-Before this patch, correct information is mixed up with incorrect
-information.  At the point where we format it into error messages, we
-have no idea whether it's correct.  Thus, the error messages lie at
-least some of the time.  That's a bug.
-
-The patch fixes that bug at the cost of losing some correct information
-along with the lies.
-
-If you'd rather lose just the lies, that's possible, but more involved.
-As the saying goes: patches welcome!
-
-[...]
-
+-- PMM
 
