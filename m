@@ -4,41 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A31CCFA13
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 19:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B1DCCFA13
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 19:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHoTc-0005Gq-4K; Sat, 08 Nov 2025 14:19:56 -0500
+	id 1vHoZM-0007jK-Vx; Sat, 08 Nov 2025 14:25:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vHoSA-0004pm-Q1; Sat, 08 Nov 2025 14:18:26 -0500
+ id 1vHoZL-0007ik-Uo; Sat, 08 Nov 2025 14:25:51 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vHoS3-0000dH-9V; Sat, 08 Nov 2025 14:18:21 -0500
+ id 1vHoZK-0002Ub-87; Sat, 08 Nov 2025 14:25:51 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DC63059730B;
- Sat, 08 Nov 2025 20:18:14 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id CEE34597302;
+ Sat, 08 Nov 2025 20:25:48 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 97TqRUx-6fQk; Sat,  8 Nov 2025 20:18:12 +0100 (CET)
+ id HrYbBtZO3GO5; Sat,  8 Nov 2025 20:25:46 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D4819597308; Sat, 08 Nov 2025 20:18:12 +0100 (CET)
+ id 7ED9E5972FF; Sat, 08 Nov 2025 20:25:46 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7C6B75972E7;
+ Sat, 08 Nov 2025 20:25:46 +0100 (CET)
+Date: Sat, 8 Nov 2025 20:25:46 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] pc-bios/dtb/pegasos*.dtb: Fix compiled dtb blobs
+To: Yogesh Vyas <yvyas1991@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+In-Reply-To: <01273d10-53ef-c49e-c3ac-ee97eefda0f3@eik.bme.hu>
+Message-ID: <ddc35233-8e68-428a-c924-ab62907357d7@eik.bme.hu>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
+ <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
+ <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
+ <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
+ <26f74e6c-a89f-4be0-aa6c-78ad88e2cba3@gmail.com>
+ <993819c9-cf87-ec91-31ac-f8988c8d3d67@eik.bme.hu>
+ <38673ed9-4690-472b-9e0f-c8a736247097@gmail.com>
+ <fd804cb4-d987-5e3d-24e8-0a4fb88e092e@eik.bme.hu>
+ <5250e103-4dd1-44e4-9dcf-7c2df033ae10@gmail.com>
+ <ebdb8442-3691-9bfe-dc0c-d3ecb3f5bf12@eik.bme.hu>
+ <01273d10-53ef-c49e-c3ac-ee97eefda0f3@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Yogesh Vyas <yvyas1991@gmail.com>
-Message-Id: <20251108191812.D4819597308@zero.eik.bme.hu>
-Date: Sat, 08 Nov 2025 20:18:12 +0100 (CET)
+Content-Type: multipart/mixed;
+ boundary="3866299591-925131595-1762629946=:12059"
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -61,82 +76,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When adding these files in commit 9099b430a4 somehow an incomplete
-version was committed. Regenerate and update these dtb files to match
-the dts which fixes problems caused by missing nodes in the dtb.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Fixes: 9099b430a4 (hw/ppc/pegasos2: Change device tree generation)
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
-I don't know how this happened but went undetected because compiling
-with dtc available seems to regenerate these so it worked and only
-caused problems where that somehow failed. Since QEMU also had dtc as
-a subproject I don't know how can that happen but some people managed
-to get that result.
+--3866299591-925131595-1762629946=:12059
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
- pc-bios/dtb/pegasos1.dtb | Bin 857 -> 1975 bytes
- pc-bios/dtb/pegasos2.dtb | Bin 1701 -> 2963 bytes
- 2 files changed, 0 insertions(+), 0 deletions(-)
+On Thu, 6 Nov 2025, BALATON Zoltan wrote:
+> On Mon, 3 Nov 2025, BALATON Zoltan wrote:
+>> On Sun, 2 Nov 2025, Yogesh Vyas wrote:
+>>> On 10/28/25 1:48 AM, BALATON Zoltan wrote:
+>>>> Trying to read invalid spr 1012 (0x3f4) at 00000000c0013f48
+>>>> [    0.000000] Using CHRP machine description
+>>>> [    0.000000] Total memory = 512MB; using 1024kB for hash table (at 
+>>>> cff00000)
+>>>> [    0.000000] Initializing cgroup subsys cpuset
+>>>> [    0.000000] Initializing cgroup subsys cpu
+>>>> [    0.000000] Initializing cgroup subsys cpuacct
+>>>> [    0.000000] Linux version 3.16.0-6-powerpc (debian- 
+>>>> kernel@lists.debian.org) (gcc version 4.8.4 (Debian 4.8.4-1) ) #1 Debian 
+>>>> 3.16.56-1+deb8u1 (2018-05-08)
+>>>> [    0.000000] Found initrd at 0xc15a2000:0xc1b0b90d
+>>>> [    0.000000] chrp type = 6 [Genesi Pegasos]
+>>>> 
+>>>> Are you using this same vmlinuz-chrp.initrd?
+>>>> 
+>>>> $ md5sum vmlinuz-chrp.initrd
+>>>> a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
+>>> 
+>>> Yes, md5sum is same as you mentioned:
+>>> yogi@fedora:~/work/images$ md5sum vmlinuz-chrp.initrd
+>>> a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
+>>> 
+>>> Could you please share your Qemu configure command line?
+>>> I can try one more time if that's different than mine.
+>>> I used below configure command line:
+>>> '../configure' '--target-list=ppc64-softmmu,ppc-softmmu' '--enable-virtfs'
+>> 
+>> I don't see how configure options could have anyhing to do with that but 
+>> I've tested that this works on my machine:
+>> 
+>> configure --disable-download --disable-tools --target-list=ppc64-softmmu
+>> qemu-system-ppc64 -M pegasos2 -serial stdio -kernel vmlinuz-chrp.initrd 
+>> -append "---" -cdrom debian-8.11.0-powerpc-netinst.iso
+>> 
+>> The configure options are just to only compile what's needed but it should 
+>> work anyway with your or any options too as long as qemu-system-ppc or 
+>> qemu-system-ppc64 is compiled. Can you test on a different machine?
+>
+> Someone else reported a possible regression maybe related to this patch too
 
-diff --git a/pc-bios/dtb/pegasos1.dtb b/pc-bios/dtb/pegasos1.dtb
-index 3b863b25288a59bcede9459ff42afad713dde741..b776861602055ed068cac103ad8b2e9faad1e6e5 100644
-GIT binary patch
-literal 1975
-zcmZuyO=}ZD7@lplwWzFuUaE&kE=9W9q^(VFE48#BXiz-$&~A1o>5~1*%%&xRwE8<d
-z2%bHA@!}5<Jo*Pb3O#sG(Bk{d&Lr!$FT6AF^US<oGn38NtEWF0oBhZbYcVzx(Y!!<
-zo%9+hiS?NHmBRjSv^1Kg`GU5=0beAw{e6*X9^56;TW#L+WGX>}gWhR81XT8An(ub9
-z$V+Nlac6tX!*{*ndz-i|&DA!xpS5f4^pK18M(z1X<~)Y8m1aE2M5+K`<U?Pkj>V;W
-zjZUMvOca|Uwfy~5@&vHJF^^L*a+efS_|KAU7rbIkZ##MqrXp50RE-kG9-PrGDa2sd
-z=FG6(*I4;?y)cqqmtzwNd{l19Md;zCbe_x)-PTeeik-x_X$@34A8dnB4{{kiu>QPz
-zQNpiJPY4z3xPzTz8jeUw;DZ}_YaRl~Qw)&fBCs|AmAs-62_b*A!qzbm6M5c)(_)3v
-zbJq%B>ij@YbcQH{>HWTGl<;S=anEM`3!70H4F1O0{Lj+*_u|Q`{WplGyQH7PSuy@L
-z)r3`pVVBPl=Zb`8{Wms{7(8G{3pXd&!reox;%?or*;V<mzk283u8`urQI4r!G~>*`
-z(`?z=rm2(<sHo9uEv+=&@Im=aqgMDqD)HGKarixhN1X#w2r&6s^9oJY0n5GPEFjw7
-zx=%LF3TpNFsFQjksMIq@YqnV<8v_4Q-)xVtsmt_@ybu*z<h~oOsWx?PW)p|?YOGBA
-zfH$#lrV!&>?wh_-mK(^%a%<JmA&Z=O7<1u<EBbKZi+5@(9?{O`c8No-Y97@?H=rJt
-zyXCvW9oWRvRPAH>gg6t+^nv`4bK^%@PVqY`SZR+<yzwcW`Sd3utMTzZA?L+6_l$Y2
-z?gfG1QaV15BFO@N5c+&KA7z}yX}}{Uh>>BMu#KmWHn%pPEFSPANW~bcmoi2Hm%a$I
-z91eo_SY3uMxsF};@$L1a)bBf8!3RU0_#@V8uC6;_l5-)3S?+j#KS>WG9`ra9Uee=|
-zb%xSWCM!}qVW8`TW$J_NM;<z%x|tkyr25AJKLL{noW2&0jM7{(j85Xklxti_$)tcu
-XF48FCg4M?xbW?sBXI>t5BF_E++M@cs
+Debugging with the other person reporting similar issue I think I've found 
+the problem and this patch should fix it:
+https://patchew.org/QEMU/20251108191812.D4819597308@zero.eik.bme.hu/
+Can you test please?
 
-delta 53
-zcmdnaf0Iq)0`I@K3=GVX3=9kw3=B+bfV2h>3j(nK5QD&4pm@nfjcTUJ$!yyIEp7@-
-
-diff --git a/pc-bios/dtb/pegasos2.dtb b/pc-bios/dtb/pegasos2.dtb
-index 29c35216ec2d77e4083a3ef618ca185925fb5d61..a6935a8c23d85e0251e7f424cf59c8fe54fe593a 100644
-GIT binary patch
-literal 2963
-zcmb_ezmFU>6!z>v$dN?L@k2t8V$o5A=my<Sa;aDmP8X#JClI1Yk$64c-Qi|uCid)I
-z79<E%bSY?&prW8dqNGS9{s0g)5*?yIA`%6WAmaNx_U_z5l!hmH=6%o4?|b&MJ@fsk
-z`@acs;!`2Swh)WY;(Z2f3GE3qNb7wej{oe`qmRhL1-u{eI&H*{qP5k~l-^F;BHHtN
-zdLV6K*Bf^By|Dh8vrs>QcD7e$GVkn;dKag5jz9k&<4?oB>+PKj7vJ3L>=lRF>|N-*
-zHL;Z*F+fz5IxkJ(05Ew@p-uByS$la6n9@Rv)UdERpW%@n6=u?1b(VVkW6;~R-B}s)
-zINBA5>PH=`99wUr57+AI93~8F$Nqhf-FQ>U`SI81{67GG8ZE^C1Ue<)&uTcuU(ez1
-z=I{@|&3t|WW-cM#uU-%M9x(IvIAX1iH86AIdWHTMp>wSQ-h|FE0q;P6yn)|=&V3R3
-zHT0zhE}%czz=zPEYT%EcGY7YxeVJxf_8Ei1n68#qn^b1b=KM;PcDGk+an>onXrqrN
-zpO5RM9x&_MSg+_-^w$?}`+n@9=yNV^ko!S_k%K5VeWTvxV;Vd9@~$}fjmK`k-2~{O
-zK|FtSr-ly0C;HK2zM|C1uBr{eAN5^o*6SA`K3;=M=)Vh{_d&pai(_sE9=E{p+#j?4
-z)-!c^oIlqcXW|-O{}Ml5w2>1#1E$_sKX+b882DbI1H|L#miX`tI0J5Nx?aq+u4y-2
-z@8f!_`{!%T7$?zqZo$#|6YsD$@ov2eOdraO?{p_%?90}rGB5Wo@2zaDa@FeGqwUqr
-z^=|q~^UmNL+Rmen)!-G^VCTI#<ER~paTZ#ac%QB?=*-T1xvwaGoYNa?HGkK%-h~I(
-zmMz-XlU^ZBGM6XMVmtIfr!fA5@(t@mUJ8Ai>$0)B;p~pnRH~bvbITHPZo?MFH91Nc
-z!#)TctPRDFMeS>uawc|dV|y$1A?tZo=}4Pyy6KBSU+(v|v(Lsixw|lv>w!GJ=4-2U
-zP&c=Jg1K$<Jxv%Z+OU&_u^Jo;zXJ!3FhAx+c^L1xCT~_&;O#k**;vtrJ;ZAAehcF~
-zFV6+#VZ56SUe4Lgn|G!9pYF<qd)=>m9$3etcO?&}6YhMk-o~4a(s55W2hQ)xZ9F<?
-zkT9=1&@npr9Jw3Ad={5wk{E4mtaO%Hk?4a|>8sVG)M8X5IuiyKn-;ma@W$&qyE~Ux
-z4s@OrW(wV@nxaHoWzw?Z0HX(D*{1JlAA4Ex|9~I)_&^&M(*e5F<|MWF9h$^-7PU=-
-zuZpdbd2D3m9knrqiL+u5kK_#y*-DxU2Lb;N`GJw6xUVZU^t!DIqs2g1F%Lmp^y5TM
-zgq_1P9-)R>?Z^6tR$(GCiBb4i6?s1$h(nWBx@ib`tD!VfRob}dX`ZA?f?SmRPXlpZ
-z*s;YAS|WyNPn(?cvF_h3Ho8|7l~7p$>b}v}$2wONVPrngR&1|tosZKTk<GZQVyX7?
-z;xN<6Knv#8Gbz+KACC}K^u`uTg>j-TRh%ZiuGB(3sjEz~@~ATs>-kJzpMhBfjW1Vh
-nv!b$s&p4MOBsR^-3RR3sS*5*9&#YXr$`o0Kw3es7en0#J=mwZO
-
-delta 54
-zcmbO%zLZzv0`I@K3=C{b85kHW7#LVi0BH>%76f7eAO-@)yFl>?8#PWdZ+7O`!~_68
-C$qNtw
-
--- 
-2.41.3
-
+Regards,
+BALATON Zoltan
+--3866299591-925131595-1762629946=:12059--
 
