@@ -4,80 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85ECCCFA18
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 19:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A31CCFA13
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Nov 2025 19:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHoFG-0007cd-A7; Sat, 08 Nov 2025 14:05:06 -0500
+	id 1vHoTc-0005Gq-4K; Sat, 08 Nov 2025 14:19:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vHoFF-0007cS-10
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 14:05:05 -0500
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vHoFD-00045r-6T
- for qemu-devel@nongnu.org; Sat, 08 Nov 2025 14:05:04 -0500
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-63e16fbdd50so1586343d50.2
- for <qemu-devel@nongnu.org>; Sat, 08 Nov 2025 11:05:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762628701; x=1763233501; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7vPgp0MYvMFKvwgWmTKhFg1YdgjiSPc61zY1fuJkPxk=;
- b=rbsuOKFxkqGXu29+WMmFeepgXrrDja9IP/67h0mxL9hXlgGMdqPFc8UW9WV0DMLWup
- OmgB4rnjkQ3xWn10y7tyz+hhcuMOncutDkK3gi14NY8XzxU9TsQqTuFLYrjwFT+Hb3cy
- fcYT4z59HGNzcmiQ+jEwG8alNZzefZ3frtH9WGHqWh9yKbP5QbhMF3vQnxu6cngHdRJG
- jXaNH9kDP1JIxcGx9rQTqUcnnfI+TCYLF3/1eJfrgaUzr1t5zjwzn6J54Aen6Lyb6bS0
- Dwmi8hNBrL51bc6Zer0mRJPO3MLXXB5xXyvdc3nDAZWJUac6+NTY82umccJrBQPwkLwM
- 6emg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762628701; x=1763233501;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7vPgp0MYvMFKvwgWmTKhFg1YdgjiSPc61zY1fuJkPxk=;
- b=DMNlpkskG44uWJqb0KHJXKU3YcpnsbKqBrPd3f9HvtW51pDglfhdix8EBIrZIcdOsJ
- NGJrAibkv37cyx/ieV04iaEUyrGLyc4YrnVPStvLwgEYX06f/Cd+86ftCvneB1bUvZSz
- OqgFGmxbP5hViXPQam3RbacAJX8pVUwvz2hmiXxqtxN+YhI+pWg9+lCmmiTAFQibSUCo
- Ag+8va852GbVKyIinM1EMIcNowhjzwaj/A7Mks4HknV8YfefG1e+XYvLTmvf0j913ThV
- 8iC27VwPG5q8Hv6Hd2VLvhXnmO2qSH5h+2dDoYXL5D50ozZ1d+PrFyJnd9Rpbl7LdTYD
- e44g==
-X-Gm-Message-State: AOJu0YwyS70p/Y+G+XiVoruX49MxOreeUAg25CFM36P++GlNVIV98NW1
- PptqscqcULN9iDj/s5izCeuOfjgxT8xV54FyQr+cn1I3R+w6xGDJ/KIyl8tFnuJ/VZ5jh0t1g9z
- IOAHu3dogWOT73sskD0f7yWdkmpY4KblWxLmBILDvrg==
-X-Gm-Gg: ASbGncssNe3eGfSIc9svRH37AY2Q8uqQm9TXQ9i0RK9u3wFeGjuE4abHBgjz/gSgHXI
- M9mabw4cDAl1Wxml+KN9a6bqNjZXvLptCOmjwyVLWFuryyp4FteV3eChqaxLiY31Vdj48RwodBw
- PaziKakIjVPgQBDZMHnUHqs7e7wqzXmQ+yAzkabfFa9+ZCfwMhnOyx7KmtBbULXkyw63u9Z08+V
- qfxk1WH2PN7Vg62tIDvFSz0+uBzzNxkaXXqSXMAzStVRC2hmppfRejlRGzwfhFcLM60u4zKLFHa
- wdtgVSg=
-X-Google-Smtp-Source: AGHT+IFGqDjPmHY5eRsohYpdntfuUYuh1Qa9z33873v7g962jccfITqEVXGrE7RlgB8tWvudjM5Ic3QWVfWWcjQ6RXY=
-X-Received: by 2002:a05:690e:4301:b0:63f:9b00:70cf with SMTP id
- 956f58d0204a3-640d453a821mr2285387d50.16.1762628700969; Sat, 08 Nov 2025
- 11:05:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vHoSA-0004pm-Q1; Sat, 08 Nov 2025 14:18:26 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vHoS3-0000dH-9V; Sat, 08 Nov 2025 14:18:21 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DC63059730B;
+ Sat, 08 Nov 2025 20:18:14 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 97TqRUx-6fQk; Sat,  8 Nov 2025 20:18:12 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D4819597308; Sat, 08 Nov 2025 20:18:12 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] pc-bios/dtb/pegasos*.dtb: Fix compiled dtb blobs
 MIME-Version: 1.0
-References: <AM9PR04MB8487562AFE05FFEF901244E587C0A@AM9PR04MB8487.eurprd04.prod.outlook.com>
-In-Reply-To: <AM9PR04MB8487562AFE05FFEF901244E587C0A@AM9PR04MB8487.eurprd04.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 8 Nov 2025 19:04:49 +0000
-X-Gm-Features: AWmQ_bk1iPuQaXO49L0Tx4sqvkMMrcL7gIAwcCpAauBn_7MTxZwUdxUBzl6CFdI
-Message-ID: <CAFEAcA8wF30KdS=hdr1RfpEcgBA5epXgRXrJ=HvtCr=p8__EGQ@mail.gmail.com>
-Subject: Re: [PATCH] Add support for the NXP i.MX8MM EVK (Evaluation Kit) board
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Yogesh Vyas <yvyas1991@gmail.com>
+Message-Id: <20251108191812.D4819597308@zero.eik.bme.hu>
+Date: Sat, 08 Nov 2025 20:18:12 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,83 +61,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 8 Nov 2025 at 12:27, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote:
->
-> From: Gaurav Sharma gaurav.sharma_7@nxp.com
->
-> Date: Sat, 8 Nov 2025 17:12:56 +0530
->
-> Subject: [PATCH] Add support for the NXP i.MX8MM EVK (Evaluation Kit) board
->
-> including: - i.MX8MM SoC implementation with CPU, memory, and peripherals -
->
-> Board-specific configuration and device tree - Clock Control Module (CCM) for
->
-> i.MX8MM - Analog mixed-signal controller - Updated GPT timer support for
->
-> i.MX8MM - Documentation for the new board
->
->
->
-> Signed-off-by: Gaurav Sharma gaurav.sharma_7@nxp.com"
->
-> ---
->
-> MAINTAINERS                     |  12 +
->
-> docs/system/arm/imx8mm-evk.rst  |  69 ++++
->
-> hw/arm/Kconfig                  |  24 ++
->
-> hw/arm/fsl-imx8mm.c             | 675 ++++++++++++++++++++++++++++++++
->
-> hw/arm/imx8mm-evk.c             | 103 +++++
->
-> hw/arm/meson.build              |   2 +
->
-> hw/misc/Kconfig                 |   6 +
->
-> hw/misc/imx8mm_analog.c         | 160 ++++++++
->
-> hw/misc/imx8mm_ccm.c            | 175 +++++++++
->
-> hw/misc/meson.build             |   3 +
->
-> hw/timer/imx_gpt.c              |  28 ++
->
-> include/hw/arm/fsl-imx8mm.h     | 242 ++++++++++++
->
-> include/hw/misc/imx8mm_analog.h |  81 ++++
->
-> include/hw/misc/imx8mm_ccm.h    |  30 ++
->
-> include/hw/timer/imx_gpt.h      |   3 +
->
-> 15 files changed, 1613 insertions(+)
+When adding these files in commit 9099b430a4 somehow an incomplete
+version was committed. Regenerate and update these dtb files to match
+the dts which fixes problems caused by missing nodes in the dtb.
 
-Please can you split this up into a multi-patch patch series
-where each patch is a self-contained reasonably sized change?
-You can look through the git history for examples, but typically
-adding each individual new device model should be in its own
-patch, for example.
+Fixes: 9099b430a4 (hw/ppc/pegasos2: Change device tree generation)
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+I don't know how this happened but went undetected because compiling
+with dtc available seems to regenerate these so it worked and only
+caused problems where that somehow failed. Since QEMU also had dtc as
+a subproject I don't know how can that happen but some people managed
+to get that result.
 
-Also, it looks like you've sent this as something other than
-a plain text email. You'll probably find git send-email will
-produce better results than sending it from your normal mail
-client.
+ pc-bios/dtb/pegasos1.dtb | Bin 857 -> 1975 bytes
+ pc-bios/dtb/pegasos2.dtb | Bin 1701 -> 2963 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
 
-You can find our guidance on how to send patches here:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html
-(which includes some tips about setting up tooling to send
-patch emails).
+diff --git a/pc-bios/dtb/pegasos1.dtb b/pc-bios/dtb/pegasos1.dtb
+index 3b863b25288a59bcede9459ff42afad713dde741..b776861602055ed068cac103ad8b2e9faad1e6e5 100644
+GIT binary patch
+literal 1975
+zcmZuyO=}ZD7@lplwWzFuUaE&kE=9W9q^(VFE48#BXiz-$&~A1o>5~1*%%&xRwE8<d
+z2%bHA@!}5<Jo*Pb3O#sG(Bk{d&Lr!$FT6AF^US<oGn38NtEWF0oBhZbYcVzx(Y!!<
+zo%9+hiS?NHmBRjSv^1Kg`GU5=0beAw{e6*X9^56;TW#L+WGX>}gWhR81XT8An(ub9
+z$V+Nlac6tX!*{*ndz-i|&DA!xpS5f4^pK18M(z1X<~)Y8m1aE2M5+K`<U?Pkj>V;W
+zjZUMvOca|Uwfy~5@&vHJF^^L*a+efS_|KAU7rbIkZ##MqrXp50RE-kG9-PrGDa2sd
+z=FG6(*I4;?y)cqqmtzwNd{l19Md;zCbe_x)-PTeeik-x_X$@34A8dnB4{{kiu>QPz
+zQNpiJPY4z3xPzTz8jeUw;DZ}_YaRl~Qw)&fBCs|AmAs-62_b*A!qzbm6M5c)(_)3v
+zbJq%B>ij@YbcQH{>HWTGl<;S=anEM`3!70H4F1O0{Lj+*_u|Q`{WplGyQH7PSuy@L
+z)r3`pVVBPl=Zb`8{Wms{7(8G{3pXd&!reox;%?or*;V<mzk283u8`urQI4r!G~>*`
+z(`?z=rm2(<sHo9uEv+=&@Im=aqgMDqD)HGKarixhN1X#w2r&6s^9oJY0n5GPEFjw7
+zx=%LF3TpNFsFQjksMIq@YqnV<8v_4Q-)xVtsmt_@ybu*z<h~oOsWx?PW)p|?YOGBA
+zfH$#lrV!&>?wh_-mK(^%a%<JmA&Z=O7<1u<EBbKZi+5@(9?{O`c8No-Y97@?H=rJt
+zyXCvW9oWRvRPAH>gg6t+^nv`4bK^%@PVqY`SZR+<yzwcW`Sd3utMTzZA?L+6_l$Y2
+z?gfG1QaV15BFO@N5c+&KA7z}yX}}{Uh>>BMu#KmWHn%pPEFSPANW~bcmoi2Hm%a$I
+z91eo_SY3uMxsF};@$L1a)bBf8!3RU0_#@V8uC6;_l5-)3S?+j#KS>WG9`ra9Uee=|
+zb%xSWCM!}qVW8`TW$J_NM;<z%x|tkyr25AJKLL{noW2&0jM7{(j85Xklxti_$)tcu
+XF48FCg4M?xbW?sBXI>t5BF_E++M@cs
 
-Thanks for including documentation with the new board model.
-Another thing that we like these days for new boards is
-a simple functional test under tests/functional/ which
-exercises the board by doing a simple "run a guest image
-and check it boots" test. You can find various examples
-under there to use as a template.
+delta 53
+zcmdnaf0Iq)0`I@K3=GVX3=9kw3=B+bfV2h>3j(nK5QD&4pm@nfjcTUJ$!yyIEp7@-
 
-thanks
--- PMM
+diff --git a/pc-bios/dtb/pegasos2.dtb b/pc-bios/dtb/pegasos2.dtb
+index 29c35216ec2d77e4083a3ef618ca185925fb5d61..a6935a8c23d85e0251e7f424cf59c8fe54fe593a 100644
+GIT binary patch
+literal 2963
+zcmb_ezmFU>6!z>v$dN?L@k2t8V$o5A=my<Sa;aDmP8X#JClI1Yk$64c-Qi|uCid)I
+z79<E%bSY?&prW8dqNGS9{s0g)5*?yIA`%6WAmaNx_U_z5l!hmH=6%o4?|b&MJ@fsk
+z`@acs;!`2Swh)WY;(Z2f3GE3qNb7wej{oe`qmRhL1-u{eI&H*{qP5k~l-^F;BHHtN
+zdLV6K*Bf^By|Dh8vrs>QcD7e$GVkn;dKag5jz9k&<4?oB>+PKj7vJ3L>=lRF>|N-*
+zHL;Z*F+fz5IxkJ(05Ew@p-uByS$la6n9@Rv)UdERpW%@n6=u?1b(VVkW6;~R-B}s)
+zINBA5>PH=`99wUr57+AI93~8F$Nqhf-FQ>U`SI81{67GG8ZE^C1Ue<)&uTcuU(ez1
+z=I{@|&3t|WW-cM#uU-%M9x(IvIAX1iH86AIdWHTMp>wSQ-h|FE0q;P6yn)|=&V3R3
+zHT0zhE}%czz=zPEYT%EcGY7YxeVJxf_8Ei1n68#qn^b1b=KM;PcDGk+an>onXrqrN
+zpO5RM9x&_MSg+_-^w$?}`+n@9=yNV^ko!S_k%K5VeWTvxV;Vd9@~$}fjmK`k-2~{O
+zK|FtSr-ly0C;HK2zM|C1uBr{eAN5^o*6SA`K3;=M=)Vh{_d&pai(_sE9=E{p+#j?4
+z)-!c^oIlqcXW|-O{}Ml5w2>1#1E$_sKX+b882DbI1H|L#miX`tI0J5Nx?aq+u4y-2
+z@8f!_`{!%T7$?zqZo$#|6YsD$@ov2eOdraO?{p_%?90}rGB5Wo@2zaDa@FeGqwUqr
+z^=|q~^UmNL+Rmen)!-G^VCTI#<ER~paTZ#ac%QB?=*-T1xvwaGoYNa?HGkK%-h~I(
+zmMz-XlU^ZBGM6XMVmtIfr!fA5@(t@mUJ8Ai>$0)B;p~pnRH~bvbITHPZo?MFH91Nc
+z!#)TctPRDFMeS>uawc|dV|y$1A?tZo=}4Pyy6KBSU+(v|v(Lsixw|lv>w!GJ=4-2U
+zP&c=Jg1K$<Jxv%Z+OU&_u^Jo;zXJ!3FhAx+c^L1xCT~_&;O#k**;vtrJ;ZAAehcF~
+zFV6+#VZ56SUe4Lgn|G!9pYF<qd)=>m9$3etcO?&}6YhMk-o~4a(s55W2hQ)xZ9F<?
+zkT9=1&@npr9Jw3Ad={5wk{E4mtaO%Hk?4a|>8sVG)M8X5IuiyKn-;ma@W$&qyE~Ux
+z4s@OrW(wV@nxaHoWzw?Z0HX(D*{1JlAA4Ex|9~I)_&^&M(*e5F<|MWF9h$^-7PU=-
+zuZpdbd2D3m9knrqiL+u5kK_#y*-DxU2Lb;N`GJw6xUVZU^t!DIqs2g1F%Lmp^y5TM
+zgq_1P9-)R>?Z^6tR$(GCiBb4i6?s1$h(nWBx@ib`tD!VfRob}dX`ZA?f?SmRPXlpZ
+z*s;YAS|WyNPn(?cvF_h3Ho8|7l~7p$>b}v}$2wONVPrngR&1|tosZKTk<GZQVyX7?
+z;xN<6Knv#8Gbz+KACC}K^u`uTg>j-TRh%ZiuGB(3sjEz~@~ATs>-kJzpMhBfjW1Vh
+nv!b$s&p4MOBsR^-3RR3sS*5*9&#YXr$`o0Kw3es7en0#J=mwZO
+
+delta 54
+zcmbO%zLZzv0`I@K3=C{b85kHW7#LVi0BH>%76f7eAO-@)yFl>?8#PWdZ+7O`!~_68
+C$qNtw
+
+-- 
+2.41.3
+
 
