@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3884CCFA13
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 13:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F96ECCFA13
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI5x7-0000kk-Mb; Sun, 09 Nov 2025 08:59:34 -0500
+	id 1vI5xW-0001FQ-8v; Sun, 09 Nov 2025 08:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI5x5-0000j1-FU
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 08:59:31 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI5xU-0001E0-Cq
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 08:59:56 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI5x3-0003Rh-L9
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 08:59:31 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-640bd9039fbso4484721a12.2
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 05:59:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI5xT-0003TL-14
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 08:59:56 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-64180bd67b7so436700a12.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 05:59:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762696768; x=1763301568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762696793; x=1763301593; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TwoLc0vvcAHe6FrRZqlSQXXFUE378WjuKdxhlU3DLRo=;
- b=uFR77x+NAtELByd18bOnFHCVGPvUjVbORF6mYvq9vzAJ6Oq4APVB2Ca4/zZBzuIVKq
- 1FY0RmkiVLjFQGImQS95FvBxBKCtuqdAA//aY+6WzWCLrlzJogfGH1EvIOYMkPkb3cnH
- e3l9oztnMvIFp4FBlbEFIsNq3j/uYETF+wX9UjMlrDjwSv55S27cKUmQztmK7OvleMgM
- CIJQzdesXfGyhm/zUSdHU7yNMC6LAhjNYMh07Zdao2rIM/K4ZrWbHlLzAJZbSx7F+uYw
- f0w8eCta5pJybSZhMWIFs5CrOM3I4WJRE7FhOqnVEwNui+FP1mJzJSrkdIIHMXJzCqaK
- A8yw==
+ bh=KbZf15ulVr2z/2LBJX/OTwQjOtB/wWtGpsmY5cW60bg=;
+ b=vSyehHyVKWd016K662mH8Qk1vYH47Ud+rlDRhJeWJYn3CyKxUkKUWT7737iJWrosTU
+ QZxDvGoRMUhGHP5OHwU0Nd/VV+dyLyQbtz+vagdeRYzwZ8OZ1+IzuEHKi0zORrqRNXO4
+ az3G2xVuhTyrEEF4/qik4MPYR1quwwDlxOiJoAazJHySdXbenHy2q75HKVWrsAe4CdRw
+ 6R8FO3zUw4aufEwT8UtRhMaWywoAc7vqrk2eHTTUFHBmIQJXextYkf5BhOpTlhzPvFzw
+ t5ffEbrG+c1zOrx+PhY55gJWkHt89o15kro/qBNZ73tuHRz5WEtnJdAYNOv0+JFqbRqy
+ PVQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762696768; x=1763301568;
+ d=1e100.net; s=20230601; t=1762696793; x=1763301593;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TwoLc0vvcAHe6FrRZqlSQXXFUE378WjuKdxhlU3DLRo=;
- b=Cjam2oDAz+ZVzFKsEW5765ICEIDx5YfmwdvMyAYEw1E9rxxC8UNrYJ0BvpPulbJtOu
- 7V5QeioNwAfHZjHZmLvyMUHx7tdE73ynDX4HXfdr6aa0Fn0wp0EcepzwzB5NJePYZH2f
- l0bu0DwCuijGxp7/v+jMKjLXvxcar80lw5d9rzXGGuE5Kpz2/JV9B5kFQv3Rp7JFEWuG
- o8n9zoidVk6ybDHIplnvvmKDUHw9/gCX8MMz9BCFvqT6fdQzKpfnAj2kIh6PksaQVhER
- iwLAkyvsiwCvy6W7YV1NvaA/bnUs0NafdImhU0vDID6w9zYdJ0W4/M/xBsgi2JjU2Nd1
- bMww==
+ bh=KbZf15ulVr2z/2LBJX/OTwQjOtB/wWtGpsmY5cW60bg=;
+ b=Ej8tgGdFDptXZpzYksJBXFQG/XYte1KNVDZUaXGyDet9NHEOJ/13/eD75khxP1AQwS
+ MJ19bXqf289mhDeTS7vofXNPwlJ2IykyraJq3aVJRGSUbNDohkM9Zwe00r2d4SgTuZTG
+ 9CkSxDZ7p/FkGLC7IKKhbL8ptYCS0/kVDlqhwIQI/f7ebtO+322+/UXUEvRp0IE0oJdw
+ GAuq7S6ijEZzfyfci8tKKAjoLqgNOlFmvfkKT/6J6lroTc/83HUVhG8vqe5P9qBpI9CG
+ 9nBIqulYlVR7Ek5cSHMO/zeVSOz9LK63O6z811gH1U0ShF51PEyRpMOAnshzXwrzilQV
+ xL3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlgoOCtn6B0YgfzZlu9Pexj6mSAmsdYMiTUy2xsWpg6IinQiLCQY+UhgSJBeityISrvbOY7l9UZKMf@nongnu.org
-X-Gm-Message-State: AOJu0YzX1M+u7y1LIEVP0yDCrTHbWIpzc8hQ8tqk0M8gTTHCu6EQWYiK
- JXLAwjt6mhJAfDl2ojDj6ov4JHDiwpWzKeXFWJPgabP1AcKQqUDg+8igM/Il6J571XA=
-X-Gm-Gg: ASbGncvxWUf5In1O/muK5YkiiL9nOlkCHZIMnM9mqCtpcw+uPH5Km8Ba7nMkdVzIaXe
- y+nR7VLcqRsPp6vrNzhPFGpszFfngymzxiAoz4DG6DY+JwaN+z/aIVpZgR8/GVkNvdFNd1nu2oZ
- hWFl7OkA/jUpeShK89VDqbelaCrxXWLB6b/7oji8XfpZG+yd+/5y+nckIJPqf74K7uJ4cBqnOJI
- SwDz3OB7qV42l83AAWmN/3VOKCy1KAhdKHD4HBAbzWWGzJzwc4e8VHuPES2ZIfUFLvZuy6AIhTj
- h5BkUd53sFQCxqWcPMvy7H0whlw7izigzhNeYkTne1jQKGV3m3h/9+6+ibF5Ok20OK0BjthqaXF
- 34vLo7RG0F4DdfxXmzYScnKArHcFoQlo7hKAUO3APRXsKGtd3w5YmKePY4il9ISS76S7lp5SAZ6
- 0DOwTDpTmBDnEj7T6GaQARM2hNZ1TTntTvTTfwm6vAvQj/ojdzvYpgabuFIA==
-X-Google-Smtp-Source: AGHT+IHWxZGfx2TvMYgSseWY40nHgOdTgkF/YV8pWgmQkftjg0gcgGHtub8jA3anYd20tKD9E6Gh6w==
-X-Received: by 2002:a05:6402:35d4:b0:640:be20:fc7b with SMTP id
- 4fb4d7f45d1cf-6415e80a82cmr3912174a12.31.1762696767998; 
- Sun, 09 Nov 2025 05:59:27 -0800 (PST)
+ AJvYcCXn3+AFPubajQxnBQkd64dA/ge2NSkJElHL7GEpjD931pjIJ6Hhoy4Aq6o0bnmyy75lBGsqWqk4wpx4@nongnu.org
+X-Gm-Message-State: AOJu0Ywb2WCOA6k1smRyqbYRSFXlzJApyKL9iuDmJYjL0cEkTHoG6wB9
+ S0IuHcCwmk6i6a3VGVRw2jPrfzpuWAL7QPYgqjXxbEJt74b53u5+v/xxG7wq5muUOy4=
+X-Gm-Gg: ASbGncv/E52wldoSfg0OSxw/Gc6gKC+YUbvOKAWpbHEzCkSwSwK8Mwxs97STy43+Za1
+ WhSJ9IhQ0cncRKnVJB4zUv3BfQEDcfpmMfY1byiIlcuozAB5H63TT3eaeiLIVNpSDIRf5AFldIH
+ wBkf68yP938ixgt8Dm7+VqnDbfvyCEm0KIjrHz1DETwHhWHc33O9clvNzEDiq5KKIFIqQcDcJL3
+ KDv+Rm5gCQlhIQzFTaHiM+VOtXCAAri8cSU49HJgsCul4Kb6cDc86Nh9/QYwe+2z8iW4xhWE/cS
+ q9MY0oPgDwxb6R0Nke1zoxGkIKRTZPSP5+1ZEJE9HjPsz+NOmpP+eq+qrUDTPCeB5/GY1q7/+dN
+ g5+K7o5c0zkPAMyCCvu+dUZBACKfoUWnusUNfiPogs6Sdfe71f5lYeORqSKksc9orlvwxBNGp9d
+ 91pmHa3XpdpM2XxUHExk8cITBM/Gh0QXLdimOkj9TdE592OhxZXMbcEz4JlQ==
+X-Google-Smtp-Source: AGHT+IHSLMpVr848boQgSP3JL72tmZPppf59LJSu/UqXV6VYWDsyQqZK8gy4knA2iC/PBqgJeSU9eg==
+X-Received: by 2002:a05:6402:1475:b0:640:fb1f:e95c with SMTP id
+ 4fb4d7f45d1cf-6415e8220e3mr3969680a12.20.1762696793213; 
+ Sun, 09 Nov 2025 05:59:53 -0800 (PST)
 Received: from [192.168.2.7] (tmo-086-152.customers.d1-online.com.
  [80.187.86.152]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6415d91f486sm4414827a12.22.2025.11.09.05.59.25
+ 4fb4d7f45d1cf-6411f862bd0sm9107874a12.26.2025.11.09.05.59.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Nov 2025 05:59:26 -0800 (PST)
-Message-ID: <264a1c41-dc4c-4158-9a71-5261f4d51b08@linaro.org>
-Date: Sun, 9 Nov 2025 14:59:25 +0100
+ Sun, 09 Nov 2025 05:59:52 -0800 (PST)
+Message-ID: <faddeb4c-2e8d-4c06-a4f3-b983ea373e4b@linaro.org>
+Date: Sun, 9 Nov 2025 14:59:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] target/riscv: replace env->rdtime_fn with a time
- source
+Subject: Re: [PATCH 7/9] hw/intc/riscv_aclint: riscv_aclint_mtimer_get_ticks:
+ get rid of void* argument
 Content-Language: en-US
 To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
@@ -81,20 +81,20 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Francisco Iglesias <francisco.iglesias@amd.com>
 References: <20251107102340.471141-1-luc.michel@amd.com>
- <20251107102340.471141-7-luc.michel@amd.com>
+ <20251107102340.471141-8-luc.michel@amd.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251107102340.471141-7-luc.michel@amd.com>
+In-Reply-To: <20251107102340.471141-8-luc.michel@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,35 +111,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/11/25 11:23, Luc Michel wrote:
-> Replace the env->rdtime_fn function pointer with an instance of the
-> RISCVCPUTimeSrcIf QOM interface.
-> 
-> This allows to remove the dependency on the ACLINT in the
-> riscv_timer_write_timecmp function:
->     - This dependency was buggy because env->rdtime_fn_arg was an opaque
->       pointer and was converted in riscv_timer_write_timecmp to a ACLINT
->       without dynamic type check.
->     - This will allow to have time sources provided by other devices than
->       an ACLINT.
+> Now that the riscv_aclint_mtimer_get_ticks is only used internally,
+> replace its void* argument with the proper RISCVAclintMTimerState type.
 > 
 > Signed-off-by: Luc Michel <luc.michel@amd.com>
 > ---
->   target/riscv/cpu.h         |  8 +++-----
->   hw/intc/riscv_aclint.c     |  2 +-
->   target/riscv/cpu_helper.c  |  7 -------
->   target/riscv/csr.c         | 24 ++++++++++++------------
->   target/riscv/time_helper.c | 15 +++++++++------
->   5 files changed, 25 insertions(+), 31 deletions(-)
-
-
-> +void riscv_cpu_set_time_src(CPURISCVState *env, RISCVCPUTimeSrcIf *src)
-> +{
-> +    env->time_src = src;
-
-Worth asserting time_src is NULL? Regardless, good cleanup:
+>   hw/intc/riscv_aclint.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +}
 
 
