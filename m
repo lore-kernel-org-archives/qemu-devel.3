@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2CACCFA1A
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B3BCCFA1E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI6Vs-0002Az-EH; Sun, 09 Nov 2025 09:35:28 -0500
+	id 1vI6Vo-00029L-H0; Sun, 09 Nov 2025 09:35:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vq-0002AC-RA
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:26 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vm-00028s-Tp
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vo-0001n6-T6
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:26 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vl-0001mU-3H
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762698924;
+ s=mimecast20190719; t=1762698919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=neawIxqIKpZCZv4T6g2O2IpqcqSPVDqavtFhhFYVqyc=;
- b=LEoRTnlmCUA+HTR9v+8TdgClPfmb9jOzUA2GjlqnfLxdCFxXNN9dwKqTVATk9oaesjQLUs
- yQb9pdutmRUGjtFCfT9AizFXw4GRDMiUON6597TpPU41PfKNc9WDcsUq3TOpk+HPXQAuoC
- K2FN3cSmFOr0kQmPp76ZZS43cJ/gIns=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xlzluGzx7auUP3YqO2kjwqtM8LvQRyJhDsEvxP82Pm4=;
+ b=bjvJkMbLc8ML7HxpCq2Zx4TQpUarmYusjPhj2SDETyAk0Fctnx+Ze6Ygiukn4K56zbX/QO
+ Jpfr+No4VFdIUApI9cAFCqTTBS6jjaVR5TiMM1IOWXtsgfeHpWGtQKrJGA+AQZUDsfc9aA
+ h0qX57W43L3NgGd9Z1f1YXEczJFGr8M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-FIEDj8mFP2SpXgSvWMXJTw-1; Sun, 09 Nov 2025 09:35:22 -0500
-X-MC-Unique: FIEDj8mFP2SpXgSvWMXJTw-1
-X-Mimecast-MFC-AGG-ID: FIEDj8mFP2SpXgSvWMXJTw_1762698921
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-47496b3c1dcso16572395e9.3
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:22 -0800 (PST)
+ us-mta-677-N-mDW7oZM3qgmlw61mP4NQ-1; Sun, 09 Nov 2025 09:35:18 -0500
+X-MC-Unique: N-mDW7oZM3qgmlw61mP4NQ-1
+X-Mimecast-MFC-AGG-ID: N-mDW7oZM3qgmlw61mP4NQ_1762698917
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e47d14dceso10618805e9.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762698921; x=1763303721; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762698917; x=1763303717; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=neawIxqIKpZCZv4T6g2O2IpqcqSPVDqavtFhhFYVqyc=;
- b=MTvgCOkJUfjhkcg1vFWfPRXWNcKcS+oCg8gHWLLyReD8J3VvHn1gYgYYVBjMoI/vMW
- 7UEp4zM2TrCr7AxPsM647VqvhlyjHjNecl1lyBCFsPj2w02xi4RztpWD8CY1CKPAVYqg
- srDb3pA4jUXVqhAmrzCNbemTm/jGSadgbqNhSl1fKisezIwBY0sZXDwPLp+wZ7TYzkkj
- VtxDoBJwe5oR/DIYeYosMX83nXfiaYPSc6i0KKdlHX/NAORp/c6fBJYn9HN1gR64QdXk
- nXsoB/PoYb/SMefHIdux7HyNF6QnT6h8a8khVP/Z65N2lb2kB+teDYu3q1SSufuJhVhD
- 5D7Q==
+ bh=xlzluGzx7auUP3YqO2kjwqtM8LvQRyJhDsEvxP82Pm4=;
+ b=RSpccAueORIK4s9ZkD/sxHzbzaOzqcx4yk5EfJ8zmSPyRq4yLph/eTc5loWtAzs0G7
+ wPjJ1vzoPXr5DywM1cP9Kn/WRc4uOqHyJC842YCf8Kz6HgoGRfvTuuHHrO0iRlqNdjg5
+ 8NdrssCHbyV+rGKxcmqYLikkSL56rvTNUaF/g4gAVdjDN0fh3iQ7e+DwKd4mMEcJCwtS
+ XeoevO6SZCn2vHaOEXoZQ8XMFf/KVR8RXCH2ch1sTQCcxDFzCcDZDeJPMlciEZAoSYiw
+ sBx1MuCRDdRLxoq8NiwqU0Um76HordAVIZt8hXbvnyhsXAnRn9YEA4ZXyANwvXhwx2FT
+ BcaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762698921; x=1763303721;
+ d=1e100.net; s=20230601; t=1762698917; x=1763303717;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=neawIxqIKpZCZv4T6g2O2IpqcqSPVDqavtFhhFYVqyc=;
- b=jmC6jMXT64spqHBIxRnJeM1yrTphCjbmFA+Qh5U6CDEwr7w2sePf9Q1eTZ5XqmwtxA
- Pl+N7JKUaN9ajz1xFGeNP85hZUoR585kX1jW1CJd07WXkzVNUktOHLF1Va+umF9rOjR6
- RtmW5ESrJx54709NFbDOUiTfNazTzlJMv+CyuZ5JQYc8Ek1VbR0NWck304qgGg+MueMN
- WmKHiH1bWras/UCs+/1ZOwBdjx97b8WCV2dqcxVtt2XZIYKDH4df/fJKEIkCynAYh0+d
- YO/KDprDxOjtyJzh4obORVxJxw/Sq/Pdm+99GgDEkeQ9BjVFkgjiFDy8M94l6RSeepcI
- JNDA==
-X-Gm-Message-State: AOJu0Yw3U2MsfUxGZ5xnIryMGrZlHVOlP9XNRs677aO96NmbX868XeVw
- a2hslz6THrQElaiJKCdA8ZMywk3hxBhE1orYF4vfQg+xOwOxqFRvF4bRFr3KaLhUbrCy8G5nEEA
- XsUYEh8tJ4jJaEzF5AIy9vopo6teEJUZQO0U0Sx8UoIV70kaUTyHVJa5c1qdQUXs3YON111/O23
- WTE7F8aZYQjgDF8Wu5j1pJzpMcqIFfMdRqcQ==
-X-Gm-Gg: ASbGncu59p/OwwmH/G8eH0QQs8DqlyMLcoYgYEva7jEhgL2xmwvs2u61N7VGMSjxS4S
- /VEFiTYzY0AdhJHuyUenU1+XICe8ePcBVO6I52goArYl2+M4U1FtTOCfrEQYawwwzwxBN5khXga
- cADGfJMARqtg6i8/XlTurM9r4mhW/YztJ3YlrYCtAWCX5gy/TLjhcTR8k5Ovl4826+8pUPA70Qi
- YBxHoIik2M0Fc6l0qE2tz1++XC72vdm8JTtZEz1OHzSIpPzit+YDr5ThUTJm9H2blSNPP8dYymw
- Pe7+RAE3xgTVuIJOQ2ZyXumz32rVq9h3dHWN/A3R9nH93bC8Cm3vB5QQbWNesmGZx8U=
-X-Received: by 2002:a05:600c:4f94:b0:475:df09:c253 with SMTP id
- 5b1f17b1804b1-47773288f90mr44101955e9.38.1762698921110; 
- Sun, 09 Nov 2025 06:35:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhpywO/HYewXtqgXyaRCEk5w8awAay0sJMHsVAgpxwREAHRbSdNt6JknID3L7S4/1zQ4RNkQ==
-X-Received: by 2002:a05:600c:4f94:b0:475:df09:c253 with SMTP id
- 5b1f17b1804b1-47773288f90mr44101675e9.38.1762698920551; 
- Sun, 09 Nov 2025 06:35:20 -0800 (PST)
+ bh=xlzluGzx7auUP3YqO2kjwqtM8LvQRyJhDsEvxP82Pm4=;
+ b=IqCd1zBZ6wcofHGQkda5Wq55+E49Sgl8gj4L+tdSxJK1BATi51lKGJl9ViIuQKIG7d
+ XxHf1bkJ5Ur4ImbBCLmTP4+1L+OjkouhQMN6qXLmh8wLD8Pa8XE2k8dIn5rkaiK7U4Ao
+ Gem4k9YKSEwXPtAjDHl576MGu0c93N7JdjG9mJ3ig0sBNrDAWzREIKZJHEwFO9itzZzN
+ 8JkWDYWbXtLgN6ss+COOQQPebKahnheCzFwjHs/uTPNYKtr4pnTOpZ+G5nY0UT2EJp6A
+ K3YTSuDo7weWYg2w6/FKs1zp+Xg2m7vRDDNzKEVlzaX44uO+Kil/QqBPlmr3UkvlKrMt
+ VMOA==
+X-Gm-Message-State: AOJu0YzrxR22toSIOGVQq8NNMTl50O0cZeAfJe8tm5wYnjNxpy3P+CsI
+ bN5+Qd5qMz0IaMSTyJk7CJfYhuvByaihlh5hbEbEQVTsnGD8QyUxIvRoGn3eW4YEaqMKq6rpFUf
+ zbv/BY+cREUPeA/kpfGyTXUUJIE2uSFQRukQKhjt2C3mWuorkwtpUyxFp+dGzfLCc649YcOFWFE
+ a11+Qpk+YLY/XPqbJ3SzYwC6K/hFlLBeiHbw==
+X-Gm-Gg: ASbGncu0LjcN/12QtkWPHjpJq2RDreIJLbCa3arIesPucXAZM//VKOjGI9wNZqkWm4i
+ 8Y4v3BEPbcpWe5km0+tm19fhDjZEQl8rU0U6hXHzS32ivWye1yYME8GvTAYVAgJP2W6V9Cb0soh
+ SdDfM277NT+ViW9eX3yrjt7rvxS5P5nTaML//+39B4r4901CU3LFqBG4ph7y1kBWJkd0ub0QqqK
+ I2BYUck7QnLiJ2JY36a91A9KlIieBvoAW/ub7CSh3Z6K2Lw4fhZjKrfeuSyApIuBTExbeE6jFA1
+ H64eNUg6NCzqng2bsI9/fjsV1Xnnsbq3IpcKn2UmVL8YB7hte5Uhr0fA3VjVQpz73rA=
+X-Received: by 2002:a05:600c:45cf:b0:477:7b16:5fa6 with SMTP id
+ 5b1f17b1804b1-4777b16628emr10215185e9.3.1762698916875; 
+ Sun, 09 Nov 2025 06:35:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFyb/lF3WWnMNiqHos/VZyw7RvULl6ERJhsA2N1X8NB+2c1XkxHtR+PwxPWbgyQwUZrTQPMMA==
+X-Received: by 2002:a05:600c:45cf:b0:477:7b16:5fa6 with SMTP id
+ 5b1f17b1804b1-4777b16628emr10214945e9.3.1762698916348; 
+ Sun, 09 Nov 2025 06:35:16 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1536:2700:9203:49b4:a0d:b580])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47763eb362bsm92032695e9.4.2025.11.09.06.35.19
+ ffacd0b85a97d-42b2fb308f5sm8657371f8f.42.2025.11.09.06.35.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Nov 2025 06:35:20 -0800 (PST)
-Date: Sun, 9 Nov 2025 09:35:18 -0500
+ Sun, 09 Nov 2025 06:35:16 -0800 (PST)
+Date: Sun, 9 Nov 2025 09:35:14 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 05/14] intel_iommu: Handle PASID cache invalidation
-Message-ID: <43b8c4339709efef153cb2cf21d23d1791890d60.1762698873.git.mst@redhat.com>
+Subject: [PULL 03/14] amd_iommu: Support 64-bit address for IOTLB lookup
+Message-ID: <637dc49a3ae6b72cdb6415dcdcdb22ff770f2c8d.1762698873.git.mst@redhat.com>
 References: <cover.1762698873.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -125,277 +124,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-Adds a new entry VTDPASIDCacheEntry in VTDAddressSpace to cache the pasid
-entry and track PASID usage and future PASID tagged DMA address translation
-support in vIOMMU.
+The physical AMD IOMMU supports up to 64 bits of IOVA. When a device tries
+to read or write from a given DMA address, the IOMMU translates the address
+using the I/O page tables assigned to that device. Since the emulated IOMMU
+uses per-device page tables, an ideal cache tag would need to be 68 bits
+(64-bit address - 12-bit page alignment + 16-bit device ID).
 
-When guest triggers pasid cache invalidation, QEMU will capture it and
-update or invalidate pasid cache.
+The current software IOTLB implementation uses a GLib hash table with a
+64-bit key to hash both the IOVA and device ID, which limits the IOVA to 60
+bits. This causes a failure while setting up the device when a guest is
+booted with "iommu.forcedac=1", which forces the use of DMA addresses at the
+top of the 64-bit address space.
 
-vIOMMU emulator could figure out the reason by fetching latest guest pasid
-entry in memory and compare it with cached PASID entry if it's valid.
+To address this issue, construct the 64-bit hash key using the upper 52 bits
+of IOVA (GFN) and lower 12 bits of the device ID to avoid truncation as much
+as possible (reducing hash collisions).
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251017093602.525338-2-zhenzhong.duan@intel.com>
+Message-Id: <20251103203209.645434-4-alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/intel_iommu_internal.h |  17 ++++
- include/hw/i386/intel_iommu.h  |   6 ++
- hw/i386/intel_iommu.c          | 141 ++++++++++++++++++++++++++++++---
- hw/i386/trace-events           |   3 +
- 4 files changed, 157 insertions(+), 10 deletions(-)
+ hw/i386/amd_iommu.h |  4 ++--
+ hw/i386/amd_iommu.c | 57 ++++++++++++++++++++++++++++++---------------
+ 2 files changed, 40 insertions(+), 21 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 0f6a1237e4..75bafdf0cd 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -316,6 +316,8 @@ typedef enum VTDFaultReason {
-                                   * request while disabled */
-     VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 38471b95d1..302ccca512 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -220,8 +220,8 @@
+ #define PAGE_SIZE_PTE_COUNT(pgsz)       (1ULL << ((ctz64(pgsz) - 12) % 9))
  
-+    VTD_FR_RTADDR_INV_TTM = 0x31,  /* Invalid TTM in RTADDR */
-+
-     VTD_FR_SM_PRE_ABS = 0x47,   /* SCT.8 : PRE bit in a present SM CE is 0 */
+ /* IOTLB */
+-#define AMDVI_IOTLB_MAX_SIZE 1024
+-#define AMDVI_DEVID_SHIFT    36
++#define AMDVI_IOTLB_MAX_SIZE        1024
++#define AMDVI_GET_IOTLB_GFN(addr)   (addr >> AMDVI_PAGE_SHIFT_4K)
  
-     /* PASID directory entry access failure */
-@@ -517,6 +519,15 @@ typedef union VTDPRDesc VTDPRDesc;
- #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
- #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
- 
-+/* PASID-cache Invalidate Descriptor (pc_inv_dsc) fields */
-+#define VTD_INV_DESC_PASIDC_G(x)        extract64((x)->val[0], 4, 2)
-+#define VTD_INV_DESC_PASIDC_G_DSI       0
-+#define VTD_INV_DESC_PASIDC_G_PASID_SI  1
-+#define VTD_INV_DESC_PASIDC_G_GLOBAL    3
-+#define VTD_INV_DESC_PASIDC_DID(x)      extract64((x)->val[0], 16, 16)
-+#define VTD_INV_DESC_PASIDC_PASID(x)    extract64((x)->val[0], 32, 20)
-+#define VTD_INV_DESC_PASIDC_RSVD_VAL0   0xfff000000000f1c0ULL
-+
- /* Page Request Descriptor */
- /* For the low 64-bit of 128-bit */
- #define VTD_PRD_TYPE            (1ULL)
-@@ -603,6 +614,12 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
- #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
- 
-+typedef struct VTDPASIDCacheInfo {
-+    uint8_t type;
-+    uint16_t did;
-+    uint32_t pasid;
-+} VTDPASIDCacheInfo;
-+
- /* PASID Table Related Definitions */
- #define VTD_PASID_DIR_BASE_ADDR_MASK  (~0xfffULL)
- #define VTD_PASID_TABLE_BASE_ADDR_MASK (~0xfffULL)
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index b2f1ef9595..ca7f7bb661 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -95,6 +95,11 @@ struct VTDPASIDEntry {
-     uint64_t val[8];
- };
- 
-+typedef struct VTDPASIDCacheEntry {
-+    struct VTDPASIDEntry pasid_entry;
-+    bool valid;
-+} VTDPASIDCacheEntry;
-+
- struct VTDAddressSpace {
-     PCIBus *bus;
+ /* default extended feature */
+ #define AMDVI_DEFAULT_EXT_FEATURES \
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 5c5cfd4989..d689a06eca 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -106,6 +106,11 @@ typedef struct AMDVIAsKey {
      uint8_t devfn;
-@@ -107,6 +112,7 @@ struct VTDAddressSpace {
-     MemoryRegion iommu_ir_fault; /* Interrupt region for catching fault */
-     IntelIOMMUState *iommu_state;
-     VTDContextCacheEntry context_cache_entry;
-+    VTDPASIDCacheEntry pasid_cache_entry;
-     QLIST_ENTRY(VTDAddressSpace) next;
-     /* Superset of notifier flags that this address space has */
-     IOMMUNotifierFlag notifier_flags;
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 6a168d5107..c47f13b659 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3051,6 +3051,130 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-     return true;
+ } AMDVIAsKey;
+ 
++typedef struct AMDVIIOTLBKey {
++    uint64_t gfn;
++    uint16_t devid;
++} AMDVIIOTLBKey;
++
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
+ {
+     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
+@@ -377,16 +382,6 @@ static void amdvi_log_pagetab_error(AMDVIState *s, uint16_t devid,
+              PCI_STATUS_SIG_TARGET_ABORT);
  }
  
-+static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
-+                                            VTDPASIDEntry *pe)
-+{
-+    IntelIOMMUState *s = vtd_as->iommu_state;
-+    VTDContextEntry ce;
-+    int ret;
-+
-+    if (!s->root_scalable) {
-+        return -VTD_FR_RTADDR_INV_TTM;
-+    }
-+
-+    ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus), vtd_as->devfn,
-+                                   &ce);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    return vtd_ce_get_rid2pasid_entry(s, &ce, pe, vtd_as->pasid);
-+}
-+
-+/* Update or invalidate pasid cache based on the pasid entry in guest memory. */
-+static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
-+                                        gpointer user_data)
-+{
-+    VTDPASIDCacheInfo *pc_info = user_data;
-+    VTDAddressSpace *vtd_as = value;
-+    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-+    VTDPASIDEntry pe;
-+    uint16_t did;
-+
-+    if (vtd_dev_get_pe_from_pasid(vtd_as, &pe)) {
-+        /*
-+         * No valid pasid entry in guest memory. e.g. pasid entry was modified
-+         * to be either all-zero or non-present. Either case means existing
-+         * pasid cache should be invalidated.
-+         */
-+        pc_entry->valid = false;
-+        return;
-+    }
-+
-+    /*
-+     * VTD_INV_DESC_PASIDC_G_DSI and VTD_INV_DESC_PASIDC_G_PASID_SI require
-+     * DID check. If DID doesn't match the value in cache or memory, then
-+     * it's not a pasid entry we want to invalidate.
-+     */
-+    switch (pc_info->type) {
-+    case VTD_INV_DESC_PASIDC_G_PASID_SI:
-+        if (pc_info->pasid != vtd_as->pasid) {
-+            return;
-+        }
-+        /* Fall through */
-+    case VTD_INV_DESC_PASIDC_G_DSI:
-+        if (pc_entry->valid) {
-+            did = VTD_SM_PASID_ENTRY_DID(pc_entry->pasid_entry.val[1]);
-+        } else {
-+            did = VTD_SM_PASID_ENTRY_DID(pe.val[1]);
-+        }
-+        if (pc_info->did != did) {
-+            return;
-+        }
-+    }
-+
-+    pc_entry->pasid_entry = pe;
-+    pc_entry->valid = true;
-+}
-+
-+static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-+{
-+    if (!s->root_scalable || !s->dmar_enabled) {
-+        return;
-+    }
-+
-+    vtd_iommu_lock(s);
-+    g_hash_table_foreach(s->vtd_address_spaces, vtd_pasid_cache_sync_locked,
-+                         pc_info);
-+    vtd_iommu_unlock(s);
-+}
-+
-+static bool vtd_process_pasid_desc(IntelIOMMUState *s,
-+                                   VTDInvDesc *inv_desc)
-+{
-+    uint16_t did;
-+    uint32_t pasid;
-+    VTDPASIDCacheInfo pc_info = {};
-+    uint64_t mask[4] = {VTD_INV_DESC_PASIDC_RSVD_VAL0, VTD_INV_DESC_ALL_ONE,
-+                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
-+
-+    if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, true,
-+                                     __func__, "pasid cache inv")) {
-+        return false;
-+    }
-+
-+    did = VTD_INV_DESC_PASIDC_DID(inv_desc);
-+    pasid = VTD_INV_DESC_PASIDC_PASID(inv_desc);
-+    pc_info.type = VTD_INV_DESC_PASIDC_G(inv_desc);
-+
-+    switch (pc_info.type) {
-+    case VTD_INV_DESC_PASIDC_G_DSI:
-+        trace_vtd_inv_desc_pasid_cache_dsi(did);
-+        pc_info.did = did;
-+        break;
-+
-+    case VTD_INV_DESC_PASIDC_G_PASID_SI:
-+        /* PASID selective implies a DID selective */
-+        trace_vtd_inv_desc_pasid_cache_psi(did, pasid);
-+        pc_info.did = did;
-+        pc_info.pasid = pasid ?: PCI_NO_PASID;
-+        break;
-+
-+    case VTD_INV_DESC_PASIDC_G_GLOBAL:
-+        trace_vtd_inv_desc_pasid_cache_gsi();
-+        break;
-+
-+    default:
-+        error_report_once("invalid granularity field in PASID-cache invalidate "
-+                          "descriptor, hi: 0x%"PRIx64" lo: 0x%" PRIx64,
-+                           inv_desc->val[1], inv_desc->val[0]);
-+        return false;
-+    }
-+
-+    vtd_pasid_cache_sync(s, &pc_info);
-+    return true;
-+}
-+
- static bool vtd_process_inv_iec_desc(IntelIOMMUState *s,
-                                      VTDInvDesc *inv_desc)
+-static gboolean amdvi_uint64_equal(gconstpointer v1, gconstpointer v2)
+-{
+-    return *((const uint64_t *)v1) == *((const uint64_t *)v2);
+-}
+-
+-static guint amdvi_uint64_hash(gconstpointer v)
+-{
+-    return (guint)*(const uint64_t *)v;
+-}
+-
+ static gboolean amdvi_as_equal(gconstpointer v1, gconstpointer v2)
  {
-@@ -3266,6 +3390,13 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
+     const AMDVIAsKey *key1 = v1;
+@@ -425,11 +420,30 @@ static AMDVIAddressSpace *amdvi_get_as_by_devid(AMDVIState *s, uint16_t devid)
+                              amdvi_find_as_by_devid, &devid);
+ }
  
-+    case VTD_INV_DESC_PC:
-+        trace_vtd_inv_desc("pasid-cache", inv_desc.val[1], inv_desc.val[0]);
-+        if (!vtd_process_pasid_desc(s, &inv_desc)) {
-+            return false;
-+        }
-+        break;
++static gboolean amdvi_iotlb_equal(gconstpointer v1, gconstpointer v2)
++{
++    const AMDVIIOTLBKey *key1 = v1;
++    const AMDVIIOTLBKey *key2 = v2;
 +
-     case VTD_INV_DESC_PIOTLB:
-         trace_vtd_inv_desc("p-iotlb", inv_desc.val[1], inv_desc.val[0]);
-         if (!vtd_process_piotlb_desc(s, &inv_desc)) {
-@@ -3308,16 +3439,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
++    return key1->devid == key2->devid && key1->gfn == key2->gfn;
++}
++
++static guint amdvi_iotlb_hash(gconstpointer v)
++{
++    const AMDVIIOTLBKey *key = v;
++    /* Use GPA and DEVID to find the bucket */
++    return (guint)(key->gfn << AMDVI_PAGE_SHIFT_4K |
++                   (key->devid & ~AMDVI_PAGE_MASK_4K));
++}
++
++
+ static AMDVIIOTLBEntry *amdvi_iotlb_lookup(AMDVIState *s, hwaddr addr,
+                                            uint64_t devid)
+ {
+-    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
+-                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
++    AMDVIIOTLBKey key = {
++        .gfn = AMDVI_GET_IOTLB_GFN(addr),
++        .devid = devid,
++    };
+     return g_hash_table_lookup(s->iotlb, &key);
+ }
  
--    /*
--     * TODO: the entity of below two cases will be implemented in future series.
--     * To make guest (which integrates scalable mode support patch set in
--     * iommu driver) work, just return true is enough so far.
--     */
--    case VTD_INV_DESC_PC:
--        if (s->scalable_mode) {
--            break;
--        }
--    /* fallthrough */
-     default:
-         error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
-                           " (unknown type)", __func__, inv_desc.hi,
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index ac9e1a10aa..298addb24d 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -24,6 +24,9 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
- vtd_inv_qi_tail(uint16_t head) "write tail %d"
- vtd_inv_qi_fetch(void) ""
- vtd_context_cache_reset(void) ""
-+vtd_inv_desc_pasid_cache_gsi(void) ""
-+vtd_inv_desc_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
-+vtd_inv_desc_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
- vtd_re_not_present(uint8_t bus) "Root entry bus %"PRIu8" not present"
- vtd_ce_not_present(uint8_t bus, uint8_t devfn) "Context entry bus %"PRIu8" devfn %"PRIu8" not present"
- vtd_iotlb_page_hit(uint16_t sid, uint64_t addr, uint64_t slpte, uint16_t domain) "IOTLB page hit sid 0x%"PRIx16" iova 0x%"PRIx64" slpte 0x%"PRIx64" domain 0x%"PRIx16
+@@ -451,8 +465,10 @@ static gboolean amdvi_iotlb_remove_by_devid(gpointer key, gpointer value,
+ static void amdvi_iotlb_remove_page(AMDVIState *s, hwaddr addr,
+                                     uint64_t devid)
+ {
+-    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
+-                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
++    AMDVIIOTLBKey key = {
++        .gfn = AMDVI_GET_IOTLB_GFN(addr),
++        .devid = devid,
++    };
+     g_hash_table_remove(s->iotlb, &key);
+ }
+ 
+@@ -463,8 +479,10 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
+     /* don't cache erroneous translations */
+     if (to_cache.perm != IOMMU_NONE) {
+         AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
+-        uint64_t *key = g_new(uint64_t, 1);
+-        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
++        AMDVIIOTLBKey *key = g_new(AMDVIIOTLBKey, 1);
++
++        key->gfn = AMDVI_GET_IOTLB_GFN(gpa);
++        key->devid = devid;
+ 
+         trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+                 PCI_FUNC(devid), gpa, to_cache.translated_addr);
+@@ -477,7 +495,8 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
+         entry->perms = to_cache.perm;
+         entry->translated_addr = to_cache.translated_addr;
+         entry->page_mask = to_cache.addr_mask;
+-        *key = gfn | ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
++        entry->devid = devid;
++
+         g_hash_table_replace(s->iotlb, key, entry);
+     }
+ }
+@@ -2526,8 +2545,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+         }
+     }
+ 
+-    s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+-                                     amdvi_uint64_equal, g_free, g_free);
++    s->iotlb = g_hash_table_new_full(amdvi_iotlb_hash,
++                                     amdvi_iotlb_equal, g_free, g_free);
+ 
+     s->address_spaces = g_hash_table_new_full(amdvi_as_hash,
+                                      amdvi_as_equal, g_free, g_free);
 -- 
 MST
 
