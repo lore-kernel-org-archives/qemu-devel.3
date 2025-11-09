@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3F3CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 22:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A007CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 22:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIDYz-0007eF-IB; Sun, 09 Nov 2025 17:07:09 -0500
+	id 1vIDYz-0007e6-2f; Sun, 09 Nov 2025 17:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYx-0007dH-UU
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:07 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYv-0007bC-Tw
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:05 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYw-0005tt-Hi
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:07 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYt-0005sx-OY
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:05 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id AB99C439B2;
- Sun,  9 Nov 2025 22:07:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EF2C4CEFB;
- Sun,  9 Nov 2025 22:07:04 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id D0FFE60051;
+ Sun,  9 Nov 2025 22:07:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C69AC4CEF8;
+ Sun,  9 Nov 2025 22:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1762726025;
- bh=faF3cw0blnpSJDXWBDnPx0moZoO2Eaq0wCzTLHV9IOE=;
+ s=k20201202; t=1762726022;
+ bh=AE064KC6fJp9k34pKNAiAgUpdKS2GXPpXNt8THd2RYM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NBPLWiwSXjXSVYJD2HFKI9s6V9lipgq7DRHc+axxBeuyRHuMSNLS6/+nHwvlUSbV9
- 9kTkmFF2o6Nc3VgrtaSkfW1Aa+aY/afJv52jAL4f8EFOGkX/eoqBDrkGMTscQZ2nVf
- eaO1aA7D2Yj8HuyKXRV2QFxQL2o6bre2ggyyBzpOwGg4+mfgpSWXfaNG/KJZczQjiB
- SllfCJGxk/YWmYUIoKt1UCbvVVWaE653owCbM6WlNJhN7B8PaBEnwA9ePXVKY+K6PE
- hqjRAgDFu05N5EAK9sD6hGyMxS8CciRYnCnF0mzV00DPAJ9iCoceqJ9tsB5rVraVCT
- fO4ADloZVJJJw==
+ b=J6gHySLG4UGVRHQ+ku2dDONlbsW72bRWWgPCGSauP0ULeIDNIZJ1fPJAR87Utfb8f
+ YzM25gj5NJ4qTGc+g5hdJd6MAMGQi+lSQGlQGRQgynxH/LTQD2hWgHNbguhpQH1D3k
+ kPC3tXS5UsoWAWPCZidrSkdSY99FRkiOrLc06Tdf/4HUQAW5syzBDgUboe7IQ5vjaP
+ mIzYtnTCvVlZwqCqH4yaSr1/UVDaTgAPw7bubTclPOkVLKgbqjMQyQQz8/fOC4Vl7g
+ xZMSLEqat1jnxkA1ltPSgV3kL0MWnoNFpbN1IHuiSBDeu7vm8w1ATyKgqZNCUv9Fi+
+ criTCRsw7mCoQ==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 5/7] ncr710: Add missing vmstate entries
-Date: Sun,  9 Nov 2025 23:06:52 +0100
-Message-ID: <20251109220654.46718-6-deller@kernel.org>
+Subject: [PULL 3/7] i82596: Remove crc_valid variable
+Date: Sun,  9 Nov 2025 23:06:50 +0100
+Message-ID: <20251109220654.46718-4-deller@kernel.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251109220654.46718-1-deller@kernel.org>
 References: <20251109220654.46718-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,67 +72,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
+While testing and developing for the HPUX 10.20 the crc_valid variable
+was used in performing CRC checks for the loopback. I expected the
+CRC to be absent on specific condition and would skip some
+functional checks for the loopback packet, so initially it added
+a if-clause that would skip the checks preventing HPUX from
+getting stuck at phase loopback.
+
+However, we can remove it, and this then fixes Coverity CID 1642868.
+
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/lasi_ncr710.c | 4 ++++
- hw/scsi/lasi_ncr710.h | 1 -
- hw/scsi/ncr53c710.c   | 2 +-
- hw/scsi/ncr53c710.h   | 1 +
- 4 files changed, 6 insertions(+), 2 deletions(-)
+ hw/net/i82596.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/hw/scsi/lasi_ncr710.c b/hw/scsi/lasi_ncr710.c
-index b674a4066f..7e0076c7a3 100644
---- a/hw/scsi/lasi_ncr710.c
-+++ b/hw/scsi/lasi_ncr710.c
-@@ -160,6 +160,10 @@ static const VMStateDescription vmstate_lasi_ncr710 = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(hw_type, LasiNCR710State),
-+        VMSTATE_UINT32(sversion, LasiNCR710State),
-+        VMSTATE_UINT32(hversion, LasiNCR710State),
-+        VMSTATE_STRUCT(ncr710, LasiNCR710State, 1, vmstate_ncr710, NCR710State),
-         VMSTATE_END_OF_LIST()
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index 37dcc0387b..fb6b54fd71 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -992,7 +992,6 @@ static ssize_t i82596_receive_packet(I82596State *s, const uint8_t *buf,
+     size_t payload_size = 0;
+     size_t bytes_copied = 0;
+     const uint8_t *packet_data = buf;
+-    bool crc_valid = true;
+     bool out_of_resources = false;
+     size_t crc_size = i82596_get_crc_size(s);
+ 
+@@ -1155,16 +1154,11 @@ rx_complete:
+         }
      }
- };
-diff --git a/hw/scsi/lasi_ncr710.h b/hw/scsi/lasi_ncr710.h
-index 3711233b0f..058718068e 100644
---- a/hw/scsi/lasi_ncr710.h
-+++ b/hw/scsi/lasi_ncr710.h
-@@ -46,7 +46,6 @@ typedef struct LasiNCR710State {
-     uint32_t hw_type;        /* Hardware type (HPHW_*) */
-     uint32_t sversion;       /* Software version */
-     uint32_t hversion;       /* Hardware version */
--    SCSIBus bus;
-     NCR710State ncr710;
- } LasiNCR710State;
  
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index aaac31cbb9..ba064c6ecf 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -2250,7 +2250,7 @@ static const VMStateDescription vmstate_ncr710_scsi_fifo = {
+-    if (packet_completed && crc_valid) {
++    if (packet_completed) {
+         rx_status |= STAT_C | STAT_OK;
+         if (is_broadcast) {
+             rx_status |= 0x0001;
+         }
+-    } else if (packet_completed) {
+-        rx_status |= STAT_C;
+-        if (!crc_valid) {
+-            rx_status |= RX_CRC_ERRORS;
+-        }
+     } else {
+         rx_status |= STAT_B;
      }
- };
+@@ -1187,7 +1181,7 @@ rx_complete:
+         return size;
+     }
  
--static const VMStateDescription vmstate_ncr710 = {
-+const VMStateDescription vmstate_ncr710 = {
-     .name = "ncr710",
-     .version_id = 1,
-     .minimum_version_id = 1,
-diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
-index 380e3959b3..6d30f9b663 100644
---- a/hw/scsi/ncr53c710.h
-+++ b/hw/scsi/ncr53c710.h
-@@ -242,5 +242,6 @@ void ncr710_transfer_data(SCSIRequest *req, uint32_t len);
- void ncr710_execute_script(NCR710State *s);
- void ncr710_set_phase(NCR710State *s, int phase);
- void ncr710_reselection_retry_callback(void *opaque);
-+extern const VMStateDescription vmstate_ncr710;
- 
- #endif /* HW_NCR53C710_H */
+-    if (packet_completed && crc_valid && s->rx_status == RX_READY) {
++    if (packet_completed && s->rx_status == RX_READY) {
+         uint32_t next_rfd_addr = i82596_translate_address(s, rfd.link, false);
+         if (next_rfd_addr != 0 && next_rfd_addr != I596_NULL) {
+             set_uint32(s->scb + 8, next_rfd_addr);
 -- 
 2.51.1
 
