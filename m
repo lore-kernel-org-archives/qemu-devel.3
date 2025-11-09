@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACDADCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 05:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B6DCD1292
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 05:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vHy8s-0005bp-CC; Sun, 09 Nov 2025 00:39:10 -0500
+	id 1vHy8s-0005br-Jq; Sun, 09 Nov 2025 00:39:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vHy8d-0005XK-Fb
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 00:38:58 -0500
+ id 1vHy8a-0005Wp-TL
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 00:38:53 -0500
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vHy8b-0007ak-P5
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 00:38:55 -0500
+ id 1vHy8Z-0007aH-4n
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 00:38:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1762666734; x=1794202734;
+ t=1762666731; x=1794202731;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3djzRjzZE+tW6luIckijbzfq6imlE010PwpXSVzspAU=;
- b=MCK0d5/sx2m3bJIhrH5ofyIKbQm5/lGElJIBlLb+jhiozR5jg8XwoioR
- MIBghqo30yOyM6iG7fo9qESnZH4XD0tFTh0gAIJ59H7RTa04Zco/zCgDz
- jrKLiDG/N8aisuScO/da8Ng+/GYYIO1e4x56ryr9POC6VohNZkI4mglDH
- gvCTXn/G6wzIi6ER9Aqu+ouBMpT12hFHp/M/Sg45NZ9XKJlAIIX8oQE8T
- iiQcOXK1wBXbcvBWV8aOmG0gx6nPhcXIHgZXPvbmoIcDyaiefsZLKGeO/
- vYzIsizSA16uJ+aJVV1vQNrHD2kg2boja1z9n116aeWFLilXxYPZ85ncp w==;
-X-CSE-ConnectionGUID: tUslf0KWT2iMnaQFdK5Hfg==
-X-CSE-MsgGUID: CFB8yuPfQmK9E+2vcEXI7w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11607"; a="63965788"
-X-IronPort-AV: E=Sophos;i="6.19,291,1754982000"; d="scan'208";a="63965788"
+ bh=Z6qFGL5WE+eZg5Z8dvi+fn6ZmgEH4hUNJqCkhe0bpoo=;
+ b=cVuYxiSjAFu7ejntj7M0Gd/HlAhXIiA22bMM7AVG3xRON4cd9wR7nB4d
+ kU4A/XDAwSlgbyvt24jVIiM/Z5M5wGAsnElLKL6iuQJJcHV5LVNZDvUBi
+ hpq28QYUor0gbSdANPMrxjuBCLBPwq8TAMyoTMWb1gVovsa0KVh34plcj
+ cFoiw5DR49K9XYGTtk27tQVGspFzqcI24JN/ym46YeSlfTfwKCVq/lI6y
+ CwKfFyacaWPf0e8F2Hr/DQsf0UvqTHFB+AzvxxZFsAM7PiXxAcj1/5Sbh
+ 55AjljfKb6ZQuIKhjrT2xbaPtTpZ1bCZ/WLO7cB7E2kQ/Z+mEDQkfFkj5 g==;
+X-CSE-ConnectionGUID: gcUvZYHzQUaGAdUWCJt1lw==
+X-CSE-MsgGUID: 8gv3EkRtTfycmlZWbDpruw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11607"; a="63965791"
+X-IronPort-AV: E=Sophos;i="6.19,291,1754982000"; d="scan'208";a="63965791"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Nov 2025 21:38:40 -0800
-X-CSE-ConnectionGUID: iICiCJjJSHaJdneDcGcfmg==
-X-CSE-MsgGUID: zEA3siaBSju0M4mZ9R0KbA==
+ 08 Nov 2025 21:38:41 -0800
+X-CSE-ConnectionGUID: YYReIa0VReybm7NJnLUTTQ==
+X-CSE-MsgGUID: 9MqzAaCiSGqearlBRAb/xg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,291,1754982000"; d="scan'208";a="188129052"
+X-IronPort-AV: E=Sophos;i="6.19,291,1754982000"; d="scan'208";a="188129063"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Nov 2025 21:38:40 -0800
+ 08 Nov 2025 21:38:41 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 04/10] vfio/region: Add a helper to get region index from
- memory region
-Date: Sat,  8 Nov 2025 21:33:47 -0800
-Message-ID: <20251109053801.2267149-5-vivek.kasireddy@intel.com>
+Subject: [PATCH v2 07/10] vfio/device: Add support for
+ VFIO_DEVICE_FEATURE_DMA_BUF
+Date: Sat,  8 Nov 2025 21:33:50 -0800
+Message-ID: <20251109053801.2267149-8-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
 References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
@@ -86,59 +86,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having a way to figure out the region index (or bar) associated
-with a memory region is helpful in various scenarios. For example,
-this capability can be useful in retrieving the region info needed
-for mapping a part of a VFIO region or creating a dmabuf.
+In order to implement VFIO_DEVICE_FEATURE_DMA_BUF, we first need
+to identify the VFIO region and index the buffer (represented by
+iovec) belongs to and then translate its addresses to offsets
+within that region.
+
+The qemu_ram_block_from_host() API gives us both the region and the
+offset info we need to populate the dma ranges in order to invoke
+this feature.
 
 Cc: Alex Williamson <alex.williamson@redhat.com>
 Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/vfio/region.c              | 14 ++++++++++++++
- include/hw/vfio/vfio-device.h | 10 ++++++++++
- 2 files changed, 24 insertions(+)
+ hw/vfio/device.c              | 40 +++++++++++++++++++++++++++++++++++
+ include/hw/vfio/vfio-device.h | 14 ++++++++++++
+ 2 files changed, 54 insertions(+)
 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index b165ab0b93..046adfaa2c 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -398,3 +398,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
-     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
-                                         enabled);
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 9ff73f9941..5417142482 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ 
++#include "system/ramblock.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/pci.h"
+ #include "hw/hw.h"
+@@ -615,3 +616,42 @@ VFIODevice *vfio_device_lookup(MemoryRegion *mr)
+     }
+     return NULL;
  }
 +
-+int vfio_get_region_index_from_mr(MemoryRegion *mr)
++int vfio_device_create_dmabuf_fd(VFIODevice *vbasedev,
++                                 struct iovec *iov, unsigned int iov_cnt)
 +{
-+    VFIORegion *region;
++    g_autofree struct vfio_device_feature *feature = NULL;
++    struct vfio_device_feature_dma_buf *dma_buf;
++    ram_addr_t offset;
++    RAMBlock *rb;
++    size_t argsz;
++    int i, index;
 +
-+    while (mr->container) {
-+        if (mr->ops == &vfio_region_ops) {
-+            region = mr->opaque;
-+	    return region->nr;
++    argsz = sizeof(*feature) + sizeof (*dma_buf) +
++            sizeof(struct vfio_region_dma_range) * iov_cnt;
++    feature = g_malloc0(argsz);
++    dma_buf = (struct vfio_device_feature_dma_buf *)feature->data;
++
++    for (i = 0; i < iov_cnt; i++) {
++        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
++        if (!rb) {
++            return -1;
 +        }
-+        mr = mr->container;
++
++        index = vfio_get_region_index_from_mr(rb->mr);
++        if (index < 0) {
++            return -1;
++        }
++
++        dma_buf->region_index = index;
++        dma_buf->dma_ranges[i].offset = offset;
++        dma_buf->dma_ranges[i].length = iov[i].iov_len;
 +    }
-+    return -1;
++
++    dma_buf->nr_ranges = iov_cnt;
++    dma_buf->open_flags = O_RDONLY | O_CLOEXEC;
++    feature->argsz = argsz;
++    feature->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_DMA_BUF;
++
++    return vbasedev->io_ops->device_feature(vbasedev, feature);
 +}
 diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index bb28123faf..44cacd3728 100644
+index 2f8087f133..7fc2912f15 100644
 --- a/include/hw/vfio/vfio-device.h
 +++ b/include/hw/vfio/vfio-device.h
-@@ -290,6 +290,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
- 
- int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_irq_info *info);
+@@ -309,6 +309,20 @@ int vfio_get_region_index_from_mr(MemoryRegion *mr);
+  * Returns the VFIO device if found or NULL.
+  */
+ VFIODevice *vfio_device_lookup(MemoryRegion *mr);
 +
 +/**
-+ * Return the region index associated with a given MemoryRegion. The index
-+ * can be useful in retrieving region info.
++ * Create and return a dmabuf fd by first translating the addresses in the
++ * iovec array into VFIO region offsets and then invoking the
++ * VFIO_DEVICE_FEATURE_DMA_BUF feature.
 + *
-+ * @mr: MemoryRegion to use
++ * @vbasedev: #VFIODevice to use
++ * @iov: array of iovec entries associated with a buffer
++ * @iov_cnt: number of entries in the iovec array
 + *
-+ * Returns the region index or -1 on error.
++ * Returns the newly created dmabuf fd or -1 on error.
 + */
-+int vfio_get_region_index_from_mr(MemoryRegion *mr);
++int vfio_device_create_dmabuf_fd(VFIODevice *vbasedev,
++                                 struct iovec *iov, unsigned int iov_cnt);
  #endif
  
  /* Returns 0 on success, or a negative errno. */
