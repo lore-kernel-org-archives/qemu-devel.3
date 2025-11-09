@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D9B0CCFA13
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDDCCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI5z3-0002aU-Hk; Sun, 09 Nov 2025 09:01:34 -0500
+	id 1vI60s-0004aI-Hj; Sun, 09 Nov 2025 09:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI5ym-0002IQ-1x
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:01:21 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI60o-0004Pp-Nr
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:03:23 -0500
 Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI5yk-0003yz-4p
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:01:15 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI60n-0004Te-5Q
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:03:22 -0500
 Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b710601e659so347531566b.1
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:01:13 -0800 (PST)
+ a640c23a62f3a-b7277324054so306057066b.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:03:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762696872; x=1763301672; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762696999; x=1763301799; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=q7uHbJVGqhREGBEbw2X+gQk3wl7ZTZUNiM46Y/Qff18=;
- b=gNPwlp8Os1xyempChrv+lf5/5uxOtDqvHyy1y34EjJSOhC+tlk63Vd9bzFs+Q6K1nj
- /a6a2rgtIojmNfq5nEv3xK+TDH9hPrtE5NR7FGS4PCG3cZvounwak55YWYqRVcW9g17Y
- 6RRXPyhAtdbUCmsfLzyhsxMq2YTg/lrXQ3ytn+cveUHxKKsjZSvGvKm9GQtgAUjYYBwi
- 36iCgmSxmkf5b92t111MSEswA3xqbWABEphoX9cbT/OBhDklUFpd+RtrAEUlDOTVziJg
- yE/R0TPL6X/8JvpoicrGPVp5YI4XSO+3b8aI/fcjyVGAWvIHDAMITpDKeS96q9ioGF6/
- mubg==
+ bh=zS7AbEGMddZbuw+7JMZ27pbVDA9qbRJcIRYc7b4x294=;
+ b=VtgefT/qFxywkrdScrnF9LgBa1sTaMYgcXG/Mb8DUeR3Zx1Wp6rgtQUrHPkWljzqkH
+ 0/cd1qvE3phC4nnCxPd0PRa0LgI1cZEtfdSTMXdmUyDhnGvbdNQIxqXlmi2oHfDRMxDt
+ MY8NIUyhM6XHIW/0j0q9u25x0HH1jKllejXvf63w6IBu3QAv26KY8U7TU5M47o0F+5Hz
+ +swXuD7bZZK8CIdyYXsK3wSFaoWH5G8w+gLKov40WTjvOIF+lec9gdPEoMSdq0bWgfJG
+ 4CJ60M0PbKav9lO6Ki4j58kopz6hGtvsoHom3zgs9SdMFLCvhyWdFWEEklFTsGX9W5E8
+ RSgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762696872; x=1763301672;
+ d=1e100.net; s=20230601; t=1762696999; x=1763301799;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=q7uHbJVGqhREGBEbw2X+gQk3wl7ZTZUNiM46Y/Qff18=;
- b=FHE9ZFsdtD8J0SDBor/URQi9KMYH6t8cWucK/Aa5APOKMbFI8+zbbezRP97XTfVCQU
- iXyAJ69+wWh2g5S/eexCSMV2o7gFvbn2iKZEMBPwGIUU6M4BnrUM59QkBUNZh5f+/WPg
- DVhDNlGmTr5dbLtt5EvuUgwTS/f+CNIdnQsd8mGFh3ZodCBlhvYdWtsmNCl1tqz/9HD4
- jLCrVKLz8aY2y9a/sTtGcy5ylk2PRrI3AziRXUZKo5mgP31rHE2BT/SOkSdEkqq8Ap0d
- KJgeOT8dNCb8RleyZVrNWRM7nI/gl1cQvLhXPygmnfbm+v+FiQNCjo9bxY1e+TP2DqLV
- JR7w==
+ bh=zS7AbEGMddZbuw+7JMZ27pbVDA9qbRJcIRYc7b4x294=;
+ b=k+CtBv4aTCOG7syNkSFDlBLdVZs4QJGhx3CD6zm7hh5tK6nNtBDwGLv4xlg1QQGaCz
+ HPEJKAqpiy9veeNLcK7F4v9eJypQocp+NuqQPPSsDkmTsWPRfQkmWhCI5AIkblelylho
+ lrhfkRJbwsbqDjxGyZCks5trYn2FJRRtLv9WTHE9wH7sEJGxsr28eBpmsHbmP2nc22ta
+ Jzvi0/56H93XIGBKhlzuqUHQZJmR6Xt0L4l1DBtbSuzZp/MIa0jH1tmlgD+ZzmjaD29Y
+ vUTNSXaZJvwf0YcTx8n8LcBlhZN6PVlR1/RFAR3JAs4habWpNRo1aJyWvketQxQDVbG0
+ H9iw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSecvJCfCwjYzcvHppOfmx20SPn+knqzw55p8+Vzz9mgCYk7TFsQ0ONBETFEYCMgjbNtOVf4YCqDT8@nongnu.org
-X-Gm-Message-State: AOJu0YwWvueKnrsYP/yN3TlXD9iXBrm5xLxTeJR4Mh91yUh6aFLu1lgC
- E6u8BL1hnZNYDQBbYSsAhuEHOmhF9JmaZtvmyueGh35MPTBvSrhWN5M9WLZ0jlvyTys=
-X-Gm-Gg: ASbGncvnSNJkgbhQ5CJ0KFmMn7OntM7gxjSTJA7bWtdU1xE46fxqjgHdtkayFdsNKTf
- qNqiDAZjeIISk/GkRUTAqI7GY44QXy61wts0PxgktR1xapKbrtyahhsLUSghE3lYZFWuTVzindQ
- Cb2vAOi4SFPvM4M73UzSuQNHAIgQyyVCHJmzeZdbu5JQUpwMrS7I7MwX/yWHr1K5ph46/tS+Agh
- np04fLrG9MrAUlyYmT5f4k8uN1hgd6OuFDol3x8s5NTz3WVolu/0TSzhE7B+zk9t6ARzEkBmQox
- 0Cb/MX5arXk9K1YYsl6N3u9HHrOwUnm7qI4Izgm253MF+acvVtpvH3Fh78UYvzlDH3TUoas5URo
- p85Vs3imMiL1/Bu+QgLFteUO7sgNNP9HskMtUGV/j7899Vin9YfOpSl4MJl0+S3NjaG2K6Oh1TK
- meizMD7inLsPpOx/X4DXqBkgrh5fwFOXvo5awOsydmhdjiweQgYdjYcTbn+g==
-X-Google-Smtp-Source: AGHT+IEcPv+thLGo6KDe7lVOpO77zeE35E2PFHmmrRaK+7Jv2QnjElSOJGuex3A+OuFkV6uHC1ODNw==
-X-Received: by 2002:a17:906:7309:b0:b70:8519:44a3 with SMTP id
- a640c23a62f3a-b72e02b33b7mr490602766b.21.1762696872478; 
- Sun, 09 Nov 2025 06:01:12 -0800 (PST)
+ AJvYcCViAYTcaahgh0No1GjmhEXpIXBScUDtQ+iMlVYl+LGIoIDPx1DuIW3fifXOUOg8CS+PWkLjrjTrsEPU@nongnu.org
+X-Gm-Message-State: AOJu0YxLtn3eo0fmrvcYqAqVtz7l/en5ob0014xcbq91PjJfbTtLW07Z
+ PjQbPKA1dpg1URaQX0YoLANjOWOXOuIWgGvDZNl4fyUuU90di8UHVZQPXdRLUHQT2j4=
+X-Gm-Gg: ASbGncv+yB7MveyWdWz4SU2EKcs0iXL6ESJ5VZq5lwWfGwUkgNf1PDcGARP8whDYbec
+ dq/722zv8ELaqon5QpvQbv1i6ruTTqxdvRELh4pwD9viojJR6ym6hGxajHOjGlr/LlSi+QJDytg
+ 2ocR5KM0C4JXUnK1Bsp4SQlfTBh/ZzyK0H2PMnAE9zHl5d7hnHOqfiYuBZqDpoof0XblIYgLsUm
+ lDyqpC0QXLFB47T9Q9Za2/oQc23mPAZsf0wEHbBXN89y2fmko65Fgi2/NbNwK0mnZ52Lsu85lvP
+ C3BdLXurkg52LVgfnxtPJdwMzhia4mZarJkxh08/c9m54l9MxyxIedEWVh5zOqWJWA/n6jaLdOR
+ ytUnLWMmskEhIBOemK/5YEgi12SP1Mo+3nV+0sOAl76jrLAKW0zdeRhOgcGGCwQ8Hcolw/pP3Gd
+ FyrUl/847nNgNA5IYmdXCj/Rt2ZF/lpInMYBr2lk73Izds/0wa66kll4KLAw==
+X-Google-Smtp-Source: AGHT+IGCuPjCiT+eu1j7JxHX7JwxbFo1LD5zY2H9EFgLMFKeuIzXqJuLq5xVhXYfLTrm13s7LT+YaA==
+X-Received: by 2002:a17:907:7e84:b0:b3f:f6d:1d90 with SMTP id
+ a640c23a62f3a-b72e02b342emr472456766b.11.1762696999453; 
+ Sun, 09 Nov 2025 06:03:19 -0800 (PST)
 Received: from [192.168.2.7] (tmo-086-152.customers.d1-online.com.
  [80.187.86.152]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bfa11367sm799597666b.68.2025.11.09.06.01.11
+ a640c23a62f3a-b72bf97e54asm806021766b.34.2025.11.09.06.03.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Nov 2025 06:01:12 -0800 (PST)
-Message-ID: <efd13f61-d14d-4016-b187-6917ce37bf80@linaro.org>
-Date: Sun, 9 Nov 2025 15:01:10 +0100
+ Sun, 09 Nov 2025 06:03:18 -0800 (PST)
+Message-ID: <420ca5b8-861a-4ec6-b64a-461707a48866@linaro.org>
+Date: Sun, 9 Nov 2025 15:03:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] hw/intc/riscv_aclint: implement the RISCVCPUTimeSrcIf
- interface
+Subject: Re: [PATCH 1/9] target/riscv: drop unused include directive in
+ time_helper.c
 Content-Language: en-US
 To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
@@ -81,9 +81,9 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Francisco Iglesias <francisco.iglesias@amd.com>
 References: <20251107102340.471141-1-luc.michel@amd.com>
- <20251107102340.471141-6-luc.michel@amd.com>
+ <20251107102340.471141-2-luc.michel@amd.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251107102340.471141-6-luc.michel@amd.com>
+In-Reply-To: <20251107102340.471141-2-luc.michel@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::634;
@@ -111,13 +111,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/11/25 11:23, Luc Michel wrote:
-> Implement the RISCVCPUTimeSrcIf QOM interface in the ACLINT mtimer device
-> model.
+> Drop the unused qemu/log.h include directive in time_helper.c
 > 
 > Signed-off-by: Luc Michel <luc.michel@amd.com>
 > ---
->   hw/intc/riscv_aclint.c | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
+>   target/riscv/time_helper.c | 1 -
+>   1 file changed, 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
