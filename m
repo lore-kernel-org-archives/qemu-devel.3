@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49B16CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 22:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10556CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 22:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIDZ1-0007fO-No; Sun, 09 Nov 2025 17:07:11 -0500
+	id 1vIDYw-0007c6-Is; Sun, 09 Nov 2025 17:07:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYz-0007eM-EV
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:09 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYu-0007aJ-Sl
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:04 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYy-0005uB-2I
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:09 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vIDYs-0005sk-IE
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 17:07:04 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 351D440C18;
- Sun,  9 Nov 2025 22:07:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06202C4CEF8;
- Sun,  9 Nov 2025 22:07:05 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 20C79437E4;
+ Sun,  9 Nov 2025 22:07:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBCFC4CEF8;
+ Sun,  9 Nov 2025 22:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1762726027;
- bh=wYG7seUsKS5MQCHJuhkK5pMSkbpMKLwU9uw450sk38c=;
+ s=k20201202; t=1762726021;
+ bh=RJJib2w6GC9LobFAqWjbssP3wkcGzztB3jlbcsTCuwo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=OOricwARyFaxtHOHf6WkDqy+sWiPRuMBYpRN0HsTJ1i6Y9MuVBG+ftJhUC7bkq0Gd
- n6PUrr7Og4IBKppeSOb9J9nrSS9jNv7ik0SCOaBaEI6g3Gpj57nEYke1GcVBESvsyi
- qTnWguQwFM9WE09UaNPBRjOms/pCIgeQJ6V5GxgZDfGhfG1JedwwejZCVYNvxn4N2j
- psk25HIfvOqhYvmVwT8l2ztVxuuL1VD+T5oFAfl0IMziJ15moMgy1mE/1FatEBwKSX
- yn3cYU8cDBmUf5z7ILUcL/sGbDyOkNinqfUgo5FeF1qN4Z9PUXVcL+cif0Co6JC1+v
- k8knZFCg783Jg==
+ b=I3w2uKoQXsPUBnh6nBAdqDytOzenM0/EJra2BfBzGUKkMmVqK/kxOZPdGP8dWWLoJ
+ HVGMbHsbsk1y6vHXuM2EuB/Lx3y92yiqUa8pDeXGF3Or5LKDv2wAo4OC951wcm322Y
+ sGrJ328Ey9DJYReBl41vKfHWGCCAb+3CxXpZnM8P61YuYo+8dlvEOqrWuSqWlvjKAZ
+ nU+zx+ryqTUt3ETTFJCOi/H8FZPXz37G1ebCbPdsdQoaXU6VMWwZItuXIVRnXr7yTO
+ tqsBcV9EGif0S2rMjb3OFZC+ZQMPzVL5LTIipU7zxoQZ4mTexLamgAesjGeaCtrjwE
+ 2u0g4VE48oERw==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 6/7] ncr710: Use address space of device instead of global
- address space
-Date: Sun,  9 Nov 2025 23:06:53 +0100
-Message-ID: <20251109220654.46718-7-deller@kernel.org>
+Subject: [PULL 2/7] ncr710: Drop leftover debug code
+Date: Sun,  9 Nov 2025 23:06:49 +0100
+Message-ID: <20251109220654.46718-3-deller@kernel.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251109220654.46718-1-deller@kernel.org>
 References: <20251109220654.46718-1-deller@kernel.org>
@@ -72,44 +71,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
+That code was part of some debugging code. Now it has no effect any
+longer, so let's drop it.
+
+Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/scsi/ncr53c710.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index ba064c6ecf..47a6983491 100644
+index a35c41b67f..aaac31cbb9 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -550,7 +550,7 @@ static inline uint8_t ncr710_scsi_fifo_dequeue(NCR710_SCSI_FIFO *fifo,
- static inline uint32_t ncr710_read_dword(NCR710State *s, uint32_t addr)
- {
-     uint32_t buf;
--    address_space_read(&address_space_memory, addr, MEMTXATTRS_UNSPECIFIED,
-+    address_space_read(s->as, addr, MEMTXATTRS_UNSPECIFIED,
-                        (uint8_t *)&buf, 4);
-     /*
-      * The NCR710 datasheet saying "operates internally in LE mode"
-@@ -565,7 +565,7 @@ static inline uint32_t ncr710_read_dword(NCR710State *s, uint32_t addr)
- static inline void ncr710_dma_read(NCR710State *s, uint32_t addr,
-                                    void *buf, uint32_t len)
- {
--    address_space_read(&address_space_memory, addr, MEMTXATTRS_UNSPECIFIED,
-+    address_space_read(s->as, addr, MEMTXATTRS_UNSPECIFIED,
-                        buf, len);
-     NCR710_DPRINTF("Read %d bytes from %08x: ", len, addr);
-     for (int i = 0; i < len && i < 16; i++) {
-@@ -577,7 +577,7 @@ static inline void ncr710_dma_read(NCR710State *s, uint32_t addr,
- static inline void ncr710_dma_write(NCR710State *s, uint32_t addr,
-                                     const void *buf, uint32_t len)
- {
--    address_space_write(&address_space_memory, addr, MEMTXATTRS_UNSPECIFIED,
-+    address_space_write(s->as, addr, MEMTXATTRS_UNSPECIFIED,
-                         buf, len);
-     NCR710_DPRINTF("Wrote %d bytes to %08x\n", len, addr);
- }
+@@ -1361,11 +1361,6 @@ again:
+         case PHASE_DI:
+             s->waiting = NCR710_WAIT_DMA;
+             ncr710_do_dma(s, 0);
+-            if (s->waiting != NCR710_WAIT_NONE) {
+-                /* Async - stop and wait */
+-                break;
+-            }
+-            /* Sync - continue execution */
+             break;
+         case PHASE_CO:
+             ncr710_do_command(s);
 -- 
 2.51.1
 
