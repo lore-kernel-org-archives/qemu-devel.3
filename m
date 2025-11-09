@@ -4,91 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD0ACCFA1E
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 10:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100F2CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 12:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI2vu-0008Le-Qi; Sun, 09 Nov 2025 05:46:06 -0500
+	id 1vI4cV-0004BC-B1; Sun, 09 Nov 2025 07:34:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI2vt-0008Gw-7C
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 05:46:05 -0500
-Received: from mail-ed1-x544.google.com ([2a00:1450:4864:20::544])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI2vq-0008TH-Uj
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 05:46:04 -0500
-Received: by mail-ed1-x544.google.com with SMTP id
- 4fb4d7f45d1cf-640f627d01dso3824470a12.2
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 02:46:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762685161; x=1763289961; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=I0XbYMG3ZXeiT8BVAbvjtRixtNLKhkoATyUV7fZJRHI=;
- b=hlrUDek525ECRXHgAzq9xnB876yd/x1WrEPlMQmlZ2FvjEfSnsjEfwUp812nyyyKYn
- JEXYvUZfaWD3+jXs+rbt1olUmJ0QSX6tqKh6p0adVYFmm0feV/tso8mpFrcLnvX7b4SG
- VftWmdzLd/hz7J2K8bfWbAgAjffwUdVYh46TZ8WJcsJOZ73o6DYeQ9xhBFL30KF2WQd9
- IKLrJnoWc6gHWiyFQjUn4WPHUu1g6OtPmkWe+iF24xA6XXuEgAZaZ8vZ6LB7Yw24oil2
- AbQuPundOb8lJvKx+nQ3MrjocHgpSY+5B++aElM1GE/L16nb0qqK5bFznOIqmjqgVHoh
- htjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762685161; x=1763289961;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I0XbYMG3ZXeiT8BVAbvjtRixtNLKhkoATyUV7fZJRHI=;
- b=h6aOpcQvIbyTmVwUwoj3jh4fCSYgrePBv6CHowjvmYLuC3cSFdGP2u1H3ORoil1Nfp
- n5kY3V/wWuvBIxTR6FONLLBIseMAm0gk0TBNHzBV7A96MMJXDzlMzLhMb8Q0mpEROFJe
- 0YZXe1kcO7EGeZHHtaOqODzSu057bAoQ9YvbHMyEgQj8Trx44gXiyAL3Y/ozXHYnXvRe
- HZ74e/cELreEBz3aPVc2BmP/NDGPJi1q5hZg4/9ZUSOuBBHcwqcjgy0XDUSHo5wTwERG
- U7g2rEYMnKNQN0IgjI767lu0nz+CWutmZ14HYZeOccfZ2q8FWbYtDnfE1UTdIJ3YERGh
- GXIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9qGm2K4uC0RO6nm+zyFy2mj+Ihwb4DdOco+JXQrHZCxh/AGOmn1UDZQkVCIFs/2lOPJIpSu/G5ZJh@nongnu.org
-X-Gm-Message-State: AOJu0Yx87teB5Wkcis5V6yQ0QJDR5ZsbW6THgVd5jbK/Ngcj268TfaY2
- +SQHiBQOTCnDJRt9hILlAR5tEA5l3qz0gGD4upsC8zQ3+UVQS8EZsuWa0qQEW89Toyg=
-X-Gm-Gg: ASbGncswBs3MbQp61QzLhG3D3KNs9hYOJyfKfG/FnYcrjjlFExpOcuWPEpdQ3CKyeVj
- peXm3aVtUEMi2DqRwkVofQHcU+ZQWlalhNcdS/EiwNkoQsTbK9o7F/qhvBXQ4AlxF/lOw8SHCR/
- 0bddHNUIsnToA65YD9XE/5EjZdQ7JuQWFGePN5UCAsUh108FMp2mUYB8nzqPT+l5iheiL94xhu2
- 6lRojhE0uObvVsnFxa2E5w5sqayEZ2UXqma+lUXruJKB71qpgkN95E/6+9+JuKQCGh3nheOWmml
- uatFzVz+u+R/bE+Wvtoci+3MgsGpp+Jqa9eD5QiUvNPAleD5cThqDgHz85B8f74phqQIJ1c2M1B
- EWqIMyIqykBgHnRxbJuD6mQQxPF5zylcm8X8XwNY7qYyU+pe0pmQW7e01xAxRmYBzNkJl6gy+0J
- vvbRVZtf0FJqQqUl/o3yn9GB8FRN+vnSmEx/mqwWHwrxu54JVu90vYTNsTB8XdWa4=
-X-Google-Smtp-Source: AGHT+IFGDx2Hg73K7SSEPTwfZS2TGY1L073Ka2nm6rM/5PhMlrkhLyCHj33kzYD6np7OnaNg3o5IVw==
-X-Received: by 2002:a17:907:9721:b0:b72:5640:ac15 with SMTP id
- a640c23a62f3a-b72e03156dcmr456854466b.26.1762685161095; 
- Sun, 09 Nov 2025 02:46:01 -0800 (PST)
-Received: from [192.168.2.7] (tmo-086-152.customers.d1-online.com.
- [80.187.86.152]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bdbcea51sm767269166b.4.2025.11.09.02.46.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Nov 2025 02:46:00 -0800 (PST)
-Message-ID: <e3530b1c-6f5f-48d0-ab5e-da94e59c275a@linaro.org>
-Date: Sun, 9 Nov 2025 11:45:59 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vI4cU-0004Ax-HA; Sun, 09 Nov 2025 07:34:10 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vI4cS-00043G-Ud; Sun, 09 Nov 2025 07:34:10 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5A9BM0kO007010;
+ Sun, 9 Nov 2025 12:34:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=53lR4i
+ 5vu49mlV9CgKYyZ2oEHdvTfKNQ9VrqEC9Ymdw=; b=MYLaN5UOYBatpRWi9s3Qc0
+ ur1nfRjPYg4BPRdigl/Sa4fwGkh+WN4vy2EMZcMVclbYwBnJ7iUxZu/EcI2QxCJ7
+ py/u7+8FGcNySD+MLiR0qjI9W1o9GLKql139co5ObJl3i8W+xz2GtP1kCzpS7cdF
+ ZFyaaLAyZ2aN/XXNeSE28CcJoGX01QtuxnxCcMaPufVRX9ton1rB28hL152a5yrG
+ QMdoKJ3EHS4dd0xf1Cu1qTmGQRdt1CCTKvShR6cfJFpMNuBNLiE2LLvHu+nbeTsb
+ f5mdpPdFJ81ZAMwvWGkPcfKzbOp2okjeCoKrshBkugdXM+j5gt0yxyHQ2uNFiSeQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a9wc6vdvh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 09 Nov 2025 12:34:04 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5A9CY3Nw000329;
+ Sun, 9 Nov 2025 12:34:04 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a9wc6vdvf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 09 Nov 2025 12:34:03 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A971gCI015147;
+ Sun, 9 Nov 2025 12:34:02 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4aagjxhkgx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 09 Nov 2025 12:34:02 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5A9CXm4I58392966
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 9 Nov 2025 12:33:49 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 76A9B58059;
+ Sun,  9 Nov 2025 12:34:02 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8572C58058;
+ Sun,  9 Nov 2025 12:34:00 +0000 (GMT)
+Received: from [9.124.217.7] (unknown [9.124.217.7])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sun,  9 Nov 2025 12:34:00 +0000 (GMT)
+Message-ID: <04809969-5de3-4cd5-9919-405a0b2cf09a@linux.ibm.com>
+Date: Sun, 9 Nov 2025 18:03:57 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/audio/lm4549: Don't try to open a zero-frequency audio
- voice
+Subject: Re: [PATCH v2] pc-bios/dtb/pegasos*.dtb: Fix compiled dtb blobs
+To: Yogesh Vyas <yvyas1991@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>
+References: <20251108193717.DADA9597302@zero.eik.bme.hu>
+ <b32eeb42-66b4-4dff-accd-cab187ef073b@gmail.com>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20251107154116.1396769-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251107154116.1396769-1-peter.maydell@linaro.org>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <b32eeb42-66b4-4dff-accd-cab187ef073b@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::544;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x544.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDAxOCBTYWx0ZWRfX1WliIHgNYn/o
+ 0yiIhvxFck1eELyHcAnvQD67oPgT1DDEyJzqWdgE0nwm8o5BPeS1svHCRYtQGKvYPjOrojUkxLW
+ k6V/chiI+nc5ZNFeXs9sA6uVBbL5VkCWMFE6TL3tzoBtn5nvwaUd1O+mwmV7fVQjfOybi8PMMHX
+ VOrkj2e0iZkME/XqFh9B/kZ4QhruJ1SR/MSb1BlGh8Agk4KUY3SR+Kc/uN0ylVVwj1hdCdR26vf
+ hLR9xYDUsICzZYhiDoH8R5DHHiobVB0M0nsxMNF6eDiC/bNSVW5RX7JmAthgwMWZa+4saP5K+tF
+ 6MmBQqD3dT2PN32Tzm5zqsWqRbr10YHTWCs9bWPbOT4+/I0jZm0sY0g+VkpUb31ilvwJ0tTvzAU
+ QoEdbN+egNZdxx/OPeK8QlS/ihKT1w==
+X-Authority-Analysis: v=2.4 cv=GcEaXAXL c=1 sm=1 tr=0 ts=69108a3c cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=9Cm5Y8c7GxDTzpMygq4A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22
+ a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-GUID: saXKy6_BjZubvXJB69UQU8lzx60bSDia
+X-Proofpoint-ORIG-GUID: _A-1_8UTtbS_m6NwShs3IDtEkZ8W7ZfF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-09_05,2025-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511080018
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +129,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 16:41, Peter Maydell wrote:
-> If the guest incorrectly programs the lm4549 audio chip with a zero
-> frequency, we will pass this to AUD_open_out(), which will complain:
-> 
->     A bug was just triggered in AUD_open_out
->     Save all your work and restart without audio
->     I am sorry
->     Context:
->     audio: frequency=0 nchannels=2 fmt=S16 endianness=little
-> 
-> The datasheet doesn't say what we should do here, only that the valid
-> range for the freqency is 8000 to 48000 Hz; we choose to log the
-> guest error and ignore an attempt to change the DAC rate to something
-> outside the valid range.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/410
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> This bug has been around for so long and is a weird edge case whose
-> only effect is to print a debug message, so it doesn't really seem
-> worth cc'ing stable on.
-> ---
->   hw/audio/lm4549.c | 17 ++++++++++++++++-
->   1 file changed, 16 insertions(+), 1 deletion(-)
 
-With s/8000/4000/ in description:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+On 11/9/25 01:41, Yogesh Vyas wrote:
+> Hi Balaton,
+> 
+> I just tested after applying this patch and it seems to solve the issue.
+> Thank you very much.
+> 
+> Reported-by: Yogesh Vyas <yvyas1991@gmail.com>
+> Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
+> 
+> On 11/9/25 1:07 AM, BALATON Zoltan wrote:
+>> When adding these files somehow an incomplete version was committed.
+>> Regenerate and update these dtb files to match the dts which fixes
+>> problems caused by missing nodes in the dtb.
+>>
+>> Fixes: 9099b430a4 (hw/ppc/pegasos2: Change device tree generation)
+>> Fixes: 3c21f9dfcf (hw/ppc/pegasos2: Add VOF support for pegasos1)
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>> v2: updated commit message to mention the two commits fixed here
+>>
+>>   pc-bios/dtb/pegasos1.dtb | Bin 857 -> 1975 bytes
+>>   pc-bios/dtb/pegasos2.dtb | Bin 1701 -> 2963 bytes
+>>   2 files changed, 0 insertions(+), 0 deletions(-)
+>>
+
+Queued, thanks.
 
