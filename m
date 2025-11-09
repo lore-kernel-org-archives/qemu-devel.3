@@ -4,112 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBD4CCFA13
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26039CCFA13
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 15:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI6W5-0002FZ-DX; Sun, 09 Nov 2025 09:35:41 -0500
+	id 1vI7CM-0008MB-B6; Sun, 09 Nov 2025 10:19:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6W3-0002FK-OJ
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vI7CJ-0008Ke-AO
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 10:19:19 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6W1-0001ow-NN
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762698937;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LFArUVOXUNIre6IYeQ7+Je+E4A2RV5Gu/4n3yh1Oct4=;
- b=ZV1n1TgKrwplpa02y7XHbQdWZ99F01l/qEkcNNmIvzHot+xmmUGzYV0dpzgwNY1x7dUKcC
- XMTl/zgIF8ZrpzPIUVA05pr0vvcmQ2t4v4NJVhyvii3a93sPsQb/2R8n8EYZD6PTo/r82e
- BYmjtIEB68RJSzIMYMcFRCLxr50W9n4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-CemaqsCpNjW33PppkWWxcg-1; Sun, 09 Nov 2025 09:35:35 -0500
-X-MC-Unique: CemaqsCpNjW33PppkWWxcg-1
-X-Mimecast-MFC-AGG-ID: CemaqsCpNjW33PppkWWxcg_1762698935
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42b2f79759bso913791f8f.2
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762698934; x=1763303734; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=LFArUVOXUNIre6IYeQ7+Je+E4A2RV5Gu/4n3yh1Oct4=;
- b=OTIZDAPrA3y+tW8TzfjYg6DyxHVqVD9xkJC51O+fEiPuyQG4AkTBIJeiZ78Z2itO9p
- IPkbtnAVLfMN35hNwQS0C6F9bdB9OkjVwqyz9DgOCANN9SGwC/t9w6gOA1QabLni9NIz
- 9iRv6tSYZzL6wUtlR2UgMVwk8PtEvq8OombHX2bLP9AlbOEbjh0Zs9p6rAYy+6cLwdwn
- C35KYN5Vh3XOGTyZgXx85mW9SzW5v0YaSYGz0Kpv08GwMfMXdaAJKo6lSbgjAhEhkf66
- 4TwPKsKSgjoKgKyHjHILWBi6ONtdrCxMqwgACknkMnTeC6azTYLe7+vKLZTNuQxhCMY4
- FDMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762698934; x=1763303734;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LFArUVOXUNIre6IYeQ7+Je+E4A2RV5Gu/4n3yh1Oct4=;
- b=dv7m5Ii3eR4u711p90zqbFmU3flgKHSwszrWtzKdsH3h4iDvYlHR1WxPivTb4lK+ud
- sEbL2Mgr4pUKB4Noi5BdB+ATqo8EaoVaZd/hGuEh9m5dUunXMG3QkkDhY5S2FOoBAVBF
- pAV2ujcx3rylFJ5b0PTZ0ACmi5EmttSswBzlBzabaQPx4RZpG5DU816Tyo1CUbAGGvwB
- vCKvqzx2lOVDtWUAv5cwpF6pPBrM5tiKujBCEayjGOUm0EYqJaSRnnMBxkiL9LJgrpM8
- 6jMWS8AMWb2UsHrSYaKa5hnb5ESCtCchoA2F6AwQ9XBTkIKFjC0MifUxverTt05vs9bc
- Ohug==
-X-Gm-Message-State: AOJu0YzHbLwRpxOkRGPO57nu2vbYBtOBahKsUKAC2WLhCBeCXnbxEQyP
- tdNOoOXrcs9TLF94C8HgPLMuTxeETNDy83lvjfQyoDSzeZVas8joKPizoYmDZZtQlZ+O0AkWUNM
- 62FLzI3bfF0Cxy4o1UHRY89Q8wgRrT4ncpSml8/IcPGinMWpKzXJGPegN5dMCVN8quqoq40Cah0
- iXsSMD+e+2+LGpUEhP3+0IogAbpn3UPiXbkg==
-X-Gm-Gg: ASbGncugj6GlZSAPp9pVugt/FFx5KSE+cRrpNECcGiYHtFicxIgmrn4UhyL9Difi7SJ
- 4x7n0kdAu7jYcGVvzNzBOEt039nmQ6ir5QxVoBzPRSTfsWKyYVdy6lirEQG2SzaYqoyU3fgl5nW
- hJ69OW5V+RaBbYQvBotbURZ64D6Al+7BAyyHZ/hRdrRkq/0EKnFTMCE/vIu0fuyYwRfbCBBqRh8
- Hir/4UopQYtRgOj9zdz6Lq7ZNU/qCqBqLycsft/R+AWj53CRVwwPcqTAfrlEDyHmD/c25a35aZ5
- e/d3+2tdc3paPF1me0AsiGdWWnhAuNoA8mgLabgHrTbMgadlUAlMQwaiR0zz4JGfGrE=
-X-Received: by 2002:a05:6000:40c7:b0:42b:32d1:28c6 with SMTP id
- ffacd0b85a97d-42b32d12d9bmr2450897f8f.63.1762698934284; 
- Sun, 09 Nov 2025 06:35:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFHduG3Rx4z6ph5zvIZVWYZ38SsEo8IiAfIHPrfeENzG77p4XIkM5V4vVrDqLPaXkIvBYlB7Q==
-X-Received: by 2002:a05:6000:40c7:b0:42b:32d1:28c6 with SMTP id
- ffacd0b85a97d-42b32d12d9bmr2450862f8f.63.1762698933638; 
- Sun, 09 Nov 2025 06:35:33 -0800 (PST)
-Received: from redhat.com ([2a0d:6fc0:1536:2700:9203:49b4:a0d:b580])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42abe63ba87sm17792975f8f.14.2025.11.09.06.35.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Nov 2025 06:35:33 -0800 (PST)
-Date: Sun, 9 Nov 2025 09:35:31 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shameer Kolothum <skolothumtho@nvidia.com>,
- Eric Auger <eric.auger@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 11/14] tests/qtest/bios-tables-test: Update DSDT blobs after
- GPEX _DSM change
-Message-ID: <ccf166d89dcf57c9d333f05173851f90e416097a.1762698873.git.mst@redhat.com>
-References: <cover.1762698873.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vI7CC-00012g-LV
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 10:19:15 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1762701530; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=k+TjIGx9qPothEjTOhhZ+96K0E36yTs9Lm0KhsdkXBRXTLBPZNwxJql6CZuw1BPyR7c/Q38VTaa8wejYtrDrqbxoPbQMMafRQlz671b6MSEtjaPswF1LqCwMjOu3vKYNT5MJs2hwmTBayYtJBmp7v/jL3IkAZ1ZCN0pMREMp1O0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1762701530;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=sNIGPchNyOyKBzNPFMt8KOVZ3abtZoOnoi0CS90fHFo=; 
+ b=TZZAtBThM5VqhrJL2OeXA7wC8MVimOlci9XFWeS5qUfCYi4BgmFjAbsy3O0MylT/Ebqg1uwwfpFedIsYuvGH9/oxq2DrTPgeyxXahchXpiNMfim/W/ucSUBTFwI1BJUI+kdoBzQpBqGzIVlbHzZIwefAkJuJA5l+frq3ETgn+Mk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762701530; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=sNIGPchNyOyKBzNPFMt8KOVZ3abtZoOnoi0CS90fHFo=;
+ b=CeHdEOurJjhuAWbfTine/dFSfnl/K2/ZyXlqxM2YaIoccXO/wHlAEiVd1yds3H7L
+ AuUgyMTKN3EsdhiSHY1wgYw3Yu/nqEphpklD4LlYW0baEKyjj2MWpxP4WxJisXhEWJO
+ aBJsRJe3qTWzLHe0ysKxAYH0nAl6SerwXeQnDqMY=
+Received: by mx.zohomail.com with SMTPS id 1762701526913339.8723152590693;
+ Sun, 9 Nov 2025 07:18:46 -0800 (PST)
+Message-ID: <9c98c743-c0bd-4b11-a899-923fd0b2633c@collabora.com>
+Date: Sun, 9 Nov 2025 18:18:39 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 00/10] Support virtio-gpu DRM native context
+To: Yiwei Zhang <zzyiwei@gmail.com>,
+ "Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>
+Cc: "Huang, Ray" <Ray.Huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny
+ <gert.wollny@collabora.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Gurchetan Singh <gurchetansingh@chromium.org>,
+ Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Roger_Pau_Monn=C3=A9?=
+ <roger.pau@citrix.com>, "Deucher, Alexander" <Alexander.Deucher@amd.com>,
+ "Stabellini, Stefano" <stefano.stabellini@amd.com>,
+ "Koenig, Christian" <Christian.Koenig@amd.com>,
+ "Ragiadakou, Xenia" <Xenia.Ragiadakou@amd.com>,
+ "Huang, Honglei1" <Honglei1.Huang@amd.com>,
+ "Zhang, Julia" <Julia.Zhang@amd.com>, "Chen, Jiqian" <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
+ <DM8PR12MB543171EE8DB9CD0272C7A99D8DC4A@DM8PR12MB5431.namprd12.prod.outlook.com>
+ <CAJ+hS_gGVc++CXCOh6uTcD2H6cn4ZNA_A=EWdWHYyo8HBhUPmg@mail.gmail.com>
+ <CAJ+hS_j=WRqXZNQCe1DrxjnFB6Haw7nc+fu-2HYoaa2uounMrg@mail.gmail.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <CAJ+hS_j=WRqXZNQCe1DrxjnFB6Haw7nc+fu-2HYoaa2uounMrg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1762698873.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,278 +100,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+On 11/9/25 04:29, Yiwei Zhang wrote:
+> On Sat, Nov 8, 2025 at 4:06 AM Yiwei Zhang <zzyiwei@gmail.com> wrote:
+>>
+>> On Tue, Nov 4, 2025 at 2:02 AM Pelloux-Prayer, Pierre-Eric
+>> <Pierre-eric.Pelloux-prayer@amd.com> wrote:
+>>>
+>>> [Public]
+>>>
+>>> Hi,
+>>>
+>>> The whole series is Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+>>>
+>>> Thanks a lot Dmitry!
+>>>
+>>> Pierre-Eric
+>>>
+>>> ________________________________
+>>> From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Sent: Tuesday, October 21, 2025 1:39 AM
+>>> To: Akihiko Odaki <akihiko.odaki@daynix.com>; Huang, Ray <Ray.Huang@amd.com>; Marc-André Lureau <marcandre.lureau@redhat.com>; Philippe Mathieu-Daudé <philmd@linaro.org>; Gerd Hoffmann <kraxel@redhat.com>; Alex Bennée <alex.bennee@linaro.org>; Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>; Michael S . Tsirkin <mst@redhat.com>; Paolo Bonzini <pbonzini@redhat.com>
+>>> Cc: Gert Wollny <gert.wollny@collabora.com>; qemu-devel@nongnu.org <qemu-devel@nongnu.org>; Gurchetan Singh <gurchetansingh@chromium.org>; Alyssa Ross <hi@alyssa.is>; Roger Pau Monné <roger.pau@citrix.com>; Deucher, Alexander <Alexander.Deucher@amd.com>; Stabellini, Stefano <stefano.stabellini@amd.com>; Koenig, Christian <Christian.Koenig@amd.com>; Ragiadakou, Xenia <Xenia.Ragiadakou@amd.com>; Huang, Honglei1 <Honglei1.Huang@amd.com>; Zhang, Julia <Julia.Zhang@amd.com>; Chen, Jiqian <Jiqian.Chen@amd.com>; Rob Clark <robdclark@gmail.com>; Yiwei Zhang <zzyiwei@gmail.com>; Sergio Lopez Pascual <slp@redhat.com>
+>>> Subject: [PATCH v14 00/10] Support virtio-gpu DRM native context
+>>>
+>>> This patchset adds DRM native context support to VirtIO-GPU on QEMU.
+>>>
+>>> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
+>>> DRM native context [1] mediates lower level kernel driver UAPI, which
+>>> reflects in a less CPU overhead and less/simpler code needed to support it.
+>>> DRM context consists of a host and guest parts that have to be implemented
+>>> for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+>>> a real/native host GPU device for GL/VK applications.
+>>>
+>>> [1] https://www.youtube.com/watch?v=9sFP_yddLLQ
+>>>
+>>> Today there are four DRM native context drivers existing in a wild:
+>>>
+>>>   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+>>>   - AMDGPU, completely upstreamed
+>>>   - Intel (i915), merge requests are opened
+>>>   - Asahi (Apple SoC GPUs), partially merged upstream
+>>>
+>>> # How to try out DRM context:
+>>>
+>>> 1. DRM context uses host blobs and on host requires v6.13 or newer version
+>>> of Linux kernel that contains necessary KVM fixes.
+>>>
+>>> 2. Use latest available Mesa (both guest and host) and libvirglrenderer
+>>> versions. On guest, build Mesa with enabled virtio native context support.
+>>>
+>>> 3. On guest, use latest Linux kernel v6.14 or newer.
+>>>
+>>> Example QEMU cmdline that enables DRM context:
+>>>
+>>>   qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm_native_context=on \
+>>>       -machine q35,accel=kvm -m 8G
+>>>
+>>> # Notes about known problems:
+>>>
+>>> 1. DRM contexts are mapping host blobs extensively and these mapping
+>>> operations work slowly in QEMU. We will need to optimize hostmem
+>>> unmapping that currently happens in a deffered RCU work, blocking
+>>> GPU for a substantial time. WIP fixes available at [2][3].
+>>>
+>>> [2] https://lore.kernel.org/qemu-devel/20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp/
+>>> [3] https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-alex.bennee@linaro.org/
+>>>
+>>> 2. Linux kernel virtio-gpu driver doesn't limit display refresh rate,
+>>> causing poor performance. Fix availalble in drm-misc-next tree [4]
+>>> and should land upstream with v6.19+ kernel.
+>>>
+>>> [4] https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/a036f5fceedb9fbd715565fef7b824a121503de7
+>>>
+>>> 3. Xorg on guest creates initial dumb buffer that is a vrend buffer, which
+>>>    can't be re-used by native contexts. This may cause drawing artifacts.
+>>>    Boot kernel with disabled fbdev using drm_client_lib.active="" kernel
+>>>    cmdline parameter to work around the issue.
+>>>
+>>>    Wayland on guest isn't affected by this issue.
+>>>
+>>> Changelog:
+>>>
+>>> v14:- Rebased on top of recent QEMU staging tree.
+>>>
+>>>     - DRM native context in QEMU now requires virglrenderer v1.2.0+
+>>>       containing fix for async-fencing not working after guest reboot.
+>>>
+>>>     - Updated doc patch with new Asahi nctx rquirements info. Asahi
+>>>       support landed to virglrenderer v1.2.0.
+>>>
+>>> v13:- Updated Asahi nctx MR link in the doc patch. Old MR was closed
+>>>       and new opened.
+>>>
+>>>     - Fixed compiler warning about unused variable when using older
+>>>       virglrenderer version.
+>>>
+>>> v12:- Rebased on top of recent QEMU/staging and a fix from Yiwei Zhang:
+>>>
+>>>         https://lore.kernel.org/qemu-devel/20250518152651.334115-1-zzyiwei@gmail.com/
+>>>
+>>>     - Async-fence and native context features now require virglrenderer > 1.1.1
+>>>       that contains fix needed for resetting virtio-gpu-gl properly on QEMU
+>>>       reboot:
+>>>
+>>>         https://gitlab.freedesktop.org/virgl/virglrenderer/-/commit/6f4681ff09cb17aa2d6715dbc6034eb3abe5711d
+>>>
+>>>     - Added r-b from Akihiko Odaki to the doc patch.
+>>>
+>>>     - Corrected resetting of async fences list that was done on scanout
+>>>       reset in v11 instead of virtio-gpu reset.
+>>>
+>>> v11:- Added column for libvirglrenderer host requrements versions and
+>>>       corrected Asahi kernel link. Suggested by Akihiko Odaki.
+>>>
+>>> v10:- Added links to Asahi and i915 virglrenderer MRs, link to Asahi host
+>>>       kernel. Suggested by Akihiko Odaki.
+>>>
+>>>     - Renamed gfxstream guest requrements table's colum to match the host
+>>>       requirements table. Suggested by Akihiko Odaki.
+>>>
+>>> v9: - Updated doc patch by addresing review comments from Akihiko Odaki.
+>>>       Made kernel requirements section specific to guest kernel and
+>>>       removed reference to host requirements. Removed examples of
+>>>       external projects' build flags.
+>>>
+>>>     - Added guest kernel minimum versions to the guest requirements table.
+>>>
+>>> v8: - Addressed review comments from Akihiko Odaki on the doc patch.
+>>>
+>>>     - Added r-bs from Akihiko Odaki on the doc patches.
+>>>
+>>>     - Extended vrend doc with info about hostmem requirement for GL 4.6
+>>>
+>>> v7: - Added r-b from Alex Bennée to the async fencing patch.
+>>>
+>>>     - Updated virtio-gpu doc patch with addressed review comments
+>>>       from Akihiko Odaki.
+>>>
+>>> v6: - Fixed compilation warning using older version of virglrenderer,
+>>>       which wasn't fixed properly in v5.
+>>>
+>>>     - Added t-bs from Alex Bennée.
+>>>
+>>>     - Added patches to improve virgl/venus doc by adding links
+>>>       to the Mesa doc as was suggested by Akihiko Odaki.
+>>>
+>>>     - Updated patch that documents guest/host requirements. Added
+>>>       links to Asahi nctx and reworked the doc structure by adding
+>>>       requirements to each context-type section instead of having
+>>>       one big blob or requirements, which was objected by Akihiko Odaki.
+>>>
+>>> v5: - Added r-bs from Akihiko Odaki.
+>>>
+>>>     - Added acks from Michael Tsirkin.
+>>>
+>>>     - Fixed compilation warning using older version of virglrenderer that
+>>>       was reported by Alex Bennée. Noticed that I need to keep old
+>>>       virgl_write_fence() code around for the older virglrenderer in
+>>>       "Support  asynchronous fencing" patch, so added it back and verified
+>>>       that old virglrenderer works properly.
+>>>
+>>>     - Added new patch from Alex Bennée that adds more virtio-gpu
+>>>       documentation with a couple corrections and additions to it from me.
+>>>
+>>>     - Rebased patches on top of latest staging tree.
+>>>
+>>> v4: - Improved SDL2/dmabuf patch by reusing existing Meson X11 config
+>>>       option, better handling EGL error and extending comment telling
+>>>       that it's safe to enable SDL2 EGL preference hint. As was suggested
+>>>       by Akihiko Odaki.
+>>>
+>>>     - Replaced another QSLIST_FOREACH_SAFE with QSLIST_EMPTY+FIRST in
+>>>       the async-fencing patch for more consistency of the code. As was
+>>>       suggested by Akihiko Odaki.
+>>>
+>>>     - Added missing braces around if-statement that was spotted by
+>>>       Alex Bennée.
+>>>
+>>>     - Renamed 'drm=on' option of virtio-gpu-gl device to
+>>>       'drm_native_context=on' for more clarity as was suggested by
+>>>       Alex Bennée. Haven't added added new context-type option that
+>>>       was also proposed by Alex, might do it with a separate patch.
+>>>       This context-type option will duplicate and depecate existing
+>>>       options, but in a longer run likely will be worthwhile adding
+>>>       it.
+>>>
+>>>     - Dropped Linux headers-update patch as headers has been updated
+>>>       in the staging tree.
+>>>
+>>> v3: - Improved EGL presence-check code on X11 systems for the SDL2
+>>>       hint that prefers EGL over GLX by using better ifdefs and checking
+>>>       Xlib presence at a build time to avoid build failure if lib SDL2
+>>>       and system are configured with a disabled X11 support. Also added
+>>>       clarifying comment telling that X11 hint doesn't affect Wayland
+>>>       systems. Suggested by Akihiko Odaki.
+>>>
+>>>     - Corrected strerror(err) that used negative error where it should
+>>>       be positive and vice versa that was caught by Akihiko Odaki. Added
+>>>       clarifying comment for the case where we get positive error code
+>>>       from virglrenderer that differs from other virglrenderer API functions.
+>>>
+>>>     - Improved QSLIST usage by dropping mutex protecting the async fence
+>>>       list and using atomic variant of QSLIST helpers instead. Switched away
+>>>       from using FOREACH helper to improve readability of the code, showing
+>>>       that we don't precess list in unoptimal way. Like was suggested by
+>>>       Akihiko Odaki.
+>>>
+>>>     - Updated patchset base to Venus v18.
+>>>
+>>> v2: - Updated SDL2-dmabuf patch by making use of error_report() and
+>>>       checking presense of X11+EGL in the system before making SDL2
+>>>       to prefer EGL backend over GLX, suggested by Akihiko Odaki.
+>>>
+>>>     - Improved SDL2's dmabuf-presence check that wasn't done properly
+>>>       in v1, where EGL was set up only after first console was fully
+>>>       inited, and thus, SDL's display .has_dmabuf callback didn't work
+>>>       for the first console. Now dmabuf support status is pre-checked
+>>>       before console is registered.
+>>>
+>>>     - Updated commit description of the patch that fixes SDL2's context
+>>>       switching logic with a more detailed explanation of the problem.
+>>>       Suggested by Akihiko Odaki.
+>>>
+>>>     - Corrected rebase typo in the async-fencing patch and switched
+>>>       async-fencing to use a sigle-linked list instead of the double,
+>>>       as was suggested by Akihiko Odaki.
+>>>
+>>>     - Replaced "=true" with "=on" in the DRM native context documentation
+>>>       example and made virtio_gpu_virgl_init() to fail with a error message
+>>>       if DRM context can't be initialized instead of giving a warning
+>>>       message, as was suggested by Akihiko Odaki.
+>>>
+>>>     - Added patchew's dependecy tag to the cover letter as was suggested by
+>>>       Akihiko Odaki.
+>>>
+>>> Alex Bennée (1):
+>>>   docs/system: virtio-gpu: Document host/guest requirements
+>>>
+>>> Dmitry Osipenko (8):
+>>>   ui/sdl2: Restore original context after new context creation
+>>>   virtio-gpu: Handle virgl fence creation errors
+>>>   virtio-gpu: Support asynchronous fencing
+>>>   virtio-gpu: Support DRM native context
+>>>   ui/sdl2: Don't disable scanout when display is refreshed
+>>>   ui/gtk: Don't disable scanout when display is refreshed
+>>>   docs/system: virtio-gpu: Add link to Mesa VirGL doc
+>>>   docs/system: virtio-gpu: Update Venus link
+>>>
+>>> Pierre-Eric Pelloux-Prayer (1):
+>>>   ui/sdl2: Implement dpy dmabuf functions
+>>>
+>>>  docs/system/devices/virtio-gpu.rst | 116 +++++++++++++++++-
+>>>  hw/display/virtio-gpu-gl.c         |   7 ++
+>>>  hw/display/virtio-gpu-virgl.c      | 185 ++++++++++++++++++++++++++++-
+>>>  hw/display/virtio-gpu.c            |  15 +++
+>>>  include/hw/virtio/virtio-gpu.h     |  14 +++
+>>>  include/ui/sdl2.h                  |   7 ++
+>>>  meson.build                        |   8 +-
+>>>  ui/gtk-egl.c                       |   1 -
+>>>  ui/gtk-gl-area.c                   |   1 -
+>>>  ui/sdl2-gl.c                       |  70 ++++++++++-
+>>>  ui/sdl2.c                          |  42 +++++++
+>>>  11 files changed, 449 insertions(+), 17 deletions(-)
+>>>
+>>> --
+>>> 2.51.0
+>>>
+>>
+>> The whole series looks good to me, and Tested-by: Yiwei Zhang
+>> <zzyiwei@gmail.com>
+> 
+> Just to clarify. My testing is done with venus + virgl to verify async
+> fence cb in QEMU is working as intended.
 
-Update the reference DSDT blobs after GPEX _DSM change. This affects the
-aarch64 'virt', riscv64 "virt", loongarch64 "virt" and the x86 'microvm'
-machines.
-
-DSDT diff is the same for all the machines/tests:
-
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT, Fri Oct 10 11:18:21 2025
-+ * Disassembly of /tmp/aml-E6V9D3, Fri Oct 10 11:18:21 2025
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-  *     Length           0x000014D9 (5337)
-  *     Revision         0x02
-- *     Checksum         0xA4
-+ *     Checksum         0xA5
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
-
-@@ -1822,33 +1822,33 @@
-                 Else
-                 {
-                     CDW1 |= 0x04
-                 }
-
-                 Return (Arg3)
-             }
-
-             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
-             {
-                 If ((Arg0 == ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
-                 {
-                     If ((Arg2 == Zero))
-                     {
-                         Return (Buffer (One)
-                         {
--                             0x01                                             // .
-+                             0x00                                             // .
-                         })
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251022080639.243965-4-skolothumtho@nvidia.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h   |  16 ----------------
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5337 -> 5337 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5423 -> 5423 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 6246 -> 6246 bytes
- .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 5391 -> 5391 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6698 -> 6698 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7812 -> 7812 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev  | Bin 10274 -> 10274 bytes
- .../data/acpi/aarch64/virt/DSDT.smmuv3-legacy | Bin 10274 -> 10274 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5539 -> 5539 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 5354 -> 5354 bytes
- tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4603 bytes
- tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5824 bytes
- tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4609 bytes
- .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4905 bytes
- tests/data/acpi/riscv64/virt/DSDT             | Bin 3538 -> 3538 bytes
- tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 2985 -> 2985 bytes
- 17 files changed, 16 deletions(-)
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index e2fce2e972..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,17 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT",
--"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/DSDT.memhp",
--"tests/data/acpi/aarch64/virt/DSDT.pxb",
--"tests/data/acpi/aarch64/virt/DSDT.topology",
--"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
--"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
--"tests/data/acpi/aarch64/virt/DSDT.viot",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
--"tests/data/acpi/riscv64/virt/DSDT",
--"tests/data/acpi/loongarch64/virt/DSDT",
--"tests/data/acpi/loongarch64/virt/DSDT.topology",
--"tests/data/acpi/loongarch64/virt/DSDT.numamem",
--"tests/data/acpi/loongarch64/virt/DSDT.memhp",
--"tests/data/acpi/x86/microvm/DSDT.pcie",
-diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
-index 38f01adb61e6e4704821cee5e397888bb6b7e46d..35a862e44714d26ded01d40dc147e76cc73a1c84 100644
-GIT binary patch
-delta 26
-icmcbqc~g_iCD<k8rU(NA)6$Jx7Q&1So1KNHF#-T`5(jwz
-
-delta 26
-icmcbqc~g_iCD<k8rU(NA(~^x`7Q&2-o1KNHF#-T`3<r4t
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-index 37a9af713b94a3fd34907dc86c40aaa79e93239c..7ce35f0d8606d17f3ddb9aa090c97c7ac9a38982 100644
-GIT binary patch
-delta 26
-hcmZ3lwO)(MCD<iIUzCA?sbC{lpD-iC=9$9N7y)3m2K4{{
-
-delta 26
-hcmZ3lwO)(MCD<iIUzCA?DSsnZpD-ii=9$9N7y)3g2K4{{
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-index 04427e2d8eb8d2db0a7ae3dbe546d9072406d09b..6d1765c31017dede80d1d87f8fa7c6dd055d1839 100644
-GIT binary patch
-delta 26
-hcmaE6@XUbACD<h-O@e`esc<8gg)k$-W@lk#Rsd@^29E#$
-
-delta 26
-hcmaE6@XUbACD<h-O@e`esbC|Qg)k%IW@lk#Rsd@;29E#$
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-index 43ab60496e5a06706d4626d9e7b58b2d7e809e75..61cce30c7471faa4a9b7e3562dcb4ab9b3519a21 100644
-GIT binary patch
-delta 26
-hcmeCz>eu3O33dtL7iC~z^4Z8`A<W3I*;)7uBLGsg1^WO1
-
-delta 26
-hcmeCz>eu3O33dtL7iC~z^4`d0A<W3Q*;)7uBLGsa1^WO1
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
-index 3c391674446167bc9c79fd5dcb1c37e80cc7bbae..ffc5f1c0d1090582672c60ade3eb1bc41acc5ef7 100644
-GIT binary patch
-delta 26
-hcmZ2wvdV<ZCD<iIONxPk>B>ef3t>iv&CbHl*#KgY2MquK
-
-delta 26
-hcmZ2wvdV<ZCD<iIONxPk>GDP{3t>ja&CbHl*#KgS2MquK
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
-index 71c632cedcca63a77a4cdde53d9bc392102687b6..f98dcbfc6b823bce6d5710e8056a4e260fb92a02 100644
-GIT binary patch
-delta 33
-pcmZp%ZL#HY33dr-kz-(B65YtPONfzS^HCu#E=GpU7i6|D0sxh>2=D*^
-
-delta 33
-pcmZp%ZL#HY33dr-kz-(B65hzQONfzi^HCu#E=I=97i6|D0sxhu2=D*^
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
-index e8c2b376df7bddc2392945ea8cbb550b3d3b5e26..6c12a7aaf8a6315bac968a685f5b6673e7248817 100644
-GIT binary patch
-delta 55
-zcmV-70LcHMP@+%@L{mgmA}9a=0;{nKx)K2Zv&9mO2@C+F5d#4LTY^ahOfZws5=yhD
-N9JL7n0JB{t#R0hw5ElRd
-
-delta 55
-zcmV-70LcHMP@+%@L{mgmA}9a=0;sVHx)K2av&9mO2@C<G5d#4LTY^ahOfZws5=yhD
-N9JL7n0kd5u#R0h45ElRd
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
-index e8c2b376df7bddc2392945ea8cbb550b3d3b5e26..6c12a7aaf8a6315bac968a685f5b6673e7248817 100644
-GIT binary patch
-delta 55
-zcmV-70LcHMP@+%@L{mgmA}9a=0;{nKx)K2Zv&9mO2@C+F5d#4LTY^ahOfZws5=yhD
-N9JL7n0JB{t#R0hw5ElRd
-
-delta 55
-zcmV-70LcHMP@+%@L{mgmA}9a=0;sVHx)K2av&9mO2@C<G5d#4LTY^ahOfZws5=yhD
-N9JL7n0kd5u#R0h45ElRd
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
-index 9f22cd3dc81efe3ebcb8caf913842a8dea910627..208a3163a6bf2a59cf421418dcb16ad1156285c6 100644
-GIT binary patch
-delta 26
-icmZ3iy;z&eCD<iou_yxr)69)rOd^a7n|Vd1F#-T#9R_9q
-
-delta 26
-icmZ3iy;z&eCD<iou_yxr(~ON=Od^bon|Vd1F#-T#7Y1ek
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-index dd3775a0762ae1a5ddb89dd656d81eee581dccb6..f81e3e6cc794d77ea66b7e27b1afe56e248132b6 100644
-GIT binary patch
-delta 26
-hcmaE*`AU<^CD<k8l?Vd^llw+43t>iv&CbHh83A%X2VVdH
-
-delta 26
-hcmaE*`AU<^CD<k8l?Vd^liNlv3t>ja&CbHh83A%R2VVdH
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT b/tests/data/acpi/loongarch64/virt/DSDT
-index 55aa34f988d6ef69293e91c5fe45bee0a02bc5f1..09aa903c4e875f541223e36f59b28e101599df20 100644
-GIT binary patch
-delta 26
-icmeyZ{9BpJCD<k8w;%%pW6Vab$vlh<o9FSwvH}2l69@SK
-
-delta 26
-icmeyZ{9BpJCD<k8w;%%pWAsL@$vljVo9FSwvH}2l4F~xE
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.memhp b/tests/data/acpi/loongarch64/virt/DSDT.memhp
-index c0955eb60448cc5f4d38d410abc260ae54ea2e9a..a069d6878fb45fa6b0e6342eedb0eb3d25eb20da 100644
-GIT binary patch
-delta 26
-icmX@0dq9`VCD<k8fEWV<W8y}x$vlh<o9FQ;aRC5qod+-g
-
-delta 26
-icmX@0dq9`VCD<k8fEWV<W5PzR$vljVo9FQ;aRC5qmj^Ha
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.numamem b/tests/data/acpi/loongarch64/virt/DSDT.numamem
-index 61e47e7252155dcf9c76879c4f60f4b3eef63f86..78ece52f57a383db128c7d1a08526e15ab911bb7 100644
-GIT binary patch
-delta 26
-hcmZovX;k5I33dr#6k=dte7=!uG7lre=6O8HtN>Vb2A==`
-
-delta 26
-hcmZovX;k5I33dr#6k=dte72EmG7lr;=6O8HtN>VV2A==`
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.topology b/tests/data/acpi/loongarch64/virt/DSDT.topology
-index b2afebc938ce45d798c8aa5f45a463f1617e257e..7ab23f47cc82dd7bc1975e17893a8cd61039e66d 100644
-GIT binary patch
-delta 26
-icmZ3fwo;ADCD<iIQ<#B)@%%=v$vlh<o9FR#vjG5Njt4CO
-
-delta 26
-icmZ3fwo;ADCD<iIQ<#B)@!UqP$vljVo9FR#vjG5NhzBhI
-
-diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
-index 527f239dab13a00ad42e5a70b8dc2b89f12aa84a..968e1a15c87bb5753b3a84ddb357e26312767220 100644
-GIT binary patch
-delta 25
-gcmca4eMy?jCD<k85-$S-lj=sUVqQju$#uLT0Ac+G$N&HU
-
-delta 25
-gcmca4eMy?jCD<k85-$S-lgdV}VqQkZ$#uLT0AcqA$N&HU
-
-diff --git a/tests/data/acpi/x86/microvm/DSDT.pcie b/tests/data/acpi/x86/microvm/DSDT.pcie
-index ba258f454dc0e59ef2fd67e0ce37e270e7c122e8..b646a05551c1ed902413a462442346ce246f8675 100644
-GIT binary patch
-delta 25
-gcmZ1}zEYgaCD<ioB{u^D(~pf@mfVaClU=w|0bO|puK)l5
-
-delta 25
-gcmZ1}zEYgaCD<ioB{u^D)Ax;BmfVbtlU=w|0bO$juK)l5
+Thanks for the review and testing!
 
 -- 
-MST
-
+Best regards,
+Dmitry
 
