@@ -4,103 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CD1CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128C3CCFA13
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI6Vm-00028q-Nq; Sun, 09 Nov 2025 09:35:22 -0500
+	id 1vI6Vj-00027j-ID; Sun, 09 Nov 2025 09:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vk-00028E-GL
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vg-000279-L0
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vi-0001mG-EU
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:20 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Ve-0001lV-4m
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762698917;
+ s=mimecast20190719; t=1762698912;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S4RPxn+BrMAAyfaECnJprzVKGlgFZx0NU1mbO1FNzso=;
- b=Y6HjARGB2qiYbaoVBR13YevUtT+5CkY7dNlpUbGXhKBs6PWVWhgkErrPKqDrh5Rb6kjK+z
- nFK7h9mD7dhz3tzSDe5grdbKE3zKVBPanz/lmpI+t2rYP7lrHUJG9mY0RqrjzRKKwlEazc
- AnLJcN782i1/rXHpwUgcMgSG6h8SJGM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=xJhZlxm2Tl2LFNmCdLACioU0v0rdrau+1g+t5U9r+f8=;
+ b=FxAgcFqjBvAHZlBhx+76WNSRLp1W3gmeY/Cnp/dxR6yIVIkhAn9c5Um+oXuiBvUZIgWsU2
+ Jpc0ddYqkl5sgNxFsCV03wDgb4JSL1hTCLCtfRHdU12BAfCwS9a/nHZ/iIPy9GMtWpDyLQ
+ dk+X9B9S/+RyaqzJuraPlg9Q4cG+p7Q=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-437-TEPwiV8MOhCm3dZ9hKL_Fg-1; Sun, 09 Nov 2025 09:35:16 -0500
-X-MC-Unique: TEPwiV8MOhCm3dZ9hKL_Fg-1
-X-Mimecast-MFC-AGG-ID: TEPwiV8MOhCm3dZ9hKL_Fg_1762698915
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4775e54a70aso22330125e9.0
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:16 -0800 (PST)
+ us-mta-98-Vl3bHKC0NDerEyi1UmZV4Q-1; Sun, 09 Nov 2025 09:35:11 -0500
+X-MC-Unique: Vl3bHKC0NDerEyi1UmZV4Q-1
+X-Mimecast-MFC-AGG-ID: Vl3bHKC0NDerEyi1UmZV4Q_1762698910
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47111dc7c5dso9874975e9.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762698915; x=1763303715; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=S4RPxn+BrMAAyfaECnJprzVKGlgFZx0NU1mbO1FNzso=;
- b=BxXsDuofmqstRccb3Zy0P7cywuWuMyB4rVyPvlhF7XKgp66yJMhg7b/Ia2/DUQ/UVz
- jRgb/XSbRGoz7/TdioXr62JdnyzPCrEbuUOpKR9Fi+wkf+EYsGmEb31ixvWCEirQ9ho3
- ZFSYca9lhJCuLs+IgG71x6IxATeMTZd2QQLIteHCgdgepa1KBaWZ04FB7LBRrHhEeTGj
- +80ObWuGx1UmkuxY82f8SmNxhKhf0wLFpqL/uxO6RnQI112nG8BwpIBFArd0/klKXhJD
- 9eutSDK5GbYB8RZ0IkI3BphkJ4fgHudAsAGy0StYf0/wQFsJlL0gtFO9YDODwjZfIcWp
- 1cvg==
+ d=redhat.com; s=google; t=1762698910; x=1763303710; darn=nongnu.org;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xJhZlxm2Tl2LFNmCdLACioU0v0rdrau+1g+t5U9r+f8=;
+ b=idIpPt1qWjdaczWvGBYrygoYLSngUWoSnvnarOD2epoppKZYRDi+ode5SNBxnluhuY
+ Wu0rUFKHLAcd7W08ayjeqa8un4YBzrNWqnm6vkhJRIRMmbYUZeobcC3jrSU10L4Qj8V4
+ Nf1KKPDj8xgv08080PmoZ6EMrFVPiwshiUzBUArDCbRnydNS1fO4Bd7jXHORYCAfl2uC
+ Z+gmgbzsY/DgbOVKHf8XZr0hM2RwhuTG31FXnIjzM/u1flCmjpQfdpLJ1hCIeF4j+/Ta
+ mJCcf94ti4D0U5afBUVJ53scTsfCJjXV4AphBli21CbYSvczd8jCiVhigbCuaG8yVmPF
+ VN3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762698915; x=1763303715;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S4RPxn+BrMAAyfaECnJprzVKGlgFZx0NU1mbO1FNzso=;
- b=KU1bAANQZNFkH5H5n7LJGtZm5mdKgIrVN3Q3RRKr0NdpS5JvnZY8Ugv8NlHCgAFBzT
- cX113FzzhYrPOZsAQpatzBvG3L95M9w+RAv3mKrzHfmIiz4+bmLVVJ6UNxLwHEgM7a7X
- 1b/VIdNzQ7Swf3++w5JGWTdRjU6kOFSCnH9Z2FLjBKAEgquaH30qtLt309k1fv0yYfzk
- +T8ldGksUhLFrJWnYYFqGsJoZoLLvF024a4p38EWfLAMOmwPH80S6QdZZUKH7mniVt8Y
- k/uh20KuPClZUmbTrVGUK4bALbTwz3aLGpz5NGub9L95PhuvDQw8ajg3TydFe6eGQ7js
- OLnA==
-X-Gm-Message-State: AOJu0YzxBhEIJkXbwS7m7qDzy1/MktNV+QXJ7RDMXAowO9BWAfs6WMPs
- DEu7N0M+ZF+CgDmzEuP7/DNPqpN2qCltoi5qn3gA1raaIG3ZHpoWXkvIhQkcXut6siC5x1alRqz
- Wr8LQBmvsMwALlQkdsPWiaJtSypo2JdVcIK2PnsXgTII/YyyrO+35UUq5H6FgJZrW34BOW8HQtU
- PqbXjr2AE9FKR2BNDKORH2n8rTHUdpOzzAPA==
-X-Gm-Gg: ASbGncvNmp4Jm02njTBbw3IrN9D3E/l04LXvC8dRqIInlU5TqPKZnllYqFvYLUicTJL
- 8bn7aVXNhQ+35Rdls70iTaakJeFJU27O3AwaYTTv8JafwEhDHPaTTQD9vbIK47P3AN0RoVG9JR/
- 2C9lsy1sr1nepof5noVaQ/N7oz7wINU9P2v/vhLyxNsvmE93n2ZQ0WolSDQeHwJ/JCpiNZJvoDI
- vd4FdqQBQLwa+gZ/k4zL/UtGf2osUvHmyAodlIPtY/tBv2PyGf7mXGBIMKNrRgyHe0EgPgiUQFh
- C81xO/PPulsuyVvBKJu+KI2VssDF+EbmSHG7ePKXJyxw0wFTxLFpqKYmgbgw3WdTYp0=
-X-Received: by 2002:a05:600c:1987:b0:477:1bb6:17de with SMTP id
- 5b1f17b1804b1-47773290dcamr50103005e9.30.1762698914855; 
- Sun, 09 Nov 2025 06:35:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFumogiHNZKFZIdVCHqsXBUzsWfcc20UY1bCk26tCrWvtDbc1S3VjsmneaAOxOOi5njERyTLA==
-X-Received: by 2002:a05:600c:1987:b0:477:1bb6:17de with SMTP id
- 5b1f17b1804b1-47773290dcamr50102675e9.30.1762698914218; 
- Sun, 09 Nov 2025 06:35:14 -0800 (PST)
+ d=1e100.net; s=20230601; t=1762698910; x=1763303710;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xJhZlxm2Tl2LFNmCdLACioU0v0rdrau+1g+t5U9r+f8=;
+ b=Hr+FqqDduwfjyP8dRkW4xDhvyf5IXVUFnR79qrAFFnFafvFk1Yb4QZspYShNNdjFkP
+ zvFu5f4d48dSSsPsQPmjYbWID6ueZezkjdk2KGboVLSIeeQPPHyDwULwTEKXJUNabjZV
+ druWTcgSmitNe4swjtzX5RxdG7hYROOpVVjqNrNaXCQVL2fQNELfGpVGugNmh2eLw3cG
+ wPztg7z15RnTmdItylogYs1y03V0IT0NVQLY89uLRxhStaCeUufS8lW6+VSl2rP0uw0E
+ 9JttmHh9zJpkCx0f9dQID0ijIjMFQ1mgDNlw9NLNHdVEw78suSHvLhJZ6snHkXP/4lZW
+ euUg==
+X-Gm-Message-State: AOJu0Yzkg1gO8NdMkEMn7IPcU31zo3haX7dlTYfpLJXtRbednfUGJugR
+ kG+uxxqBDjziUZNNk0gluErTro0Mwl+7B+pXF+DarrLRCl+gOtb/t3V5Epu1aP8yIH9ITTa7uJ1
+ QI+jrHr+GVOo92VMoZD9oFmdBeha8OiG1XYhrmC2Ofh3pp6XLomcIcnloAGoI4dJDdcqIFUFSDc
+ lbAYpbiPEFJhSVzIM5yeipch34pjykjsFfkg==
+X-Gm-Gg: ASbGnctNQhixytoXe088FF3hFI1pcki2GvrRBoX+MyAYt2X/Oan3Qwi2jdmIC6gwV1t
+ n47QKWQpLjhfTaOSncCuYV2Jwmr0obwYMe7RyN6EXZ65I7AlH91wZiPPpfByU5ewJDdd1R0OmwD
+ CcZ8MrWCzuVEFusX+6ZVG/wfdCrn33yYqku5RzEdLVVZ6nDDKCtc+8T3sr/3FBeZhcPSTZNePjT
+ 6Ok8A2z7YBY69h352K/VMbXGX8ssn6IM1JNJx+pa2f6qY3W1lCkDb6ZuIUeG825712bvhVn3g1f
+ GOxvvc7IzwxmxaZjsI2j8K27aaYwyTrjuMROx+68mAfw2tbt8AuMRTB/5rXo8mFVpd8=
+X-Received: by 2002:a05:600c:2d48:b0:477:348b:1182 with SMTP id
+ 5b1f17b1804b1-4776dcd6fddmr40113205e9.18.1762698909609; 
+ Sun, 09 Nov 2025 06:35:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0QQOk2w7JkBD3ma4iVUZDG2Ni/Hcd6zl1oVf2jOmpUNnYJXXcpXDeS251nh/5Ye3WUgz9RQ==
+X-Received: by 2002:a05:600c:2d48:b0:477:348b:1182 with SMTP id
+ 5b1f17b1804b1-4776dcd6fddmr40113035e9.18.1762698908994; 
+ Sun, 09 Nov 2025 06:35:08 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1536:2700:9203:49b4:a0d:b580])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47763e16db8sm87314415e9.1.2025.11.09.06.35.12
+ ffacd0b85a97d-42abe63e13csm16782993f8f.19.2025.11.09.06.35.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Nov 2025 06:35:13 -0800 (PST)
-Date: Sun, 9 Nov 2025 09:35:11 -0500
+ Sun, 09 Nov 2025 06:35:08 -0800 (PST)
+Date: Sun, 9 Nov 2025 09:35:07 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Alexey Kardashevskiy <aik@amd.com>,
- Vasant Hegde <vasant.hegde@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 02/14] amd_iommu: Fix handling of devices on buses != 0
-Message-ID: <27d6a0ec0beec45c35a70cd5f12c4530725dda2a.1762698873.git.mst@redhat.com>
-References: <cover.1762698873.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/14] virtio,pci,pc: fixes for 10.2
+Message-ID: <cover.1762698873.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1762698873.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -125,283 +115,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+The following changes since commit 917ac07f9aef579b9538a81d45f45850aba42906:
 
-The AMD IOMMU is set up at boot time and uses PCI bus numbers + devfn for
-indexing into the DTE. The problem is that before the guest starts, all PCI
-bus numbers are 0 as no PCI discovery has happened yet (BIOS and/or kernel
-will do that later), so relying on the bus number is wrong.
-The immediate effect is that emulated devices cannot do DMA when placed on a
-bus other than 0.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-11-05 16:07:18 +0100)
 
-Replace the static address_space array with a hash table keyed by devfn and
-PCIBus*, since these values do not change after the guest boots.
+are available in the Git repository at:
 
-Co-developed-by: Alexey Kardashevskiy <aik@amd.com>
-Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 97f24a0496be9e0a7216fea1fa0d54c1db9066e2:
+
+  vhost-user.rst: clarify when FDs can be sent (2025-11-09 08:25:53 -0500)
+
+----------------------------------------------------------------
+virtio,pci,pc: fixes for 10.2
+
+small fixes all over the place.
+UDP tunnel and TSEG tweaks are kind of borderline,
+but I feel not making the change now will just add
+to compatibility headaches down the road.
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251103203209.645434-3-alejandro.j.jimenez@oracle.com>
----
- hw/i386/amd_iommu.h |   2 +-
- hw/i386/amd_iommu.c | 134 ++++++++++++++++++++++++++------------------
- 2 files changed, 79 insertions(+), 57 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index daf82fc85f..38471b95d1 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -408,7 +408,7 @@ struct AMDVIState {
-     bool mmio_enabled;
- 
-     /* for each served device */
--    AMDVIAddressSpace **address_spaces[PCI_BUS_MAX];
-+    GHashTable *address_spaces;
- 
-     /* list of address spaces with registered notifiers */
-     QLIST_HEAD(, AMDVIAddressSpace) amdvi_as_with_notifiers;
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 378e0cb55e..5c5cfd4989 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -59,7 +59,7 @@ const char *amdvi_mmio_high[] = {
- };
- 
- struct AMDVIAddressSpace {
--    uint8_t bus_num;            /* bus number                           */
-+    PCIBus *bus;                /* PCIBus (for bus number)              */
-     uint8_t devfn;              /* device function                      */
-     AMDVIState *iommu_state;    /* AMDVI - one per machine              */
-     MemoryRegion root;          /* AMDVI Root memory map region         */
-@@ -101,6 +101,11 @@ typedef enum AMDVIFaultReason {
-     AMDVI_FR_PT_ENTRY_INV,      /* Failure to read PTE from guest memory */
- } AMDVIFaultReason;
- 
-+typedef struct AMDVIAsKey {
-+    PCIBus *bus;
-+    uint8_t devfn;
-+} AMDVIAsKey;
-+
- uint64_t amdvi_extended_feature_register(AMDVIState *s)
- {
-     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-@@ -382,6 +387,44 @@ static guint amdvi_uint64_hash(gconstpointer v)
-     return (guint)*(const uint64_t *)v;
- }
- 
-+static gboolean amdvi_as_equal(gconstpointer v1, gconstpointer v2)
-+{
-+    const AMDVIAsKey *key1 = v1;
-+    const AMDVIAsKey *key2 = v2;
-+
-+    return key1->bus == key2->bus && key1->devfn == key2->devfn;
-+}
-+
-+static guint amdvi_as_hash(gconstpointer v)
-+{
-+    const AMDVIAsKey *key = v;
-+    guint bus = (guint)(uintptr_t)key->bus;
-+
-+    return (guint)(bus << 8 | (guint)key->devfn);
-+}
-+
-+static AMDVIAddressSpace *amdvi_as_lookup(AMDVIState *s, PCIBus *bus,
-+                                          uint8_t devfn)
-+{
-+    const AMDVIAsKey key = { .bus = bus, .devfn = devfn };
-+    return g_hash_table_lookup(s->address_spaces, &key);
-+}
-+
-+static gboolean amdvi_find_as_by_devid(gpointer key, gpointer value,
-+                                       gpointer user_data)
-+{
-+    const AMDVIAsKey *as = key;
-+    const uint16_t *devidp = user_data;
-+
-+    return *devidp == PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-+}
-+
-+static AMDVIAddressSpace *amdvi_get_as_by_devid(AMDVIState *s, uint16_t devid)
-+{
-+    return g_hash_table_find(s->address_spaces,
-+                             amdvi_find_as_by_devid, &devid);
-+}
-+
- static AMDVIIOTLBEntry *amdvi_iotlb_lookup(AMDVIState *s, hwaddr addr,
-                                            uint64_t devid)
- {
-@@ -551,7 +594,7 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
- 
- static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte)
- {
--    uint16_t devid = PCI_BUILD_BDF(as->bus_num, as->devfn);
-+    uint16_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-     AMDVIState *s = as->iommu_state;
- 
-     if (!amdvi_get_dte(s, devid, dte)) {
-@@ -1011,25 +1054,15 @@ static void amdvi_switch_address_space(AMDVIAddressSpace *amdvi_as)
-  */
- static void amdvi_reset_address_translation_all(AMDVIState *s)
- {
--    AMDVIAddressSpace **iommu_as;
-+    AMDVIAddressSpace *iommu_as;
-+    GHashTableIter as_it;
- 
--    for (int bus_num = 0; bus_num < PCI_BUS_MAX; bus_num++) {
-+    g_hash_table_iter_init(&as_it, s->address_spaces);
- 
--        /* Nothing to do if there are no devices on the current bus */
--        if (!s->address_spaces[bus_num]) {
--            continue;
--        }
--        iommu_as = s->address_spaces[bus_num];
--
--        for (int devfn = 0; devfn < PCI_DEVFN_MAX; devfn++) {
--
--            if (!iommu_as[devfn]) {
--                continue;
--            }
--            /* Use passthrough as default mode after reset */
--            iommu_as[devfn]->addr_translation = false;
--            amdvi_switch_address_space(iommu_as[devfn]);
--        }
-+    while (g_hash_table_iter_next(&as_it, NULL, (void **)&iommu_as)) {
-+        /* Use passthrough as default mode after reset */
-+        iommu_as->addr_translation = false;
-+        amdvi_switch_address_space(iommu_as);
-     }
- }
- 
-@@ -1089,27 +1122,15 @@ static void enable_nodma_mode(AMDVIAddressSpace *as)
-  */
- static void amdvi_update_addr_translation_mode(AMDVIState *s, uint16_t devid)
- {
--    uint8_t bus_num, devfn, dte_mode;
-+    uint8_t dte_mode;
-     AMDVIAddressSpace *as;
-     uint64_t dte[4] = { 0 };
-     int ret;
- 
--    /*
--     * Convert the devid encoded in the command to a bus and devfn in
--     * order to retrieve the corresponding address space.
--     */
--    bus_num = PCI_BUS_NUM(devid);
--    devfn = devid & 0xff;
--
--    /*
--     * The main buffer of size (AMDVIAddressSpace *) * (PCI_BUS_MAX) has already
--     * been allocated within AMDVIState, but must be careful to not access
--     * unallocated devfn.
--     */
--    if (!s->address_spaces[bus_num] || !s->address_spaces[bus_num][devfn]) {
-+    as = amdvi_get_as_by_devid(s, devid);
-+    if (!as) {
-         return;
-     }
--    as = s->address_spaces[bus_num][devfn];
- 
-     ret = amdvi_as_to_dte(as, dte);
- 
-@@ -1783,7 +1804,7 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
-                                bool is_write, IOMMUTLBEntry *ret)
- {
-     AMDVIState *s = as->iommu_state;
--    uint16_t devid = PCI_BUILD_BDF(as->bus_num, as->devfn);
-+    uint16_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-     AMDVIIOTLBEntry *iotlb_entry = amdvi_iotlb_lookup(s, addr, devid);
-     uint64_t entry[4];
-     int dte_ret;
-@@ -1858,7 +1879,7 @@ static IOMMUTLBEntry amdvi_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
-     }
- 
-     amdvi_do_translate(as, addr, flag & IOMMU_WO, &ret);
--    trace_amdvi_translation_result(as->bus_num, PCI_SLOT(as->devfn),
-+    trace_amdvi_translation_result(pci_bus_num(as->bus), PCI_SLOT(as->devfn),
-             PCI_FUNC(as->devfn), addr, ret.translated_addr);
-     return ret;
- }
-@@ -2222,30 +2243,28 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
- {
-     char name[128];
-     AMDVIState *s = opaque;
--    AMDVIAddressSpace **iommu_as, *amdvi_dev_as;
--    int bus_num = pci_bus_num(bus);
-+    AMDVIAddressSpace *amdvi_dev_as;
-+    AMDVIAsKey *key;
- 
--    iommu_as = s->address_spaces[bus_num];
-+    amdvi_dev_as = amdvi_as_lookup(s, bus, devfn);
- 
-     /* allocate memory during the first run */
--    if (!iommu_as) {
--        iommu_as = g_new0(AMDVIAddressSpace *, PCI_DEVFN_MAX);
--        s->address_spaces[bus_num] = iommu_as;
--    }
--
--    /* set up AMD-Vi region */
--    if (!iommu_as[devfn]) {
-+    if (!amdvi_dev_as) {
-         snprintf(name, sizeof(name), "amd_iommu_devfn_%d", devfn);
- 
--        iommu_as[devfn] = g_new0(AMDVIAddressSpace, 1);
--        iommu_as[devfn]->bus_num = (uint8_t)bus_num;
--        iommu_as[devfn]->devfn = (uint8_t)devfn;
--        iommu_as[devfn]->iommu_state = s;
--        iommu_as[devfn]->notifier_flags = IOMMU_NOTIFIER_NONE;
--        iommu_as[devfn]->iova_tree = iova_tree_new();
--        iommu_as[devfn]->addr_translation = false;
-+        amdvi_dev_as = g_new0(AMDVIAddressSpace, 1);
-+        key = g_new0(AMDVIAsKey, 1);
- 
--        amdvi_dev_as = iommu_as[devfn];
-+        amdvi_dev_as->bus = bus;
-+        amdvi_dev_as->devfn = (uint8_t)devfn;
-+        amdvi_dev_as->iommu_state = s;
-+        amdvi_dev_as->notifier_flags = IOMMU_NOTIFIER_NONE;
-+        amdvi_dev_as->iova_tree = iova_tree_new();
-+        amdvi_dev_as->addr_translation = false;
-+        key->bus = bus;
-+        key->devfn = devfn;
-+
-+        g_hash_table_insert(s->address_spaces, key, amdvi_dev_as);
- 
-         /*
-          * Memory region relationships looks like (Address range shows
-@@ -2288,7 +2307,7 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
- 
-         amdvi_switch_address_space(amdvi_dev_as);
-     }
--    return &iommu_as[devfn]->as;
-+    return &amdvi_dev_as->as;
- }
- 
- static const PCIIOMMUOps amdvi_iommu_ops = {
-@@ -2329,7 +2348,7 @@ static int amdvi_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
-     if (!s->dma_remap && (new & IOMMU_NOTIFIER_MAP)) {
-         error_setg_errno(errp, ENOTSUP,
-             "device %02x.%02x.%x requires dma-remap=1",
--            as->bus_num, PCI_SLOT(as->devfn), PCI_FUNC(as->devfn));
-+            pci_bus_num(as->bus), PCI_SLOT(as->devfn), PCI_FUNC(as->devfn));
-         return -ENOTSUP;
-     }
- 
-@@ -2510,6 +2529,9 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-     s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
-                                      amdvi_uint64_equal, g_free, g_free);
- 
-+    s->address_spaces = g_hash_table_new_full(amdvi_as_hash,
-+                                     amdvi_as_equal, g_free, g_free);
-+
-     /* set up MMIO */
-     memory_region_init_io(&s->mr_mmio, OBJECT(s), &mmio_mem_ops, s,
-                           "amdvi-mmio", AMDVI_MMIO_SIZE);
--- 
-MST
+----------------------------------------------------------------
+Albert Esteve (1):
+      vhost-user: fix shared object lookup handler logic
+
+Alejandro Jimenez (1):
+      MAINTAINERS: Update entry for AMD-Vi Emulation
+
+Alyssa Ross (1):
+      vhost-user.rst: clarify when FDs can be sent
+
+Eric Auger (1):
+      hw/pci-host/gpex-acpi: Fix _DSM function 0 support return value
+
+Gerd Hoffmann (1):
+      q35: increase default tseg size
+
+German Maglione (1):
+      vhost-user: make vhost_set_vring_file() synchronous
+
+Paolo Abeni (1):
+      virtio-net: Advertise UDP tunnel GSO support by default
+
+Sairaj Kodilkar (2):
+      amd_iommu: Fix handling of devices on buses != 0
+      amd_iommu: Support 64-bit address for IOTLB lookup
+
+Shameer Kolothum (2):
+      tests/qtest/bios-tables-test: Prepare for _DSM change in the DSDT table
+      tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _DSM change
+
+Zhenzhong Duan (3):
+      intel_iommu: Handle PASID cache invalidation
+      intel_iommu: Reset pasid cache when system level reset
+      intel_iommu: Fix DMA failure when guest switches IOMMU domain
+
+ hw/i386/amd_iommu.h                              |   6 +-
+ hw/i386/intel_iommu_internal.h                   |  17 +++
+ include/hw/i386/intel_iommu.h                    |   6 +
+ hw/core/machine.c                                |   4 +
+ hw/i386/amd_iommu.c                              | 179 +++++++++++++---------
+ hw/i386/intel_iommu.c                            | 181 +++++++++++++++++++++--
+ hw/i386/pc.c                                     |   4 +-
+ hw/net/virtio-net.c                              |   8 +-
+ hw/pci-host/gpex-acpi.c                          |   2 +-
+ hw/pci-host/q35.c                                |   2 +-
+ hw/virtio/vhost-user.c                           |  64 ++++----
+ MAINTAINERS                                      |   6 +-
+ docs/interop/vhost-user.rst                      |   7 +
+ hw/i386/trace-events                             |   4 +
+ tests/data/acpi/aarch64/virt/DSDT                | Bin 5337 -> 5337 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt   | Bin 5423 -> 5423 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | Bin 6246 -> 6246 bytes
+ tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | Bin 5391 -> 5391 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp          | Bin 6698 -> 6698 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb            | Bin 7812 -> 7812 bytes
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev     | Bin 10274 -> 10274 bytes
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy  | Bin 10274 -> 10274 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology       | Bin 5539 -> 5539 bytes
+ tests/data/acpi/aarch64/virt/DSDT.viot           | Bin 5354 -> 5354 bytes
+ tests/data/acpi/loongarch64/virt/DSDT            | Bin 4603 -> 4603 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.memhp      | Bin 5824 -> 5824 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.numamem    | Bin 4609 -> 4609 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.topology   | Bin 4905 -> 4905 bytes
+ tests/data/acpi/riscv64/virt/DSDT                | Bin 3538 -> 3538 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie            | Bin 2985 -> 2985 bytes
+ 30 files changed, 371 insertions(+), 119 deletions(-)
 
 
