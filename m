@@ -4,90 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128C3CCFA13
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:36:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B50CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 14:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI6Vj-00027j-ID; Sun, 09 Nov 2025 09:35:19 -0500
+	id 1vI6Vw-0002CU-IB; Sun, 09 Nov 2025 09:35:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vg-000279-L0
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vu-0002C9-FT
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Ve-0001lV-4m
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI6Vs-0001no-UA
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 09:35:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762698912;
+ s=mimecast20190719; t=1762698928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=xJhZlxm2Tl2LFNmCdLACioU0v0rdrau+1g+t5U9r+f8=;
- b=FxAgcFqjBvAHZlBhx+76WNSRLp1W3gmeY/Cnp/dxR6yIVIkhAn9c5Um+oXuiBvUZIgWsU2
- Jpc0ddYqkl5sgNxFsCV03wDgb4JSL1hTCLCtfRHdU12BAfCwS9a/nHZ/iIPy9GMtWpDyLQ
- dk+X9B9S/+RyaqzJuraPlg9Q4cG+p7Q=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CWHbclnZjXpCqepcqPMo+sVS3js+OLhnZCkOniF4+6g=;
+ b=Xpy5MM80L0F3UAwd/07TZLaxbwbT6pMUpSb1Fr0auxV/94rJ5Vm5DFSHkruMIwAUDSpLGR
+ OMWW496MJKcz+NeaLJcsmwbIhzpmqvhX5mVf6rKyr1siPHyKGqtTeUlV6U+vW7msfp73HM
+ pWN593DDXDLuSPlHuV5jQjL4W0bLooM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-Vl3bHKC0NDerEyi1UmZV4Q-1; Sun, 09 Nov 2025 09:35:11 -0500
-X-MC-Unique: Vl3bHKC0NDerEyi1UmZV4Q-1
-X-Mimecast-MFC-AGG-ID: Vl3bHKC0NDerEyi1UmZV4Q_1762698910
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47111dc7c5dso9874975e9.0
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:10 -0800 (PST)
+ us-mta-398-syybwYipOnCd2ABNysUcPg-1; Sun, 09 Nov 2025 09:35:27 -0500
+X-MC-Unique: syybwYipOnCd2ABNysUcPg-1
+X-Mimecast-MFC-AGG-ID: syybwYipOnCd2ABNysUcPg_1762698926
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3ecdb10a612so1226686f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 06:35:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762698910; x=1763303710; darn=nongnu.org;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xJhZlxm2Tl2LFNmCdLACioU0v0rdrau+1g+t5U9r+f8=;
- b=idIpPt1qWjdaczWvGBYrygoYLSngUWoSnvnarOD2epoppKZYRDi+ode5SNBxnluhuY
- Wu0rUFKHLAcd7W08ayjeqa8un4YBzrNWqnm6vkhJRIRMmbYUZeobcC3jrSU10L4Qj8V4
- Nf1KKPDj8xgv08080PmoZ6EMrFVPiwshiUzBUArDCbRnydNS1fO4Bd7jXHORYCAfl2uC
- Z+gmgbzsY/DgbOVKHf8XZr0hM2RwhuTG31FXnIjzM/u1flCmjpQfdpLJ1hCIeF4j+/Ta
- mJCcf94ti4D0U5afBUVJ53scTsfCJjXV4AphBli21CbYSvczd8jCiVhigbCuaG8yVmPF
- VN3w==
+ d=redhat.com; s=google; t=1762698925; x=1763303725; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=CWHbclnZjXpCqepcqPMo+sVS3js+OLhnZCkOniF4+6g=;
+ b=lhe0VE1dqG6KjG305NkS5t46kD4hYoUwodqRQT3ZQFZwzKgUa2yEjoUysLPIc4hQ78
+ VH1S6I+w0abbX92p7S7vgyaeSE7khrxo4oQ0g581eyRDrQ5Z8Y9z69GpfBi68BTBYAcl
+ ArlEp/kk7flDVi06rghD/5XyQynbEx95NuwXNlYlWEtDWnD93Irs6LS7TpGTy6yKD7Ii
+ nn7mfH01s6J3qpn1LFezP2DDhuvXFAQwGRNA1DEcary46tfLOYQxsXz9MjE8sp7LB22Q
+ cfSq9gIdZex1eFj4J84SnWwVtkGxGE5wr/CVGUIjgw6jVJUXWdKKOfrOcsIDhAr1g2UX
+ 2ssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762698910; x=1763303710;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xJhZlxm2Tl2LFNmCdLACioU0v0rdrau+1g+t5U9r+f8=;
- b=Hr+FqqDduwfjyP8dRkW4xDhvyf5IXVUFnR79qrAFFnFafvFk1Yb4QZspYShNNdjFkP
- zvFu5f4d48dSSsPsQPmjYbWID6ueZezkjdk2KGboVLSIeeQPPHyDwULwTEKXJUNabjZV
- druWTcgSmitNe4swjtzX5RxdG7hYROOpVVjqNrNaXCQVL2fQNELfGpVGugNmh2eLw3cG
- wPztg7z15RnTmdItylogYs1y03V0IT0NVQLY89uLRxhStaCeUufS8lW6+VSl2rP0uw0E
- 9JttmHh9zJpkCx0f9dQID0ijIjMFQ1mgDNlw9NLNHdVEw78suSHvLhJZ6snHkXP/4lZW
- euUg==
-X-Gm-Message-State: AOJu0Yzkg1gO8NdMkEMn7IPcU31zo3haX7dlTYfpLJXtRbednfUGJugR
- kG+uxxqBDjziUZNNk0gluErTro0Mwl+7B+pXF+DarrLRCl+gOtb/t3V5Epu1aP8yIH9ITTa7uJ1
- QI+jrHr+GVOo92VMoZD9oFmdBeha8OiG1XYhrmC2Ofh3pp6XLomcIcnloAGoI4dJDdcqIFUFSDc
- lbAYpbiPEFJhSVzIM5yeipch34pjykjsFfkg==
-X-Gm-Gg: ASbGnctNQhixytoXe088FF3hFI1pcki2GvrRBoX+MyAYt2X/Oan3Qwi2jdmIC6gwV1t
- n47QKWQpLjhfTaOSncCuYV2Jwmr0obwYMe7RyN6EXZ65I7AlH91wZiPPpfByU5ewJDdd1R0OmwD
- CcZ8MrWCzuVEFusX+6ZVG/wfdCrn33yYqku5RzEdLVVZ6nDDKCtc+8T3sr/3FBeZhcPSTZNePjT
- 6Ok8A2z7YBY69h352K/VMbXGX8ssn6IM1JNJx+pa2f6qY3W1lCkDb6ZuIUeG825712bvhVn3g1f
- GOxvvc7IzwxmxaZjsI2j8K27aaYwyTrjuMROx+68mAfw2tbt8AuMRTB/5rXo8mFVpd8=
-X-Received: by 2002:a05:600c:2d48:b0:477:348b:1182 with SMTP id
- 5b1f17b1804b1-4776dcd6fddmr40113205e9.18.1762698909609; 
- Sun, 09 Nov 2025 06:35:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0QQOk2w7JkBD3ma4iVUZDG2Ni/Hcd6zl1oVf2jOmpUNnYJXXcpXDeS251nh/5Ye3WUgz9RQ==
-X-Received: by 2002:a05:600c:2d48:b0:477:348b:1182 with SMTP id
- 5b1f17b1804b1-4776dcd6fddmr40113035e9.18.1762698908994; 
- Sun, 09 Nov 2025 06:35:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1762698925; x=1763303725;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CWHbclnZjXpCqepcqPMo+sVS3js+OLhnZCkOniF4+6g=;
+ b=qanL2Gm9U02/SUEzlxCkCfU2cTlcBkMkNr0D/88VU1lxvQ1rLjcELKnqMCHD8sdXHA
+ XTc4AJ0ZbJZL9dh8JLPnF65JONR9/2q2JR5nNUxhVGSBpaGj63bMyZ9CgnS8tLRCPaU/
+ ZmsSTg0YHWFdMbBndAyiuxezVE1LuQfP8isLhfUjYMJFBExivT80BkOSdw4L+4alKNw+
+ ezNdTGF38RYVZZJfMOjPMD+1DLeA4cGtUfdF4j/GRLK9vyNfFavENQSm0fJr26Hlo7pN
+ LFziujIc8F3HELsJnElF4rKkrwx9oNCxtJaxOex74W4rYpmbzyqJ4gDTmLQzWJbV+HsH
+ LpqQ==
+X-Gm-Message-State: AOJu0Yy++slDhjHVJapLd6zRXs9BYXpyRL+L/iOzqfONgvvxtfMBWJby
+ apIr6x4mNPQsD3nctKznN67L4Gtvwbz8dProPbeGU5OyuGM41I0BaaSZbSo6VhvcLuwBwCE++/J
+ dy5+JoFVHe99Rz7hxtZBE31RwQOFz2k6Jvo0tYcOtBOI7zqf034cMLtux0Vei+3JRSgTvYn4MT/
+ /O5EqJRZWbwaorvXHapAEGFrny89tS1EQMZQ==
+X-Gm-Gg: ASbGncuLRQqIFnD3fkf9iE8l1rh+DpuXhJREJVg8WUQoNTuQpx6QsgSe49abhN/kZ+5
+ +QMbXar7JH+1eoJz7g+hq38fLz4xLM1wtFbf+QBGm8tsb2lottzHZX6e4dSoKmInzIXkDtyEcF5
+ +KRLBCyiJ0Th+u4B71pvnCuE2h0Dya+sxkyYdvxlTPX4b2FNGPsr/AuIyNbOn7FKNnxoFJVD1+X
+ uD2nG+eUey8yZ9cNiIpvNpDiOYlYO/0/IAV91c9/THGrGMyt4h+8ODj3ZoIO7hFHLY9uvfuQAii
+ Cp4kZgcsUxG+1XnKeIqJmg5tJWA8oq77X62K/2YR3Z/E2KJBTiZKRKgEVBDpTFUykmM=
+X-Received: by 2002:a05:6000:1a8d:b0:426:f10c:c512 with SMTP id
+ ffacd0b85a97d-42b2dcb7e82mr4293363f8f.43.1762698925399; 
+ Sun, 09 Nov 2025 06:35:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFyJQA33MPPPc3pBTqSi87TnHIlyDbsFjCaGZKiXheqlxK1CQY33YUh45BhHhv3MX35yWWYFg==
+X-Received: by 2002:a05:6000:1a8d:b0:426:f10c:c512 with SMTP id
+ ffacd0b85a97d-42b2dcb7e82mr4293338f8f.43.1762698924957; 
+ Sun, 09 Nov 2025 06:35:24 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc0:1536:2700:9203:49b4:a0d:b580])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42abe63e13csm16782993f8f.19.2025.11.09.06.35.08
+ ffacd0b85a97d-42b2dd927c9sm10139909f8f.27.2025.11.09.06.35.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Nov 2025 06:35:08 -0800 (PST)
-Date: Sun, 9 Nov 2025 09:35:07 -0500
+ Sun, 09 Nov 2025 06:35:24 -0800 (PST)
+Date: Sun, 9 Nov 2025 09:35:22 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/14] virtio,pci,pc: fixes for 10.2
-Message-ID: <cover.1762698873.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 07/14] intel_iommu: Fix DMA failure when guest switches IOMMU
+ domain
+Message-ID: <c9cf33075a4c8eb299e0ac3bb67ad96490499ced.1762698873.git.mst@redhat.com>
+References: <cover.1762698873.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1762698873.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
@@ -115,93 +126,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 917ac07f9aef579b9538a81d45f45850aba42906:
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-11-05 16:07:18 +0100)
+Kernel allows user to switch IOMMU domain, e.g., switch between DMA
+and identity domain. When this happen in IOMMU scalable mode, a pasid
+cache invalidation request is sent, this request is ignored by vIOMMU
+which leads to device binding to wrong address space, then DMA fails.
 
-are available in the Git repository at:
+This issue exists in scalable mode with both first stage and second
+stage translations, both emulated and passthrough devices.
 
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+Take network device for example, below sequence trigger issue:
 
-for you to fetch changes up to 97f24a0496be9e0a7216fea1fa0d54c1db9066e2:
+1. start a guest with iommu=pt
+2. echo 0000:01:00.0 > /sys/bus/pci/drivers/virtio-pci/unbind
+3. echo DMA > /sys/kernel/iommu_groups/6/type
+4. echo 0000:01:00.0 > /sys/bus/pci/drivers/virtio-pci/bind
+5. Ping test
 
-  vhost-user.rst: clarify when FDs can be sent (2025-11-09 08:25:53 -0500)
+Fix it by switching address space in invalidation handler.
 
-----------------------------------------------------------------
-virtio,pci,pc: fixes for 10.2
-
-small fixes all over the place.
-UDP tunnel and TSEG tweaks are kind of borderline,
-but I feel not making the change now will just add
-to compatibility headaches down the road.
-
+Fixes: 4a4f219e8a10 ("intel_iommu: add scalable-mode option to make scalable mode work")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20251017093602.525338-4-zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-Albert Esteve (1):
-      vhost-user: fix shared object lookup handler logic
-
-Alejandro Jimenez (1):
-      MAINTAINERS: Update entry for AMD-Vi Emulation
-
-Alyssa Ross (1):
-      vhost-user.rst: clarify when FDs can be sent
-
-Eric Auger (1):
-      hw/pci-host/gpex-acpi: Fix _DSM function 0 support return value
-
-Gerd Hoffmann (1):
-      q35: increase default tseg size
-
-German Maglione (1):
-      vhost-user: make vhost_set_vring_file() synchronous
-
-Paolo Abeni (1):
-      virtio-net: Advertise UDP tunnel GSO support by default
-
-Sairaj Kodilkar (2):
-      amd_iommu: Fix handling of devices on buses != 0
-      amd_iommu: Support 64-bit address for IOTLB lookup
-
-Shameer Kolothum (2):
-      tests/qtest/bios-tables-test: Prepare for _DSM change in the DSDT table
-      tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _DSM change
-
-Zhenzhong Duan (3):
-      intel_iommu: Handle PASID cache invalidation
-      intel_iommu: Reset pasid cache when system level reset
-      intel_iommu: Fix DMA failure when guest switches IOMMU domain
-
- hw/i386/amd_iommu.h                              |   6 +-
- hw/i386/intel_iommu_internal.h                   |  17 +++
- include/hw/i386/intel_iommu.h                    |   6 +
- hw/core/machine.c                                |   4 +
- hw/i386/amd_iommu.c                              | 179 +++++++++++++---------
- hw/i386/intel_iommu.c                            | 181 +++++++++++++++++++++--
- hw/i386/pc.c                                     |   4 +-
- hw/net/virtio-net.c                              |   8 +-
- hw/pci-host/gpex-acpi.c                          |   2 +-
- hw/pci-host/q35.c                                |   2 +-
- hw/virtio/vhost-user.c                           |  64 ++++----
- MAINTAINERS                                      |   6 +-
- docs/interop/vhost-user.rst                      |   7 +
- hw/i386/trace-events                             |   4 +
- tests/data/acpi/aarch64/virt/DSDT                | Bin 5337 -> 5337 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt   | Bin 5423 -> 5423 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | Bin 6246 -> 6246 bytes
- tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | Bin 5391 -> 5391 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp          | Bin 6698 -> 6698 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb            | Bin 7812 -> 7812 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev     | Bin 10274 -> 10274 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy  | Bin 10274 -> 10274 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology       | Bin 5539 -> 5539 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot           | Bin 5354 -> 5354 bytes
- tests/data/acpi/loongarch64/virt/DSDT            | Bin 4603 -> 4603 bytes
- tests/data/acpi/loongarch64/virt/DSDT.memhp      | Bin 5824 -> 5824 bytes
- tests/data/acpi/loongarch64/virt/DSDT.numamem    | Bin 4609 -> 4609 bytes
- tests/data/acpi/loongarch64/virt/DSDT.topology   | Bin 4905 -> 4905 bytes
- tests/data/acpi/riscv64/virt/DSDT                | Bin 3538 -> 3538 bytes
- tests/data/acpi/x86/microvm/DSDT.pcie            | Bin 2985 -> 2985 bytes
- 30 files changed, 371 insertions(+), 119 deletions(-)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index cf0b62f29e..78b142ccea 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3086,6 +3086,11 @@ static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
+     return vtd_ce_get_rid2pasid_entry(s, &ce, pe, vtd_as->pasid);
+ }
+ 
++static int vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
++{
++    return memcmp(p1, p2, sizeof(*p1));
++}
++
+ /* Update or invalidate pasid cache based on the pasid entry in guest memory. */
+ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+                                         gpointer user_data)
+@@ -3094,15 +3099,28 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+     VTDAddressSpace *vtd_as = value;
+     VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
+     VTDPASIDEntry pe;
++    IOMMUNotifier *n;
+     uint16_t did;
+ 
+     if (vtd_dev_get_pe_from_pasid(vtd_as, &pe)) {
++        if (!pc_entry->valid) {
++            return;
++        }
+         /*
+          * No valid pasid entry in guest memory. e.g. pasid entry was modified
+          * to be either all-zero or non-present. Either case means existing
+          * pasid cache should be invalidated.
+          */
+         pc_entry->valid = false;
++
++        /*
++         * When a pasid entry isn't valid any more, we should unmap all
++         * mappings in shadow pages instantly to ensure DMA security.
++         */
++        IOMMU_NOTIFIER_FOREACH(n, &vtd_as->iommu) {
++            vtd_address_space_unmap(vtd_as, n);
++        }
++        vtd_switch_address_space(vtd_as);
+         return;
+     }
+ 
+@@ -3128,8 +3146,15 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+         }
+     }
+ 
+-    pc_entry->pasid_entry = pe;
+-    pc_entry->valid = true;
++    if (!pc_entry->valid) {
++        pc_entry->pasid_entry = pe;
++        pc_entry->valid = true;
++    } else if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
++        return;
++    }
++
++    vtd_switch_address_space(vtd_as);
++    vtd_address_space_sync(vtd_as);
+ }
+ 
+ static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
+-- 
+MST
 
 
