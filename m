@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E318DCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 08:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261DACD1297
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Nov 2025 10:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vI1DT-00018U-Dq; Sun, 09 Nov 2025 03:56:07 -0500
+	id 1vI2nu-0002ma-SE; Sun, 09 Nov 2025 05:37:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI1DR-00014h-Hv
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 03:56:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vI1DN-0002ij-0K
- for qemu-devel@nongnu.org; Sun, 09 Nov 2025 03:56:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762678558;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Y+Q9bEYYBTNHIl+DYCmoTR6Paxg5AZSMxtkEDPwN054=;
- b=WAMiZ3OOiXtLKbqnWN07ylhIt8maDGZnX/gX2DanPpEaqP/9gBDM875aPN8eKMFLWFOnIc
- ipc9ZTN2hv7kM/79AKL/WuWVzNntUHqozQX2DM+dzzm/wpogZYrQ9+0j9/K9Nz9gb9UTUU
- +omHhO+kixzQiRvi4xqkAuwMaphIBtQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-ECB3cwTQNpm0D_OJ-McX0w-1; Sun, 09 Nov 2025 03:55:55 -0500
-X-MC-Unique: ECB3cwTQNpm0D_OJ-McX0w-1
-X-Mimecast-MFC-AGG-ID: ECB3cwTQNpm0D_OJ-McX0w_1762678554
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429c19b5e61so1270069f8f.2
- for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 00:55:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI2ns-0002lP-NU
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 05:37:48 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vI2nr-0006qB-1Z
+ for qemu-devel@nongnu.org; Sun, 09 Nov 2025 05:37:48 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b7155207964so364466366b.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Nov 2025 02:37:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762678554; x=1763283354; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Y+Q9bEYYBTNHIl+DYCmoTR6Paxg5AZSMxtkEDPwN054=;
- b=sNFZzvkhNvaOMQoNYjp6IamG+jt/Fr9OC6OAt9826yjo+IbV/M84YgLBqQq8MW58Ky
- GZ0aXvhjMGru94pYVsp4+C42yoL689pxGFLPErIJW3M2Bk9wT5Z0FBEe4cjaWEyiK20G
- IBmx55ATlXyG8jZ8FMI64lc+irpsEkjABtBPuX7PjCeVp3S1FPnwtdZMDgB/MmOyMxeh
- ug2mpv1iHjjBT/GIDx4NxLH7UC3nQltd04f3HODVBp0HXDYBzDHlbJO9xpBhMv0+Jouk
- 0XrvfYQwRV0BAihaiA//RU7/1pef855/vh9AjUkRq0U510yfVEQlAxUQ4/6JihHnQMVu
- BHSg==
+ d=linaro.org; s=google; t=1762684665; x=1763289465; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B6NzZ3BuJVpXC8eyjQfuMUstoZOeqlMms2pN0F9K+4M=;
+ b=ao24f0/xgQIMYUvf/CAeDp/Xf7j63/cz8xJTnzdjeKQDell40HmlgsrutkSvImh9gC
+ 7h6OL03/5kgCK8kIInKeNzmraQQ6ZxO7iWOgtta4EH+LmvhARZ9hFOXtp9h6fZJui2l7
+ RNi2elh+7QhvP3IQmxWRLnbIeTv6WM7T0M5jq0JGTAM2G5qk0h7MFRX7fCL+jSlHhl6o
+ 6nv/3hD0lzefTYx2vbT0cePKRs7Ux6SwgD0T2S7EokI9D7fs/snkkqowlS+vAJ+j+19s
+ HaFpyttto00Pf3KHo47UwF1cuGuegY3X2GBgbn8DTT9cfegz92mIEA+t+OITRhZzq4yw
+ 96GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762678554; x=1763283354;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y+Q9bEYYBTNHIl+DYCmoTR6Paxg5AZSMxtkEDPwN054=;
- b=oO1GrWS5mdAsfj8lSTot4akJGbI4Im0Or5GOALmMRIeKi+oAgAGkwVVD6CxAU5hwEt
- 05zl9DRZkJxoSb0OkdTWhwmDLdalqeScOLsQdYV4ZtfI30rtSSF+vq+sfEjr4gPnFrEX
- GrIasza1WQwu8RwYYR3Zq3YLMO0z20FtW0TAFx/4sAtVEOiJ+zepFdBnZ9mEVLa82nD6
- c4SGE47qaAGJxLChIiK6xAOESoxfm7GHs74MHxdF8bbLOQGVGW6FNEBxISBhnzm3BOvT
- g8tV0T8iE5WvOXwYblfm1m0Z84heaZ/DDevtBeLwMFS9nLJCfA1q4G4XtO10/o+3RVDW
- PJoQ==
-X-Gm-Message-State: AOJu0YyvK+sFNZDA8rB+WCF+Z7dbrOvPyP3EwfqS/TxwwHgxanwfDRv5
- VuNhUejnkqBuoZY/PJiDo+8X8wKGpzWKBTmdzfBBAKFxyfUOcZO/AihcAxU6SlBPNZKUg7X6uIX
- gROMZIaIg6+Vj0Jf6y2lZGKZr7JbJNv5PZ3VGGsd0E/kv+iQT3XC2oYtc
-X-Gm-Gg: ASbGnctVuQNNUstClV3U/OA8dVqSBX4o6fPS+c9xScnD72GRa3l3gCL2PmCNXnswn30
- xVQkHok3B7DjlKkfpPF7Of/pbVKqg+EGPp6FYJFdAQHs75dlpU23vkiXDfVl1kUIfy1/Jt+PLZ0
- YbHFavDfeDC7g4ZpDuAo2iQOiehpP9tAtBz8alOnujDl4oNKoHLB20cyGcmHqTCmM3vRda8TVdj
- bqrti1fuTUjIUbLsm/edlHePGgnOs2lwgQR/XB14AgpmayTZLzfTJf7u+CsikjvDs9zIvTLeHVf
- nq5ft6L8ra1Ap8IPBoFfpJg+Blc5paRSjAXklPUSLzHPCYeh9mhQArAmphIfT9Bmp9w=
-X-Received: by 2002:a05:6000:40cd:b0:426:ee08:8ea9 with SMTP id
- ffacd0b85a97d-42b2dcbd88fmr3471624f8f.44.1762678553878; 
- Sun, 09 Nov 2025 00:55:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGo38vIQ3H5blzaHbEFX8Lp2ZptkQ9TiuCWmO9i2RJZLRWnxh6SnwOm23mgPxFauipdOjxAYw==
-X-Received: by 2002:a05:6000:40cd:b0:426:ee08:8ea9 with SMTP id
- ffacd0b85a97d-42b2dcbd88fmr3471610f8f.44.1762678553289; 
- Sun, 09 Nov 2025 00:55:53 -0800 (PST)
-Received: from redhat.com ([2a0d:6fc0:1536:2700:9203:49b4:a0d:b580])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42abe62bf35sm15637730f8f.7.2025.11.09.00.55.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Nov 2025 00:55:52 -0800 (PST)
-Date: Sun, 9 Nov 2025 03:55:50 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alyssa Ross <hi@alyssa.is>
-Cc: qemu-devel@nongnu.org, Yureka Lilian <yureka@cyberchaos.dev>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH] vhost-user.rst: clarify when FDs can be sent
-Message-ID: <20251109035512-mutt-send-email-mst@kernel.org>
-References: <20251106192105.3456755-1-hi@alyssa.is>
+ d=1e100.net; s=20230601; t=1762684665; x=1763289465;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B6NzZ3BuJVpXC8eyjQfuMUstoZOeqlMms2pN0F9K+4M=;
+ b=xBrC+Xd43gkpRsmZETfjgchFOcw9L6gngVYp78Tea+eHc2rapIw+ZmBPtpTixyn+65
+ 7nQBVfcMwgYF+vvEqtX80Gp9irZKWILCJ8yt4GYVaRf+K4T8fGqmZTa8jTBl9N9GFiyR
+ VVa9oFn4MiOh8PzTyjniYT2XZyC5Z/MguTfg8Si2LtAYvpA2ZBJ+ANBbXNB8C1XSOQw0
+ hFWx7MJCOcCGuSjZtzhjo/tyevWAwYHQR1RzA4iw/xDB09GDjCocED9U+T3D66lAAEWG
+ TuvRl6C7pw12etVsC46Z83K+7ErBbY+B+Et6Rbjy0gBI4FQ7rU0Hwry+51alJ/lH4MDS
+ gLZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJxhaLh75G+mbMnCRPkxAX3OS/sjL/0nGNiHg/bCPp8UG8ix7moyRO7AU3nONrhOtt3wZunxkhygXY@nongnu.org
+X-Gm-Message-State: AOJu0Yz/fPw0k1IqKJucrk/UFVrKmTfsCUJg/ficbygijCG7wYZejg1r
+ TLiPxQrktWEuAttX3Cgs/kHLFGsEDMFyU43nUVe1TmgftnFxW4Y/Yzmr1yAKFYsKg5E=
+X-Gm-Gg: ASbGncvM0pkKoyFgEPnjd4rzrrd1xpESyN4jE3mG6wYB2zGCxXP5HboukdbDZZRX7hj
+ Q5wdNRwl58VnjC54rrBfoFT5AyTJ9I3Y8cBNt1Oblj2kSysaOUqZ3oM9t2TXVxD09h0S3nptNkD
+ dIIE4CcubGzsK/E1nb+as6w7/M1KuUMbkPmKYrK5J111cYpMN37ybLRDGpr2mBlHtaw2YppgOuL
+ k7Ppr2aNWeV5MY/T6vvj+dGUXSim02/t4kVCt11JtwW/hzWj/NakTQjEg86/Bw81MCqS1ugcJVa
+ 1EPXjvEC8HTjIsE3/j9oYBpZlH2dhMTcUXHuz+wEFdZpbP2N5T7q0YxwE7bwhdLDJsPE+nvnbia
+ 7QjeSZh1+wdcyYAuqNuyo789SB0O0sMxgKWp/JmH8hMM1faUAUeu6a6BCuZDgoEkfdL61cvvztO
+ uXeMZh2d8TBLBLFBzH6tn7Yu1G9bD8Pz1VDNu30W99cB8mKgWXmtuEmP7wIw==
+X-Google-Smtp-Source: AGHT+IEVe1Tahd+5nAHgUS41uHc/zY8r6PoCJerZJcOqHj1UmBhdfiqL15V3Ll4KLgKrdsfD5TWGVg==
+X-Received: by 2002:a17:907:841:b0:b49:5103:c0b4 with SMTP id
+ a640c23a62f3a-b72e04e4893mr571125266b.56.1762684664561; 
+ Sun, 09 Nov 2025 02:37:44 -0800 (PST)
+Received: from [192.168.2.7] (tmo-086-152.customers.d1-online.com.
+ [80.187.86.152]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b72bf9bcd59sm760049666b.53.2025.11.09.02.37.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Nov 2025 02:37:44 -0800 (PST)
+Message-ID: <71950c1c-f3d4-4395-ab43-4bf1178a8acc@linaro.org>
+Date: Sun, 9 Nov 2025 11:37:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251106192105.3456755-1-hi@alyssa.is>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/misc/npcm_clk: Don't divide by zero when calculating
+ frequency
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>
+References: <20251107150137.1353532-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251107150137.1353532-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,49 +105,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 06, 2025 at 08:21:05PM +0100, Alyssa Ross wrote:
-> Previously the spec did not say where in a message the FDs should be
-> sent.  As I understand it, FDs transferred in ancilliary data will
-
-ancillary, actually
-
-> always be received along with the first byte of the data they were
-> sent with, so we should define which byte that is.  Going by both
-> libvhost-user in QEMU and the rust-vmm crate, that byte is the first
-> byte of the message header.  This is important to specify because it
-> would make back-end implementation significantly more complicated if
-> receiving file descriptors in the middle of a message had to be
-> handled.
+On 7/11/25 16:01, Peter Maydell wrote:
+> If the guest misprograms the PLL registers to request a zero
+> divisor, we currently fall over with a division by zero:
 > 
-> Signed-off-by: Alyssa Ross <hi@alyssa.is>
+> ../../hw/misc/npcm_clk.c:221:14: runtime error: division by zero
+> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/misc/npcm_clk.c:221:14
+> 
+> Thread 1 "qemu-system-aar" received signal SIGFPE, Arithmetic exception.
+> 0x00005555584d8f6d in npcm7xx_clk_update_pll (opaque=0x7fffed159a20) at ../../hw/misc/npcm_clk.c:221
+> 221             freq /= PLLCON_INDV(con) * PLLCON_OTDV1(con) * PLLCON_OTDV2(con);
+> 
+> Avoid this by treating this invalid setting like a stopped clock
+> (setting freq to 0).
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/549
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  docs/interop/vhost-user.rst | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> index 2e50f2ddfa..93a9c8df2b 100644
-> --- a/docs/interop/vhost-user.rst
-> +++ b/docs/interop/vhost-user.rst
-> @@ -411,6 +411,13 @@ in the ancillary data:
->  * ``VHOST_USER_SET_INFLIGHT_FD`` (if ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD``)
->  * ``VHOST_USER_SET_DEVICE_STATE_FD``
->  
-> +When sending file descriptors in ancilliary data, *front-end* should
-
-ancillary, here too
-
-> +associate the ancilliary data with a ``sendmsg`` operation (or
-> +equivalent) that sends bytes starting with the first byte of the
-> +message header.  *back-end* can therefore expect that file descriptors
-> +will only be received in the first ``recvmsg`` operation for a message
-> +header.
-> +
->  If *front-end* is unable to send the full message or receives a wrong
->  reply it will close the connection. An optional reconnection mechanism
->  can be implemented.
-> 
-> base-commit: 917ac07f9aef579b9538a81d45f45850aba42906
-> -- 
-> 2.51.0
+>   hw/misc/npcm_clk.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
