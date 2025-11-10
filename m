@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10196CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 10:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED20CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 10:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIOys-0003zO-0l; Mon, 10 Nov 2025 05:18:52 -0500
+	id 1vIP3b-0007HJ-W6; Mon, 10 Nov 2025 05:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIOq1-0007yf-Uu
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:09:31 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIOuD-0001Yh-Bi
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:13:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIOpx-00075K-CQ
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:09:27 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIOuB-0007aJ-Ia
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:13:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762769364;
+ s=mimecast20190719; t=1762769626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BzIZFScxOkKRWl6UBEV7RUJRh5Q/TM6LWq77fcmTvcI=;
- b=H2/GUmGwKlRqXAss0fgQStnIkGbT6Vec01ehYE3R0rjUOm9j106nleBoSboIppCmQ2NFs2
- 2uObEI5k8kaIPyWCf3tTL5WVHhM0gk2cv7/6Y2ilURCMvC+1wBBIgsw44j48EKuhdmJ9X0
- kOOA8HWIZcsHvgomTR6sFB9GX9trgv8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=mdkDwqXfWLlMf/6ZNjt4tarYKjOCaK9C21xTKDJvhOE=;
+ b=DV1YEjwek3Bgayv9+aDGpUxnMf4swIfjAQobYT8eeEYQzJwG9+VGSSbxFXF5Ujrm6QxDaq
+ lrhMf30bLU+iL7pVM2Z027jH0HpqIyo3K3Cqql1u0V9/6KCaWsSM5gfnNL26dL7VjCag3r
+ 3qLCcKQd8simwHWQYdh07rIPbtRjyc4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-juGQq_o4OoSblzNHxIvBxA-1; Mon,
- 10 Nov 2025 05:09:18 -0500
-X-MC-Unique: juGQq_o4OoSblzNHxIvBxA-1
-X-Mimecast-MFC-AGG-ID: juGQq_o4OoSblzNHxIvBxA_1762769357
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-mwZNI0YRNtWQ7FfkWkQFwQ-1; Mon,
+ 10 Nov 2025 05:13:42 -0500
+X-MC-Unique: mwZNI0YRNtWQ7FfkWkQFwQ-1
+X-Mimecast-MFC-AGG-ID: mwZNI0YRNtWQ7FfkWkQFwQ_1762769621
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63246180047F; Mon, 10 Nov 2025 10:09:17 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C2481956067; Mon, 10 Nov 2025 10:13:41 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D86A719560BA; Mon, 10 Nov 2025 10:09:16 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02C06180087B; Mon, 10 Nov 2025 10:13:40 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 27C2421E6A27; Mon, 10 Nov 2025 11:09:14 +0100 (CET)
+ id 5F19C21E6A27; Mon, 10 Nov 2025 11:13:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>
 Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  kwolf@redhat.com,
  hreitz@redhat.com,  eblake@redhat.com
-Subject: Re: [PATCH v2 2/5] vvfat: move fat_type check prior to size setup
-In-Reply-To: <20251107145327.539481-3-chigot@adacore.com> (=?utf-8?Q?=22Cl?=
+Subject: Re: [PATCH v2 5/5] vvfat: add support for "fat-size" options
+In-Reply-To: <20251107145327.539481-6-chigot@adacore.com> (=?utf-8?Q?=22Cl?=
  =?utf-8?Q?=C3=A9ment?= Chigot"'s
- message of "Fri, 7 Nov 2025 15:53:24 +0100")
+ message of "Fri, 7 Nov 2025 15:53:27 +0100")
 References: <20251107145327.539481-1-chigot@adacore.com>
- <20251107145327.539481-3-chigot@adacore.com>
-Date: Mon, 10 Nov 2025 11:09:14 +0100
-Message-ID: <874ir2nqr9.fsf@pond.sub.org>
+ <20251107145327.539481-6-chigot@adacore.com>
+Date: Mon, 10 Nov 2025 11:13:38 +0100
+Message-ID: <87zf8umbzh.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,32 +91,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
 
-> This allows to handle the default FAT size in a single place and make the
-> following part taking care only about size parameters. It will be later
-> moved away in a specific function.
+> This allows more flexibility to vvfat backend. The values of "Number of
+> Heads" and "Sectors per track" are based on SD specifications Part 2.
 >
-> The selection of floppy size was a bit unusual:
->  - fat-type undefined: a FAT 12 2880 Kib disk (default)
->  - fat-type=3D16: a FAT 16 2880 Kib disk
->  - fat-type=3D12: a FAT 12 1440 Kib disk
+> Due to the FAT architecture, not all sizes are reachable. Therefore, it
+> could be round up to the closest available size.
 >
-> Now, that fat-type undefined means fat-type=3D12, it's no longer possible
-> to make that size distinction. Therefore, it's being changed for the
-> following:
->  - fat-type=3D12: a FAT 12 1440 Kib disk (default)
->  - fat-type=3D16: a FAT 16 2880 Kib dis
+> FAT32 has not been adjusted and thus still default to 504 Mib.
 >
-> This has been choosen for two reasons: keep fat-type=3D12 the default and
-> creates a more usual size for it: 1440 Kib.
->
-> The possibility to create a FAT 12 2880 Kib floppy will be added back
-> later, through the fat-size parameter.
->
-> Side note to mention that s->sectors_per_cluster assignments are
-> removed because they are overidden a few line further.
+> For floppy, only 1440 Kib and 2880 Kib are supported.
 >
 > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
 
-Is this a user-visible change?
+[...]
+
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index 8a479ba090..0bcb360320 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -3478,11 +3478,17 @@
+>  #     (default: true)
+>  #     (since 10.2)
+>  #
+> +# @fat-size: size of the device in bytes.  Due to FAT underlying
+> +#     architecture, this size can be rounded up to the closest valid
+> +#     size.
+> +#     (since 10.2)
+> +#
+
+Can you explain again why you moved from @size to @fat-size?
+
+I assume you dropped the horrible special floppy sizes because ordinary
+sizes suffice.  Correct?
+
+>  # Since: 2.9
+>  ##
+>  { 'struct': 'BlockdevOptionsVVFAT',
+>    'data': { 'dir': 'str', '*fat-type': 'int', '*floppy': 'bool',
+> -            '*label': 'str', '*rw': 'bool', '*partitioned': 'bool' } }
+> +            '*label': 'str', '*rw': 'bool', '*partitioned': 'bool',
+> +            'fat-size': 'int' } }
+>=20=20
+>  ##
+>  # @BlockdevOptionsGenericFormat:
 
 
