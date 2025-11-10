@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F4CCCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035CDCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIPx9-0002iY-7R; Mon, 10 Nov 2025 06:20:55 -0500
+	id 1vIPza-0003rJ-BP; Mon, 10 Nov 2025 06:23:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vIPcP-0007Gh-BK
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:59:33 -0500
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ id 1vIPgJ-00015B-R2
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:03:43 -0500
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vIPcM-0002sz-7N
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:59:27 -0500
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-656b52c0f88so1107564eaf.0
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 02:59:25 -0800 (PST)
+ id 1vIPgG-0003Ou-2u
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:03:30 -0500
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-45045024527so78219b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 03:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762772365; x=1763377165; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3IzNoBSFlvX2VhmSutXqh3rjth5z1B8PQhgJPhYYBTY=;
- b=OVw0+1kgXjSjzi2nYcqcKwbfPTg1e/LQkkeOIEIgLE5fXo3SEcaq+5082hlDhePyGq
- fM4t3GvJgJPvpaXML6Q0QZ/2G8OMw/rt9XWUWR/pOtsa6ItjfSTVXLszRLEXfuz66oMG
- 8Vbq6hmbQ+Jdh+XfL8K9kui/Z/JKSaDwXkMAP0cT+LsZBLSaxOUxb3Yv3MPBpJAJV0IL
- t++HnpdKu2ztSJ53PLmKoarww5nRJNs/lGL8jG6YpdRFftEsXQ3wMjY+tyr687KfIk5b
- oi7MFevENcZ+9A2YFJZ6fFtj8BE5jfu2f4KSMcyr8n13YFd0XbCMueEy852f2naV7Hdi
- /coQ==
+ d=linaro.org; s=google; t=1762772606; x=1763377406; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SPa5Roy8ZBwnrS48RwPdrJlEa9pJlzzuf8bu3IzUT+s=;
+ b=SQqpDEgOJSipaQ9Wd+d69dhAHldU45znmblqnjTnUUwca6MvhSDBbtycuOKS62HwZD
+ l1k4ciYJeUuv7Ynt79u88QDXJor3bOt8EMYmOhqFHOC3pT+Y2T0fTn+cFQa73EBC15Vb
+ 1mVrXAlPEF6lu3CnkEdC5pkhII+g2Jf23ANw/M9IVM0dBz4ZCmPakZLpvL3yiGEh+Jmd
+ z3hGflnlz9vqTsxdjUJvko3ZUtCeBJyoiepIc9hq+/zTk0mxdNVRu90ljkokas/Njol7
+ TSyX9fAVhonAtnC5xKpLad6SfOLg+I6MT6hg9zvEiwQcszJbVruwtTACtSD3WvSbGcuN
+ HnrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762772365; x=1763377165;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3IzNoBSFlvX2VhmSutXqh3rjth5z1B8PQhgJPhYYBTY=;
- b=ZSFckScDokJcmLfT31auSRiIdBfe7KNzzuIPLUxSfodUEE0f3T0pQT8n6Hw8R4Velt
- hxCGmViosiwRIIpXH5bRg7AKXFl6mM8wtP8yqK2WBaaGjBYPvsQGG3Fs+R3ifqhFgkdX
- As/GSAuJ9AYkOV2V6mvek5+QHR2uv9xausBw2bCw6mD0CCh6qfG7H9oWWyJZLQ/C3rdy
- OPr0Y1OUET4cTmbF2N18A5hvdrpa//LI7J/4PCpjENIcEh03xDGXwtH950dzlkTSc4jy
- +ZPEFt4+C0dQkJReAj5obNbb5CMB/4BKMsuTW14VnaJx4AnFrhKh6Croeobyue8eMLgi
- iCHQ==
+ d=1e100.net; s=20230601; t=1762772606; x=1763377406;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SPa5Roy8ZBwnrS48RwPdrJlEa9pJlzzuf8bu3IzUT+s=;
+ b=IP3sgwjoTFtSuzwvthiW/OzQ9KM8e1I7kw8Rfe2dprk6DtT4/eZUhZnrdQboKpdgv1
+ C3AnOiSGFDYM4kSfU6HO67dsE6La4bS9RPrnhH1631NDpf3MHod2ugoTwYv/NhBGUdZF
+ CjZHkPEDbGc+0dvfJsgNCJW6ckoX2GjjIEnYGPcxSpfENiTDtNUsJ+MAu8naMSM0ZtlF
+ sdOde1oVet2cnTFPFONhOG/YKyzRS3NSF3sf7VuR0gXhoAJxVxQOBapsTxGmkRVSW7tL
+ +quZX0kAWO5QIu0hlhFuw/uYps4QggK2Qiy2/Z0Ls0wrItM/8d+UJkq9QIn195jxGDBr
+ Oe6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK6Tc2Gu5I1gXpyt+OdT3Kvb9qdOmv54yjlzr6dxgHgpyJUASh0yg1rCbE7DpspqWCo6zBPIGsiojs@nongnu.org
-X-Gm-Message-State: AOJu0YzHFdthpsDSjB6TI+3CQ1p9y8kqKjOuOh5qo79uPWsRdOPMOm31
- Lep2fZFBmzr1NiL2wiZ6bhRhEAaVecBaYXi/I5PvJbeCBzCWxsGWhh3E9EykpXRDDCw=
-X-Gm-Gg: ASbGncvfYvGaDjM1Yn9X+KCqdFBtxWzB6pgQaolhnM7tITIwE6CWuSI8GfkCD5YAfoA
- A5z/jqfL+qVAQWfISFENVmoyHo52+rVcn3VY0sKcKRSkjRJJsoZUCBR3yMtvqc3HrYCBQCvmrOs
- zzt7Bq5iAuLURN79k15nR5zwFjHZw8gpdXhiB7qYXltFS+6B4X4jZuKW41amcVyzixE0DVUM+yu
- JkM5or5ykjj+3wKptMQNp9C1IyFVii8W5JJwlMfYFvE2Qivj7Fkp8DIDsyc8TlLwOfLnyejpbJM
- cYHllhBU+aVHfGkmhq++VYhMuJUx8Yb/65ueief9EIvJ/MWT4fMDctHCq1RcZh6zB6CHCvEWplT
- NY7b5rsCi5KT6Et/EaLyKM/EIRZTpMrA+wovDUh7ky6T7KdB0EgoV4mi+EdyjVfvnJNrMW79fXf
- 0WeO739YywmZZebz2UgPwP9FRuAghvy/2ptDR6aY1WB/TtBuc+HEBJXANu9iwGsYjVg+w=
-X-Google-Smtp-Source: AGHT+IGZGenx6m/dI0WLXtYiTmtKYfXYJk+ki3G9gvwIfhycxFUdqJ0hX+HgqXe3tSPB870kksqR/A==
-X-Received: by 2002:a05:6808:4f60:b0:438:37eb:62c7 with SMTP id
- 5614622812f47-4502a2ca46cmr4186056b6e.21.1762772364928; 
- Mon, 10 Nov 2025 02:59:24 -0800 (PST)
+ AJvYcCVY6kJHJ2K/y2rNYMzCeXIEbDsuSLucMEc4XATqwnQ6Oz+fy7YF9qngEvfwmvfFIxhZWF9HQgSL1gWi@nongnu.org
+X-Gm-Message-State: AOJu0YxOKi3GL9W+Z8fyjjRAfZhA0C+xY6QyCdXWU9LqoJl/a97tZgSS
+ pBYuYag3/9FVkmrvu3fgcVsl4/uFsz/kAYuw5Xe7mwqjSTU2x9oTK/AIjWE5vvj5x7U=
+X-Gm-Gg: ASbGncudDWXxZudESaGmgrBTFIEcp6SlmHEgI8NOUnjA4+yT0RcYqKFps9bscZ7XlRC
+ n382TBpXO7JSR17p3uJbEYx2R+AGf4/b7yKtTU5mPpzy7zhxXBB2M/aCy7PMQV5cZuJaMyJ3lW4
+ kEhnoSm5bZe6+lu3fuvShnSzr0hWQxxI27/qFmkV1KpIAi77DH9fh/5uZ3BgGRp6ZerLkxcbuJm
+ 33/UWH34ohPJH5zQ0EI6M4POKup5ZrADv6+afW64JE63P6QHBj+9g3rbQEENN06eW/3swby5WMo
+ KjKBNe1IGC0WQa1e4DxucKks+OFoQWo5VbAZ02vcMXwZ5xaPtukjRStp4YvwqNKIUBsjDwEOnuH
+ kO2ulF8Yo6q+0gl6q52007dGzNR9cXK9AxO1nfm8reVCffVSp3IU0pPyN2LzCHPB2zqNP+DWhXe
+ gT/VmdH1v/bHChVencwWPwXMNRETnBs1EqpKiG124=
+X-Google-Smtp-Source: AGHT+IE84PE9i3tXizduQdV1m32+FpHgQUkzxpBRRqlKJOxDnaGA2/WJk4XODjC0cf4bOYR7Iv8cdw==
+X-Received: by 2002:a05:6808:198d:b0:44f:ddf1:f238 with SMTP id
+ 5614622812f47-4501c55d866mr7233494b6e.0.1762772606590; 
+ Mon, 10 Nov 2025 03:03:26 -0800 (PST)
 Received: from [10.89.10.227] ([172.58.183.226])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-656c5713288sm5819727eaf.5.2025.11.10.02.59.21
+ 006d021491bc7-656c57d5928sm5844316eaf.13.2025.11.10.03.03.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Nov 2025 02:59:24 -0800 (PST)
-Message-ID: <65b33dd1-cef6-47f9-86c4-5367146d103e@linaro.org>
-Date: Mon, 10 Nov 2025 11:59:17 +0100
+ Mon, 10 Nov 2025 03:03:26 -0800 (PST)
+Message-ID: <885acde6-a468-41ef-bf54-b977a1fad0bf@linaro.org>
+Date: Mon, 10 Nov 2025 12:03:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] tests/functional: Mark another MIPS replay test
- as flaky
+Subject: Re: [PATCH] target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20251021173152.1695997-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20251104145955.84091-1-philmd@linaro.org>
- <dac450e7-e22e-43ad-a40f-690753e19813@linaro.org>
 Content-Language: en-US
-In-Reply-To: <dac450e7-e22e-43ad-a40f-690753e19813@linaro.org>
+In-Reply-To: <20251021173152.1695997-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,32 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/25 12:28, Richard Henderson wrote:
-> On 11/4/25 15:59, Philippe Mathieu-Daudé wrote:
->> When disabling MIPS tests on commit 1c11aa18071
->> ("tests/functional: Mark the MIPS replay tests as flaky")
->> we missed the 5KEc test.
->>
->> Reported-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/functional/mips64el/test_replay.py | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/tests/functional/mips64el/test_replay.py b/tests/functional/mips64el/ 
->> test_replay.py
->> index 05cc585f854..e9318448fa7 100755
->> --- a/tests/functional/mips64el/test_replay.py
->> +++ b/tests/functional/mips64el/test_replay.py
->> @@ -40,6 +40,7 @@ def test_replay_mips64el_malta(self):
->>           '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
->>       @skipUntrustedTest()
->> +    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2013")
->>       def test_replay_mips64el_malta_5KEc_cpio(self):
->>           self.set_machine('malta')
->>           self.cpu = '5KEc'
+On 10/21/25 19:31, Peter Maydell wrote:
+> In the decode_group9() function, if we don't recognise the insn as
+> one that we should handle, we leave the 'entry' pointer unaltered.
+> Because the X86OpEntry struct has a union for the gen and decode
+> pointers, this means that the top level code will call decode.e.gen()
+> which tries to use the decode function pointer (still set to
+> decode_group9) as a gen function pointer.
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> This is undefined behaviour, but seems to be mostly harmless in
+> practice (we call decode_group9() again with bogus arguments and it
+> does nothing).  If you have CFI enabled then it will trip the CFI
+> check:
+> 
+> ../target/i386/tcg/decode-new.c.inc:2862:9: runtime error: control flow integrity check for type 'void (struct DisasContext *, struct X86DecodedInsn *)' failed during indirect function call
+> 
+> Set *entry to UNKNOWN_OPCODE to provoke the #UD exception, as we do
+> in decode_group1A() and decode_group11() for similar situations.
+> 
+> Thanks to the bug reporter for the clear description and analysis of
+> the bug and the simple reproducer.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3172
+> Fixes: fcd16539ebfe2 ("target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
 Queued.
 
