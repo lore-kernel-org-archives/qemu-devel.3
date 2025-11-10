@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AFECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A169CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIQIE-0001Ge-BC; Mon, 10 Nov 2025 06:42:42 -0500
+	id 1vIQIC-0001C7-Ai; Mon, 10 Nov 2025 06:42:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vIPzk-0003vp-Tg
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:40 -0500
+ id 1vIPzg-0003vW-Jx
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:38 -0500
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vIPzh-00068e-OR
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:35 -0500
+ id 1vIPzd-00067d-FK
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:32 -0500
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id B8E511A0C47;
- Mon, 10 Nov 2025 12:23:32 +0100 (CET)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6CCF21A20DB;
+ Mon, 10 Nov 2025 12:23:28 +0100 (CET)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 833961A1D48;
- Mon, 10 Nov 2025 12:23:32 +0100 (CET)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 357BA1A0C47;
+ Mon, 10 Nov 2025 12:23:28 +0100 (CET)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id A71A11800083;
- Mon, 10 Nov 2025 19:23:31 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 591971800083;
+ Mon, 10 Nov 2025 19:23:27 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 07/13] hw/arm/fsl-imx8mm: Adding support for I2C emulation
-Date: Mon, 10 Nov 2025 16:52:51 +0530
-Message-Id: <20251110112257.184578-8-gaurav.sharma_7@nxp.com>
+Subject: [PATCH 03/13] hw/arm/fsl-imx8mm: Implemented support for SNVS
+Date: Mon, 10 Nov 2025 16:52:47 +0530
+Message-Id: <20251110112257.184578-4-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
 References: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
@@ -67,138 +67,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can be used to test and debug I2C device drivers.
-Added I2C interrupts
+SNVS contains an RTC which allows Linux to deal correctly with time
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
  docs/system/arm/imx8mm-evk.rst |  1 +
- hw/arm/Kconfig                 |  2 ++
- hw/arm/fsl-imx8mm.c            | 27 +++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h    |  8 ++++++++
- 4 files changed, 38 insertions(+)
+ hw/arm/fsl-imx8mm.c            | 10 ++++++++++
+ include/hw/arm/fsl-imx8mm.h    |  2 ++
+ 3 files changed, 13 insertions(+)
 
 diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
-index c55d02c1c2..faf90336e0 100644
+index 1cdfa153cb..e50e72bdcf 100644
 --- a/docs/system/arm/imx8mm-evk.rst
 +++ b/docs/system/arm/imx8mm-evk.rst
-@@ -15,6 +15,7 @@ The ``imx8mm-evk`` machine implements the following devices:
-  * 3 USDHC Storage Controllers
-  * 1 Designware PCI Express Controller
-  * 5 GPIO Controllers
-+ * 6 I2C Controllers
-  * Secure Non-Volatile Storage (SNVS) including an RTC
+@@ -12,6 +12,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+  * Up to 4 Cortex-A53 cores
+  * Generic Interrupt Controller (GICv3)
+  * 4 UARTs
++ * Secure Non-Volatile Storage (SNVS) including an RTC
   * Clock Tree
  
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 6df1478c4f..d442ea0624 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -629,10 +629,12 @@ config FSL_IMX8MP_EVK
- config FSL_IMX8MM
-     bool
-     imply PCI_DEVICES
-+    imply I2C_DEVICES
-     select ARM_GIC
-     select FSL_IMX8MM_ANALOG
-     select FSL_IMX8MM_CCM
-     select IMX
-+    select IMX_I2C
-     select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
+ Boot options
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 222d3bac1c..eaa9a66efc 100644
+index 248eebfbce..7d9707c131 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -177,6 +177,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-     }
+@@ -170,6 +170,8 @@ static void fsl_imx8mm_init(Object *obj)
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
-+        g_autofree char *name = g_strdup_printf("i2c%d", i + 1);
-+        object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
-+    }
+     object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MM_ANALOG);
+ 
++    object_initialize_child(obj, "snvs", &s->snvs, TYPE_IMX7_SNVS);
 +
-     for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-         g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
-         object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
-@@ -355,6 +360,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+         g_autofree char *name = g_strdup_printf("uart%d", i + 1);
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+@@ -340,6 +342,13 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
                             qdev_get_gpio_in(gicdev, serial_table[i].irq));
      }
  
-+    /* I2Cs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
-+        struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } i2c_table[FSL_IMX8MM_NUM_I2CS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C1].addr, FSL_IMX8MM_I2C1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C2].addr, FSL_IMX8MM_I2C2_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C3].addr, FSL_IMX8MM_I2C3_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C4].addr, FSL_IMX8MM_I2C4_IRQ },
-+        };
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
-+                           qdev_get_gpio_in(gicdev, i2c_table[i].irq));
++    /* SNVS */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
++        return;
 +    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
 +
-     /* GPIOs */
-     for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
-         struct {
-@@ -462,6 +488,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     /* Unimplemented devices */
+     for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
+         switch (i) {
+@@ -348,6 +357,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
          case FSL_IMX8MM_GIC_DIST:
          case FSL_IMX8MM_GIC_REDIST:
-         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
-+        case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
-         case FSL_IMX8MM_PCIE1:
-         case FSL_IMX8MM_PCIE_PHY1:
          case FSL_IMX8MM_RAM:
++        case FSL_IMX8MM_SNVS_HP:
+         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
+             /* device implemented and treated above */
+             break;
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index d3a2d1843f..e68dbd188b 100644
+index 0716484429..4fd11798a5 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
 @@ -12,6 +12,7 @@
  #include "cpu.h"
  #include "hw/char/imx_serial.h"
- #include "hw/gpio/imx_gpio.h"
-+#include "hw/i2c/imx_i2c.h"
  #include "hw/intc/arm_gicv3_common.h"
- #include "hw/misc/imx7_snvs.h"
++#include "hw/misc/imx7_snvs.h"
  #include "hw/misc/imx8mm_analog.h"
-@@ -31,6 +32,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
- enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
-     FSL_IMX8MM_NUM_GPIOS        = 5,
-+    FSL_IMX8MM_NUM_I2CS         = 4,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-@@ -45,6 +47,7 @@ struct FslImx8mmState {
+ #include "hw/misc/imx8mm_ccm.h"
+ #include "qom/object.h"
+@@ -36,6 +37,7 @@ struct FslImx8mmState {
+     GICv3State         gic;
      IMX8MMCCMState     ccm;
      IMX8MMAnalogState  analog;
-     IMX7SNVSState      snvs;
-+    IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
++    IMX7SNVSState      snvs;
      IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-     DesignwarePCIEHost pcie;
-@@ -172,6 +175,11 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_UART3_IRQ    = 28,
-     FSL_IMX8MM_UART4_IRQ    = 29,
+ };
  
-+    FSL_IMX8MM_I2C1_IRQ     = 35,
-+    FSL_IMX8MM_I2C2_IRQ     = 36,
-+    FSL_IMX8MM_I2C3_IRQ     = 37,
-+    FSL_IMX8MM_I2C4_IRQ     = 38,
-+
-     FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
-     FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
-     FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
 -- 
 2.34.1
 
