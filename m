@@ -4,107 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B88CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 19:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FAFCCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 20:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIXKr-0004qA-8h; Mon, 10 Nov 2025 14:13:53 -0500
+	id 1vIYJb-0006ix-OC; Mon, 10 Nov 2025 15:16:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vIX2h-0001YI-UC
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 13:55:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vIXxW-00029b-Hn
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 14:53:50 -0500
+Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vIX2c-0002wP-UC
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 13:55:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762800902;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uxvlh7JJGdeVJPqrfMtJjGSPK5ScCrWVZ19Asjc7xV8=;
- b=btJa9CAnDk+flBimr5VqeOXLXOzr7dAghcoR4LtIY66ing5ncdvpGEeL3OXJAViqFNfVYT
- IcNovUYqUQ6eAzKoRgoXS4nXNl6DnAbmlVNBvnWOXlGzcK2V9yHl7ugoVU/bZm86+w84on
- RCFn1d6N3HNqFwL+FHkkgkeyjJRJ0c4=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-XFSCXwb1PWC9sBikXQY87w-1; Mon, 10 Nov 2025 13:54:56 -0500
-X-MC-Unique: XFSCXwb1PWC9sBikXQY87w-1
-X-Mimecast-MFC-AGG-ID: XFSCXwb1PWC9sBikXQY87w_1762800895
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-295595cd102so82155845ad.3
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 10:54:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762800895; x=1763405695; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uxvlh7JJGdeVJPqrfMtJjGSPK5ScCrWVZ19Asjc7xV8=;
- b=nXsvblq9q4fXXGObRV7PFS3QDAhZAzZ6f57wtPGprDDinm/qCAD4cm8JFshkYv6FMR
- be6Peg1WKQFmtwyQvxosZ5s6oL4UDqq9jyNt9t+uwerb8ztjxNXVE7MGLg3bLXLWjvnH
- tFCgmn+G7z3lxFF7YE35yBsFUm54ZCNUMRZ8h4GAvDZgAuVy1lEU2vn8DYkDhZ0X+ynI
- p0LIMxvp3fS8z/WW7qi/8ASrsYZZQ3GbjXBZjLGOprWzOmj5g3uz25Egp+vw2yVmVI4V
- YKTIq1anB5XZClhu5Ocr2dd8hjhu4xDXVt53/wGLidnHFoZRnTBh7WAOgkIZqAwdGFDT
- lgcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762800895; x=1763405695;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uxvlh7JJGdeVJPqrfMtJjGSPK5ScCrWVZ19Asjc7xV8=;
- b=sqyIi3mY7Uk0OC3Pw2hpAR3AG8im5qUqesctUlUSZ3fTkTx4xfI51lELwYkCFtgqV4
- TAKufSFac3qpbTGC27cI+F5qMGwYdaZR1Xui+sR24JOLRybqXnkpOi14vpnhadDgD6ic
- PDisbVkw0B8r++J+deR1X9MCZGEHzhW2i1Hesu57C1/Lz3+aS5kHKHOfwJuzVX8wQgWU
- ObnsES/XPYi+VzwgcD5/YTKuA57ojx1UDzrc/ODsaZWfi20b9Bs+mRMGMsufCATbiJ0E
- mtpe5kdNEvTgvgHVVX4ne3KmpPHNplvkzvoq6rcge2sMBrRVA+G8332R9eKYKcDUSvOu
- xKUg==
-X-Gm-Message-State: AOJu0YxSCLPtKyrGsl3cWa5hYjCj3QwlV4RK3anNFYB5LPWQe5vQ8h/E
- FKOG1i7BlXmgmTeSevpibWpCeSFqtNI+CWy5B/rNNXHZZqV79KaOS7Yw2UZL+H3gfKfvNvJX+rt
- kZdkJLEF+2nMzobixbHGfkMm/jDvz2zCBV5lhAldbpD+A8YNqoDCQBnMehdaGCTzbn/IApKTfvo
- 6d3FTEwAbpqkAnCFVbvBBnWam9P3pm+70=
-X-Gm-Gg: ASbGncvPDjJ7dKiwBFnQ1zov4FgogZ+0rIFwzWWBiOr/DgC3hY2ANKdclsGqWN0bJAM
- XC0j6yjZa46MVeP/WR/pxPFy8rDk3pS1xep7PjHaA8jfF6UMOynPfP/vdGIfI1766jDkTuT0VLt
- abrCC3AHKiKwdpm5Y7Upo3YSnFYx2d7qnDLDf6mWb7JS1gFdJvP4s=
-X-Received: by 2002:a17:903:1a2e:b0:297:e1e1:beb1 with SMTP id
- d9443c01a7336-297e5611fc8mr126640605ad.16.1762800894762; 
- Mon, 10 Nov 2025 10:54:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpGSwrSaR6b96mxlqfwk1IQ3piJwpdWa9wjT1zCFgpp9nrCcv2mH7e1VYm3/C1HJlFZgwH2FrWaI4LIVKUVnA=
-X-Received: by 2002:a17:903:1a2e:b0:297:e1e1:beb1 with SMTP id
- d9443c01a7336-297e5611fc8mr126640395ad.16.1762800894350; Mon, 10 Nov 2025
- 10:54:54 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1762698873.git.mst@redhat.com>
- <fde5930cc37175cfcd0f03a089e26f4458a52311.1762698873.git.mst@redhat.com>
- <CADSE00+FLWVdh1CGmy6i4hLdJOKGG6-4JZySXL=wFOyyTnnFpw@mail.gmail.com>
- <20251110104059-mutt-send-email-mst@kernel.org>
- <CADSE00+8_pyV_qUGJ9WiP3miHPvpiOLsHGeCF1cs=7Y3OuajnA@mail.gmail.com>
- <20251110110546-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20251110110546-mutt-send-email-mst@kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 10 Nov 2025 19:54:43 +0100
-X-Gm-Features: AWmQ_bkQnh4cDetGfkDWL59NVrCmv2cu__gUtPzjHpYISyRvfei7bh2ZUfGB4Ec
-Message-ID: <CADSE00K3uKoOGZ5i21fh5M64ZgFcRTm4GSizyQ0K0iN67dpccA@mail.gmail.com>
-Subject: Re: [PULL 04/14] vhost-user: fix shared object lookup handler logic
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vIXxU-0003oq-Nd
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 14:53:50 -0500
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id BC40D1400074;
+ Mon, 10 Nov 2025 14:53:46 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Mon, 10 Nov 2025 14:53:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1762804426; x=1762890826; bh=UAfCxtzxyQLHmk6jy0uNdW2OnccBEC6n
+ LMJwTUn+shw=; b=EibRjmG+zIq/31XAAsvJfL0iffTvjdtHTncqlXk4Ft/0tkY+
+ 4tVEsByEz/TK8SSuDAi1N72u+bLrUiDkEZ2FWET07L6Ja1DIKscEupuSfjPit7dS
+ Osuh/RMEi2BdZQpAUcmjjqNyV5bQkeDLAe2medp1Pg9RNWjvOyBKrtfSgYuOKEjp
+ pmiNysqj5buUwz6wisv6m7Yq2DzN0v3T3/hFf3TDFfS2L2h7XfwaxdGVQZ4jvCz5
+ w/xvGnloR7bn+Q94HZXOf4Kd01/F05sc+/CLeYFQFRjv31RE8zTRTcb4A/WFIr6i
+ SZgsPCpI2vXPbuBJKnA9XdOLhbM0XWITGbGsIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762804426; x=
+ 1762890826; bh=UAfCxtzxyQLHmk6jy0uNdW2OnccBEC6nLMJwTUn+shw=; b=0
+ aXV6mqxBKbgopTMyoeSxdn0gCL4ZBcyXHH8UsuELtlwjDv4mGeUmUEDiPYBtz3rb
+ kT2koY7cWGAWYtFVMUJ9yg25O0yJltDTOg0Upy2aNMI7l65XXjL/P0sGRtjCzX/2
+ UD13rudvksu/Qe3Yggu78SSONrk17LHyTIL32cTuzSbSf3iNVQI5GgDOJfGaz5JZ
+ nD9O9C8Wyiwd6h6/EckvgU7O2mp9H10f8HXb8AdnIF78ZkCj0qf5tG3Dc+PBP53W
+ b8+CMu5WahdegQH5PHjmtFEnZ7dVWxNujAQO/26Qj6Jcc5My/52grk27yyuHZxez
+ lV7E0sF6nmC7RYZQNO6GA==
+X-ME-Sender: <xms:ykISabtjRZ8kT2G0Zhjs1nOTid5HV73lfv8oe_HgGHsg8rL47lo3_Q>
+ <xme:ykISaT5wW_RicfHIIYggsaGag9EF3rfycd4_8U_soJxQ0rnEYeANEGqLletYFdSfG
+ buQuH2M1jIY5rgEpRV8BnFcHTjO2XS6Ju9zQnMg1gb9VD-aEUNnUg>
+X-ME-Received: <xmr:ykISacKGbKOxv-db3oU3FD4ze3mAYKaeVa93IuKACa-uSLafKfyl0ByCmoCJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleelvddtucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+ hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
+ jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
+ tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
+ nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmh
+ huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegsrghlrghtohhnsegv
+ ihhkrdgsmhgvrdhhuhdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihii
+X-ME-Proxy: <xmx:ykISaT4w6nU9sk7AjdzABdg6PLajrksPwV9Llk7qAQZ1lSSdOGNtiQ>
+ <xmx:ykISafy5l0PGK0iO5fGabr9rd6YsErl-wgt-pWh-Tz13EsCv1IyAKA>
+ <xmx:ykISaXYZlB-UBIKq2GSzXPejxlOjJmYAKNjwgDi_vXpnUaSwE0t9iw>
+ <xmx:ykISaRTlibvgRbnf7yHPaGON1MzB2fFp6mm_fE8sX-b1LP2Q5EvAOQ>
+ <xmx:ykISaQktbnCuoyBDGdvUxROd3aNnKOQLiP_FmlIS7CEo78hL9691x6l->
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Nov 2025 14:53:45 -0500 (EST)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 5d5a1e07;
+ Mon, 10 Nov 2025 19:53:44 +0000 (UTC)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 10 Nov 2025 14:53:44 -0500
+Message-Id: <DE5A0KUARVWT.3RSORF4A7409B@jablonski.xyz>
+Cc: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 5/7] ati-vga: Implement HOST_DATA register writes
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
+X-Mailer: aerc 0.21.0
+References: <20251103033608.120908-1-chad@jablonski.xyz>
+ <20251103033608.120908-6-chad@jablonski.xyz>
+ <441b1bbc-3432-680f-80d7-09a256a62436@eik.bme.hu>
+ <b92ef3bf-affd-6a74-6b05-581c6d510e61@eik.bme.hu>
+In-Reply-To: <b92ef3bf-affd-6a74-6b05-581c6d510e61@eik.bme.hu>
+Received-SPF: pass client-ip=103.168.172.153; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-a2-smtp.messagingengine.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,235 +117,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 10, 2025 at 5:06=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
+>>
+>> I wonder where the real chip stores this information?
 >
-> On Mon, Nov 10, 2025 at 04:57:51PM +0100, Albert Esteve wrote:
-> > On Mon, Nov 10, 2025 at 4:42=E2=80=AFPM Michael S. Tsirkin <mst@redhat.=
-com> wrote:
-> > >
-> > > On Mon, Nov 10, 2025 at 10:23:25AM +0100, Albert Esteve wrote:
-> > > > On Sun, Nov 9, 2025 at 3:35=E2=80=AFPM Michael S. Tsirkin <mst@redh=
-at.com> wrote:
-> > > > >
-> > > > > From: Albert Esteve <aesteve@redhat.com>
-> > > > >
-> > > > > Refactor backend_read() function and add a reply_ack variable
-> > > > > to have the option for handlers to force tweak whether they shoul=
+> I don't think there's a separate buffer for this on real card and the
+> command FIFO is not long enough to store it so it should probably use
+> vram. But how does it know which part of that can be used? Maybe you coul=
 d
-> > > > > send a reply or not without depending on VHOST_USER_NEED_REPLY_MA=
-SK
-> > > > > flag.
-> > > > >
-> > > > > This fixes an issue with
-> > > > > vhost_user_backend_handle_shared_object_lookup() logic, as the
-> > > > > error path was not closing the backend channel correctly. So,
-> > > > > we can remove the reply call from within the handler, make
-> > > > > sure it returns early on errors as other handlers do and
-> > > > > set the reply_ack variable on backend_read() to true to ensure
-> > > > > that it will send a response, thus keeping the original intent.
-> > > >
-> > > > Hey Michal,
-> > > >
-> > > > This patch was
-> > > > Based-on: <20251016143827.1850397-1-aesteve@redhat.com>
-> > > > =E2=80=A6 for main.
-> > >
-> > > That's the SHMEM thing right?  Yes but I rebased it dropping
-> > > the SHMEM dependency.
-> > >
-> > > At least, I think I did it correctly.
-> >
-> > Yes, removing the dependency is correctly applied. But that was only
-> > required for the backport to stable.
-> >
-> > If we merge this patch to main without the one it is based on, then
-> > I'd need to send a new version of the SHMEM patch with the block that
-> > you have dropped. I can do it, but I was trying to prioritize the
-> > other one, as it was a lot harder to get approved. That is why I based
-> > this patch on top of the SHMEM one and not the other way around.
-> >
-> > Sorry if that was not clear from the message.
+> write some pattern into HOST_DATAx registers (like 0xaaaaaaaa, 0x55555555
+> but longer than the FIFO to make sure it's not staying there) and then
+> before writing HOST_DATA_LAST look for that pattern in vram to see if it
+> appears anywhere. Maybe some register points there or the card has some
+> memory management I don't know about? (I don't know much about GPUs so
+> it's quite possible I have no idea how it should work.) If the pattern is
+> not found I don't have any better idea to find out how this should work.
+> (We could keep the separate buffer in emulation for now but I'm curious
+> how the real chip does it and if we can emulate that.)
 >
->
-> Right but I can't apply SHMEM patch in freeze so yes, it has to go
-> on top. Sorry it's like this.
+> Regards,
+> BALATON Zoltan
 
-Got it. Then it'll have to be the other way around. Thanks for
-handling the rebase, then. I'll send the new version of the SHMEM
-patch after this one lands.
+Hi BALATON,
 
->
-> > >
-> > > > As this was the first time I did this based-on thingy, I am just
-> > > > making sure that the other patch was not missed.
-> > > > If this PULL is only targeting stable, then it's ok as is.
-> > >
-> > > It is targeting 10.2 which is in freeze. So equivalently same.
-> > >
-> > >
-> > > > BR,
-> > > > Albert
-> > > >
-> > > > >
-> > > > > Fixes: 1609476662 ("vhost-user: add shared_object msg")
-> > > > > Cc: qemu-stable@nongnu.org
-> > > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> > > > > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-> > > > > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> > > > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > > > > Message-Id: <20251017072011.1874874-2-aesteve@redhat.com>
-> > > > > ---
-> > > > >  hw/virtio/vhost-user.c | 40 +++++++++++++-----------------------=
-----
-> > > > >  1 file changed, 13 insertions(+), 27 deletions(-)
-> > > > >
-> > > > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > > > > index aac98f898a..4b0fae12ae 100644
-> > > > > --- a/hw/virtio/vhost-user.c
-> > > > > +++ b/hw/virtio/vhost-user.c
-> > > > > @@ -1668,14 +1668,6 @@ static bool vhost_user_send_resp(QIOChanne=
-l *ioc, VhostUserHeader *hdr,
-> > > > >      return !qio_channel_writev_all(ioc, iov, ARRAY_SIZE(iov), er=
-rp);
-> > > > >  }
-> > > > >
-> > > > > -static bool
-> > > > > -vhost_user_backend_send_dmabuf_fd(QIOChannel *ioc, VhostUserHead=
-er *hdr,
-> > > > > -                                  VhostUserPayload *payload, Err=
-or **errp)
-> > > > > -{
-> > > > > -    hdr->size =3D sizeof(payload->u64);
-> > > > > -    return vhost_user_send_resp(ioc, hdr, payload, errp);
-> > > > > -}
-> > > > > -
-> > > > >  int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned=
- char *uuid,
-> > > > >                                   int *dmabuf_fd)
-> > > > >  {
-> > > > > @@ -1716,19 +1708,15 @@ int vhost_user_get_shared_object(struct v=
-host_dev *dev, unsigned char *uuid,
-> > > > >
-> > > > >  static int
-> > > > >  vhost_user_backend_handle_shared_object_lookup(struct vhost_user=
- *u,
-> > > > > -                                               QIOChannel *ioc,
-> > > > > -                                               VhostUserHeader *=
-hdr,
-> > > > > -                                               VhostUserPayload =
-*payload)
-> > > > > +                                               VhostUserShared *=
-object)
-> > > > >  {
-> > > > >      QemuUUID uuid;
-> > > > >      CharFrontend *chr =3D u->user->chr;
-> > > > > -    Error *local_err =3D NULL;
-> > > > >      int dmabuf_fd =3D -1;
-> > > > >      int fd_num =3D 0;
-> > > > >
-> > > > > -    memcpy(uuid.data, payload->object.uuid, sizeof(payload->obje=
-ct.uuid));
-> > > > > +    memcpy(uuid.data, object->uuid, sizeof(object->uuid));
-> > > > >
-> > > > > -    payload->u64 =3D 0;
-> > > > >      switch (virtio_object_type(&uuid)) {
-> > > > >      case TYPE_DMABUF:
-> > > > >          dmabuf_fd =3D virtio_lookup_dmabuf(&uuid);
-> > > > > @@ -1737,18 +1725,16 @@ vhost_user_backend_handle_shared_object_l=
-ookup(struct vhost_user *u,
-> > > > >      {
-> > > > >          struct vhost_dev *dev =3D virtio_lookup_vhost_device(&uu=
-id);
-> > > > >          if (dev =3D=3D NULL) {
-> > > > > -            payload->u64 =3D -EINVAL;
-> > > > > -            break;
-> > > > > +            return -EINVAL;
-> > > > >          }
-> > > > >          int ret =3D vhost_user_get_shared_object(dev, uuid.data,=
- &dmabuf_fd);
-> > > > >          if (ret < 0) {
-> > > > > -            payload->u64 =3D ret;
-> > > > > +            return ret;
-> > > > >          }
-> > > > >          break;
-> > > > >      }
-> > > > >      case TYPE_INVALID:
-> > > > > -        payload->u64 =3D -EINVAL;
-> > > > > -        break;
-> > > > > +        return -EINVAL;
-> > > > >      }
-> > > > >
-> > > > >      if (dmabuf_fd !=3D -1) {
-> > > > > @@ -1757,11 +1743,6 @@ vhost_user_backend_handle_shared_object_lo=
-okup(struct vhost_user *u,
-> > > > >
-> > > > >      if (qemu_chr_fe_set_msgfds(chr, &dmabuf_fd, fd_num) < 0) {
-> > > > >          error_report("Failed to set msg fds.");
-> > > > > -        payload->u64 =3D -EINVAL;
-> > > > > -    }
-> > > > > -
-> > > > > -    if (!vhost_user_backend_send_dmabuf_fd(ioc, hdr, payload, &l=
-ocal_err)) {
-> > > > > -        error_report_err(local_err);
-> > > > >          return -EINVAL;
-> > > > >      }
-> > > > >
-> > > > > @@ -1790,6 +1771,7 @@ static gboolean backend_read(QIOChannel *io=
-c, GIOCondition condition,
-> > > > >      struct iovec iov;
-> > > > >      g_autofree int *fd =3D NULL;
-> > > > >      size_t fdsize =3D 0;
-> > > > > +    bool reply_ack;
-> > > > >      int i;
-> > > > >
-> > > > >      /* Read header */
-> > > > > @@ -1808,6 +1790,8 @@ static gboolean backend_read(QIOChannel *io=
-c, GIOCondition condition,
-> > > > >          goto err;
-> > > > >      }
-> > > > >
-> > > > > +    reply_ack =3D hdr.flags & VHOST_USER_NEED_REPLY_MASK;
-> > > > > +
-> > > > >      /* Read payload */
-> > > > >      if (qio_channel_read_all(ioc, (char *) &payload, hdr.size, &=
-local_err)) {
-> > > > >          error_report_err(local_err);
-> > > > > @@ -1833,8 +1817,10 @@ static gboolean backend_read(QIOChannel *i=
-oc, GIOCondition condition,
-> > > > >                                                               &pa=
-yload.object);
-> > > > >          break;
-> > > > >      case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
-> > > > > -        ret =3D vhost_user_backend_handle_shared_object_lookup(d=
-ev->opaque, ioc,
-> > > > > -                                                             &hd=
-r, &payload);
-> > > > > +        /* The backend always expects a response */
-> > > > > +        reply_ack =3D true;
-> > > > > +        ret =3D vhost_user_backend_handle_shared_object_lookup(d=
-ev->opaque,
-> > > > > +                                                             &pa=
-yload.object);
-> > > > >          break;
-> > > > >      default:
-> > > > >          error_report("Received unexpected msg type: %d.", hdr.re=
-quest);
-> > > > > @@ -1845,7 +1831,7 @@ static gboolean backend_read(QIOChannel *io=
-c, GIOCondition condition,
-> > > > >       * REPLY_ACK feature handling. Other reply types has to be m=
-anaged
-> > > > >       * directly in their request handlers.
-> > > > >       */
-> > > > > -    if (hdr.flags & VHOST_USER_NEED_REPLY_MASK) {
-> > > > > +    if (reply_ack) {
-> > > > >          payload.u64 =3D !!ret;
-> > > > >          hdr.size =3D sizeof(payload.u64);
-> > > > >
-> > > > > --
-> > > > > MST
-> > > > >
-> > >
->
+You're absolutely right. After spending some time setting up a nicer test
+environment I'm able to confirm this behavior on the Rage 128 Pro Ultra TF:
+
+write HOST_DATA0
+write HOST_DATA1
+write HOST_DATA2
+write HOST_DATA3
+-> Data appears in the framebuffer at the destination
+write HOST_DATA4
+write HOST_DATA5
+write HOST_DATA6
+write HOST_DATA7
+-> Data appears in the framebuffer at the destination
+
+The card does not wait for HOST_DATA_LAST to flush to the destination.
+So it would appear that there is no buffer at all or even a special area in
+VRAM. It's looking like there is a 128-bit accumulator which makes total
+sense given the architecture of the card. I'd like to do some additional
+testing but you were right to question this. I'll address it in patch v3.
 
 
