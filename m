@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3AC6CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 15:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3EF6CCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 15:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIU8r-0005uz-Q0; Mon, 10 Nov 2025 10:49:17 -0500
+	id 1vIU9r-00083D-Ru; Mon, 10 Nov 2025 10:50:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vIU8q-0005re-A1
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:49:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vIU9Q-0007UU-Ur
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:49:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vIU8o-0000rT-Ig
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:49:16 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vIU9P-00013k-3W
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:49:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762789753;
+ s=mimecast20190719; t=1762789790;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g4Z1tFL1FBJQybM45OX2q6ObGdIa2Hwwgev/yb60mMs=;
- b=ieMWZEEAUBUKEKoy9Gmb/0uUjQYFxpXBbb2BTKmgCCVDlkXRiPoQRdP21MQYxGZeP/cbMR
- M99SASYJXrnoNt34lj3Lh1cWRapkvGhbhrZkIutyVNPm1qgQFYiYFSAAsC2oI8mEaWjTsh
- SfiCe9yluKXwy0M0UJeEPDHCeg/ozhI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XiQZc0S9otfidhonOxKcoAmt4++DcUiIFzKq2jBQlWQ=;
+ b=iU77v+h+1hUantpkLxgMhGD44u/pt3W+x4EM1pYNsNviYY3hz39lB/rQTi2UbOX1WdyRak
+ exwj+jeilXjGk/49zZecwJsGmLZDKSgwTdSe3CHtsp2zvRGLHNZxHeHvp7yG4XvehzQDIW
+ RVlfRSVrhtfMr0GMtKkb+xuucbXvVeI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-jB-BVaM9PGK4w4_M9awe_A-1; Mon, 10 Nov 2025 10:49:12 -0500
-X-MC-Unique: jB-BVaM9PGK4w4_M9awe_A-1
-X-Mimecast-MFC-AGG-ID: jB-BVaM9PGK4w4_M9awe_A_1762789751
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-477771366cbso9862315e9.0
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 07:49:12 -0800 (PST)
+ us-mta-576-Kjf5PYBsN3SckTZPtoZ9yQ-1; Mon, 10 Nov 2025 10:49:47 -0500
+X-MC-Unique: Kjf5PYBsN3SckTZPtoZ9yQ-1
+X-Mimecast-MFC-AGG-ID: Kjf5PYBsN3SckTZPtoZ9yQ_1762789786
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-429c5c8ae3bso2582243f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 07:49:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762789751; x=1763394551; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762789786; x=1763394586; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g4Z1tFL1FBJQybM45OX2q6ObGdIa2Hwwgev/yb60mMs=;
- b=BC5Y1Sl9mID6Wu+mCX+A5FtyetgEj0zivIeZeaNiXDe9rz9ZvxUR1tQ26l6vN+NsUC
- +pgKDPcPoU7g/bm9+Cf/TVFHCGEZYyv/yC+cZUmJH+C4PMOrtugajLLkt39xqwx9piJ8
- R1YV5b6G8hYJWNpy8y7B9fID0P5zLjlN81/wG0JDiu3igGuMuxk8kGJAp0ChsU6SlkS5
- VlEd3cdLBLjOblayVJDur3WZgsDv3zm6laLiTSwWBYUpIlowJ6GR52l3FHrVEYPc9kge
- bVYSfGNYmpkTYPumnkoBsHSzNrs9ULBK52dX3qAtFW2RIeplZ5ZSHQscV/UH4yBo/xNu
- sD+Q==
+ bh=XiQZc0S9otfidhonOxKcoAmt4++DcUiIFzKq2jBQlWQ=;
+ b=sKjDxjSBo3zz4tKNStwI1kzcv9S7UKvAaCZu09aAcOMu6fP0CZh/YQLDP+LViqMNFr
+ EBTxWlCWZYP82b8XZO6g9ET1b2Xg81CZiAjLjAjjQsVqqJmhsj18cG0LolK82RJjxjr/
+ 0vFi8WOnN+HPh+/kokUPXg6ugR1MjMBvP9qK2r/JPgciz7TrTysWoA4YTxSBYVU+TVtY
+ LjHlA4htV4rKCo1WZXPhoagxXoIbqFTzoJdGlmkleOGUwaUlumhOkSyEuZFcnhr2SRqv
+ HoLYbJRa02dc3RkL2rW1bWhhEEoe+MUfv/otzqx5SsONn3j/LtrMnjV7lbihHBoNObzF
+ pNlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762789751; x=1763394551;
+ d=1e100.net; s=20230601; t=1762789786; x=1763394586;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=g4Z1tFL1FBJQybM45OX2q6ObGdIa2Hwwgev/yb60mMs=;
- b=Ps3n7WMWqVN1DZN2A+J99mX1NWfYoFHmvhZqGqz8e5fF/SxPth3raCsecnfldlSk+H
- qaCt+9HyGtviUAXoa+i+dco9uYtmxI8oFBLxpmejLE60h+QGQCRBwu1JFS0DCbOKXpye
- nrLk4lSr/qxqTTdn+gN+eZIgX90hZAriTtraCC4PLG6ycvUzgTaJ+6fIy6owd5bVrihs
- 7Y+RDH0ID9o9/sqt1q+W3mHdCvOv+f5lXzj/M5+XVl7SJJKTeoLyEK5bpk7auqbmpdPc
- Qa6J82KFKzykwBSbTn1W23zBi1riu41sf3GdqXkhr+dsX/2pNAvAVsc7Pq8csp5V+4my
- 3c+A==
-X-Gm-Message-State: AOJu0YzfjQIltVEIwYJsvXHqVoW6zTJkPTs5kVQ6NXwg3USWR+KAKZ/E
- qPVZvqQEstpqDqr4ywFGsYJCnriSQIFzfsBLMi0Lor/fa6SfDxqWmR/yr+El2xj/ZSG6HNnUXR3
- SKx/B+06EnHvzpyxxntlI+SvipoQYHXm7pw7hPck4amehkr6M3t/dLTIR
-X-Gm-Gg: ASbGncu6+VA1thOuAv064/WdtSl7X3NUdKjSG6tOc59uyr0nxosiHc8L2t4a8Wwhegi
- foxUyA1TxzX9uI9CfKFo043yUT5njfFcGfqpWXdwLsoCyBWofbzJW9toHCe+drUl4n+YkutKv8j
- n31C9mQBEHbeP1sfgxBZlGkMoaQK0HzPvqq87s6XeKkfiW8TdWJykpZjY4scjxYgyftncOxkRgF
- iQHICW72hrgVydGp6T0Ii1W9rPZYdR/e7CqrO96C8pkl4EX2xYxstamkMRt1YHSTgHvMsxgYOzW
- UbhWoVnSzbzU67DQuZRh6J1lZlHiEivhHtroqIG2zmOXYLT3B3HbFHF3ANxvuJJJb1yRRDtQYhm
- TmLgJv/4iuiFJ+MSj231GN1IusSGJaDzSKsBJAH2PL0y0lpO732leXPos+Q==
-X-Received: by 2002:a05:600c:4ecd:b0:46e:32d4:46a1 with SMTP id
- 5b1f17b1804b1-4777327c110mr76294895e9.22.1762789751014; 
- Mon, 10 Nov 2025 07:49:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEKtTriYcA3TD9cazAT91fTSNcEad6mGbprJQniVFFySmu05jY53M7004+Ny/PXZd9i4wrUfg==
-X-Received: by 2002:a05:600c:4ecd:b0:46e:32d4:46a1 with SMTP id
- 5b1f17b1804b1-4777327c110mr76294555e9.22.1762789750604; 
- Mon, 10 Nov 2025 07:49:10 -0800 (PST)
+ bh=XiQZc0S9otfidhonOxKcoAmt4++DcUiIFzKq2jBQlWQ=;
+ b=wEJ/WHo698+tYl8Nq3rpan5p1dKjoZ9GC/srVL79t0t8QQmlWl5k19xdynr3gJ2+ru
+ TwKKj4m690oInBqEKaZRbzX7i2cVDz1fjEzD1wTx1289d8dVc+XigkrvkPL8tFeedQrR
+ 6LlVuiKoYsztR4JS73OJMswdghu/+ew5GBzUK2vVzdKaD/zy5oe7O8/gX7J1Ra27f8g7
+ M/ybPa65KFkdOwhrnHoXGarw2goY+ALbFgo1r5VqjIUo8PRWwVooVKtqQdZtZc8Hydq3
+ D7WwNa3J2YF45/1gazZv8bnZpfwv+Id+2Ck+Xelho6xxU2uoEHmAbEJP43zX9eKOjb4Q
+ zkAw==
+X-Gm-Message-State: AOJu0Yx09VskjYZhqGT0RGc9RUnfvBwJAZgHw1IhVSQ5Zxg4NaRq+6Ys
+ kobkmPLLWCGT7hCEJm9FOmZMJSZoTwOeOPee6EyT04zgWlGfS5GioJrHXhPHmdED1RcfPtOOvWW
+ oAQ5ucDyDtvpalQkh8KIY+vQSC3jJalt9TqjPVk59gCwfQltFBn/JiBPP
+X-Gm-Gg: ASbGncup7zgNurM24vvFYGwNobkOnvy7WRM2XDJhrWygAe28qkSd81C9dHs79ZGLnRs
+ pldovicNRe0r1oHw1GazSSjYKNFS6crP2jAA+v3+cno6LE9x4/WufuPuS6/xfeX3B9Y8I3J2Oei
+ DVoTG3udbVusLAQ5wpnXPUW5CMXrI6OyvDL983xnhwcTm38rT1It5ZkBKi43pH68xCMlZewlTEc
+ OkUUepQctM3QC8f66At7elRteEcqFA5lDUCCF0TlFOjQXjYgBLLovP3lRxyM6WlNKz85S2JXReU
+ 9CHDjykET5Wo0glH1E3AR4OsLPSSp5+4Hngw4KqWbd+OceAx6bL5gEvNI+LQri5o/JV+eigqfLu
+ rMjvZH/+ri35RRSuSPfEKiT2BOT22HQLso3stXbazPEJcXDuwKsIJHdJRWQ==
+X-Received: by 2002:a05:6000:2d12:b0:42b:2c61:86f1 with SMTP id
+ ffacd0b85a97d-42b2dc7f5c0mr5011767f8f.35.1762789786024; 
+ Mon, 10 Nov 2025 07:49:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFS5PIegtasFArTob8lo4VL4RLFJ3/lIFDozxlnGZSs+0oRoXTg6ZcFPcc6Tufm6dULhULW8g==
+X-Received: by 2002:a05:6000:2d12:b0:42b:2c61:86f1 with SMTP id
+ ffacd0b85a97d-42b2dc7f5c0mr5011745f8f.35.1762789785617; 
+ Mon, 10 Nov 2025 07:49:45 -0800 (PST)
 Received: from localhost
  (p200300cfd7171f537afd31f3f827a45e.dip0.t-ipconnect.de.
  [2003:cf:d717:1f53:7afd:31f3:f827:a45e])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47761c2fe2asm270305485e9.5.2025.11.10.07.49.09
+ ffacd0b85a97d-42b303386f1sm14433781f8f.3.2025.11.10.07.49.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Nov 2025 07:49:09 -0800 (PST)
+ Mon, 10 Nov 2025 07:49:43 -0800 (PST)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -94,18 +94,16 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Subject: [PATCH v2 02/19] =?UTF-8?q?rbd:=20Run=20co=20BH=20CB=20in=20the?=
- =?UTF-8?q?=20coroutine=E2=80=99s=20AioContext?=
-Date: Mon, 10 Nov 2025 16:48:37 +0100
-Message-ID: <20251110154854.151484-3-hreitz@redhat.com>
+Subject: [PATCH v2 14/19] ssh: Run restart_coroutine in current AioContext
+Date: Mon, 10 Nov 2025 16:48:49 +0100
+Message-ID: <20251110154854.151484-15-hreitz@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251110154854.151484-1-hreitz@redhat.com>
 References: <20251110154854.151484-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,7 +112,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,109 +128,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_rbd_completion_cb() schedules the request completion code
-(qemu_rbd_finish_bh()) to run in the BDS’s AioContext, assuming that
-this is the same thread in which qemu_rbd_start_co() runs.
+restart_coroutine() is attached as an FD handler just to wake the
+current coroutine after yielding.  It makes most sense to attach it to
+the current (request) AioContext instead of the BDS main context.  This
+way, the coroutine can be entered directly from the BH instead of having
+yet another indirection through AioContext.co_schedule_bh.
 
-To explain, this is how both latter functions interact:
-
-In qemu_rbd_start_co():
-
-    while (!task.complete)
-        qemu_coroutine_yield();
-
-In qemu_rbd_finish_bh():
-
-    task->complete = true;
-    aio_co_wake(task->co); // task->co is qemu_rbd_start_co()
-
-For this interaction to work reliably, both must run in the same thread
-so that qemu_rbd_finish_bh() can only run once the coroutine yields.
-Otherwise, finish_bh() may run before start_co() checks task.complete,
-which will result in the latter seeing .complete as true immediately and
-skipping the yield altogether, even though finish_bh() still wakes it.
-
-With multiqueue, the BDS’s AioContext is not necessarily the thread
-start_co() runs in, and so finish_bh() may be scheduled to run in a
-different thread than start_co().  With the right timing, this will
-cause the problems described above; waking a non-yielding coroutine is
-not good, as can be reproduced by putting e.g. a usleep(100000) above
-the while loop in start_co() (and using multiqueue), giving finish_bh()
-a much better chance at exiting before start_co() can yield.
-
-So instead of scheduling finish_bh() in the BDS’s AioContext, schedule
-finish_bh() in task->co’s AioContext.
-
-In addition, we can get rid of task.complete altogether because we will
-get woken exactly once, when the task is indeed complete, no need to
-check.
-
-(We could go further and drop the BH, running aio_co_wake() directly in
-qemu_rbd_completion_cb() because we are allowed to do that even if the
-coroutine isn’t yet yielding and we’re in a different thread – but the
-doc comment on qemu_rbd_completion_cb() says to be careful, so I decided
-not to go so far here.)
-
-Buglink: https://issues.redhat.com/browse/RHEL-67115
-Reported-by: Junyao Zhao <junzhao@redhat.com>
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/rbd.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ block/ssh.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/block/rbd.c b/block/rbd.c
-index 3611dc81cf..2a70b5a983 100644
---- a/block/rbd.c
-+++ b/block/rbd.c
-@@ -110,9 +110,7 @@ typedef struct BDRVRBDState {
- } BDRVRBDState;
+diff --git a/block/ssh.c b/block/ssh.c
+index 70fe7cf86e..bdec94e9e9 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -1010,19 +1010,18 @@ static int ssh_has_zero_init(BlockDriverState *bs)
+ }
  
- typedef struct RBDTask {
+ typedef struct BDRVSSHRestart {
 -    BlockDriverState *bs;
++    BDRVSSHState *s;
      Coroutine *co;
--    bool complete;
-     int64_t ret;
- } RBDTask;
+ } BDRVSSHRestart;
  
-@@ -1309,7 +1307,6 @@ static int qemu_rbd_resize(BlockDriverState *bs, uint64_t size)
- static void qemu_rbd_finish_bh(void *opaque)
+ static void restart_coroutine(void *opaque)
  {
-     RBDTask *task = opaque;
--    task->complete = true;
-     aio_co_wake(task->co);
+     BDRVSSHRestart *restart = opaque;
+-    BlockDriverState *bs = restart->bs;
+-    BDRVSSHState *s = bs->opaque;
+-    AioContext *ctx = bdrv_get_aio_context(bs);
++    BDRVSSHState *s = restart->s;
+ 
+     trace_ssh_restart_coroutine(restart->co);
+-    aio_set_fd_handler(ctx, s->sock, NULL, NULL, NULL, NULL, NULL);
++    aio_set_fd_handler(qemu_get_current_aio_context(), s->sock,
++                       NULL, NULL, NULL, NULL, NULL);
+ 
+     aio_co_wake(restart->co);
  }
- 
-@@ -1326,7 +1323,7 @@ static void qemu_rbd_completion_cb(rbd_completion_t c, RBDTask *task)
+@@ -1031,12 +1030,13 @@ static void restart_coroutine(void *opaque)
+  * handlers are set up so that we'll be rescheduled when there is an
+  * interesting event on the socket.
+  */
+-static coroutine_fn void co_yield(BDRVSSHState *s, BlockDriverState *bs)
++static coroutine_fn void co_yield(BDRVSSHState *s)
  {
-     task->ret = rbd_aio_get_return_value(c);
-     rbd_aio_release(c);
--    aio_bh_schedule_oneshot(bdrv_get_aio_context(task->bs),
-+    aio_bh_schedule_oneshot(qemu_coroutine_get_aio_context(task->co),
-                             qemu_rbd_finish_bh, task);
- }
- 
-@@ -1338,7 +1335,7 @@ static int coroutine_fn qemu_rbd_start_co(BlockDriverState *bs,
-                                           RBDAIOCmd cmd)
- {
-     BDRVRBDState *s = bs->opaque;
--    RBDTask task = { .bs = bs, .co = qemu_coroutine_self() };
-+    RBDTask task = { .co = qemu_coroutine_self() };
-     rbd_completion_t c;
      int r;
+     IOHandler *rd_handler = NULL, *wr_handler = NULL;
++    AioContext *ctx = qemu_get_current_aio_context();
+     BDRVSSHRestart restart = {
+-        .bs = bs,
++        .s = s,
+         .co = qemu_coroutine_self()
+     };
  
-@@ -1401,9 +1398,8 @@ static int coroutine_fn qemu_rbd_start_co(BlockDriverState *bs,
-         return r;
+@@ -1051,7 +1051,7 @@ static coroutine_fn void co_yield(BDRVSSHState *s, BlockDriverState *bs)
+ 
+     trace_ssh_co_yield(s->sock, rd_handler, wr_handler);
+ 
+-    aio_set_fd_handler(bdrv_get_aio_context(bs), s->sock,
++    aio_set_fd_handler(ctx, s->sock,
+                        rd_handler, wr_handler, NULL, NULL, &restart);
+     qemu_coroutine_yield();
+     trace_ssh_co_yield_back(s->sock);
+@@ -1093,7 +1093,7 @@ static coroutine_fn int ssh_read(BDRVSSHState *s, BlockDriverState *bs,
+         trace_ssh_read_return(r, sftp_get_error(s->sftp));
+ 
+         if (r == SSH_AGAIN) {
+-            co_yield(s, bs);
++            co_yield(s);
+             goto again;
+         }
+         if (r == SSH_EOF || (r == 0 && sftp_get_error(s->sftp) == SSH_FX_EOF)) {
+@@ -1168,7 +1168,7 @@ static coroutine_fn int ssh_write(BDRVSSHState *s, BlockDriverState *bs,
+         trace_ssh_write_return(r, sftp_get_error(s->sftp));
+ 
+         if (r == SSH_AGAIN) {
+-            co_yield(s, bs);
++            co_yield(s);
+             goto again;
+         }
+         if (r < 0) {
+@@ -1233,7 +1233,7 @@ static coroutine_fn int ssh_flush(BDRVSSHState *s, BlockDriverState *bs)
+  again:
+     r = sftp_fsync(s->sftp_handle);
+     if (r == SSH_AGAIN) {
+-        co_yield(s, bs);
++        co_yield(s);
+         goto again;
      }
- 
--    while (!task.complete) {
--        qemu_coroutine_yield();
--    }
-+    /* Expect exactly a single wake from qemu_rbd_finish_bh() */
-+    qemu_coroutine_yield();
- 
-     if (task.ret < 0) {
-         error_report("rbd request failed: cmd %d offset %" PRIu64 " bytes %"
+     if (r < 0) {
 -- 
 2.51.1
 
