@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 762D2CCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 14:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79407CCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 14:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vISWo-0007gG-Db; Mon, 10 Nov 2025 09:05:54 -0500
+	id 1vISbk-0003VR-O7; Mon, 10 Nov 2025 09:11:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vISWj-0007Wn-7o
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:05:49 -0500
-Received: from 1.mo552.mail-out.ovh.net ([178.32.96.117])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vISW7-0006Zt-Mr
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:05:12 -0500
+Received: from 7.mo548.mail-out.ovh.net ([46.105.33.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vISWf-0000Nx-RS
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:05:47 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.159])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4d4rzW6Xsbz5xy9;
- Mon, 10 Nov 2025 14:05:43 +0000 (UTC)
-Received: from kaod.org (37.59.142.97) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vISW4-00005b-Go
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:05:11 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.134])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d4ryk37VBz5xyk;
+ Mon, 10 Nov 2025 14:05:02 +0000 (UTC)
+Received: from kaod.org (37.59.142.114) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 10 Nov
- 2025 15:05:43 +0100
+ 2025 15:05:00 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-97G002ad4d19d4-2c8c-4be0-82f6-d5afa59b5d88,
+ (GARM-114S008630e832b-99e4-4cda-aac2-ca3157944bbd,
  2CC8F654BF9A736B588295E2BFA8A60E013487DB) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <8648546b-8c10-4cc8-b627-373eb1457d91@kaod.org>
-Date: Mon, 10 Nov 2025 15:05:42 +0100
+Message-ID: <5fdca7c7-e9aa-42df-8eff-1ea45b2467ce@kaod.org>
+Date: Mon, 10 Nov 2025 15:04:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 05/12] hw/arm/aspeed_ast10x0: Add common init function
- for AST10x0 SoCs
+Subject: Re: [PATCH v1 04/12] hhw/misc/aspeed_scu: Add AST1060 A2 silicon
+ revision definition
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -44,7 +44,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
- <20251106084925.1253704-6-jamin_lin@aspeedtech.com>
+ <20251106084925.1253704-5-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,27 +89,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251106084925.1253704-6-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251106084925.1253704-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.97]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.114]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: c83594d7-5796-4135-a4d5-3a7fec60ef29
-X-Ovh-Tracer-Id: 17381361287500565310
+X-Ovh-Tracer-GUID: 7ef8ea20-cbec-4fb1-87fe-67f5ab594c7d
+X-Ovh-Tracer-Id: 17369539340142807870
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF9Pp+bMD8ZprMQRoFmzl2wLUBR83UOfCZdhj4Cx81TQGQuvPKIgq9vcxxsNROTj+TjZHetNgMyoqjBPXOVeVgbm4fKGYde24JTqC+k6a0LiT/JYCL6WzQ0Pfrt0gxlc/zHUqinCDwzpt2lEggIHJCkNOBqlYig1lyOdHd/0dyQcrQ88A7qebxCFUCMlOxx1s95h4GXy/VY6cZB8agoo001VlPEDVm+KuyKS8cgZowIjHZOid+plvQ1Sv3svMJquPncXmpILBkAPyYeeIsT4TAqHHfXGdWm+HX4Zlx0NmeUB1S/14NCB/EE41qz22M4nw+BySSH9Y2hqGudV53XXASwtAyW7m9oSD/lEyoM1pno/Q7UJo3+sTsClRSkM4lekClv3NeSNcqtoXQmedEvJQ+TZeVsewlaUphb5AoIjbfeD8PIkawUO6gDGaex2SVcCjS+J+ZhsGrwTxa1+AjfHQZejNNuCYbuo/D46qsyExmOQsHD2UuvGC1YFuOkJ/j4bZz6evI4P2WdZznegPc2+QpGldUEe4WzR7YAQFCuyXLBwR1bONImvKzXefxp8JCkD1Brv+EdSBkFOLQNQDzDDZF9NZ8kI/sgd5bLFUKoGM8VXzJgxYUjk8S+3SZUJO5mZzJrxAN8vzTdlMQodf2xAeQRKyyIhTLSIjUM+VyJsG391A
-DKIM-Signature: a=rsa-sha256; bh=5B6e1wQ7/nzJiX8bAfhqOLK28kTkoBtk5ne8Brxb3lw=; 
+X-VR-SPAMCAUSE: dmFkZTFXswTJJHzhsn0abB9hdsQSmehlkPhRAADzeu9n3hXwRttC1CdG2VACr6xE2JZqK0IWt+nKeNCX6+u8oifV7mw1+MHilWh6sOZVl6Gyb7cwmQnZyfOsreTDHoRkT8v1agZn5jNuTfnBtAR8kT6Ly75WxECgsWDyTgWevpiMCTmUxCI0zHT5h5M0fd9fLb3XHhX0L/vegDptr8pPFxcJm2F1VnDxJ1WFUpwfJ+nj+zFNb90HtgPrHKlH3Vc9y+0wjqkpf7HBJiAbUBixBQoH76Mb3ehzxBRUH7NNjPj+PNLGiKfrYFZBRZqM+y4i4SEBiv+wMFLnMaSCw4d9r1jBVkW9p909xTwPQUDGH5xu+ARQqXG8pbeMydNQhm+Zwp2Ogt336YD9gaeyb9VQ9+W9qWqy7vCPIzHEkWBd9UyHjFOFRZaFqY7WwZuYv+Hkz7sgMbZ1PD/EOqIYjOjvQKpk3QK6eR3em9uFJesghp/uZrvJ2HTDu9KUXAr1ed9AWr/vIvtAZfs07EUk8eVYpayjXDlmuhFx4v6rVxA3ahiOUVrSwSBHGacCWgi6KDFwmG4MUjL67bPxbfLNvtoj+n1wtVnb9Ly1hInUO9TdrX8IRtSCvSH0zU9Tm4bZz8BNoZY9UwdnVCOKDSK5oM0ts90kMO1U5vF0fRe7x5M+EYyZLhbPgA
+DKIM-Signature: a=rsa-sha256; bh=z4/ir0Iw5O6DNAtNIidU+Kijl11HHHzS3nb1xqh1sHY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1762783544; v=1;
- b=HeYHVbxTPHTEGtEexxUNVz2Y4SA2xykXTNwX/WKQnicpzGPbRZyfG6R3K+MlakQpG2nlGXn6
- S+Fg+v79avvYkSfJDmeeMcSB896jvarddQXyg54kNgudqoYK5+arqXGaNUFMH7420Gp3nSLzxU0
- MweEosAYY0qA9QENbcmGIqPlNWH3LGJnOeT2oduf1H/Rj69moJ2n02ZXZxzqmmI4t7lX+x9R0Hh
- /V5q26o1CUaF3q+4adbfaAZcf5hREQ8nuVzk5Tqj1uKcZuZTTjYVYIyNyDuUqxbzriK6PHgfIcg
- oyyi0AlY9LT02+CcEBGiFcswDaeLonaXXDiAISg5Y6Fmw==
-Received-SPF: pass client-ip=178.32.96.117; envelope-from=clg@kaod.org;
- helo=1.mo552.mail-out.ovh.net
+ t=1762783504; v=1;
+ b=ZtThXI0DHOjHkUGcmk+58LiGB7rLe1wR7886F+q7jj42eJNWnePlmpfsvWbzRBaY20cpWBBv
+ Tt8KfBL3Ct4vYuh7QoIOmX+KCcyoYuclG8Sk1b95fTx2thkHKAH1IvR5+wCGrogIpDgHABXkJba
+ uCt/TTPiVSY1/F+cOjmuU+LOK0jQuXD6N74A4Z4a67FOMXtInKBAFV03sSz6Wg/T4JT8u9Ln1M9
+ HPIZO5tnWS8z38n/DEl5GfFVVMsWkLnBkC+roup5n5qRKWWU34qc5ENpX7umic/kQstAogBalPb
+ 8cMvQNUyPzcwLRM61PNI6zbDJiPTDsjE0lPzMpNOREw4A==
+Received-SPF: pass client-ip=46.105.33.25; envelope-from=clg@kaod.org;
+ helo=7.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,31 +134,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/6/25 09:49, Jamin Lin wrote:
-> Introduce a new common initialization function
-> aspeed_soc_ast10x0_init() for AST10x0 series SoCs. This separates the
-> shared initialization logic from the AST1030-specific part, allowing
-> reuse by future SoCs such as AST1060.
-> 
-> The AST1060 does not include the LPC and PECI models, so the common
-> initializer is used for all shared modules, while
-> aspeed_soc_ast1030_init() adds initialization of LPC and PECI, which
-> are unique to AST1030.
-> 
-> This refactor improves code reuse and prepares the codebase for
-> supporting the AST1060 platform.
-> 
-> No functional changes.
+> Add a new silicon revision constant AST1060_A2_SILICON_REV for the
+> AST1060 SoC. This allows the SCU model and related SoC layers to
+> identify and handle AST1060 A2 revision properly in the same way as
+> other Aspeed SoC families.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast10x0.c | 15 ++++++++++-----
->   1 file changed, 10 insertions(+), 5 deletions(-)
+>   include/hw/misc/aspeed_scu.h | 1 +
+>   hw/misc/aspeed_scu.c         | 1 +
+>   2 files changed, 2 insertions(+)
 > 
+> diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
+> index 684b48b722..76ef8dc592 100644
+> --- a/include/hw/misc/aspeed_scu.h
+> +++ b/include/hw/misc/aspeed_scu.h
+> @@ -51,6 +51,7 @@ struct AspeedSCUState {
+>   #define AST2600_A3_SILICON_REV   0x05030303U
+>   #define AST1030_A0_SILICON_REV   0x80000000U
+>   #define AST1030_A1_SILICON_REV   0x80010000U
+> +#define AST1060_A2_SILICON_REV   0xA0030000U
+>   #define AST2700_A0_SILICON_REV   0x06000103U
+>   #define AST2720_A0_SILICON_REV   0x06000203U
+>   #define AST2750_A0_SILICON_REV   0x06000003U
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index 1f996d5398..300571256a 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -565,6 +565,7 @@ static uint32_t aspeed_silicon_revs[] = {
+>       AST2600_A3_SILICON_REV,
+>       AST1030_A0_SILICON_REV,
+>       AST1030_A1_SILICON_REV,
+> +    AST1060_A2_SILICON_REV,
+>       AST2700_A0_SILICON_REV,
+>       AST2720_A0_SILICON_REV,
+>       AST2750_A0_SILICON_REV,
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 
 
