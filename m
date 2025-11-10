@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0887CCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F80CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIUcN-0001J7-8n; Mon, 10 Nov 2025 11:19:47 -0500
+	id 1vIUob-0004D4-SG; Mon, 10 Nov 2025 11:32:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vIUc7-0001CD-18
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:19:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIUnm-00040d-MW
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:31:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vIUc4-0006Wx-PN
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:19:30 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIUnk-0000Fy-2g
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:31:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762791568;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1762792290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eHp4tImynCxj+bloGJ03P4xU9+vpwhKO2QtTweutyiI=;
- b=fAVWPzBDirY2A22UYcfxNWUsxyrq97NZVELo+CTDHJa0VLk3erOkQqbvhSCxEvNFpDXTWH
- rvsNpWMJwH6wR5oA/D7JOk2ARiWsXfZVF0ixcNJtbeKwQd11cFJ5Lznkf3Jo6/N/HUtyYw
- Wnvs6x2oN6zmKQEuHFyqJi6RMsesI2I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=hRucd3p/guezkT2k31F9Cv1aXXheykWUgtKIH/EWdFo=;
+ b=EbBQJffFCN6rAtqQ9k5ogUdaXuEsPj4XUnczO4wrOIv3tJAvCsit/vCrwU5vk1eCTY90OQ
+ Q/xPIqQQ22lCfTQ/C4nekOilVnA4oITMash5ZvoSLzsf2BwWykg9ww1fFyXk2Rh6IiZW73
+ fWyEI0/Yif8X/IvEj10J5/mu2WtOPEQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-QbmGJb0UOfujUYr-BZnBWQ-1; Mon,
- 10 Nov 2025 11:19:25 -0500
-X-MC-Unique: QbmGJb0UOfujUYr-BZnBWQ-1
-X-Mimecast-MFC-AGG-ID: QbmGJb0UOfujUYr-BZnBWQ_1762791564
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-JrARjhjWOBObH1GFAcrQoA-1; Mon,
+ 10 Nov 2025 11:31:27 -0500
+X-MC-Unique: JrARjhjWOBObH1GFAcrQoA-1
+X-Mimecast-MFC-AGG-ID: JrARjhjWOBObH1GFAcrQoA_1762792286
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 888F719560B3; Mon, 10 Nov 2025 16:19:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.62])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C013180087B; Mon, 10 Nov 2025 16:19:22 +0000 (UTC)
-Date: Mon, 10 Nov 2025 16:19:18 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 12/12] iotests: Add coverage of recent NBD qio
- deadlock fix
-Message-ID: <aRIQhtavlD8Q6zJa@redhat.com>
-References: <20251108230525.3169174-14-eblake@redhat.com>
- <20251108230525.3169174-26-eblake@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2C061800357; Mon, 10 Nov 2025 16:31:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.209])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D1F419560A7; Mon, 10 Nov 2025 16:31:22 +0000 (UTC)
+Date: Mon, 10 Nov 2025 17:31:20 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ eblake@redhat.com
+Subject: Re: [PATCH v2 5/5] vvfat: add support for "fat-size" options
+Message-ID: <aRITWJo6R_oG9t7R@redhat.com>
+References: <20251107145327.539481-1-chigot@adacore.com>
+ <20251107145327.539481-6-chigot@adacore.com>
+ <87zf8umbzh.fsf@pond.sub.org>
+ <CAJ307EjObqJ6Pr5N+WrEffTr3pWOpRCKVVamZhCG9ZgwHczVYw@mail.gmail.com>
+ <87bjlakpa5.fsf@pond.sub.org>
+ <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
+ <87o6paj96k.fsf@pond.sub.org> <aRIC1NZXQUxkR7iR@redhat.com>
+ <f301fcab-a7d6-1d89-aa56-52397f0d940a@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251108230525.3169174-26-eblake@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <f301fcab-a7d6-1d89-aa56-52397f0d940a@eik.bme.hu>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,46 +90,152 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 08, 2025 at 04:59:33PM -0600, Eric Blake wrote:
-> Test that all images in a qcow2 chain using an NBD backing file can be
-> served by the same process.  Prior to the recent QIONetListener fixes,
-> this test would demonstrate deadlock.
+Am 10.11.2025 um 16:36 hat BALATON Zoltan geschrieben:
+> On Mon, 10 Nov 2025, Kevin Wolf wrote:
+> > Am 10.11.2025 um 14:42 hat Markus Armbruster geschrieben:
+> > > Clément Chigot <chigot@adacore.com> writes:
+> > > 
+> > > > On Mon, Nov 10, 2025 at 2:09 PM Markus Armbruster <armbru@redhat.com> wrote:
+> > > > > 
+> > > > > Clément Chigot <chigot@adacore.com> writes:
+> > > > > 
+> > > > > > On Mon, Nov 10, 2025 at 11:13 AM Markus Armbruster <armbru@redhat.com> wrote:
+> > > > > > > 
+> > > > > > > Clément Chigot <chigot@adacore.com> writes:
+> > > > > > > 
+> > > > > > > > This allows more flexibility to vvfat backend. The values of "Number of
+> > > > > > > > Heads" and "Sectors per track" are based on SD specifications Part 2.
+> > > > > > > > 
+> > > > > > > > Due to the FAT architecture, not all sizes are reachable. Therefore, it
+> > > > > > > > could be round up to the closest available size.
+> > > > > > > > 
+> > > > > > > > FAT32 has not been adjusted and thus still default to 504 Mib.
+> > > > > > > > 
+> > > > > > > > For floppy, only 1440 Kib and 2880 Kib are supported.
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Clément Chigot <chigot@adacore.com>
+> > > > > > > 
+> > > > > > > [...]
+> > > > > > > 
+> > > > > > > > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > > > > > > > index 8a479ba090..0bcb360320 100644
+> > > > > > > > --- a/qapi/block-core.json
+> > > > > > > > +++ b/qapi/block-core.json
+> > > > > > > > @@ -3478,11 +3478,17 @@
+> > > > > > > >  #     (default: true)
+> > > > > > > >  #     (since 10.2)
+> > > > > > > >  #
+> > > > > > > > +# @fat-size: size of the device in bytes.  Due to FAT underlying
+> > > > > > > > +#     architecture, this size can be rounded up to the closest valid
+> > > > > > > > +#     size.
+> > > > > > > > +#     (since 10.2)
+> > > > > > > > +#
+> > > > > > > 
+> > > > > > > Can you explain again why you moved from @size to @fat-size?
+> > > > > > 
+> > > > > > Just to be sure, you mean in the above comment, in the commit message or both ?
+> > > > > 
+> > > > > Just to me, because I'm not sure I like the change, but that may well be
+> > > > > due to a lack of understanding of your reasons.
+> > > > 
+> > > > Naming `fat-size` instead of `size` ensures the parameter is only
+> > > > recognized by the vvfat backend. In particular, it will be refused by
+> > > > the default raw format, avoiding confusion:
+> > > >  "-drive file=fat:<path>,size=256M" results in a 504M FAT disk
+> > > > truncated to 256M, raw format being implicit.
+> > > >  "-drive file=fat:<path>,fat-size=256M" is refused. "fat-size" is
+> > > > unsupported by raw format.
+> > > 
+> > > I figure throwing in format=raw to make raw format explicit doesn't
+> > > change anything.  Correct?
+> > > 
+> > > >  "-drive file=fat:<path>,format=vvfat,fat-size=256M" results in a 256M FAT disk.
+> > > >  "-drive file=fat:<path>,format=vvfat,size=256M" is refused. "size" is
+> > > > unsupported by vvfat format.
+> > > 
+> > > If it was called @size, what behavior would we get?  Just two cases, I
+> > > think:
+> > > 
+> > > 1. With raw format:
+> > > 
+> > >     -drive file=fat:<path>,size=256M
+> > 
+> > You'd silently get a 504 MiB filesystem truncated to 256 MiB (i.e. a
+> > corrupted file system). It's quite easy to forget format=vvfat, so
+> > something that initially looks like it might be working is not a great
+> > result for this user error.
 > 
-> The test borrows heavily from the original formula by "John Doe" in
-> the gitlab bug, but uses a Unix socket rather than TCP to avoid port
-> contention, and uses a full-blown QEMU rather than qemu-storage-daemon
-> since both programs were impacted.
-> 
-> The test starts out with the even simpler task of directly adding an
-> NBD client without qcow2 chain ('client'), which also provokes the
-> deadlock; but commenting out the 'Adding explicit NBD client' section
-> will still show deadlock when reaching the 'Adding wrapper image...'.
-> 
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3169
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> 
-> ---
-> v2: split out vvfat changes, add an explicit client in addition to the
-> implicit one through qcow2
-> ---
->  tests/qemu-iotests/tests/nbd-in-qcow2-chain   | 94 +++++++++++++++++++
->  .../qemu-iotests/tests/nbd-in-qcow2-chain.out | 75 +++++++++++++++
->  2 files changed, 169 insertions(+)
->  create mode 100755 tests/qemu-iotests/tests/nbd-in-qcow2-chain
->  create mode 100644 tests/qemu-iotests/tests/nbd-in-qcow2-chain.out
+> Why doesn't file=fat: imply format=vvfat? For what is the fat: part in
+> file then?
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+-drive is built pretty much on the assumption that you have an image
+format that runs on top of a protocol. Format probing probes the image
+format, not the protocol, while prefixes like fat: (or nbd:, http: etc.)
+specify the protocol.
 
+So if you don't specify the format, we first open the protocol level
+(which is vvfat) and then probing will detect that over this protocol,
+we access a raw image. So it's mostly like saying format=raw.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+I think that format=<protocol driver> works is really more accidental,
+but we can't change it now (and probably also don't want to). It results
+in opening only the protocol layer and not stacking any format driver on
+top of it.
+
+Options that you specify in -drive generally go to the top layer. So the
+consequence in our case is that with format=vvfat, the option goes to
+vvfat, but with format=raw (or unspecified format), it goes to the raw
+forma driver.
+
+> I currently recommend using:
+> 
+> -drive if=none,id=ufat,format=raw,file=fat:rw:/dir/to/export
+> -device usb-storage,drive=ufat
+> 
+> to my users which I got from somewhere but don't remember where and it
+> seems to work but maybe not the best way to specify this.
+
+It's fine, and I might use the same one myself (though you should be
+aware that fat:rw: is risky, it's full of bugs).
+
+But if you add an option like size=64M, it goes to the raw driver, which
+will take whatever image you access on the protocol level and truncate
+it at 64 MiB.
+
+If you want to give the size option on the vvfat level (and create a
+filesystem that is actually only 64 MiB instead of truncating a larger
+one), then obviously format=vvfat allows you to do that because then
+there is no raw format layer to begin with. Or if you do have the raw
+format layer, you can access options of the protocol layer by prefixing
+"file.". So format=raw,file.size=64M would still pass the size option to
+vvfat.
+
+So the command line does allow you to get the option to the right place,
+it's just very easy to get confused about this and to specify the option
+for the wrong layer.
+
+> After reading this thread I'm confused about how to use this
+> correctly. Is there some documentation on this? There only seems to be
+> some mentions in docs/system/qemu-block-drivers.rst.inc but all of
+> them using older options:
+> 
+>   |qemu_system| linux.img -hdb fat:/my_directory
+>   |qemu_system| linux.img -fda fat:floppy:/my_directory
+>   |qemu_system| linux.img -fda fat:floppy:rw:/my_directory
+
+All of those are honestly fine, too, if you're happy with the defaults
+and don't want to set more advanced options.
+
+I'll give you this bonus option if you want to be modern:
+
+    -blockdev vvfat,node-name=ufat,dir=/my_directory,rw=on
+    -device usb-storage,drive=ufat
+
+But I don't think any of the other options is going away anytime soon.
+
+Kevin
 
 
