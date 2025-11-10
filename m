@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34BCCD1297
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 22:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDCECCFA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 23:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIaLr-0004MI-VY; Mon, 10 Nov 2025 17:27:08 -0500
+	id 1vIar5-0004h2-8A; Mon, 10 Nov 2025 17:59:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1vIaLo-00045M-8A
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 17:27:04 -0500
-Received: from outbound1g.eu.mailhop.org ([52.28.6.212])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1vIaLm-00009M-28
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 17:27:04 -0500
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vIaqt-0004Qd-QD
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 17:59:14 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vIaqs-0004X9-3g
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 17:59:11 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b713c7096f9so520403766b.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 14:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:cfbl-address:cfbl-feedback-id:from;
- bh=rErt73Sdbfn/qFee9Hf6kn2FwJUiCF0/ipcG6hLHciY=;
- b=PShQ9qJWRTya0L0EmBJXW1mVJJJhU/h9/ndStJD7rG9KOk5uv9m2W3l4BVWKCw1oPLZ61ltutJLVv
- TXDhRziVv/HqQ2FFqiHA2p1GnXgZLwRhMcY8BCkO7o5TrUwhNupU1HkJsh548NXF9ai+FtNSeAOKsU
- FEj1Qm69IdCNg5mg=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:cfbl-address:cfbl-feedback-id:from;
- bh=rErt73Sdbfn/qFee9Hf6kn2FwJUiCF0/ipcG6hLHciY=;
- b=Oyzjb/iyHMN2VDSTskzmEyzCL3/AMM1mPmNomwZ2wX4yf+t75JivcecfNCdXnpLtrSpQ7Tqkq2E2O
- KPNad+JM6tViNVBTFGRSQD9rz734NC24/V5oqDywOZHG0O28DB7g7FoBA5Q52ny3hUH5Db7qM+gE/y
- qYYmdh86+IX8XBSOpthJWxz24rfsEL21IQdbGXeAb0rX2C42o/pVcWt1q2IFqOgE6AgetUM2QCSBiT
- wCX9rs4KaR4vMA6Vl9cceuqly3B5DVrqOIOnmexyZh+9gQVd5xloaJsamScfMuAdBycJqystHZgjoe
- ksZF09De3tA99E0xMYEjZmkzdpORaLQ==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 5c02824e-be84-11f0-b95e-5f56af36decb
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-CFBL-Feedback-ID: 5c02824e-be84-11f0-b95e-5f56af36decb:5
-CFBL-Address: prvs=040923d279=abuse@outbound.mailhop.org; report=arf
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound3.eu.mailhop.org (Halon) with ESMTPSA
- id 5c02824e-be84-11f0-b95e-5f56af36decb;
- Mon, 10 Nov 2025 22:26:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=rErt73Sdbfn/qFee9Hf6kn2FwJUiCF0/ipcG6hLHciY=; b=OPoph+FZhy26sozUSyFBbZ+Vt4
- IQmGDyLvtv7A3QdACmI5Gw5MVqmpVlJCZiFpPI4I0ChDKSNjhj/gxlmokqiq/BsdD69vQO8rIIgrx
- OzCaDyzoqP2C9RIbUl4sGQuQ/QhTUlXdJfwpyRO6W67aKUUsNxcXNudkfxOH7eqvNBG08gRP+RYfX
- Mz3iDS4M/nF/Wniphx0Pon0/vZTtdkcqZ1WfZZSSP2lOOSTmcxTUwtMXBNdY0J6SdqqeRmp4gSGUd
- 8u8G7EZhWxUNHm6D84DvZkEttEvcCayorkg/l2fSeGX5maLMCP2CVTRRIXGUT1TQWD6pkgvzOAZ4X
- w3a3I9Gw==;
-Received: from [134.3.93.166] (helo=debian.stackframe.org)
- by mail.duncanthrax.net with esmtpa (Exim 4.97)
- (envelope-from <svens@stackframe.org>) id 1vIaLd-00000005qEU-2NSJ;
- Mon, 10 Nov 2025 23:26:53 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-Cc: qemu-devel@nongnu.org,
-	Sven Schnelle <svens@stackframe.org>
-Subject: [PATCH 1/1] target/hppa: add 64 bit support to gdbstub
-Date: Mon, 10 Nov 2025 23:26:45 +0100
-Message-ID: <20251110222646.180265-2-svens@stackframe.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251110222646.180265-1-svens@stackframe.org>
-References: <20251110222646.180265-1-svens@stackframe.org>
+ d=gmail.com; s=20230601; t=1762815548; x=1763420348; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XJ/aCtEzIF0pB/zF0oJfUqwREKGpwVpCTU/gtPJxffU=;
+ b=FZIu3MWFC2BQFSGmwd6Ev1C69GBnalfAvUFy6uKfIIfySv7vE72GBpFfV+Imk3q+Dd
+ v24vOtHuBcIg2E2J+iAeR3yFxakHuEMNefkqICQW48KM6eu4Zo9hAasJuzwy8LGEqen/
+ G7uVeYlgTHLDSHIaJzMmFW5rVkb0Z0dpLYUpWqstWz8SOryKp3vxfpg7aL0B68ZJ2rQc
+ PLYi8zPjETzJJ31SPYHZ4sSpmZNSR0EM16ne9SrXeG5NaYhpxUePvyxNFi4heoA3RKbP
+ cBN8hlmkOceonq7ndtSCjEFd299PBLq9tTu1PCz1TvvxAMPpbZqjsusC5nkEj0HYn8JD
+ rqhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762815548; x=1763420348;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XJ/aCtEzIF0pB/zF0oJfUqwREKGpwVpCTU/gtPJxffU=;
+ b=QidfNL1sbGLgMNZIz+lXg+FHrFW8bp8a/pP4yeewS7y8sIZdKxnCsDX1a+d8jSKbhs
+ eX7iROue5eoVEDbCVpsDqHs5OKJKdoCBh94y8BLY9k0vqzEyebDoKxMkeUrb44mMltcp
+ Ed7WAiLjz00Qm2LnPKSRdluCqUmML+ZD4QJeTbaz2k/AlZXh7z6JBHG64fu1S72UbVGf
+ 5mkkhimYGzOdhtDDn0waT87Zj28vet4TtyVw8lzEpHig+yxOiAJM9cenz3qpUYjs/x9v
+ 1HGilcO5stVoFswZboDArkmHiQ0hVMfQwxq+OjaNU2APG+GRkqliFDQa8vuvRU7vZD6M
+ dMhg==
+X-Gm-Message-State: AOJu0Yztvtn7kd5CmgzDIUpbljBoou1s68l7DQKlgMKq6+3CRomXYB40
+ gi5cwWuwMZIuKFqJOFMOOoq39BpwVqcJ9wJhggWYMtA5tf6m1BzA4FSrd32Pfg==
+X-Gm-Gg: ASbGncsKWyKr7/ToxKKqenBWDbth0s9k3U8pgAIrtmPKzYJXCPkChFyCQe1MxIrAKii
+ aEsIYLequmZ2s5H/sJyjZ3gUc63eFf1jtUfbnJs9o/WJPEVddDRjeSe/R/cCb3ZLkf/wC/MAxyy
+ xL3klaWSRJ+BOsIyBdc902fJjY7st67FlESFuhx8f5JR8LKWlKuNAzOqrbeYN21ok1A+YL7EyZ9
+ l7PsDteOYUsyKU2MfBwEJBPxLkHu0mmNy2NEob79g/TqYjLJxoVCfdDxQ6JP5tAxJNQdhHMJHo9
+ g3jzyQzs7qmt52jIC14KvtBmlDFq6PICH4xSCkUc3KYqQUTcWTGEsJ1hIOcx6G7Ru/IAeAMuNp5
+ Szde/H/3WHItsEXem9IgfMxug2+lmME3owSrlN3/bLpelGGxsPA4ykAQQNM1D7NgcTn4pcV9gtE
+ 5vxwq/KbqwESZQnvpSJwmWuIZn8U0lVxaqzPzcV2ojFB0MFzSIWEk7mStxvyyQE+54wBmroC2Te
+ BohKsL/CWUsZhUVaPTFbW8aQffcOOucTLI=
+X-Google-Smtp-Source: AGHT+IE8yPg06rj5njcFQDbyIehPCrWn7Sw/7AUjC4DyI4HP5tG60fI7QlSPLV+qYRBw/c8Zhb21HA==
+X-Received: by 2002:a17:907:6ea5:b0:b5b:3ab0:a5b7 with SMTP id
+ a640c23a62f3a-b72e0562593mr976435566b.42.1762815547315; 
+ Mon, 10 Nov 2025 14:59:07 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-23dc-7300-bdbc-21c7-75fc-dd84.310.pool.telefonica.de.
+ [2a02:3100:23dc:7300:bdbc:21c7:75fc:dd84])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b72bf9bd741sm1165777866b.57.2025.11.10.14.59.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Nov 2025 14:59:06 -0800 (PST)
+Date: Mon, 10 Nov 2025 22:59:04 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ mohamed@unpredictable.fr
+CC: Pedro Barbuda <pbarbuda@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v10 13/28] whpx: change memory management logic
+In-Reply-To: <20251029165510.45824-14-mohamed@unpredictable.fr>
+References: <20251029165510.45824-1-mohamed@unpredictable.fr>
+ <20251029165510.45824-14-mohamed@unpredictable.fr>
+Message-ID: <463DE817-A72E-4ACF-B6A4-C40E879B4107@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=52.28.6.212; envelope-from=svens@stackframe.org;
- helo=outbound1g.eu.mailhop.org
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,120 +109,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
----
- target/hppa/gdbstub.c | 66 +++++++++++++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 21 deletions(-)
 
-diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
-index 0daa52f7af..d4fcbc535b 100644
---- a/target/hppa/gdbstub.c
-+++ b/target/hppa/gdbstub.c
-@@ -21,16 +21,25 @@
- #include "cpu.h"
- #include "gdbstub/helpers.h"
- 
--/*
-- * GDB 15 only supports PA1.0 via the remote protocol, and ignores
-- * any provided xml.  Which means that any attempt to provide more
-- * data results in "Remote 'g' packet reply is too long".
-- */
-+static int hppa_num_regs(CPUHPPAState *env)
-+{
-+    return hppa_is_pa20(env) ? 96 : 128;
-+}
-+
-+static int hppa_reg_size(CPUHPPAState *env)
-+{
-+    return hppa_is_pa20(env) ? 8 : 4;
-+}
- 
- int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    CPUHPPAState *env = cpu_env(cs);
--    uint32_t val;
-+    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = &cpu->env;
-+    target_ulong val;
-+
-+    if (n >= hppa_num_regs(env)) {
-+        return 0;
-+    }
- 
-     switch (n) {
-     case 0:
-@@ -133,24 +142,39 @@ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         val = env->cr[30];
-         break;
-     case 64 ... 127:
--        val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
--        break;
--    default:
--        if (n < 128) {
--            val = 0;
-+        if (hppa_is_pa20(env)) {
-+            val = env->fr[n - 64];
-         } else {
--            return 0;
-+            val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
-         }
-         break;
-+    default:
-+        val = 0;
-+        break;
-     }
- 
--    return gdb_get_reg32(mem_buf, val);
-+    if (hppa_is_pa20(env)) {
-+        return gdb_get_reg64(mem_buf, val);
-+    } else {
-+        return gdb_get_reg32(mem_buf, val);
-+    }
- }
- 
- int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    CPUHPPAState *env = cpu_env(cs);
--    uint32_t val = ldl_p(mem_buf);
-+    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = &cpu->env;
-+    target_ulong val;
-+
-+    if (n >= hppa_num_regs(env)) {
-+        return 0;
-+    }
-+
-+    if (hppa_is_pa20(env)) {
-+        val = ldq_p(mem_buf);
-+    } else {
-+        val = ldl_p(mem_buf);
-+    }
- 
-     switch (n) {
-     case 0:
-@@ -267,16 +291,16 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-         cpu_hppa_loaded_fr0(env);
-         break;
-     case 65 ... 127:
--        {
-+        if (hppa_is_pa20(env)) {
-+            env->fr[n - 64] = val;
-+        } else {
-             uint64_t *fr = &env->fr[(n - 64) / 2];
-             *fr = deposit64(*fr, (n & 1 ? 0 : 32), 32, val);
-         }
-         break;
-     default:
--        if (n >= 128) {
--            return 0;
--        }
-         break;
-     }
--    return 4;
-+
-+    return hppa_reg_size(env);
- }
--- 
-2.51.0
 
+Am 29=2E Oktober 2025 16:54:55 UTC schrieb Mohamed Mediouni <mohamed@unpre=
+dictable=2Efr>:
+>This allows edk2 to work on Arm, although u-boot is still not functional=
+=2E
+
+This seems to fix https://gitlab=2Ecom/qemu-project/qemu/-/issues/513, at =
+least it works for me with x86 SeaBIOS via pflash=2E Also, https://gitlab=
+=2Ecom/qemu-project/qemu/-/issues/934 looks like a duplicate=2E
+
+I wonder if this patch could be 10=2E2 material such that OVMF can finally=
+ work with WHPX=2E
+
+Best regards,
+Bernhard
+
+>
+>Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
+>---
+> accel/whpx/whpx-common=2Ec | 101 +++++++++++++++------------------------
+> 1 file changed, 38 insertions(+), 63 deletions(-)
+>
+>diff --git a/accel/whpx/whpx-common=2Ec b/accel/whpx/whpx-common=2Ec
+>index c69792e638=2E=2Eaefec4bc8f 100644
+>--- a/accel/whpx/whpx-common=2Ec
+>+++ b/accel/whpx/whpx-common=2Ec
+>@@ -258,89 +258,64 @@ void whpx_vcpu_kick(CPUState *cpu)
+>  * Memory support=2E
+>  */
+>=20
+>-static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
+>-                                void *host_va, int add, int rom,
+>-                                const char *name)
+>+static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
+> {
+>     struct whpx_state *whpx =3D &whpx_global;
+>-    HRESULT hr;
+>-
+>-    /*
+>-    if (add) {
+>-        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
+>-               (void*)start_pa, (void*)size, host_va,
+>-               (rom ? "ROM" : "RAM"), name);
+>-    } else {
+>-        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
+>-               (void*)start_pa, (void*)size, host_va, name);
+>-    }
+>-    */
+>-
+>-    if (add) {
+>-        hr =3D whp_dispatch=2EWHvMapGpaRange(whpx->partition,
+>-                                         host_va,
+>-                                         start_pa,
+>-                                         size,
+>-                                         (WHvMapGpaRangeFlagRead |
+>-                                          WHvMapGpaRangeFlagExecute |
+>-                                          (rom ? 0 : WHvMapGpaRangeFlagW=
+rite)));
+>-    } else {
+>-        hr =3D whp_dispatch=2EWHvUnmapGpaRange(whpx->partition,
+>-                                           start_pa,
+>-                                           size);
+>-    }
+>-
+>-    if (FAILED(hr)) {
+>-        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p b=
+ytes,"
+>-                     " Host:%p, hr=3D%08lx",
+>-                     (add ? "MAP" : "UNMAP"), name,
+>-                     (void *)(uintptr_t)start_pa, (void *)size, host_va,=
+ hr);
+>+    MemoryRegion *area =3D section->mr;
+>+    bool writable =3D !area->readonly && !area->rom_device;
+>+    WHV_MAP_GPA_RANGE_FLAGS flags;
+>+    uint64_t page_size =3D qemu_real_host_page_size();
+>+    uint64_t gva =3D section->offset_within_address_space;
+>+    uint64_t size =3D int128_get64(section->size);
+>+    HRESULT res;
+>+    void *mem;
+>+
+>+    if (!memory_region_is_ram(area)) {
+>+        if (writable) {
+>+            return;
+>+        } else if (!memory_region_is_romd(area)) {
+>+             add =3D false;
+>+        }
+>     }
+>-}
+>-
+>-static void whpx_process_section(MemoryRegionSection *section, int add)
+>-{
+>-    MemoryRegion *mr =3D section->mr;
+>-    hwaddr start_pa =3D section->offset_within_address_space;
+>-    ram_addr_t size =3D int128_get64(section->size);
+>-    unsigned int delta;
+>-    uint64_t host_va;
+>=20
+>-    if (!memory_region_is_ram(mr)) {
+>-        return;
+>+    if (!QEMU_IS_ALIGNED(size, page_size) ||
+>+        !QEMU_IS_ALIGNED(gva, page_size)) {
+>+        /* Not page aligned, so we can not map as RAM */
+>+        add =3D false;
+>     }
+>=20
+>-    delta =3D qemu_real_host_page_size() - (start_pa & ~qemu_real_host_p=
+age_mask());
+>-    delta &=3D ~qemu_real_host_page_mask();
+>-    if (delta > size) {
+>-        return;
+>-    }
+>-    start_pa +=3D delta;
+>-    size -=3D delta;
+>-    size &=3D qemu_real_host_page_mask();
+>-    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
+>+    if (!add) {
+>+        res =3D whp_dispatch=2EWHvUnmapGpaRange(whpx->partition,
+>+                gva, size);
+>+        if (!SUCCEEDED(res)) {
+>+            error_report("WHPX: failed to unmap GPA range");
+>+            abort();
+>+        }
+>         return;
+>     }
+>=20
+>-    host_va =3D (uintptr_t)memory_region_get_ram_ptr(mr)
+>-            + section->offset_within_region + delta;
+>+    flags =3D WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
+>+     | (writable ? WHvMapGpaRangeFlagWrite : 0);
+>+    mem =3D memory_region_get_ram_ptr(area) + section->offset_within_reg=
+ion;
+>=20
+>-    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
+>-                        memory_region_is_rom(mr), mr->name);
+>+    res =3D whp_dispatch=2EWHvMapGpaRange(whpx->partition,
+>+         mem, gva, size, flags);
+>+    if (!SUCCEEDED(res)) {
+>+        error_report("WHPX: failed to map GPA range");
+>+        abort();
+>+    }
+> }
+>=20
+> static void whpx_region_add(MemoryListener *listener,
+>                            MemoryRegionSection *section)
+> {
+>-    memory_region_ref(section->mr);
+>-    whpx_process_section(section, 1);
+>+    whpx_set_phys_mem(section, true);
+> }
+>=20
+> static void whpx_region_del(MemoryListener *listener,
+>                            MemoryRegionSection *section)
+> {
+>-    whpx_process_section(section, 0);
+>-    memory_region_unref(section->mr);
+>+    whpx_set_phys_mem(section, false);
+> }
+>=20
+> static void whpx_transaction_begin(MemoryListener *listener)
 
