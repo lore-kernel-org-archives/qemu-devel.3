@@ -4,70 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9664BCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA92CCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIUKS-0008OX-Ab; Mon, 10 Nov 2025 11:01:16 -0500
+	id 1vIUOO-0002wC-V4; Mon, 10 Nov 2025 11:05:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c@jia.je>) id 1vIUKL-0008Gf-3B
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:01:10 -0500
-Received: from hognose1.porkbun.com ([35.82.102.206])
- by eggs.gnu.org with esmtps (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <c@jia.je>) id 1vIUKH-0003Lg-I5
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:01:08 -0500
-Received: from [192.168.1.4] (unknown [117.133.64.17])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (Client did not present a certificate)
- (Authenticated sender: c@jia.je)
- by hognose1.porkbun.com (Postfix) with ESMTPSA id C8F33459DF;
- Mon, 10 Nov 2025 16:00:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jia.je; s=default;
- t=1762790453; bh=YPcN6OmI9H/Th0Em+ryYlKFOXrNSrN4UY39LvRIARhI=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ke+YcOMLW1gSXjmE0Tv0j/qGb5qCFN84Yx7m251jByw7e4XNXHKF1BjfJvb515EVP
- 5aGgdzrv7mWbNURgTeCF9zoBxK+9yQK5yjIcPuDdoFpUIOqUhdSdMAyweIGaBWwUqs
- BeEtMIzmXinS7rn7fGqQ4DojUCvroAYZFsU2NaXg=
-Content-Type: multipart/alternative;
- boundary="------------OVwiMiIR0z3BuTgw6a09OEQs"
-Message-ID: <c70df121-ed67-403c-ab5c-c541b9eed38b@jia.je>
-Date: Tue, 11 Nov 2025 00:00:43 +0800
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vIUOJ-0002t1-Gs; Mon, 10 Nov 2025 11:05:15 -0500
+Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vIUOA-0003nB-W8; Mon, 10 Nov 2025 11:05:15 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.144])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d4vd83fGJz5ycL;
+ Mon, 10 Nov 2025 16:05:00 +0000 (UTC)
+Received: from kaod.org (37.59.142.107) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 10 Nov
+ 2025 17:04:59 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-107S001711d5169-ae66-4eec-8779-46efa9705270,
+ 2CC8F654BF9A736B588295E2BFA8A60E013487DB) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <1d1cf03e-204d-4029-b188-a0e49a59d853@kaod.org>
+Date: Mon, 10 Nov 2025 17:04:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] Add LoongArch v1.1 instructions
-To: gaosong <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: git@xen0n.name, bibo mao <maobibo@loongson.cn>
-References: <20231023153029.269211-2-c@jia.je>
- <bce33bc2-60f9-41ee-856c-d76682c185f0@linaro.org>
- <1af667c0-f1ba-4538-9aec-8232397dd3c5@jia.je>
- <a1784c3c-b00e-4cb6-a262-96e6cbaa5c30@jia.je>
- <70260625-5981-40f3-a189-afddac2a6dfa@linaro.org>
- <062ee798-c112-46d4-82b8-983e85ffe2ed@jia.je>
- <6482c6cf-1f4b-a7b9-d106-4c687360e810@loongson.cn>
- <ae3088b6-f472-4dd2-a5bc-9effb61ffaa0@jia.je>
- <b03d1fa3-b553-734b-7adf-839dc67a2dd5@loongson.cn>
- <603b8709-4288-4268-abd4-642366b0b7e2@jia.je>
- <798c78df-cc9d-78dd-5bbd-0de2ead0eb1f@loongson.cn>
- <5cffe61f-6aac-4765-a39b-68f1c90daa09@jia.je>
- <cd422828-dce0-f54e-5c05-e6afd7c850a6@loongson.cn>
- <4f03d60c-cea4-4576-be1f-758c46706087@jia.je>
- <aa59dc19-d01a-e160-38fa-928881fa2ee3@loongson.cn>
-Content-Language: en-US
-From: Jiajie Chen <c@jia.je>
-In-Reply-To: <aa59dc19-d01a-e160-38fa-928881fa2ee3@loongson.cn>
-Received-SPF: pass client-ip=35.82.102.206; envelope-from=c@jia.je;
- helo=hognose1.porkbun.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Subject: Re: [PATCH v2 07/17] hw/arm/aspeed: Attach UART device to AST1700
+ model
+To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, Jan Kiszka <jan.kiszka@siemens.com>, 'Peter Xu'
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+CC: <troy_lee@aspeedtech.com>
+References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+ <20251105035859.3709907-8-kane_chen@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251105035859.3709907-8-kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.107]
+X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 4bce708d-3eaa-45f7-87c3-0af11bdb9b20
+X-Ovh-Tracer-Id: 949133624700210107
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFoBficBsVZ6FFwKxVWP4AiNaDnijExFTbazOdTXy/F8KVnkF4/KL+H8zvuUfsG9zqXLRp+9ZJE99n8Hu2uKloRaJ49mP5mJLua0J4Lg+lgH9KBNxSfXJjTLAoTRYieewYmByRokC+TPvnQmk1nUTtXhr2hDFKbZScQsj1TlX+hoiBo12oLvzl9S5sAZ9dHiU9+5zO7cokgJTVEv4z2gChR4FsT3Z6yq0dDKIinVBl/D6ER26HwGl1vZfHBL30Oqncj0yNF8P7IJYfvI6PMTuLxyUhj3ziGsEKkAMpHrBzftroQ/Cn6FI0vt8aH7OUB42p2c3FVkqqnv15PhcEVBjz5b36Osk0d1caCDtsrynVn7EWq8xf6mc0jilU5/DvNbVZd6RPi2PeCiY1rx+RI84lakOCvX2RCJ04kfuoJ5Q4+XbZTvzvdLsE1lol6i85CAv6HBrAud4Icd0aKz0o3a4CDpMewqcgIkT6MuiN9f5gy9KBc4h9T5fCKPFnDcsa4nj9NMaOAw9O8QRyv0ognvYQBY7l2h1D0IlkYZCVJt1mx9W71UD1CM/TiQjed1poJ/JiCSso2M+UPTcY61DlZDfrGyQG87dNQJkhc9m9t/cmhlVAJPnyI6bv34bS7ef/QjCV81Gs9adx8xBC4gtMqSUeb+Xb6v3iKGjFhY59MXb5gVA
+DKIM-Signature: a=rsa-sha256; bh=+Wv9QeL8ekV/mQC0PSmfAtZK+rsJzkZEs5saPU6ig1I=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1762790701; v=1;
+ b=UnZP2UjLFUpFvpJtULbNOsqF6gz2co5tioPhr6Xw5wGj2cCCjZehdUPTfiWndCurd5za3+aP
+ 31aXNYfhHti5oEP5Z7CSEBh+9/EfjNTdaenQtNrnE6ujxIrhQUjrMRdrH0azljJ4YzUBGT8PG46
+ maNiOmGN0uPf0BrNQLKcKHgQQSh/DEgEbx+CSBT91rTJaeq2mBfF/MYva/LvkNjf+1aPK0tIK9B
+ 3mdEWKxUQd9SzLdEExUYYe5ZsoawYo1V5lYMjA+IhM0a18sz1LSzHN6U67hWwelFJkuKZYSOSe4
+ aP891xDAAI4luCNq0kgISCw1ZBIGgYpcMWHAuPfVttfBw==
+Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
+ helo=2.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,719 +133,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------OVwiMiIR0z3BuTgw6a09OEQs
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi,
 
-Reply below.
+This change appears complex due to the use of routine
+qdev_set_legacy_instance_id(). It was introduced 15 years ago
+by commit 4d2ffa08b601 ("vmstate: Add support for alias ID"),
+for the PC world AIUI.
 
-On 2025/11/10 11:42, gaosong wrote:
-> 在 2023/10/31 下午7:10, Jiajie Chen 写道:
->>
->> On 2023/10/31 19:06, gaosong wrote:
->>> 在 2023/10/31 下午5:13, Jiajie Chen 写道:
->>>>
->>>> On 2023/10/31 17:11, gaosong wrote:
->>>>> 在 2023/10/30 下午7:54, Jiajie Chen 写道:
->>>>>>
->>>>>> On 2023/10/30 16:23, gaosong wrote:
->>>>>>> 在 2023/10/28 下午9:09, Jiajie Chen 写道:
->>>>>>>>
->>>>>>>> On 2023/10/26 14:54, gaosong wrote:
->>>>>>>>> 在 2023/10/26 上午9:38, Jiajie Chen 写道:
->>>>>>>>>>
->>>>>>>>>> On 2023/10/26 03:04, Richard Henderson wrote:
->>>>>>>>>>> On 10/25/23 10:13, Jiajie Chen wrote:
->>>>>>>>>>>>> On 2023/10/24 07:26, Richard Henderson wrote:
->>>>>>>>>>>>>> See target/arm/tcg/translate-a64.c, gen_store_exclusive, 
->>>>>>>>>>>>>> TCGv_i128 block.
->>>>>>>>>>>>>> See target/ppc/translate.c, gen_stqcx_.
->>>>>>>>>>>>>
->>>>>>>>>>>>> The situation here is slightly different: aarch64 and 
->>>>>>>>>>>>> ppc64 have both 128-bit ll and sc, however LoongArch v1.1 
->>>>>>>>>>>>> only has 64-bit ll and 128-bit sc.
->>>>>>>>>>>
->>>>>>>>>>> Ah, that does complicate things.
->>>>>>>>>>>
->>>>>>>>>>>> Possibly use the combination of ll.d and ld.d:
->>>>>>>>>>>>
->>>>>>>>>>>>
->>>>>>>>>>>> ll.d lo, base, 0
->>>>>>>>>>>> ld.d hi, base, 4
->>>>>>>>>>>>
->>>>>>>>>>>> # do some computation
->>>>>>>>>>>>
->>>>>>>>>>>> sc.q lo, hi, base
->>>>>>>>>>>>
->>>>>>>>>>>> # try again if sc failed
->>>>>>>>>>>>
->>>>>>>>>>>> Then a possible implementation of gen_ll() would be: align 
->>>>>>>>>>>> base to 128-bit boundary, read 128-bit from memory, save 
->>>>>>>>>>>> 64-bit part to rd and record whole 128-bit data in llval. 
->>>>>>>>>>>> Then, in gen_sc_q(), it uses a 128-bit cmpxchg.
->>>>>>>>>>>>
->>>>>>>>>>>>
->>>>>>>>>>>> But what about the reversed instruction pattern: ll.d hi, 
->>>>>>>>>>>> base, 4; ld.d lo, base 0?
->>>>>>>>>>>
->>>>>>>>>>> It would be worth asking your hardware engineers about the 
->>>>>>>>>>> bounds of legal behaviour. Ideally there would be some very 
->>>>>>>>>>> explicit language, similar to
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> I'm a community developer not affiliated with Loongson. Song 
->>>>>>>>>> Gao, could you provide some detail from Loongson Inc.?
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> ll.d   r1, base, 0
->>>>>>>>> dbar 0x700          ==> see 2.2.8.1
->>>>>>>>> ld.d  r2, base,  8
->>>>>>>>> ...
->>>>>>>>> sc.q r1, r2, base
->>>>>>>>
->>>>>>>>
->>>>>>>> Thanks! I think we may need to detect the ll.d-dbar-ld.d 
->>>>>>>> sequence and translate the sequence into one 
->>>>>>>> tcg_gen_qemu_ld_i128 and split the result into two 64-bit 
->>>>>>>> parts. Can do this in QEMU?
->>>>>>>>
->>>>>>>>
->>>>>>> Oh, I'm not sure.
->>>>>>>
->>>>>>> I think we just need to implement sc.q. We don't need to care 
->>>>>>> about 'll.d-dbar-ld.d'. It's just like 'll.q'.
->>>>>>> It needs the user to ensure that .
->>>>>>>
->>>>>>> ll.q' is
->>>>>>> 1) ll.d r1 base, 0 ==> set LLbit, load the low 64 bits into r1
->>>>>>> 2) dbar 0x700　
->>>>>>> 3) ld.d r2 base, 8 ==> load the high 64 bits to r2
->>>>>>>
->>>>>>> sc.q needs to
->>>>>>> 1) Use 64-bit cmpxchg.
->>>>>>> 2) Write 128 bits to memory.
->>>>>>
->>>>>> Consider the following code:
->>>>>>
->>>>>>
->>>>>> ll.d r1, base, 0
->>>>>>
->>>>>> dbar 0x700
->>>>>>
->>>>>> ld.d r2, base, 8
->>>>>>
->>>>>> addi.d r2, r2, 1
->>>>>>
->>>>>> sc.q r1, r2, base
->>>>>>
->>>>>>
->>>>>> We translate them into native code:
->>>>>>
->>>>>>
->>>>>> ld.d r1, base, 0
->>>>>>
->>>>>> mv LLbit, 1
->>>>>>
->>>>>> mv LLaddr, base
->>>>>>
->>>>>> mv LLval, r1
->>>>>>
->>>>>> dbar 0x700
->>>>>>
->>>>>> ld.d r2, base, 8
->>>>>>
->>>>>> addi.d r2, r2, 1
->>>>>>
->>>>>> if (LLbit == 1 && LLaddr == base) {
->>>>>>
->>>>>>     cmpxchg addr=base compare=LLval new=r1
->>>>>>
->>>>>>     128-bit write {r2, r1} to base if cmpxchg succeeded
->>>>>>
->>>>>> }
->>>>>>
->>>>>> set r1 if sc.q succeeded
->>>>>>
->>>>>>
->>>>>>
->>>>>> If the memory content of base+8 has changed between ld.d r2 and 
->>>>>> addi.d r2, the atomicity is not guaranteed, i.e. only the high 
->>>>>> part has changed, the low part hasn't.
->>>>>>
->>>>>>
->>>>> Sorry,  my mistake.  need use cmpxchg_i128.   See 
->>>>> target/arm/tcg/translate-a64.c   gen_store_exclusive().
->>>>>
->>>>> gen_scq(rd, rk, rj)
->>>>> {
->>>>>      ...
->>>>>     TCGv_i128 t16 = tcg_temp_new_i128();
->>>>>     TCGv_i128 c16 = tcg_temp_new_i128();
->>>>>     TCGv_i64 low = tcg_temp_new_i64();
->>>>>     TCGv_i64 high= tcg_temp_new_i64();
->>>>>     TCGv_i64 temp = tcg_temp_new_i64();
->>>>>
->>>>>     tcg_gen_concat_i64_i128(t16, cpu_gpr[rd], cpu_gpr[rk]));
->>>>>
->>>>>     tcg_gen_qemu_ld(low, cpu_lladdr, ctx->mem_idx, MO_TEUQ);
->>>>>     tcg_gen_addi_tl(temp, cpu_lladdr, 8);
->>>>>     tcg_gen_mb(TCG_BAR_SC | TCG_MO_LD_LD);
->>>>>     tcg_gen_qemu_ld(high, temp, ctx->mem_idx, MO_TEUQ);
->>>>
->>>>
->>>> The problem is that, the high value read here might not equal to 
->>>> the previously read one in ll.d r2, base 8 instruction.
->>> I think dbar 0x7000 ensures that the 2 loads in 'll.q' are a 128bit 
->>> atomic operation.
->>
->>
->> The code does work in real LoongArch machine. However, we are 
->> emulating LoongArch in qemu, we have to make it atomic, yet it isn't 
->> now.
->>
->>
-> Hi, jiajie
->
-> Could you help refresh this series ?
->
-> Thanks.
-> Song Gao
+Adding Jan, Peter, Fabiano for feedback on the current relevance
+of qdev_set_legacy_instance_id(), particularly in the ARM/BMC world.
+I feel we could get rid of it and simplify this patch.
+
+Thanks,
+
+C.
 
 
-I am busy with my research these days, until around mid December. After 
-that I may try to implement following idea:
 
 
-    https://developer.arm.com/documentation/ddi0487/latest/
-    B2.9.5 Load-Exclusive and Store-Exclusive instruction usage
-    restrictions
 
-    But you could do the same thing, aligning and recording the entire
-    128-bit quantity, then extract the ll.d result based on address bit
-    6. This would complicate the implementation of sc.d as well, but
-    would perhaps bring us "close enough" to the actual architecture.
+On 11/5/25 04:58, Kane Chen wrote:
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> 
+> Connect the UART controller to the AST1700 model by mapping its MMIO
+> region.
+> 
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> ---
+>   include/hw/misc/aspeed_ast1700.h |  2 ++
+>   hw/arm/aspeed_ast27x0.c          |  2 ++
+>   hw/misc/aspeed_ast1700.c         | 26 ++++++++++++++++++++++++++
+>   3 files changed, 30 insertions(+)
+> 
+> diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/aspeed_ast1700.h
+> index c2bea11346..e105ceb027 100644
+> --- a/include/hw/misc/aspeed_ast1700.h
+> +++ b/include/hw/misc/aspeed_ast1700.h
+> @@ -28,8 +28,10 @@ struct AspeedAST1700SoCState {
+>       SysBusDevice parent_obj;
+>   
+>       MemoryRegion iomem;
+> +    hwaddr mapped_base;
+>   
+>       AspeedLTPIState ltpi;
+> +    SerialMM uart;
+>   };
+>   
+>   #endif /* ASPEED_AST1700_H */
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 11625e165a..7151feb35d 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -1070,6 +1070,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>   
+>       /* IO Expander */
+>       for (i = 0; i < sc->ioexp_num; i++) {
+> +        qdev_prop_set_uint64(DEVICE(&s->ioexp[i]), "mapped-base",
+> +                             sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
+>           if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
+>               return;
+>           }
+> diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
+> index 0ca2b90ff0..1c2d367cdb 100644
+> --- a/hw/misc/aspeed_ast1700.c
+> +++ b/hw/misc/aspeed_ast1700.c
+> @@ -18,22 +18,39 @@
+>   #define AST2700_SOC_LTPI_SIZE        0x01000000
+>   
+>   enum {
+> +    ASPEED_AST1700_DEV_UART12,
+>       ASPEED_AST1700_DEV_LTPI_CTRL,
+>   };
+>   
+>   static const hwaddr aspeed_ast1700_io_memmap[] = {
+> +    [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+>       [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+>   };
+>   static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+>   {
+>       AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
+>       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    hwaddr uart_base;
+>   
+>       /* Occupy memory space for all controllers in AST1700 */
+>       memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
+>                          AST2700_SOC_LTPI_SIZE);
+>       sysbus_init_mmio(sbd, &s->iomem);
+>   
+> +    /* UART */
+> +    uart_base = s->mapped_base +
+> +               aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12];
+> +    qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
+> +    qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
+> +    qdev_set_legacy_instance_id(DEVICE(&s->uart), uart_base, 2);
+> +    qdev_prop_set_uint8(DEVICE(&s->uart), "endianness", DEVICE_LITTLE_ENDIAN);
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart), errp)) {
+> +        return;
+> +    }
+> +    memory_region_add_subregion(&s->iomem,
+> +                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12],
+> +                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart), 0));
+> +
+>       /* LTPI controller */
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
+>           return;
+> @@ -47,6 +64,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+>   {
+>       AspeedAST1700SoCState *s = ASPEED_AST1700(obj);
+>   
+> +    /* UART */
+> +    object_initialize_child(obj, "uart[*]", &s->uart,
+> +                            TYPE_SERIAL_MM);
+> +
+>       /* LTPI controller */
+>       object_initialize_child(obj, "ltpi-ctrl",
+>                               &s->ltpi, TYPE_ASPEED_LTPI);
+> @@ -54,11 +75,16 @@ static void aspeed_ast1700_instance_init(Object *obj)
+>       return;
+>   }
+>   
+> +static const Property aspeed_ast1700_props[] = {
+> +    DEFINE_PROP_UINT64("mapped-base", AspeedAST1700SoCState, mapped_base, 0),
+> +};
+> +
+>   static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+>       dc->realize = aspeed_ast1700_realize;
+> +    device_class_set_props(dc, aspeed_ast1700_props);
+>   }
+>   
+>   static const TypeInfo aspeed_ast1700_info = {
 
-    Note that our Arm store-exclusive implementation isn't quite in spec
-    either.  There is quite a large comment within translate-a64.c
-    store_exclusive() about the ways things are not quite right.  But it
-    seems to be close enough for actual usage to succeed.
-
-
-    r~
-
-
-Best regards,
-
-Jiajie Chen
-
-
->>> Thanks.
->>> Song Gao
->>>>> tcg_gen_concat_i64_i128(c16, low, high);
->>>>>
->>>>>     tcg_gen_atomic_cmpxchg_i128(t16, cpu_lladdr, c16, t16, 
->>>>> ctx->mem_idx, MO_128);
->>>>>
->>>>>     ...
->>>>> }
->>>>>
->>>>> I am not sure this is right.
->>>>>
->>>>> I think Richard can give you more suggestions. @Richard
->>>>>
->>>>> Thanks.
->>>>> Song Gao
->>>>>>
->>>>>>> Thanks.
->>>>>>> Song Gao
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> For this series,
->>>>>>>>> I think we need set the new config bits to the 'max cpu', and 
->>>>>>>>> change linux-user/target_elf.h ''any' to 'max', so that we can 
->>>>>>>>> use these new instructions on linux-user mode.
->>>>>>>>
->>>>>>>> I will work on it.
->>>>>>>>
->>>>>>>>
->>>>>>>>>
->>>>>>>>> Thanks
->>>>>>>>> Song Gao
->>>>>>>>>>>
->>>>>>>>>>> https://developer.arm.com/documentation/ddi0487/latest/
->>>>>>>>>>> B2.9.5 Load-Exclusive and Store-Exclusive instruction usage 
->>>>>>>>>>> restrictions
->>>>>>>>>>>
->>>>>>>>>>> But you could do the same thing, aligning and recording the 
->>>>>>>>>>> entire 128-bit quantity, then extract the ll.d result based 
->>>>>>>>>>> on address bit 6. This would complicate the implementation 
->>>>>>>>>>> of sc.d as well, but would perhaps bring us "close enough" 
->>>>>>>>>>> to the actual architecture.
->>>>>>>>>>>
->>>>>>>>>>> Note that our Arm store-exclusive implementation isn't quite 
->>>>>>>>>>> in spec either. There is quite a large comment within 
->>>>>>>>>>> translate-a64.c store_exclusive() about the ways things are 
->>>>>>>>>>> not quite right.  But it seems to be close enough for actual 
->>>>>>>>>>> usage to succeed.
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> r~
->>>>>>>>>
->>>>>>>
->>>>>
->>>
->
---------------OVwiMiIR0z3BuTgw6a09OEQs
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Reply below.</p>
-    <div class="moz-cite-prefix">On 2025/11/10 11:42, gaosong wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:aa59dc19-d01a-e160-38fa-928881fa2ee3@loongson.cn">在
-      2023/10/31 下午7:10, Jiajie Chen 写道:
-      <br>
-      <blockquote type="cite">
-        <br>
-        On 2023/10/31 19:06, gaosong wrote:
-        <br>
-        <blockquote type="cite">在 2023/10/31 下午5:13, Jiajie Chen 写道:
-          <br>
-          <blockquote type="cite">
-            <br>
-            On 2023/10/31 17:11, gaosong wrote:
-            <br>
-            <blockquote type="cite">在 2023/10/30 下午7:54, Jiajie Chen 写道:
-              <br>
-              <blockquote type="cite">
-                <br>
-                On 2023/10/30 16:23, gaosong wrote:
-                <br>
-                <blockquote type="cite">在 2023/10/28 下午9:09, Jiajie Chen
-                  写道:
-                  <br>
-                  <blockquote type="cite">
-                    <br>
-                    On 2023/10/26 14:54, gaosong wrote:
-                    <br>
-                    <blockquote type="cite">在 2023/10/26 上午9:38, Jiajie
-                      Chen 写道:
-                      <br>
-                      <blockquote type="cite">
-                        <br>
-                        On 2023/10/26 03:04, Richard Henderson wrote:
-                        <br>
-                        <blockquote type="cite">On 10/25/23 10:13,
-                          Jiajie Chen wrote:
-                          <br>
-                          <blockquote type="cite">
-                            <blockquote type="cite">On 2023/10/24 07:26,
-                              Richard Henderson wrote:
-                              <br>
-                              <blockquote type="cite">See
-                                target/arm/tcg/translate-a64.c,
-                                gen_store_exclusive, TCGv_i128 block.
-                                <br>
-                                See target/ppc/translate.c, gen_stqcx_.
-                                <br>
-                              </blockquote>
-                              <br>
-                              The situation here is slightly different:
-                              aarch64 and ppc64 have both 128-bit ll and
-                              sc, however LoongArch v1.1 only has 64-bit
-                              ll and 128-bit sc.
-                              <br>
-                            </blockquote>
-                          </blockquote>
-                          <br>
-                          Ah, that does complicate things.
-                          <br>
-                          <br>
-                          <blockquote type="cite">Possibly use the
-                            combination of ll.d and ld.d:
-                            <br>
-                            <br>
-                            <br>
-                            ll.d lo, base, 0
-                            <br>
-                            ld.d hi, base, 4
-                            <br>
-                            <br>
-                            # do some computation
-                            <br>
-                            <br>
-                            sc.q lo, hi, base
-                            <br>
-                            <br>
-                            # try again if sc failed
-                            <br>
-                            <br>
-                            Then a possible implementation of gen_ll()
-                            would be: align base to 128-bit boundary,
-                            read 128-bit from memory, save 64-bit part
-                            to rd and record whole 128-bit data in
-                            llval. Then, in gen_sc_q(), it uses a
-                            128-bit cmpxchg.
-                            <br>
-                            <br>
-                            <br>
-                            But what about the reversed instruction
-                            pattern: ll.d hi, base, 4; ld.d lo, base 0?
-                            <br>
-                          </blockquote>
-                          <br>
-                          It would be worth asking your hardware
-                          engineers about the bounds of legal behaviour.
-                          Ideally there would be some very explicit
-                          language, similar to
-                          <br>
-                        </blockquote>
-                        <br>
-                        <br>
-                        I'm a community developer not affiliated with
-                        Loongson. Song Gao, could you provide some
-                        detail from Loongson Inc.?
-                        <br>
-                        <br>
-                        <br>
-                      </blockquote>
-                      <br>
-                      ll.d   r1, base, 0
-                      <br>
-                      dbar 0x700          ==&gt; see 2.2.8.1
-                      <br>
-                      ld.d  r2, base,  8
-                      <br>
-                      ...
-                      <br>
-                      sc.q r1, r2, base
-                      <br>
-                    </blockquote>
-                    <br>
-                    <br>
-                    Thanks! I think we may need to detect the
-                    ll.d-dbar-ld.d sequence and translate the sequence
-                    into one tcg_gen_qemu_ld_i128 and split the result
-                    into two 64-bit parts. Can do this in QEMU?
-                    <br>
-                    <br>
-                    <br>
-                  </blockquote>
-                  Oh, I'm not sure.
-                  <br>
-                  <br>
-                  I think we just need to implement sc.q. We don't need
-                  to care about 'll.d-dbar-ld.d'. It's just like 'll.q'.
-                  <br>
-                  It needs the user to ensure that .
-                  <br>
-                  <br>
-                  ll.q' is
-                  <br>
-                  1) ll.d r1 base, 0 ==&gt; set LLbit, load the low 64
-                  bits into r1
-                  <br>
-                  2) dbar 0x700　
-                  <br>
-                  3) ld.d r2 base, 8 ==&gt; load the high 64 bits to r2
-                  <br>
-                  <br>
-                  sc.q needs to
-                  <br>
-                  1) Use 64-bit cmpxchg.
-                  <br>
-                  2) Write 128 bits to memory.
-                  <br>
-                </blockquote>
-                <br>
-                Consider the following code:
-                <br>
-                <br>
-                <br>
-                ll.d r1, base, 0
-                <br>
-                <br>
-                dbar 0x700
-                <br>
-                <br>
-                ld.d r2, base, 8
-                <br>
-                <br>
-                addi.d r2, r2, 1
-                <br>
-                <br>
-                sc.q r1, r2, base
-                <br>
-                <br>
-                <br>
-                We translate them into native code:
-                <br>
-                <br>
-                <br>
-                ld.d r1, base, 0
-                <br>
-                <br>
-                mv LLbit, 1
-                <br>
-                <br>
-                mv LLaddr, base
-                <br>
-                <br>
-                mv LLval, r1
-                <br>
-                <br>
-                dbar 0x700
-                <br>
-                <br>
-                ld.d r2, base, 8
-                <br>
-                <br>
-                addi.d r2, r2, 1
-                <br>
-                <br>
-                if (LLbit == 1 &amp;&amp; LLaddr == base) {
-                <br>
-                <br>
-                    cmpxchg addr=base compare=LLval new=r1
-                <br>
-                <br>
-                    128-bit write {r2, r1} to base if cmpxchg succeeded
-                <br>
-                <br>
-                }
-                <br>
-                <br>
-                set r1 if sc.q succeeded
-                <br>
-                <br>
-                <br>
-                <br>
-                If the memory content of base+8 has changed between ld.d
-                r2 and addi.d r2, the atomicity is not guaranteed, i.e.
-                only the high part has changed, the low part hasn't.
-                <br>
-                <br>
-                <br>
-              </blockquote>
-              Sorry,  my mistake.  need use cmpxchg_i128.   See
-              target/arm/tcg/translate-a64.c   gen_store_exclusive().
-              <br>
-              <br>
-              gen_scq(rd, rk, rj)
-              <br>
-              {
-              <br>
-                   ...
-              <br>
-                  TCGv_i128 t16 = tcg_temp_new_i128();
-              <br>
-                  TCGv_i128 c16 = tcg_temp_new_i128();
-              <br>
-                  TCGv_i64 low = tcg_temp_new_i64();
-              <br>
-                  TCGv_i64 high= tcg_temp_new_i64();
-              <br>
-                  TCGv_i64 temp = tcg_temp_new_i64();
-              <br>
-              <br>
-                  tcg_gen_concat_i64_i128(t16, cpu_gpr[rd],
-              cpu_gpr[rk]));
-              <br>
-              <br>
-                  tcg_gen_qemu_ld(low, cpu_lladdr, ctx-&gt;mem_idx,
-              MO_TEUQ);
-              <br>
-                  tcg_gen_addi_tl(temp, cpu_lladdr, 8);
-              <br>
-                  tcg_gen_mb(TCG_BAR_SC | TCG_MO_LD_LD);
-              <br>
-                  tcg_gen_qemu_ld(high, temp, ctx-&gt;mem_idx, MO_TEUQ);
-              <br>
-            </blockquote>
-            <br>
-            <br>
-            The problem is that, the high value read here might not
-            equal to the previously read one in ll.d r2, base 8
-            instruction.
-            <br>
-          </blockquote>
-          I think dbar 0x7000 ensures that the 2 loads in 'll.q' are a
-          128bit atomic operation.
-          <br>
-        </blockquote>
-        <br>
-        <br>
-        The code does work in real LoongArch machine. However, we are
-        emulating LoongArch in qemu, we have to make it atomic, yet it
-        isn't now.
-        <br>
-        <br>
-        <br>
-      </blockquote>
-      Hi, jiajie
-      <br>
-      <br>
-      Could you help refresh this series ?
-      <br>
-      <br>
-      Thanks.
-      <br>
-      Song Gao <br>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>I am busy with my research these days, until around mid December.
-      After that I may try to implement following idea:</p>
-    <p><br>
-    </p>
-    <blockquote>
-      <p><a class="moz-txt-link-freetext" href="https://developer.arm.com/documentation/ddi0487/latest/">https://developer.arm.com/documentation/ddi0487/latest/</a>
-        <br>
-        B2.9.5 Load-Exclusive and Store-Exclusive instruction usage
-        restrictions
-        <br>
-        <br>
-        But you could do the same thing, aligning and recording the
-        entire 128-bit quantity, then extract the ll.d result based on
-        address bit 6. This would complicate the implementation of sc.d
-        as well, but would perhaps bring us "close enough" to the actual
-        architecture.
-        <br>
-        <br>
-        Note that our Arm store-exclusive implementation isn't quite in
-        spec either.  There is quite a large comment within
-        translate-a64.c store_exclusive() about the ways things are not
-        quite right.  But it seems to be close enough for actual usage
-        to succeed.
-        <br>
-        <br>
-        <br>
-        r~
-        <br>
-      </p>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>Best regards,</p>
-    <p>Jiajie Chen</p>
-    <p><br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:aa59dc19-d01a-e160-38fa-928881fa2ee3@loongson.cn">
-      <blockquote type="cite">
-        <blockquote type="cite">Thanks.
-          <br>
-          Song Gao
-          <br>
-          <blockquote type="cite">
-            <blockquote type="cite">tcg_gen_concat_i64_i128(c16, low,
-              high);
-              <br>
-              <br>
-                  tcg_gen_atomic_cmpxchg_i128(t16, cpu_lladdr, c16, t16,
-              ctx-&gt;mem_idx, MO_128);
-              <br>
-              <br>
-                  ...
-              <br>
-              }
-              <br>
-              <br>
-              I am not sure this is right.
-              <br>
-              <br>
-              I think Richard can give you more suggestions. @Richard
-              <br>
-              <br>
-              Thanks.
-              <br>
-              Song Gao
-              <br>
-              <blockquote type="cite">
-                <br>
-                <blockquote type="cite">Thanks.
-                  <br>
-                  Song Gao
-                  <br>
-                  <blockquote type="cite">
-                    <blockquote type="cite">
-                      <br>
-                      <br>
-                      For this series,
-                      <br>
-                      I think we need set the new config bits to the
-                      'max cpu', and change linux-user/target_elf.h
-                      ''any' to 'max', so that we can use these new
-                      instructions on linux-user mode.
-                      <br>
-                    </blockquote>
-                    <br>
-                    I will work on it.
-                    <br>
-                    <br>
-                    <br>
-                    <blockquote type="cite">
-                      <br>
-                      Thanks
-                      <br>
-                      Song Gao
-                      <br>
-                      <blockquote type="cite">
-                        <blockquote type="cite">
-                          <br>
-<a class="moz-txt-link-freetext" href="https://developer.arm.com/documentation/ddi0487/latest/">https://developer.arm.com/documentation/ddi0487/latest/</a>
-                          <br>
-                          B2.9.5 Load-Exclusive and Store-Exclusive
-                          instruction usage restrictions
-                          <br>
-                          <br>
-                          But you could do the same thing, aligning and
-                          recording the entire 128-bit quantity, then
-                          extract the ll.d result based on address bit
-                          6. This would complicate the implementation of
-                          sc.d as well, but would perhaps bring us
-                          "close enough" to the actual architecture.
-                          <br>
-                          <br>
-                          Note that our Arm store-exclusive
-                          implementation isn't quite in spec either. 
-                          There is quite a large comment within
-                          translate-a64.c store_exclusive() about the
-                          ways things are not quite right.  But it seems
-                          to be close enough for actual usage to
-                          succeed.
-                          <br>
-                          <br>
-                          <br>
-                          r~
-                          <br>
-                        </blockquote>
-                      </blockquote>
-                      <br>
-                    </blockquote>
-                  </blockquote>
-                  <br>
-                </blockquote>
-              </blockquote>
-              <br>
-            </blockquote>
-          </blockquote>
-          <br>
-        </blockquote>
-      </blockquote>
-      <br>
-    </blockquote>
-  </body>
-</html>
-
---------------OVwiMiIR0z3BuTgw6a09OEQs--
 
