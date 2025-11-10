@@ -4,76 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C72CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 15:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE0FCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 15:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vITqJ-0007Xx-IG; Mon, 10 Nov 2025 10:30:07 -0500
+	id 1vITwU-0007hz-VB; Mon, 10 Nov 2025 10:36:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vITqH-0007UT-Fy
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:30:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vITwH-0007Op-7T; Mon, 10 Nov 2025 10:36:19 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vITqF-0006Yq-3G
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:30:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762788602;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n1svojnP5/LMquXktHVp7DEt8zwIWS6hBbcC4qCW74Q=;
- b=EsPEvmLBo4A3L2FwT0AKGIhp/SgoTd8hMeyS2tKtzPbRkFylr8rUM/S2u4bbQuZZfEzUWH
- 7h3mrVnuzOQQ4r3P1lOqLamsayGYnQaWNT+VT9qCUV5nWn1jAqeH4rqtfI3l1Bf6c+xrmf
- pzGUJZHMhyOm+4q81Pw2anrD4iZ3zAM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-tsF38l2PPWW84Bbog0pckQ-1; Mon,
- 10 Nov 2025 10:29:57 -0500
-X-MC-Unique: tsF38l2PPWW84Bbog0pckQ-1
-X-Mimecast-MFC-AGG-ID: tsF38l2PPWW84Bbog0pckQ_1762788596
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF46319560A7; Mon, 10 Nov 2025 15:29:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.209])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7CAC195608E; Mon, 10 Nov 2025 15:29:54 +0000 (UTC)
-Date: Mon, 10 Nov 2025 16:29:52 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vITwE-0007jQ-LO; Mon, 10 Nov 2025 10:36:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 65B77597488;
+ Mon, 10 Nov 2025 16:36:11 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id pe44f3Y6_Fgt; Mon, 10 Nov 2025 16:36:09 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 54CB059748A; Mon, 10 Nov 2025 16:36:09 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4F61B597489;
+ Mon, 10 Nov 2025 16:36:09 +0100 (CET)
+Date: Mon, 10 Nov 2025 16:36:09 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Kevin Wolf <kwolf@redhat.com>
+cc: Markus Armbruster <armbru@redhat.com>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com, 
  eblake@redhat.com
-Subject: Re: [PATCH v2 2/5] vvfat: move fat_type check prior to size setup
-Message-ID: <aRIE8ACbqWZ2MPdE@redhat.com>
+Subject: Re: [PATCH v2 5/5] vvfat: add support for "fat-size" options
+In-Reply-To: <aRIC1NZXQUxkR7iR@redhat.com>
+Message-ID: <f301fcab-a7d6-1d89-aa56-52397f0d940a@eik.bme.hu>
 References: <20251107145327.539481-1-chigot@adacore.com>
- <20251107145327.539481-3-chigot@adacore.com>
- <874ir2nqr9.fsf@pond.sub.org>
- <CAJ307Ej8oNXjOZt2fkBMjR6bKSf=C2M6ncFFLCfy=Wk6+KMhNQ@mail.gmail.com>
- <877bvykp3q.fsf@pond.sub.org>
+ <20251107145327.539481-6-chigot@adacore.com> <87zf8umbzh.fsf@pond.sub.org>
+ <CAJ307EjObqJ6Pr5N+WrEffTr3pWOpRCKVVamZhCG9ZgwHczVYw@mail.gmail.com>
+ <87bjlakpa5.fsf@pond.sub.org>
+ <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
+ <87o6paj96k.fsf@pond.sub.org> <aRIC1NZXQUxkR7iR@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <877bvykp3q.fsf@pond.sub.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1642367452-1762788969=:41733"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,87 +72,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.11.2025 um 14:13 hat Markus Armbruster geschrieben:
-> Clément Chigot <chigot@adacore.com> writes:
-> 
-> > On Mon, Nov 10, 2025 at 11:09 AM Markus Armbruster <armbru@redhat.com> wrote:
-> >>
-> >> Clément Chigot <chigot@adacore.com> writes:
-> >>
-> >> > This allows to handle the default FAT size in a single place and make the
-> >> > following part taking care only about size parameters. It will be later
-> >> > moved away in a specific function.
-> >> >
-> >> > The selection of floppy size was a bit unusual:
-> >> >  - fat-type undefined: a FAT 12 2880 Kib disk (default)
-> >> >  - fat-type=16: a FAT 16 2880 Kib disk
-> >> >  - fat-type=12: a FAT 12 1440 Kib disk
-> >> >
-> >> > Now, that fat-type undefined means fat-type=12, it's no longer possible
-> >> > to make that size distinction. Therefore, it's being changed for the
-> >> > following:
-> >> >  - fat-type=12: a FAT 12 1440 Kib disk (default)
-> >> >  - fat-type=16: a FAT 16 2880 Kib dis
-> >> >
-> >> > This has been choosen for two reasons: keep fat-type=12 the default and
-> >> > creates a more usual size for it: 1440 Kib.
-> >> >
-> >> > The possibility to create a FAT 12 2880 Kib floppy will be added back
-> >> > later, through the fat-size parameter.
-> >> >
-> >> > Side note to mention that s->sectors_per_cluster assignments are
-> >> > removed because they are overidden a few line further.
-> >> >
-> >> > Signed-off-by: Clément Chigot <chigot@adacore.com>
-> >>
-> >> Is this a user-visible change?
-> >
-> > Yes, just "floppy" will now result in a 1440 KiB instead of the
-> > previous 2880 KiB. However, Kevin mentions in V1 that it would make
-> > more sense and vvfat being known to be unstable, this would be fine.
-> > FTR, here is the complete comment:
-> >
-> >> On Wed, Oct 29, 2025 at 5:06 PM Kevin Wolf <kwolf@redhat.com> wrote:
-> >> > In general, our stance is that we can change defaults whenever we want
-> >> > to, and if you don't want to be surprised by changing defaults, you need
-> >> > to specify the option explicitly.
-> 
-> Hmm, where is this stance on defaults documented?  Question for Kevin,
-> of course.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Probably nowhere. More importantly, I don't think a compatibility
-promise that says otherwise is documented either. And we know that
-defaults have changed before, and that libvirt tries to be as explicit
-as possible to avoid being impacted by changed defaults.
+--3866299591-1642367452-1762788969=:41733
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Do you disagree? If so, is there any way to change defaults or do we
-have to stick to the existing defaults forever? To me not specifying an
-option means "just pick anything that makes sense", without any promise
-that this stays the same across versions.
+On Mon, 10 Nov 2025, Kevin Wolf wrote:
+> Am 10.11.2025 um 14:42 hat Markus Armbruster geschrieben:
+>> Clément Chigot <chigot@adacore.com> writes:
+>>
+>>> On Mon, Nov 10, 2025 at 2:09 PM Markus Armbruster <armbru@redhat.com> wrote:
+>>>>
+>>>> Clément Chigot <chigot@adacore.com> writes:
+>>>>
+>>>>> On Mon, Nov 10, 2025 at 11:13 AM Markus Armbruster <armbru@redhat.com> wrote:
+>>>>>>
+>>>>>> Clément Chigot <chigot@adacore.com> writes:
+>>>>>>
+>>>>>>> This allows more flexibility to vvfat backend. The values of "Number of
+>>>>>>> Heads" and "Sectors per track" are based on SD specifications Part 2.
+>>>>>>>
+>>>>>>> Due to the FAT architecture, not all sizes are reachable. Therefore, it
+>>>>>>> could be round up to the closest available size.
+>>>>>>>
+>>>>>>> FAT32 has not been adjusted and thus still default to 504 Mib.
+>>>>>>>
+>>>>>>> For floppy, only 1440 Kib and 2880 Kib are supported.
+>>>>>>>
+>>>>>>> Signed-off-by: Clément Chigot <chigot@adacore.com>
+>>>>>>
+>>>>>> [...]
+>>>>>>
+>>>>>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>>>>>>> index 8a479ba090..0bcb360320 100644
+>>>>>>> --- a/qapi/block-core.json
+>>>>>>> +++ b/qapi/block-core.json
+>>>>>>> @@ -3478,11 +3478,17 @@
+>>>>>>>  #     (default: true)
+>>>>>>>  #     (since 10.2)
+>>>>>>>  #
+>>>>>>> +# @fat-size: size of the device in bytes.  Due to FAT underlying
+>>>>>>> +#     architecture, this size can be rounded up to the closest valid
+>>>>>>> +#     size.
+>>>>>>> +#     (since 10.2)
+>>>>>>> +#
+>>>>>>
+>>>>>> Can you explain again why you moved from @size to @fat-size?
+>>>>>
+>>>>> Just to be sure, you mean in the above comment, in the commit message or both ?
+>>>>
+>>>> Just to me, because I'm not sure I like the change, but that may well be
+>>>> due to a lack of understanding of your reasons.
+>>>
+>>> Naming `fat-size` instead of `size` ensures the parameter is only
+>>> recognized by the vvfat backend. In particular, it will be refused by
+>>> the default raw format, avoiding confusion:
+>>>  "-drive file=fat:<path>,size=256M" results in a 504M FAT disk
+>>> truncated to 256M, raw format being implicit.
+>>>  "-drive file=fat:<path>,fat-size=256M" is refused. "fat-size" is
+>>> unsupported by raw format.
+>>
+>> I figure throwing in format=raw to make raw format explicit doesn't
+>> change anything.  Correct?
+>>
+>>>  "-drive file=fat:<path>,format=vvfat,fat-size=256M" results in a 256M FAT disk.
+>>>  "-drive file=fat:<path>,format=vvfat,size=256M" is refused. "size" is
+>>> unsupported by vvfat format.
+>>
+>> If it was called @size, what behavior would we get?  Just two cases, I
+>> think:
+>>
+>> 1. With raw format:
+>>
+>>     -drive file=fat:<path>,size=256M
+>
+> You'd silently get a 504 MiB filesystem truncated to 256 MiB (i.e. a
+> corrupted file system). It's quite easy to forget format=vvfat, so
+> something that initially looks like it might be working is not a great
+> result for this user error.
 
-> >> >                                   What's a bit strange about the vvfat
-> >> > interface is that the default actually represents a configuration that
-> >> > can't even be expressed explicitly at the moment.
-> 
-> Awkward.
-> 
-> >> > So it is a special case in a way, but given that this is vvfat, which is
-> >> > known to be unstable, not widely used outside of the occasional manual
-> >> > use and not supported by libvirt, I'm willing to just make the change.
-> 
-> I'm fine to treat vvfat as unstable.  But it's not marked as such in the
-> QAPI schema!  Is that a bug?  Again, for Kevin.
+Why doesn't file=fat: imply format=vvfat? For what is the fat: part in 
+file then? I currently recommend using:
 
-Maybe? Though the kind of unstable I think of with vvfat is more than
-just API instability that the QAPI feature is about. vvfat is more a
-dirty (and clever) hack that sometimes works and can be useful enough,
-but if it breaks, you get to keep both pieces. Good for one-off uses on
-your personal toy VM, but keep it far away from production. We never
-seriously tried to get it to a properly supportable level.
+-drive if=none,id=ufat,format=raw,file=fat:rw:/dir/to/export
+-device usb-storage,drive=ufat
 
-(And yes, probably none of this is documented as clearly as it should
-be.)
+to my users which I got from somewhere but don't remember where and it 
+seems to work but maybe not the best way to specify this. After reading 
+this thread I'm confused about how to use this correctly. Is there some 
+documentation on this? There only seems to be some mentions in 
+docs/system/qemu-block-drivers.rst.inc but all of them using older 
+options:
 
-Kevin
+   |qemu_system| linux.img -hdb fat:/my_directory
+   |qemu_system| linux.img -fda fat:floppy:/my_directory
+   |qemu_system| linux.img -fda fat:floppy:rw:/my_directory
 
+Regards,
+BALATON Zoltan
+
+>> 2. Without raw format:
+>>
+>>     -drive file=fat:<path>,format=vvfat,size=256M
+>
+> This does the thing that you actually want, a 256 MiB file system.
+>
+> I suggested to rename the vvfat option in v1 to make accidents at least
+> a bit less likely. I'm not completely sure if "fat-size" is the best
+> name, though, as it sounds as if it referred to the FAT itself instead
+> of the FAT filesystem. Maybe "fs-size"?
+>
+> Kevin
+>
+>
+>
+--3866299591-1642367452-1762788969=:41733--
 
