@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB10CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 05:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330D0CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 05:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIK8U-0006a5-N9; Mon, 10 Nov 2025 00:08:15 -0500
+	id 1vIKJn-0001Wb-Pi; Mon, 10 Nov 2025 00:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vIK0u-0004lI-GS
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 00:00:32 -0500
+ id 1vIKJL-0001V6-NE
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 00:19:28 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vIK0n-00021y-BL
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 00:00:19 -0500
+ id 1vIKJI-0003th-G6
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 00:19:27 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AA50EpQ097781
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AA5JHg0005727
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 10 Nov 2025 14:00:14 +0900 (JST)
+ Mon, 10 Nov 2025 14:19:17 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YhMR/pGJlI1L5vZzSoWFw60PadhsRdHu8FJ+hYqvPcs=; 
+DKIM-Signature: a=rsa-sha256; bh=OVPfvQSvbTcYG8dx0YcYH+0uNm7NzE3f/ndUohfQLP0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1762750814; v=1;
- b=Jk5WA7f7XlEwBeYx3iJ+H0AP0lc5PLy24BD0j0aaKFhGZHOTgE8O2+S4D1V1wPeG
- 21xBLtc5yWkAhH4k9HJ5vlRUZ6T8wRKQ8zs6em9AnKm59FPrpQ300xHLd4BIFLMa
- 3gu5iV85BRAVdkrW3yo4mPnXDbMkiNoIrdBOkO91+rGz3QLyJlZXwjgeO6wlF9Wl
- nUNuKr0rWurlU7N/UQUxisV7SeogCB0wPNhJnyBvaWjVCIG0l2D+cZ+5ZhWNYxRs
- Aip+JDgU7UXuwXk4xUT2XtLPdm55TGEAsMx+flMmu1ljaSr2bfoCOPRLpXMoZW1k
- 0wHvlga4Zt/K6iIjMK9kIw==
-Message-ID: <3d92c6d0-e46d-45dc-94e8-49fc0fb370fb@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 10 Nov 2025 14:00:14 +0900
+ s=rs20250326; t=1762751957; v=1;
+ b=IOR68jHjLZ9spHDPZuL6CaB4fDM0he6zLQjZ173FEVsDJioIXRdIq9xKf6mlMdSe
+ ZxacMdhk078GkFsDquAbNJSkp3SP6vLYQqQRPSTjf3akYfAm8/0hTkl5kIpHObRl
+ PHMdiEhpQ/1JpLqPAtUwdCa2f4sbX4QzMTBViIuo8xjfVYM2uwlG5EMelcRdTFOW
+ eg6bpr9nDHLQQi+51SRK/eVp7uD8jpsWmTXwJ9dMFcI2+GALFq9p8e7YNQFRt60H
+ /AVRaNNHGajvqEidwi0znXkWaYgBLdZBALkmduZQo308KFaB2vxSF6ur0fvF7/JK
+ g19s7hqbnKtCclh2KTWT1Q==
+Message-ID: <83274ca7-dd37-4856-b198-f334bf630835@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 10 Nov 2025 14:19:16 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
+Subject: Re: [PATCH v2 09/10] virtio-gpu-dmabuf: Introduce
+ qemu_iovec_same_memory_regions()
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -49,10 +49,10 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
- <20251109053801.2267149-3-vivek.kasireddy@intel.com>
+ <20251109053801.2267149-10-vivek.kasireddy@intel.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251109053801.2267149-3-vivek.kasireddy@intel.com>
+In-Reply-To: <20251109053801.2267149-10-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,20 +80,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/11/09 14:33, Vivek Kasireddy wrote:
-> If the Guest provides a DMA address that is associated with a ram
-> device (such as a PCI device region and not its system memory),
-> then we can obtain the hva (host virtual address) by invoking
-> address_space_translate() followed by memory_region_get_ram_ptr().
-> 
-> This is because the ram device's address space is not accessible
-> to virtio-gpu directly and hence dma_memory_map() cannot be used.
-> Therefore, we first need to identify the memory region associated
-> with the DMA address and figure out if it belongs to a ram device
-> or not and decide how to obtain the host address accordingly.
-> 
-> Note that we take a reference on the memory region if it belongs
-> to a ram device but we would still call dma_memory_unmap() later
-> (to unref mr) regardless of how we obtained the hva.
+> Add a helper to check whether the addresses in an iovec array
+> belong to the same memory region or not. This is useful to verify
+> before trying to create a dmabuf from an iovec array.
 > 
 > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -102,54 +91,63 @@ On 2025/11/09 14:33, Vivek Kasireddy wrote:
 > Cc: Alex Williamson <alex.williamson@redhat.com>
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
 > ---
->   hw/display/virtio-gpu.c | 24 +++++++++++++++++++++---
->   1 file changed, 21 insertions(+), 3 deletions(-)
+>   hw/display/virtio-gpu-dmabuf.c | 29 +++++++++++++++++++++++++++++
+>   1 file changed, 29 insertions(+)
 > 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 199b18c746..d352b5afd6 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -798,6 +798,26 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
->                                 &fb, res, &ss.r, &cmd->error);
->   }
+> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+> index c34d4c85bc..80143034d4 100644
+> --- a/hw/display/virtio-gpu-dmabuf.c
+> +++ b/hw/display/virtio-gpu-dmabuf.c
+> @@ -27,6 +27,31 @@
+>   #include "standard-headers/linux/udmabuf.h"
+>   #include "standard-headers/drm/drm_fourcc.h"
 >   
-> +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-> +                                       struct virtio_gpu_ctrl_command *cmd,
-> +                                       uint64_t a, hwaddr *len)
+> +static bool qemu_iovec_same_memory_regions(const struct iovec *iov, int iov_cnt)
 > +{
-> +    MemoryRegion *mr = NULL;
-> +    hwaddr xlat;
+> +    RAMBlock *rb, *curr_rb;
+> +    ram_addr_t offset;
+> +    int i;
 > +
-> +    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
-> +                                 DMA_DIRECTION_TO_DEVICE,
-> +                                 MEMTXATTRS_UNSPECIFIED);
-> +    if (memory_region_is_ram_device(mr)) {
-> +        memory_region_ref(mr);
-> +        return memory_region_get_ram_ptr(mr) + xlat;
+> +    rb = qemu_ram_block_from_host(iov[0].iov_base, false, &offset);
+> +    if (!rb) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Could not find ramblock/memory region\n", __func__);
+> +        return false;
 > +    }
 > +
-> +    return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-> +                          DMA_DIRECTION_TO_DEVICE,
-> +                          MEMTXATTRS_UNSPECIFIED);
+> +    for (i = 1; i < iov_cnt; i++) {
+> +	curr_rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
+> +	if (curr_rb != rb) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: memory regions not same for iov entries\n",
+> +                          __func__);
+> +            return false;
+> +	}
+> +    }
+> +    return true;
 > +}
 > +
->   int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->                                     uint32_t nr_entries, uint32_t offset,
->                                     struct virtio_gpu_ctrl_command *cmd,
-> @@ -839,9 +859,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->   
->           do {
->               len = l;
-> -            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-> -                                 DMA_DIRECTION_TO_DEVICE,
-> -                                 MEMTXATTRS_UNSPECIFIED);
-> +            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
->               if (!map) {
->                   qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
->                                 " element %d\n", __func__, e);
+>   static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+>       struct udmabuf_create_list *list;
+> @@ -137,6 +162,10 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>           res->iov[0].iov_len < 4096) {
+>           pdata = res->iov[0].iov_base;
+>       } else {
+> +        if (!qemu_iovec_same_memory_regions(res->iov, res->iov_cnt)) {
+> +            return;
+> +        }
+> +
 
+This check is unnecessary. Perhaps rejecting iov with different memory 
+regions may be fine if that simplifies the code, but this actually adds 
+some code.
+
+>           virtio_gpu_create_udmabuf(res);
+>           if (res->dmabuf_fd < 0) {
+>               return;
+
+Regards,
+Akihiko Odaki
 
