@@ -4,54 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49D0CCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 13:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A245CCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 13:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vISKZ-0005mE-SH; Mon, 10 Nov 2025 08:53:16 -0500
+	id 1vISLR-0007P7-Hb; Mon, 10 Nov 2025 08:54:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1vIS4T-0008WN-Ml
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:36:37 -0500
-Received: from smtp232.sjtu.edu.cn ([202.120.2.232])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vISAJ-0005W2-NR
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:42:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1vIS4R-0003vT-9G
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:36:37 -0500
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp232.sjtu.edu.cn (Postfix) with ESMTPS id 4D83D1283F157;
- Mon, 10 Nov 2025 21:35:52 +0800 (CST)
-Received: from localhost.localdomain (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 26F3837C924;
- Mon, 10 Nov 2025 21:35:52 +0800 (CST)
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
- Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH 1/2] linux-user: add a plugin API to filter syscalls
-Date: Mon, 10 Nov 2025 21:34:42 +0800
-Message-Id: <20251110133442.579086-2-functioner@sjtu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251110133442.579086-1-functioner@sjtu.edu.cn>
-References: <20251110133442.579086-1-functioner@sjtu.edu.cn>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vISAF-0004qq-EM
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:42:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762782153;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YhdkDoDLzl3DkAisWS71XVkKLFe4gnNlS8xdwLFj87Y=;
+ b=clgKMeffRlNNGDJEatWP3JKiaAZQnD/AWadEFJe4w28Cz18cOBKIUeTDbqCC0l9kCiaode
+ k0qBCNZlvQqlTjSYBVvUDtfLkiMeFp5XJxsWvUUf6fKlTSefRObgjGMN2mBo5P6nnEFG+I
+ JB9bfyLfliL7Bk5zTsUa4oaxYqru+zQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-gL0IHtNlMbGN22ugaF8lmA-1; Mon,
+ 10 Nov 2025 08:42:32 -0500
+X-MC-Unique: gL0IHtNlMbGN22ugaF8lmA-1
+X-Mimecast-MFC-AGG-ID: gL0IHtNlMbGN22ugaF8lmA_1762782151
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A45B1956094; Mon, 10 Nov 2025 13:42:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85F5E1800451; Mon, 10 Nov 2025 13:42:30 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CC7DD21E6A27; Mon, 10 Nov 2025 14:42:27 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>
+Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  kwolf@redhat.com,
+ hreitz@redhat.com,  eblake@redhat.com
+Subject: Re: [PATCH v2 5/5] vvfat: add support for "fat-size" options
+In-Reply-To: <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
+ (=?utf-8?Q?=22Cl=C3=A9ment?= Chigot"'s message of "Mon, 10 Nov 2025
+ 14:26:46 +0100")
+References: <20251107145327.539481-1-chigot@adacore.com>
+ <20251107145327.539481-6-chigot@adacore.com>
+ <87zf8umbzh.fsf@pond.sub.org>
+ <CAJ307EjObqJ6Pr5N+WrEffTr3pWOpRCKVVamZhCG9ZgwHczVYw@mail.gmail.com>
+ <87bjlakpa5.fsf@pond.sub.org>
+ <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
+Date: Mon, 10 Nov 2025 14:42:27 +0100
+Message-ID: <87o6paj96k.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.232;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp232.sjtu.edu.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,242 +93,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a syscall filter API to the TCG plugin API set.
-Plugins can register a filter callback to QEMU to decide whether
-to intercept a syscall, process it and bypass the QEMU syscall
-handler.
+Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
 
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
----
- include/qemu/plugin-event.h  |  1 +
- include/qemu/plugin.h        | 29 +++++++++++++++++++++--------
- include/qemu/qemu-plugin.h   | 24 ++++++++++++++++++++++++
- include/user/syscall-trace.h | 17 +++++++++++++++++
- linux-user/syscall.c         |  7 +++++--
- plugins/api.c                |  7 +++++++
- plugins/core.c               | 36 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 111 insertions(+), 10 deletions(-)
+> On Mon, Nov 10, 2025 at 2:09=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
+>>
+>> > On Mon, Nov 10, 2025 at 11:13=E2=80=AFAM Markus Armbruster <armbru@red=
+hat.com> wrote:
+>> >>
+>> >> Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
+>> >>
+>> >> > This allows more flexibility to vvfat backend. The values of "Numbe=
+r of
+>> >> > Heads" and "Sectors per track" are based on SD specifications Part =
+2.
+>> >> >
+>> >> > Due to the FAT architecture, not all sizes are reachable. Therefore=
+, it
+>> >> > could be round up to the closest available size.
+>> >> >
+>> >> > FAT32 has not been adjusted and thus still default to 504 Mib.
+>> >> >
+>> >> > For floppy, only 1440 Kib and 2880 Kib are supported.
+>> >> >
+>> >> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+>> >>
+>> >> [...]
+>> >>
+>> >> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> >> > index 8a479ba090..0bcb360320 100644
+>> >> > --- a/qapi/block-core.json
+>> >> > +++ b/qapi/block-core.json
+>> >> > @@ -3478,11 +3478,17 @@
+>> >> >  #     (default: true)
+>> >> >  #     (since 10.2)
+>> >> >  #
+>> >> > +# @fat-size: size of the device in bytes.  Due to FAT underlying
+>> >> > +#     architecture, this size can be rounded up to the closest val=
+id
+>> >> > +#     size.
+>> >> > +#     (since 10.2)
+>> >> > +#
+>> >>
+>> >> Can you explain again why you moved from @size to @fat-size?
+>> >
+>> > Just to be sure, you mean in the above comment, in the commit message =
+or both ?
+>>
+>> Just to me, because I'm not sure I like the change, but that may well be
+>> due to a lack of understanding of your reasons.
+>
+> Naming `fat-size` instead of `size` ensures the parameter is only
+> recognized by the vvfat backend. In particular, it will be refused by
+> the default raw format, avoiding confusion:
+>  "-drive file=3Dfat:<path>,size=3D256M" results in a 504M FAT disk
+> truncated to 256M, raw format being implicit.
+>  "-drive file=3Dfat:<path>,fat-size=3D256M" is refused. "fat-size" is
+> unsupported by raw format.
 
-diff --git a/include/qemu/plugin-event.h b/include/qemu/plugin-event.h
-index 7056d8427b..bbb1c2b91f 100644
---- a/include/qemu/plugin-event.h
-+++ b/include/qemu/plugin-event.h
-@@ -20,6 +20,7 @@ enum qemu_plugin_event {
-     QEMU_PLUGIN_EV_VCPU_SYSCALL_RET,
-     QEMU_PLUGIN_EV_FLUSH,
-     QEMU_PLUGIN_EV_ATEXIT,
-+    QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER,
-     QEMU_PLUGIN_EV_MAX, /* total number of plugin events we support */
- };
- 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index f355c7cb8a..9f90a233e7 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -55,14 +55,15 @@ void qemu_plugin_opt_parse(const char *optstr, QemuPluginList *head);
- int qemu_plugin_load_list(QemuPluginList *head, Error **errp);
- 
- union qemu_plugin_cb_sig {
--    qemu_plugin_simple_cb_t          simple;
--    qemu_plugin_udata_cb_t           udata;
--    qemu_plugin_vcpu_simple_cb_t     vcpu_simple;
--    qemu_plugin_vcpu_udata_cb_t      vcpu_udata;
--    qemu_plugin_vcpu_tb_trans_cb_t   vcpu_tb_trans;
--    qemu_plugin_vcpu_mem_cb_t        vcpu_mem;
--    qemu_plugin_vcpu_syscall_cb_t    vcpu_syscall;
--    qemu_plugin_vcpu_syscall_ret_cb_t vcpu_syscall_ret;
-+    qemu_plugin_simple_cb_t              simple;
-+    qemu_plugin_udata_cb_t               udata;
-+    qemu_plugin_vcpu_simple_cb_t         vcpu_simple;
-+    qemu_plugin_vcpu_udata_cb_t          vcpu_udata;
-+    qemu_plugin_vcpu_tb_trans_cb_t       vcpu_tb_trans;
-+    qemu_plugin_vcpu_mem_cb_t            vcpu_mem;
-+    qemu_plugin_vcpu_syscall_cb_t        vcpu_syscall;
-+    qemu_plugin_vcpu_syscall_ret_cb_t    vcpu_syscall_ret;
-+    qemu_plugin_vcpu_syscall_filter_cb_t vcpu_syscall_filter;
-     void *generic;
- };
- 
-@@ -165,6 +166,11 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
-                          uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
-                          uint64_t a6, uint64_t a7, uint64_t a8);
- void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret);
-+bool
-+qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-+                                uint64_t a2, uint64_t a3, uint64_t a4,
-+                                uint64_t a5, uint64_t a6, uint64_t a7,
-+                                uint64_t a8, uint64_t *ret);
- 
- void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                              uint64_t value_low,
-@@ -267,6 +273,13 @@ static inline
- void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
- { }
- 
-+static inline bool
-+qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-+                                uint64_t a2, uint64_t a3, uint64_t a4,
-+                                uint64_t a5, uint64_t a6, uint64_t a7,
-+                                uint64_t a8, uint64_t *ret)
-+{ }
-+
- static inline void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                                            uint64_t value_low,
-                                            uint64_t value_high,
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index c450106af1..cdd0b2c4da 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -738,6 +738,25 @@ typedef void
-                                  uint64_t a3, uint64_t a4, uint64_t a5,
-                                  uint64_t a6, uint64_t a7, uint64_t a8);
- 
-+/*
-+ * typedef qemu_plugin_vcpu_syscall_filter_cb_t - vCPU syscall filter callback
-+ * function type
-+ * @vcpu_index: the executing vCPU
-+ * @num: the syscall number
-+ * @a1-a8: the syscall arguments
-+ * @ret: the address of the syscall return value, set this if filtered
-+ *
-+ * Returns: true if you want to filter this syscall (i.e. stop it being
-+ * handled further), otherwise return false.
-+ */
-+typedef bool
-+(*qemu_plugin_vcpu_syscall_filter_cb_t)(qemu_plugin_id_t id,
-+                                        unsigned int vcpu_index,
-+                                        int64_t num, uint64_t a1, uint64_t a2,
-+                                        uint64_t a3, uint64_t a4, uint64_t a5,
-+                                        uint64_t a6, uint64_t a7, uint64_t a8,
-+                                        uint64_t *ret);
-+
- QEMU_PLUGIN_API
- void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
-                                           qemu_plugin_vcpu_syscall_cb_t cb);
-@@ -751,6 +770,11 @@ void
- qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
-                                          qemu_plugin_vcpu_syscall_ret_cb_t cb);
- 
-+QEMU_PLUGIN_API
-+void
-+qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
-+                                            qemu_plugin_vcpu_syscall_filter_cb_t cb);
-+
- 
- /**
-  * qemu_plugin_insn_disas() - return disassembly string for instruction
-diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
-index 9bd7ca19c8..61cdbd7583 100644
---- a/include/user/syscall-trace.h
-+++ b/include/user/syscall-trace.h
-@@ -39,5 +39,22 @@ static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
-     gdb_syscall_return(cpu, num);
- }
- 
-+static bool send_through_syscall_filters(CPUState *cpu, int num,
-+                                         abi_long arg1, abi_long arg2,
-+                                         abi_long arg3, abi_long arg4,
-+                                         abi_long arg5, abi_long arg6,
-+                                         abi_long arg7, abi_long arg8,
-+                                         abi_long *ret)
-+{
-+    uint64_t sysret64 = 0;
-+    bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
-+                                                    arg3, arg4, arg5, arg6,
-+                                                    arg7, arg8, &sysret64);
-+    if (filtered) {
-+        *ret = sysret64;
-+    }
-+    return filtered;
-+}
-+
- 
- #endif /* SYSCALL_TRACE_H */
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d78b2029fa..1fb99dcf0c 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -14084,8 +14084,11 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
-         print_syscall(cpu_env, num, arg1, arg2, arg3, arg4, arg5, arg6);
-     }
- 
--    ret = do_syscall1(cpu_env, num, arg1, arg2, arg3, arg4,
--                      arg5, arg6, arg7, arg8);
-+    if (!send_through_syscall_filters(cpu, num, arg1, arg2, arg3, arg4, arg5,
-+                                      arg6, arg7, arg8, &ret)) {
-+        ret = do_syscall1(cpu_env, num, arg1, arg2, arg3, arg4,
-+                          arg5, arg6, arg7, arg8);
-+    }
- 
-     if (unlikely(qemu_loglevel_mask(LOG_STRACE))) {
-         print_syscall_ret(cpu_env, num, ret, arg1, arg2,
-diff --git a/plugins/api.c b/plugins/api.c
-index eac04cc1f6..478d0c8889 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -208,6 +208,13 @@ qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
-     plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_SYSCALL_RET, cb);
- }
- 
-+void
-+qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
-+                                            qemu_plugin_vcpu_syscall_filter_cb_t cb)
-+{
-+    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER, cb);
-+}
-+
- /*
-  * Plugin Queries
-  *
-diff --git a/plugins/core.c b/plugins/core.c
-index ead09fd2f1..8cd773cbca 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -538,6 +538,42 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
-     }
- }
- 
-+/*
-+ * Disable CFI checks.
-+ * The callback function has been loaded from an external library so we do not
-+ * have type information
-+ */
-+QEMU_DISABLE_CFI
-+bool
-+qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-+                                uint64_t a2, uint64_t a3, uint64_t a4,
-+                                uint64_t a5, uint64_t a6, uint64_t a7,
-+                                uint64_t a8, uint64_t *ret)
-+{
-+    struct qemu_plugin_cb *cb, *next;
-+    enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER;
-+
-+    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
-+        return false;
-+    }
-+
-+    bool filtered = false;
-+    QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-+        qemu_plugin_vcpu_syscall_filter_cb_t func = cb->f.vcpu_syscall_filter;
-+
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+        if (func(cb->ctx->id, cpu->cpu_index, num, a1, a2, a3, a4,
-+                 a5, a6, a7, a8, ret)) {
-+            filtered = true;
-+        }
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-+
-+        if (filtered)
-+            break;
-+    }
-+    return filtered;
-+}
-+
- void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
- {
-     /* idle and resume cb may be called before init, ignore in this case */
--- 
-2.34.1
+I figure throwing in format=3Draw to make raw format explicit doesn't
+change anything.  Correct?
+
+>  "-drive file=3Dfat:<path>,format=3Dvvfat,fat-size=3D256M" results in a 2=
+56M FAT disk.
+>  "-drive file=3Dfat:<path>,format=3Dvvfat,size=3D256M" is refused. "size"=
+ is
+> unsupported by vvfat format.
+
+If it was called @size, what behavior would we get?  Just two cases, I
+think:
+
+1. With raw format:
+
+    -drive file=3Dfat:<path>,size=3D256M
+
+2. Without raw format:
+
+    -drive file=3Dfat:<path>,format=3Dvvfat,size=3D256M
 
 
