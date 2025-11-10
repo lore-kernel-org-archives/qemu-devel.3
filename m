@@ -4,120 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA92CCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E20CCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIUOO-0002wC-V4; Mon, 10 Nov 2025 11:05:20 -0500
+	id 1vIUPu-0004nk-OX; Mon, 10 Nov 2025 11:06:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vIUOJ-0002t1-Gs; Mon, 10 Nov 2025 11:05:15 -0500
-Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vIUPs-0004ly-It
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:06:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vIUOA-0003nB-W8; Mon, 10 Nov 2025 11:05:15 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.144])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d4vd83fGJz5ycL;
- Mon, 10 Nov 2025 16:05:00 +0000 (UTC)
-Received: from kaod.org (37.59.142.107) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 10 Nov
- 2025 17:04:59 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-107S001711d5169-ae66-4eec-8779-46efa9705270,
- 2CC8F654BF9A736B588295E2BFA8A60E013487DB) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <1d1cf03e-204d-4029-b188-a0e49a59d853@kaod.org>
-Date: Mon, 10 Nov 2025 17:04:58 +0100
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vIUPp-00048h-V8
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:06:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762790809;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u0yFbVe8S8I2cR37VMafoNrc7fo48PZixS/lIG+IL74=;
+ b=MkNRbsAt3j9h3rlI6D0TkgSB+rElIGoagfbYEbsVyv7luQ5qU6D6I/JjmQNd5NdJaO/zaP
+ pxF4ySP6/W8JSNrJ6O7C1rPspHThTZdmctSi92vtjWIqrDXGNataqIoTn/BaKs8kzAfA+M
+ HCxPTClMK51CVwjaUgFofcHVXy3FB6Y=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-5fEc5b73PECNtBK7Iu_LVw-1; Mon, 10 Nov 2025 11:06:47 -0500
+X-MC-Unique: 5fEc5b73PECNtBK7Iu_LVw-1
+X-Mimecast-MFC-AGG-ID: 5fEc5b73PECNtBK7Iu_LVw_1762790806
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-429cbed2b8fso1541293f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 08:06:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762790806; x=1763395606; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=u0yFbVe8S8I2cR37VMafoNrc7fo48PZixS/lIG+IL74=;
+ b=fp4/Wj3kQACVN4UfBkSpkp73zXmJIi2Yv2+R9CyIc1NJd8QXh6kVY9oLepf8djzn2T
+ nNdgalO87zP31+KffR6Z3Uh+rz4J3JS9XMTItt1PdEbimkhMnLuMCFmq0FSJXJeYtaOF
+ eTfAHCmY3OdlKYnjujN7YvnTUTqw1RTpRwO/Njp/gmeR+AGDfC6mZkI5LI34JrQQXDmA
+ rNolZamRh7zHmq1y1vHMXf7w4fHqI0Wh7Dk6VIqJUhZ0gTbhfC1Us5HoviZB8kGeH6kf
+ jD5ATW1kZBc93XsTxOqNkIQ2MLeR6lK8tWcihbXp9MGYMled+PV4Nvl9EdIZ3EjPHqeV
+ b0HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762790806; x=1763395606;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u0yFbVe8S8I2cR37VMafoNrc7fo48PZixS/lIG+IL74=;
+ b=VBXQoIY5eug38tgsLqIU6RgPed435hEDu1WYelT8/L018RANvF6BT0e5mxjHr+ly9+
+ iqofjEbOvIcsB5mwGs51/aqMr7GR/cMTY1MWiBpKGOl5NsK6M29HcV228X48Vhw3qdZO
+ xjbnc4rukdQ1R+vCZCUiLZPmpnB6DarI0Az6KkRD108ZKz08zrX8VfvaFD69K11evMF4
+ 2T/ExVDMFo49OwRNXji9ulOWKKXqaU7sigdPZG4OKI0Gcg9p6/u+WFoqx7SBW1CijFEL
+ +0TED7i/jjiNJ/ScAaiJpmSIqQUkSqLtBE7yXEhorJwdq7GkGS7MIshLlTQ1BJzGORD3
+ rt0g==
+X-Gm-Message-State: AOJu0YxdqxsNnpmeC10hwv9mt3blZu/qGgFmRHZEu/HZ6Mnki2n3EHIW
+ NEBcAdh3YbRUZDCJvyMa+nCNj1MVer+RE1TyMoQv5EV1c9eGUJN8k8vhx44OLwADfXPBVMGTATJ
+ /iovxWKygIZ7I9w4RpdR7QA5iRY6VWKS/LW8mFaUNWzciiFH3N8X1cOUU
+X-Gm-Gg: ASbGnctHb5+g2gmOwIQQfHZ9rg06LhY24qcrJwN2SmyVaSFz9KJRnIGefPB3yq0u1xc
+ +wxsehwSYtNNcLzBbrWoOXmxxW9F6KsOVDvroXDojrYclQuUte/05BoBQ/ewiXh3BO/JTBA+bzJ
+ /VTmEfEokVWXiUb8jY7lHhEReIGdnsqJ9uVRsZ6Lv2DuMWLGSYay7CuSg1T2Y0gSJW1vJCBiD5w
+ zH2GJaWVT66UQqtKE7/cOU+JrRe0dcWUv1w47w5206KEseSvMZTN+Ym5QGhRwlOJfNw5+PHJg3y
+ v9+o+mwACKU3BGNkDS5qWJ9jpu8XNJ8Zvx/56cX9MWJG1BqVgtOe848bRyrB9rTaIYE=
+X-Received: by 2002:a05:6000:2a88:b0:429:edd0:29c with SMTP id
+ ffacd0b85a97d-42b2dbf4f0bmr6640753f8f.19.1762790806164; 
+ Mon, 10 Nov 2025 08:06:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF/GEKtR+570/BIDeJVR59mx4O67AvflFGv6oFKq1H6GIlpX5IWjLm1liKOYcOU/AqOk+jTOA==
+X-Received: by 2002:a05:6000:2a88:b0:429:edd0:29c with SMTP id
+ ffacd0b85a97d-42b2dbf4f0bmr6640722f8f.19.1762790805502; 
+ Mon, 10 Nov 2025 08:06:45 -0800 (PST)
+Received: from redhat.com ([2a0d:6fc0:1536:2700:9203:49b4:a0d:b580])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b321a80c0sm12348791f8f.1.2025.11.10.08.06.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Nov 2025 08:06:45 -0800 (PST)
+Date: Mon, 10 Nov 2025 11:06:42 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PULL 04/14] vhost-user: fix shared object lookup handler logic
+Message-ID: <20251110110546-mutt-send-email-mst@kernel.org>
+References: <cover.1762698873.git.mst@redhat.com>
+ <fde5930cc37175cfcd0f03a089e26f4458a52311.1762698873.git.mst@redhat.com>
+ <CADSE00+FLWVdh1CGmy6i4hLdJOKGG6-4JZySXL=wFOyyTnnFpw@mail.gmail.com>
+ <20251110104059-mutt-send-email-mst@kernel.org>
+ <CADSE00+8_pyV_qUGJ9WiP3miHPvpiOLsHGeCF1cs=7Y3OuajnA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/17] hw/arm/aspeed: Attach UART device to AST1700
- model
-To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, Jan Kiszka <jan.kiszka@siemens.com>, 'Peter Xu'
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-CC: <troy_lee@aspeedtech.com>
-References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
- <20251105035859.3709907-8-kane_chen@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251105035859.3709907-8-kane_chen@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.107]
-X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 4bce708d-3eaa-45f7-87c3-0af11bdb9b20
-X-Ovh-Tracer-Id: 949133624700210107
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFoBficBsVZ6FFwKxVWP4AiNaDnijExFTbazOdTXy/F8KVnkF4/KL+H8zvuUfsG9zqXLRp+9ZJE99n8Hu2uKloRaJ49mP5mJLua0J4Lg+lgH9KBNxSfXJjTLAoTRYieewYmByRokC+TPvnQmk1nUTtXhr2hDFKbZScQsj1TlX+hoiBo12oLvzl9S5sAZ9dHiU9+5zO7cokgJTVEv4z2gChR4FsT3Z6yq0dDKIinVBl/D6ER26HwGl1vZfHBL30Oqncj0yNF8P7IJYfvI6PMTuLxyUhj3ziGsEKkAMpHrBzftroQ/Cn6FI0vt8aH7OUB42p2c3FVkqqnv15PhcEVBjz5b36Osk0d1caCDtsrynVn7EWq8xf6mc0jilU5/DvNbVZd6RPi2PeCiY1rx+RI84lakOCvX2RCJ04kfuoJ5Q4+XbZTvzvdLsE1lol6i85CAv6HBrAud4Icd0aKz0o3a4CDpMewqcgIkT6MuiN9f5gy9KBc4h9T5fCKPFnDcsa4nj9NMaOAw9O8QRyv0ognvYQBY7l2h1D0IlkYZCVJt1mx9W71UD1CM/TiQjed1poJ/JiCSso2M+UPTcY61DlZDfrGyQG87dNQJkhc9m9t/cmhlVAJPnyI6bv34bS7ef/QjCV81Gs9adx8xBC4gtMqSUeb+Xb6v3iKGjFhY59MXb5gVA
-DKIM-Signature: a=rsa-sha256; bh=+Wv9QeL8ekV/mQC0PSmfAtZK+rsJzkZEs5saPU6ig1I=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1762790701; v=1;
- b=UnZP2UjLFUpFvpJtULbNOsqF6gz2co5tioPhr6Xw5wGj2cCCjZehdUPTfiWndCurd5za3+aP
- 31aXNYfhHti5oEP5Z7CSEBh+9/EfjNTdaenQtNrnE6ujxIrhQUjrMRdrH0azljJ4YzUBGT8PG46
- maNiOmGN0uPf0BrNQLKcKHgQQSh/DEgEbx+CSBT91rTJaeq2mBfF/MYva/LvkNjf+1aPK0tIK9B
- 3mdEWKxUQd9SzLdEExUYYe5ZsoawYo1V5lYMjA+IhM0a18sz1LSzHN6U67hWwelFJkuKZYSOSe4
- aP891xDAAI4luCNq0kgISCw1ZBIGgYpcMWHAuPfVttfBw==
-Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
- helo=2.mo548.mail-out.ovh.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADSE00+8_pyV_qUGJ9WiP3miHPvpiOLsHGeCF1cs=7Y3OuajnA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,137 +123,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-This change appears complex due to the use of routine
-qdev_set_legacy_instance_id(). It was introduced 15 years ago
-by commit 4d2ffa08b601 ("vmstate: Add support for alias ID"),
-for the PC world AIUI.
-
-Adding Jan, Peter, Fabiano for feedback on the current relevance
-of qdev_set_legacy_instance_id(), particularly in the ARM/BMC world.
-I feel we could get rid of it and simplify this patch.
-
-Thanks,
-
-C.
-
-
-
-
-
-On 11/5/25 04:58, Kane Chen wrote:
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+On Mon, Nov 10, 2025 at 04:57:51PM +0100, Albert Esteve wrote:
+> On Mon, Nov 10, 2025 at 4:42 PM Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Mon, Nov 10, 2025 at 10:23:25AM +0100, Albert Esteve wrote:
+> > > On Sun, Nov 9, 2025 at 3:35 PM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > >
+> > > > From: Albert Esteve <aesteve@redhat.com>
+> > > >
+> > > > Refactor backend_read() function and add a reply_ack variable
+> > > > to have the option for handlers to force tweak whether they should
+> > > > send a reply or not without depending on VHOST_USER_NEED_REPLY_MASK
+> > > > flag.
+> > > >
+> > > > This fixes an issue with
+> > > > vhost_user_backend_handle_shared_object_lookup() logic, as the
+> > > > error path was not closing the backend channel correctly. So,
+> > > > we can remove the reply call from within the handler, make
+> > > > sure it returns early on errors as other handlers do and
+> > > > set the reply_ack variable on backend_read() to true to ensure
+> > > > that it will send a response, thus keeping the original intent.
+> > >
+> > > Hey Michal,
+> > >
+> > > This patch was
+> > > Based-on: <20251016143827.1850397-1-aesteve@redhat.com>
+> > > … for main.
+> >
+> > That's the SHMEM thing right?  Yes but I rebased it dropping
+> > the SHMEM dependency.
+> >
+> > At least, I think I did it correctly.
 > 
-> Connect the UART controller to the AST1700 model by mapping its MMIO
-> region.
+> Yes, removing the dependency is correctly applied. But that was only
+> required for the backport to stable.
 > 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> ---
->   include/hw/misc/aspeed_ast1700.h |  2 ++
->   hw/arm/aspeed_ast27x0.c          |  2 ++
->   hw/misc/aspeed_ast1700.c         | 26 ++++++++++++++++++++++++++
->   3 files changed, 30 insertions(+)
+> If we merge this patch to main without the one it is based on, then
+> I'd need to send a new version of the SHMEM patch with the block that
+> you have dropped. I can do it, but I was trying to prioritize the
+> other one, as it was a lot harder to get approved. That is why I based
+> this patch on top of the SHMEM one and not the other way around.
 > 
-> diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/aspeed_ast1700.h
-> index c2bea11346..e105ceb027 100644
-> --- a/include/hw/misc/aspeed_ast1700.h
-> +++ b/include/hw/misc/aspeed_ast1700.h
-> @@ -28,8 +28,10 @@ struct AspeedAST1700SoCState {
->       SysBusDevice parent_obj;
->   
->       MemoryRegion iomem;
-> +    hwaddr mapped_base;
->   
->       AspeedLTPIState ltpi;
-> +    SerialMM uart;
->   };
->   
->   #endif /* ASPEED_AST1700_H */
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 11625e165a..7151feb35d 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -1070,6 +1070,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->   
->       /* IO Expander */
->       for (i = 0; i < sc->ioexp_num; i++) {
-> +        qdev_prop_set_uint64(DEVICE(&s->ioexp[i]), "mapped-base",
-> +                             sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
->           if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
->               return;
->           }
-> diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
-> index 0ca2b90ff0..1c2d367cdb 100644
-> --- a/hw/misc/aspeed_ast1700.c
-> +++ b/hw/misc/aspeed_ast1700.c
-> @@ -18,22 +18,39 @@
->   #define AST2700_SOC_LTPI_SIZE        0x01000000
->   
->   enum {
-> +    ASPEED_AST1700_DEV_UART12,
->       ASPEED_AST1700_DEV_LTPI_CTRL,
->   };
->   
->   static const hwaddr aspeed_ast1700_io_memmap[] = {
-> +    [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
->       [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
->   };
->   static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
->   {
->       AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
->       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    hwaddr uart_base;
->   
->       /* Occupy memory space for all controllers in AST1700 */
->       memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
->                          AST2700_SOC_LTPI_SIZE);
->       sysbus_init_mmio(sbd, &s->iomem);
->   
-> +    /* UART */
-> +    uart_base = s->mapped_base +
-> +               aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12];
-> +    qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
-> +    qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
-> +    qdev_set_legacy_instance_id(DEVICE(&s->uart), uart_base, 2);
-> +    qdev_prop_set_uint8(DEVICE(&s->uart), "endianness", DEVICE_LITTLE_ENDIAN);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart), errp)) {
-> +        return;
-> +    }
-> +    memory_region_add_subregion(&s->iomem,
-> +                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12],
-> +                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart), 0));
-> +
->       /* LTPI controller */
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
->           return;
-> @@ -47,6 +64,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
->   {
->       AspeedAST1700SoCState *s = ASPEED_AST1700(obj);
->   
-> +    /* UART */
-> +    object_initialize_child(obj, "uart[*]", &s->uart,
-> +                            TYPE_SERIAL_MM);
-> +
->       /* LTPI controller */
->       object_initialize_child(obj, "ltpi-ctrl",
->                               &s->ltpi, TYPE_ASPEED_LTPI);
-> @@ -54,11 +75,16 @@ static void aspeed_ast1700_instance_init(Object *obj)
->       return;
->   }
->   
-> +static const Property aspeed_ast1700_props[] = {
-> +    DEFINE_PROP_UINT64("mapped-base", AspeedAST1700SoCState, mapped_base, 0),
-> +};
-> +
->   static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->   
->       dc->realize = aspeed_ast1700_realize;
-> +    device_class_set_props(dc, aspeed_ast1700_props);
->   }
->   
->   static const TypeInfo aspeed_ast1700_info = {
+> Sorry if that was not clear from the message.
+
+
+Right but I can't apply SHMEM patch in freeze so yes, it has to go
+on top. Sorry it's like this.
+
+> >
+> > > As this was the first time I did this based-on thingy, I am just
+> > > making sure that the other patch was not missed.
+> > > If this PULL is only targeting stable, then it's ok as is.
+> >
+> > It is targeting 10.2 which is in freeze. So equivalently same.
+> >
+> >
+> > > BR,
+> > > Albert
+> > >
+> > > >
+> > > > Fixes: 1609476662 ("vhost-user: add shared_object msg")
+> > > > Cc: qemu-stable@nongnu.org
+> > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> > > > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> > > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > > > Message-Id: <20251017072011.1874874-2-aesteve@redhat.com>
+> > > > ---
+> > > >  hw/virtio/vhost-user.c | 40 +++++++++++++---------------------------
+> > > >  1 file changed, 13 insertions(+), 27 deletions(-)
+> > > >
+> > > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > > > index aac98f898a..4b0fae12ae 100644
+> > > > --- a/hw/virtio/vhost-user.c
+> > > > +++ b/hw/virtio/vhost-user.c
+> > > > @@ -1668,14 +1668,6 @@ static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
+> > > >      return !qio_channel_writev_all(ioc, iov, ARRAY_SIZE(iov), errp);
+> > > >  }
+> > > >
+> > > > -static bool
+> > > > -vhost_user_backend_send_dmabuf_fd(QIOChannel *ioc, VhostUserHeader *hdr,
+> > > > -                                  VhostUserPayload *payload, Error **errp)
+> > > > -{
+> > > > -    hdr->size = sizeof(payload->u64);
+> > > > -    return vhost_user_send_resp(ioc, hdr, payload, errp);
+> > > > -}
+> > > > -
+> > > >  int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
+> > > >                                   int *dmabuf_fd)
+> > > >  {
+> > > > @@ -1716,19 +1708,15 @@ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
+> > > >
+> > > >  static int
+> > > >  vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+> > > > -                                               QIOChannel *ioc,
+> > > > -                                               VhostUserHeader *hdr,
+> > > > -                                               VhostUserPayload *payload)
+> > > > +                                               VhostUserShared *object)
+> > > >  {
+> > > >      QemuUUID uuid;
+> > > >      CharFrontend *chr = u->user->chr;
+> > > > -    Error *local_err = NULL;
+> > > >      int dmabuf_fd = -1;
+> > > >      int fd_num = 0;
+> > > >
+> > > > -    memcpy(uuid.data, payload->object.uuid, sizeof(payload->object.uuid));
+> > > > +    memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> > > >
+> > > > -    payload->u64 = 0;
+> > > >      switch (virtio_object_type(&uuid)) {
+> > > >      case TYPE_DMABUF:
+> > > >          dmabuf_fd = virtio_lookup_dmabuf(&uuid);
+> > > > @@ -1737,18 +1725,16 @@ vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+> > > >      {
+> > > >          struct vhost_dev *dev = virtio_lookup_vhost_device(&uuid);
+> > > >          if (dev == NULL) {
+> > > > -            payload->u64 = -EINVAL;
+> > > > -            break;
+> > > > +            return -EINVAL;
+> > > >          }
+> > > >          int ret = vhost_user_get_shared_object(dev, uuid.data, &dmabuf_fd);
+> > > >          if (ret < 0) {
+> > > > -            payload->u64 = ret;
+> > > > +            return ret;
+> > > >          }
+> > > >          break;
+> > > >      }
+> > > >      case TYPE_INVALID:
+> > > > -        payload->u64 = -EINVAL;
+> > > > -        break;
+> > > > +        return -EINVAL;
+> > > >      }
+> > > >
+> > > >      if (dmabuf_fd != -1) {
+> > > > @@ -1757,11 +1743,6 @@ vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+> > > >
+> > > >      if (qemu_chr_fe_set_msgfds(chr, &dmabuf_fd, fd_num) < 0) {
+> > > >          error_report("Failed to set msg fds.");
+> > > > -        payload->u64 = -EINVAL;
+> > > > -    }
+> > > > -
+> > > > -    if (!vhost_user_backend_send_dmabuf_fd(ioc, hdr, payload, &local_err)) {
+> > > > -        error_report_err(local_err);
+> > > >          return -EINVAL;
+> > > >      }
+> > > >
+> > > > @@ -1790,6 +1771,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+> > > >      struct iovec iov;
+> > > >      g_autofree int *fd = NULL;
+> > > >      size_t fdsize = 0;
+> > > > +    bool reply_ack;
+> > > >      int i;
+> > > >
+> > > >      /* Read header */
+> > > > @@ -1808,6 +1790,8 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+> > > >          goto err;
+> > > >      }
+> > > >
+> > > > +    reply_ack = hdr.flags & VHOST_USER_NEED_REPLY_MASK;
+> > > > +
+> > > >      /* Read payload */
+> > > >      if (qio_channel_read_all(ioc, (char *) &payload, hdr.size, &local_err)) {
+> > > >          error_report_err(local_err);
+> > > > @@ -1833,8 +1817,10 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+> > > >                                                               &payload.object);
+> > > >          break;
+> > > >      case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
+> > > > -        ret = vhost_user_backend_handle_shared_object_lookup(dev->opaque, ioc,
+> > > > -                                                             &hdr, &payload);
+> > > > +        /* The backend always expects a response */
+> > > > +        reply_ack = true;
+> > > > +        ret = vhost_user_backend_handle_shared_object_lookup(dev->opaque,
+> > > > +                                                             &payload.object);
+> > > >          break;
+> > > >      default:
+> > > >          error_report("Received unexpected msg type: %d.", hdr.request);
+> > > > @@ -1845,7 +1831,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+> > > >       * REPLY_ACK feature handling. Other reply types has to be managed
+> > > >       * directly in their request handlers.
+> > > >       */
+> > > > -    if (hdr.flags & VHOST_USER_NEED_REPLY_MASK) {
+> > > > +    if (reply_ack) {
+> > > >          payload.u64 = !!ret;
+> > > >          hdr.size = sizeof(payload.u64);
+> > > >
+> > > > --
+> > > > MST
+> > > >
+> >
 
 
