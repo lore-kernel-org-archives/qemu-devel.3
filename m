@@ -4,81 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F80CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63241CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 16:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIUob-0004D4-SG; Mon, 10 Nov 2025 11:32:26 -0500
+	id 1vIUqT-0006Iq-Ik; Mon, 10 Nov 2025 11:34:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIUnm-00040d-MW
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:31:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIUnk-0000Fy-2g
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:31:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762792290;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hRucd3p/guezkT2k31F9Cv1aXXheykWUgtKIH/EWdFo=;
- b=EbBQJffFCN6rAtqQ9k5ogUdaXuEsPj4XUnczO4wrOIv3tJAvCsit/vCrwU5vk1eCTY90OQ
- Q/xPIqQQ22lCfTQ/C4nekOilVnA4oITMash5ZvoSLzsf2BwWykg9ww1fFyXk2Rh6IiZW73
- fWyEI0/Yif8X/IvEj10J5/mu2WtOPEQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-JrARjhjWOBObH1GFAcrQoA-1; Mon,
- 10 Nov 2025 11:31:27 -0500
-X-MC-Unique: JrARjhjWOBObH1GFAcrQoA-1
-X-Mimecast-MFC-AGG-ID: JrARjhjWOBObH1GFAcrQoA_1762792286
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2C061800357; Mon, 10 Nov 2025 16:31:25 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.209])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D1F419560A7; Mon, 10 Nov 2025 16:31:22 +0000 (UTC)
-Date: Mon, 10 Nov 2025 17:31:20 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
- eblake@redhat.com
-Subject: Re: [PATCH v2 5/5] vvfat: add support for "fat-size" options
-Message-ID: <aRITWJo6R_oG9t7R@redhat.com>
-References: <20251107145327.539481-1-chigot@adacore.com>
- <20251107145327.539481-6-chigot@adacore.com>
- <87zf8umbzh.fsf@pond.sub.org>
- <CAJ307EjObqJ6Pr5N+WrEffTr3pWOpRCKVVamZhCG9ZgwHczVYw@mail.gmail.com>
- <87bjlakpa5.fsf@pond.sub.org>
- <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
- <87o6paj96k.fsf@pond.sub.org> <aRIC1NZXQUxkR7iR@redhat.com>
- <f301fcab-a7d6-1d89-aa56-52397f0d940a@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <bobbyeshleman@gmail.com>)
+ id 1vIUcw-0002Sz-BO
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:20:24 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bobbyeshleman@gmail.com>)
+ id 1vIUcu-0006p4-EI
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 11:20:22 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-63fd0bf1f4aso2258779d50.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 08:20:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762791618; x=1763396418; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VEXAMCIMpvmXgD8uSaoHe5yaMdZjLyi2AGSnNcizk5w=;
+ b=GU8vfqVMdPWeF7+15IumqttPXeedi4QZKbjXqy9U8LAvj5fUpJs0oqtsLSR40oonMd
+ GpDalPaXON0pNDS7pdomYZoFblc6+ao5NAQuSKd3fUQSjmMABZ7OHrnwyDIh8TlQwfZ9
+ tqNWQPcxrJTmC89GL0TUXy4wFnc7iJ9ILce2PvPKFOyJRpWt5kOYTktdeH9FJoCyL8uZ
+ waNhBfyPrL1lIk/DSjpotjbN1kaEpyCi80mdkdo6sJzn6RDfuvnVk02K061raWoR3dPr
+ xAdk+4tsH9LpvmmHlRuaQ042I2O/jzOu1nXKIr756zNjhosfB8Zs22L7y4wI4f6AQrI7
+ 8cgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762791618; x=1763396418;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VEXAMCIMpvmXgD8uSaoHe5yaMdZjLyi2AGSnNcizk5w=;
+ b=r/TI3Rg5IcPrx7BP8n2/A5IdiIRzZDZnB1dzdv96q7W87LH75flke0/jHq3W52wnSF
+ JgLY64/UxrRefwSxiJhxr5DYlE+aalG+yrHcs5HYobfhKPNlNfZ7ZrGz36DXWntHSh87
+ NJmrsV3YgadALX6/zZQJ/62aZ03X1dLkS4tla2z8LmbPuM+W7+1nYcI7rZ50tlF9cyFT
+ ZUMctJqH/MVn0uVfgFpElqAg8co1JMxHw9mtqgud8ulDZHKt1u/TziA3lVwQeYhPpbgD
+ xCWtOU457l72O1LeSUnVos6QkXXidVWirJWDK2V5xYKIOAmZzzAaVCqcCUiyiS09nPCY
+ 1Xow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCURC7S88o6l7jpSk6Ju7+0fUIys8q9faH3j0BA0XzlFksXsaEil4DTaYJRUrCPSvzJZglarepo36Ubh@nongnu.org
+X-Gm-Message-State: AOJu0YxUzb4dna1Jyi1QFlKRnkOy+wYe9rgvEQNBT5jdoAlrkJS7XinG
+ HFP/BK7Fa780lqIdBavASH3dk5d3O7yK9Bw6uIwIaR/NC/Eyc6iQz2/6
+X-Gm-Gg: ASbGnctL/BYPf8nWYqexI26CEAgIPElpCd9741d1dFGJSF60rnuW2G0TbVXiv9e9pVO
+ 1MYFaWGjky/UGC/BtYxSQ/iirtSck8buHyfxoBM5/ePbvHczpnPp7jgQUGVzTMEZBY1LQte9it1
+ I8/xNaUnGcHHdvPcdRwYAUayLUT2g1NJlbjFj5j1ac7GysIw5Uiuz82nH/15IjBm3aD6M8TEeyW
+ QOI9JfO0DYI7wJbS+kd0luMolGFaUyG0mz3xxz+TQ76pwwyuRCOr7bOxFOxlxaiwdQ8/AxaCTCb
+ +mWq36JojR6CwDPVzBLBQIZpI3MxqfooXUXRJ3Wn+ZklikPCh6M1aeSTcWajzcI1LU3Gj5g4+oH
+ V6gBJqRdCKsjqCk9910IQ+97REciUyXFQRjhMeDSRFy15HG9GCCYaOdatKbWr9EIcZGbJFzvp8z
+ 09ESsnnvfkoL/J9A7HGk2FPyWD1cR9RpqCt6Cwa16JjvJl99k=
+X-Google-Smtp-Source: AGHT+IHP+4oKTYSzDop/yvd+hBvBsIqpeqFKQ4QlLbHp2l5k4103+Qk7ZJjlyE3Yus8z/RAWdD/7kQ==
+X-Received: by 2002:a05:690e:418e:b0:63f:b082:4d5a with SMTP id
+ 956f58d0204a3-640d45d3919mr7421357d50.57.1762791617709; 
+ Mon, 10 Nov 2025 08:20:17 -0800 (PST)
+Received: from devvm11784.nha0.facebook.com ([2a03:2880:25ff:43::])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-787d69f0976sm24507857b3.45.2025.11.10.08.20.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Nov 2025 08:20:17 -0800 (PST)
+Date: Mon, 10 Nov 2025 08:20:16 -0800
+From: Bobby Eshleman <bobbyeshleman@gmail.com>
+To: Robert Hoo <robert.hoo.linux@gmail.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: vsock support for communication between guests
+Message-ID: <aRIQwPIGIR/6CgeE@devvm11784.nha0.facebook.com>
+References: <1943ea16-c3cb-4442-be72-5719026ee13a@gmail.com>
+ <pkglizwznrfj6fm7tdyew4tzmomgtp2cetxwfj2fx7ge4vtwhv@kdlj2jdxqheo>
+ <9535cd2e-239a-4002-be5b-b7c7fa85f081@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f301fcab-a7d6-1d89-aa56-52397f0d940a@eik.bme.hu>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <9535cd2e-239a-4002-be5b-b7c7fa85f081@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=bobbyeshleman@gmail.com; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 10 Nov 2025 11:34:02 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,149 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.11.2025 um 16:36 hat BALATON Zoltan geschrieben:
-> On Mon, 10 Nov 2025, Kevin Wolf wrote:
-> > Am 10.11.2025 um 14:42 hat Markus Armbruster geschrieben:
-> > > Clément Chigot <chigot@adacore.com> writes:
+On Sun, Nov 09, 2025 at 09:13:13PM +0800, Robert Hoo wrote:
+> On 11/6/2025 10:32 PM, Stefano Garzarella wrote:
+> > On Fri, Oct 10, 2025 at 09:00:21PM +0800, Robert Hoo wrote:
+> > > Hi,
 > > > 
-> > > > On Mon, Nov 10, 2025 at 2:09 PM Markus Armbruster <armbru@redhat.com> wrote:
-> > > > > 
-> > > > > Clément Chigot <chigot@adacore.com> writes:
-> > > > > 
-> > > > > > On Mon, Nov 10, 2025 at 11:13 AM Markus Armbruster <armbru@redhat.com> wrote:
-> > > > > > > 
-> > > > > > > Clément Chigot <chigot@adacore.com> writes:
-> > > > > > > 
-> > > > > > > > This allows more flexibility to vvfat backend. The values of "Number of
-> > > > > > > > Heads" and "Sectors per track" are based on SD specifications Part 2.
-> > > > > > > > 
-> > > > > > > > Due to the FAT architecture, not all sizes are reachable. Therefore, it
-> > > > > > > > could be round up to the closest available size.
-> > > > > > > > 
-> > > > > > > > FAT32 has not been adjusted and thus still default to 504 Mib.
-> > > > > > > > 
-> > > > > > > > For floppy, only 1440 Kib and 2880 Kib are supported.
-> > > > > > > > 
-> > > > > > > > Signed-off-by: Clément Chigot <chigot@adacore.com>
-> > > > > > > 
-> > > > > > > [...]
-> > > > > > > 
-> > > > > > > > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> > > > > > > > index 8a479ba090..0bcb360320 100644
-> > > > > > > > --- a/qapi/block-core.json
-> > > > > > > > +++ b/qapi/block-core.json
-> > > > > > > > @@ -3478,11 +3478,17 @@
-> > > > > > > >  #     (default: true)
-> > > > > > > >  #     (since 10.2)
-> > > > > > > >  #
-> > > > > > > > +# @fat-size: size of the device in bytes.  Due to FAT underlying
-> > > > > > > > +#     architecture, this size can be rounded up to the closest valid
-> > > > > > > > +#     size.
-> > > > > > > > +#     (since 10.2)
-> > > > > > > > +#
-> > > > > > > 
-> > > > > > > Can you explain again why you moved from @size to @fat-size?
-> > > > > > 
-> > > > > > Just to be sure, you mean in the above comment, in the commit message or both ?
-> > > > > 
-> > > > > Just to me, because I'm not sure I like the change, but that may well be
-> > > > > due to a lack of understanding of your reasons.
-> > > > 
-> > > > Naming `fat-size` instead of `size` ensures the parameter is only
-> > > > recognized by the vvfat backend. In particular, it will be refused by
-> > > > the default raw format, avoiding confusion:
-> > > >  "-drive file=fat:<path>,size=256M" results in a 504M FAT disk
-> > > > truncated to 256M, raw format being implicit.
-> > > >  "-drive file=fat:<path>,fat-size=256M" is refused. "fat-size" is
-> > > > unsupported by raw format.
+> > > Does vsock support communication between guests?
+> > > From man page, and my experiment, seems it doesn't.
+> > > But why not?
 > > > 
-> > > I figure throwing in format=raw to make raw format explicit doesn't
-> > > change anything.  Correct?
-> > > 
-> > > >  "-drive file=fat:<path>,format=vvfat,fat-size=256M" results in a 256M FAT disk.
-> > > >  "-drive file=fat:<path>,format=vvfat,size=256M" is refused. "size" is
-> > > > unsupported by vvfat format.
-> > > 
-> > > If it was called @size, what behavior would we get?  Just two cases, I
-> > > think:
-> > > 
-> > > 1. With raw format:
-> > > 
-> > >     -drive file=fat:<path>,size=256M
 > > 
-> > You'd silently get a 504 MiB filesystem truncated to 256 MiB (i.e. a
-> > corrupted file system). It's quite easy to forget format=vvfat, so
-> > something that initially looks like it might be working is not a great
-> > result for this user error.
+> > It depends, vhost-user vsock device, supports it.
+> > See https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock#sibling-vm-communication
+> > 
+> > The vhost-vsock in-kernel device doesn't support it.
+> > 
+> > The main problem is that vsock is designed for host<->guest
+> > communication, so implementing a guest<->guest communication is
+> > possible, but requires more configuration (e.g. some kind of firewall,
+> > etc.) and also an extension to the address (see the required
+> > `.svm_flags = VMADDR_FLAG_TO_HOST` in the link).
+> > 
+> > The easy way to do that with vhost-vsock, is to use socat in the host to
+> > concatenate 2 VMs (some examples here:
+> > https://stefano-garzarella.github.io/posts/2021-01-22-socat-vsock/)
+> > 
+> > Cheers,
+> > Stefano
+> > 
+> Nice, thanks Stefano. It sounds ideal for my VM <--> VM communication
+> requirement. I'll read the doc carefully later.
 > 
-> Why doesn't file=fat: imply format=vvfat? For what is the fat: part in
-> file then?
 
--drive is built pretty much on the assumption that you have an image
-format that runs on top of a protocol. Format probing probes the image
-format, not the protocol, while prefixes like fat: (or nbd:, http: etc.)
-specify the protocol.
+Though not as convenient as socat, VSOCK also supports sockmap which can
+do this in-kernel (bpf), there are a few test cases for this in
+selftests/bpf.
 
-So if you don't specify the format, we first open the protocol level
-(which is vvfat) and then probing will detect that over this protocol,
-we access a raw image. So it's mostly like saying format=raw.
-
-I think that format=<protocol driver> works is really more accidental,
-but we can't change it now (and probably also don't want to). It results
-in opening only the protocol layer and not stacking any format driver on
-top of it.
-
-Options that you specify in -drive generally go to the top layer. So the
-consequence in our case is that with format=vvfat, the option goes to
-vvfat, but with format=raw (or unspecified format), it goes to the raw
-forma driver.
-
-> I currently recommend using:
-> 
-> -drive if=none,id=ufat,format=raw,file=fat:rw:/dir/to/export
-> -device usb-storage,drive=ufat
-> 
-> to my users which I got from somewhere but don't remember where and it
-> seems to work but maybe not the best way to specify this.
-
-It's fine, and I might use the same one myself (though you should be
-aware that fat:rw: is risky, it's full of bugs).
-
-But if you add an option like size=64M, it goes to the raw driver, which
-will take whatever image you access on the protocol level and truncate
-it at 64 MiB.
-
-If you want to give the size option on the vvfat level (and create a
-filesystem that is actually only 64 MiB instead of truncating a larger
-one), then obviously format=vvfat allows you to do that because then
-there is no raw format layer to begin with. Or if you do have the raw
-format layer, you can access options of the protocol layer by prefixing
-"file.". So format=raw,file.size=64M would still pass the size option to
-vvfat.
-
-So the command line does allow you to get the option to the right place,
-it's just very easy to get confused about this and to specify the option
-for the wrong layer.
-
-> After reading this thread I'm confused about how to use this
-> correctly. Is there some documentation on this? There only seems to be
-> some mentions in docs/system/qemu-block-drivers.rst.inc but all of
-> them using older options:
-> 
->   |qemu_system| linux.img -hdb fat:/my_directory
->   |qemu_system| linux.img -fda fat:floppy:/my_directory
->   |qemu_system| linux.img -fda fat:floppy:rw:/my_directory
-
-All of those are honestly fine, too, if you're happy with the defaults
-and don't want to set more advanced options.
-
-I'll give you this bonus option if you want to be modern:
-
-    -blockdev vvfat,node-name=ufat,dir=/my_directory,rw=on
-    -device usb-storage,drive=ufat
-
-But I don't think any of the other options is going away anytime soon.
-
-Kevin
-
+Best,
+Bobby
 
