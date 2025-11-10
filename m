@@ -4,113 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6DFFCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 14:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB40CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 14:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vITKF-0001mR-R3; Mon, 10 Nov 2025 09:56:59 -0500
+	id 1vITLt-0003c2-4B; Mon, 10 Nov 2025 09:58:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vITK6-0001fQ-CY
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:56:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vITK4-0000sV-1z
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:56:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762786606;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6cM2DwQPWnMIZwjLyerZc3itnOUiJcah2Bj1sbM5eok=;
- b=XePMlidH0McfYbJhTpfOuP0wvrdADSgtiuWtVD4I+woZz4+5FKur7WbxFOGwNUZ0sVIWbF
- BhDbsmjV4Ar1mt/K2ulOxHOveCXdecDWQ2mBNLVzGanHkq/H+K3uu1nFE3hjTRO21gmKOW
- 5l5zoWH3dcUAzVXI1WbVoDSU7K4q9p0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-9Ddndue9OKmvI_LrftoMHQ-1; Mon, 10 Nov 2025 09:56:45 -0500
-X-MC-Unique: 9Ddndue9OKmvI_LrftoMHQ-1
-X-Mimecast-MFC-AGG-ID: 9Ddndue9OKmvI_LrftoMHQ_1762786604
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-429cbd8299cso1094709f8f.1
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 06:56:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vITLk-0003Zn-SK
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:58:33 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vITLi-0001Ey-20
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 09:58:32 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so37216465e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 06:58:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762786604; x=1763391404; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6cM2DwQPWnMIZwjLyerZc3itnOUiJcah2Bj1sbM5eok=;
- b=SlyZ14yM3dIuIrhJL/06UVk1jcyNaOXEoC8p444Q6rRibbbTDjixcwvClsKEP5vsAV
- mgatnRvDC0z4BIMuv1mhdvvxi7/DSnpAtYS7SbtCgPOGrWCJoU0zhNBds1CI0BmYr0V+
- TvlOZwKjnpDxNofWksejIGbvPosf68Z0hK//CtSeVERgsQnYLGRrZbpYTkyAu4akEBbA
- yU8I36ipVnnA1Q6CM8AnnbDQRkBQ19cNmhL8rMdaT0fqvIAf+bXx4tRJ6EHtDFoLNwcy
- X2al+0Qx7UfP/FWyKo0OLI8w0c7FiPJXr/zOERL3bBncP1my0/JXsURDjue2j2PcKvbC
- ftgg==
+ d=linaro.org; s=google; t=1762786707; x=1763391507; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TnIi3O7z0FDXW4dTw5vpMbVOZY4hrHB1tXHUK1da/Pk=;
+ b=RP/xf6riXR4dmFQkaibzhh/odzLdC+I8z3GO7aJBFz2GBwvMg4fK30lgtbk3C4Lxxm
+ MMyN3HzIe85tnogocSbEoXnt+UKYNKeYEDKSSq90TnbcOYKQ0fd9XQdw02ABNC73XjnN
+ fs7V/jRXRVres03wKo0Ytp399gUtwvaVKJU2VVoYZygbKBAklwaImcy82p1C1pUkINYD
+ v2IHKC6usu7ak6ymYS3kt0BeXSSPRyTWxrM8/npQS9sOCml0r/HlBRKdvtBrAQ1bDIXD
+ H7hOAKxfUtb0Xnout2BdESFcb/lV7gz51dxin4LLq0VlHOppfe+NHVCVq+mILWRnLAgI
+ v2pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762786604; x=1763391404;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6cM2DwQPWnMIZwjLyerZc3itnOUiJcah2Bj1sbM5eok=;
- b=JyIj22lqumbdxvY+I86XxF+sy+JXck+eSQQA4AdaDNSy0twy+AiQhHLZvs1I/v62BQ
- ZDAT6u0uxAhaF/zPfyC25iCrD43/ahaIvACTIOa48RMHIl00B2Q2uZXHbUNtZgDv9Z5i
- yWiRNZMFZSnQctBvOZ208ZzD6gD8LW+PeElR/k9lkMv+ZeWomkWPSaIF/5Whf55L0ClH
- FJ1XiHTcAl4GAHx+Rt9GJG7MeP5TYskt06YI1RNZI00NnSuskQKh6gIfvUjNW3xTflTi
- BM6/x/Qw0NwhMpaaSqh6IN8SPWDv1qoQJJjMrlJYULVwLZL4XT17KBDbDtxKfVSOrrf7
- RGPA==
+ d=1e100.net; s=20230601; t=1762786707; x=1763391507;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TnIi3O7z0FDXW4dTw5vpMbVOZY4hrHB1tXHUK1da/Pk=;
+ b=B95RmdZeIe+5IxPbDihYT+UX7h99yDa6ulk4WBFb+qfh2vPfHQGIYlKUYYi2yaqsSG
+ 2DJ2KAoaprfCqQ+tf9HWGnIVH3gpqBWZF3LEaGuonLmPTLlqW3Z9kmNBJZuwlI85Sesp
+ RJaulfRV/btCXYfa3FVegxd1P4R70953iPbX1XN/wDNrHsPe4hmygja3tp1k1ZcXogQi
+ 9vooLKOfmTPPSdYEjsgYUqyeVnAcwESWzYgmKDlDp0/2o/51xVTCaDQ+74+5NbCYAyHT
+ JvLDyHOxuu50ZF7Sy+iQKKWaeE2eKA1S1o/Nk8+k5XcdLgA/WgWXHu5NPkvBwLAHWboj
+ NmmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSGcweBTSg1fehZfVjp3NKTgOHPes9hQr2RpnS5ViwIsqquFrw5nCjeMTZ4DZornAt3BlH1AblkeCx@nongnu.org
-X-Gm-Message-State: AOJu0YxmYULw0lI7+1q3X7XReqxLhYCGnsCNCueBjpXn1+Hd4YXfFfZs
- q9coEd379VoQuImFVIPXcK3G/SLb4XM5XL1x0rEMLkPgGFQg2cN7F+6bBQh/p8RvXWwXYBgCUy1
- 4YhhtWosCbXQ9CZZAnopGtdv8cp9cLP96scCcjvPfAZILLGOIM3Pe+Vhx
-X-Gm-Gg: ASbGnctJHuuJEMbpHx4dIpA5n7FANwAqZYu8odH3XZ49cQEe0SZGjfsIx8VZvXHpT3C
- EZVtME56iX3KOu6gk21DKWLqSSPBn//fzS6+O0gTN9Kwv1AL/heV07czER2WCKd7IX6ifboyG5u
- H8J/X8ed0NGP6b7deILe04mfisrG2tk0c/JYHBOTsU1uLSYYZjLY7agRwiIRNjDf4d9kLOQm4iZ
- FBky2J3dZIfJEEmqqWfov9Jo0P+UHEudfhwM+yevlZm/T8IckIX9D4yUdizE8AvsnJefqorRQdW
- Azvhf4LpyByAjXjnfi+lL68VY/4Eo4chHQWKMgeV0CLk4MjrDaZGIFg9hzKm50B7xA==
-X-Received: by 2002:a5d:5f50:0:b0:42b:411b:e476 with SMTP id
- ffacd0b85a97d-42b412b29aemr1280696f8f.9.1762786603796; 
- Mon, 10 Nov 2025 06:56:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqffXlXaUV8iTzadTTIkODoWrRx97bPnVr7wBabo7NHbFIY353VbqDAkqEDogoOxonmr2NCw==
-X-Received: by 2002:a5d:5f50:0:b0:42b:411b:e476 with SMTP id
- ffacd0b85a97d-42b412b29aemr1280674f8f.9.1762786603426; 
- Mon, 10 Nov 2025 06:56:43 -0800 (PST)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b2dd927d5sm15875533f8f.24.2025.11.10.06.56.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Nov 2025 06:56:43 -0800 (PST)
-Date: Mon, 10 Nov 2025 15:56:42 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- mchehab+huawei@kernel.org, gengdongjiu1@gmail.com, mst@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org, pbonzini@redhat.com,
- shan.gavin@gmail.com
-Subject: Re: [PATCH v3 7/8] kvm/arm/kvm: Introduce helper
- push_ghes_memory_errors()
-Message-ID: <20251110155642.2bf8eca0@fedora>
-In-Reply-To: <20251105114453.2164073-8-gshan@redhat.com>
-References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-8-gshan@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ AJvYcCUeCpksWxthKd+0/nUwEYEYwvUsERmt/ERcGmKp03JXsukH/Qs74Mp7bJGGV8KUt2sfr2Ay1cyP49YQ@nongnu.org
+X-Gm-Message-State: AOJu0Yxt1LgFXYzWtw0H6ryuqSH1gWVzuwxRNZg6HvyARWlIU/6Sbq4L
+ jVynqNFI2XjxkCW4vwFmUPje8QymFJnKWaSz+aV4LB1vA+eQ1D8dxywRkdak1ilmjdM=
+X-Gm-Gg: ASbGnctgledPdDtH+Mp7mmySvlwjZFEmsIAdR2WTmLIXEBeD0u4rrnyDHlbHVTbYifF
+ Cl00WRtSWVMok32c/7/sYTr0CjEnpZdAmU38y2XRvnIDIuGzmo9PYRDgQjrwMS5a04OLULJY6+T
+ BEhKkYnpVdo7lgSi622HxAvYQf+gdRUBeE2akZ+RFlD1F0bUqZWTIIhqakAbXCYDDRp/50K3Vfs
+ rF34ve2DdY1O+rU2baRS3UD4jUUTVvVU94Ygc8f8qGplRcedvi4IaO+w4lc9L31sYX2y9hTsNIv
+ LrDG8AYruqxrfF5rmUTKLfKht6DDqbgDBc2jutsA27+kOrFrQ8B6wtCL2mNia4gaeXpoHTC7QdV
+ uI/1HTO4tiqp5Da9/nyOCgaiHrPriFHOwe8Il2ViSXqi2UUtB4TnuUPN0Uq9hGD7ZQuq7L6QM+c
+ LEq84qethDsC9VCuW2p8aaqyQTCvm/EfsSpJi77t5NfHqdET0IsofWie9VsdGU22bZql0e1XAVF
+ bx0Q4e/qA==
+X-Google-Smtp-Source: AGHT+IH8CinV22JzoLRIWc8gEQYetEzFJELDJmHWKDGNlCkPycgtsa7LggqN0wZzWy1eJ4UIl5umhw==
+X-Received: by 2002:a05:600c:5494:b0:477:7b72:bf9a with SMTP id
+ 5b1f17b1804b1-4777b72c251mr44369555e9.28.1762786707500; 
+ Mon, 10 Nov 2025 06:58:27 -0800 (PST)
+Received: from [192.168.68.117] (anancy-654-1-85-43.w90-26.abo.wanadoo.fr.
+ [90.26.70.43]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47763db453csm121669635e9.1.2025.11.10.06.58.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Nov 2025 06:58:27 -0800 (PST)
+Message-ID: <09d88466-8ba6-4548-b2d4-dded9bed37b9@linaro.org>
+Date: Mon, 10 Nov 2025 15:58:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 08/12] hw/arm/aspeed_ast10x0: Add AST1060 SoC support
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, kane_chen@aspeedtech.com
+References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
+ <20251106084925.1253704-9-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251106084925.1253704-9-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,66 +112,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  5 Nov 2025 21:44:52 +1000
-Gavin Shan <gshan@redhat.com> wrote:
-
-> Introduce helper push_ghes_memory_errors(), which sends ACPI GHES memory
-> errors and injects SEA exception. With this, we can add more logics to
-> the function to support multiple ACPI GHES memory errors in the next
-> path.
+On 6/11/25 09:49, Jamin Lin via wrote:
+> Add initial support for the Aspeed AST1060 SoC. The AST1060 reuses most
+> of the AST1030 peripheral device models, as the two SoCs share nearly
+> the same controllers including WDT, SCU, TIMER, HACE, ADC, I2C, FMC,
+> and SPI.
 > 
-> No functional changes intended.
-
-I'd squash it into the next patch
-
+> A new common initialization and realization framework (ast10x0_init
+> and ast10x0_realize) is leveraged so AST1060 can instantiate the
+> existing AST1030 models without redefining duplicate device types.
 > 
-> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->  target/arm/kvm.c | 19 +++++++++++++------
->  1 file changed, 13 insertions(+), 6 deletions(-)
+>   hw/arm/aspeed_ast10x0.c | 61 ++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 60 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index a889315606..5b151eda3c 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -2429,12 +2429,23 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->      return ret;
->  }
->  
-> +static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
-> +                                    uint64_t paddr, Error **errp)
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index c85c21b149..17f5285d85 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -190,6 +190,25 @@ static void aspeed_soc_ast1030_init(Object *obj)
+>       object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
+>   }
+>   
+> +static void aspeed_soc_ast1060_init(Object *obj)
 > +{
-> +    uint64_t addresses[16];
+> +    char socname[8] = "ast1030";
 > +
-> +    addresses[0] = paddr;
-> +
-> +    kvm_cpu_synchronize_state(c);
-> +    acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses, 1, errp);
-> +    kvm_inject_arm_sea(c);
-> +}
-> +
->  void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
->  {
->      ram_addr_t ram_addr;
->      hwaddr paddr;
->      AcpiGhesState *ags;
-> -    uint64_t addresses[16];
->  
->      assert(code == BUS_MCEERR_AR || code == BUS_MCEERR_AO);
->  
-> @@ -2455,12 +2466,8 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
->               * later from the main thread, so doing the injection of
->               * the error would be more complicated.
->               */
-> -            addresses[0] = paddr;
->              if (code == BUS_MCEERR_AR) {
-> -                kvm_cpu_synchronize_state(c);
-> -                acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
-> -                                        addresses, 1, &error_abort);
-> -                kvm_inject_arm_sea(c);
-> +                push_ghes_memory_errors(c, ags, paddr, &error_abort);
->              }
->              return;
->          }
+> +    /*
+> +     * The AST1060 SoC reuses the AST1030 device models. Since all peripheral
+> +     * models (e.g. WDT, SCU, TIMER, HACE, ADC, I2C, FMC, SPI) defined for
+> +     * AST1030 are compatible with AST1060, we simply reuse the existing
+> +     * AST1030 models for AST1060.
+> +     *
+> +     * To simplify the implementation, AST1060 sets its socname to that of
+> +     * AST1030, avoiding the need to create a full set of new
+> +     * TYPE_ASPEED_1060_XXX device definitions. This allows the same
+> +     * TYPE_ASPEED_1030_WDT and other models to be instantiated for both
+> +     * SoCs.
+> +     */
+> +    aspeed_soc_ast10x0_init(obj, socname);
 
+Why not simply use:
+
+        aspeed_soc_ast10x0_init(obj, "ast1030");
+
+?
+
+> +}
 
