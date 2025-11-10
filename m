@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 841EBCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 13:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEF2CCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 13:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIS79-0001jr-NT; Mon, 10 Nov 2025 08:39:23 -0500
+	id 1vIS7d-0001yz-PR; Mon, 10 Nov 2025 08:39:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1vIRl4-0004eW-DX
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:16:37 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1vIRl1-0000j3-ES
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:16:34 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-63bc1aeb427so2420361d50.3
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 05:16:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762780590; x=1763385390; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5LNxPAa5UaJLbl0/PF1b8HrfRNxaf12EH4ci6pH3bpg=;
- b=PEwhWj4Utnjj8VFdKzWXexGn07s5JSrl7oOTrBiZJEoDSyvcZIsFFUm5dkW0aPunLx
- YFfYMmiPHLNXxhbqLf8UPoiRhgfV04yzGPsNl80aoPOtU8MhFFe95xlsxK1Tkk3N3ZtR
- hrQTFwJoIXENlfHguHF9bA31gzU12mke4sxiruvirQUck5+tFBqcWJiMic54FBLe56Up
- wad5q3ld1Nf78Ifk8bdAQWF5iF1aDoUlK5i7zrEz0Df064FRbabBvZxQHxgcxHUqRItf
- tYNHzG0n5iv692r+aVRMyn9xZCL02NFTJUaugi4Rml71hr0JT4E2EsFURzWXQG+AGOD7
- 0B5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762780590; x=1763385390;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5LNxPAa5UaJLbl0/PF1b8HrfRNxaf12EH4ci6pH3bpg=;
- b=Q7VGa+FGKEGGQ8E23Sk/AitTJdMoIO92G1bcJo+Zv0XSGS5iMm8ywTfixOVu8CXqaB
- qly1EkTn28D9cTIIvDFBRDCVlOfO6ZUGRiJ/nKc3nDZoqV8i5GbWzam9FqN9e/Ttc111
- eBU5NdUYNx00+yWS/6LthdZUjtmG5ujHj3JBPlAIICW8qKGAf11WgIPSH8wdmFi44+mC
- 0QBKXutxzx1uo6mobKFd2ckapmYm+pjJWqgtVGLarPbh+rV+lHrNtC2FUEJUP9G6gDgK
- fz6kI8IXpB5aB3ZMtfQl6lOrJNUAAlbMbQEcGP65tV7CDqqdVKqA3XsE/W36wjIaNRip
- kmYA==
-X-Gm-Message-State: AOJu0YyUZnei+rPlDMTed3wLlOjP624/ICk8jDB8g6JWykOtx+SlW9xY
- 1bdowYuBqdmMBaxfhXujQACROT2tiSqoAcoXzzzeRfK9XOIYHIFmcugnWLgV5bDz+FH9TcEtonK
- 4icQoRvk6pJBhZTuj95b4fZq+/+tefGFuB5jo
-X-Gm-Gg: ASbGnct53oTe/2w74qeN6rr3upjLYhLlJRf9uVtUsGJ6REl0hGvzGawYF9dyxSb8fo8
- iguGW5MAtHzZbisbBUCCv4SuCUJ2hWmSQme/bivAgXRZnCxsuE44+agQluGA92GkrpesRP5qNKW
- C7EtIDebu72zX/Ehh8S1RqoveQxSKrPZLrznovna1Y8ZPwozCiI1+m+I7kbxuDygpWZPwIeY6Qb
- 3rIW7PuulZaHAXhiIDt5JJBGPRuzs4EBeO/bZ7oQkMqeS9KfuSPN4OdrdUMWj0L9B8ZPOwv3Ih+
- vD+zBduK
-X-Google-Smtp-Source: AGHT+IHYTAxnRPmn/i/PJBCgTie1eg+ZwvYBZ6U4wcHxtaoefU5MgAUrFkIM2WP3zgT2OD7yRF5gVPQ6TwF3NXrsPuo=
-X-Received: by 2002:a53:d01c:0:b0:63f:af64:ae5a with SMTP id
- 956f58d0204a3-640d45d1d59mr5862292d50.58.1762780590423; Mon, 10 Nov 2025
- 05:16:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIRiD-0002fs-Qm
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:13:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIRi0-0008Lz-M3
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:13:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762780400;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7g9xL0RxGsoNnu+JdIUsQjWaA7KiC/WAha5ownuBQTc=;
+ b=UkhP9QnOZA1aKqo5vrtsSLpGe+OVecTrolgqAo9KebqZHrSqpLGy5q8Y9qbBNty0HHqknl
+ rMTAMnSwYaVpAGU3G6Sgp4LqBIJwpPyiX0dCVKncVzpKcj1AXR5XdNLNCaLs/vgKxw4L3Q
+ DFUZuFJFMp85NroLIYfQNrw8RImceV0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-F2siaPzsN4aSWccHaSG0wA-1; Mon,
+ 10 Nov 2025 08:13:17 -0500
+X-MC-Unique: F2siaPzsN4aSWccHaSG0wA-1
+X-Mimecast-MFC-AGG-ID: F2siaPzsN4aSWccHaSG0wA_1762780396
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F9F31956089; Mon, 10 Nov 2025 13:13:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB34F19560A7; Mon, 10 Nov 2025 13:13:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 276E721E6A27; Mon, 10 Nov 2025 14:13:13 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>
+Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  kwolf@redhat.com,
+ hreitz@redhat.com,  eblake@redhat.com
+Subject: Re: [PATCH v2 2/5] vvfat: move fat_type check prior to size setup
+In-Reply-To: <CAJ307Ej8oNXjOZt2fkBMjR6bKSf=C2M6ncFFLCfy=Wk6+KMhNQ@mail.gmail.com>
+ (=?utf-8?Q?=22Cl=C3=A9ment?= Chigot"'s message of "Mon, 10 Nov 2025
+ 12:15:20 +0100")
+References: <20251107145327.539481-1-chigot@adacore.com>
+ <20251107145327.539481-3-chigot@adacore.com>
+ <874ir2nqr9.fsf@pond.sub.org>
+ <CAJ307Ej8oNXjOZt2fkBMjR6bKSf=C2M6ncFFLCfy=Wk6+KMhNQ@mail.gmail.com>
+Date: Mon, 10 Nov 2025 14:13:13 +0100
+Message-ID: <877bvykp3q.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20251110110507.1641042-1-bmeng.cn@gmail.com>
- <bb8eedd0-b061-416f-be49-33a760c6e1f7@linaro.org>
-In-Reply-To: <bb8eedd0-b061-416f-be49-33a760c6e1f7@linaro.org>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 10 Nov 2025 21:16:18 +0800
-X-Gm-Features: AWmQ_bmegOQZXccjsK09vxL_dbhtDP_fTuMochwWwBuXQuHfC5kk8BT53RoWlbg
-Message-ID: <CAEUhbmUwr+y0jKx=ZGqgsZhAer=ix9X-VkkJS1pF8-OM8-YhRw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] hw/sd: Fix broken ssi-sd implementation since v9.1.0
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: QEMU <qemu-devel@nongnu.org>, Tom Rini <trini@konsulko.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb129.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,39 +91,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
 
-On Mon, Nov 10, 2025 at 7:57=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+> On Mon, Nov 10, 2025 at 11:09=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>>
+>> Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
+>>
+>> > This allows to handle the default FAT size in a single place and make =
+the
+>> > following part taking care only about size parameters. It will be later
+>> > moved away in a specific function.
+>> >
+>> > The selection of floppy size was a bit unusual:
+>> >  - fat-type undefined: a FAT 12 2880 Kib disk (default)
+>> >  - fat-type=3D16: a FAT 16 2880 Kib disk
+>> >  - fat-type=3D12: a FAT 12 1440 Kib disk
+>> >
+>> > Now, that fat-type undefined means fat-type=3D12, it's no longer possi=
+ble
+>> > to make that size distinction. Therefore, it's being changed for the
+>> > following:
+>> >  - fat-type=3D12: a FAT 12 1440 Kib disk (default)
+>> >  - fat-type=3D16: a FAT 16 2880 Kib dis
+>> >
+>> > This has been choosen for two reasons: keep fat-type=3D12 the default =
+and
+>> > creates a more usual size for it: 1440 Kib.
+>> >
+>> > The possibility to create a FAT 12 2880 Kib floppy will be added back
+>> > later, through the fat-size parameter.
+>> >
+>> > Side note to mention that s->sectors_per_cluster assignments are
+>> > removed because they are overidden a few line further.
+>> >
+>> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+>>
+>> Is this a user-visible change?
 >
-> Hi Bin, Tom,
+> Yes, just "floppy" will now result in a 1440 KiB instead of the
+> previous 2880 KiB. However, Kevin mentions in V1 that it would make
+> more sense and vvfat being known to be unstable, this would be fine.
+> FTR, here is the complete comment:
 >
-> On 10/11/25 12:05, Bin Meng wrote:
-> >
-> > The U-Boot community reported a CI failure [1] where the
-> > `sifive_unleashed` target failed to boot from an SD card after
-> > upgrading from QEMU v8.2.0 to v9.2.3.
-> >
-> > At that time, the issue was traced to commit da954d0e
-> > ("hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)")
-> > which was introduced in v9.1.0.
-> >
-> > Testing with the latest QEMU mainline shows that the problem still
-> > persists, although the underlying cause has changed due to refactoring
-> > since then.
-> >
-> > This series fixes the broken `ssi-sd` model. After applying these
-> > patches, U-Boot successfully boots again on the `sifive_unleashed`
-> > target using QEMU=E2=80=99s `sifive_u` machine.
->
-> Thanks for fixing this issue!
->
-> Do you mind adding this test as a functional one, so we get this
-> code path covered?
->
+>> On Wed, Oct 29, 2025 at 5:06=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wr=
+ote:
+>> > In general, our stance is that we can change defaults whenever we want
+>> > to, and if you don't want to be surprised by changing defaults, you ne=
+ed
+>> > to specify the option explicitly.
 
-Sure, I will try to add a test in v2.
+Hmm, where is this stance on defaults documented?  Question for Kevin,
+of course.
 
-Regards,
-Bin
+>> >                                   What's a bit strange about the vvfat
+>> > interface is that the default actually represents a configuration that
+>> > can't even be expressed explicitly at the moment.
+
+Awkward.
+
+>> > So it is a special case in a way, but given that this is vvfat, which =
+is
+>> > known to be unstable, not widely used outside of the occasional manual
+>> > use and not supported by libvirt, I'm willing to just make the change.
+
+I'm fine to treat vvfat as unstable.  But it's not marked as such in the
+QAPI schema!  Is that a bug?  Again, for Kevin.
+
 
