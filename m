@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A245CCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 13:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C389CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 14:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vISLR-0007P7-Hb; Mon, 10 Nov 2025 08:54:10 -0500
+	id 1vIST9-0004Sm-Cv; Mon, 10 Nov 2025 09:02:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vISAJ-0005W2-NR
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:42:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vISAF-0004qq-EM
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:42:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762782153;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YhdkDoDLzl3DkAisWS71XVkKLFe4gnNlS8xdwLFj87Y=;
- b=clgKMeffRlNNGDJEatWP3JKiaAZQnD/AWadEFJe4w28Cz18cOBKIUeTDbqCC0l9kCiaode
- k0qBCNZlvQqlTjSYBVvUDtfLkiMeFp5XJxsWvUUf6fKlTSefRObgjGMN2mBo5P6nnEFG+I
- JB9bfyLfliL7Bk5zTsUa4oaxYqru+zQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-gL0IHtNlMbGN22ugaF8lmA-1; Mon,
- 10 Nov 2025 08:42:32 -0500
-X-MC-Unique: gL0IHtNlMbGN22ugaF8lmA-1
-X-Mimecast-MFC-AGG-ID: gL0IHtNlMbGN22ugaF8lmA_1762782151
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A45B1956094; Mon, 10 Nov 2025 13:42:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85F5E1800451; Mon, 10 Nov 2025 13:42:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CC7DD21E6A27; Mon, 10 Nov 2025 14:42:27 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>
-Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  kwolf@redhat.com,
- hreitz@redhat.com,  eblake@redhat.com
-Subject: Re: [PATCH v2 5/5] vvfat: add support for "fat-size" options
-In-Reply-To: <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
- (=?utf-8?Q?=22Cl=C3=A9ment?= Chigot"'s message of "Mon, 10 Nov 2025
- 14:26:46 +0100")
-References: <20251107145327.539481-1-chigot@adacore.com>
- <20251107145327.539481-6-chigot@adacore.com>
- <87zf8umbzh.fsf@pond.sub.org>
- <CAJ307EjObqJ6Pr5N+WrEffTr3pWOpRCKVVamZhCG9ZgwHczVYw@mail.gmail.com>
- <87bjlakpa5.fsf@pond.sub.org>
- <CAJ307EjZwiGj3N93Td9vA0JHyK0COZBXHqv-7cjpxxg+eKiisg@mail.gmail.com>
-Date: Mon, 10 Nov 2025 14:42:27 +0100
-Message-ID: <87o6paj96k.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vISHl-0003Cw-O1
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:50:22 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vISHj-0006PR-Hv
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 08:50:20 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-640aaa89697so4371605a12.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 05:50:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762782617; x=1763387417; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mXCEtuBybIWNkH8OqUFYjuZlPwZp9AyCadxRNtAQ1Fk=;
+ b=FdrH05DFq7RV2j5NXlZA46PVDmNILtkho/sWLPXeZNtU51roQPbcvywh1yp9dVcvfC
+ 2R4RVNljM8U5CdvUCyDw6FFwIeslcTMxWPshznpsPf2rH6VfBi5ZhccAsJ7HAdPyQHmH
+ OPQXoPUX5okSmr3aasLHO4Tzy5ywKAmyvEVUPIARux2yjNKeLE0TPKcU5imRX3ainDvE
+ CfKpyW8U+N3PsxkbyHUsAt0mb2q/Ih4bIJwCy2+fbkYsi7J/WlpOXyMBE7d1SPWMnKyN
+ /N6+3dv3fhs+u8KzBfIPihxMVbTuBW2gi8Rv4Gy10BSLw18FwSSgTCJZSH2gYgJCm70v
+ IdUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762782617; x=1763387417;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mXCEtuBybIWNkH8OqUFYjuZlPwZp9AyCadxRNtAQ1Fk=;
+ b=pMozkkayUkyQItm5RjhrkufHRFVX/hN9lKwBja5nZVxSRUTaqDHB3x+AbXoj2kguiy
+ 4RKTgQhHLVLE82R4fQEoDhNtjWErH2NLsDwMwcUam6l7v/u0C73QwzoCxKGKnv9a4rHi
+ iCWKYfE8GXtxlw93aJkCUWDbaMOaD6o0E5IhBZV8+dJv9bWCA8V8V/8eFy2B6FueLfeE
+ eXNwcawssGv0NABPnkAC+tR4x1cACTOxIgh4zl6hvsjXyZS1/Pxbz66XtjnmkUx0O6Fe
+ 1kUyPZ4M33XtVrRgIHm3k/oGD29qbGJ3tuWX3GPzthkACB+J2ReJLYQQJVrJBNU81lvM
+ rDfw==
+X-Gm-Message-State: AOJu0YzZG4zl2W9c/t3X5qO7j9ZOc2nMV5PeQwUEhL5hJATtI7cMkgCx
+ ZFHTzpX0mj71nqa90IBJbYPtX7hHdg6BLm6mva8QFt5g53j8zfBD6Zyhgck9N7WvPmLk8EsGRYz
+ 5MOIHG1ldaS+vkPZAAioqLu3mpEQuQ92MxTodBCgJCNWpQySfQfk70MPDow==
+X-Gm-Gg: ASbGncveODRxjANRy5qQOqxgFLH1x5XrtNXsa3PNWk4eMOYIFqVtV1T/upVBMj3QlO9
+ bzZx+5LZeGfPK5NlL8iweGCmWNHVHnwwrq7z5xIOhDcUUSvzFaS3hFPd+KwkJmNSK5Frqz0xvRY
+ Tqcbvr6Z6huBq1ZyEv5tIl+yGVhrJKBztKL7rca3OZUb/IDEkni8h1pW3y0URefmjeVLopubT2l
+ qDDCiHxOu/zJOYNprdmHI3HxTAp695ZZ5CEwiLKsgJ/66kTrQabctTdJ9OUCuPFon8R
+X-Google-Smtp-Source: AGHT+IE/JOFksAxd4GP0WJpLJIQ0n3ZDNisPdGVey7S5iYT2Plwz8uGkMIsJzhC55C1yOSG2bl+48zbs1DI9K8nGifY=
+X-Received: by 2002:a17:907:60d1:b0:b70:bc2e:a6f0 with SMTP id
+ a640c23a62f3a-b72e02b3521mr716652666b.5.1762782617332; Mon, 10 Nov 2025
+ 05:50:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20251106215606.36598-1-stefanha@redhat.com>
+ <20251106215606.36598-2-stefanha@redhat.com>
+In-Reply-To: <20251106215606.36598-2-stefanha@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 10 Nov 2025 15:49:50 +0200
+X-Gm-Features: AWmQ_bnZzqS7WMrJ7s44Zlwk6qf7OzRpa8-8ZzodONy_k1hmIh955cAMABSYzUw
+Message-ID: <CAAjaMXaXgsHK2z-f81x_baUSZcaSsfRpBo1=s1TsgPeoPi3GSg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hpet: remove unused trace events
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,84 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
-
-> On Mon, Nov 10, 2025 at 2:09=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
->>
->> > On Mon, Nov 10, 2025 at 11:13=E2=80=AFAM Markus Armbruster <armbru@red=
-hat.com> wrote:
->> >>
->> >> Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
->> >>
->> >> > This allows more flexibility to vvfat backend. The values of "Numbe=
-r of
->> >> > Heads" and "Sectors per track" are based on SD specifications Part =
-2.
->> >> >
->> >> > Due to the FAT architecture, not all sizes are reachable. Therefore=
-, it
->> >> > could be round up to the closest available size.
->> >> >
->> >> > FAT32 has not been adjusted and thus still default to 504 Mib.
->> >> >
->> >> > For floppy, only 1440 Kib and 2880 Kib are supported.
->> >> >
->> >> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
->> >>
->> >> [...]
->> >>
->> >> > diff --git a/qapi/block-core.json b/qapi/block-core.json
->> >> > index 8a479ba090..0bcb360320 100644
->> >> > --- a/qapi/block-core.json
->> >> > +++ b/qapi/block-core.json
->> >> > @@ -3478,11 +3478,17 @@
->> >> >  #     (default: true)
->> >> >  #     (since 10.2)
->> >> >  #
->> >> > +# @fat-size: size of the device in bytes.  Due to FAT underlying
->> >> > +#     architecture, this size can be rounded up to the closest val=
-id
->> >> > +#     size.
->> >> > +#     (since 10.2)
->> >> > +#
->> >>
->> >> Can you explain again why you moved from @size to @fat-size?
->> >
->> > Just to be sure, you mean in the above comment, in the commit message =
-or both ?
->>
->> Just to me, because I'm not sure I like the change, but that may well be
->> due to a lack of understanding of your reasons.
+On Sun, Nov 9, 2025 at 3:57=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
 >
-> Naming `fat-size` instead of `size` ensures the parameter is only
-> recognized by the vvfat backend. In particular, it will be refused by
-> the default raw format, avoiding confusion:
->  "-drive file=3Dfat:<path>,size=3D256M" results in a 504M FAT disk
-> truncated to 256M, raw format being implicit.
->  "-drive file=3Dfat:<path>,fat-size=3D256M" is refused. "fat-size" is
-> unsupported by raw format.
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
 
-I figure throwing in format=3Draw to make raw format explicit doesn't
-change anything.  Correct?
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  "-drive file=3Dfat:<path>,format=3Dvvfat,fat-size=3D256M" results in a 2=
-56M FAT disk.
->  "-drive file=3Dfat:<path>,format=3Dvvfat,size=3D256M" is refused. "size"=
- is
-> unsupported by vvfat format.
-
-If it was called @size, what behavior would we get?  Just two cases, I
-think:
-
-1. With raw format:
-
-    -drive file=3Dfat:<path>,size=3D256M
-
-2. Without raw format:
-
-    -drive file=3Dfat:<path>,format=3Dvvfat,size=3D256M
-
+>  hw/timer/trace-events | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/hw/timer/trace-events b/hw/timer/trace-events
+> index 2bb51f95ea..f3fca6fc9b 100644
+> --- a/hw/timer/trace-events
+> +++ b/hw/timer/trace-events
+> @@ -112,7 +112,6 @@ sh_timer_write(uint64_t offset, uint64_t value) "tmu0=
+12_write 0x%" PRIx64 " 0x%0
+>
+>  # hpet.c
+>  hpet_timer_id_out_of_range(uint8_t timer_id) "timer id out of range: 0x%=
+" PRIx8
+> -hpet_invalid_hpet_cfg(uint8_t reg_off) "invalid HPET_CFG + %u" PRIx8
+>  hpet_ram_read(uint64_t addr) "enter hpet_ram_readl at 0x%" PRIx64
+>  hpet_ram_read_reading_counter(uint8_t reg_off, uint64_t cur_tick) "readi=
+ng counter + %" PRIu8 " =3D 0x%" PRIx64
+>  hpet_ram_read_invalid(void) "invalid hpet_ram_readl"
+> @@ -123,4 +122,3 @@ hpet_ram_write_tn_cmp(uint8_t reg_off) "hpet_ram_writ=
+el HPET_TN_CMP + %" PRIu8
+>  hpet_ram_write_invalid_tn_cmp(void) "invalid HPET_TN_CMP + 4 write"
+>  hpet_ram_write_invalid(void) "invalid hpet_ram_writel"
+>  hpet_ram_write_counter_write_while_enabled(void) "Writing counter while =
+HPET enabled!"
+> -hpet_ram_write_counter_written(uint8_t reg_off, uint64_t value, uint64_t=
+ counter) "HPET counter + %" PRIu8 "written. crt =3D 0x%" PRIx64 " -> 0x%" =
+PRIx64
+> --
+> 2.51.1
+>
 
