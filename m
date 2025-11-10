@@ -4,96 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FE7CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 15:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F6BCCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 15:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIUHS-0003rw-81; Mon, 10 Nov 2025 10:58:10 -0500
+	id 1vIUHI-0003e2-DV; Mon, 10 Nov 2025 10:58:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vIUHQ-0003oD-OK
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:58:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vIUHE-0003Sg-5H
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:57:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vIUHO-0002l7-Nh
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:58:08 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vIUHB-0002k0-Ii
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 10:57:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762790285;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1762790271;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DgTZYleRFSb4NsXaocdHdAj3su1qur320aC1QO4ZJdg=;
- b=FjTnQ06OKK/ESnhELwKS+8XkFsp2qJUPBHbdQYQXeiltklHfsf4P4HyxM7f8xLroRx5qDP
- 2tVa6TgV2MuLK9zKQoaUYSSfbCnzisZfxKoTXDf0VWWrE9txq9M8IVnWWFHqXY1NdnL5X+
- Rs3MrTHXKaSxduS/L3UV8gOX5CHo2o4=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-ql1oS-7INZeLyHlNaJ6F2Q-1; Mon, 10 Nov 2025 10:58:04 -0500
-X-MC-Unique: ql1oS-7INZeLyHlNaJ6F2Q-1
-X-Mimecast-MFC-AGG-ID: ql1oS-7INZeLyHlNaJ6F2Q_1762790284
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-29806c42760so36076965ad.2
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 07:58:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762790283; x=1763395083; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DgTZYleRFSb4NsXaocdHdAj3su1qur320aC1QO4ZJdg=;
- b=S9b9vKI6oeTIbG0XID8w/OY+v+2zSBL1LZshY+YF8RKIuAkT/QoN33zlyAMafDdQsK
- DQbCHRjlU+I/Ukg2iDDM4aOTDz4zGzhe+hpQRuKT4K91Xjcjo29rQP9n/62lIGwptO7Z
- GGmracPS85aoDI3iujlfwBQ3wcV0T2Tw6ghkZ0P7sSq5IDfTrzx+G91OgVYDi/sronC5
- GRbMXXsRM5NLn3cDaNyRbIZ7RqPZGCrK+POrUDC/IxuYXRXyLeibqSfJD9woFTSwEVvR
- 6E2k94KuWDam5shQl4kbKJ8iKMSd2vy94d8EPh9k9KKbxb/ojbLcORIMcsD185K5ZAVt
- DHbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762790283; x=1763395083;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DgTZYleRFSb4NsXaocdHdAj3su1qur320aC1QO4ZJdg=;
- b=MC/M8oRn21zqZ607jmKnTnu90yZJ8XVolGpG9HJ2Xj3434EueA/lEH7F5j2Gu+NPmD
- 0/hgCngS+MMUvhaU+9wzXlo4l3ATc+k3VQY+biE8zZOwvCyoeGdPdhB3K1pyDuyfcEGO
- SEATiD5UjrPB50eOovzR40dQ4JfV98cFB4wWn00OcoUAwcxgbv61lKT0J3qQOUwC5cmD
- o8L3hghe/LB1yTitptOwvZYUd4bNuB+slm4NRunHTpQPxJ1iOAsYBebxYAP9MUooFS/+
- bpO0sQ7K8RSOOrWtDKnAV+L0eNIOSuZZxr+zrwQiiKn3+89As1Dgwj5EglJhq9JNWS7k
- xCXQ==
-X-Gm-Message-State: AOJu0Yz+eogA4zVLc40Li4PoD2A5KRTVjJOWPFRgjnXgLGOrqvG3Qn7l
- 7y7Zqv3s5p4+miF2718hTKlsoJ1YrFfOpeMcBfnUcE/8rDAjhT7tiQBHWCJMquBnvzr3zDC60N0
- iMtsWgs38kX2SRxZmjdaGqdr2nRTi3mlo6HA9YT1pU0axeoubxDeL03QyzEGYXP10EhkuBNzYSE
- j0teM6r7ismdfqBfHODspjv9keO9LK8V4=
-X-Gm-Gg: ASbGnct+v1Kof1GH2EB5MgRyi9cRSPgU1iUpz0N7edphs5jG0XvYBFkz7txGJZCyrza
- tdEiZdr5P7zpCf5m+flK3Zz+tOk3n2xNwNIcljyFuzAcbDn/UDxb1WeBAaZoL4enKn2wJf+7ZsH
- PWpYFLHHusXPPjLiigIF0zWqsE+4TJxK4gl7y6kskfzWqtYR/f344=
-X-Received: by 2002:a17:903:350d:b0:298:8ec:9991 with SMTP id
- d9443c01a7336-29808ec9a10mr68472985ad.37.1762790283520; 
- Mon, 10 Nov 2025 07:58:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE2jRME7u+h6gyInv105nzQEUhoE/xFtVobrb/Y1H/xIjyQF0ad9kqGQ3haWtfF19gzzf1G5MMriT7nckZ8laU=
-X-Received: by 2002:a17:903:350d:b0:298:8ec:9991 with SMTP id
- d9443c01a7336-29808ec9a10mr68472725ad.37.1762790283089; Mon, 10 Nov 2025
- 07:58:03 -0800 (PST)
+ bh=UcjQ9k+Oe+3io5JCU11aI4XTxOMhYuHwyOBvaGVpFsM=;
+ b=ZEQZVM3EYU5G3Iu8FQNYT5Osj47s2eHDJDXs1fok/fC4awMzIBfCwtcd9Wh1o51m4r2UIJ
+ 8ekt8RskvhkNSU+XZnpLwNrpeFInQMLO1N5l/71+15qw1emp9Tj77yvpNBfXKDZ0AQVsfK
+ ypGu1zLXyyV2o85k0jf472DHGm1jz+M=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-RfnQ_yUoMwacv7IoAuefzw-1; Mon,
+ 10 Nov 2025 10:57:50 -0500
+X-MC-Unique: RfnQ_yUoMwacv7IoAuefzw-1
+X-Mimecast-MFC-AGG-ID: RfnQ_yUoMwacv7IoAuefzw_1762790269
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3ACB019560B0; Mon, 10 Nov 2025 15:57:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.62])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C8481800361; Mon, 10 Nov 2025 15:57:47 +0000 (UTC)
+Date: Mon, 10 Nov 2025 15:57:44 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com
+Subject: Re: [PATCH v2 01/12] iotests: Drop execute permissions on vvfat.out
+Message-ID: <aRILeBBtHvD8gT5m@redhat.com>
+References: <20251108230525.3169174-14-eblake@redhat.com>
+ <20251108230525.3169174-15-eblake@redhat.com>
 MIME-Version: 1.0
-References: <cover.1762698873.git.mst@redhat.com>
- <fde5930cc37175cfcd0f03a089e26f4458a52311.1762698873.git.mst@redhat.com>
- <CADSE00+FLWVdh1CGmy6i4hLdJOKGG6-4JZySXL=wFOyyTnnFpw@mail.gmail.com>
- <20251110104059-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20251110104059-mutt-send-email-mst@kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 10 Nov 2025 16:57:51 +0100
-X-Gm-Features: AWmQ_bklUvRt__ouKznmgEc44iLqexVjksgxa82i2ZkOmOZO8mcJ8GrRQfSI_28
-Message-ID: <CADSE00+8_pyV_qUGJ9WiP3miHPvpiOLsHGeCF1cs=7Y3OuajnA@mail.gmail.com>
-Subject: Re: [PULL 04/14] vhost-user: fix shared object lookup handler logic
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251108230525.3169174-15-eblake@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -115,217 +85,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 10, 2025 at 4:42=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Mon, Nov 10, 2025 at 10:23:25AM +0100, Albert Esteve wrote:
-> > On Sun, Nov 9, 2025 at 3:35=E2=80=AFPM Michael S. Tsirkin <mst@redhat.c=
-om> wrote:
-> > >
-> > > From: Albert Esteve <aesteve@redhat.com>
-> > >
-> > > Refactor backend_read() function and add a reply_ack variable
-> > > to have the option for handlers to force tweak whether they should
-> > > send a reply or not without depending on VHOST_USER_NEED_REPLY_MASK
-> > > flag.
-> > >
-> > > This fixes an issue with
-> > > vhost_user_backend_handle_shared_object_lookup() logic, as the
-> > > error path was not closing the backend channel correctly. So,
-> > > we can remove the reply call from within the handler, make
-> > > sure it returns early on errors as other handlers do and
-> > > set the reply_ack variable on backend_read() to true to ensure
-> > > that it will send a response, thus keeping the original intent.
-> >
-> > Hey Michal,
-> >
-> > This patch was
-> > Based-on: <20251016143827.1850397-1-aesteve@redhat.com>
-> > =E2=80=A6 for main.
->
-> That's the SHMEM thing right?  Yes but I rebased it dropping
-> the SHMEM dependency.
->
-> At least, I think I did it correctly.
+On Sat, Nov 08, 2025 at 04:59:22PM -0600, Eric Blake wrote:
+> Output files are not executables. Noticed while preparing another
+> iotest addition.
+> 
+> Fixes: c8f60bfb43 ("iotests: Add `vvfat` tests", v9.1.0)
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> 
+> ---
+> v2: split this change to separate patch
+> ---
+>  tests/qemu-iotests/tests/vvfat.out | 0
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  mode change 100755 => 100644 tests/qemu-iotests/tests/vvfat.out
+> 
+> diff --git a/tests/qemu-iotests/tests/vvfat.out b/tests/qemu-iotests/tests/vvfat.out
+> old mode 100755
+> new mode 100644
 
-Yes, removing the dependency is correctly applied. But that was only
-required for the backport to stable.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-If we merge this patch to main without the one it is based on, then
-I'd need to send a new version of the SHMEM patch with the block that
-you have dropped. I can do it, but I was trying to prioritize the
-other one, as it was a lot harder to get approved. That is why I based
-this patch on top of the SHMEM one and not the other way around.
 
-Sorry if that was not clear from the message.
-
->
-> > As this was the first time I did this based-on thingy, I am just
-> > making sure that the other patch was not missed.
-> > If this PULL is only targeting stable, then it's ok as is.
->
-> It is targeting 10.2 which is in freeze. So equivalently same.
->
->
-> > BR,
-> > Albert
-> >
-> > >
-> > > Fixes: 1609476662 ("vhost-user: add shared_object msg")
-> > > Cc: qemu-stable@nongnu.org
-> > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> > > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-> > > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > > Message-Id: <20251017072011.1874874-2-aesteve@redhat.com>
-> > > ---
-> > >  hw/virtio/vhost-user.c | 40 +++++++++++++---------------------------
-> > >  1 file changed, 13 insertions(+), 27 deletions(-)
-> > >
-> > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > > index aac98f898a..4b0fae12ae 100644
-> > > --- a/hw/virtio/vhost-user.c
-> > > +++ b/hw/virtio/vhost-user.c
-> > > @@ -1668,14 +1668,6 @@ static bool vhost_user_send_resp(QIOChannel *i=
-oc, VhostUserHeader *hdr,
-> > >      return !qio_channel_writev_all(ioc, iov, ARRAY_SIZE(iov), errp);
-> > >  }
-> > >
-> > > -static bool
-> > > -vhost_user_backend_send_dmabuf_fd(QIOChannel *ioc, VhostUserHeader *=
-hdr,
-> > > -                                  VhostUserPayload *payload, Error *=
-*errp)
-> > > -{
-> > > -    hdr->size =3D sizeof(payload->u64);
-> > > -    return vhost_user_send_resp(ioc, hdr, payload, errp);
-> > > -}
-> > > -
-> > >  int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned cha=
-r *uuid,
-> > >                                   int *dmabuf_fd)
-> > >  {
-> > > @@ -1716,19 +1708,15 @@ int vhost_user_get_shared_object(struct vhost=
-_dev *dev, unsigned char *uuid,
-> > >
-> > >  static int
-> > >  vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
-> > > -                                               QIOChannel *ioc,
-> > > -                                               VhostUserHeader *hdr,
-> > > -                                               VhostUserPayload *pay=
-load)
-> > > +                                               VhostUserShared *obje=
-ct)
-> > >  {
-> > >      QemuUUID uuid;
-> > >      CharFrontend *chr =3D u->user->chr;
-> > > -    Error *local_err =3D NULL;
-> > >      int dmabuf_fd =3D -1;
-> > >      int fd_num =3D 0;
-> > >
-> > > -    memcpy(uuid.data, payload->object.uuid, sizeof(payload->object.u=
-uid));
-> > > +    memcpy(uuid.data, object->uuid, sizeof(object->uuid));
-> > >
-> > > -    payload->u64 =3D 0;
-> > >      switch (virtio_object_type(&uuid)) {
-> > >      case TYPE_DMABUF:
-> > >          dmabuf_fd =3D virtio_lookup_dmabuf(&uuid);
-> > > @@ -1737,18 +1725,16 @@ vhost_user_backend_handle_shared_object_looku=
-p(struct vhost_user *u,
-> > >      {
-> > >          struct vhost_dev *dev =3D virtio_lookup_vhost_device(&uuid);
-> > >          if (dev =3D=3D NULL) {
-> > > -            payload->u64 =3D -EINVAL;
-> > > -            break;
-> > > +            return -EINVAL;
-> > >          }
-> > >          int ret =3D vhost_user_get_shared_object(dev, uuid.data, &dm=
-abuf_fd);
-> > >          if (ret < 0) {
-> > > -            payload->u64 =3D ret;
-> > > +            return ret;
-> > >          }
-> > >          break;
-> > >      }
-> > >      case TYPE_INVALID:
-> > > -        payload->u64 =3D -EINVAL;
-> > > -        break;
-> > > +        return -EINVAL;
-> > >      }
-> > >
-> > >      if (dmabuf_fd !=3D -1) {
-> > > @@ -1757,11 +1743,6 @@ vhost_user_backend_handle_shared_object_lookup=
-(struct vhost_user *u,
-> > >
-> > >      if (qemu_chr_fe_set_msgfds(chr, &dmabuf_fd, fd_num) < 0) {
-> > >          error_report("Failed to set msg fds.");
-> > > -        payload->u64 =3D -EINVAL;
-> > > -    }
-> > > -
-> > > -    if (!vhost_user_backend_send_dmabuf_fd(ioc, hdr, payload, &local=
-_err)) {
-> > > -        error_report_err(local_err);
-> > >          return -EINVAL;
-> > >      }
-> > >
-> > > @@ -1790,6 +1771,7 @@ static gboolean backend_read(QIOChannel *ioc, G=
-IOCondition condition,
-> > >      struct iovec iov;
-> > >      g_autofree int *fd =3D NULL;
-> > >      size_t fdsize =3D 0;
-> > > +    bool reply_ack;
-> > >      int i;
-> > >
-> > >      /* Read header */
-> > > @@ -1808,6 +1790,8 @@ static gboolean backend_read(QIOChannel *ioc, G=
-IOCondition condition,
-> > >          goto err;
-> > >      }
-> > >
-> > > +    reply_ack =3D hdr.flags & VHOST_USER_NEED_REPLY_MASK;
-> > > +
-> > >      /* Read payload */
-> > >      if (qio_channel_read_all(ioc, (char *) &payload, hdr.size, &loca=
-l_err)) {
-> > >          error_report_err(local_err);
-> > > @@ -1833,8 +1817,10 @@ static gboolean backend_read(QIOChannel *ioc, =
-GIOCondition condition,
-> > >                                                               &payloa=
-d.object);
-> > >          break;
-> > >      case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
-> > > -        ret =3D vhost_user_backend_handle_shared_object_lookup(dev->=
-opaque, ioc,
-> > > -                                                             &hdr, &=
-payload);
-> > > +        /* The backend always expects a response */
-> > > +        reply_ack =3D true;
-> > > +        ret =3D vhost_user_backend_handle_shared_object_lookup(dev->=
-opaque,
-> > > +                                                             &payloa=
-d.object);
-> > >          break;
-> > >      default:
-> > >          error_report("Received unexpected msg type: %d.", hdr.reques=
-t);
-> > > @@ -1845,7 +1831,7 @@ static gboolean backend_read(QIOChannel *ioc, G=
-IOCondition condition,
-> > >       * REPLY_ACK feature handling. Other reply types has to be manag=
-ed
-> > >       * directly in their request handlers.
-> > >       */
-> > > -    if (hdr.flags & VHOST_USER_NEED_REPLY_MASK) {
-> > > +    if (reply_ack) {
-> > >          payload.u64 =3D !!ret;
-> > >          hdr.size =3D sizeof(payload.u64);
-> > >
-> > > --
-> > > MST
-> > >
->
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
