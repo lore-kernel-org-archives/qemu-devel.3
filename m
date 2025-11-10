@@ -4,85 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40325CCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01464CCFA13
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIQ4V-0007lF-Rk; Mon, 10 Nov 2025 06:28:32 -0500
+	id 1vIQ4o-00086F-26; Mon, 10 Nov 2025 06:28:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vIPnS-0004tW-QD
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:10:54 -0500
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vIPnR-0004K9-2f
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:10:54 -0500
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-656de56ce7aso200411eaf.3
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 03:10:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vIPnJ-0004l7-4M
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:10:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vIPnD-0004JZ-Qh
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:10:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762773037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aktDvrJZFWRZUdhpU6PBPhEblVgeorLPMPLU5b2fnG0=;
+ b=a21hYyPrGjvnvxlJRRF8UZJ5rU9KiXhtk+l8bhwu/uz561s+9nyCJfvfRxOnd0Ugv2WSNX
+ jSnLcIJBp8gB9NfAki2CPTHHD1M9etJfjpk958VwkPhP20edFf3Rr7zuNSchQ4OjTRVqPA
+ rP0WmpasJpYkWG4abibtb6jhsgpPrpk=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-64MPK9eAOyasw2H9ArjJWA-1; Mon, 10 Nov 2025 06:10:36 -0500
+X-MC-Unique: 64MPK9eAOyasw2H9ArjJWA-1
+X-Mimecast-MFC-AGG-ID: 64MPK9eAOyasw2H9ArjJWA_1762773035
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-341661973daso3291025a91.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 03:10:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762773052; x=1763377852; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=d6f6vIf9x5ugrnKGZo2KdESg6EcdQ+cDF8KF7uQmoqs=;
- b=BiMOEVQcxwcLhyBHUsHUS8YamQTntI9G0qIHVjkRxCDZ5Ep0SEq9hAlyla/Ql9hwnl
- 0VpH+8l3o1Js0u3aYFqrTWyVm9xBWwfU57B8OdTBoxmT4wHCybSXq4pDGxtNfEJfsXUR
- f8kleAZm/xchUoEx7+TXW3VWjGP6WX6/PfXU1+t+ID+Zm9UdAGzN+YFEeU7Ol3lvTOUt
- PcE53oyXsBlyBSKRVLmj3KktKOiPYAzbA0IzVeKBYhnH2+54cQ9CMoegy2E5rqeDXzPi
- HmdYJuWYIFmHYjWjwrefrsMicH3xSkDG+cgsONLln/QBMDnwLPr0RpiTsJgahB2XBrfk
- 0Igw==
+ d=redhat.com; s=google; t=1762773034; x=1763377834; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aktDvrJZFWRZUdhpU6PBPhEblVgeorLPMPLU5b2fnG0=;
+ b=EtxXdtp1X5oz3+i2F4Tp+uEfiS00siSmVCbZFOwe23AeSnZB1stUHFZo/pPVmp+uD8
+ Ex7XNDurf6QsRgguNAOK3yHOUeTvfo0o0KlPb5sg6aOtqHdFn8vdMhqDasZjx5Fs2/xt
+ gcPjBCTcrqbiw8Hgp4X55IyQMWXAPjzZDlQ3/UyWGGdZS1A/2amH7veIExNU2oCTrXiU
+ TT/TS60Vck83jcVFI2Z4rM3kh/pokchJSIG0OlLAE898xBbHXrniAlj86HEO+d5wHK7N
+ upkew31csg8Z5LAJh7H/I3PIsr1hSJrwiJ36xEjyp7WeSW74/a7Eeoj61FHwOQSEO2YT
+ ClQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762773052; x=1763377852;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d6f6vIf9x5ugrnKGZo2KdESg6EcdQ+cDF8KF7uQmoqs=;
- b=D40FKq405xiEIFem8idukmjbQCXUU77dkf0QWz2Z5CPaol1TNXiKmr4RszLjdxavzI
- a4/KzYpVfHv0j5Ryai2aXKsvcNz/ugXb9pMII7GRFxZotEtfMmWezmda9aq5zNtW/BZL
- kekBRYFtS1H9+YCRC/nFQ1seoHKyOlFyyDBPnr0FfHB3AJKY13ba85RFQ2Kv1xX1T2wg
- 6C2UpvF1A1ayZDlo4KCU77+RSJZpYo8ZVycsvcKPzOyQgQFcLX6+EW+Tt6H1VDJtn0Iv
- aLx5mnxCjcA3Cxqw2Z2aTlMUFrRdSWBxjBYgtSAvBsySk7GTEoSLO+JcX/J+5g75Gctj
- ulDg==
-X-Gm-Message-State: AOJu0Yy3JL6NMjxeEmQE8nU3VCwBSXBkUxGMA8CY2yEiRHjHk4NtovFI
- NrFeDiyM0Faa7HHCPwpS6Oq3PuIHIoYSjVNUBI1qCDLFYOT5QT4Z8ti3OC8XQzKc9UmLpo6Y/Gm
- SjAW2
-X-Gm-Gg: ASbGncs7EIJy/zCaoIIPebeTrkhFOTBb4DKkwwag3hmAUNxp8h51sDZzwJVPS3tsYy9
- isuY2gYrRlWMuGdwoLkoQPa0lYsbyKc8qMwA4eMWREcQHVxPLGu1AYrmSGOUmeMIH6HdCuUm2YT
- b/PtEB51S1ZFJOIXNCCrUjfJ84PonXAgt0LqSnRSZok9JOZvZwhadypfzhc9e+ZWvwx9u9UCnpX
- 4Oy/POmKj1E2uZDGNL+vLqluazsReO6ticIzNa5WwRFEGpRkF9IrtPJpzyGXytwYsNcXaHgkk35
- CRg3jP5Ieo70pZmNxcBMIqWWlyzOMWCP5hT/OJZea2SOhB+rmTwPvo0GCTUjoBnUM4oC05DGjfz
- yYO2IJ4obxYr60KnyVIDI/9QBvy0bkDUzInqoqAQIvnZAbjpGCspcAvspZzFK+rPcIxuTRaVA/r
- J76rRwNF6IgIUu+71uqjAzTsGKMm8WBx/w+oYNiQHD
-X-Google-Smtp-Source: AGHT+IFuAl05HjkdaiUOmDnfDoGAXrQ2PcUMg1DOkFlVcoiE/Iunv2P22D/PLeB2WIvmNaH+3vmyyA==
-X-Received: by 2002:a05:6808:6903:b0:43d:25a2:e28c with SMTP id
- 5614622812f47-4502a3eda35mr3827910b6e.49.1762773051747; 
- Mon, 10 Nov 2025 03:10:51 -0800 (PST)
-Received: from stoup.. ([172.58.183.226]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-450426be56dsm1603412b6e.18.2025.11.10.03.10.50
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Nov 2025 03:10:51 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 0/5] misc patch queue
-Date: Mon, 10 Nov 2025 12:10:40 +0100
-Message-ID: <20251110111046.33990-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1762773034; x=1763377834;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aktDvrJZFWRZUdhpU6PBPhEblVgeorLPMPLU5b2fnG0=;
+ b=aEG65YQ8Asg9/8J5wIKPS1LtxNEwKmzV6QDdCOULz0qiMD0tMB8nUMmGh22XTuI42A
+ 7nspkwMv1+yk7BYc1G9O4U7PyOTMI8TWFV71DevAhp/pxGnwDKhEYiKq+b/dmzt8huC4
+ 2OO7V3fPEjvNJksA1McrBH3YPkJTu3wBVSDJ/txKIgCmevpvnXtN0TygtToZjD1ELTCt
+ pG4FaxLVeZWJtHQgu85sAoviMJ8tvhw37uFzfAwEqW7IZdzbxiNNjsCSQbmDcE7nXiWk
+ zHHt1Fd0TSmty1nWsmw6nN6kCq939xm/NOxCWUiZ+lWIb9DWIPwVvmtoLNkl5mPYPYfV
+ 6ZsA==
+X-Gm-Message-State: AOJu0YzIhtww49sD/1kOxNCPOPPfuaaJzD7UkwlspaWbRYF1Ltp0TAb3
+ kH0LhxETyKv8mO+dHRWQMYMsPX969ArSm8AIEpfRQAbR70P3lpe3zuzsZK/CzXfmBxE9u8KNFBD
+ qKFsFRgRNZ3tJwqBJHeBNvJO1fKp52ZpsgIDajT5nrVHA24RLshYU6HjEv/aOEt5UT4Sqc5spaX
+ x4iAcu83f39RJKIChG/U4jyDnTdGhixeN6r3+Y8t1V/g==
+X-Gm-Gg: ASbGncvdv6pb0NqHafueo2vNVpe6oUau60jrWe6Jfgc2XL8aD7ydFhIVofPqpJwbaIu
+ t8dtIN0rYs3UBmdsAgwkSGNsb7Ur4V5zAtyl2/urC0sCHGTZCNDqaLn0Z8QLAmpL3zgj9SnGsf3
+ 9kFFolHYoLAPuLYoFzH4wvZ4fCGG1otgqsoMat1ZRU4ppGVNpd0VyJETA=
+X-Received: by 2002:a17:90b:3bcb:b0:335:2823:3683 with SMTP id
+ 98e67ed59e1d1-3436cb89af5mr12362273a91.9.1762773034692; 
+ Mon, 10 Nov 2025 03:10:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEbUhIBEJL/jxacf792o+sNGSHz6/Sp72KPOVHeMcx04U65//u12mzyLE+Ifms74Ac+zQOotF5ecXz3ZRKHELA=
+X-Received: by 2002:a17:90b:3bcb:b0:335:2823:3683 with SMTP id
+ 98e67ed59e1d1-3436cb89af5mr12362236a91.9.1762773034277; Mon, 10 Nov 2025
+ 03:10:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc29.google.com
+References: <1943ea16-c3cb-4442-be72-5719026ee13a@gmail.com>
+ <pkglizwznrfj6fm7tdyew4tzmomgtp2cetxwfj2fx7ge4vtwhv@kdlj2jdxqheo>
+ <9535cd2e-239a-4002-be5b-b7c7fa85f081@gmail.com>
+In-Reply-To: <9535cd2e-239a-4002-be5b-b7c7fa85f081@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Mon, 10 Nov 2025 12:10:23 +0100
+X-Gm-Features: AWmQ_bl62OWWB_LlSDDHjnSUHEc2aFnXOkCl85Gc8krlhWAWuVmcHxuBZvP0fLQ
+Message-ID: <CAGxU2F5ag+gfhpCOpT_AQ_41GYhxs7U-tHMadUEN_gTUoeDqRA@mail.gmail.com>
+Subject: Re: vsock support for communication between guests
+To: Robert Hoo <robert.hoo.linux@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,42 +113,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 917ac07f9aef579b9538a81d45f45850aba42906:
+On Sun, 9 Nov 2025 at 14:13, Robert Hoo <robert.hoo.linux@gmail.com> wrote:
+>
+> On 11/6/2025 10:32 PM, Stefano Garzarella wrote:
+> > On Fri, Oct 10, 2025 at 09:00:21PM +0800, Robert Hoo wrote:
+> >> Hi,
+> >>
+> >> Does vsock support communication between guests?
+> >> From man page, and my experiment, seems it doesn't.
+> >> But why not?
+> >>
+> >
+> > It depends, vhost-user vsock device, supports it.
+> > See
+> > https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock#sibling-vm-communication
+> >
+> > The vhost-vsock in-kernel device doesn't support it.
+> >
+> > The main problem is that vsock is designed for host<->guest communication, so
+> > implementing a guest<->guest communication is possible, but requires more
+> > configuration (e.g. some kind of firewall, etc.) and also an extension to the
+> > address (see the required
+> > `.svm_flags = VMADDR_FLAG_TO_HOST` in the link).
+> >
+> > The easy way to do that with vhost-vsock, is to use socat in the host to
+> > concatenate 2 VMs (some examples here:
+> > https://stefano-garzarella.github.io/posts/2021-01-22-socat-vsock/)
+> >
+> > Cheers,
+> > Stefano
+> >
+> Nice, thanks Stefano. It sounds ideal for my VM <--> VM communication
+> requirement. I'll read the doc carefully later.
+>
+> BTW, I also found your vsock-bridge
+> (https://github.com/stefano-garzarella/vsock-bridge); but seems its last commit
+> was 5 yrs ago. It's not recommended, is it?
+>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-11-05 16:07:18 +0100)
+Oh, that was just a little exercise I did to learn Rust at the time,
+so I'd say no, it's not recommended.
+BTW `socat` supports a similar use case, so related to the example in
+the vsock-bridge's README, you can do the following:
 
-are available in the Git repository at:
+host$ socat VSOCK-LISTEN:5201 VSOCK-CONNECT:4:5201
+vm_cid3$ iperf --vsock -s
+vm_cid4$ iperf --vsock -c 2
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-misc-20251110
+But yeah, it's not 2 ways like vsock-bridge (i.e. `vm_cid3` can't
+connect to `vm_cid4`).
 
-for you to fetch changes up to 4f503afc7eb503997fedad84f24e2cdf696a7a0e:
+Cheers,
+Stefano
 
-  target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns (2025-11-10 12:02:45 +0100)
-
-----------------------------------------------------------------
-accel/tcg: Trace tb_flush() calls
-accel/tcg: Trace tb_gen_code() buffer overflow
-qapi/parser: Mollify mypy
-tests/functional: Mark another MIPS replay test as flaky
-target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
-
-----------------------------------------------------------------
-Markus Armbruster (1):
-      qapi/parser: Mollify mypy
-
-Peter Maydell (1):
-      target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
-
-Philippe Mathieu-Daudé (3):
-      accel/tcg: Trace tb_flush() calls
-      accel/tcg: Trace tb_gen_code() buffer overflow
-      tests/functional: Mark another MIPS replay test as flaky
-
- accel/tcg/tb-maint.c                     | 3 ++-
- accel/tcg/translate-all.c                | 3 +++
- accel/tcg/trace-events                   | 4 ++++
- scripts/qapi/parser.py                   | 2 +-
- target/i386/tcg/decode-new.c.inc         | 2 ++
- tests/functional/mips64el/test_replay.py | 1 +
- 6 files changed, 13 insertions(+), 2 deletions(-)
 
