@@ -4,67 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E8ECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C06CCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIPnQ-0004qv-Lz; Mon, 10 Nov 2025 06:10:52 -0500
+	id 1vIPtR-0008MF-PI; Mon, 10 Nov 2025 06:17:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIPSX-0003sI-3C
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:49:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIPSF-0005v8-Ki
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:49:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762771723;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=5KdwZCFcU9EY4HOmoNS0Rzcw9u5ByLiXmCdB2RqLqrY=;
- b=RaVtre1Q7/aa5Cuknl49QmomyuJC/GcvyP0pgkF5J93f4aKnqFlCrR2eWFLEygPmxb2f4A
- dxYmVRujZwZNNb9k3pDvcEHBUPxXM7qYXxc0MfMozYyyC30gGaEDcRFrd8kgfLA2i9FSM6
- veB5Vu0GdpIhTi4wjW3gGPEgZPgufk0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-Ygf2Tc7bPY2oFNnu6b1eFQ-1; Mon,
- 10 Nov 2025 05:48:42 -0500
-X-MC-Unique: Ygf2Tc7bPY2oFNnu6b1eFQ-1
-X-Mimecast-MFC-AGG-ID: Ygf2Tc7bPY2oFNnu6b1eFQ_1762771721
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37E2A1956089
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 10:48:41 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.225.244])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DB29830001B9; Mon, 10 Nov 2025 10:48:39 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] tests/functional/m68k/test_nextcube: Fix issues reported by
- pylint
-Date: Mon, 10 Nov 2025 11:48:37 +0100
-Message-ID: <20251110104837.52077-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vIPYh-0005oA-HD
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:55:43 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vIPYd-0001gX-Gr
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:55:38 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-44fa4808c15so356622b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 02:55:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1762772132; x=1763376932; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SFyiQnZ+wHzrtBWZ0LzKsIkHvY79oMBVulmthLwF0Wo=;
+ b=A2yCJmr24A1JXQt5zOob5ppLDpsrrA9CKcPOe0TalicS2NrXJIT3CvhVdm6PKnKLh4
+ FEo/yIGWMwWce5zZIcyHARi/QtnX2s+S2Niwh24DipOtyAY6wGDyTCxqsPoPg0Y+XW4G
+ TfsML911OZAGNf5VMxoH9mTllkDAMIs0546xotnd8IM1JKQ2jYUUlm1IRTinMZlSlkjg
+ ENsZWaVQq8hqBFHsmjhJz8wR1tRCFNarkZm1phzxXalWuKfWRZV7pp2AsF4OYOCwW3EE
+ rEbQiDzmF69aPnknCzxj8MR2Wl/t3HrodYRbUSS/PTXQRMx4VYdV8dZsvSflimhQwT/S
+ 7sKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762772132; x=1763376932;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SFyiQnZ+wHzrtBWZ0LzKsIkHvY79oMBVulmthLwF0Wo=;
+ b=GXTHxWtxcDFzbEeK4MPU5uAI9wcKUmOBLVKVrmqNy3/vkRrhb7uY4JsBIxwU5erayu
+ J5PgJzEDvZAKAq5MarQcIl2YV95lN9uK+FAgGdkEprlhs1QbeboeZKHNUSHVcifCpLEo
+ OlJYujssMK7rgu9bHSiaa0CQEBW8wCGH4iaUHsLVAkBxM6+3U4JWn6kHhbMfNbbDZcni
+ DN9KKZGtxgD5vNglcc0HJ21t4jL2qd0IUpzftEjsWD1Hvf7Pq69XcXHaqcf3ztvrnU8X
+ J7+7BbzlGEx93WoGUhYxGLW0ebiWCVG5HmR3cKIE/8NYf68AxhHSQvlKeNSxU3z/4k6W
+ 4Ytw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLhoDtVHeIeA9OuwbzN4F7srlWItFy4HP3WNY56SyAUQ98dOsJrB3EqhV2peHPMgmFVZAVdmvqxzNt@nongnu.org
+X-Gm-Message-State: AOJu0Yznn0R+xb9IE5YMuIm/1EH1ePKXT+iQ465mBdGdgzSx0fRkIwGP
+ 93JJ1yOpTWlVivHrwitJyU9L8wow8vLis3IBS8oWxD21vSZWvtxmXV1m1Zsn5+BoBEQ=
+X-Gm-Gg: ASbGnctS0Z5RM2TGZnPRNPtiCucaM+hKv2Auy7oW0AQ0lFT1mcudCBoYgaKJoRz4+M4
+ wqBZt09upamADm51OONH2jVPQRdiPcGYkN1vTepdR3P0abjTlCw2//1aK2q3HaNibLkoCPCpNsW
+ Sw/imENgXkCIZVosGIW/fdmz0ySLk5Vj9hZNh5dme42KZ6oBpwDeDXmrmbS/tUrSGbetjq2IisU
+ V1dh92X8/sczC/uQKX0E3DJ62UPm7elaF2yNKhOrA7E7yOGC+xUAAx+Q9tcxTLp1PdiN13ExOXJ
+ GCdw2pk8CgWnJg93vTQi7EbhM8q/dFPY4g7Bm7ehXJwe+i5t8xnQoGqjgp4XmuYAbR466WuWHEy
+ 1PmQm7a6dWtiiPMAGdYfzzIwHDHMo4mohKjRUaLeYJjKsbt8nA89gCPjktfg9SD0g3Y33pqWFp0
+ HdWXFfm5sLZf2M/KuieTq+rQ2xi82uoF7T0zRHMBjYB5kVI6e4UBYibesYS7vz6h6oz9B8iy1H2
+ awToQ==
+X-Google-Smtp-Source: AGHT+IGzJYh2luVQofzfPpVpmmKm6JwP04SHpnPkEsq17X2lxiwpS0dwbCB6aIQvAw6gDAf9iPHzMg==
+X-Received: by 2002:a05:6808:2187:b0:44f:e7bd:274b with SMTP id
+ 5614622812f47-4502a3f8186mr4557731b6e.55.1762772132649; 
+ Mon, 10 Nov 2025 02:55:32 -0800 (PST)
+Received: from [10.89.10.227] ([172.58.183.226])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-450426be56dsm1590055b6e.18.2025.11.10.02.55.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Nov 2025 02:55:32 -0800 (PST)
+Message-ID: <f84fe693-527c-4d76-a9a2-500ca64ecae8@linaro.org>
+Date: Mon, 10 Nov 2025 11:55:25 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] accel/tcg: Trace tb_flush() and tb_gen_code() buffer
+ overflow
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250925035610.80605-1-philmd@linaro.org>
+ <5e4627f8-ae34-4b02-8540-a8fc008e0816@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <5e4627f8-ae34-4b02-8540-a8fc008e0816@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,39 +110,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 10/29/25 18:56, Philippe Mathieu-Daudé wrote:
+> On 25/9/25 05:56, Philippe Mathieu-Daudé wrote:
+>> Add trace events to better understand the changes introduced
+>> by the "accel/tcg: Improve tb_flush usage" series recently
+>> merged.
+>>
+>> Philippe Mathieu-Daudé (2):
+>>    accel/tcg: Trace tb_flush() calls
+>>    accel/tcg: Trace tb_gen_code() buffer overflow
+>>
+>>   accel/tcg/tb-maint.c      | 3 ++-
+>>   accel/tcg/translate-all.c | 3 +++
+>>   accel/tcg/trace-events    | 4 ++++
+>>   3 files changed, 9 insertions(+), 1 deletion(-)
+>>
+> 
+> ping?
 
-Fix the indentation in one line, and while we're at it, use an f-string
-instead of old-school formatting in another spot.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/m68k/test_nextcube.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+and queued.
 
-diff --git a/tests/functional/m68k/test_nextcube.py b/tests/functional/m68k/test_nextcube.py
-index e5e1c69dcbd..71c160d0262 100755
---- a/tests/functional/m68k/test_nextcube.py
-+++ b/tests/functional/m68k/test_nextcube.py
-@@ -40,7 +40,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
-             time.sleep(0.1)
- 
-         res = self.vm.cmd('human-monitor-command',
--                          command_line='screendump %s' % screenshot_path)
-+                          command_line=f"screendump {screenshot_path}")
-         if 'unknown command' in res:
-             self.skipTest('screendump not available')
- 
-@@ -52,7 +52,7 @@ def test_bootrom_framebuffer_size(self):
- 
-         from PIL import Image
-         with Image.open(screenshot_path) as image:
--                width, height = image.size
-+            width, height = image.size
-         self.assertEqual(width, 1120)
-         self.assertEqual(height, 832)
- 
--- 
-2.51.1
-
+r~
 
