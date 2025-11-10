@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29D8CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 10:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07F30CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 10:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIPJd-0007im-NO; Mon, 10 Nov 2025 05:40:05 -0500
+	id 1vIPc2-00077B-27; Mon, 10 Nov 2025 05:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vIP5m-0000Fi-DM
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:25:46 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1vIPJf-0007m3-4f
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:40:07 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vIP5k-0001Cr-D5
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:25:45 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 03DB9601A4;
- Mon, 10 Nov 2025 10:25:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5546C16AAE;
- Mon, 10 Nov 2025 10:25:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1762770342;
- bh=FJx4GZo4EhcFFfhPu+lR1RRTb2CLulGDdWVz8Vd3SsI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=BwUZEIQNPnjyilhX5ioIKGzsgMXAtqTBPITu+z0AHAqfgUXH0TpIhMQ9NYrh3l7RM
- Vf6NUh5+1ugjwHah0FbpYj8INjPiPSLgLzEA9SgsQFLlThE29l7mQL0IHStkI0HTPC
- +q6SoLZuMifWd+I8A7rJPVeuRb96fhVX4FIYPe6ohsnFcYFSHV1A0LxCkoQhmed2tG
- YK+57sRvK5Kyw85hOPBXkLuv7JdsmSWl3lWr++O9t0+/UVEAKphyhw140WeuTuKYql
- 6mzkTkvmqIwF+X/C9+/vxZpqMKz3WKa9yZPl90p0Vf+8uqzwloiuk/V+nqYJW4omAS
- 8FO9Db0lM+7og==
-Date: Mon, 10 Nov 2025 15:48:25 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>
-Subject: Re: [PATCH v3 8/9] target/i386: SEV: Add support for setting TSC
- frequency for Secure TSC
-Message-ID: <4owmig2dsml7a42latp3r4tvg6ci35zbfw6qnrj2qhtcpoultu@wqa4365pgey4>
-References: <cover.1761648149.git.naveen@kernel.org>
- <cc40fed64f62649891bb8234daaba8a5cc926695.1761648149.git.naveen@kernel.org>
- <87cy5vgy66.fsf@pond.sub.org>
- <ot37mpc4y2oferchx6yroyriqickajnkiouok7quaaijq25c7n@cpqitwnuwyz2>
- <87ecqacgut.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1vIPJc-0002fH-Cx
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 05:40:06 -0500
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id BCCFE804D1;
+ Mon, 10 Nov 2025 13:40:02 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6bf:8011:f00:439c:fb8b:9c87:386c])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ndKaU81FteA0-B0qRAael; Mon, 10 Nov 2025 13:40:02 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1762771202;
+ bh=BBaLzRPC1vSdvTfCEYutHaoyo6yavs9dofrXa1+5uLk=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=E+IFO966Zpi5xeei3K4aBMEjwb2P5/holGtyflKYqv7At5JsAJgCeywediuCwhwPz
+ Nr/yND6hR4oA+MlMZkgDHwnJhnASBsbSnHPdeKOuSq7HeXzL+D8hNeHt8LiN8jo1QA
+ b5kwR74N75nrfPpsmZp4OxWI5TUkLtlCKQEZfelU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Raphael Norwitz <raphael@enfabrica.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v3 1/3] vmstate: introduce VMSTATE_VBUFFER_UINT64
+Date: Mon, 10 Nov 2025 15:39:37 +0500
+Message-Id: <20251110103937.1944486-2-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
+References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87ecqacgut.fsf@pond.sub.org>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,94 +80,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 07, 2025 at 10:49:30AM +0100, Markus Armbruster wrote:
-> Naveen N Rao <naveen@kernel.org> writes:
-> 
-> > On Thu, Nov 06, 2025 at 01:09:37PM +0100, Markus Armbruster wrote:
-> >> Pardon my ignorance...
-> >> 
-> >> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
-> >> 
-> >> > Add support for configuring the TSC frequency when Secure TSC is enabled
-> >> > in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
-> >> > guest objects, similar to the vCPU-specific property used by regular
-> >> > guests and TDX.
-> >> 
-> >> Which property exactly?
-> >
-> > Same name: tsc-frequency specified with '-cpu'
-> 
-> Thanks.  It's x86_64-cpu property tsc-frequency.
+This is an analog of VMSTATE_VBUFFER_UINT32 macro, but for uint64 type.
 
-Ok.
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Acked-by: Peter Xu <peterx@redhat.com>
+---
+ include/migration/vmstate.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-> 
-> >> 
-> >> >                 A new property is needed since SEV-SNP guests require
-> >> > the TSC frequency to be specified during early SNP_LAUNCH_START command
-> >> > before any vCPUs are created.
-> >> 
-> >> Sounds awkward.
-> >> 
-> >> Do the two properties set the same thing at different times?
-> >
-> > Yes. For regular guests, TSC frequency is set using a vCPU ioctl.  
-> > However, TDX and SEV-SNP (with Secure TSC) require the TSC frequency to 
-> > be set as a VM property (there is a VM ioctl for this purpose).
-> >
-> > This was Tom's question too (see v2): is there any way to re-use 
-> > 'tsc-frequency' specified with '-cpu' for Secure TSC.
-> 
-> Hmm, let's see whether I can guess how this stuff works.  Please correct
-> my misunderstandings.
-> 
-> When machine property confidential-guest-support is null, it's a regular
-> guest.
-> 
-> If it points to a sev-guest object, it's SEV.
-
-Yes, or a SEV-ES guest.
-
-> 
-> If it points to a sev-snp-guest object, it's SEV-SNP.
-> 
-> If it points to a tdx-guest object, it's TDX.
-> 
-> Normally, the TSC frequency is specified with x86_64-cpu property
-> tsc-frequency.
-> 
-> Can different CPUs have different frequencies?
-
-I believe Daniel has answered this in his reply.
-
-> 
-> In certain cases (SEV-SNP or TDX guest with Secure TSC), tsc-frequency
-
-nit: TDX guest, or SEV-SNP with Secure TSC.
-
-> needs to be configured before any CPUs are created.  You're implementing
-> this for SEV-SNP, and you chose to create a sev-snp property
-> tsc-frequency for this.
-> 
-> What happens when I enable Secure TSC with sev-snp property
-> "secure-tsc": true, but don't set property tsc-frequency?
-
-KVM uses the host default if tsc-frequency is not explicitly specified.
-
-> 
-> What happens when I do set it, and then also set the CPU property?  To
-> the same frequency?  To a different frequency?
-
-From the commit log:
-  Attempts to set TSC frequency on both the SEV_SNP object and the cpu
-  object result in an error from KVM (on the vCPU ioctl), so do not add
-  separate checks for the same.
-
-If the same frequency is specified in both places, then no error is 
-thrown.
-
-
-Thanks,
-Naveen
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 7f1f1c166a..4c9e212d58 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -707,6 +707,16 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset       = offsetof(_state, _field),                        \
+ }
+ 
++#define VMSTATE_VBUFFER_UINT64(_field, _state, _version, _test, _field_size) { \
++    .name         = (stringify(_field)),                             \
++    .version_id   = (_version),                                      \
++    .field_exists = (_test),                                         \
++    .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
++    .info         = &vmstate_info_buffer,                            \
++    .flags        = VMS_VBUFFER | VMS_POINTER,                       \
++    .offset       = offsetof(_state, _field),                        \
++}
++
+ #define VMSTATE_VBUFFER_ALLOC_UINT32(_field, _state, _version,       \
+                                      _test, _field_size) {           \
+     .name         = (stringify(_field)),                             \
+-- 
+2.34.1
 
 
