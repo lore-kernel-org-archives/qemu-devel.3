@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0342ACCFA13
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14EBBCD13CF
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Nov 2025 11:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIQIL-0001VO-Ek; Mon, 10 Nov 2025 06:42:49 -0500
+	id 1vIQIG-0001LC-49; Mon, 10 Nov 2025 06:42:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vIPzq-0003ww-IQ
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:45 -0500
+ id 1vIPzj-0003vk-2H
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:40 -0500
 Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vIPzo-00069m-Ol
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:42 -0500
+ id 1vIPzg-00068N-Jo
+ for qemu-devel@nongnu.org; Mon, 10 Nov 2025 06:23:34 -0500
 Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 9F745202DDF;
- Mon, 10 Nov 2025 12:23:38 +0100 (CET)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 87FB2202DDD;
+ Mon, 10 Nov 2025 12:23:31 +0100 (CET)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 6A01F201524;
- Mon, 10 Nov 2025 12:23:38 +0100 (CET)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 53DAF201524;
+ Mon, 10 Nov 2025 12:23:31 +0100 (CET)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 8F80418000A4;
- Mon, 10 Nov 2025 19:23:37 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 7241B180008F;
+ Mon, 10 Nov 2025 19:23:30 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM
- emulation
-Date: Mon, 10 Nov 2025 16:52:57 +0530
-Message-Id: <20251110112257.184578-14-gaurav.sharma_7@nxp.com>
+Subject: [PATCH 06/13] hw/arm/fsl-imx8mm: Add GPIO controllers
+Date: Mon, 10 Nov 2025 16:52:50 +0530
+Message-Id: <20251110112257.184578-7-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
 References: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
@@ -68,111 +67,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added script that would validate the iMX8MM emulation by checking the
-linux console log. If it succeeds, it will return:-
-
-ok 1 test_imx8mm_evk.Imx8mmEvkMachine.test_aarch64_imx8mm_evk_usdhc
+Enabled GPIO controller emulation
+Also updated the GPIO IRQ lines of iMX8MM
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- tests/functional/aarch64/meson.build        |  2 +
- tests/functional/aarch64/test_imx8mm_evk.py | 67 +++++++++++++++++++++
- 2 files changed, 69 insertions(+)
- create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
+ docs/system/arm/imx8mm-evk.rst |  1 +
+ hw/arm/fsl-imx8mm.c            | 54 ++++++++++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h    | 14 +++++++++
+ 3 files changed, 69 insertions(+)
 
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index 5ad52f93e1..31ecedbf6f 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -5,6 +5,7 @@ test_aarch64_timeouts = {
-   'aspeed_ast2700fc' : 600,
-   'device_passthrough' : 720,
-   'imx8mp_evk' : 240,
-+  'imx8mm_evk' : 240,
-   'raspi4' : 480,
-   'reverse_debug' : 180,
-   'rme_virt' : 1200,
-@@ -28,6 +29,7 @@ tests_aarch64_system_thorough = [
-   'device_passthrough',
-   'hotplug_pci',
-   'imx8mp_evk',
-+  'imx8mm_evk',
-   'kvm',
-   'multiprocess',
-   'raspi3',
-diff --git a/tests/functional/aarch64/test_imx8mm_evk.py b/tests/functional/aarch64/test_imx8mm_evk.py
-new file mode 100755
-index 0000000000..d5eb43afc6
---- /dev/null
-+++ b/tests/functional/aarch64/test_imx8mm_evk.py
-@@ -0,0 +1,67 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
+index 026db7c4a6..c55d02c1c2 100644
+--- a/docs/system/arm/imx8mm-evk.rst
++++ b/docs/system/arm/imx8mm-evk.rst
+@@ -14,6 +14,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+  * 4 UARTs
+  * 3 USDHC Storage Controllers
+  * 1 Designware PCI Express Controller
++ * 5 GPIO Controllers
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
+ 
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index ea5799b2cc..222d3bac1c 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -177,6 +177,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
++        object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
++    }
 +
-+from qemu_test import LinuxKernelTest, Asset
+     for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
+         g_autofree char *name = g_strdup_printf("usdhc%d", i + 1);
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+@@ -350,6 +355,54 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+     }
+ 
++    /* GPIOs */
++    for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
++        struct {
++            hwaddr addr;
++            unsigned int irq_low;
++            unsigned int irq_high;
++        } gpio_table[FSL_IMX8MM_NUM_GPIOS] = {
++            {
++                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO1].addr,
++                FSL_IMX8MM_GPIO1_LOW_IRQ,
++                FSL_IMX8MM_GPIO1_HIGH_IRQ
++            },
++            {
++                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO2].addr,
++                FSL_IMX8MM_GPIO2_LOW_IRQ,
++                FSL_IMX8MM_GPIO2_HIGH_IRQ
++            },
++            {
++                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO3].addr,
++                FSL_IMX8MM_GPIO3_LOW_IRQ,
++                FSL_IMX8MM_GPIO3_HIGH_IRQ
++            },
++            {
++                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO4].addr,
++                FSL_IMX8MM_GPIO4_LOW_IRQ,
++                FSL_IMX8MM_GPIO4_HIGH_IRQ
++            },
++            {
++                fsl_imx8mm_memmap[FSL_IMX8MM_GPIO5].addr,
++                FSL_IMX8MM_GPIO5_LOW_IRQ,
++                FSL_IMX8MM_GPIO5_HIGH_IRQ
++            },
++        };
++        object_property_set_bool(OBJECT(&s->gpio[i]), "has-edge-sel", true,
++                                 &error_abort);
++        object_property_set_bool(OBJECT(&s->gpio[i]), "has-upper-pin-irq",
++                                 true, &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
++            return;
++        }
 +
-+class Imx8mmEvkMachine(LinuxKernelTest):
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
++                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_low));
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 1,
++                           qdev_get_gpio_in(gicdev, gpio_table[i].irq_high));
++    }
 +
-+    ASSET_IMAGE = Asset(
-+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
-+         'debian-12-generic-arm64-20231210-1590.tar.xz'),
-+        '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
+     /* USDHCs */
+     for (i = 0; i < FSL_IMX8MM_NUM_USDHCS; i++) {
+         struct {
+@@ -408,6 +461,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_CCM:
+         case FSL_IMX8MM_GIC_DIST:
+         case FSL_IMX8MM_GIC_REDIST:
++        case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
+         case FSL_IMX8MM_PCIE1:
+         case FSL_IMX8MM_PCIE_PHY1:
+         case FSL_IMX8MM_RAM:
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 74a1a1349d..d3a2d1843f 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -11,6 +11,7 @@
+ 
+ #include "cpu.h"
+ #include "hw/char/imx_serial.h"
++#include "hw/gpio/imx_gpio.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mm_analog.h"
+@@ -29,6 +30,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
+ 
+ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_CPUS         = 4,
++    FSL_IMX8MM_NUM_GPIOS        = 5,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
+@@ -39,6 +41,7 @@ struct FslImx8mmState {
+ 
+     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
+     GICv3State         gic;
++    IMXGPIOState       gpio[FSL_IMX8MM_NUM_GPIOS];
+     IMX8MMCCMState     ccm;
+     IMX8MMAnalogState  analog;
+     IMX7SNVSState      snvs;
+@@ -169,6 +172,17 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_UART3_IRQ    = 28,
+     FSL_IMX8MM_UART4_IRQ    = 29,
+ 
++    FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
++    FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
++    FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
++    FSL_IMX8MM_GPIO2_HIGH_IRQ = 67,
++    FSL_IMX8MM_GPIO3_LOW_IRQ  = 68,
++    FSL_IMX8MM_GPIO3_HIGH_IRQ = 69,
++    FSL_IMX8MM_GPIO4_LOW_IRQ  = 70,
++    FSL_IMX8MM_GPIO4_HIGH_IRQ = 71,
++    FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
++    FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
 +
-+    KERNEL_OFFSET = 0x51000000
-+    KERNEL_SIZE = 32622528
-+    INITRD_OFFSET = 0x76000000
-+    INITRD_SIZE = 30987766
-+    DTB_OFFSET = 0x64F51000
-+    DTB_SIZE = 45 * 1024
-+
-+    def extract(self, in_path, out_path, offset, size):
-+        try:
-+            with open(in_path, "rb") as source:
-+                source.seek(offset)
-+                data = source.read(size)
-+            with open(out_path, "wb") as target:
-+                target.write(data)
-+        except (IOError, ValueError) as e:
-+            self.log.error(f"Failed to extract {out_path}: {e}")
-+            raise
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        self.image_path = self.scratch_file("disk.raw")
-+        self.kernel_path = self.scratch_file("linux")
-+        self.initrd_path = self.scratch_file("initrd.zstd")
-+        self.dtb_path = self.scratch_file("imx8mm-evk.dtb")
-+
-+        self.archive_extract(self.ASSET_IMAGE)
-+        self.extract(self.image_path, self.kernel_path,
-+                     self.KERNEL_OFFSET, self.KERNEL_SIZE)
-+        self.extract(self.image_path, self.initrd_path,
-+                     self.INITRD_OFFSET, self.INITRD_SIZE)
-+        self.extract(self.image_path, self.dtb_path,
-+                     self.DTB_OFFSET, self.DTB_SIZE)
-+
-+    def test_aarch64_imx8mm_evk_usdhc(self):
-+        self.require_accelerator("tcg")
-+        self.set_machine('imx8mm-evk')
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args('-m', '2G',
-+                         '-smp', '4',
-+                         '-kernel', self.kernel_path,
-+                         '-initrd', self.initrd_path,
-+                         '-dtb', self.dtb_path,
-+                         '-append', 'root=/dev/mmcblk2p1',
-+                         '-drive', f'file={self.image_path},if=sd,bus=2,'
-+                                    'format=raw,id=mmcblk2,snapshot=on')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Welcome to ')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
 -- 
 2.34.1
 
