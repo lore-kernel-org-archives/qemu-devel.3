@@ -4,56 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7FACCFA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 13:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75DF5CCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 13:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIoBH-0003s5-5A; Tue, 11 Nov 2025 08:13:07 -0500
+	id 1vIoRO-0004g4-0g; Tue, 11 Nov 2025 08:29:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vIoBF-0003nt-4Y; Tue, 11 Nov 2025 08:13:05 -0500
+ id 1vIoRL-0004Wp-6w; Tue, 11 Nov 2025 08:29:43 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vIoBC-0001CP-MK; Tue, 11 Nov 2025 08:13:04 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4d5Rlp6Qf0zHnGjN;
- Tue, 11 Nov 2025 21:12:38 +0800 (CST)
+ id 1vIoRI-0003XO-Gm; Tue, 11 Nov 2025 08:29:42 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4d5S6y5MqtzHnGjn;
+ Tue, 11 Nov 2025 21:29:14 +0800 (CST)
 Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 0CD931400D9;
- Tue, 11 Nov 2025 21:12:56 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DCAE4140136;
+ Tue, 11 Nov 2025 21:29:31 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
  (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 11 Nov
- 2025 13:12:55 +0000
-Date: Tue, 11 Nov 2025 13:12:53 +0000
-To: Gavin Shan <gshan@redhat.com>
-CC: Igor Mammedov <imammedo@redhat.com>, <shan.gavin@gmail.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <mchehab+huawei@kernel.org>,
- <gengdongjiu1@gmail.com>, <mst@redhat.com>, <anisinha@redhat.com>,
- <peter.maydell@linaro.org>, <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 4/8] acpi/ghes: Extend acpi_ghes_memory_errors() to
- support multiple CPERs
-Message-ID: <20251111131253.00007197@huawei.com>
-In-Reply-To: <e797a9f6-aee6-4c0f-9c17-f4200199e317@redhat.com>
-References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-5-gshan@redhat.com>
- <20251105141455.000052f0@huawei.com>
- <cc07dfc9-f58a-4654-8854-c16a2e85fecd@redhat.com>
- <20251110154957.5c481df7@fedora>
- <cad74549-a313-48b6-8260-f23f6be1e8c8@redhat.com>
- <20251111100746.00003136@huawei.com>
- <2440a0dd-6543-4590-9c0f-06b05bdfc8a4@redhat.com>
- <20251111115551.00003385@huawei.com>
- <e797a9f6-aee6-4c0f-9c17-f4200199e317@redhat.com>
+ 2025 13:29:31 +0000
+Date: Tue, 11 Nov 2025 13:29:29 +0000
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
+ <jgg@nvidia.com>, <kjaju@nvidia.com>
+Subject: Re: [RFC PATCH 4/4] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+Message-ID: <20251111132929.000064ce@huawei.com>
+In-Reply-To: <20251105154657.37386-5-skolothumtho@nvidia.com>
+References: <20251105154657.37386-1-skolothumtho@nvidia.com>
+ <20251105154657.37386-5-skolothumtho@nvidia.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
  dubpeml100005.china.huawei.com (7.214.146.113)
 Received-SPF: pass client-ip=185.176.79.56;
  envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
@@ -81,149 +73,109 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Nov 2025 22:19:18 +1000
-Gavin Shan <gshan@redhat.com> wrote:
+On Wed, 5 Nov 2025 15:46:52 +0000
+Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-> Hi Jonathan,
-> 
-> On 11/11/25 9:55 PM, Jonathan Cameron wrote:
-> > On Tue, 11 Nov 2025 20:55:17 +1000
-> > Gavin Shan <gshan@redhat.com> wrote:  
-> >> On 11/11/25 8:07 PM, Jonathan Cameron wrote:  
-> >>> On Tue, 11 Nov 2025 14:08:13 +1000
-> >>> Gavin Shan <gshan@redhat.com> wrote:  
-> >>>> On 11/11/25 12:49 AM, Igor Mammedov wrote:  
-> >>>>> On Thu, 6 Nov 2025 13:15:52 +1000
-> >>>>> Gavin Shan <gshan@redhat.com> wrote:  
-> >>>>>> On 11/6/25 12:14 AM, Jonathan Cameron wrote:  
-> >>>>>>> On Wed,  5 Nov 2025 21:44:49 +1000
-> >>>>>>> Gavin Shan <gshan@redhat.com> wrote:
-> >>>>>>>            
-> >>>>>>>> In the situation where host and guest has 64KiB and 4KiB page sizes,
-> >>>>>>>> one problematic host page affects 16 guest pages. we need to send 16
-> >>>>>>>> consective errors in this specific case.
-> >>>>>>>>
-> >>>>>>>> Extend acpi_ghes_memory_errors() to support multiple CPERs after the
-> >>>>>>>> hunk of code to generate the GHES error status is pulled out from
-> >>>>>>>> ghes_gen_err_data_uncorrectable_recoverable(). The status field of
-> >>>>>>>> generic error status block is also updated accordingly if multiple
-> >>>>>>>> error data entries are contained in the generic error status block.
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Gavin Shan <gshan@redhat.com>  
-> >>>>>>> Hi Gavin,
-> >>>>>>>
-> >>>>>>> Mostly fine, but a few comments on the defines added and a
-> >>>>>>> question on what the multiple things are meant to mean?
-> >>>>>>>            
-> >>>>>>
-> >>>>>> Thanks for your review and comments, replies as below.
-> >>>>>>        
-> >>>>>>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> >>>>>>>> index a9c08e73c0..527b85c8d8 100644
-> >>>>>>>> --- a/hw/acpi/ghes.c
-> >>>>>>>> +++ b/hw/acpi/ghes.c
-> >>>>>>>> @@ -57,8 +57,12 @@
-> >>>>>>>>      /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
-> >>>>>>>>      #define ACPI_GHES_MEM_CPER_LENGTH           80
-> >>>>>>>>      
-> >>>>>>>> -/* Masks for block_status flags */
-> >>>>>>>> -#define ACPI_GEBS_UNCORRECTABLE         1
-> >>>>>>>> +/* Bits for block_status flags */
-> >>>>>>>> +#define ACPI_GEBS_UNCORRECTABLE           0
-> >>>>>>>> +#define ACPI_GEBS_CORRECTABLE             1
-> >>>>>>>> +#define ACPI_GEBS_MULTIPLE_UNCORRECTABLE  2
-> >>>>>>>> +#define ACPI_GEBS_MULTIPLE_CORRECTABLE    3  
-> >>>>>>>
-> >>>>>>> So this maps to the bits in block status.
-> >>>>>>>
-> >>>>>>> I'm not actually sure what these multiple variants are meant to tell us.
-> >>>>>>> The multiple error blocks example referred to by the spec is a way to represent
-> >>>>>>> the same error applying to multiple places.  So that's one error, many blocks.
-> >>>>>>> I have no idea if we set these bits in that case.
-> >>>>>>>
-> >>>>>>> Based on a quick look I don't think linux even takes any notice.  THere
-> >>>>>>> are defines in actbl1.h but I'm not seeing any use made of them.
-> >>>>>>>            
-> >>>>>>
-> >>>>>> I hope Igor can confirm since it was suggested by him.
-> >>>>>>
-> >>>>>> It's hard to understand how exactly these multiple variants are used from the
-> >>>>>> spec. In ACPI 6.5 Table 18.11, it's explained as below.
-> >>>>>>
-> >>>>>> Bit [2] - Multiple Uncorrectable Errors: If set to one, indicates that more
-> >>>>>> than one uncorrectable errors have been detected.
-> >>>>>>
-> >>>>>> I don't see those multiple variants have been used by Linux. So I think it's
-> >>>>>> safe to drop them.  
-> >>>>>
-> >>>>> even though example describes 'same' error at different components,
-> >>>>> the bit fields descriptions doesn't set any limits on what 'more than one' means.
-> >>>>>
-> >>>>> Also from guest POV it's multiple different pages that we are reporting here
-> >>>>> as multiple CPERs.
-> >>>>> It seems to me that setting *_MULTIPLE_* here is correct thing to do.
-> >>>>>         
-> >>>>
-> >>>> I don't have strong opinions. Lets keep to set _MULTIPLE_ flag if Jonathan
-> >>>> is fine. Again, this field isn't used by Linux guest.  
-> >>> I don't care strongly.  Maybe we should ask for a spec clarification as I doubt
-> >>> implementations will be consistent on this given the vague description and that
-> >>> Linux ignores it today.
-> >>>      
-> >>
-> >> Google Gemini has the following question. If it can be trusted, it should be
-> >> set when @num_of_addresses is larger than 1.
-> >>
-> >> Quota from Google Gemini:
-> >>
-> >> The system firmware sets this bit to indicate to the Operating System Power Management (OSPM)
-> >> that more than one correctable error condition has been detected and logged for the associated
-> >> hardware component since the last time the status was cleared by the software. This is crucial
-> >> because a high frequency of correctable errors often indicates a potential underlying hardware
-> >> issue that could lead to uncorrectable (and potentially fatal) errors if not addressed (e.g.,
-> >> in memory, where multiple correctable errors might trigger a spare memory operation).
-> >>  
-> >>>>     
-> >>>>>>>> +#define ACPI_GEBS_ERROR_DATA_ENTRIES      4  
-> >>>>>>>
-> >>>>>>> This is bits 4-13 and the define isn't used. I'd drop it.
-> >>>>>>>            
-> >>>>>>
-> >>>>>> The definition is used in acpi_ghes_memory_errors() of this patch. However,
-> >>>>>> I don't see it has been used by Linux. This field isn't used by Linux to determine
-> >>>>>> the total number of error entries. So I think I can drop it either if Igor is ok.
-> >>>>>>        
-> >>>>
-> >>>> Lets keep this field either in next revision if Jonathan is fine.  
-> >>>
-> >>> I'm fine with the field, but not the value.  As far as I can tell form the spec, it should
-> >>> be a mask, not a single bit.
-> >>>      
-> >>
-> >> Agreed, lets keep ACPI_HEST_ERROR_ENTRY_COUNT as zero in next revision.  
-> > 
-> > I'm even more confused now.  The GEBS Error Data entry count should be field from 13:4
-> > and the value taken should be the number of entries in the record, so 1, 4, 16 depending
-> > on the page size.
-> > 
-> > So that define of the value 4 is garbage. If it were DATA_ENTRIES_SHIFT then I'd be much happier.
-> >   
-> 
-> My bad. I misunderstood your point. It will be fixed by using APIs from
-> "hw/registerfields.h" as suggested by Philippe in another reply.
-> 
->    ...
->    FIELD(ACPI_GEBS, MULTIPLE_CORRECTABLE, 3, 1)
->    FIELD(ACPI_GEBS, ERROR_DATA_ENTRIES, 4, 10)
-> 
->    then use FIELD_DP32() to only set the correct bits.
-> 
-Perfect. Thanks!
+> Install an event handler on the vEVENTQ fd to read and propagate host
+> generated vIOMMU events to the guest.
+>=20
+> The handler runs in QEMU=E2=80=99s main loop, using a non-blocking fd reg=
+istered
+> via qemu_set_fd_handler().
+>=20
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+A few minor suggestions inline.  Otherwise set looks good to me, though
+I'm very far from an expert of this stuff!
 
-J
-> Thanks,
-> Gavin
-> 
-> 
+Jonathan
+
+> ---
+>  hw/arm/smmuv3-accel.c | 62 +++++++++++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3-accel.h |  2 ++
+>  2 files changed, 64 insertions(+)
+>=20
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 210e7ebf36..e6c81c4786 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -383,6 +383,62 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUS=
+tate *bs, SMMUPciBus *sbus,
+>      return accel_dev;
+>  }
+> =20
+> +static void smmuv3_accel_event_read(void *opaque)
+> +{
+> +    SMMUv3State *s =3D opaque;
+> +    SMMUv3AccelState *s_accel =3D s->s_accel;
+> +    SMMUViommu *vsmmu =3D s_accel->vsmmu;
+> +    struct iommu_vevent_arm_smmuv3 *vevent;
+> +    struct iommufd_vevent_header *hdr;
+> +    ssize_t readsz =3D sizeof(*hdr) + sizeof(*vevent);
+> +    uint8_t buf[sizeof(*hdr) + sizeof(*vevent)];
+Could you wrap this up in a structure to make it a tiny
+bit more obvious what is going on?
+
+    struct {
+        struct iommufd_vevent_header hdr;
+        struct iommufd_vevent_arm_smmuv3 vevent;
+    } buf;
+
+Should allow sizeof(buf);
+and accessing elements directly without casts.
+
+> +    uint32_t last_seq =3D vsmmu->last_event_seq;
+> +    ssize_t bytes;
+> +    Evt evt =3D {};
+Given you copy into this based on sizeof(evt) I can't see why you need
+to initialize.
+
+> +
+> +    bytes =3D read(vsmmu->veventq->veventq_fd, buf, readsz);
+> +    if (bytes <=3D 0) {
+> +        if (errno =3D=3D EAGAIN || errno =3D=3D EINTR) {
+> +            return;
+> +        }
+> +        error_report("vEVENTQ: read failed (%s)", strerror(errno));
+> +        return;
+> +    }
+> +
+> +    if (bytes < readsz) {
+> +        error_report("vEVENTQ: incomplete read (%zd/%zd bytes)", bytes, =
+readsz);
+> +        return;
+> +    }
+> +
+> +    hdr =3D (struct iommufd_vevent_header *)buf;
+> +    if (hdr->flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS) {
+> +        error_report("vEVENTQ has lost events");
+> +        return;
+> +    }
+> +
+> +    vevent =3D (struct iommu_vevent_arm_smmuv3 *)(buf + sizeof(*hdr));
+> +    /* Check sequence in hdr for lost events if any */
+> +    if (vsmmu->event_start) {
+> +        uint32_t expected =3D (last_seq =3D=3D INT_MAX) ? 0 : last_seq +=
+ 1;
+> +
+> +        if (hdr->sequence !=3D expected) {
+> +            uint32_t delta;
+> +
+> +            if (hdr->sequence >=3D last_seq) {
+> +                delta =3D hdr->sequence - last_seq;
+> +            } else {
+> +                /* Handle wraparound from INT_MAX */
+> +                delta =3D (INT_MAX - last_seq) + hdr->sequence + 1;
+> +            }
+> +            error_report("vEVENTQ: detected lost %u event(s)", delta - 1=
+);
+> +        }
+> +    }
+> +    vsmmu->last_event_seq =3D hdr->sequence;
+> +    vsmmu->event_start =3D true;
+> +    memcpy(&evt, vevent, sizeof(evt));
+> +    smmuv3_propagate_event(s, &evt);
+Why is the copy needed?  Can't you just use the vevent in place?
+> +}
+
 
 
