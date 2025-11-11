@@ -4,101 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B24ACCFA13
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 02:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 725FFCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 02:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIe8c-0004iS-8n; Mon, 10 Nov 2025 21:29:42 -0500
+	id 1vIeD1-0006ta-J5; Mon, 10 Nov 2025 21:34:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vIe8T-0004fo-Eo
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 21:29:36 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vIe8R-00052K-DG
- for qemu-devel@nongnu.org; Mon, 10 Nov 2025 21:29:33 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b72db05e50fso577170766b.0
- for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 18:29:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762828169; x=1763432969; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YPZU5OLj+mriwXuDEOYOETP5NzC60LcIP/Y8uXXoqjc=;
- b=bStdNmbw69/HU1eh30x1wPvHeKom0DGzdqLMOPiKLdacQKLGRcRLd0UHI1Yy48/sJc
- R5vU8Yz8S0hAxzU0H1CUeJQBWQa44X2q91PVh1+oQEYgWMvwAp0HR+4B5GV8VP3d6DYF
- pH2GgKMvAsHrECHFNxfb7ZyiqvMPMeb0fe1ODKDWVCZpR4b3CMUviL5JIxBJn9ONg099
- K/RMtqZ+osczqoo6Mvn3sWLO+2oeqYsFQdzbmx0MdKu3LC9ISZD8X7uBza3Aox/LCI67
- 547OWtzIB/L+XXedhAP3nyEx9TdDSx3s2Bjk6DEbub5huLaLkFJwaOduM8t5OP5vLLti
- icsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762828169; x=1763432969;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YPZU5OLj+mriwXuDEOYOETP5NzC60LcIP/Y8uXXoqjc=;
- b=YOKFcRHAu3gXQuPe7ArJEPD1jlDA0xRIZ9UBxS1aCnk9S1pxUS0kC+iRAte670Kvzw
- uMAuXD/2QYu/5vDceuLcOKrCzrMIHnFtG44TzLP8veoDuUhrtbdbiqfqqz8qbcGDLZcH
- GB+yi0CHLEmD/KwVZ9NANkwu4P4Zrnmdlbc1j2yuHfLdwq3B9oXUx3xpuQB+hKu4Q7FY
- wv+jk6FRJDxA5iNGlQIAu7aIc4q2Tjb1671Aa6sclVnpsmGJwXoHO7zUNWjJz3BTYM4X
- sz67MqJlJ8/vsq2xLvqbcYm9FN29osI5BUvoB/NsiEOj+PhwUebbcqRN+dZUseGrgQsN
- /RwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3tzZpHRPn72GN+da9vIhEuoYpkmBOckD0rlXtgNFAky/P2GuOT8Itm1ewn1v195l70D68AuapmDZW@nongnu.org
-X-Gm-Message-State: AOJu0YzlENfGZ3u58Y+OirazPVSke0efFLEK6owP3ChHCuxaV9RlL4cV
- hDn/Rxmm17hxOHdE8uuZN5xBmM2HC8K1OmBtZf5499PuzkvhoUEeWlgd04kakbNrwIx8eluu8PF
- hCSUwmhkPW8g47NWk01gHZsEW4MHYQwE=
-X-Gm-Gg: ASbGncuiduIjZ9Lz3T5DfyLevaQae92Fzx1pLycMKfpfJR0Ekb0dZ+7EjPzVCnbENaz
- csl5nDcEiOcE5ZWI4rgWZtbTPI6CUk/NMJ0uV2dF/XVBENucW04R0m6IfSbdfl905jJYlM8xPjx
- TKtQ9FCDkSKPIuBGjM3ccJPtZUFT0W7tID1KeWw37/k37lAV2O8fdK1H8zy8HkG3r1Sz/k3iP7P
- TvXbb70FCETlVuY8PswScUF1j7RSJJjs3/4I13FJwDsCVBHKbdNpjnHPY45geZ1pKZsF1vIQ2r8
- 7Ll+RsEU6Z8asURIFg==
-X-Google-Smtp-Source: AGHT+IHCChQPa96W1v81P2orqc6vXUhE4k0aiJAUV/DVX+mbBSrx4vavqFhwWge3y4x16L8EgLZ0b7GRA4dZmC3OeVE=
-X-Received: by 2002:a17:907:60c8:b0:b4c:137d:89bb with SMTP id
- a640c23a62f3a-b72e037ab1amr1071041566b.29.1762828169098; Mon, 10 Nov 2025
- 18:29:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vIeBa-0006Ip-G7; Mon, 10 Nov 2025 21:32:49 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vIeBX-0005N9-0o; Mon, 10 Nov 2025 21:32:46 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oBz8XsuQuu+De1oCVHACgmVgXiwF0LBjjK1b6sh5X2q6FeZ5XVtMpxhpjPVjoXmbYZMF/s/l1B749S+BHwYZaK/4sAoDT9241/NY27T344OpeIV9hVQ0zXyRDC7EIv7vBPiBmOAmTJhmoMy7l5eZgGLwHU8/2G9BXiyjHoe71ChYSCvkmzz06bT2aClUmNXPqkKVIOuk5v+CI/TlFoTMimf/TrrET+6Q7gzkZbofT2roaorS+QH5kM0K7V1j1YdUXh5YPr7qajyZ1Nu82Vn1O6S4YUT66q8QbmlX8iQOuFOYnByF8gOazKXuFcsPMtq+/nPGKglf254y3WMslX7u+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KU3SIL/Y85IEeN/8s1BtvrxVnLN92Sh4p4TykrBOyGI=;
+ b=GdnpbIo4h+6+r5sbMgZfA1NYSyeMGknuzAO8AqyFErDi6O8h0gI88sXN6xWe9PQXn9I0KvRHmnvoNpWlzO7Amj0meshzBFy/nkbYtYqmECHK71bl09tpKIGi1xXVnLI4O1zUyvbL2Z5OuIcgP3r+W5bWeSEj1UZiCsVQyQJAg851fk8ILG0HsdXqvKwyS+Iw5+e3FpFy+LLaXC9AqwyXfnI7Wt0N+nSTOmrOBwtzsM+SX3CH2zAEgKUKeuHwE+roT6NstAQpRFd1jL2TZgvzH1kXte3n79ey3T3NykLyfABH2o8/0xMAyFvwK6WoxSKcTYib3AG1BVyqN00GbHZjTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KU3SIL/Y85IEeN/8s1BtvrxVnLN92Sh4p4TykrBOyGI=;
+ b=pGRRSiSG81jAqSAu9cQOSuLKsDYLklZHJePV6BMeOVfq2gPL60TSEGdaqixRGS5XBlf8wROtMauRi/7NqQ+WIW/C2Tnw4OxgTgxww7R8RAcU8tJMqwWqp/3XrlLEFdW9d/CAfvtqqCwPfl3kN0QzEfBQ5isg+ji47728v39hSSQnFeaRGpqpZ6LDxC8VwniDaTHnc3usKrYwzPLaXQbt0JWSKSquCuAH8Yj3QENeZmGjYpZXsB9ud6QYHBOtay8PTJEwdb0MUb050dB99/9/7/Ar67L/AfGJyn2YlwFyT5XNp/62Ta1qMnW8UZK3A5/+R9ySkkMrCPYWJPDNG/cXSw==
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
+ by PUZPR06MB5851.apcprd06.prod.outlook.com (2603:1096:301:f9::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.16; Tue, 11 Nov
+ 2025 02:32:32 +0000
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::602a:6372:fff6:feca]) by SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::602a:6372:fff6:feca%6]) with mapi id 15.20.9298.015; Tue, 11 Nov 2025
+ 02:32:32 +0000
+From: Kane Chen <kane_chen@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+Subject: RE: [PATCH v2 00/17] hw/arm/aspeed: AST1700 LTPI support and device
+ hookups
+Thread-Topic: [PATCH v2 00/17] hw/arm/aspeed: AST1700 LTPI support and device
+ hookups
+Thread-Index: AQHcTgiII/qWo2DjcEmFwqeBHb2lu7TsJj0AgACZT3A=
+Date: Tue, 11 Nov 2025 02:32:32 +0000
+Message-ID: <SI6PR06MB7631B0B6286AB604757EB4A7F7CFA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+ <3751eebe-8a2f-4e85-bb9c-3a856407cc4f@kaod.org>
+In-Reply-To: <3751eebe-8a2f-4e85-bb9c-3a856407cc4f@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|PUZPR06MB5851:EE_
+x-ms-office365-filtering-correlation-id: 23e47788-b261-477d-e895-08de20ca9130
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|38070700021|13003099007; 
+x-microsoft-antispam-message-info: =?utf-8?B?elNaUmhjZlpsNkROMkZTZGtVSTNiMUlsZUdITzhLS0IwUFpvZnpmNm5UMStC?=
+ =?utf-8?B?MU8vdCttWThwNXV4MnJkWmxEZ080YVVKN1BXdEZvNkNiL1R0cHhZR2tmYktC?=
+ =?utf-8?B?ZG1YWkdvSVdHZUFaWlRrQng5YjNRSVk1aVQ0amVDZDZiSU1pYkNabW1MclJr?=
+ =?utf-8?B?VCtVUUtmTFkwTEFFdWJVaUZUSThjdHI3eWIwQ3JBS2JVdjdURS9vajNYWDQ5?=
+ =?utf-8?B?TUJsekNHUWdPcndHQmtmdFBmUklhMm1zYVRiUHBFUEw5Y1ViTHRmVXRqTjE2?=
+ =?utf-8?B?bkY0Vy9weUM1NXA4STYvZVpXY1R3bUxTK2xtRXBqOXlWOXBOb0oxcld4eVFx?=
+ =?utf-8?B?NUN5U2F0WTVucEtRZUdrVWVneXpuaDh6MDB5N1dRZzIvLzdVdDFxT05VNDg2?=
+ =?utf-8?B?NHhRTzFubllic1FLZ0F5OTVUeWU5aDhqcEs2dnVkRlpzMDUwU2tKQVJtMkkx?=
+ =?utf-8?B?NEFHcllwbjBPWUVWcGNNOTFiK092V3grTXNaTDJ1RWxxSy9LMVB4V3MzZkpB?=
+ =?utf-8?B?VHpNeUNhdHUveXgyRzUzbE1DU2tCLzY2dmJDZzNYQmlLdTBlVmNtWWsyNFQ1?=
+ =?utf-8?B?SE5IZ1Rod1ZmZWxBbTJNc1B0eC8vNmQ0clB3cUNXTW5DaTN0aW5iOVo4aXB3?=
+ =?utf-8?B?TENra0tJSWxVbHZsZE8ya2VBUUc5akErcFY3SzdKYUNySnAyMURFSGhOcGRC?=
+ =?utf-8?B?eWNNMFFHcUx5MkI2R0FzSldES1Bmbm1VWUdLdXRSUzZRR1ZENGNhWnRMdVMw?=
+ =?utf-8?B?aFpKRUtHT21WME9PUWlIL2NLYUlzcG1sTTFyS2xXbjZjc1U0UWNBU3lTdXJo?=
+ =?utf-8?B?S2l2VzN4RnNvK2ZNbCtIZlJQa1l2d3o1RHBCV1B5bFhiYU1nSlB6L3U4Q2lU?=
+ =?utf-8?B?enVQRFNCV3ZldHQzQXltNVJ2SzduWTEzNXUxd0huaTAycUora3BGZ2hkOGdK?=
+ =?utf-8?B?Z080bXNUdUNDZGQrS1hwRmJJMVpTMllaNVJhNnhiN3liWGFTYVRKSDM3MHZK?=
+ =?utf-8?B?RTBEMkZBQXkwNnNyMEh5c08wdW0xN29SU2hEZUVZVTNVQlkvOFY1a1orcVIw?=
+ =?utf-8?B?ek85Mk1WdFYzbERuVEhoUzFvTCtVKzVhU3d1RGVZZGdlSGpFZ256WlJONXZD?=
+ =?utf-8?B?UDQ3dFgzaytYZFZMa290MGZBd3dXcERick40dTdsaUh6VE1zNWJLUUlyK3R0?=
+ =?utf-8?B?U1dXOGxUSGdvYTZCdFdPT1U3NlcwZ25OcHFKcWJOMENsTjlxT1g3L0g3MFc0?=
+ =?utf-8?B?ZEJTTGZjM05ORjFHdXFpTWI3dXd0bmRWdENkWWtJcnJLeGNJWGpHd3d2cmJI?=
+ =?utf-8?B?eUlTN05HYmJrOThqaDVNOHZTMFhHdUI0R1hoWjVYZVdqclFlazVjeXh2cUtj?=
+ =?utf-8?B?YWhZdi9uY1RPOHVYNnBsOHI3aGpsOUtRRy9kWVdQMVRmRmZwMGtNQkxqMHdu?=
+ =?utf-8?B?REEwUnRrL3c2YXVMSzlqT2taY29jZWorcmlKNXdNN0l3MFlzZHBiNzdqcXp2?=
+ =?utf-8?B?eW1ncDNVS1AvNlBjdU9CZ0J5TW92akFtQlBUa09jNzU0bWN6VlNCNEUzWC9j?=
+ =?utf-8?B?UjJNZlJjRm0xUThwUGhrSUUwU20zSzgxVUFDTXdvLzgwd2RGdHQ4d3hqQ2gy?=
+ =?utf-8?B?SjdLNlBkM29ZaTNZcWZUaHpjbUtyVWZhRll4ajJUTW1FY0JBM0g0OWRmRHls?=
+ =?utf-8?B?NDAwZjFrSGZyT1NEc1JUKzZoN0tObU5GWHpkekRUVUhvMFdBdnFyTXhBUHNw?=
+ =?utf-8?B?Sk15djEza0o1cFl6YkVYeHYyQ0Z6OXRrNnVYUTZ0cVQ0NVp5dTdMTHI1ZGZj?=
+ =?utf-8?B?SWhsLzgzK1BzcXFaSlF0cXRsSFdyMWdvTW1PdTg5eWMwMEhZNm5jSUcyQXph?=
+ =?utf-8?B?dXNHbnJFNWUyU3FNaFpqb0JhMVU2Rk5FWXgzcW04WnQ5Qy9ENUdkbUlKU2NF?=
+ =?utf-8?B?MkprMjZIOGl5aHVjTGtDd1dBYjZuRTZSd08rRFlFNlhYQkNhUHRpemVYL2hC?=
+ =?utf-8?B?YXVBaDVKSkpwdXkrVnRJRHFhZWtlbVRLdks1RnpzSDg4cE9NeHJkamd4NlI3?=
+ =?utf-8?Q?7sTJKS?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(13003099007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VVRpb3pndk02VXRaYzhmdlF3SFBraytQSTNQSlZPckVMRTRIOFo0OXlPRWp3?=
+ =?utf-8?B?UFVDbkl0VDI4azNEK3o5NnNkVEVIaU4wanJ1OWZwZVk0RXNYL0FFUFpRdThH?=
+ =?utf-8?B?TXBlVHpwTDIxTDRqMXFSRU40Nys3OFMvZlNaVVdVMlcwclIwb3hXcUdXeTlJ?=
+ =?utf-8?B?YTN4MEQ4czNMek82WVNpTmNlWFY2WStsUmVYeWNvTC84NGVYYUV1QjJOQklQ?=
+ =?utf-8?B?OHRlWVc0M2dRWDNSbFNBYWZkdHdQTDdHbkNPUllFN0Z3L2VCTWk5MlJTYThV?=
+ =?utf-8?B?ellqY3Y4WmUzdlE4ZmpEZFB5MFdKZVBoSlhOdkJjMHpPR0ZsMkhBRk5qUDRP?=
+ =?utf-8?B?bTBhVHdlN0Y5c0RRYU1NQjRMVVlidnduS2RtLzdPOVliR2IrU2JteWlNZ3Az?=
+ =?utf-8?B?T3FLYW9PUDZIVEFBYlBxYXRsSC9SVk1SU1gxWnpyRTdKZDlFYVBIdStrejVX?=
+ =?utf-8?B?RWxPQnFIS0NhQ3pQZVo0b0JUSGROZUwxaWtBSmlFSkY3RUoxY1JiOFZpbjdG?=
+ =?utf-8?B?UkdQd1BjYStyb2VXTDdVRGlKaGtaTU1sNmtncVAyWHlEdWw0M3dVN1QzNW5t?=
+ =?utf-8?B?TGhJRjJoR3c0TVgrdjNDSkVkekFwaDJuU0JPZTlGZ05ha1c0ejhwcUNDM2or?=
+ =?utf-8?B?dnIzWXc3RXF0WGZOMTJPRlUxSkRiRUd1OE45bFZ5Z3FDZ0VhZ2VrYU5xWXVi?=
+ =?utf-8?B?b0lnbWlabGovUDE3NFJFOG4vbzN2K1lLY2hrdy9keDh1VGNtek9LSzlsSDdm?=
+ =?utf-8?B?ekIzSkJYNzMxazhLeCtnME02cFBKeExWUUJ6WVV3TXVpaDNMWmNockZmM2l1?=
+ =?utf-8?B?TnlQRDl0M3EwSVZkb2FUVTFWbjIvbEtzNlpHLzhrTUVHZUdCeWtZWU8zVWRn?=
+ =?utf-8?B?NCthMCtaMDk5YlpQT2k5RUdWMnZVTTFzSFprNllMNXNXMys0MkNGYmFZYVMz?=
+ =?utf-8?B?L0t1VXJhRjNWbjJEbmRXYmEzQzZEelB4dnlIM0ZvYUZBMk9tdXd0VWM5YTdk?=
+ =?utf-8?B?cHk1WTAyV2VFeGNlZEtHNmJCcWswSlFONm11WFN1V1pMZzQwN0VpUm1aVjN4?=
+ =?utf-8?B?YjJQSGIrdG9GRDEyMWhxd0JhZXljQ2x3RC9Rdm9UWS9NL2NIbWRIYk9ibDAy?=
+ =?utf-8?B?MDk5ZllRSGNNOVoxWTVNdUhYTXNMRzFMNGdBSCtpUGg0N01yRExDOG1LdmNt?=
+ =?utf-8?B?eTlqTUc2cEs0b3VWSTF3Q1BkaHpMamxCbTR2Z242MWViNUpzQmxWRlJzaDFh?=
+ =?utf-8?B?UnlOUlRvOWlpZExUK2NIalg5cHl6dk5oaVVldWQ1UHRQVko2KzE2N0ZKSTdX?=
+ =?utf-8?B?TWFVM00wQ0tnWHY2VlNMNktGV3VPaWtmTS9uVTc0Q3hlOGVIdk9yV1Mwb0N2?=
+ =?utf-8?B?aGxYMkFybXZMOUl0eDMzVmtKSFphRGxlYWM4QmtHby9GRjc2eU9KZmR3Ri9V?=
+ =?utf-8?B?RVNNNldYcXoyQVZvN3o2bTNJN3d4dGd2MVFHMXZ1OXNLcVcxZndWVTJhc3FV?=
+ =?utf-8?B?VzZZU3g4WUg0K01uVTJIZW5LMFVwaWg2MHRuc0NkSzVzZXRObEtHbXN0MXFG?=
+ =?utf-8?B?Z3l2NXJ4eks1MUV0cEVLNUN4NExId3pRRGUrNlBCaHhSZW03QWlrN201UUVu?=
+ =?utf-8?B?V3VLWGFPNjF2WlM1R3hUZmhOcHIydUZlaTM1bmRaSVJzWlBLNXc1TWh2NEVJ?=
+ =?utf-8?B?N0grakVRYTRWNzhHam5GYU1yWmJIMm1pNjM5WThnVkxLK0VXUDFaNlJDM2x2?=
+ =?utf-8?B?bW5YL3FLQzFJbmE5V0lxWk9iT1lTUUt1ejJHeUd2S2s0Tzc5Um9jWW9ITHY2?=
+ =?utf-8?B?REQwenQvMUZ1OVRub1MzUmluaEdpK3h3bWdjQ3VPLzdQOWt5WGVESVNDMUI2?=
+ =?utf-8?B?cHFYTkNyTFhDV1hYTkhZMjJmR1hvVmkwbE5rSE9XYXFSZzZ3L1BqT1VGNS93?=
+ =?utf-8?B?TFRjS254eTZaMGN1OHRvb3FxNCtLaHFtTEMzbGllRzYrVHBiVnpVQ3FXQ1lB?=
+ =?utf-8?B?VmsyaUxSS2syR0FadndjZ3B4NGFjU21tMnpPdGhEcmdNUlc3dTh5TWlUK0R4?=
+ =?utf-8?B?UWFCRmNOcW9mb2xWZ3A0Wmhwbmx2c1VlYjdPWFRLWGhCMlBMRmdDRGpTNVRX?=
+ =?utf-8?Q?qVaLTs2w4Yew3vAINABbOI8Ln?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
- <20251020233949.506088-5-dmitry.osipenko@collabora.com>
- <CAJ+hS_h4gwe+yaUrcQ5ibdEAFqya=SOb4KLT5HmgG_ZGtJnMSQ@mail.gmail.com>
-In-Reply-To: <CAJ+hS_h4gwe+yaUrcQ5ibdEAFqya=SOb4KLT5HmgG_ZGtJnMSQ@mail.gmail.com>
-From: Yiwei Zhang <zzyiwei@gmail.com>
-Date: Mon, 10 Nov 2025 18:29:36 -0800
-X-Gm-Features: AWmQ_bmE_ikITNl3_O1HMOb0vCR9vkCtPpLzOudU3QoG6Sjiw6ayk_VMU_MXqHI
-Message-ID: <CAJ+hS_gPoaSc-VfoOENgyHZRhFAkUzizoGHm3xJz2trb0jsZAg@mail.gmail.com>
-Subject: Re: [PATCH v14 04/10] virtio-gpu: Support asynchronous fencing
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Huang Rui <ray.huang@amd.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org, 
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>, 
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, 
- Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
- Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x62d.google.com
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23e47788-b261-477d-e895-08de20ca9130
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2025 02:32:32.4489 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: a8gUQe8y+RjNnK/UW9dlpJEP15D2yZMPalgQ6G6L2hGqtmqwu8Wc0WHnjgs3tHo9UermgDLPeqXrvqikDCYR/QbzUOBypJmij1fhTXVedOA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5851
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=kane_chen@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,302 +187,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 8, 2025 at 3:56=E2=80=AFAM Yiwei Zhang <zzyiwei@gmail.com> wrot=
-e:
->
-> On Mon, Oct 20, 2025 at 4:42=E2=80=AFPM Dmitry Osipenko
-> <dmitry.osipenko@collabora.com> wrote:
-> >
-> > Support asynchronous fencing feature of virglrenderer. It allows Qemu t=
-o
-> > handle fence as soon as it's signalled instead of periodically polling
-> > the fence status. This feature is required for enabling DRM context
-> > support in Qemu because legacy fencing mode isn't supported for DRM
-> > contexts in virglrenderer.
-> >
-> > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> > Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> > ---
-> >  hw/display/virtio-gpu-gl.c     |   5 ++
-> >  hw/display/virtio-gpu-virgl.c  | 130 +++++++++++++++++++++++++++++++++
-> >  include/hw/virtio/virtio-gpu.h |  11 +++
-> >  meson.build                    |   2 +
-> >  4 files changed, 148 insertions(+)
-> >
-> > diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-> > index c06a078fb36a..1468c6ed1467 100644
-> > --- a/hw/display/virtio-gpu-gl.c
-> > +++ b/hw/display/virtio-gpu-gl.c
-> > @@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(DeviceS=
-tate *qdev)
-> >      if (gl->renderer_state >=3D RS_INITED) {
-> >  #if VIRGL_VERSION_MAJOR >=3D 1
-> >          qemu_bh_delete(gl->cmdq_resume_bh);
-> > +
-> > +        if (gl->async_fence_bh) {
-> > +            virtio_gpu_virgl_reset_async_fences(g);
-> > +            qemu_bh_delete(gl->async_fence_bh);
-> > +        }
-> >  #endif
-> >          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-> >              timer_free(gl->print_stats);
-> > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
-l.c
-> > index cd8b367f6fa6..0320d6deca76 100644
-> > --- a/hw/display/virtio-gpu-virgl.c
-> > +++ b/hw/display/virtio-gpu-virgl.c
-> > @@ -24,6 +24,23 @@
-> >
-> >  #include <virglrenderer.h>
-> >
-> > +/*
-> > + * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was =
-fixed
-> > + * in 1.1.0. Undefine bugged version of the macro and provide our own.
-> > + */
-> > +#if defined(VIRGL_CHECK_VERSION) && \
-> > +    VIRGL_VERSION_MAJOR =3D=3D 1 && VIRGL_VERSION_MINOR < 1
-> > +#undef VIRGL_CHECK_VERSION
-> > +#endif
-> > +
-> > +#ifndef VIRGL_CHECK_VERSION
-> > +#define VIRGL_CHECK_VERSION(major, minor, micro) \
-> > +    (VIRGL_VERSION_MAJOR > (major) || \
-> > +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR > (mino=
-r) || \
-> > +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR =3D=3D =
-(minor) && \
-> > +     VIRGL_VERSION_MICRO >=3D (micro))
-> > +#endif
-> > +
-> >  struct virtio_gpu_virgl_resource {
-> >      struct virtio_gpu_simple_resource base;
-> >      MemoryRegion *mr;
-> > @@ -1051,6 +1068,106 @@ static void virgl_write_context_fence(void *opa=
-que, uint32_t ctx_id,
-> >  }
-> >  #endif
-> >
-> > +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
-> > +{
-> > +    struct virtio_gpu_virgl_context_fence *f;
-> > +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> > +
-> > +    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
-> > +        f =3D QSLIST_FIRST(&gl->async_fenceq);
-> > +
-> > +        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
-> > +
-> > +        g_free(f);
-> > +    }
-> > +}
-> > +
-> > +#if VIRGL_CHECK_VERSION(1, 1, 2)
-> > +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
-> > +{
-> > +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
-> > +    struct virtio_gpu_ctrl_command *cmd, *tmp;
-> > +    struct virtio_gpu_virgl_context_fence *f;
-> > +    VirtIOGPU *g =3D opaque;
-> > +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> > +
-> > +    if (gl->renderer_state !=3D RS_INITED) {
-> > +        return;
-> > +    }
-> > +
-> > +    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
-> > +
-> > +    while (!QSLIST_EMPTY(&async_fenceq)) {
-> > +        f =3D QSLIST_FIRST(&async_fenceq);
-> > +
-> > +        QSLIST_REMOVE_HEAD(&async_fenceq, next);
-> > +
-> > +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
-> > +            /*
-> > +             * the guest can end up emitting fences out of order
-> > +             * so we should check all fenced cmds not just the first o=
-ne.
-> > +             */
-> > +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
-> > +                continue;
-> > +            }
-> > +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
-> > +                if (cmd->cmd_hdr.ring_idx !=3D f->ring_idx) {
-> > +                    continue;
-> > +                }
-> > +                if (cmd->cmd_hdr.ctx_id !=3D f->ctx_id) {
-> > +                    continue;
-> > +                }
-> > +            } else if (f->ring_idx >=3D 0) {
-> > +                /* ctx0 GL-query fences don't have ring info */
-> > +                continue;
-> > +            }
-> > +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK=
-_NODATA);
-> > +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
-> > +            g_free(cmd);
-> > +        }
->
-> Conditions above are a little bit confusing. Skipping unsignaled
-> fences first makes sense to me. Next we can use f->ctx_id =3D=3D 0 to
-> distinguish ctx0 fence vs context fence. Then:
-> - for f->ctx_id =3D=3D 0, skip any RING_IDX
-> - for f->ctx_id > 0, only care about RING_IDX along with comparing
-> ctx_id and ring_idx
->
-> So, if we check the RING_IDX flag first like in the existing patch,
-> the else condition is only meaningful for the ctx0 fence, and
-> f->ring_idx >=3D 0 will never be evaluated to true. Can we drop the
-> "else if" part?
->
-> > +
-> > +        trace_virtio_gpu_fence_resp(f->fence_id);
-> > +        g_free(f);
-> > +        g->inflight--;
-> > +        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-> > +            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-> > +        }
-> > +    }
-> > +}
-> > +
-> > +static void
-> > +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
-> > +                                  int64_t ring_idx, uint64_t fence_id)
-> > +{
-> > +    struct virtio_gpu_virgl_context_fence *f;
-> > +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> > +
-> > +    f =3D g_new(struct virtio_gpu_virgl_context_fence, 1);
-> > +    f->ctx_id =3D ctx_id;
-> > +    f->ring_idx =3D ring_idx;
-> > +    f->fence_id =3D fence_id;
-> > +
-> > +    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
-> > +
-> > +    qemu_bh_schedule(gl->async_fence_bh);
-> > +}
-> > +
-> > +static void virgl_write_async_fence(void *opaque, uint32_t fence)
-> > +{
-> > +    VirtIOGPU *g =3D opaque;
-> > +
-> > +    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
-> > +}
-> > +
-> > +static void virgl_write_async_context_fence(void *opaque, uint32_t ctx=
-_id,
-> > +                                            uint32_t ring_idx, uint64_=
-t fence)
-> > +{
-> > +    VirtIOGPU *g =3D opaque;
-> > +
-> > +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
-> > +}
-> > +#endif
-> > +
-> >  static virgl_renderer_gl_context
-> >  virgl_create_context(void *opaque, int scanout_idx,
-> >                       struct virgl_renderer_gl_ctx_param *params)
-> > @@ -1150,6 +1267,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
-> >  void virtio_gpu_virgl_reset(VirtIOGPU *g)
-> >  {
-> >      virgl_renderer_reset();
-> > +
-> > +    virtio_gpu_virgl_reset_async_fences(g);
-> >  }
-> >
-> >  int virtio_gpu_virgl_init(VirtIOGPU *g)
-> > @@ -1162,6 +1281,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-> >      if (qemu_egl_display) {
-> >          virtio_gpu_3d_cbs.version =3D 4;
-> >          virtio_gpu_3d_cbs.get_egl_display =3D virgl_get_egl_display;
-> > +#if VIRGL_CHECK_VERSION(1, 1, 2)
-> > +        virtio_gpu_3d_cbs.write_fence         =3D virgl_write_async_fe=
-nce;
-> > +        virtio_gpu_3d_cbs.write_context_fence =3D virgl_write_async_co=
-ntext_fence;
-> > +        flags |=3D VIRGL_RENDERER_ASYNC_FENCE_CB;
-> > +        flags |=3D VIRGL_RENDERER_THREAD_SYNC;
-> > +#endif
-> >      }
-> >  #endif
-> >  #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
-> > @@ -1195,6 +1320,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-> >      gl->cmdq_resume_bh =3D aio_bh_new(qemu_get_aio_context(),
-> >                                      virtio_gpu_virgl_resume_cmdq_bh,
-> >                                      g);
-> > +#if VIRGL_CHECK_VERSION(1, 1, 2)
-> > +    gl->async_fence_bh =3D aio_bh_new(qemu_get_aio_context(),
-> > +                                    virtio_gpu_virgl_async_fence_bh,
-> > +                                    g);
-> > +#endif
-> >  #endif
-> >
-> >      return 0;
-> > diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-=
-gpu.h
-> > index 9f16f89a36d2..e15c16aa5945 100644
-> > --- a/include/hw/virtio/virtio-gpu.h
-> > +++ b/include/hw/virtio/virtio-gpu.h
-> > @@ -233,6 +233,13 @@ struct VirtIOGPUClass {
-> >                               Error **errp);
-> >  };
-> >
-> > +struct virtio_gpu_virgl_context_fence {
-> > +    uint32_t ctx_id;
-> > +    int64_t ring_idx;
->
-> If I didn't miss anything above, we don't need -1 to tell anything.
-> Then the ring_idx here can be a uint32_t, and virgl_write_async_fence
-> can just pass 0.
->
-> > +    uint64_t fence_id;
-> > +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
-> > +};
-> > +
-> >  /* VirtIOGPUGL renderer states */
-> >  typedef enum {
-> >      RS_START,       /* starting state */
-> > @@ -250,6 +257,9 @@ struct VirtIOGPUGL {
-> >      QEMUTimer *print_stats;
-> >
-> >      QEMUBH *cmdq_resume_bh;
-> > +
-> > +    QEMUBH *async_fence_bh;
-> > +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
-> >  };
-> >
-> >  struct VhostUserGPU {
-> > @@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
-> >  void virtio_gpu_virgl_reset(VirtIOGPU *g);
-> >  int virtio_gpu_virgl_init(VirtIOGPU *g);
-> >  GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
-> > +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
-> >
-> >  #endif
-> > diff --git a/meson.build b/meson.build
-> > index e96c28da09b6..e3d48150483e 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -2597,6 +2597,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.foun=
-d())
-> >  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
-> >  if virgl.found()
-> >    config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.=
-')[0])
-> > +  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split('.=
-')[1])
-> > +  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split('.=
-')[2])
-> >  endif
-> >  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
-> >  config_host_data.set('CONFIG_VTE', vte.found())
-> > --
-> > 2.51.0
-> >
-
-Friendly ping. My early comments here might have been missed ; )
+SGkgQ8OpZHJpYywNCg0KSW4gdGhlIHNob3J0IHRlcm0sIHRoZXJlJ3Mgbm8gcGxhbiB0byByZWxl
+YXNlIGFuIGltYWdlIHRoYXQgaW5jbHVkZXMgdGhlIEFTVDE3MDAuDQpPbmNlIHN1Y2ggYW4gaW1h
+Z2UgYmVjb21lcyBhdmFpbGFibGUsIEknbGwgc3VibWl0IGEgcGF0Y2ggc2VyaWVzIGZvciBmdW5j
+dGlvbmFsDQp0ZXN0aW5nLg0KDQpJJ2xsIGFsc28gdHJ5IG1vdmluZyB0aGUgQVNUMTcwMCBjb2Rl
+IHRvIHRoZSBody9hcm0gZGlyZWN0b3J5LiBJZiBJIGVuY291bnRlciBhbnkNCklzc3VlcyBkdXJp
+bmcgdGhpcyBwcm9jZXNzLCBJJ2xsIGxldCB5b3Uga25vdy4NCg0KQmVzdCByZWdhcmRzLA0KS2Fu
+ZQ0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lkcmljIExlIEdvYXRl
+ciA8Y2xnQGthb2Qub3JnPg0KPiBTZW50OiBUdWVzZGF5LCBOb3ZlbWJlciAxMSwgMjAyNSAxMjo0
+NCBBTQ0KPiBUbzogS2FuZSBDaGVuIDxrYW5lX2NoZW5AYXNwZWVkdGVjaC5jb20+OyBQZXRlciBN
+YXlkZWxsDQo+IDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+OyBTdGV2ZW4gTGVlIDxzdGV2ZW5f
+bGVlQGFzcGVlZHRlY2guY29tPjsgVHJveQ0KPiBMZWUgPGxlZXRyb3lAZ21haWwuY29tPjsgSmFt
+aW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+OyBBbmRyZXcNCj4gSmVmZmVyeSA8YW5k
+cmV3QGNvZGVjb25zdHJ1Y3QuY29tLmF1PjsgSm9lbCBTdGFubGV5IDxqb2VsQGptcy5pZC5hdT47
+DQo+IG9wZW4gbGlzdDpBU1BFRUQgQk1DcyA8cWVtdS1hcm1Abm9uZ251Lm9yZz47IG9wZW4gbGlz
+dDpBbGwgcGF0Y2hlcyBDQw0KPiBoZXJlIDxxZW11LWRldmVsQG5vbmdudS5vcmc+DQo+IENjOiBU
+cm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVjaC5jb20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0gg
+djIgMDAvMTddIGh3L2FybS9hc3BlZWQ6IEFTVDE3MDAgTFRQSSBzdXBwb3J0IGFuZA0KPiBkZXZp
+Y2UgaG9va3Vwcw0KPiANCj4gT24gMTEvNS8yNSAwNDo1OCwgS2FuZSBDaGVuIHdyb3RlOg0KPiA+
+IEZyb206IEthbmUtQ2hlbi1BUyA8a2FuZV9jaGVuQGFzcGVlZHRlY2guY29tPg0KPiA+DQo+ID4g
+SGkgYWxsLA0KPiA+DQo+ID4gTFRQSSAoTFZEUyBUdW5uZWxpbmcgUHJvdG9jb2wgJiBJbnRlcmZh
+Y2UpIGlzIGRlZmluZWQgaW4gdGhlIE9DUA0KPiA+IERDLVNDTQ0KPiA+IDIuMCBzcGVjaWZpY2F0
+aW9uIChzZWUgRmlndXJlIDIpOg0KPiA+IGh0dHBzOi8vd3d3Lm9wZW5jb21wdXRlLm9yZy9kb2N1
+bWVudHMvb2NwLWRjLXNjbS0yLTAtbHRwaS12ZXItMS0wLXBkZg0KPiA+DQo+ID4gTFRQSSBwcm92
+aWRlcyBhIHByb3RvY29sIGFuZCBwaHlzaWNhbCBpbnRlcmZhY2UgZm9yIHR1bm5lbGluZyB2YXJp
+b3VzDQo+ID4gbG93LXNwZWVkIHNpZ25hbHMgYmV0d2VlbiB0aGUgSG9zdCBQcm9jZXNzb3IgTW9k
+dWxlIChIUE0pIGFuZCB0aGUNCj4gPiBTYXRlbGxpdGUgQ29udHJvbGxlciBNb2R1bGUgKFNDTSku
+IEluIEZpZ3VyZSAyIG9mIHRoZSBzcGVjaWZpY2F0aW9uLA0KPiA+IHRoZSBBU1QyN3gwIFNvQyAo
+bGVmdCkgaW50ZWdyYXRlcyB0d28gTFRQSSBjb250cm9sbGVycywgYWxsb3dpbmcgaXQgdG8NCj4g
+PiBjb25uZWN0IHRvIHVwIHRvIHR3byBBU1QxNzAwIGJvYXJkcy4gT24gdGhlIG90aGVyIHNpZGUs
+IHRoZSBBU1QxNzAwDQo+ID4gY29uc29saWRhdGVzIEhQTSBGUEdBIGZ1bmN0aW9ucyBhbmQgbXVs
+dGlwbGUgcGVyaXBoZXJhbCBpbnRlcmZhY2VzDQo+ID4gKEdQSU8sIFVBUlQsIEkyQywgSTNDLCBl
+dGMuKSBvbnRvIGEgc2luZ2xlIGJvYXJkLg0KPiA+DQo+ID4gQmVjYXVzZSB0aGUgQVNUMTcwMCBl
+eHBvc2VzIGFkZGl0aW9uYWwgSS9PIGludGVyZmFjZXMgKEdQSU8sIEkyQywgSTNDLA0KPiA+IGFu
+ZCBvdGhlcnMpLCBpdCBhY3RzIGFzIGFuIEkvTyBleHBhbmRlci4gT25jZSBjb25uZWN0ZWQgb3Zl
+ciBMVFBJLCB0aGUNCj4gPiBBU1QyN3gwIGNhbiBjb250cm9sIGFkZGl0aW9uYWwgZG93bnN0cmVh
+bSBkZXZpY2VzIHRocm91Z2ggdGhpcyBsaW5rLg0KPiA+DQo+ID4gVGhpcyBwYXRjaCBzZXJpZXMg
+aW50cm9kdWNlcyBhIGJhc2ljIExUUEkgY29udHJvbGxlciBtb2RlbCBhbmQgd2lyZXMNCj4gPiBp
+dCBpbnRvIHRoZSBBU1QyN3gwIFNvQy4gSXQgYWxzbyBhZGRzIHRoZSBBU1QxNzAwLXNwZWNpZmlj
+IExUUEkNCj4gPiBleHBhbmRlciBkZXZpY2UgYW5kIGdyYWR1YWxseSBjb25uZWN0cyBjb21tb24g
+cGVyaXBoZXJhbHMgb24gdGhlDQo+IEFTVDE3MDAgbW9kZWwuDQo+ID4gRm9yIGJsb2NrcyB0aGF0
+IGFyZSBub3QgeWV0IGZ1bmN0aW9uYWxseSBpbXBsZW1lbnRlZCAoSTNDLCBTR1BJT00sDQo+ID4g
+UFdNKSwgdGhlaXIgTU1JTyByZWdpb25zIGFyZSBtb2RlbGVkIGFzIHVuaW1wbGVtZW50ZWQgZGV2
+aWNlcyB0bw0KPiA+IHJlc2VydmUgYWRkcmVzcyBzcGFjZSBhbmQgbWFrZSB0aGUgbWlzc2luZyBm
+dW5jdGlvbmFsaXR5IGV4cGxpY2l0LA0KPiA+IGVuc3VyaW5nIHRoYXQgZ3Vlc3QgcHJvYmluZyBy
+ZW1haW5zIHN0YWJsZS4NCj4gDQo+IFRoYW5rcyBmb3IgdGhlIGltcHJvdmVkIGNvdmVyIGxldHRl
+ci4NCj4gDQo+ID4gSW4gdGhlIG9mZmljaWFsIHJlbGVhc2UgaW1hZ2VzLCB0aGUgQVNUMTcwMCBm
+dW5jdGlvbnMgYXJlIG5vdCBpbmNsdWRlZA0KPiA+IGJ5IGRlZmF1bHQuIFRvIHRlc3QgdGhlIEFT
+VDE3MDAtcmVsYXRlZCBmdW5jdGlvbmFsaXR5LCBwbGVhc2UgaW5jbHVkZQ0KPiA+IHRoZSBmb2xs
+b3dpbmcgRFRTIGZpbGVzIGZvciBwcm9iaW5nOg0KPiA+DQo+IGh0dHBzOi8vZ2l0aHViLmNvbS9B
+c3BlZWRUZWNoLUJNQy9saW51eC9ibG9iL2FzcGVlZC1tYXN0ZXItdjYuNi9hcmNoL2ENCj4gPiBy
+bTY0L2Jvb3QvZHRzL2FzcGVlZC9hc3BlZWQtbHRwaTAuZHRzaQ0KPiA+DQo+IGh0dHBzOi8vZ2l0
+aHViLmNvbS9Bc3BlZWRUZWNoLUJNQy9saW51eC9ibG9iL2FzcGVlZC1tYXN0ZXItdjYuNi9hcmNo
+L2ENCj4gPiBybTY0L2Jvb3QvZHRzL2FzcGVlZC9hc3BlZWQtbHRwaTEuZHRzaQ0KPiANCj4gSXMg
+YSByZWxlYXNlIHBsYW5uZWQgPw0KPiANCj4gPiBBZnRlciBpbmNsdWRpbmcgdGhlc2UgRFRTIGZp
+bGVzIGluIHRoZSBCTUMgaW1hZ2UsIHlvdSBjYW4gdmVyaWZ5IExUUEkNCj4gPiBmdW5jdGlvbmFs
+aXR5IHVzaW5nIHRoZSBmb2xsb3dpbmcgc2NlbmFyaW9zOg0KPiA+DQo+ID4gMS4gSW4gVS1Cb290
+Og0KPiA+ICAgICBSdW4gdGhlIGx0cGkgY29tbWFuZCB0byB0cmlnZ2VyIHRoZSBMVFBJIGNvbm5l
+Y3Rpb24gYW5kIGRpc3BsYXkgdGhlDQo+ID4gICAgIGN1cnJlbnQgY29ubmVjdGlvbiBzdGF0dXMu
+DQo+ID4gMi4gSW4gQk1DIExpbnV4Og0KPiA+ICAgICBSdW4gaTJjZGV0ZWN0IC15IDwxNi0zOD4g
+dG8gc2NhbiBhbmQgdGVzdCB0aGUgSTJDIGJ1c2VzIGV4cG9zZWQgYnkNCj4gPiAgICAgdGhlIEFT
+VDE3MDAuDQo+IA0KPiBiZWNhdXNlIHRoaXMgd291bGQgYmUgZ29vZCB0byBoYXZlIGZvciBmdW5j
+dGlvbmFsIHRlc3RzLg0KPiANCj4gPg0KPiA+IEFueSBmZWVkYmFjayBvciBzdWdnZXN0aW9ucyBh
+cmUgYXBwcmVjaWF0ZWQhDQo+IA0KPiBUaGUgQVNUMTcwMCBtb2RlbCBpcyByYXRoZXIgYmlnIGFu
+ZCB2ZXJ5IHNpbWlsYXIgdG8gYSBTb0MsIHdpdGhvdXQgQ1BVcy4NCj4gUGVyaGFwcyB3ZSBzaG91
+bGQgbW92ZSB0aGUgbW9kZWwgdW5kZXIgaHcvYXJtIGluc3RlYWQgPw0KPiANCj4gDQo+IFRoYW5r
+cywNCj4gDQo+IEMuDQo+IA0KPiANCj4gPg0KPiA+IEthbmUNCj4gPiAtLS0NCj4gPg0KPiA+IENo
+YW5nZUxvZw0KPiA+IC0tLS0tLS0tLQ0KPiA+IHYyOg0KPiA+IC0gU2VwYXJhdGUgdGhlIEFTVDE3
+MDAgbW9kZWwgaW50byBhIHN0YW5kYWxvbmUgaW1wbGVtZW50YXRpb24NCj4gPiAtIFJlZmluZSB0
+aGUgbWVjaGFuaXNtIGZvciBhc3NpZ25pbmcgdGhlIEFTVDE3MDAgYm9hcmQgbnVtYmVyDQo+ID4N
+Cj4gPiB2MToNCj4gPiAtIEluaXRpYWwgdmVyc2lvbg0KPiA+IC0tLQ0KPiA+DQo+ID4gS2FuZS1D
+aGVuLUFTICgxNyk6DQo+ID4gICAgaHcvYXJtL2FzcGVlZDogQWRkIExUUEkgY29udHJvbGxlcg0K
+PiA+ICAgIGh3L2FybS9hc3BlZWQ6IEF0dGFjaCBMVFBJIGNvbnRyb2xsZXIgdG8gQVNUMjdYMCBw
+bGF0Zm9ybQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IEFkZCBBU1QxNzAwIExUUEkgZXhwYW5kZXIg
+ZGV2aWNlIG1vZGVsDQo+ID4gICAgaHcvYXJtL2FzcGVlZDogSW50ZWdyYXRlIEFTVDE3MDAgZGV2
+aWNlIGludG8gQVNUMjdYMA0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IEludGVncmF0ZSBpbnRlcnJ1
+cHQgY29udHJvbGxlciBmb3IgQVNUMTcwMA0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IEF0dGFjaCBM
+VFBJIGNvbnRyb2xsZXIgdG8gQVNUMTcwMCBtb2RlbA0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IEF0
+dGFjaCBVQVJUIGRldmljZSB0byBBU1QxNzAwIG1vZGVsDQo+ID4gICAgaHcvYXJtL2FzcGVlZDog
+QXR0YWNoIFNSQU0gZGV2aWNlIHRvIEFTVDE3MDAgbW9kZWwNCj4gPiAgICBody9hcm0vYXNwZWVk
+OiBBdHRhY2ggU1BJIGRldmljZSB0byBBU1QxNzAwIG1vZGVsDQo+ID4gICAgaHcvYXJtL2FzcGVl
+ZDogQXR0YWNoIEFEQyBkZXZpY2UgdG8gQVNUMTcwMCBtb2RlbA0KPiA+ICAgIGh3L2FybS9hc3Bl
+ZWQ6IEF0dGFjaCBTQ1UgZGV2aWNlIHRvIEFTVDE3MDAgbW9kZWwNCj4gPiAgICBody9hcm0vYXNw
+ZWVkOiBBdHRhY2ggR1BJTyBkZXZpY2UgdG8gQVNUMTcwMCBtb2RlbA0KPiA+ICAgIGh3L2FybS9h
+c3BlZWQ6IEF0dGFjaCBJMkMgZGV2aWNlIHRvIEFTVDE3MDAgbW9kZWwNCj4gPiAgICBody9hcm0v
+YXNwZWVkOiBBdHRhY2ggV0RUIGRldmljZSB0byBBU1QxNzAwIG1vZGVsDQo+ID4gICAgaHcvYXJt
+L2FzcGVlZDogTW9kZWwgQVNUMTcwMCBJM0MgYmxvY2sgYXMgdW5pbXBsZW1lbnRlZCBkZXZpY2UN
+Cj4gPiAgICBody9hcm0vYXNwZWVkOiBNb2RlbCBBU1QxNzAwIFNHUElPTSBibG9jayBhcyB1bmlt
+cGxlbWVudGVkDQo+IGRldmljZQ0KPiA+ICAgIGh3L2FybS9hc3BlZWQ6IE1vZGVsIEFTVDE3MDAg
+UFdNIGJsb2NrIGFzIHVuaW1wbGVtZW50ZWQgZGV2aWNlDQo+ID4NCj4gPiAgIGluY2x1ZGUvaHcv
+YXJtL2FzcGVlZF9zb2MuaCAgICAgIHwgIDIwICstDQo+ID4gICBpbmNsdWRlL2h3L2ludGMvYXNw
+ZWVkX2ludGMuaCAgICB8ICAgMiArDQo+ID4gICBpbmNsdWRlL2h3L21pc2MvYXNwZWVkX2FzdDE3
+MDAuaCB8ICA1MSArKysrKysNCj4gPiAgIGluY2x1ZGUvaHcvbWlzYy9hc3BlZWRfbHRwaS5oICAg
+IHwgIDI1ICsrKw0KPiA+ICAgaHcvYXJtL2FzcGVlZF9hc3QyN3gwLmMgICAgICAgICAgfCAxNTQg
+KysrKysrKysrKysrKystLQ0KPiA+ICAgaHcvaW50Yy9hc3BlZWRfaW50Yy5jICAgICAgICAgICAg
+fCAgNjAgKysrKysrDQo+ID4gICBody9taXNjL2FzcGVlZF9hc3QxNzAwLmMgICAgICAgICB8IDMw
+Mw0KPiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+ID4gICBody9taXNjL2FzcGVl
+ZF9sdHBpLmMgICAgICAgICAgICB8ICA5OCArKysrKysrKysrDQo+ID4gICBody9taXNjL21lc29u
+LmJ1aWxkICAgICAgICAgICAgICB8ICAgMiArDQo+ID4gICA5IGZpbGVzIGNoYW5nZWQsIDcwMCBp
+bnNlcnRpb25zKCspLCAxNSBkZWxldGlvbnMoLSkNCj4gPiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBp
+bmNsdWRlL2h3L21pc2MvYXNwZWVkX2FzdDE3MDAuaA0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0
+IGluY2x1ZGUvaHcvbWlzYy9hc3BlZWRfbHRwaS5oDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQg
+aHcvbWlzYy9hc3BlZWRfYXN0MTcwMC5jDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvbWlz
+Yy9hc3BlZWRfbHRwaS5jDQo+ID4NCg0K
 
