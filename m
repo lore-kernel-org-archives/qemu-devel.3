@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 731D8CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8CFCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:31:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIlcb-0008Dl-SJ; Tue, 11 Nov 2025 05:29:10 -0500
+	id 1vIlcd-0008HY-Ij; Tue, 11 Nov 2025 05:29:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcH-0007Vc-J8
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:49 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1vIlcI-0007XF-Lh
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:50 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcB-0000Fa-16
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:46 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b7321b03aecso89215766b.3
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:40 -0800 (PST)
+ id 1vIlcD-0000GJ-41
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:50 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b72134a5125so589543166b.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762856919; x=1763461719; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762856922; x=1763461722; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4zu0Rm6kaYJRSMkds5jE0Qr5Ypoby5zFJAM6oroUc1k=;
- b=OqBcmjvmU8xp0wthNlysJeDhXQXIULa6Aqt7adSKaEeVTPedwQvOyr4t1EAVt4m6Ye
- CZpWQ/OU8SMXj9XO7VJWyYI/OrLuXKCTBnQeBNwV56E8jIGJR3cFfHZ6uURNa+VLIags
- ADZNnYiib2uqBAIeZESI5dkMAVc3S+0dGu/ZPXiFxzW9X3mNpD4MLohWqOPrR/n08HIl
- lnbZiUm7VO2o7t7pEbYfNB29uF8naT/BOwmii+6zezXR7pTTHeOWuWydp/dyIQt2Fpcp
- MJqVTjzCzGV6GqXSAg1zfXrXZ1iVj4g8qwvCnw43j1zem1RTTUoIcH8jzoaPJQ1C1/E4
- 0Cyg==
+ bh=f25omtBgfs0TevR7//KmvifCDlD013yaB1K85NENVXU=;
+ b=hwGYPzfz7On4nfK2oK6FrJgcTp90bwvpIkwJeJWySxKLB5SMwLlCRqLMROOmnVUxvO
+ zdU/1QY8uleY1JYDMQ/whWAg5Dz/2ixjLH5s5lXfgOlk/GdsR/ce02Nu6BRX5sH6ELfy
+ m38To3CGaitX/5NInxYBn4+L7AHoK+ZmkUpSTq2YxUxhFbuA8qPFfUlPUoTVFi+eqEIZ
+ kYfkrCpXhKZURcIuolIaZNG0v7iYgI/qIk/4i0SLSu+h56stXBN9MqBfG9g0mWMyqLqo
+ s92aUCIRRWLmB49KLsSICqgRnQiyRTZ9Nseva1OQSh6NHTXGZZPKBjFtYKXAmDudahgV
+ sYLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762856919; x=1763461719;
+ d=1e100.net; s=20230601; t=1762856922; x=1763461722;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4zu0Rm6kaYJRSMkds5jE0Qr5Ypoby5zFJAM6oroUc1k=;
- b=TEAEjcNZG1U+L6HvpyKQFNp5PHFhnwlbzew8bJzQek7Dk6CtRIoUIAs7kAcDnqfhlw
- 4EdB4m6q6KMRf8aOXF90iG+beo5p5wH9h/7A17GZ1NKSK+vbY4iwGd+6gbj1an4cE0KC
- JEgy687Yimistk8cjLWPDQfu8U85i/VOBP/ru42NbjioH+4hlpcNGDZEz74gsem+na9b
- w3xjQfrtqHbHrPdEY9B3foe+IoynA7bsnS/cKF8xHJ5JenGDmSwOI405g6LEep7LJL4Y
- 1h8cvzBmMDboAMTLUD6SjjEdY7sDn2kaHqSeOtC+my9W7eJMYBcJGxxrbdhTaAQmsZob
- 4EBw==
-X-Gm-Message-State: AOJu0Yw3Ow1gbvv0vB7DZE0ScKWfJ+X0I8EIJiJ/63yTa8hkIiCHeCkM
- r7AZo9zgEacnJ2L2oLph4LTKQ8lpiyGB6cBmB6J1ELMyxRYgBblQfWmGhCg9P2EJ
-X-Gm-Gg: ASbGncthyjtzKf22IFygUR3XM9XI8MTA1m6ip/yg18kWxfEJMIGbL1zS/Nq3z0JBk4/
- Fp3rgtNRSNx9RHDdgnLU3Zg3sr7yUXPJE6Juw/sgY/7Rgo/Hsv1hrLPMbvgBUMs4g00zs8O+jQD
- mBVawEmpHDgGaqWkxz8L0ubtfVdtntT/ps59W8nygdDil0L9mmfJ+SMwVRNDZMHbq+IZ/2EbqFq
- 5LjUp8IDxbxSXD1hvumM4l6MBv/b4WBdhZMLoRtHw/4h9S6Jhst0SHEB5nrqw/mB4ByN6fzrM8O
- VzBauzmubQ9n/ZkGfW2i4Kqbw0znUcZgkFEMf7yYnoWoHU93dMtlayIN73L3BGk/TomjGvi1Hdo
- Zm5ALL7O93ye4CM6fGWrXoZvWL9TVdnXqf3h7poef2oUsAmzo3Z06c8tA+vJunpR3rdTbuaddbt
- 6wrHsQVjSboET4TjxvqVY7FA==
-X-Google-Smtp-Source: AGHT+IGKJxSK2MsTiZQr6YSNqN+N8dUmQNNXUM73L+gy87N6msmi8tJWFcz6kE6LzJQ4C7TvWayVSQ==
-X-Received: by 2002:a17:907:3c91:b0:b3c:193:820e with SMTP id
- a640c23a62f3a-b72e02ca102mr1162872066b.13.1762856918877; 
- Tue, 11 Nov 2025 02:28:38 -0800 (PST)
+ bh=f25omtBgfs0TevR7//KmvifCDlD013yaB1K85NENVXU=;
+ b=l3RFE6Xle/+ziR5d+pU56B/p9B7/ud7ab2fh579m5gEHQZ9PddBFupAK2MoSGOgIuT
+ +5RNWFVwZ933KRYtffd5F6kE/ucHJXsIb6DsjFu/s8ILv88Muq7R1O1ExiSc2R9Z66Qt
+ ZWrZMlmYS7DaJhK24wOI8S+WlEf7MEgfIjTHGIXy4oEhv5/3GbwoWOAmHbxbiiOsFKx9
+ g6J0FxYNn5T6V2Yh5M0Jt7Us6KE9eEscK8IQgwT9T+AviSk50Bir+MVU7MeJ8C42mn6t
+ mF14PVbxKmI8AJIgbeU33/LhYyHkFxtqaXjTftQNGxRtoOQryDZDnmUx4MaTH2J3Pfn1
+ sGWQ==
+X-Gm-Message-State: AOJu0YymnIT+JbEpzq6uXcnfhcvVqMWAQQCuC0KbaR4o55pwoBojtU5S
+ B4JmPDBWkpmV8GmgJ8VT4HajPhAXG/kGIznuaP8/aT+31S5zJuYljavXf/Vow2XP
+X-Gm-Gg: ASbGnctDB0qi0fk8RgyWxYY/hIgTI8+ymhiXcibKlqVg6a4z63V94qID+vCUAnQegZV
+ 0cgCFqgAKIHDA6GhQC+49uNkUsBMxkDfmmwDblR1DVUrOBz/cXSirgpl2bcHoiww1KfTJkVdgnC
+ SacfgXBK5896BD0SVho956z76h3qfC7iC0y8CKsxMybxPC3VjSQ2CQDRN0YgtbLkXnBU+1AGE26
+ 0RijsMd8bLYeL3J2JA6CPbqkGRgMWzlE10RBETw8H/CZQuEi4cJQS60ognbZgbtDT03T3x93sJB
+ igOc06bNSvv6dFSt3HUbquCRFF+vFwXBKOfq35M4Gu1G4vwAaldgmshyxy4GAN5ZjmgAfRUJRH1
+ cO9jtMvBApc4waaiPLqsCsgtSvoyl9/5RMQum5FbtZU/zqt54yx6JwBkesvsqnfrS4+BYHRfNl6
+ WGPJSI8xuBS12ydSF0PV5UGZAYRrHkhlwB
+X-Google-Smtp-Source: AGHT+IG/DF2YjzTNfFm4f4hlzcdh5/CzFCiTeGXost6wpPq4FqBWreDCamev1Vp9QhJhsTYuerNBAQ==
+X-Received: by 2002:a17:907:7b83:b0:b40:e687:c2c with SMTP id
+ a640c23a62f3a-b72e0562db8mr1112914766b.37.1762856921585; 
+ Tue, 11 Nov 2025 02:28:41 -0800 (PST)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc12:ce00:ae91:a1ff:fe8b:15a7])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.38
+ a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 02:28:38 -0800 (PST)
+ Tue, 11 Nov 2025 02:28:41 -0800 (PST)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -76,17 +76,19 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Kevin Wolf <kwolf@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v4 01/15] hw/timer: Make frequency configurable
-Date: Tue, 11 Nov 2025 11:28:22 +0100
-Message-ID: <20251111102836.212535-2-corvin.koehne@gmail.com>
+ YannickV <Y.Vossen@beckhoff.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v4 04/15] hw/arm/zynq-devcfg: Prevent unintended unlock during
+ initialization
+Date: Tue, 11 Nov 2025 11:28:25 +0100
+Message-ID: <20251111102836.212535-5-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251111102836.212535-1-corvin.koehne@gmail.com>
 References: <20251111102836.212535-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,143 +113,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-The a9 global timer and arm mp timers rely on the PERIPHCLK as
-their clock source. The current implementation does not take
-that into account. That causes problems for applications assuming
-other frequencies than 1 GHz.
+During the emulation startup, all registers are reset, which triggers the
+`r_unlock_post_write` function with a value of 0. This led to an
+unintended memory access disable, making the devcfg unusable.
 
-We can now configure frequencies for the a9 global timer and
-arm mp timer. By allowing these values to be set according to
-the application's needs, we ensure that the timers behave
-consistently with the expected system configuration. The SoC
-configures the device correctly.
-
-Information can be found in the Zynq 7000 SoC Technical
-Reference Manual under Timers.
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM
+During startup, the memory space no longer gets locked.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/timer/a9gtimer.c            |  9 ++++++---
- hw/timer/arm_mptimer.c         | 15 +++++++++++----
- include/hw/timer/a9gtimer.h    |  1 +
- include/hw/timer/arm_mptimer.h |  2 ++
- 4 files changed, 20 insertions(+), 7 deletions(-)
+ hw/dma/xlnx-zynq-devcfg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
-index 9835c35483..090d14c683 100644
---- a/hw/timer/a9gtimer.c
-+++ b/hw/timer/a9gtimer.c
-@@ -63,9 +63,9 @@ static inline int a9_gtimer_get_current_cpu(A9GTimerState *s)
- static inline uint64_t a9_gtimer_get_conv(A9GTimerState *s)
+diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
+index b838c1c0d0..f28d0015e6 100644
+--- a/hw/dma/xlnx-zynq-devcfg.c
++++ b/hw/dma/xlnx-zynq-devcfg.c
+@@ -221,7 +221,9 @@ static void r_unlock_post_write(RegisterInfo *reg, uint64_t val)
  {
-     uint64_t prescale = extract32(s->control, R_CONTROL_PRESCALER_SHIFT,
--                                  R_CONTROL_PRESCALER_LEN);
+     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
+     const char *device_prefix = object_get_typename(OBJECT(s));
 -
--    return (prescale + 1) * 10;
-+                                  R_CONTROL_PRESCALER_LEN) + 1;
-+    uint64_t scaled_prescaler = prescale * 10;
-+    return muldiv64(scaled_prescaler, NANOSECONDS_PER_SECOND, s->freq_hz);
- }
- 
- static A9GTimerUpdate a9_gtimer_get_update(A9GTimerState *s)
-@@ -374,6 +374,9 @@ static const VMStateDescription vmstate_a9_gtimer = {
- };
- 
- static const Property a9_gtimer_properties[] = {
-+    /* Default clock-frequency is 1GHz (NANOSECONDS_PER_SECOND) */
-+    DEFINE_PROP_UINT64("clock-frequency", A9GTimerState, freq_hz,
-+                       NANOSECONDS_PER_SECOND),
-     DEFINE_PROP_UINT32("num-cpu", A9GTimerState, num_cpu, 0),
- };
- 
-diff --git a/hw/timer/arm_mptimer.c b/hw/timer/arm_mptimer.c
-index 803dad1e8a..cae07090f9 100644
---- a/hw/timer/arm_mptimer.c
-+++ b/hw/timer/arm_mptimer.c
-@@ -59,9 +59,11 @@ static inline void timerblock_update_irq(TimerBlock *tb)
- }
- 
- /* Return conversion factor from mpcore timer ticks to qemu timer ticks.  */
--static inline uint32_t timerblock_scale(uint32_t control)
-+static inline uint32_t timerblock_scale(TimerBlock *tb, uint32_t control)
- {
--    return (((control >> 8) & 0xff) + 1) * 10;
-+    uint64_t prescale = (((control >> 8) & 0xff) + 1);
-+    uint64_t scaled_prescaler = prescale * 10;
-+    return muldiv64(scaled_prescaler, NANOSECONDS_PER_SECOND, tb->freq_hz);
- }
- 
- /* Must be called within a ptimer transaction block */
-@@ -155,7 +157,7 @@ static void timerblock_write(void *opaque, hwaddr addr,
-             ptimer_stop(tb->timer);
-         }
-         if ((control & 0xff00) != (value & 0xff00)) {
--            ptimer_set_period(tb->timer, timerblock_scale(value));
-+            ptimer_set_period(tb->timer, timerblock_scale(tb, value));
-         }
-         if (value & 1) {
-             uint64_t count = ptimer_get_count(tb->timer);
-@@ -222,7 +224,8 @@ static void timerblock_reset(TimerBlock *tb)
-         ptimer_transaction_begin(tb->timer);
-         ptimer_stop(tb->timer);
-         ptimer_set_limit(tb->timer, 0, 1);
--        ptimer_set_period(tb->timer, timerblock_scale(0));
-+        ptimer_set_period(tb->timer,
-+            timerblock_scale(tb, tb->control));
-         ptimer_transaction_commit(tb->timer);
-     }
- }
-@@ -269,6 +272,7 @@ static void arm_mptimer_realize(DeviceState *dev, Error **errp)
-      */
-     for (i = 0; i < s->num_cpu; i++) {
-         TimerBlock *tb = &s->timerblock[i];
-+        tb->freq_hz = s->freq_hz;
-         tb->timer = ptimer_init(timerblock_tick, tb, PTIMER_POLICY);
-         sysbus_init_irq(sbd, &tb->irq);
-         memory_region_init_io(&tb->iomem, OBJECT(s), &timerblock_ops, tb,
-@@ -301,6 +305,9 @@ static const VMStateDescription vmstate_arm_mptimer = {
- };
- 
- static const Property arm_mptimer_properties[] = {
-+    /* Default clock-frequency is 1GHz (NANOSECONDS_PER_SECOND) */
-+    DEFINE_PROP_UINT64("clock-frequency", ARMMPTimerState, freq_hz,
-+                       NANOSECONDS_PER_SECOND),
-     DEFINE_PROP_UINT32("num-cpu", ARMMPTimerState, num_cpu, 0),
- };
- 
-diff --git a/include/hw/timer/a9gtimer.h b/include/hw/timer/a9gtimer.h
-index 6ae9122e4b..3b63d14927 100644
---- a/include/hw/timer/a9gtimer.h
-+++ b/include/hw/timer/a9gtimer.h
-@@ -76,6 +76,7 @@ struct A9GTimerState {
- 
-     MemoryRegion iomem;
-     /* static props */
-+    uint64_t freq_hz;
-     uint32_t num_cpu;
- 
-     QEMUTimer *timer;
-diff --git a/include/hw/timer/arm_mptimer.h b/include/hw/timer/arm_mptimer.h
-index 65a96e2a0d..da43a3d351 100644
---- a/include/hw/timer/arm_mptimer.h
-+++ b/include/hw/timer/arm_mptimer.h
-@@ -31,6 +31,7 @@ typedef struct {
-     uint32_t control;
-     uint32_t status;
-     struct ptimer_state *timer;
-+    uint64_t freq_hz;
-     qemu_irq irq;
-     MemoryRegion iomem;
- } TimerBlock;
-@@ -43,6 +44,7 @@ struct ARMMPTimerState {
-     SysBusDevice parent_obj;
-     /*< public >*/
- 
-+    uint64_t freq_hz;
-     uint32_t num_cpu;
-     TimerBlock timerblock[ARM_MPTIMER_MAX_CPUS];
-     MemoryRegion iomem;
++    if (device_is_in_reset(DEVICE(s))) {
++        return;
++    }
+     if (val == R_UNLOCK_MAGIC) {
+         DB_PRINT("successful unlock\n");
+         s->regs[R_CTRL] |= R_CTRL_PCAP_PR_MASK;
 -- 
 2.47.3
 
