@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE65CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 17:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE53CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 17:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIs4P-0002tr-51; Tue, 11 Nov 2025 12:22:23 -0500
+	id 1vIs4f-00032L-EN; Tue, 11 Nov 2025 12:22:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vIrzx-0005lD-1k
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:41 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1vIrzz-0005po-1J
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:43 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vIrzp-0003xR-M3
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:40 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-640f4b6836bso8255020a12.3
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 09:17:33 -0800 (PST)
+ id 1vIrzr-0003yj-Kx
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:42 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6419e6dab7fso3276414a12.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 09:17:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762881452; x=1763486252; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762881454; x=1763486254; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=06bmaVkTHcaq4jFseyDrJdNi7QHB236TwhvYBcaGYEw=;
- b=d4Ndk8hj2Q13L1O2pDQxuzFIqMvMXO+9jDWIy3qty43Z3GZHtXhVL9u/humP5HL3wy
- kRWzlR+faFNe3W1GyI5CcDe3PVFU3tayL1LU1b2Xh6+Av1hloyEe+LRKa12d31hgbLVU
- oqpVBoj6uJoOeqmDq0VNP1MaDsK9YhdFFXH3s9vEhTxq0DZEAL5FYg9mjxsKnzoJWqeN
- ukCmqYTU2kuL7i4zpulB2U1kv1smKGq7/6srQZoXJklOHW4MAYweMy7kKsnhpAkT9ywO
- vuXec/dhB5bkA9cpS54U6HadGyTAa1vAAFpr6UkyaHE6cTcgJCw0I3/KI9Hv7GJH/zan
- gFsA==
+ bh=2QDQ4kffpq2WZHg9gsRHpbpFNV16GXaUIYy7pK8ULY4=;
+ b=t77uAlXEU8RqYXqcuLkxB1j4QpLDLNz+n/J8weORceSgTaLqmW3R7XmIpwHXYj4SIS
+ Pj1+inHBMiOwJUagIayeBVninHQdBslWaKj9ThbQWO/eNKEzecVyXT1nfk6qV4o0EdzN
+ c9wIcrkzBLS/wg7tCU+WFKENnNJ6z3VQz0MyyIXzaR0p8b3kdnzv9KdI/xYyCqCOCoi7
+ t6WSqYqW+XBqzCd8zk3+y5mWo+VpkghMzMmU+bQYwUWODcKO2Tfn3wAas2paOD8ohQDN
+ r392Bvfnv5XPRZTciCeuIQ00nh3O8TnL3TOxVVA0z7O/6HwOofqTbYXLGiR1KBSrMLVq
+ TV/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762881452; x=1763486252;
+ d=1e100.net; s=20230601; t=1762881454; x=1763486254;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=06bmaVkTHcaq4jFseyDrJdNi7QHB236TwhvYBcaGYEw=;
- b=pq+L6E+NnYo+vZECoOkQKTGXhoINu3BHgkTPG2mkkjrVHFLS4SCa9kSkvhXY+lMl/d
- 6CDYtk+g7DzFNQnyv4Ufkoe6lLkgU3KioLFNyuRPT5I9VhaTEKml96LoRW4ezw5GhrKB
- ejD5+J9FBVGRsynr8EyHtoy1hAZ8mlXfuU6mMs834yUJOpHJSsI3zZmV1Hsbl5O1T9AF
- afzHNJC4vuwx78lWYBYrDvlsBuYgAr0Jinc0o8egtEhJllvCbC2BV41D6+fLImw4LEsc
- 65i4X941b2S2mwCsNQBFJlrU1IUYIHtTGMLeQE3/QKIqU4dM1r53A3ICRvEfI4OxijYU
- obWA==
-X-Gm-Message-State: AOJu0YzujvfCA8OGwl8Z9TFAMcF0391mJsTxPaelEQj7QJEz1nXUlhLE
- WwtSOTM+2GAH0CPxcm3q1tGqilTYuXKKP1BUhglabmL4kt84B3gwad5gwLBCYlwL3NI=
-X-Gm-Gg: ASbGncs3SGKxRPh4F6Ji88W1IL/m4riA144GRcMK7cE2qH29wBXmkOqUFqdUEnsFLxe
- Mwn+76blDG0IiBxlYsAoeJut/OhESZ4RbkK8yKPPQbQATuOC85pO1izo63OKX4C9ZLvdw2Oc0jI
- yHFOiLFju8v/wn4By7/Bj5HdKcyAh6FwNzRoQ/hPRrMoo86BCNM73jm4h2nqpSbMUhnZneGcm7e
- D4qtGIrloO8uzB4WcBp9tayuhFWQ61NLsH20ui2a4mKIjsqzM1jmkkwqjWVg19seUpU/OFdCETq
- 14kxhcd7+ByN/Wd/8Kc1svcXgH1MAp2AvQ++7eAzPDbdJyAAGg2EqQ5coLLlhQs5HcmzKnsPGVD
- BdGPFVm222UKgDTkKlPsEGLjwEURBGpVrtV8JAF/DQl72VR1xpVu+fNKd64VZl+5bta7Wqqwerf
- 5bIiZNaybUADA=
-X-Google-Smtp-Source: AGHT+IGr3XLOugC8bzrCaYk2H56TbbkA5nKddOGaxJUwm/kqqfmw/9zhpFl4ujmyi3w4w994599hfw==
-X-Received: by 2002:a05:6402:3058:20b0:640:f994:b887 with SMTP id
- 4fb4d7f45d1cf-6415e8312d3mr9031169a12.38.1762881451935; 
- Tue, 11 Nov 2025 09:17:31 -0800 (PST)
+ bh=2QDQ4kffpq2WZHg9gsRHpbpFNV16GXaUIYy7pK8ULY4=;
+ b=XxTR/YycGQtBgO+WPrSKPrEw3TK3XxiNMvoY9ZXjUxOwaS6w0oRKTvDtP90rh3Mv3O
+ TlLjTyEdQyUR/0xsyQ7FyynCTxbufk1GmRJJGHtXwEJc+PsOlJqhH8VU/1S0+RLai792
+ 6rYYJNVzdYlBVTwIBK1uq9Ni+l8xv8ltNCXAcmbx14jlgbWxQFQ1kjM74aRgij3C1/L/
+ WRHsiRI3rs+UrFpcjWUdnHtdCbkw2dQA5gto3rEPnoPrJWqYsPvnFg6t0ysdCAqKojiF
+ RR5kAUklYjIn4OZbm8Pg7chFttXTf0dSr1NkVPU6c4cWtG4IUIRHk3Wit1ngOJ3JTCqo
+ 0Ujw==
+X-Gm-Message-State: AOJu0YyW3nqdIs8OqqXyDkrQsbnWt3DPl3B+jaWMGro2BxDb2YppczAz
+ nGUYwfMGPhz+v2qpucpx2nXmCc2qgXVyZOeNEVmsE+eexycyiliJjNXGN5oayAZOFjU=
+X-Gm-Gg: ASbGncsuUKLu+j0twuVdp0+7kMXur6qKGOzwFuaHO6lqn7n5Vbnppp0sEXpuR/mN9v+
+ uGDmgquAfhRgWzKORBmKLMKUnhgiri5ysgOMlgjQP1o5z1iOIWitmb+XQ3tkuvs6yLBXFQvjCUU
+ ov82G9ebHeAqKVnljgbSrZgD3unPzwvIgB1Zjo4aHUS0GfYVdHI5IwP8ofcP2zrJEz2X5NnuaIY
+ hrLISibP3En2JYsI5Zyn3u2ogMkcmm5WUJGtNab8SO+f4cD6mNQSqsx0PgRiVmx0PmzQ0KH21r1
+ Q74PR9QMyxlrLTnmMO+BqN2pg67V7tWU5CaTkK/9irEIaCZmajfVrQksrx/1FWUaJXtkuwDThbo
+ IlszVxKb7qNONFF8AepKvvXUonkIuCtPX9leYCipSC/rAVcAwTuY4DSgrdVDZXx7CPl6fpOphA6
+ DiQQowJv3oWro=
+X-Google-Smtp-Source: AGHT+IE+RDj0TwfDoOTOklwVl+Igl7p37eF5Bxw8scuz9kTvOQEBuwZ1beKkOlM6q7bqG6/P92dsNg==
+X-Received: by 2002:a05:6402:40c5:b0:640:be87:a858 with SMTP id
+ 4fb4d7f45d1cf-6415e80a8d3mr11552134a12.27.1762881453962; 
+ Tue, 11 Nov 2025 09:17:33 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6415d91f486sm9287598a12.22.2025.11.11.09.17.26
+ 4fb4d7f45d1cf-6411f862cd7sm13899520a12.30.2025.11.11.09.17.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 09:17:27 -0800 (PST)
+ Tue, 11 Nov 2025 09:17:30 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 00EC05F956;
+ by draig.lan (Postfix) with ESMTP id DF83D5F8FC;
  Tue, 11 Nov 2025 17:17:25 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -83,17 +83,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH 05/16] gitlab: add initial ppc64le custom-runner test
-Date: Tue, 11 Nov 2025 17:17:12 +0000
-Message-ID: <20251111171724.78201-6-alex.bennee@linaro.org>
+Subject: [PATCH 14/16] gitlab: suppress custom runners being triggered by
+ schedule
+Date: Tue, 11 Nov 2025 17:17:21 +0000
+Message-ID: <20251111171724.78201-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251111171724.78201-1-alex.bennee@linaro.org>
 References: <20251111171724.78201-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,88 +117,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a plain configure/make check build.
+Otherwise the mere presence of the RUNNER env vars is enough to
+trigger the jobs.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/testing/ci-jobs.rst.inc            |  6 +++
- .gitlab-ci.d/custom-runners.yml               |  1 +
- .../custom-runners/debian-13-ppc64le.yml      | 40 +++++++++++++++++++
- 3 files changed, 47 insertions(+)
- create mode 100644 .gitlab-ci.d/custom-runners/debian-13-ppc64le.yml
+ .gitlab-ci.d/custom-runners/debian-13-ppc64le.yml    |  2 +-
+ .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml | 12 ++++++------
+ .gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml   |  2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/docs/devel/testing/ci-jobs.rst.inc b/docs/devel/testing/ci-jobs.rst.inc
-index b92d372a0a9..f1c70344ece 100644
---- a/docs/devel/testing/ci-jobs.rst.inc
-+++ b/docs/devel/testing/ci-jobs.rst.inc
-@@ -174,6 +174,12 @@ If you've got access to an IBM Z host that can be used as a gitlab-CI
- runner, you can set this variable to enable the tests that require this
- kind of host. The runner should be tagged with "s390x".
- 
-+PPC64LE_RUNNER_AVAILABLE
-+~~~~~~~~~~~~~~~~~~~~~~~~
-+If you've got access to an PPC64LE host that can be used as a gitlab-CI
-+runner, you can set this variable to enable the tests that require this
-+kind of host. The runner should be tagged with "ppc64le".
-+
- CCACHE_DISABLE
- ~~~~~~~~~~~~~~
- The jobs are configured to use "ccache" by default since this typically
-diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
-index 142fbf4a242..3e28e48c97c 100644
---- a/.gitlab-ci.d/custom-runners.yml
-+++ b/.gitlab-ci.d/custom-runners.yml
-@@ -31,3 +31,4 @@
- include:
-   - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml'
-   - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml'
-+  - local: '/.gitlab-ci.d/custom-runners/debian-13-ppc64le.yml'
 diff --git a/.gitlab-ci.d/custom-runners/debian-13-ppc64le.yml b/.gitlab-ci.d/custom-runners/debian-13-ppc64le.yml
-new file mode 100644
-index 00000000000..6733a8e0dae
---- /dev/null
+index 6733a8e0dae..9d87268194e 100644
+--- a/.gitlab-ci.d/custom-runners/debian-13-ppc64le.yml
 +++ b/.gitlab-ci.d/custom-runners/debian-13-ppc64le.yml
-@@ -0,0 +1,40 @@
-+# All jobs should run successfully in an environment setup by the
-+# scripts/ci/setup/build-environment.yml task:
-+# "Install basic packages to build QEMU on Ubuntu/Debian"
-+
-+.debian_ppc64le_template:
-+  extends: .custom_runner_template
-+  needs: []
-+  stage: build
-+  tags:
-+    - debian_13
-+    - ppc64le
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+    - if: "$PPC64LE_RUNNER_AVAILABLE"
-+  before_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start setup "Pre-script setup"
-+    - JOBS=$(expr $(nproc) - 2)
-+    - section_end setup
-+  script:
-+    - mkdir build
-+    - cd build
-+    - section_start configure "Running configure"
-+    - ../configure $CONFIGURE_ARGS ||
-+          { cat config.log meson-logs/meson-log.txt && exit 1; }
-+    - section_end configure
-+    - section_start build "Building QEMU"
-+    - make --output-sync -j"$JOBS"
-+    - section_end build
-+    - section_start test "Running tests"
-+    - if test -n "$MAKE_CHECK_ARGS";
-+      then
-+        make -j"$JOBS" $MAKE_CHECK_ARGS ;
-+      fi
-+    - section_end test
-+
-+debian-13-ppc64le-default:
-+  extends: .debian_ppc64le_template
-+  variables:
-+    MAKE_CHECK_ARGS: check
+@@ -11,7 +11,7 @@
+     - ppc64le
+   rules:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+-    - if: "$PPC64LE_RUNNER_AVAILABLE"
++    - if: '$PPC64LE_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+   before_script:
+     - source scripts/ci/gitlab-ci-section
+     - section_start setup "Pre-script setup"
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+index ee13587d99e..86bca7800ea 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+@@ -11,7 +11,7 @@
+     - aarch64
+   rules:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+-    - if: "$AARCH64_RUNNER_AVAILABLE"
++    - if: '$AARCH64_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+   before_script:
+     - source scripts/ci/gitlab-ci-section
+     - section_start setup "Pre-script setup"
+@@ -50,7 +50,7 @@ ubuntu-24.04-aarch64-all:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+       when: manual
+       allow_failure: true
+-    - if: "$AARCH64_RUNNER_AVAILABLE"
++    - if: '$AARCH64_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+       when: manual
+       allow_failure: true
+ 
+@@ -63,7 +63,7 @@ ubuntu-24.04-aarch64-without-defaults:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+       when: manual
+       allow_failure: true
+-    - if: "$AARCH64_RUNNER_AVAILABLE"
++    - if: '$AARCH64_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+       when: manual
+       allow_failure: true
+ 
+@@ -82,7 +82,7 @@ ubuntu-24.04-aarch64-clang:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+       when: manual
+       allow_failure: true
+-    - if: "$AARCH64_RUNNER_AVAILABLE"
++    - if: '$AARCH64_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+       when: manual
+       allow_failure: true
+ 
+@@ -95,7 +95,7 @@ ubuntu-24.04-aarch64-tci:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+       when: manual
+       allow_failure: true
+-    - if: "$AARCH64_RUNNER_AVAILABLE"
++    - if: '$AARCH64_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+       when: manual
+       allow_failure: true
+ 
+@@ -107,5 +107,5 @@ ubuntu-24.04-aarch64-notcg:
+   rules:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+       when: manual
+-    - if: "$AARCH64_RUNNER_AVAILABLE"
++    - if: '$AARCH64_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+       when: manual
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+index ef8db2750ac..69f10198725 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml
+@@ -11,7 +11,7 @@
+     - s390x
+   rules:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+-    - if: "$S390X_RUNNER_AVAILABLE"
++    - if: '$S390X_RUNNER_AVAILABLE && $CI_PIPELINE_SOURCE != "schedule"'
+   before_script:
+     - source scripts/ci/gitlab-ci-section
+     - section_start setup "Pre-script setup"
 -- 
 2.47.3
 
