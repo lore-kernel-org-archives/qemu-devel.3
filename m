@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C908FCCFA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 09:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD60CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 09:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIkPr-0007nO-87; Tue, 11 Nov 2025 04:11:55 -0500
+	id 1vIkQ0-00089o-O5; Tue, 11 Nov 2025 04:12:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vIkPd-0007i4-Fr
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 04:11:41 -0500
+ id 1vIkPs-0007pn-Ch
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 04:11:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vIkPb-0004y3-Tv
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 04:11:41 -0500
+ id 1vIkPq-000502-QJ
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 04:11:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762852299;
+ s=mimecast20190719; t=1762852314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bRDa3JkIHbz4S5jrZtT+yCAVxzLaEL+AqgIAfUMDOwM=;
- b=hKqIhYZeY1Qd22fE6V4K2NxFOlDGzx2mI/Mba1TzS50vohn+9NreJLJWSprZQBKXFc7FEe
- rE5/+qNlU5VhppDHM5HdXdDhdFe7vgHBIqZmVMK6pqg8K5hPOIqsSslHmM4CcdpuBmaZ6+
- MhlaGIPom6pRXCWu412HbDnGb2shtWc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8GV7CCIP22K+CR6r35E8ueB/KLucBzWQgO8z7mDdoU4=;
+ b=Xm3+6wIgrvZv0YxEJFBibL12XnBQLaYO3DhoJjGOd8Gay2pv5wsxXtXQYLxepE/jGT7ELQ
+ 4e551A4gm2+6PW82rEZ50S8FT311GgORumdcMaj13Ym7vBLR2FlgefWpCrgsFo/5mdLEjp
+ VUH05Xqm1vZjBZg9UrU7u2ZekgH44gQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-FuFOQDTYPkeaDtiMwDIc8w-1; Tue,
- 11 Nov 2025 04:11:36 -0500
-X-MC-Unique: FuFOQDTYPkeaDtiMwDIc8w-1
-X-Mimecast-MFC-AGG-ID: FuFOQDTYPkeaDtiMwDIc8w_1762852294
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-pX9H-maUM_Wk05je_xPDbQ-1; Tue,
+ 11 Nov 2025 04:11:50 -0500
+X-MC-Unique: pX9H-maUM_Wk05je_xPDbQ-1
+X-Mimecast-MFC-AGG-ID: pX9H-maUM_Wk05je_xPDbQ_1762852309
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B08FF1954B11; Tue, 11 Nov 2025 09:11:34 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 723FA18002E0; Tue, 11 Nov 2025 09:11:49 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.44.32.214])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B3E5319560A2; Tue, 11 Nov 2025 09:11:28 +0000 (UTC)
+ id 5AD1019560A2; Tue, 11 Nov 2025 09:11:42 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: dbassey@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -56,9 +56,9 @@ Cc: dbassey@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, david@redhat.com, hi@alyssa.is,
  stevensd@chromium.org, Stefano Garzarella <sgarzare@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v11 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-Date: Tue, 11 Nov 2025 10:10:54 +0100
-Message-ID: <20251111091058.879669-4-aesteve@redhat.com>
+Subject: [PATCH v11 5/7] vhost_user.rst: Add GET_SHMEM_CONFIG message
+Date: Tue, 11 Nov 2025 10:10:56 +0100
+Message-ID: <20251111091058.879669-6-aesteve@redhat.com>
 In-Reply-To: <20251111091058.879669-1-aesteve@redhat.com>
 References: <20251111091058.879669-1-aesteve@redhat.com>
 MIME-Version: 1.0
@@ -89,107 +89,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add SHMEM_MAP/_UNMAP request to the vhost-user
-spec documentation.
+Add GET_SHMEM_CONFIG vhost-user frontend
+message to the spec documentation.
 
+Reviewed-by: Alyssa Ross <hi@alyssa.is>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- docs/interop/vhost-user.rst | 59 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 17a68a62eb..6c1d66d7d3 100644
+index 6c1d66d7d3..6a1ecd7f48 100644
 --- a/docs/interop/vhost-user.rst
 +++ b/docs/interop/vhost-user.rst
-@@ -350,6 +350,27 @@ Device state transfer parameters
-   In the future, additional phases might be added e.g. to allow
-   iterative migration while the device is running.
+@@ -371,6 +371,20 @@ MMAP request
+   - 0: Pages are mapped read-only
+   - 1: Pages are mapped read-write
  
-+MMAP request
-+^^^^^^^^^^^^
++VIRTIO Shared Memory Region configuration
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-++-------+---------+-----------+------------+-----+-------+
-+| shmid | padding | fd_offset | shm_offset | len | flags |
-++-------+---------+-----------+------------+-----+-------+
+++-------------+---------+------------+----+--------------+
++| num regions | padding | mem size 0 | .. | mem size 255 |
+++-------------+---------+------------+----+--------------+
 +
-+:shmid: a 8-bit shared memory region identifier
++:num regions: a 32-bit number of regions
 +
-+:fd_offset: a 64-bit offset of this area from the start
-+            of the supplied file descriptor
++:padding: 32-bit
 +
-+:shm_offset: a 64-bit offset from the start of the
-+             pointed shared memory region
-+
-+:len: a 64-bit size of the memory to map
-+
-+:flags: a 64-bit value:
-+  - 0: Pages are mapped read-only
-+  - 1: Pages are mapped read-write
++:mem size: contains ``num regions`` 64-bit fields representing the size of each
++           VIRTIO Shared Memory Region
 +
  C structure
  -----------
  
-@@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserInflight inflight;
+@@ -397,6 +411,7 @@ In QEMU the vhost-user message is implemented with the following struct:
            VhostUserShared object;
            VhostUserTransferDeviceState transfer_state;
-+          VhostUserMMap mmap;
+           VhostUserMMap mmap;
++          VhostUserShMemConfig shmem;
        };
    } QEMU_PACKED VhostUserMsg;
  
-@@ -1064,6 +1086,7 @@ Protocol features
-   #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
-   #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
-   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
-+  #define VHOST_USER_PROTOCOL_F_SHMEM                20
+@@ -1761,6 +1776,30 @@ Front-end message types
+   Using this function requires prior negotiation of the
+   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
  
- Front-end message types
- -----------------------
-@@ -1872,6 +1895,42 @@ is sent by the front-end.
-   when the operation is successful, or non-zero otherwise. Note that if the
-   operation fails, no fd is sent to the backend.
- 
-+``VHOST_USER_BACKEND_SHMEM_MAP``
-+  :id: 9
++``VHOST_USER_GET_SHMEM_CONFIG``
++  :id: 44
 +  :equivalent ioctl: N/A
-+  :request payload: fd and ``struct VhostUserMMap``
-+  :reply payload: N/A
++  :request payload: N/A
++  :reply payload: ``struct VhostUserShMemConfig``
 +
 +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the backends to
-+  advertise a new mapping to be made in a given VIRTIO Shared Memory Region.
-+  Upon receiving the message, the front-end will mmap the given fd into the
-+  VIRTIO Shared Memory Region with the requested ``shmid``.
-+  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
-+  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
-+  must respond with zero when operation is successfully completed,
-+  or non-zero otherwise.
++  successfully negotiated, this message can be submitted by the front-end
++  to gather the VIRTIO Shared Memory Region configuration. The back-end will
++  respond with the number of VIRTIO Shared Memory Regions it requires, and
++  each shared memory region size in an array. The shared memory IDs are
++  represented by the array index. The information returned shall comply
++  with the following rules:
 +
-+  Mapping over an already existing map is not allowed and requests shall fail.
-+  Therefore, the memory range in the request must correspond with a valid,
-+  free region of the VIRTIO Shared Memory Region. Also, note that mappings
-+  consume resources and that the request can fail when there are no resources
-+  available. Lastly, mappings are automatically unmapped by the front-end
-+  across device reset operation.
++  * The shared information will remain valid and unchanged for the entire
++    lifetime of the connection.
 +
-+``VHOST_USER_BACKEND_SHMEM_UNMAP``
-+  :id: 10
-+  :equivalent ioctl: N/A
-+  :request payload: ``struct VhostUserMMap``
-+  :reply payload: N/A
++  * The Shared Memory Region size must be a multiple of the page size
++    supported by mmap(2).
 +
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the backends so
-+  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in the
-+  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
-+  given range shall correspond to the entirety of a valid mapped region.
-+  A reply is generated indicating whether unmapping succeeded.
++  * The size may be 0 if the region is unused. This can happen when the
++    device does not support an optional feature but does support a feature
++    that uses a higher shmid.
 +
- .. _reply_ack:
+ Back-end message types
+ ----------------------
  
- VHOST_USER_PROTOCOL_F_REPLY_ACK
 -- 
 2.49.0
 
