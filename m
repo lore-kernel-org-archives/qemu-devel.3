@@ -4,118 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1B3CCFA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 23:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B6FCCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 23:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIxOA-0005Ae-D8; Tue, 11 Nov 2025 18:03:02 -0500
+	id 1vIxQW-00060f-PO; Tue, 11 Nov 2025 18:05:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nmosier@stanford.edu>)
- id 1vIwNb-0004X6-6s; Tue, 11 Nov 2025 16:58:23 -0500
-Received: from mx0a-00000d07.pphosted.com ([67.231.149.169])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nmosier@stanford.edu>)
- id 1vIwNY-0006bo-Sp; Tue, 11 Nov 2025 16:58:22 -0500
-Received: from pps.filterd (m0342464.ppops.net [127.0.0.1])
- by mx0a-00000d07.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ABI5d50032276;
- Tue, 11 Nov 2025 13:58:14 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stanford.edu; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pps05272020; bh=WHcEqo/EFBnmLQwi/AMt
- +0DUYs82gRLPKcS4RTKm3J8=; b=c3NvdVSgqOg2kPRxYF7PJkRJFLETWw37KIPp
- 9CBxiO1pMtqiXA1sdK0INp1497PN7wc/SMxX30PaejBuXML1UPdAWaxAuUA5dJnS
- XGafsmHLjG9FeV8Us1C7eu1ipwG1jE6dlUZHP6euA2b+/9hLDTqIkyWmzkUbjueV
- Oa6PVf/6MHQa821yTBZYkTMqT6MTokL+l2g8TJiSNoBg922t4OSXCyqk5fN5qCHt
- SnMyabnyhiYAUYF5LxjDAV9NcF9/1xSzc/iWXfaUPz+IZLMWvCd1J1ciOQ/xWX6S
- PtBVqZOMl2O9cL99khPYFEuQUuqvjrISOagFVsI0uXociEtvrw==
-Received: from mx0b-00000d08.pphosted.com (mx0b-00000d08.pphosted.com
- [67.231.152.67])
- by mx0a-00000d07.pphosted.com (PPS) with ESMTPS id 4aat2cdfyh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Nov 2025 13:58:13 -0800 (PST)
-Received: from pps.filterd (m0342825.ppops.net [127.0.0.1])
- by m0342825.ppops.net (8.18.1.2/8.18.1.2) with ESMTP id 5ABK6AnL018059;
- Tue, 11 Nov 2025 13:58:13 -0800
-Received: from pps.reinject (localhost [127.0.0.1])
- by m0342825.ppops.net (PPS) with ESMTPS id 4ac14as7q8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Nov 2025 13:58:12 -0800 (PST)
-Received: from m0342825.ppops.net (m0342825.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5ABLup1N019486;
- Tue, 11 Nov 2025 13:58:12 -0800
-Received: from smtp.stanford.edu (smtp4.stanford.edu [171.67.219.72])
- by m0342825.ppops.net (PPS) with ESMTPS id 4ac14as7q6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Nov 2025 13:58:12 -0800 (PST)
-Received: from cafe-cet.stanford.edu (cafe-cet.stanford.edu [172.24.69.161])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: nmosier@stanford.edu)
- by smtp.stanford.edu (Postfix) with ESMTPSA id 37F059810B3;
- Tue, 11 Nov 2025 13:58:11 -0800 (PST)
-From: Nicholas Mosier <nmosier@stanford.edu>
-Date: Tue, 11 Nov 2025 13:57:52 -0800
-Subject: [PATCH] i386/tcg/svm: fix comma operator typo
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1vIxQV-000609-5j
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 18:05:27 -0500
+Received: from mail-il1-x144.google.com ([2607:f8b0:4864:20::144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1vIxQS-0001TU-SB
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 18:05:26 -0500
+Received: by mail-il1-x144.google.com with SMTP id
+ e9e14a558f8ab-4332381ba9bso1966725ab.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 15:05:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1762902323; x=1763507123; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=xu2zjvNPwfXJElMnr2ftCDAL/r+SerTzkT7dPyfJeuA=;
+ b=l9uVwTPZ6bpuhpfcSv2GTcsWev5YmTfh5xPN7lTDO3GuRanUr8ilIExIeBLiUviB+s
+ ImEz6VxzLkBpPw3D79fgKtzcXC9X83qgBJ1UM7xrkUbab9jxPs424WtZwb7mrRehwgxS
+ gKjHc05tAwtw7I++d52DvKHtFf+8nJ9RqI9VjvfHgK3kfLGZnBF8BCv4MmikElCT8qKd
+ I6fC5BNnOi3gSx41QdN0dYDip1QQVmHerQG6j/IDPOnoOc82csf7CzHv7KztBM8moVkF
+ SCl3C8QKtkTshgjtIBvPcTlaiHE0aZpt7xMvFIUGU+KXo4vB55D3AQ2AYzCxeyCToVpc
+ 0G0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762902323; x=1763507123;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xu2zjvNPwfXJElMnr2ftCDAL/r+SerTzkT7dPyfJeuA=;
+ b=t3sAqzS8X74UQTJ6oRqKBwqFCiye7+IHGZahJlsjSBakIFtKqL89FRgdKdLaAsgW7c
+ qO8Fkio5wMa/XpN3eIjHzEm173Ehu8yAdTETsw23lMxSwAfM/Pi+SWofnu7JDNuRO93v
+ U5ai5hqSiiNTN6MNhEMcGp8ktOUWCG4Ks0n9nJrEvjzue+J6C8Ch1WfB5n0IuBQpXqUd
+ Yro///kjkEmFj2yMvwjwAT9r3Q8crgjbP8o0pKHD7Rspa+dcY5WMIlW57lHITqRhar5R
+ ++QbyXLzOcpBy+j/5SqR5WjEYwOdwHhx/wKjI66/zRdlYBOCKCuyW1iCjxLe889mUayK
+ LspQ==
+X-Gm-Message-State: AOJu0Yxfwv6y1WenuHuOJZ3ZJtsiBjkGG6pJTuqzGmciNOQPfelCwy90
+ Txjsrq7cDY7tSTBHo32yzjBFYVeUQrkdoVRndURyISerjvHkOz/eoibU5Yp7sio1pNk=
+X-Gm-Gg: ASbGncv8dzA55YtEqWOoUYEIUqrUQhNScStBDWVv3AwAoNsaHv6WPbPt3wNIKg975l+
+ 2jMteIOeDj1pno3OpfmNNesPlWz5v9frlmyAZUuE6bMdyRIrnXf07/D6qJ/UlsRDoSj+DAmLN36
+ WXrP60yhQOFCmUm+1naW43miGsQuRuFWTI4m3y1IS1a7VOVSjcsLlYngTNlH1TxI72OVhZNA6xN
+ pbA3weH7QcyM7fbLIRdzlb4aUxKgpaiBRjKU9TiL2eAqRCcqRtOYpczuX2k8Acfp9fNm0ArLLxw
+ jTtS6NslNjMGKPOA3+AkBu+q5ZwEpDm8yzZuIG0GJs1jkAL/gfLW8OxvjYSe8Ob1xoAZVPfWW2I
+ 3ZYQ23QJ7YVIbeaGn/ZgmjIMCZlXK5ECb6cG8h/d/1YOjpT4KNSlOlLgzRvfyb0fkKl9nLX/l9+
+ FAHqILCOsbM5Bz
+X-Google-Smtp-Source: AGHT+IFytowOARwSQiwTd9ecD8L4diQzeVskDBDMuoT0MUfBuUufpMqoY5tp1PkiNJtXrtDDZcYJng==
+X-Received: by 2002:a05:6e02:2187:b0:433:3564:66a5 with SMTP id
+ e9e14a558f8ab-43473d1b7d9mr13695415ab.14.1762902322735; 
+ Tue, 11 Nov 2025 15:05:22 -0800 (PST)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-434733a3854sm3902925ab.34.2025.11.11.15.05.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Nov 2025 15:05:21 -0800 (PST)
+Date: Tue, 11 Nov 2025 17:05:20 -0600
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ Fei Wu <wu.fei9@sanechips.com.cn>
+Subject: Re: [PATCH v4 2/5] target/riscv: Add server platform reference cpu
+Message-ID: <20251111-e4f4062f326aef78ef820d00@orel>
+References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
+ <20251111182944.2895892-3-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MSwqAMAwFryJZG7C1FfUq4kJt1Cz80JaiiHc3O
- LsZeO+BQJ4pQJs94Clx4GMXUXkG0zrsCyE7cdCFtkpALusKQ9owbXRxxHifB8584WgnUo01Tls
- DMj89Sf6vu/59P5LlMPVqAAAA
-X-Change-ID: 20251111-i386-svm-vmexit-typo-fix-b5ce1954d254
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org,
- Nicholas Mosier <nmosier@stanford.edu>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762898291; l=1515;
- i=nmosier@stanford.edu; s=20251111; h=from:subject:message-id;
- bh=YqhdKP8meyPzJFhYiJEWqdaXljbVXMoDtp0iAJM+Uvg=;
- b=IVi0HYNN8k2PRA0iGacyHRtY7lBrPsGL9WJeIff895jWoFVSUNWSl3O2JQf0KD/0CSkkvF7tL
- PY/rkH8kX4EC44UlMqoMU3wh3MEe8dG3rHhejTRtq4Y8A6QTUxOEq8U
-X-Developer-Key: i=nmosier@stanford.edu; a=ed25519;
- pk=XjjXNIba23ZoFYPYMPd0ZwO7G1YZH4tzTWOg3crqj+Q=
-X-Proofpoint-GUID: 4wwLh2X7e_5l6v7eJAKXP_IX76WPNOot
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTExMDA2MCBTYWx0ZWRfXxxGFihXIatMW
- qGtSY868mOUPfegtwJmHoqRBOaaSUN9YOf3xIamfh80C7tMAJms8VGTy+Fw+RVuveukTD0AufbT
- MVS0g+G25tccTeFnsbMGteGnEJEp0CGrqFS40izEcUJpoDzQxBsNUtfqwRXWhMyNrEczlrvz5rD
- 2fdTu9t/VbZx2gW9l+4UEEhEa/0QFc1WaUhDtl/fCCrXeEGRF8owyRVUSIqXf4muZiqeNsuURCo
- k6YD8fuXOK5nMkIJxzoHKpeOx57viZVi1bGrYJb1c+knbRNbreg21EyqxYZgxC1S+gdb0QbOaoS
- oudcfOZQRfcIAQEPb7TtS+sQQDYtvd+GfnOVOD3h4uLxXWHXQxU9c26jJUEskq6ry+qW66FVMuF
- mHFAcwbMO5v8uqtDR7tfSXGYTLGNlg==
-X-Proofpoint-ORIG-GUID: Sj7cvKuiDwTqfOSyRBfuzMTeAO7NvGyz
-X-Authority-Analysis: v=2.4 cv=cZjfb3DM c=1 sm=1 tr=0 ts=6913b174 cx=c_pps
- a=O10p7afQjo2e1L+5ghj5Aw==:117 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=x7bEGLp0ZPQA:10 a=VkNPw1HP01LnGYTKEx00:22 a=6UpETPYAqtAy3kfSEAcA:9
- a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-11_04,2025-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 clxscore=1011
- suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511110060
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-11_04,2025-11-11_03,2025-10-01_01
-Received-SPF: pass client-ip=67.231.149.169; envelope-from=nmosier@stanford.edu;
- helo=mx0a-00000d07.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251111182944.2895892-3-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::144;
+ envelope-from=ajones@ventanamicro.com; helo=mail-il1-x144.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 11 Nov 2025 18:02:53 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,43 +101,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A comma operator inappropriately terminates an expression
-in svm_helper.c. Replace it with a semicolon.
+On Tue, Nov 11, 2025 at 03:29:41PM -0300, Daniel Henrique Barboza wrote:
+> From: Fei Wu <wu.fei9@sanechips.com.cn>
+> 
+> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+> profile support, plus Sv48, Svadu, H, Sscofmpf etc.
+> 
+> This patch provides a CPU type (rvsp-ref) to go along with the rvsp-ref
+> board.
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+> 
+> Signed-off-by: Fei Wu <fei2.wu@intel.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu-qom.h |  1 +
+>  target/riscv/cpu.c     | 14 ++++++++++++++
+>  2 files changed, 15 insertions(+)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 75f4e43408..07e96a14ba 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -42,6 +42,7 @@
+>  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+>  #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+> +#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
+>  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+>  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>  #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 975f7953e1..3ddb249970 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3305,6 +3305,20 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>          .cfg.max_satp_mode = VM_1_10_SV48,
+>      ),
+>  
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSP_REF, TYPE_RISCV_BARE_CPU,
+> +        .misa_mxl_max = MXL_RV64,
+> +        .profile = &RVA23S64,
+> +
+> +        /*
+> +         * ISA extensions
+> +         * NOTE: we're missing 'sdext'.
+> +         */
+> +        .cfg.ext_zkr = true,
+> +        .cfg.ext_svadu = true,
 
-Signed-off-by: Nicholas Mosier <nmosier@stanford.edu>
----
-As an apparent typo, line 742 in target/i386/tcg/system/svm_helper.c
-ends with a comma operator, rather than a statement-ending semicolon.
-This doesn't introduce any functionality bugs as the code is currently
-written, but could easily introduce bugs in the future if a new line
-of code is added following the comma operator.
+Svadu is no longer required.
 
-This patch replaces the comma with a semicolon, as the original author
-probably intended.
----
- target/i386/tcg/system/svm_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +
+> +        .cfg.max_satp_mode = VM_1_10_SV57,
 
-diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
-index 505788b0e2..c32cc7ac30 100644
---- a/target/i386/tcg/system/svm_helper.c
-+++ b/target/i386/tcg/system/svm_helper.c
-@@ -742,7 +742,7 @@ void cpu_vmexit(CPUX86State *env, uint32_t exit_code, uint64_t exit_info_1,
-              exit_code);
- 
-     x86_stq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
--                                             control.exit_info_1), exit_info_1),
-+                                             control.exit_info_1), exit_info_1);
- 
-     /* remove any pending exception */
-     env->old_exception = -1;
+Shouldn't this be SV48 and then allow instantiations to use
+rvsp-ref,sv57=on.
 
----
-base-commit: 593aee5df98b4a862ff8841a57ea3dbf22131a5f
-change-id: 20251111-i386-svm-vmexit-typo-fix-b5ce1954d254
+We also need Ssccfg and Sdtrig.
 
-Best regards,
--- 
-Nicholas Mosier <nmosier@stanford.edu>
+> +    ),
+> +
+>  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+>          .cfg.max_satp_mode = VM_1_10_SV57,
+> -- 
+> 2.51.1
+> 
+>
 
+Thanks,
+drew
 
