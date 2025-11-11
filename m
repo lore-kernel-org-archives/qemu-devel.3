@@ -4,116 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96FEBCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 20:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20BC9CCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIuoK-0007Bg-8D; Tue, 11 Nov 2025 15:17:52 -0500
+	id 1vIvvB-0003D8-HF; Tue, 11 Nov 2025 16:29:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vIuo7-00079i-MT; Tue, 11 Nov 2025 15:17:41 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vIunz-0007vx-5k; Tue, 11 Nov 2025 15:17:39 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ABDhtEo005450;
- Tue, 11 Nov 2025 20:17:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dcuues
- IDpeFzit+/CL8uBX4evemBeJj/7pCcA2Hb/pU=; b=ZCDXIekRmDbUOt9TsYXeO0
- jye6XELKZJiL5fBqwuj4YqM4GhwJ2CdhYFzynU8h9XSQcubg1TcQl3og1aV8rGMg
- dI9KIR5HBXQPrkAsYxS1X/Sa1AXLlPC3hhlGSFWRk/69cr9NdW0pDZryxQFveU14
- bMKodKsd3L/yIX85fc2jo+jzmfskUBD28Br74bzdANY97QDi7vMNfOtg3359uYwm
- svvy9JILkvtW3Iew1m2Ljb/gvpEjI299DzFxcL6ivyr7BHTh8iaSuxUmad1lDsAg
- d7PrL4jr5efme3k1d0jqYwIm11BjWJfDroeMYNOp7FDmleBkdAQ/i7qKZokXvPfQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a9wc777tt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Nov 2025 20:17:21 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5ABHQ8uV008239;
- Tue, 11 Nov 2025 20:17:20 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4aah6mvn5q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Nov 2025 20:17:20 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5ABKHJjB61014466
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Nov 2025 20:17:19 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 212CA58055;
- Tue, 11 Nov 2025 20:17:19 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2912458043;
- Tue, 11 Nov 2025 20:17:18 +0000 (GMT)
-Received: from [9.61.37.77] (unknown [9.61.37.77])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 11 Nov 2025 20:17:18 +0000 (GMT)
-Message-ID: <9b157225-ebf1-417f-aa54-3968589b262e@linux.ibm.com>
-Date: Tue, 11 Nov 2025 15:17:17 -0500
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vIvvA-0003Co-77
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:29:00 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vIvv0-0001NL-Ov
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:28:59 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-bb2447d11ceso100693a12.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 13:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762896529; x=1763501329; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iZqZUND+X2tBdz3e/u7lhPrvrKt/w9shgAzcDRtROS0=;
+ b=nNsG9XLhR2D8kFwSlBVMMHL6QEEa58SeNbnwQCsLJbF4g3KvjcN8aLfiCG6uGUDzRT
+ Xvq5jEDqm76n5sKwVRYTrwTBPPtrDqzGG75nSsyQQCnlwI7iQrpULEPFDob3dJ25jHFN
+ cHmbb8MIhjXfst4RfcpB7BRd6eyx+3UDAI1cEihyxkgnQtAxUlpdlNcD7CVU2tLcd8ld
+ 9kXb1+0T214HDaITOI7Btk1MGf7XAPqqFHxmSn0OSp4xhZbOTp+Nvr8Hmq/hjJY+fp/V
+ CcpvRN216+8x+9E2MUQoTiwtdiYJMMtwg0Jnmhw5v81Sz1TZSI+ckR1DckdKAGFbJIpB
+ 0B7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762896529; x=1763501329;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iZqZUND+X2tBdz3e/u7lhPrvrKt/w9shgAzcDRtROS0=;
+ b=CpVAd+dVRVaZBY0t5iTM92PNeIi6LGkCgMtr1dvHPB8pUvC9LwlDyuAAHcaBEubSHp
+ p0MUbWSedG+as+Q8X5F0Cb86A1DecFHkeoe0it4YlSR8CdrCP8ZddFa/MAzdnNlJCXl6
+ D0dNEerpOH6We+OfDkIOtm0Uv5vMLakhj4Afg6sSy+aHsP90L+QVG0qULadpNzXF5Efq
+ Qwqtsq2tD39t4TY8iQ4lnQYGMeA04q13xiQKNC4jEie5VaVdCdAPFVGT8VRUhvqDDmQj
+ 9bIvkrXVHhxUMWJIWIitwRzSzJvfkYhVxN487sdBEOuk9KbPCs2xEqnwQUnvBNG6XOOV
+ B3/g==
+X-Gm-Message-State: AOJu0YzH/FXPTNoF0nRfkr/DpVGnVtZkYHo7C+LO5fydRrorqCo/BNm7
+ G3YS7Bi+ZZR2PHjBRoC3NwedWp6drROcFeWfxksUi4zquR/EYHRi9s0+lwuCfdkm73DPOcdbd8L
+ LKq5tGf2ZEXBrpTEH+YXLXBo9TYB5VzE=
+X-Gm-Gg: ASbGncs0jztOWNeQ83a8exKHj1rmLBEbG7nAvtmaghw9bQsnmTuYOHSqjNhoH++cK95
+ oZtefPffqLi9cbWImkizVioZwnWKbUg346i2zE6bW0P+ikBTFv1VYwfvTFvKtgzQxigxZ5jCJxO
+ FSZGpxC93mnM3NIaiCKo2JDD5CuvjNmq9MA86PCNFYZM5NwhaHTVfOowlho5/os8sqmqk0LwWvm
+ A84BEzMO/nsMvaDc4Io4EaX7tNX018E4iVsAmCRWlGuj3hvy72OunaHUb59
+X-Google-Smtp-Source: AGHT+IEqBaL9uw2BOxssU6Jv5wZnFOCFIa7RalBcuvF2gDSJZMJAf4Xwo6F9WzgAmBAaDlZYp2KKhI86YQ+xiINvVSo=
+X-Received: by 2002:a17:902:ccd1:b0:295:570d:116e with SMTP id
+ d9443c01a7336-2984eddda33mr9614755ad.41.1762896528640; Tue, 11 Nov 2025
+ 13:28:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/28] Secure IPL Support for SCSI Scheme of
- virtio-blk/virtio-scsi Devices
-To: Thomas Huth <thuth@redhat.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <09faff84-3245-4704-aab6-e7cbb76e1130@redhat.com>
- <89a7f911-4d50-4e03-a64e-b11e866f3bd0@linux.ibm.com>
- <2657323b-6172-4795-a3b4-f98f26262daf@redhat.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <2657323b-6172-4795-a3b4-f98f26262daf@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDAxOCBTYWx0ZWRfXxhVtYzGg/ZTo
- MPJB7EGbY+vDFy+NwG1JjYEAxKeIZE0wCBLLUuMWQTmCpfIN2/7wZq89MB6FcE8QjrmJe1D/JG1
- pgD8Cs4OiUBg40juV8RCnSYoy85iKS8FGpfkThmlQMGsL9zomopRTgB/Q6yRgkzWOE83VkUCNmN
- GyAM0Q6jW1cAuCKcO0twH/z0DZyFvy5TsfyXfW80o65oiD9xsHWqt0tjLEe6ZBJDn4Tg7hDNQKh
- 6lfzG/5abZ5M08FPq+3Fo8Ke3Kan+2Y+FJBSwuxaFckVDSsba0hmCWOvM9NlqRGjE+LO6qb4Nmu
- buInXNdmdITK0FbFYQ8Mjg0OzuGLULkmdlpaqGjE4opAmMKHfNwUWABLBdM5plxEBk4RucZvhBs
- RD6eZ+EB3ydL94M0sDK5TgL3T3Jceg==
-X-Authority-Analysis: v=2.4 cv=GcEaXAXL c=1 sm=1 tr=0 ts=691399d1 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=YRHvXXt1AAAA:8 a=2PPi8XF69M-sME1U0VQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=9bw_jnHfPby8klRCszyn:22 a=cPQSjfK2_nFv0Q5t_7PE:22 a=HhbK4dLum7pmb74im6QT:22
- a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
-X-Proofpoint-GUID: sQddz3X9La06IDNqpyXdCcfs_P3mBaGI
-X-Proofpoint-ORIG-GUID: sQddz3X9La06IDNqpyXdCcfs_P3mBaGI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-11_04,2025-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511080018
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20251021205741.57109-1-philmd@linaro.org>
+ <20251021205741.57109-7-philmd@linaro.org>
+In-Reply-To: <20251021205741.57109-7-philmd@linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Tue, 11 Nov 2025 15:28:35 -0600
+X-Gm-Features: AWmQ_bnufn-9weUIGB54U-Ya9xkEdb9bPyk_AqNvBEyu4xJuXX5BfHNEnQHEUmg
+Message-ID: <CAJy5ezqRdrpLvN5T_hZ2ec2FzQfQJvd+Osa9TpcFrOg=v8QW+Q@mail.gmail.com>
+Subject: Re: [PATCH v7 06/19] config/target: Implement per-binary TargetInfo
+ structure (ARM, AARCH64)
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>, 
+ Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000005d8dc306435855af"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,102 +98,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/10/25 6:01 AM, Thomas Huth wrote:
-> On 05/11/2025 20.21, Zhuoying Cai wrote:
->> On 9/26/25 8:38 AM, Thomas Huth wrote:
->>> On 18/09/2025 01.21, Zhuoying Cai wrote:
->>> ...
->>>>    crypto/meson.build                  |   5 +-
->>>>    crypto/x509-utils.c                 | 423 +++++++++++++++
->>>>    docs/specs/s390x-secure-ipl.rst     | 165 ++++++
->>>>    docs/system/s390x/secure-ipl.rst    | 181 +++++++
->>>>    hw/s390x/cert-store.c               | 213 ++++++++
->>>>    hw/s390x/cert-store.h               |  39 ++
->>>>    hw/s390x/ipl.c                      |  62 +++
->>>>    hw/s390x/ipl.h                      |  27 +-
->>>>    hw/s390x/meson.build                |   1 +
->>>>    hw/s390x/s390-virtio-ccw.c          |  52 ++
->>>>    hw/s390x/sclp.c                     |   2 +
->>>>    include/crypto/x509-utils.h         | 131 +++++
->>>>    include/hw/s390x/ipl/diag308.h      |  34 ++
->>>>    include/hw/s390x/ipl/diag320.h      |  91 ++++
->>>>    include/hw/s390x/ipl/diag508.h      |  38 ++
->>>>    include/hw/s390x/ipl/qipl.h         |   7 +-
->>>>    include/hw/s390x/s390-virtio-ccw.h  |   3 +
->>>>    include/hw/s390x/sclp.h             |   4 +-
->>>>    pc-bios/s390-ccw/Makefile           |   3 +-
->>>>    pc-bios/s390-ccw/bootmap.c          | 107 +++-
->>>>    pc-bios/s390-ccw/bootmap.h          |  11 +
->>>>    pc-bios/s390-ccw/iplb.h             |  96 +++-
->>>>    pc-bios/s390-ccw/jump2ipl.c         |   6 +-
->>>>    pc-bios/s390-ccw/main.c             | 111 +++-
->>>>    pc-bios/s390-ccw/netmain.c          |   8 +-
->>>>    pc-bios/s390-ccw/s390-ccw.h         |  19 +
->>>>    pc-bios/s390-ccw/sclp.c             |  52 ++
->>>>    pc-bios/s390-ccw/sclp.h             |   7 +
->>>>    pc-bios/s390-ccw/secure-ipl.c       | 781 ++++++++++++++++++++++++++++
->>>>    pc-bios/s390-ccw/secure-ipl.h       | 212 ++++++++
->>>>    qapi/machine-s390x.json             |  22 +
->>>>    qapi/pragma.json                    |   1 +
->>>>    qemu-options.hx                     |  10 +-
->>>>    target/s390x/cpu_features.c         |   7 +
->>>>    target/s390x/cpu_features.h         |   1 +
->>>>    target/s390x/cpu_features_def.h.inc |   5 +
->>>>    target/s390x/cpu_models.c           |   7 +
->>>>    target/s390x/diag.c                 | 555 +++++++++++++++++++-
->>>>    target/s390x/gen-features.c         |   7 +
->>>>    target/s390x/kvm/kvm.c              |  34 ++
->>>>    target/s390x/s390x-internal.h       |   4 +
->>>>    target/s390x/tcg/misc_helper.c      |  14 +
->>>>    42 files changed, 3488 insertions(+), 70 deletions(-)
->>>>    create mode 100644 docs/specs/s390x-secure-ipl.rst
->>>>    create mode 100644 docs/system/s390x/secure-ipl.rst
->>>>    create mode 100644 hw/s390x/cert-store.c
->>>>    create mode 100644 hw/s390x/cert-store.h
->>>>    create mode 100644 include/hw/s390x/ipl/diag308.h
->>>>    create mode 100644 include/hw/s390x/ipl/diag320.h
->>>>    create mode 100644 include/hw/s390x/ipl/diag508.h
->>>>    create mode 100644 pc-bios/s390-ccw/secure-ipl.c
->>>>    create mode 100644 pc-bios/s390-ccw/secure-ipl.h
->>>
->>>    Hi,
->>>
->>> looking at the file list, there does not seem to be any test in this series
->>> ... could you please add some functional tests to make sure that the feature
->>> is working as expected?
->>
->> I’m currently working on the functional tests for secure IPL and have
->> encountered a few blockers, so I wanted to reach out for some guidance.
->>
->> The main challenge is determining how to provide signed components and
->> signatures within the tests. In a manual secure IPL setup, we would
->> generate certificates, use the sign-file script to sign the components
->> (stage3 binary and kernel), and prepare zipl inside the guest.
->> Additionally, the signed components would include Secure Code Loading
->> Attribute Blocks (SCLABs) appended for further validation. These steps
->> are difficult to reproduce in a functional test environment.
->>
->> Our current idea is to create a bootable image using the SCSI scheme
->> with a minimal boot map that includes fake signed components with
->> hard-coded signatures (and SCLABs if feasible), similar to the approach
->> used in prepare_image() in tests/qtest/cdrom-test.c. However, this
->> approach is more complex than expected, and we are unsure how viable it is.
->>
->> Do you have any suggestions on our current plan or other recommendations
->> for how we might approach testing secure IPL? I’d appreciate your guidance.
-> 
->   Hi,
-> 
-> would it be possible that you create a real small qcow2 image (e.g. with 
-> buildroot.org), make sure that it gets the right signatures, upload the 
-> image to your github account (or somewhere else), and then add a functional 
-> test to tests/functional/s390x that downloads the image and tests the boot 
-> process with it? I think that would likely be the best solution...?
-> 
->   HTH,
->    Thomas
-> 
+--0000000000005d8dc306435855af
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'll look into this approach. Thank you for the suggestion!
+On Tue, Oct 21, 2025 at 2:59=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
 
+> Implement the TargetInfo structure for qemu-system-arm
+> and qemu-system-aarch64 binaries.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+
+
+Hi Phil!
+
+Trying to run xenpvh guests with latest QEMU but running into trouble, the
+xenpvh does get built into qemu-system-aarch64 any more.
+Bisecting pointed me to this patch.
+
+To reproduce --enable-xen, and see if xenpvh shows up in -M \? or not.
+
+Any ideas?
+
+
+>
+
+--0000000000005d8dc306435855af
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Tue, Oct 21, 2025 at 2:59=E2=80=AFPM P=
+hilippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@=
+linaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_contai=
+ner"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">Implement the Target=
+Info structure for qemu-system-arm<br>
+and qemu-system-aarch64 binaries.<br>
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
+.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br></blockqu=
+ote><div><br></div><div><br></div><div>Hi Phil!</div><div><br></div><div>Tr=
+ying to run xenpvh=C2=A0guests with latest QEMU but running into trouble, t=
+he xenpvh=C2=A0does get built into qemu-system-aarch64 any more.</div><div>=
+Bisecting pointed me to this patch.</div><div><br></div><div>To reproduce -=
+-enable-xen, and see if xenpvh shows up in -M \? or not.</div><div><br></di=
+v><div>Any ideas?</div><div><br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex"><br>
+</blockquote></div></div>
+
+--0000000000005d8dc306435855af--
 
