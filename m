@@ -4,90 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E220ECCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 11:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40301CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 11:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vImrj-00085I-Eo; Tue, 11 Nov 2025 06:48:51 -0500
+	id 1vImzQ-0007Xv-Qf; Tue, 11 Nov 2025 06:56:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vImrR-000771-RH
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 06:48:34 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vImrQ-0004Xo-2A
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 06:48:33 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-298039e00c2so28177095ad.3
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 03:48:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1762861710; x=1763466510; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mxPxc4Md5C2Zqt98YWnguxmFjA/nPm3BgfgxgFswHjo=;
- b=AYRs5MEAVclXstsIpwefB8De95OYr1Y07zyM5mLdXsRD4/DsczZCTtdjt5hGDZeV45
- /weQHRtF3sbyNUzsKw6TDamMk1zUcGU9ar51DmmSzo2ZoMZPVGgWNrzn+zP2KScR4zMb
- 8WsDvBOtyPYb3P0G0HMtdWpJtkaN8Kor9W8mJj8fIGy47ASLH8zdd53POZr+Q2plidt7
- nD1Zofk7wFYC35lhUrPcBB6Ue7UGmJibvkvf+0VChyABIwA3ZflI1Io7LmbczpTSPCrB
- W4IyNAGKk2s2zq5rr5tT5cIR6Uv3byzesAIGNvuEG8YvSTY+lYMbYLF+Tp0JX1CXjaz6
- zXtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762861710; x=1763466510;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mxPxc4Md5C2Zqt98YWnguxmFjA/nPm3BgfgxgFswHjo=;
- b=IEBSFtX0l5iRSti7aZapbRCAHDmWMeGWpnWfw9PGvjMRxrKXbLPaXT/is1A3k4MCnk
- QBCbVQ6TlKHRbNowcQeFN6WULe1qb2Z2qa+GhFaSqBA1HB10YEJIyttU8qAqxU8MhFuz
- sNeTBIEqv/Ls4AJCMOnXhP2xDtCUvclfulYkdvwnH0k+cmoKXMYI6HTgUE3kv9fVpcpR
- jbwOQlwzZmH1m5BSzBhHKTGGIQPmEy7fyUy+C1KZXFFJsnbNIg5ZeSaGDSz8AZfvJJSi
- GLsTWPMcQoz0Z4vp7trzF9RlZ1LjK97hhUFgcafhm4Eqj102xfHYyYMdHDMScmWyYwJ9
- 7KOg==
-X-Gm-Message-State: AOJu0Yx976dbkOZN1Me8NAKUA11SjFnG8ML6QTfCyeXKPNb9SpFkdrVH
- arw44p25vu6g1Fr4Jsnl45ExGCJ6Aa3nXyQIoleiFaEfJPrBEUcnr3dW8Nkk0RCy095kmB4M0xw
- evfLcKjg=
-X-Gm-Gg: ASbGncsIGkyDbhh3pUOllQZ3LAc1BiocstkXbSZM4lSjGDNOVMoSeYFJu/toP42FCnk
- lQ14wRhn63Cqq6Uww9sa+EM44xKAdvOFxj31FB+/4icUggTViRIWcl2QvXsiw41D1ka4ZkhQOpF
- HteB/4WyHEzOjjj4tomJAlTMmB36RBhUwJCTItgAHJySVGFxzoC/VSPigOjzp2hLfedh1m/eZ+9
- 5IugbEfeUx7vzrf/BMyDoqkks2mDLnp4ZmOsJn2N/vBonpCgGkc2DQhayJpr/xS06h/qSx2vZG7
- rlhVFUNklXbYKqjXMdTaL+DfRh7vIAKHkdjfcHUE8uUSmdv+0/s2LEbyArNuM3IOjBoRTOpXbkd
- mMd5brR5JtxKhAt26QCM0MDxp+TYFjrKDkJttXv8XUck8oJDYjGA5+Sd2SD2bZb+SmwlU98jh+2
- bX7XUbqNWeeacN31+jhy3+EpwB2wARD1L0DtobAw==
-X-Google-Smtp-Source: AGHT+IE8QZIke1F04Lp/KHbgdXExP+qTG9cpfhkFw3BecV67MRYkgoWP/55R52wYRbC9WuCVAYkAyQ==
-X-Received: by 2002:a17:902:f785:b0:295:6122:5c42 with SMTP id
- d9443c01a7336-297e5643bc1mr176402885ad.24.1762861710357; 
- Tue, 11 Nov 2025 03:48:30 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([179.93.21.233])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29651c747d1sm177533125ad.63.2025.11.11.03.48.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 03:48:29 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 13/17] hw/riscv/trace: add format2 msg helper
-Date: Tue, 11 Nov 2025 08:46:52 -0300
-Message-ID: <20251111114656.2285048-14-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
-References: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vImyc-0005Lm-UW; Tue, 11 Nov 2025 06:55:58 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vImya-0005Mo-F6; Tue, 11 Nov 2025 06:55:58 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4d5Q2f1HJRzJ46bY;
+ Tue, 11 Nov 2025 19:55:22 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id 021AB140371;
+ Tue, 11 Nov 2025 19:55:53 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 11 Nov
+ 2025 11:55:52 +0000
+Date: Tue, 11 Nov 2025 11:55:51 +0000
+To: Gavin Shan <gshan@redhat.com>
+CC: Igor Mammedov <imammedo@redhat.com>, <shan.gavin@gmail.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <mchehab+huawei@kernel.org>,
+ <gengdongjiu1@gmail.com>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <peter.maydell@linaro.org>, <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 4/8] acpi/ghes: Extend acpi_ghes_memory_errors() to
+ support multiple CPERs
+Message-ID: <20251111115551.00003385@huawei.com>
+In-Reply-To: <2440a0dd-6543-4590-9c0f-06b05bdfc8a4@redhat.com>
+References: <20251105114453.2164073-1-gshan@redhat.com>
+ <20251105114453.2164073-5-gshan@redhat.com>
+ <20251105141455.000052f0@huawei.com>
+ <cc07dfc9-f58a-4654-8854-c16a2e85fecd@redhat.com>
+ <20251110154957.5c481df7@fedora>
+ <cad74549-a313-48b6-8260-f23f6be1e8c8@redhat.com>
+ <20251111100746.00003136@huawei.com>
+ <2440a0dd-6543-4590-9c0f-06b05bdfc8a4@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,129 +74,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before handling updiscon (uninferable PC discontinuity) cases add the
-encoded message we're going to use, format 2. Format 1 will be added
-when we add the branch map.
+On Tue, 11 Nov 2025 20:55:17 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-There are design decisions worth documenting in this patch. For irreport,
-the e-trace-encap spec [1] in section 7.6. "Format 2 packets",  says that
-we should make this bit !updiscon if we're either:
+> Hi Jonathan,
+> 
+> On 11/11/25 8:07 PM, Jonathan Cameron wrote:
+> > On Tue, 11 Nov 2025 14:08:13 +1000
+> > Gavin Shan <gshan@redhat.com> wrote:  
+> >> On 11/11/25 12:49 AM, Igor Mammedov wrote:  
+> >>> On Thu, 6 Nov 2025 13:15:52 +1000
+> >>> Gavin Shan <gshan@redhat.com> wrote:  
+> >>>> On 11/6/25 12:14 AM, Jonathan Cameron wrote:  
+> >>>>> On Wed,  5 Nov 2025 21:44:49 +1000
+> >>>>> Gavin Shan <gshan@redhat.com> wrote:
+> >>>>>         
+> >>>>>> In the situation where host and guest has 64KiB and 4KiB page sizes,
+> >>>>>> one problematic host page affects 16 guest pages. we need to send 16
+> >>>>>> consective errors in this specific case.
+> >>>>>>
+> >>>>>> Extend acpi_ghes_memory_errors() to support multiple CPERs after the
+> >>>>>> hunk of code to generate the GHES error status is pulled out from
+> >>>>>> ghes_gen_err_data_uncorrectable_recoverable(). The status field of
+> >>>>>> generic error status block is also updated accordingly if multiple
+> >>>>>> error data entries are contained in the generic error status block.
+> >>>>>>
+> >>>>>> Signed-off-by: Gavin Shan <gshan@redhat.com>  
+> >>>>> Hi Gavin,
+> >>>>>
+> >>>>> Mostly fine, but a few comments on the defines added and a
+> >>>>> question on what the multiple things are meant to mean?
+> >>>>>         
+> >>>>
+> >>>> Thanks for your review and comments, replies as below.
+> >>>>     
+> >>>>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> >>>>>> index a9c08e73c0..527b85c8d8 100644
+> >>>>>> --- a/hw/acpi/ghes.c
+> >>>>>> +++ b/hw/acpi/ghes.c
+> >>>>>> @@ -57,8 +57,12 @@
+> >>>>>>     /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
+> >>>>>>     #define ACPI_GHES_MEM_CPER_LENGTH           80
+> >>>>>>     
+> >>>>>> -/* Masks for block_status flags */
+> >>>>>> -#define ACPI_GEBS_UNCORRECTABLE         1
+> >>>>>> +/* Bits for block_status flags */
+> >>>>>> +#define ACPI_GEBS_UNCORRECTABLE           0
+> >>>>>> +#define ACPI_GEBS_CORRECTABLE             1
+> >>>>>> +#define ACPI_GEBS_MULTIPLE_UNCORRECTABLE  2
+> >>>>>> +#define ACPI_GEBS_MULTIPLE_CORRECTABLE    3  
+> >>>>>
+> >>>>> So this maps to the bits in block status.
+> >>>>>
+> >>>>> I'm not actually sure what these multiple variants are meant to tell us.
+> >>>>> The multiple error blocks example referred to by the spec is a way to represent
+> >>>>> the same error applying to multiple places.  So that's one error, many blocks.
+> >>>>> I have no idea if we set these bits in that case.
+> >>>>>
+> >>>>> Based on a quick look I don't think linux even takes any notice.  THere
+> >>>>> are defines in actbl1.h but I'm not seeing any use made of them.
+> >>>>>         
+> >>>>
+> >>>> I hope Igor can confirm since it was suggested by him.
+> >>>>
+> >>>> It's hard to understand how exactly these multiple variants are used from the
+> >>>> spec. In ACPI 6.5 Table 18.11, it's explained as below.
+> >>>>
+> >>>> Bit [2] - Multiple Uncorrectable Errors: If set to one, indicates that more
+> >>>> than one uncorrectable errors have been detected.
+> >>>>
+> >>>> I don't see those multiple variants have been used by Linux. So I think it's
+> >>>> safe to drop them.  
+> >>>
+> >>> even though example describes 'same' error at different components,
+> >>> the bit fields descriptions doesn't set any limits on what 'more than one' means.
+> >>>
+> >>> Also from guest POV it's multiple different pages that we are reporting here
+> >>> as multiple CPERs.
+> >>> It seems to me that setting *_MULTIPLE_* here is correct thing to do.
+> >>>      
+> >>
+> >> I don't have strong opinions. Lets keep to set _MULTIPLE_ flag if Jonathan
+> >> is fine. Again, this field isn't used by Linux guest.  
+> > I don't care strongly.  Maybe we should ask for a spec clarification as I doubt
+> > implementations will be consistent on this given the vague description and that
+> > Linux ignores it today.
+> >   
+> 
+> Google Gemini has the following question. If it can be trusted, it should be
+> set when @num_of_addresses is larger than 1.
+> 
+> Quota from Google Gemini:
+> 
+> The system firmware sets this bit to indicate to the Operating System Power Management (OSPM)
+> that more than one correctable error condition has been detected and logged for the associated
+> hardware component since the last time the status was cleared by the software. This is crucial
+> because a high frequency of correctable errors often indicates a potential underlying hardware
+> issue that could lead to uncorrectable (and potentially fatal) errors if not addressed (e.g.,
+> in memory, where multiple correctable errors might trigger a spare memory operation).
+> 
+> >>  
+> >>>>>> +#define ACPI_GEBS_ERROR_DATA_ENTRIES      4  
+> >>>>>
+> >>>>> This is bits 4-13 and the define isn't used. I'd drop it.
+> >>>>>         
+> >>>>
+> >>>> The definition is used in acpi_ghes_memory_errors() of this patch. However,
+> >>>> I don't see it has been used by Linux. This field isn't used by Linux to determine
+> >>>> the total number of error entries. So I think I can drop it either if Igor is ok.
+> >>>>     
+> >>
+> >> Lets keep this field either in next revision if Jonathan is fine.  
+> > 
+> > I'm fine with the field, but not the value.  As far as I can tell form the spec, it should
+> > be a mask, not a single bit.
+> >   
+> 
+> Agreed, lets keep ACPI_HEST_ERROR_ENTRY_COUNT as zero in next revision.
 
-"following a return because its address differs from the predicted return
-address at the top of the implicit_return return address stack, or the
-last retired before an exception, interrupt, privilege change or resync
-because it is necessary to report the current address stack depth or
-nested call count."
+I'm even more confused now.  The GEBS Error Data entry count should be field from 13:4
+and the value taken should be the number of entries in the record, so 1, 4, 16 depending
+on the page size.
 
-We do not implement any form of call/return prediction in the encoder,
-and TCG will always retire a single insn per cycle. This means that
-we'll never set irreport, i.e. irreport will always be equal to
-updiscon. If this interpretation turns out to be wrong we'll revisit
-this helper.
+So that define of the value 4 is garbage. If it were DATA_ENTRIES_SHIFT then I'd be much happier.
 
-Likewise, irdepth is also not implemented since we'll always return a
-package where irreport == updiscon. The size of the field is arbitrarily
-set to '3' to avoid adding padding in the end of the msg to complete an
-extra byte.
 
-[1] https://github.com/riscv-non-isa/e-trace-encap/releases/tag/v1.0
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/riscv/rv-trace-messages.c | 59 ++++++++++++++++++++++++++++++++++++
- hw/riscv/rv-trace-messages.h |  2 ++
- 2 files changed, 61 insertions(+)
-
-diff --git a/hw/riscv/rv-trace-messages.c b/hw/riscv/rv-trace-messages.c
-index 3e9466633d..3fa70ba81c 100644
---- a/hw/riscv/rv-trace-messages.c
-+++ b/hw/riscv/rv-trace-messages.c
-@@ -53,6 +53,17 @@ typedef struct RVTraceTrapPayload {
- } RVTraceTrapPayload;
- #define TRAP_PAYLOAD_SIZE_64BITS 18
- 
-+typedef struct RVTraceFormat2Payload {
-+    uint8_t format:2;
-+    uint32_t addressLow;
-+    uint32_t addressHigh;
-+    uint8_t notify:1;
-+    uint8_t updiscon:1;
-+    uint8_t irreport:1;
-+    uint8_t irdepth:3;
-+} RVTraceFormat2Payload;
-+#define FORMAT2_PAYLOAD_SIZE_64BITS 9
-+
- static void rv_etrace_write_bits(uint8_t *bytes, uint32_t bit_pos,
-                                  uint32_t num_bits, uint32_t val)
- {
-@@ -186,3 +197,51 @@ size_t rv_etrace_gen_encoded_trap_msg(uint8_t *buf, uint64_t trap_addr,
- out:
-     return HEADER_SIZE + header.length;
- }
-+
-+/*
-+ * Note: irreport and irdepth is always == updiscon.
-+ *
-+ * return_stack_size_p + call_counter_size_p is hardcoded
-+ * to 3 since we don't implement neither ATM.
-+ */
-+size_t rv_etrace_gen_encoded_format2_msg(uint8_t *buf, uint64_t addr,
-+                                         bool notify, bool updiscon)
-+{
-+    RVTraceFormat2Payload payload = {.format = 0b11,
-+                                     .notify = notify,
-+                                     .updiscon = updiscon};
-+    RVTraceMessageHeader header = {.flow = 0, .extend = 0,
-+                                   .length = FORMAT2_PAYLOAD_SIZE_64BITS};
-+    uint8_t bit_pos;
-+
-+    payload.addressLow = extract64(addr, 0, 32);
-+    payload.addressHigh = extract64(addr, 32, 32);
-+
-+    payload.irreport = updiscon;
-+    if (updiscon) {
-+        payload.irdepth = 0b111;
-+    } else {
-+        payload.irdepth = 0;
-+    }
-+
-+    rv_etrace_write_header(buf, header);
-+    bit_pos = 8;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 2, payload.format);
-+    bit_pos += 2;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 32, payload.addressLow);
-+    bit_pos += 32;
-+    rv_etrace_write_bits(buf, bit_pos, 32, payload.addressHigh);
-+    bit_pos += 32;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 1, payload.notify);
-+    bit_pos += 1;
-+    rv_etrace_write_bits(buf, bit_pos, 1, payload.updiscon);
-+    bit_pos += 1;
-+    rv_etrace_write_bits(buf, bit_pos, 1, payload.irreport);
-+    bit_pos += 1;
-+    rv_etrace_write_bits(buf, bit_pos, 3, payload.irdepth);
-+
-+    return HEADER_SIZE + header.length;
-+}
-diff --git a/hw/riscv/rv-trace-messages.h b/hw/riscv/rv-trace-messages.h
-index f3e38b571f..50a4a0ef19 100644
---- a/hw/riscv/rv-trace-messages.h
-+++ b/hw/riscv/rv-trace-messages.h
-@@ -26,5 +26,7 @@ size_t rv_etrace_gen_encoded_trap_msg(uint8_t *buf, uint64_t trap_addr,
-                                       uint8_t ecause,
-                                       bool is_interrupt,
-                                       uint64_t tval);
-+size_t rv_etrace_gen_encoded_format2_msg(uint8_t *buf, uint64_t addr,
-+                                         bool notify, bool updiscon);
- 
- #endif
--- 
-2.51.1
+> 
+> Thanks,
+> Gavin
+> 
+> 
 
 
