@@ -4,81 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 179CACCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 07:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C01CCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 07:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIirR-0004Fx-JL; Tue, 11 Nov 2025 02:32:17 -0500
+	id 1vIiy4-0007yC-Va; Tue, 11 Nov 2025 02:39:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIirF-0004BK-3x
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 02:32:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vIirB-0003z8-Tj
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 02:32:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762846319;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WCtLIRD+fmLqFUhzuTcaK1xWurPTLl1+LnYZhUzIoTo=;
- b=ETyq0A+XYixcHYd0OO5BGqZXVAc2u7VOJ1Zx0GseLs4RIk+M4FyKsSYEBRDZNad5wR858l
- 8VlsQWCvIw6GiU5PPL4jJFzipUS74lFypdFEsCdFIHj3iLePijcdMcCyQxykyQ7L/sOCAV
- ab+Pl4VLcdDJlR+1/xrYkvYc1piTKTw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-Wi3ktwNKODig974MNFRVcA-1; Tue,
- 11 Nov 2025 02:31:55 -0500
-X-MC-Unique: Wi3ktwNKODig974MNFRVcA-1
-X-Mimecast-MFC-AGG-ID: Wi3ktwNKODig974MNFRVcA_1762846314
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 731301800452; Tue, 11 Nov 2025 07:31:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 441011956056; Tue, 11 Nov 2025 07:31:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 995D521E6A27; Tue, 11 Nov 2025 08:31:49 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,
- jonathan.cameron@huawei.com,  mchehab+huawei@kernel.org,
- gengdongjiu1@gmail.com,  mst@redhat.com,  imammedo@redhat.com,
- anisinha@redhat.com,  peter.maydell@linaro.org,  pbonzini@redhat.com,
- shan.gavin@gmail.com
-Subject: Re: [PATCH v3 6/8] acpi/ghes: Use error_abort in
- acpi_ghes_memory_errors()
-In-Reply-To: <b673bf36-cf1b-4103-bce8-0465a1385403@redhat.com> (Gavin Shan's
- message of "Tue, 11 Nov 2025 16:02:24 +1000")
-References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-7-gshan@redhat.com>
- <87o6p9gmy4.fsf@pond.sub.org>
- <b673bf36-cf1b-4103-bce8-0465a1385403@redhat.com>
-Date: Tue, 11 Nov 2025 08:31:49 +0100
-Message-ID: <87jyzxf2je.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1vIiy1-0007wi-Jj
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 02:39:05 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1vIixy-0005Ix-DO
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 02:39:05 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Cx6tEH6BJpLN0hAA--.8316S3;
+ Tue, 11 Nov 2025 15:38:47 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJCxH8IG6BJpRSovAQ--.16851S2;
+ Tue, 11 Nov 2025 15:38:47 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: lixianglai@loongson.cn,
+	qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Song Gao <gaosong@loongson.cn>
+Subject: [PATCH] fix pci device can't alloc irq from fdt
+Date: Tue, 11 Nov 2025 15:14:36 +0800
+Message-Id: <20251111071436.1555402-1-lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxH8IG6BJpRSovAQ--.16851S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,234 +64,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gavin Shan <gshan@redhat.com> writes:
+When we use the -kernel parameter to start an elf format kernel relying on
+fdt, we get the following error:
 
-> Hi Markus,
->
-> On 11/11/25 3:25 PM, Markus Armbruster wrote:
->> Gavin Shan <gshan@redhat.com> writes:
->>=20
->>> Use error_abort in acpi_ghes_memory_errors() so that the caller needn't
->>> explicitly call abort() on errors. With this change, its return value
->>> isn't needed any more.
->>>
->>> Suggested-by: Igor Mammedov <imammedo@redhat.com>
->>> Signed-off-by: Gavin Shan <gshan@redhat.com>
->>> ---
->>>   hw/acpi/ghes-stub.c    |  6 +++---
->>>   hw/acpi/ghes.c         | 15 ++++-----------
->>>   include/hw/acpi/ghes.h |  5 +++--
->>>   target/arm/kvm.c       | 10 +++-------
->>>   4 files changed, 13 insertions(+), 23 deletions(-)
->>>
->>> diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
->>> index 4faf573aeb..4ef914ffc5 100644
->>> --- a/hw/acpi/ghes-stub.c
->>> +++ b/hw/acpi/ghes-stub.c
->>> @@ -11,10 +11,10 @@
->>>  #include "qemu/osdep.h"
->>>  #include "hw/acpi/ghes.h"
->>>=20=20
->>> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>> -                            uint64_t *addresses, uint32_t num_of_addre=
-sses)
->>> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>> +                             uint64_t *addresses, uint32_t num_of_addr=
-esses,
->>> +                             Error **errp)
->>>  {
->>> -    return -1;
->>>  }
->>=20
->> Before the patch, this function always fails: it returns -1.
->>=20
->> Afterwards, it always succeeds: it doesn't set @errp.
->>=20
->> Which one is correct?
->>=20
->
-> Both are correct. This variant is only used on !CONFIG_ACPI_APEI. In this=
- case,
-> there is no chance to call this variant in the only caller kvm_arch_on_si=
-gbus_vcpu().
-> acpi_ghes_get_state() returns NULL on !CONFIG_ACPI_APEI there.
+pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.0: enabling device (0000 -> 0003)
+pcieport 0000:00:01.0: PME: Signaling with IRQ 19
+pcieport 0000:00:01.0: AER: enabled with IRQ 19
+pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.1: enabling device (0000 -> 0003)
+pcieport 0000:00:01.1: PME: Signaling with IRQ 20
+pcieport 0000:00:01.1: AER: enabled with IRQ 20
+pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.2: enabling device (0000 -> 0003)
+pcieport 0000:00:01.2: PME: Signaling with IRQ 21
+pcieport 0000:00:01.2: AER: enabled with IRQ 21
+pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.3: enabling device (0000 -> 0003)
+pcieport 0000:00:01.3: PME: Signaling with IRQ 22
+pcieport 0000:00:01.3: AER: enabled with IRQ 22
+pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
 
-If this is not supposed to be called, have it abort() to make it
-obvious.
+This is because the description of interrupt-cell size in the interrupt
+controller pch_pic in our fdt is incorrect, and the description of
+interrupt-cell is missing in the pcie irq map. Now it is corrected and
+the correct interrupt-cell is added in th pcie irq map.
 
->>>=20=20
->>>  AcpiGhesState *acpi_ghes_get_state(void)
->>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
->>> index 055e5d719a..aa469c03f2 100644
->>> --- a/hw/acpi/ghes.c
->>> +++ b/hw/acpi/ghes.c
->>> @@ -543,8 +543,9 @@ void ghes_record_cper_errors(AcpiGhesState *ags, co=
-nst void *cper, size_t len,
->>>      notifier_list_notify(&acpi_generic_error_notifiers, &source_id);
->>>  }
->>>=20=20
->>> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>> -                            uint64_t *addresses, uint32_t num_of_addre=
-sses)
->>> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>> +                             uint64_t *addresses, uint32_t num_of_addr=
-esses,
->>> +                             Error **errp)
->>=20
->> qapi/error.h:
->>=20
->>   * - Whenever practical, also return a value that indicates success /
->>   *   failure.  This can make the error checking more concise, and can
->>   *   avoid useless error object creation and destruction.  Note that
->>   *   we still have many functions returning void.  We recommend
->>   *   =E2=80=A2 bool-valued functions return true on success / false on =
-failure,
->>   *   =E2=80=A2 pointer-valued functions return non-null / null pointer,=
- and
->>   *   =E2=80=A2 integer-valued functions return non-negative / negative.
->>=20
->
-> Question: If it's deterministic that caller passes @error_abort or @error=
-_fatal
-> to acpi_ghes_memory_errors(), QEMU crashes with a core dump or exit befor=
-e its
-> caller to check the return value. In this case, it's still preferred for
-> acpi_ghes_memory_errors() returns a value to indicate the success or fail=
-ure?
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+---
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Song Gao <gaosong@loongson.cn>
 
-Yes, to separate concerns: acpi_ghes_memory_errors() remains oblivious
-of how it is called.
+ hw/loongarch/virt-fdt-build.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
->>>  {
->>>      /* Memory Error Section Type */
->>>      const uint8_t guid[] =3D
->>> @@ -555,7 +556,6 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uin=
-t16_t source_id,
->>>       * Table 17-13 Generic Error Data Entry
->>>       */
->>>      QemuUUID fru_id =3D {};
->>> -    Error *errp =3D NULL;
->>>      int data_length;
->>>      GArray *block;
->>>      uint32_t block_status, i;
->>> @@ -592,16 +592,9 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, ui=
-nt16_t source_id,
->>>      }
->>>=20=20
->>>      /* Report the error */
->>> -    ghes_record_cper_errors(ags, block->data, block->len, source_id, &=
-errp);
->>> +    ghes_record_cper_errors(ags, block->data, block->len, source_id, e=
-rrp);
->>>=20=20
->>>      g_array_free(block, true);
->>> -
->>> -    if (errp) {
->>> -        error_report_err(errp);
->>> -        return -1;
->>> -    }
->>> -
->>> -    return 0;
->>>  }
->>=20
->> The error reporting moves into the caller.
->>=20
->
-> Similar question as above. If it's deterministic for the caller passes @e=
-rror_abort
-> or @error_fatal to acpi_ghes_memory_errors() and then to ghes_record_cper=
-_errors(),
-> QEMU crashes with a core dump or exit before error_report_err(errp) can b=
-e executed.
-> In this case, it's still preferred to have error_report_err(&error_abort)=
- or
-> error_report_err(&error_fatal) in its caller?
-
-Yes.
-
->>>=20=20
->>>  AcpiGhesState *acpi_ghes_get_state(void)
->>> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
->>> index f73908985d..35c7bbbb01 100644
->>> --- a/include/hw/acpi/ghes.h
->>> +++ b/include/hw/acpi/ghes.h
->>> @@ -98,8 +98,9 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *tabl=
-e_data,
->>>                       const char *oem_id, const char *oem_table_id);
->>>  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
->>>                            GArray *hardware_errors);
->>> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>> -                            uint64_t *addresses, uint32_t num_of_addre=
-sses);
->>> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->>> +                             uint64_t *addresses, uint32_t num_of_addr=
-esses,
->>> +                             Error **errp);
->>>  void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, siz=
-e_t len,
->>>                               uint16_t source_id, Error **errp);
->>>=20=20
->>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->>> index 459ca4a9b0..a889315606 100644
->>> --- a/target/arm/kvm.c
->>> +++ b/target/arm/kvm.c
->>> @@ -2458,13 +2458,9 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int co=
-de, void *addr)
->>>              addresses[0] =3D paddr;
->>>              if (code =3D=3D BUS_MCEERR_AR) {
->>>                  kvm_cpu_synchronize_state(c);
->>> -                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYN=
-C,
->>> -                                             addresses, 1)) {
->>> -                    kvm_inject_arm_sea(c);
->>> -                } else {
->>> -                    error_report("failed to record the error");
->>> -                    abort();
->>> -                }
->>> +                acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
->>> +                                        addresses, 1, &error_abort);
->>> +                kvm_inject_arm_sea(c);
->>=20
->> Before the patch, we get two error reports, like this:
->>=20
->>      qemu-system-FOO: OSPM does not acknowledge previous error, so can n=
-ot record CPER for current error anymore
->>      qemu-system-FOO: failed to record the error
->>      Aborted (core dumped)
->>=20
->> Such error cascades should be avoided.
->>=20
->> Afterwards, we get one:
->>=20
->>      Unexpected error at SOURCE-FILE:LINE-NUMBER:
->>      qemu-system-FOO: OSPM does not acknowledge previous error, so can n=
-ot record CPER for current error anymore
->>      Aborted (core dumped)
->>=20
->> Are all errors reported by acpi_ghes_memory_errors() programming errors,
->> i.e. when an error is reported, there's a bug for us to fix?
->>=20
->> If not, abort() is wrong before the patch, and &error_abort is wrong
->> afterwards.
->>=20
->> You can use &error_fatal for fatal errors that are not programming
->> errors.
->
-> No, there is no programming errors and the core dump is actually no sense.
-
-Confirms my suspicion :)
-
-> It makes more sense for the caller to pass @error_fatal down to acpi_ghes=
-_memory_errors().
-
-Makes sense.
-
->>>              }
->>>              return;
->>>          }
->>=20
->
-> Thanks,
-> Gavin
+diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+index 1f0ba01f71..f1f70ed3c3 100644
+--- a/hw/loongarch/virt-fdt-build.c
++++ b/hw/loongarch/virt-fdt-build.c
+@@ -272,7 +272,7 @@ static void fdt_add_pch_pic_node(LoongArchVirtMachineState *lvms,
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
+                            pch_pic_base, 0, pch_pic_size);
+     qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
+-    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+                           *eiointc_phandle);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,pic-base-vec", 0);
+@@ -395,6 +395,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+                                  2, base_mmio, 2, size_mmio);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
+                            0, *pch_msi_phandle, 0, 0x10000);
++
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+     fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
+     g_free(nodename);
+ }
+-- 
+2.39.1
 
 
