@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246DFCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 17:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97304CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 17:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIs0Q-0006fV-PM; Tue, 11 Nov 2025 12:18:10 -0500
+	id 1vIs0N-0006TZ-GG; Tue, 11 Nov 2025 12:18:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vIrzt-0005dE-VK
+ id 1vIrzp-0005Zc-JW
  for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:38 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vIrzo-0003wG-6k
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:37 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b72b495aa81so547967066b.2
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 09:17:31 -0800 (PST)
+ id 1vIrzm-0003ux-2W
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:33 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b6d402422c2so881932266b.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 09:17:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762881450; x=1763486250; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762881448; x=1763486248; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OPdQm12yC36NDao0BppUosTnYIa4jpYkMli2ixai1T4=;
- b=oY2HrC3PeDa9V3WcQ5rPsrLRo8xZdcTrOCT/3SavGlI2GsbV4nCJrz+HX9JSbf7xwB
- vFyK9zG4jQmaGZbJ8SrrPCBhxE3AbdEL4LP1fu3rIUvpuzt0GYTV3Em9NCN4QDhxisRW
- XlDDxFEdQOxJdzKor5OksI5NZFjWeJt6ezPtSu3Q/Tqcm//C6VsCd5QnvD2NkwuAikiC
- gU2/sy6gaOLgsRhuRX5uePy2JdwsFuv0bcegMdmypZPUVIpb3xSx4phrrID0mbu77pV/
- 0Z2njYz++3+sS9oq1nif9n45IoS/qJpMlyBEL3Q4Ht1TUvFeBzbLMMPtKiJQOET6OOxz
- B8Xw==
+ bh=OzQZP4Y3OptbZQiANnSpA5RTAqNZbiZmndRZjZG7Xks=;
+ b=HRpg7QzVU5VjJb0F6qEKCSPQrbFxNm0Q6H71sT/6AoFRD1UOpcUaHpQ8FDjAp351ev
+ Iz4S+VppTAfp8DX6jQUedkp3hpIYr09zL4Kl51LyP8eP2irqBndnBJrM3V0zEWGN1n5n
+ l7GYmc3XZB0deNuEjKA2miZo39vQaK/O0FjjBQB5CZ1BSqpzw3lduvHPAMgaew6KViTw
+ IszYUVGGJYzw4vkCORe2mVYh/3TreYoyzABdOrK0//5uXiQkb0FjBOBLn7r8HE40JYbP
+ leE53HxDH1r1ngpZf1GLfg5/5fRGKNL5C5TIa5N9TsdLx+L7UMRrCT+gxRAhjtK1Q/3C
+ /mRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762881450; x=1763486250;
+ d=1e100.net; s=20230601; t=1762881448; x=1763486248;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OPdQm12yC36NDao0BppUosTnYIa4jpYkMli2ixai1T4=;
- b=xPUp1bwot231oqCQdepYprSjtrlxrLFoS+02ngDh06ssJpQfQ64WLV5XI8UXWJ4HJ5
- OSHHaAvaEqTHiQIWTOPvM/BFmF5LhOBR5aVLMfmz7QslnX9lMZOhwrI+i+6vzAcG+XsJ
- /4VjQCNXgTzyDHz4incTKi9GG2trJ1BP2Ac2ql5RylwiaQFgKX/1VaVjSEtz+ckXhmMX
- mW2CxA+s3FdrZRxuhCmidFD9tzRtOou6KDitLrJ+g4iyVrxmy9L1oMEygF+ZMzJRNn3p
- ZSqx3XVEai41S/ZtYQ9DnHBhc9MByF9EjFodMTPzcjZrR45BhLNKZCVjekwHHZXFXSYe
- hkNQ==
-X-Gm-Message-State: AOJu0YzfoFklx9dA9iQM+jeFT/461SSGkSijYfd8sJMTxDV2sgV3NdOo
- qB+j8unOs/GF/po0WRL/YF5pIbLVTfRBg+NTAKVEciswp7x32wvMbxoektCDYE/MCjs=
-X-Gm-Gg: ASbGnctRSEFOS7L1swJ5M1wysaGHdRQrquXa3D+4DpWtEIW+G+mGDyswSJBxmvVSwCd
- 9Pr/75/EFsPzLicG4uZSoUvoTpz4ZuKZUxNYRyMh5N+8uOgd1TvQBMJvSsz6M+JL7/z/BO8sEIy
- PUVUdoKj3NlYDo8JvTedxY1YweVOOwgA0IEBuj6lMTSrqPL3QKp0CZsaKj8q2a0kfLXXpCkGT5p
- 7UejsauCNNOBq0rKufy/rpkMTjD50Ejt0Dj/Aa2uBlkncjKwztXx6SB/SasQHL6m/tLYsCM+sSf
- oqP6VvWozWOjQbOP/MRYKkyN+U51Nb7gPXF9MLTibNt46ilQQKgoOzLlpQdPGMlKlNzMtm9GGmd
- gftamTMh2J2ehAkVbpR2i55OEQGcuVDm8pyje7xRmU6Z9/bQKIiF97DMRnN9K+31/F7QMr8KV22
- VVyrMhb88vmfA=
-X-Google-Smtp-Source: AGHT+IH+rK2GA7uh5HKBO1jaj3tI3CfVnhRFhz9xjXbKspzP5ImutQx+E55V77jS1UOrApsTg4GEug==
-X-Received: by 2002:a17:907:5ca:b0:b4e:b7ee:deea with SMTP id
- a640c23a62f3a-b72e031ca37mr1457232266b.27.1762881450222; 
- Tue, 11 Nov 2025 09:17:30 -0800 (PST)
+ bh=OzQZP4Y3OptbZQiANnSpA5RTAqNZbiZmndRZjZG7Xks=;
+ b=siXdmPIFmlbc/bGGd5zYfw/NeHGuQchIxv/9B9MAoBMRFYcgdIXYpTbxbqtHxH2J+k
+ w/BZ2TYIx00I7yaC9K3jc2Mc2/iHWbGXQmSJhG79AM+vjNUHU2yp+g2H4q6gK2Xz6c32
+ EUWSnMyglgJ7kYpKxRbJ+al1FLo9ZijaHiEsTWOZIFYxFS24YNAK7N/wZVh+8uT1uuoH
+ s7SCa/ocof7diDWTWcJvN0sACrSIuolQ/BK+kgzAiC4iOXUCzo3gxPo/QK4QpDwwFqRQ
+ W+JxVwPUKOaxeNLbN1tINCb3+iSdt/JdFJLJkgHKU5Ncwxuw2duf6sji+w+HH0IG6KJe
+ aB4A==
+X-Gm-Message-State: AOJu0YwR6Wws8t52WAj02Q2TJiDYtfbAXb6QbMQ4MlYGW+VA2uATbKtZ
+ 8StQ9466kbK4Lejd0msuKwEh/uhssEhJcirY2rkI9ToB1azfwadJuGH4U0rIVccEHNs=
+X-Gm-Gg: ASbGnctkSJN0pFiEe4xCiwk64ia4bTVHlPla283hxlgUO3wopfKknOh/D2of++uyffA
+ e1QNiavuSO5AufK4+/7TcZ+V/gvnQwyXEsjqQqon5Q5Sg6uwI5xfR47Sn1k6mgeZY0FAIGZxDvI
+ wVK01IPmvqolnkaSr1beJm4E+lg0IuVw9V4sWfgX5uRPb8legsCUG1FWPjhW7CqbtRY1EFOMK2w
+ P7xs32zHmbn1zlKF0jPXYZBpEVueQYGF6lnLnwBpIGPVY0pjh0jFmJ6bnfGjCFBJ57GfbD1zgxA
+ YQ++VPs6HGRDzAH9zzHn5msQ0wvy5hOJ3eqWI5VICIopKX4h9hONAZ+VDxPRkR2VP+qm9pNnnNI
+ aHHilXWH6K+g4eVWiNsjqX/QIy76qSd7ZOu0gNms2k6CmPNy3Tq9kJtqzerqhAAToTax8X/XA8j
+ 1zd9rTiHpYT0A=
+X-Google-Smtp-Source: AGHT+IHxICJl5UFBz8yK2n3dYhQFXsVP6b62miRVnToeVp0HWXNuOWm1+jnsASE4qGQJklN9WDBNEQ==
+X-Received: by 2002:a17:907:6d06:b0:b6d:4f1d:8c9e with SMTP id
+ a640c23a62f3a-b72e0305025mr1273596066b.24.1762881447746; 
+ Tue, 11 Nov 2025 09:17:27 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bf97d0f3sm1467793866b.48.2025.11.11.09.17.27
+ a640c23a62f3a-b72bf31286esm1383522766b.21.2025.11.11.09.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 09:17:28 -0800 (PST)
+ Tue, 11 Nov 2025 09:17:25 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5DB95601A6;
- Tue, 11 Nov 2025 17:17:25 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 556F95F905;
+ Tue, 11 Nov 2025 17:17:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
@@ -82,18 +82,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  BALATON Zoltan <balaton@eik.bme.hu>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-stable@nongnu.org
-Subject: [PATCH 09/16] tests: move test_netdev_ethtool to share.linaro.org
-Date: Tue, 11 Nov 2025 17:17:16 +0000
-Message-ID: <20251111171724.78201-10-alex.bennee@linaro.org>
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH 01/16] tests/docker: drop --link from COPYs in emsdk docker
+Date: Tue, 11 Nov 2025 17:17:08 +0000
+Message-ID: <20251111171724.78201-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251111171724.78201-1-alex.bennee@linaro.org>
 References: <20251111171724.78201-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,40 +116,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linaro are migrating file-hosting from the old NextCloud instance to
-another sharing site.
+As we need to build images in both docker and podman lets not have any
+incompatibilities. I don't think it makes any major difference.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: qemu-stable@nongnu.org
 ---
- tests/functional/x86_64/test_netdev_ethtool.py | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ tests/docker/dockerfiles/emsdk-wasm32-cross.docker | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/x86_64/test_netdev_ethtool.py b/tests/functional/x86_64/test_netdev_ethtool.py
-index ee1a397bd24..ac8a92512cf 100755
---- a/tests/functional/x86_64/test_netdev_ethtool.py
-+++ b/tests/functional/x86_64/test_netdev_ethtool.py
-@@ -16,16 +16,10 @@ class NetDevEthtool(QemuSystemTest):
-     # Runs in about 17s under KVM, 19s under TCG, 25s under GCOV
-     timeout = 45
+diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+index 6b1642a207c..1f08eb0b855 100644
+--- a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
++++ b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+@@ -115,8 +115,8 @@ RUN mkdir -p /glib
+ RUN curl -Lks https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz | \
+     tar xJC /glib --strip-components=1
  
--    # Fetch assets from the netdev-ethtool subdir of my shared test
--    # images directory on fileserver.linaro.org.
--    ASSET_BASEURL = ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/'
--                     'download?path=%2Fnetdev-ethtool&files=')
--    ASSET_BZIMAGE = Asset(
--        ASSET_BASEURL + "bzImage",
--        "ed62ee06ea620b1035747f3f66a5e9fc5d3096b29f75562ada888b04cd1c4baf")
--    ASSET_ROOTFS = Asset(
--        ASSET_BASEURL + "rootfs.squashfs",
--        "8f0207e3c4d40832ae73c1a927e42ca30ccb1e71f047acb6ddb161ba422934e6")
-+    ASSET_BZIMAGE = Asset("https://share.linaro.org/downloadFile?id=QD37GYYAJhGOgVe",
-+                          "ed62ee06ea620b1035747f3f66a5e9fc5d3096b29f75562ada888b04cd1c4baf")
-+    ASSET_ROOTFS = Asset("https://share.linaro.org/downloadFile?id=YAqnr0W8fruDh3f",
-+                         "8f0207e3c4d40832ae73c1a927e42ca30ccb1e71f047acb6ddb161ba422934e6")
+-COPY --link --from=zlib-dev /builddeps/ /builddeps/
+-COPY --link --from=libffi-dev /builddeps/ /builddeps/
++COPY --from=zlib-dev /builddeps/ /builddeps/
++COPY --from=libffi-dev /builddeps/ /builddeps/
  
-     def common_test_code(self, netdev, extra_args=None):
-         self.set_machine('q35')
+ WORKDIR /glib
+ RUN <<EOF
+@@ -141,5 +141,5 @@ RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" ./_build/config.h
+ RUN meson install -C _build
+ 
+ FROM build-base
+-COPY --link --from=glib-dev /builddeps/ /builddeps/
+-COPY --link --from=pixman-dev /builddeps/ /builddeps/
++COPY --from=glib-dev /builddeps/ /builddeps/
++COPY --from=pixman-dev /builddeps/ /builddeps/
 -- 
 2.47.3
 
