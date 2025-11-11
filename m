@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3A1CD1297
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407DACCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIlcd-0008Gb-GX; Tue, 11 Nov 2025 05:29:11 -0500
+	id 1vIldI-0000lV-Ms; Tue, 11 Nov 2025 05:29:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcG-0007Uo-Pp
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:49 -0500
+ id 1vIlcR-0007q5-K7
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:29:00 -0500
 Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcB-0000FE-13
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:44 -0500
+ id 1vIlcI-0000JU-Vx
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:59 -0500
 Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-afcb7ae6ed0so672026066b.3
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:39 -0800 (PST)
+ a640c23a62f3a-b3e9d633b78so127773366b.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762856918; x=1763461718; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5aPLj5bYoMuosO6hZB892xXH3RS2ipC25que2tpo1vI=;
- b=aNb/yyYnx6u9mQ6cTVDFnZXU1WYizxs82O2Q9VWq6gzQGTj8e3RfpGURREZ3kTm/xD
- 3PqaatyFdLVsfKE0DTt+lfWOeg+2Nr2uYCiHoO/s0ImuoaWDWQy5uBKWl3CyRFMpFJ4v
- K/cJLRrfZwiRQky/9DZ6GI2aYnAMxfjaMsmt6pvNMfK87E44m7auhcrahke+zQ28KJ1S
- CA/5UbTlL6X4LkAmZvsGFKdojzXoOmSzd6Ja+je6NutIcTdGyTT8T/5r/Mtag7ElfdcI
- 8iOqovnuw5N6nDcs+q1WE6xoZx3f+whhqlOBsuiCvU7ykl1nj/I4Yn3jRDrIgEAh+onW
- IYBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762856918; x=1763461718;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1762856929; x=1763461729; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5aPLj5bYoMuosO6hZB892xXH3RS2ipC25que2tpo1vI=;
- b=E4b1QzLHFA5sZsr1CwYtpAPffjZA9mmc9xmsqdDRK+QyoT/r2vrOQYgIAYYeDGGPvO
- ib5yAhe53U3Fu8WnCwVmfLIo+Ucl4QppqTJ/zxw73HawFdpds6Q32Rk29uv/IsaY6ifU
- qVW2ata7UOrVSm6cXGgGEqs/5ClGn3qf2V0UtQzKstWWB3UWbgkX3iCD7WHd+uXeoYBd
- Kra/mQedJajt2gDNg1oTntac2xTlFNJQ2OcwLFrS/Aanfw4JJzRBvh+WxjGgf07FuKBB
- G5YNGL2D0J7cDAdUfpYGEfhrBU3vKXxGHr9NuAPBfrqoCtRUC0AZDwehGH2QlUXSYogC
- 1eOg==
-X-Gm-Message-State: AOJu0Yxh02xsZtIZFshPFHHcVujVYSY2bSj7uq9hEulsIU9KiCxLL5q/
- a3wWwsqO2V8qQiXPmH4DC8I1N6JT2cEZdOu4tNU+Gv4H/FCTGJ0vdKkHvZ9mmd6L
-X-Gm-Gg: ASbGncuEnEUQMwM6FUiYkgMf1j6xFe0uQaUxmWHnTVV/D6QA2cQKWPnGdrsS/scgZAv
- rqEdqXMKyJxWZugtOOx5OzwpHIDR70M1ndwHVFpyU0iLkl1ZDNegXdSDBFyBQC+haCjmSNAWgiI
- vRJZBq+17675Rit/h0rVXDzR7UOml13EPVZRmPP9hBZOB1cjMAZ+PXYxpOsJk5PjxFvZBSsRryN
- jGE/AO7Jc0poZXl5gr5PrFYm3FZeFnofO7TQX3/gl3hUPJARE7uMFwm8W9b177AHXR/S0hvfAAA
- dLZN01gE4scmGK53ZegOMmLezPwF7QfjI5UBIcIr46EJSnkcLfSJX/F/+R9bWwY/6ibLJrQgvYE
- YhIUm358ICacNG48uYREkggF+dXVEncjtuwdjyD4dW69h7O2EAtiWPwP1hbzY/fZV4wHyfAMV0t
- NAb93v7/o+h3xAHmRIbqXDDg==
-X-Google-Smtp-Source: AGHT+IGMDXKjC6WykjK0RiPLlNBYBMn8MANxlmLnLRzIao003X/Lbl0L4O0oEip85q0tNUBz7eew1A==
-X-Received: by 2002:a17:907:7fa0:b0:b72:91bc:9b35 with SMTP id
- a640c23a62f3a-b72e05215f5mr1157280166b.39.1762856917986; 
- Tue, 11 Nov 2025 02:28:37 -0800 (PST)
+ bh=VPA9BBHhs/TsW5+dpgEf0Zc+XHikxM0HQ0hFOJxJLVk=;
+ b=SKPIw+nqkZP+WJxcRgmWuRjKt+aRWOj6wYU5bBHgONPy67lLx3MyT9wTPkWyDjxTBA
+ 8cZnagHz/31Wv1fUlEWvXsu3bV+7F2Y00u+EwAZG3lg/ww5c8iTY7pws1oMyLGALgbmB
+ cwaoyJ0I63AA8egoJkH4bZEUSIgeuE3LCy7qG+CnusZO6PtISMYIT05DEKkHdbk30USd
+ ZdmbRNXLPq1AQqf9m4FL9CtfoyBdyBFs1oRXrzb/ktGdPmnOTOlFC5tTDqoYpknqVxC1
+ quh1N8s5dIlEatnTI6EulEuqwIuNXL0V64mygkF7+Kp6vZgOJRb6et/ktYKNaEyOcClv
+ 67TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762856929; x=1763461729;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VPA9BBHhs/TsW5+dpgEf0Zc+XHikxM0HQ0hFOJxJLVk=;
+ b=Dl5K9FszcapINObZdom/JSknKS33/ia59w5ASa5rQ3grq6MbWSecRf1wwebYd5DX24
+ ipsGLXYFv/AUbFUy2ryCnyC4GaPF704UON9pQtsNK+Ifk6AJmWL4mQl0Cd6TyZcI5PtD
+ LIggAvDqAcA4+nzNJPd1WML1+2KR0Aazv7xRoGM/wbpnXO9Fc9HQVOVyhSdV7rm4lM18
+ YKRjvefTKcMskriCx8+hx+zzNYm/AP+Z13GtrP+ynOvs6KtgCInF5/xTtf7Syp0PFfxM
+ 977n774C5brKr90Oru7biEEJmFEabrlQKyjocxCC/+J1hO1Q8rbFe2OiiqoXFrkN/77v
+ xzFA==
+X-Gm-Message-State: AOJu0YwzyWbG+aLEm+SDnnjIY98u80YzcozhEFQjJ3yvuxuJtf3f9eeU
+ 816W5O5vE9wrnRT4VTzryCS43TnloVvcNfcWOaC1op0uvA7jVILG68V4weByXlLV
+X-Gm-Gg: ASbGncuLHHGfyd3oG5c66xGmDtY4NxsOh0SKUe8nLWOuICkMEP91nz3aVPf2Pfxy1Lw
+ YBB1933CerRwhqYih0/11zDpuMcauTNPZ4mqR5MaY/84jye5/pEKgjBKdaUfj6ysTm5RnA1199i
+ s0uMBKev35ILuM6U4wgRJnumYQnOtZmza3X+07wg8Wo5bI8HXtY8ekyOZPH0hQNjnIVEeASjYip
+ vdee/uhGDrf8oUZUdoBbjz6TPapfTkJKBblCgVbvtV0FPERSHNWUAqPSV+1sgCrIO2FAuZNIeDn
+ 9hHbnXtARpFW6NCiFSHuv4veC+SSEWHU1pozrZrJtMxK4XG1o5aW9DWOXnkTnj+Iik8+NXpCP+8
+ kzeYaJh/hgL2Zl8Z71fODgeK6nPUVOXU4x8ymt/+3o/uVx74E7nTrT/mV07ovOlW8MN16X3MIHS
+ L63qhtwKjN9ebmyMTFsthMAS7g3iifZOOuQD2zaCwihWw=
+X-Google-Smtp-Source: AGHT+IGCRduyFuXU75h7mCMK+Zkr20TKPpGS5xq1c+FKZ6EProEttvhzCdsoQGo/l27ublulbNDyOQ==
+X-Received: by 2002:a17:907:9625:b0:b72:8e31:4327 with SMTP id
+ a640c23a62f3a-b731d35c2f2mr277776766b.25.1762856928768; 
+ Tue, 11 Nov 2025 02:28:48 -0800 (PST)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc12:ce00:ae91:a1ff:fe8b:15a7])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.37
+ a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 02:28:37 -0800 (PST)
+ Tue, 11 Nov 2025 02:28:48 -0800 (PST)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -74,12 +75,14 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Kevin Wolf <kwolf@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH v4 00/15] hw/arm: add Beckhoff CX7200 board
-Date: Tue, 11 Nov 2025 11:28:21 +0100
-Message-ID: <20251111102836.212535-1-corvin.koehne@gmail.com>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ YannickV <Y.Vossen@beckhoff.com>
+Subject: [PATCH v4 12/15] hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+Date: Tue, 11 Nov 2025 11:28:33 +0100
+Message-ID: <20251111102836.212535-13-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20251111102836.212535-1-corvin.koehne@gmail.com>
+References: <20251111102836.212535-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::630;
@@ -90,7 +93,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,70 +109,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Corvin Köhne <c.koehne@beckhoff.com>
+From: YannickV <Y.Vossen@beckhoff.com>
 
-Hi,
+The is25lp016d has 4 Block Write Protect Bits. BP3 specifies
+whether the upper or lower range should be protected. Therefore,
+we add the HAS_SR_TB flag to the is25lp016d flags.
 
-Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
-platform. This commit series adds the Beckhoff CX7200 as new board variant to
-QEMU.
+Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+---
+ hw/block/m25p80.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-The emulation is able to successfully boot an CX7200 image. The image includes
-some self tests executed on every boot. Only the cache self test fails due to
-QEMU emulating the cache as always being coherent. The self tests include f.e.:
-
-* Network
-* Flash
-* CCAT DMA + EEPROM [1]
-* TwinCAT (Beckhoff's automation control software [2])
-
-[1] https://github.com/beckhoff/ccat
-[2] https://www.beckhoff.com/en-us/products/automation/
-
-YannickV (15):
-  hw/timer: Make frequency configurable
-  hw/timer: Make PERIPHCLK divider configurable
-  hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
-  hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
-  hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
-    user mode
-  hw/dma/zynq-devcfg: Simulate dummy PL reset
-  hw/dma/zynq-devcfg: Indicate power-up status of PL
-  hw/dma/zynq-devcfg: Fix register memory
-  hw/misc: Add dummy ZYNQ DDR controller
-  hw/misc/zynq_slcr: Add logic for DCI configuration
-  hw/misc: Add Beckhoff CCAT device
-  hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
-  hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
-  tests/functional: Add a Beckhoff CX7200 test
-  docs/system/arm: Add support for Beckhoff CX7200
-
- docs/system/arm/beckhoff-cx7200.rst          |  57 +++
- docs/system/target-arm.rst                   |   1 +
- hw/arm/Kconfig                               |  18 +
- hw/arm/beckhoff_CX7200.c                     | 443 +++++++++++++++++++
- hw/arm/meson.build                           |   1 +
- hw/block/m25p80.c                            |   3 +-
- hw/dma/xlnx-zynq-devcfg.c                    |  29 +-
- hw/misc/Kconfig                              |   6 +
- hw/misc/beckhoff_ccat.c                      | 338 ++++++++++++++
- hw/misc/meson.build                          |   2 +
- hw/misc/xlnx-zynq-ddrc.c                     | 413 +++++++++++++++++
- hw/misc/zynq_slcr.c                          |  31 ++
- hw/timer/a9gtimer.c                          |  26 +-
- hw/timer/arm_mptimer.c                       |  32 +-
- include/hw/misc/xlnx-zynq-ddrc.h             | 148 +++++++
- include/hw/timer/a9gtimer.h                  |   2 +
- include/hw/timer/arm_mptimer.h               |   4 +
- tests/functional/test_arm_beckhoff_cx7200.py |  19 +
- 18 files changed, 1561 insertions(+), 12 deletions(-)
- create mode 100644 docs/system/arm/beckhoff-cx7200.rst
- create mode 100644 hw/arm/beckhoff_CX7200.c
- create mode 100644 hw/misc/beckhoff_ccat.c
- create mode 100644 hw/misc/xlnx-zynq-ddrc.c
- create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
- create mode 100644 tests/functional/test_arm_beckhoff_cx7200.py
-
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index b84c6afb32..4c9d79ec44 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -217,7 +217,8 @@ static const FlashPartInfo known_devices[] = {
+     /* ISSI */
+     { INFO("is25lq040b",  0x9d4013,      0,  64 << 10,   8, ER_4K) },
+     { INFO("is25lp080d",  0x9d6014,      0,  64 << 10,  16, ER_4K) },
+-    { INFO("is25lp016d",  0x9d6015,      0,  64 << 10,  32, ER_4K) },
++    { INFO("is25lp016d",  0x9d6015,      0,  64 << 10,  32,
++           ER_4K | HAS_SR_TB) },
+     { INFO("is25lp032",   0x9d6016,      0,  64 << 10,  64, ER_4K) },
+     { INFO("is25lp064",   0x9d6017,      0,  64 << 10, 128, ER_4K) },
+     { INFO("is25lp128",   0x9d6018,      0,  64 << 10, 256, ER_4K) },
 -- 
 2.47.3
 
