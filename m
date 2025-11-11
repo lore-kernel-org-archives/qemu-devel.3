@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C140ACCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 18:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E17CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 18:22:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIszv-0003sd-0j; Tue, 11 Nov 2025 13:21:43 -0500
+	id 1vIt09-0004Qc-A8; Tue, 11 Nov 2025 13:21:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vIsy3-0001uE-H0; Tue, 11 Nov 2025 13:19:49 -0500
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vIszA-0002wb-PI
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:21:04 -0500
+Received: from 10.mo548.mail-out.ovh.net ([46.105.77.235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vIsy1-00060U-O8; Tue, 11 Nov 2025 13:19:47 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.27])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4d5ZZ60WRNz5vqn;
- Tue, 11 Nov 2025 18:19:41 +0000 (UTC)
-Received: from kaod.org (37.59.142.107) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vIsz8-0006L4-4C
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:20:55 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.201])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d5ZbQ4L1Jz5vS4;
+ Tue, 11 Nov 2025 18:20:50 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 11 Nov
- 2025 19:19:40 +0100
+ 2025 19:20:49 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-107S001ba434721-7c73-4691-bd3b-21e20d23aeb9,
+ (GARM-101G00405aa82e9-5f8e-4d2a-bd39-68d148d32899,
  FED24A3CA347B2ADB49E2A92EE4521FA9BC47B0E) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b66d5044-cd8a-4f5d-aad4-c685dcd34e3f@kaod.org>
-Date: Tue, 11 Nov 2025 19:19:39 +0100
+Message-ID: <a589c937-33bb-4647-9282-d9d1e2c15131@kaod.org>
+Date: Tue, 11 Nov 2025 19:20:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 07/12] hw/arm/aspeed_ast10x0: Pass SoC name to common
- init for AST10x0 family reuse
+Subject: Re: [PATCH v1 09/12] hw/arm/aspeed_ast10x0_evb: Add AST1060 EVB
+ machine support
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -44,7 +44,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
- <20251106084925.1253704-8-jamin_lin@aspeedtech.com>
+ <20251106084925.1253704-10-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,27 +89,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251106084925.1253704-8-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251106084925.1253704-10-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.107]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG8EX2.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 3dee8299-b153-4117-8874-87926cc8e511
-X-Ovh-Tracer-Id: 9096426823833914174
+X-Ovh-Tracer-GUID: 823d16c1-2124-4cd1-b6c3-c45fd3009038
+X-Ovh-Tracer-Id: 9115567122886724414
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEu8TXs5pAMOFO/x5lb3fcBUX66ZVaVIhTB8S/g6hk0V1lJwC2jjC00jBVYgxVoniO4Lwm+MCF5fzZjuQXvjYiESdYrGkmy291xLfgyfmlbDTO9Z7vhKQ5DujN865eZ2WAa7a2vQHGn2tSIfnJessBp25PHu6Hg+lPG3k4lHMT2nTrfDvDwag/uBaq7JXtqSAdwEWzkho6Hb6LvzAs1Gupn6K8juLgn07EN42UWJCJ3tX2eVxBosquDHMWIgkCc3QHg8z2WYF+Rprc3wZshOuTdo9XftxuLBEYitUtijxWRVyR+0BXmcZXuqhtyQnu57SMyk/0s4/RuS6tKY2cGjOA2BrT80R8K7dfj5h5CuF6aFZARkTNSKV6LkZ+pW4ijPEbh0ax89tZfX4AQErSorULb8F1Cxl/VX1jGyI+kcC9jAp0UQh5JZgUkOASed2+vNRhj8czUOfCKKrSyWAIFSsjLo86PBC/8cCyLaN22aCqjedHIvHs9jWPtEp7/bCjjqRLdmYqWMMLVXmnoliKXWZgVNaudpEd0We+nGm/DDc5m0ZtY2WVUMaYA2QilxnKRrFMN2eXQiVHAMEkox+sJsaUDw76qbJScjNp5R19oh1gqWEzUHAEX0uldM37OB2/HOQQhF19xy8skw09V2qgst9Fl9ZlibHw4a0XvfAMpf8025Q
-DKIM-Signature: a=rsa-sha256; bh=XQqI37UI4p/gAn5F4R6nqOFxt91wSvefpGxa7d+UrNk=; 
+X-VR-SPAMCAUSE: dmFkZTFI54cztQU0zZOckAHpmcRRbgXHUyEHLdTdlt3xaKkH81BqRuWsu19xpne3PNrpwtgxJxSwWwSNRkEh59YB2pqmH7itmoHdd6dn+GuE2bA1QlWpCibvc5lJqmM/4mIPFjPJfkjHW3cERFREU9EvZhHz4Vl+QEJAe3v/ev7kleGZiuKwZWZlBKQ7La6W4I0yBghXZTxw2TXsOJ1u7wL6qQlTUil4uxFcFxfsKWvfCo/D1fK50NId48NDeTr2GL0CXiA1P/Mzcai8n+EPnwZ9sIvgnWSs9BXXfki5/b5EEzHe2t3kQp3GsA75wY7Umbb017E26jbfsaNl/lAhdxapm74TptoIVSTaLr+4cPzGFpP6IVeJMxzrWiETtbw79qNBUh/wEkAnFMuJr1SIUQO9F2Rw+OtQARat+pmnfV1kLdjRDol/PkQc9tg96Sf7beNQXWeDzIL486qALzEM7H52FEA5L9koYPXT0aHQ/C5TqLB6dMQc6d5lREeFQo7wnnN89tZLnOxip3jXUA80e3BYgoTaHzbkv0aBmBHpjfdbC7lWyXhjwSh23VzG8Xw2dZN4gCUwaYUAL49kwUL5bEFjXY680Uu225YMaecGsTr1NGSWurUS8Ni7Tmuq3LArjKhSlGItZ9huii8hhZmG1Gf+MnoXNWttXvnGd9Cwq316vg0hKg
+DKIM-Signature: a=rsa-sha256; bh=zZS8IkEkG1O88cUD80F8SlbZOiqH7ay+Mme1/7SIE/E=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1762885183; v=1;
- b=MTwIKXe30ahEcJmKbqxZwQanF5bL068NKtu7K5ToIEN/hEJQ3mEOleYjx3dWdVShLHT8YfMT
- npmJbzXN2XIDnfiqxpuggCbJWR1+bIWfz8afy9XbPuWi/qntkW7T6c059PrcMAF3CsQrteRj/CJ
- NgwhAkUbvIr4NKNKp8IizOHoBszPuKVzgC1W+E9CUDS5EqLx7XW9cuye0X4ux6aYDfIeX9MpA6v
- C3Z8zcABklzPj5r5BvBdjKQEOsEV5JC9sb4qJCHK17+huoiO0P+9dwEdbFMG797NjvRRe59VJZa
- aK6lDTwevxS7CZBuAtwslBOXyN1M3sLuZ+ehbHgXmKxIQ==
-Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
- helo=smtpout1.mo529.mail-out.ovh.net
+ t=1762885251; v=1;
+ b=JQKrpfYUjf1DJm5mXf9p5zddZ0CYg8pKT1jaYkjiexfq3z8R5YxIMmCHAVLNZvcPmuvU/z61
+ p3jnTSHgH/B56uQbdXpAswVzC6E/q6Mb97N9MQrTBbWyUcPokS3HSqcmpMc3FYnYotgvu0gBps/
+ Jsa2yrGeqWPorpdW6ReBiJ9v/yL2H92JcXQCOM4RPS92V1xvv/7reKivMPHBFTb8HMQzbI9Jpis
+ BmkfH6oqot7MyuKCIdppJ0G8xvMd4OfhihXIwsucuDq/VBDJsJm04APfk8g71hjo6B8NbnuloUH
+ QH46smpI1/RjB8D7rNRKtBGl4VZtl3IkPP65ymeMy7yTg==
+Received-SPF: pass client-ip=46.105.77.235; envelope-from=clg@kaod.org;
+ helo=10.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,7 +117,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,76 +134,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/6/25 09:49, Jamin Lin wrote:
-> Refactor the AST10x0 common initialization to accept a socname
-> parameter.
+> Add a new machine definition ast1060-evb to support the Aspeed AST1060
+> evaluation board. The new EVB reuses the same MiniBMC framework used by
+> AST1030, as both SoCs share the same core peripherals and controller
+> designs.
 > 
-> The AST1030 model can be reused by AST1060 since they share most of the
-> same controllers. This approach allows AST1060 to leverage the existing
-> AST1030 initialization flow while keeping separate SoC-specific init
-> functions for components that differ.
-> 
-> This prepares the framework for AST1060 support, allowing it to reuse
-> AST1030 device models and initialization flow without code duplication.
-> 
-> No functional changes.
+> The AST1060 EVB machine initializes the ast1060-a2 SoC and sets the
+> FMC and SPI flash models (w25q80bl and w25q02jvm) for simulation.
+> This enables QEMU to boot and emulate firmware images for AST1060-based
+> platforms.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast10x0.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+>   hw/arm/aspeed_ast10x0_evb.c | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
 > 
-> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-> index 5bbe16af24..c85c21b149 100644
-> --- a/hw/arm/aspeed_ast10x0.c
-> +++ b/hw/arm/aspeed_ast10x0.c
-> @@ -107,19 +107,14 @@ static qemu_irq aspeed_soc_ast1030_get_irq(AspeedSoCState *s, int dev)
->       return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
+> diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
+> index 7af2a77865..a01385b543 100644
+> --- a/hw/arm/aspeed_ast10x0_evb.c
+> +++ b/hw/arm/aspeed_ast10x0_evb.c
+> @@ -96,12 +96,35 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+>       aspeed_machine_class_init_cpus_defaults(mc);
 >   }
 >   
-> -static void aspeed_soc_ast10x0_init(Object *obj)
-> +static void aspeed_soc_ast10x0_init(Object *obj, const char *socname)
->   {
->       Aspeed10x0SoCState *a = ASPEED10X0_SOC(obj);
->       AspeedSoCState *s = ASPEED_SOC(obj);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> -    char socname[8];
->       char typename[64];
->       int i;
->   
-> -    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
-> -        g_assert_not_reached();
-> -    }
-> -
->       object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);
->   
->       s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-> @@ -184,8 +179,13 @@ static void aspeed_soc_ast10x0_init(Object *obj)
->   static void aspeed_soc_ast1030_init(Object *obj)
->   {
->       AspeedSoCState *s = ASPEED_SOC(obj);
-> +    char socname[8];
+> +static void aspeed_minibmc_machine_ast1060_evb_class_init(ObjectClass *oc,
+> +                                                          const void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 > +
-> +    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
-> +        g_assert_not_reached();
-> +    }
+> +    mc->desc = "Aspeed AST1060 PFR (Cortex-M4)";
+
+What does "PFR" mean ?
+
+> +    amc->soc_name = "ast1060-a2";
+> +    amc->hw_strap1 = 0;
+> +    amc->hw_strap2 = 0;
+> +    mc->init = aspeed_minibmc_machine_init;
+> +    amc->fmc_model = "w25q80bl";
+> +    amc->spi_model = "w25q02jvm";
+> +    amc->num_cs = 2;
+> +    amc->macs_mask = 0;
+> +    aspeed_machine_class_init_cpus_defaults(mc);
+> +}
+> +
+>   static const TypeInfo aspeed_ast10x0_evb_types[] = {
+>       {
+>           .name           = MACHINE_TYPE_NAME("ast1030-evb"),
+>           .parent         = TYPE_ASPEED_MACHINE,
+>           .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+>           .interfaces     = arm_machine_interfaces,
+> +    }, {
+> +        .name           = MACHINE_TYPE_NAME("ast1060-evb"),
+> +        .parent         = TYPE_ASPEED_MACHINE,
+> +        .class_init     = aspeed_minibmc_machine_ast1060_evb_class_init,
+> +        .interfaces     = arm_machine_interfaces,
+>       }
+>   };
 >   
-> -    aspeed_soc_ast10x0_init(obj);
-> +    aspeed_soc_ast10x0_init(obj, socname);
 
-
-As Philippe suggested, why not use directly :
-
-        aspeed_soc_ast10x0_init(obj, "ast1030");
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
-
-
->       object_initialize_child(obj, "lpc", &s->lpc, TYPE_ASPEED_LPC);
->       object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
->   }
 
 
