@@ -4,220 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53FBCCFA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 05:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C22CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 06:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIhD5-0003fi-81; Tue, 11 Nov 2025 00:46:31 -0500
+	id 1vIhSm-0006Vi-6n; Tue, 11 Nov 2025 01:02:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1vIhD2-0003dY-Mi; Tue, 11 Nov 2025 00:46:29 -0500
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vIhSi-0006Sl-3V
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 01:02:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1vIhD0-0005sN-EP; Tue, 11 Nov 2025 00:46:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P8mKgKA7VckUun093ZRzd9JaB5lexzyUqpjXxUgbeAdrPe6+cam5Gv5qsovnquVDNfwWIqD6lPTB4zxaQx8zQQDjPkF5BwbbmhPweMrjgBhzTtxgYwirTv8LybW6nSu0+pEvsM8eo6leZRiJCT73ZApYf8qFV4zzFT9BGrTpjZ67gvqwernLZ1NsFdjjxMQnsSdf1rjnj6hv9TYwhna8VZTWmZNphdOzr5jJdLBca+b3xr3T9SA/7m3OnFg5tG5ZuJoXDWWaESUPAVlMIuWJLYCmLqNjTHy9gRDyKv3AQYINtk20uqMxvnXY1vSrs4h3IRujJDOjKw0IhNCjTL1x1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rt2Hig76ubE1oF4cme4Uv0LC/uHJ6E9EdHIZ4zPBvS0=;
- b=C6Z4P/HdGNZ4zrWCHH0FIM5mckzoU8+Z/2UzxOCBtK2HNgcwxSoXikCJ4iBoYz66pMhsJKCwQGCV5y8gpyK75x4ZVdxtcxtul3JDGmXz3BTEf6ZWN3eb1I97VIjGneLfqNkAsRsHyD8vE2g64oYeFzdjOcOYRSxSjoA4qyVqorog0nWyw6R3crvMxKfqTeLtvo334bOyXsRD+HxOt8uMd8z6kUU35tyl+bFjXyr50FhMekJG4aOuH8GNlZDIMV13sQimVw/8nM6nYpgvwJb/vqotOR75Z6JAZ+hn4vIwE+Boer+vBJ+4SdJiNCtH2whxd4nSSt4a6oe04CJKjnBrlQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
- dkim=pass header.d=siemens.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rt2Hig76ubE1oF4cme4Uv0LC/uHJ6E9EdHIZ4zPBvS0=;
- b=qpXh4oih2kGRO43DrFR34ScvQD7EVVSa2LSV6otCZyoT5i1pJ7HLVfvL2LGn7wwTPur+y9ABjfVr+X8bInBDrabSntkKT8GuNGYNahotqsyT32swnyxAkK0WODgem//7jOeziYnZABSi/x/gj3RYJ5eYV93Hqj2+gFu5mINLYJJhly2svnS9rauWZbnyGy8Axa9UTG0mJhqwfswIGKyjXSSCigoypUEdNCJh2pU79gOeU9e4bKVlmGoIIp7n/Ce2HcTE2gWNXRgrpyaC39hCZCc9uQHpYtpqSzVlLt2OBEkmxrwznJVU6WNljizKzryKmugwCRz8Mv1c8P3hejJSHQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siemens.com;
-Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
- by PAXPR10MB5544.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:242::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.16; Tue, 11 Nov
- 2025 05:46:17 +0000
-Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::8fe1:7e71:cf4a:7408]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::8fe1:7e71:cf4a:7408%6]) with mapi id 15.20.9298.015; Tue, 11 Nov 2025
- 05:46:17 +0000
-Message-ID: <82b3079e-0bff-4b27-a0e1-204d787fffc4@siemens.com>
-Date: Tue, 11 Nov 2025 06:46:15 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/17] hw/arm/aspeed: Attach UART device to AST1700
- model
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- 'Peter Xu' <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: troy_lee@aspeedtech.com
-References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
- <20251105035859.3709907-8-kane_chen@aspeedtech.com>
- <1d1cf03e-204d-4029-b188-a0e49a59d853@kaod.org>
-From: Jan Kiszka <jan.kiszka@siemens.com>
-Content-Language: en-US
-Autocrypt: addr=jan.kiszka@siemens.com; keydata=
- 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
-In-Reply-To: <1d1cf03e-204d-4029-b188-a0e49a59d853@kaod.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR0P281CA0243.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:af::10) To AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:20b:588::19)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vIhSf-0007k6-HS
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 01:02:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762840955;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=koH81FTGaXA6b5zb+G0vk5e0prX1lbQsjBrO4oK8u+E=;
+ b=dr//QQc/G4uiM/l6oWCwWv5kFRfUlTzoFo/N3vpmVDugs4EvKfuUYHxpGhrUfpaSFOvSi9
+ A/3/7NdR2LA28q4psQdpHMAtx1KnjDt6X40HztcLioFdHdgDy7I5OZ6R0wTMLwg8ftziqC
+ dB4Bu9bDlOKfFV6UmAAULs1QIcS7OQE=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-141--ojs10eyNHychStXce7EIg-1; Tue, 11 Nov 2025 01:02:33 -0500
+X-MC-Unique: -ojs10eyNHychStXce7EIg-1
+X-Mimecast-MFC-AGG-ID: -ojs10eyNHychStXce7EIg_1762840952
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3438744f11bso2917666a91.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Nov 2025 22:02:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762840952; x=1763445752; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=koH81FTGaXA6b5zb+G0vk5e0prX1lbQsjBrO4oK8u+E=;
+ b=aiLdxnS1VO8BqHhCnjo3KF8ZvsfwgBsjTlV1hTOodiBwd0oFlSpLT0G5DX6zDex6At
+ xbkIYUxWc/M0UAWJhwk4+jL5SJteUQggzisCxcCdPHrGGELLsYXLXBsFW90JGQ6TJO6Z
+ zkgDVmRwxHIRF/kkFdxIzY9bN1mqcDaS9q/9FhdAsgYQK+mxbKzzWU5Q2SslYbk+3BrK
+ X6i6/RTuJo8dwYWtrLe+bY8SrGwAfPECbPRBg4IKXiXW/AgCi8dl05/cVZxxq4JHDkDZ
+ zdEk6y5UATNU6n339JjuTlXncuGQdpzE2N+1HlB2R6B0X1UfBsgxkZBK9cFNTuOBLHRq
+ 44yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762840952; x=1763445752;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=koH81FTGaXA6b5zb+G0vk5e0prX1lbQsjBrO4oK8u+E=;
+ b=VPkAREAfvaGZW6mQgxLqGrlIue1p6N5I5DoWPp8AjE7yEvaHZ529+Q+rn9JAsWKC3s
+ fpEHFj0QOUwGy1s/hTpeFR5n6kI9ZXhXnv8nMwkWgtindKxMHtQrjOEEqcI2VmAnE9hx
+ e5unE9nPJOgHyRpcESDJ52GGOm0Ly32BzcJe0XzEfYsliVHBJViCWJelSpT3Az3t4fzJ
+ MqFcvZat8rMnVvUyDHz7s5XXipKOhqteWIkSTaT73qcvI2qX5Eb7iKiLNCh5jfVu0LrR
+ MFdQCKetIvSY8XnlEfh1pxemml+kXSMlmKs6wRta3ZkWSa9O7cyKrmZW6myqsOXlnlPb
+ 2vNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUGeqaNGqvAUmR5wYAHS4/ntLJ6dtr6+HWlOUkxWznC26MT2Go34m6ACiPySVRgzkpUo5jsk5RVbHv@nongnu.org
+X-Gm-Message-State: AOJu0YyiDzk1s59zCVhEIFsEyYyJlINBvw8Ep2BaCOdZ0Knzj5VcvBD7
+ 2YtbbTb/NZsSiKvoKwwWZVwQqgWCaq5Rr+GswwXUjGv5FpXXEJrr8We5aSwwlPs/GfTPPiWsjm9
+ /IdkCvY5KwXxO/5KE+XQ2lCIy+7KpRTOVS0puP0J6rgmobTQewmMzlO49
+X-Gm-Gg: ASbGncvl8KEf5Nh4mBxKMSUpNs4b9k3wkP3I8oeo0CgTJq8jcRM+JNEltPxH9Fnlmp9
+ iN6JfnR/ZERS340pIxqVhEqmqVlSnZnHzM3wO902WXMRKR4x5oBvUHsWTG6fuCu6ramS/YtXO9Y
+ WtsNYPUn6aV3S4fhK45U/b5gMMwJkDHU5tFU9gCjBTZ9hGn8T450gMYxdcOE3gsmlOd7ZHzziHT
+ kknbF+V5RdX9yOX4c7klkWYzsx8ZXBri0ZS1TFlRx1eyJO1/WHzARIzLRrB/zZLMQFr240QgJDD
+ zy9yePnUFjxrJeAAz6U+6UOrF9ZP4xv08u5HVQlkAc7RUo20fRaizSNyNG16wJ3IHGo9pEbbYhT
+ +XSCv7nmNhrrd9mwq80RnJ3l//0eSlif31YbiK/E=
+X-Received: by 2002:a17:90b:17cb:b0:340:e521:bc73 with SMTP id
+ 98e67ed59e1d1-3436cb73b73mr12513648a91.5.1762840951923; 
+ Mon, 10 Nov 2025 22:02:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFzPdJPk3Wrt3JCPxia0buuUMKIFZVDvMzforq2lAJo6mRKfjyheZLW//gK9V1l/tF0uLzxkw==
+X-Received: by 2002:a17:90b:17cb:b0:340:e521:bc73 with SMTP id
+ 98e67ed59e1d1-3436cb73b73mr12513610a91.5.1762840951465; 
+ Mon, 10 Nov 2025 22:02:31 -0800 (PST)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-343c52046f6sm512563a91.14.2025.11.10.22.02.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Nov 2025 22:02:30 -0800 (PST)
+Message-ID: <b673bf36-cf1b-4103-bce8-0465a1385403@redhat.com>
+Date: Tue, 11 Nov 2025 16:02:24 +1000
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|PAXPR10MB5544:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff6483bb-46a3-468a-c6b9-08de20e5a251
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|921020; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bmliVWJHYmRBTUFwSDFzRWxIbHNieG1QSVJlSTVSdlBQaHd4ZXo0WjZFK3VI?=
- =?utf-8?B?RnQ1ejJudmF5K0UvTHNMN1EzbytleUR4RHVQNkNqeVAxeFRwNEJ1c2FaN1ox?=
- =?utf-8?B?RGVwRHhkRUExOFRsd3FsRHA1dTN0OVdsMm1RUUlaRnVOV2U5MXViL291STYv?=
- =?utf-8?B?RFpiOFBtREdRRmpIekFsTTg4QTFhYW5sd05ZbDh2a2lFL1NkKy9iYjdCelBh?=
- =?utf-8?B?c2NCR0tweFVtZDRUTjQxdC9kRS9oYzR0YUlUaU8vZmR3YmRybWIvK0ttZzRS?=
- =?utf-8?B?M2wzNWNxYzBGZXliT2wyT3RCWkNGZFg2bG9YZk0zQk40bjFINkdWOWxtbzkw?=
- =?utf-8?B?SFkrTTM4UUNzZEdaNDVEMGg5aG1kR2h1b2ZMMy8zQW1RM1lQY2NEZGs1NXlJ?=
- =?utf-8?B?MHJwdmExaml3RTRNczc1TE9vMGk4UVRZOXJEa243TGxvc3N1VkxuMlZpQndU?=
- =?utf-8?B?MEZ2bTJhV2xDSG1DWERiMk5KRVJieW9yNEx3SmxScUwzbE9vQnZaa2JpOHdw?=
- =?utf-8?B?KzRaYUZNVmJEY1VyT2J3UlFCUDZKa3VibU0rUy91T0hWMzdvcS96ay9MWDJK?=
- =?utf-8?B?dDBPWnQ5R2VobW1lSWs5MEFISy83OVNJMDR5Y3VTbXd4ak1FRzJDTFpQVC9M?=
- =?utf-8?B?ZEhaRWM4TTZyZDhhRHZ1TGZDV09aUi9lYVhRcjRzdmpKdXhtNGxFUE9UckRM?=
- =?utf-8?B?Qm9QeGdOeitkRnUzUGxqaDRmZlp5VEkxQzBteElBWk1kcWV0OUE1UHpXTHVI?=
- =?utf-8?B?ZTJSSFNTS1dTZENqRHB4Q2lxaGpqUUhMWlBUUUF6YUgwMUxWN3p2Wkk4K3RT?=
- =?utf-8?B?MVV0MHpwQkxlajl2ZUNKV3F6Vzk5OWdFdFk0U3ZNOUZlRDI2SkV0L2RFNkU4?=
- =?utf-8?B?WTZnZW1IL2V1WmlyMjh5OEZEYyt6WEtlZmU2Y3F5SERDMlpLZm9zc2dPRFRr?=
- =?utf-8?B?NzVTcDRBcjhiQXdyRFZXQ2hvQ0JZdld0MFhlcm81MnVVb1EzU3lCNUs0VkZ1?=
- =?utf-8?B?S3BXc3lFTFJkbEVLNXpxQVQvS0ZnRUJZUXJUazdKaGxMenJBOWhGanFja3A0?=
- =?utf-8?B?d1NCUjdGNE85dmFDUUtFWDEraWlpN1JIS0hody9GRW5XMFFNaVg3RyswczlB?=
- =?utf-8?B?UzJEa3RQUi9hc1YyaWxkay9PbEFRTmYybCswM0hZMVExVUFtNGhvK0I3ZkE3?=
- =?utf-8?B?SlZPVmp5S1BiamY0cGxjbHNoSko4THpTQ00rVC85aDdSemFmNFZCMzlOQmZ2?=
- =?utf-8?B?TWZhQWlTZFRuaHdUbXJuTDRrL0ltQUpMY1ZLdUxmeVJSNFpGS09tOG5wdFJW?=
- =?utf-8?B?K2Y3dno1My9jYndudmJKZHZlWVNzQWpSa1FQSTFsbGxUTXl5MFFDS3BHUUJk?=
- =?utf-8?B?RURHbUxpeGZDdnYya2hPRXUwY3I3UXJxbHdvTDZOOTUvOVFNSXNaV1F4Y3FF?=
- =?utf-8?B?N1hxK0w3YVU5V1BFRys5NDVGRWVSSml0VTNvL3ZNaHJvMGFmMWgzQWxNZ0N2?=
- =?utf-8?B?UjZEZVI0YjNNcWlQUDNnUlNhUlE1cWlBYzlFWC84QjNGaHhKSWRUNXZFc3lJ?=
- =?utf-8?B?K0JzQ2d1NjEvOENDQVhDRmo3VDVwVmozeVVZdjRONWxOYmd4UHZNaTV6YkxK?=
- =?utf-8?B?aUZHYkFuZkhRaVBmK0VER3A3bjArY1AyS3F1ZDJieTBOY0Nna1hBYzVvTzJz?=
- =?utf-8?B?NnlsYU5zVzdKY0tOUjBmbHJFcVBZUmcwL0RkYlQ3dll0NXI5QW9rdUJ4dXlO?=
- =?utf-8?B?OXRyQXEyYzZ0am9Gdk5mVjdUOHJPNEJPRnBxYkI1QnRTZzlxdFVORG9Wbnh3?=
- =?utf-8?B?eUpZZUdwejh2a3FnbEtjR0QwR1Zmdng1cnVJaFZoc1hKMWhyTy9iTGxpUVR5?=
- =?utf-8?B?VUhLclNYUjAvQ3ZxcUQ1WXRGM2FReHJMcEJvOXJZcTFVNG8waVB4YTBuNW9i?=
- =?utf-8?B?Sm5yUU5kZWlUUFNFSDBlWmVkSHo4TC9jQ3J0VG5GeVF4NWFid0szUnREcGJ6?=
- =?utf-8?Q?6Y0LAahV5tegF7FLb3EaiMTttqTbBs=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(921020); DIR:OUT; SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c2xiOG40WCtaWkZEbzRxZmNTNVNLSWlVUmxXZUkvVllNQmtUdHkxTmpFaFNV?=
- =?utf-8?B?cjN6SWRkQmFRdnBmbFdtbjVvVlhmRUoxNStJLzJSbHIyRTN0emcwZkZhMmtl?=
- =?utf-8?B?RmhiZjlGQkZQZzZub0lyTW1ETmZmV0xGR3pwZFVCdUxLRXJKb29yV0VEUjhk?=
- =?utf-8?B?dXNVenlmWlRZdFA2dUkzM2RjNzhKRGhEcVhId3Zma2xjNDZ1eHJLUzJ6WmVX?=
- =?utf-8?B?VlQ0UWc1eGtXVi9MYUFodWlVNysrR1dVT1R1UjJpM3dYVDQyN09qQjlMYjlJ?=
- =?utf-8?B?NmtoS1ZIaTRpTEhNUHlQQjlzVWhtOUlHaEFGOGhNbTZJS3hkVmpraFkvdy91?=
- =?utf-8?B?NS9pMXhzMUM2b1RTenlPK0JrcmNFakhwaW9BMmxhL0M2OEUxL3NGN1lUME5a?=
- =?utf-8?B?TGIrdXJPODAzcjQrV1RJV3hjTUtMYjNuN0dDajFFdmZlWHFmTXJzdkJYTU9E?=
- =?utf-8?B?VDNvYVZjdDFRdE1XOWJ2cFp2ekFXdUdpNnEzanBWZnlVblo2bGlMeFQrN0Iw?=
- =?utf-8?B?Q3pFY3RPVzBOeXpSWm1WK20yZjRRMGVVbURHRUlaV2haRlRmUjZqbS9BK2Zm?=
- =?utf-8?B?SHRlMFpNWExwVTUzUGFHTmtJT2tiQ1dzaTNMRElEY01HUGE3RVpCWWlESjIx?=
- =?utf-8?B?NG1sOHZqYWxTSGdxQlBVd3g0ZlU3Ujhwa3A1akVWM2RpdnhNRFhJRFE4SWFK?=
- =?utf-8?B?YW1scnJFbUdDUTdaQnNqdTBtTGFZM01xNVZyY2JBR01GUytoS1JuT2o1c1F4?=
- =?utf-8?B?NEpkelNmVGlkeXEvVitDM1B1RU53NHQxbklndnhsMkcrTk0wc0JkZFRLbEVS?=
- =?utf-8?B?bFp3bTgvU3NMTzNQYUlNeDEvZXQ1VzF3ZVNuWFRMVUtFcUMrZHhPcmY3TnZz?=
- =?utf-8?B?anRGdndYaEdMa2hjQmhXWGdialNTbG9XUDI2WUNwWHhqcXgxRVNHOGFlS1RT?=
- =?utf-8?B?bnB2ZE9jaGdMbmF4NldjcWNTeXBGWlhaZDZOMTlRcnJ5UW9STGZyRHJmdEZT?=
- =?utf-8?B?QU1nYmFraVlJRi9KRHZWMmpiS1ZFRXZab1BjRXB2UHJLQ3hiOXRhQ0U5ampJ?=
- =?utf-8?B?VWpRNFVYMElDMmxOUDhwblEzZ2dwQ0tMM0lkM0gvTjQ3YkRJL2hGa3Ava3N6?=
- =?utf-8?B?b0xiWFV0VmpTZTd4ay9NeDFLNVUvS1Z4Y3haUEx3ZXBmRUtzWXFlREdsVXpR?=
- =?utf-8?B?TDIza1N5QlM1NERRbDVpRS9XNStmNERibmpkSEhUd0FXL3ZhSHlIcUJEZzZ6?=
- =?utf-8?B?WG9ma2lPSTNFR3BLMVRucWY3NnBnUXVBOEp4eGJkRWNGUTJFZXgyOUNpUU44?=
- =?utf-8?B?d0o0TEpUajNNczNDVlF2TXoxdzQ2R1hEVjZGbjJBdnZqUHNnM281RVoydTAv?=
- =?utf-8?B?TFVQNVJlVFh6RkJueXM1Zk4vaHZncTFTZUhxQzgwQm55aUk1ZXk4RG5EdjVv?=
- =?utf-8?B?UzZRNk5OVVUvWFRvQ0VMRll4QlFzcHlUV0RhKzRHT2hsVGFSTUk0N1Bnek5D?=
- =?utf-8?B?OGhQYVMrcWViVmNrL0tJc3NlN2ZNVUpscVEzMVpIM3hyR2VWaDVmK3ZUZEdn?=
- =?utf-8?B?ZEpEbVZoRGZiZ1FXemVhSWZWUGUzNzIydmo0c2tnODF5NHNqVmFZbi9WL0xN?=
- =?utf-8?B?c2gyNDNFS2pWN25WYkMyMEZEdDFFR3JDWnBxcm1CelVYWko4Vi8zNVEweWJQ?=
- =?utf-8?B?NlMxZmhGNFQzR2VuVzdVL0YyTDFqdlU0NTJuNWs1T3RiQUdHaWZoM2dWaWtR?=
- =?utf-8?B?SkFndkNlUDJuT3dOdXErLzdXTzRnamNabGFqdDRVTlhBc3F0YUhrdjVSOUNE?=
- =?utf-8?B?MGptWkZneFY1TTNUMGNnMUxQeDR6NW0wbnhvOXpicTVlZGo4eDBiUmZWN3ZF?=
- =?utf-8?B?dUVEak1NNk9BeHI2ZXB0Z3ErMCtaeVhhKzl4WVkxVUF5R0hIbmd1V29MSElH?=
- =?utf-8?B?Yll2WWxrVS9jSjZOaytXdTQ1Wlk1R1NPSnRPRFV5UmkyK1BvMzdRcUx5ZUxm?=
- =?utf-8?B?Z3NzVGZqQWVUNDNheWxWWDNGdkszbUhQZTdlNkUxR0V1cXUwMnY5dFZ6dlZt?=
- =?utf-8?B?aDA2VWhZMUc0L1JOc3YyMXMxMVRDREZGeE9IWEZvcnZUbW5HWTRZbVZMT1FR?=
- =?utf-8?B?OFVsR29FYkZob2xQM2laMTN4K0sxOU9hemp0UGk5Nlkyck5QdFovZ2I4cXZJ?=
- =?utf-8?B?cXc9PQ==?=
-X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff6483bb-46a3-468a-c6b9-08de20e5a251
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2025 05:46:17.7750 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ugLlZ/d5t0KWL6uhG57KgqjcAP2rfPwgQuOJ/3Be1fe8bqcMCPBMAjyc2HGyv1HdHyiUxh3c1B9sbLoog4KQ5A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR10MB5544
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
- envelope-from=jan.kiszka@siemens.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 6/8] acpi/ghes: Use error_abort in
+ acpi_ghes_memory_errors()
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ mchehab+huawei@kernel.org, gengdongjiu1@gmail.com, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com
+References: <20251105114453.2164073-1-gshan@redhat.com>
+ <20251105114453.2164073-7-gshan@redhat.com> <87o6p9gmy4.fsf@pond.sub.org>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <87o6p9gmy4.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -233,146 +128,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.11.25 17:04, Cédric Le Goater wrote:
-> Hi,
-> 
-> This change appears complex due to the use of routine
-> qdev_set_legacy_instance_id(). It was introduced 15 years ago
-> by commit 4d2ffa08b601 ("vmstate: Add support for alias ID"),
-> for the PC world AIUI.
-> 
-> Adding Jan, Peter, Fabiano for feedback on the current relevance
-> of qdev_set_legacy_instance_id(), particularly in the ARM/BMC world.
-> I feel we could get rid of it and simplify this patch.
-> 
+Hi Markus,
 
-I have to dig deep in my memories but if I got it correctly again,
-qdev_set_legacy_instance_id is (was) only there to transition an
-existing but self-registered vmstate for an existing device model to
-qdev-registered vmstate. We neither have a pre-existing device here, nor
-do the aspeed machines or devices open-code their vmstate registrations.
-
-Jan
-
-> Thanks,
+On 11/11/25 3:25 PM, Markus Armbruster wrote:
+> Gavin Shan <gshan@redhat.com> writes:
 > 
-> C.
-> 
-> 
-> 
-> 
-> 
-> On 11/5/25 04:58, Kane Chen wrote:
->> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>> Use error_abort in acpi_ghes_memory_errors() so that the caller needn't
+>> explicitly call abort() on errors. With this change, its return value
+>> isn't needed any more.
 >>
->> Connect the UART controller to the AST1700 model by mapping its MMIO
->> region.
->>
->> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+>> Signed-off-by: Gavin Shan <gshan@redhat.com>
 >> ---
->>   include/hw/misc/aspeed_ast1700.h |  2 ++
->>   hw/arm/aspeed_ast27x0.c          |  2 ++
->>   hw/misc/aspeed_ast1700.c         | 26 ++++++++++++++++++++++++++
->>   3 files changed, 30 insertions(+)
+>>   hw/acpi/ghes-stub.c    |  6 +++---
+>>   hw/acpi/ghes.c         | 15 ++++-----------
+>>   include/hw/acpi/ghes.h |  5 +++--
+>>   target/arm/kvm.c       | 10 +++-------
+>>   4 files changed, 13 insertions(+), 23 deletions(-)
 >>
->> diff --git a/include/hw/misc/aspeed_ast1700.h b/include/hw/misc/
->> aspeed_ast1700.h
->> index c2bea11346..e105ceb027 100644
->> --- a/include/hw/misc/aspeed_ast1700.h
->> +++ b/include/hw/misc/aspeed_ast1700.h
->> @@ -28,8 +28,10 @@ struct AspeedAST1700SoCState {
->>       SysBusDevice parent_obj;
->>         MemoryRegion iomem;
->> +    hwaddr mapped_base;
->>         AspeedLTPIState ltpi;
->> +    SerialMM uart;
->>   };
->>     #endif /* ASPEED_AST1700_H */
->> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
->> index 11625e165a..7151feb35d 100644
->> --- a/hw/arm/aspeed_ast27x0.c
->> +++ b/hw/arm/aspeed_ast27x0.c
->> @@ -1070,6 +1070,8 @@ static void
->> aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->>         /* IO Expander */
->>       for (i = 0; i < sc->ioexp_num; i++) {
->> +        qdev_prop_set_uint64(DEVICE(&s->ioexp[i]), "mapped-base",
->> +                             sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
->>           if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
->>               return;
->>           }
->> diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c
->> index 0ca2b90ff0..1c2d367cdb 100644
->> --- a/hw/misc/aspeed_ast1700.c
->> +++ b/hw/misc/aspeed_ast1700.c
->> @@ -18,22 +18,39 @@
->>   #define AST2700_SOC_LTPI_SIZE        0x01000000
->>     enum {
->> +    ASPEED_AST1700_DEV_UART12,
->>       ASPEED_AST1700_DEV_LTPI_CTRL,
->>   };
->>     static const hwaddr aspeed_ast1700_io_memmap[] = {
->> +    [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
->>       [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
->>   };
->>   static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
->>   {
->>       AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
->>       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
->> +    hwaddr uart_base;
->>         /* Occupy memory space for all controllers in AST1700 */
->>       memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
->>                          AST2700_SOC_LTPI_SIZE);
->>       sysbus_init_mmio(sbd, &s->iomem);
->>   +    /* UART */
->> +    uart_base = s->mapped_base +
->> +               aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12];
->> +    qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
->> +    qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
->> +    qdev_set_legacy_instance_id(DEVICE(&s->uart), uart_base, 2);
->> +    qdev_prop_set_uint8(DEVICE(&s->uart), "endianness",
->> DEVICE_LITTLE_ENDIAN);
->> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart), errp)) {
->> +        return;
->> +    }
->> +    memory_region_add_subregion(&s->iomem,
->> +                       
->> aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12],
->> +                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s-
->> >uart), 0));
->> +
->>       /* LTPI controller */
->>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
->>           return;
->> @@ -47,6 +64,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
->>   {
->>       AspeedAST1700SoCState *s = ASPEED_AST1700(obj);
->>   +    /* UART */
->> +    object_initialize_child(obj, "uart[*]", &s->uart,
->> +                            TYPE_SERIAL_MM);
->> +
->>       /* LTPI controller */
->>       object_initialize_child(obj, "ltpi-ctrl",
->>                               &s->ltpi, TYPE_ASPEED_LTPI);
->> @@ -54,11 +75,16 @@ static void aspeed_ast1700_instance_init(Object *obj)
->>       return;
->>   }
->>   +static const Property aspeed_ast1700_props[] = {
->> +    DEFINE_PROP_UINT64("mapped-base", AspeedAST1700SoCState,
->> mapped_base, 0),
->> +};
->> +
->>   static void aspeed_ast1700_class_init(ObjectClass *klass, const void
->> *data)
->>   {
->>       DeviceClass *dc = DEVICE_CLASS(klass);
->>         dc->realize = aspeed_ast1700_realize;
->> +    device_class_set_props(dc, aspeed_ast1700_props);
->>   }
->>     static const TypeInfo aspeed_ast1700_info = {
+>> diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+>> index 4faf573aeb..4ef914ffc5 100644
+>> --- a/hw/acpi/ghes-stub.c
+>> +++ b/hw/acpi/ghes-stub.c
+>> @@ -11,10 +11,10 @@
+>>   #include "qemu/osdep.h"
+>>   #include "hw/acpi/ghes.h"
+>>   
+>> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>> -                            uint64_t *addresses, uint32_t num_of_addresses)
+>> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>> +                             uint64_t *addresses, uint32_t num_of_addresses,
+>> +                             Error **errp)
+>>   {
+>> -    return -1;
+>>   }
+> 
+> Before the patch, this function always fails: it returns -1.
+> 
+> Afterwards, it always succeeds: it doesn't set @errp.
+> 
+> Which one is correct?
 > 
 
--- 
-Siemens AG, Foundational Technologies
-Linux Expert Center
+Both are correct. This variant is only used on !CONFIG_ACPI_APEI. In this case,
+there is no chance to call this variant in the only caller kvm_arch_on_sigbus_vcpu().
+acpi_ghes_get_state() returns NULL on !CONFIG_ACPI_APEI there.
+
+>>   
+>>   AcpiGhesState *acpi_ghes_get_state(void)
+>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+>> index 055e5d719a..aa469c03f2 100644
+>> --- a/hw/acpi/ghes.c
+>> +++ b/hw/acpi/ghes.c
+>> @@ -543,8 +543,9 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+>>       notifier_list_notify(&acpi_generic_error_notifiers, &source_id);
+>>   }
+>>   
+>> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>> -                            uint64_t *addresses, uint32_t num_of_addresses)
+>> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>> +                             uint64_t *addresses, uint32_t num_of_addresses,
+>> +                             Error **errp)
+> 
+> qapi/error.h:
+> 
+>   * - Whenever practical, also return a value that indicates success /
+>   *   failure.  This can make the error checking more concise, and can
+>   *   avoid useless error object creation and destruction.  Note that
+>   *   we still have many functions returning void.  We recommend
+>   *   • bool-valued functions return true on success / false on failure,
+>   *   • pointer-valued functions return non-null / null pointer, and
+>   *   • integer-valued functions return non-negative / negative.
+> 
+
+Question: If it's deterministic that caller passes @error_abort or @error_fatal
+to acpi_ghes_memory_errors(), QEMU crashes with a core dump or exit before its
+caller to check the return value. In this case, it's still preferred for
+acpi_ghes_memory_errors() returns a value to indicate the success or failure?
+
+>>   {
+>>       /* Memory Error Section Type */
+>>       const uint8_t guid[] =
+>> @@ -555,7 +556,6 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>>        * Table 17-13 Generic Error Data Entry
+>>        */
+>>       QemuUUID fru_id = {};
+>> -    Error *errp = NULL;
+>>       int data_length;
+>>       GArray *block;
+>>       uint32_t block_status, i;
+>> @@ -592,16 +592,9 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>>       }
+>>   
+>>       /* Report the error */
+>> -    ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
+>> +    ghes_record_cper_errors(ags, block->data, block->len, source_id, errp);
+>>   
+>>       g_array_free(block, true);
+>> -
+>> -    if (errp) {
+>> -        error_report_err(errp);
+>> -        return -1;
+>> -    }
+>> -
+>> -    return 0;
+>>   }
+> 
+> The error reporting moves into the caller.
+> 
+
+Similar question as above. If it's deterministic for the caller passes @error_abort
+or @error_fatal to acpi_ghes_memory_errors() and then to ghes_record_cper_errors(),
+QEMU crashes with a core dump or exit before error_report_err(errp) can be executed.
+In this case, it's still preferred to have error_report_err(&error_abort) or
+error_report_err(&error_fatal) in its caller?
+
+>>   
+>>   AcpiGhesState *acpi_ghes_get_state(void)
+>> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+>> index f73908985d..35c7bbbb01 100644
+>> --- a/include/hw/acpi/ghes.h
+>> +++ b/include/hw/acpi/ghes.h
+>> @@ -98,8 +98,9 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
+>>                        const char *oem_id, const char *oem_table_id);
+>>   void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+>>                             GArray *hardware_errors);
+>> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>> -                            uint64_t *addresses, uint32_t num_of_addresses);
+>> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>> +                             uint64_t *addresses, uint32_t num_of_addresses,
+>> +                             Error **errp);
+>>   void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+>>                                uint16_t source_id, Error **errp);
+>>   
+>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>> index 459ca4a9b0..a889315606 100644
+>> --- a/target/arm/kvm.c
+>> +++ b/target/arm/kvm.c
+>> @@ -2458,13 +2458,9 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>>               addresses[0] = paddr;
+>>               if (code == BUS_MCEERR_AR) {
+>>                   kvm_cpu_synchronize_state(c);
+>> -                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
+>> -                                             addresses, 1)) {
+>> -                    kvm_inject_arm_sea(c);
+>> -                } else {
+>> -                    error_report("failed to record the error");
+>> -                    abort();
+>> -                }
+>> +                acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
+>> +                                        addresses, 1, &error_abort);
+>> +                kvm_inject_arm_sea(c);
+> 
+> Before the patch, we get two error reports, like this:
+> 
+>      qemu-system-FOO: OSPM does not acknowledge previous error, so can not record CPER for current error anymore
+>      qemu-system-FOO: failed to record the error
+>      Aborted (core dumped)
+> 
+> Such error cascades should be avoided.
+> 
+> Afterwards, we get one:
+> 
+>      Unexpected error at SOURCE-FILE:LINE-NUMBER:
+>      qemu-system-FOO: OSPM does not acknowledge previous error, so can not record CPER for current error anymore
+>      Aborted (core dumped)
+> 
+> Are all errors reported by acpi_ghes_memory_errors() programming errors,
+> i.e. when an error is reported, there's a bug for us to fix?
+> 
+> If not, abort() is wrong before the patch, and &error_abort is wrong
+> afterwards.
+> 
+> You can use &error_fatal for fatal errors that are not programming
+> errors.
+> 
+
+No, there is no programming errors and the core dump is actually no sense.
+
+It makes more sense for the caller to pass @error_fatal down to acpi_ghes_memory_errors().
+
+>>               }
+>>               return;
+>>           }
+> 
+
+Thanks,
+Gavin
+
 
