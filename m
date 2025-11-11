@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E925BCCFA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 18:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D038BCCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 18:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIshM-0003Rx-Ct; Tue, 11 Nov 2025 13:02:35 -0500
+	id 1vIshl-0003eg-Hc; Tue, 11 Nov 2025 13:02:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIsgd-00036t-EO
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:01:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIshM-0003TY-7q
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:02:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIsgc-0003Gy-Bn
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:01:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIshI-0003KQ-TO
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:02:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762884105;
+ s=mimecast20190719; t=1762884148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pglcBOI65Cy8PggXp2vfN1Rqo3l/dKZZbS2poH6t+Ao=;
- b=ijrp1UHPu3+voN79lwvIfo6nNfhc3vbPJLd2J0DAFxJ3rXRKEDkOoKJXa/Xd+XufGTdXto
- mQ0mlYAVQxM829B4bvRcQZbt5GhPN3ya6dfV74OWLU4cNoUcPjg0O1WtZeNooMC3IPjb/U
- WO7nC5+0fWNVKEU/8/9bZZFhYxO9/lM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TTN5SXX6lLcJCCTOfwFeybQXnMnUgF+QYM7KqAj8vI0=;
+ b=OpiIBxDZZXsI3tQo9zGTqvcSYZjCT/3uqZv45MeW2N/hdrv2gAqmbGlhe4tiVRlbMRIr8B
+ LhGim9dwAERJr55+egnZ1kNSIfecwvXs8Hbv7I9T5yJ/iFFApVip3vEdeEkdDNApzWJmEW
+ JnrxpnaKXr83xtAR55Z8PqWnAwsE2rY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-HPF43N4YOoirAt03RxoEyg-1; Tue, 11 Nov 2025 13:01:40 -0500
-X-MC-Unique: HPF43N4YOoirAt03RxoEyg-1
-X-Mimecast-MFC-AGG-ID: HPF43N4YOoirAt03RxoEyg_1762884097
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-42b2ffe9335so2167761f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 10:01:37 -0800 (PST)
+ us-mta-106-hB5cG1rUP3e-iogDEIr7VA-1; Tue, 11 Nov 2025 13:02:27 -0500
+X-MC-Unique: hB5cG1rUP3e-iogDEIr7VA-1
+X-Mimecast-MFC-AGG-ID: hB5cG1rUP3e-iogDEIr7VA_1762884146
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-429c521cf2aso2979336f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 10:02:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762884097; x=1763488897; darn=nongnu.org;
+ d=redhat.com; s=google; t=1762884145; x=1763488945; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=pglcBOI65Cy8PggXp2vfN1Rqo3l/dKZZbS2poH6t+Ao=;
- b=LGCykBJ4ShD8B8viZ3sfhj59FJ+T7jLWfEyRTkWUpfG5RZAEOznL+cXAQCVnG+iCtI
- u0O93RDLGuCJk+gNWNwpqpqsS/AIjyvRe6dYEnHw79kcRLMkdlJ9UGgp56JM5hs2rZ9A
- yxO7kGoX9f/u1YywAh+9BQM46EayhghcIrHb8mUHlzLILSf1bzSuFbz7+zICU3hbcWNm
- EwdzaK+TgWHnOvXvDPaG70syzTM5ebbTemDyNFTc9P2zCh1afDWK1CaO6/F92P9sz/F+
- WetRdWjpagAuiELyvrZ5+Vx8wP6iThOQNe1T7ng0J9Vv8fkUVG3Yh0Mw6Ebw8e30oXzT
- ImpA==
+ bh=TTN5SXX6lLcJCCTOfwFeybQXnMnUgF+QYM7KqAj8vI0=;
+ b=PMBk0vcTgL0ld5Q+LT7p5ubFg1l94gGR1Fcna534DX0a4Pi1CrFLoVKaYqK2QNv9nf
+ xHW1E1tJgN8/1eFc5hAr95SkOckaYDOtWpRE7q9jvJz0Tf97y1j3JmrcySU7oYt8Bmen
+ GCkhuqu40aRRpq63yPlEvef1pblx8QPwBKHgfQ15md3fezpuYW3WdKbKH4iAPMurdRik
+ 6x0YQ4JkwTvVJt1uKRJA1zqFZbkbMFiyOkpUR1PZII7oxdL2ulTS971orRsBrh2341DC
+ N06UrC8WniqQ2MDMs5+16BWtPat5pYOZFEGFCQ2eE/qwnLIcaI3oWsdjRmXvnhNuZG4D
+ URrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762884097; x=1763488897;
+ d=1e100.net; s=20230601; t=1762884145; x=1763488945;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pglcBOI65Cy8PggXp2vfN1Rqo3l/dKZZbS2poH6t+Ao=;
- b=mfuGAfBHYdvbCXcY1MmAfKu4SaczcvpWOVpE+1THI8EHFpUcPit/N5hwKsuDva8+en
- uyDI3ijqUeMVQwUnRqNwZ9Rv57coBX4thbgo6DKvuZ3rE7bNuF+iDxS7/9mQJktTPsj6
- iVjmW73Rck+gvrP7ZzPz3Az001IxyfTvIirMl2W9Fsvq3yrO1PpifmBQtXVbbi2hz7aq
- ac1foi85Gjc4TnYE5mtlLRiR6AZ0sOxHy+4nOEwSqM+wHX1F9Y+ttLRLoRK4A3vfFAwY
- Yh5cMqpJtag2BqrR7YoNBSBAClIwZpwg2RzGI6jCXdg3m/qS2rzgeJmyA5RrTv/D6ODT
- 0pRg==
+ bh=TTN5SXX6lLcJCCTOfwFeybQXnMnUgF+QYM7KqAj8vI0=;
+ b=IYkrjvzsPiy361CGKnl7IpFfuyBHseqqXUIgCEIkbmwT7jw8a1rx1bhURv19hBU0ot
+ BL+Wq5heBSxZyYpjWVzWhceNz5hTShayz5iFIHMPt8gUSBIqGSEm8bdcJ7rPuGu28Lvc
+ 0K75FhNakhaHG9rATIfiejupI7pHBE7XBt1EcO4fNtHJpL5TInITRugPIoRHSqDlDsJ6
+ /8k3F9td5jZjmd2WgdUPUCt0Xna12PXGGHnIz/9aPWlwzbR69m2MQHWqPTE9k1/KKPco
+ zY7b9hZjb3F+3890ugAWqYWhm33uwCmU6xn1n00rj+N+DcWouJTfbClMyJ3n5/YRooXE
+ dsYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhhjiDoOlcVL8Q3xQRKBHodkWUHh+QEmaA5CcmgiYQVjS+ICIHSmSYV9gQINMs5T+ywBtF9+IeNKCf@nongnu.org
-X-Gm-Message-State: AOJu0YxlTW6IFgCUZpKmYb8+gHxymDBH2j14FI6Qf77oHCZOQi0xtEsy
- 8+6OVRq798xOgHkB0GEy/7q7b7jajdu8HeUeUWKPiD46OOztwlO56HcNnZooWKwLuQQsPzPUOne
- x4UxE3qmbYB0kNiwh3nTjl43sfEz7PlGNOC180n+PkVvJkcpYsOjoY5AB
-X-Gm-Gg: ASbGncsCcqVCQm6JMRhPa+5DATxHmqSqietDmDLcR7N3js7JRqf4BoW/NQ/tsVlU3O3
- zYz1SkHQ9SmtwBZiz5P6Ua2B+ydOtZ4APvZyxk+zjgNCzXuYRql5vuhG+0W757Oj05lLn+dKoMS
- rjC1lhsw45x+j4NKilLEBJ/LqRHYX3h+YeRwXY2nZ8xmAlRw2fIXHPmFU1sHz3rFOvZzZQlnFv5
- 1HxAliWj0RVZjYmDKgpmdJv5aZMX2Rrvo/OCShwHW/rC42j/1n7Fy8hftEsJs5Bd/mv961/0fcf
- e+ZNJWxNhZBcVN5c9qS7RAfmGuN7LSeGqr5vAT+xwZOrNBDgAqQy6pkja0F14liQYCIn+bk=
-X-Received: by 2002:a5d:5c84:0:b0:42b:4279:eddd with SMTP id
- ffacd0b85a97d-42b4bb7d2f0mr90474f8f.24.1762884096720; 
- Tue, 11 Nov 2025 10:01:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZO7dWUazsEo1FXX4wCWBB8J8Qn7Bv1CYf1jO0OUi/DbAay5UVfKOZiBUA7uG7I0QaGR0xrg==
-X-Received: by 2002:a5d:5c84:0:b0:42b:4279:eddd with SMTP id
- ffacd0b85a97d-42b4bb7d2f0mr90430f8f.24.1762884096263; 
- Tue, 11 Nov 2025 10:01:36 -0800 (PST)
+ AJvYcCVzE2/yiHDrmLIXDWpDLedt+it7KlHZalvA7LKOzb7Ybm57WL/iUzgXhGbyuDqW5LBvwtQO5N3Tl2c5@nongnu.org
+X-Gm-Message-State: AOJu0YzfjpUmbmPQDihoidy2yPXTF/ik4FGsgvKCcV44839OTHGPwbCb
+ 1HUeblyEpq6C23mEu8CRqyZhS7j/XtYcuaz8DLx2Y7QLgrd4m9mBhAUhHp5ypnmDZd6TI04Pes/
+ OlGdmVIH9kxR8GS8Yri+rqhmftuUPudi/f8k10SRBGi3V3QZKXukemwHg
+X-Gm-Gg: ASbGncsgJxSpPVsFXMQj2SXBA1omxgok16dABEJYW8/xOZLoBggLCIzX8hmKy+FVlk1
+ Sqwbm4uXV9+ttd5C0rWekgiOOAaoZ/1Wm4hK4nW1vKuEuv8SEouwr3eqhxxEO7cPMP3qi9rGvdB
+ wOYxrZqPKsjqAlLxShuQyqF6IdqUdVV/8OyvB9GrcwUlR6+rtdRzOy1uJYc0h2UT8mjR0JFoduP
+ fhLM+6q240du0EVvMRiJ1UUVxB+LGpvt3fzikPmLKMYoLtWoGMSWtYJ5owFIVZb7yZgT8cndx7j
+ QMXjArFEmGIFv5/eonWj5CKQTecUbvfATpBYRruXTr6Au0+m/TYwP/Kx+b8qBY2qPKvD65g=
+X-Received: by 2002:a05:6000:64c:b0:427:719f:de70 with SMTP id
+ ffacd0b85a97d-42b4bb7bfa9mr97970f8f.14.1762884145517; 
+ Tue, 11 Nov 2025 10:02:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXmGGIxQW4UVktKiWPN3q0JgVSfTGugHVmSCr2qeTegBDXhikE2BpwPbjjaIAbsOm3kEDhyw==
+X-Received: by 2002:a05:6000:64c:b0:427:719f:de70 with SMTP id
+ ffacd0b85a97d-42b4bb7bfa9mr97947f8f.14.1762884145122; 
+ Tue, 11 Nov 2025 10:02:25 -0800 (PST)
 Received: from [192.168.0.7] ([47.64.113.41]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42ac679c5dcsm33138957f8f.44.2025.11.11.10.01.34
+ ffacd0b85a97d-42abe63e131sm29480878f8f.20.2025.11.11.10.02.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 10:01:35 -0800 (PST)
-Message-ID: <b540d3eb-b132-4fb8-acd7-8b5ec5878652@redhat.com>
-Date: Tue, 11 Nov 2025 19:01:34 +0100
+ Tue, 11 Nov 2025 10:02:24 -0800 (PST)
+Message-ID: <5888d509-5fa6-4e65-9c24-186b2007af46@redhat.com>
+Date: Tue, 11 Nov 2025 19:02:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/16] tests: move test_xen assets to share.linaro.org
+Subject: Re: [PATCH 08/16] tests: move test_virt assets to share.linaro.org
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
@@ -102,7 +102,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Gustavo Romero <gustavo.romero@linaro.org>, qemu-stable@nongnu.org
 References: <20251111171724.78201-1-alex.bennee@linaro.org>
- <20251111171724.78201-8-alex.bennee@linaro.org>
+ <20251111171724.78201-9-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -147,10 +147,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251111171724.78201-8-alex.bennee@linaro.org>
+In-Reply-To: <20251111171724.78201-9-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,7 +159,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,65 +177,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/11/2025 18.17, Alex Bennée wrote:
 > Linaro are migrating file-hosting from the old NextCloud instance to
-> another sharing site.
+> another sharing site. While I'm at it drop the old pauth-impdef flag
+> which is no longer needed.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > Cc: qemu-stable@nongnu.org
 > ---
->   tests/functional/aarch64/test_xen.py | 12 ++++--------
->   1 file changed, 4 insertions(+), 8 deletions(-)
+>   tests/functional/aarch64/test_virt.py | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 > 
-> diff --git a/tests/functional/aarch64/test_xen.py b/tests/functional/aarch64/test_xen.py
-> index 261d796540d..f7bde5859ec 100755
-> --- a/tests/functional/aarch64/test_xen.py
-> +++ b/tests/functional/aarch64/test_xen.py
-> @@ -25,8 +25,7 @@ class BootXen(LinuxKernelTest):
->       XEN_COMMON_COMMAND_LINE = 'dom0_mem=128M loglvl=all guest_loglvl=all'
+> diff --git a/tests/functional/aarch64/test_virt.py b/tests/functional/aarch64/test_virt.py
+> index 63071f9b517..972b7bf783c 100755
+> --- a/tests/functional/aarch64/test_virt.py
+> +++ b/tests/functional/aarch64/test_virt.py
+> @@ -60,8 +60,7 @@ def test_alpine_virt_tcg_gic_max(self):
+>   
 >   
 >       ASSET_KERNEL = Asset(
-> -        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/'
-> -         'download?path=%2F&files=linux-5.9.9-arm64-ajb'),
-> +        ('https://share.linaro.org/downloadFile?id=RRahAWwAwYKTZQd'),
+> -        ('https://fileserver.linaro.org/s/'
+> -         'z6B2ARM7DQT3HWN/download'),
+> +        ('https://share.linaro.org/downloadFile?id=3zGlbmXh8pXFewt'),
 
-If the URL fits into one line, you could drop the parentheses here now (and 
-also in the other spots in this patch).
+Please drop the parentheses here, too.
 
-With that nit fixed:
+With that fixed:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
->           '00366fa51ea957c19462d2e2aefd480bef80ce727120e714ae48e0c88f261edb')
+>           '12a54d4805cda6ab647cb7c7bbdb16fafb3df400e0d6f16445c1a0436100ef8d')
 >   
->       def launch_xen(self, xen_path):
-> @@ -55,8 +54,7 @@ def launch_xen(self, xen_path):
->           wait_for_console_pattern(self, console_pattern, "Panic on CPU 0:")
->   
->       ASSET_XEN_4_11 = Asset(
-> -        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/download?path=%2F&'
-> -         'files=xen-hypervisor-4.11-arm64_4.11.4%2B37-g3263f257ca-1_arm64.deb'),
-> +        ('https://share.linaro.org/downloadFile?id=ALU4n2NGGYbE4fO'),
->           'b745c2631342f9fcc0147ddc364edb62c20ecfebd430e5a3546e7d7c6891c0bc')
->   
->       def test_arm64_xen_411_and_dom0(self):
-> @@ -66,8 +64,7 @@ def test_arm64_xen_411_and_dom0(self):
->           self.launch_xen(xen_path)
->   
->       ASSET_XEN_4_14 = Asset(
-> -        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/download?path=%2F&'
-> -         'files=xen-hypervisor-4.14-arm64_4.14.0%2B80-gd101b417b7-1_arm64.deb'),
-> +        ('https://share.linaro.org/downloadFile?id=os4zSXPl7WW4lqX'),
->           'e930a3293248edabd367d5b4b3b6448b9c99c057096ea8b47228a7870661d5cb')
->   
->       def test_arm64_xen_414_and_dom0(self):
-> @@ -77,8 +74,7 @@ def test_arm64_xen_414_and_dom0(self):
->           self.launch_xen(xen_path)
->   
->       ASSET_XEN_4_15 = Asset(
-> -        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/download?path=%2F&'
-> -         'files=xen-upstream-4.15-unstable.deb'),
-> +        ('https://share.linaro.org/downloadFile?id=jjjG4uTp2wuO4Ks'),
->           '2a9a8af8acf0231844657cc28baab95bd918b0ee2d493ee4ee6f8846e1358bc9')
->   
->       def test_arm64_xen_415_and_dom0(self):
+>       def common_aarch64_virt(self, machine):
+> @@ -77,7 +76,7 @@ def common_aarch64_virt(self, machine):
+>           self.vm.set_console()
+>           kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+>                                  'console=ttyAMA0')
+> -        self.vm.add_args('-cpu', 'max,pauth-impdef=on',
+> +        self.vm.add_args('-cpu', 'max',
+>                            '-machine', machine,
+>                            '-accel', 'tcg',
+>                            '-kernel', kernel_path,
 
 
