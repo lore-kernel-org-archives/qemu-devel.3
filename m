@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A2ACCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A0DCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIvzh-0007QO-Jt; Tue, 11 Nov 2025 16:33:41 -0500
+	id 1vIvzr-0007va-7W; Tue, 11 Nov 2025 16:33:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvze-0007KW-OY
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzm-0007bu-0V
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzc-0001u6-GS
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:38 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzk-000213-1J
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762896815;
+ s=mimecast20190719; t=1762896822;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lwXgUXD7qlEUCdsZvzgaK7cFPmP4zuXzuJbnOA0x1us=;
- b=GIwHm4F0ZQyKWrWMmfWulekMqignOClGAd2ZlgupQ3nwnUY9+TDFiLOfR1txBj8ZFktwea
- Ht0G+GfDHQH4jCTlCgpNMrRP4OFTsTCwzEg7LlxLxW4HUaiuKw29vRJpkG/lofnoqEpf0B
- rDitF8wJoUCZQo82LMh3Dhz54lAfAM8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2ZC45b+YLC8hAjPqvQ8hxvi6YolSPofBUAJKu4Vdz0c=;
+ b=T16kuN/7O5DelW9gXdjxYVaNzE+MaexxjfMiUn7HcRxXtUOcAusv9w5Qyf75HNUDs1R8nj
+ FJrbNPDnbGHAbM1I6ces9sCOO3GxLAH4oCF7KYdj8+IZ27odLq9yZkETkPhLXzl1JTfmvF
+ SUHt1s0u+A05JdPJWpR/Zksloxt2ZrQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-7-RpSachDGMPmZcE8h_PttqA-1; Tue,
- 11 Nov 2025 16:33:30 -0500
-X-MC-Unique: RpSachDGMPmZcE8h_PttqA-1
-X-Mimecast-MFC-AGG-ID: RpSachDGMPmZcE8h_PttqA_1762896809
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-2-yi3z9oOCm6qeMFQSha4A-1; Tue,
+ 11 Nov 2025 16:33:41 -0500
+X-MC-Unique: 2-yi3z9oOCm6qeMFQSha4A-1
+X-Mimecast-MFC-AGG-ID: 2-yi3z9oOCm6qeMFQSha4A_1762896820
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98BCF1956089; Tue, 11 Nov 2025 21:33:29 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 723B91800451; Tue, 11 Nov 2025 21:33:40 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.225.214])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 099D130044E0; Tue, 11 Nov 2025 21:33:27 +0000 (UTC)
+ id B804530044E0; Tue, 11 Nov 2025 21:33:38 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL v2 13/28] aio-posix: add aio_add_sqe() API for user-defined
- io_uring requests
-Date: Tue, 11 Nov 2025 22:32:23 +0100
-Message-ID: <20251111213238.181992-14-kwolf@redhat.com>
+Subject: [PULL v2 18/28] iotests: Test resizing file node under raw with
+ size/offset
+Date: Tue, 11 Nov 2025 22:32:28 +0100
+Message-ID: <20251111213238.181992-19-kwolf@redhat.com>
 In-Reply-To: <20251111213238.181992-1-kwolf@redhat.com>
 References: <20251111213238.181992-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,388 +84,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+This adds some more tests for using the 'size' and 'offset' options of
+raw to the recently added resize-below-raw test.
 
-Introduce the aio_add_sqe() API for submitting io_uring requests in the
-current AioContext. This allows other components in QEMU, like the block
-layer, to take advantage of io_uring features without creating their own
-io_uring context.
-
-This API supports nested event loops just like file descriptor
-monitoring and BHs do. This comes at a complexity cost: CQE callbacks
-must be placed on a list so that nested event loops can invoke pending
-CQE callbacks from parent event loops. If you're wondering why
-CqeHandler exists instead of just a callback function pointer, this is
-why.
-
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20251104022933.618123-14-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251028094328.17919-1-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/aio.h   |  83 +++++++++++++++++++++++++++++++-
- util/aio-posix.h      |   1 +
- util/aio-posix.c      |   9 ++++
- util/fdmon-io_uring.c | 109 ++++++++++++++++++++++++++++++++++++------
- util/trace-events     |   4 ++
- 5 files changed, 190 insertions(+), 16 deletions(-)
+ tests/qemu-iotests/tests/resize-below-raw     | 53 +++++++++++++++++--
+ tests/qemu-iotests/tests/resize-below-raw.out |  4 +-
+ 2 files changed, 51 insertions(+), 6 deletions(-)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index fc1a3c06e2..0f77ae2f64 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -61,6 +61,27 @@ typedef struct LuringState LuringState;
- /* Is polling disabled? */
- bool aio_poll_disabled(AioContext *ctx);
+diff --git a/tests/qemu-iotests/tests/resize-below-raw b/tests/qemu-iotests/tests/resize-below-raw
+index 3c9241c918..ddf3f44742 100755
+--- a/tests/qemu-iotests/tests/resize-below-raw
++++ b/tests/qemu-iotests/tests/resize-below-raw
+@@ -8,16 +8,27 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-+#ifdef CONFIG_LINUX_IO_URING
-+/*
-+ * Each io_uring request must have a unique CqeHandler that processes the cqe.
-+ * The lifetime of a CqeHandler must be at least from aio_add_sqe() until
-+ * ->cb() invocation.
-+ */
-+typedef struct CqeHandler CqeHandler;
-+struct CqeHandler {
-+    /* Called by the AioContext when the request has completed */
-+    void (*cb)(CqeHandler *handler);
+ import os
++from typing import Dict, Optional
 +
-+    /* Used internally, do not access this */
-+    QSIMPLEQ_ENTRY(CqeHandler) next;
-+
-+    /* This field is filled in before ->cb() is called */
-+    struct io_uring_cqe cqe;
-+};
-+
-+typedef QSIMPLEQ_HEAD(, CqeHandler) CqeHandlerSimpleQ;
-+#endif /* CONFIG_LINUX_IO_URING */
-+
- /* Callbacks for file descriptor monitoring implementations */
- typedef struct {
-     /*
-@@ -157,6 +178,27 @@ typedef struct {
-      * Called with list_lock incremented.
-      */
-     void (*gsource_dispatch)(AioContext *ctx, AioHandlerList *ready_list);
-+
-+#ifdef CONFIG_LINUX_IO_URING
-+    /**
-+     * add_sqe: Add an io_uring sqe for submission.
-+     * @prep_sqe: invoked with an sqe that should be prepared for submission
-+     * @opaque: user-defined argument to @prep_sqe()
-+     * @cqe_handler: the unique cqe handler associated with this request
-+     *
-+     * The caller's @prep_sqe() function is invoked to fill in the details of
-+     * the sqe. Do not call io_uring_sqe_set_data() on this sqe.
-+     *
-+     * The kernel may see the sqe as soon as @prep_sqe() returns or it may take
-+     * until the next event loop iteration.
-+     *
-+     * This function is called from the current AioContext and is not
-+     * thread-safe.
-+     */
-+    void (*add_sqe)(AioContext *ctx,
-+                    void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
-+                    void *opaque, CqeHandler *cqe_handler);
-+#endif /* CONFIG_LINUX_IO_URING */
- } FDMonOps;
+ import iotests
+ from iotests import imgfmt, qemu_img_create, QMPTestCase
  
- /*
-@@ -274,7 +316,10 @@ struct AioContext {
-     struct io_uring fdmon_io_uring;
-     AioHandlerSList submit_list;
-     void *io_uring_fd_tag;
--#endif
-+
-+    /* Pending callback state for cqe handlers */
-+    CqeHandlerSimpleQ cqe_handler_ready_list;
-+#endif /* CONFIG_LINUX_IO_URING */
+ image_size = 1 * 1024 * 1024
+ image = os.path.join(iotests.test_dir, 'test.img')
  
-     /* TimerLists for calling timers - one per clock type.  Has its own
-      * locking.
-@@ -782,4 +827,40 @@ void aio_context_set_aio_params(AioContext *ctx, int64_t max_batch);
-  */
- void aio_context_set_thread_pool_params(AioContext *ctx, int64_t min,
-                                         int64_t max, Error **errp);
+-class TestResizeBelowRaw(QMPTestCase):
++class BaseResizeBelowRaw(QMPTestCase):
++    raw_size: Optional[int] = None
++    raw_offset: Optional[int] = None
 +
-+#ifdef CONFIG_LINUX_IO_URING
-+/**
-+ * aio_has_io_uring: Return whether io_uring is available.
-+ *
-+ * io_uring is either available in all AioContexts or in none, so this only
-+ * needs to be called once from within any thread's AioContext.
-+ */
-+static inline bool aio_has_io_uring(void)
-+{
-+    AioContext *ctx = qemu_get_current_aio_context();
-+    return ctx->fdmon_ops->add_sqe;
-+}
-+
-+/**
-+ * aio_add_sqe: Add an io_uring sqe for submission.
-+ * @prep_sqe: invoked with an sqe that should be prepared for submission
-+ * @opaque: user-defined argument to @prep_sqe()
-+ * @cqe_handler: the unique cqe handler associated with this request
-+ *
-+ * The caller's @prep_sqe() function is invoked to fill in the details of the
-+ * sqe. Do not call io_uring_sqe_set_data() on this sqe.
-+ *
-+ * The sqe is submitted by the current AioContext. The kernel may see the sqe
-+ * as soon as @prep_sqe() returns or it may take until the next event loop
-+ * iteration.
-+ *
-+ * When the AioContext is destroyed, pending sqes are ignored and their
-+ * CqeHandlers are not invoked.
-+ *
-+ * This function must be called only when aio_has_io_uring() returns true.
-+ */
-+void aio_add_sqe(void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
-+                 void *opaque, CqeHandler *cqe_handler);
-+#endif /* CONFIG_LINUX_IO_URING */
-+
- #endif
-diff --git a/util/aio-posix.h b/util/aio-posix.h
-index dfa1a51c0b..babbfa8314 100644
---- a/util/aio-posix.h
-+++ b/util/aio-posix.h
-@@ -36,6 +36,7 @@ struct AioHandler {
- #ifdef CONFIG_LINUX_IO_URING
-     QSLIST_ENTRY(AioHandler) node_submitted;
-     unsigned flags; /* see fdmon-io_uring.c */
-+    CqeHandler internal_cqe_handler; /* used for POLL_ADD/POLL_REMOVE */
- #endif
-     int64_t poll_idle_timeout; /* when to stop userspace polling */
-     bool poll_ready; /* has polling detected an event? */
-diff --git a/util/aio-posix.c b/util/aio-posix.c
-index 6ff36b6e51..e24b955fd9 100644
---- a/util/aio-posix.c
-+++ b/util/aio-posix.c
-@@ -806,3 +806,12 @@ void aio_context_set_aio_params(AioContext *ctx, int64_t max_batch)
+     def setUp(self) -> None:
+         qemu_img_create('-f', imgfmt, image, str(image_size))
  
-     aio_notify(ctx);
- }
++        extra_options: Dict[str, str] = {}
++        if self.raw_size is not None:
++            extra_options['size'] = str(self.raw_size)
++        if self.raw_offset is not None:
++            extra_options['offset'] = str(self.raw_offset)
 +
-+#ifdef CONFIG_LINUX_IO_URING
-+void aio_add_sqe(void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
-+                 void *opaque, CqeHandler *cqe_handler)
-+{
-+    AioContext *ctx = qemu_get_current_aio_context();
-+    ctx->fdmon_ops->add_sqe(ctx, prep_sqe, opaque, cqe_handler);
-+}
-+#endif /* CONFIG_LINUX_IO_URING */
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index 6ee6adbebb..d0b56127c6 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -46,8 +46,10 @@
- #include "qemu/osdep.h"
- #include <poll.h>
- #include "qapi/error.h"
-+#include "qemu/defer-call.h"
- #include "qemu/rcu_queue.h"
- #include "aio-posix.h"
-+#include "trace.h"
+         self.vm = iotests.VM()
+         self.vm.add_blockdev(self.vm.qmp_to_opts({
+             'driver': imgfmt,
+@@ -26,7 +37,8 @@ class TestResizeBelowRaw(QMPTestCase):
+                 'driver': 'file',
+                 'filename': image,
+                 'node-name': 'file0',
+-            }
++            },
++            **extra_options
+         }))
+         self.vm.launch()
  
- enum {
-     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
-@@ -76,8 +78,8 @@ static inline int pfd_events_from_poll(int poll_events)
- }
+@@ -34,14 +46,16 @@ class TestResizeBelowRaw(QMPTestCase):
+         self.vm.shutdown()
+         os.remove(image)
  
- /*
-- * Returns an sqe for submitting a request.  Only be called within
-- * fdmon_io_uring_wait().
-+ * Returns an sqe for submitting a request. Only called from the AioContext
-+ * thread.
-  */
- static struct io_uring_sqe *get_sqe(AioContext *ctx)
- {
-@@ -168,23 +170,46 @@ static void fdmon_io_uring_update(AioContext *ctx,
-     }
- }
+-    def assert_size(self, size: int) -> None:
++    def assert_size(self, size: int, file_size: Optional[int] = None) -> None:
+         nodes = self.vm.qmp('query-named-block-nodes', flat=True)['return']
+         self.assertEqual(len(nodes), 2)
+         for node in nodes:
+-            if node['drv'] == 'file':
++            if node['drv'] == 'file' and file_size is not None:
++                self.assertEqual(node['image']['virtual-size'], file_size)
+                 continue
+             self.assertEqual(node['image']['virtual-size'], size)
  
-+static void fdmon_io_uring_add_sqe(AioContext *ctx,
-+        void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
-+        void *opaque, CqeHandler *cqe_handler)
-+{
-+    struct io_uring_sqe *sqe = get_sqe(ctx);
-+
-+    prep_sqe(sqe, opaque);
-+    io_uring_sqe_set_data(sqe, cqe_handler);
-+
-+    trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
-+                                 cqe_handler);
-+}
-+
-+static void fdmon_special_cqe_handler(CqeHandler *cqe_handler)
-+{
-+    /*
-+     * This is an empty function that is never called. It is used as a function
-+     * pointer to distinguish it from ordinary cqe handlers.
-+     */
-+}
-+
- static void add_poll_add_sqe(AioContext *ctx, AioHandler *node)
- {
-     struct io_uring_sqe *sqe = get_sqe(ctx);
-     int events = poll_events_from_pfd(node->pfd.events);
++class TestResizeBelowUnlimitedRaw(BaseResizeBelowRaw):
+     def test_resize_below_raw(self) -> None:
+         self.assert_size(image_size)
+         self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
+@@ -49,5 +63,36 @@ class TestResizeBelowRaw(QMPTestCase):
+         self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
+         self.assert_size(3*image_size)
  
-     io_uring_prep_poll_add(sqe, node->pfd.fd, events);
--    io_uring_sqe_set_data(sqe, node);
-+    node->internal_cqe_handler.cb = fdmon_special_cqe_handler;
-+    io_uring_sqe_set_data(sqe, &node->internal_cqe_handler);
- }
++# offset = 0 behaves the same as absent offset
++class TestResizeBelowRawWithZeroOffset(TestResizeBelowUnlimitedRaw):
++    raw_offset = 0
++
++class TestResizeBelowRawWithSize(BaseResizeBelowRaw):
++    raw_size = image_size // 2
++
++    def test_resize_below_raw_with_size(self) -> None:
++        self.assert_size(image_size // 2, image_size)
++
++        # This QMP command fails because node0 unshares RESIZE
++        self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
++        self.assert_size(image_size // 2, image_size)
++
++        # This QMP command fails because node0 is a fixed-size disk
++        self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
++        self.assert_size(image_size // 2, image_size)
++
++class TestResizeBelowRawWithOffset(BaseResizeBelowRaw):
++    raw_offset = image_size // 4
++
++    def test_resize_below_raw_with_offset(self) -> None:
++        self.assert_size(image_size * 3 // 4, image_size)
++
++        # This QMP command fails because node0 unshares RESIZE
++        self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
++        self.assert_size(image_size * 3 // 4, image_size)
++
++        self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
++        self.assert_size(3 * image_size, image_size * 13 // 4)
++
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['raw'], supported_protocols=['file'])
+diff --git a/tests/qemu-iotests/tests/resize-below-raw.out b/tests/qemu-iotests/tests/resize-below-raw.out
+index ae1213e6f8..89968f35d7 100644
+--- a/tests/qemu-iotests/tests/resize-below-raw.out
++++ b/tests/qemu-iotests/tests/resize-below-raw.out
+@@ -1,5 +1,5 @@
+-.
++....
+ ----------------------------------------------------------------------
+-Ran 1 tests
++Ran 4 tests
  
- static void add_poll_remove_sqe(AioContext *ctx, AioHandler *node)
- {
-     struct io_uring_sqe *sqe = get_sqe(ctx);
-+    CqeHandler *cqe_handler = &node->internal_cqe_handler;
- 
- #ifdef LIBURING_HAVE_DATA64
--    io_uring_prep_poll_remove(sqe, (uintptr_t)node);
-+    io_uring_prep_poll_remove(sqe, (uintptr_t)cqe_handler);
- #else
--    io_uring_prep_poll_remove(sqe, node);
-+    io_uring_prep_poll_remove(sqe, cqe_handler);
- #endif
-     io_uring_sqe_set_data(sqe, NULL);
- }
-@@ -219,19 +244,13 @@ static void fill_sq_ring(AioContext *ctx)
-     }
- }
- 
--/* Returns true if a handler became ready */
--static bool process_cqe(AioContext *ctx,
--                        AioHandlerList *ready_list,
--                        struct io_uring_cqe *cqe)
-+static bool process_cqe_aio_handler(AioContext *ctx,
-+                                    AioHandlerList *ready_list,
-+                                    AioHandler *node,
-+                                    struct io_uring_cqe *cqe)
- {
--    AioHandler *node = io_uring_cqe_get_data(cqe);
-     unsigned flags;
- 
--    /* poll_timeout and poll_remove have a zero user_data field */
--    if (!node) {
--        return false;
--    }
--
-     /*
-      * Deletion can only happen when IORING_OP_POLL_ADD completes.  If we race
-      * with enqueue() here then we can safely clear the FDMON_IO_URING_REMOVE
-@@ -255,6 +274,35 @@ static bool process_cqe(AioContext *ctx,
-     return true;
- }
- 
-+/* Returns true if a handler became ready */
-+static bool process_cqe(AioContext *ctx,
-+                        AioHandlerList *ready_list,
-+                        struct io_uring_cqe *cqe)
-+{
-+    CqeHandler *cqe_handler = io_uring_cqe_get_data(cqe);
-+
-+    /* poll_timeout and poll_remove have a zero user_data field */
-+    if (!cqe_handler) {
-+        return false;
-+    }
-+
-+    /*
-+     * Special handling for AioHandler cqes. They need ready_list and have a
-+     * return value.
-+     */
-+    if (cqe_handler->cb == fdmon_special_cqe_handler) {
-+        AioHandler *node = container_of(cqe_handler, AioHandler,
-+                                        internal_cqe_handler);
-+        return process_cqe_aio_handler(ctx, ready_list, node, cqe);
-+    }
-+
-+    cqe_handler->cqe = *cqe;
-+
-+    /* Handlers are invoked later by fdmon_io_uring_dispatch() */
-+    QSIMPLEQ_INSERT_TAIL(&ctx->cqe_handler_ready_list, cqe_handler, next);
-+    return false;
-+}
-+
- static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
- {
-     struct io_uring *ring = &ctx->fdmon_io_uring;
-@@ -299,6 +347,32 @@ static bool fdmon_io_uring_gsource_check(AioContext *ctx)
-     return g_source_query_unix_fd(&ctx->source, tag) & G_IO_IN;
- }
- 
-+/* Dispatch CQE handlers that are ready */
-+static bool fdmon_io_uring_dispatch(AioContext *ctx)
-+{
-+    CqeHandlerSimpleQ *ready_list = &ctx->cqe_handler_ready_list;
-+    bool progress = false;
-+
-+    /* Handlers may use defer_call() to coalesce frequent operations */
-+    defer_call_begin();
-+
-+    while (!QSIMPLEQ_EMPTY(ready_list)) {
-+        CqeHandler *cqe_handler = QSIMPLEQ_FIRST(ready_list);
-+
-+        QSIMPLEQ_REMOVE_HEAD(ready_list, next);
-+
-+        trace_fdmon_io_uring_cqe_handler(ctx, cqe_handler,
-+                                         cqe_handler->cqe.res);
-+        cqe_handler->cb(cqe_handler);
-+        progress = true;
-+    }
-+
-+    defer_call_end();
-+
-+    return progress;
-+}
-+
-+
- /* This is where CQEs are processed in the glib event loop */
- static void fdmon_io_uring_gsource_dispatch(AioContext *ctx,
-                                             AioHandlerList *ready_list)
-@@ -371,9 +445,11 @@ static const FDMonOps fdmon_io_uring_ops = {
-     .update = fdmon_io_uring_update,
-     .wait = fdmon_io_uring_wait,
-     .need_wait = fdmon_io_uring_need_wait,
-+    .dispatch = fdmon_io_uring_dispatch,
-     .gsource_prepare = fdmon_io_uring_gsource_prepare,
-     .gsource_check = fdmon_io_uring_gsource_check,
-     .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
-+    .add_sqe = fdmon_io_uring_add_sqe,
- };
- 
- bool fdmon_io_uring_setup(AioContext *ctx, Error **errp)
-@@ -389,6 +465,7 @@ bool fdmon_io_uring_setup(AioContext *ctx, Error **errp)
-     }
- 
-     QSLIST_INIT(&ctx->submit_list);
-+    QSIMPLEQ_INIT(&ctx->cqe_handler_ready_list);
-     ctx->fdmon_ops = &fdmon_io_uring_ops;
-     ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
-             ctx->fdmon_io_uring.ring_fd, G_IO_IN);
-@@ -425,6 +502,8 @@ void fdmon_io_uring_destroy(AioContext *ctx)
-     g_source_remove_unix_fd(&ctx->source, ctx->io_uring_fd_tag);
-     ctx->io_uring_fd_tag = NULL;
- 
-+    assert(QSIMPLEQ_EMPTY(&ctx->cqe_handler_ready_list));
-+
-     qemu_lockcnt_lock(&ctx->list_lock);
-     fdmon_poll_downgrade(ctx);
-     qemu_lockcnt_unlock(&ctx->list_lock);
-diff --git a/util/trace-events b/util/trace-events
-index bd8f25fb59..540d662507 100644
---- a/util/trace-events
-+++ b/util/trace-events
-@@ -24,6 +24,10 @@ buffer_move_empty(const char *buf, size_t len, const char *from) "%s: %zd bytes
- buffer_move(const char *buf, size_t len, const char *from) "%s: %zd bytes from %s"
- buffer_free(const char *buf, size_t len) "%s: capacity %zd"
- 
-+# fdmon-io_uring.c
-+fdmon_io_uring_add_sqe(void *ctx, void *opaque, int opcode, int fd, uint64_t off, void *cqe_handler) "ctx %p opaque %p opcode %d fd %d off %"PRId64" cqe_handler %p"
-+fdmon_io_uring_cqe_handler(void *ctx, void *cqe_handler, int cqe_res) "ctx %p cqe_handler %p cqe_res %d"
-+
- # filemonitor-inotify.c
- qemu_file_monitor_add_watch(void *mon, const char *dirpath, const char *filename, void *cb, void *opaque, int64_t id) "File monitor %p add watch dir='%s' file='%s' cb=%p opaque=%p id=%" PRId64
- qemu_file_monitor_remove_watch(void *mon, const char *dirpath, int64_t id) "File monitor %p remove watch dir='%s' id=%" PRId64
+ OK
 -- 
 2.51.1
 
