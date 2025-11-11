@@ -4,73 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633F3CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 13:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7FACCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 13:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIo6M-0003Fm-3D; Tue, 11 Nov 2025 08:08:02 -0500
+	id 1vIoBH-0003s5-5A; Tue, 11 Nov 2025 08:13:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vIo6H-00038n-7r
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 08:07:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vIoBF-0003nt-4Y; Tue, 11 Nov 2025 08:13:05 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vIo6E-0000Hx-OH
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 08:07:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762866471;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=ZFD21VI8bHg0k7TYPWDZSx1ow5767EIQaOS3VmZYUg0=;
- b=g/FKupdUFngb/Ygy+3Q5XlUDOLcosGncBkYmPe6SSpJZOVnifEzRUUvOBTLM31mvVLUcww
- +0IXzFarExl0Rz8fu9Ivivj+MsNctvqu/y8BZk+o/Gb7PDXssBb/48CbPoDb8fgWpA52/Y
- DJc5P3WerG0PkA4Dsbmz1u1K+vHe1LI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-ZMMIglsoOdWHKaWuaXgTtw-1; Tue,
- 11 Nov 2025 08:07:49 -0500
-X-MC-Unique: ZMMIglsoOdWHKaWuaXgTtw-1
-X-Mimecast-MFC-AGG-ID: ZMMIglsoOdWHKaWuaXgTtw_1762866469
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C1F818862F7
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 13:07:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.84])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C13461956056; Tue, 11 Nov 2025 13:07:28 +0000 (UTC)
-Date: Tue, 11 Nov 2025 13:07:23 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: Meson help
-Message-ID: <aRM1C6FaMapcCeaD@redhat.com>
-References: <CAFn=p-ZqLCJ2uRm4MSeewPbKyN8g+B95ELVkP9qaXdE2tObf_Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vIoBC-0001CP-MK; Tue, 11 Nov 2025 08:13:04 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4d5Rlp6Qf0zHnGjN;
+ Tue, 11 Nov 2025 21:12:38 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0CD931400D9;
+ Tue, 11 Nov 2025 21:12:56 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 11 Nov
+ 2025 13:12:55 +0000
+Date: Tue, 11 Nov 2025 13:12:53 +0000
+To: Gavin Shan <gshan@redhat.com>
+CC: Igor Mammedov <imammedo@redhat.com>, <shan.gavin@gmail.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <mchehab+huawei@kernel.org>,
+ <gengdongjiu1@gmail.com>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <peter.maydell@linaro.org>, <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 4/8] acpi/ghes: Extend acpi_ghes_memory_errors() to
+ support multiple CPERs
+Message-ID: <20251111131253.00007197@huawei.com>
+In-Reply-To: <e797a9f6-aee6-4c0f-9c17-f4200199e317@redhat.com>
+References: <20251105114453.2164073-1-gshan@redhat.com>
+ <20251105114453.2164073-5-gshan@redhat.com>
+ <20251105141455.000052f0@huawei.com>
+ <cc07dfc9-f58a-4654-8854-c16a2e85fecd@redhat.com>
+ <20251110154957.5c481df7@fedora>
+ <cad74549-a313-48b6-8260-f23f6be1e8c8@redhat.com>
+ <20251111100746.00003136@huawei.com>
+ <2440a0dd-6543-4590-9c0f-06b05bdfc8a4@redhat.com>
+ <20251111115551.00003385@huawei.com>
+ <e797a9f6-aee6-4c0f-9c17-f4200199e317@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFn=p-ZqLCJ2uRm4MSeewPbKyN8g+B95ELVkP9qaXdE2tObf_Q@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,82 +76,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 07, 2025 at 03:18:31PM -0500, John Snow wrote:
-> Hiya;
+On Tue, 11 Nov 2025 22:19:18 +1000
+Gavin Shan <gshan@redhat.com> wrote:
+
+> Hi Jonathan,
 > 
-> I tried adding a test dep in meson to execute an ensuregroup command
-> for check-functional tests; i.e.
+> On 11/11/25 9:55 PM, Jonathan Cameron wrote:
+> > On Tue, 11 Nov 2025 20:55:17 +1000
+> > Gavin Shan <gshan@redhat.com> wrote:  
+> >> On 11/11/25 8:07 PM, Jonathan Cameron wrote:  
+> >>> On Tue, 11 Nov 2025 14:08:13 +1000
+> >>> Gavin Shan <gshan@redhat.com> wrote:  
+> >>>> On 11/11/25 12:49 AM, Igor Mammedov wrote:  
+> >>>>> On Thu, 6 Nov 2025 13:15:52 +1000
+> >>>>> Gavin Shan <gshan@redhat.com> wrote:  
+> >>>>>> On 11/6/25 12:14 AM, Jonathan Cameron wrote:  
+> >>>>>>> On Wed,  5 Nov 2025 21:44:49 +1000
+> >>>>>>> Gavin Shan <gshan@redhat.com> wrote:
+> >>>>>>>            
+> >>>>>>>> In the situation where host and guest has 64KiB and 4KiB page sizes,
+> >>>>>>>> one problematic host page affects 16 guest pages. we need to send 16
+> >>>>>>>> consective errors in this specific case.
+> >>>>>>>>
+> >>>>>>>> Extend acpi_ghes_memory_errors() to support multiple CPERs after the
+> >>>>>>>> hunk of code to generate the GHES error status is pulled out from
+> >>>>>>>> ghes_gen_err_data_uncorrectable_recoverable(). The status field of
+> >>>>>>>> generic error status block is also updated accordingly if multiple
+> >>>>>>>> error data entries are contained in the generic error status block.
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Gavin Shan <gshan@redhat.com>  
+> >>>>>>> Hi Gavin,
+> >>>>>>>
+> >>>>>>> Mostly fine, but a few comments on the defines added and a
+> >>>>>>> question on what the multiple things are meant to mean?
+> >>>>>>>            
+> >>>>>>
+> >>>>>> Thanks for your review and comments, replies as below.
+> >>>>>>        
+> >>>>>>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> >>>>>>>> index a9c08e73c0..527b85c8d8 100644
+> >>>>>>>> --- a/hw/acpi/ghes.c
+> >>>>>>>> +++ b/hw/acpi/ghes.c
+> >>>>>>>> @@ -57,8 +57,12 @@
+> >>>>>>>>      /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
+> >>>>>>>>      #define ACPI_GHES_MEM_CPER_LENGTH           80
+> >>>>>>>>      
+> >>>>>>>> -/* Masks for block_status flags */
+> >>>>>>>> -#define ACPI_GEBS_UNCORRECTABLE         1
+> >>>>>>>> +/* Bits for block_status flags */
+> >>>>>>>> +#define ACPI_GEBS_UNCORRECTABLE           0
+> >>>>>>>> +#define ACPI_GEBS_CORRECTABLE             1
+> >>>>>>>> +#define ACPI_GEBS_MULTIPLE_UNCORRECTABLE  2
+> >>>>>>>> +#define ACPI_GEBS_MULTIPLE_CORRECTABLE    3  
+> >>>>>>>
+> >>>>>>> So this maps to the bits in block status.
+> >>>>>>>
+> >>>>>>> I'm not actually sure what these multiple variants are meant to tell us.
+> >>>>>>> The multiple error blocks example referred to by the spec is a way to represent
+> >>>>>>> the same error applying to multiple places.  So that's one error, many blocks.
+> >>>>>>> I have no idea if we set these bits in that case.
+> >>>>>>>
+> >>>>>>> Based on a quick look I don't think linux even takes any notice.  THere
+> >>>>>>> are defines in actbl1.h but I'm not seeing any use made of them.
+> >>>>>>>            
+> >>>>>>
+> >>>>>> I hope Igor can confirm since it was suggested by him.
+> >>>>>>
+> >>>>>> It's hard to understand how exactly these multiple variants are used from the
+> >>>>>> spec. In ACPI 6.5 Table 18.11, it's explained as below.
+> >>>>>>
+> >>>>>> Bit [2] - Multiple Uncorrectable Errors: If set to one, indicates that more
+> >>>>>> than one uncorrectable errors have been detected.
+> >>>>>>
+> >>>>>> I don't see those multiple variants have been used by Linux. So I think it's
+> >>>>>> safe to drop them.  
+> >>>>>
+> >>>>> even though example describes 'same' error at different components,
+> >>>>> the bit fields descriptions doesn't set any limits on what 'more than one' means.
+> >>>>>
+> >>>>> Also from guest POV it's multiple different pages that we are reporting here
+> >>>>> as multiple CPERs.
+> >>>>> It seems to me that setting *_MULTIPLE_* here is correct thing to do.
+> >>>>>         
+> >>>>
+> >>>> I don't have strong opinions. Lets keep to set _MULTIPLE_ flag if Jonathan
+> >>>> is fine. Again, this field isn't used by Linux guest.  
+> >>> I don't care strongly.  Maybe we should ask for a spec clarification as I doubt
+> >>> implementations will be consistent on this given the vague description and that
+> >>> Linux ignores it today.
+> >>>      
+> >>
+> >> Google Gemini has the following question. If it can be trusted, it should be
+> >> set when @num_of_addresses is larger than 1.
+> >>
+> >> Quota from Google Gemini:
+> >>
+> >> The system firmware sets this bit to indicate to the Operating System Power Management (OSPM)
+> >> that more than one correctable error condition has been detected and logged for the associated
+> >> hardware component since the last time the status was cleared by the software. This is crucial
+> >> because a high frequency of correctable errors often indicates a potential underlying hardware
+> >> issue that could lead to uncorrectable (and potentially fatal) errors if not addressed (e.g.,
+> >> in memory, where multiple correctable errors might trigger a spare memory operation).
+> >>  
+> >>>>     
+> >>>>>>>> +#define ACPI_GEBS_ERROR_DATA_ENTRIES      4  
+> >>>>>>>
+> >>>>>>> This is bits 4-13 and the define isn't used. I'd drop it.
+> >>>>>>>            
+> >>>>>>
+> >>>>>> The definition is used in acpi_ghes_memory_errors() of this patch. However,
+> >>>>>> I don't see it has been used by Linux. This field isn't used by Linux to determine
+> >>>>>> the total number of error entries. So I think I can drop it either if Igor is ok.
+> >>>>>>        
+> >>>>
+> >>>> Lets keep this field either in next revision if Jonathan is fine.  
+> >>>
+> >>> I'm fine with the field, but not the value.  As far as I can tell form the spec, it should
+> >>> be a mask, not a single bit.
+> >>>      
+> >>
+> >> Agreed, lets keep ACPI_HEST_ERROR_ENTRY_COUNT as zero in next revision.  
+> > 
+> > I'm even more confused now.  The GEBS Error Data entry count should be field from 13:4
+> > and the value taken should be the number of entries in the record, so 1, 4, 16 depending
+> > on the page size.
+> > 
+> > So that define of the value 4 is garbage. If it were DATA_ENTRIES_SHIFT then I'd be much happier.
+> >   
 > 
-> commit ddb9ae03e1a29a036aa708016fcb747d77b1fc6d
-> Author: John Snow <jsnow@redhat.com>
-> Date:   Fri Nov 7 14:41:04 2025 -0500
+> My bad. I misunderstood your point. It will be fixed by using APIs from
+> "hw/registerfields.h" as suggested by Philippe in another reply.
 > 
->     test: add pyvenv test deps to func tests...?
+>    ...
+>    FIELD(ACPI_GEBS, MULTIPLE_CORRECTABLE, 3, 1)
+>    FIELD(ACPI_GEBS, ERROR_DATA_ENTRIES, 4, 10)
 > 
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 725630d3082..dd9a1be18e7 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -66,7 +66,7 @@ foreach speed : ['quick', 'thorough']
->        target_tests = get_variable('tests_' + target_base + '_' +
-> sysmode + '_' + speed, [])
->      endif
+>    then use FIELD_DP32() to only set the correct bits.
 > 
-> -    test_deps = [roms, keymap_targets]
-> +    test_deps = [roms, keymap_targets, pyvenv_test_deps]
->      test_env = environment()
->      if have_tools
->        test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() /
-> 'qemu-img')
+Perfect. Thanks!
+
+J
+> Thanks,
+> Gavin
 > 
-> And then I tried removing the "check-venv" targets from
-> tests/Makefile.include; but now it appears as though running "make
-> check-functional" doesn't work; it doesn't invoke the ensuregroup
-> hook.
 > 
-> What am I missing? Do I need to change the way "make check-functional"
-> invokes the test suite....?
-> 
-> https://gitlab.com/jsnow/qemu/-/commits/python_drop_qmp
-
-I checked out that branch, purged my local build env, and did
-
-  ./configure --target-list=x86_64-softmmu
-  make
-  make check-functional
-
-In the output displayed by the latter I saw
-
-  changing dir to build for make "check-functional"...
-  make[1]: Entering directory '/var/home/berrange/src/virt/qemu/build'
-  ninja: Jobserver mode detected: rR -j20 --jobserver-auth=fifo:/tmp/GMfifo2721806
-  [1/29] Generating tests/pyvenv_checktests_group with a custom command
-  mkvenv: checking for qemu.qmp>=0.0.5
-  mkvenv: installing qemu.qmp==0.0.5
-
-That seems to be installing the 'checktests'  deps from pythondeps.yml
-but is NOT installing the 'functests' deps from pythondeps.yml
-
-It looks like the tests/meson.build target:
-
-  pyvenv_checktests_group = custom_target(
-      ....
-  )
-
-needs to be duplicated in tests/functional/meson.build, to process
-the 'functests' deps instead of 'checktests', and them make both
-'pyvenv_checktests_group' and 'pyvenv_functests_group' deps of
-the functional tests.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
