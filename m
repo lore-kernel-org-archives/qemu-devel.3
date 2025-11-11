@@ -4,122 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64DDFCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 12:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C54FCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 12:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vInMq-0006wm-Kf; Tue, 11 Nov 2025 07:21:01 -0500
+	id 1vInUl-0000RT-4E; Tue, 11 Nov 2025 07:29:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vInLQ-0004cF-5K
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 07:19:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vInTx-0008QN-Bj
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 07:28:28 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vInLN-00019S-ED
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 07:19:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762863568;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j4vFMP2+PgPcpDrBpxIP2bJH0X/tllQNcH+EXd83rIM=;
- b=WFyyeLSmm7Vl7bY6Io+badPunyocaAZGIk7ImpVSQj0+cKRjCDcubW0lFgfvGcsWVpWqdp
- xQoHROSwjTRqpBcyDKUdbJm8gGtXrbgNEqlhjmUFnxvKLhRytKaHySeqJTGf3RfJyLvRw4
- 3s52K3k2f2regHOzvCje7kc+O9MG+0U=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-L_jdpESRMYiCHsSf_n4jLA-1; Tue, 11 Nov 2025 07:19:26 -0500
-X-MC-Unique: L_jdpESRMYiCHsSf_n4jLA-1
-X-Mimecast-MFC-AGG-ID: L_jdpESRMYiCHsSf_n4jLA_1762863566
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3438b1220bcso2991788a91.2
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 04:19:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762863566; x=1763468366; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=j4vFMP2+PgPcpDrBpxIP2bJH0X/tllQNcH+EXd83rIM=;
- b=b4QGFAj97yRQo8IFK7U6Nc3o8vksMZHT/iPsH2ZSJgt4hEwWxjHbGR39EUnKZBL9x7
- XrI5TmpQOUfBUPNgSUOBJCuqjX5VhT0zQcwzgsKRYNbn3kEn78b8ZtcdrX+CXFXUwkS4
- rBtjFPjC6aDY52PTJLNzYQ7uWymXt5N0T8XifsNjj77EQy7QoWN4UPwrGHCwgHuMe7mC
- RYjwg4XgJLykumthN8amOJJBUstFYTZkb19uN2fuRNR2R8DyrvuzTlNBDfHQmGv8WKu2
- 3Om67FBHAfA2+Uwf91olISmS/TWc9fTf4bc70OeHZn8+W+6rkVg3L6hl/wRecZNCiXek
- VvMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762863566; x=1763468366;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=j4vFMP2+PgPcpDrBpxIP2bJH0X/tllQNcH+EXd83rIM=;
- b=m7qmkEO07aDIYjEKSz7sJz1OQo/egpMPWuoTVD5t2pEuKk7A+GD7AlAFdGPLQZLndE
- hdz6udgACuiAKy9ijjd/ch+Z47pzBlMG/2BPMBb63zWdEdfTrMNoAuk6gxEobvNm4SKC
- yYYq8Fd+mci/MBOBgL5em62zH0JrU/amg7Vp7IxGCJ/6Fx1PBUXcIfFD2olxBVlqYATH
- hv7r/rOYz/rzR1pOFpHMSabI9tBt/wCbdwRUrpKEE7vkLC1XPrRlKH0k75b6mRamcwlG
- HhfzJvGGZWSGCR/43sc8PvewljdfuXA0ox+eIpAxDcC4FCbYBfRQaoX6pR0ACAG5iSS+
- tVJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJs8WR6UX6nyhUvESSLgK9CnXrJfyjIvXXmSRqydO2netjVwlKhkGIiqwglCMZI71UD0+MEieowWO/@nongnu.org
-X-Gm-Message-State: AOJu0YwVnAVXgQL/pAwLjesW/yI4NngvHuDl19fXin2Fow3kgvDXF0+i
- NcvRmURsj7ddsa+8k+VvKcnGnyNCECTLmWlLayD6lULoa/hC+MccUf0PHsmeoj3gBQM3GrSu3qC
- 0wPidgD32/2+HmGAC+DiLuGGfOxMQcNRMCyRh5Qa7+14T9orsnkHGG4Lj
-X-Gm-Gg: ASbGncsej22IaRqPtawhjBKw2outr4KkEuvd9TkqkQrgH4ldqVDjvaQYP1ShFnKkFXK
- m4QnOA0Xc9tngC69yYvUGC9qFuAdI51iwVWQmPTZbyykqpzNqVJMIMEmO+X1QRWF46Q7poMqWnG
- f4u5KCggtxxH3a7ybZlzuOObTLjyPev/KEPjVc0ZPDjPi8cFXKSboxwn0RsAuukRo2qfvEZ04u0
- ZrViAQjLACEtCIMhlRiKLSE1QYU45WmZkI3sZPTvB62/URjrbNK4MW/siwuGVrPuSpoV2V5hqwf
- JhF+xbIXFvqA8nAw5HrR4T9EdZCfiMMlGJacExyXlOJODs0caA1dvR8TvFLZ26d4fz4tY0r4NOF
- C3+80xoFfV9iTGwOmuncgjG4PhvZ5fQQ5UbL/PwM=
-X-Received: by 2002:a17:90a:e710:b0:340:dcd4:f851 with SMTP id
- 98e67ed59e1d1-3436cb73cb1mr13540565a91.3.1762863565607; 
- Tue, 11 Nov 2025 04:19:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEBHn4H9bZrdWxPBi2rdXHGLAVOuYVkOomXD5ohBndslH4wZdqE20IEvS7wmwTVumgvXJiCfw==
-X-Received: by 2002:a17:90a:e710:b0:340:dcd4:f851 with SMTP id
- 98e67ed59e1d1-3436cb73cb1mr13540530a91.3.1762863565096; 
- Tue, 11 Nov 2025 04:19:25 -0800 (PST)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3434c31d86esm14711595a91.8.2025.11.11.04.19.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 04:19:24 -0800 (PST)
-Message-ID: <e797a9f6-aee6-4c0f-9c17-f4200199e317@redhat.com>
-Date: Tue, 11 Nov 2025 22:19:18 +1000
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vInTt-0002mG-BL
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 07:28:20 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1762864077; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=MbFm8B9QIF57OBa9Ot8v0HJa00Ukhr0v7wiHDMPLxsSpzks1Y2avmi9sXYv4oizBy/Kr2o7b8hfxQlW8GaNH6XiXhX0WdE+XLZ9rZ/a8E0XIipxm3fE2L6kl/Xs521K39QiqQNtE2XCUwq9c4jgfIqTpe2rPid6TzUcMn0OL7wM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1762864077;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ylUqIarbGf+7DK4gKzBv0KxwyIjQhRoxGDe5/6gix0Y=; 
+ b=L0OSIy/hk0/IG7cqltazC+pYiRy5AF2YV8zxToAfTDFbgc+mv9WUbGrfLAekMtseRqIwn9IaW8kZEGU6czRyPKtQMP/ji02WmRIuEKDGZIaJDEmrEZcOv4ElZzAWDZWXSZ3wrCMnRA4j4aq/mHj9sRVosp6KN6UnBI2rJRERUyg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762864077; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=ylUqIarbGf+7DK4gKzBv0KxwyIjQhRoxGDe5/6gix0Y=;
+ b=DM9GgDgyBLUQ80cEwlVGOiSrssCMs1P8RdgincJt6DCwfZN9RPDS4zGs84KeZgFA
+ Fi1KxqmL6WDcMdxOrz4/sEZTxxTx8d1QyfWxFXXxjnNvpVOA/j9z5ZGfvkQXLA55a8A
+ +8U0CLiERkWM73ydwOUV4S9eeQgPUDgi1182JJ7A=
+Received: by mx.zohomail.com with SMTPS id 176286407551846.49917102360757;
+ Tue, 11 Nov 2025 04:27:55 -0800 (PST)
+Message-ID: <f2c322f2-c111-455d-a8b5-17162effac09@collabora.com>
+Date: Tue, 11 Nov 2025 15:27:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/8] acpi/ghes: Extend acpi_ghes_memory_errors() to
- support multiple CPERs
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, shan.gavin@gmail.com,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, mchehab+huawei@kernel.org,
- gengdongjiu1@gmail.com, mst@redhat.com, anisinha@redhat.com,
- peter.maydell@linaro.org, pbonzini@redhat.com
-References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-5-gshan@redhat.com>
- <20251105141455.000052f0@huawei.com>
- <cc07dfc9-f58a-4654-8854-c16a2e85fecd@redhat.com>
- <20251110154957.5c481df7@fedora>
- <cad74549-a313-48b6-8260-f23f6be1e8c8@redhat.com>
- <20251111100746.00003136@huawei.com>
- <2440a0dd-6543-4590-9c0f-06b05bdfc8a4@redhat.com>
- <20251111115551.00003385@huawei.com>
+Subject: Re: [PATCH v14 04/10] virtio-gpu: Support asynchronous fencing
+To: Yiwei Zhang <zzyiwei@gmail.com>
+Cc: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
+ <20251020233949.506088-5-dmitry.osipenko@collabora.com>
+ <CAJ+hS_h4gwe+yaUrcQ5ibdEAFqya=SOb4KLT5HmgG_ZGtJnMSQ@mail.gmail.com>
+ <CAJ+hS_gPoaSc-VfoOENgyHZRhFAkUzizoGHm3xJz2trb0jsZAg@mail.gmail.com>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20251111115551.00003385@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <CAJ+hS_gPoaSc-VfoOENgyHZRhFAkUzizoGHm3xJz2trb0jsZAg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,141 +100,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
-
-On 11/11/25 9:55 PM, Jonathan Cameron wrote:
-> On Tue, 11 Nov 2025 20:55:17 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
->> On 11/11/25 8:07 PM, Jonathan Cameron wrote:
->>> On Tue, 11 Nov 2025 14:08:13 +1000
->>> Gavin Shan <gshan@redhat.com> wrote:
->>>> On 11/11/25 12:49 AM, Igor Mammedov wrote:
->>>>> On Thu, 6 Nov 2025 13:15:52 +1000
->>>>> Gavin Shan <gshan@redhat.com> wrote:
->>>>>> On 11/6/25 12:14 AM, Jonathan Cameron wrote:
->>>>>>> On Wed,  5 Nov 2025 21:44:49 +1000
->>>>>>> Gavin Shan <gshan@redhat.com> wrote:
->>>>>>>          
->>>>>>>> In the situation where host and guest has 64KiB and 4KiB page sizes,
->>>>>>>> one problematic host page affects 16 guest pages. we need to send 16
->>>>>>>> consective errors in this specific case.
->>>>>>>>
->>>>>>>> Extend acpi_ghes_memory_errors() to support multiple CPERs after the
->>>>>>>> hunk of code to generate the GHES error status is pulled out from
->>>>>>>> ghes_gen_err_data_uncorrectable_recoverable(). The status field of
->>>>>>>> generic error status block is also updated accordingly if multiple
->>>>>>>> error data entries are contained in the generic error status block.
->>>>>>>>
->>>>>>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
->>>>>>> Hi Gavin,
->>>>>>>
->>>>>>> Mostly fine, but a few comments on the defines added and a
->>>>>>> question on what the multiple things are meant to mean?
->>>>>>>          
->>>>>>
->>>>>> Thanks for your review and comments, replies as below.
->>>>>>      
->>>>>>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
->>>>>>>> index a9c08e73c0..527b85c8d8 100644
->>>>>>>> --- a/hw/acpi/ghes.c
->>>>>>>> +++ b/hw/acpi/ghes.c
->>>>>>>> @@ -57,8 +57,12 @@
->>>>>>>>      /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
->>>>>>>>      #define ACPI_GHES_MEM_CPER_LENGTH           80
->>>>>>>>      
->>>>>>>> -/* Masks for block_status flags */
->>>>>>>> -#define ACPI_GEBS_UNCORRECTABLE         1
->>>>>>>> +/* Bits for block_status flags */
->>>>>>>> +#define ACPI_GEBS_UNCORRECTABLE           0
->>>>>>>> +#define ACPI_GEBS_CORRECTABLE             1
->>>>>>>> +#define ACPI_GEBS_MULTIPLE_UNCORRECTABLE  2
->>>>>>>> +#define ACPI_GEBS_MULTIPLE_CORRECTABLE    3
->>>>>>>
->>>>>>> So this maps to the bits in block status.
->>>>>>>
->>>>>>> I'm not actually sure what these multiple variants are meant to tell us.
->>>>>>> The multiple error blocks example referred to by the spec is a way to represent
->>>>>>> the same error applying to multiple places.  So that's one error, many blocks.
->>>>>>> I have no idea if we set these bits in that case.
->>>>>>>
->>>>>>> Based on a quick look I don't think linux even takes any notice.  THere
->>>>>>> are defines in actbl1.h but I'm not seeing any use made of them.
->>>>>>>          
->>>>>>
->>>>>> I hope Igor can confirm since it was suggested by him.
->>>>>>
->>>>>> It's hard to understand how exactly these multiple variants are used from the
->>>>>> spec. In ACPI 6.5 Table 18.11, it's explained as below.
->>>>>>
->>>>>> Bit [2] - Multiple Uncorrectable Errors: If set to one, indicates that more
->>>>>> than one uncorrectable errors have been detected.
->>>>>>
->>>>>> I don't see those multiple variants have been used by Linux. So I think it's
->>>>>> safe to drop them.
->>>>>
->>>>> even though example describes 'same' error at different components,
->>>>> the bit fields descriptions doesn't set any limits on what 'more than one' means.
->>>>>
->>>>> Also from guest POV it's multiple different pages that we are reporting here
->>>>> as multiple CPERs.
->>>>> It seems to me that setting *_MULTIPLE_* here is correct thing to do.
->>>>>       
->>>>
->>>> I don't have strong opinions. Lets keep to set _MULTIPLE_ flag if Jonathan
->>>> is fine. Again, this field isn't used by Linux guest.
->>> I don't care strongly.  Maybe we should ask for a spec clarification as I doubt
->>> implementations will be consistent on this given the vague description and that
->>> Linux ignores it today.
->>>    
+On 11/11/25 05:29, Yiwei Zhang wrote:
+> On Sat, Nov 8, 2025 at 3:56 AM Yiwei Zhang <zzyiwei@gmail.com> wrote:
 >>
->> Google Gemini has the following question. If it can be trusted, it should be
->> set when @num_of_addresses is larger than 1.
->>
->> Quota from Google Gemini:
->>
->> The system firmware sets this bit to indicate to the Operating System Power Management (OSPM)
->> that more than one correctable error condition has been detected and logged for the associated
->> hardware component since the last time the status was cleared by the software. This is crucial
->> because a high frequency of correctable errors often indicates a potential underlying hardware
->> issue that could lead to uncorrectable (and potentially fatal) errors if not addressed (e.g.,
->> in memory, where multiple correctable errors might trigger a spare memory operation).
->>
->>>>   
->>>>>>>> +#define ACPI_GEBS_ERROR_DATA_ENTRIES      4
->>>>>>>
->>>>>>> This is bits 4-13 and the define isn't used. I'd drop it.
->>>>>>>          
->>>>>>
->>>>>> The definition is used in acpi_ghes_memory_errors() of this patch. However,
->>>>>> I don't see it has been used by Linux. This field isn't used by Linux to determine
->>>>>> the total number of error entries. So I think I can drop it either if Igor is ok.
->>>>>>      
->>>>
->>>> Lets keep this field either in next revision if Jonathan is fine.
+>> On Mon, Oct 20, 2025 at 4:42 PM Dmitry Osipenko
+>> <dmitry.osipenko@collabora.com> wrote:
 >>>
->>> I'm fine with the field, but not the value.  As far as I can tell form the spec, it should
->>> be a mask, not a single bit.
->>>    
+>>> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+>>> handle fence as soon as it's signalled instead of periodically polling
+>>> the fence status. This feature is required for enabling DRM context
+>>> support in Qemu because legacy fencing mode isn't supported for DRM
+>>> contexts in virglrenderer.
+>>>
+>>> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>>> Tested-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> ---
+>>>  hw/display/virtio-gpu-gl.c     |   5 ++
+>>>  hw/display/virtio-gpu-virgl.c  | 130 +++++++++++++++++++++++++++++++++
+>>>  include/hw/virtio/virtio-gpu.h |  11 +++
+>>>  meson.build                    |   2 +
+>>>  4 files changed, 148 insertions(+)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+>>> index c06a078fb36a..1468c6ed1467 100644
+>>> --- a/hw/display/virtio-gpu-gl.c
+>>> +++ b/hw/display/virtio-gpu-gl.c
+>>> @@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>>>      if (gl->renderer_state >= RS_INITED) {
+>>>  #if VIRGL_VERSION_MAJOR >= 1
+>>>          qemu_bh_delete(gl->cmdq_resume_bh);
+>>> +
+>>> +        if (gl->async_fence_bh) {
+>>> +            virtio_gpu_virgl_reset_async_fences(g);
+>>> +            qemu_bh_delete(gl->async_fence_bh);
+>>> +        }
+>>>  #endif
+>>>          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>>>              timer_free(gl->print_stats);
+>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>>> index cd8b367f6fa6..0320d6deca76 100644
+>>> --- a/hw/display/virtio-gpu-virgl.c
+>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>> @@ -24,6 +24,23 @@
+>>>
+>>>  #include <virglrenderer.h>
+>>>
+>>> +/*
+>>> + * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fixed
+>>> + * in 1.1.0. Undefine bugged version of the macro and provide our own.
+>>> + */
+>>> +#if defined(VIRGL_CHECK_VERSION) && \
+>>> +    VIRGL_VERSION_MAJOR == 1 && VIRGL_VERSION_MINOR < 1
+>>> +#undef VIRGL_CHECK_VERSION
+>>> +#endif
+>>> +
+>>> +#ifndef VIRGL_CHECK_VERSION
+>>> +#define VIRGL_CHECK_VERSION(major, minor, micro) \
+>>> +    (VIRGL_VERSION_MAJOR > (major) || \
+>>> +     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR > (minor) || \
+>>> +     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR == (minor) && \
+>>> +     VIRGL_VERSION_MICRO >= (micro))
+>>> +#endif
+>>> +
+>>>  struct virtio_gpu_virgl_resource {
+>>>      struct virtio_gpu_simple_resource base;
+>>>      MemoryRegion *mr;
+>>> @@ -1051,6 +1068,106 @@ static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+>>>  }
+>>>  #endif
+>>>
+>>> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
+>>> +{
+>>> +    struct virtio_gpu_virgl_context_fence *f;
+>>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>>> +
+>>> +    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
+>>> +        f = QSLIST_FIRST(&gl->async_fenceq);
+>>> +
+>>> +        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
+>>> +
+>>> +        g_free(f);
+>>> +    }
+>>> +}
+>>> +
+>>> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+>>> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
+>>> +{
+>>> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+>>> +    struct virtio_gpu_ctrl_command *cmd, *tmp;
+>>> +    struct virtio_gpu_virgl_context_fence *f;
+>>> +    VirtIOGPU *g = opaque;
+>>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>>> +
+>>> +    if (gl->renderer_state != RS_INITED) {
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
+>>> +
+>>> +    while (!QSLIST_EMPTY(&async_fenceq)) {
+>>> +        f = QSLIST_FIRST(&async_fenceq);
+>>> +
+>>> +        QSLIST_REMOVE_HEAD(&async_fenceq, next);
+>>> +
+>>> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+>>> +            /*
+>>> +             * the guest can end up emitting fences out of order
+>>> +             * so we should check all fenced cmds not just the first one.
+>>> +             */
+>>> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
+>>> +                continue;
+>>> +            }
+>>> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+>>> +                if (cmd->cmd_hdr.ring_idx != f->ring_idx) {
+>>> +                    continue;
+>>> +                }
+>>> +                if (cmd->cmd_hdr.ctx_id != f->ctx_id) {
+>>> +                    continue;
+>>> +                }
+>>> +            } else if (f->ring_idx >= 0) {
+>>> +                /* ctx0 GL-query fences don't have ring info */
+>>> +                continue;
+>>> +            }
+>>> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
+>>> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
+>>> +            g_free(cmd);
+>>> +        }
 >>
->> Agreed, lets keep ACPI_HEST_ERROR_ENTRY_COUNT as zero in next revision.
+>> Conditions above are a little bit confusing. Skipping unsignaled
+>> fences first makes sense to me. Next we can use f->ctx_id == 0 to
+>> distinguish ctx0 fence vs context fence. Then:
+>> - for f->ctx_id == 0, skip any RING_IDX
+>> - for f->ctx_id > 0, only care about RING_IDX along with comparing
+>> ctx_id and ring_idx
+>>
+>> So, if we check the RING_IDX flag first like in the existing patch,
+>> the else condition is only meaningful for the ctx0 fence, and
+>> f->ring_idx >= 0 will never be evaluated to true. Can we drop the
+>> "else if" part?
+>>
+>>> +
+>>> +        trace_virtio_gpu_fence_resp(f->fence_id);
+>>> +        g_free(f);
+>>> +        g->inflight--;
+>>> +        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>>> +            trace_virtio_gpu_dec_inflight_fences(g->inflight);
+>>> +        }
+>>> +    }
+>>> +}
+>>> +
+>>> +static void
+>>> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
+>>> +                                  int64_t ring_idx, uint64_t fence_id)
+>>> +{
+>>> +    struct virtio_gpu_virgl_context_fence *f;
+>>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>>> +
+>>> +    f = g_new(struct virtio_gpu_virgl_context_fence, 1);
+>>> +    f->ctx_id = ctx_id;
+>>> +    f->ring_idx = ring_idx;
+>>> +    f->fence_id = fence_id;
+>>> +
+>>> +    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
+>>> +
+>>> +    qemu_bh_schedule(gl->async_fence_bh);
+>>> +}
+>>> +
+>>> +static void virgl_write_async_fence(void *opaque, uint32_t fence)
+>>> +{
+>>> +    VirtIOGPU *g = opaque;
+>>> +
+>>> +    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
+>>> +}
+>>> +
+>>> +static void virgl_write_async_context_fence(void *opaque, uint32_t ctx_id,
+>>> +                                            uint32_t ring_idx, uint64_t fence)
+>>> +{
+>>> +    VirtIOGPU *g = opaque;
+>>> +
+>>> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
+>>> +}
+>>> +#endif
+>>> +
+>>>  static virgl_renderer_gl_context
+>>>  virgl_create_context(void *opaque, int scanout_idx,
+>>>                       struct virgl_renderer_gl_ctx_param *params)
+>>> @@ -1150,6 +1267,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>>>  void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>>>  {
+>>>      virgl_renderer_reset();
+>>> +
+>>> +    virtio_gpu_virgl_reset_async_fences(g);
+>>>  }
+>>>
+>>>  int virtio_gpu_virgl_init(VirtIOGPU *g)
+>>> @@ -1162,6 +1281,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>>>      if (qemu_egl_display) {
+>>>          virtio_gpu_3d_cbs.version = 4;
+>>>          virtio_gpu_3d_cbs.get_egl_display = virgl_get_egl_display;
+>>> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+>>> +        virtio_gpu_3d_cbs.write_fence         = virgl_write_async_fence;
+>>> +        virtio_gpu_3d_cbs.write_context_fence = virgl_write_async_context_fence;
+>>> +        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB;
+>>> +        flags |= VIRGL_RENDERER_THREAD_SYNC;
+>>> +#endif
+>>>      }
+>>>  #endif
+>>>  #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+>>> @@ -1195,6 +1320,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>>>      gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
+>>>                                      virtio_gpu_virgl_resume_cmdq_bh,
+>>>                                      g);
+>>> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+>>> +    gl->async_fence_bh = aio_bh_new(qemu_get_aio_context(),
+>>> +                                    virtio_gpu_virgl_async_fence_bh,
+>>> +                                    g);
+>>> +#endif
+>>>  #endif
+>>>
+>>>      return 0;
+>>> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+>>> index 9f16f89a36d2..e15c16aa5945 100644
+>>> --- a/include/hw/virtio/virtio-gpu.h
+>>> +++ b/include/hw/virtio/virtio-gpu.h
+>>> @@ -233,6 +233,13 @@ struct VirtIOGPUClass {
+>>>                               Error **errp);
+>>>  };
+>>>
+>>> +struct virtio_gpu_virgl_context_fence {
+>>> +    uint32_t ctx_id;
+>>> +    int64_t ring_idx;
+>>
+>> If I didn't miss anything above, we don't need -1 to tell anything.
+>> Then the ring_idx here can be a uint32_t, and virgl_write_async_fence
+>> can just pass 0.
+>>
+>>> +    uint64_t fence_id;
+>>> +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
+>>> +};
+>>> +
+>>>  /* VirtIOGPUGL renderer states */
+>>>  typedef enum {
+>>>      RS_START,       /* starting state */
+>>> @@ -250,6 +257,9 @@ struct VirtIOGPUGL {
+>>>      QEMUTimer *print_stats;
+>>>
+>>>      QEMUBH *cmdq_resume_bh;
+>>> +
+>>> +    QEMUBH *async_fence_bh;
+>>> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+>>>  };
+>>>
+>>>  struct VhostUserGPU {
+>>> @@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+>>>  void virtio_gpu_virgl_reset(VirtIOGPU *g);
+>>>  int virtio_gpu_virgl_init(VirtIOGPU *g);
+>>>  GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+>>> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+>>>
+>>>  #endif
+>>> diff --git a/meson.build b/meson.build
+>>> index e96c28da09b6..e3d48150483e 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -2597,6 +2597,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+>>>  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+>>>  if virgl.found()
+>>>    config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')[0])
+>>> +  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split('.')[1])
+>>> +  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split('.')[2])
+>>>  endif
+>>>  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+>>>  config_host_data.set('CONFIG_VTE', vte.found())
+>>> --
+>>> 2.51.0
+>>>
 > 
-> I'm even more confused now.  The GEBS Error Data entry count should be field from 13:4
-> and the value taken should be the number of entries in the record, so 1, 4, 16 depending
-> on the page size.
-> 
-> So that define of the value 4 is garbage. If it were DATA_ENTRIES_SHIFT then I'd be much happier.
-> 
+> Friendly ping. My early comments here might have been missed ; )
 
-My bad. I misunderstood your point. It will be fixed by using APIs from
-"hw/registerfields.h" as suggested by Philippe in another reply.
+I indeed missed that first part of the comment, thanks.
 
-   ...
-   FIELD(ACPI_GEBS, MULTIPLE_CORRECTABLE, 3, 1)
-   FIELD(ACPI_GEBS, ERROR_DATA_ENTRIES, 4, 10)
+Could you please give a code sample of your suggestion?
 
-   then use FIELD_DP32() to only set the correct bits.
+The `if (f->ring_idx >= 0)` is a sanity-check for that we're not getting
+a fence that has ring_idx without a set RING_IDX flag. All other fences
+are processed by that fence-handling loop.
 
-Thanks,
-Gavin
-
+-- 
+Best regards,
+Dmitry
 
