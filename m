@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95152CD1297
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 077B2CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIlci-0008PN-DR; Tue, 11 Nov 2025 05:29:16 -0500
+	id 1vIlci-0008Ow-7q; Tue, 11 Nov 2025 05:29:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcP-0007nm-7i
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:57 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1vIlcL-0007dD-Hb
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:53 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcH-0000Gj-MU
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:56 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b72b495aa81so478575566b.2
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:43 -0800 (PST)
+ id 1vIlcH-0000HZ-4Q
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:52 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b73161849e1so328359766b.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762856922; x=1763461722; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762856925; x=1763461725; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Nebiko2e8E9Ki2NoxKJO7wXXHO0pfIKqcEM3oGXROYo=;
- b=Eadv8SLSij+fi9Ydz89OfcFG3F2xs6BZGIdVDByxhaLSCLozPWulg5aOvXQLFervIU
- 8B/ZDrsk+66AHureK5PmOV/LYCtOrxnVw0DqDH15DHrNfuxb0ju2OUpJZ59ax81nsKqv
- q1BSESmuPSrgsK8alyr4Mj/LjYvB3ir+EoYDKcsoY+eg2uBM8ALoxMzgR+LcixTkieQn
- iwS1gwlkrHjeS17Ay9+O9j3M0vEXpuZe4/XQ7InQglImFdgahnkOinnMckYV+NCbPY64
- 1Z298gve3pX8OhmmgwPnb51odGlxYmx2gRIr4Md24MYzD6xwcELR4cWJ+foY1zrXRi3T
- AvCQ==
+ bh=a2R3zKrQT8zFcXqdr8zmnfkYZDb9c7Kd8HiPSpJXcco=;
+ b=cjaDFLIRMQTtdcakvbCXnTNix97XOywezGK3hBpuokwl5bm/GgfJCDHacxqarSnsIO
+ CUeO12DUidZcWzRCkEkTSXRJ3Y0IcU27ZEZA1q80hdTnAe5HVnpWSysZdCuebZxP4Wt2
+ er9HiG+cxBNJQ9om+fTllyq4ZFgVu5NtIqJcstIZ2t0K8KmZOYK3xT98grJHLpjoNc/Y
+ KVFIwWjmm/IhBRT9uOqTE6Sw8pBhkqMuiwKBqln+4MwQfZgIaaJFhCX3PczXvYtLz+3w
+ VLN8W0Leq/CIeDOkb1M/HMDIb8SKX/vVKVhBYlGEdWSsxieIo+pFEKBAy6E95bjef14i
+ 7dNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762856922; x=1763461722;
+ d=1e100.net; s=20230601; t=1762856925; x=1763461725;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Nebiko2e8E9Ki2NoxKJO7wXXHO0pfIKqcEM3oGXROYo=;
- b=i8cY5tJchqZUVkMvruOxBiTe9ib/yu1fzv5rRcRJepqwnpTd6QEDbDS0iXHYr7TWet
- uMAINAaXxfK+1XI3wAaiAVgTUpBdmC97x0yZ8SkoF25jCSwsk7WPsLbyc/r8QJGd6hHJ
- aLDN1UFoK+lPo5rCVoZIj5brey1ZLSPHZ/fKpGa/WuBxXJDqqaf82Y4xsIoYSsEcZej0
- HcCZE/1OlO3uh5iRYCmsVYnoxqQXIkrneHoZpuAqHLJHRujFden5+uNHSkdWxrh4WryP
- Qa9ibnofIe1DAPnzIrGQCgDuwatAu9kCFosdli79B28EoFmnpp+XclE6b9PSitb1AKtX
- TRyg==
-X-Gm-Message-State: AOJu0Yz1RJZkQfI1BH0XVCpBVap5lIYIiiEad/XGldpUwiMSXlG3Cln5
- TX8mmIOD/tuOZtZrME4R4XIzyJ2yehXo9UycUVdY8JiZPeAjH3TiJYZtJMZOAymd
-X-Gm-Gg: ASbGncuHPfnJCD6D7VrhvWKokyoe9DiTlIlGIPmRNPIDce++T9dfVzJVklkIvk0bPiu
- 5HGxgBiQXKBASfmJm+8HgvKwAw2uffQPYuA8P/zFJHqREY+X9oFatnV0Vn0PZ444x7iiBcmA32C
- 1AXf10IAXy1VmJibQbnxndQCjbyK86ffdOC2JgGqznunJl0biRzaRsi/MWSGs3au+8Eym20T5qh
- fvzPOkgtU6EaQlwvSkfKWW8RwByS4mk26D9PdmRmTKPujU1FbrVsLLridQYEYzdyxtbYoqKeEwI
- 2OndtwGZZYvauUxYEowkpKDEraY9Ykma5vWxfYFUEUIErbL9QrG8DcgKTQ0xvsVfRAX2NhxJSFR
- XDSE3W6i/PPQAz6ImBw/I9RubSrTWYfYw1bol6McT6PiRqjnDUoCJchSu6Ehzg8Y+ZsdKQ5NLTy
- 32nYQNrtLNgXTMfdVt85antA==
-X-Google-Smtp-Source: AGHT+IFpcOXmVrH5pW+O83+G34A/vN9m3eynA7yS82zpn4vnxG0brScbTKkne7F1vs6WFs5u56UY7g==
-X-Received: by 2002:a17:907:96a6:b0:b4e:d6e3:1670 with SMTP id
- a640c23a62f3a-b72e028c900mr906068466b.11.1762856922464; 
- Tue, 11 Nov 2025 02:28:42 -0800 (PST)
+ bh=a2R3zKrQT8zFcXqdr8zmnfkYZDb9c7Kd8HiPSpJXcco=;
+ b=wzfh76aO1KGoBD0h+E8Q+q3GRAobeG/suUKCoUpnuXmK2LEab9bmDey2U04Tv2em8A
+ 7sW4AVHf/clGk/cpHg4y20DrFgl9iIywJWB6xf7DpGYSetYg8rLPL5iyle4jh8b4kged
+ BApxKLBCLj2ErQ72DU9AH27D/+WDD7b7UHapQMl/2O5EIrdszOIRRZ9uiFWkEDkFU+3K
+ 2kZmcjXZwmQ5ppzlVCdNwBIx6nrzS0xAT41uW0ZeAqRCcJPoQTtaVjQxkm+C4PjpsB3p
+ 6mrCNlr5gwWMrlm8snNtd9uZ7xt6AvXnRrY8VEiBYKgbiSin6sla76PgD83mmtmd7X36
+ 0zkw==
+X-Gm-Message-State: AOJu0YyJfoKIvqo8fXLjjAAK50zXB0P9WEBxis7pFVeZYykrlyd/e9R0
+ RTOoJue6hfLjWaPXsYIymXEjnv9tHJGVHhKZ0M8/Ad+QnMI+myDF60u3OauJZM4Y
+X-Gm-Gg: ASbGncv3SALXVfLXPC2f9gUrCDaGUD3DBpwkJwvtYFepnaZ0KnV3k0XPM9BL6iUdItE
+ 6Ub5wwhoEL0zTZDlGtLOAErcG1D2CwtartZ3lfPFW7gYT9a+AIB1QT35pcEtzt8N3b4tNqWgqZD
+ aeW1mKsTBUHs76WfpTXuEd8cP2XjPFqoHq0lsnFHF8re324mKnXhusYUXdM1ouj6Sji5DFC5yHl
+ wsWdBxhGrXHf0lgG7YgZXfdQFVdSt0IpEk0+QismxL8ex63kaQRFaNHbF9t4nWAUtOjEjQ6T4kX
+ jhR9vsFxGSS+r6h+DaToYuCgJZlXmhjXXiTcmKloiqvelIBgxnqopS9HXRKN6prUIHzXXvhAItF
+ zhNce9SPg3ff/8bBRyMSbJ1bnA0g0JTiaSpvNXsTNy1JEz3XyuPaQpQuAkHZtpzj8EGio6uH6cx
+ HKYyUMPu0+anSPGYTLNpNHEw==
+X-Google-Smtp-Source: AGHT+IFo8fxqj1exL4ue3grGneT6lvsp7VEqKFt+Cv/hUix1gwdWzS9XnInAcAemmSZKksNl7CXiRg==
+X-Received: by 2002:a17:906:f590:b0:b71:cec2:d54 with SMTP id
+ a640c23a62f3a-b72e04e4ebemr1208186166b.57.1762856925194; 
+ Tue, 11 Nov 2025 02:28:45 -0800 (PST)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc12:ce00:ae91:a1ff:fe8b:15a7])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.41
+ a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 02:28:42 -0800 (PST)
+ Tue, 11 Nov 2025 02:28:44 -0800 (PST)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -78,17 +78,16 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  YannickV <Y.Vossen@beckhoff.com>,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v4 05/15] hw/dma/zynq: Ensure PCFG_DONE bit remains set to
- indicate PL is in user mode
-Date: Tue, 11 Nov 2025 11:28:26 +0100
-Message-ID: <20251111102836.212535-6-corvin.koehne@gmail.com>
+Subject: [PATCH v4 08/15] hw/dma/zynq-devcfg: Fix register memory
+Date: Tue, 11 Nov 2025 11:28:29 +0100
+Message-ID: <20251111102836.212535-9-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251111102836.212535-1-corvin.koehne@gmail.com>
 References: <20251111102836.212535-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,31 +112,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-All register bits are clear on write by writing 1s to those bits, however
-the register bits will only be cleared if the condition that sets the
-interrupt flag is no longer true. Since we can assume that programming
-is always done, the `PCFG_DONE` flag is always set to 1, so it will not
-never be cleared.
+Registers are always 32 bit aligned. R_MAX is not the maximum
+register address, it is the maximum register number. The memory
+size can be determined by 4 * R_MAX.
+
+Currently every register with an offset bigger than 0x40 will be
+ignored, because the memory size is set wrong. This effects the
+MCTRL register and makes it useless. This commit restores the
+correct behaviour.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/dma/xlnx-zynq-devcfg.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/dma/xlnx-zynq-devcfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index f28d0015e6..28b3cd2902 100644
+index 512a33b066..abb8c419d9 100644
 --- a/hw/dma/xlnx-zynq-devcfg.c
 +++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -188,6 +188,8 @@ static void r_ixr_post_write(RegisterInfo *reg, uint64_t val)
- {
-     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
- 
-+    s->regs[R_INT_STS] |= R_INT_STS_PCFG_DONE_MASK;
-+
-     xlnx_zynq_devcfg_update_ixr(s);
- }
- 
+@@ -393,7 +393,7 @@ static void xlnx_zynq_devcfg_init(Object *obj)
+                               s->regs_info, s->regs,
+                               &xlnx_zynq_devcfg_reg_ops,
+                               XLNX_ZYNQ_DEVCFG_ERR_DEBUG,
+-                              XLNX_ZYNQ_DEVCFG_R_MAX);
++                              XLNX_ZYNQ_DEVCFG_R_MAX * 4);
+     memory_region_add_subregion(&s->iomem,
+                                 A_CTRL,
+                                 &reg_array->mem);
 -- 
 2.47.3
 
