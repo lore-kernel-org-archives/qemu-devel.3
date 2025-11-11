@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407DACCF9E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EAFCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIldI-0000lV-Ms; Tue, 11 Nov 2025 05:29:52 -0500
+	id 1vIldI-0000ox-UT; Tue, 11 Nov 2025 05:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcR-0007q5-K7
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:29:00 -0500
+ id 1vIlcT-0007tz-CO
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:29:01 -0500
 Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vIlcI-0000JU-Vx
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:28:59 -0500
+ id 1vIlcK-0000KL-BT
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:29:01 -0500
 Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b3e9d633b78so127773366b.1
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:50 -0800 (PST)
+ a640c23a62f3a-b72e43405e2so110708266b.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 02:28:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762856929; x=1763461729; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762856931; x=1763461731; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VPA9BBHhs/TsW5+dpgEf0Zc+XHikxM0HQ0hFOJxJLVk=;
- b=SKPIw+nqkZP+WJxcRgmWuRjKt+aRWOj6wYU5bBHgONPy67lLx3MyT9wTPkWyDjxTBA
- 8cZnagHz/31Wv1fUlEWvXsu3bV+7F2Y00u+EwAZG3lg/ww5c8iTY7pws1oMyLGALgbmB
- cwaoyJ0I63AA8egoJkH4bZEUSIgeuE3LCy7qG+CnusZO6PtISMYIT05DEKkHdbk30USd
- ZdmbRNXLPq1AQqf9m4FL9CtfoyBdyBFs1oRXrzb/ktGdPmnOTOlFC5tTDqoYpknqVxC1
- quh1N8s5dIlEatnTI6EulEuqwIuNXL0V64mygkF7+Kp6vZgOJRb6et/ktYKNaEyOcClv
- 67TQ==
+ bh=VswszwaiJ2zd/aEwrd6yTHXOVyT5h3XZLeUyB9lumkM=;
+ b=RkuD7DHwLIcrHJg6ypHiNz+MU3EYDavIwtCaFj1j0lmQ1wrbNh/0y7hvcjqzJ9IxYV
+ mu+ETOvMjNJRt1HC/gVkdgdeZVOdvzM+kHs2qrIgd3hYuBjrEEtHcu95VE3bbSQ5TAZ0
+ kot1K9vXW4SuRPDvWPU2WEdGLrozqx33H5waRRrXKTLs8d74+UaYElwykhERZj7YrHXW
+ JK82U0pB2lKbsNnfIYloIrYs5e55hXBwulZPwvhhuGBKZ2TZXCKFXdKHLzWVG1VJCWIv
+ wLCa22j6vVSgUFazlILCYRGtV+CvFA32N26p6x1xpFvlOOb5w2K7fAeMj9StFzFvFww5
+ uoEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762856929; x=1763461729;
+ d=1e100.net; s=20230601; t=1762856931; x=1763461731;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VPA9BBHhs/TsW5+dpgEf0Zc+XHikxM0HQ0hFOJxJLVk=;
- b=Dl5K9FszcapINObZdom/JSknKS33/ia59w5ASa5rQ3grq6MbWSecRf1wwebYd5DX24
- ipsGLXYFv/AUbFUy2ryCnyC4GaPF704UON9pQtsNK+Ifk6AJmWL4mQl0Cd6TyZcI5PtD
- LIggAvDqAcA4+nzNJPd1WML1+2KR0Aazv7xRoGM/wbpnXO9Fc9HQVOVyhSdV7rm4lM18
- YKRjvefTKcMskriCx8+hx+zzNYm/AP+Z13GtrP+ynOvs6KtgCInF5/xTtf7Syp0PFfxM
- 977n774C5brKr90Oru7biEEJmFEabrlQKyjocxCC/+J1hO1Q8rbFe2OiiqoXFrkN/77v
- xzFA==
-X-Gm-Message-State: AOJu0YwzyWbG+aLEm+SDnnjIY98u80YzcozhEFQjJ3yvuxuJtf3f9eeU
- 816W5O5vE9wrnRT4VTzryCS43TnloVvcNfcWOaC1op0uvA7jVILG68V4weByXlLV
-X-Gm-Gg: ASbGncuLHHGfyd3oG5c66xGmDtY4NxsOh0SKUe8nLWOuICkMEP91nz3aVPf2Pfxy1Lw
- YBB1933CerRwhqYih0/11zDpuMcauTNPZ4mqR5MaY/84jye5/pEKgjBKdaUfj6ysTm5RnA1199i
- s0uMBKev35ILuM6U4wgRJnumYQnOtZmza3X+07wg8Wo5bI8HXtY8ekyOZPH0hQNjnIVEeASjYip
- vdee/uhGDrf8oUZUdoBbjz6TPapfTkJKBblCgVbvtV0FPERSHNWUAqPSV+1sgCrIO2FAuZNIeDn
- 9hHbnXtARpFW6NCiFSHuv4veC+SSEWHU1pozrZrJtMxK4XG1o5aW9DWOXnkTnj+Iik8+NXpCP+8
- kzeYaJh/hgL2Zl8Z71fODgeK6nPUVOXU4x8ymt/+3o/uVx74E7nTrT/mV07ovOlW8MN16X3MIHS
- L63qhtwKjN9ebmyMTFsthMAS7g3iifZOOuQD2zaCwihWw=
-X-Google-Smtp-Source: AGHT+IGCRduyFuXU75h7mCMK+Zkr20TKPpGS5xq1c+FKZ6EProEttvhzCdsoQGo/l27ublulbNDyOQ==
-X-Received: by 2002:a17:907:9625:b0:b72:8e31:4327 with SMTP id
- a640c23a62f3a-b731d35c2f2mr277776766b.25.1762856928768; 
- Tue, 11 Nov 2025 02:28:48 -0800 (PST)
+ bh=VswszwaiJ2zd/aEwrd6yTHXOVyT5h3XZLeUyB9lumkM=;
+ b=HzsjIHONFU/srzW+yIvWGs4rS1rRPS5SfJpPAg5jZgLvLOQkwSYz5D4uMZNUzsA0ey
+ fFsyQpFzli79kDbB+peCSirbftSlVQnfU+ZWts+szcyAcAsFhYYJYAW5nRXMBipSIB+Z
+ LdfNsuRr2iWgai4VshDuxL1pWnzUDh2MOniVlRwOn2rmV7z8K70fwANk12WcYfGqmyY/
+ FR5SZNaJGtQ/xZuwEwfMgm3b4Y/1APgjNoGcc2Q5EgSRjrCVFc4/7QJiwc0WYOXmxnBi
+ BF0VpIN6kRihfpfkMVKnFsUmGt/NbBV04pfyhN2rMxgJyFzKQxp0XHCHF+Q5tr878Wso
+ 6cMA==
+X-Gm-Message-State: AOJu0YyWcWk8c+LxbsgrwPAsGUJB38TUoe+ugQgZU4CZZNWHpH204L9f
+ rNcKNng/9oXQgcNNGuMOAYtlkT62PKsmsJkSbyMs3Kj1b8ZImm0kw11A0B+FkLus
+X-Gm-Gg: ASbGncsocqhus9iH8HCwk2N9rpTk4kkwyKvuVpIUzZhKi5ysTbQTeBWL7TJLBMPc/6T
+ L4dG7sjg+GmpZWXRh0ocX7BIBAcr40CAdsFG3oxcaUZiq3y3B1+5JMJuTLue83IiWQtnyt1rlse
+ jzv3kGiNLAJwreo3UyHYCcBHdArnosV2HW9hywuDs+sDUsGdLnbNY4yRFpWD0D7lwRbrjRDoSKe
+ 75uiAkhObjH4qwJB4wSdEcPMfwaOQBPn3OT6BFMm4zVSvrZXB2t6FrlMK/qSjHHrNdnnliodKK2
+ jGYT2HhNopUda30TC9EWMol2lXZb6eN5uQDaJsFrKQYGl+GjQdzHae8SiVK6WJgdz3cjwcI4ZIU
+ CkFs66eJjz6IEHLGeyzXYvRDZVPT7cFkooounoRywPrEZrQ6AE56cGYB/TDesKoVeXfS5PxX2xS
+ uD+CN5ShW9WzSo1WQNeP8Lhg==
+X-Google-Smtp-Source: AGHT+IFVYfkIGyEMl+nO4AtaIfCzV8I390aFwnCxstmdAw0kA9L47FY93oxjJ+iRO97Gzkkz/ssy7g==
+X-Received: by 2002:a17:907:d8b:b0:b50:94d1:8395 with SMTP id
+ a640c23a62f3a-b731d1c00b3mr314123866b.9.1762856930619; 
+ Tue, 11 Nov 2025 02:28:50 -0800 (PST)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc12:ce00:ae91:a1ff:fe8b:15a7])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.47
+ a640c23a62f3a-b72bdbd1ecfsm1290619366b.10.2025.11.11.02.28.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 02:28:48 -0800 (PST)
+ Tue, 11 Nov 2025 02:28:50 -0800 (PST)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -77,9 +77,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Kevin Wolf <kwolf@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v4 12/15] hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
-Date: Tue, 11 Nov 2025 11:28:33 +0100
-Message-ID: <20251111102836.212535-13-corvin.koehne@gmail.com>
+Subject: [PATCH v4 14/15] tests/functional: Add a Beckhoff CX7200 test
+Date: Tue, 11 Nov 2025 11:28:35 +0100
+Message-ID: <20251111102836.212535-15-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251111102836.212535-1-corvin.koehne@gmail.com>
 References: <20251111102836.212535-1-corvin.koehne@gmail.com>
@@ -111,29 +111,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-The is25lp016d has 4 Block Write Protect Bits. BP3 specifies
-whether the upper or lower range should be protected. Therefore,
-we add the HAS_SR_TB flag to the is25lp016d flags.
-
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+TODO
 ---
- hw/block/m25p80.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/functional/test_arm_beckhoff_cx7200.py | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+ create mode 100644 tests/functional/test_arm_beckhoff_cx7200.py
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index b84c6afb32..4c9d79ec44 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -217,7 +217,8 @@ static const FlashPartInfo known_devices[] = {
-     /* ISSI */
-     { INFO("is25lq040b",  0x9d4013,      0,  64 << 10,   8, ER_4K) },
-     { INFO("is25lp080d",  0x9d6014,      0,  64 << 10,  16, ER_4K) },
--    { INFO("is25lp016d",  0x9d6015,      0,  64 << 10,  32, ER_4K) },
-+    { INFO("is25lp016d",  0x9d6015,      0,  64 << 10,  32,
-+           ER_4K | HAS_SR_TB) },
-     { INFO("is25lp032",   0x9d6016,      0,  64 << 10,  64, ER_4K) },
-     { INFO("is25lp064",   0x9d6017,      0,  64 << 10, 128, ER_4K) },
-     { INFO("is25lp128",   0x9d6018,      0,  64 << 10, 256, ER_4K) },
+diff --git a/tests/functional/test_arm_beckhoff_cx7200.py b/tests/functional/test_arm_beckhoff_cx7200.py
+new file mode 100644
+index 0000000000..a7fb88ac30
+--- /dev/null
++++ b/tests/functional/test_arm_beckhoff_cx7200.py
+@@ -0,0 +1,19 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a bare metal application on the Beckhoff CX7200
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import LinuxKernelTest
++
++class CX7200Test(LinuxKernelTest):
++    def test_baremetal_elf(self):
++        self.set_machine('beckhoff-cx7200')
++        elf_path = '/home/yannickv/git/build-TCRTOS/FreeRTOS/Zynq7000/DriveZynq_Fsbl/build/CX7200/Optg/ZYNQ7000S/CX7200_Zynq_Fsbl.elf'
++        self.vm.set_console()
++        self.vm.add_args('-kernel', elf_path, '-nographic')
++        self.vm.launch()
++        self.wait_for_console_pattern('Boot mode is SD')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
+\ No newline at end of file
 -- 
 2.47.3
 
