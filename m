@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BFCCCFA18
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16739CD1297
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 18:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIsrq-00021K-It; Tue, 11 Nov 2025 13:13:27 -0500
+	id 1vIsrX-0001tY-3z; Tue, 11 Nov 2025 13:13:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIsq8-0000rf-2G
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:11:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIspI-0000MK-Fe
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:10:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIsq5-0004nH-31
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:11:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIspG-0004ht-Rh
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 13:10:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762884685;
+ s=mimecast20190719; t=1762884642;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TiMa4k140u3cGmFCtj6qdZarrmwEcQGAOitHCjnEHGs=;
- b=TWHW27ZZHD+ZFLa7Ge25z62cHPduqNQgxq6oo6cEOJSttTjG3R1ABrMvjcvrnhYxWGeLGK
- vXxkc1w3gzvDtfypZhK7Wgw8d4ee8gdn3H52uLeclQScFqbJFoobSpvCaUVcWwRS8Z0cfR
- ZUOjDofvmCvdaRx7gPMe3daIHvlDRZU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IepPRqgK1jr/UOoANH4bVxcEIwwE2dFGrKTXGlRzhYQ=;
+ b=Nem+sYMzC0mXItEam/hmeFXKnBgfS8IxNM0cNpa8oKlj422zJYFxaS2zDcdLFI1SkeLx7x
+ ZZS2zEhfJXuWXNsJkFoAPLifXrtwt7kmQqMgu8P6G7pQPAXzD23t8JER2lWFGZYGWN8P0M
+ 4mHe+zZkq5Lo0cyft+5ZoU+0HlFzXMI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-S-jew_EpMTGbRcyI2VRACA-1; Tue, 11 Nov 2025 13:11:23 -0500
-X-MC-Unique: S-jew_EpMTGbRcyI2VRACA-1
-X-Mimecast-MFC-AGG-ID: S-jew_EpMTGbRcyI2VRACA_1762884682
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4777a022d1fso258055e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 10:11:23 -0800 (PST)
+ us-mta-584-elpUan9HPGey_m38bAAmdQ-1; Tue, 11 Nov 2025 13:10:38 -0500
+X-MC-Unique: elpUan9HPGey_m38bAAmdQ-1
+X-Mimecast-MFC-AGG-ID: elpUan9HPGey_m38bAAmdQ_1762884637
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-429c93a28ebso3310668f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 10:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762884682; x=1763489482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=TiMa4k140u3cGmFCtj6qdZarrmwEcQGAOitHCjnEHGs=;
- b=J4Ogayfa22Enait47bmM83XTMbdNg1Z8A5dMZrHJsZKIU05niUa3MVb1ZOK3oyT9wz
- xeZSOGaSIE73NYb1r1tBqggFGKEoihZ1A3E1mDnUqp3fs1QCzcvhK3dSjEj3/+PPIUKl
- HAyojgEG4RYRtwLSZJaEmURlbuVw0y4/pTK8FvTO58lNJBYNUSv/YHz3FypYQ+oclFv5
- sLhyrnImx5ZR3LWlgHYqLD4imjZemOC3TRHVzeIRr7bSqUmhlthAXcTlNyvNNuTZA75f
- I/fRErAgp5S+bEkwZs/qNlM66E/pnY57aV66jsf4ICv1AxH/ALkM1QCCnX3ACvOs7g/u
- d5EA==
+ d=redhat.com; s=google; t=1762884637; x=1763489437; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=IepPRqgK1jr/UOoANH4bVxcEIwwE2dFGrKTXGlRzhYQ=;
+ b=HG7KXjPAN2ODI2WsL0eFuPfeaUM4d8LmBRDirOS4o1uPU8cT7IxFDSCN0TqixploJJ
+ ejhM+8hfCgCsoTZUOvgYgne2m+FEI4+mS2JPPVv2IqtMPZ5gmarenJVAkAjz3/rLS7Gm
+ dvpf35IagHlrZUoUBiTg+/LlebUcHlkAHut6WYI6W5kEwq2kThrCCze32Vly2z+sYMZZ
+ AI7hnDVgmkSK/YP/elyY8Kgfu6kj6Td1FiubX/6JQxGzHABT4pquF/EbOXEWzUPizSjK
+ BDi+oWcDntReJMHdp+woWQELwTaR2R231xcKta6Xvs8M0mo5+ryIfmJuPjtTQ/9qy70d
+ pKtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762884682; x=1763489482;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1762884637; x=1763489437;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TiMa4k140u3cGmFCtj6qdZarrmwEcQGAOitHCjnEHGs=;
- b=HDyek5LEW4sQKM+3qqdGDI/I8d0Nxyqx3UD7D0FB5rB0bZWqueY7MnkpIPrlmDix88
- tJgKKgkfxvt6fgMAaUnyGLCQvOD0Odpj1LF2aku9Emx0hqMg6w21ZrXCTUlLT8CUgfKg
- aE+XBf2NKCfAXA2/MKz5pWmXoGhW/TkwLRI4O4dMtgSCjUrp2jxKGacfsHPqWcgIjDpx
- dn+B9ZQfSursnTZe21SFS6/atqDp62aXeETOCH/NUadjx1wYZMPviBFwBMNGDk0VoK5O
- wDvGc0BUXkWo8w7+1t55BoHfpBqtFo6U0Ll63dm306Spq3AUK6AE98eTdbXt0uDMZ3pN
- UYLA==
+ bh=IepPRqgK1jr/UOoANH4bVxcEIwwE2dFGrKTXGlRzhYQ=;
+ b=M9ITBENa1MuASgFMIehsUEwPkYq4peLlvvM4TwEdlKr9XbQ6DA5QOfIJaHTT52Ah8+
+ YZK/aFilCe+URZD8ctGKHqCfui3+tufxls6xf4X6Ruj9/aVLfWHaLOV3zWhhWoA1dnpJ
+ 8CmKjPut2HCiMX8V2ZpGcg3hwPpPTOkB/mjfqo3cUGg0zsDABQyqsJn/uCN+ESNv6KkO
+ i+Ys/+KupOoaHX8mrZcUZ1HYPssdtlLa5KgKM+RaFbM9lvibkjyl1Syp8k1OY/tyxSny
+ plm9b6WQZJM15YhYnC/7yxTsg3Yxh/xO13uumE09C6PT5uKUFt1SH/dR3a5riA7HHQ5B
+ DN1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKcIqNrmh5ku7B6eEz6ppdb3A5j5Qjau/q9dScLx8hONgU2yhtKtxe5UC26hqqQJ0cO0HkvwfNC7yJ@nongnu.org
-X-Gm-Message-State: AOJu0Yw9eSCEifPYAEnx2+KOnDZZJR6UiNygGAR84QTGYfcqEsTcQc3l
- m2joV5Qo16t76FAvgHcY1mYr/oGT8G7v4PrvK4vwgi3WvMd7VowdaXd4/pQq9cY80kO77PYhSp3
- T9MBHnFhLeZ2IsBnrfnX9ZoazCASEJkov5KWfdyYwu1PRPvlL7p3Vz4ID
-X-Gm-Gg: ASbGncuTaWJbc4FrxWcA1wa+MsCrJV7aZUdljoZPnwpwlPIGZC0ruhaD2/6p+jR/JRE
- JXqfjgarVHt0umxGk8Vnj4sDybXP40cmLv0MQnkixCyMSxdKVpRNk/q+cbuSZvYDnp9eg/3BpEF
- NTZPycqmwcj5uxk5yBcXsoTla4F5JUteB3wnpsRWWSmZuVX4wc5PQixG4xbCD2T1flvD6dql0XX
- 3pRXAD7Vi2ISLnoenVF2SGIeoViGXnUSURG7laBmqg/0Qejp6PQ5KyYukiXoOzHrpNOFzAXmN+O
- nzQd8UA6PHgwMNAQl6nL0jNHJkRdeZRgI7eX3PbUbdTpdNe4M+3UB7RIPM6/MPYJFj4rtWA=
-X-Received: by 2002:a05:600c:4706:b0:477:3e07:217a with SMTP id
- 5b1f17b1804b1-477870be036mr3108515e9.36.1762884682308; 
- Tue, 11 Nov 2025 10:11:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFHu6jE6Hs2I+kOlDIe38T3qVw2Smz7NUTRAeN2KbdV1zdvJfst63QQOsUcXg8BBcCm4u0VFg==
-X-Received: by 2002:a05:600c:4706:b0:477:3e07:217a with SMTP id
- 5b1f17b1804b1-477870be036mr3108255e9.36.1762884681881; 
- Tue, 11 Nov 2025 10:11:21 -0800 (PST)
+ AJvYcCV/t8vsMwW3qb8yjrrRBk7M5WWm1JDTzXw/NinTaetswf+D4tPHAgxlwOQdl1PE2Cbrw9Jr2dWW/0S2@nongnu.org
+X-Gm-Message-State: AOJu0YwGQZBc/Sqe0nETuSSeZzr02qPnVw6r1TAWivEBnqH+GDwXwl0P
+ lLp5oPVEr+CroLM46DK6OB5y3ZTw0hsdJQNDlmKNnvm64NFOdYYlAmwJnM1G10VgThXyLZZ5G29
+ y48e4ogla7Geh1AKgYmyR7Wn7tJZmKPh0nLxu8Hd38SGlwdK2uNcEQPFl4Bbo7BZ/
+X-Gm-Gg: ASbGncvbVoIKbCiuliJtXfXOKjjcHACeh5945pTEP21N3oInkllyQlpcOJMHTchYVVd
+ 4qHt1LKa97OUK7nTk2er4w0YspT0xFSfFsYkRBn+d4cwA6O9sr+4Hmz7fMBRYMC4UaZeGbl1tn4
+ Zobn6GZ7r29CK+yg15OZF1HursKRHYbhKPMLgkOjaygD9GtqA7KFD5Hb/SbQ5b7PkjnlEbBvEZF
+ J+DI3f8Ir2lGWWqZm4cQYYziRUpxc5VswjPwGp9O477L41o33w6OlZrU72I/GPTPBPyJBji8fao
+ L53OLpO3DuZYCqD1qzsJJ2c/11VqOMn16fFD1I0PoRrCeEqJHp0ahLaOxzLdDX6bUDTMv70=
+X-Received: by 2002:a5d:5d10:0:b0:42b:3d5f:ebfb with SMTP id
+ ffacd0b85a97d-42b4bd90943mr137150f8f.27.1762884637078; 
+ Tue, 11 Nov 2025 10:10:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVfvesgUZ0Zo9rnPPsmfDNpup0423SVZBOkeG1xdiM38JuPRvXpLM+BXYWWTMHPqbRPKtceA==
+X-Received: by 2002:a5d:5d10:0:b0:42b:3d5f:ebfb with SMTP id
+ ffacd0b85a97d-42b4bd90943mr137121f8f.27.1762884636663; 
+ Tue, 11 Nov 2025 10:10:36 -0800 (PST)
 Received: from [192.168.0.7] ([47.64.113.41]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47781d5d2f1sm24380255e9.6.2025.11.11.10.11.20
+ ffacd0b85a97d-42ac679e06csm29121631f8f.47.2025.11.11.10.10.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 10:11:21 -0800 (PST)
-Message-ID: <1b30dbbb-ea0d-4240-9604-2046ceef7f3d@redhat.com>
-Date: Tue, 11 Nov 2025 19:11:19 +0100
+ Tue, 11 Nov 2025 10:10:36 -0800 (PST)
+Message-ID: <9c9bf493-7cb3-42fd-aa5d-6a8c89e6f373@redhat.com>
+Date: Tue, 11 Nov 2025 19:10:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/16] tests: move test_kvm_xen to share.linaro.org
+Subject: Re: [PATCH 09/16] tests: move test_netdev_ethtool to share.linaro.org
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
@@ -102,9 +102,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Gustavo Romero <gustavo.romero@linaro.org>, qemu-stable@nongnu.org
 References: <20251111171724.78201-1-alex.bennee@linaro.org>
- <20251111171724.78201-11-alex.bennee@linaro.org>
-Content-Language: en-US
+ <20251111171724.78201-10-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -147,7 +147,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251111171724.78201-11-alex.bennee@linaro.org>
+In-Reply-To: <20251111171724.78201-10-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -182,34 +182,33 @@ On 11/11/2025 18.17, Alex Bennée wrote:
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > Cc: qemu-stable@nongnu.org
 > ---
->   tests/functional/x86_64/test_kvm_xen.py | 17 +++++------------
->   1 file changed, 5 insertions(+), 12 deletions(-)
+>   tests/functional/x86_64/test_netdev_ethtool.py | 14 ++++----------
+>   1 file changed, 4 insertions(+), 10 deletions(-)
 > 
-> diff --git a/tests/functional/x86_64/test_kvm_xen.py b/tests/functional/x86_64/test_kvm_xen.py
-> index a5d445023c9..424d4b20010 100755
-> --- a/tests/functional/x86_64/test_kvm_xen.py
-> +++ b/tests/functional/x86_64/test_kvm_xen.py
-> @@ -23,18 +23,11 @@ class KVMXenGuest(QemuSystemTest):
->       kernel_path = None
->       kernel_params = None
+> diff --git a/tests/functional/x86_64/test_netdev_ethtool.py b/tests/functional/x86_64/test_netdev_ethtool.py
+> index ee1a397bd24..ac8a92512cf 100755
+> --- a/tests/functional/x86_64/test_netdev_ethtool.py
+> +++ b/tests/functional/x86_64/test_netdev_ethtool.py
+> @@ -16,16 +16,10 @@ class NetDevEthtool(QemuSystemTest):
+>       # Runs in about 17s under KVM, 19s under TCG, 25s under GCOV
+>       timeout = 45
 >   
-> -    # Fetch assets from the kvm-xen-guest subdir of my shared test
-> -    # images directory on fileserver.linaro.org where you can find
-> -    # build instructions for how they where assembled.
-> -    ASSET_KERNEL = Asset(
-> -        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
-> -         'path=%2Fkvm-xen-guest&files=bzImage'),
-> -        'ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a')
-> -
+> -    # Fetch assets from the netdev-ethtool subdir of my shared test
+> -    # images directory on fileserver.linaro.org.
+> -    ASSET_BASEURL = ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/'
+> -                     'download?path=%2Fnetdev-ethtool&files=')
+> -    ASSET_BZIMAGE = Asset(
+> -        ASSET_BASEURL + "bzImage",
+> -        "ed62ee06ea620b1035747f3f66a5e9fc5d3096b29f75562ada888b04cd1c4baf")
 > -    ASSET_ROOTFS = Asset(
-> -        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
-> -         'path=%2Fkvm-xen-guest&files=rootfs.ext4'),
-> -        'b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b')
-> +    ASSET_KERNEL = Asset('https://share.linaro.org/downloadFile?id=UG0V8dzzHrrHb9X',
-> +                         'ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a')
-> +
-> +    ASSET_ROOTFS = Asset('https://share.linaro.org/downloadFile?id=VwLRKDXKFl6oKti',
-> +                         'b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b')
+> -        ASSET_BASEURL + "rootfs.squashfs",
+> -        "8f0207e3c4d40832ae73c1a927e42ca30ccb1e71f047acb6ddb161ba422934e6")
+> +    ASSET_BZIMAGE = Asset("https://share.linaro.org/downloadFile?id=QD37GYYAJhGOgVe",
+> +                          "ed62ee06ea620b1035747f3f66a5e9fc5d3096b29f75562ada888b04cd1c4baf")
+> +    ASSET_ROOTFS = Asset("https://share.linaro.org/downloadFile?id=YAqnr0W8fruDh3f",
+> +                         "8f0207e3c4d40832ae73c1a927e42ca30ccb1e71f047acb6ddb161ba422934e6")
+
+Close to 100 columns, but I think it's still ok.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
