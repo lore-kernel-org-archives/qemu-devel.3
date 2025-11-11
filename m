@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E1BCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A64FCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIw1D-0001hk-Pq; Tue, 11 Nov 2025 16:35:16 -0500
+	id 1vIvzd-0007Hs-B2; Tue, 11 Nov 2025 16:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIw0R-0000XP-Vt
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:34:31 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzb-0007FE-B5
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIw0N-0002IH-Nf
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:34:26 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzY-0001sv-Ky
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762896847;
+ s=mimecast20190719; t=1762896812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DpNqXUG11AGsY3sUGvyckw8XphYJ8cR1pOTzBckv6uc=;
- b=MqDYCmQ5+A+/J1pRaFhuxy7ZBnVPYs4PR9R8/ufcMHgVyKl+iBh0UOKEjZNiAjHBkG5T/4
- b5Jz9XiHIDvnix+vUfrpqXjLb7E4Qp30Tuy8ruTZJea8Ci0QFWlmDdQPte/ZNj2+Egeo09
- 3nQUCsvCp0vo4V/SLTv51Nm1phjaTOk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=I9ja/8Y+aWX0+58GLKoSYSCZiUYja82CJjZUvwp2kZM=;
+ b=I3AzwNKWAkke4JdSB+NfKdWfDQFsEkTFDDfStwdsP1jTRXTOJmiI7rVy6/LZQuUV3nUwCr
+ gRKijGPV7v8gefJre6R4q8VaFw1dLTBS3/xf/mGNhc5mliBIvHGjDZRdGjkUlq/efgzhl5
+ n2ybsM3MRTRtgelM3+lhZexqBouv6Yc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-PEx8NJJaMvm8lAPihEfVng-1; Tue,
- 11 Nov 2025 16:34:02 -0500
-X-MC-Unique: PEx8NJJaMvm8lAPihEfVng-1
-X-Mimecast-MFC-AGG-ID: PEx8NJJaMvm8lAPihEfVng_1762896841
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-qu0UsUPgOcO-liKDS3c1MQ-1; Tue,
+ 11 Nov 2025 16:33:28 -0500
+X-MC-Unique: qu0UsUPgOcO-liKDS3c1MQ-1
+X-Mimecast-MFC-AGG-ID: qu0UsUPgOcO-liKDS3c1MQ_1762896807
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D0AC1956095; Tue, 11 Nov 2025 21:34:01 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8339D195608A; Tue, 11 Nov 2025 21:33:27 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.225.214])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0EEDE30044E0; Tue, 11 Nov 2025 21:33:59 +0000 (UTC)
+ id E9C7230044E5; Tue, 11 Nov 2025 21:33:25 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL v2 27/28] qcow2,
- vmdk: Restrict creation with secondary file using protocol
-Date: Tue, 11 Nov 2025 22:32:37 +0100
-Message-ID: <20251111213238.181992-28-kwolf@redhat.com>
+Subject: [PULL v2 12/28] aio-posix: add fdmon_ops->dispatch()
+Date: Tue, 11 Nov 2025 22:32:22 +0100
+Message-ID: <20251111213238.181992-13-kwolf@redhat.com>
 In-Reply-To: <20251111213238.181992-1-kwolf@redhat.com>
 References: <20251111213238.181992-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -84,88 +83,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Ever since CVE-2024-4467 (see commit 7ead9469 in qemu v9.1.0), we have
-intentionally treated the opening of secondary files whose name is
-specified in the contents of the primary file, such as a qcow2
-data_file, as something that must be a local file and not a protocol
-prefix (it is still possible to open a qcow2 file that wraps an NBD
-data image by using QMP commands, but that is from the explicit action
-of the QMP overriding any string encoded in the qcow2 file).  At the
-time, we did not prevent the use of protocol prefixes on the secondary
-image while creating a qcow2 file, but it results in a qcow2 file that
-records an empty string for the data_file, rather than the protocol
-passed in during creation:
+The ppoll and epoll file descriptor monitoring implementations rely on
+the event loop's generic file descriptor, timer, and BH dispatch code to
+invoke user callbacks.
 
-$ qemu-img create -f raw datastore.raw 2G
-$ qemu-nbd -e 0 -t -f raw datastore.raw &
-$ qemu-img create -f qcow2 -o data_file=nbd://localhost:10809/ \
-  datastore_nbd.qcow2 2G
-Formatting 'datastore_nbd.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=2147483648 data_file=nbd://localhost:10809/ lazy_refcounts=off refcount_bits=16
-$ qemu-img info datastore_nbd.qcow2 | grep data
-$ qemu-img info datastore_nbd.qcow2 | grep data
-image: datastore_nbd.qcow2
-    data file:
-    data file raw: false
-    filename: datastore_nbd.qcow2
+The io_uring file descriptor monitoring implementation will need
+io_uring-specific dispatch logic for CQE handlers for custom SQEs.
 
-And since an empty string was recorded in the file, attempting to open
-the image without using QMP to supply the NBD data store fails, with a
-somewhat confusing error message:
+Introduce a new FDMonOps ->dispatch() callback that allows file
+descriptor monitoring implementations to invoke user callbacks. The next
+patch will use this new callback.
 
-$ qemu-io -f qcow2 datastore_nbd.qcow2
-qemu-io: can't open device datastore_nbd.qcow2: The 'file' block driver requires a file name
-
-Although the ability to create an image with a convenience reference
-to a protocol data file is not a security hole (unlike the case with
-open, the image is not untrusted if we are the ones creating it), the
-above demo shows that it is still inconsistent.  Thus, it makes more
-sense if we also insist that image creation rejects a protocol prefix
-when using the same syntax.  Now, the above attempt produces:
-
-$ qemu-img create -f qcow2 -o data_file=nbd://localhost:10809/ \
-  datastore_nbd.qcow2 2G
-Formatting 'datastore_nbd.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=2147483648 data_file=nbd://localhost:10809/ lazy_refcounts=off refcount_bits=16
-qemu-img: datastore_nbd.qcow2: Could not create 'nbd://localhost:10809/': No such file or directory
-
-with datastore_nbd.qcow2 no longer created.
-
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20250915213919.3121401-6-eblake@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20251104022933.618123-13-stefanha@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/qcow2.c | 2 +-
- block/vmdk.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/block/aio.h | 19 +++++++++++++++++++
+ util/aio-posix.c    |  9 +++++++++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index ec72e27214..cb0bdb32ec 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -3971,7 +3971,7 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-     /* Create and open an external data file (protocol layer) */
-     val = qdict_get_try_str(qdict, BLOCK_OPT_DATA_FILE);
-     if (val) {
--        ret = bdrv_co_create_file(val, opts, true, errp);
-+        ret = bdrv_co_create_file(val, opts, false, errp);
-         if (ret < 0) {
-             goto finish;
-         }
-diff --git a/block/vmdk.c b/block/vmdk.c
-index eb3c174eca..3b35b63cb5 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -2334,7 +2334,7 @@ vmdk_create_extent(const char *filename, int64_t filesize, bool flat,
-     int ret;
-     BlockBackend *blk = NULL;
+diff --git a/include/block/aio.h b/include/block/aio.h
+index 13b6d34238..fc1a3c06e2 100644
+--- a/include/block/aio.h
++++ b/include/block/aio.h
+@@ -107,6 +107,25 @@ typedef struct {
+      */
+     bool (*need_wait)(AioContext *ctx);
  
--    ret = bdrv_co_create_file(filename, opts, true, errp);
-+    ret = bdrv_co_create_file(filename, opts, false, errp);
-     if (ret < 0) {
-         goto exit;
++    /*
++     * dispatch:
++     * @ctx: the AioContext
++     *
++     * Dispatch any work that is specific to this file descriptor monitoring
++     * implementation. Usually the event loop's generic file descriptor
++     * monitoring, BH, and timer dispatching code is sufficient, but file
++     * descriptor monitoring implementations offering additional functionality
++     * may need to implement this function for custom behavior. Called at a
++     * point in the event loop when it is safe to invoke user-defined
++     * callbacks.
++     *
++     * This function is optional and may be NULL.
++     *
++     * Returns: true if progress was made (see aio_poll()'s return value),
++     * false otherwise.
++     */
++    bool (*dispatch)(AioContext *ctx);
++
+     /*
+      * gsource_prepare:
+      * @ctx: the AioContext
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index c0285a26a3..6ff36b6e51 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -385,10 +385,15 @@ void aio_dispatch(AioContext *ctx)
+     AioHandlerList ready_list = QLIST_HEAD_INITIALIZER(ready_list);
+ 
+     qemu_lockcnt_inc(&ctx->list_lock);
++
+     aio_bh_poll(ctx);
+ 
+     ctx->fdmon_ops->gsource_dispatch(ctx, &ready_list);
+ 
++    if (ctx->fdmon_ops->dispatch) {
++        ctx->fdmon_ops->dispatch(ctx);
++    }
++
+     /* block_ns is 0 because polling is disabled in the glib event loop */
+     aio_dispatch_ready_handlers(ctx, &ready_list, 0);
+ 
+@@ -707,6 +712,10 @@ bool aio_poll(AioContext *ctx, bool blocking)
+         block_ns = qemu_clock_get_ns(QEMU_CLOCK_REALTIME) - start;
      }
+ 
++    if (ctx->fdmon_ops->dispatch) {
++        progress |= ctx->fdmon_ops->dispatch(ctx);
++    }
++
+     progress |= aio_bh_poll(ctx);
+     progress |= aio_dispatch_ready_handlers(ctx, &ready_list, block_ns);
+ 
 -- 
 2.51.1
 
