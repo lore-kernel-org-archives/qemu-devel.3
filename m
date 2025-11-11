@@ -4,71 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7083DCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1B3CCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 23:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIw6f-0004rz-At; Tue, 11 Nov 2025 16:40:53 -0500
+	id 1vIxOA-0005Ae-D8; Tue, 11 Nov 2025 18:03:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIw6W-0004g0-KA
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:40:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nmosier@stanford.edu>)
+ id 1vIwNb-0004X6-6s; Tue, 11 Nov 2025 16:58:23 -0500
+Received: from mx0a-00000d07.pphosted.com ([67.231.149.169])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIw6T-0003Bb-JE
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:40:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762897240;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FpJVK0UMWK1IVwMwlZwjtYT4XHhRC6C7igQENJxQmXE=;
- b=D1YIYej573HEEiSa87NkdhuShBdqqfuI1aNVUL+893Yqq85S2OJrfMLniQE8NwKGxZk0bS
- nu8+LwY9mheF/uEF3tYl6hhT3truVApKWb1A7uGeI8kAqv+9CJzb8BBzedc0yEgJWbZOgU
- oJ/GKTHlcrS6ls0ut3kRtDb/r4PXNSU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-aPhtfXGCPeiDJHanzChiOw-1; Tue,
- 11 Nov 2025 16:40:37 -0500
-X-MC-Unique: aPhtfXGCPeiDJHanzChiOw-1
-X-Mimecast-MFC-AGG-ID: aPhtfXGCPeiDJHanzChiOw_1762897236
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (Exim 4.90_1) (envelope-from <nmosier@stanford.edu>)
+ id 1vIwNY-0006bo-Sp; Tue, 11 Nov 2025 16:58:22 -0500
+Received: from pps.filterd (m0342464.ppops.net [127.0.0.1])
+ by mx0a-00000d07.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ABI5d50032276;
+ Tue, 11 Nov 2025 13:58:14 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stanford.edu; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pps05272020; bh=WHcEqo/EFBnmLQwi/AMt
+ +0DUYs82gRLPKcS4RTKm3J8=; b=c3NvdVSgqOg2kPRxYF7PJkRJFLETWw37KIPp
+ 9CBxiO1pMtqiXA1sdK0INp1497PN7wc/SMxX30PaejBuXML1UPdAWaxAuUA5dJnS
+ XGafsmHLjG9FeV8Us1C7eu1ipwG1jE6dlUZHP6euA2b+/9hLDTqIkyWmzkUbjueV
+ Oa6PVf/6MHQa821yTBZYkTMqT6MTokL+l2g8TJiSNoBg922t4OSXCyqk5fN5qCHt
+ SnMyabnyhiYAUYF5LxjDAV9NcF9/1xSzc/iWXfaUPz+IZLMWvCd1J1ciOQ/xWX6S
+ PtBVqZOMl2O9cL99khPYFEuQUuqvjrISOagFVsI0uXociEtvrw==
+Received: from mx0b-00000d08.pphosted.com (mx0b-00000d08.pphosted.com
+ [67.231.152.67])
+ by mx0a-00000d07.pphosted.com (PPS) with ESMTPS id 4aat2cdfyh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Nov 2025 13:58:13 -0800 (PST)
+Received: from pps.filterd (m0342825.ppops.net [127.0.0.1])
+ by m0342825.ppops.net (8.18.1.2/8.18.1.2) with ESMTP id 5ABK6AnL018059;
+ Tue, 11 Nov 2025 13:58:13 -0800
+Received: from pps.reinject (localhost [127.0.0.1])
+ by m0342825.ppops.net (PPS) with ESMTPS id 4ac14as7q8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Nov 2025 13:58:12 -0800 (PST)
+Received: from m0342825.ppops.net (m0342825.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5ABLup1N019486;
+ Tue, 11 Nov 2025 13:58:12 -0800
+Received: from smtp.stanford.edu (smtp4.stanford.edu [171.67.219.72])
+ by m0342825.ppops.net (PPS) with ESMTPS id 4ac14as7q6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Nov 2025 13:58:12 -0800 (PST)
+Received: from cafe-cet.stanford.edu (cafe-cet.stanford.edu [172.24.69.161])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6DF8D1956096; Tue, 11 Nov 2025 21:40:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.214])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D39C180049F; Tue, 11 Nov 2025 21:40:35 +0000 (UTC)
-Date: Tue, 11 Nov 2025 22:40:32 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 06/27] aio-posix: integrate fdmon into glib event loop
-Message-ID: <aROtUHtR5jE4LV-H@redhat.com>
-References: <20251104175415.525388-1-kwolf@redhat.com>
- <20251104175415.525388-7-kwolf@redhat.com>
- <4dd86e70-fd42-4a70-9f0f-3944e04bc972@linaro.org>
+ (Authenticated sender: nmosier@stanford.edu)
+ by smtp.stanford.edu (Postfix) with ESMTPSA id 37F059810B3;
+ Tue, 11 Nov 2025 13:58:11 -0800 (PST)
+From: Nicholas Mosier <nmosier@stanford.edu>
+Date: Tue, 11 Nov 2025 13:57:52 -0800
+Subject: [PATCH] i386/tcg/svm: fix comma operator typo
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4dd86e70-fd42-4a70-9f0f-3944e04bc972@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MSwqAMAwFryJZG7C1FfUq4kJt1Cz80JaiiHc3O
+ LsZeO+BQJ4pQJs94Clx4GMXUXkG0zrsCyE7cdCFtkpALusKQ9owbXRxxHifB8584WgnUo01Tls
+ DMj89Sf6vu/59P5LlMPVqAAAA
+X-Change-ID: 20251111-i386-svm-vmexit-typo-fix-b5ce1954d254
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org,
+ Nicholas Mosier <nmosier@stanford.edu>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762898291; l=1515;
+ i=nmosier@stanford.edu; s=20251111; h=from:subject:message-id;
+ bh=YqhdKP8meyPzJFhYiJEWqdaXljbVXMoDtp0iAJM+Uvg=;
+ b=IVi0HYNN8k2PRA0iGacyHRtY7lBrPsGL9WJeIff895jWoFVSUNWSl3O2JQf0KD/0CSkkvF7tL
+ PY/rkH8kX4EC44UlMqoMU3wh3MEe8dG3rHhejTRtq4Y8A6QTUxOEq8U
+X-Developer-Key: i=nmosier@stanford.edu; a=ed25519;
+ pk=XjjXNIba23ZoFYPYMPd0ZwO7G1YZH4tzTWOg3crqj+Q=
+X-Proofpoint-GUID: 4wwLh2X7e_5l6v7eJAKXP_IX76WPNOot
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTExMDA2MCBTYWx0ZWRfXxxGFihXIatMW
+ qGtSY868mOUPfegtwJmHoqRBOaaSUN9YOf3xIamfh80C7tMAJms8VGTy+Fw+RVuveukTD0AufbT
+ MVS0g+G25tccTeFnsbMGteGnEJEp0CGrqFS40izEcUJpoDzQxBsNUtfqwRXWhMyNrEczlrvz5rD
+ 2fdTu9t/VbZx2gW9l+4UEEhEa/0QFc1WaUhDtl/fCCrXeEGRF8owyRVUSIqXf4muZiqeNsuURCo
+ k6YD8fuXOK5nMkIJxzoHKpeOx57viZVi1bGrYJb1c+knbRNbreg21EyqxYZgxC1S+gdb0QbOaoS
+ oudcfOZQRfcIAQEPb7TtS+sQQDYtvd+GfnOVOD3h4uLxXWHXQxU9c26jJUEskq6ry+qW66FVMuF
+ mHFAcwbMO5v8uqtDR7tfSXGYTLGNlg==
+X-Proofpoint-ORIG-GUID: Sj7cvKuiDwTqfOSyRBfuzMTeAO7NvGyz
+X-Authority-Analysis: v=2.4 cv=cZjfb3DM c=1 sm=1 tr=0 ts=6913b174 cx=c_pps
+ a=O10p7afQjo2e1L+5ghj5Aw==:117 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=x7bEGLp0ZPQA:10 a=VkNPw1HP01LnGYTKEx00:22 a=6UpETPYAqtAy3kfSEAcA:9
+ a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-11_04,2025-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 priorityscore=1501 clxscore=1011
+ suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511110060
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-11_04,2025-11-11_03,2025-10-01_01
+Received-SPF: pass client-ip=67.231.149.169; envelope-from=nmosier@stanford.edu;
+ helo=mx0a-00000d07.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 11 Nov 2025 18:02:53 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,96 +130,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 05.11.2025 um 16:06 hat Richard Henderson geschrieben:
-> On 11/4/25 18:53, Kevin Wolf wrote:
-> > From: Stefan Hajnoczi <stefanha@redhat.com>
-> > 
-> > AioContext's glib integration only supports ppoll(2) file descriptor
-> > monitoring. epoll(7) and io_uring(7) disable themselves and switch back
-> > to ppoll(2) when the glib event loop is used. The main loop thread
-> > cannot use epoll(7) or io_uring(7) because it always uses the glib event
-> > loop.
-> > 
-> > Future QEMU features may require io_uring(7). One example is uring_cmd
-> > support in FUSE exports. Each feature could create its own io_uring(7)
-> > context and integrate it into the event loop, but this is inefficient
-> > due to extra syscalls. It would be more efficient to reuse the
-> > AioContext's existing fdmon-io_uring.c io_uring(7) context because
-> > fdmon-io_uring.c will already be active on systems where Linux io_uring
-> > is available.
-> > 
-> > In order to keep fdmon-io_uring.c's AioContext operational even when the
-> > glib event loop is used, extend FDMonOps with an API similar to
-> > GSourceFuncs so that file descriptor monitoring can integrate into the
-> > glib event loop.
-> > 
-> > A quick summary of the GSourceFuncs API:
-> > - prepare() is called each event loop iteration before waiting for file
-> >    descriptors and timers.
-> > - check() is called to determine whether events are ready to be
-> >    dispatched after waiting.
-> > - dispatch() is called to process events.
-> > 
-> > More details here: https://docs.gtk.org/glib/struct.SourceFuncs.html
-> > 
-> > Move the ppoll(2)-specific code from aio-posix.c into fdmon-poll.c and
-> > also implement epoll(7)- and io_uring(7)-specific file descriptor
-> > monitoring code for glib event loops.
-> > 
-> > Note that it's still faster to use aio_poll() rather than the glib event
-> > loop since glib waits for file descriptor activity with ppoll(2) and
-> > does not support adaptive polling. But at least epoll(7) and io_uring(7)
-> > now work in glib event loops.
-> > 
-> > Splitting this into multiple commits without temporarily breaking
-> > AioContext proved difficult so this commit makes all the changes. The
-> > next commit will remove the aio_context_use_g_source() API because it is
-> > no longer needed.
-> > 
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Reviewed-by: Eric Blake <eblake@redhat.com>
-> > Message-ID: <20251104022933.618123-7-stefanha@redhat.com>
-> > Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+A comma operator inappropriately terminates an expression
+in svm_helper.c. Replace it with a semicolon.
 
-> > diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-> > index 3d8638b0e5..0a5ec5ead6 100644
-> > --- a/util/fdmon-io_uring.c
-> > +++ b/util/fdmon-io_uring.c
-> > @@ -262,6 +262,11 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
-> >       unsigned num_ready = 0;
-> >       unsigned head;
-> > +    /* If the CQ overflowed then fetch CQEs with a syscall */
-> > +    if (io_uring_cq_has_overflow(ring)) {
-> > +        io_uring_get_events(ring);
-> > +    }
-> 
-> 
-> https://gitlab.com/qemu-project/qemu/-/jobs/11984045425#L2379
-> 
-> 
-> ../util/fdmon-io_uring.c: In function 'process_cq_ring':
-> ../util/fdmon-io_uring.c:315:9: error: implicit declaration of function
-> 'io_uring_cq_has_overflow' [-Werror=implicit-function-declaration]
->   315 |     if (io_uring_cq_has_overflow(ring)) {
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~
-> ../util/fdmon-io_uring.c:315:9: error: nested extern declaration of
-> 'io_uring_cq_has_overflow' [-Werror=nested-externs]
-> ../util/fdmon-io_uring.c:316:9: error: implicit declaration of function
-> 'io_uring_get_events'; did you mean 'io_uring_get_sqe'?
-> [-Werror=implicit-function-declaration]
->   316 |         io_uring_get_events(ring);
->       |         ^~~~~~~~~~~~~~~~~~~
->       |         io_uring_get_sqe
-> ../util/fdmon-io_uring.c:316:9: error: nested extern declaration of
-> 'io_uring_get_events' [-Werror=nested-externs]
+Signed-off-by: Nicholas Mosier <nmosier@stanford.edu>
+---
+As an apparent typo, line 742 in target/i386/tcg/system/svm_helper.c
+ends with a comma operator, rather than a statement-ending semicolon.
+This doesn't introduce any functionality bugs as the code is currently
+written, but could easily introduce bugs in the future if a new line
+of code is added following the comma operator.
 
-Thanks, I sent a v2 pull request.
+This patch replaces the comma with a semicolon, as the original author
+probably intended.
+---
+ target/i386/tcg/system/svm_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Please reply to all in the future instead of only to qemu-devel. I
-missed this reply until today, which due to the hard freeze meant a
-somewhat longer working day for me than I had hoped for.
+diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
+index 505788b0e2..c32cc7ac30 100644
+--- a/target/i386/tcg/system/svm_helper.c
++++ b/target/i386/tcg/system/svm_helper.c
+@@ -742,7 +742,7 @@ void cpu_vmexit(CPUX86State *env, uint32_t exit_code, uint64_t exit_info_1,
+              exit_code);
+ 
+     x86_stq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
+-                                             control.exit_info_1), exit_info_1),
++                                             control.exit_info_1), exit_info_1);
+ 
+     /* remove any pending exception */
+     env->old_exception = -1;
 
-Kevin
+---
+base-commit: 593aee5df98b4a862ff8841a57ea3dbf22131a5f
+change-id: 20251111-i386-svm-vmexit-typo-fix-b5ce1954d254
+
+Best regards,
+-- 
+Nicholas Mosier <nmosier@stanford.edu>
 
 
