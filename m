@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A0DCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91FECCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 21:37:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIvzr-0007va-7W; Tue, 11 Nov 2025 16:33:51 -0500
+	id 1vIvzE-0006jV-IE; Tue, 11 Nov 2025 16:33:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzm-0007bu-0V
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:47 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzC-0006eJ-Tg
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzk-000213-1J
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:45 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vIvzB-0001ot-9g
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 16:33:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762896822;
+ s=mimecast20190719; t=1762896788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2ZC45b+YLC8hAjPqvQ8hxvi6YolSPofBUAJKu4Vdz0c=;
- b=T16kuN/7O5DelW9gXdjxYVaNzE+MaexxjfMiUn7HcRxXtUOcAusv9w5Qyf75HNUDs1R8nj
- FJrbNPDnbGHAbM1I6ces9sCOO3GxLAH4oCF7KYdj8+IZ27odLq9yZkETkPhLXzl1JTfmvF
- SUHt1s0u+A05JdPJWpR/Zksloxt2ZrQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=l+CpWO3JCH0B/CwO232sJN6EEvF1wViIZzhnu7FRhIc=;
+ b=iMWI5ZZ4mtlCN/FKRlfEYMiWdCS5zAd/FHcDiLLHg3ct5gSkmAMY87PPmzHWAsMJMKX7DM
+ Oz29djvosdYAl/38x8mhtioiVdIvUe1gzX8aPpCxqtur9xzGgnDjT25LqHkjxdYcE9ESdz
+ E4w/Rw2JMqSCcZFXvejZMLq+M6bGQCQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-2-yi3z9oOCm6qeMFQSha4A-1; Tue,
- 11 Nov 2025 16:33:41 -0500
-X-MC-Unique: 2-yi3z9oOCm6qeMFQSha4A-1
-X-Mimecast-MFC-AGG-ID: 2-yi3z9oOCm6qeMFQSha4A_1762896820
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-UCRwQINCMvSxJ3IO_6t95w-1; Tue,
+ 11 Nov 2025 16:33:05 -0500
+X-MC-Unique: UCRwQINCMvSxJ3IO_6t95w-1
+X-Mimecast-MFC-AGG-ID: UCRwQINCMvSxJ3IO_6t95w_1762896784
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 723B91800451; Tue, 11 Nov 2025 21:33:40 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 017D5195608F; Tue, 11 Nov 2025 21:33:04 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.225.214])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B804530044E0; Tue, 11 Nov 2025 21:33:38 +0000 (UTC)
+ id 641FC30044E5; Tue, 11 Nov 2025 21:33:02 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL v2 18/28] iotests: Test resizing file node under raw with
- size/offset
-Date: Tue, 11 Nov 2025 22:32:28 +0100
-Message-ID: <20251111213238.181992-19-kwolf@redhat.com>
+Subject: [PULL v2 02/28] aio-posix: fix fdmon-io_uring.c timeout stack
+ variable lifetime
+Date: Tue, 11 Nov 2025 22:32:12 +0100
+Message-ID: <20251111213238.181992-3-kwolf@redhat.com>
 In-Reply-To: <20251111213238.181992-1-kwolf@redhat.com>
 References: <20251111213238.181992-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -68,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,128 +84,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds some more tests for using the 'size' and 'offset' options of
-raw to the recently added resize-below-raw test.
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20251028094328.17919-1-kwolf@redhat.com>
+io_uring_prep_timeout() stashes a pointer to the timespec struct rather
+than copying its fields. That means the struct must live until after the
+SQE has been submitted by io_uring_enter(2). add_timeout_sqe() violates
+this constraint because the SQE is not submitted within the function.
+
+Inline add_timeout_sqe() into fdmon_io_uring_wait() so that the struct
+lives at least as long as io_uring_enter(2).
+
+This fixes random hangs (bogus timeout values) when the kernel loads
+undefined timespec struct values from userspace after the original
+struct on the stack has been destroyed.
+
+Reported-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20251104022933.618123-3-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/tests/resize-below-raw     | 53 +++++++++++++++++--
- tests/qemu-iotests/tests/resize-below-raw.out |  4 +-
- 2 files changed, 51 insertions(+), 6 deletions(-)
+ util/fdmon-io_uring.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/resize-below-raw b/tests/qemu-iotests/tests/resize-below-raw
-index 3c9241c918..ddf3f44742 100755
---- a/tests/qemu-iotests/tests/resize-below-raw
-+++ b/tests/qemu-iotests/tests/resize-below-raw
-@@ -8,16 +8,27 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index ad89160f31..b64ce42513 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -188,20 +188,6 @@ static void add_poll_remove_sqe(AioContext *ctx, AioHandler *node)
+     io_uring_sqe_set_data(sqe, NULL);
+ }
  
- import os
-+from typing import Dict, Optional
-+
- import iotests
- from iotests import imgfmt, qemu_img_create, QMPTestCase
+-/* Add a timeout that self-cancels when another cqe becomes ready */
+-static void add_timeout_sqe(AioContext *ctx, int64_t ns)
+-{
+-    struct io_uring_sqe *sqe;
+-    struct __kernel_timespec ts = {
+-        .tv_sec = ns / NANOSECONDS_PER_SECOND,
+-        .tv_nsec = ns % NANOSECONDS_PER_SECOND,
+-    };
+-
+-    sqe = get_sqe(ctx);
+-    io_uring_prep_timeout(sqe, &ts, 1, 0);
+-    io_uring_sqe_set_data(sqe, NULL);
+-}
+-
+ /* Add sqes from ctx->submit_list for submission */
+ static void fill_sq_ring(AioContext *ctx)
+ {
+@@ -291,13 +277,24 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
+ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
+                                int64_t timeout)
+ {
++    struct __kernel_timespec ts;
+     unsigned wait_nr = 1; /* block until at least one cqe is ready */
+     int ret;
  
- image_size = 1 * 1024 * 1024
- image = os.path.join(iotests.test_dir, 'test.img')
+     if (timeout == 0) {
+         wait_nr = 0; /* non-blocking */
+     } else if (timeout > 0) {
+-        add_timeout_sqe(ctx, timeout);
++        /* Add a timeout that self-cancels when another cqe becomes ready */
++        struct io_uring_sqe *sqe;
++
++        ts = (struct __kernel_timespec){
++            .tv_sec = timeout / NANOSECONDS_PER_SECOND,
++            .tv_nsec = timeout % NANOSECONDS_PER_SECOND,
++        };
++
++        sqe = get_sqe(ctx);
++        io_uring_prep_timeout(sqe, &ts, 1, 0);
++        io_uring_sqe_set_data(sqe, NULL);
+     }
  
--class TestResizeBelowRaw(QMPTestCase):
-+class BaseResizeBelowRaw(QMPTestCase):
-+    raw_size: Optional[int] = None
-+    raw_offset: Optional[int] = None
-+
-     def setUp(self) -> None:
-         qemu_img_create('-f', imgfmt, image, str(image_size))
- 
-+        extra_options: Dict[str, str] = {}
-+        if self.raw_size is not None:
-+            extra_options['size'] = str(self.raw_size)
-+        if self.raw_offset is not None:
-+            extra_options['offset'] = str(self.raw_offset)
-+
-         self.vm = iotests.VM()
-         self.vm.add_blockdev(self.vm.qmp_to_opts({
-             'driver': imgfmt,
-@@ -26,7 +37,8 @@ class TestResizeBelowRaw(QMPTestCase):
-                 'driver': 'file',
-                 'filename': image,
-                 'node-name': 'file0',
--            }
-+            },
-+            **extra_options
-         }))
-         self.vm.launch()
- 
-@@ -34,14 +46,16 @@ class TestResizeBelowRaw(QMPTestCase):
-         self.vm.shutdown()
-         os.remove(image)
- 
--    def assert_size(self, size: int) -> None:
-+    def assert_size(self, size: int, file_size: Optional[int] = None) -> None:
-         nodes = self.vm.qmp('query-named-block-nodes', flat=True)['return']
-         self.assertEqual(len(nodes), 2)
-         for node in nodes:
--            if node['drv'] == 'file':
-+            if node['drv'] == 'file' and file_size is not None:
-+                self.assertEqual(node['image']['virtual-size'], file_size)
-                 continue
-             self.assertEqual(node['image']['virtual-size'], size)
- 
-+class TestResizeBelowUnlimitedRaw(BaseResizeBelowRaw):
-     def test_resize_below_raw(self) -> None:
-         self.assert_size(image_size)
-         self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
-@@ -49,5 +63,36 @@ class TestResizeBelowRaw(QMPTestCase):
-         self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
-         self.assert_size(3*image_size)
- 
-+# offset = 0 behaves the same as absent offset
-+class TestResizeBelowRawWithZeroOffset(TestResizeBelowUnlimitedRaw):
-+    raw_offset = 0
-+
-+class TestResizeBelowRawWithSize(BaseResizeBelowRaw):
-+    raw_size = image_size // 2
-+
-+    def test_resize_below_raw_with_size(self) -> None:
-+        self.assert_size(image_size // 2, image_size)
-+
-+        # This QMP command fails because node0 unshares RESIZE
-+        self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
-+        self.assert_size(image_size // 2, image_size)
-+
-+        # This QMP command fails because node0 is a fixed-size disk
-+        self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
-+        self.assert_size(image_size // 2, image_size)
-+
-+class TestResizeBelowRawWithOffset(BaseResizeBelowRaw):
-+    raw_offset = image_size // 4
-+
-+    def test_resize_below_raw_with_offset(self) -> None:
-+        self.assert_size(image_size * 3 // 4, image_size)
-+
-+        # This QMP command fails because node0 unshares RESIZE
-+        self.vm.qmp('block_resize', node_name='file0', size=2*image_size)
-+        self.assert_size(image_size * 3 // 4, image_size)
-+
-+        self.vm.qmp('block_resize', node_name='node0', size=3*image_size)
-+        self.assert_size(3 * image_size, image_size * 13 // 4)
-+
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['raw'], supported_protocols=['file'])
-diff --git a/tests/qemu-iotests/tests/resize-below-raw.out b/tests/qemu-iotests/tests/resize-below-raw.out
-index ae1213e6f8..89968f35d7 100644
---- a/tests/qemu-iotests/tests/resize-below-raw.out
-+++ b/tests/qemu-iotests/tests/resize-below-raw.out
-@@ -1,5 +1,5 @@
--.
-+....
- ----------------------------------------------------------------------
--Ran 1 tests
-+Ran 4 tests
- 
- OK
+     fill_sq_ring(ctx);
 -- 
 2.51.1
 
