@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3773FCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41AB4CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 10:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIlOy-0002lr-Kv; Tue, 11 Nov 2025 05:15:04 -0500
+	id 1vIlVy-0000mp-HO; Tue, 11 Nov 2025 05:22:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vIlOm-0002Xr-9X
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:14:52 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vIlOk-0006Ij-A2
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:14:52 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Dx_tKUDBNpI+khAA--.8190S3;
- Tue, 11 Nov 2025 18:14:44 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxaMCRDBNp0EYvAQ--.48004S3;
- Tue, 11 Nov 2025 18:14:43 +0800 (CST)
-Subject: Re: [PATCH] fix pci device can't alloc irq from fdt
-From: Bibo Mao <maobibo@loongson.cn>
-To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-References: <20251111071436.1555402-1-lixianglai@loongson.cn>
- <caf726ca-2e17-9711-9686-4e17eef94f01@loongson.cn>
-Message-ID: <91abf355-3ed7-ca6b-83b8-fe2128e4f40c@loongson.cn>
-Date: Tue, 11 Nov 2025 18:12:19 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIlVs-0000g1-Ti
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:22:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vIlVr-0007Yu-0P
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 05:22:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762856530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0oRc0cVg4BRzb1rR189tQt8bOHQIgTDWGlHbTWP4PKg=;
+ b=XIf37awIqWSGYqMOTCRFQhlQGEG8DrPa5Yj+MqIOj0la4cutujnr4Q3PQkzkocQAxqFlK3
+ IjM4iPHZQmfczFOgdYXtTpLoJmnqNpa3gt7jHahnPZgh3b44Fkq4NHQumYd+rOrR0Ewd5U
+ K0cYYCWK9EJIWGl8tlzrY4tKoEGR6cQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-Wkk0MzCMM3q6jtaiiWNPmg-1; Tue,
+ 11 Nov 2025 05:22:06 -0500
+X-MC-Unique: Wkk0MzCMM3q6jtaiiWNPmg-1
+X-Mimecast-MFC-AGG-ID: Wkk0MzCMM3q6jtaiiWNPmg_1762856525
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0BA811956094; Tue, 11 Nov 2025 10:22:05 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.97])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BD27F30044E1; Tue, 11 Nov 2025 10:22:03 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 2/4] tests/functional/aarch64/test_device_passthrough: Fix
+ warnings from pylint
+Date: Tue, 11 Nov 2025 11:21:56 +0100
+Message-ID: <20251111102158.92091-3-thuth@redhat.com>
+In-Reply-To: <20251111102158.92091-1-thuth@redhat.com>
+References: <20251111102158.92091-1-thuth@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <caf726ca-2e17-9711-9686-4e17eef94f01@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxaMCRDBNp0EYvAQ--.48004S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZw17WF4DGryUAF1rAF47Awc_yoWrWFW5pF
- WkG3WDWrWIgr109w4xXF1Uury3Ar13A3WjqwnrJF1UCwnruw10qr4qqrWvgFyUK3ykJF4U
- Xr45K34I9w1UGabCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
- Ja73UjIFyTuYvjxU7XTmDUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.793,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,96 +82,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Thomas Huth <thuth@redhat.com>
 
+Remove unused imports, write constants with capital letters and make
+sure that the code uses the right indentation / formatting.
 
-On 2025/11/11 下午6:07, Bibo Mao wrote:
-> 
-> 
-> On 2025/11/11 下午3:14, Xianglai Li wrote:
->> When we use the -kernel parameter to start an elf format kernel 
->> relying on
->> fdt, we get the following error:
->>
->> pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
->> pcieport 0000:00:01.0: enabling device (0000 -> 0003)
->> pcieport 0000:00:01.0: PME: Signaling with IRQ 19
->> pcieport 0000:00:01.0: AER: enabled with IRQ 19
->> pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
->> pcieport 0000:00:01.1: enabling device (0000 -> 0003)
->> pcieport 0000:00:01.1: PME: Signaling with IRQ 20
->> pcieport 0000:00:01.1: AER: enabled with IRQ 20
->> pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
->> pcieport 0000:00:01.2: enabling device (0000 -> 0003)
->> pcieport 0000:00:01.2: PME: Signaling with IRQ 21
->> pcieport 0000:00:01.2: AER: enabled with IRQ 21
->> pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
->> pcieport 0000:00:01.3: enabling device (0000 -> 0003)
->> pcieport 0000:00:01.3: PME: Signaling with IRQ 22
->> pcieport 0000:00:01.3: AER: enabled with IRQ 22
->> pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
->>
->> This is because the description of interrupt-cell size in the interrupt
->> controller pch_pic in our fdt is incorrect, and the description of
->> interrupt-cell is missing in the pcie irq map. Now it is corrected and
->> the correct interrupt-cell is added in th pcie irq map.
->>
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> ---
->> Cc: Bibo Mao <maobibo@loongson.cn>
->> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
->> Cc: Song Gao <gaosong@loongson.cn>
->>
->>   hw/loongarch/virt-fdt-build.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/loongarch/virt-fdt-build.c 
->> b/hw/loongarch/virt-fdt-build.c
->> index 1f0ba01f71..f1f70ed3c3 100644
->> --- a/hw/loongarch/virt-fdt-build.c
->> +++ b/hw/loongarch/virt-fdt-build.c
->> @@ -272,7 +272,7 @@ static void 
->> fdt_add_pch_pic_node(LoongArchVirtMachineState *lvms,
->>       qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
->>                              pch_pic_base, 0, pch_pic_size);
->>       qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", 
->> NULL, 0);
->> -    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
->> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
-> The pch_pic supports irq number and trigger level, value of 
-> #interrupt-cells should be 2.
-> 
->>       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
->>                             *eiointc_phandle);
->>       qemu_fdt_setprop_cell(ms->fdt, nodename, 
->> "loongson,pic-base-vec", 0);
->> @@ -395,6 +395,8 @@ static void fdt_add_pcie_node(const 
->> LoongArchVirtMachineState *lvms,
->>                                    2, base_mmio, 2, size_mmio);
->>       qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
->>                              0, *pch_msi_phandle, 0, 0x10000);
->> +
->> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
->>       fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
-> Here is error report:
->    pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
-irq parsing from FDT table with non-pci device should be good,
-such as uart, it is interrupt cell field is 2: (irq, 0x4)
-   qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4)
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251030143203.297692-1-thuth@redhat.com>
+---
+ .../aarch64/test_device_passthrough.py        | 26 ++++++++++++-------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-only pci legacy interrupt pin parsing has problem.
-
-Regards
-Bibo Mao
-> 
-> I think that we should support interrupt-map fdt table in function 
-> fdt_add_pcie_irq_map_node(), so that PCI trigger level is added in the 
-> map table.
-> 
-> Regards
-> Bibo Mao
->>       g_free(nodename);
->>   }
->>
-> 
+diff --git a/tests/functional/aarch64/test_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
+index 05a3f52d5e2..10c73728f36 100755
+--- a/tests/functional/aarch64/test_device_passthrough.py
++++ b/tests/functional/aarch64/test_device_passthrough.py
+@@ -10,13 +10,13 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from os.path import join
++from random import randbytes
+ 
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import exec_command, wait_for_console_pattern
+-from qemu_test import exec_command_and_wait_for_pattern
+-from random import randbytes
++from qemu_test import wait_for_console_pattern
++
+ 
+-guest_script = '''
++GUEST_SCRIPT = '''
+ #!/usr/bin/env bash
+ 
+ set -euo pipefail
+@@ -56,7 +56,7 @@
+ -device vfio-pci,host=$pci_iommufd,iommufd=iommufd0
+ '''
+ 
+-nested_guest_script = '''
++NESTED_GUEST_SCRIPT = '''
+ #!/usr/bin/env bash
+ 
+ set -euo pipefail
+@@ -75,6 +75,7 @@
+ echo device_passthrough_test_ok
+ '''
+ 
++
+ class Aarch64DevicePassthrough(QemuSystemTest):
+ 
+     # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthrough
+@@ -86,7 +87,7 @@ class Aarch64DevicePassthrough(QemuSystemTest):
+     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
+         ('https://github.com/pbo-linaro/qemu-linux-stack/'
+          'releases/download/build/device_passthrough-a9612a2.tar.xz'),
+-         'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
++        'f7d2f70912e7231986e6e293e1a2c4786dd02bec113a7acb6bfc619e96155455')
+ 
+     # This tests the device passthrough implementation, by booting a VM
+     # supporting it with two nvme disks attached, and launching a nested VM
+@@ -108,10 +109,14 @@ def test_aarch64_device_passthrough(self):
+         guest_cmd = join(stack, 'guest.sh')
+         nested_guest_cmd = join(stack, 'nested_guest.sh')
+         # we generate two random disks
+-        with open(disk_vfio, "wb") as d: d.write(randbytes(512))
+-        with open(disk_iommufd, "wb") as d: d.write(randbytes(1024))
+-        with open(guest_cmd, 'w') as s: s.write(guest_script)
+-        with open(nested_guest_cmd, 'w') as s: s.write(nested_guest_script)
++        with open(disk_vfio, "wb") as d:
++            d.write(randbytes(512))
++        with open(disk_iommufd, "wb") as d:
++            d.write(randbytes(1024))
++        with open(guest_cmd, 'w', encoding='utf-8') as s:
++            s.write(GUEST_SCRIPT)
++        with open(nested_guest_cmd, 'w', encoding='utf-8') as s:
++            s.write(NESTED_GUEST_SCRIPT)
+ 
+         self.vm.add_args('-cpu', 'max')
+         self.vm.add_args('-m', '2G')
+@@ -139,5 +144,6 @@ def test_aarch64_device_passthrough(self):
+         wait_for_console_pattern(self, 'device_passthrough_test_ok',
+                                  failure_message='Kernel panic')
+ 
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
+-- 
+2.51.1
 
 
