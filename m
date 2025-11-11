@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E46CCFA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 17:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C05BCCFA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Nov 2025 17:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIs2V-0000EZ-8R; Tue, 11 Nov 2025 12:20:30 -0500
+	id 1vIs4H-0002JO-TO; Tue, 11 Nov 2025 12:22:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vIs00-0005rt-6l
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:44 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1vIrzw-0005js-Li
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:40 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vIrzt-0003ze-Be
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:43 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-6406f3dcc66so7328998a12.3
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 09:17:36 -0800 (PST)
+ id 1vIrzp-0003wx-IT
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 12:17:40 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-640e9f5951aso1749262a12.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 09:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762881456; x=1763486256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762881451; x=1763486251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6fTw1tbKCxfSYtSshvI7Ey8m20SzjiVCQ9bgtYepDy4=;
- b=jnmfODHKfIcJAN8d0GRiW0Aqif6kGvgiVxmtFGAArqrjRNHxflWr8WIodeFaJIyKTm
- TeaHwx+/80IPWZsY5EUSN72CfLzI2frus4lDBubgRhqZ7KTL3Wki/fqasj0Hxr1Je2Gc
- Bk7JpE9A6wmAHlAZUiQglNHBFSMg86rhnL0XdqB/coaSts0AM25iZeJXcaUDYXTWdC2t
- DWFFDIZ3Im9XuN2Z2sSSjnRn0xNMPN0FkL2Foien1AxCnp/WLCTWgEfcf6kg5Mq26l+0
- HGpastFPhq16o/3lVwdc5FtE7jHNVJLdrKz4soGAZhFFyVgppeqNZA9zEUgK6WLF4Vlk
- l1dA==
+ bh=Za+5Mks5dDo7+VKCqxjl33d6oX+mjFDqlwwucW0qEdw=;
+ b=ZHIQFa0Z7ZkxAu2cvisWOzanuLPLo3kuObEDjokoouLRFrBOSMLgUguxR9DLvtcssd
+ gpEbopaYuVVo49X1wkPUkJF2Et+mxF9UFR1q9LmJLqbyCm340XiMM5HPBS+kwpdnMT4d
+ AxRiGQhxN9IjAJ3Ve+6vw0ayDKjWwg3BxFpVVvDoCtYpmHsj/sW3qn3v0E9wMoNLwUAU
+ /g2zsVx0SV+zwnPPeRIVfB/AKzkETN2YaKfgqaxg3DWxh4YIswVZ6XPFOzH3FAdEzH7O
+ PLkb6xO+57svmafJ2L0T8Y0sIhksi5p0WktlXVZMUxfgJwWh2mVh8v7uq0+890ucahJ9
+ QrMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762881456; x=1763486256;
+ d=1e100.net; s=20230601; t=1762881451; x=1763486251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6fTw1tbKCxfSYtSshvI7Ey8m20SzjiVCQ9bgtYepDy4=;
- b=PO3d5KM8v96vE9bA5wGjAtjhIj0rERzLflIvigEUDyKrQ9Kc37tixCEOjFww+9/Xut
- t+KIaF40OPKYFE++KUAJMR8bW8BnZB3FIa2UrAEF6f9SdwSU3FGV1VoTnwOfSCDriYcv
- MRomA8uw0UTb1UC9bOWB90DXhtQRp66/mEgSbsjyuCZH3RlM0EPrbOmRDpN4h++z5OiT
- +c9iNaacllz99Rra+0G468AXnFfedbnNzAegMXMMMDgxGrmji/nC1p9jgAqzAv5mmDMB
- T3wwdLNxWj9tR04UNdkquGXOZFhcjZNQdgLs6gAvds420tQjkD9oEl3zkKlF6eWeidR5
- cYzg==
-X-Gm-Message-State: AOJu0YwwNK4mxi5IPNtl75/5J1cZV6SBh7/LjJj7yDzIneRzMlqH16AL
- dTioeYeFviZyHhdBideYlbNLzrykgi7YMcuAvCyIJQMJxpbptpSYNSOMHUO8vvy9UjY=
-X-Gm-Gg: ASbGnctrzozo9pL/Mtw7M0U9VxolV0pMT00x4letA6qkXH6HW4mOudxVMPpD6Fy/cSk
- GJyKL/TJHPaka/8D4Zxqq1Ndn5xCFaEsVkKBN0yqqUp3gtlrmQKgTps1Y+1hH8QDvmbC5RFDLGx
- j/e+7Ti9nNU/LnKKbnwKDZ1+QVF/UrnLaifrc2HsjOail9LZfXRvUEZYJ0TlMEsVpNgwNH8OZ28
- a1BuaVj6OyNedfCz560RLWajTzVgLJ+uHjUHk5wjYD3pfxvlZPQWY323HqOR1BJXGLWztf+xFkx
- QcK4FUa5rUxMY7eEQoXVYMNY9n0kI3B94snoUmwsqkicOzvrFxoryTnSGvxWnNOVUhJrx58OWH4
- LrUC+YjvCK5ZGLsuBUdVOqw12oYl/b2Rs2u1nvZwr+n25Lh2sH870I1QYvhv7KHZceIjh0/YYX/
- Hc
-X-Google-Smtp-Source: AGHT+IEIBJSo9FgSIMHiM7CQsZpHOl0WJofaTdHZ+a73Qle06jSr+jEjM5ZdvzkUWrmqxAA6DKq6Hg==
-X-Received: by 2002:a17:907:60ce:b0:b71:88eb:e60c with SMTP id
- a640c23a62f3a-b72e05e686emr1169167566b.44.1762881455418; 
- Tue, 11 Nov 2025 09:17:35 -0800 (PST)
+ bh=Za+5Mks5dDo7+VKCqxjl33d6oX+mjFDqlwwucW0qEdw=;
+ b=tMHkWxcswUXa4OWsH8iu0vbWtqErKr6qOxGm/vD6jTwOSK4137QVRIFgO+EsIv8nOM
+ pYdetg0iDgEvcE2xCOxfUV9bPZJs5dk3HuUt3mUrfT4xm+3CaZa1F5vG8W2GM6tdym2m
+ MZ8cnDmjhih0zmbG9x33IYh3mdAlNgvajnn3SxgtAN78pOHm2VxEEWiv/bP8CKh8JPP0
+ b2Z3Jj7onMqPTvF+2vrlkw1Q6rklvjNP9IDs7YTbiQc5TnNfYBptc18hZAaoiRpyjefD
+ TKqD2fsX99jiM/kYoWnp3CxUVO3JbWyHh6Lf6AS+wxgzVERwtFZLDX7yMy6sTy6syLh0
+ KRNQ==
+X-Gm-Message-State: AOJu0YxDTP63U1fkILF+HmAsecYUNwvMeH++q5fuXPwlCrLIoMGH9w4F
+ MYcs+V7lCWfdmJHGqTXYpYWLdeB8VDSOhLcVJLxOgn/sqPahAQiy9aPHDv0vy5YAnwE=
+X-Gm-Gg: ASbGnctLNcn3A7zfJaJl8JxhFAYSHD3UirnyKXlmcoMe6Zfbko+U94tNUrJniuo1WSy
+ YJTW188arqe0kNZCe3AaCk0ZlAYc4CzzMQ6nO5bEa+CP+zSdOtjJxs8pZ77H/+NTcYaKk/T4Xd/
+ Xt78GulMDclspxQ0sTwf98/BGN0to3krcFtS3SrnCsccNkb2mOrtrwQIHvSjdw60elaIBPAOmfr
+ bz+UmEOCNM9nxDFCTclu/NRMEv7cxGtxBGmCZ8c5Bq6ieeiZ9aDecmyCsVxKz/5UGI1j5qfigpj
+ fQyzXZ037Z8u+pZFbiauDOHu/owmIA/LjtTGgMz9L1XZUwcy+qKDD19thmJSa4zivdXMGOb3ctv
+ LMH4ZaTFkFknfP3IHmSZKEgxI1vJJr9haLDFFxfL/5mpQwwoPMWEnqNP6a9IJNypYoAzCbUF/lA
+ Sz
+X-Google-Smtp-Source: AGHT+IEzV2oPWceBEQZfRjUMRF3Z1okUInmrwb60js1ltUEB6Txr+6XY2GMiVSLduNqZ35nAheRp/w==
+X-Received: by 2002:a17:906:6a1d:b0:afa:1d2c:bbd1 with SMTP id
+ a640c23a62f3a-b733143e47dmr5499966b.30.1762881451559; 
+ Tue, 11 Nov 2025 09:17:31 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6411f862cd7sm13899498a12.30.2025.11.11.09.17.28
+ a640c23a62f3a-b72bfa2510esm1371639666b.72.2025.11.11.09.17.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Nov 2025 09:17:33 -0800 (PST)
+ Tue, 11 Nov 2025 09:17:28 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8F4A660804;
+ by draig.lan (Postfix) with ESMTP id AB09C60DA8;
  Tue, 11 Nov 2025 17:17:25 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -83,17 +83,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Gustavo Romero <gustavo.romero@linaro.org>, qemu-stable@nongnu.org
-Subject: [PATCH 11/16] tests: move test_kvm to share.linaro.org
-Date: Tue, 11 Nov 2025 17:17:18 +0000
-Message-ID: <20251111171724.78201-12-alex.bennee@linaro.org>
+Subject: [PATCH 12/16] tests: move test_virt_gpu to share.linaro.org
+Date: Tue, 11 Nov 2025 17:17:19 +0000
+Message-ID: <20251111171724.78201-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251111171724.78201-1-alex.bennee@linaro.org>
 References: <20251111171724.78201-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,27 +122,36 @@ another sharing site.
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Cc: qemu-stable@nongnu.org
 ---
- tests/functional/aarch64/test_kvm.py | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ tests/functional/aarch64/test_virt_gpu.py | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/aarch64/test_kvm.py
-index 9fb9286139f..c8351afc5ec 100755
---- a/tests/functional/aarch64/test_kvm.py
-+++ b/tests/functional/aarch64/test_kvm.py
-@@ -18,11 +18,8 @@
+diff --git a/tests/functional/aarch64/test_virt_gpu.py b/tests/functional/aarch64/test_virt_gpu.py
+index 4e50887c3e9..89bd596b548 100755
+--- a/tests/functional/aarch64/test_virt_gpu.py
++++ b/tests/functional/aarch64/test_virt_gpu.py
+@@ -22,17 +22,11 @@
  
- class Aarch64VirtKVMTests(LinuxKernelTest):
+ class Aarch64VirtGPUMachine(LinuxKernelTest):
  
--    ASSET_KVM_TEST_KERNEL = Asset(
--        'https://fileserver.linaro.org/s/HmjaxXXYHYSqbes/'
+-    ASSET_VIRT_GPU_KERNEL = Asset(
+-        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
 -        'download?path=%2F&files='
--        'image-with-kvm-tool-and-unit-tests.gz',
--        '34de4aaea90db5da42729e7d28b77f392c37a2f4da859f889a5234aaf0970696')
-+    ASSET_KVM_TEST_KERNEL = Asset('https://share.linaro.org/downloadFile?id=Dt5pQbTe5RrxEii',
-+                                  '34de4aaea90db5da42729e7d28b77f392c37a2f4da859f889a5234aaf0970696')
+-        'Image.6.12.16.aarch64',
+-        '7888c51c55d37e86bbbdeb5acea9f08c34e6b0f03c1f5b2463285f6a6f6eec8b')
+-
+-    ASSET_VIRT_GPU_ROOTFS = Asset(
+-        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+-        'download?path=%2F&files='
+-        'rootfs.aarch64.ext2.zstd',
+-        'd45118c899420b7e673f1539a37a35480134b3e36e3a59e2cb69b1781cbb14ef')
++    ASSET_VIRT_GPU_KERNEL = Asset('https://share.linaro.org/downloadFile?id=lL8wgnMmSXZo7Co',
++                                  '7888c51c55d37e86bbbdeb5acea9f08c34e6b0f03c1f5b2463285f6a6f6eec8b')
++
++    ASSET_VIRT_GPU_ROOTFS = Asset('https://share.linaro.org/downloadFile?id=qOn1wbfKmS6KVHZ',
++                                  'd45118c899420b7e673f1539a37a35480134b3e36e3a59e2cb69b1781cbb14ef')
  
-     # make it easier to detect successful return to shell
-     PS1 = 'RES=[$?] # '
+     def _launch_virt_gpu(self, gpu_device):
+ 
 -- 
 2.47.3
 
