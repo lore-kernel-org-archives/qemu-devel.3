@@ -4,152 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6760FCD3428
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63A8CD13DD
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 16:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJDwb-0000qt-2f; Wed, 12 Nov 2025 11:43:41 -0500
+	id 1vJDwk-0001Kg-Gk; Wed, 12 Nov 2025 11:43:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJDtj-0006ya-Qs
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 11:40:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1vJDuH-0007g1-8V; Wed, 12 Nov 2025 11:41:20 -0500
+Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJDtg-0007sP-Dl
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 11:40:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762965638;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ekP2LoStC6atia7JLc6rGhNzk31oeeo9AHkN1/Jshi4=;
- b=M0b8KusD8PqJUhIBnhYSAVAgpOdS++eGXijPAUe+0dkcaqUI0jRryJWEutZRy25i6Tmflt
- xhXDtDwMFVINfj/estRmfuYW+Hwi0SAehhLPGYiTh5YWMElGtVA31kAkSURwD4upoWGFNS
- GzgSMlzA4SlGoyCekPOa6hHNrGthFBg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-491-NZmDcCkYMZGyySxUOeLS2w-1; Wed, 12 Nov 2025 11:40:37 -0500
-X-MC-Unique: NZmDcCkYMZGyySxUOeLS2w-1
-X-Mimecast-MFC-AGG-ID: NZmDcCkYMZGyySxUOeLS2w_1762965636
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429cce847c4so652734f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 08:40:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762965636; x=1763570436; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ekP2LoStC6atia7JLc6rGhNzk31oeeo9AHkN1/Jshi4=;
- b=kRFl9NYtYirdzxlIqRqu5vIQEkB5Az0I1RdCMcaR6jXOU45Vp9DoDUFXV+zojDNHms
- 3hUNzYvMY8MxVOm/zZ4e44W0Lt/5LJZxR0zkuA3O5tOoW3TMErl5JKTGDODNXjxN+keD
- Cc63hiwint45tdA6e7xnpfVCZQib5aFky1+XCtfjl+h4AXOIlRAVW7+bbxidIbKD+1lc
- rulpwJiIMHWWk/AURAIk4ooK85+HsS4RLEbNtLq4+Lc6KbvvH4GhjWqBxkwLlu5daRyE
- hFZ2rWjUy4A5+nMuQeVGPOYAW44EvV80yVYxcu6q5lFps4c4ulCOD0hrRcJvIDU3uuhR
- ARiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762965636; x=1763570436;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ekP2LoStC6atia7JLc6rGhNzk31oeeo9AHkN1/Jshi4=;
- b=I5nqZJKYwdq83Y4SlFjka7zwquSdgP2ItvopPxXoMCuCEeG3yaPNoItWVxD0l0ToJC
- 9yMhD2g86evsB29yMQSta+I8IuXOy6R3oMuU7RDu4x/skv0VRL0xF55/zDdlfLsq8P41
- bION4CzHYtGR6qNEyFXGeLLVxlG9kq0r1tzeKTtcMBt6ZaVhJeh0ZXZ63BGBHEftfrpv
- dQIsxZ8huLXePgPRZYYD5e8e+Jj0ADT2qwcpDsPOwYpr/Lo4IUBpOIx0wgvXFTAuKFwF
- QBrmbmDSnHeA5BRPnQg7KlpI/yxKZsdpguGleYOpRdMmsq9vtUCPPhCYtmjGjFxm7gQC
- TqPA==
-X-Gm-Message-State: AOJu0Yw3BDuhtlhCsPQ66YJpoKfT7AjB6RkjiHgjNArmV0ANBO5aJYUQ
- T8LF91j/ZMHy0c6LcSx6h3F/fbs80/DgKqy6Mz3iXx46gDJunei6lWhtlfWV75b50ks6SCcIdMZ
- IE4zxmQY94fPB2x6AZHoaZ0WZK2YP3j081IJ4UPzg+V+92KqZ/tLZ8gnR
-X-Gm-Gg: ASbGncsvuB4CHeJq/vgXKA6eFXulK9UWG3lXxXAUf9O4VoAKTs+KZt0CLKVltOsxAcf
- KMubK3+9bHohTwecGVnHbLrdHVmQns0wwIyVJKLc4YF/yp3Y5PS/3IVVHaHb6mJYryueGSHSXQD
- ZypJZVBErzz0Es5hmFDZVMc/uIWZsYCNgGiru9fg1IeLwN5wDZiLcniypeT0BcpUTD0XrR+88mm
- MEZgVHm2bw0FyQhkumckCYVabhiEX23ykOxhfuuKoqLV4DChM0DmwwKxkoo/kaBlfQAaTLqYLKU
- REXNpesHQd61q314wHD/r5BfR8RIBQthV5WBctfOHsRNrkcjv1lumE90Q/wBxUf5k4Nt6+4=
-X-Received: by 2002:a05:6000:40cd:b0:429:d0b8:3850 with SMTP id
- ffacd0b85a97d-42b4bdb4884mr2891028f8f.48.1762965636149; 
- Wed, 12 Nov 2025 08:40:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEpg/RiQDd6VD0n6A8rp3Q8E6xKZcyeWD8b/HcSfdtD2qh32H8NPx+29zXTCdssGRuL6W58jg==
-X-Received: by 2002:a05:6000:40cd:b0:429:d0b8:3850 with SMTP id
- ffacd0b85a97d-42b4bdb4884mr2891000f8f.48.1762965635703; 
- Wed, 12 Nov 2025 08:40:35 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42abe63ba87sm35969688f8f.14.2025.11.12.08.40.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Nov 2025 08:40:35 -0800 (PST)
-Message-ID: <c8184f53-b0ed-4f74-adc2-080309568795@redhat.com>
-Date: Wed, 12 Nov 2025 17:40:33 +0100
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1vJDuE-0007zs-LT; Wed, 12 Nov 2025 11:41:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=Eiy+P/m1GSyiAuLf1biu8Qv/nhPfT6ioj5lttzS+EqA=; b=e//r6sqRDTMV
+ oOnz3f0Ek50/lusSwCTejbOakWiI47Imb9m6C/WYT2XeTRweB7ZtB+UJlZ3zbGKROB8oTIkjldCif
+ jzcbKvTlCyYZLwYLb8MnydZvA8q+oEcxWqPlvXgDezAOTOVa4m+ZeAa/20zdgJEGD3yNJ0sxeFm2l
+ HEPmCBNbIOnt8E0UaCa+iVngV8KR/dQ+NVG1Zf290XjyU2PtRLDPXKwQS0C5ROEs/W5cSu6boyo1+
+ yZHVTnRehwBO4AgOEMYCOiUhZzsWi0cM0a9tDlbSk1FWNzuYQ+GrAbTByucgJFznxRru0FrOo/U7E
+ EXu64d4eZxLdr04G+UPZiA==;
+Received: from [130.117.225.5] (helo=dev005.ch-qa.vzint.dev)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1vJDsg-00H2e8-11;
+ Wed, 12 Nov 2025 17:41:07 +0100
+From: andrey.drobyshev@virtuozzo.com
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, f.ebner@proxmox.com,
+ hreitz@redhat.com, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com
+Subject: [RFC PATCH 1/1] block: avoid global drain on graph subtrees
+ manipulation
+Date: Wed, 12 Nov 2025 18:41:08 +0200
+Message-ID: <20251112164108.506976-2-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20251112164108.506976-1-andrey.drobyshev@virtuozzo.com>
+References: <20251112164108.506976-1-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 28/28] qemu-img rebase: don't exceed IO_BUF_SIZE in one
- operation
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Alberto Garcia <berto@igalia.com>
-Cc: qemu-devel@nongnu.org
-References: <20251111213238.181992-1-kwolf@redhat.com>
- <20251111213238.181992-29-kwolf@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251111213238.181992-29-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=130.117.225.111;
+ envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,178 +68,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-  Hi Alberto, hi Kevin,
+The block layer's graph drain series [0] moved many drain operations outside
+of graph locks, but introduced a regression: some function now unconditionally
+use bdrv_graph_wrlock_drained(), which drains all BDS in the system and
+asserts no I/O is in flight.
 
-this patch caused the iotest 024 to fail when being run with -qed:
+When 'blockdev-add' creates a new node, it creates a temporary
+BlockBackend which is only used for probing, only to delete it later.
+Before deletion, it's also attaching child 'file' BDS to that same
+BlockBackend in bdrv_open_child_common().
 
-024   fail       [17:35:06] [17:35:08]   2.2s   (last: 2.0s)  output 
-mismatch (see .../tests/qemu-iotests/scratch/qed-file-024/024.out.bad)
---- .../qemu/tests/qemu-iotests/024.out
-+++ .../qemu-build/tests/qemu-iotests/scratch/qed-file-024/024.out.bad
-@@ -267,6 +267,7 @@
-  read 1048576/1048576 bytes at offset 3145728
-  1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-  Offset          Length          File
--0               0x400000        TEST_DIR/subdir/t.IMGFMT
-+0               0x200000        TEST_DIR/subdir/t.IMGFMT
-+0x200000        0x200000        TEST_DIR/subdir/t.IMGFMT
+Both blk_remove_bs() and bdrv_open_child_common() call
+bdrv_graph_wrlock_drained() unconditionally.  If we have an incoming IO
+at the same time, it might lead to assertion failure:
 
-Could you please have a look?
+    qemu-system-x86_64: ../block/io.c:441: bdrv_drain_assert_idle: \
+        Assertion `qatomic_read(&bs->in_flight) == 0' failed.
 
-  Thanks,
-    Thomas
+The global drain is unnecessary for temporary nodes created during
+'blockdev-add'. Only live device roots require full graph draining.
 
+[0] https://lore.kernel.org/qemu-devel/20250530151125.955508-1-f.ebner@proxmox.com/
 
-PS: Thank you, Kevin, for merging the "Add more image formats to the 
-thorough testing" patch! As you can see, it already helped to spot the first 
-regression :-)
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ block.c               |  8 +++++++-
+ block/block-backend.c | 11 ++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-
-On 11/11/2025 22.32, Kevin Wolf wrote:
-> From: Alberto Garcia <berto@igalia.com>
-> 
-> During a rebase operation data is copied from the backing chain into
-> the target image using a loop, and each iteration looks for a
-> contiguous region of allocated data of at most IO_BUF_SIZE (2 MB).
-> 
-> Once that region is found, and in order to avoid partial writes, its
-> boundaries are extended so they are aligned to the (sub)clusters of
-> the target image (see commit 12df580b).
-> 
-> This operation can however result in a region that exceeds the maximum
-> allowed IO_BUF_SIZE, crashing qemu-img.
-> 
-> This can be easily reproduced when the source image has a smaller
-> cluster size than the target image:
-> 
-> base <- int <- active
-> 
-> $ qemu-img create -f qcow2 base.qcow2 4M
-> $ qemu-img create -f qcow2 -F qcow2 -b base.qcow2 -o cluster_size=1M int.qcow2
-> $ qemu-img create -f qcow2 -F qcow2 -b int.qcow2  -o cluster_size=2M active.qcow2
-> $ qemu-io -c "write -P 0xff 1M 2M" int.qcow2
-> $ qemu-img rebase -F qcow2 -b base.qcow2 active.qcow2
-> qemu-img: qemu-img.c:4102: img_rebase: Assertion `written + pnum <= IO_BUF_SIZE' failed.
-> Aborted
-> 
-> Cc: qemu-stable <qemu-stable@nongnu.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3174
-> Fixes: 12df580b3b7f ("qemu-img: rebase: avoid unnecessary COW operations")
-> Signed-off-by: Alberto Garcia <berto@igalia.com>
-> Message-ID: <20251107091834.383781-1-berto@igalia.com>
-> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   qemu-img.c                 |  2 +-
->   tests/qemu-iotests/024     | 46 ++++++++++++++++++++++++++++++++++++++
->   tests/qemu-iotests/024.out | 26 +++++++++++++++++++++
->   3 files changed, 73 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qemu-img.c b/qemu-img.c
-> index 7a32d2d16c..c42dd4e995 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -4081,7 +4081,7 @@ static int img_rebase(const img_cmd_t *ccmd, int argc, char **argv)
->               n += offset - QEMU_ALIGN_DOWN(offset, write_align);
->               offset = QEMU_ALIGN_DOWN(offset, write_align);
->               n += QEMU_ALIGN_UP(offset + n, write_align) - (offset + n);
-> -            n = MIN(n, size - offset);
-> +            n = MIN(n, MIN(size - offset, IO_BUF_SIZE));
->               assert(!bdrv_is_allocated(unfiltered_bs, offset, n, &n_alloc) &&
->                      n_alloc == n);
->   
-> diff --git a/tests/qemu-iotests/024 b/tests/qemu-iotests/024
-> index b29c76e161..021169b4a1 100755
-> --- a/tests/qemu-iotests/024
-> +++ b/tests/qemu-iotests/024
-> @@ -315,6 +315,52 @@ echo
->   
->   $QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
->   
-> +# Check that the region to copy to the overlay during a rebase
-> +# operation does not exceed the I/O buffer size.
-> +#
-> +# backing_new <-- backing_old <-- overlay
-> +#
-> +# Backing (new): -- -- -- --    <-- Empty image, size 4MB
-> +# Backing (old):|--|ff|ff|--|   <-- 4 clusters, 1MB each
-> +# Overlay:      |-- --|-- --|   <-- 2 clusters, 2MB each
-> +#
-> +# The data at [1MB, 3MB) must be copied from the old backing image to
-> +# the overlay. However the rebase code will extend that region to the
-> +# overlay's (sub)cluster boundaries to avoid CoW (see commit 12df580b).
-> +# This test checks that IO_BUF_SIZE (2 MB) is taken into account.
-> +
-> +echo
-> +echo "=== Test that the region to copy does not exceed 2MB (IO_BUF_SIZE) ==="
-> +echo
-> +
-> +echo "Creating backing chain"
-> +echo
-> +
-> +TEST_IMG=$BASE_NEW _make_test_img 4M
-> +TEST_IMG=$BASE_OLD CLUSTER_SIZE=1M _make_test_img -b "$BASE_NEW" -F $IMGFMT
-> +TEST_IMG=$OVERLAY  CLUSTER_SIZE=2M _make_test_img -b "$BASE_OLD" -F $IMGFMT
-> +
-> +echo
-> +echo "Writing data to region [1MB, 3MB)"
-> +echo
-> +
-> +$QEMU_IO "$BASE_OLD" -c "write -P 0xff 1M 2M" | _filter_qemu_io
-> +
-> +echo
-> +echo "Rebasing"
-> +echo
-> +
-> +$QEMU_IMG rebase -b "$BASE_NEW" -F $IMGFMT "$OVERLAY"
-> +
-> +echo "Verifying the data"
-> +echo
-> +
-> +$QEMU_IO "$OVERLAY" -c "read -P 0x00  0 1M" | _filter_qemu_io
-> +$QEMU_IO "$OVERLAY" -c "read -P 0xff 1M 2M" | _filter_qemu_io
-> +$QEMU_IO "$OVERLAY" -c "read -P 0x00 3M 1M" | _filter_qemu_io
-> +
-> +$QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
-> +
->   echo
->   
->   # success, all done
-> diff --git a/tests/qemu-iotests/024.out b/tests/qemu-iotests/024.out
-> index 3d1e31927a..1b7522ba71 100644
-> --- a/tests/qemu-iotests/024.out
-> +++ b/tests/qemu-iotests/024.out
-> @@ -243,4 +243,30 @@ Offset          Length          File
->   0               0x20000         TEST_DIR/subdir/t.IMGFMT
->   0x40000         0x20000         TEST_DIR/subdir/t.IMGFMT
->   
-> +=== Test that the region to copy does not exceed 2MB (IO_BUF_SIZE) ===
-> +
-> +Creating backing chain
-> +
-> +Formatting 'TEST_DIR/subdir/t.IMGFMT.base_new', fmt=IMGFMT size=4194304
-> +Formatting 'TEST_DIR/subdir/t.IMGFMT.base_old', fmt=IMGFMT size=4194304 backing_file=TEST_DIR/subdir/t.IMGFMT.base_new backing_fmt=IMGFMT
-> +Formatting 'TEST_DIR/subdir/t.IMGFMT', fmt=IMGFMT size=4194304 backing_file=TEST_DIR/subdir/t.IMGFMT.base_old backing_fmt=IMGFMT
-> +
-> +Writing data to region [1MB, 3MB)
-> +
-> +wrote 2097152/2097152 bytes at offset 1048576
-> +2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +
-> +Rebasing
-> +
-> +Verifying the data
-> +
-> +read 1048576/1048576 bytes at offset 0
-> +1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +read 2097152/2097152 bytes at offset 1048576
-> +2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +read 1048576/1048576 bytes at offset 3145728
-> +1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +Offset          Length          File
-> +0               0x400000        TEST_DIR/subdir/t.IMGFMT
-> +
->   *** done
+diff --git a/block.c b/block.c
+index cf08e64add..26dfc624b6 100644
+--- a/block.c
++++ b/block.c
+@@ -3796,10 +3796,16 @@ bdrv_open_child_common(const char *filename, QDict *options,
+         return NULL;
+     }
+ 
+-    bdrv_graph_wrlock_drained();
++
++    /* We only need this parent's subtree to be drained, not the entire graph.
++     * So we avoid global drain here.
++     */
++    bdrv_drained_begin(parent);
++    bdrv_graph_wrlock();
+     child = bdrv_attach_child(parent, bs, bdref_key, child_class, child_role,
+                               errp);
+     bdrv_graph_wrunlock();
++    bdrv_drained_end(parent);
+ 
+     return child;
+ }
+diff --git a/block/block-backend.c b/block/block-backend.c
+index f8d6ba65c1..d8110cbaff 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -889,7 +889,16 @@ void blk_remove_bs(BlockBackend *blk)
+     root = blk->root;
+     blk->root = NULL;
+ 
+-    bdrv_graph_wrlock_drained();
++    if (blk->dev) {
++        bdrv_graph_wrlock_drained();
++    } else {
++        /* We suppose that blk with an unattached dev is temporary (e.g.
++         * used for probing in bdrv_open_inherit()) and therefore global
++         * drain is unnecessary.  Draining of this blk's subtree is done above
++         * in blk_drain().
++         */
++        bdrv_graph_wrlock();
++    }
+     bdrv_root_unref_child(root);
+     bdrv_graph_wrunlock();
+ }
+-- 
+2.43.5
 
 
