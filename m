@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7843CCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9C4CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ56A-00038y-G6; Wed, 12 Nov 2025 02:16:58 -0500
+	id 1vJ57d-0004Je-5U; Wed, 12 Nov 2025 02:18:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ54D-0001Q1-53
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:14:59 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ573-00043E-HF
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:18:00 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ54B-0005d2-Ic
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:14:56 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4711810948aso2907555e9.2
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:14:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ570-00062G-1q
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:17:52 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47117f92e32so3495495e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:17:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762931694; x=1763536494; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1762931868; x=1763536668; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1Rut/nRnvwL2ZP6wW7ld1iTjQqI//SAAwPnCfO4q95o=;
- b=rYaWxRK9rjUfjyA4PQkqyIEmIfkZURhLSFz+ldTl/SjjnPjS/IqLR/n/E12G1IahUt
- MORARnCw0iFcs9NzTzHJZ8by8Ocpyml70nde4708WRj8lgKecrY+a/FpUIIrcSuj4Qo8
- QnsMYUtviclkDgaI3a4G+D0oL6k0gMZPctOXRqsaCyDp7ghL+EiRJ5PxDSzp4SlaWq5T
- mu/hT4U/ZDhfCKdKrKYNrDROm8c1YV7XXWSPrDMr+ZEpFUhwHuDVNFyWU3Dy135Xlna5
- tTZXiefPYZSqRYOIa411JqqyCP1w4Y4wvkUxQ8gXCT+UGy82ITfR0D8cR5nUeWJEvSpu
- oGTw==
+ bh=TloOU0/vz5LrdO/wwCE7MeVV3UbSMtg5CQYqYg1VoVE=;
+ b=UWStPfY+J54n7FLpp9EvmDMJEzNae/MHoUFirEto59YZjTAhuwDBRpK3p58lZ8fzZ+
+ rY4iS1oxOPCFH9roAw8ACUl+sKbxsA0cpG+wiJKiNW1l104eidnU7kx2FloRZw+Mwg4G
+ 17x4QjiOeKSm5oBaVQSsajSfC+UTib3UAoH6V2HjdS1ZVfwieX8OvoLBL4XoRN3KKjjM
+ f6Il4rDWeIl632uENOsG8vDdGAnSEk+bkU8LDUU7iUL3VivgKKkdv0MyY+JS65KlDRFt
+ j3q0SplKvkXOAv1FPfYeZon5zWgHEp4sOMrSHT9aJbAPuPiFRe+6dbduUc1dQAdxZxMz
+ k3Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762931694; x=1763536494;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1762931868; x=1763536668;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1Rut/nRnvwL2ZP6wW7ld1iTjQqI//SAAwPnCfO4q95o=;
- b=ahnk7ekHUSZ8yHrF32rBsh5xYi40lnUGRpKYWLNSG1VmjE0lV1CZYI0Ml5DXXUddra
- hfcdW1LV9CHakuKwJ2tGU+vy7MTqaOxmaXduP2zMXT1F36KaGPUV2R2L1T3f1U+GIfRi
- Af/hk+MnNCkuFarZgdjvRmJR1qEwNZ7eHVWVFW+UdemwwxN3fca9HSaLzoEG+zBKsYtU
- mxRPCVJwE8SBpBchw5V2xPB34vAA01oolT/VTnM4hv/IaUtMqkXCmmTlV3KOREcdwkW8
- zxQfHIFU32Bd9qfC5cBTWU7sEIf4VIEEJizcZ2RsMxMgjIOn7pLIX4QrWUw8FvEbWOA6
- wM2Q==
+ bh=TloOU0/vz5LrdO/wwCE7MeVV3UbSMtg5CQYqYg1VoVE=;
+ b=NG452AHvD5T1feCY8WjrpwFzJMDloT6J4tH2634mYDc2tkCNb2TuGen6mtu/B4waO4
+ Ne2dllBmYUeXggxj9lWxvFQEu6r0MzqSSRnCMKfOfCnFP7ntyclfDBcfJrTzHnrDcbAi
+ 0fVWUlYMxmVMUbodOjIkQFzw6iaR4xY0z+VagXLplNtHP99vbOWAZgxGqN25jHLua44G
+ k7cT9CeVkMicmAZ/KAm0oGWtmn+VwmUWNQIF+nUm27vw7e7iGjAofRX1wFbO2WunAoI+
+ FaYVKWQCL+tefx5tM+e34b+4gpHrCTlqlv90BPa9eHn/SJG+tiQsMnj/GGls3xF+2OPO
+ JGUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8TUhQ+V87eadA9FutNHPQy+eByYlI7Is+SX7+68DdlFkaS6wVO3q96eEQ1VX4DAgSeVT52Ym6xOi5@nongnu.org
-X-Gm-Message-State: AOJu0YyLJDLbuP9aZuZDyPx10W+lsqG3d5YkBkBHaFWoGtIiSgNpDo8M
- RJbDeeydmsxnhMhcLkFa6G8JMkUrnDTrEbq6+Z2fzL8iRwysHpLZHW2P6qTZfx8K62k=
-X-Gm-Gg: ASbGnct9m1sC5AMd2iyY0YU1CB6j0tzYkaSzkVk6CFhrv4SpbB3AM9Rh15zly5Oxeve
- 17qtw/FMw/+BMTR5bc/MLdYfihSHjQRzVrsEIDQp82zd264Bj4QBCBDL2BV0iG+rM470t1eeoAH
- lul3smDHSiaWs4DskC/hEFTBtxHJsvH/F3f1y68aIwAIoY2o2y5T4eSeJ6f6rCm3AGBN1E92fru
- 5IEIFBrUxYS+oEsZskThFbispRp57qrdqKZmirjqKgRA163KNxrFyQ9MoKQo0aG6+aG2v6FCOjg
- NZ61ah9KrssVMtrS78xthrvPOZl3icfyDJjIzfvCRCJZj+IWTd6/xsxgj/qpf9qWtBkEeHJC4RY
- T+l8JrxCZVqLxOSJNOuw9DRbLMypkzL6Jn+1QiwtYdujh9bPesRcBfjbs+BYj4y46M6d265W4EL
- rt6Ep1dQws3Xml3wcd+rRcNQiOeNVAgfGMLoutYhLxFTAAZotuTTcqBzc1Pgo=
-X-Google-Smtp-Source: AGHT+IEQRIXjklu5kIt7vQNus1CaEu/EoX5LfUlH/1pG1PlGzZ5htAnTHKOCq7SUudiau5AmtRvNBQ==
-X-Received: by 2002:a05:600c:350d:b0:471:989:9d85 with SMTP id
- 5b1f17b1804b1-47787095d77mr17391855e9.19.1762931693967; 
- Tue, 11 Nov 2025 23:14:53 -0800 (PST)
+ AJvYcCXmOcLVOBUK5atEZ8DcWPyDULE4/Mte87tT8aEqr5XfEYvClWqZOPb7e7UfqEFbcTXXaPM1SwlFFQFc@nongnu.org
+X-Gm-Message-State: AOJu0YyGHg5KRc6w4DJhxEpcyQdnX0IPcAFEGXq04b4me3CbTeGw5XBg
+ e2k8Fp7TQpx1L6yvNmnRxFVwHbaC2cFk02pqyIhjCcRGfIOVuXXjO6UNlPcxtxdCZR4=
+X-Gm-Gg: ASbGncvyL9n6IILpIgDns8Qhu63hGyqozJxBIc/ES6yS590544g/KCB7E2v2We+fSw+
+ ArYXimQ1F7sbpQPOXYXl9VgGiAvkTfI8sH2Ixer+rut7kA+cLGt+pl9FZCuPFhdMcGdCdnD+XK4
+ TBtUi1qnvyvrSvvS2W96tr+/N1YpDeK1YCuQdgafi9H0DbRaOg0q99BFcbu9VLwfUGraWFRWN6s
+ vEiI55DguVDcUtBwUkA6VVZrgwB80gb5M0/BhyheVMnFZ7JHzuNMhjm4SrLOHB4cbWrDZAHOfF1
+ M4WvVpUvJrRaL1Wg8dT3iSbhg9DVKoq3WV0gfO3R/QyYYhS1WcZqlxETSHjZzkImcfrjFmqfpy5
+ 8sBLzbuli7TkfDltLVa+7aCEYMD+qLfM3dlq1Cdt4p6l8M6M0bxLV2yNvJizyFol++8wKVlgSnj
+ XWxyagw+wWbxQhaqEFiaS1wkbv+2Dleun+GwQGpuFYzBk1fDuU
+X-Google-Smtp-Source: AGHT+IEmX1rzwNDfMDV0zxHXc8d7k9O7ai6+g6wGt/GNem/uhDsA8iFWRxYSnHUZNuKwscGRTC7dSA==
+X-Received: by 2002:a05:600c:4f54:b0:477:1622:7f78 with SMTP id
+ 5b1f17b1804b1-477870bfd6cmr13829915e9.40.1762931868158; 
+ Tue, 11 Nov 2025 23:17:48 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e953e3sm19272975e9.14.2025.11.11.23.14.53
+ 5b1f17b1804b1-47787e43c2fsm19241675e9.6.2025.11.11.23.17.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 23:14:53 -0800 (PST)
-Message-ID: <11781df4-ef38-4ba4-811e-8da50aa586a9@linaro.org>
-Date: Wed, 12 Nov 2025 08:14:52 +0100
+ Tue, 11 Nov 2025 23:17:47 -0800 (PST)
+Message-ID: <0c9716c9-6037-4abb-bd59-1929d0cc46d4@linaro.org>
+Date: Wed, 12 Nov 2025 08:17:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/tcg/svm: fix comma operator typo
+Subject: Re: [PATCH] hw/sd: Remove unused header includes in ssi-sd.c
 Content-Language: en-US
-To: Nicholas Mosier <nmosier@stanford.edu>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org
-References: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
+To: Bin Meng <bmeng.cn@gmail.com>, QEMU <qemu-devel@nongnu.org>
+References: <20251110104311.1640772-1-bmeng.cn@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
+In-Reply-To: <20251110104311.1640772-1-bmeng.cn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,23 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/25 22:57, Nicholas Mosier wrote:
-> A comma operator inappropriately terminates an expression
-> in svm_helper.c. Replace it with a semicolon.
+On 10/11/25 11:43, Bin Meng wrote:
+> Remove these header files which are not used by ssi-sd.c
 > 
-> Signed-off-by: Nicholas Mosier <nmosier@stanford.edu>
-> ---
-> As an apparent typo, line 742 in target/i386/tcg/system/svm_helper.c
-> ends with a comma operator, rather than a statement-ending semicolon.
-> This doesn't introduce any functionality bugs as the code is currently
-> written, but could easily introduce bugs in the future if a new line
-> of code is added following the comma operator.
+> Signed-off-by: Bin Meng <bmeng.cn@gmail.com>
 > 
-> This patch replaces the comma with a semicolon, as the original author
-> probably intended.
 > ---
->   target/i386/tcg/system/svm_helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+>   hw/sd/ssi-sd.c | 4 ----
+>   1 file changed, 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
