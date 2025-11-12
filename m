@@ -4,93 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF98CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 08:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC776CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 08:31:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ6A6-0006JV-85; Wed, 12 Nov 2025 03:25:06 -0500
+	id 1vJ6FE-0001In-W0; Wed, 12 Nov 2025 03:30:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ69w-0006Gl-Nd
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:25:00 -0500
-Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ69t-0008KG-Gg
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:24:55 -0500
-Received: by mail-wr1-x443.google.com with SMTP id
- ffacd0b85a97d-42b3108f41fso285782f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 00:24:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vJ6FB-0001IG-JB
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:30:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vJ6F7-0000YY-Al
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:30:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762936212;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=ij0r8Oi7E6TAFy4mLa/c9i5fRjCspdyvKwmYgBQpPNhDNfsy5m9GPjKLpUUyC9Bx11HqNE
+ 254MVt+upF2h4mJx1lwXHGFJreZBdo9MIi6V36vuKjtXpGBwWKyxUuS5aXUKLg8UUN3n33
+ R9a5LoCfLkRwNscCqX4DRURBx4PiSTY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-Z975mQnjN_iQliGO87KjdQ-1; Wed, 12 Nov 2025 03:30:10 -0500
+X-MC-Unique: Z975mQnjN_iQliGO87KjdQ-1
+X-Mimecast-MFC-AGG-ID: Z975mQnjN_iQliGO87KjdQ_1762936209
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e47d14dceso2681775e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 00:30:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762935890; x=1763540690; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=k6U11kUQm8sRxz8OTQpA8Y/1j4PrHW/PDkE7RFJB2dg=;
- b=dUoe66Ib6XxOGIhYiFQN3g5TZYZsSAIVvFU1/M2oVbdVkbOqkgz/aHdCi6Mc7SqEiy
- +kpTFS9rVSHhA9Dljvpm21aZyHjtME7jpWf3H2Q4yl7r2JaJRldrl2QEg0OtPoCYZ28w
- Zynhh3MMwpFEN63Ix/YTyipSIJc/jgXiY2Cx2NOddvAkIySpHWlBj1shm0i1CMTId6AV
- vs3aqRrDxH3C1dyrioDGf/RHV8lmy69BhXVQa8GUM5v16CIKQupNqhbmuOBazZ6o8Irt
- eALd2saFDb8UjSS/yeB9PBqOLMXCZLRondibbMI3FUu5AjXM0zK5NfstsVSxcVhp9exz
- 5Bfg==
+ d=redhat.com; s=google; t=1762936209; x=1763541009; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=uAbmOMeufs9Tyu19s2If3vOhq94BFCHB8/hhy71k+MFOJOMnypqppHkV+83FmbqUN2
+ N30jbz7z2cMKMG3Dd8oLbSVuKQWa8dCZPy5Hdzhqz0OeSweJhgGmYhM7Fp2XR0h3oNZF
+ 9bxGaA0cYhKHNrGSi07j2MwPTQ3XBj+yvEr5A2Gunhawby7CQLZFuAy8iGmEeKnAdPu3
+ 32uhg9Bfdv+5oB6wF1B2KI1KbXB11345SlhyngHkEy1UhgBKMGHc+aoY3Tc+iY5vzJRw
+ euOwEyBU8U+uXARqjMk7NPAKQ7KKPufJMdvWx1xpHVO7RRAEGDc/SxzFgPlWbD5aq1E+
+ dsyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762935890; x=1763540690;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=k6U11kUQm8sRxz8OTQpA8Y/1j4PrHW/PDkE7RFJB2dg=;
- b=Eivn6Qyl6aObwo9Bl0EcwWk97P8WSZXjmYmkgC1SSl/gg1cy3pgBZYyw9p9L5ChgQU
- /u/BKACAMp6UJr8WbW8JJUPID+a3iNUtGoD5kEjd+hsk6DXCCJ2qbYoKEAIUsgoWxSfj
- Tdfag1wJI4ZqqP+GUe/Bno3TFe7pQPnXqbtjEE+c0LLJatNu82UEHeb8qqlGtMA3iGgh
- T9LiflNkRfXRdiIV3GFUg9yOrrpNPbcjEw5iWCS/DFahNObgbRexJGu7yceqNkSQV+/4
- mqGrvwNNq9a7GjWCofbDgsFy2xxqhPy5PJCM3En8U59NgS9crGvjVX9zjaFXhJgzMJKb
- QFlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWdzpHKcBGmClQfe3PUW+gSWMMzp035fmbHn7G6QvEdOEYrwxOjIzsDf1QrdhsEky9ZB5+vVrhbzvf5@nongnu.org
-X-Gm-Message-State: AOJu0YzbgU0ZUKcVwl/OhWL+cZ02q6cW3R4BrbD0DwBnVYUouHcWIYqk
- hcShZsDuFomllGtePQPOxstXuUj/v6qgYQYqBKNVFmnvsQsGCX0s8AyqmXrmaNN+zdA=
-X-Gm-Gg: ASbGnctjVuBw1mz4TCb7E5sNVdhBd4eEL4PlLpVO9nxJSltRGi4PpNpYYNj/Uk+DsO8
- /GAo22Bo0ZJy5lthBHXQ+pTKNy/LrdTrvcvySvxZ96eRJW4yU+USbH7T4m3FbQHIQm9kfpsKkbs
- cZmp1Nxl6MAOkZ5nwEKLh9YhK12NGyTZKLyd8V7tjL/Oo6alZvrCXsROJHhl1C+eG5/SaTmQh1q
- SPJ+FEhnW1KZpDOnrYH+EpICcrrHF6e7w/d01thcrcyFdkxzg85ft88MdxOt4Hp1U+3tQkrmAs0
- a0IWnEtvx5j9X4a5AWy4470h2t5/bSa1Z4fKRI/Jd2MvTatdEqR/o4GBzTf/G8LYI9BG/ezGz5p
- OxHoebXycOVtPr183g7SHUkMi30/HQ4wp7Eu5qHw9Gh1+JqVM1cTe8cP/V55RVch92FAu/jd6Z2
- esGbr46JXMS4SpYi5SOm2nsn/yJbbfVw7FmHTOZZE+JPI=
-X-Google-Smtp-Source: AGHT+IHvO304gwk9Pwq6dgu9OdZUKjEe+AOr2E3BSge9KjpFaUBRRy+CmuhzH3NM2EStpEpvzoxJOQ==
-X-Received: by 2002:a05:6000:4308:b0:42b:4185:e590 with SMTP id
- ffacd0b85a97d-42b4bdd5872mr1559314f8f.58.1762935890319; 
- Wed, 12 Nov 2025 00:24:50 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42abe63e131sm32856622f8f.20.2025.11.12.00.24.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Nov 2025 00:24:49 -0800 (PST)
-Message-ID: <29895ba8-0b4c-4bdc-a984-1e5052e426e5@linaro.org>
-Date: Wed, 12 Nov 2025 09:24:48 +0100
+ d=1e100.net; s=20230601; t=1762936209; x=1763541009;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=OWMNdFaKIYrKfnHLMNZs4fmWJz0C1b7Zu35jEsWp5G44ctXU90nOzJC8UZalT2XBue
+ QCqK0gdhRQcOVC4xEIPJ5BmB7AsPSsrTW9K4hNN05pWJcyAQ8k8Whr+pYH7f30Q7eGsa
+ xsTOPGP6ZUjb47Q1rcWfsiZhPi1AEYTK+l1JPqXQcnJGScyyGEelmhExTCiwgmeh88CN
+ R5yk5MjmGFLiT76pOYE0UzQkeFVdOH3bkWFpfH20jvfYiw/iOVS9PVSQSeustLUd556f
+ 6XDUZKc5sVc65+cO5Ac8zhEau0UgVdBLEATxnHGbIXMxaqR5VknfofSxd4INTbZnrMF7
+ s9hg==
+X-Gm-Message-State: AOJu0Yyu5Xib6MJr335/9glMWU+4ZyQUJRDcnArLo1UdiOy09gf/zaU6
+ GAgEcvqBNdy8RXtG9HhltQ9X+P92R/S8D4AXQptJTiSbuUeW8KhQx81vGUQTRt6JFxkNCexDGE4
+ +nwyxysrI18jGfLv3P51pEHu2xaJzdnwtfLRomKWjKK/2buUOo2wYVC8t
+X-Gm-Gg: ASbGncsDWYCUc49sLqORQHZOWQGjQnNsez6plHn6+rECZUoQGCmpCAYzPTbqrNVUGwa
+ 2+Edb668pHQc+QKW3L+AaG3Y/A90TOrpJ3e2W1tMRHniht7MwNT5v3Eg/o9uuFf7NpMCn+iPwH1
+ 02Eqi4ZgVpRoMXqVMhzNvmYjpcUNkHGO+CZ/6pffpAiYSM+05HMuKtnDPPTyoPQ3leydgxnxvW9
+ LZ0Ufx3F82uu+3KtJAadMpVHYHjrQ0TduewZODs4MY8XCm0T9amcAN2sDX8TmRpKxeEiZLozE3u
+ 39vYnQbLzd/ND1wLmWODA6omvJBhIFlsvfC1VolWlS2mC9sF3O8GBRSDHMNb73A6aJHl9O5JEj/
+ 0gsc5DJftxQItb7P38esXiL0HathUXRfiX2qCruEVdoI+zHGDrH4Ld6xsK6E4fw45iNnCbL9oTS
+ UKja5Oeg==
+X-Received: by 2002:a05:600c:c493:b0:475:dd9a:f786 with SMTP id
+ 5b1f17b1804b1-477870be153mr16157685e9.40.1762936209312; 
+ Wed, 12 Nov 2025 00:30:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrPkZeoCx0w6wc2L0ze4J5LK1TOLmB4zvIQ8c5Q7FNViKH1YsR+V8oMsiuQCz2fHDdhmHENg==
+X-Received: by 2002:a05:600c:c493:b0:475:dd9a:f786 with SMTP id
+ 5b1f17b1804b1-477870be153mr16157485e9.40.1762936208969; 
+ Wed, 12 Nov 2025 00:30:08 -0800 (PST)
+Received: from [192.168.10.48] ([176.206.111.214])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47787e51f54sm23548525e9.8.2025.11.12.00.30.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Nov 2025 00:30:08 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Nicholas Mosier <nmosier@stanford.edu>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] i386/tcg/svm: fix comma operator typo
+Date: Wed, 12 Nov 2025 09:30:06 +0100
+Message-ID: <20251112083006.277792-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
+References: 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 0/8] Accelerators & CPU patches for 2025-11-02
-Content-Language: en-US
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20251102181406.51160-1-philmd@linaro.org>
- <6aabcdbb-acdd-4b3a-8652-b9c1cf3ce435@linaro.org>
- <4e836608-dc06-41ea-8be0-eb34232b8b60@linaro.org>
- <041080b6-28b7-4a3e-868a-a25459470e3d@yandex-team.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <041080b6-28b7-4a3e-868a-a25459470e3d@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::443;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,51 +122,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/25 10:54, Vladimir Sementsov-Ogievskiy wrote:
-> On 03.11.25 16:19, Philippe Mathieu-Daudé wrote:
->> On 3/11/25 10:20, Richard Henderson wrote:
->>> On 11/2/25 19:14, Philippe Mathieu-Daudé wrote:
->>>> Vladimir Sementsov-Ogievskiy (2):
->>>>    util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
->>>>    tests/unit: add unit test for qemu_hexdump()
->>>
->>> This doesn't build:
->>>
->>> https://gitlab.com/qemu-project/qemu/-/jobs/11947161300
->>> https://gitlab.com/qemu-project/qemu/-/jobs/11947161195
->>>
->>> and 10 other variations.
->>
->> Nice. Apologies for missing that.
-> 
-> Oops, my fault.
-> 
->>
->> Vladimir, please repost (only) the test:
->> https://lore.kernel.org/qemu-devel/20251031211518.38503-9- 
->> philmd@linaro.org/
-> 
-> 
-> Hmmm. But how to correctly fix it?
-> 
-> As I understand, the problem is that
-> 
->    util_ss.add(files('hexdump.c'))
-> 
-> comes inside
-> 
->    if have_block
-> 
-> block, so it miss targets without block subsystem?
+Queued, thanks.
 
-Likely: we can build QEMU user emulation without system / block.
+Paolo
 
-> Would it be more correct, to just move `util_ss.add(files('hexdump.c'))`
-> out of the block, so it compile always, like many other "utils"?
-> Actually, qemu_hexdump() itself is unrelated to block..
-I concur, this should be the correct fix.
-
-Thanks,
-
-Phil.
 
