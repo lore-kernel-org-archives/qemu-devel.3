@@ -4,100 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B9FCD4853
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 22:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ADAACD4853
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 22:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJIz7-0000ZY-7N; Wed, 12 Nov 2025 17:06:37 -0500
+	id 1vJJ0s-0002Aj-4f; Wed, 12 Nov 2025 17:08:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vJIfn-0006Dk-Ux
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 16:46:51 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vJIfk-0001pE-6F
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 16:46:38 -0500
-Received: by mail-ed1-f48.google.com with SMTP id
- 4fb4d7f45d1cf-6417313bddaso214406a12.3
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 13:46:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJIoi-0005Lh-Ua
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 16:55:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJIof-0003I2-Ij
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 16:55:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762984547;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=j3ZUMuwTNX7Dqo1vtiBXmt14e+7wCBUvIkZ0++wW0DM=;
+ b=LMbl2pKndTHrMJ7qxGazJWMN2QrmDeBUdEOApXYBqmarojOfCqG8u9hRskOGgeMGX+NTkw
+ UK556eeqEQOtMjwHf5Vf+OnS+FEApkzoNGzLXXbGbIMfQDQGDf/ZWVQ66Jlv/pp9uiH+1R
+ 1PIIG19U+LSZ+674tY1qdVGYdBQxEB0=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-HaAnKoHOPmqksu-8wbJlMg-1; Wed, 12 Nov 2025 16:55:46 -0500
+X-MC-Unique: HaAnKoHOPmqksu-8wbJlMg-1
+X-Mimecast-MFC-AGG-ID: HaAnKoHOPmqksu-8wbJlMg_1762984546
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b17194d321so43932385a.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 13:55:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762983994; x=1763588794; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+K0CQ5cTVI5rouzPoAFMVICrxC8BrBaLBaJXESjPzuk=;
- b=RzTZazDriQ8XPySMA5HQjTJahIQXCgD5epV90ONlZSA9RGcDu32vi9PfjdFgCRUiRi
- ybCCGfUXVg/j4hVd3fB16bg68JBKO07VKc2tBL/IsFJv4/Hx/TMoZlnLYJqMxskwpdmK
- yYu0tAGMK2WF3Kl2qvVSrDPXy74XlmlTqDglAV7fQ/rV5erLPrzE9x3w6ZrVAWBt+Cln
- uEo+icRcIo98+THArr+VQFff+HW0/NqTPj1c0Wa4E5H2y8+SZZ2ewHDLXcabh+A6IPlv
- V0PWd4ESdY2w8zcXCf/231RfZtW7LVyBAq2OteKxknuqLyuYnmt7eq3znA9QgV7Y1PyY
- hydw==
+ d=redhat.com; s=google; t=1762984546; x=1763589346; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=j3ZUMuwTNX7Dqo1vtiBXmt14e+7wCBUvIkZ0++wW0DM=;
+ b=cxYJU1lDNRArFdDGjbcfEXLcP7XK+JUwv+TCDPfcY3ITPUoyGfod1yNYWQd6BZd/xj
+ A1P0IPopwixzIpQtCe8RyiNKLHNxyc4VRZDxuNUOR/aay9r9BWvrrz/EubBak2PfP8oI
+ jhLJPCn8xBVb4YCskdavQTe4rmhJzTTXMp1QCTQjku7NPYDHgVvSZ1dagmULFxPtAjrm
+ A7a0JX+fIrvTNmmU747aaC8tInQT3qjgYX8QB7M797NZ77GphfryTpQqWeJljJoKjQnm
+ AkwWrikV26ZSVS27eeg872a0JA6OZZWFsAvZDhGIkC5aP9Bhav3OxYEv/xcwieoyYy9x
+ Yp5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762983994; x=1763588794;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+K0CQ5cTVI5rouzPoAFMVICrxC8BrBaLBaJXESjPzuk=;
- b=o73SM9lIg8Sek3Jk2iPXmM+Bf4J5xpo6Rd25eFa71zWRgzuM9G9JGKo58Wr8Le2kDV
- waMzXuzSf0WWECIrkdEWeOeZOEwKR2Ozm8cMcmx8gCs199kgbsP+i68a/KFMmQ99bzy5
- hOfnst6cOtnpb9O/bHBSSFbVHhmhL8ypp6ehaZ5NBqn4kxQueap7ZuEH25Lg2rtXyNGb
- vE6U54k8mHeakl52erem/SiMTYA95iLvYLfUeAAiO5gwKoE36XIRnByMI8QjJgqw1Mzx
- +bQkQvEqMXIJXPXTP+10+8vdHBfDkCGfexst3e7fhFUXx/QHFggROsy0VDshz2AeE4T6
- AK0w==
+ d=1e100.net; s=20230601; t=1762984546; x=1763589346;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j3ZUMuwTNX7Dqo1vtiBXmt14e+7wCBUvIkZ0++wW0DM=;
+ b=kNfqmBsNil7Wo9Wv1BfZB/id6I0YlWGfmzPZPm5C9EVEb8/lSo0i8JbIqauzweJM2B
+ 3DQh8Zo4ZmOnHUM40xHkz1b9uXT9aeoQWYGH++DMwAtl1chIZpK2cCAD7Igl9FpvcY7n
+ 1lDNP0/ml98AI5nvsvWhAIsynbIdaMO9dUk5xuS/4CRwfMiuRjG0nYxp7jDzH0qqLZeQ
+ hoc7jSFWNghyYsVxQVcy+1rhiP6VmIoHFh8DHpWS6JNdrRPLtC4Qnr6fLRd410pG/kG9
+ C2i+xm54G2T7AMqKc3NdLauwSJN1B3OFTYwdNqb4/h6FruboUmIRcdIiplo2b55fgwzG
+ Kyog==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqKM0+FqtHXchfK16qRVTG0Jzz8hjWTyf8fBNTcjeIfMnlgxSJz1kGEKSAePRmiD1i6kQjKy0FSiqh@nongnu.org
-X-Gm-Message-State: AOJu0Yz1XRzzVjbNULU3vpTf2kAW8eps6ygOd4IM/il96pLHIrEGkbSx
- ij51nS5XpyX2mmAzaHHqXInyIEmb3eRIlFgX976VwIziMq4ReWuXjrWlfw7J1Q==
-X-Gm-Gg: ASbGncsvRu0svlVlN6G2fDm4YK5GULLS5ya4XPUTFr1ia0Igs1j91Oye/oF8EMJs1+v
- Yf2Ph55VUBiHLan+WHh975za9ZkB8Of+nshRYOY79P6k6r6KTaF6oJJ8yKdQTMsavcrWRq7Uo9F
- eWNcSfVkpI1v8wOFk1zXbsx3r6PSLoAdYqUWXT/s1JRocF7cXeyh4S/qqXlchUg68f2aIWrIFu2
- 2beJGTQ4JxieJSa3dJEXJ7ou333TSiw9EBBvQKZNdPNSM2LMqLhqQ4xi3mUyc7LmmnyEd8ldpaw
- US+IHK4YcTJ3AxsUq1butLmkWhXzn4004j00GrmU2Dy/z+8zl4agplBP+RdDTfMMz4eodm4JEWS
- 9qvoELdHbRHigbXRnFO1iKwgsG76GI95XrgIaeFOGM56fO20FJlFU5mf7I498/DA+zmE6J992wW
- df/iQOndHxaS/6H9ZPq6pD7MCg9A5Z7zcrg6mPx3j/tL82KJ1jhY25OQw7rvSCtW0Qw0QOL7orN
- 3opl06lj8O1kEwaLgLTCOQs
-X-Google-Smtp-Source: AGHT+IFX13QHzGDwFuL5P2yjVScSF4iyfQIMkp2bMrNYGXpgOLoSpOIiwG63Jdn2/C5nBmmYUEvs+w==
-X-Received: by 2002:a05:6402:27c8:b0:637:e2b8:605b with SMTP id
- 4fb4d7f45d1cf-6431a39740dmr4143417a12.5.1762983993908; 
- Wed, 12 Nov 2025 13:46:33 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2416-f400-bdbc-21c7-75fc-dd84.310.pool.telefonica.de.
- [2a02:3100:2416:f400:bdbc:21c7:75fc:dd84])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-64169852018sm10629631a12.16.2025.11.12.13.46.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Nov 2025 13:46:32 -0800 (PST)
-Date: Wed, 12 Nov 2025 21:46:30 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-Subject: =?US-ASCII?Q?RE=3A_=5BEXT=5D_Re=3A_=5BPATCH_13/13=5D_hw/arm/fsl-imx8mm=3A?=
- =?US-ASCII?Q?_Adding_functional_testing_of_iMX8MM_emulation?=
-In-Reply-To: <AM9PR04MB8487096A518874924AC17DEB87CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-References: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
- <20251110112257.184578-14-gaurav.sharma_7@nxp.com>
- <61242433-9D75-47F8-BC44-FD35748F055C@gmail.com>
- <AM9PR04MB8487682307D0672DA3F5345B87CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
- <AM9PR04MB84874E537D542ED6CD0216F387CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
- <AM9PR04MB8487096A518874924AC17DEB87CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-Message-ID: <D361607E-6F67-4FEC-BC68-A71BB1823B9C@gmail.com>
+ AJvYcCUnbGbTs1F9HrWR6V7HTuGkOSVbgJkvaFt4X9aIbg4PFDQQXMfXz7xhWbICfix8HIa423P4sJGLz8y3@nongnu.org
+X-Gm-Message-State: AOJu0Yx7anfqoN/hCeU0KhdGGqMShgSbQ48bJCDppVbhQA97qsUHv1NI
+ 8hbPx11tS23iXY3FEK2JxF9yqGyY+YVoD4N6wg+VbUBBXmZuumC8E9hunoY++pEXPvS937S0rCl
+ lcOQ2khrFpHodap34oECGUKqFAFL9QvACxgUf3RGZtnbhsDcWOF/OHbg3
+X-Gm-Gg: ASbGncv7Kvk7lGCgGomPHRgxwtH5yvJBRFvOG+8H8sSJ3I4hmS0uGCDFcEt6I/N7w+P
+ lR5xLrufzZhAZz04PUHvpLcKOt6WN5jiX5szPrqct1xuf4mNn7L/ki4sfKt7ylOs1AZcce7+DQ/
+ UY1peKHb4LYYtfjyYkmJDSb30yM0l0H3LvcFGGj31yEx7nURJqWxLUOjJFaNVnL4NMxZccN5wCb
+ 1UqJJ5wHsqQSQCPtDmC7kzXDNgdOv4tVWxVtOMZh9FyGaH/ur/j1J2X9rNCA8t2URBeNRPWUVVM
+ njpayYMYOJ3i6ggVULeWKPhr88dojR8IQFvEvsNemM1aQkAUPI8YHGwR2LSR9FibnHo=
+X-Received: by 2002:a05:620a:4591:b0:8b2:9aba:e887 with SMTP id
+ af79cd13be357-8b29b77aa53mr598624285a.24.1762984545438; 
+ Wed, 12 Nov 2025 13:55:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGtRxuUCrj1XyqtvgMlfQpMU53WACUfF3wAjXfiDXs5mmnbLk+6xaqh1HSCMuVilJl3hcRVhw==
+X-Received: by 2002:a05:620a:4591:b0:8b2:9aba:e887 with SMTP id
+ af79cd13be357-8b29b77aa53mr598621085a.24.1762984544888; 
+ Wed, 12 Nov 2025 13:55:44 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b2aee9e4c8sm5686485a.12.2025.11.12.13.55.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Nov 2025 13:55:44 -0800 (PST)
+Date: Wed, 12 Nov 2025 16:55:42 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, mst@redhat.com,
+ qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com,
+ thuth@redhat.com, berrange@redhat.com
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+Message-ID: <aRUCXvHkpfZgZCR0@x1.local>
+References: <20251107020149.3223-1-jasowang@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.208.48; envelope-from=shentey@gmail.com;
- helo=mail-ed1-f48.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251107020149.3223-1-jasowang@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,240 +119,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
+> We used to clear features silently in virtio_net_get_features() even
+> if it is required. This complicates the live migration compatibility
+> as the management layer may think the feature is enabled but in fact
+> not.
+> 
+> Let's add a strict feature check to make sure if there's a mismatch
+> between the required feature and peer, fail the get_features()
+> immediately instead of waiting until the migration to fail. This
+> offload the migration compatibility completely to the management
+> layer.
+> 
+> Signed-off-by: Jason Wang <jasowang@redhat.com>
 
+Jason, thanks for help looking into the problem!
 
-Am 12=2E November 2025 11:02:13 UTC schrieb Gaurav Sharma <gaurav=2Esharma=
-_7@nxp=2Ecom>:
->@'Bernhard Beschow' looks like I was referring to the hex dump of a diffe=
-rent Debian disk image=2E I have got the offset for iMX8MM now=2E I have te=
-sted it as well=2E The console looks good=2E Now the only question remains:=
-- shall we continue using offset based method to extract dtb or download it=
- from the cloud instead?
+Am I right that after this patch applied, whenever a new QEMU boots with
+the new machine types (e.g. having USO* by default ON), will fail to boot
+on an old kernel that doesn't support USO*, but ask the users to turn off
+USO* features explicitly in the virtio-net devices?
 
-Nice! I'd slightly prefer extracring the DTB from the image for consistenc=
-y and to have only one URL that could break in the future=2E Does this work=
- for you?
+Thanks,
 
->
->-----Original Message-----
->From: Gaurav Sharma
->Sent: 12 November 2025 12:35
->To: 'Bernhard Beschow' <shentey@gmail=2Ecom>; 'qemu-devel@nongnu=2Eorg' <=
-qemu-devel@nongnu=2Eorg>
->Cc: 'pbonzini@redhat=2Ecom' <pbonzini@redhat=2Ecom>; 'peter=2Emaydell@lin=
-aro=2Eorg' <peter=2Emaydell@linaro=2Eorg>
->Subject: RE: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional=
- testing of iMX8MM emulation
->
->Sorry The correct xxd dump for dtb offset 0x64F51000:- xxd -s 0x64F51000 =
--l 4 disk=2Eraw
->64f51000: e103 16aa                                =2E=2E=2E=2E
->
->
->-----Original Message-----
->From: Gaurav Sharma
->Sent: 12 November 2025 12:28
->To: 'Bernhard Beschow' <shentey@gmail=2Ecom>; qemu-devel@nongnu=2Eorg
->Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
->Subject: RE: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional=
- testing of iMX8MM emulation
->
->Thank you for reviewing Bernhard=2E Yes, iMX8MM is very close to iMX8MP t=
-hat's why I chose to stick to that structure=2E
->
->" Looks like these lists are sorted alphabetically=2E Shall we preserve t=
-hat?"
->
->-- yes "tests_aarch64_system_thorough" should be sorted alphabetically pr=
-eserving the original order - - will modify it in v2 patch
->
->"This DTB offset is the one for the imx8mp-evk, and in fact the console l=
-og confirms it=2E Both machines seem to be so similar that the test passes =
-anyway"
->
->-- yes, I just found out in the console log=2E The test was giving a fals=
-e positive=2E Thank you for the heads up!  I have now modified it to fetch =
-the dtb from the Debian stable repository=2E Verified it's working correctl=
-y via console log
->
->What you need is the offset in the "disk=2Eraw" image that gets extracted=
- from above file=2E Open "disk=2Eraw" in a hex editor and search for "imx8m=
-m-evk", then determine the offset of the preceeding "d00df00d" DTB magic=2E=
- That is your offset=2E
->
->-- do you mean the DTB magic "d00dfeed" instead of "d00df00d"? Also, whil=
-e I was analysing the DTB offset of the mainlined imx8mp functional testing=
- 'disk=2Eraw' which has debian-12-generic-arm64-20231210-1590=2E The script=
- mentions the DTB_OFFSET at 0x64F51000=2E Dumping this offset using xxd[als=
-o verified it via hex editor]:- # xxd -s 0x51000000 -l 4 disk=2Eraw
->51000000: 6cff 0060
->It doesn't mention the DTB magic number at this offset=2E Please let me k=
-now if I am missing anything here =2E
->Can we choose not to rely on the hardcoded offset and instead download th=
-e dtb from the Debian stable repository itself? This way the same functiona=
-l test can be used easily for the future imx board porting as well=2E
->Looking forward to your guidance=2E
->
->
->
->-----Original Message-----
->From: Bernhard Beschow <shentey@gmail=2Ecom>
->Sent: 12 November 2025 04:51
->To: qemu-devel@nongnu=2Eorg; Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
->Subject: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional tes=
-ting of iMX8MM emulation
->
->[You don't often get email from shentey@gmail=2Ecom=2E Learn why this is =
-important at https://aka=2Ems/LearnAboutSenderIdentification ]
->
->Caution: This is an external email=2E Please take care when clicking link=
-s or opening attachments=2E When in doubt, report the message using the 'Re=
-port this email' button
->
->
->Am 10=2E November 2025 11:22:57 UTC schrieb Gaurav Sharma <gaurav=2Esharm=
-a_7@nxp=2Ecom>:
->>Added script that would validate the iMX8MM emulation by checking the
->>linux console log=2E If it succeeds, it will return:-
->>
->>ok 1 test_imx8mm_evk=2EImx8mmEvkMachine=2Etest_aarch64_imx8mm_evk_usdhc
->>
->>Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->
->>Hi Gaurav!
->
->>Nice to see another imx8 machine being contributed! I'm impressed how cl=
-ose you stick to the imx8mp, both in terms of structuring this series as we=
-ll as the code=2E
->
->>I've built your series and ran the functional test=2E Comments below=2E
->
->
->
->
->--
->
->>---
->> tests/functional/aarch64/meson=2Ebuild        |  2 +
->> tests/functional/aarch64/test_imx8mm_evk=2Epy | 67 ++++++++++++++++++++=
-+
->> 2 files changed, 69 insertions(+)
->> create mode 100755 tests/functional/aarch64/test_imx8mm_evk=2Epy
->>
->>diff --git a/tests/functional/aarch64/meson=2Ebuild
->>b/tests/functional/aarch64/meson=2Ebuild
->>index 5ad52f93e1=2E=2E31ecedbf6f 100644
->>--- a/tests/functional/aarch64/meson=2Ebuild
->>+++ b/tests/functional/aarch64/meson=2Ebuild
->>@@ -5,6 +5,7 @@ test_aarch64_timeouts =3D {
->>   'aspeed_ast2700fc' : 600,
->>   'device_passthrough' : 720,
->>   'imx8mp_evk' : 240,
->>+  'imx8mm_evk' : 240,
->>   'raspi4' : 480,
->>   'reverse_debug' : 180,
->>   'rme_virt' : 1200,
->>@@ -28,6 +29,7 @@ tests_aarch64_system_thorough =3D [
->>   'device_passthrough',
->>   'hotplug_pci',
->>   'imx8mp_evk',
->>+  'imx8mm_evk',
->
->Looks like these lists are sorted alphabetically=2E Shall we preserve tha=
-t?
->
->>   'kvm',
->>   'multiprocess',
->>   'raspi3',
->>diff --git a/tests/functional/aarch64/test_imx8mm_evk=2Epy
->>b/tests/functional/aarch64/test_imx8mm_evk=2Epy
->>new file mode 100755
->>index 0000000000=2E=2Ed5eb43afc6
->>--- /dev/null
->>+++ b/tests/functional/aarch64/test_imx8mm_evk=2Epy
->>@@ -0,0 +1,67 @@
->>+#!/usr/bin/env python3
->>+#
->>+# Functional test that boots a Linux kernel and checks the console # #
->>+SPDX-License-Identifier: GPL-2=2E0-or-later
->>+
->>+from qemu_test import LinuxKernelTest, Asset
->>+
->>+class Imx8mmEvkMachine(LinuxKernelTest):
->>+
->>+    ASSET_IMAGE =3D Asset(
->>+        ('https://cloud=2Edebian=2Eorg/images/cloud/bookworm/20231210-1=
-590/'
->>+         'debian-12-generic-arm64-20231210-1590=2Etar=2Exz'),
->>+
->>+ '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
->>+
->>+    KERNEL_OFFSET =3D 0x51000000
->>+    KERNEL_SIZE =3D 32622528
->>+    INITRD_OFFSET =3D 0x76000000
->>+    INITRD_SIZE =3D 30987766
->>+    DTB_OFFSET =3D 0x64F51000
->
->This DTB offset is the one for the imx8mp-evk, and in fact the console lo=
-g confirms it=2E Both machines seem to be so similar that the test passes a=
-nyway=2E
->
->What you need is the offset in the "disk=2Eraw" image that gets extracted=
- from above file=2E Open "disk=2Eraw" in a hex editor and search for "imx8m=
-m-evk", then determine the offset of the preceeding "d00df00d" DTB magic=2E=
- That is your offset=2E
->
->Best regards,
->Bernhard
->
->>+    DTB_SIZE =3D 45 * 1024
->>+
->>+    def extract(self, in_path, out_path, offset, size):
->>+        try:
->>+            with open(in_path, "rb") as source:
->>+                source=2Eseek(offset)
->>+                data =3D source=2Eread(size)
->>+            with open(out_path, "wb") as target:
->>+                target=2Ewrite(data)
->>+        except (IOError, ValueError) as e:
->>+            self=2Elog=2Eerror(f"Failed to extract {out_path}: {e}")
->>+            raise
->>+
->>+    def setUp(self):
->>+        super()=2EsetUp()
->>+
->>+        self=2Eimage_path =3D self=2Escratch_file("disk=2Eraw")
->>+        self=2Ekernel_path =3D self=2Escratch_file("linux")
->>+        self=2Einitrd_path =3D self=2Escratch_file("initrd=2Ezstd")
->>+        self=2Edtb_path =3D self=2Escratch_file("imx8mm-evk=2Edtb")
->>+
->>+        self=2Earchive_extract(self=2EASSET_IMAGE)
->>+        self=2Eextract(self=2Eimage_path, self=2Ekernel_path,
->>+                     self=2EKERNEL_OFFSET, self=2EKERNEL_SIZE)
->>+        self=2Eextract(self=2Eimage_path, self=2Einitrd_path,
->>+                     self=2EINITRD_OFFSET, self=2EINITRD_SIZE)
->>+        self=2Eextract(self=2Eimage_path, self=2Edtb_path,
->>+                     self=2EDTB_OFFSET, self=2EDTB_SIZE)
->>+
->>+    def test_aarch64_imx8mm_evk_usdhc(self):
->>+        self=2Erequire_accelerator("tcg")
->>+        self=2Eset_machine('imx8mm-evk')
->>+        self=2Evm=2Eset_console(console_index=3D1)
->>+        self=2Evm=2Eadd_args('-m', '2G',
->>+                         '-smp', '4',
->>+                         '-kernel', self=2Ekernel_path,
->>+                         '-initrd', self=2Einitrd_path,
->>+                         '-dtb', self=2Edtb_path,
->>+                         '-append', 'root=3D/dev/mmcblk2p1',
->>+                         '-drive', f'file=3D{self=2Eimage_path},if=3Dsd=
-,bus=3D2,'
->>+
->>+ 'format=3Draw,id=3Dmmcblk2,snapshot=3Don')
->>+
->>+        self=2Evm=2Elaunch()
->>+        self=2Ewait_for_console_pattern('Welcome to ')
->>+
->>+if __name__ =3D=3D '__main__':
->>+    LinuxKernelTest=2Emain()
+> ---
+>  hw/core/machine.c              |   1 +
+>  hw/net/virtio-net.c            | 153 +++++++++++++++++++++++++--------
+>  include/hw/virtio/virtio-net.h |   1 +
+>  3 files changed, 119 insertions(+), 36 deletions(-)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 681adbb7ac..a9e43c4990 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -40,6 +40,7 @@
+>  
+>  GlobalProperty hw_compat_10_1[] = {
+>      { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+> +    { TYPE_VIRTIO_NET, "strict-peer-feature-check", "false"},
+>  };
+>  const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
+>  
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 33116712eb..3acc5ed4a6 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3090,53 +3090,120 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>      virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
+>  
+>      if (!peer_has_vnet_hdr(n)) {
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
+> -
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
+> -
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+> -
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> -        virtio_clear_feature_ex(features,
+> -                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> -        virtio_clear_feature_ex(features,
+> -                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+> +        if (n->strict_peer_feature_check) {
+> +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_CSUM) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO4) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO6) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_ECN) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_ECN) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_HASH_REPORT)) {
+> +                error_setg(errp, "virtio_net: peer doesn't support vnet hdr");
+> +                return;
+> +            }
+> +        } else {
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
+> +
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
+> +
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+> +
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> +            virtio_clear_feature_ex(features,
+> +                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> +            virtio_clear_feature_ex(features,
+> +                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+>  
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> +        }
+>      }
+>  
+>      if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
+> +        if (n->strict_peer_feature_check) {
+> +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UFO) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UFO)) {
+> +                error_setg(errp, "virtio_net: peer doesn't support UFO");
+> +                return;
+> +            }
+> +        } else {
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
+> +        }
+>      }
+>      if (!peer_has_uso(n)) {
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+> +        if (n->strict_peer_feature_check) {
+> +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6)) {
+> +                error_setg(errp, "virtio_net: peer doesn't support USO");
+> +                return;
+> +            }
+> +        } else {
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+> +        }
+>      }
+>  
+>      if (!peer_has_tunnel(n)) {
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> -        virtio_clear_feature_ex(features,
+> -                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> -        virtio_clear_feature_ex(features,
+> -                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+> +        if (n->strict_peer_feature_check) {
+> +            if (virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
+> +                virtio_has_feature_ex(features,
+> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM)) {
+> +                error_setg(errp, "virtio_net: peer doesn't support tunnel GSO");
+> +                return;
+> +            }
+> +        } else {
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> +            virtio_clear_feature_ex(features,
+> +                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> +            virtio_clear_feature_ex(features,
+> +                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+> +        }
+>      }
+>  
+>      if (!get_vhost_net(nc->peer)) {
+>          if (!use_own_hash) {
+> -            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> -            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
+> +            if (n->strict_peer_feature_check) {
+> +                if (virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT) |
+> +                    virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
+> +                    error_setg(errp,
+> +                               "virtio_net: peer doesn't support RSS/HASH_REPORT");
+> +                    return;
+> +                }
+> +            } else {
+> +                virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> +                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
+> +            }
+>          } else if (virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
+>              virtio_net_load_ebpf(n, errp);
+>          }
+> @@ -3145,14 +3212,26 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>      }
+>  
+>      if (!use_peer_hash) {
+> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> +        if (n->strict_peer_feature_check &&
+> +            virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT)) {
+> +            error_setg(errp, "virtio_net: peer doesn't HASH_REPORT");
+> +            return;
+> +        } else {
+> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> +        }
+>  
+>          if (!use_own_hash || !virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
+>              if (!virtio_net_load_ebpf(n, errp)) {
+>                  return;
+>              }
+>  
+> -            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
+> +            if (n->strict_peer_feature_check &&
+> +                virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
+> +                error_setg(errp, "virtio_net: fail to attach eBPF for RSS");
+> +                return;
+> +            } else {
+> +                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
+> +            }
+>          }
+>      }
+>  
+> @@ -4313,6 +4392,8 @@ static const Property virtio_net_properties[] = {
+>                                 host_features_ex,
+>                                 VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
+>                                 false),
+> +    DEFINE_PROP_BOOL("strict-peer-feature-check", VirtIONet,
+> +                     strict_peer_feature_check, true),
+>  };
+>  
+>  static void virtio_net_class_init(ObjectClass *klass, const void *data)
+> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+> index 5b8ab7bda7..abd4ca4bb0 100644
+> --- a/include/hw/virtio/virtio-net.h
+> +++ b/include/hw/virtio/virtio-net.h
+> @@ -222,6 +222,7 @@ struct VirtIONet {
+>      /* primary failover device is hidden*/
+>      bool failover_primary_hidden;
+>      bool failover;
+> +    bool strict_peer_feature_check;
+>      DeviceListener primary_listener;
+>      QDict *primary_opts;
+>      bool primary_opts_from_json;
+> -- 
+> 2.34.1
+> 
+
+-- 
+Peter Xu
+
 
