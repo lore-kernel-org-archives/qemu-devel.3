@@ -4,177 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957ADCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 02:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E448CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 02:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ0Ix-00073q-1n; Tue, 11 Nov 2025 21:09:51 -0500
+	id 1vJ0Jz-00083s-AR; Tue, 11 Nov 2025 21:10:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vJ0Iq-00071F-9g; Tue, 11 Nov 2025 21:09:46 -0500
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vJ0In-0005cO-TZ; Tue, 11 Nov 2025 21:09:44 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kN2zcBLQb2sQ7IShbyqqxcXmjCMR7IEJ4o5JjWPvy63LEG3wLcqSJtluziHvQ9Uvv4zbV838bQdM1Z8px5ewGpsemTwEBfDFOvs+P4ndd89tzLi2nvq5Xe2geixo6IOrrShVQ9oq53GtQhncymn1diiMIfrPRL/gLV8Sl56mHvqZz2idE7M6u4y6mak2U31ONOVKlt9udfkbTy6vqGDR/JjZSXyyo9jRsnLzqSbio8JxqW7xC2m9N6BHKQRcEFeUofyEJm+UQhrzfwG3fFv0IiJuouGzBNAIrCSskrYIc8Wy5luQkzMQJMUIAj2qYHBWCwDyPwtZbEiZG1OAkWaPDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bHgAtzUina025OXWOpwxcwNB67dXne04w2z1cdg+mu4=;
- b=AisqG4/AtwegL6Muo1ykYfHf6vi9O/x2mZYYmyusXSRgxrWduifU3eeNj15YoZdf6UezD8cDh35gjs/CpPXIy4rzdRtqOOUcK4kDcTrc9WzbPUr9BjiOeHUlNMGGwLGaraOrlzuenwp+7TUQANTwc3Dg7pSMzApK4r2oufU3AWf9mjQpZ2VdLUvRZhSjYg5pVMyW+Y2q7B83z0sfcj7V5CNyQWu/yGzRedVqoFq7JeSubWRJNA2c3McoYLyVRu+x04Qh0uSJ5NX1J3d5qIvFw2cMj0cYgbvF0vtgXYDH7+lim+BRrFbkI+A7895RmTP+0DgDakz7E6lsaWNlytinRA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bHgAtzUina025OXWOpwxcwNB67dXne04w2z1cdg+mu4=;
- b=VoWiKxj7nTmEOvOJ/HLY/xro1PL31QKAM2hjd7XdCffRSAQcuJfcWaD02EYixxi478mPBVkIWBECVDcTMil6eTfTNdwHoEVyR0496SOA+lEWFNnTorlSqeB+Ss9wzjFbbHnDPudwQ4IC28ubWfVc61bbQzQJAgw7su/lVQvclWp4/v3pONWaQV2hAIZhJiHaEfJ47C1yxUYQZDcEkM2bZTdV3wfS67Hpr5oCygCwJyJOfE1hgQvulBAu1Y+MTS1eiWyUNsYoTVdsGGHNUG3yKSbeXde4wMljpjzr6aSA/QmTl3hjPBbmhL1QvUmkjtXlPhy8s64hipC2mRIwCRckvw==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by TY0PR06MB5493.apcprd06.prod.outlook.com (2603:1096:400:264::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.16; Wed, 12 Nov
- 2025 02:09:30 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::b420:4392:6eb0:91e5]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::b420:4392:6eb0:91e5%3]) with mapi id 15.20.9298.010; Wed, 12 Nov 2025
- 02:09:29 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, Kevin
- Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: RE: [PATCH v1 12/12] docs/system/arm/aspeed: Update Aspeed MiniBMC
- section to include AST1060 PFR processor
-Thread-Topic: [PATCH v1 12/12] docs/system/arm/aspeed: Update Aspeed MiniBMC
- section to include AST1060 PFR processor
-Thread-Index: AQHcTvpLBZj4uK0SgUK+hE7tg6ko2bTt0uqAgAB/zjA=
-Date: Wed, 12 Nov 2025 02:09:29 +0000
-Message-ID: <TYPPR06MB8206EFFA6DD7D7576A540C5CFCCCA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
- <20251106084925.1253704-13-jamin_lin@aspeedtech.com>
- <1ad39032-6b9a-4736-921e-b383d883ace8@kaod.org>
-In-Reply-To: <1ad39032-6b9a-4736-921e-b383d883ace8@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TY0PR06MB5493:EE_
-x-ms-office365-filtering-correlation-id: eb800c41-6f21-495a-f153-08de21908365
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|921020|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?eUJuVTFTSXBjd1c2d3dYM3I0U3h4aDFmM3QzVlRUSWd1RmZ0SGw1UFc0TG56?=
- =?utf-8?B?N3gwNGtnb0VwK1hYeHp3TU1RVFlKTHZRbmFtTXUzQnhuVUhsZllQdytaVE84?=
- =?utf-8?B?MldGcnRLRVIxMVozOUM1eEpNTHZQcU9PT3Z4WStWZDBYelg0R3FuUU5pcmJ6?=
- =?utf-8?B?UllraGdlWDlFdEQxNW9ZRm1hcWlVTUxNKzFKQ2FIZE0wMDhBT1l5Yy9xRFJk?=
- =?utf-8?B?VXBuRERiWDNQa3M2eUN0bVpZVVBNaFltY2VTZk1mUXVMblNwa3lKUTRCeHdT?=
- =?utf-8?B?Z05tR1RLS3QwRXc3b2tjS2ZMcERFajFSZ094OFg3Mjhscysweml0bXBmdFFo?=
- =?utf-8?B?UEE0ZWxHQ0Y3VDhOV0FBNnRKdEtBbHd4Z1IxN0ZkdDVDazNJUWtKQWpVeGZM?=
- =?utf-8?B?OGRGY1RuQld4R0MxbEVEckJYTGtXTy9NcndWZkVFYU1uaHd0QUx4N1BIcHBi?=
- =?utf-8?B?eGJvYWR1L0FUaW5IUmp5b3pqYzdYVUQrcTlFcDAxeUR6RG1NSHRyQVBlZEZo?=
- =?utf-8?B?aDNYemhwWDFJQ3VMKzM4aFRpa3lpNXpoVTdvVURSNmlYNzRqR1pua1dRbGxn?=
- =?utf-8?B?OU9OVHN5eE5BVkZvVGVzbU85MUthQXEycUhYdXdKQ05KTW42ZnlXaEIxR1pz?=
- =?utf-8?B?RFduM2hGUDNUaTd2TXB3TGtYMDUxcGtKUjloVWlTOCtpQ2Z6MEJsc0RtQ2Rk?=
- =?utf-8?B?cFdtSWh0bFJmR0hFWFRiQ1o3cHRjOTJQSW0vQ0swRHo3aUptR0xjZ3kvMGpx?=
- =?utf-8?B?Vm00VWljUlpKUHF0UVhiWDJjRjJHZVZ5OWZxYmYwMmpEaHVIYXRUcVZTMjZD?=
- =?utf-8?B?U1Q2RlloTmdQUTg0bnZiUFBvczQ2NHI3YWdHQWxpd3hBMW9STThteHN5V2hZ?=
- =?utf-8?B?bDhXVk0vTE95VkRpcXJJTys0aUtDWkUyejUrOU1zZHlKQXpjZGRFU0t3aTk1?=
- =?utf-8?B?MVNWRUc2d24vb2FOVXBpQjJFeVE2aDlpemI3UXZYSWhuY2Y1Y3ZWemwrRUts?=
- =?utf-8?B?d0tlTVMvblhFSjk3SGtMTUtvcmtZV3dGcllMRGpiQkxwNXRsTVJJQjZYMDI4?=
- =?utf-8?B?ZHRVUk1xek9IdzlDQkV4a0JUdnJ5NHdnUVB0d3EweU5TOGpmcVZJaEtFOUlk?=
- =?utf-8?B?TVp5eVNiTWV0a2FEWlVEVGV5clR4UVNrc3J6djYrR2ZRQVBTWmx0RlV5OUEw?=
- =?utf-8?B?SkcyQlAzZGpRdGhONmQ0M0w4bVh6elZ0R3RaZXpKY3VVL0RubWp4YnZEcGFZ?=
- =?utf-8?B?SWRrSDlsTW8wd0Q3dzFnK0pXSmZqN2R1akk3eXdrck9ENThKcU52ZjBrUUR3?=
- =?utf-8?B?RlVmRDVWdlNjdm12d2c3UmtsNVRjMWlySW5IM2ZOQUt4aitzeTlCNmYxK0Jn?=
- =?utf-8?B?QVpDSjNteXhqVFJkQlVOMkZPREZtdkFUWXhyNEd2S3Q4M20xaTYrR25BeHNX?=
- =?utf-8?B?dFY3THVEekg1TysxUW4vQm1yWUdOMHFmc3U1YVZmWVNnVXptS0VCdVJHU1NK?=
- =?utf-8?B?bmxwdGQraXV2bTN3Rm9rTkdHTzNKdEFneFc0VWltUnc3akNhVWJaM0M0dDRq?=
- =?utf-8?B?RDZQY3lkT0hYL2xFS0lOc1l4YitQck11T3NQTWxSUWMwSkZrUnVCM0h4QW9U?=
- =?utf-8?B?R3lvRHhzQXZKem4vSUFOOWdLSDNpeDlTeDBzSUhZUVA3cU5NMGMwZlpib0xX?=
- =?utf-8?B?aUFiZVVaWEdObXJaKzREZ1dNdzltM1JiUmROL1pxOEZaT0RncUgvdXk1eXl6?=
- =?utf-8?B?ZDdRVXJwLys1UEdKM2RwSmgzUkUzRTNKNlF0aEVVWUVRSFA0aWJBU0IxTVAy?=
- =?utf-8?B?TFFRdXZ3ZzdWNlczeVRMYkhKZnJiZWtabDBwdXFLWE5LT2F4VUNTQkRyTVJv?=
- =?utf-8?B?bjFmV0hsNGVRN3h0NCtDc3FOZGEwV1Z1N3NMMkdjNysySjFIeElMVWdldGpB?=
- =?utf-8?B?VHU1TGZYeXZ3SWVuNkd6T2lIM0lGNHVXc0ZkcjVpNFBrRkg4Z1hyUkxBODBN?=
- =?utf-8?B?WkhnUnd5T2RKdmhWWnE3YnJvek5zV2pENG05eWtrdk9sdnJGZkN4THU4TlFn?=
- =?utf-8?B?WXhIK0Q3K1l5c2h5QUJjSVM1ZXBrZWM4MEt4MFcxSjZtODI2eEpBb1dzUTZw?=
- =?utf-8?Q?6viI=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(921020)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Tis2WU1kcDRIZElCcUFxdHJpTDgrOFlvNGZ3ZzZ2SHQ2bjlDTGIyWGtjSnNh?=
- =?utf-8?B?d0owSVJXcFVjVVg0d1lGcDQ1NWJ0aCtxbFY0VkVkdkRLcVRYNUxYWnNaZk9T?=
- =?utf-8?B?NldzRGRFS0ZIR1pTQlhGQ0d6cEp3T2s3cWpxYWhjbndmWkJaNUg5SkdZZDlO?=
- =?utf-8?B?blU2SDZiSmlDRCtZczFQVjBlTVJZbXZlMlAzQXhDL1poekFzQjBoUlBHUHZr?=
- =?utf-8?B?V3J5RmdiOWV4YVFzcjRhV3MxSGlLaFdWeElvRVZXWXB6NkZTVFJPTnVDdmpF?=
- =?utf-8?B?Q2VpRUd6akdWNGFFbmkrbWQzT084ZkZkWEJmTmdKK1phV2tTTEF2RDFZQzlY?=
- =?utf-8?B?dXVVVlo5ak42Rnk5K0F3dkpyd3FrZ0wyMDJ6Rm9ZU1RwR1FQbENNMFNLNG1G?=
- =?utf-8?B?MnpVbzZJdlgwcHBoK3U4QmJJa2kvb2R5UkhUbDMxQlE5MVVHK3loUTZRRFdl?=
- =?utf-8?B?UzVmcHZRSUZTYjJ1VU9pd2M3NWpmT3VoSjZOK2Zpd3EzUEd1TnQ0V2E0RDBD?=
- =?utf-8?B?M29QZ3phRGIvMlA4d0w2WkhZdGJ6MUU4N3U0SmszaHN3L3hiek5xL3ZUVXh0?=
- =?utf-8?B?YTNuaURlbWtFQ0dXL2JBWGEzaFphL2tUZU4vdmRRU1FRVENUOHFLYThMM0tz?=
- =?utf-8?B?ZTh3KzFxcXVmNmJjYXc2QVpIVm5lOGRyY3llL0xwUXlGUG5oMnMvakJvcnJO?=
- =?utf-8?B?YkVUOGNRN3k2emRqNEMyRlFCUTZNbC9JaXFDcEZNRFI0Vm9NVy9mZThNTlpl?=
- =?utf-8?B?aWdUQjNEQTMxOFVQZVZiNUNjOExldlArc3RMK1hUNjNMNVJoVmNWQ29tL3R2?=
- =?utf-8?B?Y3Q2UVNOZ01jc0dpd2hNMkJuTUY3MnExS0hnNUw4OEw1TFNTakt0T0VaVUtV?=
- =?utf-8?B?WjBXNDJDV3BDMkkzSTNBN3hBMkw5SnlpYi9mY1FTeW9OU0RzNm80MU0rSEEy?=
- =?utf-8?B?ZllVb0dMeks4YldJQ0w1bEQza0lpTHgwRmhMZEZzMGhYYVRMYWk2QWtuWGJU?=
- =?utf-8?B?UFhTaDQxRWpCdmlTU1RjS04rSGN4L1VidVc5aXdCL0N2VVdYQk1odWxNRnlS?=
- =?utf-8?B?dHQyd1hYYVFDSkU2NWRqa3d0VFJaa3R5UG5tZlk5dnpaNXRNaXFUNloycGI2?=
- =?utf-8?B?UjV3UUgxbW9iWU5JNVAzZy9tMVF0WFd3N0prL3B6Nlo5Q3Q3MHVaRG1DYjRU?=
- =?utf-8?B?TzJZbFZ5NlVyODBQKytYL2NNVTdtb2lVek85NktUYmVUcTYvdEJnQmoxVmV1?=
- =?utf-8?B?MDQ3ZFdreHRhY053SHJHUTZqVTdLK2hIRFYvdHZ3NU1FdkpGZ3F6WlBZazIx?=
- =?utf-8?B?RjRIOW9ENmprQ0o5TEVsZ0xpWmlqM2t1bGt3cFZnWDBNSE5VU1lwVElBZm5G?=
- =?utf-8?B?U3ExVmN6dGpLdmkvRHBvdWNVbitKWktlNHl0Mjc4QXZHT2pGZ2txKzRiQkM1?=
- =?utf-8?B?RmZGWUc4dEd1aXN4SEZ3eVd2b1BWNDkzSU5RMVBJSDJzakF6c0tlZithNk4w?=
- =?utf-8?B?Z0ZEY2lBRnBWYjdYVHVJcm5WRm5sbmNVa1lxQzFBb3k1UThJVVRVK1JHQW95?=
- =?utf-8?B?ekxRYWx3SEliVFIrMzRJeXduOFh6Y0ZEcnRpdDlRbk5BWDBSbHppeHdrbDZ6?=
- =?utf-8?B?TlJGS1FGR3hZaDc1YWJLK1VEZURoZDhndFhHY21CS05CYjlqWVVFMEVXRHow?=
- =?utf-8?B?YWQ4SHB5dGNrOCt5ZDE4Yjg3N1JFb1o5dktLNG5zajFyOTcxVjBuNGFEV3Bo?=
- =?utf-8?B?aWpMT0xOaXRwc0tkZkhzYUl3RDlnV2VCTURDTVc5QXN6b1k5OXoydDR6L2hD?=
- =?utf-8?B?RGdkbUMxRDQ5KzdMRG1sSlVHMy9yd0tWMTJwSXh6QTQ0RDMxMW1paEdLRG03?=
- =?utf-8?B?MzBmcEZLUVNkOWRtaUJOLzJVeUppdTMzT0J2VUlPK3N5RVIxdHpUV3hvUlhU?=
- =?utf-8?B?Z0JXY3VHeFNRc3A3MGdBaVdTZjNjeWIrdDk3eDhSWFM1SzlNbit2RDRLWnJy?=
- =?utf-8?B?SmQ4eVlJTUZVWjdQdEpwWTRkV1MvVjBiTTI0VzZwM2d2WTlHazBMV3hXaFZG?=
- =?utf-8?B?WXJNbWFudmEyb1NkYy94d3R4NGtxSVR4QUZZbS9vSHA2bkVJSVhoRC9wY3hi?=
- =?utf-8?Q?N70FYGJFh6cIxNUcMdbKWHVjt?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vJ0Jx-00082N-6X
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 21:10:53 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vJ0Ju-0006Oq-0y
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 21:10:52 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b731b176b5eso67414666b.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 18:10:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1762913448; x=1763518248; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kAZDnZ1Ii+N9iedkxl9WRFhwFHY61e+LRhP0ah92aOc=;
+ b=e3E37/R8EK+gGKxeQzMWZCC+yvVG+/H31A4CKgAWm19jpCBoWvGboGqFCLhT56XwXE
+ kA2+DXBslDMN9MLRUdhV3zDAJPw+27pczY+repZmdNFuJ4QnIFeCnRXNdfOaCDxxCSSk
+ 5sZF5W5r0wXuSG101uNGF2fsKrLGNFsNYfqX/UaXqaCnKF1HK7WfsdtrX28H/3dUUWVk
+ JeQMf9GxUwURwfmtFb0++P+2HClU93ruFsaH1NdFM7i0gpY4TI2uHhrqsqTT49Cg0wzl
+ FeT+VWudJyiHRhxKlXutM46P2cC7umH62qGAvkTeRUHTUyYpWfIMVU1IBzOvQKdlqdXq
+ +emg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762913448; x=1763518248;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kAZDnZ1Ii+N9iedkxl9WRFhwFHY61e+LRhP0ah92aOc=;
+ b=KcWB+8pEjKBJlqwlQuGYSW6fZohcNU1ulNdv5sSex2QXw6F/Tv1x5AwdLKJT4Gr4f/
+ Ue2LPrMrUVBmBh/MD6rxZJa56K+T4dBs3YW/dsNv8pmYEWMqDf4y1GQiIaBIO7xbFG3z
+ sAFCuN9+Agoy+rpoJ9nV7wTAWVWXgNyCgcXIx3lVAA1Ue9eWPPLnssLw3+vtirmZtOSU
+ hakgvgcVOLaPHX+AkB2D4X5D5aoT/TxJgB4s0C/8yCm0st8xq7O2kP+YOUzc2OCU5BWK
+ 7Qa+gDsxRT8StoCB4pL+J7FmB4GjKKdXy3MA52w2ng2jjWDYl8yjNkZS4zxyYP7JNRXD
+ N9Zw==
+X-Gm-Message-State: AOJu0Ywq+urw4jsFKGFdBUIPCVSVo0KlcnJaZNNBjNBpQ1pEKwI5erVU
+ y6Rck40a/y83/J0Adn9IkCgFXFjmVPCl/oHDcRcUQfWYALcksUyIsf+GX0+IzRz4UEeMnmcsra9
+ KOR2o51vgO/S8i6n1fT3Ieu+5weT4tzI=
+X-Gm-Gg: ASbGncsI/xhu1wSmuA75O1LDQiOEnV+D2D66iamb6Xu9ubJ+Utwf3xwOeurcqB5byIv
+ 4r7qZvlSrVk069173W28UFZTvS9Irw1OQ5qjF3Kn3raJYWgshQ2qXWG4/ZSYqPwS5yhSfSFB13t
+ Y3jRdf7JveNQwqu3HfFHxDTGWjozYpcON+KL3kpsJQngxt1qtlTaSiqxtQg6qkPZeagA48wAmi3
+ 5UsypBAi3c5zO1a/ybPRI8QHKE2inmBZIyJMvZj578Rr9GoeSAkg/MvA58mZ3SpzNmKivQx26b6
+ LNNgIM8CyASKTds=
+X-Google-Smtp-Source: AGHT+IFlv2AQk6Ov8koHMWz7iS79EHF626S1s7qT9LSCCBZ+EstImbYBVrV6jofyszAarQL5jFHmW36fxJk/0FuQ5gI=
+X-Received: by 2002:a17:907:7285:b0:b72:dce0:d8e7 with SMTP id
+ a640c23a62f3a-b7331973fc7mr114050366b.23.1762913448218; Tue, 11 Nov 2025
+ 18:10:48 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb800c41-6f21-495a-f153-08de21908365
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2025 02:09:29.6376 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8bvRpqGr8jSC5J79iMET7u4bNiQWsl6O+nuIRj0D+//VUmbfcYzFAd/9jJrTDq53a7L4V5auXLj8CAWmzanDUxiy2TAdGY4wS2homMODEGo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5493
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+References: <20251027100938.11822-1-michael@videogpu.com>
+ <20251027100938.11822-6-michael@videogpu.com>
+In-Reply-To: <20251027100938.11822-6-michael@videogpu.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 12 Nov 2025 12:10:21 +1000
+X-Gm-Features: AWmQ_bkbynzhqH9DtfuPS9ZCdd3Zz352gSAvLD2Cxi3Ump8euudLH2KNTbC4-3Q
+Message-ID: <CAKmqyKPADYN85RAb+WJvZXf724pyXWRsH20-vDDdLOWpXX2Ugg@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] hw/riscv: introduce 'neorv32' board, docs, and
+ riscv32 device config
+To: Michael Levit <michael@videogpu.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, philmd@linaro.org, 
+ pbonzini@redhat.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ liwei1518@gmail.com, smishash@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -191,66 +100,526 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYw0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjEgMTIvMTJdIGRvY3Mvc3lzdGVt
-L2FybS9hc3BlZWQ6IFVwZGF0ZSBBc3BlZWQNCj4gTWluaUJNQyBzZWN0aW9uIHRvIGluY2x1ZGUg
-QVNUMTA2MCBQRlIgcHJvY2Vzc29yDQo+IA0KPiBPbiAxMS82LzI1IDA5OjQ5LCBKYW1pbiBMaW4g
-d3JvdGU6DQo+ID4gQWRkZWQgZGV0YWlscyBkZXNjcmliaW5nIEFTVDEwNjAgYXMgYSBQRlIgcHJv
-Y2Vzc29yIGJvYXJkIGFsb25nc2lkZQ0KPiANCj4gUGxlYXNlIGV4cGxhaW4gd2hhdCB0aGUgVExB
-ICdQRlInIG1lYW5zLg0KDQpQRlIgaXMgdGhlIGFiYnJldmlhdGlvbiBmb3IgUGxhdGZvcm0gRmly
-bXdhcmUgUmVzaWxpZW5jZSwgYXMgZGVmaW5lZCBpbiB0aGUgTklTVCBTUCA4MDAtMTkzDQooUGxh
-dGZvcm0gRmlybXdhcmUgUmVzaWxpZW5jeSBHdWlkZWxpbmVzLCBodHRwczovL2NzcmMubmlzdC5n
-b3YvcHVicy9zcC84MDAvMTkzL2ZpbmFsICkNClRoZSBBU1QxMDYwIGltcGxlbWVudHMgdGhlIE5J
-U1QgU1AgODAwLTE5MyBQRlIgZnVuY3Rpb25hbGl0eSBhbmQgZWZmZWN0aXZlbHkgc2VydmVzIGFz
-IHRoZSBQbGF0Zm9ybSBSb290IG9mIFRydXN0Lg0KU28sIEkgd2lsbCB1cGRhdGUgdG8gdXNlICIg
-UGxhdGZvcm0gUm9vdCBvZiBUcnVzdCIgaW5zdGVhZCBvZiBQRlIuDQoNCj4gDQo+ID4gQVNUMTAz
-MCBNaW5pQk1DLCBhbmQgZXh0ZW5kZWQgdGhlIGxpc3Qgb2YgbWlzc2luZyBkZXZpY2VzIHRvIGlu
-Y2x1ZGUNCj4gPiBTTUJ1cyBGaWx0ZXIgYW5kIFFTUEkgTW9uaXRvciBjb250cm9sbGVycy4NCj4g
-Pg0KPiA+IFNpZ25lZC1vZmYtYnk6IEphbWluIExpbiA8amFtaW5fbGluQGFzcGVlZHRlY2guY29t
-Pg0KPiA+IC0tLQ0KPiA+ICAgZG9jcy9zeXN0ZW0vYXJtL2FzcGVlZC5yc3QgfCAyNCArKysrKysr
-KysrKysrKystLS0tLS0tLS0NCj4gPiAgIDEgZmlsZSBjaGFuZ2VkLCAxNSBpbnNlcnRpb25zKCsp
-LCA5IGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2RvY3Mvc3lzdGVtL2FybS9h
-c3BlZWQucnN0IGIvZG9jcy9zeXN0ZW0vYXJtL2FzcGVlZC5yc3QNCj4gPiBpbmRleCBhMGMwNWE2
-ZjczLi5mZmE1ZjRiMzcyIDEwMDY0NA0KPiA+IC0tLSBhL2RvY3Mvc3lzdGVtL2FybS9hc3BlZWQu
-cnN0DQo+ID4gKysrIGIvZG9jcy9zeXN0ZW0vYXJtL2FzcGVlZC5yc3QNCj4gPiBAQCAtNDQ4LDIz
-ICs0NDgsMjUgQEAgVXNlIGBgdGlvYGAgb3IgYW5vdGhlciB0ZXJtaW5hbCBlbXVsYXRvciB0bw0K
-PiBjb25uZWN0IHRvIHRoZSBjb25zb2xlczoNCj4gPiAgICAgICQgdGlvIC9kZXYvcHRzLzU3DQo+
-ID4NCj4gPg0KPiA+IC1Bc3BlZWQgbWluaWJtYyBmYW1pbHkgYm9hcmRzIChgYGFzdDEwMzAtZXZi
-YGApDQo+ID4NCj4gLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PQ0KPiA9PT0NCj4gPiArQXNwZWVkIG1pbmlibWMgYW5kIFBGUiBw
-cm9jZXNzb3IgZmFtaWx5IGJvYXJkcyAoYGBhc3QxMDMwLWV2YmBgLA0KPiA+ICtgYGFzdDEwNjAt
-ZXZiYGApDQo+ID4NCj4gKz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PQ0KPiA9PT09PT0NCj4gPiArPT09PT09PT09PT09DQo+ID4N
-Cj4gPiAtVGhlIFFFTVUgQXNwZWVkIG1hY2hpbmVzIG1vZGVsIG1pbmkgQk1DcyBvZiB2YXJpb3Vz
-IEFzcGVlZA0KPiBldmFsdWF0aW9uDQo+ID4gLWJvYXJkcy4gVGhleSBhcmUgYmFzZWQgb24gZGlm
-ZmVyZW50IHJlbGVhc2VzIG9mIHRoZSAtQXNwZWVkIFNvQyA6IHRoZQ0KPiA+IEFTVDEwMzAgaW50
-ZWdyYXRpbmcgYW4gQVJNIENvcnRleCBNNEYgQ1BVICgyMDBNSHopLg0KPiA+ICtUaGUgUUVNVSBB
-c3BlZWQgbWFjaGluZXMgbW9kZWwgbWluaSBCTUNzIGFuZCBQRlIgcHJvY2Vzc29ycyBvZg0KPiA+
-ICt2YXJpb3VzIEFzcGVlZCBldmFsdWF0aW9uIGJvYXJkcy4gVGhleSBhcmUgYmFzZWQgb24gZGlm
-ZmVyZW50DQo+ID4gK3JlbGVhc2VzIG9mIHRoZSBBc3BlZWQgU29DIDogdGhlIEFTVDEwMzAgKE1p
-bmlCTUMpIGFuZCBBU1QxMDYwIChQRlINCj4gPiArUHJvY2Vzc29yKSwgYm90aCBpbnRlZ3JhdGlu
-ZyBhbiBBUk0gQ29ydGV4IE00RiBDUFUgKDIwME1IeikuDQo+ID4NCj4gPiAgIFRoZSBTb0MgY29t
-ZXMgd2l0aCBTUkFNLCBTUEksIEkyQywgZXRjLg0KPiA+DQo+ID4gLUFTVDEwMzAgU29DIGJhc2Vk
-IG1hY2hpbmVzIDoNCj4gPiArQVNUMTB4MCBTb0MgYmFzZWQgbWFjaGluZXMgOg0KPiA+DQo+ID4g
-LS0gYGBhc3QxMDMwLWV2YmBgICAgICAgICAgIEFzcGVlZCBBU1QxMDMwIEV2YWx1YXRpb24gYm9h
-cmQNCj4gKENvcnRleC1NNEYpDQo+ID4gKy0gYGBhc3QxMDMwLWV2YmBgICAgICAgICAgIEFzcGVl
-ZCBBU1QxMDMwIE1pbmlCTUMgRXZhbHVhdGlvbiBib2FyZA0KPiAoQ29ydGV4LU00RikNCj4gPiAr
-LSBgYGFzdDEwNjAtZXZiYGAJICAgQXNwZWVkIEFTVDEwNjAgUEZSIFByb2Nlc3NvciBFdmFsdWF0
-aW9uIGJvYXJkDQo+IChDb3J0ZXgtTTRGKQ0KPiA+DQo+ID4gICBTdXBwb3J0ZWQgZGV2aWNlcw0K
-PiA+ICAgLS0tLS0tLS0tLS0tLS0tLS0NCj4gPg0KPiA+IC0gKiBTTVAgKGZvciB0aGUgQVNUMTAz
-MCBDb3J0ZXgtTTRGKQ0KPiA+ICsgKiBTTVAgKGZvciB0aGUgQ29ydGV4LU00RikNCj4gPiAgICAq
-IEludGVycnVwdCBDb250cm9sbGVyIChWSUMpDQo+ID4gICAgKiBUaW1lciBDb250cm9sbGVyDQo+
-ID4gICAgKiBJMkMgQ29udHJvbGxlcg0KPiA+IEBAIC00OTIsNiArNDk0LDggQEAgTWlzc2luZyBk
-ZXZpY2VzDQo+ID4gICAgKiBWaXJ0dWFsIFVBUlQNCj4gPiAgICAqIGVTUEkgQ29udHJvbGxlcg0K
-PiA+ICAgICogSTNDIENvbnRyb2xsZXINCj4gPiArICogU01CdXMgRmlsdGVyIENvbnRyb2xsZXIN
-Cj4gPiArICogUVNQSSBNb25pdG9yIENvbnRyb2xsZXINCj4gPg0KPiA+ICAgQm9vdCBvcHRpb25z
-DQo+ID4gICAtLS0tLS0tLS0tLS0NCj4gPiBAQCAtNTAyLDkgKzUwNiwxMSBAQCBBU1BFRUQgR2l0
-SHViIHJlbGVhc2UgcmVwb3NpdG9yeSA6DQo+ID4NCj4gPiAgICAgIGh0dHBzOi8vZ2l0aHViLmNv
-bS9Bc3BlZWRUZWNoLUJNQy96ZXBoeXIvcmVsZWFzZXMNCj4gPg0KPiA+ICsgICBodHRwczovL2dp
-dGh1Yi5jb20vQXNwZWVkVGVjaC1CTUMvYXNwZWVkLXplcGh5ci1wcm9qZWN0L3JlbGVhc2VzDQo+
-ID4gKw0KPiANCj4gU2hvdWxkIHdlIGtlZXAgYSByZWZlcmVuY2UgdG8gYm90aCBVUkxzID8NCj4g
-DQpXaWxsIHJlbW92ZSBpdC4NClRoYW5rcy1KYW1pbg0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiAN
-Cj4gDQo+ID4gICBUbyBib290IGEga2VybmVsIGRpcmVjdGx5IGZyb20gYSBaZXBoeXIgYnVpbGQg
-dHJlZToNCj4gPg0KPiA+ICAgLi4gY29kZS1ibG9jazo6IGJhc2gNCj4gPg0KPiA+ICAgICAkIHFl
-bXUtc3lzdGVtLWFybSAtTSBhc3QxMDMwLWV2YiAtbm9ncmFwaGljIFwNCj4gPiAtICAgICAgICAt
-a2VybmVsIHplcGh5ci5lbGYNCj4gPiArICAgICAgICAta2VybmVsIHplcGh5ci5iaW4NCg0K
+On Mon, Oct 27, 2025 at 8:12=E2=80=AFPM Michael Levit <michael@videogpu.com=
+> wrote:
+>
+> From: Michael <michael@videogpu.com>
+>
+> Introduce the 'neorv32' board wiring IMEM/DMEM/BOOTROM, SYSINFO, UART0, a=
+nd SPI0;
+> add docs/system/riscv/neorv32.rst and riscv32-softmmu device config entry=
+.
+>
+> Signed-off-by: Michael Levit <michael@videogpu.com>
+>
+> diff --git a/configs/devices/riscv32-softmmu/default.mak b/configs/device=
+s/riscv32-softmmu/default.mak
+> index c2cd86ce05..4fdc94ab48 100644
+> --- a/configs/devices/riscv32-softmmu/default.mak
+> +++ b/configs/devices/riscv32-softmmu/default.mak
+> @@ -10,3 +10,4 @@
+>  # CONFIG_SIFIVE_U=3Dn
+>  # CONFIG_RISCV_VIRT=3Dn
+>  # CONFIG_OPENTITAN=3Dn
+> +# CONFIG_NEORV32=3Dn
+>
+> diff --git a/docs/system/riscv/neorv32.rst b/docs/system/riscv/neorv32.rs=
+t
+> new file mode 100644
+> index 0000000000..7f9048a7ad
+> --- /dev/null
+> +++ b/docs/system/riscv/neorv32.rst
+> @@ -0,0 +1,110 @@
+> +
+> +NEORV32 Soft SoC (``neorv32``)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> +
+> +The ``neorv32`` machine models a minimal NEORV32-based SoC sufficient to
+> +exercise the stock NEORV32 bootloader and run example applications from =
+an
+> +emulated SPI NOR flash. It exposes a UART for console I/O and an MTD-bac=
+ked
+> +SPI flash device that can be populated with user binaries.
+> +
+> +Neorv32 full repo:
+> +https://github.com/stnolting/neorv32
+> +
+> +Current QEMU implementation base on commit 7d0ef6b2 in Neorv32 repo.
+> +
+> +Supported devices
+> +-----------------
+> +
+> +The ``neorv32`` machine provides the core peripherals needed by the
+> +bootloader and examples:
+> +
+> +* UART for console (mapped to the QEMU stdio when ``-nographic`` or
+> +  ``-serial stdio`` is used).
+> +* SPI controller connected to an emulated SPI NOR flash (exposed to the
+> +  guest via QEMU's ``if=3Dmtd`` backend).
+> +* Basic timer/CLINT-like facilities required by the example software.
+> +
+> +(Exact register maps and optional peripherals depend on the QEMU version=
+ and
+> +the specific patch series you are using.)
+
+Thanks for the patches!
+
+I think the main focus is running the patches through checkpatch and
+cleaning up the commits a little bit more.
+
+We also want to make sure that the default machine matches some sort
+of default configuration. We can't expect users to be manually editing
+C code just to get this running. Then QEMU properties can be used to
+allow tweaking some of the more common options
+
+> +
+> +
+> +QEMU build configuration:
+> +------------------------
+> +/path/to/qemu/configure \
+> +  --python=3D/usr/local/bin/python3.12 \
+> +  --target-list=3Driscv32-softmmu \
+> +  --enable-fdt \
+> +  --enable-debug \
+> +  --disable-vnc \
+> +  --disable-gtk
+
+You don't need to document how to build QEMU, that's covered elsewhere.
+
+Alistair
+
+> +
+> +Boot options
+> +------------
+> +
+> +Typical usage is to boot the NEORV32 bootloader as the QEMU ``-bios`` im=
+age,
+> +and to provide a raw SPI flash image via an MTD drive. The bootloader wi=
+ll
+> +then jump to the application image placed at the configured flash offset=
+.
+> +
+> +Preparing the SPI flash with a =E2=80=9CHello World=E2=80=9D example
+> +----------------------------------------------------
+> +
+> +1. Create a 64 MiB flash image (filled with zeros)::
+> +
+> +   $ dd if=3D/dev/zero of=3D$HOME/flash_contents.bin bs=3D1 count=3D$((0=
+x04000000))
+> +
+> +2. Place your application binary at the **4 MiB** offset inside the flas=
+h.
+> +   Replace ``/path/to/neorv32_exe.bin`` with the path to your compiled
+> +   example application (e.g., the NEORV32 ``hello_world`` example)::
+> +
+> +   $ dd if=3D/path/to/neorv32_exe.bin of=3D$HOME/flash_contents.bin \
+> +        bs=3D1 seek=3D$((0x00400000)) conv=3Dnotrunc
+> +
+> +Running the =E2=80=9CHello World=E2=80=9D example
+> +---------------------------------
+> +
+> +Run QEMU with the NEORV32 bootloader as ``-bios`` and attach the prepare=
+d
+> +flash image via the MTD interface. Replace the placeholder paths with yo=
+ur
+> +local paths::
+> +
+> +  $ /path/to/qemu-system-riscv32 -nographic -machine neorv32 \
+> +      -bios /path/to/neorv32/bootloader/neorv32_raw_exe.bin \
+> +      -drive file=3D$HOME/flash_contents.bin,if=3Dmtd,format=3Draw
+> +
+> +Notes:
+> +
+> +* ``-nographic`` routes the UART to your terminal (Ctrl-A X to quit when
+> +  using the QEMU monitor hotkeys; or just close the terminal).
+> +* The bootloader starts first and will transfer control to your applicat=
+ion
+> +  located at the 4 MiB offset of the flash image.
+> +* If you prefer, you can use ``-serial stdio`` instead of ``-nographic``=
+.
+> +
+> +Machine-specific options
+> +------------------------
+> +
+> +Unless otherwise noted by the patch series, there are no special board
+> +options beyond the standard QEMU options shown above. Commonly useful
+> +generic options include:
+> +
+> +* ``-s -S`` to open a GDB stub on TCP port 1234 and start paused, so you=
+ can
+> +  debug both QEMU and the guest.
+> +* ``-d guest_errors,unimp`` (or other trace flags) for additional loggin=
+g.
+> +
+> +Example: debugging with GDB::
+> +
+> +  $ /path/to/qemu-system-riscv32 -nographic -machine neorv32 \
+> +      -bios /path/to/neorv32/bootloader/neorv32_raw_exe.bin \
+> +      -drive file=3D$HOME/flash_contents.bin,if=3Dmtd,format=3Draw \
+> +      -s -S
+> +
+> +  # In another shell:
+> +  $ riscv32-unknown-elf-gdb /path/to/neorv32/bootloader/main.elf
+> +  (gdb) target remote :1234
+> +
+> +
+> +Known limitations
+> +-----------------
+> +
+> +This is a functional model intended for software bring-up and testing of
+> +example programs. It may not model all timing details or every optional
+> +peripheral available in a specific NEORV32 SoC configuration.
+> +
+>
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index fc9c35bd98..976acd2a1b 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -128,3 +128,11 @@ config XIANGSHAN_KUNMINGHU
+>      select RISCV_APLIC
+>      select RISCV_IMSIC
+>      select SERIAL_MM
+> +
+> +config NEORV32
+> +    bool
+> +    default y
+> +    depends on RISCV32
+> +    select NEORV32_UART
+> +    select NEORV32_SPI
+> +    select NEORV32_SYSINFO_QEMU
+>
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index 2a8d5b136c..b8788e2035 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -14,5 +14,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files=
+(
+>         'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv=
+-iommu-hpm.c'))
+>  riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-g=
+eneric.c'))
+>  riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangsh=
+an_kmh.c'))
+> +riscv_ss.add(when: 'CONFIG_NEORV32', if_true: files('neorv32.c'))
+>
+>  hw_arch +=3D {'riscv': riscv_ss}
+>
+> diff --git a/hw/riscv/neorv32.c b/hw/riscv/neorv32.c
+> new file mode 100644
+> index 0000000000..87e35a9b0d
+> --- /dev/null
+> +++ b/hw/riscv/neorv32.c
+> @@ -0,0 +1,219 @@
+> +/*
+> + * QEMU RISC-V Board Compatible with Neorv32 IP
+> + *
+> + * Provides a board compatible with the Neorv32 IP:
+> + *
+> + * 0) SYSINFO
+> + * 1) IMEM
+> + * 2) DMEM
+> + * 3) UART
+> + * 4) SPI
+> + *
+> + * Author:
+> + *   Michael Levit <michael@videogpu.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/cutils.h"
+> +#include "qemu/error-report.h"
+> +#include "qapi/error.h"
+> +#include "hw/boards.h"
+> +#include "hw/loader.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/char/serial.h"
+> +#include "hw/misc/unimp.h"
+> +#include "target/riscv/cpu.h"
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "hw/riscv/boot.h"
+> +#include "hw/intc/riscv_aclint.h"
+> +#include "chardev/char.h"
+> +#include "system/system.h"
+> +#include "hw/ssi/ssi.h"    /* For ssi_realize_and_unref() */
+> +
+> +#include "hw/riscv/neorv32.h"
+> +#include "hw/misc/neorv32_sysinfo.h"
+> +#include "hw/char/neorv32_uart.h"
+> +#include "hw/ssi/neorv32_spi.h"
+> +
+> +static const MemMapEntry neorv32_memmap[] =3D {
+> +
+> +    [NEORV32_IMEM]           =3D { NEORV32_IMEM_BASE,               SYSI=
+NFO_IMEM_SIZE},
+> +    [NEORV32_BOOTLOADER_ROM] =3D { NEORV32_BOOTLOADER_BASE_ADDRESS, 0x20=
+00},     /* 8K  ROM for bootloader */
+> +    [NEORV32_DMEM]           =3D { NEORV32_DMEM_BASE,               SYSI=
+NFO_DMEM_SIZE},
+> +    [NEORV32_SYSINFO]        =3D { NEORV32_SYSINFO_BASE,            0x10=
+0},
+> +    [NEORV32_UART0]          =3D { NEORV32_UART0_BASE,              0x10=
+0},
+> +       [NEORV32_SPI0]           =3D { NEORV32_SPI_BASE,                0=
+x100},
+> +};
+> +
+> +static void neorv32_machine_init(MachineState *machine)
+> +{
+> +    MachineClass *mc =3D MACHINE_GET_CLASS(machine);
+> +    const MemMapEntry *memmap =3D neorv32_memmap;
+> +
+> +    Neorv32State *s =3D NEORV32_MACHINE(machine);
+> +    MemoryRegion *sys_mem =3D get_system_memory();
+> +    int i;
+> +    RISCVBootInfo boot_info;
+> +    hwaddr start_addr =3D memmap[NEORV32_BOOTLOADER_ROM].base;
+> +
+> +    if (machine->ram_size !=3D mc->default_ram_size) {
+> +        char *sz =3D size_to_str(mc->default_ram_size);
+> +        error_report("Invalid RAM size, should be %s", sz);
+> +        g_free(sz);
+> +        exit(EXIT_FAILURE);
+> +    }
+> +
+> +    /* Initialize SoC */
+> +    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_RISCV_=
+NEORV32_SOC);
+> +    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+> +
+> +    /* Data Tightly Integrated Memory */
+> +    memory_region_add_subregion(sys_mem,
+> +        memmap[NEORV32_DMEM].base, machine->ram);
+> +
+> +    /* Instruction Memory (IMEM) */
+> +       memory_region_init_ram(&s->soc.imem_region, OBJECT(&s->soc), "ris=
+cv.neorv32.imem",
+> +                                                memmap[NEORV32_IMEM].siz=
+e, &error_fatal);
+> +       memory_region_add_subregion(sys_mem, memmap[NEORV32_IMEM].base, &=
+s->soc.imem_region);
+> +
+> +    /* Mask ROM reset vector */
+> +    uint32_t reset_vec[4];
+> +
+> +    reset_vec[1] =3D 0x204002b7;  /* 0x1004: lui     t0,0x20400 */
+> +    reset_vec[2] =3D 0x00028067;      /* 0x1008: jr      t0 */
+> +    reset_vec[0] =3D reset_vec[3] =3D 0;
+> +
+> +    /* copy in the reset vector in little_endian byte order */
+> +    for (i =3D 0; i < sizeof(reset_vec) >> 2; i++) {
+> +        reset_vec[i] =3D cpu_to_le32(reset_vec[i]);
+> +    }
+> +
+> +    /* Neorv32 bootloader */
+> +    if (machine->firmware) {
+> +        riscv_find_and_load_firmware(machine, machine->firmware,
+> +                                            &start_addr, NULL);
+> +    }
+> +
+> +    /* Neorv32 example applications */
+> +    riscv_boot_info_init(&boot_info, &s->soc.cpus);
+> +    if (machine->kernel_filename) {
+> +        riscv_load_kernel(machine, &boot_info,
+> +                          memmap[NEORV32_IMEM].base,
+> +                          false, NULL);
+> +    }
+> +}
+> +
+> +static void neorv32_machine_instance_init(Object *obj)
+> +{
+> +
+> +    /* Placeholder for now */
+> +    /* Neorv32State *s =3D NEORV32_MACHINE(obj); */
+> +}
+> +
+> +static void neorv32_machine_class_init(ObjectClass *oc,const void *data)
+> +{
+> +    MachineClass *mc =3D MACHINE_CLASS(oc);
+> +
+> +    mc->desc =3D "RISC-V SOC compatible with Neorv32 SDK";
+> +    mc->init =3D neorv32_machine_init;
+> +    mc->max_cpus =3D 1;
+> +    mc->default_cpu_type =3D NEORV32_CPU;
+> +    mc->default_ram_id =3D "riscv.neorv32.dmem";
+> +    mc->default_ram_size =3D neorv32_memmap[NEORV32_DMEM].size;
+> +
+> +}
+> +
+> +static const TypeInfo neorv32_machine_typeinfo =3D {
+> +    .name          =3D MACHINE_TYPE_NAME("neorv32"),
+> +    .parent        =3D TYPE_MACHINE,
+> +    .class_init    =3D neorv32_machine_class_init,
+> +    .instance_init =3D neorv32_machine_instance_init,
+> +    .instance_size =3D sizeof(Neorv32State),
+> +};
+> +
+> +static void neorv32_machine_init_register_types(void)
+> +{
+> +    type_register_static(&neorv32_machine_typeinfo);
+> +}
+> +
+> +type_init(neorv32_machine_init_register_types)
+> +
+> +static void neorv32_soc_init(Object *obj)
+> +{
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    Neorv32SoCState *s =3D RISCV_NEORV32_SOC(obj);
+> +
+> +    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY=
+);
+> +    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
+> +                            &error_abort);
+> +
+> +    object_property_set_int(OBJECT(&s->cpus), "resetvec", NEORV32_BOOTLO=
+ADER_BASE_ADDRESS, &error_abort);
+> +
+> +}
+> +
+> +static void neorv32_soc_realize(DeviceState *dev, Error **errp)
+> +{
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    const MemMapEntry *memmap =3D neorv32_memmap;
+> +    Neorv32SoCState *s =3D RISCV_NEORV32_SOC(dev);
+> +    MemoryRegion *sys_mem =3D get_system_memory();
+> +
+> +    object_property_set_str(OBJECT(&s->cpus), "cpu-type", ms->cpu_type,
+> +                            &error_abort);
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
+> +
+> +    /* Bootloader ROM */
+> +    memory_region_init_rom(&s->bootloader_rom, OBJECT(dev), "riscv.bootl=
+oader.rom",
+> +                           memmap[NEORV32_BOOTLOADER_ROM].size, &error_f=
+atal);
+> +    memory_region_add_subregion(sys_mem,
+> +        memmap[NEORV32_BOOTLOADER_ROM].base, &s->bootloader_rom);
+> +
+> +
+> +    /* Sysinfo ROM */
+> +    neorv32_sysinfo_create(sys_mem, memmap[NEORV32_SYSINFO].base);
+> +
+> +    /* Uart0 */
+> +    neorv32_uart_create(sys_mem, memmap[NEORV32_UART0].base,serial_hd(0)=
+);
+> +
+> +    /* SPI controller */
+> +       NEORV32SPIState *spi =3D neorv32_spi_create(sys_mem, memmap[NEORV=
+32_SPI0].base);
+> +
+> +       if (!spi) {
+> +               error_setg(errp, "SPI is not created");
+> +               return;
+> +       }
+> +}
+> +
+> +static void neorv32_soc_class_init(ObjectClass *oc,const void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(oc);
+> +    dc->realize =3D neorv32_soc_realize;
+> +    dc->user_creatable =3D false;
+> +}
+> +
+> +static const TypeInfo neorv32_soc_type_info =3D {
+> +    .name =3D TYPE_RISCV_NEORV32_SOC,
+> +    .parent =3D TYPE_DEVICE,
+> +    .instance_size =3D sizeof(Neorv32SoCState),
+> +    .instance_init =3D neorv32_soc_init,
+> +    .class_init =3D neorv32_soc_class_init,
+> +};
+> +
+> +static void neorv32_soc_register_types(void)
+> +{
+> +    type_register_static(&neorv32_soc_type_info);
+> +}
+> +
+> +type_init(neorv32_soc_register_types)
+>
+> diff --git a/include/hw/riscv/neorv32.h b/include/hw/riscv/neorv32.h
+> new file mode 100644
+> index 0000000000..46c7f6767e
+> --- /dev/null
+> +++ b/include/hw/riscv/neorv32.h
+> @@ -0,0 +1,60 @@
+> +/*
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +#ifndef HW_NEORV32_H
+> +#define HW_NEORV32_H
+> +
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "hw/boards.h"
+> +
+> +#if defined(TARGET_RISCV32)
+> +#define NEORV32_CPU TYPE_RISCV_CPU_NEORV32
+> +#endif
+> +
+> +#define TYPE_RISCV_NEORV32_SOC "riscv.neorv32.soc"
+> +#define RISCV_NEORV32_SOC(obj) \
+> +    OBJECT_CHECK(Neorv32SoCState, (obj), TYPE_RISCV_NEORV32_SOC)
+> +
+> +typedef struct Neorv32SoCState {
+> +    /*< private >*/
+> +    DeviceState parent_obj;
+> +
+> +    /*< public >*/
+> +    RISCVHartArrayState cpus;
+> +    DeviceState *plic;
+> +    MemoryRegion imem_region;
+> +    MemoryRegion bootloader_rom;
+> +} Neorv32SoCState;
+> +
+> +typedef struct Neorv32State {
+> +    /*< private >*/
+> +    MachineState parent_obj;
+> +
+> +    /*< public >*/
+> +    Neorv32SoCState soc;
+> +} Neorv32State;
+> +
+> +#define TYPE_NEORV32_MACHINE MACHINE_TYPE_NAME("neorv32")
+> +#define NEORV32_MACHINE(obj) \
+> +    OBJECT_CHECK(Neorv32State, (obj), TYPE_NEORV32_MACHINE)
+> +
+> +enum {
+> +       NEORV32_IMEM,
+> +       NEORV32_BOOTLOADER_ROM,
+> +       NEORV32_DMEM,
+> +       NEORV32_SYSINFO,
+> +       NEORV32_UART0,
+> +       NEORV32_SPI0,
+> +};
+> +
+> +#endif //HW_NEORV32_H
+>
 
