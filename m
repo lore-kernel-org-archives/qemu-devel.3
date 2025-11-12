@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4618ACCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7843CCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ53f-0000FF-Tx; Wed, 12 Nov 2025 02:14:24 -0500
+	id 1vJ56A-00038y-G6; Wed, 12 Nov 2025 02:16:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ539-0007xc-GF
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:13:52 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ54D-0001Q1-53
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:14:59 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ538-0005ZP-2c
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:13:51 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47754e9cc7fso2654105e9.2
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:13:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ54B-0005d2-Ic
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:14:56 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4711810948aso2907555e9.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:14:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762931626; x=1763536426; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762931694; x=1763536494; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JP15IZWR8qAc0tWzr+vK1k14ifPXVpBaDW6ReMVdEJ0=;
- b=GYEmHZkDd/cP+lc4pIycqnsA/KYmUAr7/owH61U1eiUJdXZOahuVT0goVAMJKlSwhv
- 0XOsXo9WFnEklLAxMckfD8EfrDwYW18bsCQTDSlHMKI9kATMdLfzn6jaSonEGz7qb1yW
- WZUfY/JongV/9FftvXjkQqFgA65AjnovcjV9MoHbxD1oE9byTn9OrD0Fy6hY45gAb/d1
- ERQ1FuKeNT17mVdiwCEJeqY0PkqjaY8M83QnyvyL3s9lqZ0j4ipqrDiAlXTTlKVrbx8T
- yjNX2OesAL65LqEfCOiwXE3yPfTtnum9+n1WBJCsGs2FddLtFksrQiKUMSoKDErMVdZf
- 8C/g==
+ bh=1Rut/nRnvwL2ZP6wW7ld1iTjQqI//SAAwPnCfO4q95o=;
+ b=rYaWxRK9rjUfjyA4PQkqyIEmIfkZURhLSFz+ldTl/SjjnPjS/IqLR/n/E12G1IahUt
+ MORARnCw0iFcs9NzTzHJZ8by8Ocpyml70nde4708WRj8lgKecrY+a/FpUIIrcSuj4Qo8
+ QnsMYUtviclkDgaI3a4G+D0oL6k0gMZPctOXRqsaCyDp7ghL+EiRJ5PxDSzp4SlaWq5T
+ mu/hT4U/ZDhfCKdKrKYNrDROm8c1YV7XXWSPrDMr+ZEpFUhwHuDVNFyWU3Dy135Xlna5
+ tTZXiefPYZSqRYOIa411JqqyCP1w4Y4wvkUxQ8gXCT+UGy82ITfR0D8cR5nUeWJEvSpu
+ oGTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762931626; x=1763536426;
+ d=1e100.net; s=20230601; t=1762931694; x=1763536494;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JP15IZWR8qAc0tWzr+vK1k14ifPXVpBaDW6ReMVdEJ0=;
- b=oGC1oMbdusd2f7/r6hHI1Fuf7OMzs/6NQwf9SZdmnTMwnhw2IbNlYcQt7QQnHdR8e1
- MBj0YFwvER/Y/IVCPNO/H+CPdZGJpnCx8dHHGjPmzOVDcKBITnHhH+WpQ/CHmd8kp4az
- YpOuQAis67BHlCciMksc0Pz89lVbbVW4UuS67FKEqT+bLi6sDGQkNeUGxhbvnf0A8xej
- k9lsJABmAidtUmXy/Z8Cv8cJtmhDL4xrgzVwabr9pPYQejvnA3/ORFk1TXqmAT3mF0K/
- 12Jap5B5HFWLnS4tuf684gbk9ZnEIXZBmFCq853QuXqrwSqGlfqWi6O/7GSCJUA+7KHU
- XkMw==
+ bh=1Rut/nRnvwL2ZP6wW7ld1iTjQqI//SAAwPnCfO4q95o=;
+ b=ahnk7ekHUSZ8yHrF32rBsh5xYi40lnUGRpKYWLNSG1VmjE0lV1CZYI0Ml5DXXUddra
+ hfcdW1LV9CHakuKwJ2tGU+vy7MTqaOxmaXduP2zMXT1F36KaGPUV2R2L1T3f1U+GIfRi
+ Af/hk+MnNCkuFarZgdjvRmJR1qEwNZ7eHVWVFW+UdemwwxN3fca9HSaLzoEG+zBKsYtU
+ mxRPCVJwE8SBpBchw5V2xPB34vAA01oolT/VTnM4hv/IaUtMqkXCmmTlV3KOREcdwkW8
+ zxQfHIFU32Bd9qfC5cBTWU7sEIf4VIEEJizcZ2RsMxMgjIOn7pLIX4QrWUw8FvEbWOA6
+ wM2Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+r4L4g4qsOuUpn7/ArI2UuyRZHOWeDHyLwfm9rxAliOUvRT8NGougkS2IBMHDE7zhY9PKnKBQAfRh@nongnu.org
-X-Gm-Message-State: AOJu0YxS9kw7yk8C98cpClTzJSekJGi3tTTOLfjxLPX3y8KA3Vof6OAE
- NheOHpQ+PJDvnuQ55B0xUbcQ2KGxkBRuk/t76hIDVgZBor091aNcKRVZddZcJamQhuk=
-X-Gm-Gg: ASbGncv9SGwHeXw2CPKFNOgUVlTYMYTrazBMOx50NI67eITVyMycHxPfmRQP43LgfdE
- g7B3KNbU79f41tmnc8zPLmh7RWS5S7QUsyxYeKmtlnvils5pIXXcrgdYYlOAfo3ZoCcn/l/M8m1
- 7bIscqo0+Lpp+PFxKB0ZqRRo0A0PI8pBbDHZlwOso3mbLpEq6pohTuLtSsAXBZSFR1b57zSn84t
- XjU1EhyNXZlCOfs5p6zMpd7oVpHxEJJupyUu1ROWd0XrBXnqkSiQ/9nGgPFcitEPpAcKsyX6E1b
- vcsUkX8KFFpIhATgmPbTGkE+0yIxXW7Hzv4AYzae/SvYoqkOVPKMg827mvD6Mf49t0h3HD3pnP4
- SXu2x+VEiDCg968yPjrxeyED+jNCeQBkv/FRX+jK3+TL618WCRQ4lRF/l/qPtX6Z07abhnCxc2E
- i/NdCVss4hpHnjq9b/ZSf71Bxj0gn+YjykMqWI3dYLO8FTv0k2X+cN+H5oBCI=
-X-Google-Smtp-Source: AGHT+IFgDUFQCJ7adEN0Il+lrYYzAtCB2COR3CBdk/PGv+TskJHC5uo8S0feCdXbxgFzyDnT/oXisw==
-X-Received: by 2002:a05:600c:1f8c:b0:471:16b1:b824 with SMTP id
- 5b1f17b1804b1-477871c47b6mr18358705e9.28.1762931625640; 
- Tue, 11 Nov 2025 23:13:45 -0800 (PST)
+ AJvYcCV8TUhQ+V87eadA9FutNHPQy+eByYlI7Is+SX7+68DdlFkaS6wVO3q96eEQ1VX4DAgSeVT52Ym6xOi5@nongnu.org
+X-Gm-Message-State: AOJu0YyLJDLbuP9aZuZDyPx10W+lsqG3d5YkBkBHaFWoGtIiSgNpDo8M
+ RJbDeeydmsxnhMhcLkFa6G8JMkUrnDTrEbq6+Z2fzL8iRwysHpLZHW2P6qTZfx8K62k=
+X-Gm-Gg: ASbGnct9m1sC5AMd2iyY0YU1CB6j0tzYkaSzkVk6CFhrv4SpbB3AM9Rh15zly5Oxeve
+ 17qtw/FMw/+BMTR5bc/MLdYfihSHjQRzVrsEIDQp82zd264Bj4QBCBDL2BV0iG+rM470t1eeoAH
+ lul3smDHSiaWs4DskC/hEFTBtxHJsvH/F3f1y68aIwAIoY2o2y5T4eSeJ6f6rCm3AGBN1E92fru
+ 5IEIFBrUxYS+oEsZskThFbispRp57qrdqKZmirjqKgRA163KNxrFyQ9MoKQo0aG6+aG2v6FCOjg
+ NZ61ah9KrssVMtrS78xthrvPOZl3icfyDJjIzfvCRCJZj+IWTd6/xsxgj/qpf9qWtBkEeHJC4RY
+ T+l8JrxCZVqLxOSJNOuw9DRbLMypkzL6Jn+1QiwtYdujh9bPesRcBfjbs+BYj4y46M6d265W4EL
+ rt6Ep1dQws3Xml3wcd+rRcNQiOeNVAgfGMLoutYhLxFTAAZotuTTcqBzc1Pgo=
+X-Google-Smtp-Source: AGHT+IEQRIXjklu5kIt7vQNus1CaEu/EoX5LfUlH/1pG1PlGzZ5htAnTHKOCq7SUudiau5AmtRvNBQ==
+X-Received: by 2002:a05:600c:350d:b0:471:989:9d85 with SMTP id
+ 5b1f17b1804b1-47787095d77mr17391855e9.19.1762931693967; 
+ Tue, 11 Nov 2025 23:14:53 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e2bcf9sm19860375e9.3.2025.11.11.23.13.44
+ 5b1f17b1804b1-47787e953e3sm19272975e9.14.2025.11.11.23.14.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 23:13:45 -0800 (PST)
-Message-ID: <6697cd8d-4bd3-4492-9e43-b56d65709187@linaro.org>
-Date: Wed, 12 Nov 2025 08:13:44 +0100
+ Tue, 11 Nov 2025 23:14:53 -0800 (PST)
+Message-ID: <11781df4-ef38-4ba4-811e-8da50aa586a9@linaro.org>
+Date: Wed, 12 Nov 2025 08:14:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] hw/riscv/server_platform_ref.c: add riscv-iommu-sys
+Subject: Re: [PATCH] i386/tcg/svm: fix comma operator typo
 Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Andrew Jones <ajones@ventanamicro.com>
-References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
- <20251111182944.2895892-5-dbarboza@ventanamicro.com>
+To: Nicholas Mosier <nmosier@stanford.edu>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org
+References: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251111182944.2895892-5-dbarboza@ventanamicro.com>
+In-Reply-To: <20251111-i386-svm-vmexit-typo-fix-v1-1-49f0414472cd@stanford.edu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/25 19:29, Daniel Henrique Barboza wrote:
-> Add an always present IOMMU platform device for the rvsp-ref board.
+On 11/11/25 22:57, Nicholas Mosier wrote:
+> A comma operator inappropriately terminates an expression
+> in svm_helper.c. Replace it with a semicolon.
 > 
-> The IRQs being used are similar to what the 'virt' board is using: IRQs
-> 36 to 39, one IRQ for queue.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Nicholas Mosier <nmosier@stanford.edu>
 > ---
->   hw/riscv/Kconfig               |  1 +
->   hw/riscv/server_platform_ref.c | 78 ++++++++++++++++++++++++++++++++--
->   2 files changed, 75 insertions(+), 4 deletions(-)
+> As an apparent typo, line 742 in target/i386/tcg/system/svm_helper.c
+> ends with a comma operator, rather than a statement-ending semicolon.
+> This doesn't introduce any functionality bugs as the code is currently
+> written, but could easily introduce bugs in the future if a new line
+> of code is added following the comma operator.
+> 
+> This patch replaces the comma with a semicolon, as the original author
+> probably intended.
+> ---
+>   target/i386/tcg/system/svm_helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
