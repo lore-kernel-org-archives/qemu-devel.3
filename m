@@ -4,62 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA2DCCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 13:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A599CCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 13:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJAXQ-0005es-TI; Wed, 12 Nov 2025 08:05:28 -0500
+	id 1vJAaX-0007tM-Ej; Wed, 12 Nov 2025 08:08:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1vJA7j-0003KG-O8
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 07:38:57 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vJAII-0005tG-Cc
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 07:50:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1vJA7g-0007H9-St
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 07:38:54 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vJAI2-0000QE-6M
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 07:49:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762951131;
+ s=mimecast20190719; t=1762951773;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+0xSZ+KrD847vgH+oP7wUsgnb8iECnZJjObtHo+JI6g=;
- b=FcH4ZawuBPX/rhfotMOflJzcaiEaZ4KTKhcHLal/IlKO9vFFu9t2CGdmup+Jn0TCuQPN1R
- 3w7mLkhPPYgUGbjx6of9xiP6Dt+dLI6QTgkCJrIzGChbm2eR9ykPA51ey2fZnVl+2UT1jB
- tRwcG8v/syXUn4xJEajEOt+XC5W1vW0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-a0bkWb2YM7mZi7lUdw_plQ-1; Wed,
- 12 Nov 2025 07:38:47 -0500
-X-MC-Unique: a0bkWb2YM7mZi7lUdw_plQ-1
-X-Mimecast-MFC-AGG-ID: a0bkWb2YM7mZi7lUdw_plQ_1762951127
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD40C180034A; Wed, 12 Nov 2025 12:38:46 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 137451955F1A; Wed, 12 Nov 2025 12:38:45 +0000 (UTC)
-Date: Wed, 12 Nov 2025 12:38:44 +0000
-From: "Richard W.M. Jones" <rjones@redhat.com>
-To: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 0/5] block/vvfat: introduce "size" option
-Message-ID: <20251112123844.GA14264@redhat.com>
-References: <20250903075721.77623-1-chigot@adacore.com>
+ bh=OGZsA9Er78xuHjaVmybLiZVZnkpjpBUWuXT5uN9MlHI=;
+ b=C/dQzatdmyv2BNZ5K2+o2q/oYf/cKJQhXtzqcGRId8cuqCn0x0JUMD5ttMbAAhNa1vnZiG
+ 1o8nPFcRQtgL0EEsMex2mnJ+53d/9pv09JL7hHsfduEDORx0xiSYLZmLBvsgyJVp9OHfq0
+ E8+Bst/oCsLXBzSmoQTKnluquMjp9ZU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-556-Mgi_78zDOIqCpRvcBreGXw-1; Wed, 12 Nov 2025 07:49:31 -0500
+X-MC-Unique: Mgi_78zDOIqCpRvcBreGXw-1
+X-Mimecast-MFC-AGG-ID: Mgi_78zDOIqCpRvcBreGXw_1762951771
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47788165c97so4892395e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 04:49:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762951770; x=1763556570; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OGZsA9Er78xuHjaVmybLiZVZnkpjpBUWuXT5uN9MlHI=;
+ b=pcW1bHRSFgnNyK4z04D2FLmOMasbM0sGgBGZny8x1hensr10QqO9zi5CaYS8KZ8xnj
+ UxdEjyR+E63YYztDvjqPh8WU2BQtJl0Vt3S739Nd0TEI7+GIfHVkwsUJSylK6uKyKJoj
+ nLYUj/fcq+qWPiHW72P1AWPhRtZNRvlXXtoQZhfDSyfD0ugEGgyCOPWN2NmYRbePinnv
+ I01Z4xgWdpOYP10PqplJaCqqhU+wZYC4qTLchlmuhOxi+6v9RrX/HUJ5LcuGjVTplEZN
+ JGe5yVEmiTIYf9HyEMF6B5jktqgetqQ3sCRm2AxDaJ17evVRgq2tJGHDtqfLF+KdpflS
+ 1upw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762951770; x=1763556570;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OGZsA9Er78xuHjaVmybLiZVZnkpjpBUWuXT5uN9MlHI=;
+ b=aTrI5LpW0rH421/Gt/1xHUN2MbwsZMPkQrErmyOIuMdSq4wSb8VdCwS1KXx5jq0N6u
+ 6cLlgdrDJmANx37PrwdSl8h0v6o5JsVHgLQHKgz3R1fWEwuTfVv5v0IF8VpMDMUp+Fbx
+ XX5zhLERgF3wiyIzDPu170mFPl82Z6q8/7PCPYSBDsNI9v2KGFVC5P7agBS08IfAjpOY
+ AjVA/fd5qcn22w1gtpDjcyinmjdJFqri1gOYgbls3D1JAPuHEGTP2ChAzDCie6dAV4E2
+ WtR1kvtO68zP1w41OVzkv2WR8LSnrpYZ77Xh8oW2VmXbNvQbcomWS1/03nadwIyETNqP
+ k4mw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOJGAQnuGcPdsLGDCAlaMZZGmaiVwEPBHvEYf1sj34/Vi2TJTP3cXiv9TGjzzXnwsRsxRaRcBUmi04@nongnu.org
+X-Gm-Message-State: AOJu0YwtgogFSS6aK9dpUGuZ8YtJaKcdzVz/ClTRsLZvCJ00EzIM86sx
+ hIIg6yGhC4zZHAPPLX1fXoktLOwuMOPUpFfh5La6gQPK87N9IOorkEjmf52pui0ZomYmrfLkWkR
+ /cY9zf+xelmfNzRG+83MZD4f5JTXrI885UNfKs9Ji3hDltE9PQz3XzwPa
+X-Gm-Gg: ASbGncvBOyqqtU6Xte3h3IHrPHGnI/JLjCEL+qNJEMMuVIH1j+cSjtut33jLFunHb4k
+ 6Ho4jvVySuUJDKSZ3lpXBXBtpk737/VmtvHTs4dTAT4LxmLNqIjqWtlCckIvpk1RsPG1c/BdDnN
+ BldAZDS+917eaiGyLqKXcAhJzDp66a9qScGGBSTFPH2DIbl7R2CEXGEEpYodu+Ze1qjczTzkWoC
+ G6ZHgr94AwOVIVdT0kKBcIp2IC46YMoHqAnWYNi5VsPRERDnfjFlJPgihuSfe4RH+dlg1z7MpOY
+ uy5WwbnYnMvdF3AKfNyIgKZMeDDzx8WsnMQuBWfpygZ/so8MRJpd3K+TLly5D4KhSA==
+X-Received: by 2002:a05:600c:1c20:b0:46e:32dd:1b1a with SMTP id
+ 5b1f17b1804b1-4778703cf57mr26108325e9.7.1762951770546; 
+ Wed, 12 Nov 2025 04:49:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHH9OMVYlPK+nc8UH0dxP0HD95VJka5aqgZvmwR1VGSvojArHtzGCmbdpTzxDdhhdLu1LawTA==
+X-Received: by 2002:a05:600c:1c20:b0:46e:32dd:1b1a with SMTP id
+ 5b1f17b1804b1-4778703cf57mr26108025e9.7.1762951769963; 
+ Wed, 12 Nov 2025 04:49:29 -0800 (PST)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47787e486a0sm33243745e9.4.2025.11.12.04.49.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Nov 2025 04:49:29 -0800 (PST)
+Date: Wed, 12 Nov 2025 13:49:28 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ mchehab+huawei@kernel.org, gengdongjiu1@gmail.com, mst@redhat.com,
+ anisinha@redhat.com, peter.maydell@linaro.org, pbonzini@redhat.com,
+ shan.gavin@gmail.com, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v3 6/8] acpi/ghes: Use error_abort in
+ acpi_ghes_memory_errors()
+Message-ID: <20251112134928.3f2ebb40@fedora>
+In-Reply-To: <4af87665-14b1-41a4-8ed9-d3c9dfc087b8@redhat.com>
+References: <20251105114453.2164073-1-gshan@redhat.com>
+ <20251105114453.2164073-7-gshan@redhat.com>
+ <2c3b388e-e002-466a-9b03-cafefcfc9d19@linaro.org>
+ <4af87665-14b1-41a4-8ed9-d3c9dfc087b8@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250903075721.77623-1-chigot@adacore.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,57 +129,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 03, 2025 at 09:57:16AM +0200, Clément Chigot wrote:
-> The main goal of this series is to introduce a new option "size" within
-> the vvfat backend (patch 5). It allows more control over SD cards' size.
-> The value for "Number of Heads" and "Sectors per track" are based on SD
-> specifications Part 2.
-> 
-> This series also includes minor patches:
->  - patch 1 introduces another option to remove the Master Boot Record
->    (this is mandatory for QNX)
->  - patch 2-4 are minor improvements easing the introducing of "size"
->    option
-> 
-> This was tested on with a aarch64-linux kernel taken from
-> functional/aarch64/test-virt and on aarch64-qnx over raspi4b with a
-> workaround, not included here (the SD bus must be associated to the EMMC2
-> port instead of through GPIOs).
-> 
-> Clément Chigot (5):
->   vvfat: introduce no-mbr option
->   vvfat: move fat_type check prior to size setup
->   vvfat: add a define for SECTOR_SIZE
->   vvfat: move size parameters within driver structure
->   vvfat: add support for "size" options
-> 
->  block/vvfat.c | 279 ++++++++++++++++++++++++++++++++++++++------------
->  1 file changed, 213 insertions(+), 66 deletions(-)
+On Tue, 11 Nov 2025 13:58:46 +1000
+Gavin Shan <gshan@redhat.com> wrote:
 
-(Thanks Markus for bringing this thread up)
+> Hi Philippe,
+>=20
+> On 11/11/25 12:54 AM, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 5/11/25 12:44, Gavin Shan wrote: =20
+> >> Use error_abort in acpi_ghes_memory_errors() so that the caller needn't
+> >> explicitly call abort() on errors. With this change, its return value
+> >> isn't needed any more.
+> >>
+> >> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> >> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> >> ---
+> >> =C2=A0 hw/acpi/ghes-stub.c=C2=A0=C2=A0=C2=A0 |=C2=A0 6 +++---
+> >> =C2=A0 hw/acpi/ghes.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+| 15 ++++-----------
+> >> =C2=A0 include/hw/acpi/ghes.h |=C2=A0 5 +++--
+> >> =C2=A0 target/arm/kvm.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 +++--=
+-----
+> >> =C2=A0 4 files changed, 13 insertions(+), 23 deletions(-) =20
+> >=20
+> >  =20
+> >> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> >> index f73908985d..35c7bbbb01 100644
+> >> --- a/include/hw/acpi/ghes.h
+> >> +++ b/include/hw/acpi/ghes.h
+> >> @@ -98,8 +98,9 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *tab=
+le_data,
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char =
+*oem_id, const char *oem_table_id);
+> >> =C2=A0 void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 GArray *hardware_errors);
+> >> -int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 uint64_t *addresses, uint32_t num_of_addresses);
+> >> +void acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+> >> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 uint64_t *addresses, uint32_t num_of_addresses,
+> >> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 Error **errp); =20
+> >=20
+> > This is an anti-pattern w.r.t. commit e3fe3988d78 ("error: Document
+> > Error API usage rules"), because it can be called with an errp distinct
+> > of &error_abort.
+> >=20
+> > If you really want to abort(), remove the errp argument, directly call
+> > abort() and rename as acpi_ghes_memory_abort_on_errors().
+> >  =20
+>=20
+> Thanks for pointing it out. I will improve this like below in next revisi=
+on.
+>=20
+> - Drop 'errp' argument from acpi_ghes_memory_errors(), but I prefer to ke=
+ep
+>    the function name.
+>=20
+> - In acpi_ghes_memory_errors(), a local variable 'Error *err' is added and
+>    pass it to ghes_record_cper_errors(), which is also called by QMP hand=
+ler
+>    qmp_inject_ghes_v2_error().
+>=20
+> Please let me know if there are any more improvements needed.
+>=20
+> >> =C2=A0 void ghes_record_cper_errors(AcpiGhesState *ags, const void *cp=
+er, size_t len,
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint16_t source_id, Error **errp);
+> >> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> >> index 459ca4a9b0..a889315606 100644
+> >> --- a/target/arm/kvm.c
+> >> +++ b/target/arm/kvm.c
+> >> @@ -2458,13 +2458,9 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int c=
+ode, void *addr)
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 addresses[0] =3D paddr;
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 if (code =3D=3D BUS_MCEERR_AR) {
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_cpu_synchronize_state(c);
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SY=
+NC,
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 addresses, 1)) {
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_inject_arm_sea(c);
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 } else {
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_report("failed to recor=
+d the error");
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abort();
+> >> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 }
+> >> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
+> >> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 addresses, 1, &error_abort);
 
-I just wanted to say that a long time ago I wrote an nbdkit plugin
-that was intended as a more sane replacement for vfat.  Since then
-several more nbdkit plugins have been added.  They support arbitrary
-sizes already.  The first one is the most direct replacement for vvfat
-(although it doesn't support writes to the backing directory, because
-that feature is insane).
+I guess that was my request,
+with calling abort() directly you have to print error separately,
+while using 'error_abort' is much more cleaner (as this hunk demonstrates) =
+=20
 
-https://libguestfs.org/nbdkit-floppy-plugin.1.html
-https://libguestfs.org/nbdkit-iso-plugin.1.html
-https://libguestfs.org/nbdkit-linuxdisk-plugin.1.html
-https://libguestfs.org/nbdkit-tmpdisk-plugin.1.html
-
-Very easy to use from qemu as documented here:
-
-https://libguestfs.org/nbdkit-client.1.html#ATTACHING-NBD-DEVICES-TO-A-VIRTUAL-MACHINE
-
-Rich.
-
--- 
-Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
-Read my programming and virtualization blog: http://rwmj.wordpress.com
-libguestfs lets you edit virtual machines.  Supports shell scripting,
-bindings from many languages.  http://libguestfs.org
+> >> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 kvm_inject_arm_sea(c);
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 }
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 return;
+> >> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } =20
+> >  =20
+>=20
+> Thanks,
+> Gavin
+>=20
 
 
