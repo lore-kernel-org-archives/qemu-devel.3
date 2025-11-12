@@ -4,101 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E526CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 14:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F2FCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 14:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJBgn-0003sf-Ft; Wed, 12 Nov 2025 09:19:13 -0500
+	id 1vJBgl-0003rB-PW; Wed, 12 Nov 2025 09:19:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akash.kulhalli@oracle.com>)
- id 1vJ9TR-0007vw-0k
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 06:57:17 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vJ5gk-0000VM-AL
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:54:46 -0500
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akash.kulhalli@oracle.com>)
- id 1vJ9TP-0000IR-8m
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 06:57:16 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ACBgNeU012845
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 11:57:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=n6rLww8tFkkLaKSjsCjF2vx+clhjw
- AXRmoGuIHVLVVY=; b=KECpLg4s/6aYitOOIGSgKaDr/+xT6TwBC0wFUCdfW8u6d
- HT17+n8WVEQU3Z3eJ3OmuDVXKxT5HA7NXSV4WXTRazOfGkot/1HocNYRNJQ0AyxW
- d9oczgHFtFOVW2/limkzN+9z8wiVaG/lr4EYWqunBds3fSTdLzcR87F+nBa0Mv14
- lS7ndG/w9TBKQLUdh59hfldVNCYAdkICuMrQn6fGKPcfjdjmgHDITcbnPJwPPj/2
- dKXGuMPs94aJAMcMRv0LWIgd2n5+jifqWjj4ZrDGSBMjT8HPqf/ERbnL9GGMSOYu
- l17WtQprsv783EbHaytLuiZggZEuiipjJ7ikrlwDw==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4acrrug3bx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 11:57:11 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 5ACAYmw3010115
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 11:57:11 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4a9vamccsr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 11:57:10 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5ACBvAIh019817
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 11:57:10 GMT
-Received: from akulhall-vm1-ol9.osdevelopmeniad.oraclevcn.com
- (akulhall-vm1-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.255.191])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4a9vamccsf-1; Wed, 12 Nov 2025 11:57:10 +0000
-From: Akash Kulhalli <akash.kulhalli@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: akash.kulhalli@oracle.com
-Subject: [RFC] Why is IO_BUF_SIZE still 2MB in qemu-img operations?
-Date: Wed, 12 Nov 2025 17:25:34 +0530
-Message-ID: <20251112115534.853892-1-akash.kulhalli@oracle.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vJ5gh-00036x-RD
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:54:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QjSnriKggDsrvWj6s7mw8pDnwCQ5pPtwHwegHL35OTdaT71x/YRnJomSw+/rd9NxkhKbJsUnJs+JVaZbAKQE9wvXsjCY2zw1xlEExk/eoq5v/CiWyZ2+dwWRwqoFLeQsZVg56BsJ/ENpg2gjxb++DqeH0od7k4/H+2CNaiEW4BvjA+Zjz/ynlnBHf6m8leEYStVK+DdW5a0jI6Ux8CugWqxRnsHZR0K0srCZDr39bwDR4kmnP/+gv2jSyXhpABY6rhkHKBMuWDCYOPy7MgCagoJR3GWmPfpKgaqeNGWbi6qFrQCDVBvW4C1clPn6w8mBgR6xu9YF/TrD3D5yweqZ+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AZfkjAqHwQvF5b4CyD4zYNAlJRRnoe2uIYAfUTn62gc=;
+ b=WK4Z7uQkubVTmeHjEp/ETZneYGia6qXn8ou4e6pVxMJZr0gt7FgDU6z3VnqT8TR0jfJWh6e0H091rU0ywEEc6+ZpWbcGgjTyzRVvuPeDsy3K4/GlGsvbqddRLmqbl8h1qtXsHEfdKL+Y2g1wravi+s6/cZ3bStQcBg59cDnjwfS34QndWDzASAwuOtEWRiiK0Fo2ga6Hg0OLejJFLQry0rfIevBpzPmgAcSg8px205mG0hNhd214fwmqysQd5mX2Uy6K3iZOBLJ4ieiwdZrXYuyKLRAWvsLeDd+Eg51PFgggpkReR/Te1ApF5VyIB3rs0TM9jzdU1bSCHx21OQzNgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AZfkjAqHwQvF5b4CyD4zYNAlJRRnoe2uIYAfUTn62gc=;
+ b=nKJL5q/s13xE9KOAWT/XDlqZjpmpnzjQXCDmBP1WEZc3X/Tfm46Jm04nQdEk38qSIvTx6hgvS6mJukAxgvsfvIYYkt6L03S/x8AM/4RZE0kXwt/dYEjwB5UrgONe86QE7dxWTWA5NRhh/7ToQsHQsp7fSvX2Up3GUNt8nGnnMZ0=
+Received: from BYAPR02CA0006.namprd02.prod.outlook.com (2603:10b6:a02:ee::19)
+ by SA5PPFC3F406448.namprd12.prod.outlook.com
+ (2603:10b6:80f:fc04::8e0) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.16; Wed, 12 Nov
+ 2025 07:54:38 +0000
+Received: from MWH0EPF000A6730.namprd04.prod.outlook.com
+ (2603:10b6:a02:ee:cafe::6) by BYAPR02CA0006.outlook.office365.com
+ (2603:10b6:a02:ee::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.15 via Frontend Transport; Wed,
+ 12 Nov 2025 07:54:37 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ MWH0EPF000A6730.mail.protection.outlook.com (10.167.249.22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9320.13 via Frontend Transport; Wed, 12 Nov 2025 07:54:37 +0000
+Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 11 Nov
+ 2025 23:54:35 -0800
+From: Honglei Huang <honghuan@amd.com>
+To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>,
+ <Ray.Huang@amd.com>
+CC: <odaki@rsg.ci.i.u-tokyo.ac.jp>, <mst@redhat.com>, <cohuck@redhat.com>,
+ <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, Honglei Huang
+ <honghuan@amd.com>
+Subject: [PATCH 2/3] virtio-gpu: add configurable HSAKMT capset support
+Date: Wed, 12 Nov 2025 15:54:13 +0800
+Message-ID: <20251112075414.3719917-3-honghuan@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251112075414.3719917-1-honghuan@amd.com>
+References: <20251112075414.3719917-1-honghuan@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-12_03,2025-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 mlxscore=0
- phishscore=0 mlxlogscore=999 spamscore=0 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
- definitions=main-2511120095
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDA4NiBTYWx0ZWRfX92h7O+3Li2oP
- +9wP+RJXbwDdkPa8dmRvJo8F5Mw28QfmxTpICpyud5kPz99Y4/LUlVx58/WSRYlquUlEEJb6rO9
- FC1DIdrxKs3QQzQF3b9HdY4kdPgNxGBaYuaybDk707us8pB8sVrTBulcYni5fohpU+06gTzvVlk
- fCuozgYjwrYPW2qe/S+T4bJOxLLrYYsLanKaqiwyBtqBOfMuh3Uyc+BUohaFSk9564YBfZpve97
- AiVWq6dAqQcLeMKly4zlIofgWgZ2DCZ3fy6zl6VSGEMabauhcT3O2qehtFcxx97hlLR+uoqwnkJ
- kMkh7Cal2JB201enM2QqW6AJa8n0lhKTejVTwm6jHgKqbh39RGZzcUUk3nVdMg3mLEZ2DfJHEH2
- fx8bREHuhiiNT1V1oiSy8QlXAyMk0GAFsNRaZl5wlVsvM8OGrS0=
-X-Proofpoint-GUID: 42giQes2zHdxB7SCgLlYLPjcG7julFaU
-X-Proofpoint-ORIG-GUID: 42giQes2zHdxB7SCgLlYLPjcG7julFaU
-X-Authority-Analysis: v=2.4 cv=N9Ek1m9B c=1 sm=1 tr=0 ts=69147617 b=1 cx=c_pps
- a=qoll8+KPOyaMroiJ2sR5sw==:117
- a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=4wxDOdoqRUtZD-WHigcA:9 cc=ntf
- awl=host:12100
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=akash.kulhalli@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6730:EE_|SA5PPFC3F406448:EE_
+X-MS-Office365-Filtering-Correlation-Id: ad3beda2-7721-407d-bed9-08de21c0ba86
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?GzpUMKcbkDAOqAuhXY3yDIx90+/v3CfmQejL0BpN8TfftywvN/daPTGdthDt?=
+ =?us-ascii?Q?l0vFDBv3mRHghiQKnVE+aTGxX8eZPYmNgVpJP5DzzNntE3HyIsHPf5OE2FHC?=
+ =?us-ascii?Q?PTJrc3FT3b3eov983CSdWBkHQvkQDh7au0sTghUtkwz3lqknDHJeGGkbLqDW?=
+ =?us-ascii?Q?GkHcjpWmA0NRynH8QFWt1Ml6IS2mw9OC9qhyvhqJcpi6RaXdDM928KXt+ouQ?=
+ =?us-ascii?Q?VhCtSLeU2geQDT7JaWnKJtXcs5wgm19sIVD4s+xI8txKUxVMiyeWchxcSgI4?=
+ =?us-ascii?Q?v9aTmcLGyMX3LApCwJHNaYa4L4OJmUScMH0PWYaIQpOOXQD5NKsxQluXnGsV?=
+ =?us-ascii?Q?rQyvdy73x4LrjSIdsojB4/I3xoGK8RHTPk9XwojmZxRlpUFKSO3HjdK7LgRg?=
+ =?us-ascii?Q?KfSxssWby4WPNqdrnCSu/s9b6Ecyv2Nxbg6jy+ogm/+I3KUxHcwXqHUD5L4K?=
+ =?us-ascii?Q?3BJMWuXIKA4cUtPoBu77QspStty9nU20Uxyf/ssVNTGlVdy6bcT4e+CDEyXg?=
+ =?us-ascii?Q?/kA8EEQMXxKzDx7RA7aAq2CM27pLaH2U26sQh8EZEe04Vqp/B8a5Pz77JLrG?=
+ =?us-ascii?Q?89JbyutPAgqlbkwm1Q2eu1Nah37BBBs4+xfBKscsVpkPnvVya1XqESEaKX5a?=
+ =?us-ascii?Q?U3fwBPqujP9CJj3w+w7UxdHQIiuRoGyD7cTyaFl3/821Ck0luU0EhxEl+V9t?=
+ =?us-ascii?Q?+E0w7/Hj1dDdWSbZDYo/PrHtdAFxFEQbVAaXfHIBzQBpetQCH81j3ffDmulQ?=
+ =?us-ascii?Q?wzfqJP5TmBGUEZjyThN6NI9NHLVUlnbjzNhZSADHWN6iaMQgQn8r3jd1ASlH?=
+ =?us-ascii?Q?5zev5e8yhkcjcqXmmrmLVCiiBvPrVi6km3nJJ6lj6IKrBIfmsJwLbW9vWGhe?=
+ =?us-ascii?Q?deiVCSy5l91X5HDDTe3pFOacFGG1TsbjA5xZnGP4cX/NQERpZ2o26cUWyEAG?=
+ =?us-ascii?Q?vd8A/nryi519WwFLAlPY9B8UuH4BUblmiwEA9mgOvtcNEjhPkCgMWiDrqvSP?=
+ =?us-ascii?Q?rpYlUwN7bh4W3BzptyuOU/VxyrP5mNXRUaHWnUJGqUb4z5NDf9VtPGRESZaz?=
+ =?us-ascii?Q?n+DkIqVDJrIqnYrgdI+i2DhwlWRORyPl04FldMtsA4zeY9uFW1rZMqJ0mB63?=
+ =?us-ascii?Q?8d9n0mV8meqDoNlbpQehmoemG+4LMZNtDDwzvD++Ln3JhWczJmIkXKKdvOBe?=
+ =?us-ascii?Q?kZdM31Z9GDv+y0uShwES9xk0sQVXvOvWMkjj3OwRqWhsKUlpUusRC+Z36cZr?=
+ =?us-ascii?Q?kco3Ilww+ADt0RpIipMBsd0rW8agNDmHIQhR3s6gJO0QOmMcsqfkUKR0FMml?=
+ =?us-ascii?Q?51z3ZIQowRwSievjLfCbDwGnnRyjJIe4KwNY9r11sbVS/AOYd0SfyVjUeac1?=
+ =?us-ascii?Q?SQtPeWHs/yAVYl933zertLfTaQYvHu+f39FoM6eT2P3p8lnwxLbnRHIQ16ZZ?=
+ =?us-ascii?Q?aC8qGkUwNiYBZhdvWVHbcIRBIjqw9nb5zj9xWBXHAGQ+PZsQiml6wHq+LiXI?=
+ =?us-ascii?Q?E6WtcA+L3G4uGacDwPN2/cG/igdlOlZ+rMsCCe5ddf0In7NWPvTxEDAUC6QU?=
+ =?us-ascii?Q?E3lYDEtQi240cckb3ME=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2025 07:54:37.8675 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ad3beda2-7721-407d-bed9-08de21c0ba86
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6730.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPFC3F406448
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 12 Nov 2025 09:19:07 -0500
+X-Mailman-Approved-At: Wed, 12 Nov 2025 09:19:00 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,66 +153,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Changes include:
+- Add VIRTIO_GPU_FLAG_HSAKMT_ENABLED flag to virtio_gpu_base_conf_flags
+- Add virtio_gpu_hsakmt_enabled() macro for configuration checking
+- Add "hsakmt" device property to virtio-gpu-gl device
+- Modify virtio_gpu_virgl_get_capsets() to conditionally enable HSAKMT
+  capset based on configuration flag and runtime capability check
 
-I'd like to understand the reasoning behind the buffer size used in the
-`qemu-img convert` command. Currently, `IO_BUF_SIZE` is defined as 2MB in
-`qemu-img.c`. Based on performance observations, I would like to propose
-a patch that increases this to the current upper limit of 16MB, with the
-behavior being configurable once I understand the reasoning behind the
-existing values.
+The HSAKMT capset is now only enabled when:
+1. The "hsakmt=on" device property is set (defaults to false)
+2. virgl_renderer_get_cap_set() reports capset_max_size > 0
 
-The motivation stems from analysing perf reports during image conversions
-with different negotiated sizes with a nbdkit daemon, when investigating
-performance slowdowns with virt-v2v; it revealed smaller, inefficient network
-data patterns. This buffer size is what qemu-img negotiates with nbdkit, as
-validated through some debug logging. Increasing the buffer size drastically
-improved performance, especially for network accesses when the source image
-is accessed over the internet.
+Usage:
+  -device virtio-gpu-gl,hsakmt=on
 
-A quick observation of bandwidth utilisation with the larger buffer sizes show
-a significant improvement. Using nload as an example, on an otherwise-idle
-system shows a very low bandwidth utilisation when using a a buffer size of 2M-
+This provides better control over HSAKMT functionality and avoids
+exposing unsupported capabilities to guests.
 
-Using 2MB buffer sizes
-======================
-Incoming:                                               Outgoing:
-Curr: 33.44 MBit/s                                      Curr: 1.02 MBit/s
-Avg: 35.19 MBit/s                                       Avg: 1.09 MBit/s
-Min: 1.13 MBit/s                                        Min: 34.52 kBit/s
-Max: 50.19 MBit/s                                       Max: 3.39 MBit/s
-Ttl: 473.11 GByte                                       Ttl: 9.26 GByte
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+---
+ hw/display/virtio-gpu-gl.c                  | 2 ++
+ hw/display/virtio-gpu-virgl.c               | 9 +++++++++
+ include/hw/virtio/virtio-gpu.h              | 3 +++
+ include/standard-headers/linux/virtio_gpu.h | 1 +
+ 4 files changed, 15 insertions(+)
 
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index c06a078fb3..4ed2f53e4e 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -159,6 +159,8 @@ static const Property virtio_gpu_gl_properties[] = {
+                     VIRTIO_GPU_FLAG_STATS_ENABLED, false),
+     DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
+                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
++    DEFINE_PROP_BIT("hsakmt", VirtIOGPU, parent_obj.conf.flags,
++                    VIRTIO_GPU_FLAG_HSAKMT_ENABLED, false),
+ };
+ 
+ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 9da64bf16f..7162c4bfee 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1227,5 +1227,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
+         }
+     }
+ 
++    if (virtio_gpu_hsakmt_enabled(g->parent_obj.conf)) {
++        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_HSAKMT,
++                                   &capset_max_ver,
++                                   &capset_max_size);
++        if (capset_max_size) {
++            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_HSAKMT);
++        }
++    }
++
+     return capset_ids;
+ }
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 58e0f91fda..c820247db8 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -100,6 +100,7 @@ enum virtio_gpu_base_conf_flags {
+     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
+     VIRTIO_GPU_FLAG_VENUS_ENABLED,
+     VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
++    VIRTIO_GPU_FLAG_HSAKMT_ENABLED,
+ };
+ 
+ #define virtio_gpu_virgl_enabled(_cfg) \
+@@ -122,6 +123,8 @@ enum virtio_gpu_base_conf_flags {
+     (_cfg.hostmem > 0)
+ #define virtio_gpu_venus_enabled(_cfg) \
+     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
++#define virtio_gpu_hsakmt_enabled(_cfg) \
++    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_HSAKMT_ENABLED))
+ 
+ struct virtio_gpu_base_conf {
+     uint32_t max_outputs;
+diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standard-headers/linux/virtio_gpu.h
+index b85e781a2d..6c54cb745f 100644
+--- a/include/standard-headers/linux/virtio_gpu.h
++++ b/include/standard-headers/linux/virtio_gpu.h
+@@ -313,6 +313,7 @@ struct virtio_gpu_cmd_submit {
+ #define VIRTIO_GPU_CAPSET_VENUS 4
+ #define VIRTIO_GPU_CAPSET_CROSS_DOMAIN 5
+ #define VIRTIO_GPU_CAPSET_DRM 6
++#define VIRTIO_GPU_CAPSET_HSAKMT 8
+ 
+ /* VIRTIO_GPU_CMD_GET_CAPSET_INFO */
+ struct virtio_gpu_get_capset_info {
+-- 
+2.34.1
 
-On the same setup, using a larger buffer size of 16M yields much better
-results, hitting peaks of ~267Mb/s, as opposed to 50Mb/s with a 2MB buffer
-size. This is a pretty significant improvement and therefore warranted some
-closer analysis.
-
-Using 16MB buffer sizes
-=======================
-Incoming:                                               Outgoing:
-Curr: 267.08 MBit/s                                     Curr: 7.89 MBit/s
-Avg: 117.76 MBit/s                                      Avg: 3.18 MBit/s
-Min: 4.20 kBit/s                                        Min: 47.87 kBit/s
-Max: 267.30 MBit/s                                      Max: 9.40 MBit/s
-Ttl: 369.93 GByte                                       Ttl: 9.34 GByte
-
-It is also important to note here that this problem is visible for a specific
-combination of using qemu-img alongside virt-v2v (virt-v2v 1.42, as is the case
-on Oracle Linux 8). While the internals of this utility are out of scope for
-this discussion forum, what's relevant here is that qemu-img uses this buffer
-size when negotiating receive window sizes with nbdkit during initialisation,
-which bottlenecks its own performance.
-
-Can anybody explain the reasoning behind keeping `IO_BUF_SIZE` at
-2MB? Are there specific constraints (e.g., memory usage, compatibility, or
-other platform-specific limitations) that prevent increasing it to 16MB
-(or higher)?
-
-Appreciate any insights/reasoning behind this value. A patch can be provided if
-the discussion deems it relevant.
-
-Regards,
-Akash Kulhalli
 
