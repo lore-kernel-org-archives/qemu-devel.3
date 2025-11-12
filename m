@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB691CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 13:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 593BACCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 13:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJBEE-0007DC-Mu; Wed, 12 Nov 2025 08:49:42 -0500
+	id 1vJBE5-00078g-Kd; Wed, 12 Nov 2025 08:49:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB6x-00042F-K3
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:12 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB6p-00041L-Hr
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:05 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB6u-0001KD-K8
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:11 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so6145385e9.3
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 05:42:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB6o-0001Je-3H
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:03 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-477775d3728so7618835e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 05:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762954927; x=1763559727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762954920; x=1763559720; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kqvv4c6i4mp0sBOCXGvJZ0HxeshggKA5QiiUueMIbSo=;
- b=bvDi6JF9/0ZR0fqCFITXPLRIfdUqyq120dqI54um7yBPt6kt521Af08WSKF8vxLGeb
- PKGY/vaw8Ds5m2G05GZKJkUsx5tOfk0ZF3+CW2Kk/st63nfeAxBWhgvW67ejg4gvuQzy
- uoX6gyuGWir+enlIkzcHR1T0qoroH57tXsftVFOQZgUUiHFAxEs48J243aoncUAz6p52
- vw8I/nqMYa3Qiw7j0LKATlLp38H7UwBMrJKnVkdrhtH/tiT49ejovPrqRdrpusB6ypI5
- RKQKW14f5zlwPOS0sVEh0P3F6arCHx7IAjdWun6mfkjQ0lx4CwvWgoq4GOUQVAxTcn2V
- wFzA==
+ bh=+28mb6/qxZ6eOW2R7gXOmFFtY5bUA8Y2twhmxYKlCbE=;
+ b=xIiqlzkFuQn5ZkgDUnI9TRQws5gBd+w7w2bH9EmT0YttrAWA3CvK6tYTfuveEnv0V6
+ 0cRMdlHq6RTA998fqwJPs9JamZTixV7d7fyzBhAOYg6P9CaGx48FeTo2/qSIDBAJr3sw
+ qbQiC1rbZSLy5p2WGXx5nT/dagWKtuKSF9hoFcV1mrJTwHfBdHgwA08557VifbZ+9sz9
+ 1vrtqG69PwO3x8fBOC73ricf9JeBvjIf/tVL/TtbjGFxBdaqcwF0y4LSvXPrBCD9ZVZJ
+ h5OKQeoNCjdve9R0G9Mxk8P/NSepAq1ipyJr52D+l5hQ+Baybwn+jDgH7ocp88YrB+0H
+ 4JLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762954927; x=1763559727;
+ d=1e100.net; s=20230601; t=1762954920; x=1763559720;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Kqvv4c6i4mp0sBOCXGvJZ0HxeshggKA5QiiUueMIbSo=;
- b=J+20xdp+Bw4Z71uB2Gc2YQOAW96oX4EqmuKp6PgtEDmqzOhwhXqZSIFusfITIxCUxK
- eAnThWYqKiRXybQZ3bB9D6oah/sAv4IOQybBuSeza0GukB0cFPA+cU8vm5YbcepKg/bG
- Ez+2DBRu3Y1LMofgjhQO6geWdE83t6hkzUuGt367Yss7l93oqkcc6TKl16jeTrWMBLWM
- d5P+wuSiRStOjah1kBDbBn9LaQ6DKDYWKuvEJ5BK7+ftK6WXoUviBLZ3ZAXSazi+4Vnj
- /lWDtOyS0HZE9YVPp/62BI3O6YiP4CqWWfOWFSIsULlek8o/2Wj4yAQ2UkCxOB9sgLkx
- TSHw==
-X-Gm-Message-State: AOJu0Ywldqu1EfOzdILuKuwc6i5VXqKuWxGqJknKVQPUx63E5cpta4+W
- mNc5RYgfMfJeIZ+p4Cr1KlMUf79+R3FwHdno/4g197ngzjwBOipFPzr2pu4Eqe5xn5zACEA0C0P
- gwhGVOC4Bbw==
-X-Gm-Gg: ASbGncuv5q9zCO3eFBPa9Zo0sCftl+0Ci8mPgspTwraMllO0T7FaRuqb6nCPqPXFeBT
- IWUtv9N0nxtLXB2JaAwt0AChTr2aDwxT2AbdoQ+DZ5S5WprEqHBc7V9tLGIKFL6jKttv79nOhTw
- QcPHD+QB75GzzQSP/JgR6IO4sL9YcAIwcU5nM2NMb/AfnHENGUYiO0ELtAo+Z0uQeao2RaLVC5p
- JthfOpYmqRTHVspscvWIeXdu0N+eUZNCZRtHmFaAPWcoOca3VVocxgH0JzrgoYgHz1w0aVXZO+g
- AVuLyfVOLK0eXtxzCn/6+KGQPGkC7CqmQ+6xcG1PQYzgRITxUD70QpdbIaB78Jz5WCau8mnmd2l
- JWfHEMxrqYVkOtKQI8gtQ0LaGYf8RnyQ1Jp3Kq1vx6L9q0ZZq6evcOpcmPjJvb9/qF2T/KNdJqo
- oJdmiRf4QNAhjOYHO+pqiaMtX8dr6s6pY67WePjXJmeMJCw6tKFwetRp4=
-X-Google-Smtp-Source: AGHT+IHwvQAIqQo3qXpDX63W7d62iIL/ecSGXZ28juJnwIFUt5yJVNib7cQ+0pvxVRC8zDcqwe4IlQ==
-X-Received: by 2002:a05:600c:1396:b0:46e:4246:c90d with SMTP id
- 5b1f17b1804b1-4778707c897mr23436145e9.11.1762954926657; 
- Wed, 12 Nov 2025 05:42:06 -0800 (PST)
+ bh=+28mb6/qxZ6eOW2R7gXOmFFtY5bUA8Y2twhmxYKlCbE=;
+ b=QhitizA9mE6G1/v0PCW6bVpPAITWZnWhsYCivB4UvmdFRyQgh8AZUH/OGbVm9ckvZ0
+ TM5Idlpbxjmc2HHnF4k9ZQDbGgR/a+KlFX72oMFCR59912wgx0jpmhyCwJNuauqHBSqs
+ aUINCVrBaT+N4HILZG5uSsjmY876eew3kbHTsXujLHdr1kl0m94VWeVRxAqFhqdqVd+F
+ JcfIGmH12JYNYncHkG0l/pjtpWMQhe++l+P7vekj9eIjpFVwndhol9tuGRVHA1oiRzqM
+ llwuN4VEYFJpVwB4FG0O1S36in8eW+tlrqchu5K9cZr19nhXrKYUvCSpWemUPNREhkVK
+ poPA==
+X-Gm-Message-State: AOJu0YxVCB+FIbY8Z4ItjLxqarzGW5+O7nmHa6LsxCNqW4J94Jbr2bW4
+ wXNj6BOPP43vrxuF6gk6mlxPRLSJ9f1FfWZ7DvX13obaWYMDn2WHT2HDFFGEcZMQAZSoBrUAPsQ
+ VApHL14bM2A==
+X-Gm-Gg: ASbGncuSgfJ75/VEzUQQObOqhonqDUghMzoojs4cDlZy6VhvkcQrR/XXQsg9AUhzbtU
+ F/hY4gGp8yzl49THMQ1CGGNQ2npunCuqt4yFX2J4QBdhgUS15gqTjp+g7DqdJCOvihoPNBH8HV4
+ LO9WIToBai3LsrtvHADRkYncHZewJ4kFH/nMTq/Mfi0VCQIAtt7ygO0Bis/xWpk8trlY72WAGlN
+ RLIgoYcbTlLeDXUKQBNSsbRFvuNQvKMX+wPJiVRZwc9WbZPvUqfYTE7uZhHA9ej58SOPBJmn6a3
+ ZHyofM3zFlDG9zQSIo1VOVSTWsRYt4+TLcmq+B2HDc5jbCkuhrGu6r45fKOtnbKxS1qygHhYbGM
+ g7ZAMjdMf0zd8nG+WFpnDfRrvX74klBeex988MUofZzahavSb7OO3bQx7GFg0uixZCcoOxAJSNa
+ M6P6rs0IhVmihaRqWmTBqHDrsfZQlCwo2qLbmAcA1gzxIkIkXSQ62g+ks=
+X-Google-Smtp-Source: AGHT+IECmPThv0Pj+IN2TLSZCg1tMWtQ/247+6M4vZaDrhQEPTeNbG+7UqTvBNKcUxCWgn8CSNVN6Q==
+X-Received: by 2002:a05:600c:3511:b0:477:6d96:b3ca with SMTP id
+ 5b1f17b1804b1-4778703e676mr30655935e9.5.1762954919724; 
+ Wed, 12 Nov 2025 05:41:59 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e8e743sm34172765e9.15.2025.11.12.05.42.05
+ ffacd0b85a97d-42ac675cd25sm34703662f8f.22.2025.11.12.05.41.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Nov 2025 05:42:06 -0800 (PST)
+ Wed, 12 Nov 2025 05:41:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,18 +71,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 03/10] chardev/char: Improve ChardevClass::chr_write()
- docstring
-Date: Wed, 12 Nov 2025 14:41:36 +0100
-Message-ID: <20251112134143.27194-4-philmd@linaro.org>
+Subject: [PATCH v3 02/10] chardev/char-io: Add @docstrings for
+ io_channel_send[_full]()
+Date: Wed, 12 Nov 2025 14:41:35 +0100
+Message-ID: <20251112134143.27194-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251112134143.27194-1-philmd@linaro.org>
 References: <20251112134143.27194-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,35 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/chardev/char.h | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/chardev/char-io.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index b65e9981c14..df55c7f4e67 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -263,7 +263,17 @@ struct ChardevClass {
-     void (*open)(Chardev *chr, ChardevBackend *backend,
-                  bool *be_opened, Error **errp);
+diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
+index ac379ea70e3..5b181be6a0b 100644
+--- a/include/chardev/char-io.h
++++ b/include/chardev/char-io.h
+@@ -38,8 +38,28 @@ GSource *io_add_watch_poll(Chardev *chr,
  
--    /* write buf to the backend */
-+    /**
-+     * chr_write: Write data to a character backend
-+     * @s: the character backend to write to
-+     * @buf: the data to write
-+     * @len: the number of bytes to write
-+     *
-+     * Called with chr_write_lock held.
-+     *
-+     * Returns: the number of bytes consumed or -1 on error.
-+     * On error, %errno is also set as appropriate.
-+     */
-     int (*chr_write)(Chardev *s, const uint8_t *buf, int len);
+ void remove_fd_in_watch(Chardev *chr);
  
-     /*
++/**
++ * io_channel_send:
++ * @ioc: the IO channel object
++ * @buf: the data
++ * @len: the number of bytes to send
++ *
++ * Returns: the number of bytes consumed or -1 on error.
++ * On error, %errno is also set as appropriate.
++ */
+ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
+ 
++/**
++ * io_channel_send_full:
++ * @ioc: the IO channel object
++ * @buf: the data
++ * @len: the number of bytes to send
++ * @fds: an array of file handles to send
++ * @nfds: number of file handles in @fds
++ *
++ * Returns: the number of bytes consumed or -1 on error.
++ * On error, %errno is also set as appropriate.
++ */
+ int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
+                          int *fds, size_t nfds);
+ 
 -- 
 2.51.0
 
