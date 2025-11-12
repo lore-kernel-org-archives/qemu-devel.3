@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ADAACD4853
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 22:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC5CCD4855
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 22:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJJ0s-0002Aj-4f; Wed, 12 Nov 2025 17:08:26 -0500
+	id 1vJJRH-0007FB-2a; Wed, 12 Nov 2025 17:35:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJIoi-0005Lh-Ua
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 16:55:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJIof-0003I2-Ij
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 16:55:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762984547;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j3ZUMuwTNX7Dqo1vtiBXmt14e+7wCBUvIkZ0++wW0DM=;
- b=LMbl2pKndTHrMJ7qxGazJWMN2QrmDeBUdEOApXYBqmarojOfCqG8u9hRskOGgeMGX+NTkw
- UK556eeqEQOtMjwHf5Vf+OnS+FEApkzoNGzLXXbGbIMfQDQGDf/ZWVQ66Jlv/pp9uiH+1R
- 1PIIG19U+LSZ+674tY1qdVGYdBQxEB0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-HaAnKoHOPmqksu-8wbJlMg-1; Wed, 12 Nov 2025 16:55:46 -0500
-X-MC-Unique: HaAnKoHOPmqksu-8wbJlMg-1
-X-Mimecast-MFC-AGG-ID: HaAnKoHOPmqksu-8wbJlMg_1762984546
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8b17194d321so43932385a.0
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 13:55:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJJR2-00075N-8x
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 17:35:30 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJJR0-0003Ss-Et
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 17:35:28 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42b3108f41fso100639f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 14:35:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762984546; x=1763589346; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=j3ZUMuwTNX7Dqo1vtiBXmt14e+7wCBUvIkZ0++wW0DM=;
- b=cxYJU1lDNRArFdDGjbcfEXLcP7XK+JUwv+TCDPfcY3ITPUoyGfod1yNYWQd6BZd/xj
- A1P0IPopwixzIpQtCe8RyiNKLHNxyc4VRZDxuNUOR/aay9r9BWvrrz/EubBak2PfP8oI
- jhLJPCn8xBVb4YCskdavQTe4rmhJzTTXMp1QCTQjku7NPYDHgVvSZ1dagmULFxPtAjrm
- A7a0JX+fIrvTNmmU747aaC8tInQT3qjgYX8QB7M797NZ77GphfryTpQqWeJljJoKjQnm
- AkwWrikV26ZSVS27eeg872a0JA6OZZWFsAvZDhGIkC5aP9Bhav3OxYEv/xcwieoyYy9x
- Yp5A==
+ d=linaro.org; s=google; t=1762986924; x=1763591724; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1g0NEWhSiHjpehnnY5FpjAg6Ilpau6hRglCYbGcTLu4=;
+ b=iNsf1UvhR4frg6ig0tm6Sl0JoYAdwUlarPnpoYtE940M9011zHn8Gcguf/NMavAaHV
+ WR49LraD3RE7jQDcUfROmfFRUJtgMtCtDEYHQXbC8JDm9Q3RXKa+7JOoTFLAefu+MZjl
+ BnGJLFrHyH/ia6qYHmP5jrOp10ueX4P8tx2gTyLtdo04HEaOBVHGC+GYb6jwdFPZTMbc
+ nsAMytebjB9FlWquPsscxhiY3Zl0ga2rGbQKmjddAfSWvf9PmHDAPTVl+t9IzOuzg3U9
+ 3X9v/xBwcFvmGb884usexfseaTGjdKs1FFZE16cmxTAkG40xQqkISUn2xvGjv0jcLTUr
+ R1og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762984546; x=1763589346;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=j3ZUMuwTNX7Dqo1vtiBXmt14e+7wCBUvIkZ0++wW0DM=;
- b=kNfqmBsNil7Wo9Wv1BfZB/id6I0YlWGfmzPZPm5C9EVEb8/lSo0i8JbIqauzweJM2B
- 3DQh8Zo4ZmOnHUM40xHkz1b9uXT9aeoQWYGH++DMwAtl1chIZpK2cCAD7Igl9FpvcY7n
- 1lDNP0/ml98AI5nvsvWhAIsynbIdaMO9dUk5xuS/4CRwfMiuRjG0nYxp7jDzH0qqLZeQ
- hoc7jSFWNghyYsVxQVcy+1rhiP6VmIoHFh8DHpWS6JNdrRPLtC4Qnr6fLRd410pG/kG9
- C2i+xm54G2T7AMqKc3NdLauwSJN1B3OFTYwdNqb4/h6FruboUmIRcdIiplo2b55fgwzG
- Kyog==
+ d=1e100.net; s=20230601; t=1762986924; x=1763591724;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1g0NEWhSiHjpehnnY5FpjAg6Ilpau6hRglCYbGcTLu4=;
+ b=KG9n06mHzmwXm0O8bBDFMlGUWSIYMqlCyQRBxbGu+o1ilPtlkxqQwyH17auiXnEU/c
+ owbPRRZp89r3MlhzIRAOfzSZvtyytyQphjgh1Q2f8zoLa7xMsxfXID6gLCuJa4y+VMu4
+ p9Wzm7bY5C/SHXe+RjWIx0AkK7IkaMYImdJq8FnU/fAzkbMRsVE/o6MZL0or/O+AaqbJ
+ ABoYHnU9t6iyEwWs5n7LlUTkobC+S4eBNHRVYWUdNQpZqEBL9wKdlJruUyO2Udvu3al9
+ TQkSq72waPx45YLwSwu+lU25l/UYEPcPDZLCJ2d/BaRfZEzWuteE6kkMEBXneuKuqeWB
+ Wpig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnbGbTs1F9HrWR6V7HTuGkOSVbgJkvaFt4X9aIbg4PFDQQXMfXz7xhWbICfix8HIa423P4sJGLz8y3@nongnu.org
-X-Gm-Message-State: AOJu0Yx7anfqoN/hCeU0KhdGGqMShgSbQ48bJCDppVbhQA97qsUHv1NI
- 8hbPx11tS23iXY3FEK2JxF9yqGyY+YVoD4N6wg+VbUBBXmZuumC8E9hunoY++pEXPvS937S0rCl
- lcOQ2khrFpHodap34oECGUKqFAFL9QvACxgUf3RGZtnbhsDcWOF/OHbg3
-X-Gm-Gg: ASbGncv7Kvk7lGCgGomPHRgxwtH5yvJBRFvOG+8H8sSJ3I4hmS0uGCDFcEt6I/N7w+P
- lR5xLrufzZhAZz04PUHvpLcKOt6WN5jiX5szPrqct1xuf4mNn7L/ki4sfKt7ylOs1AZcce7+DQ/
- UY1peKHb4LYYtfjyYkmJDSb30yM0l0H3LvcFGGj31yEx7nURJqWxLUOjJFaNVnL4NMxZccN5wCb
- 1UqJJ5wHsqQSQCPtDmC7kzXDNgdOv4tVWxVtOMZh9FyGaH/ur/j1J2X9rNCA8t2URBeNRPWUVVM
- njpayYMYOJ3i6ggVULeWKPhr88dojR8IQFvEvsNemM1aQkAUPI8YHGwR2LSR9FibnHo=
-X-Received: by 2002:a05:620a:4591:b0:8b2:9aba:e887 with SMTP id
- af79cd13be357-8b29b77aa53mr598624285a.24.1762984545438; 
- Wed, 12 Nov 2025 13:55:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtRxuUCrj1XyqtvgMlfQpMU53WACUfF3wAjXfiDXs5mmnbLk+6xaqh1HSCMuVilJl3hcRVhw==
-X-Received: by 2002:a05:620a:4591:b0:8b2:9aba:e887 with SMTP id
- af79cd13be357-8b29b77aa53mr598621085a.24.1762984544888; 
- Wed, 12 Nov 2025 13:55:44 -0800 (PST)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b2aee9e4c8sm5686485a.12.2025.11.12.13.55.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Nov 2025 13:55:44 -0800 (PST)
-Date: Wed, 12 Nov 2025 16:55:42 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, mst@redhat.com,
- qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com,
- thuth@redhat.com, berrange@redhat.com
-Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
-Message-ID: <aRUCXvHkpfZgZCR0@x1.local>
-References: <20251107020149.3223-1-jasowang@redhat.com>
+ AJvYcCVOa10YzuEpzU7BM/1ubHOYuen10BeqpMI5BG5Oqd4nf4nUNKhpfW3MDwkGcndlUju69dDZoK0UW94m@nongnu.org
+X-Gm-Message-State: AOJu0YyLEBFo3barXWrxch3nVAs8xK9LUliNuQjT3e4pVktI9vkHOYR5
+ 61dBc3ClSWbgmnZMLUOO42bliD6qV9kqPuRNG+b6n2ZVfHMUGP5sE3x20NMSCDOc/ms=
+X-Gm-Gg: ASbGncuocDRYLO9MsZq4qfJ2NAygKcntd4op7Ad+IR1Bb3XrkM+tYe7LPBBhI8ioHR2
+ 3Qy4awsiA+fxRqYEaQnqMmgi0BYdlPexrxTgCJ5EA1fqR+HBvWrWXPIguRYMEvJFyafKOYJhjk4
+ 8CvAPxqXsQe302Lupj7gCCiWQtEZGEmoHC2FmNddWAsT4V/5TSmvmvvw4+AR5ypH+ifubliTBgA
+ rq0w/mRf2MdvfKs7uhUb1jM1MBQzwHRWG2YIGwthO+oOvU+QCBMXaOZ1ARtyE8IKRU6rKoUuye4
+ 469GhzVXfeOoVDU1lmKCDNUeLbfsQRp+WxtDyQ5h+gy62imQWO2012hZNTHw3EKxP7BDc2GZhHB
+ 0HjHt/0s8iCTNO9OdaeIPiqv5ZWdsV+nTcZioI/oSc+AXfCuERwNZW5GYEppfV32wLE02hCS3sq
+ 6VChRX4ntTpShRxjgunoohiY8aJz6tjiRNZ27OMPHyLHJunDJSYe6blQ==
+X-Google-Smtp-Source: AGHT+IEtTCiltdIs7bGHhoHVEhQuC2YCaLu+VlCSh30cf7LIKkTyhglYr4uh8b1FssBNMB4bZ/mX3Q==
+X-Received: by 2002:a05:6000:4008:b0:42b:4219:269 with SMTP id
+ ffacd0b85a97d-42b4bdb0029mr4543025f8f.41.1762986924424; 
+ Wed, 12 Nov 2025 14:35:24 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e84a4fsm169125f8f.11.2025.11.12.14.35.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Nov 2025 14:35:23 -0800 (PST)
+Message-ID: <c782890b-1dc5-4ac6-9792-d31a07c2354e@linaro.org>
+Date: Wed, 12 Nov 2025 23:35:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251107020149.3223-1-jasowang@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Qemu-devel] [PULL 16/17] hw/pci-bridge: format special OFW unit
+ address for PXB host
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Kevin O'Connor <kevin@koconnor.net>
+References: <1435326248-24291-1-git-send-email-mst@redhat.com>
+ <1435326248-24291-17-git-send-email-mst@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1435326248-24291-17-git-send-email-mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,261 +106,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
-> We used to clear features silently in virtio_net_get_features() even
-> if it is required. This complicates the live migration compatibility
-> as the management layer may think the feature is enabled but in fact
-> not.
-> 
-> Let's add a strict feature check to make sure if there's a mismatch
-> between the required feature and peer, fail the get_features()
-> immediately instead of waiting until the migration to fail. This
-> offload the migration compatibility completely to the management
-> layer.
-> 
-> Signed-off-by: Jason Wang <jasowang@redhat.com>
+Hi Michael and Marcel,
 
-Jason, thanks for help looking into the problem!
+(old patch...)
 
-Am I right that after this patch applied, whenever a new QEMU boots with
-the new machine types (e.g. having USO* by default ON), will fail to boot
-on an old kernel that doesn't support USO*, but ask the users to turn off
-USO* features explicitly in the virtio-net devices?
+On 26/6/15 15:46, Michael S. Tsirkin wrote:
+> From: Laszlo Ersek <lersek@redhat.com>
+> 
+> We have agreed that OpenFirmware device paths in the "bootorder" fw_cfg
+> file should follow the pattern
+> 
+>    /pci@i0cf8,%x/...
+> 
+> for devices that live behind an extra root bus. The extra root bus in
+> question is the %x'th among the extra root buses. (In other words, %x
+> gives the position of the affected extra root bus relative to the other
+> extra root buses, in bus_nr order.) %x starts at 1, and is formatted in
+> hex.
+> 
+> The portion of the unit address that comes before the comma is dynamically
+> taken from the main host bridge, similarly to sysbus_get_fw_dev_path().
+> 
+> Cc: Kevin O'Connor <kevin@koconnor.net>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Marcel Apfelbaum <marcel@redhat.com>
+> Signed-off-by: Laszlo Ersek <lersek@redhat.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>   hw/pci-bridge/pci_expander_bridge.c | 53 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 53 insertions(+)
+> 
+> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> index 70708ef..57f8a37 100644
+> --- a/hw/pci-bridge/pci_expander_bridge.c
+> +++ b/hw/pci-bridge/pci_expander_bridge.c
+> @@ -43,6 +43,8 @@ typedef struct PXBDev {
+>       uint16_t numa_node;
+>   } PXBDev;
+>   
+> +static GList *pxb_dev_list;
+
+This list is static ...
+
+> +
+>   #define TYPE_PXB_HOST "pxb-host"
+>   
+>   static int pxb_bus_num(PCIBus *bus)
+> @@ -89,12 +91,45 @@ static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
+>       return bus->bus_path;
+>   }
+>   
+> +static char *pxb_host_ofw_unit_address(const SysBusDevice *dev)
+> +{
+> +    const PCIHostState *pxb_host;
+> +    const PCIBus *pxb_bus;
+> +    const PXBDev *pxb_dev;
+> +    int position;
+> +    const DeviceState *pxb_dev_base;
+> +    const PCIHostState *main_host;
+> +    const SysBusDevice *main_host_sbd;
+> +
+> +    pxb_host = PCI_HOST_BRIDGE(dev);
+> +    pxb_bus = pxb_host->bus;
+> +    pxb_dev = PXB_DEV(pxb_bus->parent_dev);
+> +    position = g_list_index(pxb_dev_list, pxb_dev);
+> +    assert(position >= 0);
+
+... and for some reason when calling pxb_host_ofw_unit_address() twice
+it triggers the following:
+
+Assertion failed: (position >= 0), function pxb_host_ofw_unit_address, 
+file pci_expander_bridge.c, line 154.
+
+Any idea why it got implemented this way and how to modify to
+avoid the assertion? All other devices implementing the
+SysBusDeviceClass::explicit_ofw_unit_address handler don't abort
+when being called multiple times, what is so particular here?
 
 Thanks,
 
-> ---
->  hw/core/machine.c              |   1 +
->  hw/net/virtio-net.c            | 153 +++++++++++++++++++++++++--------
->  include/hw/virtio/virtio-net.h |   1 +
->  3 files changed, 119 insertions(+), 36 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 681adbb7ac..a9e43c4990 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -40,6 +40,7 @@
->  
->  GlobalProperty hw_compat_10_1[] = {
->      { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-> +    { TYPE_VIRTIO_NET, "strict-peer-feature-check", "false"},
->  };
->  const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
->  
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 33116712eb..3acc5ed4a6 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3090,53 +3090,120 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
->      virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
->  
->      if (!peer_has_vnet_hdr(n)) {
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
-> -
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
-> -
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> -
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> -        virtio_clear_feature_ex(features,
-> -                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> -        virtio_clear_feature_ex(features,
-> -                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> +        if (n->strict_peer_feature_check) {
-> +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_CSUM) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO4) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO6) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_ECN) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_ECN) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_HASH_REPORT)) {
-> +                error_setg(errp, "virtio_net: peer doesn't support vnet hdr");
-> +                return;
-> +            }
-> +        } else {
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
-> +
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
-> +
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> +
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> +            virtio_clear_feature_ex(features,
-> +                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> +            virtio_clear_feature_ex(features,
-> +                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
->  
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> +        }
->      }
->  
->      if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-> +        if (n->strict_peer_feature_check) {
-> +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UFO) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UFO)) {
-> +                error_setg(errp, "virtio_net: peer doesn't support UFO");
-> +                return;
-> +            }
-> +        } else {
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-> +        }
->      }
->      if (!peer_has_uso(n)) {
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> +        if (n->strict_peer_feature_check) {
-> +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6)) {
-> +                error_setg(errp, "virtio_net: peer doesn't support USO");
-> +                return;
-> +            }
-> +        } else {
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> +        }
->      }
->  
->      if (!peer_has_tunnel(n)) {
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> -        virtio_clear_feature_ex(features,
-> -                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> -        virtio_clear_feature_ex(features,
-> -                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> +        if (n->strict_peer_feature_check) {
-> +            if (virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
-> +                virtio_has_feature_ex(features,
-> +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM)) {
-> +                error_setg(errp, "virtio_net: peer doesn't support tunnel GSO");
-> +                return;
-> +            }
-> +        } else {
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> +            virtio_clear_feature_ex(features,
-> +                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> +            virtio_clear_feature_ex(features,
-> +                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> +        }
->      }
->  
->      if (!get_vhost_net(nc->peer)) {
->          if (!use_own_hash) {
-> -            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> -            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> +            if (n->strict_peer_feature_check) {
-> +                if (virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT) |
-> +                    virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-> +                    error_setg(errp,
-> +                               "virtio_net: peer doesn't support RSS/HASH_REPORT");
-> +                    return;
-> +                }
-> +            } else {
-> +                virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> +                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> +            }
->          } else if (virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
->              virtio_net_load_ebpf(n, errp);
->          }
-> @@ -3145,14 +3212,26 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
->      }
->  
->      if (!use_peer_hash) {
-> -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> +        if (n->strict_peer_feature_check &&
-> +            virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT)) {
-> +            error_setg(errp, "virtio_net: peer doesn't HASH_REPORT");
-> +            return;
-> +        } else {
-> +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> +        }
->  
->          if (!use_own_hash || !virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
->              if (!virtio_net_load_ebpf(n, errp)) {
->                  return;
->              }
->  
-> -            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> +            if (n->strict_peer_feature_check &&
-> +                virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-> +                error_setg(errp, "virtio_net: fail to attach eBPF for RSS");
-> +                return;
-> +            } else {
-> +                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> +            }
->          }
->      }
->  
-> @@ -4313,6 +4392,8 @@ static const Property virtio_net_properties[] = {
->                                 host_features_ex,
->                                 VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
->                                 false),
-> +    DEFINE_PROP_BOOL("strict-peer-feature-check", VirtIONet,
-> +                     strict_peer_feature_check, true),
->  };
->  
->  static void virtio_net_class_init(ObjectClass *klass, const void *data)
-> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-> index 5b8ab7bda7..abd4ca4bb0 100644
-> --- a/include/hw/virtio/virtio-net.h
-> +++ b/include/hw/virtio/virtio-net.h
-> @@ -222,6 +222,7 @@ struct VirtIONet {
->      /* primary failover device is hidden*/
->      bool failover_primary_hidden;
->      bool failover;
-> +    bool strict_peer_feature_check;
->      DeviceListener primary_listener;
->      QDict *primary_opts;
->      bool primary_opts_from_json;
-> -- 
-> 2.34.1
-> 
+Phil.
 
--- 
-Peter Xu
+> +
+> +    pxb_dev_base = DEVICE(pxb_dev);
+> +    main_host = PCI_HOST_BRIDGE(pxb_dev_base->parent_bus->parent);
+> +    main_host_sbd = SYS_BUS_DEVICE(main_host);
+> +
+> +    if (main_host_sbd->num_mmio > 0) {
+> +        return g_strdup_printf(TARGET_FMT_plx ",%x",
+> +                               main_host_sbd->mmio[0].addr, position + 1);
+> +    }
+> +    if (main_host_sbd->num_pio > 0) {
+> +        return g_strdup_printf("i%04x,%x",
+> +                               main_host_sbd->pio[0], position + 1);
+> +    }
+> +    return NULL;
+> +}
+> +
+>   static void pxb_host_class_init(ObjectClass *class, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(class);
+> +    SysBusDeviceClass *sbc = SYS_BUS_DEVICE_CLASS(class);
+>       PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
+>   
+>       dc->fw_name = "pci";
+> +    sbc->explicit_ofw_unit_address = pxb_host_ofw_unit_address;
+>       hc->root_bus_path = pxb_host_root_bus_path;
+>   }
+>   
+> @@ -149,6 +184,15 @@ static int pxb_map_irq_fn(PCIDevice *pci_dev, int pin)
+>       return pin - PCI_SLOT(pxb->devfn);
+>   }
+>   
+> +static gint pxb_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    const PXBDev *pxb_a = a, *pxb_b = b;
+> +
+> +    return pxb_a->bus_nr < pxb_b->bus_nr ? -1 :
+> +           pxb_a->bus_nr > pxb_b->bus_nr ?  1 :
+> +           0;
+> +}
+> +
+>   static int pxb_dev_initfn(PCIDevice *dev)
+>   {
+>       PXBDev *pxb = PXB_DEV(dev);
+> @@ -192,9 +236,17 @@ static int pxb_dev_initfn(PCIDevice *dev)
+>                                  PCI_STATUS_66MHZ | PCI_STATUS_FAST_BACK);
+>       pci_config_set_class(dev->config, PCI_CLASS_BRIDGE_HOST);
+>   
+> +    pxb_dev_list = g_list_insert_sorted(pxb_dev_list, pxb, pxb_compare);
+>       return 0;
+>   }
+>   
+> +static void pxb_dev_exitfn(PCIDevice *pci_dev)
+> +{
+> +    PXBDev *pxb = PXB_DEV(pci_dev);
+> +
+> +    pxb_dev_list = g_list_remove(pxb_dev_list, pxb);
+> +}
+> +
+>   static Property pxb_dev_properties[] = {
+>       /* Note: 0 is not a legal a PXB bus number. */
+>       DEFINE_PROP_UINT8("bus_nr", PXBDev, bus_nr, 0),
+> @@ -208,6 +260,7 @@ static void pxb_dev_class_init(ObjectClass *klass, void *data)
+>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>   
+>       k->init = pxb_dev_initfn;
+> +    k->exit = pxb_dev_exitfn;
+>       k->vendor_id = PCI_VENDOR_ID_REDHAT;
+>       k->device_id = PCI_DEVICE_ID_REDHAT_PXB;
+>       k->class_id = PCI_CLASS_BRIDGE_HOST;
 
 
