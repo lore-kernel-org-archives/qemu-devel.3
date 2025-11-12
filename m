@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 912A1CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878B4CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4Xu-0004tG-Gz; Wed, 12 Nov 2025 01:41:34 -0500
+	id 1vJ4h4-0006bB-Gu; Wed, 12 Nov 2025 01:51:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1vJ4XD-0004EC-3e; Wed, 12 Nov 2025 01:40:51 -0500
-Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
+ id 1vJ4g9-0006KQ-EL; Wed, 12 Nov 2025 01:50:07 -0500
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1vJ4XA-0000O3-NG; Wed, 12 Nov 2025 01:40:50 -0500
+ id 1vJ4g4-0001Wb-JG; Wed, 12 Nov 2025 01:50:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1762929643; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=sNeu3GrLhvrRzSsokkv4ce2zQoYHo57v21pIm2tpfvo=;
- b=d4zXcNWjleO0+T0ydaX1atGN9Oe6rcetGl7ExJPmTnkjZwPsql3jKRlOgT5gt1uzG9pCOt33Oh/YzgWWDKJwGj9QvsdoYmqNROmmZjSq9dYqFu8Bs+EsythgpXRl/Qxd053f7+d3YsxopYR+E3LIP0vwsOGKWQhOkpDRvJyEiDs=
+ t=1762930194; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=vgzzjNPLZ8wZOVR/jL4BoqiZstbNeBM+KJ0qg0mSqEY=;
+ b=SXHOghHLpLx39yNohZrRajqFW3KI/ikNYIa+0oxKtTiJgdkT+hXMjMVnLB+H5fim24C4wpi05v2jIsL0T9+vUFSeVnHpc+lAgHuaNTbwhYvNYjK1K7uuCc7HJ4ZKuu3J329NIMhjo5hwI+dWASmlyEBT2FozuXHiJCH/NnQmFfw=
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WsF6VK2_1762929641 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 12 Nov 2025 14:40:41 +0800
+ fp:SMTPD_---0WsFCrAS_1762930191 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 12 Nov 2025 14:49:52 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, Huang Tao <eric.huang@linux.alibaba.com>,
  TANG Tiancheng <lyndra@linux.alibaba.com>
-Subject: [PATCH v3 6/6] target/riscv: Enable SMMPT extension
-Date: Wed, 12 Nov 2025 14:40:26 +0800
-Message-Id: <20251112064026.44222-7-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v4 4/6] target/riscv: Implement SMMPT fence instructions
+Date: Wed, 12 Nov 2025 14:49:43 +0800
+Message-Id: <20251112064945.46533-5-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20251112064026.44222-1-zhiwei_liu@linux.alibaba.com>
-References: <20251112064026.44222-1-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20251112064945.46533-1-zhiwei_liu@linux.alibaba.com>
+References: <20251112064945.46533-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.112;
+Received-SPF: pass client-ip=115.124.30.133;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -67,37 +67,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patch completes the SMMPT implementation by adding support for the
+new fence instructions: `mfence.spa` and `minval.spa`.
+
+According to the specification, these instructions act as memory ordering
+fences for MPT updates. In QEMU's TCG model, this is conservatively
+implemented by flushing the entire TLB, which ensures that any subsequent
+memory accesses will re-evaluate permissions and see the effects of any prior
+MPT modifications.
+
+The instructions are privileged and will cause an illegal instruction
+exception if executed outside of M-mode.
+
 Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
 Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/cpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/insn32.decode                    |  2 ++
+ .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index b32d19344b..2ef4b6da7b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -204,8 +204,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_13_0, ext_smdbltrp),
-     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-     ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-+    ISA_EXT_DATA_ENTRY(smmpt, PRIV_VERSION_1_13_0, ext_smmpt),
-     ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
-     ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
-+    ISA_EXT_DATA_ENTRY(smsdid, PRIV_VERSION_1_13_0, ext_smsdid),
-     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
-     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-     ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
-@@ -1372,6 +1374,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index cd23b1f3a9..cf58f1beee 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
+ mret        0011000    00010 00000 000 00000 1110011
+ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
++mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
++minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
  
- /* These are experimental so mark with 'x-' */
- const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-+    MULTI_EXT_CFG_BOOL("x-smmpt", ext_smmpt, false),
-+    MULTI_EXT_CFG_BOOL("x-smsdid", ext_smsdid, false),
-     MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
- 
-     { },
+ # *** NMI ***
+ mnret       0111000    00010 00000 000 00000 1110011
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..5ec6bf5991 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+ #endif
+     return false;
+ }
++
++#define REQUIRE_SMSDID(ctx) do {          \
++    if (!ctx->cfg_ptr->ext_smsdid) {      \
++        return false;                     \
++    }                                     \
++} while (0)
++
++static bool do_mfence_spa(DisasContext *ctx)
++{
++#ifndef CONFIG_USER_ONLY
++    REQUIRE_SMSDID(ctx);
++    if (ctx->priv != PRV_M) {
++        return false;
++    }
++    decode_save_opc(ctx, 0);
++    gen_helper_tlb_flush_all(tcg_env);
++    return true;
++#endif
++    return false;
++}
++
++static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
++{
++    return do_mfence_spa(ctx);
++}
++
++static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
++{
++    return do_mfence_spa(ctx);
++}
 -- 
 2.25.1
 
