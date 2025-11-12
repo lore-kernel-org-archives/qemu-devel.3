@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163B2CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 15:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526AACCF9E3
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 15:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJCVm-0003pv-IV; Wed, 12 Nov 2025 10:11:54 -0500
+	id 1vJCiX-0005Tj-Km; Wed, 12 Nov 2025 10:25:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vJCTG-0002MO-Ce
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 10:09:20 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1vJCh0-0004Et-Us
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 10:23:32 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vJCTE-000750-EP
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 10:09:18 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47721743fd0so5509765e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 07:09:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1vJCgz-0001Vh-5m
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 10:23:30 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2980d9b7df5so8583935ad.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 07:23:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762960140; x=1763564940; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qEN0Nqv2JL7nJEzwv2A8fmEjvJqvrO8INDU15jCsKSA=;
- b=dZell2vehUpIMZz30JF/63AEBucPujvnElC3oUotCjXen5/6h7gn8uJvW909c5ZEA2
- DhLiVNIuLP+b6XupHIW76rlV0aIt5uUOT1TD4RlVr7xPpFyIoFJD86f8hDKtrtYZs2VJ
- dQX4PYheFu0KK1h/U8nTgBLfq2RjbCfa+CMBFe3U+TEHhG7z0ZLb3CkePvf5lqBg+u1L
- OiQeZCXySTzThUuqc0laZh1BBentFxcuwtMhJY1K6Cv6EEDHh+sUET31bwdQJX5H9Fm7
- 0beTwLeHO9EZtgi8yGLUbyRJKmin+9qFyjLgbKNH2xbeHQzbmL5nX9qKKpdRpRYLmhAs
- bx+Q==
+ d=gmail.com; s=20230601; t=1762961004; x=1763565804; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aQoFD8HHNCUzu8Xv77GZfmrU4JLWRGqETvU5zFCEuZo=;
+ b=DRxFMR0vsjSp3qtlQnRLst3oppyPcAro5wio3FWSB8+NMBDWUa//8NbqIiqgph46sq
+ 9pjhM9RvTzDHQCDSUmMR2uGar4bNb/BEL+TlyTcG4hJOD9UCSdSb7IgzF7x6z3FXmP3W
+ nNsjStKouJK9HPcDIUyXCGbM95YzPM6BWFLqVXGHtumzzpeiYSfSho28R1VLRUkN9VAC
+ DnAbK5YmHyaHHB7pqqEWWTSVPkPdV5kbOpyxIyGX0ByMnbJy/kIpI+6nLjB0l5sj0Kj4
+ joYhJiOI7sVBpsz2NMNMSiTJ999gj0nuC2OpRkIcBS+F4PrEg6dAtJto7z8cLOiy0HRg
+ +elg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762960140; x=1763564940;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qEN0Nqv2JL7nJEzwv2A8fmEjvJqvrO8INDU15jCsKSA=;
- b=K4LFVr8mPKPsqfx/ejO+WP7wpDXCgcqWxxGEwim9XC52uU8+jJVb6TcMoYd97soTNl
- vuXJiNH1h1wqUW67RfBJyFnLejw67WMs5OieeHB0BOcCm6/vSmhKD7dlwBwOLRV9QmyY
- OMj3HnxEoyyPdX3i+8UZaAvMRPFJHxBAai4hed4VKsR2CFJGuRrabFW3Nc2ihHNGKJYM
- QIATIEXmOpLRiCMXzJQT32bwv8A2DZ/z3gcWnrbDG/NErHN1UzbUFk77Mc4yND3EOaK2
- u2lETXtVzmb6N+XSH9L6qU/AY3CorzEwHMOXai4+DDQUd41gFtpWwKFlxo9YY4Qr/QEQ
- 2CqA==
-X-Gm-Message-State: AOJu0YwE7rBj4/RYsWMqFIHiui166RRQeepU8L3/XpqX4fAw2haTLsRq
- Ky52K/Tq8XkfSb+kL+4MzKAVEKdjA/fw4U3sQ9irfsW3fn403lMoEUltbEhlv/bx37I=
-X-Gm-Gg: ASbGncsxqEQppRNNzgVncbL/oXOK1nHVQ2K+N4rGuH/D4pPmc2irjUL2ug0dPomf7d/
- coxpDjRcfPJMTudt+pBLyYFMsEZuwyJwjgpinPKt7tJAp0iLXxa3O9POiAOm5wEkuN8ZebP2jWj
- EDopmKP/JWXXbnpn4LDECrFoEYrVzQ3JsrNHt82YqVOqxLysO57G3+seOjBAatHHS/5Muv4SDsG
- 1ld/js62JVglBNI6kG2vj2v6RcFROF8rCIwxAvXit86Kyz1I/9d2k+QYxh63zDsq4YuoC7MYixR
- lOc/goAeEpjpfHp3+0P36jWGRQiKc6bO/BfMXnzl+WG6S/Ggy+006rK6UzbNcXGKu5ghmxHjaw3
- OOi741LmNp4KwuuAheFn38W7ZIiIRFSSqNmNjkphMyZOofvj4IyMe0DnSQ4OKe+kauOe9anjs9M
- KBu6J6wHBH5fX8zKbDLv1d2EZ1hyUb0HgfNWb53h00FOVQBcG76QyhrXu9Wg==
-X-Google-Smtp-Source: AGHT+IGa/bOsJ2ZnJYJnett7KY7mZhOf9sKXK3UDY+qLOsl4nglzaordZYg2Pg/JxwJlktIdtL51FA==
-X-Received: by 2002:a05:600c:4fc7:b0:477:7d94:5d0e with SMTP id
- 5b1f17b1804b1-477871c33cfmr27011805e9.27.1762960139965; 
- Wed, 12 Nov 2025 07:08:59 -0800 (PST)
-Received: from [192.168.8.105] (17.red-37-158-52.dynamicip.rima-tde.net.
- [37.158.52.17]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e7006bsm38068515e9.12.2025.11.12.07.08.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Nov 2025 07:08:59 -0800 (PST)
-Message-ID: <efd7a408-0a62-420a-9798-9f123a54408b@linaro.org>
-Date: Wed, 12 Nov 2025 16:08:56 +0100
+ d=1e100.net; s=20230601; t=1762961004; x=1763565804;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aQoFD8HHNCUzu8Xv77GZfmrU4JLWRGqETvU5zFCEuZo=;
+ b=NCGVsQH+afoPnBxCgunHrlkoSDdA64//86AwBlY01wzlnHRSvggXHRI1yYL57AfKTZ
+ JTmA6Mt54EaaXpypK3OK9aOhXj4wfeW2x+JE3KWeH6pGIIDlWPL/zl5ZoDEvzi/nxelC
+ QHWGvogUiXFPA7cgfA7td3S2o5tsH2z4UOZqoNKUW0QeqX+tniRjV8dFyfL89kWqZE+i
+ qSmNjJntqzxKJlZvv9aUtb9AB2Oi+ObqNqg425/rHgMwOCrbCnq3UXCxAXG769yYNkH7
+ J8tw8e9JgmMIyd7EXtdzzEqXORk1HKrke+4H/9GNIWECOPJ2mWPhMXeyZ4MlVHlmwUJS
+ 5CAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJG9PFBi3sSf0GfD+OlnrGFQ5YHDSzczu3JHlOVm7Nj+VDevfB+KmNjYN9r2jiAdDKM3nOC1I8EwbL@nongnu.org
+X-Gm-Message-State: AOJu0Yxl+PkjftuHhSvLlScjJNO4+/Zno+c1gA9iUgDk1eIur2moxzHf
+ wdLpq2JlO6eBin85p4HKJQk1c2e0w7ZYswyAZWFC34FiVobRH6B2UR5/EFLX9g/KPNDdTlgwSzd
+ ygQL7itBHQc1QnTt/G2pZ9HYc9v3udPc=
+X-Gm-Gg: ASbGncvwuOqZ/Byh8CnKSKqxXHMbZSdNV+TBJnSle3pgavr+HPYV7vt+Ogn2vw1n66e
+ yxaTsn2obYdJitNTA9s4VHMwSSH9rMe6DBA5uRBNa81aR3yOUj09pMefQjTSoyGY5Tn2ipRBGZy
+ z5XBm2sglP/cxb1Z3fetu7OMccJkvP46Sw8InDHtjEBZdpRdXRVyMDt7vX6mjxhVcjOBY/+qrqa
+ q/7d8eu9IjAOrBCQprWTRfVNDob1/+CQMCqzfTWtSPhdrWTSmh1Z7dET9xBMPHyg7kpnnUTq3Qd
+ sFTdu52b9Cspn9o=
+X-Google-Smtp-Source: AGHT+IF3WSJKlxx4PFfnmdF9dVEWavrMVXOkgMhtp3vjRM5O2tUj2a21XIS2+2O1FqyAXifna1jXAEeR1yUyZZsKlYw=
+X-Received: by 2002:a17:903:244a:b0:295:1aa7:edf7 with SMTP id
+ d9443c01a7336-2984edaaeb0mr42748425ad.30.1762961004324; Wed, 12 Nov 2025
+ 07:23:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/28] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20251111213238.181992-1-kwolf@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251111213238.181992-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
+References: <20251111171724.78201-1-alex.bennee@linaro.org>
+ <20251111171724.78201-2-alex.bennee@linaro.org>
+In-Reply-To: <20251111171724.78201-2-alex.bennee@linaro.org>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Thu, 13 Nov 2025 00:23:12 +0900
+X-Gm-Features: AWmQ_bnKMzPbFk434dGlXinTwKvQee_I0gzBdLN9S0ZpzTEkJ-usQIqLqOXaNI0
+Message-ID: <CAEDrbUbLNbTkVTYTnodZPXsPyBJ+ci9DoxLDyP8FRyf2u0QGgw@mail.gmail.com>
+Subject: Re: [PATCH 01/16] tests/docker: drop --link from COPYs in emsdk docker
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Ed Maste <emaste@freebsd.org>, Paul Durrant <paul@xen.org>,
+ David Woodhouse <dwmw2@infradead.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>, 
+ Thomas Huth <thuth@redhat.com>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Gustavo Romero <gustavo.romero@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000006a6e2006436758c1"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,34 +106,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/11/25 22:32, Kevin Wolf wrote:
-> The following changes since commit 593aee5df98b4a862ff8841a57ea3dbf22131a5f:
-> 
->    Merge tag 'for_upstream' ofhttps://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2025-11-10 16:49:59 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://repo.or.cz/qemu/kevin.git tags/for-upstream
-> 
-> for you to fetch changes up to 909852ba6b4a22fd2b6f9d8b88adb5fc47dfa781:
-> 
->    qemu-img rebase: don't exceed IO_BUF_SIZE in one operation (2025-11-11 22:06:09 +0100)
-> 
-> ----------------------------------------------------------------
-> Block layer patches
-> 
-> - stream: Fix potential crash during job completion
-> - aio: add the aio_add_sqe() io_uring API
-> - qcow2: put discards in discard queue when discard-no-unref is enabled
-> - qcow2, vmdk: Restrict creation with secondary file using protocol
-> - qemu-img rebase: Fix assertion failure due to exceeding IO_BUF_SIZE
-> - iotests: Run iotests with sanitizers
-> - iotests: Add more image formats to the thorough testing
-> - iotests: Improve the dry run list to speed up thorough testing
-> - Code cleanup
+--0000000000006a6e2006436758c1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+> As we need to build images in both docker and podman lets not have any
+> incompatibilities. I don't think it makes any major difference.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  tests/docker/dockerfiles/emsdk-wasm32-cross.docker | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+> index 6b1642a207c..1f08eb0b855 100644
+> --- a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+> +++ b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+> @@ -115,8 +115,8 @@ RUN mkdir -p /glib
+>  RUN curl -Lks
+https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VE=
+RSION.tar.xz
+| \
+>      tar xJC /glib --strip-components=3D1
+>
+> -COPY --link --from=3Dzlib-dev /builddeps/ /builddeps/
+> -COPY --link --from=3Dlibffi-dev /builddeps/ /builddeps/
+> +COPY --from=3Dzlib-dev /builddeps/ /builddeps/
+> +COPY --from=3Dlibffi-dev /builddeps/ /builddeps/
+>
+>  WORKDIR /glib
+>  RUN <<EOF
+> @@ -141,5 +141,5 @@ RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d"
+./_build/config.h
+>  RUN meson install -C _build
+>
+>  FROM build-base
+> -COPY --link --from=3Dglib-dev /builddeps/ /builddeps/
+> -COPY --link --from=3Dpixman-dev /builddeps/ /builddeps/
+> +COPY --from=3Dglib-dev /builddeps/ /builddeps/
+> +COPY --from=3Dpixman-dev /builddeps/ /builddeps/
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-r~
+Regards,
+Kohei Tokunaga
+
+--0000000000006a6e2006436758c1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">&gt; As we need to build images in both d=
+ocker and podman lets not have any<br>&gt; incompatibilities. I don&#39;t t=
+hink it makes any major difference.<br>&gt; <br>&gt; Signed-off-by: Alex Be=
+nn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@linaro.=
+org</a>&gt;<br>&gt; ---<br>&gt; =C2=A0tests/docker/dockerfiles/emsdk-wasm32=
+-cross.docker | 8 ++++----<br>&gt; =C2=A01 file changed, 4 insertions(+), 4=
+ deletions(-)<br>&gt; <br>&gt; diff --git a/tests/docker/dockerfiles/emsdk-=
+wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker<br=
+>&gt; index 6b1642a207c..1f08eb0b855 100644<br>&gt; --- a/tests/docker/dock=
+erfiles/emsdk-wasm32-cross.docker<br>&gt; +++ b/tests/docker/dockerfiles/em=
+sdk-wasm32-cross.docker<br>&gt; @@ -115,8 +115,8 @@ RUN mkdir -p /glib<br>&=
+gt; =C2=A0RUN curl -Lks <a href=3D"https://download.gnome.org/sources/glib/=
+${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz">https://download.gnome.org=
+/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz</a> | \<br>&g=
+t; =C2=A0 =C2=A0 =C2=A0tar xJC /glib --strip-components=3D1<br>&gt; <br>&gt=
+; -COPY --link --from=3Dzlib-dev /builddeps/ /builddeps/<br>&gt; -COPY --li=
+nk --from=3Dlibffi-dev /builddeps/ /builddeps/<br>&gt; +COPY --from=3Dzlib-=
+dev /builddeps/ /builddeps/<br>&gt; +COPY --from=3Dlibffi-dev /builddeps/ /=
+builddeps/<br>&gt; <br>&gt; =C2=A0WORKDIR /glib<br>&gt; =C2=A0RUN &lt;&lt;E=
+OF<br>&gt; @@ -141,5 +141,5 @@ RUN sed -i -E &quot;/#define HAVE_PTHREAD_GE=
+TNAME_NP 1/d&quot; ./_build/config.h<br>&gt; =C2=A0RUN meson install -C _bu=
+ild<br>&gt; <br>&gt; =C2=A0FROM build-base<br>&gt; -COPY --link --from=3Dgl=
+ib-dev /builddeps/ /builddeps/<br>&gt; -COPY --link --from=3Dpixman-dev /bu=
+ilddeps/ /builddeps/<br>&gt; +COPY --from=3Dglib-dev /builddeps/ /builddeps=
+/<br>&gt; +COPY --from=3Dpixman-dev /builddeps/ /builddeps/<br><br>Reviewed=
+-by: Kohei Tokunaga &lt;<a href=3D"mailto:ktokunaga.mail@gmail.com">ktokuna=
+ga.mail@gmail.com</a>&gt;<br><br>Regards,<br>Kohei Tokunaga<br><br></div></=
+div>
+
+--0000000000006a6e2006436758c1--
 
