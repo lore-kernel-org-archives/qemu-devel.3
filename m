@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A72CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA779CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4x0-0008FT-Ot; Wed, 12 Nov 2025 02:07:30 -0500
+	id 1vJ52w-0007gO-U0; Wed, 12 Nov 2025 02:13:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ4wy-0008Eb-NU
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:07:28 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ52u-0007aG-6n
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:13:36 -0500
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ4ww-0004T6-OG
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:07:28 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47758595eecso2201355e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:07:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ52s-0005YF-Ed
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:13:35 -0500
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-42b3c5defb2so264528f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:13:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762931245; x=1763536045; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762931613; x=1763536413; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3ZHUhyxlTqIrmpRfSH2rmBuKi5JiPWXboCziGiH3ma0=;
- b=UZAaO0hUOGgmwarbHAgk4dIUuvEU2RO8FRfV0xE3eiPPjpXo1q2AM3MSGEYNLVHKlV
- rxyKlAKmFg0d3oTsCoG+BDfRskk+6IW+fvbJkF7leDIhGiyyXTQjrTntxyMQafevI29b
- WcBPvjf3RoVI6HQYXP1Vv/nKO82tu1zaotpHYuceySbjz8L16l2ZwAvMh5j7JoOv0jKE
- rEbzJmC9/ckSoBNZwuYrNvluypAWOXeGcsU7WiDz3/YKnec0xVLIOK2C7dXJzM6wdRW4
- tUFde4oDEHke0yB3Pb6zbqI5CT1oKp8V6aaKc4/2REYyGfCBFaPbUtJ3M6X98VjWdbWq
- vbIg==
+ bh=SToKNFNxWpGdZztA7IEd8LMdQOrB7lsXcR+gQX37vnY=;
+ b=eNzjzS1vH8B3m/eMPui0XbUwPJAZgRAdQEnzXMfML8r0o9cpo+Bd3fZW5cS52AbD0f
+ pCbrVZF/wb/uD7pYXP1bPLjxFTflzy5oAnQGNc+iQiOkVDHCXfoR/VTWD1ruz4l1zmaA
+ tGWfT7b8T0KJEvaBpqSQI+ymjnOwmnRWHhBTIxULt5qmma5uQaLrBqgXDwFd6fQugGC4
+ ybyQ0kbAX9JD9NSGYksayT36NkgzO+aqiS2VZaQLla/kdDePXLsxkWUze+S56as0sHez
+ AQ7sFvX5rV74hD2WVENVixx1KQCzXG4jrF8Pr2eYUGtdiXH56WQUiILIn6p65m4j1qrA
+ aqsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762931245; x=1763536045;
+ d=1e100.net; s=20230601; t=1762931613; x=1763536413;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3ZHUhyxlTqIrmpRfSH2rmBuKi5JiPWXboCziGiH3ma0=;
- b=kXGWpoOqKJ/OsCMYarPRjLK+GhtTT1v16p/lR4avdteHLofCxslcG8frTdPVt3V2TR
- HFrV9qbcV8KfS/RF7riR+4qrn/j3eBF6DnJIhhNjoT8eDPDq9+33FRkBpZCcr8Yeg2RK
- iy+XJGoNHpOZGoFsMaUifvzD+coShVa7vFTsRJy1VaEc4afoQvwgjYflaBlesF5z9X+s
- xQ8e1m23SfVzRPit4TeuOJo09rlHb04lInIX1dVeUAplKOQASIJKuJinQ1+dD5EnqyNK
- jd26Eb00vF6jRBFQocqUrR2puYHONDsNeGml+HFK7tgxzJyod5NMM2c49KST3QP96EDV
- 1ilQ==
-X-Gm-Message-State: AOJu0Yw9zUXRFDwEpdD25nZxLrJ0xm90zyq/bZ36FPyEVCztxiAPe7vw
- GX3xqxuGXSUOJg5feOL+ZWCK3YfHN5auGLcFG93XcXo2c52YXh14vuet0RB8wZds+YBJDu8Og1q
- Mm+AZLINYGA==
-X-Gm-Gg: ASbGncvm8UUf0BNm2iQGKdslGK5ZBlN8dUb1TbTeSQKeoknlk/PMg2M7eLS7WxbkYKu
- 11eOz2RuSe4z8T8tOgnCwaRIBYp9NG4V0MmT5tl1UkT1vmC130wSvjJDhVSroXBGcOs8NHAlv8P
- hVuHBwznpYuIhlAzPV96RV6/6nYeOUIcBH7oDFmXlWmlAeB9ZI/4aUk6412iYvcico2vcNHiZ/9
- TFcEjbuaLR1gAAaAEaXMpGlzcpcgh7G7JvaZ0XPacfjjqWmNFJ29gwMSOxhltgdSfA14ErG9k7p
- 9PzNcvgfQIu1oiIhowEhk1tOcIj+or1Z7gWtYr9eUEGFd5mpYwNaGVCIxPvqPDDQukLJJzKipNQ
- /ue3DEhpIuPMwBmWeITjg7oillcTImSG7oFqkxLssujsFMf2jjkdlEfchoajPx46q4RHs+pxbWC
- JoaIZV9tQe/uy/9j2U7Tuc6+TR0yz2k65X+Uq6xJCfEh/m3iKI
-X-Google-Smtp-Source: AGHT+IF+Gf6K/t4OuINIQBE+4bW9k9sLE/9A6+5RGyTphRUhrBZvjZRyyNMZ34IJzWTc9edvQ4Lmdw==
-X-Received: by 2002:a05:600c:19ca:b0:45d:d505:a1c3 with SMTP id
- 5b1f17b1804b1-477870cd9ecmr15195175e9.37.1762931245015; 
- Tue, 11 Nov 2025 23:07:25 -0800 (PST)
+ bh=SToKNFNxWpGdZztA7IEd8LMdQOrB7lsXcR+gQX37vnY=;
+ b=FTqJIB8A5DYpFKgA4VHcEh/AGJ7OcFyo5C9wuIx3zpFRPMWZNPTOk1Lpt9BYkUlm46
+ aGLcaW9F6cyxwj9XfcfkiA33CLIR4OHQNB5kF7jBchI5+FJcCzxRnnX4OdkpRyAY8YYn
+ 31A9FW/ELKCoSegdtGiCjWiY6n2fBeQbPPIz80Nv0q0hzlNkUhQjTx7gkpi9HPJFu9Pb
+ Q3UKVBrEr2yY6sdbvGqm1v2RZGsAZbsL1nyszboCQ/nKp5R83lBDzF0K2DmvXBTvBWyw
+ SUXRt2fcYqwUBjBHKQY5AgX3Arsfayc3E50GsHkzkhm4961/5WEsOrocX0KfHo/1cldX
+ 95GA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWw2C4G6Jxgvcc4QYsF1hL0xGo19k215WPeqjnCassuDNmfw+8lO/NqVhP+o8ZysYKw915B0hFolXnC@nongnu.org
+X-Gm-Message-State: AOJu0Yz2/Q7UxGOhYjcn6e5MW8TR/IqkMB/QmC+37Vv3u6js/XqueJRx
+ IyxMo5NzamhYw3dVchdvjdGq7MZXC0A+P5JB4py/EBzgPl/CdEOhA3zfgkYgUUcMos0=
+X-Gm-Gg: ASbGncsYrHXnSJXAigOiPIchvApXH7CfvBiVEljw/o7dnZZyHkMXzUJBb2ZHMtnXLkf
+ opqESpjEQVvRbBx7gQpqE3loWwovWbr32U9H8lgKtFmmcZHMlgPxdqC+KHPqNNMSfJrXE5RtcqJ
+ QbRqtrjzZeWylQgwFlVt4L74Vl/FiN0DlnPxJTYdc1n7xnqf8uPOvRQwn4mxUVQxXkItBxS2JPN
+ p/zaP287Mc8K+KWatIlS1zu9PhL7KZM2cJDrO3kqhcMdkv7xo0kua361fosZtDNxNOVlVyIU5FR
+ A8P/fGf0pEGlv1nxOkSN5VdLcPe0wDFpLxmCRkWvLJUTcoOfODGuplEpJYTUX8uPDShrX5HMkfx
+ SJuphNmrcioPgrNVfFa1gfj6CwYSj3Geh0L7/4drnNxo9aOB7LSppUnUQXoS7JuqbEmdlmndZj+
+ LdaCdybgZRKsKc5gl4GUZmsC4OI3R+VI1FMK6C+UXvl+76lsIr
+X-Google-Smtp-Source: AGHT+IGxDHKQTRT9FMW1fL8Epb47f/j9HtWLL6HZNCrAHpLNNJ3o1D8l+NtCkzBAAozMAvLrijWMhA==
+X-Received: by 2002:a05:6000:250c:b0:429:cc1c:c42 with SMTP id
+ ffacd0b85a97d-42b4bdae90fmr1535776f8f.61.1762931612692; 
+ Tue, 11 Nov 2025 23:13:32 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787ea39ccsm18712425e9.15.2025.11.11.23.07.22
+ ffacd0b85a97d-42b2e9644fbsm24417511f8f.25.2025.11.11.23.13.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 23:07:23 -0800 (PST)
-Message-ID: <41f24ea4-787f-4e79-bff2-5ae66c4c2a6e@linaro.org>
-Date: Wed, 12 Nov 2025 08:07:22 +0100
+ Tue, 11 Nov 2025 23:13:32 -0800 (PST)
+Message-ID: <4b2862d9-0912-4a73-bcf6-29bdfd681b0e@linaro.org>
+Date: Wed, 12 Nov 2025 08:13:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] target/hppa: add 64 bit support to gdbstub
+Subject: Re: [PATCH v4 3/5] hw/riscv: experimental server platform reference
+ machine
 Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-Cc: qemu-devel@nongnu.org
-References: <20251110222646.180265-1-svens@stackframe.org>
- <20251110222646.180265-2-svens@stackframe.org>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Fei Wu <wu.fei9@sanechips.com.cn>
+References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
+ <20251111182944.2895892-4-dbarboza@ventanamicro.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251110222646.180265-2-svens@stackframe.org>
+In-Reply-To: <20251111182944.2895892-4-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,67 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sven!
+Hi Fei, Daniel,
 
-On 10/11/25 23:26, Sven Schnelle wrote:
-> Signed-off-by: Sven Schnelle <svens@stackframe.org>
+On 11/11/25 19:29, Daniel Henrique Barboza wrote:
+> From: Fei Wu <wu.fei9@sanechips.com.cn>
+> 
+> The RISC-V Server Platform specification [1] defines a standardized set
+> of hardware and software capabilities, that portable system software,
+> such as OS and hypervisors can rely on being present in a RISC-V server
+> platform.
+> 
+> We do not have all the required extensions in QEMU: we're missing
+> 'sdext'. In theory we shouldn't go ahead with this work, but the
+> emulation as is now is proving to be useful for development and testing
+> of other parts of the SW stack (firmware, kernel) and we would like to
+> make it broadly available to everyone. We're contributing it as
+> 'experimental', hopefully making it clear that the board does NOT
+> complies 100% with [1].
+> 
+> The main features included in this emulation are:
+> 
+>   - Based on riscv virt machine type
+>   - A new memory map as close as virt machine as possible
+>   - A new virt CPU type rvsp-ref-cpu for server platform compliance
+>   - AIA
+>   - PCIe AHCI
+>   - PCIe NIC
+>   - No virtio device
+>   - No fw_cfg device
+>   - No ACPI table provided
+>   - Only minimal device tree nodes
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform
+> 
+> Signed-off-by: Fei Wu <fei2.wu@intel.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->   target/hppa/gdbstub.c | 66 +++++++++++++++++++++++++++++--------------
->   1 file changed, 45 insertions(+), 21 deletions(-)
+>   configs/devices/riscv64-softmmu/default.mak |    1 +
+>   hw/riscv/Kconfig                            |   14 +
+>   hw/riscv/meson.build                        |    1 +
+>   hw/riscv/server_platform_ref.c              | 1276 +++++++++++++++++++
 
+Too big to my taste to review and/or look back in future.
 
-> +static int hppa_reg_size(CPUHPPAState *env)
-> +{
-> +    return hppa_is_pa20(env) ? 8 : 4;
-> +}
+(Don't bother splitting if someone is willing to review the patch).
 
->   int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->   {
-> -    CPUHPPAState *env = cpu_env(cs);
-> -    uint32_t val = ldl_p(mem_buf);
-> +    HPPACPU *cpu = HPPA_CPU(cs);
-> +    CPUHPPAState *env = &cpu->env;
-> +    target_ulong val;
-> +
-> +    if (n >= hppa_num_regs(env)) {
-> +        return 0;
-> +    }
-> +
-> +    if (hppa_is_pa20(env)) {
-> +        val = ldq_p(mem_buf);
-> +    } else {
-> +        val = ldl_p(mem_buf);
-> +    }
-
-Alternatively:
-
-        val = ldn_p(mem_buf, hppa_reg_size(env));
-
->   
->       switch (n) {
->       case 0:
-> @@ -267,16 +291,16 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->           cpu_hppa_loaded_fr0(env);
->           break;
->       case 65 ... 127:
-> -        {
-> +        if (hppa_is_pa20(env)) {
-> +            env->fr[n - 64] = val;
-> +        } else {
->               uint64_t *fr = &env->fr[(n - 64) / 2];
->               *fr = deposit64(*fr, (n & 1 ? 0 : 32), 32, val);
->           }
->           break;
->       default:
-> -        if (n >= 128) {
-> -            return 0;
-> -        }
->           break;
->       }
-> -    return 4;
-> +
-> +    return hppa_reg_size(env);
->   }
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+>   4 files changed, 1292 insertions(+)
+>   create mode 100644 hw/riscv/server_platform_ref.c
 
