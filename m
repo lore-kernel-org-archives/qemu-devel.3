@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 593BACCF9F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACDFCD1297
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 13:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJBE5-00078g-Kd; Wed, 12 Nov 2025 08:49:33 -0500
+	id 1vJBE4-00078c-5m; Wed, 12 Nov 2025 08:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB6p-00041L-Hr
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:05 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB73-00043C-AD
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:20 -0500
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB6o-0001Je-3H
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:03 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJB71-0001L0-PH
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 08:42:17 -0500
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-477775d3728so7618835e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 05:42:01 -0800 (PST)
+ 5b1f17b1804b1-47789cd2083so3751435e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 05:42:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762954920; x=1763559720; darn=nongnu.org;
+ d=linaro.org; s=google; t=1762954934; x=1763559734; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+28mb6/qxZ6eOW2R7gXOmFFtY5bUA8Y2twhmxYKlCbE=;
- b=xIiqlzkFuQn5ZkgDUnI9TRQws5gBd+w7w2bH9EmT0YttrAWA3CvK6tYTfuveEnv0V6
- 0cRMdlHq6RTA998fqwJPs9JamZTixV7d7fyzBhAOYg6P9CaGx48FeTo2/qSIDBAJr3sw
- qbQiC1rbZSLy5p2WGXx5nT/dagWKtuKSF9hoFcV1mrJTwHfBdHgwA08557VifbZ+9sz9
- 1vrtqG69PwO3x8fBOC73ricf9JeBvjIf/tVL/TtbjGFxBdaqcwF0y4LSvXPrBCD9ZVZJ
- h5OKQeoNCjdve9R0G9Mxk8P/NSepAq1ipyJr52D+l5hQ+Baybwn+jDgH7ocp88YrB+0H
- 4JLA==
+ bh=RpfJ4jVX8PRzGjLcbMi2UKEOY8vjEXd8DJ9mg1LwAPA=;
+ b=llLavNj2I+HUAldU4+Yt5whOSYFIzXA5Vhy+/Urnv0xKjKmgSaKJKGvgf0NblRfo77
+ hZBPZrMn6PLKaT3WmDbz4CX24dk5D5lp0H0gy62TZfu2fcAxyUSuYhfCLFMeHtleOexx
+ gqH5pfM6CLKdUbXlzCHidvjsB5mgHxPDRw/BlxHMBYoj0kprUam1AxaVnvf9R1Gdi7LO
+ 7nmVdrbvWW1Sc7wNSvFpCp7qayrLoxwakjr7mRRTb1peM9ztAOVX1bu2Vb/0/PPB9kLE
+ mHR2ZmcAF3vVHN7g9Y1BHnM/ivPSgJvzPPYJaTrNq6p0hjsdEQU6cmqhptn0M/fGniPt
+ /MRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762954920; x=1763559720;
+ d=1e100.net; s=20230601; t=1762954934; x=1763559734;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+28mb6/qxZ6eOW2R7gXOmFFtY5bUA8Y2twhmxYKlCbE=;
- b=QhitizA9mE6G1/v0PCW6bVpPAITWZnWhsYCivB4UvmdFRyQgh8AZUH/OGbVm9ckvZ0
- TM5Idlpbxjmc2HHnF4k9ZQDbGgR/a+KlFX72oMFCR59912wgx0jpmhyCwJNuauqHBSqs
- aUINCVrBaT+N4HILZG5uSsjmY876eew3kbHTsXujLHdr1kl0m94VWeVRxAqFhqdqVd+F
- JcfIGmH12JYNYncHkG0l/pjtpWMQhe++l+P7vekj9eIjpFVwndhol9tuGRVHA1oiRzqM
- llwuN4VEYFJpVwB4FG0O1S36in8eW+tlrqchu5K9cZr19nhXrKYUvCSpWemUPNREhkVK
- poPA==
-X-Gm-Message-State: AOJu0YxVCB+FIbY8Z4ItjLxqarzGW5+O7nmHa6LsxCNqW4J94Jbr2bW4
- wXNj6BOPP43vrxuF6gk6mlxPRLSJ9f1FfWZ7DvX13obaWYMDn2WHT2HDFFGEcZMQAZSoBrUAPsQ
- VApHL14bM2A==
-X-Gm-Gg: ASbGncuSgfJ75/VEzUQQObOqhonqDUghMzoojs4cDlZy6VhvkcQrR/XXQsg9AUhzbtU
- F/hY4gGp8yzl49THMQ1CGGNQ2npunCuqt4yFX2J4QBdhgUS15gqTjp+g7DqdJCOvihoPNBH8HV4
- LO9WIToBai3LsrtvHADRkYncHZewJ4kFH/nMTq/Mfi0VCQIAtt7ygO0Bis/xWpk8trlY72WAGlN
- RLIgoYcbTlLeDXUKQBNSsbRFvuNQvKMX+wPJiVRZwc9WbZPvUqfYTE7uZhHA9ej58SOPBJmn6a3
- ZHyofM3zFlDG9zQSIo1VOVSTWsRYt4+TLcmq+B2HDc5jbCkuhrGu6r45fKOtnbKxS1qygHhYbGM
- g7ZAMjdMf0zd8nG+WFpnDfRrvX74klBeex988MUofZzahavSb7OO3bQx7GFg0uixZCcoOxAJSNa
- M6P6rs0IhVmihaRqWmTBqHDrsfZQlCwo2qLbmAcA1gzxIkIkXSQ62g+ks=
-X-Google-Smtp-Source: AGHT+IECmPThv0Pj+IN2TLSZCg1tMWtQ/247+6M4vZaDrhQEPTeNbG+7UqTvBNKcUxCWgn8CSNVN6Q==
-X-Received: by 2002:a05:600c:3511:b0:477:6d96:b3ca with SMTP id
- 5b1f17b1804b1-4778703e676mr30655935e9.5.1762954919724; 
- Wed, 12 Nov 2025 05:41:59 -0800 (PST)
+ bh=RpfJ4jVX8PRzGjLcbMi2UKEOY8vjEXd8DJ9mg1LwAPA=;
+ b=vM03RZ04dqsmiQtCtoqW+UKxJxu1CAaG/b8tFd5BmdtTX9fDIrdFaRVyXm7i/igcPr
+ jbGMMTRU14AfvR7qXHtGoEAtWWNQPS9tG/etwXif5WiHLRZq0xWniwIjfAD/ABBpKw6S
+ 0oiU8ae9z3HBKLuMmBZLfzKDhoGytO4NAVRDZKJg18iPk7i3MVMF09uhGvSMSrq9Vr8O
+ ZhpFjzmmhcNWsimgVnGgXgGD4ubu6GSRqCUdzie1TdC9tzP9XMxLaAwCqNN2l83Kunum
+ JsVb7NC4+3vDwIBUkBsa/aiw0X3KWNA49I80F4zTTA7HXzk0MzQMrrYJz6+fVQJqLT1k
+ 2vQg==
+X-Gm-Message-State: AOJu0YwtEziYkcyyMpX8OpJ/cwyeeGDayxLYWqCT/Ba51iCMhfnyiKSW
+ OizR6mpLZqhgNiDPHW3/ezCd33XM0Dak6G0aQ/mtIfepBXLmETUqR1AR3glwp8DrqVnrPl64rV+
+ MjM0nq02wxw==
+X-Gm-Gg: ASbGncsQ+7k33F5YinSyhXk1putdu1s1nf07QPqUWG7V+8y1o/6KRfVT+M+FrN0r89b
+ b0zh968JJB63WmgO2aU/PXKHAAjaKafXBezrux4eJjvTlfx8Ng65lXMB3x8kXPqrGUa5WrHG0qq
+ fdXoI4WtLKrNh0dg+eBMyz7xIOFABkL7oJRbfv1oPv0JHq33bMlYIhNGFg/VKZIfL1oVzs2b+hJ
+ IfN1jbMx/RAd6LMWQbtXxuZkgh/FjVfW+ZhJVR+IROtqdoLWxYa/lsJM67rrSUjj3lGL4DXKEwR
+ zP0jouuNwvI4CjCsxuSGhmxH4PR8fPez7y5p96g6r9UIG/GeZglgwUpq16zVmvqmZmRvqQ0L9pb
+ +8vKqsGI+Zw6Xya0wLpv4kBqLq39kiTpoo4waws7obveFVHJvCQBlHTHyk7V3i9rneTgZaazhoi
+ JNwxTJuuDcaEt6KUzEdIhCr3238IdJC1pirR1W2UrJL45GaRcMx5P+/ZE=
+X-Google-Smtp-Source: AGHT+IF8PpiXsnoKZXjUMlDZQSx3EHhpu0A7iBpsvCfG4lu3hnCWTf4ODBLCnAZOyBv47g1LjluNtg==
+X-Received: by 2002:a05:600c:4f0b:b0:477:55ce:f3c2 with SMTP id
+ 5b1f17b1804b1-47787084475mr23116055e9.14.1762954933725; 
+ Wed, 12 Nov 2025 05:42:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42ac675cd25sm34703662f8f.22.2025.11.12.05.41.58
+ 5b1f17b1804b1-47787e8e798sm35417825e9.10.2025.11.12.05.42.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Nov 2025 05:41:59 -0800 (PST)
+ Wed, 12 Nov 2025 05:42:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,10 +71,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 02/10] chardev/char-io: Add @docstrings for
- io_channel_send[_full]()
-Date: Wed, 12 Nov 2025 14:41:35 +0100
-Message-ID: <20251112134143.27194-3-philmd@linaro.org>
+Subject: [PATCH v3 04/10] chardev/char: Document qemu_chr_write[_all]()
+Date: Wed, 12 Nov 2025 14:41:37 +0100
+Message-ID: <20251112134143.27194-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251112134143.27194-1-philmd@linaro.org>
 References: <20251112134143.27194-1-philmd@linaro.org>
@@ -105,44 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/chardev/char-io.h | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ include/chardev/char.h | 29 +++++++++++++++++++++++++++++
+ chardev/char.c         |  1 +
+ 2 files changed, 30 insertions(+)
 
-diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
-index ac379ea70e3..5b181be6a0b 100644
---- a/include/chardev/char-io.h
-+++ b/include/chardev/char-io.h
-@@ -38,8 +38,28 @@ GSource *io_add_watch_poll(Chardev *chr,
- 
- void remove_fd_in_watch(Chardev *chr);
- 
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index df55c7f4e67..4aab018938d 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -223,8 +223,37 @@ void qemu_chr_set_feature(Chardev *chr,
+                           ChardevFeature feature);
+ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
+                                 bool permit_mux_mon);
++
 +/**
-+ * io_channel_send:
-+ * @ioc: the IO channel object
++ * qemu_chr_write: Write data to a character backend
++ * @s: the character backend to write to
 + * @buf: the data
-+ * @len: the number of bytes to send
++ * @len: the number of bytes to write
++ * @write_all: whether to block until all chars are written
++ *
++ * Attempt to write all the data to the backend. If not all
++ * data can be consumed and @write_all is %true, keep retrying
++ * while the backend return EAGAIN, effectively blocking the caller.
 + *
 + * Returns: the number of bytes consumed or -1 on error.
 + * On error, %errno is also set as appropriate.
 + */
- int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
- 
+ int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_all);
++
 +/**
-+ * io_channel_send_full:
-+ * @ioc: the IO channel object
++ * qemu_chr_write_all: Write data to a character backend
++ * @s: the character backend to write to
 + * @buf: the data
-+ * @len: the number of bytes to send
-+ * @fds: an array of file handles to send
-+ * @nfds: number of file handles in @fds
++ * @len: the number of bytes to write
++ *
++ * Unlike @qemu_chr_write, this call will block if the backend
++ * cannot consume all of the data attempted to be written.
 + *
 + * Returns: the number of bytes consumed or -1 on error.
 + * On error, %errno is also set as appropriate.
 + */
- int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
-                          int *fds, size_t nfds);
+ #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true)
++
+ int qemu_chr_wait_connected(Chardev *chr, Error **errp);
  
+ #define TYPE_CHARDEV "chardev"
+diff --git a/chardev/char.c b/chardev/char.c
+index 3e432195a5a..105b0d53184 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -108,6 +108,7 @@ static void qemu_chr_write_log(Chardev *s, const uint8_t *buf, size_t len)
+     }
+ }
+ 
++/* qemu_chr_write_buffer: Return the number of bytes consumed or -1 on error. */
+ static int qemu_chr_write_buffer(Chardev *s,
+                                  const uint8_t *buf, int len,
+                                  int *offset, bool write_all)
 -- 
 2.51.0
 
