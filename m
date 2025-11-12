@@ -4,156 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7E8CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC44CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4uy-0005we-Sa; Wed, 12 Nov 2025 02:05:24 -0500
+	id 1vJ4w5-0007H2-Oa; Wed, 12 Nov 2025 02:06:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vJ4ux-0005w3-CE
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:05:23 -0500
-Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vJ4w4-0007GP-NI
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:06:32 -0500
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vJ4uv-0004J6-9F
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:05:23 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Yy8ZysMJpy7PdseoD/cqUVFm5KIulhTFaEwv6ffqBai9WBVnIwCthMLxtX5NZxux4mNS49ISJVQ8SW314FHIvU/wNS0IdiYsI8rzb6SkAzIpHehBie/HJ6qBSztjciLQ4+ApVLA8bXEkYdIsZU3u92elZgwHqLjnG7aqty9Ka7GccJbqAHefHuHkEmd7sdW3hJYNw4pDET3TtbxDs8feEE7FEn8xCIO+UC6vM2hgqK/TZQ5PQqRTyzaCv3v7RPB943vjEWERzziBesFaBj3PcDg6q17QNPynIirdQt/Slr7/2gVhUCyFVrUG6BN40Z79RPCtU7eONDq/YmMPusoTdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gLIYmGLrwshpbVIGKC51f2nL6rYDoge3w8fpxeBMo8U=;
- b=npUE3dDbd7mHkcFEFE2UAUB9nqhlu2lI8w4FW1iCclqx5QQ9AkBnCcAlNB99keKYE7kWJXUnAk5K0Qe70pEoFmu6nUvvZf2SB6DM4tK7dq8GHMmWUvdOQD9bhYHfTHdWGKNK1g41Lmsyu7satr+1ysK9ZVPpAV8/rz8PO76H4SzxiWSdeqVywTB1AHjX6XKQEday89YaIUzuUMR+IruMX5l7jBCs+Po54ft6qW2OkGFah0Js0WZBXIAgJoKVbIEBOxIa1FTZ5WVw41dbqXckJzq7sQPjgiFNPx3sKmy+9hih7UbonlotrO/2C62RcXOtlmClJp0DoDkcD25IHZKiHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gLIYmGLrwshpbVIGKC51f2nL6rYDoge3w8fpxeBMo8U=;
- b=UdYwntFEtE0MS4N3mi9J/yekwfTzbYF8+vX0LY00+HBRnYniJdPiC+DCx8n+zIinCwfcV64dcfGdlIGVeoM+B8J4Gq/IUJcdUuMRa+4IbMfGflv9X8lb/TVs7XSBer3UPbIK3FCCHa8dIfKzj1V+NH/9y3nP5C2o/hdJDhIE8HA6XE20mOZ7YK2BOZaPYhw2ly44pmE1bNWzarZPN4e8SQkCGa3HT9LEwynHOaoC6R6M70emNgPOW+jbCSTlkikWKr5SV8kfdwhCGDbYkizUj/ogkYRjTzhOljModQXWAmSmVfnLJOJjVPGENwS4UMmBNqELlyL++mdTRLYCyGh20g==
-Received: from AM9PR04MB8487.eurprd04.prod.outlook.com (2603:10a6:20b:41a::6)
- by AMBPR04MB11720.eurprd04.prod.outlook.com (2603:10a6:20b:6f1::5)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vJ4w1-0004Og-Je
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:06:32 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.84])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d5vZn0Vpqz5yWd;
+ Wed, 12 Nov 2025 07:06:25 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.16; Wed, 12 Nov
- 2025 07:05:17 +0000
-Received: from AM9PR04MB8487.eurprd04.prod.outlook.com
- ([fe80::1e08:e81f:d29:e1da]) by AM9PR04MB8487.eurprd04.prod.outlook.com
- ([fe80::1e08:e81f:d29:e1da%4]) with mapi id 15.20.9298.015; Wed, 12 Nov 2025
- 07:05:17 +0000
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>
-Subject: RE: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional
- testing of iMX8MM emulation
-Thread-Topic: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional
- testing of iMX8MM emulation
-Thread-Index: AQHcUjR4IKJSoyibD0aCjGOoNfN43rTuH2WAgAB2bjCAAAqRsA==
-Date: Wed, 12 Nov 2025 07:05:16 +0000
-Message-ID: <AM9PR04MB84874E537D542ED6CD0216F387CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-References: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
- <20251110112257.184578-14-gaurav.sharma_7@nxp.com>
- <61242433-9D75-47F8-BC44-FD35748F055C@gmail.com>
- <AM9PR04MB8487682307D0672DA3F5345B87CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-In-Reply-To: <AM9PR04MB8487682307D0672DA3F5345B87CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM9PR04MB8487:EE_|AMBPR04MB11720:EE_
-x-ms-office365-filtering-correlation-id: f17a28e5-0861-49ec-9d34-08de21b9d5a9
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|19092799006|376014|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?h9Y2DqRdCXMlAFqXDZyYpb2+e19BqBKNPbCB5QnZ5sdNE2QfSgTw4U2keOaA?=
- =?us-ascii?Q?dnDn+tFRYY0IIeKDwbIZe8G9N+qo22Se/QvPCVIjIQfWQdvxqZovEWXsrxg7?=
- =?us-ascii?Q?Fm6PZdr6a05ljW2xz9eCaFMKrNT+RFWXDhyF3EZp95Jp7PouIJkmMq4SsQnE?=
- =?us-ascii?Q?Vipgl5BYd3caa06MlepLA4EUrPaAS44Qccb/aIJvxgqLwfeH7cutxwGlgvEu?=
- =?us-ascii?Q?9Wu+tDjk4ywoMOh+Xi9beoM7C0dxp3+a1TgjEefI7Q3ObT+GRyPp4ceGd7e6?=
- =?us-ascii?Q?MJRj5dbl4NlU/twXrwO/7K6Z/2E0IaKnbNQMRaOD4StSsdFCEopkpy15Efje?=
- =?us-ascii?Q?AZHhvUixUPwqBSXQhpw+OZ8xRwuIcy9EhdJ2StX7K8jBxmvPFFfEnpDOpPUG?=
- =?us-ascii?Q?pv962kicRTypMeucl+INRn2jg3qedCGZSZFy2KzCEt+J4Ju+N8aHFFjI4q6u?=
- =?us-ascii?Q?58mNbttUDEFkgsajq5IYc52vKWP/0tVT0H8KM9PLHZcgRGCjgyA7azrR2Ftn?=
- =?us-ascii?Q?djr4GhYjJzAvACgf9JPwjZz7+EuOuLmNZp5UT25g0MRuYmy8U8POcDtA+Qiw?=
- =?us-ascii?Q?zQNFq4RaAbP2bJAnZOfloUioopIGd8zQv7Xr64MpbhE4w1vZR8416c1Ha/Rh?=
- =?us-ascii?Q?DLk6yRRBZmWBBsD4yOHpNkbtsJHDyvLFMIdtCdwfBZ2v8nwibn2Bs2Enkrwu?=
- =?us-ascii?Q?ZqAMqVNyDLJXsM1FvEhgSrY0jI3lcJ0gbguxAlENZdLZk30yb3xDC4g8OyjZ?=
- =?us-ascii?Q?XiUaLnPm6su5cPNADw0Ixu6TaNTWOmtgY52QYAX3VPHfueRDMwKJEqloVuY8?=
- =?us-ascii?Q?XWgMoVtAebKUaX45LjQEdtRzfRewqdart2IafFCQiwqYJpjljkYHuAk8Y7wi?=
- =?us-ascii?Q?VibdcplfxOhS+/nPrt6WN0zKyQ+31YkEZ4YFwKkokWfRKAtiKpsXbkYHC6li?=
- =?us-ascii?Q?NNJmCvX5ouvTfsqw/ekKureCdczCoMsEVd8GBgJfy4eLJwdoJ4RHUKzlCGnD?=
- =?us-ascii?Q?Enf+8CrHp2ffnknsylEIm19oCXvw7ofgIlTQ6XBj7W30s46WyP2fkQOTv/Y4?=
- =?us-ascii?Q?TG6QPpLmGJnuTicc3w0l2mklTovy37OCw1ta1uK9fvk8vrWJnuEtvJwQFjwr?=
- =?us-ascii?Q?RN2FGs32S6VL9BiHaj+eixvZby5mvCMWDlHzf1oAzA2XRp7+PXPeK2Gq7HOK?=
- =?us-ascii?Q?pNBts0yYhJRKXFSj4YNBKdlqJ1CxMbnjaer7taRqbVLMQ/gA9TB3K46RK0tp?=
- =?us-ascii?Q?dXKD+K1zn+6BRryABzU0EUnnX5aiBMn2PQaPAVhRrjsNdBh3AwKsqmoofoGI?=
- =?us-ascii?Q?Ir5O0QNUe0sTWUJCzpfUNC6Lg4ZlChuh7Kn6Aw3UCg12LxE60uiFaham3JxS?=
- =?us-ascii?Q?zeEFeUXubb0epkMkLLLIqxaVyxS3iksQt4J3r8CqC1kuTEOM0McSJpuWr3Kz?=
- =?us-ascii?Q?Cy1KAOXhCWkzznLsSN4Jj3lxVpx1AEg6ZfDVi5AVRMOLJxlHWZ6Ao97oMcXP?=
- =?us-ascii?Q?nROFmw3I1D9EvJer7hSvPr5Ce5QCDKEL3kZN?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR04MB8487.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(19092799006)(376014)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Nz/ftGuWV6XhuqnLp9/v7Nfu5K10g/PNoRUHfPXghP0ptdWBfyETL7ckkS7w?=
- =?us-ascii?Q?NdLDBOPrgMV8uycL/tbO5N+TBhx5tNTwVVL85Cj7D+dE3vlUtrhq15zorxhf?=
- =?us-ascii?Q?s5Fcxg+aZq10hY5qkFtXjtntMpFRgDyPUXRmxtxlriIXE2JI7okrxfZP0Kzo?=
- =?us-ascii?Q?+AsQ6JEL8pAqdhmy7mHV8tVBcARYaQEJpiCuBX2cT3T9unMHD78YWOmy5SXa?=
- =?us-ascii?Q?CcC4nAmRiiCQgc8UxVbiaQVGtWAgpfOq7LHNOq0wDm74bcdP8YqbIaL89qvb?=
- =?us-ascii?Q?Un0bGJ8t2oz16Yqg/0pym+/YbEw+rcBxeH3OklS3p4qBQUuVXjROJhZ3ZEFW?=
- =?us-ascii?Q?EZl3htjJr/mNNVBmO4DRzAAuSDOU99xF9sggjrq3ljeNYEJXvZ+mylTIIsjA?=
- =?us-ascii?Q?X4thONutrER7vXhnW/Gg6CvRwqq0mcjk4kYrr9Y+0jgtScNqoeOO2XlMVPss?=
- =?us-ascii?Q?4o9oVg7owVJ57rjdz8Oq/0zxthLsWIkiUjoX/7huPTw0w4Fqc5AC7AsycH/s?=
- =?us-ascii?Q?1B3CsELlHQDL/uvhKVEu99VDeNsO7T797mEwAD8UXUKpqff2PP5i2xFD9H48?=
- =?us-ascii?Q?B2jR2L0iiPYq70f1V05zRv5miKCfP/kzGLvB03InanerGM/TMHaun69C20Dy?=
- =?us-ascii?Q?7InQoLn1Zvr+XPoHVYp4WbUbx4m7qHx4jgONgGnK+6Kpv0IVoS4LFqqY/uhS?=
- =?us-ascii?Q?89eSMJCWq9qQLtgMojPxqMREVxnbZfU1ZuE8lcewfmHCuBi+IBeFjKqh3Fan?=
- =?us-ascii?Q?fHKIuXro9Dt01SNCpPaYmMVU+Yl/K6ZuitOxI06axZzH9jy8y4l/9jjRB26Y?=
- =?us-ascii?Q?gzi3ooMiail+JzI1xRDFVii6pAs208HVA8e0AhX4wnYbP2PPBM4duiBGXIf6?=
- =?us-ascii?Q?LZnUat4KtsyGHpA903n1w68daYVjjQH9ACwaSCW564J3C87vrXQvYYe9N5OM?=
- =?us-ascii?Q?p2usHL5ADytlWRKhRmmpA0rLR57vbUeEmv+5rsn2RzR5diLJeNgg7nIeZNMz?=
- =?us-ascii?Q?oWxlU59Lv1qT7fu8whXbcB72rfjJjmeGQYmTNnFZSfILkQeAtnUzXg13QaL9?=
- =?us-ascii?Q?Rlya1mFY+UesRbcVIwP3myVw3MaddkvhmiUOd1yu3dBUEn08wjF/77Ry/sMU?=
- =?us-ascii?Q?VkdaytuwNDXmn70qOnPvfq66C+xDO6iposPfXg4vppcnkXeEaHeJ2r0LNqO2?=
- =?us-ascii?Q?+Hq8bhclRbkW1YTfk8rj3V2OoZw5XCvlQOWLjNXEajk/Cuv0bEQqITpp9qU0?=
- =?us-ascii?Q?EhumwADfNuwnm0V7aeVqUVq7joadFYtd4sZ48pgyphQpblzy6uAArH9ncZ1c?=
- =?us-ascii?Q?1GPsOUJBtfJdF5BqXJ1kk+XChpWbBk670SkouRz37uvkAJG2t3b5y6sBAnX2?=
- =?us-ascii?Q?YUSMgmntO77nnBaoJ0kJa1Gk5HWegVIixFhL8EcIDuZeTMOxeSGPmW1Yq9Vp?=
- =?us-ascii?Q?KudKU2HxjtxUNmWUaLu8+vM8+yt2wkNC+3BbOY1IFaWaX1zONYi7Nrel7xeD?=
- =?us-ascii?Q?VOJefE8zh1rodVipPlr+WvDI5ZlZtwKAPHRs8rdJO54Suj0njBvuhgzECUL8?=
- =?us-ascii?Q?0PLn1SKr3LSBfffDMulHzDeyd+Sb21SjCqLRIfRT?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Wed, 12 Nov
+ 2025 08:06:24 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-113S007503aa52d-e0d9-470b-9ead-5f5c79ce3d2c,
+ 9257335D443C2E6469A43BBCD845C62091C4C3D1) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <188cb6be-97dc-4818-a035-2ef845c59807@kaod.org>
+Date: Wed, 12 Nov 2025 08:06:23 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8487.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f17a28e5-0861-49ec-9d34-08de21b9d5a9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2025 07:05:17.0005 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Pbuqg+1W1XHSj2YtFPXTpa1XQvWjKWCqUp2aQWoA1S17smmTFbih5VQS8thpIuRntQqaSTIk8gfyZ7+6l2sX+g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB11720
-Received-SPF: permerror client-ip=2a01:111:f403:c20a::7;
- envelope-from=gaurav.sharma_7@nxp.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/17] hw/arm/aspeed: Model AST1700 SGPIOM block as
+ unimplemented device
+To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, Yubin Zou <yubinz@google.com>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+References: <20251105035859.3709907-1-kane_chen@aspeedtech.com>
+ <20251105035859.3709907-17-kane_chen@aspeedtech.com>
+ <e5c2996f-610a-4c53-b086-d0c9306add00@kaod.org>
+ <SI6PR06MB7631AD1B0C7457F8890AAA08F7CFA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI6PR06MB7631AD1B0C7457F8890AAA08F7CFA@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: feed13ce-6533-4b96-a711-e8f363be20d5
+X-Ovh-Tracer-Id: 3598376104153811957
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTF40gITRMRQAT8kYufCFuksjqcDAhSJL2+JsSH+X61zXfHP7xdJUOcZIT+1F8z6NIx3K4AOKO9FdqD9MCVRzclimFH2t1Z+FHkNw/bCxhZvGrSym6gJ3GkaU7A3kcm3+zgv0qYapeaABQF6s1WZu0Si9PwYQ0vktSngJRQc7inHwuVVaphszjpgC9yVlmVX+QEVVjBL364ZHbHTuqfTLZqQR3ecUIHzDo6/bJbCzimeCmk92Pvn51mzGgqn7LLQczGB/9K5/YfRiJ2FIiE03lWq787EKXzrEi2M1C932xvaizcEvaX1l+xyxdSsdyX5JfRG44dZ2tNhuuymDjnbwXCJJb89/simh8rt0b3Q0OeLaglHOpJ8LIYCSMPqWRnS0rCFWn3AP2kTgV2dkHEFjsDRJsUoro3rzkBdohDpDbI9Hf7dHIZ4jBNh2ijrT9s+OWggivWJlpem11Fbhnl+xWURp9Xuaq7LcyzoJhZzitPfpqBgNfaxJm+TPgGB3otY13gTLlNbVTq2umTa6U7hsjMKaIZotJZqctjvbxxR2BbL+tueWj+4HdlhZtsDSLbxvQBLgy08ObAx8blrQW2qkqVWRJESaUKa9uMyagon4eZFhq+Z0xcs4LzYOGFyA/urld37bDkFEZOrGiGl8KXuzHsf0cPDu4jROro8NoKZs+A5dA
+DKIM-Signature: a=rsa-sha256; bh=aYlCsGLgaem7QMAYCo7H8mUI60ZBUzwh1NXpaQpsWQw=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1762931186; v=1;
+ b=fM3m8XNxBV/GRpHBA71Nr8M2iCmf65MrvgDVydhh4REanC1sAElHDTsW1cJnkvrBtoGdu2FK
+ qGDhQydfbPcysm8kxEHhTB4sHIK8a12GSO5Y1m+177NjoI/LHxe5y9TRel15pfwTV6ABMFFa0ee
+ O7Lpthx9RKEiUtj7f72ZWtZmmemqzQKcXZ+z2SFX/AAmFHkW3Zzli69C05ao86AOJAzY7bL3ljv
+ +KcM62FZ1mXNhG3KdW9fAfJpFYA2TxNiA4T/tlXUCQ5pH4KQB3O3ZYy6Z2L6P1eg0awzsEhczH/
+ JjCUZqz84iAdgiYZE2Bj0WcF31SGhqouMVnAB/jiQdCOA==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,212 +134,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry The correct xxd dump for dtb offset 0x64F51000:-
-xxd -s 0x64F51000 -l 4 disk.raw
-64f51000: e103 16aa                                ....
+Hello,
 
+On 11/11/25 02:33, Kane Chen wrote:
+> Hi Cédric,
+> 
+> Thanks for the information. I'll investigate this model and integrate it.
 
------Original Message-----
-From: Gaurav Sharma
-Sent: 12 November 2025 12:28
-To: 'Bernhard Beschow' <shentey@gmail.com>; qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com; peter.maydell@linaro.org
-Subject: RE: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional t=
-esting of iMX8MM emulation
+Help with reviewing is welcome !
 
-Thank you for reviewing Bernhard. Yes, iMX8MM is very close to iMX8MP that'=
-s why I chose to stick to that structure.
+Thanks,
 
-" Looks like these lists are sorted alphabetically. Shall we preserve that?=
-"
-
--- yes "tests_aarch64_system_thorough" should be sorted alphabetically pres=
-erving the original order - - will modify it in v2 patch
-
-"This DTB offset is the one for the imx8mp-evk, and in fact the console log=
- confirms it. Both machines seem to be so similar that the test passes anyw=
-ay"
-
--- yes, I just found out in the console log. The test was giving a false po=
-sitive. Thank you for the heads up!  I have now modified it to fetch the dt=
-b from the Debian stable repository. Verified it's working correctly via co=
-nsole log
-
-What you need is the offset in the "disk.raw" image that gets extracted fro=
-m above file. Open "disk.raw" in a hex editor and search for "imx8mm-evk", =
-then determine the offset of the preceeding "d00df00d" DTB magic. That is y=
-our offset.
-
--- do you mean the DTB magic "d00dfeed" instead of "d00df00d"? Also, while =
-I was analysing the DTB offset of the mainlined imx8mp functional testing '=
-disk.raw' which has debian-12-generic-arm64-20231210-1590. The script menti=
-ons the DTB_OFFSET at 0x64F51000. Dumping this offset using xxd[also verifi=
-ed it via hex editor]:- # xxd -s 0x51000000 -l 4 disk.raw
-51000000: 6cff 0060
-It doesn't mention the DTB magic number at this offset. Please let me know =
-if I am missing anything here .
-Can we choose not to rely on the hardcoded offset and instead download the =
-dtb from the Debian stable repository itself? This way the same functional =
-test can be used easily for the future imx board porting as well.
-Looking forward to your guidance.
-
-
-
------Original Message-----
-From: Bernhard Beschow <shentey@gmail.com>
-Sent: 12 November 2025 04:51
-To: qemu-devel@nongnu.org; Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: pbonzini@redhat.com; peter.maydell@linaro.org
-Subject: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional testi=
-ng of iMX8MM emulation
-
-[You don't often get email from shentey@gmail.com. Learn why this is import=
-ant at https://aka.ms/LearnAboutSenderIdentification ]
-
-Caution: This is an external email. Please take care when clicking links or=
- opening attachments. When in doubt, report the message using the 'Report t=
-his email' button
-
-
-Am 10. November 2025 11:22:57 UTC schrieb Gaurav Sharma <gaurav.sharma_7@nx=
-p.com>:
->Added script that would validate the iMX8MM emulation by checking the
->linux console log. If it succeeds, it will return:-
->
->ok 1 test_imx8mm_evk.Imx8mmEvkMachine.test_aarch64_imx8mm_evk_usdhc
->
->Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-
->Hi Gaurav!
-
->Nice to see another imx8 machine being contributed! I'm impressed how clos=
-e you stick to the imx8mp, both in terms of structuring this series as well=
- as the code.
-
->I've built your series and ran the functional test. Comments below.
+C.
 
 
 
 
---
+> 
+> Best Regards,
+> Kane
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Tuesday, November 11, 2025 12:15 AM
+>> To: Kane Chen <kane_chen@aspeedtech.com>; Peter Maydell
+>> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
+>> Lee <leetroy@gmail.com>; Jamin Lin <jamin_lin@aspeedtech.com>; Andrew
+>> Jeffery <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>;
+>> open list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC
+>> here <qemu-devel@nongnu.org>; Yubin Zou <yubinz@google.com>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>> Subject: Re: [PATCH v2 16/17] hw/arm/aspeed: Model AST1700 SGPIOM block
+>> as unimplemented device
+>>
+>> Hello,
+>>
+>> On 11/5/25 04:58, Kane Chen wrote:
+>>> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>>>
+>>> AST1700 includes an SGPIOM block, but QEMU has no functional model yet.
+>>
+>> Does the series  "hw/gpio: Add Aspeed Serial GPIO (SGPIO) controller" [1]
+>> proposed by Yubin Zou fill this gap ?
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>> [1]
+>> https://lore.kernel.org//qemu-devel/20251106-aspeed-sgpio-v1-0-b0260937
+>> 16fa@google.com
+>>
+>>
+>>> Expose it as an unimplemented device so the address space is reserved
+>>> and the missing functionality is explicit to users/guests.
+>>>
+>>> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>>> ---
+>>>    include/hw/misc/aspeed_ast1700.h |  1 +
+>>>    hw/misc/aspeed_ast1700.c         | 16 ++++++++++++++++
+>>>    2 files changed, 17 insertions(+)
+>>>
+>>> diff --git a/include/hw/misc/aspeed_ast1700.h
+>>> b/include/hw/misc/aspeed_ast1700.h
+>>> index 4048d31154..8ada3a7775 100644
+>>> --- a/include/hw/misc/aspeed_ast1700.h
+>>> +++ b/include/hw/misc/aspeed_ast1700.h
+>>> @@ -44,6 +44,7 @@ struct AspeedAST1700SoCState {
+>>>        AspeedWDTState wdt[AST1700_WDT_NUM];
+>>>
+>>>        UnimplementedDeviceState i3c;
+>>> +    UnimplementedDeviceState sgpiom;
+>>>    };
+>>>
+>>>    #endif /* ASPEED_AST1700_H */
+>>> diff --git a/hw/misc/aspeed_ast1700.c b/hw/misc/aspeed_ast1700.c index
+>>> 37b2946fc0..66a5f21d27 100644
+>>> --- a/hw/misc/aspeed_ast1700.c
+>>> +++ b/hw/misc/aspeed_ast1700.c
+>>> @@ -19,6 +19,7 @@
+>>>    #define AST2700_SOC_LTPI_SIZE        0x01000000
+>>>    #define AST1700_SOC_SRAM_SIZE        0x00040000
+>>>    #define AST1700_SOC_I3C_SIZE         0x00010000
+>>> +#define AST1700_SOC_SGPIOM_SIZE      0x00002000
+>>>
+>>>    enum {
+>>>        ASPEED_AST1700_DEV_SPI0,
+>>> @@ -26,6 +27,7 @@ enum {
+>>>        ASPEED_AST1700_DEV_ADC,
+>>>        ASPEED_AST1700_DEV_SCU,
+>>>        ASPEED_AST1700_DEV_GPIO,
+>>> +    ASPEED_AST1700_DEV_SGPIOM,
+>>>        ASPEED_AST1700_DEV_I2C,
+>>>        ASPEED_AST1700_DEV_I3C,
+>>>        ASPEED_AST1700_DEV_UART12,
+>>> @@ -40,6 +42,7 @@ static const hwaddr aspeed_ast1700_io_memmap[] =
+>> {
+>>>        [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
+>>>        [ASPEED_AST1700_DEV_SCU]       =  0x00C02000,
+>>>        [ASPEED_AST1700_DEV_GPIO]      =  0x00C0B000,
+>>> +    [ASPEED_AST1700_DEV_SGPIOM]    =  0x00C0C000,
+>>>        [ASPEED_AST1700_DEV_I2C]       =  0x00C0F000,
+>>>        [ASPEED_AST1700_DEV_I3C]       =  0x00C20000,
+>>>        [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+>>> @@ -162,6 +165,15 @@ static void aspeed_ast1700_realize(DeviceState
+>> *dev, Error **errp)
+>>>
+>> aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_LTPI_CTRL],
+>>>
+>>> sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ltpi), 0));
+>>>
+>>> +    /* SGPIOM */
+>>> +    qdev_prop_set_string(DEVICE(&s->sgpiom), "name", "ioexp-sgpiom");
+>>> +    qdev_prop_set_uint64(DEVICE(&s->sgpiom), "size",
+>> AST1700_SOC_SGPIOM_SIZE);
+>>> +    sysbus_realize(SYS_BUS_DEVICE(&s->sgpiom), errp);
+>>> +    memory_region_add_subregion_overlap(&s->iomem,
+>>> +
+>> aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SGPIOM],
+>>> +
+>> sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sgpiom), 0),
+>>> +                        -1000);
+>>> +
+>>>        /* WDT */
+>>>        for (i = 0; i < AST1700_WDT_NUM; i++) {
+>>>            AspeedWDTClass *awc =
+>> ASPEED_WDT_GET_CLASS(&s->wdt[i]); @@
+>>> -225,6 +237,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+>>>        object_initialize_child(obj, "ltpi-ctrl",
+>>>                                &s->ltpi, TYPE_ASPEED_LTPI);
+>>>
+>>> +    /* SGPIOM */
+>>> +    object_initialize_child(obj, "ioexp-sgpiom[*]", &s->sgpiom,
+>>> +                            TYPE_UNIMPLEMENTED_DEVICE);
+>>> +
+>>>        /* WDT */
+>>>        for (i = 0; i < AST1700_WDT_NUM; i++) {
+>>>            snprintf(typename, sizeof(typename), "aspeed.wdt-%s",
+>>> socname);
+> 
 
->---
-> tests/functional/aarch64/meson.build        |  2 +
-> tests/functional/aarch64/test_imx8mm_evk.py | 67 +++++++++++++++++++++
-> 2 files changed, 69 insertions(+)
-> create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
->
->diff --git a/tests/functional/aarch64/meson.build
->b/tests/functional/aarch64/meson.build
->index 5ad52f93e1..31ecedbf6f 100644
->--- a/tests/functional/aarch64/meson.build
->+++ b/tests/functional/aarch64/meson.build
->@@ -5,6 +5,7 @@ test_aarch64_timeouts =3D {
->   'aspeed_ast2700fc' : 600,
->   'device_passthrough' : 720,
->   'imx8mp_evk' : 240,
->+  'imx8mm_evk' : 240,
->   'raspi4' : 480,
->   'reverse_debug' : 180,
->   'rme_virt' : 1200,
->@@ -28,6 +29,7 @@ tests_aarch64_system_thorough =3D [
->   'device_passthrough',
->   'hotplug_pci',
->   'imx8mp_evk',
->+  'imx8mm_evk',
-
-Looks like these lists are sorted alphabetically. Shall we preserve that?
-
->   'kvm',
->   'multiprocess',
->   'raspi3',
->diff --git a/tests/functional/aarch64/test_imx8mm_evk.py
->b/tests/functional/aarch64/test_imx8mm_evk.py
->new file mode 100755
->index 0000000000..d5eb43afc6
->--- /dev/null
->+++ b/tests/functional/aarch64/test_imx8mm_evk.py
->@@ -0,0 +1,67 @@
->+#!/usr/bin/env python3
->+#
->+# Functional test that boots a Linux kernel and checks the console # #
->+SPDX-License-Identifier: GPL-2.0-or-later
->+
->+from qemu_test import LinuxKernelTest, Asset
->+
->+class Imx8mmEvkMachine(LinuxKernelTest):
->+
->+    ASSET_IMAGE =3D Asset(
->+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
->+         'debian-12-generic-arm64-20231210-1590.tar.xz'),
->+
->+ '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
->+
->+    KERNEL_OFFSET =3D 0x51000000
->+    KERNEL_SIZE =3D 32622528
->+    INITRD_OFFSET =3D 0x76000000
->+    INITRD_SIZE =3D 30987766
->+    DTB_OFFSET =3D 0x64F51000
-
-This DTB offset is the one for the imx8mp-evk, and in fact the console log =
-confirms it. Both machines seem to be so similar that the test passes anywa=
-y.
-
-What you need is the offset in the "disk.raw" image that gets extracted fro=
-m above file. Open "disk.raw" in a hex editor and search for "imx8mm-evk", =
-then determine the offset of the preceeding "d00df00d" DTB magic. That is y=
-our offset.
-
-Best regards,
-Bernhard
-
->+    DTB_SIZE =3D 45 * 1024
->+
->+    def extract(self, in_path, out_path, offset, size):
->+        try:
->+            with open(in_path, "rb") as source:
->+                source.seek(offset)
->+                data =3D source.read(size)
->+            with open(out_path, "wb") as target:
->+                target.write(data)
->+        except (IOError, ValueError) as e:
->+            self.log.error(f"Failed to extract {out_path}: {e}")
->+            raise
->+
->+    def setUp(self):
->+        super().setUp()
->+
->+        self.image_path =3D self.scratch_file("disk.raw")
->+        self.kernel_path =3D self.scratch_file("linux")
->+        self.initrd_path =3D self.scratch_file("initrd.zstd")
->+        self.dtb_path =3D self.scratch_file("imx8mm-evk.dtb")
->+
->+        self.archive_extract(self.ASSET_IMAGE)
->+        self.extract(self.image_path, self.kernel_path,
->+                     self.KERNEL_OFFSET, self.KERNEL_SIZE)
->+        self.extract(self.image_path, self.initrd_path,
->+                     self.INITRD_OFFSET, self.INITRD_SIZE)
->+        self.extract(self.image_path, self.dtb_path,
->+                     self.DTB_OFFSET, self.DTB_SIZE)
->+
->+    def test_aarch64_imx8mm_evk_usdhc(self):
->+        self.require_accelerator("tcg")
->+        self.set_machine('imx8mm-evk')
->+        self.vm.set_console(console_index=3D1)
->+        self.vm.add_args('-m', '2G',
->+                         '-smp', '4',
->+                         '-kernel', self.kernel_path,
->+                         '-initrd', self.initrd_path,
->+                         '-dtb', self.dtb_path,
->+                         '-append', 'root=3D/dev/mmcblk2p1',
->+                         '-drive', f'file=3D{self.image_path},if=3Dsd,bus=
-=3D2,'
->+
->+ 'format=3Draw,id=3Dmmcblk2,snapshot=3Don')
->+
->+        self.vm.launch()
->+        self.wait_for_console_pattern('Welcome to ')
->+
->+if __name__ =3D=3D '__main__':
->+    LinuxKernelTest.main()
 
