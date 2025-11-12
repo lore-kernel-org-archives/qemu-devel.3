@@ -4,63 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825C4CCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34AF5CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4TE-0000pH-C3; Wed, 12 Nov 2025 01:36:44 -0500
+	id 1vJ4Xm-0004j8-4E; Wed, 12 Nov 2025 01:41:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vJ4SH-0000Oq-4u; Wed, 12 Nov 2025 01:35:55 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1vJ4X9-0004Bz-Ig; Wed, 12 Nov 2025 01:40:47 -0500
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vJ4SE-00083J-Im; Wed, 12 Nov 2025 01:35:44 -0500
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 34710C1271;
- Wed, 12 Nov 2025 09:35:26 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:55f::1:2] (unknown [2a02:6bf:8080:55f::1:2])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id OZIttA0Fva60-dOaGKx0Q; Wed, 12 Nov 2025 09:35:25 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1762929325;
- bh=4s6cIl0DCMKuqQ0u8XIsUL1qrbSGTbMBlxGVLnSgqj4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=AEHtg9jnUh+mjDlAMu4p0D1yKqUstPWlt9gS9V3hwHum6HQ2HbqnlGjSj8eIgGaGL
- qaY9uJFvShgnjs0S55njk9ZsS8HbH41kAAPZFLFMZtXHxo1NqdhqMJ6LKNerZ4YWPT
- 00xWH3Lnvu/FrIc7PgDODMgJDilcmWfCkTPjlqkg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <f5846a61-ca5f-485e-b23e-b4cf8ed328f7@yandex-team.ru>
-Date: Wed, 12 Nov 2025 09:35:24 +0300
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1vJ4X7-0000Mv-2Q; Wed, 12 Nov 2025 01:40:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1762929633; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=LkDz/p7t+T+PV1mfUzHw9wDgGZ0AEmqr3sWsbFCFH5Y=;
+ b=XJ59Mdn9Lxmvh17Z6kbM5rtmk82F7aDH+KLFD6gUBV2YShBtc+rtlTPXZJ9fumxw+cfUfJXyqF2RBQwjMY394lEMw21DVSBlSF5nAZu3xlV+UMn222W1YdvbK//YI/YFjJXZDHA4NV88c95C6iPHC2terS8OI4675l8B002YpSI=
+Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WsF6VG3_1762929631 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 12 Nov 2025 14:40:32 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: [PATCH v3 0/6] target/riscv: Implement Smsdid and Smmpt extension
+Date: Wed, 12 Nov 2025 14:40:20 +0800
+Message-Id: <20251112064026.44222-1-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/12] iotests: Add coverage of recent NBD qio deadlock
- fix
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, berrange@redhat.com, kwolf@redhat.com,
- Hanna Reitz <hreitz@redhat.com>
-References: <20251108230525.3169174-14-eblake@redhat.com>
- <20251108230525.3169174-26-eblake@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251108230525.3169174-26-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.131;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-131.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,27 +64,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.11.25 01:59, Eric Blake wrote:
-> Test that all images in a qcow2 chain using an NBD backing file can be
-> served by the same process.  Prior to the recent QIONetListener fixes,
-> this test would demonstrate deadlock.
-> 
-> The test borrows heavily from the original formula by "John Doe" in
-> the gitlab bug, but uses a Unix socket rather than TCP to avoid port
-> contention, and uses a full-blown QEMU rather than qemu-storage-daemon
-> since both programs were impacted.
-> 
-> The test starts out with the even simpler task of directly adding an
-> NBD client without qcow2 chain ('client'), which also provokes the
-> deadlock; but commenting out the 'Adding explicit NBD client' section
-> will still show deadlock when reaching the 'Adding wrapper image...'.
-> 
-> Fixes:https://gitlab.com/qemu-project/qemu/-/issues/3169
-> Signed-off-by: Eric Blake<eblake@redhat.com>
+This patch set introduces support for the RISC-V Smmpt (Supervisor
+Memory-tracking and Protection Table) extension. Smmpt provides a
+hardware mechanism for fine-grained memory protection, checked after
+address translation, which is particularly useful for supervisor-level
+sandboxing and security monitoring.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+The rfc patch set:
+https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
+
+v2->v3:
+    1. Fix build error in patch 2.
+    2. Rebase to master.
+
+rfc->v2:
+    1. When ext_smmpt is false or BARE mode, make other fields in mmpt
+       CSR zero.
+    2. Add patch 5 to fix smrnmi ISA string order.
+    3. Fix patch 6 smmpt and smsdid ISA string order.
+    4. Make smmpt and smsdid experiment extensions.
+    5. Add review tags.
+
+
+LIU Zhiwei (6):
+  target/riscv: Add basic definitions and CSRs for SMMPT
+  target/riscv: Implement core SMMPT lookup logic
+  target/riscv: Integrate SMMPT checks into MMU and TLB fill
+  target/riscv: Implement SMMPT fence instructions
+  target/riscv: Fix smrnmi isa alphabetical order
+  target/riscv: Enable SMMPT extension
+
+ target/riscv/cpu.c                            |   6 +-
+ target/riscv/cpu.h                            |   9 +-
+ target/riscv/cpu_bits.h                       |  27 ++
+ target/riscv/cpu_cfg_fields.h.inc             |   2 +
+ target/riscv/cpu_helper.c                     |  81 +++++-
+ target/riscv/csr.c                            |  95 ++++++
+ target/riscv/insn32.decode                    |   2 +
+ .../riscv/insn_trans/trans_privileged.c.inc   |  30 ++
+ target/riscv/meson.build                      |   1 +
+ target/riscv/pmp.h                            |   3 +
+ target/riscv/riscv_smmpt.c                    | 274 ++++++++++++++++++
+ target/riscv/riscv_smmpt.h                    |  36 +++
+ 12 files changed, 560 insertions(+), 6 deletions(-)
+ create mode 100644 target/riscv/riscv_smmpt.c
+ create mode 100644 target/riscv/riscv_smmpt.h
 
 -- 
-Best regards,
-Vladimir
+2.25.1
+
 
