@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9685CCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 02:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D00CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 02:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ0D0-000330-44; Tue, 11 Nov 2025 21:03:42 -0500
+	id 1vJ0Fg-0005AT-6x; Tue, 11 Nov 2025 21:06:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vJ0Cy-00031x-CR
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 21:03:40 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1vJ0Fd-00058z-5L
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 21:06:25 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vJ0Cv-0004O7-Dp
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 21:03:40 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b73161849e1so62429366b.2
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 18:03:36 -0800 (PST)
+ id 1vJ0FZ-00056m-Tk
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 21:06:24 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b71397df721so59724466b.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 18:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762913015; x=1763517815; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762913180; x=1763517980; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s4Va8c6OPMRrscisMdJqeUCRm70mbmVuUFwICVdanFw=;
- b=mNY8jW05naQ3E4fbNB/t5lBkR319hmWUQe0OoVtDSEIcToPIGjtK+YRbfxYksjMTn9
- 3ot8y92c5tTtBqS+EB8ReaZy4ID7HDHM+XbPSQ0stO9+QvJEiAWrWYbsp9TytmTfQWm0
- L4wKiaujO+VlmITKbev74LmYfYqfh2r66TAQY8s/oR2ltrHRw+tgDCYoEJF58YsQu1gt
- GXOF+4XFsSbwZEpqCMMOFOYrkqzgW5KqzWm+UbLPdQjgdnJspxFMTol5ACt7nPwsW2E4
- 4ymwMEISx3d05NeboF8ouLYL40S6yeJnjjnkU2jhtyb8dS5fFZ3VnkevEAx79vLQjGk5
- C9Fg==
+ bh=TQiMcf2cVKAvtX2a22pFFkv9ji9ImJBtk1gMWEZ3/l4=;
+ b=GXAw+vgZvXj+SEYo5oZMTzY+dZjQe9zLgfGeChc3GD2pMsdK59+mxf1zCcEXXbIO+W
+ FSYxG2TP0VLLDdNruFdUDEe8DAZFlOkm+xj5yHct+MsZmj5Ili32HEuiJdXXnqSNQVq2
+ Qk4BUR0NaHspGZhP6LWhmt7aF8L7RSlTx6jZ+aanb9PYIPLhapziSnuAUD8GGvbD0vNI
+ XfJWHzJS3se8kYQFACQwwdNZPKep1B1Dm7VoTYYosLWTbD2l4OF6NKw2v1vEpMWMm9Qd
+ DFSUQS8dq7WNEd/d51wKQ3qjAJlOE3AKlPl610nwcKndHD4I/nbKmlwalD+z99N+uisG
+ rZPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762913015; x=1763517815;
+ d=1e100.net; s=20230601; t=1762913180; x=1763517980;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=s4Va8c6OPMRrscisMdJqeUCRm70mbmVuUFwICVdanFw=;
- b=uHg1bjDGcRU/W1cVWYBgwU4p4yNDBa1qoFAjhALWGaxOmPLokh4mNNT2+7y7e05Bz1
- 7p/s+biIAnc70F3GLc3ZsRXqt+3U5sPrSE9ctZR69B6nzGbMaLWh8X3H9SyokqYG1Yfu
- 2KpJJKy7671yvlIN4Ewc8bC4dDlzSqY7vPeoloIKdsdFqZV6fPd2DGbiIv0+SFBtzLUo
- sOX3uQe4aNf4nbr+kSefiTxO17k5Rhs3syL4Y+CilJoi4YoiZXdMRQETfD0L9ikHGFeJ
- WduMDsQ01fssNo5OFH1NvujeCANnyffauVhwZaNb3D0BPJbJJZRG+92rrCqx0VsGapAu
- CUlA==
-X-Gm-Message-State: AOJu0Yxz5aekZ/7WhKisJReSVuPeFZmRtw8Y5LE78d1WJYxXryru8f5O
- 18ScSnOtxVNFCrcdzKB2tRk6FKtcDGmqtx4mNjcGrxwCvro8gOsuFHxHT6b+OnyksyOQoDDxtfE
- kQcrY32HrFt5IL4rRLWoWW2P0cpdCKrw=
-X-Gm-Gg: ASbGnct8ztifaOSDrccKzb8fIiYK93KyhTVIc+FNDxzFL2B6Y3bWlD88L0kMPuysXA+
- /UqPyqb5RMXRq4PW3fugGZoTMqaP19/PxEsLF/35D3y7f8YILbrEHx6YH8q+2tHbYfqMMPfN9q5
- f2VQTf3/JqnIeoemfA4ytTOgnLa8Y2k4DZEzo13TVuxKTjUsLByypLIDLEROKL2iIIdIooMq/0R
- ykv1ylBHtlFkvkoy7TphMKUrFLJfazUm19MfRqmgAkyKFl0UwAo7nGcQcWZIgD4y+6f35JOr4ET
- Ru2+q332+ol07aZ85yQLW3wsxw==
-X-Google-Smtp-Source: AGHT+IG2p2ua7HGbjaBQPqF7dtVrOi/E0ybiMjd2vmTJyktv4qlvHzzgOHz5JlFaAqyRwMbKYdvXHzDy0iZro6Nl59w=
-X-Received: by 2002:a17:907:d0e:b0:b73:3028:93a1 with SMTP id
- a640c23a62f3a-b7331958c1fmr130111166b.9.1762913015376; Tue, 11 Nov 2025
- 18:03:35 -0800 (PST)
+ bh=TQiMcf2cVKAvtX2a22pFFkv9ji9ImJBtk1gMWEZ3/l4=;
+ b=tyxoHrMr81LFKuJdoUsiYi/YiWYKtu7OPvmCzaoGATIDQsgN3IQxeEBgoVOXbsI6un
+ Juq8COnRQ8SOTlq3vYJk0onJd6M2vLeNecjmsBEM09vYLFWs0L09lysnmY4gnIsrEg1+
+ iVoHI8KksF19KZYJ3MAVQKREpr/fCno2+wmiII2bLNnR8E+mJEEHoiuW6J0pAySSKOiu
+ YZ8vhsR6Ne/EVoQTy3l66ydUGrAnC2szZ/qhzo+He704YYm+/0tjqEQ0GnvkwMhbvcGh
+ DDA8XWH4s1FEUHA6nL5dLG56NWk2/ztEVBlfBhg/0g98x1ZdhTyZq5z3q6+wKE+VVk6J
+ C0vQ==
+X-Gm-Message-State: AOJu0YzQP+itYdtO5dfpjzTdWp0+67uApySMOVcuWx8etgXYvC20MRoK
+ H1EXZwfv5tSq2i6psAYhi/mHRbCZZ5irJLLoRFFz1tDBANYgDCNAx7FEc4Z/EM0LgdEiieJRbWn
+ lC9dpyA+Q7LofAt4twWPQc2rTz/oD+4s=
+X-Gm-Gg: ASbGncsQnpeKWjLPHNSF3JTubaMlLRXbJzTHOSWrXQDD8wukmYdEF53joY74ih05xLC
+ dtDg8sY0Qe9zN0YtQ0qEI4z9eruUQoiEtnQ3DhwxW5sOL9hTFYP6QxeuhaO8hNcIVSQIxFGN1/g
+ WJgRe+wWgjiA23hQlSaETc/Ab8ZaRYXVOwoKmgiB6zb4od8rzOsZkpaqFfErxhuQkSqsWWzDvRz
+ n0LlPRaZUIOR4EP6k/PkwHWfn3dHYPj7KlM0LvromCU7h2qobjssrzjFOL3/G2YvQgyhXGSfH3B
+ BNJPmsk6u6RCizR6URgybCx4hA==
+X-Google-Smtp-Source: AGHT+IH6RSzOb1G3SW3Od4ISWvJgwWMXEMRFC1kTCeTfb4MleQMxj23VyMTj8oqHkcZEa9aEURvfVh0DgS1h+Z065P8=
+X-Received: by 2002:a17:907:e895:b0:b71:1420:334a with SMTP id
+ a640c23a62f3a-b73319684b2mr125073466b.13.1762913180077; Tue, 11 Nov 2025
+ 18:06:20 -0800 (PST)
 MIME-Version: 1.0
 References: <20251027100938.11822-1-michael@videogpu.com>
- <20251027100938.11822-4-michael@videogpu.com>
-In-Reply-To: <20251027100938.11822-4-michael@videogpu.com>
+ <20251027100938.11822-5-michael@videogpu.com>
+In-Reply-To: <20251027100938.11822-5-michael@videogpu.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 12 Nov 2025 12:03:09 +1000
-X-Gm-Features: AWmQ_bm6738B14j2BV9ocKuJLDEhynJ3AQPLSotdTlV4VpNW4pKId7zGh3BYK9U
-Message-ID: <CAKmqyKNbcAv9OsbxOv9cA1Dmk5xNXdEqoupS2FgZS9g_D1vfwQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] hw/char: add NEORV32 UART (CTRL/DATA, fifo,
- chardev)
+Date: Wed, 12 Nov 2025 12:05:53 +1000
+X-Gm-Features: AWmQ_bnVCMStOE-wcA5qEQio317ZZjjZ4QVHqUH32yWsH_x5thTD6YpfuZc17vk
+Message-ID: <CAKmqyKOt=Lut6bnYwTRW6FgkF_-JFs6ySJ4pi_6tebpLzNKHuw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] hw/ssi: add NEORV32 SPI controller (SSI master,
+ CS command)
 To: Michael Levit <michael@videogpu.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, philmd@linaro.org, 
  pbonzini@redhat.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
  liwei1518@gmail.com, smishash@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,52 +105,50 @@ On Mon, Oct 27, 2025 at 8:12=E2=80=AFPM Michael Levit <michael@videogpu.com=
 >
 > From: Michael <michael@videogpu.com>
 >
-> Add NEORV32 UART device: CTRL/DATA registers, RX FIFO, TX to chardev.
+> Add NEORV32 SPI controller: CTRL/DATA, tiny TX/RX FIFOs, command-mode CS =
+(active-low),
+> SSI master bus, and helper to attach n25q flash when an MTD drive is prov=
+ided.
 > Includes Kconfig/meson and public header.
 >
 > Signed-off-by: Michael Levit <michael@videogpu.com>
 >
-> diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-> index 020c0a84bb..1fd39c2b30 100644
-> --- a/hw/char/Kconfig
-> +++ b/hw/char/Kconfig
-> @@ -95,3 +95,6 @@ config IP_OCTAL_232
+> diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+> index 1bd56463c1..5b1a03f3c4 100644
+> --- a/hw/ssi/Kconfig
+> +++ b/hw/ssi/Kconfig
+> @@ -32,3 +32,7 @@ config PNV_SPI
+>  config ALLWINNER_A10_SPI
 >      bool
->      default y
->      depends on IPACK
+>      select SSI
 > +
-> +config NEORV32_UART
+> +config NEORV32_SPI
 > +    bool
+> +    select SSI
 >
-> diff --git a/hw/char/meson.build b/hw/char/meson.build
-> index a9e1dc26c0..2f5bf827a7 100644
-> --- a/hw/char/meson.build
-> +++ b/hw/char/meson.build
-> @@ -31,6 +31,7 @@ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap=
-_uart.c'))
->  system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_aux.c'))
->  system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: files('renesas_sci.c'=
+> diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+> index 6afb1ea200..5139cc1ca0 100644
+> --- a/hw/ssi/meson.build
+> +++ b/hw/ssi/meson.build
+> @@ -13,3 +13,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_s=
+pi.c'))
+>  system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
+>  system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'=
 ))
->  system_ss.add(when: 'CONFIG_SIFIVE_UART', if_true: files('sifive_uart.c'=
+>  system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
+> +system_ss.add(when: 'CONFIG_NEORV32_SPI', if_true: files('neorv32_spi.c'=
 ))
-> +system_ss.add(when: 'CONFIG_NEORV32_UART', if_true: files('neorv32_uart.=
-c'))
->  system_ss.add(when: 'CONFIG_SH_SCI', if_true: files('sh_serial.c'))
->  system_ss.add(when: 'CONFIG_STM32F2XX_USART', if_true: files('stm32f2xx_=
-usart.c'))
->  system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_=
-usart.c'))
 >
-> diff --git a/hw/char/neorv32_uart.c b/hw/char/neorv32_uart.c
+> diff --git a/hw/ssi/neorv32_spi.c b/hw/ssi/neorv32_spi.c
 > new file mode 100644
-> index 0000000000..b54ab54d6a
+> index 0000000000..43fb822f1a
 > --- /dev/null
-> +++ b/hw/char/neorv32_uart.c
-> @@ -0,0 +1,311 @@
+> +++ b/hw/ssi/neorv32_spi.c
+> @@ -0,0 +1,504 @@
 > +/*
-> + * Neorv32-specific UART.
+> + * QEMU implementation of the Neorv32 SPI block.
 > + *
-> + * Copyright (c) 2025 Michael Levit
+> + * Copyright (c) 2025 Michael Levit.
 > + *
 > + * Author:
 > + *   Michael Levit <michael@videogpu.com>
@@ -173,347 +171,558 @@ ng with
 > + */
 > +
 > +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/log.h"
-> +#include "migration/vmstate.h"
-> +#include "chardev/char.h"
-> +#include "chardev/char-fe.h"
-> +#include "hw/irq.h"
-> +#include "hw/char/neorv32_uart.h"
-> +#include "hw/qdev-properties-system.h"
-> +
-> +typedef volatile struct __attribute__((packed,aligned(4))) {
-> +  uint32_t CTRL;  /**< offset 0: control register (#NEORV32_UART_CTRL_en=
-um) */
-> +  uint32_t DATA;  /**< offset 4: data register  (#NEORV32_UART_DATA_enum=
-) */
-> +} neorv32_uart_t;
+> +/*
+> + * QEMU model of a NEORV32 SPI Controller
+> + *
+> + * This example is inspired by the SiFive SPI controller implementation =
+shown
+> + * previously and adapted to the NEORV32 SPI register interface and sema=
+ntics.
+> + *
+> + * IMPORTANT:
+> + * This code is an illustrative example. Adjust register addresses, IRQ =
+logic,
+> + * FIFO sizes, and chip select configurations according to actual NEORV3=
+2 SPI
+> + * specifications. The following is based on the given register bits and=
+ a
+> + * presumed memory map. Check the official NEORV32 documentation for the
+> + * correct register definitions, addressing scheme, and functionality.
 
-This doesn't seem to be used at all
+What are users expected to do with this information?
+
+Can we get this to match some default example?
 
 Alistair
 
+> + *
+> + * The code simulates:
+> + *  - A single SPI control register (CTRL) and a data register (DATA).
+> + *  - TX and RX FIFOs for SPI transfers.
+> + *  - Basic SPI master logic (no advanced timing or prescaler logic show=
+n).
+> + *  - Chip select lines and interrupts based on FIFO status.
+> + *
+> + * This code will:
+> + *   - Create a QEMU device "neorv32-spi"
+> + *   - Map it to a 0x1000 address space region
+> + *   - Provide a simple SPI master interface using QEMU=E2=80=99s ssi bu=
+s
+> + *   - Allow reading/writing CTRL and DATA registers
+> + *   - Simulate FIFO behavior and trigger IRQ lines
+> + */
 > +
-> +#define NEORV32_UART_IO_REGION_SIZE  (32)
+> +#include "qemu/osdep.h"
+> +#include "hw/irq.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/ssi/ssi.h"
+> +#include "qemu/fifo8.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +#include "trace/trace-root.h"
+> +#include "qapi/error.h"
+> +#include "hw/irq.h"
+> +#include "hw/ssi/neorv32_spi.h"
+> +#include "system/blockdev.h"
 > +
-> +static Property neorv32_uart_properties[] =3D {
-> +    DEFINE_PROP_CHR("chardev", Neorv32UARTState, chr),
+> +
+> +
+> +/** SPI control register bits */
+> +enum NEORV32_SPI_CTRL_enum {
+> +  SPI_CTRL_EN           =3D  0, /**< SPI control register(0)  (r/w): SPI=
+ unit enable */
+> +  SPI_CTRL_CPHA         =3D  1, /**< SPI control register(1)  (r/w): Clo=
+ck phase */
+> +  SPI_CTRL_CPOL         =3D  2, /**< SPI control register(2)  (r/w): Clo=
+ck polarity */
+> +  SPI_CTRL_PRSC0        =3D  3, /**< SPI control register(3)  (r/w): Clo=
+ck prescaler select bit 0 */
+> +  SPI_CTRL_PRSC1        =3D  4, /**< SPI control register(4)  (r/w): Clo=
+ck prescaler select bit 1 */
+> +  SPI_CTRL_PRSC2        =3D  5, /**< SPI control register(5)  (r/w): Clo=
+ck prescaler select bit 2 */
+> +  SPI_CTRL_CDIV0        =3D  6, /**< SPI control register(6)  (r/w): Clo=
+ck divider bit 0 */
+> +  SPI_CTRL_CDIV1        =3D  7, /**< SPI control register(7)  (r/w): Clo=
+ck divider bit 1 */
+> +  SPI_CTRL_CDIV2        =3D  8, /**< SPI control register(8)  (r/w): Clo=
+ck divider bit 2 */
+> +  SPI_CTRL_CDIV3        =3D  9, /**< SPI control register(9)  (r/w): Clo=
+ck divider bit 3 */
+> +
+> +  SPI_CTRL_RX_AVAIL     =3D 16, /**< SPI control register(16) (r/-): RX =
+FIFO data available (RX FIFO not empty) */
+> +  SPI_CTRL_TX_EMPTY     =3D 17, /**< SPI control register(17) (r/-): TX =
+FIFO empty */
+> +  SPI_CTRL_TX_FULL      =3D 18, /**< SPI control register(18) (r/-): TX =
+FIFO full */
+> +
+> +  SPI_CTRL_FIFO_LSB     =3D 24, /**< SPI control register(24) (r/-): log=
+2(FIFO size), LSB */
+> +  SPI_CTRL_FIFO_MSB     =3D 27, /**< SPI control register(27) (r/-): log=
+2(FIFO size), MSB */
+> +
+> +  SPI_CS_ACTIVE         =3D 30, /**< SPI control register(30) (r/-): At =
+least one CS line is active when set */
+> +  SPI_CTRL_BUSY         =3D 31  /**< SPI control register(31) (r/-): ser=
+ial PHY busy or TX FIFO not empty yet */
 > +};
 > +
-> +enum {
-> +    NEORV32_UART_CTRL =3D 0,  /**< offset 0: control register */
-> +    NEORV32_UART_DATA =3D 4  /**< offset 4: data register  */
+> +//TODO:
+> +//Implement NEORV32_SPI_DATA_enum
+> +/** SPI data register bits */
+> +enum NEORV32_SPI_DATA_enum {
+> +  SPI_DATA_LSB  =3D  0, /**< SPI data register(0)  (r/w): Data byte LSB =
+*/
+> +  SPI_DATA_CSEN =3D  3, /**< SPI data register(3)  (-/w): Chip select en=
+able (command-mode) */
+> +  SPI_DATA_MSB  =3D  7, /**< SPI data register(7)  (r/w): Data byte MSB =
+*/
+> +  SPI_DATA_CMD  =3D 31  /**< SPI data register(31) (-/w): 1=3Dcommand, 0=
+=3Ddata */
 > +};
 > +
-> +/** UART control register bits */
-> +enum NEORV32_UART_CTRL_enum {
-> +  UART_CTRL_EN            =3D  0, /**< UART control register(0)  (r/w): =
-UART global enable */
-> +  UART_CTRL_SIM_MODE      =3D  1, /**< UART control register(1)  (r/w): =
-Simulation output override enable */
-> +  UART_CTRL_HWFC_EN       =3D  2, /**< UART control register(2)  (r/w): =
-Enable RTS/CTS hardware flow-control */
-> +  UART_CTRL_PRSC_LSB      =3D  3, /**< UART control register(3)  (r/w): =
-clock prescaler select, bit 0 (LSB) */
-> +  UART_CTRL_PRSC_MSB      =3D  5, /**< UART control register(5)  (r/w): =
-clock prescaler select, bit 2 (MSB) */
-> +  UART_CTRL_BAUD_LSB      =3D  6, /**< UART control register(6)  (r/w): =
-BAUD rate divisor, bit 0 (LSB) */
-> +  UART_CTRL_BAUD_MSB      =3D 15, /**< UART control register(15) (r/w): =
-BAUD rate divisor, bit 9 (MSB) */
-> +  UART_CTRL_RX_NEMPTY     =3D 16, /**< UART control register(16) (r/-): =
-RX FIFO not empty */
-> +  UART_CTRL_RX_FULL       =3D 17, /**< UART control register(17) (r/-): =
-RX FIFO full */
-> +  UART_CTRL_TX_EMPTY      =3D 18, /**< UART control register(18) (r/-): =
-TX FIFO empty */
-> +  UART_CTRL_TX_NFULL      =3D 19, /**< UART control register(19) (r/-): =
-TX FIFO not full */
-> +  UART_CTRL_IRQ_RX_NEMPTY =3D 20, /**< UART control register(20) (r/w): =
-Fire IRQ if RX FIFO not empty */
-> +  UART_CTRL_IRQ_RX_FULL   =3D 21, /**< UART control register(21) (r/w): =
-Fire IRQ if RX FIFO full */
-> +  UART_CTRL_IRQ_TX_EMPTY  =3D 22, /**< UART control register(22) (r/w): =
-Fire IRQ if TX FIFO empty */
-> +  UART_CTRL_IRQ_TX_NFULL  =3D 23, /**< UART control register(23) (r/w): =
-Fire IRQ if TX FIFO not full */
+> +/* Register offsets */
+> +#define NEORV32_SPI_CTRL  0x00
+> +#define NEORV32_SPI_DATA  0x04
+> +#define NEORV32_SPI_MMIO_SIZE   0x8  // ctrl + data (8 bytes total)
+> +/* Various constants */
+> +#define NEORV32_SPI_MAX_CS_LINES  7
+> +#define NEORV32_SPI_FIFO_CAPACITY 8
 > +
-> +  UART_CTRL_RX_OVER       =3D 30, /**< UART control register(30) (r/-): =
-RX FIFO overflow */
-> +  UART_CTRL_TX_BUSY       =3D 31  /**< UART control register(31) (r/-): =
-Transmitter busy or TX FIFO not empty */
-> +};
-> +
-> +/**  bits */
-> +enum NEORV32_UART_DATA_enum {
-> +  UART_DATA_RTX_LSB          =3D  0, /**< (r/w): UART rx/tx data, LSB */
-> +  UART_DATA_RTX_MSB          =3D  7, /**< (r/w): UART rx/tx data, MSB */
-> +
-> +  UART_DATA_RX_FIFO_SIZE_LSB =3D  8, /**< (r/-): log2(RX FIFO size), LSB=
- */
-> +  UART_DATA_RX_FIFO_SIZE_MSB =3D 11, /**< (r/-): log2(RX FIFO size), MSB=
- */
-> +
-> +  UART_DATA_TX_FIFO_SIZE_LSB =3D 12, /**< (r/-): log2(RX FIFO size), LSB=
- */
-> +  UART_DATA_TX_FIFO_SIZE_MSB =3D 15, /**< (r/-): log2(RX FIFO size), MSB=
- */
-> +};
-> +/**@}*/
-> +
-> +static void neorv32_uart_update_irq(Neorv32UARTState *s)
+> +/* Utility functions to get/set bits in ctrl register */
+> +static inline bool get_ctrl_bit(NEORV32SPIState *s, int bit)
 > +{
-> +    int cond =3D 0;
-> +    if ((s->ie & NEORV32_UART_IE_TXWM) ||
-> +        ((s->ie & NEORV32_UART_IE_RXWM) && s->rx_fifo_len)) {
-> +        cond =3D 1;
-> +    }
-> +    if (cond) {
-> +        qemu_irq_raise(s->irq);
+> +    return (s->ctrl & (1 << bit)) !=3D 0;
+> +}
+> +
+> +static inline void set_ctrl_bit(NEORV32SPIState *s, int bit, bool val)
+> +{
+> +    if (val) {
+> +        s->ctrl |=3D (1 << bit);
 > +    } else {
-> +        qemu_irq_lower(s->irq);
+> +        s->ctrl &=3D ~(1 << bit);
 > +    }
 > +}
 > +
-> +static uint64_t
-> +neorv32_uart_read(void *opaque, hwaddr addr, unsigned int size)
+> +static inline bool get_data_bit(uint32_t v, int bit)
 > +{
-> +    Neorv32UARTState *s =3D opaque;
-> +    unsigned char r;
-> +
-> +    switch (addr) {
-> +        case NEORV32_UART_CTRL:
-> +                       if (s->rx_fifo_len) {
-> +                               s->CTRL |=3D (1 << UART_CTRL_RX_NEMPTY); =
-/* set data available */
-> +                       } else {
-> +                               s->CTRL &=3D ~(1 << UART_CTRL_RX_NEMPTY);=
- /* clear data available */
-> +                       }
-> +                       //TODO: assuming here TX is always avalable, fix =
-it.
-> +                       s->CTRL |=3D (1 << UART_CTRL_TX_NFULL); /* set TX=
- not full */
-> +
-> +               return s->CTRL;
-> +
-> +        case NEORV32_UART_DATA:
-> +            if (s->rx_fifo_len) {
-> +                r =3D s->rx_fifo[0];
-> +                memmove(s->rx_fifo, s->rx_fifo + 1, s->rx_fifo_len - 1);
-> +                s->rx_fifo_len--;
-> +                qemu_chr_fe_accept_input(&s->chr);
-> +                s->DATA =3D r;
-> +
-> +                neorv32_uart_update_irq(s); /* TODO: check if need to ca=
-ll */
-> +                return r;
-> +            }
-> +        }
-> +
-> +
-> +
-> +    qemu_log_mask(LOG_GUEST_ERROR, "%s: bad read: addr=3D0x%x\n",
-> +                  __func__, (int)addr);
-> +    return 0;
+> +    return (v >> bit) & 1;
 > +}
 > +
-> +
-> +
-> +static void
-> +neorv32_uart_write(void *opaque, hwaddr addr,
-> +                  uint64_t val64, unsigned int size)
+> +/* Update read-only status bits in CTRL register */
+> +static void neorv32_spi_update_status(NEORV32SPIState *s)
 > +{
+> +    /* RX_AVAIL: set if RX FIFO not empty */
+> +    set_ctrl_bit(s, SPI_CTRL_RX_AVAIL, !fifo8_is_empty(&s->rx_fifo));
 > +
-> +    Neorv32UARTState *s =3D opaque;
-> +    uint32_t value =3D val64;
-> +    unsigned char ch =3D value;
+> +    /* TX_EMPTY: set if TX FIFO empty */
+> +    set_ctrl_bit(s, SPI_CTRL_TX_EMPTY, fifo8_is_empty(&s->tx_fifo));
 > +
-> +    /* TODO: check if need to update data and control bits */
-> +    switch (addr) {
-> +        case NEORV32_UART_CTRL:
-> +            s->CTRL =3D value;
-> +            /* TODO: check if need to call, depending on IRQ flags */
-> +            /* neorv32_uart_update_irq(s); */
-> +            return;
-> +        case NEORV32_UART_DATA:
-> +            s->DATA =3D value;
-> +            qemu_chr_fe_write(&s->chr, &ch, 1);
-> +            /* neorv32_uart_update_irq(s); TODO: check if need to call *=
-/
-> +            return;
-> +        }
+> +    /* TX_FULL: set if TX FIFO full */
+> +    set_ctrl_bit(s, SPI_CTRL_TX_FULL, fifo8_is_full(&s->tx_fifo));
 > +
-> +    qemu_log_mask(LOG_GUEST_ERROR, "%s: bad write: addr=3D0x%x v=3D0x%x\=
-n",
-> +                  __func__, (int)addr, (int)value);
-> +}
 > +
-> +static const MemoryRegionOps neorv32_uart_ops =3D {
-> +    .read  =3D neorv32_uart_read,
-> +    .write =3D neorv32_uart_write,
-> +    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .valid =3D {
-> +        .min_access_size =3D 4,
-> +        .max_access_size =3D 4
+> +    /* BUSY: We'll consider SPI busy if TX FIFO is not empty or currentl=
+y shifting data.
+> +     * For simplicity, if TX is not empty we say busy.
+> +     */
+> +    bool busy =3D !fifo8_is_empty(&s->tx_fifo);
+> +    set_ctrl_bit(s, SPI_CTRL_BUSY, busy);
+> +
+> +    /* Update CS status */
+> +    if (s->cmd_cs_active) {
+> +        s->ctrl |=3D (1u << SPI_CS_ACTIVE);
+> +    } else {
+> +        s->ctrl &=3D ~(1u << SPI_CS_ACTIVE);
 > +    }
-> +};
 > +
-> +static void neorv32_uart_init(Object *obj)
-> +{
-> +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(obj);
-> +    Neorv32UARTState *s =3D NEORV32_UART(obj);
-> +
-> +    memory_region_init_io(&s->mmio, OBJECT(s), &neorv32_uart_ops, s,
-> +                          TYPE_NEORV32_UART, NEORV32_UART_IO_REGION_SIZE=
-);
-> +    sysbus_init_mmio(sbd, &s->mmio);
-> +    sysbus_init_irq(sbd, &s->irq);
 > +}
 > +
-> +
-> +static void neorv32_uart_rx(void *opaque, const uint8_t *buf, int size)
+> +/* Update chip select lines based on command-mode CS (active-low on the =
+wire) */
+> +static void neorv32_spi_update_cs(NEORV32SPIState *s)
 > +{
-> +    Neorv32UARTState *s =3D opaque;
-> +
-> +    /* Got a byte.  */
-> +    if (s->rx_fifo_len >=3D sizeof(s->rx_fifo)) {
-> +        printf("WARNING: UART dropped char.\n");
+> +       /* Check that input valid */
+> +       if (!s->cs_lines || s->num_cs <=3D 0) {
 > +        return;
 > +    }
-> +    s->rx_fifo[s->rx_fifo_len++] =3D *buf;
 > +
-> +    neorv32_uart_update_irq(s);
+> +    /* Deassert all CS lines (inactive =3D high) */
+> +    for (int i =3D 0; i < s->num_cs; i++) {
+> +        qemu_set_irq(s->cs_lines[i], 1);
+> +    }
+> +
+> +    /* If DATA command says CS active, assert selected line (low =3D act=
+ive) */
+> +    if (s->cmd_cs_active) {
+> +        int cs_idx =3D s->current_cs;
+> +        if (cs_idx < 0 || cs_idx >=3D s->num_cs) {
+> +            /* Out of range: keep all deasserted, but warn once per even=
+t */
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: CS index %d out of range=
+ (num_cs=3D%d)\n",
+> +                          __func__, cs_idx, s->num_cs);
+> +            return;
+> +        }
+> +        /* Active-low when enabled */
+> +        qemu_set_irq(s->cs_lines[cs_idx], 0);
+> +    }
+> +
 > +}
 > +
-> +static int neorv32_uart_can_rx(void *opaque)
+> +/* Update IRQ based on conditions */
+> +static void neorv32_spi_update_irq(NEORV32SPIState *s)
 > +{
-> +    Neorv32UARTState *s =3D opaque;
+> +    /* Conditions for IRQ:
+> +     * IRQ if RX data available and IRQ_RX_AVAIL is set:
+> +     *    if (!RX FIFO empty && SPI_CTRL_IRQ_RX_AVAIL set)
+> +     *
+> +     * IRQ if TX empty and IRQ_TX_EMPTY is set:
+> +     *    if (TX empty && SPI_CTRL_IRQ_TX_EMPTY set)
+> +     *
+> +     * IRQ if TX < half full and IRQ_TX_HALF is set:
+> +     *    if (TX < half full && SPI_CTRL_IRQ_TX_HALF set)
+> +     */
 > +
-> +    return s->rx_fifo_len < sizeof(s->rx_fifo);
+> +    bool rx_irq =3D !fifo8_is_empty(&s->rx_fifo);
+> +    bool tx_empty_irq =3D fifo8_is_empty(&s->tx_fifo);
+> +    int used =3D fifo8_num_used(&s->tx_fifo);
+> +    bool tx_half_irq =3D (used < (s->fifo_capacity / 2));
+> +
+> +    bool irq_level =3D rx_irq || tx_empty_irq || tx_half_irq;
+> +    qemu_set_irq(s->irq, irq_level ? 1 : 0);
 > +}
 > +
-> +static void neorv32_uart_event(void *opaque, QEMUChrEvent event)
+> +/* Flush the TX FIFO to the SPI bus:
+> + * For each byte in TX FIFO, send it out via ssi_transfer.
+> + * If direction is not explicitly given, we assume:
+> + *   - On write to DATA, we push to TX FIFO and then transfer out.
+> + *   - On receiving data back from ssi_transfer, we push it into RX FIFO
+> + *     if SPI is enabled.
+> + */
+> +static void neorv32_spi_flush_txfifo(NEORV32SPIState *s)
 > +{
+> +    if (!get_ctrl_bit(s, SPI_CTRL_EN)) {
+> +        /* SPI not enabled, do nothing */
+> +        return;
+> +    }
+> +
+> +    while (!fifo8_is_empty(&s->tx_fifo)) {
+> +        uint8_t tx =3D fifo8_pop(&s->tx_fifo);
+> +        uint8_t rx =3D ssi_transfer(s->bus, tx);
+> +
+> +        /* Push received byte into RX FIFO if not full */
+> +        if (!fifo8_is_full(&s->rx_fifo)) {
+> +            fifo8_push(&s->rx_fifo, rx);
+> +        }
+> +    }
 > +}
 > +
-> +static int  neorv32_uart_be_change(void *opaque)
+> +/* Reset the device state */
+> +static void neorv32_spi_reset(DeviceState *d)
 > +{
-> +    Neorv32UARTState *s =3D opaque;
+> +    NEORV32SPIState *s =3D NEORV32_SPI(d);
 > +
-> +    qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_=
-rx,
-> +                             neorv32_uart_event, neorv32_uart_be_change,=
- s,
-> +                             NULL, true);
+> +    s->ctrl =3D 0;
+> +    s->data =3D 0;
 > +
-> +    return 0;
+> +    /* Reset FIFOs */
+> +    fifo8_reset(&s->tx_fifo);
+> +    fifo8_reset(&s->rx_fifo);
+> +
+> +    neorv32_spi_update_status(s);
+> +    neorv32_spi_update_cs(s);
+> +    neorv32_spi_update_irq(s);
 > +}
 > +
-> +static void neorv32_uart_realize(DeviceState *dev, Error **errp)
+> +/* MMIO read handler */
+> +static uint64_t neorv32_spi_read(void *opaque, hwaddr addr, unsigned int=
+ size)
 > +{
-> +    Neorv32UARTState *s =3D NEORV32_UART(dev);
+> +    NEORV32SPIState *s =3D opaque;
+> +    uint32_t r =3D 0;
 > +
-> +    qemu_chr_fe_set_handlers(&s->chr, neorv32_uart_can_rx, neorv32_uart_=
-rx,
-> +                            neorv32_uart_event, neorv32_uart_be_change, =
-s,
-> +                             NULL, true);
+> +    switch (addr) {
+> +    case NEORV32_SPI_CTRL:
+> +        /* Return the current CTRL register value (including status bits=
+) */
+> +        neorv32_spi_update_status(s);
+> +        r =3D s->ctrl;
+> +        break;
 > +
+> +    case NEORV32_SPI_DATA:
+> +        /* If RX FIFO is empty, return some default, else pop from RX FI=
+FO */
+> +        if (fifo8_is_empty(&s->rx_fifo)) {
+> +            /* No data available, could return 0xFFFFFFFF or 0x00000000 =
+as "no data" */
+> +            r =3D 0x00000000;
+> +        } else {
+> +            r =3D fifo8_pop(&s->rx_fifo);
+> +        }
+> +        break;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: bad read at address 0x%"
+> +                       HWADDR_PRIx "\n", __func__, addr);
+> +        break;
+> +    }
+> +
+> +    neorv32_spi_update_status(s);
+> +    neorv32_spi_update_irq(s);
+> +
+> +    return r;
 > +}
 > +
-> +static const VMStateDescription vmstate_neorv32_uart =3D {
-> +    .name =3D TYPE_NEORV32_UART,
-> +    .version_id =3D 1,
-> +    .minimum_version_id =3D 1,
-> +    .fields =3D (VMStateField[]) {
-> +        VMSTATE_UINT8_ARRAY(rx_fifo,
-> +                            Neorv32UARTState,
-> +                            NEORV32_UART_RX_FIFO_SIZE),
-> +        VMSTATE_UINT8(rx_fifo_len, Neorv32UARTState),
-> +        VMSTATE_UINT32(ie, Neorv32UARTState),
-> +        VMSTATE_END_OF_LIST()
+> +/* MMIO write handler */
+> +static void neorv32_spi_write(void *opaque, hwaddr addr,
+> +                              uint64_t val64, unsigned int size)
+> +{
+> +    NEORV32SPIState *s =3D opaque;
+> +    uint32_t value =3D val64;
+> +
+> +    switch (addr) {
+> +    case NEORV32_SPI_CTRL: {
+> +
+> +        /* Writing control register:
+> +         * Some bits are read-only (e.g., status bits).
+> +         * We should mask them out or ignore writes to them.
+> +         * For simplicity, we overwrite ctrl except for RO bits.
+> +         */
+> +
+> +        /* Save old RO bits: RX_AVAIL, TX_EMPTY, TX_NHALF, TX_FULL, BUSY=
+ and FIFO size bits */
+> +        uint32_t ro_mask =3D ((1 << SPI_CTRL_BUSY)      |
+> +                            (1 << SPI_CTRL_TX_EMPTY)  |
+> +                            (1 << SPI_CTRL_TX_FULL)   |
+> +                            (1 << SPI_CTRL_RX_AVAIL));
+> +
+> +        /* FIFO size bits might be hardwired read-only. Assume we do not=
+ change them:
+> +         * FIFO size: bits [SPI_CTRL_FIFO_LSB..SPI_CTRL_FIFO_MSB], here =
+assume read-only.
+> +         */
+> +        uint32_t fifo_size_mask =3D 0;
+> +        for (int b =3D SPI_CTRL_FIFO_LSB; b <=3D SPI_CTRL_FIFO_MSB; b++)=
+ {
+> +            fifo_size_mask |=3D (1 << b);
+> +        }
+> +        ro_mask |=3D fifo_size_mask;
+> +
+> +        uint32_t ro_bits =3D s->ctrl & ro_mask;
+> +        s->ctrl =3D (value & ~ro_mask) | ro_bits;
+> +
+> +        neorv32_spi_update_cs(s);
+> +        break;
+> +    } //NEORV32_SPI_CTRL
+> +
+> +    case NEORV32_SPI_DATA:
+> +       {
+> +               /* If CMD=3D1, this write is a command, not payload */
+> +               const bool is_cmd =3D get_data_bit(value, SPI_DATA_CMD);
+> +
+> +               if (is_cmd) {
+> +               /*   DATA command format:
+> +                *   bit 31: CMD =3D 1
+> +                *   bit  3: CSEN (1=3Dassert CS, 0=3Ddeassert All)
+> +                *   bits [2:0]: CS index (0..7) when asserting
+> +                */
+> +               const bool csen =3D get_data_bit(value, SPI_DATA_CSEN);
+> +               const int  cs_index =3D (int)(value & 0x7);
+> +
+> +               if (csen) {
+> +                   /* Select and assert a single CS */
+> +                   s->current_cs    =3D cs_index;  /* range checking in =
+update_cs() */
+> +                   s->cmd_cs_active =3D true;
+> +               } else {
+> +                   /* Deassert all CS lines */
+> +                   s->cmd_cs_active =3D false;
+> +               }
+> +
+> +                       /* Drive the wires */
+> +                       neorv32_spi_update_cs(s);
+> +                       /* Update status (SPI_CS_ACTIVE is read-only stat=
+us bit) */
+> +                       neorv32_spi_update_status(s);
+> +                       neorv32_spi_update_irq(s);
+> +                       break; /* no FIFO push on command */
+> +               }
+> +
+> +               /* Writing DATA puts a byte into TX FIFO if not full */
+> +               if (!fifo8_is_full(&s->tx_fifo)) {
+> +                       uint8_t tx_byte =3D (uint8_t)value;
+> +
+> +                       fifo8_push(&s->tx_fifo, tx_byte);
+> +                       /* After pushing data, flush TX to SPI bus */
+> +                       neorv32_spi_flush_txfifo(s);
+> +               } else {
+> +                       qemu_log_mask(LOG_GUEST_ERROR, "%s: TX FIFO full,=
+ cannot write 0x%x\n",
+> +                                                 __func__, value);
+> +               }
+> +               break;
+> +       } //NEORV32_SPI_DATA
+> +
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: bad write at address 0x%"
+> +                      HWADDR_PRIx " value=3D0x%x\n", __func__, addr, val=
+ue);
+> +        break;
+> +
+> +    } //switch (addr)
+> +
+> +    neorv32_spi_update_status(s);
+> +    neorv32_spi_update_irq(s);
+> +} //neorv32_spi_write
+> +
+> +static const MemoryRegionOps neorv32_spi_ops =3D {
+> +    .read =3D neorv32_spi_read,
+> +    .write =3D neorv32_spi_write,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> +    .valid =3D {
+> +        .min_access_size =3D 4,
+> +        .max_access_size =3D 4,
 > +    },
 > +};
 > +
-> +static void neorv32_uart_reset_enter(Object *obj, ResetType type)
+> +static void neorv32_spi_init(Object *obj)
 > +{
-> +    Neorv32UARTState *s =3D NEORV32_UART(obj);
-> +    s->rx_fifo_len =3D 0;
-> +    s->ie =3D 0;
+> +    NEORV32SPIState *s =3D NEORV32_SPI(obj);
+> +    s->ctrl          =3D 0;
+> +    s->data          =3D 0;
+> +    s->fifo_capacity =3D NEORV32_SPI_FIFO_CAPACITY;
+> +    s->num_cs        =3D NEORV32_SPI_MAX_CS_LINES; /* Default to 1 CS li=
+ne */
+> +    s->cmd_cs_active =3D false;
+> +    s->current_cs    =3D 0; /* Use CS0 by default */
 > +}
 > +
-> +static void neorv32_uart_reset_hold(Object *obj, ResetType type)
+> +/* Realize the device */
+> +static void neorv32_spi_realize(DeviceState *dev, Error **errp)
 > +{
-> +    Neorv32UARTState *s =3D NEORV32_UART(obj);
-> +    qemu_irq_lower(s->irq);
+> +    NEORV32SPIState *s =3D NEORV32_SPI(dev);
+> +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
+> +
+> +    /* Create the SSI master bus */
+> +       s->bus =3D ssi_create_bus(dev, "neorv32-spi-bus");
+> +
+> +       /* 1) IRQ inputs: first the main IRQ, then each CS line */
+> +       sysbus_init_irq(sbd, &s->irq);
+> +       s->cs_lines =3D g_new0(qemu_irq, s->num_cs);
+> +       for (int i =3D 0; i < s->num_cs; i++) {
+> +               sysbus_init_irq(sbd, &s->cs_lines[i]);
+> +               qemu_set_irq(s->cs_lines[i], 1);  /* deassert CS (high) *=
+/
+> +       }
+> +
+> +       /* 2) Now map the MMIO region */
+> +       memory_region_init_io(&s->mmio, OBJECT(s), &neorv32_spi_ops, s,
+> +                                                 TYPE_NEORV32_SPI, NEORV=
+32_SPI_MMIO_SIZE);
+> +       sysbus_init_mmio(sbd, &s->mmio);
+> +
+> +
+> +    /* Initialize FIFOs */
+> +    fifo8_create(&s->tx_fifo, s->fifo_capacity);
+> +    fifo8_create(&s->rx_fifo, s->fifo_capacity);
+> +
+> +    /* Set FIFO size bits (log2 of FIFO size =3D 3 for capacity=3D8) */
+> +    /* FIFO size bits: from SPI_CTRL_FIFO_LSB to SPI_CTRL_FIFO_MSB
+> +     * We'll store a value of 3 (log2(8)=3D3)
+> +     */
+> +    int fifo_size_log2 =3D 3;
+> +    for (int b =3D SPI_CTRL_FIFO_LSB; b <=3D SPI_CTRL_FIFO_MSB; b++) {
+> +        int shift =3D b - SPI_CTRL_FIFO_LSB;
+> +        if (fifo_size_log2 & (1 << shift)) {
+> +            s->ctrl |=3D (1 << b);
+> +        } else {
+> +            s->ctrl &=3D ~(1 << b);
+> +        }
+> +    }
 > +}
 > +
-> +static void neorv32_uart_class_init(ObjectClass *oc,const void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(oc);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(oc);
-> +
-> +    dc->realize =3D neorv32_uart_realize;
-> +    dc->vmsd =3D &vmstate_neorv32_uart;
-> +    rc->phases.enter =3D neorv32_uart_reset_enter;
-> +    rc->phases.hold  =3D neorv32_uart_reset_hold;
-> +    device_class_set_props(dc, neorv32_uart_properties);
-> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-> +}
-> +
-> +static const TypeInfo neorv32_uart_info =3D {
-> +    .name          =3D TYPE_NEORV32_UART,
-> +    .parent        =3D TYPE_SYS_BUS_DEVICE,
-> +    .instance_size =3D sizeof(Neorv32UARTState),
-> +    .instance_init =3D neorv32_uart_init,
-> +    .class_init    =3D neorv32_uart_class_init,
+> +/* Device properties can be added if needed. For now, none. */
+> +static Property neorv32_spi_properties[] =3D {
+> +       DEFINE_PROP_UINT32("num-cs", NEORV32SPIState, num_cs, 1),
 > +};
 > +
-> +static void neorv32_uart_register_types(void)
+> +static void neorv32_spi_class_init(ObjectClass *klass,const void *data)
 > +{
-> +    type_register_static(&neorv32_uart_info);
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +    device_class_set_props(dc, neorv32_spi_properties);
+> +    device_class_set_legacy_reset(dc, neorv32_spi_reset);
+> +    dc->realize =3D neorv32_spi_realize;
 > +}
 > +
-> +type_init(neorv32_uart_register_types)
-> +/*
-> + * Create UART device.
-> + */
-> +Neorv32UARTState *neorv32_uart_create(MemoryRegion *address_space,
-> +                                      hwaddr base,
-> +                                      Chardev *chr)
+> +static const TypeInfo neorv32_spi_type_info =3D {
+> +    .name           =3D TYPE_NEORV32_SPI,
+> +    .parent         =3D TYPE_SYS_BUS_DEVICE,
+> +    .instance_size  =3D sizeof(NEORV32SPIState),
+> +    .instance_init  =3D neorv32_spi_init,
+> +    .class_init     =3D neorv32_spi_class_init,
+> +};
+> +
+> +static void neorv32_spi_register_types(void)
 > +{
-> +    DeviceState *dev;
-> +    SysBusDevice *s;
-> +    bool succed=3D false;
+> +    type_register_static(&neorv32_spi_type_info);
+> +}
 > +
-> +    dev =3D qdev_new("riscv.neorv32.uart");
+> +type_init(neorv32_spi_register_types)
 > +
-> +    qdev_prop_set_chr(dev, "chardev", chr);
-> +    s =3D SYS_BUS_DEVICE(dev);
-> +    succed =3D sysbus_realize_and_unref(s, &error_fatal);
 > +
-> +    if (succed) {
-> +        memory_region_add_subregion(address_space, base,
-> +                                    sysbus_mmio_get_region(s, 0));
-> +        return NEORV32_UART(dev);
-> +    } else {
-> +        return NULL;
+> +
+> +NEORV32SPIState *neorv32_spi_create(MemoryRegion *sys_mem, hwaddr base_a=
+ddr)
+> +{
+> +    /* Allocate and initialize the SPI state object */
+> +    NEORV32SPIState *s =3D g_new0(NEORV32SPIState, 1);
+> +    object_initialize(&s->parent_obj, sizeof(*s), TYPE_NEORV32_SPI);
+> +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(&s->parent_obj);
+> +
+> +    /* Realize the SPI controller (sets up mmio, irq, SSI bus, cs_lines)=
+ */
+> +    sysbus_realize_and_unref(sbd, &error_fatal);
+> +
+> +    /* Map the MMIO region into the system address space */
+> +    sysbus_mmio_map(sbd, 0, base_addr);
+> +
+> +    /* Attach an SPI flash to SPI0 if a drive image is provided */
+> +    DriveInfo *dinfo =3D drive_get(IF_MTD, 0, 0);
+> +    if (dinfo) {
+> +        /* Create the flash device and bind the MTD backend */
+> +        DeviceState *flash =3D qdev_new("n25q512a11");
+> +        qdev_prop_set_drive_err(flash, "drive",
+> +                                blk_by_legacy_dinfo(dinfo),
+> +                                &error_fatal);
+> +
+> +        /* Realize flash on the same SSI bus created during controller r=
+ealize */
+> +        qdev_realize_and_unref(flash, BUS(s->bus), &error_fatal);
+> +
+> +        /* Retrieve and wire the flash's CS input line to CS0 output */
+> +        qemu_irq flash_cs =3D qdev_get_gpio_in_named(flash, SSI_GPIO_CS,=
+ 0);
+> +        sysbus_connect_irq(sbd, 1, flash_cs);
 > +    }
-> +} //neorv32_uart_create
+> +
+> +    return s;
+> +}
+> +
 >
-> diff --git a/include/hw/char/neorv32_uart.h b/include/hw/char/neorv32_uar=
-t.h
+> diff --git a/include/hw/ssi/neorv32_spi.h b/include/hw/ssi/neorv32_spi.h
 > new file mode 100644
-> index 0000000000..3651d4741f
+> index 0000000000..525bacf2d3
 > --- /dev/null
-> +++ b/include/hw/char/neorv32_uart.h
-> @@ -0,0 +1,68 @@
+> +++ b/include/hw/ssi/neorv32_spi.h
+> @@ -0,0 +1,70 @@
 > +/*
-> + * Neorv32-specific UART.
+> + * QEMU implementation of the Neorv32 SPI block.
 > + *
-> + * Copyright (c) 2025 Michael Levit
+> + * Copyright (c) 2025 Michael Levit.
 > + *
 > + * Author:
 > + *   Michael Levit <michael@videogpu.com>
@@ -535,60 +744,57 @@ ng with
 > + * this program.  If not, see <http://www.gnu.org/licenses/>.
 > + */
 > +
-> +#ifndef HW_NEORV32_UART_H
-> +#define HW_NEORV32_UART_H
+> +#ifndef NEORV32_SPI_H
+> +#define NEORV32_SPI_H
 > +
-> +#include "chardev/char-fe.h"
-> +#include "hw/qdev-properties.h"
+> +#include "qemu/osdep.h"
 > +#include "hw/sysbus.h"
-> +#include "qom/object.h"
 > +
-> +#define TYPE_NEORV32_UART "riscv.neorv32.uart"
-> +OBJECT_DECLARE_SIMPLE_TYPE(Neorv32UARTState, NEORV32_UART)
+> +#define TYPE_NEORV32_SPI "neorv32.spi"
+> +#define NEORV32_SPI(obj) OBJECT_CHECK(NEORV32SPIState, (obj), TYPE_NEORV=
+32_SPI)
 > +
-> +#define QEMU_UART_DATA_RX_FIFO_SIZE_LSB  8 /**256 < UART data register(8=
-)  (r/-): log2(RX FIFO size), LSB */
-> +#define QEMU_UART_DATA_RX_FIFO_SIZE_MSB  11 /** 2048 < UART data registe=
-r(11) (r/-): log2(RX FIFO size), MSB */
-> +
-> +#define NEORV32_UART_RX_FIFO_SIZE  32 //in HW it is  2048 + 256 =3D _MSB=
- + _LSB
-> +
-> +enum {
-> +       NEORV32_UART_IE_TXWM       =3D 1, /* Transmit watermark interrupt=
- enable */
-> +       NEORV32_UART_IE_RXWM       =3D 2  /* Receive watermark interrupt =
-enable */
-> +};
-> +
-> +enum {
-> +       NEORV32_UART_IP_TXWM       =3D 1, /* Transmit watermark interrupt=
- pending */
-> +       NEORV32_UART_IP_RXWM       =3D 2  /* Receive watermark interrupt =
-pending */
-> +};
-> +
-> +
-> +
-> +struct Neorv32UARTState {
-> +    /*< private >*/
+> +typedef struct  NEORV32SPIState {
 > +    SysBusDevice parent_obj;
 > +
-> +    /*< public >*/
-> +    qemu_irq irq;
+> +    /* Memory-mapped registers */
 > +    MemoryRegion mmio;
-> +    CharBackend chr;
-> +    uint8_t rx_fifo[NEORV32_UART_RX_FIFO_SIZE];
-> +    uint8_t rx_fifo_len;
-> +    uint32_t ie; //interrupt enable
-> +    uint32_t CTRL;
-> +    uint32_t DATA;
-> +};
 > +
-> +Neorv32UARTState *neorv32_uart_create(MemoryRegion *address_space, hwadd=
-r base,
-> +    Chardev *chr);
+> +    /* IRQ line */
+> +    qemu_irq irq;
 > +
-> +#endif //HW_NEORV32_UART_H
+> +    /* SPI bus (master) */
+> +    SSIBus *bus;
+> +
+> +    /* Chip selects (assume up to 3 CS lines) */
+> +    qemu_irq *cs_lines;
+> +    uint32_t num_cs;
+> +
+> +    /* Registers:
+> +     * Assume:
+> +     * 0x00: CTRL (r/w)
+> +     * 0x04: DATA (r/w)
+> +     */
+> +    uint32_t ctrl;
+> +    uint32_t data;
+> +
+> +    /* FIFOs */
+> +    Fifo8 tx_fifo;
+> +    Fifo8 rx_fifo;
+> +
+> +    /* FIFO capacity */
+> +    int fifo_capacity;
+> +    /* Track CS state driven by command writes */
+> +    bool cmd_cs_active;  /* true =3D CS asserted (active-low on wire) */
+> +    int  current_cs;     /* which CS line is active; default 0 for now *=
+/
+> +} NEORV32SPIState;
+> +
+> +
+> +
+> +NEORV32SPIState *neorv32_spi_create(MemoryRegion *sys_mem, hwaddr base_a=
+ddr);
+> +
+> +#endif /* NEORV32_SPI_H */
 >
 
