@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16AFCD3429
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 17:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CB6CD3429
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 17:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJEd7-00068q-AN; Wed, 12 Nov 2025 12:27:37 -0500
+	id 1vJEcb-0004ua-7A; Wed, 12 Nov 2025 12:27:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vJEcj-0005K9-0p
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 12:27:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vJEcZ-0004oF-Oq
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 12:27:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vJEch-00007v-9Y
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 12:27:12 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vJEcX-00006g-V0
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 12:27:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762968430;
+ s=mimecast20190719; t=1762968421;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WPogAEVcjLymYTVGk6GEGsDj+aUBwTIlqerowZrJWI4=;
- b=dAT9c7wWP56DLmZ+9g/T87GDeXwLXVePycNe/Z7biU3IY+X2MiU6prDCL5iH/o6CujTuJD
- ItI37CDT4M571Mf9OdpPcEcx8pSVlnfrb4nsFMMwn2KvknmugehuRTIo8wa++y9t4A1GuV
- 9b22RVyu6nc8ehns9P7pf2xHSSMlWsY=
+ bh=jComCR9dou2BiNNIDUx1CcQSU8FXiZcz7ZdaWhHcvD0=;
+ b=IbTZzig4sxbgU5UZZzp0uzvuRDLaLWP41/bqw3vuihh2vBPxs6Pxthmv+Ktwo+LT9PI+4Q
+ PBoJLoPt4HCWXFl7bEoqmRyPGZX7bNBAsAW9xlBnyFsG+UqZi7ohsHAW+1CUa5XTmfhnn8
+ yCJ6Vc3Dmm7geReo0+WgSTdMKf1H1WI=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-8T_zd2RyMOOGPhpWRYCw2w-1; Wed,
- 12 Nov 2025 12:27:06 -0500
-X-MC-Unique: 8T_zd2RyMOOGPhpWRYCw2w-1
-X-Mimecast-MFC-AGG-ID: 8T_zd2RyMOOGPhpWRYCw2w_1762968424
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-cON3AfeFOd2SB71cAs8s3w-1; Wed,
+ 12 Nov 2025 12:26:57 -0500
+X-MC-Unique: cON3AfeFOd2SB71cAs8s3w-1
+X-Mimecast-MFC-AGG-ID: cON3AfeFOd2SB71cAs8s3w_1762968416
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47B11195607F; Wed, 12 Nov 2025 17:27:04 +0000 (UTC)
+ id 2F4891956070; Wed, 12 Nov 2025 17:26:56 +0000 (UTC)
 Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.14])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF3341955F1A; Wed, 12 Nov 2025 17:26:56 +0000 (UTC)
+ id BFA421955F1A; Wed, 12 Nov 2025 17:26:48 +0000 (UTC)
 From: Gavin Shan <gshan@redhat.com>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
@@ -53,16 +53,17 @@ Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
  eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, zhao1.liu@intel.com, peter.maydell@linaro.org,
  pbonzini@redhat.com, shan.gavin@gmail.com
-Subject: [PATCH v4 7/8] acpi/ghes: Use error_fatal in acpi_ghes_memory_errors()
-Date: Thu, 13 Nov 2025 03:25:34 +1000
-Message-ID: <20251112172535.403042-8-gshan@redhat.com>
+Subject: [PATCH v4 6/8] acpi/ghes: Bail early on error from
+ get_ghes_source_offsets()
+Date: Thu, 13 Nov 2025 03:25:33 +1000
+Message-ID: <20251112172535.403042-7-gshan@redhat.com>
 In-Reply-To: <20251112172535.403042-1-gshan@redhat.com>
 References: <20251112172535.403042-1-gshan@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,173 +88,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use error_fatal in acpi_ghes_memory_errors() so that the caller
-needn't explicitly terminate on errors. With error_fatal, a qemu
-core dump won't be provided as it doesn't provide anything needed
-by debugging.
+For one particular error (Error), we can't call error_setg() for twice.
+Otherwise, the assert(*errp == NULL) will be triggered unexpectedly in
+error_setv(). In ghes_record_cper_errors(), get_ghes_source_offsets()
+can return a error initialized by error_setg(). Without bailing on
+this error, it can call into the second error_setg() due to the
+unexpected value from the read acknowledgement register.
 
-There is no way to call ghes-stu.c::acpi_ghes_memory_errors(), an
-abort() is put there as explicit marker. Besides, the return value
-of acpi_ghes_memory_errors() is changed from 'int' to 'bool' as
-the error indicator. ghes_record_cper_errors() also return a 'bool'
-value for that, to be compatible to what is documented in error.h.
+Bail early in ghes_record_cper_errors() when error is received from
+get_ghes_source_offsets() to avoid the exception.
 
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- hw/acpi/ghes-stub.c    |  7 ++++---
- hw/acpi/ghes.c         | 27 +++++++++++++--------------
- include/hw/acpi/ghes.h |  7 ++++---
- target/arm/kvm.c       | 10 +++-------
- 4 files changed, 24 insertions(+), 27 deletions(-)
+ hw/acpi/ghes.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
-index 4faf573aeb..fc7374b0a6 100644
---- a/hw/acpi/ghes-stub.c
-+++ b/hw/acpi/ghes-stub.c
-@@ -11,10 +11,11 @@
- #include "qemu/osdep.h"
- #include "hw/acpi/ghes.h"
- 
--int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
--                            uint64_t *addresses, uint32_t num_of_addresses)
-+bool acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-+                             uint64_t *addresses, uint32_t num_of_addresses,
-+                             Error **errp)
- {
--    return -1;
-+    abort();
- }
- 
- AcpiGhesState *acpi_ghes_get_state(void)
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index d3d6c11197..7160cf37d0 100644
+index 160eedcf09..d3d6c11197 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -508,14 +508,14 @@ static bool get_ghes_source_offsets(uint16_t source_id,
- NotifierList acpi_generic_error_notifiers =
-     NOTIFIER_LIST_INITIALIZER(acpi_generic_error_notifiers);
+@@ -436,7 +436,7 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+     *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+ }
  
--void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-+bool ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
- {
-     uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
- 
-     if (len > ghes_max_raw_data_length(ags)) {
-         error_setg(errp, "GHES CPER record is too big: %zd", len);
--        return;
-+        return false;
-     }
- 
-     if (!ags->use_hest_addr) {
-@@ -524,7 +524,7 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-     } else if (!get_ghes_source_offsets(source_id,
-                     le64_to_cpu(ags->hest_addr_le), &cper_addr,
-                     &read_ack_register_addr, errp)) {
+-static void get_ghes_source_offsets(uint16_t source_id,
++static bool get_ghes_source_offsets(uint16_t source_id,
+                                     uint64_t hest_addr,
+                                     uint64_t *cper_addr,
+                                     uint64_t *read_ack_start_addr,
+@@ -467,7 +467,7 @@ static void get_ghes_source_offsets(uint16_t source_id,
+         /* For now, we only know the size of GHESv2 table */
+         if (type != ACPI_GHES_SOURCE_GENERIC_ERROR_V2) {
+             error_setg(errp, "HEST: type %d not supported.", type);
 -            return;
 +            return false;
-     }
+         }
  
-     cpu_physical_memory_read(read_ack_register_addr,
-@@ -535,7 +535,7 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-         error_setg(errp,
-                    "OSPM does not acknowledge previous error,"
-                    " so can not record CPER for current error anymore");
+         /* Compare CPER source ID at the GHESv2 structure */
+@@ -481,7 +481,7 @@ static void get_ghes_source_offsets(uint16_t source_id,
+     }
+     if (i == num_sources) {
+         error_setg(errp, "HEST: Source %d not found.", source_id);
 -        return;
 +        return false;
      }
  
-     read_ack_register = cpu_to_le64(0);
-@@ -550,10 +550,13 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-     cpu_physical_memory_write(cper_addr, cper, len);
- 
-     notifier_list_notify(&acpi_generic_error_notifiers, &source_id);
+     /* Navigate through table address pointers */
+@@ -501,6 +501,8 @@ static void get_ghes_source_offsets(uint16_t source_id,
+     cpu_physical_memory_read(hest_read_ack_addr, read_ack_start_addr,
+                              sizeof(*read_ack_start_addr));
+     *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
 +
 +    return true;
  }
  
--int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
--                            uint64_t *addresses, uint32_t num_of_addresses)
-+bool acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-+                             uint64_t *addresses, uint32_t num_of_addresses,
-+                             Error **errp)
- {
-     /* Memory Error Section Type */
-     const uint8_t guid[] =
-@@ -564,10 +567,10 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-      * Table 17-13 Generic Error Data Entry
-      */
-     QemuUUID fru_id = {};
--    Error *errp = NULL;
-     int data_length;
-     GArray *block;
-     uint32_t block_status = 0, i;
-+    bool ret;
- 
-     block = g_array_new(false, true /* clear */, 1);
- 
-@@ -605,16 +608,12 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+ NotifierList acpi_generic_error_notifiers =
+@@ -519,9 +521,10 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
+     if (!ags->use_hest_addr) {
+         get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
+                              &cper_addr, &read_ack_register_addr);
+-    } else {
+-        get_ghes_source_offsets(source_id, le64_to_cpu(ags->hest_addr_le),
+-                                &cper_addr, &read_ack_register_addr, errp);
++    } else if (!get_ghes_source_offsets(source_id,
++                    le64_to_cpu(ags->hest_addr_le), &cper_addr,
++                    &read_ack_register_addr, errp)) {
++            return;
      }
  
-     /* Report the error */
--    ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
-+    ret = ghes_record_cper_errors(ags, block->data, block->len,
-+                                  source_id, errp);
- 
-     g_array_free(block, true);
- 
--    if (errp) {
--        error_report_err(errp);
--        return -1;
--    }
--
--    return 0;
-+    return ret;
- }
- 
- AcpiGhesState *acpi_ghes_get_state(void)
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index f7b084c039..c1f01ac25c 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -99,9 +99,10 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
--int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
--                            uint64_t *addresses, uint32_t num_of_addresses);
--void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-+bool acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-+                             uint64_t *addresses, uint32_t num_of_addresses,
-+                             Error **errp);
-+bool ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-                              uint16_t source_id, Error **errp);
- 
- /**
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 459ca4a9b0..b8c3ad2ad9 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2458,13 +2458,9 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
-             addresses[0] = paddr;
-             if (code == BUS_MCEERR_AR) {
-                 kvm_cpu_synchronize_state(c);
--                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
--                                             addresses, 1)) {
--                    kvm_inject_arm_sea(c);
--                } else {
--                    error_report("failed to record the error");
--                    abort();
--                }
-+                acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
-+                                        addresses, 1, &error_fatal);
-+                kvm_inject_arm_sea(c);
-             }
-             return;
-         }
+     cpu_physical_memory_read(read_ack_register_addr,
 -- 
 2.51.1
 
