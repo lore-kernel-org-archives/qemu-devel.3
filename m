@@ -4,55 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4F7CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 03:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF26CCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 03:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ1Bt-0000hQ-0O; Tue, 11 Nov 2025 22:06:37 -0500
+	id 1vJ1sl-0000hW-S2; Tue, 11 Nov 2025 22:50:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vJ1Br-0000g8-Qv; Tue, 11 Nov 2025 22:06:35 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vJ1Bq-0003zx-2t; Tue, 11 Nov 2025 22:06:35 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 12 Nov
- 2025 11:05:56 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 12 Nov 2025 11:05:56 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "Kevin
- Wolf" <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v2 09/12] hw/arm/aspeed_ast10x0_evb: Add AST1060 EVB machine
- support
-Date: Wed, 12 Nov 2025 11:05:46 +0800
-Message-ID: <20251112030553.291734-10-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
-References: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1vJ1sj-0000fb-Oi
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 22:50:53 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1vJ1sh-0005T4-78
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 22:50:53 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxmdEVBBRpTkciAA--.8914S3;
+ Wed, 12 Nov 2025 11:50:45 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJBxysAQBBRp9iMwAQ--.50588S2;
+ Wed, 12 Nov 2025 11:50:44 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: qemu-devel@nongnu.org,
+	lixianglai@loongson.cn
+Cc: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Song Gao <gaosong@loongson.cn>
+Subject: [PATCH V2 0/2] fix pci device can't alloc irq from fdt
+Date: Wed, 12 Nov 2025 11:26:31 +0800
+Message-Id: <cover.1762914885.git.lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-CM-TRANSID: qMiowJBxysAQBBRp9iMwAQ--.50588S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,68 +61,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new machine definition ast1060-evb to support the Aspeed AST1060
-evaluation board. The new EVB reuses the same MiniBMC framework used by
-AST1030, as both SoCs share the same core peripherals and controller
-designs.
+When we use the -kernel parameter to start an elf format kernel relying on
+fdt, we get the following error:
 
-The AST1060 EVB machine initializes the ast1060-a2 SoC and sets the
-FMC and SPI flash models (w25q80bl and w25q02jvm) for simulation.
-This enables QEMU to boot and emulate firmware images for AST1060-based
-platforms.
+pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.0: enabling device (0000 -> 0003)
+pcieport 0000:00:01.0: PME: Signaling with IRQ 19
+pcieport 0000:00:01.0: AER: enabled with IRQ 19
+pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.1: enabling device (0000 -> 0003)
+pcieport 0000:00:01.1: PME: Signaling with IRQ 20
+pcieport 0000:00:01.1: AER: enabled with IRQ 20
+pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.2: enabling device (0000 -> 0003)
+pcieport 0000:00:01.2: PME: Signaling with IRQ 21
+pcieport 0000:00:01.2: AER: enabled with IRQ 21
+pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
+pcieport 0000:00:01.3: enabling device (0000 -> 0003)
+pcieport 0000:00:01.3: PME: Signaling with IRQ 22
+pcieport 0000:00:01.3: AER: enabled with IRQ 22
+pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/arm/aspeed_ast10x0_evb.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+This is because  the description of interrupt-cell is missing in the pcie
+irq map.  And there is a lack of a description of the interrupt trigger
+type.  Now it is corrected and the correct interrupt-cell is added in the
+pcie irq map.
 
-diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
-index 7af2a77865..245b19daa8 100644
---- a/hw/arm/aspeed_ast10x0_evb.c
-+++ b/hw/arm/aspeed_ast10x0_evb.c
-@@ -96,12 +96,35 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
-+static void aspeed_minibmc_machine_ast1060_evb_class_init(ObjectClass *oc,
-+                                                          const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-+
-+    mc->desc = "Aspeed AST1060 Platform Root of Trust (Cortex-M4)";
-+    amc->soc_name = "ast1060-a2";
-+    amc->hw_strap1 = 0;
-+    amc->hw_strap2 = 0;
-+    mc->init = aspeed_minibmc_machine_init;
-+    amc->fmc_model = "w25q80bl";
-+    amc->spi_model = "w25q02jvm";
-+    amc->num_cs = 2;
-+    amc->macs_mask = 0;
-+    aspeed_machine_class_init_cpus_defaults(mc);
-+}
-+
- static const TypeInfo aspeed_ast10x0_evb_types[] = {
-     {
-         .name           = MACHINE_TYPE_NAME("ast1030-evb"),
-         .parent         = TYPE_ASPEED_MACHINE,
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
-         .interfaces     = arm_machine_interfaces,
-+    }, {
-+        .name           = MACHINE_TYPE_NAME("ast1060-evb"),
-+        .parent         = TYPE_ASPEED_MACHINE,
-+        .class_init     = aspeed_minibmc_machine_ast1060_evb_class_init,
-+        .interfaces     = arm_machine_interfaces,
-     }
- };
- 
+Refer to the implementation in arm and add some comments.
+
+changes:
+V1->V2:
+1.Fallback the incorrect modification of pch_pic interrupt-cells and add
+the interrupt trigger type in the pcie irq map
+2.Add macro definitions for the interrupt trigger types of fdt
+3.Refer to the implementation in arm and add some comments.
+
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Song Gao <gaosong@loongson.cn>
+
+Xianglai Li (2):
+  Modify the interrupt trigger type in loongarch virt fdt to macro
+    definition
+  fix pci device can't alloc irq from fdt
+
+ hw/loongarch/virt-fdt-build.c | 52 ++++++++++++++++++++++++-----------
+ 1 file changed, 36 insertions(+), 16 deletions(-)
+
 -- 
-2.43.0
+2.39.1
 
 
