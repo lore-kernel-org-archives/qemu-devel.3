@@ -4,55 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977AACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD12CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4h4-0006aV-2Y; Wed, 12 Nov 2025 01:51:02 -0500
+	id 1vJ4tG-0003xa-4x; Wed, 12 Nov 2025 02:03:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1vJ4gC-0006Lf-M5; Wed, 12 Nov 2025 01:50:20 -0500
-Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1vJ4g4-0001W7-LN; Wed, 12 Nov 2025 01:50:06 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ4tE-0003wi-5y
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:03:36 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ4tB-0003yF-VO
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:03:35 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47117f92e32so3406565e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:03:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1762930192; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=D6hxXjspeNA6pycvYior6h12FLtDmYammcdZitMD384=;
- b=dzoHVROryC0cvd168JdX8AqK3xMWGbqNm/3HULFRPT1XmYMoKj2q+uz5f4mYzaUNMYLuCbqGsU3e1yRIRxb2zGroB9BaUOtpIieALds+MMo+c9t1m74G1s48Lu5VtnVRkanhYRt3xdYCVge7Gzfagfj8G401F1JUvzdwAoosYLE=
-Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WsFCrAE_1762930191 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 12 Nov 2025 14:49:51 +0800
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>
-Subject: [PATCH v4 3/6] target/riscv: Integrate SMMPT checks into MMU and TLB
- fill
-Date: Wed, 12 Nov 2025 14:49:42 +0800
-Message-Id: <20251112064945.46533-4-zhiwei_liu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20251112064945.46533-1-zhiwei_liu@linux.alibaba.com>
-References: <20251112064945.46533-1-zhiwei_liu@linux.alibaba.com>
+ d=linaro.org; s=google; t=1762931010; x=1763535810; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=q7se5OtenhZotDJ001wyYbB8b+98LBInT6cl3Lx8+Tg=;
+ b=d212h2RsQsx+Y1EfnOWZG/ZCssISmuNwcxp//l3H+5vIpscgkKhJ1mu8UKVihiF4li
+ 65790LIQR3xu5qj9TxX1KyJaS91ZEQ0CchLlPeoOaIP5fjgExPKzjkj6ivo3UXx4xMbA
+ frGNVnZqYrWqjs9Dtu8xD2jlLYcjBYm8lJO6prCgCASaX72JB+0MbaCMWQo3/9QEdDwq
+ dsYBDjS/mI7NL3lH9BUhWB/jWf8HMLx0//qhdNQ5LuphXE3cBYBWpvO/+lMCSNnHb6im
+ u+mE+7zXUYkxFsRzSejIm0blrLz3p8raAGcR/I5XaFGE0lXrnHScfLYVzIxB7Cbe0rZE
+ AqqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762931010; x=1763535810;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q7se5OtenhZotDJ001wyYbB8b+98LBInT6cl3Lx8+Tg=;
+ b=NZ9AG39fwO9BPzVLmVj/DKpnrgjMIrauhO9Ghq2bI/cAwSv1g0BWK6U2ICKpZM9jE3
+ a2z2xqm/cWBwYRU3+jYRkQN2448OWt98yy042HVGqHHZjo40Zp0TlXGZ3dQiGLCLjjjw
+ RXnc8fMq/cCGhh0QiUPS+krvAPCx4RuhMqwF4QRNdDWFCZ80Lrviww065bf0cyYJpsT2
+ AWSSxpQDGLp2GcZ31yTwHYb/q+JDUnkshTjVxufPhpYiyhUqUqaRbF2E3FL02SiiWNV5
+ +KsrBRBTuIZ3iDH6VpcodoPD0zmQ2by6DOIRwU76SQ4r7lUii8yZoyvkY4LS1prZNd0j
+ vDSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcTOpU6uexp0SWaTo5FA5zbZ+ifx7FIMOQG/X9JURzTqgxngNJOkv5tzeju1w0cnHgqdo0v8u4I8ep@nongnu.org
+X-Gm-Message-State: AOJu0YxpDQOr7BdN/+JvCvfJJ+cAJyUAGlIc4rBiYIDqZrIhsmaRqRkc
+ RxP3JdqvJrWdRfm+zIZMc5wYrrF+gOoGZHffrywEhhx249VNiFugTGY0C3jwK9HR1lt2uo4nJnU
+ 86zfBHC9JXA==
+X-Gm-Gg: ASbGncvJA92h7htn92GAAJ/H0iTInOmoN614IB+dCEEaene5CTceQCvNq59n0LQg1H9
+ ROULibUa1M7J+BtrYxW4PNzh9qf5YjTH930iMrL5dGu1s/t8UWMJuQXuLPeitY2tNRki/v+0szK
+ SHixPFEddr5daYfpzrjmXuSWXSrmYixP9w/Rz3cpzWqG/S1l/KN4gkKhmGB1pnAM43XJRO5Wejc
+ lTj73o1ET8cQNo07xT/xf+bkk9b//GEZXPb5q5/tuUQ4xcwzpoKsq1yEKtIU0VLAkEX2n1eUc2C
+ Y3BUjEAUb539BzCQNo86kZzrVriJs39+UyuyEod/Q5/JmAz3if644k+evu88IQanaYi2RCQGdkk
+ 53xwBw10SrdiIh1lPu66lUNsPYCHtLK1UWXiuyAr+ivXrfPUUpmuuKeQ6nB0cNsAMK6wJ8a+fjp
+ b+1AD1jpXVAbqZ3lpWS4aq0BayR9QF0813IQg1oZ33REPt2xXv
+X-Google-Smtp-Source: AGHT+IHOnc63B0U1gOl3r9X4JbGL3s6/x90m9OhMtpDc4C+jkEoyWMz5L37RY4AzfcOU6+/rrMjG9Q==
+X-Received: by 2002:a05:600c:4593:b0:476:d494:41d2 with SMTP id
+ 5b1f17b1804b1-477870b2cecmr15852275e9.29.1762931009836; 
+ Tue, 11 Nov 2025 23:03:29 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47788a1f823sm6363875e9.2.2025.11.11.23.03.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Nov 2025 23:03:29 -0800 (PST)
+Message-ID: <dfbdc47a-6e70-44d6-8e87-eddf5363ff77@linaro.org>
+Date: Wed, 12 Nov 2025 08:03:28 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/9pfs: Drop unused print_sg helper
+Content-Language: en-US
+To: Osama Abdelkader <osama.abdelkader@gmail.com>, qemu-devel@nongnu.org,
+ qemu_oss@crudebyte.com, groug@kaod.org
+References: <20251110155424.694664-1-osama.abdelkader@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251110155424.694664-1-osama.abdelkader@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,148 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the core MPT lookup logic in place, this patch integrates the
-permission checks into QEMU's main MMU processing functions.
+Hi Osama,
 
-A new helper, `get_physical_address_mpt`, is introduced to check the
-permissions for a given physical address against the MPT. This helper
-is then called at two critical points:
+On 10/11/25 16:54, Osama Abdelkader wrote:
+> Remove the print_sg() debug helper and its always-disabled call sites
+> in v9fs_read() and v9fs_write(). The function was only reachable via
+> if (0) blocks, so it has been dead code for a long time.
+> 
+> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+> ---
+>   hw/9pfs/9p.c | 20 --------------------
+>   1 file changed, 20 deletions(-)
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index bc4a016ee3..a8de894f4c 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -1389,20 +1389,6 @@ static int stat_to_v9stat_dotl(V9fsPDU *pdu, const struct stat *stbuf,
+>       return stat_to_qid(pdu, stbuf, &v9lstat->qid);
+>   }
+>   
+> -static void print_sg(struct iovec *sg, int cnt)
+> -{
+> -    int i;
+> -
+> -    printf("sg[%d]: {", cnt);
+> -    for (i = 0; i < cnt; i++) {
+> -        if (i) {
+> -            printf(", ");
+> -        }
+> -        printf("(%p, %zd)", sg[i].iov_base, sg[i].iov_len);
+> -    }
+> -    printf("}\n");
+> -}
+> -
+>   /* Will call this only for path name based fid */
+>   static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
+>   {
+> @@ -2468,9 +2454,6 @@ static void coroutine_fn v9fs_read(void *opaque)
+>           do {
+>               qemu_iovec_reset(&qiov);
+>               qemu_iovec_concat(&qiov, &qiov_full, count, qiov_full.size - count);
+> -            if (0) {
+> -                print_sg(qiov.iov, qiov.niov);
 
-1. During page table walks (`get_physical_address`): The physical
-   address of the Page Table Entry (PTE) itself is checked to ensure
-   the supervisor has permission to read it.
+Alternatively, consider converting to trace event so we can keep
+dumping the entries, but select that at runtime (see for conversion
+example commit 4847c5701a3 "hw/rtc/mc146818rtc: Convert CMOS_DPRINTF
+into trace events").
+> -            }
 
-2. After successful address translation (`riscv_cpu_tlb_fill`): The final
-   guest-physical address is checked against the MPT before the access
-   is allowed to proceed.
+Regards,
 
-This ensures that SMMPT protection is enforced for both the translation
-process and the final memory access, as required by the specification.
-
-Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu_helper.c | 76 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 75 insertions(+), 1 deletion(-)
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index a055a8ab20..e4d52a37af 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1161,6 +1161,60 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
-     return !high_bit;
- }
- 
-+/*
-+ * get_physical_address_mpt - check mpt permission for this physical address
-+ *
-+ * Lookup the Memory Protection Table and check permission for this
-+ * physical address. Returns 0 if the permission checking was successful
-+ *
-+ * @env: CPURISCVState
-+ * @prot: The returned protection attributes
-+ * @addr: The physical address to be checked permission
-+ * @access_type: The type of MMU access
-+ * @mode: Indicates current privilege level.
-+ */
-+static int get_physical_address_mpt(CPURISCVState *env, int *prot, hwaddr addr,
-+                                    MMUAccessType access_type, int mode)
-+{
-+    mpt_access_t mpt_access;
-+    bool mpt_has_access;
-+
-+    /*
-+     * If the extension is not supported or the mmpt.mode is Bare,
-+     * there is no protection, return success.
-+     */
-+    if (!riscv_cpu_cfg(env)->ext_smmpt || env->mptmode == 0) {
-+        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        return TRANSLATE_SUCCESS;
-+    }
-+
-+    /*
-+     * MPT is checked for all accesses to physical memory, unless the
-+     * effective privilege mode is M.
-+     *
-+     * Data accesses in M-mode when the MPRV bit in mstatus is set and
-+     * the MPP field in mstatus contains S or U are subject to MPT checks.
-+     *
-+     * In riscv_env_mmu_index, The MPRV and MPP bits are already checked and
-+     * encoded to mmu_idx, So we do not need to check it here.
-+     */
-+    if (mode == PRV_M) {
-+        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        return TRANSLATE_SUCCESS;
-+    }
-+
-+    mpt_has_access = smmpt_check_access(env, addr,
-+                                      &mpt_access, access_type);
-+    if (!mpt_has_access) {
-+        *prot = 0;
-+        return TRANSLATE_MPT_FAIL;
-+    }
-+
-+    *prot = smmpt_access_to_page_prot(mpt_access);
-+
-+    return TRANSLATE_SUCCESS;
-+}
-+
- /*
-  * get_physical_address - get the physical address for this virtual address
-  *
-@@ -1355,6 +1409,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-             pte_addr = base + idx * ptesize;
-         }
- 
-+        int mpt_prot;
-+        int mpt_ret = get_physical_address_mpt(env, &mpt_prot, pte_addr,
-+                                               MMU_DATA_LOAD, PRV_S);
-+        if (mpt_ret != TRANSLATE_SUCCESS) {
-+            return TRANSLATE_MPT_FAIL;
-+        }
-+
-         int pmp_prot;
-         int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-                                                sxlen_bytes,
-@@ -1765,7 +1826,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     CPURISCVState *env = &cpu->env;
-     vaddr im_address;
-     hwaddr pa = 0;
--    int prot, prot2, prot_pmp;
-+    int prot, prot2, prot_pmp, mpt_prot;
-     bool pmp_violation = false;
-     bool first_stage_error = true;
-     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
-@@ -1819,6 +1880,13 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-             prot &= prot2;
- 
-             if (ret == TRANSLATE_SUCCESS) {
-+                ret = get_physical_address_mpt(env, &mpt_prot, pa,
-+                                               access_type, mode);
-+                qemu_log_mask(CPU_LOG_MMU,
-+                              "%s MPT address=" HWADDR_FMT_plx " ret %d prot"
-+                              " %d\n",
-+                              __func__, pa, ret, mpt_prot);
-+                prot &= mpt_prot;
-                 ret = get_physical_address_pmp(env, &prot_pmp, pa,
-                                                size, access_type, mode);
-                 tlb_size = pmp_get_tlb_size(env, pa);
-@@ -1854,6 +1922,12 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                       __func__, address, ret, pa, prot);
- 
-         if (ret == TRANSLATE_SUCCESS) {
-+            ret = get_physical_address_mpt(env, &mpt_prot, pa,
-+                                           access_type, mode);
-+            qemu_log_mask(CPU_LOG_MMU,
-+                          "%s MPT address=" HWADDR_FMT_plx " ret %d prot %d\n",
-+                          __func__, pa, ret, mpt_prot);
-+            prot &= mpt_prot;
-             ret = get_physical_address_pmp(env, &prot_pmp, pa,
-                                            size, access_type, mode);
-             tlb_size = pmp_get_tlb_size(env, pa);
--- 
-2.25.1
-
+Phil.
 
