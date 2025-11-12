@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9ACCD13DD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E03CD3424
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 16:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJDc2-0002ii-H4; Wed, 12 Nov 2025 11:22:26 -0500
+	id 1vJDc4-0002ny-7G; Wed, 12 Nov 2025 11:22:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vJDbo-0002da-WB; Wed, 12 Nov 2025 11:22:13 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ id 1vJDbq-0002fd-Oj; Wed, 12 Nov 2025 11:22:17 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vJDbk-0004oc-MX; Wed, 12 Nov 2025 11:22:12 -0500
+ id 1vJDbl-0004of-DO; Wed, 12 Nov 2025 11:22:13 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBHYqgktBRpI6oPAg--.69S2;
- Thu, 13 Nov 2025 00:21:56 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBXOCUmtBRpVZvEAA--.10993S2;
+ Thu, 13 Nov 2025 00:21:58 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDnP+0jtBRpz0YEAA--.8224S3;
- Thu, 13 Nov 2025 00:21:55 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDnP+0jtBRpz0YEAA--.8224S4;
+ Thu, 13 Nov 2025 00:21:56 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
@@ -35,29 +35,32 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v3 0/3] hw/misc: Introduce a generalized IOMMU test framework
-Date: Thu, 13 Nov 2025 00:21:49 +0800
-Message-Id: <20251112162152.447327-1-tangtao1634@phytium.com.cn>
+Subject: [RFC v3 1/3] hw/misc: introduce iommu-testdev for bare-metal IOMMU
+ testing
+Date: Thu, 13 Nov 2025 00:21:50 +0800
+Message-Id: <20251112162152.447327-2-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251112162152.447327-1-tangtao1634@phytium.com.cn>
+References: <20251112162152.447327-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDnP+0jtBRpz0YEAA--.8224S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAMBWkTmLAHcAAHsq
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwDnP+0jtBRpz0YEAA--.8224S4
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAMBWkTmLAHcwAAsu
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxtFy3KFWUWFWkJF43Ar1kZrb_yoW3Wr1UpF
- 93Cay3KF48JF1fZrn3Aw40yFy3tan5Ja12vr13Gw1Sg3y3AFy8tF47KFy8tF93A395ZF17
- Za1Utr15ur4FyFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
+X-Coremail-Antispam: 1Uk129KBjvAXoWfJr4Utr47ZF43tr43Kw4rXwb_yoW8CF13Ao
+ WYvFWfu3W8Gw1xur1v9as7GF45XFy0gFnxJFWUWFsYgaykAF9xJr15Aw45Ga45Grn5CF9r
+ uF1kt3y3tr9rWr93n29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+ J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+ UUUUUUU==
+Received-SPF: pass client-ip=209.97.181.73;
  envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,188 +78,582 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v3 of the IOMMU test framework. V2 introduced the smmu-testdev for
-bare-metal SMMUv3 testing. V3 is a significant architectural refactoring of that
-work, generalizing it into a modular and extensible IOMMU test framework. The
-device has been renamed from smmu-testdev to iommu-testdev and the
-architecture has been significantly restructured for better modularity
-and extensibility.
+Add a minimal PCI test device designed to exercise IOMMU translation
+(such as ARM SMMUv3) without requiring guest firmware or OS. The device
+provides MMIO registers to configure and trigger DMA operations with
+controllable attributes (security state, address space), enabling
+deterministic IOMMU testing.
 
-Motivation
-----------
+Key features:
+- Bare-metal IOMMU testing via simple MMIO interface
+- Configurable DMA attributes for security states and address spaces
+- Write-then-read verification pattern with automatic result checking
 
-Currently, thoroughly testing IOMMU emulation (e.g., ARM SMMUv3) requires
-a significant software stack. We need to boot a full guest operating
-system (like Linux) with the appropriate drivers (e.g., IOMMUFD) and rely
-on firmware (e.g., ACPI with IORT tables or Hafnium) to correctly
-configure the IOMMU and orchestrate DMA from a peripheral device.
+The device performs a deterministic DMA test pattern: write a known
+value(0x88888888) to a configured IOVA, read it back, and verify data
+integrity. Results are reported through a dedicated result register,
+eliminating the need for complex interrupt handling or driver
+infrastructure in tests.
 
-This dependency on a complex software stack presents several challenges:
+This is purely a test device and not intended for production use or
+machine realism. It complements existing test infrastructure like
+pci-testdev but focuses specifically on IOMMU translation path
+validation.
 
-* High Barrier to Entry: Writing targeted tests for specific IOMMU
-    features (like fault handling, specific translation regimes, etc.)
-    becomes cumbersome.
-
-* Difficult to Debug: It's hard to distinguish whether a bug originates
-    from the IOMMU emulation itself, the guest driver, the firmware
-    tables, or the guest kernel's configuration.
-
-* Slow Iteration: The need to boot a full guest OS slows down the
-    development and testing cycle.
-
-The primary goal of this work is to create a lightweight, self-contained
-testing environment that allows us to exercise the IOMMU's core logic
-directly at the qtest level, removing the need for any guest-side software.
-
-Our Approach: A Dedicated Test Framework
------------------------------------------
-
-To achieve this, we introduce three main components:
-
-* A minimal hardware device: iommu-testdev
-* A reusable IOMMU helper library: libqos/qos-smmuv3
-* A comprehensive qtest suite: iommu-smmuv3-test
-
-The iommu-testdev is intentionally not a conformant, general-purpose PCIe
-or platform device. It is a purpose-built, highly simplified "DMA engine"
-designed to be analogous to a minimal PCIe Root Complex that bypasses the
-full, realistic topology (Host Bridges, Switches, Endpoints) to provide a
-direct, programmable path for a DMA request to reach the IOMMU. Its sole
-purpose is to trigger a DMA transaction when its registers are written to,
-making it perfectly suited for direct control from a test environment like
-qtest.
-
-The Qtest Framework
--------------------
-
-The new qtest (iommu-smmuv3-test.c) serves as the "bare-metal driver"
-for both the IOMMU and the iommu-testdev. It leverages the libqos helper
-library to manually perform all the setup that would typically be handled
-by the guest kernel and firmware, but in a completely controlled and
-predictable manner:
-
-1.  IOMMU Configuration: It directly initializes the SMMU's registers to a
-    known state using helper functions from qos-smmuv3.
-
-2.  Translation Structure Setup: It uses the libqos library to construct
-    the necessary translation structures in memory, including Stream Table
-    Entries (STEs), Context Descriptors (CDs), and Page Tables (PTEs).
-
-3.  DMA Trigger: It programs the iommu-testdev to initiate a DMA operation
-    targeting a specific IOVA with configurable attributes.
-
-4.  Verification: It waits for the transaction to complete and verifies
-    that the memory was accessed correctly after address translation by
-    the IOMMU.
-
-This framework provides a solid and extensible foundation for validating
-the IOMMU's core translation paths. The current test suite covers:
-
-- Stage 1 only translation (VA -> PA via CD page tables)
-- Stage 2 only translation (IPA -> PA via STE S2 tables)
-- Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
-
-The infrastructure is designed to be easily extended to support multiple
-security spaces (Non-Secure, Secure, Root, Realm) and additional IOMMU
-features.
-
-
-Major Changes from v2 to v3:
------------------------------
-
-1. Generalization and Renaming:
-   - Device renamed from "smmu-testdev" to "iommu-testdev" to reflect
-     its generic nature and potential use with other IOMMU types beyond
-     SMMUv3.
-   - File paths updated:
-     * hw/misc/smmu-testdev.c -> hw/misc/iommu-testdev.c
-     * include/hw/misc/smmu-testdev.h -> include/hw/misc/iommu-testdev.h
-     * docs/specs/smmu-testdev.rst -> docs/specs/iommu-testdev.rst
-
-2. Architectural Refactoring - Separation of Concerns:
-   The most significant change is the separation of IOMMU-specific logic
-   from the test device:
-
-   - iommu-testdev (hw/misc/iommu-testdev.c):
-     * Now focuses solely on being a DMA trigger device
-     * Contains only MMIO register handling and DMA operation triggering
-     * No longer contains SMMU-specific page table construction logic
-     * Provides a clean, minimal interface for IOMMU testing
-
-   - libqos/qos-smmuv3 (tests/qtest/libqos/qos-smmuv3.{c,h}):
-     * Encapsulates all SMMUv3-specific initialization and setup
-     * Handles Stream Table Entry (STE) construction
-     * Handles Context Descriptor (CD) construction
-     * Manages multi-level page table setup (L0-L3)
-     * Provides support for different translation modes (S1, S2, nested)
-     * Can be reused across multiple test suites
-     * Includes helper functions for security space offset calculations
-
-   - iommu-smmuv3-test (tests/qtest/iommu-smmuv3-test.c):
-     * Focuses on test logic rather than setup boilerplate
-     * Cleaner and more maintainable test cases
-     * Uses high-level abstractions from qos-smmuv3 library
-
-3. Enhanced Modularity:
-   - Clear separation between:
-     * Generic DMA trigger mechanism (iommu-testdev)
-     * IOMMU-specific setup logic (qos-smmuv3)
-     * Test scenarios (iommu-smmuv3-test)
-   - This structure makes it easier to:
-     * Add tests for new IOMMU features
-     * Support additional IOMMU types (e.g., Intel VT-d)
-
-4. Improved Test Coverage:
-   - Explicit tests for multiple translation modes:
-     * Stage 1 only
-     * Stage 2 only
-     * Nested (Stage 1 + Stage 2)
-   - Better structured test configuration system
-   - Clearer test result validation
-
-5. Code Quality Improvements:
-   - Added comprehensive tracing support (8 trace points)
-   - Better error handling and validation
-   - More descriptive variable names and comments
-
-6. Documentation Updates:
-   - Updated device specification in docs/specs/iommu-testdev.rst
-   - More detailed register descriptions
-
-Future Work
------------
-
-The current implementation focuses on basic translation path validation
-in the Non-Secure address space. Future extensions could include:
-
-* Multi-space testing (Secure, Root, Realm) for SMMUv3
-* Support for other IOMMU types (Intel VT-d, AMD-Vi, RISC-V IOMMU)
-
-Tao Tang (3):
-  hw/misc: introduce iommu-testdev for bare-metal IOMMU testing
-  tests/qtest: add libqos SMMUv3 helper library
-  tests/qtest: add SMMUv3 bare-metal test using iommu-testdev
-
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+---
  docs/specs/index.rst            |   1 +
- docs/specs/iommu-testdev.rst    |  96 ++++
+ docs/specs/iommu-testdev.rst    |  96 +++++++++++
  hw/misc/Kconfig                 |   5 +
- hw/misc/iommu-testdev.c         | 292 ++++++++++
+ hw/misc/iommu-testdev.c         | 292 ++++++++++++++++++++++++++++++++
  hw/misc/meson.build             |   1 +
- hw/misc/trace-events            |  10 +
- include/hw/misc/iommu-testdev.h |  78 +++
- tests/qtest/iommu-smmuv3-test.c | 116 ++++
- tests/qtest/libqos/meson.build  |   3 +
- tests/qtest/libqos/qos-smmuv3.c | 920 ++++++++++++++++++++++++++++++++
- tests/qtest/libqos/qos-smmuv3.h | 291 ++++++++++
- tests/qtest/meson.build         |   1 +
- 12 files changed, 1814 insertions(+)
+ hw/misc/trace-events            |  10 ++
+ include/hw/misc/iommu-testdev.h |  78 +++++++++
+ 7 files changed, 483 insertions(+)
  create mode 100644 docs/specs/iommu-testdev.rst
  create mode 100644 hw/misc/iommu-testdev.c
  create mode 100644 include/hw/misc/iommu-testdev.h
- create mode 100644 tests/qtest/iommu-smmuv3-test.c
- create mode 100644 tests/qtest/libqos/qos-smmuv3.c
- create mode 100644 tests/qtest/libqos/qos-smmuv3.h
 
+diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+index f19d73c9f6..1fc7fae6bb 100644
+--- a/docs/specs/index.rst
++++ b/docs/specs/index.rst
+@@ -39,3 +39,4 @@ guest hardware that is specific to QEMU.
+    riscv-iommu
+    riscv-aia
+    aspeed-intc
++   iommu-testdev
+\ No newline at end of file
+diff --git a/docs/specs/iommu-testdev.rst b/docs/specs/iommu-testdev.rst
+new file mode 100644
+index 0000000000..b43d0a7ef1
+--- /dev/null
++++ b/docs/specs/iommu-testdev.rst
+@@ -0,0 +1,96 @@
++iommu-testdev — IOMMU test device for bare-metal testing
++=========================================================
++
++Overview
++--------
++``iommu-testdev`` is a minimal, test-only PCI device designed to exercise
++IOMMU translation (such as ARM SMMUv3) without requiring firmware or a guest
++OS. Tests can populate IOMMU translation tables with known values and trigger
++DMA operations that flow through the IOMMU translation path. It is **not** a
++faithful PCIe endpoint and must be considered a QEMU-internal test vehicle.
++
++Key Features
++------------
++* **Bare-metal IOMMU testing**: No guest kernel or firmware required
++* **Configurable DMA attributes**: Supports address space  configuration via
++  MMIO registers
++* **Deterministic verification**: Write-then-read DMA pattern with automatic
++  result checking
++
++Status
++------
++* Location: ``hw/misc/iommu-testdev.c``
++* Header: ``include/hw/misc/iommu-testdev.h``
++* Build guard: ``CONFIG_IOMMU_TESTDEV``
++
++Device Interface
++----------------
++The device exposes a single PCI BAR0 with MMIO registers:
++
++* ``ITD_REG_DMA_TRIGGERING`` (0x00): Reading triggers DMA execution
++* ``ITD_REG_DMA_GVA_LO`` (0x04): IOVA/GVA bits [31:0]
++* ``ITD_REG_DMA_GVA_HI`` (0x08): IOVA/GVA bits [63:32]
++* ``ITD_REG_DMA_LEN`` (0x0C): DMA transfer length
++* ``ITD_REG_DMA_RESULT`` (0x10): DMA operation result (0=success)
++* ``ITD_REG_DMA_DBELL`` (0x14): Write 1 to arm DMA
++* ``ITD_REG_DMA_ATTRS`` (0x18): DMA attributes
++
++  - bit[0]: secure (1=Secure, 0=Non-Secure)
++  - bits[2:1]: address space (0=Non-Secure, 1=Secure, 2=Root, 3=Realm)
++
++DMA Operation Flow
++------------------
++1. Test programs IOMMU translation tables
++2. Test configures DMA address (GVA_LO/HI), length, and attributes
++3. Test writes 1 to DMA_DBELL to arm the operation
++4. Test reads DMA_TRIGGERING to execute DMA
++5. Test polls DMA_RESULT:
++
++   - 0x00000000: Success
++   - 0xFFFFFFFE: Busy (still in progress)
++   - 0xDEAD000X: Various error codes
++
++The device performs a write-then-read sequence using a known pattern
++(0x88888888) and verifies data integrity automatically.
++
++Running the qtest
++-----------------
++The SMMUv3 test suite uses this device and covers multiple translation modes::
++
++    cd build-debug
++    QTEST_QEMU_BINARY=./qemu-system-aarch64 \\
++        ./tests/qtest/iommu-smmuv3-test --tap -k
++
++This test suite exercises:
++
++* Stage 1 only translation
++* Stage 2 only translation
++* Nested (Stage 1 + Stage 2) translation
++* Multiple security spaces (Non-Secure, Secure, Root, Realm)
++
++Instantiation
++-------------
++The device is not wired into any board by default. Tests instantiate it
++via QEMU command line::
++
++    -device iommu-testdev
++
++For ARM platforms with SMMUv3::
++
++    -M virt,iommu=smmuv3 -device iommu-testdev
++
++The device will be placed behind the IOMMU automatically.
++
++Limitations
++-----------
++* No realistic PCIe enumeration, MSI/MSI-X, or interrupt handling
++* No ATS/PRI support
++* No actual device functionality beyond DMA test pattern
++* Test-only; not suitable for production or machine realism
++* Address space support (Secure/Root/Realm) is architecture-dependent
++
++See also
++--------
++* ``tests/qtest/iommu-smmuv3-test.c`` — SMMUv3 test suite
++* ``tests/qtest/libqos/qos-smmuv3.{c,h}`` — SMMUv3 test library
++* SMMUv3 emulation: ``hw/arm/smmu*``
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index fccd735c24..b5f6fdbd9c 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -25,6 +25,11 @@ config PCI_TESTDEV
+     default y if TEST_DEVICES
+     depends on PCI
+ 
++config IOMMU_TESTDEV
++    bool
++    default y if TEST_DEVICES
++    depends on PCI
++
+ config EDU
+     bool
+     default y if TEST_DEVICES
+diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
+new file mode 100644
+index 0000000000..00e2415ece
+--- /dev/null
++++ b/hw/misc/iommu-testdev.c
+@@ -0,0 +1,292 @@
++/*
++ * A test device for IOMMU
++ *
++ * This test device is a minimal IOMMU-aware device used to test the IOMMU.
++ *
++ * Copyright (c) 2025 Phytium Technology
++ *
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "system/address-spaces.h"
++#include "trace.h"
++#include "hw/pci/pci_device.h"
++#include "hw/qdev-properties.h"
++#include "qom/object.h"
++#include "hw/misc/iommu-testdev.h"
++
++#define TYPE_IOMMU_TESTDEV "iommu-testdev"
++OBJECT_DECLARE_SIMPLE_TYPE(IOMMUTestDevState, IOMMU_TESTDEV)
++
++struct IOMMUTestDevState {
++    PCIDevice parent_obj;
++    MemoryRegion bar0;
++    uint32_t attr_ns;
++    uint64_t dma_vaddr;
++    uint32_t dma_len;
++    uint32_t dma_result;
++    bool dma_pending;
++
++    /* Future-proof DMA config */
++    AddressSpace *dma_as;   /* IOMMU-mediated DMA AS for this device */
++    uint32_t dma_attrs_cfg; /* bit0 secure, bits[2:1] space, bit3 unspecified */
++    uint32_t trans_status;  /* 0=ok; non-zero=error */
++
++    /* User-configurable BDF (device/function) */
++    uint32_t cfg_dev;       /* PCI device/slot number (0..31) */
++    uint32_t cfg_fn;        /* PCI function number (0..7) */
++};
++
++static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
++{
++    int i, j, remaining_bytes;
++    uint32_t expected_val, actual_val;
++    g_autofree uint8_t *write_buf = NULL;
++    g_autofree uint8_t *read_buf = NULL;
++    MemTxResult write_res, read_res;
++    MemTxAttrs attrs;
++    AddressSpace *as;
++
++    if (!s->dma_pending) {
++        return;
++    }
++    trace_iommu_testdev_dma_start();
++
++    s->dma_pending = false;
++
++    if (!s->dma_len) {
++        s->dma_result = ITD_DMA_ERR_BAD_LEN;
++        return;
++    }
++
++    write_buf = g_malloc(s->dma_len);
++    read_buf = g_malloc(s->dma_len);
++
++    /* Initialize MemTxAttrs from generic register */
++    attrs = MEMTXATTRS_UNSPECIFIED;
++    attrs.secure = ITD_ATTRS_GET_SECURE(s->dma_attrs_cfg);
++
++    /*
++     * The 'space' field in MemTxAttrs is ARM-specific.
++     * On other architectures where this field doesn't exist,
++     * the assignment will be optimized away or ignored.
++     */
++    attrs.space = ITD_ATTRS_GET_SPACE(s->dma_attrs_cfg);
++
++    as = s->dma_as;
++
++    /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
++    trace_iommu_testdev_dma_write(s->dma_vaddr, s->dma_len);
++
++    for (i = 0; i < s->dma_len; i++) {
++        write_buf[i] = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
++    }
++    write_res = dma_memory_write(as, s->dma_vaddr, write_buf, s->dma_len,
++                                 attrs);
++
++    if (write_res != MEMTX_OK) {
++        s->dma_result = ITD_DMA_ERR_TX_FAIL;
++        trace_iommu_testdev_dma_result(s->dma_result);
++        return;
++    }
++
++    /* Step 2: Read back from the same DMA address */
++    trace_iommu_testdev_dma_read(s->dma_vaddr, s->dma_len);
++
++    read_res = dma_memory_read(as, s->dma_vaddr, read_buf, s->dma_len, attrs);
++
++    if (read_res != MEMTX_OK) {
++        s->dma_result = ITD_DMA_ERR_RD_FAIL;
++        trace_iommu_testdev_dma_result(s->dma_result);
++        return;
++    }
++
++    /* Step 3: Verify the read data matches what we wrote */
++    for (i = 0; i < s->dma_len; i += 4) {
++        remaining_bytes = (s->dma_len - i) < 4 ? (s->dma_len - i) : 4;
++
++        expected_val = 0;
++        actual_val = 0;
++
++        for (j = 0; j < remaining_bytes; j++) {
++            expected_val |= ((uint32_t)write_buf[i + j]) << (j * 8);
++            actual_val |= ((uint32_t)read_buf[i + j]) << (j * 8);
++        }
++
++        trace_iommu_testdev_dma_verify(expected_val, actual_val);
++
++        if (expected_val != actual_val) {
++            s->dma_result = ITD_DMA_ERR_MISMATCH;
++            trace_iommu_testdev_dma_result(s->dma_result);
++            return;
++        }
++    }
++
++    /* All checks passed */
++    s->dma_result = 0;
++    trace_iommu_testdev_dma_result(s->dma_result);
++}
++
++static uint64_t iommu_testdev_mmio_read(void *opaque, hwaddr addr,
++                                        unsigned size)
++{
++    IOMMUTestDevState *s = opaque;
++    uint64_t value = 0;
++
++    switch (addr) {
++    case ITD_REG_DMA_TRIGGERING:
++        /*
++         * This lets tests poll ITD_REG_DMA_RESULT to observe BUSY before
++         * consuming the DMA.
++         */
++        iommu_testdev_maybe_run_dma(s);
++        value = 0;
++        break;
++    case ITD_REG_DMA_GVA_LO:
++        value = (uint32_t)(s->dma_vaddr & 0xffffffffu);
++        break;
++    case ITD_REG_DMA_GVA_HI:
++        value = (uint32_t)(s->dma_vaddr >> 32);
++        break;
++    case ITD_REG_DMA_LEN:
++        value = s->dma_len;
++        break;
++    case ITD_REG_DMA_RESULT:
++        value = s->dma_result;
++        break;
++    case ITD_REG_DMA_ATTRS:
++        value = s->dma_attrs_cfg;
++        break;
++    case ITD_REG_TRANS_STATUS:
++        value = s->trans_status;
++        break;
++    default:
++        value = 0;
++        break;
++    }
++
++    trace_iommu_testdev_mmio_read(addr, value, size);
++    return value;
++}
++
++static void iommu_testdev_mmio_write(void *opaque, hwaddr addr, uint64_t val,
++                                     unsigned size)
++{
++    IOMMUTestDevState *s = opaque;
++    uint32_t data = val;
++
++    trace_iommu_testdev_mmio_write(addr, val, size);
++
++    switch (addr) {
++    case ITD_REG_DMA_GVA_LO:
++        s->dma_vaddr = (s->dma_vaddr & ~0xffffffffull) | data;
++        break;
++    case ITD_REG_DMA_GVA_HI:
++        s->dma_vaddr = (s->dma_vaddr & 0xffffffffull) |
++                       ((uint64_t)data << 32);
++        break;
++    case ITD_REG_DMA_LEN:
++        s->dma_len = data;
++        break;
++    case ITD_REG_DMA_RESULT:
++        s->dma_result = data;
++        break;
++    case ITD_REG_DMA_DBELL:
++        if (data & 0x1) {
++            s->dma_pending = true;
++            s->dma_result = ITD_DMA_RESULT_BUSY;
++            trace_iommu_testdev_dma_pending(true);
++        } else {
++            s->dma_pending = false;
++            s->dma_result = ITD_DMA_RESULT_IDLE;
++            trace_iommu_testdev_dma_pending(false);
++        }
++        break;
++    case ITD_REG_DMA_ATTRS:
++        s->dma_attrs_cfg = data;
++        break;
++    case ITD_REG_TRANS_DBELL:
++        if (data & 0x2) {
++            s->trans_status = 0;
++        }
++        break;
++    default:
++        break;
++    }
++}
++
++static const MemoryRegionOps iommu_testdev_mmio_ops = {
++    .read = iommu_testdev_mmio_read,
++    .write = iommu_testdev_mmio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void iommu_testdev_realize(PCIDevice *pdev, Error **errp)
++{
++    IOMMUTestDevState *s = IOMMU_TESTDEV(pdev);
++
++    s->dma_vaddr = 0;
++    s->dma_len = 0;
++    s->dma_result = ITD_DMA_RESULT_IDLE;
++    s->dma_pending = false;
++    s->dma_attrs_cfg = 0;
++    s->dma_as = pci_device_iommu_address_space(pdev);
++    s->trans_status = 0;
++
++    memory_region_init_io(&s->bar0, OBJECT(pdev), &iommu_testdev_mmio_ops, s,
++                          TYPE_IOMMU_TESTDEV ".bar0", BAR0_SIZE);
++    pci_register_bar(pdev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->bar0);
++}
++
++static void iommu_testdev_reset(DeviceState *dev)
++{
++    IOMMUTestDevState *s = IOMMU_TESTDEV(dev);
++
++    s->dma_vaddr = 0;
++    s->dma_len = 0;
++    s->dma_result = ITD_DMA_RESULT_IDLE;
++    s->dma_pending = false;
++    s->dma_attrs_cfg = 0;
++    s->trans_status = 0;
++}
++
++static void iommu_testdev_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
++
++    pc->realize = iommu_testdev_realize;
++    pc->vendor_id = IOMMU_TESTDEV_VENDOR_ID;
++    pc->device_id = IOMMU_TESTDEV_DEVICE_ID;
++    pc->revision = 0;
++    pc->class_id = PCI_CLASS_OTHERS;
++    dc->desc = "A test device for IOMMU";
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    device_class_set_legacy_reset(dc, iommu_testdev_reset);
++}
++
++static const TypeInfo iommu_testdev_info = {
++    .name          = TYPE_IOMMU_TESTDEV,
++    .parent        = TYPE_PCI_DEVICE,
++    .instance_size = sizeof(IOMMUTestDevState),
++    .class_init    = iommu_testdev_class_init,
++    .interfaces    = (const InterfaceInfo[]) {
++        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++        { }
++    },
++};
++
++static void iommu_testdev_register_types(void)
++{
++    type_register_static(&iommu_testdev_info);
++}
++
++type_init(iommu_testdev_register_types);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index b1d8d8e5d2..6f9bb9bb0f 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -4,6 +4,7 @@ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
+ system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
+ system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
++system_ss.add(when: 'CONFIG_IOMMU_TESTDEV', if_true: files('iommu-testdev.c'))
+ system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
+ system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
+ system_ss.add(when: 'CONFIG_LED', if_true: files('led.c'))
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index eeb9243898..84fd349fb8 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -409,3 +409,13 @@ ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) "Interrupting
+ i2c_echo_event(const char *id, const char *event) "%s: %s"
+ i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%02" PRIx8
+ i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%02" PRIx8
++
++# iommu-testdev.c
++iommu_testdev_mmio_read(uint64_t addr, uint64_t value, unsigned size) "addr=0x%" PRIx64 " value=0x%" PRIx64 " size=%u"
++iommu_testdev_mmio_write(uint64_t addr, uint64_t value, unsigned size) "addr=0x%" PRIx64 " value=0x%" PRIx64 " size=%u"
++iommu_testdev_dma_start(void) "DMA operation started"
++iommu_testdev_dma_write(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
++iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
++iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
++iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
++iommu_testdev_dma_pending(bool pending) "pending=%d"
+diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-testdev.h
+new file mode 100644
+index 0000000000..b6b88b0dac
+--- /dev/null
++++ b/include/hw/misc/iommu-testdev.h
+@@ -0,0 +1,78 @@
++/*
++ * A test device for IOMMU
++ *
++ * This test device is a minimal IOMMU-aware device used to test the IOMMU.
++ *
++ * Copyright (c) 2025 Phytium Technology
++ *
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_MISC_IOMMU_TESTDEV_H
++#define HW_MISC_IOMMU_TESTDEV_H
++
++#include "hw/pci/pci.h"
++
++#define IOMMU_TESTDEV_VENDOR_ID     PCI_VENDOR_ID_REDHAT
++#define IOMMU_TESTDEV_DEVICE_ID     PCI_DEVICE_ID_REDHAT_TEST
++
++/* DMA_ATTRS register bit definitions (architecture-agnostic) */
++#define ITD_ATTRS_SECURE_SHIFT      0
++#define ITD_ATTRS_SECURE_MASK       0x1
++#define ITD_ATTRS_SPACE_SHIFT       1
++#define ITD_ATTRS_SPACE_MASK        0x3
++#define ITD_ATTRS_PRIV_SHIFT        3
++#define ITD_ATTRS_PRIV_MASK         0x1
++
++/* Helper macros for setting fields */
++#define ITD_ATTRS_SET_SECURE(attrs, val)                              \
++    (((attrs) & ~(ITD_ATTRS_SECURE_MASK << ITD_ATTRS_SECURE_SHIFT)) | \
++     (((val) & ITD_ATTRS_SECURE_MASK) << ITD_ATTRS_SECURE_SHIFT))
++
++#define ITD_ATTRS_SET_SPACE(attrs, val)                               \
++    (((attrs) & ~(ITD_ATTRS_SPACE_MASK << ITD_ATTRS_SPACE_SHIFT)) |   \
++     (((val) & ITD_ATTRS_SPACE_MASK) << ITD_ATTRS_SPACE_SHIFT))
++
++#define ITD_ATTRS_SET_PRIV(attrs, val)                                \
++    (((attrs) & ~(ITD_ATTRS_PRIV_MASK << ITD_ATTRS_PRIV_SHIFT)) |     \
++     (((val) & ITD_ATTRS_PRIV_MASK) << ITD_ATTRS_PRIV_SHIFT))
++
++/* Helper macros for getting fields */
++#define ITD_ATTRS_GET_SECURE(attrs)                                   \
++    (((attrs) >> ITD_ATTRS_SECURE_SHIFT) & ITD_ATTRS_SECURE_MASK)
++
++#define ITD_ATTRS_GET_SPACE(attrs)                                    \
++    (((attrs) >> ITD_ATTRS_SPACE_SHIFT) & ITD_ATTRS_SPACE_MASK)
++
++#define ITD_ATTRS_GET_PRIV(attrs)                                     \
++    (((attrs) >> ITD_ATTRS_PRIV_SHIFT) & ITD_ATTRS_PRIV_MASK)
++
++/* DMA result/status values shared with tests */
++#define ITD_DMA_RESULT_IDLE  0xffffffffu
++#define ITD_DMA_RESULT_BUSY  0xfffffffeu
++#define ITD_DMA_ERR_BAD_LEN  0xdead0001u
++#define ITD_DMA_ERR_TX_FAIL  0xdead0002u
++#define ITD_DMA_ERR_RD_FAIL  0xdead0003u
++#define ITD_DMA_ERR_MISMATCH 0xdead0004u
++
++#define ITD_DMA_WRITE_VAL    0x88888888u
++
++/* BAR0 layout of iommu-testdev */
++enum {
++    ITD_REG_DMA_TRIGGERING  = 0x00,
++    ITD_REG_DMA_GVA_LO      = 0x04,
++    ITD_REG_DMA_GVA_HI      = 0x08,
++    ITD_REG_DMA_LEN         = 0x0c,
++    ITD_REG_DMA_RESULT      = 0x10,
++    ITD_REG_DMA_DBELL       = 0x14,
++    ITD_REG_DMA_ATTRS       = 0x18, /* [0] secure,[2:1] space,[3] unspecified */
++    /* Translation config & builder */
++    ITD_REG_TRANS_DBELL     = 0x1c, /* bit0=build, bit1=clear status */
++    ITD_REG_TRANS_STATUS    = 0x20, /* 0=ok else error */
++    BAR0_SIZE               = 0x1000,
++};
++
++#endif /* HW_MISC_IOMMU_TESTDEV_H */
 -- 
 2.34.1
 
