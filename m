@@ -4,45 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCBACCF9E3
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 15:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9ACCD13DD
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 16:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJCpw-0004N9-8t; Wed, 12 Nov 2025 10:32:44 -0500
+	id 1vJDc2-0002ii-H4; Wed, 12 Nov 2025 11:22:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1vJCoo-0003YD-3k
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 10:31:34 -0500
-Received: from out28-78.mail.aliyun.com ([115.124.28.78])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1vJCoh-0002r8-Tj
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 10:31:33 -0500
-Received: from Sun.localdomain(mailfrom:mail@jiesong.me
- fp:SMTPD_---.fKuO.7o_1762961464 cluster:ay29) by smtp.aliyun-inc.com;
- Wed, 12 Nov 2025 23:31:11 +0800
-From: Jie Song <mail@jiesong.me>
-To: armbru@redhat.com
-Cc: berrange@redhat.com, mail@jiesong.me, qemu-devel@nongnu.org,
- songjie_yewu@cmss.chinamobile.com
-Subject: Re: [PATCH] monitor/qmp: cleanup socket listener sources early to
- avoid fd handling race
-Date: Wed, 12 Nov 2025 23:31:04 +0800
-Message-ID: <20251112153104.21104-1-mail@jiesong.me>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <87a50r8w3g.fsf@pond.sub.org>
-References: <87a50r8w3g.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vJDbo-0002da-WB; Wed, 12 Nov 2025 11:22:13 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vJDbk-0004oc-MX; Wed, 12 Nov 2025 11:22:12 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBHYqgktBRpI6oPAg--.69S2;
+ Thu, 13 Nov 2025 00:21:56 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwDnP+0jtBRpz0YEAA--.8224S3;
+ Thu, 13 Nov 2025 00:21:55 +0800 (CST)
+From: Tao Tang <tangtao1634@phytium.com.cn>
+To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
+Subject: [RFC v3 0/3] hw/misc: Introduce a generalized IOMMU test framework
+Date: Thu, 13 Nov 2025 00:21:49 +0800
+Message-Id: <20251112162152.447327-1-tangtao1634@phytium.com.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.28.78; envelope-from=mail@jiesong.me;
- helo=out28-78.mail.aliyun.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+X-CM-TRANSID: AQAAfwDnP+0jtBRpz0YEAA--.8224S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAMBWkTmLAHcAAHsq
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxtFy3KFWUWFWkJF43Ar1kZrb_yoW3Wr1UpF
+ 93Cay3KF48JF1fZrn3Aw40yFy3tan5Ja12vr13Gw1Sg3y3AFy8tF47KFy8tF93A395ZF17
+ Za1Utr15ur4FyFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,140 +75,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Daniel, is this in your area of expertise?
-> 
-> Jie Song, can you identify the commit that introduced the bug?
-> 
-> Jie Song <mail@jiesong.me> writes:
-> 
-> > From: Jie Song <songjie_yewu@cmss.chinamobile.com>
-> >
-> > When starting a dummy QEMU process with virsh, monitor_init_qmp() enables
-> > IOThread monitoring of the QMP fd by default. However, a race condition
-> > exists during the initialization phase: the IOThread only removes the
-> > main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
-> > which may be delayed under high system load.
-> >
-> > This creates a window between monitor_qmp_setup_handlers_bh() and
-> > qio_net_listener_set_client_func_full() where both the main thread and
-> > IOThread are simultaneously monitoring the same fd and processing events.
-> > This race can cause either the main thread or the IOThread to hang and
-> > become unresponsive.
-> >
-> > Fix this by proactively cleaning up the listener's IO sources in
-> > monitor_init_qmp() before the IOThread initializes QMP monitoring,
-> > ensuring exclusive fd ownership and eliminating the race condition.
-> >
-> > The fix introduces socket_chr_listener_cleanup() to destroy and unref
-> > all existing IO sources on the socket chardev listener, guaranteeing
-> > that no concurrent fd monitoring occurs during the transition to
-> > IOThread handling.
-> >
-> > Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
-> > ---
-> >  chardev/char-socket.c         | 18 ++++++++++++++++++
-> >  include/chardev/char-socket.h |  2 ++
-> >  monitor/qmp.c                 |  6 ++++++
-> >  3 files changed, 26 insertions(+)
-> >
-> > diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-> > index 62852e3caf..073a9da855 100644
-> > --- a/chardev/char-socket.c
-> > +++ b/chardev/char-socket.c
-> > @@ -656,6 +656,24 @@ static void tcp_chr_telnet_destroy(SocketChardev *s)
-> >      }
-> >  }
-> >  
-> > +void socket_chr_listener_cleanup(Chardev *chr)
-> > +{
-> > +    SocketChardev *s = SOCKET_CHARDEV(chr);
-> > +
-> > +    if (s->listener) {
-> > +        QIONetListener *listener = s->listener;
-> > +        size_t i;
-> > +
-> > +        for (i = 0; i < listener->nsioc; i++) {
-> > +            if (listener->io_source[i]) {
-> > +                g_source_destroy(listener->io_source[i]);
-> > +                g_source_unref(listener->io_source[i]);
-> > +                listener->io_source[i] = NULL;
-> > +            }
-> > +        }
-> > +    }
-> > +}
-> > +
-> >  static void tcp_chr_update_read_handler(Chardev *chr)
-> >  {
-> >      SocketChardev *s = SOCKET_CHARDEV(chr);
-> > diff --git a/include/chardev/char-socket.h b/include/chardev/char-socket.h
-> > index d6d13ad37f..682440c6de 100644
-> > --- a/include/chardev/char-socket.h
-> > +++ b/include/chardev/char-socket.h
-> > @@ -84,4 +84,6 @@ typedef struct SocketChardev SocketChardev;
-> >  DECLARE_INSTANCE_CHECKER(SocketChardev, SOCKET_CHARDEV,
-> >                           TYPE_CHARDEV_SOCKET)
-> >  
-> > +void socket_chr_listener_cleanup(Chardev *chr);
-> > +
-> >  #endif /* CHAR_SOCKET_H */
-> > diff --git a/monitor/qmp.c b/monitor/qmp.c
-> > index cb99a12d94..d9d1fafa70 100644
-> > --- a/monitor/qmp.c
-> > +++ b/monitor/qmp.c
-> > @@ -25,6 +25,7 @@
-> >  #include "qemu/osdep.h"
-> >  
-> >  #include "chardev/char-io.h"
-> > +#include "chardev/char-socket.h"
-> >  #include "monitor-internal.h"
-> >  #include "qapi/error.h"
-> >  #include "qapi/qapi-commands-control.h"
-> > @@ -537,6 +538,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-> >           * e.g. the chardev is in client mode, with wait=on.
-> >           */
-> >          remove_fd_in_watch(chr);
-> > +        /*
-> > +         * Clean up listener IO sources early to prevent racy fd
-> > +         * handling between the main thread and the I/O thread.
-> > +         */
-> > +        socket_chr_listener_cleanup(chr);
-> >          /*
-> >           * We can't call qemu_chr_fe_set_handlers() directly here
-> >           * since chardev might be running in the monitor I/O
+This is v3 of the IOMMU test framework. V2 introduced the smmu-testdev for
+bare-metal SMMUv3 testing. V3 is a significant architectural refactoring of that
+work, generalizing it into a modular and extensible IOMMU test framework. The
+device has been renamed from smmu-testdev to iommu-testdev and the
+architecture has been significantly restructured for better modularity
+and extensibility.
 
-Hi Markus,
+Motivation
+----------
 
-Thank you for the question.
+Currently, thoroughly testing IOMMU emulation (e.g., ARM SMMUv3) requires
+a significant software stack. We need to boot a full guest operating
+system (like Linux) with the appropriate drivers (e.g., IOMMUFD) and rely
+on firmware (e.g., ACPI with IORT tables or Hafnium) to correctly
+configure the IOMMU and orchestrate DMA from a peripheral device.
 
-The issue you're referring to is not tied to any specific commit but rather 
-arises from the current process flow. Specifically, in scenarios like the one 
-with virsh starting a dummy QEMU process, the following command line may
-triggers the bug:
-`/usr/bin/qemu-system-x86_64 -S -no-user-config -nodefaults -nographic -machine
-none,accel=tcg -qmp unix:/var/lib/libvirt/qemu/qmp-xxx/qmp.monitor,server=on,wait=off`
+This dependency on a complex software stack presents several challenges:
 
-We can reproduce this issue using gdb with the following steps:
-  1.Pause the I/O thread: Execute monitor_init_qmp in the main thread, and before 
-    aio_bh_schedule_oneshot is called, suspend the I/O thread (scheduler-locking on). 
-    This simulates a high load scenario.
-  2.Set a breakpoint at qemu_accept: Allow the main thread to continue running. 
-    The main thread will reach qemu_accept, and at this point, the main thread will 
-    be listening for the corresponding chardev (the QMP socket).
-  3.Simulate a client connection: Use nc -U to simulate a client connecting to the 
-    Unix socket. The main thread will detect the event and hit the breakpoint at qemu_accept.
-  4.Resume the I/O thread: Now, switch to the I/O thread and allow it to run. 
-    It will also reach the qemu_accept breakpoint, creating a race condition where 
-    both threads are handling the same accept event.
+* High Barrier to Entry: Writing targeted tests for specific IOMMU
+    features (like fault handling, specific translation regimes, etc.)
+    becomes cumbersome.
 
-This race causes either the main thread or the IOThread to hang and become unresponsive.
+* Difficult to Debug: It's hard to distinguish whether a bug originates
+    from the IOMMU emulation itself, the guest driver, the firmware
+    tables, or the guest kernel's configuration.
 
-The issue stems from the window between when the main thread sets up the listener watch and
-when the IOThread takes over exclusive ownership. Under normal conditions this window is 
-very small, but under high load or with specific timing, both threads can end up processing 
-events on the same fd simultaneously.
+* Slow Iteration: The need to boot a full guest OS slows down the
+    development and testing cycle.
 
-I hope this explanation clarifies the issue. 
+The primary goal of this work is to create a lightweight, self-contained
+testing environment that allows us to exercise the IOMMU's core logic
+directly at the qtest level, removing the need for any guest-side software.
 
-Best regards,
-Jie Song
+Our Approach: A Dedicated Test Framework
+-----------------------------------------
+
+To achieve this, we introduce three main components:
+
+* A minimal hardware device: iommu-testdev
+* A reusable IOMMU helper library: libqos/qos-smmuv3
+* A comprehensive qtest suite: iommu-smmuv3-test
+
+The iommu-testdev is intentionally not a conformant, general-purpose PCIe
+or platform device. It is a purpose-built, highly simplified "DMA engine"
+designed to be analogous to a minimal PCIe Root Complex that bypasses the
+full, realistic topology (Host Bridges, Switches, Endpoints) to provide a
+direct, programmable path for a DMA request to reach the IOMMU. Its sole
+purpose is to trigger a DMA transaction when its registers are written to,
+making it perfectly suited for direct control from a test environment like
+qtest.
+
+The Qtest Framework
+-------------------
+
+The new qtest (iommu-smmuv3-test.c) serves as the "bare-metal driver"
+for both the IOMMU and the iommu-testdev. It leverages the libqos helper
+library to manually perform all the setup that would typically be handled
+by the guest kernel and firmware, but in a completely controlled and
+predictable manner:
+
+1.  IOMMU Configuration: It directly initializes the SMMU's registers to a
+    known state using helper functions from qos-smmuv3.
+
+2.  Translation Structure Setup: It uses the libqos library to construct
+    the necessary translation structures in memory, including Stream Table
+    Entries (STEs), Context Descriptors (CDs), and Page Tables (PTEs).
+
+3.  DMA Trigger: It programs the iommu-testdev to initiate a DMA operation
+    targeting a specific IOVA with configurable attributes.
+
+4.  Verification: It waits for the transaction to complete and verifies
+    that the memory was accessed correctly after address translation by
+    the IOMMU.
+
+This framework provides a solid and extensible foundation for validating
+the IOMMU's core translation paths. The current test suite covers:
+
+- Stage 1 only translation (VA -> PA via CD page tables)
+- Stage 2 only translation (IPA -> PA via STE S2 tables)
+- Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
+
+The infrastructure is designed to be easily extended to support multiple
+security spaces (Non-Secure, Secure, Root, Realm) and additional IOMMU
+features.
+
+
+Major Changes from v2 to v3:
+-----------------------------
+
+1. Generalization and Renaming:
+   - Device renamed from "smmu-testdev" to "iommu-testdev" to reflect
+     its generic nature and potential use with other IOMMU types beyond
+     SMMUv3.
+   - File paths updated:
+     * hw/misc/smmu-testdev.c -> hw/misc/iommu-testdev.c
+     * include/hw/misc/smmu-testdev.h -> include/hw/misc/iommu-testdev.h
+     * docs/specs/smmu-testdev.rst -> docs/specs/iommu-testdev.rst
+
+2. Architectural Refactoring - Separation of Concerns:
+   The most significant change is the separation of IOMMU-specific logic
+   from the test device:
+
+   - iommu-testdev (hw/misc/iommu-testdev.c):
+     * Now focuses solely on being a DMA trigger device
+     * Contains only MMIO register handling and DMA operation triggering
+     * No longer contains SMMU-specific page table construction logic
+     * Provides a clean, minimal interface for IOMMU testing
+
+   - libqos/qos-smmuv3 (tests/qtest/libqos/qos-smmuv3.{c,h}):
+     * Encapsulates all SMMUv3-specific initialization and setup
+     * Handles Stream Table Entry (STE) construction
+     * Handles Context Descriptor (CD) construction
+     * Manages multi-level page table setup (L0-L3)
+     * Provides support for different translation modes (S1, S2, nested)
+     * Can be reused across multiple test suites
+     * Includes helper functions for security space offset calculations
+
+   - iommu-smmuv3-test (tests/qtest/iommu-smmuv3-test.c):
+     * Focuses on test logic rather than setup boilerplate
+     * Cleaner and more maintainable test cases
+     * Uses high-level abstractions from qos-smmuv3 library
+
+3. Enhanced Modularity:
+   - Clear separation between:
+     * Generic DMA trigger mechanism (iommu-testdev)
+     * IOMMU-specific setup logic (qos-smmuv3)
+     * Test scenarios (iommu-smmuv3-test)
+   - This structure makes it easier to:
+     * Add tests for new IOMMU features
+     * Support additional IOMMU types (e.g., Intel VT-d)
+
+4. Improved Test Coverage:
+   - Explicit tests for multiple translation modes:
+     * Stage 1 only
+     * Stage 2 only
+     * Nested (Stage 1 + Stage 2)
+   - Better structured test configuration system
+   - Clearer test result validation
+
+5. Code Quality Improvements:
+   - Added comprehensive tracing support (8 trace points)
+   - Better error handling and validation
+   - More descriptive variable names and comments
+
+6. Documentation Updates:
+   - Updated device specification in docs/specs/iommu-testdev.rst
+   - More detailed register descriptions
+
+Future Work
+-----------
+
+The current implementation focuses on basic translation path validation
+in the Non-Secure address space. Future extensions could include:
+
+* Multi-space testing (Secure, Root, Realm) for SMMUv3
+* Support for other IOMMU types (Intel VT-d, AMD-Vi, RISC-V IOMMU)
+
+Tao Tang (3):
+  hw/misc: introduce iommu-testdev for bare-metal IOMMU testing
+  tests/qtest: add libqos SMMUv3 helper library
+  tests/qtest: add SMMUv3 bare-metal test using iommu-testdev
+
+ docs/specs/index.rst            |   1 +
+ docs/specs/iommu-testdev.rst    |  96 ++++
+ hw/misc/Kconfig                 |   5 +
+ hw/misc/iommu-testdev.c         | 292 ++++++++++
+ hw/misc/meson.build             |   1 +
+ hw/misc/trace-events            |  10 +
+ include/hw/misc/iommu-testdev.h |  78 +++
+ tests/qtest/iommu-smmuv3-test.c | 116 ++++
+ tests/qtest/libqos/meson.build  |   3 +
+ tests/qtest/libqos/qos-smmuv3.c | 920 ++++++++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-smmuv3.h | 291 ++++++++++
+ tests/qtest/meson.build         |   1 +
+ 12 files changed, 1814 insertions(+)
+ create mode 100644 docs/specs/iommu-testdev.rst
+ create mode 100644 hw/misc/iommu-testdev.c
+ create mode 100644 include/hw/misc/iommu-testdev.h
+ create mode 100644 tests/qtest/iommu-smmuv3-test.c
+ create mode 100644 tests/qtest/libqos/qos-smmuv3.c
+ create mode 100644 tests/qtest/libqos/qos-smmuv3.h
+
+-- 
+2.34.1
+
 
