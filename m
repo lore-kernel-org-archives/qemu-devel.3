@@ -4,52 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A7DCD13DD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6764CD3429
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 16:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJDwm-0001Ro-HY; Wed, 12 Nov 2025 11:43:52 -0500
+	id 1vJDxG-0002Tc-77; Wed, 12 Nov 2025 11:44:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vJDuH-0007g5-Ji; Wed, 12 Nov 2025 11:41:20 -0500
-Received: from relay.virtuozzo.com ([130.117.225.111])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJDvw-0000Sg-NF
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 11:43:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vJDuE-0007zt-Lb; Wed, 12 Nov 2025 11:41:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=7ZOowEZ2uXhtXPyyFDxTZw4mF9ye7De92pk040iwuXQ=; b=sImQbIsZ9UE2
- daD4SmDnqHX/f6uWh4fP7jZm8x209FKvtNcHlh5ROu0ME7qcL8emDR9PjBTEtGtNARc4/JeRgiEB2
- Ry/2EzP0sdsyRIWIYZl9e6nHY2JkS8WWFz+HmxGAXrM5mTJYD+N7F08jhujxTy00BtEAJFl7Wk5QI
- 3zdzUexg2esM2K6xfnfG1wA7bhhGLAOIDN3+QTONqT5AIb47cJYqAOLKMJhdkMk0Y7T5iMPKioXeK
- ogBuKRD6dHspvQGt6ZgG4FauexUeQc4xUDv3PK8Vy1+jLaybnVMSc57mLLf41vF0NHAkOcfkgQ59o
- unvCnsZv6BAXgslY69YSxA==;
-Received: from [130.117.225.5] (helo=dev005.ch-qa.vzint.dev)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1vJDsg-00H2e8-0v;
- Wed, 12 Nov 2025 17:41:07 +0100
-From: andrey.drobyshev@virtuozzo.com
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, f.ebner@proxmox.com,
- hreitz@redhat.com, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com
-Subject: [BUG] Block graph assertion failure on blockdev-add
-Date: Wed, 12 Nov 2025 18:41:07 +0200
-Message-ID: <20251112164108.506976-1-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJDvv-0008Cd-8r
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 11:43:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1762965778;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=DeIHPZyBL7Y8OrZjwa5mNyy4mVj2s+eOMI0x62MWnfs=;
+ b=T+ObcvrLKpY54p1Y9Uf9geSEZccy/gWLf0ALDFIiaM+LQxRRpEQA3N/9Rxa7Xq7sHkeAYG
+ 3qNFmTxDbtFlpsoItvFBqTM61BLfiPyuchl+lVPF6LKFcunXEsBdZWy46dRuFQIuRQYIfB
+ cIp1FenzhqHb8AjgpzQFIzOEIIQn7FM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-52-6p99gLOrOsCfxwtQr0Q8KA-1; Wed, 12 Nov 2025 11:42:57 -0500
+X-MC-Unique: 6p99gLOrOsCfxwtQr0Q8KA-1
+X-Mimecast-MFC-AGG-ID: 6p99gLOrOsCfxwtQr0Q8KA_1762965776
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42b2f79759bso959495f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 08:42:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1762965776; x=1763570576; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=DeIHPZyBL7Y8OrZjwa5mNyy4mVj2s+eOMI0x62MWnfs=;
+ b=t/puLvJIErqNaUVwxuFmC/XbsGP2k0NZZpLILf49qIZQxdJo8UPASsa7nkFig+8Xnt
+ q6OM2Btr6uNxtahtM9vEag5n0k4HWeGNfeJ/RW3x9nrHka1Yo+9aYJUuNTtRWd0/PP3k
+ BgC3dR57fZvx+rxdWu4Ev16BB97Anbzt/R0PQQz8YRKe3VR58PA0mimd85eYvxZTVb5N
+ vZpsnwmeKiKIxX4bFUULXfuKQkcq9voQsKTN/7jcRN7LA3+XR/UM2iih3rpRWWevBFCT
+ JQ9nj2Dflh6Ud6M5PpOmo9i+MpqYHP0VZxLieH8zKvMuJmJxe/SFq++Bb93gz6p8t8cr
+ 8vBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1762965776; x=1763570576;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DeIHPZyBL7Y8OrZjwa5mNyy4mVj2s+eOMI0x62MWnfs=;
+ b=pxVubCfzolC4wMtVIb7PAwNc106+1oE7FChJvdaMAiAeKXUD3DsJjpPncf/FGf2/hp
+ H+iIwP/N7p2fqsLkSjavlH1/r+uHypyd4/6kQ5BU8T/9BpkjOcY3JkhbJ9kaXJtCbJjE
+ Nd5AJbsiQqaWRz+Z+FiCnNZ74TUAM6cVqpU4/cbHssM5rbIRy/Kang5yTMNSphi7E3NE
+ FH5ZRZN/Hx2KK71Z1/46FV4F0GrnGVMDS0ZGY3lwdgnDt3HoPwqw37x4wxcr6l5DH2wQ
+ 0QlMwYUyxO9wVSKA9RHrSDvKlWm+f7r/GihSsBZ9/FNFv7c+HWj1Yl3X/8IgKdnJbEWG
+ EaRw==
+X-Gm-Message-State: AOJu0Yw5bVgwW5aSSbZ+A1AFNUWec0+JxqwDNwIZOLqcGaHSX0E6nODz
+ J5zaXydlG0cwzO2Y0gsKeSMnJyIyYvGQgvkbPkG58Y+Bx0ARzmaBP/IVMzuyiuYTFQVETO9oIbb
+ 0lY8rxPYWJJnpaKwIiwYGHmMaEaKhhnZBaGNk3Fhg7DhdSZNn52GuzBQj
+X-Gm-Gg: ASbGnctreYdWuL1coohi66eFIzLPXNAW2VkqChaK78Kba8zKfZBg/vIyqnSB9Y0H829
+ L4HsFX7Vf2oVjtgD9ii6Hz4t7XjAla5Jf6D+qHrzs5M2vQjFpLObwDapb1cn3vRXTUm7JyR+kFM
+ ltOo2sM1xsi5nR/4CBqP0p5Nuo//M6gat72PC2N8cHu1BhIJYbw9nCGMeDXIABozWHHLBxSKvWL
+ ORaER+ewXQYFW19IZa3n/Rt+cc2QOvQ2l4S3D5SwU52XFeoXc/9PMWCn0fk91YLNNPAIHFvtcQO
+ hP29qBYEjkyroBgnmzVjysAqBRdilf7Wvq+594tV2etVt2Z4RV4b4oos1QBgdbUXpTWLWSI=
+X-Received: by 2002:a05:6000:3106:b0:42b:3ab7:b8a8 with SMTP id
+ ffacd0b85a97d-42b4bb91763mr3510719f8f.17.1762965775832; 
+ Wed, 12 Nov 2025 08:42:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEtcyglg/uofbdlKBUFUlV9HSDFiJfzoX9UpP5Sf5JXlf2d/BDXhHR/XumTckFcx4rwohI8PQ==
+X-Received: by 2002:a05:6000:3106:b0:42b:3ab7:b8a8 with SMTP id
+ ffacd0b85a97d-42b4bb91763mr3510695f8f.17.1762965775425; 
+ Wed, 12 Nov 2025 08:42:55 -0800 (PST)
+Received: from [192.168.0.7] ([47.64.114.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42ac67920fcsm34365295f8f.39.2025.11.12.08.42.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Nov 2025 08:42:55 -0800 (PST)
+Message-ID: <62f768cd-6b4f-4687-b3ae-e23419c7df9a@redhat.com>
+Date: Wed, 12 Nov 2025 17:42:54 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 28/28] qemu-img rebase: don't exceed IO_BUF_SIZE in one
+ operation
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Alberto Garcia <berto@igalia.com>
+Cc: qemu-devel@nongnu.org
+References: <20251111213238.181992-1-kwolf@redhat.com>
+ <20251111213238.181992-29-kwolf@redhat.com>
+ <c8184f53-b0ed-4f74-adc2-080309568795@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <c8184f53-b0ed-4f74-adc2-080309568795@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=130.117.225.111;
- envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,180 +166,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+On 12/11/2025 17.40, Thomas Huth wrote:
+> 
+>   Hi Alberto, hi Kevin,
+> 
+> this patch caused the iotest 024 to fail when being run with -qed:
+> 
+> 024   fail       [17:35:06] [17:35:08]   2.2s   (last: 2.0s)  output 
+> mismatch (see .../tests/qemu-iotests/scratch/qed-file-024/024.out.bad)
+> --- .../qemu/tests/qemu-iotests/024.out
+> +++ .../qemu-build/tests/qemu-iotests/scratch/qed-file-024/024.out.bad
+> @@ -267,6 +267,7 @@
+>   read 1048576/1048576 bytes at offset 3145728
+>   1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+>   Offset          Length          File
+> -0               0x400000        TEST_DIR/subdir/t.IMGFMT
+> +0               0x200000        TEST_DIR/subdir/t.IMGFMT
+> +0x200000        0x200000        TEST_DIR/subdir/t.IMGFMT
+> 
+> Could you please have a look?
+> 
+>   Thanks,
+>     Thomas
+> 
+> 
+> PS: Thank you, Kevin, for merging the "Add more image formats to the 
+> thorough testing" patch! As you can see, it already helped to spot the first 
+> regression :-)
 
-Hi all,
+Ah, never mind that last sentence, I just noticed that we had "qed" in the 
+"thorough" list before that patch already, so I would also have run into 
+this without that patch.
 
-There's a bug in block layer which leads to an assertion failure and crash.
-The reproduce is flaky, which suggests there's a race involved.  Here's how
-it's reproduced:
-
-1. Run QEMU with 2 disks: one system (with actual guest) and one empty; attach
-them to an iothread;
-2. In the guest, format the empty disk and start sequential IO on it;
-3. At the host, start growing a chain of snapshots upon the empty image.
-
-Here're the scripts:
-
-1. Running QEMU:
-
-QMPSOCK=/var/run/qmp.sock
-SERIALSOCK=/var/run/serial.sock
-ROOTIMG=/path/to/rootimg.qcow2
-EMPTYIMG=/path/to/emptyimg.qcow2
-
-rm -f $EMPTYIMG
-qemu-img create -f qcow2 \
-    -o cluster_size=1M,extended_l2=on,lazy_refcounts=on \
-    $EMPTYIMG 64G
-
-/path/to/qemu/build/qemu-system-x86_64 -enable-kvm \
-    -machine q35 -cpu Nehalem \
-    -name guest=guestvm,debug-threads=on \
-    -m 2g -smp 2 \
-    -nographic \
-    \
-    -serial unix:$SERIALSOCK,server=on,wait=off \
-    -qmp unix:$QMPSOCK,server=on,wait=off \
-    \
-    -object iothread,id=iothread1 \
-    \
-    -blockdev node-name=disk-storage,driver=file,filename=$ROOTIMG,aio=native,cache.direct=on,cache.no-flush=off,auto-read-only=true,discard=unmap \
-    -blockdev node-name=disk-prealloc,driver=preallocate,file=disk-storage,discard=unmap \
-    -blockdev node-name=disk-format,driver=qcow2,file=disk-prealloc,read-only=false,discard=unmap \
-    \
-    -blockdev node-name=empty-storage,driver=file,filename=$EMPTYIMG,aio=native,cache.direct=on,cache.no-flush=off,auto-read-only=true,discard=unmap \
-    -blockdev node-name=empty-prealloc,driver=preallocate,file=empty-storage,discard=unmap \
-    -blockdev node-name=empty-format,driver=qcow2,file=empty-prealloc,read-only=false,discard=unmap \
-    \
-    -device pcie-root-port,id=root_port0,slot=1,bus=pcie.0 \
-    -device pcie-root-port,id=root_port1,slot=2,bus=pcie.0 \
-    -device virtio-blk-pci,drive=disk-format,id=virtio-disk0,bus=root_port0,bootindex=1 \
-    -device virtio-blk-pci,drive=empty-format,iothread=iothread1,id=virtio-disk1,bus=root_port1
-
-2. Formatting the disk in the guest and running sequential IO:
-
-BLKDEV=$(ls /dev/[sv]d[b-z] | sort | sed -n '1p')
-
-sgdisk -Z -n 1:0:0 -t 1:8300 $BLKDEV
-mkfs.ext4 -F "${BLKDEV}1"
-mkdir -p /mnt/empty
-mount "${BLKDEV}1" /mnt/empty
-
-fio --name=grow-disk --filename=/mnt/empty/growing.data \
-    --rw=write --bs=4K --size=60G --time_based --runtime=900 \
-    --ioengine=libaio --iodepth=32 --numjobs=4 --direct=0
-
-3. Grow a chain of snapshots:
-
-TESTDIR=/path/to/testdir
-QMPSOCK=/var/run/qmp.sock
-QMPSHELL=/path/to/qemu/scripts/qmp/qmp-shell
-
-rm -f $TESTDIR/snap*.qcow2
-SNAPNODE=empty-format
-
-for i in {1..200} ; do
-    SNAPIMG=$TESTDIR/snap$i.qcow2
-    qemu-img create -f qcow2 \
-        -o cluster_size=1M,extended_l2=on,lazy_refcounts=on \
-        $SNAPIMG 64G
-
-$QMPSHELL -p $QMPSOCK <<EOF
-    blockdev-add node-name=snap${i}-storage driver=file filename=$SNAPIMG auto-read-only=true aio=native cache={"no-flush":false,"direct":true} discard=unmap
-    blockdev-add node-name=snap${i}-prealloc driver=preallocate discard=unmap file=snap${i}-storage
-    blockdev-add node-name=snap${i}-format driver=qcow2 read-only=false cache={"no-flush":false,"direct":true} discard=unmap file=snap${i}-prealloc
-    blockdev-snapshot node=$SNAPNODE overlay=snap${i}-format
-EOF
-
-    SNAPNODE=snap${i}-format
-done
-
-
-Then, at some point, we get:
-
-qemu-system-x86_64: ../block/io.c:441: bdrv_drain_assert_idle: Assertion `qatomic_read(&bs->in_flight) == 0' failed.
-
-Stack trace:
-
-(gdb) bt
-#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-#1  0x00007f92e52a15a3 in __pthread_kill_internal (signo=6, threadid=<optimized out>) at pthread_kill.c:78
-#2  0x00007f92e5254d06 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-#3  0x00007f92e52287f3 in __GI_abort () at abort.c:79
-#4  0x00007f92e522871b in __assert_fail_base (fmt=<optimized out>, assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>) at assert.c:92
-#5  0x00007f92e524dca6 in __assert_fail (assertion=0x555c50966200 "qatomic_read(&bs->in_flight) == 0", file=0x555c509660eb "../block/io.c", line=441, function=0x555c50966e60 <__PRETTY_FUNCTION__.33> "bdrv_drain_assert_idle") at assert.c:101
-#6  0x0000555c505cb3f7 in bdrv_drain_assert_idle (bs=0x555c5384de20) at ../block/io.c:441
-#7  0x0000555c505cb757 in bdrv_drain_all_begin () at ../block/io.c:531
-#8  0x0000555c505c93c3 in bdrv_graph_wrlock_drained () at ../block/graph-lock.c:168
-#9  0x0000555c505b83e3 in blk_remove_bs (blk=0x555c535b89f0) at ../block/block-backend.c:892
-#10 0x0000555c505b73cb in blk_delete (blk=0x555c535b89f0) at ../block/block-backend.c:487
-#11 0x0000555c505b77ac in blk_unref (blk=0x555c535b89f0) at ../block/block-backend.c:547
-#12 0x0000555c5058f7f9 in bdrv_open_inherit (filename=0x0, reference=0x0, options=0x555c5386a530, flags=8194, parent=0x0, child_class=0x0, child_role=0, parse_filename=true, errp=0x7ffd1d8cba68) at ../block.c:4196
-#13 0x0000555c5058fd89 in bdrv_open (filename=0x0, reference=0x0, options=0x555c53687680, flags=0, errp=0x7ffd1d8cba68) at ../block.c:4285
-#14 0x0000555c5057ade1 in bds_tree_init (bs_opts=0x555c53687680, errp=0x7ffd1d8cba68) at ../blockdev.c:680
-#15 0x0000555c50581c24 in qmp_blockdev_add (options=0x7ffd1d8cbaa0, errp=0x7ffd1d8cba68) at ../blockdev.c:3434
-#16 0x0000555c506b28f8 in qmp_marshal_blockdev_add (args=0x7f92c400a9e0, ret=0x7f92d9fe3da8, errp=0x7f92d9fe3da0) at qapi/qapi-commands-block-core.c:1417
-#17 0x0000555c5073d311 in do_qmp_dispatch_bh (opaque=0x7f92d9fe3e40) at ../qapi/qmp-dispatch.c:128
-#18 0x0000555c5076a318 in aio_bh_call (bh=0x555c53640580) at ../util/async.c:172
-#19 0x0000555c5076a43b in aio_bh_poll (ctx=0x555c52f635f0) at ../util/async.c:219
-#20 0x0000555c5074aac2 in aio_dispatch (ctx=0x555c52f635f0) at ../util/aio-posix.c:436
-#21 0x0000555c5076a8d5 in aio_ctx_dispatch (source=0x555c52f635f0, callback=0x0, user_data=0x0) at ../util/async.c:364
-#22 0x00007f92e6913e3f in g_main_dispatch (context=0x555c52f69c10) at ../glib/gmain.c:3364
-#23 g_main_context_dispatch (context=0x555c52f69c10) at ../glib/gmain.c:4079
-#24 0x0000555c5076c13c in glib_pollfds_poll () at ../util/main-loop.c:290
-#25 0x0000555c5076c1c3 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:313
-#26 0x0000555c5076c2e3 in main_loop_wait (nonblocking=0) at ../util/main-loop.c:592
-#27 0x0000555c502126b2 in qemu_main_loop () at ../system/runstate.c:903
-#28 0x0000555c50681fb1 in qemu_default_main (opaque=0x0) at ../system/main.c:50
-#29 0x0000555c50682060 in main (argc=39, argv=0x7ffd1d8cbf68) at ../system/main.c:93
-(gdb) frame 6
-#6  0x0000555c505cb3f7 in bdrv_drain_assert_idle (bs=0x555c5384de20) at ../block/io.c:441
-441     {
-(gdb) printf "%s (%s): %d\n", bs->node_name, bs->drv->format_name, bs->in_flight
-snap40-storage (file): 1
-
-
-So draining doesn't work as expected: in-flight requests are supposed to be
-polled right before calling bdrv_drain_assert_idle(), but there's new IO
-arriving:
-
-void coroutine_mixed_fn bdrv_drain_all_begin(void)
-{
-...
-    bdrv_drain_all_begin_nopoll();
-
-    /* Now poll the in-flight requests */
-    AIO_WAIT_WHILE_UNLOCKED(NULL, bdrv_drain_all_poll());   <---------
-
-    while ((bs = bdrv_next_all_states(bs))) {
-        bdrv_drain_assert_idle(bs);
-    }
-}
-
-I've bisected the issue, and it seems to be introduced by Fiona's series [0]
-for fixing a deadlock.  Namely, before the commit b13f546545 ("block: move
-drain outside of bdrv_root_unref_child()") my reproducer above produces a
-deadlock similar to what we had in [1].  And after commit b13f546545 is
-applied, we get the crash.
-
-Attached is a naive fix which simply eliminates global draining (i.e. draining
-of all the block graph) in problematic codepaths.  While global draining might
-indeed be redundant there, the real problem, i.e. the race, still remains.
-
-Any comments and suggestions are welcomed.  Thanks!
-
-[0] https://lore.kernel.org/qemu-devel/20250530151125.955508-1-f.ebner@proxmox.com/
-[1] https://lore.kernel.org/qemu-devel/73839c04-7616-407e-b057-80ca69e63f51@virtuozzo.com/
-
-Andrey Drobyshev (1):
-  block: avoid global drain on graph subtrees manipulation
-
- block.c               |  8 +++++++-
- block/block-backend.c | 11 ++++++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
-
--- 
-2.43.5
+  Thomas
 
 
