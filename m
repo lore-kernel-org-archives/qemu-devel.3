@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DBACCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 08:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1856FCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 08:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ64j-0001Zk-M4; Wed, 12 Nov 2025 03:19:34 -0500
+	id 1vJ66L-0003n0-65; Wed, 12 Nov 2025 03:21:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vJ630-0008Jn-Gi
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:17:47 -0500
+ id 1vJ66I-0003gw-RI
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:21:10 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vJ62x-0006pG-F8
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:17:46 -0500
+ id 1vJ66G-0007iP-LX
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:21:10 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AC8HZte003262
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AC8L495004430
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 12 Nov 2025 17:17:35 +0900 (JST)
+ Wed, 12 Nov 2025 17:21:04 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=nDQeONniTkb7oG+vNVg9DGYHQxEdVJ+1AJfIZ8Jn7+Y=; 
+DKIM-Signature: a=rsa-sha256; bh=n2HXNTgh7jfEVYLhmEL6JS0qBH8EMM/P9LiVHXSVdtQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1762935455; v=1;
- b=SxZ19gXEouKR76WD4Ie7+szIureOS/HOf/GYMSWa1Xcft+WuPcfPD7GqsSSv3mmW
- lPP+tp3PgIZiTvCDNp7nd0k3ikgY8C7XmMdIC6PkH7Wrd/H2i3RC/a8pLrHzH2gz
- XGDMiDe6wChKwylHIlcYd5UFNOlzv3eLwr1PMImBYciyh+T1ja+vGkeplVJYLepL
- v1jLzIrQKnOsiYyMi/TQBbOPGYbxHu1KJyoq6qXgH6loYrbzGgi4QIRf5+BleYwW
- jz0ggKTIP5dH9uVssKZKHFxjRfcugjqIzUH2GL9GoxgmZ5XTM3pqSe0O52U8cH1q
- 9l1OTIKIGoCoIpMzzPGCuQ==
-Message-ID: <3c0fe9e8-7efa-4936-b5ef-5cabc4239cdd@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 12 Nov 2025 17:17:34 +0900
+ s=rs20250326; t=1762935664; v=1;
+ b=d7edQjSmzOJbnmvBT8NN25KGh1yWXD2TMmIkzMP5c9eHS+csrdEUZpfwr98BIpta
+ yqhXYZjiyuf5GFGlJttW2ZLHrSaekCeVbDW05py3l0cBehFRMyWBfbSLt3S+m90t
+ oG591h3iGK9g23TEWsMaXtD3N0WN4RH2emS3uWoQVKQb36/L3nv9ySlBw+LTA3sO
+ xdj9LtJixsAdgeXhKg/k7nrHs3xiLu4K1eqXLcsCg9GdSxgA1iOagwAJAwdzorld
+ 3ZIDIQ49IOkKGRBzNlNLbvnrXTIPiwdwR4IIpU1Fg0jSxdAYbc7HnnOpBeC63wxS
+ C9Xhm8pubtpDBV+3l/cizA==
+Message-ID: <77fd4755-a880-4a69-90fd-7153183ebaf3@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 12 Nov 2025 17:21:03 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
+Subject: Re: [PATCH v2 09/10] virtio-gpu-dmabuf: Introduce
+ qemu_iovec_same_memory_regions()
 To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -50,14 +50,14 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
- <20251109053801.2267149-11-vivek.kasireddy@intel.com>
- <5c224e00-8114-4586-b502-3819770bc8ff@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <20251109053801.2267149-10-vivek.kasireddy@intel.com>
+ <83274ca7-dd37-4856-b198-f334bf630835@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185F1DA0CD274FBB2C30672F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
+In-Reply-To: <IA0PR11MB7185F1DA0CD274FBB2C30672F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -82,45 +82,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/12 13:26, Kasireddy, Vivek wrote:
+On 2025/11/12 13:24, Kasireddy, Vivek wrote:
 > Hi Akihiko,
 > 
->> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
->> associated with VFIO devices
+>> Subject: Re: [PATCH v2 09/10] virtio-gpu-dmabuf: Introduce
+>> qemu_iovec_same_memory_regions()
 >>
 >> On 2025/11/09 14:33, Vivek Kasireddy wrote:
->>> In addition to memfd, a blob resource can also have its backing
->>> storage in a VFIO device region. Therefore, we first need to figure
->>> out if the blob is backed by a VFIO device region or a memfd before
->>> we can call the right API to get a dmabuf fd created.
+>>> Add a helper to check whether the addresses in an iovec array
+>>> belong to the same memory region or not. This is useful to verify
+>>> before trying to create a dmabuf from an iovec array.
 >>>
->>> So, once we have the ramblock and the associated mr, we rely on
->>> memory_region_is_ram_device() to tell us where the backing storage
->>> is located. If the blob resource is VFIO backed, we try to find the
->>> right VFIO device that contains the blob and then invoke the API
->>> vfio_device_create_dmabuf().
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex.williamson@redhat.com>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu-dmabuf.c | 29 +++++++++++++++++++++++++++++
+>>>    1 file changed, 29 insertions(+)
 >>>
->>> Note that in virtio_gpu_remap_udmabuf(), we first try to test if
->>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
->>> use the VFIO device fd directly to create the CPU mapping.
+>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>> dmabuf.c
+>>> index c34d4c85bc..80143034d4 100644
+>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>> @@ -27,6 +27,31 @@
+>>>    #include "standard-headers/linux/udmabuf.h"
+>>>    #include "standard-headers/drm/drm_fourcc.h"
+>>>
+>>> +static bool qemu_iovec_same_memory_regions(const struct iovec *iov,
+>> int iov_cnt)
+>>> +{
+>>> +    RAMBlock *rb, *curr_rb;
+>>> +    ram_addr_t offset;
+>>> +    int i;
+>>> +
+>>> +    rb = qemu_ram_block_from_host(iov[0].iov_base, false, &offset);
+>>> +    if (!rb) {
+>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                      "%s: Could not find ramblock/memory region\n", __func__);
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    for (i = 1; i < iov_cnt; i++) {
+>>> +	curr_rb = qemu_ram_block_from_host(iov[i].iov_base, false,
+>> &offset);
+>>> +	if (curr_rb != rb) {
+>>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                          "%s: memory regions not same for iov entries\n",
+>>> +                          __func__);
+>>> +            return false;
+>>> +	}
+>>> +    }
+>>> +    return true;
+>>> +}
+>>> +
+>>>    static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource
+>> *res)
+>>>    {
+>>>        struct udmabuf_create_list *list;
+>>> @@ -137,6 +162,10 @@ void virtio_gpu_init_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>            res->iov[0].iov_len < 4096) {
+>>>            pdata = res->iov[0].iov_base;
+>>>        } else {
+>>> +        if (!qemu_iovec_same_memory_regions(res->iov, res->iov_cnt)) {
+>>> +            return;
+>>> +        }
+>>> +
 >>
->> I have just remembered that mremap() will work for either of udmabuf and
->> VFIO. That will avoid having two different methods and make
->> vfio_get_region_index_from_mr() and vfio_device_get_region_info()
->> unnecessary.
-> IIUC, the name virtio_gpu_remap_dmabuf() is misleading because we are not
-> actually doing remap but are simply calling mmap(). In other words, we are not
-> expanding or shrinking existing mapping but are creating a new mapping.
-> And, for dmabufs associated with VFIO devices, without having to call
-> vfio_get_region_index_from_mr() and vfio_device_get_region_info(), I don't see
-> any other way to determine the region offset.
-> 
-> So, I guess I'll create a new patch to do s/remapped/map.
+>> This check is unnecessary. Perhaps rejecting iov with different memory
+>> regions may be fine if that simplifies the code, but this actually adds
+>> some code.
+> I think we can keep this sanity check but I don't really mind dropping this
+> patch given that buffers with mixed memory regions are not encountered
+> in practical situations. Or, I guess I could move the if (curr_rb != rb) check
+> to virtio_gpu_create_udmabuf() and vfio_device_create_dmabuf_fd()
+> like you suggested previously.
 
-I mean calling mremap() with 0 as the old_size parameter. The man page says:
- > If the value of old_size is zero, and old_address refers to a
- > shareable mapping (see the description of MAP_SHARED in mmap(2)), then
- > mremap() will create a new mapping of the same pages.
+I won't call it a "sanity check"; it is "unlikely" to have different 
+memory regions, but it is still not "wrong" and is sane.
+
+The VFIO code path still needs to check if the memory regions belong to 
+one VFIO device. Trying to create one DMA-BUF using multiple VFIO 
+devices is wrong.
 
 Regards,
 Akihiko Odaki
