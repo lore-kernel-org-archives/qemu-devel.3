@@ -4,108 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F23CCD3431
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 17:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A98CD343E
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 18:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJEsq-0008NJ-Oz; Wed, 12 Nov 2025 12:43:52 -0500
+	id 1vJFMV-0004W2-MJ; Wed, 12 Nov 2025 13:14:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vJEqN-0004o8-RO
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 12:41:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vJFME-00039Q-BR
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 13:14:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vJEqL-0002Ft-HQ
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 12:41:19 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vJFMB-0006nL-C7
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 13:14:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762969276;
+ s=mimecast20190719; t=1762971250;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q5BID2g4Ux0itV/YP5INGMeHDUmnM90k7s0Z4ua4VjY=;
- b=Qmn6D6jXDHmXb4bV3/e6+I1W2vpepx8VWDK07Qvy++ECKyh10bqX4DeEse844Y+g9iHJXF
- jnqsXzNUoNJFIVdNnm57SKwi8Z/B8RmdbGMn187lHJntOYqqC37rGeGc35pfHjNBMECjS3
- 9xi1/4epECYij/K0Dzk5OLlkkjlaids=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=U7+Ad1DQku/KL3b7bCdX4+uTWQCvm0tEszy834Ayws4=;
+ b=F3X58444+vydgcbylzWQlATIdR1va4Vs7emMsR19yAD7gABg7RCCbT8wxEt9NL6s3VZp2+
+ tFs0ITEN6WFOHGuNfg++325jMCHumDKJG2JpD+C68d4xbyps3jD+HQP7QQ1EPd8YW7nF5y
+ R52s6Q4+k9+ygNE6/XTbr2zf/+NL060=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-zf_791LlMEqcjyrZjB9KoA-1; Wed, 12 Nov 2025 12:41:14 -0500
-X-MC-Unique: zf_791LlMEqcjyrZjB9KoA-1
-X-Mimecast-MFC-AGG-ID: zf_791LlMEqcjyrZjB9KoA_1762969274
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3439fe6229aso1472453a91.1
- for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 09:41:14 -0800 (PST)
+ us-mta-659-GA-OkqQ_NM6UNVkFZtrD4Q-1; Wed, 12 Nov 2025 13:14:09 -0500
+X-MC-Unique: GA-OkqQ_NM6UNVkFZtrD4Q-1
+X-Mimecast-MFC-AGG-ID: GA-OkqQ_NM6UNVkFZtrD4Q_1762971248
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4777b03b90fso6714005e9.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Nov 2025 10:14:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1762969273; x=1763574073; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Q5BID2g4Ux0itV/YP5INGMeHDUmnM90k7s0Z4ua4VjY=;
- b=dimO/7zDDHAWVrkCZ6vsbabQ4wC6h98CvWUZahn0OoVIh/qg3s2Q2+znQx1T6b2BUm
- a9947KxLxc/h9VksfBf8d0l+BfI/prV7gauwEwHMqLP4N64Be7yyd+3yGNO0lhjrZUcM
- LT5pmEKC45PhNDXeHO59SfG/TYSlbrFBEi0KmIRVRzcp6M2xgKeIgxEeWTfTCbE2K4TY
- n8QFxGwdv6QUQN9sAy34Zdpz3ZyK/kktHdTfpr4obFlQLLzFP1IX1nnunkIGJCXiwZZj
- rG1VfnnpmAhM90AgiMXjFh0uGAlB1jWTRPxkpAc7dXqPsLMzVUsaak8b2WH5oO5UPqeK
- V+SA==
+ d=redhat.com; s=google; t=1762971248; x=1763576048; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U7+Ad1DQku/KL3b7bCdX4+uTWQCvm0tEszy834Ayws4=;
+ b=CMxDqFQBNb/sHbOCOB9tCIp5CZDgJl0tBEjBQIJP3JtGHhdkuSO903BmQufFLnYxD4
+ jtKStFUZ6eBjNKUX0Gda5q/F2wuHDdt29TPQniNA0rCYBDzyAeRH4t+X5/R5L/r+XxRA
+ 0nNAQR6jCQ+o4Ok8hue+cllb1tczhyWwOdGy/OZ7sUxk6bQuzl39kGc2tE+fO8fLl8Ia
+ n0h2dRUyyziCraBfNOeHZngVo8Uk4Rb7KaRF3Y46KycLLoyCwmueK1AL/BFCoQfI3FBG
+ PM2bIh+hhYl9PO+qvxbg56JS8xCHLryZ3o//qUUAZtqu/iLZWSSu6Jmw7smqeLY5aATY
+ RHUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762969273; x=1763574073;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Q5BID2g4Ux0itV/YP5INGMeHDUmnM90k7s0Z4ua4VjY=;
- b=SrzafhQlyeUKLE1Idu3SENOau9QB1g+oeE46MeDvJFtqweUktyqTqKOjOMuq3pYAxW
- kknGLabV3XJ2RS28y45lwWXiHCW1wUPGUsUtTaoQ8CJNAzsT1gWYpU83gvIl9A0ZZyg8
- xdJTpXT2cszasEe2pbwGwebLPJnyS3ZYm1YNwbg+QlP2if00c5Bfl5zEZ2X6RMF2/Qx4
- HVnFAtv6gs6R2TEfut4i66uZC1J3pwvnNZNtfPF1ppzSKI2g6Ek3/lOnVKwxrN+2cvce
- uw4tjfpJL12un3geEXBt+NZmphZ9ExPOcLt6QsXWHrQembRLK3E0f78/f+rP1JRZT1iB
- ye2g==
+ d=1e100.net; s=20230601; t=1762971248; x=1763576048;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=U7+Ad1DQku/KL3b7bCdX4+uTWQCvm0tEszy834Ayws4=;
+ b=beNxjjM3s5GHpd+qHWyIDMdEc4lmhRM/gmK3arQjhIB8UVv1pdhd5U8+rDDaKwxHwr
+ XclGcxYzFKFDPgc+BBx5vXhuHbf9Z+Z5MSUt/eFdGuIlSd2Uxh3sBnYatoPyhgm2tVV6
+ FGZ/WnO0XRNKJ1Svu3umOfkPm8Gatq36Z9WQtzklHeRsXmF1/MOVsMEmxlkGBaGbFcwV
+ rn/uUR75NoRkkbSoesCAnZES7G/zJX3gGI0ThCnd2o1N3Fi4H++ux/RksPNWbsJ+oAH4
+ ul25um3ONzM98QpHjxr+K3saImdDfxs6hYzCybUtHyykXtPHd7NZlqG54BMEQnTSS7yU
+ 6K4A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZuqwDx/B2utXcmiHVv+ThgrY2+DjpFmZyF7P7e5jpx+hpcfYXxFkipZwOLqQ0gHgMpdzqDEMsBbUE@nongnu.org
-X-Gm-Message-State: AOJu0Yz2r39vOE+7nWtvQCrxWGAkax+l3k0NIH9NZl7dMZpuv9W4BFHk
- +zzXnr3JEeW+PWqSVbLJRvqOTxjIgSOJcqtfgx4xq+SSrfX0a1XSySiTqXRDiwXP5TPTsUaVhEo
- HU+m84LeNUGthrcfnH2uqKIKQziUrMMFoUJ3Gl5Y928SC8lMAFQdv1SafM9GpvHn/
-X-Gm-Gg: ASbGncuVeL4grwnGeEDoeTYtcGn+OINy8z57qKJ6h3ypzWcMEIba3lbCo+zfwVZpO5a
- Eywh1EdDidCgqf2D7L/FmI2cBwYl6HnOYui9QqOAXLdUu+VJIdUV5XQYpBYLeZPvWPjSzKQFRcR
- mqQBKrzwjxLeejqGwfNe1Bs7YkEIQd/war5990Ol4bqaP+9D/cv5KDdm2Rk9c4t+Phza9baiP5n
- TRimi4lG9F/IzjF+3/L7xf3/0LZgCS3kD+mKzcqf6r63n0WjUbVnq9Rk5C1a4jTu2wYp/3kHRhQ
- H6t2RtijLJ1uz8RvRBZNRI8wviuD7cRjuf1IWFdnR4hg4PcjjMK39E6Bk+hrEq7mk1KoXl2hDfL
- Wk5ULFU2iHGV16bzTQhoz+9WCEuvdEvMvnNeAUaU=
-X-Received: by 2002:a17:90b:562c:b0:343:89cc:6f23 with SMTP id
- 98e67ed59e1d1-343eacba165mr202050a91.14.1762969273168; 
- Wed, 12 Nov 2025 09:41:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFI1rQsfYV8cSqEvqIVKqykhD1/MtJpAXyaLqrFfKmq7jNBv0vTUJM4AlqkZ+dXLPg01GJ7Pg==
-X-Received: by 2002:a17:90b:562c:b0:343:89cc:6f23 with SMTP id
- 98e67ed59e1d1-343eacba165mr202023a91.14.1762969272799; 
- Wed, 12 Nov 2025 09:41:12 -0800 (PST)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-343eac7ec56sm48384a91.10.2025.11.12.09.41.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Nov 2025 09:41:12 -0800 (PST)
-Message-ID: <54de65b4-6ba3-474a-b9b2-e128cfc9f2ef@redhat.com>
-Date: Thu, 13 Nov 2025 03:41:06 +1000
+ AJvYcCUfpb3fID3q4fMrU2MG3Tb+vcjX+5wQvh/Y73eL5kKjsHXH6xOrmP6ZcoOI+/QGIxkns4B3AcZynyTZ@nongnu.org
+X-Gm-Message-State: AOJu0Yz0IKh3dkn1Al5/kxQl/tY1hNu7zv7V870kOc20MtjsG6jJEpPn
+ XVTucwbG0OB0k9ARZeVx/TWomLQEBx0PmwHnJhx9XUfy2jo8x7SmzI3Yr293DKGEbveLq4YNKCQ
+ tRGnmz1V66F2Xu0ZeZxCWddw3uawJ+yUmJi1PfY/TsrFqTka+NSFMU2cW
+X-Gm-Gg: ASbGncuSMOXE0uwHFuCU6aETEQH4QATgCDFcJU46+DJujGFlz+Sr5rQE370CXTsGHG9
+ TlVNpdaYB+7QlK92Cz5cuxoFuOTJZwi+WEXrGQWew/VTiiuumP3cRhNv6UipVc5ra/3pCV4fCEk
+ iDot0bY/qe+opjxfqqPKq4DHLA6R3P/o9s/V7MM9BIABSogb0Y8WliW9OAXWMxywrCSqDeg7jsM
+ nbAPg7e/IsRqiyZ+XokD5IbtM7tfAluwHFQ8jy8fLE5vVtAzNfq/XM9ypBi9qoe0ayNgeyKFtU0
+ /E2OSvreCxYQ8tbx7/bewxflIKKqU329hvbvG7scnnbUjei84hCPhi5q93X6lloRRRq7WiFggN4
+ N8Qerxyxd0uPEKpapK3fXmW5IHFk/cht8LTQs8A0iXbb58oGppfqany6xwZpBqw==
+X-Received: by 2002:a05:600c:1d0f:b0:471:16e5:6d7a with SMTP id
+ 5b1f17b1804b1-4778706ea91mr33694035e9.13.1762971247839; 
+ Wed, 12 Nov 2025 10:14:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IExx7YrdQI+IydYpEMMuMdDOGxLo8j/rSItSIu9aQs64pFfJY+BoQHkmXgSTSSwlx02YpTuFw==
+X-Received: by 2002:a05:600c:1d0f:b0:471:16e5:6d7a with SMTP id
+ 5b1f17b1804b1-4778706ea91mr33693785e9.13.1762971247394; 
+ Wed, 12 Nov 2025 10:14:07 -0800 (PST)
+Received: from rh.fritz.box
+ (p200300f6af131a0027bd20bfc18c447d.dip0.t-ipconnect.de.
+ [2003:f6:af13:1a00:27bd:20bf:c18c:447d])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47787e51e49sm46851355e9.7.2025.11.12.10.14.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Nov 2025 10:14:06 -0800 (PST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev, Sebastian Ott <sebott@redhat.com>
+Subject: [PATCH v3 1/2] target/arm/kvm: add constants for new PSCI versions
+Date: Wed, 12 Nov 2025 19:13:56 +0100
+Message-ID: <20251112181357.38999-2-sebott@redhat.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251112181357.38999-1-sebott@redhat.com>
+References: <20251112181357.38999-1-sebott@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] acpi/ghes: Increase GHES raw data maximal length
- to 4KiB
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- mchehab+huawei@kernel.org, gengdongjiu1@gmail.com, mst@redhat.com,
- anisinha@redhat.com, peter.maydell@linaro.org, pbonzini@redhat.com,
- shan.gavin@gmail.com
-References: <20251105114453.2164073-1-gshan@redhat.com>
- <20251105114453.2164073-3-gshan@redhat.com> <20251110151107.5e825ea0@fedora>
- <de9e6c46-6682-488e-bb50-9ce43ffaaa8e@redhat.com>
- <20251112133217.41cc6df8@fedora>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20251112133217.41cc6df8@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -130,99 +124,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+Add constants for PSCI version 1_2 and 1_3.
 
-On 11/12/25 10:32 PM, Igor Mammedov wrote:
-> On Tue, 11 Nov 2025 14:05:23 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
->> On 11/11/25 12:11 AM, Igor Mammedov wrote:
->>> On Wed,  5 Nov 2025 21:44:47 +1000
->>> Gavin Shan <gshan@redhat.com> wrote:
->>>    
->>>> The current GHES raw data maximal length isn't enough for 16 consecutive
->>>> CPER errors, which will be sent to a guest with 4KiB page size on a
->>>> erroneous 64KiB host page. Note those 16 CPER errors will be contained
->>>> in one single error block, meaning all CPER errors should be identical
->>>> in terms of type and severity and all of them should be delivered in
->>>> one shot.
->>>>
->>>> Increase GHES raw data maximal length from 1KiB to 4KiB so that the
->>>> error block has enough storage space for 16 consecutive CPER errors.
->>>>
->>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
->>>> ---
->>>>    docs/specs/acpi_hest_ghes.rst | 2 +-
->>>>    hw/acpi/ghes.c                | 2 +-
->>>>    2 files changed, 2 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
->>>> index aaf7b1ad11..acf31d6eeb 100644
->>>> --- a/docs/specs/acpi_hest_ghes.rst
->>>> +++ b/docs/specs/acpi_hest_ghes.rst
->>>> @@ -68,7 +68,7 @@ Design Details
->>>>        and N Read Ack Register entries. The size for each entry is 8-byte.
->>>>        The Error Status Data Block table contains N Error Status Data Block
->>>>        entries. The size for each entry is defined at the source code as
->>>> -    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 1024 bytes). The total size
->>>> +    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 4096 bytes). The total size
->>>
->>> is it safe to bump without compat glue?
->>>
->>> consider VM migrated from old QEMU to new one,
->>> it will have  etc/hardware_errors allocated with 1K GESB,
->>> and more importantly error_block_addressN will have 1K offsets as well
->>>
->>> however with ACPI_GHES_MAX_RAW_DATA_LENGTH all length checks will
->>> let >1K blocks to be written into into 1K 'formated' etc/hardware_errors.
->>>
->>> Thanks to previous refactoring we get all addresses right (1K version),
->>> but if you write large GESB there it will either overlap with the next GESB
->>> or a smaller GESB might overwrite tail of preceding large one.
->>> And in works case it's OOB when writing large GESB in the last block.
->>>
->>> Given we have to write GESB successfully or abort, there is no point
->>> in adding compat knobs. But we still need to check if GEBS will fit into
->>> whatever block size etc/hardware_errors inside guest RAM is laid out originally.
->>>    
->>
->> Good point. You're right that we're not safe for migration from old QEMU to
->> and new QEMU. So I think I need to bump vmstate_hest_state::minimum_version_id
->> in generic_event_device.c ?
-> 
-> that won't help,
-> what would help is creating compat property (in the owner of GHES MMIO registers),
-> and lower limits (to former value) for older machine types.
-> That way sizes would match even if you do ping pong migration
-> between old qemu and new one, since one would still be using old machine type
-> for that.
-> 
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+---
+ target/arm/kvm-consts.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-In v4, a compat property 'x-error-block-size' has been added, as the fence
-between QEMU 10.1 and 10.2 (1KiB vs 4KiB GHES error block size).
-
-https://lists.nongnu.org/archive/html/qemu-arm/2025-11/msg00534.html
-
->>
->>
->>>>        for the "etc/hardware_errors" fw_cfg blob is
->>>>        (N * 8 * 2 + N * ACPI_GHES_MAX_RAW_DATA_LENGTH) bytes.
->>>>        N is the number of the kinds of hardware error sources.
->>>> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
->>>> index 06555905ce..a9c08e73c0 100644
->>>> --- a/hw/acpi/ghes.c
->>>> +++ b/hw/acpi/ghes.c
->>>> @@ -33,7 +33,7 @@
->>>>    #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
->>>>    
->>>>    /* The max size in bytes for one error block */
->>>> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
->>>> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
->>>>    
->>>>    /* Generic Hardware Error Source version 2 */
->>>>    #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
->>
-
-Thanks,
-Gavin
+diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
+index 54ae5da7ce..9fba3e886d 100644
+--- a/target/arm/kvm-consts.h
++++ b/target/arm/kvm-consts.h
+@@ -97,6 +97,8 @@ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
+ #define QEMU_PSCI_VERSION_0_2                     0x00002
+ #define QEMU_PSCI_VERSION_1_0                     0x10000
+ #define QEMU_PSCI_VERSION_1_1                     0x10001
++#define QEMU_PSCI_VERSION_1_2                     0x10002
++#define QEMU_PSCI_VERSION_1_3                     0x10003
+ 
+ MISMATCH_CHECK(QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED, PSCI_0_2_TOS_MP);
+ /* We don't bother to check every possible version value */
+-- 
+2.42.0
 
 
