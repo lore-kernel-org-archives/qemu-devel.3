@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE29CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 912A1CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 06:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4Xq-0004pV-Rv; Wed, 12 Nov 2025 01:41:30 -0500
+	id 1vJ4Xu-0004tG-Gz; Wed, 12 Nov 2025 01:41:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1vJ4XB-0004DE-I6; Wed, 12 Nov 2025 01:40:49 -0500
-Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
+ id 1vJ4XD-0004EC-3e; Wed, 12 Nov 2025 01:40:51 -0500
+Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1vJ4X8-0000NX-I6; Wed, 12 Nov 2025 01:40:49 -0500
+ id 1vJ4XA-0000O3-NG; Wed, 12 Nov 2025 01:40:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1762929640; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=oHgFg6K1lbUTVWACWkG2PgP3sOaiLTXkqv2u0SB3SxQ=;
- b=OsfiZF39ZWv6qEN1VkAVluLV/MaK2VaHQPtjUAIMtXZTLRPRVF/6f36mgKO5q7RhJ81ev5WY0RQn0O+raKkHJfMzsJMxVskiCd5BE9LMW6ymryjmJrq8aD/LjNT7dlitnEhXpGfLBiMHZaDFXhAxPD7UzYj2IxW2UTCWrEZada8=
+ t=1762929643; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=sNeu3GrLhvrRzSsokkv4ce2zQoYHo57v21pIm2tpfvo=;
+ b=d4zXcNWjleO0+T0ydaX1atGN9Oe6rcetGl7ExJPmTnkjZwPsql3jKRlOgT5gt1uzG9pCOt33Oh/YzgWWDKJwGj9QvsdoYmqNROmmZjSq9dYqFu8Bs+EsythgpXRl/Qxd053f7+d3YsxopYR+E3LIP0vwsOGKWQhOkpDRvJyEiDs=
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WsF6VGW_1762929632 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 12 Nov 2025 14:40:38 +0800
+ fp:SMTPD_---0WsF6VK2_1762929641 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 12 Nov 2025 14:40:41 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, Huang Tao <eric.huang@linux.alibaba.com>,
  TANG Tiancheng <lyndra@linux.alibaba.com>
-Subject: [PATCH v3 1/6] target/riscv: Add basic definitions and CSRs for SMMPT
-Date: Wed, 12 Nov 2025 14:40:21 +0800
-Message-Id: <20251112064026.44222-2-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v3 6/6] target/riscv: Enable SMMPT extension
+Date: Wed, 12 Nov 2025 14:40:26 +0800
+Message-Id: <20251112064026.44222-7-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20251112064026.44222-1-zhiwei_liu@linux.alibaba.com>
 References: <20251112064026.44222-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.119;
+Received-SPF: pass client-ip=115.124.30.112;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -67,263 +67,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch lays the groundwork for the SMMPT (Supervisor Domains Access
-Protection) extension by introducing its fundamental components.
-
-It adds:
-- New CPU configuration flags, `ext_smmpt` and `ext_smsdid`, to enable
-  the extension.
-- Bit-field definitions for the `mmpt` CSR in `cpu_bits.h`.
-- The `mmpt` and `msdcfg` CSR numbers and their read/write handlers in
-  `csr.c`.
-- New fields in `CPUArchState` to store the state of these new CSRs.
-- A new translation failure reason `TRANSLATE_MPT_FAIL`.
-
-This provides the necessary infrastructure for the core MPT logic and
-MMU integration that will follow.
-
 Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
 Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- target/riscv/cpu.h                |  9 ++-
- target/riscv/cpu_bits.h           | 27 +++++++++
- target/riscv/cpu_cfg_fields.h.inc |  2 +
- target/riscv/csr.c                | 95 +++++++++++++++++++++++++++++++
- target/riscv/riscv_smmpt.h        | 21 +++++++
- 5 files changed, 153 insertions(+), 1 deletion(-)
- create mode 100644 target/riscv/riscv_smmpt.h
+ target/riscv/cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 36e7f10037..dfe21d31a7 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -130,7 +130,8 @@ enum {
-     TRANSLATE_SUCCESS,
-     TRANSLATE_FAIL,
-     TRANSLATE_PMP_FAIL,
--    TRANSLATE_G_STAGE_FAIL
-+    TRANSLATE_G_STAGE_FAIL,
-+    TRANSLATE_MPT_FAIL
- };
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index b32d19344b..2ef4b6da7b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -204,8 +204,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_13_0, ext_smdbltrp),
+     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+     ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
++    ISA_EXT_DATA_ENTRY(smmpt, PRIV_VERSION_1_13_0, ext_smmpt),
+     ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
+     ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
++    ISA_EXT_DATA_ENTRY(smsdid, PRIV_VERSION_1_13_0, ext_smsdid),
+     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+     ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
+@@ -1372,6 +1374,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
  
- /* Extension context status */
-@@ -181,6 +182,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
- #include "debug.h"
-+#include "riscv_smmpt.h"
- #endif
+ /* These are experimental so mark with 'x-' */
+ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
++    MULTI_EXT_CFG_BOOL("x-smmpt", ext_smmpt, false),
++    MULTI_EXT_CFG_BOOL("x-smsdid", ext_smsdid, false),
+     MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
  
- #define RV_VLEN_MAX 1024
-@@ -487,6 +489,11 @@ struct CPUArchState {
-     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t sstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t henvcfg;
-+    /* Smsdid */
-+    uint32_t mptmode;
-+    uint32_t sdid;
-+    uint64_t mptppn;
-+    uint32_t msdcfg;
- #endif
- 
-     /* Fields from here on are preserved across CPU reset. */
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index b62dd82fe7..c6a34863d1 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -1164,4 +1164,31 @@ typedef enum CTRType {
- #define MCONTEXT64                         0x0000000000001FFFULL
- #define MCONTEXT32_HCONTEXT                0x0000007F
- #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
-+
-+/* Smsdid */
-+#define CSR_MMPT        0xbc0
-+#define CSR_MSDCFG      0xbd1
-+
-+#define MMPT_MODE_MASK_32   0xC0000000
-+#define MMPT_SDID_MASK_32   0x3F000000
-+#define MMPT_PPN_MASK_32    0x003FFFFF
-+
-+#define MMPT_MODE_SHIFT_32  30
-+#define MMPT_SDID_SHIFT_32  24
-+
-+#define MMPT_MODE_MASK_64   0xF000000000000000ULL
-+#define MMPT_SDID_MASK_64   0x0FC0000000000000ULL
-+#define MMPT_PPN_MASK_64    0x000FFFFFFFFFFFFFULL
-+
-+#define MPTE_L3_VALID       0x0000100000000000ULL
-+#define MPTE_L3_RESERVED    0xFFFFE00000000000ULL
-+
-+#define MPTE_L2_RESERVED_64    0xFFFF800000000000ULL
-+#define MPTE_L2_RESERVED_32    0xFE000000
-+
-+#define MPTE_L1_RESERVED_64    0xFFFFFFFF00000000ULL
-+#define MPTE_L1_RESERVED_32    0xFFFF0000
-+
-+#define MMPT_MODE_SHIFT_64  60
-+#define MMPT_SDID_SHIFT_64  54
- #endif
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index a154ecdc79..a0dffd9f30 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -60,6 +60,8 @@ BOOL_FIELD(ext_svpbmt)
- BOOL_FIELD(ext_svrsw60t59b)
- BOOL_FIELD(ext_svvptc)
- BOOL_FIELD(ext_svukte)
-+BOOL_FIELD(ext_smmpt)
-+BOOL_FIELD(ext_smsdid)
- BOOL_FIELD(ext_zdinx)
- BOOL_FIELD(ext_zaamo)
- BOOL_FIELD(ext_zacas)
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5c91658c3d..e14f80a540 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -794,6 +794,15 @@ static RISCVException rnmi(CPURISCVState *env, int csrno)
- 
-     return RISCV_EXCP_ILLEGAL_INST;
- }
-+
-+static RISCVException smsdid(CPURISCVState *env, int csrno)
-+{
-+    if (riscv_cpu_cfg(env)->ext_smsdid) {
-+        return RISCV_EXCP_NONE;
-+    }
-+
-+    return RISCV_EXCP_ILLEGAL_INST;
-+}
- #endif
- 
- static RISCVException seed(CPURISCVState *env, int csrno)
-@@ -5470,6 +5479,89 @@ static RISCVException write_mnstatus(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException read_mmpt(CPURISCVState *env, int csrno,
-+                                target_ulong *val)
-+{
-+    if (riscv_cpu_xlen(env) == 32) {
-+        uint32_t value = 0;
-+        value |= env->mptmode << MMPT_MODE_SHIFT_32;
-+        value |= (env->sdid << MMPT_SDID_SHIFT_32) & MMPT_SDID_MASK_32;
-+        value |= env->mptppn & MMPT_PPN_MASK_32;
-+        *val = value;
-+    } else if (riscv_cpu_xlen(env) == 64) {
-+        uint64_t value_64 = 0;
-+        uint32_t mode_value = env->mptmode;
-+        /* mpt_mode_t convert to mmpt.mode value */
-+        if (mode_value) {
-+            mode_value -= SMMPT43 - SMMPT34;
-+        }
-+        value_64 |= (uint64_t)mode_value << MMPT_MODE_SHIFT_64;
-+        value_64 |= ((uint64_t)env->sdid << MMPT_SDID_SHIFT_64)
-+                    & MMPT_SDID_MASK_64;
-+        value_64 |= (uint64_t)env->mptppn & MMPT_PPN_MASK_64;
-+        *val = value_64;
-+    } else {
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    }
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_mmpt(CPURISCVState *env, int csrno,
-+                                 target_ulong val, uintptr_t ra)
-+{
-+    uint32_t mode_value = 0;
-+    if (!riscv_cpu_cfg(env)->ext_smmpt) {
-+        goto set_remaining_fields_zero;
-+    }
-+
-+    if (riscv_cpu_xlen(env) == 32) {
-+        mode_value = (val & MMPT_MODE_MASK_32) >> MMPT_MODE_SHIFT_32;
-+        /* If mode is bare, the remaining fields in mmpt must be zero */
-+        if (mode_value == SMMPTBARE) {
-+            goto set_remaining_fields_zero;
-+        } else if (mode_value <= SMMPT34) {
-+            /* Only write the legal value */
-+            env->mptmode = mode_value;
-+        }
-+        env->sdid = (val & MMPT_SDID_MASK_32) >> MMPT_SDID_SHIFT_32;
-+        env->mptppn = val & MMPT_PPN_MASK_32;
-+    } else if (riscv_cpu_xlen(env) == 64) {
-+        mode_value = (val & MMPT_MODE_MASK_64) >> MMPT_MODE_SHIFT_64;
-+        if (mode_value == SMMPTBARE) {
-+            goto set_remaining_fields_zero;
-+        } else if (mode_value < SMMPTMAX) {
-+            /* convert to mpt_mode_t */
-+            mode_value += SMMPT43 - SMMPT34;
-+            env->mptmode = mode_value;
-+        }
-+        env->sdid = (val & MMPT_SDID_MASK_64) >> MMPT_SDID_SHIFT_64;
-+        env->mptppn = val & MMPT_PPN_MASK_64;
-+    } else {
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    }
-+    return RISCV_EXCP_NONE;
-+
-+set_remaining_fields_zero:
-+    env->sdid = 0;
-+    env->mptmode = SMMPTBARE;
-+    env->mptppn = 0;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_msdcfg(CPURISCVState *env, int csrno,
-+                                   target_ulong *val)
-+{
-+    *val = env->msdcfg;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_msdcfg(CPURISCVState *env, int csrno,
-+                                    target_ulong val, uintptr_t ra)
-+{
-+    env->msdcfg = val;
-+    return RISCV_EXCP_NONE;
-+}
-+
- #endif
- 
- /* Crypto Extension */
-@@ -6666,6 +6758,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-                              write_mhpmcounterh                         },
-     [CSR_SCOUNTOVF]      = { "scountovf", sscofpmf,  read_scountovf,
-                              .min_priv_ver = PRIV_VERSION_1_12_0 },
-+    /* Supervisor Domain Identifier and Protection Registers */
-+    [CSR_MMPT] =    { "mmpt",   smsdid,  read_mmpt,   write_mmpt   },
-+    [CSR_MSDCFG] =  { "msdcfg", smsdid,  read_msdcfg, write_msdcfg },
- 
- #endif /* !CONFIG_USER_ONLY */
- };
-diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
-new file mode 100644
-index 0000000000..74dcccf4be
---- /dev/null
-+++ b/target/riscv/riscv_smmpt.h
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU RISC-V Smmpt (Memory Protection Table)
-+ *
-+ * Copyright (c) 2024 Alibaba Group. All rights reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef RISCV_SMMPT_H
-+#define RISCV_SMMPT_H
-+
-+typedef enum {
-+    SMMPTBARE = 0,
-+    SMMPT34   = 1,
-+    SMMPT43   = 2,
-+    SMMPT52   = 3,
-+    SMMPT64   = 4,
-+    SMMPTMAX
-+} mpt_mode_t;
-+
-+#endif
+     { },
 -- 
 2.25.1
 
