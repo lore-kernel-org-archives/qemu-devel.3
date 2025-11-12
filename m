@@ -4,87 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E96EBCCFA18
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 00:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F5CCCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 00:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vIyx5-00016V-Lm; Tue, 11 Nov 2025 19:43:11 -0500
+	id 1vIyxy-0001hX-Ts; Tue, 11 Nov 2025 19:44:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vIyx3-00015O-H8
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 19:43:09 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vIyxt-0001gF-BE
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 19:44:01 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vIyx1-00048h-Cp
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 19:43:09 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b731b176b5eso59565266b.1
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 16:43:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vIyxr-0004Gp-02
+ for qemu-devel@nongnu.org; Tue, 11 Nov 2025 19:44:01 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b72cbc24637so69389366b.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 16:43:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762908186; x=1763512986; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1762908237; x=1763513037; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xTe/nUNd852nMPXiIUEtygWnFyVsZ6dRNUvoruQuFKI=;
- b=cxzNWTcwiLCDIN3Jnzyx6Hh8TyT87ksth52Hkl0WnKjZUAvxeDpScyPhgZdaa6XEZr
- 60Fj34G+PEpC6G8dOQ/x4ftHM0G10oU5vnvRAKk39yfgeBN3gdzd4dCitH3GU6rXCaco
- XXS8bp1QbfU0v5ZocPNCDUr12RFc0sswMtlts+9kcZRbbmjy6jxjv0Xn3CfXbzTReP7N
- uNTZBlwISWvZ/gKWXcsIZzZHECCCFPh2PWBFYs8RTW7iYqIVwuJAwuP2NcnR9hhQbfxF
- 0wA6pBPCiIaYAFHRXXmgBl3vwpy51R1JzTSfFjDBGLamWS0XY19brxm4wSbd9y2yPZJk
- UXWw==
+ bh=pUE0jchmsm5xrgyHQHD3PoidWi73JgHjO5FFMSjbzXQ=;
+ b=h671tShycguf1gr0GcuGrgnpmWZb6paBo+4f6tO4+GjvcLExuPcULABdHQ20BB1vai
+ WGF3OuPGWBDp/MVSgx9YDIK1XVORlTHHG5HDQEtrDMajqqZWVP0CwiAm4gODeFCfcpE6
+ 26urixbmNew1Q8SrRP5yCRuHMmqX1WEAAplJzs4upmHyPCkBj8QT9jLNCgBzUfcKsLUD
+ MtSx5DRmjuHWnAV7Ox/tUCWwxtBvBaKklEx9mzms3eA+afT3Pb4pWSXxujaf9T2mNDcD
+ XlKsT5YVuL60AsaS0TrYUneclwBUQt88wfQcn4iPbi+/9LLjfSbYYj4Oo2lTj31fWeh/
+ tZgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762908186; x=1763512986;
+ d=1e100.net; s=20230601; t=1762908237; x=1763513037;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xTe/nUNd852nMPXiIUEtygWnFyVsZ6dRNUvoruQuFKI=;
- b=p+w1k32BRoyofv33xpX2pGyw5qAJV6o9v9YykKpWdabtPjh9SS1kg/+0yL8rcTHnG1
- 1sf76ZI8OSGNsvG4JQ2dzhlpyiIUsMibiTHpeilx7GRjeMWhq04+Ch1Zo9UCApOfcre8
- gRLeBu9iTZpRl4G31diJVG08Q9whPE5PI7b7eVMo1K+wtMfoe+bs22XSxs3yDvA3VH4/
- bXUmWdCmDdJUb/jcLIKZCXSJxv9KfNyU9QE2h17WwzulmyIaeX/Xhsk/aLDZaDGYrVog
- ZQTOYYWSQqhTj6HMLubULJagxfrrmKIT2hs8EcokxJgfRJsOJy3xuQeM3H+qu6c1dEy1
- MCGg==
+ bh=pUE0jchmsm5xrgyHQHD3PoidWi73JgHjO5FFMSjbzXQ=;
+ b=LUFzjyTQf/BIlBfJCSWneFjrpUn5iTInP2lFSP4D07VuSrQAshsaAG5+RVf/U3eiH7
+ GePSOV3fY2/UkNpo974D0is0wGJdF54zoOZaJEn+FVWBMnj8n4yd5A4VaM1cA2uI+bM6
+ FSLEEo6hGHUX5aQQL65Zlb8PTvFssKrk9Y6hcOXag8u2PF59hdWM9fKYl9gIC17GPZgc
+ aRlp4wstW/nST+LhT1QKLtplrJwOaXPT5dze1PTfeQ4dbhvLoiqmecg4Ze3AwR4xCeFg
+ 5j3rNDh5MAftJVgeCInXsUn8sEDX8vosH538hEucv0+qmq1gRBeMKiTu3tFpfCrngiL0
+ N/HQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/h7kja+4CWU56giU5dhutqQHtOCF7KZVzeZv44HJ7QOUwPOK84hC9vPxw5ToZ7IMa6peakHim9R1k@nongnu.org
-X-Gm-Message-State: AOJu0YwHmtdVkAJH2vzlZ1TVbgV3gpzsu1JavgTB1ziOdnvfUoc/CElv
- DQMiQU+GPFTInyYqXAKiGhtDWcG6qXaCZVbfxxIfvjZlHQJDTXHagHIosvI//ft3g/FJOQ7zeUe
- A36mgRV9hwa2z8hqcZBBM73wDXbn1GfI=
-X-Gm-Gg: ASbGncuhAoYeFd2E/rxDUs2zzDseaeBnAcdBKaHEXjJv+TJKu5Y0DS+YSMVnuikGHRw
- 0DLu0iBJ8Xz1M/VVNDOtnwTuEzOnzVUBnpRoNEqhUwAugcc8HUneHQEf4AP0+2vIw9YMWyyHo3D
- atr1dSDseTxesPj3Q1cGtTKhqZ0CJOIDPTKRARuORE/lfcBPOsYIrDZqkSQIoWKhNFiph9MGzgY
- GgSpYCUCCLkV6w7/K/Qoz9JLUfOvf5s96IK6Lm2YcTzTWC9JMxAGnNFymCAG1ugoPPMGaP1s2Nv
- Pn1AM3UDuC4hupZha2V05GKkAA==
-X-Google-Smtp-Source: AGHT+IFADdD0lK2cHewge0p/LuakaxCJtdSua2828112yc5dvtvFFgn9pDbjuvnonaq1zar952hHcrLjUD4lyuO9E/U=
-X-Received: by 2002:a17:907:6095:b0:b72:5983:db09 with SMTP id
- a640c23a62f3a-b7331a6b878mr105681466b.32.1762908185724; Tue, 11 Nov 2025
- 16:43:05 -0800 (PST)
+ AJvYcCXK41j4NHfwlZWHWyf0yY0tKyEOeTQxi0vC11O/S/qu0W+zJiv22fg2WRVIWqdBSQRWB1SGytSUcz0g@nongnu.org
+X-Gm-Message-State: AOJu0YwzV11qwuVaM59tOq2vS2XLmTt/2Pi7AsGrsmSCSM2XByOvbxAf
+ fZ8Ypx33laJlNB/MhD1fQCyLAJxgX2trh6wRV3i4NQAsvUo8DXXRS0c3CBx7TYDKrf2l2NEIf/X
+ brC1yU/3YS9t/37nipB/Dx08+ijHh3cg=
+X-Gm-Gg: ASbGncvKlAxKu+NZbm5P9SuMcJN8IpY9yFP2WcidzrYY2woiYjZLsjky0ZtJ5PLxD3M
+ bFFa/CoYSwf41aphjP3Au3Si3PtWBrlBuZ31LRQn1IMN4NsbWvOiFZDG4YKaN4oKLn4q2k746zq
+ 60mfggGpMuzGiFICmvsl8rRZKgPP4evnRVgbrZ4c718hKtykQjyO1IiL+MmPmgqiSvZjiGtCMMq
+ ug+j1TsRNQqzkgRCW5KdhsL9plvWe4WKAlIkPFMypDYAN4d6rfIE2d9Ue9z7LiGvPj3udw2gvfT
+ QNkhwBdTN5cHeJMs
+X-Google-Smtp-Source: AGHT+IH+rQth0ezYCycyD5wWOV9RyQMaF+NF7ES9SJILk9rhwmo/vspJiBNfjnX4O8kAb0EmXhgtJhKDwuFQdy6EBJo=
+X-Received: by 2002:a17:906:c156:b0:b72:62b2:26a1 with SMTP id
+ a640c23a62f3a-b73319717cdmr95145666b.19.1762908237332; Tue, 11 Nov 2025
+ 16:43:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20251103101730.80749-1-roan.richmond@codethink.co.uk>
-In-Reply-To: <20251103101730.80749-1-roan.richmond@codethink.co.uk>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 12 Nov 2025 10:42:39 +1000
-X-Gm-Features: AWmQ_bmWO55ZVKesB4a4EIjdbjCRQW00dj0BLJ-4CbwEMEKQ2BkKfjNCewlnmF0
-Message-ID: <CAKmqyKPzGPhpZbwOm51M3MzX4c-bLWcY7oLv3sfVEX0jfy988g@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] Add RISCV ZALASR extension
-To: Roan Richmond <roan.richmond@codethink.co.uk>
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-devel@nongnu.org
+References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
+ <20251020233949.506088-5-dmitry.osipenko@collabora.com>
+ <CAJ+hS_h4gwe+yaUrcQ5ibdEAFqya=SOb4KLT5HmgG_ZGtJnMSQ@mail.gmail.com>
+ <CAJ+hS_gPoaSc-VfoOENgyHZRhFAkUzizoGHm3xJz2trb0jsZAg@mail.gmail.com>
+ <f2c322f2-c111-455d-a8b5-17162effac09@collabora.com>
+In-Reply-To: <f2c322f2-c111-455d-a8b5-17162effac09@collabora.com>
+From: Yiwei Zhang <zzyiwei@gmail.com>
+Date: Tue, 11 Nov 2025 16:44:04 -0800
+X-Gm-Features: AWmQ_blXOha0bzFHSDEHpw89Cxb4yhwTjiMG9fjC8OWpfp0v_tSpv1kWzdGCCWQ
+Message-ID: <CAJ+hS_g4kXwpfd4Xc41nLrii8LciJDGgqQ18xheZudjJq4Fu8A@mail.gmail.com>
+Subject: Re: [PATCH v14 04/10] virtio-gpu: Support asynchronous fencing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny <gert.wollny@collabora.com>,
+ qemu-devel@nongnu.org, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>, 
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, 
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
+ Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,242 +117,381 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 3, 2025 at 8:17=E2=80=AFPM Roan Richmond
-<roan.richmond@codethink.co.uk> wrote:
+On Tue, Nov 11, 2025 at 4:28=E2=80=AFAM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
 >
-> This is based on version v0.9 of the ZALASR specification [1].
-> The specification is listed as in Ratified state [2].
+> On 11/11/25 05:29, Yiwei Zhang wrote:
+> > On Sat, Nov 8, 2025 at 3:56=E2=80=AFAM Yiwei Zhang <zzyiwei@gmail.com> =
+wrote:
+> >>
+> >> On Mon, Oct 20, 2025 at 4:42=E2=80=AFPM Dmitry Osipenko
+> >> <dmitry.osipenko@collabora.com> wrote:
+> >>>
+> >>> Support asynchronous fencing feature of virglrenderer. It allows Qemu=
+ to
+> >>> handle fence as soon as it's signalled instead of periodically pollin=
+g
+> >>> the fence status. This feature is required for enabling DRM context
+> >>> support in Qemu because legacy fencing mode isn't supported for DRM
+> >>> contexts in virglrenderer.
+> >>>
+> >>> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> >>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> >>> ---
+> >>>  hw/display/virtio-gpu-gl.c     |   5 ++
+> >>>  hw/display/virtio-gpu-virgl.c  | 130 +++++++++++++++++++++++++++++++=
+++
+> >>>  include/hw/virtio/virtio-gpu.h |  11 +++
+> >>>  meson.build                    |   2 +
+> >>>  4 files changed, 148 insertions(+)
+> >>>
+> >>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> >>> index c06a078fb36a..1468c6ed1467 100644
+> >>> --- a/hw/display/virtio-gpu-gl.c
+> >>> +++ b/hw/display/virtio-gpu-gl.c
+> >>> @@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(Devic=
+eState *qdev)
+> >>>      if (gl->renderer_state >=3D RS_INITED) {
+> >>>  #if VIRGL_VERSION_MAJOR >=3D 1
+> >>>          qemu_bh_delete(gl->cmdq_resume_bh);
+> >>> +
+> >>> +        if (gl->async_fence_bh) {
+> >>> +            virtio_gpu_virgl_reset_async_fences(g);
+> >>> +            qemu_bh_delete(gl->async_fence_bh);
+> >>> +        }
+> >>>  #endif
+> >>>          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+> >>>              timer_free(gl->print_stats);
+> >>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-vi=
+rgl.c
+> >>> index cd8b367f6fa6..0320d6deca76 100644
+> >>> --- a/hw/display/virtio-gpu-virgl.c
+> >>> +++ b/hw/display/virtio-gpu-virgl.c
+> >>> @@ -24,6 +24,23 @@
+> >>>
+> >>>  #include <virglrenderer.h>
+> >>>
+> >>> +/*
+> >>> + * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and wa=
+s fixed
+> >>> + * in 1.1.0. Undefine bugged version of the macro and provide our ow=
+n.
+> >>> + */
+> >>> +#if defined(VIRGL_CHECK_VERSION) && \
+> >>> +    VIRGL_VERSION_MAJOR =3D=3D 1 && VIRGL_VERSION_MINOR < 1
+> >>> +#undef VIRGL_CHECK_VERSION
+> >>> +#endif
+> >>> +
+> >>> +#ifndef VIRGL_CHECK_VERSION
+> >>> +#define VIRGL_CHECK_VERSION(major, minor, micro) \
+> >>> +    (VIRGL_VERSION_MAJOR > (major) || \
+> >>> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR > (mi=
+nor) || \
+> >>> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR =3D=
+=3D (minor) && \
+> >>> +     VIRGL_VERSION_MICRO >=3D (micro))
+> >>> +#endif
+> >>> +
+> >>>  struct virtio_gpu_virgl_resource {
+> >>>      struct virtio_gpu_simple_resource base;
+> >>>      MemoryRegion *mr;
+> >>> @@ -1051,6 +1068,106 @@ static void virgl_write_context_fence(void *o=
+paque, uint32_t ctx_id,
+> >>>  }
+> >>>  #endif
+> >>>
+> >>> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
+> >>> +{
+> >>> +    struct virtio_gpu_virgl_context_fence *f;
+> >>> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+> >>> +
+> >>> +    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
+> >>> +        f =3D QSLIST_FIRST(&gl->async_fenceq);
+> >>> +
+> >>> +        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
+> >>> +
+> >>> +        g_free(f);
+> >>> +    }
+> >>> +}
+> >>> +
+> >>> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+> >>> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
+> >>> +{
+> >>> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+> >>> +    struct virtio_gpu_ctrl_command *cmd, *tmp;
+> >>> +    struct virtio_gpu_virgl_context_fence *f;
+> >>> +    VirtIOGPU *g =3D opaque;
+> >>> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+> >>> +
+> >>> +    if (gl->renderer_state !=3D RS_INITED) {
+> >>> +        return;
+> >>> +    }
+> >>> +
+> >>> +    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
+> >>> +
+> >>> +    while (!QSLIST_EMPTY(&async_fenceq)) {
+> >>> +        f =3D QSLIST_FIRST(&async_fenceq);
+> >>> +
+> >>> +        QSLIST_REMOVE_HEAD(&async_fenceq, next);
+> >>> +
+> >>> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> >>> +            /*
+> >>> +             * the guest can end up emitting fences out of order
+> >>> +             * so we should check all fenced cmds not just the first=
+ one.
+> >>> +             */
+> >>> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
+> >>> +                continue;
+> >>> +            }
+> >>> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) =
+{
+> >>> +                if (cmd->cmd_hdr.ring_idx !=3D f->ring_idx) {
+> >>> +                    continue;
+> >>> +                }
+> >>> +                if (cmd->cmd_hdr.ctx_id !=3D f->ctx_id) {
+> >>> +                    continue;
+> >>> +                }
+> >>> +            } else if (f->ring_idx >=3D 0) {
+> >>> +                /* ctx0 GL-query fences don't have ring info */
+> >>> +                continue;
+> >>> +            }
+> >>> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_=
+OK_NODATA);
+> >>> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> >>> +            g_free(cmd);
+> >>> +        }
+> >>
+> >> Conditions above are a little bit confusing. Skipping unsignaled
+> >> fences first makes sense to me. Next we can use f->ctx_id =3D=3D 0 to
+> >> distinguish ctx0 fence vs context fence. Then:
+> >> - for f->ctx_id =3D=3D 0, skip any RING_IDX
+> >> - for f->ctx_id > 0, only care about RING_IDX along with comparing
+> >> ctx_id and ring_idx
+> >>
+> >> So, if we check the RING_IDX flag first like in the existing patch,
+> >> the else condition is only meaningful for the ctx0 fence, and
+> >> f->ring_idx >=3D 0 will never be evaluated to true. Can we drop the
+> >> "else if" part?
+> >>
+> >>> +
+> >>> +        trace_virtio_gpu_fence_resp(f->fence_id);
+> >>> +        g_free(f);
+> >>> +        g->inflight--;
+> >>> +        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+> >>> +            trace_virtio_gpu_dec_inflight_fences(g->inflight);
+> >>> +        }
+> >>> +    }
+> >>> +}
+> >>> +
+> >>> +static void
+> >>> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
+> >>> +                                  int64_t ring_idx, uint64_t fence_i=
+d)
+> >>> +{
+> >>> +    struct virtio_gpu_virgl_context_fence *f;
+> >>> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+> >>> +
+> >>> +    f =3D g_new(struct virtio_gpu_virgl_context_fence, 1);
+> >>> +    f->ctx_id =3D ctx_id;
+> >>> +    f->ring_idx =3D ring_idx;
+> >>> +    f->fence_id =3D fence_id;
+> >>> +
+> >>> +    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
+> >>> +
+> >>> +    qemu_bh_schedule(gl->async_fence_bh);
+> >>> +}
+> >>> +
+> >>> +static void virgl_write_async_fence(void *opaque, uint32_t fence)
+> >>> +{
+> >>> +    VirtIOGPU *g =3D opaque;
+> >>> +
+> >>> +    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
+> >>> +}
+> >>> +
+> >>> +static void virgl_write_async_context_fence(void *opaque, uint32_t c=
+tx_id,
+> >>> +                                            uint32_t ring_idx, uint6=
+4_t fence)
+> >>> +{
+> >>> +    VirtIOGPU *g =3D opaque;
+> >>> +
+> >>> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
+> >>> +}
+> >>> +#endif
+> >>> +
+> >>>  static virgl_renderer_gl_context
+> >>>  virgl_create_context(void *opaque, int scanout_idx,
+> >>>                       struct virgl_renderer_gl_ctx_param *params)
+> >>> @@ -1150,6 +1267,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *=
+g)
+> >>>  void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> >>>  {
+> >>>      virgl_renderer_reset();
+> >>> +
+> >>> +    virtio_gpu_virgl_reset_async_fences(g);
+> >>>  }
+> >>>
+> >>>  int virtio_gpu_virgl_init(VirtIOGPU *g)
+> >>> @@ -1162,6 +1281,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+> >>>      if (qemu_egl_display) {
+> >>>          virtio_gpu_3d_cbs.version =3D 4;
+> >>>          virtio_gpu_3d_cbs.get_egl_display =3D virgl_get_egl_display;
+> >>> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+> >>> +        virtio_gpu_3d_cbs.write_fence         =3D virgl_write_async_=
+fence;
+> >>> +        virtio_gpu_3d_cbs.write_context_fence =3D virgl_write_async_=
+context_fence;
+> >>> +        flags |=3D VIRGL_RENDERER_ASYNC_FENCE_CB;
+> >>> +        flags |=3D VIRGL_RENDERER_THREAD_SYNC;
+> >>> +#endif
+> >>>      }
+> >>>  #endif
+> >>>  #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+> >>> @@ -1195,6 +1320,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+> >>>      gl->cmdq_resume_bh =3D aio_bh_new(qemu_get_aio_context(),
+> >>>                                      virtio_gpu_virgl_resume_cmdq_bh,
+> >>>                                      g);
+> >>> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+> >>> +    gl->async_fence_bh =3D aio_bh_new(qemu_get_aio_context(),
+> >>> +                                    virtio_gpu_virgl_async_fence_bh,
+> >>> +                                    g);
+> >>> +#endif
+> >>>  #endif
+> >>>
+> >>>      return 0;
+> >>> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virti=
+o-gpu.h
+> >>> index 9f16f89a36d2..e15c16aa5945 100644
+> >>> --- a/include/hw/virtio/virtio-gpu.h
+> >>> +++ b/include/hw/virtio/virtio-gpu.h
+> >>> @@ -233,6 +233,13 @@ struct VirtIOGPUClass {
+> >>>                               Error **errp);
+> >>>  };
+> >>>
+> >>> +struct virtio_gpu_virgl_context_fence {
+> >>> +    uint32_t ctx_id;
+> >>> +    int64_t ring_idx;
+> >>
+> >> If I didn't miss anything above, we don't need -1 to tell anything.
+> >> Then the ring_idx here can be a uint32_t, and virgl_write_async_fence
+> >> can just pass 0.
+> >>
+> >>> +    uint64_t fence_id;
+> >>> +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
+> >>> +};
+> >>> +
+> >>>  /* VirtIOGPUGL renderer states */
+> >>>  typedef enum {
+> >>>      RS_START,       /* starting state */
+> >>> @@ -250,6 +257,9 @@ struct VirtIOGPUGL {
+> >>>      QEMUTimer *print_stats;
+> >>>
+> >>>      QEMUBH *cmdq_resume_bh;
+> >>> +
+> >>> +    QEMUBH *async_fence_bh;
+> >>> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+> >>>  };
+> >>>
+> >>>  struct VhostUserGPU {
+> >>> @@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)=
+;
+> >>>  void virtio_gpu_virgl_reset(VirtIOGPU *g);
+> >>>  int virtio_gpu_virgl_init(VirtIOGPU *g);
+> >>>  GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+> >>> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+> >>>
+> >>>  #endif
+> >>> diff --git a/meson.build b/meson.build
+> >>> index e96c28da09b6..e3d48150483e 100644
+> >>> --- a/meson.build
+> >>> +++ b/meson.build
+> >>> @@ -2597,6 +2597,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.fo=
+und())
+> >>>  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+> >>>  if virgl.found()
+> >>>    config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split(=
+'.')[0])
+> >>> +  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split(=
+'.')[1])
+> >>> +  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split(=
+'.')[2])
+> >>>  endif
+> >>>  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+> >>>  config_host_data.set('CONFIG_VTE', vte.found())
+> >>> --
+> >>> 2.51.0
+> >>>
+> >
+> > Friendly ping. My early comments here might have been missed ; )
 >
-> [1]: https://github.com/riscv/riscv-zalasr/tree/v0.9
-> [2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+R=
-ISC-V+Specifications+Under+Active+Development
+> I indeed missed that first part of the comment, thanks.
 >
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
-
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
-> ---
-> V4:
->   - rebased onto newest master branch
->   - added config option for ZALASR into RISCVCPUMultiExtConfig
->     which was missed off in V3 version
+> Could you please give a code sample of your suggestion?
 >
->  target/riscv/cpu.c                           |   2 +
->  target/riscv/cpu_cfg_fields.h.inc            |   1 +
->  target/riscv/insn32.decode                   |  10 ++
->  target/riscv/insn_trans/trans_rvzalasr.c.inc | 120 +++++++++++++++++++
->  target/riscv/translate.c                     |   1 +
->  5 files changed, 134 insertions(+)
->  create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
+> The `if (f->ring_idx >=3D 0)` is a sanity-check for that we're not gettin=
+g
+> a fence that has ring_idx without a set RING_IDX flag. All other fences
+> are processed by that fence-handling loop.
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 73d4280d7c..96e33ee10f 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -127,6 +127,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
->      ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
->      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-> +    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
->      ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
->      ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
->      ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
-> @@ -1253,6 +1254,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
- =3D {
->      MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
->      MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
->      MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
-> +    MULTI_EXT_CFG_BOOL("zalasr", ext_zalasr, false),
->      MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
->      MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
->      MULTI_EXT_CFG_BOOL("zfa", ext_zfa, true),
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc
-> index a154ecdc79..7d3d5d0d57 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -65,6 +65,7 @@ BOOL_FIELD(ext_zaamo)
->  BOOL_FIELD(ext_zacas)
->  BOOL_FIELD(ext_zama16b)
->  BOOL_FIELD(ext_zabha)
-> +BOOL_FIELD(ext_zalasr)
->  BOOL_FIELD(ext_zalrsc)
->  BOOL_FIELD(ext_zawrs)
->  BOOL_FIELD(ext_zfa)
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index cd23b1f3a9..c848c0c1c5 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -1066,3 +1066,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111=
- @atom_st
->  amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
->  amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
->  amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
-> +
-> +# *** Zalasr Standard Extension ***
-> +lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
-> +lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
-> +lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
-> +ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
-> +sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
-> +sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
-> +sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
-> +sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-> diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/=
-insn_trans/trans_rvzalasr.c.inc
-> new file mode 100644
-> index 0000000000..8761508de3
-> --- /dev/null
-> +++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-> @@ -0,0 +1,120 @@
-> +/*
-> + * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Rel=
-ease)
-> + * Extension.
-> + *
-> + * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOU=
-T
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
- for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License alo=
-ng with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#define REQUIRE_ZALASR(ctx) do {     \
-> +    if (!ctx->cfg_ptr->ext_zalasr) { \
-> +        return false;                \
-> +    }                                \
-> +} while (0)
-> +
-> +static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp me=
-mop)
-> +{
-> +    decode_save_opc(ctx, 0);
-> +
-> +    TCGv addr =3D get_address(ctx, a->rs1, 0);
-> +    TCGv dest =3D get_gpr(ctx, a->rd, EXT_NONE);
-> +    TCGBar bar =3D (a->rl) ? TCG_BAR_STRL : 0;
-> +
-> +    /* Check that AQ is set, as this is mandatory */
-> +    if (!a->aq) {
-> +        return false;
-> +    }
-> +
-> +    memop |=3D (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-> +
-> +    tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
-> +    gen_set_gpr(ctx, a->rd, dest);
-> +
-> +    /* Add a memory barrier implied by AQ (mandatory) and RL (optional) =
-*/
-> +    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ | bar);
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_aqrl *a)
-> +{
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_SB));
-> +}
-> +
-> +static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
-> +{
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
-> +}
-> +
-> +static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
-> +{
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
-> +}
-> +
-> +static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
-> +}
-> +
-> +static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp m=
-emop)
-> +{
-> +    decode_save_opc(ctx, 0);
-> +
-> +    TCGv addr =3D get_address(ctx, a->rs1, 0);
-> +    TCGv data =3D get_gpr(ctx, a->rs2, EXT_NONE);
-> +    TCGBar bar =3D (a->aq) ? TCG_BAR_LDAQ : 0;
-> +
-> +    /* Check that RL is set, as this is mandatory */
-> +    if (!a->rl) {
-> +        return false;
-> +    }
-> +
-> +    memop |=3D (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-> +
-> +    /* Add a memory barrier implied by RL (mandatory) and AQ (optional) =
-*/
-> +    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
-> +
-> +    tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
-> +    return true;
-> +}
-> +
-> +static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_aqrl *a)
-> +{
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_SB));
-> +}
-> +
-> +static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
-> +{
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
-> +}
-> +
-> +static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
-> +{
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
-> +}
-> +
-> +static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +    REQUIRE_ZALASR(ctx);
-> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
-> +}
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index e1f4dc5ffd..f89a99c849 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -1199,6 +1199,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
- target_ulong pc)
->  #include "insn_trans/trans_rvzicond.c.inc"
->  #include "insn_trans/trans_rvzacas.c.inc"
->  #include "insn_trans/trans_rvzabha.c.inc"
-> +#include "insn_trans/trans_rvzalasr.c.inc"
->  #include "insn_trans/trans_rvzawrs.c.inc"
->  #include "insn_trans/trans_rvzicbo.c.inc"
->  #include "insn_trans/trans_rvzimop.c.inc"
 > --
-> 2.43.0
->
+> Best regards,
+> Dmitry
+
+QEMU creates ctx0 fences without seeing the RING_IDX flag, and I think
+that sanity check is a bit redundant. So I was suggesting below for
+simplicity:
+
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ccba1d8ee4..12c1e1764c 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1117,9 +1117,6 @@ static void virtio_gpu_virgl_async_fence_bh(void *opa=
+que)
+                 if (cmd->cmd_hdr.ctx_id !=3D f->ctx_id) {
+                     continue;
+                 }
+-            } else if (f->ring_idx >=3D 0) {
+-                /* ctx0 GL-query fences don't have ring info */
+-                continue;
+             }
+             virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NOD=
+ATA);
+             QTAILQ_REMOVE(&g->fenceq, cmd, next);
+@@ -1137,7 +1134,7 @@ static void virtio_gpu_virgl_async_fence_bh(void *opa=
+que)
+
+ static void
+ virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
+-                                  int64_t ring_idx, uint64_t fence_id)
++                                  uint32_t ring_idx, uint64_t fence_id)
+ {
+     struct virtio_gpu_virgl_context_fence *f;
+     VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+@@ -1156,7 +1153,7 @@ static void virgl_write_async_fence(void
+*opaque, uint32_t fence)
+ {
+     VirtIOGPU *g =3D opaque;
+
+-    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
++    virtio_gpu_virgl_push_async_fence(g, 0, UINT32_MAX, fence);
+ }
+
+ static void virgl_write_async_context_fence(void *opaque, uint32_t ctx_id,
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.=
+h
+index a4963508a4..cd576c9e0d 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -238,7 +238,7 @@ struct VirtIOGPUClass {
+
+ struct virtio_gpu_virgl_context_fence {
+     uint32_t ctx_id;
+-    int64_t ring_idx;
++    uint32_t ring_idx;
+     uint64_t fence_id;
+     QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
+ };
 
