@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F7ACCF9F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 08:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DBACCFA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 08:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ61Z-0007Hn-DX; Wed, 12 Nov 2025 03:16:18 -0500
+	id 1vJ64j-0001Zk-M4; Wed, 12 Nov 2025 03:19:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vJ5zl-0006d1-6t
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:14:28 -0500
+ id 1vJ630-0008Jn-Gi
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:17:47 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vJ5zi-0006Ej-Dv
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:14:24 -0500
+ id 1vJ62x-0006pG-F8
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 03:17:46 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AC8ECV7002056
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AC8HZte003262
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 12 Nov 2025 17:14:12 +0900 (JST)
+ Wed, 12 Nov 2025 17:17:35 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=uEutbpvUhy2dfBxmrUM5LtE3BwwCvorM0r13C9p8lNQ=; 
+DKIM-Signature: a=rsa-sha256; bh=nDQeONniTkb7oG+vNVg9DGYHQxEdVJ+1AJfIZ8Jn7+Y=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1762935252; v=1;
- b=egXYW+qxxsKJ0SV2VixihIkAfYtcCTTs8vuElSzpK0/bQVP+6QnFRaaT9Zu0z1Q0
- 2Af4xp22QO+Ag1Pv9cwpi8q42kvt04vgBp6hKrEpO/zQvnn9fdiUCmJ6u2MKYWBN
- 7Uj8scsaXJf5oU10U4YcyT8UR56FibXGyW6b62p+SXOuPq3ynEPhxvXfrejODbL3
- H9DhfHKPY3QqoiS4t+Mzm1snDANbF1WVdEmZ6DVha3a8WvQ8UaAEM2XolKrn/rYc
- 3OJdfwXZqtSy1/TMAKSN2j1T6F2Lrzgsp55tmDHtpRPZu3TUGJ7ZtWPE3BjxuYeY
- Iaq/L0/fQXHLA/6cZbaX3Q==
-Message-ID: <8b8e3b19-7696-4b7c-8d74-eab2028dcd02@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 12 Nov 2025 17:14:11 +0900
+ s=rs20250326; t=1762935455; v=1;
+ b=SxZ19gXEouKR76WD4Ie7+szIureOS/HOf/GYMSWa1Xcft+WuPcfPD7GqsSSv3mmW
+ lPP+tp3PgIZiTvCDNp7nd0k3ikgY8C7XmMdIC6PkH7Wrd/H2i3RC/a8pLrHzH2gz
+ XGDMiDe6wChKwylHIlcYd5UFNOlzv3eLwr1PMImBYciyh+T1ja+vGkeplVJYLepL
+ v1jLzIrQKnOsiYyMi/TQBbOPGYbxHu1KJyoq6qXgH6loYrbzGgi4QIRf5+BleYwW
+ jz0ggKTIP5dH9uVssKZKHFxjRfcugjqIzUH2GL9GoxgmZ5XTM3pqSe0O52U8cH1q
+ 9l1OTIKIGoCoIpMzzPGCuQ==
+Message-ID: <3c0fe9e8-7efa-4936-b5ef-5cabc4239cdd@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 12 Nov 2025 17:17:34 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
+Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
 To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -50,14 +50,14 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
- <20251109053801.2267149-3-vivek.kasireddy@intel.com>
- <ea2e1bd7-d681-4929-b902-1948b854e488@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185866AD30B9A73097934CCF8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <20251109053801.2267149-11-vivek.kasireddy@intel.com>
+ <5c224e00-8114-4586-b502-3819770bc8ff@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB7185866AD30B9A73097934CCF8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
+In-Reply-To: <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -82,109 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/12 13:30, Kasireddy, Vivek wrote:
+On 2025/11/12 13:26, Kasireddy, Vivek wrote:
 > Hi Akihiko,
 > 
->> Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA addr
->> associated with a ram device
+>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+>> associated with VFIO devices
 >>
 >> On 2025/11/09 14:33, Vivek Kasireddy wrote:
->>> If the Guest provides a DMA address that is associated with a ram
->>> device (such as a PCI device region and not its system memory), then
->>> we can obtain the hva (host virtual address) by invoking
->>> address_space_translate() followed by memory_region_get_ram_ptr().
+>>> In addition to memfd, a blob resource can also have its backing
+>>> storage in a VFIO device region. Therefore, we first need to figure
+>>> out if the blob is backed by a VFIO device region or a memfd before
+>>> we can call the right API to get a dmabuf fd created.
 >>>
->>> This is because the ram device's address space is not accessible to
->>> virtio-gpu directly and hence dma_memory_map() cannot be used.
->>> Therefore, we first need to identify the memory region associated with
->>> the DMA address and figure out if it belongs to a ram device or not
->>> and decide how to obtain the host address accordingly.
+>>> So, once we have the ramblock and the associated mr, we rely on
+>>> memory_region_is_ram_device() to tell us where the backing storage
+>>> is located. If the blob resource is VFIO backed, we try to find the
+>>> right VFIO device that contains the blob and then invoke the API
+>>> vfio_device_create_dmabuf().
 >>>
->>> Note that we take a reference on the memory region if it belongs to a
->>> ram device but we would still call dma_memory_unmap() later (to unref
->>> mr) regardless of how we obtained the hva.
->>>
->>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> Cc: Alex Williamson <alex.williamson@redhat.com>
->>> Cc: Cédric Le Goater <clg@redhat.com>
->>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>> ---
->>>    hw/display/virtio-gpu.c | 24 +++++++++++++++++++++---
->>>    1 file changed, 21 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c index
->>> 199b18c746..d352b5afd6 100644
->>> --- a/hw/display/virtio-gpu.c
->>> +++ b/hw/display/virtio-gpu.c
->>> @@ -798,6 +798,26 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU
->> *g,
->>>                                  &fb, res, &ss.r, &cmd->error);
->>>    }
->>>
->>> +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
->>> +                                       struct virtio_gpu_ctrl_command *cmd,
->>> +                                       uint64_t a, hwaddr *len) {
->>> +    MemoryRegion *mr = NULL;
->>> +    hwaddr xlat;
->>> +
->>> +    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
->>> +                                 DMA_DIRECTION_TO_DEVICE,
->>> +                                 MEMTXATTRS_UNSPECIFIED);
->>> +    if (memory_region_is_ram_device(mr)) {
->>> +        memory_region_ref(mr);
->>> +        return memory_region_get_ram_ptr(mr) + xlat;
->>> +    }
->>> +
->>> +    return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
->>> +                          DMA_DIRECTION_TO_DEVICE,
->>> +                          MEMTXATTRS_UNSPECIFIED);
+>>> Note that in virtio_gpu_remap_udmabuf(), we first try to test if
+>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+>>> use the VFIO device fd directly to create the CPU mapping.
 >>
->> This function should:
->> - call memory_region_get_ram_ptr(mr)
->>     if memory_region_is_ram(mr)
->> - return NULL otherwise
->>
->> There are a few reasons. First, the documentation of dma_memory_map()
->> tells to use it "only for reads OR writes - not for read-modify-write
->> operations." It can be used for read-modify-write operations so
->> dma_memory_map() should be avoided.
-> This patch series only deals with non-virgl use-cases where AFAICS resources
-> are not written to on the Host.
+>> I have just remembered that mremap() will work for either of udmabuf and
+>> VFIO. That will avoid having two different methods and make
+>> vfio_get_region_index_from_mr() and vfio_device_get_region_info()
+>> unnecessary.
+> IIUC, the name virtio_gpu_remap_dmabuf() is misleading because we are not
+> actually doing remap but are simply calling mmap(). In other words, we are not
+> expanding or shrinking existing mapping but are creating a new mapping.
+> And, for dmabufs associated with VFIO devices, without having to call
+> vfio_get_region_index_from_mr() and vfio_device_get_region_info(), I don't see
+> any other way to determine the region offset.
 > 
->>
->> Second, it ensures that the mapped pointer is writable.
->> "[PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs associated
->> with VFIO devices" adds checks for memory_region_is_ram() and
->> memory_region_is_ram_device() to virtio_gpu_init_dmabuf(), but the other
->> callers also use the function to map writable pointers.
-> Unless I am missing something, I don't see where writable pointers are used
-> in non-virgl use-cases?
+> So, I guess I'll create a new patch to do s/remapped/map.
 
-Rutabaga uses too, but you are right about that 2D operations won't use it.
-
-That said, exposing non-writable memory to Virgl and Rutabaga lets the 
-guest corrupt memory so should be avoided. On the other hand, it is 
-unlikely that rejecting non-writable memory will cause any problem. You 
-can also add another code path to use 
-memory_region_supports_direct_access() instead of memory_region_is_ram() 
-for virtio-gpu for 2D and avoid calling memory_region_is_ram() in 
-virtio_gpu_init_dmabuf() if you want to keep non-writable memory working.
-
-> 
->>
->> It also makes the check of memory_region_is_ram_device() and
->> memory_region_is_ram() unnecessary for virtio_gpu_init_dmabuf(), reducing
->> the overall complexity.
-> Since buffers reside completely in either ram or ram_device regions, using both
-> memory_region_is_ram_device() and memory_region_is_ram() to check where
-> they are located seems necessary and unavoidable.
-
-It can unconditionally call virtio_gpu_create_udmabuf(), and if the 
-function finds the memory is incompatible with udmabuf, it can call 
-vfio_device_lookup() to tell if the memory belongs to VFIO or not.
+I mean calling mremap() with 0 as the old_size parameter. The man page says:
+ > If the value of old_size is zero, and old_address refers to a
+ > shareable mapping (see the description of MAP_SHARED in mmap(2)), then
+ > mremap() will create a new mapping of the same pages.
 
 Regards,
 Akihiko Odaki
