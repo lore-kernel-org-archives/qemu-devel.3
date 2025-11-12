@@ -4,86 +4,176 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66158CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 01:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05601CCFA18
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 01:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ034-0006ZD-SM; Tue, 11 Nov 2025 20:53:26 -0500
+	id 1vJ03H-0006fV-O7; Tue, 11 Nov 2025 20:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vJ02j-0006Vf-H4
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 20:53:14 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vJ02g-0002B8-0S
- for qemu-devel@nongnu.org; Tue, 11 Nov 2025 20:53:05 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b728a43e410so67057066b.1
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 17:53:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1762912380; x=1763517180; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h3NSfBrXFusAi+hWaGkvdhWGYM99uw6czHjs+nP0lI4=;
- b=bByZAkiYNUhLLALe+Los5YB1oRMyATQuaMMAvmUWePsB90ymAL7fnEEahhjavjQB/u
- Bsh554pTiJKqX4tLBWH4hD8FCsfYCn7FIc8rFwhtsQ8cVk6bFbvAdrtRjtygp9DIxua/
- e7eUafYeqYZ7CqkbhFTHhIzz2vstuCOUXwp4h4P2RaVdFarUEvYd6jESlrQUn/Tk7jPp
- sl+N99vqs/eNH1RK7Mwaso24NBtbXHM+59+V8jNMNnkM0lbGMs7aKyfuGs+cXt3/YjYZ
- nS+rdl6ktsuHhwid4hwqGVyllvd63DUu1wcCvD/F/uT07JbIkazWQfT9DbIMVKPHs3B2
- eMqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762912380; x=1763517180;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=h3NSfBrXFusAi+hWaGkvdhWGYM99uw6czHjs+nP0lI4=;
- b=la9q8onmFebS337Ihr/nAuSm9xLa7y5Yb3pDvN02cSpIReNogjVyoQL4Qv/onpoNfG
- bbNmfwWazRgcioSKB2VCa3CrnIKRS7X/pBUZDttpVHK7VsahntouIRgXulxpT45xI2Oq
- zDRgNek229zr1KV9wWEgQqKoiwwEu3HHx+EpHg5D+jXJ6Md/nIXew2CuCqEIK3GEcWEN
- yxbFfDQjb1/QwXbyG7WibgeYx1nhzoz15FFxCyOtajJynN9F1g1eLkKCpHotkIeo7Qki
- 056zCP56nxppgFwUe+OmYcwti4HzNONWQytlnq5kt0XdKsPKMtikAQJ5EeMtPb90DCZP
- 6ICQ==
-X-Gm-Message-State: AOJu0YzCCIv/nPDY9WEAZ8iaBRoVQxX8Alq0nRLwbwmXqi6DWnJ4gQFJ
- +ZdOEUP3bAt2t+xrTcNkFdVkMqWJYpBnmvbqxAsjd1lG5+jClxeeqKojJkZhnHLQVM0cSyI0jvd
- 9FfxjXvIbPWL39pfgKpukilCa0UDgnr+UyA==
-X-Gm-Gg: ASbGncvc9qEjvX9BR8+etScIduy9CKyVkG5TuapwAJ1kiSSSNAAy/R50W7ZUIxTZ4rs
- Qe4a1gFJOscIL/QoZZ2LOup+6jQbrcHjCP/vCgPOGvkGTN3AQ9+4yo/c4Ak1FN4zqc4eIMBrUhv
- kIqHuyWZh9SJ2nH9SDtLxYWSFjmb0nFEH9H6Xly84dFAOxgjndecGNgtJNjwqTUWDMOxfBkD9/7
- hh6w0ISXIZBgg5judGYk1Rru4xJlDFlCSzgB6NGXxrh1gfwyr4yLHLyp+9GtLENAHD7fFhbY8fG
- Uc3usOJkvs1o2Qc=
-X-Google-Smtp-Source: AGHT+IGxUEgL8WFg6CGYQFor4OfLvHtzP9op9N5MJ/p98ABJEsFpXCBZoIF8VhsunTNRbKjlpvl/d2lmA/C+4Qw1BIE=
-X-Received: by 2002:a17:907:7f17:b0:b70:b3e8:a353 with SMTP id
- a640c23a62f3a-b7331ac5960mr108529566b.50.1762912380218; Tue, 11 Nov 2025
- 17:53:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vJ03A-0006cV-Gu; Tue, 11 Nov 2025 20:53:32 -0500
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vJ038-0002GF-1C; Tue, 11 Nov 2025 20:53:32 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ifj7szt54flDM8k1A0RhtbFNix9pRFP7rvyvSiA0JuuwOoKyZBVO0jJrHndmYFOZaXXsW9swzm8qRzJN2VHBTdUYAWVZlrsAr/CJhdiFyA8SVaYwYk35gbDxauN8261QreaAoo1slSWqYED6YwzDJn422TQt2+IwlgccFBegLTo6AVJCRfAPQiOAGYfMXXnbYW7HF3YDKYBeYRNQ0xUujRJv2hbAyXmlhCMbKOxOr7t1nVIad9oXlI6IslnnVLRFuwMvsniVAwogN1JdIyVo7wh48QbC75bxH1BO58zNkuG0YBpViY8DCLaS/KoD1Umi9KG2CejSwo2LSq6tIu2KsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=C+40KJFWSu1vImbArSKjhMbyf70g0kfl0gTuIRwmHVk=;
+ b=dxd+bZhne9+lXkCRVi0OyfyuV2hxIUg+aA8nnZ7UeIxtp1UkwQBAVeegInHnq+tlmlli0npTP84K3PONZJCodzISwiOnr7VYhjc9ULgmtiUh7t8bJ7Xh2RJLeMfg+tmQ//etADVKVr5iHa6xePMJu+jgXcmvp0UYI5cRYvM13BI/CNoE/vKAucbTXQIBnvGnJALfcBEN31ahWuN5azP7Znzb2bh9Z0o0eTPhCFnlj7mdO1p97PbddPkm0z3mSRoza0oPcv9SKmT3+OIjKRVrFPkOtS1GMIWjK2fbfl5mpQSYC1kYR50pXPcE64Xoh6hphs47oFtSXkS1CheX5pfsXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=C+40KJFWSu1vImbArSKjhMbyf70g0kfl0gTuIRwmHVk=;
+ b=EAJYZUcrE782G+yb/bvz/8Ui3OxtjsrYgBXou6T5ACQtVzQUJI3947I2vHQHPv1ufZFQEWPgK0N5kIbtwZIewMiBbhlxAla9eL0nuT2msSDVVKTs9CFAfgYNTTJZiFwG8i6agRAYG6skhSx+rpGAB80zFM2fbrBVM6V3BHR3ZS4Wsh23dwggEwVEIX8by7OUCjKGLHLfi5AxmS9BzCqOBZFFPt9gOK5tpEeU6IpTVwMWrQPZCHIksrGURx/zljjtTV/7MVPaI1BgoRbc+scTtycoW7mdyKgKh7eQwnSGcPdXp0up3m8Otzp4l1IJYa+NLn0zv0ivaMtHA1fZUbSmWg==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by KL1PR06MB6579.apcprd06.prod.outlook.com (2603:1096:820:f3::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.15; Wed, 12 Nov
+ 2025 01:53:19 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::b420:4392:6eb0:91e5]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::b420:4392:6eb0:91e5%3]) with mapi id 15.20.9298.010; Wed, 12 Nov 2025
+ 01:53:19 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, Kevin
+ Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+Subject: RE: [PATCH v1 09/12] hw/arm/aspeed_ast10x0_evb: Add AST1060 EVB
+ machine support
+Thread-Topic: [PATCH v1 09/12] hw/arm/aspeed_ast10x0_evb: Add AST1060 EVB
+ machine support
+Thread-Index: AQHcTvpJZgcmMrohVECXi7UA2tDIq7Tt0dkAgAB90cA=
+Date: Wed, 12 Nov 2025 01:53:19 +0000
+Message-ID: <TYPPR06MB82069216568E2B8EBA70759AFCCCA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+References: <20251106084925.1253704-1-jamin_lin@aspeedtech.com>
+ <20251106084925.1253704-10-jamin_lin@aspeedtech.com>
+ <a589c937-33bb-4647-9282-d9d1e2c15131@kaod.org>
+In-Reply-To: <a589c937-33bb-4647-9282-d9d1e2c15131@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KL1PR06MB6579:EE_
+x-ms-office365-filtering-correlation-id: 154fca44-8170-4a01-7d17-08de218e40fe
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|38070700021|921020; 
+x-microsoft-antispam-message-info: =?utf-8?B?aUl4VEUyYmVnQUhHTU8ydlVvcDBVaEVVMU1oZ0NrL2ZUM2tvS2hRcFFOenpV?=
+ =?utf-8?B?Z2pLRlJ2djR4M2E0UkNoWmtJRFRWc0dkN21lL1l2YS85VFdEZFducmZFc2cv?=
+ =?utf-8?B?MGIzRjR4UWdabHRrK1Jkb2hNcjhkNzZGc1lWd0QwK3Q3c3JLZ3M1b3FHRHpN?=
+ =?utf-8?B?VzBFaDVKTFEwSVhteEF0S0NUcHZ5SWlIQXpWWFdBNEMwQUpka3ZNdHBjUG8w?=
+ =?utf-8?B?a0tWQWRqSzRFQ0ViUDdHcnZEZVI5MVUrVHBCZXFvekZMZGNHRFF6WUFHd0Iy?=
+ =?utf-8?B?U05nUUdPRTFSNHh2Y0xlbTB2OFF6VWJoMm9pTWY2ekpPalJva2FBd1h4UU5o?=
+ =?utf-8?B?NWR4TGZPWGwxRmdoOFBWMzFpMzVLaCs1VGFiZTdZK3dSamIvKzBya29MOWVU?=
+ =?utf-8?B?U3ZkRlBpNlRTVjZHS2VzV0pBRExRbXBqeUdYdGxyNFl3R3pvWkplZTNiUVNK?=
+ =?utf-8?B?SUVkencwbzh2Y0diaG5ma0xVTlladTdmd3lUWUFKQzIxK0tOWCtWQzlZVFp1?=
+ =?utf-8?B?T3FuOVVJcWtReE5wdytSNHlGYjJvSW1sb1NndGxkV2YxRzN0aUpMb056clRU?=
+ =?utf-8?B?cDEyRXV4ZFo1MjdxMTFNQXlUVUR3S3RlSnpIYkpBQ0M3QUEzRE14Q1VDMDhU?=
+ =?utf-8?B?NUpTb2s0S2lZYi80cXU2K1ZDZnNtYXNLRUF6VDZEVSszOWdrNWQvdGx6eWVL?=
+ =?utf-8?B?aXNZVlBYN2F6RTZ5NXJTVC9UVTloZGRsamxTTmtGL3hWaUJHZkVqZEk2eW5a?=
+ =?utf-8?B?UWo4S2lsOWhtSGROQ1BQTU9Eb0J1V3l3MTBpWjk0eG9wRDJvS1lSN1hTZXFx?=
+ =?utf-8?B?L21pemdhQ2RlV2x5Y0pXa01lRVpQUFV5RHA4QS9SR3dXMVZJZno4cDg0dzUy?=
+ =?utf-8?B?ekp0ZGJWVDJyYTFyK0FUaTkyZkpEV1hQc2dZbkljNjBiOGQ0YVhHWkZIOFhC?=
+ =?utf-8?B?S0lVR2tleFlId285SEVjMkE2ZUN5a081ZGdZa1l6SnFPZjRIRHU3dFl4Mngy?=
+ =?utf-8?B?RGlXZFN1cDRYbmRmUzVuUTk1c2VBd0ZkR2V6aU1YRlJqOWdnQi81eSt5cXVE?=
+ =?utf-8?B?Y0w5bHhBaDBlZnQ4SUk3Y2RTUVRuQWE2ckRMQ0lnNGx0dGVMOUxzQ24zM1h4?=
+ =?utf-8?B?NzlDV05hUFFzc0NWS1loVmJ4VE5PTHNtZFhVV0tDdC9FU21meFZJajc5czBS?=
+ =?utf-8?B?QmF3MHpVRU1Wb0NVWVBWY1dBQkhZZzQvbjlBQnZSaDY1UFBMbnhPemlPTjJu?=
+ =?utf-8?B?Q0VwTHNZOWVvZWQrQ1c4ZE5BS1JPRXFibmFjTlZQVWRDaGk5TWJQNm5DcVRu?=
+ =?utf-8?B?dWJKOWNaMzRqUUNNaWhlSDFxRHdHSEpQZEcwQ2hONU8xNWMrdGt1VE1veFB1?=
+ =?utf-8?B?L2tjRXAyNy8rdlBPK0VZbURGQTU4Y1djRUtmWERldTZyUCtuM1pLaDdvdlM4?=
+ =?utf-8?B?QkJXRHowYXRxNlNoOHBGYzRDODJic1hhQTlIeGkwRVg3Nm8xMkZkL0dGbDZp?=
+ =?utf-8?B?Z1lrR1kweStZeUI2c0RsTEFmbFVJTFVMdnAvY0FCK21LNERncmxkeXlMakln?=
+ =?utf-8?B?SHhQd3JxekR5cHo0OUZubm9mNVd3ZVJBQTJLQU1CUjI0TDFKeWZxY3NvNVNK?=
+ =?utf-8?B?MVBGcVA5WWdJVWlud084YzhydHkrdnhuZVdKN1grdUhYKytHUmtwaHhjOG5a?=
+ =?utf-8?B?WTRpYkN0OUkyOWRiaU50cmc5enNKblN1TmVWUjNrYStKSGpnQUplcTQ3cm9r?=
+ =?utf-8?B?akdORTR0MzBBcWNyRTlNd0dXN28yTUgrQk9NNm9RNXpTK0kvZDVYUDFjc0FU?=
+ =?utf-8?B?c2RWOXRYcWsvQllyQnE5UWRWK1BwOTQrTDhyZzIxbURtZXpDV1VkL0dZWXI1?=
+ =?utf-8?B?QnlrZk40N25sVnJVZkpBaktoNUNzcHZDNWdsQ1hWaFQxQXpPc3BoN1kyOUo0?=
+ =?utf-8?B?MHRyTEhaSGZVVFkzdTUzNXR1ekw5VHYrb25ISEhGTWp6a0FieGRrT1Avbm1K?=
+ =?utf-8?B?UW93cnU3M2N5ZTROL1BjZmtoNStROGFLR21yNHRMYnl1SkxhcDFuREhIV1VW?=
+ =?utf-8?B?R0kwWFpYWmpuZ3pIem83QVZPWXRkdjM5ZHJEZz09?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021)(921020);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UCtUQzUzTEhaU0MzZXhMZnM2ZDZCUnJJbnZiOXhSTmlSWC9JRDlpeE4xUHVz?=
+ =?utf-8?B?dDNOUEVYeVlIbnFsQ3k0NkZ1Qklnd2FQSUtDK0QxYzY4NWM2ZkxTZzlsdkt2?=
+ =?utf-8?B?aXhZQUJucmNsYzFORC8vZnFPM25MVEFNTktaa3VjU3M4N1dQRHEzMzBJNk5r?=
+ =?utf-8?B?ZkJKc1ZUQzhsNlFNYU9CMjBVek05SjAwVHFvdVA5ckE0UHp0bERzRGpxcGpO?=
+ =?utf-8?B?UXppdUFOaTBsWXFqbzFTazZpS0FUNU5EYVZQT1JZaXJub2pETUhKVS9vd0wx?=
+ =?utf-8?B?YnN3MEZiaWlFb2RQdEt3MUVhQ1FoWXowcWRMMW9WbE94ZGpWOVcvdGkwRkdx?=
+ =?utf-8?B?ZDRZZnNlM0ViRHNRSW9QZ1pjMmJXT3JteWNKemF4aDBaNTcvbmVTbFAxdGtF?=
+ =?utf-8?B?OXUyQk9OS3FKTjlsRnV3T0FzUC96S0pDcTBtN2dYN3JYQ25LMlFybHNaWlpH?=
+ =?utf-8?B?M1hSMG80SVVyY01LSWdUZVZndGlRQThTN0NySmpGcmpTTzVSazlFbmhNbE9m?=
+ =?utf-8?B?TktPWVc1ZjI3OFhUcGdYWGc3L0tFeElyOFlwbkdpOE84bUlCNTY3TTI2NWVs?=
+ =?utf-8?B?MHBrZ0xNMzVjOU9NT1Rld0hiZFA4Uy9nUW94Zm9XcFZhTW9GWW1CZ1JseCs5?=
+ =?utf-8?B?T0xOdW45UnVKRnVsVExkNmp6QmtrdU1EV2FMekcyUTJkcmMzL2V1aHZSVVAw?=
+ =?utf-8?B?cE1xQ2RwN0NYQ0dFVzloOGNrRHlhR0FWMHErcGF3aWxVdzJzb2RYKzRXZ3dD?=
+ =?utf-8?B?aVBhRDUycEYvbUZKUm5xVEhBQVE5RXc1ZFIwWWRXbDFSMFp4WmVsTnZSMVlZ?=
+ =?utf-8?B?Z1hxelNRL3p4YVJqMlo4LzlsYk1NTUc4UDhyeTJnVitVS3A0bEhSdDVjN1pp?=
+ =?utf-8?B?K2xKRmx3Kyt3LzMwOG5IbTNkazhTVThUNkpYdmpVWHUwL1BqTFRXajdjdTZR?=
+ =?utf-8?B?MTZWQ3ZDTXlmMDZZZEs4TXNPcFRYNW5PMEZZQVErTDZERG4vTFpsRFc4dnZK?=
+ =?utf-8?B?VFRWWDBMWGFVckpQWnpSUWtOcFNaL3VKanE2UjVVbTdzVWRFWTJReGRKelk4?=
+ =?utf-8?B?aGVPU2hiS2E3U0E2c2dza21WTEMxUkVGZ3FxRVEwR1ZLOGM1ZHJ0aHF2QkRk?=
+ =?utf-8?B?QjhRdGJjbWt2WURaU2N0UDJJV2NnVkVVM3owbUFUdnN2RWFCUVNwZVpKL0hI?=
+ =?utf-8?B?MHdjMVdIMmljYVhlRnpHa05WaXY4d05PQmpEdm5iaWdPSUhLSS9ycWNUSGlI?=
+ =?utf-8?B?T0VsNnJ2RWhsT1gwWm56QW1CNDFZQjd0WEw3UTBuTXZGb3h4aThBVXpSYnUr?=
+ =?utf-8?B?MDFLSTJ2QUVkeXRGbmMvcllpZWU2bVdwYzloSkZCVENiVnZNc1dhKzFYeW01?=
+ =?utf-8?B?TDJobDBLeTNKTlVUQ3htN3R6MUlNbzFuOFlMQmpMU2hFb2w4VFZVOVJhazU1?=
+ =?utf-8?B?VGlTSlZhMjViUUk4aVZ0ODdNQUtJYUQ1VFZhWVRWQkFEVUVaUlZySG5ldjla?=
+ =?utf-8?B?MEljTTNubzFOTVBsVllMRkdnYVNHeHBvWTZ0UXhubi9nV09JTFpQQk9Iazc3?=
+ =?utf-8?B?KzRoejJFNVpRQ09sT0tNejhaWmVmWWh4cHc2Lzk5WXpqQ1ZKd2FGb05weWo5?=
+ =?utf-8?B?QTVjKzZQaWVCNkpWbnUrTjloZlhIeGxPTDdxVFVFQ2VERm10b0JwWnp6RFhk?=
+ =?utf-8?B?bkVDYjNyMHFaRnJqMXhaa2w2SWlXZE56WTNoaStQZjR2Vng3MHdqZ3hBZHlu?=
+ =?utf-8?B?OHRyOGtMbk5Cb3JPekhtZVFlUU9ydER0OE92WitaeEdOTjg3LzFKM1BBVlZn?=
+ =?utf-8?B?NWJ5M2pXUmY1ZXA3T09FT3ZicW5aOGNSd2sxMGJaUTV2eHAySlZVYlcraHhL?=
+ =?utf-8?B?Qm5wMG1GZWNLZjZwam02a2lnNDZ2SzJUOExVVmZUT0hLRGZ2eGhlWlBjWGxn?=
+ =?utf-8?B?MXF4TS9XNHF0VFMzS3hCK0FhMWdhWjVXQUJ2MDcrVjFtKzhoUGhDRWxLWUNQ?=
+ =?utf-8?B?OEczVVdlVUVMM2hSZ2N6aDV6VDZYVjljWFkxM0VsTHhzUXppVVV6TFJ2RFQz?=
+ =?utf-8?B?UU5EWHNYa05pWEdkSmVqZ0djdS9PVzllenlUakVJczhaNkJXZTJoNlcxRmwy?=
+ =?utf-8?Q?VVlubygaK9gj67g+GUSrfkq6t?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20251027100938.11822-1-michael@videogpu.com>
- <20251027100938.11822-2-michael@videogpu.com>
-In-Reply-To: <20251027100938.11822-2-michael@videogpu.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 12 Nov 2025 11:52:33 +1000
-X-Gm-Features: AWmQ_blnEkxcXk9je3KDXlQviT1XutaPVKEk9kGZKdg4ml-pnSG7t9BwxJkmHck
-Message-ID: <CAKmqyKOoZnm+wjypuTPxRWYGy+bb=RS3sc0gF=TOeBybaAmwaw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] target/riscv: add NEORV32 RV32 CPU type and vendor
- CSR hooks
-To: Michael Levit <michael@videogpu.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, philmd@linaro.org, 
- pbonzini@redhat.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- liwei1518@gmail.com, smishash@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 154fca44-8170-4a01-7d17-08de218e40fe
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2025 01:53:19.2290 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: JpwuFK5HqHHC1oe6P9bPyGUu6ecRVG20Znzu97ukei5ZmsGRxfE6AkyzbhHDIMgBwHUEotl8u01X14VeVOeazv/Q8YUJRi3lkZ2MT7FDGkQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6579
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,225 +190,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 8:12=E2=80=AFPM Michael Levit <michael@videogpu.com=
-> wrote:
->
-> From: Michael <michael@videogpu.com>
->
-> Introduce NEORV32 RV32 CPU type under target/riscv, wire NEORV32 vendor I=
-D,
-> and add a vendor CSR (CSR_MXISA) guarded by mvendorid match, plus meson g=
-lue.
-
-Looks good. There are a bunch of whitespace errors though, can you run
-your patches through checkpatch.pl
-
-Alistair
-
->
-> Signed-off-by: Michael Levit <michael@videogpu.com>
->
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 75f4e43408..a39bf853cc 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -57,6 +57,8 @@
->  #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-n=
-anhu")
->  #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-k=
-unminghu")
->  #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
-> +#define TYPE_RISCV_CPU_NEORV32          RISCV_CPU_TYPE_NAME("neorv32")
-> +
->
->  OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 73d4280d7c..7bcf93c66c 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -245,6 +245,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(xtheadmempair, PRIV_VERSION_1_11_0, ext_xtheadmem=
-pair),
->      ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsync),
->      ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVentan=
-aCondOps),
-> +    ISA_EXT_DATA_ENTRY(xneorv32xisa,PRIV_VERSION_1_10_0,ext_xneorv32xisa=
-),
->
->      { },
->  };
-> @@ -1366,6 +1367,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[=
-] =3D {
->      MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
->      MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
->      MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
-> +       MULTI_EXT_CFG_BOOL("xneorv32xisa", ext_xneorv32xisa, false),
->
->      { },
->  };
-> @@ -3032,6 +3034,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.pmp_regions =3D 8
->      ),
->
-> +
->  #if defined(TARGET_RISCV32) || \
->      (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
->      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
-> @@ -3075,6 +3078,21 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .misa_mxl_max =3D MXL_RV32,
->          .misa_ext =3D RVE
->      ),
-> +       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_NEORV32, TYPE_RISCV_VENDOR_CPU,
-> +               .misa_mxl_max =3D MXL_RV32,
-> +        .misa_ext =3D RVI | RVM | RVA | RVC | RVU,
-> +        .priv_spec =3D PRIV_VERSION_1_10_0,
-> +
-> +        .cfg.max_satp_mode =3D VM_1_10_MBARE,
-> +        .cfg.ext_zifencei =3D true,
-> +        .cfg.ext_zicsr =3D true,
-> +        .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 16,
-> +               .cfg.mvendorid =3D NEORV32_VENDOR_ID,
-> +#ifndef CONFIG_USER_ONLY
-> +        .custom_csrs =3D neorv32_csr_list
-> +#endif
-> +    ),
->  #endif
->
->  #if (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 36e7f10037..6a9918a25a 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -985,5 +985,8 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_=
-32_bit);
->  /* In th_csr.c */
->  extern const RISCVCSR th_csr_list[];
->
-> +/* Implemented in neorv32_csr.c */
-> +extern const RISCVCSR neorv32_csr_list[];
-> +
->  const char *priv_spec_to_str(int priv_version);
->  #endif /* RISCV_CPU_H */
->
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index aa28dc8d7e..9ad38506e4 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -64,5 +64,6 @@ MATERIALISE_EXT_PREDICATE(xtheadmemidx)
->  MATERIALISE_EXT_PREDICATE(xtheadmempair)
->  MATERIALISE_EXT_PREDICATE(xtheadsync)
->  MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
-> +MATERIALISE_EXT_PREDICATE(xneorv32xisa)
->
->  #endif
->
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc
-> index a154ecdc79..b84e1bd287 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -147,6 +147,7 @@ BOOL_FIELD(ext_xtheadmemidx)
->  BOOL_FIELD(ext_xtheadmempair)
->  BOOL_FIELD(ext_xtheadsync)
->  BOOL_FIELD(ext_XVentanaCondOps)
-> +BOOL_FIELD(ext_xneorv32xisa)
->
->  BOOL_FIELD(mmu)
->  BOOL_FIELD(pmp)
->
-> diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-> index 96b6b9c2cb..66a8f30b81 100644
-> --- a/target/riscv/cpu_vendorid.h
-> +++ b/target/riscv/cpu_vendorid.h
-> @@ -7,4 +7,6 @@
->  #define VEYRON_V1_MIMPID        0x111
->  #define VEYRON_V1_MVENDORID     0x61f
->
-> +#define NEORV32_VENDOR_ID       0xF0000001
-> +
->  #endif /*  TARGET_RISCV_CPU_VENDORID_H */
->
-> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-> index fdefe88ccd..44e706ad3f 100644
-> --- a/target/riscv/meson.build
-> +++ b/target/riscv/meson.build
-> @@ -40,6 +40,7 @@ riscv_system_ss.add(files(
->    'th_csr.c',
->    'time_helper.c',
->    'riscv-qmp-cmds.c',
-> +  'neorv32_csr.c',
->  ))
->
->  subdir('tcg')
->
-> diff --git a/target/riscv/neorv32_csr.c b/target/riscv/neorv32_csr.c
-> new file mode 100644
-> index 0000000000..0cb8663436
-> --- /dev/null
-> +++ b/target/riscv/neorv32_csr.c
-> @@ -0,0 +1,54 @@
-> +/*
-> + * Neorv32-specific CSR.
-> + *
-> + * Copyright (c) 2025 Michael Levit
-> + *
-> + * Author:
-> + *   Michael Levit <michael@videogpu.com>
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOU=
-T
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
- for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License alo=
-ng with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "cpu.h"
-> +#include "cpu_vendorid.h"
-> +
-> +#define    CSR_MXISA    (0xfc0)
-> +
-> +static RISCVException smode(CPURISCVState *env, int csrno)
-> +{
-> +       return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException read_neorv32_xisa(CPURISCVState *env, int csrno,
-> +                                       target_ulong *val)
-> +{
-> +       /* We don't support any extension for now on QEMU */
-> +    *val =3D 0x00;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static bool test_neorv32_mvendorid(RISCVCPU *cpu)
-> +{
-> +    return cpu->cfg.mvendorid =3D=3D NEORV32_VENDOR_ID;
-> +}
-> +
-> +const RISCVCSR neorv32_csr_list[] =3D {
-> +    {
-> +        .csrno =3D CSR_MXISA,
-> +        .insertion_test =3D test_neorv32_mvendorid,
-> +        .csr_ops =3D { "neorv32.xisa", smode, read_neorv32_xisa }
-> +    },
-> +    { }
-> +};
-> +
-> --
-> 2.51.1
->
+SGkgQ8OpZHJpYywNCg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYxIDA5LzEyXSBody9hcm0vYXNw
+ZWVkX2FzdDEweDBfZXZiOiBBZGQgQVNUMTA2MCBFVkINCj4gbWFjaGluZSBzdXBwb3J0DQo+IA0K
+PiBPbiAxMS82LzI1IDA5OjQ5LCBKYW1pbiBMaW4gd3JvdGU6DQo+ID4gQWRkIGEgbmV3IG1hY2hp
+bmUgZGVmaW5pdGlvbiBhc3QxMDYwLWV2YiB0byBzdXBwb3J0IHRoZSBBc3BlZWQgQVNUMTA2MA0K
+PiA+IGV2YWx1YXRpb24gYm9hcmQuIFRoZSBuZXcgRVZCIHJldXNlcyB0aGUgc2FtZSBNaW5pQk1D
+IGZyYW1ld29yayB1c2VkDQo+ID4gYnkgQVNUMTAzMCwgYXMgYm90aCBTb0NzIHNoYXJlIHRoZSBz
+YW1lIGNvcmUgcGVyaXBoZXJhbHMgYW5kDQo+ID4gY29udHJvbGxlciBkZXNpZ25zLg0KPiA+DQo+
+ID4gVGhlIEFTVDEwNjAgRVZCIG1hY2hpbmUgaW5pdGlhbGl6ZXMgdGhlIGFzdDEwNjAtYTIgU29D
+IGFuZCBzZXRzIHRoZQ0KPiA+IEZNQyBhbmQgU1BJIGZsYXNoIG1vZGVscyAodzI1cTgwYmwgYW5k
+IHcyNXEwMmp2bSkgZm9yIHNpbXVsYXRpb24uDQo+ID4gVGhpcyBlbmFibGVzIFFFTVUgdG8gYm9v
+dCBhbmQgZW11bGF0ZSBmaXJtd2FyZSBpbWFnZXMgZm9yDQo+ID4gQVNUMTA2MC1iYXNlZCBwbGF0
+Zm9ybXMuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3Bl
+ZWR0ZWNoLmNvbT4NCj4gPiAtLS0NCj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0MTB4MF9ldmIuYyB8
+IDIzICsrKysrKysrKysrKysrKysrKysrKysrDQo+ID4gICAxIGZpbGUgY2hhbmdlZCwgMjMgaW5z
+ZXJ0aW9ucygrKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2h3L2FybS9hc3BlZWRfYXN0MTB4MF9l
+dmIuYyBiL2h3L2FybS9hc3BlZWRfYXN0MTB4MF9ldmIuYw0KPiA+IGluZGV4IDdhZjJhNzc4NjUu
+LmEwMTM4NWI1NDMgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvYXJtL2FzcGVlZF9hc3QxMHgwX2V2Yi5j
+DQo+ID4gKysrIGIvaHcvYXJtL2FzcGVlZF9hc3QxMHgwX2V2Yi5jDQo+ID4gQEAgLTk2LDEyICs5
+NiwzNSBAQCBzdGF0aWMgdm9pZA0KPiBhc3BlZWRfbWluaWJtY19tYWNoaW5lX2FzdDEwMzBfZXZi
+X2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKm9jLA0KPiA+ICAgICAgIGFzcGVlZF9tYWNoaW5lX2Ns
+YXNzX2luaXRfY3B1c19kZWZhdWx0cyhtYyk7DQo+ID4gICB9DQo+ID4NCj4gPiArc3RhdGljIHZv
+aWQgYXNwZWVkX21pbmlibWNfbWFjaGluZV9hc3QxMDYwX2V2Yl9jbGFzc19pbml0KE9iamVjdENs
+YXNzDQo+ICpvYywNCj4gPiArDQo+IGNvbnN0IHZvaWQNCj4gPiArKmRhdGEpIHsNCj4gPiArICAg
+IE1hY2hpbmVDbGFzcyAqbWMgPSBNQUNISU5FX0NMQVNTKG9jKTsNCj4gPiArICAgIEFzcGVlZE1h
+Y2hpbmVDbGFzcyAqYW1jID0gQVNQRUVEX01BQ0hJTkVfQ0xBU1Mob2MpOw0KPiA+ICsNCj4gPiAr
+ICAgIG1jLT5kZXNjID0gIkFzcGVlZCBBU1QxMDYwIFBGUiAoQ29ydGV4LU00KSI7DQo+IA0KPiBX
+aGF0IGRvZXMgIlBGUiIgbWVhbiA/DQo+IA0KVGhhbmtzIGZvciB5b3VyIHJldmlldyBhbmQgc3Vn
+Z2VzdGlvbi4NCg0KSSB3aWxsIHVwZGF0ZSBpdCB0byAiIFBsYXRmb3JtIFJvb3Qgb2YgVHJ1c3Qi
+DQpUaGFua3MtSmFtaW4NCg0KPiA+ICsgICAgYW1jLT5zb2NfbmFtZSA9ICJhc3QxMDYwLWEyIjsN
+Cj4gPiArICAgIGFtYy0+aHdfc3RyYXAxID0gMDsNCj4gPiArICAgIGFtYy0+aHdfc3RyYXAyID0g
+MDsNCj4gPiArICAgIG1jLT5pbml0ID0gYXNwZWVkX21pbmlibWNfbWFjaGluZV9pbml0Ow0KPiA+
+ICsgICAgYW1jLT5mbWNfbW9kZWwgPSAidzI1cTgwYmwiOw0KPiA+ICsgICAgYW1jLT5zcGlfbW9k
+ZWwgPSAidzI1cTAyanZtIjsNCj4gPiArICAgIGFtYy0+bnVtX2NzID0gMjsNCj4gPiArICAgIGFt
+Yy0+bWFjc19tYXNrID0gMDsNCj4gPiArICAgIGFzcGVlZF9tYWNoaW5lX2NsYXNzX2luaXRfY3B1
+c19kZWZhdWx0cyhtYyk7DQo+ID4gK30NCj4gPiArDQo+ID4gICBzdGF0aWMgY29uc3QgVHlwZUlu
+Zm8gYXNwZWVkX2FzdDEweDBfZXZiX3R5cGVzW10gPSB7DQo+ID4gICAgICAgew0KPiA+ICAgICAg
+ICAgICAubmFtZSAgICAgICAgICAgPSBNQUNISU5FX1RZUEVfTkFNRSgiYXN0MTAzMC1ldmIiKSwN
+Cj4gPiAgICAgICAgICAgLnBhcmVudCAgICAgICAgID0gVFlQRV9BU1BFRURfTUFDSElORSwNCj4g
+PiAgICAgICAgICAgLmNsYXNzX2luaXQgICAgID0NCj4gYXNwZWVkX21pbmlibWNfbWFjaGluZV9h
+c3QxMDMwX2V2Yl9jbGFzc19pbml0LA0KPiA+ICAgICAgICAgICAuaW50ZXJmYWNlcyAgICAgPSBh
+cm1fbWFjaGluZV9pbnRlcmZhY2VzLA0KPiA+ICsgICAgfSwgew0KPiA+ICsgICAgICAgIC5uYW1l
+ICAgICAgICAgICA9IE1BQ0hJTkVfVFlQRV9OQU1FKCJhc3QxMDYwLWV2YiIpLA0KPiA+ICsgICAg
+ICAgIC5wYXJlbnQgICAgICAgICA9IFRZUEVfQVNQRUVEX01BQ0hJTkUsDQo+ID4gKyAgICAgICAg
+LmNsYXNzX2luaXQgICAgID0NCj4gYXNwZWVkX21pbmlibWNfbWFjaGluZV9hc3QxMDYwX2V2Yl9j
+bGFzc19pbml0LA0KPiA+ICsgICAgICAgIC5pbnRlcmZhY2VzICAgICA9IGFybV9tYWNoaW5lX2lu
+dGVyZmFjZXMsDQo+ID4gICAgICAgfQ0KPiA+ICAgfTsNCj4gPg0KPiANCj4gUmV2aWV3ZWQtYnk6
+IEPDqWRyaWMgTGUgR29hdGVyIDxjbGdAcmVkaGF0LmNvbT4NCj4gDQo+IFRoYW5rcywNCj4gDQo+
+IEMuDQo+IA0KDQo=
 
