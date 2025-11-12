@@ -4,91 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD12CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA4BCCF9F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Nov 2025 07:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJ4tG-0003xa-4x; Wed, 12 Nov 2025 02:03:38 -0500
+	id 1vJ4uP-00054n-G3; Wed, 12 Nov 2025 02:04:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ4tE-0003wi-5y
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:03:36 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJ4tB-0003yF-VO
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:03:35 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so3406565e9.1
- for <qemu-devel@nongnu.org>; Tue, 11 Nov 2025 23:03:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1762931010; x=1763535810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=q7se5OtenhZotDJ001wyYbB8b+98LBInT6cl3Lx8+Tg=;
- b=d212h2RsQsx+Y1EfnOWZG/ZCssISmuNwcxp//l3H+5vIpscgkKhJ1mu8UKVihiF4li
- 65790LIQR3xu5qj9TxX1KyJaS91ZEQ0CchLlPeoOaIP5fjgExPKzjkj6ivo3UXx4xMbA
- frGNVnZqYrWqjs9Dtu8xD2jlLYcjBYm8lJO6prCgCASaX72JB+0MbaCMWQo3/9QEdDwq
- dsYBDjS/mI7NL3lH9BUhWB/jWf8HMLx0//qhdNQ5LuphXE3cBYBWpvO/+lMCSNnHb6im
- u+mE+7zXUYkxFsRzSejIm0blrLz3p8raAGcR/I5XaFGE0lXrnHScfLYVzIxB7Cbe0rZE
- AqqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1762931010; x=1763535810;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=q7se5OtenhZotDJ001wyYbB8b+98LBInT6cl3Lx8+Tg=;
- b=NZ9AG39fwO9BPzVLmVj/DKpnrgjMIrauhO9Ghq2bI/cAwSv1g0BWK6U2ICKpZM9jE3
- a2z2xqm/cWBwYRU3+jYRkQN2448OWt98yy042HVGqHHZjo40Zp0TlXGZ3dQiGLCLjjjw
- RXnc8fMq/cCGhh0QiUPS+krvAPCx4RuhMqwF4QRNdDWFCZ80Lrviww065bf0cyYJpsT2
- AWSSxpQDGLp2GcZ31yTwHYb/q+JDUnkshTjVxufPhpYiyhUqUqaRbF2E3FL02SiiWNV5
- +KsrBRBTuIZ3iDH6VpcodoPD0zmQ2by6DOIRwU76SQ4r7lUii8yZoyvkY4LS1prZNd0j
- vDSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcTOpU6uexp0SWaTo5FA5zbZ+ifx7FIMOQG/X9JURzTqgxngNJOkv5tzeju1w0cnHgqdo0v8u4I8ep@nongnu.org
-X-Gm-Message-State: AOJu0YxpDQOr7BdN/+JvCvfJJ+cAJyUAGlIc4rBiYIDqZrIhsmaRqRkc
- RxP3JdqvJrWdRfm+zIZMc5wYrrF+gOoGZHffrywEhhx249VNiFugTGY0C3jwK9HR1lt2uo4nJnU
- 86zfBHC9JXA==
-X-Gm-Gg: ASbGncvJA92h7htn92GAAJ/H0iTInOmoN614IB+dCEEaene5CTceQCvNq59n0LQg1H9
- ROULibUa1M7J+BtrYxW4PNzh9qf5YjTH930iMrL5dGu1s/t8UWMJuQXuLPeitY2tNRki/v+0szK
- SHixPFEddr5daYfpzrjmXuSWXSrmYixP9w/Rz3cpzWqG/S1l/KN4gkKhmGB1pnAM43XJRO5Wejc
- lTj73o1ET8cQNo07xT/xf+bkk9b//GEZXPb5q5/tuUQ4xcwzpoKsq1yEKtIU0VLAkEX2n1eUc2C
- Y3BUjEAUb539BzCQNo86kZzrVriJs39+UyuyEod/Q5/JmAz3if644k+evu88IQanaYi2RCQGdkk
- 53xwBw10SrdiIh1lPu66lUNsPYCHtLK1UWXiuyAr+ivXrfPUUpmuuKeQ6nB0cNsAMK6wJ8a+fjp
- b+1AD1jpXVAbqZ3lpWS4aq0BayR9QF0813IQg1oZ33REPt2xXv
-X-Google-Smtp-Source: AGHT+IHOnc63B0U1gOl3r9X4JbGL3s6/x90m9OhMtpDc4C+jkEoyWMz5L37RY4AzfcOU6+/rrMjG9Q==
-X-Received: by 2002:a05:600c:4593:b0:476:d494:41d2 with SMTP id
- 5b1f17b1804b1-477870b2cecmr15852275e9.29.1762931009836; 
- Tue, 11 Nov 2025 23:03:29 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47788a1f823sm6363875e9.2.2025.11.11.23.03.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Nov 2025 23:03:29 -0800 (PST)
-Message-ID: <dfbdc47a-6e70-44d6-8e87-eddf5363ff77@linaro.org>
-Date: Wed, 12 Nov 2025 08:03:28 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/9pfs: Drop unused print_sg helper
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vJ4uG-0004xn-70
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:04:41 -0500
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vJ4uC-00042z-CK
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 02:04:39 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AsCZIYMiTPwHx+Ccj8N++OOnMl/icUuGWO+HBdyEDqAsx0fDzN5cg73WxB9iZJJBnOAYInhcKGqRTWIFdcxKkKHkmqc3PgwH0jLUm4BkwmwSZ/L3t/xs4UWfKo+EftvtGbS6fCBIOjDg+ay6H1ciEkIwBeI3ptRcQR7m1jdNAOs+0pluwzkRqR7GuH3hiVh7GiHSaq0OrUQHv9PUwlszckc/qjA0w9QAul1oCRidnyzZmbuEMlNt8w83usYS+e41h8kJcVWpICnwsRRLSuGbaqELvlOl7Y7tD7T+vjH3ctQpZ2ASjWRUsnLWCtr5Ylt2EhjCfUN0N9deSGazDwGVHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RbCdmlWdFKkagLt5h9gxV/kuEBgsX97TFMO/Al1dHxE=;
+ b=Vm1XcurQS31EeehOs4FORApucN7GZTAKvoBIIX8YK2nJgpeCNZHkhM1bDG02b9qYKkwSjoV6kN1Y5t+wsYCNFd4oKbMGYU+s3D5FRoh0phit2uGGxfLIZADfTwdMvUL+V+nTcgvlBYpuS6YzHWdZqCnoSntRTxXdF5/eHpbjdwe8LcC2PlMW1xIkwBHtUUzMUb11wrpze/5MXPhLvu82oLCMG/dKe7/1i6kQCsEPiGvvK4T3rYB1ldOadCIRHzlRa1PQQHb1J5mc99XS77QjkYqtgNlSat/KVDnespVv8ktkn6/23Ga92oEeGYqFdVCwXamPvu4g12H1KqlWnVxTFQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RbCdmlWdFKkagLt5h9gxV/kuEBgsX97TFMO/Al1dHxE=;
+ b=LyiUpLc/yarCYIsxMP88qsnB4wc99FLmdsK6jVRRdFj3axYvMThK1AKOV0fZm2IWvpLseS4d6mgPCfv8Ca8/4DR/MKaprJeHGQOb1PF3Lh3ztBBUUbuvuILnCpKaJYg63gXRe233SVT5bX35OZEZZ0BB0JuquVDgFoKbu/mWJ8OJn7CVoDJVVml90yGvehiqsMPiGrYcpsRxW5AerOQsySoYLgZy9isQnutiP8zAroCVO25Y3bsnmSmoUyItN3AR3h5ZveQBuG3grN5m70t3m7qVGq0h+jRNay+T9sXt5FCw/+pAIFZegMaOEFOTr4CfLAGhlW9YNDH/oUCLbzOHqA==
+Received: from AM9PR04MB8487.eurprd04.prod.outlook.com (2603:10a6:20b:41a::6)
+ by PA4PR04MB9437.eurprd04.prod.outlook.com (2603:10a6:102:2a9::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.16; Wed, 12 Nov
+ 2025 06:58:04 +0000
+Received: from AM9PR04MB8487.eurprd04.prod.outlook.com
+ ([fe80::1e08:e81f:d29:e1da]) by AM9PR04MB8487.eurprd04.prod.outlook.com
+ ([fe80::1e08:e81f:d29:e1da%4]) with mapi id 15.20.9298.015; Wed, 12 Nov 2025
+ 06:58:04 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>
+Subject: RE: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional
+ testing of iMX8MM emulation
+Thread-Topic: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional
+ testing of iMX8MM emulation
+Thread-Index: AQHcUjR4IKJSoyibD0aCjGOoNfN43rTuH2WAgAB2bjA=
+Date: Wed, 12 Nov 2025 06:58:04 +0000
+Message-ID: <AM9PR04MB8487682307D0672DA3F5345B87CCA@AM9PR04MB8487.eurprd04.prod.outlook.com>
+References: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
+ <20251110112257.184578-14-gaurav.sharma_7@nxp.com>
+ <61242433-9D75-47F8-BC44-FD35748F055C@gmail.com>
+In-Reply-To: <61242433-9D75-47F8-BC44-FD35748F055C@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Osama Abdelkader <osama.abdelkader@gmail.com>, qemu-devel@nongnu.org,
- qemu_oss@crudebyte.com, groug@kaod.org
-References: <20251110155424.694664-1-osama.abdelkader@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251110155424.694664-1-osama.abdelkader@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM9PR04MB8487:EE_|PA4PR04MB9437:EE_
+x-ms-office365-filtering-correlation-id: fc84a118-062f-4cab-b37e-08de21b8d39f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|19092799006|376014|1800799024|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?Nv9tyoh5XNk+1uBDzGnVSFmO5WN+yYFcl/133hXXA09Zu+7G1lNFf6HOgN21?=
+ =?us-ascii?Q?ZmX1ZU7ZUvxHrEBT9cHxXSbZ0Fxc1EsTdd3BwKq1EHOeccAqfO9H61qCIzzr?=
+ =?us-ascii?Q?f3CS600dacG2IaYelZ45a3Dux+4hGwJd1FPQ6UjrH1uxeIHdlE9J/yMBbW5K?=
+ =?us-ascii?Q?D7O3Jq2UyNjkWXl/wrlIYXY1qQwfIoLd++kTwuNIrT5hDIYSwudvih5rDQqP?=
+ =?us-ascii?Q?I4MMlP9Tou7YIO97rORFwXIxRpL+wHXgux3ttLTF486b47UtIcIzPiB7azeT?=
+ =?us-ascii?Q?Fw8Hg6LJ9J3uwTtZRHDH+9fGlkONaPmIdK+D2X1JIF1rAPNPrn3FvItXt9iu?=
+ =?us-ascii?Q?Tg31NJHSMxJPmnV95oAzyMB30RmFtHsrhkwIZqdCQOSJHOzaIHmAwz772MB5?=
+ =?us-ascii?Q?Ebso2J9VK/Ga0YHjS/wqDevxgksO75bVIgJdmGW5flTMwYWfhKyWFn1G+2fP?=
+ =?us-ascii?Q?jwz8aZYTeoCRqg3oztpL2vmoGZFq8k3UjAqXTA/siDBcCX07kzpBZJeGIHS7?=
+ =?us-ascii?Q?DqxrFCJpTgxprdowxvDIeZt+9Fn/c9kcQez1uO3iOoSz0qXDtcR9FtFpCbF+?=
+ =?us-ascii?Q?DoEFRdZcY3oEoPWuVR32luscYKZGYY+VKrpfJsu0eYpMBdTUCbLg+JcFTLVP?=
+ =?us-ascii?Q?ql/sptq00ZiqNTb5QVcuZ3MykeD/XEyXuhDX9k1zhK5bcPTsl0lUO4Cwn1Gb?=
+ =?us-ascii?Q?ze+BcP/1DyEdzV1B76e4WjeoKPK7bPhM+VuBv7wKMXGjfTt4jRcNa3Lbv5SL?=
+ =?us-ascii?Q?hc9874KMKmbjXQWZwtuyusidX+6li+mS9AbTkRqxEwoJM7JlHcN1Ya06W8Vf?=
+ =?us-ascii?Q?eCm2yyGHli/r9P8aq3lFmCp1i/9B3Izck5r76jls4zPirghyYGoGlvhEPdTZ?=
+ =?us-ascii?Q?vcKHS0NQ9ahd2dMeJDCH+dxw2MVU74MzCMUQQmWyA39jcgWP/leon20RE8BH?=
+ =?us-ascii?Q?qSIrsC5QDRpnJn5C7ipY1Bk5wcneLtvTip1NVFmESc/m9FW/gTbBAce+P1F2?=
+ =?us-ascii?Q?T4SGCSJ+T/MBRrZaHM+wNqmxgLkw8vDP1nbPRGv044NK7+8SB9U5HlgnWbcd?=
+ =?us-ascii?Q?e7bJJf9OBDi66PvNaXBIg8Yxfl2adu8hm8wituOUurIWO73rM1vPUy7Nt32i?=
+ =?us-ascii?Q?Gn5yF5o6RWbnjtNyRxRdQPHwAp8erICScbSfLoJ5Aa3s7KDg2JNhcfO5TCbz?=
+ =?us-ascii?Q?cStkozyHp9LeSbLVcb/wS+lHHmyxefAkGJv1n7BVTECHNouPnm7hmb/QaSd9?=
+ =?us-ascii?Q?hrlhLpXBs3CmyPaINax6px9WI7YTHYb3zJXOZ6iL13T6kMGymteY4c9UHWHN?=
+ =?us-ascii?Q?H9s77x+ekq5DtLsTRyQllZR3BetQmSpqhpZAQZRblWUl3eL2SdN6iqS62ptQ?=
+ =?us-ascii?Q?nqVPbuUlMAs1jDdUAdPc3uTvImKlbF9TTtG4AFaoK2/tn2Jyxd08rJc3kPu3?=
+ =?us-ascii?Q?4H9YIXOiwgpdk6jc9o4UBP9D9eLg3LHF6GHxNSzS2O9Yq9buEcwG3KrjJ1TB?=
+ =?us-ascii?Q?6EfkoITWeUqE9EeAl7SwM6Phsdho+yd3Z2Pp?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR04MB8487.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(19092799006)(376014)(1800799024)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ZdhAtuvGP4++k6AddOFeTfxIXf8PImKHmx87RVffa8fTnEg2t7gElXJqvhOY?=
+ =?us-ascii?Q?HPK2APL1zIPFxBgWVe70oHFLjE6xCxLwDCw11fOZvw84yHbd9gjbit2rHgal?=
+ =?us-ascii?Q?oSw24IREVynIkl8s8Of8riCJZunZYWfpjGa3sSHhoO19sSpUPohSND9fwyF8?=
+ =?us-ascii?Q?UVMiUCZ6Pu5THLQBeo5nwskxCC9yS/ZUhE+rMy+ibe3hc8CjcYl+d92GFjrM?=
+ =?us-ascii?Q?cbK0fp+CYdfjTOyJDC6TT4Xl15ylE9zeIQyJRPPYOOFBxSzkFKe4QlAg9Npw?=
+ =?us-ascii?Q?bmPA2nRqzYgYvMHjiVg/zl+vUBKuDPLpN419ynKoBQEJBuZdlnADQeKqzzU7?=
+ =?us-ascii?Q?13FtlkdtP8/kG0MHZ1rAbOTjWYcyBeTAokLxnp2YIfxWdvDurr2iDPaeGOM2?=
+ =?us-ascii?Q?zOOzDZ2yL+/Rw8QyxHwTuUiA8h2JvybyemZlbm87AghYDSE17WQT/pgFoufK?=
+ =?us-ascii?Q?pdVhb0yrz57EvUAfYrmFXasELs89U5Atx6+KyxyVQxW+XXZ21QWXD0Kyz6Vr?=
+ =?us-ascii?Q?DygThThdb+GCvQyXtYpeKGio8hGfINT6DZYfZtBCNc5Q1k+XtOgouqQ5gVYa?=
+ =?us-ascii?Q?Z0X+OVaXi+cRgHi5pbqcQe7uHbYkUuUm/UvN24UQ1e0gdmizBz4Cq3aTcMYJ?=
+ =?us-ascii?Q?ZokzCltmPGIMXjCtewwrazoEXFGywFF7bnz3CL7EdF73J64HT+moWYImyjK9?=
+ =?us-ascii?Q?gD9oL9MZjVZzJocNcOWlWwaLj9UtGCqJ/g6V54qTEy6Pbmchup35pXpAR54F?=
+ =?us-ascii?Q?BKDs3HdrII0b63Kw65zhCDBmEYYyMPxiz9PaYd888Fqppk3uRTotiJWZpzcK?=
+ =?us-ascii?Q?GvfWq6BKuMhEHLIDFFE2onUfzexMHp9yam3SlTDEGpEF61yqvvZGyym2OBU9?=
+ =?us-ascii?Q?HvLBSr43dmUUUuuagYTagpPkN8rPVPb6AUFG3FJeUVCJ1XG/frDxyMSLFH44?=
+ =?us-ascii?Q?8OfECM5EmPXqow+14k+hUzvUVO3CZii8p5qYLEgg7dpFURQuC6qMpa8ewdgs?=
+ =?us-ascii?Q?aN/D6CoP+QWnJ+VskXAosLr2Os2871s9vQNeCynNlYGCatcyG5jqtRVg8/9Q?=
+ =?us-ascii?Q?1vYbTBj5Z3LFeF/NDyfZM34yW4OgDGKzysFJJgHbOmUGgKfM9ZX81befvccQ?=
+ =?us-ascii?Q?yJK58JwuC6G+krYGpvraHnwgzWOVy4WbdO44AWERFIUGLCyQ7LK1DyuXj1w4?=
+ =?us-ascii?Q?irDatHl9Lcv1Je6qnPfJJHTRU/GdDQQLJG3uV1NeUoKOi5vP8E9NEq8ISTRf?=
+ =?us-ascii?Q?Y1xfx6uji+V3/WBEWFE/dxmySKDj3hnbt6ruCWTZRBeiEaKOsPT2nsvlT3oR?=
+ =?us-ascii?Q?h+3Y7dQQTkkvNYDmBNJumEnLUF8zIYCPkXjVWLxwUZZ4wV4V5fJGTmmAhwtn?=
+ =?us-ascii?Q?HJMtLFPglS7h94Z2bFuHrMZumuExBmjd0k8yE0Db1PkiBAARfTzSiZL/jLER?=
+ =?us-ascii?Q?s1Zc8ZCfCAThQpDDwDIBZoC0Ec9fYmDYM+v2/mwguJOzz/AOLVOSWolD+huf?=
+ =?us-ascii?Q?kQQVTD+gMat8ZW00mTPRyG47IpQ9MSSUENMcit4jKhBvV2xT94nkTRoUKqWX?=
+ =?us-ascii?Q?yytSZSqpZA70HdD9qOw1uyr508QyHAjRTqa3TStf?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8487.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc84a118-062f-4cab-b37e-08de21b8d39f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2025 06:58:04.1218 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5UFe49Fnml9MWEcEy2/a3xZiuUX9A4ifTFDiRv8UfHRLxJa9AE7YfkeTWqsFb3K3/fzZRlXur+prYMkcvZEAEg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9437
+Received-SPF: permerror client-ip=2a01:111:f403:c20f::7;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,57 +168,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Osama,
+Thank you for reviewing Bernhard. Yes, iMX8MM is very close to iMX8MP that'=
+s why I chose to stick to that structure.
 
-On 10/11/25 16:54, Osama Abdelkader wrote:
-> Remove the print_sg() debug helper and its always-disabled call sites
-> in v9fs_read() and v9fs_write(). The function was only reachable via
-> if (0) blocks, so it has been dead code for a long time.
-> 
-> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-> ---
->   hw/9pfs/9p.c | 20 --------------------
->   1 file changed, 20 deletions(-)
-> 
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index bc4a016ee3..a8de894f4c 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -1389,20 +1389,6 @@ static int stat_to_v9stat_dotl(V9fsPDU *pdu, const struct stat *stbuf,
->       return stat_to_qid(pdu, stbuf, &v9lstat->qid);
->   }
->   
-> -static void print_sg(struct iovec *sg, int cnt)
-> -{
-> -    int i;
-> -
-> -    printf("sg[%d]: {", cnt);
-> -    for (i = 0; i < cnt; i++) {
-> -        if (i) {
-> -            printf(", ");
-> -        }
-> -        printf("(%p, %zd)", sg[i].iov_base, sg[i].iov_len);
-> -    }
-> -    printf("}\n");
-> -}
-> -
->   /* Will call this only for path name based fid */
->   static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
->   {
-> @@ -2468,9 +2454,6 @@ static void coroutine_fn v9fs_read(void *opaque)
->           do {
->               qemu_iovec_reset(&qiov);
->               qemu_iovec_concat(&qiov, &qiov_full, count, qiov_full.size - count);
-> -            if (0) {
-> -                print_sg(qiov.iov, qiov.niov);
+" Looks like these lists are sorted alphabetically. Shall we preserve that?=
+"
 
-Alternatively, consider converting to trace event so we can keep
-dumping the entries, but select that at runtime (see for conversion
-example commit 4847c5701a3 "hw/rtc/mc146818rtc: Convert CMOS_DPRINTF
-into trace events").
-> -            }
+-- yes "tests_aarch64_system_thorough" should be sorted alphabetically pres=
+erving the original order - - will modify it in v2 patch
 
-Regards,
+"This DTB offset is the one for the imx8mp-evk, and in fact the console log=
+ confirms it. Both machines seem to be so similar that the test passes anyw=
+ay"
 
-Phil.
+-- yes, I just found out in the console log. The test was giving a false po=
+sitive. Thank you for the heads up!  I have now modified it to fetch the dt=
+b from the Debian stable repository. Verified it's working correctly via co=
+nsole log
+
+What you need is the offset in the "disk.raw" image that gets extracted fro=
+m above file. Open "disk.raw" in a hex editor and search for "imx8mm-evk", =
+then determine the offset of the preceeding "d00df00d" DTB magic. That is y=
+our offset.
+
+-- do you mean the DTB magic "d00dfeed" instead of "d00df00d"? Also, while =
+I was analysing the DTB offset of the mainlined imx8mp functional testing '=
+disk.raw' which has debian-12-generic-arm64-20231210-1590. The script menti=
+ons the DTB_OFFSET at 0x64F51000. Dumping this offset using xxd[also verifi=
+ed it via hex editor]:-
+# xxd -s 0x51000000 -l 4 disk.raw
+51000000: 6cff 0060
+It doesn't mention the DTB magic number at this offset. Please let me know =
+if I am missing anything here .
+Can we choose not to rely on the hardcoded offset and instead download the =
+dtb from the Debian stable repository itself? This way the same functional =
+test can be used easily for the future imx board porting as well.
+Looking forward to your guidance.
+
+
+
+-----Original Message-----
+From: Bernhard Beschow <shentey@gmail.com>
+Sent: 12 November 2025 04:51
+To: qemu-devel@nongnu.org; Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Cc: pbonzini@redhat.com; peter.maydell@linaro.org
+Subject: [EXT] Re: [PATCH 13/13] hw/arm/fsl-imx8mm: Adding functional testi=
+ng of iMX8MM emulation
+
+[You don't often get email from shentey@gmail.com. Learn why this is import=
+ant at https://aka.ms/LearnAboutSenderIdentification ]
+
+Caution: This is an external email. Please take care when clicking links or=
+ opening attachments. When in doubt, report the message using the 'Report t=
+his email' button
+
+
+Am 10. November 2025 11:22:57 UTC schrieb Gaurav Sharma <gaurav.sharma_7@nx=
+p.com>:
+>Added script that would validate the iMX8MM emulation by checking the
+>linux console log. If it succeeds, it will return:-
+>
+>ok 1 test_imx8mm_evk.Imx8mmEvkMachine.test_aarch64_imx8mm_evk_usdhc
+>
+>Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+
+>Hi Gaurav!
+
+>Nice to see another imx8 machine being contributed! I'm impressed how clos=
+e you stick to the imx8mp, both in terms of structuring this series as well=
+ as the code.
+
+>I've built your series and ran the functional test. Comments below.
+
+
+
+
+--
+
+>---
+> tests/functional/aarch64/meson.build        |  2 +
+> tests/functional/aarch64/test_imx8mm_evk.py | 67 +++++++++++++++++++++
+> 2 files changed, 69 insertions(+)
+> create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
+>
+>diff --git a/tests/functional/aarch64/meson.build
+>b/tests/functional/aarch64/meson.build
+>index 5ad52f93e1..31ecedbf6f 100644
+>--- a/tests/functional/aarch64/meson.build
+>+++ b/tests/functional/aarch64/meson.build
+>@@ -5,6 +5,7 @@ test_aarch64_timeouts =3D {
+>   'aspeed_ast2700fc' : 600,
+>   'device_passthrough' : 720,
+>   'imx8mp_evk' : 240,
+>+  'imx8mm_evk' : 240,
+>   'raspi4' : 480,
+>   'reverse_debug' : 180,
+>   'rme_virt' : 1200,
+>@@ -28,6 +29,7 @@ tests_aarch64_system_thorough =3D [
+>   'device_passthrough',
+>   'hotplug_pci',
+>   'imx8mp_evk',
+>+  'imx8mm_evk',
+
+Looks like these lists are sorted alphabetically. Shall we preserve that?
+
+>   'kvm',
+>   'multiprocess',
+>   'raspi3',
+>diff --git a/tests/functional/aarch64/test_imx8mm_evk.py
+>b/tests/functional/aarch64/test_imx8mm_evk.py
+>new file mode 100755
+>index 0000000000..d5eb43afc6
+>--- /dev/null
+>+++ b/tests/functional/aarch64/test_imx8mm_evk.py
+>@@ -0,0 +1,67 @@
+>+#!/usr/bin/env python3
+>+#
+>+# Functional test that boots a Linux kernel and checks the console # #
+>+SPDX-License-Identifier: GPL-2.0-or-later
+>+
+>+from qemu_test import LinuxKernelTest, Asset
+>+
+>+class Imx8mmEvkMachine(LinuxKernelTest):
+>+
+>+    ASSET_IMAGE =3D Asset(
+>+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
+>+         'debian-12-generic-arm64-20231210-1590.tar.xz'),
+>+
+>+ '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
+>+
+>+    KERNEL_OFFSET =3D 0x51000000
+>+    KERNEL_SIZE =3D 32622528
+>+    INITRD_OFFSET =3D 0x76000000
+>+    INITRD_SIZE =3D 30987766
+>+    DTB_OFFSET =3D 0x64F51000
+
+This DTB offset is the one for the imx8mp-evk, and in fact the console log =
+confirms it. Both machines seem to be so similar that the test passes anywa=
+y.
+
+What you need is the offset in the "disk.raw" image that gets extracted fro=
+m above file. Open "disk.raw" in a hex editor and search for "imx8mm-evk", =
+then determine the offset of the preceeding "d00df00d" DTB magic. That is y=
+our offset.
+
+Best regards,
+Bernhard
+
+>+    DTB_SIZE =3D 45 * 1024
+>+
+>+    def extract(self, in_path, out_path, offset, size):
+>+        try:
+>+            with open(in_path, "rb") as source:
+>+                source.seek(offset)
+>+                data =3D source.read(size)
+>+            with open(out_path, "wb") as target:
+>+                target.write(data)
+>+        except (IOError, ValueError) as e:
+>+            self.log.error(f"Failed to extract {out_path}: {e}")
+>+            raise
+>+
+>+    def setUp(self):
+>+        super().setUp()
+>+
+>+        self.image_path =3D self.scratch_file("disk.raw")
+>+        self.kernel_path =3D self.scratch_file("linux")
+>+        self.initrd_path =3D self.scratch_file("initrd.zstd")
+>+        self.dtb_path =3D self.scratch_file("imx8mm-evk.dtb")
+>+
+>+        self.archive_extract(self.ASSET_IMAGE)
+>+        self.extract(self.image_path, self.kernel_path,
+>+                     self.KERNEL_OFFSET, self.KERNEL_SIZE)
+>+        self.extract(self.image_path, self.initrd_path,
+>+                     self.INITRD_OFFSET, self.INITRD_SIZE)
+>+        self.extract(self.image_path, self.dtb_path,
+>+                     self.DTB_OFFSET, self.DTB_SIZE)
+>+
+>+    def test_aarch64_imx8mm_evk_usdhc(self):
+>+        self.require_accelerator("tcg")
+>+        self.set_machine('imx8mm-evk')
+>+        self.vm.set_console(console_index=3D1)
+>+        self.vm.add_args('-m', '2G',
+>+                         '-smp', '4',
+>+                         '-kernel', self.kernel_path,
+>+                         '-initrd', self.initrd_path,
+>+                         '-dtb', self.dtb_path,
+>+                         '-append', 'root=3D/dev/mmcblk2p1',
+>+                         '-drive', f'file=3D{self.image_path},if=3Dsd,bus=
+=3D2,'
+>+
+>+ 'format=3Draw,id=3Dmmcblk2,snapshot=3Don')
+>+
+>+        self.vm.launch()
+>+        self.wait_for_console_pattern('Welcome to ')
+>+
+>+if __name__ =3D=3D '__main__':
+>+    LinuxKernelTest.main()
 
