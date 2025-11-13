@@ -4,195 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DF4CD4F5F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 08:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94869CD5BA2
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 08:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJT4y-0000rX-Il; Thu, 13 Nov 2025 03:53:20 -0500
+	id 1vJT5p-0001SY-T8; Thu, 13 Nov 2025 03:54:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vJT4j-0000Yc-8B
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 03:53:05 -0500
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
+ id 1vJT52-00014W-Fy; Thu, 13 Nov 2025 03:53:25 -0500
+Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vJT4g-0001mh-Em
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 03:53:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763023982; x=1794559982;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=ojQjRXodIeedUWhxXszKkWwnOLgxxI6sXRinCgQMPkA=;
- b=IER2pkvm8q5kNhzfKCdroshykkZq0vHVzHGXp2pG3LdmRJu7hb6QgD36
- 7aXRgsmJn/MW2TKYKxR7llCyiIUkmpyKH0702VurEciQONJkxWQmrZlN0
- azn6Zm/Gi/jPShAN0cn0A+XGjTbs78AZCdiy/YIq0Iy7V0c50ANWThkMR
- 9Nw+J/QL3P44Bp+T3rFbp4JaGpGICoqNU/vZwRAVMMO3keR4PjFmYib04
- D29ZkKunGG7a5IAvb3aJA85c8U8wSjDZXJOYz2WB8f4nKDDYw+NO/2Mw6
- wdG+KUphhYspcohWgcl+4TIaJ8qYT1Jwgm4oGwnGwIP5xFB50qmNbBCIR A==;
-X-CSE-ConnectionGUID: vcOkKVgPRS+qzx1kU8G2+g==
-X-CSE-MsgGUID: HIdqej2WQveJzpcFFXnCfA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="64304673"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="64304673"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Nov 2025 00:52:59 -0800
-X-CSE-ConnectionGUID: r4XdIHadS2mgrFL2FTZixw==
-X-CSE-MsgGUID: l/MJaxuRQnKyhDsA/6YX1g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="189290511"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Nov 2025 00:52:59 -0800
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 13 Nov 2025 00:52:58 -0800
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Thu, 13 Nov 2025 00:52:58 -0800
-Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.13) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 13 Nov 2025 00:52:58 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tM0ei5k7nbZbWIUJTtBDI5HWiaC0DRfTSkwh5iYEADMgSjPAUF+Vb+eO7sBytjCyB4xT/Z+QxibB+vKZPxgppvBmDi2BxRSTvL0EzwyQ+InkB7aAFk9Fk1hPjcN3Ywug2ZA2K28eqdmb6CfJrSKE0YE8fYgwO4SFjZ5jfNeH5A0dlJWBsHcWlxMvXGL4evT3aCBPxMghFcvz03VU6nkKKvNJkaKlk68mSHXU4vpO9JaauhQ6d6DZKS0KsxZg9d0Bf9VaRDXP0vg5KxaHHSzDzIIaa/A+4tX8CsNy4pAs1ruh2Um2Ap6+XEnFZzRUmMCct1ri1XVJiKk9dpK4YL5XSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iOWWbFEgp7bgLswspeD5Fw+CQ1vvUVcVCvaQLqBz1tM=;
- b=FTQg/taSce2gGdWbFbzdNP8oyuEzG0vXakd1oXdCm+Zhzv82DnFn3azupBefFD4VsvtZh9t7p6XiJid5u5gMq8RpMM1nGIryMN+AF8oKrArchgrtsTGCeS2M6PIB0SAaMLrfgHbGwIMNBadj8qNt7sbs+P+vYYAfO9tvEW+NB651gCVSqcmOdQ94y8gr8UOhDtmR4Wxd0z/mIUHNytu0HCRLpV+0ofgiTJdocFOWB1kvsxFMM6cx137Vjj5den4UvgNoOSTCECKKv3mDEN/Gn5hV8zAUg+VezOwBeMQQtUcDkXN/ir5wLTRhTrdugrDNHgwL1J8t2poVBwr7XARJIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by PH7PR11MB6402.namprd11.prod.outlook.com (2603:10b6:510:1fa::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.15; Thu, 13 Nov
- 2025 08:52:56 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9320.013; Thu, 13 Nov 2025
- 08:52:56 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
- Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao
- P" <chao.p.peng@intel.com>
-Subject: RE: [PATCH v7 19/23] Workaround for ERRATA_772415_SPR17
-Thread-Topic: [PATCH v7 19/23] Workaround for ERRATA_772415_SPR17
-Thread-Index: AQHcRMKfeXHyQowlQ0W5iGBKgUDegrTg/igAgA8/jGA=
-Date: Thu, 13 Nov 2025 08:52:56 +0000
-Message-ID: <IA3PR11MB9136D1A323FFE88DA66E632892CDA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-20-zhenzhong.duan@intel.com>
- <ee36b44e-ba84-462b-be43-bb00b0b4158d@redhat.com>
-In-Reply-To: <ee36b44e-ba84-462b-be43-bb00b0b4158d@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH7PR11MB6402:EE_
-x-ms-office365-filtering-correlation-id: a3ce1ed5-3eb7-403d-34ad-08de22920a19
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?Zddg2QlDa+1PotL275anEaq6GmSu+RuJifBwOSV3wNyIKNRhFcs+9EyINJqf?=
- =?us-ascii?Q?CF2v0j/ES14fYE7Xfn48QHYoxLn7KWqHCkhEE8Ez4tsnblaZU08gjyVFSvMB?=
- =?us-ascii?Q?J9ATazEVyWjXCPnV80VAXTBnfZ4tuo68SRaS8KuqaCzkyfFquyGP3aMSDxni?=
- =?us-ascii?Q?yvxsZ3LzHF2RBba9scVOFlZYOedgPsWrH4B5ko2o2aywgIx4En+ji05rtPwd?=
- =?us-ascii?Q?fg9BAfLbeYSJadv1tZ0g/nuuTXX/aoYq4Mu4utR8mU6D/ApRY62bFCShc1/C?=
- =?us-ascii?Q?+zPjbgiqsNrEoTCXHZmB/Z0nYmNNV9WIsrNbtR3rprHGuRFfh1lqdSOVYXHg?=
- =?us-ascii?Q?eYud3z/EvYrX4DzF4H05CfF9d5ek9K78E4EeH9ayslmh4uwR/1RXlYwZMruu?=
- =?us-ascii?Q?6fbaauhN2LZZNdel5VuaxTu07sr8oPAxRV1KVU6s9KjBGorPGCAminIT81Fh?=
- =?us-ascii?Q?A2bZ5nVXFnVUrHLcTbt4lYZxqh5389+XzI8FnYAxZ4AnA7L9HyO5K9dcGu7U?=
- =?us-ascii?Q?5mmmal0dfGJeai4PfTdmhZnztTyLCJPqLiAbz3V7fQEn6OLAqKpUH+keO4Ae?=
- =?us-ascii?Q?7K5FwchbkYXKW3U/LVF8+wdZaGmZ/lMxwct1QCWBPvWQNH0Y3Ch0lVcohJvH?=
- =?us-ascii?Q?zJQQLc5uq7edd7C5kUhqRhcuWuYYV/1d3/tA+5pEhZ0dHqoviPqFWw7G3WbV?=
- =?us-ascii?Q?CycEfdI9Qv8B4OMbHvOgesJTuHqoO40A2jXVmeHXnSmv9lzH8UEHOfgU+tte?=
- =?us-ascii?Q?Eo3DjkEdt48Dv1pbCMLIu8evTzfzUhIW4DihCMNJpftDoYi7grmEF8tJxLOK?=
- =?us-ascii?Q?UNG9wfllEfY28hgWd5PDa7GrcovGsYuWPJZbXWe6j/sdAYFPH6RI9U1pJt7R?=
- =?us-ascii?Q?apF4zYbykEE60hwXzVZTFM5foHjT9Yg2dP9dmyzj0WlgPmP6xbjpM1u2TaRW?=
- =?us-ascii?Q?KSadlRwOgiKB7CRJ8Pj3mOE9YaHjHU09z+VRN2ggr6Z+0inVpYocHUt/K3EG?=
- =?us-ascii?Q?SKXIXg2m/W9s65zkfbn7hd4uX8mQ+AlBfvKpghoJKOHOylpmc6WX5/Dgrjps?=
- =?us-ascii?Q?VLThm4xwrHBkGK6YXmU/USyFSDInMtF6LDKV1VPuuJ9XP2iRIhHLmsyUVmPQ?=
- =?us-ascii?Q?ezT91V4eOjtVHxUKkCm5BjEdwhxq3Tceee+4DXp3SuyHf3z5EDd4CqROrxw2?=
- =?us-ascii?Q?l2qRo+wfV4UZ9wcy5HDd6AyqqwG2IiAW/SgFEKDE5ChEkqBS/2mOiZJvYwib?=
- =?us-ascii?Q?IKO+q22HVwHMGfBSomvWeumU3BJdrCWKkd/00cTCd6W3DqhuBhop3KV2C8Af?=
- =?us-ascii?Q?bcYpRE06LVsJVIrMrETdVIV8Q6XgfOJS2u5grqzyA4tdTIVzHBznSg2YjcmN?=
- =?us-ascii?Q?Q1r1Cdf1COUM/J4H0zxNAjD5dkHCyMHsVskEJ7qGLBeUe7Q9skfpbDugQrun?=
- =?us-ascii?Q?bC30Z5yJnqQPmHnQUqdKtEogsatHqiUt9hqz1PUv3+oEZuQTBogbtPrIfthd?=
- =?us-ascii?Q?Q8mdtoj6pB/YtCaEPktnUanbR5yDNHeTGfcn?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?mPf/MwoqXdnw0kzKtjCQkcw5Eq3NgVMROHJcUhifZkcplc/ro68FQgdDSD5R?=
- =?us-ascii?Q?yeTTC7wEq/3/q20FnWMLy5je+lyfVWx7YpzYFSonRcTgvyQcqeG5WcMHov80?=
- =?us-ascii?Q?9Ffqd6kboSbHQxg5k69bFba97Jg/alZhWrnOtAqU+FYc4bP0/B1SmTXdl0B3?=
- =?us-ascii?Q?Gvt+GkyaGWs6NwMrB+2N66sd7dci0S8d/DTUtsdrsWYG31KgLYQm5WpdQAvn?=
- =?us-ascii?Q?zyyL+KMd+SgI8lktH4GdSdzbERpYXmDCHg2fPstPKmYA2A7KXGscbLkaoJAI?=
- =?us-ascii?Q?F/VwRowzm2GO3TasgjYlySn9YZv2KcEd/APMqyXdU6Z3KRjxhla0cXFaS0ML?=
- =?us-ascii?Q?FC5YCSoSw1aQIQl3cd5s3wegps/wwn0eRw0yBdkpa9EoDy/tO2hlvm/N+Y4B?=
- =?us-ascii?Q?bQrqPo81KIvbbM9gYg9LYmNw+S3o4S31xGMr+Y4TS0i7FN36Kqkug7pNih1T?=
- =?us-ascii?Q?huv0bMkfBdgXnSEUBCVK5aTb9uqb9ghPHyoqmU8s2XOzZ2s3mkxOB6QMtSUI?=
- =?us-ascii?Q?te8VnrSMsYzuY0ovzUko5cQvdGQijS9jVXHbINSkQO1bMZ89sTotDH0zZJ5X?=
- =?us-ascii?Q?peRYA4trVpl1/VpDsLgMoxofeLDurN8+LB2Ssup0T4UN1zldu1ip0iCg51G5?=
- =?us-ascii?Q?laYC0r79fSnbxfCvRH3xg4sRruwv1OLSPHUfLU9ihZjO2w8++bK5cwx6rajC?=
- =?us-ascii?Q?HumhLDw41A0L1pVi2VI+Bqac3gg8LYU8Fivayy7bdH9RFkGH2FM/0kVKuapB?=
- =?us-ascii?Q?MCrIhQAT/Yk1i3iFlUx89ShMoCYnLNIg8gylOQt94GKRSXmunhLuNOqeVPvX?=
- =?us-ascii?Q?MfPyvfTQ86OwrxEF9mW2FPAYaVBBH/C0mn7afuW8BAD8+mxBDYvleWYa9Hvi?=
- =?us-ascii?Q?jPUXXzCOCBim0bh2wHv1gau7CN19/uHs5iKiidFNk5dMwO7IkWh2dDEthsM6?=
- =?us-ascii?Q?1l1djJp3C5B7ZrVHVEpzhQAHfZ9zSYyW5VMgag+W18nvueLBD4Qbx5mEeLDN?=
- =?us-ascii?Q?iF3i7dLiIaCew1Pm7vgld9VKCKkgyuV+RpCSTLuRL7Iv9iC52t0a7rXHLRwY?=
- =?us-ascii?Q?i6gZWICTES9tSYoAjFzi0lDsgsPtdUlTs8Icym8fncWNSMd3zo7eflGNbxdQ?=
- =?us-ascii?Q?4IyEMnMejY+U/NzSPPay5AjK4Gp5PuKC/ZFADijRKF/XOnlcgmiz/xRj8ZGT?=
- =?us-ascii?Q?JcS/7k9pNiMN9RbSi2EUa8byex4rbEggzChFd0SOuE/ZpLK7g+AH8J8hjs3W?=
- =?us-ascii?Q?46Jw4IbO7PmCnVTq9q9xKZ7GGds0kTZzpQf/9yELk5lZZut2SdajIVUuOvPD?=
- =?us-ascii?Q?hDCSgvNj9GBrTUSW3pQe0Ht21k3PyntyQLqM/Kk9xwx70yy7lc6NMnklEQdU?=
- =?us-ascii?Q?j+5REKC5qY5V804k0zdBCG6vwIrX6VBbmjsH4vGPhq5k17TMaaG18g41d7vX?=
- =?us-ascii?Q?cXxzRltKtoJ4t5c585cbCYmpu/XnG65x6acfqXjU1bMgRuZtSirJBA0wU5/H?=
- =?us-ascii?Q?LGd4WWFsJF61rspOccadkoKDlyy5roUYf70c9xQQWJLeNBiG21cP81I79wHX?=
- =?us-ascii?Q?xAcbM9Qhcbh9s/VWgDK+J/PvBxyqODGPVuZDFImM?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
+ id 1vJT50-0001of-1l; Thu, 13 Nov 2025 03:53:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
+ In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:
+ Reply-To; bh=kYbaxiwNZYnS7hL2hoqeHX+nQYbGcUKgNgLkh8tmBb0=; b=BiX5CzqiaGxiq7xQ
+ cfqQ2VVYRFGwAs0zQJm/ZpU+lEvC1efG5PE/N6QODmgYg7BtVGlIFLdNT8ENpaab+UU3iIsYhYLsT
+ E22ymIWFfow5meoH4iOdqr00OMK6yFIWjlcRZfN4miblrkJEfNRLY29/0PKhVm0CaewxYsia4icNQ
+ nLdu0O0UExBQVA0XzRIZ9Wgmay77yUQBTWNJZlxg1C+RbRff0ZaLmd+T7EDjtVMyoj/Ti03GfRXnq
+ sFgLaFHHw4Rr/nPp3OgJa+j27yp6py14Gcykpwbhmu7EMDUFVNPOjb70FbuLWrrYNOMm+LFY889+o
+ Yu9h0HB5NPP39RLFcw==;
+Received: from [167.98.27.226] (helo=[10.35.4.47])
+ by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1vJT4v-000eCB-0J; Thu, 13 Nov 2025 08:53:18 +0000
+Message-ID: <19ada6a7-089e-4103-9c2f-c6a9a0e7add2@codethink.co.uk>
+Date: Thu, 13 Nov 2025 08:53:17 +0000
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a3ce1ed5-3eb7-403d-34ad-08de22920a19
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2025 08:52:56.2914 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wyn5J7V4fbGvlRubwceLghiPyrJmk3CAYhtiK7bZEfyK2BjvSbFCC6UveHR65vols7oe/ci1fno0U0aKLSX7VPdpjU+ZFg2qF+RYzHbdwYw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6402
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.18;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Add RISCV Zilsd extension
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org
+References: <20251110090510.84103-1-roan.richmond@codethink.co.uk>
+ <CAKmqyKPheAMZt6cn2d4bN2kPxXMrr5Vr8jY5+MBuqhptnc4wjw@mail.gmail.com>
+Content-Language: en-US
+From: Roan Richmond <roan.richmond@codethink.co.uk>
+In-Reply-To: <CAKmqyKPheAMZt6cn2d4bN2kPxXMrr5Vr8jY5+MBuqhptnc4wjw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=188.40.203.114;
+ envelope-from=roan.richmond@codethink.co.uk; helo=imap4.hz.codethink.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -209,101 +72,192 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
->-----Original Message-----
->From: Eric Auger <eric.auger@redhat.com>
->Subject: Re: [PATCH v7 19/23] Workaround for ERRATA_772415_SPR17
->
->
->
->On 10/24/25 10:43 AM, Zhenzhong Duan wrote:
->> On a system influenced by ERRATA_772415,
->IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
->> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the
->readonly
->> range mapped on second stage page table could still be written.
+On 12/11/2025 01:41, Alistair Francis wrote:
+> On Mon, Nov 10, 2025 at 7:05 PM Roan Richmond
+> <roan.richmond@codethink.co.uk> wrote:
+>> This is based on v1.0 of the Zilsd extension [1].
+>> The specification is listed as in the Ratified state [2],
+>>   since Jan 30, 2025.
 >>
->> Reference from 4th Gen Intel Xeon Processor Scalable Family Specificatio=
-n
->> Update, Errata Details, SPR17.
+>> [1]: https://github.com/riscv/riscv-zilsd
+>> [2]: https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154861/RISC-V+Specs+Under+Development
 >>
->https://edc.intel.com/content/www/us/en/design/products-and-solutions/pr
->ocessors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
->>
->> Also copied the SPR17 details from above link:
->> "Problem: When remapping hardware is configured by system software in
->> scalable mode as Nested (PGTT=3D011b) and with PWSNP field Set in the
->> PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
->> Access bit if enabled) in first-stage page-table entries even when
->> second-stage mappings indicate that corresponding first-stage page-table
->> is Read-Only.
->>
->> Implication: Due to this erratum, pages mapped as Read-only in
->second-stage
->> page-tables may be modified by remapping hardware Access/Dirty bit
->updates.
->>
->> Workaround: None identified. System software enabling nested translation=
-s
->> for a VM should ensure that there are no read-only pages in the
->> corresponding second-stage mappings."
->>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> Reviewed-by: Daniel Henrique barboza <dbarboza@ventanamicro.com>
+>> Reviewed-by: Richard Henderson  <richard.henderson@linaro.org>
+>> Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
 >> ---
->>  hw/vfio/iommufd.c | 10 +++++++++-
->>  1 file changed, 9 insertions(+), 1 deletion(-)
+>> v2:
+>>    - In `gen_load_zilsd` swapped `dest_gpr` with `tcg_temp_new`, this prevents
+>>      writing to `r1/r0` in the case where `r0` is the set as `rd`.
+>>    - Removed unneeded brackets around `a->rd` + c expressions
 >>
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index f9d0926274..f9da0e79cc 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -15,6 +15,7 @@
->>  #include <linux/vfio.h>
->>  #include <linux/iommufd.h>
+>>   target/riscv/cpu.c                      |  2 +
+>>   target/riscv/cpu_cfg_fields.h.inc       |  1 +
+>>   target/riscv/insn_trans/trans_rvi.c.inc | 57 ++++++++++++++++++++++++-
+>>   3 files changed, 58 insertions(+), 2 deletions(-)
 >>
->> +#include "hw/iommu.h"
->>  #include "hw/vfio/vfio-device.h"
->>  #include "qemu/error-report.h"
->>  #include "trace.h"
->> @@ -351,6 +352,7 @@ static bool
->iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>      VFIOContainer *bcontainer =3D VFIO_IOMMU(container);
->>      uint32_t type, flags =3D 0;
->>      uint64_t hw_caps;
->> +    VendorCaps caps;
->>      VFIOIOASHwpt *hwpt;
->>      uint32_t hwpt_id;
->>      int ret;
->> @@ -396,7 +398,8 @@ static bool
->iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>       * instead.
->>       */
->>      if (!iommufd_backend_get_device_info(vbasedev->iommufd,
->vbasedev->devid,
->> -                                         &type, NULL, 0,
->&hw_caps, errp)) {
->> +                                         &type, &caps,
->sizeof(caps), &hw_caps,
->> +                                         errp)) {
->>          return false;
->>      }
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 73d4280d7c..6e0d37fb96 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -121,6 +121,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>       ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
+>>       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
+>>       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+>> +    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_13_0, ext_zilsd),
+>>       ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
+>>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>>       ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
+>> @@ -1247,6 +1248,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>>       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+>>       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+>>       MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
+>> +    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
+>>       MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
+>>       MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
+>>       MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+>> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+>> index a154ecdc79..8d8e35e4cf 100644
+>> --- a/target/riscv/cpu_cfg_fields.h.inc
+>> +++ b/target/riscv/cpu_cfg_fields.h.inc
+>> @@ -41,6 +41,7 @@ BOOL_FIELD(ext_zicond)
+>>   BOOL_FIELD(ext_zihintntl)
+>>   BOOL_FIELD(ext_zihintpause)
+>>   BOOL_FIELD(ext_zihpm)
+>> +BOOL_FIELD(ext_zilsd)
+>>   BOOL_FIELD(ext_zimop)
+>>   BOOL_FIELD(ext_zcmop)
+>>   BOOL_FIELD(ext_ztso)
+>> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+>> index 54b9b4f241..20058bf483 100644
+>> --- a/target/riscv/insn_trans/trans_rvi.c.inc
+>> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
+>> @@ -18,6 +18,7 @@
+>>    * this program.  If not, see <http://www.gnu.org/licenses/>.
+>>    */
 >>
->> @@ -411,6 +414,11 @@ static bool
->iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>       */
->>      if (vfio_device_get_viommu_flags_want_nesting(vbasedev)) {
->>          flags |=3D IOMMU_HWPT_ALLOC_NEST_PARENT;
+>> +#include "migration/multifd.h"
+>>   static bool trans_illegal(DisasContext *ctx, arg_empty *a)
+>>   {
+>>       gen_exception_illegal(ctx);
+>> @@ -370,6 +371,27 @@ static bool gen_load_tl(DisasContext *ctx, arg_lb *a, MemOp memop)
+>>       return true;
+>>   }
+>>
+>> +/* Zilsd extension adds load/store double for 32bit arch */
+>> +static bool gen_load_zilsd(DisasContext *ctx, arg_lb *a)
+>> +{
+>> +    TCGv dest_1 = tcg_temp_new();
+>> +    TCGv dest_2 = tcg_temp_new();
+>> +    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
+>> +    TCGv addr_2 = get_address(ctx, a->rs1, a->imm+4);
 >> +
->> +        if (host_iommu_extract_quirks(type, &caps) &
->Given that call site, I would rather implement a new PCIIOMMUOps, no?
+>> +    tcg_gen_qemu_ld_tl(dest_1, addr_1, ctx->mem_idx, MO_SL);
+>> +    tcg_gen_qemu_ld_tl(dest_2, addr_2, ctx->mem_idx, MO_SL);
+>> +
+>> +    /* If destination is x0 then result of the load is discarded */
+>> +    if (a->rd == 0) {
+>> +        return true;
+>> +    }
+>> +
+>> +    gen_set_gpr(ctx, a->rd, dest_1);
+>> +    gen_set_gpr(ctx, a->rd+1, dest_2);
+>> +    return true;
+>> +}
+>> +
+>>   /* Compute only 64-bit addresses to use the address translation mechanism */
+>>   static bool gen_load_i128(DisasContext *ctx, arg_lb *a, MemOp memop)
+>>   {
+>> @@ -409,6 +431,8 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+>>       decode_save_opc(ctx, 0);
+>>       if (get_xl(ctx) == MXL_RV128) {
+>>           out = gen_load_i128(ctx, a, memop);
+>> +    } else if (memop == MO_SQ && get_xl(ctx) == MXL_RV32) {
+>> +        out = gen_load_zilsd(ctx, a);
+>>       } else {
+>>           out = gen_load_tl(ctx, a, memop);
+>>       }
+>> @@ -437,7 +461,10 @@ static bool trans_lw(DisasContext *ctx, arg_lw *a)
+>>
+>>   static bool trans_ld(DisasContext *ctx, arg_ld *a)
+>>   {
+>> -    REQUIRE_64_OR_128BIT(ctx);
+>> +    /* Check for Zilsd extension if 32bit */
+>> +    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
+>> +        return false;
+>> +    }
+>>       return gen_load(ctx, a, MO_SQ);
+>>   }
+>>
+>> @@ -482,6 +509,27 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
+>>       return true;
+>>   }
+>>
+>> +/* Zilsd extension adds load/store double for 32bit arch */
+>> +static bool gen_store_zilsd(DisasContext *ctx, arg_sb *a)
+>> +{
+>> +    TCGv data_1 = tcg_temp_new();
+>> +    TCGv data_2 = tcg_temp_new();
+>> +    if (a->rs2 != 0) {
+>> +        data_1 = get_gpr(ctx, a->rs2, EXT_NONE);
+>> +        data_2 = get_gpr(ctx, a->rs2+1, EXT_NONE);
+>> +    }
+> Don't mix code and declarations, otherwise
+>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>
+> Alistair
+Struggling to see what you mean by this.
 
-OK, will move CONFIG_IOMMUFD guarded code from intel_iommu.c to intel_iommu=
-_accel.c
-and add new PCIIOMMUOps to call into intel_iommu_accel.c
+Could you provide a bit more clarification on the changes you would like 
+me to make and then I'll send out a v3.
 
-Thanks
-Zhenzhong
+Thanks,
+Roan
 
-Thanks
-Zhenzhong
+>
+>> +    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
+>> +    TCGv addr_2 = get_address(ctx, a->rs1, a->imm+4);
+>> +
+>> +    if (ctx->ztso) {
+>> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+>> +    }
+>> +
+>> +    tcg_gen_qemu_st_tl(data_1, addr_1, ctx->mem_idx, MO_SL);
+>> +    tcg_gen_qemu_st_tl(data_2, addr_2, ctx->mem_idx, MO_SL);
+>> +    return true;
+>> +}
+>> +
+>>   static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+>>   {
+>>       TCGv src1l = get_gpr(ctx, a->rs1, EXT_NONE);
+>> @@ -511,6 +559,8 @@ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+>>       decode_save_opc(ctx, 0);
+>>       if (get_xl(ctx) == MXL_RV128) {
+>>           return gen_store_i128(ctx, a, memop);
+>> +    } else if (memop == MO_UQ && get_xl(ctx) == MXL_RV32) {
+>> +        return gen_store_zilsd(ctx, a);
+>>       } else {
+>>           return gen_store_tl(ctx, a, memop);
+>>       }
+>> @@ -533,7 +583,10 @@ static bool trans_sw(DisasContext *ctx, arg_sw *a)
+>>
+>>   static bool trans_sd(DisasContext *ctx, arg_sd *a)
+>>   {
+>> -    REQUIRE_64_OR_128BIT(ctx);
+>> +    /* Check for Zilsd extension if 32bit */
+>> +    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
+>> +        return false;
+>> +    }
+>>       return gen_store(ctx, a, MO_UQ);
+>>   }
+>>
+>> --
+>> 2.43.0
+>>
+-- 
+Roan Richmond (he/him)
+Software Engineer
+Codethink Ltd
+
 
