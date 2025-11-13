@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B794CD4F2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 04:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511B8CD4F2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 04:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPH2-00009A-J0; Wed, 12 Nov 2025 23:49:32 -0500
+	id 1vJPPB-0004sX-47; Wed, 12 Nov 2025 23:57:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1vJPGe-0007zJ-VP
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 23:49:12 -0500
-Received: from outbound1.eu.mailhop.org ([52.28.251.132])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vJPOr-0004k6-UG; Wed, 12 Nov 2025 23:57:41 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1vJPGc-0000Qq-3X
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 23:49:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:cfbl-address:cfbl-feedback-id:from;
- bh=EQiK/d4eR2OKP/BGJNe6aFXzoB5xSfYMqlOp9tbaIbs=;
- b=IzKzuIE4gUgPTkWrN3VAbgazAx64rNCX4PCGG0kVq+Nh9adPG+iHYDKbAvREoKr8mlnVljHuuevzd
- W9/3FTenmNrZkZI7I0Z894Kir++Qiylacdn7beiYlvNrnl9Z7r1oye9YeIu/fReqsLNHYvcXmJrhXF
- Woxya6iit01B1oUE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:cfbl-address:cfbl-feedback-id:from;
- bh=EQiK/d4eR2OKP/BGJNe6aFXzoB5xSfYMqlOp9tbaIbs=;
- b=bHBB2BYBhBvTtHy9NaOsbHvVVHSX9A6RhNKuswuuUkyLOJS42i84kgBID7rZzz8wW1gLsZxekGzKK
- DOdw8bPhTXxZBb158OmVJfGmPpYv6iZgA4sXKRfDzzKk9kIrIwpEbcVzwp9Vot36S3M78j/t/keTo+
- VjNiDHGHxEddjCkk+1f1OcB5rgB22qwDawPiD8pRnK8TIrvU6pRC5+lrdZ9LJ4de0NOFQKcaDQQoET
- i65nrw/PT4azX4s3ZbcNLZQI2z8MhHQ0t/qtnq6ue2siYh1NuETkCrkIsG8c9nh1kUJO5lpyjPxzp0
- p7EWEcnEQvv6k6GKLDRSJF7Uj+CbrLQ==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 11b4fa91-c04c-11f0-b9e7-5f56af36decb
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-CFBL-Feedback-ID: 11b4fa91-c04c-11f0-b9e7-5f56af36decb:5
-CFBL-Address: prvs=04127d9ad8=abuse@outbound.mailhop.org; report=arf
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound3.eu.mailhop.org (Halon) with ESMTPSA
- id 11b4fa91-c04c-11f0-b9e7-5f56af36decb;
- Thu, 13 Nov 2025 04:49:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=EQiK/d4eR2OKP/BGJNe6aFXzoB5xSfYMqlOp9tbaIbs=; b=TwsNuLv+VTygyc0qu6CJjnH7Pr
- V/kTDvjrBt4b6dy9ooT6pIHcqoMOoSHv3OmP2ZMHbODs9xledPklPa+jy6TYp8jiIzlgr42zgZ9Wy
- KuzJKvWDVCuUmSaQqPdwnv9uzeFcrlZ1kJFNegHNatEL+NA2jbp/mrOKTMX4Sc1cq+uG1Hnc1RaaY
- 5MAhu2L0e0Gv5TNUmHxd7lkiE3tkO0C4Jn1kFeldS/l/HUt8zP6KrBfpGoq2rG2ZnDQ53d7CUBmMF
- ov41yPhq8ZbusMljm67S3mLmPUjPtN1fEUCFgeg3CL4AkdjAmv5CwIu5eeI3rGTjmkPWlyziuz6cJ
- 8VpaMulg==;
-Received: from [134.3.93.166] (helo=debian.stackframe.org)
- by mail.duncanthrax.net with esmtpa (Exim 4.97)
- (envelope-from <svens@stackframe.org>) id 1vJPGV-00000006YAi-1j1J;
- Thu, 13 Nov 2025 05:48:59 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-Cc: qemu-devel@nongnu.org,
-	Sven Schnelle <svens@stackframe.org>
-Subject: [PATCH v2 1/1] target/hppa: add 64 bit support to gdbstub
-Date: Thu, 13 Nov 2025 05:48:57 +0100
-Message-ID: <20251113044857.67290-2-svens@stackframe.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251113044857.67290-1-svens@stackframe.org>
-References: <20251113044857.67290-1-svens@stackframe.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vJPOm-0001c6-AL; Wed, 12 Nov 2025 23:57:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763009852; x=1794545852;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=BGzL/4pIP4+T106T6tStBo67qOhw/L4y6OIvrc/vvFY=;
+ b=lOkxp4hHNFeaVramEUa5VJ47CgEdR1j5/eR5jJh6sQLikWDHBj4IphqP
+ qgbvdnz0CZeCN5eS5JIwxNMKmnwSZOprZah0+NX7byePXGMmxvMEPXI5T
+ gzoNS9GvR9V5N9KBfXLZzJ7hdfYRc1wZKYhJEDrGFJl2l5ZUib8wLWsa9
+ Pe+EL8BlIuXZqFsJeGJcLXD2mZdx+cOpQzOlUQ3EDxGLidurFWc+aopPN
+ 2VArK04cAGTut0siHrYjKtIO+Ml7wmoz++5Qz1hAWtJy6U0S26NQSgX24
+ WOHOZeMuEUdnTFF8dwuLqdz0u9Ga3eE64sqcRBKMifv6TDqtkKVNssVIg Q==;
+X-CSE-ConnectionGUID: vmH1b3amTCuj6y881fv2KQ==
+X-CSE-MsgGUID: s8uaFfF8QFuP11ewR8PfEQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682072"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682072"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Nov 2025 20:57:30 -0800
+X-CSE-ConnectionGUID: RYWFGF5/SM6iumNqlmTupg==
+X-CSE-MsgGUID: ZDRNeJ6ORBmxNtRq1phk3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663234"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:28 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 04/22] rust/bql: Add BqlGuard to provide BQL context
+Date: Thu, 13 Nov 2025 13:19:19 +0800
+Message-Id: <20251113051937.4017675-5-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
+References: <20251113051937.4017675-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=52.28.251.132; envelope-from=svens@stackframe.org;
- helo=outbound1.eu.mailhop.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,116 +82,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
----
- target/hppa/gdbstub.c | 62 ++++++++++++++++++++++++++++---------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+There's some case requiring BQL context, for example, accessing
+BqlCell/BqlRefCell or operation on IRQ in lockless IO.
 
-diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
-index 0daa52f7af..777f4a48b9 100644
---- a/target/hppa/gdbstub.c
-+++ b/target/hppa/gdbstub.c
-@@ -21,16 +21,25 @@
- #include "cpu.h"
- #include "gdbstub/helpers.h"
+Note though BqlCell/BqlRefCell ensures BQL won't be released during
+reference exists, they don't create BQL context if BQL is not locked,
+instead, they just assert and panic when BQL is not locked.
+
+Therefore, it's necessary to provide a way to create BQL context by hand
+at Rust side. BqlGuard is suitable for this need.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ include/qemu/main-loop.h |  22 ++++++++-
+ rust/bql/src/lib.rs      | 101 ++++++++++++++++++++++++++++++++++++++-
+ stubs/iothread-lock.c    |  11 +++++
+ system/cpus.c            |  10 ++++
+ 4 files changed, 142 insertions(+), 2 deletions(-)
+
+diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
+index 0d55c636b21a..7dd7c8211f02 100644
+--- a/include/qemu/main-loop.h
++++ b/include/qemu/main-loop.h
+@@ -250,7 +250,7 @@ AioContext *iohandler_get_aio_context(void);
+ /**
+  * rust_bql_mock_lock:
+  *
+- * Called from Rust doctests to make bql_lock() return true.
++ * Called from Rust doctests to make bql_locked() return true.
+  * Do not touch.
+  */
+ void rust_bql_mock_lock(void);
+@@ -368,6 +368,16 @@ bool qemu_in_main_thread(void);
+ #define bql_lock() bql_lock_impl(__FILE__, __LINE__)
+ void bql_lock_impl(const char *file, int line);
  
--/*
-- * GDB 15 only supports PA1.0 via the remote protocol, and ignores
-- * any provided xml.  Which means that any attempt to provide more
-- * data results in "Remote 'g' packet reply is too long".
-- */
-+static int hppa_num_regs(CPUHPPAState *env)
-+{
-+    return hppa_is_pa20(env) ? 96 : 128;
-+}
++/**
++ * @rust_bql_lock: A wrapper over bql_lock().
++ *
++ * This function is used to allow bindgen to generate bql_lock()
++ * binding.
++ *
++ * Do not call this function directly! Use bql_lock() instead.
++ */
++void rust_bql_lock(void);
 +
-+static int hppa_reg_size(CPUHPPAState *env)
-+{
-+    return hppa_is_pa20(env) ? 8 : 4;
-+}
+ /**
+  * bql_unlock: Unlock the Big QEMU Lock (BQL).
+  *
+@@ -383,6 +393,16 @@ void bql_lock_impl(const char *file, int line);
+  */
+ void bql_unlock(void);
  
- int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    CPUHPPAState *env = cpu_env(cs);
--    uint32_t val;
-+    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = &cpu->env;
-+    target_ulong val;
++/**
++ * @rust_bql_unlock: A wrapper over bql_unlock().
++ *
++ * This function is used to allow bindgen to generate bql_unlock()
++ * binding.
++ *
++ * Do not call this function directly! Use bql_unlock() instead.
++ */
++void rust_bql_unlock(void);
 +
-+    if (n >= hppa_num_regs(env)) {
-+        return 0;
-+    }
+ /**
+  * BQL_LOCK_GUARD
+  *
+diff --git a/rust/bql/src/lib.rs b/rust/bql/src/lib.rs
+index ef08221e9c1a..48cc76a7557c 100644
+--- a/rust/bql/src/lib.rs
++++ b/rust/bql/src/lib.rs
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
-     switch (n) {
-     case 0:
-@@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         val = env->cr[30];
-         break;
-     case 64 ... 127:
--        val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
--        break;
--    default:
--        if (n < 128) {
--            val = 0;
-+        if (hppa_is_pa20(env)) {
-+            val = env->fr[n - 64];
-         } else {
--            return 0;
-+            val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
-         }
-         break;
-+    default:
-+        val = 0;
-+        break;
+ mod bindings;
+-use bindings::{bql_block_unlock, bql_locked, rust_bql_mock_lock};
++use bindings::{bql_block_unlock, bql_locked, rust_bql_lock, rust_bql_mock_lock, rust_bql_unlock};
+ 
+ mod cell;
+ pub use cell::*;
+@@ -27,3 +27,102 @@ pub fn block_unlock(increase: bool) {
+         bql_block_unlock(increase);
      }
- 
--    return gdb_get_reg32(mem_buf, val);
-+    if (hppa_is_pa20(env)) {
-+        return gdb_get_reg64(mem_buf, val);
-+    } else {
-+        return gdb_get_reg32(mem_buf, val);
-+    }
  }
- 
- int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    CPUHPPAState *env = cpu_env(cs);
--    uint32_t val = ldl_p(mem_buf);
-+    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = &cpu->env;
-+    target_ulong val;
 +
-+    if (n >= hppa_num_regs(env)) {
-+        return 0;
++// this function is private since user should get BQL context via BqlGuard.
++fn lock() {
++    // SAFETY: the function locks bql which lifetime is enough to cover
++    // the device's entire lifetime.
++    unsafe {
++        rust_bql_lock();
 +    }
++}
 +
-+    val = ldn_p(mem_buf, hppa_reg_size(env));
- 
-     switch (n) {
-     case 0:
-@@ -267,16 +287,16 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-         cpu_hppa_loaded_fr0(env);
-         break;
-     case 65 ... 127:
--        {
-+        if (hppa_is_pa20(env)) {
-+            env->fr[n - 64] = val;
++// this function is private since user should get BQL context via BqlGuard.
++fn unlock() {
++    // SAFETY: the function unlocks bql which lifetime is enough to
++    // cover the device's entire lifetime.
++    unsafe {
++        rust_bql_unlock();
++    }
++}
++
++/// An RAII guard to ensure a block of code runs within the BQL context.
++///
++/// It checks if the BQL is already locked at its creation:
++/// * If not, it locks the BQL and will release it when it is dropped.
++/// * If yes, it blocks BQL unlocking until its lifetime is end.
++#[must_use]
++pub struct BqlGuard {
++    locked: bool,
++}
++
++impl BqlGuard {
++    /// Creates a new `BqlGuard` to ensure BQL is locked during its
++    /// lifetime.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use bql::{BqlCell, BqlGuard};
++    ///
++    /// fn foo() {
++    ///     let _guard = BqlGuard::new(); // BQL is locked
++    ///
++    ///     let c = BqlCell::new(5);
++    ///     assert_eq!(c.get(), 5);
++    /// } // BQL could be unlocked
++    /// ```
++    pub fn new() -> Self {
++        if !is_locked() {
++            lock();
++            Self { locked: true }
 +        } else {
-             uint64_t *fr = &env->fr[(n - 64) / 2];
-             *fr = deposit64(*fr, (n & 1 ? 0 : 32), 32, val);
-         }
-         break;
-     default:
--        if (n >= 128) {
--            return 0;
--        }
-         break;
-     }
--    return 4;
++            block_unlock(true);
++            Self { locked: false }
++        }
++    }
++}
 +
-+    return hppa_reg_size(env);
++impl Default for BqlGuard {
++    fn default() -> Self {
++        Self::new()
++    }
++}
++
++impl Drop for BqlGuard {
++    fn drop(&mut self) {
++        if self.locked {
++            unlock();
++        } else {
++            block_unlock(false);
++        }
++    }
++}
++
++/// Executes a closure (function) within the BQL context.
++///
++/// This function creates a `BqlGuard`.
++///
++/// # Examples
++///
++/// ```should_panic
++/// use bql::{with_guard, BqlRefCell};
++///
++/// let c = BqlRefCell::new(5);
++///
++/// with_guard(|| {
++///     // BQL is locked
++///     let m = c.borrow();
++///
++///     assert_eq!(*m, 5);
++/// }); // BQL could be unlocked
++///
++/// let b = c.borrow(); // this causes a panic
++/// ```
++pub fn with_guard<F, R>(f: F) -> R
++where
++    F: FnOnce() -> R,
++{
++    let _guard = BqlGuard::new();
++    f()
++}
+diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
+index c89c9c7228f3..e2ebce565a06 100644
+--- a/stubs/iothread-lock.c
++++ b/stubs/iothread-lock.c
+@@ -23,6 +23,17 @@ void bql_unlock(void)
+     assert(!bql_unlock_blocked);
  }
+ 
++void rust_bql_lock(void)
++{
++    rust_bql_mock_lock();
++}
++
++void rust_bql_unlock(void)
++{
++    bql_unlock();
++    bql_is_locked = false;
++}
++
+ void bql_block_unlock(bool increase)
+ {
+     uint32_t new_value;
+diff --git a/system/cpus.c b/system/cpus.c
+index ef2d2f241faa..da31bda59444 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -578,6 +578,11 @@ void bql_lock_impl(const char *file, int line)
+     bql_lock_fn(&bql, file, line);
+ }
+ 
++void rust_bql_lock(void)
++{
++    bql_lock();
++}
++
+ void bql_unlock(void)
+ {
+     g_assert(bql_locked());
+@@ -585,6 +590,11 @@ void bql_unlock(void)
+     qemu_mutex_unlock(&bql);
+ }
+ 
++void rust_bql_unlock(void)
++{
++    bql_unlock();
++}
++
+ void qemu_cond_wait_bql(QemuCond *cond)
+ {
+     qemu_cond_wait(cond, &bql);
 -- 
-2.51.0
+2.34.1
 
 
