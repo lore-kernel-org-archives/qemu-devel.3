@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933B3CD5BBB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 10:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B3A3CD5BBB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 10:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJUWR-0007vi-Ce; Thu, 13 Nov 2025 05:25:47 -0500
+	id 1vJUWU-00082d-23; Thu, 13 Nov 2025 05:25:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vJUWM-0007lW-KL
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 05:25:42 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1vJUWQ-0007us-R4
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 05:25:46 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vJUWE-0007Ih-BT
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 05:25:42 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-641977dc00fso955841a12.1
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 02:25:33 -0800 (PST)
+ id 1vJUWG-0007KA-JW
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 05:25:46 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b735487129fso69681366b.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 02:25:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763029533; x=1763634333; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763029535; x=1763634335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vlCHybPzDuoJOci0v74ijY95dNfkhBjmAJIbo8QxUw0=;
- b=qhnaOO09D1uCdnp3gRk/xD5TGO6JNAkGqRN/EMAL3MXAm+pgBkpoZayF8NVMNoJbwi
- W3ANKJWh5zmGIDu1msen8Zkbn1ebykHZtLT7DPVlqtCa2qV7aKXs8SkXhoeEjIGf3n0T
- o+CIlXq+ODn6haDouNIBHB0EdWCvIAUnu+hcX4VhVm8z1ZkG9SX704peA+uTIOzZtnGc
- sScYkXivvJ3hMdHfhzP3UjKYet44/YSObWEgL9IM3n2CxuPqpFawGRDGJGwv9lhnMZd2
- gSThmLuCi/TqjtcIH4pVCZQoY0E4wi/zcwr7duTy054Itsz729YsMcAFaAsJEcsHEbZP
- rKZw==
+ bh=UkgDEGpjp4w+u5Dg5xmWRAxGeNrpQ0virl1sQpXH2RY=;
+ b=SBbsAuyGgLJnIclrrEguHPtQDEsTqraHUDYqFTs82Sj/Q17RJzL1965A2RD5p1IM9V
+ ryWlLopJZi/6PNcrhqa/KWTf4I5TQawjFBWehl7VQamRlxPgZMPLcxkSbLy8ZawpEGNV
+ DsyiLUrPW0yrWtTCubLc7gcX+EzVG3WKHQ+52j8AtAEwVNbR4BrwcQKd/Dq6hnQNnZRb
+ iCz9RoysPocrox1J5uG5mWmjNvpNKfVza1Bho4gJl6hA83FbRVcQPyWV5Hww4ttEryhW
+ TkDUuKxwvx7Ld3rYfPY2IJVDzIUMW1ubVdOa+G8+cWwx/+NZHKa8A8EefnqfRWF79ke7
+ qe/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763029533; x=1763634333;
+ d=1e100.net; s=20230601; t=1763029535; x=1763634335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vlCHybPzDuoJOci0v74ijY95dNfkhBjmAJIbo8QxUw0=;
- b=wZhE0lEA689c36KxCyKtyqM8syS4cqhm931QvHG3rTiZ7VpOX7jJV+BpwxYDu7AH1G
- qcegnJojUfUi5wxisD4N4Ua8rxTZebtUzCT9rL2amx73SZy/d9twHd4P/8k9yEWXs6XY
- sBKXA6Mlm13ZakmWNiFE3dAcrohKUGkD7JT6ssUDjJYoCwG2rUuS/4rknBRXwOZ14Any
- LlifvAj2MFEeK51N/dBFjIu17QfaUVJf1K/QzE2m1EfGMfAdFH4LyDM7VIyJENP/7TAE
- nstGzuQT3g9AzLWePoGT0URNhhduegWZFEUmmhL7NnCy5pxB12MnF3878pFEIgyv+UUi
- p5Gg==
-X-Gm-Message-State: AOJu0YyzxcndNPNMAAsR4/8OzgrrVdXbwFcTJ44NtbRDEyjp2/XtjN2G
- 5EeJSpqm45JeWRQVKA8HGmU+Tf5XFiCbyAt0g4Yu+Nywr2X3Nbk4hR4vIT3SKo91XOo=
-X-Gm-Gg: ASbGnctD8CzfEw4Wi5qzLgLeUupULNtQ7sTP9RY0amztoTvEVJYOT6oHAVLeUORoT0u
- mRb8JZVAp6qLV0fiMVfaaLvCVo1Ut1qZgM/QFmO+76qtjLu5fdDvrsEXef75JezOI6AMlBHLMod
- C/kfiS7eMxpeDDLgqPXKfc/hT57rU+/AoB0cj34i55JpJkmgVf2a6QzuPQzVtzT/ANbGs+RyYOu
- ESBthMINdYirzv7pMxGerh6xbSz6n0LWnYcTVqhUnp/t3ATaFewl16akProdvx9YyesqBuqIsn5
- hQotkgKzmuXMWhPEYgBCQ/YMjfojl0nXZOruQIENo7cDAksk4BkA946gkT3FLkJcldPe5KBmNvj
- BzLaXNSwWhTnXXk24GhjlEFT1eC38GIB/9snZ9sbP0hGSLWmyp33xuH5vNgX3nBAPDO6J1qh3oo
- /p
-X-Google-Smtp-Source: AGHT+IFSefeI3O3NTyzInxDbyr4d+Szrak+Wk48jqZT19jYcdXoczcU1I6FmxlB0Ky6wwAR6+WCrmA==
-X-Received: by 2002:a17:907:8694:b0:b73:4894:6e10 with SMTP id
- a640c23a62f3a-b7348946ecdmr282833466b.46.1763029532396; 
- Thu, 13 Nov 2025 02:25:32 -0800 (PST)
+ bh=UkgDEGpjp4w+u5Dg5xmWRAxGeNrpQ0virl1sQpXH2RY=;
+ b=pZeKWOz7LUPBGOcjnUKgE/hMAxeRcGbpuNC9OizAKRl8f8qEvCI67o/0LQHs9P2pYd
+ V1EGx52ZK3LmEozQOV2TOTlcgkL4KiKpfdPRBULo/UCscYASYcFxIxIzqVu4gLFDUzOa
+ VTHVEvDsS+phIAAjvE5Nb+DoF+wi5f3OcNb8XgH+x5969sok7TtZo1XBUC0StkmMsYZA
+ tm0acFA+jbv5QCmWH2JkOddmloHtTYCAfSltKQjZnhfcS1TmGWeFykvAlKv6o+RAlVm6
+ nFg6j/DsD7x8w348nAH38/Xxfh92gTzU9otrmuUTHxuRlk0Wwfx9IYwwOYiGTUdx1W8I
+ fMmA==
+X-Gm-Message-State: AOJu0YzRcZtY67f2DfcCPxe7HCiGZEbwbO6u5SOh0YDL5HEhTlkfCVuv
+ /Z02vZynSdkMfMrKAA3uMq/Veu7yV5DpCIY1TbVfurNGPpn2l4f/gEFhUnZP6hVjrzQ=
+X-Gm-Gg: ASbGncvmhxOntswDTgg69LKken84PomX5Oi3VglwHyUbN2F+Enq7sqqweqyhK2q5HTM
+ W0FJaaeP3CTMNyUuThHJVYKyGWMivw8/bNn4jqVdg4H1H9I6S1XnEdLExGGkn9KBs7q6kcm3X+M
+ Gkpu3dmIy8loTlVqYVYVT20BgkJuyBbLRAySKvXr2/IiOcGVehK815N/AjId1qhcOuWzf3rusSn
+ iJP+kT23w8vvftzG2rluWt3S5eBmSL2IKvtDCIj79foDBoM1p2MXtZKiy5C58pCXmHJK/JdTQ/y
+ GDjeym9mO+pGld4h4ZntwCI8RJNlz+ox2W4k9zU4ES9spZJdfnHucVTydx3qC2dZoF7HJqwMA+p
+ lEnbqAUovC5yGNSDSTerQO/xNcwAUlLrgzKBcjzFjlC4GiAIc2hMIevu9q5Voj9M3LgAzO6WEZm
+ 6Q
+X-Google-Smtp-Source: AGHT+IHWeaC0wY9ccVsTiz2phFAUfWFNz9FbjBQkABFLxC/XdOjCNk3RJD2luixLdg+m6NaPZRlaMQ==
+X-Received: by 2002:a17:907:bb81:b0:b73:4b56:7a37 with SMTP id
+ a640c23a62f3a-b734b567c09mr163198966b.30.1763029534982; 
+ Thu, 13 Nov 2025 02:25:34 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b734fa81275sm135714466b.13.2025.11.13.02.25.28
+ a640c23a62f3a-b73513b400fsm128747866b.1.2025.11.13.02.25.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Nov 2025 02:25:29 -0800 (PST)
+ Thu, 13 Nov 2025 02:25:30 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9FFD25F956;
- Thu, 13 Nov 2025 10:25:26 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0D37F601A6;
+ Thu, 13 Nov 2025 10:25:27 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paul Durrant <paul@xen.org>,
@@ -83,17 +83,17 @@ Cc: Paul Durrant <paul@xen.org>,
  qemu-s390x@nongnu.org, Li-Wen Hsu <lwhsu@freebsd.org>,
  David Woodhouse <dwmw2@infradead.org>, Ed Maste <emaste@freebsd.org>,
  qemu-stable@nongnu.org
-Subject: [PATCH v2 07/18] tests: move test_xen assets to share.linaro.org
-Date: Thu, 13 Nov 2025 10:25:13 +0000
-Message-ID: <20251113102525.1255370-8-alex.bennee@linaro.org>
+Subject: [PATCH v2 11/18] tests: move test_kvm to share.linaro.org
+Date: Thu, 13 Nov 2025 10:25:17 +0000
+Message-ID: <20251113102525.1255370-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251113102525.1255370-1-alex.bennee@linaro.org>
 References: <20251113102525.1255370-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,61 +119,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Linaro are migrating file-hosting from the old NextCloud instance to
 another sharing site.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Cc: qemu-stable@nongnu.org
 
 ---
 v2
-  - strip un-needed ellipses
+  - indentation to avoid long lines
 ---
- tests/functional/aarch64/test_xen.py | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ tests/functional/aarch64/test_kvm.py | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tests/functional/aarch64/test_xen.py b/tests/functional/aarch64/test_xen.py
-index 261d796540d..d90595cad35 100755
---- a/tests/functional/aarch64/test_xen.py
-+++ b/tests/functional/aarch64/test_xen.py
-@@ -25,8 +25,7 @@ class BootXen(LinuxKernelTest):
-     XEN_COMMON_COMMAND_LINE = 'dom0_mem=128M loglvl=all guest_loglvl=all'
+diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/aarch64/test_kvm.py
+index 9fb9286139f..0a89694ca75 100755
+--- a/tests/functional/aarch64/test_kvm.py
++++ b/tests/functional/aarch64/test_kvm.py
+@@ -19,9 +19,7 @@
+ class Aarch64VirtKVMTests(LinuxKernelTest):
  
-     ASSET_KERNEL = Asset(
--        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/'
--         'download?path=%2F&files=linux-5.9.9-arm64-ajb'),
-+        'https://share.linaro.org/downloadFile?id=RRahAWwAwYKTZQd',
-         '00366fa51ea957c19462d2e2aefd480bef80ce727120e714ae48e0c88f261edb')
+     ASSET_KVM_TEST_KERNEL = Asset(
+-        'https://fileserver.linaro.org/s/HmjaxXXYHYSqbes/'
+-        'download?path=%2F&files='
+-        'image-with-kvm-tool-and-unit-tests.gz',
++        'https://share.linaro.org/downloadFile?id=Dt5pQbTe5RrxEii',
+         '34de4aaea90db5da42729e7d28b77f392c37a2f4da859f889a5234aaf0970696')
  
-     def launch_xen(self, xen_path):
-@@ -55,8 +54,7 @@ def launch_xen(self, xen_path):
-         wait_for_console_pattern(self, console_pattern, "Panic on CPU 0:")
- 
-     ASSET_XEN_4_11 = Asset(
--        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/download?path=%2F&'
--         'files=xen-hypervisor-4.11-arm64_4.11.4%2B37-g3263f257ca-1_arm64.deb'),
-+        'https://share.linaro.org/downloadFile?id=ALU4n2NGGYbE4fO',
-         'b745c2631342f9fcc0147ddc364edb62c20ecfebd430e5a3546e7d7c6891c0bc')
- 
-     def test_arm64_xen_411_and_dom0(self):
-@@ -66,8 +64,7 @@ def test_arm64_xen_411_and_dom0(self):
-         self.launch_xen(xen_path)
- 
-     ASSET_XEN_4_14 = Asset(
--        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/download?path=%2F&'
--         'files=xen-hypervisor-4.14-arm64_4.14.0%2B80-gd101b417b7-1_arm64.deb'),
-+        'https://share.linaro.org/downloadFile?id=os4zSXPl7WW4lqX',
-         'e930a3293248edabd367d5b4b3b6448b9c99c057096ea8b47228a7870661d5cb')
- 
-     def test_arm64_xen_414_and_dom0(self):
-@@ -77,8 +74,7 @@ def test_arm64_xen_414_and_dom0(self):
-         self.launch_xen(xen_path)
- 
-     ASSET_XEN_4_15 = Asset(
--        ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/download?path=%2F&'
--         'files=xen-upstream-4.15-unstable.deb'),
-+        'https://share.linaro.org/downloadFile?id=jjjG4uTp2wuO4Ks',
-         '2a9a8af8acf0231844657cc28baab95bd918b0ee2d493ee4ee6f8846e1358bc9')
- 
-     def test_arm64_xen_415_and_dom0(self):
+     # make it easier to detect successful return to shell
 -- 
 2.47.3
 
