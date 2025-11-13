@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B397FCD6E55
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 13:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65295CD6E5C
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 13:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJXe9-0006Z5-9V; Thu, 13 Nov 2025 08:45:57 -0500
+	id 1vJXjI-0006IF-F9; Thu, 13 Nov 2025 08:51:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vJXe6-0006Vb-JV
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 08:45:54 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1vJXj7-0006Bc-04
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 08:51:05 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vJXe4-00077B-60
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 08:45:54 -0500
+ id 1vJXj4-0002GD-6F
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 08:51:04 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 9B5F543EDA
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 13:45:49 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 3E1AC43982
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 13:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1763041549;
- bh=TSNgPTA7uiZ5T9Jf3WSxhZ3QTNQmPwIxkQqe7EIPPQo=;
+ s=20210803; t=1763041860;
+ bh=96q41YLLWEJdO3MLI0pRASap4svKRNf1WL1ps0YEhG8=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=NLpD3rWFD1VjY6oUc8I9mYZESUV6/Cydd8uKCwTX3IVMF3EnkYO2DPy3rSQge5XnE
- RFb1gm3Lk+pq4fTPylb2sy7XqPxgsI0mK3RI/eVd/P3VFU8pE+WeQ6KW9qu4H7cCsd
- qiE6cYasJ/Le86l/OTgbX4nq+syIU/TYGQAi8C4mi8p1vL9QP8ay7EYD7BAiHbc5RJ
- cl+GjiNQHU4LBaNu95lbRCVbvTZyhld0rK3sWQJDxrse6ndmcyD0YN2BuKZSaw+GZ5
- caAXHr2ugJVFYdyAh9ZOXyhm7QqNkWlOW7nafU97gFDhPn9zWWjag1cBYuKs5J5jIL
- KS8U3Y1kBT5WA==
+ b=qj0IK6iLtnztZ7HSG7T+Dncl1+/dvvp1EweSp+/Fj5JKA5nuYGx1FR+piw2V+bSN2
+ k8xTYSFqRdWBH533gfKoTrHvv2DqIjY1TLoQe1xf9g/Ms4KxLJHmo6wHi2OwpQUvVO
+ im2kS59eXiE8p6ALZ79zwAlKNmL5pIiIoT8st2chRlMYzZPhzfsMBTwJlM7xU+PE4C
+ BsfDlmL5/7em4zZWHZX/XI68CjKYegU9Uck3hbmVzBSMuCgF7elJ7Vrq2c9parKMWu
+ WTDIQV480fFxOLv0KWH+qtlc8SGmZrOFjp/Z5LQoDf+oSKRaUjJSnRoc4NJewqFlXr
+ h9CoGs2JJhInQ==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 84CBA7F548
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 13:45:49 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 297557F65E
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 13:51:00 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 13 Nov 2025 13:38:22 -0000
-From: =?utf-8?q?Lukas_M=C3=A4rdian?= <2123828@bugs.launchpad.net>
+Date: Thu, 13 Nov 2025 13:44:06 -0000
+From: Valentin Haudiquet <2123828@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
@@ -91,9 +91,9 @@ X-Launchpad-Bug-Security-Vulnerability: no
 X-Launchpad-Bug-Commenters: ahasenack enr0n hectorcao janitor paelzer schopin
  slyon ubuntu-sru-bot vhaudiquet xypron
 X-Launchpad-Bug-Reporter: =?utf-8?q?Lukas_M=C3=A4rdian_=28slyon=29?=
-X-Launchpad-Bug-Modifier: =?utf-8?q?Lukas_M=C3=A4rdian_=28slyon=29?=
+X-Launchpad-Bug-Modifier: Valentin Haudiquet (vhaudiquet)
 References: <175793222278.1250191.6568998309826575823.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176304110234.926311.17831671942394861501.malone@juju-98d295-prod-launchpad-3>
+Message-Id: <176304144629.714072.13713819323099882162.malone@juju-98d295-prod-launchpad-7>
 Subject: [Bug 2123828] Re: [SRU] RISC-V: incorrect emulation of load and store
  on big-endian systems
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -102,9 +102,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="1d08ffb47b836b8a4c9a0f11318dfdea7420ab6d";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 22297324facf21bfb762e4743f722d6317e05bc9
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 502a63699c8cb7b0b4b3ece24d299590f5a8cae8
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -127,10 +127,12 @@ Reply-To: Bug 2123828 <2123828@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding block-proposed-questing, due to the dependency on "ceph". See
-comment #27 above and (LP: #2119024)
+I don't think I fully understand: I thought the only issue was the ceph
+SRU still waiting, and everything would be fixed after that. So this SRU
+is already "over", right ? (to me it was).
 
-** Tags added: block-proposed-questing
+I don't plan on fixing something else for now, if that is your
+question... but maybe that question was not for me but for Lukas ?
 
 --=20
 You received this bug notification because you are a member of qemu-
