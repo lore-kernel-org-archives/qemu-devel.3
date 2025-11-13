@@ -4,113 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF8BCD98D5
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 19:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C61DCD98DF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 20:45:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJd8t-0005x5-An; Thu, 13 Nov 2025 14:38:03 -0500
+	id 1vJeBB-0002jF-RZ; Thu, 13 Nov 2025 15:44:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJd4R-00036W-Me
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 14:33:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vJdvd-0000WU-HQ
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 15:28:25 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJd44-0006kx-Ii
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 14:33:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763062356;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HMNd6K2L6+5dVVi7ASJ8Kq6S4C72esb9kuGXVxdfORc=;
- b=SzTwCIVWZgZyj+kAj+Tgoh6A+OD6/pZDQkkoSqcIECYH+KJpfYEmS6wwncohTrty+twGkM
- ihqjOCY1/spjAL593jqnMLN1f0Xc63fcsuKxM8PKkuhFfEzpFW/H7kiq0cVDUV3bbv6rwB
- jT35L4xDrKqU4a995jjDMD11vPmLwXU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-320--Bv8Hz-jPtKgu6MZRJzj_g-1; Thu, 13 Nov 2025 14:32:35 -0500
-X-MC-Unique: -Bv8Hz-jPtKgu6MZRJzj_g-1
-X-Mimecast-MFC-AGG-ID: -Bv8Hz-jPtKgu6MZRJzj_g_1763062354
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8826fb20ef0so33068026d6.0
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 11:32:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763062354; x=1763667154; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=HMNd6K2L6+5dVVi7ASJ8Kq6S4C72esb9kuGXVxdfORc=;
- b=aIs7Ish+OUBo2eJbXgqg8nS/Y94U7MmAWeZSfoAO8xmZAE8aBqQW3Fq5HcQEpmXsGY
- R0VH0GCFGd3yCK8rI61oVVjmapjnaI/ik/F41+NuFOkMo01YzoEfFuLQ7aL5stEnbcpg
- l5j9jGRquQNmxqfVahgq4MBCto4AkzD+KNYFNlURZ/OH98ZacZIDmTf5At9WpzFGYrgS
- bR8EHmLYLelsGWoKQqHwVm88HD+TmayQBxQpTarl0IbSeRARfVzUHgO2C4yQ8z2epJ5e
- pWMmYgkGNYqKYVJwrrhZf9tytLv47jLr3cn10EZmTyeoOiWwKStWdo6hSw3fiQ7nzGhS
- k0ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763062354; x=1763667154;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HMNd6K2L6+5dVVi7ASJ8Kq6S4C72esb9kuGXVxdfORc=;
- b=HbXHINIXAX7/T0GJ4aGEz+m8dwUp/Ozm5VKxC0J2kFSk4Dh9AEr4qtIO/wViEyVqOc
- zMrmmkvNV4yydTJAXTQ0+ZmvuAY+RFu7acBYuaqgEBAynbXEwfv0KwVhIRQOtwfEDEh/
- U5BldyyqCR/dFHGXoS5YqOQFo6wEb9ulaBhbjtHWLNh4ROspYnV20TugMVQn7qwdtq+m
- cqd/ZSCOi0WBFyB+VxrDyAVRkuUb3chZlnYt2ZeSZyrYN36WxIkwNLesdrov9f/pzwDH
- 0kehlqHMHx0b/QU5r0BfnnLnakZpJgExW0gIRcq6wITF7vuz/UWr6aOzK7GAYGTTQrIS
- LNqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU81JX3RczY0s8XeWEa9DLlSYnW8evsxRNehUUG+PESdEdiOzwQAnr3dHpg9r4qlAq3C9h6kcrWymbS@nongnu.org
-X-Gm-Message-State: AOJu0YycVrnTbrkyF+GD7uGp00c5ZwuGmN7+Jg9QF9hp6b4mQiCedXER
- dESwq4Y2ZSZDM3m7bUJRASAjOAnztUu0At9oEhkGmdvNmF1rZea1cYV0WX1QaAvN3y+QyfLTmrz
- 80IwlvnySbrpma53zhtX4fDtbfq8fTr/oMnJcbgqyrkQaaRithGAaGJb6
-X-Gm-Gg: ASbGncsjemVMzUUIZqcm1hNzGtpR7TAnVHBZX6rIVNvJzikAb/xNNxSEc0fOQoHAem7
- 08GItXGg8WJjnynTWWM71qITjPpVX97IKLtwo7K9US4iPdp3KjphclKQiTWzk6aR0qAALpit5gC
- UQur462w0EW/Hq0AWHbwtbhZoU6I6iWJOA3ehIq7f8eO3U2mczjOi5hezLmBe0w56hV+1zDJdbq
- k+qEWjSHqN1R1Y7dMLCk1elYEmBecobK5rLuGP5SSJbUaArB7YDmKH1vqzCJx+izZqVL5rLgq8w
- nPQUK5n1dfN4zZSmvHfRq/Bk7u3Vzm4sBwrVylFg1SzI4WfCBCHsI+QjDhdxOo0E/J6dn/gZf0P
- ZzA==
-X-Received: by 2002:a05:6214:c4a:b0:880:57b3:cd0e with SMTP id
- 6a1803df08f44-882926d7c5cmr5281056d6.32.1763062354416; 
- Thu, 13 Nov 2025 11:32:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH7Yi8U3lX2gGSYA04huNT+3JAWnUaQ+aiwiqjj1eW5UwH/XrUaebtupbQWVk5MbwtHc0YfEg==
-X-Received: by 2002:a05:6214:c4a:b0:880:57b3:cd0e with SMTP id
- 6a1803df08f44-882926d7c5cmr5280386d6.32.1763062353965; 
- Thu, 13 Nov 2025 11:32:33 -0800 (PST)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-882865a2fb6sm17720186d6.50.2025.11.13.11.32.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Nov 2025 11:32:33 -0800 (PST)
-Date: Thu, 13 Nov 2025 14:32:29 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
- farosas@suse.de, jinpu.wang@ionos.com, thuth@redhat.com,
- berrange@redhat.com
-Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
-Message-ID: <aRYyTeNNIPW_WIJW@x1.local>
-References: <20251107020149.3223-1-jasowang@redhat.com>
- <20251113110004-mutt-send-email-mst@kernel.org>
- <aRYJRZyNrDcDzTuG@x1.local>
- <20251113114710-mutt-send-email-mst@kernel.org>
- <aRYRhg7lKDCBUIrf@x1.local>
- <20251113124207-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vJdvZ-0006yF-A3
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 15:28:25 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ADFV32d009088;
+ Thu, 13 Nov 2025 20:28:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=J2oR07
+ 7o3g6sLTcg3wVZUV94ihgcNKVcW8kzXi4/+18=; b=D00fyVQ1gLWtmhx4khT89w
+ IykIMNw8IA9wP9H0h+99Xj2uMyNJdcf02qma/C7uT9Dlwqs+sHmjAo440OoJR8+i
+ zbpnJqzyh/NYXev551GVgDDoVUEq63La/2nRpPEAxKvsIejq8l+J6RfNFIH/pq+f
+ GfXrpBb0255Mb6sqkqVlD4W98y9Ggy3Mv3RxTIqTpNIrVWWB6znyKyHiTsUF4SgE
+ 0LLsiINeWdRHxNUEF/von2BPOV6PL+LuK7BzhgIbRvCNBTofDZfzJhjoifNwCvFs
+ Sr37Cn/JO+DtQmwbVnQaNj8NyblOd1Q173cznwx1QEiFxJyoy90HaN1iaPxxsMlw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a9wc7jb9m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Nov 2025 20:28:16 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5ADJ2XgJ014779;
+ Thu, 13 Nov 2025 20:28:15 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4aahpkfw0r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Nov 2025 20:28:14 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5ADKSEf227918858
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 13 Nov 2025 20:28:14 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DFA1758053;
+ Thu, 13 Nov 2025 20:28:13 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E22A958043;
+ Thu, 13 Nov 2025 20:28:12 +0000 (GMT)
+Received: from [9.61.187.144] (unknown [9.61.187.144])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 13 Nov 2025 20:28:12 +0000 (GMT)
+Message-ID: <bb65bbe3-37b3-4e79-b662-82d33852e33b@linux.ibm.com>
+Date: Thu, 13 Nov 2025 15:28:12 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251113124207-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 37/45] migration: multi-mode notifier
+To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>, Alex Williamson
+ <alex@shazbot.org>, Cedric Le Goater <clg@redhat.com>
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-38-peterx@redhat.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20251003153948.1304776-38-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDAxOCBTYWx0ZWRfXzs8BWDc9FSmY
+ op/4mSAjZVjQxOzeyp06cfWVpGrzaVu1UVxkTQzvERYoVprUjRobAQ798ke00rTrDb3XGb2a3/6
+ J1aeUm3VRkzhfn6M39vKPcQNEyBflF5i75eUg88mCKScU+FdMdI9iqt2/5Q7G3SgMq5JgzjqL9B
+ yQs75JJ7y+auFyDSQ+aTDz+IS4wj9Iw6Ry1tXxrleTLe0ArPPPiccaIbLFD9/kUd1qVZIXZ9Jn7
+ gtiST0qbl+QDL3+TDRYJjaSJIj0KpdTaFozmt0shT/Acq3qXLjip1NBe3dqOzMjP4p1ONva1D8A
+ XT7fqNAYxEc+FB3/h2XlpJBQe2VpUuQJJd+4g3ZNv7vNbxKi4B/ABzLp+Zc9KeVco/RkYTz0pYI
+ u3QB1Yf+9AbVehNAxBboPSQB1Y3AFQ==
+X-Authority-Analysis: v=2.4 cv=GcEaXAXL c=1 sm=1 tr=0 ts=69163f60 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=mSj3SbOExz9NMja2UvgA:9
+ a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: cpYC78q2Q57tTMaopJOfKwJu0PMbJZGi
+X-Proofpoint-ORIG-GUID: cpYC78q2Q57tTMaopJOfKwJu0PMbJZGi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-13_05,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1011 spamscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511080018
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,74 +126,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 13, 2025 at 12:46:55PM -0500, Michael S. Tsirkin wrote:
-> failing to start a perfectly good qemu which used to work
-> because you changed kernels is better than failing to migrate how?
+On 10/3/25 11:39 AM, Peter Xu wrote:
+> From: Steve Sistare <steven.sistare@oracle.com>
 > 
-
-I agree this is not pretty.
-
-The very original proposal was having extra features to be OFF by default,
-only allow explicit selections to enable them when the mgmt / user is aware
-of the possible hosts to run on top.  That'll guarantee:
-
-(1) explicit failure whenever some unsupported cap is chosen on boot,
-
-(2) default setup should always assume no kernel dependency hence booting
-should be all fine,
-
-(3) since all features will be by default OFF or selected by the user with
-explicit cmdlines, VM ABI is guaranteed so that migration will work.
-
-But unfortunately that proposal was rejected.
-
+> Allow a notifier to be added for multiple migration modes.
+> To allow a notifier to appear on multiple per-node lists, use
+> a generic list type.  We can no longer use NotifierWithReturnList,
+> because it shoe horns the notifier onto a single list.
 > 
-> graceful downgrade with old kernels is the basics of good userspace
-> behaviour and has been for decades.
-> 
-> 
-> sure, let's work on a solution, just erroring out is more about blaming
-> the user. what is the user supposed to do when qemu fails to start?
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Link: https://lore.kernel.org/r/1759332851-370353-2-git-send-email-steven.sistare@oracle.com
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-This is indeed a good question.  If with strict checks maybe we would at
-least want to make sure we throw explicit messages to let user know what to
-turn off.
+...
 
-> 
-> 
-> first, formulate what exactly do you want to enable.
-> 
-> 
-> 
-> for example, you have a set of boxes and you want a set of flags
-> to supply to guarantee qemu can migrate between them. is that it?
+>  void migration_remove_notifier(NotifierWithReturn *notify)
+>  {
+>      if (notify->notify) {
+> -        notifier_with_return_remove(notify);
+> +        for (MigMode mode = 0; mode < MIG_MODE__MAX; mode++) {
+> +            migration_blockers[mode] =
+> +                g_slist_remove(migration_state_notifiers[mode], notify);
+> +        }
+>          notify->notify = NULL;
+>      }
 
-Yes I think that's the case.
+Hi, we started noticing occasional crashes on detach of vfio-pci devices on s390x.
 
-That's also why I think the very original proposal still makes sense
-(having all defaults OFF when dependent on kernel), because only the mgmt
-knows the details about the cluster, so it may make more sense to select
-from the top which has the full knowledge base, explicitly enable some sets
-of features (not only network, but also CPU feature bits and else).  Then
-the mgmt boots the VM, also knows where it can migrate explicitly.
+The pattern we used to reliably hit the issue is to attach/detach the same hostdev to a guest; crash usually happens on the second detach, sometimes the third. 
 
-If all things are hidden then the mgmt is almost out of control of this.
+I did a bisect and it points to this patch.  This code isn't my area of expertise, but the change above looks wrong.
 
-That was rejected because there's the need to by default enable new
-features if ever possible.  In that case, IMHO Jason's soluion is spot on
-where it sits in the middle ground of both, allowing both to happen
-(auto-enable of new feats, while keeping VM ABI stablility).
+I tried the following diff and it resolves the crash for me at least:
 
-So IIUC there will be a cluster, it may contain different groups of hosts,
-each group should have similar setups so that VMs can freely migrate
-between each other within the same group (but may not easily migratable
-across groups?).  But I don't think I know well on that part in practise.
-
-Dan might be a great source of input from that level.
-
-Thanks,
-
--- 
-Peter Xu
+diff --git a/migration/migration.c b/migration/migration.c
+index c2daab6bdd..9e787749b2 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1693,7 +1693,7 @@ void migration_remove_notifier(NotifierWithReturn *notify)
+ {
+     if (notify->notify) {
+         for (MigMode mode = 0; mode < MIG_MODE__MAX; mode++) {
+-            migration_blockers[mode] =
++            migration_state_notifiers[mode] =
+                 g_slist_remove(migration_state_notifiers[mode], notify);
+         }
+         notify->notify = NULL;
 
 
