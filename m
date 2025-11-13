@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16730CD4F2C
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA8CCD4F30
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJLyK-0004dQ-Ny; Wed, 12 Nov 2025 20:18:00 -0500
+	id 1vJLxn-000362-Sk; Wed, 12 Nov 2025 20:17:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJLxP-0002iy-HQ
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:17:03 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJLx9-0002cC-Mg
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:16:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJLxM-0005rp-SM
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:17:02 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJLx7-0005oN-3m
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:16:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762996620;
+ s=mimecast20190719; t=1762996604;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4B12cEQrDwPWjzA13TdS34zZbWrTYxvI42/uYIj4SNY=;
- b=PDq00vXForPGLHftBh8Os5pTPq9mRQidxvue2zAJFai5gtilYd4KM5WcSqNTh5flAyWBMf
- kg+p1txwThIH4KeOtxg8iqT5u9gaPcz3egydSBBv3iHKny9flHpmGQ7Zx7SHJaplCjk6Fj
- wRnKKlzBbl/oRFkWc3trQ+p8QytZL6A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=+P9nrrqD51YTGRCKqzi3I+JtkC0sByhMh7ytAjmzR5Y=;
+ b=VBMY/pywDuy4gG9r9y/KFwBxI0BNOYvHRSCbB1cRitubJySTQxQsh7haHr7rC8DfU7Y9Q1
+ +/k9zzntX9U/AYl72CI7kdV6/42ubsfVsuFEYsJ+B0OHYjOTsjcwSSeAaLZzSBs/jchJTk
+ smKbvZqcK/fPYQSGZWw8BYah/p9Kvvk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-H6WUqjoOOK-SfyKbDLtJvg-1; Wed,
- 12 Nov 2025 20:16:58 -0500
-X-MC-Unique: H6WUqjoOOK-SfyKbDLtJvg-1
-X-Mimecast-MFC-AGG-ID: H6WUqjoOOK-SfyKbDLtJvg_1762996617
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-1k7d2cngPwK75pyHOSuFFA-1; Wed,
+ 12 Nov 2025 20:16:40 -0500
+X-MC-Unique: 1k7d2cngPwK75pyHOSuFFA-1
+X-Mimecast-MFC-AGG-ID: 1k7d2cngPwK75pyHOSuFFA_1762996599
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A63631800452; Thu, 13 Nov 2025 01:16:56 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17D7D1956089; Thu, 13 Nov 2025 01:16:39 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.87])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DEBEF180049F; Thu, 13 Nov 2025 01:16:54 +0000 (UTC)
+ id C72071800451; Thu, 13 Nov 2025 01:16:37 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, kwolf@redhat.com, berrange@redhat.com,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v3 12/13] nbd: Avoid deadlock in client connecting to
- same-process server
-Date: Wed, 12 Nov 2025 19:11:37 -0600
-Message-ID: <20251113011625.878876-27-eblake@redhat.com>
+ qemu-stable@nongnu.org
+Subject: [PATCH v3 04/13] qio: Remember context of
+ qio_net_listener_set_client_func_full
+Date: Wed, 12 Nov 2025 19:11:29 -0600
+Message-ID: <20251113011625.878876-19-eblake@redhat.com>
 In-Reply-To: <20251113011625.878876-15-eblake@redhat.com>
 References: <20251113011625.878876-15-eblake@redhat.com>
 MIME-Version: 1.0
@@ -69,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,47 +84,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-See the previous patch for a longer description of the deadlock.  Now
-that QIONetListener supports waiting for clients in the main loop
-AioContext, NBD can use that to ensure that the server can make
-progress even when a client is intentionally starving the GMainContext
-from any activity not tied to an AioContext.
+io/net-listener.c has two modes of use: asynchronous (the user calls
+qio_net_listener_set_client_func to wake up the callback via the
+global GMainContext, or qio_net_listener_set_client_func_full to wake
+up the callback via the caller's own alternative GMainContext), and
+synchronous (the user calls qio_net_listener_wait_client which creates
+its own GMainContext and waits for the first client connection before
+returning, with no need for a user's callback).  But commit 938c8b79
+has a latent logic flaw: when qio_net_listener_wait_client finishes on
+its temporary context, it reverts all of the siocs back to the global
+GMainContext rather than the potentially non-NULL context they might
+have been originally registered with.  Similarly, if the user creates
+a net-listener, adds initial addresses, registers an async callback
+with a non-default context (which ties to all siocs for the initial
+addresses), then adds more addresses with qio_net_listener_add, the
+siocs for later addresses are blindly placed in the global context,
+rather than sharing the context of the earlier ones.
 
-Note that command-line arguments and QMP commands like
-nbd-server-start or nbd-server-stop that manipulate whether the NBD
-server exists are serviced in the main loop; and therefore, this patch
-does not fall foul of the restrictions in the previous patch about the
-inherent unsafe race possible if a QIONetListener can have its async
-callback modified by a different thread than the one servicing polls.
+In practice, I don't think this has caused issues.  As pointed out by
+the original commit, all async callers prior to that commit were
+already okay with the NULL default context; and the typical usage
+pattern is to first add ALL the addresses the listener will pay
+attention to before ever setting the async callback.  Likewise, if a
+file uses only qio_net_listener_set_client_func instead of
+qio_net_listener_set_client_func_full, then it is never using a custom
+context, so later assignments of async callbacks will still be to the
+same global context as earlier ones.  Meanwhile, any callers that want
+to do the sync operation to grab the first client are unlikely to
+register an async callback; altogether bypassing the question of
+whether later assignments of a GSource are being tied to a different
+context over time.
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3169
+I do note that chardev/char-socket.c is the only file that calls both
+qio_net_listener_wait_client (sync for a single client in
+tcp_chr_accept_server_sync), and qio_net_listener_set_client_func_full
+(several places, all with chr->gcontext, but sometimes with a NULL
+callback function during teardown).  But as far as I can tell, the two
+uses are mutually exclusive, based on the is_waitconnect parameter to
+qmp_chardev_open_socket_server.
+
+That said, it is more robust to remember when an async callback
+function is tied to a non-default context, and have both the sync wait
+and any late address additions honor that same context.  That way, the
+code will be robust even if a later user performs a sync wait for a
+specific client in the middle of servicing a longer-lived
+QIONetListener that has an async callback for all other clients.
+
+CC: qemu-stable@nongnu.org
+Fixes: 938c8b79 ("qio: store gsources for net listeners", v2.12.0)
 Signed-off-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 ---
-v2: new patch
-v3: enhance commit message
+v2: move earlier in series, trace context
 ---
- blockdev-nbd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/io/net-listener.h |  1 +
+ io/net-listener.c         | 25 ++++++++++++++++---------
+ io/trace-events           |  6 +++---
+ 3 files changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 1e3e634b87d..696474aea93 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -94,10 +94,10 @@ static void nbd_update_server_watch(NBDServerData *s)
- {
-     if (s->listener) {
-         if (!s->max_connections || s->connections < s->max_connections) {
--            qio_net_listener_set_client_func(s->listener, nbd_accept, NULL,
-+            qio_net_listener_set_client_aio_func(s->listener, nbd_accept, NULL,
-                                              NULL);
-         } else {
--            qio_net_listener_set_client_func(s->listener, NULL, NULL, NULL);
-+            qio_net_listener_set_client_aio_func(s->listener, NULL, NULL, NULL);
+diff --git a/include/io/net-listener.h b/include/io/net-listener.h
+index ab9f291ed62..42fbfab5467 100644
+--- a/include/io/net-listener.h
++++ b/include/io/net-listener.h
+@@ -50,6 +50,7 @@ struct QIONetListener {
+     QIOChannelSocket **sioc;
+     GSource **io_source;
+     size_t nsioc;
++    GMainContext *context;
+
+     bool connected;
+
+diff --git a/io/net-listener.c b/io/net-listener.c
+index d71b65270e0..0f16b78fbbd 100644
+--- a/io/net-listener.c
++++ b/io/net-listener.c
+@@ -51,7 +51,8 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
+         return TRUE;
+     }
+
+-    trace_qio_net_listener_callback(listener, listener->io_func);
++    trace_qio_net_listener_callback(listener, listener->io_func,
++                                    listener->context);
+     if (listener->io_func) {
+         listener->io_func(listener, sioc, listener->io_data);
+     }
+@@ -125,13 +126,14 @@ void qio_net_listener_add(QIONetListener *listener,
+     object_ref(OBJECT(sioc));
+     listener->connected = true;
+
+-    trace_qio_net_listener_watch(listener, listener->io_func, "add");
++    trace_qio_net_listener_watch(listener, listener->io_func,
++                                 listener->context, "add");
+     if (listener->io_func != NULL) {
+         object_ref(OBJECT(listener));
+         listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
+             QIO_CHANNEL(listener->sioc[listener->nsioc]), G_IO_IN,
+             qio_net_listener_channel_func,
+-            listener, (GDestroyNotify)object_unref, NULL);
++            listener, (GDestroyNotify)object_unref, listener->context);
+     }
+
+     listener->nsioc++;
+@@ -147,7 +149,8 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+     size_t i;
+
+     trace_qio_net_listener_unwatch(listener, listener->io_func,
+-                                   "set_client_func");
++                                   listener->context, "set_client_func");
++
+     for (i = 0; i < listener->nsioc; i++) {
+         if (listener->io_source[i]) {
+             g_source_destroy(listener->io_source[i]);
+@@ -162,9 +165,10 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+     listener->io_func = func;
+     listener->io_data = data;
+     listener->io_notify = notify;
++    listener->context = context;
+
+     trace_qio_net_listener_watch(listener, listener->io_func,
+-                                 "set_client_func");
++                                 listener->context, "set_client_func");
+     if (listener->io_func != NULL) {
+         for (i = 0; i < listener->nsioc; i++) {
+             object_ref(OBJECT(listener));
+@@ -225,7 +229,8 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
+     };
+     size_t i;
+
+-    trace_qio_net_listener_unwatch(listener, listener->io_func, "wait_client");
++    trace_qio_net_listener_unwatch(listener, listener->io_func,
++                                   listener->context, "wait_client");
+     for (i = 0; i < listener->nsioc; i++) {
+         if (listener->io_source[i]) {
+             g_source_destroy(listener->io_source[i]);
+@@ -255,14 +260,15 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
+     g_main_loop_unref(loop);
+     g_main_context_unref(ctxt);
+
+-    trace_qio_net_listener_watch(listener, listener->io_func, "wait_client");
++    trace_qio_net_listener_watch(listener, listener->io_func,
++                                 listener->context, "wait_client");
+     if (listener->io_func != NULL) {
+         for (i = 0; i < listener->nsioc; i++) {
+             object_ref(OBJECT(listener));
+             listener->io_source[i] = qio_channel_add_watch_source(
+                 QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
+                 qio_net_listener_channel_func,
+-                listener, (GDestroyNotify)object_unref, NULL);
++                listener, (GDestroyNotify)object_unref, listener->context);
          }
      }
- }
+
+@@ -277,7 +283,8 @@ void qio_net_listener_disconnect(QIONetListener *listener)
+         return;
+     }
+
+-    trace_qio_net_listener_unwatch(listener, listener->io_func, "disconnect");
++    trace_qio_net_listener_unwatch(listener, listener->io_func,
++                                   listener->context, "disconnect");
+     for (i = 0; i < listener->nsioc; i++) {
+         if (listener->io_source[i]) {
+             g_source_destroy(listener->io_source[i]);
+diff --git a/io/trace-events b/io/trace-events
+index 10976eca5fe..0cb77d579b6 100644
+--- a/io/trace-events
++++ b/io/trace-events
+@@ -74,6 +74,6 @@ qio_channel_command_abort(void *ioc, int pid) "Command abort ioc=%p pid=%d"
+ qio_channel_command_wait(void *ioc, int pid, int ret, int status) "Command abort ioc=%p pid=%d ret=%d status=%d"
+
+ # net-listener.c
+-qio_net_listener_watch(void *listener, void *func, const char *extra) "Net listener=%p watch enabled func=%p by %s"
+-qio_net_listener_unwatch(void *listener, void *func, const char *extra) "Net listener=%p watch disabled func=%p by %s"
+-qio_net_listener_callback(void *listener, void *func) "Net listener=%p callback forwarding to func=%p"
++qio_net_listener_watch(void *listener, void *func, void *ctx, const char *extra) "Net listener=%p watch enabled func=%p ctx=%p by %s"
++qio_net_listener_unwatch(void *listener, void *func, void *ctx, const char *extra) "Net listener=%p watch disabled func=%p ctx=%p by %s"
++qio_net_listener_callback(void *listener, void *func, void *ctx) "Net listener=%p callback forwarding to func=%p ctx=%p"
 -- 
 2.51.1
 
