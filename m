@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA8CCD4F30
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA880CD4F30
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJLxn-000362-Sk; Wed, 12 Nov 2025 20:17:27 -0500
+	id 1vJM1T-000396-CE; Wed, 12 Nov 2025 20:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJLx9-0002cC-Mg
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:16:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJLx7-0005oN-3m
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:16:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1762996604;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+P9nrrqD51YTGRCKqzi3I+JtkC0sByhMh7ytAjmzR5Y=;
- b=VBMY/pywDuy4gG9r9y/KFwBxI0BNOYvHRSCbB1cRitubJySTQxQsh7haHr7rC8DfU7Y9Q1
- +/k9zzntX9U/AYl72CI7kdV6/42ubsfVsuFEYsJ+B0OHYjOTsjcwSSeAaLZzSBs/jchJTk
- smKbvZqcK/fPYQSGZWw8BYah/p9Kvvk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-1k7d2cngPwK75pyHOSuFFA-1; Wed,
- 12 Nov 2025 20:16:40 -0500
-X-MC-Unique: 1k7d2cngPwK75pyHOSuFFA-1
-X-Mimecast-MFC-AGG-ID: 1k7d2cngPwK75pyHOSuFFA_1762996599
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17D7D1956089; Thu, 13 Nov 2025 01:16:39 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.87])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C72071800451; Thu, 13 Nov 2025 01:16:37 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, berrange@redhat.com,
- qemu-stable@nongnu.org
-Subject: [PATCH v3 04/13] qio: Remember context of
- qio_net_listener_set_client_func_full
-Date: Wed, 12 Nov 2025 19:11:29 -0600
-Message-ID: <20251113011625.878876-19-eblake@redhat.com>
-In-Reply-To: <20251113011625.878876-15-eblake@redhat.com>
-References: <20251113011625.878876-15-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vJM1A-0002ZK-Qu
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:20:56 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vJM17-0006Tl-Gl
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:20:56 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxaNFpMhVpzawiAA--.10052S3;
+ Thu, 13 Nov 2025 09:20:41 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxQ+RnMhVpMhUxAQ--.14748S3;
+ Thu, 13 Nov 2025 09:20:41 +0800 (CST)
+Subject: Re: [PATCH V2 1/2] Modify the interrupt trigger type in loongarch
+ virt fdt to macro definition
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
+References: <cover.1762917185.git.lixianglai@loongson.cn>
+ <56832788ca15ee896e4e7bd2a635e65e188d75c2.1762917185.git.lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <1910ee77-f492-63f7-af62-c711e055cdb2@loongson.cn>
+Date: Thu, 13 Nov 2025 09:18:16 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <56832788ca15ee896e4e7bd2a635e65e188d75c2.1762917185.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowJDxQ+RnMhVpMhUxAQ--.14748S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uF47Zry3JrW7Cry3Zw4DJrc_yoW8uF4fpF
+ W7Aa1DXr4DJr9xG39xua4Y9w1fAr1rGr1jgFnrur40kryDWw1fXr40k39rtF17u34rJ3WF
+ vFsYgr9xWa42qrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.736,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,183 +83,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-io/net-listener.c has two modes of use: asynchronous (the user calls
-qio_net_listener_set_client_func to wake up the callback via the
-global GMainContext, or qio_net_listener_set_client_func_full to wake
-up the callback via the caller's own alternative GMainContext), and
-synchronous (the user calls qio_net_listener_wait_client which creates
-its own GMainContext and waits for the first client connection before
-returning, with no need for a user's callback).  But commit 938c8b79
-has a latent logic flaw: when qio_net_listener_wait_client finishes on
-its temporary context, it reverts all of the siocs back to the global
-GMainContext rather than the potentially non-NULL context they might
-have been originally registered with.  Similarly, if the user creates
-a net-listener, adds initial addresses, registers an async callback
-with a non-default context (which ties to all siocs for the initial
-addresses), then adds more addresses with qio_net_listener_add, the
-siocs for later addresses are blindly placed in the global context,
-rather than sharing the context of the earlier ones.
 
-In practice, I don't think this has caused issues.  As pointed out by
-the original commit, all async callers prior to that commit were
-already okay with the NULL default context; and the typical usage
-pattern is to first add ALL the addresses the listener will pay
-attention to before ever setting the async callback.  Likewise, if a
-file uses only qio_net_listener_set_client_func instead of
-qio_net_listener_set_client_func_full, then it is never using a custom
-context, so later assignments of async callbacks will still be to the
-same global context as earlier ones.  Meanwhile, any callers that want
-to do the sync operation to grab the first client are unlikely to
-register an async callback; altogether bypassing the question of
-whether later assignments of a GSource are being tied to a different
-context over time.
 
-I do note that chardev/char-socket.c is the only file that calls both
-qio_net_listener_wait_client (sync for a single client in
-tcp_chr_accept_server_sync), and qio_net_listener_set_client_func_full
-(several places, all with chr->gcontext, but sometimes with a NULL
-callback function during teardown).  But as far as I can tell, the two
-uses are mutually exclusive, based on the is_waitconnect parameter to
-qmp_chardev_open_socket_server.
-
-That said, it is more robust to remember when an async callback
-function is tied to a non-default context, and have both the sync wait
-and any late address additions honor that same context.  That way, the
-code will be robust even if a later user performs a sync wait for a
-specific client in the middle of servicing a longer-lived
-QIONetListener that has an async callback for all other clients.
-
-CC: qemu-stable@nongnu.org
-Fixes: 938c8b79 ("qio: store gsources for net listeners", v2.12.0)
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
----
-v2: move earlier in series, trace context
----
- include/io/net-listener.h |  1 +
- io/net-listener.c         | 25 ++++++++++++++++---------
- io/trace-events           |  6 +++---
- 3 files changed, 20 insertions(+), 12 deletions(-)
-
-diff --git a/include/io/net-listener.h b/include/io/net-listener.h
-index ab9f291ed62..42fbfab5467 100644
---- a/include/io/net-listener.h
-+++ b/include/io/net-listener.h
-@@ -50,6 +50,7 @@ struct QIONetListener {
-     QIOChannelSocket **sioc;
-     GSource **io_source;
-     size_t nsioc;
-+    GMainContext *context;
-
-     bool connected;
-
-diff --git a/io/net-listener.c b/io/net-listener.c
-index d71b65270e0..0f16b78fbbd 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -51,7 +51,8 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
-         return TRUE;
-     }
-
--    trace_qio_net_listener_callback(listener, listener->io_func);
-+    trace_qio_net_listener_callback(listener, listener->io_func,
-+                                    listener->context);
-     if (listener->io_func) {
-         listener->io_func(listener, sioc, listener->io_data);
-     }
-@@ -125,13 +126,14 @@ void qio_net_listener_add(QIONetListener *listener,
-     object_ref(OBJECT(sioc));
-     listener->connected = true;
-
--    trace_qio_net_listener_watch(listener, listener->io_func, "add");
-+    trace_qio_net_listener_watch(listener, listener->io_func,
-+                                 listener->context, "add");
-     if (listener->io_func != NULL) {
-         object_ref(OBJECT(listener));
-         listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
-             QIO_CHANNEL(listener->sioc[listener->nsioc]), G_IO_IN,
-             qio_net_listener_channel_func,
--            listener, (GDestroyNotify)object_unref, NULL);
-+            listener, (GDestroyNotify)object_unref, listener->context);
-     }
-
-     listener->nsioc++;
-@@ -147,7 +149,8 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
-     size_t i;
-
-     trace_qio_net_listener_unwatch(listener, listener->io_func,
--                                   "set_client_func");
-+                                   listener->context, "set_client_func");
-+
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-@@ -162,9 +165,10 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
-     listener->io_func = func;
-     listener->io_data = data;
-     listener->io_notify = notify;
-+    listener->context = context;
-
-     trace_qio_net_listener_watch(listener, listener->io_func,
--                                 "set_client_func");
-+                                 listener->context, "set_client_func");
-     if (listener->io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-@@ -225,7 +229,8 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     };
-     size_t i;
-
--    trace_qio_net_listener_unwatch(listener, listener->io_func, "wait_client");
-+    trace_qio_net_listener_unwatch(listener, listener->io_func,
-+                                   listener->context, "wait_client");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-@@ -255,14 +260,15 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     g_main_loop_unref(loop);
-     g_main_context_unref(ctxt);
-
--    trace_qio_net_listener_watch(listener, listener->io_func, "wait_client");
-+    trace_qio_net_listener_watch(listener, listener->io_func,
-+                                 listener->context, "wait_client");
-     if (listener->io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-             listener->io_source[i] = qio_channel_add_watch_source(
-                 QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
-                 qio_net_listener_channel_func,
--                listener, (GDestroyNotify)object_unref, NULL);
-+                listener, (GDestroyNotify)object_unref, listener->context);
-         }
-     }
-
-@@ -277,7 +283,8 @@ void qio_net_listener_disconnect(QIONetListener *listener)
-         return;
-     }
-
--    trace_qio_net_listener_unwatch(listener, listener->io_func, "disconnect");
-+    trace_qio_net_listener_unwatch(listener, listener->io_func,
-+                                   listener->context, "disconnect");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-diff --git a/io/trace-events b/io/trace-events
-index 10976eca5fe..0cb77d579b6 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -74,6 +74,6 @@ qio_channel_command_abort(void *ioc, int pid) "Command abort ioc=%p pid=%d"
- qio_channel_command_wait(void *ioc, int pid, int ret, int status) "Command abort ioc=%p pid=%d ret=%d status=%d"
-
- # net-listener.c
--qio_net_listener_watch(void *listener, void *func, const char *extra) "Net listener=%p watch enabled func=%p by %s"
--qio_net_listener_unwatch(void *listener, void *func, const char *extra) "Net listener=%p watch disabled func=%p by %s"
--qio_net_listener_callback(void *listener, void *func) "Net listener=%p callback forwarding to func=%p"
-+qio_net_listener_watch(void *listener, void *func, void *ctx, const char *extra) "Net listener=%p watch enabled func=%p ctx=%p by %s"
-+qio_net_listener_unwatch(void *listener, void *func, void *ctx, const char *extra) "Net listener=%p watch disabled func=%p ctx=%p by %s"
-+qio_net_listener_callback(void *listener, void *func, void *ctx) "Net listener=%p callback forwarding to func=%p ctx=%p"
--- 
-2.51.1
+On 2025/11/12 上午11:26, Xianglai Li wrote:
+> In the loongarch virt fdt file, the interrupt trigger type directly
+> uses magic numbers. Now, refer to the definitions in the linux kernel and
+> use macro definitions.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> 
+>   hw/loongarch/virt-fdt-build.c | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+> index 1f0ba01f71..7333019cf7 100644
+> --- a/hw/loongarch/virt-fdt-build.c
+> +++ b/hw/loongarch/virt-fdt-build.c
+> @@ -16,6 +16,11 @@
+>   #include "system/reset.h"
+>   #include "target/loongarch/cpu.h"
+>   
+> +#define FDT_IRQ_TYPE_EDGE_RISING  1
+> +#define FDT_IRQ_TYPE_EDGE_FALLING 2
+> +#define FDT_IRQ_TYPE_LEVEL_HIGH   4
+> +#define FDT_IRQ_TYPE_LEVEL_LOW    8
+> +
+>   static void create_fdt(LoongArchVirtMachineState *lvms)
+>   {
+>       MachineState *ms = MACHINE(lvms);
+> @@ -415,7 +420,8 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+>       if (chosen) {
+>           qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+>       }
+> -    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
+> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq,
+> +                           FDT_IRQ_TYPE_LEVEL_HIGH);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+>                             *pch_pic_phandle);
+>       g_free(nodename);
+> @@ -435,7 +441,8 @@ static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
+>                               "loongson,ls7a-rtc");
+>       qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+> -                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
+> +                           VIRT_RTC_IRQ - VIRT_GSI_BASE ,
+> +                           FDT_IRQ_TYPE_LEVEL_HIGH);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+>                             *pch_pic_phandle);
+>       g_free(nodename);
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
