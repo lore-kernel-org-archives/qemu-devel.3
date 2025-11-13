@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC36CDB462
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 22:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FDBCD98FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 22:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJgEF-0006bA-SE; Thu, 13 Nov 2025 17:55:47 -0500
+	id 1vJgET-0006pe-Vw; Thu, 13 Nov 2025 17:56:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEE-0006UD-6K
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:46 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEJ-0006ky-TT
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEC-0000jh-8W
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:45 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEH-0000lw-OY
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763074543;
+ s=mimecast20190719; t=1763074549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XIJsVRrHKkwjnz3/pMJXWwHAQW95LGmY+DrcHOTzCKM=;
- b=EGArAb2aBealx/9Y7gX1ftd0ENkIUnKFnJW3blM5jkRZmtobBi+2xuwa2j/ESz0NLiHAa+
- LAqVTZMUdZGaZl1pD1sjqMhbA6Oi44gFmpWAhL3krNNW3L/ktnlWp4kxHauISXDla1W/kH
- DKQcaQcskyL8Fm7kIRoWiV+dq5058B4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=yfaZmhfT5FMbK6fQyyHMb4KRAuvT1pqkCCWbuRrODso=;
+ b=TELaO2Ve3wFW5ufNSrskZzQwlbSuGLvS1UzN9HE4oCqwwPCarZb6oGc4Uwoz3+oh8IO+1/
+ njtOorWBoKDsXILa0/2PKsn7I0lskq8Zy703ohq8KqhQuWuH+Zr3TH7CDPkRA/OLkH5TSP
+ JDHgftwe5zi4BQ/6PppbKPurB9PwAN8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-BKYXIkY0O6yYVVZV20kLxw-1; Thu,
- 13 Nov 2025 17:55:42 -0500
-X-MC-Unique: BKYXIkY0O6yYVVZV20kLxw-1
-X-Mimecast-MFC-AGG-ID: BKYXIkY0O6yYVVZV20kLxw_1763074541
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-TFrlQC1HMdWgRz2_gvFAHw-1; Thu,
+ 13 Nov 2025 17:55:47 -0500
+X-MC-Unique: TFrlQC1HMdWgRz2_gvFAHw-1
+X-Mimecast-MFC-AGG-ID: TFrlQC1HMdWgRz2_gvFAHw_1763074546
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5544E19373D8; Thu, 13 Nov 2025 22:55:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA8CD1956070; Thu, 13 Nov 2025 22:55:46 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.22])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BC251955F1B; Thu, 13 Nov 2025 22:55:40 +0000 (UTC)
+ id 4B33E1955F1B; Thu, 13 Nov 2025 22:55:45 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 05/15] qio: Protect NetListener callback with mutex
-Date: Thu, 13 Nov 2025 16:55:01 -0600
-Message-ID: <20251113225531.1077484-22-eblake@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 09/15] qio: Provide accessor around QIONetListener->sioc
+Date: Thu, 13 Nov 2025 16:55:05 -0600
+Message-ID: <20251113225531.1077484-26-eblake@redhat.com>
 In-Reply-To: <20251113225531.1077484-17-eblake@redhat.com>
 References: <20251113225531.1077484-17-eblake@redhat.com>
 MIME-Version: 1.0
@@ -84,252 +86,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without a mutex, NetListener can run into this data race between a
-thread changing the async callback callback function to use when a
-client connects, and the thread servicing polling of the listening
-sockets:
+An upcoming patch needs to pass more than just sioc as the opaque
+pointer to an AioContext; but since our AioContext code in general
+(and its QIO Channel wrapper code) lacks a notify callback present
+with GSource, we do not have the trivial option of just g_malloc'ing a
+small struct to hold all that data coupled with a notify of g_free.
+Instead, the data pointer must outlive the registered handler; in
+fact, having the data pointer have the same lifetime as QIONetListener
+is adequate.
 
-  Thread 1:
-       qio_net_listener_set_client_func(lstnr, f1, ...);
-           => foreach sock: socket
-               => object_ref(lstnr)
-               => sock_src = qio_channel_socket_add_watch_source(sock, ...., lstnr, object_unref);
+But the cleanest way to stick such a helper struct in QIONetListener
+will be to rearrange internal struct members.  And that in turn means
+that all existing code that currently directly accesses
+listener->nsioc and listener->sioc[] should instead go through
+accessor functions, to be immune to the upcoming struct layout
+changes.  So this patch adds accessor methods qio_net_listener_nsioc()
+and qio_net_listener_sioc(), and puts them to use.
 
-  Thread 2:
-       poll()
-          => event POLLIN on socket
-               => ref(GSourceCallback)
-               => if (lstnr->io_func) // while lstnr->io_func is f1
-                    ...interrupt..
+While at it, notice that the pattern of grabbing an sioc from the
+listener only to turn around can call
+qio_channel_socket_get_local_address is common enough to also warrant
+the helper of qio_net_listener_get_local_address, and fix a copy-paste
+error in the corresponding documentation.
 
-  Thread 1:
-       qio_net_listener_set_client_func(lstnr, f2, ...);
-          => foreach sock: socket
-               => g_source_unref(sock_src)
-          => foreach sock: socket
-               => object_ref(lstnr)
-               => sock_src = qio_channel_socket_add_watch_source(sock, ...., lstnr, object_unref);
-
-  Thread 2:
-               => call lstnr->io_func(lstnr->io_data) // now sees f2
-               => return dispatch(sock)
-               => unref(GSourceCallback)
-                  => destroy-notify
-                     => object_unref
-
-Found by inspection; I did not spend the time trying to add sleeps or
-execute under gdb to try and actually trigger the race in practice.
-This is a SEGFAULT waiting to happen if f2 can become NULL because
-thread 1 deregisters the user's callback while thread 2 is trying to
-service the callback.  Other messes are also theoretically possible,
-such as running callback f1 with an opaque pointer that should only be
-passed to f2 (if the client code were to use more than just a binary
-choice between a single async function or NULL).
-
-Mitigating factor: if the code that modifies the QIONetListener can
-only be reached by the same thread that is executing the polling and
-async callbacks, then we are not in a two-thread race documented above
-(even though poll can see two clients trying to connect in the same
-window of time, any changes made to the listener by the first async
-callback will be completed before the thread moves on to the second
-client).  However, QEMU is complex enough that this is hard to
-generically analyze.  If QMP commands (like nbd-server-stop) are run
-in the main loop and the listener uses the main loop, things should be
-okay.  But when a client uses an alternative GMainContext, or if
-servicing a QMP command hands off to a coroutine to avoid blocking, I
-am unable to state with certainty whether a given net listener can be
-modified by a thread different from the polling thread running
-callbacks.
-
-At any rate, it is worth having the API be robust.  To ensure that
-modifying a NetListener can be safely done from any thread, add a
-mutex that guarantees atomicity to all members of a listener object
-related to callbacks.  This problem has been present since
-QIONetListener was introduced.
-
-Note that this does NOT prevent the case of a second round of the
-user's old async callback being invoked with the old opaque data, even
-when the user has already tried to change the async callback during
-the first async callback; it is only about ensuring that there is no
-sharding (the eventual io_func(io_data) call that does get made will
-correspond to a particular combination that the user had requested at
-some point in time, and not be sharded to a combination that never
-existed in practice).  In other words, this patch maintains the status
-quo that a user's async callback function already needs to be robust
-to parallel clients landing in the same window of poll servicing, even
-when only one client is desired, if that particular listener can be
-amended in a thread other than the one doing the polling.
-
-CC: qemu-stable@nongnu.org
-Fixes: 53047392 ("io: introduce a network socket listener API", v2.12.0)
 Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20251113011625.878876-20-eblake@redhat.com>
+Message-ID: <20251113011625.878876-24-eblake@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[eblake: minor commit message wording improvements]
-Signed-off-by: Eric Blake <eblake@redhat.com>
 ---
- include/io/net-listener.h |  1 +
- io/net-listener.c         | 58 +++++++++++++++++++++++++++++----------
- 2 files changed, 44 insertions(+), 15 deletions(-)
+ include/io/channel-socket.h |  2 +-
+ include/io/net-listener.h   | 42 +++++++++++++++++++++++++++++++++++++
+ chardev/char-socket.c       |  2 +-
+ io/net-listener.c           | 27 ++++++++++++++++++++++++
+ migration/socket.c          |  4 ++--
+ ui/vnc.c                    | 34 ++++++++++++++++++------------
+ 6 files changed, 94 insertions(+), 17 deletions(-)
 
+diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
+index fcfd489c6ce..a1ef3136ea2 100644
+--- a/include/io/channel-socket.h
++++ b/include/io/channel-socket.h
+@@ -228,7 +228,7 @@ void qio_channel_socket_dgram_async(QIOChannelSocket *ioc,
+  * release with a call qapi_free_SocketAddress() when no
+  * longer required.
+  *
+- * Returns: 0 on success, -1 on error
++ * Returns: the socket address struct, or NULL on error
+  */
+ SocketAddress *
+ qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
 diff --git a/include/io/net-listener.h b/include/io/net-listener.h
-index 42fbfab5467..c2165dc1669 100644
+index c2165dc1669..95bc7407d66 100644
 --- a/include/io/net-listener.h
 +++ b/include/io/net-listener.h
-@@ -54,6 +54,7 @@ struct QIONetListener {
+@@ -185,4 +185,46 @@ void qio_net_listener_disconnect(QIONetListener *listener);
+  */
+ bool qio_net_listener_is_connected(QIONetListener *listener);
 
-     bool connected;
++
++/**
++ * qio_net_listener_nsioc:
++ * @listener: the network listener object
++ *
++ * Determine the number of listener channels currently owned by the
++ * given listener.
++ *
++ * Returns: number of channels, or 0 if not listening
++ */
++size_t qio_net_listener_nsioc(QIONetListener *listener);
++
++
++/**
++ * qio_net_listener_sioc:
++ * @listener: the network listener object
++ * @n: index of the sioc to grab
++ *
++ * Accessor for the nth sioc owned by the listener.
++ *
++ * Returns: the requested listener, or NULL if not in bounds
++ */
++QIOChannelSocket *qio_net_listener_sioc(QIONetListener *listener, size_t n);
++
++/**
++ * qio_net_listener_get_local_address:
++ * @listener: the network listener object
++ * @n: index of the sioc to grab
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Get the string representation of the local socket
++ * address. A pointer to the allocated address information
++ * struct will be returned, which the caller is required to
++ * release with a call qapi_free_SocketAddress() when no
++ * longer required.
++ *
++ * Returns: the socket address struct, or NULL on error
++ */
++SocketAddress *
++qio_net_listener_get_local_address(QIONetListener *listener, size_t n,
++                                   Error **errp);
++
+ #endif /* QIO_NET_LISTENER_H */
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index ec4116ade4d..26d2f11202e 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1255,7 +1255,7 @@ static int qmp_chardev_open_socket_server(Chardev *chr,
+     }
 
-+    QemuMutex lock; /* Protects remaining fields */
-     QIONetListenerClientFunc io_func;
-     gpointer io_data;
-     GDestroyNotify io_notify;
+     qapi_free_SocketAddress(s->addr);
+-    s->addr = qio_channel_socket_get_local_address(s->listener->sioc[0], errp);
++    s->addr = qio_net_listener_get_local_address(s->listener, 0, errp);
+
+ skip_listen:
+     update_disconnected_filename(s);
 diff --git a/io/net-listener.c b/io/net-listener.c
-index 0f16b78fbbd..f70acdfc5ce 100644
+index 9a94b153279..9ffbc141a76 100644
 --- a/io/net-listener.c
 +++ b/io/net-listener.c
-@@ -23,11 +23,16 @@
- #include "io/dns-resolver.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "qemu/lockable.h"
- #include "trace.h"
-
- QIONetListener *qio_net_listener_new(void)
- {
--    return QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
-+    QIONetListener *listener;
-+
-+    listener = QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
-+    qemu_mutex_init(&listener->lock);
-+    return listener;
+@@ -316,6 +316,33 @@ bool qio_net_listener_is_connected(QIONetListener *listener)
+     return listener->connected;
  }
 
- void qio_net_listener_set_name(QIONetListener *listener,
-@@ -44,6 +49,9 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
- {
-     QIONetListener *listener = QIO_NET_LISTENER(opaque);
-     QIOChannelSocket *sioc;
-+    QIONetListenerClientFunc io_func;
-+    gpointer io_data;
-+    GMainContext *context;
-
-     sioc = qio_channel_socket_accept(QIO_CHANNEL_SOCKET(ioc),
-                                      NULL);
-@@ -51,10 +59,15 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
-         return TRUE;
-     }
-
--    trace_qio_net_listener_callback(listener, listener->io_func,
--                                    listener->context);
--    if (listener->io_func) {
--        listener->io_func(listener, sioc, listener->io_data);
-+    WITH_QEMU_LOCK_GUARD(&listener->lock) {
-+        io_func = listener->io_func;
-+        io_data = listener->io_data;
-+        context = listener->context;
++size_t qio_net_listener_nsioc(QIONetListener *listener)
++{
++    return listener->nsioc;
++}
++
++QIOChannelSocket *qio_net_listener_sioc(QIONetListener *listener, size_t n)
++{
++    if (n >= listener->nsioc) {
++        return NULL;
++    }
++    return listener->sioc[n];
++}
++
++SocketAddress *
++qio_net_listener_get_local_address(QIONetListener *listener, size_t n,
++                                   Error **errp)
++{
++    QIOChannelSocket *sioc = qio_net_listener_sioc(listener, n);
++
++    if (!sioc) {
++        error_setg(errp, "Listener index out of range");
++        return NULL;
 +    }
 +
-+    trace_qio_net_listener_callback(listener, io_func, context);
-+    if (io_func) {
-+        io_func(listener, sioc, io_data);
-     }
-
-     object_unref(OBJECT(sioc));
-@@ -111,6 +124,9 @@ int qio_net_listener_open_sync(QIONetListener *listener,
- void qio_net_listener_add(QIONetListener *listener,
-                           QIOChannelSocket *sioc)
++    return qio_channel_socket_get_local_address(sioc, errp);
++}
++
+ static void qio_net_listener_finalize(Object *obj)
  {
-+    QIONetListenerClientFunc io_func;
-+    GMainContext *context;
-+
-     if (listener->name) {
-         qio_channel_set_name(QIO_CHANNEL(sioc), listener->name);
-     }
-@@ -126,14 +142,18 @@ void qio_net_listener_add(QIONetListener *listener,
-     object_ref(OBJECT(sioc));
-     listener->connected = true;
+     QIONetListener *listener = QIO_NET_LISTENER(obj);
+diff --git a/migration/socket.c b/migration/socket.c
+index 5ec65b8c039..9e379bf56fd 100644
+--- a/migration/socket.c
++++ b/migration/socket.c
+@@ -170,9 +170,9 @@ void socket_start_incoming_migration(SocketAddress *saddr,
+                                           NULL, NULL,
+                                           g_main_context_get_thread_default());
 
--    trace_qio_net_listener_watch(listener, listener->io_func,
--                                 listener->context, "add");
--    if (listener->io_func != NULL) {
-+    WITH_QEMU_LOCK_GUARD(&listener->lock) {
-+        io_func = listener->io_func;
-+        context = listener->context;
-+    }
-+
-+    trace_qio_net_listener_watch(listener, io_func, context, "add");
-+    if (io_func) {
-         object_ref(OBJECT(listener));
-         listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
-             QIO_CHANNEL(listener->sioc[listener->nsioc]), G_IO_IN,
-             qio_net_listener_channel_func,
--            listener, (GDestroyNotify)object_unref, listener->context);
-+            listener, (GDestroyNotify)object_unref, context);
-     }
-
-     listener->nsioc++;
-@@ -148,6 +168,7 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
- {
-     size_t i;
-
-+    QEMU_LOCK_GUARD(&listener->lock);
-     trace_qio_net_listener_unwatch(listener, listener->io_func,
-                                    listener->context, "set_client_func");
-
-@@ -228,9 +249,15 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-         .loop = loop
-     };
-     size_t i;
-+    QIONetListenerClientFunc io_func;
-+    GMainContext *context;
-
--    trace_qio_net_listener_unwatch(listener, listener->io_func,
--                                   listener->context, "wait_client");
-+    WITH_QEMU_LOCK_GUARD(&listener->lock) {
-+        io_func = listener->io_func;
-+        context = listener->context;
-+    }
-+
-+    trace_qio_net_listener_unwatch(listener, io_func, context, "wait_client");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-@@ -260,15 +287,14 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     g_main_loop_unref(loop);
-     g_main_context_unref(ctxt);
-
--    trace_qio_net_listener_watch(listener, listener->io_func,
--                                 listener->context, "wait_client");
--    if (listener->io_func != NULL) {
-+    trace_qio_net_listener_watch(listener, io_func, context, "wait_client");
-+    if (io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-             listener->io_source[i] = qio_channel_add_watch_source(
-                 QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
-                 qio_net_listener_channel_func,
--                listener, (GDestroyNotify)object_unref, listener->context);
-+                listener, (GDestroyNotify)object_unref, context);
+-    for (i = 0; i < listener->nsioc; i++)  {
++    for (i = 0; i < qio_net_listener_nsioc(listener); i++)  {
+         SocketAddress *address =
+-            qio_channel_socket_get_local_address(listener->sioc[i], errp);
++            qio_net_listener_get_local_address(listener, i, errp);
+         if (!address) {
+             return;
          }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 50016ff7ab4..0d499b208b9 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -235,12 +235,12 @@ static VncServerInfo *vnc_server_info_get(VncDisplay *vd)
+     VncServerInfo *info;
+     Error *err = NULL;
+
+-    if (!vd->listener || !vd->listener->nsioc) {
++    if (!vd->listener || !qio_net_listener_nsioc(vd->listener)) {
+         return NULL;
      }
 
-@@ -283,6 +309,7 @@ void qio_net_listener_disconnect(QIONetListener *listener)
+     info = g_malloc0(sizeof(*info));
+-    vnc_init_basic_info_from_server_addr(vd->listener->sioc[0],
++    vnc_init_basic_info_from_server_addr(qio_net_listener_sioc(vd->listener, 0),
+                                          qapi_VncServerInfo_base(info), &err);
+     info->auth = g_strdup(vnc_auth_name(vd));
+     if (err) {
+@@ -377,7 +377,7 @@ VncInfo *qmp_query_vnc(Error **errp)
+     VncDisplay *vd = vnc_display_find(NULL);
+     SocketAddress *addr = NULL;
+
+-    if (vd == NULL || !vd->listener || !vd->listener->nsioc) {
++    if (vd == NULL || !vd->listener || !qio_net_listener_nsioc(vd->listener)) {
+         info->enabled = false;
+     } else {
+         info->enabled = true;
+@@ -386,8 +386,7 @@ VncInfo *qmp_query_vnc(Error **errp)
+         info->has_clients = true;
+         info->clients = qmp_query_client_list(vd);
+
+-        addr = qio_channel_socket_get_local_address(vd->listener->sioc[0],
+-                                                    errp);
++        addr = qio_net_listener_get_local_address(vd->listener, 0, errp);
+         if (!addr) {
+             goto out_error;
+         }
+@@ -549,6 +548,8 @@ VncInfo2List *qmp_query_vnc_servers(Error **errp)
+     size_t i;
+
+     QTAILQ_FOREACH(vd, &vnc_displays, next) {
++        size_t nsioc = 0;
++
+         info = g_new0(VncInfo2, 1);
+         info->id = g_strdup(vd->id);
+         info->clients = qmp_query_client_list(vd);
+@@ -559,14 +560,21 @@ VncInfo2List *qmp_query_vnc_servers(Error **errp)
+                                                   "device", &error_abort));
+             info->display = g_strdup(dev->id);
+         }
+-        for (i = 0; vd->listener != NULL && i < vd->listener->nsioc; i++) {
+-            info->server = qmp_query_server_entry(
+-                vd->listener->sioc[i], false, vd->auth, vd->subauth,
+-                info->server);
++        if (vd->listener != NULL) {
++            nsioc = qio_net_listener_nsioc(vd->listener);
+         }
+-        for (i = 0; vd->wslistener != NULL && i < vd->wslistener->nsioc; i++) {
++        for (i = 0; i < nsioc; i++) {
+             info->server = qmp_query_server_entry(
+-                vd->wslistener->sioc[i], true, vd->ws_auth,
++                qio_net_listener_sioc(vd->listener, i), false, vd->auth,
++                vd->subauth, info->server);
++        }
++        nsioc = 0;
++        if (vd->wslistener) {
++            nsioc = qio_net_listener_nsioc(vd->wslistener);
++        }
++        for (i = 0; i < nsioc; i++) {
++            info->server = qmp_query_server_entry(
++                qio_net_listener_sioc(vd->wslistener, i), true, vd->ws_auth,
+                 vd->ws_subauth, info->server);
+         }
+
+@@ -3550,11 +3558,11 @@ static void vnc_display_print_local_addr(VncDisplay *vd)
+ {
+     SocketAddress *addr;
+
+-    if (!vd->listener || !vd->listener->nsioc) {
++    if (!vd->listener || !qio_net_listener_nsioc(vd->listener)) {
          return;
      }
 
-+    QEMU_LOCK_GUARD(&listener->lock);
-     trace_qio_net_listener_unwatch(listener, listener->io_func,
-                                    listener->context, "disconnect");
-     for (i = 0; i < listener->nsioc; i++) {
-@@ -318,6 +345,7 @@ static void qio_net_listener_finalize(Object *obj)
-     g_free(listener->io_source);
-     g_free(listener->sioc);
-     g_free(listener->name);
-+    qemu_mutex_destroy(&listener->lock);
- }
-
- static const TypeInfo qio_net_listener_info = {
+-    addr = qio_channel_socket_get_local_address(vd->listener->sioc[0], NULL);
++    addr = qio_net_listener_get_local_address(vd->listener, 0, NULL);
+     if (!addr) {
+         return;
+     }
 -- 
 2.51.1
 
