@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57BDCCFA18
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BC9CD4F2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:02:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPPC-0004tN-7L; Wed, 12 Nov 2025 23:57:58 -0500
+	id 1vJPPH-0004xV-Uj; Wed, 12 Nov 2025 23:58:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOx-0004lQ-I2; Wed, 12 Nov 2025 23:57:45 -0500
+ id 1vJPOr-0004k7-UF; Wed, 12 Nov 2025 23:57:41 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOs-0001cD-Kk; Wed, 12 Nov 2025 23:57:41 -0500
+ id 1vJPOm-0001cD-9P; Wed, 12 Nov 2025 23:57:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763009859; x=1794545859;
+ t=1763009852; x=1794545852;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=9GE+hk+1IXfDmzkd0C2JXTi850FRaaGqtgpTyN8LixA=;
- b=KqmMx80ypLkQ+pPgvN0EtNv6b+eiZv/AWdZYn/6r/dK7HqULpbeJQzPq
- jCNSYM1mSi80zK9zPEQY30XFy3Io/RgetFhjWMB2EaWnRgqF2JKf+Q8qv
- IN52lvDgNM2qO9lp+15d3DcczVwbLXeCCajPFv4s/1J2zKunr4F2WuyTq
- Jh7FV8emnmCQLQouYnzJZaIiqWjOWEwl8OryxC6eH8eCbrh22JS8/m1LW
- Z1uJ8QrPUVabYLkOM2dXq6I2YkaSKOVWC5ZY6kXmncVdYR/qN/tpETrBJ
- p0J7vr0Py5/nONVjYTcKOMFeULmTEYbM4pZo9XY5j1al1KpO9ZnNQpUQ+ g==;
-X-CSE-ConnectionGUID: 5KMOHGDrRveUO0WnLzPhGw==
-X-CSE-MsgGUID: k6P4mUumTYKjx6s5n+ONnw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682084"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682084"
+ bh=2S5WatjIoZmc7FdySy+887bRnIi9jDxZtOKrzrC+ftk=;
+ b=h1DZ5Lnph4DsIIGCJZfwGOGfS7zSlCtcvyomDKWZ7mAAkomr7RCfz3EO
+ rSECi0oqGFVtuSTtYJ4GP9n4H3nr5dAzMGnMmaHcZp8Zhr0IDYEd5Smwg
+ QUXUBuODPc37WhC3Xw4vOJnw7clSQM6vph7JjWey9CLZ9TYKIMA5SAx2V
+ C7q+XjGvmCRqREwSor33w4ixfHABLJcQDsnCX4xr2uPxI2WGphx6ZwSXs
+ xQyrwZYv5aQKAqtxM2FL8X4Mz1uS5YB7u2UpTNZxQpA1dDItMtmc/J3XV
+ jEOjbhMsw1nG3F7prVsyrcXqy9vDhnyfs12/N2ZFfgahrxN31mejR4rvU w==;
+X-CSE-ConnectionGUID: ZZn/7L1TRne8T81pgFGcHA==
+X-CSE-MsgGUID: 7JQ762OGS0qjwAo6uKqE6w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682067"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682067"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Nov 2025 20:57:36 -0800
-X-CSE-ConnectionGUID: fWcBP6ETR1eIk8oxB+g2VA==
-X-CSE-MsgGUID: Y2r+tZemR0WjRr3M8E4dww==
+ 12 Nov 2025 20:57:28 -0800
+X-CSE-ConnectionGUID: z3N6LOWLQ0OKBNXQDI9+Fw==
+X-CSE-MsgGUID: 0Oyf85xnQHSJ8Fa+1T5lKg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663245"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663229"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:34 -0800
+ by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:26 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
 Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 07/22] rust/hpet: Reduce unnecessary mutable self argument
-Date: Thu, 13 Nov 2025 13:19:22 +0800
-Message-Id: <20251113051937.4017675-8-zhao1.liu@intel.com>
+Subject: [PATCH 03/22] rust/migration: Check name field in
+ VMStateDescriptionBuilder
+Date: Thu, 13 Nov 2025 13:19:18 +0800
+Message-Id: <20251113051937.4017675-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
 References: <20251113051937.4017675-1-zhao1.liu@intel.com>
@@ -82,63 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Methods of Timer and InterruptSource have been made as safe, so make the
-related methods of HPETTimer to accept immutable self reference.
+The name field is necessary for VMStateDescription, so that it's
+necessary to check if it is set when build VMStateDescription.
+
+Since is_null()/as_ref() become rustc v1.84 and pointer cannot cast to
+integer in const, use Option<> to check name with a new field in
+VMStateDescriptionBuilder instead.
+
+This can be simplified in future when QEMU bumps up rustc version.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ rust/migration/src/vmstate.rs | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 3564aa79c6e5..5e08b91494cf 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -324,7 +324,7 @@ fn get_int_route(&self) -> usize {
-         }
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 267f9c8e053a..8087f10832f1 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -530,7 +530,11 @@ macro_rules! vmstate_subsections {
+ unsafe impl<T: Sync> Sync for VMStateDescription<T> {}
+ 
+ #[derive(Clone)]
+-pub struct VMStateDescriptionBuilder<T>(bindings::VMStateDescription, PhantomData<fn(&T)>);
++pub struct VMStateDescriptionBuilder<T>(
++    bindings::VMStateDescription,
++    Option<*const std::os::raw::c_char>, // the name of VMStateDescription
++    PhantomData<fn(&T)>,
++);
+ 
+ #[derive(Debug)]
+ pub struct InvalidError;
+@@ -591,7 +595,7 @@ fn from(_value: InvalidError) -> Errno {
+ impl<T> VMStateDescriptionBuilder<T> {
+     #[must_use]
+     pub const fn name(mut self, name_str: &CStr) -> Self {
+-        self.0.name = ::std::ffi::CStr::as_ptr(name_str);
++        self.1 = Some(::std::ffi::CStr::as_ptr(name_str));
+         self
      }
  
--    fn set_irq(&mut self, set: bool) {
-+    fn set_irq(&self, set: bool) {
-         let route = self.get_int_route();
- 
-         if set && self.is_int_enabled() && self.get_state().is_hpet_enabled() {
-@@ -350,7 +350,7 @@ fn set_irq(&mut self, set: bool) {
-         }
+@@ -717,13 +721,16 @@ pub const fn subsections(mut self, subs: &'static VMStateSubsections) -> Self {
      }
  
--    fn update_irq(&mut self, set: bool) {
-+    fn update_irq(&self, set: bool) {
-         // If Timer N Interrupt Enable bit is 0, "the timer will
-         // still operate and generate appropriate status bits, but
-         // will not cause an interrupt"
-@@ -388,7 +388,7 @@ fn set_timer(&mut self) {
-         self.arm_timer(self.cmp64);
+     #[must_use]
+-    pub const fn build(self) -> VMStateDescription<T> {
++    pub const fn build(mut self) -> VMStateDescription<T> {
++        // FIXME: is_null()/as_ref() become const since v1.84.
++        assert!(self.1.is_some(), "VMStateDescription requires name field!");
++        self.0.name = self.1.unwrap();
+         VMStateDescription::<T>(self.0, PhantomData)
      }
  
--    fn del_timer(&mut self) {
-+    fn del_timer(&self) {
-         // Just remove the timer from the timer_list without destroying
-         // this timer instance.
-         self.qemu_timer.delete();
-@@ -657,7 +657,7 @@ fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
-             self.counter.set(self.get_ticks());
- 
-             for timer in self.timers.iter().take(self.num_timers) {
--                timer.borrow_mut().del_timer();
-+                timer.borrow().del_timer();
-             }
-         }
- 
-@@ -681,7 +681,7 @@ fn set_int_status_reg(&self, shift: u32, _len: u32, val: u64) {
- 
-         for (index, timer) in self.timers.iter().take(self.num_timers).enumerate() {
-             if cleared & (1 << index) != 0 {
--                timer.borrow_mut().update_irq(false);
-+                timer.borrow().update_irq(false);
-             }
-         }
+     #[must_use]
+     pub const fn new() -> Self {
+-        Self(bindings::VMStateDescription::ZERO, PhantomData)
++        Self(bindings::VMStateDescription::ZERO, None, PhantomData)
      }
+ }
+ 
 -- 
 2.34.1
 
