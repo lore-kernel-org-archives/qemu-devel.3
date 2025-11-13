@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FCACD98E3
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 21:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C2BCCD98E4
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 21:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJet7-00073u-6f; Thu, 13 Nov 2025 16:29:53 -0500
+	id 1vJewT-0001sY-Mh; Thu, 13 Nov 2025 16:33:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJeW5-0000ax-BU
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 16:06:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJeYf-0002Wt-Vy
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 16:08:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJeW3-0005Zj-U5
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 16:06:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJeYe-0005tI-DH
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 16:08:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763067962;
+ s=mimecast20190719; t=1763068123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JL/v6J68lg2RvncxWRrbXTogTIMVK670L6+8XYBdfc4=;
- b=FSnuaSVV4RfnZgn8c1oGODf24opS5zEQ07V/0Cy8/erE4mW2mgEyu6pCdLYC2ttQ67pT2G
- aelTZqDX1CoTBvfyl7/a4Q+FCKtbflIx/WF/F85qmBM3KDcI5woCYcIMpajoMCb/zYtRvC
- YOiQjprWtthTdszhCcriVXBEGKXY8HY=
+ bh=TpcFGgdSWZ5AsF1vV4PRrxl7iUCrQtOsXSlW8E7tVFs=;
+ b=BHveR2XnhsXSVxMfYCCFECOYMVtgoOpaOkXiCMakjDLqaxEQfy/nOtA1kJHHOrbB3G6hL4
+ akfGxzHIjQ4jcxduCS+r9kPPz2VkEAV4V/DRLmo6zPP2PtUS/v+HWBdfwD0aUS0nrhY6IR
+ O1RMJ5K6gbLlcP3nZqak95y4w/7XxwM=
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-twtmKbz6Nr6kwKLsavvrfQ-1; Thu, 13 Nov 2025 16:06:00 -0500
-X-MC-Unique: twtmKbz6Nr6kwKLsavvrfQ-1
-X-Mimecast-MFC-AGG-ID: twtmKbz6Nr6kwKLsavvrfQ_1763067960
+ us-mta-424-VmpuQDoCOXStaoAULkA-EA-1; Thu, 13 Nov 2025 16:08:42 -0500
+X-MC-Unique: VmpuQDoCOXStaoAULkA-EA-1
+X-Mimecast-MFC-AGG-ID: VmpuQDoCOXStaoAULkA-EA_1763068121
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-89eb8ee2a79so766447985a.2
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 13:06:00 -0800 (PST)
+ af79cd13be357-8b244ef3ed4so409441985a.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 13:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763067960; x=1763672760; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763068121; x=1763672921; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JL/v6J68lg2RvncxWRrbXTogTIMVK670L6+8XYBdfc4=;
- b=p5x5VIcLVZaU8xS+2HjC/GXJ5MMIVfH8CZr6xdeojz8rSCajFK0nblDZrAfk8067jx
- M05JRgA4BdAgh/5V9gyfeAEheAFc70q//Mzj6jEAJO7XAHX5tM2nXxoULyjW0HxH2wb9
- IWJRcKXvusTfRpcUw0BUKjTcimM43ONA2nAJuL0EH6E+qZyTL10PNfg1bHWh33zU4FGI
- hOjYO8YjQ5ibY6k6z4qbiRNHTD8soss+W4UqwZatBq/67kALtnWjvZv68IdkIHEyqVT0
- Hl9bs3prL0QqLEsN/RsnPnEHTNJr6WctIFZwRr9k/HDV835pWLofPfWB5z9+qzg0HBC/
- 4qfg==
+ bh=TpcFGgdSWZ5AsF1vV4PRrxl7iUCrQtOsXSlW8E7tVFs=;
+ b=Q4zVAj0P5L4beAnmqQEB902537ublqFYy9jnfvps+IDOvKiWMj9gYvN42HLwlcW2Ei
+ 4TfS7P1/8bXuPGVsMb5G/xOGhRiRsT+aKQNapaPURCLrzRMf3WghVPjHLxMZJRG8YQgI
+ 4pOgBGRcxxEYHDNI2LxXxNPTVF8X0MbrAxWUXMtCcMBUT4KYzHH+oMXuyKWk0qq655Ok
+ BoU/Kkjyd5da96hOhffWbILTzUdOXsv0oBVkBncVAyl6qCRHF2pzycUhGhuVxY2m2ne4
+ /b3X5CzSgQKTHRO5wA0g76hdCNLb1bFhPtib/1Dk5iMm1pxDzvEp/SkkAw41qcy0AkwT
+ S/1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763067960; x=1763672760;
+ d=1e100.net; s=20230601; t=1763068121; x=1763672921;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JL/v6J68lg2RvncxWRrbXTogTIMVK670L6+8XYBdfc4=;
- b=CcswDMXPAdylGf5BPMp0CfQ0pyT8rPIAC4bioTxi4YCfNsyQ5N8xw8lof8HivsOQv7
- 1eMi39rQ6nR+e1bIv9Dggd2cwBSFM6Buc2ijNZAwi6j+I+D4MatgdtCY7cY85Bd37wWq
- ByLZUcafuR6nlRT1ROf2TtmXClfS/fWJ9BPTL/K/d8+OKBIpFMzjN4jU5fMNVvobeoii
- yLvz7R3Ui6RVJGrKPEiwr4PvOuk/rQO8IQz/vAUrygOpn0SLbwZDTRdkSn+jwVqWnfZP
- iotDP57soA0HpBiGPhxlrjNgbUY0FQKuvvRrdPSfmLXiOjv3p1wYlsm3tM8V13Xl4vfj
- jCRg==
-X-Gm-Message-State: AOJu0Yye9eN/8j7nSPMG5BV0HmCWqFBz9NMPSMkLx0vOJNgoZlonqoGQ
- V24TcX9AtjhyZE+tQLaNvGQZfxTfpQhiW9qO3l9HTdZrQwLqpxQnBH2QaPo07HAFRagSZsKQugn
- TIPZ8XE0zO+zlWT1cgvjTqLQpqyHWwH+8AkT2Qvdu9naMjNrsMuKGaCVG
-X-Gm-Gg: ASbGnctxHAush8IAOggNtM3hD0rfRQq9TDw/Qoh4CXvMoFNDJC1WNUolQAruEIk5XRB
- AQ7Dlo0WDvWnM9GutxV7tC3DPZEWDgmUokocD+NOsYgoUcz5R4C/++40o1doH4WBMOijWBapckJ
- gGzFq4ecbTO0nn1ELcsWhcMQsDBpVOb3dpjLthhX1D0kK9FgLlSzN13ej43BfuRSYIMPIktrcIW
- LBW/UjnK+AOZgITXxozeR7vRYdkQV4NqL0+ZSixcbHXb0G/d225kASk/xPnUf7V/jVPKaEa1SnP
- UXk8G4/sQV2gAa93+4Lngvucusv2jdjOKVgVGGGcXR05kXbsQBD6U0GjVi9Kh4WbtyOPUlOQxRm
- /IQ==
-X-Received: by 2002:a05:620a:1708:b0:864:48eb:356 with SMTP id
- af79cd13be357-8b2c315b9ffmr104922885a.25.1763067960194; 
- Thu, 13 Nov 2025 13:06:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpCw0YE7k3OOHTOSawkwOsg8ZVBdxfqqck/KM58R3ks/aOKEISHE/JSKhKDRCVG5QIgzD1eg==
-X-Received: by 2002:a05:620a:1708:b0:864:48eb:356 with SMTP id
- af79cd13be357-8b2c315b9ffmr104917385a.25.1763067959720; 
- Thu, 13 Nov 2025 13:05:59 -0800 (PST)
+ bh=TpcFGgdSWZ5AsF1vV4PRrxl7iUCrQtOsXSlW8E7tVFs=;
+ b=Eq7vgz3RFsl0wX3bTqG77WxXa2xAt1zfu7r9QWcLyXMKdRt7tVlSXupapnRPR7NGDT
+ bMADYnooOH6ilkxHsIrQHO0YXxCGSP5WcpilCjVhlrh/GhrCVigpaKzeWmzHREwtxV91
+ YCk/JoV0vgLtEhPvksORqxcn9vD1c5LsEZycnhjqXIicu+chR53DrwEiFvg74vbYR2G7
+ a/md3n4GDdFGWKFgp8EnghgVdyoIAZt+TnsYo0xDGtJtH5Bzv27CPUccTIwiH7hvlDX8
+ YA8vG+y8eOmbRV1S/zDFgORcI48oW1l7tXqk6Nt9z3thHGXUf7eW5nRGqu7magYwcecQ
+ Q2Vg==
+X-Gm-Message-State: AOJu0YypQy75HwOzZ9Ed0IFGNFdQOzcM/FNSJuXel3cvAk7yKmjB4nai
+ x6+a1Tz3N5/w8bCsCXm6ChYsu+P+ZTBJJuUOYTl0GlI37GVRNsckDHe+87W3oRa860oyVmu2BxL
+ 6jbgBnpjk3G0WnjH8rCFQtfKECG544pJhJ62fm6cg8RXyz9yJyY++GBIY
+X-Gm-Gg: ASbGncs2s3moEie8Osrw5ACi7mmCyXOPK2X7dvF3IUoRnVYhsqfUBtMylNuVLjMzv+I
+ eP3AZKBd16R4sZ86jOLRMZ6LFuq/NADW/AcbLNmqQ3TgldMwcBMe05/p8goEp3K0pbZOTvIvDXD
+ Wrins2aWgZqsvJGCb+j7hIEvaRqXqzskC9IQDpDxl3YaZqQBVareYB5HM4K05ZPuMkE650VSpo/
+ 757XHLdkB39wKffNVZNy8Dnxt2vUZrugZQUkM79CB8uL1Gj3TTGUE4pGWRMgIHCRrOmxeukmqcG
+ zQR2ZtC3zsQfM6/WaRSndmA8maPPm9sNzAPpZnUxUAXLB29b1osFbveYzLRIE+cGxB2Kbcs+xBb
+ 2VA==
+X-Received: by 2002:a05:620a:1911:b0:8a4:107a:6772 with SMTP id
+ af79cd13be357-8b2c31dd43amr119895785a.76.1763068121353; 
+ Thu, 13 Nov 2025 13:08:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFS01cbOv8YqaWCdo/ga8BIFiHkyW+zoAINhuEeAUO/zGjwdCKJGgHSVjmaSH88K3uuxPdaCw==
+X-Received: by 2002:a05:620a:1911:b0:8a4:107a:6772 with SMTP id
+ af79cd13be357-8b2c31dd43amr119889985a.76.1763068120801; 
+ Thu, 13 Nov 2025 13:08:40 -0800 (PST)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b2bd0bfc23sm105605985a.17.2025.11.13.13.05.58
+ af79cd13be357-8b2af043045sm202632285a.39.2025.11.13.13.08.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Nov 2025 13:05:59 -0800 (PST)
-Date: Thu, 13 Nov 2025 16:05:55 -0500
+ Thu, 13 Nov 2025 13:08:40 -0800 (PST)
+Date: Thu, 13 Nov 2025 16:08:36 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -88,7 +88,7 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Juraj Marcin <jmarcin@redhat.com>
 Subject: Re: [PATCH 2/8] kvm: Allow kvm_guest_memfd_supported for non-private
  use case
-Message-ID: <aRZIM9baerzcuxOi@x1.local>
+Message-ID: <aRZI1O18HAHcxaFV@x1.local>
 References: <20251023185913.2923322-1-peterx@redhat.com>
  <20251023185913.2923322-3-peterx@redhat.com>
  <9614d727-97bf-4a50-be13-6754952bec96@intel.com>
@@ -96,7 +96,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <9614d727-97bf-4a50-be13-6754952bec96@intel.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -122,40 +122,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, Oct 24, 2025 at 10:30:19AM +0800, Xiaoyao Li wrote:
-> On 10/24/2025 2:59 AM, Peter Xu wrote:
-> > Guest-memfd is not 100% attached to private, it's a VM-specific memory
-> > provider.  Allow it to be created even without private attributes, for
-> > example, when the VM can use the guest-memfd memory completely shared.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >   accel/kvm/kvm-all.c | 6 ++----
-> >   1 file changed, 2 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> > index f9254ae654..1425dfd8b3 100644
-> > --- a/accel/kvm/kvm-all.c
-> > +++ b/accel/kvm/kvm-all.c
-> > @@ -2779,10 +2779,8 @@ static int kvm_init(AccelState *as, MachineState *ms)
-> >       }
-> >       kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
-> > -    kvm_guest_memfd_supported =
-> > -        kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-> > -        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
-> > -        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> > +    kvm_guest_memfd_supported = kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-> > +        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
-> >       kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
-> >       if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-> 
-> 
-> The check on KVM_MEMORY_ATTRIBUTE_PRIVATE is dropped silently. But using
-> guest memfd to serve as private memory does requires the support of
-> KVM_MEMORY_ATTRIBUTE_PRIVATE.
-> 
-> My version of the patch was
+> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> index 68cd33ba9735..73f04eb589ef 100644
+> --- a/accel/stubs/kvm-stub.c
+> +++ b/accel/stubs/kvm-stub.c
+> @@ -125,3 +125,8 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t
+> flags, Error **errp)
+>  {
+>      return -ENOSYS;
+>  }
+> +
+> +bool kvm_private_memory_attribute_supported(void)
+> +{
+> +    return false;
+> +}
 
-Your version looks good, I'll fetch yours to replace mine.  Thanks.
+Hmm, I found that your this patch seems newer than the one you pushed here:
+
+https://github.com/intel-staging/qemu-tdx/tree/lxy/gmem-mmap-poc
+
+Do you want to push it once more to make it latest?
+
+Thanks,
 
 -- 
 Peter Xu
