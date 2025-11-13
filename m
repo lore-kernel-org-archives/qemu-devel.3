@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318FACD98F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 22:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2C1CDB462
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 22:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJgED-0006SP-SE; Thu, 13 Nov 2025 17:55:46 -0500
+	id 1vJgEE-0006WG-VL; Thu, 13 Nov 2025 17:55:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEA-0006H6-SQ
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:42 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEB-0006JB-AA
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgE8-0000iY-Qu
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:42 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgE8-0000iL-WA
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763074539;
+ s=mimecast20190719; t=1763074538;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5mfN6v6WoRbmZtIImVZProAQ0UlpmeT7Vl/y/PTTt8I=;
- b=SU5NjYGMsZRz910B+cLJoEROI56TueDgG4QHxSwuGvyjStCx7XAfxzG7CQsg9oFlAHBv70
- sNqwDC4+16KMm23pCE1g4d2Gs0oRd/ovtiDFxhWZbyPLINaGle44EBlZrstADEmebbzIIZ
- P4DFZTyNXdWaeWe4h34El8Ts5Oan2yo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=inbSWSOHGeBpKBaikq2zS8RPho/TBUsVCjlvCcGRCXc=;
+ b=fIQAdbksfzv+y8z7NrLKD/fA/Iql3H2DWKxmYECpXhQIf4PtkuaJ0jBCFuq8PSb10DkkUO
+ +6lyo8leiVzpitvYnrM7Q401XPJbfl/0VsThLSkKxdP8lv6nMV/6rCbKQ4GCswAGiUtJ2n
+ tnEzjDCVtm//Bv5JTWiK7eKRo0tV/30=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-140-JGEUZP9RPaytXHQ5JiqavQ-1; Thu,
- 13 Nov 2025 17:55:37 -0500
-X-MC-Unique: JGEUZP9RPaytXHQ5JiqavQ-1
-X-Mimecast-MFC-AGG-ID: JGEUZP9RPaytXHQ5JiqavQ_1763074537
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-CbO11KKjMnaoSEcd1MIq3Q-1; Thu,
+ 13 Nov 2025 17:55:36 -0500
+X-MC-Unique: CbO11KKjMnaoSEcd1MIq3Q-1
+X-Mimecast-MFC-AGG-ID: CbO11KKjMnaoSEcd1MIq3Q_1763074536
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EF131956096
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:55:37 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8F5D180035F
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:55:35 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.22])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E85719540DF; Thu, 13 Nov 2025 22:55:35 +0000 (UTC)
+ id 567EB19540E8
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:55:35 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 01/15] iotests: Drop execute permissions on vvfat.out
-Date: Thu, 13 Nov 2025 16:54:57 -0600
-Message-ID: <20251113225531.1077484-18-eblake@redhat.com>
-In-Reply-To: <20251113225531.1077484-17-eblake@redhat.com>
-References: <20251113225531.1077484-17-eblake@redhat.com>
+Subject: [PULL for-10.2 00/15] NBD patches for 2025-11-13
+Date: Thu, 13 Nov 2025 16:54:56 -0600
+Message-ID: <20251113225531.1077484-17-eblake@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,21 +80,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Output files are not executables. Noticed while preparing another
-iotest addition.
+The following changes since commit 9febfa94b69b7146582c48a868bd2330ac45037f:
 
-Fixes: c8f60bfb43 ("iotests: Add `vvfat` tests", v9.1.0)
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20251113011625.878876-16-eblake@redhat.com>
----
- tests/qemu-iotests/tests/vvfat.out | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
+  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2025-11-12 11:47:42 +0100)
+
+are available in the Git repository at:
+
+  https://repo.or.cz/qemu/ericb.git tags/pull-nbd-2025-11-13
+
+for you to fetch changes up to 4c91719a6a78a1c24d8bb854f7594e767962d0d9:
+
+  tests/qemu-iotest: fix iotest 024 with qed images (2025-11-13 16:43:21 -0600)
+
+----------------------------------------------------------------
+NBD patches for 2025-11-13
+
+- Fix NBD client deadlock when connecting to same-process server
+- Several iotests improvements
+
+----------------------------------------------------------------
+Alberto Garcia (1):
+      tests/qemu-iotest: fix iotest 024 with qed images
+
+Eric Blake (13):
+      iotests: Drop execute permissions on vvfat.out
+      qio: Add trace points to net_listener
+      qio: Unwatch before notify in QIONetListener
+      qio: Remember context of qio_net_listener_set_client_func_full
+      qio: Protect NetListener callback with mutex
+      qio: Minor optimization when callback function is unchanged
+      qio: Factor out helpers qio_net_listener_[un]watch
+      chardev: Reuse channel's cached local address
+      qio: Provide accessor around QIONetListener->sioc
+      qio: Prepare NetListener to use AioContext
+      qio: Add QIONetListener API for using AioContext
+      nbd: Avoid deadlock in client connecting to same-process server
+      iotests: Add coverage of recent NBD qio deadlock fix
+
+Thomas Huth (1):
+      tests/qemu-iotests: Fix broken grep command in iotest 207
+
+ include/io/channel-socket.h                     |   2 +-
+ include/io/net-listener.h                       |  71 +++++-
+ blockdev-nbd.c                                  |   4 +-
+ chardev/char-socket.c                           |   2 +-
+ io/net-listener.c                               | 300 ++++++++++++++++++------
+ migration/socket.c                              |   4 +-
+ ui/vnc.c                                        |  34 ++-
+ io/trace-events                                 |   5 +
+ tests/qemu-iotests/024                          |   2 +-
+ tests/qemu-iotests/024.out                      |   3 +-
+ tests/qemu-iotests/207                          |   2 +-
+ tests/qemu-iotests/tests/nbd-in-qcow2-chain     |  94 ++++++++
+ tests/qemu-iotests/tests/nbd-in-qcow2-chain.out |  75 ++++++
+ tests/qemu-iotests/tests/vvfat.out              |   0
+ 14 files changed, 501 insertions(+), 97 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/nbd-in-qcow2-chain
+ create mode 100644 tests/qemu-iotests/tests/nbd-in-qcow2-chain.out
  mode change 100755 => 100644 tests/qemu-iotests/tests/vvfat.out
 
-diff --git a/tests/qemu-iotests/tests/vvfat.out b/tests/qemu-iotests/tests/vvfat.out
-old mode 100755
-new mode 100644
 -- 
 2.51.1
 
