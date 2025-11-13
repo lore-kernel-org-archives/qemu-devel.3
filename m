@@ -4,59 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A0DCD5BCE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 11:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6772CD5BCF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 11:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJVwW-00039d-Ci; Thu, 13 Nov 2025 06:56:48 -0500
+	id 1vJVzN-0007wU-Qo; Thu, 13 Nov 2025 06:59:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vJVwV-00036Z-61
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:56:47 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vJVwT-0007E2-KL
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:56:46 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 6E1DC41B17;
- Thu, 13 Nov 2025 11:56:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E9AC4CEF8;
- Thu, 13 Nov 2025 11:56:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763035002;
- bh=3XhTU374TFMtj+D9jwBjfE+9wE/TCv42zGEI+2Tzxwo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=hz2S9MbMHNr+0ecckp144n+KK8qfq6jpCp2Y8VQRW5KomzTezM/W/FMG7Xq7w+61m
- aK3cvUZbR0i34k5P1IZtrwkqk+lODHHufI63Tdoe0bHvP21kpC8psB6ORoLLzajoFT
- IcS2Bv0v3NHv43JFSCtb14RMAXOqswIdlDlO3Vpp0eccyXHlgr087BH2ioeGAt9EZ/
- NaDmBKVFNVBPgiUVqhIXzoFuXzbktHKHMZhUbGS0L1yFi2TUjsq4vQ8zttOfSzDC0U
- 04KMqQSvWYhG98dTqBWbUbJTthN7o0ZdUci9+C02VNlyo7T/Yq1Kz1kGzcCzFXI895
- a4kztUGKq+Q3Q==
-Message-ID: <66a5228e-1e21-4c59-8538-3475ea3ca768@kernel.org>
-Date: Thu, 13 Nov 2025 12:56:39 +0100
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vJVzG-0007lt-NH
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:59:39 -0500
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vJVzF-0007UT-7m
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:59:38 -0500
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5943d20f352so760950e87.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 03:59:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763035175; x=1763639975; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VVJadbzVhhoEha0LPWhaDRWNxXnQUDBpTDgn4MKWgo8=;
+ b=Wkk6Q2oHmvwLPtH+LfFV/aguAHkYRBlTivhdEKzhYNUlEmkuHT8ApUTVYXd4djHqNi
+ WPfHChZGbLLRnxShEB+KPNJ/9Hfx+GD6N/3uJpxMBZZeuZzmZiARaTw+Y0oclANKgKI1
+ G8BTw1DskeboaivX8wXh+h8PdaJoJvdMhdt+Nzpcst0qELID9MVT/Xn3faXRIv+WZ1Dh
+ oMsegouBCo6OnaTMM19dwSE0p+vMkf4xFB6Q/+BwNvClWbp1x+hUBvdwx716XThXxj/p
+ 4iGkc69I3wAV25b0gqKqKVEJZDFM4k+3debFmlMczor0NMRlohWyKS2PXO0h1jTKlPS6
+ QYPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763035175; x=1763639975;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VVJadbzVhhoEha0LPWhaDRWNxXnQUDBpTDgn4MKWgo8=;
+ b=FGbVZzY9JHWE/w+cco558bnvxwXJ+9hR2ilN9Oxb+YSsUrp+GerzXGQkDTqIq61CQ+
+ F04z6BDUtK66mh2u8xKVCVjSmGDMNkkDj1t6FCx5g8Tk9jewW/5R+ZgI69aTWPVj3WZ0
+ rovUtR389QIXXnOZEwa/C7BdCRsA5itpLFEAUG5ZTYdICIWqqYotNFKE7by7Otx2g82d
+ 5jxcXoRqtmknDGmVhNxpCbHF0eRwkj6LQJq3E/15V7ECHI90H7zRnbYCkzSX35nG/e9M
+ GsMs+JCRPAkjHZdzZevYb4kmsTtBsqpw8RLswYColMyJVpRJV2YrmBxvZyo/vRAvMTsZ
+ QaeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRr9id6EQQZzlHq4o3YcfzxUk5i3dARlqq88IiVM+Lsnrvjaap8dY23RsEYETMC3/UPGlM9LPxrsVn@nongnu.org
+X-Gm-Message-State: AOJu0YzdH1rn6VLG0zaCS4f+gN3TkfCFRwZAah/daHKfkAgcliF9DL9/
+ OZNvmm1tcdFxaV0b5mQ94VKSCn8BXojTCC9mgWQzBvgpqqrHWYP0CMX3yzxs1zKxRAqsPXlT4w9
+ je0b1s1mMdc3H3YBHQ2tj2cUmj35G2CynX1pXPIzF6A==
+X-Gm-Gg: ASbGnctaK/7240JAq0vVZOQipP9Uy99f+Z4OT3LHjNZ0i8xl+k6+orcllCdR2i9UGZV
+ vfgjlBq3X8BfK47/5Ah028OwPj/oEdJEDFSbrXLU8ne59sg2c6Ar8ZupBSEJksFdVAFMJp6CpVp
+ 4GssWL/nPaTSpZlKJ2PUNklo97vSshx0UabfF+XyPfv19xJWE5AN9KLFUTk7jQTD5i/KfRWaZ6+
+ CAdnfgFYmlh3PBC9/F9a1SzV3BG/13xUKaM++UH6KbEBJwktUMuuBsBTYaExQLXhKW1BZM=
+X-Google-Smtp-Source: AGHT+IFUKG3nA//YaQZBuHjirAse05rPxxeRjW44qBb+wCs3IC7oXEFZxFPsGPEsIP/mglDiIDCeRaa6jvwEsx0yX7E=
+X-Received: by 2002:a05:6512:31d1:b0:592:f5f9:f5a9 with SMTP id
+ 2adb3069b0e04-59576e3c63fmr2173275e87.36.1763035169628; Thu, 13 Nov 2025
+ 03:59:29 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio/vhost: don't consider non-MAP_SHARED regions public
-To: Stefano Garzarella <sgarzare@redhat.com>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-References: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
- <yhrdm2lo5gvbpdn6emn3iwjxu4oa42aol26hoo3j5vnvycvnbx@uwgeim6b257q>
-From: "David Hildenbrand (Red Hat)" <david@kernel.org>
-Content-Language: en-US
-In-Reply-To: <yhrdm2lo5gvbpdn6emn3iwjxu4oa42aol26hoo3j5vnvycvnbx@uwgeim6b257q>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=david@kernel.org;
- helo=sea.source.kernel.org
+References: <20251105154657.37386-1-skolothumtho@nvidia.com>
+ <20251105154657.37386-5-skolothumtho@nvidia.com>
+In-Reply-To: <20251105154657.37386-5-skolothumtho@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Thu, 13 Nov 2025 19:59:18 +0800
+X-Gm-Features: AWmQ_bmjYJUBjMNzxIUksNR0XPxJr5d2Yqn1M4Mu9ond4jTJYqg2__y0xHK2CS4
+Message-ID: <CABQgh9HzB9yCD_rYjGFX5ZC7RX2e2iVu_FZPU2Vm-kuf3jfm+w@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/4] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com, 
+ mochs@nvidia.com, jonathan.cameron@huawei.com, zhenzhong.duan@intel.com, 
+ jgg@nvidia.com, kjaju@nvidia.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,38 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.11.25 10:40, Stefano Garzarella wrote:
-> CCing David
+Hi, Shameer
+
+On Wed, 5 Nov 2025 at 23:49, Shameer Kolothum <skolothumtho@nvidia.com> wro=
+te:
+>
+> Install an event handler on the vEVENTQ fd to read and propagate host
+> generated vIOMMU events to the guest.
+>
+> The handler runs in QEMU=E2=80=99s main loop, using a non-blocking fd reg=
+istered
+> via qemu_set_fd_handler().
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+
+Still don't understand how to use this vevent.
+Is it to replace the fault queue (IOMMU_FAULT_QUEUE_ALLOC)?
+And only find read, no write, only receive events but no response
+(from guest kernel)?
+
+By the way, can we use vevent in user space application? not in qemu
+environment.
 
 Thanks
-
-> 
-> On Thu, Nov 13, 2025 at 11:58:42AM +0300, Daniil Tatianin wrote:
->> Just having a file descriptor is not enough to consider a memory region
->> public. If QEMU didn't map it as MAP_SHARED (in case of share=off), guest
->> writes to this region won't be visible to the vhost-user backend, thus
->> causing it to read all zeroes or garbage. Make sure we don't pass such
->> regions and include that to our definition of what a private region is.
->>
-> 
-> Should we add a Fixes tag? Not really as bug fix, but more to make it
-> clear that this is a followup.
-> 
-> Fixes: 552b25229c ("vhost: Rework memslot filtering and fix "used_memslot" tracking")
-
-I am missing a description of what this problem is fixing.
-
-The thing is that having real MAP_PRIVATE memory in such VM 
-configurations is usually a strong indication that it is a 
-VM-misconfiguration.
-
-E.g., a vhost-user device cannot possibly read/write that memory.
-
-So before we call something a fix (that was spelled out as a TODO), I 
-want to learn more about the valid sue case we have in mind here.
-
--- 
-Cheers
-
-David
 
