@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53B6CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 17:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D9FCD8CAC
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 17:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJawi-0001Q2-8X; Thu, 13 Nov 2025 12:17:20 -0500
+	id 1vJawk-0001Vz-7t; Thu, 13 Nov 2025 12:17:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vJavj-0000Sw-PF
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:16:22 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1vJavo-0000XQ-Nc
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:16:32 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vJavh-0006Zr-Dd
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:16:18 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7aae5f2633dso1289481b3a.3
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 09:16:17 -0800 (PST)
+ id 1vJavl-0006an-1L
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:16:22 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-297f35be2ffso15790195ad.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 09:16:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1763054176; x=1763658976; darn=nongnu.org;
+ d=sifive.com; s=google; t=1763054179; x=1763658979; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CSZeOBRdaJtR4VSZeBosQBp8vrblOwFu5a8eIkNfB8Y=;
- b=m7CIWtr30j5cCa/UEm2u/pD7xFPxej8G9DT3hUIOOQ0q28DuP5XOQh6IthcimVL0aj
- aqmiZYkqbV8sr1x6QPD3gE0Cax/C/ODz6WFqokKC5KM4HC+BYt+Z4WF61ngLjGBthAm5
- HQZNN7uNq74xRysvapOTMysR6Gt9+VQ8La1i3l4E5qHPYZH/ZtHaRvlk4UvxJEHe6xoY
- PVz8afIuFIUolbx+QNlhAUxyb8RQB7PQm+GCeRV3fyN/2WsRR/jTfVwPGrawd9xxkqIE
- dVdub3UBXTK7jNhHHvi7/V4lbDT9dv3EgD1+IekWQBbgt37GJABRE1cscu2EAOrrhZxa
- WF/w==
+ bh=jFnadgi9dD0Vz2iOn7f1bPoX8rdwHzVBdX7RAPpODaM=;
+ b=InkVPVZ/WJRVoEN2WB5nl3OCdqsO7BfMO9C0TNXMNVAx/Nfz3hGFeonk0rfZNHkHVp
+ lKOWFrCZrefZg9RI47LYB5BxsIBtJGOSY2KlS1+ikZz1dqEQisS0ZDHHzm5wurLMeigE
+ kfTrGbCW3jbILqRbIt96RB/JR6nyzlBBNq7iSwF0t7cuaUCrhQwyScSTWXMLpSSmKWcf
+ 52hxLshhyQiry6bgQtVkpLjGM5mDB+cSS85bx2ko2WqpbXtlYcjlF5KzD24sLlHEixfO
+ yJqubfUeberxBeQBZ5ItY0q57M3InhcjlNM/k24YtBz8YMtKGCOztNE8yRxWemEhB0hX
+ 9Sxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763054176; x=1763658976;
+ d=1e100.net; s=20230601; t=1763054179; x=1763658979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CSZeOBRdaJtR4VSZeBosQBp8vrblOwFu5a8eIkNfB8Y=;
- b=s3VQ689KSRRe6apj4+fywjRTgfJnpfyhjfEmIvQRJxEORVa3EGb2M+cep8tgGdsIaj
- c1d/rjBAIZ6M/OqtXiUTpCiO4NxW0lG786ZV7PG3jlbVj1KilnIU08LguUR3du6vR7UD
- CEb5VT6w2iDv37Xx/5TkpUf9IN29pMJGyZFAsH/b7R+RTY8nolYOHu6eidsVk++Hxjzn
- nc5+lBvMhWoodvYqU68eVSc2g+dk4xL1W1PJBXbKDAFTQ0FuBWTcEg3BRksOFCuqMHh/
- L5j0ppf5KHUHsxQOR/9ob5nkdkvDV1c7dKo6dB4h+Mm43WleqO9DbSdgtjCVh2BgYPQd
- 0T6g==
-X-Gm-Message-State: AOJu0YzQJmWo/v1QH6FjBeoQVNV1F1TzX0lglBxmqYeulnBQM8oy1QLs
- nSEpmc/pb7lZPgrg3v+Uz97J0SG4H0sbPDmmakWcAE8Fg1K/J0H1WyGyh3LN2n2XXAJ7363U8JX
- cMb53yVseZ0pn9btYESKT5xem0xmHveyaau09Gz3Jrc/QYCd8HCJBZy8+ZBC+iUnCS/RAKofVHV
- 7JM5chgBckwroc81p6rsVpqNNLIM/IjOhHJKjtR700RQ==
-X-Gm-Gg: ASbGncskvE220gdT3VlWNJr+ZrN8ED23VHHtUjqclkebUyt8PVN50q81OuH9u4g2BnG
- 0YRxUKUqPBd0YflYsBeUKolRZcQLvSm1J/8LjoBpMYk8A+76gmy86SqvdxIGys8Tjam6NAyDo7S
- muwtS+BbsK23XImrousG9hLw/huinmEK4NMX7YcjQnV8WXG+EQDga48m6yvlfSMaQ5HR6q6pYg4
- u5ekMzd50QDV/XW6+t0FHNNTTuqJz5+I/07MAo2SYbVWxOVbVNfw/IOJdNPesHidsfgcvo1tinQ
- m19a5ClBS+O6gedlVGmn6RbuZ9QZyLMTGqOddb1/tw12EBqhCaoTP6FYcEfVUMVpIXPDYOoLTOl
- zjlu8wV8Vkx1nM1FE8haB2h6dS+Q8aF8bXWkKaFht0n9NyzOz+3uXR0sO4VKdzekhGmMpDpuNvA
- BAun6P/TlHP0Jaj0RMlG1tRnZLjHGASaSdupoVjWf2TAMdVdrHjpCC/JY=
-X-Google-Smtp-Source: AGHT+IHOQO+2owWcCKWIyQ3fBALgs8pKDWv/mNb1FtumrHARR+2+DKcMOHjAytEjVM3Teu7qEPdOpQ==
-X-Received: by 2002:a05:6a20:72ab:b0:334:a784:3046 with SMTP id
- adf61e73a8af0-35ba17aa0e5mr367978637.38.1763054175723; 
- Thu, 13 Nov 2025 09:16:15 -0800 (PST)
+ bh=jFnadgi9dD0Vz2iOn7f1bPoX8rdwHzVBdX7RAPpODaM=;
+ b=PBIB/aUMaIqcFiUz1CPUDL77xo/DPH/BLH7LqpWRdjRAfzv19xm+t9bKIgOjQnqYbG
+ jmTi7RAME3DYUZS/73s+/LJaV82UhRf7ze7MWRU+HjmhBm2/zOJds5W0U9WtH2/nF88X
+ 150Sh0cSEECfPIEZnAZGP0fxJj30BRKVx5VAVyU9wBZf+/qEg2fgXBDeOPWPjufQ7s0G
+ BPJiRTi0+K4P/4dcQMVDopfAcPZVPnYOrJKNGnAcTnAFJoxunGIou9MvVRupL5eXhtib
+ 1s057b66rPdxdeFMmODJPARb3BsiWr32aZaNJYe3G5bCA7ORWiU2d1k6FOBHBHzKz6e7
+ kq9g==
+X-Gm-Message-State: AOJu0YxnwQ0k4pMg3SBi/AMSliSgfjRAdbqTqoQnMRNTTUislU3V/R5n
+ FmZ6hXJ8ybueNHxE2sUXfTgNBMTiNJPD98e8Cq6gma+H64L6pgV9h26XQK5/f9K58hhGZXf73Ol
+ 106iA3Rxakxd/V1q91LEJYVCpXJoXbUMoYJpIdvrqLZWs2hhD2DbK+DIIrOZjvmwHsdfc4V8v0o
+ O4RG4PLjq6FkvP9yxBh+PW4i2DNe5BryXbm/KFKaDuAA==
+X-Gm-Gg: ASbGnctztB90hGpEYAa2/Y2fiwtUSv36KmiQPLHQgZ63wR5ncxBpWOJ5kx/Ij8VSDd7
+ UKmc1+bBMosVOfs4nCMkSCF/xHcpQHygugvWuGnr+u7K0m+D8TM9STehlqKzkAvV8b0zuLgpFT2
+ EFMrOSndghaUC4bEpKJa/KZzqjHQfCQuXTOqH+G/UQboBjL/A/4SBTG5yUui5MKwQSjPHc7P4o/
+ QUrXBeOE7MVsOC8+UJ0a3EBEbi0AbRx3bvqtNDXz5gIh7pAfUR9bKQL5JOTRuJ7Rfjq7lmQ7qyW
+ bjUrunPtvUNd4JZlsEu5QkbTaR9WLZo2kLxRIOUh1QvTzeiK1dWkAMWqp9FEoOks/IDyRuuN5wj
+ K9MHAjIaER6e1AAFaL4uWoZ31DlF9xvBWDuwdyf1FVQJHtULvYiSpngKsu7jC/OPuVpSXXSSTa+
+ fr1i7Aib2VcPThL13l/lByOSSYLufHe+PlolMTqR6HFAi6
+X-Google-Smtp-Source: AGHT+IFbojOjpLnkgvJr0rAkuol23EQvKvB1sajTn1r7SezGyJvQYJyQFj3NNclHy9ZSXzDI+WM12A==
+X-Received: by 2002:a17:90b:1c91:b0:340:ad5e:ca with SMTP id
+ 98e67ed59e1d1-343f9ec96d3mr49194a91.12.1763054179260; 
+ Thu, 13 Nov 2025 09:16:19 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-bc375081023sm2712992a12.21.2025.11.13.09.16.13
+ 41be03b00d2f7-bc375081023sm2712992a12.21.2025.11.13.09.16.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Nov 2025 09:16:15 -0800 (PST)
+ Thu, 13 Nov 2025 09:16:19 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -75,19 +75,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Anton Blanchard <antonb@tenstorrent.com>,
- Nutty Liu <liujingqi@lanxincomputing.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v3 2/3] target/riscv: rvv: Apply vext_check_input_eew to
- vector reduction instructions
-Date: Fri, 14 Nov 2025 01:16:03 +0800
-Message-ID: <20251113171604.3034161-3-max.chou@sifive.com>
+ Anton Blanchard <antonb@tenstorrent.com>, Max Chou <max.chou@sifive.com>,
+ Nutty Liu <liujingqi@lanxincomputing.com>
+Subject: [PATCH v3 3/3] target/riscv: vadc and vsbc are vm=0 instructions
+Date: Fri, 14 Nov 2025 01:16:04 +0800
+Message-ID: <20251113171604.3034161-4-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251113171604.3034161-1-max.chou@sifive.com>
 References: <20251113171604.3034161-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,38 +111,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Blanchard <antonb@tenstorrent.com>
 
-Handle the overlap of source registers with different EEWs for vector
-reduction instructions.
+We were marking vadc and vsbc as vm=1 instructions, which meant
+vext_check_input_eew wouldn't detect mask vs source register
+overlaps.
 
 Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/riscv/insn32.decode | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 422e1a21185..2d9cf27ef76 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3076,6 +3076,7 @@ static bool reduction_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
-+           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew, a->vm) &&
-            vext_check_reduction(s, a->rs2);
- }
- 
-@@ -3092,7 +3093,8 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
- static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
- {
-     return reduction_check(s, a) && (s->sew < MO_64) &&
--           ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
-+           ((s->sew + 1) <= (s->cfg_ptr->elen >> 4)) &&
-+           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew + 1, a->vm);
- }
- 
- GEN_OPIVV_WIDEN_TRANS(vwredsum_vs, reduction_widen_check)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index b341832e41f..3647ec7f941 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -459,14 +459,14 @@ vwsubu_wv       110110 . ..... ..... 010 ..... 1010111 @r_vm
+ vwsubu_wx       110110 . ..... ..... 110 ..... 1010111 @r_vm
+ vwsub_wv        110111 . ..... ..... 010 ..... 1010111 @r_vm
+ vwsub_wx        110111 . ..... ..... 110 ..... 1010111 @r_vm
+-vadc_vvm        010000 0 ..... ..... 000 ..... 1010111 @r_vm_1
+-vadc_vxm        010000 0 ..... ..... 100 ..... 1010111 @r_vm_1
+-vadc_vim        010000 0 ..... ..... 011 ..... 1010111 @r_vm_1
++vadc_vvm        010000 0 ..... ..... 000 ..... 1010111 @r_vm_0
++vadc_vxm        010000 0 ..... ..... 100 ..... 1010111 @r_vm_0
++vadc_vim        010000 0 ..... ..... 011 ..... 1010111 @r_vm_0
+ vmadc_vvm       010001 . ..... ..... 000 ..... 1010111 @r_vm
+ vmadc_vxm       010001 . ..... ..... 100 ..... 1010111 @r_vm
+ vmadc_vim       010001 . ..... ..... 011 ..... 1010111 @r_vm
+-vsbc_vvm        010010 0 ..... ..... 000 ..... 1010111 @r_vm_1
+-vsbc_vxm        010010 0 ..... ..... 100 ..... 1010111 @r_vm_1
++vsbc_vvm        010010 0 ..... ..... 000 ..... 1010111 @r_vm_0
++vsbc_vxm        010010 0 ..... ..... 100 ..... 1010111 @r_vm_0
+ vmsbc_vvm       010011 . ..... ..... 000 ..... 1010111 @r_vm
+ vmsbc_vxm       010011 . ..... ..... 100 ..... 1010111 @r_vm
+ vand_vv         001001 . ..... ..... 000 ..... 1010111 @r_vm
 -- 
 2.43.0
 
