@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6778CD4F2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B28CACD4F4B
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPQ6-0005xy-CP; Wed, 12 Nov 2025 23:58:54 -0500
+	id 1vJPPy-0005XR-U6; Wed, 12 Nov 2025 23:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPPr-0005St-Uw; Wed, 12 Nov 2025 23:58:40 -0500
+ id 1vJPPn-0005S7-Kg; Wed, 12 Nov 2025 23:58:38 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPPq-0001cQ-Aw; Wed, 12 Nov 2025 23:58:39 -0500
+ id 1vJPPl-0001cD-5q; Wed, 12 Nov 2025 23:58:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763009918; x=1794545918;
+ t=1763009913; x=1794545913;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=193x3cEaO/W8kqPWarKPTbJLO0e1R1MsTOdBlF+JlVs=;
- b=SozMra+rrd9GSmNxOwnKyGaOjEhN4XWWN0xxZbX/VIKrmTHz483EvEVo
- GefGiFUP9Adm987df9uiuWVWFZT6S8SVGTWRf+CPl9Q43bhsolV3Q92m3
- /YrOG/oU5MGLfmHjLxmZM8gActC7bjxULkuLu5GMsE2PTGJGVlQ9wD2Jo
- 5xtq6VYxgKtlT6NtY9kJ72QVEQ5c87DHr8oUPLhPEoyN91WkuKX5Acemr
- hxOmZx9UstitpflOyxT3yGJcURbTUjPRASYW4WwJw8y3DVw/DRcfu5dkk
- 75ZJykiXmI526XWIo8KrftDC7Sux7/MGZk2+1DyYLrI74LKt75Ru6sN5x g==;
-X-CSE-ConnectionGUID: SLqfU5ZwSia9GjunceJePQ==
-X-CSE-MsgGUID: M+N4W89sRkyJ9D2eXeD2cw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682172"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682172"
+ bh=uXoJUkOhZjdwhX5KNjMRR98nVVQYV3obvpK5cPPhy7Y=;
+ b=PgPioLBhvtLUtQRwMoVDFuXExW3aSACJS4qZCqG7DILNmzcGEOih0v+x
+ LSe+ecPDhb0L8GZyMUlN6McUQKYdDcuAkTCeRcA7CFFkgj4qybGsXGCN/
+ EEDNum0t8bFbvFwZjoQoaSdKw2TUJKU836Ie1CCBbztsuxOKZ/r8EVxNP
+ FZvJRIXHz27WJkwzLT1iKoeuJ/iuWiquZ8xK0JQ3o0W3dt5Ty43JlGpBC
+ WthnOl60d5rLfquaHcHKKECnZbgVyoUHAIewgD9ZSjb3ubVo/Y3DUglTG
+ KrtbfQxoGNw+TIotw2CO0IGWgYFKcUaRxj0vUa29zrbgQuOUcz9c2OWph g==;
+X-CSE-ConnectionGUID: MI98ytdnR1CEQxJKxan9Nw==
+X-CSE-MsgGUID: IPyA0HhiRnC6YGXmp9dDpg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682141"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682141"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Nov 2025 20:58:04 -0800
-X-CSE-ConnectionGUID: MIinsMTLTLyyjQLXC4FnZg==
-X-CSE-MsgGUID: AEFg1L/CR1G4/wZZbloVew==
+ 12 Nov 2025 20:57:55 -0800
+X-CSE-ConnectionGUID: sJk4RytKRLqLuHeqU4DMsQ==
+X-CSE-MsgGUID: lIf3cytHQP+PvOLDsy/BlQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663482"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663299"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:58:02 -0800
+ by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:52 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
 Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 20/22] rust/hpet: Apply Migratable<> wrapper and
- ToMigrationState for HPETRegisters
-Date: Thu, 13 Nov 2025 13:19:35 +0800
-Message-Id: <20251113051937.4017675-21-zhao1.liu@intel.com>
+Subject: [PATCH 16/22] rust/hpet: Pass &BqlRefCell<HPETRegisters> as argument
+ during MMIO access
+Date: Thu, 13 Nov 2025 13:19:31 +0800
+Message-Id: <20251113051937.4017675-17-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
 References: <20251113051937.4017675-1-zhao1.liu@intel.com>
@@ -83,107 +83,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before using Mutex<> to protect HPETRegisters, it's necessary to apply
-Migratable<> wrapper and ToMigrationState first since there's no
-pre-defined VMState for Mutex<>.
+Currently in HPETTimer context, the global registers are accessed by
+dereferring a HPETState raw pointer stored in NonNull<>, and then
+borrowing the BqlRefCel<>.
 
-Though HPETRegistersMigration and HPETTimerRegistersMigration structs are
-generated by ToMigrationState macro, their VMStates still need to be
-implemented by hand.
+This blocks borrowing HPETRegisters once during MMIO access, and
+furthermore prevents replacing BqlRefCell<> with Mutex<>.
+
+Therefore, do not access global registers through NonNull<HPETState>
+and instead passing &BqlRefCell<HPETRegisters> as argument in
+function calls within MMIO access.
+
+But there's one special case that is timer handler, which still needs
+to access HPETRegistsers through NonNull<HPETState>. It's okay for now
+since this case doesn't have any repeated borrow() or lock reentrancy
+issues.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 160 +++++++++++++++++++------------
+ 1 file changed, 97 insertions(+), 63 deletions(-)
 
 diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 73a1c87abd95..42e2e8d070c3 100644
+index 1bef94e560f6..13e88df66d6f 100644
 --- a/rust/hw/timer/hpet/src/device.rs
 +++ b/rust/hw/timer/hpet/src/device.rs
-@@ -18,7 +18,7 @@
- };
- use migration::{
-     self, impl_vmstate_struct, vmstate_fields, vmstate_of, vmstate_subsections, vmstate_validate,
--    VMStateDescription, VMStateDescriptionBuilder,
-+    Migratable, ToMigrationState, VMStateDescription, VMStateDescriptionBuilder,
- };
- use qom::{prelude::*, ObjectImpl, ParentField, ParentInit};
- use system::{
-@@ -184,7 +184,7 @@ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+@@ -177,7 +177,10 @@ const fn deactivating_bit(old: u64, new: u64, shift: usize) -> bool {
+ }
+ 
+ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+-    timer_cell.borrow_mut().callback()
++    let mut t = timer_cell.borrow_mut();
++    // SFAETY: state field is valid after timer initialization.
++    let hpet_regs = &mut unsafe { t.state.as_mut() }.regs;
++    t.callback(hpet_regs)
  }
  
  #[repr(C)]
--#[derive(Debug, Default)]
-+#[derive(Debug, Default, ToMigrationState)]
- pub struct HPETTimerRegisters {
-     // Memory-mapped, software visible timer registers
-     /// Timer N Configuration and Capability Register
-@@ -663,7 +663,7 @@ fn write(
+@@ -285,11 +288,8 @@ fn get_state(&self) -> &HPETState {
+         unsafe { self.state.as_ref() }
+     }
+ 
+-    fn is_int_active(&self) -> bool {
+-        self.get_state()
+-            .regs
+-            .borrow()
+-            .is_timer_int_active(self.index.into())
++    fn is_int_active(&self, hpet_regs: &BqlRefCell<HPETRegisters>) -> bool {
++        hpet_regs.borrow().is_timer_int_active(self.index.into())
+     }
+ 
+     /// calculate next value of the general counter that matches the
+@@ -307,8 +307,8 @@ fn calculate_cmp64(&self, cur_tick: u64, target: u64) -> u64 {
+         }
+     }
+ 
+-    fn get_int_route(&self) -> usize {
+-        if self.index <= 1 && self.get_state().regs.borrow().is_legacy_mode() {
++    fn get_int_route(&self, hpet_regs: &BqlRefCell<HPETRegisters>) -> usize {
++        if self.index <= 1 && hpet_regs.borrow().is_legacy_mode() {
+             // If LegacyReplacement Route bit is set, HPET specification requires
+             // timer0 be routed to IRQ0 in NON-APIC or IRQ2 in the I/O APIC,
+             // timer1 be routed to IRQ8 in NON-APIC or IRQ8 in the I/O APIC.
+@@ -332,10 +332,10 @@ fn get_int_route(&self) -> usize {
+         }
+     }
+ 
+-    fn set_irq(&self, set: bool) {
+-        let route = self.get_int_route();
++    fn set_irq(&self, hpet_regs: &BqlRefCell<HPETRegisters>, set: bool) {
++        let route = self.get_int_route(hpet_regs);
+ 
+-        if set && self.regs.is_int_enabled() && self.get_state().regs.borrow().is_hpet_enabled() {
++        if set && self.regs.is_int_enabled() && hpet_regs.borrow().is_hpet_enabled() {
+             if self.regs.is_fsb_route_enabled() {
+                 // SAFETY:
+                 // the parameters are valid.
+@@ -358,13 +358,17 @@ fn set_irq(&self, set: bool) {
+         }
+     }
+ 
+-    fn update_irq(&self, set: bool) {
++    fn update_irq(&self, hpet_regs: &BqlRefCell<HPETRegisters>, set: bool) {
++        let mut regs = hpet_regs.borrow_mut();
+         // If Timer N Interrupt Enable bit is 0, "the timer will
+         // still operate and generate appropriate status bits, but
+         // will not cause an interrupt"
+-        self.get_state()
+-            .update_int_status(self.index.into(), set && self.regs.is_int_level_triggered());
+-        self.set_irq(set);
++        regs.int_status = regs.int_status.deposit(
++            self.index.into(),
++            1,
++            u64::from(set && self.regs.is_int_level_triggered()),
++        );
++        self.set_irq(hpet_regs, set);
+     }
+ 
+     fn arm_timer(&mut self, tick: u64) {
+@@ -396,20 +400,26 @@ fn set_timer(&mut self) {
+         self.arm_timer(self.cmp64);
+     }
+ 
+-    fn del_timer(&self) {
++    fn del_timer(&self, hpet_regs: &BqlRefCell<HPETRegisters>) {
+         // Just remove the timer from the timer_list without destroying
+         // this timer instance.
+         self.qemu_timer.delete();
+ 
+-        if self.is_int_active() {
++        if self.is_int_active(hpet_regs) {
+             // For level-triggered interrupt, this leaves interrupt status
+             // register set but lowers irq.
+-            self.update_irq(true);
++            self.update_irq(hpet_regs, true);
+         }
+     }
+ 
+     /// Configuration and Capability Register
+-    fn set_tn_cfg_reg(&mut self, shift: u32, len: u32, val: u64) {
++    fn set_tn_cfg_reg(
++        &mut self,
++        hpet_regs: &BqlRefCell<HPETRegisters>,
++        shift: u32,
++        len: u32,
++        val: u64,
++    ) {
+         // TODO: Add trace point - trace_hpet_ram_write_tn_cfg(addr & 4)
+         let old_val: u64 = self.regs.config;
+         let mut new_val: u64 = old_val.deposit(shift, len, val);
+@@ -419,13 +429,15 @@ fn set_tn_cfg_reg(&mut self, shift: u32, len: u32, val: u64) {
+         if deactivating_bit(old_val, new_val, HPET_TN_CFG_INT_TYPE_SHIFT) {
+             // Do this before changing timer.regs.config; otherwise, if
+             // HPET_TN_FSB is set, update_irq will not lower the qemu_irq.
+-            self.update_irq(false);
++            self.update_irq(hpet_regs, false);
+         }
+ 
+         self.regs.config = new_val;
+ 
+-        if activating_bit(old_val, new_val, HPET_TN_CFG_INT_ENABLE_SHIFT) && self.is_int_active() {
+-            self.update_irq(true);
++        if activating_bit(old_val, new_val, HPET_TN_CFG_INT_ENABLE_SHIFT)
++            && self.is_int_active(hpet_regs)
++        {
++            self.update_irq(hpet_regs, true);
+         }
+ 
+         if self.regs.is_32bit_mod() {
+@@ -433,13 +445,19 @@ fn set_tn_cfg_reg(&mut self, shift: u32, len: u32, val: u64) {
+             self.period = u64::from(self.period as u32); // truncate!
+         }
+ 
+-        if self.get_state().regs.borrow().is_hpet_enabled() {
++        if hpet_regs.borrow().is_hpet_enabled() {
+             self.set_timer();
+         }
+     }
+ 
+     /// Comparator Value Register
+-    fn set_tn_cmp_reg(&mut self, shift: u32, len: u32, val: u64) {
++    fn set_tn_cmp_reg(
++        &mut self,
++        hpet_regs: &BqlRefCell<HPETRegisters>,
++        shift: u32,
++        len: u32,
++        val: u64,
++    ) {
+         let mut length = len;
+         let mut value = val;
+ 
+@@ -463,18 +481,24 @@ fn set_tn_cmp_reg(&mut self, shift: u32, len: u32, val: u64) {
+         }
+ 
+         self.regs.clear_valset();
+-        if self.get_state().regs.borrow().is_hpet_enabled() {
++        if hpet_regs.borrow().is_hpet_enabled() {
+             self.set_timer();
+         }
+     }
+ 
+     /// FSB Interrupt Route Register
+-    fn set_tn_fsb_route_reg(&mut self, shift: u32, len: u32, val: u64) {
++    fn set_tn_fsb_route_reg(
++        &mut self,
++        _hpet_regs: &BqlRefCell<HPETRegisters>,
++        shift: u32,
++        len: u32,
++        val: u64,
++    ) {
+         self.regs.fsb = self.regs.fsb.deposit(shift, len, val);
+     }
+ 
+-    fn reset(&mut self) {
+-        self.del_timer();
++    fn reset(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
++        self.del_timer(hpet_regs);
+         self.regs.cmp = u64::MAX; // Comparator Match Registers reset to all 1's.
+         self.regs.config =
+             (1 << HPET_TN_CFG_PERIODIC_CAP_SHIFT) | (1 << HPET_TN_CFG_SIZE_CAP_SHIFT);
+@@ -489,7 +513,7 @@ fn reset(&mut self) {
+     }
+ 
+     /// timer expiration callback
+-    fn callback(&mut self) {
++    fn callback(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
+         let period: u64 = self.period;
+         let cur_tick: u64 = self.get_state().get_ticks();
+ 
+@@ -507,10 +531,10 @@ fn callback(&mut self) {
+             self.wrap_flag = 0;
+             self.arm_timer(self.cmp64);
+         }
+-        self.update_irq(true);
++        self.update_irq(hpet_regs, true);
+     }
+ 
+-    const fn read(&self, target: TimerRegister) -> u64 {
++    const fn read(&self, target: TimerRegister, _hpet_regs: &BqlRefCell<HPETRegisters>) -> u64 {
+         use TimerRegister::*;
+         match target {
+             CFG => self.regs.config, // including interrupt capabilities
+@@ -519,12 +543,19 @@ const fn read(&self, target: TimerRegister) -> u64 {
+         }
+     }
+ 
+-    fn write(&mut self, target: TimerRegister, value: u64, shift: u32, len: u32) {
++    fn write(
++        &mut self,
++        target: TimerRegister,
++        hpet_regs: &BqlRefCell<HPETRegisters>,
++        value: u64,
++        shift: u32,
++        len: u32,
++    ) {
+         use TimerRegister::*;
+         match target {
+-            CFG => self.set_tn_cfg_reg(shift, len, value),
+-            CMP => self.set_tn_cmp_reg(shift, len, value),
+-            ROUTE => self.set_tn_fsb_route_reg(shift, len, value),
++            CFG => self.set_tn_cfg_reg(hpet_regs, shift, len, value),
++            CMP => self.set_tn_cmp_reg(hpet_regs, shift, len, value),
++            ROUTE => self.set_tn_fsb_route_reg(hpet_regs, shift, len, value),
+         }
+     }
  }
+@@ -643,38 +674,33 @@ fn init_timers(this: &mut MaybeUninit<Self>) {
+         }
+     }
  
- #[repr(C)]
--#[derive(Default)]
-+#[derive(Default, ToMigrationState)]
- pub struct HPETRegisters {
-     // HPET block Registers: Memory-mapped, software visible registers
-     /// General Capabilities and ID Register
-@@ -701,7 +701,7 @@ fn is_timer_int_active(&self, index: usize) -> bool {
- pub struct HPETState {
-     parent_obj: ParentField<SysBusDevice>,
-     iomem: MemoryRegion,
--    regs: BqlRefCell<HPETRegisters>,
-+    regs: Migratable<BqlRefCell<HPETRegisters>>,
+-    fn update_int_status(&self, index: u32, level: bool) {
+-        let mut regs = self.regs.borrow_mut();
+-        regs.int_status = regs.int_status.deposit(index, 1, u64::from(level));
+-    }
+-
+     /// General Configuration Register
+-    fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
+-        let old_val = self.regs.borrow().config;
++    fn set_cfg_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, val: u64) {
++        let old_val = regs.borrow().config;
+         let mut new_val = old_val.deposit(shift, len, val);
  
-     // Internal state
-     /// Capabilities that QEMU HPET supports.
-@@ -1120,16 +1120,17 @@ impl ObjectImpl for HPETState {
-         })
-         .build();
+         new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
+-        self.regs.borrow_mut().config = new_val;
++        regs.borrow_mut().config = new_val;
  
-+// HPETTimerRegistersMigration is generated by ToMigrationState macro.
- impl_vmstate_struct!(
--    HPETTimerRegisters,
--    VMStateDescriptionBuilder::<HPETTimerRegisters>::new()
-+    HPETTimerRegistersMigration,
-+    VMStateDescriptionBuilder::<HPETTimerRegistersMigration>::new()
-         .name(c"hpet_timer/regs")
-         .version_id(1)
-         .minimum_version_id(1)
-         .fields(vmstate_fields! {
--            vmstate_of!(HPETTimerRegisters, config),
--            vmstate_of!(HPETTimerRegisters, cmp),
--            vmstate_of!(HPETTimerRegisters, fsb),
-+            vmstate_of!(HPETTimerRegistersMigration, config),
-+            vmstate_of!(HPETTimerRegistersMigration, cmp),
-+            vmstate_of!(HPETTimerRegistersMigration, fsb),
-         })
-         .build()
- );
-@@ -1151,17 +1152,18 @@ impl ObjectImpl for HPETState {
+         if activating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
+             // Enable main counter and interrupt generation.
+             self.hpet_offset
+-                .set(ticks_to_ns(self.regs.borrow().counter) - CLOCK_VIRTUAL.get_ns());
++                .set(ticks_to_ns(regs.borrow().counter) - CLOCK_VIRTUAL.get_ns());
  
- const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
+             for timer in self.timers.iter().take(self.num_timers) {
+                 let mut t = timer.borrow_mut();
  
-+// HPETRegistersMigration is generated by ToMigrationState macro.
- impl_vmstate_struct!(
--    HPETRegisters,
--    VMStateDescriptionBuilder::<HPETRegisters>::new()
-+    HPETRegistersMigration,
-+    VMStateDescriptionBuilder::<HPETRegistersMigration>::new()
-         .name(c"hpet/regs")
-         .version_id(2)
-         .minimum_version_id(2)
-         .fields(vmstate_fields! {
--            vmstate_of!(HPETRegisters, config),
--            vmstate_of!(HPETRegisters, int_status),
--            vmstate_of!(HPETRegisters, counter),
--            vmstate_of!(HPETRegisters, tn_regs),
-+            vmstate_of!(HPETRegistersMigration, config),
-+            vmstate_of!(HPETRegistersMigration, int_status),
-+            vmstate_of!(HPETRegistersMigration, counter),
-+            vmstate_of!(HPETRegistersMigration, tn_regs),
-         })
-         .build()
- );
+-                if t.regs.is_int_enabled() && t.is_int_active() {
+-                    t.update_irq(true);
++                if t.regs.is_int_enabled() && t.is_int_active(regs) {
++                    t.update_irq(regs, true);
+                 }
+                 t.set_timer();
+             }
+         } else if deactivating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
+             // Halt main counter and disable interrupt generation.
+-            self.regs.borrow_mut().counter = self.get_ticks();
++            regs.borrow_mut().counter = self.get_ticks();
+ 
+             for timer in self.timers.iter().take(self.num_timers) {
+-                timer.borrow().del_timer();
++                timer.borrow().del_timer(regs);
+             }
+         }
+ 
+@@ -692,20 +718,26 @@ fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
+     }
+ 
+     /// General Interrupt Status Register: Read/Write Clear
+-    fn set_int_status_reg(&self, shift: u32, _len: u32, val: u64) {
++    fn set_int_status_reg(
++        &self,
++        regs: &BqlRefCell<HPETRegisters>,
++        shift: u32,
++        _len: u32,
++        val: u64,
++    ) {
+         let new_val = val << shift;
+-        let cleared = new_val & self.regs.borrow().int_status;
++        let cleared = new_val & regs.borrow().int_status;
+ 
+         for (index, timer) in self.timers.iter().take(self.num_timers).enumerate() {
+             if cleared & (1 << index) != 0 {
+-                timer.borrow().update_irq(false);
++                timer.borrow().update_irq(regs, false);
+             }
+         }
+     }
+ 
+     /// Main Counter Value Register
+-    fn set_counter_reg(&self, shift: u32, len: u32, val: u64) {
+-        let mut regs = self.regs.borrow_mut();
++    fn set_counter_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, val: u64) {
++        let mut regs = regs.borrow_mut();
+         if regs.is_hpet_enabled() {
+             // TODO: Add trace point -
+             // trace_hpet_ram_write_counter_write_while_enabled()
+@@ -786,7 +818,7 @@ fn realize(&self) -> util::Result<()> {
+ 
+     fn reset_hold(&self, _type: ResetType) {
+         for timer in self.timers.iter().take(self.num_timers) {
+-            timer.borrow_mut().reset();
++            timer.borrow_mut().reset(&self.regs);
+         }
+ 
+         // pit_enabled.set(true) will call irq handler and access regs
+@@ -838,16 +870,17 @@ fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode<'_> {
+     fn read(&self, addr: hwaddr, size: u32) -> u64 {
+         // TODO: Add trace point - trace_hpet_ram_read(addr)
+         let HPETAddrDecode { shift, target, .. } = self.decode(addr, size);
++        let regs = &self.regs;
+ 
+         use DecodedRegister::*;
+         use GlobalRegister::*;
+         (match target {
+-            Timer(timer, tn_target) => timer.borrow_mut().read(tn_target),
+-            Global(CAP) => self.regs.borrow().capability, /* including HPET_PERIOD 0x004 */
+-            Global(CFG) => self.regs.borrow().config,
+-            Global(INT_STATUS) => self.regs.borrow().int_status,
++            Timer(timer, tn_target) => timer.borrow_mut().read(tn_target, regs),
++            Global(CAP) => regs.borrow().capability, /* including HPET_PERIOD 0x004 */
++            Global(CFG) => regs.borrow().config,
++            Global(INT_STATUS) => regs.borrow().int_status,
+             Global(COUNTER) => {
+-                let regs = self.regs.borrow();
++                let regs = regs.borrow();
+                 // TODO: Add trace point
+                 // trace_hpet_ram_read_reading_counter(addr & 4, cur_tick)
+                 if regs.is_hpet_enabled() {
+@@ -865,16 +898,17 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
+ 
+     fn write(&self, addr: hwaddr, value: u64, size: u32) {
+         let HPETAddrDecode { shift, len, target } = self.decode(addr, size);
++        let regs = &self.regs;
+ 
+         // TODO: Add trace point - trace_hpet_ram_write(addr, value)
+         use DecodedRegister::*;
+         use GlobalRegister::*;
+         match target {
+-            Timer(timer, tn_target) => timer.borrow_mut().write(tn_target, value, shift, len),
++            Timer(timer, tn_target) => timer.borrow_mut().write(tn_target, regs, value, shift, len),
+             Global(CAP) => {} // General Capabilities and ID Register: Read Only
+-            Global(CFG) => self.set_cfg_reg(shift, len, value),
+-            Global(INT_STATUS) => self.set_int_status_reg(shift, len, value),
+-            Global(COUNTER) => self.set_counter_reg(shift, len, value),
++            Global(CFG) => self.set_cfg_reg(regs, shift, len, value),
++            Global(INT_STATUS) => self.set_int_status_reg(regs, shift, len, value),
++            Global(COUNTER) => self.set_counter_reg(regs, shift, len, value),
+             Unknown(_) => {
+                 // TODO: Add trace point - trace_hpet_ram_write_invalid()
+             }
 -- 
 2.34.1
 
