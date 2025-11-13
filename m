@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1351ACD4F2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8508CD4F2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPPj-0005HA-Nm; Wed, 12 Nov 2025 23:58:32 -0500
+	id 1vJPP8-0004pI-KC; Wed, 12 Nov 2025 23:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOz-0004mb-Oq; Wed, 12 Nov 2025 23:57:49 -0500
+ id 1vJPOp-0004jo-AZ; Wed, 12 Nov 2025 23:57:40 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOv-0001cQ-KP; Wed, 12 Nov 2025 23:57:44 -0500
+ id 1vJPOi-0001cQ-P3; Wed, 12 Nov 2025 23:57:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763009862; x=1794545862;
+ t=1763009849; x=1794545849;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3OTgmbXWXa3j4MCRvhCK3zxnzKKL2HP9WGCm4S7ASyk=;
- b=Gd4v15LvH1PvqvQlAuAdD0IAlPl+DaNpOQ3FQvoL1pz13VhhN3O6cS8g
- 2w9kzRE5UVzEB1zalKfj9DQXy/NYHpOSEq1X8A59834DIB8qlaCU4DCVT
- MmITD+9GjaCgl93QNHXYexdpvUc/NWe0FteRvdmL2V4YyHPepvFRawwmO
- jM9sCNNjUWOalpxlobqHNg6Rv5OXl4QqcD46150n3G/Bnw04Fw9IHer6G
- 3M+HkwY3QPgKEomfzyVpyqwVA77nD5ZoXv1ibIljfPz4SNvydAP2G7HHM
- g7heHvvCdDFzvxlBjVtK9mjYPxRixAu0dZ4KkvFT5xpLp3Z1Rvrr/f2cb A==;
-X-CSE-ConnectionGUID: xwlkU8hZQiukCy+gSpQlmQ==
-X-CSE-MsgGUID: O4FLhJfsQJ2kwsycqKFvEA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682091"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682091"
+ bh=y/Z27usq9NO6Gx7PFhdqImE5l1fhD5PaRWTiCqUeEvA=;
+ b=lwBJcJhgpS5MYkqvArLq/cMzbPcONPe2zVhNK3sZENWztgyxmBHct16M
+ X+s2wpRRvLhSQNHE7+gAf8G0T1ZXV23DHX4whz5/kVyu3jY5Wd0QwFQvp
+ FbCUORtY1NEvTv7K01toOnzmKzhtcZler/+FjL550gdR3ZXYkb4KHt0nF
+ uDnrN5IGBfNs3fHQuHROWV99CKCZZWiTMLq0w6+zDZAGHgVCECnqpqUJY
+ 87K594t0n86fqMvdvo3vHuF0EoWQdpHJ0WcWfVLxrVP4PQ4h95U7ahVqm
+ Zp8AZTWNHa51uCQyrAJStMkRS3VnOJFODM9m6ghZdA9lSdBsxpxl2O8G2 g==;
+X-CSE-ConnectionGUID: K2YArIYARR2QDopMwmSdZQ==
+X-CSE-MsgGUID: 8AdaWV7pSmCC7xNI4n5DNA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682064"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682064"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Nov 2025 20:57:38 -0800
-X-CSE-ConnectionGUID: YrPllLViQnKjvMQ2Z1gIXQ==
-X-CSE-MsgGUID: twD4nmjcQF+zNsNfCHifCQ==
+ 12 Nov 2025 20:57:27 -0800
+X-CSE-ConnectionGUID: u+7KslJrTmqe+3Kv3s9kjQ==
+X-CSE-MsgGUID: cZlBZ7KgQ7eISp8U0fI/7A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663250"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663226"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:36 -0800
+ by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:25 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
 Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 08/22] rust/hpet: Rename HPETRegister to DecodedRegister
-Date: Thu, 13 Nov 2025 13:19:23 +0800
-Message-Id: <20251113051937.4017675-9-zhao1.liu@intel.com>
+Subject: [PATCH 02/22] rust/migration: Fix missing name in the VMSD of
+ Migratable<>
+Date: Thu, 13 Nov 2025 13:19:17 +0800
+Message-Id: <20251113051937.4017675-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
 References: <20251113051937.4017675-1-zhao1.liu@intel.com>
@@ -82,105 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HPETRegister represents the layout of register spaces of HPET timer
-block and timer N, and is used to decode register address into register
-enumeration.
+The VMStateDescription of Migratable<T> missed the name field, and this
+casused segmentation fault in vmstate_save_state_v() when it tries to
+write name field by json_writer_str().
 
-To avoid confusion with the subsequently introduced HPETRegisters (that
-is used to maintain values of HPET registers), rename HPETRegister to
-DecodedRegister.
+Due to the limitation of const, a custom name based on type would be
+more difficult. Instead, a straightforward and simple approach is to
+have all Migratable<T> instances use the same VMSD name -
+"migratable-wrapper".
+
+This is availiable because Migratable<T> is always a field within a
+VMSD, and its parent VMSD should have a distinct name.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ rust/migration/src/migratable.rs | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 5e08b91494cf..c76f52a374de 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -102,7 +102,7 @@
- #[derive(common::TryInto)]
- #[repr(u64)]
- #[allow(non_camel_case_types)]
--/// Timer registers, masked by 0x18
-+/// Timer register enumerations, masked by 0x18
- enum TimerRegister {
-     /// Timer N Configuration and Capability Register
-     CFG = 0,
-@@ -115,7 +115,7 @@ enum TimerRegister {
- #[derive(common::TryInto)]
- #[repr(u64)]
- #[allow(non_camel_case_types)]
--/// Global registers
-+/// Global register enumerations
- enum GlobalRegister {
-     /// General Capabilities and ID Register
-     CAP = 0,
-@@ -127,7 +127,7 @@ enum GlobalRegister {
-     COUNTER = 0xF0,
- }
+diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
+index 5c47c7d1c2fa..76e524774a3c 100644
+--- a/rust/migration/src/migratable.rs
++++ b/rust/migration/src/migratable.rs
+@@ -421,7 +421,11 @@ impl<T: 'static + ToMigrationStateShared> Migratable<T> {
+         Migratable::<T>::FIELD
+     };
  
--enum HPETRegister<'a> {
-+enum DecodedRegister<'a> {
-     /// Global register in the range from `0` to `0xff`
-     Global(GlobalRegister),
- 
-@@ -142,7 +142,7 @@ enum HPETRegister<'a> {
- struct HPETAddrDecode<'a> {
-     shift: u32,
-     len: u32,
--    reg: HPETRegister<'a>,
-+    reg: DecodedRegister<'a>,
- }
- 
- const fn hpet_next_wrap(cur_tick: u64) -> u64 {
-@@ -783,22 +783,22 @@ fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode<'_> {
- 
-         addr &= !4;
-         let reg = if (0..=0xff).contains(&addr) {
--            GlobalRegister::try_from(addr).map(HPETRegister::Global)
-+            GlobalRegister::try_from(addr).map(DecodedRegister::Global)
-         } else {
-             let timer_id: usize = ((addr - 0x100) / 0x20) as usize;
-             if timer_id < self.num_timers {
-                 // TODO: Add trace point - trace_hpet_ram_[read|write]_timer_id(timer_id)
-                 TimerRegister::try_from(addr & 0x18)
--                    .map(|reg| HPETRegister::Timer(&self.timers[timer_id], reg))
-+                    .map(|reg| DecodedRegister::Timer(&self.timers[timer_id], reg))
-             } else {
-                 // TODO: Add trace point -  trace_hpet_timer_id_out_of_range(timer_id)
-                 Err(addr)
-             }
-         };
- 
--        // reg is now a Result<HPETRegister, hwaddr>
--        // convert the Err case into HPETRegister as well
--        let reg = reg.unwrap_or_else(HPETRegister::Unknown);
-+        // reg is now a Result<DecodedRegister, hwaddr>
-+        // convert the Err case into DecodedRegister as well
-+        let reg = reg.unwrap_or_else(DecodedRegister::Unknown);
-         HPETAddrDecode { shift, len, reg }
-     }
- 
-@@ -807,7 +807,7 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
-         let HPETAddrDecode { shift, reg, .. } = self.decode(addr, size);
- 
-         use GlobalRegister::*;
--        use HPETRegister::*;
-+        use DecodedRegister::*;
-         (match reg {
-             Timer(timer, tn_reg) => timer.borrow_mut().read(tn_reg),
-             Global(CAP) => self.capability.get(), /* including HPET_PERIOD 0x004 */
-@@ -834,7 +834,7 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
- 
-         // TODO: Add trace point - trace_hpet_ram_write(addr, value)
-         use GlobalRegister::*;
--        use HPETRegister::*;
-+        use DecodedRegister::*;
-         match reg {
-             Timer(timer, tn_reg) => timer.borrow_mut().write(tn_reg, value, shift, len),
-             Global(CAP) => {} // General Capabilities and ID Register: Read Only
++    // All Migratable<T> instances share the same name. This is fine because
++    // Migratable<T> is always a field within a VMSD. The parent VMSD has the
++    // different name to distinguish child Migratable<T>.
+     const VMSD: &'static bindings::VMStateDescription = VMStateDescriptionBuilder::<Self>::new()
++        .name(c"migratable-wrapper")
+         .version_id(1)
+         .minimum_version_id(1)
+         .pre_save(&Self::pre_save)
 -- 
 2.34.1
 
