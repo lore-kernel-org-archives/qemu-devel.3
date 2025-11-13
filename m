@@ -4,106 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9767FCD8C85
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 15:39:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83BCCD8C85
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 15:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJZPK-0005dM-0F; Thu, 13 Nov 2025 10:38:46 -0500
+	id 1vJZbX-000701-WC; Thu, 13 Nov 2025 10:51:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1vJZPH-0005YN-5z
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 10:38:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJZbW-0006yl-36
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 10:51:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1vJZPE-0005Pw-RL
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 10:38:42 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJZbU-0002gH-5t
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 10:51:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763048318;
+ s=mimecast20190719; t=1763049078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S+CwB15Zm/3FjNs1ajTTM4NVZyB97NFP2VomROl/dFQ=;
- b=GixhsAGjNzJJlohtKsEZ8jUPdtZdmmp0QxjsnFK85tW9j56D3YcmmC/jPCdVsPLLS3JilU
- gsFNVaFB0EVuZBfgbUlYVg5WYThFrK4BNYMj7QwLHT1qW0RIpcHDwtDYeu/uxZeqXVTSA/
- 7VVObrN3mhvi5rHA+N+OdHGjUjEUv60=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qoPmiEZow0NsTzKvPxRL9fPhztwpsWf+/PvpHIEw2Ic=;
+ b=ch/ty2udfCg0pLn6Yb59+XCiYFwpwA6L3Q15t4PQ3ubl57YoJmVZYGiOCvLYC7i6QUmL/U
+ ANp+t4x8kfFAe5qK1Zww/CETevrw9SIAH42Y7n6wlP0+3o/3cbtHL30UkNVxKIOj0021hT
+ 33Wocs6BtYYKM6Ls6DkxR4XXUlklEFE=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-DB-9FrCVMGeEJjmVn8BBMQ-1; Thu, 13 Nov 2025 10:38:36 -0500
-X-MC-Unique: DB-9FrCVMGeEJjmVn8BBMQ-1
-X-Mimecast-MFC-AGG-ID: DB-9FrCVMGeEJjmVn8BBMQ_1763048315
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-64161017e34so974873a12.1
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 07:38:36 -0800 (PST)
+ us-mta-609-0HEDhVQDMpKMQDESBayORA-1; Thu, 13 Nov 2025 10:51:16 -0500
+X-MC-Unique: 0HEDhVQDMpKMQDESBayORA-1
+X-Mimecast-MFC-AGG-ID: 0HEDhVQDMpKMQDESBayORA_1763049075
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-88238449415so48158126d6.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 07:51:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763048315; x=1763653115; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763049075; x=1763653875; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=S+CwB15Zm/3FjNs1ajTTM4NVZyB97NFP2VomROl/dFQ=;
- b=UqcERLM13OesuScS8V6MRgbyFJrFf5Yu+NNuOwO0E3qUOTsz050O5YyfqBpMo8RKcM
- sgk0zkW1kFkXHmlm2tzsDIBXpQ70Zv620UJMRh0UZmgtl6gelxhtyRI4291icCmdp0PX
- bqZICZX4s4xcVZY3FYOkZNrWnUOrDUazkxYkq9/wLgXcLhdGSq7uTBTfFrcJjo6R9g8X
- vaoWGYtI7JXetmUX+j6sCpmPQlzWHcYfIf39KzyjtJ17MhOpp+DX0ZivUc098HhGc7YF
- GbJc2inAO49uE775AoZXgUacSBqWuAsPPjhl9a8gaKjQbKpCSSczoC7QF8STV6XrNpkD
- hgjw==
+ bh=qoPmiEZow0NsTzKvPxRL9fPhztwpsWf+/PvpHIEw2Ic=;
+ b=lu6iUBgSoeMudnbjn4tCPwvsgz8vY1BZ2KHhdA2zD2sDzFhRpimvQVULe3hTsvXhVT
+ pFEFTiEu76PWx2kAAnUzGo93jS3V1rO2ErvW7DO3iWOlferScpyJXzBESzYOzs/F2AXF
+ AZgrxSYsu9hyNmkM6zAjr8TTQcyg2ma90jMvUfnK1t26b+XyfZGUerRXuRVgGwiGZ6l5
+ c4pj+ieNAB/dw1k/+E1/xz/LeBznP6Xe2XFLQshgKIYv78Q88rjm/gxFcdVelF2pL3tD
+ rDaUCqyQNetKEP4owrOtXTEcchWgELW3Vy9+vEFwfroKjnGFlDPdL3mRsIfwxgfl2R8j
+ ppUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763048315; x=1763653115;
+ d=1e100.net; s=20230601; t=1763049075; x=1763653875;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S+CwB15Zm/3FjNs1ajTTM4NVZyB97NFP2VomROl/dFQ=;
- b=QETlIPLJE7cWiEyenG8LJM4zenm92KwwqnDamxYV1gevwALMx2st8ZIShYU0E4QPzc
- wNs1kNY30E5Q96rRvptHj48QexlAYBhi/rLN5zF+1dcfy4fBi1V8E+wptfswpXGkPi1U
- kEIaOI8eqoKe5IAJ68D3pL2yqqZmrRJyq3jAfOmX+s45d1vysM2z+IVVkhN4yeWYKwm+
- AsX8mfCa2SNpz+eUT8RKIdYtMxttJs5OjYHWstPn4ryRXxxmDiPfcd5LobJ68aljFKEJ
- Lg+DSi45FAdNCxqXq/sXF1BIAL7N7iCUuGcGx7TuDUPwvEXA7xx4rN0YsdcN5CihJxTE
- yxOA==
+ bh=qoPmiEZow0NsTzKvPxRL9fPhztwpsWf+/PvpHIEw2Ic=;
+ b=U3yz0IsV+te5XmFZ0Syev7U1+RlRdvC7kpgbsEYSfL0Ghw4vVf5+gI3ILUW7jhMkHx
+ 0m5l8VA6aew0KLmIZ644yjHa4Blbm+K/++SbSXaoT52NQieREkWF5o+Rklb7MFTtyhZp
+ zan9dBgZI6im8R8H16APJDXGg8KDWDMKop+le/JQYMA5KipfGxl9JwEk372SQ15k4gd7
+ If3d6fiD22bWvBobAFmWFQYdt3Apjghy0o7DlDXc0hIz1HP24xMjNfvlCrILR7ACz3O9
+ pYM2Q8z+kFpsybF5nen7VgqmZ9oBD7/tLIOzVoc7a487hDCq7O6KBDo79Jyy9GS5PT3S
+ Ihtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpwBLcEjAN8B1gFnYtd3cfmkhw9FAXwfVjg+vgQy0BSWGyt4qF2vC3fS2RvLrtCypsGD20acttiLIS@nongnu.org
-X-Gm-Message-State: AOJu0Yx2FBETJ4eJ7/yQRID0gCO2MlxvIuovhCAKDBvfGS9FVQmnBMMR
- auWpWHGNCxuiCgmBSd3U0N/l/1Te7FwEZvzeYHv/o7QTTTMp2247zBfqXruQUJCqjlTC4LaSCfr
- a0xPrNDm4uPcgxU0bCfB4eWq9pttXRqjb70ZjKXhf4Xns5XYbkzIrVSpH
-X-Gm-Gg: ASbGncvd7m3QbRA17X6DfpH+Qw3HAz0srnHNJA30vSOTHYEI8LL2kOBIAhcLdjo67I3
- HtRjJYW7jdV30BAOS4kVl1lgH8aCmQW+TfwDyzIIemzBUk79xYcznO1lTRQYms/jwpX5jzVnS30
- C6V23Peh4iiFH6W+HxYTyGaWpR36Hm+3hURgLAW0G4ISdSxBCCLxLkySbnf8vL2NL/9nfyZ/xJ6
- SUR+RuXWyccykoHAdqXyAEt2dE9YTZXurNjqY5LzcBGDsUqbWeCkhHR/4quHFPAkQjG5TEJDibR
- RWAfkQPYeArSXQaVzpZF6eRrMzvZWYya53M0rWcgseKGa78pe1shn4pB439eKS8q6XsfJGNTg9D
- G8aVsIykIbYYnbibAf0MpriAYKeg2XMIeB5EcDLl4BNIFU8EJaEo=
-X-Received: by 2002:a05:6402:354e:b0:634:5381:530b with SMTP id
- 4fb4d7f45d1cf-6431a4b3a56mr6703578a12.13.1763048315246; 
- Thu, 13 Nov 2025 07:38:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH312LdxlN2+6L3xFCGQ6cF9N6vhEYkTMgjcMoBU++3kzQETZDv+QAzqLP5laLCKGkAxjT+EQ==
-X-Received: by 2002:a05:6402:354e:b0:634:5381:530b with SMTP id
- 4fb4d7f45d1cf-6431a4b3a56mr6703558a12.13.1763048314773; 
- Thu, 13 Nov 2025 07:38:34 -0800 (PST)
-Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
- [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6433a3d839esm1664988a12.8.2025.11.13.07.38.33
+ AJvYcCV7V2awOvFTPSm4dRoIdNrE+1KtRPNtzXCFJ/DA43fUg/ARwE4p1ENvadwoAdwuUPihjdLs5MfTJSsv@nongnu.org
+X-Gm-Message-State: AOJu0YypPs8RBB3wnd6VbUS3OKy4AHWuJSIV3+jf1XbbQ5XU89BksavZ
+ 9CSQpEgObQvPTHesYfxcevY5UnOnVZEzbI+WLH0R2VbbkpxMQiIiCNYnRFkiCbjRiG0h8O13YHt
+ kYzwmhRwwdgUWM1pR/voMFKI/h3TQKb80/bo7V42mJ55xstkHn4tsOEy/
+X-Gm-Gg: ASbGnctgVPcM6rphHqjpEinj3ZfJce4xTptfhHb+HVbCxa4IM80RHlOw4vyY6mZ3Tz/
+ aiI/Xr74E9+rsEi7AKehJ+ZHneV2z/H1bK6a7+jTtzlI9pHXKPM8P1NZcPTCOiCGksug6jVVTgk
+ c99bi8S5ovOMiilrkcjCz493/w30upBEX2NC2WJzL5lGO0f2DTFFthvO997GjbpCKw466IcV/9q
+ VouSNsLr6igX3OLpfsC6J6sNBsOndEpkAS/SirZWenWn3f3Mmh9N6onPLozE44bAJUIsaS6iwBV
+ SSSsS2XazQR4A6oi9E1j5JTF19BvyJqd8ljsdyVc9/xQlci2wpVJEwEc4aNGkomcFeo=
+X-Received: by 2002:a05:6214:e8d:b0:880:5bff:74d6 with SMTP id
+ 6a1803df08f44-88271a38ca7mr117099506d6.51.1763049075506; 
+ Thu, 13 Nov 2025 07:51:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjZ5zdJwElwtryBctCMDxY7guTFKjF9ra2UCz2SI+QxoJiiexs9yoY3uhPZkQS74Ojsbl4tg==
+X-Received: by 2002:a05:6214:e8d:b0:880:5bff:74d6 with SMTP id
+ 6a1803df08f44-88271a38ca7mr117098956d6.51.1763049075101; 
+ Thu, 13 Nov 2025 07:51:15 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4ede8815a22sm13964031cf.25.2025.11.13.07.51.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Nov 2025 07:38:34 -0800 (PST)
-Date: Thu, 13 Nov 2025 16:38:29 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: "David Hildenbrand (Red Hat)" <david@kernel.org>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, 
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] virtio/vhost: don't consider non-MAP_SHARED regions public
-Message-ID: <eg3ny5pnbq535r7bmpxaerljjvp5icyjya5fsiagfoqfqbcykb@hqk3r7vakcpd>
-References: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
- <yhrdm2lo5gvbpdn6emn3iwjxu4oa42aol26hoo3j5vnvycvnbx@uwgeim6b257q>
- <66a5228e-1e21-4c59-8538-3475ea3ca768@kernel.org>
- <6wyzsqwlnw2tkkhgfcm62tlen2g56noqaxbau3cn734jsasngo@d5pqtkftefvm>
- <290cc3c5-15d8-40ad-855f-0f9c7c7d405f@kernel.org>
+ Thu, 13 Nov 2025 07:51:14 -0800 (PST)
+Date: Thu, 13 Nov 2025 10:51:10 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, mst@redhat.com,
+ qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com,
+ thuth@redhat.com, berrange@redhat.com
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+Message-ID: <aRX-bodzFk2TuVYo@x1.local>
+References: <20251107020149.3223-1-jasowang@redhat.com>
+ <aRUCXvHkpfZgZCR0@x1.local>
+ <CACGkMEui+A8HFpxKpaSjLTqJHPSaq0Pko18af-APYguznK6bOg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <290cc3c5-15d8-40ad-855f-0f9c7c7d405f@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+In-Reply-To: <CACGkMEui+A8HFpxKpaSjLTqJHPSaq0Pko18af-APYguznK6bOg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -128,66 +124,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 13, 2025 at 04:27:00PM +0100, David Hildenbrand (Red Hat) wrote:
->On 13.11.25 13:38, Stefano Garzarella wrote:
->>On Thu, Nov 13, 2025 at 12:56:39PM +0100, David Hildenbrand (Red Hat) wrote:
->>>On 13.11.25 10:40, Stefano Garzarella wrote:
->>>>CCing David
->>>
->>>Thanks
->>>
->>>>
->>>>On Thu, Nov 13, 2025 at 11:58:42AM +0300, Daniil Tatianin wrote:
->>>>>Just having a file descriptor is not enough to consider a memory region
->>>>>public. If QEMU didn't map it as MAP_SHARED (in case of share=off), guest
->>>>>writes to this region won't be visible to the vhost-user backend, thus
->>>>>causing it to read all zeroes or garbage. Make sure we don't pass such
->>>>>regions and include that to our definition of what a private region is.
->>>>>
->>>>
->>>>Should we add a Fixes tag? Not really as bug fix, but more to make it
->>>>clear that this is a followup.
->>>>
->>>>Fixes: 552b25229c ("vhost: Rework memslot filtering and fix "used_memslot" tracking")
->>>
->>>I am missing a description of what this problem is fixing.
->>>
->>>The thing is that having real MAP_PRIVATE memory in such VM
->>>configurations is usually a strong indication that it is a
->>>VM-misconfiguration.
->>>
->>>E.g., a vhost-user device cannot possibly read/write that memory.
->>>
->>>So before we call something a fix (that was spelled out as a TODO), I
->>>want to learn more about the valid sue case we have in mind here.
->>
->>I specified in my comment: "Not really as bug fix, but more to make it
->>clear that this is a followup.", so I agree it is not a fix. But, IMO
->>it's nice to link a follow-up patch to the previous patch that
->>introduced the TODO. That said, yeah, maybe the Fixes tag is not the
->>right one, but at least I think we should mention that commit.
->
->Right, the thing is that we already did before the code something wrong
->if you take a look at the old vhost_user_mem_section_filter().
->
->Passing MAP_PRIVATE memory to a vhost-user device and having it work 
->on the shared memory cannot possibly work correctly.
->
->So IIUC, commit 552b25229cf didn't change the behavior, it only 
->highlighted the existing problem.
+On Thu, Nov 13, 2025 at 08:31:14AM +0800, Jason Wang wrote:
+> On Thu, Nov 13, 2025 at 5:55 AM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
+> > > We used to clear features silently in virtio_net_get_features() even
+> > > if it is required. This complicates the live migration compatibility
+> > > as the management layer may think the feature is enabled but in fact
+> > > not.
+> > >
+> > > Let's add a strict feature check to make sure if there's a mismatch
+> > > between the required feature and peer, fail the get_features()
+> > > immediately instead of waiting until the migration to fail. This
+> > > offload the migration compatibility completely to the management
+> > > layer.
+> > >
+> > > Signed-off-by: Jason Wang <jasowang@redhat.com>
+> >
+> > Jason, thanks for help looking into the problem!
+> >
+> > Am I right that after this patch applied, whenever a new QEMU boots with
+> > the new machine types (e.g. having USO* by default ON), will fail to boot
+> > on an old kernel that doesn't support USO*, but ask the users to turn off
+> > USO* features explicitly in the virtio-net devices?
+> >
+> > Thanks,
+> 
+> Yes, I wonder if this can help in dealing with migration compatibility issues.
 
-Okay, now I understand your point and I agree with not putting the Fixes 
-tag!
+Yes I think so.
 
-I saw it more as: “Okay, we fixed the TODO introduced there, so maybe 
-it's worth mentioning,” but the TODO actually existed from the
-beginning.
+The only thing I do not know well is how much risk new qemu will start to
+fail boot on old kernels.  One thing we can do here is be less aggressive
+on set default-ON to new network features.
 
->
->So I agree, resolving this TODO is great -- back then I wasn't quite 
->sure if there are other things we have to consider so I left it alone.
+E.g. for features like USO* we can avoid turning it ON by default when
+introduced, but wait for a few more releases.  Distros / Downstreams can
+still be aggresive though to tweak the default if they know exactly the
+kernels to be run on top will be new enough.
 
-Thank you for the clarification and discussion!
-Stefano
+Thanks again for the proposal, Jason.  Anyway, from migration side, feel
+free to take:
+
+Acked-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
 
 
