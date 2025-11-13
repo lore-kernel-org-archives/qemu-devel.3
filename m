@@ -4,68 +4,170 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A47B5CD4F4B
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17C4CD4F2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPQ4-0005sN-Ml; Wed, 12 Nov 2025 23:58:52 -0500
+	id 1vJPXr-0001x7-RJ; Thu, 13 Nov 2025 00:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPPq-0005Sd-2Q; Wed, 12 Nov 2025 23:58:40 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vJPXm-0001vH-2W; Thu, 13 Nov 2025 00:06:50 -0500
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPPn-0001c6-10; Wed, 12 Nov 2025 23:58:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763009915; x=1794545915;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=N9AZpBd6/q/5oHUSzHqqPqrrk3vQsoyaWoV5xGqOOQw=;
- b=FSScF6FcsodMF4VrlQ+jKHQ7YDg7v3S8Rd2cF0F+ZvLuGaNJrFs97ktt
- IWl8eY/QjitalgIf0mbMjGojuZA/gTXN2q+E4U/ur2eBDF98VLCuMbrvG
- wUfePaLyipFCxbE3Xrf+6dDdx1UC/n7bS/umaRnz2CIL4MHH991b8bGYt
- HNrYBxlx2FX3smpyeQsAgKqi071LHKTH/kdd/2bxXpWqpks+PujHGB+xN
- 15mXexKw1KFmmunG64AH02bDw1MrB/cErAqJeomKaqtuNIqX5eVzcdDkN
- iT3knJz3nxz0ST2ePZ27g/tpIgOqv9ClfrF+nLf5MgRaJ5MD9VXm/VFlq w==;
-X-CSE-ConnectionGUID: rhPW0eSiRCqGJGpJGkGghw==
-X-CSE-MsgGUID: O7YpBJgITXuf2yXQFF6LNQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682162"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682162"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Nov 2025 20:58:00 -0800
-X-CSE-ConnectionGUID: qswQX7xsQUGpyvVN3FJZAg==
-X-CSE-MsgGUID: 39iw9uV4SSK019SCKs8yRQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663397"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:57 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 18/22] rust/hpet: Borrow BqlRefCell<HPETRegisters> at top level
-Date: Thu, 13 Nov 2025 13:19:33 +0800
-Message-Id: <20251113051937.4017675-19-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
-References: <20251113051937.4017675-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vJPXj-0003XB-7h; Thu, 13 Nov 2025 00:06:49 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HcIQvjb3GMt14hQh9/GO9SNI49rbPABFvRJ2mt1ONldOI4rBox0WpsaIoNH+GlMmGByLGkqGiTMKzZHFCFff9b2gnQrJczOIzGhEwnGjhz1UQIvQk8j+DXOrrsCRp6kU8dd0QTdZnGCSaZVhbrlZePGy/yuyRtomkPmlN6+Cu6AZV1IrT+O0uDFMasnmUyBA0HKMlQYr+l0z/T0oP+wyYLefLi2gGCqLtUd3fFDrgHgD6cGX6wF3jElVawJxZtTKwbPtOQBAiT09dgDdbOVd4KJV+Lr8ejHlvzzCYM56k/bNfp/QxAbd5yy7+pRHyYPpqlKYRvBHkv5oI/nrEA+apg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Vq63AMNjvWFlxkurQwO/LU/7rhltf3G35Marp50lsik=;
+ b=wsQeYQe5WNDcm5q5njEXu48KCP1x8pkQung4jGKlkh4jvWxNU9x7RTy0z/yx0wQcz7tpSZfMkOlVm6+Kd5gxbb1+LXS8X32IHTQYnP+uYHAYWb157Z0RlMtATYdEyoW2NW6oalmRv72R5AF9EO/0kEwiz9yKbz+Ht+Fqa2FCJ9Mvs3eMNIwpzrpM+ETXMtsZagOR8agbk3j9Si0mTuYu5MpS9GrzDkxn+GY8fPCFq5/y1JiNHm7aQ/lo9HTDBPoTldfFFvN3SCZxWH2s3n8w6c08gigruHnMibGqrWU2XLF7yVRRnDUPs68902q0wtG/UKori53FgzK343WnDSHGWA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Vq63AMNjvWFlxkurQwO/LU/7rhltf3G35Marp50lsik=;
+ b=OXy8/1YY1Q/B4ge0l76RH7nfnM9XqVYfaevxSvHItkegsElZN/RXtz3lUamCdpuCDWEcibdbjnQ8/llZrp2q8D76YmOTylhbg7zalTl4wPQOj99mzeD2XCD0HEeU51JLYEGbxcw4vMhyMG3+MyO5ImUM9LbqL8DcfOCkNqMRYtL9Zvjng3jbuZnHcSp7fH62Q2d2jEyRk9Kblhbp43Zw1TDFB7l3SGLMsbH8NNIZC0bqNUo3iHF7kyQXRktxkcxohwkIdxacffFH1Pj52+79BK4jd46m/3xzOgno5NoBx7C34leYBRByMXEOhIknJ+e7CEzI1EybeK/XUMRT4xnMyA==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by PUZPR06MB5904.apcprd06.prod.outlook.com (2603:1096:301:113::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.16; Thu, 13 Nov
+ 2025 05:06:36 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::b420:4392:6eb0:91e5]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::b420:4392:6eb0:91e5%3]) with mapi id 15.20.9320.013; Thu, 13 Nov 2025
+ 05:06:36 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Yubin Zou <yubinz@google.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, Hao Wu
+ <wuhaotsh@google.com>, Patrick Venture <venture@google.com>
+Subject: RE: [PATCH v2 0/3] Add drive-backed EEPROM support to quanta-q71l
+Thread-Topic: [PATCH v2 0/3] Add drive-backed EEPROM support to quanta-q71l
+Thread-Index: AQHcVDaR/hxbHLEzF0aWbfAKfbjFbrTwDSww
+Date: Thu, 13 Nov 2025 05:06:35 +0000
+Message-ID: <TYPPR06MB82066E9E2A137135A76935A4FCCDA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+References: <20251113-quanta-q71l-eeproms-v2-0-e72451b974b0@google.com>
+In-Reply-To: <20251113-quanta-q71l-eeproms-v2-0-e72451b974b0@google.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|PUZPR06MB5904:EE_
+x-ms-office365-filtering-correlation-id: 3a906ede-8d1f-4eb5-c63d-08de22726ba3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|7416014|38070700021; 
+x-microsoft-antispam-message-info: =?utf-8?B?ZGZ5dExpZVljRlUxWklkcG1lbDNGWE1PUlR6VHRxRjEvUkhWWVU4dzQya2Zs?=
+ =?utf-8?B?WWpjTzVPMitJTGlmSWl1Vm9HeDRnb1lCQXkxbHlYZi9FZDlOMndBc3NvZ3J5?=
+ =?utf-8?B?VUlqUU5LUjlQR3NUbWlFbzhoVkorcjR6RWlKemVDLzN2bTRVS1ljTDVEbHVq?=
+ =?utf-8?B?V0RJdnYzeXMrbHJ4WTJEM2liQklDTkxYVkJ0QTdIN2Jwb0dZWldSckFBbGVa?=
+ =?utf-8?B?ZVp4NkNqNkd3aStSTjJsY0tMVUlOYWdtV3NoWEhvLzNiREU0NmZ1QWRlQ0F2?=
+ =?utf-8?B?SUthb3psSUxmVFpMa1F3UnhCK0oxT3h5amV6SFpaeFMxaWtoM0RoYjhYY0FZ?=
+ =?utf-8?B?Sy9IZ0dGV3ZtVjhuYlhyMFRaZXhBUHlFSnFOZkhyUXE2T0FYb3o4Rmw5ckpE?=
+ =?utf-8?B?R2l6NXdWYVdoT0pvWGFzQ1BFQVVjcjBOL2tKL2tkZFJ3bHZEcUJJeS9LcElm?=
+ =?utf-8?B?QzhKckdrbVFNK21sTzgxK2tXaGJWMVd1OTlRYzJlWjgzdjBRZy9sWlVON3hG?=
+ =?utf-8?B?MVRxaCtJQ1MveTBMRGUyMkxoTWJBR09aNXgyS3d4MUZJNE1NRmppVkNqcitU?=
+ =?utf-8?B?RWtSeXFOSG91Y21ZcE5RcGIwNkN0Zmk3a0JVQmJvVitrSmdPZnN3cWN4UDBI?=
+ =?utf-8?B?OHZBKzN2MjlMYysyUWd1b3ZQaWlReHVGdEJ0K2xIa1Mvelk2a0xvNXFwbncv?=
+ =?utf-8?B?WGJPUVp2aWtWWjlMMFZVeVNoMzFDUG92cG9rcmoxbkNQYnBrSkZ5MWtyeDQv?=
+ =?utf-8?B?T21LaU8xaTZKektReFZDYTg3d2tpRnVtVWlPM01LQzk1b0szbTBXWmJ1dnRG?=
+ =?utf-8?B?aVN2dkZlYXdFV21nYk5McXlmQjRJMnBlY2p1a0hVSDBUcUZJdEV2cytaVGxw?=
+ =?utf-8?B?RUN5dVhoVHJqN2tFdFFTUHlxbkMvWjFsM0lEL2hJNk9rMkFodXNwZkt4dkVQ?=
+ =?utf-8?B?OFN4cDdPMDIxdFRYdHllZFV2OWltRmtFM0IxT0s1akYvMWdWSE1oZFlNLzhN?=
+ =?utf-8?B?bGlreGo2RWF5RlAxelJjOXJucjM3cm4yZG1IdSszSGRDK1NwZWkzL3NKQ05Y?=
+ =?utf-8?B?RnBNN21Ccm1yVExEeXFsY1RPdytnb3Jrb3dXam5zWlAzYldIMUhLbEVBMTZa?=
+ =?utf-8?B?UFNYWE9paFFNRXV6MkFFNFF1R01yOC9HdEtIcUtFQ2RrZlRtNU9lQTZwbmhH?=
+ =?utf-8?B?WG5kQnNZQ3J5cG9sNFJkekZOWUVjLzF5OTg5Wlp0Wk14dEJKOVQzdDVnRm81?=
+ =?utf-8?B?N0cwa3Z5dWgyeGNXOE1PYVg2bXZRNEJUb05pM1FVWW5ISE44dS9VcnpRUVow?=
+ =?utf-8?B?dHhxRHhGYmJHTHE1VXFVb2VpUE5sdGRtNmN3SEVlVXZ1Rm5IVHpXN2pPV0VZ?=
+ =?utf-8?B?QkdFWmdwMTRZVi9vNE51S2VzdTJ6UHpadGlrUUVDVXFHOStQWGdjSlQ0REFa?=
+ =?utf-8?B?YmFUcHQySWtxK1ZJZ0pwOXRNTzNUM2M2Smp2a1JPVTRsVUNObFVQRGUrNE5V?=
+ =?utf-8?B?N0R5QkZBeUV4UUJLTUNUbXlFa05JN1hpbmFOMzdaK3hKalIwWTgyT3kvVzE3?=
+ =?utf-8?B?YkFPTXMyTUppMVVPeEhnaVk1eGpqUGJiWUtXUFNydU9GSFBoblJZVFYzUGNv?=
+ =?utf-8?B?aTdaU1NzcWUyWU5WRjF0S0gxTEJTR3B0SG4xTE9qVUcraVhHR3dTa0JhejBn?=
+ =?utf-8?B?ZHdZUHpkVEZkRVM0SjVwQzFUcUpRaWhlNEZsYVJCVnEvM3QrKzEzblgrY1RC?=
+ =?utf-8?B?eFRSczlnZlVOZ3JiSFhzemR3anBVaDUxWVlWc3ZzQ1Q5S2UzMnkxM1gzb2Rm?=
+ =?utf-8?B?U2xscGNPNVhEcjdSb0h5WWJ4UTN0eExBRGFsUVZuSnprUHlMQ2tpNzNNeWJ2?=
+ =?utf-8?B?VGFlSXZsRXduZEZpK1lGUFJIdlUvdmx2Yi9UTmlDRDQyZGtyZ3owSFdFQSt5?=
+ =?utf-8?B?dHcvS0ZtQ2dGNXM0Q0JGK3Y5U3NHQ01mVEI2THNVNGp1NnZ0d1lMRzJqMUt5?=
+ =?utf-8?B?Yi83RWdIYXp6RzB4cWlMM0I2MnhBQVhIa2RlMHVaS3JnOWdDOUxrQmYraHZR?=
+ =?utf-8?B?YTNKc1VYeEVFRDNpeFpXR1ErSmtVWFlTaHk4Zz09?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(376014)(366016)(1800799024)(7416014)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?c2Q5THRtNExobXZteHovQitrY2dTcEFYMTNZYVNldzMrMFQ5eGpaS0VNNFhP?=
+ =?utf-8?B?OHVEOWU0bFBYeUhQc1BnbGhOZU5sUS8vaGhXNmhJZUhqUEg5QnlTdXQzT1o3?=
+ =?utf-8?B?R0h5bUVqQ2R5blkvZTI1eFozb01qSlY0THNOdllySWRUMTdMN3pOWlU1Qy9j?=
+ =?utf-8?B?TkVVMERsa2tRM1QvQVJMc2VuUWo1M1l1b1gwcmdHSGkxdEJYRkZlZkgwU2VY?=
+ =?utf-8?B?b1Z2MWpHcTNPandlMUh6STU0NHZBdzdBUjJCU2wraXpucWt6NmFRUnF5cU5y?=
+ =?utf-8?B?c0ZRaGN2eHNCSjB2Z2dKejNnbmZGVFViejhaVktpQ1ZxWGNyVHJxWUZieWNV?=
+ =?utf-8?B?M3BuQ29sUlF3OFV1MWN2dmZGbXl1STZPSDNtV0I3UmJvQ3JBNDNkVFlvK09y?=
+ =?utf-8?B?dlpWQ1NUNndQTG8vRWVIdW1FNmdwOTdSYXVybERDeHRiVFhoM0tYcHVHWWsw?=
+ =?utf-8?B?OGhYQm85Uk9ZRUc3VzJxVmZvd2pweURyY0pTZmdEdnMxcGxTOXQvc1dzc0pn?=
+ =?utf-8?B?SXBvYjNrQVovWnNQMUYxc3VRTTdaUWxFNCtjWEcrRktDQUFtWGMwQVhXUXhr?=
+ =?utf-8?B?M3NFTS80eFlzUGgzWjN0ZGovdmtUYWIrUzNCRVFmMDhYcTFkTW9aRmROMWUw?=
+ =?utf-8?B?NFZsbXFaemJtSG9TVlRyeHhFZWU4blRhV2ZYR0l2N2pzM21uSDRNQnRnOHAx?=
+ =?utf-8?B?cUhQbEFUNXc5OG9xZm1vc1BVZXMvWUZIN3g0aVhxclV5ZkV5VkxKaFEyelYw?=
+ =?utf-8?B?RWtKWWkwV0txUVFxNHplbkRzbExzMlY2MjBVN2tCNTlXYWtBS0Zmem5Va0wv?=
+ =?utf-8?B?UFc5NEVuWTdXV3IvWll6ajB3RWN3dGdYTityRzduY2VpTzhBbk1tcTl6TzRP?=
+ =?utf-8?B?STFpZ1U0eXptREhVa0FmTVNVTmJ1UG5QZGNUL3ZocHFYQ3lFUDR0VU95aWRB?=
+ =?utf-8?B?U2ZLeGxEU0s0VnZpLzJXVHdHNjdrcm1RRUUyZmFCTUd3ZGw3REhzQXppL0F3?=
+ =?utf-8?B?eTJKelI0alBFc1B4VWlROS8yR2U2azZHRXRqYmVZaUpiNElPcTZIZWFKQWdX?=
+ =?utf-8?B?NzFoZDJzaTRVcElqK1ZmWVFuY29KUGI5K3VGN21idm9TcFJORC8zL0s4eTd0?=
+ =?utf-8?B?KzczaWtSbmI5S3M3Z1dvNFhMQVBUNVNITUpTU2pyQ2ZvVWJIczA5emt3Ym1G?=
+ =?utf-8?B?c1ljM254bHIrWHJuSDc4R3NRdWtIRjFUcmZiOUZXY3R2UnkwQWlKVnl0ckFx?=
+ =?utf-8?B?VUltYnRhc0YrMlJsTThBVHp1T2w2eUNqRGQ3TzBhSm1wZFgybXRqenczaWIr?=
+ =?utf-8?B?MGNPblBPWWw4cXhMZlN4aUJxaHFMZWVLTXZWSHlCYnh3UTRWK2E3aHdQd1do?=
+ =?utf-8?B?cHowSlY4Rzg3cUFMS29jdHl2Nk00cDhlYVlJVDlOTzNiRXRHUzFnSFVobVhN?=
+ =?utf-8?B?WkhlRFVPYUZXcEU1akxLbHdnZTJpY05JN2lRNVZCQkgrL2ZSUGdoUTRRWGZ4?=
+ =?utf-8?B?OFZ6RStMdStZS00zUnIyYUQ2Yk9JdCtCMElqbUdpaTJNcUdISWxaaUZXTmVX?=
+ =?utf-8?B?SmUxY0FwQlV3TlI1RWs2WHQvVDdORllwNnllOW9ZZ3RtNU9WTk0rS1hOenh4?=
+ =?utf-8?B?bTNDc3BoVGZrcHBSbWVTU3pUOXViQ3lSbmpWL0YxVDFpOG1Gcmw4b2xUaFBD?=
+ =?utf-8?B?aU1QWkg5RUJtR1QrbTZIYXBPZitFMVFvOTBhUnFSSUtHMUtscFB5b3M5OGND?=
+ =?utf-8?B?amlsWEJ5dFVtVHdGZjRqNk9KVktGNFd5eHBCcUE2QUZmZnp3SkFzcFlZSjNV?=
+ =?utf-8?B?LzVmcExUMnFja1krUlZVNWlBZ0F5cU5YUkpnc3NJNnJ3ajRxVk1tQjRkVEcy?=
+ =?utf-8?B?K25OM29SSS9qOVdmVjFnL1VSemg4SDFIWkRhZXVHRTcxWEdxUHpSaHBXc0dL?=
+ =?utf-8?B?ZWlYNkZBam8vbjhXOGRuQzBIbHQ0QkdnbFlhcExxTEU3NlhBalMzU0xLY2xn?=
+ =?utf-8?B?NHVqL3hWNS9QV2xTdkdMa3lvVmpFUnpybjBReEN0Nk13SGczM0ZXd3JnMDNH?=
+ =?utf-8?B?OGZDL28zRS9qeXRqTExTWUVncFo4aXZvWmVNdWlvWlFNRFJGNkNnSkFEWDF2?=
+ =?utf-8?Q?GZ3RXE55ZkIoyJzZbsZy0KyFv?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a906ede-8d1f-4eb5-c63d-08de22726ba3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2025 05:06:36.0267 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4mTZjM/ja6a2/lcjBOsnYBKNyb0FZFY7Bwgajsj14LBmnTE/vDQ66y2JlZcMcN8EwLNvMziRDRyelxMALWfeQKdhPTYYhoa6PENDYObD6Wk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5904
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,526 +184,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Lockless IO requires to lock the registers during MMIO access. So it's
-necessary to get (or borrow) registers data at top level, and not to
-borrow again in child function calls.
-
-Change the argument types from BqlRefCell<HPETRegisters> to
-&HPETRegisters/&mut HPETRegisters in child methods, and do borrow the
-data once at top level.
-
-This allows BqlRefCell<HPETRegisters> to be directly replaced with
-Mutex<HPETRegisters> in subsequent steps without causing lock reentrancy
-issues.
-
-Note, passing reference instead of BqlRef/BqlRefMut because BqlRefMut
-cannot be re-borrowed as BqlRef, though BqlRef/BqlRefMut themselves play
-as the "guard". Passing reference is directly and the extra
-bql::is_locked check could help to consolidate safety guarantee.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/hw/timer/hpet/src/device.rs | 270 ++++++++++++++++++++-----------
- 1 file changed, 177 insertions(+), 93 deletions(-)
-
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 462a09880b61..f8a551fc0a78 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -179,7 +179,7 @@ const fn deactivating_bit(old: u64, new: u64, shift: usize) -> bool {
- fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
-     let mut t = timer_cell.borrow_mut();
-     // SFAETY: state field is valid after timer initialization.
--    let hpet_regs = &mut unsafe { t.state.as_mut() }.regs;
-+    let hpet_regs = &mut unsafe { t.state.as_mut() }.regs.borrow_mut();
-     t.callback(hpet_regs)
- }
- 
-@@ -286,20 +286,27 @@ fn get_state(&self) -> &HPETState {
-         unsafe { self.state.as_ref() }
-     }
- 
--    fn is_int_active(&self, hpet_regs: &BqlRefCell<HPETRegisters>) -> bool {
--        hpet_regs.borrow().is_timer_int_active(self.index.into())
-+    fn is_int_active(&self, hpet_regs: &HPETRegisters) -> bool {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        hpet_regs.is_timer_int_active(self.index.into())
-     }
- 
-     /// calculate next value of the general counter that matches the
-     /// target (either entirely, or the low 32-bit only depending on
-     /// the timer mode).
--    fn calculate_cmp64(
--        &self,
--        hpet_regs: &BqlRefCell<HPETRegisters>,
--        cur_tick: u64,
--        target: u64,
--    ) -> u64 {
--        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
-+    fn calculate_cmp64(&self, hpet_regs: &HPETRegisters, cur_tick: u64, target: u64) -> u64 {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &hpet_regs.tn_regs[self.index as usize];
-         if tn_regs.is_32bit_mod() {
-             let mut result: u64 = cur_tick.deposit(0, 32, target);
-             if result < cur_tick {
-@@ -311,9 +318,14 @@ fn calculate_cmp64(
-         }
-     }
- 
--    fn get_int_route(&self, hpet_regs: &BqlRefCell<HPETRegisters>) -> usize {
--        let regs = hpet_regs.borrow();
--        if self.index <= 1 && regs.is_legacy_mode() {
-+    fn get_int_route(&self, hpet_regs: &HPETRegisters) -> usize {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        if self.index <= 1 && hpet_regs.is_legacy_mode() {
-             // If LegacyReplacement Route bit is set, HPET specification requires
-             // timer0 be routed to IRQ0 in NON-APIC or IRQ2 in the I/O APIC,
-             // timer1 be routed to IRQ8 in NON-APIC or IRQ8 in the I/O APIC.
-@@ -333,16 +345,21 @@ fn get_int_route(&self, hpet_regs: &BqlRefCell<HPETRegisters>) -> usize {
-             // ...
-             // If the LegacyReplacement Route bit is not set, the individual
-             // routing bits for each of the timers are used.
--            regs.tn_regs[self.index as usize].get_individual_route()
-+            hpet_regs.tn_regs[self.index as usize].get_individual_route()
-         }
-     }
- 
--    fn set_irq(&self, hpet_regs: &BqlRefCell<HPETRegisters>, set: bool) {
--        let regs = hpet_regs.borrow();
--        let tn_regs = &regs.tn_regs[self.index as usize];
-+    fn set_irq(&self, hpet_regs: &HPETRegisters, set: bool) {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &hpet_regs.tn_regs[self.index as usize];
-         let route = self.get_int_route(hpet_regs);
- 
--        if set && tn_regs.is_int_enabled() && regs.is_hpet_enabled() {
-+        if set && tn_regs.is_int_enabled() && hpet_regs.is_hpet_enabled() {
-             if tn_regs.is_fsb_route_enabled() {
-                 // SAFETY:
-                 // the parameters are valid.
-@@ -365,21 +382,32 @@ fn set_irq(&self, hpet_regs: &BqlRefCell<HPETRegisters>, set: bool) {
-         }
-     }
- 
--    fn update_irq(&self, hpet_regs: &BqlRefCell<HPETRegisters>, set: bool) {
--        let mut regs = hpet_regs.borrow_mut();
-+    fn update_irq(&self, hpet_regs: &mut HPETRegisters, set: bool) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         // If Timer N Interrupt Enable bit is 0, "the timer will
-         // still operate and generate appropriate status bits, but
-         // will not cause an interrupt"
--        regs.int_status = regs.int_status.deposit(
-+        hpet_regs.int_status = hpet_regs.int_status.deposit(
-             self.index.into(),
-             1,
--            u64::from(set && regs.tn_regs[self.index as usize].is_int_level_triggered()),
-+            u64::from(set && hpet_regs.tn_regs[self.index as usize].is_int_level_triggered()),
-         );
-         self.set_irq(hpet_regs, set);
-     }
- 
--    fn arm_timer(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>, tick: u64) {
--        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
-+    fn arm_timer(&mut self, hpet_regs: &HPETRegisters, tick: u64) {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &hpet_regs.tn_regs[self.index as usize];
-         let mut ns = self.get_state().get_ns(tick);
- 
-         // Clamp period to reasonable min value (1 us)
-@@ -391,8 +419,14 @@ fn arm_timer(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>, tick: u64) {
-         self.qemu_timer.modify(self.last);
-     }
- 
--    fn set_timer(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
--        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
-+    fn set_timer(&mut self, hpet_regs: &HPETRegisters) {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &hpet_regs.tn_regs[self.index as usize];
-         let cur_tick: u64 = self.get_state().get_ticks();
- 
-         self.wrap_flag = 0;
-@@ -409,7 +443,13 @@ fn set_timer(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
-         self.arm_timer(hpet_regs, self.cmp64);
-     }
- 
--    fn del_timer(&self, hpet_regs: &BqlRefCell<HPETRegisters>) {
-+    fn del_timer(&self, hpet_regs: &mut HPETRegisters) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         // Just remove the timer from the timer_list without destroying
-         // this timer instance.
-         self.qemu_timer.delete();
-@@ -423,12 +463,18 @@ fn del_timer(&self, hpet_regs: &BqlRefCell<HPETRegisters>) {
- 
-     fn prepare_tn_cfg_reg_new(
-         &self,
--        hpet_regs: &BqlRefCell<HPETRegisters>,
-+        hpet_regs: &mut HPETRegisters,
-         shift: u32,
-         len: u32,
-         val: u64,
-     ) -> (u64, u64) {
--        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &hpet_regs.tn_regs[self.index as usize];
-         // TODO: Add trace point - trace_hpet_ram_write_tn_cfg(addr & 4)
-         let old_val: u64 = tn_regs.config;
-         let mut new_val: u64 = old_val.deposit(shift, len, val);
-@@ -445,43 +491,46 @@ fn prepare_tn_cfg_reg_new(
-     }
- 
-     /// Configuration and Capability Register
--    fn set_tn_cfg_reg(
--        &mut self,
--        hpet_regs: &BqlRefCell<HPETRegisters>,
--        shift: u32,
--        len: u32,
--        val: u64,
--    ) {
-+    fn set_tn_cfg_reg(&mut self, hpet_regs: &mut HPETRegisters, shift: u32, len: u32, val: u64) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         // Factor out a prepare_tn_cfg_reg_new() to better handle immutable scope.
-         let (new_val, old_val) = self.prepare_tn_cfg_reg_new(hpet_regs, shift, len, val);
--        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
--        tn_regs.config = new_val;
-+        // After prepare_tn_cfg_reg_new(), it's safe to access int_status with a
-+        // immutable reference before update_irq().
-+        let tn_int_active = self.is_int_active(hpet_regs);
-+        hpet_regs.tn_regs[self.index as usize].config = new_val;
- 
--        if activating_bit(old_val, new_val, HPET_TN_CFG_INT_ENABLE_SHIFT)
--            && self.is_int_active(hpet_regs)
--        {
-+        if activating_bit(old_val, new_val, HPET_TN_CFG_INT_ENABLE_SHIFT) && tn_int_active {
-             self.update_irq(hpet_regs, true);
-         }
- 
-+        // Create the mutable reference after update_irq() to ensure that
-+        // only one mutable reference exists at a time.
-+        let tn_regs = &mut hpet_regs.tn_regs[self.index as usize];
-         if tn_regs.is_32bit_mod() {
-             tn_regs.cmp = u64::from(tn_regs.cmp as u32); // truncate!
-             self.period = u64::from(self.period as u32); // truncate!
-         }
- 
--        if hpet_regs.borrow().is_hpet_enabled() {
-+        if hpet_regs.is_hpet_enabled() {
-             self.set_timer(hpet_regs);
-         }
-     }
- 
-     /// Comparator Value Register
--    fn set_tn_cmp_reg(
--        &mut self,
--        hpet_regs: &BqlRefCell<HPETRegisters>,
--        shift: u32,
--        len: u32,
--        val: u64,
--    ) {
--        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
-+    fn set_tn_cmp_reg(&mut self, hpet_regs: &mut HPETRegisters, shift: u32, len: u32, val: u64) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &mut hpet_regs.tn_regs[self.index as usize];
-         let mut length = len;
-         let mut value = val;
- 
-@@ -505,27 +554,33 @@ fn set_tn_cmp_reg(
-         }
- 
-         tn_regs.clear_valset();
--        if hpet_regs.borrow().is_hpet_enabled() {
-+        if hpet_regs.is_hpet_enabled() {
-             self.set_timer(hpet_regs);
-         }
-     }
- 
-     /// FSB Interrupt Route Register
--    fn set_tn_fsb_route_reg(
--        &self,
--        hpet_regs: &BqlRefCell<HPETRegisters>,
--        shift: u32,
--        len: u32,
--        val: u64,
--    ) {
--        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
-+    fn set_tn_fsb_route_reg(&self, hpet_regs: &mut HPETRegisters, shift: u32, len: u32, val: u64) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &mut hpet_regs.tn_regs[self.index as usize];
-         tn_regs.fsb = tn_regs.fsb.deposit(shift, len, val);
-     }
- 
--    fn reset(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
-+    fn reset(&mut self, hpet_regs: &mut HPETRegisters) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         self.del_timer(hpet_regs);
- 
--        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
-+        let tn_regs = &mut hpet_regs.tn_regs[self.index as usize];
-         tn_regs.cmp = u64::MAX; // Comparator Match Registers reset to all 1's.
-         tn_regs.config = (1 << HPET_TN_CFG_PERIODIC_CAP_SHIFT) | (1 << HPET_TN_CFG_SIZE_CAP_SHIFT);
-         if self.get_state().has_msi_flag() {
-@@ -539,8 +594,14 @@ fn reset(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
-     }
- 
-     /// timer expiration callback
--    fn callback(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
--        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
-+    fn callback(&mut self, hpet_regs: &mut HPETRegisters) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &mut hpet_regs.tn_regs[self.index as usize];
-         let period: u64 = self.period;
-         let cur_tick: u64 = self.get_state().get_ticks();
- 
-@@ -561,8 +622,14 @@ fn callback(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
-         self.update_irq(hpet_regs, true);
-     }
- 
--    fn read(&self, target: TimerRegister, hpet_regs: &BqlRefCell<HPETRegisters>) -> u64 {
--        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
-+    fn read(&self, target: TimerRegister, hpet_regs: &HPETRegisters) -> u64 {
-+        // &HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let tn_regs = &hpet_regs.tn_regs[self.index as usize];
- 
-         use TimerRegister::*;
-         match target {
-@@ -575,11 +642,17 @@ fn read(&self, target: TimerRegister, hpet_regs: &BqlRefCell<HPETRegisters>) ->
-     fn write(
-         &mut self,
-         target: TimerRegister,
--        hpet_regs: &BqlRefCell<HPETRegisters>,
-+        hpet_regs: &mut HPETRegisters,
-         value: u64,
-         shift: u32,
-         len: u32,
-     ) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         use TimerRegister::*;
-         match target {
-             CFG => self.set_tn_cfg_reg(hpet_regs, shift, len, value),
-@@ -707,22 +780,28 @@ fn init_timers(this: &mut MaybeUninit<Self>) {
-     }
- 
-     /// General Configuration Register
--    fn set_cfg_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, val: u64) {
--        let old_val = regs.borrow().config;
-+    fn set_cfg_reg(&self, regs: &mut HPETRegisters, shift: u32, len: u32, val: u64) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-+        let old_val = regs.config;
-         let mut new_val = old_val.deposit(shift, len, val);
- 
-         new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
--        regs.borrow_mut().config = new_val;
-+        regs.config = new_val;
- 
-         if activating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
-             // Enable main counter and interrupt generation.
-             self.hpet_offset
--                .set(ticks_to_ns(regs.borrow().counter) - CLOCK_VIRTUAL.get_ns());
-+                .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
- 
-             for timer in self.timers.iter().take(self.num_timers) {
-                 let mut t = timer.borrow_mut();
-                 let id = t.index as usize;
--                let tn_regs = &regs.borrow().tn_regs[id];
-+                let tn_regs = &regs.tn_regs[id];
- 
-                 if tn_regs.is_int_enabled() && t.is_int_active(regs) {
-                     t.update_irq(regs, true);
-@@ -731,7 +810,7 @@ fn set_cfg_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, va
-             }
-         } else if deactivating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
-             // Halt main counter and disable interrupt generation.
--            regs.borrow_mut().counter = self.get_ticks();
-+            regs.counter = self.get_ticks();
- 
-             for timer in self.timers.iter().take(self.num_timers) {
-                 timer.borrow().del_timer(regs);
-@@ -752,15 +831,15 @@ fn set_cfg_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, va
-     }
- 
-     /// General Interrupt Status Register: Read/Write Clear
--    fn set_int_status_reg(
--        &self,
--        regs: &BqlRefCell<HPETRegisters>,
--        shift: u32,
--        _len: u32,
--        val: u64,
--    ) {
-+    fn set_int_status_reg(&self, regs: &mut HPETRegisters, shift: u32, _len: u32, val: u64) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         let new_val = val << shift;
--        let cleared = new_val & regs.borrow().int_status;
-+        let cleared = new_val & regs.int_status;
- 
-         for (index, timer) in self.timers.iter().take(self.num_timers).enumerate() {
-             if cleared & (1 << index) != 0 {
-@@ -770,8 +849,13 @@ fn set_int_status_reg(
-     }
- 
-     /// Main Counter Value Register
--    fn set_counter_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, val: u64) {
--        let mut regs = regs.borrow_mut();
-+    fn set_counter_reg(&self, regs: &mut HPETRegisters, shift: u32, len: u32, val: u64) {
-+        // &mut HPETRegisters should be gotten from BqlRefCell<HPETRegisters>,
-+        // but there's no lock guard to guarantee this. So we have to check BQL
-+        // context explicitly. This check should be removed when we switch to
-+        // Mutex<HPETRegisters>.
-+        assert!(bql::is_locked());
-+
-         if regs.is_hpet_enabled() {
-             // TODO: Add trace point -
-             // trace_hpet_ram_write_counter_write_while_enabled()
-@@ -851,15 +935,16 @@ fn realize(&self) -> util::Result<()> {
-     }
- 
-     fn reset_hold(&self, _type: ResetType) {
--        for timer in self.timers.iter().take(self.num_timers) {
--            timer.borrow_mut().reset(&self.regs);
--        }
--
-         // pit_enabled.set(true) will call irq handler and access regs
-         // again. We cannot borrow BqlRefCell twice at once. Minimize the
-         // scope of regs to ensure it will be dropped before irq callback.
-         {
-             let mut regs = self.regs.borrow_mut();
-+
-+            for timer in self.timers.iter().take(self.num_timers) {
-+                timer.borrow_mut().reset(&mut regs);
-+            }
-+
-             regs.counter = 0;
-             regs.config = 0;
-             HPETFwConfig::update_hpet_cfg(
-@@ -904,17 +989,16 @@ fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode<'_> {
-     fn read(&self, addr: hwaddr, size: u32) -> u64 {
-         // TODO: Add trace point - trace_hpet_ram_read(addr)
-         let HPETAddrDecode { shift, target, .. } = self.decode(addr, size);
--        let regs = &self.regs;
-+        let regs = &self.regs.borrow();
- 
-         use DecodedRegister::*;
-         use GlobalRegister::*;
-         (match target {
-             Timer(timer, tn_target) => timer.borrow_mut().read(tn_target, regs),
--            Global(CAP) => regs.borrow().capability, /* including HPET_PERIOD 0x004 */
--            Global(CFG) => regs.borrow().config,
--            Global(INT_STATUS) => regs.borrow().int_status,
-+            Global(CAP) => regs.capability, /* including HPET_PERIOD 0x004 */
-+            Global(CFG) => regs.config,
-+            Global(INT_STATUS) => regs.int_status,
-             Global(COUNTER) => {
--                let regs = regs.borrow();
-                 // TODO: Add trace point
-                 // trace_hpet_ram_read_reading_counter(addr & 4, cur_tick)
-                 if regs.is_hpet_enabled() {
-@@ -932,7 +1016,7 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
- 
-     fn write(&self, addr: hwaddr, value: u64, size: u32) {
-         let HPETAddrDecode { shift, len, target } = self.decode(addr, size);
--        let regs = &self.regs;
-+        let regs = &mut self.regs.borrow_mut();
- 
-         // TODO: Add trace point - trace_hpet_ram_write(addr, value)
-         use DecodedRegister::*;
-@@ -972,7 +1056,7 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-             let cnt = regs.counter;
-             let cmp = regs.tn_regs[t.index as usize].cmp;
- 
--            t.cmp64 = t.calculate_cmp64(&self.regs, cnt, cmp);
-+            t.cmp64 = t.calculate_cmp64(&regs, cnt, cmp);
-             t.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-         }
- 
--- 
-2.34.1
-
+SGkgWXViaW4sDQoNCj4gT3ZlcnZpZXcgb2YgQ2hhbmdlczoNCj4gVGhpcyB0d28tcGF0Y2ggc2Vy
+aWVzIGludHJvZHVjZXMgSTJDIEVFUFJPTSBkZXZpY2VzIChBVDI0QzY0KSB0byB0aGUNCj4gcXVh
+bnRhLXE3MWwgbWFjaGluZSBtb2RlbCwgcmVwcmVzZW50aW5nIHRoZSBCYXNlYm9hcmQsIEZyb250
+cGFuZWwsIEJJT1MsDQo+IFBEQiwgYW5kIEJNQyBGUlVzLg0KPiANCj4gSW1wcm92ZW1lbnQgdG8g
+UUVNVToNCj4gVGhlc2UgY2hhbmdlcyBlbmhhbmNlIHRoZSBzaW11bGF0aW9uIGZpZGVsaXR5IG9m
+IHRoZSBxdWFudGEtcTcxbCBib2FyZC4NCj4gQnkgbW9kZWxpbmcgdGhlIEZSVSBFRVBST01zIGFu
+ZCBhbGxvd2luZyB0aGVtIHRvIGJlIGJhY2tlZCBieSBkcml2ZXMuDQo+IA0KPiBJbXBhY3QgKEJl
+Zm9yZS9BZnRlcik6DQo+IEJlZm9yZToNCj4gVGhlIHF1YW50YS1xNzFsIG1hY2hpbmUgbW9kZWwg
+ZGlkIG5vdCBpbmNsdWRlIHRoZSBJMkMgRUVQUk9NcyBmb3IgRlJVDQo+IGRhdGEgc3RvcmFnZS4N
+Cg0KUGxlYXNlIHJlYmFzZSB5b3VyIGNvZGViYXNlLg0KVGhlIHF1YW50YS1xNzFsIGJvYXJkIGhh
+cyBiZWVuIG1vdmVkIGludG8gYXNwZWVkX2FzdDI0MDBfcXVhbnRhLXE3MWwuYw0KWW91IGNhbiBm
+aW5kIGl0IGhlcmU6DQpodHRwczovL2dpdGh1Yi5jb20vcWVtdS9xZW11L2Jsb2IvbWFzdGVyL2h3
+L2FybS9hc3BlZWRfYXN0MjQwMF9xdWFudGEtcTcxbC5jDQoNClRoYW5rcy1KYW1pbg0KDQo+IA0K
+PiBBZnRlcjoNCj4gVGhlIEVFUFJPTXMgYXJlIGFkZGVkIHRvIHRoZSBhcHByb3ByaWF0ZSBJMkMg
+YnVzZXMgYXQgdGhlaXIgcmVzcGVjdGl2ZQ0KPiBhZGRyZXNzZXMuIEVhY2ggZWVwcm9tIG5vdyBj
+YW4gYmUgYXNzb2NpYXRlZCB3aXRoIGEgUUVNVSBkcml2ZXIgYmFja2VuZA0KPiBieSB1c2luZyB0
+aGUgYC1kcml2ZWBvcHRpb24uDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBZdWJpbiBab3UgPHl1Ymlu
+ekBnb29nbGUuY29tPg0KPiAtLS0NCj4gQ2hhbmdlcyBpbiB2MjoNCj4gSW5jbHVkZSBhIHBhdGNo
+IHRvIGFkZCBhIGF1eGlsaWFyeSBmdW5jdGlvbiBpbiB0aGUgYXQyNGMgZWVwcm9tIG1vZHVsZSB0
+bw0KPiBhc3NpZ24gdW5pcXVlIHVuaXQgbnVtYmVycyBmb3IgZWFjaCBlZXByb21zIGluIGVhY2gg
+Ym9hcmQNCj4gDQo+IC0gTGluayB0byB2MToNCj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVt
+dS1kZXZlbC8yMDI1MDkxNi1xdWFudGEtcTcxbC1lZXByb21zLXYxLTAtMzY0OA0KPiA2OTJjYzQ0
+MUBnb29nbGUuY29tDQo+IA0KPiAtLS0NCj4gSGFvIFd1ICgxKToNCj4gICAgICAgaHcvbnZyYW06
+IEFkZCBhIG5ldyBhdXhpbGlhcnkgZnVuY3Rpb24gdG8gaW5pdCBhdDI0YyBlZXByb20NCj4gDQo+
+IFBhdHJpY2sgVmVudHVyZSAoMik6DQo+ICAgICAgIGh3L2FybTogYWRkIGVlcHJvbXMgdG8gcXVh
+bnRhLXE3bDEgYm9hcmQNCj4gICAgICAgaHcvYXJtOiBlbmFibGUgZWVwcm9tcyBmb3IgcXVhbnRh
+LXE3MWwNCj4gDQo+ICBody9hcm0vYXNwZWVkLmMgICAgICAgICAgICAgICAgIHwgMTUgKysrKysr
+KysrKy0tLS0tDQo+ICBody9udnJhbS9lZXByb21fYXQyNGMuYyAgICAgICAgIHwgMTcgKysrKysr
+KysrKysrKysrKysNCj4gIGluY2x1ZGUvaHcvbnZyYW0vZWVwcm9tX2F0MjRjLmggfCAgNCArKysr
+DQo+ICAzIGZpbGVzIGNoYW5nZWQsIDMxIGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pDQo+
+IC0tLQ0KPiBiYXNlLWNvbW1pdDogMTkwZDVkN2ZkNzI1ZmY3NTRmOTRlOGUwY2JmYjY5ZjI3OWM4
+MmI1ZA0KPiBjaGFuZ2UtaWQ6IDIwMjUwOTE2LXF1YW50YS1xNzFsLWVlcHJvbXMtMGViYzZlMDQ4
+NmQ3DQo+IA0KPiBCZXN0IHJlZ2FyZHMsDQo+IC0tDQo+IFl1YmluIFpvdSA8eXViaW56QGdvb2ds
+ZS5jb20+DQoNCg==
 
