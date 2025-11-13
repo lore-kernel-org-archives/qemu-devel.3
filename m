@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029FBCD4F57
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 08:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5029DCD4F50
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 08:30:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJShH-0004ti-If; Thu, 13 Nov 2025 03:28:51 -0500
+	id 1vJSi8-0005iu-L7; Thu, 13 Nov 2025 03:29:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vJSgn-0004hg-3l; Thu, 13 Nov 2025 03:28:22 -0500
+ id 1vJSi5-0005gg-CX; Thu, 13 Nov 2025 03:29:41 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vJSgj-0001xZ-Tj; Thu, 13 Nov 2025 03:28:20 -0500
+ id 1vJSi3-0002C3-RA; Thu, 13 Nov 2025 03:29:41 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7A16F1699E6;
- Thu, 13 Nov 2025 11:27:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C40C31699E8;
+ Thu, 13 Nov 2025 11:29:24 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EAE59317485;
- Thu, 13 Nov 2025 11:27:54 +0300 (MSK)
-Message-ID: <8ce36148-47a0-463f-9af6-669c69c8b575@tls.msk.ru>
-Date: Thu, 13 Nov 2025 11:27:53 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4B159317497;
+ Thu, 13 Nov 2025 11:29:36 +0300 (MSK)
+Message-ID: <4599f828-0bf8-47b6-8639-340cb29508a3@tls.msk.ru>
+Date: Thu, 13 Nov 2025 11:29:35 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/15] aio: add the aio_add_sqe() io_uring API
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, eblake@redhat.com,
- Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- hibriansong@gmail.com
-References: <20251104022933.618123-1-stefanha@redhat.com>
+Subject: Re: [PATCH 1/2] qemu-img: Fix amend option parse error handling
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20251023-iotests-v1-0-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
+ <20251023-iotests-v1-1-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251104022933.618123-1-stefanha@redhat.com>
+In-Reply-To: <20251023-iotests-v1-1-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -106,58 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/25 05:29, Stefan Hajnoczi wrote:
-..
-> This patch series contains io_uring improvements:
+On 10/23/25 11:10, Akihiko Odaki wrote:
+> qemu_opts_del(opts) dereferences opts->list, which is the old amend_opts
+> pointer that can be dangling after executing
+> qemu_opts_append(amend_opts, bs->drv->create_opts) and cause
+> use-after-free.
 > 
-> 1. Support the glib event loop in fdmon-io_uring.
->     - aio-posix: fix race between io_uring CQE and AioHandler deletion
->     - aio-posix: keep polling enabled with fdmon-io_uring.c
->     - tests/unit: skip test-nested-aio-poll with io_uring
->     - aio-posix: integrate fdmon into glib event loop
-> 
-> 2. Enable fdmon-io_uring on hosts where io_uring is available at runtime.
->     Otherwise continue using ppoll(2) or epoll(7).
->     - aio: remove aio_context_use_g_source()
-> 
-> 3. Add the new aio_add_sqe() API for submitting io_uring requests in the QEMU
->     event loop.
->     - aio: free AioContext when aio_context_new() fails
->     - aio: add errp argument to aio_context_setup()
->     - aio-posix: gracefully handle io_uring_queue_init() failure
->     - aio-posix: add aio_add_sqe() API for user-defined io_uring requests
->     - aio-posix: avoid EventNotifier for cqe_handler_bh
-> 
-> 4. Use aio_add_sqe() in block/io_uring.c instead of creating a dedicated
->     io_uring context for --blockdev aio=io_uring. This simplifies the code,
->     reduces the number of file descriptors, and demonstrates the aio_add_sqe()
->     API.
->     - block/io_uring: use aio_add_sqe()
->     - block/io_uring: use non-vectored read/write when possible
-> 
-> The highlight is aio_add_sqe(), which is needed for the FUSE-over-io_uring
-> Google Summer of Code project and other future QEMU features that natively use
-> Linux io_uring functionality.
-..> Stefan Hajnoczi (15):
->    aio-posix: fix race between io_uring CQE and AioHandler deletion
->    aio-posix: fix fdmon-io_uring.c timeout stack variable lifetime
->    aio-posix: fix spurious return from ->wait() due to signals
->    aio-posix: keep polling enabled with fdmon-io_uring.c
->    tests/unit: skip test-nested-aio-poll with io_uring
->    aio-posix: integrate fdmon into glib event loop
->    aio: remove aio_context_use_g_source()
->    aio: free AioContext when aio_context_new() fails
->    aio: add errp argument to aio_context_setup()
->    aio-posix: gracefully handle io_uring_queue_init() failure
->    aio-posix: unindent fdmon_io_uring_destroy()
->    aio-posix: add fdmon_ops->dispatch()
->    aio-posix: add aio_add_sqe() API for user-defined io_uring requests
->    block/io_uring: use aio_add_sqe()
->    block/io_uring: use non-vectored read/write when possible
+> Fix the potential use-after-free by moving the qemu_opts_del() call
+> before the qemu_opts_append() call.
 
-Is there anything in there which should go to qemu-stable?
-
- From the descriptions of a few changes it feels like something should.
+This feels like a qemu-stable material, is it not?
 
 Thanks,
 
