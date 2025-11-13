@@ -4,88 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6772CD5BCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 11:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DBBCD6E42
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 12:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJVzN-0007wU-Qo; Thu, 13 Nov 2025 06:59:45 -0500
+	id 1vJWKZ-00027f-Qv; Thu, 13 Nov 2025 07:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1vJVzG-0007lt-NH
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:59:39 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1vJVzF-0007UT-7m
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:59:38 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5943d20f352so760950e87.0
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 03:59:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vJW5F-0004qA-0y
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 07:05:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vJW5B-0000hE-Bl
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 07:05:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763035543;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tI2/OYtW6mgwxijeu2yFHVnaEg8ys2MTvM8mvkzh7dM=;
+ b=QFw0LRgBtO+baD4eG2qb7gCQIEwVsN01IUD4HYL2i7f2v3quoZ91aHw3GZcJnogdtRu9MX
+ jx79tsWXimSD37T383yvveTbIdBwk+I7mSSUF+5rb3+mlwL2rpZUyZIPps9GOitC79c6Kg
+ pIGUpFQ+BIikx8XIxU4S+2nklAKB4dE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-5VBdwpoOP1KStj7dW5akmQ-1; Thu, 13 Nov 2025 07:05:42 -0500
+X-MC-Unique: 5VBdwpoOP1KStj7dW5akmQ-1
+X-Mimecast-MFC-AGG-ID: 5VBdwpoOP1KStj7dW5akmQ_1763035541
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-429c5f1e9faso735034f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 04:05:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763035175; x=1763639975; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VVJadbzVhhoEha0LPWhaDRWNxXnQUDBpTDgn4MKWgo8=;
- b=Wkk6Q2oHmvwLPtH+LfFV/aguAHkYRBlTivhdEKzhYNUlEmkuHT8ApUTVYXd4djHqNi
- WPfHChZGbLLRnxShEB+KPNJ/9Hfx+GD6N/3uJpxMBZZeuZzmZiARaTw+Y0oclANKgKI1
- G8BTw1DskeboaivX8wXh+h8PdaJoJvdMhdt+Nzpcst0qELID9MVT/Xn3faXRIv+WZ1Dh
- oMsegouBCo6OnaTMM19dwSE0p+vMkf4xFB6Q/+BwNvClWbp1x+hUBvdwx716XThXxj/p
- 4iGkc69I3wAV25b0gqKqKVEJZDFM4k+3debFmlMczor0NMRlohWyKS2PXO0h1jTKlPS6
- QYPA==
+ d=redhat.com; s=google; t=1763035541; x=1763640341; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=tI2/OYtW6mgwxijeu2yFHVnaEg8ys2MTvM8mvkzh7dM=;
+ b=DRw2xeoMEvPa6Mk7mFVgjvxEwW81WUBjwym2QlluS2aDdvy7Vc0weYplr3GLC6NXNx
+ /xPWBRFCIcE0g0lKCRn9VGftKvKO2fmMUL4oxwEjLBli/qb8ARf96FnpzzO/8Vx7uj8F
+ BKojWA1ajOkvDSovgKEnXsOJHtLhRSSigmUx5OdEdXqxI5ziL1+7FxoLIxvWnXd+hog8
+ aEhj2su9i07gPgiQH/rvlXG8S0wmFFVdhkcW23T9OTsEHj4B8IC4N3QYjSqZ3fovE11l
+ rHcPJRsXobt1rj/VIYUYMZ2j8ouSJP3o6XMsZcYO5RH+BPq4uJ4774Vjm2PEsJrZ/g4l
+ Gkhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763035175; x=1763639975;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VVJadbzVhhoEha0LPWhaDRWNxXnQUDBpTDgn4MKWgo8=;
- b=FGbVZzY9JHWE/w+cco558bnvxwXJ+9hR2ilN9Oxb+YSsUrp+GerzXGQkDTqIq61CQ+
- F04z6BDUtK66mh2u8xKVCVjSmGDMNkkDj1t6FCx5g8Tk9jewW/5R+ZgI69aTWPVj3WZ0
- rovUtR389QIXXnOZEwa/C7BdCRsA5itpLFEAUG5ZTYdICIWqqYotNFKE7by7Otx2g82d
- 5jxcXoRqtmknDGmVhNxpCbHF0eRwkj6LQJq3E/15V7ECHI90H7zRnbYCkzSX35nG/e9M
- GsMs+JCRPAkjHZdzZevYb4kmsTtBsqpw8RLswYColMyJVpRJV2YrmBxvZyo/vRAvMTsZ
- QaeQ==
+ d=1e100.net; s=20230601; t=1763035541; x=1763640341;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tI2/OYtW6mgwxijeu2yFHVnaEg8ys2MTvM8mvkzh7dM=;
+ b=nseqlEcmSYvjX6vMvISphgNjJDuKY0hNqmyI9zUM8ops7lI8UAT9fXf4oZvfFNCUVV
+ tr35o6Lup4VEzjbfTY7MzxOaTCeVgh/oabNYok/JtTsXWZWufkkK3DV6PCBX0neA6BRv
+ o3WZ1YTjV7a0NPHzg6wxJcXHUCki/9r1rJCbXxRpmpebnTHp4xh3JXVoKnOS8HFaN+I8
+ 4PJ7vx/giUdKxUtXYisvNi2a1u73VheOqBlpQnU19sCFweRPfonAGXRGesS3HM7hsd5o
+ qsrj0pjSZVCD7ns5Bc/B2Dz1HZDhRqel48GPfwrvkHPVVOLR0jvJhBAm5rPJVRZYoQZp
+ VvQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRr9id6EQQZzlHq4o3YcfzxUk5i3dARlqq88IiVM+Lsnrvjaap8dY23RsEYETMC3/UPGlM9LPxrsVn@nongnu.org
-X-Gm-Message-State: AOJu0YzdH1rn6VLG0zaCS4f+gN3TkfCFRwZAah/daHKfkAgcliF9DL9/
- OZNvmm1tcdFxaV0b5mQ94VKSCn8BXojTCC9mgWQzBvgpqqrHWYP0CMX3yzxs1zKxRAqsPXlT4w9
- je0b1s1mMdc3H3YBHQ2tj2cUmj35G2CynX1pXPIzF6A==
-X-Gm-Gg: ASbGnctaK/7240JAq0vVZOQipP9Uy99f+Z4OT3LHjNZ0i8xl+k6+orcllCdR2i9UGZV
- vfgjlBq3X8BfK47/5Ah028OwPj/oEdJEDFSbrXLU8ne59sg2c6Ar8ZupBSEJksFdVAFMJp6CpVp
- 4GssWL/nPaTSpZlKJ2PUNklo97vSshx0UabfF+XyPfv19xJWE5AN9KLFUTk7jQTD5i/KfRWaZ6+
- CAdnfgFYmlh3PBC9/F9a1SzV3BG/13xUKaM++UH6KbEBJwktUMuuBsBTYaExQLXhKW1BZM=
-X-Google-Smtp-Source: AGHT+IFUKG3nA//YaQZBuHjirAse05rPxxeRjW44qBb+wCs3IC7oXEFZxFPsGPEsIP/mglDiIDCeRaa6jvwEsx0yX7E=
-X-Received: by 2002:a05:6512:31d1:b0:592:f5f9:f5a9 with SMTP id
- 2adb3069b0e04-59576e3c63fmr2173275e87.36.1763035169628; Thu, 13 Nov 2025
- 03:59:29 -0800 (PST)
+ AJvYcCWYrEWRFrIJBPMErEOAXOII4cAWQ+IqMB4GYGeRDbw/FPRPlX6gsMDGAVJDqoq42ax1zcnqVHbYKQsL@nongnu.org
+X-Gm-Message-State: AOJu0YypS0rwLZJuEhUzsUVQzCzLoTe8HCb7zn4/LmDktegskUeRnQ+d
+ xbla3bXSloKZHME9JMFQOSSaIDdprb2zr4S2e4NLH0AsMo1b0TRTNg3j7Swe7Jc7dsgIIPNBmQw
+ SzK0X5DVSA//EEJfXOWVjaJ/LmhNJusq4GmvSmQY2lO/U1E7gr/M6NpOR
+X-Gm-Gg: ASbGncu2cyZAVhbX/yZ9lLI/swVLL96a/MokTWrsxkwwcDgn0qMLyh3Q3Fm4N3bXfnL
+ 8OgEugweq1cJsrf7fUJ2JCDWgZY4qfMWuzDk9acUoTcHagtN6kS3SfOnrflksnVEg8vmTrs0Gl0
+ 9Z7xjv0Jnzsp5utWA2Or4psjAkmArlOaGrzo50Y4sW3Nq6rCJ8hVvJf09dhqwE8SGVOvmQlZSfW
+ eurwFjoGUVUNRuke5+e0LLlo6n1JFGC1MvH+m5K1nVwQSFgxF935YuBrlAKkuMc5dYCQZo02pvB
+ aqqiI9lR0LJ6hPCGtjxrQJXfCXfny9tnP/Ompc/BjeFPaou7UWb0RS1cfSW1cMkUjU1GysoCUAR
+ uX13BHSypi//Tn9OfbJSppk9aru05ZQ4Verj/71J3i/bixWI8
+X-Received: by 2002:a05:6000:1885:b0:42b:3680:3567 with SMTP id
+ ffacd0b85a97d-42b4bb91b2cmr5895240f8f.18.1763035541151; 
+ Thu, 13 Nov 2025 04:05:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3IIBIBt8q03GbcoIy980NO1o7f47Eyz3eGrQw/lEHfvAJ2mJpS0tJ8SI1nFL6EYhPZo1J9g==
+X-Received: by 2002:a05:6000:1885:b0:42b:3680:3567 with SMTP id
+ ffacd0b85a97d-42b4bb91b2cmr5895217f8f.18.1763035540713; 
+ Thu, 13 Nov 2025 04:05:40 -0800 (PST)
+Received: from rh (p200300f6af131a0027bd20bfc18c447d.dip0.t-ipconnect.de.
+ [2003:f6:af13:1a00:27bd:20bf:c18c:447d])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53f23a1asm3522001f8f.45.2025.11.13.04.05.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Nov 2025 04:05:40 -0800 (PST)
+Date: Thu, 13 Nov 2025 13:05:39 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
+ kvmarm@lists.linux.dev
+Subject: Re: [PATCH v3 2/2] target/arm/kvm: add kvm-psci-version vcpu property
+In-Reply-To: <d4f17034-94d9-4fdb-9d9d-c027dbc1e9b3@linaro.org>
+Message-ID: <c082340f-31b1-e690-8c29-c8d39edf8d35@redhat.com>
+References: <20251112181357.38999-1-sebott@redhat.com>
+ <20251112181357.38999-3-sebott@redhat.com>
+ <d4f17034-94d9-4fdb-9d9d-c027dbc1e9b3@linaro.org>
 MIME-Version: 1.0
-References: <20251105154657.37386-1-skolothumtho@nvidia.com>
- <20251105154657.37386-5-skolothumtho@nvidia.com>
-In-Reply-To: <20251105154657.37386-5-skolothumtho@nvidia.com>
-From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Thu, 13 Nov 2025 19:59:18 +0800
-X-Gm-Features: AWmQ_bmjYJUBjMNzxIUksNR0XPxJr5d2Yqn1M4Mu9ond4jTJYqg2__y0xHK2CS4
-Message-ID: <CABQgh9HzB9yCD_rYjGFX5ZC7RX2e2iVu_FZPU2Vm-kuf3jfm+w@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/4] hw/arm/smmuv3-accel: Read and propagate host
- vIOMMU events
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
- peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com, 
- mochs@nvidia.com, jonathan.cameron@huawei.com, zhenzhong.duan@intel.com, 
- jgg@nvidia.com, kjaju@nvidia.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x131.google.com
+Content-Type: multipart/mixed;
+ boundary="-1463806286-853068444-1763035540=:13840"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +124,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Shameer
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 5 Nov 2025 at 23:49, Shameer Kolothum <skolothumtho@nvidia.com> wro=
-te:
+---1463806286-853068444-1763035540=:13840
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+Hi Philippe,
+
+On Wed, 12 Nov 2025, Philippe Mathieu-Daudé wrote:
+> On 12/11/25 19:13, Sebastian Ott wrote:
+>>  Provide a kvm specific vcpu property to override the default
+>>  (as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
+>>  by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+>>
+>>  Note: in order to support PSCI v0.1 we need to drop vcpu
+>>  initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
+>>
+>>  Signed-off-by: Sebastian Ott <sebott@redhat.com>
+>>  ---
+>>    docs/system/arm/cpu-features.rst |  5 +++
+>>    target/arm/cpu.h                 |  6 +++
+>>    target/arm/kvm.c                 | 64 +++++++++++++++++++++++++++++++-
+>>    3 files changed, 74 insertions(+), 1 deletion(-)
 >
-> Install an event handler on the vEVENTQ fd to read and propagate host
-> generated vIOMMU events to the guest.
 >
-> The handler runs in QEMU=E2=80=99s main loop, using a non-blocking fd reg=
-istered
-> via qemu_set_fd_handler().
+>>  diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>>  index 0d57081e69..e91b1abfb8 100644
+>>  --- a/target/arm/kvm.c
+>>  +++ b/target/arm/kvm.c
+>>  @@ -484,6 +484,49 @@ static void kvm_steal_time_set(Object *obj, bool
+>>  value, Error **errp)
+>>        ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON :
+>>    ON_OFF_AUTO_OFF;
+>>    }
+>>
+>>  +struct psci_version {
+>>  +    uint32_t number;
+>>  +    const char *str;
+>>  +};
+>>  +
+>>  +static const struct psci_version psci_versions[] = {
+>>  +    { QEMU_PSCI_VERSION_0_1, "0.1" },
+>>  +    { QEMU_PSCI_VERSION_0_2, "0.2" },
+>>  +    { QEMU_PSCI_VERSION_1_0, "1.0" },
+>>  +    { QEMU_PSCI_VERSION_1_1, "1.1" },
+>>  +    { QEMU_PSCI_VERSION_1_2, "1.2" },
+>>  +    { QEMU_PSCI_VERSION_1_3, "1.3" },
+>>  +    { -1, NULL },
+>>  +};
 >
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>
+>>  @@ -505,6 +548,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+>>                                 kvm_steal_time_set);
+>>        object_property_set_description(obj, "kvm-steal-time",
+>>                                        "Set off to disable KVM steal
+>>  time.");
+>>  +
+>>  +    object_property_add_str(obj, "kvm-psci-version",
+>>  kvm_get_psci_version,
+>>  +                            kvm_set_psci_version);
+>>  +    object_property_set_description(obj, "kvm-psci-version",
+>>  +                                    "Set PSCI version. "
+>>  +                                    "Valid values are 0.1, 0.2, 1.0, 1.1,
+>>  1.2, 1.3");
+>
+> Could we enumerate from psci_versions[] here?
+>
 
-Still don't understand how to use this vevent.
-Is it to replace the fault queue (IOMMU_FAULT_QUEUE_ALLOC)?
-And only find read, no write, only receive events but no response
-(from guest kernel)?
+Hm, we'd need to concatenate these. Either manually:
+"Valid values are " psci_versions[0].str ", " psci_versions[1].str ", " ... 
+which is not pretty and still needs to be touched for a new version.
 
-By the way, can we use vevent in user space application? not in qemu
-environment.
+Or by a helper function that puts these in a new array and uses smth like
+g_strjoinv(", ", array);
+But that's quite a bit of extra code that needs to be maintained without
+much gain.
 
-Thanks
+Or we shy away from the issue and rephrase that to:
+"Valid values include 1.0, 1.1, 1.2, 1.3"
+
+Since the intended use case is via machine types and I don't expect a
+lot of users setting the psci version manually - I vote for option 3.
+
+Opinions?
+
+Sebastian
+---1463806286-853068444-1763035540=:13840--
+
 
