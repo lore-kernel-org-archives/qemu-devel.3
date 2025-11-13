@@ -4,92 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16410CD4F28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 06:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA95FCCFA18
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 06:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJRBo-0007IS-4D; Thu, 13 Nov 2025 01:52:16 -0500
+	id 1vJRC3-0007Q1-8Z; Thu, 13 Nov 2025 01:52:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vJRBE-00079n-Hz; Thu, 13 Nov 2025 01:51:49 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vJRBp-0007JZ-NM
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 01:52:19 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vJRB9-0004Rk-Jl; Thu, 13 Nov 2025 01:51:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:References:Cc:To:From:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=dWOlTNTces2YnOoeVnIOlYdVRBiRu5xt0nUTCGnvoPk=; b=zSWH1uhdTe5EMB0EFtIXAJsIz/
- 9RKpzvILPB7xHcMEXD6G9n3hAjtRsx2nr/eA6aApCgv5iqtzntzwcREsfFaj6JTWvf+2q9a3FdDg5
- zGXlzSLoG5Ct7hPqNSaEZVz+zmTh5cH9n6YgLBPd6Y9DoSDV0Sy78+LVxJX8fL4S/nSO+aGYg/5hL
- lRXCVyytPzn+EvZb4kjN5yfJ3KdlRifxSBcCm6qQdD//rrrVpv9yCisP4Nca3TZScEFeK58zK5h9H
- v413wDnSZJ/mzo0avbXppCsVRF1oK/z8ttoXfkVQHmRLyn2kaS0J1YKKM13vxXnE7zCX+KyWIns8z
- xfy6fs7K/SPy/Dc4LmQrQAKOK46akH5+ve3S4X+9jheF6Ajol3MrfvFodjigVU/7nhq/uOP+TK4Bg
- cz8WJPLNJL8K8QgptwSUxopojc61OZYoaekHm+Y4fnrZoSVpgQR6ZIpWVKdLzK2lsuFh/eCOmvgFR
- 9hFiTHIa8yX90e167WkJiWK1GhbQcje3jF56lUGPaWT5P7BnVHzM/Nb0rTq8dDNB4Zy2GgzGZI/mx
- pi2HBeP8eomXxYvGeXuuUjosdphKxtH27ePshTCNu2xL/m0abAyh6oXVXuYn1yBFv6nxyB/iQ3hoZ
- +1PzJvU7VOkcOQi7saXkbvpqp2W69n6YBCEbwy6qA=;
-Received: from [2a02:8012:2f01:0:d1be:3a37:c7f0:f7cd]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vJR8o-0008Eu-U7; Thu, 13 Nov 2025 06:49:11 +0000
-Message-ID: <19fb1c5a-e2de-4b6a-a274-4355c79e677c@ilande.co.uk>
-Date: Thu, 13 Nov 2025 06:51:28 +0000
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vJRBk-0004TQ-9V
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 01:52:17 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AD6pfqI050661
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 13 Nov 2025 15:51:41 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=MLm5RDpCJkS/UJBfMSfhBdfrq71VKP8k3EQ/RdM7lps=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:From:To;
+ s=rs20250326; t=1763016701; v=1;
+ b=LJHpN4S+q0Ur3dp8FGY/YFpQE24Pvv5w/X94HwGuYyDqWHahwxF2lhpxl7QE32cQ
+ yOSjhNrDywPtz4FYrAYaeBgr+bZQAdQdloBKFl4rmqBzK9geiDvA5PNLgbfdPH9i
+ RkKRwtFNJ0bFrkwzMe9vD/DwhoiL63DWwfcl+Vt/0V51EkOxAMcblE8ifOdjt3lS
+ 5oSB5SlLAR9Of/WRRAfSmcaRoEGs37OcwXY/rbxgc9k7QF42OQdJqJ5Cif47GYql
+ eYY+be1ttRjQWAXTKo31z4FZbMsoD7uUVMzZ8aAGArzzCtepTFWeIoGlT36iEyrQ
+ jLNMnuotXpvs2fCjQzHFXA==
+Message-ID: <211751d8-c6b5-42f3-8623-324bb23a63b9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 13 Nov 2025 15:51:40 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: Michael Levit <michael@videogpu.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, philmd@linaro.org, pbonzini@redhat.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- liwei1518@gmail.com, smishash@gmail.com
-References: <20251109191532.32419-1-michael@videogpu.com>
- <20251109191532.32419-5-michael@videogpu.com>
+Subject: Re: [RFC PATCH v1 1/1] virtio-gpu: Support mapping hostmem blobs with
+ map_fixed
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20251112233118.1475381-1-dmitry.osipenko@collabora.com>
+ <20251112233118.1475381-2-dmitry.osipenko@collabora.com>
+ <4eceb841-8767-4d70-91b1-f6288e6f8a22@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20251109191532.32419-5-michael@videogpu.com>
+In-Reply-To: <4eceb841-8767-4d70-91b1-f6288e6f8a22@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:d1be:3a37:c7f0:f7cd
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v4 4/5] hw/ssi: add NEORV32 SPI controller (SSI master, CS
- command)
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,605 +94,370 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/11/2025 19:15, Michael Levit wrote:
-
-> From: Michael <michael@videogpu.com>
+On 2025/11/13 11:52, Akihiko Odaki wrote:
+> On 2025/11/13 8:31, Dmitry Osipenko wrote:
+>> Support mapping virgl blobs to a fixed location of a hostmem memory
+>> region using new virglrenderer MAP_FIXED API.
+>>
+>> This new feature closes multiple problems for virtio-gpu on QEMU:
+>>
+>> - Having dedicated memory region for each mapped blob works notoriously
+>> slow due to QEMU's memory region software design built around RCU that
+>> isn't optimized for frequent removal of the regions
+>>
+>> - KVM isn't optimized for a frequent slot changes too
+>>
+>> - QEMU/KVM has a limit for a total number of created memory regions,
+>> crashing QEMU when limit is reached
+>>
+>> This patch makes virtio-gpu-gl to pre-create a single anonymous memory
+>> region covering whole hostmem area to which blobs will be mapped using
+>> the MAP_FIXED API.
+>>
+>> Not all virgl resources will support mapping at a fixed memory 
+>> address. For
+>> them, we will continue to create individual nested memory sub-regions. In
+>> particular, vrend resources may not have MAP_FIXED capability.
+>>
+>> Venus and DRM native contexts will largely benefit from the MAP_FIXED
+>> feature in terms of performance and stability improvement.
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> ---
+>>   hw/display/virtio-gpu-gl.c     | 37 +++++++++++++++++
+>>   hw/display/virtio-gpu-virgl.c  | 72 +++++++++++++++++++++++++++++++++-
+>>   include/hw/virtio/virtio-gpu.h |  3 ++
+>>   3 files changed, 110 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+>> index b640900fc6f1..e1481291948a 100644
+>> --- a/hw/display/virtio-gpu-gl.c
+>> +++ b/hw/display/virtio-gpu-gl.c
+>> @@ -122,6 +122,9 @@ static void 
+>> virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>>   {
+>>       ERRP_GUARD();
+>>       VirtIOGPU *g = VIRTIO_GPU(qdev);
+>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
 > 
-> Add NEORV32 SPI controller: CTRL/DATA, tiny TX/RX FIFOs, command-mode CS (active-low),
-> SSI master bus, and helper to attach n25q flash when an MTD drive is provided.
-> Includes Kconfig/meson and public header.
+> Nitpick: this order is slightly odd as VirtIOGPUBase is the base class 
+> of VirtIOGPU and VirtIOGPUGL. So let's do:
 > 
-> Signed-off-by: Michael Levit <michael@videogpu.com>
-> ---
->   hw/ssi/Kconfig               |   4 +
->   hw/ssi/meson.build           |   1 +
->   hw/ssi/neorv32_spi.c         | 478 +++++++++++++++++++++++++++++++++++
->   include/hw/ssi/neorv32_spi.h |  57 +++++
->   4 files changed, 540 insertions(+)
->   create mode 100644 hw/ssi/neorv32_spi.c
->   create mode 100644 include/hw/ssi/neorv32_spi.h
+> VirtIOGPUBase *b = VIRTIO_GPU_BASE(qdev); // super class of b
+> VirtIOGPU *g = VIRTIO_GPU(qdev); // base class of gl
+> VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
 > 
-> diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
-> index 1bd56463c1..5b1a03f3c4 100644
-> --- a/hw/ssi/Kconfig
-> +++ b/hw/ssi/Kconfig
-> @@ -32,3 +32,7 @@ config PNV_SPI
->   config ALLWINNER_A10_SPI
->       bool
->       select SSI
-> +
-> +config NEORV32_SPI
-> +    bool
-> +    select SSI
-> diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-> index 6afb1ea200..5139cc1ca0 100644
-> --- a/hw/ssi/meson.build
-> +++ b/hw/ssi/meson.build
-> @@ -13,3 +13,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
->   system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
->   system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
->   system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
-> +system_ss.add(when: 'CONFIG_NEORV32_SPI', if_true: files('neorv32_spi.c'))
-> diff --git a/hw/ssi/neorv32_spi.c b/hw/ssi/neorv32_spi.c
-> new file mode 100644
-> index 0000000000..954788a5de
-> --- /dev/null
-> +++ b/hw/ssi/neorv32_spi.c
-> @@ -0,0 +1,478 @@
-> +/*
-> + * QEMU implementation of the Neorv32 SPI block.
-> + *
-> + * Copyright (c) 2025 Michael Levit
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/irq.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/ssi/ssi.h"
-> +#include "qemu/fifo8.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "trace/trace-root.h"
-> +#include "qapi/error.h"
-> +#include "hw/irq.h"
-> +#include "hw/ssi/neorv32_spi.h"
-> +#include "system/blockdev.h"
-> +
-> +/* SPI control register bits */
-> +enum NEORV32_SPI_CTRL_enum {
-> +  SPI_CTRL_EN           =  0, /* (r/w): SPI unit enable */
-> +  SPI_CTRL_CPHA         =  1, /* (r/w): Clock phase */
-> +  SPI_CTRL_CPOL         =  2, /* (r/w): Clock polarity */
-> +  SPI_CTRL_PRSC0        =  3, /* (r/w): Clock prescaler select bit 0 */
-> +  SPI_CTRL_PRSC1        =  4, /* (r/w): Clock prescaler select bit 1 */
-> +  SPI_CTRL_PRSC2        =  5, /* (r/w): Clock prescaler select bit 2 */
-> +  SPI_CTRL_CDIV0        =  6, /* (r/w): Clock divider bit 0 */
-> +  SPI_CTRL_CDIV1        =  7, /* (r/w): Clock divider bit 1 */
-> +  SPI_CTRL_CDIV2        =  8, /* (r/w): Clock divider bit 2 */
-> +  SPI_CTRL_CDIV3        =  9, /* (r/w): Clock divider bit 3 */
-> +
-> +  SPI_CTRL_RX_AVAIL     = 16, /* (r/-): RX FIFO data available (not empty) */
-> +  SPI_CTRL_TX_EMPTY     = 17, /* (r/-): TX FIFO empty */
-> +  SPI_CTRL_TX_FULL      = 18, /* (r/-): TX FIFO full */
-> +
-> +  SPI_CTRL_FIFO_LSB     = 24, /* (r/-): log2(FIFO size), LSB */
-> +  SPI_CTRL_FIFO_MSB     = 27, /* (r/-): log2(FIFO size), MSB */
-> +
-> +  SPI_CS_ACTIVE         = 30, /* (r/-): At least one CS line is active */
-> +  SPI_CTRL_BUSY         = 31  /* (r/-): serial PHY busy or TX FIFO not empty */
-> +};
-> +
-> +/* SPI data register bits */
-> +enum NEORV32_SPI_DATA_enum {
-> +  SPI_DATA_LSB  =  0, /* (r/w): Data byte LSB */
-> +  SPI_DATA_CSEN =  3, /* (-/w): Chip select enable (command-mode) */
-> +  SPI_DATA_MSB  =  7, /* (r/w): Data byte MSB */
-> +  SPI_DATA_CMD  = 31  /* (-/w): 1=command, 0=data */
-> +};
-> +
-> +/* Register offsets */
-> +#define NEORV32_SPI_CTRL          0x00
-> +#define NEORV32_SPI_DATA          0x04
-> +#define NEORV32_SPI_MMIO_SIZE     0x8  /* ctrl + data (8 bytes total) */
-> +/* Various constants */
-> +#define NEORV32_SPI_MAX_CS_LINES  7
-> +#define NEORV32_SPI_FIFO_CAPACITY 8
-> +
-> +/* Utility functions to get/set bits in ctrl register */
-> +static inline bool get_ctrl_bit(NEORV32SPIState *s, int bit)
-> +{
-> +    return (s->ctrl & (1 << bit)) != 0;
-> +}
-> +
-> +static inline void set_ctrl_bit(NEORV32SPIState *s, int bit, bool val)
-> +{
-> +    if (val) {
-> +        s->ctrl |= (1 << bit);
-> +    } else {
-> +        s->ctrl &= ~(1 << bit);
-> +    }
-> +}
-> +
-> +static inline bool get_data_bit(uint32_t v, int bit)
-> +{
-> +    return (v >> bit) & 1;
-> +}
-> +
-> +/* Update read-only status bits in CTRL register */
-> +static void neorv32_spi_update_status(NEORV32SPIState *s)
-> +{
-> +    /* RX_AVAIL: set if RX FIFO not empty */
-> +    set_ctrl_bit(s, SPI_CTRL_RX_AVAIL, !fifo8_is_empty(&s->rx_fifo));
-> +
-> +    /* TX_EMPTY: set if TX FIFO empty */
-> +    set_ctrl_bit(s, SPI_CTRL_TX_EMPTY, fifo8_is_empty(&s->tx_fifo));
-> +
-> +    /* TX_FULL: set if TX FIFO full */
-> +    set_ctrl_bit(s, SPI_CTRL_TX_FULL, fifo8_is_full(&s->tx_fifo));
-> +
-> +
-> +    /*
-> +     * BUSY: We'll consider SPI busy if TX FIFO is not empty
-> +     * or currently shifting data.
-> +     * For simplicity, if TX is not empty we say busy.
-> +     */
-> +    bool busy = !fifo8_is_empty(&s->tx_fifo);
-> +    set_ctrl_bit(s, SPI_CTRL_BUSY, busy);
-> +
-> +    /* Update CS status */
-> +    if (s->cmd_cs_active) {
-> +        s->ctrl |= (1u << SPI_CS_ACTIVE);
-> +    } else {
-> +        s->ctrl &= ~(1u << SPI_CS_ACTIVE);
-> +    }
-> +
-> +}
-> +
-> +/* Update chip select lines based on command-mode CS (active-low on the wire) */
-> +static void neorv32_spi_update_cs(NEORV32SPIState *s)
-> +{
-> +    /* Check that input valid */
-> +    if (!s->cs_lines || s->num_cs <= 0) {
-> +        return;
-> +    }
-> +
-> +    /* Deassert all CS lines (inactive = high) */
-> +    for (int i = 0; i < s->num_cs; i++) {
-> +        qemu_set_irq(s->cs_lines[i], 1);
-> +    }
-> +
-> +    /* If DATA command says CS active, assert selected line (low = active) */
-> +    if (s->cmd_cs_active) {
-> +        int cs_idx = s->current_cs;
-> +        if (cs_idx < 0 || cs_idx >= s->num_cs) {
-> +            /* Out of range: keep all deasserted, but warn once per event */
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: CS index %d out of range (num_cs=%d)\n",
-> +                          __func__, cs_idx, s->num_cs);
-> +            return;
-> +        }
-> +        /* Active-low when enabled */
-> +        qemu_set_irq(s->cs_lines[cs_idx], 0);
-> +    }
-> +
-> +}
-> +
-> +/* Update IRQ based on conditions */
-> +static void neorv32_spi_update_irq(NEORV32SPIState *s)
-> +{
-> +    /*
-> +     * Conditions for IRQ:
-> +     * IRQ if RX data available and IRQ_RX_AVAIL is set:
-> +     *    if (!RX FIFO empty && SPI_CTRL_IRQ_RX_AVAIL set)
-> +     *
-> +     * IRQ if TX empty and IRQ_TX_EMPTY is set:
-> +     *    if (TX empty && SPI_CTRL_IRQ_TX_EMPTY set)
-> +     *
-> +     * IRQ if TX < half full and IRQ_TX_HALF is set:
-> +     *    if (TX < half full && SPI_CTRL_IRQ_TX_HALF set)
-> +     */
-> +
-> +    bool rx_irq = !fifo8_is_empty(&s->rx_fifo);
-> +    bool tx_empty_irq = fifo8_is_empty(&s->tx_fifo);
-> +    int  used = fifo8_num_used(&s->tx_fifo);
-> +    bool tx_half_irq = (used < (s->fifo_capacity / 2));
-> +
-> +    bool irq_level = rx_irq || tx_empty_irq || tx_half_irq;
-> +    qemu_set_irq(s->irq, irq_level ? 1 : 0);
-> +}
-> +
-> +/*
-> + * Flush the TX FIFO to the SPI bus:
-> + * For each byte in TX FIFO, send it out via ssi_transfer.
-> + * If direction is not explicitly given, we assume:
-> + *   - On write to DATA, we push to TX FIFO and then transfer out.
-> + *   - On receiving data back from ssi_transfer, we push it into RX FIFO
-> + *     if SPI is enabled.
-> + */
-> +static void neorv32_spi_flush_txfifo(NEORV32SPIState *s)
-> +{
-> +    if (!get_ctrl_bit(s, SPI_CTRL_EN)) {
-> +        /* SPI not enabled, do nothing */
-> +        return;
-> +    }
-> +
-> +    while (!fifo8_is_empty(&s->tx_fifo)) {
-> +        uint8_t tx = fifo8_pop(&s->tx_fifo);
-> +        uint8_t rx = ssi_transfer(s->bus, tx);
-> +
-> +        /* Push received byte into RX FIFO if not full */
-> +        if (!fifo8_is_full(&s->rx_fifo)) {
-> +            fifo8_push(&s->rx_fifo, rx);
-> +        }
-> +    }
-> +}
-> +
-> +/* Reset the device state */
-> +static void neorv32_spi_reset(DeviceState *d)
-> +{
-> +    NEORV32SPIState *s = NEORV32_SPI(d);
-> +
-> +    s->ctrl = 0;
-> +    s->data = 0;
-> +
-> +    /* Reset FIFOs */
-> +    fifo8_reset(&s->tx_fifo);
-> +    fifo8_reset(&s->rx_fifo);
-> +
-> +    neorv32_spi_update_status(s);
-> +    neorv32_spi_update_cs(s);
-> +    neorv32_spi_update_irq(s);
-> +}
-> +
-> +/* MMIO read handler */
-> +static uint64_t neorv32_spi_read(void *opaque, hwaddr addr, unsigned int size)
-> +{
-> +    NEORV32SPIState *s = opaque;
-> +    uint32_t r = 0;
-> +
-> +    switch (addr) {
-> +    case NEORV32_SPI_CTRL:
-> +        /* Return the current CTRL register value (including status bits) */
-> +        neorv32_spi_update_status(s);
-> +        r = s->ctrl;
-> +        break;
-> +
-> +    case NEORV32_SPI_DATA:
-> +        /* If RX FIFO is empty, return some default, else pop from RX FIFO */
-> +        if (fifo8_is_empty(&s->rx_fifo)) {
-> +            /*
-> +             * No data available,
-> +             * could return 0xFFFFFFFF or 0x00000000 as "no data"
-> +             */
-> +            r = 0x00000000;
-> +        } else {
-> +            r = fifo8_pop(&s->rx_fifo);
-> +        }
-> +        break;
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: bad read at address 0x%"
-> +                       HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +    }
-> +
-> +    neorv32_spi_update_status(s);
-> +    neorv32_spi_update_irq(s);
-> +
-> +    return r;
-> +}
-> +
-> +/* MMIO write handler */
-> +static void neorv32_spi_write(void *opaque, hwaddr addr,
-> +                              uint64_t val64, unsigned int size)
-> +{
-> +    NEORV32SPIState *s = opaque;
-> +    uint32_t value = val64;
-> +
-> +    switch (addr) {
-> +    case NEORV32_SPI_CTRL: {
-> +
-> +        /*
-> +         * Writing control register:
-> +         * Some bits are read-only (e.g., status bits).
-> +         * We should mask them out or ignore writes to them.
-> +         * For simplicity, we overwrite ctrl except for RO bits.
-> +         */
-> +
-> +
-> +        /*
-> +         * Save old RO bits: RX_AVAIL, TX_EMPTY, TX_NHALF, TX_FULL, BUSY
-> +         * and FIFO size bits
-> +         */
-> +        uint32_t ro_mask = ((1 << SPI_CTRL_BUSY)      |
-> +                            (1 << SPI_CTRL_TX_EMPTY)  |
-> +                            (1 << SPI_CTRL_TX_FULL)   |
-> +                            (1 << SPI_CTRL_RX_AVAIL));
-> +
-> +        /*
-> +         * FIFO size bits might be hardwired read-only.
-> +         * Assume we do not change them:
-> +         * FIFO size: bits [SPI_CTRL_FIFO_LSB..SPI_CTRL_FIFO_MSB],
-> +         * here assume read-only.
-> +         */
-> +        uint32_t fifo_size_mask = 0;
-> +        for (int b = SPI_CTRL_FIFO_LSB; b <= SPI_CTRL_FIFO_MSB; b++) {
-> +            fifo_size_mask |= (1 << b);
-> +        }
-> +        ro_mask |= fifo_size_mask;
-> +
-> +        uint32_t ro_bits = s->ctrl & ro_mask;
-> +        s->ctrl = (value & ~ro_mask) | ro_bits;
-> +
-> +        neorv32_spi_update_cs(s);
-> +        break;
-> +    } /* NEORV32_SPI_CTRL */
-> +
-> +    case NEORV32_SPI_DATA:
-> +    {
-> +        /* If CMD=1, this write is a command, not payload */
-> +        const bool is_cmd = get_data_bit(value, SPI_DATA_CMD);
-> +
-> +        if (is_cmd) {
-> +            /*
-> +             * DATA command format:
-> +             *   bit 31: CMD = 1
-> +             *   bit  3: CSEN (1=assert CS, 0=deassert All)
-> +             *   bits [2:0]: CS index (0..7) when asserting
-> +             */
-> +            const bool csen = get_data_bit(value, SPI_DATA_CSEN);
-> +            const int  cs_index = (int)(value & 0x7);
-> +
-> +            if (csen) {
-> +                /* Select and assert a single CS */
-> +                s->current_cs    = cs_index;  /* range checking  update_cs() */
-> +                s->cmd_cs_active = true;
-> +            } else {
-> +                /* Deassert all CS lines */
-> +                s->cmd_cs_active = false;
-> +            }
-> +
-> +            /* Drive the wires */
-> +            neorv32_spi_update_cs(s);
-> +            /* Update status (SPI_CS_ACTIVE is read-only status bit) */
-> +            neorv32_spi_update_status(s);
-> +            neorv32_spi_update_irq(s);
-> +            break; /* no FIFO push on command */
-> +        }
-> +
-> +        /* Writing DATA puts a byte into TX FIFO if not full */
-> +        if (!fifo8_is_full(&s->tx_fifo)) {
-> +            uint8_t tx_byte = (uint8_t)value;
-> +
-> +            fifo8_push(&s->tx_fifo, tx_byte);
-> +            /* After pushing data, flush TX to SPI bus */
-> +            neorv32_spi_flush_txfifo(s);
-> +        } else {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: TX FIFO full, cannot write 0x%x\n",
-> +                          __func__, value);
-> +        }
-> +        break;
-> +    } /* NEORV32_SPI_DATA */
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: bad write at address 0x%"
-> +                      HWADDR_PRIx " value=0x%x\n", __func__, addr, value);
-> +        break;
-> +
-> +    } /* switch (addr) */
-> +
-> +    neorv32_spi_update_status(s);
-> +    neorv32_spi_update_irq(s);
-> +} /* neorv32_spi_write */
-> +
-> +static const MemoryRegionOps neorv32_spi_ops = {
-> +    .read = neorv32_spi_read,
-> +    .write = neorv32_spi_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void neorv32_spi_init(Object *obj)
-> +{
-> +    NEORV32SPIState *s = NEORV32_SPI(obj);
-> +    s->ctrl          = 0;
-> +    s->data          = 0;
-> +    s->fifo_capacity = NEORV32_SPI_FIFO_CAPACITY;
-> +    s->num_cs        = NEORV32_SPI_MAX_CS_LINES; /* Default to 1 CS line */
-> +    s->cmd_cs_active = false;
-> +    s->current_cs    = 0; /* Use CS0 by default */
-> +}
-> +
-> +/* Realize the device */
-> +static void neorv32_spi_realize(DeviceState *dev, Error **errp)
-> +{
-> +    NEORV32SPIState *s = NEORV32_SPI(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +
-> +    /* Create the SSI master bus */
-> +    s->bus = ssi_create_bus(dev, "neorv32-spi-bus");
-> +
-> +    /* 1) IRQ inputs: first the main IRQ, then each CS line */
-> +    sysbus_init_irq(sbd, &s->irq);
-> +    s->cs_lines = g_new0(qemu_irq, s->num_cs);
-> +    for (int i = 0; i < s->num_cs; i++) {
-> +        sysbus_init_irq(sbd, &s->cs_lines[i]);
-> +        qemu_set_irq(s->cs_lines[i], 1);  /* deassert CS (high) */
-> +    }
-> +
-> +    /* 2) Now map the MMIO region */
-> +    memory_region_init_io(&s->mmio, OBJECT(s), &neorv32_spi_ops, s,
-> +                          TYPE_NEORV32_SPI, NEORV32_SPI_MMIO_SIZE);
-> +    sysbus_init_mmio(sbd, &s->mmio);
-> +
-> +
-> +    /* Initialize FIFOs */
-> +    fifo8_create(&s->tx_fifo, s->fifo_capacity);
-> +    fifo8_create(&s->rx_fifo, s->fifo_capacity);
-> +
-> +    /*
-> +     * Set FIFO size bits (log2 of FIFO size = 3 for capacity=8)
-> +     *
-> +     * FIFO size bits: from SPI_CTRL_FIFO_LSB to SPI_CTRL_FIFO_MSB
-> +     * We'll store a value of 3 (log2(8)=3)
-> +     */
-> +    int fifo_size_log2 = 3;
-> +    for (int b = SPI_CTRL_FIFO_LSB; b <= SPI_CTRL_FIFO_MSB; b++) {
-> +        int shift = b - SPI_CTRL_FIFO_LSB;
-> +        if (fifo_size_log2 & (1 << shift)) {
-> +            s->ctrl |= (1 << b);
-> +        } else {
-> +            s->ctrl &= ~(1 << b);
-> +        }
-> +    }
-> +}
-> +
-> +/* Device properties can be added if needed. For now, none. */
-> +static Property neorv32_spi_properties[] = {
+> Arguments are unified to qdev for consistency with other functions.
+> 
+>> +    void *map;
+>>   #if HOST_BIG_ENDIAN
+>>       error_setg(errp, "virgl is not supported on bigendian platforms");
+>> @@ -152,6 +155,31 @@ static void 
+>> virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>>   #endif
+>>       virtio_gpu_device_realize(qdev, errp);
+>> +
+>> +    /*
+>> +     * Check whether virtio_gpu_device_realize() failed.
+>> +     */
+>> +    if (!g->ctrl_bh) {
+> 
+> Instead, do:
+> if (*errp) {
+>      return;
+> }
+> 
+> With this change it is clear that it checks whether 
+> virtio_gpu_device_realize() failed so the comment will be unnecessary.
+> 
+>> +        return;
+>> +    }
+>> +
+>> +    if (virtio_gpu_hostmem_enabled(b->conf)) {
+>> +        map = mmap(NULL, b->conf.hostmem, PROT_NONE,
 
-Similar to as before: this should be static const Property.
+I'm concerned that mapping with PROT_NONE may allow the guest crash QEMU 
+by accessing the hostmem region without blobs, especially with TCG (not 
+sure about KVM).
 
-> +    DEFINE_PROP_UINT32("num-cs", NEORV32SPIState, num_cs, 1),
-> +};
-> +
-> +static void neorv32_spi_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    device_class_set_props(dc, neorv32_spi_properties);
-> +    device_class_set_legacy_reset(dc, neorv32_spi_reset);
-> +    dc->realize = neorv32_spi_realize;
-> +}
-> +
-> +static const TypeInfo neorv32_spi_type_info = {
-> +    .name           = TYPE_NEORV32_SPI,
-> +    .parent         = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size  = sizeof(NEORV32SPIState),
-> +    .instance_init  = neorv32_spi_init,
-> +    .class_init     = neorv32_spi_class_init,
-> +};
-> +
-> +static void neorv32_spi_register_types(void)
-> +{
-> +    type_register_static(&neorv32_spi_type_info);
-> +}
-> +
-> +type_init(neorv32_spi_register_types)
-> +
-> +
-> +
-> +NEORV32SPIState *neorv32_spi_create(MemoryRegion *sys_mem, hwaddr base_addr)
-> +{
-> +    /* Allocate and initialize the SPI state object */
-> +    NEORV32SPIState *s = g_new0(NEORV32SPIState, 1);
-> +    object_initialize(&s->parent_obj, sizeof(*s), TYPE_NEORV32_SPI);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(&s->parent_obj);
-> +
-> +    /* Realize the SPI controller (sets up mmio, irq, SSI bus, cs_lines) */
-> +    sysbus_realize_and_unref(sbd, &error_fatal);
-> +
-> +    /* Map the MMIO region into the system address space */
-> +    sysbus_mmio_map(sbd, 0, base_addr);
-> +
-> +    /* Attach an SPI flash to SPI0 if a drive image is provided */
-> +    DriveInfo *dinfo = drive_get(IF_MTD, 0, 0);
-> +    if (dinfo) {
-> +        /* Create the flash device and bind the MTD backend */
-> +        DeviceState *flash = qdev_new("n25q512a11");
-> +        qdev_prop_set_drive_err(flash, "drive",
-> +                                blk_by_legacy_dinfo(dinfo),
-> +                                &error_fatal);
-> +
-> +        /* Realize flash on the same SSI bus created on  controller realize */
-> +        qdev_realize_and_unref(flash, BUS(s->bus), &error_fatal);
-> +
-> +        /* Retrieve and wire the flash's CS input line to CS0 output */
-> +        qemu_irq flash_cs = qdev_get_gpio_in_named(flash, SSI_GPIO_CS, 0);
-> +        sysbus_connect_irq(sbd, 1, flash_cs);
-> +    }
-> +
-> +    return s;
-> +}
+Perhaps PROT_READ | PROT_WRITE may be a safe choice. It is ugly and lets 
+the guest read and write garbage to the region without blobs, but at 
+least avoids crashes.
 
-And again this separate neorv32_spi_create() function should not be included as part 
-of the device. The initialisation and wiring needs to be done as part of the board code.
-
-> diff --git a/include/hw/ssi/neorv32_spi.h b/include/hw/ssi/neorv32_spi.h
-> new file mode 100644
-> index 0000000000..8b94d2f1cf
-> --- /dev/null
-> +++ b/include/hw/ssi/neorv32_spi.h
-> @@ -0,0 +1,57 @@
-> +/*
-> + * QEMU implementation of the Neorv32 SPI block.
-> + *
-> + * Copyright (c) 2025 Michael Levit
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef NEORV32_SPI_H
-> +#define NEORV32_SPI_H
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/sysbus.h"
-> +
-> +#define TYPE_NEORV32_SPI "neorv32.spi"
-> +#define NEORV32_SPI(obj) OBJECT_CHECK(NEORV32SPIState, (obj), TYPE_NEORV32_SPI)
-> +
-> +typedef struct  NEORV32SPIState {
-> +    SysBusDevice parent_obj;
-> +
-> +    /* Memory-mapped registers */
-> +    MemoryRegion mmio;
-> +
-> +    /* IRQ line */
-> +    qemu_irq irq;
-> +
-> +    /* SPI bus (master) */
-> +    SSIBus *bus;
-> +
-> +    /* Chip selects (assume up to 3 CS lines) */
-> +    qemu_irq *cs_lines;
-> +    uint32_t num_cs;
-> +
-> +    /*
-> +     * Registers:
-> +     * Assume:
-> +     * 0x00: CTRL (r/w)
-> +     * 0x04: DATA (r/w)
-> +     */
-> +    uint32_t ctrl;
-> +    uint32_t data;
-> +
-> +    /* FIFOs */
-> +    Fifo8 tx_fifo;
-> +    Fifo8 rx_fifo;
-> +
-> +    /* FIFO capacity */
-> +    int fifo_capacity;
-> +    /* Track CS state driven by command writes */
-> +    bool cmd_cs_active;  /* true = CS asserted (active-low on wire) */
-> +    int  current_cs;     /* which CS line is active; default 0 for now */
-> +} NEORV32SPIState;
-> +
-> +
-> +
-> +NEORV32SPIState *neorv32_spi_create(MemoryRegion *sys_mem, hwaddr base_addr);
-
-... which means this should also go.
-
-> +#endif /* NEORV32_SPI_H */
-
-
-ATB,
-
-Mark.
-
+>> +                   MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> 
+> I think you need to check CONFIG_WIN32.
+> 
+>> +        if (map == MAP_FAILED) {
+>> +            error_setg(errp,
+>> +                       "virgl hostmem region could not be 
+>> initialized: %s",
+>> +                       strerror(errno));
+>> +            return;
+>> +        }
+>> +
+>> +        gl->hostmem_mmap = map;
+>> +        gl->hostmem_mr = g_new0(MemoryRegion, 1);
+> 
+> Having "b->hostmem" and "gl->hostmem_mr" is rather confusing.
+> 
+>> +        memory_region_init_ram_ptr(gl->hostmem_mr, NULL, "hostmem-anon",
+> 
+> "anon" is misleading because virgl_renderer_resource_map_fixed() will 
+> map non-anonymous pages.
+> 
+> Looking for an alternative word, I found docs/devel/memory.rst refers 
+> this kind of memory region as "background".
+> 
+>> +                                   b->conf.hostmem, gl->hostmem_mmap);
+>> +        memory_region_add_subregion(&b->hostmem, 0, gl->hostmem_mr);
+>> +        memory_region_set_enabled(gl->hostmem_mr, true);
+> 
+> Calling memory_region_set_enabled() is unnecessary. I failed to point 
+> out this for commit 7c092f17ccee ("virtio-gpu: Handle resource blob 
+> commands")...
+> 
+>> +    }
+>>   }
+>>   static const Property virtio_gpu_gl_properties[] = {
+>> @@ -167,6 +195,7 @@ static void 
+>> virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>>   {
+>>       VirtIOGPU *g = VIRTIO_GPU(qdev);
+>>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
+>> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+>>       if (gl->renderer_state >= RS_INITED) {
+>>   #if VIRGL_VERSION_MAJOR >= 1
+>> @@ -187,6 +216,14 @@ static void 
+>> virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>>       gl->renderer_state = RS_START;
+>>       g_array_unref(g->capset_ids);
+>> +
+>> +    if (gl->hostmem_mr) {
+>> +        memory_region_set_enabled(gl->hostmem_mr, false);
+> 
+> This memory_region_set_enabled() is unnecessary either.
+> 
+>> +        memory_region_del_subregion(&b->hostmem, gl->hostmem_mr);
+>> +    }
+>> +    if (gl->hostmem_mmap) {
+>> +        munmap(gl->hostmem_mmap, b->conf.hostmem);
+>> +    }
+> 
+> Please remove munmap(). It is not guaranteed that the memory region will 
+> be finalized immediately with memory_region_del_subregion(), so there 
+> can be a remaining reference to gl->hostmem_mmap.
+> 
+> virtio-gpu is not hotpluggable so you don't have to worry about memory 
+> leaks.
+> 
+>>   }
+>>   static void virtio_gpu_gl_class_init(ObjectClass *klass, const void 
+>> *data)
+>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu- 
+>> virgl.c
+>> index 5c9a9ee84392..d4188cf1d6b2 100644
+>> --- a/hw/display/virtio-gpu-virgl.c
+>> +++ b/hw/display/virtio-gpu-virgl.c
+>> @@ -21,6 +21,7 @@
+>>   #include "hw/virtio/virtio-gpu-pixman.h"
+>>   #include "ui/egl-helpers.h"
+>> +#include <stdio.h>
+>>   #include <virglrenderer.h>
+>> @@ -44,6 +45,7 @@
+>>   struct virtio_gpu_virgl_resource {
+>>       struct virtio_gpu_simple_resource base;
+>>       MemoryRegion *mr;
+>> +    void *map_fixed;
+>>   };
+>>   static struct virtio_gpu_virgl_resource *
+>> @@ -116,6 +118,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>   {
+>>       struct virtio_gpu_virgl_hostmem_region *vmr;
+>>       VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>>       MemoryRegion *mr;
+>>       uint64_t size;
+>>       void *data;
+>> @@ -126,6 +129,40 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>           return -EOPNOTSUPP;
+>>       }
+>> +#if VIRGL_CHECK_VERSION(1, 2, 1) && !defined(_WIN32)
+> 
+> Check CONFIG_WIN32 instead. scripts/checkpatch.pl has the following code:
+> # check of hardware specific defines
+> # we have e.g. CONFIG_LINUX and CONFIG_WIN32 for common cases
+> # where they might be necessary.
+>          if ($line =~ m@^.\s*\#\s*if.*\b__@) {
+>              WARN("architecture specific defines should be avoided\n" .  
+> $herecurr);
+>          }
+> 
+> This combination of VIRGL_CHECK_VERSION(1, 2, 1) && ! 
+> defined(CONFIG_WIN32) is rather frequent so perhaps defining a macro for 
+> this may be useful.
+> 
+>> +    /*
+>> +     * virgl_renderer_resource_map_fixed() allows to create multiple
+>> +     * mappings of the same resource, while 
+>> virgl_renderer_resource_map()
+>> +     * not.
+>> +     */
+>> +    if (res->map_fixed || res->mr) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>> +                      "%s: failed to map(fixed) virgl resource: 
+>> already mapped\n",
+>> +                      __func__);
+>> +        return -EBUSY;
+>> +    }
+>> +
+>> +    /*
+>> +     * -EOPNOTSUPP is returned if MAP_FIXED unsupported by this 
+>> resource,
+>> +     * mapping falls back to a blob subregion method in that case.
+>> +     */
+>> +    ret = virgl_renderer_resource_map_fixed(res->base.resource_id,
+>> +                                            gl->hostmem_mmap + offset);
+>> +    if (ret && ret != -EOPNOTSUPP) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>> +                      "%s: failed to map(fixed) virgl resource: %s\n",
+>> +                      __func__, strerror(-ret));
+>> +        return ret;
+>> +    }
+>> +
+>> +    if (ret == 0) {
+>> +        fprintf(stderr, "virgl_renderer_resource_map_fixed\n");
+> 
+> I guess you forgot removing a debug log.
+> 
+>> +
+>> +        res->map_fixed = gl->hostmem_mmap + offset;
+>> +        return 0;
+>> +    }
+> 
+> I would restructure these statements as follows:
+> 
+> ret = virgl_renderer_resource_map_fixed(...);
+> switch (ret) {
+> case 0:
+>      ...
+>      return 0;
+> 
+> case -EOPNOTSUPP:
+>      /*
+>       * -MAP_FIXED is unsupported by this resource.
+>       * Mapping falls back to a blob subregion method in that case.
+>       */
+>      break;
+> 
+> default:
+>      ...
+>      return ret;
+> }
+> 
+> ...so that you don't need to check ret before checking
+> ret != -EOPNOTSUPP and what case the comment on the fallback applies.
+> 
+>> +#endif
+>> +
+>>       ret = virgl_renderer_resource_map(res->base.resource_id, &data, 
+>> &size);
+>>       if (ret) {
+>>           qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl 
+>> resource: %s\n",
+>> @@ -138,7 +175,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>       mr = &vmr->mr;
+>>       memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+>> -    memory_region_add_subregion(&b->hostmem, offset, mr);
+>> +    memory_region_add_subregion(gl->hostmem_mr, offset, mr);
+> 
+> docs/devel/memory.rst says having a subregion in a RAM reion is not 
+> preferred. Instead, memory_region_add_subregion_overlap() should be used 
+> for hostmem_mr to make it "background".
+> 
+>>       memory_region_set_enabled(mr, true);
+>>       /*
+>> @@ -163,9 +200,27 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>>   {
+>>       struct virtio_gpu_virgl_hostmem_region *vmr;
+>>       VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>>       MemoryRegion *mr = res->mr;
+>>       int ret;
+>> +#if VIRGL_CHECK_VERSION(1, 2, 1) && !defined(_WIN32)
+>> +    if (res->map_fixed) {
+>> +        res->map_fixed = mmap(res->map_fixed, res->base.blob_size, 
+>> PROT_NONE,
+>> +                              MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED,
+>> +                              -1, 0);
+>> +        if (res->map_fixed == MAP_FAILED) {
+>> +            ret = -errno;
+>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>> +                          "%s: failed to unmap(fixed) virgl resource: 
+>> %s\n",
+>> +                          __func__, strerror(-ret));
+>> +            return ret;
+>> +        }
+>> +
+>> +        res->map_fixed = NULL;
+>> +    }
+>> +#endif
+>> +
+>>       if (!mr) {
+>>           return 0;
+>>       }
+>> @@ -202,7 +257,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>>           /* memory region owns self res->mr object and frees it by 
+>> itself */
+>>           memory_region_set_enabled(mr, false);
+>> -        memory_region_del_subregion(&b->hostmem, mr);
+>> +        memory_region_del_subregion(gl->hostmem_mr, mr);
+>>           object_unparent(OBJECT(mr));
+>>       }
+>> @@ -1270,9 +1325,22 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>>   void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>>   {
+>> +#if VIRGL_CHECK_VERSION(1, 2, 1) && !defined(_WIN32)
+>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+>> +#endif
+>> +
+>>       virgl_renderer_reset();
+>>       virtio_gpu_virgl_reset_async_fences(g);
+>> +
+>> +#if VIRGL_CHECK_VERSION(1, 2, 1) && !defined(_WIN32)
+>> +    if (gl->hostmem_mmap &&
+>> +        mmap(gl->hostmem_mmap, b->conf.hostmem, PROT_NONE,
+>> +             MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1, 0) == 
+>> MAP_FAILED) {
+>> +        error_report("failed to reset virgl hostmem: %s", 
+>> strerror(errno));
+>> +    }
+>> +#endif
+> 
+> I think this is better to be done before virgl_renderer_reset() to avoid 
+> having dangling pages after virgl_renderer_reset() and before this 
+> mmap() call.
+> 
+> Regards,
+> Akihiko Odaki
+> 
+>>   }
+>>   int virtio_gpu_virgl_init(VirtIOGPU *g)
+>> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/ 
+>> virtio-gpu.h
+>> index 172f5ffce3ed..e1122edd6eeb 100644
+>> --- a/include/hw/virtio/virtio-gpu.h
+>> +++ b/include/hw/virtio/virtio-gpu.h
+>> @@ -263,6 +263,9 @@ struct VirtIOGPUGL {
+>>       QEMUBH *async_fence_bh;
+>>       QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+>> +
+>> +    MemoryRegion *hostmem_mr;
+>> +    void *hostmem_mmap;
+>>   };
+>>   struct VhostUserGPU {
+> 
 
 
