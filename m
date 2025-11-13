@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511B8CD4F2F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41237CCFA18
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 04:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPPB-0004sX-47; Wed, 12 Nov 2025 23:57:57 -0500
+	id 1vJPPg-00059x-PG; Wed, 12 Nov 2025 23:58:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOr-0004k6-UG; Wed, 12 Nov 2025 23:57:41 -0500
+ id 1vJPPQ-00054A-48; Wed, 12 Nov 2025 23:58:12 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOm-0001c6-AL; Wed, 12 Nov 2025 23:57:36 -0500
+ id 1vJPPN-0001cD-W3; Wed, 12 Nov 2025 23:58:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763009852; x=1794545852;
+ t=1763009890; x=1794545890;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BGzL/4pIP4+T106T6tStBo67qOhw/L4y6OIvrc/vvFY=;
- b=lOkxp4hHNFeaVramEUa5VJ47CgEdR1j5/eR5jJh6sQLikWDHBj4IphqP
- qgbvdnz0CZeCN5eS5JIwxNMKmnwSZOprZah0+NX7byePXGMmxvMEPXI5T
- gzoNS9GvR9V5N9KBfXLZzJ7hdfYRc1wZKYhJEDrGFJl2l5ZUib8wLWsa9
- Pe+EL8BlIuXZqFsJeGJcLXD2mZdx+cOpQzOlUQ3EDxGLidurFWc+aopPN
- 2VArK04cAGTut0siHrYjKtIO+Ml7wmoz++5Qz1hAWtJy6U0S26NQSgX24
- WOHOZeMuEUdnTFF8dwuLqdz0u9Ga3eE64sqcRBKMifv6TDqtkKVNssVIg Q==;
-X-CSE-ConnectionGUID: vmH1b3amTCuj6y881fv2KQ==
-X-CSE-MsgGUID: s8uaFfF8QFuP11ewR8PfEQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682072"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682072"
+ bh=9FjEDY+GF/YArWJ05FOcZ+WtDQiE6q6wuBg3+lsy+ZU=;
+ b=UI9y0AQd27cG6tKr623muZgfsGwYGno69lRO/m7E9+6SDZ4MGbCwfzt+
+ 75TZ6rhujc39rzMDeBVudjyr4dy7BNdUqiFDJ1FElr2ACrMPncDVnVki8
+ IBx/KaPkBt/bd+5BsXrHxpJUr/pQhlAFFDN+5Un8J8gh0zZI7zsG31WC5
+ Y6EyiKbfRQmWLGHpSs0R2Le4RnHk5tVRorKGpUSMvS62VuDCdQ5KSq+/e
+ jDACq/MJGJAKY9aM48uO4Y5BuUfbPHc5unXQNxT4V5G53ltaEhyq5SFYq
+ p2CuTwIur3MajWonntTloUfKTNFly4ulK3YsCP/4N+7EJ+kS6Tl+25M8D Q==;
+X-CSE-ConnectionGUID: TSLtYhBdRxOpWAUxxlhv1w==
+X-CSE-MsgGUID: STkdW5IaSB2K2r++2WwLsA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682124"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682124"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Nov 2025 20:57:30 -0800
-X-CSE-ConnectionGUID: RYWFGF5/SM6iumNqlmTupg==
-X-CSE-MsgGUID: ZDRNeJ6ORBmxNtRq1phk3A==
+ 12 Nov 2025 20:57:49 -0800
+X-CSE-ConnectionGUID: wHBKprh9T+KSm6Kq1rmjNw==
+X-CSE-MsgGUID: oJVtCOlJRPi58XRybDLwCA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663234"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663276"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:28 -0800
+ by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:47 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
 Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 04/22] rust/bql: Add BqlGuard to provide BQL context
-Date: Thu, 13 Nov 2025 13:19:19 +0800
-Message-Id: <20251113051937.4017675-5-zhao1.liu@intel.com>
+Subject: [PATCH 13/22] rust/hpet: Make global register accessors as methods of
+ HPETRegisters
+Date: Thu, 13 Nov 2025 13:19:28 +0800
+Message-Id: <20251113051937.4017675-14-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
 References: <20251113051937.4017675-1-zhao1.liu@intel.com>
@@ -82,237 +83,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's some case requiring BQL context, for example, accessing
-BqlCell/BqlRefCell or operation on IRQ in lockless IO.
+Implement helper accessors as methods of HPETRegisters. Then
+HPETRegisters can be accessed without going through HPETState.
 
-Note though BqlCell/BqlRefCell ensures BQL won't be released during
-reference exists, they don't create BQL context if BQL is not locked,
-instead, they just assert and panic when BQL is not locked.
+In subsequent refactoring, coarser-grained BQL lock protection will be
+implemented. Specifically, BqlRefCell<HPETRegisters> will be borrowed
+only once during MMIO accesses, and the scope of borrowed `regs` will
+be extended to cover the entire MMIO access. Consequently, repeated
+borrow() attempts within function calls will no longer be allowed.
 
-Therefore, it's necessary to provide a way to create BQL context by hand
-at Rust side. BqlGuard is suitable for this need.
+Therefore, refactor the accessors of HPETRegisters to bypass HPETState,
+which help to reduce borrow() in deep function calls.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/qemu/main-loop.h |  22 ++++++++-
- rust/bql/src/lib.rs      | 101 ++++++++++++++++++++++++++++++++++++++-
- stubs/iothread-lock.c    |  11 +++++
- system/cpus.c            |  10 ++++
- 4 files changed, 142 insertions(+), 2 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 60 ++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 26 deletions(-)
 
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 0d55c636b21a..7dd7c8211f02 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -250,7 +250,7 @@ AioContext *iohandler_get_aio_context(void);
- /**
-  * rust_bql_mock_lock:
-  *
-- * Called from Rust doctests to make bql_lock() return true.
-+ * Called from Rust doctests to make bql_locked() return true.
-  * Do not touch.
-  */
- void rust_bql_mock_lock(void);
-@@ -368,6 +368,16 @@ bool qemu_in_main_thread(void);
- #define bql_lock() bql_lock_impl(__FILE__, __LINE__)
- void bql_lock_impl(const char *file, int line);
- 
-+/**
-+ * @rust_bql_lock: A wrapper over bql_lock().
-+ *
-+ * This function is used to allow bindgen to generate bql_lock()
-+ * binding.
-+ *
-+ * Do not call this function directly! Use bql_lock() instead.
-+ */
-+void rust_bql_lock(void);
-+
- /**
-  * bql_unlock: Unlock the Big QEMU Lock (BQL).
-  *
-@@ -383,6 +393,16 @@ void bql_lock_impl(const char *file, int line);
-  */
- void bql_unlock(void);
- 
-+/**
-+ * @rust_bql_unlock: A wrapper over bql_unlock().
-+ *
-+ * This function is used to allow bindgen to generate bql_unlock()
-+ * binding.
-+ *
-+ * Do not call this function directly! Use bql_unlock() instead.
-+ */
-+void rust_bql_unlock(void);
-+
- /**
-  * BQL_LOCK_GUARD
-  *
-diff --git a/rust/bql/src/lib.rs b/rust/bql/src/lib.rs
-index ef08221e9c1a..48cc76a7557c 100644
---- a/rust/bql/src/lib.rs
-+++ b/rust/bql/src/lib.rs
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- mod bindings;
--use bindings::{bql_block_unlock, bql_locked, rust_bql_mock_lock};
-+use bindings::{bql_block_unlock, bql_locked, rust_bql_lock, rust_bql_mock_lock, rust_bql_unlock};
- 
- mod cell;
- pub use cell::*;
-@@ -27,3 +27,102 @@ pub fn block_unlock(increase: bool) {
-         bql_block_unlock(increase);
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 503ceee4c445..738ebb374fc9 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -286,7 +286,10 @@ fn get_state(&self) -> &HPETState {
      }
- }
-+
-+// this function is private since user should get BQL context via BqlGuard.
-+fn lock() {
-+    // SAFETY: the function locks bql which lifetime is enough to cover
-+    // the device's entire lifetime.
-+    unsafe {
-+        rust_bql_lock();
-+    }
-+}
-+
-+// this function is private since user should get BQL context via BqlGuard.
-+fn unlock() {
-+    // SAFETY: the function unlocks bql which lifetime is enough to
-+    // cover the device's entire lifetime.
-+    unsafe {
-+        rust_bql_unlock();
-+    }
-+}
-+
-+/// An RAII guard to ensure a block of code runs within the BQL context.
-+///
-+/// It checks if the BQL is already locked at its creation:
-+/// * If not, it locks the BQL and will release it when it is dropped.
-+/// * If yes, it blocks BQL unlocking until its lifetime is end.
-+#[must_use]
-+pub struct BqlGuard {
-+    locked: bool,
-+}
-+
-+impl BqlGuard {
-+    /// Creates a new `BqlGuard` to ensure BQL is locked during its
-+    /// lifetime.
-+    ///
-+    /// # Examples
-+    ///
-+    /// ```
-+    /// use bql::{BqlCell, BqlGuard};
-+    ///
-+    /// fn foo() {
-+    ///     let _guard = BqlGuard::new(); // BQL is locked
-+    ///
-+    ///     let c = BqlCell::new(5);
-+    ///     assert_eq!(c.get(), 5);
-+    /// } // BQL could be unlocked
-+    /// ```
-+    pub fn new() -> Self {
-+        if !is_locked() {
-+            lock();
-+            Self { locked: true }
-+        } else {
-+            block_unlock(true);
-+            Self { locked: false }
-+        }
-+    }
-+}
-+
-+impl Default for BqlGuard {
-+    fn default() -> Self {
-+        Self::new()
-+    }
-+}
-+
-+impl Drop for BqlGuard {
-+    fn drop(&mut self) {
-+        if self.locked {
-+            unlock();
-+        } else {
-+            block_unlock(false);
-+        }
-+    }
-+}
-+
-+/// Executes a closure (function) within the BQL context.
-+///
-+/// This function creates a `BqlGuard`.
-+///
-+/// # Examples
-+///
-+/// ```should_panic
-+/// use bql::{with_guard, BqlRefCell};
-+///
-+/// let c = BqlRefCell::new(5);
-+///
-+/// with_guard(|| {
-+///     // BQL is locked
-+///     let m = c.borrow();
-+///
-+///     assert_eq!(*m, 5);
-+/// }); // BQL could be unlocked
-+///
-+/// let b = c.borrow(); // this causes a panic
-+/// ```
-+pub fn with_guard<F, R>(f: F) -> R
-+where
-+    F: FnOnce() -> R,
-+{
-+    let _guard = BqlGuard::new();
-+    f()
-+}
-diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
-index c89c9c7228f3..e2ebce565a06 100644
---- a/stubs/iothread-lock.c
-+++ b/stubs/iothread-lock.c
-@@ -23,6 +23,17 @@ void bql_unlock(void)
-     assert(!bql_unlock_blocked);
+ 
+     fn is_int_active(&self) -> bool {
+-        self.get_state().is_timer_int_active(self.index.into())
++        self.get_state()
++            .regs
++            .borrow()
++            .is_timer_int_active(self.index.into())
+     }
+ 
+     /// calculate next value of the general counter that matches the
+@@ -305,7 +308,7 @@ fn calculate_cmp64(&self, cur_tick: u64, target: u64) -> u64 {
+     }
+ 
+     fn get_int_route(&self) -> usize {
+-        if self.index <= 1 && self.get_state().is_legacy_mode() {
++        if self.index <= 1 && self.get_state().regs.borrow().is_legacy_mode() {
+             // If LegacyReplacement Route bit is set, HPET specification requires
+             // timer0 be routed to IRQ0 in NON-APIC or IRQ2 in the I/O APIC,
+             // timer1 be routed to IRQ8 in NON-APIC or IRQ8 in the I/O APIC.
+@@ -332,7 +335,7 @@ fn get_int_route(&self) -> usize {
+     fn set_irq(&self, set: bool) {
+         let route = self.get_int_route();
+ 
+-        if set && self.regs.is_int_enabled() && self.get_state().is_hpet_enabled() {
++        if set && self.regs.is_int_enabled() && self.get_state().regs.borrow().is_hpet_enabled() {
+             if self.regs.is_fsb_route_enabled() {
+                 // SAFETY:
+                 // the parameters are valid.
+@@ -430,7 +433,7 @@ fn set_tn_cfg_reg(&mut self, shift: u32, len: u32, val: u64) {
+             self.period = u64::from(self.period as u32); // truncate!
+         }
+ 
+-        if self.get_state().is_hpet_enabled() {
++        if self.get_state().regs.borrow().is_hpet_enabled() {
+             self.set_timer();
+         }
+     }
+@@ -460,7 +463,7 @@ fn set_tn_cmp_reg(&mut self, shift: u32, len: u32, val: u64) {
+         }
+ 
+         self.regs.clear_valset();
+-        if self.get_state().is_hpet_enabled() {
++        if self.get_state().regs.borrow().is_hpet_enabled() {
+             self.set_timer();
+         }
+     }
+@@ -542,6 +545,20 @@ pub struct HPETRegisters {
+     counter: u64,
  }
  
-+void rust_bql_lock(void)
-+{
-+    rust_bql_mock_lock();
++impl HPETRegisters {
++    fn is_legacy_mode(&self) -> bool {
++        self.config & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
++    }
++
++    fn is_hpet_enabled(&self) -> bool {
++        self.config & (1 << HPET_CFG_ENABLE_SHIFT) != 0
++    }
++
++    fn is_timer_int_active(&self, index: usize) -> bool {
++        self.int_status & (1 << index) != 0
++    }
 +}
 +
-+void rust_bql_unlock(void)
-+{
-+    bql_unlock();
-+    bql_is_locked = false;
-+}
-+
- void bql_block_unlock(bool increase)
- {
-     uint32_t new_value;
-diff --git a/system/cpus.c b/system/cpus.c
-index ef2d2f241faa..da31bda59444 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -578,6 +578,11 @@ void bql_lock_impl(const char *file, int line)
-     bql_lock_fn(&bql, file, line);
- }
+ /// HPET Event Timer Block Abstraction
+ #[repr(C)]
+ #[derive(qom::Object, hwcore::Device)]
+@@ -589,18 +606,6 @@ const fn has_msi_flag(&self) -> bool {
+         self.flags & (1 << HPET_FLAG_MSI_SUPPORT_SHIFT) != 0
+     }
  
-+void rust_bql_lock(void)
-+{
-+    bql_lock();
-+}
-+
- void bql_unlock(void)
- {
-     g_assert(bql_locked());
-@@ -585,6 +590,11 @@ void bql_unlock(void)
-     qemu_mutex_unlock(&bql);
- }
+-    fn is_legacy_mode(&self) -> bool {
+-        self.regs.borrow().config & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
+-    }
+-
+-    fn is_hpet_enabled(&self) -> bool {
+-        self.regs.borrow().config & (1 << HPET_CFG_ENABLE_SHIFT) != 0
+-    }
+-
+-    fn is_timer_int_active(&self, index: usize) -> bool {
+-        self.regs.borrow().int_status & (1 << index) != 0
+-    }
+-
+     fn get_ticks(&self) -> u64 {
+         ns_to_ticks(CLOCK_VIRTUAL.get_ns() + self.hpet_offset.get())
+     }
+@@ -610,13 +615,14 @@ fn get_ns(&self, tick: u64) -> u64 {
+     }
  
-+void rust_bql_unlock(void)
-+{
-+    bql_unlock();
-+}
-+
- void qemu_cond_wait_bql(QemuCond *cond)
- {
-     qemu_cond_wait(cond, &bql);
+     fn handle_legacy_irq(&self, irq: u32, level: u32) {
++        let regs = self.regs.borrow();
+         if irq == HPET_LEGACY_PIT_INT {
+-            if !self.is_legacy_mode() {
++            if !regs.is_legacy_mode() {
+                 self.irqs[0].set(level != 0);
+             }
+         } else {
+             self.rtc_irq_level.set(level);
+-            if !self.is_legacy_mode() {
++            if !regs.is_legacy_mode() {
+                 self.irqs[RTC_ISA_IRQ].set(level != 0);
+             }
+         }
+@@ -699,7 +705,8 @@ fn set_int_status_reg(&self, shift: u32, _len: u32, val: u64) {
+ 
+     /// Main Counter Value Register
+     fn set_counter_reg(&self, shift: u32, len: u32, val: u64) {
+-        if self.is_hpet_enabled() {
++        let mut regs = self.regs.borrow_mut();
++        if regs.is_hpet_enabled() {
+             // TODO: Add trace point -
+             // trace_hpet_ram_write_counter_write_while_enabled()
+             //
+@@ -710,7 +717,6 @@ fn set_counter_reg(&self, shift: u32, len: u32, val: u64) {
+             // tick count (i.e., the previously calculated offset will
+             // not be changed as well).
+         }
+-        let mut regs = self.regs.borrow_mut();
+         regs.counter = regs.counter.deposit(shift, len, val);
+     }
+ 
+@@ -829,12 +835,13 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
+             Global(CFG) => self.regs.borrow().config,
+             Global(INT_STATUS) => self.regs.borrow().int_status,
+             Global(COUNTER) => {
++                let regs = self.regs.borrow();
+                 // TODO: Add trace point
+                 // trace_hpet_ram_read_reading_counter(addr & 4, cur_tick)
+-                if self.is_hpet_enabled() {
++                if regs.is_hpet_enabled() {
+                     self.get_ticks()
+                 } else {
+-                    self.regs.borrow().counter
++                    regs.counter
+                 }
+             }
+             Unknown(_) => {
+@@ -863,8 +870,9 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
+     }
+ 
+     fn pre_save(&self) -> Result<(), migration::Infallible> {
+-        if self.is_hpet_enabled() {
+-            self.regs.borrow_mut().counter = self.get_ticks();
++        let mut regs = self.regs.borrow_mut();
++        if regs.is_hpet_enabled() {
++            regs.counter = self.get_ticks();
+         }
+ 
+         /*
+@@ -899,7 +907,7 @@ fn is_rtc_irq_level_needed(&self) -> bool {
+     }
+ 
+     fn is_offset_needed(&self) -> bool {
+-        self.is_hpet_enabled() && self.hpet_offset_saved
++        self.regs.borrow().is_hpet_enabled() && self.hpet_offset_saved
+     }
+ 
+     fn validate_num_timers(&self, _version_id: u8) -> bool {
 -- 
 2.34.1
 
