@@ -4,104 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65788CD5BC5
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 11:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94333CD5BC5
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 11:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJVZr-0007g3-Tn; Thu, 13 Nov 2025 06:33:24 -0500
+	id 1vJVcE-0002a9-Jc; Thu, 13 Nov 2025 06:35:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vJVZm-0007Rb-SG
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:33:19 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vJVbz-0002Wa-B8
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:35:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vJVZl-0007a1-2a
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:33:18 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vJVbx-0007tm-Ip
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 06:35:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763033595;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1763033732;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WqmTCtcW3ujfxhfBw6wyVEU8uL1dsZiu375KvoDsotQ=;
- b=Rl3zEYcVQses59JThckJMhOD93Qp9Xdzty0Ut39CqlFA14AKrA3e+KkiiUwXNopwwFl6An
- dSi8Zw9hMrz+4OsYHSapMTcDdCLfMwXELcUqdvFjrAMI4FFLACnderXU9S6oBEjnXPeh/8
- L5iWrdJQ3vUrNi7bfFXvq77hh9rz6sE=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-0uGoCjNsPaG_4JmuEAITDg-1; Thu, 13 Nov 2025 06:33:09 -0500
-X-MC-Unique: 0uGoCjNsPaG_4JmuEAITDg-1
-X-Mimecast-MFC-AGG-ID: 0uGoCjNsPaG_4JmuEAITDg_1763033589
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-343725e6243so1882246a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 03:33:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763033589; x=1763638389; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WqmTCtcW3ujfxhfBw6wyVEU8uL1dsZiu375KvoDsotQ=;
- b=FaoOxCrNcaA+nhxI9B8GnClAJLL56PmyPBknNJYPrjxoJqxXky58asSgt/DioRS/we
- EfB52R2LW33PnrLI/djGr6rl49z9KDrKufXPwZjD8MKU6J2Bw22wvdsb1TBHEcMEAtqj
- mEONKyS/FwjKMpM1SMqcxIdxA/PDX7TyH1sgOT6H8klBwOcQFyjyP+BTbayyGiER9hjm
- VMxoNXlAe920iuWZhzNR6F+wW17y91Q42OjnDqxttHubmK76eqWnl91j1QGRQWpBC2ds
- +hX7/GmDEulWcRGrH9yRZviYvPLSZnlztIwEwbXSg1onGBxVA0AOlxXXmLryfgosJpwH
- r0VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763033589; x=1763638389;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WqmTCtcW3ujfxhfBw6wyVEU8uL1dsZiu375KvoDsotQ=;
- b=UikYHT1j+eBiYLzGFe6mEngP8Y0C2LfNfcN9QELGP9qxsdxwG4GKih53/EK2mguW+b
- bLsTvkfnX1M5qOMrfR0VF+S4c27aC2Du83QK8/dTq8LP5d6K2Glr5ehLwzr8gvJ+t6Eo
- Xk1Fv96iL4dNAuxtcJpdbsLnOy29Ovfyd1AmUV3ltfbUGwkzZy5EY1dLtfJgCIHBKiSe
- MCJf0FMI4xTN1xLx5lIKHgVHLl9N8za1bgRuE9zmmEkQ7KSepm0eXj6kbml3X1QufVF3
- lclNu8qPnFMLH306SuCnPN2u2mkyq0ncLYFU/FPqqN0v/IHiuD2mwkF18JioCTOCpLtc
- C8yQ==
-X-Gm-Message-State: AOJu0YxEhV6IHOS7wMYTyE4XnPg1BKngoQXwYZVtzGSF893eRMlfdt/1
- NCnD6Ez46OATcuPsZFJ1BVntu1i7QIPUdQwdh3RMxdd7gSlBSBcJ0EIekYUu921lL7Fnqsq8VNk
- 31aiakV8mSWdfEDLwogKQECT5LHYLSRiUGk9/TUKm8Nl3g8lqTMjv1sANKaxtv2QvWrt6+OFXtS
- 6+YRoOWaDxE7S0Jl9q783xGomC5AMclu8=
-X-Gm-Gg: ASbGnctXMGFR22zdzV0vxJtI1gFhmjdmU93MnUW/Zd9b7k0vu/i5Z+x7iOWeKO2CSC2
- m2JTMsiqdIvza7vmIK/u3j8MTPrxXb7Edg2zyU5RD1/eTOC7K0coWWe8dlEdC7GBSmOIvxV+e7q
- H0R2A3j/kBwFVZ+QhaF63VnMgF8GCFvC15uqNK4SbQxc8ARt/8q8dIKIpahZFvnpaWV97zfKOx0
- Y4RxhavPA5JQgg=
-X-Received: by 2002:a17:90b:548c:b0:340:29a3:800f with SMTP id
- 98e67ed59e1d1-343eacb9cdfmr3694321a91.15.1763033588695; 
- Thu, 13 Nov 2025 03:33:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFyLzKGQyvIa60IeEdkCGH4uesJuhRY6qZ2oxCno0Wk/pILqQAuwl3d1kU50MdzjQc9kdmDfQ+AdKKbLXpwPL8=
-X-Received: by 2002:a17:90b:548c:b0:340:29a3:800f with SMTP id
- 98e67ed59e1d1-343eacb9cdfmr3694303a91.15.1763033588419; Thu, 13 Nov 2025
- 03:33:08 -0800 (PST)
+ bh=pdv9t1hgezQbjJOwln6Vfm752vqT4y2n6Ad6ZvoHRHg=;
+ b=P/0YROB/By7LpLQxkTgc1xs7qslkvw3+JFVtEKWduSCY08a+nZWTbttkkfVdYqSA8HKg7s
+ fQe8X3Mwv97lcx/EZCSvHe4M692MNhTc85Yq7mzbVfHiQ7Xjuwbc7dpThRDCDd0Na5PScN
+ kLEpKAZ3QEuMahtVzEZkR2zQz5vVoFk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-KWTuhIsOONOgpg56p26tlw-1; Thu,
+ 13 Nov 2025 06:35:31 -0500
+X-MC-Unique: KWTuhIsOONOgpg56p26tlw-1
+X-Mimecast-MFC-AGG-ID: KWTuhIsOONOgpg56p26tlw_1763033730
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 23149180047F; Thu, 13 Nov 2025 11:35:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C473F300018D; Thu, 13 Nov 2025 11:35:27 +0000 (UTC)
+Date: Thu, 13 Nov 2025 11:35:22 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org, philmd@linaro.org
+Subject: Re: [PATCH v3] tests/unit: add unit test for qemu_hexdump()
+Message-ID: <aRXCes0Y2xMPYfS2@redhat.com>
+References: <20251113064935.342018-1-vsementsov@yandex-team.ru>
+ <aRWgdCWsEr3cCSNl@redhat.com>
+ <84b8a084-d8f3-4515-a6f8-23aaca080b37@yandex-team.ru>
+ <aRWz63pC5fsdYRsq@redhat.com>
+ <CAFEAcA8433bHWqbb0cC2myY=7NKqPb1M3r+y3_mXH=QQuCoYJQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20251112134143.27194-1-philmd@linaro.org>
- <20251112134143.27194-9-philmd@linaro.org>
-In-Reply-To: <20251112134143.27194-9-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 13 Nov 2025 15:32:55 +0400
-X-Gm-Features: AWmQ_bm173myUQedBtrl95deeV6m4-dy_fLNKr3AZW9T06aHP0X9vQvTQnZLuWs
-Message-ID: <CAMxuvawq81=wz7vVQcd13Ys_vDL-Me+5wDcchtdXbD1vUxSdOw@mail.gmail.com>
-Subject: Re: [PATCH v3 08/10] chardev/char: Document qemu_chr_fe_write()'s
- return value
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000c3dd590643783ee4"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA8433bHWqbb0cC2myY=7NKqPb1M3r+y3_mXH=QQuCoYJQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,127 +89,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c3dd590643783ee4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Nov 13, 2025 at 10:46:42AM +0000, Peter Maydell wrote:
+> On Thu, 13 Nov 2025 at 10:33, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Thu, Nov 13, 2025 at 01:20:15PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > On 13.11.25 12:10, Daniel P. Berrangé wrote:
+> > > > On Thu, Nov 13, 2025 at 09:49:35AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > > Test, that fix in previous commit make sense.
+> > > > >
+> > > > > To not break compilation when we build without
+> > > > > 'block', move hexdump.c out of "if have_block"
+> > > > > in meson.build.
+> > > > >
+> > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > > > ---
+> > > > >
+> > > > > v3: change meson.build to compile hexdump.c always
+> > > > >
+> > > > >   tests/unit/test-cutils.c | 43 ++++++++++++++++++++++++++++++++++++++++
+> > > > >   util/meson.build         |  2 +-
+> > > > >   2 files changed, 44 insertions(+), 1 deletion(-)
+> > > >
+> > > > > +static void test_qemu_hexdump_alignment(void)
+> > > > > +{
+> > > > > +    /*
+> > > > > +     * Test that ASCII part is properly aligned for incomplete lines.
+> > > > > +     * This test catches the bug that was fixed in previous commit
+> > > > > +     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
+> > > > > +     *
+> > > > > +     * We use data that is not aligned to 16 bytes, so last line
+> > > > > +     * is incomplete.
+> > > > > +     */
+> > > > > +    const uint8_t data[] = {
+> > > > > +        /* First line: 16 bytes */
+> > > > > +        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* "Hello Wo" */
+> > > > > +        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* "rld! Thi" */
+> > > > > +        /* Second line: 5 bytes (incomplete) */
+> > > > > +        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s is " */
+> > > > > +    };
+> > > > > +    char *output = NULL;
+> > > >
+> > > > Could be  g_autofree, and avoid the later 'free()' call.
+> > >
+> > > I'm not sure that it's correct to replace free() by g_free()..
+> > >
+> > > Documentation says "bad things can happen" https://docs.gtk.org/glib/memory.html
+> >
+> > Note where it says:
+> >
+> >   "Since GLib 2.46, g_malloc() is hardcoded to always use the system
+> >    malloc implementation."
+> >
+> > I added that guarantee to glib docs specifically so apps no longer
+> > have to match free with g_free.  You should still not mix up the
+> > C free vs C++ delete, or  free vs g_slice_free, but that's not an
+> > issue for QEMU.
+> 
+> I think for this specific case (the buffer allocated by
+> open_memstream()) it's probably better to use explicit
+> free(), because the criterion for "when is it OK to free
+> this?" is not "when the pointer goes out of scope" but
+> "when we have called fclose() on the stream". Auto-freeing
+> the buffer by returning without closing the file would
+> be a bug.
 
-On Wed, Nov 12, 2025 at 5:42=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Oh good point, lets just leave this as-is.
 
 
-> ---
->  include/chardev/char-fe.h | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
-> index 36bcf1f88a6..fbec6a73dbb 100644
-> --- a/include/chardev/char-fe.h
-> +++ b/include/chardev/char-fe.h
-> @@ -238,8 +238,9 @@ guint qemu_chr_fe_add_watch(CharFrontend *c,
-> GIOCondition cond,
->   * will send data from the front end to the back end.  This function
->   * is thread-safe.
->   *
-> - * Returns: the number of bytes consumed (0 if no associated Chardev)
-> - *          or -1 on error.
-> + * Returns: 0 if no associated Chardev or no data could be written,
-> + *          a positive value indicating the number of bytes consumed,
-> + *          or a negative %errno indicating a definite error.
->   */
->  int qemu_chr_fe_write(CharFrontend *c, const uint8_t *buf, int len);
->
-> @@ -254,8 +255,8 @@ int qemu_chr_fe_write(CharFrontend *c, const uint8_t
-> *buf, int len);
->   * this function will block if the back end cannot consume all of the da=
-ta
->   * attempted to be written.  This function is thread-safe.
->   *
-> - * Returns: the number of bytes consumed (0 if no associated Chardev)
-> - *          or -1 on error.
-> + * Returns: 0 if no associated Chardev or no data could be written,
-> + *          @len on success or a negative %errno indicating a definite
-> error.
->   */
->  int qemu_chr_fe_write_all(CharFrontend *c, const uint8_t *buf, int len);
->
-> --
-> 2.51.0
->
->
-
---000000000000c3dd590643783ee4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 12,=
- 2025 at 5:42=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
-philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">Suggested-by: Peter Maydell &lt;<a href=
-=3D"mailto:peter.maydell@linaro.org" target=3D"_blank">peter.maydell@linaro=
-.org</a>&gt;<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:mar=
-candre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0include/chardev/char-fe.h | 9 +++++----<br>
-=C2=A01 file changed, 5 insertions(+), 4 deletions(-)<br>
-<br>
-diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h<br>
-index 36bcf1f88a6..fbec6a73dbb 100644<br>
---- a/include/chardev/char-fe.h<br>
-+++ b/include/chardev/char-fe.h<br>
-@@ -238,8 +238,9 @@ guint qemu_chr_fe_add_watch(CharFrontend *c, GIOConditi=
-on cond,<br>
-=C2=A0 * will send data from the front end to the back end.=C2=A0 This func=
-tion<br>
-=C2=A0 * is thread-safe.<br>
-=C2=A0 *<br>
-- * Returns: the number of bytes consumed (0 if no associated Chardev)<br>
-- *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 or -1 on error.<br>
-+ * Returns: 0 if no associated Chardev or no data could be written,<br>
-+ *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 a positive value indicating the numbe=
-r of bytes consumed,<br>
-+ *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 or a negative %errno indicating a def=
-inite error.<br>
-=C2=A0 */<br>
-=C2=A0int qemu_chr_fe_write(CharFrontend *c, const uint8_t *buf, int len);<=
-br>
-<br>
-@@ -254,8 +255,8 @@ int qemu_chr_fe_write(CharFrontend *c, const uint8_t *b=
-uf, int len);<br>
-=C2=A0 * this function will block if the back end cannot consume all of the=
- data<br>
-=C2=A0 * attempted to be written.=C2=A0 This function is thread-safe.<br>
-=C2=A0 *<br>
-- * Returns: the number of bytes consumed (0 if no associated Chardev)<br>
-- *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 or -1 on error.<br>
-+ * Returns: 0 if no associated Chardev or no data could be written,<br>
-+ *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 @len on success or a negative %errno =
-indicating a definite error.<br>
-=C2=A0 */<br>
-=C2=A0int qemu_chr_fe_write_all(CharFrontend *c, const uint8_t *buf, int le=
-n);<br>
-<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
-
---000000000000c3dd590643783ee4--
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
