@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B46CD8C9B
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 16:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D505FCD8CA7
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 16:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJZvY-0002LN-AH; Thu, 13 Nov 2025 11:12:04 -0500
+	id 1vJaKI-00052M-7N; Thu, 13 Nov 2025 11:37:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vJZuy-0001kf-LY
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 11:11:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJaKG-00051Y-4Z
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 11:37:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vJZux-00014i-94
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 11:11:28 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJaKE-0004jR-C8
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 11:37:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763050286;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1763051852;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kuxBfdu6kY0KdaWE7A2OKXKhFmTlP7+laG2mTLCscIE=;
- b=RgnF8Hw6EWPR7yCwetzrCPWhSKHV6iEtsahPJNcMS4UGhDZateXUW7F75paPHFQD+rF9PK
- MA5XsO5/75XmP1QkF+r9vLjbM4F1/6CNMjeqa8jK3NpX4PgdzJodIjrPA6BYzkT8PyfXcQ
- ac9ruatd00uQuON+G59NBM42XrQ8oA4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=On6JZofhUkPNHYArOzq+yr8hKMj3t0AKWkSz0p32nas=;
+ b=GORXH3q8by7m71c2xd4C2o6fTZFXgIEDGg5wyRMW1ecDDhLcW7CdNgXT0N6SnrV0lGNuwX
+ 28V3BesluY/inPWZK9lM+EsAs7Y/nmFmsVYQVDRjHpSyz2nOfIEOcyJ7QZwKg1XnXWybzN
+ zwvMtMhC8Wd3Gj8NGq7MjjXBuyRN/WY=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-zC2zo1qhNWq4rrImWfACkw-1; Thu, 13 Nov 2025 11:11:24 -0500
-X-MC-Unique: zC2zo1qhNWq4rrImWfACkw-1
-X-Mimecast-MFC-AGG-ID: zC2zo1qhNWq4rrImWfACkw_1763050284
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8a9ec099b5cso282975485a.1
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 08:11:24 -0800 (PST)
+ us-mta-447-F5Ey8R5GPnO5UVeFigMsuw-1; Thu, 13 Nov 2025 11:37:30 -0500
+X-MC-Unique: F5Ey8R5GPnO5UVeFigMsuw-1
+X-Mimecast-MFC-AGG-ID: F5Ey8R5GPnO5UVeFigMsuw_1763051850
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b24383b680so477264385a.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 08:37:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763051850; x=1763656650; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=On6JZofhUkPNHYArOzq+yr8hKMj3t0AKWkSz0p32nas=;
+ b=qubCkLLjMmoALEhTDd8bDldwRjR8auMd/kyRr5QObr5VJqgnH7Fyrh38xP2dNp8iTr
+ /Jms+GaVSus61ULMQHgSrhsWpYbtbQR+780VeikCSGDOddqhmzENskVSmHYj8cCihvaW
+ af123ozG42Ct8Ds/PHEP9mJXNpUYg1DRqSUrQy5XbUiYTClzLDx7iv/Pq92qG77cUx5e
+ UigLeZbrp/pD7RE0Wtj9W/5x3LZ8sb9mRMC67TKs/3taa3MI0xSOoKJrCH/7wbsaP9/F
+ CKX+xBLJ0trdD1sQb33sqw+slC3RjpVgahzYf8WegmjY0YJluH651TIRD7zHCiFwZwQE
+ 7Z9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763050284; x=1763655084;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kuxBfdu6kY0KdaWE7A2OKXKhFmTlP7+laG2mTLCscIE=;
- b=gN/ojZ1n4nq2r0pB1cvn5Zi6z+TQTMLw7y859oyEPZIA/A9dzv6gnatTDoB0hXQ/qy
- 8fyMcb8iXbstImbFS1Erekr0r1s2jeq2rVGsYaSY2s09Oqpv8Td8ArzeiKD/rOe3FbDU
- +tN+8xXNVPPsfnFjkZ2BB8PSguoeRGSqPtAMzgKJfR3ZWRDg52v/HmeJPlqpDFvXes3C
- L6/so72viU7OZqNoYldy+IHsOte+aa/BNUUXciNfgy95gWurG/3kvSMLKi1N0ycykvoo
- 6r/HoNVgXBJoYOXVKcyvy3AxsHNOS0WhylyuOjISD3yTW5TLoLgVoYaNsbSDq0YT+Gm1
- DAng==
+ d=1e100.net; s=20230601; t=1763051850; x=1763656650;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=On6JZofhUkPNHYArOzq+yr8hKMj3t0AKWkSz0p32nas=;
+ b=VMZZfCddIRIMQzTdbMP9E8bFl/wEPW/kHVqp139v2JIo0X8U+ru7tvejgxzwhjoiP/
+ LIRN6VMD1S8v/a092QH4d3Hk44V2DzrhcJ9OeZ8RR83NKfhlU6a66rUnCnHD314TWUSa
+ 0k+MtCa75gJygcM29exolQ/QuBqTOXBduZLWy9Fb/Q/DqERw4ZBXoqAA8msyEaFybtcO
+ ldF81CM7wwiPYzLzpVq/RvspRuxVw6OFEKvsmyKcBmqRFO/uvsKvMMDQ/KGwBGCoaMsD
+ gW5Q3od+07+FKYv0MCrN1W8RPJ0eWZLM21JpeqTWELtIDp8E2Fepvqotu6ERVImVtfxO
+ Mfpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVD4iw8oU7RNmbBndzmQcqoGZJeoMtT5ccZkHMVWxRADvcrLvKO0tOfjHpgN1oI96dwPJS6gRz/ZJw0@nongnu.org
-X-Gm-Message-State: AOJu0YwjtOvfwTPUxgLCpJ9e4/3+QNOPbXnBfdAS79smt1VkixU1lHwQ
- gYA48RPwnjnbM5RiLciy+BICXw/2Qx8O6AwvvaI25gC6vXP1zMNm7rWAbyVgwzFgLby5IEDG8yW
- ExiEkNf/eqx7A8DZKavoGnV5NuPI5B5TDKI3Ai1B9jFmcbGMOUvgZ9KDI
-X-Gm-Gg: ASbGncseoAfGR/OVdoViasJfw36Ot93EFUUG5wzK986r6sQvv4YxtYWIWhVitZxeAgM
- 7z105Eo9e5DOvATK0ioE5H5K1Ykm03L610ezvgNDVET2BDZrsKhnKv7cLs1+S4iEMAuK8RG5uQU
- J1WNDF0UrxfXOWGBvMCpQLUWSfJr4fWPkxZntOlCnt9flApgLQFmVCg6j0TwHkztP22w57/T543
- BfUGoklvbsWEm9bQfS5ZMS28hU6flvfIWsPOjIw3Jcn4B+YS+9whuKqqfRhsflfNYi5VRnqjJXM
- Lc1O3c2/iD1V9f+C6jLYgFMFYabWAuBctZEMzRdVlkzZbjn4iGVpFgoSdGF9QlvTfgH3lDhB9eN
- yASfneyLTVIVbO3eyNy9P+cqnKYtokmyKaLqvkloOBtuzDA==
-X-Received: by 2002:a05:620a:4726:b0:8b1:be0f:da52 with SMTP id
- af79cd13be357-8b29b76cb38mr964928985a.7.1763050284352; 
- Thu, 13 Nov 2025 08:11:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+YhppjKRVYtghjQNQUOILcFalSAKjrwgJUOiVYlATXBb8dSR3XEP2h1zxVAWnf68zVXrisw==
-X-Received: by 2002:a05:620a:4726:b0:8b1:be0f:da52 with SMTP id
- af79cd13be357-8b29b76cb38mr964921585a.7.1763050283791; 
- Thu, 13 Nov 2025 08:11:23 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b2aeeb1487sm156162385a.19.2025.11.13.08.11.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Nov 2025 08:11:23 -0800 (PST)
-Message-ID: <c3c00640-5d27-4dc5-99af-daf5fa48893b@redhat.com>
-Date: Thu, 13 Nov 2025 17:11:19 +0100
+ AJvYcCXu5Q6ZiTj3qZiib1VBOmekGf31MI9nnhQK+B1d1bx+M90agoGms4ZrzcQt67JfSeFL3b/2ZzD7KbB4@nongnu.org
+X-Gm-Message-State: AOJu0YwbnkLS14IcKFVH2b2Ag1m3BOaS0zCEm78p8Ghi9DV5CQ8m9cXj
+ WMEuKpDwWQYX6RPqCuM4ZltfNXsUcK91tjoJjPScEOHQdCDgXJTvGQh79mC1k+SmbWVoBfmIFel
+ KfdOqaGIZss+7il/HYX3AjvbeHce37jntQzqC12dw7iedEsZIp/hBAzgS
+X-Gm-Gg: ASbGnctK0moJEWZQnvh4ArnmNSVIgUecDKrIYsOXAIQEcIoPjjlsGDDbT6yccEHgswg
+ pJb138Z6IuaG9SoI3NGKhLyKFeOI/XDoT6SB/ZyHxf5vsTHhz7GuIhbqDgdDecBNmSnUhGzW/DY
+ zSYDnA58uQkpH4W2Jbbtrmv9oaxVwcD8M/EZiP1z0XgADkmu1D5zSIk5eTTgobprb3pdCXc9n1A
+ pas82IrB9l0C/qMshrZKBhImLuN9sbfEsG/lae1wmxKaf/8r0Vrr3LJh450XaAdZba9cwG7gkMw
+ /xBB1Kf1kQnNWP7ZUMhx9ho8lViiwjSRE2ONVOk+COtq4bpcplB02h/6KqtRZ5H4HMBhWj3/MGa
+ XJg==
+X-Received: by 2002:a05:620a:2985:b0:8b2:6a47:f5ff with SMTP id
+ af79cd13be357-8b29b82b8a5mr897246985a.86.1763051850226; 
+ Thu, 13 Nov 2025 08:37:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHw+RwkNx0l+R4dJHmNGdpBT+MqeCcZfXPktlVOrmgUuQmsiBbzLajBrAobS2r8sVWBMzaNYw==
+X-Received: by 2002:a05:620a:2985:b0:8b2:6a47:f5ff with SMTP id
+ af79cd13be357-8b29b82b8a5mr897241685a.86.1763051849610; 
+ Thu, 13 Nov 2025 08:37:29 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b2aee9e210sm160922285a.4.2025.11.13.08.37.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Nov 2025 08:37:29 -0800 (PST)
+Date: Thu, 13 Nov 2025 11:37:25 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
+ farosas@suse.de, jinpu.wang@ionos.com, thuth@redhat.com,
+ berrange@redhat.com
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+Message-ID: <aRYJRZyNrDcDzTuG@x1.local>
+References: <20251107020149.3223-1-jasowang@redhat.com>
+ <20251113110004-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH 1/7] target/arm/machine: Improve traces on register
- mismatch during migration
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com, gshan@redhat.com,
- ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
-References: <20251016140039.250111-1-eric.auger@redhat.com>
- <20251016140039.250111-2-eric.auger@redhat.com> <877bwtvaj7.fsf@redhat.com>
- <791e0383-c4c7-49bf-863c-d45428f3e48d@redhat.com> <874iqyrnt3.fsf@redhat.com>
- <CAFEAcA8F2JFR-X9oWH9cX+qESWDUbxfU+ZiPmFg2h05dgb4gRQ@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA8F2JFR-X9oWH9cX+qESWDUbxfU+ZiPmFg2h05dgb4gRQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251113110004-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,39 +119,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Nov 13, 2025 at 11:09:32AM -0500, Michael S. Tsirkin wrote:
+> On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
+> > We used to clear features silently in virtio_net_get_features() even
+> > if it is required. This complicates the live migration compatibility
+> > as the management layer may think the feature is enabled but in fact
+> > not.
+> > 
+> > Let's add a strict feature check to make sure if there's a mismatch
+> > between the required feature and peer, fail the get_features()
+> > immediately instead of waiting until the migration to fail. This
+> > offload the migration compatibility completely to the management
+> > layer.
+> > 
+> > Signed-off-by: Jason Wang <jasowang@redhat.com>
+> 
+> This is not really useful - how do users know how to tweak their
+> command lines?
+> We discussed this many times.
+> To try and solve this you need a tool that will tell you how to start
+> VM on X to make it migrateable to Y or Z.
+> 
+> 
+> More importantly,
+> migration is a niche thing and breaking booting perfectly good VMs 
+> just for that seems wrong.
 
+IMHO Jason's proposal is useful in that it now provides a way to provide
+ABI stablility but allows auto-ON to exist.
 
-On 11/13/25 4:01 PM, Peter Maydell wrote:
-> On Thu, 13 Nov 2025 at 14:48, Cornelia Huck <cohuck@redhat.com> wrote:
->> On Thu, Nov 13 2025, Eric Auger <eric.auger@redhat.com> wrote:
->>
->>>>> +    #define MAX_CPREG_VMSTATE_ANOMALIES 10
->>>>> +    uint64_t cpreg_vmstate_missing_indexes[MAX_CPREG_VMSTATE_ANOMALIES];
->>>>> +    int32_t cpreg_vmstate_missing_indexes_array_len;
->>>>> +    uint64_t cpreg_vmstate_unexpected_indexes[MAX_CPREG_VMSTATE_ANOMALIES];
->>>>> +    int32_t cpreg_vmstate_unexpected_indexes_array_len;
->>>> "indices"?
->>> Originally we had
->>>    uint64_t *cpreg_vmstate_indexes;
->>> so I reused the same terminology
->>>
->>> As a non native english speaker I don't know if the usage is wrong. I
->>> thought some references on the net though
->> Not a native English speaker, either; wiktionary says both are valid, so
->> probably a matter of taste.
-> Mmm. I tend to go with "indexes" as being clearer (especially
-> for non-native speakers) than "indices". Within QEMU sources
-> there are twice as many "indexes" as "indices".
-OK thanks. I will keep it.
+If we think migration is optional, we could add a migration blocker where
+strict check flag is set to OFF, as I mentioned in the email reply to Dan.
+As that implies the VM ABI is not guaranteed.
 
-Eric
->
-> thanks
-> -- PMM
->
+Thanks,
+
+> 
+> 
+> If you want to keep this off by default, and have management
+> enable this if it knows what it's doing, then I don't really
+> care.
+
+-- 
+Peter Xu
 
 
