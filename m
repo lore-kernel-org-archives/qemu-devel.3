@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571DFCD4F5F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 08:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1151ACD5BA2
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 08:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJT5a-0001Jl-0X; Thu, 13 Nov 2025 03:53:58 -0500
+	id 1vJT8O-0004cS-Mn; Thu, 13 Nov 2025 03:56:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vJT5T-0001D9-AG
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 03:53:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vJT89-0004Sl-Nj
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 03:56:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vJT5O-0001qH-Se
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 03:53:50 -0500
+ id 1vJT83-0002F9-9I
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 03:56:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763024025;
+ s=mimecast20190719; t=1763024188;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=5xpAhBR+RDcMUel8zK04PX2o2nGk1xXVph5O4YzxwBI=;
- b=eCtq3H0yU+WSHsWSunSEhjJhok2tV3W5RZw0KbQ+uAju0jG7l1PWoNCzSf4P+InI5hrkij
- IC9vNEqv+dtBWyShP95G2ZY6lg5IHql6+pJscU1mZk+ScaEW3o4ch/tKkgynqeWwN3cUy5
- YeIn45bN2udPyiZuy35VAFtPVsyesRw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=czolCu1rTBBLtCLe92zG257pGtJwA3hzlnuGosqd/4E=;
+ b=MncNleEKSxlubOCW/cH6yeE2zSBprYOUR2SfSTauyyyJvR7B/P3fwD+iW2JdAUsZNB0Tbf
+ nO83wfOx/Wp8Y8GodSSRxSbaPTwsxTZpdW7fDENk4eFuoB2gf9jnT8BxeJz4Y71TzXe/BB
+ xU77xzxRigWjXroE4cVfH6lT5dM1m48=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-Us67bDswOFG8AA-cnFVmqw-1; Thu,
- 13 Nov 2025 03:53:39 -0500
-X-MC-Unique: Us67bDswOFG8AA-cnFVmqw-1
-X-Mimecast-MFC-AGG-ID: Us67bDswOFG8AA-cnFVmqw_1763024018
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-Kl3Ls2ZVNaGVED6gzU2iNQ-1; Thu,
+ 13 Nov 2025 03:56:25 -0500
+X-MC-Unique: Kl3Ls2ZVNaGVED6gzU2iNQ-1
+X-Mimecast-MFC-AGG-ID: Kl3Ls2ZVNaGVED6gzU2iNQ_1763024184
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3602119560A1; Thu, 13 Nov 2025 08:53:38 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0247918005B0; Thu, 13 Nov 2025 08:56:24 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.56])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C8171955F1B; Thu, 13 Nov 2025 08:53:34 +0000 (UTC)
-Date: Thu, 13 Nov 2025 08:53:30 +0000
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F28F0180094B; Thu, 13 Nov 2025 08:56:20 +0000 (UTC)
+Date: Thu, 13 Nov 2025 08:56:17 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, mst@redhat.com,
- qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com,
- thuth@redhat.com
-Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
-Message-ID: <aRWcimmBN23VzH55@redhat.com>
-References: <20251107020149.3223-1-jasowang@redhat.com>
- <aRUCXvHkpfZgZCR0@x1.local>
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v3 05/13] qio: Protect NetListener callback with mutex
+Message-ID: <aRWdMXPSXk76LGt3@redhat.com>
+References: <20251112224032.864420-15-eblake@redhat.com>
+ <20251112224032.864420-20-eblake@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aRUCXvHkpfZgZCR0@x1.local>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251112224032.864420-20-eblake@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -73,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,276 +90,92 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 12, 2025 at 04:55:42PM -0500, Peter Xu wrote:
-> On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
-> > We used to clear features silently in virtio_net_get_features() even
-> > if it is required. This complicates the live migration compatibility
-> > as the management layer may think the feature is enabled but in fact
-> > not.
-> > 
-> > Let's add a strict feature check to make sure if there's a mismatch
-> > between the required feature and peer, fail the get_features()
-> > immediately instead of waiting until the migration to fail. This
-> > offload the migration compatibility completely to the management
-> > layer.
-> > 
-> > Signed-off-by: Jason Wang <jasowang@redhat.com>
+On Wed, Nov 12, 2025 at 04:31:05PM -0600, Eric Blake wrote:
+> Without a mutex, NetListener can run into this data race between a
+> thread changing the async callback callback function to use when a
+> client connects, and the thread servicing polling of the listening
+> sockets:
 > 
-> Jason, thanks for help looking into the problem!
+>  Thread 1:
+>        qio_net_listener_set_client_func(lstnr, f1, ...);
+>            => foreach sock: socket
+>                => object_ref(lstnr)
+>                => sock_src = qio_channel_socket_add_watch_source(sock, ...., lstnr, object_unref);
 > 
-> Am I right that after this patch applied, whenever a new QEMU boots with
-> the new machine types (e.g. having USO* by default ON), will fail to boot
-> on an old kernel that doesn't support USO*, but ask the users to turn off
-> USO* features explicitly in the virtio-net devices?
+>   Thread 2:
+>        poll()
+>           => event POLLIN on socket
+>                => ref(GSourceCallback)
+>                => if (lstnr->io_func) // while lstnr->io_func is f1
+>                     ...interrupt..
+> 
+>   Thread 1:
+>        qio_net_listener_set_client_func(lstnr, f2, ...);
+>           => foreach sock: socket
+>                => g_source_unref(sock_src)
+>           => foreach sock: socket
+>                => object_ref(lstnr)
+>                => sock_src = qio_channel_socket_add_watch_source(sock, ...., lstnr, object_unref);
+> 
+>   Thread 2:
+>                => call lstnr->io_func(lstnr->io_data) // now sees f2
+>                => return dispatch(sock)
+>                => unref(GSourceCallback)
+>                   => destroy-notify
+>                      => object_unref
+> 
+> Found by inspection.  This is a SEGFAULT waiting to happen if f2 can
+> become NULL because thread 1 deregisters the user's callback while
+> thread 2 is trying to service the callback.  Other messes are also
+> theoretically possible, such as running callback f1 with an opaque
+> pointer that should only be passed to f2 (if the client code were to
+> use more than just a binary choice between a single async function or
+> NULL).
+> 
+> Mitigating factor: if the code that modifies the QIONetListener can
+> only be reached by the same thread that is executing the polling and
+> async callbacks, then we are not in a two-thread race documented above
+> (even though poll can see two clients trying to connect in the same
+> window of time, any changes made to the listener by the first async
+> callback will be completed before the thread moves on to the second
+> client).  However, QEMU is complex enough that I was unable to state
+> with certainty whether a QMP command (such as nbd-server-stop, which
+> does modify the net listener) can ever be serviced in a thread
+> distinct from the one trying to do the async callbacks.  Similarly, I
+> did not spend the time trying to add sleeps or execute under gdb to
+> try and actually trigger the race in practice.
+> 
+> At any rate, it is worth having the API be robust.  To ensure that
+> modifying a NetListener can be safely done from any thread, add a
+> mutex that guarantees atomicity to all members of a listener object
+> related to callbacks.  This problem has been present since
+> QIONetListener was introduced.
+> 
+> Note that this does NOT prevent the case of a second round of the
+> user's old async callback being invoked with the old opaque data, even
+> when the user has already tried to change the async callback during
+> the first async callback; it is only about ensuring that there is no
+> sharding (the eventual io_func(io_data) call that does get made will
+> correspond to a particular combination that the user had requested at
+> some point in time, and not be sharded to a combination that never
+> existed in practice).  In other words, this patch maintains the status
+> quo that a user's async callback function already needs to be robust
+> to parallel clients landing in the same window of poll servicing, even
+> when only one client is desired.
+> 
+> CC: qemu-stable@nongnu.org
+> Fixes: 53047392 ("io: introduce a network socket listener API", v2.12.0)
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> 
+> ---
+> v3: new patch
+> ---
+>  include/io/net-listener.h |  1 +
+>  io/net-listener.c         | 58 +++++++++++++++++++++++++++++----------
+>  2 files changed, 44 insertions(+), 15 deletions(-)
 
-What kernel version are we talking about where there will be
-incompatibility ?  Is it old enough that it pre-dates our
-platform support matrix requirements ?  Ubuntu 22.04 and
-RHEL-9 are currently our targets with the oldest kernels
-that we need to retain compatibility with as the bare min.
-I would expect machine types to work on these old platforms
-without users to having to manually disable default set
-features.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-
-
-> 
-> Thanks,
-> 
-> > ---
-> >  hw/core/machine.c              |   1 +
-> >  hw/net/virtio-net.c            | 153 +++++++++++++++++++++++++--------
-> >  include/hw/virtio/virtio-net.h |   1 +
-> >  3 files changed, 119 insertions(+), 36 deletions(-)
-> > 
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index 681adbb7ac..a9e43c4990 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -40,6 +40,7 @@
-> >  
-> >  GlobalProperty hw_compat_10_1[] = {
-> >      { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-> > +    { TYPE_VIRTIO_NET, "strict-peer-feature-check", "false"},
-> >  };
-> >  const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
-> >  
-> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > index 33116712eb..3acc5ed4a6 100644
-> > --- a/hw/net/virtio-net.c
-> > +++ b/hw/net/virtio-net.c
-> > @@ -3090,53 +3090,120 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-> >      virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
-> >  
-> >      if (!peer_has_vnet_hdr(n)) {
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
-> > -
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
-> > -
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> > -
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> > -        virtio_clear_feature_ex(features,
-> > -                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> > -        virtio_clear_feature_ex(features,
-> > -                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> > +        if (n->strict_peer_feature_check) {
-> > +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_CSUM) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO4) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_TSO6) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_ECN) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_ECN) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_HASH_REPORT)) {
-> > +                error_setg(errp, "virtio_net: peer doesn't support vnet hdr");
-> > +                return;
-> > +            }
-> > +        } else {
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO6);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_ECN);
-> > +
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_CSUM);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_TSO6);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_ECN);
-> > +
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> > +
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> > +            virtio_clear_feature_ex(features,
-> > +                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> > +            virtio_clear_feature_ex(features,
-> > +                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> >  
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> > +        }
-> >      }
-> >  
-> >      if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-> > +        if (n->strict_peer_feature_check) {
-> > +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UFO) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UFO)) {
-> > +                error_setg(errp, "virtio_net: peer doesn't support UFO");
-> > +                return;
-> > +            }
-> > +        } else {
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UFO);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UFO);
-> > +        }
-> >      }
-> >      if (!peer_has_uso(n)) {
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> > +        if (n->strict_peer_feature_check) {
-> > +            if (virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_USO) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO4) |
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_USO6)) {
-> > +                error_setg(errp, "virtio_net: peer doesn't support USO");
-> > +                return;
-> > +            }
-> > +        } else {
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_USO);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
-> > +        }
-> >      }
-> >  
-> >      if (!peer_has_tunnel(n)) {
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> > -        virtio_clear_feature_ex(features,
-> > -                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> > -        virtio_clear_feature_ex(features,
-> > -                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> > +        if (n->strict_peer_feature_check) {
-> > +            if (virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM) |
-> > +                virtio_has_feature_ex(features,
-> > +                                      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM)) {
-> > +                error_setg(errp, "virtio_net: peer doesn't support tunnel GSO");
-> > +                return;
-> > +            }
-> > +        } else {
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> > +            virtio_clear_feature_ex(features,
-> > +                                    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> > +            virtio_clear_feature_ex(features,
-> > +                                    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> > +        }
-> >      }
-> >  
-> >      if (!get_vhost_net(nc->peer)) {
-> >          if (!use_own_hash) {
-> > -            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> > -            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> > +            if (n->strict_peer_feature_check) {
-> > +                if (virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT) |
-> > +                    virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-> > +                    error_setg(errp,
-> > +                               "virtio_net: peer doesn't support RSS/HASH_REPORT");
-> > +                    return;
-> > +                }
-> > +            } else {
-> > +                virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> > +                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> > +            }
-> >          } else if (virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-> >              virtio_net_load_ebpf(n, errp);
-> >          }
-> > @@ -3145,14 +3212,26 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-> >      }
-> >  
-> >      if (!use_peer_hash) {
-> > -        virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> > +        if (n->strict_peer_feature_check &&
-> > +            virtio_has_feature_ex(features, VIRTIO_NET_F_HASH_REPORT)) {
-> > +            error_setg(errp, "virtio_net: peer doesn't HASH_REPORT");
-> > +            return;
-> > +        } else {
-> > +            virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> > +        }
-> >  
-> >          if (!use_own_hash || !virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
-> >              if (!virtio_net_load_ebpf(n, errp)) {
-> >                  return;
-> >              }
-> >  
-> > -            virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> > +            if (n->strict_peer_feature_check &&
-> > +                virtio_has_feature_ex(features, VIRTIO_NET_F_RSS)) {
-> > +                error_setg(errp, "virtio_net: fail to attach eBPF for RSS");
-> > +                return;
-> > +            } else {
-> > +                virtio_clear_feature_ex(features, VIRTIO_NET_F_RSS);
-> > +            }
-> >          }
-> >      }
-> >  
-> > @@ -4313,6 +4392,8 @@ static const Property virtio_net_properties[] = {
-> >                                 host_features_ex,
-> >                                 VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
-> >                                 false),
-> > +    DEFINE_PROP_BOOL("strict-peer-feature-check", VirtIONet,
-> > +                     strict_peer_feature_check, true),
-> >  };
-> >  
-> >  static void virtio_net_class_init(ObjectClass *klass, const void *data)
-> > diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-> > index 5b8ab7bda7..abd4ca4bb0 100644
-> > --- a/include/hw/virtio/virtio-net.h
-> > +++ b/include/hw/virtio/virtio-net.h
-> > @@ -222,6 +222,7 @@ struct VirtIONet {
-> >      /* primary failover device is hidden*/
-> >      bool failover_primary_hidden;
-> >      bool failover;
-> > +    bool strict_peer_feature_check;
-> >      DeviceListener primary_listener;
-> >      QDict *primary_opts;
-> >      bool primary_opts_from_json;
-> > -- 
-> > 2.34.1
-> > 
-> 
-> -- 
-> Peter Xu
-> 
 
 With regards,
 Daniel
