@@ -4,64 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B820CD4F35
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E5BACD4F2C
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJM7v-0001o8-Du; Wed, 12 Nov 2025 20:27:56 -0500
+	id 1vJM8x-0003lj-Lg; Wed, 12 Nov 2025 20:28:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vJM7T-0001a8-88; Wed, 12 Nov 2025 20:27:27 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vJM7Q-00082a-2Q; Wed, 12 Nov 2025 20:27:26 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4d6N0v5YcLz8Xs6y;
- Thu, 13 Nov 2025 09:27:11 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
- by mse-fl1.zte.com.cn with SMTP id 5AD1R8JR083952;
- Thu, 13 Nov 2025 09:27:08 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp05[null]) by mapi (Zmail) with MAPI id mid32;
- Thu, 13 Nov 2025 09:27:09 +0800 (CST)
-Date: Thu, 13 Nov 2025 09:27:09 +0800 (CST)
-X-Zmail-TransId: 2afc691533ed0af-7d401
-X-Mailer: Zmail v1.0
-Message-ID: <2025111309270952219AjKpVEnbJXB7fcGTE4g@zte.com.cn>
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <imammedo@redhat.com>, <alistair.francis@wdc.com>,
- <dbarboza@ventanamicro.com>, <sunilvl@ventanamicro.com>,
- <anisinha@redhat.com>
-Cc: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <liwei1518@gmail.com>,
- <zhiwei_liu@linux.alibaba.com>, <mst@redhat.com>,
- <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>, <liu.xuemei1@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIHY0IFJFU0VORCAwLzJdIGh3L3Jpc2N2L3ZpcnQ6IEFkZCBhY3BpIGdlZCBhbmQgcG93ZXJkb3duIHN1cHBvcnQ=?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 5AD1R8JR083952
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 13 Nov 2025 09:27:11 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 691533EF.000/4d6N0v5YcLz8Xs6y
-Received-SPF: pass client-ip=160.30.148.35;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vJM8t-0003ZN-Rh
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:28:55 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vJM8q-0008Ca-FZ
+ for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:28:55 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx379QNBVpfq0iAA--.7351S3;
+ Thu, 13 Nov 2025 09:28:48 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxfcFNNBVpQRcxAQ--.20079S3;
+ Thu, 13 Nov 2025 09:28:47 +0800 (CST)
+Subject: Re: [PATCH V2 2/2] fix pci device can't alloc irq from fdt
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
+References: <cover.1762917185.git.lixianglai@loongson.cn>
+ <7f6ec86e3425b12a337d71d963a0e26577c84f51.1762917185.git.lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <342b3d95-dc51-f938-ddd1-bd3b5c1b7688@loongson.cn>
+Date: Thu, 13 Nov 2025 09:26:22 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <7f6ec86e3425b12a337d71d963a0e26577c84f51.1762917185.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxfcFNNBVpQRcxAQ--.20079S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZF1kGF4rXr4DWrWfCr47Jrc_yoWrKw1fpF
+ WDC3ZIgrWxWr1I939xA3WUXF13Kr1fCry8twn7Xr10krnxur1xXr4DK3yIyFWUG3ykJayU
+ tFsIga4Ig3WUJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7XTmDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.736,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,37 +82,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-Add riscv acpi powerdown support
 
-Changes in v4:
-- Added modifies of DSDT blob in another patch
-- Link to v3: https://lore.kernel.org/qemu-riscv/20250723113739751COZ5PkRzx6aXEuKzsHhm_@zte.com.cn/
+On 2025/11/12 上午11:26, Xianglai Li wrote:
+> When we use the -kernel parameter to start an elf format kernel relying on
+> fdt, we get the following error:
+> 
+> pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.0: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.0: PME: Signaling with IRQ 19
+> pcieport 0000:00:01.0: AER: enabled with IRQ 19
+> pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.1: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.1: PME: Signaling with IRQ 20
+> pcieport 0000:00:01.1: AER: enabled with IRQ 20
+> pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.2: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.2: PME: Signaling with IRQ 21
+> pcieport 0000:00:01.2: AER: enabled with IRQ 21
+> pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.3: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.3: PME: Signaling with IRQ 22
+> pcieport 0000:00:01.3: AER: enabled with IRQ 22
+> pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
+> 
+> This is because  the description of interrupt-cell is missing in the pcie
+> irq map.  And there is a lack of a description of the interrupt trigger
+> type.  Now it is corrected and the correct interrupt-cell is added in the
+> pcie irq map.
+> 
+> Refer to the implementation in arm and add some comments.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> 
+>   hw/loongarch/virt-fdt-build.c | 43 +++++++++++++++++++++++------------
+>   1 file changed, 28 insertions(+), 15 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+> index 7333019cf7..73ac28bcba 100644
+> --- a/hw/loongarch/virt-fdt-build.c
+> +++ b/hw/loongarch/virt-fdt-build.c
+> @@ -317,10 +317,13 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
+>                                         uint32_t *pch_pic_phandle)
+>   {
+>       int pin, dev;
+> -    uint32_t irq_map_stride = 0;
+> +    int irq_map_stride = 0;
+This change may be unnecessary.
+>       uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
+>       uint32_t *irq_map = full_irq_map;
+>       const MachineState *ms = MACHINE(lvms);
+> +    uint32_t pch_pic_handle = *pch_pic_phandle;
+This change may be unnecessary also, let us keep smallest modification.
+> +    uint32_t pin_mask;
+> +    uint32_t devfn_mask;
+>   
+>       /*
+>        * This code creates a standard swizzle of interrupts such that
+> @@ -339,31 +342,39 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
+>               int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
+>               int i = 0;
+>   
+> -            /* Fill PCI address cells */
+> -            irq_map[i] = cpu_to_be32(devfn << 8);
+> -            i += 3;
+> -
+> -            /* Fill PCI Interrupt cells */
+> -            irq_map[i] = cpu_to_be32(pin + 1);
+> -            i += 1;
+> -
+> -            /* Fill interrupt controller phandle and cells */
+> -            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
+> -            irq_map[i++] = cpu_to_be32(irq_nr);
+> +            uint32_t map[] = {
+> +                devfn << 8, 0, 0,             /* devfn */
+Is there any specification for two consecutive 0, 0 with interrupt-map? 
+Although many of code is copied from other places, we had better know 
+howto since the problem comes out already -:)
 
-Changes in v3:
-- Added missing param to virt_is_acpi_enabled
-- Fixed failure of bios-tables-test
-- Link to v2: https://lore.kernel.org/qemu-riscv/202506201130099861lTkD839Hh6oko8Jo2W2H@zte.com.cn/
+Regards
+Bibo Mao
+> +                pin + 1,                      /* PCI pin */
+> +                pch_pic_handle,              /* interrupt controller handle */
+> +                irq_nr,                       /* irq number */
+> +                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
+>   
+>               if (!irq_map_stride) {
+> -                irq_map_stride = i;
+> +                irq_map_stride = sizeof(map) / sizeof(uint32_t);
+>               }
+> +
+> +            /* Convert map to big endian */
+> +            for (i = 0; i < irq_map_stride; i++) {
+> +                irq_map[i] = cpu_to_be32(map[i]);
+> +            }
+> +
+>               irq_map += irq_map_stride;
+>           }
+>       }
+>   
+> -
+>       qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
+>                        PCI_NUM_PINS * PCI_NUM_PINS *
+>                        irq_map_stride * sizeof(uint32_t));
+> +
+> +    /* The pci slot only needs to specify the matching of the lower bit */
+> +    devfn_mask = cpu_to_be16(PCI_DEVFN((PCI_NUM_PINS - 1), 0));
+> +    /* The pci pin only needs to match the specified low bit */
+> +    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
+> +
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
+> -                     0x1800, 0, 0, 0x7);
+> +                           devfn_mask,
+> +                           0, 0,
+> +                           pin_mask);
+>   }
+>   
+>   static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+> @@ -400,6 +411,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+>                                    2, base_mmio, 2, size_mmio);
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
+>                              0, *pch_msi_phandle, 0, 0x10000);
+> +
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+>       fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
+>       g_free(nodename);
+>   }
+> 
 
-Changes in v2:
-- Unwrappered acpi_dsdt_add_ged function
-- Modified base address of VIRT_ACPI_GED
-- Added conditions for function calls
-- Adjusted code formatting
-- Link to v1: https://lore.kernel.org/qemu-riscv/202506191556260735QxWC8sxRwFURYEvlD24y@zte.com.cn/
-
-Xuemei Liu (2):
-  hw/riscv/virt: Add acpi ged and powerdown support
-  tests/acpi: Add acpi ged and power button in DSDT for RISC-V
-
- hw/riscv/Kconfig                  |   1 +
- hw/riscv/virt-acpi-build.c        |  10 +++++++++
- hw/riscv/virt.c                   |  35 ++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h           |   4 ++++
- tests/data/acpi/riscv64/virt/DSDT | Bin 3538 -> 3681 bytes
- 5 files changed, 50 insertions(+)
-
--- 
-2.27.0
 
