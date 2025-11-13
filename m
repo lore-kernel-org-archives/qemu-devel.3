@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED796CD4F2F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6778CD4F2F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 05:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJPPI-0004xh-0b; Wed, 12 Nov 2025 23:58:05 -0500
+	id 1vJPQ6-0005xy-CP; Wed, 12 Nov 2025 23:58:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOl-0004jQ-FI; Wed, 12 Nov 2025 23:57:38 -0500
+ id 1vJPPr-0005St-Uw; Wed, 12 Nov 2025 23:58:40 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJPOi-0001c6-E0; Wed, 12 Nov 2025 23:57:31 -0500
+ id 1vJPPq-0001cQ-Aw; Wed, 12 Nov 2025 23:58:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763009848; x=1794545848;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=z0jYZkVqhwfntwsjsHs2N/NJKGYapCAZFN4qvzCE/qg=;
- b=jc6hJAl2DAmr0W21Gey3wBiMcOPPP0tFjtBKUno2LMfC+PnWNPr8IY1Z
- bW17GNDKNVi7IjPekAXWlKo29SF5lENEqFM/eDteSYZ4M+WrcLCT8Ois1
- hbBG1qOZTE3UtAsN5r1oO2yvdByXDJKgKYDv2dA7FtTm+xPC55ZpbVIbV
- 27y0JZRemomkhxB7eSnYInAdTnLdPiNxuWsjozqsO64nYusk+0okt2k75
- +VLUboCYEklSy8CXV2Nx66IIi2r+lO6481EaSSzhR+8P1Z8Dm4zaUoBTY
- Ysz4h1CEoYa5rN0VtkoUMYD378UQZx3V4QUkZ6My1daZ4qxSrnfs8HHiP w==;
-X-CSE-ConnectionGUID: Vm9MuYMVSRiIsyxcZ0a+FQ==
-X-CSE-MsgGUID: e7oahj/RRfGL0B61dm6SzQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682056"
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682056"
+ t=1763009918; x=1794545918;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=193x3cEaO/W8kqPWarKPTbJLO0e1R1MsTOdBlF+JlVs=;
+ b=SozMra+rrd9GSmNxOwnKyGaOjEhN4XWWN0xxZbX/VIKrmTHz483EvEVo
+ GefGiFUP9Adm987df9uiuWVWFZT6S8SVGTWRf+CPl9Q43bhsolV3Q92m3
+ /YrOG/oU5MGLfmHjLxmZM8gActC7bjxULkuLu5GMsE2PTGJGVlQ9wD2Jo
+ 5xtq6VYxgKtlT6NtY9kJ72QVEQ5c87DHr8oUPLhPEoyN91WkuKX5Acemr
+ hxOmZx9UstitpflOyxT3yGJcURbTUjPRASYW4WwJw8y3DVw/DRcfu5dkk
+ 75ZJykiXmI526XWIo8KrftDC7Sux7/MGZk2+1DyYLrI74LKt75Ru6sN5x g==;
+X-CSE-ConnectionGUID: SLqfU5ZwSia9GjunceJePQ==
+X-CSE-MsgGUID: M+N4W89sRkyJ9D2eXeD2cw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11611"; a="67682172"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="67682172"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Nov 2025 20:57:23 -0800
-X-CSE-ConnectionGUID: 6kMSflpcQ+i4F3zX7OZ3rQ==
-X-CSE-MsgGUID: FiBZj2+ITAS/4yJM3aOM3Q==
+ 12 Nov 2025 20:58:04 -0800
+X-CSE-ConnectionGUID: MIinsMTLTLyyjQLXC4FnZg==
+X-CSE-MsgGUID: AEFg1L/CR1G4/wZZbloVew==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663220"
+X-IronPort-AV: E=Sophos;i="6.19,301,1754982000"; d="scan'208";a="193663482"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:57:20 -0800
+ by fmviesa005.fm.intel.com with ESMTP; 12 Nov 2025 20:58:02 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
 Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 00/22] rust/hpet: Move towards lockless IO, partly
-Date: Thu, 13 Nov 2025 13:19:15 +0800
-Message-Id: <20251113051937.4017675-1-zhao1.liu@intel.com>
+Subject: [PATCH 20/22] rust/hpet: Apply Migratable<> wrapper and
+ ToMigrationState for HPETRegisters
+Date: Thu, 13 Nov 2025 13:19:35 +0800
+Message-Id: <20251113051937.4017675-21-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251113051937.4017675-1-zhao1.liu@intel.com>
+References: <20251113051937.4017675-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
@@ -80,123 +83,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Before using Mutex<> to protect HPETRegisters, it's necessary to apply
+Migratable<> wrapper and ToMigrationState first since there's no
+pre-defined VMState for Mutex<>.
 
-This series tries to (partly) synchronize the lockless IO of the C HPET
-to Rust HPET, and deploy Migratable<>/ToMigrationState to HPET.
+Though HPETRegistersMigration and HPETTimerRegistersMigration structs are
+generated by ToMigrationState macro, their VMStates still need to be
+implemented by hand.
 
-It's "partly" because this series only uses Mutex<> to protect registers
-and doesn't add SeqLock.
-
-This series is based on master branch at the commit 9febfa94b69b ("Merge
-tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging"). And
-you can also find the code here:
-
-https://gitlab.com/zhao.liu/qemu/-/tree/rust-hpet-refactor-v1-11-11-2025
-
-Thanks for your review!
-
-
-Overview
-========
-
-1. Replacing BqlRefCell<single register> with Mutex<HPETregisters>
-------------------------------------------------------------------
-
-In fact, the most part of this series is to convert
-BqlCell<single register> to BqlRefCell<HPETRegisters>. The difference
-between the two includes:
- * BqlCell<> is used for quick access but BqlRefCell<> would involve
-   the reference with bigger scope.
- * BqlRefCell<> doesn't allow multiple borrowing, which requires to take
-   care about lifetime management.
- * Placing all registers in HPETRegisters makes it more complex to
-   justify reference lifetime.
-
-However, once the conversion is complete, we only need to borrow
-BqlRefCell<> once during MMIO read/write operations. This makes replacing
-BqlRefCell<> with Mutex<> a straightforward way.
-
-And to address BQL context issue during lockless IO (like commit
-d99041a20328 ("hpet: guard IRQ handling with BQL")), this series
-introduce BqlGuard to provide BQL context by hand.
-
-But there's "difference": Rust HPET has stronger BQL guarantees and it
-uses BqlCell<> and BqlRefCell<> for many fields of HPETState, so that
-Rust HPET needs to provide BQL context for more cases that C HPET (which
-just guards IRQ handling). More details, please review Patch 22.
-
-
-2. Leverage Migartable<> and ToMigrationState
----------------------------------------------
-
-This series uses Migratable<> twice:
- * Patch 20 applies Migratable<> for BqlRefCell<>.
- * Patch 21 applies Migratable<> for Mutex<>.
-
-Migrable<> and ToMigrationState work well at the above cases.
-
-But there's one thing still missing (I just remember this when I'm writng
-this cover letter):
- * ToMigrationState for Timer
-
-The timer's ToMigrationState would be added in v2 or in a seperate
-patch.
-
-
-Open Question
-=============
-
-I'm still a bit unsure - can we provide a property option to control
-whether ToMigrationState automatically generates VMState, for simple
-case without version/subsection consideration?
-
-In this series, I implemented VMState for HPETTimerRegistersMigration
-and HPETRegistersMigration by hand. But doing such thing by hand for the
-generated struts seems not natural enough.
-
-
-Thanks and Best Regards,
-Zhao
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Zhao Liu (22):
-  rust/migration: Add Sync implementation for Migratable<>
-  rust/migration: Fix missing name in the VMSD of Migratable<>
-  rust/migration: Check name field in VMStateDescriptionBuilder
-  rust/bql: Add BqlGuard to provide BQL context
-  rust/bql: Ensure BQL locked early at BqlRefCell borrowing
-  rust/memory: Add enable_lockless_io binding
-  rust/hpet: Reduce unnecessary mutable self argument
-  rust/hpet: Rename HPETRegister to DecodedRegister
-  rust/hpet: Rename decoded "reg" enumeration to "target"
-  rust/hpet: Abstract HPETTimerRegisters struct
-  rust/hpet: Make timer register accessors as methods of
-    HPETTimerRegisters
-  rust/hpet: Abstract HPETRegisters struct
-  rust/hpet: Make global register accessors as methods of HPETRegisters
-  rust/hpet: Borrow HPETState.regs once in HPETState::post_load()
-  rust/hpet: Explicitly initialize complex fields in init()
-  rust/hpet: Pass &BqlRefCell<HPETRegisters> as argument during MMIO
-    access
-  rust/hpet: Maintain HPETTimerRegisters in HPETRegisters
-  rust/hpet: Borrow BqlRefCell<HPETRegisters> at top level
-  rust/hpet: Rename hpet_regs variables to regs
-  rust/hpet: Apply Migratable<> wrapper and ToMigrationState for
-    HPETRegisters
-  rust/hpet: Replace BqlRefCell<HPETRegisters> with Mutex<HPETRegisters>
-  rust/hpet: Enable lockless IO
+ rust/hw/timer/hpet/src/device.rs | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
- include/qemu/main-loop.h         |  22 +-
- rust/bql/src/cell.rs             |  16 +-
- rust/bql/src/lib.rs              | 101 ++++-
- rust/hw/timer/hpet/src/device.rs | 638 +++++++++++++++++++------------
- rust/migration/src/migratable.rs |   7 +
- rust/migration/src/vmstate.rs    |  15 +-
- rust/system/src/memory.rs        |  15 +-
- stubs/iothread-lock.c            |  11 +
- system/cpus.c                    |  10 +
- 9 files changed, 583 insertions(+), 252 deletions(-)
-
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 73a1c87abd95..42e2e8d070c3 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -18,7 +18,7 @@
+ };
+ use migration::{
+     self, impl_vmstate_struct, vmstate_fields, vmstate_of, vmstate_subsections, vmstate_validate,
+-    VMStateDescription, VMStateDescriptionBuilder,
++    Migratable, ToMigrationState, VMStateDescription, VMStateDescriptionBuilder,
+ };
+ use qom::{prelude::*, ObjectImpl, ParentField, ParentInit};
+ use system::{
+@@ -184,7 +184,7 @@ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+ }
+ 
+ #[repr(C)]
+-#[derive(Debug, Default)]
++#[derive(Debug, Default, ToMigrationState)]
+ pub struct HPETTimerRegisters {
+     // Memory-mapped, software visible timer registers
+     /// Timer N Configuration and Capability Register
+@@ -663,7 +663,7 @@ fn write(
+ }
+ 
+ #[repr(C)]
+-#[derive(Default)]
++#[derive(Default, ToMigrationState)]
+ pub struct HPETRegisters {
+     // HPET block Registers: Memory-mapped, software visible registers
+     /// General Capabilities and ID Register
+@@ -701,7 +701,7 @@ fn is_timer_int_active(&self, index: usize) -> bool {
+ pub struct HPETState {
+     parent_obj: ParentField<SysBusDevice>,
+     iomem: MemoryRegion,
+-    regs: BqlRefCell<HPETRegisters>,
++    regs: Migratable<BqlRefCell<HPETRegisters>>,
+ 
+     // Internal state
+     /// Capabilities that QEMU HPET supports.
+@@ -1120,16 +1120,17 @@ impl ObjectImpl for HPETState {
+         })
+         .build();
+ 
++// HPETTimerRegistersMigration is generated by ToMigrationState macro.
+ impl_vmstate_struct!(
+-    HPETTimerRegisters,
+-    VMStateDescriptionBuilder::<HPETTimerRegisters>::new()
++    HPETTimerRegistersMigration,
++    VMStateDescriptionBuilder::<HPETTimerRegistersMigration>::new()
+         .name(c"hpet_timer/regs")
+         .version_id(1)
+         .minimum_version_id(1)
+         .fields(vmstate_fields! {
+-            vmstate_of!(HPETTimerRegisters, config),
+-            vmstate_of!(HPETTimerRegisters, cmp),
+-            vmstate_of!(HPETTimerRegisters, fsb),
++            vmstate_of!(HPETTimerRegistersMigration, config),
++            vmstate_of!(HPETTimerRegistersMigration, cmp),
++            vmstate_of!(HPETTimerRegistersMigration, fsb),
+         })
+         .build()
+ );
+@@ -1151,17 +1152,18 @@ impl ObjectImpl for HPETState {
+ 
+ const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
+ 
++// HPETRegistersMigration is generated by ToMigrationState macro.
+ impl_vmstate_struct!(
+-    HPETRegisters,
+-    VMStateDescriptionBuilder::<HPETRegisters>::new()
++    HPETRegistersMigration,
++    VMStateDescriptionBuilder::<HPETRegistersMigration>::new()
+         .name(c"hpet/regs")
+         .version_id(2)
+         .minimum_version_id(2)
+         .fields(vmstate_fields! {
+-            vmstate_of!(HPETRegisters, config),
+-            vmstate_of!(HPETRegisters, int_status),
+-            vmstate_of!(HPETRegisters, counter),
+-            vmstate_of!(HPETRegisters, tn_regs),
++            vmstate_of!(HPETRegistersMigration, config),
++            vmstate_of!(HPETRegistersMigration, int_status),
++            vmstate_of!(HPETRegistersMigration, counter),
++            vmstate_of!(HPETRegistersMigration, tn_regs),
+         })
+         .build()
+ );
 -- 
 2.34.1
 
