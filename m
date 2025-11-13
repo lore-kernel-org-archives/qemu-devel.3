@@ -4,97 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF6B0CD8CAD
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 17:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07317CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 17:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJawo-0001Y8-8D; Thu, 13 Nov 2025 12:17:27 -0500
+	id 1vJb9z-0005bq-Pp; Thu, 13 Nov 2025 12:31:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vJavi-0000SZ-80
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:16:20 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vJavf-0006ZO-0h
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:16:17 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7aae5f2633dso1289419b3a.3
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 09:16:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJb9r-0005Yt-Au
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:30:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJb9p-0004MP-De
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 12:30:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763055050;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Sfb9rDcsR549HIBKdlZi74Kzx0c2W0GF1kOQc/lOnRw=;
+ b=HR+c/KCGQzRCj9Vxn6bPjyXSJqmvXREtJU++BoJtksyGVWsLaxLS2yo8eMKddD6yzosw5o
+ DX32Byoqa99/pk9ucNxDACJsgUHUgn91fo+ojouFq7aWdPYBauWak7fySxC4a+SbszN6dw
+ AV9bykdj2Ebd0K8UtpuNka+xbgKFstI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-491-pYJhKr9iO2qWJ7PlTUv0Jg-1; Thu, 13 Nov 2025 12:30:49 -0500
+X-MC-Unique: pYJhKr9iO2qWJ7PlTUv0Jg-1
+X-Mimecast-MFC-AGG-ID: pYJhKr9iO2qWJ7PlTUv0Jg_1763055049
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8a5b03118f4so667950585a.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 09:30:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1763054173; x=1763658973; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nmgh3LFk96HdrFD9152quz3Sn/dfARCWPL1thHveu/Q=;
- b=C+0xz9Q6436FDInTcBmo6p9z2CE2ka9ODSw+CNtPHAxJig87r3vMoc2Q1Q+u17d+sZ
- K0Sw+XE0XtuSK2GCJ1aBIMbiFrpysmikM36UJf+4hDnbdVWH2Dlkc1Um7/vwj9E/5U1j
- 4s4gxscw29TRABgvSeVFbhNoxJQnBqxuyuXRappVjpzlNXtsAOxguH5Lk8NTpv5LNqbX
- TaSNgtxK1GMU/SPy+qsjkdwPp/cw31Mvrb+T+eMUncOlY9CEOWe/jOhYzcvN8kDew3wX
- OX9hhjEnBLOgy4qOxlZA4856UohvVMkOVAyQZCH5yeKtg4Xejx0IVKIlGC5UbG86K8Kh
- n/vw==
+ d=redhat.com; s=google; t=1763055049; x=1763659849; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Sfb9rDcsR549HIBKdlZi74Kzx0c2W0GF1kOQc/lOnRw=;
+ b=SxIvRT2X2GGYRepBMye5ZzUH7i+ZiD7MT3GDB3MOLcsKXmGdsuT+HXu5XVf/E1B+67
+ 3Df2tadWlOqwi9Kt5ubrik8jjpgxrpzyLi/KEK1NVX9yRkCbEir/ByEeLVxy3oqvrOV6
+ xuhfpDWyvkbiSnqyU3gtqFEeV99ICJYrrCf9sXoNxRXdTcEd5nm9SpFiARslIhFGtkX2
+ W+usvE69KxI0SncVdUDq/mlxvnvs5tAiOieaQF5BedOOKyiwL5JaNjC23yj+KQ7+M9uo
+ byCER/y11My4JxtTT20rkjJxN8B3EzaGVg6AfpWX94NZHF9EhPc43r4wPqiEpMnQrt3f
+ mXpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763054173; x=1763658973;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nmgh3LFk96HdrFD9152quz3Sn/dfARCWPL1thHveu/Q=;
- b=PyKTHeEIXcCUoc1yJv7tVd7H927TYHmEPAlkwePUNey7/bh7DSUfzCahn/TPKyfkF4
- Iqgf3gwRm6Ussn7/0hwd7ZgIIq8sy/Ckoe1TtntCAO+54V1HRS8Tmn3kzqIfZiGRK73Z
- PKEACaUxuGMgdKEpk6s5xHcsQQSxE5t2o2LhLSKYc7Or5m+9ZZz4xPoeq1lOjMIvzFOn
- JSJ/7hSqYFK7FLSCJkGI5Sy4EcwIGjBkLP/kVwvcvfpCrQLJCRAIPX0tBoi6xEkfJ85H
- jhK9ADa0tMxmODy1XcFB5r4Ti5/FVU5UjWFgZW44RAPiaedBaKWhIx7BgQLrgrH0h7jv
- 0HFw==
-X-Gm-Message-State: AOJu0Ywn2+XdURWt16lZj45endvlqZP660fkHynt5X37wNQogn6PjN3p
- yZiR3UumkmnPGUDtMZTcf/ouBTkcxByzDNkSCNVGux7H+8sNiZ9Ck/M2+JN5Y8zk1Rjdah6xI5E
- Rf/hJRkq26Ksn74wXD3hVx3ctdfB5N2fYIhelXEPczCxT3nY0oRfcZdct74kLXE1tkYQNR3oqEX
- iiaM+lCCmh9Fk4Sw/VdGHSfhFLSWtqAo8W9U0zZ5k+YA==
-X-Gm-Gg: ASbGncv65nvr3I2nF/gG4pxfaJ91JjHi2JBT9zRaUiFtSaAre0e7zRPiZyviHkO7iVK
- FsMuxr7YMMXW0NVn02Jv/9be3/lDf9zyF7cfuhXYHJHkS7FFDs3ZSN/ga47tDNLyYTilR7xtuYY
- xk4Jq1FM4z6F8FpR/U8/Q5ltiJLuGr0uGdVqr/MrqiL+7d89ZrXno11ijD78sxrOAVcBhHbyd2Z
- aknKVZkr4/JwrgxIhz/lfAVc1P1/ubzjf17glVPpuOmSzfDFJU9/C+ZacXxCURr2gZht27DXKzu
- /iDseQQzCgJ2Q5vMBpvOXVdMhpYm6XJvPIqY//LS0krUgW3pPXgeNd3a7wa6W9FotOgiL1wwVhj
- 2FqiKyuavTxiBMuCcooEd5KMCHZx54Lghg7O+q6mR3wvLwy8g63s42f9mi0moYAnsANPjAaxtY0
- LtXNnCRqdKWvsQAljecR4HOG8oepEYtbadNlCX1JicMsIFBidFlWofEq4=
-X-Google-Smtp-Source: AGHT+IEdoSbWfZxdWwzpFXHSrcTKZuNo8nYqoWn5rhqCV3Ii7IlMwTeCP5PNy4p7n08XWAdPpWuytQ==
-X-Received: by 2002:a05:6a20:1588:b0:2e5:655c:7f86 with SMTP id
- adf61e73a8af0-35ba17ae264mr402703637.39.1763054172852; 
- Thu, 13 Nov 2025 09:16:12 -0800 (PST)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-bc375081023sm2712992a12.21.2025.11.13.09.16.11
+ d=1e100.net; s=20230601; t=1763055049; x=1763659849;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Sfb9rDcsR549HIBKdlZi74Kzx0c2W0GF1kOQc/lOnRw=;
+ b=T8CbfN0rGdhwZzhH97N3ceGmvTyEhm3Al01yHRyRHk9thkXTvWTTzSKw0yA2saALr3
+ h6Ce6DT3P2HO6Sla/EtZS+/ZiyvIH3dhzAdO0DsDnCh1Xq53sxZCBwOTMA5+3yrMeV+L
+ NIk/e6E+fMg2mf22SmG8MMci3EK9G4wCOSXLONMOJ1cV80zd2VJySFFuaYFZVEKB3wAX
+ UqV1HZoLaxupj5Ahb/NMGpLcXypY6Z7bzSU75/lHL6MadN4x80/vtN0pnJJREB9XPetN
+ bddOYnsrfwVmXVV0wN5h9Zhy9sakeQFvNnRaKBKSeEqUUbz6l5Dm41rCJKbluCXk6XR+
+ cyTg==
+X-Gm-Message-State: AOJu0YymHiNljfiY8blCy9WmdSQJwLxUOCdWYwVvH90m4HR7xXYdIekY
+ W+qevvOERDzdjMA4RTi/NmzsHjhBtE5uD10kx4C5D42EUUrIYUPi4rqGhxbaL7yXcxop43Lf3I+
+ Yp4maAsKnTlPUg1SckktyBhVmTGPviaWZsDhdYhJRG2VCigxkW3yaCxK7
+X-Gm-Gg: ASbGncu1UR3/gtbZVtWJ0CzvTR5f+29u9mAS2hgsydKIWbVxaP7tc7MKG9ofqrmqzLo
+ wVx0lcCFCdnltCgm5G+JW3cPi93CFdV63Cjgw2g+fhcuS7C6sPMYCdrltCC/gY8+AfDRLDhl7us
+ O7UUEhrGx2ehvhAyp2Ds0sF5ZqNuN8GYianCKYvX1v/Y781fkxsL07NicJK3aMhwKDvJyRHK/Sl
+ QYYXkk8mE++UCVDOX4T2cDfVE9Ir2e9LgEeoN23OY+PceVpHM98NeNtrFAFoPI/jOYn6AIaPYqN
+ 8iJEG4XHHo0yCuBJB4b1iu+8ClkQl8xepMZD+ncav1L+7i4OX8uG5FJKQyy+kxa43W8sGPlNS4d
+ MRw==
+X-Received: by 2002:a05:620a:390e:b0:84b:7b84:4ec with SMTP id
+ af79cd13be357-8b2c046ede1mr62279085a.22.1763055048757; 
+ Thu, 13 Nov 2025 09:30:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGZfr16TVA59UEv/smsYBxEZO55ioY2Si7XCbjgDYHe4Ui5ch8XmJRntn7oXhjdP1vNVE+cKA==
+X-Received: by 2002:a05:620a:390e:b0:84b:7b84:4ec with SMTP id
+ af79cd13be357-8b2c046ede1mr62271785a.22.1763055048129; 
+ Thu, 13 Nov 2025 09:30:48 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b2aeeaf78bsm170216885a.15.2025.11.13.09.30.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Nov 2025 09:16:12 -0800 (PST)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Anton Blanchard <antonb@tenstorrent.com>, Max Chou <max.chou@sifive.com>,
- Nutty Liu <liujingqi@lanxincomputing.com>
-Subject: [PATCH v3 1/3] target/riscv: rvv: Apply vext_check_input_eew to
- vector int/fp compare instructions
-Date: Fri, 14 Nov 2025 01:16:02 +0800
-Message-ID: <20251113171604.3034161-2-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251113171604.3034161-1-max.chou@sifive.com>
-References: <20251113171604.3034161-1-max.chou@sifive.com>
+ Thu, 13 Nov 2025 09:30:47 -0800 (PST)
+Date: Thu, 13 Nov 2025 12:30:43 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+Message-ID: <aRYVw1ydTbZr0OEH@x1.local>
+References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <aQJbd5qYR10qcbr7@x1.local>
+ <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
+ <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ0Ys09WtlSPoapm@x1.local>
+ <1b318ad8-48b3-4968-86ca-c62aef3b3bd4@rsg.ci.i.u-tokyo.ac.jp>
+ <7c49d808-ccb8-4262-ae6c-2ac746b43b80@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x433.google.com
+In-Reply-To: <7c49d808-ccb8-4262-ae6c-2ac746b43b80@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,104 +128,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Blanchard <antonb@tenstorrent.com>
+Hi, Akihiko,
 
-Handle the overlap of source registers with different EEWs for vector
-integer/floatint point comare instructions.
+I found that you replied to me and forgot to cc all, I added all of the
+people back.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+On Sun, Nov 09, 2025 at 06:05:00PM +0900, Akihiko Odaki wrote:
+> On 2025/11/08 10:45, Akihiko Odaki wrote:
+> > On 2025/11/07 6:52, Peter Xu wrote:
+> > > When I was having a closer look, I found some other issues, I'll list it
+> > > all here.
+> > > 
+> > > 1. I found that rcu_gp_event was initialized as "true".  I'm not sure
+> > >     whether it should be false.  This has nothing to do with your
+> > > series as
+> > >     well, only some observation of mine.
+> > >      qemu_event_init(&rcu_gp_event, true);
+> > 
+> > Indeed it makes more sense to initialize it with false.
+> > 
+> > rcu_read_unlock() sets the event only in grace periods, and
+> > wait_for_readers() always reset it when ending those grace periods. By
+> > initializing it with false, the event will be false whenever outside
+> > grace periods, improving consistency.
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2a487179f63..422e1a21185 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -436,9 +436,10 @@ static bool vext_check_sss(DisasContext *s, int vd, int vs1, int vs2, int vm)
-            require_align(vs1, s->lmul);
- }
- 
--static bool vext_check_ms(DisasContext *s, int vd, int vs)
-+static bool vext_check_ms(DisasContext *s, int vd, int vs, int vm)
- {
--    bool ret = require_align(vs, s->lmul);
-+    bool ret = require_align(vs, s->lmul) &&
-+               vext_check_input_eew(s, vs, s->sew, -1, 0, vm);
-     if (vd != vs) {
-         ret &= require_noover(vd, 0, vs, s->lmul);
-     }
-@@ -461,9 +462,10 @@ static bool vext_check_ms(DisasContext *s, int vd, int vs)
-  *      with a mask value (e.g., comparisons) or the scalar result
-  *      of a reduction. (Section 5.3)
-  */
--static bool vext_check_mss(DisasContext *s, int vd, int vs1, int vs2)
-+static bool vext_check_mss(DisasContext *s, int vd, int vs1, int vs2, int vm)
- {
--    bool ret = vext_check_ms(s, vd, vs2) &&
-+    bool ret = vext_check_ms(s, vd, vs2, vm) &&
-+               vext_check_input_eew(s, vs1, s->sew, vs2, s->sew, vm) &&
-                require_align(vs1, s->lmul);
-     if (vd != vs1) {
-         ret &= require_noover(vd, 0, vs1, s->lmul);
-@@ -1823,7 +1825,7 @@ static bool opivv_vmadc_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_mss(s, a->rd, a->rs1, a->rs2);
-+           vext_check_mss(s, a->rd, a->rs1, a->rs2, a->vm);
- }
- 
- GEN_OPIVV_TRANS(vmadc_vvm, opivv_vmadc_check)
-@@ -1859,7 +1861,7 @@ static bool opivx_vmadc_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ms(s, a->rd, a->rs2);
-+           vext_check_ms(s, a->rd, a->rs2, a->vm);
- }
- 
- GEN_OPIVX_TRANS(vmadc_vxm, opivx_vmadc_check)
-@@ -2033,7 +2035,7 @@ static bool opivv_cmp_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_mss(s, a->rd, a->rs1, a->rs2);
-+           vext_check_mss(s, a->rd, a->rs1, a->rs2, a->vm);
- }
- 
- GEN_OPIVV_TRANS(vmseq_vv, opivv_cmp_check)
-@@ -2047,7 +2049,7 @@ static bool opivx_cmp_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ms(s, a->rd, a->rs2);
-+           vext_check_ms(s, a->rd, a->rs2, a->vm);
- }
- 
- GEN_OPIVX_TRANS(vmseq_vx, opivx_cmp_check)
-@@ -2755,7 +2757,7 @@ static bool opfvv_cmp_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_mss(s, a->rd, a->rs1, a->rs2);
-+           vext_check_mss(s, a->rd, a->rs1, a->rs2, a->vm);
- }
- 
- GEN_OPFVV_TRANS(vmfeq_vv, opfvv_cmp_check)
-@@ -2768,7 +2770,7 @@ static bool opfvf_cmp_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ms(s, a->rd, a->rs2);
-+           vext_check_ms(s, a->rd, a->rs2, a->vm);
- }
- 
- GEN_OPFVF_TRANS(vmfeq_vf, opfvf_cmp_check)
+Thanks for confirming this. AFAIU this isn't a huge deal, as
+wait_for_readers() should be tolerant of false positives.  So I'll leave it
+to you on whether to touch it together.
+
+> > 
+> > > 
+> > > 2. It looks to me your patch here checked the wrong retval of
+> > >     qemu_event_timedwait()..
+> > > 
+> > >          } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+> > >                     !sleeps || qemu_event_timedwait(&sync_event, 10)) {
+> > >                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> > > 
+> > >     should it be "!qemu_event_timedwait(&sync_event, 10)"?  Side
+> > > note: maybe
+> > >     we should cleanup all _timedwait() for QEMU's eventfd, sem, cond,
+> > >     ... because they don't return the same retval.. but if you think
+> > > sem is
+> > >     good, then we don't need eventfd's timedwait() in this series (your
+> > >     initial two patches).
+> > 
+> > You are right here too. This is a stupid mistake.
+> 
+> No, the original patch is right. qemu_event_timedwait(&sync_event, 10)
+> returning true means that the forced variable was set before timing out,
+> hence the we need to enter the force quiescent state.
+
+You're correct.  I got misleaded by the comment here:
+
+            /*
+             * Now one of the following heuristical conditions is satisfied:
+             * - A decent number of callbacks piled up.
+             * - It timed out.                <--------------------
+             * - force_rcu() was called.
+             *
+             * Force a quiescent state.
+             */
+
+I'm guessing you got misleaded too when I raised the question and when you
+were looking.  Maybe it means it would be good to change that line of
+comment into:
+
+             * - It timed out continuously 5 times (causing sleeps==0)
+
+> 
+> > 
+> > > 
+> > > 3. I doubt if malloc_trim() feature is broken with your current patchset,
+> > >     because now the loop looks like:
+> > > 
+> > >          for (;;) {
+> > >              qemu_event_reset(&sync_event);
+> > >              n = qatomic_read(&rcu_call_count);
+> > >              if (n) {
+> > >                  break;
+> > >              }
+> > > #if defined(CONFIG_MALLOC_TRIM)
+> > >              malloc_trim(4 * 1024 * 1024);
+> > > #endif
+> > >              qemu_event_wait(&sync_event);
+> > >          }
+> > > 
+> > >    I don't know if n can be zero here at all.. if you use the sem change
+> > >    this might trigger but it's not designed for it.  When using sem
+> > > we may
+> > >    want to periodically trim.  But I'd like to know how you think in
+> > > general
+> > >    on the sem idea first (e.g. do we need to be prepared for high
+> > > freq rcu
+> > >    frees).
+> > 
+> > malloc_trim() is triggered when the RCU thread is idle, and that is not
+> > changed with this patch.
+
+You're right, I read it wrong.  Please ignore this comment.
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
