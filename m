@@ -4,70 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA880CD4F30
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B820CD4F35
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 01:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJM1T-000396-CE; Wed, 12 Nov 2025 20:21:15 -0500
+	id 1vJM7v-0001o8-Du; Wed, 12 Nov 2025 20:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vJM1A-0002ZK-Qu
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:20:56 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vJM17-0006Tl-Gl
- for qemu-devel@nongnu.org; Wed, 12 Nov 2025 20:20:56 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxaNFpMhVpzawiAA--.10052S3;
- Thu, 13 Nov 2025 09:20:41 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxQ+RnMhVpMhUxAQ--.14748S3;
- Thu, 13 Nov 2025 09:20:41 +0800 (CST)
-Subject: Re: [PATCH V2 1/2] Modify the interrupt trigger type in loongarch
- virt fdt to macro definition
-To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-References: <cover.1762917185.git.lixianglai@loongson.cn>
- <56832788ca15ee896e4e7bd2a635e65e188d75c2.1762917185.git.lixianglai@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <1910ee77-f492-63f7-af62-c711e055cdb2@loongson.cn>
-Date: Thu, 13 Nov 2025 09:18:16 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <56832788ca15ee896e4e7bd2a635e65e188d75c2.1762917185.git.lixianglai@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxQ+RnMhVpMhUxAQ--.14748S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uF47Zry3JrW7Cry3Zw4DJrc_yoW8uF4fpF
- W7Aa1DXr4DJr9xG39xua4Y9w1fAr1rGr1jgFnrur40kryDWw1fXr40k39rtF17u34rJ3WF
- vFsYgr9xWa42qrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.736,
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1vJM7T-0001a8-88; Wed, 12 Nov 2025 20:27:27 -0500
+Received: from mxhk.zte.com.cn ([160.30.148.35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1vJM7Q-00082a-2Q; Wed, 12 Nov 2025 20:27:26 -0500
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4d6N0v5YcLz8Xs6y;
+ Thu, 13 Nov 2025 09:27:11 +0800 (CST)
+Received: from xaxapp01.zte.com.cn ([10.88.99.176])
+ by mse-fl1.zte.com.cn with SMTP id 5AD1R8JR083952;
+ Thu, 13 Nov 2025 09:27:08 +0800 (+08)
+ (envelope-from liu.xuemei1@zte.com.cn)
+Received: from mapi (xaxapp05[null]) by mapi (Zmail) with MAPI id mid32;
+ Thu, 13 Nov 2025 09:27:09 +0800 (CST)
+Date: Thu, 13 Nov 2025 09:27:09 +0800 (CST)
+X-Zmail-TransId: 2afc691533ed0af-7d401
+X-Mailer: Zmail v1.0
+Message-ID: <2025111309270952219AjKpVEnbJXB7fcGTE4g@zte.com.cn>
+Mime-Version: 1.0
+From: <liu.xuemei1@zte.com.cn>
+To: <imammedo@redhat.com>, <alistair.francis@wdc.com>,
+ <dbarboza@ventanamicro.com>, <sunilvl@ventanamicro.com>,
+ <anisinha@redhat.com>
+Cc: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <liwei1518@gmail.com>,
+ <zhiwei_liu@linux.alibaba.com>, <mst@redhat.com>,
+ <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>, <liu.xuemei1@zte.com.cn>
+Subject: =?UTF-8?B?W1BBVENIIHY0IFJFU0VORCAwLzJdIGh3L3Jpc2N2L3ZpcnQ6IEFkZCBhY3BpIGdlZCBhbmQgcG93ZXJkb3duIHN1cHBvcnQ=?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl1.zte.com.cn 5AD1R8JR083952
+X-TLS: YES
+X-SPF-DOMAIN: zte.com.cn
+X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
+X-SPF: None
+X-SOURCE-IP: 10.5.228.132 unknown Thu, 13 Nov 2025 09:27:11 +0800
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 691533EF.000/4d6N0v5YcLz8Xs6y
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,59 +77,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
+Add riscv acpi powerdown support
 
-On 2025/11/12 上午11:26, Xianglai Li wrote:
-> In the loongarch virt fdt file, the interrupt trigger type directly
-> uses magic numbers. Now, refer to the definitions in the linux kernel and
-> use macro definitions.
-> 
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> ---
-> Cc: Bibo Mao <maobibo@loongson.cn>
-> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> Cc: Song Gao <gaosong@loongson.cn>
-> 
->   hw/loongarch/virt-fdt-build.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-> index 1f0ba01f71..7333019cf7 100644
-> --- a/hw/loongarch/virt-fdt-build.c
-> +++ b/hw/loongarch/virt-fdt-build.c
-> @@ -16,6 +16,11 @@
->   #include "system/reset.h"
->   #include "target/loongarch/cpu.h"
->   
-> +#define FDT_IRQ_TYPE_EDGE_RISING  1
-> +#define FDT_IRQ_TYPE_EDGE_FALLING 2
-> +#define FDT_IRQ_TYPE_LEVEL_HIGH   4
-> +#define FDT_IRQ_TYPE_LEVEL_LOW    8
-> +
->   static void create_fdt(LoongArchVirtMachineState *lvms)
->   {
->       MachineState *ms = MACHINE(lvms);
-> @@ -415,7 +420,8 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
->       if (chosen) {
->           qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
->       }
-> -    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
-> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq,
-> +                           FDT_IRQ_TYPE_LEVEL_HIGH);
->       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
->                             *pch_pic_phandle);
->       g_free(nodename);
-> @@ -435,7 +441,8 @@ static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
->                               "loongson,ls7a-rtc");
->       qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
->       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
-> -                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
-> +                           VIRT_RTC_IRQ - VIRT_GSI_BASE ,
-> +                           FDT_IRQ_TYPE_LEVEL_HIGH);
->       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
->                             *pch_pic_phandle);
->       g_free(nodename);
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Changes in v4:
+- Added modifies of DSDT blob in another patch
+- Link to v3: https://lore.kernel.org/qemu-riscv/20250723113739751COZ5PkRzx6aXEuKzsHhm_@zte.com.cn/
 
+Changes in v3:
+- Added missing param to virt_is_acpi_enabled
+- Fixed failure of bios-tables-test
+- Link to v2: https://lore.kernel.org/qemu-riscv/202506201130099861lTkD839Hh6oko8Jo2W2H@zte.com.cn/
+
+Changes in v2:
+- Unwrappered acpi_dsdt_add_ged function
+- Modified base address of VIRT_ACPI_GED
+- Added conditions for function calls
+- Adjusted code formatting
+- Link to v1: https://lore.kernel.org/qemu-riscv/202506191556260735QxWC8sxRwFURYEvlD24y@zte.com.cn/
+
+Xuemei Liu (2):
+  hw/riscv/virt: Add acpi ged and powerdown support
+  tests/acpi: Add acpi ged and power button in DSDT for RISC-V
+
+ hw/riscv/Kconfig                  |   1 +
+ hw/riscv/virt-acpi-build.c        |  10 +++++++++
+ hw/riscv/virt.c                   |  35 ++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h           |   4 ++++
+ tests/data/acpi/riscv64/virt/DSDT | Bin 3538 -> 3681 bytes
+ 5 files changed, 50 insertions(+)
+
+-- 
+2.27.0
 
