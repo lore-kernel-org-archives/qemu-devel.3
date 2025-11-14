@@ -4,102 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A50CE8D55
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 17:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82951CE8D68
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 17:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJxJ3-0005Ll-Ln; Fri, 14 Nov 2025 12:09:53 -0500
+	id 1vJy0T-0005o8-IA; Fri, 14 Nov 2025 12:54:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.kauer@koalo.de>)
- id 1vJx1q-00087V-9W
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 11:52:06 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vJy09-0005Re-Ct
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 12:54:29 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <florian.kauer@koalo.de>)
- id 1vJx1o-0003VT-Br
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 11:52:06 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47728f914a4so14289315e9.1
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 08:52:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vJy07-0006f2-Mg
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 12:54:25 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-429c8632fcbso1608945f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 09:54:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=koalo-de.20230601.gappssmtp.com; s=20230601; t=1763139122; x=1763743922;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qsBTokqs+RoEw8OM/0Z0PHq5bIEO5QvUmBWCJ5Sf8YA=;
- b=wYn5RX27tdRLVJl6wsNMs85x3HQyUclhTDF0ccnRSnXjcwzudXOmSHX6Mwt2NoGMXI
- Vl05QbpkdGH91TbS6rAzK+5SfkAc6YzVhsNJz/TVE3pD7ORyFmyPRPRrkLqBiWXfRtBz
- HQMJx3JwOuAknYAUjm221rVEDCGGYZYYLvdMfOlFtq8+JIgkEoruLy2CtQxlw1wTqt3w
- 08+2qQmqHJv89FuXUt6BNcETjvBWFFkBlbzcO5e3V6yXyli9m96c5jp31F68YfnX0W1v
- rFkeyxsz0Hv/YIGyXAXFMTwZTC91X+lAMKZCflS9DRRk0c3GOsjMhiM+o4nPSAQieS2N
- i4Fw==
+ d=linaro.org; s=google; t=1763142860; x=1763747660; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jkwfE8w9X+zb4L+yWFPm67KE+tgnj5BfrOePnspgBrc=;
+ b=TJQVcs74CDPvYxYXwJEoKx2a3XBCUx0JplCJ0dV2aRNT14CDrTuCNdu+6hirldKo3k
+ KDhhQIK8M6AkgZyLZf26FHWCsho97MjxTYit3a8yl01DxqajgC4CxbNk0HJolL3BpV16
+ 9MERgq6YLeGfPxCUUOnRbX9Cwln6mlU48MrBmI3HhyM2IkHSVvse4maQRsvFeI9RI8Gd
+ OhVGvy60kmt3ISFR3ihLNYLrWEOGjHBO+UBocI6uL8tIAWJvl5zvG9mz0KpzCSsezbLX
+ 7iZvK/dMPRVl/+gePQ3LMVdIt41XwgJWiOmUEYf1HasAK6tzRe/tJ1rvL9fkxdaI+haa
+ we2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763139122; x=1763743922;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qsBTokqs+RoEw8OM/0Z0PHq5bIEO5QvUmBWCJ5Sf8YA=;
- b=kTP0dAkP28Z0WEjg/8TT2Fct9viVSUuLOJa92psxVqLXBkwO8uCFkAd/tpuqLTLnJG
- NRYcq89b4s1IFrGlxOoLJmUzV4CGeJ5jrlowUt9Yqh8PL23ogXcL0CXxzQ0csqS/mrU/
- QLh/rKnFUf0YRsF4T71mgR8d6m9EZDXMUlosrMvdqcG7oWOdD5i62tf4WMYKoKPHcA59
- X2FeuQrvRGhPFq5erb8wksnV2pEYaTseCcHjaOQ+qqVpmOjzfrz6My3EnbIRfJVRRXly
- 6QagDA85LbJHzQkSYJeDCk9OkWCa2ek0csauWFx4EBd+TSqe3lYN9pf8r8XaZqUeLdw1
- TJiA==
-X-Gm-Message-State: AOJu0Yxe8OD49IHtkoXNvhoC8cNWo4rYXAMhvJV5AuE0T3D7InRTmJpx
- akkSjeM38jBbhCKu9FnS8FspoACgYP2Dj/ug8Dzt7DfeRwSAE5OgPp+garACqP3gfPk=
-X-Gm-Gg: ASbGnctE22dib5+kTzVvkzAKGEupeSKYr7HOIiTak8Y9/PTCeGJvcducC2yNTaBiuoI
- 64MpGrIBRI1oG4/O5adewS0CHahCiNFbQ1MlqH19jZImc5H1NTr1zbF3fHYHe5vJCNAdC4oryTK
- bgqU8s0wMA8ODxyXs8mpCmE/7wyYsAOiW8MZcYA9vjLPg/l7Iw7HAIP+cHc2Uv8Zjm1qx0ErNZz
- WA/raF7QLPwp8gRPvSc2fs5fBPOrJzivLwW9SAndzUu+o8RqDHwQu9BMI2lZl551yXg60Rtd8Bm
- j3Brri/nDhHEwZjid4HOzCd2K5fifhq7hQ76rhnHTJDHXtLCLnCgfOVxv2zSyhhfqJTIeZEku2H
- IywAAUJXZR343oDi5GrJvv6N34ciS84jKWng2CBgfq7JrOsKhdIMBssrVSM8tUzz3jd6P3g2fOY
- XdiLfmBZ+a65/Zh5cME6MYv3OlfSNj72hKjALO5JjwHaMMuLL8CGnh3wN7qw==
-X-Google-Smtp-Source: AGHT+IGKsV5foJQx1/a+GnAxo7TMaGqEHklqDTqA6zJLH3JDLROSwb83rVogRBbnnPZG/kn1tNP8NQ==
-X-Received: by 2002:a05:600c:3112:b0:477:9650:3184 with SMTP id
- 5b1f17b1804b1-47796503351mr1320595e9.2.1763139121405; 
- Fri, 14 Nov 2025 08:52:01 -0800 (PST)
-Received: from ?IPV6:2001:9e8:e31b:a300:de87:2ce:e496:70e6?
- ([2001:9e8:e31b:a300:de87:2ce:e496:70e6])
+ d=1e100.net; s=20230601; t=1763142860; x=1763747660;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jkwfE8w9X+zb4L+yWFPm67KE+tgnj5BfrOePnspgBrc=;
+ b=kR/+tiuqcwncnDm4ytESrNclzAcpc5UxYpvGcZ23LVA1Nv+L5tSlCwrrzUfTXBgnAo
+ MTo8zEmvGriPYKlfSxf/tVSdbinO7pKkNP9yYeNX5Kwhxrh2uQUZEQVBOsuPlRkWsfDH
+ vZz8n1wGGr4q1ctNM7DTsNAcp0EIQbTdTvWgeliu4O5mWgwvB+gr8E0wv0CpsL5BFSgp
+ TpvtMbaLil952M6J7ewJtngHhsAjVXYzYXMy9MbgQNLxDXPHWrf/b3cSuoEw9XdAx9fP
+ Sy/NztXYM5nE1UljQqhL+pYu3gcTdKxTT3JbW6o54WcDuyQnxLJ+TKUsnRX0KLiq2+dH
+ Rt6w==
+X-Gm-Message-State: AOJu0Yw5a7yu7Sxkmk7FfdxsAliPq48DuZWn/EBPBTN6/HokMmMyqe8k
+ axqhnBitXOc9y0TzRK2RPByiYkiBEeZwB9xSFlgT3NFm5FJ5QlqQ1D9PnLzwqeB2SRW2A5MFQDC
+ nDU7B
+X-Gm-Gg: ASbGncvCu+T3J2ScH/VbwHeGaJBwoxIwxpMXH0lZ0raQLBtmwjnTBJQijV58wJJ8KNj
+ 7YTNd1IY8pGlWOtPXtKCBM4XAN9KEexXBk2bpCOMqGVo+gG68fsRwo+6FLCw3/mEc9Jm15ADyjC
+ am4+FAH8Ydhnjj1QmFa3h4Vb61Rov91bCkKxc0QT/B0/aV9u+WHePe10jtfckoiDh0mNuNuO56/
+ eKuiV7eu5tkQAAoXu6Z1opNNRxYIt7czpiZsCmEfiaFTKobeBI0PgW/9Yq2AS1zWF4TkSYaH574
+ vPg8f5nVjkmTXDDP43fKWdEZYv31azFbaIvrL9DSN+mgO82qoUetlZcYS5lEqXCF4nJybV7oyvh
+ xzMJS1t5uDg+liwWJFTBlmvAYdeDqYildCFqre+eEmUguVXJSNsmgCTjQybJszSCdGBFr6Vrgvz
+ cXlzOnaAd1/OtSR9+ITpfXpSxwiao=
+X-Google-Smtp-Source: AGHT+IGZh1tJGFdGmd7VwlFS3m/eygslWGjlrH+INGxos65mporq4FaXMvtUQ5Yv56irp5Ittj69Lg==
+X-Received: by 2002:a05:6000:21ca:b0:42b:41dc:1b5e with SMTP id
+ ffacd0b85a97d-42b5936797amr2751689f8f.30.1763142860111; 
+ Fri, 14 Nov 2025 09:54:20 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4779524d265sm18165815e9.2.2025.11.14.08.52.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Nov 2025 08:52:00 -0800 (PST)
-Message-ID: <cc68c783-1f2b-4ecf-ab53-f0471e21114a@koalo.de>
-Date: Fri, 14 Nov 2025 17:51:57 +0100
+ ffacd0b85a97d-42b53e7b074sm10775857f8f.7.2025.11.14.09.54.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Nov 2025 09:54:18 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH] target/arm: Mark VPERMILPS as not valid with prefix 0
+Date: Fri, 14 Nov 2025 17:54:17 +0000
+Message-ID: <20251114175417.2794804-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/dma: don't allow weird transfer lengths for bcm2835
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:Raspberry Pi" <qemu-arm@nongnu.org>,
- Florian Meier <florian.meier@koalo.de>,
- Florian Fainelli <florian.fainelli@broadcom.com>
-References: <20251111105429.3993300-1-alex.bennee@linaro.org>
- <4d6d7e9d-0952-4158-9ef4-6093a16e9dd9@yodel.dev>
- <87wm3so997.fsf@draig.linaro.org>
-From: Florian Kauer <florian.kauer@koalo.de>
-Content-Language: en-US
-In-Reply-To: <87wm3so997.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=2a00:1450:4864:20::331;
- envelope-from=florian.kauer@koalo.de; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 14 Nov 2025 12:09:50 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,60 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+There are a small set of binary SSE insns which have no MMX
+equivalent, which we create the gen functions for with the
+BINARY_INT_SSE() macro.  This forwards to gen_binary_int_sse() with a
+NULL pointer for 'mmx'.
 
+For almost all of these insns we correctly mark them in the decode
+table as not permitting a zero prefix byte; however we got this wrong
+for VPERMILPS, with the result that a bogus instruction would get
+through the decode checks and end up in gen_binary_int_sse() trying
+to call a NULL pointer.
 
-On 11/14/25 17:43, Alex Bennée wrote:
-> Yodel Eldar <yodel.eldar@yodel.dev> writes:
-> 
-> (add Florians to CC)
-> 
->> On 11/11/2025 04:54, Alex Bennée wrote:
->>> The datasheet doesn't explicitly say that TXFR_LEN has to be word
->>> aligned but the fact there is a DMA_D_WIDTH flag to select between 32
->>> bit and 128 bit strongly implies that is how it works. The downstream
->>
->> At the bottom of page 38, the datasheet [1] states "the DMA can deal
->> with byte aligned transfers and will minimise bus traffic by buffering
->> and packing misaligned accesses."
->>
->> IIUC, the *_WIDTH info fields are implied as maxima.
->>
->> [1] https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf
-> 
-> That reads ambiguously - you could start a misaligned n*WIDTH transfer
-> and the hardware will write bytes until aligned?
-> 
-> If it does indeed work with byte accesses maybe we can just do:
-> 
->   if (xlen & 0x3) {
->     .. do one byte ..
->     xlen -= 1;
->   } else {
->     .. existing 32 bit code ..
->   }
-> 
-> but I guess we need to handle unaligned accesses as well.
-> 
-> Florian,
-> 
-> Can you help clarify what the datasheet means here?
+Correct the decode table entry for VPERMILPD so that we get the
+expected #UD exception.
 
+In the x86 SDM, table A-4 "Three-byte Opcode Map: 08H-FFH
+(First Two Bytes are 0F 38H)" confirms that there is no pfx 0
+version of VPERMILPS.
 
-Sorry, I won't be of big help here. I have no further insights apart from what the datasheet says.
-I implemented this driver many years ago and it worked for my specific use case (enabling the I2S interface of the Raspberry Pi) this way,
-but I cannot make a confident statement about unaligned access :-(
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3199
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/i386/tcg/decode-new.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Greetings,
-Florian
-
-
-> 
-> Thanks,
-> 
-> <snip>
-> 
->>> rpi kernel also goes to efforts to not write sub-4 byte lengths so
->>> lets:
-> 
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index f4192f10068..805cfd08e83 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -643,7 +643,7 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
+     [0x0a] = X86_OP_ENTRY3(PSIGND,    V,x,        H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
+     [0x0b] = X86_OP_ENTRY3(PMULHRSW,  V,x,        H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
+     /* Listed incorrectly as type 4 */
+-    [0x0c] = X86_OP_ENTRY3(VPERMILPS, V,x,        H,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_00_66),
++    [0x0c] = X86_OP_ENTRY3(VPERMILPS, V,x,        H,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
+     [0x0d] = X86_OP_ENTRY3(VPERMILPD, V,x,        H,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
+     [0x0e] = X86_OP_ENTRY3(VTESTPS,   None,None,  V,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
+     [0x0f] = X86_OP_ENTRY3(VTESTPD,   None,None,  V,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
+-- 
+2.43.0
 
 
