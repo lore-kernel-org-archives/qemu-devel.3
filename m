@@ -4,99 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6EECD4F49
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 05:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B999CDE00A
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 06:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJmgF-000884-8a; Fri, 14 Nov 2025 00:49:09 -0500
+	id 1vJn1x-00017x-DV; Fri, 14 Nov 2025 01:11:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJmg1-00082n-78
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 00:48:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJn1u-00016Q-Fo
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 01:11:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJmfz-0005Ha-2s
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 00:48:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJn1s-0004m3-4S
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 01:11:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763099329;
+ s=mimecast20190719; t=1763100686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RjWhheDqX2JemPIp/YnvisbeZKIfQgPVycWoFCthxQg=;
- b=ifEKCskeyOU5gb10ObFinpqc1kKHunnZ2VouMVLOEVyqysJebkMbjLqLP6B/YSfC6Ix6zH
- tfPSpWKmk9xpiE7sRQk5TYnrXdSs9HdSyRnYLZsFrDZfabjUmCtwdxygQiSB215w8Yfe8l
- RVctYOyZhBwiYdt8IS6wlG8Zo5WFK9U=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6YsJYSI801dpV8bDwEIMDwEUT1fDGxyQIigvHMmZW1s=;
+ b=f+sWZge1toOj8CQ2UgyK9OuuZCCHkRRJY54SP4fEERKqDv/dRrlrl727TAYsWqpeOc64UV
+ Cj9mYLZ0HLW+eaIg2+AmzFJIkA1/GI0EZi2QbsjHAY+YfvBIQx6TBxL7jatjW+Zf3G6gp5
+ HM4OtAW9TWMXm2Ufx7LtIw6GCL51CSI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-NG0KVKEDNiS_1C92ffEEKg-1; Fri, 14 Nov 2025 00:48:45 -0500
-X-MC-Unique: NG0KVKEDNiS_1C92ffEEKg-1
-X-Mimecast-MFC-AGG-ID: NG0KVKEDNiS_1C92ffEEKg_1763099325
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-6407bd092b6so1883883a12.1
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 21:48:45 -0800 (PST)
+ us-mta-637-bpm-GvxAPxWp2inxp2mUHA-1; Fri, 14 Nov 2025 01:11:24 -0500
+X-MC-Unique: bpm-GvxAPxWp2inxp2mUHA-1
+X-Mimecast-MFC-AGG-ID: bpm-GvxAPxWp2inxp2mUHA_1763100683
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4710d174c31so15912245e9.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:11:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763099324; x=1763704124; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763100683; x=1763705483; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RjWhheDqX2JemPIp/YnvisbeZKIfQgPVycWoFCthxQg=;
- b=n2XbVGJhi/IJtJFFiSrkTlpTMb3U6QUQ2wHgdngesohPIUKK8af1hM3EPM5kVt+q8K
- cvIkTXV69bdKhI2HC/dnyhng+39+mZ3i1ykozKqKvR3DZfy1UXtsRyT0dHbV5jOMry1p
- 6urZqHsrtjellTO/+qC6Q9UyaFLWA1kdxjwuWhYKQzvvDcaliEepdNK31xKfkoDM/B+7
- /ZK1Q7KRA4qpgOozmToIPYS9NuDZv4co+E8WWLD94m1cbThNjuN9ZjS2OGTeDdgoLfXS
- Arp7pmAhxIyKwiK1rKiq0vWinbM9k/HOjM5HmQqQUGAjrrplKPopc4w0nGqGBWTIeXNS
- UyPQ==
+ bh=6YsJYSI801dpV8bDwEIMDwEUT1fDGxyQIigvHMmZW1s=;
+ b=gUbSoB/2apbdTFvZEDtQYkiQA9mC6+YkX9r1flK8GqwteRPLGLXU9LRFV8EeEKxyVi
+ /ELEbrLfdO9DX27ERKQoAJnNhsJKx67aRh4uWY0NCbpsVr5a+SeyEVbWQxGav202gOUk
+ qxg4J4e4zfqLoLoJHAuv6E95gZfD3oeQbrQ8uZdrec9NWT4RFE0GvsPdoqd7rv7Pl6TP
+ nTDC/mjHzweTLrf0zYi9cOAfd3GVtYcIMU9QH3c/gP97Z+6s5l1ht9nYXEama//LHLKM
+ m2NYxmJ/vs68P6cGDo8tmcSLTLPb614HHPsWga6RV0OprlSW6+qO7plWupCFwRL37w+j
+ MjDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763099324; x=1763704124;
+ d=1e100.net; s=20230601; t=1763100683; x=1763705483;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RjWhheDqX2JemPIp/YnvisbeZKIfQgPVycWoFCthxQg=;
- b=qLZzG4tjUkSx+57ExKbtUCvORbumIa3yNTysdUpybakIbMFRKyPxTq+iLADBchiCxd
- bp+M/Fyq819B5NJp1HxrGYNDhy+AtJ548BYU72VDaeP0noqogUA2BKVHSQ3S1dmU4Xnc
- XTzvuhTunrrEvKGvTYiK+djAVST486RKbiMJwFz0whH1tznFULt8rqrjRMuSLAlc9PsX
- QkHkHsKDWbSfEzpK1aCAoZwP384as/Tf2lx7yMHoGfvxnwiEAHnrLuSsoG5kDwPanQ5p
- 6BrxN06WDUBiEX9ge6PX4ycxevRrzuV5fiMKHOHSr5XAwxNSIqqEzuFY6Ubz65/o3TBG
- wb1g==
+ bh=6YsJYSI801dpV8bDwEIMDwEUT1fDGxyQIigvHMmZW1s=;
+ b=dS60390Hd8ppONWWk161UMkU3d+cDPtgb4TDdQneIDDmwH9LkRHeddVTIvZUNHhkTn
+ 34zH5VXK1fjVE+f+SyfAn98Cu4MCrnm+AzRFs90jp+q9we4Tz7zffQQj6iuuG0eqqRPi
+ 4MDSHcGkeZIFmkNEFOYURk2DaczAlbGt95ya2mhoCY0qmjOUbd4OTTH9zJHs2ZD3mypk
+ 4F8S4gfyRUdMQCNPDArjpm34Oia7JbzPdUDWuZkB7J5QZaq4D5V0zK2eCMP5KTOvalgz
+ njmL++Wa27U+2DyvFsGD896E0mr/0LavrZ+B4dnUyYz33Q4tFWL9ZxY850FKmdafD0Bc
+ Vbpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXiGXhILY0zI3HuCUe6WBxtD7QgmdxB9nFQiZfCH5Vxm30TYNCk8sXzKkq6W8BlZA6mjBKyG4QhkHrz@nongnu.org
-X-Gm-Message-State: AOJu0YwZQ8IpBT7a22WcRCOHB5GMt9OV8RSdy3qxTRVVj8SWBPV1f/L8
- tzw3voYD/nA3dqRtUddIwl1j2ynjvz9nxXagsV6IiEoHyPtaJGhjsHHsCiwMAdZubAykr8FpT78
- WDHZgOW8hnpfI0X9QYp+QWj42yFeXOmVVeVIiND037w21eM7kUSTYCsQi
-X-Gm-Gg: ASbGncvKHQBq5cj1Rh0S5LerBYUYCyoNt9H+l1rd6O9hdfjYEb+d+vUk0ehMwmFho79
- V5Z7hDvkl0FT/olAqaJgsltf1ggeNessxVGGvrUNL9iuOikWYvgbvFkntEOloNRoj6hpe/LwN2h
- RAu5LvwB/N3gN0vECLlhr404rhhWyWXnWcAqHDN84/zIFuwmHADoooBmfVkdEkD4BAi2U2wQrft
- fJfprjRbKxgYZLYE+f6dlPaXyIDk5w0THwchlVsL26CSmJAv3dFQbUh8NpGc1R87DI2TXBBG4kc
- 3/xnTGtRbndV8rFnhR60iZkTXDHId11kWImaSqCFtVTovoUkTMP4RFd7fDPhQxnvp/FwGBI=
-X-Received: by 2002:a17:907:3f97:b0:b6d:7124:3d8f with SMTP id
- a640c23a62f3a-b736786805bmr159291166b.6.1763099324636; 
- Thu, 13 Nov 2025 21:48:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHpfnTd9dpfr9pU8CgJRACJ3Vu9XFEKzBkbVpItokj6+d3fvQbqMGCE5xYrkwp8FauqW/ttKQ==
-X-Received: by 2002:a17:907:3f97:b0:b6d:7124:3d8f with SMTP id
- a640c23a62f3a-b736786805bmr159289166b.6.1763099324250; 
- Thu, 13 Nov 2025 21:48:44 -0800 (PST)
+ AJvYcCX2HAb4FDVU8v79fwaYpm7+VNDL66z4/hiyQM+GaUNyElEU7krsJoQ2IyM6kJCIhgp5gOuQGWA71Omg@nongnu.org
+X-Gm-Message-State: AOJu0YwtwqWRRx2Yb4YW5mf2wS4t4JF0KxgyOtMe8URLb0POnbDzc3BS
+ gTmuhCxvD3qNXw+6nzm9OJXvoyXs23/Im9nSpho7O5vWuDumX1P96/CyBjz1GKq0Nb6vCevbVbo
+ Z/As+tifKFkYlAhIvF9YJQWotk1XTUFx6aKvbzcfFM+IxeOhbILPNiYF3
+X-Gm-Gg: ASbGncuSqsKzD7lB7AVXhgR2x6+sh1RV4IS/E+YCv5ELctM8ebbkLN4ZpfVR7jRonrt
+ 9CYyrPf5i0BUrAxPb/PMuyCIopu5H48Dnmk73dhebLYkOKDakuu226Z9lONllHyg1iyyfYbfOUI
+ uYT6915omiAYJ/poe4EXyL66pEdrTKABgiUKmLJEh3fyavGpE7bgxL8fwlClKqmCt7xc3y7Z1vE
+ 2dgyPQ02KKvWaAzOUx49L5m5hFHcUuJc2luuGDwnv0xkD8VrwIkUtsX7uRE4jSed5xXVMv3ZFBM
+ A9D+sOdw2WLeIfEgrAq78jT5Gm/W1i6PmpBwxpTCMFslmOuwRq032Jy1I+gyzB+LDFKPmFE=
+X-Received: by 2002:a05:600c:3b19:b0:471:989:9d7b with SMTP id
+ 5b1f17b1804b1-4778fe95fe2mr17030115e9.21.1763100683471; 
+ Thu, 13 Nov 2025 22:11:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHJzaEiYmJ9iVo6V9w4aVzVjTovC5oFykKyk1gT2ZYxfvVrcgFn/ufRDYtP+QjizYXr4/63Mg==
+X-Received: by 2002:a05:600c:3b19:b0:471:989:9d7b with SMTP id
+ 5b1f17b1804b1-4778fe95fe2mr17029925e9.21.1763100683052; 
+ Thu, 13 Nov 2025 22:11:23 -0800 (PST)
 Received: from [192.168.0.7] ([47.64.114.10]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b734fd809fasm317193466b.45.2025.11.13.21.48.42
+ 5b1f17b1804b1-4778c850000sm70759715e9.4.2025.11.13.22.11.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Nov 2025 21:48:43 -0800 (PST)
-Message-ID: <6a83ca08-5484-469a-8020-a1165aed1c73@redhat.com>
-Date: Fri, 14 Nov 2025 06:48:42 +0100
+ Thu, 13 Nov 2025 22:11:22 -0800 (PST)
+Message-ID: <ec0110b7-5d63-481a-8d8f-3eefbe366129@redhat.com>
+Date: Fri, 14 Nov 2025 07:11:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
-To: Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
- zhao1.liu@intel.com, qemu-devel@nongnu.org, farosas@suse.de,
- jinpu.wang@ionos.com, berrange@redhat.com
-References: <20251107020149.3223-1-jasowang@redhat.com>
- <20251113110004-mutt-send-email-mst@kernel.org> <aRYJRZyNrDcDzTuG@x1.local>
- <20251113114710-mutt-send-email-mst@kernel.org> <aRYRhg7lKDCBUIrf@x1.local>
- <20251113124207-mutt-send-email-mst@kernel.org> <aRYyTeNNIPW_WIJW@x1.local>
+Subject: Re: Regression with the "replay" test on target alpha
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20251028173430.2180057-1-pbonzini@redhat.com>
+ <20251028173430.2180057-4-pbonzini@redhat.com>
+ <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
+ <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
+ <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
+ <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
+ <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
+ <d4921688-b3b3-45f2-a3c9-dee2977750cd@redhat.com>
+ <889e6be6-0cef-4a23-9d57-2e0611f9588a@rsg.ci.i.u-tokyo.ac.jp>
+ <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
+ <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -141,10 +147,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <aRYyTeNNIPW_WIJW@x1.local>
+In-Reply-To: <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -170,25 +176,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/11/2025 20.32, Peter Xu wrote:
-> On Thu, Nov 13, 2025 at 12:46:55PM -0500, Michael S. Tsirkin wrote:
->> failing to start a perfectly good qemu which used to work
->> because you changed kernels is better than failing to migrate how?
+On 07/11/2025 08.49, Paolo Bonzini wrote:
+> On 11/7/25 08:41, Thomas Huth wrote:
+>> On 05/11/2025 07.29, Akihiko Odaki wrote:
+>>> On 2025/11/04 21:18, Paolo Bonzini wrote:
+>>>> In this backtrace the CPU is waking up the main loop (thread 1), but the 
+>>>> main loop is running so I don't think it's really a deadlock. It's more 
+>>>> likely that the replay is not matching the record, or there's a similar 
+>>>> reason why the replay is not proceeding.
+>>>
+>>> I agree. It is more likely that debugging the replay code instead of the 
+>>> RCU change will lead to the real cause.
 >>
+>> This now also impacts the Gitlab-CI :
+>>
+>>   https://gitlab.com/qemu-project/qemu/-/jobs/11984309870
+>>
+>> How do we tackle this? It feels bad that we have such a subtle problem at 
+>> the beginning of the freeze period. Shall we revert the RCU patch 'til the 
+>> problem is understood?
 > 
-> I agree this is not pretty.
-> 
-> The very original proposal was having extra features to be OFF by default,
-> only allow explicit selections to enable them when the mgmt / user is aware
-> of the possible hosts to run on top.
+> I'll look at it today; if I can't make heads or tails of it we'll revert it, 
+> yes.
 
-Could it maybe be tied to the "-nodefaults" option of QEMU? If you run QEMU 
-with "-nodefaults" (which you should do when planning a migration later), 
-these extra features that depend on the kernel version stay OFF. If you run 
-QEMU without "-nodefaults", QEMU could enable them if supported by the 
-kernel. So that would benefit both, the people running QEMU via management 
-layers (using -nodefaults), and the people who just want to quickly launch 
-QEMU on the command line. WDYT?
+Sorry if I missed it, but did you find out anything? ... the test is still 
+failing for me, which is somewhat annoying ...
 
   Thomas
 
