@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13195CE7B0E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D08FCE7B0E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:39:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJtze-0002CQ-R0; Fri, 14 Nov 2025 08:37:44 -0500
+	id 1vJu1a-0003Dt-Ky; Fri, 14 Nov 2025 08:39:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vJtz4-00020F-LT; Fri, 14 Nov 2025 08:37:08 -0500
-Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vJtzX-0002Cq-SI
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:37:33 -0500
+Received: from 5.mo552.mail-out.ovh.net ([188.165.45.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vJtz2-0008Rx-Se; Fri, 14 Nov 2025 08:37:02 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.75])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4d7J8Q3sfBz5w7Z;
- Fri, 14 Nov 2025 13:36:53 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vJtzW-0008V1-AU
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:37:31 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.74])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4d7J934vXnz6PTy;
+ Fri, 14 Nov 2025 13:37:27 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 14 Nov
- 2025 14:36:52 +0100
+ 2025 14:37:26 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003969e823e-f44f-4aa6-8001-f34b540682f9,
+ (GARM-101G00449c239d7-63da-4c4b-8811-616a05ca450d,
  DCBE4845A3BE020BB938A31E73221960BF2A3C2F) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <e1bf6ade-12cc-42c7-b8af-627018ec4088@kaod.org>
-Date: Fri, 14 Nov 2025 14:36:52 +0100
+Message-ID: <0e9fe31b-463c-40f5-bf7e-126fb770caf1@kaod.org>
+Date: Fri, 14 Nov 2025 14:37:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v2 11/12] docs/system/arm/aspeed: Update Aspeed and
- 2700 family boards list
+Subject: Re: [SPAM] [PATCH v2 12/12] docs/system/arm/aspeed: Update Aspeed
+ MiniBMC section to include AST1060 processor
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -44,7 +44,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
- <20251112030553.291734-12-jamin_lin@aspeedtech.com>
+ <20251112030553.291734-13-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,35 +89,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251112030553.291734-12-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251112030553.291734-13-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.109]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 4ae824a1-af02-43ff-830e-29935dd99deb
-X-Ovh-Tracer-Id: 3491697089170672446
+X-Ovh-Tracer-GUID: b4411277-a759-471e-81fc-1d075ba6cab5
+X-Ovh-Tracer-Id: 3501267237811751742
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE+UWJRIlLnC6ooa45X4eehxQFODeYpSkME6TTfKz87ZsaWAB/s6cIzZ/W3eqXOeagxjGgLhCJcvyhGOMBlYeSWXWCZ+89y5nRdpdn954MQpdH0+e49wS3IRc2lGMHhi7/gcEBdueHz7J0KxpuyfHRmmlldycoay5EOZzFsqbiMXyb3O/rGakEO0sNYXQSzCLgNX9qIFUY6ZLk/dhLow9WoCn+Z+au2XTXEpi/nZ7AMfW4ojCAbL3jlnxfJuzj+EvKHbG7LlPAj74AHfuOoSbYehgGYOB9RzKZtMo9GXN7uHEl3pwpSAS+X6abWotS5x6x+QlSr5NR/ROXeafz7ClJNgSsXsXIkssSGdI8cLp1651IpIGV9aecXhTSvoggWirY/6V+/a7Cmc6ruHTSpsCFYIoPTR3btnTwvyGFPpFesQsgYqVrGBzH4ZF9mAZOyeBUv8zKmAoR6pkH6gbc2FkmEmrR/An9fnv9EEOh8Ua8bDtrXLf2GcADd+ojgAXXtJrCBHC05dTRwuiSeITdpo/CH9iDEfr7hoRC6GtG24PLjNKnHgHUu4Bzjs0RW+7qv747LWrsdAArWAOJi5EyQzVIwOSgMb/W7NiZJvVAcV+JRf1KNGjGP2SJjyrwRkqvfsmjF6ACppy5eNGyJlnFWHMuyeD/hJjYcBz9cbzuWZzQVuw
-DKIM-Signature: a=rsa-sha256; bh=BXlN3MI5Tax9jUWeumdGikuUrDYNL7i0VrIpcSw9qRQ=; 
+X-VR-SPAMCAUSE: dmFkZTEprUkoDrRFBMpdrT2iZVzvdoaH8whxx6wBS0SX+VFxDWLiJVR6SYWjtHuNU3utcTuNPcuN1skphyN24qlFDnA5jNV0hCYffy8971FpBIRce2cXhvi/OE4eO1xyFfUwuUMvjY5K41zKM5XUPlUJsIhZO4/aw1q87QxJo0wAoIQWt8Ja/Lul8vYJFEyKB26Gcagp/hZWtHewkQJ9adn/ZkofGNYxV2jLV/7yF+QC4CXd2enwVI0ZF5tGeYIx8OjK1EGxS3pRH/4jwmxsz5PxoTH4XCIsdKQFI6VIFxt7aEnUWaJPi/9f4YKSUhBP3BAG1H+O4tXkQ+excfWvJhRfG3LmsOfvCqrRawpd3c6OPy7sCQ1awqEbP11N6NRP/DB7cQL9pDUCxGHI4baZveZrfMJJQqQ5wG+o/1Y6EQ9BZJIu9CASkQ+ZeC0/fDmvCMuHQ+yMISo84VA2hTg/cxOEuc2KJrrJSN+CzCJm4ERp6L7xs17KdrEG0fCbmeL3b11AsL2pIo2XW3MezgJXNopeNHpWiBpl278DXlIzMssu7CTlFQTIwqy1YlgoUQNLHNoxSLIQsfxsgbOxIZVOkaEYegaqTUzPRnlSDE7gA0aIgTxKYU+MedtvzPEym2i/nM1zrlnwBJ62TGuHaxDjkDaLsbs75E9s2mNxv76f67BCADBaQQ
+DKIM-Signature: a=rsa-sha256; bh=oyUVWyRK8MdIDsdqLbOqI5nWMG9keEuxVM0TCHoK8o0=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1763127416; v=1;
- b=u4A0t8JBTekSHOWoMtNY/yMkoUxjeWEbL/T13jWNgzbHZyx9tkff3RvewLsRUj55NacsQJ7K
- XGvRfCZtuhH85iOrMXjOVJYJHugJhUGXeE7u28huKyMIVH6mclTenW3kANsC4nDaV66tgCQ85CF
- BjZi3hSzmcYgWyZt6PMQDC7nYwDwdOCXlx8k7/Yozv2QXs1arA2TaXfy+fT0bzszrwub8Eu93hF
- Je+5yPwpvrcGbJP4yK9HrlX6/CmECit+kCDb1KuCOJbmxNUouisH9hmQ++zvA0X5fEuMZflI2L5
- H8+fYcltM0P2Mj2KuyX4XoLskA9jDBBenTRDmQrtOydbg==
-Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
- helo=smtpout2.mo529.mail-out.ovh.net
+ t=1763127447; v=1;
+ b=NVW/C3JAVbeMvM8yu7Ul2+lTvMDovslHBtJWvpbLgR+EJpd+0+w/++k8IMl5jX1/TLAeu4lt
+ 4aY6lRMjWvEsfgB97Wmw1PnhDJbYvU4+t0PNDobJrtFXJYmaLa1cf44GID8UbzN0rH5s8dTC/Bv
+ SLD9B1M1FplrPHwp5es7jk4S67oeErMprYfYHQYjfWQKHIgVHO2wtFknyrdgHYK6Rg5LsRxmn2z
+ fAFpGFxHVYB/2rrI41lfXOtw1/bCr6fED7Elpy3b8mCIsnahYUmuUx8gFI07YNHZogUcRwUzUnD
+ lZrWzqMrlBYVT/nH6K/cKTvJGdPlCuHAgEFEmsWaAYN0Q==
+Received-SPF: pass client-ip=188.165.45.220; envelope-from=clg@kaod.org;
+ helo=5.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,19 +134,68 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/12/25 04:05, Jamin Lin wrote:
-> Remove the ast2700-evb entry from the Aspeed family boards list in
-> the documentation. The AST2700 platform now belongs to the new Aspeed
-> 2700 family group, which has its own dedicated documentation section
-> and board definitions.
-> 
-> Update the Aspeed 2700 family boards list in the documentation to include
-> the new ast2700fc board entry.
+> Added details describing AST1060 as a Platform Root of Trust processor board alongside
+> AST1030 MiniBMC, and extended the list of missing devices to include
+> SMBus Filter and QSPI Monitor controllers.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   docs/system/arm/aspeed.rst | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   docs/system/arm/aspeed.rst | 19 +++++++++++--------
+>   1 file changed, 11 insertions(+), 8 deletions(-)
 > 
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index 81a9699455..4fa1739cb5 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -448,23 +448,24 @@ Use ``tio`` or another terminal emulator to connect to the consoles:
+>      $ tio /dev/pts/57
+>   
+>   
+> -Aspeed minibmc family boards (``ast1030-evb``)
+> -==================================================================
+> +Aspeed MiniBMC and Platform Root of Trust processor family boards (``ast1030-evb``, ``ast1060-evb``)
+> +====================================================================================================
+>   
+> -The QEMU Aspeed machines model mini BMCs of various Aspeed evaluation
+> -boards. They are based on different releases of the
+> -Aspeed SoC : the AST1030 integrating an ARM Cortex M4F CPU (200MHz).
+> +The QEMU Aspeed machines model mini BMCs and Platform Root of Trust processors of various Aspeed
+> +evaluation boards. They are based on different releases of the Aspeed SoC : the AST1030 (MiniBMC)
+> +and AST1060 (Platform Root of Trust Processor), both integrating an ARM Cortex M4F CPU (200MHz).
+>   
+>   The SoC comes with SRAM, SPI, I2C, etc.
+>   
+> -AST1030 SoC based machines :
+> +AST10x0 SoC based machines :
+>   
+>   - ``ast1030-evb``          Aspeed AST1030 Evaluation board (Cortex-M4F)
+> +- ``ast1060-evb``          Aspeed AST1060 Evaluation board (Cortex-M4F)
+>   
+>   Supported devices
+>   -----------------
+>   
+> - * SMP (for the AST1030 Cortex-M4F)
+> + * SMP (for the Cortex-M4F)
+>    * Interrupt Controller (VIC)
+>    * Timer Controller
+>    * I2C Controller
+> @@ -492,6 +493,8 @@ Missing devices
+>    * Virtual UART
+>    * eSPI Controller
+>    * I3C Controller
+> + * SMBus Filter Controller
+> + * QSPI Monitor Controller
+>   
+>   Boot options
+>   ------------
+> @@ -507,4 +510,4 @@ To boot a kernel directly from a Zephyr build tree:
+>   .. code-block:: bash
+>   
+>     $ qemu-system-arm -M ast1030-evb -nographic \
+> -        -kernel zephyr.elf
+> +        -kernel zephyr.bin
+
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
