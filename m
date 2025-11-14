@@ -4,90 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9986CE7B05
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 12:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4488CE7B06
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 12:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJt9N-00080w-3l; Fri, 14 Nov 2025 07:43:37 -0500
+	id 1vJtIY-0006yb-Hl; Fri, 14 Nov 2025 07:53:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJt2a-00044O-Lj
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 07:36:42 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vJt2X-0006RI-2O
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 07:36:34 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42b2dc17965so1656415f8f.3
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 04:36:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763123791; x=1763728591; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hi0Ggm2J+RewAEfy0sHtgkw0RsI2w5w3CcHrqlRsIcA=;
- b=wkTW2Y1SXcS9ID9Uq+2mwx+1RH6O5xEyadjpJaJMeHJtIAHR905vL4gz5TG8+dro2J
- U129uuWc339VnwtOmI0/2QPypViI4ThdMrLIqFIupnzmnli209JVuLDTg/S02HV0GTs0
- WBshMlWHnYERDm+B73J0wQoc7Klpqw6HFDTcOpjjbgMN6ty4kRjoj69UiuRch+Tk00FD
- k+w68ggUnaNdcN3wCqpnyY6cAwEov41sv/lEWh8ngQfnC03bTeiA/D2SoQd7YA+BmGMh
- iSOfLxhGpDKxyoipDZD/bVsu27wGllCvB7fj1wWCqqYt5ttWGe2tA/huBeFLI9FShS6P
- J0Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763123791; x=1763728591;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hi0Ggm2J+RewAEfy0sHtgkw0RsI2w5w3CcHrqlRsIcA=;
- b=A6A/Z/uIKJyRaX15p4VBPw8HCFvM20PMrscWB7v93XQ/4FlFYn8Fco8xPQET46F5xK
- /iKg+aHgHUyFIL9etRZn4E1fHjrIVDfaouwC4NWObRUL47I7xTZc/Bi8/lqL7kpPQTY7
- 552qPk+wvXSaLocC/GSrSqJ47HpL5ZpszmLosYJ2x3NvMcJx1qf0WPaec+NpNBrNOaiO
- 5acP3jV7erCJbw3DttP4b+xcrotGglt5p+rDqhXZ5bMHNa22V9hBB5YiTGxbq1Y9VhKK
- RSzfMGc9n2UbitbsdFC4nLk8tzB3pEg32zsANL16sm+pWgGQm3S92rRhfaS2FJ6PQkid
- bh1Q==
-X-Gm-Message-State: AOJu0YwpYICAPXsO6cgL/HlCp8UYJOM1wtN76Khf06yFeKxKzK8GRDZp
- Uv28UwjzxNns2jUmfRBCXfjvzPWn8fTO7FD4tuZ73RvaTnUEgFYw6icKdJ8wTf9usHc=
-X-Gm-Gg: ASbGncvKsh8sRTrx9dN8hbmSmkv3mD3SlIkGgtUfoi5jAlUND1hULsodK31/WkkGQ8S
- Yb2+65A+P7bNk1Rs4KRcEm0Swn3EnmPRS4DtzAeC+ik+Ao3M7xIaiOg2QlexuiWHIqdYnqaQUQm
- UiqPebwTYT39Rmu1N57yY4G1GgWjPWnyGPVkgcVyQGaZs6IK/Db3qT2uI1VxHVYuJ1h2V/FiRbl
- pXAcstPEwtuZIfg3JB+DhDdnLnJB5GLD1FM1hJc1szgyLFEThJm4YurBaA7/XuY4WuObom6e3Uo
- WmSui+q1xTfzd+7uGCrvLzdIJGeQLvUKiedb6omuXZkUjwU1A+456UPS/ijNkLCEzbjT/GMr8Ha
- 8+ApqMuD+M7uS9gPNzGcwsg7EgZeU8zJGnPrJnwvoeEOTj4bHyLX98zztVU7Kj0GTCml9Yn+ySH
- NrgCPU04wkXNt2jjnEhyZV0Fk/ARb+23IQ1yQxTfz66I4=
-X-Google-Smtp-Source: AGHT+IGQ3MEopkbrjhpflf/6jyNZr/sR/9WXyIq81i+1viYK6p/b8vcnxv34x1mMnL+vpbAuc6EAfg==
-X-Received: by 2002:a5d:5d10:0:b0:429:bac1:c7f5 with SMTP id
- ffacd0b85a97d-42b5938ee78mr2711790f8f.44.1763123791144; 
- Fri, 14 Nov 2025 04:36:31 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f2084dsm10015822f8f.42.2025.11.14.04.36.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Nov 2025 04:36:30 -0800 (PST)
-Message-ID: <848dd7f0-112e-4950-bce4-4288c8515bde@linaro.org>
-Date: Fri, 14 Nov 2025 13:36:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Make sure fetch_instruction exist before calling it
-Content-Language: en-US
-To: phind.uet@gmail.com, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>
-Cc: qemu-devel@nongnu.org
-References: <20251114082915.71884-2-phind.uet@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251114082915.71884-2-phind.uet@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
+ id 1vJtCO-0001t6-SJ; Fri, 14 Nov 2025 07:46:50 -0500
+Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
+ id 1vJtCH-0000VX-A4; Fri, 14 Nov 2025 07:46:44 -0500
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id E071E1400138;
+ Fri, 14 Nov 2025 07:46:21 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Fri, 14 Nov 2025 07:46:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1763124381;
+ x=1763210781; bh=KRYaujiTt/NaBsbWVwqCf8TZUqbb8yn18Xn+agrRczw=; b=
+ xYw68h30mOhha24Fy+Djx1xc28TWR+ECpjvcdZxAd8PpW3IpvQphK4vUToR/2kIT
+ ddw45vQcaseH695Yym7cwPZgeTlI7WwjK0JEN+z102/PPahAsMbtXi2JUgTwjNUn
+ 5G1N1TyJ+1xl3p1ATSixjpbNinTRt0jHgO+D4u89iWf6NK/r6mlxuOUhPHWZWjKg
+ +3C7HThvqa/bO9YzkNVvrQkSOB3s7k+FL86Ek1/qTF6sEJf9dNTThO+2Ig2ZNcOb
+ JlU6q6P6SGXk/fEjqdfGE+XY8EVE5AQlX6LODYbihfwiPvfyUDsIUNgQoRBQPjLQ
+ RmwyUlqZv9xGiD51Qu0oNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763124381; x=
+ 1763210781; bh=KRYaujiTt/NaBsbWVwqCf8TZUqbb8yn18Xn+agrRczw=; b=q
+ tO1PWTSFRu9NpxEDakCpSS0jxM15f5M7nRoQ+0xEr8vaXATkezmoePgbWuXbkAn5
+ 02l1iFwZi+EjExSYZVqx/l80qHFRigPjuD7ATYsfJ3arRtITUmsfeDpdJMtGG1o/
+ QGSP+Oy48fGmYJzw2L/xd/Z2nibhTw9IuJcMn6hVikdRbfyzFyeU+6pkipj6PYyt
+ kO4zeGiACYWk0T3qi0vyDyejupjqwWV3foMjiPOTUpsQ5xlICGVp9sBl5sVi3JFx
+ msS3qzi7U7h+dqYe/qet1hUQkq//d4KkD7XvCEG+l8S5WKnfrxOXWFkOMcawxebR
+ uYMtwDVsdiAcfFFkPRymA==
+X-ME-Sender: <xms:nCQXaeQtrHyqW1zIlLTrndImcnf0qI6wwQUaQBopTju9Ilkbqa7emw>
+ <xme:nCQXaeuA6ltEL9pNcrVsDHqG5WttY0N5syBXXA-95NiVnQeTXPfpelZAkOLRv9MA3
+ nXLfoNIjifq0dWIskySIbEuWbb9MZTbPurhvhKnmK9OZgLixM6yvy8>
+X-ME-Received: <xmr:nCQXaa18WIOnoQREN2G1zsYXPJ4129IzS2AzJHohqay7_t8KwmFsKsh-AtCDdz-iJo4xRyJu9FrKt1HFK378GNx66Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdelkeehucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgvshhp
+ vghrucffvghvrghnthhivghrfdcuoehfohhsshesuggvfhhmrggtrhhordhitheqnecugg
+ ftrfgrthhtvghrnheptdevkeffvefgkeeutdfhteelhfehhfeugeffgfdthfelfeeuudff
+ gfelleeuudeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+ homhepfhhoshhsseguvghfmhgrtghrohdrihhtpdhnsggprhgtphhtthhopeejpdhmohgu
+ vgepshhmthhpohhuthdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughkpd
+ hrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthho
+ pehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotg
+ hksehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehl
+ ihhnrghrohdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtg
+ homhdprhgtphhtthhopehqvghmuhdquggvvhgvlhdqsghouhhntggvshdoqhgvmhhuqdgu
+ vghvvghlpegrrhgthhhivhgvrhdrkhgvrhhnvghlrdhorhhgsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:nCQXafWH-mA2nbIevglkN7oN-qfpJ-3LpjGwnkYycHh0GSEDHWurHw>
+ <xmx:nCQXaVLd8RfQURpMvQeUU8A1yqfTjKYdrxCZlMwyew4uMtEI4J9tNQ>
+ <xmx:nCQXaR1WGjGeWJRqLKw7LhGv6W7c24N4xY0gjHsutgPVeijA3iZ8MQ>
+ <xmx:nCQXab6MBWIuM_963ovcRaNO0EugkqYmPmf_ndojboKDoKLSk7lTWg>
+ <xmx:nSQXaakEL_YZGepx588aHlolpk2AnKIJXiM8zpYLCyadIF3bpzHk2Dsh>
+Feedback-ID: ic0014905:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Nov 2025 07:46:19 -0500 (EST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 14 Nov 2025 13:46:17 +0100
+Message-Id: <DE8FFH3SWJXI.R5P4RVKOJWKQ@defmacro.it>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>, "Klaus Jensen"
+ <k.jensen@samsung.com>,
+ <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
+Subject: Re: [PATCH for-10.2] hw/nvme: fix namespace atomic parameter setup
+From: "Jesper Devantier" <foss@defmacro.it>
+To: "Klaus Jensen" <its@irrelevant.dk>, <qemu-devel@nongnu.org>, "Keith
+ Busch" <kbusch@kernel.org>, <qemu-block@nongnu.org>
+X-Mailer: aerc 0.20.1
+References: <20251104-nvme-fix-atomics-v1-1-fe13be5a8339@samsung.com>
+In-Reply-To: <20251104-nvme-fix-atomics-v1-1-fe13be5a8339@samsung.com>
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=foss@defmacro.it;
+ helo=fhigh-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,37 +114,5 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/11/25 09:29, phind.uet@gmail.com wrote:
-> From: Nguyen Dinh Phi <phind.uet@gmail.com>
-> 
-> Currently, this function is only available in MSHV. If a different accelerator
-> is used, and the code jumps to this section, a segfault will occur.
-> (I ran into this with HVF)
-> 
-
-Fixes: 1e25327b244 ("x86/emulate: Allow instruction decoding from stream")
-
-> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-> ---
->   target/i386/emulate/x86_decode.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-> index 97bd6f1a3b..d037ed1142 100644
-> --- a/target/i386/emulate/x86_decode.c
-> +++ b/target/i386/emulate/x86_decode.c
-> @@ -77,7 +77,11 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
->           memcpy(&val, decode->stream->bytes + decode->len, size);
->       } else {
->           target_ulong va = linear_rip(env_cpu(env), env->eip) + decode->len;
-> -        emul_ops->fetch_instruction(env_cpu(env), &val, va, size);
-> +        if (emul_ops->fetch_instruction) {
-> +            emul_ops->fetch_instruction(env_cpu(env), &val, va, size);
-> +        } else {
-> +            emul_ops->read_mem(env_cpu(env), &val, va, size);
-> +        }
->       }
->       decode->len += size;
->   
-
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 
