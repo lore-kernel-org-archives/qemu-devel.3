@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87587CDE018
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5B9CE7B08
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJtfl-0006K1-FZ; Fri, 14 Nov 2025 08:17:05 -0500
+	id 1vJtj9-0000je-6H; Fri, 14 Nov 2025 08:20:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJtfU-0005tM-Tp
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:16:55 -0500
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1vJthx-0008Qg-Ev
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:19:25 -0500
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJtfT-0002IS-9R
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:16:48 -0500
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-7815092cd0bso18909837b3.2
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 05:16:46 -0800 (PST)
+ id 1vJthw-0002YM-2P
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:19:21 -0500
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-64107188baeso1802676d50.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 05:19:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763126206; x=1763731006; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763126359; x=1763731159; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4IyIKZFBmHVETvf09ZtZ3Oav8iu5fHOkmm9MGs84064=;
- b=Ip9+PS2fvXysGjP1uAuVvr6zOzGaaNPhNzY/HLVrNWjfvOP1R7q3oQaLuD1pwOZC0j
- x3+46XQV9YT+BsnxXlenO88h43LjlVybKN/Ga+cSGpyCioykAYAO5MUSQHIVj2HFNWYQ
- jDsgfMahkp1LNwAMZfkt/a13+FAehsrmuX6nCc8bsPAU5J7B4DyGxtTxNsRD8+9xomht
- ry6sbNgVO75YAHgDGrc+x423JV768FFa4owHTL4CfhwaMvgPnDGAssiXGLIGvz+OPcKq
- Hvix76yJsqwBGoFTGlpF90/WxCQe0W3pW0Y0VVG4qildB6OYAehdgl+a991zAPQFeExD
- WBeQ==
+ bh=jq07g6e7KH5zYtT1Neb6ACLpqUPUkVb01NhBRq7Mqjs=;
+ b=xmKYLZGtIDWwcNyzqH9sm8nhyXsV/U7vygTHy4HCD164FLAtlrbwa8NTOlu4ZoqTLc
+ f9TxWDFkDYDjlzzQaKN/ovCZjpQo5MH9XrZnEUn9FJKnQSZ1KGInFF8NOz+7glaj1N42
+ W+yvaTjewvcNr4Ehiyjd8huIhEcU9WzOtetuVs1J2rORDLaUDRJU0fft84EBjL1ihJVm
+ R8dafjxxWzWerMWIYUiLF+Bh5dj4kHVyXBjMXW4K/u5acGUqEmqBo9fJgtx9Bi3K+Ob3
+ yD1uMbxlNDVCWCf2grLP8BQBndo1Z5L+bKrYQH9XyDP5CGIGzx8yNB466Qs930kCIa5Z
+ nizQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763126206; x=1763731006;
+ d=1e100.net; s=20230601; t=1763126359; x=1763731159;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4IyIKZFBmHVETvf09ZtZ3Oav8iu5fHOkmm9MGs84064=;
- b=rRUvZ3+MHrAyIo58NdMRvia2selQB5hwAwIFXuOSqw5HNa8ihQ2lO4wuoadBiu09uD
- ecVjpVQhXx2KGYt6fUkEst8VFq4/5iUUUiVyInESnXNzXHaCbcudwgmprD5VT4/HQqOB
- QQkfSEw+G+YwBu4BsLlF92fQPaAkSY91FUoQcbn45ZvOwQjuszjD9b4YmGtp6eWgWl33
- NGuc+KAg5dtXCMtVVGR+SGYRtt+Ngv+v1a20dkaHNuOfF2PkJ2QCdIFrYx4kVOgVxiB8
- 38sT4gGWSJUvwBSWmUsJGDrq8hYsXCQIhLTpqrS97+bFWPjM0WgZxcsT0GLAcxCNY+ow
- dhgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWJYLMftAz9MVvXSwBZ8oNTBt18h5jYVcmlttAw8CEu7pJYpEL/VkyybCgjTetzvchvVnVkquucw9q@nongnu.org
-X-Gm-Message-State: AOJu0YyPEuupqHdTMEN7zl3zXjabjutrvdLwONK/krkHQoHAJ+CBDBr2
- rENNxj5B6wrUx/U53pX1hMK4CYlYlWN1CIVr3WjLr+GDB+F8pWUyAbK42CJRc71gl4RDhSKc1mg
- 0duTu09NFgG1WUsn6okPzGy8pc84cN+GOS9WFHlP0toxg+dTRALPbGiM=
-X-Gm-Gg: ASbGnctsh+F2eDclXi0JjpC46VVc/eyE+b+WoXKvf8pdSzCXrqkElu8J87dLkfJL87B
- WHDHHfeZN+A/wfEHb2qF+sHu8IE+F1DqzqoCcg1VZOaKpZJsKWY0jooELwhNwZj3GgDNQY9Usuy
- CFo0igsK3vyLNZHBQquoVz2zicqe/rcrjfu1j3zv+F8Ez1yvrXiJ9SLB5x5AYyKMiCSGaNcRabO
- m9ICxIqwyyv+093Vb84ned9dFx3O01A0Z8rr30I2rFbmTufe2ernGbnswAsVgd23ySasGzO
-X-Google-Smtp-Source: AGHT+IFhRN+Azr3gUEK0bqvU3vlEQ3RfVgtnw7N5+2b8L9y4y+PKuDF7mUf3YbAdY7GwiqaKLerUAEG+gcIwCtKbWK8=
-X-Received: by 2002:a05:690c:5086:b0:788:e1b:5ee6 with SMTP id
- 00721157ae682-78929f4086emr40008227b3.70.1763126206095; Fri, 14 Nov 2025
- 05:16:46 -0800 (PST)
+ bh=jq07g6e7KH5zYtT1Neb6ACLpqUPUkVb01NhBRq7Mqjs=;
+ b=HhqhpeZPYgF7YymNvq/2olYelTZDf9ou2ejtqty9s0yMLlxiwhM9/XFgS52ap3S5jY
+ UNy9sYUWZIH/V3T6XhR80m266vH1txNjUe+xYI0TE9fkUSArLmsjKRf1v8BRCe9TjoVg
+ /0w+z3DkbBUHEwUWEr17574U+yOVqpb9uWj8riQGHsFz5Gg49EhE18f8YV6GUJuUAnGw
+ ZpPUmB8Zy5bR8bIU8gBNjIC/b0VAqn+gkzjUqmBGM/zxvHuaHnPwA/vMvPIrD45qfZN/
+ U6AarTvIjzcZgDcCPKMnsPzsT31NkfHjoGKKmE8o0M+SvjWEtE/8Y50Q7bxaZxFz1N6t
+ Lw3w==
+X-Gm-Message-State: AOJu0Yz08VjD4OyYKg2ONBu8K0ucscF3YzSRvMNXk1H1zASYfVJixL9u
+ Rv7tnINN5vga3tliIu6COgFgni3exADPpJ5yZItjWNi/EXYeB6DZjnV+FlpqbXMRoJ8k9yQibhG
+ ezEkTEoXfL0UQJpKkF2F6wVPvmlGR5zt1Fb6sYqJ4PtbuUsTM4hudyOo=
+X-Gm-Gg: ASbGncuS+C+jYFi8tB/bPPP39+GAQc1bl/1w/AAircglb74iUM1U63BL0dbKcQ2hrX4
+ 2ZQ4d3yx5zqpOTLl7Pv2CVsPJr7iuA227qvI5HWaH3D9ovqXUnbuEIZ+6KxGl4Ny/JsoBha7tj6
+ RQIoYoH0kQHgQ4gOajrzeOUltBw3rkWFyyOKDgNCLD+EbgSk4TWTrjUspB/piEBIGWe2f0EeU6V
+ 2b4OU7oCOHR8M/zSRKLlhsvDZtzRC9EXKZVQiwdaqhPAmTyG5DyvcJ74eAr+5rkGMplblq+
+X-Google-Smtp-Source: AGHT+IELRTcYwCLeMbbgI0mZjBxd+vizbfKskfOSc9LF1PtuZvoNn2Mewu2FRSwVP2V8QZyU9aM9EbyCrgJmohjuXZA=
+X-Received: by 2002:a05:690e:d4a:b0:63e:1f47:f504 with SMTP id
+ 956f58d0204a3-641e766148fmr2490148d50.50.1763126358942; Fri, 14 Nov 2025
+ 05:19:18 -0800 (PST)
 MIME-Version: 1.0
-References: <20251107143913.1341358-1-peter.maydell@linaro.org>
-In-Reply-To: <20251107143913.1341358-1-peter.maydell@linaro.org>
+References: <20251104160943.751997-1-peter.maydell@linaro.org>
+In-Reply-To: <20251104160943.751997-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 14 Nov 2025 13:16:34 +0000
-X-Gm-Features: AWmQ_bnB8ak65mO4-BDrYlIMr9FeSdCSz2rNziwD75WVUlq1J-S332_kcYFbtjw
-Message-ID: <CAFEAcA_M6dO2L8GEFm_LafpK8sbGWTiTp1aD3sWxQxtsjnV5aA@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/exynos4210_fimd: Account for zero length in
- fimd_update_memory_section()
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Igor Mitsyanko <i.mitsyanko@gmail.com>
+Date: Fri, 14 Nov 2025 13:19:07 +0000
+X-Gm-Features: AWmQ_bllXjllp5Uw_WMcfw4bENWzQy4518jlI7hUg1ADWSjsepiWDigwz4pWRag
+Message-ID: <CAFEAcA_0gVKvQTcL0NXq3Z1kZALDVG9M-0L0e9mZXvRhhh=7OQ@mail.gmail.com>
+Subject: Re: [PATCH 0/9] clean-includes: improve exclude list, run on cxl,
+ vfio, tests
+To: qemu-devel@nongnu.org
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Alex Williamson <alex@shazbot.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,54 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for review?
+On Tue, 4 Nov 2025 at 16:09, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> I realised that we haven't run clean-includes recently, and
+> unsurprisingly various violations of our include policy have
+> crept in to the tree. The exclude-list of files it shouldn't
+> be run on has also grown rather out of date.
+>
+> While looking at this I realised that one reason the exclude list
+> is stale is that it's encoded in the script in a really awkward
+> single long line extended regex. So the main thing this patch
+> series does is fix that to instead use a list of regexes, one
+> per line, with comments permitted.
+>
+> The other useful new feature here is that you can now point
+> the script at a directory (previously your only options were
+> an explicit list of files, or '--all' to scan everything).
+>
+> The other changes to the script itself are minor cleanups.
+>
+> Finally, I have a couple of patches which are the result of
+> running the script on some subdirectories. I do think that all
+> the changes that the script now suggests are correct (it wants
+> to make changes to 28 files other than these) but I wanted to
+> get the script changes through review first, and then perhaps
+> send those last changes a bit more broken up per-subsystem.
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (9):
+>   scripts/clean-includes: Allow directories on command line
+>   scripts/clean-includes: Remove outdated comment
+>   scripts/clean-includes: Make ignore-regexes one per line
+>   scripts/clean-includes: Do all our exclusions with REGEXFILE
+>   scripts/clean-includes: Give the args in git commit messages
+>   scripts/clean-includes: Update exclude list
+>   cxl: Clean up includes
+>   vfio: Clean up includes
+>   tests: Clean up includes
+
+I've taken the "actually clean some include files" patches
+into target-arm.next, since those have been reviewed.
+Review of the actual script changes would still be
+appreciated.
 
 thanks
 -- PMM
-
-On Fri, 7 Nov 2025 at 14:39, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> In fimd_update_memory_section() we attempt ot find and map part of
-> the RAM MR which backs the framebuffer, based on guest-configurable
-> size and start address.
->
-> If the guest configures framebuffer settings which result in a
-> zero-sized framebuffer, we hit an assertion(), because
-> memory_region_find() will return a NULL mem_section.mr.
->
-> Explicitly check for the zero-size case and treat this as a
-> guest error.
->
-> Because we now have a code path which can reach error_return without
-> calling memory_region_find to set w->mem_section, we must NULL out
-> w->mem_section.mr after the unref of the old MR, so that error_return
-> does not incorrectly double-unref the old MR.
->
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1407
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  hw/display/exynos4210_fimd.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-> index c61e0280a7c..eec874d0b1d 100644
-> --- a/hw/display/exynos4210_fimd.c
-> +++ b/hw/display/exynos4210_fimd.c
-> @@ -1147,6 +1147,13 @@ static void fimd_update_memory_section(Exynos4210fimdState *s, unsigned win)
->      if (w->mem_section.mr) {
->          memory_region_set_log(w->mem_section.mr, false, DIRTY_MEMORY_VGA);
->          memory_region_unref(w->mem_section.mr);
-> +        w->mem_section.mr = NULL;
-> +    }
-> +
-> +    if (w->fb_len == 0) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "FIMD: Guest config means framebuffer is zero length\n");
-> +        goto error_return;
->      }
->
->      w->mem_section = memory_region_find(s->fbmem, fb_start_addr, w->fb_len);
-> --
-> 2.43.0
 
