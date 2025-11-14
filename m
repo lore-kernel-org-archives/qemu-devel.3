@@ -4,59 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A395DCE7B08
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43499CE7B0D
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJtoB-0000Ti-HB; Fri, 14 Nov 2025 08:25:47 -0500
+	id 1vJtpY-0002o1-Un; Fri, 14 Nov 2025 08:27:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vJto1-0000RT-Tb; Fri, 14 Nov 2025 08:25:37 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vJtox-0001lo-Fj
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:26:42 -0500
+Received: from 7.mo548.mail-out.ovh.net ([46.105.33.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vJtnx-0006AD-Qd; Fri, 14 Nov 2025 08:25:36 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B7F3E5972E8;
- Fri, 14 Nov 2025 14:25:28 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id FyWVkKh9w2Yi; Fri, 14 Nov 2025 14:25:26 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A3A415972E2; Fri, 14 Nov 2025 14:25:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A18435972E4;
- Fri, 14 Nov 2025 14:25:26 +0100 (CET)
-Date: Fri, 14 Nov 2025 14:25:26 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>
-cc: Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com, 
- eblake@redhat.com
-Subject: Re: [PATCH v2 1/5] vvfat: introduce partitioned option
-In-Reply-To: <CAJ307EjFMrXOmQMF5YckQ6hMGdFGtdYdAH3fWShcvwEXAtBrrw@mail.gmail.com>
-Message-ID: <87c7d0d6-8f8f-b6f2-3c81-0b0572dbad2c@eik.bme.hu>
-References: <20251107145327.539481-1-chigot@adacore.com>
- <20251107145327.539481-2-chigot@adacore.com> <878qgenqum.fsf@pond.sub.org>
- <CAJ307Eg7x_rKb5qybgW3XxAKLP=1ds524gqgXettv2cZ8WTMww@mail.gmail.com>
- <757f66d0-625c-9d1b-5090-3d5210903173@eik.bme.hu>
- <87346mkos9.fsf@pond.sub.org> <aRH_2gcYOH31UB38@redhat.com>
- <87ecq5f201.fsf@pond.sub.org>
- <CAJ307EjFMrXOmQMF5YckQ6hMGdFGtdYdAH3fWShcvwEXAtBrrw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vJtou-0006EV-2d
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:26:34 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.199])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d7HwC4C6bz5xQS;
+ Fri, 14 Nov 2025 13:26:19 +0000 (UTC)
+Received: from kaod.org (37.59.142.102) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 14 Nov
+ 2025 14:26:17 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-102R004abd91f49-da0a-4f75-ac9f-652097edea88,
+ DCBE4845A3BE020BB938A31E73221960BF2A3C2F) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <3026aa92-6aee-47ee-b599-763496eb239a@kaod.org>
+Date: Fri, 14 Nov 2025 14:26:16 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1758519928-1763126726=:96084"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v2 07/12] hw/arm/aspeed_ast10x0: Pass SoC name to
+ common init for AST10x0 family reuse
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, Kevin
+ Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
+References: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
+ <20251112030553.291734-8-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251112030553.291734-8-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.102]
+X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 0de7527b-a532-470a-8612-a5dcfda492ae
+X-Ovh-Tracer-Id: 3312960475975551806
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGJyr4Q3GQpbOi19MPd5rscbNrFSibLW//8JUN04vak7huJQYUeaDdA+YLgW9mkCU/GyKrGktothQqZrivvqCJl2qUOR5rkankWLEmh3/ZNv1sdZsEQ+n0zhS2yHXIlKIc8rz9kZwfj+j0zqW7/DkjWVpDr7qeLqFtnuSF6RQ70L1ZT5HVAr897m9D7S9UfEvN/+WGy7AnJo6Akcqxn2kEVIEpjjUZA+dDEP6z5dfn3HjRe7K++mm8fWS41hMByGY25mz14ZHM31jfEVIvSBD8wgEOR3XL8QJvkS22JmHNlWAkQl50fsj9xi3aC7aSsXjVXIeZVE3k6P1oegQMkh9JYts11pewMlcu1sVFv07ndQgS7yfOh54CnQajIm1B8mWe3bJJXoPZm/J91zIiw0hd8grUKgy+ULB/J6OWq7bZMtf8KzA48qSyGaYqPHqXRhyN+TFouBIs6Fst//kgmQWCaQurNX9qK2tArd7PhjNtvFhvqslY/x5hunp9uRHNFT7soqMPiNMriiiqVulPlx+TXyxNDjQknYZ/Trng35A4Pg/eyJyiaLK+nPiZEFKLnJm7PBg2SFvXRxkRIdwf8UnXJwnrAWu0FmWFD73l+joREhxMtGGE+9tOsSwqB/veAoZFfLFOz/rP2wd8Ix2GchbpnJwmu4BgOl1a4orVWmqaUOw
+DKIM-Signature: a=rsa-sha256; bh=3BdvPrRTDES12bWowk2n8TYJV3MVqO3jcq7TQ5KkbHo=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1763126781; v=1;
+ b=OhPnK9jbWK4b+8WupSe2JQIxKa3aD2x8uvUxuobLP3nsOmx1ceIBg6D7LdFJFVVC42Xx1WYB
+ H54NXGuQ21Z2EzKMKfEblcAFBODUCFVLuPNrUUMFoaqcxestPeR5UfUHoHh55bToRhYBZAvToRd
+ E82aJEUg7TvgbY1ll/vumVekFvIpGA7ImpKM0fUzitOhQcCS3TQzVPJ7FzQf8t6AgIqa/aVlXzq
+ dcdYmZVR1VN49/SNNSrOciJ5n1Crr3la/A/Wge2CRtYKtBQKtqHQ5TULBNHiuSNwZBdf3RjUd3l
+ E5Nq85Ao6MUx5R8wZPspPFGF6xz3wvL1AU0vSeqtBaKJQ==
+Received-SPF: pass client-ip=46.105.33.25; envelope-from=clg@kaod.org;
+ helo=7.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,120 +133,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 11/12/25 04:05, Jamin Lin wrote:
+> Refactor the AST10x0 common initialization to accept a socname
+> parameter.
+> 
+> The AST1030 model can be reused by AST1060 since they share most of the
+> same controllers. This approach allows AST1060 to leverage the existing
+> AST1030 initialization flow while keeping separate SoC-specific init
+> functions for components that differ.
+> 
+> This prepares the framework for AST1060 support, allowing it to reuse
+> AST1030 device models and initialization flow without code duplication.
+> 
+> No functional changes.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast10x0.c | 9 ++-------
+>   1 file changed, 2 insertions(+), 7 deletions(-)
 
---3866299591-1758519928-1763126726=:96084
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
 
-On Fri, 14 Nov 2025, Clément Chigot wrote:
-> On Tue, Nov 11, 2025 at 8:43 AM Markus Armbruster <armbru@redhat.com> wrote:
->>
->> Kevin Wolf <kwolf@redhat.com> writes:
->>
->>> Am 10.11.2025 um 14:20 hat Markus Armbruster geschrieben:
->>>> BALATON Zoltan <balaton@eik.bme.hu> writes:
->>>>
->>>>> On Mon, 10 Nov 2025, Clément Chigot wrote:
->>>>>> On Mon, Nov 10, 2025 at 11:07 AM Markus Armbruster <armbru@redhat.com> wrote:
->>>>>>>
->>>>>>> Clément Chigot <chigot@adacore.com> writes:
->>>>>>>
->>>>>>>> This option tells whether a hard disk should be partitioned or not. It
->>>>>>>> defaults to true and have the prime effect of preventing a master boot
->>>>>>>> record (MBR) to be initialized.
->>>>>>>>
->>>>>>>> This is useful as some operating system (QNX, Rtems) don't
->>>>>>>> recognized FAT mounted disks (especially SD cards) if a MBR is present.
->>>>>>>>
->>>>>>>> Signed-off-by: Clément Chigot <chigot@adacore.com>
->>
->> [...]
->>
->>>>>>> Not sure I like "partitioned".  Is a disk with an MBR and a partition
->>>>>>> table contraining a single partition partitioned?  Call it "mbr"?
->>>>>>
->>>>>> It used to be called "mbr/no-mbr" but Kevin suggested renaming it in
->>>>>> V1. Honestly I'm fine with both options:
->>>>>> - Technically, the option prevents MBR which has a side effect for
->>>>>> preventing partition tables
->>>>
->>>> Yes, because the partition table is part of the MBR.  I'd rather name
->>>> the option after the entire thing it controls, not one of its parts.
->>>>
->>>>>> - Even it has a single partition, I think it makes sense to call a
->>>>>> disk "partitioned" as long as it has a partition table
->>>>>>
->>>>>> But I'm not that familiar with disk formats, etc. I'll let you decide
->>>>>> with Kevin, which one you prefer.
->>>>
->>>> Kevin is the maintainer, I just serve as advisor here.
->>>
->>> I figured that the meaning of "partitioned" is easier to understand for
->>> a casual user than having or not having an MBR ("I don't want to boot
->>> from this disk, why would I care about a boot record?").
->>
->> Fair point.
->>
->> Possible counter-points:
->>
->> * The default is almost always right for the casual user.  The
->>   exception, as far as I understand, is certain guest OSes refuse to
->>   play ball with certain devices when they have an MBR.
->>
->> * The configuration interface isn't exactly casual-user-friendly to
->>   begin with.  @fat-type, what's that, and why do I care?  @floppy,
->>   what's that, and why do I care?
->>
->> Anyway, you decide.
->
-> AFAICT, there are two open questions for that patch:
->
-> 1. "mbr" vs "partitioned".
-> I do think "partitioned" is clearer, a bit more casual friendly. "mbr"
-> requires knowledge about FAT format, while what's a partition should
-> be known by a wider audience.
-> Side note, in V3, I'll remove the "unpartitioned" keyword to simply
-> replace it by "partitoned=false" (I wasn't aware such an obvious
-> possibility was working...). So we might even call it
-> "partition/partitions=true|false".
->
-> 2. The default value. Should it be "false" for @floppy ?
-> IMO, having a default value independent of other arguments is always
-> better. Hence, I'll push for keeping "partitioned=true" as the
-> default, and having users forcing "partitioned=false" for floppy (an
-> error being raised otherwise). As we'll probably change the default
-> behavior with floppy anyway (cf patch 2), I don't think it will hurt a
-> lot to make users passing a new flag.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Combined with the option called partinioned=false that's quite unfriendly 
-for users trying to type a command line. Maybe not many do but those who 
-don't also don't care about what are the defaults or if it's called mbr or 
-partitioned as whatever generates the command line for them takes care 
-of that. So I'm still for user friendly CLI but I also don't care enough 
-to insist more if others don't think it's worth to keep this user friendly 
-for command line users.
+Thanks,
 
-There was another question if the fat-size option is really needed or it 
-could just use size if the default format=raw was changed to behave like 
-format=vvfat if file=fat: is given which I think would make more sense 
-than only truncating the underlying raw format that's not even needed to 
-be there but I don't know how difficult it is to implement this or the 
-default format=raw is hard coded and hard to change for fat: protocol.
+C.
 
-So in summary:
 
-1. format=vvfat,size=xMB was said to work so could file=fat:/dir,size=xMB 
-imply format=vvfat so it would also work? Then no other size option is 
-needed.
+> 
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index 5bbe16af24..1521000af0 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -107,19 +107,14 @@ static qemu_irq aspeed_soc_ast1030_get_irq(AspeedSoCState *s, int dev)
+>       return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
+>   }
+>   
+> -static void aspeed_soc_ast10x0_init(Object *obj)
+> +static void aspeed_soc_ast10x0_init(Object *obj, const char *socname)
+>   {
+>       Aspeed10x0SoCState *a = ASPEED10X0_SOC(obj);
+>       AspeedSoCState *s = ASPEED_SOC(obj);
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> -    char socname[8];
+>       char typename[64];
+>       int i;
+>   
+> -    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
+> -        g_assert_not_reached();
+> -    }
+> -
+>       object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);
+>   
+>       s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+> @@ -185,7 +180,7 @@ static void aspeed_soc_ast1030_init(Object *obj)
+>   {
+>       AspeedSoCState *s = ASPEED_SOC(obj);
+>   
+> -    aspeed_soc_ast10x0_init(obj);
+> +    aspeed_soc_ast10x0_init(obj, "ast1030");
+>       object_initialize_child(obj, "lpc", &s->lpc, TYPE_ASPEED_LPC);
+>       object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
+>   }
 
-2. Having different defaults for floppy or disk would keep existing 
-command lines working. Otherwise why not make partitioned=false the 
-default and let users who need it set explicitly. That would also work for 
-most cases without having to type out this option.
-
-Regards,
-BALATON Zoltan
---3866299591-1758519928-1763126726=:96084--
 
