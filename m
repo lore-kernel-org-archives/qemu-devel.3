@@ -4,94 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AECE6CE8D7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 19:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D856FCE8D76
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 19:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJzRC-0006uc-UU; Fri, 14 Nov 2025 14:26:27 -0500
+	id 1vJzwM-0002fW-D2; Fri, 14 Nov 2025 14:58:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vJzEJ-0000We-8O; Fri, 14 Nov 2025 14:13:07 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vJzEH-00059D-EB; Fri, 14 Nov 2025 14:13:06 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ADE2716A20D;
- Fri, 14 Nov 2025 22:12:49 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1569F319717;
- Fri, 14 Nov 2025 22:12:52 +0300 (MSK)
-Message-ID: <3e38f235-c25f-4ec6-9650-84ba6977e81e@tls.msk.ru>
-Date: Fri, 14 Nov 2025 22:12:51 +0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vJzr5-0006p5-PS
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 14:53:14 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vJzr3-00089Y-GZ
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 14:53:10 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 75E96218F9;
+ Fri, 14 Nov 2025 19:53:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1763149986; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sjiabFdUcc9LmbkYc1Li+f9ngy25fg8hINhtpQQx5/w=;
+ b=lvLvjlMMTHgr9hA0pOK5yYf+Hv+bzBzVukZuD5lYiwpJc6F4xnOoznFTfzo0eNzcwE7hoa
+ xx8NXpnj+2P1J/HvmEtYSe8fILDBfAqlwT1W70yR/2kjAQeV2ht0Vqx3W7aIa85Gk/pg4t
+ WYLYwLXfNNFgF1AOr8KC2bx5s8KaOzM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1763149986;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sjiabFdUcc9LmbkYc1Li+f9ngy25fg8hINhtpQQx5/w=;
+ b=tu5VOrHe0ssmrEnTidP8zzGCVIJlMWwhZOdTTDb/13lrqoL7I+81inqOAzCcBmrxMQYqSQ
+ FK/VAy3R/FuJCiCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XDbvqyt0;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=n1AWirpm
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1763149985; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sjiabFdUcc9LmbkYc1Li+f9ngy25fg8hINhtpQQx5/w=;
+ b=XDbvqyt0oYHNEeRIl2JwEWZZUBfqBXHLX8KBKv4F9zsjFZ78zu6gxYPL9nt4zV/d+0gQOe
+ 3gXl+l4DVYUCFA+8kfRTb4anFR7PD3pSqDbNzNn7bGjOLS3XF+FWxwUExbM4v8oW4rspSZ
+ t8Y+0vX0NuU2vV+3x0d9zLdJhrsyuA8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1763149985;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sjiabFdUcc9LmbkYc1Li+f9ngy25fg8hINhtpQQx5/w=;
+ b=n1AWirpmhMLV/cKvwZxHm9cvzDlpqeQ/x3V4h0mh2joLMOAe1vCamfHM518mtTDz3Q/xLf
+ 3wr+VYAzwMC5qwBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E13CE3EA61;
+ Fri, 14 Nov 2025 19:53:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dQ6zJ6CIF2lTLwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Nov 2025 19:53:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] system/qtest.c: Allow for multiple CHR_EVENT_CLOSED events
+In-Reply-To: <CAFEAcA-ROzqrpb1Z9oR2LF5=YHhM95=Ae2RCsqPH7Yj3CRBwLA@mail.gmail.com>
+References: <20251107174306.1408139-1-peter.maydell@linaro.org>
+ <CAFEAcA-ROzqrpb1Z9oR2LF5=YHhM95=Ae2RCsqPH7Yj3CRBwLA@mail.gmail.com>
+Date: Fri, 14 Nov 2025 16:53:02 -0300
+Message-ID: <875xbccrxd.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] io: release active GSource in TLS channel finalizer
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Cc: Grant Millar | Cylo <rid@cylo.io>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Eric Blake <eblake@redhat.com>
-References: <20251003150245.3510069-1-berrange@redhat.com>
- <20251003150245.3510069-2-berrange@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251003150245.3510069-2-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 75E96218F9
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,50 +127,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/25 18:02, Daniel P. Berrangé wrote:
-> While code is supposed to call qio_channel_close() before releasing the
-> last reference on an QIOChannel, this is not guaranteed. QIOChannelFile
-> and QIOChannelSocket both cleanup resources in their finalizer if the
-> close operation was missed.
-> 
-> This ensures the TLS channel will do the same failsafe cleanup.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   io/channel-tls.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/io/channel-tls.c b/io/channel-tls.c
-> index 7135896f79..bb460ca7e9 100644
-> --- a/io/channel-tls.c
-> +++ b/io/channel-tls.c
-> @@ -342,6 +342,16 @@ static void qio_channel_tls_finalize(Object *obj)
->   {
->       QIOChannelTLS *ioc = QIO_CHANNEL_TLS(obj);
->   
-> +    if (ioc->hs_ioc_tag) {
-> +        trace_qio_channel_tls_handshake_cancel(ioc);
-> +        g_clear_handle_id(&ioc->hs_ioc_tag, g_source_remove);
-> +    }
-> +
-> +    if (ioc->bye_ioc_tag) {
-> +        trace_qio_channel_tls_bye_cancel(ioc);
-> +        g_clear_handle_id(&ioc->bye_ioc_tag, g_source_remove);
-> +    }
-> +
->       object_unref(OBJECT(ioc->master));
->       qcrypto_tls_session_free(ioc->session);
->   }
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-This series should be relevant for 7.2.x qemu stable series too, it
-looks like.  Except that 7.2 does not have ioc->bye_ioc_tag (which
-comes from v9.2.0-1773-g30ee88622e "io: tls: Add qio_channel_tls_bye"), 
-and does not have trace_qio_channel_tls_handshake_cancel defined.
+> Ping for code review?
+>
+> thanks
+> -- PMM
+>
+> On Fri, 7 Nov 2025 at 17:43, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> In the qtest_event() QEMUChrEvent handler, we create a timer
+>> and log OPENED on CHR_EVENT_OPENED, and we destroy the timer and
+>> log CLOSED on CHR_EVENT_CLOSED. However, the chardev subsystem
+>> can send us more than one CHR_EVENT_CLOSED if we're reading from
+>> a file chardev:
+>>  * the first one happens when we read the last data from the file
+>>  * the second one happens when the user hits ^C to exit QEMU
+>>    and the chardev is finalized: char_fd_finalize()
+>>
+>> This causes us to call g_timer_elapsed() with a NULL timer
+>> (which glib complains about) and print an extra CLOSED log line
+>> with a zero timestamp:
+>>
+>> [I +0.063829] CLOSED
+>> qemu-system-aarch64: GLib: g_timer_elapsed: assertion 'timer != NULL' failed
+>> [I +0.000000] CLOSED
+>>
+>> Avoid this by ignoring a CHR_EVENT_CLOSED if we have already
+>> processed one.
+>>
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+>>  system/qtest.c | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>> diff --git a/system/qtest.c b/system/qtest.c
+>> index baef06d4d1b..67e2385f4b0 100644
+>> --- a/system/qtest.c
+>> +++ b/system/qtest.c
+>> @@ -815,6 +815,10 @@ static void qtest_event(void *opaque, QEMUChrEvent event)
+>>          }
+>>          break;
+>>      case CHR_EVENT_CLOSED:
+>> +        if (!qtest_opened) {
+>> +            /* Ignore CLOSED events if we have already closed the log */
+>> +            break;
+>> +        }
+>>          qtest_opened = false;
+>>          if (qtest_log_fp) {
+>>              fprintf(qtest_log_fp, "[I +" FMT_timeval "] CLOSED\n", g_timer_elapsed(timer, NULL));
+>> --
+>> 2.43.0
 
-Does the whole series (besides this change) look sane in the 7.2.x
-context?
+I'm aware some qtest stuff is lingering on the list, I came back from
+vacations yesterday and will give attention to it in the next few days.
 
-Thanks,
-
-/mjt
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
