@@ -4,163 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B999CDE00A
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 06:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D741CDE00E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 06:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJn1x-00017x-DV; Fri, 14 Nov 2025 01:11:33 -0500
+	id 1vJn7Q-0004Yr-Hy; Fri, 14 Nov 2025 01:17:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJn1u-00016Q-Fo
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 01:11:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vJn7M-0004Xk-ES; Fri, 14 Nov 2025 01:17:08 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJn1s-0004m3-4S
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 01:11:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763100686;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6YsJYSI801dpV8bDwEIMDwEUT1fDGxyQIigvHMmZW1s=;
- b=f+sWZge1toOj8CQ2UgyK9OuuZCCHkRRJY54SP4fEERKqDv/dRrlrl727TAYsWqpeOc64UV
- Cj9mYLZ0HLW+eaIg2+AmzFJIkA1/GI0EZi2QbsjHAY+YfvBIQx6TBxL7jatjW+Zf3G6gp5
- HM4OtAW9TWMXm2Ufx7LtIw6GCL51CSI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-bpm-GvxAPxWp2inxp2mUHA-1; Fri, 14 Nov 2025 01:11:24 -0500
-X-MC-Unique: bpm-GvxAPxWp2inxp2mUHA-1
-X-Mimecast-MFC-AGG-ID: bpm-GvxAPxWp2inxp2mUHA_1763100683
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4710d174c31so15912245e9.0
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:11:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763100683; x=1763705483; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=6YsJYSI801dpV8bDwEIMDwEUT1fDGxyQIigvHMmZW1s=;
- b=gUbSoB/2apbdTFvZEDtQYkiQA9mC6+YkX9r1flK8GqwteRPLGLXU9LRFV8EeEKxyVi
- /ELEbrLfdO9DX27ERKQoAJnNhsJKx67aRh4uWY0NCbpsVr5a+SeyEVbWQxGav202gOUk
- qxg4J4e4zfqLoLoJHAuv6E95gZfD3oeQbrQ8uZdrec9NWT4RFE0GvsPdoqd7rv7Pl6TP
- nTDC/mjHzweTLrf0zYi9cOAfd3GVtYcIMU9QH3c/gP97Z+6s5l1ht9nYXEama//LHLKM
- m2NYxmJ/vs68P6cGDo8tmcSLTLPb614HHPsWga6RV0OprlSW6+qO7plWupCFwRL37w+j
- MjDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763100683; x=1763705483;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6YsJYSI801dpV8bDwEIMDwEUT1fDGxyQIigvHMmZW1s=;
- b=dS60390Hd8ppONWWk161UMkU3d+cDPtgb4TDdQneIDDmwH9LkRHeddVTIvZUNHhkTn
- 34zH5VXK1fjVE+f+SyfAn98Cu4MCrnm+AzRFs90jp+q9we4Tz7zffQQj6iuuG0eqqRPi
- 4MDSHcGkeZIFmkNEFOYURk2DaczAlbGt95ya2mhoCY0qmjOUbd4OTTH9zJHs2ZD3mypk
- 4F8S4gfyRUdMQCNPDArjpm34Oia7JbzPdUDWuZkB7J5QZaq4D5V0zK2eCMP5KTOvalgz
- njmL++Wa27U+2DyvFsGD896E0mr/0LavrZ+B4dnUyYz33Q4tFWL9ZxY850FKmdafD0Bc
- Vbpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2HAb4FDVU8v79fwaYpm7+VNDL66z4/hiyQM+GaUNyElEU7krsJoQ2IyM6kJCIhgp5gOuQGWA71Omg@nongnu.org
-X-Gm-Message-State: AOJu0YwtwqWRRx2Yb4YW5mf2wS4t4JF0KxgyOtMe8URLb0POnbDzc3BS
- gTmuhCxvD3qNXw+6nzm9OJXvoyXs23/Im9nSpho7O5vWuDumX1P96/CyBjz1GKq0Nb6vCevbVbo
- Z/As+tifKFkYlAhIvF9YJQWotk1XTUFx6aKvbzcfFM+IxeOhbILPNiYF3
-X-Gm-Gg: ASbGncuSqsKzD7lB7AVXhgR2x6+sh1RV4IS/E+YCv5ELctM8ebbkLN4ZpfVR7jRonrt
- 9CYyrPf5i0BUrAxPb/PMuyCIopu5H48Dnmk73dhebLYkOKDakuu226Z9lONllHyg1iyyfYbfOUI
- uYT6915omiAYJ/poe4EXyL66pEdrTKABgiUKmLJEh3fyavGpE7bgxL8fwlClKqmCt7xc3y7Z1vE
- 2dgyPQ02KKvWaAzOUx49L5m5hFHcUuJc2luuGDwnv0xkD8VrwIkUtsX7uRE4jSed5xXVMv3ZFBM
- A9D+sOdw2WLeIfEgrAq78jT5Gm/W1i6PmpBwxpTCMFslmOuwRq032Jy1I+gyzB+LDFKPmFE=
-X-Received: by 2002:a05:600c:3b19:b0:471:989:9d7b with SMTP id
- 5b1f17b1804b1-4778fe95fe2mr17030115e9.21.1763100683471; 
- Thu, 13 Nov 2025 22:11:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHJzaEiYmJ9iVo6V9w4aVzVjTovC5oFykKyk1gT2ZYxfvVrcgFn/ufRDYtP+QjizYXr4/63Mg==
-X-Received: by 2002:a05:600c:3b19:b0:471:989:9d7b with SMTP id
- 5b1f17b1804b1-4778fe95fe2mr17029925e9.21.1763100683052; 
- Thu, 13 Nov 2025 22:11:23 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4778c850000sm70759715e9.4.2025.11.13.22.11.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Nov 2025 22:11:22 -0800 (PST)
-Message-ID: <ec0110b7-5d63-481a-8d8f-3eefbe366129@redhat.com>
-Date: Fri, 14 Nov 2025 07:11:21 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vJn7J-0006oi-D0; Fri, 14 Nov 2025 01:17:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763101026; x=1794637026;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=VV0UpawImWFH3xZGjVbej/CWiDter091wmFQqpUYUr8=;
+ b=mmLWVo4iYnF9xAAtF+XGkqlgRXKuuFlHu4PgAqRSiqP+a2/IgxpljQM1
+ 1c+SPUSdeR5IjDa1tuc3sDuSKAb+UAossmvh1s/ndCOxQ00Y7lyAVxUdq
+ QXBLTSyL4ytrkd9a7WP2t958brNVUbuSDH+0ru6HCk7cvdXP2o6oyprZQ
+ h4Ok+8OMco2pzi75G5MbQMjc6qWLlIScfXC7a8FoGObku43wiMv/cEqh6
+ xnn4BGWgX48WKEp6QTTBt3nKfi29IFq0HVX2OivUhY9vuZtMjd5qppRve
+ X/KoY3j/rFAFl1ilu4OgrbK32LQBHuh8PbGZlTMgAObyMipld7Wt2qifd A==;
+X-CSE-ConnectionGUID: +ay4EyeJScil0eSmDl+PMw==
+X-CSE-MsgGUID: lzMxUFUsS6OWGDpvwMPYfg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="65351054"
+X-IronPort-AV: E=Sophos;i="6.19,304,1754982000"; d="scan'208";a="65351054"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Nov 2025 22:16:55 -0800
+X-CSE-ConnectionGUID: 0u2Ct5K/RtKPc/lRIdcFDA==
+X-CSE-MsgGUID: OPxAToSFQEKeHRcC+goM3g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,304,1754982000"; d="scan'208";a="188987084"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 13 Nov 2025 22:16:53 -0800
+Date: Fri, 14 Nov 2025 14:39:10 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 22/22] rust/hpet: Enable lockless IO
+Message-ID: <aRbOjuDk3USq2RLK@intel.com>
+References: <20251113051937.4017675-1-zhao1.liu@intel.com>
+ <20251113051937.4017675-23-zhao1.liu@intel.com>
+ <6ed6a959-fe49-4635-9051-b9bbc91dd2e4@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Regression with the "replay" test on target alpha
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20251028173430.2180057-1-pbonzini@redhat.com>
- <20251028173430.2180057-4-pbonzini@redhat.com>
- <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
- <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
- <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
- <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
- <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
- <d4921688-b3b3-45f2-a3c9-dee2977750cd@redhat.com>
- <889e6be6-0cef-4a23-9d57-2e0611f9588a@rsg.ci.i.u-tokyo.ac.jp>
- <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
- <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6ed6a959-fe49-4635-9051-b9bbc91dd2e4@redhat.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,32 +85,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/11/2025 08.49, Paolo Bonzini wrote:
-> On 11/7/25 08:41, Thomas Huth wrote:
->> On 05/11/2025 07.29, Akihiko Odaki wrote:
->>> On 2025/11/04 21:18, Paolo Bonzini wrote:
->>>> In this backtrace the CPU is waking up the main loop (thread 1), but the 
->>>> main loop is running so I don't think it's really a deadlock. It's more 
->>>> likely that the replay is not matching the record, or there's a similar 
->>>> reason why the replay is not proceeding.
->>>
->>> I agree. It is more likely that debugging the replay code instead of the 
->>> RCU change will lead to the real cause.
->>
->> This now also impacts the Gitlab-CI :
->>
->>   https://gitlab.com/qemu-project/qemu/-/jobs/11984309870
->>
->> How do we tackle this? It feels bad that we have such a subtle problem at 
->> the beginning of the freeze period. Shall we revert the RCU patch 'til the 
->> problem is understood?
+> >   * BqlCell/BqlRefCell access.
+> > 
+> >     Except InterruptSource, HPETState has other BqlCell and BqlRefCell:
+> >     hpet_offset (BqlCell<u64>), rtc_irq_level (BqlCell<u32>) and timers
+> >     ([BqlRefCell<HPETTimer>; HPET_MAX_TIMERS]).
+> > 
+> >     Their data may change during runtime, so the atomic context is
+> >     required.
 > 
-> I'll look at it today; if I can't make heads or tails of it we'll revert it, 
-> yes.
+> I have already mentioned HPETTimer in the other email, but I would also move
+> hpet_offset to HPETRegisters if possible.  It doesn't seem hard.
 
-Sorry if I missed it, but did you find out anything? ... the test is still 
-failing for me, which is somewhat annoying ...
+Yeah, it can.
 
-  Thomas
+> And as an aside, I wonder if you really need to pass MutexGuard and not &mut
+> HPETRegisters.  Once you don't have BQL dependencies, you can just remove
+> the assert!(bql::is_locked()) without switching to MutexGuard<>.
+
+The main reason for using MutexGuard at present is to explicitly
+indicate that it is protected by a Mutex. Because I considered that
+get_mut() in the timer handler could bypass the lock(). But get_mut
+depends on the unsafe code `unsafe { t.state.as_mut() }` which always
+needs careful check and review.
+
+So yes, we can use &mut HPETRegisters directly.
+
+> In the meanwhile, even if they are not perfect (especially due to
+> migration), I think touching patches 1-19 further is too messy, so I'll
+> rebase on top of Stefan's tracing patches and push them to rust-next. Let's
+> start from there and I'll take a look tomorrow maybe on how to fix
+> migration.  Migratable<HPETTimer> looks like a powerful tool for that.
+
+Thank you! 
+
+> Then the new problem is that we have to figure out a way to handle IRQs.
+> They are also messy for PL011 compared to the C version, and that will make
+> it possible to enable lockless IO.
+>
+> The crazy idea that just came to mind, is a Latched<u32> that is something
+> like an (AtomicU32, BqlCell<u32>) tuple.  Then we set the individual bits
+> outside the BQL and update IRQs at the end of the MMIO in a
+> bql::with_guard() block.
+
+This is an interesting idea and sounds like a "RCU" (write-copy-update)?
+
+HMM, what does u32 mean, irq number? I understand the bql::with_guard()
+is after Muext locking, i.e., after writing registers.
+
+At that point, we need to know which irq should be operated (this is the
+u32 but we also have pit_enabled), and what operation should we do now.
+
+I'm not sure whether a tuple is enough... because there may be multiple
+IRQ operations during Mutex locking:
+
+fn set_cfg_reg(&self, regs: &mut MutexGuard<HPETRegisters>, shift: u32, len: u32, val: u64) {
+    ...
+    // i8254 and RTC output pins are disabled when HPET is in legacy mode
+    if activating_bit(old_val, new_val, HPET_CFG_LEG_RT_SHIFT) {
+        bql::with_guard(|| {
+            self.pit_enabled.set(false);
+            self.irqs[0].lower();
+            self.irqs[RTC_ISA_IRQ].lower();
+        });
+    } else if deactivating_bit(old_val, new_val, HPET_CFG_LEG_RT_SHIFT) {
+        bql::with_guard(|| {
+            // TODO: Add irq binding: qemu_irq_lower(s->irqs[0])
+            self.irqs[0].lower();
+            self.pit_enabled.set(true);
+            self.irqs[RTC_ISA_IRQ].set(self.rtc_irq_level.get() != 0);
+        });
+    }
+}
+
+So do we need a lockless queue to store IrqOps during Mutex locking?
+
+pub enum HPETIrqOp {
+    Lower(usize), // usize is index in HPETState::irqs[]
+    Pulse(usize),
+    Raise(usize),
+    Set(usize, bool),
+    PitSet(bool), // HPETState::pit_enabled
+}
+
+Another point I'm considerring is: the IRQ ops is cached in MMIO Mutex,
+while its execution occurs in the MMIO BQL. If a timer handler (which
+acquires BQL and then Mutex) is present between MMIO Mutex and MMIO BQL,
+and also performs an IRQ op, this seems possible a "reordering" issue
+for IRQ ops. Is this ok?
+
+I guess it's ok, since even hardware may also can't guarantee that
+register operation and irq operation is atomic...
+
+Then with your idea, this could fix deadlock I mentioned in patch 21 and
+we don't need the fix to unlock bql in timer handler anymore...
+
+BTW, but, shouldn't C HPET also lock the mutex in the timer handler?
+
+> Maybe if you have some time you can prototype that
+> for PL011 (even without generics, you could just do LatchedU32 for a start)?
+
+I guess you mean HPET? PL011 is also Ok but it hasn't reached the
+lockless stage yet.
+
+Thanks,
+Zhao
 
 
