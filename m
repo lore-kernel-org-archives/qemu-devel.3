@@ -4,72 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE72CDE00A
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 04:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6EECD4F49
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 05:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJlE1-0004LF-Vg; Thu, 13 Nov 2025 23:15:53 -0500
+	id 1vJmgF-000884-8a; Fri, 14 Nov 2025 00:49:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJlDs-0004IA-Cg; Thu, 13 Nov 2025 23:15:45 -0500
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJmg1-00082n-78
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 00:48:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vJlDp-0005IJ-7G; Thu, 13 Nov 2025 23:15:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763093741; x=1794629741;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=v95B4pMzUV5GxDaF4MSD491zoTSmZN/+twEGJCME1sk=;
- b=lvikJvoEofkvmdRp4mVVot+ll5vcpAe+Gq5R9+2lewtZptGwX60z/hOQ
- LoRSAfU/7iw3J88cQPS6/Vl7muhi8D3g3pj/K5Qsbd7gqdAD/+lEOEXES
- yZBk55RaN+nZ2+p2gNf9IvSFMVnHkCs4rYVl3lTRSxG66Fy3F91IGP2iq
- OB1Gm14JdlAcQb3ll9OJTJvXaH+RUfS8z1KAJa1nV46e+g8c1zcHLK8TS
- AAkBjEtIvV9s4iuJQkrDq1TxUzWWOiJKZTHhRaeasIxIjApJrq8G2fTvZ
- i7ACNt4sTrv/Y/dNscoGqG3kcn/DajS8EW7iGigpkPmSwk7vMu34Uk3eW Q==;
-X-CSE-ConnectionGUID: Jk4izkl9RUC5r3PSjmAisA==
-X-CSE-MsgGUID: YCFshpKDQMCjaCRC/nXljQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="64389620"
-X-IronPort-AV: E=Sophos;i="6.19,303,1754982000"; d="scan'208";a="64389620"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Nov 2025 20:15:38 -0800
-X-CSE-ConnectionGUID: /Fwn3Pp2RoG7evC20wlCjg==
-X-CSE-MsgGUID: 9TlJLg5XTMC6nDNtJ+W6Ng==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,303,1754982000"; d="scan'208";a="189870695"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 13 Nov 2025 20:15:36 -0800
-Date: Fri, 14 Nov 2025 12:37:53 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 10/22] rust/hpet: Abstract HPETTimerRegisters struct
-Message-ID: <aRayIQYzGkUK4Emv@intel.com>
-References: <20251113051937.4017675-1-zhao1.liu@intel.com>
- <20251113051937.4017675-11-zhao1.liu@intel.com>
- <12e93226-b70d-4c9c-bf8a-db7e0e05b585@redhat.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vJmfz-0005Ha-2s
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 00:48:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763099329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=RjWhheDqX2JemPIp/YnvisbeZKIfQgPVycWoFCthxQg=;
+ b=ifEKCskeyOU5gb10ObFinpqc1kKHunnZ2VouMVLOEVyqysJebkMbjLqLP6B/YSfC6Ix6zH
+ tfPSpWKmk9xpiE7sRQk5TYnrXdSs9HdSyRnYLZsFrDZfabjUmCtwdxygQiSB215w8Yfe8l
+ RVctYOyZhBwiYdt8IS6wlG8Zo5WFK9U=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-214-NG0KVKEDNiS_1C92ffEEKg-1; Fri, 14 Nov 2025 00:48:45 -0500
+X-MC-Unique: NG0KVKEDNiS_1C92ffEEKg-1
+X-Mimecast-MFC-AGG-ID: NG0KVKEDNiS_1C92ffEEKg_1763099325
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-6407bd092b6so1883883a12.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 21:48:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763099324; x=1763704124; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=RjWhheDqX2JemPIp/YnvisbeZKIfQgPVycWoFCthxQg=;
+ b=n2XbVGJhi/IJtJFFiSrkTlpTMb3U6QUQ2wHgdngesohPIUKK8af1hM3EPM5kVt+q8K
+ cvIkTXV69bdKhI2HC/dnyhng+39+mZ3i1ykozKqKvR3DZfy1UXtsRyT0dHbV5jOMry1p
+ 6urZqHsrtjellTO/+qC6Q9UyaFLWA1kdxjwuWhYKQzvvDcaliEepdNK31xKfkoDM/B+7
+ /ZK1Q7KRA4qpgOozmToIPYS9NuDZv4co+E8WWLD94m1cbThNjuN9ZjS2OGTeDdgoLfXS
+ Arp7pmAhxIyKwiK1rKiq0vWinbM9k/HOjM5HmQqQUGAjrrplKPopc4w0nGqGBWTIeXNS
+ UyPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763099324; x=1763704124;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RjWhheDqX2JemPIp/YnvisbeZKIfQgPVycWoFCthxQg=;
+ b=qLZzG4tjUkSx+57ExKbtUCvORbumIa3yNTysdUpybakIbMFRKyPxTq+iLADBchiCxd
+ bp+M/Fyq819B5NJp1HxrGYNDhy+AtJ548BYU72VDaeP0noqogUA2BKVHSQ3S1dmU4Xnc
+ XTzvuhTunrrEvKGvTYiK+djAVST486RKbiMJwFz0whH1tznFULt8rqrjRMuSLAlc9PsX
+ QkHkHsKDWbSfEzpK1aCAoZwP384as/Tf2lx7yMHoGfvxnwiEAHnrLuSsoG5kDwPanQ5p
+ 6BrxN06WDUBiEX9ge6PX4ycxevRrzuV5fiMKHOHSr5XAwxNSIqqEzuFY6Ubz65/o3TBG
+ wb1g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXiGXhILY0zI3HuCUe6WBxtD7QgmdxB9nFQiZfCH5Vxm30TYNCk8sXzKkq6W8BlZA6mjBKyG4QhkHrz@nongnu.org
+X-Gm-Message-State: AOJu0YwZQ8IpBT7a22WcRCOHB5GMt9OV8RSdy3qxTRVVj8SWBPV1f/L8
+ tzw3voYD/nA3dqRtUddIwl1j2ynjvz9nxXagsV6IiEoHyPtaJGhjsHHsCiwMAdZubAykr8FpT78
+ WDHZgOW8hnpfI0X9QYp+QWj42yFeXOmVVeVIiND037w21eM7kUSTYCsQi
+X-Gm-Gg: ASbGncvKHQBq5cj1Rh0S5LerBYUYCyoNt9H+l1rd6O9hdfjYEb+d+vUk0ehMwmFho79
+ V5Z7hDvkl0FT/olAqaJgsltf1ggeNessxVGGvrUNL9iuOikWYvgbvFkntEOloNRoj6hpe/LwN2h
+ RAu5LvwB/N3gN0vECLlhr404rhhWyWXnWcAqHDN84/zIFuwmHADoooBmfVkdEkD4BAi2U2wQrft
+ fJfprjRbKxgYZLYE+f6dlPaXyIDk5w0THwchlVsL26CSmJAv3dFQbUh8NpGc1R87DI2TXBBG4kc
+ 3/xnTGtRbndV8rFnhR60iZkTXDHId11kWImaSqCFtVTovoUkTMP4RFd7fDPhQxnvp/FwGBI=
+X-Received: by 2002:a17:907:3f97:b0:b6d:7124:3d8f with SMTP id
+ a640c23a62f3a-b736786805bmr159291166b.6.1763099324636; 
+ Thu, 13 Nov 2025 21:48:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpfnTd9dpfr9pU8CgJRACJ3Vu9XFEKzBkbVpItokj6+d3fvQbqMGCE5xYrkwp8FauqW/ttKQ==
+X-Received: by 2002:a17:907:3f97:b0:b6d:7124:3d8f with SMTP id
+ a640c23a62f3a-b736786805bmr159289166b.6.1763099324250; 
+ Thu, 13 Nov 2025 21:48:44 -0800 (PST)
+Received: from [192.168.0.7] ([47.64.114.10]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b734fd809fasm317193466b.45.2025.11.13.21.48.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Nov 2025 21:48:43 -0800 (PST)
+Message-ID: <6a83ca08-5484-469a-8020-a1165aed1c73@redhat.com>
+Date: Fri, 14 Nov 2025 06:48:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <12e93226-b70d-4c9c-bf8a-db7e0e05b585@redhat.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+To: Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, qemu-devel@nongnu.org, farosas@suse.de,
+ jinpu.wang@ionos.com, berrange@redhat.com
+References: <20251107020149.3223-1-jasowang@redhat.com>
+ <20251113110004-mutt-send-email-mst@kernel.org> <aRYJRZyNrDcDzTuG@x1.local>
+ <20251113114710-mutt-send-email-mst@kernel.org> <aRYRhg7lKDCBUIrf@x1.local>
+ <20251113124207-mutt-send-email-mst@kernel.org> <aRYyTeNNIPW_WIJW@x1.local>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <aRYyTeNNIPW_WIJW@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,78 +170,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 13, 2025 at 12:24:07PM +0100, Paolo Bonzini wrote:
-> Date: Thu, 13 Nov 2025 12:24:07 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 10/22] rust/hpet: Abstract HPETTimerRegisters struct
+On 13/11/2025 20.32, Peter Xu wrote:
+> On Thu, Nov 13, 2025 at 12:46:55PM -0500, Michael S. Tsirkin wrote:
+>> failing to start a perfectly good qemu which used to work
+>> because you changed kernels is better than failing to migrate how?
+>>
 > 
-> On 11/13/25 06:19, Zhao Liu wrote:
-> > Place all timer N's registers in a HPETTimerRegisters struct.
-> > 
-> > This allows all Timer N registers to be grouped together with global
-> > registers and managed using a single lock (BqlRefCell or Mutex) in
-> > future. And this makes it easier to apply ToMigrationState macro.
+> I agree this is not pretty.
 > 
-> This is pretty much the crucial patch in the series and it's the only
-> one that needs more work, or some fixup at the end.
-> 
-> In particular, more fields of HPETTimer need to be moved to the
-> HPETTimerRegisters. It's possible that it would be a problem to move
-> the timer itself inside the mutex but, at least, the HPETTimer could be
-> changed to just
-> 
-> pub struct HPETTimer {
->     timer: QemuTimer,
->     state: NonNull<HPETState>,
->     index: u8,
-> }
+> The very original proposal was having extra features to be OFF by default,
+> only allow explicit selections to enable them when the mgmt / user is aware
+> of the possible hosts to run on top.
 
-Good idea!
+Could it maybe be tied to the "-nodefaults" option of QEMU? If you run QEMU 
+with "-nodefaults" (which you should do when planning a migration later), 
+these extra features that depend on the kernel version stay OFF. If you run 
+QEMU without "-nodefaults", QEMU could enable them if supported by the 
+kernel. So that would benefit both, the people running QEMU via management 
+layers (using -nodefaults), and the people who just want to quickly launch 
+QEMU on the command line. WDYT?
 
-> as in the patch included at the end (compile-tested only).  Then, the
-> BqlRefCell<HPETTimer> can be changed to just HPETTimer because all the
-> fields handle their interior-mutable fields.
-
-Yes, this will reduce BQL context in lockless IO a lot. And I'll based
-on your patch to extract HPETTimer from BqlRefCell.
-
-> Preserving the old migration format can then be solved in two ways:
-> 
-> 1) with a handwritten ToMigrationStateShared implementation for
-> HPETTimer (and marking the tn_regs array as #[migration_state(omit)])
-
-Yes, compared with 2), I also this is the better choice, which looks
-more common and could be an good example for other device.
-
-> 2) by also adding num_timers_save and the timer's expiration to
-> HPETRegisters and HPETTimerRegisters, respectively.
-> 
-> I think I prefer the former, but I haven't written the code so it's
-> not my choice. :)
-> 
-> I'm okay with doing these changes on top of these patches as well.
-
-Thank you!
-
-The code attached looks good. Only a minor question below:
- 
-> @@ -181,6 +181,9 @@ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
->  #[repr(C)]
->  #[derive(Debug, Default, ToMigrationState)]
->  pub struct HPETTimerRegisters {
-> +    // Only needed for migration
-> +    index: u8,
-
-I didn't get the point why we need to migrate this "index" instead of
-HPETTimer::index?
-
-Anyway, if we continue to keep index in HPETTimerRegisters, we can make
-it have usize type with a "#[migration_state(try_into(u8))]" property.
-
-If we just HPETTimer::index for migration, I think it's possible to do
-type convertion in handwritten ToMigrationStateShared.
-
-Thanks,
-Zhao
+  Thomas
 
 
