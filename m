@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63CD9CEACC9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F72CEACCB
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 20:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vK050-0000yl-T1; Fri, 14 Nov 2025 15:07:34 -0500
+	id 1vK04v-0000qo-Np; Fri, 14 Nov 2025 15:07:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK02j-00078P-SQ
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:05:19 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK02N-0006tB-GC
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:04:53 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK02h-0004zC-Rr
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:05:13 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42b2dc17965so1975415f8f.3
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 12:05:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK02L-0004mL-Qk
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:04:51 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-429c7869704so1809889f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 12:04:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763150710; x=1763755510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763150688; x=1763755488; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J0L1rNSBbDA68/IWNXBGkYS13/51Kd8iUuA26ASfqQc=;
- b=KwhLblhxCN6WChJuKN1Au8lVHH7bFpVE/aLP3yRVoKgJ84ByrsUHKimVOU9FxLrab5
- 0eZ+FlA7DavzIDluQZTnfUlQbndG0fYXVX7m3F2Iv9cFeYQHb+DMGNFEtgj4NLAYzAr/
- ipUVNqGCG6MKbuL1XomnKq5y8sqMfJO6uw2q/zmFWWoEJP6wyX2jAIB0qonKIs7W9XEF
- kyJmuwdk4B5lxTt7U9cnilQ+UXIMKuabgSsY50lfH7UaGyMtP62MlXkkdCnHFYpZ/Nc6
- mrrxovi9oVBDhQBwCUcnStIFIrNWShwtDSNkH0U5Iut6QtFrUgARuc6GVY8LKZeWiGOp
- TBJA==
+ bh=OYZPdSjIdF/EKh7X/rENMynZwEwjU3Z8rLiFolDwON0=;
+ b=vb0GeqrPZzk4buzcxOhThE+YrqagZ1nlQgVmNLW2Kwp2/Xzk03c5advi59pQDeGYO3
+ tgGIzxnIh8UW/WEZd/qk7qXRHTdZ2PqZrFzyzxcxCzotz5ihLE30Qd7nAWeGd9M1kBk5
+ kYOC0kcbXJSq1kq3x6T4Zhpldu/h6IcwADxqn362ZEEsNXbzkYYBYReMP0JE08Qj0R6n
+ HmMPIY9hjZqOP00DqXvoKOc2ivT9V9IYsIOPVpViGbBDjoveQXLMNc65zzlEM0jm5GLm
+ 3qrNCYfQLTPcqhaFdGuspTIta7v4U+6RfT64fAGGG/aJI1g9zwWP1qWeEnjtXi7wlgym
+ v4mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763150710; x=1763755510;
+ d=1e100.net; s=20230601; t=1763150688; x=1763755488;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=J0L1rNSBbDA68/IWNXBGkYS13/51Kd8iUuA26ASfqQc=;
- b=AsQW12ucYZnwhtTO+ft9xRFmbdrF4nWLqE+JXtd0YBaKcPzGdCEwWoO+f3WLILRXup
- ShOxSPbQgd7gnycxuvSco+wqzwOuLn6ZK6+79iyCWkfBVRlqEJMfE3aR2QxodErbP2FR
- k8qQtwdbtzWoUW9bkWZUDR89QhLq99LMVhkZ6Ihbq0qcIP6VM3C4nayAUHNmNtcUPGmp
- DYkQ524Reh5oOEkOkjh1IIq1d1NLzmRMssqgAbsIFsnzb2WSp91bth80DvbapN10a2NC
- iiONFehNIN4hgX16jkU1EtLfKgU+EuZG4kXziW0J2x8hCuNcV/f+2HEs9phP6C2IFHS0
- seiQ==
-X-Gm-Message-State: AOJu0Yz0HLcCKof3VrgMIvKqNNp7dRq5uYjdB1Bd4W/ieDbwABBSu4Ft
- Gzve0eJNgBcyJ06V+50VCEAspbaCRjGyiAsWRytCJXUuxHEv+iSFsZJfcxJ0f2rwPWL/qXyLhRq
- 7jUKjKWS18g==
-X-Gm-Gg: ASbGncv/t9aQn1K16URlM3SfvhqtGPTmEbJUI5vkwXSqIL3pJvGt7joLeNpOq8f7eAG
- 26R3WTswyNUP/+Go/zJt25Nr0qKNipKfvLFU/moV4UfoU9lD7wLTiVwVtrat1962n8UUP7ZZ2HM
- y7I6za5KYw/yD+TdHUMlewWJWS37BQrSNQtTgwEolw0mT6vj8XEh0ciNh1MqBvaT29W0LGLRqpF
- fUdUcOKmhlLbZMoo9RdhD8D/H1NW/l/M/bMVbcMYh0Bs+ahbn0hARWcZAVQEePajXx/RjcG2kst
- cAuB3GVtv+e96OljQOh4HmEvR8rKFw4TAYMp7EXMjd3baPJ/KS6bOsWd5OR2i6GuZaoLOsY7YuC
- p5mnUJfnu1F3/IkJpQDdR0seiwTcGu86Nhy45ae41b0+UObHFwUS3UvpVSPPoFrTcEeDyX7jDOB
- +w7MgiRMn53g0o2THlUyEZ4dB1D/p5rYZE2zujGz5IemIM0v6eHQ==
-X-Google-Smtp-Source: AGHT+IH9++UghT7X6TWmgQQDj8uViVogW81843lmyUpf5bakcr9SDWJjIwDBT+ZBb/wKPM503kpBQw==
-X-Received: by 2002:a05:6000:2601:b0:42b:3d9d:c605 with SMTP id
- ffacd0b85a97d-42b5938f92fmr3950582f8f.49.1763150709726; 
- Fri, 14 Nov 2025 12:05:09 -0800 (PST)
+ bh=OYZPdSjIdF/EKh7X/rENMynZwEwjU3Z8rLiFolDwON0=;
+ b=HuvPj4lJh/5KeZpNhEYXk4njzC5OFc3cJR48VkcC/hWL3SQzBV3s3eDeIJXgrzI+cu
+ zYokF8XdduzdNMQlJAn8Wy3cn6InEPFqE/jq1ADVU/RSIZ3FPL3nKdn+udYBvXEVus1L
+ 6ybsI1ozPadzxWTO4PhG6GImUrZXiEgscM4NH7uAVqkNzdc5KVYFg6ztbctqrxUajooq
+ xW6xN/Yqz6Sh8uwoXtZZBJt0LEpm9anZIqsorpcoOWQ30bb2HHeI9MK5PTBdER5agkWR
+ KFt7cBo9kO3Xov1wIQZc3KHi9gACBevEOmqqjQNkCjR5EwMl2fIF/0F4BtXO63qLVdLQ
+ EBag==
+X-Gm-Message-State: AOJu0Yw+577FDg3VqHXQqi1HC507+xQ7RjrWJ6U3OdphkO6QAUqJc6RV
+ /2Gu4ymIYwfazyyeQanEcNR+Ad1IHOkA3OfLW5S6UXtLFvN9o5r7gDvQroC5jqnPHLTiN69A9si
+ Nc02Q+A7zTA==
+X-Gm-Gg: ASbGncuy1k2UuAUalo/NpSTq9DA51aGMXetisoefyDPy9/Gl2zG/JIF7Tyi8r/0FKcT
+ B/nXe/Lq59HPJOg+LpQ/gXqc+lrd41bPKJWaJy4TW+xCJcyuckBT5nRBhiEnchKvyU0qacq0fWc
+ cjq7WOX0rNpMWjfYLzKBPNck0OH2xBK1d74JSFEt/z7lN4uD9+VtGR9OGl/Mzo0SM4kyN//wtpE
+ Z0RSJuIa6otFKCe/Yw6mOytgpeivOqloHCv1g9Ma3pzCR9ypMUdnA+DQ8dRB+d08OjBx5JOSyOX
+ tScQAGnGB3fQQekIdQjJYd+Aznj2P0Tpc3eNEIqq7TQHxhAKW8KI6XA8w7aXtpa3WVrmroEf6Tk
+ 0ogoD/dSMeRTNxKprZ7sgeAlnIAWd6iwcWMrLsdcxrvKga8G5sX85PV7wkoErfeN/tvCg0+/tl6
+ WaA6AixmCd+HiSuhGnrmky9wP/AEyxTPPzy0vNZIzcUid+CdQyg17NOyyR9IsM
+X-Google-Smtp-Source: AGHT+IEIqz8iRf+F3zPMn3HXphrgQtH6CH8BN6CABSXb2GhbgVTHz0nk/hAbT6A0LgT1h06eGnXWtw==
+X-Received: by 2002:a05:6000:1ace:b0:42b:3978:1587 with SMTP id
+ ffacd0b85a97d-42b59381be5mr4664778f8f.36.1763150688096; 
+ Fri, 14 Nov 2025 12:04:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f0b8a0sm11926516f8f.25.2025.11.14.12.05.08
+ ffacd0b85a97d-42b53e7aea7sm11727470f8f.1.2025.11.14.12.04.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 14 Nov 2025 12:05:09 -0800 (PST)
+ Fri, 14 Nov 2025 12:04:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
@@ -76,17 +76,17 @@ Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH v5 06/19] accel/hvf: Simplify hvf_log_*
-Date: Fri, 14 Nov 2025 21:04:08 +0100
-Message-ID: <20251114200422.4280-7-philmd@linaro.org>
+Subject: [PATCH v5 03/19] accel/hvf: Enforce host alignment in hv_vm_protect()
+Date: Fri, 14 Nov 2025 21:04:05 +0100
+Message-ID: <20251114200422.4280-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251114200422.4280-1-philmd@linaro.org>
 References: <20251114200422.4280-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,102 +109,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+hv_vm_protect() arguments must be aligned to host page.
 
-Rely on the AddressSpace and MemoryRegion structures
-rather than hvf_slot.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/hvf_int.h |  3 ---
- accel/hvf/hvf-all.c      | 40 ++++++++++------------------------------
- 2 files changed, 10 insertions(+), 33 deletions(-)
+ accel/hvf/hvf-all.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 5a57691885f..ee7ab689f45 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -24,9 +24,6 @@ typedef hv_vcpu_t hvf_vcpuid;
- typedef hv_vcpuid_t hvf_vcpuid;
- #endif
- 
--/* hvf_slot flags */
--#define HVF_SLOT_LOG (1 << 0)
--
- typedef struct hvf_slot {
-     uint64_t start;
-     uint64_t size;
 diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index cb029e4dd4b..601e63c7f9a 100644
+index e13abddbd9c..cb029e4dd4b 100644
 --- a/accel/hvf/hvf-all.c
 +++ b/accel/hvf/hvf-all.c
-@@ -204,45 +204,24 @@ static void hvf_set_phys_mem(MemoryRegionSection *section, bool add)
-     }
- }
- 
--static void hvf_set_dirty_tracking(MemoryRegionSection *section, bool on)
--{
--    hvf_slot *slot;
--
--    slot = hvf_find_overlap_slot(
--            section->offset_within_address_space,
--            int128_get64(section->size));
--
--    /* protect region against writes; begin tracking it */
--    if (on) {
--        slot->flags |= HVF_SLOT_LOG;
--        hv_vm_protect((uintptr_t)slot->start, (size_t)slot->size,
--                      HV_MEMORY_READ | HV_MEMORY_EXEC);
--    /* stop tracking region*/
--    } else {
--        slot->flags &= ~HVF_SLOT_LOG;
--        hv_vm_protect((uintptr_t)slot->start, (size_t)slot->size,
--                      HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
--    }
--}
--
- static void hvf_log_start(MemoryListener *listener,
-                           MemoryRegionSection *section, int old, int new)
+@@ -11,6 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "accel/accel-ops.h"
++#include "exec/cpu-common.h"
+ #include "system/address-spaces.h"
+ #include "system/memory.h"
+ #include "system/hvf.h"
+@@ -61,12 +62,15 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
+ static void do_hv_vm_protect(hwaddr start, size_t size,
+                              hv_memory_flags_t flags)
  {
--    if (old != 0) {
--        return;
-+    assert(new != 0);
-+    if (old == 0) {
-+        hvf_protect_clean_range(section->offset_within_address_space,
-+                                int128_get64(section->size));
-     }
--
--    hvf_set_dirty_tracking(section, 1);
- }
++    intptr_t page_mask = qemu_real_host_page_mask();
+     hv_return_t ret;
  
- static void hvf_log_stop(MemoryListener *listener,
-                          MemoryRegionSection *section, int old, int new)
- {
--    if (new != 0) {
--        return;
-+    assert(old != 0);
-+    if (new == 0) {
-+        hvf_unprotect_dirty_range(section->offset_within_address_space,
-+                                  int128_get64(section->size));
-     }
--
--    hvf_set_dirty_tracking(section, 0);
- }
+     trace_hvf_vm_protect(start, size, flags,
+                          flags & HV_MEMORY_READ  ? 'R' : '-',
+                          flags & HV_MEMORY_WRITE ? 'W' : '-',
+                          flags & HV_MEMORY_EXEC  ? 'X' : '-');
++    g_assert(!((uintptr_t)start & ~page_mask));
++    g_assert(!(size & ~page_mask));
  
- static void hvf_log_sync(MemoryListener *listener,
-@@ -252,7 +231,8 @@ static void hvf_log_sync(MemoryListener *listener,
-      * sync of dirty pages is handled elsewhere; just make sure we keep
-      * tracking the region.
-      */
--    hvf_set_dirty_tracking(section, 1);
-+    hvf_protect_clean_range(section->offset_within_address_space,
-+                            int128_get64(section->size));
- }
- 
- static void hvf_region_add(MemoryListener *listener,
+     ret = hv_vm_protect(start, size, flags);
+     assert_hvf_ok(ret);
 -- 
 2.51.0
 
