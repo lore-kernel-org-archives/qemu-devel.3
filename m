@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3FDACEACE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 23:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF086CEACE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 23:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vK2nG-0007k6-IL; Fri, 14 Nov 2025 18:01:26 -0500
+	id 1vK2nG-0007o5-RD; Fri, 14 Nov 2025 18:01:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vK2mC-0007GU-0n
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 18:00:26 -0500
-Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
+ id 1vK2mE-0007Gn-O7
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 18:00:31 -0500
+Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vK2mA-0004aV-AZ
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 18:00:19 -0500
-Received: by mail-il1-x12d.google.com with SMTP id
- e9e14a558f8ab-4330eb0f232so15282305ab.0
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 15:00:17 -0800 (PST)
+ id 1vK2mC-0004b8-Sd
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 18:00:22 -0500
+Received: by mail-il1-x136.google.com with SMTP id
+ e9e14a558f8ab-4332381ba9bso23885385ab.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 15:00:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1763161216; x=1763766016; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=i9TvG2oqL1dQLCcfT9sslRfQECluHkcmdOPVWIjcQg8=;
- b=Hy+G0SPyQuWs4vQDKVsqS2yNk2hJU2oLBcm93NF/AoPqFxyZWOhF4uTTXbdPf2FvvT
- HkN4ZufINGX9qEXs0S+PfZlhtCtLBUTB9SzLFWg4VFIs1vm+giRdvcF0lG5eQwWfF5Vc
- DcQ2K+bD1ClwI8zS5wS4uUeqBhdo0cbPvf3Y9Z75N6mBfHQN6a10b/yQ6JPH4INgIZgb
- 9WwsAGLIFDN/1zjtxwbS40TeM9Um5+VIryaa4Eb4cyPhN16WH/2QCGgnV+MDJFwz//hd
- 5DTshjo+x32/3RSqNvJX+N6k84aOKtQ7kf4gl9BIxkhRUdt6DkBgYpp2hERJpoq/Ywqh
- FwEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763161216; x=1763766016;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1763161219; x=1763766019; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i9TvG2oqL1dQLCcfT9sslRfQECluHkcmdOPVWIjcQg8=;
- b=hPf035eAglqqA3J7BOyiSCkbbFOPTF2RdDISm3mnJDEEGk/V6XXpAlp2HIzIKp79I0
- MO0BT+U4jPdNpV+zgqUo9UXSoHzDAZOGkJbRfgGsvNkCyGCQhKKqodl4/bq8cFGwoy9L
- ZIDNIel7zV1Ehl4ruIvjHR2R+Kmn+wL2Jb+fRTeqNMf99wuJV7aOdaR2rb2t19hu1bEi
- 8Z3yFTq//x5rmPe9rf5jTdPJXOzIe0aUZq8rmKy60NPs18mOI6NM5oY/M0StTjyZUfNR
- L4o3EdVGPMd+fsm7Bf+LPz++r89icrfhdH+pEief6WJDT8ugMvfX9wu28buKrIEZlyKR
- 53FA==
-X-Gm-Message-State: AOJu0YzBNrOrZ9uzZDfVpMZkWMtxgpXz/sGcsHblitT9Dz7gVDblhci0
- cM1W4R8m4KFFgrq2pFl7CpS2yL8tlUxV1cfAAty4koxLct0f4pLYBEz7RmPgteH1
-X-Gm-Gg: ASbGncvUeGB5AaAYCE2oW5NcR2hRkXckXYWDY8s0evgHYJ1X8YSNV13UDdj71aD+bZu
- 3wzj6bv0PWd3vwKpfj8wFnRA0zBww+HwLf+ggU1iyEFRlMc7DPna4DDXwsDORns+jYnk1oFcBOQ
- 9jIgxIsZoCa5TdV9ygkEh78y0MRHDRQ0sZPMXsfig9J2QDxumTr7o1Xrkd2SvjC7Xo4VVTKqbUa
- y6NXseS8tVkvR7MXNV4rGBxzWXpOxtVieZqRqc/Pm+YKj4iFAEUXj1vECOTtYnoTru6erFu9KCi
- meH9chP25lXeIU8crfynqzjsJ7oYpPPfj6/fhl5AVsmGLzvYar+b5Wq+/iAxEzvE/5DGfph5smc
- vx2Vla9dA3u1V18w6z4NFncBizFaSfWXE2DLzkM67vjEQ7swXRFlsEAPlm4k773Chkx8pMsqSMN
- 6DMYvBglEBLU6QYZx20Qnf/o5mK1VbCEZOuM+liwi1X8TXTVFjreynSzKZtx61mXVDnUw/PngsP
- dDK
-X-Google-Smtp-Source: AGHT+IGSbxmCq/9qX4A8QnHP9uMocen+85yhvpOqobvInXB3RHTT1uDna7RXfrSmi7OE5DqL1LCfdQ==
-X-Received: by 2002:a92:d310:0:b0:434:96ea:ca1b with SMTP id
- e9e14a558f8ab-43496eacc97mr17921465ab.19.1763161215913; 
- Fri, 14 Nov 2025 15:00:15 -0800 (PST)
+ bh=PnAX0+EnRAJr676o/PiOZ16BLN9mB74861g8sJCRKgw=;
+ b=aii6V3BhhZPUg7uZqt2ynjWEPhXeDDg1BqVsJ2svjC6NL+UHXEdysBI1j8JXoCCpwe
+ kHHckhGA5j6rb/HJQeT5uL6WFB7Tp+r/emwfahEFa34KmMC3mQJ96eF0Pi3NlSRHYClr
+ tVakC0wMf4wNIAvJWJ6lBCgGiqc4oc/IAWZ2GRRLI0W4KpdI5JVRNPGqQqpE2dcjL3kW
+ HGm56Ffz9eP+n5LX414kYJ+GEn+SkApIH53N2qJPlvE8anwkxEfZLjOMCPZk/NbuCB1n
+ Lj5Is+uGuL+pSgr6RDPx2gE2fmOuSLd4/rfS/7YCoAwQpKprliRGlXKrGth4hMriC0RU
+ cOEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763161219; x=1763766019;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PnAX0+EnRAJr676o/PiOZ16BLN9mB74861g8sJCRKgw=;
+ b=jxYlpCYoqmJtpKbJvj3Sod15+K6OUPg/vEP18YLLwxUDSPhYscJk3fHKYmTHswf6Yj
+ l1g8S6yiYDaEeMp57DKblbaRfSDq1dLaUcFOj23DMJuxwuh/a1fueGFDmr1yp2ejuzu1
+ hQQIEdA31r+eWJU1uGwUWMjWnSCz69hAU0r9+5/fwMyJREfgwn9oBGrziHk9o4RJCQLT
+ XFzFxpa7GI2+9KdA3/vUe0cHQogQDuJ8RTYC3HAewIkR9mrK60Ji4PPbYIpZP8X68Dfa
+ NIvmnNLiMcF+3m1jRfygLFF+BTppA1IcNvxWVhPJA7HJVt8gJUMVo1C1ljS6D4Q3SbUF
+ bqyA==
+X-Gm-Message-State: AOJu0YxIL+6Uk1vY5qrVgM5OzrThJUo4XyYLskNnjIsMaPv33FcOXnZw
+ n5n8H9MiJ40bjFLTrUJo/2nfXyqM2wzvjp7HuDKPcIdxJGk++sFv+VRjYFRUkkMQ
+X-Gm-Gg: ASbGncvxPEcXZRdWzEQ+OcfoU+AqOpRYATaRotdDcg6XD5Htn85UxTgOD+qxmnF7WXF
+ ZzLV72HPvigegss4dhI3T4RK7UEEvcYnkTZ211u8X9PNcxSBcrAl++HVFVWd9BuiHUIRFulEHD1
+ UMcf+lVVekOFp4JoxpB+Z/N9ERMm9YOyeU3WnrwX2Zb6UJ5z8xJGkZ6WlXLytkjQAHaptH2aX6i
+ 7GNKGRadz2S19mIQMe9TUqAacSuzJqb9oLBTP04/AN9B8o8L+fqh1T5x1Nzb1zkEA1p8GGgNvP3
+ 6Da2dYEIXb1vFRuhGwflbYR4PIjKzrH5T1nissNYF/0fAPku4lSPA+XyTLytz98r6OKD4vg3dXd
+ A8aza/u1jXZ93pyNntjShzUe00Z7js8wZZnM/WyxR3r2b589CX85OztjsUDwvKXizgqhzA8Msjp
+ 7WC1Ba+fue35HqN3pFHG5vGtFAAfQZeuJrpVtE8p1qteqKyD3SZrAkV3kfoOFZoOISpdTRN3OcQ
+ bBd
+X-Google-Smtp-Source: AGHT+IHOqeMLhB1mYuz+MnTkGV6DDhnKSk/F1lswSVV/ijt5FvWPothcCjD/Uuza9XuQOw/xH7it9A==
+X-Received: by 2002:a05:6e02:1749:b0:433:575b:9e93 with SMTP id
+ e9e14a558f8ab-4348c949985mr70783655ab.25.1763161219471; 
+ Fri, 14 Nov 2025 15:00:19 -0800 (PST)
 Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
  [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-434838c24a1sm35673075ab.15.2025.11.14.15.00.14
+ e9e14a558f8ab-434838c24a1sm35673075ab.15.2025.11.14.15.00.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Nov 2025 15:00:15 -0800 (PST)
+ Fri, 14 Nov 2025 15:00:19 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
  sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
  ltaylorsimpson@gmail.com
-Subject: [PATCH 0/4] Clean up end-of-instruction processing
-Date: Fri, 14 Nov 2025 16:00:09 -0700
-Message-ID: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
+Subject: [PATCH 3/4] Hexagon (target/hexagon)
+ s/gen_log_vreg_write/gen_vreg_write
+Date: Fri, 14 Nov 2025 16:00:12 -0700
+Message-ID: <20251114230013.158098-4-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
+References: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,26 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The changes to packet processing have made some of the end-of-instruction
-processing obsolete.  With the addition of gen_analyze_funcs.py and the
-ability to short-circuit a packet commit, we no longer need to "log" the
-register writes of each instruction.
+Note there are two functions impacted
+    gen_log_vreg_write          -> gen_vreg_write
+    gen_log_vreg_write_pair     -> gen_vreg_write_pair
+These functions don't "log" anything, they just generate the write
 
-Taylor Simpson (4):
-  Hexagon (target/hexagon) Remove gen_log_reg_write
-  Hexagon (target/hexagon) s/gen_log_pred_write/gen_pred_write
-  Hexagon (target/hexagon) s/gen_log_vreg_write/gen_vreg_write
-  Hexagon (target/hexagon) s/log_write/gen_write
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/genptr.c      | 8 ++++----
+ target/hexagon/hex_common.py | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
- target/hexagon/gen_tcg.h                    | 11 ++-
- target/hexagon/genptr.h                     |  3 +-
- target/hexagon/genptr.c                     | 86 +++++++++------------
- target/hexagon/idef-parser/parser-helpers.c |  4 +-
- target/hexagon/README                       | 10 ++-
- target/hexagon/gen_tcg_funcs.py             |  3 +-
- target/hexagon/hex_common.py                | 56 +++++++-------
- 7 files changed, 77 insertions(+), 96 deletions(-)
-
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index bfbbd61c33..616db17907 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -1174,7 +1174,7 @@ static intptr_t vreg_src_off(DisasContext *ctx, int num)
+     return offset;
+ }
+ 
+-static void gen_log_vreg_write(DisasContext *ctx, intptr_t srcoff, int num,
++static void gen_vreg_write(DisasContext *ctx, intptr_t srcoff, int num,
+                                VRegWriteType type)
+ {
+     intptr_t dstoff;
+@@ -1190,12 +1190,12 @@ static void gen_log_vreg_write(DisasContext *ctx, intptr_t srcoff, int num,
+     }
+ }
+ 
+-static void gen_log_vreg_write_pair(DisasContext *ctx, intptr_t srcoff, int num,
++static void gen_vreg_write_pair(DisasContext *ctx, intptr_t srcoff, int num,
+                                     VRegWriteType type)
+ {
+-    gen_log_vreg_write(ctx, srcoff, num ^ 0, type);
++    gen_vreg_write(ctx, srcoff, num ^ 0, type);
+     srcoff += sizeof(MMVector);
+-    gen_log_vreg_write(ctx, srcoff, num ^ 1, type);
++    gen_vreg_write(ctx, srcoff, num ^ 1, type);
+ }
+ 
+ static intptr_t get_result_qreg(DisasContext *ctx, int qnum)
+diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+index 1277fec9a2..6b683487bc 100755
+--- a/target/hexagon/hex_common.py
++++ b/target/hexagon/hex_common.py
+@@ -823,8 +823,8 @@ def decl_tcg(self, f, tag, regno):
+             """))
+     def log_write(self, f, tag):
+         f.write(code_fmt(f"""\
+-            gen_log_vreg_write(ctx, {self.hvx_off()}, {self.reg_num},
+-                               {hvx_newv(tag)});
++            gen_vreg_write(ctx, {self.hvx_off()}, {self.reg_num},
++                           {hvx_newv(tag)});
+         """))
+     def helper_hvx_desc(self, f):
+         f.write(code_fmt(f"""\
+@@ -915,8 +915,8 @@ def decl_tcg(self, f, tag, regno):
+             """))
+     def log_write(self, f, tag):
+         f.write(code_fmt(f"""\
+-            gen_log_vreg_write_pair(ctx, {self.hvx_off()}, {self.reg_num},
+-                                    {hvx_newv(tag)});
++            gen_vreg_write_pair(ctx, {self.hvx_off()}, {self.reg_num},
++                                {hvx_newv(tag)});
+         """))
+     def helper_hvx_desc(self, f):
+         f.write(code_fmt(f"""\
 -- 
 2.43.0
 
