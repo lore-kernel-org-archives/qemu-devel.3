@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE1E5CE8D70
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 18:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E14CE8D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 19:24:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJyHp-00080i-A2; Fri, 14 Nov 2025 13:12:47 -0500
+	id 1vJzOI-0005FV-4a; Fri, 14 Nov 2025 14:23:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
- id 1vJyDu-0005EX-DG
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 13:08:38 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vJzAF-0005wJ-Om
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 14:08:56 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
- id 1vJyDs-0002QV-SF
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 13:08:38 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-42b3377aaf2so1490065f8f.2
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 10:08:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vJzAD-0003zL-UI
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 14:08:55 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-475ca9237c2so13586715e9.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 11:08:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1763143715; x=1763748515; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=sS4TuJHvwYBLjzB7Rskj2B69G0AxkaHlbYXU+VJy9Os=;
- b=Z0l8KUT7gN69+yTDcwjKtO4dmvVtwGoTwPoLEgGFpkH2i8DiNDNP8Nj8Ch4d3N2Hsv
- Ca5OC33eA5auFVhrvDIL6n6c9gb3gHQgdeouIINhiFdNf8nf4YNoMONaxnIFWafRtOwi
- RL4xvFvCbK45/Rvj6r1uTZT5Euw2mw2Ca8Tg48jxlyVU7f5DCjQHxOC47gPsNG13V4za
- EyO0ZlCVa5knkNkj5hhXRFL2BvazQvsdAnwgx8NpCFpr2f9QRyCl/nVZNNEoX7uJKFST
- 8GcsQFB/HybjmR8f/Mjc1XiTh83tVDbxpkmc+xfYVEZSCXxubOXh6HUg8PLCuvI3mMsA
- Wdcg==
+ d=linaro.org; s=google; t=1763147332; x=1763752132; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=grC4bnSGbBPY7VQJMpAUPZhA8iWfNhAwQLNkM6hSOtk=;
+ b=nBou3awXIbDfmVyDajU3cTR4e3hIXrtbtIIMjxgtu+lus2soup63FnZNlI2oJS3bw6
+ xJHTII4S+s8/tWfAcWGBGIALvkrzI6EfAUJFRiu+VuK1B8OvgJdqC0y/joUwzIs2CxrZ
+ 7W8BY5TOyIcPJBrySsG4GCLEDPZxxuWJLB9XljTGaxXfG8N/ryNtcwfMVuocIPEJbE9H
+ t76L9ZHgwnCcNa2SrxUoM7J6RlUt+sMZ3c4EbtUQnM8PXrndnAGx9XMkKBrff7VdzBiv
+ 68SbXx8d81CfX6J1GTobW3L5m0HlTNUjA6lTZkENzpr4FmCmWoLaRDpNTQHOIGCQzVEj
+ hmAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763143715; x=1763748515;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sS4TuJHvwYBLjzB7Rskj2B69G0AxkaHlbYXU+VJy9Os=;
- b=JoVLuEtiMX4bEblbPSiOCUnczbnN7qKIPn7lIVQvkqk+rObTE5ucmZeZpDGK4wvp/V
- GpqsZ70hH9BO2WNYUUURjvZENdK+iV8tXQuA/OtyC7hSDrYfSFmwKxUhboKw3p3MvM73
- K586CcaLmI6oqtWo5HAQ3+UJfCdfEVm7E6OgsjcH+ZJ/Mcn+tVq9/GZwB37vpdsm/gx+
- i68u47wGITlvAzgNxQ0sZ+900HBVrsELoSN9igiRWX+LAekM5o7t/fTO0wa0MmsDntAM
- 19B4OiRAJHeFnVGLi+HT1VRWX9G1l3+GE9vdsym0MTCBhzuPxoj3Carg23cVNUbJ1Uih
- zPVA==
-X-Gm-Message-State: AOJu0Yzubl4Ib3AM41orT86gggTXjX+ehOQKBl+rXagvliMACv+uZQzH
- ExMBZ18MQATICaPLLF2i4Kdq1MrI6Tcy3TZ4MqS3V8rprW3sHYuVCRSX
-X-Gm-Gg: ASbGncsE3dicyPhUaBgyciGrx5xcvguDsi6vSD+7wO8ZZkczIMRpi21IP0THFNsPOXj
- OKZy0bux4h8WU74ibENAzogYuJoyw4wsCvzWnDjxULF90anwIwQ0FFXgRfjhO408G4svAeXLelT
- ewJxmJ3c8hhpXakR8N6cwMsxcJ0KiDV9SwLho6eDL4YDhFG9svsAKjk0kXigkbRhgyulAV4Czlk
- cb4Q+dUnnrlVT7498ebfV48p6BTTYaKP4sL5rpF9ygwsBMwXXwjtTo9RtG749F22icX2iA1Pe7X
- b9ZF475HcxUXPEwg1p+6COP5pKNIcdD4EE9Oa00N+OAaRRnbb/JjWHUR28XbhELObd+oa8jQiZl
- zDVA8t8Zh0hhIe9kJxzS6x+LV55lGcZ83tU0jevPV4B3Jpz1+gzZYXuevCLWdd80B9uWSVT5W0Z
- gU3A==
-X-Google-Smtp-Source: AGHT+IHEY+WbjzagjXKXoew7zeol0tRmdITtP/uCdcYhvbtdf7SDBaENJkwcu5uuzjC8wOcSef/2AQ==
-X-Received: by 2002:a05:6000:1786:b0:42b:3dbe:3a54 with SMTP id
- ffacd0b85a97d-42b59367325mr3848589f8f.17.1763143714677; 
- Fri, 14 Nov 2025 10:08:34 -0800 (PST)
-Received: from osama ([2c0f:fc89:122:a5d6:f17f:de94:75b3:6be2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f0b62dsm11346496f8f.24.2025.11.14.10.08.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Nov 2025 10:08:34 -0800 (PST)
-Date: Fri, 14 Nov 2025 20:08:31 +0200
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu_oss@crudebyte.com, groug@kaod.org
-Subject: Re: [PATCH] hw/9pfs: Drop unused print_sg helper
-Message-ID: <aRdwH98a_k__cDDj@osama>
-References: <20251110155424.694664-1-osama.abdelkader@gmail.com>
- <dfbdc47a-6e70-44d6-8e87-eddf5363ff77@linaro.org>
- <3260517.0rzgI7jUu0@silver>
- <6d5fc070-4756-4d58-ad1e-78bdcfe9db90@linaro.org>
+ d=1e100.net; s=20230601; t=1763147332; x=1763752132;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=grC4bnSGbBPY7VQJMpAUPZhA8iWfNhAwQLNkM6hSOtk=;
+ b=BJVQo3J2erDla6/aBG2i92ouJRS2WSM3qwZoOSp8aBh5RdQX+WxGCbrpq9SDcIKp96
+ bAiWL+tSWf4asrzHYeEaMHWu7EZ1zjooyr6EmNGTHCc7034E6iB15Z+OWCcpbAseI9jg
+ 3z0358Yae953qWIZSowSA9S/K2PD9kRSRtZAvwpLySO6xTl9VPiC1tROhYoMiwRjNDsU
+ quWgxaJmmuYKtmcneRh8qAGzGtGdLgsvwmDnMpS19Hn7hPtTB2tIQcrSkuNizZi5bSNp
+ IG4O6iKibBy5XgVwOtcP8VGBr/OeYvC6JoZB1lajH4CQjN7gLs+mjYDQh1fxmeimU9ZG
+ CNiw==
+X-Gm-Message-State: AOJu0Yw0EhOffvyaIcJ9p3rDy9bjWsfbq2WNYjyJoj3LBNwYpC4NzXTQ
+ huChU3tcfNadbWNHKCWPAvhhxeLO7NFuKKyi/HZscaeiQE4FAIQaDSMnp7ZuGfFMGCcX6H9iUIM
+ g+wBQa9w=
+X-Gm-Gg: ASbGncudatpvDo/QavpeZDowTHaBmT3mffyfEBWz3WZ7laZA1gD2bNZ/8z4L2/j/dle
+ bIRA9GxKQ83l5LlWa9YTYucBeHsVafth3YwDGysCr11stzsQqFh4eU2aQKMW3ACEC7L1OeyuQ0f
+ ZakLvUyK0KCHnm6YcRHrKxg16c/6CFSJo8uaKSCWipGYbxBJwt2sPqXZoabVoRQmQhu/2Jsqqhu
+ ThiyTDrocpOHZc3/7f6rJyeHWjWGbhX6oHioluRcBQy78HXat+BNGnXWDm2a7xUOTDYfia+4Z+2
+ y8H8f5v6UjLJ05DrmaYoVSG3E5yM78AmCNQAXn90qAb52TXwrkABaEvnnK7jOiEBOL7UonzC6F2
+ m84/4kwHUFHe8RtACZVfe6/1xaIFkwnQrvZNxlmUZiiMoDDSlBwbO1+bRXvLqGj1/U15VC81Lxy
+ DIOWtxWGs+lE4pk/7eSn5Y09c3QLmJ4yuQyh8vof2a5BJcG+9vqPVmsUbi8A==
+X-Google-Smtp-Source: AGHT+IGLyWK+XJeK4/5XY29tpmIah0R6ZwVRLlCyE9ne6x91pMVRPqlDsyEP8vYytWu5+is5Lees9g==
+X-Received: by 2002:a05:600c:46ca:b0:471:14af:c715 with SMTP id
+ 5b1f17b1804b1-4778fe4f06dmr43811045e9.3.1763147331869; 
+ Fri, 14 Nov 2025 11:08:51 -0800 (PST)
+Received: from [192.168.8.105] (86.red-80-27-231.dynamicip.rima-tde.net.
+ [80.27.231.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47787e2ad4csm167168305e9.1.2025.11.14.11.08.50
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 14 Nov 2025 11:08:51 -0800 (PST)
+Message-ID: <4b6521a2-8399-40ef-ba64-af58096b56b9@linaro.org>
+Date: Fri, 14 Nov 2025 20:08:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6d5fc070-4756-4d58-ad1e-78bdcfe9db90@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=osama.abdelkader@gmail.com; helo=mail-wr1-x432.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/10] target-arm queue
+To: qemu-devel@nongnu.org
+References: <20251114152110.2547285-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251114152110.2547285-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,80 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 12, 2025 at 02:42:58PM +0100, Philippe Mathieu-Daudé wrote:
-> On 12/11/25 13:30, Christian Schoenebeck wrote:
-> > On Wednesday, November 12, 2025 8:03:28 AM CET Philippe Mathieu-Daudé wrote:
-> > > Hi Osama,
-> > > 
-> > > On 10/11/25 16:54, Osama Abdelkader wrote:
-> > > > Remove the print_sg() debug helper and its always-disabled call sites
-> > > > in v9fs_read() and v9fs_write(). The function was only reachable via
-> > > > if (0) blocks, so it has been dead code for a long time.
-> > > > 
-> > > > Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-> > > > ---
-> > 
-> > TBH low care level for this on my side. It's just passive debug code and the
-> > suggested change does not change anything on the resulting binary.
-> > 
-> > It's not that this debug code is not used at all, but very seldom. Last time I
-> > personally used it was like 3 years ago.
-> > 
-> > > > 
-> > > >    hw/9pfs/9p.c | 20 --------------------
-> > > >    1 file changed, 20 deletions(-)
-> > > > 
-> > > > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> > > > index bc4a016ee3..a8de894f4c 100644
-> > > > --- a/hw/9pfs/9p.c
-> > > > +++ b/hw/9pfs/9p.c
-> > > > @@ -1389,20 +1389,6 @@ static int stat_to_v9stat_dotl(V9fsPDU *pdu, const
-> > > > struct stat *stbuf,>
-> > > >        return stat_to_qid(pdu, stbuf, &v9lstat->qid);
-> > > >    }
-> > > > 
-> > > > -static void print_sg(struct iovec *sg, int cnt)
-> > > > -{
-> > > > -    int i;
-> > > > -
-> > > > -    printf("sg[%d]: {", cnt);
-> > > > -    for (i = 0; i < cnt; i++) {
-> > > > -        if (i) {
-> > > > -            printf(", ");
-> > > > -        }
-> > > > -        printf("(%p, %zd)", sg[i].iov_base, sg[i].iov_len);
-> > > > -    }
-> > > > -    printf("}\n");
-> > > > -}
-> > > > -
-> > > > 
-> > > >    /* Will call this only for path name based fid */
-> > > >    static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
-> > > >    {
-> > > > 
-> > > > @@ -2468,9 +2454,6 @@ static void coroutine_fn v9fs_read(void *opaque)
-> > > > 
-> > > >            do {
-> > > >                qemu_iovec_reset(&qiov);
-> > > >                qemu_iovec_concat(&qiov, &qiov_full, count, qiov_full.size -
-> > > >                count);
-> > > > 
-> > > > -            if (0) {
-> > > > -                print_sg(qiov.iov, qiov.niov);
-> > > 
-> > > Alternatively, consider converting to trace event so we can keep
-> > > dumping the entries, but select that at runtime (see for conversion
-> > > example commit 4847c5701a3 "hw/rtc/mc146818rtc: Convert CMOS_DPRINTF
-> > > into trace events").
-> > 
-> > Probably overkill. We have a bunch of trace events where it makes, especially
-> > for investigating issues on 9p protocol level. But this debug code is usually
-> > just enabled if you are working on a virtio transport issue or new virtio
-> > feature and then you are usually working on this source code already.
-> > 
-> > But again: no strong opinion about this overall issue whatsoever.
+On 11/14/25 16:21, Peter Maydell wrote:
+> Hi; here are some arm patches for the freeze; mostly these are
+> fairly unexciting minor bug fixes.
 > 
-> Fine then!
+> I did find in my CI run for this that the check-python-minreqs
+> job failed with:
+> "ERROR: /builds/pm215/qemu/scripts/qapi/commands.py Imports are incorrectly sorted and/or formatted."
+> https://gitlab.com/pm215/qemu/-/jobs/12092087877
+> 
+> but since this pullreq doesn't touch that file or anything
+> else python-related I assume that's a pre-existing CI failure.
+> 
+> thanks
+> -- PMM
+> 
+> The following changes since commit 9febfa94b69b7146582c48a868bd2330ac45037f:
+> 
+>    Merge tag 'for-upstream' ofhttps://repo.or.cz/qemu/kevin into staging (2025-11-12 11:47:42 +0100)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251114
+> 
+> for you to fetch changes up to 522444744eb79dd01e377ad2ed15544f10bcc70c:
+> 
+>    hw/audio/lm4549: Don't try to open a zero-frequency audio voice (2025-11-14 13:20:10 +0000)
+> 
+> ----------------------------------------------------------------
+> target-arm queue:
+>   * MAINTAINERS file update for whpx
+>   * target/arm: Fix accidental write to TCG constant
+>   * target/arm/cpu64: remove duplicate include
+>   * hw/display/xlnx_dp: don't abort() on guest errors
+>   * cxl, vfio, tests: clean up includes
+>   * hw/misc/npcm_clk: Don't divide by zero when calculating frequency
+>   * hw/audio/lm4549: Don't try to open a zero-frequency audio voice
 
-Thanks for your review.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+
+r~
 
