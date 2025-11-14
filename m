@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A081CD98F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Nov 2025 22:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD86CCD8CBF
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 01:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJgEE-0006Vc-P1; Thu, 13 Nov 2025 17:55:46 -0500
+	id 1vJiMs-0005vH-Lp; Thu, 13 Nov 2025 20:12:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgEC-0006NR-FO
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vJiMp-0005ua-9D
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 20:12:47 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vJgE9-0000il-Si
- for qemu-devel@nongnu.org; Thu, 13 Nov 2025 17:55:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763074540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aOxQsYPZmM4s9HmJmCubRSBkIkjET07s0boPshPsQYI=;
- b=av7nFMFocgW2iJsGzwRbsLlO+AVzWp/bfb3JQJaPupOQrQu2JqF9C+DKUsIXWh5sH6nEPO
- 1hLoLhftzHr8rGTfQ43IvlN9xX6qe6PlFV4XB3aJCKKf718E/4xV+yZ0Cyl1QfTcJgVz0+
- bKrNmvfQuYiQQrwU0xc08r00lzVRqmc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-rGsCoRU_PnibT7pIoH82Sg-1; Thu,
- 13 Nov 2025 17:55:38 -0500
-X-MC-Unique: rGsCoRU_PnibT7pIoH82Sg-1
-X-Mimecast-MFC-AGG-ID: rGsCoRU_PnibT7pIoH82Sg_1763074538
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDCA3195609D
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:55:37 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.22])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 562FA1955F1B; Thu, 13 Nov 2025 22:55:37 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 02/15] qio: Add trace points to net_listener
-Date: Thu, 13 Nov 2025 16:54:58 -0600
-Message-ID: <20251113225531.1077484-19-eblake@redhat.com>
-In-Reply-To: <20251113225531.1077484-17-eblake@redhat.com>
-References: <20251113225531.1077484-17-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vJiMk-0002kN-N4
+ for qemu-devel@nongnu.org; Thu, 13 Nov 2025 20:12:45 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AE1CT3M031476
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 14 Nov 2025 10:12:29 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=B5duLP+jnqT9i+qTUWD2CdgU1XqR6RRVfAv64fbQvvo=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763082749; v=1;
+ b=hPGM9PdD3ypeaTgCuvqrlNsZa0tYBMHXz4xwRzSMu9X6P5B7q2SZ18UVQvjMQrAH
+ nEGRj/32TQRRt7QXHEwjutqT4F6j7oD7HBAjh65N47D60k8lbquz69Pvc0zj8aJz
+ dJgZjVP7aLmZXXMBp1NJj4GLZG2gPxIVysB/+BEpCOjdscemW5SwF0CR7Y76THS4
+ yUGIBYXk7nwyo8cMbep2ndZPFvqvKbtoY67vsUY8Fu3fRcExZi30CbcUUh34+Uli
+ zCLh5b8cWgT4OXAjyQoi0ekKYOAyFOqrNwMoE9aYBf19gd1ZV+W/ctkKnCoKEl/I
+ 4PyqwxhGXJDwoakujgpk2Q==
+Message-ID: <97e08e70-3842-433f-b427-ccc20bef29cc@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 14 Nov 2025 10:12:29 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <20251029-force_rcu-v1-4-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp>
+ <aQJbd5qYR10qcbr7@x1.local>
+ <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
+ <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ0Ys09WtlSPoapm@x1.local>
+ <1b318ad8-48b3-4968-86ca-c62aef3b3bd4@rsg.ci.i.u-tokyo.ac.jp>
+ <7c49d808-ccb8-4262-ae6c-2ac746b43b80@rsg.ci.i.u-tokyo.ac.jp>
+ <aRYVw1ydTbZr0OEH@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aRYVw1ydTbZr0OEH@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,105 +84,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Upcoming patches will adjust how net_listener watches for new client
-connections; adding trace points now makes it easier to debug that the
-changes work as intended.  For example, adding
---trace='qio_net_listener*' to the qemu-storage-daemon command line
-before --nbd-server will track when the server first starts listening
-for clients.
+On 2025/11/14 2:30, Peter Xu wrote:
+> Hi, Akihiko,
+> 
+> I found that you replied to me and forgot to cc all, I added all of the
+> people back.
+> 
+> On Sun, Nov 09, 2025 at 06:05:00PM +0900, Akihiko Odaki wrote:
+>> On 2025/11/08 10:45, Akihiko Odaki wrote:
+>>> On 2025/11/07 6:52, Peter Xu wrote:
+>>>> When I was having a closer look, I found some other issues, I'll list it
+>>>> all here.
+>>>>
+>>>> 1. I found that rcu_gp_event was initialized as "true".  I'm not sure
+>>>>      whether it should be false.  This has nothing to do with your
+>>>> series as
+>>>>      well, only some observation of mine.
+>>>>       qemu_event_init(&rcu_gp_event, true);
+>>>
+>>> Indeed it makes more sense to initialize it with false.
+>>>
+>>> rcu_read_unlock() sets the event only in grace periods, and
+>>> wait_for_readers() always reset it when ending those grace periods. By
+>>> initializing it with false, the event will be false whenever outside
+>>> grace periods, improving consistency.
+> 
+> Thanks for confirming this. AFAIU this isn't a huge deal, as
+> wait_for_readers() should be tolerant of false positives.  So I'll leave it
+> to you on whether to touch it together.
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20251113011625.878876-17-eblake@redhat.com>
----
- io/net-listener.c | 10 ++++++++++
- io/trace-events   |  5 +++++
- 2 files changed, 15 insertions(+)
+It's just one-line change so I'll include it in the next version of this 
+series.
 
-diff --git a/io/net-listener.c b/io/net-listener.c
-index 47405965a66..007acbd5b18 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -23,6 +23,7 @@
- #include "io/dns-resolver.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "trace.h"
+> 
+>>>
+>>>>
+>>>> 2. It looks to me your patch here checked the wrong retval of
+>>>>      qemu_event_timedwait()..
+>>>>
+>>>>           } else if (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
+>>>>                      !sleeps || qemu_event_timedwait(&sync_event, 10)) {
+>>>>                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>
+>>>>      should it be "!qemu_event_timedwait(&sync_event, 10)"?  Side
+>>>> note: maybe
+>>>>      we should cleanup all _timedwait() for QEMU's eventfd, sem, cond,
+>>>>      ... because they don't return the same retval.. but if you think
+>>>> sem is
+>>>>      good, then we don't need eventfd's timedwait() in this series (your
+>>>>      initial two patches).
+>>>
+>>> You are right here too. This is a stupid mistake.
+>>
+>> No, the original patch is right. qemu_event_timedwait(&sync_event, 10)
+>> returning true means that the forced variable was set before timing out,
+>> hence the we need to enter the force quiescent state.
+> 
+> You're correct.  I got misleaded by the comment here:
+> 
+>              /*
+>               * Now one of the following heuristical conditions is satisfied:
+>               * - A decent number of callbacks piled up.
+>               * - It timed out.                <--------------------
+>               * - force_rcu() was called.
+>               *
+>               * Force a quiescent state.
+>               */
+> 
+> I'm guessing you got misleaded too when I raised the question and when you
+> were looking.  Maybe it means it would be good to change that line of
+> comment into:
+> 
+>               * - It timed out continuously 5 times (causing sleeps==0)
 
- QIONetListener *qio_net_listener_new(void)
- {
-@@ -50,6 +51,7 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
-         return TRUE;
-     }
+Mentioning the sleeps variable makes sense.
 
-+    trace_qio_net_listener_callback(listener, listener->io_func);
-     if (listener->io_func) {
-         listener->io_func(listener, sioc, listener->io_data);
-     }
-@@ -123,6 +125,7 @@ void qio_net_listener_add(QIONetListener *listener,
-     object_ref(OBJECT(sioc));
-     listener->connected = true;
-
-+    trace_qio_net_listener_watch(listener, listener->io_func, "add");
-     if (listener->io_func != NULL) {
-         object_ref(OBJECT(listener));
-         listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
-@@ -143,6 +146,8 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
- {
-     size_t i;
-
-+    trace_qio_net_listener_unwatch(listener, listener->io_func,
-+                                   "set_client_func");
-     if (listener->io_notify) {
-         listener->io_notify(listener->io_data);
-     }
-@@ -158,6 +163,8 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
-         }
-     }
-
-+    trace_qio_net_listener_watch(listener, listener->io_func,
-+                                 "set_client_func");
-     if (listener->io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-@@ -218,6 +225,7 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     };
-     size_t i;
-
-+    trace_qio_net_listener_unwatch(listener, listener->io_func, "wait_client");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-@@ -247,6 +255,7 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     g_main_loop_unref(loop);
-     g_main_context_unref(ctxt);
-
-+    trace_qio_net_listener_watch(listener, listener->io_func, "wait_client");
-     if (listener->io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-@@ -268,6 +277,7 @@ void qio_net_listener_disconnect(QIONetListener *listener)
-         return;
-     }
-
-+    trace_qio_net_listener_unwatch(listener, listener->io_func, "disconnect");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-diff --git a/io/trace-events b/io/trace-events
-index dc3a63ba1fb..10976eca5fe 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -72,3 +72,8 @@ qio_channel_command_new_pid(void *ioc, int writefd, int readfd, int pid) "Comman
- qio_channel_command_new_spawn(void *ioc, const char *binary, int flags) "Command new spawn ioc=%p binary=%s flags=%d"
- qio_channel_command_abort(void *ioc, int pid) "Command abort ioc=%p pid=%d"
- qio_channel_command_wait(void *ioc, int pid, int ret, int status) "Command abort ioc=%p pid=%d ret=%d status=%d"
-+
-+# net-listener.c
-+qio_net_listener_watch(void *listener, void *func, const char *extra) "Net listener=%p watch enabled func=%p by %s"
-+qio_net_listener_unwatch(void *listener, void *func, const char *extra) "Net listener=%p watch disabled func=%p by %s"
-+qio_net_listener_callback(void *listener, void *func) "Net listener=%p callback forwarding to func=%p"
--- 
-2.51.1
+> 
+>>
+>>>
+>>>>
+>>>> 3. I doubt if malloc_trim() feature is broken with your current patchset,
+>>>>      because now the loop looks like:
+>>>>
+>>>>           for (;;) {
+>>>>               qemu_event_reset(&sync_event);
+>>>>               n = qatomic_read(&rcu_call_count);
+>>>>               if (n) {
+>>>>                   break;
+>>>>               }
+>>>> #if defined(CONFIG_MALLOC_TRIM)
+>>>>               malloc_trim(4 * 1024 * 1024);
+>>>> #endif
+>>>>               qemu_event_wait(&sync_event);
+>>>>           }
+>>>>
+>>>>     I don't know if n can be zero here at all.. if you use the sem change
+>>>>     this might trigger but it's not designed for it.  When using sem
+>>>> we may
+>>>>     want to periodically trim.  But I'd like to know how you think in
+>>>> general
+>>>>     on the sem idea first (e.g. do we need to be prepared for high
+>>>> freq rcu
+>>>>     frees).
+>>>
+>>> malloc_trim() is triggered when the RCU thread is idle, and that is not
+>>> changed with this patch.
+> 
+> You're right, I read it wrong.  Please ignore this comment.
+> 
+> Thanks,
+> 
 
 
