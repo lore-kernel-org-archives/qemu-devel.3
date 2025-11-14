@@ -4,155 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190CECDE014
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 06:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A247FCDE027
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 08:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJnRF-0004Xo-6G; Fri, 14 Nov 2025 01:37:43 -0500
+	id 1vJp44-0004Lx-7v; Fri, 14 Nov 2025 03:21:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vJnR7-0004WZ-DE
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 01:37:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vJnR5-0006g0-9H
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 01:37:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763102249;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kOgkd4ED2n9/O4szBXbI+STkadMAJeeiX+MvL5j7KXA=;
- b=ROrCeDZJiuJfOoA6gj5WDRaRv9Jt9vDFcA15ZpetNcGiFXnCvv1w3BKVcY5IDdtlQZ6LU/
- A8puYdysQNmsHi1u2KHkee+6bhq2T7d2uESyivOql0nRu/wDDyEQOlHTfggo8GGW3Swlb3
- 7xefpCytJ5HY6nXpcWC/wLGLbYeij2A=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-l24F0RxGPia3820oUcWZsA-1; Fri, 14 Nov 2025 01:37:27 -0500
-X-MC-Unique: l24F0RxGPia3820oUcWZsA-1
-X-Mimecast-MFC-AGG-ID: l24F0RxGPia3820oUcWZsA_1763102246
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-42b2fb13b79so775261f8f.3
- for <qemu-devel@nongnu.org>; Thu, 13 Nov 2025 22:37:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1vJp3P-00047F-B6
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 03:21:13 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1vJp3N-00085S-8x
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 03:21:10 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-640aaa89697so2407371a12.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 00:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763102246; x=1763707046; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=kOgkd4ED2n9/O4szBXbI+STkadMAJeeiX+MvL5j7KXA=;
- b=e9K9yJJC/91Ek+vRmXSoR0ciSLed0Bfs5Dbk/SVQAi6oR0+GAvl6dWYBzk6/h/c4xz
- +JC/59Oa9MehB8j0qutWn3R0WeDh3K+Y3V4KEkxsLKVdYJwQTlZUZiprt9YS2tu3bmb8
- 4xUDTH4ZAKYK+wZ/WROU3r9FMIhDmcqPWJa9pwnbULLtcBEwI2Q2f2imXg2Xy221d6G+
- vq9Ow0jNgzPkGMBbrZnvjiQ/Lm+Q/qTV+V3a1ATdqBWx4ICkRICrLVnuHck/ykWg53bI
- rlOLLucvKZ67u1upEX5MOsMasqddvryjhTIEl2+ZIfGcRVCmfXufftyWr01eGMFAxd9n
- OhbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763102246; x=1763707046;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=adacore.com; s=google; t=1763108465; x=1763713265; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kOgkd4ED2n9/O4szBXbI+STkadMAJeeiX+MvL5j7KXA=;
- b=vJq61SczFZTaa+TOoFurhIY/b43DAHs3u2CQFxRU/1vHGAwHvlt36bD2CD8rh+aDqn
- 8Kie9Xiab/Pj0c/VixytUlbmn8HVTEEy4QTgAQPTjFM2KJB1Tf7i5nYdS8geplUqdtrN
- sPiiccyg9T8fIpn+LyhYZ6jHckI2yc6qpwTsOn2K4QESNWNHP1BCQn223dwtt0uHmhCr
- QvoI5UCAgoaags/pBiU5fLKMI3nF81UkubOSPT368skDZWGdWvtNGjeQ9K2bwm8ulz4E
- Q5fWBqrhA2w0TF2BjwWh0j1aP8riTlXX2cZ3HI4G29nwJas3a01waRiZVPn7iXjxQAKG
- fqwg==
+ bh=7yKP2q2n26hyS1LvyZ+r81R1M2eVj1Wbiwe11uS3Mqc=;
+ b=ULuFbPsdlkEB49qas6HN4tTn5zVjHcbII+qBbAKN8M+vLDuJD9B9O8NNf5cVzfBPI1
+ k1sbDNVcL9+CdgsjTiwflnrbD9mME3HFX7I7D/kuvG4DCfrCyt3XlrB2McI+Owc8AOe9
+ iQyXFt9FWZeSX8obMmqHVEcejX022OFot0yEdeN1P2bsgL/ZacyrVVTAJ49Ytb0T3U7G
+ xhAQslV9egdT7YZ838ZLjqzQ04k4z26I6rxmb1b+wGv45wWfZsd3pVhO5uiytliJPEqn
+ pWoNCXKUhWgOukJGsXG7UOna+zhw6o2mo3l4PS0hXv+ifD4Db2hUosm+gXa8juyscAUF
+ uCpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763108465; x=1763713265;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7yKP2q2n26hyS1LvyZ+r81R1M2eVj1Wbiwe11uS3Mqc=;
+ b=VCZKjBP5mFRAWq2KKL0FvUfKU1vb0OxTYuMn1relL+TdInVPpoNu3nm82tjE6UzLPX
+ T4R4DQgvlPrlwBj0sCktj8UKwbeeMVZcUooBVI+V1sY30EUTqAnHBNStkrkbT8qXWREX
+ JA6FS4G1uIZ6aZRtBAgwaN5JrU5y2Asf1soYAxmglIv66hAhs2SKIoWG/PvsEAlh7qFz
+ XXkpDSh6T0bovsGEl00PVU9j0jFIu5nuiqy/BdYQ/7J0jL+kfPj0PIKFYlPg5hmyBHDP
+ ZGi/n6JLV6rd9qwbQhmhY2TrSBO4mANCHYr4BVZHc2a+YxqPb8G01S5FrHgfByAssk7H
+ Ig9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3Bmads3KOqoqno3uR1S1L1mzovM0H5b9NSEj6zhz/OkiRoTHBPtarw382kBiR0Dahp17C2ISLhPmw@nongnu.org
-X-Gm-Message-State: AOJu0YxfTQTqUNFR1PmLDAHz6OhGOAsgzLXhzI/o+9Ju7l3H+v+4ckiN
- bwNK8/ON8YITgl3aKy7qFPjUBDtIvTE3mu4HTS1tpzzeVmU9BmmgKy+ZnlTUu8kPVwIB9dyS+0n
- qKnNje6MFvycvtLSjBuG/MXgD3JYYFCdvtudEQguzwMnWkpFETI8hpEui
-X-Gm-Gg: ASbGncv4CqjXT5K9Z85srSo+XEDcvtRp25TYJa0VUS+uGcPnW3A6DlAepzgYYJ59l7L
- /PVL3FaGzwzO0fNFxmvosF34iYOp/Q5W5HrMy234fTFNNvIrwNWys9ErmcD0TzeFvsMAjxpmpt1
- twO+kwRvvG7uqRFi9worttf7vz3vQwxqvZ5zW4D15yswkH0jvKq7fQFtAmNhWvbusPasIe7TOeI
- cFkDSrVPidcWYWuAs2hpHIPZLFU5xXSaUkR34UWh3I1ZI5A2PAK6lCawhiXg8ggZK0ySkSL5fhE
- Ju83ZqhCIO1sqNRo6E8xkb3apAx7ksBU4+8DE3Cc6PC6tGcB1yFQCVERx7JT7knDgMR/IIn/8pN
- 2bzVjVg3u9DtiU4JC2R0sj6zSMjH+DiI+fL0GCQ==
-X-Received: by 2002:a5d:5885:0:b0:42b:3bc4:16c9 with SMTP id
- ffacd0b85a97d-42b59373ee4mr1444252f8f.51.1763102246357; 
- Thu, 13 Nov 2025 22:37:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHZIn/4aOrohDZZ+jnJQjBdwmtJk6myvePpDcT2ReMBE+fYRQ72cTJxSXYN2VEdZWxVjQypeQ==
-X-Received: by 2002:a5d:5885:0:b0:42b:3bc4:16c9 with SMTP id
- ffacd0b85a97d-42b59373ee4mr1444233f8f.51.1763102245896; 
- Thu, 13 Nov 2025 22:37:25 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53e845bdsm7814490f8f.12.2025.11.13.22.37.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Nov 2025 22:37:25 -0800 (PST)
-Message-ID: <71f97da4-315e-457e-8ac9-c48d04fb4772@redhat.com>
-Date: Fri, 14 Nov 2025 07:37:24 +0100
+ AJvYcCWmlNOe5zo0CMx08DzyuvT1YuVuOHmFvWRDscJEss/3dKUnxHCev1ouFB0t2B08VO+B8Vfpj5UZYs2A@nongnu.org
+X-Gm-Message-State: AOJu0Yxv8BMm4+evclesZkCgn1urADHWkGfrWjAUf/E690uX4TFwgde2
+ hLz1Ek0fF0+/wKDX4L2Z0t939dXI/yDC8xh0ck+4dyC+RamUJp6v1u1rAweZEBr0wwieKhD3rJX
+ LJrGt79KjsxusnHySoK5S0WX3yCN8C8bSFwZu/D3Y
+X-Gm-Gg: ASbGncvBcqeoJVBVWqdqttBu37jsT2DFHVzyqWBdVwgG2//rJH7XO2DwVV3YGoLZn6H
+ RftHhcxIe2pg16ZMBrldw3SL1hNWvFG010q8lOdVY0/hxVPBp1I3Ydhn30WYfbQRAFQei+ORAKS
+ zaPffixmzUaxqdbr7ImqFWht3pZgbtsZD3k2WSUZjTqFNYELN5zkR2gLR6ZM0yVVUf62aCn7JS/
+ 63yXTLynupVWWJ+ruYRB7kzqFsN7txec5rRF3cQeCXjtRx7FN/ydmxjSy8Q+wL5osSeWC5Fcm2d
+ okCW9mtxnt81e9LtGA8=
+X-Google-Smtp-Source: AGHT+IHHZjC8tNrXN9ht3/Xt8U5mzYEA24WxyFA9Hye8LypFQf/Kl6y42UYo+T91Oa/VYQlqoHocBWSgja8DwcMgpko=
+X-Received: by 2002:a17:907:d0f:b0:b72:b710:cbfd with SMTP id
+ a640c23a62f3a-b73678f4784mr192804466b.36.1763108465209; Fri, 14 Nov 2025
+ 00:21:05 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: set correct list pointer when removing notifier
-To: Matthew Rosato <mjrosato@linux.ibm.com>, peterx@redhat.com
-Cc: farosas@suse.de, steven.sistare@oracle.com, alex@shazbot.org,
- qemu-devel@nongnu.org
-References: <20251113213545.513453-1-mjrosato@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251113213545.513453-1-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251107145327.539481-1-chigot@adacore.com>
+ <20251107145327.539481-2-chigot@adacore.com>
+ <878qgenqum.fsf@pond.sub.org>
+ <CAJ307Eg7x_rKb5qybgW3XxAKLP=1ds524gqgXettv2cZ8WTMww@mail.gmail.com>
+ <757f66d0-625c-9d1b-5090-3d5210903173@eik.bme.hu>
+ <87346mkos9.fsf@pond.sub.org>
+ <aRH_2gcYOH31UB38@redhat.com> <87ecq5f201.fsf@pond.sub.org>
+In-Reply-To: <87ecq5f201.fsf@pond.sub.org>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Fri, 14 Nov 2025 09:20:54 +0100
+X-Gm-Features: AWmQ_bnYPQscuZUZ982hCSD9uYzGMQYGbn9EhA4X4q6x_Q9xjCNIT0UppeqJIRU
+Message-ID: <CAJ307EjFMrXOmQMF5YckQ6hMGdFGtdYdAH3fWShcvwEXAtBrrw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] vvfat: introduce partitioned option
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-block@nongnu.org, 
+ qemu-devel@nongnu.org, hreitz@redhat.com, eblake@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=chigot@adacore.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,39 +105,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/13/25 22:35, Matthew Rosato wrote:
-> In migration_remove_notifier(), g_slist_remove() will search for and
-> potentially remove an entry from the specified list.  The return value
-> should be used to update the potentially-changed head pointer of the
-> list that was just searched (migration_state_notifiers[mode]) instead
-> of the migration blockers list.
-> 
-> Fixes: dc79c7d5e1 ("migration: multi-mode notifier")
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> ---
->   migration/migration.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index c2daab6bdd..9e787749b2 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1693,7 +1693,7 @@ void migration_remove_notifier(NotifierWithReturn *notify)
->   {
->       if (notify->notify) {
->           for (MigMode mode = 0; mode < MIG_MODE__MAX; mode++) {
-> -            migration_blockers[mode] =
-> +            migration_state_notifiers[mode] =
->                   g_slist_remove(migration_state_notifiers[mode], notify);
->           }
->           notify->notify = NULL;
+On Tue, Nov 11, 2025 at 8:43=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Kevin Wolf <kwolf@redhat.com> writes:
+>
+> > Am 10.11.2025 um 14:20 hat Markus Armbruster geschrieben:
+> >> BALATON Zoltan <balaton@eik.bme.hu> writes:
+> >>
+> >> > On Mon, 10 Nov 2025, Cl=C3=A9ment Chigot wrote:
+> >> >> On Mon, Nov 10, 2025 at 11:07=E2=80=AFAM Markus Armbruster <armbru@=
+redhat.com> wrote:
+> >> >>>
+> >> >>> Cl=C3=A9ment Chigot <chigot@adacore.com> writes:
+> >> >>>
+> >> >>>> This option tells whether a hard disk should be partitioned or no=
+t. It
+> >> >>>> defaults to true and have the prime effect of preventing a master=
+ boot
+> >> >>>> record (MBR) to be initialized.
+> >> >>>>
+> >> >>>> This is useful as some operating system (QNX, Rtems) don't
+> >> >>>> recognized FAT mounted disks (especially SD cards) if a MBR is pr=
+esent.
+> >> >>>>
+> >> >>>> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+>
+> [...]
+>
+> >> >>> Not sure I like "partitioned".  Is a disk with an MBR and a partit=
+ion
+> >> >>> table contraining a single partition partitioned?  Call it "mbr"?
+> >> >>
+> >> >> It used to be called "mbr/no-mbr" but Kevin suggested renaming it i=
+n
+> >> >> V1. Honestly I'm fine with both options:
+> >> >> - Technically, the option prevents MBR which has a side effect for
+> >> >> preventing partition tables
+> >>
+> >> Yes, because the partition table is part of the MBR.  I'd rather name
+> >> the option after the entire thing it controls, not one of its parts.
+> >>
+> >> >> - Even it has a single partition, I think it makes sense to call a
+> >> >> disk "partitioned" as long as it has a partition table
+> >> >>
+> >> >> But I'm not that familiar with disk formats, etc. I'll let you deci=
+de
+> >> >> with Kevin, which one you prefer.
+> >>
+> >> Kevin is the maintainer, I just serve as advisor here.
+> >
+> > I figured that the meaning of "partitioned" is easier to understand for
+> > a casual user than having or not having an MBR ("I don't want to boot
+> > from this disk, why would I care about a boot record?").
+>
+> Fair point.
+>
+> Possible counter-points:
+>
+> * The default is almost always right for the casual user.  The
+>   exception, as far as I understand, is certain guest OSes refuse to
+>   play ball with certain devices when they have an MBR.
+>
+> * The configuration interface isn't exactly casual-user-friendly to
+>   begin with.  @fat-type, what's that, and why do I care?  @floppy,
+>   what's that, and why do I care?
+>
+> Anyway, you decide.
 
+AFAICT, there are two open questions for that patch:
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+1. "mbr" vs "partitioned".
+I do think "partitioned" is clearer, a bit more casual friendly. "mbr"
+requires knowledge about FAT format, while what's a partition should
+be known by a wider audience.
+Side note, in V3, I'll remove the "unpartitioned" keyword to simply
+replace it by "partitoned=3Dfalse" (I wasn't aware such an obvious
+possibility was working...). So we might even call it
+"partition/partitions=3Dtrue|false".
 
-Thanks,
+2. The default value. Should it be "false" for @floppy ?
+IMO, having a default value independent of other arguments is always
+better. Hence, I'll push for keeping "partitioned=3Dtrue" as the
+default, and having users forcing "partitioned=3Dfalse" for floppy (an
+error being raised otherwise). As we'll probably change the default
+behavior with floppy anyway (cf patch 2), I don't think it will hurt a
+lot to make users passing a new flag.
 
-C.
-
-
+> > But if people think that "mbr" is better, that's fine with me.
+> >
+> > The only thing I really didn't want is the negative "no-mbr" and the
+> > double negation in "no-mbr=3Doff" that comes with it.
+>
+> Yes, negative names should definitely be avoided for boolean options.
+>
+> [...]
+>
 
