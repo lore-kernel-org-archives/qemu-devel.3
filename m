@@ -4,95 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2331CE7A8C
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 09:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B84E6CE7A9A
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 09:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJphN-0005re-Vz; Fri, 14 Nov 2025 04:02:30 -0500
+	id 1vJpvn-0003nE-Lx; Fri, 14 Nov 2025 04:17:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1vJpgj-0004MI-PX
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 04:01:50 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1vJpgh-0007G9-7v
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 04:01:49 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7aace33b75bso1656582b3a.1
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 01:01:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1763110905; x=1763715705; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E/fRO/sMpvxBW5liC2r3DKNfWyHa1X3NXHWrEWWToCI=;
- b=HYDqcIYG8l0bdfnt0xRKvMfkAU0xTxIY0VGB0zaXl+BkVDmMV03Q8tnYU3lEMuMk1+
- hUN5h34YUDQbWqEX5Q4qHnAKwJqkKTyZcCTLyr3NlXxsC1GIUYd32CTWdUxbm/KeMjKn
- 4T1M8DOGXUSXwQPGEJaMmAoloibKLD+GeZV4ms5QOzMO8AhSuADWNVcY0kqNYqxDmpKR
- K/289tkiSNoccrjo5wXN0xl3bGvtFchCv6mQkbMlGim5qoX6DLZSo8lUaYwdazz4CkzH
- 2bO+gj/yfn+/tmuGFs7QOck0mqrVDrWX7m63Ck1tFX1XbNaFd+aSyZOodvVtCCGSDv6c
- mYyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763110905; x=1763715705;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=E/fRO/sMpvxBW5liC2r3DKNfWyHa1X3NXHWrEWWToCI=;
- b=rNcsKpo7laW3gN5W3JTELNsjvuA0aGSmSfryM+3KF5wMKztsX2wDiLS85wt8g8k1I5
- Y0LZZ/IA2DeB5msXM9oPWyuTAX3LC03GDn8s+RzjiXjOGOZtc7jul40Z363iCpYueZw5
- ITRXLm3gRia+8+RU6FMS6C+aY+cRjW/1aKrv62aHSZCJSbUOLqsvQ68FUVz1THNvrf+k
- p5KcKj5Gb/wTtS+BdWtqYF9f/x1goP2g20/u8K1to7qv03PzSB17XH+l2uBsf0KuR2Vm
- T7nC+QX9Rgar2xg9PL+cjfw/224PFRNXbZMnQxglg6gVnN2YtcrHVjgTRT6k8llTGFTl
- F84g==
-X-Gm-Message-State: AOJu0Yw9B0n3GEJ586jHC0c/cEtztHk7VOK3nlUw3DyUyieYm4BK8Qmi
- rCnlUklUGN7V3lc6ecHGjX4wQFjKoAn12t4PiwTFsYSrsJ4Hvh71YbTe5ZAmnkxxQAV4sjohCBa
- RFWIbIdd8pv/Pxx5y4WrjMP4eS5JAYvDY42XpcrD2kH963ZtZzWLRQwZFXXyVPG7Adtdl6kdbGn
- fdSPtjUi13QYZhvCSkeCAgVCRXazkyf9Wm/K8utBO1bR8=
-X-Gm-Gg: ASbGncvAcbkd6DkFAVNA4hX14aZnM9ZJLJQ2aQ5f2XQctSLMA6p733vyUKr6hQG7EiB
- ypG/AKNXA/5VRye0MrTyKMd85ve5pbAkgHDeNoyKHO6OVlnZEZnFtMa3ENzJPOHvSTIFys8lfbZ
- 1NsE/iZgcQ4R9U+HTR/WlcBvsU7O8d66iYH4vXNJkmU9lhDed5JqvOop1Vjjo+DHiwQQbDahSay
- QDaYTT+UZo8nTNCxHukATr0nMqRhD0ZkRHTbjgbOOgwqJCPy2JCsODVnqLe5Y5DgQtOt/3p37HM
- hcDkgvYcR/zjD5jywqJ8ePI439VR7+Y+ptkx5ssfENfY9AIs+/M3L23fTj72aD7u/YkOS1pE/n2
- awO1BICJ919uyITQ35S5FcVhNIY0YUFB+6mRjbHyNAC++fM3t8D6bUX+XJ/fNhY8uxDlgP8miL7
- GxqtSJ7i5u+EbUQtHTxaKUcXNEtynmPirAPT+C0Q==
-X-Google-Smtp-Source: AGHT+IFdLjF9PQ/ri41efq6F51vgsaSRsZt1RmR0JugtuZ7cHaYYsxrzQTIRF52p8Nh2Lm1hYDHbaA==
-X-Received: by 2002:a05:7022:4590:b0:119:e569:f60d with SMTP id
- a92af1059eb24-11b40f9bcd8mr824634c88.6.1763110905073; 
- Fri, 14 Nov 2025 01:01:45 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-11b06088625sm8049254c88.8.2025.11.14.01.01.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Nov 2025 01:01:44 -0800 (PST)
-From: frank.chang@sifive.com
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vJpvc-0003Yx-4g
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 04:17:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vJpva-0003LS-2A
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 04:17:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763111828;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=0k9gE9OBnyE+OiyzVseSUkJqX807Y3xb0ASD5xFtiRg=;
+ b=BMGcg9eJxE5WtJQppJ7/XpXEhcxThJgBjFGNxamWBbYEOQKget66iAsf7U1mfBpL8ST0Gw
+ xrj906r59uAjCB8SO/5MEpFwQk/O48RDIE0muwm4B23tsYX/Z2I3cDFPJeLxYnF8dNZk3h
+ XD6K/h1eK0+TXDARHiS9N8HjmYxtyf4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-5Jb_QW3SMpOSOeJQrTTggg-1; Fri,
+ 14 Nov 2025 04:17:03 -0500
+X-MC-Unique: 5Jb_QW3SMpOSOeJQrTTggg-1
+X-Mimecast-MFC-AGG-ID: 5Jb_QW3SMpOSOeJQrTTggg_1763111822
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 181C21956094; Fri, 14 Nov 2025 09:17:02 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2EA611955F1B; Fri, 14 Nov 2025 09:17:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 647BC21E6A27; Fri, 14 Nov 2025 10:16:58 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 2/2] target/riscv: Update MISA.X for non-standard extensions
-Date: Fri, 14 Nov 2025 17:01:33 +0800
-Message-ID: <20251114090134.1125646-3-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251114090134.1125646-1-frank.chang@sifive.com>
-References: <20251114090134.1125646-1-frank.chang@sifive.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
+ <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, xen-devel@lists.xenproject.org, Vikram Garhwal
+ <vikram.garhwal@amd.com>
+Subject: Incorrect error handling in xen_enable_tpm()
+Date: Fri, 14 Nov 2025 10:16:58 +0100
+Message-ID: <87jyzt0y9h.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=frank.chang@sifive.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,64 +84,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+Consider xen_enable_tpm() in hw/xen/xen-pvh-common.c:
 
-MISA.X is set if there are any non-standard extensions.
-We should set MISA.X when any of the vendor extensions is enabled.
+    static void xen_enable_tpm(XenPVHMachineState *s)
+    {
+        Error *errp = NULL;
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.h         |  1 +
- target/riscv/tcg/tcg-cpu.c | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+Nitpick: confusing name; we use @errp for Error ** variables, not for
+Error * variables.  Better: @err.
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 8899bf7667a..2e0c92fe593 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -69,6 +69,7 @@ typedef struct CPUArchState CPURISCVState;
- #define RVH RV('H')
- #define RVG RV('G')
- #define RVB RV('B')
-+#define RVX RV('X')
- 
- extern const uint32_t misa_bits[];
- const char *riscv_get_misa_ext_name(uint32_t bit);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index da09a2417cc..0d730f4d774 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1180,6 +1180,20 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
-     }
- }
- 
-+/* MISA.X is set when any of the non-standard extensions is enabled. */
-+static void riscv_cpu_update_misa_x(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-+
-+    for (int i = 0; arr[i].name != NULL; i++) {
-+        if (isa_ext_is_enabled(cpu, arr[i].offset)) {
-+            riscv_cpu_set_misa_ext(env, env->misa_ext | RVX);
-+            break;
-+        }
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1188,6 +1202,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-     riscv_cpu_update_misa_c(cpu);
-+    riscv_cpu_update_misa_x(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
--- 
-2.43.0
+        DeviceState *dev;
+        SysBusDevice *busdev;
+
+        TPMBackend *be = qemu_find_tpm_be("tpm0");
+        if (be == NULL) {
+            error_report("Couldn't find tmp0 backend");
+            return;
+        }
+        dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
+        object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
+
+If this fails, @errp changes to non-null.
+
+        object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
+
+If this then succeeds, @errp remains non-null.  Since we ignore it, we
+leak the Error object.
+
+If it also fails, we trip error_setv()'s assertion, because we violate
+qapi/error.h rule
+
+ * - You may pass NULL to not receive the error, &error_abort to abort
+ *   on error, &error_fatal to exit(1) on error, or a pointer to a
+ *   variable containing NULL to receive the error.
+
+Taking a step back from the incorrect error handling: we're setting the
+same property *twice*.  Why?
+
+As far as I can tell, property "tpmdev" is not a link.  It's defined
+with DEFINE_PROP_TPMBE(), i.e. setting it runs set_tpm() from
+backends/tpm/tpm_util.c.  Passes the value to qemu_find_tpm_be(), which
+appears to take a TPMBackend ID.
+
+I suspect the object_property_set_link() always fails, and we leak the
+Error object.
+
+I'd verify this in a debugger, but I don't have a Xen box handy.
+
+Code goes back to commit 733766cd373 (hw/arm: introduce xenpvh machine).
+
+        busdev = SYS_BUS_DEVICE(dev);
+        sysbus_realize_and_unref(busdev, &error_fatal);
+        sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
+
+        trace_xen_enable_tpm(s->cfg.tpm.base);
+    }
 
 
