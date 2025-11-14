@@ -4,101 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4488CE7B06
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 12:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CAB1CE7B08
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJtIY-0006yb-Hl; Fri, 14 Nov 2025 07:53:06 -0500
+	id 1vJtR4-0006xE-3Q; Fri, 14 Nov 2025 08:01:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
- id 1vJtCO-0001t6-SJ; Fri, 14 Nov 2025 07:46:50 -0500
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
- id 1vJtCH-0000VX-A4; Fri, 14 Nov 2025 07:46:44 -0500
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id E071E1400138;
- Fri, 14 Nov 2025 07:46:21 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Fri, 14 Nov 2025 07:46:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1763124381;
- x=1763210781; bh=KRYaujiTt/NaBsbWVwqCf8TZUqbb8yn18Xn+agrRczw=; b=
- xYw68h30mOhha24Fy+Djx1xc28TWR+ECpjvcdZxAd8PpW3IpvQphK4vUToR/2kIT
- ddw45vQcaseH695Yym7cwPZgeTlI7WwjK0JEN+z102/PPahAsMbtXi2JUgTwjNUn
- 5G1N1TyJ+1xl3p1ATSixjpbNinTRt0jHgO+D4u89iWf6NK/r6mlxuOUhPHWZWjKg
- +3C7HThvqa/bO9YzkNVvrQkSOB3s7k+FL86Ek1/qTF6sEJf9dNTThO+2Ig2ZNcOb
- JlU6q6P6SGXk/fEjqdfGE+XY8EVE5AQlX6LODYbihfwiPvfyUDsIUNgQoRBQPjLQ
- RmwyUlqZv9xGiD51Qu0oNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763124381; x=
- 1763210781; bh=KRYaujiTt/NaBsbWVwqCf8TZUqbb8yn18Xn+agrRczw=; b=q
- tO1PWTSFRu9NpxEDakCpSS0jxM15f5M7nRoQ+0xEr8vaXATkezmoePgbWuXbkAn5
- 02l1iFwZi+EjExSYZVqx/l80qHFRigPjuD7ATYsfJ3arRtITUmsfeDpdJMtGG1o/
- QGSP+Oy48fGmYJzw2L/xd/Z2nibhTw9IuJcMn6hVikdRbfyzFyeU+6pkipj6PYyt
- kO4zeGiACYWk0T3qi0vyDyejupjqwWV3foMjiPOTUpsQ5xlICGVp9sBl5sVi3JFx
- msS3qzi7U7h+dqYe/qet1hUQkq//d4KkD7XvCEG+l8S5WKnfrxOXWFkOMcawxebR
- uYMtwDVsdiAcfFFkPRymA==
-X-ME-Sender: <xms:nCQXaeQtrHyqW1zIlLTrndImcnf0qI6wwQUaQBopTju9Ilkbqa7emw>
- <xme:nCQXaeuA6ltEL9pNcrVsDHqG5WttY0N5syBXXA-95NiVnQeTXPfpelZAkOLRv9MA3
- nXLfoNIjifq0dWIskySIbEuWbb9MZTbPurhvhKnmK9OZgLixM6yvy8>
-X-ME-Received: <xmr:nCQXaa18WIOnoQREN2G1zsYXPJ4129IzS2AzJHohqay7_t8KwmFsKsh-AtCDdz-iJo4xRyJu9FrKt1HFK378GNx66Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdelkeehucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedflfgvshhp
- vghrucffvghvrghnthhivghrfdcuoehfohhsshesuggvfhhmrggtrhhordhitheqnecugg
- ftrfgrthhtvghrnheptdevkeffvefgkeeutdfhteelhfehhfeugeffgfdthfelfeeuudff
- gfelleeuudeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
- homhepfhhoshhsseguvghfmhgrtghrohdrihhtpdhnsggprhgtphhtthhopeejpdhmohgu
- vgepshhmthhpohhuthdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughkpd
- hrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthho
- pehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotg
- hksehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehl
- ihhnrghrohdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtg
- homhdprhgtphhtthhopehqvghmuhdquggvvhgvlhdqsghouhhntggvshdoqhgvmhhuqdgu
- vghvvghlpegrrhgthhhivhgvrhdrkhgvrhhnvghlrdhorhhgsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:nCQXafWH-mA2nbIevglkN7oN-qfpJ-3LpjGwnkYycHh0GSEDHWurHw>
- <xmx:nCQXaVLd8RfQURpMvQeUU8A1yqfTjKYdrxCZlMwyew4uMtEI4J9tNQ>
- <xmx:nCQXaR1WGjGeWJRqLKw7LhGv6W7c24N4xY0gjHsutgPVeijA3iZ8MQ>
- <xmx:nCQXab6MBWIuM_963ovcRaNO0EugkqYmPmf_ndojboKDoKLSk7lTWg>
- <xmx:nSQXaakEL_YZGepx588aHlolpk2AnKIJXiM8zpYLCyadIF3bpzHk2Dsh>
-Feedback-ID: ic0014905:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Nov 2025 07:46:19 -0500 (EST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 14 Nov 2025 13:46:17 +0100
-Message-Id: <DE8FFH3SWJXI.R5P4RVKOJWKQ@defmacro.it>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>, "Klaus Jensen"
- <k.jensen@samsung.com>,
- <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
-Subject: Re: [PATCH for-10.2] hw/nvme: fix namespace atomic parameter setup
-From: "Jesper Devantier" <foss@defmacro.it>
-To: "Klaus Jensen" <its@irrelevant.dk>, <qemu-devel@nongnu.org>, "Keith
- Busch" <kbusch@kernel.org>, <qemu-block@nongnu.org>
-X-Mailer: aerc 0.20.1
-References: <20251104-nvme-fix-atomics-v1-1-fe13be5a8339@samsung.com>
-In-Reply-To: <20251104-nvme-fix-atomics-v1-1-fe13be5a8339@samsung.com>
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=foss@defmacro.it;
- helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vJtQM-0006fa-Uy
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:01:11 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vJtQC-0004hX-WC
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:01:10 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-640d4f2f13dso1832077d50.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 05:00:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763125254; x=1763730054; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Sxe0nfN4FvXH37rL8I/U2Ynot6MXxlfpS473dhTJwy4=;
+ b=Y69j0rrkL1MKQ3YkNFjIcixDurESsP2FVcNQ24BPJpwWc3zf4nMD16VH3eRq243EZX
+ vr80KdV+Vl5LKMom0Xvj/3ryRZAkHQjcK4bJuSQi01MwXGIRuhczO0iekyEPJZtoqcze
+ 6FEW7lersrfODRhHBp503l/BQ/M3FhOtwuieFjEwobsEsl3TZwCGCY4FbAMCF1ZgrZCM
+ rtUB606QKswxV1+oB0siVgobSnKVIhr+pLD8BHtQossKCtg6t7AQf8NgA0TKdic9NaZp
+ WYoYSiHGlEviqIiTCXMNQiUcgHmJH9TCXQ9Q1BgV7GudanTGb4VScJv/bSE0i03P4srT
+ mAHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763125254; x=1763730054;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Sxe0nfN4FvXH37rL8I/U2Ynot6MXxlfpS473dhTJwy4=;
+ b=rjGx8D3crNjez2iZwUIIPyRRQWHWVOxIVvbwJ2os8/CDI597j1JY9d7jxBWv6SoBnv
+ hUrx67Okfx47blwcDNcPjWQNuj8/xfoKCkz0WP4Q1njJE2Rlmev7C3OBTukrkfKu8bXm
+ iGPSZP36ao9Wjg0JOKCGwfnicd/n2B+cXnbfMMPYtfkDmJRfHHAmGEf+z33y8G0C3zDn
+ RfALPpwAH31wQgZzjbEwtSbIwv+xR75ahW+J8JbQoPc5u8KBL4HkcmC4VQ0XopOSmamJ
+ u4cHCcCL0KJ/v3tZxSgD9m38csTzMGWY62lU3fNhw5KMrz10E66l228Es5dZHIr/GBQH
+ 3fQg==
+X-Gm-Message-State: AOJu0YzRmqHw8GKaWz1N0WZbCR+pBjLrfqcnOf0sU+eAo/+FMgBYQG0/
+ Y38e+Poy1lU8UsF2TUH2aP3OxqeTQaPGPeRcHymD5s4LLumXzvsIGCgKN6O3xEPtIl2ODD1LSBx
+ cSljsMyaYtgI2jQiRpRUspJr2mxPQ89lmxAIQ2ql1Bg==
+X-Gm-Gg: ASbGncs9J1Jetpr5yTfGPSQSYCB9Ub02Z76cxhb+O6vYkpddDqzjK4tjQZ4zC619xT1
+ r+y88LLtPwjn+N/w6/0Ukli+TkBXytCBXNrc398H0hEb1f294bz2Uce4Jpn6uH3qxaC1W3ywfUw
+ 5qO/1ukTsTzM9Z+AsRiZhhlKabLG4/oMKwdiBBg2Vvklwp4rYKg/WM5J5m9tvwPxN4jvBzzDqWa
+ 05d54xm0UfljU5RGtKt+4S6ZZd6GveA6hFwm8GVLMqdzNhW7b/apEfiTyZwmg8NMaWZ3UZU
+X-Google-Smtp-Source: AGHT+IFlUjjPZiu83jmEZVWMiRXUurNdIi2sLZLQ0Av9K85Jebl5oA0H0oYfMmiFtwdLxTynzMAf0LsCAKfa9YP0fXM=
+X-Received: by 2002:a05:690e:1609:b0:640:cfa4:e8ce with SMTP id
+ 956f58d0204a3-641e769b265mr1905844d50.68.1763125254330; Fri, 14 Nov 2025
+ 05:00:54 -0800 (PST)
+MIME-Version: 1.0
+References: <20251107072337.28932-1-mohamed@unpredictable.fr>
+In-Reply-To: <20251107072337.28932-1-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 14 Nov 2025 13:00:43 +0000
+X-Gm-Features: AWmQ_bn0V3KiSyg1chlH-e41pK9GHLI_27WlBHW9ADV-bjc11Svm28ZROyFhq0I
+Message-ID: <CAFEAcA_aYPG3HMyYpKsTKtR+rJgcgc=C6bU0tqw8XLMGPwqZEw@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: update maintainers for WHPX
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,5 +92,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+On Fri, 7 Nov 2025 at 07:24, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>
+> From Pedro Barbuda (on Teams):
+>
+> > we meant to have that switched a while back. you can add me as the maintainer. Pedro Barbuda (pbarbuda@microsoft.com)
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>  MAINTAINERS | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index be6efff80c..c75b1a4d07 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -547,7 +547,8 @@ F: include/system/hvf.h
+>  F: include/system/hvf_int.h
+>
+>  WHPX CPUs
+> -M: Sunil Muthuswamy <sunilmut@microsoft.com>
+> +M: Pedro Barbuda <pbarbuda@microsoft.com>
+> +M: Mohamed Mediouni <mohamed@unpredictable.fr>
+>  S: Supported
+>  F: target/i386/whpx/
+>  F: accel/stubs/whpx-stub.c
+
+
+
+Applied to target-arm.next, thanks.
+
+-- PMM
 
