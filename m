@@ -4,89 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC7B9CE8D47
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 15:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E6BCE8D49
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 15:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJvnt-0008Qs-MZ; Fri, 14 Nov 2025 10:33:39 -0500
+	id 1vJvwB-0004y4-9R; Fri, 14 Nov 2025 10:42:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJvc4-0006Rd-OM
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:21:25 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJvc3-0003vb-5e
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:21:24 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47754e9cc7fso13140965e9.2
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 07:21:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJvlC-0006JB-F9
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:30:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vJvl9-0007oa-LK
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:30:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763134241;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TmknJCZrc9DY/f44OvYULegMzpz4ssCah9OyrbLp8TY=;
+ b=f1b5T5zQApkb2roXM62qCuNeUgV3TbEFWvGkYekaFSdbPKGbCG0XTwLy2jPtyt+OY8l++f
+ gye1tgjKcXArOdnquHmXIVp8YyvoeW7AWOhRD6luV/YX014f3ioWYYhpRnkQzMb5DhKNfH
+ nP8PqTxnNz07yop1/9fG47zaI33Zig4=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-256--SdHeuJGORKBsuNNd4468w-1; Fri, 14 Nov 2025 10:30:38 -0500
+X-MC-Unique: -SdHeuJGORKBsuNNd4468w-1
+X-Mimecast-MFC-AGG-ID: -SdHeuJGORKBsuNNd4468w_1763134237
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4edad305681so47500601cf.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 07:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763133682; x=1763738482; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BWBLmsAkkYwVdETk16l9aBsdSyWo1bpWuw0Uuv+XzqA=;
- b=wiXzqnTR58xF8PItyUVkpVb//+2c6XcDt/RqxoVOOARQnuOoBNCgjvph3zrzFMFr9J
- 1vZK60uslOk2DXhB1N/bTATVOCyRWqW5jfUD4Cxq7RrolxSx+5FuyGtK0GzWHn71EZPW
- CZZcSCkfKUKHOZa5WRbbFyxwAUrqVhEHjVKm2P3uPBAgHvWDbqpiETxRIb8awncPsize
- w7ND1bLjOioGDx+NdHuWOGq/UIkEgTStRNIcR3tw1zeEkVKetz3ljo/6zrekdukf3KA6
- D57U2w8wWtaAVQrfERbYxrECvDqBZf7+Z7Z/M12DbfxyGv8+iWy8fAnMlDfi/XzKCdMX
- j7iQ==
+ d=redhat.com; s=google; t=1763134237; x=1763739037; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=TmknJCZrc9DY/f44OvYULegMzpz4ssCah9OyrbLp8TY=;
+ b=QsES3J7GF0Ov/QaROBkFtx2lLvnWFBKmJVlkllLCyYCTADB+dMp9+b8QqijUais2Pm
+ OaRHQyjpwCJvKLW7vTSWVDOPgNuz5CLyIs/tNKuaGkQvm9MLd9+B2imESSBDJYvcczyz
+ YR3AMe+PaVg7oagaZBpBKvOM07t3t6Dyz5+4IvhV01I9Hxzs5hZSANv7cP5PGeuNFEl3
+ txDhXM9MIb8oPZq1MYhJEbOVWHyF9xNj4+LmY3Do+/6BoLa55MT4PVImFuOGQjkIYTEa
+ YMy+o4n4foVk2keEuCvd9QUaMeX4Cn2sW/TCvm9GbG8S+bcg8WvKbmbjQsepHUr1erD1
+ MylA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763133682; x=1763738482;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=BWBLmsAkkYwVdETk16l9aBsdSyWo1bpWuw0Uuv+XzqA=;
- b=Becp6h3YBCR041dwevs8AZuX4+ulGhSN//u7Hq0cd3J+sy1Bc55dGNWgDyDbBuCqTM
- pWsAqQsflV2rnDdOQpoyic+C2qgjddrCwCtncXwWQzSv6gbK4/4goRd3ozrdlVeN4XsF
- mJ3+V7cQgRLG1HQi1AbEJI4eyKLgsWOqtwjoRFhTRAMJeeidK+iI/vlo5geJAQA8cNgN
- 4zRhbuiOgatxUsXb8+MsC7WBerbw6HAO7gkn/0KJFuZX/1p8iM/HuVm4gBOe4hoYmXEU
- j4gZ2EoSaS/N/9FzBui/SgH2e7jnW320NbxKTArIyHAduAkNeIuCAydJC7RNBjrtwpkh
- EZOA==
-X-Gm-Message-State: AOJu0YxqQ42ZuILtBCi+fSBqdzncxyoyTfnnHb6GC6AfVOKAYy+uch72
- qy0O6YboA5zazDVBJesCdeCRDAlE1MuTf7BmiNEtu+MVaC78Rz/E4KS706U3/Kvf3NZBQIhdAxM
- yew1w
-X-Gm-Gg: ASbGncs/I4Ulp/LX73Go+ty9WUs332WWnaFXdFzG9cF7P15U/bayYQA60uEhLpjsfDJ
- PT9Xca32y62ekPuGRHiiQx/CBplqiyX4bKV96nXYzfjFEmellKK4QaBZkqPySErhF2awBKXLQU/
- H6fu3fRTkuyz0ffi7UYwTKWoMBxBDN2aJlD5XWgjd+FAIrMKhR78t00yqZ3xpqGWrde/Z9NDD/M
- Dz8nTwfGuB+F60olDKFXZnxx8n+fzpopgL6L9AFNMGrANRNTrFSComG+dn/z+aKZM7fnMU9BYU6
- y5lCfVP7neU/RwfKzfa31GW+5ByB3Jj/Bn3UMO759wCJ7Q5dzUyF/8aJcTGBz+w5PFLavUT2AuC
- bYbQScgXtvJSCr0BfX81OnGc/OHEKW+oPwPiyOqR+1PuRg8AGy1uNLurO/UspuxcZh9Q6GYp1jz
- w/JBx4T17X2qGaZmAq
-X-Google-Smtp-Source: AGHT+IGbayNZbFMyj7Ja54BJBiZ5C9/fAxu+KUIEbzW/RwnqguBXdW7d4oN/oW6z6ZTk2erT6o1MDw==
-X-Received: by 2002:a05:600c:45d5:b0:471:14b1:da13 with SMTP id
- 5b1f17b1804b1-4778fe59054mr32720115e9.14.1763133681665; 
- Fri, 14 Nov 2025 07:21:21 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e8e798sm146772835e9.10.2025.11.14.07.21.20
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1763134237; x=1763739037;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TmknJCZrc9DY/f44OvYULegMzpz4ssCah9OyrbLp8TY=;
+ b=HNSBYlSvL6Be7OlXANhMj3UePTHoGMDyheShU+jHa30fgrcHz1SDvMh8HsRQnVCnqP
+ xxzxLue8Shau7uEtxPHXwrpojdtSQkAOhU3MNJrtOw2iXsr4Aam3P3x7xQiSDKKzaAEH
+ beDEvHIBGBrMw9qKqyEp+/x/Mc6pF1FdqMdZ1BUkZchrFKB6HY32hLPZKwUjkphjr7PU
+ JR1fj7KnC+OOQXPTlGnoOzZ3wwUU3Mchy9ZJF7AjkWq2REvcflPrJDEGnj75oKdDuCVT
+ WZwyVUDd3Kv5TYXZJ2uXkVDTHbiJyrtTiIXwx7XGxj34sB+Uu57+2O4GP13rErqfdSvn
+ 8dnw==
+X-Gm-Message-State: AOJu0YwNSnt7NYgqzSTxezpB5Zn9ZOBGyDSHupLbQm4ZEzLnvpamrFfm
+ rq22eY0kQNMSPao1hzBk22rJ97PMTVjDW3BK0Gi6k3L8FhTY7WqQbFhMqq/slRZhQ1TiOftizUe
+ gOH6pCbK6cO7E/N3gjOutk+U4kmjjdlHMcw+tQAxsxnfNzVpAaNt+PPa8
+X-Gm-Gg: ASbGncsBq14G/h7j94Ebp56Jjd5iSaIiREAH88hGtQbZLhuqYG3NQxNMRl8FKB9AlH2
+ F9aGiaZYJOIdo01fte3b2KESAx8W4thm+/TVbRDqVDt0DVt8C5kHYyWpA/SURbWXERVmQJn0Rij
+ Qmsi8vThs9WhOII6/yXb6r11Nk18/yHz8JnF4nPDOLJwE1lan81VtUUqw2Nmhvr5uofhVatc5SB
+ fJMXX6Nd7pQIMJWfQx8IBejrvKnVKad/t8FPuRgvNUEzn1VUTNd6rRCKbhlJAS8FNmlyaFwtyGg
+ YPOd2S8SS/pMUiLYTSnuhqbsSC/ShLOxSQzp+/HJxohkqMNJ3zx7uSnpLdOfp599YJygNra3gEN
+ RMQ==
+X-Received: by 2002:a05:622a:13ca:b0:4ed:dfd6:ec44 with SMTP id
+ d75a77b69052e-4edf217781fmr47347541cf.78.1763134237162; 
+ Fri, 14 Nov 2025 07:30:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLcDDhAloLfEsIX7rHurLwGRqNDhBrE3xdNx266+HFbvXXtUu/L7AoWeocnu5+tN6LUG+yyA==
+X-Received: by 2002:a05:622a:13ca:b0:4ed:dfd6:ec44 with SMTP id
+ d75a77b69052e-4edf217781fmr47346801cf.78.1763134236628; 
+ Fri, 14 Nov 2025 07:30:36 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4ede87eed39sm30044571cf.24.2025.11.14.07.30.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Nov 2025 07:21:20 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 09/10] hw/misc/npcm_clk: Don't divide by zero when calculating
- frequency
-Date: Fri, 14 Nov 2025 15:21:09 +0000
-Message-ID: <20251114152110.2547285-10-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251114152110.2547285-1-peter.maydell@linaro.org>
-References: <20251114152110.2547285-1-peter.maydell@linaro.org>
+ Fri, 14 Nov 2025 07:30:36 -0800 (PST)
+Date: Fri, 14 Nov 2025 10:30:31 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+Message-ID: <aRdLFwxzJwjsXFpY@x1.local>
+References: <aQJbd5qYR10qcbr7@x1.local>
+ <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
+ <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ0Ys09WtlSPoapm@x1.local>
+ <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ37hd0fVJltYtt-@x1.local>
+ <5002e5b4-0493-4dff-af11-402cebecbcc2@rsg.ci.i.u-tokyo.ac.jp>
+ <aRYPXh_9m5ZvTi2w@x1.local>
+ <ded7ef38-8c99-4d37-87b2-2f5ba1dc93fc@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ded7ef38-8c99-4d37-87b2-2f5ba1dc93fc@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,50 +126,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the guest misprograms the PLL registers to request a zero
-divisor, we currently fall over with a division by zero:
+On Fri, Nov 14, 2025 at 10:24:40AM +0900, Akihiko Odaki wrote:
+> However it creates another problem. Think of the following sequence:
+> 
+> call_rcu_thread()              |
+>                                | call_rcu1()
+>                                |  qatomic_fetch_inc(&rcu_call_count)
+>                                |  qemu_sem_post(&sync_event)
+>                                |
+>  qatomic_read(&rcu_call_count) |
+>  enter_qs(false)               |
+>   wait_for_readers(false)      |
+>    qemu_sem_timedwait(         |
+>     &sync_event, 10)           |
+> 
+> qemu_sem_timedwait() incorrectly interrupts the RCU thread and enters the
+> force quiescent state.
 
-../../hw/misc/npcm_clk.c:221:14: runtime error: division by zero
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/misc/npcm_clk.c:221:14
+First thing to mention is, IIUC above can't happen because if
+call_rcu_thread() is already waked up and reaching enter_qs(), then there
+should have been, for example, a prior call_rcu1() that incremented
+rcu_call_count and posted to sync_event, hence rcu_call_count cannot be 0
+anymore in the call_rcu1() above, because the sub happens later:
 
-Thread 1 "qemu-system-aar" received signal SIGFPE, Arithmetic exception.
-0x00005555584d8f6d in npcm7xx_clk_update_pll (opaque=0x7fffed159a20) at ../../hw/misc/npcm_clk.c:221
-221             freq /= PLLCON_INDV(con) * PLLCON_OTDV1(con) * PLLCON_OTDV2(con);
+call_rcu_thread:
+        ... sees rcu_call_count > 0, quit loop ...
+        ...
+        enter_qs(sleep);
+        qatomic_sub(&rcu_call_count, n); <-------------------------
+        ...
 
-Avoid this by treating this invalid setting like a stopped clock
-(setting freq to 0).
+That means the concurrent call_rcu1() above will not post sem anymore
+because it will only post it if rcu_call_count==0.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/549
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20251107150137.1353532-1-peter.maydell@linaro.org
----
- hw/misc/npcm_clk.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Besides, IMHO replacing the event with sem shouldn't change similar
+behavior comparing to when using events.  Because any spot that can post()
+concurrently can also does qemu_event_set() concurrently... after all, we
+only have a few spots resettting the event in the original patch, after the
+reset a concurrent qemu_event_set() will re-activate it.
 
-diff --git a/hw/misc/npcm_clk.c b/hw/misc/npcm_clk.c
-index c48d40b4468..e202a8a2998 100644
---- a/hw/misc/npcm_clk.c
-+++ b/hw/misc/npcm_clk.c
-@@ -212,13 +212,14 @@ static void npcm7xx_clk_update_pll(void *opaque)
- {
-     NPCM7xxClockPLLState *s = opaque;
-     uint32_t con = s->clk->regs[s->reg];
--    uint64_t freq;
-+    uint64_t freq, freq_div;
- 
-     /* The PLL is grounded if it is not locked yet. */
-     if (con & PLLCON_LOKI) {
-         freq = clock_get_hz(s->clock_in);
-         freq *= PLLCON_FBDV(con);
--        freq /= PLLCON_INDV(con) * PLLCON_OTDV1(con) * PLLCON_OTDV2(con);
-+        freq_div = PLLCON_INDV(con) * PLLCON_OTDV1(con) * PLLCON_OTDV2(con);
-+        freq = freq_div ? freq / freq_div : 0;
-     } else {
-         freq = 0;
-     }
+Sem does introduce possible false positives on events, but as I was trying
+to justify, a generic VM boots and shutdown should need less than 1000 rcu
+calls, so worst case is we loop read rcu_call_count 1000 times... I also
+didn't measure how many of such call_rcu1() will see N>0 so they'll not
+post() to sem at all, I believe it'll be common.  So the perf overhead
+should really be rare, IMHO.
+
+Note that I was not requesting you to replace this event to sem before
+merging.  Frankly, I think your work is good enough to land.
+
+However I still want to discuss a sem replacement, not only because this is
+the best place to discuss it (after all, force rcu starts to introduce a
+genuine second user of the event besides call_rcu1, hence the "being able
+to remember more than 1" will start to make more sense than avoid resets),
+it looks also cleaner to remove some new code force rcu adds.
+
+When reviewing I found it also hard to justify qemu_event_reset() are
+proper all over the places.  Sem will remove that problem.  So at least to
+me, if you agree with using sem is better, it'll at least make me more
+confident to ack the series (not that merging needs my ack.. but I do feel
+more uncertain when the event needs explicit resets).  OTOH, false positive
+causes some loops in rcu thread which looks much safer even if happens
+(however in reality, I think sem shouldn't be more than 2).
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
