@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B76CEACC9
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 20:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2452ACEACC9
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 20:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vK05J-0001BI-M0; Fri, 14 Nov 2025 15:07:53 -0500
+	id 1vK05E-000186-Tp; Fri, 14 Nov 2025 15:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK02H-0006mf-Fw
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:04:46 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK027-0006cO-Jq
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:04:38 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK02E-0004kX-Uz
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:04:45 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-471191ac79dso25428485e9.3
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 12:04:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vK026-0004it-00
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 15:04:35 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6cb4so17352365e9.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 12:04:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763150681; x=1763755481; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763150672; x=1763755472; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rvdpQqu+6tXXSi2BeJVnKSBoAv9PMGvcr8JslOxrI6M=;
- b=KiU904us8oftspXA1TTMuy/gWi46WZ1tqQL5Prex/xC4QMT4hPrRX9O4AIxDXoNftd
- pbqVb9THp0EuYTqKYaAngJCPKDv+dB6U2e7I/fmjW6FcCYDAYsLEEcNFhzZwTsD8q4fE
- KKWAX8fjUtRbucGWayJVJGEbqAR2UljwtdDUcN+7rChSVYmBmpgzeCzR6tnQciF8ZGnr
- ApbEMH0vXztrdnzTi5OTnKVTYcZCErgu7qjQudSNvzTF3QXpo1AkWIaccnp58t3Kl5JB
- sE5m8Zn/r4Kkk9eHgSp8JQKQNAb4VvYvOQILFLP45IKP4BC9A2E4KhfGLgiP3K2Sjjid
- Koig==
+ bh=5rAlH1/lu+rh7awee2lje3uE1FvJDSXtcSFDkovTFo0=;
+ b=uwKliTfoZ/O9qq1VHbrRh8PevPDw/tno82ytxbDDG9hv/XcTxwLPsKIlom4jlDeN+6
+ xWG4WXKmM73kZIu1JBWMf1PYaUL/OQ2PLpbOEK+xLu/CzJfHoSnLQvQf3/tmRe0v19Mg
+ Eywm6LJefdWBaEEtL901Ctps2QGUiVKG8nKsxbEP1ZGS0jnlsk9uP3mGGMJyyhzRyNn+
+ mYm3qfhXWt9iggegyf5KQzJ9icuj4f7NmBToX1Deh9Au+KmTcl9ZdFVg3KRrhzxltj/k
+ gtzt9tpyY9isE+a2kqkvXah+PcnGYgkFyyfN3ae6dNAuKD2SvwbqlRhrEU5jJWqiRGzQ
+ 1vDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763150681; x=1763755481;
+ d=1e100.net; s=20230601; t=1763150672; x=1763755472;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rvdpQqu+6tXXSi2BeJVnKSBoAv9PMGvcr8JslOxrI6M=;
- b=XgbM1wGBkj2G5TngF55q2xJNpXaMzYqMeYOftM3Fpk5ksDqfo492LFLV6bPjxspprt
- whOu5BDOCD7p28TliysiZC46WKxEFE3tlxXBn2zxJttjeDOAZp56PM+Ftgqco9tQNCTX
- z1bV51o2frluvPumJZ0WOYeCy/TtDE82JEmqX6KM4UCbzx8q3okwbwX6S2kkWxhUpF+s
- d2QqyKJwj2nsTTKnN7VgzkalqZ6DOI4pAzDXY5ZW16+OUYHJw+EFKUCaYPYJtysifCZj
- 1PaTTAt98XZoA8GY9Pp6SaRUSuuyyTuEV4EsLXhEIGu0gfWcrxEJbn7sYoylc/fvawVh
- 9l1w==
-X-Gm-Message-State: AOJu0YwZLZAijLcnuIrg0aCkd1mmjj97eQDdF7jXH+FM4Yyi2M9483CT
- sq5FC0hwMB06mN/IQvtxUB3k0bwATs3YKm9bUSqzXIlSRHu1Upxj+6sgrkuQb8QgIS8eHa9BmmU
- ObSImH6dhXA==
-X-Gm-Gg: ASbGncuhZVxU4NIjXYwjcClf0tuzDRyXqyau+nG4qTApS6s/VNhyKQ4ce3+W0KmQH+5
- AI/k4eBcHeuvsnuZMAbXkHQ/Dau/v9lopDikqAJqkc23GDUoroL9wpXhwmm+p5z9ynOzD6OXYTE
- A8L3ho/pVTcEiwjs1qg2HtiT397ZlNxxAjHXTn0xsaAm5w79Wp+cPGSpfyiBguuCEliA2JKRvyp
- hB48hmGzU4B2vH++7xjhgFALPFfa2ORXUWd+Y/DzxbrXhBZihkS7uKloo5BmDeaXXaZezrHk3a/
- XiNYvS2eVzKtwC6D0bSTdQxG3J5g0te1WgwAUBmtBXimgThb+kNuX8wKjIE2BPkeuF7yPvvw9/S
- UxgeR7bAdfZXth1QcHFIQZWgZiBurw+OmjbXpC8Em/PYJq4KqdDmpDXVnqfTqImFS/BC63JFJkp
- +hq9p478KIBFrzRJKSmULzq8Aj+E9ffwDyq3K5wVgZGw+5ZwcDnQ==
-X-Google-Smtp-Source: AGHT+IHTprch3yTnnz5rhGFgAVG2lRMB+7nzu9YU92Wc1HgHwxaGUWze/hAC3poy65AAfi6+3zy4Xg==
-X-Received: by 2002:a05:600c:1f92:b0:477:73cc:82c3 with SMTP id
- 5b1f17b1804b1-4778fe9b3c4mr41368145e9.26.1763150680804; 
- Fri, 14 Nov 2025 12:04:40 -0800 (PST)
+ bh=5rAlH1/lu+rh7awee2lje3uE1FvJDSXtcSFDkovTFo0=;
+ b=esqIRvaWuX5WAA0NZLWNcyYuY0NVvnhIJALhbYleHdsAvPx4WEl/JbCus0um672Uuu
+ dxJc6HepEANOUX+5UFCaukY6vDiQjk/ZSzFjZw/xW71zAW03saa4pyVF4HvcN00UREkA
+ WWE4PSWUlnMcdjol7OPDvl3XYUjDs8xUn9VSlbuN7oU0UVwTXx/1CgrUVF6SsbQxrLtX
+ t3KSTl72zomt2Htl5bnLE6U+uFqmc+x0C6vMVCpNxTtTyIfZ6dSo5++ysWrT5N7rfvhq
+ jGuQ4GBg52LBk/95TZiB9qw1Q0tLBNXM4YD6hSVkzP5ym0XOruDgyyzd5lFdZdj1coIQ
+ nPKA==
+X-Gm-Message-State: AOJu0Yzmhd9olRFaPV4XTBNL4jdUKbAzSUkx12dU1zuB/pJ7TqBMfEK4
+ qi56jHC56U6qp0rRDPjwCIY9OnuTAWjQ2cX8NNPhJ2E/NawBQpL/9Az08M+H0ou87kx7BQH8h1F
+ QtwMawzcGug==
+X-Gm-Gg: ASbGncvEmWwfgdQ2/bt2Ea6ABG6F4l8OB4zwuc79f0KXWYeilTjoDsqhOua8537w9dG
+ 5M+scZmlYNxARu7hVHRV/eMPG32nFGzlt+sSrnVIEeFFtdpuey1Bw5AhCWvEFm72K7KiHathe2i
+ EedTUiW/e/eTfp+z/WEX9PqWVSdciNXG8bOiaWyjvCkEklMQkAJck3G9MHrQ7/QvJ9W7PNWwbPW
+ o8QCYL5AgaA/KR05gJv3XEomGeOtq2yfOYrkmgzRMI+WCtuvOMXxtqS6teh2imvnXeRnJelxKjr
+ eeECz8LeOKk1WNp+e8b5E7M/jxeLVuWUk297jkD8RlgKStll7env3bhHF7iNTPTp5CCQxXd1YCK
+ xTOOaMT/6VLH4d2ETN9KWq6L/tOk00FNQOIAYJNBPJnZhG9Lqs9MzLoxJY8ySFcLGQU4BGj41Y3
+ Ue5wslbl6gf+knLWpgUv7s0ALFzmR55aiWpsxlTRQF8SPbu+iDfQ==
+X-Google-Smtp-Source: AGHT+IE/Peslf1OXX9yKIDVEJMqIQIkwdLX98UYwlr0AHuUTIL7K5CwpTaK3typJs5/qi3Zg0EQ4UQ==
+X-Received: by 2002:a05:600c:c4ab:b0:477:8b2e:aa7d with SMTP id
+ 5b1f17b1804b1-4778feaf8e6mr45412785e9.30.1763150672037; 
+ Fri, 14 Nov 2025 12:04:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4778bb30e3asm54161735e9.1.2025.11.14.12.04.38
+ 5b1f17b1804b1-4779527235esm26904815e9.8.2025.11.14.12.04.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 14 Nov 2025 12:04:39 -0800 (PST)
+ Fri, 14 Nov 2025 12:04:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
@@ -76,18 +76,18 @@ Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH v5 02/19] target/i386/hvf: Use host page alignment in
- ept_emulation_fault()
-Date: Fri, 14 Nov 2025 21:04:04 +0100
-Message-ID: <20251114200422.4280-3-philmd@linaro.org>
+Subject: [PATCH v5 01/19] accel/hvf: Create hvf_protect_clean_range,
+ hvf_unprotect_dirty_range
+Date: Fri, 14 Nov 2025 21:04:03 +0100
+Message-ID: <20251114200422.4280-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251114200422.4280-1-philmd@linaro.org>
 References: <20251114200422.4280-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,44 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While on x86 the host page size is fixed to 4KB, it is
-better to call qemu_real_host_page_size() for consistency.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/hvf/hvf.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/system/hvf_int.h |  3 +++
+ accel/hvf/hvf-all.c      | 25 +++++++++++++++++++++++++
+ accel/hvf/trace-events   |  1 +
+ 3 files changed, 29 insertions(+)
 
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 16febbac48f..9a1bf026a4a 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -76,7 +76,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/accel.h"
- #include "target/i386/cpu.h"
--#include "exec/target_page.h"
-+#include "exec/cpu-common.h"
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 3d2be4092ef..5a57691885f 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -89,6 +89,9 @@ int hvf_arch_get_registers(CPUState *);
+ /* Must be called by the owning thread */
+ void hvf_arch_update_guest_debug(CPUState *cpu);
  
- static Error *invtsc_mig_blocker;
- 
-@@ -137,9 +137,12 @@ static bool ept_emulation_fault(hvf_slot *slot, uint64_t gpa, uint64_t ept_qual)
- 
-     if (write && slot) {
-         if (slot->flags & HVF_SLOT_LOG) {
--            uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
-+            uintptr_t page_size = qemu_real_host_page_size();
-+            intptr_t page_mask = -(intptr_t)page_size;
-+            uint64_t dirty_page_start = gpa & page_mask;
++void hvf_protect_clean_range(hwaddr addr, size_t size);
++void hvf_unprotect_dirty_range(hwaddr addr, size_t size);
 +
-             memory_region_set_dirty(slot->region, gpa - slot->start, 1);
--            hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
-+            hv_vm_protect(dirty_page_start, page_size,
-                           HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
-         }
-     }
+ struct hvf_sw_breakpoint {
+     vaddr pc;
+     vaddr saved_insn;
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 0a4b498e836..e13abddbd9c 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -58,6 +58,31 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
+     abort();
+ }
+ 
++static void do_hv_vm_protect(hwaddr start, size_t size,
++                             hv_memory_flags_t flags)
++{
++    hv_return_t ret;
++
++    trace_hvf_vm_protect(start, size, flags,
++                         flags & HV_MEMORY_READ  ? 'R' : '-',
++                         flags & HV_MEMORY_WRITE ? 'W' : '-',
++                         flags & HV_MEMORY_EXEC  ? 'X' : '-');
++
++    ret = hv_vm_protect(start, size, flags);
++    assert_hvf_ok(ret);
++}
++
++void hvf_protect_clean_range(hwaddr addr, size_t size)
++{
++    do_hv_vm_protect(addr, size, HV_MEMORY_READ | HV_MEMORY_EXEC);
++}
++
++void hvf_unprotect_dirty_range(hwaddr addr, size_t size)
++{
++    do_hv_vm_protect(addr, size,
++                     HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
++}
++
+ static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
+ {
+     struct mac_slot *macslot;
+diff --git a/accel/hvf/trace-events b/accel/hvf/trace-events
+index 2fd3e127c74..f989da59492 100644
+--- a/accel/hvf/trace-events
++++ b/accel/hvf/trace-events
+@@ -5,3 +5,4 @@
+ # hvf-accel-ops.c
+ hvf_vm_map(uint64_t paddr, uint64_t size, void *vaddr, uint8_t flags, const char r, const char w, const char e) "paddr:0x%016"PRIx64" size:0x%08"PRIx64" vaddr:%p flags:0x%02x/%c%c%c"
+ hvf_vm_unmap(uint64_t paddr, uint64_t size) "paddr:0x%016"PRIx64" size:0x%08"PRIx64
++hvf_vm_protect(uint64_t paddr, size_t size, uint8_t flags, const char r, const char w, const char e) "paddr:0x%016"PRIx64" size:0x%08zx flags:0x%02x/%c%c%c"
 -- 
 2.51.0
 
