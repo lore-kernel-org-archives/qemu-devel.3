@@ -4,142 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F85CCE7A9C
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 09:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C854CE7A8E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 09:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJq49-0007B5-Sl; Fri, 14 Nov 2025 04:26:01 -0500
+	id 1vJqGG-0005KK-Fr; Fri, 14 Nov 2025 04:38:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1vJq40-0006zZ-Bg; Fri, 14 Nov 2025 04:25:54 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>) id 1vJqGE-0005K7-EC
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 04:38:30 -0500
+Received: from xmbghk7.mail.qq.com ([43.163.128.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1vJq3w-00062G-Id; Fri, 14 Nov 2025 04:25:52 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MixVrzGo2Hzb9Px36E6trTw6gzU3ZKaE7uYZUaU4zZpGvsIRtHchoQrNtwIpTL540ccrLwZaPRqx2gpXSuMECtkPMi9suDMx1q9olDJyyYCcr/aRTA5+2NflqKKzSP4H11KMhnY35u80araUM/nva8QqS5ugD+ZrilvYB/CUIobJVnOxiCnfL3Mun7ReKlTH849PNX6MULOXrWmMKEg9julVfTRj4xjBCJbmarlxyeRdhHNgpR1xqtHQgbGoS+VkTcdU5kTsgD4HjG+QZdNI/aKfahDB8MR22ppucQcYomgStFp/NdXW/k/YYbvgz4Arlmnf7bci37E9S1wGrmS3ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IQpsEFrMAOhDNkkTnfpDUT2cVsCffa2CmTEnfEu8HsE=;
- b=NLJYiHZkeqAkhuyZfBfcMwBgY41VfnxR/XD0gBTT6PIHa7jtSUjUtzHamEKxhqWrnmNQ2xmsLekYiFlDfuikAocLIkzf0LxuBACzdjt0n/DrL1snY7VoCyUwjzxdocZD2Oz8UAL2Vkq2MjkTPu7ZUukLEIbtJku4bjPU1AtakDDyGqzfMLKIn+gLIDyqYF8QdsCxms6aekyeHeDXpEE29HRvBKk6NqW4EOU67+dWroL/nTd67NZUHK9lWQBmLf15I203NYGsFziBhAWRyA+GE64QeOVlgIYa2e129Yi7eVyrhAeO7Igp+e1hV3ZHaBM5geCkM+3jXLuYMQnyMKmd2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IQpsEFrMAOhDNkkTnfpDUT2cVsCffa2CmTEnfEu8HsE=;
- b=TtpGim6a6uADPLdCgXF+DTvqXQBGi8Kg2zfgCME54Bq0Qo8Z0GW005GzwjjxEwZpSQ8YCzEUSmYR/NH0VE/9/DqhivgCCmb/07DoVOi1WwcEt9NN1iFqyKQWzZs9St4A7qh7ijbhWzp8vxvo/yCBoOXk7d17ZUaBJl2L+vmFDEE=
-Received: from SJ0PR05CA0201.namprd05.prod.outlook.com (2603:10b6:a03:330::26)
- by MW6PR12MB8835.namprd12.prod.outlook.com (2603:10b6:303:240::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.17; Fri, 14 Nov
- 2025 09:25:38 +0000
-Received: from SJ5PEPF000001D1.namprd05.prod.outlook.com
- (2603:10b6:a03:330:cafe::ae) by SJ0PR05CA0201.outlook.office365.com
- (2603:10b6:a03:330::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.7 via Frontend Transport; Fri,
- 14 Nov 2025 09:25:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF000001D1.mail.protection.outlook.com (10.167.242.53) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9320.13 via Frontend Transport; Fri, 14 Nov 2025 09:25:38 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Fri, 14 Nov
- 2025 01:25:36 -0800
-Received: from satlexmb07.amd.com (10.181.42.216) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 14 Nov
- 2025 03:25:37 -0600
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17 via Frontend
- Transport; Fri, 14 Nov 2025 01:25:35 -0800
-Date: Fri, 14 Nov 2025 10:25:34 +0100
-From: Luc Michel <luc.michel@amd.com>
-To: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
-CC: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
- <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, "Daniel Henrique
- Barboza" <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Francisco Iglesias
- <francisco.iglesias@amd.com>
-Subject: Re: [PATCH 0/9] RISC-V CPU time source interface
-Message-ID: <aRb1jmwXE18JB2_g@XFR-LUMICHEL-L2.amd.com>
-References: <20251107102340.471141-1-luc.michel@amd.com>
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>) id 1vJqGB-0001Jg-BE
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 04:38:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1763113101; bh=yFmgW3/NHzvyuVAr5Qr73wDI5PMEeyjibflL2bj7sYw=;
+ h=From:To:Cc:Subject:Date;
+ b=AvHql7cZC0F1YV6+YWmesCHItzXKgFvM282JH7PXH4iATnZ9c7R2AJtzQDoNFG2rx
+ OBDa7uf34DlJJmgVDC5kBHG5UP9Pnzaq6Rn0lsWgGYrZWCOpSXvt85cnvd1drD0Hbx
+ 1WPGFCy+Pxs5Woo4XLQ06HBVPYjCRgdHuf7PWYNk=
+Received: from qq.com ([221.237.17.17])
+ by newxmesmtplogicsvrszb42-0.qq.com (NewEsmtp) with SMTP
+ id 8C5B3284; Fri, 14 Nov 2025 17:35:05 +0800
+X-QQ-mid: xmsmtpt1763112905t96mp5p53
+Message-ID: <tencent_66E8C146EA79CD00E966DEDAEF8CACD97D05@qq.com>
+X-QQ-XMAILINFO: NoN45VbJ/ow6YPboy+1tvz//+LBJFXPTjPioxTL2Zc3mJsK/mmbYq2Yj/XO7O2
+ Xh7/mxVxwngBzaa/x1H+8iHWKcNKCx7XD5SJ5tWk41gNn54iy9w/fiW87ZuSoHeXqHBIORXuXtdZ
+ 3N2CiNT2HIML6xStg1/5LL1DgJe/NE/jUIV6FLsI4m3Kv7ZhuhXWZ6GERvaicVs3UhSyGI8BbeC7
+ TsD0J/H0qp/Lpyl9hhnzHVKHdLx1mW0txmCLppYpSMOWJ0b977QxH8PE66fiY/yNA28VCEmgvdte
+ ZJMtuu4yPa5F7Z8ps9l3WW6iPkcpSsalsNPUVB29VO4FNmAC+LZdaycxXF1CwNMIPoRDpGZ8ry9S
+ Dcp5UTrnXcL4WBjFrTPxmGywycsa1d7dpe4jM8NgUfe5dIFfXsdlXEMFe+0lKOjdu+XLDeF2SDdd
+ 43aTBARfAJBjDUtug6q2ew1j9deAG/JSgeYk2UTZtih2MkzYnHztamiDZQKub/+wJihdK2yiyFCG
+ PM0IvTQqKKD51IarCV2bpcwjnH6995WEEcmGyAElREzsOHQF2DDt4ajqvlcWh+uJs4jN5UL4sIME
+ Nw9ebkeggHLrjzy+A494XWt+OfRylXkPamEmIq3gumG2yXT6f/pByvDnWvJy6QWT5/YQCSLc6W4S
+ QGbOG+qV7adyvBxHeDsg1B75RKz8mOkVvgYLUjtG0Rvz4vG/i6bkfAA2Ba86C36CY6V8iENG8JfE
+ chARnwLX8dD3UOQU2k6AgXLUylw86DcXtrS4bTygudU2bIqp59VpCZ7oSjsKv4hKgAdQcz8k4Nk5
+ nDQHEb21/NzC2J9uOYU8DAS2LT/n66hwb3RKo74JlMtLLyO9C7Y4CEEFtCwSKZQJxcKP8Dz33Snf
+ Bu+sQ8yJwbthG5U6gf2iFYV0lAJpQX7kFudJefoWL5RxIuUz7jZplQSvvYsK+Q2OBvNrbp+Pd6gT
+ kwcPq7RN9t/5J7yIGhJzG+ioARDFnb0S1j7QOY2JqRiAL4/VRxwfw2WE0lce85Po09CauVmwsbnM
+ 2jUhXnYA==
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+From: Yanfeng Liu <yfliu2008@qq.com>
+To: kraxel@redhat.com,
+	manos.pitsidianakis@linaro.org,
+	mst@redhat.com
+Cc: qemu-devel@nongnu.org, Yanfeng Liu <yfliu2008@qq.com>,
+ Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
+Subject: [PATCH v1] audio/virtio-snd: fix latency calc
+Date: Fri, 14 Nov 2025 17:34:46 +0800
+X-OQ-MSGID: <20251114093446.115990-1-yfliu2008@qq.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20251107102340.471141-1-luc.michel@amd.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D1:EE_|MW6PR12MB8835:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0dcb77b7-d4ab-4716-e5c1-08de235fc622
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|1800799024|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?vh2nK16K+Z5BJuD5kxdErFpNOTgV74LInd4SB/5OICFJjiwm3JwQeZ6hxHAI?=
- =?us-ascii?Q?cZvVpR+O5UzXrsR4rDDy8OsvDppgewyztoFdDiSphQikGOo/FRoVDmJ4b487?=
- =?us-ascii?Q?UAHPWvS9t/I1aRU4cABN07QNdDnxxJOQf71UpHWPAp+MH8QBKGzlT92UQ/V/?=
- =?us-ascii?Q?loQoNnCghOq9f6qbcTMVZyz1wYmQ5ovdW/eDa2WWVlLocwhE4a3hGZgUphoy?=
- =?us-ascii?Q?QVgIOr0kB4n6SLAwRk6TvEZj8zeLtwp6i02nZrEhNN2eUvsGCVuwFtt59XnB?=
- =?us-ascii?Q?OkHFn6iC2dXZP0F/Dz5G52goGJyBENoPf7RcjmEw/MM2NTGguMwDIwLw/gYS?=
- =?us-ascii?Q?vBm42ASwGPAglegBdM3ju7CeNLBFbFSt8RJuNuCx/uhwMxt86S/emQrI9Fbt?=
- =?us-ascii?Q?Oj8ZDyQbsWPjHR7DWYfDw+ekoGwujg5cN1TSdIfkgjj9S4eGcl9bUIlOrRAC?=
- =?us-ascii?Q?Sj+v6c8pv5Ljcre+E/rYvDcy5zXD7TmJCUYoO20hVr4V09a9BRhPwMp8iLYE?=
- =?us-ascii?Q?RHztrYdATt4CgyBAhpdVYlsScr/JOwZtDNTbnf+Z604subdquyyd8hZC/7h5?=
- =?us-ascii?Q?/6jcC7eW3dp5xpWgjvAXUicqWOkP4tKpkQ5GNPcANugVqltUFMH6KfI5vurt?=
- =?us-ascii?Q?QH5sO1JuKYPfaUBR8vprZGVNc/q/eapyhEkR2itTA9Av/RKdFk3L17dnxN0V?=
- =?us-ascii?Q?YX/NsuDhJkC2yfgZy5UCqfPLQO/hEdrE8KIsiQlPpD7nYzuRdqJS73pW5K69?=
- =?us-ascii?Q?c8ZTO7y44UNgS8zhdpz0t5eW6B+QZnoyGjnZ0AzgGe09EQShpfEluT9wHhd3?=
- =?us-ascii?Q?g8y30aqgvTvJYZpbLpo1UjlBEkSt6gGqYSX3Ws+sElDxwDbApZxsUnERnUDG?=
- =?us-ascii?Q?JyKrkxQVP0JxIOrG2wHwRiiA4KEYd6X2Z2G6P0x8Ej8F7SBhcQ46F4lbaXCM?=
- =?us-ascii?Q?CgZgPEJEJlCnNl6v2Y86R7VygWNp9Jb9hFSxC12xfpCBThAxY8hmN4HxXaIm?=
- =?us-ascii?Q?DOQgzHVdbt0wj1/vUEd3vj07IsUr7Si063s4GxJKm01S46w4SIKtj0JeyEso?=
- =?us-ascii?Q?q53oIZNUKKbYCdff+Yk4DzSYWrb83uIoTJyOHCf2GGx5F+J/AEkpM8HPbsnQ?=
- =?us-ascii?Q?lrQ+bFn/6RctQOYKYG6Rd16XhaZTbwmKs6p2JnHD1DWwRewVIUhF+QiUcs2J?=
- =?us-ascii?Q?XY3zvqe1giDjalnQecQW4r3yrtmGak0ogZXfUlfDF9oR3HwYITPLLX2UiW+P?=
- =?us-ascii?Q?7l/ztimtvD9xkpalxY4Q9TXf7LQIuHJOa6Q7n+ADsGywl56CqJRaclYHPg9u?=
- =?us-ascii?Q?F9nMamULf6S3YM01p09eVtBEcjtFWAzdD+lvTeGhkga38gv9YZufgDSQ/j+M?=
- =?us-ascii?Q?ezWIlDsZkTNLGG0MaFqkkYNhjcHgEt/8i0Ts5E+WsS3leCjfGFI+L/LeJvK6?=
- =?us-ascii?Q?JyaRI6552T4FVNtQ8t4JcYN/CKfMw88mqDmsKQXLExJNclOC5B5p6NizNIi/?=
- =?us-ascii?Q?6tOysF409nNehUKZKKT4qnXSJzHdldJZU6DaACx9bbw5dJF5RFcx91cOUrI4?=
- =?us-ascii?Q?GQVaMOcSr2CSsU9chZg=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(1800799024)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2025 09:25:38.4897 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0dcb77b7-d4ab-4716-e5c1-08de235fc622
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D1.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8835
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
- envelope-from=Luc.Michel@amd.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=43.163.128.47; envelope-from=yfliu2008@qq.com;
+ helo=xmbghk7.mail.qq.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,87 +83,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11:23 Fri 07 Nov     , Luc Michel wrote:
-> Hello,
-> 
-> By working locally on a RISC-V CPU with the sstc extension, I noticed
-> that the sstc code (the `riscv_timer_write_timecmp' function) was
-> implicitly assuming that the object behind the env->rdtime_fn callback
-> was a ACLINT. This is not a correct assumption from the point of view of
-> the riscv_cpu_set_rdtime_fn function API since env->rdtime_fn_arg is a
-> `void *' and is not required to be a ACLINT.
-> 
-> I reworked this and ended up with this series. It introduces the
-> RISCVCPUTimeSrcIf interface to replace the env->rdtime_fn callback and
-> break this dependency. This interface provides a mean to retrieve the
-> number of ticks (same as the rdtime_fn callback), and the tick frequency
-> that `riscv_timer_write_timecmp' needs.
-> 
-> This will effectively allow other platforms with CPUs and the sstc
-> extension but no ACLINT to provide their own time source. For now only
-> the ACLINT implements this interface.
-> 
-> The last two patches enhance the interface with a tick change notifier
-> registering mechanism. This allows the time source user (the CPU) to get
-> notified when the time source tick counter gets asynchronously modified
-> (reset to 0, ...), i.e., when the time register is written to. This is
-> then implemented in the ACLINT so that it does not have to include
-> time_helper.h and tinker with the CPU internals. This again will allow
-> new sources to be implemented more easily. It also ease maintenance by
-> keeping internal CPU mechanics contained into the RISC-V target code and
-> avoid potential duplication.
-> 
-> Note that I would have liked to put the time_src interface as a qdev
-> link property on the CPU but given the current state of the various
-> RISC-V machines, this is not easy to do. Most of the time the CPU gets
-> realized before the ACLINT so it is too late to set the link property.
-> This would require further refactoring.
-> 
-> Tested using `make check' and by booting Linux v6.17.6 in the virt
-> machine with 4 CPUs. I can see an initial `time' register write
-> (probably initial reset or OpenSBI) that correctly notifies the CPUs.
-> 
-> Thanks
-> 
-> Luc
+Media players needs meaningful latency_bytes update but it is
+zero now most of the time. This adds stream-wise latency_bytes
+calculation so that to improve the situation.
 
-Hi,
+Signed-off-by: Yanfeng Liu <p-liuyanfeng9@xiaomi.com>
+---
+ hw/audio/virtio-snd.c         | 12 +++++++++++-
+ include/hw/audio/virtio-snd.h |  1 +
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-Ping, patches missing review: 8 and 9.
-
-Thanks
-
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 9101560f38..ed0422b45a 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -431,6 +431,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+         stream->id = stream_id;
+         stream->pcm = s->pcm;
+         stream->s = s;
++        stream->latency_bytes = 0;
+         qemu_mutex_init(&stream->queue_mutex);
+         QSIMPLEQ_INIT(&stream->queue);
+ 
+@@ -899,6 +900,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+             buffer->vq = vq;
+             buffer->size = size;
+             buffer->offset = 0;
++            stream->latency_bytes += size;
+ 
+             QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
+         }
+@@ -1112,12 +1114,19 @@ error_cleanup:
+     virtio_snd_unrealize(dev);
+ }
+ 
++static inline void update_latency(VirtIOSoundPCMStream *s, size_t used)
++{
++    s->latency_bytes = s->latency_bytes > used ?
++                       s->latency_bytes - used : 0;
++}
++
+ static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
+                                     VirtIOSoundPCMBuffer *buffer)
+ {
+     virtio_snd_pcm_status resp = { 0 };
+     resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
+-    resp.latency_bytes = cpu_to_le32((uint32_t)buffer->size);
++    update_latency(stream, buffer->size);
++    resp.latency_bytes = cpu_to_le32(stream->latency_bytes);
+     iov_from_buf(buffer->elem->in_sg,
+                  buffer->elem->in_num,
+                  0,
+@@ -1178,6 +1187,7 @@ static void virtio_snd_pcm_out_cb(void *data, int available)
+                 buffer->size -= size;
+                 buffer->offset += size;
+                 available -= size;
++                update_latency(stream, size);
+                 if (buffer->size < 1) {
+                     return_tx_buffer(stream, buffer);
+                     break;
+diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
+index c176066584..9560bac8b1 100644
+--- a/include/hw/audio/virtio-snd.h
++++ b/include/hw/audio/virtio-snd.h
+@@ -150,6 +150,7 @@ struct VirtIOSoundPCMStream {
+     } voice;
+     QemuMutex queue_mutex;
+     bool active;
++    uint32_t latency_bytes;
+     QSIMPLEQ_HEAD(, VirtIOSoundPCMBuffer) queue;
+ };
+ 
 -- 
-Luc
+2.34.1
 
-> 
-> Luc Michel (9):
->   target/riscv: drop unused include directive in time_helper.c
->   hw/intc/riscv_aclint: fix coding style
->   hw/intc/riscv_aclint: rename cpu_riscv_read_rtc to
->     riscv_aclint_mtimer_get_ticks
->   target/riscv: add the RISCVCPUTimeSrcIf interface
->   hw/intc/riscv_aclint: implement the RISCVCPUTimeSrcIf interface
->   target/riscv: replace env->rdtime_fn with a time source
->   hw/intc/riscv_aclint: riscv_aclint_mtimer_get_ticks: get rid of void*
->     argument
->   target/riscv: RISCVCPUTimeSrcIf: add register_time_change_notifier
->   hw/intc/riscv_aclint: implement the register_time_change_notifier
->     method
-> 
->  include/hw/intc/riscv_aclint.h |  1 +
->  target/riscv/cpu-qom.h         | 41 ++++++++++++++++++
->  target/riscv/cpu.h             |  9 ++--
->  target/riscv/time_helper.h     | 27 ++++++++++++
->  hw/intc/riscv_aclint.c         | 76 ++++++++++++++++++++++++----------
->  target/riscv/cpu_helper.c      |  7 ----
->  target/riscv/csr.c             | 24 +++++------
->  target/riscv/time_helper.c     | 42 +++++++++++++++----
->  8 files changed, 173 insertions(+), 54 deletions(-)
-> 
-> -- 
-> 2.51.0
-> 
-
--- 
 
