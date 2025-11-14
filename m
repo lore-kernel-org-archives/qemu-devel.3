@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EA5CDE018
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6656CE7B0B
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 13:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJtkd-0003Eh-Cl; Fri, 14 Nov 2025 08:22:07 -0500
+	id 1vJtkg-0003PT-K1; Fri, 14 Nov 2025 08:22:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJtjW-0001Cd-ER
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:21:01 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1vJtk4-0002VX-Tj
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:21:34 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJtjU-0002vy-O6
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:20:58 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-63bc1aeb427so1717355d50.3
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 05:20:56 -0800 (PST)
+ id 1vJtk3-000305-8u
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 08:21:32 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-787f28f89faso20754517b3.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 05:21:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763126455; x=1763731255; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SrNpysS5iPmrz38YudoYz05NZLKPiHOdqavnyuAT4ic=;
- b=xCnlT6yhRAx4OTcYb1qrfcMQoFII/wlvw0VC8a8sDXPZdqRTSYsolLKVt82pPnSR1B
- aCieLAvNGlToaUG6uzC0n1FNCGlZn7NIgoDKmZWg7YIsFCjMbCePK13mXeP6Zg1vkirj
- eTXOk0LzOinDpxJKi+NmMI6Hu5iIGWSPCKOgTtnn68WR24O9YDfxpd7GyA3iFaTvfvZ6
- MnkD5jMPCQ1bIlqMF58ECGt/Ezd6CbwkEKnzwfNTmyVZlP91OmIkzzAHkx64R0jDKC1S
- F6+rkUw9ytahfHzUZTuH3EDfbmyU4mTS7F6JoO538bEgPs0dszsoLlqH0kBdbAyXyrBH
- gktg==
+ d=linaro.org; s=google; t=1763126489; x=1763731289; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9M/QamdtXqcxY+VfwHXlALR9X1NcSU3LD1wH3inr1xk=;
+ b=tfWujToqw0HofOXQFKZLhR7KO4AvE5fy7Pghg8Lr8FsnbuSvXdviNwfnqool4DSpiV
+ 13wOL6CMk47W9DC6PozVlEP//iSkDRjB/M3/CLzolM7Zau0iDGtSUov3tlk00OroTjgb
+ lhRvkGFbT+5Ow84IcQUlqmQPdH55scAjZSY/qJaUPQ7W8fE0t/Lb4gh9OMu3tSH7fMe8
+ OrmX2fb4iPW/GkiahHftoc8+uRP55Q21aSdy0ubIohlZEM6PBMmLrR8UUllpMqfmjGkK
+ L/+B3lbMPGnlQW8nn+6qjcCWE6Vomu7utP68k59uVtZhKnVuPcwCzFL0Obz9SGmcotN7
+ t1uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763126455; x=1763731255;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SrNpysS5iPmrz38YudoYz05NZLKPiHOdqavnyuAT4ic=;
- b=IM5UHlvRyDl1+DPO4rE3y9q7Pcgpif8WXnfUmxDmv9n59Hevg/Bsgb/J3RzP45Uy2N
- rDvGzZthFOr6onhJ1YMoVSe9UIv6OwbAFIhAYCXqXlu9AlQzCabkVbSC9hQYZt9fzuEZ
- aLOFUPMjBXiPNC2Ietph7UYO9xcDxyWmOumCBSyrTEVlBKw+r6hcySk5CEgGnjqcrAWg
- 4XV4GHmW/uO5LQKyju8+FQwn4c2HBZcW7g+VEITCA32hoKRrmUQl5q908CewmbL9e4Y/
- ENCqRU9xfDlyPKV9ryexM5a7PWFtPh70GcQg7bKE1uiDfCOyHLh1+BnHcalH5wjGOu68
- pvZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYhR1/2rBBESiml50it9YTpU1vLSD8yzKg8yOx2Y8Bqbw04kWjweqzsTUljEp7ySCwXT+sLhOgvvKT@nongnu.org
-X-Gm-Message-State: AOJu0YywDXGYIkMQ+/0WxtJ9ZOHZ+uwtXaoIc0kRup1bo39leBnTh7Gh
- rPNImECbtq6oNMZ3dwV04gzwsl1yvCaUKEfCjTeO/k98SmQYCZU7+fPaqyH7X5ASIP/3ICrBwli
- vd/VNwwIMzQ7ErpsAY/d8YKPKSrfQ4mc8F1qSjHoxzRD58aD+V+ywOks=
-X-Gm-Gg: ASbGnctmOZ1RZvC4IQH2iiPO89GraXo/a6yV+dd3EzRaCixecJJiTKzWyeEp5VDzxQc
- gn7xqvTPdTfqvyWmHmEObADoq8lg1J6fWY8eYW+ckzMitnzqbCHtcoc37iJLrQEZ6t4MSZI0f2k
- YR08JZtRzKWi1oYhniYqWaAwZAgSEszqvJrqcJZ9d+3Gx6ld4/JRMwQ/TbSB9dwuyAruf0HT8+p
- 2F6Q2emt3rP/B33kCsREzOIBug4n6qtwkn3B8fA+4bbp87Y3zgBHlMvyzbxhfICNREwJxeplWvy
- dYAOXBM=
-X-Google-Smtp-Source: AGHT+IEZvp7ogq2k4+3cAXrGsKtv/kY6iQ1vRk/qU0LrH1sOi1uFs5rxj2Lpe2EmBb3mxQ8Oftpcp89PCGit6NslwcA=
-X-Received: by 2002:a05:690e:240c:b0:63f:ba88:e8f9 with SMTP id
- 956f58d0204a3-641e75e62f4mr1986404d50.41.1763126455421; Fri, 14 Nov 2025
- 05:20:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763126489; x=1763731289;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9M/QamdtXqcxY+VfwHXlALR9X1NcSU3LD1wH3inr1xk=;
+ b=XEbcyMMkqPLPRmP9nsL1ShTPoRuy+ZlUvbu66ajb/iLcCShDMdZACkKyXzM9PBbLhY
+ SNM3hPtF47nH4P8NO1K1S6Oz5WtsYaAntXcE01o7/DQAnCkesY3ZTmYpJrIgSWmWwixj
+ 7DBKTXqs8SIptP3prI7ORS3ZXqjtrVwil9lcxQqCdg1URYtAobpcWPz4GYjy9/y2gzPz
+ Quo5aaZrgRyQELFSABHE1/xk6ARgT2abWyWObjWIGOEzOe+ZRiDpi32RL1JOJmu0UDX2
+ MjWKK0wjiE7NhP8cOj89O4iRC21567j6EDySdJQWSNzHHAPozatZeDp6q75MfrHMycYD
+ Mx5Q==
+X-Gm-Message-State: AOJu0Yw+OEKuAko4zZVCNY/4L2l8/phqZIxwuo2wgAIfhPnvv8xTLi2h
+ CDElxjDfTKFLS4XStpFM+fD6rVTQRCPblf+WHnZhRsaWSh+NM1lccPS7u15E3+TgWkdrnohUmS4
+ vhrEkrMhBm7UKjoV14bOrgvkQe7mRbiQ2c3JSBUNFaGR3yrMxo6tM/ic=
+X-Gm-Gg: ASbGncu5Ei2S0drm4RubNJKND+84LEHv9Hih2mrPLcFK06VHMJ9CvbPy18MuqH4/D/6
+ zc/fYNcXkt92iSJtGcYmHTTB/R8KopucHVe4Yi0/Yo20ZJaSTDdL5kuGSN9TD6TKH+5BUV1k4Xy
+ PjYnkCneIyEQR/FGBvxVS0u1huky7nQWMM8CamiaX4fWmkIsBwlnVPDWl8VfyXLFUytLmfJw6z6
+ cXhdWvrnN8XonOzaRC/Qby+wFSxLRoxYnV+uWDrYcldqB6YsekZlhjzPpEnEpJYdf8Ec0k6G2iY
+ 8xK69p4=
+X-Google-Smtp-Source: AGHT+IFzr9Um8PQEoyRK7yqlFHJLBanEemwlERyKgwrX4KTOQbeoRmuY9WUpzBD8gBl9nGE/Z04VynsYcgeuqjydJXU=
+X-Received: by 2002:a05:690c:a1d4:b0:788:166a:d007 with SMTP id
+ 00721157ae682-78929e3e69cmr22832377b3.4.1763126489439; Fri, 14 Nov 2025
+ 05:21:29 -0800 (PST)
 MIME-Version: 1.0
-References: <20251107154116.1396769-1-peter.maydell@linaro.org>
- <e3530b1c-6f5f-48d0-ab5e-da94e59c275a@linaro.org>
-In-Reply-To: <e3530b1c-6f5f-48d0-ab5e-da94e59c275a@linaro.org>
+References: <20251107174306.1408139-1-peter.maydell@linaro.org>
+In-Reply-To: <20251107174306.1408139-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 14 Nov 2025 13:20:44 +0000
-X-Gm-Features: AWmQ_blUBXMjCT9mOgBIwS7Rfmq0QQ_KIoHgIVAoP3qC70c3rAK0Z4xi_II4upw
-Message-ID: <CAFEAcA-CfPPBORHu4mZUzK=A9Y8cJJ3H508PYykGz3ggPYTxvQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/audio/lm4549: Don't try to open a zero-frequency audio
- voice
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Fri, 14 Nov 2025 13:21:17 +0000
+X-Gm-Features: AWmQ_bm1eD9ziiEGFCqdrEAES8D-AoApgVW-rktKc0Q0U2ueTLs3Bj9MoWmXluU
+Message-ID: <CAFEAcA-ROzqrpb1Z9oR2LF5=YHhM95=Ae2RCsqPH7Yj3CRBwLA@mail.gmail.com>
+Subject: Re: [PATCH] system/qtest.c: Allow for multiple CHR_EVENT_CLOSED events
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +94,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 9 Nov 2025 at 10:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> On 7/11/25 16:41, Peter Maydell wrote:
-> > If the guest incorrectly programs the lm4549 audio chip with a zero
-> > frequency, we will pass this to AUD_open_out(), which will complain:
-> >
-> >     A bug was just triggered in AUD_open_out
-> >     Save all your work and restart without audio
-> >     I am sorry
-> >     Context:
-> >     audio: frequency=3D0 nchannels=3D2 fmt=3DS16 endianness=3Dlittle
-> >
-> > The datasheet doesn't say what we should do here, only that the valid
-> > range for the freqency is 8000 to 48000 Hz; we choose to log the
-> > guest error and ignore an attempt to change the DAC rate to something
-> > outside the valid range.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/410
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > This bug has been around for so long and is a weird edge case whose
-> > only effect is to print a debug message, so it doesn't really seem
-> > worth cc'ing stable on.
-> > ---
-> >   hw/audio/lm4549.c | 17 ++++++++++++++++-
-> >   1 file changed, 16 insertions(+), 1 deletion(-)
->
-> With s/8000/4000/ in description:
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Ping for code review?
 
-Applied to target-arm.next with that commit message fix, thanks.
-
+thanks
 -- PMM
+
+On Fri, 7 Nov 2025 at 17:43, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> In the qtest_event() QEMUChrEvent handler, we create a timer
+> and log OPENED on CHR_EVENT_OPENED, and we destroy the timer and
+> log CLOSED on CHR_EVENT_CLOSED. However, the chardev subsystem
+> can send us more than one CHR_EVENT_CLOSED if we're reading from
+> a file chardev:
+>  * the first one happens when we read the last data from the file
+>  * the second one happens when the user hits ^C to exit QEMU
+>    and the chardev is finalized: char_fd_finalize()
+>
+> This causes us to call g_timer_elapsed() with a NULL timer
+> (which glib complains about) and print an extra CLOSED log line
+> with a zero timestamp:
+>
+> [I +0.063829] CLOSED
+> qemu-system-aarch64: GLib: g_timer_elapsed: assertion 'timer != NULL' failed
+> [I +0.000000] CLOSED
+>
+> Avoid this by ignoring a CHR_EVENT_CLOSED if we have already
+> processed one.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  system/qtest.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/system/qtest.c b/system/qtest.c
+> index baef06d4d1b..67e2385f4b0 100644
+> --- a/system/qtest.c
+> +++ b/system/qtest.c
+> @@ -815,6 +815,10 @@ static void qtest_event(void *opaque, QEMUChrEvent event)
+>          }
+>          break;
+>      case CHR_EVENT_CLOSED:
+> +        if (!qtest_opened) {
+> +            /* Ignore CLOSED events if we have already closed the log */
+> +            break;
+> +        }
+>          qtest_opened = false;
+>          if (qtest_log_fp) {
+>              fprintf(qtest_log_fp, "[I +" FMT_timeval "] CLOSED\n", g_timer_elapsed(timer, NULL));
+> --
+> 2.43.0
 
