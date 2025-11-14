@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A0D5CE8D40
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 15:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E51BACE7B1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Nov 2025 15:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vJviP-0003lP-Rm; Fri, 14 Nov 2025 10:27:59 -0500
+	id 1vJvll-0006qn-K5; Fri, 14 Nov 2025 10:31:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJvc6-0006Vi-85
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:21:27 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1vJvby-00068H-4P
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:21:18 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vJvc4-0003vl-D6
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:21:25 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42b3d7c1321so1559483f8f.3
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 07:21:23 -0800 (PST)
+ id 1vJvbw-0003tP-Ef
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 10:21:17 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so23877645e9.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 07:21:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763133683; x=1763738483; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763133675; x=1763738475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QIw9GgzRpa5cDAQSM5pDHi3MBoCBEr8BPmj9kJq1ADY=;
- b=q9z5e0vFaMGs4C0gAVVntIPkslRVd33oawZ/86EpSviVh2MpM2BT2bMRf/QJ2cswuZ
- GUNinbmJk2RVFDIJ8/0qYJa8x/abg++nrBw/ttUzErrjm/5EazQle+X74DgcED/cKph+
- 83IhKuX/RBqGY0JQuSv6PiDAGY3qBAYiu6h3kvJ3BXR3GaiRFG0Ja26dulnIpqrzwSEy
- 3VjzD/Rox4Mye3/aEXhsal2E5WaEbMtRotm6Oz3afM616OWJ9d4Lmj/xpUevKCelm72x
- OHT4Gcpmja4HYC9yucHbDS7dNifxglDSbNhyRhEIYhDgHcL4GruG85onYuL4bLQFOCkk
- j/Qw==
+ :reply-to; bh=nZtUkU3Iq8T00E2//P0yo9sIxgGNCw9UjWil4f/LYN8=;
+ b=W8bWdtFScMR1Wm17Z+SaRBzbdqmHZENWZLljmbTlm+rwlVcp6fIcKeJrR9Qv2PoE8M
+ PsvNb09Cx3POeZ/itj6Mohs26itIvBk6WY9Zx0DxMYtLtZ2E/JwaJI40flNWVVgfRVKM
+ 1G7kKNWjI4GvFJeMtRKzh1wKjyRc3Vz/JJmYAmxdO2ge9rEmoT3K5mgmsdcwxXViJeoQ
+ fefJkYw2KboxnkvVeoJQGKyMV35zZVFtwPBnvtxmP3pp8LsW6jX8DEpQQ0z+OZqxX4BX
+ CqcH2booKFrjLImDzCqmYM1FfCsDwYgNSyJ5IKT54wfqPvaD8BodzNOzI9oTkPyg8OgQ
+ 8+Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763133683; x=1763738483;
+ d=1e100.net; s=20230601; t=1763133675; x=1763738475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=QIw9GgzRpa5cDAQSM5pDHi3MBoCBEr8BPmj9kJq1ADY=;
- b=CMhLsI/DAiA17qmyN4nY/brfg0zDVUquL7yDB3N4NCfx/gPMS+PS+T2wjspjwo1506
- gTm+fG1wooiIpEhickG/Grl7Y7HYp2D6nfpwYCNgB/+JmLNlR8EDAQ79B/du07kUzbGx
- DCaPEEAbB6Vg9Z5Z5knGASD3mZiSklFygjFqS2PrUH7EuOOUM1lRd0xT36Ofak5gNsBL
- 5M+8RMN/QH9qb8husQIg7QyjdS59EoqIs8Jg8b0peGpLBjvr0h3eieTNxF+lzGYR4lCw
- kIpZL6t2G7Z8UTNnNt05mu/nhq/wRKlSc4DZMVPq3Q0QduOlGYjgPMFAYiQ+RB1VO9Lt
- aigQ==
-X-Gm-Message-State: AOJu0YzKoZrt42d5VmkSIpF/HskUgi2qiVMuyC5STgCAOwl7E8ByGvaf
- KiLch/cYpka9s+PUYVkeidmOUdsaegCL2mLLxJqFSalz1vOZNBvbpr55O0JpG+yWQkIAOlJPczv
- 4HoiT
-X-Gm-Gg: ASbGnctrDaZWAG413ALI5J8u1buqJ70RriMDyqToNoAFSaVeDYAh11BPHO4Bi+SPYDk
- Sm/C8cp78/mCGjtT8tpDezioS4bp1U7bdaaJyuzV5B1mTzO/0uda3+7NGYWbsZiAUrNkYS6Ps2E
- 48bjogAIp1metZ9VRER5+uSTpLw9+h4+zUx3M6UFAQOjW/0UNBtqc3nmQQlyUOkqbbuvIWU5tCs
- bKegF1gZriLxf7mPZ60Er0zFyAp/vW4+u9iseE6x3bRVdrKyrUzfMtArs28288fhK+CXxEw2d3V
- egkBpxc8ovH/xFJr86hAw/3j50e4oZh+mcWEF9qIEd4xyU65WZW/LHwZw3ecJOTIFGRf0U+ndEA
- bdBCfolfBTNCyjF5N7YXJj5gUHxepOJkvIPyOKfojOkiHWfO/Q9c7Q8K2/iXLPplayD7jKU2rzA
- mkmne2rnUafZ77PaQ5
-X-Google-Smtp-Source: AGHT+IG9xi1AR6Nm6zyk0u5503J4BrXXpaUvcN0hZUNht7BBXmA2SM63cqX7IKiGkfBb9jjtmxY2XA==
-X-Received: by 2002:a05:6000:24c7:b0:428:52c7:feae with SMTP id
- ffacd0b85a97d-42b593869b1mr3320488f8f.32.1763133682600; 
- Fri, 14 Nov 2025 07:21:22 -0800 (PST)
+ bh=nZtUkU3Iq8T00E2//P0yo9sIxgGNCw9UjWil4f/LYN8=;
+ b=wK8oFSQyBJdphaW9+PUrYez0AJqIhh1gYtJ1BzZjLMLAcTbw1kuavEZl5ICzFS5cdG
+ OcMOGD+IIzDhV0QQ7ljRO+g/F8ip2gBp/ZeR0JUUPQ8T7IhTL3V3twjFLe0GyO0ZLdc1
+ VRPQ9L/aLckJ9OtY9KAHqAEuNmSx7tsCj1L7F2LP/Y/W1OQlJhwTKTzu+mv45HkxqFto
+ V4l4qaXW5tX5Lv1h0F2HomiC45dK6bho/tVl8GYcy8d0Z5C9bEdWIs9GWWDV9M3F2NYV
+ epxqY+xiw7ghd7aAROSoOua0T7f52+QVTeajz2UEM+3XhkH8gw/vZ2zl0GcwYN3sIhwP
+ ts9A==
+X-Gm-Message-State: AOJu0Yx0mFyJ2rmMdZWwV6oT1fCCHPeFIKdyg2TE0XcJCsVfmT+NG3F4
+ ixPpLeBYEnD/c/ViquBLp+1gNgHw8iERVGyUBTxGK/ybM4+fagAYc+zsGKt+tmv763H8g7LQD8j
+ yAgSo
+X-Gm-Gg: ASbGncsm0dI7YiXSTWtURSYv9aHpiM71cb3L0v4YdcXPzs9fmG6zwimA7qAcxMuQuz7
+ CBuRHEAi1a7s0/krBB2Jo7a2cwp74vMrPA6umKTR4rZKpwma0qkGBkVNmfKhkHIkmkvUJT13eaF
+ QFQ3gsdkzfloPtjxdcp53dPIV2pcpeO7NwXhNn4R7tbFMsDsKGBbALdKc+p90KOm8ATQ5ZfiOuF
+ /YZv39BGurZGP1VasCaaSDUDxM7DkG4C5cHTelTtCPpepTswACao4xs2U1NHMdQQOzm6kWiVUto
+ Zfv4uusrgvvZa6BYFWIFKMihogbJsf8KWrMFr6WPe6a4Mp1Ye+zlFwdEsquR8ttzhpBKoWyYxPr
+ iNznicCu4FlRTuk00aRPHFgSSacAsiI16vVUBATjuv2xMXguTLR+ggWcxKW+gjZzLearQvX81eT
+ h6VzDJsGLb7XNtf7kL
+X-Google-Smtp-Source: AGHT+IFIkT4ujWE20/hkb77WOkSU2Uy3mDGCkAcrbF3RqTiy24IO576GQfNWKbBB/d4bAuKiCFSkqA==
+X-Received: by 2002:a05:600c:c4a1:b0:477:3f35:66d5 with SMTP id
+ 5b1f17b1804b1-4778fe95fedmr30829595e9.26.1763133674648; 
+ Fri, 14 Nov 2025 07:21:14 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e8e798sm146772835e9.10.2025.11.14.07.21.21
+ 5b1f17b1804b1-47787e8e798sm146772835e9.10.2025.11.14.07.21.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Nov 2025 07:21:21 -0800 (PST)
+ Fri, 14 Nov 2025 07:21:13 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/10] hw/audio/lm4549: Don't try to open a zero-frequency
- audio voice
-Date: Fri, 14 Nov 2025 15:21:10 +0000
-Message-ID: <20251114152110.2547285-11-peter.maydell@linaro.org>
+Subject: [PULL 02/10] target/arm: Fix accidental write to TCG constant
+Date: Fri, 14 Nov 2025 15:21:02 +0000
+Message-ID: <20251114152110.2547285-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251114152110.2547285-1-peter.maydell@linaro.org>
 References: <20251114152110.2547285-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,65 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the guest incorrectly programs the lm4549 audio chip with a zero
-frequency, we will pass this to AUD_open_out(), which will complain:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-   A bug was just triggered in AUD_open_out
-   Save all your work and restart without audio
-   I am sorry
-   Context:
-   audio: frequency=0 nchannels=2 fmt=S16 endianness=little
+Currently an unpredictable movw such as
 
-The datasheet doesn't say what we should do here, only that the valid
-range for the freqency is 4000 to 48000 Hz; we choose to log the
-guest error and ignore an attempt to change the DAC rate to something
-outside the valid range.
+  movw pc, 0x123
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/410
+results in the tinycode
+
+   and_i32 $0x123,$0x123,$0xfffffffc
+   mov_i32 pc,$0x123
+   exit_tb $0x0
+
+which is clearly a bug: writing to a constant is incorrect and
+discards the result of the mask.  Fix this by always doing an and_i32
+and trusting the optimizer to turn this into a simple move when the
+mask is zero.
+
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: <gustavo.romero@linaro.org>
+Message-id: 20251106144909.533997-1-richard.henderson@linaro.org
+[rth: Avoid an extra temp and extra move.]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+[PMM: commit message tweak]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20251107154116.1396769-1-peter.maydell@linaro.org
 ---
- hw/audio/lm4549.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ target/arm/tcg/translate.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
-index 745441bd790..bf711c49c04 100644
---- a/hw/audio/lm4549.c
-+++ b/hw/audio/lm4549.c
-@@ -15,6 +15,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/hw.h"
-+#include "qemu/log.h"
- #include "qemu/audio.h"
- #include "lm4549.h"
- #include "migration/vmstate.h"
-@@ -179,9 +180,23 @@ void lm4549_write(lm4549_state *s,
-         break;
- 
-     case LM4549_PCM_Front_DAC_Rate:
--        regfile[LM4549_PCM_Front_DAC_Rate] = value;
-         DPRINTF("DAC rate change = %i\n", value);
- 
-+        /*
-+         * Valid sample rates are 4kHz to 48kHz.
-+         * The datasheet doesn't say what happens if you try to
-+         * set the frequency to zero. AUD_open_out() will print
-+         * a bug message if we pass it a zero frequency, so just
-+         * ignore attempts to set the DAC frequency to zero.
-+         */
-+        if (value < 4000 || value > 48000) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: DAC sample rate %d Hz is invalid, ignoring it\n",
-+                          __func__, value);
-+            break;
-+        }
-+        regfile[LM4549_PCM_Front_DAC_Rate] = value;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 5f64fed2202..63735d97898 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -303,20 +303,23 @@ TCGv_i32 add_reg_for_lit(DisasContext *s, int reg, int ofs)
+    marked as dead.  */
+ void store_reg(DisasContext *s, int reg, TCGv_i32 var)
+ {
++    uint32_t mask = 0;
 +
-         /* Re-open a voice with the new sample rate */
-         struct audsettings as;
-         as.freq = value;
+     if (reg == 15) {
+-        /* In Thumb mode, we must ignore bit 0.
++        /*
++         * In Thumb mode, we must ignore bit 0.
+          * In ARM mode, for ARMv4 and ARMv5, it is UNPREDICTABLE if bits [1:0]
+          * are not 0b00, but for ARMv6 and above, we must ignore bits [1:0].
+          * We choose to ignore [1:0] in ARM mode for all architecture versions.
+          */
+-        tcg_gen_andi_i32(var, var, s->thumb ? ~1 : ~3);
++        mask = s->thumb ? 1 : 3;
+         s->base.is_jmp = DISAS_JUMP;
+         s->pc_save = -1;
+     } else if (reg == 13 && arm_dc_feature(s, ARM_FEATURE_M)) {
+         /* For M-profile SP bits [1:0] are always zero */
+-        tcg_gen_andi_i32(var, var, ~3);
++        mask = 3;
+     }
+-    tcg_gen_mov_i32(cpu_R[reg], var);
++    tcg_gen_andi_i32(cpu_R[reg], var, ~mask);
+ }
+ 
+ /*
 -- 
 2.43.0
 
