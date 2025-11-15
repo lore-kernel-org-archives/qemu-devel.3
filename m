@@ -4,106 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 842B5CE8D7A
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Nov 2025 01:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5BFCE8D7A
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Nov 2025 01:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vK5Uu-0000o1-5A; Fri, 14 Nov 2025 20:54:40 -0500
+	id 1vK5Yf-0002XW-4G; Fri, 14 Nov 2025 20:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vK5Ua-0000kM-15
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 20:54:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vK5Yb-0002Wg-8q
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 20:58:29 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vK5UY-0005iO-62
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 20:54:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763171656;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=BBW85pbyW1JiYUXYRrf6v5xu2V5GcK8qF6OmC8TQVL4=;
- b=dKcqdeq2i3eDThdt9yNM/+LMM10syZjjjAqGoGsZ75W9SLgkHYBfPFcNN4qF5evplhs02b
- X9yv28BvUZ+B8AUKIjd5siABl93lqLHygBpXzgCaYsNgKJHsJMB5Cc3Qbf+WjJHMiOXQcF
- IqoeR98O958uY8EINCBted/+D0z+VE4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-7Kecvu4aPxm7prejczPHuQ-1; Fri, 14 Nov 2025 20:54:14 -0500
-X-MC-Unique: 7Kecvu4aPxm7prejczPHuQ-1
-X-Mimecast-MFC-AGG-ID: 7Kecvu4aPxm7prejczPHuQ_1763171653
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-42b2c8fb84fso1444599f8f.2
- for <qemu-devel@nongnu.org>; Fri, 14 Nov 2025 17:54:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763171652; x=1763776452; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=BBW85pbyW1JiYUXYRrf6v5xu2V5GcK8qF6OmC8TQVL4=;
- b=GH1vUM0b6qFEJe+lAH/+LWUqiL1KuvY2GUkLCE0JAxQf56fVRjtDdxcGNc5kut4Y+q
- 32OWvGEze0EfqLdbfGk/MsQYINM8htuGHsMTqzH1Yj4BZad+icg9JrBK52vFJteFedkm
- bgbOyh/bDRPtzl0KmFrD4RQmiMRTXKuQ5d0os0I1PkQZ0+DFfKTk5/tDEGUySrwRAZHT
- VFVU6GgDtFjnrLLXgKsq9jdpkikkV5VWSnHI3/ZPSZcCi5meYK4EPYGIdTXy9wB73Fkh
- J19vjmEa/OjP6fMzZID1/O5GcNpj6dcQX6SEkG5j8jH696swQwHh1x0Y/vMP5FnafKXY
- E4YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763171652; x=1763776452;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BBW85pbyW1JiYUXYRrf6v5xu2V5GcK8qF6OmC8TQVL4=;
- b=lEIU9g5YKoaW8+oYhl0zh5sTWdhgmmR6qbAvJOszxv1LV1JYSSNpDqI5G0WmQ1keZt
- 7SrfCtpxYZ3c46J8/zP4wr/YjkZP3uC91snq0A8hiCZcgYnsq6/MEMSQ/z8XKJ/TABhg
- CBA/uA7d4AyrBHmBRiiftpQp5sLPomGPy/2eM0mrYwHce6LwMGXQdGsatfQ8SjXOfzgI
- ycWoUx5Zaa5naZbBk5J3QwHBo5sKX2O3NJ/AbM7YeZOMKvH2kSwYnA/nSp7S7L8E4Rxs
- KxV1+cLcVNGvDAU7r8UB1KIvOJj+oV/ez3zNLFDYmu2kwfGeuUfTNAiFtTN2AY7EJXJU
- Xycg==
-X-Gm-Message-State: AOJu0Yw8iMZxEzWNyEvBSA8eIAbvolBv0WD2Fw31ZLGZvKEyW5eE2j9p
- Vf5RDxmygglp9VLm4k/jTqK4QXBXA+YmlOFlYQcSq5elmwSUD0eddz3JPT9fbayMZmLOYtMgBa9
- pw5LErTltq5X//8y9/NaMAQucsuSQWNwZv1Z0ru0aVs03A4quh+Dx0I9NHki4t0SywXDI1e7qHX
- wtLGbq02yqzmDvPuW5u9/SqZhDg/hDjbQmu0vkdLzi
-X-Gm-Gg: ASbGncv1qBSnaIT88gNBfFhL6u531xFMa3q38JO1jXxjSG/pnPSx90CeFoUjf7dD0PI
- uJUkohtdGmhEw7D9iHAsj/ZLeP7OduwQrNbHSWRu4kfQYSNoYAu2tZyiW0PHuJ5k+1kQSMU04Ez
- WVkQIUIPUAyz16Ec1HhEpQvdeLIx8uit9wJmwBLwjTC6ncbon7kaJvqd9NarMwvn2ukT1ZDD+X7
- IylL6b4sqwcXhax0Rhh8tRnhzfsAeJ4LCCIksGzP6GT0pzOk6SR1IBBX3AoJ//xsEP9HbgHxAsK
- aIqpz5xekL+RaSS/CFTCaC8nISVorRPyPAm1gJUNxh+itMMG007zH/cug/pLxfIRhxOYQVOgdtk
- /sYz7Wt/uMJbRnoRlJHvBZDSJ+Ya89+Niy48zYfXnKB6A8uw50U6tyuqxxC4JrM+uIYhxVVwvBa
- vBzlhU
-X-Received: by 2002:a05:6000:4202:b0:429:f050:adbb with SMTP id
- ffacd0b85a97d-42b5935092dmr5177652f8f.26.1763171652356; 
- Fri, 14 Nov 2025 17:54:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHq8ID3s468c3qzhuCX5QPsJ8YWwZfDsvD6WgZz4C259WST5rafZdlmB8nqCbeBx6mRuoljvg==
-X-Received: by 2002:a05:6000:4202:b0:429:f050:adbb with SMTP id
- ffacd0b85a97d-42b5935092dmr5177642f8f.26.1763171651813; 
- Fri, 14 Nov 2025 17:54:11 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.119.13])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f206e2sm13085855f8f.41.2025.11.14.17.54.11
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Nov 2025 17:54:11 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2] target/i386: fix stack size when delivering real mode
- interrupts
-Date: Sat, 15 Nov 2025 02:54:10 +0100
-Message-ID: <20251115015410.185195-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.1
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vK5YY-0006AM-Lf
+ for qemu-devel@nongnu.org; Fri, 14 Nov 2025 20:58:28 -0500
+Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AF1wBKm093332
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 15 Nov 2025 10:58:11 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/rRPfQMHYXIti5J/uYa1p1g9UBoYEzR34chujsG5sVk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763171892; v=1;
+ b=kTbc7nCZiprGH9JrYRFbC5n/76tBAVc9BGSSSXkrLRVUoGVdMJbuYrskV0OnOAkf
+ SSjBxPFqb8x7OPQkKyNzCLirI3+hjM+htJsx94aiWV2bjNjO8ridxQPxFRGaxkvB
+ 4IgD/04ehE5LfNoyTA6F938/2NfsYZXugklje/yePkBvG78Og7VBNfoG6x6Uk5GV
+ esDv9DhM7nh2E/e7lciLhrOZWxsH9xofLfIQccfpP6ZyCzFhIviyyT6hno9CosGV
+ zRdC7BEWUn8s9Ufp63yUocg8FCWXZXnEA8QBUh6Gss852fjGquVNbpAycBIXMSHy
+ GfX+IO6V8YtwcyZXv+2Eog==
+Message-ID: <a8c03d1e-a3f4-40de-a633-7b15ec2288e3@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 15 Nov 2025 10:58:11 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <aQJbd5qYR10qcbr7@x1.local>
+ <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
+ <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ0Ys09WtlSPoapm@x1.local>
+ <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ37hd0fVJltYtt-@x1.local>
+ <5002e5b4-0493-4dff-af11-402cebecbcc2@rsg.ci.i.u-tokyo.ac.jp>
+ <aRYPXh_9m5ZvTi2w@x1.local>
+ <ded7ef38-8c99-4d37-87b2-2f5ba1dc93fc@rsg.ci.i.u-tokyo.ac.jp>
+ <aRdLFwxzJwjsXFpY@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aRdLFwxzJwjsXFpY@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,41 +85,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stack can be 32-bit even in real mode, and in this case
-the stack pointer must be updated in its entirety rather than
-just the bottom 16 bits.  The same is true of real mode IRET,
-for which there was even a comment suggesting the right thing
-to do.
+On 2025/11/15 0:30, Peter Xu wrote:
+> On Fri, Nov 14, 2025 at 10:24:40AM +0900, Akihiko Odaki wrote:
+>> However it creates another problem. Think of the following sequence:
+>>
+>> call_rcu_thread()              |
+>>                                 | call_rcu1()
+>>                                 |  qatomic_fetch_inc(&rcu_call_count)
+>>                                 |  qemu_sem_post(&sync_event)
+>>                                 |
+>>   qatomic_read(&rcu_call_count) |
+>>   enter_qs(false)               |
+>>    wait_for_readers(false)      |
+>>     qemu_sem_timedwait(         |
+>>      &sync_event, 10)           |
+>>
+>> qemu_sem_timedwait() incorrectly interrupts the RCU thread and enters the
+>> force quiescent state.
+> 
+> First thing to mention is, IIUC above can't happen because if
+> call_rcu_thread() is already waked up and reaching enter_qs(), then there
+> should have been, for example, a prior call_rcu1() that incremented
+> rcu_call_count and posted to sync_event, hence rcu_call_count cannot be 0
+> anymore in the call_rcu1() above, because the sub happens later:
+> 
+> call_rcu_thread:
+>          ... sees rcu_call_count > 0, quit loop ...
+>          ...
+>          enter_qs(sleep);
+>          qatomic_sub(&rcu_call_count, n); <-------------------------
+>          ...
+> 
+> That means the concurrent call_rcu1() above will not post sem anymore
+> because it will only post it if rcu_call_count==0.
+Below is an extended version of the sequence:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1506
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/seg_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+call_rcu_thread()                |
+  qatomic_sub(&rcu_call_count, n) |
+  (sets rcu_call_count to 0)      |
+                                  | call_rcu1()
+                                  |  qatomic_fetch_inc(&rcu_call_count)
+                                  |  qemu_sem_post(&sync_event)
+  qatomic_read(&rcu_call_count)   |
+  enter_qs(false)                 |
+   wait_for_readers(false)        |
+   qemu_sem_timedwait(            |
+    &sync_event, 10)              |
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 667b1c38696..227336c4ef2 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1161,7 +1161,7 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
-     sa.env = env;
-     sa.ra = 0;
-     sa.sp = env->regs[R_ESP];
--    sa.sp_mask = 0xffff;
-+    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-     sa.ss_base = env->segs[R_SS].base;
-     sa.mmu_index = x86_mmu_index_pl(env, 0);
- 
-@@ -1964,7 +1964,7 @@ void helper_iret_real(CPUX86State *env, int shift)
-     sa.env = env;
-     sa.ra = GETPC();
-     sa.mmu_index = x86_mmu_index_pl(env, 0);
--    sa.sp_mask = 0xffff; /* XXXX: use SS segment size? */
-+    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-     sa.sp = env->regs[R_ESP];
-     sa.ss_base = env->segs[R_SS].base;
- 
--- 
-2.51.1
+Note that there may not be a qemu_sem_wait(&sync_event) call between 
+qatomic_sub(&rcu_call_count, n) and qatomic_read(&rcu_call_count).
 
+> 
+> Besides, IMHO replacing the event with sem shouldn't change similar
+> behavior comparing to when using events.  Because any spot that can post()
+> concurrently can also does qemu_event_set() concurrently... after all, we
+> only have a few spots resettting the event in the original patch, after the
+> reset a concurrent qemu_event_set() will re-activate it.
+
+The sequence I showed is handled properly with properly placed 
+qemu_event_reset():
+
+call_rcu_thread()                |
+  qatomic_sub(&rcu_call_count, n) |
+  (sets rcu_call_count to 0)      |
+                                  | call_rcu1()
+                                  |  qatomic_fetch_inc(&rcu_call_count)
+                                  |  qemu_event_set(&sync_event)
+  qatomic_read(&rcu_call_count)   |
+  qemu_event_reset(&sync_event)   |
+  enter_qs(false)                 |
+   wait_for_readers(false)        |
+    qemu_sem_timedwait(           |
+     &sync_event, 10)             |
+
+Note that a concurrent qemu_event_set() after resetting the event can 
+only triggered with force_rcu(), which is intended to interrupt 
+wait_for_readers().
+
+> 
+> Sem does introduce possible false positives on events, but as I was trying
+> to justify, a generic VM boots and shutdown should need less than 1000 rcu
+> calls, so worst case is we loop read rcu_call_count 1000 times... I also
+> didn't measure how many of such call_rcu1() will see N>0 so they'll not
+> post() to sem at all, I believe it'll be common.  So the perf overhead
+> should really be rare, IMHO.
+> 
+> Note that I was not requesting you to replace this event to sem before
+> merging.  Frankly, I think your work is good enough to land.
+> 
+> However I still want to discuss a sem replacement, not only because this is
+> the best place to discuss it (after all, force rcu starts to introduce a
+> genuine second user of the event besides call_rcu1, hence the "being able
+> to remember more than 1" will start to make more sense than avoid resets),
+> it looks also cleaner to remove some new code force rcu adds.
+
+How do "being able to remember more than 1" help?
+
+Regards,
+Akihiko Odaki
 
