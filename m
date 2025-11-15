@@ -4,73 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FE9CEACEF
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Nov 2025 02:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF34CCEACFC
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Nov 2025 06:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vK6VS-0003kq-Lw; Fri, 14 Nov 2025 21:59:19 -0500
+	id 1vKA96-0006ed-B4; Sat, 15 Nov 2025 01:52:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vK6VQ-0003kJ-0i
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 21:59:16 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vKA93-0006Yx-Cb
+ for qemu-devel@nongnu.org; Sat, 15 Nov 2025 01:52:25 -0500
+Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vK6VM-0004bK-Ri
- for qemu-devel@nongnu.org; Fri, 14 Nov 2025 21:59:15 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AF2x1hj006603
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 15 Nov 2025 11:59:02 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=u4RggNAVgqVAXBv6+8nU/jtxeKXN2u6P4gf19a10s7c=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:From:To;
- s=rs20250326; t=1763175542; v=1;
- b=GLHPzYcmMEv6rItLA/yI4zIQfLoEru1i+cUaWLXddDGHGuCRVo9n0rxSAi3Er7Ti
- LM+oX5FJbHrH6GpM5oh3qInCeZpMPQLaqGc7mjgnO8dNJBvYoMXtPLbvTZOAzxH8
- PHKQikLpyU5u6gfD3y0cwEFSQYl0IF4K25daQ7C2nI9Y3Lk8yYbJyPITbsLwA3i0
- FTdtNnnIQLucRBcxA6nETwl7zArMXkVacfFsrbOLIhEW7wxpsOfo4fW3k7s6cUXR
- p1s9acoJOI43thyP2zvK0/sn29bci8qCMS+/Eh/uwhpvy0ReZrmIECG3Uq7ckdsg
- vqrU6xiX3pZBJIRsnXI/ag==
-Message-ID: <3c3ad5f1-37ac-4c4b-93c4-ca67b5a1edef@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 15 Nov 2025 11:59:01 +0900
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vKA91-0008Mu-Id
+ for qemu-devel@nongnu.org; Sat, 15 Nov 2025 01:52:25 -0500
+Received: from inva020.nxp.com (localhost [127.0.0.1])
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 86A481A2170;
+ Sat, 15 Nov 2025 07:52:22 +0100 (CET)
+Received: from aprdc01srsp001v.ap-rdc01.nxp.com
+ (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 499BB1A14DE;
+ Sat, 15 Nov 2025 07:52:22 +0100 (CET)
+Received: from lsv031015.swis.in-blr01.nxp.com
+ (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 6CBDE1800091;
+ Sat, 15 Nov 2025 14:52:21 +0800 (+08)
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCHv2 11/13] hw/arm/fsl-imx8mm: Adding support for ENET ethernet
+ controller
+Date: Sat, 15 Nov 2025 12:20:57 +0530
+Message-Id: <20251115065059.1884980-12-gaurav.sharma_7@nxp.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251115065059.1884980-1-gaurav.sharma_7@nxp.com>
+References: <20251115065059.1884980-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <aQJbd5qYR10qcbr7@x1.local>
- <38c07d37-1b4d-42d2-ab41-fbe1c860dd3b@rsg.ci.i.u-tokyo.ac.jp>
- <aQu2_izqViAbJ3A9@x1.local>
- <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
- <aQ0Ys09WtlSPoapm@x1.local>
- <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
- <aQ37hd0fVJltYtt-@x1.local>
- <5002e5b4-0493-4dff-af11-402cebecbcc2@rsg.ci.i.u-tokyo.ac.jp>
- <aRYPXh_9m5ZvTi2w@x1.local>
- <ded7ef38-8c99-4d37-87b2-2f5ba1dc93fc@rsg.ci.i.u-tokyo.ac.jp>
- <aRdLFwxzJwjsXFpY@x1.local>
- <a8c03d1e-a3f4-40de-a633-7b15ec2288e3@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-In-Reply-To: <a8c03d1e-a3f4-40de-a633-7b15ec2288e3@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Virus-Scanned: ClamAV using ClamSMTP
+Received-SPF: pass client-ip=92.121.34.13;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,129 +68,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/15 10:58, Akihiko Odaki wrote:
-> On 2025/11/15 0:30, Peter Xu wrote:
->> On Fri, Nov 14, 2025 at 10:24:40AM +0900, Akihiko Odaki wrote:
->>> However it creates another problem. Think of the following sequence:
->>>
->>> call_rcu_thread()              |
->>>                                 | call_rcu1()
->>>                                 |  qatomic_fetch_inc(&rcu_call_count)
->>>                                 |  qemu_sem_post(&sync_event)
->>>                                 |
->>>   qatomic_read(&rcu_call_count) |
->>>   enter_qs(false)               |
->>>    wait_for_readers(false)      |
->>>     qemu_sem_timedwait(         |
->>>      &sync_event, 10)           |
->>>
->>> qemu_sem_timedwait() incorrectly interrupts the RCU thread and enters 
->>> the
->>> force quiescent state.
->>
->> First thing to mention is, IIUC above can't happen because if
->> call_rcu_thread() is already waked up and reaching enter_qs(), then there
->> should have been, for example, a prior call_rcu1() that incremented
->> rcu_call_count and posted to sync_event, hence rcu_call_count cannot be 0
->> anymore in the call_rcu1() above, because the sub happens later:
->>
->> call_rcu_thread:
->>          ... sees rcu_call_count > 0, quit loop ...
->>          ...
->>          enter_qs(sleep);
->>          qatomic_sub(&rcu_call_count, n); <-------------------------
->>          ...
->>
->> That means the concurrent call_rcu1() above will not post sem anymore
->> because it will only post it if rcu_call_count==0.
-> Below is an extended version of the sequence:
-> 
-> call_rcu_thread()                |
->   qatomic_sub(&rcu_call_count, n) |
->   (sets rcu_call_count to 0)      |
->                                   | call_rcu1()
->                                   |  qatomic_fetch_inc(&rcu_call_count)
->                                   |  qemu_sem_post(&sync_event)
->   qatomic_read(&rcu_call_count)   |
->   enter_qs(false)                 |
->    wait_for_readers(false)        |
->    qemu_sem_timedwait(            |
->     &sync_event, 10)              |
-> 
-> Note that there may not be a qemu_sem_wait(&sync_event) call between 
-> qatomic_sub(&rcu_call_count, n) and qatomic_read(&rcu_call_count).
-> 
->>
->> Besides, IMHO replacing the event with sem shouldn't change similar
->> behavior comparing to when using events.  Because any spot that can 
->> post()
->> concurrently can also does qemu_event_set() concurrently... after all, we
->> only have a few spots resettting the event in the original patch, 
->> after the
->> reset a concurrent qemu_event_set() will re-activate it.
-> 
-> The sequence I showed is handled properly with properly placed 
-> qemu_event_reset():
-> 
-> call_rcu_thread()                |
->   qatomic_sub(&rcu_call_count, n) |
->   (sets rcu_call_count to 0)      |
->                                   | call_rcu1()
->                                   |  qatomic_fetch_inc(&rcu_call_count)
->                                   |  qemu_event_set(&sync_event)
->   qatomic_read(&rcu_call_count)   |
->   qemu_event_reset(&sync_event)   |
->   enter_qs(false)                 |
->    wait_for_readers(false)        |
->     qemu_sem_timedwait(           |
->      &sync_event, 10)             |
-> 
-> Note that a concurrent qemu_event_set() after resetting the event can 
-> only triggered with force_rcu(), which is intended to interrupt 
-> wait_for_readers().
+It enables emulation of ENET ethernet controller in iMX8MM
+Enables testing and debugging of network dependent drivers
+Added ENET MAC IRQ lines
 
-This is wrong. The following can still happen:
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+---
+ docs/system/arm/imx8mm-evk.rst |  1 +
+ hw/arm/Kconfig                 |  1 +
+ hw/arm/fsl-imx8mm.c            | 24 ++++++++++++++++++++++++
+ hw/arm/imx8mm-evk.c            |  1 +
+ include/hw/arm/fsl-imx8mm.h    |  8 ++++++++
+ 5 files changed, 35 insertions(+)
 
-call_rcu_thread()                |
-  qatomic_sub(&rcu_call_count, n) |
-  (sets rcu_call_count to 0)      |
-                                  | call_rcu1()
-                                  |  qatomic_fetch_inc(&rcu_call_count)
-  qatomic_read(&rcu_call_count)   |
-  qemu_event_reset(&sync_event)   |
-                                  |  qemu_event_set(&sync_event)
-  enter_qs(false)                 |
-   wait_for_readers(false)        |
-    qemu_sem_timedwait(           |
-     &sync_event, 10)             |
-
-I'll fix it with the next version.
-
-> 
->>
->> Sem does introduce possible false positives on events, but as I was 
->> trying
->> to justify, a generic VM boots and shutdown should need less than 1000 
->> rcu
->> calls, so worst case is we loop read rcu_call_count 1000 times... I also
->> didn't measure how many of such call_rcu1() will see N>0 so they'll not
->> post() to sem at all, I believe it'll be common.  So the perf overhead
->> should really be rare, IMHO.
->>
->> Note that I was not requesting you to replace this event to sem before
->> merging.  Frankly, I think your work is good enough to land.
->>
->> However I still want to discuss a sem replacement, not only because 
->> this is
->> the best place to discuss it (after all, force rcu starts to introduce a
->> genuine second user of the event besides call_rcu1, hence the "being able
->> to remember more than 1" will start to make more sense than avoid 
->> resets),
->> it looks also cleaner to remove some new code force rcu adds.
-> 
-> How do "being able to remember more than 1" help?
-> 
-> Regards,
-> Akihiko Odaki
+diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
+index 60ebcd1394..173f4688fb 100644
+--- a/docs/system/arm/imx8mm-evk.rst
++++ b/docs/system/arm/imx8mm-evk.rst
+@@ -14,6 +14,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+  * 4 UARTs
+  * 3 USDHC Storage Controllers
+  * 1 Designware PCI Express Controller
++ * 1 Ethernet Controller
+  * 5 GPIO Controllers
+  * 6 I2C Controllers
+  * 3 SPI Controllers
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 733baea384..d41d03d728 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -634,6 +634,7 @@ config FSL_IMX8MM
+     select FSL_IMX8MM_ANALOG
+     select FSL_IMX8MM_CCM
+     select IMX
++    select IMX_FEC
+     select IMX_I2C
+     select OR_IRQ
+     select SDHCI
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index e5599b1c48..7be0bb8664 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -209,6 +209,8 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
+     }
+ 
++    object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
++
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -532,6 +534,21 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, spi_table[i].irq));
+     }
+ 
++    /* ENET1 */
++    object_property_set_uint(OBJECT(&s->enet), "phy-num", s->phy_num,
++                             &error_abort);
++    object_property_set_uint(OBJECT(&s->enet), "tx-ring-num", 3, &error_abort);
++    qemu_configure_nic_device(DEVICE(&s->enet), true, NULL);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->enet), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_ENET1].addr);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
++                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
++
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+         return;
+@@ -594,6 +611,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
+         case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
++        case FSL_IMX8MM_ENET1:
+         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_PCIE1:
+         case FSL_IMX8MM_PCIE_PHY1:
+@@ -614,10 +632,16 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static const Property fsl_imx8mm_properties[] = {
++    DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mmState, phy_num, 0),
++    DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mmState, phy_connected, true),
++};
++
+ static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
++    device_class_set_props(dc, fsl_imx8mm_properties);
+     dc->realize = fsl_imx8mm_realize;
+ 
+     dc->desc = "i.MX 8MM SoC";
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index 1366f84d4a..d57b56d1d5 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -77,6 +77,7 @@ static void imx8mm_evk_init(MachineState *machine)
+     };
+ 
+     s = FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
++    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 6b70be81d2..356627ab82 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -17,6 +17,7 @@
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mm_analog.h"
+ #include "hw/misc/imx8mm_ccm.h"
++#include "hw/net/imx_fec.h"
+ #include "hw/or-irq.h"
+ #include "hw/pci-host/designware.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+@@ -58,11 +59,15 @@ struct FslImx8mmState {
+     IMXSPIState        spi[FSL_IMX8MM_NUM_ECSPIS];
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
++    IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
++
++    uint32_t           phy_num;
++    bool               phy_connected;
+ };
+ 
+ enum FslImx8mmMemoryRegions {
+@@ -216,6 +221,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_WDOG2_IRQ    = 79,
+     FSL_IMX8MM_WDOG3_IRQ    = 10,
+ 
++    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
++    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
++
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
+-- 
+2.34.1
 
 
