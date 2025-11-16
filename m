@@ -4,119 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1289BCCD19A
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 20:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E90BCEBF61
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 21:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKjeS-0002qV-Ot; Sun, 16 Nov 2025 15:47:12 -0500
+	id 1vKk4W-0007nV-8r; Sun, 16 Nov 2025 16:14:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vKjeP-0002pg-QE; Sun, 16 Nov 2025 15:47:10 -0500
-Received: from 6.mo548.mail-out.ovh.net ([188.165.58.48])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vKjeM-00083e-OO; Sun, 16 Nov 2025 15:47:09 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.98])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4d8jbl1kSTz5yfQ;
- Sun, 16 Nov 2025 20:46:58 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Sun, 16 Nov
- 2025 21:46:57 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-95G001f456cd2e-8db9-415e-bd1a-088123101773,
- 341CA4BE1272FAB2DFA1B6D1A4625F22D6D7B78A) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <6253b8f4-7661-48b5-910d-2abe010c04e8@kaod.org>
-Date: Sun, 16 Nov 2025 21:46:57 +0100
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vKk4U-0007n4-K0
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 16:14:06 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vKk4S-0003SR-7S
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 16:14:06 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b725ead5800so434564766b.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Nov 2025 13:14:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1763327642; x=1763932442; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Pafkzefx6529M/rSwlUFN2UfeAYzBaRkosylYUUsRMg=;
+ b=UR0tm+d832fVcquyuCR0BIOGOvYJHlYafQZuvZSqVfxXTJD2u3eEOl0tzR8R/JPcoj
+ nFRHUbSKLKenje0qYzsuYDitlQqJPeuZkzTuXSGFYHc90r+IbjXSYwGlxU8e9gYV6g2n
+ yxs9nFoqtc0bDUJJQ4ay/Gzt40TnNvGCXgZAdB0+VYDItcqJlykM7stQiVWEULr5wzXr
+ 7u1MtU/T8s5SuVRRrvyVShJwAXyDWMT5399g6HYzYIj64fQzSNm7vtStxNC8xWGJ9hgd
+ d+zbovrxUXxxOyZCsLjzEL1BhHpwD3AbihcMecanaAeOlpl4CNhGMPvbgcexQmFam9O5
+ 7gZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763327642; x=1763932442;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Pafkzefx6529M/rSwlUFN2UfeAYzBaRkosylYUUsRMg=;
+ b=Q24loLM5iCds8bi0NPvmdn2yVXSizkaktxG7MXT0XufRhIR9fzVILx89e8/FhDhr+C
+ Jc50I1mAUaxSkUpkJzPJLRyMWQmmJ+sV8zjVTz12qyvxyDXT+5pKsPl2hvFkzf4tW5pd
+ 9dyD3IddmbZespaiDoB//4eRQ+1e5zCsBGms83UpahcZwbphWP+6f1undnmsxCBfwOa/
+ Xt5R3bq3ygK3qDXoAQrqk0MmJ5ulttptMiWnsmqo8ADxmVSxiPjLuyihlkGQlsybbLT7
+ niJbqRcipvRDqian0/J0yIpJ3JSEcgzB8GO88I5hfBZxxwnvrKhdBZOgfIaBJH/XOz3z
+ 0Kbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTKOMSvU7rnYosBgLPfT8IsoPTCOloS0udTiBHrozKZN1sXBKcqaIv//42HXF03n3NbDJ9+Xd9a/Re@nongnu.org
+X-Gm-Message-State: AOJu0Ywl1PxtR7f2I+7tryAIhaFA0J+NM+kA4Fn1p9adtuURm5OzfCDH
+ OT9dOobvq1ehVAG9xXBBAaAhahi0Sw1G42MclGQGoeTOp62LyUqPf+fzRr5DCVVeEkuWxU5pcta
+ u5h1t+zITrCyfmTyDLMWZ627xFduSuIU=
+X-Gm-Gg: ASbGnctdN3j0SHTDTyg7Wj7VM+9J1uOZmNFsnNckNpSlIDwjcvWhxHzpnwXv2bSNIBC
+ AD1hSmaZQ20yoZKyLT8wxYmnFvGnLReALxstae56w9h6f8KjHzMd9CKd4x+H5Y34AxB7Gx2uk3u
+ ZpvpnFXozEh+QUXuFgeWCj2bO1U2xZALTPGi1Lle0mmhHv+qGeBG+ye9dnEvxw0Zl6CPsJYvAM0
+ S9BT481iawGpznARUPwc8EC6NgP1WoVSyENYOqR8qZLpV9opUdq2ZM6hRHcF5+4mRdZKp+nMRJm
+ 6krQJQM9ZoCVLjKxvw==
+X-Google-Smtp-Source: AGHT+IEUTxANqtj1SQj+MQ1YdO3xZW+HHZCVCzeLK+W/iIEjjYyiqUIH9ak47knm00MHYYKIpJLzivmUkIt7va7rsvc=
+X-Received: by 2002:a17:907:97cc:b0:b73:7b5d:e76a with SMTP id
+ a640c23a62f3a-b737b5dea0bmr674098066b.27.1763327641634; Sun, 16 Nov 2025
+ 13:14:01 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v2 08/12] hw/arm/aspeed_ast10x0: Add AST1060 SoC
- support
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, Kevin
- Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
-References: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
- <20251112030553.291734-9-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251112030553.291734-9-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.95]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 35b2dca2-4cb3-4a84-9bee-ae4cafe08427
-X-Ovh-Tracer-Id: 4053802616971889470
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTELNB8YEuNPcH7tImB3ujllpqAJgSE1UdOIpKFyeHSiSPD8rW0dBfviQVQefu9tXWnTYcWktdilKA/ib4GoQe5DL6lIT2GIQsGDuGE65VfTNaNrInh17EgT63pBjzHIVZLjit6zNIUlLFa5zTYyN636D3pq5jl8xNOgjY7CM+O10r4J6Kt/caZAqYk34WdEkz0o5FjEiIt7lNubQp9lOOETWvkbm8T6KcyarbfgdhWWwqc/9dOG9wkbKYLzXB3zqNBOzjOb6H6PSl683dnLR1tCcB6mluJOoaC1AfG836dgMxKQXeebMhDAHQcweXJ22JJB4tI30WGIbI8WSMhItSK7oDlerLeAFUwedI0Y6yOaBMm0QfBjNGeEsUjsHqRFSr/LvXdfF32/lHvW6uGhxgXMZg9zPyUOvdu7+nMlNO8SU8nLk1KgQD0JWw5ZFtsqrpaL1ZXhn6WDEqRG/ELyXIwEXPnXRGvGhw6qNkxf6g95gsbMk8UvBNpYWvBVx4nC4v05Z4q+rbLYGMhZ6t3/TJ9lBgBoP0pGURqMlowrfMuVKoFzwL8bmtOtoAruH3tTxA2/vbjahkxCSuoOBY4H2/MpPKHt9yrCSA8msp9rjU+ZU/nDqw+ZQeFgBqwv3IUlaubTRlmtT6l/j/Rt2nd1mcG5VQzooUs/w3VcwYUAUNLRSQ
-DKIM-Signature: a=rsa-sha256; bh=l2TVH9YOQo/0hD0npMnI10Pg2uE7125Qkw4HpVPhRsk=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1763326020; v=1;
- b=sBWGe6DlYUK5to9U0fE1OS8MIGCdztyJZxuIDM4eDEeEdm1YokOugbmYNGY+sCC1E9hMxn5k
- gKDpZ52HXhKpo26Q1UIUPCillXD4Me2OG4Eevow9WjtDWeAN0FKvQtW7EHa81sYnbuXaP4QBZK3
- vWxYlcTfuIQkAjscrIv8G6H40bxfIhkooyacJm+RzrQ1hDJryUjo+jHsH0Iwqotuja+t1NbMA10
- jSidjFFBX9YRJpvUVYzFIXwPrfSIHXzXt0VN5tOu9itWXbR4R5CSHTUg64c/k1GBgKkXrt3Bp68
- DDsoDVBj/tf3FZPAmgF7Y5oOTYX/QsPa+gTcSy7speoOA==
-Received-SPF: pass client-ip=188.165.58.48; envelope-from=clg@kaod.org;
- helo=6.mo548.mail-out.ovh.net
+References: <20251116125641.2255794-1-dmitry.osipenko@collabora.com>
+ <20251116125641.2255794-5-dmitry.osipenko@collabora.com>
+In-Reply-To: <20251116125641.2255794-5-dmitry.osipenko@collabora.com>
+From: Yiwei Zhang <zzyiwei@gmail.com>
+Date: Sun, 16 Nov 2025 13:14:11 -0800
+X-Gm-Features: AWmQ_bkgaAeTLI9RpUeeQZxXrPE-YZPno-KWkQSeYh2SabeiENxqu0zB4lbrO1E
+Message-ID: <CAJ+hS_js9UZc-e0R0vegvC-pp8HRWzsxLfAWRrwnG7=6nfOpXQ@mail.gmail.com>
+Subject: Re: [PATCH v16 04/10] virtio-gpu: Support asynchronous fencing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny <gert.wollny@collabora.com>,
+ qemu-devel@nongnu.org, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>, 
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, 
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
+ Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,120 +113,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/25 04:05, Jamin Lin wrote:
-> Add initial support for the Aspeed AST1060 SoC. The AST1060 reuses most
-> of the AST1030 peripheral device models, as the two SoCs share nearly
-> the same controllers including WDT, SCU, TIMER, HACE, ADC, I2C, FMC,
-> and SPI.
-> 
-> A new common initialization and realization framework (ast10x0_init
-> and ast10x0_realize) is leveraged so AST1060 can instantiate the
-> existing AST1030 models without redefining duplicate device types.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+On Sun, Nov 16, 2025 at 4:58=E2=80=AFAM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
+>
+> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+> handle fence as soon as it's signalled instead of periodically polling
+> the fence status. This feature is required for enabling DRM context
+> support in Qemu because legacy fencing mode isn't supported for DRM
+> contexts in virglrenderer.
+>
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+> Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
->   hw/arm/aspeed_ast10x0.c | 59 ++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 58 insertions(+), 1 deletion(-)
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> 
-> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-> index 1521000af0..bcfe83bdb7 100644
-> --- a/hw/arm/aspeed_ast10x0.c
-> +++ b/hw/arm/aspeed_ast10x0.c
-> @@ -185,6 +185,23 @@ static void aspeed_soc_ast1030_init(Object *obj)
->       object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
->   }
->   
-> +static void aspeed_soc_ast1060_init(Object *obj)
+>  hw/display/virtio-gpu-gl.c     |   5 ++
+>  hw/display/virtio-gpu-virgl.c  | 127 +++++++++++++++++++++++++++++++++
+>  include/hw/virtio/virtio-gpu.h |  11 +++
+>  meson.build                    |   2 +
+>  4 files changed, 145 insertions(+)
+>
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index c06a078fb36a..1468c6ed1467 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(DeviceSta=
+te *qdev)
+>      if (gl->renderer_state >=3D RS_INITED) {
+>  #if VIRGL_VERSION_MAJOR >=3D 1
+>          qemu_bh_delete(gl->cmdq_resume_bh);
+> +
+> +        if (gl->async_fence_bh) {
+> +            virtio_gpu_virgl_reset_async_fences(g);
+> +            qemu_bh_delete(gl->async_fence_bh);
+> +        }
+>  #endif
+>          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>              timer_free(gl->print_stats);
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+> index d9704e3574a0..d6853bfab3cd 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -24,6 +24,23 @@
+>
+>  #include <virglrenderer.h>
+>
+> +/*
+> + * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fi=
+xed
+> + * in 1.1.0. Undefine bugged version of the macro and provide our own.
+> + */
+> +#if defined(VIRGL_CHECK_VERSION) && \
+> +    VIRGL_VERSION_MAJOR =3D=3D 1 && VIRGL_VERSION_MINOR < 1
+> +#undef VIRGL_CHECK_VERSION
+> +#endif
+> +
+> +#ifndef VIRGL_CHECK_VERSION
+> +#define VIRGL_CHECK_VERSION(major, minor, micro) \
+> +    (VIRGL_VERSION_MAJOR > (major) || \
+> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR > (minor)=
+ || \
+> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR =3D=3D (m=
+inor) && \
+> +     VIRGL_VERSION_MICRO >=3D (micro))
+> +#endif
+> +
+>  struct virtio_gpu_virgl_resource {
+>      struct virtio_gpu_simple_resource base;
+>      MemoryRegion *mr;
+> @@ -1055,6 +1072,103 @@ static void virgl_write_context_fence(void *opaqu=
+e, uint32_t ctx_id,
+>  }
+>  #endif
+>
+> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
 > +{
-> +    /*
-> +     * The AST1060 SoC reuses the AST1030 device models. Since all peripheral
-> +     * models (e.g. WDT, SCU, TIMER, HACE, ADC, I2C, FMC, SPI) defined for
-> +     * AST1030 are compatible with AST1060, we simply reuse the existing
-> +     * AST1030 models for AST1060.
-> +     *
-> +     * To simplify the implementation, AST1060 sets its socname to that of
-> +     * AST1030, avoiding the need to create a full set of new
-> +     * TYPE_ASPEED_1060_XXX device definitions. This allows the same
-> +     * TYPE_ASPEED_1030_WDT and other models to be instantiated for both
-> +     * SoCs.
-> +     */
-> +    aspeed_soc_ast10x0_init(obj, "ast1030");
+> +    struct virtio_gpu_virgl_context_fence *f;
+> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+> +
+> +    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
+> +        f =3D QSLIST_FIRST(&gl->async_fenceq);
+> +
+> +        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
+> +
+> +        g_free(f);
+> +    }
 > +}
 > +
->   static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCState *a, Error **errp)
->   {
->       AspeedSoCState *s = ASPEED_SOC(a);
-> @@ -451,6 +468,15 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
->                                   sc->irqmap[ASPEED_DEV_KCS] + aspeed_lpc_kcs_4));
->   }
->   
-> +static void aspeed_soc_ast1060_realize(DeviceState *dev_soc, Error **errp)
+> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
 > +{
-> +    Aspeed10x0SoCState *a = ASPEED10X0_SOC(dev_soc);
+> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+> +    struct virtio_gpu_ctrl_command *cmd, *tmp;
+> +    struct virtio_gpu_virgl_context_fence *f;
+> +    VirtIOGPU *g =3D opaque;
+> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
 > +
-> +    if (!aspeed_soc_ast10x0_realize(a, errp)) {
+> +    if (gl->renderer_state !=3D RS_INITED) {
 > +        return;
 > +    }
-> +}
 > +
->   static void aspeed_soc_ast1030_class_init(ObjectClass *klass, const void *data)
->   {
->       static const char * const valid_cpu_types[] = {
-> @@ -479,6 +505,32 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, const void *data)
->       sc->num_cpus = 1;
->   }
->   
-> +static void aspeed_soc_ast1060_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    static const char * const valid_cpu_types[] = {
-> +        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
-> +        NULL
-> +    };
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
+> +    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
 > +
-> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
-> +    dc->user_creatable = false;
-> +    dc->realize = aspeed_soc_ast1060_realize;
+> +    while (!QSLIST_EMPTY(&async_fenceq)) {
+> +        f =3D QSLIST_FIRST(&async_fenceq);
 > +
-> +    sc->valid_cpu_types = valid_cpu_types;
-> +    sc->silicon_rev = AST1060_A2_SILICON_REV;
-> +    sc->sram_size = 0xc0000;
-> +    sc->secsram_size = 0x40000; /* 256 * KiB */
-> +    sc->spis_num = 2;
-> +    sc->wdts_num = 4;
-> +    sc->uarts_num = 1;
-> +    sc->uarts_base = ASPEED_DEV_UART5;
-> +    sc->irqmap = aspeed_soc_ast1030_irqmap;
-> +    sc->memmap = aspeed_soc_ast1030_memmap;
-> +    sc->num_cpus = 1;
-> +}
+> +        QSLIST_REMOVE_HEAD(&async_fenceq, next);
 > +
->   static const TypeInfo aspeed_soc_ast10x0_types[] = {
->       {
->           .name           = TYPE_ASPEED10X0_SOC,
-> @@ -490,7 +542,12 @@ static const TypeInfo aspeed_soc_ast10x0_types[] = {
->           .parent         = TYPE_ASPEED10X0_SOC,
->           .instance_init  = aspeed_soc_ast1030_init,
->           .class_init     = aspeed_soc_ast1030_class_init,
-> -    },
-> +    }, {
-> +        .name           = "ast1060-a2",
-> +        .parent         = TYPE_ASPEED10X0_SOC,
-> +        .instance_init  = aspeed_soc_ast1060_init,
-> +        .class_init     = aspeed_soc_ast1060_class_init,
+> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> +            /*
+> +             * the guest can end up emitting fences out of order
+> +             * so we should check all fenced cmds not just the first one=
+.
+> +             */
+> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
+> +                continue;
+> +            }
+> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +                if (cmd->cmd_hdr.ring_idx !=3D f->ring_idx) {
+> +                    continue;
+> +                }
+> +                if (cmd->cmd_hdr.ctx_id !=3D f->ctx_id) {
+> +                    continue;
+> +                }
+> +            }
+> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_N=
+ODATA);
+> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> +            g_free(cmd);
+> +        }
+> +
+> +        trace_virtio_gpu_fence_resp(f->fence_id);
+> +        g_free(f);
+> +        g->inflight--;
+> +        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+> +            trace_virtio_gpu_dec_inflight_fences(g->inflight);
+> +        }
 > +    }
->   };
->   
->   DEFINE_TYPES(aspeed_soc_ast10x0_types)
+> +}
+> +
+> +static void
+> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
+> +                                  uint32_t ring_idx, uint64_t fence_id)
+> +{
+> +    struct virtio_gpu_virgl_context_fence *f;
+> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
+> +
+> +    f =3D g_new(struct virtio_gpu_virgl_context_fence, 1);
+> +    f->ctx_id =3D ctx_id;
+> +    f->ring_idx =3D ring_idx;
+> +    f->fence_id =3D fence_id;
+> +
+> +    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
+> +
+> +    qemu_bh_schedule(gl->async_fence_bh);
+> +}
+> +
+> +static void virgl_write_async_fence(void *opaque, uint32_t fence)
+> +{
+> +    VirtIOGPU *g =3D opaque;
+> +
+> +    virtio_gpu_virgl_push_async_fence(g, 0, UINT32_MAX, fence);
+> +}
+> +
+> +static void virgl_write_async_context_fence(void *opaque, uint32_t ctx_i=
+d,
+> +                                            uint32_t ring_idx, uint64_t =
+fence)
+> +{
+> +    VirtIOGPU *g =3D opaque;
+> +
+> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
+> +}
+> +#endif
+> +
+>  static virgl_renderer_gl_context
+>  virgl_create_context(void *opaque, int scanout_idx,
+>                       struct virgl_renderer_gl_ctx_param *params)
+> @@ -1154,6 +1268,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>  void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>  {
+>      virgl_renderer_reset();
+> +
+> +    virtio_gpu_virgl_reset_async_fences(g);
+>  }
+>
+>  int virtio_gpu_virgl_init(VirtIOGPU *g)
+> @@ -1166,6 +1282,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>      if (qemu_egl_display) {
+>          virtio_gpu_3d_cbs.version =3D 4;
+>          virtio_gpu_3d_cbs.get_egl_display =3D virgl_get_egl_display;
+> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+> +        virtio_gpu_3d_cbs.write_fence         =3D virgl_write_async_fenc=
+e;
+> +        virtio_gpu_3d_cbs.write_context_fence =3D virgl_write_async_cont=
+ext_fence;
+> +        flags |=3D VIRGL_RENDERER_ASYNC_FENCE_CB;
+> +        flags |=3D VIRGL_RENDERER_THREAD_SYNC;
+> +#endif
+>      }
+>  #endif
+>  #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+> @@ -1199,6 +1321,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>      gl->cmdq_resume_bh =3D aio_bh_new(qemu_get_aio_context(),
+>                                      virtio_gpu_virgl_resume_cmdq_bh,
+>                                      g);
+> +#if VIRGL_CHECK_VERSION(1, 1, 2)
+> +    gl->async_fence_bh =3D aio_bh_new(qemu_get_aio_context(),
+> +                                    virtio_gpu_virgl_async_fence_bh,
+> +                                    g);
+> +#endif
+>  #endif
+>
+>      return 0;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index 58e0f91fda65..16e9f6914f07 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -233,6 +233,13 @@ struct VirtIOGPUClass {
+>                               Error **errp);
+>  };
+>
+> +struct virtio_gpu_virgl_context_fence {
+> +    uint32_t ctx_id;
+> +    uint32_t ring_idx;
+> +    uint64_t fence_id;
+> +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
+> +};
+> +
+>  /* VirtIOGPUGL renderer states */
+>  typedef enum {
+>      RS_START,       /* starting state */
+> @@ -250,6 +257,9 @@ struct VirtIOGPUGL {
+>      QEMUTimer *print_stats;
+>
+>      QEMUBH *cmdq_resume_bh;
+> +
+> +    QEMUBH *async_fence_bh;
+> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+>  };
+>
+>  struct VhostUserGPU {
+> @@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+>  void virtio_gpu_virgl_reset(VirtIOGPU *g);
+>  int virtio_gpu_virgl_init(VirtIOGPU *g);
+>  GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+>
+>  #endif
+> diff --git a/meson.build b/meson.build
+> index b86c9b55562e..2418aaa1a33b 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2546,6 +2546,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found(=
+))
+>  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+>  if virgl.found()
+>    config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')=
+[0])
+> +  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split('.')=
+[1])
+> +  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split('.')=
+[2])
+>  endif
+>  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+>  config_host_data.set('CONFIG_VTE', vte.found())
+> --
+> 2.51.1
+>
 
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 
