@@ -4,118 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71C3CEBF8A
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 06:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32CCACEACEF
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 12:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKWdF-0002bx-J5; Sun, 16 Nov 2025 01:53:07 -0500
+	id 1vKcKI-0005GK-Q4; Sun, 16 Nov 2025 07:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKWd9-0002a8-BE
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 01:53:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vKcKH-0005Fu-1P
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 07:57:53 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKWd7-0002lF-7O
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 01:52:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763275975;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kF1DIeUOCSGCpUaQscZBqkc4fmRRxAi16pb/d9BjruI=;
- b=FGaNU642yTiZeLJluwnV9bt3osseucjP0NSnKsOyK5g0XA+dcblhgOUDom7B74Qenj+fgf
- DCd3IBVGtyib/YdpNs3rCxIQEfHUaXqVnLA35KENUtdgvTFAfYyXRNS7v9pIKMUWNV7/Np
- 454V7Jd8sfPg0pKQ6bwwYfo2xR4aW/M=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-YdjFf_NdPOq3QU3VvJIe2A-1; Sun, 16 Nov 2025 01:52:53 -0500
-X-MC-Unique: YdjFf_NdPOq3QU3VvJIe2A-1
-X-Mimecast-MFC-AGG-ID: YdjFf_NdPOq3QU3VvJIe2A_1763275972
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-47106a388cfso19355935e9.0
- for <qemu-devel@nongnu.org>; Sat, 15 Nov 2025 22:52:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763275972; x=1763880772; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=kF1DIeUOCSGCpUaQscZBqkc4fmRRxAi16pb/d9BjruI=;
- b=UuQzQ+GhoJLuk8jqO2ZjhaObYpSgZwB9ZgBx4AYuV33TCHzgn2Egghjkb6O3m3o+yd
- Iv/ZAHtbBGscceIe+vtT/oHGx0WHUs6yXtuYQy5f/caNO7o/Jx+Jad36Btem69qXMqmr
- Ek8tpi6F/icNoRIJUzITWl4j3xJ4qgIz5NLn4MbAvhGYeuhspxjhFfZvE7yidesqOmCv
- 0L/iW2R2Gi7at/VcUgiaChpTH5lXqx6lq+P07zbcIeEX09tP8j3IW72Sy2zPO1EIinC8
- kMqtOwhaCm2SAkouqQxc3+nUKGJX7P5aMqUmRyPdzL75OaTsqQFIDuH53rEntopbIE31
- KsYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763275972; x=1763880772;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kF1DIeUOCSGCpUaQscZBqkc4fmRRxAi16pb/d9BjruI=;
- b=s75MMcM+Da+LR/LrsOA2fs67Ej/3t5fZZthmq3W8ueiQDscHZAWM0GVD5Q9genihsB
- aj/AttvxGGzU5K1PO3HWTsYtLPYwxZqpmz9U4KSu7Gs4cIsuoVm2G9bHzDsFgCQG3B/P
- WKli6pg/Or7qdjSpqSikrJWMNjCjamqO5ZZ1bRCKIh3prHfICCh61CKKa8S9q751cqDZ
- R9xyOnVzkTOMoJFxw6HeZXi+BsVAEnpYcC3wsK2FAh1gb+gc9He/f5Y9kum8/R7ghv/z
- yAtG2La4zJDpAcbjdsceNRyvwiZacZVuCTeqMuwO4yzDj4up1LWbKQHdpnWT5mfmU6p1
- x1uw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3MlgCkel1xUl5IXTGCbpCOHnFPixYt9CnVNfIYqTGnw52Gxi6eGMJOqpQVoqZHVxFcsxZSz5pLHba@nongnu.org
-X-Gm-Message-State: AOJu0YyAONKeX9xGvyWdieRX1GbauwydzIkVbLt4esIzXfk8Phb7jSub
- k4z09HGrnesHY0frBScVA6CjBjIWA5VvP05R4dOr/VI7ndAdrhsSI728d7yVLdS6kVZM28zipRW
- kFy/kwX38UOXZXObVC739kx1ihuUQJNDThUdcuGws9+Id8YGlauCuetgg
-X-Gm-Gg: ASbGncsXRh4oGuHTLlLMPkXJZuSEl28mhi/8blf0JqN/rWbRHSRhRq5tfC3CxbpmstZ
- pj1kg0kV0tyJ6tCq81X9a9XaUNH3DQFqaoZxPDndKsmP5IItktMTFTvvO6IdekJR3fq3fLMlAmo
- RN3gHxTWVZu8azjZcy2TSqfwHAH2E5kV0pF78q5nXll0U545tZhu3UTiJlVmdnFp37YVtLK0gGD
- /bA0DfV2J0FVdQUzhOt9qwfyuiLgNag7CM1S3F8L044j1ZRHN9pMoZaPnfXZx6UTPxPrfO7adqN
- I/WBuZsBn9V14gB5SVRNgCyBaEpWv1Aq59vDzEl5EJPYJ5lFaEysTcROZfsRO+f6W5tsbHfSXNK
- XlU7i/FkBWhgrWNS8q6U=
-X-Received: by 2002:a05:6000:64a:b0:42b:4267:83d5 with SMTP id
- ffacd0b85a97d-42b5935dde3mr6116135f8f.8.1763275971976; 
- Sat, 15 Nov 2025 22:52:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7glVwif3DF8yw2PlI0pPn9PeTzwIKCqyfjgNuyyX8z3rojTByCODMHUxIGZttuU3MwXls4A==
-X-Received: by 2002:a05:6000:64a:b0:42b:4267:83d5 with SMTP id
- ffacd0b85a97d-42b5935dde3mr6116123f8f.8.1763275971508; 
- Sat, 15 Nov 2025 22:52:51 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-39-63.inter.net.il. [80.230.39.63])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f176basm19260632f8f.34.2025.11.15.22.52.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Nov 2025 22:52:50 -0800 (PST)
-Date: Sun, 16 Nov 2025 01:52:48 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
- farosas@suse.de, jinpu.wang@ionos.com, thuth@redhat.com,
- berrange@redhat.com
-Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
-Message-ID: <20251116014625-mutt-send-email-mst@kernel.org>
-References: <20251107020149.3223-1-jasowang@redhat.com>
- <20251113110004-mutt-send-email-mst@kernel.org>
- <aRYJRZyNrDcDzTuG@x1.local>
- <20251113114710-mutt-send-email-mst@kernel.org>
- <aRYRhg7lKDCBUIrf@x1.local>
- <20251113124207-mutt-send-email-mst@kernel.org>
- <CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vKcKE-0008Ic-Hr
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 07:57:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763297848; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=k1X6FoG7JXczWYgGn1QHkJ8sB5ek450iljJYhMoKZYd43gU+BCApD6o0RsrOzye/3/ZyHqLKO2uJYI9fetaC/08ZwLNumCig7uiLstsYX7dbpmjP/Izz1km8hDhANWcKtraC0cinBT4a1B+VyasyPYE1KMaX1x9qlFcxtfOqA+A=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1763297848;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=3Qk5zJqjVdS/BK3eJuBKOmV02gUOgZRXXpGCYqXoZ3Q=; 
+ b=EF1BVNNXOH4c0R3ASHn3PgIXsscmXHI6GirBPrLm27qJMrx1Q8SznzQVM94kXoD2rKmLktS4BQFFx1qbwa+zuf+AYzWiHhIZ6wPJtI6ZW5g8DlPE4P9uInEDuPL+gXCC8qHFa1EdPivS+7RtfNFQ0SNGaLiVQYlQXOwAYylgWTo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763297848; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=3Qk5zJqjVdS/BK3eJuBKOmV02gUOgZRXXpGCYqXoZ3Q=;
+ b=Fij2wqdRVHW5gjLvaiSijNxlsM7WFEdaS93rLxYfqu7jXnkribdUbLnUdeCVyOWL
+ h2Yp2DBWwR/NgLnLSN0N0mD/wYnlf5YRzEI7qO9wYTdaOW25/GycTOqbiYNcDimFePK
+ ObIG2MDM1Jq0uaNPsdmFnnsYK/g+CeSpYRRRipTQ=
+Received: by mx.zohomail.com with SMTPS id 1763297846633875.2624930110816;
+ Sun, 16 Nov 2025 04:57:26 -0800 (PST)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
+Subject: [PATCH v16 00/10] Support virtio-gpu DRM native context
+Date: Sun, 16 Nov 2025 15:56:31 +0300
+Message-ID: <20251116125641.2255794-1-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.51.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,155 +93,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 14, 2025 at 09:32:47AM +0800, Jason Wang wrote:
-> On Fri, Nov 14, 2025 at 1:47 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Thu, Nov 13, 2025 at 12:12:38PM -0500, Peter Xu wrote:
-> > > On Thu, Nov 13, 2025 at 11:47:51AM -0500, Michael S. Tsirkin wrote:
-> > > > On Thu, Nov 13, 2025 at 11:37:25AM -0500, Peter Xu wrote:
-> > > > > On Thu, Nov 13, 2025 at 11:09:32AM -0500, Michael S. Tsirkin wrote:
-> > > > > > On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
-> > > > > > > We used to clear features silently in virtio_net_get_features() even
-> > > > > > > if it is required. This complicates the live migration compatibility
-> > > > > > > as the management layer may think the feature is enabled but in fact
-> > > > > > > not.
-> > > > > > >
-> > > > > > > Let's add a strict feature check to make sure if there's a mismatch
-> > > > > > > between the required feature and peer, fail the get_features()
-> > > > > > > immediately instead of waiting until the migration to fail. This
-> > > > > > > offload the migration compatibility completely to the management
-> > > > > > > layer.
-> > > > > > >
-> > > > > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> > > > > >
-> > > > > > This is not really useful - how do users know how to tweak their
-> > > > > > command lines?
-> > > > > > We discussed this many times.
-> > > > > > To try and solve this you need a tool that will tell you how to start
-> > > > > > VM on X to make it migrateable to Y or Z.
-> > > > > >
-> > > > > >
-> > > > > > More importantly,
-> > > > > > migration is a niche thing and breaking booting perfectly good VMs
-> > > > > > just for that seems wrong.
-> > > > >
-> > > > > IMHO Jason's proposal is useful in that it now provides a way to provide
-> > > > > ABI stablility but allows auto-ON to exist.
-> > > > >
-> > > > > If we think migration is optional, we could add a migration blocker where
-> > > > > strict check flag is set to OFF, as I mentioned in the email reply to Dan.
-> > > > > As that implies the VM ABI is not guaranteed.
-> > > > >
-> > > > > Thanks,
-> > > >
-> > > >
-> > > > All you have to do is avoid changing the kernel and ABI is stable.
-> > > > Downstreams already do this.
-> > >
-> > > But the whole point of migration is allowing VMs to move between hosts..
-> > > hence AFAIU kernel can change.
-> > >
-> > > Downstream will still have problem if some network features will be
-> > > optionally supported in some of the RHEL-N branches, because machine types
-> > > are defined the same in any RHEL-N, so IIUC it's also possible a VM booting
-> > > on a latest RHEL-X.Y qemu/kernel hit issues migrating back to an older
-> > > RHEL-X.(Y-1) qemu/kernel if RHEL-X.(Y-1) kernel doesn't have the network
-> > > feature available..
-> > >
-> > > It's also not good IMHO to only fix downstream but having upstream face
-> > > such problems, even if there's a downstream fix...
-> > >
-> > > This thread was revived only because Jinpu hit similar issues.  IMHO we
-> > > should still try to provide a generic solution upstream for everyone.
-> > >
-> > > Thanks,
-> > >
-> > > --
-> > > Peter Xu
-> >
-> > failing to start a perfectly good qemu which used to work
-> > because you changed kernels is better than failing to migrate how?
-> 
-> It doesn't:
-> 
-> 1) the strict feature check will be only enabled in new machine types
-> 2) if kernel ABI is stable, qemu will keep working after upgrading
-> kernel even with strict check otherwise it would be a bug of kernel
-> 
-> So I don't see it breaking anything if we make it start to work at 11.0?
+This patchset adds DRM native context support to VirtIO-GPU on QEMU.
 
-Using QEMU from git suddenly requires upgrading the kernel or figuring
-out obscure flags? Ugh.
+Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
+DRM native context [1] mediates lower level kernel driver UAPI, which
+reflects in a less CPU overhead and less/simpler code needed to support it.
+DRM context consists of a host and guest parts that have to be implemented
+for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+a real/native host GPU device for GL/VK applications.
 
+[1] https://www.youtube.com/watch?v=9sFP_yddLLQ
 
-> >
-> >
-> >
-> > graceful downgrade with old kernels is the basics of good userspace
-> > behaviour and has been for decades.
-> 
-> Peter has given the example of how hard we can define gracefulness
-> (e.g migrate from a kernel w/ USO to a kernel w/o USO) and fix.
-> 
-> Maybe we can think of a usersapce fallback to emulation of USO or
-> others, but I'm not sure if it's an overkill.
-> 
-> >
-> >
-> > sure, let's work on a solution, just erroring out is more about blaming
-> > the user. what is the user supposed to do when qemu fails to start?
-> 
-> It's the first step as it's much better than silently clearing the
-> feature which may confuse both user and migration. We can use warnings
-> instead of errors but I'm not sure how much it can help.
+Today there are four DRM native context drivers existing in a wild:
 
+  - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+  - AMDGPU, completely upstreamed
+  - Intel (i915), merge requests are opened
+  - Asahi (Apple SoC GPUs), partially merged upstream
 
-Well with this first step we have successfully blamed the user and
-the second step won't ever be taken.
+# How to try out DRM context:
 
-> >
-> >
-> > first, formulate what exactly do you want to enable.
-> >
-> >
-> >
-> > for example, you have a set of boxes and you want a set of flags
-> > to supply to guarantee qemu can migrate between them. is that it?
-> 
-> Mostly, it should work as a CPU cluster.
+1. DRM context uses host blobs and on host requires v6.13 or newer version
+of Linux kernel that contains necessary KVM fixes.
 
-the reason it kinda works with CPU cluster is simply because
-there is a final set of CPU models and you can not easily
-switch your CPU to a different model.
+2. Use latest available Mesa (both guest and host) and libvirglrenderer 
+versions. On guest, build Mesa with enabled virtio native context support.
 
-> So it's the responsibility of
-> the management layer, maybe we can develop some tool to report this or
-> via qemu introspection ("query-tap" ?). Or if the management can do
-> this now, we don't even need to bother (or it can help to uncover
-> bugs). Anyhow, clearing a feature silently is not good and can cover
-> bugs of various layers.
-> 
-> Note that this issue is not specific to TAP, we may meet this for
-> vDPA/VFIO live migration as well. Basically, it should be the
-> responsibility of the management layer to deal with those migration
-> compatibility policies instead of using hard coded policies inside
-> Qemu. For qemu, it can simply error out when there's a mismatch
-> between features that are supported and features that are asked to
-> enable. We've suffered a lot in the past when trying to deal with this
-> by Qemu.
-> 
-> Thanks
+3. On guest, use latest Linux kernel v6.14 or newer.
 
-Yes but QEMU currently gives management no tools to figure out
-what is important for it. 
+Example QEMU cmdline that enables DRM context:
 
+  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm_native_context=on \
+      -machine q35,accel=kvm -m 8G
 
+Using latest virglrenderer-git version + drm-misc-next guest kernel +
+my QEMU branch [5] is recommended for the testing. See notes on the perf
+problems below.
 
-> >
-> >
-> >
-> > --
-> > MST
-> >
+# Known problems:
+
+1. DRM contexts are mapping host blobs extensively and these mapping
+operations work slowly in QEMU. This will be sorted out with addition of
+MAP_FIXED support in next versions of virglrenderer and QEMU [4][5][6].
+
+[4] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1374
+[5] https://gitlab.freedesktop.org/digetx/qemu/-/commits/native-context-v16
+[6] https://lore.kernel.org/qemu-devel/20251112233118.1475381-2-dmitry.osipenko@collabora.com/
+
+2. Linux kernel virtio-gpu driver doesn't limit display refresh rate,
+causing poor performance. Fix availalble in drm-misc-next tree [7]
+and should land upstream with v6.19+ kernel.
+
+[7] https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/a036f5fceedb9fbd715565fef7b824a121503de7
+
+3. Xorg on guest creates initial dumb buffer that is a vrend buffer, which
+   can't be re-used by native contexts. This may cause drawing artifacts.
+   Boot kernel with disabled fbdev using drm_client_lib.active="" kernel
+   cmdline parameter to work around the issue.
+
+   Wayland on guest isn't affected by this issue.
+
+Changelog:
+
+v16:- Applied async-fence improvement suggested by Yiwei Zhang on v14
+
+v15:- Added ack/rb/tb from Pierre-Eric Pelloux-Prayer and Yiwei Zhang.
+
+    - Applied minor cosmetic code change suggested by Yiwei Zhang on v14.
+
+v14:- Rebased on top of recent QEMU staging tree.
+
+    - DRM native context in QEMU now requires virglrenderer v1.2.0+
+      containing fix for async-fencing not working after guest reboot.
+
+    - Updated doc patch with new Asahi nctx rquirements info. Asahi
+      support landed to virglrenderer v1.2.0.
+
+v13:- Updated Asahi nctx MR link in the doc patch. Old MR was closed
+      and new opened.
+
+    - Fixed compiler warning about unused variable when using older
+      virglrenderer version.
+
+v12:- Rebased on top of recent QEMU/staging and a fix from Yiwei Zhang:
+
+        https://lore.kernel.org/qemu-devel/20250518152651.334115-1-zzyiwei@gmail.com/
+
+    - Async-fence and native context features now require virglrenderer > 1.1.1
+      that contains fix needed for resetting virtio-gpu-gl properly on QEMU
+      reboot:
+
+        https://gitlab.freedesktop.org/virgl/virglrenderer/-/commit/6f4681ff09cb17aa2d6715dbc6034eb3abe5711d
+
+    - Added r-b from Akihiko Odaki to the doc patch.
+
+    - Corrected resetting of async fences list that was done on scanout
+      reset in v11 instead of virtio-gpu reset.
+
+v11:- Added column for libvirglrenderer host requrements versions and 
+      corrected Asahi kernel link. Suggested by Akihiko Odaki.
+
+v10:- Added links to Asahi and i915 virglrenderer MRs, link to Asahi host
+      kernel. Suggested by Akihiko Odaki.
+
+    - Renamed gfxstream guest requrements table's colum to match the host
+      requirements table. Suggested by Akihiko Odaki.
+
+v9: - Updated doc patch by addresing review comments from Akihiko Odaki.
+      Made kernel requirements section specific to guest kernel and
+      removed reference to host requirements. Removed examples of
+      external projects' build flags.
+
+    - Added guest kernel minimum versions to the guest requirements table.
+
+v8: - Addressed review comments from Akihiko Odaki on the doc patch.
+
+    - Added r-bs from Akihiko Odaki on the doc patches.
+
+    - Extended vrend doc with info about hostmem requirement for GL 4.6
+
+v7: - Added r-b from Alex Bennée to the async fencing patch.
+
+    - Updated virtio-gpu doc patch with addressed review comments
+      from Akihiko Odaki.
+
+v6: - Fixed compilation warning using older version of virglrenderer,
+      which wasn't fixed properly in v5.
+
+    - Added t-bs from Alex Bennée.
+
+    - Added patches to improve virgl/venus doc by adding links
+      to the Mesa doc as was suggested by Akihiko Odaki.
+
+    - Updated patch that documents guest/host requirements. Added
+      links to Asahi nctx and reworked the doc structure by adding
+      requirements to each context-type section instead of having
+      one big blob or requirements, which was objected by Akihiko Odaki.
+
+v5: - Added r-bs from Akihiko Odaki.
+
+    - Added acks from Michael Tsirkin.
+
+    - Fixed compilation warning using older version of virglrenderer that
+      was reported by Alex Bennée. Noticed that I need to keep old
+      virgl_write_fence() code around for the older virglrenderer in
+      "Support  asynchronous fencing" patch, so added it back and verified
+      that old virglrenderer works properly.
+
+    - Added new patch from Alex Bennée that adds more virtio-gpu 
+      documentation with a couple corrections and additions to it from me.
+
+    - Rebased patches on top of latest staging tree.
+
+v4: - Improved SDL2/dmabuf patch by reusing existing Meson X11 config 
+      option, better handling EGL error and extending comment telling
+      that it's safe to enable SDL2 EGL preference hint. As was suggested
+      by Akihiko Odaki.
+
+    - Replaced another QSLIST_FOREACH_SAFE with QSLIST_EMPTY+FIRST in
+      the async-fencing patch for more consistency of the code. As was
+      suggested by Akihiko Odaki.
+
+    - Added missing braces around if-statement that was spotted by
+      Alex Bennée.
+
+    - Renamed 'drm=on' option of virtio-gpu-gl device to 
+      'drm_native_context=on' for more clarity as was suggested by 
+      Alex Bennée. Haven't added added new context-type option that 
+      was also proposed by Alex, might do it with a separate patch.
+      This context-type option will duplicate and depecate existing
+      options, but in a longer run likely will be worthwhile adding
+      it.
+
+    - Dropped Linux headers-update patch as headers has been updated
+      in the staging tree.
+
+v3: - Improved EGL presence-check code on X11 systems for the SDL2
+      hint that prefers EGL over GLX by using better ifdefs and checking
+      Xlib presence at a build time to avoid build failure if lib SDL2
+      and system are configured with a disabled X11 support. Also added
+      clarifying comment telling that X11 hint doesn't affect Wayland
+      systems. Suggested by Akihiko Odaki.
+
+    - Corrected strerror(err) that used negative error where it should
+      be positive and vice versa that was caught by Akihiko Odaki. Added
+      clarifying comment for the case where we get positive error code
+      from virglrenderer that differs from other virglrenderer API functions.
+
+    - Improved QSLIST usage by dropping mutex protecting the async fence
+      list and using atomic variant of QSLIST helpers instead. Switched away
+      from using FOREACH helper to improve readability of the code, showing
+      that we don't precess list in unoptimal way. Like was suggested by
+      Akihiko Odaki.
+
+    - Updated patchset base to Venus v18.
+
+v2: - Updated SDL2-dmabuf patch by making use of error_report() and
+      checking presense of X11+EGL in the system before making SDL2
+      to prefer EGL backend over GLX, suggested by Akihiko Odaki.
+
+    - Improved SDL2's dmabuf-presence check that wasn't done properly
+      in v1, where EGL was set up only after first console was fully
+      inited, and thus, SDL's display .has_dmabuf callback didn't work
+      for the first console. Now dmabuf support status is pre-checked
+      before console is registered.
+
+    - Updated commit description of the patch that fixes SDL2's context
+      switching logic with a more detailed explanation of the problem.
+      Suggested by Akihiko Odaki.
+
+    - Corrected rebase typo in the async-fencing patch and switched
+      async-fencing to use a sigle-linked list instead of the double,
+      as was suggested by Akihiko Odaki.
+
+    - Replaced "=true" with "=on" in the DRM native context documentation
+      example and made virtio_gpu_virgl_init() to fail with a error message
+      if DRM context can't be initialized instead of giving a warning
+      message, as was suggested by Akihiko Odaki.
+
+    - Added patchew's dependecy tag to the cover letter as was suggested by
+      Akihiko Odaki.
+
+Alex Bennée (1):
+  docs/system: virtio-gpu: Document host/guest requirements
+
+Dmitry Osipenko (8):
+  ui/sdl2: Restore original context after new context creation
+  virtio-gpu: Handle virgl fence creation errors
+  virtio-gpu: Support asynchronous fencing
+  virtio-gpu: Support DRM native context
+  ui/sdl2: Don't disable scanout when display is refreshed
+  ui/gtk: Don't disable scanout when display is refreshed
+  docs/system: virtio-gpu: Add link to Mesa VirGL doc
+  docs/system: virtio-gpu: Update Venus link
+
+Pierre-Eric Pelloux-Prayer (1):
+  ui/sdl2: Implement dpy dmabuf functions
+
+ docs/system/devices/virtio/virtio-gpu.rst | 116 +++++++++++++-
+ hw/display/virtio-gpu-gl.c                |   7 +
+ hw/display/virtio-gpu-virgl.c             | 182 +++++++++++++++++++++-
+ hw/display/virtio-gpu.c                   |  15 ++
+ include/hw/virtio/virtio-gpu.h            |  14 ++
+ include/ui/sdl2.h                         |   7 +
+ meson.build                               |   8 +-
+ ui/gtk-egl.c                              |   1 -
+ ui/gtk-gl-area.c                          |   1 -
+ ui/sdl2-gl.c                              |  70 ++++++++-
+ ui/sdl2.c                                 |  42 +++++
+ 11 files changed, 446 insertions(+), 17 deletions(-)
+
+-- 
+2.51.1
 
 
