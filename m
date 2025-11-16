@@ -4,93 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0C9CEB2C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Nov 2025 12:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672C6CD4F3E
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 06:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKFLn-000587-5K; Sat, 15 Nov 2025 07:25:55 -0500
+	id 1vKWWB-0007Ug-Nb; Sun, 16 Nov 2025 01:45:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vKFLl-000530-EK
- for qemu-devel@nongnu.org; Sat, 15 Nov 2025 07:25:53 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vKFLj-0003Ks-KY
- for qemu-devel@nongnu.org; Sat, 15 Nov 2025 07:25:53 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4777a9aeedaso26432915e9.3
- for <qemu-devel@nongnu.org>; Sat, 15 Nov 2025 04:25:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKWW3-0007QZ-Gt
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 01:45:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKWW0-0001Su-6M
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 01:45:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763275531;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9mKVEdd9mkeH4LX/Wlw5fH2FnV/iWGrlqVGOcyf22KQ=;
+ b=ZN1oEQnPDdKgFbVdlY2fiInvjSZJF44eLinTjbZ/EItoCghB7/cXTsNQBP/9v+rQdKjFfZ
+ EXwXpJKMQG9p/4/IG0M6iisXKoQKiWGdWJI9IS/bmMTxEQxEwx+o8WAnMn7wZ7jdyJCjPM
+ lFyLqNaGi8kPfzlAewYNn7gOcZaHcfI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-sbuOgWH4OFWo69GVcsPnzw-1; Sun, 16 Nov 2025 01:45:30 -0500
+X-MC-Unique: sbuOgWH4OFWo69GVcsPnzw-1
+X-Mimecast-MFC-AGG-ID: sbuOgWH4OFWo69GVcsPnzw_1763275529
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-42b2c8fb84fso1750806f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 15 Nov 2025 22:45:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763209550; x=1763814350; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0bMHb4X4K7dLBTFhdqOHfEjno0MRByMmJn7VEL8/NyY=;
- b=MvXB5iITbPX8JapC5JYhGK2G9DwdFso7DLs1Y2d+bKyTfaJ8QlxXKAIOJ/fOBGX796
- CbiLlI7KUaGYKQ+kHv1mu7dgniuUoNu9exOOd0MP8hV1N34i3ssfvWlElmQCjMFaLcdV
- j0mrr9YGXYHRcyXyesnyP6+F3UQJIYHQ9mP19W8yC9eHi1kq0qbjr5szeJpGsJj458wE
- VJUDquXid1x/MARjzvphSsHEVoT/ivRx09zapiLm6SHFOX4J2eLdeCUUS/ejQPBehAR3
- L/jhJK7XqsAx8mQwiUrzyLTvl6rWxYZ6NMsoU0DKycUj7jYgtGFGF8sJc7Ivgja8g84Q
- wFDA==
+ d=redhat.com; s=google; t=1763275529; x=1763880329; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=9mKVEdd9mkeH4LX/Wlw5fH2FnV/iWGrlqVGOcyf22KQ=;
+ b=b8cz0YsDaLCfWIN6G0a3s45p1eGfxyQnnqk2379BVvQdJfqgmMpRs3e0hFi9qzGwaH
+ JWuVH4jloNTXidwVRSzyz/QzP2Zy32SvcwcCY/sWGF7Q9yLbTBILm8LwGzuXv9Ck0/qO
+ 5uON/eThx6PQY6GjXZfD1RBzyQUljRnePnsxcEBFeqoHx2RmZ1B/FOXd5piEPg5kG7hM
+ V1EjclEdu75SohkDiPNxJGNKjS1B3CfHJZZOmmXAtUwZXPjfCUcdaPWV+rCG2N5GqsTm
+ mxWuHqT+QuHuYHynQeQYRbRH4g2BlrYdMe4j1RMg+9WAfrIvyok1vkzrWCW3+Ec7dAFo
+ wEbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763209550; x=1763814350;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0bMHb4X4K7dLBTFhdqOHfEjno0MRByMmJn7VEL8/NyY=;
- b=nQ7Cc/mpb5OtAqKOcI4cfzORt/BU7/huw/JSjSeLROitYlqRbZqTuUINp6SOwaTqMh
- 3qO6kFYgrm7tWHK9xjX9g59tHECvvUwNbDaIaJkNVUpNGXKvotTXFsxE6iQ/qP1HpOVd
- to9PTUHqwo/LYnaa/nhGiCbWbamrt/oAOkhs0efthDxyoRstyT+/QSte6Xpwmeru0aXp
- ho/KqLAfPKjQtUn0EB+5FKi4omE1COfD5gf4szP5ZxyM8+nkdSph/RNi2BzZw1wt1A2t
- my+huL3HDxpSfqm+MBecOFy6hnHpZtOJOgh9BpwaWDXxo0kAQ58PtdOVprqmZuMCAVTn
- 8vxA==
+ d=1e100.net; s=20230601; t=1763275529; x=1763880329;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9mKVEdd9mkeH4LX/Wlw5fH2FnV/iWGrlqVGOcyf22KQ=;
+ b=MyIb5lLQIfc252vD9whOLglr3uSFUNKlQtVo4mczbzULvSsA16EhPYZ9QpatSzjGL+
+ 7GirID+UC7R4ul1gA3Q7fI+vDBEMSXDWWUN8879wtzWrbz3rCCipbQqjN4UsJVETbfCA
+ gpxeqvICk6oZWYIq9NY2n8yYAMCvN/EnJIP7DCaxXr4blAN+/SyBAxFV0kFYAZoGRP6y
+ Hw3RCYAngKeSgBAfvDjDYe05nCXultd/5TzKrGzW+Ibwkh5uyDbtEC1wnAWe3EPy4cYH
+ +kjImCNArLXWe2FTG9W7e1XW1LsMFh4z6cCK2nvBTF2OySRcF2MsiYQ6nEvcdhokQASG
+ j4EQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWidBowZIM/XtcFRloahsGhAbCuocruwKU31zeTIPnVoPFMWI9JsGQRi3Qg3Q69XStrCP6NLgeaXdvU@nongnu.org
-X-Gm-Message-State: AOJu0YxXCPhGODPyfbtVjPd/m6T893Dcc5zhsrRFHD2QWV0CNJcXSgbL
- khGkYDLkb+VQMNVoyv18mkgHSkYsKx5YJpj34HN1gEl3Ufyv+h9VwQPkbN6b52JjCTAJ1tFKZe8
- bYNFbk2A=
-X-Gm-Gg: ASbGncsf0GbWg2FYa4E2AcJCDFSzz0lVut5uW8RBsNFqEt6Zg9JsQko/xJM6EIPl5Pj
- LZSUnUxBmBwWwqssY6mMf5ENC35e2xzBtm0L3a2IrZPpUPt2AtMgul4zIL7gwvljm/ZmhqI/Jge
- C1XnHlP6DP1SQmCLKrFPFhiiOjKALWAsS2wfy1eYEOvuWPViUQ6flY3URybNl25T53Jb/6OWL8G
- UIe5sqvhZ3kQQQD9fmEonxIczNh+LxWvqsFk56PiCQLFht07ocw8Qm1mnfGJLB7fVwjBuyd9B8s
- rkINTsWPZbgnTAHl3cAnzWDaQcNQKx61jTPOtqJfKEAe/3MFJyOt5WItIBJ4cSZ+/0s7z0rhRfs
- hJ4YtlkrMNcTx/fRFOKeHQit5qDeRpWfK+fKU7TYuO9YBSg7ULguSzSyRpSue+U2t0GKXrLgWC5
- zzdgVQRLMHJW7wqbHi5gjbNP8oH65Auf9I30IMQNUt0WP88sct780di1jScGjH
-X-Google-Smtp-Source: AGHT+IEX5yoCK5pNY3rsBBLmBpP3MqVUZYi67OFDlBm8WonucxHFBIVuT6rq3W2OV5GfL/dHR3JLVQ==
-X-Received: by 2002:a05:600c:138d:b0:475:d8b3:a9d5 with SMTP id
- 5b1f17b1804b1-4778fe5de6fmr62026735e9.10.1763209549562; 
- Sat, 15 Nov 2025 04:25:49 -0800 (PST)
-Received: from [192.168.8.105] (115.red-2-141-104.dynamicip.rima-tde.net.
- [2.141.104.115]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4778bae816bsm67028455e9.0.2025.11.15.04.25.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Nov 2025 04:25:49 -0800 (PST)
-Message-ID: <b6d5aa11-eef1-4cda-b008-79ba8ee89e1f@linaro.org>
-Date: Sat, 15 Nov 2025 13:25:46 +0100
+ AJvYcCVVw905ei7HIh1dba03G5qVcudlBaag7urfn6St+tjVGRYs5Xban8ctCYJje2A4gdZgY7VGbOyjjXuq@nongnu.org
+X-Gm-Message-State: AOJu0Yzpc3OxfHyiQOGWFlUru253TyXMj3CYiHh8b1bWowBv7sjjyVuB
+ jeZYIcaYaD4S4mxOy+3BP5kXl6j3laJoFP2bgayYxtb7O5fR/lfkDmDvs0dI2LkeSpecqz4Xe4i
+ f0mZka8bYN6k6SBGuWs+1sJqPE/Dm1XzAszKGCTTzXOB/bl6Wqi5wprw4
+X-Gm-Gg: ASbGncvh4KSA0iFNlu2Tbr81NNOBIt5FdK+hv/EmYRkMtoN21YDr6YTtXQXRHAQ9aq2
+ hwENxLHxwfS3qDw49b7KJSlLbvA+xs/0B/mWLXf2paEmrFq3+7tlWoNxFOZKlRaYIoMtjYr5z5m
+ SWHr0oLPhpcoI8PzNdTgRxtgiyXGB5N0Uk5Ek2TQLxhv9gwZHKCStuIFeikYBa6gOhGgz133f1w
+ 1jiJubT5z8CwyzI1e/70qZCP/5E852Kx2idRlJ/3XOnqAgYpTe6T8A0uwtq1alJbPvTJ4qrMVHp
+ c4404m/j9dqU4Z9/FxI9UQU8+bJuF1r5UPCTT64m15uAA8wRJrFBn5unYv1zkZbV+dObUvqNmp8
+ uAnU5YP7QNGoXIiWrKqU=
+X-Received: by 2002:a5d:5d0b:0:b0:429:d350:8012 with SMTP id
+ ffacd0b85a97d-42b593456e6mr6894457f8f.8.1763275528913; 
+ Sat, 15 Nov 2025 22:45:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFUG6uv5Co8TKNJWomddTrYw5B8XixJtAYFg3zIhs6SkpRfuVdfb4TU4qtdDFtRv25HuIoxvQ==
+X-Received: by 2002:a5d:5d0b:0:b0:429:d350:8012 with SMTP id
+ ffacd0b85a97d-42b593456e6mr6894433f8f.8.1763275528440; 
+ Sat, 15 Nov 2025 22:45:28 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-39-63.inter.net.il. [80.230.39.63])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e84b12sm20360708f8f.15.2025.11.15.22.45.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 15 Nov 2025 22:45:27 -0800 (PST)
+Date: Sun, 16 Nov 2025 01:45:25 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
+ farosas@suse.de, jinpu.wang@ionos.com, thuth@redhat.com,
+ berrange@redhat.com
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+Message-ID: <20251116014436-mutt-send-email-mst@kernel.org>
+References: <20251107020149.3223-1-jasowang@redhat.com>
+ <20251113110004-mutt-send-email-mst@kernel.org>
+ <aRYJRZyNrDcDzTuG@x1.local>
+ <20251113114710-mutt-send-email-mst@kernel.org>
+ <aRYRhg7lKDCBUIrf@x1.local>
+ <20251113124207-mutt-send-email-mst@kernel.org>
+ <aRYyTeNNIPW_WIJW@x1.local>
+ <CACGkMEsZtgmreUbd8BJQb9V7V2Pw-dafjLao1aVxPowuM3LHng@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/i386: fix stack size when delivering real mode
- interrupts
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20251115015410.185195-1-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251115015410.185195-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x333.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACGkMEsZtgmreUbd8BJQb9V7V2Pw-dafjLao1aVxPowuM3LHng@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,46 +129,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/15/25 02:54, Paolo Bonzini wrote:
-> The stack can be 32-bit even in real mode, and in this case
-> the stack pointer must be updated in its entirety rather than
-> just the bottom 16 bits.  The same is true of real mode IRET,
-> for which there was even a comment suggesting the right thing
-> to do.
+On Fri, Nov 14, 2025 at 09:51:00AM +0800, Jason Wang wrote:
+> > So IIUC there will be a cluster, it may contain different groups of hosts,
+> > each group should have similar setups so that VMs can freely migrate
+> > between each other within the same group (but may not easily migratable
+> > across groups?).  But I don't think I know well on that part in practise.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1506
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/seg_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Towards this, we may need to develop tools somewhere to report TAP
+> capability. Or as replied in another thread, developing software
+> fallback for new features, but it seems a burden.
 
+Or more generally, host capability from QEMU POV.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
-
-r~
-
-> 
-> diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-> index 667b1c38696..227336c4ef2 100644
-> --- a/target/i386/tcg/seg_helper.c
-> +++ b/target/i386/tcg/seg_helper.c
-> @@ -1161,7 +1161,7 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
->       sa.env = env;
->       sa.ra = 0;
->       sa.sp = env->regs[R_ESP];
-> -    sa.sp_mask = 0xffff;
-> +    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
->       sa.ss_base = env->segs[R_SS].base;
->       sa.mmu_index = x86_mmu_index_pl(env, 0);
->   
-> @@ -1964,7 +1964,7 @@ void helper_iret_real(CPUX86State *env, int shift)
->       sa.env = env;
->       sa.ra = GETPC();
->       sa.mmu_index = x86_mmu_index_pl(env, 0);
-> -    sa.sp_mask = 0xffff; /* XXXX: use SS segment size? */
-> +    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
->       sa.sp = env->regs[R_ESP];
->       sa.ss_base = env->segs[R_SS].base;
->   
+-- 
+MST
 
 
