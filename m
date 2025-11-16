@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25481CCD19A
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 13:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6706ACEBF92
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 14:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKdDB-0004Ll-Ub; Sun, 16 Nov 2025 08:54:37 -0500
+	id 1vKdXR-0004Cj-8D; Sun, 16 Nov 2025 09:15:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vKdDB-0004Ld-2c
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 08:54:37 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ id 1vKdXM-0004BV-Mu
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 09:15:31 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vKdD9-0001CD-Bi
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 08:54:36 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1763301258; cv=none; 
+ id 1vKdXK-0006Y0-FA
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 09:15:27 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763302508; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Bdkfi2xnwf7WbKWAhWqmXI+wk/moYUCG7oMWPYS9I7Iroo2mpxU451W849NNEUJFW7M3PghkJy1DhaFBVp1Tku69hVZ1+enbVz66jc21j9kUsPZ0YVHGDNlYHAXK1A2a2ybosMq6g9M8FGp2tH9biQK4Afhhk8iEW1ncDnEcreo=
+ b=J+nGUO459phXb5ouWl4Mt1UO9gU1QGdSXgA5IliVFPzZDjQcjb8XCM3VgqdjjPAFrTdvogewAmOWh7yHw3u6hJ1/wuW8HjbHmEoVpeAkr9nU1fLQnF4TRDo8qDm1E6vGnYvhmx1pATFzihrcQeBk5lzqOcHaPpSi5FuRFgIPBQY=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1763301258;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=poHVKhwpw1ZzROjuD1JvbWMikwHoRE4hz0xrgrZKGx4=; 
- b=gIl1YbRvsCVa+nraCKRYR28bXwGukNGybYvmJBJx4A4XmXGcDtecYWC4QArPd30T1iUegZQI2RBTDkZgDb2UrNoeNUKowDxc2Asrz1CNTEEaH5vvgTKjM/Sm7IP52VVWq5qZaYJSqHpqCssCpmJaxPgwBNpLkHmZ3q8Ofvzs46k=
+ s=zohoarc; t=1763302508;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=XsovyN1uJw3oPN5EZ3MKWO6PsNz0oy48jQOUBV0dtfg=; 
+ b=gGcdR2FW/Y6yiLuWDjp6W33X1DhfdKM2r199aM6r4VOocC+A867jhZv/K25KmPvKffCAd5Qn7BCCQao/AD3TedczmhxyWpvn4xN01EDndCL9msCG8phds/nqZI0XuvhnxysyvEFD/CglQHWZhwbwMM+5ZdAOznVyKXl2B7fyd+A=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763301258; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763302508; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=poHVKhwpw1ZzROjuD1JvbWMikwHoRE4hz0xrgrZKGx4=;
- b=JMNGYpnvZtQthOg5/nk58QdCtDvqAEMhJzRCsh9GGKZimxzW9wZVzPMOsvvKlMSd
- WZkqyxE7QzPH78TnrMOPO2Z/HzafqFaxyPPsYnqc6bw/MN8ERgH1KbBdurkhFGYRGsM
- /vBpHHnJzbjv/R4g1FAIIJ3lNTMuaYQn+cJ2NUwI=
-Received: by mx.zohomail.com with SMTPS id 1763301257265209.3884524764877;
- Sun, 16 Nov 2025 05:54:17 -0800 (PST)
-Message-ID: <dc98cd65-6ae9-4d7f-b88a-59d741ee980f@collabora.com>
-Date: Sun, 16 Nov 2025 16:54:07 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 1/1] virtio-gpu: Support mapping hostmem blobs with
- map_fixed
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=XsovyN1uJw3oPN5EZ3MKWO6PsNz0oy48jQOUBV0dtfg=;
+ b=dbaV9bKdBG7NGEjMjGWZLC5Mc7R0M1R356+DiofHcqsbJUbqdapDKCoAtRSl0WRZ
+ O+BKSyXllMNUzydbqGtMR7KbWF/ISR2djh45PH7O5krjs+kngmWxVQ5Oj1oBZluhvMC
+ hXLC42Mj0bUeZte+Zx6uOmw2I3yBL+fEn2a5a5LM=
+Received: by mx.zohomail.com with SMTPS id 1763302506158891.9670769515335;
+ Sun, 16 Nov 2025 06:15:06 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
 Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
  Alex Deucher <alexander.deucher@amd.com>,
  Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-References: <20251112233118.1475381-1-dmitry.osipenko@collabora.com>
- <20251112233118.1475381-2-dmitry.osipenko@collabora.com>
- <4eceb841-8767-4d70-91b1-f6288e6f8a22@rsg.ci.i.u-tokyo.ac.jp>
- <211751d8-c6b5-42f3-8623-324bb23a63b9@rsg.ci.i.u-tokyo.ac.jp>
- <87e09bf2-117e-4b59-afec-d6ee135e0b88@collabora.com>
-Content-Language: en-US
-In-Reply-To: <87e09bf2-117e-4b59-afec-d6ee135e0b88@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: [RFC PATCH v2 1/2] virtio-gpu: Remove superfluous
+ memory_region_set_enabled()
+Date: Sun, 16 Nov 2025 17:14:26 +0300
+Message-ID: <20251116141427.2325372-2-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251116141427.2325372-1-dmitry.osipenko@collabora.com>
+References: <20251116141427.2325372-1-dmitry.osipenko@collabora.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,110 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/13/25 15:16, Dmitry Osipenko wrote:
-> Hello Akihiko,
-> 
-> On 11/13/25 09:51, Akihiko Odaki wrote:
->> On 2025/11/13 11:52, Akihiko Odaki wrote:
->>> On 2025/11/13 8:31, Dmitry Osipenko wrote:
->>>> Support mapping virgl blobs to a fixed location of a hostmem memory
->>>> region using new virglrenderer MAP_FIXED API.
->>>>
->>>> This new feature closes multiple problems for virtio-gpu on QEMU:
->>>>
->>>> - Having dedicated memory region for each mapped blob works notoriously
->>>> slow due to QEMU's memory region software design built around RCU that
->>>> isn't optimized for frequent removal of the regions
->>>>
->>>> - KVM isn't optimized for a frequent slot changes too
->>>>
->>>> - QEMU/KVM has a limit for a total number of created memory regions,
->>>> crashing QEMU when limit is reached
->>>>
->>>> This patch makes virtio-gpu-gl to pre-create a single anonymous memory
->>>> region covering whole hostmem area to which blobs will be mapped using
->>>> the MAP_FIXED API.
->>>>
->>>> Not all virgl resources will support mapping at a fixed memory
->>>> address. For
->>>> them, we will continue to create individual nested memory sub-
->>>> regions. In
->>>> particular, vrend resources may not have MAP_FIXED capability.
->>>>
->>>> Venus and DRM native contexts will largely benefit from the MAP_FIXED
->>>> feature in terms of performance and stability improvement.
->>>>
->>>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>>> ---
->>>>   hw/display/virtio-gpu-gl.c     | 37 +++++++++++++++++
->>>>   hw/display/virtio-gpu-virgl.c  | 72 +++++++++++++++++++++++++++++++++-
->>>>   include/hw/virtio/virtio-gpu.h |  3 ++
->>>>   3 files changed, 110 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
->>>> index b640900fc6f1..e1481291948a 100644
->>>> --- a/hw/display/virtio-gpu-gl.c
->>>> +++ b/hw/display/virtio-gpu-gl.c
->>>> @@ -122,6 +122,9 @@ static void
->>>> virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
->>>>   {
->>>>       ERRP_GUARD();
->>>>       VirtIOGPU *g = VIRTIO_GPU(qdev);
->>>> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
->>>> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
->>>
->>> Nitpick: this order is slightly odd as VirtIOGPUBase is the base class
->>> of VirtIOGPU and VirtIOGPUGL. So let's do:
->>>
->>> VirtIOGPUBase *b = VIRTIO_GPU_BASE(qdev); // super class of b
->>> VirtIOGPU *g = VIRTIO_GPU(qdev); // base class of gl
->>> VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
->>>
->>> Arguments are unified to qdev for consistency with other functions.
->>>
->>>> +    void *map;
->>>>   #if HOST_BIG_ENDIAN
->>>>       error_setg(errp, "virgl is not supported on bigendian platforms");
->>>> @@ -152,6 +155,31 @@ static void
->>>> virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
->>>>   #endif
->>>>       virtio_gpu_device_realize(qdev, errp);
->>>> +
->>>> +    /*
->>>> +     * Check whether virtio_gpu_device_realize() failed.
->>>> +     */
->>>> +    if (!g->ctrl_bh) {
->>>
->>> Instead, do:
->>> if (*errp) {
->>>      return;
->>> }
->>>
->>> With this change it is clear that it checks whether
->>> virtio_gpu_device_realize() failed so the comment will be unnecessary.
->>>
->>>> +        return;
->>>> +    }
->>>> +
->>>> +    if (virtio_gpu_hostmem_enabled(b->conf)) {
->>>> +        map = mmap(NULL, b->conf.hostmem, PROT_NONE,
->>
->> I'm concerned that mapping with PROT_NONE may allow the guest crash QEMU
->> by accessing the hostmem region without blobs, especially with TCG (not
->> sure about KVM).
->>
->> Perhaps PROT_READ | PROT_WRITE may be a safe choice. It is ugly and lets
->> the guest read and write garbage to the region without blobs, but at
->> least avoids crashes.
-> 
-> Thanks a lot for a quick and thorough review, very appreciate. Will test
-> how KVM behaves when accessing PROT_NONE and address TCG + rest of the
-> comments.
+There is no need to explicitly enable/disable memory region when it's
+added or deleted respectively. Remove superfluous set_enabled() calls
+for consistency.
 
-KVM faults and terminates QEMU. Both KVM and TCG shouldn't use
-PROT_NONE, good catch.
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ hw/display/virtio-gpu-virgl.c | 2 --
+ 1 file changed, 2 deletions(-)
 
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 80f71c0b66aa..a6860f63b563 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -139,7 +139,6 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+-    memory_region_set_enabled(mr, true);
+ 
+     /*
+      * MR could outlive the resource if MR's reference is held outside of
+@@ -201,7 +200,6 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         b->renderer_blocked++;
+ 
+         /* memory region owns self res->mr object and frees it by itself */
+-        memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+         object_unparent(OBJECT(mr));
+     }
 -- 
-Best regards,
-Dmitry
+2.51.1
+
 
