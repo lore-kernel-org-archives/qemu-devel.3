@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF27CD4F3E
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 12:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEED8CD4F3E
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 12:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKcKy-0005Ml-1o; Sun, 16 Nov 2025 07:58:37 -0500
+	id 1vKcKm-0005JO-J3; Sun, 16 Nov 2025 07:58:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vKcKs-0005Kr-Vz
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 07:58:31 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ id 1vKcKi-0005IW-QI
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 07:58:22 -0500
+Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vKcKr-0000A6-Dc
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 07:58:30 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1763297893; cv=none; 
+ id 1vKcKh-00009E-4U
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 07:58:20 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763297885; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=IKKu4PniSehbK4W18Iz+NHU7gKvBC6s/xixjQpj9CLPX5Ns/E1LdqMLySC2LgyJJ26d2SRkdwhL54gnSSP85vg6uRJ0T5IPLaDztOsoE/dfZEYvoMXsR0XeRyBnMTw4DLWTu/2M9kEqBdXCQYLtC1b+HDptHw4Cd9SUhMusr45w=
+ b=IyJe1EhtYt96DTK4iqlZvLnQJaRyCALHu82jl8PM7tDkL1UNXE+PAfzqGFap7p58oZhJmEY/zz1whKIq+ifBEQ74xeHTHYbfBbfiz5pLERVuO5zX6S2KW8n01RMI0FgLZ8Crp/ze2aps15vWx+h0Zi7YCSIiSdsxxkOL2J4k+rU=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1763297893;
+ s=zohoarc; t=1763297885;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Kbq5j4g3EVatJbKy3t91p/JVim8cEGBRZ828mqbLAro=; 
- b=L7GlAJNpa5K2TuhysiDIQb1of97pnb2yQ7al8jFZVPZRjPC63Nzi2dy51W4NtyjY0z5pkgNpGaMn59LzT2T+OH6J6yu+SvL9BdYQaNcXVZOJrlyojZZHmCgpjYBAnxBRZpE4/HsDyy3DlX/BHRMVfQ/o4Ktavn8CLNJKGYbpo8Q=
+ bh=/7w8ta1DWV3a2bMv4C7H1+A7BzR2CHXgSqChY/0pPxo=; 
+ b=MLr33FUMcA7HSuLgNrF6HtbrufGwXKiJsfgj24XQy2U8TmpYsTU4QJLfSZ6srUHWoU7o2LpPUPpGipqb+hExnPP1MGU2pN9NWrqSaeQ4FYjM7+05Xb69Gwmb6b6Voie5mRBgWN3pNcf4qRx6FQMbmHkOKDGR4WfylG4enlsnQb8=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763297893; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763297885; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=Kbq5j4g3EVatJbKy3t91p/JVim8cEGBRZ828mqbLAro=;
- b=PNGzCfqMf8bLD8/QBqnOfmQ9o/pbuxbzzXRkw7sVLev/+X0QOlLJObcW9fTzoL9G
- TFTJUwS70f2eGBh+URe28ofEHo5k7DH/Rd6P+YA1MYHPsvmmNa50bAkWI7eyVcCL1lU
- O289+5aG83jf5PK3vWmnERVnYkw4NnTbdrHFbR14=
-Received: by mx.zohomail.com with SMTPS id 1763297890069470.72239581318297;
- Sun, 16 Nov 2025 04:58:10 -0800 (PST)
+ bh=/7w8ta1DWV3a2bMv4C7H1+A7BzR2CHXgSqChY/0pPxo=;
+ b=Oy5EfQtoFzdSjPzuC7eDuL7paa9pmpwur+kOSIrVZI42+OVR73ohcyg8VylGN+Au
+ xjiFdkJZOo4gn3YNp7ddZvsrgphWIqFMCIHBXHqnxxcHfK/YVU2xFXEsCfLyr8bVRJS
+ ov57ciNFr+21aNiYuAQUOfqnHkSqOy2Y/jHxRKw8=
+Received: by mx.zohomail.com with SMTPS id 1763297883916920.1357062694328;
+ Sun, 16 Nov 2025 04:58:03 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -60,10 +60,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v16 07/10] ui/gtk: Don't disable scanout when display is
+Subject: [PATCH v16 06/10] ui/sdl2: Don't disable scanout when display is
  refreshed
-Date: Sun, 16 Nov 2025 15:56:38 +0300
-Message-ID: <20251116125641.2255794-8-dmitry.osipenko@collabora.com>
+Date: Sun, 16 Nov 2025 15:56:37 +0300
+Message-ID: <20251116125641.2255794-7-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251116125641.2255794-1-dmitry.osipenko@collabora.com>
 References: <20251116125641.2255794-1-dmitry.osipenko@collabora.com>
@@ -71,14 +71,13 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=136.143.184.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -111,34 +110,21 @@ Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/gtk-egl.c     | 1 -
- ui/gtk-gl-area.c | 1 -
- 2 files changed, 2 deletions(-)
+ ui/sdl2-gl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index ae9239999cdb..0dbb429958e5 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -180,7 +180,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 4906f6875046..d8e5e0a3642c 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -53,7 +53,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
+     int ww, wh;
  
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
--        gtk_egl_set_scanout_mode(vc, false);
-         gd_egl_draw(vc);
-     }
- }
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index cd86022d264a..c709b2ce0f63 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -199,7 +199,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+-    sdl2_set_scanout_mode(scon, false);
  
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
--        gtk_gl_area_set_scanout_mode(vc, false);
-         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
-     }
- }
+     SDL_GetWindowSize(scon->real_window, &ww, &wh);
+     surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
 -- 
 2.51.1
 
