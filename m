@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFAF7CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 08:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68BD0CEBF93
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 08:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKul5-0006ND-Cy; Mon, 17 Nov 2025 03:38:47 -0500
+	id 1vKumz-0007Y1-OI; Mon, 17 Nov 2025 03:40:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vKul1-0006M3-9R; Mon, 17 Nov 2025 03:38:43 -0500
+ id 1vKums-0007WV-2O; Mon, 17 Nov 2025 03:40:38 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vKukz-0005dJ-GI; Mon, 17 Nov 2025 03:38:43 -0500
+ id 1vKumo-0005sj-4n; Mon, 17 Nov 2025 03:40:35 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6FBEB16AB34;
- Mon, 17 Nov 2025 11:38:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 32D6D16AB3F;
+ Mon, 17 Nov 2025 11:40:31 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 45E2831D906;
- Mon, 17 Nov 2025 11:38:30 +0300 (MSK)
-Message-ID: <637696ee-f0a4-4e35-b281-0bd0b1089b09@tls.msk.ru>
-Date: Mon, 17 Nov 2025 11:38:30 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1314B31D913;
+ Mon, 17 Nov 2025 11:40:32 +0300 (MSK)
+Message-ID: <f495c43b-3d35-4763-853e-4e70428cb666@tls.msk.ru>
+Date: Mon, 17 Nov 2025 11:40:31 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qmp: Fix a typo for a USO feature
-To: Jack Wang <jinpu.wang@ionos.com>, mst@redhat.com, qemu-devel@nongnu.org
-Cc: yu.zhang@ionos.com, "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-References: <20251021053309.208957-1-jinpu.wang@ionos.com>
+Subject: Re: [PATCH 0/4] linux-user: fix several mremap bugs
+To: Matthew Lugg <mlugg@mlugg.co.uk>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, qemu-stable@nongnu.org
+References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -77,7 +77,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251021053309.208957-1-jinpu.wang@ionos.com>
+In-Reply-To: <20251011200337.30258-1-mlugg@mlugg.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -103,31 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/25 08:33, Jack Wang wrote:
-> There is a copy & paste error, USO6 should be there.
-> 
-> Fixes: 58f81689789f ("qmp: update virtio feature maps, vhost-user-gpio introspection")
-> Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-
-It looks like this patch has been forgotten.
-I can push it through the trivial-patches queue
-if you like.
+A friendly ping?  Has this series been forgotten?
+It looks like it should be picked up for 10.2 release.
 
 Thanks,
 
 /mjt
-> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-> index b338344c6cca..968299fda0c9 100644
-> --- a/hw/virtio/virtio-qmp.c
-> +++ b/hw/virtio/virtio-qmp.c
-> @@ -299,7 +299,7 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
->       FEATURE_ENTRY(VIRTIO_NET_F_GUEST_USO4, \
->               "VIRTIO_NET_F_GUEST_USO4: Driver can receive USOv4"),
->       FEATURE_ENTRY(VIRTIO_NET_F_GUEST_USO6, \
-> -            "VIRTIO_NET_F_GUEST_USO4: Driver can receive USOv6"),
-> +            "VIRTIO_NET_F_GUEST_USO6: Driver can receive USOv6"),
->       FEATURE_ENTRY(VIRTIO_NET_F_HOST_USO, \
->               "VIRTIO_NET_F_HOST_USO: Device can receive USO"),
->       FEATURE_ENTRY(VIRTIO_NET_F_HASH_REPORT, \
+
+On 10/11/25 23:03, Matthew Lugg wrote:
+> I was recently debugging a strange crash in a downstream project which turned
+> out to be a QEMU bug related to the `mremap` implementation in linux-user. In
+> practice, this bug essentially led to arbitrary memory regions being unmapped
+> when a 32-bit guest, running on a 64-bit host, uses `mremap` to shrink a memory
+> mapping.
+> 
+> The first patch in this set resolves that bug. Since the patch is very simple,
+> and the bug is quite likely to be hit, I suspect that that commit is a good
+> candidate for qemu-stable.
+> 
+> The following two patches just resolve two more bugs I became aware of whilst
+> working on this code. I believe the messages in those patches contain all
+> necessary context. They are less critical and the fixes more complex, so are
+> likely not suitable for backporting into qemu-stable.
+> 
+> The final commits adds tcg tests for the fixed `mremap` behavior. The third fix
+> is unfortunately difficult to test programmatically, but I have confirmed that
+> it behaves as expected by observing the output of `strace qemu-i386 repro`,
+> where `repro` is the following C program:
+> 
+>      #define _GNU_SOURCE
+>      #include <stddef.h>
+>      #include <sys/mman.h>
+>      int main(void) {
+>          char *a = mmap(NULL, 4097, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+>          char *b = mmap(NULL, 4097, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+>          mremap(b, 4097, 4097, MREMAP_FIXED | MREMAP_MAYMOVE, a);
+>          // QEMU has now leaked a page of its memory reservation!
+>          return 0;
+>      }
+> 
+> Prior to the patch, as the comment says, QEMU leaks a page of its address space
+> reservation (i.e. the page becomes unmapped). After the patch, QEMU correctly
+> reclaims that page with `mmap`.
+> 
+> Matthew Lugg (4):
+>    linux-user: fix mremap unmapping adjacent region
+>    linux-user: fix mremap errors for invalid ranges
+>    linux-user: fix reserved_va page leak in do_munmap
+>    tests: add tcg coverage for fixed mremap bugs
+> 
+>   linux-user/mmap.c               | 75 +++++++++++++--------------------
+>   tests/tcg/multiarch/test-mmap.c | 47 ++++++++++++++++++---
+>   2 files changed, 71 insertions(+), 51 deletions(-)
+> 
 
 
