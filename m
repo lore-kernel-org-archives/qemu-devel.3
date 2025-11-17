@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211C5CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 13:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4396FCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 13:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKzBX-0000LJ-Mk; Mon, 17 Nov 2025 08:22:23 -0500
+	id 1vKzXB-0007Av-Jr; Mon, 17 Nov 2025 08:44:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vKzBT-0000L1-Lv
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:22:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vKzBP-0008I4-MS
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:22:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763385733;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pFAnXRRODl07fsFM7Kz2irx4vTOUOXn4vLftet1+zeM=;
- b=TDrSBccCw5KmcEDO+2/7ZtBBSkDu4m6Lj4xmATqaP6oYpaWvpC7v0FeA4XhkxOvPRmrrob
- zpgqrj49ie3rfN5PoiF8XB2cNE/wKDdXEx+EudyUfCI5qJdTv8rcGFstAyhNIn2Suyr+h5
- Y5Sfem825LYOZtAwirKRzdaunw21xEA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-D5e6tBqZMTK-ljeHmBN2Cw-1; Mon,
- 17 Nov 2025 08:22:10 -0500
-X-MC-Unique: D5e6tBqZMTK-ljeHmBN2Cw-1
-X-Mimecast-MFC-AGG-ID: D5e6tBqZMTK-ljeHmBN2Cw_1763385729
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C6EB1956095; Mon, 17 Nov 2025 13:22:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E8B71800451; Mon, 17 Nov 2025 13:22:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CDF0021E6A27; Mon, 17 Nov 2025 14:22:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Honglei Huang <honghuan@amd.com>,  alex.bennee@linaro.org,
- odaki@rsg.ci.i.u-tokyo.ac.jp,  armbru@redhat.com,  mst@redhat.com,
- cohuck@redhat.com,  pbonzini@redhat.com,  qemu-devel@nongnu.org,
- Ray.Huang@amd.com
-Subject: Re: [v4] virtio-gpu: use consistent error checking style for
- virtio_gpu_create_mapping_iov
-In-Reply-To: <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com> (Dmitry
- Osipenko's message of "Mon, 17 Nov 2025 15:03:24 +0300")
-References: <20251117105104.258513-1-honghuan@amd.com>
- <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com>
-Date: Mon, 17 Nov 2025 14:22:05 +0100
-Message-ID: <87bjl0pzeq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vKzX8-0007AV-D7
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:44:42 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vKzX6-0004Dw-Rb
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:44:42 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-297e264528aso43021475ad.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 05:44:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763387078; x=1763991878; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fytbvVTf0UQ7oYQnU1JSKf5Gx3i4Vweqjn7EuGQaOT4=;
+ b=sm8BQmvZ56qeTEmJ/H/a0s7XzQ29eYPgVNpJbqPIasZdec57U3FbR4fDSq70d2ivFN
+ xQTr6zo3M9xIIDaq5laOYuY6UhCMVz5d5L3Ow4JX84gCjD2LD/HhONp9+vz1OErnjFBY
+ hP9PrQ8dJ8QTGU1jiUR2x9dY+FhSevonz1oqTVFqGrTJbZ5qbFH6Z8oWr1zlhHYz/9HR
+ Mb2NSrNX9UdamdBHkAG/+ofU70D1OGaZbKMkSXandnyHlkNIw2ICKhz1IRupCO2DtNJI
+ iU5EKt4CUGQreDg59TH4I3Lvqi10GVo8NlbFKcigc1avCOZ7w6W7BbzQe1zdnWsSc5CL
+ jBrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763387078; x=1763991878;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fytbvVTf0UQ7oYQnU1JSKf5Gx3i4Vweqjn7EuGQaOT4=;
+ b=mKHnXQAGEC1rMQThZ/SoCx1vL87pVbeJM3GU1u9EtPUYqqf5E91u6JL7nAQx0AloKV
+ 87durc3cheD0SCRabNaMIBhlMnPT1+z+coP7gmyJ4OKO6X2zPV54ujDxGopkm3JdHzhb
+ X/6jr6X6g9GRmevqNy3l0ysXev2sHmLM9X/GsW9jBbMdiPC3yahSvB5vgxaQ5wFwGdjW
+ 5rrmxGCiAPBlGVQjJk8M4PMkM2XvWinixb1zzLMAygTn+4abVSiGcUvz/qizIktXEHtZ
+ VkHWpflFCSXB+pgxHlXhJ9Fk+5Q10nAp7jWFtoQXskxlN88LWTyGG0uoXBIXYlRH6VmA
+ s+2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUcW/Tmq2CicZ+mIE/JkHuzuX6EZWd1oI9YkpaUhjaomsb63MiHZK+Zk2rFpAGS5SrUW0lm1xpP9iE@nongnu.org
+X-Gm-Message-State: AOJu0YzQcDhbehn91P7DFjh08LA3Z+kBy6AnAm+gw8diN4DCYIqCE5RG
+ MTiwxYyHnvfqhRIIVhjPQW/qW4kXF41rsV9PMSjIgq3rymKFfFe6jsjQw5q3voac7o/C9nI3IF0
+ ZefBi
+X-Gm-Gg: ASbGncvreJJ2DMzjnnhP5kn2EeB8JQ4q6/uXn9yTiCu/rArdcEm3SDxud47zLNxa9vW
+ jI7/0D9Zf6b7KPkBzJlsuTw1TwqD2AbrALnFkyoPOhPIIYVwXFp2ahHGZVvl9Hte2SxPjGYerO9
+ qiYb3cLJELJCIWfS/0yZ6MV2vYHVGrVOUPGdKvivedd4QpHhNmbOaP2EW8pNAbi1enve/OtKQ3S
+ XJkxIGQ229WN4TZCLTRSfcJW81yv96fR9Yhp2iGZgtHiwXvke3aJ+3ILPRTMokSaE8PfifSL1UV
+ Twbxe8fnXat0O7cMTL5US6sv6DjC+FstdZFHZ+HkynnXVZfvFQBC7dFNXP7vEkiALnFIxhouk1f
+ 7V7U2Da/fepkkTHXmPYzS4/2Z/7+zJAKehiXheOWgijl3uLCt9NdvMWpoyVvGIh0Sga+SH7LH3p
+ IaHj48PcfepstQw6ylMESmxhz5cyfIlmaZ8ZW20GcdxlXoaUOVWvk5
+X-Google-Smtp-Source: AGHT+IGj8kxdnAWUGcL4n9uNKEVTKSewe7g5h2PrIt6NxyV+okLPLv7o7h2Wc/R0hAFX6CdeFGWM/Q==
+X-Received: by 2002:a17:903:380b:b0:296:3f23:b910 with SMTP id
+ d9443c01a7336-2986a6b5587mr111782585ad.9.1763387078380; 
+ Mon, 17 Nov 2025 05:44:38 -0800 (PST)
+Received: from [192.168.0.102] (189-47-45-94.dsl.telesp.net.br. [189.47.45.94])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-343ea740980sm6612742a91.7.2025.11.17.05.44.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Nov 2025 05:44:37 -0800 (PST)
+Message-ID: <84357dfb-8098-4d57-b144-c3019c7f6a70@linaro.org>
+Date: Mon, 17 Nov 2025 10:44:28 -0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user: ancilliary -> ancillary
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+References: <44f5010964049b9988923ce1429652e0a9e8ebaf.1763380540.git.mst@redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <44f5010964049b9988923ce1429652e0a9e8ebaf.1763380540.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,29 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+Hi Michael,
 
-> On 11/17/25 13:51, Honglei Huang wrote:
->> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
->> index ed5ae52acb..ea2928b706 100644
->> --- a/hw/display/virtio-gpu-rutabaga.c
->> +++ b/hw/display/virtio-gpu-rutabaga.c
->> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
->>  
->>      ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
->>                                          cmd, NULL, &res->iov, &res->iov_cnt);
->> -    CHECK(!ret, cmd);
->> +    CHECK(ret >= 0, cmd);
->
-> virtio_gpu_create_mapping_iov() doesn't return positive values, don't
-> see how this change improves anything. You now saying that ret > 0 is
-> okay, while it shall never happen.
+On 11/17/25 08:55, Michael S. Tsirkin wrote:
+> My dictionary says the former spelling is incorrect.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>   docs/interop/vhost-user.rst | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> index 93a9c8df2b..93f756d3f4 100644
+> --- a/docs/interop/vhost-user.rst
+> +++ b/docs/interop/vhost-user.rst
+> @@ -411,8 +411,8 @@ in the ancillary data:
+>   * ``VHOST_USER_SET_INFLIGHT_FD`` (if ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD``)
+>   * ``VHOST_USER_SET_DEVICE_STATE_FD``
+>   
+> -When sending file descriptors in ancilliary data, *front-end* should
+> -associate the ancilliary data with a ``sendmsg`` operation (or
+> +When sending file descriptors in ancillary data, *front-end* should
+> +associate the ancillary data with a ``sendmsg`` operation (or
+>   equivalent) that sends bytes starting with the first byte of the
+>   message header.  *back-end* can therefore expect that file descriptors
+>   will only be received in the first ``recvmsg`` operation for a message
 
-Please see
+Yeah, I'm not a native English speaker but in my mind the latter is the correct form :)
 
-    Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in virgl_cmd_resource_create_blob 
-    Date: Mon, 17 Nov 2025 08:49:42 +0100
-    Message-ID: <87ms4lrtd5.fsf@pond.sub.org>
-    https://lore.kernel.org/qemu-devel/87ms4lrtd5.fsf@pond.sub.org/
-
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
