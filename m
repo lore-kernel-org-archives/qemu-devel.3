@@ -4,58 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73723CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 15:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD4CCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 15:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL1C3-0002xs-7S; Mon, 17 Nov 2025 10:31:03 -0500
+	id 1vL1J1-0004sz-V6; Mon, 17 Nov 2025 10:38:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlugg@mlugg.co.uk>)
- id 1vL1Bm-0002vp-Pe; Mon, 17 Nov 2025 10:30:48 -0500
-Received: from mlugg.co.uk ([2001:19f0:7401:8244:5400:ff:fe24:ff33]
- helo=mail.mlugg.co.uk) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <mlugg@mlugg.co.uk>)
- id 1vL1Bk-0004a7-MC; Mon, 17 Nov 2025 10:30:46 -0500
-Received: from [IPV6:2001:8b0:abc0:29bf:bb12:7589:aee2:20c3]
- (3.c.0.2.2.e.e.a.9.8.5.7.2.1.b.b.f.b.9.2.0.c.b.a.0.b.8.0.1.0.0.2.ip6.arpa
- [IPv6:2001:8b0:abc0:29bf:bb12:7589:aee2:20c3])
- by mail.mlugg.co.uk (Postfix) with ESMTPSA id A7DB3359B5;
- Mon, 17 Nov 2025 15:30:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mlugg.co.uk; s=20200703;
- t=1763393441; h=from:from:sender:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CUR/V2qp7L5o8RGDvogyRpXfLVrJBT8DaCoQs0PTed8=;
- b=jRtyB/hS9JDY7Eu1FnEsbUlesOFBXHSdFBQR6s7UQiIP2w3zcc23D5QpEpGghCmLXnpNjN
- 4y9fxWMZBzBzwfEHwdV2uYwSA0+A9SxlcsLpcMuuwFG7XXLQDA4tYazvNwx3mKO13dmE8Y
- /ejjBhIi+Ng0ED2vlfnxCn8BL3+LbRQ=
-Message-ID: <255ff28a-4892-4703-ac0a-a560fd344d76@mlugg.co.uk>
-Date: Mon, 17 Nov 2025 15:30:41 +0000
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL1Iq-0004mk-5e
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:38:07 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL1Io-0005XX-F8
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:38:03 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4779a4fc95aso12434415e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 07:38:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763393880; x=1763998680; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XSaA16vn3CbMGF8BDHCj9IKI1zIXr7noqygEHPWkXEc=;
+ b=pQqCazSFZPJ29IqTl05sBXvcFeBjKrZ7uTLt/11pUdg5jIGqxPAwIMV3F4wNTWE2fM
+ byCYa63QnkYV5YRI8azbzkyuMXQtCqEhvJ5lncnDaVAtjm4GUafGzksiHjC0Dpie/T2x
+ uEUm1g7+U/s0abshy3JM4/gTuoz87t1ImA+ceq69O6crSpgfahf6i5bbAyVqdo3IxLI1
+ k12bEWKG7JsVpwBv/O1MAGf04vLtnYDcGA6E+A1zWJeG/1XTw/yNfroPQnlPpbl4m6wP
+ Ai/GaL6AmAjkdiRVEOx383nNHldwwM8ck37eVSYJua9YHTdv5kBQllxUXiVQgzdm+Aia
+ fpLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763393880; x=1763998680;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XSaA16vn3CbMGF8BDHCj9IKI1zIXr7noqygEHPWkXEc=;
+ b=nZYixcylA1BQlbU10HgtoTbqmq9C+cEmCcGify5fbG/xQCvYsE3t93JmN4Tb/pg/Y+
+ zMvHw7pFo5x6EcQDQI/CAglBhmidm+NIN30ga7CwHY2U1Ln5w2pvsaFlOT75l7AzI1Jj
+ rjgx/+gCH/FzoWneo++88g1pWywHcgJ4UfbjdWZePFyctGft/F2SgYPwGUokqa+kFd6n
+ YL7PWISiNVTNesAEhzFQW2ED4iwr7geHATbejAym1yn5OZDirUNdJdOGgZMQtcTdDV2j
+ +3P2eeC9Tcem4cIHyUiDP2LmmlleuyvY5FD1b3c8iTa86InIyfVVF0flS1GQfnMO2xLF
+ T/0w==
+X-Gm-Message-State: AOJu0YwNwiswQiF5Xz6B8ApcSulJVAaM8a1ryWaRkl9curtPG+egpIJd
+ UBzx/SKNmDXBD2GEtBsqLVIp5adQ188loo+d4r1TjWqKJWUBtER9XZ93I23KhwrqqMU67Y0bH0c
+ D4q0n3iJnrg==
+X-Gm-Gg: ASbGnct12L8atAjDy7mJkNZUfjtFquY2Vnr1oRSsIAd6gPKGqno+cn5U0VaEB9z0TsO
+ md/KPxNa/RNtTJZ4dfhs/qV9ldmN1ixtOlUwhJonZ3RQo3o2ADjoF/IiV/rs2SQh3Jsc64b1p6E
+ iTrMU7DJOAo7FgLmoXbyhaLEusaSrbh/JS9TC2LkivXqgc3XhrqtjoTfRLfAhzPm4ruvNqGgXu7
+ H9TzjFVZLi0tijb1PO0ryipbYmiUA+9GbgqRCfvOoKmqbTw+Sczy0YNerhvvQxUTU/Oz2zFSTKS
+ KTDiEFCNamQ1r/XnoiMndEE/BJUSxoW3HsIzcsw5f44Ed2ipW9A6uLSE7dTDJd7Vdfd/2G8Mudu
+ 5DU/ydtV72x24at64z6DdCI3RHb6zBnARf5a1m/P1ZVdOGIyveuPzE24yo152RAYoLY2t97zc9I
+ F7wa+IhN4L6ZDVzUIpuNmKrvwOOQxTIO8KI+Mfpj+tbwTf+XLpwg==
+X-Google-Smtp-Source: AGHT+IFoCA8LSiw/SG71MJp4zWMRe4PWK/H6Ll5vJXv8Lw5oRpWL8Eqkyi3YWleTCdCj6RW+824mIg==
+X-Received: by 2002:a05:600c:a406:b0:477:75b4:d2d1 with SMTP id
+ 5b1f17b1804b1-4778bd13e4amr121413625e9.15.1763393879620; 
+ Mon, 17 Nov 2025 07:37:59 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42ca01b074csm6323103f8f.34.2025.11.17.07.37.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 17 Nov 2025 07:37:57 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.2] docs: Mention 32-bit PPC host as removed
+Date: Mon, 17 Nov 2025 16:37:56 +0100
+Message-ID: <20251117153756.78830-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] tests: add tcg coverage for fixed mremap bugs
-From: Matthew Lugg <mlugg@mlugg.co.uk>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, laurent@vivier.eu, qemu-stable@nongnu.org
-References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
- <20251011200337.30258-5-mlugg@mlugg.co.uk>
- <CAFEAcA_mLnE5kEBMkpq1fNNq00ivND7wvRyBpxfxWpNSYd=PAA@mail.gmail.com>
- <cd467137-e2ad-48e8-b8fd-c395586aa06f@mlugg.co.uk>
-Content-Language: en-US
-In-Reply-To: <cd467137-e2ad-48e8-b8fd-c395586aa06f@mlugg.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:19f0:7401:8244:5400:ff:fe24:ff33;
- envelope-from=mlugg@mlugg.co.uk; helo=mail.mlugg.co.uk
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,22 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/25 15:13, Matthew Lugg wrote:
-> On 10/20/25 16:26, Peter Maydell wrote:
->> I was going to complain about indent on this line, but the
->> problem seems to be that the file is incorrectly
->> indented with hardcoded tabs for parts of it.
-> 
-> Oops! I mostly work in a language where my editor config forces space 
-> indentation, so occasionally forget to set space indentation when I do 
-> need to. Will correct (and double-check indentation in the rest of the 
-> series) in the next revision.
+We removed support for 32-bit PPC hosts in commit 5c1ec5a1ee0
+("tcg/ppc: Remove support for 32-bit hosts").
 
-While working on this commit I just realised that you meant that 
-*existing* parts of the file were indented with hard tabs (causing the 
-apparent mismatch in the patch). Because there are quite a few hard tabs 
-in the file, I'll leave them as-is to avoid a big whitespace diff, but 
-will keep my added line correctly space-indented, as in the original 
-patch. You (or whoever is involved in the final merge) can of course add 
-a patch to fix the existing whitespace if you want.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/removed-features.rst | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 88ea0dc4edc..3ebbe9aec98 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -902,6 +902,12 @@ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+ Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+ maintain our cross-compilation CI tests of the architecture.
+ 
++32-bit PPC (since 11.0)
++'''''''''''''''''''''''
++
++Keeping 32-bit host support alive is a substantial burden for the
++QEMU project.
++
+ Guest Emulator ISAs
+ -------------------
+ 
+-- 
+2.51.0
+
 
