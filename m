@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81100CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E119CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKvhd-0004Ui-Gt; Mon, 17 Nov 2025 04:39:18 -0500
+	id 1vKvix-0005og-JY; Mon, 17 Nov 2025 04:40:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKvh8-0004Hb-4s
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:38:49 -0500
+ id 1vKviE-000592-9T
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:40:02 -0500
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKvh4-0006Fj-RW
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:38:45 -0500
+ id 1vKviC-0006Kp-7z
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:39:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763372323; x=1794908323;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=SaPWauZCovDtguFycylS01Pj0BmVIid6QW+wendfLuc=;
- b=XdNj8QavXiEFnC2hYoopzS2xT84UjWQdf9RlSNoN3aQIlp06C7jq30IN
- Ag4pZ4c2WGu5vm4XwyrTV1SdkgSJh9BWBSIew8k7+j/0v0Oab+qaIPNGg
- P1RNMkOOFW6QQB+KVq8FOFO+jft19AwEBGo5pYMtP3484soVcf+jve/Nx
- hqbLFvhbH6JJMBuo+469aNGtwjjvEaoqWfI/5kbt9Q78tj94HY8wzE6hU
- 03zfjYgj3HIqJzHsrRmY7NYl+t24rOi20EU65ZgGn0M7uB2Btkv+5TYxT
- SHl2zTPVoyOQQ/5WEZSTEwJHX35zILGc3e0SCwjBOj9FNjQCxbmBXXMHT g==;
-X-CSE-ConnectionGUID: WPbQi5uoTzGMdx5mIVx8gw==
-X-CSE-MsgGUID: by6DJ2zNRyu5PSWurPS1tA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76045854"
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76045854"
+ t=1763372392; x=1794908392;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=upukl2JcnyzmPxfGaIBFEQ3nzBlZZ2Dg6jwwVjvrLDI=;
+ b=Fd/tHJvxHEJexlyaulCX9GzXqEdcpVQKfKTSYu677i9yyN5ZfI22WbCR
+ msBQHn4tAS/y5WPFYyDyLo87654KYbuWZRaMq9YPT93r6t+oqiqTjLCA5
+ LkqGh0hIMSYuKjKZreG1QPBa3x0NhfKkKzxmoS9sKpBhR0VZIIqJFEB+T
+ QBJvHxVIdBn3LmtChdayuKtu4ieIK8zzAHmtQIiaAdBetBABpp+sSWlik
+ zzk8uNZ1NaaqFaXoIACtxPLtM8oukUTIVYjHIoRbKjN5cvdf+CbxK2MXh
+ fVeEu6M2VZMmwcFQiKDjdAwfGttqrviSXgo+RgFZAVsPn0bS/TrUw1Vhq g==;
+X-CSE-ConnectionGUID: 626O7UpXREmIrulQag6big==
+X-CSE-MsgGUID: e+L1ZlVlS4e/+/3Z58cn5A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76046049"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76046049"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:38:34 -0800
-X-CSE-ConnectionGUID: +3iXa4bgSj2GuVFYFGKVjw==
-X-CSE-MsgGUID: iOniffMqRUSjjrJo/BJbUA==
+ 17 Nov 2025 01:39:40 -0800
+X-CSE-ConnectionGUID: xrybInCiS3aowhHWly128g==
+X-CSE-MsgGUID: nzTwrWrqShaa5dXIulXDZQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070809"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070965"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:38:30 -0800
+ 17 Nov 2025 01:39:36 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,11 +53,13 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v8 00/23] intel_iommu: Enable first stage translation for
- passthrough device
-Date: Mon, 17 Nov 2025 04:37:03 -0500
-Message-ID: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
+Subject: [PATCH v8 17/23] vfio/listener: Bypass readonly region for dirty
+ tracking
+Date: Mon, 17 Nov 2025 04:37:20 -0500
+Message-ID: <20251117093729.1121324-18-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
+References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.9;
@@ -85,240 +87,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+When doing ditry tracking or calculating dirty tracking range, readonly
+regions can be bypassed, because corresponding DMA mappings are readonly
+and never become dirty.
 
-For passthrough device with intel_iommu.x-flts=on, we don't do shadowing of
-guest page table but pass first stage page table to host side to construct a
-nested HWPT. There was some effort to enable this feature in old days, see
-[1] for details.
+This can optimize dirty tracking a bit for passthrough device.
 
-The key design is to utilize the dual-stage IOMMU translation (also known as
-IOMMU nested translation) capability in host IOMMU. As the below diagram shows,
-guest I/O page table pointer in GPA (guest physical address) is passed to host
-and be used to perform the first stage address translation. Along with it,
-modifications to present mappings in the guest I/O page table should be followed
-with an IOTLB invalidation.
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/vfio/listener.c   | 46 +++++++++++++++++++++++++++++++++-----------
+ hw/vfio/trace-events |  1 +
+ 2 files changed, 36 insertions(+), 11 deletions(-)
 
-        .-------------.  .---------------------------.
-        |   vIOMMU    |  | Guest I/O page table      |
-        |             |  '---------------------------'
-        .----------------/
-        | PASID Entry |--- PASID cache flush --+
-        '-------------'                        |
-        |             |                        V
-        |             |           I/O page table pointer in GPA
-        '-------------'
-    Guest
-    ------| Shadow |---------------------------|--------
-          v        v                           v
-    Host
-        .-------------.  .-----------------------------.
-        |   pIOMMU    |  | First stage for GIOVA->GPA  |
-        |             |  '-----------------------------'
-        .----------------/  |
-        | PASID Entry |     V (Nested xlate)
-        '----------------\.--------------------------------------------.
-        |             |   | Second stage for GPA->HPA, unmanaged domain|
-        |             |   '--------------------------------------------'
-        '-------------'
-<Intel VT-d Nested translation>
-
-This series reuse VFIO device's default HWPT as nesting parent instead of
-creating new one. This way avoids duplicate code of a new memory listener,
-all existing feature from VFIO listener can be shared, e.g., ram discard,
-dirty tracking, etc. Two limitations are: 1) not supporting VFIO device
-under a PCI bridge with emulated device, because emulated device wants
-IOMMU AS and VFIO device stick to system AS; 2) not supporting kexec or
-reboot from "intel_iommu=on,sm_on" to "intel_iommu=on,sm_off" on platform
-with ERRATA_772415_SPR17, because VFIO device's default HWPT is created
-with NEST_PARENT flag, kernel inhibit RO mappings when switch to shadow
-mode.
-
-This series is also a prerequisite work for vSVA, i.e. Sharing guest
-application address space with passthrough devices.
-
-There are some interactions between VFIO and vIOMMU
-* vIOMMU registers PCIIOMMUOps [set|unset]_iommu_device to PCI
-  subsystem. VFIO calls them to register/unregister HostIOMMUDevice
-  instance to vIOMMU at vfio device realize stage.
-* vIOMMU registers PCIIOMMUOps get_viommu_flags to PCI subsystem.
-  VFIO calls it to get vIOMMU exposed flags.
-* vIOMMU calls HostIOMMUDeviceIOMMUFD interface [at|de]tach_hwpt
-  to bind/unbind device to IOMMUFD backed domains, either nested
-  domain or not.
-
-See below diagram:
-
-        VFIO Device                                 Intel IOMMU
-    .-----------------.                         .-------------------.
-    |                 |                         |                   |
-    |       .---------|PCIIOMMUOps              |.-------------.    |
-    |       | IOMMUFD |(set/unset_iommu_device) || Host IOMMU  |    |
-    |       | Device  |------------------------>|| Device list |    |
-    |       .---------|(get_viommu_flags)       |.-------------.    |
-    |                 |                         |       |           |
-    |                 |                         |       V           |
-    |       .---------|  HostIOMMUDeviceIOMMUFD |  .-------------.  |
-    |       | IOMMUFD |            (attach_hwpt)|  | Host IOMMU  |  |
-    |       | link    |<------------------------|  |   Device    |  |
-    |       .---------|            (detach_hwpt)|  .-------------.  |
-    |                 |                         |       |           |
-    |                 |                         |       ...         |
-    .-----------------.                         .-------------------.
-
-Below is an example to enable first stage translation for passthrough device:
-
-    -M q35,...
-    -device intel-iommu,x-scalable-mode=on,x-flts=on...
-    -object iommufd,id=iommufd0 -device vfio-pci,iommufd=iommufd0,...
-
-Test done:
-- VFIO devices hotplug/unplug
-- different VFIO devices linked to different iommufds
-- vhost net device ping test
-- migration with QAT passthrough
-
-PATCH01-08: Some preparing work
-PATCH09-10: Compatibility check between vIOMMU and Host IOMMU
-PATCH11-16: Implement first stage translation for passthrough device
-PATCH17-18: Add migration support and optimization
-PATCH19-21: Workaround for ERRATA_772415_SPR17
-PATCH22:    Enable first stage translation for passthrough device
-PATCH23:    Add doc
-
-Qemu code can be found at [2], it's based on
-vfio-next + migration_relax_series[3].
-
-Fault event injection to guest isn't supported in this series, we presume guest
-kernel always construct correct first stage page table for passthrough device.
-For emulated devices, the emulation code already provided first stage fault
-injection.
-
-TODO:
-- Fault event injection to guest when HW first stage page table faults
-
-[1] https://patchwork.kernel.org/project/kvm/cover/20210302203827.437645-1-yi.l.liu@intel.com/
-[2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting.v8
-[3] https://lore.kernel.org/qemu-devel/20251106042027.856594-1-zhenzhong.duan@intel.com/
-
-Thanks
-Zhenzhong
-
-Changelog:
-v8:
-- add hw/i386/intel_iommu_accel.[hc] to hold accel code (Eric)
-- return bool for all vtd accel related functions (Cedric, Eric)
-- introduce a new PCIIOMMUOps::get_host_iommu_quirks() (Eric, Nicolin)
-- minor polishment to comment and code (Cedric, Eric)
-- drop some R-b as they have changes needing review again
-
-v7:
-- s/host_iommu_extract_vendor_caps/host_iommu_extract_quirks (Nicolin)
-- s/RID_PASID/PASID_0 (Eric)
-- drop rid2pasid check in vtd_do_iommu_translate (Eric)
-- refine DID check in vtd_pasid_cache_sync_locked (Liuyi)
-- refine commit log (Nicolin, Eric, Liuyi)
-- Fix doc build (Cedric)
-- add migration support
-
-v6:
-- delete RPS capability related supporting code (Eric, Yi)
-- use terminology 'first/second stage' to replace 'first/second level" (Eric, Yi)
-- use get_viommu_flags() instead of get_viommu_caps() (Nicolin)
-- drop non-RID_PASID related code and simplify pasid invalidation handling (Eric, Yi)
-- drop the patch that handle pasid replay when context invalidation (Eric)
-- move vendor specific cap check from VFIO core to backend/iommufd.c (Nicolin)
-
-v5:
-- refine commit log of patch2 (Cedric, Nicolin)
-- introduce helper vfio_pci_from_vfio_device() (Cedric)
-- introduce helper vfio_device_viommu_get_nested() (Cedric)
-- pass 'bool bypass_ro' argument to vfio_listener_valid_section() instead of 'VFIOContainerBase *' (Cedric)
-- fix a potential build error reported by Jim Shu
-
-v4:
-- s/VIOMMU_CAP_STAGE1/VIOMMU_CAP_HW_NESTED (Eric, Nicolin, Donald, Shameer)
-- clarify get_viommu_cap() return pure emulated caps and explain reason in commit log (Eric)
-- retrieve the ce only if vtd_as->pasid in vtd_as_to_iommu_pasid_locked (Eric)
-- refine doc comment and commit log in patch10-11 (Eric)
-
-v3:
-- define enum type for VIOMMU_CAP_* (Eric)
-- drop inline flag in the patch which uses the helper (Eric)
-- use extract64 in new introduced MACRO (Eric)
-- polish comments and fix typo error (Eric)
-- split workaround patch for ERRATA_772415_SPR17 to two patches (Eric)
-- optimize bind/unbind error path processing
-
-v2:
-- introduce get_viommu_cap() to get STAGE1 flag to create nesting parent HWPT (Liuyi)
-- reuse VFIO's default HWPT as parent HWPT of nested translation (Nicolin, Liuyi)
-- abandon support of VFIO device under pcie-to-pci bridge to simplify design (Liuyi)
-- bypass RO mapping in VFIO's default HWPT if ERRATA_772415_SPR17 (Liuyi)
-- drop vtd_dev_to_context_entry optimization (Liuyi)
-
-v1:
-- simplify vendor specific checking in vtd_check_hiod (Cedric, Nicolin)
-- rebase to master
-
-
-Yi Liu (3):
-  intel_iommu_accel: Propagate PASID-based iotlb invalidation to host
-  intel_iommu: Replay all pasid bindings when either SRTP or TE bit is
-    changed
-  intel_iommu: Replay pasid bindings after context cache invalidation
-
-Zhenzhong Duan (20):
-  intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
-    vtd_ce_get_pasid_entry
-  intel_iommu: Delete RPS capability related supporting code
-  intel_iommu: Update terminology to match VTD spec
-  hw/pci: Export pci_device_get_iommu_bus_devfn() and return bool
-  hw/pci: Introduce pci_device_get_viommu_flags()
-  intel_iommu: Implement get_viommu_flags() callback
-  intel_iommu: Introduce a new structure VTDHostIOMMUDevice
-  vfio/iommufd: Force creating nesting parent HWPT
-  intel_iommu_accel: Check for compatibility with IOMMUFD backed device
-    when x-flts=on
-  intel_iommu_accel: Fail passthrough device under PCI bridge if
-    x-flts=on
-  intel_iommu_accel: Stick to system MR for IOMMUFD backed host device
-    when x-flts=on
-  intel_iommu: Add some macros and inline functions
-  intel_iommu_accel: Bind/unbind guest page table to host
-  vfio/listener: Bypass readonly region for dirty tracking
-  intel_iommu: Add migration support with x-flts=on
-  hw/pci: Introduce pci_device_get_host_iommu_quirks()
-  intel_iommu_accel: Implement get_host_iommu_quirks() callback
-  Workaround for ERRATA_772415_SPR17
-  intel_iommu: Enable host device when x-flts=on in scalable mode
-  docs/devel: Add IOMMUFD nesting documentation
-
- MAINTAINERS                      |   2 +
- docs/devel/vfio-iommufd.rst      |  25 ++
- hw/i386/intel_iommu_accel.h      |  55 ++++
- hw/i386/intel_iommu_internal.h   | 155 ++++++---
- include/hw/i386/intel_iommu.h    |   5 +-
- include/hw/iommu.h               |  30 ++
- include/hw/pci/pci.h             |  55 ++++
- include/hw/vfio/vfio-container.h |   1 +
- include/hw/vfio/vfio-device.h    |   5 +
- hw/i386/intel_iommu.c            | 530 ++++++++++++++++++-------------
- hw/i386/intel_iommu_accel.c      | 272 ++++++++++++++++
- hw/pci/pci.c                     |  35 +-
- hw/vfio/device.c                 |  26 ++
- hw/vfio/iommufd.c                |  18 +-
- hw/vfio/listener.c               |  48 ++-
- tests/qtest/intel-iommu-test.c   |   4 +-
- hw/i386/Kconfig                  |   5 +
- hw/i386/meson.build              |   1 +
- hw/i386/trace-events             |   4 +
- hw/vfio/trace-events             |   1 +
- 20 files changed, 979 insertions(+), 298 deletions(-)
- create mode 100644 hw/i386/intel_iommu_accel.h
- create mode 100644 include/hw/iommu.h
- create mode 100644 hw/i386/intel_iommu_accel.c
-
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 3b48f6796c..ca2377d860 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -76,8 +76,13 @@ static bool vfio_log_sync_needed(const VFIOContainer *bcontainer)
+     return true;
+ }
+ 
+-static bool vfio_listener_skipped_section(MemoryRegionSection *section)
++static bool vfio_listener_skipped_section(MemoryRegionSection *section,
++                                          bool bypass_ro)
+ {
++    if (bypass_ro && section->readonly) {
++        return true;
++    }
++
+     return (!memory_region_is_ram(section->mr) &&
+             !memory_region_is_iommu(section->mr)) ||
+            memory_region_is_protected(section->mr) ||
+@@ -368,9 +373,9 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
+ }
+ 
+ static bool vfio_listener_valid_section(MemoryRegionSection *section,
+-                                        const char *name)
++                                        bool bypass_ro, const char *name)
+ {
+-    if (vfio_listener_skipped_section(section)) {
++    if (vfio_listener_skipped_section(section, bypass_ro)) {
+         trace_vfio_listener_region_skip(name,
+                 section->offset_within_address_space,
+                 section->offset_within_address_space +
+@@ -497,7 +502,7 @@ void vfio_container_region_add(VFIOContainer *bcontainer,
+     int ret;
+     Error *err = NULL;
+ 
+-    if (!vfio_listener_valid_section(section, "region_add")) {
++    if (!vfio_listener_valid_section(section, false, "region_add")) {
+         return;
+     }
+ 
+@@ -663,7 +668,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+     int ret;
+     bool try_unmap = true;
+ 
+-    if (!vfio_listener_valid_section(section, "region_del")) {
++    if (!vfio_listener_valid_section(section, false, "region_del")) {
+         return;
+     }
+ 
+@@ -722,11 +727,11 @@ static void vfio_listener_region_del(MemoryListener *listener,
+         }
+ 
+         /*
+-         * Fake an IOTLB entry for identity mapping which is needed by dirty
+-         * tracking. In fact, in unmap_bitmap, only translated_addr field is
+-         * used to set dirty bitmap.
++         * Fake an IOTLB entry for writable identity mapping which is needed
++         * by dirty tracking. In fact, in unmap_bitmap, only translated_addr
++         * field is used to set dirty bitmap.
+          */
+-        if (!memory_region_is_iommu(section->mr)) {
++        if (!memory_region_is_iommu(section->mr) && !section->readonly) {
+             entry.iova = iova;
+             entry.translated_addr = iova;
+             iotlb = &entry;
+@@ -834,7 +839,8 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+         container_of(listener, VFIODirtyRangesListener, listener);
+     hwaddr iova, end;
+ 
+-    if (!vfio_listener_valid_section(section, "tracking_update") ||
++    /* Bypass readonly section as it never becomes dirty */
++    if (!vfio_listener_valid_section(section, true, "tracking_update") ||
+         !vfio_get_section_iova_range(dirty->bcontainer, section,
+                                      &iova, &end, NULL)) {
+         return;
+@@ -1093,6 +1099,19 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if (!mr) {
+         goto out_unlock;
+     }
++
++    /*
++     * The mapping is readonly when either it's a readonly mapping in guest
++     * or mapped target is readonly, bypass it for dirty tracking as it
++     * never becomes dirty.
++     */
++    if (!(iotlb->perm & IOMMU_WO) || mr->readonly) {
++        trace_vfio_iommu_map_dirty_notify_skip_ro(iova,
++                                                  iova + iotlb->addr_mask);
++        rcu_read_unlock();
++        return;
++    }
++
+     translated_addr = memory_region_get_ram_addr(mr) + xlat;
+ 
+     ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+@@ -1228,7 +1247,12 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+     int ret;
+     Error *local_err = NULL;
+ 
+-    if (vfio_listener_skipped_section(section)) {
++    /*
++     * Bypass readonly section as it never becomes dirty, iommu memory section
++     * is RW and never bypassed. The readonly mappings in iommu MR are bypassed
++     * in vfio_iommu_map_dirty_notify().
++     */
++    if (vfio_listener_skipped_section(section, true)) {
+         return;
+     }
+ 
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 3c62bab764..180e3d526b 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -103,6 +103,7 @@ vfio_listener_region_del(uint64_t start, uint64_t end) "region_del 0x%"PRIx64" -
+ vfio_device_dirty_tracking_update(uint64_t start, uint64_t end, uint64_t min, uint64_t max) "section 0x%"PRIx64" - 0x%"PRIx64" -> update [0x%"PRIx64" - 0x%"PRIx64"]"
+ vfio_device_dirty_tracking_start(int nr_ranges, uint64_t min32, uint64_t max32, uint64_t min64, uint64_t max64, uint64_t minpci, uint64_t maxpci) "nr_ranges %d 32:[0x%"PRIx64" - 0x%"PRIx64"], 64:[0x%"PRIx64" - 0x%"PRIx64"], pci64:[0x%"PRIx64" - 0x%"PRIx64"]"
+ vfio_iommu_map_dirty_notify(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
++vfio_iommu_map_dirty_notify_skip_ro(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
+ 
+ # container.c
+ vfio_container_query_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t backend_flag, uint64_t bitmap_size, uint64_t translated_addr, uint64_t dirty_pages) "iova=0x%"PRIx64" size=0x%"PRIx64" backend_flag=0x%"PRIx64" bitmap_size=0x%"PRIx64" gpa=0x%"PRIx64" dirty_pages=%"PRIu64
 -- 
 2.47.1
 
