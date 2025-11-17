@@ -4,96 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F41CEBF61
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 14:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A40FCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 14:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKznQ-0005Z4-Am; Mon, 17 Nov 2025 09:01:32 -0500
+	id 1vKzqI-0006xk-59; Mon, 17 Nov 2025 09:04:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKzn2-0005DC-Br
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 09:01:15 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKzqG-0006xb-RH
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 09:04:28 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKzmv-0008M7-4h
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 09:01:03 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42b31507ed8so3467831f8f.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 06:00:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKzqF-0000Wn-B8
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 09:04:28 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so46236725e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 06:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763388057; x=1763992857; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=brg7uRDq185l2/5NDQjHWbT0l/Th4/sFLDv0ZLlhKEY=;
- b=NO6/HxwcNa505VtUKZqyjpxDioLMkFLsMFdQ/bR0RfjFosiDQjVZrxE5zf+AdQmFC0
- 6sW7W59WpFAtkr9VGHPHlL33rP56pgOEjCx1l9THJ2WmDAu6KHjuO7Hn8CT7aJBJ7JYQ
- mZlai7iXC1tmqqQH6iLWE5yxJ1F5r05YnsSTHDOm2toS+7baFQj/YtbkXHZsQcFUYVRn
- TdZMTuTGtP5T4dV26Wb1IdE6EJIAfcZCmzQH7nQeXTWIoFYabtK40gXPoNWDxKKDAQfG
- 01h0/tByaJZv8/6LsO49UJ3cXTsTy53IwHcoEdoTi44LS2U1c2dev5MesCfRsDiIdqRe
- ATAg==
+ d=linaro.org; s=google; t=1763388265; x=1763993065; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=g6bk/DS0zVlU3mOvpnZS7E1ShstFOzUCHUlepPd+CAw=;
+ b=VDcXxTXDdmhQjx1Ng7kLcD++9NhFaDYEgWeplhPox27boAIkNqU8Sq6tR/KxNEMw+7
+ 0VoJ9mEqf9/GxyyCQBDMom8nt/OxOtbK5D1HQPZQw54BMNl/CJpkbB5Rq68SGlk6ckna
+ j5PSsu7GuzyJEKByP3St81O6/XZILQiNpNnJfc5d9C4FY8isqz5PXO2vSh/k1A2qcDYI
+ DNJXvG3PThatKz6JClT3Hwb/0A8swZ3bvMH8EvUvemefmnRecg17O357x0VYjhP0Dr7s
+ iHOvVC7ThQigFmgNhzTPCrGLs0mDk+tNLvxuQ03SqEHY1roaA3dUgd2VsL9Ohal15m1C
+ fL/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763388057; x=1763992857;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=brg7uRDq185l2/5NDQjHWbT0l/Th4/sFLDv0ZLlhKEY=;
- b=hfboXk4xwgGJ93uYD2fQ8IjGYBVvRde70U82wicvZvW4VsHdIakMirSGbPmxWy7ByH
- vK2fkzT7FAUjqUrBCMvR1uTPsrA7XQ/dCFSDAk9PCZ/4O3vDhMsDZnxprzW5N0TsLo+j
- HRsEwABlYcLYAkITctbEinjjy+D3QTWfntDdcn+coP9wJQNe5HtM14kE6AcIfEH3DAD5
- ffytrgnVyo14G21ExwqUoXxCfD79c333UFQ6gYXaSUlmViIsHr6pyjLe7Kpk3PVR3fgG
- NG6RdcdOWKC5de9+EUFx7yc7SgWs7GCHx1AOyFDXq8JxJ3mp9nP4kFUdtumHNJZ+4wQN
- zEFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvEDgG9poq9iktXPZT1H4AAzsDmOUXzyKhn+B9c+pE2/R7is9O38TdaoRH7Pbs99nsRzijg60PY7Aq@nongnu.org
-X-Gm-Message-State: AOJu0Yz4tg63lxujMXGcaLBLPWK4yBDHzJ6yEk0pjai0Cas2CaFnEdFw
- kgmteCchwAd0QYy2HbZbRfj4yuR/E+hBfIXDTqwrnHdoJtFu2Q3nzhRXkXHkJ/lkDO4=
-X-Gm-Gg: ASbGnctECLW3oxSKV3zwF/ATzvwN1bN1xUmUq+rIqx3ny2y2tjWt0VQKLz8wgNiW+wz
- GUNZQoUQrjlR8A5x1qwHWPHMFX2QzYehJXl+iZK36imhvOWCQhbZmxBgixScvbrY9uCJyqqgDsV
- 4SdTFs1QOy/jmGk/4u7BUHk8d+1ynDchO1e8Rp/Q7YgMkSe41+qYtAS3Op+DTBelOh4bGe6hsnK
- vz8bhFkAisPYJvPH/1u8kTUseXoeWLK3u8zy5GSuJgf8IhGmfAeUI2T2u94REByDG2F93WM84Yi
- orZXDed0WmamhqF2BQ/QlIqpdoI3st33w/trPgecV3STihDmPw7KIdS02ZDmwvS75B3QFWh/Fb7
- m0ZJGcbCfd1d3c+7RHOHT760TGKZ4SzGgF9fha+7bdIa+GlJibCGbNon9yPMrU07v358m9NWDlI
- wULuSJbbqxretYZN37XgyKzY0/THt5F9nsES7qJUbxiB0prMRMnZlqUw==
-X-Google-Smtp-Source: AGHT+IH/7gI+UQRTQ+3MAGm4CKJ44DTKp80MRvjqQ61BvMNJpYeRjVF9+IJInJirojuzS6MFtEw1+Q==
-X-Received: by 2002:a05:6000:25c8:b0:429:c851:69bc with SMTP id
- ffacd0b85a97d-42b59342f3fmr10029042f8f.8.1763388057404; 
- Mon, 17 Nov 2025 06:00:57 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1763388265; x=1763993065;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g6bk/DS0zVlU3mOvpnZS7E1ShstFOzUCHUlepPd+CAw=;
+ b=Zom/HkWff27+LXNGGu2vBXMz/XnLvPhsMoKm971vKBA3DC3myk8EeXR3MNa1XR9XXz
+ rPaLTCroO09z1gFnuTOcllTGKawa03D/lIsPxN4QVPkvPKxVcRbwm6H3flPrKXrhzDFZ
+ IaceWlPlq0i2oDG8pS04vb7/5xJJ6nlB23wKZasx6FrPOBQ3RmPLQswmE+s3w1mcilcP
+ 8N1LZew47xcyy+M6pzxnydrffhynVvEL9qWmO3Zb466DIxjkx4wBTe4GpZKEwMufFrxD
+ MIoQ4h41QF2bH8KWwlmjPUmXQPTNb3SqVeTUUrbOfP8acZLiueeobkrcnsf+4ZtC1zUE
+ YWaA==
+X-Gm-Message-State: AOJu0Yz88znpnKURiELWyOg6SIKAQyZJsUFjRXlQJQC8SmuHnpvvnsVO
+ P629kGuaQfEIuK+QBLx/nMLwk7zL+iHQkKcyef5TNTQMhRRgXIBXCC5tWzzDJmkrNYhPfwQVXld
+ GMI+JCe/NSg==
+X-Gm-Gg: ASbGncs99ZSy3eWqbTsxYXjPpOqWQavvZ81/prdssDewGismPCdtmLNw6CN6ozZeASD
+ Kxuv7GloZIstDYES8uMyXLJU9ZqztUkHXc0oe5jNT+VZSkz5lEDy5hpYqv/97s2Ta5DH0/scWB3
+ fFnh4jbqNHLVu7Jb1+W6SPbKPlEhCFi+D7c803i13Am4ipDaF1T7lX2Tbpz23hsn7+bKluYIu8F
+ 8nAUQs0kFAJnifBqPcm/MF5uilbxMtbU2zPdJtAXxp1qM5yqcvivm5zDlfOfZpLcQejQ7rEB8Gt
+ wXjBc4wNSub01o2NR2ROkcXgwMXI9q0z++d22qtvTSKym3sXmCsmpPdzNrYplmLc4y6ijL+G3fB
+ QTzDiaco5hNuCN8N0orKEN19GtZreZtsCSjuIjH1Xqr+Oow+uiqcgl5pK3bZ5gjkmvSLh8zcLqp
+ v/9VhlCI+Va6mxOsZuovJ7aNN6BNHIhXr9EKPLamOrfIIuzcjegg==
+X-Google-Smtp-Source: AGHT+IEi3G5otK/YE8p5oG9UFk6oOlXV4exv7zzItrYLbYaV45eyf1jMPZbO2/HZ6uKNdL4Xxtn3yQ==
+X-Received: by 2002:a05:600c:6052:b0:477:9986:5e6b with SMTP id
+ 5b1f17b1804b1-47799866420mr48467395e9.28.1763388265015; 
+ Mon, 17 Nov 2025 06:04:25 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f0b894sm27018673f8f.26.2025.11.17.06.00.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Nov 2025 06:00:54 -0800 (PST)
-Message-ID: <0d18d036-f93a-4874-9306-ec769cb375d2@linaro.org>
-Date: Mon, 17 Nov 2025 15:00:52 +0100
+ ffacd0b85a97d-42b53e7ae2dsm26951084f8f.5.2025.11.17.06.04.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 17 Nov 2025 06:04:22 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH-for-10.2] roms: Do not try to build EDK2 for 32-bit ARM on
+ Fedora
+Date: Mon, 17 Nov 2025 15:04:20 +0100
+Message-ID: <20251117140420.62193-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/18] tests/lcitool: update ENV stazas outputted by
- refresh
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Ed Maste <emaste@freebsd.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Thomas Huth
- <thuth@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
- Paul Durrant <paul@xen.org>, Gustavo Romero <gustavo.romero@linaro.org>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-arm@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251117115523.3993105-1-alex.bennee@linaro.org>
- <20251117115523.3993105-4-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251117115523.3993105-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,28 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Typo "stanzas" in subject?
+With Fedora 27, support for 32-bit ARM hosts was dropped.
+QEMU also stopped building the docker images in commit
+0054dc8bde4 ("Update lcitool and fedora to 37").
 
-On 17/11/25 12:55, Alex Bennée wrote:
-> Now lcitool has been updated to use the non-legacy ENVs we should do
-> the same for what refresh adds.
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20251113102525.1255370-4-alex.bennee@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/docker/dockerfiles/debian-amd64-cross.docker    | 4 ++--
->   tests/docker/dockerfiles/debian-arm64-cross.docker    | 4 ++--
->   tests/docker/dockerfiles/debian-armhf-cross.docker    | 4 ++--
->   tests/docker/dockerfiles/debian-i686-cross.docker     | 4 ++--
->   tests/docker/dockerfiles/debian-mips64el-cross.docker | 4 ++--
->   tests/docker/dockerfiles/debian-mipsel-cross.docker   | 4 ++--
->   tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 4 ++--
->   tests/docker/dockerfiles/debian-riscv64-cross.docker  | 4 ++--
->   tests/docker/dockerfiles/debian-s390x-cross.docker    | 4 ++--
->   tests/docker/dockerfiles/debian.docker                | 2 +-
->   tests/docker/dockerfiles/fedora-win64-cross.docker    | 4 ++--
->   tests/lcitool/refresh                                 | 6 +++---
->   12 files changed, 24 insertions(+), 24 deletions(-)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ roms/edk2-build.py | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/roms/edk2-build.py b/roms/edk2-build.py
+index e564765aaa7..c7e9dc58ec0 100755
+--- a/roms/edk2-build.py
++++ b/roms/edk2-build.py
+@@ -293,10 +293,6 @@ def prepare_env(cfg, silent = False):
+         # ubuntu
+         os.environ['GCC5_ARM_PREFIX'] = 'arm-linux-gnueabi-'
+         os.environ['GCC_ARM_PREFIX'] = 'arm-linux-gnueabi-'
+-    elif binary_exists('arm-linux-gnu-gcc'):
+-        # fedora
+-        os.environ['GCC5_ARM_PREFIX'] = 'arm-linux-gnu-'
+-        os.environ['GCC_ARM_PREFIX'] = 'arm-linux-gnu-'
+     if binary_exists('loongarch64-linux-gnu-gcc'):
+         os.environ['GCC5_LOONGARCH64_PREFIX'] = 'loongarch64-linux-gnu-'
+         os.environ['GCC_LOONGARCH64_PREFIX'] = 'loongarch64-linux-gnu-'
+-- 
+2.51.0
 
 
