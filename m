@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC0FCE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834D3CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL28Q-00079y-Ce; Mon, 17 Nov 2025 11:31:22 -0500
+	id 1vL28U-0007Ir-Gi; Mon, 17 Nov 2025 11:31:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vL28L-00076r-6u
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:17 -0500
+ id 1vL28Q-0007Er-Qu
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vL28I-0007gX-NJ
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:16 -0500
+ id 1vL28P-0007h6-8M
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763397073;
+ s=mimecast20190719; t=1763397080;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=9EV0G8fOv9urSTQ/Zi9BrN+v8CBpmDQcEA3FMJ5hCDI=;
- b=Z4SDfB/MnV65YACGRc8qfWyzHGCYfwkRBbOZEbj4Pbi++tO2uVRlUq0bjnhF0NfY8DHVsB
- rRNCCLA54IBQABBVKldzU8b3oqxY7Du+w4yw+xym0+J94+EFAYteUn4dSRvi5HO3hrJIDc
- VN0kcJmgxT5zRtoBjv8wNeMK8dnAya8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q10xK85V9eTQ7DlgmxFXQKaQw89HU4P1/5M6DW8MO80=;
+ b=djBwve7CUChijtL6E3E5Y3jqxG87rF6/tm/t8HSJzA/v8x5xd5P+YJCyPvIbNlLXBemrmT
+ GAVLz3F82IIsKRtWMZe/9Ii5IqFzg40smFr4TCZoCMhuZG5snhH8pTmZijjL57d73RYK/N
+ YrM8mMNlETgBLhDub+fIzcFmFHt/o9E=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-204-OV4QJj6UOZy6ZW6Z--o6jA-1; Mon, 17 Nov 2025 11:31:11 -0500
-X-MC-Unique: OV4QJj6UOZy6ZW6Z--o6jA-1
-X-Mimecast-MFC-AGG-ID: OV4QJj6UOZy6ZW6Z--o6jA_1763397070
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-477563a0c75so26086935e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 08:31:10 -0800 (PST)
+ us-mta-658-swEOyHvwNvqe04gxMqzmTw-1; Mon, 17 Nov 2025 11:31:18 -0500
+X-MC-Unique: swEOyHvwNvqe04gxMqzmTw-1
+X-Mimecast-MFC-AGG-ID: swEOyHvwNvqe04gxMqzmTw_1763397077
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477a11d9e67so10849975e9.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 08:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763397069; x=1764001869; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9EV0G8fOv9urSTQ/Zi9BrN+v8CBpmDQcEA3FMJ5hCDI=;
- b=YwA6fsdpvUW+HuQy4HGgqBWT3Vn6hb0Td4WJSlhdpJRgMO1Q1X91/slKU92by15+9j
- bo0qsZF7S12oUD1lcYpT6dPC4UFksE9dWHZdwSPtuWJoU6wWgYPym/ZH9VoffCcpyK6t
- A4sfb+a8GgouqQb4BzRtaF2pwaETec8P1tzxsy49Ng6gOOEArozOfC2xM74gZAkAk2bC
- +9N7rgAjmKJ4QQopZukoNV/A7tQ7EtuYlYAd+7yl1gsYaocb61RwvDcJGGvxxRJE1AUI
- TPioAlESQ0HmasNMhw8j9VITxwSLwiGkyiWsHgE9O1hG70xk3csFAr1e6Zi3dsSu+vvu
- Qj3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763397069; x=1764001869;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1763397076; x=1764001876; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9EV0G8fOv9urSTQ/Zi9BrN+v8CBpmDQcEA3FMJ5hCDI=;
- b=xSmQ22jngHvR6kY0NB8lqnWvLrLlp5YXeeCXFipCuLqjvQWMtZmTAeq6WtXDRbYTzD
- ioxBvwV8z/TU0wohpFZmSfnYn+TodPJh4DxhJ0SGS7mropeL/425BVOeFJFjKV22qMp0
- SATMFUxKpqy8GKDqJ9quc5SwMAABcd6lRK43RGcnIGK0takgjhPQRMvNyMxagBXKptld
- kEq8oVn2FROJddeaEzum9FqyOh+39gNZBFTX8hhGjeLfdKm47d7VjME8fhN/LwGAF46h
- sde+F1eKchgm5B9QZgK1Znh7IbfKaGJlqlgqbfhj/gVHgCpIXzQElWHHIlpcDHOCRrGh
- 3hcg==
-X-Gm-Message-State: AOJu0YzDmk5Oeeu/saD+eZmSUo8JzFiFSGOsCE02FzaqB2922cohwFX5
- 3Plz791PfjA9J3UFjgJixZa+hKQb7q+Tn9oq2AlwpJwqDiU8DF8lw5A1SqvZUJ5lRBTIDc+8hRM
- LRH5ZtmI+/N0K6/ytXs9QWyfDNwa2+q07hPaDFbWGl9PF7XPdIQ7rMHNmiSoUjvG9G9noOR8uCn
- tqGB1Ou2kB/jSHLnB1gaaNGPuWmkgd2GKeCqiKUuD4
-X-Gm-Gg: ASbGncvxoRt0g4c6s/1+CYzM00e7q2+317R7Gzb9CN7e+xy3ovklZ77lNsw7vKoTNG0
- g/YQgn0Rbq0hMiWApX+6wgi7wEga7Yvjk+FT0NsjtVl2RMwkPTJDEmjHia+xHAYrCFGd41bAkc1
- x7ldOkuCvm0CxghUbuDSekTlkSXNWoHGJJYgMlodnKvOSLa/98ugT5uvO63nzHhrjiZuatjm/OH
- 8pdFkTyibglEQp6OZRh2AbG8UmbAzt0VWdEP8Qc9zZIMXK8Cb5Y4bYKSi178TIzLzA7PBGkAUm7
- Zzt0ibSlTeq22yRscDfMt4owRjkqgb77uoD8ErNApvORVNKIlHsZ+rJvJF15+DnPrDlU1PWCYPG
- ozfoefholkZu9EdLfMyLeaOACFksU4MdHnfZc/f94Qgtj63qjJ4k3y7lvhTloZN7ZxS/6S7TPy7
- mr3p5F
-X-Received: by 2002:a05:600c:3587:b0:477:8a29:582c with SMTP id
- 5b1f17b1804b1-4778feb23b3mr129423525e9.34.1763397069065; 
- Mon, 17 Nov 2025 08:31:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF3lrjs4Ap1sFQcoO4p66XX8pM0YvYevbQYPjMR4436z8tfMJINA/9vZN5f1jzYpVKDeFHDHA==
-X-Received: by 2002:a05:600c:3587:b0:477:8a29:582c with SMTP id
- 5b1f17b1804b1-4778feb23b3mr129423135e9.34.1763397068564; 
- Mon, 17 Nov 2025 08:31:08 -0800 (PST)
+ bh=q10xK85V9eTQ7DlgmxFXQKaQw89HU4P1/5M6DW8MO80=;
+ b=geUcogDZHUKWkacJmYl/A68zbvgMHtaSEp4NUIAbnZtTsnWv4Xxfgd/vO5DuXJgZn7
+ iGdoqaARTtqHrOXSDmd6Y3vdrUYTWaZreVxNZmsDSE77tPgktHUZvwIo/KlFAE4F7Ivv
+ tM+L9uSVHWrzPp4mrSUFMViYzlMOCjUjKtW3Uz07VjegSgM8jYJYnWA9VKIWREuTqVA+
+ xWsREDJ9hR4fO5TQuPNOHisCso642exPtSP/bivle6sgh4QL/TzBwXHkEbCBzhe21Zru
+ 70czJhr3nSiOHIt4SWo7T4nHVYDAhYbZOzmr4T4DWULh+DAeEA/Etaay039nQo73XX2c
+ j0xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763397076; x=1764001876;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=q10xK85V9eTQ7DlgmxFXQKaQw89HU4P1/5M6DW8MO80=;
+ b=qFcdR4JrIFuXUaiU91ZmNePvIqUF8+Fe3kOOHBLQdferamh6ewEiJ/z/Eav7wxK3qh
+ gX+BFzHiHMDpdVhD1BHgeECG4ljrb4q99CT+ghKPoxD9EOzedOeY+8L0c/sCfpysGS5j
+ C9Spq/nmN3pv3C28I6dqKwdbQ0ynm1XNdasTvT4v7k5+nfT6Un2Ix/CnRfoMQtxPCKyk
+ u3vM4Inld7msBdX5dJyucw0332plBDIZMaUTjNikgmaqnolAJ0jg2dbxcU4ckGQogtLm
+ xE2Ba3et1OTaz/wbhcwkLG0C33pjBu/MuQSXKGLAcqQ13hTIkmPbI1McGGRKAST5JbeD
+ IBNg==
+X-Gm-Message-State: AOJu0YynLmn4q0ITWaV7yKMlmSGTH7mLFZnh4A4YifjS1zzBHy3Uz8kg
+ IIx810Di7luhINqIiRCdHX3XJT7D0EaFxoYG3KpySUsk6pO7xzim9oBk+Ss+0yO7v4sAo6rnJYw
+ btnMAok5emR+znZUORvd7c8lA+SAC3HwQqZu3tHAiMMwspScFv6d8l07tkuZ+/0Pxhxls6dQB+x
+ TAQxO6n/6h2vTSQqT6QzI1voQvFOupXq87uHbOhVrQ
+X-Gm-Gg: ASbGncs0KN31C0/IoxW5NAXEb08xfEy3XmnnZjXzHXhVdJAuQzIitbbSZS1dnK5c7EN
+ uz6XrJ7A7cMHmflR914r/dNT57mx24dNhuLim4rxvcpXexJln1reyC6miy73ThDXeoG4ZUycvaF
+ HENbyBGu93MvwTdK6W4aKq7rrLEqnsgGZrdXcKX0GF+ML54PeX7MFUYydOjjjxRII0qmkdNEmkF
+ WmcyRIeDmhQnaExrMwEtJqHRkizmPvoH04ufpdaWsbWub07jlF7gmxx0bsDL2afWUsda349/aFB
+ kKpkJyLjZY1HPf5oOCmRi4mA94lrziWCd5fyklkdPwx7zW73nWGRrIjhzvDVoFDbGAeFhelx0kC
+ TaI9eZ8ikH8eoA3HeVph/CNGyxJILQHgW4XUnWQYzfWk1Vc4kSdPiDOFq6Z00R3rpTBRQY4mUvV
+ YzvhWV
+X-Received: by 2002:a05:600c:4995:b0:477:9671:3a42 with SMTP id
+ 5b1f17b1804b1-47796713b41mr56648895e9.35.1763397076592; 
+ Mon, 17 Nov 2025 08:31:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3HpuKHSyu3iQuP5dckY3VWg+ETMJqmu4PV6tG2+KdtfH0gE/+Mr5Er+be0J8wWi4TxJF7lw==
+X-Received: by 2002:a05:600c:4995:b0:477:9671:3a42 with SMTP id
+ 5b1f17b1804b1-47796713b41mr56648655e9.35.1763397076129; 
+ Mon, 17 Nov 2025 08:31:16 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4779fc42f25sm99329855e9.6.2025.11.17.08.31.07
+ 5b1f17b1804b1-47787e36ca3sm340067495e9.5.2025.11.17.08.31.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 08:31:08 -0800 (PST)
+ Mon, 17 Nov 2025 08:31:13 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com
-Subject: [PATCH 0/3] mtest2make: clean up and make dependencies more precise
-Date: Mon, 17 Nov 2025 17:31:04 +0100
-Message-ID: <20251117163107.372393-1-pbonzini@redhat.com>
+Subject: [PATCH 3/3] mtest2make: do not repeat the same speed over and over
+Date: Mon, 17 Nov 2025 17:31:07 +0100
+Message-ID: <20251117163107.372393-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251117163107.372393-1-pbonzini@redhat.com>
+References: <20251117163107.372393-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -118,37 +122,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-You probably have never thought much about scripts/mtest2make.py, and in
-fact it has seen only a hendful of commits in the last few years.
-The idea is pretty simple: gather the list of testsuites and their
-dependencies, and turn a "make check-*" invocation into calling "ninja"
-first and "meson test" second.  On top of that, it magically turns
-SPEED=thorough into invoking up to three suites named XYZ, XYZ-slow
-and XYZ-thorough.
+There are just three of them, avoid repeating them for as many
+times as there are tests.
 
-But even this incospicuous script can harbor a bug, or rather an "I
-didn't really think too much about it" situation.  Dependencies are added
-to suite XYZ independent of the speed that is used in the meson.build
-file: add a dependency to a func-thorough test and "make check-func"
-will build it at any requested speed.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ scripts/mtest2make.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Fixing this is a one line change, but it is easiest with a small cleanup
-on the front, which is patch 1.  This (at least to me) makes the generated
-Makefile.mtest file a little bit easier to read, which is also nice
-to have.
-
-Paolo
-
-
-Paolo Bonzini (3):
-  mtest2make: cleanup mtest-suites variables
-  mtest2make: add dependencies to the "speed-qualified" suite
-  mtest2make: do not repeat the same speed over and over
-
- Makefile              |  4 +++-
- scripts/mtest2make.py | 43 ++++++++++++++++++-------------------------
- 2 files changed, 21 insertions(+), 26 deletions(-)
-
+diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+index d32eef2f7f4..2b706f94234 100644
+--- a/scripts/mtest2make.py
++++ b/scripts/mtest2make.py
+@@ -14,7 +14,7 @@
+ class Suite(object):
+     def __init__(self):
+         self.deps = set()
+-        self.speeds = ['quick']
++        self.speeds = {'quick'}
+ 
+     def names(self, base):
+         return [base if speed == 'quick' else f'{base}-{speed}' for speed in self.speeds]
+@@ -62,10 +62,10 @@ def process_tests(test, targets, suites):
+         suites[s].deps.update(deps)
+         if s.endswith('-slow'):
+             s = s[:-5]
+-            suites[s].speeds.append('slow')
++            suites[s].speeds.add('slow')
+         if s.endswith('-thorough'):
+             s = s[:-9]
+-            suites[s].speeds.append('thorough')
++            suites[s].speeds.add('thorough')
+ 
+ def emit_prolog(suites, prefix):
+     all_targets = ' '.join((f'{prefix}-{k}' for k in suites.keys()))
 -- 
 2.51.1
 
