@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D663DCEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 11:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A94CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 11:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKxeT-0007WZ-GW; Mon, 17 Nov 2025 06:44:09 -0500
+	id 1vKxf5-0000Bh-Uh; Mon, 17 Nov 2025 06:44:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vKxeJ-0007NT-M6; Mon, 17 Nov 2025 06:44:01 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vKxeF-0002o5-Hn; Mon, 17 Nov 2025 06:43:57 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B34716AC49;
- Mon, 17 Nov 2025 14:43:49 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 495E931DDAB;
- Mon, 17 Nov 2025 14:43:50 +0300 (MSK)
-Message-ID: <a794dd06-cf28-4d04-be08-c87796296a72@tls.msk.ru>
-Date: Mon, 17 Nov 2025 14:43:49 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vKxf4-0000Ay-MT
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:44:46 -0500
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vKxf3-000313-4v
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:44:46 -0500
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-71d71bcab69so34862337b3.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 03:44:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763379883; x=1763984683; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mh42pQFJ66OqpZVu6hLshqlNoH1FayhCS+/Kp0WBPcI=;
+ b=iCpiZVlwAeBUHKptAe6nTlDhurIgyKH3Xya5wTlBGIVJPAKbdZxo426HblCgM5IeBK
+ jsVAWl3/t6GarQWxnmah/wlq7YfTDQsza+B9JBRTX9l4X0qYOvm/dQxhfSo4KOdbQgYf
+ 1+/6EwZatCzNXsCKj2GpM96cCDrzFw99WV8zcREi3tR14LIQUwSx7mqbYTCwONRXihpn
+ RNFIGiLexuIiZSwUKWgircF2z9m0UqUqHFRunyBSp1D8QkxSNFJEy9vYbewluNzbQk9c
+ g5p3uByENKJDdOER35xTFA+85jCuaTLAlHsV/ZaQE1pfg3rlfeZgdU/6hW8WMb3Jln/Q
+ +i/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763379883; x=1763984683;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Mh42pQFJ66OqpZVu6hLshqlNoH1FayhCS+/Kp0WBPcI=;
+ b=HE4BqectEB/nm5yhVXvFnnyhpLKOo2EGNrlNbjt/FFFUZyJ8l7Kq46XLOMSkkW5oCS
+ Twgs/aaV1A8gkievcAGnvnlV3XgPdA20MjaN+tCPuiFRCrQCN064Vfu/Uikr4pOSJiUJ
+ SygftHNca0HztBVGZ8WkvJdxwZmJHmWePaDmPZl1B+WPcRu32yYo94SevNy1R30UUCrE
+ Cb10qZ4jJGUs2FqhI2lpR97iiPkqyjeZ4b6IMJpBTC1FYVSUyFMsGRBPUUkjYhXHMsOh
+ RIuUNh08D5ec5SInL4Zy3ppevDJZYl6QsAgZ4FlgXQQ0ZrBlOabtAQ/9qvrvcQuO7V6O
+ /THw==
+X-Gm-Message-State: AOJu0YyzDnCfPcyBZj2N/UC9T3FOjtkjAjRpSkFNeAZCkO1l3knox3Xr
+ JugRahJZNlWqxPs3QjG61xUdpkCskOBAohpcpXgsLUdgsGyYCIfHLMYPj9cKUp/YX0n7rSfhzgo
+ iMnx0+o27k3aQXTMFcWhKMZm458vz26dW8aFzpIPzXw==
+X-Gm-Gg: ASbGnctTtj1ZOkTUjTb9Uiz6UVf2RVzkWtATrOa6PH1NZD3py6uWaFsIDG7iLkpWqCi
+ xg0xXtqkq19VTDMF7sryuzcaxhNZyeMuyFs8+uzRwhjXuK8uMjruvvnS+TNVWcaZVGq0cmtm20X
+ 6sOKcuc7MFiTukCvWKXR6/ukuSgNncFJnO2rD5vwRWuwRkcFsntvyk7ToTJOSVTwAJ7jT7bPbz8
+ 3lDXPWMLnDEDF38ehTUMJuo2xMiKiEMWrTkIeHVZV2mtveMPE/jttDkD6mfgHIWlbwIHxps
+X-Google-Smtp-Source: AGHT+IH2HpKa7rJc8SgXWbNjYHEDlmj0k1nTAZ8nfHZSIqbx13YEXuZQaj5LhmXBC300W39Zg3mWWJFJKlpEVljAFz0=
+X-Received: by 2002:a53:d008:0:b0:63f:bdfa:640 with SMTP id
+ 956f58d0204a3-641e755eaddmr10036584d50.25.1763379883008; Mon, 17 Nov 2025
+ 03:44:43 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] linux-user: fix several mremap bugs
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Matthew Lugg <mlugg@mlugg.co.uk>, qemu-devel@nongnu.org,
- laurent@vivier.eu, qemu-stable@nongnu.org
-References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
- <f495c43b-3d35-4763-853e-4e70428cb666@tls.msk.ru>
- <CAFEAcA_8DbBoQdxRzqedssk6hdKrCNSVrO8i6iK4o5SWrkrNaw@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CAFEAcA_8DbBoQdxRzqedssk6hdKrCNSVrO8i6iK4o5SWrkrNaw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1762698873.git.mst@redhat.com>
+ <20251117052608-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251117052608-mutt-send-email-mst@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Nov 2025 11:44:30 +0000
+X-Gm-Features: AWmQ_bkQY0srTWKPLdcX_1hwQVo4SYQEzuFuHPjHFjTePu6mOVWW6OaDTwz2atE
+Message-ID: <CAFEAcA8KY=Cro0XHQe6ZoPPTVYgyOUMxzqnyiz0CD5_RRnZhWQ@mail.gmail.com>
+Subject: Re: [PULL 00/14] virtio,pci,pc: fixes for 10.2
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,20 +93,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/25 14:42, Peter Maydell wrote:
-> On Mon, 17 Nov 2025 at 08:40, Michael Tokarev <mjt@tls.msk.ru> wrote:
->>
->> A friendly ping?  Has this series been forgotten?
->> It looks like it should be picked up for 10.2 release.
-> 
-> No, there are review comments on the series that need to be
-> addressed before it can be applied.
+On Mon, 17 Nov 2025 at 10:28, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Sun, Nov 09, 2025 at 09:35:09AM -0500, Michael S. Tsirkin wrote:
+> > The following changes since commit 917ac07f9aef579b9538a81d45f45850aba42906:
+> >
+> >   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-11-05 16:07:18 +0100)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> >
+> > for you to fetch changes up to 97f24a0496be9e0a7216fea1fa0d54c1db9066e2:
+> >
+> >   vhost-user.rst: clarify when FDs can be sent (2025-11-09 08:25:53 -0500)
+> >
+> > ----------------------------------------------------------------
+> > virtio,pci,pc: fixes for 10.2
+> >
+> > small fixes all over the place.
+> > UDP tunnel and TSEG tweaks are kind of borderline,
+> > but I feel not making the change now will just add
+> > to compatibility headaches down the road.
+> >
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> >
+> > ----------------------------------------------------------------
+>
+>
+> Is there any issue with this pull request?
+> Just making sure these fixes have not been lost.
 
-Yes that's what I actually mean, - just used the wrong wording.
-What I mean is that this series is better be fixed and applied
-before/for 10.2.
+They were merged last week (merge commit 593aee5df98b4a862).
 
-Thanks,
-
-/mjt
+-- PMM
 
