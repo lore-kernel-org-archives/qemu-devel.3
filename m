@@ -4,73 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC65CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 07:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0921CEBF92
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 07:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKtRJ-0000Xz-Q8; Mon, 17 Nov 2025 02:14:23 -0500
+	id 1vKtdN-0007Gu-Tc; Mon, 17 Nov 2025 02:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vKtQk-0000IM-8C
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:13:54 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vKtdC-0007Ge-QP
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:26:34 -0500
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vKtQg-00029C-9Y
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:13:41 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AH7DUuW083492
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 17 Nov 2025 16:13:30 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=hYmABUl8IANAnqtrHqiZN1dXxAViNumtd3PAxUufUjM=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763363610; v=1;
- b=i9cD+HdwBS2YgU80zu3p/YpOL8X+E6Zjv+WCl07HboZSz+hAw4G25YeOvBU2Faui
- dAeryXkVKQhiLW8/tagxI26kHtPSvZrJZGKlYkdsmLxBQPf4/04YQ/7ojASa02Jm
- KsEAxJoiZRzW30eq83W544y+nX7nq3URk1kH1nltnQ5u94U0ZT9LpbQxPLBQq92T
- 8gkgt8pOPIeDPJ6/oYlbaLuQZlE8QNwOcbnRErSxXJo72K6eHC1i8xSlHjO+OflQ
- 6qvHFpw11GYXdYi/Jd60Xq+Q+W6AIX1Le4O+LMNj1uEuosKCLUo9tfGXcksNnHaB
- 4eRWMY18wL6aULm//X44UA==
-Message-ID: <8dcffe42-da84-44cf-a240-90680cdb0953@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 17 Nov 2025 16:13:30 +0900
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vKtdB-00041Y-5U
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:26:34 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=veLpbEF8Rp2B+1Mp7reD1DNqf56sXJ+mAR8Sw8GisFy4/FLq7N4wP+olcqXOhr3ak1JrDtidylDPKD1el5EZM+iUBpJs4xtNwfuut28YzSNDTqMLtdds4HkjDq3pBFQjqOKEY8EYyPhF+bYKuTunq98kIo6jeR83mBfNqHgiBFagw+vv2FzJN46U/8qk3FGxCpj8JdpCt6zy4wseo4OObSHGtdFJwQecd5h+yTW3MDhQaoC3e2HHXrFtIFkI8hjGhzsygAdj/PXP7iaLIiynB3YufBry/Scu2Wk/wJc2KBMOdTcFT1ZbmoWrQ6bl0NUEMSK8BazJy7Z2qyD9icHJcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4++MH2TbrNAoLll2np5gdCP5vBPrur4GtnDss9u0Ecc=;
+ b=Rlg+RCCSK3UJL+iNfaYj0GO8lkkAO6erbkjYJ8CBl1te0PK8mdyYwIzAQzL8nb/mvRW7k2MPqZ9iKuHsHctFc4np8uEKirOzQse8QmxuPiIZr+c8Pqg8ZOUhpWvcT3Mb45bFBvNVyy0Wd5hgpfWNeV2aLaGn1UbX7xl9Co3ZFXsjtTjA3Zh++ApI7xmk81/B0ns1rrIAx8S5P5ayQhP7SnMqv8Hvz4SdtxDKHzE6QoyESn+FPTaoZFQgzo6G+a6UHXqs1zpc1uAKRRbECW7AACvkE7JZsm4gsfhrJV6Ak+cKf4PzTRIiMwvkFgXhvNM+xde8lLSsn2kI2cY5Jgkllg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4++MH2TbrNAoLll2np5gdCP5vBPrur4GtnDss9u0Ecc=;
+ b=onKfaxBf74LlVRzSROIlhZJGr50rlM08/L+z5Rc3U5qUlgfRx9kXQdWvTZcBMdW1Te+8FV1VHd9v0qhRgSYIYv8HHYbUUCaTSEQ3EQ4oo3iMngyLq1wxs1iAi/jRcgLKiRb2yK1YGk9dhcjaurMPKRpa55mk3xMV6gkjonVZz5Y=
+Received: from BYAPR03CA0025.namprd03.prod.outlook.com (2603:10b6:a02:a8::38)
+ by LV2PR12MB5800.namprd12.prod.outlook.com (2603:10b6:408:178::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.18; Mon, 17 Nov
+ 2025 07:26:26 +0000
+Received: from SJ1PEPF000023D1.namprd02.prod.outlook.com
+ (2603:10b6:a02:a8:cafe::cb) by BYAPR03CA0025.outlook.office365.com
+ (2603:10b6:a02:a8::38) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.22 via Frontend Transport; Mon,
+ 17 Nov 2025 07:26:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF000023D1.mail.protection.outlook.com (10.167.244.7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9343.9 via Frontend Transport; Mon, 17 Nov 2025 07:26:25 +0000
+Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 16 Nov
+ 2025 23:26:22 -0800
+From: Honglei Huang <honghuan@amd.com>
+To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>
+CC: <odaki@rsg.ci.i.u-tokyo.ac.jp>, <mst@redhat.com>, <cohuck@redhat.com>,
+ <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <Ray.Huang@amd.com>, "Honglei
+ Huang" <honghuan@amd.com>
+Subject: [v2] virtio-gpu-virgl: fix error handling in
+ virgl_cmd_resource_create_blob
+Date: Mon, 17 Nov 2025 15:26:10 +0800
+Message-ID: <20251117072611.107507-1-honghuan@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
- <20251109053801.2267149-11-vivek.kasireddy@intel.com>
- <5c224e00-8114-4586-b502-3819770bc8ff@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <3c0fe9e8-7efa-4936-b5ef-5cabc4239cdd@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71855ADFEEC4E3267B464768F8CDA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <8451c0ee-6c9d-4fbf-b1c2-05fd5fd8e4c3@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185D06DA886C3758E9B0FB5F8C9A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB7185D06DA886C3758E9B0FB5F8C9A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D1:EE_|LV2PR12MB5800:EE_
+X-MS-Office365-Filtering-Correlation-Id: fb2a58d8-9fff-4822-a9bd-08de25aa9e25
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?OCO/bRbv/f5LQS4nK1C0z6GkOL3M6xdNusd+Hgv0C1iQgzBl4Wr7EyYV4GU1?=
+ =?us-ascii?Q?AxdcJgr9YJp1jcpWOcQDSfP3bMQtIABOvuwMxv2t/QMx4RzWVnRpELz2UyLw?=
+ =?us-ascii?Q?NB0we2F2tgmSEblW8w64RBPJBKWAkvbTzbDRZT92JJDDUMUvmwsFEDL20qZ6?=
+ =?us-ascii?Q?UEpU3AL2aODmnNmcFadK0w/JWabDNX8b6/xu8QVZzTmIEicJQz2ZJVRr1mN0?=
+ =?us-ascii?Q?Z3V1hNHSHhZ/gKMg2jJwYUbni47fiQxhwzHuXicrz2/9RIhxwWPC/RgqRuMH?=
+ =?us-ascii?Q?ISX/8TRuF4fYB5FD2knJDXaOAeQ43P8IijiEZ5yR5A8kbvq7OQJROjzRkgee?=
+ =?us-ascii?Q?ujTD4VJOlRebhFaPHqxg7fv+kMB+sHLlN75mH2tH+WK2XLQkoK8wYrFKOaOl?=
+ =?us-ascii?Q?7YDRONxGOGPJ2Wn4hde8L4wFIuR3kKsfccFHnwxfUMR4Xe3lbRX70TeJgFbK?=
+ =?us-ascii?Q?ioRByHSTufTMdHqbdbRCkK4Na/nkj01/1bo+55L3x6N7AaTv89DYq3aksMdR?=
+ =?us-ascii?Q?rmI8Cj+tkjaq6oJTciKquVxm2vGdlp2TvGCMXgrdVTob9jnxAapdw/ZD3fxt?=
+ =?us-ascii?Q?k48ivEewAg8odT0llRjx0Xc+JEa/3ISRuPbUMsfRGmIVXOPnvZTqlavZh+bA?=
+ =?us-ascii?Q?t7z/v5r03i5JDEdGn0x38ady0jQRZJgKymQBCVP57rtUVw21fpLGLbLRQnz7?=
+ =?us-ascii?Q?90RfjTltD0WqxC5/I7T3OQZYNpsRv/+eEegLVVeu9u5Pw1VrvycsAa4q6cYg?=
+ =?us-ascii?Q?YCCR79o4t75cRynG9+iv3KnZZm2QHuoqspBaxrMJGMB3B18Wix+Mygx+84Wm?=
+ =?us-ascii?Q?Sew9mBH0uxjUCeEl8cxKJS2xPSlJIXcTbDzE8l3xYZgufuHvbMOpII52PNwz?=
+ =?us-ascii?Q?hjsn4QbQitJW4RlAzDokhdkdRVcsQq0VHexKRY7tADcM4DjcCSW2WeOz9/dm?=
+ =?us-ascii?Q?FIxd6xK6xkgqoMhjaDi2Mm0CxWufa/fxwgi068JEr52vf+ypYG0nyp719a5Q?=
+ =?us-ascii?Q?KS8h1hvthGqeQR/z3mR5zmOFftVqeN0x7UjPemk7TifglIEYOSAAcZLtDv+D?=
+ =?us-ascii?Q?VadopfSA6elmZww8epL/bG0yzlHeF5/jSBXmktYTZ47KAbiCW7vlxjWaCMQo?=
+ =?us-ascii?Q?qUzdHGoKikUYfeU8QqnQFtrT/jWKYpwz7dJMiD4C9XXisvCMCmQmQ+x5Xtk0?=
+ =?us-ascii?Q?P1KSZhxJ7n/M0RojKoNcvUSvafx3+/JOns0TuX7nHmIQSRLDzv1mRcLh8S5w?=
+ =?us-ascii?Q?+TuuVwCsEIg40k6ereoMgwUmUUFL0cbet2F/vvfNDrwD/1w44obhQ09s5RVi?=
+ =?us-ascii?Q?2NiepG+shviJSiBTtF8IXD85NdgwuAM0j8v4jkn8UfGtHmX+kQjzukZigXww?=
+ =?us-ascii?Q?trpbUkdjenN0BJ9ehflfmtvMhvYn7dzS8n/vwtheJEkrhuaU2LaWSxlWDBwS?=
+ =?us-ascii?Q?1OydCzw/DzZVTZVV7xwSfKTL3hH9rTMTo5RyWdQUOrkTEOJKwb9jQgOKuGIV?=
+ =?us-ascii?Q?PzyBWXgcVHJK+d6WBU7IXEuToVie0IKY/4hBqebD9LplbP0NolKPauMrgOoE?=
+ =?us-ascii?Q?NkXGAzFJ3VCHfV7wBQA=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2025 07:26:25.9786 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fb2a58d8-9fff-4822-a9bd-08de25aa9e25
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D1.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5800
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,118 +149,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/17 13:19, Kasireddy, Vivek wrote:
-> Hi Akihiko,
-> 
->> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
->> associated with VFIO devices
->>
->> On 2025/11/13 12:17, Kasireddy, Vivek wrote:
->>> Hi Akihiko,
->>>
->>>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for
->> blobs
->>>> associated with VFIO devices
->>>>
->>>> On 2025/11/12 13:26, Kasireddy, Vivek wrote:
->>>>> Hi Akihiko,
->>>>>
->>>>>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for
->>>> blobs
->>>>>> associated with VFIO devices
->>>>>>
->>>>>> On 2025/11/09 14:33, Vivek Kasireddy wrote:
->>>>>>> In addition to memfd, a blob resource can also have its backing
->>>>>>> storage in a VFIO device region. Therefore, we first need to figure
->>>>>>> out if the blob is backed by a VFIO device region or a memfd before
->>>>>>> we can call the right API to get a dmabuf fd created.
->>>>>>>
->>>>>>> So, once we have the ramblock and the associated mr, we rely on
->>>>>>> memory_region_is_ram_device() to tell us where the backing storage
->>>>>>> is located. If the blob resource is VFIO backed, we try to find the
->>>>>>> right VFIO device that contains the blob and then invoke the API
->>>>>>> vfio_device_create_dmabuf().
->>>>>>>
->>>>>>> Note that in virtio_gpu_remap_udmabuf(), we first try to test if
->>>>>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
->>>>>>> use the VFIO device fd directly to create the CPU mapping.
->>>>>>
->>>>>> I have just remembered that mremap() will work for either of udmabuf
->>>> and
->>>>>> VFIO. That will avoid having two different methods and make
->>>>>> vfio_get_region_index_from_mr() and vfio_device_get_region_info()
->>>>>> unnecessary.
->>>>> IIUC, the name virtio_gpu_remap_dmabuf() is misleading because we
->> are
->>>> not
->>>>> actually doing remap but are simply calling mmap(). In other words, we
->>>> are not
->>>>> expanding or shrinking existing mapping but are creating a new
->> mapping.
->>>>> And, for dmabufs associated with VFIO devices, without having to call
->>>>> vfio_get_region_index_from_mr() and vfio_device_get_region_info(), I
->>>> don't see
->>>>> any other way to determine the region offset.
->>>>>
->>>>> So, I guess I'll create a new patch to do s/remapped/map.
->>>>
->>>> I mean calling mremap() with 0 as the old_size parameter. The man page
->>>> says:
->>>>    > If the value of old_size is zero, and old_address refers to a
->>>>    > shareable mapping (see the description of MAP_SHARED in mmap(2)),
->>>> then
->>>>    > mremap() will create a new mapping of the same pages.
->>> It might be possible to use mremap() here but using mmap() seems very
->>> straightforward given that we are actually not shrinking or expanding
->>> an existing mapping but are instead creating a new mapping. Also, I am
->>> wondering what benefit would mremap() bring as opposed to just using
->>> mmap()?
->>
->> As I noted earlier, mremap() removes the need of having two different
->> paths for udmabuf and VFIO, and make vfio_get_region_index_from_mr()
->> and
->> vfio_device_get_region_info() unnecessary, reducing code complexity.
-> Sorry, I should have researched thoroughly before but after looking at the code
-> again, I don't see how mremap() removes the need for having two different
-> paths for udmabuf and VFIO and make vfio_get_region_index_from_mr()
-> and vfio_device_get_region_info() unnecessary. Could you please elaborate
-> how it can be done?
+The error handling logic was incorrect. virtio_gpu_create_mapping_iov()
+returns 0 on success and non-zero on failure, but the code was checking
+whether to set the error response.
 
-Not tested, but something like the following:
+The fix changes the condition from 'if (!ret)' to 'if (ret != 0)' to
+properly handle the return value, consistent with other usage patterns
+in the same codebase (see virtio-gpu.c:932 and virtio-gpu.c:354).
 
-head = qemu_ram_mmap(-1, res->blob_size, qemu_real_host_page_size(),
-                      QEMU_MAP_READONLY | QEMU_MAP_SHARED, 0);
-if (head == MAP_FAILED) {
-     return NULL;
-}
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+---
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-cursor = head;
-
-for (i = 0; i < res->iov_cnt; i++) {
-     if (mremap(res->iov[i].iov_base, 0, res->iov[i].iov_len,
-                MREMAP_FIXED, cursor) == MAP_FAILED) {
-         qemu_ram_munmap(-1, head, res->blob_size);
-         return NULL;
-     }
-
-     cursor += res->iov[i].iov_len;
-}
-
-return head;
-
-Regards,
-Akihiko Odaki
-
-> 
-> Thanks,
-> Vivek
-> 
->>
->> mremap() is also sufficiently straightforward. The man page explicitly
->> states it is designed to create a new mapping. Using it for the purpose
->> (not shrinking or expanding an existing mapping) is not an abuse of the API.
->>
->> Regards,
->> Akihiko Odaki
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 94ddc01f91..e60e1059df 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+                                             cmd, &res->base.addrs,
+                                             &res->base.iov, &res->base.iov_cnt);
+-        if (!ret) {
++        if (ret != 0) {
+             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+             return;
+         }
+-- 
+2.34.1
 
 
