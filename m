@@ -4,92 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE43CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D84CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL2k8-0002in-Dh; Mon, 17 Nov 2025 12:10:20 -0500
+	id 1vL2kZ-0003FS-Do; Mon, 17 Nov 2025 12:10:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL2jT-0002KV-BH
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:09:40 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL2jR-0005kM-0B
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:09:39 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso37823165e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:09:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763399375; x=1764004175; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fo3m93QgAfXweZgvBwggdTWa4sBOV4sqi1XMrWrnlhU=;
- b=kmUBohKiizZuRDK7aEwdKACuaUj67jogs6dLt0jvLw+Z9HfmWaye4zkxS1V7OlKWRX
- dnOJ4/+T09Yg7EudrUFfBIQqcSv/JoEeB1FJC9qgJJkxs/mJWBeo/nGDXuorImWXe0Jd
- CIaGhDOY/yufyelenpNlJz1vgyw9n29qZm5Oa0Bre/ojdETtyrO6g+0VDkxDM6josvJh
- OfpYyuCgSIZ/hEuLTcLEK1UMhsY4GVt16ve+LGWgLb2kx/3MGD/ydvR9NgUQQXFJ2iVo
- q92RFpdrbEHYGuhKENjxAwSCHdnh/ixOrm/tmwYvSy44jYjpS2wKj8/txa6xFapjigXI
- +R0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763399375; x=1764004175;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fo3m93QgAfXweZgvBwggdTWa4sBOV4sqi1XMrWrnlhU=;
- b=utUpXU/AtB0N+QSzGzrWUS84z8SB4suinO/ACyDg2jBZZxiDk3zXfSNI7YU4HiLWfJ
- 7WJao07wbq0KwRQCyY9tgabddSCUfIM2zbbGVrg6yhwJ7yR0M6ep4Xh0OG0yxyOlMkb2
- Vq6vdS0dt0pF/OsLLFCiyaUHeKYloZrEPO+awDnO8GhmQ0QSmPNRG4QTK/sN+eDmD1Vr
- SsMedP01lQdbhTo/fReRf9GcPh0iJtm7fyH9GzKPwKjIrScaAaG7VAGjP1hKjbsuL1Os
- CCKdFsje6svHMmXkinnIqNVx8mot0GNlUyn+S02Ob52pZseFnVFSkQET5PxaDFMI3p5I
- XGNw==
-X-Gm-Message-State: AOJu0Yzh0CpTYZy6aHGOWfXVgsyzbSyV3n8++ZVe21nhGXnQSDIWBn5c
- nPYqX51BREDaB90fc8xhG62P4ghsl9X/iwk1M7jN7KPgL3UrvJfBkFCdbKHt6/GCOjphyn5+i/y
- Xd1d+KEMTlA==
-X-Gm-Gg: ASbGncvu0RUOTqDsCpehjDHnZuKNJn2a01cPMyOiyubt4dEFWX2EIP3qnm3SCYNGGKz
- +cc+BaEOhxYGQNoQIQkXjSoVrTU21fbfxNv9edmf+jTha1lZmKfB9ytielt7zD8uGXmyDgvWa/o
- kUG9vXfAWeV/nhGzgatsHH5/dSZNuoClZgiyVa8/9+TVnioTY/wkW1tsYpYDhhkZ8sjWdmb7ivb
- wxp0JJ/0eERyK2qGYkCtSt1NFtMBHD982iHbMNE90d4rs6V4rEZvOH+zvbBtEfwrW2KEQ4MSiK+
- mvyyyOEcLHUJQqZLDseeDN4T0jKzH9GAoDacI+dK+IDay++ST/RKCd7wGB5nzo1MjNmqfnxEDP9
- I626Q/SOizNU+aUpC2P63SkVpld3GyfOixGFKWQGM+gEp7To24w7S8u7BAE4PHNZdOKcaAUrd8F
- lTK0GI5l97An9r5CwAFyX+d/0HRsf7+JLQYaXks+iZyJ9bzMAYgXSBXFAPqWciPOpHTNsC0dA=
-X-Google-Smtp-Source: AGHT+IGIk4Z8raCNRRax10NzPiOtzcWZsfFqovZxOEC0O6EAwuDa9OGLqy3618E2lq6SY5Z/RIvTOw==
-X-Received: by 2002:a05:600c:474e:b0:477:9d88:2da6 with SMTP id
- 5b1f17b1804b1-477a945e522mr1642955e9.0.1763399375257; 
- Mon, 17 Nov 2025 09:09:35 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477988060e8sm65079275e9.5.2025.11.17.09.09.34
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Nov 2025 09:09:34 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mlugg@mlugg.co.uk>) id 1vL2kS-0002zn-3u
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:10:40 -0500
+Received: from mlugg.co.uk ([104.238.170.239] helo=mail.mlugg.co.uk)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <mlugg@mlugg.co.uk>) id 1vL2kD-0006FC-0l
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:10:27 -0500
+Received: from localhost.localdomain
+ (3.c.0.2.2.e.e.a.9.8.5.7.2.1.b.b.f.b.9.2.0.c.b.a.0.b.8.0.1.0.0.2.ip6.arpa
+ [IPv6:2001:8b0:abc0:29bf:bb12:7589:aee2:20c3])
+ by mail.mlugg.co.uk (Postfix) with ESMTPSA id C77A2359B5;
+ Mon, 17 Nov 2025 17:10:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mlugg.co.uk; s=20200703;
+ t=1763399421; h=from:from:sender:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:references; bh=vQaPbsDya+DT/xQXtMXTu2BCH23a7jXmjkrd5R6uwCw=;
+ b=G8iHb9IQ/TJ1QBEQaAvpPkBum2CEll00al+AgAKamcolkiaXZCy7yFb9+eGd79c+zuNzhr
+ k3d+x40ZxgI64FKazzyOP4jynNvICyrAYK2Ad8Gzg6EwoaiwQ/PmU+doqzjWp/dIZ8MI3X
+ l+bUE5dm44kQ+CibmkAQmXor8mizDt8=
+From: Matthew Lugg <mlugg@mlugg.co.uk>
 To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH-for-10.2 v2 2/2] docs: Mention 32-bit PPC host as removed
-Date: Mon, 17 Nov 2025 18:09:18 +0100
-Message-ID: <20251117170918.80248-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251117170918.80248-1-philmd@linaro.org>
-References: <20251117170918.80248-1-philmd@linaro.org>
+Cc: laurent@vivier.eu, peter.maydell@linaro.org,
+ Matthew Lugg <mlugg@mlugg.co.uk>
+Subject: [PATCH v2 0/4] linux-user: fix several mremap bugs
+Date: Mon, 17 Nov 2025 17:09:50 +0000
+Message-ID: <20251117170954.31451-1-mlugg@mlugg.co.uk>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=104.238.170.239; envelope-from=mlugg@mlugg.co.uk;
+ helo=mail.mlugg.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,32 +65,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We removed support for 32-bit PPC hosts in commit 5c1ec5a1ee0
-("tcg/ppc: Remove support for 32-bit hosts").
+This version of the series should address all feedback I received. The original
+cover letter is replicated below.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/about/removed-features.rst | 6 ++++++
- 1 file changed, 6 insertions(+)
+I was recently debugging a strange crash in a downstream project which turned
+out to be a QEMU bug related to the `mremap` implementation in linux-user. In
+practice, this bug essentially led to arbitrary memory regions being unmapped
+when a 32-bit guest, running on a 64-bit host, uses `mremap` to shrink a memory
+mapping.
 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index a72df26dd24..e4eb3da4c22 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -902,6 +902,12 @@ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
- Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
- maintain our cross-compilation CI tests of the architecture.
- 
-+32-bit PPC (since 10.2)
-+'''''''''''''''''''''''
-+
-+Keeping 32-bit host support alive is a substantial burden for the
-+QEMU project.
-+
- Guest Emulator ISAs
- -------------------
- 
+The first patch in this set resolves that bug. Since the patch is very simple,
+and the bug is quite likely to be hit, I suspect that that commit is a good
+candidate for qemu-stable.
+
+The following two patches just resolve two more bugs I became aware of whilst
+working on this code. I believe the messages in those patches contain all
+necessary context. They are less critical and the fixes more complex, so are
+likely not suitable for backporting into qemu-stable.
+
+The final commits adds tcg tests for the fixed `mremap` behavior. The third fix
+is unfortunately difficult to test programmatically, but I have confirmed that
+it behaves as expected by observing the output of `strace qemu-i386 repro`,
+where `repro` is the following C program:
+
+    #define _GNU_SOURCE
+    #include <stddef.h>
+    #include <sys/mman.h>
+    int main(void) {
+        char *a = mmap(NULL, 4097, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+        char *b = mmap(NULL, 4097, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+        mremap(b, 4097, 4097, MREMAP_FIXED | MREMAP_MAYMOVE, a);
+        // QEMU has now leaked a page of its memory reservation!
+        return 0;
+    }
+
+Prior to the patch, as the comment says, QEMU leaks a page of its address space
+reservation (i.e. the page becomes unmapped). After the patch, QEMU correctly
+reclaims that page with `mmap`.
+
+Matthew Lugg (4):
+  linux-user: fix mremap unmapping adjacent region
+  linux-user: fix mremap errors for invalid ranges
+  linux-user: fix reserved_va page leak in do_munmap
+  tests: add tcg coverage for fixed mremap bugs
+
+ linux-user/mmap.c               | 16 ++++++++-----
+ tests/tcg/multiarch/test-mmap.c | 42 +++++++++++++++++++++++++++++++--
+ 2 files changed, 50 insertions(+), 8 deletions(-)
+
 -- 
-2.51.0
+2.51.2
 
 
