@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B0DCEBF61
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 13:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95615CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 13:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKziw-000353-Ap; Mon, 17 Nov 2025 08:56:54 -0500
+	id 1vKzl0-0004Gu-3e; Mon, 17 Nov 2025 08:59:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vKzis-00033u-D4; Mon, 17 Nov 2025 08:56:50 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vKzio-0006zN-Tg; Mon, 17 Nov 2025 08:56:50 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCXnJiRKRtpGL4+Ag--.111S2;
- Mon, 17 Nov 2025 21:56:33 +0800 (CST)
-Received: from [192.168.31.184] (unknown [113.246.232.179])
- by mail (Coremail) with SMTP id AQAAfwA3kO2NKRtpR18FAA--.10707S2;
- Mon, 17 Nov 2025 21:56:29 +0800 (CST)
-Message-ID: <7f38ee63-eb24-460c-b8b3-51f3402c4d69@phytium.com.cn>
-Date: Mon, 17 Nov 2025 21:56:28 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vKzkq-0004G6-26
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:58:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vKzkn-0007km-FO
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:58:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763387926;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QY6EyeHC6xxWSjZ/+6wsu6VjEqvl4sOXMw9JWwZUy2w=;
+ b=HM6p767ifbXe0K+0aIyJtCNg7IX7m0DUGKP2tnCu5GZXRLO33Qv6Ps1kkGAJwsYCd27B1y
+ 1mTneewEfBdcNQDlfN7+Ykio55V5kOkuad0PiOcDWmGManw8Fl2i9uGMQt2eLsyWxWitNt
+ idlKhvwdzulV2E0rjA5Gdu8+KfpYMtc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-411--FICa-b5N-eHUi5_ZnI5Pg-1; Mon,
+ 17 Nov 2025 08:58:43 -0500
+X-MC-Unique: -FICa-b5N-eHUi5_ZnI5Pg-1
+X-Mimecast-MFC-AGG-ID: -FICa-b5N-eHUi5_ZnI5Pg_1763387921
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4549618AB419; Mon, 17 Nov 2025 13:58:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD33F19560A7; Mon, 17 Nov 2025 13:58:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 03A3B21E6A27; Mon, 17 Nov 2025 14:58:38 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Jason Wang <jasowang@redhat.com>,  Andrew
+ Melnychenko <andrew@daynix.com>,  Yuri Benditovich
+ <yuri.benditovich@daynix.com>
+Subject: Re: ebpf functions can fail without setting an error
+In-Reply-To: <87sehfsife.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Mon, 25 Aug 2025 14:19:01 +0200")
+References: <87ectns27j.fsf@pond.sub.org> <aKRWZwvbWzA0QbA_@redhat.com>
+ <87sehfsife.fsf@pond.sub.org>
+Date: Mon, 17 Nov 2025 14:58:37 +0100
+Message-ID: <871plwpxpu.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 1/3] hw/misc: introduce iommu-testdev for bare-metal
- IOMMU testing
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251112162152.447327-1-tangtao1634@phytium.com.cn>
- <20251112162152.447327-2-tangtao1634@phytium.com.cn>
- <b087405f179f2d2b8c4224c87c2c562455b9ab6d.camel@eviden.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <b087405f179f2d2b8c4224c87c2c562455b9ab6d.camel@eviden.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwA3kO2NKRtpR18FAA--.10707S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQARBWkaMBEG7wAAsu
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWfGr43XrykCFWrXryfXw1fJFb_yoWDCFykpr
- n3JrZrtryUtrn3Jr17JF4UJFy5Zr18Ja4DJr18XF1rJw47Ar1jgryUWr1v9ryUJrW8Jr1x
- Jr1UWrnrZr17JrDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,270 +89,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Clement,
+Markus Armbruster <armbru@redhat.com> writes:
 
-On 2025/11/13 15:02, CLEMENT MATHIEU--DRIF wrote:
-> Hi Tao,
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 >
-> On Thu, 2025-11-13 at 00:21 +0800, Tao Tang wrote:
->> Add a minimal PCI test device designed to exercise IOMMU translation
->> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
->> provides MMIO registers to configure and trigger DMA operations with
->> controllable attributes (security state, address space), enabling
->> deterministic IOMMU testing.
+>> On Thu, Aug 07, 2025 at 03:14:56PM +0200, Markus Armbruster wrote:
+>>> Three functions in ebpf_rss.h take an Error ** argument and return bool.
+>>> Good.
+>>>=20
+>>> They can all fail without setting an error.  Not good.
+>>>=20
+>>> The failures without error are:
+>>>=20
+>>> * All three stubs in ebpf_rss-stub.c always.  Oversight?
 >>
->> Key features:
->> - Bare-metal IOMMU testing via simple MMIO interface
->> - Configurable DMA attributes for security states and address spaces
->> - Write-then-read verification pattern with automatic result checking
->>
->> The device performs a deterministic DMA test pattern: write a known
->> value(0x88888888) to a configured IOVA, read it back, and verify data
->> integrity. Results are reported through a dedicated result register,
->> eliminating the need for complex interrupt handling or driver
->> infrastructure in tests.
->>
->> This is purely a test device and not intended for production use or
->> machine realism. It complements existing test infrastructure like
->> pci-testdev but focuses specifically on IOMMU translation path
->> validation.
->>
->> Signed-off-by: Tao Tang <[tangtao1634@phytium.com.cn](mailto:tangtao1634@phytium.com.cn)>
->> ---
->>   docs/specs/index.rst            |   1 +
->>   docs/specs/iommu-testdev.rst    |  96 +++++++++++
->>   hw/misc/Kconfig                 |   5 +
->>   hw/misc/iommu-testdev.c         | 292 ++++++++++++++++++++++++++++++++
->>   hw/misc/meson.build             |   1 +
->>   hw/misc/trace-events            |  10 ++
->>   include/hw/misc/iommu-testdev.h |  78 +++++++++
->>   7 files changed, 483 insertions(+)
->>   create mode 100644 docs/specs/iommu-testdev.rst
->>   create mode 100644 hw/misc/iommu-testdev.c
->>   create mode 100644 include/hw/misc/iommu-testdev.h
->>
->> ------------------------------<snip>------------------------------
->>
->>
->>
->> ------------------------------<snip>------------------------------
->> +
->> +static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
->> +{
->> +    int i, j, remaining_bytes;
-> I think i and j could be declared in their respective loop
+>> Opps, yes, we really should have added error_setg() calls for diagnosis
+>> if someone tries to use eBPF when QEMU build has it disabled.
 
+Easy enough, but...
 
-Thanks a lot for taking the time to review the patch. All your 
-suggestions are excellent and make a lot of sense.
-
-
-Move the i and j loop variable declarations into their respective for 
-loops sounds a good idea. But I wasn't entirely sure if QEMU had a 
-strict code style requirement for this, such as mandating all variables 
-be defined at the start of the function before any executable code (C89 
-style), so I appreciate the clarification.
-
-
->> +    uint32_t expected_val, actual_val;
->> +    g_autofree uint8_t *write_buf = NULL;
->> +    g_autofree uint8_t *read_buf = NULL;
->> +    MemTxResult write_res, read_res;
->> +    MemTxAttrs attrs;
->> +    AddressSpace *as;
->> +
->> +    if (!s->dma_pending) {
-> As this is a test device, shouldn't we consider this as an error and provide the caller a way to know what happened?
+> Some stubs exist only to mollify the linker.  They are not meant to be
+> called.  They should abort(), optionally with lipstick.
 >
-> One way to do so is to set a "fatal error csr" to 1 and block the device.
-> Maybe it's not the best interface but this makes things clearer to the user.
-
-
-I'll set a specific error code in the dma_result register instead of 
-silently returning, as you suggested.
-
->> +        return;
->> +    }
->> +    trace_iommu_testdev_dma_start();
->> +
->> +    s->dma_pending = false;
->> +
->> +    if (!s->dma_len) {
->> +        s->dma_result = ITD_DMA_ERR_BAD_LEN;
->> +        return;
->> +    }
->> +
->> +    write_buf = g_malloc(s->dma_len);
->> +    read_buf = g_malloc(s->dma_len);
->> +
->> +    /* Initialize MemTxAttrs from generic register */
->> +    attrs = MEMTXATTRS_UNSPECIFIED;
->> +    attrs.secure = ITD_ATTRS_GET_SECURE(s->dma_attrs_cfg);
->> +
->> +    /*
->> +     * The 'space' field in MemTxAttrs is ARM-specific.
->> +     * On other architectures where this field doesn't exist,
->> +     * the assignment will be optimized away or ignored.
->> +     */
->> +    attrs.space = ITD_ATTRS_GET_SPACE(s->dma_attrs_cfg);
->> +
->> +    as = s->dma_as;
->> +
->> +    /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
->> +    trace_iommu_testdev_dma_write(s->dma_vaddr, s->dma_len);
->> +
->> +    for (i = 0; i < s->dma_len; i++) {
->> +        write_buf[i] = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
->> +    }
->> +    write_res = dma_memory_write(as, s->dma_vaddr, write_buf, s->dma_len,
->> +                                 attrs);
->> +
->> +    if (write_res != MEMTX_OK) {
->> +        s->dma_result = ITD_DMA_ERR_TX_FAIL;
->> +        trace_iommu_testdev_dma_result(s->dma_result);
->> +        return;
->> +    }
->> +
->> +    /* Step 2: Read back from the same DMA address */
->> +    trace_iommu_testdev_dma_read(s->dma_vaddr, s->dma_len);
->> +
->> +    read_res = dma_memory_read(as, s->dma_vaddr, read_buf, s->dma_len, attrs);
->> +
->> +    if (read_res != MEMTX_OK) {
->> +        s->dma_result = ITD_DMA_ERR_RD_FAIL;
->> +        trace_iommu_testdev_dma_result(s->dma_result);
->> +        return;
->> +    }
->> +
->> +    /* Step 3: Verify the read data matches what we wrote */
->> +    for (i = 0; i < s->dma_len; i += 4) {
->> +        remaining_bytes = (s->dma_len - i) < 4 ? (s->dma_len - i) : 4;
-> This is MIN
-
-
-Yeah it's just MIN. I'll replace the ternary logic with the MIN() macro 
-for calculating remaining_bytes.
-
+> Other stubs are called and should fail nicely.
 >
->> +
->> +        expected_val = 0;
->> +        actual_val = 0;
->> +
->> +        for (j = 0; j < remaining_bytes; j++) {
->> +            expected_val |= ((uint32_t)write_buf[i + j]) << (j * 8);
->> +            actual_val |= ((uint32_t)read_buf[i + j]) << (j * 8);
->> +        }
->> +
->> +        trace_iommu_testdev_dma_verify(expected_val, actual_val);
->> +
->> +        if (expected_val != actual_val) {
->> +            s->dma_result = ITD_DMA_ERR_MISMATCH;
->> +            trace_iommu_testdev_dma_result(s->dma_result);
->> +            return;
->> +        }
->> +    }
->> +
->> +    /* All checks passed */
->> +    s->dma_result = 0;
->> +    trace_iommu_testdev_dma_result(s->dma_result);
->> +}
->> +
->> +static uint64_t iommu_testdev_mmio_read(void *opaque, hwaddr addr,
->> +                                        unsigned size)
->> +{
->> +    IOMMUTestDevState *s = opaque;
->> +    uint64_t value = 0;
->> +
->> +    switch (addr) {
->> +    case ITD_REG_DMA_TRIGGERING:
->> +        /*
->> +         * This lets tests poll ITD_REG_DMA_RESULT to observe BUSY before
->> +         * consuming the DMA.
->> +         */
->> +        iommu_testdev_maybe_run_dma(s);
->> +        value = 0;
->> +        break;
->> +    case ITD_REG_DMA_GVA_LO:
->> +        value = (uint32_t)(s->dma_vaddr & 0xffffffffu);
->> +        break;
->> +    case ITD_REG_DMA_GVA_HI:
->> +        value = (uint32_t)(s->dma_vaddr >> 32);
->> +        break;
->> +    case ITD_REG_DMA_LEN:
->> +        value = s->dma_len;
->> +        break;
->> +    case ITD_REG_DMA_RESULT:
->> +        value = s->dma_result;
->> +        break;
->> +    case ITD_REG_DMA_ATTRS:
->> +        value = s->dma_attrs_cfg;
->> +        break;
->> +    case ITD_REG_TRANS_STATUS:
->> +        value = s->trans_status;
->> +        break;
->> +    default:
->> +        value = 0;
->> +        break;
->> +    }
->> +
->> +    trace_iommu_testdev_mmio_read(addr, value, size);
->> +    return value;
->> +}
->> +
->> +static void iommu_testdev_mmio_write(void *opaque, hwaddr addr, uint64_t val,
->> +                                     unsigned size)
->> +{
->> +    IOMMUTestDevState *s = opaque;
->> +    uint32_t data = val;
->> +
->> +    trace_iommu_testdev_mmio_write(addr, val, size);
->> +
->> +    switch (addr) {
->> +    case ITD_REG_DMA_GVA_LO:
->> +        s->dma_vaddr = (s->dma_vaddr & ~0xffffffffull) | data;
->> +        break;
->> +    case ITD_REG_DMA_GVA_HI:
->> +        s->dma_vaddr = (s->dma_vaddr & 0xffffffffull) |
->> +                       ((uint64_t)data << 32);
->> +        break;
->> +    case ITD_REG_DMA_LEN:
->> +        s->dma_len = data;
->> +        break;
->> +    case ITD_REG_DMA_RESULT:
->> +        s->dma_result = data;
->> +        break;
->> +    case ITD_REG_DMA_DBELL:
->> +        if (data & 0x1) {
-> Shouldn't we define a constant for the 0x1? Like ITD_DMA_ARMED?
+> Can you tell me offhand which kind these are?
+
+If calling these stubs is possible, I'd like to know how I can get them
+called, so I can test the errors I add.
+
+If calling is not possible, I'd rather add abort()s.
+
+I tried to figure out whether calling is possible, but it ended in
+confusion.  Can you help?
+
+>>> * Non-stub ebpf_rss_load() when ebpf_rss_is_loaded().  Are these
+>>>   reachable?
+>>
+>> This scenario should never happen, and we should add a call like
+>>
+>>   error_setg(errp, "eBPF program is already loaded");
+>>
+>> to report it correctly.
 >
->> +            s->dma_pending = true;
->> +            s->dma_result = ITD_DMA_RESULT_BUSY;
->> +            trace_iommu_testdev_dma_pending(true);
->> +        } else {
->> +            s->dma_pending = false;
->> +            s->dma_result = ITD_DMA_RESULT_IDLE;
->> +            trace_iommu_testdev_dma_pending(false);
->> +        }
->> +        break;
->> +    case ITD_REG_DMA_ATTRS:
->> +        s->dma_attrs_cfg = data;
->> +        break;
->> +    case ITD_REG_TRANS_DBELL:
->> +        if (data & 0x2) {
-> Same suggestion here
+> Is it a programming error when it happens?
 
-
-Sure I'll introduce named constants for the DMA/translation doorbell 
-bits. While reviewing the code, I also noticed that ITD_REG_DMA_DBELL 
-only only is written with 1 and ITD_REG_TRANS_DBELL only only is written 
-with 2. I’ll fix that as part of v4.
-
-
-Thanks again for your excellent suggestions!
-
-
-Yours,
-
-Tao
+This question is still open as well.
 
 
