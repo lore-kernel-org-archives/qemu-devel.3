@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE763CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 20:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D87CCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 20:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL60B-0005Kv-Ux; Mon, 17 Nov 2025 15:39:07 -0500
+	id 1vL608-0005Ki-Di; Mon, 17 Nov 2025 15:39:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL5zz-0005Jr-Oz
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 15:38:56 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL5zt-0005JR-AR
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 15:38:50 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL5zx-0000cZ-PN
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 15:38:55 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47755a7652eso32763625e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 12:38:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL5zr-0000bp-9p
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 15:38:48 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47790b080e4so17805025e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 12:38:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763411932; x=1764016732; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763411924; x=1764016724; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IwAOx9Hsl9tPV/fbNKmTyyOWz5fj4m6Yt+dsMAsL3yE=;
- b=WiZbv2fA/4PM7t0bv5ewJXUmSs2S3TXGbpWB0/o6aVzO2Sv2TrHQaiZgLX7YxepP3k
- XIEbjPmoeXRWmcAWQxBScjB25qTgN2W+jYa8otYZYqQYlMoe70Q1K1sUi1YdoHIv5cWF
- nIlnYDlnoYXWUq6ys4x/GZODTw1ElRWZitAWaCJ+OXkbrm09K9c8L5cdBDhuYG6Z/CeM
- KXo834HiVEKBsHJfTOdSr6luNb/Gxg5ckAhn7DD8gHbzi74bCMXdcE49vh0IT2cv1ljD
- fYXgs1YuaDweritKxqsrERy+Gjb7tY0gMzsfT+kZu531nPwYCmzPo4OY58eZLJEBsQcH
- lshQ==
+ bh=+dQxn+7K1DnLqxzX8+uoAG3/GgxJkaJRF7+GxCfNDfM=;
+ b=ykZbnHG4WasXQc+fS4neQXliGUX4GvxOPxyEnfoAtsTj6sQOxrunZulytBgbRhvLXi
+ OI1PxjgA5j/QfUS5RnrR0UhbKMnk7T47zklAa1gVsI9dSkuAOOlgHG5fBpbjVpnsEAPn
+ jL+VzR6zJMExJJFS7mX5mzAtg/6MxYCu+8kfXrtbhXK/VySuIjSIr0VWy+fOr0RE+nrf
+ QD14tjUCCun14/KI829UypgGp+8KJPUOhKAKkWLtY5rsFKT8pgWD2+yqoz3HlcaS6uzg
+ ghau0UTKWfbxz8+U0czjWnUIBQtP2oQ3HrOj9Q6WF9uSY5OOAlVDkveQxWEBrewqgZoo
+ eySw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763411932; x=1764016732;
+ d=1e100.net; s=20230601; t=1763411924; x=1764016724;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=IwAOx9Hsl9tPV/fbNKmTyyOWz5fj4m6Yt+dsMAsL3yE=;
- b=i24Y2YgzcwhWpWUSssmeeDgOPObXhptbmsNKwQs2X+mpFqOwTdjGYwpW7dQfoaJLj0
- eXZD8E+OjrT0AzX/4CQhQ14gSrEmrb3yqAKtrYgnm2TmGNKThnP05Dj5jVkZjugI54+f
- mg78nfsLbmXn0qVKdaEYGOM4OhLPGxki0D69Qh4ikXpDxBrWXah8eaAQPH1NZC/fzQEY
- Cg4sK5Tu2Qbh0So3EpqzPageziEvKrfcthydiUavuJiEBpqwuPUPsL3autW/KIiWSMqv
- MlTYzXzN4qd+9JcCQLUwRhZjBWGtSBR3kfzS7ObEvJEe5dupNbI38jzFDJghhs81eD9S
- Rsjg==
-X-Gm-Message-State: AOJu0YzPbAhsIbrN2EvCfKX1aaSvm4TUWk77Wdyb6OpRBl/MYgDY+hNz
- i70wOKf4g/SkyXs5GXNVQOFykg5N7m/+DB0hFNrGQ3dh8XX4/4AVWfOq2E1ADj/3/zvIr0pB41n
- l0/TuwMRQYg==
-X-Gm-Gg: ASbGncujUTLZYD/xt4+lGCPYioizT/ODPhFVF/BuQcLRaooBNnYLAO/HqmbV1UEmkzr
- 1P5oE9lQCGFy66YIsf9bx9BYg2McK6IRedl2b3/BEptAku1Bj3EceIr4a2b+ZqRkTTa9kK5nXK2
- CvWVLuIw+SwqrW5lq1xmZ6jEXccEQyqsgLRnge6HLu8Zw6CUi8CVYq+BJfxBr5SbEJvWUmN/Ps7
- +9xy9FZiNkF8Bv44uZZiEKhrQj1vcxFdSjnv6PhK+qCT7HA4VgC7YvGJdI8h+9MAqURkHp1bQZv
- 4XNIfvEwz4d0HfEBb72ENSUVcGPtvwhV3FCR2hvu1kO2RWtIaVnQ1oxQF8DSJ8f40EihJIZJk8S
- 5JyVSiuoBzsytAyBmDfaN7qjy4MpZb6bFCjvJ7rSfkNnClFnkEXv3eFL+eUaLuy0BCC+I6zmEjv
- GaZN7uGgNnWhmANT9jLrJRDkDn5i3cj6YEz5rdCmQsW9wRjOPFICNWPyFJsQtv/kVzyidZCHo=
-X-Google-Smtp-Source: AGHT+IFz3b9knL/n8h8K6LzdtzVWHarlefA9XTMY6gkk6Uew5Q4u/PObyg7yUaGYeDv4G6ug0rBG0w==
-X-Received: by 2002:a05:600c:6052:b0:477:9986:5e6b with SMTP id
- 5b1f17b1804b1-47799866420mr56228585e9.28.1763411931622; 
- Mon, 17 Nov 2025 12:38:51 -0800 (PST)
+ bh=+dQxn+7K1DnLqxzX8+uoAG3/GgxJkaJRF7+GxCfNDfM=;
+ b=sFf8vIGkNmCzoJZA2FxIEf/Bif3YTs8e94b7fRraaeddRJpSbMfZYBps0Jbw1BvblT
+ 0ChrgGmRF95rZ638Flsd8CwOypPnw19h69BPSaV6LdQqiXzbYHunPwPSJBd4xFLRqDzh
+ 4vH/pOaPF730miBe3KwE71UKvOfjFBqeLDA5RZtBCd/LqcMwh9eEKyOIwGWwlkh+ktnF
+ FFWJY3s8PrCKqE27sptX2Ye7ZtxUBMxWdEMovtBvUw+7mNIrLPt5WRrRhq0yP6KsE60j
+ BlnXWdpVzZ2Yv7B+Wax6mRrPqM6M26d8y3R5NNB0uorBDgBZxOxEeNvOonc/LFLCuCkl
+ nhbw==
+X-Gm-Message-State: AOJu0YyqDfdLGkVdADGqbPi1G6HWKjES9UXA1Ze9daszRVb0pkxPDIPk
+ NnkixF8aLj3mf7eJdX2R5QeGAg96IKl0LmQruPQvSJGaqOvRcrSCnTxv4S7zt5IGV4vbqd60Utm
+ /PYZ3pbAwwQ==
+X-Gm-Gg: ASbGncu9kvmG37WedfFkBUj7n4ia5PjVuPUEhY2WhwCahRo4BO+0srVeRUz7pJpJ4cd
+ m0Fsv9LpZoa+TsDQP7UQyWS7AoQkbmJGvpLuqu8vXkz07cr8/WePB591jArEsw0iLgOhaL2fzGx
+ fMPtSnbknC626zOFbdVfgtliKkrbepHXq6pawqTLvA9ubJM2DXxGGDtU7jAe2UXH8ymTzNisiGV
+ BBfAsYHq2b4+7XY3SS/qizmCbcLudM54FK5zGU5hU92UvEMbvMgxk9GbrV6uX1uHNOYWe/RCvqM
+ v8ZwmlB3Fn54SuHjIdS6+HH4jaWpZVq+GLwWnEnGkx5fSxGs0V7SsLKPRkVMz+7xz0yeIOrpMMi
+ JDcJYlvR1bTNkCIBN9WnvrIJDvEbPI07/HcittFnAiEoXfM/lx0sg14fAIIkt0Xxl1c/CAuOsFW
+ QXCZ3auX0YdiGsOZtrMSgo2P2DwVmdrk76pLFIn/VSdU3PxeeFfvNoemaGZA6D
+X-Google-Smtp-Source: AGHT+IGLme3x2Ng/f07RZoW67xnz84j5DP/TeuewLy0le9/Bq16JZ7Pe7g29mJr5Lt2Mt2h0b+4vqA==
+X-Received: by 2002:a05:600c:630d:b0:471:1765:839c with SMTP id
+ 5b1f17b1804b1-4778fea2bf7mr114591505e9.20.1763411924405; 
+ Mon, 17 Nov 2025 12:38:44 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a0f4ff42sm90424585e9.12.2025.11.17.12.38.50
+ 5b1f17b1804b1-47787e442c2sm335227675e9.7.2025.11.17.12.38.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Nov 2025 12:38:51 -0800 (PST)
+ Mon, 17 Nov 2025 12:38:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nick Briggs <nicholas.h.briggs@gmail.com>,
@@ -76,18 +76,18 @@ Cc: Nick Briggs <nicholas.h.briggs@gmail.com>,
  Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH-for-10.2 2/3] migration/rdma: Check ntohll() availability with
- meson
-Date: Mon, 17 Nov 2025 21:38:33 +0100
-Message-ID: <20251117203834.83713-3-philmd@linaro.org>
+Subject: [PATCH-for-10.2 1/3] qga/commands: Include proper Solaris header for
+ getloadavg()
+Date: Mon, 17 Nov 2025 21:38:32 +0100
+Message-ID: <20251117203834.83713-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251117203834.83713-1-philmd@linaro.org>
 References: <20251117203834.83713-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,72 +110,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 44ce1b5d2fc ("migration/rdma: define htonll/ntohll
-only if not predefined") tried to only include htonll/ntohll
-replacements when their symbol is *defined*, but this doesn't
-work, as they aren't:
+Solaris declares getloadavg() in <sys/loadavg.h>:
 
-  ../migration/rdma.c:242:17: error: static declaration of 'htonll' follows non-static declaration
-    242 | static uint64_t htonll(uint64_t v)
-        |                 ^~~~~~
-  In file included from /usr/include/netinet/in.h:73,
-                   from /usr/include/sys/socket.h:32,
-                   from /home/f4bug/qemu/include/system/os-posix.h:30,
-                   from /home/f4bug/qemu/include/qemu/osdep.h:176,
-                   from ../migration/rdma.c:17:
-  /usr/include/sys/byteorder.h:75:18: note: previous declaration of 'htonll' with type 'uint64_t(uint64_t)' {aka 'long unsigned int(long unsigned int)'}
-     75 | extern  uint64_t htonll(uint64_t);
-        |                  ^~~~~~
-  ../migration/rdma.c:252:17: error: static declaration of 'ntohll' follows non-static declaration
-    252 | static uint64_t ntohll(uint64_t v)
-        |                 ^~~~~~
-  /usr/include/sys/byteorder.h:76:18: note: previous declaration of 'ntohll' with type 'uint64_t(uint64_t)' {aka 'long unsigned int(long unsigned int)'}
-     76 | extern  uint64_t ntohll(uint64_t);
-        |                  ^~~~~~
+    getloadavg(3C)       Standard C Library Functions       getloadavg(3C)
 
-Better to check the symbol availability with meson.
+    NAME
+           getloadavg - get system load averages
+
+    SYNOPSIS
+           #include <sys/loadavg.h>
+
+           int getloadavg(double loadavg[], int nelem);
+
+    [...]
+
+    Oracle Solaris 11.4           23 Jul 2020               getloadavg(3C)
+
+Include it in order to avoid:
+
+  ../qga/commands-posix.c: In function 'qmp_guest_get_load':
+  ../qga/commands-posix.c:1408:9: error: implicit declaration of function 'getloadavg' [-Wimplicit-function-declaration]
+   1408 |     if (getloadavg(loadavg, G_N_ELEMENTS(loadavg)) < 0) {
+      |         ^~~~~~~~~~
+  ../qga/commands-posix.c:1408:9: warning: nested extern declaration of 'getloadavg' [-Wnested-externs]
+
+../configure relevant output:
+
+  C compiler for the host machine: gcc (gcc 14.2.0 "gcc (GCC) 14.2.0")
+  C linker for the host machine: gcc ld.solaris 5.11-1.3315
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- meson.build      | 1 +
- migration/rdma.c | 4 +---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ qga/commands-posix.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index df4460035c3..72edd6097a4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2663,6 +2663,7 @@ config_host_data.set('CONFIG_SYNCFS', cc.has_function('syncfs'))
- config_host_data.set('CONFIG_SYNC_FILE_RANGE', cc.has_function('sync_file_range'))
- config_host_data.set('CONFIG_TIMERFD', cc.has_function('timerfd_create'))
- config_host_data.set('CONFIG_GETLOADAVG', cc.has_function('getloadavg'))
-+config_host_data.set('CONFIG_ARPA_INET_64', cc.has_function('htonll'))
- config_host_data.set('HAVE_COPY_FILE_RANGE', cc.has_function('copy_file_range'))
- config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
- config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 2d839fce6c4..337b4158899 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -238,7 +238,7 @@ static const char *control_desc(unsigned int rdma_control)
-     return strs[rdma_control];
- }
- 
--#if !defined(htonll)
-+#if !defined(CONFIG_ARPA_INET_64)
- static uint64_t htonll(uint64_t v)
- {
-     union { uint32_t lv[2]; uint64_t llv; } u;
-@@ -246,9 +246,7 @@ static uint64_t htonll(uint64_t v)
-     u.lv[1] = htonl(v & 0xFFFFFFFFULL);
-     return u.llv;
- }
--#endif
- 
--#if !defined(ntohll)
- static uint64_t ntohll(uint64_t v)
- {
-     union { uint32_t lv[2]; uint64_t llv; } u;
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index c7059857e44..66f3e6f6733 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -43,6 +43,9 @@
+ #include <net/ethernet.h>
+ #endif
+ #ifdef CONFIG_SOLARIS
++#ifdef CONFIG_GETLOADAVG
++#include <sys/loadavg.h>
++#endif
+ #include <sys/sockio.h>
+ #endif
+ #endif
 -- 
 2.51.0
 
