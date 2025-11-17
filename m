@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CE5CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57340CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL3Ub-0000Yl-1i; Mon, 17 Nov 2025 12:58:23 -0500
+	id 1vL44r-0006sm-Mn; Mon, 17 Nov 2025 13:35:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vL3U2-0008MN-Nd
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:57:49 -0500
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vL44p-0006sJ-VM
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:35:47 -0500
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vL3Ty-0007M0-RB
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:57:45 -0500
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-450b90e6bcbso222610b6e.3
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:57:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vL44o-0005v4-BB
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:35:47 -0500
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-786d1658793so41952317b3.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 10:35:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1763402260; x=1764007060; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=psiYa7+6mddVnP5SlGVSIu1eWh5vsyL2fgOE804Kq7k=;
- b=cgGHk+MVVhW5xuvUeMd61eZJ6JQpek8K7Ol2tHMA4chS1eYUx6YWfMNLEH3ePJ+w3D
- ls52fF9cPlGO1Lch5h9fkaCnMNd0hh7+9utq56u9DCHeOBeJYai0aM6fGorFgf1d6yxO
- OMblcMRibiT83gFYD+jug65RM/o65/4xuOI4apnLoEy0AAZEljbDQ/dWYcUVk5YwdUxP
- 2ZMK/JRsUnoIot4JrsfGxeS5QqmMuMmevDekTUMIXwYf7KugvpIA/ezi4VvzTvAcwOGO
- vTHA9Zk35gbnBme9JzXA9TMbLzVHweou3BwQezBzGHR/6IX8MKBIQ1RgzSdZqVQmOmof
- aikw==
+ d=gmail.com; s=20230601; t=1763404545; x=1764009345; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=K73Ao705R0Dy5FBdMxo0IeNm5wVkP23X22ouQxRWOBo=;
+ b=K1b2lyRDF9C/0axmtjQNmicZRb04VyO91TG7TZ3sF/pQWs5l4h6DRtAlm0dAf9pAcR
+ fXtY3ef1U7jT42c5fWIqaCr+DY4UdggCaNyEDKRo2ic60P9bPfxsApG8IlznI0+4/ctR
+ Z2akB//UeY6G7i2oM6bYDvcxmt6a+UJdycFGG/k8VEMjg4lzh8qHKo7EBiz0hRhy8rt6
+ ZIzDD3Qs3H2R5K8jhvCm5MNdQqxvd8KfS0kRyI8sCrOWav8mB+POmstCiHTxrAy2MFTn
+ yT5yqdYMBa63rviClFqijshcVpiZLQNJQhfQrjdtQovaezezaQj1tHuRmRB85RTP4hpr
+ rz+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763402260; x=1764007060;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=psiYa7+6mddVnP5SlGVSIu1eWh5vsyL2fgOE804Kq7k=;
- b=C+A4DPBWyZYDdo/0JCm+8cOLjIJ2thOB4sZAbqb96P6xFKh4LwHdEbAiAL0ElOgzGZ
- aOr+M4DrJ0kCasl0MUWHR0scBK8ahe5R2QkV5tbGtwzW1zqtEK/MFnbQX+BOSOHK5V46
- 76cytaBgioXJicLT6X6QRiIU3WXi+jvfcRyKeJTCbeyCSHTOR8Kl20/uXN0kK0YqNETK
- u14gonI+RRBQXn/QfcBkOVJlvqDdN5R8saN0omlcMUJfCWRZJ1aGz1+WKod8sieymVEH
- GROSZ5FE+wPR5FGo96nY7JXCe6dBRZTkjPbVqIHxgqLy7flNurFMRkLNvs89UoFEkaf3
- lHeg==
-X-Gm-Message-State: AOJu0YwLQL7eSYbcvCwqJ1mgIFJzTNZHBOZWJb7QJYBxOlvINBS9n2Z8
- LK/M1jZdvQXDNttlomHT4YNodjSARvl2Y4EkeKYlfzdon3P4tGcqULfWkypAijcZ0pk=
-X-Gm-Gg: ASbGncv+GpW7t0sKYaZ7fXAgFp7PmSf0/FuGqwfC4XDrGm5NJrZkrWUP+DQRx4+AP3f
- UhalWaABi5SJvre05Q476ifw66A8HJwZqe9zFNMSOYXtL2Kj1yjuM8qFrlKYF3wfGxC5rj81dFT
- c7vtyV098Y+lyOMx/NdQx6tkg/ETT3VEWEXKs//gCGtwdszVXIhEK6ZP6ceXxT2lF7eVhd9eLQK
- ZYuiaP0V/2KD6CVoM+DNIS6pkhw3wBRSpJrYnUgKBxf9YJRjhggCSlZx+AsBs7HHVU4ld4YrYh3
- KfVyHWBCpq7xjlJmzo1CGaZ+J4zSmeJh9syg7dzWHlzmwg93Wf4pYJYFjgyrWoULOC6WMVwj1bo
- zMPCq0f7pD2ZIRr7i6pJdWOCk98wVAw8SWI/nSesGht0ODd9n2eGFFbKhpEW2uErntUXIFxPvtZ
- CrG37WQW4jH5nqa45LVxcTd/oRPw==
-X-Google-Smtp-Source: AGHT+IF+FMq1MfRS0GbQ9jOrjYjM1IxXTECP0pk336zuSYpBTZCHboklw/Md3qN0iQB5n9yhDf0jFg==
-X-Received: by 2002:a05:6808:2444:b0:450:c49f:9a38 with SMTP id
- 5614622812f47-450c49fa214mr2393165b6e.17.1763402260450; 
- Mon, 17 Nov 2025 09:57:40 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.237.26])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4508a531221sm4411650b6e.1.2025.11.17.09.57.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Nov 2025 09:57:39 -0800 (PST)
-Message-ID: <ff6a9d8f-9d8e-46f2-90e8-a04b10bb21bc@ventanamicro.com>
-Date: Mon, 17 Nov 2025 14:57:35 -0300
+ d=1e100.net; s=20230601; t=1763404545; x=1764009345;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K73Ao705R0Dy5FBdMxo0IeNm5wVkP23X22ouQxRWOBo=;
+ b=SM3GpPdq0KyXFy3++Bz9zRGC+28nisldiIVY4X+GW0WYCKiiE9diFOxcRZQYYevwE5
+ 2MKfNn0uv11pOBs0V20EjkFv/PoG3XAslP+Yf4Gdyh8Juq8R/MkkaDYBKeU4WF85cJ9E
+ JvcBJ2D+G4yV4dOFlwLUH14uLVrm3a1Jv3DVVGgArtZGyU5GA5dCZ5uL+oAH7ch+VlOl
+ XCNZtmXIztbN6R90silR15koSXh30VMP9RYQ51ApKGILJaLFwQiKh4zJrPTs0SR772ip
+ XrPKOngEI1q46Xj8ZqoCT441GHYBwpT/nXi/QcP9/SJJSLBAI+UvX1CrDWBtjT2Z0lG0
+ fuuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0iKJ6PpW6R9pgudDfwk4kXBHc3vKNfD0crMlVHjtEElGgnHXXGA68hnU6Y5We9o5R+egtAJKktJvH@nongnu.org
+X-Gm-Message-State: AOJu0Yy4sWpZoe8dvtXDGw7VpwHMLu3pT6F3urrWygTIj1SmSnternzO
+ aW2GniUxwfxgjBVVuEu5RQdu4MYL/SpZ+AZfiDZogInfYddsS6wY9B3CWqRoFFzroPIShVyHl4Y
+ zU+HEQTGb/BkEhRmfb3ywLjsU0O29j1U=
+X-Gm-Gg: ASbGncvy6pmnoMkRSBNHg7kPgZTKzmycrh4o5N8gyLvtSA73y2vHeYBrKojH/rF09rR
+ SP+Iutf9+JX35DOBqDWJzOjBsOQCkClWPIBc/8VHkLw90Hk+7iGytFv0HWD2yiS71GHnmb6rRCY
+ fcko9mYBGa+IKRXMeO7r/SzBhGHDUzuMqy5bFfLf2orHlqoZRg6uHS3YrmWti6DyUpkatO/64SQ
+ vs3gepNKCkMau48ZLSauBsk/Ur/hMYISSVncVaQqL1etdYFCwDBEV507zE/v+7mkJP5FwNzq2TO
+ V8NaQn4hz9B5vBpPWjOi5c7x5JQ=
+X-Google-Smtp-Source: AGHT+IHKzUuvpg714Fgo+Zdh6Dv9mPLPmmROWTXjiHyYBjT9xeTDpJd3MCNR+hTIN1nx69dtw8MKdp1ztjvWyf3c1/I=
+X-Received: by 2002:a05:690c:3613:b0:786:5471:f44c with SMTP id
+ 00721157ae682-78929f1df9amr227961867b3.63.1763404544526; Mon, 17 Nov 2025
+ 10:35:44 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] target/riscv: Add server platform reference cpu
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Fei Wu <wu.fei9@sanechips.com.cn>
-References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
- <20251111182944.2895892-3-dbarboza@ventanamicro.com>
- <20251111-e4f4062f326aef78ef820d00@orel>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20251111-e4f4062f326aef78ef820d00@orel>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22c.google.com
+References: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
+ <d3323b18-5822-431e-aad6-cbe4470d1a2d@linaro.org>
+ <CAEqNhNYCUwK6UDXKSONA67yfmLPaSt14gtgrK26AfAQqyBopTg@mail.gmail.com>
+In-Reply-To: <CAEqNhNYCUwK6UDXKSONA67yfmLPaSt14gtgrK26AfAQqyBopTg@mail.gmail.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 17 Nov 2025 11:35:32 -0700
+X-Gm-Features: AWmQ_bnkvRxB9OIyZBKxygPNwTO3DJSnMWGZ_PA8SxmhyMFt7WJIzeBfG9Pnsmw
+Message-ID: <CAATN3Nps8qxYPBHxM6NfP6qt+NSNHzhiC_C-tuK796rQG+qbAQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Clean up end-of-instruction processing
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng
+Content-Type: multipart/alternative; boundary="00000000000078cef50643ce9dc2"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,90 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--00000000000078cef50643ce9dc2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+They are based on this one
+commit bc831f37398b51dfe65d99a67bcff9352f84a9d2 (origin/staging,
+origin/master, origin/HEAD)
+Merge: 76929d6117 7dbe2d7df0
+Author: Richard Henderson <richard.henderson@linaro.org>
+Date:   Tue Oct 28 11:48:05 2025 +0100
 
-On 11/11/25 8:05 PM, Andrew Jones wrote:
-> On Tue, Nov 11, 2025 at 03:29:41PM -0300, Daniel Henrique Barboza wrote:
->> From: Fei Wu <wu.fei9@sanechips.com.cn>
->>
->> The harts requirements of RISC-V server platform [1] require RVA23 ISA
->> profile support, plus Sv48, Svadu, H, Sscofmpf etc.
->>
->> This patch provides a CPU type (rvsp-ref) to go along with the rvsp-ref
->> board.
->>
->> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
->>
->> Signed-off-by: Fei Wu <fei2.wu@intel.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/cpu-qom.h |  1 +
->>   target/riscv/cpu.c     | 14 ++++++++++++++
->>   2 files changed, 15 insertions(+)
->>
->> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
->> index 75f4e43408..07e96a14ba 100644
->> --- a/target/riscv/cpu-qom.h
->> +++ b/target/riscv/cpu-qom.h
->> @@ -42,6 +42,7 @@
->>   #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
->>   #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
->>   #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
->> +#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
->>   #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
->>   #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
->>   #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index 975f7953e1..3ddb249970 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -3305,6 +3305,20 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->>           .cfg.max_satp_mode = VM_1_10_SV48,
->>       ),
->>   
->> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSP_REF, TYPE_RISCV_BARE_CPU,
->> +        .misa_mxl_max = MXL_RV64,
->> +        .profile = &RVA23S64,
->> +
->> +        /*
->> +         * ISA extensions
->> +         * NOTE: we're missing 'sdext'.
->> +         */
->> +        .cfg.ext_zkr = true,
->> +        .cfg.ext_svadu = true,
-> 
-> Svadu is no longer required.
-> 
->> +
->> +        .cfg.max_satp_mode = VM_1_10_SV57,
-> 
-> Shouldn't this be SV48 and then allow instantiations to use
-> rvsp-ref,sv57=on.
+They also apply cleanly to Brian's hex-next-express branch.
 
-Makes sense.
-
-> 
-> We also need Ssccfg and Sdtrig.
-
-Sdtrig is enabled by default, and somehow I forgot to add ssccfg. I'll add it.
-
+What error are you getting on your end?
 
 Thanks,
+Taylor
 
-Daniel
 
-> 
->> +    ),
->> +
->>   #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
->>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
->>           .cfg.max_satp_mode = VM_1_10_SV57,
->> -- 
->> 2.51.1
->>
->>
-> 
-> Thanks,
-> drew
+On Mon, Nov 17, 2025 at 10:08=E2=80=AFAM Brian Cain <brian.cain@oss.qualcom=
+m.com>
+wrote:
 
+> Maybe they're based on the other commits on my tree which are queued for
+> inclusion after 10.2?
+> https://github.com/quic/qemu/commits/hex-next-express/
+>
+
+--00000000000078cef50643ce9dc2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><div>They are based on this one</div><div>commit bc831=
+f37398b51dfe65d99a67bcff9352f84a9d2 (origin/staging, origin/master, origin/=
+HEAD)<br>Merge: 76929d6117 7dbe2d7df0<br>Author: Richard Henderson &lt;<a h=
+ref=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.org</a=
+>&gt;<br>Date: =C2=A0 Tue Oct 28 11:48:05 2025 +0100<br></div><div><br></di=
+v><div>They also apply cleanly to Brian&#39;s hex-next-express branch.</div=
+><div><br></div><div>What error are you getting on your end?</div><div><br>=
+</div><div>Thanks,</div><div>Taylor</div><div><br></div></div><br><div clas=
+s=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_att=
+r">On Mon, Nov 17, 2025 at 10:08=E2=80=AFAM Brian Cain &lt;<a href=3D"mailt=
+o:brian.cain@oss.qualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">=
+Maybe they&#39;re based on the other commits on my tree which are queued fo=
+r inclusion after 10.2?=C2=A0=C2=A0<a href=3D"https://github.com/quic/qemu/=
+commits/hex-next-express/" target=3D"_blank">https://github.com/quic/qemu/c=
+ommits/hex-next-express/</a></div>
+</blockquote></div>
+
+--00000000000078cef50643ce9dc2--
 
