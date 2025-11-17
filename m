@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A4DCEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 08:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44224CEBF97
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 08:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKuuD-00048s-C8; Mon, 17 Nov 2025 03:48:13 -0500
+	id 1vKuuE-0004Aq-Sd; Mon, 17 Nov 2025 03:48:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vKuuB-00044X-1R
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:48:11 -0500
+ id 1vKuuC-000471-CC
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:48:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vKuu8-00071a-FN
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:48:10 -0500
+ id 1vKuuA-00071v-CM
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:48:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763369287;
+ s=mimecast20190719; t=1763369289;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bXWL09IpvxzHJJZXvTmfbHjqEOYFpT3gc+RY/7fbQEk=;
- b=KSQzXqZTYpOQPq2eT2XYYivNe85e2YB+VbRViED/6WavEwWfPrLJjlb4ALsm1gZaKuSL5V
- PS0P1R6JPFYsk3mT6QUMapjDrRTXjZrnkHdVWM66un/41cZzmD/DRCyifm3HBkQGs1qN9l
- 5IOEaqlXBkWc9m1BzfVk3wp9MEuQGfc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=13wjDJAbYFD10gI6Zr7kk4dq3n61G4FXpl1Z3qYzA6A=;
+ b=Awaf1xNnb7mCXJLjHsJ0H6NjXrk06oZwul3h7FsSZ104FjjJqQ9+Quf0DPJHqzUcE5ZQK+
+ 041+oO4i4rMQ4iRktgi0tSqhRgnmXYWWjd1E6Lx1+oFtoR1jsYY+4V9rfQt8CDWnH9kL1B
+ MhxP5TUiTEEM10AQIvIJheRjGhyKny0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661--024tjmnMNOLOttaDIoKlw-1; Mon, 17 Nov 2025 03:48:05 -0500
-X-MC-Unique: -024tjmnMNOLOttaDIoKlw-1
-X-Mimecast-MFC-AGG-ID: -024tjmnMNOLOttaDIoKlw_1763369285
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4775f51ce36so33810725e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 00:48:05 -0800 (PST)
+ us-mta-91-9sHBLJIXNMGUTRDVMYbZBg-1; Mon, 17 Nov 2025 03:48:07 -0500
+X-MC-Unique: 9sHBLJIXNMGUTRDVMYbZBg-1
+X-Mimecast-MFC-AGG-ID: 9sHBLJIXNMGUTRDVMYbZBg_1763369287
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47496b3c1dcso56033555e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 00:48:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763369284; x=1763974084; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763369286; x=1763974086; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bXWL09IpvxzHJJZXvTmfbHjqEOYFpT3gc+RY/7fbQEk=;
- b=OmNQZz0+Gt5s+lM52ryRGtypza14py5YyXV3uTGn4XfBpOaBDry4rMpZj1XQqsgDr0
- FSX8s/sRbCaE8zqPzPZstlam5lrxuItJughzw6k9T3/yYzKSA+Isevx1bhdYI7mQhvBQ
- 6+8cfcX/pP8pZHgVx57tqgdixNFIN8anR2DTLh9i4Z0Mte31aqqHq8Sz2Howx2ELnesR
- jSVvbtuL5E8j/9bS2CFgl5L2+CUFM7ntEFbiP1PifHuRhdYsIcXIkrVhRDCPDl3vJ1Ru
- lRYO+NcTX8i3CvPUhnmKpnHO1ul4w88tdrUPbBL1pZnUe+iBMfp4SFhpQcBNvzKjFzgx
- czAA==
+ bh=13wjDJAbYFD10gI6Zr7kk4dq3n61G4FXpl1Z3qYzA6A=;
+ b=oXFL5bxMCw1U6QyfF8NSve5jsM5d0teFaCCe3yumih5u8lTBrVEseGtsGVljWEOZnb
+ ZPxQufaPNQNV8ixwiPOfZt8zCytOTMoPElhdX+t1hGduc5xdx1O8Cswsg2Xnhyej/21B
+ chLIe2pmTQV5AEXiDeWRG8em/mfSCba01rji1MrYzzjEw5qtkEgredKQOAGWQfnRVz83
+ HGycXldGOQIu766bbBjMT+XQ+/BdYzXLFpQwQdvp4UxfWlRy2pPqgkSOygpsdO7iXy1u
+ GL6VGnS/zsii6yrqWic3Sx/dRgkA3jRA5FqTEf+VQkPnu8Z7WussRW4pJcY6PQ63XGh1
+ u40w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763369284; x=1763974084;
+ d=1e100.net; s=20230601; t=1763369286; x=1763974086;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bXWL09IpvxzHJJZXvTmfbHjqEOYFpT3gc+RY/7fbQEk=;
- b=iYDyaohyp5DrxX8GZP07Vt1jllElvY2G0bW26vf6RsnjxUIe05xIBIrnyNG2EhWsHB
- 0kisVg8+/sL2MouVCPdon3ThqKRkCjmQsw1RmdL6730SCpxHMuUFOuqMahIZhOf9JXss
- /9C+HlXsuZ86zsuEZazlUOpuiaGrSzmD0dPA8+U1jOOiLWXr4bD5xCyulhsuMDyV+lRn
- T1gqwnN4X71rADFRz56hTRsVbLPA7/uMINkMjhqdLka+PZ4oaGfJAUxhyRxpDra6STVY
- 8FqbHC/3QRyiKQ7TQnF2XGSdwnXsjL9TvFeUjhrq8/x/N013KMURjRObqYdsceu9Q2Yk
- nWkg==
-X-Gm-Message-State: AOJu0YxYogUDTHjfAD3X6GUcLJ+skSwCgw9nT0IEAxbfijM4Xb1hGh1/
- orbdismYT0N77z9fNCBZHq/KrjxvYg0OMNxQgNMpxtPVnjE0nUQCPqIvsN5zxI9yqoOr32ZOb+b
- jtQf+vB6dOogi2wOVYkW8sNC8yfnNsIukKvBqSQlegYhSYUMft2U1IO/x2qphF8yvSG+UTpG1rt
- VgZ9zkGg6CurWRgDDLs4hLkqiLhauOax9A55DzVIlm
-X-Gm-Gg: ASbGncu89jfOhLP+4fiILaqyxzz3HesrejG/49vRYeE2Baxst5zRvWzMYC5q/hywSQV
- yXW5/d8i18SKzZpvs8zscz5cjLkUA/JhalKjS1C3lJCsZrAK9DBw5p3AbRAJnHn0vAqO2bzHkkB
- nU0gMfo4gX5Qm8IPW5eNuGW1pfXvvrCOeTM4xH8B/rYbguk78RnKsWLyNufEJd5EXqp3zCxyKUn
- IcctWnV5rTksmKCSRVoaKvtCEjpac/3BQYeHLUrz/kJ1Ry0h8cmdmr0aHWAmwfc1xxWPGSoi4sV
- arAoyzGHfhMki9QNLadB92Y6P1foEeo13tVD/ygOecFMon/adh4MAOQO5Ns1No2X/7kncEhk2iX
- FA6t903vwsfjG+qR5CmQmVuCRXeJ02uEYZCezFJ+5v/K4n3U+fo5ORt3wOmyxbUAtQOlEhvo9RN
- nrzh/k
-X-Received: by 2002:a05:600c:4fcf:b0:477:63b5:6f39 with SMTP id
- 5b1f17b1804b1-4778fe9ab26mr96050965e9.19.1763369283889; 
- Mon, 17 Nov 2025 00:48:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF0ztVFNwTbxHTpp0X4RABgpbGcZmzYcWa+a09nVBRT8CMcaQAFP3/azAIRVghZvEQIoH3Fag==
-X-Received: by 2002:a05:600c:4fcf:b0:477:63b5:6f39 with SMTP id
- 5b1f17b1804b1-4778fe9ab26mr96050615e9.19.1763369283275; 
- Mon, 17 Nov 2025 00:48:03 -0800 (PST)
+ bh=13wjDJAbYFD10gI6Zr7kk4dq3n61G4FXpl1Z3qYzA6A=;
+ b=l8WDT4WL2NDyCoAPQYrGT7mxI3d2GlHgHT9bCoNMaD+fehK5r9emJ6Nm8R+Qm9YpKk
+ Hh3reyNithQSuJzguSmvzq6ORj2KSbqY6Of9X1vKPQWxqudr9JYnJEvZnj3DsoCgomo6
+ TybIAwSsSgAWhtKgm0T4PQI0BRDoSbNFbR+fK6Q86DNIeif9Eam3/l1hHd8+ogX+/a/X
+ Pc+bqNv7y5FogdAko/ufWs9K+3pAUJE647i2OuvtR5KDNuhEYu86YvZdaX8xcjzComW0
+ ySAcG5TbitDfH1OlI4r5tterLiGmN05P+NpbGwcfbt5i4pY5kBTQTVWQHjwzcMMpx7gX
+ Qltw==
+X-Gm-Message-State: AOJu0Yw2S/wa9mB9u1IWBbMXhOzH0J60hfC/FcbITH/nv5anV6FnFX+X
+ DgclvuuO++U0ofF6TnKwV5mBmLztv2cRkPNvtTqJvRuVwIT2bgYkOFYRXpCF1VS3sVPv6GSBCt+
+ THEEC1mtn+MzxNfio1GnowV+MeJP29nNln298bWMyBAqt0NKLCzGF93CqdKUSn0K+Ns4BIsPMFe
+ ghmopwH2vtx6BFjKnNSJCdbMGMHU0xwkRj6hv6vIoB
+X-Gm-Gg: ASbGnct0aoe2AJvoijIVwbmEVDQfHds96zEptSM5QkCdh3pA8N5bze1GSxoCqjSRwAK
+ Odc7vPoLHZdqGRwwty27qYosDA14LbQht8DameXsw7IxXHUxj++Q3BaqSRiMnBoBshq9lXa9N4D
+ qGh1WU4iIcu0dHh02JsoStIFDNbZoA2dFncazQkQApxJDM4eFsUPsIFolxk3oIKss2NCIpkObW4
+ 0dev0N6/04iORGe5UI4JLZ2enwOAbOcY2W32VaB56JePLgy/se+1DXnyvYU3JrqIdmaNIiv3Enf
+ SjGuuOziyJkRsrxkRAwcvsLJS3ctxJh8sFHq7H3L0N+7x3CiGuk5IXsDkhszHuUHy4lfimgzwIh
+ SKZTk26tt988lF1CyJfIa1A/y/V3FQ4hdYeDiouJsMnDnb/LcFKqo291h4VD5akxxxlbQ9ZFCfY
+ LiJMOw
+X-Received: by 2002:a05:600c:8b4b:b0:477:755b:5587 with SMTP id
+ 5b1f17b1804b1-4778fe55405mr120246565e9.8.1763369286151; 
+ Mon, 17 Nov 2025 00:48:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHO3LBJn+YbU5X+iaa8JqvmzPeaJKA7gO3VOUKYsFmhe8jI/H7VeCvb+7GHo+9dafbY/erqlQ==
+X-Received: by 2002:a05:600c:8b4b:b0:477:755b:5587 with SMTP id
+ 5b1f17b1804b1-4778fe55405mr120246225e9.8.1763369285641; 
+ Mon, 17 Nov 2025 00:48:05 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4778bae1122sm113161345e9.0.2025.11.17.00.48.01
+ 5b1f17b1804b1-4779920f2cdsm135766415e9.10.2025.11.17.00.48.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 00:48:01 -0800 (PST)
+ Mon, 17 Nov 2025 00:48:04 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	zhao1.liu@intel.com
-Subject: [PATCH 3/5] rust/hpet: remove BqlRefCell around HPETTimer
-Date: Mon, 17 Nov 2025 09:47:50 +0100
-Message-ID: <20251117084752.203219-4-pbonzini@redhat.com>
+Subject: [PATCH 4/5] rust: migration: implement ToMigrationState for Timer
+Date: Mon, 17 Nov 2025 09:47:51 +0100
+Message-ID: <20251117084752.203219-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251117084752.203219-1-pbonzini@redhat.com>
 References: <20251117084752.203219-1-pbonzini@redhat.com>
@@ -107,7 +107,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,192 +123,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HPETTimer now has all of its state stored in HPETRegisters, so it does not
-need its own BqlRefCell anymore.
+Timer is a complex struct, allow adding it to a struct that
+uses #[derive(ToMigrationState)]; similar to vmstate_timer, only
+the expiration time has to be preserved.
+
+In fact, because it is thread-safe, ToMigrationStateShared can
+also be implemented without needing a cell or mutex that wraps
+the timer.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 53 ++++++++++++++++----------------
- rust/util/src/timer.rs           | 12 +++++---
- 2 files changed, 34 insertions(+), 31 deletions(-)
+ rust/hw/timer/hpet/src/device.rs |  1 -
+ rust/migration/src/migratable.rs | 31 +++++++++++++++++++++++++++++++
+ rust/util/src/timer.rs           | 10 +++++++++-
+ 3 files changed, 40 insertions(+), 2 deletions(-)
 
 diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 19676af74bc..5bcf151a680 100644
+index 5bcf151a680..373ec37bbd3 100644
 --- a/rust/hw/timer/hpet/src/device.rs
 +++ b/rust/hw/timer/hpet/src/device.rs
-@@ -126,7 +126,7 @@ enum DecodedRegister<'a> {
-     Global(GlobalRegister),
- 
-     /// Register in the timer block `0x100`...`0x3ff`
--    Timer(&'a BqlRefCell<HPETTimer>, TimerRegister),
-+    Timer(&'a HPETTimer, TimerRegister),
- 
-     /// Invalid address
-     #[allow(dead_code)]
-@@ -170,8 +170,7 @@ const fn deactivating_bit(old: u64, new: u64, shift: usize) -> bool {
-     (old & mask != 0) && (new & mask == 0)
+@@ -250,7 +250,6 @@ const fn get_individual_route(&self) -> usize {
  }
  
--fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
--    let t = timer_cell.borrow();
-+fn timer_handler(t: &HPETTimer) {
-     // SFAETY: state field is valid after timer initialization.
-     let regs = &mut unsafe { t.state.as_ref() }.regs.borrow_mut();
-     t.callback(regs)
-@@ -277,12 +276,16 @@ fn new(index: u8, state: *const HPETState) -> HPETTimer {
-         }
-     }
+ /// HPET Timer Abstraction
+-#[repr(C)]
+ #[derive(Debug)]
+ pub struct HPETTimer {
+     /// timer N index within the timer block (`HPETState`)
+diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
+index 02efe31d72c..c82a6b9a7cf 100644
+--- a/rust/migration/src/migratable.rs
++++ b/rust/migration/src/migratable.rs
+@@ -140,6 +140,26 @@ fn restore_migrated_state_mut(
  
--    fn init_timer_with_cell(cell: &BqlRefCell<Self>) {
--        let mut timer = cell.borrow_mut();
--        // SAFETY: HPETTimer is only used as part of HPETState, which is
--        // always pinned.
--        let qemu_timer = unsafe { Pin::new_unchecked(&mut timer.qemu_timer) };
--        qemu_timer.init_full(None, CLOCK_VIRTUAL, Timer::NS, 0, timer_handler, cell);
-+    fn init_timer(timer: Pin<&mut Self>) {
-+        Timer::init_full(
-+            timer,
-+            None,
-+            CLOCK_VIRTUAL,
-+            Timer::NS,
-+            0,
-+            timer_handler,
-+            |t| &mut t.qemu_timer,
-+        );
-     }
+ impl_for_primitive!(u8, u16, u32, u64, i8, i16, i32, i64, bool);
  
-     fn get_state(&self) -> &HPETState {
-@@ -726,7 +729,7 @@ pub struct HPETState {
++impl ToMigrationState for util::timer::Timer {
++    type Migrated = i64;
++
++    fn snapshot_migration_state(&self, target: &mut i64) -> Result<(), InvalidError> {
++        // SAFETY: as_ptr() is unsafe to ensure that the caller reasons about
++        // the pinning of the data inside the Opaque<>.  Here all we do is
++        // access a field.
++        *target = self.expire_time_ns().unwrap_or(-1);
++        Ok(())
++    }
++
++    fn restore_migrated_state_mut(
++        &mut self,
++        source: Self::Migrated,
++        version_id: u8,
++    ) -> Result<(), InvalidError> {
++        self.restore_migrated_state(source, version_id)
++    }
++}
++
+ impl<T: ToMigrationState, const N: usize> ToMigrationState for [T; N]
+ where
+     [T::Migrated; N]: Default,
+@@ -237,6 +257,17 @@ fn restore_migrated_state(
+     ) -> Result<(), InvalidError>;
+ }
  
-     /// HPET timer array managed by this timer block.
-     #[doc(alias = "timer")]
--    timers: [BqlRefCell<HPETTimer>; HPET_MAX_TIMERS],
-+    timers: [HPETTimer; HPET_MAX_TIMERS],
-     #[property(rename = "timers", default = HPET_MIN_TIMERS)]
-     num_timers: usize,
-     num_timers_save: BqlCell<u8>,
-@@ -761,11 +764,10 @@ fn init_timers(this: &mut MaybeUninit<Self>) {
- 
-             // Initialize in two steps, to avoid calling Timer::init_full on a
-             // temporary that can be moved.
--            let timer = timer.write(BqlRefCell::new(HPETTimer::new(
--                index.try_into().unwrap(),
--                state,
--            )));
--            HPETTimer::init_timer_with_cell(timer);
-+            let timer = timer.write(HPETTimer::new(index.try_into().unwrap(), state));
-+            // SAFETY: HPETState is pinned
-+            let timer = unsafe { Pin::new_unchecked(timer) };
-+            HPETTimer::init_timer(timer);
-         }
-     }
- 
-@@ -787,8 +789,7 @@ fn set_cfg_reg(&self, regs: &mut HPETRegisters, shift: u32, len: u32, val: u64)
-             // Enable main counter and interrupt generation.
-             regs.hpet_offset = ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns();
- 
--            for timer in self.timers.iter().take(self.num_timers) {
--                let t = timer.borrow();
-+            for t in self.timers.iter().take(self.num_timers) {
-                 let id = t.index as usize;
-                 let tn_regs = &regs.tn_regs[id];
- 
-@@ -801,8 +802,8 @@ fn set_cfg_reg(&self, regs: &mut HPETRegisters, shift: u32, len: u32, val: u64)
-             // Halt main counter and disable interrupt generation.
-             regs.counter = regs.get_ticks();
- 
--            for timer in self.timers.iter().take(self.num_timers) {
--                timer.borrow().del_timer(regs);
-+            for t in self.timers.iter().take(self.num_timers) {
-+                t.del_timer(regs);
-             }
-         }
- 
-@@ -830,9 +831,9 @@ fn set_int_status_reg(&self, regs: &mut HPETRegisters, shift: u32, _len: u32, va
-         let new_val = val << shift;
-         let cleared = new_val & regs.int_status;
- 
--        for (index, timer) in self.timers.iter().take(self.num_timers).enumerate() {
--            if cleared & (1 << index) != 0 {
--                timer.borrow().update_irq(regs, false);
-+        for t in self.timers.iter().take(self.num_timers) {
-+            if cleared & (1 << t.index) != 0 {
-+                t.update_irq(regs, false);
-             }
-         }
-     }
-@@ -928,8 +929,8 @@ fn reset_hold(&self, _type: ResetType) {
-         {
-             let mut regs = self.regs.borrow_mut();
- 
--            for timer in self.timers.iter().take(self.num_timers) {
--                timer.borrow().reset(&mut regs);
-+            for t in self.timers.iter().take(self.num_timers) {
-+                t.reset(&mut regs);
-             }
- 
-             regs.counter = 0;
-@@ -981,7 +982,7 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
-         use DecodedRegister::*;
-         use GlobalRegister::*;
-         (match target {
--            Timer(timer, tn_target) => timer.borrow().read(tn_target, regs),
-+            Timer(t, tn_target) => t.read(tn_target, regs),
-             Global(CAP) => regs.capability, /* including HPET_PERIOD 0x004 */
-             Global(CFG) => regs.config,
-             Global(INT_STATUS) => regs.int_status,
-@@ -1012,7 +1013,7 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
-         use DecodedRegister::*;
-         use GlobalRegister::*;
-         match target {
--            Timer(timer, tn_target) => timer.borrow().write(tn_target, regs, value, shift, len),
-+            Timer(t, tn_target) => t.write(tn_target, regs, value, shift, len),
-             Global(CAP) => {} // General Capabilities and ID Register: Read Only
-             Global(CFG) => self.set_cfg_reg(regs, shift, len, value),
-             Global(INT_STATUS) => self.set_int_status_reg(regs, shift, len, value),
++impl ToMigrationStateShared for util::timer::Timer {
++    fn restore_migrated_state(&self, source: i64, _version_id: u8) -> Result<(), InvalidError> {
++        if source >= 0 {
++            self.modify(source as u64);
++        } else {
++            self.delete();
++        }
++        Ok(())
++    }
++}
++
+ impl<T: ToMigrationStateShared, const N: usize> ToMigrationStateShared for [T; N]
+ where
+     [T::Migrated; N]: Default,
 diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
-index c6b3e4088ec..829f52d111e 100644
+index 829f52d111e..4109d84c398 100644
 --- a/rust/util/src/timer.rs
 +++ b/rust/util/src/timer.rs
-@@ -45,14 +45,14 @@ impl Timer {
-     }
+@@ -10,7 +10,8 @@
+ use common::{callbacks::FnCall, Opaque};
  
-     /// Create a new timer with the given attributes.
--    pub fn init_full<'timer, 'opaque: 'timer, T, F>(
--        self: Pin<&'timer mut Self>,
-+    pub fn init_full<T, F>(
-+        opaque: Pin<&mut T>,
-         timer_list_group: Option<&TimerListGroup>,
-         clk_type: ClockType,
-         scale: u32,
-         attributes: u32,
-         _cb: F,
--        opaque: &'opaque T,
-+        field: impl FnOnce(&mut T) -> &mut Self,
-     ) where
-         F: for<'a> FnCall<(&'a T,)>,
-     {
-@@ -70,8 +70,10 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+ use crate::bindings::{
+-    self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType,
++    self, qemu_clock_get_ns, timer_del, timer_expire_time_ns, timer_init_full, timer_mod,
++    QEMUClockType,
+ };
  
-         // SAFETY: the opaque outlives the timer
-         unsafe {
-+            let opaque = Pin::into_inner_unchecked(opaque);
-+            let timer = field(opaque).as_mut_ptr();
-             timer_init_full(
--                self.as_mut_ptr(),
-+                timer,
-                 if let Some(g) = timer_list_group {
-                     g as *const TimerListGroup as *mut _
-                 } else {
-@@ -81,7 +83,7 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
-                 scale as c_int,
-                 attributes as c_int,
-                 Some(timer_cb),
--                (opaque as *const T).cast::<c_void>().cast_mut(),
-+                (opaque as *mut T).cast::<c_void>(),
-             )
+ /// A safe wrapper around [`bindings::QEMUTimer`].
+@@ -88,6 +89,13 @@ pub fn init_full<T, F>(
          }
      }
+ 
++    pub fn expire_time_ns(&self) -> Option<i64> {
++        // SAFETY: the only way to obtain a Timer safely is via methods that
++        // take a Pin<&mut Self>, therefore the timer is pinned
++        let ret = unsafe { timer_expire_time_ns(self.as_ptr()) };
++        i64::try_from(ret).ok()
++    }
++
+     pub fn modify(&self, expire_time: u64) {
+         // SAFETY: the only way to obtain a Timer safely is via methods that
+         // take a Pin<&mut Self>, therefore the timer is pinned
 -- 
 2.51.1
 
