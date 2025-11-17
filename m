@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091B0CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3A4CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKvhX-0004OG-HG; Mon, 17 Nov 2025 04:39:11 -0500
+	id 1vKvho-0004aO-QE; Mon, 17 Nov 2025 04:39:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKvhE-0004JH-2G
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:38:59 -0500
+ id 1vKvhL-0004KH-FS
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:39:04 -0500
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKvhC-0006Fs-Dx
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:38:51 -0500
+ id 1vKvhH-0006Go-CP
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:38:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763372330; x=1794908330;
+ t=1763372335; x=1794908335;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XDnUEaBT3mLSFTfR7mqqUXIcK4G2KiahJspPNGq6d0o=;
- b=khlf2E8Dgd56syK4KY3G0LRDn0YPZ1CU6UWNrzRic5dGKp8JlyEw/f9c
- VSomvGbrUPfrd74DDrNNyON8rTaunIjkPePAZ5IwmSJ9JvS6AQecJvbPh
- lGRPVOlBusOylRoj7GXDoGMzLVljDlKT2wczzT2tcFC0OK/YpqMiZKLXN
- iN/VdxxyYHIYLCnemJ9Jegg/lPAJTaG37vdyzseMKWG8x4EDC7YtU//zE
- kJgGiACz3a9Tr4W6gGQv8xh/LEpbQ9SO/ajKGuwzS6qfK81RX8U9v7ZG5
- G3L/JdNOw3hK4gSnNDdDl6LfHBj6VW6HLw2YGadESa+A57irKNwndbepm Q==;
-X-CSE-ConnectionGUID: rZTsYonBQSGskT6DsZsvlg==
-X-CSE-MsgGUID: PWUnc3xKShS+el5/MRcKbQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76045899"
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76045899"
+ bh=buymKJBV/yPtNbGbUWV+sja0KPQ1zcEGwhkxHAaGyik=;
+ b=C4dJ9G6zpMStwqc7x6qXgFjJtFkWRDKuO3eUKJmp+Dya7b5bWtsRX1uY
+ XVTagifkyC5RB7vG7s8MQKj4JTzqyb/5YVY9PdSAw6FPIQEZhm57ysa3S
+ 1/oJX5BfUCmn9U+JKYJiESzdbciT8oUAZUpmyZhYfjgmp/+9vEkA0lqWF
+ mPaVacvZHFDYfhj+RWwxK45Wdgnz0yGR9x9WbrUXO9xztS5ADNxc4zZpM
+ k24L287nE5g5ebosIQz6DuYGcq63wZ5SAgiXGD/k7x0JYpZnqgeEnOPBM
+ OSG2xEG/Etiz+iRdEmYnpjXZNaxsy+Un3823MTbvTUJJYS6snICzSvpYN A==;
+X-CSE-ConnectionGUID: ZiJ+xzbSRgiYimURpXa4pw==
+X-CSE-MsgGUID: O0UfBFWXQZu5pKCBlSlgiw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76045915"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76045915"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:38:50 -0800
-X-CSE-ConnectionGUID: SuTeiMM3Q/Ois5BhmtoYNg==
-X-CSE-MsgGUID: ke1+9973R+6a6y1+wgvTwA==
+ 17 Nov 2025 01:38:53 -0800
+X-CSE-ConnectionGUID: QseA8r4MRJ2GOqEyzvbOnA==
+X-CSE-MsgGUID: TsVNByKLSxKyL4JUVBQ8YA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070872"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070887"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:38:46 -0800
+ 17 Nov 2025 01:38:49 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,14 +53,14 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v8 04/23] hw/pci: Export pci_device_get_iommu_bus_devfn() and
- return bool
-Date: Mon, 17 Nov 2025 04:37:07 -0500
-Message-ID: <20251117093729.1121324-5-zhenzhong.duan@intel.com>
+Subject: [PATCH v8 05/23] hw/pci: Introduce pci_device_get_viommu_flags()
+Date: Mon, 17 Nov 2025 04:37:08 -0500
+Message-ID: <20251117093729.1121324-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
 References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.9;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -87,79 +87,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returns true if PCI device is aliased or false otherwise. This will be
-used in following patch to determine if a PCI device is under a PCI
-bridge.
+Introduce a new PCIIOMMUOps optional callback, get_viommu_flags() which
+allows to retrieve flags exposed by a vIOMMU. The first planned vIOMMU
+device flag is VIOMMU_FLAG_WANT_NESTING_PARENT that advertises the
+support of HW nested stage translation scheme and wants other sub-system
+like VFIO's cooperation to create nesting parent HWPT.
 
+pci_device_get_viommu_flags() is a wrapper that can be called on a PCI
+device potentially protected by a vIOMMU.
+
+get_viommu_flags() is designed to return 64bit bitmap of purely vIOMMU
+flags which are only determined by user's configuration, no host
+capabilities involved. Reasons are:
+
+1. host may has heterogeneous IOMMUs, each with different capabilities
+2. this is migration friendly, return value is consistent between source
+   and target.
+
+Note that this op will be invoked at the attach_device() stage, at which
+point host IOMMU capabilities are not yet forwarded to the vIOMMU through
+the set_iommu_device() callback that will be after the attach_device().
+
+See below sequence:
+
+  vfio_device_attach():
+      iommufd_cdev_attach():
+          pci_device_get_viommu_flags() for HW nesting cap
+          create a nesting parent HWPT
+          attach device to the HWPT
+          vfio_device_hiod_create_and_realize() creating hiod
+  ...
+  pci_device_set_iommu_device(hiod)
+
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/pci/pci.h |  2 ++
- hw/pci/pci.c         | 12 ++++++++----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ MAINTAINERS          |  1 +
+ include/hw/iommu.h   | 25 +++++++++++++++++++++++++
+ include/hw/pci/pci.h | 22 ++++++++++++++++++++++
+ hw/pci/pci.c         | 11 +++++++++++
+ 4 files changed, 59 insertions(+)
+ create mode 100644 include/hw/iommu.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9cb181e1da..f4a30c126b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2344,6 +2344,7 @@ F: include/system/iommufd.h
+ F: backends/host_iommu_device.c
+ F: include/system/host_iommu_device.h
+ F: include/qemu/chardev_open.h
++F: include/hw/iommu.h
+ F: util/chardev_open.c
+ F: docs/devel/vfio-iommufd.rst
+ 
+diff --git a/include/hw/iommu.h b/include/hw/iommu.h
+new file mode 100644
+index 0000000000..9b8bb94fc2
+--- /dev/null
++++ b/include/hw/iommu.h
+@@ -0,0 +1,25 @@
++/*
++ * General vIOMMU flags
++ *
++ * Copyright (C) 2025 Intel Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_IOMMU_H
++#define HW_IOMMU_H
++
++#include "qemu/bitops.h"
++
++/*
++ * Theoretical vIOMMU flags. Only determined by the vIOMMU device properties and
++ * independent on the actual host IOMMU capabilities they may depend on. Each
++ * flag can be an expectation or request to other sub-system or just a pure
++ * vIOMMU capability. vIOMMU can choose which flags to expose.
++ */
++enum viommu_flags {
++    /* vIOMMU needs nesting parent HWPT to create nested HWPT */
++    VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
++};
++
++#endif /* HW_IOMMU_H */
 diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 6bccb25ac2..bde9dca8e2 100644
+index bde9dca8e2..a3ca54859c 100644
 --- a/include/hw/pci/pci.h
 +++ b/include/hw/pci/pci.h
-@@ -637,6 +637,8 @@ typedef struct PCIIOMMUOps {
-                             bool is_write);
- } PCIIOMMUOps;
- 
-+bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-+                                    PCIBus **aliased_bus, int *aliased_devfn);
- AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
- bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+@@ -462,6 +462,18 @@ typedef struct PCIIOMMUOps {
+      * @devfn: device and function number of the PCI device.
+      */
+     void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
++    /**
++     * @get_viommu_flags: get vIOMMU flags
++     *
++     * Optional callback, if not implemented, then vIOMMU doesn't support
++     * exposing flags to other sub-system, e.g., VFIO.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * Returns: bitmap with each bit representing a vIOMMU flag defined in
++     * enum viommu_flags.
++     */
++    uint64_t (*get_viommu_flags)(void *opaque);
+     /**
+      * @get_iotlb_info: get properties required to initialize a device IOTLB.
+      *
+@@ -644,6 +656,16 @@ bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
                                   Error **errp);
+ void pci_device_unset_iommu_device(PCIDevice *dev);
+ 
++/**
++ * pci_device_get_viommu_flags: get vIOMMU flags.
++ *
++ * Returns: bitmap with each bit representing a vIOMMU flag defined in
++ * enum viommu_flags. Or 0 if vIOMMU doesn't report any.
++ *
++ * @dev: PCI device pointer.
++ */
++uint64_t pci_device_get_viommu_flags(PCIDevice *dev);
++
+ /**
+  * pci_iommu_get_iotlb_info: get properties required to initialize a
+  * device IOTLB.
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index b1eba348e0..3eb57b96ea 100644
+index 3eb57b96ea..8b62044a8e 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
-@@ -2869,20 +2869,21 @@ static void pci_device_class_base_init(ObjectClass *klass, const void *data)
-  * For call sites which don't need aliased BDF, passing NULL to
-  * aliased_[bus|devfn] is allowed.
-  *
-+ * Returns true if PCI device RID is aliased or false otherwise.
-+ *
-  * @piommu_bus: return root #PCIBus backed by an IOMMU for the PCI device.
-  *
-  * @aliased_bus: return aliased #PCIBus of the PCI device, optional.
-  *
-  * @aliased_devfn: return aliased devfn of the PCI device, optional.
-  */
--static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
--                                           PCIBus **piommu_bus,
--                                           PCIBus **aliased_bus,
--                                           int *aliased_devfn)
-+bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-+                                    PCIBus **aliased_bus, int *aliased_devfn)
- {
-     PCIBus *bus = pci_get_bus(dev);
-     PCIBus *iommu_bus = bus;
-     int devfn = dev->devfn;
-+    bool aliased = false;
- 
-     while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
-         PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
-@@ -2919,6 +2920,7 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-                 devfn = parent->devfn;
-                 bus = parent_bus;
-             }
-+            aliased = true;
-         }
- 
-         /*
-@@ -2953,6 +2955,8 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-     if (aliased_devfn) {
-         *aliased_devfn = devfn;
+@@ -3021,6 +3021,17 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
      }
-+
-+    return aliased;
  }
  
- AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
++uint64_t pci_device_get_viommu_flags(PCIDevice *dev)
++{
++    PCIBus *iommu_bus;
++
++    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
++    if (iommu_bus && iommu_bus->iommu_ops->get_viommu_flags) {
++        return iommu_bus->iommu_ops->get_viommu_flags(iommu_bus->iommu_opaque);
++    }
++    return 0;
++}
++
+ int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
+                          bool exec_req, hwaddr addr, bool lpig,
+                          uint16_t prgi, bool is_read, bool is_write)
 -- 
 2.47.1
 
