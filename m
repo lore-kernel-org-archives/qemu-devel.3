@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FAC0CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C391BCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL3A4-0002zo-Md; Mon, 17 Nov 2025 12:37:08 -0500
+	id 1vL3BP-0004gQ-Du; Mon, 17 Nov 2025 12:38:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL3A2-0002uw-Jb
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:37:06 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vL3BD-0004dw-8A
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:38:19 -0500
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL3A1-0003Xl-6P
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:37:06 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-429c8632fcbso3248810f8f.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:37:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vL3BB-0003mb-Pb
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:38:19 -0500
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-640f2c9ccbdso3980435d50.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:38:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763401023; x=1764005823; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jLCAJ65AZBHvcqSXAcsnLrHpVTWmAXVSEPg76Aa9GBA=;
- b=r7i17c21u9zP6YPCPUpIHXkfYz7xjyXJctOvO73VFGkq3mzU+bQnrH3VyY4DucKYQT
- AExEasqG2vw4/0WWfa2wMEtOzfwv8r9TwKk3gb4gIDBIICJfhQfNYPFo9Rx9eeEBpvrL
- GHJR98Z0FUa6XUsn+xw6c7Ac8Aydhr6Fb0eZEJMGHt0LhLhp1OHLzAvz4xCMSafhDTwd
- irUv8TBsPy/sEa23oZSdK7xL6Jgk5BWg5w7SZ0QVGne8V+bsDfZrX7Z1vOdwUGGd2KUu
- JyVAUC9AuU76tigWtIIs1q9tKzWQ2R9XiWTMV6Gu/K8GC65MFy6VWbJGeUVZA+dLmCOU
- 0p9w==
+ d=linaro.org; s=google; t=1763401096; x=1764005896; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=g9YMoTHiA8EtV1v/OdAo2noKhbi3CuEHGudADMjDqHc=;
+ b=Kw9qCIaaEc7hD5P//kySAh1XMgUF1h5t9r5R/U795g3yrI9ne3wgX/UHQFn863aTzU
+ KnToyRE8amOI1Q9ARqLW6Bbd6cBZnzpxsU9VN3VwoshZdJVCHsusGsu6ND75C2rQ2AaW
+ T2qNEgHxVqDRMwqIYDWzanpZAPIq2mzIFKiYLtZreW3A8a4W6mZSJDR1TrvmdacyH1Jm
+ JMLj6lkJBL5Zp7lFYzEp2h6EgiXYVxAtjefOTwIFsmwekYc7pVKKCAcLHrEebV2DqGbZ
+ +U/dD7K1I97zm4NtAj0Jk5kYpjKBkUSoskyL2i4Jz01LB9AQryK3Cn4+bQJoojwO6Fe1
+ fXBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763401023; x=1764005823;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jLCAJ65AZBHvcqSXAcsnLrHpVTWmAXVSEPg76Aa9GBA=;
- b=RakR9t1uwRoB4mtTlzxrOiZY2jorZKiXpw+nIkOEO68+7FWmZGg/hkv4ipKP9+Q9v6
- KjiPwh6Wl8rIbSBCWIrRdu2ZRrRMA0UxUc7MohDadvHWRHyuyaXnLUuMO1E2V9WCFxcp
- iWZ+1of+JIFTB6NgjVhPG6th84SqwoCMD73+xQ53N3pF92t5/OYeTla0ebJYfJNfVzcj
- 0qZF8FSiGz+qlgYtiQA5p9MrbrT3ekzIZa/gbXzrmvOQBkryivvqyyo/3YEJKTDZXHjM
- jFtzeZAoqoXAqA83vYGffakOpR/fEYGGXzmQNp41/wvWFmK4iWO0RR3xRPaGhLrpSp8e
- vIuA==
+ d=1e100.net; s=20230601; t=1763401096; x=1764005896;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g9YMoTHiA8EtV1v/OdAo2noKhbi3CuEHGudADMjDqHc=;
+ b=EJq7WaVMcuXBvVIaKiCp/vfms3dwUs/VzMojAuZ4lfGZcJBu6jdXgBDskTSfVcOB14
+ zg4RsinFQY77WWeeqA8uZeA+v3ZoMmygduHjAkBE+ndlCC0rmrrvmqEYqBsF5Uy3WhGX
+ O9365HNjaQKxB9IgZeo/9Yy51LjqLH90/LZxdtF8Snv2v6fVrdEvWYp1RxiUu5rymsR6
+ mAzOhVRjDeEWxkozjkchjsCI01K1Lc6tkTaFYV+PRgQD5aEZWvNwKtOvUR1joKJoLrBj
+ 6dKD3OHlkojc2+CROPfzg4WqeJI7x6hVIdF34Ecboj9rTrtigdynSBiw9MIikkS2y2e8
+ FYCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5WfxoOsw7YBW84Fc17aNpyFgSWvvCemTJvjZcJW3P+xIOI1YbReIv9VZl0jIt8ClEuM3ITYrbglg0@nongnu.org
-X-Gm-Message-State: AOJu0YxK639eThDP0uHY02PLOYkQQhXDVKBm5oau5CrkdSezvGUAcsTL
- I77cXjBZW34trPS2/8PHCDbJRnCaCSn07PcUVx59O8c6WlBEANLy6TFj1jLItOTE3RE=
-X-Gm-Gg: ASbGnctz0Fcp5OCw6MNrT2G5cYE+m4L9kbkv1MU6nkxxOdgh5qJlb33mI0cpZ/4CgDU
- 8R/IE/Ci3fRL4oLhPEM+COiFK5E8ReI2sIv/x4RiG6X05VYWiEZZzHH/wb/mlid5nVyzp4Kifjz
- Ql578U4smXnO+ETbGoRIpGHaMb2anGbcqxkxLeGe56BpUM7NeQmzsjO26AxXdfbCbW1qCXzIjMC
- GMMWfp7fX/UC6crP/EK48/r+k/h7S3AbaA/PbvMlLBXTGw532x4Ie7n5Xrs/SYZwNBErwmXmx7R
- 8pMf4DLVTigKPEv5t4tbqFixPtV/TnYIJaYdMLlrEfmwwejjdJhNt4YVVePR0piQzn4QTzjFJFv
- +j75xHTCdNfw82ovsACRr39SB9zNsZNEtf/v3VJcDCZhEfNmPcDcvDFhbVmsrWA0GoFsOwiHLvx
- QeS5kmVudG31pWOuVRtl7kXw8tpRyzORnsemezfUBqsWpK5/INjYHpXA==
-X-Google-Smtp-Source: AGHT+IGxDO3v3bCGIuzdSJGl98OAYRfABh19ARPZW3N03yl+c9r6EpayTYS87G1Ua3qj7xagj+rW8g==
-X-Received: by 2002:a05:6000:3104:b0:42b:496e:517c with SMTP id
- ffacd0b85a97d-42b593236d5mr13542453f8f.13.1763401023370; 
- Mon, 17 Nov 2025 09:37:03 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f17cbfsm27316235f8f.35.2025.11.17.09.37.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Nov 2025 09:37:02 -0800 (PST)
-Message-ID: <e8938d60-23ec-4235-ab69-73cf1de2aede@linaro.org>
-Date: Mon, 17 Nov 2025 18:37:01 +0100
+ AJvYcCUQOKCcckyfMn1LzGSi9LRmkXkbW55yuDe+3cnUy8+2EvAAIjNYOn/qCcn5o0MVrbS+PPLMe55BIOyq@nongnu.org
+X-Gm-Message-State: AOJu0YxohJH4TW7Uy7Zsry7y11uCMbb2Cl2t2yCNCkK4sU+UMo5VEqD9
+ WJCc1zI7AWxPI+PlUXehmlq8JsmYb6f7L0JcsIK0CDDmcea/zUYhGFyiYHE55vKH2xhjx5OEsg8
+ 8z/BIIf5chW5Eu+piuf02H90wpkloI4kxr1FsJWpATg==
+X-Gm-Gg: ASbGncvtdKUveciDlT8AW+mbIgLC0SeW6xDrqNP1LRzrmB4Q2tP9NrDb5DtkvWp/PKx
+ iKBKHs6L45LbDj5mwdKTRDWplCGPt1TuicNQEx/vc6Q8qYAeWxrMk1KDcaxR8EV3vlwFc3EnyCT
+ xF0IpYGGHFv7wH1dcupmQKtvBafLR4rtz6ui8DyDOm97Tq3s71eMiJRPFvc23EI8zGphzz1etUY
+ s5HFjwjvrpr1GHRzD/T0a1ArIsOjbM0NAO207jI0EWFIndbqzasLXLhfkifqQfaQm1Z9/GC3OmU
+ qivlXtE=
+X-Google-Smtp-Source: AGHT+IFxkK8+KYZKcY9Pjs9MgQKLdaMetg1TNe+INtQH9bBEsXh56HvYx8e5dWoIylKX3psKDM7T4dAXawjGlHu+pL0=
+X-Received: by 2002:a05:690e:191e:b0:641:f5bc:68ce with SMTP id
+ 956f58d0204a3-641f5bc6daemr6305364d50.75.1763401096399; Mon, 17 Nov 2025
+ 09:38:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] Hexagon (target/hexagon) s/log_write/gen_write
-Content-Language: en-US
-To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
- sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng
-References: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
- <20251114230013.158098-5-ltaylorsimpson@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251114230013.158098-5-ltaylorsimpson@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+References: <20251101120130.236721-1-shentey@gmail.com>
+ <20251101120130.236721-2-shentey@gmail.com>
+ <87v7j8r399.fsf@redhat.com>
+In-Reply-To: <87v7j8r399.fsf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Nov 2025 17:38:03 +0000
+X-Gm-Features: AWmQ_bmQO4uc0RRaMJHYg4ZU7v5SYNAMNMlLIcfJ2OXnjBa_AH7PuF8uOMjhT3g
+Message-ID: <CAFEAcA_XORdwONC2YbVKPois6BLPEr0dFt_QjTHE=UWmiCiv-g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] hw/arm/imx8mp-evk: Add KVM support
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,15 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/11/25 00:00, Taylor Simpson wrote:
-> These functions don't "log" anything, they just generate the write
-> 
-> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> ---
->   target/hexagon/gen_tcg_funcs.py |  2 +-
->   target/hexagon/hex_common.py    | 30 +++++++++++++++---------------
->   2 files changed, 16 insertions(+), 16 deletions(-)
+On Mon, 17 Nov 2025 at 17:13, Cornelia Huck <cohuck@redhat.com> wrote:
+> Running current master (resp. with this patch applied), I'm getting make
+> check failures on an aarch64 (Mt. Snow) host ("qemu-system-aarch64:
+> unknown type 'arm-gicv3'" while using this machine); going back right
+> before this patch, everything works fine. Haven't tried to debug this
+> yet (maybe I'm the one with the weird config again...)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Is this a KVM-only config (no TCG) ?
 
+I think this happens because the KConfig now says
++    depends on TCG || KVM
+
+but because the machine by default doesn't use KVM then
+trying to run the machine with no extra arguments falls
+over if TCG isn't present.
+
+This thing we put in to handle "creation of the SoC object
+via device introspection means it doesn't have an ms->cpu_type
+to look at":
+
++    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
+
+also probably won't do anything useful under a KVM-only config.
+
+I think the simplest thing here is to put the KConfig back to:
+
+  depends on TCG && AARCH64
+
+People building a KVM-only config almost certainly do not
+want this machine type and its devices, because the main
+reason to build KVM-only is because you're in the
+"virtualization use case" and want to not build in a
+load of not-security-supported machine types.
+
+thanks
+-- PMM
 
