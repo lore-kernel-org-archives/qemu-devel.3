@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C391BCEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CE5CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL3BP-0004gQ-Du; Mon, 17 Nov 2025 12:38:35 -0500
+	id 1vL3Ub-0000Yl-1i; Mon, 17 Nov 2025 12:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vL3BD-0004dw-8A
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:38:19 -0500
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vL3U2-0008MN-Nd
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:57:49 -0500
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vL3BB-0003mb-Pb
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:38:19 -0500
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-640f2c9ccbdso3980435d50.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:38:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vL3Ty-0007M0-RB
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:57:45 -0500
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-450b90e6bcbso222610b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:57:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763401096; x=1764005896; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=g9YMoTHiA8EtV1v/OdAo2noKhbi3CuEHGudADMjDqHc=;
- b=Kw9qCIaaEc7hD5P//kySAh1XMgUF1h5t9r5R/U795g3yrI9ne3wgX/UHQFn863aTzU
- KnToyRE8amOI1Q9ARqLW6Bbd6cBZnzpxsU9VN3VwoshZdJVCHsusGsu6ND75C2rQ2AaW
- T2qNEgHxVqDRMwqIYDWzanpZAPIq2mzIFKiYLtZreW3A8a4W6mZSJDR1TrvmdacyH1Jm
- JMLj6lkJBL5Zp7lFYzEp2h6EgiXYVxAtjefOTwIFsmwekYc7pVKKCAcLHrEebV2DqGbZ
- +U/dD7K1I97zm4NtAj0Jk5kYpjKBkUSoskyL2i4Jz01LB9AQryK3Cn4+bQJoojwO6Fe1
- fXBg==
+ d=ventanamicro.com; s=google; t=1763402260; x=1764007060; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=psiYa7+6mddVnP5SlGVSIu1eWh5vsyL2fgOE804Kq7k=;
+ b=cgGHk+MVVhW5xuvUeMd61eZJ6JQpek8K7Ol2tHMA4chS1eYUx6YWfMNLEH3ePJ+w3D
+ ls52fF9cPlGO1Lch5h9fkaCnMNd0hh7+9utq56u9DCHeOBeJYai0aM6fGorFgf1d6yxO
+ OMblcMRibiT83gFYD+jug65RM/o65/4xuOI4apnLoEy0AAZEljbDQ/dWYcUVk5YwdUxP
+ 2ZMK/JRsUnoIot4JrsfGxeS5QqmMuMmevDekTUMIXwYf7KugvpIA/ezi4VvzTvAcwOGO
+ vTHA9Zk35gbnBme9JzXA9TMbLzVHweou3BwQezBzGHR/6IX8MKBIQ1RgzSdZqVQmOmof
+ aikw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763401096; x=1764005896;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g9YMoTHiA8EtV1v/OdAo2noKhbi3CuEHGudADMjDqHc=;
- b=EJq7WaVMcuXBvVIaKiCp/vfms3dwUs/VzMojAuZ4lfGZcJBu6jdXgBDskTSfVcOB14
- zg4RsinFQY77WWeeqA8uZeA+v3ZoMmygduHjAkBE+ndlCC0rmrrvmqEYqBsF5Uy3WhGX
- O9365HNjaQKxB9IgZeo/9Yy51LjqLH90/LZxdtF8Snv2v6fVrdEvWYp1RxiUu5rymsR6
- mAzOhVRjDeEWxkozjkchjsCI01K1Lc6tkTaFYV+PRgQD5aEZWvNwKtOvUR1joKJoLrBj
- 6dKD3OHlkojc2+CROPfzg4WqeJI7x6hVIdF34Ecboj9rTrtigdynSBiw9MIikkS2y2e8
- FYCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQOKCcckyfMn1LzGSi9LRmkXkbW55yuDe+3cnUy8+2EvAAIjNYOn/qCcn5o0MVrbS+PPLMe55BIOyq@nongnu.org
-X-Gm-Message-State: AOJu0YxohJH4TW7Uy7Zsry7y11uCMbb2Cl2t2yCNCkK4sU+UMo5VEqD9
- WJCc1zI7AWxPI+PlUXehmlq8JsmYb6f7L0JcsIK0CDDmcea/zUYhGFyiYHE55vKH2xhjx5OEsg8
- 8z/BIIf5chW5Eu+piuf02H90wpkloI4kxr1FsJWpATg==
-X-Gm-Gg: ASbGncvtdKUveciDlT8AW+mbIgLC0SeW6xDrqNP1LRzrmB4Q2tP9NrDb5DtkvWp/PKx
- iKBKHs6L45LbDj5mwdKTRDWplCGPt1TuicNQEx/vc6Q8qYAeWxrMk1KDcaxR8EV3vlwFc3EnyCT
- xF0IpYGGHFv7wH1dcupmQKtvBafLR4rtz6ui8DyDOm97Tq3s71eMiJRPFvc23EI8zGphzz1etUY
- s5HFjwjvrpr1GHRzD/T0a1ArIsOjbM0NAO207jI0EWFIndbqzasLXLhfkifqQfaQm1Z9/GC3OmU
- qivlXtE=
-X-Google-Smtp-Source: AGHT+IFxkK8+KYZKcY9Pjs9MgQKLdaMetg1TNe+INtQH9bBEsXh56HvYx8e5dWoIylKX3psKDM7T4dAXawjGlHu+pL0=
-X-Received: by 2002:a05:690e:191e:b0:641:f5bc:68ce with SMTP id
- 956f58d0204a3-641f5bc6daemr6305364d50.75.1763401096399; Mon, 17 Nov 2025
- 09:38:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763402260; x=1764007060;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=psiYa7+6mddVnP5SlGVSIu1eWh5vsyL2fgOE804Kq7k=;
+ b=C+A4DPBWyZYDdo/0JCm+8cOLjIJ2thOB4sZAbqb96P6xFKh4LwHdEbAiAL0ElOgzGZ
+ aOr+M4DrJ0kCasl0MUWHR0scBK8ahe5R2QkV5tbGtwzW1zqtEK/MFnbQX+BOSOHK5V46
+ 76cytaBgioXJicLT6X6QRiIU3WXi+jvfcRyKeJTCbeyCSHTOR8Kl20/uXN0kK0YqNETK
+ u14gonI+RRBQXn/QfcBkOVJlvqDdN5R8saN0omlcMUJfCWRZJ1aGz1+WKod8sieymVEH
+ GROSZ5FE+wPR5FGo96nY7JXCe6dBRZTkjPbVqIHxgqLy7flNurFMRkLNvs89UoFEkaf3
+ lHeg==
+X-Gm-Message-State: AOJu0YwLQL7eSYbcvCwqJ1mgIFJzTNZHBOZWJb7QJYBxOlvINBS9n2Z8
+ LK/M1jZdvQXDNttlomHT4YNodjSARvl2Y4EkeKYlfzdon3P4tGcqULfWkypAijcZ0pk=
+X-Gm-Gg: ASbGncv+GpW7t0sKYaZ7fXAgFp7PmSf0/FuGqwfC4XDrGm5NJrZkrWUP+DQRx4+AP3f
+ UhalWaABi5SJvre05Q476ifw66A8HJwZqe9zFNMSOYXtL2Kj1yjuM8qFrlKYF3wfGxC5rj81dFT
+ c7vtyV098Y+lyOMx/NdQx6tkg/ETT3VEWEXKs//gCGtwdszVXIhEK6ZP6ceXxT2lF7eVhd9eLQK
+ ZYuiaP0V/2KD6CVoM+DNIS6pkhw3wBRSpJrYnUgKBxf9YJRjhggCSlZx+AsBs7HHVU4ld4YrYh3
+ KfVyHWBCpq7xjlJmzo1CGaZ+J4zSmeJh9syg7dzWHlzmwg93Wf4pYJYFjgyrWoULOC6WMVwj1bo
+ zMPCq0f7pD2ZIRr7i6pJdWOCk98wVAw8SWI/nSesGht0ODd9n2eGFFbKhpEW2uErntUXIFxPvtZ
+ CrG37WQW4jH5nqa45LVxcTd/oRPw==
+X-Google-Smtp-Source: AGHT+IF+FMq1MfRS0GbQ9jOrjYjM1IxXTECP0pk336zuSYpBTZCHboklw/Md3qN0iQB5n9yhDf0jFg==
+X-Received: by 2002:a05:6808:2444:b0:450:c49f:9a38 with SMTP id
+ 5614622812f47-450c49fa214mr2393165b6e.17.1763402260450; 
+ Mon, 17 Nov 2025 09:57:40 -0800 (PST)
+Received: from [192.168.68.110] ([191.202.237.26])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-4508a531221sm4411650b6e.1.2025.11.17.09.57.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Nov 2025 09:57:39 -0800 (PST)
+Message-ID: <ff6a9d8f-9d8e-46f2-90e8-a04b10bb21bc@ventanamicro.com>
+Date: Mon, 17 Nov 2025 14:57:35 -0300
 MIME-Version: 1.0
-References: <20251101120130.236721-1-shentey@gmail.com>
- <20251101120130.236721-2-shentey@gmail.com>
- <87v7j8r399.fsf@redhat.com>
-In-Reply-To: <87v7j8r399.fsf@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Nov 2025 17:38:03 +0000
-X-Gm-Features: AWmQ_bmQO4uc0RRaMJHYg4ZU7v5SYNAMNMlLIcfJ2OXnjBa_AH7PuF8uOMjhT3g
-Message-ID: <CAFEAcA_XORdwONC2YbVKPois6BLPEr0dFt_QjTHE=UWmiCiv-g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] hw/arm/imx8mp-evk: Add KVM support
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/5] target/riscv: Add server platform reference cpu
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Fei Wu <wu.fei9@sanechips.com.cn>
+References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
+ <20251111182944.2895892-3-dbarboza@ventanamicro.com>
+ <20251111-e4f4062f326aef78ef820d00@orel>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <20251111-e4f4062f326aef78ef820d00@orel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,40 +107,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Nov 2025 at 17:13, Cornelia Huck <cohuck@redhat.com> wrote:
-> Running current master (resp. with this patch applied), I'm getting make
-> check failures on an aarch64 (Mt. Snow) host ("qemu-system-aarch64:
-> unknown type 'arm-gicv3'" while using this machine); going back right
-> before this patch, everything works fine. Haven't tried to debug this
-> yet (maybe I'm the one with the weird config again...)
 
-Is this a KVM-only config (no TCG) ?
 
-I think this happens because the KConfig now says
-+    depends on TCG || KVM
+On 11/11/25 8:05 PM, Andrew Jones wrote:
+> On Tue, Nov 11, 2025 at 03:29:41PM -0300, Daniel Henrique Barboza wrote:
+>> From: Fei Wu <wu.fei9@sanechips.com.cn>
+>>
+>> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+>> profile support, plus Sv48, Svadu, H, Sscofmpf etc.
+>>
+>> This patch provides a CPU type (rvsp-ref) to go along with the rvsp-ref
+>> board.
+>>
+>> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+>>
+>> Signed-off-by: Fei Wu <fei2.wu@intel.com>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/cpu-qom.h |  1 +
+>>   target/riscv/cpu.c     | 14 ++++++++++++++
+>>   2 files changed, 15 insertions(+)
+>>
+>> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+>> index 75f4e43408..07e96a14ba 100644
+>> --- a/target/riscv/cpu-qom.h
+>> +++ b/target/riscv/cpu-qom.h
+>> @@ -42,6 +42,7 @@
+>>   #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>>   #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+>>   #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+>> +#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
+>>   #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+>>   #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>>   #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 975f7953e1..3ddb249970 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -3305,6 +3305,20 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>>           .cfg.max_satp_mode = VM_1_10_SV48,
+>>       ),
+>>   
+>> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSP_REF, TYPE_RISCV_BARE_CPU,
+>> +        .misa_mxl_max = MXL_RV64,
+>> +        .profile = &RVA23S64,
+>> +
+>> +        /*
+>> +         * ISA extensions
+>> +         * NOTE: we're missing 'sdext'.
+>> +         */
+>> +        .cfg.ext_zkr = true,
+>> +        .cfg.ext_svadu = true,
+> 
+> Svadu is no longer required.
+> 
+>> +
+>> +        .cfg.max_satp_mode = VM_1_10_SV57,
+> 
+> Shouldn't this be SV48 and then allow instantiations to use
+> rvsp-ref,sv57=on.
 
-but because the machine by default doesn't use KVM then
-trying to run the machine with no extra arguments falls
-over if TCG isn't present.
+Makes sense.
 
-This thing we put in to handle "creation of the SoC object
-via device introspection means it doesn't have an ms->cpu_type
-to look at":
+> 
+> We also need Ssccfg and Sdtrig.
 
-+    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
+Sdtrig is enabled by default, and somehow I forgot to add ssccfg. I'll add it.
 
-also probably won't do anything useful under a KVM-only config.
 
-I think the simplest thing here is to put the KConfig back to:
+Thanks,
 
-  depends on TCG && AARCH64
+Daniel
 
-People building a KVM-only config almost certainly do not
-want this machine type and its devices, because the main
-reason to build KVM-only is because you're in the
-"virtualization use case" and want to not build in a
-load of not-security-supported machine types.
+> 
+>> +    ),
+>> +
+>>   #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+>>           .cfg.max_satp_mode = VM_1_10_SV57,
+>> -- 
+>> 2.51.1
+>>
+>>
+> 
+> Thanks,
+> drew
 
-thanks
--- PMM
 
