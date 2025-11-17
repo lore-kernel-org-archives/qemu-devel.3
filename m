@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4ACFCE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 11:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3977CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 11:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKxcW-0004xr-0Z; Mon, 17 Nov 2025 06:42:08 -0500
+	id 1vKxcz-0005VP-BN; Mon, 17 Nov 2025 06:42:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKxcU-0004wt-HP
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:42:06 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vKxcx-0005TX-4X
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:42:35 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKxcS-0002Uo-Jv
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:42:06 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4775895d69cso22642575e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 03:42:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vKxcv-0002Zc-Lv
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:42:34 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-78802ac2296so39227627b3.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 03:42:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763379722; x=1763984522; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fR70elkEGu+FKP9bV0fr6f2hWS1wy6kNuGAdttasHzc=;
- b=yBkEu8BUDq/12uscxOGyjM+rvveQDAs4wV+eaLI5OU4c0ycEo3zICcIfPSzVjAFtTF
- OKQthw17R/cc52r9rGSbRKHq0Xl/6loRnAvUhagXQj77aa+PgqEv0+C/7Ggk/YkmOuVV
- oAZtxcGw20ZYsX9r8uJlutUuCZbe9ldzuUP25s91SaXCH0UKNZpvTDva7hq/59eakbF6
- j7lOIc60RTqreM2yYZEETC1VNTs6qANBEhRiGRe9bQNDppmznzRSuVh4o9WCUsppQBrp
- oyV5Sy5ff33K7Ydhnvw8jj/+teXrNKT4JabW41/iQicJStXKrAmOIo632KRCS6vLX5Qi
- wpVA==
+ d=linaro.org; s=google; t=1763379752; x=1763984552; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UBxkJwjosmQ014MCdjMhpJyjVPKexKK0fujxek1a/vA=;
+ b=pjxARpIEG6dMNBRbzYeON92GhD7rmObG2tUTVYoOZzhN2eTp024jVkTAXgOsBwwt3M
+ bdlkiMh/jsq5LXYyLYZ+spRER/5ptd+y+FfbeaB7lvo1n8JYoKYQH5XlpV+Z/JZo4Hos
+ ayBg7mNsPp800Tr+hRBfNhy5ehGZ8eOFSwDr/RjCnM95YM3CKxJP1J0dUcarPvAFgBSz
+ 3gsA/5JRuaiCyr5kwDZ6CczGmLweZgdFmbGLSxva8PMklzi6YG2W1alVbCq3o9qW2BwM
+ yyFdY5ranj4AS512pjDd9stGEz0ABi00PKnzK/KCqsCiy1nrkNuKWZsJ4/R9xZxrkYTm
+ +QcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763379722; x=1763984522;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1763379752; x=1763984552;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fR70elkEGu+FKP9bV0fr6f2hWS1wy6kNuGAdttasHzc=;
- b=ortuLApFxbHbjp3S3Z/DXAm6oLRZvbvJtzro1gsqi1lrRoVsZAu7zOaeHxfYIO/+qB
- vq7doA1FUNRtcCClP16fwbJhyCkO+B7ovMG80R3OEzP79vejKZagVeyH4FJNgdjhf55N
- kmK7zX8rfopKFY2STrg293quOTowHz9BTuDShQMh9UD/PFOI0/trOCqmOA/RBLnUQy4e
- pd13tJOKFRsiLxWiQ4+hP9+1HkMqf75quupMJbHsNH/q+YAXeOadWPsEj9AUXxJ/U1ua
- h6SnatW+jvDIhX32OiGyx8ktJG5p7nz5sqHEfR03FlS0L4o1mApLC3cmeOgS28mAVTFa
- z66g==
-X-Gm-Message-State: AOJu0Yxj4QR87YMtJYN4wBc/D5zJesbjhWScWb9f/dskymo2KJ7Rlng/
- VjlcxX7Eb0Vu0nTKgsZEh6wKg4sSpoOgMI3PH3lNyVkH9cSjAlm5EKNj/g7jzUvYD6w+Zt8fU3x
- vLWithyg8Yw==
-X-Gm-Gg: ASbGncsiwL4qjYm7z/y27h1vUXvN2fnJxueeysnObUFELvVP3LSWUW8wgsWgk8XG0YR
- 5iCNTQTSAlDnNa1mZQKPGYh7vFW46dWqUQMxEWog/OSmN2bNcDOzT3iHPhyUkOYqYacGUAvU4aB
- oeWUpWvwRSG5XGd4DI/sjipGKgQDsRtW6QMo2z3OzLFy87nkcdQfp4UcqZdibQC1FZelindx20Z
- j4SOAo0r2VroiiwkxCBtpLc/blBJq34pvlw7M841IsxqiT21xtiEUGmiy4SjNXlzzoLdaSwwg8O
- m6w6hp7mfshKMCIAtOzIIcp1T+DSNGhX9VZ3tcqesbECSZMldLOnXbHSHH2kZurdWcRiX/cv+r2
- cBIpho/BGBWD6AMXewEoEZ5hHuLvfrw/bLk0ODC9G6oq7pNlDWLrYUriY8Lko7asXI2aVTpbz+a
- UmEvJ8UgoAkHb28Z0fE2dJLVdpeickondDcvdK58K3v5BprhV2/Q==
-X-Google-Smtp-Source: AGHT+IE8qvPWC62cKZpJnp1rmxQC8sZ69Lrv0gs9APokxYyd6ZUuLfvwauHv+uNb+fgms3Y1r42kIA==
-X-Received: by 2002:a05:600c:4505:b0:45d:e28c:875a with SMTP id
- 5b1f17b1804b1-4778feb255emr130182985e9.31.1763379722375; 
- Mon, 17 Nov 2025 03:42:02 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a2422d93sm24018635e9.0.2025.11.17.03.42.01
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Nov 2025 03:42:01 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH-for-10.2] buildsys: Remove dead 'mips' entry in
- supported_cpus[] array
-Date: Mon, 17 Nov 2025 12:42:00 +0100
-Message-ID: <20251117114200.60917-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ bh=UBxkJwjosmQ014MCdjMhpJyjVPKexKK0fujxek1a/vA=;
+ b=pyyuVwbYXJReKfpGbveZsoFyp8UyvhpiCAmuobAznkTODhBUiolGSUN27tDs5JhM/X
+ apnxFCYfw86zC6xcggjopSrXFtUVZR2Hhv6bGbocZacKizZvsUxJjXVoqe2B+GjVjucZ
+ JbjJtNqInRlToeEMON+OitI5qPNt3NKebClMB4UHgmBuYWRy6wO2KYwFZfVvknF0mprO
+ CQZA1qveQA6ip7Xe77twcf8FFz/XQ0BCi6DFZ8ySRP6vP7TE4KEsc4I8kdz8lQZ2v5zF
+ lniuH17i3nkqhFomklCNPW6G34evp3cBlhtAXopArXjG4euLYjf1x1RUu1brD06gZ5Xa
+ CBfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtwosdiLZ2HN3wjzpieZC3zUWIALpM3SG3r8ATANA5QOE9T6ve4j8Qk9E+fPnyrq2K3geSpUfgnkzh@nongnu.org
+X-Gm-Message-State: AOJu0Ywpd9GkZXaWv03aqHVXxSsUObwFEpTzoEFcI0zKWm8lIvhl84K+
+ RrK/SAYLdIXL4mXT9T4FgDNLlF/Haxl5sF7shw1rZYHP5k5bnH4JvSlGbOnno7SC1NgPYXqnVmS
+ m7LSxdBRf7zVGWuwk1VUEMgjGA0YAQl/leLvnpZ6cDcfH1rYw6EhbEds=
+X-Gm-Gg: ASbGnctj3AunvH9vj3dyYYUG/xlru+sSMqbR+mE6Mc5tqHuOPSVdDsO1PDXucrECDA7
+ VBJqJxbE0AshjejZdDeBuhN1cY+ScmVG7pAcDJ2iSydah8tCDTPU6ya7+Gl9QGIAqk+VzZMITQr
+ 7k5hPM/Gs9YJ0q6yud7hAIOP3u7OoFuzgIdJ9LaaOOAzskpewXckZBYs2HaZtFz/dEtb/NVZQgW
+ 0dwUxnJbHHw1FaNrJmJGz0lm8Hl5CtuVedphSVwPsqjoTncIFTGBpsgHo2n1udWRL/g4JLBkL7w
+ 4deu26M=
+X-Google-Smtp-Source: AGHT+IEiqau49uMwrHyM1+PwgTncue4WuO7dP0MDrYg2HnE0Je4/AwGl1g5y+4RUyQ4arz0xwZExNuX+hYPt12z7X3Y=
+X-Received: by 2002:a05:690c:385:b0:787:ec83:5d0e with SMTP id
+ 00721157ae682-78929f33136mr111459187b3.60.1763379752272; Mon, 17 Nov 2025
+ 03:42:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
+ <f495c43b-3d35-4763-853e-4e70428cb666@tls.msk.ru>
+In-Reply-To: <f495c43b-3d35-4763-853e-4e70428cb666@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Nov 2025 11:42:20 +0000
+X-Gm-Features: AWmQ_bm_-I1x2TYm0dlvlNQz1U1wN0RiaGYAYxMoKXHKcfFkznZRJ_uCd94SKnc
+Message-ID: <CAFEAcA_8DbBoQdxRzqedssk6hdKrCNSVrO8i6iK4o5SWrkrNaw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] linux-user: fix several mremap bugs
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Matthew Lugg <mlugg@mlugg.co.uk>, qemu-devel@nongnu.org, laurent@vivier.eu,
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,28 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove 'mips' from supported_cpus[], forgotten in commit
-269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts").
+On Mon, 17 Nov 2025 at 08:40, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> A friendly ping?  Has this series been forgotten?
+> It looks like it should be picked up for 10.2 release.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+No, there are review comments on the series that need to be
+addressed before it can be applied.
 
-diff --git a/meson.build b/meson.build
-index df4460035c3..5ddec8afd7b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -52,7 +52,7 @@ qapi_trace_events = []
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
- supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
--  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
-+  'arm', 'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm32']
- 
- cpu = host_machine.cpu_family()
- 
--- 
-2.51.0
-
+thanks
+-- PMM
 
