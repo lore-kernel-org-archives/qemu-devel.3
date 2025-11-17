@@ -4,167 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E692CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 07:27:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF030CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 07:40:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKtdA-0007Et-7Y; Mon, 17 Nov 2025 02:26:32 -0500
+	id 1vKtpv-0001SH-HI; Mon, 17 Nov 2025 02:39:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vKtct-00078N-Hz
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:26:16 -0500
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ id 1vKtp8-0001Op-7Q
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:39:03 -0500
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vKtcq-00040E-R6
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:26:15 -0500
+ id 1vKtp4-0005aw-Or
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 02:38:53 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=f4HVoO/InyjkhINWu/Vcu0LGmbjPilFIi+OdQNLJ38mhOiRGoluc5FafeT8GZs8LdfvVMoI24l+g5df4fQtBPFLYUjA/F/PaDBbOkRGkBcSn6Rrx5G+Me3J/r1dUT89eVeyYPHDVBM/e9DshpVLY8nPBRZNrHZsXytuWtxuPbNKvVJXJycj9mMDSuzGrKZlwig1/dvTMuqXwlVdiebfkgwW6kWLTOJvVS92bahwaXAV6HDuXBuqwJaMWVE7ePzqjmabsIz0dL5XIBMgSSyyUhZ0llXekliGR9k4KhZt3kqGomVY4HL6aGSrDuJMy6ev3LWGC0ACoSSUNqpIXPgUv+w==
+ b=AoV74JIrfIRALHskrzD9sJinHcYcYb9S8COo1LNWpTLVR+UJfJMJ1MgiUSMxxI4ifqJH7K71xVZmmMnpuSZ5U7Y6DEKDmkDjyRJMd25fB3G9HmucbMfH5+bcYCJn40k+v1KMK84iYitYm5n1houbTNq0554Xo9ci8RZOFPhdOrX9EgKVpTXxPivt9+qWiqgwmpkRPNMdmE5Z+fNlNBgNEaYvddYiO3mT8KJxQW7ebQXiXEAUOqbGCiCqrFjpvtPZE2jCTSumFx30daRVaxSA9Hu3vUC5BodcQc96Zq+BK0M9nTtR4tNEqfbO9R7qBgNmLpLOi0zbdmkoZFtpC2GRAw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AA8Pf5/F6HlKNXZ5xaUDc8UV56KUxEdONzmy1A0OncE=;
- b=ehZr3McOt7+SC9aykDXlFSfgrZRnFwgxw3ibNMEs0rEARyPhG/rxRlwasmyf/t9YshvbpIiumxSdDqKDPvY8E5yYCQsKwmFkX2LwJycMtcEmKRhEZSlA++IaFutx2TQ8eW4mlIc0LiIQzJUUs/InZO7447RPyvs3/0UA+V6RSzdEwo0RsdbXqYoez9gwi4k99NQyryFKpMfUxbpSC8AeCSs2HeeuZJXYiBpmMiSKUck122w1v/LJlZKgIi0oYDby/dqDXEG0gQTj6EA3vTA76tCegALxBd4/t2NTS3mKhid0qPYh8282yprovYXZJ8xVMxgqdJVtgncc1fDzOPDPYg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
+ bh=vurPIQEBgUEpzH5sWQR6vn4OFToANJqHOyBe3u4IwzM=;
+ b=aRJzpIoXYpMpe9zLZ+GB+3gZLhLFMhnY7n3U1weUGyS8Bkehd7O8Bog71bc06Y3VphiK9umKjpZJqRqXpLvuO/KVAm6KbVd9R5ogKUGOWrbVwOyt2lutG+lNqsL+RYR3e34Z5POv1Xcnwd0VYvmVJH8sK4euatNQmBOZMob2aNwsXXjvy+juyoLuaIAlzx9kIqObfMO1I/fLzpgCEevfhgVIOao73slUFgiFD48XVYzViRCLkKJ8p9zOR6iMYSKW0BrBYw/Keq+JBlQlPnezCiW1rWgWyvgV4n7c9Kn8lf4LnFM1RfuM1YJliWMWf63OSYAiJa16KlKIA+BeG3O9Lg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AA8Pf5/F6HlKNXZ5xaUDc8UV56KUxEdONzmy1A0OncE=;
- b=tl9kqVXWK6JA9RRzeA9v3t+wwHoxIsFnvQsiXiCQGR47Hog8HDCNbVTzKZBdFFhF3DXNU1maS2KXho0iubXhoxXP5St5zh8toKVkZ00wzm1cVisC8+1v+rCPsdEHSDESBSUDzw9UTRdmQaWbn/F6xFLOWIyRA8g3VEe7bFb04N0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from IA1PR12MB6435.namprd12.prod.outlook.com (2603:10b6:208:3ad::10)
- by IA0PR12MB8088.namprd12.prod.outlook.com (2603:10b6:208:409::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.22; Mon, 17 Nov
- 2025 07:26:06 +0000
-Received: from IA1PR12MB6435.namprd12.prod.outlook.com
- ([fe80::273a:80c9:35fc:6941]) by IA1PR12MB6435.namprd12.prod.outlook.com
- ([fe80::273a:80c9:35fc:6941%3]) with mapi id 15.20.9275.015; Mon, 17 Nov 2025
- 07:26:06 +0000
-Message-ID: <27e24af2-683a-48f2-9b10-e6f4061d49d4@amd.com>
-Date: Mon, 17 Nov 2025 15:26:01 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in
+ bh=vurPIQEBgUEpzH5sWQR6vn4OFToANJqHOyBe3u4IwzM=;
+ b=sSgCYF/BR71oQVXWcn0Fv20LZqzEIfY5NVW/6fnpEvG9Hs4lVMpRBVCgK+Vaq9KnAA6YPeWnd/hfKD5bCg51KvI/7FlGw/JLF1rEdxfokNJlUnu6NaTFRelaBQ/18Nb6l6p/yctr/W9t40aORMT1tckTYf++PFsEyA6h0OHas0g=
+Received: from BYAPR02CA0061.namprd02.prod.outlook.com (2603:10b6:a03:54::38)
+ by BN7PPF39B20C1D8.namprd12.prod.outlook.com
+ (2603:10b6:40f:fc02::6cc) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.15; Mon, 17 Nov
+ 2025 07:38:43 +0000
+Received: from SJ1PEPF000023D5.namprd21.prod.outlook.com
+ (2603:10b6:a03:54:cafe::38) by BYAPR02CA0061.outlook.office365.com
+ (2603:10b6:a03:54::38) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.21 via Frontend Transport; Mon,
+ 17 Nov 2025 07:38:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF000023D5.mail.protection.outlook.com (10.167.244.70) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9366.1 via Frontend Transport; Mon, 17 Nov 2025 07:38:42 +0000
+Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 16 Nov
+ 2025 23:38:39 -0800
+From: Honglei Huang <honghuan@amd.com>
+To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>,
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>
+CC: <mst@redhat.com>, <cohuck@redhat.com>, <pbonzini@redhat.com>,
+ <qemu-devel@nongnu.org>, <Ray.Huang@amd.com>, Honglei Huang
+ <honghuan@amd.com>
+Subject: [v2] virtio-gpu-virgl: fix error handling in
  virgl_cmd_resource_create_blob
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ray.Huang@amd.com, alex.bennee@linaro.org,
- dmitry.osipenko@collabora.com
-References: <20251117055112.99046-1-honghuan@amd.com>
- <5eca552d-31e6-4918-adf1-da2568af18ef@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: "Honglei1.Huang@amd.com" <honghuan@amd.com>
-In-Reply-To: <5eca552d-31e6-4918-adf1-da2568af18ef@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYCP286CA0169.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:3c6::12) To IA1PR12MB6435.namprd12.prod.outlook.com
- (2603:10b6:208:3ad::10)
+Date: Mon, 17 Nov 2025 15:38:27 +0800
+Message-ID: <20251117073827.114891-1-honghuan@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB6435:EE_|IA0PR12MB8088:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4844c72-9cf3-4594-b6a1-08de25aa9248
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D5:EE_|BN7PPF39B20C1D8:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8fe08a24-80d5-46b8-9724-08de25ac5548
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SWlIc0MwOXkxc0IwZTJjWEhNNGZ5emRQOTVELzBxTDlNQXBHeGR1MktqZ2cw?=
- =?utf-8?B?TUkxeWs0MlJaZjk5dHJLUFFrSmVMWmZWVlYrSmFhZ1ZQSENyTWFOTXV3YkM3?=
- =?utf-8?B?RVF4WnBqT2ZtTlU5WHlHaFVPQ1Y5anN4bnBBSUEreVp5OGNiVUw1ZnA3NHkv?=
- =?utf-8?B?TEszbDAvcURyb3ZZVjZmQW0zUnNmNFFVOElkTEUzQ1M3VG5mSTZCM0FxU2kz?=
- =?utf-8?B?b0Zaelh4bG0zbUR5THQ4a1lmc0ZXVmVuTUYzTE5jSkc4NForeTM4VDc1RG5q?=
- =?utf-8?B?QVh2R0VkV1VFaENqVHlVZjEzUWVWa0xiQVk5NlE4VlNtck82eWVHTWpFTUN5?=
- =?utf-8?B?ODZmUnQ5ZklxekdmWlJmeUhqWVBCVnIvUW02SDd1d280T05BdjFEMkRIZ3dp?=
- =?utf-8?B?OGZjbzN5K2xGNjYwcHNZZXNYQmVKSUR4Ym1OcUI5bThSOGxDVmUwaXFxUy9a?=
- =?utf-8?B?N3hob3ZxejRMUHB5S0UyY2lqREVSSEdra2svTDczaXVnTkJqMzFCSytXN2lr?=
- =?utf-8?B?VjRMemF0YnpTdmF5Q3J3dU93VUkwQ2ViSUVYS2JaWU50VVFOa2NLZFlockFa?=
- =?utf-8?B?Uy9QdW9QYzdpTWZRK2k4NXUveGhwYjJJM3RDRWhiejFPc0FiallobERVK255?=
- =?utf-8?B?dVRhVnNKdkprbXU1bENKYjN3QmpiN3pXRkNGQXE2MzZiWVVrMytPc3JEMXli?=
- =?utf-8?B?aVBoaXZOQjdicUkzV1JrZlBFYnA4Uy8xcTF0OWxwS216bm83aVNISWdvUk9y?=
- =?utf-8?B?cy9aSXVHWUJ2d3dmc1MyNjcxRloxbGh3czlVd1FhUnVHWnBtbnRDdTZqM0cv?=
- =?utf-8?B?NlBrUjc4M0JzOHJIS2UxT1ZqM2xmVG4zZmQxWkVNazY1VDB6T0RQT0lpcTBM?=
- =?utf-8?B?YlhkRnR3djlIYlp4QWJLR0dCdGtFT2JFeW8rdndPR3kyclIzZnZWOEpGajN6?=
- =?utf-8?B?R1dZdk55bGF4c2p4a2F3ZEdObEZJUGVsTjZpRUwvdzFTSUx2VEFOdHlxZTBa?=
- =?utf-8?B?bkprc0RtUHFnbndlU09LY0tONHQ5VjhYVStYZDI5WFZSWmZmWDc5YjdGWTBk?=
- =?utf-8?B?dXBlejIzdmxkcVJKSjdMd2pLd1h4QTUxaXhoLzk2MnBDeWF0M2paSnM0bm0z?=
- =?utf-8?B?SXdLVlZENWRpV3NjQnMyOXdtVGN0OHVRVGdvQm53M3hzcHdzNVQySW1qaXh0?=
- =?utf-8?B?dG51SitaZm1xWm1sdjNPSWs0a3NsOWh5eTEzUi92WTRwbDEwR2RLQjh0NkRs?=
- =?utf-8?B?ek9OZnExNGh2OTVuTkgvZGRkcDVIM2FuZ0p1OXhoRU53U3JnSGZjelk1aXph?=
- =?utf-8?B?M2V4Qnc1TGFDVzNXSlVlT0h0U2MvRTdPdDJWTEZnR3VwNU1zNXB1djVyZ0Fw?=
- =?utf-8?B?Y3JUNUZnYVBSbExKRjlMMDBaTlhtc29BYmo4SHpSUmhtV1l4SHh4Nm1odUE0?=
- =?utf-8?B?b3dRcm1rNDZoNUtBRkxUQ05jcitQWFpnVnY2M3JvRzBGRWNXdEg4bjArT09v?=
- =?utf-8?B?S01KVjhtZ0hyeUQ1cFkwY2N4Rllra3ZTZk5uN0psT2h0elNuSW0zZFVkUVEz?=
- =?utf-8?B?ZlZldFpzRTVXSTBabll2L2E4Snc1R2IwS01IMXcwUUNWaGVYN1E3YjM4UUlV?=
- =?utf-8?B?elEweWw1UDJDUU54VUlHcHhCNUJITjlONW5FYkZOOGFOalpxVHBtLy9BUGN1?=
- =?utf-8?B?Nm5wUnFVazRNN0ROc2JycGZhbTFacFVVbnpwT3kxazB0NDBvM0cyemNxbWhn?=
- =?utf-8?B?Vmo2aGpVdkQ0Z1hrOVpsTTczb1ljM1lXeHE3MlY4U3Q0d2pWU2xiTEJGdlQ2?=
- =?utf-8?B?WXhlMk9Ga2o0OC9jb0NqTUQwZWpoZkJ0a3h1YlhRUzFwSmlEUENJZVgzT1Zv?=
- =?utf-8?B?SlhHV2dHZ05XV1JaQlU5ZlVQellQdDBXNXBFNzBNb1ZYM1IrMVkrSXdmNDNS?=
- =?utf-8?Q?ZJ7/oEjECZqszVpT1LRlqtqKCqQvr3pu?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR12MB6435.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z05XSGRkSisxaXplVEVOYndKMFVWam51bVZ5bi90VzF4WEZNUEV5TjNYakJp?=
- =?utf-8?B?TUY4YkN2M0FkMlNtWS9QY2hZTXlBc3h5THhDeVY0a1lpa3N2clRWUUxobVh5?=
- =?utf-8?B?Wi9SWW9uRzNwSXk2VXpNbGRiZmc3U01IOEcwNmltSlc4R2h2ampvSnNHdnVW?=
- =?utf-8?B?MEl6QlMvdm40dkRzWXR4QUFHdWViZW1WUmg5cEdseWRuL2g4a1hRYmRrd3lD?=
- =?utf-8?B?QUNKaTkvZDlPZnFzZ1Z3dzZDZFlYUVF6Y0dBL0tvdStKelgwTlpwWmRGQzd5?=
- =?utf-8?B?bHJhcCtYWlBIRHpLMFl6T1VNNWpwSDU1QUsyUnhFV1dPUzFSZElBdE04YVRT?=
- =?utf-8?B?M0N0S2trOXl0NEhnQkZmKzd0OXpBRHZwcHJiZDJpYnVyVHJIbG5GeWZrREsr?=
- =?utf-8?B?NXkwdjRWdVJ4LzlTN0Uvb1kxN210eWlaTGc5ZDdlZFVJOGgzSmdtRlBMNzJq?=
- =?utf-8?B?d21IMkp0azJrSExZd1hMQmpYL2xVMlBEZFQveHFqdnhBZ2owVm9LWlZyd3pi?=
- =?utf-8?B?eGo3VlU5bDZ2RkpHV2thYW5HVkRWRVBqVXRvemVnMW56dUF0TCtYMy9IaFBS?=
- =?utf-8?B?RjFuNk1Ya2Z4ZWFaOWdOeWNOSllPTi9nRlZVWGdFd0RMM3huQmYrcjJVTzhp?=
- =?utf-8?B?SFVCcFhIZWVsNzdIWjIvYUJWcmM0RDg4OG05WEkxdDVQUmp4aklXRnZYd2h1?=
- =?utf-8?B?WXJwT05KTmZFRFV0Mm9jUy9UeFJOYXFWZmxCUlJGUjFtUkY3YVl4WUpPSXAz?=
- =?utf-8?B?cDQyTFplYU5uUnBrWit1NkVCcU01NHhkbUJnOE5wZmFNbFMrQy9JQTU1NTVZ?=
- =?utf-8?B?aUxmWkpJOXpMNXUrQXJSRjhGbms2aG1RSDlZZU5QTDBrVnJjaUlvVituTVlj?=
- =?utf-8?B?UUc1aU4rUEhOTVpyVnE3UHJxRUZicHlaRXUyQklyTGxSZGdDS2FPRHZWWlhQ?=
- =?utf-8?B?cVJSUzA5Y29oM01uTFh3eXNxb3UyNVRQV2drWXh6UW1uOVZrb2VVdE1OUldY?=
- =?utf-8?B?SHhQaFQ0R0QzRHFYRUozc0g2Ny9lNUhmZ2N5Szlsang0cGFodFFHdHY2NVR0?=
- =?utf-8?B?WXU5d3lnYnYxVGgwcllQV2V4cmJQdDl4dTlWNUkrQ2tQSWczaWdVd0cvQXh1?=
- =?utf-8?B?NWxZTDFGU0hUZjVqYjJ0cjNLS2c5TGV0cldZOTJ3Y2xqRUhZMW5peGdxVHha?=
- =?utf-8?B?bnE4Sk1ZSlQrYktCMEd4aTcxa3c3N2x6Q2c5T2xvb1ZSemZMZ0xKSU9heEt3?=
- =?utf-8?B?bTc0bVF0VEQ2eWNxZmRXM2ZnOG0zT2xyYUdmNWpjSEZwbjlLUUhNWnpVNEkx?=
- =?utf-8?B?Wno3a2I1anBBalQ5V2tKT2FkNHpNVHN0Sm9Kb0ZlQUlIOW40K1pkTUpGSCtQ?=
- =?utf-8?B?UE9xeStlQ2dGY2NwK1M1T2U2QzAzdVVWWnpsTmlyWTZWQjBOUVpUU3VkbVFL?=
- =?utf-8?B?ck5tZkt5MFM1WkI1bUpoQU40ZEdwT2tOZzZ1WUN5bkhJcHV3U09zMDJ0MnQ4?=
- =?utf-8?B?S2tNSFIwOVl5aFpFZTZSb0hzaXVWbW8vSlN1MkQ0ZkNmMlQ4RGZPZXNTcllK?=
- =?utf-8?B?US9OVzlUdTRkWHlDNkthczFodG81MTd1NVpyZDF0elB5QVY0ODA1WUFiSXo3?=
- =?utf-8?B?Y0lYSU11eVJsMDZmWEp1c1Vtb01nL3R2VHhqL0YzNDNJa0ZMWUxkd3VqdmFi?=
- =?utf-8?B?czZ5WndTbmJvQ0RkeStnTWExSGxoaHRaMlZveksxbmdHVWVKZ3g0N2plam9O?=
- =?utf-8?B?cGdxaG5OamtnUGkwdCt2S3dHSTViMFRmTi9heHg2NzN5V1M4U3hrcGc1akdC?=
- =?utf-8?B?YnNrUVlBeWxMelU5VHEvQnpxRWxmVHp0SW5TdlRkckFYdDYxeFNjQUpJRUc2?=
- =?utf-8?B?c1ZjSDdTL2JHOVhwb21EYk5mWnh0TE4xdkhwNjJiYXNnalN2NXpOQ2ROdzF5?=
- =?utf-8?B?YWZxME4xMHl5YWZCV3c2eWloVkxwcjB4dkFpdzJ3eG9ZUUhvMkZTeTdRMCtQ?=
- =?utf-8?B?b1dweFE3ZENLajV3bkJHS0hwSjhxelpMVVF3aUY5VGkwQ1J4OWFZMEV0MmNq?=
- =?utf-8?B?N29Kb3NDRmV4L1NuYjJHWGN0dC9BYTlnVmhidkIvZGZ4YnFGUlZVM0h4elhI?=
- =?utf-8?Q?Vb7Hsn7esF5oS4txJ6maWNrDp?=
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|1800799024|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?93B9Ajh4Dj9G/A2+VC3M6b+8dXZfKXGw3XbCiCw2CQ0Gz9mhQ2Ht/yj7WObT?=
+ =?us-ascii?Q?kzL7yisYzIflD+nGpIEwNCf/rkpMowQ5roR+hjtMbY/ikt+WXWAYs9HyQDQR?=
+ =?us-ascii?Q?e+jVK4nMLNXImaZAHt3B/gRAtNn6ggY9LSdB+5aYa+dJDNPF2fF/j8QtL7DH?=
+ =?us-ascii?Q?a1VDgClw8qwip+8qmeOIG1T3/HOwAgq3TQaIoHQvhiwKXp/3t/xZisDAkq9j?=
+ =?us-ascii?Q?5Sr93dh0uPDlcCxpZf5VRZToEUmo7gF9Vl/LyUyFNSMYf3sOYyhTAtli/RBg?=
+ =?us-ascii?Q?4ImsTjOJphf2ZIa+DkkfX/MUTWeynViH0apzJpOielLl4Q+IS6pVC1OAdQ80?=
+ =?us-ascii?Q?YQHvwFK0iir+0A4nWAUU5F1Kx8mFWdO8ets0OLdFTGwAJhdb479LSgPu7XXq?=
+ =?us-ascii?Q?eM5rAEh0EQFEYWt7lGnRUr6fOoAu85B6uPJxfdQhUyKsghWAQjW0mPkOY1b3?=
+ =?us-ascii?Q?S9IwAINOIMvJSiZKK/88CW8AoUmPSMqbVyhJNpztlzsyehFQD+s8PBdkNDGe?=
+ =?us-ascii?Q?UY6bJP1yg/wmPpXP4fJlr5tqWici02MUA/N+OS/WuR5bpeyWF3e1xb522x0/?=
+ =?us-ascii?Q?fy6DxsDPDn09A9RdiGgnOOJvTF8kNzHYRmy402yQr+w+lPTaUsqVpMNjc2T2?=
+ =?us-ascii?Q?RjPCPNDQt210Mty8kGqSfaMY74E6BkmFPsq/Tq+rwXSWoqGmTSR5HpxdpFfZ?=
+ =?us-ascii?Q?fLJkx4JN9M4EEJvGvk3dCLbMSn6QKr7qfExjpYuJQUV60qb5bo9vKQuKRjGo?=
+ =?us-ascii?Q?woSILnJrVNMExJEP1sYNTPwWho7diO/XDjNO56aheCAXgCEHMVU4BpyaNIfF?=
+ =?us-ascii?Q?+U3SanrJah3ML44KivMq5yP4mMi263rhQUPdYtBsmrv2Cw8StTaDEw1rWyKy?=
+ =?us-ascii?Q?Of3ipDTdz1SRng+Es16AykM6RH75OGBZmGe5V2RPQt9kECl9fEEfJVv3zz7H?=
+ =?us-ascii?Q?1BuKUtF5/VpI7+bxOAT6X6MIUM/IFri38IUn6t9846ghlryj5P7JpZXj1qug?=
+ =?us-ascii?Q?VE4gY0EQc3jcge0pdpQApONPmGYh+4NL/AMegwksYhhRPCmoz5rB5qVnydt9?=
+ =?us-ascii?Q?7U1BNwJ2WiRUT+JNQG/A4sEp+pXxPM7ys34sWHJ31E+Pa8WSPEOsFISBbmSC?=
+ =?us-ascii?Q?U4bDBGmRZ0+uEfu1JnNZHt1iqaeUe/vjM6k+2WKOqNyz/nET8iDryWKTYjNh?=
+ =?us-ascii?Q?+wqVZyPdptqJuD2LqGHtU9kpTT5RRKk1wY9cF46b0odjfp7Yw71NNGzdyK+E?=
+ =?us-ascii?Q?SIv8t70MXHPjFokHCd5eCMsX6HvVF9pMQANBus24yqca819YVA9I2HrXqRbh?=
+ =?us-ascii?Q?LpsQjUgwFth+FaBMLG1riqnCzJxzHyLHr4aEE2V2PZs5tNmiKFd4s+EsZ4VQ?=
+ =?us-ascii?Q?Rzk7KeFyfBIGEW7ZlIL+N9yKAKbNAdNJE16jyvyAWmCUzbSWrDgKBqiutXLz?=
+ =?us-ascii?Q?bDdCOYKMGT992q9E221Y3MscklDBrUMJVyMTuib9OGD3EY0ltj7PPCY6ID5J?=
+ =?us-ascii?Q?tWvG47V+ph2lq6YmLqu8hVMG1InFenn1jdACVucp/j+CqDiBI1RF+jqeCtwu?=
+ =?us-ascii?Q?RXlxiyhwmDw1Nc8vy+g=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(1800799024)(376014); DIR:OUT;
+ SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4844c72-9cf3-4594-b6a1-08de25aa9248
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6435.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2025 07:26:06.4601 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2025 07:38:42.7276 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8fe08a24-80d5-46b8-9724-08de25ac5548
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p04/RGccoYWfkvdHW4BOhUy+ADmzYHEmJhpDUnQ3amTnmG7G2hiZOYxEZvS7Oa3RpAnDz2rs73MdzZ3hk2L0Pg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8088
-Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D5.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF39B20C1D8
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
  envelope-from=Honglei1.Huang@amd.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
+ helo=PH8PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- NAME_EMAIL_DIFF=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,28 +150,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The error handling logic was incorrect. virtio_gpu_create_mapping_iov()
+returns 0 on success and non-zero on failure, but the code was checking
+whether to set the error response.
 
+The fix changes the condition from 'if (!ret)' to 'if (ret != 0)' to
+properly handle the return value, consistent with other usage patterns
+in the same codebase (see virtio-gpu.c:932 and virtio-gpu.c:354).
 
-On 2025/11/17 14:39, Akihiko Odaki wrote:
-> On 2025/11/17 14:51, Honglei Huang wrote:
->> The error handling logic was incorrect in virgl_cmd_resource_create_blob.
->> virtio_gpu_create_mapping_iov() returns 0 on success and non-zero on
->> failure, but the code was checking whether to set the error response.
->>
->> The fix changes the condition from 'if (!ret)' to 'if (ret != 0)' to
->> properly handle the return value, consistent with other usage patterns
->> in the same codebase (see virtio-gpu.c:932 and virtio-gpu.c:354).
->>
->> Signed-off-by: Honglei Huang <honghuan@amd.com>
-> 
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> This should also have:
-> 
-> Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Really thanks for the review, will add fixes tag in v2.
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 94ddc01f91..e60e1059df 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+                                             cmd, &res->base.addrs,
+                                             &res->base.iov, &res->base.iov_cnt);
+-        if (!ret) {
++        if (ret != 0) {
+             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+             return;
+         }
+-- 
+2.34.1
 
-Regards,
-Honglei
 
