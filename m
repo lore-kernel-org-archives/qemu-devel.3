@@ -4,196 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39100CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 04:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362C0CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 04:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKqiJ-00080X-Iv; Sun, 16 Nov 2025 23:19:39 -0500
+	id 1vKquR-0003Dm-IQ; Sun, 16 Nov 2025 23:32:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vKqiH-00080P-1i
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 23:19:37 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vKquO-0003Ac-72
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 23:32:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vKqiE-0005Lo-Hi
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 23:19:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763353175; x=1794889175;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=0F03M7PCYWJet5pSzaK5P2KACUh4yvEpungTT8JREWY=;
- b=NB7YoZZkVw92uSBXHKoxoryZ8EgVgwI/HDiHp48Jy+6c097P3+ox7SKj
- mg7lLqNuVdw0VVm/olwwZqDK9BUyfLjlDyd7ZG2iTjk3FTkdNgKbt/TmJ
- jDeqWHhuKWpCobES64b5R5vjLLwyIhtsqPpjJcRa4yPsNIjmXzxPSmwo8
- aTRTGzq73Pd8Z8ry9sp+VeByB39wXdc6eJlDJ5ImFSFSuJmV/Mqj7c461
- Q+Fh0CcRZpZr8xVGAJTNeD8tVOq0XCeGnKnJOIcDae+GkBaJ1FqR72KoS
- 87bl88I4hS+2JQMWsUInWxCtstVWnRXq0oPgNpMrhjAHClnNLU4hRtqeR g==;
-X-CSE-ConnectionGUID: +d91AoMaQhKTf5j96tlcRQ==
-X-CSE-MsgGUID: bmLUr2eBTZeDdPMSZE4Gzg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="69196539"
-X-IronPort-AV: E=Sophos;i="6.19,310,1754982000"; d="scan'208";a="69196539"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Nov 2025 20:19:33 -0800
-X-CSE-ConnectionGUID: 9gIUtPhUQbGbqXklfYwLsA==
-X-CSE-MsgGUID: tcHyWOFqRT+MhQTaWDvMUg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,310,1754982000"; d="scan'208";a="213741288"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Nov 2025 20:19:32 -0800
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Sun, 16 Nov 2025 20:19:31 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Sun, 16 Nov 2025 20:19:31 -0800
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.17) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Sun, 16 Nov 2025 20:19:31 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S8p8GuxdwXxcQ80GLw5hfEq8aq5nNTtQKZc7AiP3mq+LXxKRwoooK3qJiYgVTAfzeYOCCB6aslj3lBKnFKhqdXCv6ElRD3TdE5FXfD2hglmCOT15nxVQEjbmtTbFMiMmtWjzkOJt3BgDZhF0X2ps7Q/yig7RVPUqTz9Js4cru/0y08i9kQu0w4RljjdsRXzM5pt6Ikhcnyiw0NnAYemMy8SumpyLu1fgFN2f6f+cJKT+idlLF5iPYkkQQqSWXXuk5KmogeJrL05wEhVEpE0cmP8oklhUvfs68bSMhqUHLQNV48dHZvd65Nh0IDZt2qccfrY8FNyQpgEHFMJcfKTfew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lnmxUDSmMcZT6paLhZeSFl8CfW16Lt58cXA2TTzVQg0=;
- b=hEHYa+3D5JPg+51ffJGbUS1zqOQ8DTdtLWXVkmGF7HwjnH5P3vYTOKOLVH88HXayM+PoJG37OUrRGW1+zf4dKEK4RdJt+ChSo/qeslhpI2m0Mh6uyMFasAqg74AGBMKKrbqwUzOs6mAOCmwAf1nNDh/2P+VmpWRLBCzAN63pSGQrfui6geOeTgg9WBfBdbUEvhlLaF3dWG7PZf1HxRoXISX1sAPmgiGNvEhjlTcyT6vVGJaTC8o9PYlQJXvBN5vh7RFVadrgL/F8In3NDrwyFZKJ+5uSpgAaiAdeqLpGi5kX0QVugtM+EjzO849gfA2ZDUr6yQ28MvpLuXUO1o2kTA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by DS4PPF6915D992B.namprd11.prod.outlook.com (2603:10b6:f:fc02::29)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.21; Mon, 17 Nov
- 2025 04:19:30 +0000
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::dd3b:ce77:841a:722b%3]) with mapi id 15.20.9320.021; Mon, 17 Nov 2025
- 04:19:30 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Alex Williamson
- <alex.williamson@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@redhat.com>
-Subject: RE: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-Thread-Topic: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-Thread-Index: AQHcUTsgsJEAjPPBdEeeacaZ/CcvobTrWiQAgAEUO2CAAkjDAIAA2a3wgABopoCAARmAkA==
-Date: Mon, 17 Nov 2025 04:19:30 +0000
-Message-ID: <IA0PR11MB7185D06DA886C3758E9B0FB5F8C9A@IA0PR11MB7185.namprd11.prod.outlook.com>
-References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
- <20251109053801.2267149-11-vivek.kasireddy@intel.com>
- <5c224e00-8114-4586-b502-3819770bc8ff@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <3c0fe9e8-7efa-4936-b5ef-5cabc4239cdd@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71855ADFEEC4E3267B464768F8CDA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <8451c0ee-6c9d-4fbf-b1c2-05fd5fd8e4c3@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <8451c0ee-6c9d-4fbf-b1c2-05fd5fd8e4c3@rsg.ci.i.u-tokyo.ac.jp>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|DS4PPF6915D992B:EE_
-x-ms-office365-filtering-correlation-id: 88841074-9abe-4e59-fc36-08de259080e4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?udjzJSCQjf6W3m47w1ajyJzgdtWIsSv1H3tfl0CehhsLtQ+vfwYNWO6Vkr?=
- =?iso-8859-1?Q?g+wgHMYu4jZ6HPW9x9M0J6ps63oiyOGAgalCKwC4uicLJmaJqckDytXtpB?=
- =?iso-8859-1?Q?/nLvRgf3aCqfEiE7Xi0EOnVQwzhjCaATw5BJK+WO6mgCT+n3eGxy8dAL0E?=
- =?iso-8859-1?Q?c9fQB7fcNyOBgJ6PkmB+E9MX9W0Bq8BhFP1SDNDPVoeHlS3lcedUGIT2Qx?=
- =?iso-8859-1?Q?/CYpWlILoC7K2L73cmg/1KBC5tEaNUMFnDEv5GGXnrxkAlWDsjdeYli6Kp?=
- =?iso-8859-1?Q?sL99ne/3GrH4tnQHqmFggxh/MCKQNaIcgM6RpgqvX9tSzHi/wGuGLA/i98?=
- =?iso-8859-1?Q?80pFY4VSjWkBM931mb/0OJFuJ/YFo9zqiPRe2FFopgIpkbOU0nxJ+brtg8?=
- =?iso-8859-1?Q?q8o+y9axWl3wxQBlKiQULzBIWrEGm/jTSwSz3oZfeewdvJbByLU4z4kOtX?=
- =?iso-8859-1?Q?CMA7UTK9HA8T438/kZKCTWtZd73TDjN8i69SDy7e2w5DzjfjbatSYOqJgh?=
- =?iso-8859-1?Q?g4k6xuLkDSWXE4LD1OLJGxkr1SMKuilXE9wH3XnBcKT4WONSeXlMvBoTrw?=
- =?iso-8859-1?Q?9H3Hm+Y96ri1ZkgO/XmpVtbavk6Oqq1UO6XX1WB949wM72H89ietJ9S1MK?=
- =?iso-8859-1?Q?1KaZNB0ZIrYGBGo/Kc6FJQ94GgGr9zYqxmQ7fq/bCHp4VXqkk8Q3adZntK?=
- =?iso-8859-1?Q?+4wForv6F7nE9xrbQZbWkQiLTHMUmwh/BWuMmrjj3Dg0TS1nZ98hBL5ca9?=
- =?iso-8859-1?Q?76fKV6eghBuuMzV8BhSxKbntfvy5VnzCNwPAkA/MIBloP2lcXl8JM/BM6b?=
- =?iso-8859-1?Q?t1egT3LDB1sgSDUAh3v2Juwu+aHtWmO7cddf5Q4HdrBwO4DXOJLV1yaxjb?=
- =?iso-8859-1?Q?Bjw/HexotC7IVPEo/WWzWr9f09bwiLB/QlCs0ASCbR7XmnM1yhvfH2x/NA?=
- =?iso-8859-1?Q?wDHmRIk0uaUBEZxb3IRJ54R2WsiYgDWmEPJZecGuN0RRUCoy0ZiG5N84nY?=
- =?iso-8859-1?Q?tS/yUv8w6Vsqa8CAOoh8zIbEdQBiJmEeffgroM3exul3jgv5rh9LFIwXZz?=
- =?iso-8859-1?Q?bURRGj3ipfBUKpzDywbIPcALamzxbexXmAlMSQxBtQx8tuhqzuXSYVDxmU?=
- =?iso-8859-1?Q?FJTIcpcmMY8SON2Xwgkef1le9wEYDcCKqEH4JZAKRZD5VFewGD4HIrID/x?=
- =?iso-8859-1?Q?gwspmsb7pUEMoiRb9wS4fzdJ3QPyTOc2ybTU2QgiFyU0NFKTAqA6bWcgJ2?=
- =?iso-8859-1?Q?ayUzwG+4sNPqkNYEfXK1j7f7R2+gnKgGsaJbvc71m5m1Ztx71AwrxSoIoG?=
- =?iso-8859-1?Q?ZMBm4Zc1W58w0+JxV9tz+VEPbshqp/oJy1ENsgaQIuYfnGw8RGknaoZHOj?=
- =?iso-8859-1?Q?4U6eudACP3f+YAMCAffged+i0SU9pykZOIhAN6ASZkYQ4cy67I/HXv2jUp?=
- =?iso-8859-1?Q?rz6ALTrUBIC9y75L9euB/26LR5uKVjBWr19mOo/5tt7s7ELUp/oJWRLqDk?=
- =?iso-8859-1?Q?k/pHzsU9vV+zpdBAzi+rTcipxznhdiD8AVl0n9T3MIQB39UBvLHiCnS7dJ?=
- =?iso-8859-1?Q?RqoV5VdK1o0SdaWxKev3691Y5mf3?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?htQEOnRXCFx4H5ILqevusA308VAWACdUe+/Jv3G+6W3iea/ZKITCzaaJOT?=
- =?iso-8859-1?Q?tnak0nIVU92sdci2XSmATUnwyg651PPWSwSdY3+nA2UTQmJvWYFWiX3En7?=
- =?iso-8859-1?Q?ha+Sy3329ltOs5qoZJCQQhZrHmjrrlx3seGjXhTAKDa5aWKi5rqXAPOoIi?=
- =?iso-8859-1?Q?imOhVREY4NngF3Tc6GRVpK9BaTY0JsoY+Jz6JforU835l4jUIWDWCX2rtB?=
- =?iso-8859-1?Q?3Y/qCMCQtSS7pXnQbc++C0CIaGGEcMiv0MIOYOXKWsgPGn00SfnoMnoMyV?=
- =?iso-8859-1?Q?vXWy86SZb5SBNCbuWqa0XVWE51SZHnbCaEnsod1k0P8/FKv6VCbLO/vS2J?=
- =?iso-8859-1?Q?o46pOEKwWUdSgMIOnHSdViiS8hndPtkTYzToL18Y5/xbyztuBMEDHtkjnJ?=
- =?iso-8859-1?Q?45wU1bEX78z9nyYsfJFrn5kicngaKVlOteXsiNTE+6/WP8zA5pQxwRh2El?=
- =?iso-8859-1?Q?2vUIYYX+Ik5CBqhaRAQCPjRtKDPaFqM7YXyOnBcXxYC9iZbKQ8RFNfPKhb?=
- =?iso-8859-1?Q?FdQCl82WzF0Xy8nQ1INi5/FwKi6S1Gd7z+mBv55AuhFS3UgDMfVrmKAtcZ?=
- =?iso-8859-1?Q?x46is7Vc0BCP/M6hmSzjocArnIlm6IG27jXDzcOPeHKhBo5qOxOVXVZpOW?=
- =?iso-8859-1?Q?/Ba2MKgFoUNPnNOlw4ELgGccuZNHYhyxo0NuUQJZ6pJ6ek5fP4mKKAp/Ua?=
- =?iso-8859-1?Q?kRs/q7JziHV9qH4Rn1bGz93ZDauzE38fheePpBl/aCUUPAesbu8LOGZPoF?=
- =?iso-8859-1?Q?wGsQvCh8rHe8ZMmWgDo3Xv61Wke2ub51uGYqLIbdg4t5wM5Wdk1kG48Hyf?=
- =?iso-8859-1?Q?9/dKPvhRvcIBiUcEdjVrR2ZKUhMYjwAlzy26nVuNqkuYXXnn6JVPrhPb3X?=
- =?iso-8859-1?Q?fqQRXqQ0rk6kGzO/vsl2zq4HKPmfEmBYnFWxRAh98udwaPkLznc5+yYZxx?=
- =?iso-8859-1?Q?OPM3JOfD7oGjB5s2+0P2mfAmGofu7BDmR8cNv59cM9jg/BFIY02axAS7Ez?=
- =?iso-8859-1?Q?LCnYUuwL0HrGqmkGpr8pl1lWSgHK3MmHZxNitDavhI1m/Ir+1zMNPQYj2X?=
- =?iso-8859-1?Q?+yp5EVinGQGo+lCyOO8L3yC9Kq/VM1klYUMwhnwsyWNUosFupl59uoJohS?=
- =?iso-8859-1?Q?F0b3ZlHr1Rihqz4WQLRIaJh8tEU/CvDjb6vuadlCMhuN3gTTk4Vifn77h+?=
- =?iso-8859-1?Q?8RyhVV8Hy1g9Qoq88gN1yNvbFO64hLdmlGMkZwCHBoW4sb95BsHOW59jnW?=
- =?iso-8859-1?Q?WT5qsM8xA9UAtLzFOUmn/nIMUoa83AfXz2OVSBFMWk4r0zy/J8EMDMMAuU?=
- =?iso-8859-1?Q?v77kqb6DZFQz7mqB/vfHStMReMQWLYX73lU05WOgySqqtclPa7M8Z66ZFs?=
- =?iso-8859-1?Q?WfjHwI5M+AkPV3FPxHsF/bD39z1hL7jaJgqLCQMlWdYp0w8s5CcRPQQOVS?=
- =?iso-8859-1?Q?PEY7DAUP2/BEtcTLZZwX2+/RJ4FUrmxuwTBjLEBrK47XIdC3WlNivvxB/9?=
- =?iso-8859-1?Q?lGRMsellk9C1/uw0Y/O4JUyXLWrfDt95AVM6b5XeRbNKILDcne+uPEB1uc?=
- =?iso-8859-1?Q?bPhKRWudnG0/FtilJz0XHszKog7PW01ZJ7fzkZHgWCfqUlKfi18Ex1MJQt?=
- =?iso-8859-1?Q?e3rphO8G5Lo2ePaUvQWSY/z3m5cpDsZMw1?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vKquL-0001ES-C1
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 23:32:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763353922;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xnz6U0nU+bJLJstQwbNQzNvG0aoWuUd9YgXrbfCr/Pg=;
+ b=hIldzefwmdZDmxjxjQXrK5BY2IYee1mQCgjDUWCLVMSeNty6yC+eXX4g4HvI6qkeiDUw3y
+ LXyVS5qk6v6JQeB1m2xhHVYBP+qeb5Z7leEfwKzMWuiEnnGxAb/6N1HdESQw6ZZYwETfUf
+ /h/mFb91cR3KiETy7x7X9l6dTu+leKs=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-oj6IIjHBN5KS2lNhFL3C0A-1; Sun, 16 Nov 2025 23:32:01 -0500
+X-MC-Unique: oj6IIjHBN5KS2lNhFL3C0A-1
+X-Mimecast-MFC-AGG-ID: oj6IIjHBN5KS2lNhFL3C0A_1763353920
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-3416dc5754fso6793830a91.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Nov 2025 20:32:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763353920; x=1763958720; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xnz6U0nU+bJLJstQwbNQzNvG0aoWuUd9YgXrbfCr/Pg=;
+ b=ATXuDQ/lltYclPfGHvv4DPSy3cxDhEfBm9mgcN3s+BxLrA7V671MvmMeujfEYnFG+C
+ y1ocoN9x8AxA3mx4SFVBElCFb/6njrUma4opZTHeaKlYx9QD6qSf2f6eUSV4kgnGNOri
+ JF/MFNtxDPErHguc9IVJMlRcbtPNHMCp6CwMtwgsEUvA1l9Y39O/ZAfaZI1mMcvo1sHZ
+ iBcct8SZnSN2aiQX6pQBYrK7lN+85XxVp8Q+RXF85cUvfmkJa6RXyIAX6FZiyY6u31Kp
+ mnPPVNR+bVy8Ae7ljJzUKwzYeL7798PxbJdcJI7G8uBbhqe9OcAr85CSu2jsIRZWdv9f
+ YfQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763353920; x=1763958720;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xnz6U0nU+bJLJstQwbNQzNvG0aoWuUd9YgXrbfCr/Pg=;
+ b=e79n9zwirCJGcW6VNWKdVTBe3YeuIad5v20OK8Lx0wCNuqZirfKU2h/8hinPQmHMxo
+ kDcK/+3v6ACfe45LRMoKAaRJmuBcsoGPUhzelZADkoC9Ze/JwvkXLFiHohLlOU5eKEBf
+ PTkA5hjI5heSsSU6OUIlD6GbL37btv36xgHHsiTEqVTMRDVVFWNp/Iv7x6rc/Zxd9GZH
+ WoX06gwCszRRmyp5Y/VNAiwq3w0wqpqqZUhIXSD5hFBTOZfljoxgKTkWKjXPN2VlCcjG
+ p1FVLtVA43GioqzjrbgGj1EehR3qFGu3gFitw1ITIAI5ROBqjpQvHUYHCY0RzF6fmJ74
+ /P0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0kgrQtj/GJsK8h2TUm001vO45UH/qHiMw/FSSX2nqumCuVfARUwRYHrmXkLSQqEKmteGxfvsZFzEW@nongnu.org
+X-Gm-Message-State: AOJu0Yy3aghdcIVa9ByvUooPVaNEZF1FuuUvLOK+FJGiJqqQaYgx236K
+ 5+UEB3/SLsnkm6EVYIJX3sEswB9DfqNEMe9zzMU9wrkv5jNfP7CZWbeZP9JF5I9E1g0INsem+w6
+ sp/l2qH77z+CReVwJqs3jhP4NPL4ipcj3SQyrlszAWzdaWgKNV5PTMAl4n+u0XVy+n9LLhNhv4W
+ qk+wJMCpVHFgxJHFon8qEuxIb3Vv4HR18=
+X-Gm-Gg: ASbGncuS+r+2VpqjV78AaxhvFC5y/WEIXyBPF2BnD/8/Qf1GpzjEWswkfAb+U6KhuYg
+ 9Gz25WQT9N35x7mK4ASMS5oZjoSiqFbgARdgdn09BCPgXf3ELdYkje0L+1mFPjy3ZP7pNN9rzw3
+ 2jIr2Lm6JU9LlIuRejJwwDPA3sjI6CHssgZm4tVF1+vReS3XbZZo+WTMQnbgmZgMKIXDg=
+X-Received: by 2002:a17:90b:2e0b:b0:340:d1a1:af8e with SMTP id
+ 98e67ed59e1d1-343fa774e3cmr13710487a91.37.1763353920008; 
+ Sun, 16 Nov 2025 20:32:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdJ9YEivO6odkvpPz+NfwN6jbab+J5NKa/eD/EsEzai8Cks028O4rTGfY+clkCA5PF1B9I8sG6Nfn0n2yYzyQ=
+X-Received: by 2002:a17:90b:2e0b:b0:340:d1a1:af8e with SMTP id
+ 98e67ed59e1d1-343fa774e3cmr13710462a91.37.1763353919515; Sun, 16 Nov 2025
+ 20:31:59 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88841074-9abe-4e59-fc36-08de259080e4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2025 04:19:30.0878 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: bDG+oMhN8R/AlboMu8+bGh+mqoK5IbT92Ypmz9XaADWaJRsUeGdU0L0gOsZBMGd5FedZNj2BJFI4yk1/sD/rp+Kjns73c5hjbNSP0rLUFcE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF6915D992B
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.14;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20251107020149.3223-1-jasowang@redhat.com>
+ <20251113110004-mutt-send-email-mst@kernel.org>
+ <aRYJRZyNrDcDzTuG@x1.local> <20251113114710-mutt-send-email-mst@kernel.org>
+ <aRYRhg7lKDCBUIrf@x1.local> <20251113124207-mutt-send-email-mst@kernel.org>
+ <CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com>
+ <20251116014625-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251116014625-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 17 Nov 2025 12:31:47 +0800
+X-Gm-Features: AWmQ_bmAk86lXMMtI2gyG4cdNms2Q8un-yKYYyaT0_aNy0dBm4gTVxIKe0YgQrA
+Message-ID: <CACGkMEsxZvzyeqa_-9qQRfwNGAeCg5pLgu5MtEHr0OFWpA4_-g@mail.gmail.com>
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, 
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
+ qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com, 
+ thuth@redhat.com, berrange@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -209,93 +125,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
-
-> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
-> associated with VFIO devices
->=20
-> On 2025/11/13 12:17, Kasireddy, Vivek wrote:
-> > Hi Akihiko,
+On Sun, Nov 16, 2025 at 2:53=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Fri, Nov 14, 2025 at 09:32:47AM +0800, Jason Wang wrote:
+> > On Fri, Nov 14, 2025 at 1:47=E2=80=AFAM Michael S. Tsirkin <mst@redhat.=
+com> wrote:
+> > >
+> > > On Thu, Nov 13, 2025 at 12:12:38PM -0500, Peter Xu wrote:
+> > > > On Thu, Nov 13, 2025 at 11:47:51AM -0500, Michael S. Tsirkin wrote:
+> > > > > On Thu, Nov 13, 2025 at 11:37:25AM -0500, Peter Xu wrote:
+> > > > > > On Thu, Nov 13, 2025 at 11:09:32AM -0500, Michael S. Tsirkin wr=
+ote:
+> > > > > > > On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
+> > > > > > > > We used to clear features silently in virtio_net_get_featur=
+es() even
+> > > > > > > > if it is required. This complicates the live migration comp=
+atibility
+> > > > > > > > as the management layer may think the feature is enabled bu=
+t in fact
+> > > > > > > > not.
+> > > > > > > >
+> > > > > > > > Let's add a strict feature check to make sure if there's a =
+mismatch
+> > > > > > > > between the required feature and peer, fail the get_feature=
+s()
+> > > > > > > > immediately instead of waiting until the migration to fail.=
+ This
+> > > > > > > > offload the migration compatibility completely to the manag=
+ement
+> > > > > > > > layer.
+> > > > > > > >
+> > > > > > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
+> > > > > > >
+> > > > > > > This is not really useful - how do users know how to tweak th=
+eir
+> > > > > > > command lines?
+> > > > > > > We discussed this many times.
+> > > > > > > To try and solve this you need a tool that will tell you how =
+to start
+> > > > > > > VM on X to make it migrateable to Y or Z.
+> > > > > > >
+> > > > > > >
+> > > > > > > More importantly,
+> > > > > > > migration is a niche thing and breaking booting perfectly goo=
+d VMs
+> > > > > > > just for that seems wrong.
+> > > > > >
+> > > > > > IMHO Jason's proposal is useful in that it now provides a way t=
+o provide
+> > > > > > ABI stablility but allows auto-ON to exist.
+> > > > > >
+> > > > > > If we think migration is optional, we could add a migration blo=
+cker where
+> > > > > > strict check flag is set to OFF, as I mentioned in the email re=
+ply to Dan.
+> > > > > > As that implies the VM ABI is not guaranteed.
+> > > > > >
+> > > > > > Thanks,
+> > > > >
+> > > > >
+> > > > > All you have to do is avoid changing the kernel and ABI is stable=
+.
+> > > > > Downstreams already do this.
+> > > >
+> > > > But the whole point of migration is allowing VMs to move between ho=
+sts..
+> > > > hence AFAIU kernel can change.
+> > > >
+> > > > Downstream will still have problem if some network features will be
+> > > > optionally supported in some of the RHEL-N branches, because machin=
+e types
+> > > > are defined the same in any RHEL-N, so IIUC it's also possible a VM=
+ booting
+> > > > on a latest RHEL-X.Y qemu/kernel hit issues migrating back to an ol=
+der
+> > > > RHEL-X.(Y-1) qemu/kernel if RHEL-X.(Y-1) kernel doesn't have the ne=
+twork
+> > > > feature available..
+> > > >
+> > > > It's also not good IMHO to only fix downstream but having upstream =
+face
+> > > > such problems, even if there's a downstream fix...
+> > > >
+> > > > This thread was revived only because Jinpu hit similar issues.  IMH=
+O we
+> > > > should still try to provide a generic solution upstream for everyon=
+e.
+> > > >
+> > > > Thanks,
+> > > >
+> > > > --
+> > > > Peter Xu
+> > >
+> > > failing to start a perfectly good qemu which used to work
+> > > because you changed kernels is better than failing to migrate how?
 > >
-> >> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for
-> blobs
-> >> associated with VFIO devices
-> >>
-> >> On 2025/11/12 13:26, Kasireddy, Vivek wrote:
-> >>> Hi Akihiko,
-> >>>
-> >>>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for
-> >> blobs
-> >>>> associated with VFIO devices
-> >>>>
-> >>>> On 2025/11/09 14:33, Vivek Kasireddy wrote:
-> >>>>> In addition to memfd, a blob resource can also have its backing
-> >>>>> storage in a VFIO device region. Therefore, we first need to figure
-> >>>>> out if the blob is backed by a VFIO device region or a memfd before
-> >>>>> we can call the right API to get a dmabuf fd created.
-> >>>>>
-> >>>>> So, once we have the ramblock and the associated mr, we rely on
-> >>>>> memory_region_is_ram_device() to tell us where the backing storage
-> >>>>> is located. If the blob resource is VFIO backed, we try to find the
-> >>>>> right VFIO device that contains the blob and then invoke the API
-> >>>>> vfio_device_create_dmabuf().
-> >>>>>
-> >>>>> Note that in virtio_gpu_remap_udmabuf(), we first try to test if
-> >>>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
-> >>>>> use the VFIO device fd directly to create the CPU mapping.
-> >>>>
-> >>>> I have just remembered that mremap() will work for either of udmabuf
-> >> and
-> >>>> VFIO. That will avoid having two different methods and make
-> >>>> vfio_get_region_index_from_mr() and vfio_device_get_region_info()
-> >>>> unnecessary.
-> >>> IIUC, the name virtio_gpu_remap_dmabuf() is misleading because we
-> are
-> >> not
-> >>> actually doing remap but are simply calling mmap(). In other words, w=
-e
-> >> are not
-> >>> expanding or shrinking existing mapping but are creating a new
-> mapping.
-> >>> And, for dmabufs associated with VFIO devices, without having to call
-> >>> vfio_get_region_index_from_mr() and vfio_device_get_region_info(), I
-> >> don't see
-> >>> any other way to determine the region offset.
-> >>>
-> >>> So, I guess I'll create a new patch to do s/remapped/map.
-> >>
-> >> I mean calling mremap() with 0 as the old_size parameter. The man page
-> >> says:
-> >>   > If the value of old_size is zero, and old_address refers to a
-> >>   > shareable mapping (see the description of MAP_SHARED in mmap(2)),
-> >> then
-> >>   > mremap() will create a new mapping of the same pages.
-> > It might be possible to use mremap() here but using mmap() seems very
-> > straightforward given that we are actually not shrinking or expanding
-> > an existing mapping but are instead creating a new mapping. Also, I am
-> > wondering what benefit would mremap() bring as opposed to just using
-> > mmap()?
->=20
-> As I noted earlier, mremap() removes the need of having two different
-> paths for udmabuf and VFIO, and make vfio_get_region_index_from_mr()
-> and
-> vfio_device_get_region_info() unnecessary, reducing code complexity.
-Sorry, I should have researched thoroughly before but after looking at the =
-code
-again, I don't see how mremap() removes the need for having two different
-paths for udmabuf and VFIO and make vfio_get_region_index_from_mr()
-and vfio_device_get_region_info() unnecessary. Could you please elaborate
-how it can be done?
+> > It doesn't:
+> >
+> > 1) the strict feature check will be only enabled in new machine types
+> > 2) if kernel ABI is stable, qemu will keep working after upgrading
+> > kernel even with strict check otherwise it would be a bug of kernel
+> >
+> > So I don't see it breaking anything if we make it start to work at 11.0=
+?
+>
+> Using QEMU from git suddenly requires upgrading the kernel or figuring
+> out obscure flags? Ugh.
 
-Thanks,
-Vivek
+Only the setups are buggy that might meet this.
 
->=20
-> mremap() is also sufficiently straightforward. The man page explicitly
-> states it is designed to create a new mapping. Using it for the purpose
-> (not shrinking or expanding an existing mapping) is not an abuse of the A=
-PI.
->=20
-> Regards,
-> Akihiko Odaki
+>
+>
+> > >
+> > >
+> > >
+> > > graceful downgrade with old kernels is the basics of good userspace
+> > > behaviour and has been for decades.
+> >
+> > Peter has given the example of how hard we can define gracefulness
+> > (e.g migrate from a kernel w/ USO to a kernel w/o USO) and fix.
+> >
+> > Maybe we can think of a usersapce fallback to emulation of USO or
+> > others, but I'm not sure if it's an overkill.
+> >
+> > >
+> > >
+> > > sure, let's work on a solution, just erroring out is more about blami=
+ng
+> > > the user. what is the user supposed to do when qemu fails to start?
+> >
+> > It's the first step as it's much better than silently clearing the
+> > feature which may confuse both user and migration. We can use warnings
+> > instead of errors but I'm not sure how much it can help.
+>
+>
+> Well with this first step we have successfully blamed the user and
+> the second step won't ever be taken.
+
+Are you suggesting to fix the management? E.g patching libvirt to
+probe tap features?
+
+>
+> > >
+> > >
+> > > first, formulate what exactly do you want to enable.
+> > >
+> > >
+> > >
+> > > for example, you have a set of boxes and you want a set of flags
+> > > to supply to guarantee qemu can migrate between them. is that it?
+> >
+> > Mostly, it should work as a CPU cluster.
+>
+> the reason it kinda works with CPU cluster is simply because
+> there is a final set of CPU models and you can not easily
+> switch your CPU to a different model.
+
+We can define a set of TAP features as well, but I'm not sure it's
+worthwhile to do this.
+
+>
+> > So it's the responsibility of
+> > the management layer, maybe we can develop some tool to report this or
+> > via qemu introspection ("query-tap" ?). Or if the management can do
+> > this now, we don't even need to bother (or it can help to uncover
+> > bugs). Anyhow, clearing a feature silently is not good and can cover
+> > bugs of various layers.
+> >
+> > Note that this issue is not specific to TAP, we may meet this for
+> > vDPA/VFIO live migration as well. Basically, it should be the
+> > responsibility of the management layer to deal with those migration
+> > compatibility policies instead of using hard coded policies inside
+> > Qemu. For qemu, it can simply error out when there's a mismatch
+> > between features that are supported and features that are asked to
+> > enable. We've suffered a lot in the past when trying to deal with this
+> > by Qemu.
+> >
+> > Thanks
+>
+> Yes but QEMU currently gives management no tools to figure out
+> what is important for it.
+
+Using Qemu might be problematic as usually it doesn't not have privilege.
+
+We can extend iproute, or a dedicated tool or ask libvirt to do this.
+If libvirt could do the probe by itself, could we start from that?
+
+Thanks
+
+
+>
+>
+>
+> > >
+> > >
+> > >
+> > > --
+> > > MST
+> > >
+>
+
 
