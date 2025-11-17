@@ -4,100 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834D3CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B56CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL28U-0007Ir-Gi; Mon, 17 Nov 2025 11:31:26 -0500
+	id 1vL2H5-0002f3-Ay; Mon, 17 Nov 2025 11:40:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vL28Q-0007Er-Qu
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL2GX-0002Zj-5Q
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:39:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vL28P-0007h6-8M
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:22 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL2GU-0000ST-C5
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:39:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763397080;
+ s=mimecast20190719; t=1763397580;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=q10xK85V9eTQ7DlgmxFXQKaQw89HU4P1/5M6DW8MO80=;
- b=djBwve7CUChijtL6E3E5Y3jqxG87rF6/tm/t8HSJzA/v8x5xd5P+YJCyPvIbNlLXBemrmT
- GAVLz3F82IIsKRtWMZe/9Ii5IqFzg40smFr4TCZoCMhuZG5snhH8pTmZijjL57d73RYK/N
- YrM8mMNlETgBLhDub+fIzcFmFHt/o9E=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F+d8j+QZZaV9H08GO9/dgbRS42LH0lP+1m6sGsNTgNE=;
+ b=ZfTtTniC6lljlM8G7z0dFflsXebV2ynLBvCgvL4oHWumw5kTj/MxotZCp/owomjNImbgCi
+ GKtsiLnzLfF+pF9GhOLptnHksLGCdPNUEhrqx310bqdsdp/l8UDtKF8wFpQK6ZqJO7XpPK
+ P39XAbYltYjTJtYmdDrKAIVawIAMV3k=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-swEOyHvwNvqe04gxMqzmTw-1; Mon, 17 Nov 2025 11:31:18 -0500
-X-MC-Unique: swEOyHvwNvqe04gxMqzmTw-1
-X-Mimecast-MFC-AGG-ID: swEOyHvwNvqe04gxMqzmTw_1763397077
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477a11d9e67so10849975e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 08:31:18 -0800 (PST)
+ us-mta-119-LhrcEGJaONqg85UA8A_Hsw-1; Mon, 17 Nov 2025 11:39:39 -0500
+X-MC-Unique: LhrcEGJaONqg85UA8A_Hsw-1
+X-Mimecast-MFC-AGG-ID: LhrcEGJaONqg85UA8A_Hsw_1763397578
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8804823b757so170138816d6.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 08:39:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763397076; x=1764001876; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q10xK85V9eTQ7DlgmxFXQKaQw89HU4P1/5M6DW8MO80=;
- b=geUcogDZHUKWkacJmYl/A68zbvgMHtaSEp4NUIAbnZtTsnWv4Xxfgd/vO5DuXJgZn7
- iGdoqaARTtqHrOXSDmd6Y3vdrUYTWaZreVxNZmsDSE77tPgktHUZvwIo/KlFAE4F7Ivv
- tM+L9uSVHWrzPp4mrSUFMViYzlMOCjUjKtW3Uz07VjegSgM8jYJYnWA9VKIWREuTqVA+
- xWsREDJ9hR4fO5TQuPNOHisCso642exPtSP/bivle6sgh4QL/TzBwXHkEbCBzhe21Zru
- 70czJhr3nSiOHIt4SWo7T4nHVYDAhYbZOzmr4T4DWULh+DAeEA/Etaay039nQo73XX2c
- j0xw==
+ d=redhat.com; s=google; t=1763397578; x=1764002378; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=F+d8j+QZZaV9H08GO9/dgbRS42LH0lP+1m6sGsNTgNE=;
+ b=XZroGYPktsYGDSjTyanDLUUibokWilgP5sZDOseJUmK5zUNRDYOUKrXeP/EGh2HKS7
+ uol6cmnYtucLJ8+YmRMUH91Td7hqqYYOSkij/52+xz8V/ZAijayi+5dS9B8sTfx4MZfc
+ ZHsEZJlycNZrFYOYPFF2v6DlKu79h+OhzNmfU4/wgENgNPqA2vXJ/9S7c1zj96udOT3N
+ mcqIqzrfRUYW/TshPdLVRl5JPEj/qgTGtUDO/t5nlvsEkcWsV0Nh3RIYhpy+YpiOdwco
+ vozTf0XufudUnV3zscpfwF/CfaPYAfDGxDoCfsoZK6e8B0sWtL5T6DIMrhunsj9/YKIc
+ ulow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763397076; x=1764001876;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q10xK85V9eTQ7DlgmxFXQKaQw89HU4P1/5M6DW8MO80=;
- b=qFcdR4JrIFuXUaiU91ZmNePvIqUF8+Fe3kOOHBLQdferamh6ewEiJ/z/Eav7wxK3qh
- gX+BFzHiHMDpdVhD1BHgeECG4ljrb4q99CT+ghKPoxD9EOzedOeY+8L0c/sCfpysGS5j
- C9Spq/nmN3pv3C28I6dqKwdbQ0ynm1XNdasTvT4v7k5+nfT6Un2Ix/CnRfoMQtxPCKyk
- u3vM4Inld7msBdX5dJyucw0332plBDIZMaUTjNikgmaqnolAJ0jg2dbxcU4ckGQogtLm
- xE2Ba3et1OTaz/wbhcwkLG0C33pjBu/MuQSXKGLAcqQ13hTIkmPbI1McGGRKAST5JbeD
- IBNg==
-X-Gm-Message-State: AOJu0YynLmn4q0ITWaV7yKMlmSGTH7mLFZnh4A4YifjS1zzBHy3Uz8kg
- IIx810Di7luhINqIiRCdHX3XJT7D0EaFxoYG3KpySUsk6pO7xzim9oBk+Ss+0yO7v4sAo6rnJYw
- btnMAok5emR+znZUORvd7c8lA+SAC3HwQqZu3tHAiMMwspScFv6d8l07tkuZ+/0Pxhxls6dQB+x
- TAQxO6n/6h2vTSQqT6QzI1voQvFOupXq87uHbOhVrQ
-X-Gm-Gg: ASbGncs0KN31C0/IoxW5NAXEb08xfEy3XmnnZjXzHXhVdJAuQzIitbbSZS1dnK5c7EN
- uz6XrJ7A7cMHmflR914r/dNT57mx24dNhuLim4rxvcpXexJln1reyC6miy73ThDXeoG4ZUycvaF
- HENbyBGu93MvwTdK6W4aKq7rrLEqnsgGZrdXcKX0GF+ML54PeX7MFUYydOjjjxRII0qmkdNEmkF
- WmcyRIeDmhQnaExrMwEtJqHRkizmPvoH04ufpdaWsbWub07jlF7gmxx0bsDL2afWUsda349/aFB
- kKpkJyLjZY1HPf5oOCmRi4mA94lrziWCd5fyklkdPwx7zW73nWGRrIjhzvDVoFDbGAeFhelx0kC
- TaI9eZ8ikH8eoA3HeVph/CNGyxJILQHgW4XUnWQYzfWk1Vc4kSdPiDOFq6Z00R3rpTBRQY4mUvV
- YzvhWV
-X-Received: by 2002:a05:600c:4995:b0:477:9671:3a42 with SMTP id
- 5b1f17b1804b1-47796713b41mr56648895e9.35.1763397076592; 
- Mon, 17 Nov 2025 08:31:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3HpuKHSyu3iQuP5dckY3VWg+ETMJqmu4PV6tG2+KdtfH0gE/+Mr5Er+be0J8wWi4TxJF7lw==
-X-Received: by 2002:a05:600c:4995:b0:477:9671:3a42 with SMTP id
- 5b1f17b1804b1-47796713b41mr56648655e9.35.1763397076129; 
- Mon, 17 Nov 2025 08:31:16 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.119.13])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e36ca3sm340067495e9.5.2025.11.17.08.31.13
+ d=1e100.net; s=20230601; t=1763397578; x=1764002378;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F+d8j+QZZaV9H08GO9/dgbRS42LH0lP+1m6sGsNTgNE=;
+ b=GhvSP5hOzg0Ehb605Z0EM1SouefWWOVwSTEZZ1hhZJZjymYyfrxu72AGEtE52cyoxv
+ fUYMzH+erHZXcIEFriCSs4GLBGj/+/CSKFZpTfodelkbSky37nt8Rc0U2ej+Gcys2Dhg
+ +Kedenwi2SNNFCoo1OY3to893m1a1dtOvYSkfiML8jDAGP/Hbe3EzwyGdR6pYXd67guh
+ 0tsAMtrgRxgx2yp6za7/z4UfEmcfHzpAPIsMuwsVUQE397TYljvc/Ob7dVtq9JYfQDlN
+ WVZ76rxVW7sAQHN/JHOigAF7w+Zp2wjQm3HfButdmPQAHeJnzuFrInmG0uGYyQaufejU
+ B6IQ==
+X-Gm-Message-State: AOJu0Yw3Gk6AZMMDYGcq4VhCF7hMvSvk8H66EPf/VVsMd9ddRPQgHUof
+ 2uICENPUl03bOclNHOXFrmZNsaZWzDHRrlejlAuV253gKsHpGDEIwLv9lwG/efHa6fNDoIq6a1p
+ 6JKFq6qU6TN+WA9qzK0puPhcCnpFo0ampTTrO1kOs1peb2hppvuxDGXCY
+X-Gm-Gg: ASbGncvDdhb0CRAGbO/kePqzUMpxkDBQMr9LxYSjHadA6HYO1450LKnLjycifUqZfut
+ IymUrkmgtFHEB2jHhtjodQzByD/GCep12AnXQLp3QPLQacH0ZPnt4Jqgu+5UNzNJTm5o470+Lbn
+ hYmJntxKKLtlLLj6Ced3tWQfnMvC8x5jVJJ2PrKVvKTTygsMcR3Oow9Sc+mPQJHFicMOkWpcsni
+ dCowP33BpJjqX/vSekZSXPuh9Ef1fYtTbN36QzJvdDyG6T4wQ2iY4RaOEtlaSA8VKpdDhUUvjTA
+ nl/BuFfde4HnaLc+pozOthwtVxE61LL+SyZ0Ip8UUXsyK4MTtjI/by5WhuS6OcLC/+T0tHT832j
+ 0fw==
+X-Received: by 2002:ad4:5f06:0:b0:880:5249:be4b with SMTP id
+ 6a1803df08f44-88290e3f067mr187468856d6.12.1763397578384; 
+ Mon, 17 Nov 2025 08:39:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFogpbKV2bT5OoKLMehYL0xI95V9BSdITocXCSjto3tFQHX2GPrCOueuowA+Tof4ILjLn6SQA==
+X-Received: by 2002:ad4:5f06:0:b0:880:5249:be4b with SMTP id
+ 6a1803df08f44-88290e3f067mr187468116d6.12.1763397577803; 
+ Mon, 17 Nov 2025 08:39:37 -0800 (PST)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8828655e55bsm94838736d6.43.2025.11.17.08.39.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 08:31:13 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: jsnow@redhat.com
-Subject: [PATCH 3/3] mtest2make: do not repeat the same speed over and over
-Date: Mon, 17 Nov 2025 17:31:07 +0100
-Message-ID: <20251117163107.372393-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251117163107.372393-1-pbonzini@redhat.com>
-References: <20251117163107.372393-1-pbonzini@redhat.com>
+ Mon, 17 Nov 2025 08:39:37 -0800 (PST)
+Date: Mon, 17 Nov 2025 11:39:33 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
+Message-ID: <aRtPxYIgf55p7e5O@x1.local>
+References: <aQu2_izqViAbJ3A9@x1.local>
+ <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ0Ys09WtlSPoapm@x1.local>
+ <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
+ <aQ37hd0fVJltYtt-@x1.local>
+ <5002e5b4-0493-4dff-af11-402cebecbcc2@rsg.ci.i.u-tokyo.ac.jp>
+ <aRYPXh_9m5ZvTi2w@x1.local>
+ <ded7ef38-8c99-4d37-87b2-2f5ba1dc93fc@rsg.ci.i.u-tokyo.ac.jp>
+ <aRdLFwxzJwjsXFpY@x1.local>
+ <a8c03d1e-a3f4-40de-a633-7b15ec2288e3@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a8c03d1e-a3f4-40de-a633-7b15ec2288e3@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -122,41 +126,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are just three of them, avoid repeating them for as many
-times as there are tests.
+On Sat, Nov 15, 2025 at 10:58:11AM +0900, Akihiko Odaki wrote:
+> On 2025/11/15 0:30, Peter Xu wrote:
+> > On Fri, Nov 14, 2025 at 10:24:40AM +0900, Akihiko Odaki wrote:
+> > > However it creates another problem. Think of the following sequence:
+> > > 
+> > > call_rcu_thread()              |
+> > >                                 | call_rcu1()
+> > >                                 |  qatomic_fetch_inc(&rcu_call_count)
+> > >                                 |  qemu_sem_post(&sync_event)
+> > >                                 |
+> > >   qatomic_read(&rcu_call_count) |
+> > >   enter_qs(false)               |
+> > >    wait_for_readers(false)      |
+> > >     qemu_sem_timedwait(         |
+> > >      &sync_event, 10)           |
+> > > 
+> > > qemu_sem_timedwait() incorrectly interrupts the RCU thread and enters the
+> > > force quiescent state.
+> > 
+> > First thing to mention is, IIUC above can't happen because if
+> > call_rcu_thread() is already waked up and reaching enter_qs(), then there
+> > should have been, for example, a prior call_rcu1() that incremented
+> > rcu_call_count and posted to sync_event, hence rcu_call_count cannot be 0
+> > anymore in the call_rcu1() above, because the sub happens later:
+> > 
+> > call_rcu_thread:
+> >          ... sees rcu_call_count > 0, quit loop ...
+> >          ...
+> >          enter_qs(sleep);
+> >          qatomic_sub(&rcu_call_count, n); <-------------------------
+> >          ...
+> > 
+> > That means the concurrent call_rcu1() above will not post sem anymore
+> > because it will only post it if rcu_call_count==0.
+> Below is an extended version of the sequence:
+> 
+> call_rcu_thread()                |
+>  qatomic_sub(&rcu_call_count, n) |
+>  (sets rcu_call_count to 0)      |
+>                                  | call_rcu1()
+>                                  |  qatomic_fetch_inc(&rcu_call_count)
+>                                  |  qemu_sem_post(&sync_event)
+>  qatomic_read(&rcu_call_count)   |
+>  enter_qs(false)                 |
+>   wait_for_readers(false)        |
+>   qemu_sem_timedwait(            |
+>    &sync_event, 10)              |
+> 
+> Note that there may not be a qemu_sem_wait(&sync_event) call between
+> qatomic_sub(&rcu_call_count, n) and qatomic_read(&rcu_call_count).
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- scripts/mtest2make.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Yes, with a semaphore this may happen.
 
-diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
-index d32eef2f7f4..2b706f94234 100644
---- a/scripts/mtest2make.py
-+++ b/scripts/mtest2make.py
-@@ -14,7 +14,7 @@
- class Suite(object):
-     def __init__(self):
-         self.deps = set()
--        self.speeds = ['quick']
-+        self.speeds = {'quick'}
- 
-     def names(self, base):
-         return [base if speed == 'quick' else f'{base}-{speed}' for speed in self.speeds]
-@@ -62,10 +62,10 @@ def process_tests(test, targets, suites):
-         suites[s].deps.update(deps)
-         if s.endswith('-slow'):
-             s = s[:-5]
--            suites[s].speeds.append('slow')
-+            suites[s].speeds.add('slow')
-         if s.endswith('-thorough'):
-             s = s[:-9]
--            suites[s].speeds.append('thorough')
-+            suites[s].speeds.add('thorough')
- 
- def emit_prolog(suites, prefix):
-     all_targets = ' '.join((f'{prefix}-{k}' for k in suites.keys()))
+It may also happen that the sem keeps accumulating like this (for example,
+wait_for_readers() may always see a lot of callbacks registered that is
+more than RCU_CALL_MIN_SIZE), so it can be even more than 2.  Then when the
+RCU callback storm finishes, call_rcu_thread() may see that >2 sem counter
+and loop over in reading rcu_call_count a few times seeing zeros.
+
+I think it's fine because rcu thread only runs slightly faster on recycling
+in extreme rare cases like this, or a few more loops also only in extreme
+corner cases (as I mentioned before, I was trying to ask whether high
+frequency RCU free matters to us, that's why I was trying to count it in a
+VM lifespan).  Hence IMHO it's not an error either, but a benign false
+positive.
+
+> 
+> > 
+> > Besides, IMHO replacing the event with sem shouldn't change similar
+> > behavior comparing to when using events.  Because any spot that can post()
+> > concurrently can also does qemu_event_set() concurrently... after all, we
+> > only have a few spots resettting the event in the original patch, after the
+> > reset a concurrent qemu_event_set() will re-activate it.
+> 
+> The sequence I showed is handled properly with properly placed
+> qemu_event_reset():
+> 
+> call_rcu_thread()                |
+>  qatomic_sub(&rcu_call_count, n) |
+>  (sets rcu_call_count to 0)      |
+>                                  | call_rcu1()
+>                                  |  qatomic_fetch_inc(&rcu_call_count)
+>                                  |  qemu_event_set(&sync_event)
+>  qatomic_read(&rcu_call_count)   |
+>  qemu_event_reset(&sync_event)   |
+>  enter_qs(false)                 |
+>   wait_for_readers(false)        |
+>    qemu_sem_timedwait(           |
+>     &sync_event, 10)             |
+> 
+> Note that a concurrent qemu_event_set() after resetting the event can only
+> triggered with force_rcu(), which is intended to interrupt
+> wait_for_readers().
+
+I see your point here.  I agree I can't think of any way to trigger false
+positives like when sem is used.
+
+> 
+> > 
+> > Sem does introduce possible false positives on events, but as I was trying
+> > to justify, a generic VM boots and shutdown should need less than 1000 rcu
+> > calls, so worst case is we loop read rcu_call_count 1000 times... I also
+> > didn't measure how many of such call_rcu1() will see N>0 so they'll not
+> > post() to sem at all, I believe it'll be common.  So the perf overhead
+> > should really be rare, IMHO.
+> > 
+> > Note that I was not requesting you to replace this event to sem before
+> > merging.  Frankly, I think your work is good enough to land.
+> > 
+> > However I still want to discuss a sem replacement, not only because this is
+> > the best place to discuss it (after all, force rcu starts to introduce a
+> > genuine second user of the event besides call_rcu1, hence the "being able
+> > to remember more than 1" will start to make more sense than avoid resets),
+> > it looks also cleaner to remove some new code force rcu adds.
+> 
+> How do "being able to remember more than 1" help?
+
+It helps to avoid resets and make the code easier to follow.
+
+The current rcu code, especially after your series lands, will have quite
+some (1) more deliberate event reset needed, and (2) ordering constraints
+between any of: event waits, event resets, reading "force" var, reading
+"rcu_call_count" var, etc.  These things need very careful attention,
+missing or making it wrong any spot may introduce hard to debug functional
+issues.
+
+The sem proposal was almost about trying to remove almost all of those
+complexities.
+
+But I agree the drawback is sem may introduce false positives like above,
+so at least it's not an ideal proposal.  It's just that as mentioned it
+should be all safe and fine IMHO, unless we care about high freq rcu frees.
+As I said, I don't have a strong opinion. I'll leave that to you to decide.
+
+Thanks,
+
 -- 
-2.51.1
+Peter Xu
 
 
