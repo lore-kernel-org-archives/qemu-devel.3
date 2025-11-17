@@ -4,96 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E330CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 01:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3738CD4F3E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 01:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKoF2-0002tx-HB; Sun, 16 Nov 2025 20:41:16 -0500
+	id 1vKoVo-0005vZ-2p; Sun, 16 Nov 2025 20:58:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1vKoEd-0002XA-Em
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 20:40:52 -0500
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1vKoEZ-0005y3-JO
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 20:40:49 -0500
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-4ed66b5abf7so54100561cf.1
- for <qemu-devel@nongnu.org>; Sun, 16 Nov 2025 17:40:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1763343646; x=1763948446; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1QKoUu8BlGHfDs3PD9C4DZ89TPN3YY4wK9WcP+sPaow=;
- b=W4ZJFSzYsaPbSoU5hTRNy5ddYlu8kswUP/xItK6hSsrLwO8fBaoDX4qDzB9jCVxvHq
- VCBmaKsz9zAwpyQynPfqzNgj2+q3PTRRcDrfrSO2HR5KWFj2DLQ72YNnvpxzBzU4p0cn
- mzW/eJzaKhH3x7wGAZBChyi+067QuT3/Hp2aVwj+e942Snx7wblictHJ4dAYKdNYgWCB
- jQIgD6dwHsCmO7uVXU+7El7YHvgw5frpIoMtKAV5ieRg2eoUCYIB77VWxJ9OtlNlVKxH
- 8uRe7e1Srdw+E2rOrgF9da2xFJGySeM05DLxMfYiYkNjtadW2EzV/jwNsO0Ky/5VLq1K
- jw9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763343646; x=1763948446;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=1QKoUu8BlGHfDs3PD9C4DZ89TPN3YY4wK9WcP+sPaow=;
- b=ggVYJ7KTXBs4szJcJdCgSplTMCubOj7YgxU9b/I64Ho4P42l9NJDzBe2k6Uv17xije
- rqiNVn/3mrz7+eD2eTB27VqXo/RrJVpkuRCpZ9S3N6bL+vgPk8sssK7bwDKe4RyWVWfp
- G1DDXXLBmw77bjYBWGc7/kC66Pg11ekqIoHDhhYw5pkAEQzfNlenTQXuwn9HkxigdGKi
- 7t7GGjObpgv9yE0zud8NqsGI8hE+dS2b6QtgJQQE5cZy3R03/n6jWqo6pSN70sI4DmYE
- MaeviumzNCTGYVrwAoJN22anM8pu4iKGIiAqPPzAX0T9mHFrvz2VFizbwZnQIQQYpz6x
- P9Ng==
-X-Gm-Message-State: AOJu0YwR9oaDYAZ+w+9QFMxU7OGgqJNWIAqhjTFN1W1CaOBfDhs5LDuJ
- 2n5WkD/9JQIRWqqJWztcVila3jNjSjziuYz0XqUfL8W2t3lbp2onkoLk
-X-Gm-Gg: ASbGncuP1eJKfawUbyyjMfECEU1M5uM2KQAcIIhouyxaoHsOHWbaVH4ZBuWNz4QEEPN
- 40QOcechB3oW+HOjfPMM1/0qweO6DOqmNO+Rx+A7EpBsnTukY4d5deH2ltoAGXV/AGLoWvMAXCo
- vqqwDdIJtZ7E38hlt32mPpZrMX3ulYOKwLYb3BNHnXIde/9od7Nnk9c128vbbOmegfJp2/zeuS4
- JQks017+guhBlgMGEpt++uKC4rxCyY6+H8BVjNOjIX3+X15zBb3KBhQ1cEUKx5xhO90Bar0vP07
- FRo0CLOD4mf1va+G5f8popFwhwdU/GGqQxMVOoVL0zYXKOfVe/kgkfX+/SQM7vh3uLI4V7vrh9V
- M/PCMFoW64QMLj90shFEwB0Mq+ahNqumb1bphC843F7q5ta7CxZ1qY8drsQxZzuoAVBntOwVVKn
- oXsFzH9ZR9f7mL4cAYSFw=
-X-Google-Smtp-Source: AGHT+IGtk+ku1IIDb8bDLAxmXk0SUFnCFIxPd4sHk3RUX/w6oKGfuNkxUuOrXA3tIMQibzAHkiA0NA==
-X-Received: by 2002:a05:622a:1492:b0:4ed:b185:f49d with SMTP id
- d75a77b69052e-4edf206c97dmr140382211cf.1.1763343646529; 
- Sun, 16 Nov 2025 17:40:46 -0800 (PST)
-Received: from [10.0.0.22] ([185.213.193.149])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4ee1c21ea34sm18246551cf.30.2025.11.16.17.40.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Nov 2025 17:40:45 -0800 (PST)
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Sun, 16 Nov 2025 20:40:22 -0500
-Subject: [PATCH RFC v2 05/10] tests/tcg: added test for MTE write-only
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vKoVm-0005vM-Hy
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 20:58:34 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vKoVi-0008Ar-TI
+ for qemu-devel@nongnu.org; Sun, 16 Nov 2025 20:58:34 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AH1w0Fp059139
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 17 Nov 2025 10:58:00 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=YnCwYLzSSe+FUeVa4BxSUjB8Ovpb/N9Gb75fKClFk/w=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763344680; v=1;
+ b=bvWz23xQXf+j0rpuQQiaxpJzZYRvbIZuDzf3SpI3dgCutM4iLyHsppaXPW5LQLcf
+ fnbPNo/fxZ8p3rwCzgkOYrf4aKB0RNEp/SQfqAhx56bajTAnE1QKhu+0jsfM6XAl
+ 3FFTEki92eg2PjT1neAzqCUQK7eL8vrEFKkHtFd4jg1pClaI4vPslYZ7rk+T7n7T
+ A6Ja9U0Pp92YZrprLU5aNAqBBo4IRMiVcQuf1qrt0BXoch8kwUOUqZCEInW5ln5d
+ uC9ZJ4/OYSMTBJj/gzCUjMq53y+JRgI0mv4bZvhGNQ4iFPM5GWzKMgW0UGbzCJBs
+ Rtksbpj3vAPodpk79oIQaQ==
+Message-ID: <75560c73-2b86-46a6-ad91-cc4a6de92e13@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 17 Nov 2025 10:57:59 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 2/2] virtio-gpu: Support mapping hostmem blobs with
+ map_fixed
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20251116141427.2325372-1-dmitry.osipenko@collabora.com>
+ <20251116141427.2325372-3-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251116141427.2325372-3-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251116-feat-mte4-v2-5-9a7122b7fa76@gmail.com>
-References: <20251116-feat-mte4-v2-0-9a7122b7fa76@gmail.com>
-In-Reply-To: <20251116-feat-mte4-v2-0-9a7122b7fa76@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org, 
- Gabriel Brookman <brookmangabriel@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763343639; l=2569;
- i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=+MW5eKyHmFp9lQRa143T4qRhRjYlTU7oYxdQCpWyD18=;
- b=uq6fD+kwIaV7oIcJ/6+wobrRZ3ZDAit3vkKR+4CyEE3dVUnUzdHKyJYPOiWb6+WGm3DJU9Iu1
- suPPYK3TXXGD/pP2BKcd38STp/lE7osYumWOG3yElWxFbokONjUy6/1
-X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
- pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,91 +93,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This test cannot be run in user-mode because the control bit that
-enables this feature is only writable at EL1.
+On 2025/11/16 23:14, Dmitry Osipenko wrote:
+> Support mapping virgl blobs to a fixed location of a hostmem memory
+> region using new virglrenderer MAP_FIXED API.
+> 
+> This new feature closes multiple problems for virtio-gpu on QEMU:
+> 
+> - Having dedicated memory region for each mapped blob works notoriously
+> slow due to QEMU's memory region software design built around RCU that
+> isn't optimized for frequent removal of the regions
+> 
+> - KVM isn't optimized for a frequent slot changes too
+> 
+> - QEMU/KVM has a limit for a total number of created memory regions,
+> crashing QEMU when limit is reached
+> 
+> This patch makes virtio-gpu-gl to pre-create a single anonymous memory
+> region covering whole hostmem area to which blobs will be mapped using
+> the MAP_FIXED API.
+> 
+> Not all virgl resources will support mapping at a fixed memory address. For
+> them, we will continue to create individual nested memory sub-regions. In
+> particular, vrend resources may not have MAP_FIXED capability.
+> 
+> Venus and DRM native contexts will largely benefit from the MAP_FIXED
+> feature in terms of performance and stability improvement.
+> 
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-gl.c     | 45 ++++++++++++++++++++-
+>   hw/display/virtio-gpu-virgl.c  | 74 +++++++++++++++++++++++++++++++++-
+>   include/hw/virtio/virtio-gpu.h |  3 ++
+>   3 files changed, 119 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index b640900fc6f1..23e0dd26c67b 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -121,7 +121,12 @@ static void virtio_gpu_gl_reset(VirtIODevice *vdev)
+>   static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>   {
+>       ERRP_GUARD();
+> -    VirtIOGPU *g = VIRTIO_GPU(qdev);
+> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(qdev);
+> +    VirtIOGPU *g = VIRTIO_GPU(b);
+> +#if !defined(CONFIG_WIN32)
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +    void *map;
+> +#endif
+>   
+>   #if HOST_BIG_ENDIAN
+>       error_setg(errp, "virgl is not supported on bigendian platforms");
+> @@ -152,6 +157,33 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>   #endif
+>   
+>       virtio_gpu_device_realize(qdev, errp);
+> +
+> +    /*
+> +     * Check whether virtio_gpu_device_realize() failed.
+> +     */
+> +    if (*errp) {
+> +        return;
+> +    }
+> +
+> +#if !defined(CONFIG_WIN32)
+> +    if (virtio_gpu_hostmem_enabled(b->conf)) {
 
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
----
- tests/tcg/aarch64/Makefile.target |  2 +-
- tests/tcg/aarch64/mte-10.c        | 55 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+), 1 deletion(-)
+hostmem should be kept enabled for Windows. I don't have any reason to 
+believe hostmem does not work on Windows.
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index b491cfb5e1..6203ac9b51 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -64,7 +64,7 @@ AARCH64_TESTS += bti-2
- 
- # MTE Tests
- ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
--AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7 mte-8 mte-9
-+AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7 mte-8 mte-9 mte-10
- mte-%: CFLAGS += $(CROSS_CC_HAS_ARMV8_MTE)
- endif
- 
-diff --git a/tests/tcg/aarch64/mte-10.c b/tests/tcg/aarch64/mte-10.c
-new file mode 100644
-index 0000000000..0fa3f97e1d
---- /dev/null
-+++ b/tests/tcg/aarch64/mte-10.c
-@@ -0,0 +1,55 @@
-+/*
-+ * Memory tagging, write-only tag checking
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "mte.h"
-+
-+void pass(int sig, siginfo_t *info, void *uc)
-+{
-+    exit(0);
-+}
-+
-+int main(int ac, char **av)
-+{
-+    struct sigaction sa;
-+    int *p0, *p1, *p2;
-+    long excl = 1;
-+
-+    /*
-+     * NOTE FOR REVIEWERS: to run this test locally, I modified
-+     * enable_mte to also activate write-only tag checking by writing
-+     * to ID_AA64PFR2_EL1. I am not sure how to modify the test so that
-+     * it works without that modification. Input appreciated.
-+     */
-+    enable_mte(PR_MTE_TCF_SYNC);
-+    p0 = alloc_mte_mem(sizeof(*p0));
-+
-+    /* Create two differently tagged pointers. */
-+    asm("irg %0,%1,%2" : "=r"(p1) : "r"(p0), "r"(excl));
-+    asm("gmi %0,%1,%0" : "+r"(excl) : "r" (p1));
-+    assert(excl != 1);
-+    asm("irg %0,%1,%2" : "=r"(p2) : "r"(p0), "r"(excl));
-+    assert(p1 != p2);
-+
-+    /* Store the tag from the first pointer.  */
-+    asm("stg %0, [%0]" : : "r"(p1));
-+
-+    /*
-+     * We write to p1 (stg above makes this check pass) and read from
-+     * p2 (improperly tagged, but since it's a read, we don't care).
-+     */
-+    *p1 = *p2;
-+
-+    /* enable handler */
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_sigaction = pass;
-+    sa.sa_flags = SA_SIGINFO;
-+    sigaction(SIGSEGV, &sa, NULL);
-+
-+    /* now we write to badly checked p2, should fault. */
-+    *p2 = 0;
-+
-+    abort();
-+}
+> +        map = mmap(NULL, b->conf.hostmem, PROT_READ | PROT_WRITE,
+> +                   MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
--- 
-2.51.2
+Use qemu_ram_mmap() that installs a guard page.
+
+> +        if (map == MAP_FAILED) {
+> +            error_setg(errp,
+> +                       "virgl hostmem region could not be initialized: %s",
+> +                       strerror(errno));
+> +            return;
+> +        }
+> +
+> +        gl->hostmem_mmap = map;
+> +        gl->hostmem_background = g_new0(MemoryRegion, 1);
+
+Embed hostmem_background to VirtIOGPUGL and avoid having g_new0(), just 
+like hostmem of VirtIOGPUBase.
+
+> +        memory_region_init_ram_ptr(gl->hostmem_background, NULL,
+> +                                   "hostmem-background", b->conf.hostmem,
+> +                                   gl->hostmem_mmap);
+> +        memory_region_add_subregion(&b->hostmem, 0, gl->hostmem_background);
+> +    }
+> +#endif
+>   }
+>   
+>   static const Property virtio_gpu_gl_properties[] = {
+> @@ -165,6 +197,7 @@ static const Property virtio_gpu_gl_properties[] = {
+>   
+>   static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>   {
+> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(qdev);
+>       VirtIOGPU *g = VIRTIO_GPU(qdev);
+>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
+>   
+> @@ -187,6 +220,16 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>       gl->renderer_state = RS_START;
+>   
+>       g_array_unref(g->capset_ids);
+> +
+> +    /*
+> +     * It is not guaranteed that the memory region will be finalized
+> +     * immediately with memory_region_del_subregion(), there can be
+> +     * a remaining reference to gl->hostmem_mmap. VirtIO-GPU is not
+> +     * hotpluggable, hence no need to worry about the leaked mapping.
+> +     */
+> +    if (gl->hostmem_background) {
+> +        memory_region_del_subregion(&b->hostmem, gl->hostmem_background);
+> +    }
+
+This memory_region_del_subregion() is unnecessary because b->hostmem and 
+gl->hostmem_background belong to the same device and will be gone at the 
+same time.
+
+>   }
+>   
+>   static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index a6860f63b563..5a663ad2acfa 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -41,9 +41,14 @@
+>        VIRGL_VERSION_MICRO >= (micro))
+>   #endif
+>   
+> +#if VIRGL_CHECK_VERSION(1, 2, 1) && !defined(CONFIG_WIN32)
+> +    #define VIRGL_HAS_MAP_FIXED
+> +#endif
+
+Simpler:
+
+#define VIRGL_HAS_MAP_FIXED VIRGL_CHECK_VERSION(1, 2, 1) && 
+!IS_ENABLED(CONFIG_WIN32)
+
+And you can use it like:
+#if VIRGL_HAS_MAP_FIXED
+
+> +
+>   struct virtio_gpu_virgl_resource {
+>       struct virtio_gpu_simple_resource base;
+>       MemoryRegion *mr;
+> +    void *map_fixed;
+>   };
+>   
+>   static struct virtio_gpu_virgl_resource *
+> @@ -116,6 +121,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>   {
+>       struct virtio_gpu_virgl_hostmem_region *vmr;
+>       VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>       MemoryRegion *mr;
+>       uint64_t size;
+>       void *data;
+> @@ -126,6 +132,41 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>           return -EOPNOTSUPP;
+>       }
+>   
+> +#ifdef VIRGL_HAS_MAP_FIXED
+> +    /*
+> +     * virgl_renderer_resource_map_fixed() allows to create multiple
+> +     * mappings of the same resource, while virgl_renderer_resource_map()
+> +     * not. Don't allow mapping same resource twice.
+> +     */
+> +    if (res->map_fixed || res->mr) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: failed to map(fixed) virgl resource: already mapped\n",
+> +                      __func__);
+> +        return -EBUSY;
+> +    }
+> +
+> +    ret = virgl_renderer_resource_map_fixed(res->base.resource_id,
+> +                                            gl->hostmem_mmap + offset);
+
+I think you need a boundary check here.
+
+> +    switch (ret) {
+> +    case 0:
+> +        res->map_fixed = gl->hostmem_mmap + offset;
+> +        return 0;
+> +
+> +    case -EOPNOTSUPP:
+> +        /*
+> +         * -MAP_FIXED is unsupported by this resource.
+> +         * Mapping falls back to a blob subregion method in that case.
+> +         */
+> +        break;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: failed to map(fixed) virgl resource: %s\n",
+> +                      __func__, strerror(-ret));
+> +        return ret;
+> +    }
+> +#endif
+> +
+>       ret = virgl_renderer_resource_map(res->base.resource_id, &data, &size);
+>       if (ret) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl resource: %s\n",
+> @@ -138,7 +179,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>   
+>       mr = &vmr->mr;
+>       memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+> -    memory_region_add_subregion(&b->hostmem, offset, mr);
+> +    memory_region_add_subregion_overlap(gl->hostmem_background, offset, mr, 1);
+
+This should be:
+memory_region_add_subregion_overlap(&b->hostmem, offset, mr, 1);
+
+>   
+>       /*
+>        * MR could outlive the resource if MR's reference is held outside of
+> @@ -162,9 +203,28 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>   {
+>       struct virtio_gpu_virgl_hostmem_region *vmr;
+>       VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>       MemoryRegion *mr = res->mr;
+>       int ret;
+>   
+> +#ifdef VIRGL_HAS_MAP_FIXED
+> +    if (res->map_fixed) {
+> +        res->map_fixed = mmap(res->map_fixed, res->base.blob_size,
+> +                              PROT_READ | PROT_WRITE,
+> +                              MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED,
+> +                              -1, 0);
+> +        if (res->map_fixed == MAP_FAILED) {
+> +            ret = -errno;
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: failed to unmap(fixed) virgl resource: %s\n",
+> +                          __func__, strerror(-ret));
+> +            return ret;
+
+This code path leaves the blob mapped but overwrites res->map_fixed with 
+MAP_FAILED.
+
+Regards,
+Akihiko Odaki
+
+> +        }
+> +
+> +        res->map_fixed = NULL;
+> +    }
+> +#endif
+> +
+>       if (!mr) {
+>           return 0;
+>       }
+> @@ -200,7 +260,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>           b->renderer_blocked++;
+>   
+>           /* memory region owns self res->mr object and frees it by itself */
+> -        memory_region_del_subregion(&b->hostmem, mr);
+> +        memory_region_del_subregion(gl->hostmem_background, mr);
+>           object_unparent(OBJECT(mr));
+>       }
+>   
+> @@ -1265,6 +1325,16 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>   
+>   void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>   {
+> +#ifdef VIRGL_HAS_MAP_FIXED
+> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +
+> +    if (gl->hostmem_mmap &&
+> +        mmap(gl->hostmem_mmap, b->conf.hostmem, PROT_READ | PROT_WRITE,
+> +             MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1, 0) == MAP_FAILED) {
+> +        error_report("failed to reset virgl hostmem: %s", strerror(errno));
+> +    }
+> +#endif
+>       virgl_renderer_reset();
+>   
+>       virtio_gpu_virgl_reset_async_fences(g);
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 718332284305..bfe85a4e0449 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -263,6 +263,9 @@ struct VirtIOGPUGL {
+>   
+>       QEMUBH *async_fence_bh;
+>       QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+> +
+> +    MemoryRegion *hostmem_background;
+> +    void *hostmem_mmap;
+>   };
+>   
+>   struct VhostUserGPU {
 
 
