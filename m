@@ -4,100 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E90BCEBF61
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Nov 2025 21:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B98CCD19A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 01:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKk4W-0007nV-8r; Sun, 16 Nov 2025 16:14:08 -0500
+	id 1vKnmP-0001HI-Oa; Sun, 16 Nov 2025 20:11:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vKk4U-0007n4-K0
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 16:14:06 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vKk4S-0003SR-7S
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 16:14:06 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b725ead5800so434564766b.1
- for <qemu-devel@nongnu.org>; Sun, 16 Nov 2025 13:14:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1763327642; x=1763932442; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Pafkzefx6529M/rSwlUFN2UfeAYzBaRkosylYUUsRMg=;
- b=UR0tm+d832fVcquyuCR0BIOGOvYJHlYafQZuvZSqVfxXTJD2u3eEOl0tzR8R/JPcoj
- nFRHUbSKLKenje0qYzsuYDitlQqJPeuZkzTuXSGFYHc90r+IbjXSYwGlxU8e9gYV6g2n
- yxs9nFoqtc0bDUJJQ4ay/Gzt40TnNvGCXgZAdB0+VYDItcqJlykM7stQiVWEULr5wzXr
- 7u1MtU/T8s5SuVRRrvyVShJwAXyDWMT5399g6HYzYIj64fQzSNm7vtStxNC8xWGJ9hgd
- d+zbovrxUXxxOyZCsLjzEL1BhHpwD3AbihcMecanaAeOlpl4CNhGMPvbgcexQmFam9O5
- 7gZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763327642; x=1763932442;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Pafkzefx6529M/rSwlUFN2UfeAYzBaRkosylYUUsRMg=;
- b=Q24loLM5iCds8bi0NPvmdn2yVXSizkaktxG7MXT0XufRhIR9fzVILx89e8/FhDhr+C
- Jc50I1mAUaxSkUpkJzPJLRyMWQmmJ+sV8zjVTz12qyvxyDXT+5pKsPl2hvFkzf4tW5pd
- 9dyD3IddmbZespaiDoB//4eRQ+1e5zCsBGms83UpahcZwbphWP+6f1undnmsxCBfwOa/
- Xt5R3bq3ygK3qDXoAQrqk0MmJ5ulttptMiWnsmqo8ADxmVSxiPjLuyihlkGQlsybbLT7
- niJbqRcipvRDqian0/J0yIpJ3JSEcgzB8GO88I5hfBZxxwnvrKhdBZOgfIaBJH/XOz3z
- 0Kbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTKOMSvU7rnYosBgLPfT8IsoPTCOloS0udTiBHrozKZN1sXBKcqaIv//42HXF03n3NbDJ9+Xd9a/Re@nongnu.org
-X-Gm-Message-State: AOJu0Ywl1PxtR7f2I+7tryAIhaFA0J+NM+kA4Fn1p9adtuURm5OzfCDH
- OT9dOobvq1ehVAG9xXBBAaAhahi0Sw1G42MclGQGoeTOp62LyUqPf+fzRr5DCVVeEkuWxU5pcta
- u5h1t+zITrCyfmTyDLMWZ627xFduSuIU=
-X-Gm-Gg: ASbGnctdN3j0SHTDTyg7Wj7VM+9J1uOZmNFsnNckNpSlIDwjcvWhxHzpnwXv2bSNIBC
- AD1hSmaZQ20yoZKyLT8wxYmnFvGnLReALxstae56w9h6f8KjHzMd9CKd4x+H5Y34AxB7Gx2uk3u
- ZpvpnFXozEh+QUXuFgeWCj2bO1U2xZALTPGi1Lle0mmhHv+qGeBG+ye9dnEvxw0Zl6CPsJYvAM0
- S9BT481iawGpznARUPwc8EC6NgP1WoVSyENYOqR8qZLpV9opUdq2ZM6hRHcF5+4mRdZKp+nMRJm
- 6krQJQM9ZoCVLjKxvw==
-X-Google-Smtp-Source: AGHT+IEUTxANqtj1SQj+MQ1YdO3xZW+HHZCVCzeLK+W/iIEjjYyiqUIH9ak47knm00MHYYKIpJLzivmUkIt7va7rsvc=
-X-Received: by 2002:a17:907:97cc:b0:b73:7b5d:e76a with SMTP id
- a640c23a62f3a-b737b5dea0bmr674098066b.27.1763327641634; Sun, 16 Nov 2025
- 13:14:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <luzhipeng@cestc.cn>)
+ id 1vKnmL-0001Ew-F3; Sun, 16 Nov 2025 20:11:37 -0500
+Received: from smtp-pop-umt-2.cecloud.com ([1.203.97.240]
+ helo=smtp.cecloud.com) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <luzhipeng@cestc.cn>)
+ id 1vKnmI-0001el-RG; Sun, 16 Nov 2025 20:11:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by smtp.cecloud.com (Postfix) with ESMTP id 2DC46900112;
+ Mon, 17 Nov 2025 09:11:22 +0800 (CST)
+X-MAIL-GRAY: 0
+X-MAIL-DELIVERY: 1
+X-SKE-CHECKED: 1
+X-ANTISPAM-LEVEL: 2
+Received: from localhost.localdomain
+ (168.24.209.222.broad.cd.sc.dynamic.163data.com.cn [222.209.24.168])
+ by smtp.cecloud.com (postfix) whith ESMTP id
+ P506955T281464608125296S1763341878453037_; 
+ Mon, 17 Nov 2025 09:11:22 +0800 (CST)
+X-RL-SENDER: luzhipeng@cestc.cn
+X-SENDER: luzhipeng@cestc.cn
+X-LOGIN-NAME: luzhipeng@cestc.cn
+X-FST-TO: qemu-block@nongnu.org
+X-RCPT-COUNT: 6
+X-LOCAL-RCPT-COUNT: 1
+X-MUTI-DOMAIN-COUNT: 0
+X-SENDER-IP: 222.209.24.168
+X-ATTACHMENT-NUM: 0
+X-UNIQUE-TAG: <55da0fbe8708e8ede776091c18d00f92>
+X-System-Flag: 0
+From: luzhipeng <luzhipeng@cestc.cn>
+To: qemu-block@nongnu.org
+Cc: Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ luzhipeng <luzhipeng@cestc.cn>
+Subject: [PATCH resend] block: add single-check guard in
+ throttle_group_restart_queue to address race with schedule_next_request
+Date: Mon, 17 Nov 2025 09:10:45 +0800
+Message-ID: <20251117011045.1232-1-luzhipeng@cestc.cn>
+X-Mailer: git-send-email 2.45.1.windows.1
 MIME-Version: 1.0
-References: <20251116125641.2255794-1-dmitry.osipenko@collabora.com>
- <20251116125641.2255794-5-dmitry.osipenko@collabora.com>
-In-Reply-To: <20251116125641.2255794-5-dmitry.osipenko@collabora.com>
-From: Yiwei Zhang <zzyiwei@gmail.com>
-Date: Sun, 16 Nov 2025 13:14:11 -0800
-X-Gm-Features: AWmQ_bkgaAeTLI9RpUeeQZxXrPE-YZPno-KWkQSeYh2SabeiENxqu0zB4lbrO1E
-Message-ID: <CAJ+hS_js9UZc-e0R0vegvC-pp8HRWzsxLfAWRrwnG7=6nfOpXQ@mail.gmail.com>
-Subject: Re: [PATCH v16 04/10] virtio-gpu: Support asynchronous fencing
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org, 
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>, 
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, 
- Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
- Rob Clark <robdclark@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=1.203.97.240; envelope-from=luzhipeng@cestc.cn;
+ helo=smtp.cecloud.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,280 +76,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Nov 16, 2025 at 4:58=E2=80=AFAM Dmitry Osipenko
-<dmitry.osipenko@collabora.com> wrote:
->
-> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
-> handle fence as soon as it's signalled instead of periodically polling
-> the fence status. This feature is required for enabling DRM context
-> support in Qemu because legacy fencing mode isn't supported for DRM
-> contexts in virglrenderer.
->
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
-> Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->  hw/display/virtio-gpu-gl.c     |   5 ++
->  hw/display/virtio-gpu-virgl.c  | 127 +++++++++++++++++++++++++++++++++
->  include/hw/virtio/virtio-gpu.h |  11 +++
->  meson.build                    |   2 +
->  4 files changed, 145 insertions(+)
->
-> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-> index c06a078fb36a..1468c6ed1467 100644
-> --- a/hw/display/virtio-gpu-gl.c
-> +++ b/hw/display/virtio-gpu-gl.c
-> @@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(DeviceSta=
-te *qdev)
->      if (gl->renderer_state >=3D RS_INITED) {
->  #if VIRGL_VERSION_MAJOR >=3D 1
->          qemu_bh_delete(gl->cmdq_resume_bh);
-> +
-> +        if (gl->async_fence_bh) {
-> +            virtio_gpu_virgl_reset_async_fences(g);
-> +            qemu_bh_delete(gl->async_fence_bh);
-> +        }
->  #endif
->          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
->              timer_free(gl->print_stats);
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
-c
-> index d9704e3574a0..d6853bfab3cd 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -24,6 +24,23 @@
->
->  #include <virglrenderer.h>
->
-> +/*
-> + * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fi=
-xed
-> + * in 1.1.0. Undefine bugged version of the macro and provide our own.
-> + */
-> +#if defined(VIRGL_CHECK_VERSION) && \
-> +    VIRGL_VERSION_MAJOR =3D=3D 1 && VIRGL_VERSION_MINOR < 1
-> +#undef VIRGL_CHECK_VERSION
-> +#endif
-> +
-> +#ifndef VIRGL_CHECK_VERSION
-> +#define VIRGL_CHECK_VERSION(major, minor, micro) \
-> +    (VIRGL_VERSION_MAJOR > (major) || \
-> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR > (minor)=
- || \
-> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR =3D=3D (m=
-inor) && \
-> +     VIRGL_VERSION_MICRO >=3D (micro))
-> +#endif
-> +
->  struct virtio_gpu_virgl_resource {
->      struct virtio_gpu_simple_resource base;
->      MemoryRegion *mr;
-> @@ -1055,6 +1072,103 @@ static void virgl_write_context_fence(void *opaqu=
-e, uint32_t ctx_id,
->  }
->  #endif
->
-> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
-> +{
-> +    struct virtio_gpu_virgl_context_fence *f;
-> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> +
-> +    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
-> +        f =3D QSLIST_FIRST(&gl->async_fenceq);
-> +
-> +        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
-> +
-> +        g_free(f);
-> +    }
-> +}
-> +
-> +#if VIRGL_CHECK_VERSION(1, 1, 2)
-> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
-> +{
-> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
-> +    struct virtio_gpu_ctrl_command *cmd, *tmp;
-> +    struct virtio_gpu_virgl_context_fence *f;
-> +    VirtIOGPU *g =3D opaque;
-> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> +
-> +    if (gl->renderer_state !=3D RS_INITED) {
-> +        return;
-> +    }
-> +
-> +    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
-> +
-> +    while (!QSLIST_EMPTY(&async_fenceq)) {
-> +        f =3D QSLIST_FIRST(&async_fenceq);
-> +
-> +        QSLIST_REMOVE_HEAD(&async_fenceq, next);
-> +
-> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
-> +            /*
-> +             * the guest can end up emitting fences out of order
-> +             * so we should check all fenced cmds not just the first one=
-.
-> +             */
-> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
-> +                continue;
-> +            }
-> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
-> +                if (cmd->cmd_hdr.ring_idx !=3D f->ring_idx) {
-> +                    continue;
-> +                }
-> +                if (cmd->cmd_hdr.ctx_id !=3D f->ctx_id) {
-> +                    continue;
-> +                }
-> +            }
-> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_N=
-ODATA);
-> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
-> +            g_free(cmd);
-> +        }
-> +
-> +        trace_virtio_gpu_fence_resp(f->fence_id);
-> +        g_free(f);
-> +        g->inflight--;
-> +        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-> +            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-> +        }
-> +    }
-> +}
-> +
-> +static void
-> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
-> +                                  uint32_t ring_idx, uint64_t fence_id)
-> +{
-> +    struct virtio_gpu_virgl_context_fence *f;
-> +    VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
-> +
-> +    f =3D g_new(struct virtio_gpu_virgl_context_fence, 1);
-> +    f->ctx_id =3D ctx_id;
-> +    f->ring_idx =3D ring_idx;
-> +    f->fence_id =3D fence_id;
-> +
-> +    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
-> +
-> +    qemu_bh_schedule(gl->async_fence_bh);
-> +}
-> +
-> +static void virgl_write_async_fence(void *opaque, uint32_t fence)
-> +{
-> +    VirtIOGPU *g =3D opaque;
-> +
-> +    virtio_gpu_virgl_push_async_fence(g, 0, UINT32_MAX, fence);
-> +}
-> +
-> +static void virgl_write_async_context_fence(void *opaque, uint32_t ctx_i=
-d,
-> +                                            uint32_t ring_idx, uint64_t =
-fence)
-> +{
-> +    VirtIOGPU *g =3D opaque;
-> +
-> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
-> +}
-> +#endif
-> +
->  static virgl_renderer_gl_context
->  virgl_create_context(void *opaque, int scanout_idx,
->                       struct virgl_renderer_gl_ctx_param *params)
-> @@ -1154,6 +1268,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->  void virtio_gpu_virgl_reset(VirtIOGPU *g)
->  {
->      virgl_renderer_reset();
-> +
-> +    virtio_gpu_virgl_reset_async_fences(g);
->  }
->
->  int virtio_gpu_virgl_init(VirtIOGPU *g)
-> @@ -1166,6 +1282,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->      if (qemu_egl_display) {
->          virtio_gpu_3d_cbs.version =3D 4;
->          virtio_gpu_3d_cbs.get_egl_display =3D virgl_get_egl_display;
-> +#if VIRGL_CHECK_VERSION(1, 1, 2)
-> +        virtio_gpu_3d_cbs.write_fence         =3D virgl_write_async_fenc=
-e;
-> +        virtio_gpu_3d_cbs.write_context_fence =3D virgl_write_async_cont=
-ext_fence;
-> +        flags |=3D VIRGL_RENDERER_ASYNC_FENCE_CB;
-> +        flags |=3D VIRGL_RENDERER_THREAD_SYNC;
-> +#endif
->      }
->  #endif
->  #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
-> @@ -1199,6 +1321,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->      gl->cmdq_resume_bh =3D aio_bh_new(qemu_get_aio_context(),
->                                      virtio_gpu_virgl_resume_cmdq_bh,
->                                      g);
-> +#if VIRGL_CHECK_VERSION(1, 1, 2)
-> +    gl->async_fence_bh =3D aio_bh_new(qemu_get_aio_context(),
-> +                                    virtio_gpu_virgl_async_fence_bh,
-> +                                    g);
-> +#endif
->  #endif
->
->      return 0;
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
-u.h
-> index 58e0f91fda65..16e9f6914f07 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -233,6 +233,13 @@ struct VirtIOGPUClass {
->                               Error **errp);
->  };
->
-> +struct virtio_gpu_virgl_context_fence {
-> +    uint32_t ctx_id;
-> +    uint32_t ring_idx;
-> +    uint64_t fence_id;
-> +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
-> +};
-> +
->  /* VirtIOGPUGL renderer states */
->  typedef enum {
->      RS_START,       /* starting state */
-> @@ -250,6 +257,9 @@ struct VirtIOGPUGL {
->      QEMUTimer *print_stats;
->
->      QEMUBH *cmdq_resume_bh;
-> +
-> +    QEMUBH *async_fence_bh;
-> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
->  };
->
->  struct VhostUserGPU {
-> @@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
->  void virtio_gpu_virgl_reset(VirtIOGPU *g);
->  int virtio_gpu_virgl_init(VirtIOGPU *g);
->  GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
-> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
->
->  #endif
-> diff --git a/meson.build b/meson.build
-> index b86c9b55562e..2418aaa1a33b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2546,6 +2546,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found(=
-))
->  config_host_data.set('CONFIG_VNC_SASL', sasl.found())
->  if virgl.found()
->    config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')=
-[0])
-> +  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split('.')=
-[1])
-> +  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split('.')=
-[2])
->  endif
->  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
->  config_host_data.set('CONFIG_VTE', vte.found())
-> --
-> 2.51.1
->
+A race condition exists between throttle_group_restart_queue() and
+schedule_next_request(): when multiple ThrottleGroupMembers in the same
+throttle group are assigned to different IOThreads, concurrent execution
+can cause schedule_next_request() to re-arm a throttle timer while
+throttle_group_restart_queue() is being called (e.g., from a timer
+callback or external restart). This violates the assumption that no
+timer is pending upon entry to throttle_group_restart_queue(), triggering
+an assertion failure and causing QEMU to abort.
 
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+This patch replaces the assert with a single early-return check:
+if the timer for the given direction is already pending, the function
+returns immediately. This prevents duplicate coroutine scheduling and
+avoids crashes under race conditions, without altering the core
+(non-thread-safe) throttle group logic.
+
+For details, see: https://gitlab.com/qemu-project/qemu/-/issues/3194
+
+Signed-off-by: luzhipeng <luzhipeng@cestc.cn>
+---
+ block/throttle-groups.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+index 66fdce9a90..9dcc6b4923 100644
+--- a/block/throttle-groups.c
++++ b/block/throttle-groups.c
+@@ -430,15 +430,14 @@ static void throttle_group_restart_queue(ThrottleGroupMember *tgm,
+                                         ThrottleDirection direction)
+ {
+     Coroutine *co;
++    if (timer_pending(tgm->throttle_timers.timers[direction])) {
++        return;
++    }
+     RestartData *rd = g_new0(RestartData, 1);
+ 
+     rd->tgm = tgm;
+     rd->direction = direction;
+ 
+-    /* This function is called when a timer is fired or when
+-     * throttle_group_restart_tgm() is called. Either way, there can
+-     * be no timer pending on this tgm at this point */
+-    assert(!timer_pending(tgm->throttle_timers.timers[direction]));
+ 
+     qatomic_inc(&tgm->restart_pending);
+ 
+-- 
+2.31.1
+
+
+
 
