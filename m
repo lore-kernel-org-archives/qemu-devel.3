@@ -4,105 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36415CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 08:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824DCCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 08:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKuvf-0007MY-Rb; Mon, 17 Nov 2025 03:49:44 -0500
+	id 1vKuxI-0000zj-82; Mon, 17 Nov 2025 03:51:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vKuv6-0006ee-L3
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:49:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vKuv5-000761-4r
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:49:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763369346;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tliqKSVVLfCrngXBrAabVIXWfdW/o3DdRFdN4dB6hGU=;
- b=Og5husV/ELNbe2ygweDXkWzmFLF+02G0sQsUy4oUy7JyLCuGPi7qN35g78cteS4kC//OkD
- hgWQjz+gkLhXV4eaZHqSkHCYc1+Gt9VYEb0jrw/vAVjdxQG0ErBbL8wKSOy4dBsv6GHLkx
- 5DjrOuyJDPNYLZFZP1EaLqUGGuVMDlo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-BDJr8EFMN9Cr53UrbrxN4Q-1; Mon, 17 Nov 2025 03:49:04 -0500
-X-MC-Unique: BDJr8EFMN9Cr53UrbrxN4Q-1
-X-Mimecast-MFC-AGG-ID: BDJr8EFMN9Cr53UrbrxN4Q_1763369344
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-429c93a28ebso3142204f8f.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 00:49:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763369343; x=1763974143; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tliqKSVVLfCrngXBrAabVIXWfdW/o3DdRFdN4dB6hGU=;
- b=maJx6KKwv1oiO/2/7VWBke+q4sYhAfnpOEfDdqEc/ie4B+dwN4wJrEg3IU8cE0lkBw
- N4mKMppJuo0wvAmgA6VCVBDkp7gGXxwOGqmIUK3+JaVs8/b7VTENs6Vyg87hM1qiKvyP
- TgVhjxt4//r1iulN47mJ/fWL4CjPb8d4nlGAUc14yvJrElJwBaMCG5dMQst3Zy8gntBS
- HkIWbqbcldiBCeg1n8HgPEP3Oq6Sm7dNckBckRLiZTz5iF3WSgeh12flgDvk9emLhSaT
- xQg60+8BxDWfs5I53YTEz2ayvpSgcjb2lPwhtneazs4nhUlw9HgYMcwOyxFmzOuJuJHa
- UbyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763369343; x=1763974143;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tliqKSVVLfCrngXBrAabVIXWfdW/o3DdRFdN4dB6hGU=;
- b=v0AjmDCBQrK56e3vDLPh1Sey7MWP1/NLflqCaTlqIasRBtmcnW7BmTeslI6KmblRHS
- QtnA1S9m3TYoC3yT0xCsPAU5+coDRV3i8F/Hp0ttOM/gNbifdhYITAGQMHfmMe5nUKb5
- HBl9N1Ji9WPFV8/lhPKO0LyoHpII6c/qU038vtPgGu1Xtbwqe6cDE0cckTPjeow1Wm0P
- QmBxS7pgGaj69eEnmybeJ8gfdXPNkWsci/PoPw2AFH8nWe36ICPlAsck0Yp0xhRrcSs3
- yBlhZ/2MJhe7OBh/kThr1GlKbU5tGWdYDu8tM+ah+6lv5WIjX2iw2jeQHP67qxQgIuBq
- 6WPw==
-X-Gm-Message-State: AOJu0YxElMSCkUQc00yrM7Vspyj2ceMc0h4VBsTqgd2CR4EvB75g7Qyb
- pEYr3UupBoHiyjF8bkEWzT9fbgQZJjQHbkv3MiXMomalAf1ZbTBpqmxoNOhYotShu4GFSOGG9rh
- UbLwU7gFRa/CmOSZdQfqzVD00oGEpBX4nK6AK+S2I0no0zEoDhSFJT5iNYajNu71oiEGicxTftV
- FXNe6zXGlvGoRGGPP0NW//2q8vEFj0RPSGq90l3tU=
-X-Gm-Gg: ASbGnctrvnhJZWyIotT+gWxc6Q1GrPvP0jH6CYYbWzfhqrisDwqCAha/H/1NUzjQqHN
- tOTzwN64RIdr8+eAHHXZc7W6mFCd3Lrd+0F6ZmKmD1wZ38xHBD3WBLM8O7cWu/Iit4KT9nNCstn
- /mONPbqVyX7vhSb3mjjJHzIm2xDFe08pZ7AKLo8UHXKaqrTQAgx/5B1j56lDgBRJOjeOENUkAO5
- uRM7uc2GA3NQ2btEC8nCNhP9Mw+mHIwF8nq0z6Nh5tpS5gcLe2enVHX08DT
-X-Received: by 2002:a05:6000:2f83:b0:42b:3c8d:1936 with SMTP id
- ffacd0b85a97d-42b5935241dmr10724675f8f.26.1763369343301; 
- Mon, 17 Nov 2025 00:49:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IElk61xBndh3pqZne8krYD+WD91i88AujeVdBzUVvyZrIX79umdhiqFZffC9mDpdQPbK3v0dBxH8xK6kqZw0gI=
-X-Received: by 2002:a05:6000:2f83:b0:42b:3c8d:1936 with SMTP id
- ffacd0b85a97d-42b5935241dmr10724649f8f.26.1763369342870; Mon, 17 Nov 2025
- 00:49:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vKuxE-0000wK-Dr
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:51:20 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vKuxA-0007LR-Sy
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 03:51:19 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Axjr_24Rpp+1wkAA--.10944S3;
+ Mon, 17 Nov 2025 16:51:02 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxpeTx4RpppN01AQ--.18592S3;
+ Mon, 17 Nov 2025 16:51:01 +0800 (CST)
+Subject: Re: [PATCH 1/1] target/loongarch: Fix some exception need't update
+ CSR_BADV
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20251117075042.1831667-1-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <60c5e801-2ddf-d212-55bd-bb7d97e28776@loongson.cn>
+Date: Mon, 17 Nov 2025 16:48:33 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20251115015410.185195-1-pbonzini@redhat.com>
- <b6d5aa11-eef1-4cda-b008-79ba8ee89e1f@linaro.org>
-In-Reply-To: <b6d5aa11-eef1-4cda-b008-79ba8ee89e1f@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 17 Nov 2025 09:48:50 +0100
-X-Gm-Features: AWmQ_bkpRyrm1mGVt0TvTVnguqs3Lwez42a74uU02JTeF3th4vbPjK8pWHx7Tu4
-Message-ID: <CABgObfbg7R7NH4rb-cKsMY-K0zUSufCGO3HrWg6Y2NZiKq4GmA@mail.gmail.com>
-Subject: Re: [PATCH v2] target/i386: fix stack size when delivering real mode
- interrupts
-To: Richard Henderson <richard.henderson@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20251117075042.1831667-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJBxpeTx4RpppN01AQ--.18592S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ury8uFy3tFW8uryftr1kJFc_yoW8ZF1rpF
+ s2k3y7JryrA34Ut34xJr4jgr18W395Aw45tr1aqa48Gr1ftryvgr4kta98tFy3WFWrG347
+ ZFW3try5ZayDGrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jn
+ UUUUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.469,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,25 +82,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Nov 15, 2025 at 1:25=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/15/25 02:54, Paolo Bonzini wrote:
-> > The stack can be 32-bit even in real mode, and in this case
-> > the stack pointer must be updated in its entirety rather than
-> > just the bottom 16 bits.  The same is true of real mode IRET,
-> > for which there was even a comment suggesting the right thing
-> > to do.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1506
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >   target/i386/tcg/seg_helper.c | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
->
-> Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as a=
-ppropriate.
 
-Cc: qemu-stable@nongnu.org
+
+On 2025/11/17 下午3:50, Song Gao wrote:
+> According to Volume 1 Manual 7.4.8, certain exceptions require setting CSR_BADV,
+> but the code does not match.this patch correct it. and the exception PIL,PIS,PIF,
+> PME,PNR, PNX, PPI already update on raise_mmu_exception(),these are need't update.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/tcg/tcg_cpu.c | 24 +++++++++++++-----------
+>   1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+> index 9d077c56d9..7f94c183c4 100644
+> --- a/target/loongarch/tcg/tcg_cpu.c
+> +++ b/target/loongarch/tcg/tcg_cpu.c
+> @@ -109,10 +109,22 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>           }
+>           QEMU_FALLTHROUGH;
+>       case EXCCODE_PIF:
+> -    case EXCCODE_ADEF:
+>           cause = cs->exception_index;
+>           update_badinstr = 0;
+>           break;
+> +    case EXCCODE_ADEF:
+> +        update_badinstr = 0;
+> +        QEMU_FALLTHROUGH;
+why is there such modification with EXCCODE_ADEF? what is the problem 
+with exception EXCCODE_ADEF?
+
+> +    case EXCCODE_BCE:
+> +    case EXCCODE_ADEM:
+> +        env->CSR_BADV = env->pc;
+> +        QEMU_FALLTHROUGH;
+With EXCCODE_BCE/EXCCODE_ADEM, if CSR_BADV is missing, please use 
+another patch.
+> +    case EXCCODE_PNR:
+> +    case EXCCODE_PNX:
+> +    case EXCCODE_PPI:
+> +    case EXCCODE_PIL:
+> +    case EXCCODE_PIS:
+> +    case EXCCODE_PME:
+What is the problem with EXCCODE_PNR/EXCCODE_PNX exception here?
+
+Regards
+Bibo Mao
+>       case EXCCODE_SYS:
+>       case EXCCODE_BRK:
+>       case EXCCODE_INE:
+> @@ -121,16 +133,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>       case EXCCODE_FPE:
+>       case EXCCODE_SXD:
+>       case EXCCODE_ASXD:
+> -        env->CSR_BADV = env->pc;
+> -        QEMU_FALLTHROUGH;
+> -    case EXCCODE_BCE:
+> -    case EXCCODE_ADEM:
+> -    case EXCCODE_PIL:
+> -    case EXCCODE_PIS:
+> -    case EXCCODE_PME:
+> -    case EXCCODE_PNR:
+> -    case EXCCODE_PNX:
+> -    case EXCCODE_PPI:
+>           cause = cs->exception_index;
+>           break;
+>       default:
+> 
 
 
