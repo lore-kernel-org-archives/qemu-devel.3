@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD17CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BAFCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKvjQ-0006sZ-8w; Mon, 17 Nov 2025 04:41:08 -0500
+	id 1vKvjR-0006zH-J5; Mon, 17 Nov 2025 04:41:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKviT-0005Fo-Qg
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:40:11 -0500
+ id 1vKvig-0005o0-44
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:40:24 -0500
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKviK-0006Kh-Cd
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:40:06 -0500
+ id 1vKvie-0006Kp-7i
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:40:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763372400; x=1794908400;
+ t=1763372420; x=1794908420;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=m6JtVmIagroZy9cOs7RiyvaIEIEKcB6qKAzh5iaKdoA=;
- b=h3F29nHWashXt3EouFbpHCdQDwwUKwrqwLXHt1gs9AeC5o7SyBZ5Dhtg
- VdAJ4EkgdaybzOgjJ/qwsEkl6UVYQ8Jmw0WoSsmzNNodeUG3UZvj74PdH
- LT89yziuhUCrl1c16u3jw+6/prXeRbdEyuz5cbwmPY/N+lNyEXBrXgthY
- oeZ+Q+sebkgrGzeRY8uCJizwdvtzThhY4QBm34HSAVviCTX6Cp7pfAQmg
- UJfnDFw7acddMCETSCOYpyoEg5Reg8jNL15NqItbFACszS3W1APgnFLwQ
- sVJYiFagS+WYndW2z8Ww7fPydtj1wr6KvrUEcWgNMrad9GoNhdBlkh7IG Q==;
-X-CSE-ConnectionGUID: j2odEedIQJ+hd/OqjpKlAg==
-X-CSE-MsgGUID: laE2kILMQ0KFovDgMmUW2g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76046072"
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76046072"
+ bh=s8x4SQJsqM3hIZ73DiLwWQChJ2mlRt/MJGgdnOThySk=;
+ b=PNHtgrgyWanr8skw3YaU40LSDOINyJLkChmTG095PclTw9y38cIU2Xtz
+ JnYKrQ3Vyp34UlgQ3+EzpzjHXjdnzYU4EbJReWXBXQvpO2Bs+lC/qzA6J
+ iYcRh2GOvWVcT/1U7ZkZ2f/9kJ8B36O7y84smaC/zIWR/KYpHN4lPKxm4
+ 9eWKDzvfc2/CxGlVlJRWPGzQ9tc/vcdtUNq/pkJzC5FsK2urnXhEpcca6
+ op6JQyAHM9B2q/GiIFye71LKnwruhFFuohZ/moULjiVgNxsp8Wqh8yfc/
+ J0eS9ZKkspiqBn6luvRMrvtbgtg6iFkyDfUisvcFhRLXpN6Xd1d08p9BZ Q==;
+X-CSE-ConnectionGUID: ZcR/AkDmSa2sIY3iqm4lFQ==
+X-CSE-MsgGUID: J95K7EoiT4G435SEltmNVQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76046121"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76046121"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:39:47 -0800
-X-CSE-ConnectionGUID: 1F8/vIZlTvWTrrinTObGWQ==
-X-CSE-MsgGUID: yzKoOT3mTte52mi16+voCQ==
+ 17 Nov 2025 01:40:03 -0800
+X-CSE-ConnectionGUID: D2ghcJ9iQnaxSeUxm0hfuQ==
+X-CSE-MsgGUID: u3tAczwUTdC1t6TTk9eR/g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070983"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190071021"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:39:43 -0800
+ 17 Nov 2025 01:39:59 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,9 +53,9 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v8 19/23] hw/pci: Introduce pci_device_get_host_iommu_quirks()
-Date: Mon, 17 Nov 2025 04:37:22 -0500
-Message-ID: <20251117093729.1121324-20-zhenzhong.duan@intel.com>
+Subject: [PATCH v8 23/23] docs/devel: Add IOMMUFD nesting documentation
+Date: Mon, 17 Nov 2025 04:37:26 -0500
+Message-ID: <20251117093729.1121324-24-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
 References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
@@ -86,112 +86,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In VFIO core, we call iommufd_backend_get_device_info() to return vendor
-specific hardware information data, but it's not good to retrieve this raw
-data in VFIO core.
+Add documentation about using IOMMUFD backed VFIO device with intel_iommu with
+x-flts=on.
 
-Introduce a new PCIIOMMUOps optional callback, get_host_iommu_quirk() which
-allows to retrieve the vendor specific hardware information data and convert
-it into bitmaps defined with enum host_iommu_quirks.
-
-pci_device_get_host_iommu_quirks() is a wrapper that can be called on a PCI
-device potentially protected by a vIOMMU.
-
-Suggested-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- include/hw/iommu.h   |  5 +++++
- include/hw/pci/pci.h | 31 +++++++++++++++++++++++++++++++
- hw/pci/pci.c         | 12 ++++++++++++
- 3 files changed, 48 insertions(+)
+ docs/devel/vfio-iommufd.rst | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-index 9b8bb94fc2..6d61410703 100644
---- a/include/hw/iommu.h
-+++ b/include/hw/iommu.h
-@@ -22,4 +22,9 @@ enum viommu_flags {
-     VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
- };
+diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
+index 3d1c11f175..474549903e 100644
+--- a/docs/devel/vfio-iommufd.rst
++++ b/docs/devel/vfio-iommufd.rst
+@@ -164,3 +164,28 @@ RAM discarding for mdev.
  
-+/* Host IOMMU quirks. Extracted from host IOMMU capabilities */
-+enum host_iommu_quirks {
-+    HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
-+};
+ ``vfio-ap`` and ``vfio-ccw`` devices don't have same issue as their backend
+ devices are always mdev and RAM discarding is force enabled.
 +
- #endif /* HW_IOMMU_H */
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index a3ca54859c..83dc995cf3 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -474,6 +474,23 @@ typedef struct PCIIOMMUOps {
-      * enum viommu_flags.
-      */
-     uint64_t (*get_viommu_flags)(void *opaque);
-+    /**
-+     * @get_host_iommu_quirks: get host IOMMU quirks
-+     *
-+     * Optional callback, if not implemented, then vIOMMU doesn't support
-+     * converting @type specific hardware information data into a standard
-+     * bitmap format.
-+     *
-+     * @type: IOMMU hardware info type
-+     *
-+     * @caps: IOMMU @type specific hardware information data
-+     *
-+     * @size: size of @caps
-+     *
-+     * Returns: bitmap with each bit representing a host IOMMU quirk defined in
-+     * enum host_iommu_quirks
-+     */
-+    uint64_t (*get_host_iommu_quirks)(uint32_t type, void *caps, uint32_t size);
-     /**
-      * @get_iotlb_info: get properties required to initialize a device IOTLB.
-      *
-@@ -666,6 +683,20 @@ void pci_device_unset_iommu_device(PCIDevice *dev);
-  */
- uint64_t pci_device_get_viommu_flags(PCIDevice *dev);
- 
-+/**
-+ * pci_device_get_host_iommu_quirks: get host IOMMU quirks.
-+ *
-+ * Returns: bitmap with each bit representing a host IOMMU quirk defined in
-+ * enum host_iommu_quirks. Or 0 if vIOMMU doesn't convert any.
-+ *
-+ * @dev: PCI device pointer.
-+ * @type: IOMMU hardware info type
-+ * @caps: IOMMU @type specific hardware information data
-+ * @size: size of @caps
-+ */
-+uint64_t pci_device_get_host_iommu_quirks(PCIDevice *dev, uint32_t type,
-+                                          void *caps, uint32_t size);
++Usage with intel_iommu featuring x-flts=on
++-------------------------------------
 +
- /**
-  * pci_iommu_get_iotlb_info: get properties required to initialize a
-  * device IOTLB.
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 8b62044a8e..520ec19982 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -3032,6 +3032,18 @@ uint64_t pci_device_get_viommu_flags(PCIDevice *dev)
-     return 0;
- }
- 
-+uint64_t pci_device_get_host_iommu_quirks(PCIDevice *dev, uint32_t type,
-+                                          void *caps, uint32_t size)
-+{
-+    PCIBus *iommu_bus;
++Only IOMMUFD backed VFIO device is supported when intel_iommu is configured
++with x-flts=on, for legacy container backed VFIO device, below error shows:
 +
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
-+    if (iommu_bus && iommu_bus->iommu_ops->get_host_iommu_quirks) {
-+        return iommu_bus->iommu_ops->get_host_iommu_quirks(type, caps, size);
-+    }
-+    return 0;
-+}
++.. code-block:: none
 +
- int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
-                          bool exec_req, hwaddr addr, bool lpig,
-                          uint16_t prgi, bool is_read, bool is_write)
++    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when x-flts=on
++
++VFIO device under PCI bridge is unsupported, use PCIE bridge if necessary,
++otherwise below error shows:
++
++.. code-block:: none
++
++    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when x-flts=on
++
++If host IOMMU has ERRATA_772415_SPR17, kexec or reboot from "intel_iommu=on,sm_on"
++to "intel_iommu=on,sm_off" in guest is also unsupported. Configure scalable mode
++off as below if it's not needed by guest.
++
++.. code-block:: bash
++
++    -device intel-iommu,x-scalable-mode=off
 -- 
 2.47.1
 
