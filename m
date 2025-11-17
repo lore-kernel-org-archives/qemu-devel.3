@@ -4,110 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362C0CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 04:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA5B5CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 05:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKquR-0003Dm-IQ; Sun, 16 Nov 2025 23:32:12 -0500
+	id 1vKsEH-0002nW-IP; Mon, 17 Nov 2025 00:56:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vKquO-0003Ac-72
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 23:32:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vKsEF-0002mY-Rv
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 00:56:43 -0500
+Received: from mail-eastusazon11011010.outbound.protection.outlook.com
+ ([52.101.52.10] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vKquL-0001ES-C1
- for qemu-devel@nongnu.org; Sun, 16 Nov 2025 23:32:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763353922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xnz6U0nU+bJLJstQwbNQzNvG0aoWuUd9YgXrbfCr/Pg=;
- b=hIldzefwmdZDmxjxjQXrK5BY2IYee1mQCgjDUWCLVMSeNty6yC+eXX4g4HvI6qkeiDUw3y
- LXyVS5qk6v6JQeB1m2xhHVYBP+qeb5Z7leEfwKzMWuiEnnGxAb/6N1HdESQw6ZZYwETfUf
- /h/mFb91cR3KiETy7x7X9l6dTu+leKs=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-oj6IIjHBN5KS2lNhFL3C0A-1; Sun, 16 Nov 2025 23:32:01 -0500
-X-MC-Unique: oj6IIjHBN5KS2lNhFL3C0A-1
-X-Mimecast-MFC-AGG-ID: oj6IIjHBN5KS2lNhFL3C0A_1763353920
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3416dc5754fso6793830a91.1
- for <qemu-devel@nongnu.org>; Sun, 16 Nov 2025 20:32:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763353920; x=1763958720; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xnz6U0nU+bJLJstQwbNQzNvG0aoWuUd9YgXrbfCr/Pg=;
- b=ATXuDQ/lltYclPfGHvv4DPSy3cxDhEfBm9mgcN3s+BxLrA7V671MvmMeujfEYnFG+C
- y1ocoN9x8AxA3mx4SFVBElCFb/6njrUma4opZTHeaKlYx9QD6qSf2f6eUSV4kgnGNOri
- JF/MFNtxDPErHguc9IVJMlRcbtPNHMCp6CwMtwgsEUvA1l9Y39O/ZAfaZI1mMcvo1sHZ
- iBcct8SZnSN2aiQX6pQBYrK7lN+85XxVp8Q+RXF85cUvfmkJa6RXyIAX6FZiyY6u31Kp
- mnPPVNR+bVy8Ae7ljJzUKwzYeL7798PxbJdcJI7G8uBbhqe9OcAr85CSu2jsIRZWdv9f
- YfQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763353920; x=1763958720;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xnz6U0nU+bJLJstQwbNQzNvG0aoWuUd9YgXrbfCr/Pg=;
- b=e79n9zwirCJGcW6VNWKdVTBe3YeuIad5v20OK8Lx0wCNuqZirfKU2h/8hinPQmHMxo
- kDcK/+3v6ACfe45LRMoKAaRJmuBcsoGPUhzelZADkoC9Ze/JwvkXLFiHohLlOU5eKEBf
- PTkA5hjI5heSsSU6OUIlD6GbL37btv36xgHHsiTEqVTMRDVVFWNp/Iv7x6rc/Zxd9GZH
- WoX06gwCszRRmyp5Y/VNAiwq3w0wqpqqZUhIXSD5hFBTOZfljoxgKTkWKjXPN2VlCcjG
- p1FVLtVA43GioqzjrbgGj1EehR3qFGu3gFitw1ITIAI5ROBqjpQvHUYHCY0RzF6fmJ74
- /P0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW0kgrQtj/GJsK8h2TUm001vO45UH/qHiMw/FSSX2nqumCuVfARUwRYHrmXkLSQqEKmteGxfvsZFzEW@nongnu.org
-X-Gm-Message-State: AOJu0Yy3aghdcIVa9ByvUooPVaNEZF1FuuUvLOK+FJGiJqqQaYgx236K
- 5+UEB3/SLsnkm6EVYIJX3sEswB9DfqNEMe9zzMU9wrkv5jNfP7CZWbeZP9JF5I9E1g0INsem+w6
- sp/l2qH77z+CReVwJqs3jhP4NPL4ipcj3SQyrlszAWzdaWgKNV5PTMAl4n+u0XVy+n9LLhNhv4W
- qk+wJMCpVHFgxJHFon8qEuxIb3Vv4HR18=
-X-Gm-Gg: ASbGncuS+r+2VpqjV78AaxhvFC5y/WEIXyBPF2BnD/8/Qf1GpzjEWswkfAb+U6KhuYg
- 9Gz25WQT9N35x7mK4ASMS5oZjoSiqFbgARdgdn09BCPgXf3ELdYkje0L+1mFPjy3ZP7pNN9rzw3
- 2jIr2Lm6JU9LlIuRejJwwDPA3sjI6CHssgZm4tVF1+vReS3XbZZo+WTMQnbgmZgMKIXDg=
-X-Received: by 2002:a17:90b:2e0b:b0:340:d1a1:af8e with SMTP id
- 98e67ed59e1d1-343fa774e3cmr13710487a91.37.1763353920008; 
- Sun, 16 Nov 2025 20:32:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdJ9YEivO6odkvpPz+NfwN6jbab+J5NKa/eD/EsEzai8Cks028O4rTGfY+clkCA5PF1B9I8sG6Nfn0n2yYzyQ=
-X-Received: by 2002:a17:90b:2e0b:b0:340:d1a1:af8e with SMTP id
- 98e67ed59e1d1-343fa774e3cmr13710462a91.37.1763353919515; Sun, 16 Nov 2025
- 20:31:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vKsED-0006DK-Rm
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 00:56:43 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aaaQRXHai0uPzfTB9pvANGH40rOD8Dkv3V1875dC9vUvnMlmNytBO3wIdw7RKibGweZfiHBF5yPUX9BAe+/tRJzeoX2iVzD2QgP8VmP1I91e2AOADBuFHYtlRfH1gcRm8ZWmwzipGJZ9tWs9kEspPcyjyLvL1OaArLOy94pZrjp1THnuwihEiMoEGZvwaO4pW9ud/OKJSW36L3quojLTzNaSbtypBFHb56axSghURf2Tj7KGvA4pfJM1PtPou/x2X/8kfXTjbI7aCeeDhetGKzwnCbb1xnY7fklHabvNjQpnV+NZC1zySQvALsUgnUs+rMespEZpZjHF10L3MdkrYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=igDiKbQQ5D5R0mAyAbw09aoOUYFI+OPKAxqBaafkLE4=;
+ b=l3fbvhhV/Me+CZZE1ndxuuSiSXTaz97f03reoy3lQ65j8Apy1Xy4dmF/Fmek9RWARDC5hbgd1K9ZEKvZf7au02rb2flrhf9uY3z/NrNYa+0hOL2oW2krkgVM3er6CkwGWjdXUu6JmdAIEpHZum7Lxf6e30oTGpRLEvXYk0i3jo4MOnBucgltdCZrIrQHBeFoUTivJGb8qo9jvL8oL4vHUM5g6SOMDbnCslxd2IYpiuk3LlmOd7hYnaKTAlQFnxpKy3gj7DZp7yURO2hNAF+L/XRTfRI7hZJQVBNTTL9ZSfOniZvGlrvTQF09jBPeqzSB3JYDXZqqh3n4nAZIXixN0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=igDiKbQQ5D5R0mAyAbw09aoOUYFI+OPKAxqBaafkLE4=;
+ b=dSmJzsmKEMJ2Btw06cOeLlX8wFJezLqpdrwizuiIuEim5dmzjjOoBMcRMTOAFlaiKDYGIjVW78PnADzV2pfBbElCMXStchl9+u+pDGNGVCiwB9CLI15Lr6DVbxHuDSbU+rHAHKSj5pkln/bpPZmUIs88sPL7dfgQn2xUXk9j/UU=
+Received: from CH0PR03CA0288.namprd03.prod.outlook.com (2603:10b6:610:e6::23)
+ by SA0PR12MB4432.namprd12.prod.outlook.com (2603:10b6:806:98::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.19; Mon, 17 Nov
+ 2025 05:51:34 +0000
+Received: from DS3PEPF000099D3.namprd04.prod.outlook.com
+ (2603:10b6:610:e6:cafe::dd) by CH0PR03CA0288.outlook.office365.com
+ (2603:10b6:610:e6::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.22 via Frontend Transport; Mon,
+ 17 Nov 2025 05:51:26 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS3PEPF000099D3.mail.protection.outlook.com (10.167.17.4) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9343.9 via Frontend Transport; Mon, 17 Nov 2025 05:51:33 +0000
+Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 16 Nov
+ 2025 21:51:30 -0800
+From: Honglei Huang <honghuan@amd.com>
+To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>
+CC: <odaki@rsg.ci.i.u-tokyo.ac.jp>, <mst@redhat.com>, <cohuck@redhat.com>,
+ <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <Ray.Huang@amd.com>, "Honglei
+ Huang" <honghuan@amd.com>
+Subject: [PATCH] virtio-gpu-virgl: fix error handling in
+ virgl_cmd_resource_create_blob
+Date: Mon, 17 Nov 2025 13:51:12 +0800
+Message-ID: <20251117055112.99046-1-honghuan@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20251107020149.3223-1-jasowang@redhat.com>
- <20251113110004-mutt-send-email-mst@kernel.org>
- <aRYJRZyNrDcDzTuG@x1.local> <20251113114710-mutt-send-email-mst@kernel.org>
- <aRYRhg7lKDCBUIrf@x1.local> <20251113124207-mutt-send-email-mst@kernel.org>
- <CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com>
- <20251116014625-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20251116014625-mutt-send-email-mst@kernel.org>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 17 Nov 2025 12:31:47 +0800
-X-Gm-Features: AWmQ_bmAk86lXMMtI2gyG4cdNms2Q8un-yKYYyaT0_aNy0dBm4gTVxIKe0YgQrA
-Message-ID: <CACGkMEsxZvzyeqa_-9qQRfwNGAeCg5pLgu5MtEHr0OFWpA4_-g@mail.gmail.com>
-Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
- qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com, 
- thuth@redhat.com, berrange@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099D3:EE_|SA0PR12MB4432:EE_
+X-MS-Office365-Filtering-Correlation-Id: f3c3575d-2f90-426f-eeae-08de259d5d0f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?XyLra6SV/wxnVYaiCEVRgVzL3GDFVZYX3bWLEd2G5et175kyj14IOgRqUE/s?=
+ =?us-ascii?Q?opDXfwfvPizlouFwMqxkiMrlUMMT+sZFWDPNAQscr5HbEqtpYABB+1LzB3Q5?=
+ =?us-ascii?Q?NJKLEBKoWaFCfyxcvRhWbmLpFhuErWwwFcLcHlKZBQbou80tnr3+EKTEC6Qa?=
+ =?us-ascii?Q?rdsAJoMw/IK7sjvdCBy3VeK7S+4v3ggpC1JOdGFFrZ2EMmIc82Qy3n5W8V4K?=
+ =?us-ascii?Q?KKDsgzTTkE6wEnw85wGfiN8vjbKpEBbS7Rq49Hc8IHno4mxwN9/4elYfac3P?=
+ =?us-ascii?Q?hWFMxEnMbEdSvdjQbHFb9nEq+EKpSM6OMruJOOHnA7Nuza+smwMNpSUa5NtN?=
+ =?us-ascii?Q?scvjy+aaychwtEFJRoTJx+j/sMzyDVD6ejGqcxAprcht2hh1q4Gx9yq3cAtZ?=
+ =?us-ascii?Q?7JvbT5RFBAhYHiw4GWY6Il2X8aeuQunJjLo7nsL9p8dZzWne6TjNUmIxS0E/?=
+ =?us-ascii?Q?iQeQlgvg/eRV1YgAfdlDpSQYxQ9hXdaVEVXUNRdKTXI1/L1KQqXSOvJ8omnN?=
+ =?us-ascii?Q?H1ds4cSG5CrMs43HPP0W/Ey1SDTpCu7Eeba+yBazdiDRC5kV3yYUERRomWsr?=
+ =?us-ascii?Q?N+z3bYUI3fznkzAUmWWKwJsFVuCfCx6Uhao44HQEFmMy3bHGqkRAqm6htGUl?=
+ =?us-ascii?Q?VYxBofb/NDeoEwQ46Tz0nopWA+zgYWL8VYJ9i0eCINFRqhN1Xfwb6rRjoIDr?=
+ =?us-ascii?Q?B5b7WbaB/aTtFuYL0jLltk69SSaISc6IOf5JYJKJEEnuZKW4ZiAGMBnEIUEG?=
+ =?us-ascii?Q?PL+mpFEFKfOJcHtnKDOKHI+3/DzVnw3A9DPmHitJbKGMc8tIdkglMo+c3DGx?=
+ =?us-ascii?Q?tDC4JCe3k5lE01KRYpO2P7WfKWlgp+ZotX9i9HrUHQlpoddQd3Re44lv338h?=
+ =?us-ascii?Q?UbiKne5ItoRRn5+8BTzcC8dKJiXxoDbvyRaMfIQu4Gr3+Bt0qbM4RViPKnaW?=
+ =?us-ascii?Q?nkE+9whdlj9c1GX8ia0QC3yHVfzmqDyLB1L1g1omi19sdShiMUNGRGZjZbCz?=
+ =?us-ascii?Q?5kt2eXiwfDw1MrGiVh0jXVtT3rHHxjB/91S6l7FfK9+Ia5+Gc3rt1bL1p+OK?=
+ =?us-ascii?Q?4c5AoKSRU6EaOlqFBe86ai+9BLPl95gSEOgBiivk8QJlaWUeoQLW3xgzugLd?=
+ =?us-ascii?Q?OQMIXx1Qsi1eD9zexVVGSXWiy1mz4ohSuv7DakwX9k6XtGVUxkjDySfkIyd2?=
+ =?us-ascii?Q?N3P/Ueuo0QTYeUnUtW94MGMzLYfpdDsVQIdZvGikOGgdKQmyotqv85cbrEwP?=
+ =?us-ascii?Q?+n2r4K+/BClLOwNN+vqk7tURG6q24jKjmvjBe/VEqNbjf4GUk1RY4Fo3tRem?=
+ =?us-ascii?Q?r7HQkFpSZ/QPIQnxj2Y3nOcu6TsbN6glT6wipxw6apr+/y9utD7f8tEUp7KP?=
+ =?us-ascii?Q?XRXB7iw2ShmS9LwlJOTnbipPEO78XYS4Bx4TxmQ+xe3tODjVMiA3d3inVXkf?=
+ =?us-ascii?Q?X9IuSayiX1jbIGWCfxVD+jDkFD46+Dfa19RpAQFj5wdG735stOS4m1Kscq6I?=
+ =?us-ascii?Q?t/FNQml0qLR++As3XBAyjYeHOFXN7HHbGd0f8K0oK0lE0UYAJFXEaYGOjcqG?=
+ =?us-ascii?Q?ttrEIv4U4AjHjG+BHhM=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2025 05:51:33.3820 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f3c3575d-2f90-426f-eeae-08de259d5d0f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099D3.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4432
+Received-SPF: permerror client-ip=52.101.52.10;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,205 +151,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Nov 16, 2025 at 2:53=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Fri, Nov 14, 2025 at 09:32:47AM +0800, Jason Wang wrote:
-> > On Fri, Nov 14, 2025 at 1:47=E2=80=AFAM Michael S. Tsirkin <mst@redhat.=
-com> wrote:
-> > >
-> > > On Thu, Nov 13, 2025 at 12:12:38PM -0500, Peter Xu wrote:
-> > > > On Thu, Nov 13, 2025 at 11:47:51AM -0500, Michael S. Tsirkin wrote:
-> > > > > On Thu, Nov 13, 2025 at 11:37:25AM -0500, Peter Xu wrote:
-> > > > > > On Thu, Nov 13, 2025 at 11:09:32AM -0500, Michael S. Tsirkin wr=
-ote:
-> > > > > > > On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrote:
-> > > > > > > > We used to clear features silently in virtio_net_get_featur=
-es() even
-> > > > > > > > if it is required. This complicates the live migration comp=
-atibility
-> > > > > > > > as the management layer may think the feature is enabled bu=
-t in fact
-> > > > > > > > not.
-> > > > > > > >
-> > > > > > > > Let's add a strict feature check to make sure if there's a =
-mismatch
-> > > > > > > > between the required feature and peer, fail the get_feature=
-s()
-> > > > > > > > immediately instead of waiting until the migration to fail.=
- This
-> > > > > > > > offload the migration compatibility completely to the manag=
-ement
-> > > > > > > > layer.
-> > > > > > > >
-> > > > > > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> > > > > > >
-> > > > > > > This is not really useful - how do users know how to tweak th=
-eir
-> > > > > > > command lines?
-> > > > > > > We discussed this many times.
-> > > > > > > To try and solve this you need a tool that will tell you how =
-to start
-> > > > > > > VM on X to make it migrateable to Y or Z.
-> > > > > > >
-> > > > > > >
-> > > > > > > More importantly,
-> > > > > > > migration is a niche thing and breaking booting perfectly goo=
-d VMs
-> > > > > > > just for that seems wrong.
-> > > > > >
-> > > > > > IMHO Jason's proposal is useful in that it now provides a way t=
-o provide
-> > > > > > ABI stablility but allows auto-ON to exist.
-> > > > > >
-> > > > > > If we think migration is optional, we could add a migration blo=
-cker where
-> > > > > > strict check flag is set to OFF, as I mentioned in the email re=
-ply to Dan.
-> > > > > > As that implies the VM ABI is not guaranteed.
-> > > > > >
-> > > > > > Thanks,
-> > > > >
-> > > > >
-> > > > > All you have to do is avoid changing the kernel and ABI is stable=
-.
-> > > > > Downstreams already do this.
-> > > >
-> > > > But the whole point of migration is allowing VMs to move between ho=
-sts..
-> > > > hence AFAIU kernel can change.
-> > > >
-> > > > Downstream will still have problem if some network features will be
-> > > > optionally supported in some of the RHEL-N branches, because machin=
-e types
-> > > > are defined the same in any RHEL-N, so IIUC it's also possible a VM=
- booting
-> > > > on a latest RHEL-X.Y qemu/kernel hit issues migrating back to an ol=
-der
-> > > > RHEL-X.(Y-1) qemu/kernel if RHEL-X.(Y-1) kernel doesn't have the ne=
-twork
-> > > > feature available..
-> > > >
-> > > > It's also not good IMHO to only fix downstream but having upstream =
-face
-> > > > such problems, even if there's a downstream fix...
-> > > >
-> > > > This thread was revived only because Jinpu hit similar issues.  IMH=
-O we
-> > > > should still try to provide a generic solution upstream for everyon=
-e.
-> > > >
-> > > > Thanks,
-> > > >
-> > > > --
-> > > > Peter Xu
-> > >
-> > > failing to start a perfectly good qemu which used to work
-> > > because you changed kernels is better than failing to migrate how?
-> >
-> > It doesn't:
-> >
-> > 1) the strict feature check will be only enabled in new machine types
-> > 2) if kernel ABI is stable, qemu will keep working after upgrading
-> > kernel even with strict check otherwise it would be a bug of kernel
-> >
-> > So I don't see it breaking anything if we make it start to work at 11.0=
-?
->
-> Using QEMU from git suddenly requires upgrading the kernel or figuring
-> out obscure flags? Ugh.
+The error handling logic was incorrect in virgl_cmd_resource_create_blob.
+virtio_gpu_create_mapping_iov() returns 0 on success and non-zero on 
+failure, but the code was checking whether to set the error response.
 
-Only the setups are buggy that might meet this.
+The fix changes the condition from 'if (!ret)' to 'if (ret != 0)' to
+properly handle the return value, consistent with other usage patterns
+in the same codebase (see virtio-gpu.c:932 and virtio-gpu.c:354).
 
->
->
-> > >
-> > >
-> > >
-> > > graceful downgrade with old kernels is the basics of good userspace
-> > > behaviour and has been for decades.
-> >
-> > Peter has given the example of how hard we can define gracefulness
-> > (e.g migrate from a kernel w/ USO to a kernel w/o USO) and fix.
-> >
-> > Maybe we can think of a usersapce fallback to emulation of USO or
-> > others, but I'm not sure if it's an overkill.
-> >
-> > >
-> > >
-> > > sure, let's work on a solution, just erroring out is more about blami=
-ng
-> > > the user. what is the user supposed to do when qemu fails to start?
-> >
-> > It's the first step as it's much better than silently clearing the
-> > feature which may confuse both user and migration. We can use warnings
-> > instead of errors but I'm not sure how much it can help.
->
->
-> Well with this first step we have successfully blamed the user and
-> the second step won't ever be taken.
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+---
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Are you suggesting to fix the management? E.g patching libvirt to
-probe tap features?
-
->
-> > >
-> > >
-> > > first, formulate what exactly do you want to enable.
-> > >
-> > >
-> > >
-> > > for example, you have a set of boxes and you want a set of flags
-> > > to supply to guarantee qemu can migrate between them. is that it?
-> >
-> > Mostly, it should work as a CPU cluster.
->
-> the reason it kinda works with CPU cluster is simply because
-> there is a final set of CPU models and you can not easily
-> switch your CPU to a different model.
-
-We can define a set of TAP features as well, but I'm not sure it's
-worthwhile to do this.
-
->
-> > So it's the responsibility of
-> > the management layer, maybe we can develop some tool to report this or
-> > via qemu introspection ("query-tap" ?). Or if the management can do
-> > this now, we don't even need to bother (or it can help to uncover
-> > bugs). Anyhow, clearing a feature silently is not good and can cover
-> > bugs of various layers.
-> >
-> > Note that this issue is not specific to TAP, we may meet this for
-> > vDPA/VFIO live migration as well. Basically, it should be the
-> > responsibility of the management layer to deal with those migration
-> > compatibility policies instead of using hard coded policies inside
-> > Qemu. For qemu, it can simply error out when there's a mismatch
-> > between features that are supported and features that are asked to
-> > enable. We've suffered a lot in the past when trying to deal with this
-> > by Qemu.
-> >
-> > Thanks
->
-> Yes but QEMU currently gives management no tools to figure out
-> what is important for it.
-
-Using Qemu might be problematic as usually it doesn't not have privilege.
-
-We can extend iproute, or a dedicated tool or ask libvirt to do this.
-If libvirt could do the probe by itself, could we start from that?
-
-Thanks
-
-
->
->
->
-> > >
-> > >
-> > >
-> > > --
-> > > MST
-> > >
->
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 94ddc01f91..e60e1059df 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+                                             cmd, &res->base.addrs,
+                                             &res->base.iov, &res->base.iov_cnt);
+-        if (!ret) {
++        if (ret != 0) {
+             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+             return;
+         }
+-- 
+2.34.1
 
 
