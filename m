@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95615CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 13:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D474CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 14:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKzl0-0004Gu-3e; Mon, 17 Nov 2025 08:59:02 -0500
+	id 1vKzlu-0004lN-Jr; Mon, 17 Nov 2025 08:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vKzkq-0004G6-26
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:58:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vKzkn-0007km-FO
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:58:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763387926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QY6EyeHC6xxWSjZ/+6wsu6VjEqvl4sOXMw9JWwZUy2w=;
- b=HM6p767ifbXe0K+0aIyJtCNg7IX7m0DUGKP2tnCu5GZXRLO33Qv6Ps1kkGAJwsYCd27B1y
- 1mTneewEfBdcNQDlfN7+Ykio55V5kOkuad0PiOcDWmGManw8Fl2i9uGMQt2eLsyWxWitNt
- idlKhvwdzulV2E0rjA5Gdu8+KfpYMtc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-411--FICa-b5N-eHUi5_ZnI5Pg-1; Mon,
- 17 Nov 2025 08:58:43 -0500
-X-MC-Unique: -FICa-b5N-eHUi5_ZnI5Pg-1
-X-Mimecast-MFC-AGG-ID: -FICa-b5N-eHUi5_ZnI5Pg_1763387921
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4549618AB419; Mon, 17 Nov 2025 13:58:41 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD33F19560A7; Mon, 17 Nov 2025 13:58:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 03A3B21E6A27; Mon, 17 Nov 2025 14:58:38 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Jason Wang <jasowang@redhat.com>,  Andrew
- Melnychenko <andrew@daynix.com>,  Yuri Benditovich
- <yuri.benditovich@daynix.com>
-Subject: Re: ebpf functions can fail without setting an error
-In-Reply-To: <87sehfsife.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 25 Aug 2025 14:19:01 +0200")
-References: <87ectns27j.fsf@pond.sub.org> <aKRWZwvbWzA0QbA_@redhat.com>
- <87sehfsife.fsf@pond.sub.org>
-Date: Mon, 17 Nov 2025 14:58:37 +0100
-Message-ID: <871plwpxpu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKzls-0004kt-2i
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:59:56 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKzlq-00080h-Hy
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 08:59:55 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4779cb0a33fso21619655e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 05:59:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763387993; x=1763992793; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b3Y9xwpTLZXScegm/s3JtqBGrblu6twRCJDYSui8Cps=;
+ b=FFwPq94xJOTr9U5+2vbqs4cRy+h/wU5DSebFYglvoLFo/1jqVldhMqpWHYRdf6NRi3
+ x+308xXLck9z89qPKYqCzg99afth4f2FSzHd1fxbBDj0Gd5rdsVpBO7jMSm1i0oFltej
+ zpmSSTfccPomllEkBnTiPp5iRVtgWbt6D3pzjEbvEv7vvgmDgKQzDVp+HohRrqR1kCIm
+ bTBGTAW5XJIrzUFh1ohPOOyIq5oU5NTZkBlqaVEE0BN9qZdgyPSxuV5tkNrhyvN7MpMM
+ ZWS4GYK7zQ81/8djTuj75pjejAJmF55PIbJjTlHbWZ15+Y12iFNBztcbkbICyUSQqBNW
+ VYPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763387993; x=1763992793;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b3Y9xwpTLZXScegm/s3JtqBGrblu6twRCJDYSui8Cps=;
+ b=uEaPUO54PHFUVDkgnygGTaPHYSeTmeskaQVHuGvN4/mIIXA8g1WEH8vFxamqPJ9Nzn
+ aX9w6rysY/2cTrzjwLmtjV1ShxzB/OdWad4Ck+kYn8DfFYm/3vMj7v9HvmOq8+9cxWed
+ Brc8fdJEZTD3sNm4C5bIypS0QuK5KPT5U7iocoziAVZkloKHw92Vo4oCyFAvTtCSQiMa
+ +Dfd6GTMtJWVuN8OBOf7pyZ+XTxRAsD1v4/C0yW4ts/H+/dhAqwAzV8wbVZiSfG5dLcx
+ ZytE5i0ZKFP3Ij18tt1S1hCkR3b+tdm4pvfN93ttGRVz9E1NhUQZM/ikkvM0RO1QjhsB
+ xxPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbKgb4UthAmq4G5iQmaDGS6WzIliHqxgXFaOukmH+L9b7qLLbfbF0TIkM7Cupg55FWJV23g65H3oaA@nongnu.org
+X-Gm-Message-State: AOJu0Yyt1dmXsHcURoMqiHx3kBOe470AOnZ/D1EZYYmSKUY3z2nfwFO8
+ cJLl9hDoWpOzb0mdeivUj4lSsU2dyOkiMgW7Umn8hxpCosQy8byTtRcAB9Z6RpSfj7o=
+X-Gm-Gg: ASbGncvEZqcQoIPRl7P6weL3+IW6eIxyRm4pp9yyphqwJDNCiUQz6zMZGT9axA/TPzu
+ qWpXX850fISJWpw+EgX8PPAeS1JyyihjoJwMYclkkyJuGeXwIE3m5fyVl+hOsh1GVMSYYJLwNVn
+ V3x6t90rCldGb6f2itgriKvatfWIsLFL74YKISIzyz7dgFxwSGEAz4+cUMrgaOe0CYQu0fq4kG6
+ pGsQ0BJkoVeuphTspOWqAZZNT/wRBRCadem4PEJuomv3+zjuJx8m9mqv//XAP5pFGq8G/y9YfC6
+ 6LA2Ju9EA79pZ8zMqOWAN3p3jjaykw+wkCYs0TcbHQP9/H3Uc52onG0qgoB6vh2jwPvH405p22X
+ 9wAgR2b8kdM1QM89ZpJURSd5PQ3eMsgVlfWQS9e2zudKW2ZJI1xhPFXyGzmwu07B0mtfTfgxgjm
+ nUlc3+St6+tMCk7pIka8Cn9oSCH+ZGj/R6fPFBtkjU5OwK9SJn3ll3xQ==
+X-Google-Smtp-Source: AGHT+IHvPKIJIVCxqujl4TCB4nTGhlGhqkX2sWMMSOq09uy5N7X3OLBL7t0SaJEpigzsE6VVnOjHmg==
+X-Received: by 2002:a05:600c:1f92:b0:477:73cc:82c3 with SMTP id
+ 5b1f17b1804b1-4778fe9b3c4mr121531705e9.26.1763387992724; 
+ Mon, 17 Nov 2025 05:59:52 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4778bae1122sm119065935e9.0.2025.11.17.05.59.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Nov 2025 05:59:52 -0800 (PST)
+Message-ID: <52339e58-4366-4b7c-872f-b28e05370a5d@linaro.org>
+Date: Mon, 17 Nov 2025 14:59:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user: ancilliary -> ancillary
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+References: <44f5010964049b9988923ce1429652e0a9e8ebaf.1763380540.git.mst@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <44f5010964049b9988923ce1429652e0a9e8ebaf.1763380540.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,51 +103,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On 17/11/25 12:55, Michael S. Tsirkin wrote:
+> My dictionary says the former spelling is incorrect.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>   docs/interop/vhost-user.rst | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->
->> On Thu, Aug 07, 2025 at 03:14:56PM +0200, Markus Armbruster wrote:
->>> Three functions in ebpf_rss.h take an Error ** argument and return bool.
->>> Good.
->>>=20
->>> They can all fail without setting an error.  Not good.
->>>=20
->>> The failures without error are:
->>>=20
->>> * All three stubs in ebpf_rss-stub.c always.  Oversight?
->>
->> Opps, yes, we really should have added error_setg() calls for diagnosis
->> if someone tries to use eBPF when QEMU build has it disabled.
-
-Easy enough, but...
-
-> Some stubs exist only to mollify the linker.  They are not meant to be
-> called.  They should abort(), optionally with lipstick.
->
-> Other stubs are called and should fail nicely.
->
-> Can you tell me offhand which kind these are?
-
-If calling these stubs is possible, I'd like to know how I can get them
-called, so I can test the errors I add.
-
-If calling is not possible, I'd rather add abort()s.
-
-I tried to figure out whether calling is possible, but it ended in
-confusion.  Can you help?
-
->>> * Non-stub ebpf_rss_load() when ebpf_rss_is_loaded().  Are these
->>>   reachable?
->>
->> This scenario should never happen, and we should add a call like
->>
->>   error_setg(errp, "eBPF program is already loaded");
->>
->> to report it correctly.
->
-> Is it a programming error when it happens?
-
-This question is still open as well.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
