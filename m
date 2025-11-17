@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C03CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE76DCE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL1ew-0000o4-IO; Mon, 17 Nov 2025 11:00:54 -0500
+	id 1vL1en-0000eE-Mv; Mon, 17 Nov 2025 11:00:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vL1e5-0000WV-Px
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vL1e5-0000WZ-QZ
  for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:00:08 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vL1e0-0001QD-Qd
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:59:58 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42b38693c4dso1982011f8f.3
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 07:59:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vL1e0-0001Q1-B5
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:59:57 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-78677ff31c2so37235797b3.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 07:59:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763395194; x=1763999994; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1763395192; x=1763999992; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VPocHTMce2ZquThh4geYRtJxROYwjyITY7vsP6Zm4RE=;
- b=c/3UclCPebMwdNdkwMCOzW85VIxcIhX6qQzljsdKYk3TcTgnKfKb4r0zf7E5ZvILJh
- p9W/GF0D4ZeCppVQtvpiz0Avcn4zhzo1Gg2I69PL/BuTlPZmOZbekYjYl6d5lFbPVHLA
- tp8pZL7vpEG47BXKWLZ6b6cXm/y9Q6iI7kQVC514vQ98Pz88eR7Jff2V7saBAWIXyI0Y
- Fa6QIu5pIRxMX0Qa+UqZtVXTHjQG+84st4x7OIH5iGjeBakcLAZECJ96q5nsiRwh5+wr
- 9TQQvBYLNSjpXQ4bJNAVOrXVUmU6iXIcm1hoMtti6WcjbeRRHwnoH++wttpQi3Zab9bE
- enPA==
+ bh=gHTgpEzHUXz1adi5KE/ydBVHYXdO1GNQEdl0OMaSsWE=;
+ b=qtMWrVVsbZa74zXsjKOpX1Xyf9pV8yEYDyJXbv3ixSi5hFsOlkNAR1pPq2/gBQAD/2
+ kMKVn4odfL8b6JfVqgC14lTUBGrs6oSQ43oMmzMX/Rz3llMlg/x0bX3dZAAWfJPa7pWb
+ fGGT8WP9k7V/e/vldv529NRQSUDc0ZNsAeINIxbMErQ3PBDeH1qiPTfiqId7b2un0Ht7
+ Dpe5bWl3kUf4U0TlOUDkpmiCvlu1k4cobeDhstuQ986N/ZOAt0zXYHICWR/bJde4kXGZ
+ HQHKP9MacRbRhDxHnKtvU0brCQoG+oH3aUrewixaUecj1rAO3/SeOHSLDO2Jsz8onP7t
+ eUcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763395194; x=1763999994;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1763395192; x=1763999992;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VPocHTMce2ZquThh4geYRtJxROYwjyITY7vsP6Zm4RE=;
- b=IbRkmQ5a0RrUYA2d5VISiXPPOHG3zEk7WV2DKypDzXlMCODPtmRIa/J2jaUXhG5l90
- bH4SaDYMvHz5OesS77rN55somwHFG4dJ0MYn011vjWiwf05EKiE5vie+PPb4W4XqZDe6
- 89icGITCb92F/H0ZumxhP93BWfH0hl/jP6eaL57M8mjPqqCGWo7hnvAPXOki1WMdFNCp
- zSwOprLLsGKX5QrqWZsFrGVWlN0uypOB3xKoJFlogiI4VOX+viVUpOSrTg68SWvHLHgj
- AJlqhQ68DUzlWJEZHMDmgsjgdcu22jVEgZRYpex4GLLZJx8Qw0PVzAqnHdo7yPe7ziL3
- rEkw==
-X-Gm-Message-State: AOJu0YzPseAUVGWEMnq79vmBlqrpcnOLk3wb88TxuErVzZ+JLwu+Zsdj
- XLO8HZsBdPwleqx1NBsDxQsuEmKTcSVr9FofNLQNav7HqRnLN2UiGdTpWzI6GWy941c=
-X-Gm-Gg: ASbGncsIkHA5iJ4lDzegQtEPPScGWMPvvPY6wABhbHUAlaUiPW6FhnyouZUtxXMAsLy
- U9DvilMwBiUXPfl3644fUwD8CsBoYxTHcyJ/JoMahvMsBiCSv61rN4amAGZdnwtqdLU8SQrPGVi
- KOqBRLp6hcF+oWr+qK439G0JWP+UI3dzkLCQKB2nXySlzVthNZ5es/t1yTmXvIsXVeolpGIRHhf
- u67RLbm9SKVN2yb2SvxS3PHU/+n8fshWyDd59gDLN+VCJlcoT0CH5opLKA0fAtvOh6kQMc3K26t
- 3fkKHK/UdFDtKEafC4iUQRLM6cJma9LCL1QyBkJDZcnBHt85nk4ssseo52MUiWNu8aG3yghGpPh
- Ft+gnqqAsi4g6qA9wuEYSS6QqcXUEzlyAFTWyKlpWGOZaVSJQYvssDeOC+bZM9ojQGfLbR2Cfr8
- mALt4pqTBjSxM=
-X-Google-Smtp-Source: AGHT+IE2qNr/q30ebycmhMlceAGc2dajThHvJTU7MJ5qh87QI3nwZsyZCdscUI0PK2zOi8h7LAHF+Q==
-X-Received: by 2002:a05:6000:3109:b0:42b:3b55:8929 with SMTP id
- ffacd0b85a97d-42b5935040cmr11772863f8f.19.1763395194100; 
- Mon, 17 Nov 2025 07:59:54 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f17291sm26858932f8f.32.2025.11.17.07.59.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 07:59:52 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B7FA05F76E;
- Mon, 17 Nov 2025 15:49:49 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 14/18] gitlab: simplify the ubuntu-24.04-aarch64 rules
-Date: Mon, 17 Nov 2025 15:49:43 +0000
-Message-ID: <20251117154948.4122164-15-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251117154948.4122164-1-alex.bennee@linaro.org>
-References: <20251117154948.4122164-1-alex.bennee@linaro.org>
+ bh=gHTgpEzHUXz1adi5KE/ydBVHYXdO1GNQEdl0OMaSsWE=;
+ b=kuwpmz5vb7KV9+MRM7HW9gbzyEwKem/7leFhYgyW0YA0jZqkWcA4csl+rC1X3uibmA
+ KGJIMUxOzZUz7fu+7QjbgxJfOGS/I34zh1dYxJo0+g66cX2/eTQGdMZJFrbJUQO0CCAP
+ RMHMhlBAT06Kmq8ML0sjbH/la0zz1AVhwy/h5JdIH8rVPPium73hgYIdaTgwEpLZbUbo
+ PYSXU8gKvoKM+F2JPuRedFuhgkoQg5G97UCIPMqCgfzWOvjVeou7Haq11B4vnuzicgZD
+ ko8Rf7AjZ8810c9V078DlC8Q9xUeqjtKok0sx6a3eFoLrQJfpZhGeMWkjuwBcHy777Fk
+ N65w==
+X-Gm-Message-State: AOJu0YwaSND8ZKilbWaow8MK+Q2d9IDXofy62zkgt8oiLg3OQBbFb9Xn
+ AC9HYelUBhtnwtt8/1xU9DXmrlLZTsg+hQJyDhERceZ/PoJ1/dLeYsSIlRpRmOcxklXtjwzpx0p
+ h/vpi6TB1VMgoQD5ZKXAPzH740WNucjgKs0bLsPLVbw==
+X-Gm-Gg: ASbGncsbvgqaKlfgB6OlHgY9k++PdpFwHLEdn3ZoLcceMA/8gFMSAcIjIlnIc1sgfmf
+ FqEcLORehgh1okuOYaVU6POI9kXW+GnXspLoVI6ttckEKANjEH+Y/NrJMlVMx2Um6F+UVBGgO89
+ 0cqfGuVlCCYntUzDBNRNiYhkT7id3AD6IsKBDGnwgKRGnokpq25OKGC1WL9jrWbJuJwJx7gWdQO
+ TyM7ui8x1VR+X5PV4kuVm1/rc6IrU8pK6xp4e/XYlhJYFGL08x9y5Stam6xKx5GkaqmGp28Hy5E
+ SeAnQGA=
+X-Google-Smtp-Source: AGHT+IEGLO/ClAuY29s2xR7oSDOkU3t5RgbnSsBgaSel7T4dRMslqbqi3exQa9lBMqONLyJl0QHuXTC5vk/gMiaagpE=
+X-Received: by 2002:a05:690e:1587:20b0:641:f5bc:6975 with SMTP id
+ 956f58d0204a3-641f5bc702bmr5468164d50.81.1763395191880; Mon, 17 Nov 2025
+ 07:59:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+References: <20251117154154.79090-1-philmd@linaro.org>
+In-Reply-To: <20251117154154.79090-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Nov 2025 15:59:40 +0000
+X-Gm-Features: AWmQ_bm4lmcRXwYzzA-plWaP0voGQ_CQJZDi5xEDbFMNSCdGvzVWRZftu1A8Dsk
+Message-ID: <CAFEAcA-e6fC6yaZP1WSV5qg6-LYYrSDFJik4yLPUPMUDjxQ39Q@mail.gmail.com>
+Subject: Re: [PATCH-for-10.2 0/2] tcg: Remove support for 32-bit arm hosts
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,91 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't need to duplicate the if rules to get the allow_failure and
-manual behaviour we want. Clean that up to keep all the rules in the
-same place.
+On Mon, 17 Nov 2025 at 15:42, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> 32-bit hosts are deprecated since QEMU v10.0.0; we already
+> removed support for MIPS and PPC hosts. Time for ARM removal.
+>
+> Based-on: <20251117140420.62193-1-philmd@linaro.org>
+>           "roms: Do not try to build EDK2 for 32-bit ARM on Fedora"
+> Based-on: <20251117153756.78830-1-philmd@linaro.org>
+>           "docs: Mention 32-bit PPC host as removed"
+>
+> Philippe Mathieu-Daud=C3=A9 (2):
+>   gitlab: Stop cross-testing for 32-bit ARM hosts
+>   buildsys: Remove support for 32-bit ARM hosts
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20251117115523.3993105-15-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+I would prefer us not to drop a deprecated feature after
+feature-freeze, please. This seems like it can wait for 11.0.
 
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-index ee13587d99e..6f950baee0d 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-@@ -46,26 +46,16 @@ ubuntu-24.04-aarch64-all:
-   extends: .ubuntu_aarch64_template
-   variables:
-     MAKE_CHECK_ARGS: check
--  rules:
--    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--      when: manual
--      allow_failure: true
--    - if: "$AARCH64_RUNNER_AVAILABLE"
--      when: manual
--      allow_failure: true
-+  allow_failure: true
-+  when: manual
- 
- ubuntu-24.04-aarch64-without-defaults:
-   extends: .ubuntu_aarch64_template
-   variables:
-     CONFIGURE_ARGS: --disable-user --without-default-devices --without-default-features
-     MAKE_CHECK_ARGS: check
--  rules:
--    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--      when: manual
--      allow_failure: true
--    - if: "$AARCH64_RUNNER_AVAILABLE"
--      when: manual
--      allow_failure: true
-+  allow_failure: true
-+  when: manual
- 
- ubuntu-24.04-aarch64-alldbg:
-   extends: .ubuntu_aarch64_template
-@@ -78,34 +68,21 @@ ubuntu-24.04-aarch64-clang:
-   variables:
-     CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
-     MAKE_CHECK_ARGS: check
--  rules:
--    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--      when: manual
--      allow_failure: true
--    - if: "$AARCH64_RUNNER_AVAILABLE"
--      when: manual
--      allow_failure: true
-+  allow_failure: true
-+  when: manual
- 
- ubuntu-24.04-aarch64-tci:
-   extends: .ubuntu_aarch64_template
-   variables:
-     CONFIGURE_ARGS: --enable-tcg-interpreter
-     MAKE_CHECK_ARGS: check
--  rules:
--    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--      when: manual
--      allow_failure: true
--    - if: "$AARCH64_RUNNER_AVAILABLE"
--      when: manual
--      allow_failure: true
-+  allow_failure: true
-+  when: manual
- 
- ubuntu-24.04-aarch64-notcg:
-   extends: .ubuntu_aarch64_template
-   variables:
-     CONFIGURE_ARGS: --disable-tcg --with-devices-aarch64=minimal
-     MAKE_CHECK_ARGS: check
--  rules:
--    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--      when: manual
--    - if: "$AARCH64_RUNNER_AVAILABLE"
--      when: manual
-+  allow_failure: true
-+  when: manual
--- 
-2.47.3
-
+thanks
+-- PMM
 
