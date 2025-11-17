@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 971DDCE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 22:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12BACEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 22:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL7so-00054y-V6; Mon, 17 Nov 2025 17:39:40 -0500
+	id 1vL7sr-00055y-LT; Mon, 17 Nov 2025 17:39:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7sg-00053U-IA
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:32 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7si-00053t-Iu
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7sc-0003Vb-QN
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:30 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7sd-0003Vx-SK
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763419156;
+ s=mimecast20190719; t=1763419162;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9XijziNlOnKQZVQqlX3I8vq+83B68kRlfGkDl8KnMyU=;
- b=TW509FFu1kv3VxdWDDZ7CA4vUe1j29PRg19mMVPU7h1uRGillo2WXyvDabqek7rrLZcI51
- WWejKQxX2xll8T1YvFgGJhkL85+GwFfmKb9edA58INS1Ncol8ocE29yMrUS5jxl/N50tXm
- cJuYfZoHpK0eWQc2rhhrFRQR8Ftnf+U=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ih8mt1S/dK6l1RZ22LUm8+7bTSCfVNi+19N02b7VVyM=;
+ b=Bw4R7YpCoOdLD5pJ5/jtNmXk+GGX5BRqmZznvCuhthAJqu/UK0Kzz8ablAJQM8d2JX9bl7
+ SVkPeT+wya9yggtSk85YcFj3UX6xGzjjlLOUpKHNtvKssP/qxwdjk+AjaCkoclA0bhKnmK
+ campLBJt7mtvtR5WC1HvodkikyK416k=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-46kKDZlxM1yAh5TZtb-ssw-1; Mon, 17 Nov 2025 17:39:15 -0500
-X-MC-Unique: 46kKDZlxM1yAh5TZtb-ssw-1
-X-Mimecast-MFC-AGG-ID: 46kKDZlxM1yAh5TZtb-ssw_1763419154
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4ee1b7293e7so82795071cf.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 14:39:15 -0800 (PST)
+ us-mta-248-6oUDAlreMeGMgMYWgEwjgw-1; Mon, 17 Nov 2025 17:39:21 -0500
+X-MC-Unique: 6oUDAlreMeGMgMYWgEwjgw-1
+X-Mimecast-MFC-AGG-ID: 6oUDAlreMeGMgMYWgEwjgw_1763419161
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4ed7591799eso143558281cf.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 14:39:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763419154; x=1764023954; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9XijziNlOnKQZVQqlX3I8vq+83B68kRlfGkDl8KnMyU=;
- b=CMjQuOoNUn4nmj1wV58CDEmDIY1FQCc980YmwVQAR95IsDWzJByOm6JesUvF3W8zOV
- vC5fWLIF8uXWMJQ/Tv7WL6pf16wapknczemTzbVkMwXEpuCPxWoNS7hDF+6/RCCIWyyt
- KXLa729qr9Cm0O7gZDUQI6r7X64seskLWuJVUigq3K5x/EjU04oYKMC89RjedJvwUVV4
- I9v1CfhSH0XdetOU369z3v+1h6XxNWEhDIY5kEoL+pSz0IO7EyUNMula7/8Y21Fxqa3M
- dfWFhvCQQiIhptp+oI685cAoUSIoLReTczAuZ2xnSnRBQXGAK1gBcjuU5Fxdcv2tnJcC
- 6pIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763419154; x=1764023954;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1763419160; x=1764023960; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9XijziNlOnKQZVQqlX3I8vq+83B68kRlfGkDl8KnMyU=;
- b=GIXNRT0sfedYmnGYRUJZo4+oU72TqfwlMikytWxlcF7/v7k84KyoJ8+IiHdQNrxgzT
- nc2RgKtvhdiclOAVxX5ZjR0HVuUiJpr5LN1WCLMv9deSYPUNwwfpskCoFo7fkheFqmzb
- LhFUXP41KEEw32o9RuCHremXrtcHcCkzV5CFDbAov5QWf7Z5TzCuIaI0qTRDoCiakPhL
- lO0dmxjSoDPUwwRzNsPnAVWUh7P//0fuWGq7YvactBSfv8KZCHKe3/YeSBJjMjuelw3l
- uHLgkrhYsu4BhvZEmxUdB0uSdwsF+Bp16CzP5qtxGU4fkYcN6uacvFczRtPXf73DeHVw
- gDIQ==
-X-Gm-Message-State: AOJu0YxkNh6Dj/IY9nP3KVnEdM6f0zow4RLre73twUfiq/Fc/WLoojbV
- 6lCp9XjAYgDKlxRfMc2iy0uuTI5LsEbGOOgbwp3w62oNrryWPgBjLURurRnaGPzm0YU//KwPKsb
- R6ncMgg9Xai04L2EPToraTR+dvcPKDLHbY8jc/yA7lXV0pjLzDAG5pUwTB1EaPuYYkaKdvLDTbk
- a6jDC60SfiiR/wm/NdfoCQ2Tb6DO6GZLhLAFXWTg==
-X-Gm-Gg: ASbGncuHlbn7edaI8rpICypDyIPenGFSocx1fgdV7WqR4l3KFsQI46yqRv7W2CmSSAx
- ie8N/4KAJDpvYF88ATgfh+T7wuJ47OHudY1TW09QRdBz0s7mSicdhEvJk4ri5h6re7BjrMe4l41
- zTxd2/9TZWUUnWoiuBoIubeybOuTUSWNw8ZtqpjebRAJ+gJ+bvVS2tq9c01H+7Q/BJ3J8c4W5WJ
- 6YgaVQASeFDyEMBBmDHyu0nszbFFJH0Ci8iKnUDJ/FSApTveM0lmApTNxMBVMxJ/tGky0ulp4wf
- Q+u3pJG6wUPIlfz9DJbhU2xX6OK59LhCRF5epM6cK28TBb5FeN6YxnNgRepocsvYVFV9D103Vng
+ bh=Ih8mt1S/dK6l1RZ22LUm8+7bTSCfVNi+19N02b7VVyM=;
+ b=ATbna1Fsu90DzMAJKv/WyJ6oR/kdMBoGUVzimeb9IRQWCGnC70mvsSaFmkYlylolGf
+ AQgk9MAhi11iZIFNpL4QYlImoh4xuxLeEvxfJDJ4DJ/Dea+1MJLnypmAJfuRewzwhHGS
+ t7W/ZvIpzgd4h1nDcD2BZNQcAe8WoDgkZCB6FfoV7df8GekPJTmvMSBRi8PBjJYlb5b7
+ czLtcbq9WHp4TW4qtTtADT/nZj/zqEQ2duXzTUQbxQFq7iYh4tuN5ryO6bai6X7WFUxN
+ FyNRldIGhlbCe1Mus4J+O9gYEHc2iHGgK8yicpQke8dhyT48c4aczk7iVrcSV+OHlEIr
+ Ud8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763419160; x=1764023960;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Ih8mt1S/dK6l1RZ22LUm8+7bTSCfVNi+19N02b7VVyM=;
+ b=hbypg8ruznOH3qQv+hmS0MySPaEabQlNxwPsZCaya1CXYbnk5qmLtdYA94kbXCtv6E
+ gGEdkGAjEzMPIOa9Ia/1TAfCVpLkxNv0iQ8i0U+RMUAAGxJVcf31jsHdqX0VP0kHl5hV
+ GbpBXkm9ILl6Oks+zYKlXGTyKMgqW6HFkWk8fao63+wVXRHoeo8ad/G1HLVslmcSDUvT
+ gtNRCPXKQPl0vt/3TeuOxkUfawTLGvcSdOBpiGY6OXDoVIxnRTe0C8ktQw91aF339jX7
+ 6PNhR2yAob0rtk7xrkbCs5KV8gKCLzuXv2G3EDQYJaX51t9Y9vIL5P9Is/zcnhjpVo9Q
+ aO9g==
+X-Gm-Message-State: AOJu0Yzxx+m/iLLg0lCFy97p63cXcPE0/kPgAXOTXphAiNnCTMtsOVb/
+ TVPKb+lQZbZLPi6g+KM3zA4JRASWfasQTGTtU5cC5t7T5h6ppL8h30ZaKR9lUsZf6rcJd1jPFjt
+ H2ZUB2BWj+UGHe5Ui+yQwti73ZHKDfw7XOeEQ6oOTxSy8ZRqFtTSn+oFaXZ9oYZyLe/sY1nhAqm
+ lDRssqhAPoKWVm826VZWxr4wbTqh1ilXmXhjn89A==
+X-Gm-Gg: ASbGnct0psEZ+04nPUf0flFsVqvwzI9hVEN2VVE4UNxGqx0ascWOSrG78T3I00yKB08
+ jqA0j0OXmHZcUNfFK7PJSutsK0mmjc5tVthYAE0q2CJzqqV6nWGmivpPdzK+JOCUL05JJuAsgy+
+ D6dNQCw8w3Crf4TdSMkYYHsPteBSyp/c0gpXDsHh0fmNljFLEJeFlu8FFJQ+gyFj5zX5aI8OWBn
+ Sn4gZq0bJc4foMYH9jh+FfrMbRqWcf4OG8sSbFH2HnwBEJLzFVxgUp8i5SInuopwehxSHXZ7bCs
+ 1phWz7FG/0yoytZz8g6TS8ZeaABl5zLgI4psUXVRJ/DXvb1APryybDsRmrJAQEeSHL4QG4jxzNg
  =
-X-Received: by 2002:a05:622a:190c:b0:4ed:aa7b:e1b6 with SMTP id
- d75a77b69052e-4edf2044e57mr198996861cf.12.1763419154245; 
- Mon, 17 Nov 2025 14:39:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGG7wxJw20nKjWhdEzODr68WvE82TcZbVOWiCa7V+An6/3028DCKtK36HZCMGJJA51eH/LGAw==
-X-Received: by 2002:a05:622a:190c:b0:4ed:aa7b:e1b6 with SMTP id
- d75a77b69052e-4edf2044e57mr198996571cf.12.1763419153821; 
- Mon, 17 Nov 2025 14:39:13 -0800 (PST)
+X-Received: by 2002:a05:622a:4a15:b0:4ed:df82:ca30 with SMTP id
+ d75a77b69052e-4edfc875136mr175173791cf.13.1763419160227; 
+ Mon, 17 Nov 2025 14:39:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGSgbJNRUEz0YasY2a4WtBYI9gwZaFtYrHBh9hcW3zoxmt5sTrzVtoZtqSWPCg3uNne1Z3wKQ==
+X-Received: by 2002:a05:622a:4a15:b0:4ed:df82:ca30 with SMTP id
+ d75a77b69052e-4edfc875136mr175173391cf.13.1763419159651; 
+ Mon, 17 Nov 2025 14:39:19 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4ee1c21ea34sm37693521cf.30.2025.11.17.14.39.11
+ d75a77b69052e-4ee1c21ea34sm37693521cf.30.2025.11.17.14.39.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 14:39:12 -0800 (PST)
+ Mon, 17 Nov 2025 14:39:19 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 0/4] tests/migration-test: Introduce mem_type
-Date: Mon, 17 Nov 2025 17:39:04 -0500
-Message-ID: <20251117223908.415965-1-peterx@redhat.com>
+Subject: [PATCH 4/4] tests/migration-test: Use MEM_TYPE_MEMFD for
+ memory_backend
+Date: Mon, 17 Nov 2025 17:39:08 -0500
+Message-ID: <20251117223908.415965-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20251117223908.415965-1-peterx@redhat.com>
+References: <20251117223908.415965-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -116,27 +120,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a small refactor series to merge memory_backend and use_shmem
-parameters that migration-test uses to specify memory types.  No rush for
-having it for 10.2, but since this is test code, we can also consider it as
-the current two parameters are definitely confusing..
+The only two users of memory_backend as of now (cpr-exec, cpr-transfer)
+uses memfd as backend, now we fully support it.  We can move memory_backend
+usage to mem_type and drop it.
 
-This series will also make guest-memfd support extremely easy to add too.
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ tests/qtest/migration/framework.h |  5 -----
+ tests/qtest/migration/cpr-tests.c |  6 ++----
+ tests/qtest/migration/framework.c | 10 +++-------
+ 3 files changed, 5 insertions(+), 16 deletions(-)
 
-Comments welcomed, thanks.
-
-Peter Xu (4):
-  tests/migration-test: Introduce MemType
-  tests/migration-test: Merge shmem_opts into memory_backend
-  tests/migration-test: Add MEM_TYPE_SHMEM
-  tests/migration-test: Use MEM_TYPE_MEMFD for memory_backend
-
- tests/qtest/migration/framework.h  |  26 +++++--
- tests/qtest/migration/cpr-tests.c  |   8 +-
- tests/qtest/migration/framework.c  | 113 ++++++++++++++++++++---------
- tests/qtest/migration/misc-tests.c |   2 +-
- 4 files changed, 104 insertions(+), 45 deletions(-)
-
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 9dec21c344..ed85ed502d 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -134,11 +134,6 @@ typedef struct {
+     bool suspend_me;
+     /* enable OOB QMP capability */
+     bool oob;
+-    /*
+-     * Format string for the main memory backend, containing one %s where the
+-     * size is plugged in.  If omitted, "-m %s" is used.
+-     */
+-    const char *memory_backend;
+ 
+     /* Do not connect to target monitor and qtest sockets in qtest_init */
+     bool defer_target_connect;
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 70f8e69633..2a186c6f35 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -89,8 +89,7 @@ static void test_mode_transfer_common(bool incoming_defer)
+         .start.opts_source = opts,
+         .start.opts_target = opts_target,
+         .start.defer_target_connect = true,
+-        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
+-                                " -machine memory-backend=pc.ram",
++        .start.mem_type = MEM_TYPE_MEMFD,
+         .listen_uri = incoming_defer ? "defer" : uri,
+         .connect_channels = connect_channels,
+         .cpr_channel = cpr_channel,
+@@ -235,8 +234,7 @@ static void test_mode_exec(void)
+     MigrateCommon args = {
+         .start.only_source = true,
+         .start.opts_source = "-machine aux-ram-share=on -nodefaults",
+-        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
+-                                " -machine memory-backend=pc.ram",
++        .start.mem_type = MEM_TYPE_MEMFD,
+         .connect_uri = uri,
+         .listen_uri = listen_uri,
+         .start_hook = test_mode_exec_start,
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 4d1663356a..81eae09c92 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -366,13 +366,9 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+         ignore_stderr = "";
+     }
+ 
+-    if (args->memory_backend) {
+-        memory_backend = g_strdup_printf(args->memory_backend, memory_size);
+-    } else {
+-        mem_object = migrate_mem_type_get_opts(args->mem_type, memory_size);
+-        memory_backend = g_strdup_printf("-machine memory-backend=%s %s",
+-                                         MIG_MEM_ID, mem_object);
+-    }
++    mem_object = migrate_mem_type_get_opts(args->mem_type, memory_size);
++    memory_backend = g_strdup_printf("-machine memory-backend=%s %s",
++                                     MIG_MEM_ID, mem_object);
+ 
+     if (args->use_dirty_ring) {
+         kvm_opts = ",dirty-ring-size=4096";
 -- 
 2.50.1
 
