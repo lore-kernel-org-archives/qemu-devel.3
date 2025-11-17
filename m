@@ -4,70 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022C6CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F35CEBF61
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKw0L-0002RA-3S; Mon, 17 Nov 2025 04:58:38 -0500
+	id 1vKw0D-0002QR-Lk; Mon, 17 Nov 2025 04:58:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vKw0I-0002Qx-Sa
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:58:35 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vKw0F-0000TK-Vw
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:58:34 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Cx77++8RppUWQkAA--.10769S3;
- Mon, 17 Nov 2025 17:58:22 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJCxdOS58Rppr+41AQ--.21303S3;
- Mon, 17 Nov 2025 17:58:22 +0800 (CST)
-Subject: Re: [PATCH 1/1] target/loongarch: Fix some exception need't update
- CSR_BADV
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20251117075042.1831667-1-gaosong@loongson.cn>
- <60c5e801-2ddf-d212-55bd-bb7d97e28776@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <87b8da14-f9bb-3044-da0e-8407d7eb80d4@loongson.cn>
-Date: Mon, 17 Nov 2025 17:58:39 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKw0A-0002Q5-9C
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:58:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKw08-0000Pv-2h
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:58:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763373502;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Mv+ABs1/aqXKwYa9fnN8KDfkMvmLi7ermffaowrPFDI=;
+ b=Kvs/geW6neyyctLel50jBmYmqVFOdQVlfBMX0VIIL8hsxpUcIX2HBQwHpNHD33KUA9yw0u
+ ZXkrCVoyGseezKnu/OApUavD8dj/H9FkRTsiaBuRik3F7Z5ibyY4TJBqso8AAtTSSn1YrZ
+ 0za0RQAiHY/OODvPzdg9wOFDk5gBsuQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-BEoFJXW7McupWZgGYhlRBw-1; Mon, 17 Nov 2025 04:58:20 -0500
+X-MC-Unique: BEoFJXW7McupWZgGYhlRBw-1
+X-Mimecast-MFC-AGG-ID: BEoFJXW7McupWZgGYhlRBw_1763373499
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42b2fb13b79so1917384f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 01:58:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763373499; x=1763978299; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mv+ABs1/aqXKwYa9fnN8KDfkMvmLi7ermffaowrPFDI=;
+ b=QRnUwKax7Buih/0PoD26aJJ8lW+wdM1dmobrUCrXpwkI9nIBi+5JwtAhSZ7au7sJch
+ fqCg8VcrAgM00aBxOZMZ/MOChyFSzdHnjj+pd7YgScvJ96INL6zV9cwHt4rXhQD1Kyvb
+ u2vU9AGn14jasPqJvzxc9FxdHP6ewWWkpxqva43EvEll3aiPFtijqvw0SaHF/rKueyO1
+ iVMPCl5Uk1gm2WHtqeS5MxmTx42kLf0VzHHmyWhj45I9TqiA2317diPjnyH7Znj0lHFL
+ Cnn1qAtnTJA+0THkNeAa1dcTUptv050mR+qqKURMqV7dF0rlWlwfMs1A7JTX6n8w8rlA
+ cx3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763373499; x=1763978299;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Mv+ABs1/aqXKwYa9fnN8KDfkMvmLi7ermffaowrPFDI=;
+ b=Oju/u4/ayCVWkorszWezN96YI1o+4drauU1e8XeGf6pVb8AKjzKtATsGLeicq6OfuV
+ BI5Xn9a3g4j7W5s+VC8gW+2X56uzG8kJSqXD4z3s0pzNWP9IdEuQ9bbzoVK5M0JAeIAT
+ urJU30YB5KgT8sqqNnsMZfEreDlZ3J0iN4fPptmDOF448S8A3WvyApQ1x0d/DP3kFBaA
+ av0QaDaTN0m5Qqyt1Cb85OWF6nAQErA3Xa8ckphy3SrUaxVrJXJXGgi3RgY/95Mhcpnu
+ duEvv2x7vx8H6291kxAzw2RNJ2MhfiSo0+jm01mU2CvCg7v/gbTsjUXC/meogwSaEKg5
+ O1Cw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdzj4mF4l/936lha/ukxCtIpbbUfYHDyIKBAUu+MZd8iSb/TsTzv3dFJyP4UMUZ3/hjITHM3MTu/Vu@nongnu.org
+X-Gm-Message-State: AOJu0YwUNpq3SW+fZESPC/yjd14bOYsxiI6I6xTC9LTZWGwOUZWtPEet
+ uipqpVpVOBCR0V47ZnTcn5UU4DP/9hxX1YLdNsr3zdyEa/pazWLLzXvVuLlfHTMMJX7tbPt5e/E
+ 4V6sLocKMfLQQ1qfmFKUS24YaY00V+ivm2pZi3aLo8Re7XHXBJjqcTYIkEMY1K8L9
+X-Gm-Gg: ASbGncvzRL7BZqDcVBWyV9V9LAlwI1PcOUyvUHJlHhv7Fo8lTBGchSVWbIIZfBUBRfN
+ HUDfFpbYYV0S5chrleljQ7fr/tXqsQ8tkuWOMT0Kbr5mw80yFoSrHu6lkiROXF06He241PNCjQm
+ GvA0m7z7+98TTKq6LQjfY3ULA5qktwmRKxZwjHWHF1RsAfszutFjaU458JzWPAHX/IhyT8GEcxI
+ g4WbXc/hXIQJbOIw25eoNcmtBDL/FWfsNnFJi9vYO6yaBy1E1EsQEDFIKFudx396HtMA9TDrh0M
+ qlPqa9sexPMHFV1adf7FRfBw0hp+rZw/9IiwmV+RoWwXFJewKjMSZ4gFBm1JZiLeMu8NxR8Ip8G
+ 6dGfT7f842ZiVH+yuikM=
+X-Received: by 2002:a05:600c:a49:b0:477:55c9:c3ea with SMTP id
+ 5b1f17b1804b1-4778feaa94amr95560595e9.35.1763373499203; 
+ Mon, 17 Nov 2025 01:58:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUAGkKB3PJ0ez/r6G8ofkqaQVy8V1bxLdxogwN5gAPLflGK8si6AWTCXMhsuNoie48HG1+MA==
+X-Received: by 2002:a05:600c:a49:b0:477:55c9:c3ea with SMTP id
+ 5b1f17b1804b1-4778feaa94amr95560255e9.35.1763373498459; 
+ Mon, 17 Nov 2025 01:58:18 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-39-63.inter.net.il. [80.230.39.63])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4779527235esm158593855e9.8.2025.11.17.01.58.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Nov 2025 01:58:17 -0800 (PST)
+Date: Mon, 17 Nov 2025 04:58:15 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Fabian Vogt <fvogt@suse.de>
+Cc: Gabriel Somlo <somlo@cmu.edu>, qemu-devel@nongnu.org,
+ linux-kernel@vger.kernel.org, Takashi Iwai <tiwai@suse.de>
+Subject: Re: [PATCH v2] firmware: qemu_fw_cfg: Do not hard depend on
+ CONFIG_HAS_IOPORT_MAP
+Message-ID: <20251117045307-mutt-send-email-mst@kernel.org>
+References: <24142953.6Emhk5qWAg@fvogt-thinkpad>
 MIME-Version: 1.0
-In-Reply-To: <60c5e801-2ddf-d212-55bd-bb7d97e28776@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJCxdOS58Rppr+41AQ--.21303S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGr4rKFW7Ww47uw4fXF13Awc_yoW5AF1UpF
- n2k3y5JryrK3WvqryxJF4UtryUWw4UAa17Jr1Yqa48JF4Syryjgr4UXr4qgr17Xr4rJ3y7
- ZF47JrW3Zay5JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
- e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <24142953.6Emhk5qWAg@fvogt-thinkpad>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.469,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,91 +120,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/11/17 下午4:48, Bibo Mao 写道:
->
->
-> On 2025/11/17 下午3:50, Song Gao wrote:
->> According to Volume 1 Manual 7.4.8, certain exceptions require 
->> setting CSR_BADV,
->> but the code does not match.this patch correct it. and the exception 
->> PIL,PIS,PIF,
->> PME,PNR, PNX, PPI already update on raise_mmu_exception(),these are 
->> need't update.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/tcg/tcg_cpu.c | 24 +++++++++++++-----------
->>   1 file changed, 13 insertions(+), 11 deletions(-)
->>
->> diff --git a/target/loongarch/tcg/tcg_cpu.c 
->> b/target/loongarch/tcg/tcg_cpu.c
->> index 9d077c56d9..7f94c183c4 100644
->> --- a/target/loongarch/tcg/tcg_cpu.c
->> +++ b/target/loongarch/tcg/tcg_cpu.c
->> @@ -109,10 +109,22 @@ static void loongarch_cpu_do_interrupt(CPUState 
->> *cs)
->>           }
->>           QEMU_FALLTHROUGH;
->>       case EXCCODE_PIF:
->> -    case EXCCODE_ADEF:
->>           cause = cs->exception_index;
->>           update_badinstr = 0;
->>           break;
->> +    case EXCCODE_ADEF:
->> +        update_badinstr = 0;
->> +        QEMU_FALLTHROUGH;
-> why is there such modification with EXCCODE_ADEF? what is the problem 
-> with exception EXCCODE_ADEF?
->
-EXCCODE_ADEF also missing  update CSR_BADV.
->> +    case EXCCODE_BCE:
->> +    case EXCCODE_ADEM:
->> +        env->CSR_BADV = env->pc;
->> +        QEMU_FALLTHROUGH;
-> With EXCCODE_BCE/EXCCODE_ADEM, if CSR_BADV is missing, please use 
-> another patch.
->> +    case EXCCODE_PNR:
->> +    case EXCCODE_PNX:
->> +    case EXCCODE_PPI:
->> +    case EXCCODE_PIL:
->> +    case EXCCODE_PIS:
->> +    case EXCCODE_PME:
-> What is the problem with EXCCODE_PNR/EXCCODE_PNX exception here?
->
-These exceptions already update CSR_BADV on raise_mmu_exception(),
+On Mon, Nov 03, 2025 at 03:11:05PM +0100, Fabian Vogt wrote:
+> Some configs have CONFIG_NO_IOPORT_MAP=y but support qemu_fw_cfg over
+> MMIO. Currently the qemu_fw_cfg module can't be built for those as it
+> needs HAS_IOPORT_MAP=y for ioport remapping.
+> 
+> This patch allows to build qemu_fw_cfg in those cases. If
+> CONFIG_HAS_IOPORT_MAP=n, qemu_fw_cfg is just built without support for
+> ioport based access.
+> 
+> Signed-off-by: Fabian Vogt <fvogt@suse.de>
 
-and the PGD value frome CSR_BADV, see 7.5.7.
-"When CSR.TLBRERA.IsTLBR=0, the bad virtual address
-information in the current context is located in CSR.BADV;"
 
-we shoudn't updat CSR_BADV here.
+Thanks for the patch! yet something to improve:
 
-Thanks.
-Song Gao.
-> Regards
-> Bibo Mao
->>       case EXCCODE_SYS:
->>       case EXCCODE_BRK:
->>       case EXCCODE_INE:
->> @@ -121,16 +133,6 @@ static void loongarch_cpu_do_interrupt(CPUState 
->> *cs)
->>       case EXCCODE_FPE:
->>       case EXCCODE_SXD:
->>       case EXCCODE_ASXD:
->> -        env->CSR_BADV = env->pc;
->> -        QEMU_FALLTHROUGH;
->> -    case EXCCODE_BCE:
->> -    case EXCCODE_ADEM:
->> -    case EXCCODE_PIL:
->> -    case EXCCODE_PIS:
->> -    case EXCCODE_PME:
->> -    case EXCCODE_PNR:
->> -    case EXCCODE_PNX:
->> -    case EXCCODE_PPI:
->>           cause = cs->exception_index;
->>           break;
->>       default:
->>
->
+
+> ---
+> v2: Guard ioport_unmap as well, which makes it work on archs like arm64
+> in the !PCI case. Unlike arm, arm64 has no stub for ioport_unmap.
+> Reword description.
+> 
+>  drivers/firmware/Kconfig       | 1 -
+>  drivers/firmware/qemu_fw_cfg.c | 7 +++++++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+> index bbd2155d8483..91442f85f0f0 100644
+> --- a/drivers/firmware/Kconfig
+> +++ b/drivers/firmware/Kconfig
+> @@ -122,7 +122,6 @@ config RASPBERRYPI_FIRMWARE
+>  config FW_CFG_SYSFS
+>  	tristate "QEMU fw_cfg device support in sysfs"
+>  	depends on SYSFS && (ARM || ARM64 || PARISC || PPC_PMAC || RISCV || SPARC || X86)
+> -	depends on HAS_IOPORT_MAP
+>  	default n
+>  	help
+>  	  Say Y or M here to enable the exporting of the QEMU firmware
+> diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
+> index 0eebd572f9a5..fa4385339824 100644
+> --- a/drivers/firmware/qemu_fw_cfg.c
+> +++ b/drivers/firmware/qemu_fw_cfg.c
+> @@ -204,8 +204,10 @@ static void fw_cfg_io_cleanup(void)
+>  		iounmap(fw_cfg_dev_base);
+>  		release_mem_region(fw_cfg_p_base, fw_cfg_p_size);
+>  	} else {
+> +#ifdef CONFIG_HAS_IOPORT_MAP
+>  		ioport_unmap(fw_cfg_dev_base);
+>  		release_region(fw_cfg_p_base, fw_cfg_p_size);
+> +#endif
+>  	}
+>  }
+>  
+> @@ -258,6 +260,7 @@ static int fw_cfg_do_platform_probe(struct platform_device *pdev)
+>  			return -EFAULT;
+>  		}
+>  	} else {
+> +#ifdef CONFIG_HAS_IOPORT_MAP
+>  		if (!request_region(fw_cfg_p_base,
+>  				    fw_cfg_p_size, "fw_cfg_io"))
+>  			return -EBUSY;
+> @@ -266,6 +269,10 @@ static int fw_cfg_do_platform_probe(struct platform_device *pdev)
+>  			release_region(fw_cfg_p_base, fw_cfg_p_size);
+>  			return -EFAULT;
+>  		}
+> +#else
+> +		dev_err(&pdev->dev, "IO region given but CONFIG_HAS_IOPORT_MAP=n");
+> +		return -EINVAL;
+> +#endif
+
+
+
+I do not like ifdefs spread all around the code.
+
+Don't these arches provide stubs so fwcfg can just
+have same code, with ioport stuff eliminated by compiler?
+
+
+If not, stubs can be added to fwcfg as last resort.
+
+-- 
+MST
 
 
