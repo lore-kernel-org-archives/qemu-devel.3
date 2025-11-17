@@ -4,138 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA5B5CEACEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E49CE8D6B
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 05:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKsEH-0002nW-IP; Mon, 17 Nov 2025 00:56:45 -0500
+	id 1vKsEM-0002pb-P9; Mon, 17 Nov 2025 00:56:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vKsEF-0002mY-Rv
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 00:56:43 -0500
-Received: from mail-eastusazon11011010.outbound.protection.outlook.com
- ([52.101.52.10] helo=BL2PR02CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vKsED-0006DK-Rm
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 00:56:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aaaQRXHai0uPzfTB9pvANGH40rOD8Dkv3V1875dC9vUvnMlmNytBO3wIdw7RKibGweZfiHBF5yPUX9BAe+/tRJzeoX2iVzD2QgP8VmP1I91e2AOADBuFHYtlRfH1gcRm8ZWmwzipGJZ9tWs9kEspPcyjyLvL1OaArLOy94pZrjp1THnuwihEiMoEGZvwaO4pW9ud/OKJSW36L3quojLTzNaSbtypBFHb56axSghURf2Tj7KGvA4pfJM1PtPou/x2X/8kfXTjbI7aCeeDhetGKzwnCbb1xnY7fklHabvNjQpnV+NZC1zySQvALsUgnUs+rMespEZpZjHF10L3MdkrYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=igDiKbQQ5D5R0mAyAbw09aoOUYFI+OPKAxqBaafkLE4=;
- b=l3fbvhhV/Me+CZZE1ndxuuSiSXTaz97f03reoy3lQ65j8Apy1Xy4dmF/Fmek9RWARDC5hbgd1K9ZEKvZf7au02rb2flrhf9uY3z/NrNYa+0hOL2oW2krkgVM3er6CkwGWjdXUu6JmdAIEpHZum7Lxf6e30oTGpRLEvXYk0i3jo4MOnBucgltdCZrIrQHBeFoUTivJGb8qo9jvL8oL4vHUM5g6SOMDbnCslxd2IYpiuk3LlmOd7hYnaKTAlQFnxpKy3gj7DZp7yURO2hNAF+L/XRTfRI7hZJQVBNTTL9ZSfOniZvGlrvTQF09jBPeqzSB3JYDXZqqh3n4nAZIXixN0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=igDiKbQQ5D5R0mAyAbw09aoOUYFI+OPKAxqBaafkLE4=;
- b=dSmJzsmKEMJ2Btw06cOeLlX8wFJezLqpdrwizuiIuEim5dmzjjOoBMcRMTOAFlaiKDYGIjVW78PnADzV2pfBbElCMXStchl9+u+pDGNGVCiwB9CLI15Lr6DVbxHuDSbU+rHAHKSj5pkln/bpPZmUIs88sPL7dfgQn2xUXk9j/UU=
-Received: from CH0PR03CA0288.namprd03.prod.outlook.com (2603:10b6:610:e6::23)
- by SA0PR12MB4432.namprd12.prod.outlook.com (2603:10b6:806:98::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.19; Mon, 17 Nov
- 2025 05:51:34 +0000
-Received: from DS3PEPF000099D3.namprd04.prod.outlook.com
- (2603:10b6:610:e6:cafe::dd) by CH0PR03CA0288.outlook.office365.com
- (2603:10b6:610:e6::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.22 via Frontend Transport; Mon,
- 17 Nov 2025 05:51:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- DS3PEPF000099D3.mail.protection.outlook.com (10.167.17.4) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.9 via Frontend Transport; Mon, 17 Nov 2025 05:51:33 +0000
-Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 16 Nov
- 2025 21:51:30 -0800
-From: Honglei Huang <honghuan@amd.com>
-To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>
-CC: <odaki@rsg.ci.i.u-tokyo.ac.jp>, <mst@redhat.com>, <cohuck@redhat.com>,
- <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <Ray.Huang@amd.com>, "Honglei
- Huang" <honghuan@amd.com>
-Subject: [PATCH] virtio-gpu-virgl: fix error handling in
- virgl_cmd_resource_create_blob
-Date: Mon, 17 Nov 2025 13:51:12 +0800
-Message-ID: <20251117055112.99046-1-honghuan@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vKsEK-0002ov-I0
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 00:56:48 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zzyiwei@gmail.com>) id 1vKsEI-0006F9-SH
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 00:56:48 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b736cd741c1so401599766b.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Nov 2025 21:56:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1763359005; x=1763963805; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RxNm03b5xtibms/VZqYHKyahpCGLpr6A87TWKYMwtNA=;
+ b=TifvB1AkZB2dy2zOAEHyc4TMJ6bCDgbFfBs9xrw9n1wnp8vGBTsO/wZrIAAGF4uMJD
+ TPI3UaIdy6qXtMTqrsjFfeDkZm63gmoFkfrKgZFbezhgOkk2rTCMwQ1cLAwAQy2J0hC7
+ dE1ByEmQnd9f5N3nDH+fuXFxRXRR7D8oYJuad18GZYDCtIno84O+7kpvf9W4dK0Kn/Nu
+ qUNm2jBQ2yb3YwMiFVGp04nOLSILYVZqrNlnvQlJoTulQDiO5PX8DgBpAbHiZCuFqx/B
+ NCL4FIeW61dawv84am4yOYH306TfzMY5HrtEpZ+m1IhuHlIM86/czLVmdR3CJ4v0UOzV
+ 2q0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763359005; x=1763963805;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RxNm03b5xtibms/VZqYHKyahpCGLpr6A87TWKYMwtNA=;
+ b=TjJE2UaJPkY9eB1fHTPpzmGalXpzJgO0xLJOdbeKeH9UDePit2pOAeniZXbtD4lT62
+ Du0nIIgrpBk0xKHo8znTbj2vow+AgmrOwcDAFtGcsXpEt3hkEjRS1nJwvE0szvWSA40Y
+ v47n2qiWqTqbh0zq6Al/YKol0sCJ3TjzWTb/yZweYNbS+QbW2npl7jFRKTyT1189wyz2
+ CjjYOE0WvxEGSfGlmPD3/o6DYRBNysB7Z2sFmQcRVA/V4Kaa35aUmGgapf96R2MaAcyL
+ FBz4kh6813SGZUDx1JfOXgZ1r78qaboo7oZchWVUJe8kbUC80HhIR9cHQNpQSBInIlZY
+ trAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUt59FQjfZ2wj4c4igZoLL2MWynCOzFD5zOcJlsUdRhI6ZtTlNRerQzogOeseNn2GrRgnXeVS35Y4xm@nongnu.org
+X-Gm-Message-State: AOJu0YxHL6GuAV+G8DqjpIdJaygoHhRpHV41n1fR8LCwkrYa4BEpLl4R
+ K60c7ufKRPCQiQ8ITSKoXmdOz5b05EQY22dTxGn3HRUkbnNlIDZLmuJ8wcZecMLyCTmxoKbSd62
+ uk1r3XwHRGyrryEahsRicv3PJfGX5xBc=
+X-Gm-Gg: ASbGncvFAq2AyZr63nvE7V+jVnuNnXpCtlx4lIpfwndwwUztU7+xAqk8DmHN46AM2h4
+ 6CtAQyU2zPtbcV1fnJMh4w4nIIjZQ8YwH2BeMN3qhLhcN2DyCZd1FL4e6Qf+RfIjz1rtcIKTc2F
+ DL0NAiNzRvYRcifwRp577UDPaer7UaOASg52SCTVIDy/wy9iS/9qR1s3V8vQP8I2AbwRgcy3ZHF
+ GiIotIGd/myohxab6OBEq5jTRWmmAKpQ0Sbj/EE25mS3N3ScgfgnrR/+Nq0nvsHn690xnZXS34A
+ kXRZFjalsy3dwOd1MPZq6+8f36KQ
+X-Google-Smtp-Source: AGHT+IGU9ADznqtlsioPPNJZsXuo31Arze6hpQ1NHEk9zqEaEwBdwN/paVSK0CeomXaPLbxGkJ4q8uy3I85g6Knhtn8=
+X-Received: by 2002:a17:907:3c82:b0:b6d:5df7:3490 with SMTP id
+ a640c23a62f3a-b73677ee60dmr951452566b.1.1763359004788; Sun, 16 Nov 2025
+ 21:56:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099D3:EE_|SA0PR12MB4432:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3c3575d-2f90-426f-eeae-08de259d5d0f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?XyLra6SV/wxnVYaiCEVRgVzL3GDFVZYX3bWLEd2G5et175kyj14IOgRqUE/s?=
- =?us-ascii?Q?opDXfwfvPizlouFwMqxkiMrlUMMT+sZFWDPNAQscr5HbEqtpYABB+1LzB3Q5?=
- =?us-ascii?Q?NJKLEBKoWaFCfyxcvRhWbmLpFhuErWwwFcLcHlKZBQbou80tnr3+EKTEC6Qa?=
- =?us-ascii?Q?rdsAJoMw/IK7sjvdCBy3VeK7S+4v3ggpC1JOdGFFrZ2EMmIc82Qy3n5W8V4K?=
- =?us-ascii?Q?KKDsgzTTkE6wEnw85wGfiN8vjbKpEBbS7Rq49Hc8IHno4mxwN9/4elYfac3P?=
- =?us-ascii?Q?hWFMxEnMbEdSvdjQbHFb9nEq+EKpSM6OMruJOOHnA7Nuza+smwMNpSUa5NtN?=
- =?us-ascii?Q?scvjy+aaychwtEFJRoTJx+j/sMzyDVD6ejGqcxAprcht2hh1q4Gx9yq3cAtZ?=
- =?us-ascii?Q?7JvbT5RFBAhYHiw4GWY6Il2X8aeuQunJjLo7nsL9p8dZzWne6TjNUmIxS0E/?=
- =?us-ascii?Q?iQeQlgvg/eRV1YgAfdlDpSQYxQ9hXdaVEVXUNRdKTXI1/L1KQqXSOvJ8omnN?=
- =?us-ascii?Q?H1ds4cSG5CrMs43HPP0W/Ey1SDTpCu7Eeba+yBazdiDRC5kV3yYUERRomWsr?=
- =?us-ascii?Q?N+z3bYUI3fznkzAUmWWKwJsFVuCfCx6Uhao44HQEFmMy3bHGqkRAqm6htGUl?=
- =?us-ascii?Q?VYxBofb/NDeoEwQ46Tz0nopWA+zgYWL8VYJ9i0eCINFRqhN1Xfwb6rRjoIDr?=
- =?us-ascii?Q?B5b7WbaB/aTtFuYL0jLltk69SSaISc6IOf5JYJKJEEnuZKW4ZiAGMBnEIUEG?=
- =?us-ascii?Q?PL+mpFEFKfOJcHtnKDOKHI+3/DzVnw3A9DPmHitJbKGMc8tIdkglMo+c3DGx?=
- =?us-ascii?Q?tDC4JCe3k5lE01KRYpO2P7WfKWlgp+ZotX9i9HrUHQlpoddQd3Re44lv338h?=
- =?us-ascii?Q?UbiKne5ItoRRn5+8BTzcC8dKJiXxoDbvyRaMfIQu4Gr3+Bt0qbM4RViPKnaW?=
- =?us-ascii?Q?nkE+9whdlj9c1GX8ia0QC3yHVfzmqDyLB1L1g1omi19sdShiMUNGRGZjZbCz?=
- =?us-ascii?Q?5kt2eXiwfDw1MrGiVh0jXVtT3rHHxjB/91S6l7FfK9+Ia5+Gc3rt1bL1p+OK?=
- =?us-ascii?Q?4c5AoKSRU6EaOlqFBe86ai+9BLPl95gSEOgBiivk8QJlaWUeoQLW3xgzugLd?=
- =?us-ascii?Q?OQMIXx1Qsi1eD9zexVVGSXWiy1mz4ohSuv7DakwX9k6XtGVUxkjDySfkIyd2?=
- =?us-ascii?Q?N3P/Ueuo0QTYeUnUtW94MGMzLYfpdDsVQIdZvGikOGgdKQmyotqv85cbrEwP?=
- =?us-ascii?Q?+n2r4K+/BClLOwNN+vqk7tURG6q24jKjmvjBe/VEqNbjf4GUk1RY4Fo3tRem?=
- =?us-ascii?Q?r7HQkFpSZ/QPIQnxj2Y3nOcu6TsbN6glT6wipxw6apr+/y9utD7f8tEUp7KP?=
- =?us-ascii?Q?XRXB7iw2ShmS9LwlJOTnbipPEO78XYS4Bx4TxmQ+xe3tODjVMiA3d3inVXkf?=
- =?us-ascii?Q?X9IuSayiX1jbIGWCfxVD+jDkFD46+Dfa19RpAQFj5wdG735stOS4m1Kscq6I?=
- =?us-ascii?Q?t/FNQml0qLR++As3XBAyjYeHOFXN7HHbGd0f8K0oK0lE0UYAJFXEaYGOjcqG?=
- =?us-ascii?Q?ttrEIv4U4AjHjG+BHhM=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2025 05:51:33.3820 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3c3575d-2f90-426f-eeae-08de259d5d0f
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099D3.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4432
-Received-SPF: permerror client-ip=52.101.52.10;
- envelope-from=Honglei1.Huang@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
+References: <20251116141427.2325372-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20251116141427.2325372-1-dmitry.osipenko@collabora.com>
+From: Yiwei Zhang <zzyiwei@gmail.com>
+Date: Sun, 16 Nov 2025 21:56:54 -0800
+X-Gm-Features: AWmQ_bnqRPkV4iELETMhfHU7rT_3XYIwNUCOuuh1mQxSJe1gPS3WZzi8ALRNtDc
+Message-ID: <CAJ+hS_ijKWTWW1k1YU-US-EaJD8UCM8+zk2Jqq9cSBhss-s+GA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/2] Support mapping virtio-gpu virgl hostmem blobs
+ using MAP_FIXED API
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Sergio Lopez Pascual <slp@redhat.com>, 
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>, 
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, 
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=zzyiwei@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,33 +113,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error handling logic was incorrect in virgl_cmd_resource_create_blob.
-virtio_gpu_create_mapping_iov() returns 0 on success and non-zero on 
-failure, but the code was checking whether to set the error response.
+On Sun, Nov 16, 2025 at 6:15=E2=80=AFAM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
+>
+> Virglrender got a new unstable API that allows mapping host blobs at a gi=
+ven
+> memory address using MAP_FIXED mmap flag [1]. Usage of this new API bring=
+s
+> major performance and stability improvement for venus and drm native cont=
+exts,
+> see commit message of the RFC patch for details.
+>
+> Sending early to collect review feeback and have patch prepared by the
+> time new version of libvirglrenderer will be released with the stabilized
+> API.
+>
+> [1] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1=
+374
+>
+> Based-on: 20251116125641.2255794-1-dmitry.osipenko@collabora.com
+>
+> Changelog:
+>
+> v2: - Addressed v1 review comments from Akihiko Odaki
+>
+>     - Added patch that removes unnecessary memory_region_set_enabled(),
+>       suggested by Akihiko Odaki
+>
+> Dmitry Osipenko (2):
+>   virtio-gpu: Remove superfluous memory_region_set_enabled()
+>   virtio-gpu: Support mapping hostmem blobs with map_fixed
+>
+>  hw/display/virtio-gpu-gl.c     | 45 +++++++++++++++++++-
+>  hw/display/virtio-gpu-virgl.c  | 76 ++++++++++++++++++++++++++++++++--
+>  include/hw/virtio/virtio-gpu.h |  3 ++
+>  3 files changed, 119 insertions(+), 5 deletions(-)
+>
+> --
+> 2.51.1
+>
 
-The fix changes the condition from 'if (!ret)' to 'if (ret != 0)' to
-properly handle the return value, consistent with other usage patterns
-in the same codebase (see virtio-gpu.c:932 and virtio-gpu.c:354).
+Nice work! I'd say Venus loves it soooo much ; )
 
-Signed-off-by: Honglei Huang <honghuan@amd.com>
----
- hw/display/virtio-gpu-virgl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 94ddc01f91..e60e1059df 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
-                                             cmd, &res->base.addrs,
-                                             &res->base.iov, &res->base.iov_cnt);
--        if (!ret) {
-+        if (ret != 0) {
-             cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-             return;
-         }
--- 
-2.34.1
-
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 
