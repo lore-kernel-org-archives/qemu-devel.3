@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA877CEBF61
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 11:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4ACFCE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 11:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKxXJ-0001tP-O0; Mon, 17 Nov 2025 06:36:45 -0500
+	id 1vKxcW-0004xr-0Z; Mon, 17 Nov 2025 06:42:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vKxXI-0001tG-Hj
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:36:44 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vKxXG-0001dA-Bk
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:36:44 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1763379377; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=h/MJ8PPyLpfgg/NmiET+kK9mMjmcZiZlfPEdFz7kZL3xYZ9CaPSu/VcENqjuFSkMWuB/kN1AyqJJ+LNXJdF73pPY2RspNopfwvLAP0OYWKd1HhAFvxjFRZajv3zjbFj0nLPKKdcPtyBG51t8iaFboKomNyHsv+8KVkXL7DmX7Wk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1763379377;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=kQQzQBE1mfx665VnjnrOCO6dH5yq8jyVkPNmCCvB/zc=; 
- b=UDBVQAGyMUMi7757kTmxennb79qeGtiwBWbqLhvt9r0ozn6cNQSr7IigNeuPECFBIZ34BgVLHaZU8Vt0J8H+s5eqDQQyiy6aP3le/HUJA91EdQ5sMi57l2Dvci5EPsFuqBu+LV+RIMdBAtb+joeTkoeMrt2n/ZYWxe84i3TkBS4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763379377; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=kQQzQBE1mfx665VnjnrOCO6dH5yq8jyVkPNmCCvB/zc=;
- b=ihGac95j0t1m91ftI5qp5d3qk8XHo/tiqKSJ+XCcYJfj0euPsE+mIUwwfp16e2vk
- 4rw7JJSrQn6IsbA5HObpJ9hDSft/5RcM8qlt4SESIvU2a+nz4UlYA2VKVwvImNxCGPN
- ly7+qiBsnSTD4mTV8H5YQHSIJNoFDBkw1HcfzXiM=
-Received: by mx.zohomail.com with SMTPS id 1763379375608964.7270456943281;
- Mon, 17 Nov 2025 03:36:15 -0800 (PST)
-Message-ID: <60ae7642-db9c-4f1d-936c-f7a4fb4ab455@collabora.com>
-Date: Mon, 17 Nov 2025 14:36:10 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKxcU-0004wt-HP
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:42:06 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKxcS-0002Uo-Jv
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 06:42:06 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4775895d69cso22642575e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 03:42:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763379722; x=1763984522; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fR70elkEGu+FKP9bV0fr6f2hWS1wy6kNuGAdttasHzc=;
+ b=yBkEu8BUDq/12uscxOGyjM+rvveQDAs4wV+eaLI5OU4c0ycEo3zICcIfPSzVjAFtTF
+ OKQthw17R/cc52r9rGSbRKHq0Xl/6loRnAvUhagXQj77aa+PgqEv0+C/7Ggk/YkmOuVV
+ oAZtxcGw20ZYsX9r8uJlutUuCZbe9ldzuUP25s91SaXCH0UKNZpvTDva7hq/59eakbF6
+ j7lOIc60RTqreM2yYZEETC1VNTs6qANBEhRiGRe9bQNDppmznzRSuVh4o9WCUsppQBrp
+ oyV5Sy5ff33K7Ydhnvw8jj/+teXrNKT4JabW41/iQicJStXKrAmOIo632KRCS6vLX5Qi
+ wpVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763379722; x=1763984522;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fR70elkEGu+FKP9bV0fr6f2hWS1wy6kNuGAdttasHzc=;
+ b=ortuLApFxbHbjp3S3Z/DXAm6oLRZvbvJtzro1gsqi1lrRoVsZAu7zOaeHxfYIO/+qB
+ vq7doA1FUNRtcCClP16fwbJhyCkO+B7ovMG80R3OEzP79vejKZagVeyH4FJNgdjhf55N
+ kmK7zX8rfopKFY2STrg293quOTowHz9BTuDShQMh9UD/PFOI0/trOCqmOA/RBLnUQy4e
+ pd13tJOKFRsiLxWiQ4+hP9+1HkMqf75quupMJbHsNH/q+YAXeOadWPsEj9AUXxJ/U1ua
+ h6SnatW+jvDIhX32OiGyx8ktJG5p7nz5sqHEfR03FlS0L4o1mApLC3cmeOgS28mAVTFa
+ z66g==
+X-Gm-Message-State: AOJu0Yxj4QR87YMtJYN4wBc/D5zJesbjhWScWb9f/dskymo2KJ7Rlng/
+ VjlcxX7Eb0Vu0nTKgsZEh6wKg4sSpoOgMI3PH3lNyVkH9cSjAlm5EKNj/g7jzUvYD6w+Zt8fU3x
+ vLWithyg8Yw==
+X-Gm-Gg: ASbGncsiwL4qjYm7z/y27h1vUXvN2fnJxueeysnObUFELvVP3LSWUW8wgsWgk8XG0YR
+ 5iCNTQTSAlDnNa1mZQKPGYh7vFW46dWqUQMxEWog/OSmN2bNcDOzT3iHPhyUkOYqYacGUAvU4aB
+ oeWUpWvwRSG5XGd4DI/sjipGKgQDsRtW6QMo2z3OzLFy87nkcdQfp4UcqZdibQC1FZelindx20Z
+ j4SOAo0r2VroiiwkxCBtpLc/blBJq34pvlw7M841IsxqiT21xtiEUGmiy4SjNXlzzoLdaSwwg8O
+ m6w6hp7mfshKMCIAtOzIIcp1T+DSNGhX9VZ3tcqesbECSZMldLOnXbHSHH2kZurdWcRiX/cv+r2
+ cBIpho/BGBWD6AMXewEoEZ5hHuLvfrw/bLk0ODC9G6oq7pNlDWLrYUriY8Lko7asXI2aVTpbz+a
+ UmEvJ8UgoAkHb28Z0fE2dJLVdpeickondDcvdK58K3v5BprhV2/Q==
+X-Google-Smtp-Source: AGHT+IE8qvPWC62cKZpJnp1rmxQC8sZ69Lrv0gs9APokxYyd6ZUuLfvwauHv+uNb+fgms3Y1r42kIA==
+X-Received: by 2002:a05:600c:4505:b0:45d:e28c:875a with SMTP id
+ 5b1f17b1804b1-4778feb255emr130182985e9.31.1763379722375; 
+ Mon, 17 Nov 2025 03:42:02 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a2422d93sm24018635e9.0.2025.11.17.03.42.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 17 Nov 2025 03:42:01 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH-for-10.2] buildsys: Remove dead 'mips' entry in
+ supported_cpus[] array
+Date: Mon, 17 Nov 2025 12:42:00 +0100
+Message-ID: <20251117114200.60917-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] virtio-gpu/next - misc fixes and MR handling
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251014111234.3190346-1-alex.bennee@linaro.org>
- <b3d94838-8484-457e-ada4-8ed3c5b38f8a@tls.msk.ru>
- <874iqtm2c5.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <874iqtm2c5.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,38 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/25 12:32, Alex Bennée wrote:
-> Michael Tokarev <mjt@tls.msk.ru> writes:
-> 
->> Hi!
->>
->> 2 changes from this series has been applied to the master branch:
->>
->>  9f714c4b20 hw/display: add blob map/unmap trace events
->>  0c6d6d79a5 ui/gtk-gl-area: Remove extra draw call in refresh
->>
->> but the rest weren't.  And it looks like some are worth to be
->> considered at least.
->>
->> Alex, maybe you can refresh the series and re-send?
->> We're entering feature freeze stage with 10.2..
-> 
-> There were problems with the other patches leading to leaks in
-> MemoryRegions. Akihiko has been looking at alternatives patches to
-> re-factor MemoryRegion handling and also investigating the sub-optimal
-> RCU behaviour that causes the test case (patch 8) to lock up on the
-> current master.
-> 
-> Longer term I wonder if there is a better backend we can use that avoids
-> the need for the complex blob/MemoryRegion dance we currently do between
-> threads?
+Remove 'mips' from supported_cpus[], forgotten in commit
+269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts").
 
-The MAP_FIXED feature will close MR problems [1].
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1]
-https://lore.kernel.org/qemu-devel/20251116141427.2325372-3-dmitry.osipenko@collabora.com/
-
+diff --git a/meson.build b/meson.build
+index df4460035c3..5ddec8afd7b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -52,7 +52,7 @@ qapi_trace_events = []
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+ supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+ supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
+-  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
++  'arm', 'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm32']
+ 
+ cpu = host_machine.cpu_family()
+ 
 -- 
-Best regards,
-Dmitry
+2.51.0
+
 
