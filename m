@@ -4,107 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F35CEBF61
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2C0CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 10:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKw0D-0002QR-Lk; Mon, 17 Nov 2025 04:58:30 -0500
+	id 1vKw3K-0003aA-Pg; Mon, 17 Nov 2025 05:01:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKw0A-0002Q5-9C
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:58:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vKw08-0000Pv-2h
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:58:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763373502;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Mv+ABs1/aqXKwYa9fnN8KDfkMvmLi7ermffaowrPFDI=;
- b=Kvs/geW6neyyctLel50jBmYmqVFOdQVlfBMX0VIIL8hsxpUcIX2HBQwHpNHD33KUA9yw0u
- ZXkrCVoyGseezKnu/OApUavD8dj/H9FkRTsiaBuRik3F7Z5ibyY4TJBqso8AAtTSSn1YrZ
- 0za0RQAiHY/OODvPzdg9wOFDk5gBsuQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-BEoFJXW7McupWZgGYhlRBw-1; Mon, 17 Nov 2025 04:58:20 -0500
-X-MC-Unique: BEoFJXW7McupWZgGYhlRBw-1
-X-Mimecast-MFC-AGG-ID: BEoFJXW7McupWZgGYhlRBw_1763373499
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-42b2fb13b79so1917384f8f.3
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 01:58:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vKw3D-0003XF-R3
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 05:01:40 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vKw3B-0000vj-Go
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 05:01:35 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-bd1b0e2c1eeso453846a12.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 02:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763373499; x=1763978299; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Mv+ABs1/aqXKwYa9fnN8KDfkMvmLi7ermffaowrPFDI=;
- b=QRnUwKax7Buih/0PoD26aJJ8lW+wdM1dmobrUCrXpwkI9nIBi+5JwtAhSZ7au7sJch
- fqCg8VcrAgM00aBxOZMZ/MOChyFSzdHnjj+pd7YgScvJ96INL6zV9cwHt4rXhQD1Kyvb
- u2vU9AGn14jasPqJvzxc9FxdHP6ewWWkpxqva43EvEll3aiPFtijqvw0SaHF/rKueyO1
- iVMPCl5Uk1gm2WHtqeS5MxmTx42kLf0VzHHmyWhj45I9TqiA2317diPjnyH7Znj0lHFL
- Cnn1qAtnTJA+0THkNeAa1dcTUptv050mR+qqKURMqV7dF0rlWlwfMs1A7JTX6n8w8rlA
- cx3w==
+ d=ventanamicro.com; s=google; t=1763373691; x=1763978491; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VPiNNMmkodgonWLCasO6R7aTZ1ZSIQj0aJyqx1YRVfA=;
+ b=Wlj16sX8sQOf1kcudc97WHadmMIZHiq4Pw2gjWYEFCde5QzeQBWNcHqF0/80TxA+fA
+ 95PMVMhLen13uUDK4OxQtPXdOmG/jCy/KuFdBl1yd9bg52wVaHuTELj0LUPGWXKG4UTq
+ 1zWMzhDVM2auGyGyKwhZV9Wn2+VoqKzbxmaQphYXBMIqFGrSCAcpevCMhffh2TO60uX/
+ ip71VjublOvz7ldpuQfBmz6kieMkBvqoYHZdFMBFGx5aaDrLcivszkcki0pBP3Vqy3kP
+ 7Nesxj9cTJ/NNBL8eHaurOIUcsWIu+SXFqB+xB6fUBZ9JTf3Ogjx5z5uanWS7qHT+IHG
+ FATA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763373499; x=1763978299;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Mv+ABs1/aqXKwYa9fnN8KDfkMvmLi7ermffaowrPFDI=;
- b=Oju/u4/ayCVWkorszWezN96YI1o+4drauU1e8XeGf6pVb8AKjzKtATsGLeicq6OfuV
- BI5Xn9a3g4j7W5s+VC8gW+2X56uzG8kJSqXD4z3s0pzNWP9IdEuQ9bbzoVK5M0JAeIAT
- urJU30YB5KgT8sqqNnsMZfEreDlZ3J0iN4fPptmDOF448S8A3WvyApQ1x0d/DP3kFBaA
- av0QaDaTN0m5Qqyt1Cb85OWF6nAQErA3Xa8ckphy3SrUaxVrJXJXGgi3RgY/95Mhcpnu
- duEvv2x7vx8H6291kxAzw2RNJ2MhfiSo0+jm01mU2CvCg7v/gbTsjUXC/meogwSaEKg5
- O1Cw==
+ d=1e100.net; s=20230601; t=1763373691; x=1763978491;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VPiNNMmkodgonWLCasO6R7aTZ1ZSIQj0aJyqx1YRVfA=;
+ b=glvm30kDs0Ca/uvFnFE+F8owxTUHs8DtseHbBX9qTDDojImBHe1rr12JuPA74nwxbX
+ JzhrRXM0ssXFMhe+9q8z+RlFJhCqdfJKSj7Vwqa25YX6VnjyIvYlr1T/dkZkxd3fjKMO
+ O2FDP2T6UDIFPekW3ZtnK7IfIhr028fi0QLsGZaf3R7165x5ary4utXGXoCisAedT5qS
+ ecYV9/RrijRe5klWU0o4+hRWKfmjCbFw9Mg+zR56IFfMaVshKbkrsJUUaSoGT06mm3pE
+ /GGZsrZR3YnOg3MzTOF6IK45fhk3GAQif/PY2lQnyJWPnDUS7UULQDnqOJdotSibY55k
+ AHpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdzj4mF4l/936lha/ukxCtIpbbUfYHDyIKBAUu+MZd8iSb/TsTzv3dFJyP4UMUZ3/hjITHM3MTu/Vu@nongnu.org
-X-Gm-Message-State: AOJu0YwUNpq3SW+fZESPC/yjd14bOYsxiI6I6xTC9LTZWGwOUZWtPEet
- uipqpVpVOBCR0V47ZnTcn5UU4DP/9hxX1YLdNsr3zdyEa/pazWLLzXvVuLlfHTMMJX7tbPt5e/E
- 4V6sLocKMfLQQ1qfmFKUS24YaY00V+ivm2pZi3aLo8Re7XHXBJjqcTYIkEMY1K8L9
-X-Gm-Gg: ASbGncvzRL7BZqDcVBWyV9V9LAlwI1PcOUyvUHJlHhv7Fo8lTBGchSVWbIIZfBUBRfN
- HUDfFpbYYV0S5chrleljQ7fr/tXqsQ8tkuWOMT0Kbr5mw80yFoSrHu6lkiROXF06He241PNCjQm
- GvA0m7z7+98TTKq6LQjfY3ULA5qktwmRKxZwjHWHF1RsAfszutFjaU458JzWPAHX/IhyT8GEcxI
- g4WbXc/hXIQJbOIw25eoNcmtBDL/FWfsNnFJi9vYO6yaBy1E1EsQEDFIKFudx396HtMA9TDrh0M
- qlPqa9sexPMHFV1adf7FRfBw0hp+rZw/9IiwmV+RoWwXFJewKjMSZ4gFBm1JZiLeMu8NxR8Ip8G
- 6dGfT7f842ZiVH+yuikM=
-X-Received: by 2002:a05:600c:a49:b0:477:55c9:c3ea with SMTP id
- 5b1f17b1804b1-4778feaa94amr95560595e9.35.1763373499203; 
- Mon, 17 Nov 2025 01:58:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGUAGkKB3PJ0ez/r6G8ofkqaQVy8V1bxLdxogwN5gAPLflGK8si6AWTCXMhsuNoie48HG1+MA==
-X-Received: by 2002:a05:600c:a49:b0:477:55c9:c3ea with SMTP id
- 5b1f17b1804b1-4778feaa94amr95560255e9.35.1763373498459; 
- Mon, 17 Nov 2025 01:58:18 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-39-63.inter.net.il. [80.230.39.63])
+ AJvYcCXgGoXra0tdIMC8oFWvQRaoMGN0DbmeEMhYirfctAbWqM9cftJOsaqyWDezpUs+EsMQpqK6JXvDOsdT@nongnu.org
+X-Gm-Message-State: AOJu0YzUFus3ftQ2XGL03p79spmykNVvGXGYbsolJpHQeyLmz22aRa2w
+ O4vY/a0sqTYYnUEVQA+sdMr18VLf8fwXLkgpA7fp/S29eXNgYuJRFJKbA2HWEtkQ+z0=
+X-Gm-Gg: ASbGncvSPMh/o3WZ7mwNHlfmLU7IN+jxCkLDJMxJwdoLYbeWdeiRb3pp+ejwg6tU5Ea
+ lxCu20OxRBMtRPlpn3Q5H2TDPh5iwHIiTIljiGY3llK9xIRTLaS5j6kqGhMeOdiubnPiFquz5Ci
+ E++nxrgR2gMpYdhEfvh6juBU6NTAX/3lQ8QTTDooVpDOa+uPwSThTK60j9G3wdKr+fhKkqGYRyG
+ +B8I2+C0yAvM4fsi138p9AfUeQEkD0PZQY6dUIJO9xCCXur2fixzq+kc5sbAWaMDJ6LJtc3IVQc
+ RhHO/j4Zph4G0kXv9ZcTG1tYko7Rx2dRS6GTpwqCjYH6V3HPxCMryZlc497zjCMcK/HnoAtaqix
+ 6BdML15hgK4rVFcmBptrtgfyijf35/FwWkB/YtOHRw6JP0LryO8TEbm7JQbaIh0MnTD9ExwMjS6
+ yikGpHhhyGcGJMlhY=
+X-Google-Smtp-Source: AGHT+IGqnSY6zM+bLz1bJfjIszifUxwGOv3pvpJOeR8wiqpK3YlGJo03LK64KYdhm0dPYD/FQqzLjQ==
+X-Received: by 2002:a05:7022:412:b0:119:fac9:ce12 with SMTP id
+ a92af1059eb24-11b40fca515mr4799050c88.13.1763373691395; 
+ Mon, 17 Nov 2025 02:01:31 -0800 (PST)
+Received: from [192.168.68.110] ([191.202.237.26])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4779527235esm158593855e9.8.2025.11.17.01.58.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 01:58:17 -0800 (PST)
-Date: Mon, 17 Nov 2025 04:58:15 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Fabian Vogt <fvogt@suse.de>
-Cc: Gabriel Somlo <somlo@cmu.edu>, qemu-devel@nongnu.org,
- linux-kernel@vger.kernel.org, Takashi Iwai <tiwai@suse.de>
-Subject: Re: [PATCH v2] firmware: qemu_fw_cfg: Do not hard depend on
- CONFIG_HAS_IOPORT_MAP
-Message-ID: <20251117045307-mutt-send-email-mst@kernel.org>
-References: <24142953.6Emhk5qWAg@fvogt-thinkpad>
+ a92af1059eb24-11b06088625sm47429458c88.8.2025.11.17.02.01.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Nov 2025 02:01:30 -0800 (PST)
+Message-ID: <7765a558-a7b4-4228-8d43-2e67d2266b18@ventanamicro.com>
+Date: Mon, 17 Nov 2025 07:01:25 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24142953.6Emhk5qWAg@fvogt-thinkpad>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 RESEND 1/2] hw/riscv/virt: Add acpi ged and powerdown
+ support
+To: liu.xuemei1@zte.com.cn, imammedo@redhat.com, alistair.francis@wdc.com,
+ sunilvl@ventanamicro.com, anisinha@redhat.com
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, mst@redhat.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+References: <20251113093022673gxIvC2wmdHDBY2Sq0_AUm@zte.com.cn>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <20251113093022673gxIvC2wmdHDBY2Sq0_AUm@zte.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,85 +109,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 03, 2025 at 03:11:05PM +0100, Fabian Vogt wrote:
-> Some configs have CONFIG_NO_IOPORT_MAP=y but support qemu_fw_cfg over
-> MMIO. Currently the qemu_fw_cfg module can't be built for those as it
-> needs HAS_IOPORT_MAP=y for ioport remapping.
+
+
+On 11/12/25 10:30 PM, liu.xuemei1@zte.com.cn wrote:
+> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 > 
-> This patch allows to build qemu_fw_cfg in those cases. If
-> CONFIG_HAS_IOPORT_MAP=n, qemu_fw_cfg is just built without support for
-> ioport based access.
+> This adds powerdown support by implementing the ACPI GED.
 > 
-> Signed-off-by: Fabian Vogt <fvogt@suse.de>
-
-
-Thanks for the patch! yet something to improve:
-
-
+> Co-authored-by: Björn Töpel <bjorn@rivosinc.com>
+> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
 > ---
-> v2: Guard ioport_unmap as well, which makes it work on archs like arm64
-> in the !PCI case. Unlike arm, arm64 has no stub for ioport_unmap.
-> Reword description.
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   hw/riscv/Kconfig                            |  1 +
+>   hw/riscv/virt-acpi-build.c                  | 10 ++++++
+>   hw/riscv/virt.c                             | 35 +++++++++++++++++++++
+>   include/hw/riscv/virt.h                     |  4 +++
+>   tests/qtest/bios-tables-test-allowed-diff.h |  1 +
+>   5 files changed, 51 insertions(+)
 > 
->  drivers/firmware/Kconfig       | 1 -
->  drivers/firmware/qemu_fw_cfg.c | 7 +++++++
->  2 files changed, 7 insertions(+), 1 deletion(-)
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index fc9c35bd98..f89a6e3672 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -68,6 +68,7 @@ config RISCV_VIRT
+>       select PLATFORM_BUS
+>       select ACPI
+>       select ACPI_PCI
+> +    select ACPI_HW_REDUCED
 > 
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index bbd2155d8483..91442f85f0f0 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -122,7 +122,6 @@ config RASPBERRYPI_FIRMWARE
->  config FW_CFG_SYSFS
->  	tristate "QEMU fw_cfg device support in sysfs"
->  	depends on SYSFS && (ARM || ARM64 || PARISC || PPC_PMAC || RISCV || SPARC || X86)
-> -	depends on HAS_IOPORT_MAP
->  	default n
->  	help
->  	  Say Y or M here to enable the exporting of the QEMU firmware
-> diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
-> index 0eebd572f9a5..fa4385339824 100644
-> --- a/drivers/firmware/qemu_fw_cfg.c
-> +++ b/drivers/firmware/qemu_fw_cfg.c
-> @@ -204,8 +204,10 @@ static void fw_cfg_io_cleanup(void)
->  		iounmap(fw_cfg_dev_base);
->  		release_mem_region(fw_cfg_p_base, fw_cfg_p_size);
->  	} else {
-> +#ifdef CONFIG_HAS_IOPORT_MAP
->  		ioport_unmap(fw_cfg_dev_base);
->  		release_region(fw_cfg_p_base, fw_cfg_p_size);
-> +#endif
->  	}
->  }
->  
-> @@ -258,6 +260,7 @@ static int fw_cfg_do_platform_probe(struct platform_device *pdev)
->  			return -EFAULT;
->  		}
->  	} else {
-> +#ifdef CONFIG_HAS_IOPORT_MAP
->  		if (!request_region(fw_cfg_p_base,
->  				    fw_cfg_p_size, "fw_cfg_io"))
->  			return -EBUSY;
-> @@ -266,6 +269,10 @@ static int fw_cfg_do_platform_probe(struct platform_device *pdev)
->  			release_region(fw_cfg_p_base, fw_cfg_p_size);
->  			return -EFAULT;
->  		}
-> +#else
-> +		dev_err(&pdev->dev, "IO region given but CONFIG_HAS_IOPORT_MAP=n");
-> +		return -EINVAL;
-> +#endif
-
-
-
-I do not like ifdefs spread all around the code.
-
-Don't these arches provide stubs so fwcfg can just
-have same code, with ioport stuff eliminated by compiler?
-
-
-If not, stubs can be added to fwcfg as last resort.
-
--- 
-MST
+>   config SHAKTI_C
+>       bool
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index f1406cb683..64fd8aa426 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -27,6 +27,7 @@
+>   #include "hw/acpi/acpi-defs.h"
+>   #include "hw/acpi/acpi.h"
+>   #include "hw/acpi/aml-build.h"
+> +#include "hw/acpi/generic_event_device.h"
+>   #include "hw/acpi/pci.h"
+>   #include "hw/acpi/utils.h"
+>   #include "hw/intc/riscv_aclint.h"
+> @@ -498,6 +499,15 @@ static void build_dsdt(GArray *table_data,
+>           acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
+>       }
+> 
+> +    if (s->acpi_ged) {
+> +        build_ged_aml(scope, "\\_SB."GED_DEVICE,
+> +                      HOTPLUG_HANDLER(s->acpi_ged),
+> +                      ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
+> +                      s->memmap[VIRT_ACPI_GED].base);
+> +    }
+> +
+> +    acpi_dsdt_add_power_button(scope);
+> +
+>       aml_append(dsdt, scope);
+> 
+>       /* copy AML table into ACPI tables blob and patch header there */
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 17909206c7..a853184105 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -51,10 +51,12 @@
+>   #include "system/kvm.h"
+>   #include "system/tpm.h"
+>   #include "system/qtest.h"
+> +#include "system/runstate.h"
+>   #include "hw/pci/pci.h"
+>   #include "hw/pci-host/gpex.h"
+>   #include "hw/display/ramfb.h"
+>   #include "hw/acpi/aml-build.h"
+> +#include "hw/acpi/generic_event_device.h"
+>   #include "qapi/qapi-visit-common.h"
+>   #include "hw/virtio/virtio-iommu.h"
+>   #include "hw/uefi/var-service-api.h"
+> @@ -95,6 +97,7 @@ static const MemMapEntry virt_memmap[] = {
+>       [VIRT_UART0] =        { 0x10000000,         0x100 },
+>       [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+>       [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
+> +    [VIRT_ACPI_GED] =     { 0x10101000, ACPI_GED_EVT_SEL_LEN },
+>       [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+>       [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+>       [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+> @@ -1270,6 +1273,22 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+>       return dev;
+>   }
+> 
+> +static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqchip)
+> +{
+> +    DeviceState *dev;
+> +    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+> +
+> +    dev = qdev_new(TYPE_ACPI_GED);
+> +    qdev_prop_set_uint32(dev, "ged-event", event);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].base);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+> +                       qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
+> +
+> +    return dev;
+> +}
+> +
+>   static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+>   {
+>       FWCfgState *fw_cfg;
+> @@ -1428,6 +1447,14 @@ static void virt_build_smbios(RISCVVirtState *s)
+>       }
+>   }
+> 
+> +static void virt_powerdown_req(Notifier *notifier, void *opaque)
+> +{
+> +    RISCVVirtState *s;
+> +
+> +    s = container_of(notifier, RISCVVirtState, powerdown_notifier);
+> +    acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
+> +}
+> +
+>   static void virt_machine_done(Notifier *notifier, void *data)
+>   {
+>       RISCVVirtState *s = container_of(notifier, RISCVVirtState,
+> @@ -1701,6 +1728,11 @@ static void virt_machine_init(MachineState *machine)
+> 
+>       create_platform_bus(s, mmio_irqchip);
+> 
+> +    /* acpi ged */
+> +    if (virt_is_acpi_enabled(s)) {
+> +        s->acpi_ged = create_acpi_ged(s, mmio_irqchip);
+> +    }
+> +
+>       serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
+>           0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+>           serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> @@ -1742,6 +1774,9 @@ static void virt_machine_init(MachineState *machine)
+>           sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+>       }
+> 
+> +    s->powerdown_notifier.notify = virt_powerdown_req;
+> +    qemu_register_powerdown_notifier(&s->powerdown_notifier);
+> +
+>       s->machine_done.notify = virt_machine_done;
+>       qemu_add_machine_init_done_notifier(&s->machine_done);
+>   }
+> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> index 7b4c2c8b7d..9422b45d0c 100644
+> --- a/include/hw/riscv/virt.h
+> +++ b/include/hw/riscv/virt.h
+> @@ -47,6 +47,8 @@ struct RISCVVirtState {
+> 
+>       /*< public >*/
+>       Notifier machine_done;
+> +    Notifier powerdown_notifier;
+> +    DeviceState *acpi_ged;
+>       DeviceState *platform_bus_dev;
+>       RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
+>       DeviceState *irqchip[VIRT_SOCKETS_MAX];
+> @@ -88,9 +90,11 @@ enum {
+>       VIRT_PLATFORM_BUS,
+>       VIRT_PCIE_ECAM,
+>       VIRT_IOMMU_SYS,
+> +    VIRT_ACPI_GED,
+>   };
+> 
+>   enum {
+> +    ACPI_GED_IRQ = 9,
+>       UART0_IRQ = 10,
+>       RTC_IRQ = 11,
+>       VIRTIO_IRQ = 1, /* 1 to 8 */
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..8e85fcdee9 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,2 @@
+>   /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/riscv64/virt/DSDT",
 
 
