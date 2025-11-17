@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC10DCE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA11BCEBF93
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL4O4-0006zQ-N3; Mon, 17 Nov 2025 13:55:41 -0500
+	id 1vL4Nu-0006C7-Lo; Mon, 17 Nov 2025 13:55:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4LL-0002qy-HS
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4LL-0002qz-Ho
  for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:52:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4LD-0008Bs-8L
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:52:46 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4LF-0008Bw-9p
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:52:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1763405553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u7QgNts0LQW/4YxR/3WxRcvz60hrnd8IOAFqxu0kUuc=;
- b=SFdbUlwH6dh3FYMpl17kGLfj6lPIwTmTnGaEjzHE42/s83aQLyu5OHDbmxWGzyKU9NiSVo
- E++8Uw9Xv35RIjnZlbfQyuCvY5nf0jLbc71BHPSyuhGzlg9mMIG8HEwe9dDl2YrL7MsZDG
- GIGBslgiWFx8SgkQLDKpgcrKQFCyQGw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=uGdJGXmUkVrTU1zFvmuan13P27n0xeF3v/uBV8JJkmg=;
+ b=GyIm29+INFRddi5CDrc7o5oTgFrBBCqpAHmgEKeHhh7kHCp2HYH1++ZQJlotdo73eXAqtl
+ da62mKxesDm7K3uuMelc0VjAjKIWV5F8kObU0PQPqHTP/aJ1MZuFbEFe07raybei8naFr5
+ 1cSidgUCchwHXCnVh+/mXvhM4gklofs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-EOY39rFoN-O28wp3EctfNA-1; Mon,
- 17 Nov 2025 13:52:32 -0500
-X-MC-Unique: EOY39rFoN-O28wp3EctfNA-1
-X-Mimecast-MFC-AGG-ID: EOY39rFoN-O28wp3EctfNA_1763405551
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-UdqTnDdjPnmsIrq4kxHkyQ-1; Mon,
+ 17 Nov 2025 13:52:30 -0500
+X-MC-Unique: UdqTnDdjPnmsIrq4kxHkyQ-1
+X-Mimecast-MFC-AGG-ID: UdqTnDdjPnmsIrq4kxHkyQ_1763405548
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D741D1800452; Mon, 17 Nov 2025 18:52:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1746718AB419; Mon, 17 Nov 2025 18:52:28 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.81.70])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5A365180047F; Mon, 17 Nov 2025 18:52:28 +0000 (UTC)
+ id 594DE180049F; Mon, 17 Nov 2025 18:52:25 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -56,9 +56,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 19/22] mkvenv: add --no-build-isolation flag
-Date: Mon, 17 Nov 2025 13:51:27 -0500
-Message-ID: <20251117185131.953681-20-jsnow@redhat.com>
+Subject: [PATCH 18/22] python/mkvenv: add mechanism to install local package(s)
+Date: Mon, 17 Nov 2025 13:51:26 -0500
+Message-ID: <20251117185131.953681-19-jsnow@redhat.com>
 In-Reply-To: <20251117185131.953681-1-jsnow@redhat.com>
 References: <20251117185131.953681-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -73,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,26 +89,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-WIP. This is needed to process local installs for newer versions of
-pip/setuptools. There may be other options. Investigating.
+Currently, we "implicitly" install the local 'qemu' python package for
+'make check-venv' with some logic inside tests/Makefile.include. I would
+like to make this installation explicit in pythondeps.toml instead.
+
+The version constraint specification that Python specifies does not
+support relative paths, so it is difficult (or impossible?) to specify a
+path within the source tree, and we will need a workaround to do so.
+
+By specifying a package name that starts with $SRCROOT, you can now
+specify a file path to a local package for installation. This is done to
+allow us to install the python packages hosted inside of the tree while
+also processing dependencies; i.e. so that our "qemu" package can
+specify that it needs "qemu.qmp", which soon will not be included in
+qemu.git.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/scripts/mkvenv.py | 1 +
- 1 file changed, 1 insertion(+)
+ python/scripts/mkvenv.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index e38292b63a6..9cf7a6e2b2a 100644
+index a22e3ee3394..e38292b63a6 100644
 --- a/python/scripts/mkvenv.py
 +++ b/python/scripts/mkvenv.py
-@@ -677,6 +677,7 @@ def pip_install(
-         "-m",
-         "pip",
-         "install",
-+        "--no-build-isolation",
-         "--disable-pip-version-check",
-         "-v" if loud else "-q",
-     ]
+@@ -736,6 +736,10 @@ def _do_ensure(
+     present = []
+     canary = None
+     for name, info in group.items():
++        if name.startswith("$SRCROOT/"):
++            srcroot = Path(__file__).parents[2]
++            absent.append(name.replace("$SRCROOT/", f"file:///{srcroot}/"))
++            continue
+         constraint = _make_version_constraint(info, False)
+         matcher = Matcher(name + constraint)
+         print(f"mkvenv: checking for {matcher}", file=sys.stderr)
 -- 
 2.51.1
 
