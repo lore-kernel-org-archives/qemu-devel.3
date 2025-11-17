@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12BACEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 22:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C0ACEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 22:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL7sr-00055y-LT; Mon, 17 Nov 2025 17:39:41 -0500
+	id 1vL7ss-00056Z-F0; Mon, 17 Nov 2025 17:39:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7si-00053t-Iu
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7si-00053r-IH
  for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7sd-0003Vx-SK
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:31 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vL7sd-0003Vo-RU
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:39:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763419162;
+ s=mimecast20190719; t=1763419160;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ih8mt1S/dK6l1RZ22LUm8+7bTSCfVNi+19N02b7VVyM=;
- b=Bw4R7YpCoOdLD5pJ5/jtNmXk+GGX5BRqmZznvCuhthAJqu/UK0Kzz8ablAJQM8d2JX9bl7
- SVkPeT+wya9yggtSk85YcFj3UX6xGzjjlLOUpKHNtvKssP/qxwdjk+AjaCkoclA0bhKnmK
- campLBJt7mtvtR5WC1HvodkikyK416k=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lbVrUGXUqQmpNGqTPi1M30LVldLmmTTajrOXDGbLJb8=;
+ b=EJtJy/J1lxk0+LOvpTrThAo6WGc6uTyANyvyOELVMWr+EwNgryk4hDmOvVhYs60gtGdzto
+ bYJLZpBZfGOmRHJPeCAhZu/sBo4lAyXGfIwFFihiUzRDTtG9Az3GhV7tTQC/y78lnU7Tk6
+ gYUMGlI51zfFE43dHA/Zt4LmArXUCVA=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-248-6oUDAlreMeGMgMYWgEwjgw-1; Mon, 17 Nov 2025 17:39:21 -0500
-X-MC-Unique: 6oUDAlreMeGMgMYWgEwjgw-1
-X-Mimecast-MFC-AGG-ID: 6oUDAlreMeGMgMYWgEwjgw_1763419161
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4ed7591799eso143558281cf.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 14:39:21 -0800 (PST)
+ us-mta-34-nlpPd8T-NBmKmR5lNQCgpQ-1; Mon, 17 Nov 2025 17:39:18 -0500
+X-MC-Unique: nlpPd8T-NBmKmR5lNQCgpQ-1
+X-Mimecast-MFC-AGG-ID: nlpPd8T-NBmKmR5lNQCgpQ_1763419158
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8b1d8f56e24so1337030585a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 14:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763419160; x=1764023960; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763419157; x=1764023957; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ih8mt1S/dK6l1RZ22LUm8+7bTSCfVNi+19N02b7VVyM=;
- b=ATbna1Fsu90DzMAJKv/WyJ6oR/kdMBoGUVzimeb9IRQWCGnC70mvsSaFmkYlylolGf
- AQgk9MAhi11iZIFNpL4QYlImoh4xuxLeEvxfJDJ4DJ/Dea+1MJLnypmAJfuRewzwhHGS
- t7W/ZvIpzgd4h1nDcD2BZNQcAe8WoDgkZCB6FfoV7df8GekPJTmvMSBRi8PBjJYlb5b7
- czLtcbq9WHp4TW4qtTtADT/nZj/zqEQ2duXzTUQbxQFq7iYh4tuN5ryO6bai6X7WFUxN
- FyNRldIGhlbCe1Mus4J+O9gYEHc2iHGgK8yicpQke8dhyT48c4aczk7iVrcSV+OHlEIr
- Ud8A==
+ bh=lbVrUGXUqQmpNGqTPi1M30LVldLmmTTajrOXDGbLJb8=;
+ b=euvXgFuUiRyoaOPMyqYu3HYeCULZP5X9ttzGGITLV8ZaDJuPsAz529HN340N3pJVfR
+ EGl0CIrR0Tdvdyy9FWctO9VejW5JqrnvPAuk2nkAhIik8hGAKjnl8i7mAkaX5s5v9dCz
+ x8RNe30GIrTl/xcesp/mRWlgbow68wFpC2RJ3jfqFv5cxzURSbowsxJqKIXxnH9x7u/1
+ HLm+9m5yWALFpQfw+EA3oZtWHfeF0faR9IYCnKwi0otqhCmRoPbFt8+N3gnxDUosFs1b
+ Oe3nE/eV3bqulYmQFvMClSTB+Sc7MtzAr576JFJc/4vrvO1o0oSPZ3p5XFQI/bXI10or
+ ouqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763419160; x=1764023960;
+ d=1e100.net; s=20230601; t=1763419157; x=1764023957;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ih8mt1S/dK6l1RZ22LUm8+7bTSCfVNi+19N02b7VVyM=;
- b=hbypg8ruznOH3qQv+hmS0MySPaEabQlNxwPsZCaya1CXYbnk5qmLtdYA94kbXCtv6E
- gGEdkGAjEzMPIOa9Ia/1TAfCVpLkxNv0iQ8i0U+RMUAAGxJVcf31jsHdqX0VP0kHl5hV
- GbpBXkm9ILl6Oks+zYKlXGTyKMgqW6HFkWk8fao63+wVXRHoeo8ad/G1HLVslmcSDUvT
- gtNRCPXKQPl0vt/3TeuOxkUfawTLGvcSdOBpiGY6OXDoVIxnRTe0C8ktQw91aF339jX7
- 6PNhR2yAob0rtk7xrkbCs5KV8gKCLzuXv2G3EDQYJaX51t9Y9vIL5P9Is/zcnhjpVo9Q
- aO9g==
-X-Gm-Message-State: AOJu0Yzxx+m/iLLg0lCFy97p63cXcPE0/kPgAXOTXphAiNnCTMtsOVb/
- TVPKb+lQZbZLPi6g+KM3zA4JRASWfasQTGTtU5cC5t7T5h6ppL8h30ZaKR9lUsZf6rcJd1jPFjt
- H2ZUB2BWj+UGHe5Ui+yQwti73ZHKDfw7XOeEQ6oOTxSy8ZRqFtTSn+oFaXZ9oYZyLe/sY1nhAqm
- lDRssqhAPoKWVm826VZWxr4wbTqh1ilXmXhjn89A==
-X-Gm-Gg: ASbGnct0psEZ+04nPUf0flFsVqvwzI9hVEN2VVE4UNxGqx0ascWOSrG78T3I00yKB08
- jqA0j0OXmHZcUNfFK7PJSutsK0mmjc5tVthYAE0q2CJzqqV6nWGmivpPdzK+JOCUL05JJuAsgy+
- D6dNQCw8w3Crf4TdSMkYYHsPteBSyp/c0gpXDsHh0fmNljFLEJeFlu8FFJQ+gyFj5zX5aI8OWBn
- Sn4gZq0bJc4foMYH9jh+FfrMbRqWcf4OG8sSbFH2HnwBEJLzFVxgUp8i5SInuopwehxSHXZ7bCs
- 1phWz7FG/0yoytZz8g6TS8ZeaABl5zLgI4psUXVRJ/DXvb1APryybDsRmrJAQEeSHL4QG4jxzNg
+ bh=lbVrUGXUqQmpNGqTPi1M30LVldLmmTTajrOXDGbLJb8=;
+ b=f46EFPewwPcSHmFOTQEe5891cq9CcdIRuXUASLXX/1trSdWSTI4gRHHu2ydMXqiQKs
+ SZ30ZCKaFBOY9qRlRw7tP2r61zFdDvHuuAjRqiRV+nOKICP7azjK7ZupKixPIoD6n/G1
+ /JkZwD0HbtMK0GFFwVXl7f19Lqz/rMnEXHP9oE0tzI8PABVw9FSDLeUF3MVMlPgd0JxK
+ I4PYMwqUsBwUnJctVlG0lmuBEAvjQTy/ROCUxVZi2FuAefxg74sNQplihBEnz3ptwJUG
+ HLr2vCQXHTLlneMKAjM2Z7q9BE9AkXnHT2YHBmcLLZXR0yU0pnykWe3DuFhXOZnDaqRP
+ HGcw==
+X-Gm-Message-State: AOJu0Yz9yfWtVqWYVfCZZ19hlTLccuLGhjF0EyievucHZu2PaBzVUcvp
+ ZHUUMJpcca7Hi7ehtiuXJVdigW36/954q2BPClZ3q0Ki68rZILT6CQXb62qOcLHVyg75ioL7GNk
+ ab+lp7cx9IVY3m3qR967nPfTPSuzvBEZROVQnsdkXkDO+oCtSYOWgY+HtDtNZ/Uq7Xw1gSUEGZb
+ WjUnZBSj8q9Ex+qG5zJWXhOKr2OgYTU65ZnE6B3Q==
+X-Gm-Gg: ASbGnct28ERK4gJuHMHMtbJf684jjm5UWxWqMFuyoP01RJQoF0t6xOCTh3bEgFHKGm3
+ As9+WBv9e0K2oYOE/zOZ9C1WRWbG6TZN2z7yM3VQHyUrcG9T7ahhV7O7Gkd6ZHCidlVLdDy3kGx
+ L9sz6RWjmBqY93PJSSvD/lbIP4dMU4I8PG8+6C5VuMQGoE5O+S+h7BiqiAZ3r4LIniBaNxHZqFw
+ AsvlPmw4ZnMn69+DBbdFAB1xe+caZYCkla7KKT+wEWkL3rIJCfL4P0ruwoG3ICFevgeOJH1R/6L
+ JX2ZaQN7EVXroOQ16W8re5NMFcP3yxHT6KVxL0XGWdrM4o8d2IxtAffK0B7b4gZMXOUFQFrDAcg
  =
-X-Received: by 2002:a05:622a:4a15:b0:4ed:df82:ca30 with SMTP id
- d75a77b69052e-4edfc875136mr175173791cf.13.1763419160227; 
- Mon, 17 Nov 2025 14:39:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGSgbJNRUEz0YasY2a4WtBYI9gwZaFtYrHBh9hcW3zoxmt5sTrzVtoZtqSWPCg3uNne1Z3wKQ==
-X-Received: by 2002:a05:622a:4a15:b0:4ed:df82:ca30 with SMTP id
- d75a77b69052e-4edfc875136mr175173391cf.13.1763419159651; 
- Mon, 17 Nov 2025 14:39:19 -0800 (PST)
+X-Received: by 2002:a05:620a:7007:b0:8b2:f29e:3af8 with SMTP id
+ af79cd13be357-8b2f29e3f93mr597467785a.59.1763419157350; 
+ Mon, 17 Nov 2025 14:39:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH+pFypgMeYFWPkxsWTxKu4u+2AiQaTUj0Odc4c0vuOta/Cs9rAC9XmTNg3PL9L8t0St4GvVw==
+X-Received: by 2002:a05:620a:7007:b0:8b2:f29e:3af8 with SMTP id
+ af79cd13be357-8b2f29e3f93mr597464185a.59.1763419156864; 
+ Mon, 17 Nov 2025 14:39:16 -0800 (PST)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4ee1c21ea34sm37693521cf.30.2025.11.17.14.39.17
+ d75a77b69052e-4ee1c21ea34sm37693521cf.30.2025.11.17.14.39.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 14:39:19 -0800 (PST)
+ Mon, 17 Nov 2025 14:39:15 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 4/4] tests/migration-test: Use MEM_TYPE_MEMFD for
- memory_backend
-Date: Mon, 17 Nov 2025 17:39:08 -0500
-Message-ID: <20251117223908.415965-5-peterx@redhat.com>
+Subject: [PATCH 2/4] tests/migration-test: Merge shmem_opts into memory_backend
+Date: Mon, 17 Nov 2025 17:39:06 -0500
+Message-ID: <20251117223908.415965-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251117223908.415965-1-peterx@redhat.com>
 References: <20251117223908.415965-1-peterx@redhat.com>
@@ -120,78 +119,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The only two users of memory_backend as of now (cpr-exec, cpr-transfer)
-uses memfd as backend, now we fully support it.  We can move memory_backend
-usage to mem_type and drop it.
+The two parameters are more or less duplicated in migrate_args().  They all
+describe the memory type.  When one is used, the other is not.
+
+mem_type currently uses numa parameter to specify the memory backend, while
+memory_backend (the two users of such uses "-machine memory-backend=ID").
+
+This patch merges the use of the two variables so that we always generate a
+memory object string and put it into "memory_backend" variable.  Now we can
+drop shmem_opts parameter in the function.
+
+Meanwhile we always use a memory-backend-* no matter which mem type is
+used.  This brings mem_type to be aligned with memory_backend usage, then
+we stick with this as this is flexible enough.
+
+This paves way that we merge mem_type and memory_backend in MigrateStart.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/framework.h |  5 -----
- tests/qtest/migration/cpr-tests.c |  6 ++----
- tests/qtest/migration/framework.c | 10 +++-------
- 3 files changed, 5 insertions(+), 16 deletions(-)
+ tests/qtest/migration/framework.c | 41 ++++++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 9dec21c344..ed85ed502d 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -134,11 +134,6 @@ typedef struct {
-     bool suspend_me;
-     /* enable OOB QMP capability */
-     bool oob;
--    /*
--     * Format string for the main memory backend, containing one %s where the
--     * size is plugged in.  If omitted, "-m %s" is used.
--     */
--    const char *memory_backend;
- 
-     /* Do not connect to target monitor and qtest sockets in qtest_init */
-     bool defer_target_connect;
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 70f8e69633..2a186c6f35 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -89,8 +89,7 @@ static void test_mode_transfer_common(bool incoming_defer)
-         .start.opts_source = opts,
-         .start.opts_target = opts_target,
-         .start.defer_target_connect = true,
--        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
--                                " -machine memory-backend=pc.ram",
-+        .start.mem_type = MEM_TYPE_MEMFD,
-         .listen_uri = incoming_defer ? "defer" : uri,
-         .connect_channels = connect_channels,
-         .cpr_channel = cpr_channel,
-@@ -235,8 +234,7 @@ static void test_mode_exec(void)
-     MigrateCommon args = {
-         .start.only_source = true,
-         .start.opts_source = "-machine aux-ram-share=on -nodefaults",
--        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
--                                " -machine memory-backend=pc.ram",
-+        .start.mem_type = MEM_TYPE_MEMFD,
-         .connect_uri = uri,
-         .listen_uri = listen_uri,
-         .start_hook = test_mode_exec_start,
 diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 4d1663356a..81eae09c92 100644
+index 8fa39999a1..6df0e56c2a 100644
 --- a/tests/qtest/migration/framework.c
 +++ b/tests/qtest/migration/framework.c
-@@ -366,13 +366,9 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+@@ -260,23 +260,36 @@ static char *test_shmem_path(void)
+     return g_strdup_printf("/dev/shm/qemu-%d", getpid());
+ }
+ 
++#define  MIG_MEM_ID  "mig.mem"
++
+ /* NOTE: caller is responsbile to free the string if returned */
+ static char *migrate_mem_type_get_opts(MemType type, const char *memory_size)
+ {
+     g_autofree char *shmem_path = NULL;
+-    char *backend = NULL;
++    g_autofree char *backend = NULL;
++    bool share = true;
++    char *opts;
+ 
+     switch (type) {
+     case MEM_TYPE_SHMEM:
+         shmem_path = test_shmem_path();
+-        backend = g_strdup_printf(
+-            "-object memory-backend-file,id=mem0,size=%s"
+-            ",mem-path=%s,share=on -numa node,memdev=mem0",
+-            memory_size, shmem_path);
+-        return backend;
++        backend = g_strdup_printf("-object memory-backend-file,mem-path=%s",
++                                  shmem_path);
++        break;
++    case MEM_TYPE_ANON:
++        backend = g_strdup("-object memory-backend-ram");
++        share = false;
++        break;
+     default:
+-        return NULL;
++        g_assert_not_reached();
++        break;
+     }
++
++    opts = g_strdup_printf("%s,id=%s,size=%s,share=%s",
++                           backend, MIG_MEM_ID, memory_size,
++                           share ? "on" : "off");
++
++    return opts;
+ }
+ 
+ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+@@ -286,7 +299,7 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+     gchar *cmd_source = NULL;
+     gchar *cmd_target = NULL;
+     const gchar *ignore_stderr;
+-    g_autofree char *shmem_opts = NULL;
++    g_autofree char *mem_object = NULL;
+     const char *kvm_opts = NULL;
+     const char *arch = qtest_get_arch();
+     const char *memory_size;
+@@ -350,12 +363,12 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
          ignore_stderr = "";
      }
  
--    if (args->memory_backend) {
--        memory_backend = g_strdup_printf(args->memory_backend, memory_size);
--    } else {
--        mem_object = migrate_mem_type_get_opts(args->mem_type, memory_size);
--        memory_backend = g_strdup_printf("-machine memory-backend=%s %s",
--                                         MIG_MEM_ID, mem_object);
--    }
-+    mem_object = migrate_mem_type_get_opts(args->mem_type, memory_size);
-+    memory_backend = g_strdup_printf("-machine memory-backend=%s %s",
-+                                     MIG_MEM_ID, mem_object);
+-    shmem_opts = migrate_mem_type_get_opts(args->mem_type, memory_size);
+-
+     if (args->memory_backend) {
+         memory_backend = g_strdup_printf(args->memory_backend, memory_size);
+     } else {
+-        memory_backend = g_strdup_printf("-m %s ", memory_size);
++        mem_object = migrate_mem_type_get_opts(args->mem_type, memory_size);
++        memory_backend = g_strdup_printf("-machine memory-backend=%s %s",
++                                         MIG_MEM_ID, mem_object);
+     }
  
      if (args->use_dirty_ring) {
-         kvm_opts = ",dirty-ring-size=4096";
+@@ -378,12 +391,11 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+                                  "-name source,debug-threads=on "
+                                  "%s "
+                                  "-serial file:%s/src_serial "
+-                                 "%s %s %s %s",
++                                 "%s %s %s",
+                                  kvm_opts ? kvm_opts : "",
+                                  machine, machine_opts,
+                                  memory_backend, tmpfs,
+                                  arch_opts ? arch_opts : "",
+-                                 shmem_opts ? shmem_opts : "",
+                                  args->opts_source ? args->opts_source : "",
+                                  ignore_stderr);
+ 
+@@ -400,13 +412,12 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+                                  "%s "
+                                  "-serial file:%s/dest_serial "
+                                  "-incoming %s "
+-                                 "%s %s %s %s %s",
++                                 "%s %s %s %s",
+                                  kvm_opts ? kvm_opts : "",
+                                  machine, machine_opts,
+                                  memory_backend, tmpfs, uri,
+                                  events,
+                                  arch_opts ? arch_opts : "",
+-                                 shmem_opts ? shmem_opts : "",
+                                  args->opts_target ? args->opts_target : "",
+                                  ignore_stderr);
+ 
 -- 
 2.50.1
 
