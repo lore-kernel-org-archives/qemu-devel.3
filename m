@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92228CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A76CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL4KJ-0002c0-HX; Mon, 17 Nov 2025 13:51:47 -0500
+	id 1vL4KK-0002cg-UC; Mon, 17 Nov 2025 13:51:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4KH-0002bb-7T
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:51:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4KI-0002bl-4c
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:51:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4KE-00084g-Vl
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:51:44 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4KE-00084Z-V8
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:51:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763405501;
+ s=mimecast20190719; t=1763405500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sKnlxMdNRwOrumbl+JG8c0k2jq6AgNvSnUaYTaCJ/Dg=;
- b=ieKpTwFjQNlFQ9G2tKLZYwHDit7LIbJ8LIdjKBRjpiFTV7+t4mDarYoEYoT3G2qa6lbipF
- ebZkdV9HGu3Vzir0K5ukc/p4L9T0uy7xBchP2GmndKxlNV+/CoEqLWW2VORQ2zLlTUFeWH
- gk5Na5IiYrn7EYcL8YIeCfNkhGOiPNA=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=hRjly9qUuW80gfD02w+t21wQeZ/XgyOYiPwyKH4zVdk=;
+ b=aiTT83hULJ4ZzbNuGed/ae7RTW1eBVz/SPLj2j1YLVQnWRO2P963jdgDhx76Aw9MAqQ2Tz
+ vwOjHU3KKvZ/3yp9jl2swHMy/mygaF1B+x06wEphUt4f5Uki9FsE7OrNUbiZWmqoQuGM0q
+ LiiCTkhV3jJ1vPCMtcjeGx6BE9jnWfw=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-bDDssQFyP36_htPeynX_HA-1; Mon,
- 17 Nov 2025 13:51:40 -0500
-X-MC-Unique: bDDssQFyP36_htPeynX_HA-1
-X-Mimecast-MFC-AGG-ID: bDDssQFyP36_htPeynX_HA_1763405499
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-xGnTqVQHNM25GAyeMqxZjA-1; Mon,
+ 17 Nov 2025 13:51:37 -0500
+X-MC-Unique: xGnTqVQHNM25GAyeMqxZjA-1
+X-Mimecast-MFC-AGG-ID: xGnTqVQHNM25GAyeMqxZjA_1763405496
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D55931956059; Mon, 17 Nov 2025 18:51:38 +0000 (UTC)
+ id AE7851956055; Mon, 17 Nov 2025 18:51:35 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.81.70])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 16D56180047F; Mon, 17 Nov 2025 18:51:35 +0000 (UTC)
+ id B382D180047F; Mon, 17 Nov 2025 18:51:32 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -56,16 +55,14 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 01/22] python/mkvenv: ensure HAVE_LIB variables are actually
- constants
-Date: Mon, 17 Nov 2025 13:51:09 -0500
-Message-ID: <20251117185131.953681-2-jsnow@redhat.com>
-In-Reply-To: <20251117185131.953681-1-jsnow@redhat.com>
-References: <20251117185131.953681-1-jsnow@redhat.com>
+Subject: [PATCH 00/22] python: drop qemu.qmp from qemu.git tree
+Date: Mon, 17 Nov 2025 13:51:08 -0500
+Message-ID: <20251117185131.953681-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,108 +87,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pylint 4.x has refined checking for variable names that behave as
-constants vs ones that do not; unfortunately our tricky import machinery
-is perceived as these variables being re-assigned.
-
-Add a temporary variable with an underscore and assign to the global
-constants precisely once to alleviate this new nag message. Add an
-ignore for this name for older versions of pylint that developers may
-have installed locally.
-
-(In other words: there is no solution that will cater to both pre- and
-post- 4.x versions, so we target 4.x here and silence older versions.)
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- python/scripts/mkvenv.py | 24 ++++++++++++++++--------
- python/setup.cfg         |  1 +
- 2 files changed, 17 insertions(+), 8 deletions(-)
-
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index 9aed266df1b..a064709e6ce 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -92,7 +92,7 @@
- # Try to load distlib, with a fallback to pip's vendored version.
- # HAVE_DISTLIB is checked below, just-in-time, so that mkvenv does not fail
- # outside the venv or before a potential call to ensurepip in checkpip().
--HAVE_DISTLIB = True
-+_import_ok = True
- try:
-     import distlib.scripts
- except ImportError:
-@@ -102,11 +102,13 @@
-         from pip._vendor import distlib
-         import pip._vendor.distlib.scripts  # noqa, pylint: disable=unused-import
-     except ImportError:
--        HAVE_DISTLIB = False
-+        _import_ok = False
-+
-+HAVE_DISTLIB = _import_ok
- 
- # pip 25.2 does not vendor distlib.version, but it uses vendored
- # packaging.version
--HAVE_DISTLIB_VERSION = True
-+_import_ok = True
- try:
-     import distlib.version  # pylint: disable=ungrouped-imports
- except ImportError:
-@@ -114,9 +116,11 @@
-         # pylint: disable=unused-import,ungrouped-imports
-         import pip._vendor.distlib.version  # noqa
-     except ImportError:
--        HAVE_DISTLIB_VERSION = False
-+        _import_ok = False
- 
--HAVE_PACKAGING_VERSION = True
-+HAVE_DISTLIB_VERSION = _import_ok
-+
-+_import_ok = True
- try:
-     # Do not bother importing non-vendored packaging, because it is not
-     # in stdlib.
-@@ -125,20 +129,24 @@
-     import pip._vendor.packaging.requirements  # noqa
-     import pip._vendor.packaging.version  # noqa
- except ImportError:
--    HAVE_PACKAGING_VERSION = False
-+    _import_ok = False
-+
-+HAVE_PACKAGING_VERSION = _import_ok
- 
- 
- # Try to load tomllib, with a fallback to tomli.
- # HAVE_TOMLLIB is checked below, just-in-time, so that mkvenv does not fail
- # outside the venv or before a potential call to ensurepip in checkpip().
--HAVE_TOMLLIB = True
-+_import_ok = True
- try:
-     import tomllib
- except ImportError:
-     try:
-         import tomli as tomllib
-     except ImportError:
--        HAVE_TOMLLIB = False
-+        _import_ok = False
-+
-+HAVE_TOMLLIB = _import_ok
- 
- # Do not add any mandatory dependencies from outside the stdlib:
- # This script *must* be usable standalone!
-diff --git a/python/setup.cfg b/python/setup.cfg
-index d7f5dc7bafe..f40f11396c9 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -159,6 +159,7 @@ good-names=i,
-            c,   # for c in string: ...
-            T,   # for TypeVars. See pylint#3401
-            SocketAddrT,  # Not sure why this is invalid.
-+           _import_ok,  # For mkvenv import trickery and compatibility pre-4.x
- 
- [pylint.similarities]
- # Ignore imports when computing similarities.
--- 
-2.51.1
+Hi, this series does a few things, but it's ultimately in service of=0D
+dropping the python qemu.qmp package from the qemu.git tree in favor of=0D
+using the standalone package instead, to prevent any further issues from=0D
+the two codebases diverging.=0D
+=0D
+Patches 1-3: Fix linting issues that have cropped up with python=0D
+Patches 4-8,12,16: Set up new python dependency targets in Meson=0D
+Patches 9-10,17: Adjust test execution in GitLab to cope with new test=0D
+                 dependency structure=0D
+Patch 11: Add vendored qemu.qmp package for isolated/offline test=0D
+          execution=0D
+Patches 13-15: Fix meson build system (Paolo Bonzini)=0D
+Patches 18-20: Teach mkvenv how to install local packages=0D
+Patch 21: Replace "make check-venv" in Makefile with meson execution=0D
+Patch 22: Drop qemu.qmp.=0D
+=0D
+There are some quality problems with Patches 18-20, but all GitLab tests=0D
+are green and this is a great starting point to discuss this series.=0D
+=0D
+--js=0D
+=0D
+John Snow (19):=0D
+  python/mkvenv: ensure HAVE_LIB variables are actually constants=0D
+  python/qapi: add an ignore for Pylint 4.x=0D
+  python/qapi: delint import statements=0D
+  python/mkvenv: create timestamp file for each group "ensured"=0D
+  python/mkvenv: bump 'qemu.qmp' dependency for testdeps=0D
+  python/mkvenv: rename 'testdeps' to 'functests'=0D
+  python/mkvenv: add "checktests" dependency group=0D
+  meson, mkvenv: add checktests and functests custom targets=0D
+  tests/iotests: Use configured python to run GitLab iotests=0D
+  tests/iotests: use "make check-venv" to prepare for running iotests=0D
+  python: add vendored qemu.qmp package=0D
+  meson, mkvenv: make iotests depend on checktests group=0D
+  meson, mkvenv: make functional tests depend on functests group=0D
+  tests: forcibly run 'make check-venv' for crash tests=0D
+  python/mkvenv: add mechanism to install local package(s)=0D
+  mkvenv: add --no-build-isolation flag=0D
+  meson, mkvenv: add qemu.git/python/qemu package to pythondeps.toml=0D
+  tests/Makefile: replace old "check-venv" target with meson target=0D
+  python: delete qemu.qmp=0D
+=0D
+Paolo Bonzini (3):=0D
+  mtest2make: cleanup mtest-suites variables=0D
+  mtest2make: add dependencies to the "speed-qualified" suite=0D
+  mtest2make: do not repeat the same speed over and over=0D
+=0D
+ Makefile                                      |    4 +-=0D
+ meson.build                                   |    1 +=0D
+ .gitlab-ci.d/buildtest.yml                    |    9 +-=0D
+ python/qemu/qmp/__init__.py                   |   60 -=0D
+ python/qemu/qmp/error.py                      |   53 -=0D
+ python/qemu/qmp/events.py                     |  751 -----------=0D
+ python/qemu/qmp/legacy.py                     |  339 -----=0D
+ python/qemu/qmp/message.py                    |  217 ----=0D
+ python/qemu/qmp/models.py                     |  146 ---=0D
+ python/qemu/qmp/protocol.py                   | 1101 -----------------=0D
+ python/qemu/qmp/py.typed                      |    0=0D
+ python/qemu/qmp/qmp_client.py                 |  732 -----------=0D
+ python/qemu/qmp/qmp_shell.py                  |  689 -----------=0D
+ python/qemu/qmp/qmp_tui.py                    |  665 ----------=0D
+ python/qemu/qmp/util.py                       |  150 ---=0D
+ python/qemu/utils/qom_fuse.py                 |    1 -=0D
+ python/scripts/mkvenv.py                      |   35 +-=0D
+ python/scripts/vendor.py                      |    2 +=0D
+ python/setup.cfg                              |   32 +-=0D
+ python/tests/minreqs.txt                      |    8 +-=0D
+ python/tests/protocol.py                      |  596 ---------=0D
+ python/wheels/qemu_qmp-0.0.5-py3-none-any.whl |  Bin 0 -> 72263 bytes=0D
+ pythondeps.toml                               |    7 +-=0D
+ pyvenv/meson.build                            |   34 +=0D
+ scripts/mtest2make.py                         |   41 +-=0D
+ scripts/qapi/commands.py                      |    5 +-=0D
+ scripts/qapi/introspect.py                    |    2 +-=0D
+ tests/Makefile.include                        |   25 +-=0D
+ tests/functional/meson.build                  |    7 +-=0D
+ tests/qemu-iotests/meson.build                |    2 +-=0D
+ 30 files changed, 116 insertions(+), 5598 deletions(-)=0D
+ delete mode 100644 python/qemu/qmp/__init__.py=0D
+ delete mode 100644 python/qemu/qmp/error.py=0D
+ delete mode 100644 python/qemu/qmp/events.py=0D
+ delete mode 100644 python/qemu/qmp/legacy.py=0D
+ delete mode 100644 python/qemu/qmp/message.py=0D
+ delete mode 100644 python/qemu/qmp/models.py=0D
+ delete mode 100644 python/qemu/qmp/protocol.py=0D
+ delete mode 100644 python/qemu/qmp/py.typed=0D
+ delete mode 100644 python/qemu/qmp/qmp_client.py=0D
+ delete mode 100644 python/qemu/qmp/qmp_shell.py=0D
+ delete mode 100644 python/qemu/qmp/qmp_tui.py=0D
+ delete mode 100644 python/qemu/qmp/util.py=0D
+ delete mode 100644 python/tests/protocol.py=0D
+ create mode 100644 python/wheels/qemu_qmp-0.0.5-py3-none-any.whl=0D
+ create mode 100644 pyvenv/meson.build=0D
+=0D
+-- =0D
+2.51.1=0D
+=0D
 
 
