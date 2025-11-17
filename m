@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62397CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5860DCEBF96
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKvhp-0004b7-NO; Mon, 17 Nov 2025 04:39:29 -0500
+	id 1vKvj7-0006Ef-Sz; Mon, 17 Nov 2025 04:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKvhM-0004KI-AK
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:39:04 -0500
+ id 1vKviI-0005BL-Ty
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:40:06 -0500
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vKvhK-0006H0-G5
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:39:00 -0500
+ id 1vKviF-0006HR-VN
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:39:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763372339; x=1794908339;
+ t=1763372396; x=1794908396;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=KhQR5tiHq2nlsQHsdWiG7YU6sxG6zpGR/PSttrNctaw=;
- b=QufvxFx5woViYxKWP78R7v6N3CysQuD+IHnXe7EfpGcaz0r/N08CrOZB
- IA+NofrnfNyUYe5mne+01JbpuAjRfWxQpR5rKCR85FMy6D6DEQaSe76rz
- Q1gEsBFldCp6NJNQJJZosZF4OqRN3RoarTH/51kIwKQ2pGer8OsBQqd0v
- qJB2H+wWEt2/pm8SvPWxs6t9VsoKp8U0XQmt/cgDfkGiSkAnHz8XK/9F+
- 96LH2ZOBfPsjvkQJftWD84YXFuaJk3Hj7cmeON5BKUFUhSovtnxeunL9U
- C4Svb69YaIwe0M8G2ysIYz6CljxI6+dOfkVt8EJog62fgkoeZOf67TezE A==;
-X-CSE-ConnectionGUID: kxyA8ExpR7ecrJMZeHHTXg==
-X-CSE-MsgGUID: Mdp8UtvnRY+WvS0px5Ootg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76045929"
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76045929"
+ bh=F/UlVir0CPbKiBxFTUK1dLBiSRa0vktrD+oJw9HyZT0=;
+ b=g/3eNsBO2igncWG9UL76BCw5diQfEzTJlBCGfVXn8zeGDss2he/2iIFA
+ 4LEYR/W1Ljwaan0yHX6LBsdvDO2JiFeaude1SZjXaT+k+8esEbcj3aphA
+ akVt7LnQs46Pa/RxqBJiv3qVIyJ/VYG53MUi3voqWsLPeZ/35W09QlHBA
+ XgMKZuKNzR4Alb4AQBCPy9OAn8aZMm3BrT7A/GbIsKZ44ls4SXqibj5mH
+ WlUr+GwvaIbxyQwM1VbMLNZWOwfCRvTDJaZ+Q9U2whs1fyeQo6eMgkDfj
+ KRuZf14DnBmOLwQi2YXsvJHCqpbwo3AUD9LsAMr06muD5mnthOJZb+vz7 A==;
+X-CSE-ConnectionGUID: YxRGx4xiQ2S5SdpG+MD9jg==
+X-CSE-MsgGUID: nBTHY5xDQn64jwBkBv9nfA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="76046064"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="76046064"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:38:57 -0800
-X-CSE-ConnectionGUID: /VJjrsnuSkiuZwVLdGPYSg==
-X-CSE-MsgGUID: ZMkKwW4vSpu9Mn6XB9UoSg==
+ 17 Nov 2025 01:39:44 -0800
+X-CSE-ConnectionGUID: t/DiLwDIRNW/fW4ZYlBRgA==
+X-CSE-MsgGUID: pWgY1I2bRCeseY8sgrwcQA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070893"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; d="scan'208";a="190070978"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 01:38:53 -0800
+ 17 Nov 2025 01:39:40 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,9 +53,9 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v8 06/23] intel_iommu: Implement get_viommu_flags() callback
-Date: Mon, 17 Nov 2025 04:37:09 -0500
-Message-ID: <20251117093729.1121324-7-zhenzhong.duan@intel.com>
+Subject: [PATCH v8 18/23] intel_iommu: Add migration support with x-flts=on
+Date: Mon, 17 Nov 2025 04:37:21 -0500
+Message-ID: <20251117093729.1121324-19-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
 References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
@@ -86,58 +86,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement get_viommu_flags() callback and expose a request for nesting
-parent HWPT for now.
+When x-flts=on, we set up bindings to nested HWPT in host, after
+migration, VFIO device binds to nesting parent HWPT by default.
+We need to re-establish the bindings to nested HWPT, or else device
+DMA will break.
 
-VFIO uses it to create nesting parent HWPT which is further used to create
-nested HWPT in vIOMMU. All these will be implemented in following patches.
-
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/i386/intel_iommu.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ hw/i386/intel_iommu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index ab8037a666..43f3a49769 100644
+index 42c1bf48f1..269b7da958 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -24,6 +24,7 @@
- #include "qemu/main-loop.h"
- #include "qapi/error.h"
- #include "hw/sysbus.h"
-+#include "hw/iommu.h"
- #include "intel_iommu_internal.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_bus.h"
-@@ -4696,6 +4697,16 @@ static void vtd_address_space_unmap_in_migration(VTDAddressSpace *as,
-     }
+@@ -4091,6 +4091,13 @@ static int vtd_post_load(void *opaque, int version_id)
+      */
+     vtd_switch_address_space_all(iommu);
+ 
++    /*
++     * Bindings to nested HWPT in host is set up dynamically depending
++     * on pasid entry configuration from guest. After migration, we
++     * need to re-establish the bindings before restoring device's DMA.
++     */
++    vtd_replay_pasid_bindings_all(iommu);
++
+     return 0;
  }
  
-+static uint64_t vtd_get_viommu_flags(void *opaque)
-+{
-+    IntelIOMMUState *s = opaque;
-+    uint64_t flags;
-+
-+    flags = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
-+
-+    return flags;
-+}
-+
- /* Unmap the whole range in the notifier's scope. */
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
- {
-@@ -5354,6 +5365,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
-     .pri_register_notifier = vtd_pri_register_notifier,
-     .pri_unregister_notifier = vtd_pri_unregister_notifier,
-     .pri_request_page = vtd_pri_request_page,
-+    .get_viommu_flags = vtd_get_viommu_flags,
- };
- 
- static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 2.47.1
 
