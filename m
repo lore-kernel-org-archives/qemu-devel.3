@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAEBCCEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D70CEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKvNd-0001YM-Pt; Mon, 17 Nov 2025 04:18:37 -0500
+	id 1vKvPI-0003kH-KH; Mon, 17 Nov 2025 04:20:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKvNH-0000pl-Kd
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:18:23 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vKvP1-0003iV-Ac
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:20:05 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKvNB-0002lE-N0
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:18:15 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-429c4c65485so3362773f8f.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 01:18:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vKvOz-0002xR-NZ
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:20:03 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4774f41628bso26231205e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 01:20:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763371087; x=1763975887; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=z1G+OLaL4n0dcENeYQN6K/NmT7uSXZsSdALs6YUFBg4=;
- b=PMK7OjmcDrfHkWKQ7spT7XdBHL35YNiTExpEDWtUsgLNjAgDihxPfEca1lKm0zug74
- OAVmrJhFP48w81/4HsNKNKayTKbdfqu1/dWv22VDfeSWs5yb+mxNa4mF+Dq19km4eB8k
- /o3+cWAPoJDOc9bdnX4i23LD9gkYuGcWPT7VRmqS+I3r2Bft61r9eTmpKtyL17f4mIOh
- v5uFvqziXgiGOP6Js8l/cnJHPZUeyWpGUvDQwbIJ2Clon6B60/McpIPrPs4a1awg/n7H
- 490CzkpNvKhceDqJfnhNj+l7lJIcvWvui/gnGMr/FLWunzQmexH/NGTdrzfEmS8jgfOy
- jdxg==
+ d=linaro.org; s=google; t=1763371200; x=1763976000; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=12jZZeLTvfy9HJFuCu3xwvboNtNQZrKJ9IZFVJ+nnxM=;
+ b=Xp7ckIyJGtQM4tQBnbWAYRCt3suXyYKYO8caNu72J8Yqrwxts/1bGvHf/QXy7CYLvM
+ uXL/g1s4+OYAjiYF/NlEWcSLGgqLSnlWLiogUfPRE0MM5P9Gi1RU4xQ2gIYwFqZtZRIO
+ 0vBUUmAYU00+IIcwJNcMkcuQcn/XEaLI6bnDgF2KHZecfqGLMDEfXI4S59XevQUDsoUR
+ v+BaB4pmIBYRDRZ+Uk6HVtwj5DIphCSJAWfHWqA1AqJispROhV465LWGe36RU0LShalb
+ /36agVLpbA5VEhnrWr63KK/HeCvGMqr6QoOxNPhZZGsIbAU8x9lUBORNymaA2TO4zVY5
+ eXiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763371087; x=1763975887;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z1G+OLaL4n0dcENeYQN6K/NmT7uSXZsSdALs6YUFBg4=;
- b=kEK3q8HfVBvVSoXaSBww13HFcplHRrb05gtuMfHInlWeewOUTaPp908f10A9n1xU21
- rDRY89kANSPDxoqOEgqrZ4bE2pqTL8VAbYFIMFP0f2H9NS/3oimbu9KyKBtor60pXRCG
- 3ypeWxkKhlOBKbDdoqk7A6/XYD5MQcuLDV3b3Syw1X0RsabLz86Om4ixtbT3pVy0HhYt
- sSTOh/mI2w2KjJy2faZJ8xEpcIgmQW66Du/lpus2TbbB2doozxo7i51+0V5Z9/3KS9Ic
- 1A+KZ6/LCQYnD/6ByWjPE+J8iI1FvSQWwbyeBfA1Nccn/ylm4jaugkvC3Y/Kt+QhNU56
- dUew==
-X-Gm-Message-State: AOJu0YyX13k08ZyI6OMkbE6uESXSm2ZFEq4JFMDQM4Ya+Lq+agDRn5gC
- 7zlphvauvp0RAIbeUKoR/co+Vgr9P2Z7sAnKBT41NHL3aikrZhxpZY+il1WJ7TlPpUJAm/SmwKc
- +fhFOo65bgQ==
-X-Gm-Gg: ASbGnctM7jlNNEBKkp3VDF0yvQzTKVOLMMyampw6/UNItGOEdmleUunszt1swQTXl6o
- jqiFapYTXnbm/pCcmPTiIS2EinbOMXhRHEr5N92ZmyaJM8EZRU1rRWXnRIWIKNtTc8kYSJ1mtX/
- CxAVQEpGU5eioHYL5v3e3rp8ZE3Vk5R2lCF+DXZ0ZXH4t4HPjmXAuiH2+anIWXFOhCiC7U+o4gs
- efFMkBwa5gXb/oTv5FGkDqiYcbN4EUfYPPgNhDD49QJrjqV5S3erd8mz2LDhWGKhRM3WnTEuEwj
- B+La1nnbp2aZ0wYDELGNMTVvt9DX1infAvsy2ZfZqLrgp3h00iQwR6IchZrI4wbkmATqGR2zcqi
- Uu2b66enbjmpvqBmccMeURq2KedXeO2rbpWJ3PEDKXu4LP0QoeqcfPQukhdhpFVq/3tl5y3kwoX
- pQiduKKWHcSI4wte1EqAfVwOSzwInNtcv5pOqswz7jIweVl+tVYZ30g+IDBiPT
-X-Google-Smtp-Source: AGHT+IFctotpgdkF2s48ZutUeIzhKMylJVkhAyOkHunscCcYBLSbJ4gMIaoFG/wQ00TT+BXzqhW1OQ==
-X-Received: by 2002:a05:6000:605:b0:42b:3b62:cd9b with SMTP id
- ffacd0b85a97d-42b593722f4mr10927762f8f.37.1763371086878; 
- Mon, 17 Nov 2025 01:18:06 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53e845bdsm24322205f8f.12.2025.11.17.01.18.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Nov 2025 01:18:06 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
- Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.2] hw/southbridge/lasi: Correct LasiState parent
-Date: Mon, 17 Nov 2025 10:18:04 +0100
-Message-ID: <20251117091804.56529-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ d=1e100.net; s=20230601; t=1763371200; x=1763976000;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=12jZZeLTvfy9HJFuCu3xwvboNtNQZrKJ9IZFVJ+nnxM=;
+ b=JaeMzG41gGTdYKURlZNN+nurJlGLrggT+aQ0SJA1UZENQ6PxOjFcO6S1WP0WbMgO35
+ kUHTAweESxtTL/jNOk3KAhw8Ob2Y4qz9xGx8xaCuQ49xt4bDGW+mg19pgKv8y6p6V3ca
+ 1zz5GBaMD9k9ZLRVidhHr2aCC+IM3IA5efxaxEVkPTISnkIxdqWYnxiICZK48RKclhgk
+ rf82FVF9lkByxT0p702w1vgdf223ThexNbseq79VxZfEHJZQB6OIXqqDHzGFiV+5S9OE
+ +G1LqIEtidiv0xji4LJ34bsAtwhuukCxk3I9+YQ8RgHmHYBo0PGGI0V9Oj6S8xLt9+0e
+ lrXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEjNCK3hhA9zBTSWq9EAR8b11qSQKEJDmyPLWaW6Dol0b2+0LxLU5B5kPS+I5GGPVfhcIYQ7uBX1uF@nongnu.org
+X-Gm-Message-State: AOJu0Yx1NLeGvZceKzMPzTJzKBmzdVCet5vC8qmYxg2UD6psZQH+rcx6
+ EdOxSM9IJFfAtiN/sXvdmbHqYsiaANT2GS9ZAwAKCankJ3/TJFosi1bfW7ogcrszdi8=
+X-Gm-Gg: ASbGncs/ipOgj6Ctrx6F0lmWWuJfgvP2oezs38gH0HsIcCDRCWLnz1ko1yDndE+OZXE
+ PU8Euvk8FOdIE6E2Hws4WXKF0n8kmoDv7YejRAdfHpqeMi3XpIARQlWy1WI1O0AbHMI2Nz1xE2Q
+ 7JiQPn4Ul98wjwHtW0GazpQI/nc77BK65u8EYNzni2nc4+ilkat22WpOQR3EYQj6eMr1Ep0pvXQ
+ DnlnAX5VWCWeeSfz1IBbhE46MGe7GWI0fxQF+PIgb+XoOV+a4ysatCOtbm0dxyGLsdejCYhD9Wb
+ 5kdx8NUXrZRDr67Pn7+xheLX965lc79x18oilyjT0IkekAxVEJfiVw7ghKPvZoSaSuD6qfHwX4S
+ qTJctbCA4VYv/zHb11K/dxE9wVku8k7vC9n2yqHDbajvvzeXxNTZl3/thWcvRkUvHsNNHCghHLE
+ 5ZZpV4/n6AhrgigCzmeYsK8k32oIiYKdmwjSbyd2SUClnhTsSbewpm/hS3gSUO
+X-Google-Smtp-Source: AGHT+IE7Gye+gnDU2YqzZXOy9NYg68IZin26VGax2m+8GT3THFUzLP7+G3qsURc4DVvoEhA4LutYHQ==
+X-Received: by 2002:a05:600c:1d24:b0:475:ddad:c3a9 with SMTP id
+ 5b1f17b1804b1-4778fdb3970mr117062155e9.13.1763371200114; 
+ Mon, 17 Nov 2025 01:20:00 -0800 (PST)
+Received: from [192.168.8.105] (66.red-37-158-132.dynamicip.rima-tde.net.
+ [37.158.132.66]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4779b509a5esm119434345e9.2.2025.11.17.01.19.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Nov 2025 01:19:59 -0800 (PST)
+Message-ID: <245a1415-1493-4202-838f-e13c3882eff2@linaro.org>
+Date: Mon, 17 Nov 2025 10:19:57 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] scripts/clean-includes: Make ignore-regexes one per
+ line
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Alex Williamson <alex@shazbot.org>
+References: <20251104160943.751997-1-peter.maydell@linaro.org>
+ <20251104160943.751997-4-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251104160943.751997-4-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +111,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_LASI_CHIP inherits from TYPE_SYS_BUS_DEVICE, not
-TYPE_PCI_HOST_BRIDGE, so its parent structure is of
-SysBusDevice type.
+On 11/4/25 17:09, Peter Maydell wrote:
+> Currently we have a single extended regular expression defining
+> files that clean-includes should ignore. This is now very long
+> and awkward to read and edit.
+> 
+> Switch to having a list of newline-separated EREs that we write
+> to a file for grep's -f option, so we can express them more
+> legibly in the shell script. We allow for comments in the
+> regex list, which lets us document why we have put the
+> exclusions in.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   scripts/clean-includes | 28 ++++++++++++++++++++++------
+>   1 file changed, 22 insertions(+), 6 deletions(-)
 
-Fixes: 376b851909d ("hppa: Add support for LASI chip with i82596 NIC")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/misc/lasi.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-index 04312d0b589..0e95be1c32a 100644
---- a/include/hw/misc/lasi.h
-+++ b/include/hw/misc/lasi.h
-@@ -13,8 +13,8 @@
- #define LASI_H
- 
- #include "system/address-spaces.h"
--#include "hw/pci/pci_host.h"
- #include "hw/boards.h"
-+#include "hw/sysbus.h"
- 
- #define TYPE_LASI_CHIP "lasi-chip"
- OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
-@@ -63,7 +63,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
- #define LASI_IRQ_PS2MOU_HPA 26
- 
- struct LasiState {
--    PCIHostState parent_obj;
-+    SysBusDevice parent_obj;
- 
-     uint32_t irr;
-     uint32_t imr;
--- 
-2.51.0
-
+r~
 
