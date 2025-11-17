@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A91CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D3FCEACEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 09:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vKvXK-0000Pp-6c; Mon, 17 Nov 2025 04:28:38 -0500
+	id 1vKvb8-0001CO-UZ; Mon, 17 Nov 2025 04:32:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKvXI-0000PI-DW
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:28:36 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vKvb6-0001C1-1z
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:32:32 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vKvXG-000497-RF
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:28:36 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42b3ac40ae4so2329152f8f.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 01:28:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vKvb4-0005Av-9Y
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 04:32:31 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-477563e28a3so27265845e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 01:32:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763371713; x=1763976513; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PA2nuFX61j/IuNtMkRIbPWbXMumEq3e6l12jyUI2qUg=;
- b=JdRIUu8c591dbEFLEfLzVlKozaD/e3iqOwEOiGi3RjP13nKFx6up9pm9E87iiv0c0h
- cpg+jO0v8w83OWwiDOWzCwfQcQm3sdb3AkkuqxALrmSywaVT+c5BKIIma8n2jOMBrN6L
- uOm8NdRTswurxCwQI/hhoEsiBwqhoTNY2OR6xWx66eOaunWT+neQcCyL4MkV6b1SaqyD
- Fb87jiumI+HeZq6efPGih6lYXm2ypkIv2YHT8B0FiEypWvJnV21GnmlN5aDa2tYTcCnY
- awe5rTyll/6vk6PH3XQEW295gEMHh7vrdwfKvz7jO/VEw29BCaSxF5nrJUxN7SjuhL1u
- W4iQ==
+ d=linaro.org; s=google; t=1763371948; x=1763976748; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MHLiE4m5Kzbx3xojOuk4FzUzwOfDCLTDyu46zeJDevI=;
+ b=Y8pRTfEIAGYNgaK3mMhpZaGC1m3Z6kfaQH48L4y+xUYc6DmHO4gRV7sSg6BCyihBEz
+ b3KnuJHBpK6l7gUYGvrnjcWPJ7x4J9VvPapLjLq7N89Jm6TKmQzy5qD1yXhyVrG75jXV
+ dwBf+wiZAccTH+lDQyJW1rVTZwSfonpwEP0Ta/JiLcXlbTqq+1w4fS9YPbUwTb43koJ9
+ zggGoDF6hNS08qQZYLJZDLc6mFgNHoklipVldNOethuxUAnsCYYgoGpoUW//lcsYpsJC
+ cR81IMgL7gqQJIH80dDluyKeolS5ZxmB9CVKNvqwlkoA5YblIdfvS1Hs1GPrS+8wRwqz
+ Wqjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763371713; x=1763976513;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PA2nuFX61j/IuNtMkRIbPWbXMumEq3e6l12jyUI2qUg=;
- b=K4pGBCg5F+A0KVOMN939eviERiImde2h45xrEelUPYJ5K9H5Ml5X5Ud8PsHjzoepYX
- c4ZpogR1BDZ9fjvMoZwBD+SNW9ffL+3kEj8OtWeEvULHr2PKjJt6LZO2D+TLfh52Pspw
- Ujx5E1LziiqnOX0d2X8YuYpSN+OimgENBkuy07WcvRF47tVtVktw+qzoKfFnL4ICCBHg
- kbZUmnv3XeJjGkRziIvaLl1Ez5EyRSrH78EGQztbepHaHNK9btxRQGPTiluoWrLVbM2L
- rrqlbH+z+HbM5qrPKbP1yORq4z9OnbbXk3lNRst1MrIQPfrcM7lahNrwQJ0ur+Azzqf9
- c8cg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWu/NDJgd3lGwgVc8c6787r+DnlZSneAtHrI1gZghVhgs+cauorwYw+82sx/tOT8MBKtW+30FfkhYi7@nongnu.org
-X-Gm-Message-State: AOJu0Yyf1kaO5zfEEi7yCczRjvZs7SoqAgAnvz9mZEvZ2Z9b/zkGD372
- +Wq0/857Bq/1Nc7Ozjy72B2ukt/Oe5M+a2jtaJcHO8dkRaeP7x20tTPkZAS9vCtN+V0=
-X-Gm-Gg: ASbGncs0MmbKXhN/rQ+CrWUBhkpJVWT4yoA4o5KsKqyW/ecXOTMjox6/7naybhbThYY
- 0/oDoPXZ91FRked7pSU0R3ddF1XsJqBIkcYwgHitMSNI+EtF4zfKT3AgG5Pb+oReaxKfypELZ5U
- hfLN+i570ykeV/Jhq3qY+yQF8m7JQkS1ib83IAE97mv1bw4UYwxWxjvNvMYayvISQjMaLapvQdY
- tsXssZqD5bJcJk8eZbhwL1uO4G+AZMpfuSMin6uhgcxjVXu/Lh4BH7sjOWu3xmNe6345GQRcpQi
- YKJLddR6B999u+vh38aMC3ta4tDhwsU9oItypaswtNPdU5Mz4MW/qSv2dz1DF5G1xm5Ea9JpS+H
- 4bmgbwCtTdQQdnY830diLnFm9F4AH0gSx1J091ZUIclLaqIHXEFH1l94t2ECgscSnIgTToRcUTa
- L1cU4OS8oiaMRVx5CsqXaWwDkRRxdo4FbHnd7HGM66pXjNHA+/+rebAQ==
-X-Google-Smtp-Source: AGHT+IEKW0hLVNxe6DrYPYvF/KvEIh0uOdopKILN+kYlhh/c7A68yWavZcGe7kOSoz5vWmL6aIj5TA==
-X-Received: by 2002:a05:6000:2509:b0:3fb:aca3:d5d9 with SMTP id
- ffacd0b85a97d-42b5933916bmr10801852f8f.1.1763371712867; 
- Mon, 17 Nov 2025 01:28:32 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f19aa0sm25233395f8f.37.2025.11.17.01.28.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Nov 2025 01:28:32 -0800 (PST)
-Message-ID: <d3323b18-5822-431e-aad6-cbe4470d1a2d@linaro.org>
-Date: Mon, 17 Nov 2025 10:28:31 +0100
+ d=1e100.net; s=20230601; t=1763371948; x=1763976748;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MHLiE4m5Kzbx3xojOuk4FzUzwOfDCLTDyu46zeJDevI=;
+ b=uSzicSFy+MUYbx2Y2ZTNGwfU5zGSnodzYjc+B5TmG5DtTkiW04TILw8iuHbYDs/ykV
+ k8SiLKp4utf54NzWow8SKFg9gr4VOfz39HPe3WXtdeXWYbzzo8btr4buGIyUW5XUoKDJ
+ gtaekpS8wUn9h8JA1OwcfcU/rYujiyFZit1X79TXe3ytoEbhF9tFn95ikdb3Rz3rGWOs
+ u6eCEOdqBSnDMf3Og8qll7h6orUUxqlFAbQvG+3jPpgzd2Ss1v5Cme5pgEE8EE9mtlFk
+ Or41koliZVt/ib3c84SdwVOdKRiSblZ1njsuY+A1LuWfRP6NDIUrKXTjcWz/fT5T7H1F
+ idMA==
+X-Gm-Message-State: AOJu0YwkhF9/izUTX9xpqV9XqJecjsX0uYAKGRmau/GW49WpvKdbJ92C
+ 6gTZ87Q69y45ZfXjCjzwv1W0IyRphF1xyqXoFbr0/FgCm82S6P0it4GqG6F7hfrinwg=
+X-Gm-Gg: ASbGnculxq9fnSTGL2Hf/Oe3CDS1cV/BP5aRGed32BmHZJ9XwZz3/nubk5zKjHLii6Q
+ xCvYdbtSOL8wkyiF2WX2oOHQi2OumE5lZAGGSuPWQUahnRPPGACb9LeoWRqL+H7o99KGt5P7l9y
+ PQ4x4r9wEqbwzxuh/WfjywrmQm/4rIWoaUs/XbDGOrmldFM30AW2DcHIS/rOSToCV+5CaShK1wB
+ 7r9rb7Xw+82xao/RoLD9bIcAvURRXbFK3z0fM2NhHz2URIHH73ORDssj5UvIOtcWC5E/JJvp2wQ
+ 581vAlCE/89+kVm/o8NkqZMlI9lNHVcHl5Hb5jrlEW8KiCJiCShG8mbvnrxCYWaioeR9iozIwru
+ xUSZ/kj2Zia1ZvjYmpcAACZdQcGLC91jMQiqTWFbD/ZZ2fqOVcV+N11hJjAy3DKgNzNBa+sIKYG
+ Nq9qaxiBbhb80=
+X-Google-Smtp-Source: AGHT+IGtHNLnhvpuHx4c5gdJai5WboKu9W2aGQ74+sdLLijcu5jnWr/+dUZ2lvglMlIteRw/ZO+dZQ==
+X-Received: by 2002:a05:600c:5598:b0:477:a71c:d200 with SMTP id
+ 5b1f17b1804b1-477a71cd913mr4892215e9.11.1763371948051; 
+ Mon, 17 Nov 2025 01:32:28 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e7ae16sm25375058f8f.3.2025.11.17.01.32.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Nov 2025 01:32:27 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 786105F804;
+ Mon, 17 Nov 2025 09:32:26 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org,  David Hildenbrand <david@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau
+ <marcandre.lureau@redhat.com>,  Peter Xu <peterx@redhat.com>,  "Michael S.
+ Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 0/8] virtio-gpu/next - misc fixes and MR handling
+In-Reply-To: <b3d94838-8484-457e-ada4-8ed3c5b38f8a@tls.msk.ru> (Michael
+ Tokarev's message of "Mon, 17 Nov 2025 11:47:29 +0300")
+References: <20251014111234.3190346-1-alex.bennee@linaro.org>
+ <b3d94838-8484-457e-ada4-8ed3c5b38f8a@tls.msk.ru>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Mon, 17 Nov 2025 09:32:26 +0000
+Message-ID: <874iqtm2c5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Clean up end-of-instruction processing
-Content-Language: en-US
-To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
- sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng
-References: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,23 +112,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Taylor,
+Michael Tokarev <mjt@tls.msk.ru> writes:
 
-On 15/11/25 00:00, Taylor Simpson wrote:
-> The changes to packet processing have made some of the end-of-instruction
-> processing obsolete.  With the addition of gen_analyze_funcs.py and the
-> ability to short-circuit a packet commit, we no longer need to "log" the
-> register writes of each instruction.
-> 
-> Taylor Simpson (4):
->    Hexagon (target/hexagon) Remove gen_log_reg_write
->    Hexagon (target/hexagon) s/gen_log_pred_write/gen_pred_write
->    Hexagon (target/hexagon) s/gen_log_vreg_write/gen_vreg_write
->    Hexagon (target/hexagon) s/log_write/gen_write
+> Hi!
+>
+> 2 changes from this series has been applied to the master branch:
+>
+>  9f714c4b20 hw/display: add blob map/unmap trace events
+>  0c6d6d79a5 ui/gtk-gl-area: Remove extra draw call in refresh
+>
+> but the rest weren't.  And it looks like some are worth to be
+> considered at least.
+>
+> Alex, maybe you can refresh the series and re-send?
+> We're entering feature freeze stage with 10.2..
 
-I fail to apply your series, what is the base commit?
+There were problems with the other patches leading to leaks in
+MemoryRegions. Akihiko has been looking at alternatives patches to
+re-factor MemoryRegion handling and also investigating the sub-optimal
+RCU behaviour that causes the test case (patch 8) to lock up on the
+current master.
 
-Thanks,
+Longer term I wonder if there is a better backend we can use that avoids
+the need for the complex blob/MemoryRegion dance we currently do between
+threads?
 
-Phil.
+>
+> Thanks,
+>
+> /mjt
+>
+> On 10/14/25 14:12, Alex Benn=C3=A9e wrote:
+>> I still have a number of patches that addressed a lock-up but were
+>> never merged due to objections. However there is a bunch of discussion
+>> around re-factoring the MemoryRegion code so I'm re-posting with an
+>> additional functional test which demonstrates the lock-up is fixed.
+>> Whatever the final solution for more cleanly handling the binding
+>> between MemoryRegions and blobs it will at least need to pass the
+>> test.
+>> Blob memory issues aside I'll send a PR next week to merge the
+>> per-head and ui/gtk-gl-area changes.
+>> Discuss,
+>> Alex.
+>> Alex Benn=C3=A9e (4):
+>>    system/memory: add memory_region_finalize tracepoint
+>>    hw/display: add blob map/unmap trace events
+>>    hw/display: re-arrange memory region tracking
+>>    tests/functional: add GPU blob allocation test
+>> Andrew Keesler (1):
+>>    Support per-head resolutions with virtio-gpu
+>> Dongwon Kim (1):
+>>    ui/gtk-gl-area: Remove extra draw call in refresh
+>> Manos Pitsidianakis (2):
+>>    virtio-gpu: refactor async blob unmapping
+>>    virtio-gpu: fix hang under TCG when unmapping blob
+>>   qapi/virtio.json                          | 10 +++-
+>>   include/system/memory.h                   |  1 +
+>>   hw/display/virtio-gpu-base.c              | 10 ++++
+>>   hw/display/virtio-gpu-virgl.c             | 62 +++++++++++--------
+>>   system/memory.c                           |  5 ++
+>>   ui/gtk-gl-area.c                          |  1 -
+>>   hw/display/trace-events                   |  2 +
+>>   system/trace-events                       |  1 +
+>>   tests/functional/aarch64/meson.build      |  1 +
+>>   tests/functional/aarch64/test_gpu_blob.py | 73 +++++++++++++++++++++++
+>>   10 files changed, 138 insertions(+), 28 deletions(-)
+>>   create mode 100755 tests/functional/aarch64/test_gpu_blob.py
+>>=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
