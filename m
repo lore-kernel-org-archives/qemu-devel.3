@@ -4,100 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E454CEBF61
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC0FCE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 16:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL28R-0007G7-8u; Mon, 17 Nov 2025 11:31:23 -0500
+	id 1vL28Q-00079y-Ce; Mon, 17 Nov 2025 11:31:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vL28M-00079k-OF
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vL28L-00076r-6u
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vL28K-0007gh-Sj
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:18 -0500
+ id 1vL28I-0007gX-NJ
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 11:31:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763397075;
+ s=mimecast20190719; t=1763397073;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2pn8tdgNfLASOvuPWNTWM6oSQ6NEVCBo2XL5ksJU9So=;
- b=M721b6ABKy4vxZ0hK7tAvpwrJ5Ggi8UKvE6IG8gb/y/PsdUnQ3uCK2Nsg6/olZghPkVxQo
- OtqRuG26jkjd09MNNikXPx1VIvEzcZRreeuTZx82zY+M6ah2qk6cp/R2wghBT4aJlF7GF+
- Fys3fq9N5mlneI3WkBlZyrpEdhCivyc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9EV0G8fOv9urSTQ/Zi9BrN+v8CBpmDQcEA3FMJ5hCDI=;
+ b=Z4SDfB/MnV65YACGRc8qfWyzHGCYfwkRBbOZEbj4Pbi++tO2uVRlUq0bjnhF0NfY8DHVsB
+ rRNCCLA54IBQABBVKldzU8b3oqxY7Du+w4yw+xym0+J94+EFAYteUn4dSRvi5HO3hrJIDc
+ VN0kcJmgxT5zRtoBjv8wNeMK8dnAya8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-597-5Ysr__7aMjOVxPWn-URCbQ-1; Mon, 17 Nov 2025 11:31:13 -0500
-X-MC-Unique: 5Ysr__7aMjOVxPWn-URCbQ-1
-X-Mimecast-MFC-AGG-ID: 5Ysr__7aMjOVxPWn-URCbQ_1763397072
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-429c76c8a1bso2735847f8f.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 08:31:13 -0800 (PST)
+ us-mta-204-OV4QJj6UOZy6ZW6Z--o6jA-1; Mon, 17 Nov 2025 11:31:11 -0500
+X-MC-Unique: OV4QJj6UOZy6ZW6Z--o6jA-1
+X-Mimecast-MFC-AGG-ID: OV4QJj6UOZy6ZW6Z--o6jA_1763397070
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477563a0c75so26086935e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 08:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763397071; x=1764001871; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2pn8tdgNfLASOvuPWNTWM6oSQ6NEVCBo2XL5ksJU9So=;
- b=TtmLfojDkI+HAsmdlvmEHR0MdrS5DpFOBkuWq3TIdLwzIS1GcWyW6mjUGVmTMYRDqp
- mB1vmmJs/M1PeykqGzPEEvlX/WU/ESiVmj5Sj8uemZZ8Cm2UC+TjlNGNKwwGL9NdkZPa
- Go1xxhSLcH1klKBiByLtnEeRTsP5vxTzG5sHmdt2DAjzNH3hBvBbnPF5X9S8qjr2zD6u
- OQYnWtqqwfEmtmbesX9DR6A2LM5PehPucg3yPIsUYBCyzT++7NJUC2JJ9UcwHXoKzPXR
- ds1g477mBQKIBdU5olVLzritpNmBhCT8K979zXVop6zD2MXbbzNLatzS6o+bTZQuHL7m
- iNhg==
+ d=redhat.com; s=google; t=1763397069; x=1764001869; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9EV0G8fOv9urSTQ/Zi9BrN+v8CBpmDQcEA3FMJ5hCDI=;
+ b=YwA6fsdpvUW+HuQy4HGgqBWT3Vn6hb0Td4WJSlhdpJRgMO1Q1X91/slKU92by15+9j
+ bo0qsZF7S12oUD1lcYpT6dPC4UFksE9dWHZdwSPtuWJoU6wWgYPym/ZH9VoffCcpyK6t
+ A4sfb+a8GgouqQb4BzRtaF2pwaETec8P1tzxsy49Ng6gOOEArozOfC2xM74gZAkAk2bC
+ +9N7rgAjmKJ4QQopZukoNV/A7tQ7EtuYlYAd+7yl1gsYaocb61RwvDcJGGvxxRJE1AUI
+ TPioAlESQ0HmasNMhw8j9VITxwSLwiGkyiWsHgE9O1hG70xk3csFAr1e6Zi3dsSu+vvu
+ Qj3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763397071; x=1764001871;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2pn8tdgNfLASOvuPWNTWM6oSQ6NEVCBo2XL5ksJU9So=;
- b=hYAvi1CbO+CLpOp9D+Dl9xyUy7DAsfXdcbgDdLSHwkn59PdPWJ4ZXjo5Equ6QbvtN9
- faYNTWzAddh1L0iaezZexZwfaBzd8X66kgivYZdWUQx0nM2bDcpX36G9gwqwBNhQQhSz
- j8gOjCwhKzC6hJ7bic3dOr9yAQ5zReK4Bo+VOV2Nqt08VnrPw53Ni0TQj35jIU4wu7Ch
- 3cEBkSfYM3QeefR2CaKC9cFQVwtaaGkIKNDOTzSYPfpiRM8cMk8wk/8UwJbWuu2dZBEv
- +jvj+Kig3VEpWGhggXQnkO5JETdLqA4olZgVcbyK+pXjGDUUENcgkxgrGhqeH1uflFKr
- Ie0A==
-X-Gm-Message-State: AOJu0Yx/zYS5y53KSeAziIQrZ0HV6tb07CwF58xe+wYccbMFNdArJiIZ
- X2q556cPpgFsKKw6hCAtCLmqUOMD6e4U44mdD+QQDE2w5CPcOhnw5ctdd7p1mcJtgO7KIlHxa+r
- kvWOYtjAvdsH+J9FkXT9QJ/v35OV/ZRpyHlYrir0p+oNBqDHHbrc8lv5wCwRzlk924uNfdwM/xS
- GQSHT+ISBc/qlm78orKK/7peyuMNcGxHc1vDBtW1Ex
-X-Gm-Gg: ASbGnct5zSyeITz5x4SWEMauMYpaRPTx9BH4vj4HAqTogZBpK+4aQlYrZmvT82RZtVm
- aElPX0stfSU+w2vkfCfqHP3WPQeJJw1LOYqp2UBBMVW4O2tBDGPwDeQbM7KNR3CoPBc0VSsluHQ
- vd72kjKlKY2GyIujvIbplXThW2j7lCYp1bZAw5uhs260B6GoP8gqVmPqdtIlBt4/ZoMxoZCMynx
- NN3wkWVlT2Xp9WRXwklhWVtegxWi4psHT9jAMI6fnSH1sBCm7sv+ci+WiIIB3xS9zaGn91yoYdz
- G1nktpQZCe7h20oTGTA2Vj/Kcx/MjEkxMnLfU5Axnq3hdxEIRAl5Kdai8/j2emcPLVH52SrV/s1
- e69MQGU27FIuR38HdxpwvV49F3Huj6M5fnTjEOQielUEXI4scz5v9zbasvE7Vmr90bLdFrOE0zj
- Tx/hcB
-X-Received: by 2002:a05:6000:1ace:b0:3ff:17ac:a34b with SMTP id
- ffacd0b85a97d-42b59383b2dmr12854976f8f.42.1763397071195; 
- Mon, 17 Nov 2025 08:31:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLWAqTbjxJLdcShd9EuFkYF7JjwGuWiMRtkrUGAvFY8pM0W623wuE3rMwfbFZ7lqOhyC7x4A==
-X-Received: by 2002:a05:6000:1ace:b0:3ff:17ac:a34b with SMTP id
- ffacd0b85a97d-42b59383b2dmr12854948f8f.42.1763397070747; 
- Mon, 17 Nov 2025 08:31:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763397069; x=1764001869;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9EV0G8fOv9urSTQ/Zi9BrN+v8CBpmDQcEA3FMJ5hCDI=;
+ b=xSmQ22jngHvR6kY0NB8lqnWvLrLlp5YXeeCXFipCuLqjvQWMtZmTAeq6WtXDRbYTzD
+ ioxBvwV8z/TU0wohpFZmSfnYn+TodPJh4DxhJ0SGS7mropeL/425BVOeFJFjKV22qMp0
+ SATMFUxKpqy8GKDqJ9quc5SwMAABcd6lRK43RGcnIGK0takgjhPQRMvNyMxagBXKptld
+ kEq8oVn2FROJddeaEzum9FqyOh+39gNZBFTX8hhGjeLfdKm47d7VjME8fhN/LwGAF46h
+ sde+F1eKchgm5B9QZgK1Znh7IbfKaGJlqlgqbfhj/gVHgCpIXzQElWHHIlpcDHOCRrGh
+ 3hcg==
+X-Gm-Message-State: AOJu0YzDmk5Oeeu/saD+eZmSUo8JzFiFSGOsCE02FzaqB2922cohwFX5
+ 3Plz791PfjA9J3UFjgJixZa+hKQb7q+Tn9oq2AlwpJwqDiU8DF8lw5A1SqvZUJ5lRBTIDc+8hRM
+ LRH5ZtmI+/N0K6/ytXs9QWyfDNwa2+q07hPaDFbWGl9PF7XPdIQ7rMHNmiSoUjvG9G9noOR8uCn
+ tqGB1Ou2kB/jSHLnB1gaaNGPuWmkgd2GKeCqiKUuD4
+X-Gm-Gg: ASbGncvxoRt0g4c6s/1+CYzM00e7q2+317R7Gzb9CN7e+xy3ovklZ77lNsw7vKoTNG0
+ g/YQgn0Rbq0hMiWApX+6wgi7wEga7Yvjk+FT0NsjtVl2RMwkPTJDEmjHia+xHAYrCFGd41bAkc1
+ x7ldOkuCvm0CxghUbuDSekTlkSXNWoHGJJYgMlodnKvOSLa/98ugT5uvO63nzHhrjiZuatjm/OH
+ 8pdFkTyibglEQp6OZRh2AbG8UmbAzt0VWdEP8Qc9zZIMXK8Cb5Y4bYKSi178TIzLzA7PBGkAUm7
+ Zzt0ibSlTeq22yRscDfMt4owRjkqgb77uoD8ErNApvORVNKIlHsZ+rJvJF15+DnPrDlU1PWCYPG
+ ozfoefholkZu9EdLfMyLeaOACFksU4MdHnfZc/f94Qgtj63qjJ4k3y7lvhTloZN7ZxS/6S7TPy7
+ mr3p5F
+X-Received: by 2002:a05:600c:3587:b0:477:8a29:582c with SMTP id
+ 5b1f17b1804b1-4778feb23b3mr129423525e9.34.1763397069065; 
+ Mon, 17 Nov 2025 08:31:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF3lrjs4Ap1sFQcoO4p66XX8pM0YvYevbQYPjMR4436z8tfMJINA/9vZN5f1jzYpVKDeFHDHA==
+X-Received: by 2002:a05:600c:3587:b0:477:8a29:582c with SMTP id
+ 5b1f17b1804b1-4778feb23b3mr129423135e9.34.1763397068564; 
+ Mon, 17 Nov 2025 08:31:08 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53dea1c9sm27261602f8f.0.2025.11.17.08.31.09
+ 5b1f17b1804b1-4779fc42f25sm99329855e9.6.2025.11.17.08.31.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Nov 2025 08:31:09 -0800 (PST)
+ Mon, 17 Nov 2025 08:31:08 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com
-Subject: [PATCH 1/3] mtest2make: cleanup mtest-suites variables
-Date: Mon, 17 Nov 2025 17:31:05 +0100
-Message-ID: <20251117163107.372393-2-pbonzini@redhat.com>
+Subject: [PATCH 0/3] mtest2make: clean up and make dependencies more precise
+Date: Mon, 17 Nov 2025 17:31:04 +0100
+Message-ID: <20251117163107.372393-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251117163107.372393-1-pbonzini@redhat.com>
-References: <20251117163107.372393-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -122,113 +118,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the "--suite" argument from the .*.mtest-suites variables, and
-add it only when actually computing the arguments to "meson test".
-This makes it possible to look at the set of suites to set ninja-cmd-goals,
-instead of doing it via many different .ninja-goals.* variables.
+You probably have never thought much about scripts/mtest2make.py, and in
+fact it has seen only a hendful of commits in the last few years.
+The idea is pretty simple: gather the list of testsuites and their
+dependencies, and turn a "make check-*" invocation into calling "ninja"
+first and "meson test" second.  On top of that, it magically turns
+SPEED=thorough into invoking up to three suites named XYZ, XYZ-slow
+and XYZ-thorough.
 
-As a bonus, this removes code duplication between emit_suite_deps
-and its caller emit_suite.  Since emit_suite_deps would now be one or
-two lines of code, integrate it into emit_suite directly.
+But even this incospicuous script can harbor a bug, or rather an "I
+didn't really think too much about it" situation.  Dependencies are added
+to suite XYZ independent of the speed that is used in the meson.build
+file: add a dependency to a func-thorough test and "make check-func"
+will build it at any requested speed.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
+Fixing this is a one line change, but it is easiest with a small cleanup
+on the front, which is patch 1.  This (at least to me) makes the generated
+Makefile.mtest file a little bit easier to read, which is also nice
+to have.
+
+Paolo
+
+
+Paolo Bonzini (3):
+  mtest2make: cleanup mtest-suites variables
+  mtest2make: add dependencies to the "speed-qualified" suite
+  mtest2make: do not repeat the same speed over and over
+
  Makefile              |  4 +++-
- scripts/mtest2make.py | 35 ++++++++++++++---------------------
- 2 files changed, 17 insertions(+), 22 deletions(-)
+ scripts/mtest2make.py | 43 ++++++++++++++++++-------------------------
+ 2 files changed, 21 insertions(+), 26 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 74c2da20372..9fb55dcf330 100644
---- a/Makefile
-+++ b/Makefile
-@@ -96,6 +96,8 @@ meson.stamp: config-host.mak
- 
- # 3. ensure meson-generated build files are up-to-date
- 
-+ninja-cmd-goals =
-+
- ifneq ($(NINJA),)
- Makefile.ninja: build.ninja
- 	$(quiet-@){ \
-@@ -150,7 +152,7 @@ NINJAFLAGS = \
-           $(or $(filter -l% -j%, $(MAKEFLAGS)), \
-                $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1))) \
-         -d keepdepfile
--ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
-+ninja-cmd-goals += $(or $(MAKECMDGOALS), all)
- ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
- 
- makefile-targets := build.ninja ctags TAGS cscope dist clean
-diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
-index 2ef375fc6fb..af4ee56de54 100644
---- a/scripts/mtest2make.py
-+++ b/scripts/mtest2make.py
-@@ -20,12 +20,12 @@ def names(self, base):
-         return [base if speed == 'quick' else f'{base}-{speed}' for speed in self.speeds]
- 
- 
--print('''
-+print(r'''
- SPEED = quick
- 
--.speed.quick = $(foreach s,$(sort $(filter-out %-slow %-thorough, $1)), --suite $s)
--.speed.slow = $(foreach s,$(sort $(filter-out %-thorough, $1)), --suite $s)
--.speed.thorough = $(foreach s,$(sort $1), --suite $s)
-+.speed.quick = $(sort $(filter-out %-slow %-thorough, $1))
-+.speed.slow = $(sort $(filter-out %-thorough, $1))
-+.speed.thorough = $(sort $1)
- 
- TIMEOUT_MULTIPLIER ?= 1
- .mtestargs = --no-rebuild -t $(TIMEOUT_MULTIPLIER)
-@@ -34,8 +34,10 @@ def names(self, base):
- endif
- .mtestargs += $(subst -j,--num-processes , $(filter-out -j, $(lastword -j1 $(filter -j%, $(MAKEFLAGS)))))
- 
--.check.mtestargs = $(MTESTARGS) $(.mtestargs) $(if $(V),--verbose,--print-errorlogs)
--.bench.mtestargs = $(MTESTARGS) $(.mtestargs) --benchmark --verbose''')
-+.check.mtestargs = $(MTESTARGS) $(.mtestargs) $(if $(V),--verbose,--print-errorlogs) \
-+    $(foreach s, $(sort $(.check.mtest-suites)), --suite $s)
-+.bench.mtestargs = $(MTESTARGS) $(.mtestargs) --benchmark --verbose \
-+    $(foreach s, $(sort $(.bench.mtest-suites)), --suite $s)''')
- 
- introspect = json.load(sys.stdin)
- 
-@@ -72,29 +74,20 @@ def emit_prolog(suites, prefix):
-     print(f'all-{prefix}-targets = {all_targets}')
-     print(f'all-{prefix}-xml = {all_xml}')
-     print(f'.PHONY: {prefix} do-meson-{prefix} {prefix}-report.junit.xml $(all-{prefix}-targets) $(all-{prefix}-xml)')
--    print(f'ifeq ($(filter {prefix}, $(MAKECMDGOALS)),)')
--    print(f'.{prefix}.mtestargs += $(call .speed.$(SPEED), $(.{prefix}.mtest-suites))')
--    print(f'endif')
-+    print(f'ninja-cmd-goals += $(foreach s, $(.{prefix}.mtest-suites), $(.{prefix}-$s.deps))')
-     print(f'{prefix}-build: run-ninja')
-     print(f'{prefix} $(all-{prefix}-targets): do-meson-{prefix}')
-     print(f'do-meson-{prefix}: run-ninja; $(if $(MAKE.n),,+)$(MESON) test $(.{prefix}.mtestargs)')
-     print(f'{prefix}-report.junit.xml $(all-{prefix}-xml): {prefix}-report%.junit.xml: run-ninja')
-     print(f'\t$(MAKE) {prefix}$* MTESTARGS="$(MTESTARGS) --logbase {prefix}-report$*" && ln -f meson-logs/$@ .')
- 
--def emit_suite_deps(name, suite, prefix):
--    deps = ' '.join(suite.deps)
--    targets = [f'{prefix}-{name}', f'{prefix}-report-{name}.junit.xml', f'{prefix}', f'{prefix}-report.junit.xml',
--               f'{prefix}-build']
--    print()
--    print(f'.{prefix}-{name}.deps = {deps}')
--    for t in targets:
--        print(f'.ninja-goals.{t} += $(.{prefix}-{name}.deps)')
--
- def emit_suite(name, suite, prefix):
--    emit_suite_deps(name, suite, prefix)
--    targets = f'{prefix}-{name} {prefix}-report-{name}.junit.xml {prefix} {prefix}-report.junit.xml'
-+    deps = ' '.join(suite.deps)
-+    targets = f'{prefix}-{name} {prefix}-report-{name}.junit.xml {prefix} {prefix}-report.junit.xml {prefix}-build'
-+    names = ' '.join(suite.names(name))
-+    print(f'.{prefix}-{name}.deps = {deps}')
-     print(f'ifneq ($(filter {targets}, $(MAKECMDGOALS)),)')
--    print(f'.{prefix}.mtest-suites += ' + ' '.join(suite.names(name)))
-+    print(f".{prefix}.mtest-suites += $(call .speed.$(SPEED), {names})")
-     print(f'endif')
- 
- targets = {t['id']: [os.path.relpath(f) for f in t['filename']]
 -- 
 2.51.1
 
