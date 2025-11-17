@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05458CEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC11CEBF61
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 17:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL2mS-0006Wn-Qk; Mon, 17 Nov 2025 12:12:45 -0500
+	id 1vL2mk-0006kI-Jr; Mon, 17 Nov 2025 12:13:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL2mQ-0006Vk-O0
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:12:42 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL2mh-0006ih-ML
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:12:59 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL2mO-0006jG-C4
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:12:42 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47755de027eso32059975e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:12:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vL2mf-0006ll-4N
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 12:12:59 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-477619f8ae5so30975285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 09:12:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763399558; x=1764004358; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LeGIsKgjXUpY7siwK7h2OvBlSAO20bFJdWrBioItVhk=;
- b=BXrXLMGZC7euNw6Ke4kjEYBMI0i1dZ7S/HwfdF4cBQre3vjSQkfXm9DCu0FcP1/N7G
- 7ga/GMraS4WFD7DgeBAVWttH+GkKBXNXN9lWc3YDayva+DPUDWYsUMgs7YQxHTYeXF8t
- /wIlcAOeiI/Ym/lAw40wr2q5L27UEVK6PTHEGVVafuPkLX9jwNIE2Mzkl5HBRZxwGpv0
- ORlMr42xG8m0r6OqwPQuYvGowHY1s8pbmqj0qedFKD9srUul8iWrjW0l9P9Kzgbb9mxm
- Wn5pwXs7KhNzNmPpCiGDRyD/WlVYlLgpEF624urGLoaQjmoehIMZSxqQs2PYOCuy3Gns
- vLRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763399558; x=1764004358;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1763399575; x=1764004375; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LeGIsKgjXUpY7siwK7h2OvBlSAO20bFJdWrBioItVhk=;
- b=jknabHYti0vrae3XjxVZKqbShifHM0Gu2VnHq6Q8a46dqXGMPsExDVYnLefpw+5J0o
- Va3TDwSDRgGi46/gQTksB/VLMixIcP9SWRQ5GcZhGl2kP0iWG3PRwbG6btARAoPllXh+
- wEEc4ua3S0/Tp2W7DcF3yOmKpKhBlUbPswU2fwr7ZYJ0Pkr70vi45CWtoHXfvU6viPaP
- wq5h5Xz6ls5TBR204cawN5FEjhRu/bTLpGfrh6COuRaIsRYJIxAr7Jsra9zyPIwbKEFB
- 4n2Cl0dJ/1gVmxyaJ95VmpDQV0y2vncuCWMEeMTdH6n67/rIPLybDsv8mX5txcHl0HgE
- cU0Q==
-X-Gm-Message-State: AOJu0Yzud393JtR4yIB/5v7Zg9IcjJcOLxR60Q6XW+QjUXhyjxN3qkzk
- z6mgwhjVwf7J6H5I/fsBFtSNRPRknDu2gW/w+sQy9Et30jHdZ9REVwCF5KDyzzZnss9i7m83+1g
- 9sDOCfmBVTw==
-X-Gm-Gg: ASbGnct8jOTD2EADN9FLf8vtzFEoeO3t+PwZgrnr7V/cqE4mc5iHvpnNNy9O61CZXRB
- 4Wg5Zs7Itco8/mWxg2f9iC4cGpeJQAmH27rcare/3vIh/v/UNUf/tm6n5U4jnQ+PH9K7w5B1oSu
- /bzIUv2yk/91wUjhb85snTWHH1nZjBqVMEe9MFm3pwqYbhMifJRwyrxa7UnC3y7ygUtPfPd3QYi
- Ig+68hiDLrsMxDRdHkLZSAQ3+GZt2yayfqaU2c5/MJ8a0XIboYPSJvao3WCQDS3boFHqenxojnL
- hreDJzTvzwpqd1X4HQozKPBxLrup0kxrI5qurcqr+pdcNcqO8YBKGeAAVQWjGPx1spn4CBXji0o
- 2CKkWBEIvQO6ERl+FmfjPMUMHd4sX71XWt7MEwVUFLlsgPtnzbwilDemc9lMGV9y6eKZZKRfyWm
- TU6xL1MhRWqCX6HACvd14uK0IGUkGGBOsVdGiFjExt3UpCwdceow==
-X-Google-Smtp-Source: AGHT+IEcUEPZdVuGr21TJ8hLxCN8R2Dfoy0DYh5l4U3tL6rkLMMNQ2UrLldn6511HXCUJ2kg24mpMQ==
-X-Received: by 2002:a05:600c:5487:b0:477:9e8f:dae8 with SMTP id
- 5b1f17b1804b1-4779e8fdb3dmr66365925e9.0.1763399558298; 
- Mon, 17 Nov 2025 09:12:38 -0800 (PST)
+ bh=Zm9KzVzoJUw665v7OdINjbHAvr0+RcZ7YFxld/TN60c=;
+ b=ux3heA6KGo1zlV+b0E4iJIEhVdfx2m/XGj77BX3Fqd+vOG2rZmDZ2mlMrppTlCkWfs
+ p0Xu9aIIuSN1uZaX03SDg0xzhIzOo7Xj7R29Urp0mqc75UT2FG7zXnI8+maIXub3OR2n
+ M8jn0sgK2+zPhlC+qkXHEztVmN6+mDtDs1llm88DWmQc3ZHGBNtJ2V//ASB2zAluYBQ1
+ tne2yqcJ6ucGRh/l1vjG6sRN44+xE8btK10xX+0Y3sMER1vnFV/ifywYw4PBS3/mEMOn
+ QFgjB1LT33EdxcmSl8izmwArRbf7hPYqN+LQAMP2Oq/dgjRykdiYhQCDkoOl3gjdj+Q3
+ j+dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763399575; x=1764004375;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Zm9KzVzoJUw665v7OdINjbHAvr0+RcZ7YFxld/TN60c=;
+ b=ApY89YM90w9+IplL5Om0qtNONGeoX02mzuwa0FoeGdkENzOIVKnPFPiFiK8XH/+1hY
+ i/ws6PbZR+sr+toLlLeOiBITbIlJprz820F3dMkMnewkaLhj+BudlYQ5JbQK5ZEkXguX
+ VnZQ/HAnc+I6u4Rm4MBSONeljybIzZLsfpqc8/QqwMj2X3O4zh6ZBnh+13pUvAPRWRzp
+ OpoWUIkeriizT8ORNkH46FQIaXdRFGTks70D76uej28MsHzl+R3bLq9zAac5GsuYe3z/
+ jqA0CY3g9UBu4L1SNxLWeg5YGh1k04e9bNdiaMFedgZBA01A/p061F224ZSQ4aOBkNSl
+ FBqw==
+X-Gm-Message-State: AOJu0YzWaZqsD7V8zn7ZdfxSEWEKZtUEUaOqs/uvYwjyiKG4AgMZs30d
+ MaQrzecIK7DvegprAejKkklqMCLPq7FPTIHiRd/uCJsLElyW9OEp6CSBIvIbDS1DZPtSrgVM7Tp
+ Lfk2SMRrdlA==
+X-Gm-Gg: ASbGncumzdkud/LOPY8/6CW6uQrPsPp5vAzQipGLp5FZbj0k88S+Yvo7BIOMJlvqKZu
+ Vlb8g8AmcqfVxCLKOI+cNnbv+2JPdjKia1YNcIVlk4vA+y5iD1AFZH9tWeF02cgeNUyv3CjeoEc
+ 3ajW90K9tS/6g1g3A36mSqINtbCEEP+J/DhapduuHwnZKv3nU4j3+K7YUn+1GgrqjoMoZmnXuda
+ s+FUfH//fBu8pRhXbCsnHXeUycL9aWVLZInLMObVPjHTC93i9DcDHo87D1yyDx9ft5fehoMG0Ox
+ MuPhzbNI0hn+SJcw4dZwXkuk06bo8vzeU48W+kXBWfD3sV6JKyQsrb0q5dsPX2n5ARQrlsCAIOU
+ rITeW54eGbv2QJ0gGxgKP1gtriKOkuMrju70CDHwZdKgc9M95qTeGVUivRml9cCDMwUmtZzdX/X
+ d2NL0Rct6J+FMA2GAjw5To0iS9HsUuebXSQ34ke0RZrDOdRhkX/5DzHQqEvP4j
+X-Google-Smtp-Source: AGHT+IF2XbjhpUYcFu9uh9y4Lh1x7QCMIhGtL/wtw/n4Mef1L7k/CZCtzjj57zNK9QI/wiWxkq+OkQ==
+X-Received: by 2002:a05:600c:1396:b0:477:6373:f3eb with SMTP id
+ 5b1f17b1804b1-4778feb53d3mr121355805e9.31.1763399575305; 
+ Mon, 17 Nov 2025 09:12:55 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4779a684202sm138842195e9.10.2025.11.17.09.12.36
+ 5b1f17b1804b1-4778bb34b0asm115465245e9.1.2025.11.17.09.12.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Nov 2025 09:12:37 -0800 (PST)
+ Mon, 17 Nov 2025 09:12:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -71,15 +72,17 @@ Cc: devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH-for-10.2 v3 0/2] docs: Update around MIPS/PPC host removal
-Date: Mon, 17 Nov 2025 18:12:33 +0100
-Message-ID: <20251117171236.80472-1-philmd@linaro.org>
+Subject: [PATCH-for-10.2 v3 2/2] docs: Mention 32-bit PPC host as removed
+Date: Mon, 17 Nov 2025 18:12:35 +0100
+Message-ID: <20251117171236.80472-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251117171236.80472-1-philmd@linaro.org>
+References: <20251117171236.80472-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,23 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v2:
-- Generic 32-bit host removal message (danpb)
-Since v1:
-- 11.0 -> 10.2
+We removed support for 32-bit PPC hosts in commit 5c1ec5a1ee0
+("tcg/ppc: Remove support for 32-bit hosts").
 
-v0 Cover:
-- Clarify MIPS host removal
-- Mention PPC host was removed
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/removed-features.rst | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Philippe Mathieu-Daudé (2):
-  docs: Correct release of MIPS deprecations / removals
-  docs: Mention 32-bit PPC host as removed
-
- docs/about/deprecated.rst       | 2 +-
- docs/about/removed-features.rst | 7 ++++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index a72df26dd24..422b9c98d35 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -902,6 +902,11 @@ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+ Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+ maintain our cross-compilation CI tests of the architecture.
+ 
++32-bit PPC (since 10.2)
++'''''''''''''''''''''''
++
++The QEMU project no longer supports 32-bit host builds.
++
+ Guest Emulator ISAs
+ -------------------
+ 
 -- 
 2.51.0
 
