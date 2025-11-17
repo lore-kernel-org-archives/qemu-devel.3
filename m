@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57340CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92228CE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 18:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL44r-0006sm-Mn; Mon, 17 Nov 2025 13:35:49 -0500
+	id 1vL4KJ-0002c0-HX; Mon, 17 Nov 2025 13:51:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vL44p-0006sJ-VM
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:35:47 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vL44o-0005v4-BB
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:35:47 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-786d1658793so41952317b3.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 10:35:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1763404545; x=1764009345; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=K73Ao705R0Dy5FBdMxo0IeNm5wVkP23X22ouQxRWOBo=;
- b=K1b2lyRDF9C/0axmtjQNmicZRb04VyO91TG7TZ3sF/pQWs5l4h6DRtAlm0dAf9pAcR
- fXtY3ef1U7jT42c5fWIqaCr+DY4UdggCaNyEDKRo2ic60P9bPfxsApG8IlznI0+4/ctR
- Z2akB//UeY6G7i2oM6bYDvcxmt6a+UJdycFGG/k8VEMjg4lzh8qHKo7EBiz0hRhy8rt6
- ZIzDD3Qs3H2R5K8jhvCm5MNdQqxvd8KfS0kRyI8sCrOWav8mB+POmstCiHTxrAy2MFTn
- yT5yqdYMBa63rviClFqijshcVpiZLQNJQhfQrjdtQovaezezaQj1tHuRmRB85RTP4hpr
- rz+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763404545; x=1764009345;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K73Ao705R0Dy5FBdMxo0IeNm5wVkP23X22ouQxRWOBo=;
- b=SM3GpPdq0KyXFy3++Bz9zRGC+28nisldiIVY4X+GW0WYCKiiE9diFOxcRZQYYevwE5
- 2MKfNn0uv11pOBs0V20EjkFv/PoG3XAslP+Yf4Gdyh8Juq8R/MkkaDYBKeU4WF85cJ9E
- JvcBJ2D+G4yV4dOFlwLUH14uLVrm3a1Jv3DVVGgArtZGyU5GA5dCZ5uL+oAH7ch+VlOl
- XCNZtmXIztbN6R90silR15koSXh30VMP9RYQ51ApKGILJaLFwQiKh4zJrPTs0SR772ip
- XrPKOngEI1q46Xj8ZqoCT441GHYBwpT/nXi/QcP9/SJJSLBAI+UvX1CrDWBtjT2Z0lG0
- fuuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0iKJ6PpW6R9pgudDfwk4kXBHc3vKNfD0crMlVHjtEElGgnHXXGA68hnU6Y5We9o5R+egtAJKktJvH@nongnu.org
-X-Gm-Message-State: AOJu0Yy4sWpZoe8dvtXDGw7VpwHMLu3pT6F3urrWygTIj1SmSnternzO
- aW2GniUxwfxgjBVVuEu5RQdu4MYL/SpZ+AZfiDZogInfYddsS6wY9B3CWqRoFFzroPIShVyHl4Y
- zU+HEQTGb/BkEhRmfb3ywLjsU0O29j1U=
-X-Gm-Gg: ASbGncvy6pmnoMkRSBNHg7kPgZTKzmycrh4o5N8gyLvtSA73y2vHeYBrKojH/rF09rR
- SP+Iutf9+JX35DOBqDWJzOjBsOQCkClWPIBc/8VHkLw90Hk+7iGytFv0HWD2yiS71GHnmb6rRCY
- fcko9mYBGa+IKRXMeO7r/SzBhGHDUzuMqy5bFfLf2orHlqoZRg6uHS3YrmWti6DyUpkatO/64SQ
- vs3gepNKCkMau48ZLSauBsk/Ur/hMYISSVncVaQqL1etdYFCwDBEV507zE/v+7mkJP5FwNzq2TO
- V8NaQn4hz9B5vBpPWjOi5c7x5JQ=
-X-Google-Smtp-Source: AGHT+IHKzUuvpg714Fgo+Zdh6Dv9mPLPmmROWTXjiHyYBjT9xeTDpJd3MCNR+hTIN1nx69dtw8MKdp1ztjvWyf3c1/I=
-X-Received: by 2002:a05:690c:3613:b0:786:5471:f44c with SMTP id
- 00721157ae682-78929f1df9amr227961867b3.63.1763404544526; Mon, 17 Nov 2025
- 10:35:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4KH-0002bb-7T
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:51:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vL4KE-00084g-Vl
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 13:51:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763405501;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sKnlxMdNRwOrumbl+JG8c0k2jq6AgNvSnUaYTaCJ/Dg=;
+ b=ieKpTwFjQNlFQ9G2tKLZYwHDit7LIbJ8LIdjKBRjpiFTV7+t4mDarYoEYoT3G2qa6lbipF
+ ebZkdV9HGu3Vzir0K5ukc/p4L9T0uy7xBchP2GmndKxlNV+/CoEqLWW2VORQ2zLlTUFeWH
+ gk5Na5IiYrn7EYcL8YIeCfNkhGOiPNA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-bDDssQFyP36_htPeynX_HA-1; Mon,
+ 17 Nov 2025 13:51:40 -0500
+X-MC-Unique: bDDssQFyP36_htPeynX_HA-1
+X-Mimecast-MFC-AGG-ID: bDDssQFyP36_htPeynX_HA_1763405499
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D55931956059; Mon, 17 Nov 2025 18:51:38 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.81.70])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 16D56180047F; Mon, 17 Nov 2025 18:51:35 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH 01/22] python/mkvenv: ensure HAVE_LIB variables are actually
+ constants
+Date: Mon, 17 Nov 2025 13:51:09 -0500
+Message-ID: <20251117185131.953681-2-jsnow@redhat.com>
+In-Reply-To: <20251117185131.953681-1-jsnow@redhat.com>
+References: <20251117185131.953681-1-jsnow@redhat.com>
 MIME-Version: 1.0
-References: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
- <d3323b18-5822-431e-aad6-cbe4470d1a2d@linaro.org>
- <CAEqNhNYCUwK6UDXKSONA67yfmLPaSt14gtgrK26AfAQqyBopTg@mail.gmail.com>
-In-Reply-To: <CAEqNhNYCUwK6UDXKSONA67yfmLPaSt14gtgrK26AfAQqyBopTg@mail.gmail.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 17 Nov 2025 11:35:32 -0700
-X-Gm-Features: AWmQ_bnkvRxB9OIyZBKxygPNwTO3DJSnMWGZ_PA8SxmhyMFt7WJIzeBfG9Pnsmw
-Message-ID: <CAATN3Nps8qxYPBHxM6NfP6qt+NSNHzhiC_C-tuK796rQG+qbAQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Clean up end-of-instruction processing
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
- sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng
-Content-Type: multipart/alternative; boundary="00000000000078cef50643ce9dc2"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-yw1-x112a.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,56 +90,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000078cef50643ce9dc2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Pylint 4.x has refined checking for variable names that behave as
+constants vs ones that do not; unfortunately our tricky import machinery
+is perceived as these variables being re-assigned.
 
-They are based on this one
-commit bc831f37398b51dfe65d99a67bcff9352f84a9d2 (origin/staging,
-origin/master, origin/HEAD)
-Merge: 76929d6117 7dbe2d7df0
-Author: Richard Henderson <richard.henderson@linaro.org>
-Date:   Tue Oct 28 11:48:05 2025 +0100
+Add a temporary variable with an underscore and assign to the global
+constants precisely once to alleviate this new nag message. Add an
+ignore for this name for older versions of pylint that developers may
+have installed locally.
 
-They also apply cleanly to Brian's hex-next-express branch.
+(In other words: there is no solution that will cater to both pre- and
+post- 4.x versions, so we target 4.x here and silence older versions.)
 
-What error are you getting on your end?
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ python/scripts/mkvenv.py | 24 ++++++++++++++++--------
+ python/setup.cfg         |  1 +
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-Thanks,
-Taylor
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index 9aed266df1b..a064709e6ce 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -92,7 +92,7 @@
+ # Try to load distlib, with a fallback to pip's vendored version.
+ # HAVE_DISTLIB is checked below, just-in-time, so that mkvenv does not fail
+ # outside the venv or before a potential call to ensurepip in checkpip().
+-HAVE_DISTLIB = True
++_import_ok = True
+ try:
+     import distlib.scripts
+ except ImportError:
+@@ -102,11 +102,13 @@
+         from pip._vendor import distlib
+         import pip._vendor.distlib.scripts  # noqa, pylint: disable=unused-import
+     except ImportError:
+-        HAVE_DISTLIB = False
++        _import_ok = False
++
++HAVE_DISTLIB = _import_ok
+ 
+ # pip 25.2 does not vendor distlib.version, but it uses vendored
+ # packaging.version
+-HAVE_DISTLIB_VERSION = True
++_import_ok = True
+ try:
+     import distlib.version  # pylint: disable=ungrouped-imports
+ except ImportError:
+@@ -114,9 +116,11 @@
+         # pylint: disable=unused-import,ungrouped-imports
+         import pip._vendor.distlib.version  # noqa
+     except ImportError:
+-        HAVE_DISTLIB_VERSION = False
++        _import_ok = False
+ 
+-HAVE_PACKAGING_VERSION = True
++HAVE_DISTLIB_VERSION = _import_ok
++
++_import_ok = True
+ try:
+     # Do not bother importing non-vendored packaging, because it is not
+     # in stdlib.
+@@ -125,20 +129,24 @@
+     import pip._vendor.packaging.requirements  # noqa
+     import pip._vendor.packaging.version  # noqa
+ except ImportError:
+-    HAVE_PACKAGING_VERSION = False
++    _import_ok = False
++
++HAVE_PACKAGING_VERSION = _import_ok
+ 
+ 
+ # Try to load tomllib, with a fallback to tomli.
+ # HAVE_TOMLLIB is checked below, just-in-time, so that mkvenv does not fail
+ # outside the venv or before a potential call to ensurepip in checkpip().
+-HAVE_TOMLLIB = True
++_import_ok = True
+ try:
+     import tomllib
+ except ImportError:
+     try:
+         import tomli as tomllib
+     except ImportError:
+-        HAVE_TOMLLIB = False
++        _import_ok = False
++
++HAVE_TOMLLIB = _import_ok
+ 
+ # Do not add any mandatory dependencies from outside the stdlib:
+ # This script *must* be usable standalone!
+diff --git a/python/setup.cfg b/python/setup.cfg
+index d7f5dc7bafe..f40f11396c9 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -159,6 +159,7 @@ good-names=i,
+            c,   # for c in string: ...
+            T,   # for TypeVars. See pylint#3401
+            SocketAddrT,  # Not sure why this is invalid.
++           _import_ok,  # For mkvenv import trickery and compatibility pre-4.x
+ 
+ [pylint.similarities]
+ # Ignore imports when computing similarities.
+-- 
+2.51.1
 
-
-On Mon, Nov 17, 2025 at 10:08=E2=80=AFAM Brian Cain <brian.cain@oss.qualcom=
-m.com>
-wrote:
-
-> Maybe they're based on the other commits on my tree which are queued for
-> inclusion after 10.2?
-> https://github.com/quic/qemu/commits/hex-next-express/
->
-
---00000000000078cef50643ce9dc2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><div>They are based on this one</div><div>commit bc831=
-f37398b51dfe65d99a67bcff9352f84a9d2 (origin/staging, origin/master, origin/=
-HEAD)<br>Merge: 76929d6117 7dbe2d7df0<br>Author: Richard Henderson &lt;<a h=
-ref=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.org</a=
->&gt;<br>Date: =C2=A0 Tue Oct 28 11:48:05 2025 +0100<br></div><div><br></di=
-v><div>They also apply cleanly to Brian&#39;s hex-next-express branch.</div=
-><div><br></div><div>What error are you getting on your end?</div><div><br>=
-</div><div>Thanks,</div><div>Taylor</div><div><br></div></div><br><div clas=
-s=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_att=
-r">On Mon, Nov 17, 2025 at 10:08=E2=80=AFAM Brian Cain &lt;<a href=3D"mailt=
-o:brian.cain@oss.qualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">=
-Maybe they&#39;re based on the other commits on my tree which are queued fo=
-r inclusion after 10.2?=C2=A0=C2=A0<a href=3D"https://github.com/quic/qemu/=
-commits/hex-next-express/" target=3D"_blank">https://github.com/quic/qemu/c=
-ommits/hex-next-express/</a></div>
-</blockquote></div>
-
---00000000000078cef50643ce9dc2--
 
