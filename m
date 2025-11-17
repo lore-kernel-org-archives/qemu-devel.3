@@ -4,115 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F8ECEACEF
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 15:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5874FCE8D6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 15:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL1VJ-00046f-3g; Mon, 17 Nov 2025 10:50:57 -0500
+	id 1vL1VB-0003wE-HQ; Mon, 17 Nov 2025 10:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vL1VF-000416-Ly
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:50:53 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vL1UO-0003cs-CD
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:50:07 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vL1VE-0008Jt-5g
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:50:53 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9EADE211C4;
- Mon, 17 Nov 2025 15:50:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1763394650; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qXAPh18vI7HzW726G2z85BEmaXGSSASnPcMI+fjlSPk=;
- b=DEk0nyXwuu3sVxgo0upgdxebOGw1Y1RuF0E5YVdRU4/KdqPEhh1/4CfMk4R90Yafo47Mu/
- cW9vo5c1+8GFKS92/FJMxNHkLQT2stb6VDxcEseFMjSXWD1Xld1NAq/4lqPUVa9wcMriIc
- IDhP8i/uUwGrVCC/rOsbssE/pOZkgOA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1763394650;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qXAPh18vI7HzW726G2z85BEmaXGSSASnPcMI+fjlSPk=;
- b=yjFnkvbViwEsY2CZHA2PQYRZu16CBdWU2j3QCmtaoIBsrhQ/Rxl/1u+SyYlefbJt2dq6TE
- KC4tGsUjQBzQIVDg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0oY6Caa4;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=h8dZZms6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1763394649; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qXAPh18vI7HzW726G2z85BEmaXGSSASnPcMI+fjlSPk=;
- b=0oY6Caa4azy+1MO3pXkOJ/NacTeqUPdmc+A2nM0iD3drMgMCV5zXSb44iLhKaR+LUvryQl
- AazSGWRt3ApJhdlof9W+cTorhhNyaIvvAJU9oTRUIWpkEqSdciHP2M8HJBYn2Vj/Cimslp
- oucgkZZQfrFuxt3/WiRukvoNeNbDnGE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1763394649;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qXAPh18vI7HzW726G2z85BEmaXGSSASnPcMI+fjlSPk=;
- b=h8dZZms6NApWkHCudNx8SNJEqCzYTguvYllxlwYZdv79vS1rWUxPNpdSHRZ2UoaAUiaAzt
- MZVDomH6UYLfzZAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CDF03EA61;
- Mon, 17 Nov 2025 15:50:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CY2mM1hEG2lCfwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 17 Nov 2025 15:50:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com
-Subject: Re: [PATCH 3/3] migration/postcopy-ram: Improve error reporting
- after loadvm failure
-In-Reply-To: <20251115083500.2753895-4-armbru@redhat.com>
-References: <20251115083500.2753895-1-armbru@redhat.com>
- <20251115083500.2753895-4-armbru@redhat.com>
-Date: Mon, 17 Nov 2025 12:50:46 -0300
-Message-ID: <87zf8kbquh.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vL1UJ-0007xI-4J
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 10:49:58 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47774d3536dso37080155e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 07:49:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763394594; x=1763999394; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s9tbBOFZcbf6qkUrLJv6zj0rwn2I5w4p3d7SQXfrnjg=;
+ b=MxWLtWPn9Gzk/Tf0sWcq3Px5I0VocV0h9BFSEyTRKOjEU9yhlPk9tImdnzpgETXq5k
+ eu6sqGSMJ1Wz9JrM43mRvF/fvl5sAcGjgIKxjRzw9ikC+SEmCFYU4/C0i52gvZ/ajRuA
+ uhdFn+rxvs00YbEdTFet01sZl6oUkHSBt5xj3udpM43Mm23R9Rr4A0MhbVeW2Rnu6sfR
+ ZdvNR9EgxT1mJaLBPs9Kms3Aa9WXBkGLnPVdpvgb+l1kbhZTPFvpmayTXYGVaQ+ECLB4
+ V5MwbTF7iy1a0erOhvzVMthkaysROWWaifOyRbKKoadNldRp+03juEpq54z8baF4EWes
+ bVJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763394594; x=1763999394;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=s9tbBOFZcbf6qkUrLJv6zj0rwn2I5w4p3d7SQXfrnjg=;
+ b=VO9pyS4dMwhHBra1rvp5fbcYWQcD+3BBV6JfgYPNJYTCh25D3z8ec/g3VA01C2Ef6K
+ Cx7lLx75jFsUyjZ60v5j+JP9VXAvewMjtxHPeL1kMWulr0E6iOUps6j1meakwkscdcB+
+ SED5AdMlZi+GE+GXXBENUAEjmE7vAO0NHpMeKH9qyVDEBossPtENE6DoDoIs+j0p4xk0
+ zEl0LI9SYbNRljYefwWQ9zlgcy/tPolZmOIOjugfmrPgpvk6NAZ2Uq2DKXrUGUygTQ9y
+ rp9xmE5g9VR4SVnBbnX7GGE+vap0OXeK21F4eZxTDcowf4DRgfFnN0WDtCKukYLb3Cxa
+ oseA==
+X-Gm-Message-State: AOJu0YwDjMVxmJnH4R88TBjgRysLTcT8nZ7+9dtoWZ4zQCcXSQxT6H8d
+ I0jblqBx3k3o1rjxZcUgfeCGak9MguhxoZm4VJFZ/2d/1ejaS+pAREK8QZFO+ip6DAE=
+X-Gm-Gg: ASbGncuddN5ysRJTzPc/fQiizvseEEgjgtxDv2WCqF9P09iPP28hn367XnCOYSHp9Du
+ QfUcA7kGgCpS46x3QhhMN6ThhQcEDiGrODKFt+sZcsT/JW9g3yaQFGTVFzsBQFfkM45apoO5S4W
+ fWVO8vVWQUpaMy2sQ08+p9RSsnchlkktQEmLTtjer7gEVFyNNop0Usuo9B+DrWI7BGPSMfVbpEe
+ V4Q28ul+SVlajByWF2eSwvY+/U9GDk6sHXPvwP1bsxAigSqz4rnhkWMxb1Uw0dki3eAZyRREbBc
+ 5MlbD+wLEh1RNgLzHmqlgyQ70eIRIKqsVmQ4Sw4ZBXIXnaY92LmQTYKWfwrZ0/8rjnpUQPJ1ozQ
+ RUiSqMKRmbjH7j68YJFZ4LjJCJ1zz8PsOz/3MeIF5TweTuJVYEq0VvWT7bwGhaZKLpW8N8RkwR6
+ qB
+X-Google-Smtp-Source: AGHT+IH56pC0++WJaAhmBEkUxvXnIw/V4Ujf612mRCXrhTm52OLY59R4Vc7dJChCf8v05uTpY3kHcw==
+X-Received: by 2002:a05:600c:4991:b0:477:9d31:9f76 with SMTP id
+ 5b1f17b1804b1-4779d31a01amr46241835e9.12.1763394593509; 
+ Mon, 17 Nov 2025 07:49:53 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4779973ddcfsm136501565e9.15.2025.11.17.07.49.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Nov 2025 07:49:50 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DF96F5F915;
+ Mon, 17 Nov 2025 15:49:48 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 05/18] docs/about/emulation: update assets for uftrace plugin
+ documentation
+Date: Mon, 17 Nov 2025 15:49:34 +0000
+Message-ID: <20251117154948.4122164-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251117154948.4122164-1-alex.bennee@linaro.org>
+References: <20251117154948.4122164-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 9EADE211C4
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.41 / 50.00]; BAYES_HAM(-2.90)[99.57%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[3]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:mid, suse.de:dkim]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,22 +105,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-> One of two error messages show __func__.  Drop it; it doesn't help
-> users, and developers can grep for the message.  This also permits
-> de-duplicating the code to prepend to the error message.
->
-> Both error messages show a numeric error code.  I doubt that's
-> helpful, but I'm leaving it alone.
->
-> Use error_append_hint() for explaining that some dirty bitmaps may be
-> lost.  Polish the prose.
->
-> Don't faff around with g_clear_pointer(), it's not worth its keep
-> here.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Linaro is discontinuing its fileserver service by end of the year.
+Migrate assets to GitHub.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20251117115523.3993105-6-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 92c219119e8..4a7d1f41780 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -886,24 +886,24 @@ As an example, we can trace qemu itself running git::
+     $ uftrace dump --chrome | gzip > ~/qemu_aarch64_git_help.json.gz
+ 
+ For convenience, you can download this trace `qemu_aarch64_git_help.json.gz
+-<https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz>`_.
++<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/qemu_aarch64_git_help.json.gz>`_.
+ Download it and open this trace on https://ui.perfetto.dev/. You can zoom in/out
+ using :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys.
+ Some sequences taken from this trace:
+ 
+ - Loading program and its interpreter
+ 
+-.. image:: https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/loader_exec.png?raw=true
+    :height: 200px
+ 
+ - open syscall
+ 
+-.. image:: https://fileserver.linaro.org/s/rsXPTeZZPza4PcE/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/open_syscall.png?raw=true
+    :height: 200px
+ 
+ - TB creation
+ 
+-.. image:: https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/tb_translation.png?raw=true
+    :height: 200px
+ 
+ It's usually better to use ``uftrace record`` directly. However, tracing
+@@ -916,7 +916,7 @@ Example system trace
+ 
+ A full trace example (chrome trace, from instructions below) generated from a
+ system boot can be found `here
+-<https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz>`_.
++<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/aarch64_boot.json.gz>`_.
+ Download it and open this trace on https://ui.perfetto.dev/. You can see code
+ executed for all privilege levels, and zoom in/out using
+ :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys. You can find below some sequences
+@@ -924,27 +924,27 @@ taken from this trace:
+ 
+ - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
+ 
+-.. image:: https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/bl3_to_bl1.png?raw=true
+    :height: 200px
+ 
+ - U-boot initialization (until code relocation, after which we can't track it)
+ 
+-.. image:: https://fileserver.linaro.org/s/LKTgsXNZFi5GFNC/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/uboot.png?raw=true
+    :height: 200px
+ 
+ - Stat and open syscalls in kernel
+ 
+-.. image:: https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/stat.png?raw=true
+    :height: 200px
+ 
+ - Timer interrupt
+ 
+-.. image:: https://fileserver.linaro.org/s/TM5yobYzJtP7P3C/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/timer_interrupt.png?raw=true
+    :height: 200px
+ 
+ - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
+ 
+-.. image:: https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/poweroff.png?raw=true
+    :height: 200px
+ 
+ Build and run system example
+-- 
+2.47.3
+
 
