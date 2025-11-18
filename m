@@ -4,197 +4,181 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE3DCCD19A
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 05:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31CACED240
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 05:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLEER-00028T-P7; Tue, 18 Nov 2025 00:26:23 -0500
+	id 1vLEJd-0003aO-Vb; Tue, 18 Nov 2025 00:31:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vLEEO-00028D-9T
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 00:26:20 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vLEJb-0003a1-8z
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 00:31:43 -0500
+Received: from mail-northeuropeazon11010018.outbound.protection.outlook.com
+ ([52.101.84.18] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vLEEK-0005Yf-Qh
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 00:26:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763443577; x=1794979577;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=bIfjtwdDA3qdUny7Gyy7qg188Zp7QWGxrqONJY1cVpY=;
- b=LB09SsDx7Q+CBeae3FU8FYlnwITmaEH3UAKIJIoeluy+IrxvEHvdy0cq
- 1DleHFa4AsZMCGUJAtl+nYVO/Mm/FFSOFE9d7Lnz0i7uKri7ejGrtQ+PA
- ASpDMVCY724+DZB9X/KQMFe2pufMo4iRNHHrounFtAjRRgmdIHhyVmZf6
- k6R6tAgJr0NfgETf63Mmly2LcBQcPjcPB+CRBUFUJ2+QMYC1UWdh0afLy
- qSJclj6l1/t69MNE2sK3Vw0KU5AAKw11iK/qrlhlzo2F006u150tlseqJ
- Tn4mPiLHMEiugUbkhX120qe7yThxIK8nKy9WtBJXpn63ne9b3QBMpErUM A==;
-X-CSE-ConnectionGUID: BANQN/S1RHyHKux1iplZxA==
-X-CSE-MsgGUID: 4x63O7t0S76YmEMrGGfHHw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="65547914"
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="65547914"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 21:26:09 -0800
-X-CSE-ConnectionGUID: 032dCIYQRC+5Ije9utBq+w==
-X-CSE-MsgGUID: fxsWmm03SCK3kEyj0o0a8A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="190322288"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 21:26:09 -0800
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 17 Nov 2025 21:26:08 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Mon, 17 Nov 2025 21:26:08 -0800
-Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.56) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 17 Nov 2025 21:26:08 -0800
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vLEJX-0005w6-A1
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 00:31:43 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SKzErKKVDbBr7dGbiYtt3undO/OjxpqIwnaG4J7CmTyG6ykxVsrXfuOeYyk7xe/K5UqaVg/MG92+xvtNJMGycInqHhVCDa2YsEaEsZZPL409XrVw0NphcU4LsRO4BWC/qI+3us5Y2i4PXyMO3XIZstoxxsHiXMlbDg3IkGwaNPbTlyQLlcgHWkXQ+jYd8IjeLPLZ/HdQ7pTsipANN52LeHorC9DjLLXx+q1YFJZW0tayFKYer39znufBU4l+Nq9BVHxryOrRSdLzSJjDHhK8K+nq13ci267ZnnyoKbBFY4OlIn2DCJN3X1Et+a+l5U5ccJt/EVLB3NkmPqAo/wt1+Q==
+ b=E2vFaLqnPOWDNWfPv7CMQxuIaZ2sF0NsTIRkOOr/8eLV9Jc5DlinWYLZjvaolcr2/qXwIVgPkqp4M0HtFcqlkuL5Icjr6JSJH00RUlN9v0smlkHXLmb5QhPM4tgTc7ApbC0ztURtIR1b+x0KKm4i5bvj7QJfzFupapbEYesozAmVI/IJleigu50ebSSIgTf2pkTyFhnbl9xibbYs3OuXtscW16Sm8Dsci8pRASAYtKkTmSPG0ESRFHKUna2FFejdLmlTay+0WWjywzCITHQgQp8tnVd+60xxEHfhgdfmPQJb8UXfzHXJirLUynNDBIirDGvQKZcn9oHo9CWtkdpszQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WDRfCeQk1S+0YTJBiceVLHiwZ4/R41tIZrh/lQlgjWc=;
- b=Im4NsJSHf5Dj80EcXUtb60v3RUJDyoVbvkSzs8975KnXwADjTgpg2aLDRkbf/LWvC8QwV/MhQg8RKeakRi7bYkSS8svV5cK/3nC/sHEbRaPq89rfNs9YPi6dsCLlcTTIncbrxQjzmcfmnAShP/tqkG14h94XSCeMKQ2eA4l0Q9iRcwtHojvqUN29OckmC6BuPU9tIsX2GRlim8ahY/dCitUQWmF0bPGJoNi29TlOQ2xIXlJj/I02Nlifjjd7YSnYTOup41knngFahc3C0VpXzsR3B9xQWtCorWRgokcV4Qa1urRZi3WrTKQ73ZFJpnJTv817v/npAasVzJmu21iP7Q==
+ bh=gC4Tfj2YEj/9j6A8lbVXebjsHahdafgHV1TRcQkSM2s=;
+ b=NCe7wVKOBOIYIR89Ff82YeKPzyUfRSiWjtcKYYNSxPrmMKhi6xNPAXJAwhrkMUTQfznXFvE/Q4zV3QdWmpNdYSAhg0aJrS7T+B1c7SceAN9EATvSuxiLvtddBqCLh+0OJOMZAwpnQG4nFupV9vQ70KJ+s4KgS8UKa+CD8/UPz/CWdTHfQTEZ7xgiR3acaXujB+SGoInSC7Toq9fgbbmyjE/A1DaRotjV+A+iVf66zOP3CZC8Dv5IxpJk8O+ny33ioGxgUC/ZTbtJmSWfwkODYutFkMhmw1C20jARK8JgsAS7s2GDUI1svQNDs7gENrpCIEq3EJTZF8iehEoJ/hud/w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by CYXPR11MB8709.namprd11.prod.outlook.com (2603:10b6:930:dd::21)
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gC4Tfj2YEj/9j6A8lbVXebjsHahdafgHV1TRcQkSM2s=;
+ b=gsQTCPI2f55aT3duFHO/wzOWUptWXOJ8DzoZMgsfGEW5XgU8u66Y3+mWeZP/IWafSOvu8gXk3WWAxCei/+W38GrJBEmVU3ji2qk2kq05ZwmSCrf2QZq5ypBKH3QDWmaaLZMpDdMkASj3X3vDbj7IWmskkafB52kdR2fTcLb0XQH4FcR7HYTtIxv74ytykJZ1hV0AvqEm6kcIB35srCYCPKch4Sm/eXr3RHkmnCdNWUW89ujLEFMabf/cc+Za/OzPyVhZ2etGrMhDHNqnD1zIPr/CNquv/p36IQ9f8K+OIzQiAWNmcQPnNiAQJOrJ2pgdD8gdLwiOFee/KZkIzjyjDg==
+Received: from AM9PR04MB8487.eurprd04.prod.outlook.com (2603:10a6:20b:41a::6)
+ by PA4PR04MB9224.eurprd04.prod.outlook.com (2603:10a6:102:2a3::5)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.22; Tue, 18 Nov
- 2025 05:26:00 +0000
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::dd3b:ce77:841a:722b%3]) with mapi id 15.20.9320.021; Tue, 18 Nov 2025
- 05:26:00 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.21; Tue, 18 Nov
+ 2025 05:26:34 +0000
+Received: from AM9PR04MB8487.eurprd04.prod.outlook.com
+ ([fe80::1e08:e81f:d29:e1da]) by AM9PR04MB8487.eurprd04.prod.outlook.com
+ ([fe80::1e08:e81f:d29:e1da%4]) with mapi id 15.20.9320.018; Tue, 18 Nov 2025
+ 05:26:34 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
-CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Alex Williamson
- <alex.williamson@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@redhat.com>
-Subject: RE: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Topic: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Index: AQHcUTsfaCBAQNqK6UqI5jTHJ6PIg7Ts6XoAgAE6QFCAAJJ2gIAA3p9AgABvJgCAAROboIAFZI8AgAEGRKA=
-Date: Tue, 18 Nov 2025 05:26:00 +0000
-Message-ID: <IA0PR11MB71852665F80155422F4714E2F8D6A@IA0PR11MB7185.namprd11.prod.outlook.com>
-References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
- <20251109053801.2267149-3-vivek.kasireddy@intel.com>
- <ea2e1bd7-d681-4929-b902-1948b854e488@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185866AD30B9A73097934CCF8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <8b8e3b19-7696-4b7c-8d74-eab2028dcd02@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71857687EC63A9A8D46476C7F8CDA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <e9424a92-f612-4cce-abc1-5336949ca71b@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB71852A2F1894A75CE0B7EB13F8C9A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <a5b4e817-93b2-45c3-8c59-21a4b65174b4@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <a5b4e817-93b2-45c3-8c59-21a4b65174b4@rsg.ci.i.u-tokyo.ac.jp>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>
+Subject: RE: [EXT] Re: [PATCH 01/13] hw/arm: Add the i.MX 8MM EVK(Evaluation
+ Kit) board
+Thread-Topic: [EXT] Re: [PATCH 01/13] hw/arm: Add the i.MX 8MM EVK(Evaluation
+ Kit) board
+Thread-Index: AQHcUjRwGlPwlBhZz0miSX67uwfg6rTuJcwAgAIcKzCABqHhgIABDhsg
+Date: Tue, 18 Nov 2025 05:26:34 +0000
+Message-ID: <AM9PR04MB848742C309CB74036D36578F87D6A@AM9PR04MB8487.eurprd04.prod.outlook.com>
+References: <20251110112257.184578-1-gaurav.sharma_7@nxp.com>
+ <20251110112257.184578-2-gaurav.sharma_7@nxp.com>
+ <456712A0-D581-47E8-8EFC-FC32B2C23445@gmail.com>
+ <AM9PR04MB84872E6EC84C52E32DF8039E87CDA@AM9PR04MB8487.eurprd04.prod.outlook.com>
+ <72765C82-C132-4C3A-9F3C-1338266BAD96@gmail.com>
+In-Reply-To: <72765C82-C132-4C3A-9F3C-1338266BAD96@gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
+ header.d=none;dmarc=none action=none header.from=nxp.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|CYXPR11MB8709:EE_
-x-ms-office365-filtering-correlation-id: b27ba9d9-799b-4e84-05b8-08de2662f58d
+x-ms-traffictypediagnostic: AM9PR04MB8487:EE_|PA4PR04MB9224:EE_
+x-ms-office365-filtering-correlation-id: 6ed5fe97-789c-4b8f-74f9-08de266309fc
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?IDPhYHsE1gB+yJPjkMFTLJLbwVxLTMhGrTSLKLNKfOY1mozxEN15uFd16Z?=
- =?iso-8859-1?Q?4b9VWQXAcqTs2qk0cvx52nCFgRSzqslofyDgCENEFMmhP65Pie60I3mKer?=
- =?iso-8859-1?Q?0K5VryQkQmMbGvCJiFjl4qYKrhUyhqaZZ0hQi5Ca9fnsjmBwNmpUpgxnp4?=
- =?iso-8859-1?Q?pOZaOu6owByqCHNjO8OuKv3jxWR+SYegIusXbHiNO8vvtJ7YpRj00TVhPv?=
- =?iso-8859-1?Q?qZAMYfDHyMIQKw+PdpiUt7B+0jlMIc8/oHuiSfk4jFl9/3xm7kBD2NEoWM?=
- =?iso-8859-1?Q?tl3vEsPHvCtW1U96ZsMV6thtkw4YgTjvGvnpf2h5GHP8TqaLtBasStvN7V?=
- =?iso-8859-1?Q?YmgXVsMAWouAr4uAO4HurNfnqUvbAL7YX/agP33EZpXUTmLmcStxBe2ypU?=
- =?iso-8859-1?Q?T7wzkI2a/lsuB1e/6yE2PmE3kwEIpPUIIA01s3OQJGv7TjtMYDzjIM8ZWO?=
- =?iso-8859-1?Q?bpHuagwxMsEyN1WA33KRbS2znV1oYbf9suXQuHgQN14ZS+dpcolmjF960y?=
- =?iso-8859-1?Q?vaPhHuz7NY7PCg/zYfvPa9NmAP9Hlu6lkTNc3K8qqJBKMuuru4FnRV8VWU?=
- =?iso-8859-1?Q?06klYM13AG4JVpQhedgfJp0h/CsQfv2cVEg7j9QDeQ/SQICqXpMOgiSjNZ?=
- =?iso-8859-1?Q?NzNSCQrfv6plYVZ0E0mD6G7D242Iv2P5m3M5ABZCjhYhariL6ju35ChUKC?=
- =?iso-8859-1?Q?UMnnkF/c8cMDJqNR8lGhlPaibwacHy+xFrG+/F4OBmVEq1tkpUchodOUdX?=
- =?iso-8859-1?Q?EUB1lB8ZIrcaacIR0HPkjNG08NzF8y2fkOdkmC8ESlXiIy4skRB9iD5yOp?=
- =?iso-8859-1?Q?rn7s+2EO/xlhRmxoWPPNYK93URn2p8l4Zka3DFVUys6ViDdNJ4arbiYOPW?=
- =?iso-8859-1?Q?71OgqHLA8GexOtn2PqIpY4gLQg3bHnId/XcrIszqeKnetlmwbqVCEBYPAm?=
- =?iso-8859-1?Q?eYJO/IWNscglBTRc5wt52GZYZZSqhpzk465JUUjSqyKthvuwsl1fiXyZRR?=
- =?iso-8859-1?Q?/6+Uk+9FBWzwdd2yCcBjEIM8xkX/kmOD0JrOYaYdcmE1GCOfscY6uyPiD6?=
- =?iso-8859-1?Q?UnwEAq1vhpCvfWTAX9Jt0CBlIQrWFC5Gc1ltC43WsRRXjLBCM9jflCqFsn?=
- =?iso-8859-1?Q?s1eDUGcq7cP5e2144oX8nzr1OMAXtRrWGoPchxnjR9RrRYa9GICHHk5pQO?=
- =?iso-8859-1?Q?5CakRtbNFLpu2awwuHq6uehu8oNoUq5d0WHGxiQ4PTUEUsOBn9m0fP6lXw?=
- =?iso-8859-1?Q?P/nyZnPUhUmUavJUXp/Pf4LRgMe5SMQDPvo5gRcYrjuu9lNrp3pdU1RFvk?=
- =?iso-8859-1?Q?W+l7Xe+SZrW4cQGwKNRgA2QLSpy6aUlrt/Zl+OGsyB6b7op9YJDqyu5UGu?=
- =?iso-8859-1?Q?eqOx4tkMeCnywOOOWfIaA12XlxE9iqEnr1eANL23mSB/G8dA8VSJtDROG1?=
- =?iso-8859-1?Q?EzxbNnoY1M1+I4f7+U3SWno8kIr5VFPAN279+xLZkhi58lE94jscK8UUOb?=
- =?iso-8859-1?Q?0LtEwZFRMb+WGtjVcobYtmvhNamnL7tz3n/A8wNX7ZEkd5/8a6on2KFb7r?=
- =?iso-8859-1?Q?FeMzqpARhMFSQECgcj7+tPSgCOdF?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1101; 
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|19092799006|376014|1800799024|366016|38070700021; 
+x-microsoft-antispam-message-info: =?iso-2022-jp?B?OVk4aWM2L2hHOGRBbUNtbThmcjZidEEzakRhWUx6QzVLNy9QYkFOWElp?=
+ =?iso-2022-jp?B?U2VXVTJMY3llV3JVaTBhMTljdFJLVlllS0lXeG5veGJhMDdtNDY0MFdT?=
+ =?iso-2022-jp?B?T3luWFFTUlVVcTlSYUlnOU8xeDBoMGpQQzd5dlhLT00wVlhIcDRJMXo4?=
+ =?iso-2022-jp?B?bDZGTWo1R0JjVGZjT3R5dk8vT0IwZUVvcEpLOFo0MTVmV2dHZ1pNVEJz?=
+ =?iso-2022-jp?B?dWhLaUMzOUxaM0dYRWZCZHJNS0JDUzdONVNQRDI2UU5GMDBheCtpa3pL?=
+ =?iso-2022-jp?B?MEdVUWFLYjVSbCtpUWYrS09UNHU5MzNrN1l6SncrcVRzUHVBYzlHbXhs?=
+ =?iso-2022-jp?B?b0EwazE3c3krMituR0pmNmJVZjdkdVhwcHRFMTc3aytlZXRtbFdUMjNG?=
+ =?iso-2022-jp?B?UjM4aUpHY3o3Zk9yc21oSzBvQ0N6VkNKQ1VtZVpMTkFMSDNpbGZnL2tn?=
+ =?iso-2022-jp?B?cnBIeFFHbjdGQlpNVW4xMzQ3R1VNSy92S1Jackc2bUZLRjlsbEMrWHk2?=
+ =?iso-2022-jp?B?NXNWZTNzV1VOYXBQLzJOdlZRQjgxaVVVRU9ma25rTGIvWE1vUU0vbngx?=
+ =?iso-2022-jp?B?cnVpZFp1Q3JPMkdiQXVQTGVQdEtFeGRMSUo2UXlyYjBwWUJuOXArZFFR?=
+ =?iso-2022-jp?B?VXBORndXUG43cFBDVkVRNnlOM0Noc2xMcmNoVE82bytnZ2RIdHgwUVkv?=
+ =?iso-2022-jp?B?aVBMblp0WUZXejJldDVKNHpIS3NTYWN5RzIyc2hyNDNWaFY0UkUxdU4w?=
+ =?iso-2022-jp?B?Nlh6V3M1NUVMS0xLdldyLzU4cUdJOThlRWJTRE1VU2IvVU1BTFM4YkdM?=
+ =?iso-2022-jp?B?UGdnYXZodGxWRW10ZnJQSUd6d2VPZEtNeXhiSDFFR2lwZ1Z6MXdzN3J1?=
+ =?iso-2022-jp?B?eisrWTVMN2ZIQ0VjVGEzUTlwcFE4VkIvT3BtYnlDS3pqVUJ5RnJIbmds?=
+ =?iso-2022-jp?B?U0ZxbVB3MXEvanM2Rk1TUGFqSERvZEFxN1FpL2djdkpNaW1lQ2R0MGgy?=
+ =?iso-2022-jp?B?NGJ4MXJaZTBxZGw5aGhIelMrb0ZRaThlQkxiZFNOSmlhZGM1ckIzaS9N?=
+ =?iso-2022-jp?B?UG1mYm1pOUQwQzJ2d1REeVFZUkFQNGpycFdxdmZTeTFlTWM5ZVlBUDlY?=
+ =?iso-2022-jp?B?SjBDZnBRejd0WGo4OG8rc1NpMmk1WThvM1BzZ1paNkl4bytqNkthSWEr?=
+ =?iso-2022-jp?B?d0k0MWVUQ0FqWHN5VnVpem9VQmNXV2tOWTErdDJOQXBwajc5cDVmR0xQ?=
+ =?iso-2022-jp?B?ODF6Tmdab3lsTnhoZkFnY3ZwWGNxZ1ZlTDgwb3JrdUtTVjdjS3JZMU13?=
+ =?iso-2022-jp?B?emg4bzFTWWc5NndYSHNqSUo3YTNmWXAvdUNzQkY3Y3EzckUzVzU4OFBl?=
+ =?iso-2022-jp?B?N1hVVUNGS1Y4TStRNFpMU2Y0Yk01UVh2NTV3MitVSnN1dVpxbDhxOHJ2?=
+ =?iso-2022-jp?B?YVUwZFFDeVNHeGZlbGpNemdQQklFb1M3emJHYnNJV09nNXVLb1JpWHZh?=
+ =?iso-2022-jp?B?aVhrU1d4QTVqbVNDOE40MXp6TVVkditXYWhyR29oZHRLcUZIVUlVb09n?=
+ =?iso-2022-jp?B?U3RrSDhBbG9NTExIem4rbUZDZWVxdk5MMzdqaU9acTZ2UkRncFJEZjRP?=
+ =?iso-2022-jp?B?cHFXVFBSNFVvSTBnZE1ORDFJeXpITzlnS3lYSFFjOFVLVVZRWXlUZlA4?=
+ =?iso-2022-jp?B?alA5MytvcVlwaTIrdERJSVJLVlN5Z3NXOStMTUdTZnpwaTd4R2wvL1pE?=
+ =?iso-2022-jp?B?R1VNaU5hT09udUFiR1dQMlhQSEsxdHFRN1pzbTBKQUpSRHdEVmFJaXlB?=
+ =?iso-2022-jp?B?OTM5WVVTS1prVEVkUWJHQ05MQlZ5SlVKaCs2d2RLNk42SzVUYk5OT2lI?=
+ =?iso-2022-jp?B?Z0tNZTQwYXozT0krSng5VHd5UER1eVcwTGp3dXB4SnBVSlA5VDBzNjJG?=
+ =?iso-2022-jp?B?RW1xSWNoTHd6b1FqSm1VQ2VBL21sOFBhNmVQYXJDZFBkK3orblRJY1dK?=
+ =?iso-2022-jp?B?SmxRQTc4VUxCYklWakM4eXJHZlk3cjZSYVNES2dvbmx3cTB5VlJLLzFI?=
+ =?iso-2022-jp?B?RWswYlZ4NXNMQ1JwQ1JjYUVLaWdDS3U0UHhLT2RsbllEcjF1MTRuZWh1?=
+ =?iso-2022-jp?B?Z3JYV0FHek5TaWVhZTFlN0k4WVYvak53M3lVbVg4OWdUQUxoeDZaOVpI?=
+ =?iso-2022-jp?B?VEJFYVFmUjBlMkpyYndOWm1FcVhnMW5s?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:ja; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR04MB8487.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(19092799006)(376014)(1800799024)(366016)(38070700021); DIR:OUT;
+ SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?6lBH3ExziVgghkjQDN5OcvLOYQ8/Ot8LxmmQXwR9tcy9tFYmuaTlM/DkYf?=
- =?iso-8859-1?Q?MWitTa5WwwH6kDlJfYMXXOni6vyr467VLo+bVNPv8JibrssiVLUri/q1T5?=
- =?iso-8859-1?Q?OD3Rz/bi+38ogp1B5AFSqGtZaEBs7bI5tL3QOnf5is1AgwYfKktQkmBT01?=
- =?iso-8859-1?Q?KCfLjm2gWZOf2aKIWdMMGHB9QjEDGxWwmB3To21j4eu9Csm0u/hE9THy7U?=
- =?iso-8859-1?Q?jyGhNWzVui0m/gv76BfHY9uN9+T9xE6uf4AABK8zVbQ0vXTIOLNf92e+4X?=
- =?iso-8859-1?Q?t8TNygD76fooDVraSGEM9Y5I4k7f8wyM9WRf8pnydqyQIq+y/VpXCuoEr/?=
- =?iso-8859-1?Q?iywaHAZ2127NwvNO57ZKMKoh+OpAWTnmQrAlAURjn5pkV7Sn9KTYh1ULNB?=
- =?iso-8859-1?Q?rs3M6+LQrkPUFJLZO/VfZPUF86uoWzIcRfNLC1+v+ohfGppIz0dnoRDJJN?=
- =?iso-8859-1?Q?dIAJNGAzHCYR9Wxw5W/e2+xPMbRyL4dY5R36Bl72TLkszJvWNOUFaJUpM9?=
- =?iso-8859-1?Q?LbAq0NU+5oTEDBo2N08J7DHdkPZGm4ycuNKVjVHj/QszoRjfjmlKFn0xgD?=
- =?iso-8859-1?Q?1PfIK/Kt0T5kkC5JYYX1x8TgA4vrqVzs+IUQ2Pah0RrUktHNn6EWk4nvgC?=
- =?iso-8859-1?Q?uPNMAvZ6LiPkjEOClJi41Ro9ZPQplsqKXi5ebObqw6PT3Fp1RieI/OV4q4?=
- =?iso-8859-1?Q?i6oxj7A3oR5GVy1y2boIKLGY+ivUYmTWAubuNIfyKl1J9ZfUbigCG6OiSK?=
- =?iso-8859-1?Q?7+Ko5UzkVPSfhJOnNuo0IYieLcq0y8jM0CEQYFwe0kdqS/Al+xWqYE5+CW?=
- =?iso-8859-1?Q?O9zXmQrs0mChaMHvsmccBXsIoOCfbINtJSe0uv0vJNhMXwZMHL7ozPnXpb?=
- =?iso-8859-1?Q?YtS3qEU7YFrn4JF00ky+Ie3Ynpq+VJN3f2VlFvnK94DFH2f8xcECnSs0kX?=
- =?iso-8859-1?Q?d86Ww/pPIzfNe0f+oSQDuFhyAFlp8M1MNzFSuFH6eq/0LWEh1EDPjRW9R0?=
- =?iso-8859-1?Q?otds09F8dYP6ZKYA6ezhjwxIq+2qSTLA8iNwYuILSLU0CHcgJbgwBkAqot?=
- =?iso-8859-1?Q?yVumOjUEoaTd0+5SDcZiwCS+spiGZKiHFReWAr1RiWxk9j5C3NQkANzem1?=
- =?iso-8859-1?Q?DfLJAZkPdjCsZ/9pEGGZ+VuH1fF01t5H3inW10DEh5aN8RVTl84bOVC3g8?=
- =?iso-8859-1?Q?AhmPC0hbpmNumEXjbyLOXb4gv5tu/ObgFeHG9EI0XH3cEo4aYJ5DhyCmle?=
- =?iso-8859-1?Q?860xAVK4VOvqou7UgxOaRxZgdZgsZxlzAxLYSrey9m7vms4zelMZhc5ImJ?=
- =?iso-8859-1?Q?MBlU4xGltateh9SDP6HNhAfCRgPLPeyxhCm4d5oOJJsVcga4YVZSHQKMd5?=
- =?iso-8859-1?Q?jmMXFy6xpauRzhY02qiZVdXjyJu9GiFAXy05e8JZcVMbbIzBKKE45vE2L5?=
- =?iso-8859-1?Q?KihejdllAfpMGhs/6ROTa9UZhT87NOPWM3VhKP8MFGveK2x8HXei3cWxdA?=
- =?iso-8859-1?Q?6ktITSt6znTt2eZfFKrB+eUaKPGYgHt0AWozSut4qd22VzutgmhPzjfSLF?=
- =?iso-8859-1?Q?hnTdSZB3puwow5aPNyOWs97D1ypfO5fpXE+XPF9aDhQhykJI5+9l2QKP08?=
- =?iso-8859-1?Q?Cz3vqki/WyPpm9lucm8g6vUTW3QSbUB6nT?=
-Content-Type: text/plain; charset="iso-8859-1"
+x-ms-exchange-antispam-messagedata-0: =?iso-2022-jp?B?ZFplSVVKeC92UzlCMlBrWUd2cFJicDFhOHErSVpQOUNkYS9uQy9JbDVI?=
+ =?iso-2022-jp?B?YnFPS3ZISnZLVHBMRktjbWtDWFVHSitCeU9HQWprZnF2TTdXWTJVNEg4?=
+ =?iso-2022-jp?B?eURmeWtQczdrS0k5Z2UxWHFZK1RCSlRUcjJLS0pPOTdkbnVoWGdzdkJ2?=
+ =?iso-2022-jp?B?Ri9qUWRXc3AvUkdoS3RKV2F2bkZjbmRtUCtodzZTVWlrR1hpY0F2cVVO?=
+ =?iso-2022-jp?B?Y3VoMTQ1Z21ONWtGaEpNU3o4d3pOSmFlRE5hZStWRklMcXE0c0Zvckk2?=
+ =?iso-2022-jp?B?dTk0UjZ3UktmQXg2ZXF2bWx6cCtHYkpORDlCWTI1TzQ0OEZ1Njg4a1gr?=
+ =?iso-2022-jp?B?U2FHK2pIMGFaQWRWUHlhTDl6Kzd3N2xtc2xOaWEvOHpTU2F3VjdHdS9y?=
+ =?iso-2022-jp?B?bFRVM0dBcFd5em4zdUs3aTljK2VKVmQvN0FQMHB1eEVMYXBXM3g4K2tU?=
+ =?iso-2022-jp?B?N0R5bHlQOUcwMVc3R0dHOHM5bFdOOHdJYnl6T1U5SDhudTd5cHZaK3Bo?=
+ =?iso-2022-jp?B?azFhajl6VXEyZVFMM0NNNTFYM2Y4b1cycUU5Q3o5UW5JeG9GcGFwUTBl?=
+ =?iso-2022-jp?B?VlNCeXRVNkZvNHV3T0VzUFlBZ1dSM1ZZSTRENU1RMUFEbU9QdHNhTS80?=
+ =?iso-2022-jp?B?M2dRVDQrZ1ZmSUR5NGMzcnFibFdibXdZT2Frak5EbXZSR1htNEFlSTJT?=
+ =?iso-2022-jp?B?bE1Pcll3Y1RWZzVoQWJYNkE4bU9kS3o2YXJadmt3UEhiVUdGVXJrdllq?=
+ =?iso-2022-jp?B?K09OVkJWRVoyMXhYMnBQTjlkZ1ZXMXJYRkhONXZIRzdLWWNpU3NsaTRj?=
+ =?iso-2022-jp?B?YXRlZ3FhQVVORlFQMTQ5NUhhNUlMcmNrVm5BZGtXK2gvQlEwaEhSY1pr?=
+ =?iso-2022-jp?B?M01qd25jYm54Z0RRU3Y1VFVZN2VLam96cEg2S2xLSm5mTDhpc3JMMU1s?=
+ =?iso-2022-jp?B?MzFTUnVlZmxBaS84Zng3U0FSaDI4aXlNVXVrWFVGeXRmbEhNem15c1lR?=
+ =?iso-2022-jp?B?STA4SnRYN0pnR1dOam1KaDUxdW5ScUIvM2lZdVlwZDZFU1ZydUVpNTRW?=
+ =?iso-2022-jp?B?VjJwaEZnNFFtK1d2VGRBZHYzTW9jUnBxS1ltdW9rVUd2TXFkdzA0UHVZ?=
+ =?iso-2022-jp?B?U1lxNGhOaXhqcjdmYndYQ29Cc3N6N25Fb1FYUUpTVjB3RXF3QnZxWWwy?=
+ =?iso-2022-jp?B?M0l6a0l5Z243K1h0TXpURFpqLzY4Qktabk9HNjkvUEx4UFpOWlBqQzJ6?=
+ =?iso-2022-jp?B?bWdaczRkY3ZSZVhiR1laeUd1ZDNqdFJaMmtjclM5d0grT1U0K0FuMk92?=
+ =?iso-2022-jp?B?WUpuaVNsRk5wbDdjSnBaU0JLSHQ1eDd6M2NvbTRrbE1KczFhNlRUdnJ5?=
+ =?iso-2022-jp?B?QmpHMzFCREJqSDV1SEJGQUZ5b3NvT1FtZ0g3Z3pyYmNVTm1Mc1BXR0h5?=
+ =?iso-2022-jp?B?dDBCTEswT3RzU3NTL2lGcVlKWXBUQVRMWU9Rb3hleGFwSDRQeTJjai95?=
+ =?iso-2022-jp?B?OTN6d1pGZXY2dEpGT3RLblZmVGdWVVpLSXhCdTFsR2lzK3J0YS9JK2M3?=
+ =?iso-2022-jp?B?MEo1NEROWDJuWndNdE1RQVdvMEJhMnhUU201N1JaQzVLMjVpejFVdE53?=
+ =?iso-2022-jp?B?TlhlY1ZFTFlqVEtjYzljbHNSbU1XdzBoYzNSaXZBaUhpY2lxT1g5MEpi?=
+ =?iso-2022-jp?B?MHJpSXNOOHA1dHdBNlBxZEV5QmovZWxlOFhzY0tDem5IYVlrd0xsVEJD?=
+ =?iso-2022-jp?B?UDJnY3RrejFadjA3Y0R1Y2JoTHJmWGR4SVFSTjNySUZOcnFDdDJPU1FR?=
+ =?iso-2022-jp?B?Z2Y5S2dqdkhmbm45T2tKQ2QrWGVwZjU0Mk5pNWpGZzFDUFdwU2RWRmNR?=
+ =?iso-2022-jp?B?bDJHVjBlbVJ5RDNZUnZEU2Y5NkJvT294MDdEaDZCZTc4OHh2SlRYR0ph?=
+ =?iso-2022-jp?B?TU9STCtRNlRod05ZdGRvdWh2MWhIeGpHSWFqQnpEd1Fpa25SckxqL2Nl?=
+ =?iso-2022-jp?B?NkVGY2lCTTJ2WmZHaktsT2J4WFQrdGczVUlUUytFQnZZK0dUblRCVTRQ?=
+ =?iso-2022-jp?B?UEpQa0NKNlNoUmwwMkJmNkxhaE9pTFY1VVJiYVdKZWNzZVpMdzFsU2Ri?=
+ =?iso-2022-jp?B?Qkx2MElCNWQ4eFd2c2Q0QXFUVEFYQ0VJZ1c3SEtXdTh3VC9tN0tzM2M0?=
+ =?iso-2022-jp?B?WFd3WFRUZ1FSQ3VtVlNvMVFKZnVuN2hMbFRMU3VnUGtiM3N0MlJSYm1J?=
+ =?iso-2022-jp?B?VnNXOXNlcE84eVlyM21IR3dQdm5XWmd5R3ZBczFjNkNhWXNVbFk2a2Nk?=
+ =?iso-2022-jp?B?LzdudQ==?=
+Content-Type: text/plain; charset="iso-2022-jp"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b27ba9d9-799b-4e84-05b8-08de2662f58d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Nov 2025 05:26:00.0942 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8487.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ed5fe97-789c-4b8f-74f9-08de266309fc
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Nov 2025 05:26:34.3370 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3idErUmICFOeeIGte/MUFYkvElXRneo/IndIR9ADD/W+se9D68hMaSOShzrRyLRyRYIf0Bql9FSPyUsB0juUV5b7o3MJYhvNuW1+aXaPvLY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR11MB8709
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.15;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-userprincipalname: xH7rV8g0yh+OlD4eD6m3FovXPzMX9EpC5ZI9Kvb3Up5BVMPb43at0ypnBF2AApj1qRTqUckprtnugGUfWNKG8w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9224
+Received-SPF: pass client-ip=52.101.84.18;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -211,242 +195,920 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
+" No need to remove the whole section. Since the machine supports KVM this =
+section should be there. It's just that the "-cpu host" is redundant in "-a=
+ccel kvm -cpu host"
 
-> Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA addr
-> associated with a ram device
->=20
-> On 2025/11/17 13:14, Kasireddy, Vivek wrote:
-> > Hi Akihiko,
-> >
-> >> Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA add=
-r
-> >> associated with a ram device
-> >>
-> >>
-> >>
-> >> On 2025/11/13 12:39, Kasireddy, Vivek wrote:
-> >>> Hi Akihiko,
-> >>>
-> >>>> Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA a=
-ddr
-> >>>> associated with a ram device
-> >>>>
-> >>>> On 2025/11/12 13:30, Kasireddy, Vivek wrote:
-> >>>>> Hi Akihiko,
-> >>>>>
-> >>>>>> Subject: Re: [PATCH v2 02/10] virtio-gpu: Find hva for Guest's DMA
-> >> addr
-> >>>>>> associated with a ram device
-> >>>>>>
-> >>>>>> On 2025/11/09 14:33, Vivek Kasireddy wrote:
-> >>>>>>> If the Guest provides a DMA address that is associated with a ram
-> >>>>>>> device (such as a PCI device region and not its system memory), t=
-hen
-> >>>>>>> we can obtain the hva (host virtual address) by invoking
-> >>>>>>> address_space_translate() followed by
-> >> memory_region_get_ram_ptr().
-> >>>>>>>
-> >>>>>>> This is because the ram device's address space is not accessible =
-to
-> >>>>>>> virtio-gpu directly and hence dma_memory_map() cannot be used.
-> >>>>>>> Therefore, we first need to identify the memory region associated
-> >> with
-> >>>>>>> the DMA address and figure out if it belongs to a ram device or n=
-ot
-> >>>>>>> and decide how to obtain the host address accordingly.
-> >>>>>>>
-> >>>>>>> Note that we take a reference on the memory region if it belongs =
-to a
-> >>>>>>> ram device but we would still call dma_memory_unmap() later (to
-> >> unref
-> >>>>>>> mr) regardless of how we obtained the hva.
-> >>>>>>>
-> >>>>>>> Cc: Marc-Andr=E9 Lureau<marcandre.lureau@redhat.com>
-> >>>>>>> Cc: Alex Benn=E9e<alex.bennee@linaro.org>
-> >>>>>>> Cc: Akihiko Odaki<odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>>>>>> Cc: Dmitry Osipenko<dmitry.osipenko@collabora.com>
-> >>>>>>> Cc: Alex Williamson<alex.williamson@redhat.com>
-> >>>>>>> Cc: C=E9dric Le Goater<clg@redhat.com>
-> >>>>>>> Signed-off-by: Vivek Kasireddy<vivek.kasireddy@intel.com>
-> >>>>>>> ---
-> >>>>>>>      hw/display/virtio-gpu.c | 24 +++++++++++++++++++++---
-> >>>>>>>      1 file changed, 21 insertions(+), 3 deletions(-)
-> >>>>>>>
-> >>>>>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c in=
-dex
-> >>>>>>> 199b18c746..d352b5afd6 100644
-> >>>>>>> --- a/hw/display/virtio-gpu.c
-> >>>>>>> +++ b/hw/display/virtio-gpu.c
-> >>>>>>> @@ -798,6 +798,26 @@ static void
-> >>>> virtio_gpu_set_scanout_blob(VirtIOGPU
-> >>>>>> *g,
-> >>>>>>>                                    &fb, res, &ss.r, &cmd->error);
-> >>>>>>>      }
-> >>>>>>>
-> >>>>>>> +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-> >>>>>>> +                                       struct virtio_gpu_ctrl_co=
-mmand *cmd,
-> >>>>>>> +                                       uint64_t a, hwaddr *len) =
-{
-> >>>>>>> +    MemoryRegion *mr =3D NULL;
-> >>>>>>> +    hwaddr xlat;
-> >>>>>>> +
-> >>>>>>> +    mr =3D address_space_translate(VIRTIO_DEVICE(g)->dma_as, a,
-> >> &xlat,
-> >>>> len,
-> >>>>>>> +                                 DMA_DIRECTION_TO_DEVICE,
-> >>>>>>> +                                 MEMTXATTRS_UNSPECIFIED);
-> >>>>>>> +    if (memory_region_is_ram_device(mr)) {
-> >>>>>>> +        memory_region_ref(mr);
-> >>>>>>> +        return memory_region_get_ram_ptr(mr) + xlat;
-> >>>>>>> +    }
-> >>>>>>> +
-> >>>>>>> +    return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-> >>>>>>> +                          DMA_DIRECTION_TO_DEVICE,
-> >>>>>>> +                          MEMTXATTRS_UNSPECIFIED);
-> >>>>>> This function should:
-> >>>>>> - call memory_region_get_ram_ptr(mr)
-> >>>>>>       if memory_region_is_ram(mr)
-> >>>>>> - return NULL otherwise
-> >>>>>>
-> >>>>>> There are a few reasons. First, the documentation of
-> >>>> dma_memory_map()
-> >>>>>> tells to use it "only for reads OR writes - not for read-modify-wr=
-ite
-> >>>>>> operations." It can be used for read-modify-write operations so
-> >>>>>> dma_memory_map() should be avoided.
-> >>>>> This patch series only deals with non-virgl use-cases where AFAICS
-> >>>> resources
-> >>>>> are not written to on the Host.
-> >>>>>
-> >>>>>> Second, it ensures that the mapped pointer is writable.
-> >>>>>> "[PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
-> >>>> associated
-> >>>>>> with VFIO devices" adds checks for memory_region_is_ram() and
-> >>>>>> memory_region_is_ram_device() to virtio_gpu_init_dmabuf(), but the
-> >>>> other
-> >>>>>> callers also use the function to map writable pointers.
-> >>>>> Unless I am missing something, I don't see where writable pointers =
-are
-> >>>> used
-> >>>>> in non-virgl use-cases?
-> >>>> Rutabaga uses too, but you are right about that 2D operations won't =
-use
-> >> it.
-> >>>>
-> >>>> That said, exposing non-writable memory to Virgl and Rutabaga lets t=
-he
-> >>>> guest corrupt memory so should be avoided. On the other hand, it is
-> >>>> unlikely that rejecting non-writable memory will cause any problem. =
-You
-> >>>> can also add another code path to use
-> >>>> memory_region_supports_direct_access() instead of
-> >>>> memory_region_is_ram()
-> >>>> for virtio-gpu for 2D and avoid calling memory_region_is_ram() in
-> >>>> virtio_gpu_init_dmabuf() if you want to keep non-writable memory
-> >> working.
-> >>> AFAICS, virtio_gpu_init_dmabuf() is only called in non-virgl/non-ruta=
-baga
-> >> code.
-> >>> And, this patch series and my use-case (GPU SRIOV) only needs to deal
-> >> with
-> >>> non-writeable memory because the rendering is already done by the
-> >> Guest and
-> >>> the Host only needs to display the Guest's FB.
-> >>>
-> >>> However, I see that virtio_gpu_create_mapping_iov() is used by
-> >> virgl/rutabaga
-> >>> code as well, so I am wondering how do things work right now given th=
-at
-> >>> virtio_gpu_create_mapping_iov() always calls dma_memory_map()?
-> >>> In other words, is there no problem currently with non-writeable memo=
-ry
-> >>> in virgl/rutabaga use-cases?
-> >>
-> >> The current code is problematic, and using memory_region_is_ram() will
-> >> fix it.
-> > Ok, I'll make the change.
-> >
-> >>
-> >>>
-> >>>>>> It also makes the check of memory_region_is_ram_device() and
-> >>>>>> memory_region_is_ram() unnecessary for virtio_gpu_init_dmabuf(),
-> >>>> reducing
-> >>>>>> the overall complexity.
-> >>>>> Since buffers reside completely in either ram or ram_device regions=
+-- does that mean that every ARM machine enabled so far inside hw/arm/ exce=
+pt 'virt' is not supported for a virtualization use-case in qemu?
+
+-----Original Message-----
+From: Bernhard Beschow <shentey@gmail.com>
+Sent: 17 November 2025 18:45
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>; qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com; peter.maydell@linaro.org
+Subject: RE: [EXT] Re: [PATCH 01/13] hw/arm: Add the i.MX 8MM EVK(Evaluatio=
+n Kit) board
+
+Caution: This is an external email. Please take care when clicking links or=
+ opening attachments. When in doubt, report the message using the 'Report t=
+his email' button
+
+
+Am 13. November 2025 10:52:54 UTC schrieb Gaurav Sharma <gaurav.sharma_7@nx=
+p.com>:
+>"s/Plus/Mini/ ?"
+>
+>-- Typo. Will fix it in v2
+>
+>"`-cpu host` isn't actually needed since this is the default in KVM mode. =
+We missed that nitpick in the imx8mp-evk doc "
+>
+>-- Okay got it. Will remove the KVM Acceleration section from the rst
+>doc in v2
+
+No need to remove the whole section. Since the machine supports KVM this se=
+ction should be there. It's just that the "-cpu host" is redundant in "-acc=
+el kvm -cpu host".
+
+>
+>" Any idea how this works on real hardware? I've already analyzed the inte=
+raction with src and gpc but all interrupt channels seem blocked. Any hint =
+would be very helpful."
+>
+>-- honestly, I have a fairly limited knowledge on the subject but this
+>is what I know about the wake up logic at the silicon level:-
+>
+>Timer IRQ =1B$B"*=1B(B GIC-500 =1B$B"*=1B(B GPC =1B$B"*=1B(B Power Domain =
+Controller =1B$B"*=1B(B CPU Wake After
+>receiving the IRQ, GIC distributor logic sends a wake signal to the GPC if=
+ the cpu is sleeping. GPC manages power domains for each CPU, that means us=
+ing some configuration registers it can decide which cpu will handle the wa=
+ke request. In the GPC, the system mode controller will be responsible to p=
+ower up the A53 core, which then sends the request to the PGTSC(power gatin=
+g controller) to wake up the cpu. Debugging in the GPC implementation and c=
+hecking if it is receiveing signal from GIC might help your cause.
+
+Thanks, now I think I see what is going on. The guest configures for wakeup=
+ by GIC and deactivates all IRQs before shutting down the CPU, so it doesn'=
+t get confused when waking up. When the wakeup IRQ arrives, it actually bec=
+omes pending, but then QEMU needs to wake the CPU by executing the wakeup p=
+ath in the guest which will enable interrupts again and thus serve the pend=
+ing IRQ. That part in QEMU is not yet implemented which is why we need to r=
+emove the DTB properties.
+
+Best regards,
+Bernhard
+
+>
+>
+>--
+>-----Original Message-----
+>From: Bernhard Beschow <shentey@gmail.com>
+>Sent: 12 November 2025 05:14
+>To: qemu-devel@nongnu.org; Gaurav Sharma <gaurav.sharma_7@nxp.com>
+>Cc: pbonzini@redhat.com; peter.maydell@linaro.org
+>Subject: [EXT] Re: [PATCH 01/13] hw/arm: Add the i.MX 8MM
+>EVK(Evaluation Kit) board
+>
+>[You don't often get email from shentey@gmail.com. Learn why this is
+>important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+>Caution: This is an external email. Please take care when clicking
+>links or opening attachments. When in doubt, report the message using
+>the 'Report this email' button
+>
+>
+>Am 10. November 2025 11:22:45 UTC schrieb Gaurav Sharma <gaurav.sharma_7@n=
+xp.com>:
+>>Implemented CPUs, RAM, UARTs and Interrupt Controller Other
+>>peripherals are represented as TYPE_UNIMPLEMENTED_DEVICE Complete
+>>memory map of the SoC is provided.
+>>
+>>Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+>>---
+>> docs/system/arm/imx8mm-evk.rst |  70 +++++++
+>> docs/system/target-arm.rst     |   1 +
+>> hw/arm/Kconfig                 |  12 ++
+>> hw/arm/fsl-imx8mm.c            | 363 +++++++++++++++++++++++++++++++++
+>> hw/arm/imx8mm-evk.c            | 107 ++++++++++
+>> hw/arm/meson.build             |   2 +
+>> include/hw/arm/fsl-imx8mm.h    | 156 ++++++++++++++
+>> 7 files changed, 711 insertions(+)
+>> create mode 100644 docs/system/arm/imx8mm-evk.rst  create mode 100644
+>>hw/arm/fsl-imx8mm.c  create mode 100644 hw/arm/imx8mm-evk.c  create
+>>mode 100644 include/hw/arm/fsl-imx8mm.h
+>>
+>>diff --git a/docs/system/arm/imx8mm-evk.rst
+>>b/docs/system/arm/imx8mm-evk.rst new file mode 100644 index
+>>0000000000..61d28ebf72
+>>--- /dev/null
+>>+++ b/docs/system/arm/imx8mm-evk.rst
+>>@@ -0,0 +1,70 @@
+>>+NXP i.MX 8MM Evaluation Kit (``imx8mm-evk``)
+>>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>+
+>>+The ``imx8mm-evk`` machine models the i.MX 8M Plus Evaluation Kit,
+>>+based on an
+>
+>s/Plus/Mini/ ?
+>
+>>+i.MX 8MM SoC.
+>>+
+>>+Supported devices
+>>+-----------------
+>>+
+>>+The ``imx8mm-evk`` machine implements the following devices:
+>>+
+>>+ * Up to 4 Cortex-A53 cores
+>>+ * Generic Interrupt Controller (GICv3)
+>>+ * 4 UARTs
+>>+
+>>+Boot options
+>>+------------
+>>+
+>>+The ``imx8mm-evk`` machine can start a Linux kernel directly using
+>>+the standard ``-kernel`` functionality.
+>>+
+>>+Direct Linux Kernel Boot
+>>+''''''''''''''''''''''''
+>>+
+>>+Probably the easiest way to get started with a whole Linux system on
+>>+the machine is to generate an image with Buildroot. Version 2024.11.1
+>>+is tested at the time of writing and involves two steps. First run
+>>+the following commands in the toplevel directory of the Buildroot source=
+ tree:
+>>+
+>>+.. code-block:: bash
+>>+
+>>+  $ make freescale_imx8mmevk_defconfig  $ make
+>>+
+>>+Once finished successfully there is an ``output/image`` subfolder.
+>>+Navigate into it and resize the SD card image to a power of two:
+>>+
+>>+.. code-block:: bash
+>>+
+>>+  $ qemu-img resize sdcard.img 256M
+>>+
+>>+Now that everything is prepared the machine can be started as follows:
+>>+
+>>+.. code-block:: bash
+>>+
+>>+  $ qemu-system-aarch64 -M imx8mm-evk -smp 4 -m 3G \
+>>+      -display none -serial null -serial stdio \
+>>+      -kernel Image \
+>>+      -dtb imx8mm-evk.dtb \
+>>+      -append "root=3D/dev/mmcblk2p2" \
+>>+      -drive file=3Dsdcard.img,if=3Dsd,bus=3D2,format=3Draw,id=3Dmmcblk2
+>>+
+>>+
+>>+KVM Acceleration
+>>+----------------
+>>+
+>>+To enable hardware-assisted acceleration via KVM, append ``-accel kvm
+>>+-cpu host`` to the command line. While this speeds up performance
+>
+>`-cpu host` isn't actually needed since this is the default in KVM mode. W=
+e missed that nitpick in the imx8mp-evk doc.
+>
+>>+significantly, be aware of the following limitations:
+>>+
+>>+* The ``imx8mm-evk`` machine is not included under the "virtualization u=
+se case"
+>>+  of :doc:`QEMU's security policy </system/security>`. This means
+>>+that you
+>>+  should not trust that it can contain malicious guests, whether it
+>>+is run
+>>+  using TCG or KVM. If you don't trust your guests and you're relying
+>>+on QEMU to
+>>+  be the security boundary, you want to choose another machine such as `=
+`virt``.
+>>+* Rather than Cortex-A53 CPUs, the same CPU type as the host's will be u=
+sed.
+>>+  This is a limitation of KVM and may not work with guests with a
+>>+tight
+>>+  dependency on Cortex-A53.
+>>+* No EL2 and EL3 exception levels are available which is also a KVM limi=
+tation.
+>>+  Direct kernel boot should work but running U-Boot, TF-A, etc. won't su=
+cceed.
+>>diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+>>index a96d1867df..d6a4b5bb00 100644
+>>--- a/docs/system/target-arm.rst
+>>+++ b/docs/system/target-arm.rst
+>>@@ -97,6 +97,7 @@ Board-specific documentation
+>>    arm/mcimx6ul-evk
+>>    arm/mcimx7d-sabre
+>>    arm/imx8mp-evk
+>>+   arm/imx8mm-evk
+>>    arm/orangepi
+>>    arm/raspi
+>>    arm/collie
+>>diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig index
+>>0cdeb60f1f..7c66f3c3cd 100644
+>>--- a/hw/arm/Kconfig
+>>+++ b/hw/arm/Kconfig
+>>@@ -626,6 +626,18 @@ config FSL_IMX8MP_EVK
+>>     depends on TCG || KVM
+>>     select FSL_IMX8MP
+>>
+>>+config FSL_IMX8MM
+>>+    bool
+>>+    select ARM_GIC
+>>+    select IMX
+>>+
+>>+config FSL_IMX8MM_EVK
+>>+    bool
+>>+    default y
+>>+    depends on AARCH64
+>>+    depends on TCG || KVM
+>>+    select FSL_IMX8MM
+>>+
+>> config ARM_SMMUV3
+>>     bool
+>>
+>>diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c new file mode
+>>100644 index 0000000000..9c8acc1e99
+>>--- /dev/null
+>>+++ b/hw/arm/fsl-imx8mm.c
+>>@@ -0,0 +1,363 @@
+>>+/*
+>>+ * i.MX 8MM SoC Implementation
+>>+ *
+>>+ * Based on hw/arm/fsl-imx6.c
+>>+ *
+>>+ * Copyright (c) 2025, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+>>+ *
+>>+ * SPDX-License-Identifier: GPL-2.0-or-later  */
+>>+
+>>+#include "qemu/osdep.h"
+>>+#include "system/address-spaces.h"
+>>+#include "hw/arm/bsa.h"
+>>+#include "hw/arm/fsl-imx8mm.h"
+>>+#include "hw/misc/unimp.h"
+>>+#include "hw/boards.h"
+>>+#include "system/kvm.h"
+>>+#include "system/system.h"
+>>+#include "target/arm/cpu.h"
+>>+#include "target/arm/cpu-qom.h"
+>>+#include "target/arm/kvm_arm.h"
+>>+#include "qapi/error.h"
+>>+#include "qobject/qlist.h"
+>>+
+>>+static const struct {
+>>+    hwaddr addr;
+>>+    size_t size;
+>>+    const char *name;
+>>+} fsl_imx8mm_memmap[] =3D {
+>>+    [FSL_IMX8MM_RAM] =3D { FSL_IMX8MM_RAM_START, FSL_IMX8MM_RAM_SIZE_MAX=
+, "ram" },
+>>+    [FSL_IMX8MM_DDR_PHY_BROADCAST] =3D { 0x3dc00000, 4 * MiB, "ddr_phy_b=
+roadcast" },
+>>+    [FSL_IMX8MM_DDR_PERF_MON] =3D { 0x3d800000, 4 * MiB, "ddr_perf_mon" =
+},
+>>+    [FSL_IMX8MM_DDR_CTL] =3D { 0x3d400000, 4 * MiB, "ddr_ctl" },
+>>+    [FSL_IMX8MM_DDR_PHY] =3D { 0x3c000000, 16 * MiB, "ddr_phy" },
+>>+    [FSL_IMX8MM_GIC_DIST] =3D { 0x38800000, 512 * KiB, "gic_dist" },
+>>+    [FSL_IMX8MM_GIC_REDIST] =3D { 0x38880000, 512 * KiB, "gic_redist" },
+>>+    [FSL_IMX8MM_VPU] =3D { 0x38340000, 2 * MiB, "vpu" },
+>>+    [FSL_IMX8MM_VPU_BLK_CTRL] =3D { 0x38330000, 2 * MiB, "vpu_blk_ctrl" =
+},
+>>+    [FSL_IMX8MM_VPU_G2_DECODER] =3D { 0x38310000, 1 * MiB, "vpu_g2_decod=
+er" },
+>>+    [FSL_IMX8MM_VPU_G1_DECODER] =3D { 0x38300000, 1 * MiB, "vpu_g1_decod=
+er" },
+>>+    [FSL_IMX8MM_USB2_OTG] =3D { 0x32e50200, 0x200, "usb2_otg" },
+>>+    [FSL_IMX8MM_USB2] =3D { 0x32e50000, 0x200, "usb2" },
+>>+    [FSL_IMX8MM_USB1_OTG] =3D { 0x32e40200, 0x200, "usb1_otg" },
+>>+    [FSL_IMX8MM_USB1] =3D { 0x32e40000, 0x200, "usb1" },
+>>+    [FSL_IMX8MM_GPU2D] =3D { 0x38000000, 64 * KiB, "gpu2d" },
+>>+    [FSL_IMX8MM_QSPI1_RX_BUFFER] =3D { 0x34000000, 32 * MiB, "qspi1_rx_b=
+uffer" },
+>>+    [FSL_IMX8MM_PCIE1] =3D { 0x33800000, 4 * MiB, "pcie1" },
+>>+    [FSL_IMX8MM_QSPI1_TX_BUFFER] =3D { 0x33008000, 32 * KiB, "qspi1_tx_b=
+uffer" },
+>>+    [FSL_IMX8MM_APBH_DMA] =3D { 0x33000000, 32 * KiB, "apbh_dma" },
+>>+
+>>+    /* AIPS-4 Begin */
+>>+    [FSL_IMX8MM_TZASC] =3D { 0x32f80000, 64 * KiB, "tzasc" },
+>>+    [FSL_IMX8MM_PCIE_PHY1] =3D { 0x32f00000, 64 * KiB, "pcie_phy1" },
+>>+    [FSL_IMX8MM_MEDIA_BLK_CTL] =3D { 0x32e28000, 256, "media_blk_ctl" },
+>>+    [FSL_IMX8MM_LCDIF] =3D { 0x32e00000, 64 * KiB, "lcdif" },
+>>+    [FSL_IMX8MM_MIPI_DSI] =3D { 0x32e10000, 64 * KiB, "mipi_dsi" },
+>>+    [FSL_IMX8MM_MIPI_CSI] =3D { 0x32e30000, 64 * KiB, "mipi_csi" },
+>>+    [FSL_IMX8MM_AIPS4_CONFIGURATION] =3D { 0x32df0000, 64 * KiB, "aips4_=
+configuration" },
+>>+    /* AIPS-4 End */
+>>+
+>>+    [FSL_IMX8MM_INTERCONNECT] =3D { 0x32700000, 1 * MiB, "interconnect"
+>>+ },
+>>+
+>>+    /* AIPS-3 Begin */
+>>+    [FSL_IMX8MM_ENET1] =3D { 0x30be0000, 64 * KiB, "enet1" },
+>>+    [FSL_IMX8MM_SDMA1] =3D { 0x30bd0000, 64 * KiB, "sdma1" },
+>>+    [FSL_IMX8MM_QSPI] =3D { 0x30bb0000, 64 * KiB, "qspi" },
+>>+    [FSL_IMX8MM_USDHC3] =3D { 0x30b60000, 64 * KiB, "usdhc3" },
+>>+    [FSL_IMX8MM_USDHC2] =3D { 0x30b50000, 64 * KiB, "usdhc2" },
+>>+    [FSL_IMX8MM_USDHC1] =3D { 0x30b40000, 64 * KiB, "usdhc1" },
+>>+    [FSL_IMX8MM_SEMAPHORE_HS] =3D { 0x30ac0000, 64 * KiB, "semaphore_hs"=
+ },
+>>+    [FSL_IMX8MM_MU_B] =3D { 0x30ab0000, 64 * KiB, "mu_b" },
+>>+    [FSL_IMX8MM_MU_A] =3D { 0x30aa0000, 64 * KiB, "mu_a" },
+>>+    [FSL_IMX8MM_UART4] =3D { 0x30a60000, 64 * KiB, "uart4" },
+>>+    [FSL_IMX8MM_I2C4] =3D { 0x30a50000, 64 * KiB, "i2c4" },
+>>+    [FSL_IMX8MM_I2C3] =3D { 0x30a40000, 64 * KiB, "i2c3" },
+>>+    [FSL_IMX8MM_I2C2] =3D { 0x30a30000, 64 * KiB, "i2c2" },
+>>+    [FSL_IMX8MM_I2C1] =3D { 0x30a20000, 64 * KiB, "i2c1" },
+>>+    [FSL_IMX8MM_AIPS3_CONFIGURATION] =3D { 0x309f0000, 64 * KiB, "aips3_=
+configuration" },
+>>+    [FSL_IMX8MM_CAAM] =3D { 0x30900000, 256 * KiB, "caam" },
+>>+    [FSL_IMX8MM_SPBA1] =3D { 0x308f0000, 64 * KiB, "spba1" },
+>>+    [FSL_IMX8MM_UART2] =3D { 0x30890000, 64 * KiB, "uart2" },
+>>+    [FSL_IMX8MM_UART3] =3D { 0x30880000, 64 * KiB, "uart3" },
+>>+    [FSL_IMX8MM_UART1] =3D { 0x30860000, 64 * KiB, "uart1" },
+>>+    [FSL_IMX8MM_ECSPI3] =3D { 0x30840000, 64 * KiB, "ecspi3" },
+>>+    [FSL_IMX8MM_ECSPI2] =3D { 0x30830000, 64 * KiB, "ecspi2" },
+>>+    [FSL_IMX8MM_ECSPI1] =3D { 0x30820000, 64 * KiB, "ecspi1" },
+>>+    /* AIPS-3 End */
+>>+
+>>+    /* AIPS-2 Begin */
+>>+    [FSL_IMX8MM_QOSC] =3D { 0x307f0000, 64 * KiB, "qosc" },
+>>+    [FSL_IMX8MM_PERFMON2] =3D { 0x307d0000, 64 * KiB, "perfmon2" },
+>>+    [FSL_IMX8MM_PERFMON1] =3D { 0x307c0000, 64 * KiB, "perfmon1" },
+>>+    [FSL_IMX8MM_GPT4] =3D { 0x30700000, 64 * KiB, "gpt4" },
+>>+    [FSL_IMX8MM_GPT5] =3D { 0x306f0000, 64 * KiB, "gpt5" },
+>>+    [FSL_IMX8MM_GPT6] =3D { 0x306e0000, 64 * KiB, "gpt6" },
+>>+    [FSL_IMX8MM_SYSCNT_CTRL] =3D { 0x306c0000, 64 * KiB, "syscnt_ctrl" }=
 ,
-> >> using
-> >>>> both
-> >>>>> memory_region_is_ram_device() and memory_region_is_ram() to
-> check
-> >>>> where
-> >>>>> they are located seems necessary and unavoidable.
-> >>>> It can unconditionally call virtio_gpu_create_udmabuf(), and if the
-> >>>> function finds the memory is incompatible with udmabuf, it can call
-> >>>> vfio_device_lookup() to tell if the memory belongs to VFIO or not.
-> >>> Yeah, what you suggest is doable but seems a bit convoluted to have t=
-o
-> >>> first call virtio_gpu_create_udmabuf() and if it fails then call VFIO=
- related
-> >>> functions.
-> >>>
-> >>> I think using memory_region_is_ram_device() and
-> >> memory_region_is_ram()
-> >>> to identify the right memory region and calling either
-> >> virtio_gpu_create_udmabuf()
-> >>> or vfio_create_dmabuf() is much more intuitive and readable.
-> >>
-> >> memory_region_is_ram_device() and memory_region_is_ram() are not
-> >> sufficient to identify the right memory region.
-> >> memory_region_is_ram_device() returns true for RAM device created by
-> >> non-VFIO devices, and memory_region_is_ram() returns true for memory
-> >> regions created with memory_region_init_ram_ptr(), which is not backed
-> >> with memfd.
-> > Right, but structuring the code in the following way would address your
-> concerns
-> > and make it more robust:
-> >          if (memory_region_is_ram_device(rb->mr) && (vdev =3D
-> vfio_device_lookup(rb->mr))) {
-> > 	vfio_create_dmabuf(vdev, res);
-> >          } else if (memory_region_is_ram(rb->mr) &&
-> virtio_gpu_have_udmabuf()) {
-> > 	virtio_gpu_create_udmabuf(res);
-> >          } else {
-> > 	...
-> >          }
->=20
-> One of the concerns I raised is that having such checks has an inherent
-> hazard that they can be inconsistent with the actual implementations.
->=20
-> The original checks had such inconsistency, and the updated one still
-> have too. memory_region_is_ram(rb->mr) && virtio_gpu_have_udmabuf()
-> can
-> be still true even for memory regions that do not have memfd; please
-> refer to the example of memory_region_init_ram_ptr() I pointed out in
-> the last email.
->=20
-> Even if you somehow managed to write checks that match with the
-> implementations, it is still possible that a future change can break it.
-> Letting the implementations check their prerequisite conditions
-> completely prevents such an error by construction and makes the code
-> more robust.
-IIUC, your suggestion is to add a check for memory_region_supports_direct_a=
-ccess()
-inside virtio_gpu_create_udmabuf() and call it unconditionally right?
-And, also move the (memory_region_is_ram_device(rb->mr) && (vdev =3D vfio_d=
-evice_lookup(rb->mr)))
-check inside vfio_create_dmabuf() right?
-
-Thanks,
-Vivek
->=20
-> Another concern is complexity. Calling another function
-> (virtio_gpu_have_udmabuf()) do not reduce complexity.
->=20
-> I do not understand why having such extra function calls and
-> conditionals will make the code more robust.
->=20
-> Regards,
-> Akihiko Odaki
+>>+    [FSL_IMX8MM_SYSCNT_CMP] =3D { 0x306b0000, 64 * KiB, "syscnt_cmp" },
+>>+    [FSL_IMX8MM_SYSCNT_RD] =3D { 0x306a0000, 64 * KiB, "syscnt_rd" },
+>>+    [FSL_IMX8MM_PWM4] =3D { 0x30690000, 64 * KiB, "pwm4" },
+>>+    [FSL_IMX8MM_PWM3] =3D { 0x30680000, 64 * KiB, "pwm3" },
+>>+    [FSL_IMX8MM_PWM2] =3D { 0x30670000, 64 * KiB, "pwm2" },
+>>+    [FSL_IMX8MM_PWM1] =3D { 0x30660000, 64 * KiB, "pwm1" },
+>>+    [FSL_IMX8MM_AIPS2_CONFIGURATION] =3D { 0x305f0000, 64 * KiB, "aips2_=
+configuration" },
+>>+    /* AIPS-2 End */
+>>+
+>>+    /* AIPS-1 Begin */
+>>+    [FSL_IMX8MM_CSU] =3D { 0x303e0000, 64 * KiB, "csu" },
+>>+    [FSL_IMX8MM_RDC] =3D { 0x303d0000, 64 * KiB, "rdc" },
+>>+    [FSL_IMX8MM_SEMAPHORE2] =3D { 0x303c0000, 64 * KiB, "semaphore2" },
+>>+    [FSL_IMX8MM_SEMAPHORE1] =3D { 0x303b0000, 64 * KiB, "semaphore1" },
+>>+    [FSL_IMX8MM_GPC] =3D { 0x303a0000, 64 * KiB, "gpc" },
+>>+    [FSL_IMX8MM_SRC] =3D { 0x30390000, 64 * KiB, "src" },
+>>+    [FSL_IMX8MM_CCM] =3D { 0x30380000, 64 * KiB, "ccm" },
+>>+    [FSL_IMX8MM_SNVS_HP] =3D { 0x30370000, 64 * KiB, "snvs_hp" },
+>>+    [FSL_IMX8MM_ANA_PLL] =3D { 0x30360000, 64 * KiB, "ana_pll" },
+>>+    [FSL_IMX8MM_OCOTP_CTRL] =3D { 0x30350000, 64 * KiB, "ocotp_ctrl" },
+>>+    [FSL_IMX8MM_IOMUXC_GPR] =3D { 0x30340000, 64 * KiB, "iomuxc_gpr" },
+>>+    [FSL_IMX8MM_IOMUXC] =3D { 0x30330000, 64 * KiB, "iomuxc" },
+>>+    [FSL_IMX8MM_GPT3] =3D { 0x302f0000, 64 * KiB, "gpt3" },
+>>+    [FSL_IMX8MM_GPT2] =3D { 0x302e0000, 64 * KiB, "gpt2" },
+>>+    [FSL_IMX8MM_GPT1] =3D { 0x302d0000, 64 * KiB, "gpt1" },
+>>+    [FSL_IMX8MM_SDMA2] =3D { 0x302c0000, 64 * KiB, "sdma2" },
+>>+    [FSL_IMX8MM_SDMA3] =3D { 0x302b0000, 64 * KiB, "sdma3" },
+>>+    [FSL_IMX8MM_WDOG3] =3D { 0x302a0000, 64 * KiB, "wdog3" },
+>>+    [FSL_IMX8MM_WDOG2] =3D { 0x30290000, 64 * KiB, "wdog2" },
+>>+    [FSL_IMX8MM_WDOG1] =3D { 0x30280000, 64 * KiB, "wdog1" },
+>>+    [FSL_IMX8MM_ANA_OSC] =3D { 0x30270000, 64 * KiB, "ana_osc" },
+>>+    [FSL_IMX8MM_ANA_TSENSOR] =3D { 0x30260000, 64 * KiB, "ana_tsensor" }=
+,
+>>+    [FSL_IMX8MM_GPIO5] =3D { 0x30240000, 64 * KiB, "gpio5" },
+>>+    [FSL_IMX8MM_GPIO4] =3D { 0x30230000, 64 * KiB, "gpio4" },
+>>+    [FSL_IMX8MM_GPIO3] =3D { 0x30220000, 64 * KiB, "gpio3" },
+>>+    [FSL_IMX8MM_GPIO2] =3D { 0x30210000, 64 * KiB, "gpio2" },
+>>+    [FSL_IMX8MM_GPIO1] =3D { 0x30200000, 64 * KiB, "gpio1" },
+>>+    [FSL_IMX8MM_AIPS1_CONFIGURATION] =3D { 0x301f0000, 64 * KiB, "aips1_=
+configuration" },
+>>+    [FSL_IMX8MM_SAI6] =3D { 0x30060000, 64 * KiB, "sai6" },
+>>+    [FSL_IMX8MM_SAI5] =3D { 0x30050000, 64 * KiB, "sai5" },
+>>+    [FSL_IMX8MM_SAI3] =3D { 0x30030000, 64 * KiB, "sai3" },
+>>+    [FSL_IMX8MM_SAI2] =3D { 0x30020000, 64 * KiB, "sai2" },
+>>+    [FSL_IMX8MM_SAI1] =3D { 0x30010000, 64 * KiB, "sai1" },
+>>+
+>>+    /* AIPS-1 End */
+>>+
+>>+    [FSL_IMX8MM_A53_DAP] =3D { 0x28000000, 16 * MiB, "a53_dap" },
+>>+    [FSL_IMX8MM_PCIE1_MEM] =3D { 0x18000000, 128 * MiB, "pcie1_mem" },
+>>+    [FSL_IMX8MM_QSPI_MEM] =3D { 0x08000000, 256 * MiB, "qspi_mem" },
+>>+    [FSL_IMX8MM_OCRAM] =3D { 0x00900000, 256 * KiB, "ocram" },
+>>+    [FSL_IMX8MM_TCM_DTCM] =3D { 0x00800000, 128 * KiB, "tcm_dtcm" },
+>>+    [FSL_IMX8MM_TCM_ITCM] =3D { 0x007e0000, 128 * KiB, "tcm_itcm" },
+>>+    [FSL_IMX8MM_OCRAM_S] =3D { 0x00180000, 32 * KiB, "ocram_s" },
+>>+    [FSL_IMX8MM_CAAM_MEM] =3D { 0x00100000, 32 * KiB, "caam_mem" },
+>>+    [FSL_IMX8MM_BOOT_ROM_PROTECTED] =3D { 0x0003f000, 4 * KiB, "boot_rom=
+_protected" },
+>>+    [FSL_IMX8MM_BOOT_ROM] =3D { 0x00000000, 252 * KiB, "boot_rom" }, };
+>>+
+>>+static void fsl_imx8mm_init(Object *obj) {
+>>+    MachineState *ms =3D MACHINE(qdev_get_machine());
+>>+    FslImx8mmState *s =3D FSL_IMX8MM(obj);
+>>+    const char *cpu_type =3D ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a=
+53");
+>>+    int i;
+>>+
+>>+    for (i =3D 0; i < MIN(ms->smp.cpus, FSL_IMX8MM_NUM_CPUS); i++) {
+>>+        g_autofree char *name =3D g_strdup_printf("cpu%d", i);
+>>+        object_initialize_child(obj, name, &s->cpu[i], cpu_type);
+>>+    }
+>>+
+>>+    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+>>+
+>>+    for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+>>+        g_autofree char *name =3D g_strdup_printf("uart%d", i + 1);
+>>+        object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL)=
+;
+>>+    }
+>>+
+>>+}
+>>+
+>>+static void fsl_imx8mm_realize(DeviceState *dev, Error **errp) {
+>>+    MachineState *ms =3D MACHINE(qdev_get_machine());
+>>+    FslImx8mmState *s =3D FSL_IMX8MM(dev);
+>>+    DeviceState *gicdev =3D DEVICE(&s->gic);
+>>+    int i;
+>>+
+>>+    if (ms->smp.cpus > FSL_IMX8MM_NUM_CPUS) {
+>>+        error_setg(errp, "%s: Only %d CPUs are supported (%d requested)"=
+,
+>>+                   TYPE_FSL_IMX8MM, FSL_IMX8MM_NUM_CPUS, ms->smp.cpus);
+>>+        return;
+>>+    }
+>>+
+>>+    /* CPUs */
+>>+    for (i =3D 0; i < ms->smp.cpus; i++) {
+>>+        /* On uniprocessor, the CBAR is set to 0 */
+>>+        if (ms->smp.cpus > 1 &&
+>>+                object_property_find(OBJECT(&s->cpu[i]), "reset-cbar")) =
+{
+>>+            object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+>>+                                    fsl_imx8mm_memmap[FSL_IMX8MM_GIC_DIS=
+T].addr,
+>>+                                    &error_abort);
+>>+        }
+>>+
+>>+        /*
+>>+         * CNTFID0 base frequency in Hz of system counter
+>>+         */
+>>+        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
+>>+                                &error_abort);
+>>+
+>>+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el2")) {
+>>+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el2",
+>>+                                     !kvm_enabled(), &error_abort);
+>>+        }
+>>+
+>>+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
+>>+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
+>>+                                     !kvm_enabled(), &error_abort);
+>>+        }
+>>+
+>>+        if (i) {
+>>+            /*
+>>+             * Secondary CPUs start in powered-down state (and can be
+>>+             * powered up via the SRC system reset controller)
+>>+             */
+>>+            object_property_set_bool(OBJECT(&s->cpu[i]), "start-powered-=
+off",
+>>+                                     true, &error_abort);
+>>+        }
+>>+
+>>+        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
+>>+            return;
+>>+        }
+>>+    }
+>>+
+>>+    /* GIC */
+>>+    {
+>>+        SysBusDevice *gicsbd =3D SYS_BUS_DEVICE(&s->gic);
+>>+        QList *redist_region_count;
+>>+        bool pmu =3D object_property_get_bool(OBJECT(first_cpu), "pmu",
+>>+ NULL);
+>>+
+>>+        qdev_prop_set_uint32(gicdev, "num-cpu", ms->smp.cpus);
+>>+        qdev_prop_set_uint32(gicdev, "num-irq",
+>>+                             FSL_IMX8MM_NUM_IRQS + GIC_INTERNAL);
+>>+        redist_region_count =3D qlist_new();
+>>+        qlist_append_int(redist_region_count, ms->smp.cpus);
+>>+        qdev_prop_set_array(gicdev, "redist-region-count", redist_region=
+_count);
+>>+        object_property_set_link(OBJECT(&s->gic), "sysmem",
+>>+                                 OBJECT(get_system_memory()), &error_fat=
+al);
+>>+        if (!sysbus_realize(gicsbd, errp)) {
+>>+            return;
+>>+        }
+>>+        sysbus_mmio_map(gicsbd, 0, fsl_imx8mm_memmap[FSL_IMX8MM_GIC_DIST=
+].addr);
+>>+        sysbus_mmio_map(gicsbd, 1,
+>>+ fsl_imx8mm_memmap[FSL_IMX8MM_GIC_REDIST].addr);
+>>+
+>>+        /*
+>>+         * Wire the outputs from each CPU's generic timer and the GICv3
+>>+         * maintenance interrupt signal to the appropriate GIC PPI input=
+s, and
+>>+         * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
+>>+         */
+>>+        for (i =3D 0; i < ms->smp.cpus; i++) {
+>>+            DeviceState *cpudev =3D DEVICE(&s->cpu[i]);
+>>+            int intidbase =3D FSL_IMX8MM_NUM_IRQS + i * GIC_INTERNAL;
+>>+            qemu_irq irq;
+>>+
+>>+            /*
+>>+             * Mapping from the output timer irq lines from the CPU to t=
+he
+>>+             * GIC PPI inputs.
+>>+             */
+>>+            static const int timer_irqs[] =3D {
+>>+                [GTIMER_PHYS] =3D ARCH_TIMER_NS_EL1_IRQ,
+>>+                [GTIMER_VIRT] =3D ARCH_TIMER_VIRT_IRQ,
+>>+                [GTIMER_HYP]  =3D ARCH_TIMER_NS_EL2_IRQ,
+>>+                [GTIMER_SEC]  =3D ARCH_TIMER_S_EL1_IRQ,
+>>+            };
+>>+
+>>+            for (int j =3D 0; j < ARRAY_SIZE(timer_irqs); j++) {
+>>+                irq =3D qdev_get_gpio_in(gicdev, intidbase + timer_irqs[=
+j]);
+>>+                qdev_connect_gpio_out(cpudev, j, irq);
+>>+            }
+>>+
+>>+            irq =3D qdev_get_gpio_in(gicdev, intidbase + ARCH_GIC_MAINT_=
+IRQ);
+>>+            qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-inter=
+rupt",
+>>+                                        0, irq);
+>>+
+>>+            irq =3D qdev_get_gpio_in(gicdev, intidbase + VIRTUAL_PMU_IRQ=
+);
+>>+            qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+>>+ irq);
+>>+
+>>+            sysbus_connect_irq(gicsbd, i,
+>>+                               qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+>>+            sysbus_connect_irq(gicsbd, i + ms->smp.cpus,
+>>+                               qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+>>+            sysbus_connect_irq(gicsbd, i + 2 * ms->smp.cpus,
+>>+                               qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+>>+            sysbus_connect_irq(gicsbd, i + 3 * ms->smp.cpus,
+>>+                               qdev_get_gpio_in(cpudev,
+>>+ ARM_CPU_VFIQ));
+>>+
+>>+            if (kvm_enabled()) {
+>>+                if (pmu) {
+>>+                    assert(arm_feature(&s->cpu[i].env, ARM_FEATURE_PMU))=
+;
+>>+                    if (kvm_irqchip_in_kernel()) {
+>>+                        kvm_arm_pmu_set_irq(&s->cpu[i], VIRTUAL_PMU_IRQ)=
+;
+>>+                    }
+>>+                    kvm_arm_pmu_init(&s->cpu[i]);
+>>+                }
+>>+            }
+>>+        }
+>>+    }
+>>+
+>>+    /* UARTs */
+>>+    for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+>>+        struct {
+>>+            hwaddr addr;
+>>+            unsigned int irq;
+>>+        } serial_table[FSL_IMX8MM_NUM_UARTS] =3D {
+>>+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART1].addr, FSL_IMX8MM_UART1=
+_IRQ },
+>>+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART2].addr, FSL_IMX8MM_UART2=
+_IRQ },
+>>+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART3].addr, FSL_IMX8MM_UART3=
+_IRQ },
+>>+            { fsl_imx8mm_memmap[FSL_IMX8MM_UART4].addr, FSL_IMX8MM_UART4=
+_IRQ },
+>>+        };
+>>+
+>>+        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
+>>+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+>>+            return;
+>>+        }
+>>+
+>>+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].=
+addr);
+>>+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
+>>+                           qdev_get_gpio_in(gicdev, serial_table[i].irq)=
+);
+>>+    }
+>>+
+>>+    /* Unimplemented devices */
+>>+    for (i =3D 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
+>>+        switch (i) {
+>>+        case FSL_IMX8MM_GIC_DIST:
+>>+        case FSL_IMX8MM_GIC_REDIST:
+>>+        case FSL_IMX8MM_RAM:
+>>+        case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
+>>+            /* device implemented and treated above */
+>>+            break;
+>>+
+>>+        default:
+>>+            create_unimplemented_device(fsl_imx8mm_memmap[i].name,
+>>+                                        fsl_imx8mm_memmap[i].addr,
+>>+                                        fsl_imx8mm_memmap[i].size);
+>>+            break;
+>>+        }
+>>+    }
+>>+}
+>>+
+>>+static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data) {
+>>+    DeviceClass *dc =3D DEVICE_CLASS(oc);
+>>+
+>>+    dc->realize =3D fsl_imx8mm_realize;
+>>+
+>>+    dc->desc =3D "i.MX 8MM SoC";
+>>+}
+>>+
+>>+static const TypeInfo fsl_imx8mm_types[] =3D {
+>>+    {
+>>+        .name =3D TYPE_FSL_IMX8MM,
+>>+        .parent =3D TYPE_SYS_BUS_DEVICE,
+>>+        .instance_size =3D sizeof(FslImx8mmState),
+>>+        .instance_init =3D fsl_imx8mm_init,
+>>+        .class_init =3D fsl_imx8mm_class_init,
+>>+    },
+>>+};
+>>+
+>>+DEFINE_TYPES(fsl_imx8mm_types)
+>>diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c new file mode
+>>100644 index 0000000000..cfb42fe464
+>>--- /dev/null
+>>+++ b/hw/arm/imx8mm-evk.c
+>>@@ -0,0 +1,107 @@
+>>+/*
+>>+ * NXP i.MX 8MM Evaluation Kit System Emulation
+>>+ *
+>>+ * Copyright (c) 2025, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+>>+ *
+>>+ * SPDX-License-Identifier: GPL-2.0-or-later  */
+>>+
+>>+#include "qemu/osdep.h"
+>>+#include "system/address-spaces.h"
+>>+#include "hw/arm/boot.h"
+>>+#include "hw/arm/fsl-imx8mm.h"
+>>+#include "hw/arm/machines-qom.h"
+>>+#include "hw/boards.h"
+>>+#include "hw/qdev-properties.h"
+>>+#include "system/kvm.h"
+>>+#include "system/qtest.h"
+>>+#include "qemu/error-report.h"
+>>+#include "qapi/error.h"
+>>+#include <libfdt.h>
+>>+
+>>+static void imx8mm_evk_modify_dtb(const struct arm_boot_info *info,
+>>+void *fdt) {
+>>+    int i, offset;
+>>+
+>>+    /* Temporarily disable following nodes until they are implemented */
+>>+    const char *nodes_to_remove[] =3D {
+>>+        "nxp,imx8mm-fspi",
+>>+    };
+>>+
+>>+    for (i =3D 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
+>>+        const char *dev_str =3D nodes_to_remove[i];
+>>+
+>>+        offset =3D fdt_node_offset_by_compatible(fdt, -1, dev_str);
+>>+        while (offset >=3D 0) {
+>>+            fdt_nop_node(fdt, offset);
+>>+            offset =3D fdt_node_offset_by_compatible(fdt, offset, dev_st=
+r);
+>>+        }
+>>+    }
+>>+
+>>+    /* Remove cpu-idle-states property from CPU nodes */
+>>+    offset =3D fdt_node_offset_by_compatible(fdt, -1, "arm,cortex-a53");
+>>+    while (offset >=3D 0) {
+>>+        fdt_nop_property(fdt, offset, "cpu-idle-states");
+>>+        offset =3D fdt_node_offset_by_compatible(fdt, offset, "arm,corte=
+x-a53");
+>>+    }
+>
+>Removing the idle-states ptoperties is only needed since the CPU goes into=
+ deep sleep mode during boot and is unable to wake up, even with an imx_sys=
+ctr implementation <https://github.com/shentok/qemu/blob/imx8mp/hw/timer/im=
+x_sysctr.c>. Any idea how this works on real hardware? I've already analyze=
+d the interaction with src and gpc but all interrupt channels seem blocked.=
+ Any hint would be very helpful.
+>
+>Thanks,
+>Bernhard
+>
+>>+
+>>+    if (kvm_enabled()) {
+>>+        /* Use system counter frequency from host CPU to fix time in gue=
+st */
+>>+        offset =3D fdt_node_offset_by_compatible(fdt, -1, "arm,armv8-tim=
+er");
+>>+        while (offset >=3D 0) {
+>>+            fdt_nop_property(fdt, offset, "clock-frequency");
+>>+            offset =3D fdt_node_offset_by_compatible(fdt, offset, "arm,a=
+rmv8-timer");
+>>+        }
+>>+    }
+>>+}
+>>+
+>>+static void imx8mm_evk_init(MachineState *machine) {
+>>+    static struct arm_boot_info boot_info;
+>>+    FslImx8mmState *s;
+>>+
+>>+    if (machine->ram_size > FSL_IMX8MM_RAM_SIZE_MAX) {
+>>+        error_report("RAM size " RAM_ADDR_FMT " above max supported (%08=
+" PRIx64 ")",
+>>+                     machine->ram_size, FSL_IMX8MM_RAM_SIZE_MAX);
+>>+        exit(1);
+>>+    }
+>>+
+>>+    boot_info =3D (struct arm_boot_info) {
+>>+        .loader_start =3D FSL_IMX8MM_RAM_START,
+>>+        .board_id =3D -1,
+>>+        .ram_size =3D machine->ram_size,
+>>+        .psci_conduit =3D QEMU_PSCI_CONDUIT_SMC,
+>>+        .modify_dtb =3D imx8mm_evk_modify_dtb,
+>>+    };
+>>+
+>>+    s =3D FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
+>>+    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+>>+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+>>+
+>>+    memory_region_add_subregion(get_system_memory(), FSL_IMX8MM_RAM_STAR=
+T,
+>>+                                machine->ram);
+>>+
+>>+    if (!qtest_enabled()) {
+>>+        arm_load_kernel(&s->cpu[0], machine, &boot_info);
+>>+    }
+>>+}
+>>+
+>>+static const char *imx8mm_evk_get_default_cpu_type(const MachineState
+>>+*ms) {
+>>+    if (kvm_enabled()) {
+>>+        return ARM_CPU_TYPE_NAME("host");
+>>+    }
+>>+
+>>+    return ARM_CPU_TYPE_NAME("cortex-a53"); }
+>>+
+>>+static void imx8mm_evk_machine_init(MachineClass *mc) {
+>>+    mc->desc =3D "NXP i.MX 8MM EVK Board";
+>>+    mc->init =3D imx8mm_evk_init;
+>>+    mc->max_cpus =3D FSL_IMX8MM_NUM_CPUS;
+>>+    mc->default_ram_id =3D "imx8mm-evk.ram";
+>>+    mc->get_default_cpu_type =3D imx8mm_evk_get_default_cpu_type; }
+>>+
+>>+DEFINE_MACHINE_AARCH64("imx8mm-evk", imx8mm_evk_machine_init)
+>>diff --git a/hw/arm/meson.build b/hw/arm/meson.build index
+>>aeaf654790..12ecb824cc 100644
+>>--- a/hw/arm/meson.build
+>>+++ b/hw/arm/meson.build
+>>@@ -84,6 +84,8 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true:
+>>files('armsse.c'))
+>> arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true:
+>>files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+>> arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true:
+>>files('fsl-imx8mp.c'))
+>> arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true:
+>>files('imx8mp-evk.c'))
+>>+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MM', if_true:
+>>+files('fsl-imx8mm.c'))
+>>+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MM_EVK', if_true:
+>>+files('imx8mm-evk.c'))
+>> arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true:
+>>files('smmuv3.c'))
+>> arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true:
+>>files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+>> arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true:
+>>files('nrf51_soc.c')) diff --git a/include/hw/arm/fsl-imx8mm.h
+>>b/include/hw/arm/fsl-imx8mm.h new file mode 100644 index
+>>0000000000..aa954ea00b
+>>--- /dev/null
+>>+++ b/include/hw/arm/fsl-imx8mm.h
+>>@@ -0,0 +1,156 @@
+>>+/*
+>>+ * i.MX 8MM SoC Definitions
+>>+ *
+>>+ * Copyright (c) 2025, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+>>+ *
+>>+ * SPDX-License-Identifier: GPL-2.0-or-later  */
+>>+
+>>+#ifndef FSL_IMX8MM_H
+>>+#define FSL_IMX8MM_H
+>>+
+>>+#include "cpu.h"
+>>+#include "hw/char/imx_serial.h"
+>>+#include "hw/intc/arm_gicv3_common.h"
+>>+#include "qom/object.h"
+>>+#include "qemu/units.h"
+>>+
+>>+#define TYPE_FSL_IMX8MM "fsl-imx8mm"
+>>+OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
+>>+
+>>+#define FSL_IMX8MM_RAM_START        0x40000000
+>>+#define FSL_IMX8MM_RAM_SIZE_MAX     (4 * GiB)
+>>+
+>>+enum FslImx8mmConfiguration {
+>>+    FSL_IMX8MM_NUM_CPUS         =3D 4,
+>>+    FSL_IMX8MM_NUM_IRQS         =3D 128,
+>>+    FSL_IMX8MM_NUM_UARTS        =3D 4,
+>>+};
+>>+
+>>+struct FslImx8mmState {
+>>+    SysBusDevice   parent_obj;
+>>+
+>>+    ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
+>>+    GICv3State         gic;
+>>+    IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+>>+};
+>>+
+>>+enum FslImx8mmMemoryRegions {
+>>+    FSL_IMX8MM_A53_DAP,
+>>+    FSL_IMX8MM_AIPS1_CONFIGURATION,
+>>+    FSL_IMX8MM_AIPS2_CONFIGURATION,
+>>+    FSL_IMX8MM_AIPS3_CONFIGURATION,
+>>+    FSL_IMX8MM_AIPS4_CONFIGURATION,
+>>+    FSL_IMX8MM_ANA_OSC,
+>>+    FSL_IMX8MM_ANA_PLL,
+>>+    FSL_IMX8MM_ANA_TSENSOR,
+>>+    FSL_IMX8MM_APBH_DMA,
+>>+    FSL_IMX8MM_BOOT_ROM,
+>>+    FSL_IMX8MM_BOOT_ROM_PROTECTED,
+>>+    FSL_IMX8MM_CAAM,
+>>+    FSL_IMX8MM_CAAM_MEM,
+>>+    FSL_IMX8MM_CCM,
+>>+    FSL_IMX8MM_CSU,
+>>+    FSL_IMX8MM_DDR_CTL,
+>>+    FSL_IMX8MM_DDR_PERF_MON,
+>>+    FSL_IMX8MM_DDR_PHY,
+>>+    FSL_IMX8MM_DDR_PHY_BROADCAST,
+>>+    FSL_IMX8MM_ECSPI1,
+>>+    FSL_IMX8MM_ECSPI2,
+>>+    FSL_IMX8MM_ECSPI3,
+>>+    FSL_IMX8MM_ENET1,
+>>+    FSL_IMX8MM_GIC_DIST,
+>>+    FSL_IMX8MM_GIC_REDIST,
+>>+    FSL_IMX8MM_GPC,
+>>+    FSL_IMX8MM_GPIO1,
+>>+    FSL_IMX8MM_GPIO2,
+>>+    FSL_IMX8MM_GPIO3,
+>>+    FSL_IMX8MM_GPIO4,
+>>+    FSL_IMX8MM_GPIO5,
+>>+    FSL_IMX8MM_GPT1,
+>>+    FSL_IMX8MM_GPT2,
+>>+    FSL_IMX8MM_GPT3,
+>>+    FSL_IMX8MM_GPT4,
+>>+    FSL_IMX8MM_GPT5,
+>>+    FSL_IMX8MM_GPT6,
+>>+    FSL_IMX8MM_GPU2D,
+>>+    FSL_IMX8MM_I2C1,
+>>+    FSL_IMX8MM_I2C2,
+>>+    FSL_IMX8MM_I2C3,
+>>+    FSL_IMX8MM_I2C4,
+>>+    FSL_IMX8MM_INTERCONNECT,
+>>+    FSL_IMX8MM_IOMUXC,
+>>+    FSL_IMX8MM_IOMUXC_GPR,
+>>+    FSL_IMX8MM_MEDIA_BLK_CTL,
+>>+    FSL_IMX8MM_LCDIF,
+>>+    FSL_IMX8MM_MIPI_CSI,
+>>+    FSL_IMX8MM_MIPI_DSI,
+>>+    FSL_IMX8MM_MU_A,
+>>+    FSL_IMX8MM_MU_B,
+>>+    FSL_IMX8MM_OCOTP_CTRL,
+>>+    FSL_IMX8MM_OCRAM,
+>>+    FSL_IMX8MM_OCRAM_S,
+>>+    FSL_IMX8MM_PCIE1,
+>>+    FSL_IMX8MM_PCIE1_MEM,
+>>+    FSL_IMX8MM_PCIE_PHY1,
+>>+    FSL_IMX8MM_PERFMON1,
+>>+    FSL_IMX8MM_PERFMON2,
+>>+    FSL_IMX8MM_PWM1,
+>>+    FSL_IMX8MM_PWM2,
+>>+    FSL_IMX8MM_PWM3,
+>>+    FSL_IMX8MM_PWM4,
+>>+    FSL_IMX8MM_QOSC,
+>>+    FSL_IMX8MM_QSPI,
+>>+    FSL_IMX8MM_QSPI1_RX_BUFFER,
+>>+    FSL_IMX8MM_QSPI1_TX_BUFFER,
+>>+    FSL_IMX8MM_QSPI_MEM,
+>>+    FSL_IMX8MM_RAM,
+>>+    FSL_IMX8MM_RDC,
+>>+    FSL_IMX8MM_SAI1,
+>>+    FSL_IMX8MM_SAI2,
+>>+    FSL_IMX8MM_SAI3,
+>>+    FSL_IMX8MM_SAI5,
+>>+    FSL_IMX8MM_SAI6,
+>>+    FSL_IMX8MM_SDMA1,
+>>+    FSL_IMX8MM_SDMA2,
+>>+    FSL_IMX8MM_SDMA3,
+>>+    FSL_IMX8MM_SEMAPHORE1,
+>>+    FSL_IMX8MM_SEMAPHORE2,
+>>+    FSL_IMX8MM_SEMAPHORE_HS,
+>>+    FSL_IMX8MM_SNVS_HP,
+>>+    FSL_IMX8MM_SPBA1,
+>>+    FSL_IMX8MM_SRC,
+>>+    FSL_IMX8MM_SYSCNT_CMP,
+>>+    FSL_IMX8MM_SYSCNT_CTRL,
+>>+    FSL_IMX8MM_SYSCNT_
 
