@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 066CECEDDA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB77CEDDA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLN5v-0006T5-RL; Tue, 18 Nov 2025 09:54:11 -0500
+	id 1vLN7t-0007Da-Va; Tue, 18 Nov 2025 09:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLN5r-0006R8-RU
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:54:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLN5p-0002TM-Ub
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:54:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763477644;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nxJjYK5sf1aycLpPfldsgzDRteDgbc4TdlfACYYT/j8=;
- b=WBV3B0Wbav2SncF2XxKXPh3C9EQwdf88kVvNTYVHf9dJ4/+gBSur+nCiQZSHVF2PeK9N4s
- FwcsFWvIGbYCUVXlILYb4qvq3Te+Z1IqvoZsoQ5dxHw6q+UmXHUxTuMIucJyLv73rmOK76
- a54izI7tsGTPhoQBgsGV+VzSyvirqaE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-Xu2FjxofNqCixfYGJaE5TA-1; Tue,
- 18 Nov 2025 09:54:00 -0500
-X-MC-Unique: Xu2FjxofNqCixfYGJaE5TA-1
-X-Mimecast-MFC-AGG-ID: Xu2FjxofNqCixfYGJaE5TA_1763477638
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D1D218002D6; Tue, 18 Nov 2025 14:53:58 +0000 (UTC)
-Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7FC3519560B0; Tue, 18 Nov 2025 14:53:57 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger
- <borntraeger@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew
- Rosato <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org, David Hildenbrand
- <david@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, Halil
- Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH v2] hw/s390x: Fix a possible crash with passed-through
- virtio devices
-In-Reply-To: <20251118152411.37a06f7a.pasic@linux.ibm.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251118093945.35062-1-thuth@redhat.com>
- <20251118130218.30d3da33.pasic@linux.ibm.com>
- <50f79156-dd93-40c4-831e-66e558531be8@redhat.com>
- <20251118152411.37a06f7a.pasic@linux.ibm.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 18 Nov 2025 15:53:55 +0100
-Message-ID: <87ecpvqtmk.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vLN7R-0007B3-Pw
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:55:47 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vLN7Q-0002h9-3s
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:55:45 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42b32ff5d10so3931258f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:55:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763477742; x=1764082542; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w2YSSyFFgS95NJWgbULMYK6H1nDDxjbMozcjqkKeIoA=;
+ b=DiuuFU9WvqvU8ou6kwtxVtU6BvN+97q+gtJ7V+M0qOTES9WXlD2FNAcXfAJEoDtKKX
+ g+eJMeodRmWr4wwD3tXjryz4/sZEGEByQS2aWXZCkd0At9y1f0GrDBJPtDT14191pGUo
+ 3on+qgsqy+3kEteIl+tfg+LETnUIlUTzK2e4KWPRKACPqFX81ahE+90m0Vl/AjI9J3C7
+ v2FgDLXlo0JHkROIt6Djgrb1x4S6DUdBTUxMGA8sHcNh59ydWnMKdfqH7Ilhvu7S5Swf
+ Iv/JnE8u4MKi8AN5xfcYk/J+LM6tzuKGMz3gharLpX9WMraGbOmWgregJ2aygiodIut/
+ 8Llw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763477742; x=1764082542;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=w2YSSyFFgS95NJWgbULMYK6H1nDDxjbMozcjqkKeIoA=;
+ b=elFnyBYgfA4vfn/rwPUxPjJ35oR5kSbWVFTdLTLUfdvvXPwaLJ2ry2SAhley7/bfET
+ Rj/4eDs7k3blob/OJOwnOftPjCG5tH3PJwBGXF1OdkoZiecjWLblS9ssIBfcmUosgLv1
+ 41EnXuZRW0TGsvL3fEgSHEh//lWwqBUG6uNGt5hY+vxqMm4QqD8Gy6ZiwuONky/UezYV
+ 1BbogkBuN1DRwTX81Gt6Ljrn1UPXqM+YU0W++I+814OEa24MHL9jzFRYnvHpUPjKhpd+
+ YIlu2lnCKlVTaLU+slcJ92RagA1ABZ2N10aiAGpFgNAWtmUOE4kMt8pfF43B5x0R3yzw
+ pcZA==
+X-Gm-Message-State: AOJu0YyHwovUnZpuVN6dMQ1P0u0y+WXa6LcIESFDkDsOIjM3DLHlj8Dg
+ FauYEQ6R5vlHvGBvYzDZsSITI7YzskmemC3zIHAfijcdfoneif0YgJR56yrkWn3mwl0D2oxZA6h
+ Zk6vX
+X-Gm-Gg: ASbGnctUUKPkiJiEi7+poB0DReHmE2JzEXJ6vGXEQAGNrnaJvk0b0EBWOz2IWMTR6Yu
+ SB9l6hjluZwwEpgpL+7Uf6a8sU9TMHYPZWX2wdhR6IXFUr4d+BPLbyIhT9WbUwlW+3MOaL8t/BT
+ 2cHXmTPd69ssBWv+TEvWIpYlmT/stbaGV4jfMQhH8tRGrLz9dUfEFLbb8QjLkZ3JLYIJCmMI8GM
+ zftbgfCEQJSyXTRc62VvZua3kH0FUirWUFPiTXPDKpdy2JWYfC/BAESkdVXf3wrA9klrf/uF/2R
+ cSlfNllFpWnCI4SJ73KCoED1P4D5ztu5tpXemb4uSEbDt2QC92xPBugKeH1B3xYycH9Ules0NGA
+ 1epkYoKj4yS8Z3F+eGSgdiFtS45grAeW4xWQkeUIZLrLIp+COnxGOH6ygEOmpRCOK4vOUWJ8V9E
+ e/dN/1+Q8t+68=
+X-Google-Smtp-Source: AGHT+IHZuuxNwGo3lPN40LPYEHs8qD+iMLbQaGaAzXPNthsJemwXm1jWhjqTdt4obFY1wrvp2iDX9Q==
+X-Received: by 2002:a05:6000:2582:b0:425:7e33:b4a9 with SMTP id
+ ffacd0b85a97d-42ca85a5046mr3698677f8f.0.1763477741918; 
+ Tue, 18 Nov 2025 06:55:41 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53f0b8d6sm33674581f8f.28.2025.11.18.06.55.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Nov 2025 06:55:41 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 80D255F8B9;
+ Tue, 18 Nov 2025 14:55:40 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  jsnow@redhat.com
+Subject: Re: [PATCH v2 1/3] mtest2make: cleanup mtest-suites variables
+In-Reply-To: <20251118102942.551194-2-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 18 Nov 2025 11:29:40 +0100")
+References: <20251118102942.551194-1-pbonzini@redhat.com>
+ <20251118102942.551194-2-pbonzini@redhat.com>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Tue, 18 Nov 2025 14:55:40 +0000
+Message-ID: <87o6ozjspf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,28 +106,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 18 2025, Halil Pasic <pasic@linux.ibm.com> wrote:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Hm, the -EINVAL is put into GPR2 which is 'Host Cookie' according to the
-> virtio specification:
-> https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.html#x1-2260002
+> Remove the "--suite" argument from the .*.mtest-suites variables, and
+> add it only when actually computing the arguments to "meson test".
+> This makes it possible to set ninja-cmd-goals from the set of suites,
+> instead of doing it via many different .ninja-goals.* variables.
 >
-> Unfortunately, I did not find any words in the spec according to which
-> GPR2 can be used to indicate errors. There does seem to be handling in
-> the linux driver for that. It basically says negative is bad, but I can't
-> see that in the spec. It just says "For each notification, the driver
-> SHOULD use GPR4 to pass the host cookie received in GPR2 from the previous
-> notification."
->
-> Maybe we want to update the spec to reflect what is in the filed.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Saying that the driver SHOULD check GPR2 for negative error values is
-probably fine, since it matches what is already out
-there. (Unfortunately, we can't mandate it without either a new feature
-bit or a new revision, and that would be overkill IMHO.)
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-For the device, we say "The device MAY return a 64-bit host cookie in
-GPR2 to speed up the notification execution." -- the spec should
-probably also say that the device MAY return a negative error code.
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
