@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD506CEE341
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4622CEE33B
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLP6y-00006J-3z; Tue, 18 Nov 2025 12:03:24 -0500
+	id 1vLP7D-0000UG-Aa; Tue, 18 Nov 2025 12:03:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP6w-0008W0-CW
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:22 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7C-0000Tt-JC
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP6u-0004jq-Oy
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:22 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7A-0004nw-61
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763485400;
+ s=mimecast20190719; t=1763485415;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L8meUzKvO6KX2QLIVnDxoDj1RumboLDFbRJuX950bDI=;
- b=VCH64tvBA1wj0xoqAXTeHepITuNcOpajD6DDZGzQVVWfsxPXs63c5oyAbnNIvYN/XPgDzb
- /8nZ/fmVdHlJBf15NT40SXVE9YL8rwsY6M/3cZbm3POkujWKTXHbjmUnFm8ErOmQlHsqqi
- XPryi3m5cJdGtqDUSzOS7B950ANvAPs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=uiTN7MKP9/fhyCfDenC0oaDVaYEcnwmTXIzVHbaCHvo=;
+ b=JlDvmHDKRKvA2jw83IW7tHsppiq84TcMrT59jqhU86R6vB/6R2yqwoK7m7qqU2yAPnTXql
+ KSiYdTui5j5E2QIGeM2V/6rUitRgiGRZ1340t4/oUL4339BSY5rQPwSV2647DwddqCcIn/
+ k2uoCvYN9O1nIrKycr70PsIzOdDEHs0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-DvkrLMPkPEWD-LnmcVL6sA-1; Tue,
- 18 Nov 2025 12:03:16 -0500
-X-MC-Unique: DvkrLMPkPEWD-LnmcVL6sA-1
-X-Mimecast-MFC-AGG-ID: DvkrLMPkPEWD-LnmcVL6sA_1763485395
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-PwZYSqqWP9aC-jW7HeVvlw-1; Tue,
+ 18 Nov 2025 12:03:31 -0500
+X-MC-Unique: PwZYSqqWP9aC-jW7HeVvlw-1
+X-Mimecast-MFC-AGG-ID: PwZYSqqWP9aC-jW7HeVvlw_1763485410
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97DFF1956069; Tue, 18 Nov 2025 17:03:15 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C83D1801237; Tue, 18 Nov 2025 17:03:30 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.32.26])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0EC74300A88D; Tue, 18 Nov 2025 17:03:13 +0000 (UTC)
+ id 7A060300ABAF; Tue, 18 Nov 2025 17:03:28 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 05/19] curl: Fix coroutine waking
-Date: Tue, 18 Nov 2025 18:02:42 +0100
-Message-ID: <20251118170256.272087-6-kwolf@redhat.com>
+Subject: [PULL 12/19] qcow2: Fix cache_clean_timer
+Date: Tue, 18 Nov 2025 18:02:49 +0100
+Message-ID: <20251118170256.272087-13-kwolf@redhat.com>
 In-Reply-To: <20251118170256.272087-1-kwolf@redhat.com>
 References: <20251118170256.272087-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -68,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,157 +86,323 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-If we wake a coroutine from a different context, we must ensure that it
-will yield exactly once (now or later), awaiting that wake.
+The cache-cleaner runs as a timer CB in the BDS AioContext.  With
+multiqueue, it can run concurrently to I/O requests, and because it does
+not take any lock, this can break concurrent cache accesses, corrupting
+the image.  While the chances of this happening are low, it can be
+reproduced e.g. by modifying the code to schedule the timer CB every
+5 ms (instead of at most once per second) and modifying the last (inner)
+while loop of qcow2_cache_clean_unused() like so:
 
-curl’s current .ret == -EINPROGRESS loop may lead to the coroutine not
-yielding if the request finishes before the loop gets run.  To fix it,
-we must drop the loop and yield exactly once, if we need to yield.
+    while (i < c->size && can_clean_entry(c, i)) {
+        for (int j = 0; j < 1000 && can_clean_entry(c, i); j++) {
+            usleep(100);
+        }
+        c->entries[i].offset = 0;
+        c->entries[i].lru_counter = 0;
+        i++;
+        to_clean++;
+    }
 
-Finding out that latter part ("if we need to yield") makes it a bit
-complicated: Requests may be served from a cache internal to the curl
-block driver, or fail before being submitted.  In these cases, we must
-not yield.  However, if we find a matching but still ongoing request in
-the cache, we will have to await that, i.e. still yield.
+i.e. making it wait on purpose for the point in time where the cache is
+in use by something else.
 
-To address this, move the yield inside of the respective functions:
-- Inside of curl_find_buf() when awaiting ongoing concurrent requests,
-- Inside of curl_setup_preadv() when having created a new request.
+The solution chosen for this in this patch is not the best solution, I
+hope, but I admittedly can’t come up with anything strictly better.
 
-Rename curl_setup_preadv() to curl_do_preadv() to reflect this.
+We can protect from concurrent cache accesses either by taking the
+existing s->lock, or we introduce a new (non-coroutine) mutex
+specifically for cache accesses.  I would prefer to avoid the latter so
+as not to introduce additional (very slight) overhead.
 
-(Can be reproduced with multiqueue by adding a usleep(100000) before the
-`while (acb.ret == -EINPROGRESS)` loop.)
+Using s->lock, which is a coroutine mutex, however means that we need to
+take it in a coroutine, so the timer must run in a coroutine.  We can
+transform it from the current timer CB style into a coroutine that
+sleeps for the set interval.  As a result, however, we can no longer
+just deschedule the timer to instantly guarantee it won’t run anymore,
+but have to await the coroutine’s exit.
 
-Also, add a comment why aio_co_wake() is safe regardless of whether the
-coroutine and curl_multi_check_completion() run in the same context.
+(Note even before this patch there were places that may not have been so
+guaranteed after all: Anything calling cache_clean_timer_del() from the
+QEMU main AioContext could have been running concurrently to an existing
+timer CB invocation.)
 
-Cc: qemu-stable@nongnu.org
+Polling to await the timer to actually settle seems very complicated for
+something that’s rather a minor problem, but I can’t come up with any
+better solution that doesn’t again just overlook potential problems.
+
+(Not Cc-ing qemu-stable, as the issue is quite unlikely to be hit, and
+I’m not too fond of this solution.)
+
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-6-hreitz@redhat.com>
+Message-ID: <20251110154854.151484-13-hreitz@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/curl.c | 45 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ block/qcow2.h |   5 +-
+ block/qcow2.c | 141 ++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 117 insertions(+), 29 deletions(-)
 
-diff --git a/block/curl.c b/block/curl.c
-index d7d93d967f..4e77c93b46 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -258,8 +258,8 @@ read_end:
+diff --git a/block/qcow2.h b/block/qcow2.h
+index 547bb2b814..96db7c51ec 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -345,8 +345,11 @@ typedef struct BDRVQcow2State {
+ 
+     Qcow2Cache *l2_table_cache;
+     Qcow2Cache *refcount_block_cache;
+-    QEMUTimer *cache_clean_timer;
++    /* Non-NULL while the timer is running */
++    Coroutine *cache_clean_timer_co;
+     unsigned cache_clean_interval;
++    QemuCoSleep cache_clean_timer_wake;
++    CoQueue cache_clean_timer_exit;
+ 
+     QLIST_HEAD(, QCowL2Meta) cluster_allocs;
+ 
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 4e4f77170a..05da589729 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -835,41 +835,113 @@ static const char *overlap_bool_option_names[QCOW2_OL_MAX_BITNR] = {
+     [QCOW2_OL_BITMAP_DIRECTORY_BITNR] = QCOW2_OPT_OVERLAP_BITMAP_DIRECTORY,
+ };
+ 
+-static void cache_clean_timer_cb(void *opaque)
++static void coroutine_fn cache_clean_timer(void *opaque)
+ {
+-    BlockDriverState *bs = opaque;
+-    BDRVQcow2State *s = bs->opaque;
+-    qcow2_cache_clean_unused(s->l2_table_cache);
+-    qcow2_cache_clean_unused(s->refcount_block_cache);
+-    timer_mod(s->cache_clean_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+-              (int64_t) s->cache_clean_interval * 1000);
++    BDRVQcow2State *s = opaque;
++    uint64_t wait_ns;
++
++    WITH_QEMU_LOCK_GUARD(&s->lock) {
++        wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
++    }
++
++    while (wait_ns > 0) {
++        qemu_co_sleep_ns_wakeable(&s->cache_clean_timer_wake,
++                                  QEMU_CLOCK_VIRTUAL, wait_ns);
++
++        WITH_QEMU_LOCK_GUARD(&s->lock) {
++            if (s->cache_clean_interval > 0) {
++                qcow2_cache_clean_unused(s->l2_table_cache);
++                qcow2_cache_clean_unused(s->refcount_block_cache);
++            }
++
++            wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
++        }
++    }
++
++    WITH_QEMU_LOCK_GUARD(&s->lock) {
++        s->cache_clean_timer_co = NULL;
++        qemu_co_queue_restart_all(&s->cache_clean_timer_exit);
++    }
  }
  
- /* Called with s->mutex held.  */
--static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
--                          CURLAIOCB *acb)
-+static bool coroutine_fn
-+curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
+ static void cache_clean_timer_init(BlockDriverState *bs, AioContext *context)
  {
+     BDRVQcow2State *s = bs->opaque;
+     if (s->cache_clean_interval > 0) {
+-        s->cache_clean_timer =
+-            aio_timer_new_with_attrs(context, QEMU_CLOCK_VIRTUAL,
+-                                     SCALE_MS, QEMU_TIMER_ATTR_EXTERNAL,
+-                                     cache_clean_timer_cb, bs);
+-        timer_mod(s->cache_clean_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+-                  (int64_t) s->cache_clean_interval * 1000);
++        assert(!s->cache_clean_timer_co);
++        s->cache_clean_timer_co = qemu_coroutine_create(cache_clean_timer, s);
++        aio_co_enter(context, s->cache_clean_timer_co);
+     }
+ }
+ 
+-static void cache_clean_timer_del(BlockDriverState *bs)
++/**
++ * Delete the cache clean timer and await any yet running instance.
++ * Called holding s->lock.
++ */
++static void coroutine_fn
++cache_clean_timer_co_locked_del_and_wait(BlockDriverState *bs)
++{
++    BDRVQcow2State *s = bs->opaque;
++
++    if (s->cache_clean_timer_co) {
++        s->cache_clean_interval = 0;
++        qemu_co_sleep_wake(&s->cache_clean_timer_wake);
++        qemu_co_queue_wait(&s->cache_clean_timer_exit, &s->lock);
++    }
++}
++
++/**
++ * Same as cache_clean_timer_co_locked_del_and_wait(), but takes s->lock.
++ */
++static void coroutine_fn
++cache_clean_timer_co_del_and_wait(BlockDriverState *bs)
+ {
+     BDRVQcow2State *s = bs->opaque;
+-    if (s->cache_clean_timer) {
+-        timer_free(s->cache_clean_timer);
+-        s->cache_clean_timer = NULL;
++
++    WITH_QEMU_LOCK_GUARD(&s->lock) {
++        cache_clean_timer_co_locked_del_and_wait(bs);
++    }
++}
++
++struct CacheCleanTimerDelAndWaitCoParams {
++    BlockDriverState *bs;
++    bool done;
++};
++
++static void coroutine_fn cache_clean_timer_del_and_wait_co_entry(void *opaque)
++{
++    struct CacheCleanTimerDelAndWaitCoParams *p = opaque;
++
++    cache_clean_timer_co_del_and_wait(p->bs);
++    p->done = true;
++    aio_wait_kick();
++}
++
++/**
++ * Delete the cache clean timer and await any yet running instance.
++ * Must be called from the main or BDS AioContext without s->lock held.
++ */
++static void coroutine_mixed_fn
++cache_clean_timer_del_and_wait(BlockDriverState *bs)
++{
++    IO_OR_GS_CODE();
++
++    if (qemu_in_coroutine()) {
++        cache_clean_timer_co_del_and_wait(bs);
++    } else {
++        struct CacheCleanTimerDelAndWaitCoParams p = { .bs = bs };
++        Coroutine *co;
++
++        co = qemu_coroutine_create(cache_clean_timer_del_and_wait_co_entry, &p);
++        qemu_coroutine_enter(co);
++
++        BDRV_POLL_WHILE(bs, !p.done);
+     }
+ }
+ 
+ static void qcow2_detach_aio_context(BlockDriverState *bs)
+ {
+-    cache_clean_timer_del(bs);
++    cache_clean_timer_del_and_wait(bs);
+ }
+ 
+ static void qcow2_attach_aio_context(BlockDriverState *bs,
+@@ -1214,12 +1286,24 @@ fail:
+     return ret;
+ }
+ 
++/* s_locked specifies whether s->lock is held or not */
+ static void qcow2_update_options_commit(BlockDriverState *bs,
+-                                        Qcow2ReopenState *r)
++                                        Qcow2ReopenState *r,
++                                        bool s_locked)
+ {
+     BDRVQcow2State *s = bs->opaque;
      int i;
-     uint64_t end = start + len;
-@@ -307,6 +307,10 @@ static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
-             for (j=0; j<CURL_NUM_ACB; j++) {
-                 if (!state->acb[j]) {
-                     state->acb[j] = acb;
-+                    /* Await ongoing request */
-+                    qemu_mutex_unlock(&s->mutex);
-+                    qemu_coroutine_yield();
-+                    qemu_mutex_lock(&s->mutex);
-                     return true;
-                 }
-             }
-@@ -378,6 +382,16 @@ static void curl_multi_check_completion(BDRVCURLState *s)
-                 acb->ret = error ? -EIO : 0;
-                 state->acb[i] = NULL;
-                 qemu_mutex_unlock(&s->mutex);
-+                /*
-+                 * Current AioContext is the BDS context, which may or may not
-+                 * be the request (coroutine) context.
-+                 * - If it is, the coroutine must have yielded or the FD handler
-+                 *   (curl_multi_do()/curl_multi_timeout_do()) could not have
-+                 *   been called and we would not be here
-+                 * - If it is not, it doesn't matter whether it has already
-+                 *   yielded or not; it will be scheduled once it does yield
-+                 * So aio_co_wake() is safe to call.
-+                 */
-                 aio_co_wake(acb->co);
-                 qemu_mutex_lock(&s->mutex);
-             }
-@@ -868,7 +882,7 @@ out_noclean:
-     return -EINVAL;
- }
  
--static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-+static void coroutine_fn curl_do_preadv(BlockDriverState *bs, CURLAIOCB *acb)
- {
-     CURLState *state;
-     int running;
-@@ -880,10 +894,13 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
- 
-     qemu_mutex_lock(&s->mutex);
- 
--    // In case we have the requested data already (e.g. read-ahead),
--    // we can just call the callback and be done.
 +    /*
-+     * In case we have the requested data already (e.g. read-ahead),
-+     * we can just call the callback and be done.  This may have to
-+     * await an ongoing request, in which case it itself will yield.
++     * We need to stop the cache-clean-timer before destroying the metadata
++     * table caches
 +     */
-     if (curl_find_buf(s, start, acb->bytes, acb)) {
--        goto out;
-+        goto dont_yield;
++    if (s_locked) {
++        cache_clean_timer_co_locked_del_and_wait(bs);
++    } else {
++        cache_clean_timer_del_and_wait(bs);
++    }
++
+     if (s->l2_table_cache) {
+         qcow2_cache_destroy(s->l2_table_cache);
      }
- 
-     // No cache found, so let's start a new request
-@@ -898,7 +915,7 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-     if (curl_init_state(s, state) < 0) {
-         curl_clean_state(state);
-         acb->ret = -EIO;
--        goto out;
-+        goto dont_yield;
+@@ -1228,6 +1312,7 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
      }
+     s->l2_table_cache = r->l2_table_cache;
+     s->refcount_block_cache = r->refcount_block_cache;
++
+     s->l2_slice_size = r->l2_slice_size;
  
-     acb->start = 0;
-@@ -913,7 +930,7 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-     if (state->buf_len && state->orig_buf == NULL) {
-         curl_clean_state(state);
-         acb->ret = -ENOMEM;
--        goto out;
-+        goto dont_yield;
-     }
-     state->acb[0] = acb;
+     s->overlap_check = r->overlap_check;
+@@ -1239,11 +1324,8 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
  
-@@ -925,13 +942,16 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
-         acb->ret = -EIO;
+     s->discard_no_unref = r->discard_no_unref;
  
-         curl_clean_state(state);
--        goto out;
-+        goto dont_yield;
-     }
- 
-     /* Tell curl it needs to kick things off */
-     curl_multi_socket_action(s->multi, CURL_SOCKET_TIMEOUT, 0, &running);
-+    qemu_mutex_unlock(&s->mutex);
-+    qemu_coroutine_yield();
-+    return;
- 
--out:
-+dont_yield:
-     qemu_mutex_unlock(&s->mutex);
- }
- 
-@@ -947,10 +967,7 @@ static int coroutine_fn curl_co_preadv(BlockDriverState *bs,
-         .bytes = bytes
-     };
- 
--    curl_setup_preadv(bs, &acb);
--    while (acb.ret == -EINPROGRESS) {
--        qemu_coroutine_yield();
+-    if (s->cache_clean_interval != r->cache_clean_interval) {
+-        cache_clean_timer_del(bs);
+-        s->cache_clean_interval = r->cache_clean_interval;
+-        cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
 -    }
-+    curl_do_preadv(bs, &acb);
-     return acb.ret;
++    s->cache_clean_interval = r->cache_clean_interval;
++    cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
+ 
+     qapi_free_QCryptoBlockOpenOptions(s->crypto_opts);
+     s->crypto_opts = r->crypto_opts;
+@@ -1261,6 +1343,7 @@ static void qcow2_update_options_abort(BlockDriverState *bs,
+     qapi_free_QCryptoBlockOpenOptions(r->crypto_opts);
  }
+ 
++/* Called with s->lock held */
+ static int coroutine_fn GRAPH_RDLOCK
+ qcow2_update_options(BlockDriverState *bs, QDict *options, int flags,
+                      Error **errp)
+@@ -1270,7 +1353,7 @@ qcow2_update_options(BlockDriverState *bs, QDict *options, int flags,
+ 
+     ret = qcow2_update_options_prepare(bs, &r, options, flags, errp);
+     if (ret >= 0) {
+-        qcow2_update_options_commit(bs, &r);
++        qcow2_update_options_commit(bs, &r, true);
+     } else {
+         qcow2_update_options_abort(bs, &r);
+     }
+@@ -1908,7 +1991,7 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
+     qemu_vfree(s->l1_table);
+     /* else pre-write overlap checks in cache_destroy may crash */
+     s->l1_table = NULL;
+-    cache_clean_timer_del(bs);
++    cache_clean_timer_co_locked_del_and_wait(bs);
+     if (s->l2_table_cache) {
+         qcow2_cache_destroy(s->l2_table_cache);
+     }
+@@ -1963,6 +2046,7 @@ static int qcow2_open(BlockDriverState *bs, QDict *options, int flags,
+ 
+     /* Initialise locks */
+     qemu_co_mutex_init(&s->lock);
++    qemu_co_queue_init(&s->cache_clean_timer_exit);
+ 
+     assert(!qemu_in_coroutine());
+     assert(qemu_get_current_aio_context() == qemu_get_aio_context());
+@@ -2048,7 +2132,7 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
+ 
+     GRAPH_RDLOCK_GUARD_MAINLOOP();
+ 
+-    qcow2_update_options_commit(state->bs, state->opaque);
++    qcow2_update_options_commit(state->bs, state->opaque, false);
+     if (!s->data_file) {
+         /*
+          * If we don't have an external data file, s->data_file was cleared by
+@@ -2805,7 +2889,7 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
+         qcow2_inactivate(bs);
+     }
+ 
+-    cache_clean_timer_del(bs);
++    cache_clean_timer_del_and_wait(bs);
+     qcow2_cache_destroy(s->l2_table_cache);
+     qcow2_cache_destroy(s->refcount_block_cache);
+ 
+@@ -2875,6 +2959,7 @@ qcow2_co_invalidate_cache(BlockDriverState *bs, Error **errp)
+     s->data_file = data_file;
+     /* Re-initialize objects initialized in qcow2_open() */
+     qemu_co_mutex_init(&s->lock);
++    qemu_co_queue_init(&s->cache_clean_timer_exit);
+ 
+     options = qdict_clone_shallow(bs->options);
  
 -- 
 2.51.1
