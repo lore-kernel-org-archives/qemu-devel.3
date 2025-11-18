@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E75CEE343
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2395BCEE347
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQIa-00026t-Eq; Tue, 18 Nov 2025 13:19:28 -0500
+	id 1vLQKR-0003cc-HN; Tue, 18 Nov 2025 13:21:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQIZ-00026h-5j
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:19:27 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQKQ-0003bW-0i
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:21:22 -0500
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQIX-0007on-CI
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:19:26 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47795f6f5c0so26905695e9.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:19:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQKO-0008Bz-Jk
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:21:21 -0500
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-42b3720e58eso5364981f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763489964; x=1764094764; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763490078; x=1764094878; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oX4nBcOixFPcuQ+ZnKJFA3Mq6nOvTUGekeiK4b8ii4M=;
- b=fPFTQset5ii6TZcFJIvACql+VKrU+nvIkrayp4UKUDujInba29qKGq2b4akeEJ20g/
- 0mPtLjQ1Jt7/RaeVhqTUskBofhU26Jc7/nbeWk+1l9syhIRvagPeqrrVnxyIVwHWgOj8
- Jxs7tccPGGFsSslxfqsdqvRyLQrP1JXo6sjQAPfmP2OTkSCg9gV1/Z8VtchWxG6Pjo7v
- 75wTCqjDAbB8zfZewflNY8SmZVqWE8e7cCmCvCn5K6EG3ATjTe/AFiB1wg606qTGP1Zq
- sMIFQd5m9vIPVkcMab3R1WzZxi+6G4C2KWwnm1G5TIdmLDtfBBtMAz+jVW9BexASlBA0
- onhg==
+ bh=3cCp0GVg4DQazg6OaNDuPBMPUVotUpy9uO56eOuSk24=;
+ b=vliEgMXgNN+r6llJfxIt9TQvb2CrMzWI4O4QICzIv/YDSin3S7nr0Ri3tVCkeLqLg7
+ bWyUDbFt4JzHzMrYymCz00x16V0x/gQOHklfAibAzgFUDnmXOK0FoQDGwA76+goX+Rur
+ V+VN7VRd0crIYnpKx/J2XyOC7Ep1qHVn/rqqJQzPyFX6gIOir5zRntuX/0MqhnHMeKO5
+ EAQK1N3M1lgRYnT2LdhMoP0lfXrBqlESbI3wGUHqa2+FbTtiEnHYN3ISIS2tnaGC0oNw
+ mUm5l+sK7m73SCW3bPWwmGWkrj2R90JaPPUQvzjCmQXiPTid+zMGFCUNLlzKlVvSsrBS
+ fm9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763489964; x=1764094764;
+ d=1e100.net; s=20230601; t=1763490078; x=1764094878;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=oX4nBcOixFPcuQ+ZnKJFA3Mq6nOvTUGekeiK4b8ii4M=;
- b=Py5BlyMkWbZ5RzQpmDZc4xlKbc0GBrzLBugBIvNU9Cn1v8xmx7jcHWcP+Ts8qCbz+a
- J2ngoS3Ue7hohjttdspZzzhFtW5bJjyJg7eRu+kqLXbab/jXwE4IdDH2NlyyYqlQ4xaQ
- GkkZJhBui+muPZdVRQUP5RUY3otiC3KB4B0FaP+PQSv/ya+pe/35G3em4n4Otc04YGFj
- zimCKHSxwBCeYusXMzVeHMkJBWRELdG79QT8Sei2YXLDXxIQkty29E5OGOyv/xQq3ssO
- ZE+PvdmpNIj+6qKkfsEfAE4qx+B9KhjKz6lSKTNCk4cz0rpEb1PuqVd5+HGMQPJ2d2DJ
- rB+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXl9gQTVBdf8uPOyvZrIcW9uHGwxU4RIjBUbM6GTN7UnGGoMWFRyc1Kypn3BrbwFx+2X/eBEObcbC9p@nongnu.org
-X-Gm-Message-State: AOJu0Yx7RwU0OqG7Su3Lu6rboxPUnq2q2g/Y/cATrp034q/qraJtxWE0
- LlpF7c1RRSGTb/STZTjOduELXpQDg5NRSfyAtmKUOz/xRV5ay8gdGOhESgYQLE84wIk=
-X-Gm-Gg: ASbGncsD2XPXphoG33HAIFPnWjj8cd+pbGarHam2inQJX4mmGrYSWjGckKLEZU7Pfwt
- je4aEFbIT0aikLA+GNquHCqjyMEZGLzSKu9V1dHDpZeCNgfs3iXwwjv2v0pAFzJTvoNczXHafUN
- a/zh0SeQ3H80/jOxWm+ocOz936M05zMFNR43bDJRuzwhQarTCJnQ7Oi324H110AYxPZfRiugnMj
- m+R4uNC9sTmXMYVsa94MriKO91M9CAZ0ijbbZeKBOR5DxRYar7/9gmeGbM5No4OojPKyuTCkFuP
- eM4JgcA0WxM3BYLFxdix2mRbx6xD8GRDkKbKohu5xZwlCbRDaYp5L2Xpjcxusnei/JDIh+jZOTo
- ezBKAtiF6kDTUKKZIZAbxcVUd7wYOj/7U57gqbjtiT4NlXhIJvjqbQRK2xeljeOk/Lz57tZPVm3
- /pyt9pNEXzNxjZ58h2RZ/3Q0I1sSWCfjRBzUiKPyTcsR8EXRZAo2pm4NM0jRXDU4yi
-X-Google-Smtp-Source: AGHT+IFKLJQGmJNTnSgNbgHUAgD4UYfbPHEVi7bCm5l5KX1VkWVR0Sebl1snkWy9IIRC6vETYynsiQ==
-X-Received: by 2002:a05:600c:4f51:b0:477:a02d:397a with SMTP id
- 5b1f17b1804b1-477a02d3af1mr90646285e9.2.1763489963960; 
- Tue, 18 Nov 2025 10:19:23 -0800 (PST)
+ bh=3cCp0GVg4DQazg6OaNDuPBMPUVotUpy9uO56eOuSk24=;
+ b=RoS0cX0Gg9lejKzdyq8arO0vgzZMblQ1oDTShxnC1LGCKmDyPP4Gt5rtu/hZeOJV/d
+ aDEGPbwcXJNf3+eOGHSkNTl1xjE/n4MfolDP2kbFyZTGeJ4dZ39tHLDgt402I3rKQ4SU
+ JAlNfqMaqf82Xh5NWnvpythnm5Yl5OOPAlV3m9pNKbtGBS7+9GrtEJq4ju30qhdm2LkO
+ sg6+qPb8yxW7LcloZOHnYzjAkslR+lxPFufeYG2ODKhyF4EteiBP9AGWFe/JkvBpHCLa
+ nh1TWXcfKvtqgiefakQcQIdfmK0bFBC/CTGJA791dxt4d+jobEGe9DRg3xYknG3Ln7rF
+ hKhA==
+X-Gm-Message-State: AOJu0Yw0fM3PCx/P6twelVfG/kgjKZ4D6nn3TNF/aXsCGjXf8E/K0kQy
+ qiWK5t5LbkwEGFqxqan1OIms8L7772K4c0GAv7XY9B06113Y+9MQMMqQ5k3mmGsDlOfCp2rpHnj
+ 2nUBv2O2UffiL
+X-Gm-Gg: ASbGnctufDkoHJJaAImCwRyBC1MiupX8+RL+/d4H71OLyp7H6H6mXZyXBjraFUKL4Sj
+ qVmeQvY+TZAgcRBwpcVw4XpWPFwP2WfM+UINcYalAbpQ2HdyLJs7tr36UJrH+vjwJM3pLyOW/6S
+ K4GtZs7+gm/6jEu8mN5Re0S5sV+kScxeAkmlvunttgwMtRpcXQEA8FdkX7PxPGdI+1RXAiS7dhF
+ XnWNoDiowIOp1B3gbEQTyeJAFbMN12LleVlb+IFcg+G/4QMU/UdraTsyk3MVFDKNSvU82j+4xfJ
+ RIjxS6hs81RiEDgHWhCy3Fzi2g0yPVmxDlK18byciWknI1YJSvpJWGgdlPwg7GP/IISF6Atrz5V
+ UydfDBjP4+4WMnGoCZGAueak7U8d6e9bfXgqJwFpP6Rzi2TAk2VU43vVS45VpRC/Wlqm5PfZglL
+ GD83svRKL6sh/uv0xNE0P7htZrEhQJ43K5/eH/eniuXPTAH9j6Cj1AEQ==
+X-Google-Smtp-Source: AGHT+IGa54ulDtbjqkB6ax4RLtM4dNXJzV8/VVRil9O5Lt5V5u35Zw30azbkIYyX1esIHvjwqWU3ig==
+X-Received: by 2002:a05:6000:2901:b0:42b:3e60:18cd with SMTP id
+ ffacd0b85a97d-42b5933dfdemr15603230f8f.11.1763490077614; 
+ Tue, 18 Nov 2025 10:21:17 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a9d21591sm24077725e9.2.2025.11.18.10.19.22
+ ffacd0b85a97d-42b53e7aea7sm33212249f8f.1.2025.11.18.10.21.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 10:19:23 -0800 (PST)
-Message-ID: <5a5ab812-872d-4995-8cf9-59a7c7f6b452@linaro.org>
-Date: Tue, 18 Nov 2025 19:19:22 +0100
+ Tue, 18 Nov 2025 10:21:16 -0800 (PST)
+Message-ID: <843115a5-d9bb-4efa-b829-d93549c2ef35@linaro.org>
+Date: Tue, 18 Nov 2025 19:21:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/sd: Fix broken ssi-sd implementation since v9.1.0
+Subject: Re: [PATCH-for-10.2] hw/arm: Re-enable xenpvh machine in
+ qemu-system-arm/aarch64 binaries
 Content-Language: en-US
-To: Bin Meng <bmeng.cn@gmail.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Tom Rini <trini@konsulko.com>
-References: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+References: <20251117091253.56009-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+In-Reply-To: <20251117091253.56009-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,11 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/11/25 12:05, Bin Meng wrote:
+On 17/11/25 10:12, Philippe Mathieu-Daudé wrote:
+> While registering the ARM/Aarch64 machine interfaces
+> in commit 38c5ab40031 ("hw/arm: Filter machine types
+> for qemu-system-arm/aarch64 binaries"), we missed the
+> XenPV machine. Correct that.
+> 
+> Reported-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> ---
+> 1/ Review got likely unnoticed by Xen folks because no
+>     Xen-specific entry in MAINTAINERS:
+> 
+>     $ ./scripts/get_maintainer.pl -f hw/arm/xen-pvh.c
+>     Peter Maydell <peter.maydell@linaro.org> (maintainer:ARM TCG CPUs)
+>     qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+>     qemu-devel@nongnu.org (open list:All patches CC here)
+> 
+> 2/ Should we restrict it to aa64 only?
+> ---
+>   hw/arm/xen-pvh.c | 2 ++
+>   1 file changed, 2 insertions(+)
 
-> Bin Meng (2):
->    hw/sd: Fix incorrect idle state reporting in R1 response for SPI mode
->    hw/sd: Fix ACMD41 state machine in SPI mode
-
-Series queued, thanks.
+Patch queued, thanks.
 
