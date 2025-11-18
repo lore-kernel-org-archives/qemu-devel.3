@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6361CEBF61
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 01:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79F4CED245
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 03:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLAww-0005Pd-Ca; Mon, 17 Nov 2025 20:56:06 -0500
+	id 1vLCGk-0001KG-Ig; Mon, 17 Nov 2025 22:20:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vLAwo-0005PC-H2
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 20:55:59 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vLAwk-0007ux-JH
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 20:55:57 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxK9Ij0htpOL0kAA--.11427S3;
- Tue, 18 Nov 2025 09:55:47 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxrcEg0htpz7g2AQ--.60648S3;
- Tue, 18 Nov 2025 09:55:46 +0800 (CST)
-Subject: Re: [PATCH V3 2/2] fix pci device can't alloc irq from fdt
-To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-References: <cover.1763347485.git.lixianglai@loongson.cn>
- <894d7a034593e5ccd53b7f3695569c05cd2620e0.1763347485.git.lixianglai@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <4e77e390-6c09-96f7-4732-b2601e69c5fb@loongson.cn>
-Date: Tue, 18 Nov 2025 09:53:20 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vLCGi-0001Jv-KE
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:20:36 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vLCGg-0004Cz-VH
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:20:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763436035; x=1794972035;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=c/VS1/2chdkAwU46yWRjXngVNYQ5YwGggg1BKVSm57Q=;
+ b=PE74lcJ61nzG6wCsObaOQj2uALLMwp7uXZr087i1vHzARdblHzxCVj0S
+ V6wihAGsUdpbE7DCmHairXtMI9qaohXRBkDuFYq50khMUO4wkqW007lax
+ EArPz9XlL9K1LpvV9uDGqxW8AacrMCNDJ9gfEeFD+ULRNPcBpnALD/Bwi
+ ooBknLQkTn7d+egyZmqMnVzO2BEyG2J9TEtS/FHKIzk/8Tj4Fk6v5u17C
+ 2+JpibM3JZN3D4MfhsOgf6C5HnIXD+ArD4uCGBaUgTt6nmNBwTEPO1Vk+
+ 4xLCoASqhi7dOEwBvwuPkOwbdixKU7MXWjY+7hYlCnvDRdr8YkvWF9LVF A==;
+X-CSE-ConnectionGUID: 99dnE949Rnage0cqfqp3rQ==
+X-CSE-MsgGUID: /Zrdn6x7T0u1zUW4pfm6PQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="68053767"
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="68053767"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Nov 2025 19:20:34 -0800
+X-CSE-ConnectionGUID: tY2UtiO5SReuvQs52PsQQw==
+X-CSE-MsgGUID: 6S7lQ1wKSUGghZcA7lHJdQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="221537165"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 17 Nov 2025 19:20:31 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
+ Xin Li <xin@zytor.com>, John Allen <john.allen@amd.com>,
+ Babu Moger <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>,
+ Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v4 05/23] i386/cpu: Add avx10 dependency for
+ Opmask/ZMM_Hi256/Hi16_ZMM
+Date: Tue, 18 Nov 2025 11:42:13 +0800
+Message-Id: <20251118034231.704240-6-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251118034231.704240-1-zhao1.liu@intel.com>
+References: <20251118034231.704240-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <894d7a034593e5ccd53b7f3695569c05cd2620e0.1763347485.git.lixianglai@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxrcEg0htpz7g2AQ--.60648S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZF1kGF4rXr4DWrWfCr47Jrc_yoWrKF1rpr
- WDC3ZIgrWIqr1I939xA3WUWF15Kr1fCFyUJwnxXr10kwnxuw1xXr4DK3y7tFy7K3ykJayU
- XFnIgayIg3WUJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.064,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,135 +87,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+With feature array in ExtSaveArea, add avx10 as the second dependency
+for Opmask/ZMM_Hi256/Hi16_ZMM xsave components, and drop the special
+check in cpuid_has_xsave_feature().
 
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-On 2025/11/17 下午3:14, Xianglai Li wrote:
-> When we use the -kernel parameter to start an elf format kernel relying on
-> fdt, we get the following error:
-> 
-> pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.0: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.0: PME: Signaling with IRQ 19
-> pcieport 0000:00:01.0: AER: enabled with IRQ 19
-> pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.1: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.1: PME: Signaling with IRQ 20
-> pcieport 0000:00:01.1: AER: enabled with IRQ 20
-> pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.2: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.2: PME: Signaling with IRQ 21
-> pcieport 0000:00:01.2: AER: enabled with IRQ 21
-> pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.3: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.3: PME: Signaling with IRQ 22
-> pcieport 0000:00:01.3: AER: enabled with IRQ 22
-> pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
-> 
-> This is because  the description of interrupt-cell is missing in the pcie
-> irq map.  And there is a lack of a description of the interrupt trigger
-> type.  Now it is corrected and the correct interrupt-cell is added in the
-> pcie irq map.
-> 
-> Refer to the implementation in arm and add some comments.
-> 
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> ---
-> Cc: Bibo Mao <maobibo@loongson.cn>
-> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> Cc: Song Gao <gaosong@loongson.cn>
-> 
->   hw/loongarch/virt-fdt-build.c | 44 ++++++++++++++++++++++-------------
->   1 file changed, 28 insertions(+), 16 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-> index 7333019cf7..52082b2483 100644
-> --- a/hw/loongarch/virt-fdt-build.c
-> +++ b/hw/loongarch/virt-fdt-build.c
-> @@ -321,6 +321,8 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
->       uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
->       uint32_t *irq_map = full_irq_map;
->       const MachineState *ms = MACHINE(lvms);
-> +    uint32_t pin_mask;
-> +    uint32_t devfn_mask;
->   
->       /*
->        * This code creates a standard swizzle of interrupts such that
-> @@ -333,37 +335,45 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
->        */
->   
->       for (dev = 0; dev < PCI_NUM_PINS; dev++) {
-> -        int devfn = dev * 0x8;
-> +        int devfn = PCI_DEVFN(dev, 0);
->   
->           for (pin = 0; pin < PCI_NUM_PINS; pin++) {
-> -            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-> +            int irq_nr = VIRT_DEVICE_IRQS + \
-> +                         ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
->               int i = 0;
->   
-> -            /* Fill PCI address cells */
-> -            irq_map[i] = cpu_to_be32(devfn << 8);
-> -            i += 3;
-> -
-> -            /* Fill PCI Interrupt cells */
-> -            irq_map[i] = cpu_to_be32(pin + 1);
-> -            i += 1;
-> -
-> -            /* Fill interrupt controller phandle and cells */
-> -            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
-> -            irq_map[i++] = cpu_to_be32(irq_nr);
-> +            uint32_t map[] = {
-> +                cpu_to_be16(devfn), 0, 0,     /* devfn */
-here it seems that it should be devfn << 8 rather than cpu_to_be16(devfn).
-
-Otherwise look good to me.
-
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-> +                pin + 1,                      /* PCI pin */
-> +                *pch_pic_phandle,             /* interrupt controller handle */
-> +                irq_nr,                       /* irq number */
-> +                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
->   
->               if (!irq_map_stride) {
-> -                irq_map_stride = i;
-> +                irq_map_stride = sizeof(map) / sizeof(uint32_t);
->               }
-> +
-> +            /* Convert map to big endian */
-> +            for (i = 0; i < irq_map_stride; i++) {
-> +                irq_map[i] = cpu_to_be32(map[i]);
-> +            }
-> +
->               irq_map += irq_map_stride;
->           }
->       }
->   
-> -
->       qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
->                        PCI_NUM_PINS * PCI_NUM_PINS *
->                        irq_map_stride * sizeof(uint32_t));
-> +
-> +    /* The pci slot only needs to specify the matching of the lower bit */
-> +    devfn_mask = cpu_to_be16(PCI_DEVFN((PCI_NUM_PINS - 1), 0));
-> +    /* The pci interrupt only needs to match the specified low bit */
-> +    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
-> +
->       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
-> -                     0x1800, 0, 0, 0x7);
-> +                           devfn_mask, 0, 0,  /* address cells */
-> +                           pin_mask);
->   }
->   
->   static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-> @@ -400,6 +410,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
->                                    2, base_mmio, 2, size_mmio);
->       qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
->                              0, *pch_msi_phandle, 0, 0x10000);
-> +
-> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
->       fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
->       g_free(nodename);
->   }
-> 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index e495e6d9b21c..70a282668f72 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2054,18 +2054,21 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
+         .size = sizeof(XSaveOpmask),
+         .features = {
+             { FEAT_7_0_EBX,         CPUID_7_0_EBX_AVX512F },
++            { FEAT_7_1_EDX,         CPUID_7_1_EDX_AVX10   },
+         },
+     },
+     [XSTATE_ZMM_Hi256_BIT] = {
+         .size = sizeof(XSaveZMM_Hi256),
+         .features = {
+             { FEAT_7_0_EBX,         CPUID_7_0_EBX_AVX512F },
++            { FEAT_7_1_EDX,         CPUID_7_1_EDX_AVX10   },
+         },
+     },
+     [XSTATE_Hi16_ZMM_BIT] = {
+         .size = sizeof(XSaveHi16_ZMM),
+         .features = {
+             { FEAT_7_0_EBX,         CPUID_7_0_EBX_AVX512F },
++            { FEAT_7_1_EDX,         CPUID_7_1_EDX_AVX10   },
+         },
+     },
+     [XSTATE_PKRU_BIT] = {
+@@ -8648,12 +8651,6 @@ static bool cpuid_has_xsave_feature(CPUX86State *env, const ExtSaveArea *esa)
+         }
+     }
+ 
+-    if (esa->features[0].index == FEAT_7_0_EBX &&
+-        esa->features[0].mask == CPUID_7_0_EBX_AVX512F &&
+-        (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10)) {
+-        return true;
+-    }
+-
+     return false;
+ }
+ 
+-- 
+2.34.1
 
 
