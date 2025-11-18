@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F68ECED63B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBD5CEDD98
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLMUr-0001HF-1e; Tue, 18 Nov 2025 09:15:53 -0500
+	id 1vLMV9-0001Im-Gk; Tue, 18 Nov 2025 09:16:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vLMUo-0001GW-GI
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vLMUp-0001Gg-LT
  for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:15:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vLMUm-0005LN-A1
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:15:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vLMUo-0005Ln-9C
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:15:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763475340;
+ s=mimecast20190719; t=1763475344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4YjYgnv3pJA8KXR9PSUbOZGoj46F2MG6jHiAadTXH3M=;
- b=MoHrtZw0ZNuPNYZDM5zLEe9gmbW9VZvepl8RZ4AattXpv/qXkjcUm3aSyLuysam0d7ePj0
- FsX4bK/HRHK1J17YBIkN1yyVbZUoe5mQ+czx30sQHtcRpjhYfkntfZM1FQVP7lbaM9m/49
- fPXdoiGi9ETJZtdNAZ6Y7ALrX6z7k9c=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=68RqYC/ed89RF9Eukjrx/fh3DZTcdRI5hnsv3QG9Mf0=;
+ b=U7EmVuliJs62c/dq+PLubORhFmoWBnlgH8dZpePhuM8JScbHsN6EBT+CG1xU531KCq+4FG
+ xiJoJ0EDM1iPORvNx/OljG3i9Yb7JFUhUA5seh3U4LKe6+Q8vuSinE6N9XxHaSofL5l6KU
+ QoTjuFKG0qf4/XRwSbmcI5pvAPC/ylI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-QGeiZjALPz-8wsU3gp-g6Q-1; Tue, 18 Nov 2025 09:15:38 -0500
-X-MC-Unique: QGeiZjALPz-8wsU3gp-g6Q-1
-X-Mimecast-MFC-AGG-ID: QGeiZjALPz-8wsU3gp-g6Q_1763475337
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42b2fb13b79so2669664f8f.3
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:15:38 -0800 (PST)
+ us-mta-663-t26uFMfpPFGmYnqRZONa1A-1; Tue, 18 Nov 2025 09:15:30 -0500
+X-MC-Unique: t26uFMfpPFGmYnqRZONa1A-1
+X-Mimecast-MFC-AGG-ID: t26uFMfpPFGmYnqRZONa1A_1763475329
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42b478551a6so707391f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:15:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763475337; x=1764080137; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763475329; x=1764080129; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=4YjYgnv3pJA8KXR9PSUbOZGoj46F2MG6jHiAadTXH3M=;
- b=JfAFvZ2Sx/wPwHSQDFz5Op93RPoyh6zJOC3ob9uQsIoMXOP/PrSitQuPnFEI/coTCW
- /4/0WrIAiwKqsWlSmIbETDEZxHUH5yambPEmHMNIt1kF40TC2Ij0docHfI1uCDwxqUbk
- 13utvSwqvX76hHMepEngMc1+dmp6+uMqs0dzX1B0gGs24h/4eJZhDV5EqH7aIMlvbmQg
- jmL0ruaUhu1POQLM+e7pHTpIYfXV4+DCgraKNGtYJgjOZjHtiVrD7ZA5Nox2NCfP4d9y
- fABlO5xSz8U4iw1/dlhDIn29buJOMT2A/vjEz9G6FmuXpawFbBKMYn5d1mGRzm5V8xz6
- wRiQ==
+ bh=68RqYC/ed89RF9Eukjrx/fh3DZTcdRI5hnsv3QG9Mf0=;
+ b=LDf5DcnO0gosfxSg7Yfy1fY1s4IeF+JE0e3mVDP91ZNzl8VceWIz1dQBlII7WIp+B9
+ 4SVIcdMAKytSDtvCdlZvfc1QbwcwEjHBgsKDCr3rd497tv3K6NdzW28uvk0U7Kc+CxSG
+ EbzKQqsm6hRFrkrQRtmOeQLusyKami0o/WIHAK/iJkhfkvCajDwfXofw5McKfST5wDI2
+ NPn1AIDbAMUaK3DHwCF2QOw8gdEVKALAJhupw4HAbb1jaq04FBGhIDf0cSByrsSy0ur+
+ MY2tjuex46oBTJts4zRcQw83TwGdR76pzs4KhWxNW6M0Ytj93nmiIIRJ9TbbKdFMww0o
+ XVWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763475337; x=1764080137;
+ d=1e100.net; s=20230601; t=1763475329; x=1764080129;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4YjYgnv3pJA8KXR9PSUbOZGoj46F2MG6jHiAadTXH3M=;
- b=gDX/LVvGRv+93tLoMNX1njbRRZfLtfo6mT04Pb/E6Ut262gSUnn3RLGioVGddvH1w6
- 9rpnZma+DuwC2/IL1akuvAXpUDiWwlFDG7yBYxpfr69N1YnTzaRvUQC5l6p6+pFrbXKy
- fMn+dpBp8Htug436g7T8ewLpLydqdqUfHoxvo1s0BShngOdKpe0PNOJTxCWVSYCULrNn
- OglmrvG6v6hZ5bfp4wrjr2ua8LKF+qrM+Sw1BVOINXOHn2P7o9QIh5XypSukkEMEuhjH
- MyAIGuOb8h1ql+Lo6x2Rg9hVev4+l4v2CaRcWdX6hEwFbV97MmUvW8Mi6FF7I0Ci55AS
- 2wPw==
+ bh=68RqYC/ed89RF9Eukjrx/fh3DZTcdRI5hnsv3QG9Mf0=;
+ b=upWwf3drgq89Gf4H3ORxesQ/Xre2OmdiKdiUSnZP845UawwjT6Y6IfQPyj++XFftND
+ H7AwO9r/+ysjThj2i+UrjxHN5f0R4CpFNhKcs8X32+hoWA2i3y5/v2yRNRWwZfoVH9TD
+ EiyA/3kXLCVs04GsTA8z0K3CDoEorM2sG3Ly4BY8tD8z4w/tPqGNOKHqP52SJsTEF9R4
+ TnKqy/h8WXTvMQ3kbghVGKO6mwm89hBqW3glkjkG4ubIbHNhnHKgkxGV/GT7GZJUh0Dk
+ m3TtiYZW7/PsPSho4nyYSV8/c25eHFxf9Fddrf0faxz1hSukU1S2e5Lh/MLzfyYW/L+S
+ OX8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3GnFKI8Rqe6tpvRfggcrE5SR04hL0GMzEYIBRtz2cVvjcAvhjkNikxJltkUla8igbp435tXmFgcFG@nongnu.org
-X-Gm-Message-State: AOJu0YytqOmi8le87OqsJ3O/+AQZqnZLnzYHisqWzgeMQJHf69kU9vnN
- /P2zuccd5rFKezW6Fj2ZVBx/hqrhEiRNP94E8VqID4D6vwjhEjRRl8FzmxqzPk9lxn9E5gUi+Zy
- Lv2nYBNhGCdV42YSM3AxTpU4KA+NYtOJ54+cRmj3QGn0sk4F1qZE0BzBg8DOxRHs0
-X-Gm-Gg: ASbGnctSAV4ucCKpLnUwTjP3EeUHbkQmwYLPUhwx2Rv9rhZFYvkb+DvfWirxXPmJ9yC
- byN6TCrYDhZ4efmcK12v14r8NKzb5JcASWdbFTP/67B8GPKWBjuUauV7l2/0gBW9CtgRx6e8BQS
- 3eXHtKiWYsbHAJRiRo6B9cfUZkMKX0Eyx1Q/EHt86zCpLpEBQgleHxO+/9wITZRpAmAz55+REwv
- ut6gv8M/xNIGvLpodCUZepui51koZR0wbTqrPsB0RkGEgLU8dI1gGvjvkWo8LiXutcwRpTetvFe
- FdsR7cIRBJwbaYQH0mDole8YsCEuqR8yC1RE7NXWUBaht1nX8Wc3jOV/qHtpU3BrK5l+9LFzUcn
- KxGr8CnnhVeYObbyasuL1d+zBONxq56xaOgGaOg==
-X-Received: by 2002:a05:6000:430e:b0:42b:39d0:6386 with SMTP id
- ffacd0b85a97d-42b5936796fmr13878172f8f.31.1763475336747; 
- Tue, 18 Nov 2025 06:15:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEbCIgK6vwAWJ+bbWAc/ZJPS2Noo1+Wf0NhNzfilqTaHLZryQJqqUJLU6va1q3+6MTSl5I9eQ==
-X-Received: by 2002:a05:6000:430e:b0:42b:39d0:6386 with SMTP id
- ffacd0b85a97d-42b5936796fmr13878146f8f.31.1763475336282; 
- Tue, 18 Nov 2025 06:15:36 -0800 (PST)
+ AJvYcCVdUUTCpg5KXhxMemn9c17Erx3qkcNeC/4+FIFQiwl+KVsXdtPG14y/NOx54i5QeaXGHn45dawlP5eP@nongnu.org
+X-Gm-Message-State: AOJu0YyUlODFZ52pjq38cAtAC/g8N2ZvkSIFRd8+v68bCkvhBXbj3wRL
+ AUkLnB3uTomWt5nExytmcT6xrDN+5FMOTFdO9tf40jp2BkVcLKR/AEJknzep8LWWMErwGRumv+q
+ hjN4XDsgILQ9KsZYOwLAJ4rBJsHVYTx0Uk19yMRH+wY7dXO2sV8sJj9xjeel8yLMb
+X-Gm-Gg: ASbGncvGTbXSwiceXAcaFDf1zrP0AIsM7s5x332pF+txOCe2K3cxZu+5Z2IkpSAZNgF
+ koibekRnx7Era0ZXv+gDhi/939gQbIZYMyA1hRKba0foJthkcI7VnOYMqi9JJZEWvSUY5Mttd9r
+ BaAl3VyfWxRA22c2ZViwnxSFuXHK5/jNKKAqd1KpIAxPnGG918u7HiOl5JIICnH7AIZ1uMw92UB
+ qOP0425n4y9QvXBeAEy54m8zMRl/BCDG850rMm+UZLdF7GtkAqU9Ci2/TGXQwAvFzv9aXRe0p1S
+ hSXU7n/F+Tj9Qig7vVSYuASDIgrXgDzKY1MXMWTsR4As3iVPmRBm7TuCNy2COfde/EG7ZWKGxzS
+ CtXpFqDbBt23KXOOOV8vRMRp8zdpHCnWRdj0hGg==
+X-Received: by 2002:a05:6000:1845:b0:42b:3aee:429e with SMTP id
+ ffacd0b85a97d-42b5938a9d7mr15167195f8f.56.1763475328665; 
+ Tue, 18 Nov 2025 06:15:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDPYfUBUKWzfqduz50rUrjYPcBilb5cFRtxKgcQRg3FHLatyJ/fRJO4kf8OVRdx6SVjEN3PQ==
+X-Received: by 2002:a05:6000:1845:b0:42b:3aee:429e with SMTP id
+ ffacd0b85a97d-42b5938a9d7mr15167164f8f.56.1763475328212; 
+ Tue, 18 Nov 2025 06:15:28 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53e982d6sm32717318f8f.21.2025.11.18.06.15.35
+ ffacd0b85a97d-42b53e7ae16sm32820021f8f.3.2025.11.18.06.15.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 06:15:35 -0800 (PST)
-Message-ID: <38066e7a-8e05-4c8a-9779-273ae3d88d59@redhat.com>
-Date: Tue, 18 Nov 2025 15:15:35 +0100
+ Tue, 18 Nov 2025 06:15:27 -0800 (PST)
+Message-ID: <62a61f6c-4383-463a-91fe-53dd456c4e3b@redhat.com>
+Date: Tue, 18 Nov 2025 15:15:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] vfio-user: clarify partial message handling
+Subject: Re: [PATCH v2 1/5] vfio-user: simplify vfio_user_process()
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  Peter Maydell <peter.maydell@linaro.org>
 References: <20251117155656.2060336-1-john.levon@nutanix.com>
- <20251117155656.2060336-3-john.levon@nutanix.com>
+ <20251117155656.2060336-2-john.levon@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -141,10 +141,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251117155656.2060336-3-john.levon@nutanix.com>
+In-Reply-To: <20251117155656.2060336-2-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -170,29 +170,64 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/17/25 16:56, John Levon wrote:
-> Improve a comment for this.
+> It can figure out if it's a reply by itself, rather than passing that
+> information in.
 > 
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio-user/proxy.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   hw/vfio-user/proxy.c | 11 ++++-------
+>   1 file changed, 4 insertions(+), 7 deletions(-)
 > 
 > diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-> index 75845d7c89..82c76c6665 100644
+> index bbd7ec243d..75845d7c89 100644
 > --- a/hw/vfio-user/proxy.c
 > +++ b/hw/vfio-user/proxy.c
-> @@ -362,7 +362,10 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
->       while (msgleft > 0) {
->           ret = qio_channel_read(proxy->ioc, data, msgleft, errp);
+> @@ -147,8 +147,7 @@ VFIOUserFDs *vfio_user_getfds(int numfds)
+>   /*
+>    * Process a received message.
+>    */
+> -static void vfio_user_process(VFIOUserProxy *proxy, VFIOUserMsg *msg,
+> -                              bool isreply)
+> +static void vfio_user_process(VFIOUserProxy *proxy, VFIOUserMsg *msg)
+>   {
 >   
-> -        /* prepare to complete read on next iternation */
-> +        /*
-> +         * We'll complete this read on the next go around; keep track of the
-> +         * partial message until then.
-> +         */
->           if (ret == QIO_CHANNEL_ERR_BLOCK) {
->               proxy->part_recv = msg;
->               proxy->recv_left = msgleft;
+>       /*
+> @@ -157,7 +156,7 @@ static void vfio_user_process(VFIOUserProxy *proxy, VFIOUserMsg *msg,
+>        *
+>        * Requests get queued for the BH.
+>        */
+> -    if (isreply) {
+> +    if ((msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REPLY) {
+>           msg->complete = true;
+>           if (msg->type == VFIO_MSG_WAIT) {
+>               qemu_cond_signal(&msg->cv);
+> @@ -187,7 +186,6 @@ static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
+>   {
+>       VFIOUserMsg *msg = proxy->part_recv;
+>       size_t msgleft = proxy->recv_left;
+> -    bool isreply;
+>       char *data;
+>       int ret;
+>   
+> @@ -214,8 +212,7 @@ static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
+>        */
+>       proxy->part_recv = NULL;
+>       proxy->recv_left = 0;
+> -    isreply = (msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REPLY;
+> -    vfio_user_process(proxy, msg, isreply);
+> +    vfio_user_process(proxy, msg);
+>   
+>       /* return positive value */
+>       return 1;
+> @@ -381,7 +378,7 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+>           data += ret;
+>       }
+>   
+> -    vfio_user_process(proxy, msg, isreply);
+> +    vfio_user_process(proxy, msg);
+>       return 0;
+>   
+>       /*
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
