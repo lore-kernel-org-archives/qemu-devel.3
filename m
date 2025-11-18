@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FF5CEBF9A
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 03:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F3DCED240
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 03:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLCHD-0001Pn-6B; Mon, 17 Nov 2025 22:21:07 -0500
+	id 1vLCGa-0001IB-Gh; Mon, 17 Nov 2025 22:20:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLCHA-0001PJ-F9
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:21:05 -0500
+ id 1vLCGY-0001Hy-Rm
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:20:26 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLCH8-0004Cz-MO
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:21:04 -0500
+ id 1vLCGX-0004Cz-5k
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:20:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763436063; x=1794972063;
+ t=1763436025; x=1794972025;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=FtN3GnlS9XpEdZZ5ADMYto6Z66Ic1LkzQp5aPpZOx4E=;
- b=TmDZ2ixuM3LcZh4GxrdKY8jpFz43vZoXJj69PbA5sLDYQbwb/ht/5Pza
- 2DieS8i4fMfUQ3EXsr+x8jKTH3cMcoLpUyrr8AfIJUw3wga6YfYSs43Ls
- Ndx/xOsY2PR5cVwnRwDypQXyh9atiz2ayZmjNN4Qg2M1Feo/c5ObGqJIL
- oDta0gWa7DHNK7RW6QokCwucNqLkPz4nmrzTecVogH0zUd46dtAyZEG5W
- RRu80mP0lyTsgBfLsefiMGSHPuSChMvCdSRoBr4hWRSQPaejvojLiVCCz
- 7XGzlyFpSkkqqLFA6727ew82cT/Ktm6fjYDIW9b/XPgjkZi3KJwxAbFIa w==;
-X-CSE-ConnectionGUID: SBVBUFz6TS2RqKAcfaq4hg==
-X-CSE-MsgGUID: WxjvInN8SRmuWyVgqsL/JQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="68053859"
-X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="68053859"
+ bh=enKcO38L6D4368mFk9WuGh+dSr2WFd6BUxl4+hq0Pz4=;
+ b=HBYI7k617H5oqeSL+lNSk0IluxoOiDBM11bws3uZxZkzXCgZ2tdWyZE9
+ RQok+joCbGAN9B8ixY0PPfe6YFpVE/ra8Qf2KZmkclnP5uG+0ROxq3bq9
+ S6ftAuY/b7SmBR3+uWFbQGe6BPTYaOvzCim5TaZn5EZUHuKE9AlPNM1eB
+ BmLKtwQg4AX80dQ68Qht+RIjk/miK0315m0/pFVGGogvxcV0LK5ul4wNr
+ HwuIyqGVuyw+YkW0rpP8wcuchlD/8vp9foZKaP1r7hcwVfFU0yi/LUDlo
+ 2WjR/Vlrw+eQuPwaKCRUFAf7dCxEQ1nl7Yw/+8yl8zUwWD3mVZ1feblvr A==;
+X-CSE-ConnectionGUID: Q+H5fnxbTAeqfgqICsKk2g==
+X-CSE-MsgGUID: 08VedOSbTBGX86aKV1QSYw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="68053738"
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="68053738"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 19:21:02 -0800
-X-CSE-ConnectionGUID: EsWihIMhRZG0T8NjBlfN/A==
-X-CSE-MsgGUID: 9jIsDCHTR1CiHx3n6juJ2A==
+ 17 Nov 2025 19:20:24 -0800
+X-CSE-ConnectionGUID: KloAmZodSrWOopC6xpWqrg==
+X-CSE-MsgGUID: B3BIwUb5Rsuu6KBSN/t8IA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="221537237"
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="221537139"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 17 Nov 2025 19:20:58 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 17 Nov 2025 19:20:20 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -53,9 +53,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v4 13/23] i386/cpu: Add CET support in CR4
-Date: Tue, 18 Nov 2025 11:42:21 +0800
-Message-Id: <20251118034231.704240-14-zhao1.liu@intel.com>
+Subject: [PATCH v4 02/23] i386/cpu: Clean up arch lbr xsave struct and comment
+Date: Tue, 18 Nov 2025 11:42:10 +0800
+Message-Id: <20251118034231.704240-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251118034231.704240-1-zhao1.liu@intel.com>
 References: <20251118034231.704240-1-zhao1.liu@intel.com>
@@ -86,76 +86,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CR4.CET bit (bit 23) is as master enable for CET.
-Check and adjust CR4.CET bit based on CET CPUIDs.
+Arch LBR state is area 15, not 19. Fix this comment. And considerring
+other areas don't mention user or supervisor state, for consistent
+style, remove "Supervisor mode" from its comment.
+
+Moreover, rename XSavesArchLBR to XSaveArchLBR since there's no need to
+emphasize XSAVES in naming; the XSAVE related structure is mainly
+used to represent memory layout.
+
+In addition, arch lbr specifies its offset of xsave component as 0. But
+this cannot help on anything. The offset of ExtSaveArea is initialized
+by accelerators (e.g., hvf_cpu_xsave_init(), kvm_cpu_xsave_init() and
+x86_tcg_cpu_xsave_init()), so explicitly setting the offset doesn't
+work and CPUID 0xD encoding has already ensure supervisor states won't
+have non-zero offsets. Drop the offset initialization and its comment
+from the xsave area of arch lbr.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes Since v3:
- - Reorder CR4_RESERVED_MASK.
----
- target/i386/cpu.h    |  9 +++++++--
- target/i386/helper.c | 12 ++++++++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ target/i386/cpu.c | 3 +--
+ target/i386/cpu.h | 8 ++++----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c598f09f3d50..34a4c2410d03 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2058,8 +2058,7 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
+     },
+     [XSTATE_ARCH_LBR_BIT] = {
+         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
+-        .offset = 0 /*supervisor mode component, offset = 0 */,
+-        .size = sizeof(XSavesArchLBR),
++        .size = sizeof(XSaveArchLBR),
+     },
+     [XSTATE_XTILE_CFG_BIT] = {
+         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index bfc38830e29e..f4cb1dc49b71 100644
+index cee1f692a1c3..c95b772719ce 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -257,6 +257,7 @@ typedef enum X86Seg {
- #define CR4_SMEP_MASK   (1U << 20)
- #define CR4_SMAP_MASK   (1U << 21)
- #define CR4_PKE_MASK   (1U << 22)
-+#define CR4_CET_MASK   (1U << 23)
- #define CR4_PKS_MASK   (1U << 24)
- #define CR4_LAM_SUP_MASK (1U << 28)
+@@ -1747,15 +1747,15 @@ typedef struct {
  
-@@ -273,8 +274,8 @@ typedef enum X86Seg {
-                 | CR4_OSFXSR_MASK | CR4_OSXMMEXCPT_MASK | CR4_UMIP_MASK \
-                 | CR4_LA57_MASK \
-                 | CR4_FSGSBASE_MASK | CR4_PCIDE_MASK | CR4_OSXSAVE_MASK \
--                | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK \
--                | CR4_LAM_SUP_MASK | CR4_FRED_MASK))
-+                | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_CET_MASK \
-+                | CR4_PKS_MASK | CR4_LAM_SUP_MASK | CR4_FRED_MASK))
+ #define ARCH_LBR_NR_ENTRIES            32
  
- #define DR6_BD          (1 << 13)
- #define DR6_BS          (1 << 14)
-@@ -2951,6 +2952,10 @@ static inline uint64_t cr4_reserved_bits(CPUX86State *env)
-     if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED)) {
-         reserved_bits |= CR4_FRED_MASK;
-     }
-+    if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) &&
-+        !(env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT)) {
-+        reserved_bits |= CR4_CET_MASK;
-+    }
-     return reserved_bits;
- }
+-/* Ext. save area 19: Supervisor mode Arch LBR state */
+-typedef struct XSavesArchLBR {
++/* Ext. save area 15: Arch LBR state */
++typedef struct XSaveArchLBR {
+     uint64_t lbr_ctl;
+     uint64_t lbr_depth;
+     uint64_t ler_from;
+     uint64_t ler_to;
+     uint64_t ler_info;
+     LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
+-} XSavesArchLBR;
++} XSaveArchLBR;
  
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 72b2e195a31e..3f179c6c11f8 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -232,6 +232,18 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
-         new_cr4 &= ~CR4_LAM_SUP_MASK;
-     }
+ QEMU_BUILD_BUG_ON(sizeof(XSaveAVX) != 0x100);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveBNDREG) != 0x40);
+@@ -1766,7 +1766,7 @@ QEMU_BUILD_BUG_ON(sizeof(XSaveHi16_ZMM) != 0x400);
+ QEMU_BUILD_BUG_ON(sizeof(XSavePKRU) != 0x8);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveXTILECFG) != 0x40);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveXTILEDATA) != 0x2000);
+-QEMU_BUILD_BUG_ON(sizeof(XSavesArchLBR) != 0x328);
++QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
  
-+    /*
-+     * In fact, "CR4.CET can be set only if CR0.WP is set, and it must be
-+     * clear before CR0.WP can be cleared". However, here we only check
-+     * CR4.CET based on the supported CPUID CET bit, without checking the
-+     * dependency on CR4.WP - the latter need to be determined by the
-+     * underlying accelerators.
-+     */
-+    if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) &&
-+        !(env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT)) {
-+        new_cr4 &= ~CR4_CET_MASK;
-+    }
-+
-     env->cr[4] = new_cr4;
-     env->hflags = hflags;
- 
+ typedef struct ExtSaveArea {
+     uint32_t feature, bits;
 -- 
 2.34.1
 
