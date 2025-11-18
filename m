@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E52FFCED61A
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 11:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9536CED606
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 11:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLJpN-0001tc-M6; Tue, 18 Nov 2025 06:24:53 -0500
+	id 1vLJs6-0002yx-35; Tue, 18 Nov 2025 06:27:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJpL-0001sr-7d
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:24:51 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJs3-0002yb-WB
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:27:40 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJpI-00054Q-8l
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:24:49 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4779cc419b2so30215085e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 03:24:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJs2-0005h3-Gp
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:27:39 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-429ce7e79f8so3902520f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 03:27:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763465086; x=1764069886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763465257; x=1764070057; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bvDpP2IVJJRQ+n2zQy2iI+FpIq3ypH8hVi0ntiSMvg0=;
- b=BlXDwJBmlh4e1erPAplGd4BU+kD7eHp3QTU7+gb82/N6LQ5ehRJaDlh0qYARH1IdNV
- Qx8HPYFzaRCbUgt/LtRNklqACFRRnIHiEfkE/yFatxDvy14QZTlL2F+OvcRY+ovPp/e0
- DN407Ve4dtXa2C9MT6t+a5mSLMq92PbJSND8LepEnVx2clShJ4IYUj2SklfgKi6I2kRY
- 6OMyixqEWnRFMdCCdwNCt/QGjQXXmpEvzdrH4uIohzwOvYb6yqArTSmwfRsvOyVHSC4y
- ixTgY8YSEQ6Jyc8oVg5ZhzTG5gHlt8a1Y+sf1/+CGjH/vvANQwiQLYXf4FeZTXdSPz/C
- M2Fw==
+ bh=GwlHLOObjnzvG8oBGahyYHjpKdXO3X7YoAL4S2ocP5E=;
+ b=D0MPwD07rwR5qsgdk/AG08DHOt6DJ4VstYm+oATCviIsunbPHCdhZWHvjJaUrRekit
+ EtvWcrsLDdQIKz1IE0EorYlbZI9yZLeatZC1l3D/lrWviIsRIq2HSyMvsEdzfbmeRTH5
+ QDPTOxcdTGnRoA6tdoNObJ7RzBHR9x9t880ipzdKiKPAlZpAaUtFbATIvAjty1PNyDo/
+ XXmFY1/3/t193Vnq/YaVoOBq0+P7Qh5QYWRnZJr3TfC8v5YUILIcALYCoW+Z0VECNxYd
+ P5diShjyxvf7BwqtPUhQcuVpAonCJs8kzEy0B5vLQVnzTS/wazYQB7fSHanCyQjiPJzD
+ rQnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763465086; x=1764069886;
+ d=1e100.net; s=20230601; t=1763465257; x=1764070057;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bvDpP2IVJJRQ+n2zQy2iI+FpIq3ypH8hVi0ntiSMvg0=;
- b=Qovppo/utpIXh9/ua3t0TihVACE/JQA2efnKhJd8xwRFKE3VGH89htFPINHrfgNpkk
- pqGRKAQcVfWMnnJgiAXqRlUYVyxO4r134hqtNx7Lx72FYutbBtH0Q7QcHb7aFR5wPgwI
- KhdpoJFiz2eQc4tQ3gUmgsFxoxSZqtLxQHOyLc9lWb3wYDSiPxYsDMMUI9FyQ1REZLmx
- hrQKtLzbLM7eskEUr0KzewIUCPOhd/OyozX2OE5zXjx++0tX2/f1Xx8ZPxnxIPviBD5b
- usk6Rw3IGIReKr0sUGzCDjpBVgUr79caQLa/RlNYeBQKcTgapuDB3tXLUV4d0zNJ2guX
- uI9A==
-X-Gm-Message-State: AOJu0YwKA5mZ9JDrm/6FXjk2qCC1XHPd+k0BcNeV4RFVxhpfyHcJs06a
- ARpXwYT3EbhyxrATS+yVKKOYC5U9s6/v0h4QA/64HJda8W5TMM/ROJMrv8iopU9hKq4=
-X-Gm-Gg: ASbGncuHXSQFPejRaXL7yVUivyNqPkSUfiJRwxdT6gFmPt3Xpb87YQWI2FVYJfwHkZz
- 0zaKayf76w2yG7F0jxyHrTWwJeagXriLzlynNz0nC9SlbTL8A/TkccQYns8mC2BYgwphkf7+vDh
- b3Es/y3/lYJxYgFhsKwUe3MijbSR6Vlspr6Ma7sskSOQmuwt0xkmJI1V/NG3o3leEBoyfyBVY6c
- V7WV/zHMe3wi/2ajGosHzDGZyvcmwDzs9ebzz9PwgN9EhldiFrBKMwW21PIjwIJVfzBkYUskf4v
- qh+N7SRfS4x3liKBcfsBOoaBGLM/HuNxXh+MnkmVAyqddxktftqcm76fLOahSdJmI0qTt0esWwQ
- EVbrK2G//SfERPbfzTGrpxofndhslhMZpnHhM7d6ZxzMFHF218QhcWdsWt6ocdA3u0hTZFH+Q1G
- XKnzyJXe48Dbvr6Zr7VcCFvCkDsDIssOX9/D541NwNlJU=
-X-Google-Smtp-Source: AGHT+IE0dHq6LcID9k6G9kb05S9J6cdLFX9bBjgLMeMdCr/xfrlAMZsbAvkfBSPydap974Q4xJywhw==
-X-Received: by 2002:a05:600c:4452:b0:477:832c:86ae with SMTP id
- 5b1f17b1804b1-4778fe5c755mr136090025e9.12.1763465086396; 
- Tue, 18 Nov 2025 03:24:46 -0800 (PST)
+ bh=GwlHLOObjnzvG8oBGahyYHjpKdXO3X7YoAL4S2ocP5E=;
+ b=pFNX+f7zCCIg0/iOtFZDordRdpLdZnce16zf4HDmUWqxbtL3IKV/1dH3oYK4TcJfXD
+ bsK6xqT7wtVNQiMMiRhBY59LYsR/NponQ3D5sXEBvwpl5/8NfQx4fW426Dx2zjHxvglm
+ NsYuzG0uNOaSrHAEOx3mRFlnUwpvovWhIu2HfAdpPD0HsEv18nkzfa7MtKh6QLS9tg4u
+ BiFtBc1iIstCGgoxpGfjA2OAeeschTqpRZceItQxm1+ITiuL7Wbxn8ZP+q0sKruTXPMb
+ BOeC31/VE97SkoBuQiA7e+l9QbNwWcwI7HfBIzpvhSJiKc1RvlWHCdQxQJHI5zM8ffij
+ JPlQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVziftKb4oHJyOsCOMEoAnZHxptHtYJb2juaj13z3WFLOA9C9K2snIsI31AqJg0X9GgjfuNc5lcC59x@nongnu.org
+X-Gm-Message-State: AOJu0YzL1EmL+4mYIEDylsDvLSjeXSvKtdoqDSYgR2xgkU6o491xCJOm
+ bBWe7JS9MjG2a2rJCV7z4XUULVr9GBpcizfmp1DFSLlfRDShXNVHd7D1Qr2V8SRyHEhnBs2AcDF
+ NGE9tGv/6Pg==
+X-Gm-Gg: ASbGncv3djd1Ygj6b6ttutQPGVYANb0wCTCO9Z2s05ukj4HxeyrdeTlBaWwK4D8LiQ/
+ Ot8qLuiY1CFQyLO0ZaAaxkhUPplonEwbX6PidlnWR9AAdvPV9ETyLa7BhRh+FbLJ5HTSIMXuWSv
+ 0rIqoolRpw7Ja0KekRGtM1H9teR/4la0do0A7Md66GoiCErMK+uMoeRY4fE0qEPvrJOVpXxN7jg
+ Zm4WDx7n1o+V9WnstSt8x9zWvOvadlrurTaJy/2PvTju+KcFBm/K+wO+SKCYH+zZUAFM4d5Flbh
+ g7U2F5TU8fuTXNcCwjm7lfbLpxq20NncHyHziyWcNFGeFfwTA9byFIkXvQ6KqpaqjwnJM3RcGkK
+ mytgtwfHy8GkR7Kwfv9HMtRWHDPyD5w8JC7cmOhZhEF4jHmZJSOIU2RWPY4CXSw2V/fiHfFBY/c
+ fkajT3s1UfJ/ixKnWy0M+uz9jO29hYr9GCndJpENl/2c4c5koQ1Pna3A==
+X-Google-Smtp-Source: AGHT+IEJfyBihYuOr2QSoNEhiYZZ0yDFRPHpySE+qXo6pHp4g/2fUFEw2lCi0VSHqp35OxUZHp7AGQ==
+X-Received: by 2002:a05:6000:3104:b0:429:c709:7b58 with SMTP id
+ ffacd0b85a97d-42b59390ef4mr15873765f8f.50.1763465256640; 
+ Tue, 18 Nov 2025 03:27:36 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4779f44a0e4sm143767415e9.15.2025.11.18.03.24.45
+ ffacd0b85a97d-42b5ce849ddsm25131180f8f.14.2025.11.18.03.27.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 03:24:45 -0800 (PST)
-Message-ID: <8a86dfaf-eba5-4348-8885-58c520355e47@linaro.org>
-Date: Tue, 18 Nov 2025 12:24:44 +0100
+ Tue, 18 Nov 2025 03:27:36 -0800 (PST)
+Message-ID: <4b153b0e-0a97-49ae-a951-0322aa9ab32c@linaro.org>
+Date: Tue, 18 Nov 2025 12:27:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] hw/arm/imx8mp-evk: Add KVM support
+Subject: Re: [PATCH] hw/intc/ioapic: Fix ACCEL_KERNEL_GSI_IRQFD_POSSIBLE typo
 Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-References: <20251101120130.236721-1-shentey@gmail.com>
- <20251101120130.236721-2-shentey@gmail.com> <87v7j8r399.fsf@redhat.com>
- <CAFEAcA_XORdwONC2YbVKPois6BLPEr0dFt_QjTHE=UWmiCiv-g@mail.gmail.com>
- <2EAC1B70-89DE-4694-A4E8-350DC6F9C343@gmail.com>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Magnus Kulke <magnuskulke@linux.microsoft.com>
+References: <20251106105148.737093-1-clg@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2EAC1B70-89DE-4694-A4E8-350DC6F9C343@gmail.com>
+In-Reply-To: <20251106105148.737093-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,48 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/11/25 10:49, Bernhard Beschow wrote:
+On 6/11/25 11:51, Cédric Le Goater wrote:
+> Commit 638ac1c78457 introduced a regression in interrupt remapping
+> when running a VM configured with an intel-iommu device and an
+> assigned PCI VF. During boot, Linux reports repeated messages :
 > 
+>   [   15.416794] __common_interrupt: 2.37 No irq handler for vector
+>   [   15.417266] __common_interrupt: 2.37 No irq handler for vector
+>   [   15.417733] __common_interrupt: 2.37 No irq handler for vector
+>   [   15.418202] __common_interrupt: 2.37 No irq handler for vector
+>   [   15.418670] __common_interrupt: 2.37 No irq handler for vector
 > 
-> Am 17. November 2025 17:38:03 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
->> On Mon, 17 Nov 2025 at 17:13, Cornelia Huck <cohuck@redhat.com> wrote:
->>> Running current master (resp. with this patch applied), I'm getting make
->>> check failures on an aarch64 (Mt. Snow) host ("qemu-system-aarch64:
->>> unknown type 'arm-gicv3'" while using this machine); going back right
->>> before this patch, everything works fine. Haven't tried to debug this
->>> yet (maybe I'm the one with the weird config again...)
->>
->> Is this a KVM-only config (no TCG) ?
->>
->> I think this happens because the KConfig now says
->> +    depends on TCG || KVM
->>
->> but because the machine by default doesn't use KVM then
->> trying to run the machine with no extra arguments falls
->> over if TCG isn't present.
->>
->> This thing we put in to handle "creation of the SoC object
->> via device introspection means it doesn't have an ms->cpu_type
->> to look at":
->>
->> +    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
->>
->> also probably won't do anything useful under a KVM-only config.
->>
->> I think the simplest thing here is to put the KConfig back to:
->>
->>   depends on TCG && AARCH64
->>
->> People building a KVM-only config almost certainly do not
->> want this machine type and its devices, because the main
->> reason to build KVM-only is because you're in the
->> "virtualization use case" and want to not build in a
->> load of not-security-supported machine types.
+> and may eventually hang.
 > 
-> Do we need this treatment for further machines, e.g. isapc, e500, mips? Or shall the CPU type handling in the SoC consider kvm_enabled()?
+> The issue is caused by the incorrect use of the macro
+> ACCEL_KERNEL_GSI_IRQFD_POSSIBLE, which should instead be
+> ACCEL_GSI_IRQFD_POSSIBLE.
+> 
+> Fixes: 638ac1c78457 ("hw/intc: Generalize APIC helper names from kvm_* to accel_*")
+> Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/intc/ioapic.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Good point. My understanding is only virt x86/arm/ppc64/s390x are
-"security covered", but there is no explicit mention of that in
-our doc. (btw why not include isapc? as it is a subset of other
-covered x86 machines?)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
