@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E13FCEE33B
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E96CEE33B
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLP7b-00018O-Ng; Tue, 18 Nov 2025 12:04:03 -0500
+	id 1vLP7K-0000hL-7v; Tue, 18 Nov 2025 12:03:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7Q-0000lj-D1
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7I-0000c6-Rp
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7P-0004sk-2g
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:52 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7H-0004qM-FO
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763485430;
+ s=mimecast20190719; t=1763485422;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mjBgl8TAn/PtNsGljFmCNEuEQkuQYHsGrHeqvArlr9A=;
- b=LL+iBJn17D9YSMWnZqBh+FPuW3uQZK6oxdgKql3bCOiMPHoQQJau7nqXob+mS/BbgKeaGA
- Ix3+UPHiHFIIBwKFFBhNEhaTUpyee4lhweDEcPSYXSmCg5Njl5iWNcTOkRN52RnSmZkVYg
- 6HsI1xjWZSvMywFl4aYGSRlPX/cO8vQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6Nc2oEL9Mw1ggXqiNLuOpI5nlP8ISfwmioSj0M8b6ko=;
+ b=E9jsEmeMWLuelh1+1wWabod93YG2rXuPfW/oUQv8kUKj6kRoUcfPfZu1WZ9gX7LReRQHqn
+ 0pvr7bfFpHxPu22aRxZrRD62KlUL9JoU23K1RkE4Vu0I8YUD28AOKiYlP7Pru+YzqDfTdk
+ 33meSHCz+RLtn6qUb/ppPVc80TQiWsU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-F3CtKBTdMSG6re4Hptz3Tw-1; Tue,
- 18 Nov 2025 12:03:42 -0500
-X-MC-Unique: F3CtKBTdMSG6re4Hptz3Tw-1
-X-Mimecast-MFC-AGG-ID: F3CtKBTdMSG6re4Hptz3Tw_1763485421
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-RHvGxxutMxOLDBtNxiH34w-1; Tue,
+ 18 Nov 2025 12:03:34 -0500
+X-MC-Unique: RHvGxxutMxOLDBtNxiH34w-1
+X-Mimecast-MFC-AGG-ID: RHvGxxutMxOLDBtNxiH34w_1763485412
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDE9B1800357; Tue, 18 Nov 2025 17:03:40 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3F69C180123A; Tue, 18 Nov 2025 17:03:32 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.32.26])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 662B0300A88D; Tue, 18 Nov 2025 17:03:38 +0000 (UTC)
+ id 8631E300ABAF; Tue, 18 Nov 2025 17:03:30 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 17/19] iscsi: Create AIO BH in original AioContext
-Date: Tue, 18 Nov 2025 18:02:54 +0100
-Message-ID: <20251118170256.272087-18-kwolf@redhat.com>
+Subject: [PULL 13/19] qcow2: Schedule cache-clean-timer in realtime
+Date: Tue, 18 Nov 2025 18:02:50 +0100
+Message-ID: <20251118170256.272087-14-kwolf@redhat.com>
 In-Reply-To: <20251118170256.272087-1-kwolf@redhat.com>
 References: <20251118170256.272087-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,56 +85,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-AIO callbacks must be called in the original request’s AioContext,
-regardless of the BDS’s “main” AioContext.
+There is no reason why the cache cleaning timer should run in virtual
+time, run it in realtime instead.
 
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-18-hreitz@redhat.com>
+Message-ID: <20251110154854.151484-14-hreitz@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/iscsi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ block/qcow2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/iscsi.c b/block/iscsi.c
-index 852ecccf0d..7d6bf185ea 100644
---- a/block/iscsi.c
-+++ b/block/iscsi.c
-@@ -119,6 +119,7 @@ typedef struct IscsiTask {
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 05da589729..e29810d86a 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -846,7 +846,7 @@ static void coroutine_fn cache_clean_timer(void *opaque)
  
- typedef struct IscsiAIOCB {
-     BlockAIOCB common;
-+    AioContext *ctx;
-     QEMUBH *bh;
-     IscsiLun *iscsilun;
-     struct scsi_task *task;
-@@ -173,7 +174,7 @@ iscsi_schedule_bh(IscsiAIOCB *acb)
-     if (acb->bh) {
-         return;
-     }
--    acb->bh = aio_bh_new(acb->iscsilun->aio_context, iscsi_bh_cb, acb);
-+    acb->bh = aio_bh_new(acb->ctx, iscsi_bh_cb, acb);
-     qemu_bh_schedule(acb->bh);
- }
+     while (wait_ns > 0) {
+         qemu_co_sleep_ns_wakeable(&s->cache_clean_timer_wake,
+-                                  QEMU_CLOCK_VIRTUAL, wait_ns);
++                                  QEMU_CLOCK_REALTIME, wait_ns);
  
-@@ -1012,8 +1013,7 @@ static void iscsi_ioctl_handle_emulated(IscsiAIOCB *acb, int req, void *buf)
-         ret = -EINVAL;
-     }
-     assert(!acb->bh);
--    acb->bh = aio_bh_new(bdrv_get_aio_context(bs),
--                         iscsi_ioctl_bh_completion, acb);
-+    acb->bh = aio_bh_new(acb->ctx, iscsi_ioctl_bh_completion, acb);
-     acb->ret = ret;
-     qemu_bh_schedule(acb->bh);
- }
-@@ -1030,6 +1030,7 @@ static BlockAIOCB *iscsi_aio_ioctl(BlockDriverState *bs,
-     acb = qemu_aio_get(&iscsi_aiocb_info, bs, cb, opaque);
- 
-     acb->iscsilun = iscsilun;
-+    acb->ctx         = qemu_get_current_aio_context();
-     acb->bh          = NULL;
-     acb->status      = -EINPROGRESS;
-     acb->ioh         = buf;
+         WITH_QEMU_LOCK_GUARD(&s->lock) {
+             if (s->cache_clean_interval > 0) {
 -- 
 2.51.1
 
