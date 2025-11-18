@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DEFCED63D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A357CEE34C
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQwv-00086l-RI; Tue, 18 Nov 2025 14:01:09 -0500
+	id 1vLQx8-0008CY-2b; Tue, 18 Nov 2025 14:01:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQwp-00086W-Jf
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:04 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQwx-00087J-5e
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:11 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQwl-0005zC-Ky
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:02 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso1203815e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:00:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQwt-0005zf-Cs
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:10 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-4779ce2a624so28781475e9.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:01:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763492456; x=1764097256; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Fm4tyjcS+8Cy0irXcSr4soVTSNXAFzQYmzr/abpLi04=;
- b=uV7yBS8WR/JsHBCplXb6X+cbbdBY45F9kUseWKH2Fk4qMMmqsZzp4DiDULUu4sZgLS
- X4s0TkE8MRNPvCY/Qd29au878fi1BvC2NSxZisRK/cEQRj4CYR0m615okTUwMHy8XPEW
- /+teosaQwq3IIxsAXzYip1GsSsSU1/Kuf5MLbyvrz8xx7MdwkmhpRA6JGGoH8V15hy/X
- nkt921zaYB+MTS+7ehm4+UlNWqmkaPr8VFlR14+GyNfZbVmQUrkg1DxkJhtE0+DjAmKU
- /Xpqv8np5G+Kq9jNfvZZvIX9wm3DJfJVdLZvXOgIzbL7oSsbcCYh+dvwguZLv216Yics
- zwZw==
+ d=linaro.org; s=google; t=1763492463; x=1764097263; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=QC8WE8eYMgcfS9sjroA8zBJbr2zc7zfo/2xABclw2L0=;
+ b=X5gXXUVCpFjDd7i/5R+WA8RUzDCYaqs1Mvl+F5NmUucci+is+9dSF7CKvzDhN4azfJ
+ W6VU9wnHVMrEmrciCE+7N1dYOHkvhFV84eDuxFt/OGMFLzwlsSsVwQOhKiX3Y6OfWHdq
+ 7t0d/3mMF2+qBzKd8ZqXRA8+FzBSAfdIoyhMZZNX3e/BjVQE+JNh/fvKhqrBv5MCN3oc
+ cA05LOGcJJAvLt1eAq4GW2YJ7UXSiD1jfB12Aw86GQKMCDrnDQICXRoaICGlW3a5M/kX
+ obUTXs8O3/E8fWc4wOzTar99/J6SV7U5nAZT27WcXDf8OSIYifNutThfQRrVAn7zQKpt
+ retA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763492456; x=1764097256;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Fm4tyjcS+8Cy0irXcSr4soVTSNXAFzQYmzr/abpLi04=;
- b=uMaVjX7j4zXlf51W1E6Nw3mrfn8wM3cr319OcxYutXyaPZyqbGKeBv8lRvpfH7nbtr
- fOF3a/hpy6QTxuov6/Sz2sbXyTOyCMfjiVJ0VXA4TpiTacdUIT9s0mjc7T3tof1MI2Xf
- A7Z1wep6K8Tq8HsB5CXSueyGoskPj16M0aoT7x/j38SMJj43prBzIc7OZHfFzH97RBZ+
- MhW9a9ZFbx/yhAF9Q6LjiiXlNVdWa8KWQKT/ZQFyxNRn3gA3Q2AopXeFVNDum+O3HzAl
- ENUJ+vYsze4QZMrsmAI8dOsxlYHkzc2liSnvsyJ9sVQ3Lvzwv1fngHbtKFAI7ULE6cEW
- EODg==
-X-Gm-Message-State: AOJu0YwivYtN0QSZhvyev6JfaVgSgCAg24Y9nfPjd+e7oK9lZRsVEzPn
- yjChnOWb2BxM8VmyiHG5+A1N6QvQapZXCGm48+FidKbXets38GeRhINAfYWOwVtIs0FzbFON38U
- rmpmJU7yYTf0z
-X-Gm-Gg: ASbGncsenHOqBeHi/GVCUFD8Fn2zwTMk0FhEa8DvwCCU9d2f6JxHtR2Gn+u9IkbF685
- aKezY8F8B1KASgIGzakcVzFcjSKC6mSKAa6BF4VyolVt/+GIMMD+W03I5cnswriSGSw6qcHageZ
- Qfu9+5oD95yLBJKNBwDzeH1OzL9DMxu3A/O41lXquvA2aGFLgCH/mQNJCKoO/u/GYptNjgJP4BB
- Cw5aKD8D2mEycOWwsRqgYA/ynhhPPBuDFIjUCXg6HjWqD6Rd3E4CT3taxm9wdR+Na0WpR8jYlNM
- ISB60mF2DbIc+2IYbph/UTUORCK6Rw4kD4StdZ/IEieRO5OoO4iGYKw/7smQPWv3ehHWem/ZmgH
- CAnpmXTc1YHVrWSCD3oFxWSxadPIdlw9UlFiRtrQYFPWFRIjkwxDGVJTP4s0jJo5+bSV0LzYazz
- 2v8ESz6yPW/vHLtK11TChbrBMVfKQaGuKsILf7BciSZEMJQveiReffxpt1bYbl
-X-Google-Smtp-Source: AGHT+IF1Lzvq3myo4CY6j8LjKK9CUhXGBzBhrYwIqIPjEsSgYTOswnlG7rX8jN+/a7EB5aMzrMf3HA==
-X-Received: by 2002:a05:600c:6094:b0:477:a71c:d200 with SMTP id
- 5b1f17b1804b1-477b0cca7bfmr6259795e9.11.1763492456320; 
- Tue, 18 Nov 2025 11:00:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763492463; x=1764097263;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=QC8WE8eYMgcfS9sjroA8zBJbr2zc7zfo/2xABclw2L0=;
+ b=BJnbuHJ7LYZ3yGl7stFDk9zJ6GqCbOAxlu0s/GyZzWMOST/42w9XOP7I2hV67x6pYc
+ UImYC4c9bdBRMNqPgHwdBUXeKRyL4rMutW7OCPocehWksV9vKY6SteNWa0aOCJg5QsEd
+ x9K6ib/jLh3mxjOGva5ZWtA9MmKOYNNIr68DyIkSid5MyDvK7u3bC4tiT+tn36JU+m5w
+ xinB2le+3RJXs0YKbGpXhJdWj5BAGXp7+GdejsGYGmh4dTIogblXhUXFCvUNIIY44MmB
+ H0U0mj24AtpMvNy/u1sRUnK8u5B4uoH/hu4jCmOSHkV/N0/8TAJoY+V+47T1V4oUOVVt
+ 43ww==
+X-Gm-Message-State: AOJu0YxTHn4KiM3qhwVRntnk1rsrMkCWESREHXKzX7zBbJVpOBT7OZfx
+ g/RvhgfP80sQnEy6TA68/rVfiLn3Vn2qdwUxl+65Z9ZMxhyphryhpkLGhdd1KKuWgrZ36W0M0Rf
+ s9e54D9qAYxTg
+X-Gm-Gg: ASbGncuDvdmEJlCSijZhO8f9CojgThCkNchLYUVxz6wR+1/ae0h8EV+pgm1vLl7xe11
+ zokN5WV5RqgEmV55Qw1G6CK8zec3OXlmkmM0WYbM3TxQy1qKMyJGNmPL/i65xJM1GnuinDLiKBC
+ 9orH3Z0rVNtOBDWKETaS5ZBJn1PmZRmu9bp4nsVRTnIct6K2YraCXyBH96nWDjySqi9OVkYqnYJ
+ HsiZfku5oqDd/p+nSaTnydv+MijqpKUbgcguzBZNP6delwUgRlttvtYvS9+07BGdIQ4biooAkCs
+ HjGz7mDkXKwdeBqeaag46dwzqU81B5xiAoqjtKJZG6zi3GFB+Qliu8YyTx3ZebDxY1Vv7oeiAVy
+ XAaYeN09hpN3VQ1RFjotbCk8nLwGwsqLEs6ur1vxYEYjWYS8WhfxfyyMoF/090cWKU+SaBNVQdx
+ 25Ke/Spy5dsA2+R9rYe8+i+Lped3nkhXqJYVgaww5kwFVcWYh+8Lro/HEZ/WZk
+X-Google-Smtp-Source: AGHT+IH0I+9C+HeUrCvYPESlnc6sMV0sq5hDciSWKvU1EkBjarEwsjIZiewdGkhRXo7qK2Ur2BbDUg==
+X-Received: by 2002:a05:600c:5246:b0:477:a977:b8c2 with SMTP id
+ 5b1f17b1804b1-477a977b995mr32655345e9.13.1763492463530; 
+ Tue, 18 Nov 2025 11:01:03 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f19aa0sm34183260f8f.37.2025.11.18.11.00.54
+ 5b1f17b1804b1-477b106b10asm5154785e9.10.2025.11.18.11.01.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Nov 2025 11:00:55 -0800 (PST)
+ Tue, 18 Nov 2025 11:01:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/18] Misc HW patches for 2025-11-18
-Date: Tue, 18 Nov 2025 20:00:35 +0100
-Message-ID: <20251118190053.39015-1-philmd@linaro.org>
+Subject: [PULL 01/18] MAINTAINERS: Update David Hildenbrand's email address
+Date: Tue, 18 Nov 2025 20:00:36 +0100
+Message-ID: <20251118190053.39015-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251118190053.39015-1-philmd@linaro.org>
+References: <20251118190053.39015-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,96 +99,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 711a1ddf899bef577907a10db77475c8834da52f:
+From: "David Hildenbrand (Red Hat)" <david@kernel.org>
 
-  Merge tag 'pull-10.2-maintainer-171125-2' of https://gitlab.com/stsquad/qemu into staging (2025-11-18 09:18:23 +0100)
+Switch to kernel.org email address as I will be leaving Red Hat. The
+old address will remain active until end of January 2026, so performing
+the change now should make sure that most mails will reach me.
 
-are available in the Git repository at:
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251103103947.384401-1-david@kernel.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ MAINTAINERS | 18 +++++++++---------
+ .mailmap    |  1 +
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20251118
-
-for you to fetch changes up to de285aa9076841c618d068f7b838e312fc8b26c6:
-
-  ebpf: Make ebpf_rss_load() return value consistent with @errp (2025-11-18 19:59:36 +0100)
-
-Ignoring following checkpatch error:
-
-  ERROR: line over 90 characters
-  #26: FILE: scripts/checkpatch.pl:3205:
-  +  ERROR("DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead\n" . $herecurr);
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Re-enable xenpvh machine in qemu-system-arm/aarch64 binaries
-- Correct Xilinx Zynq DMA Devcfg registers range size
-- Correct ACCEL_KERNEL_GSI_IRQFD_POSSIBLE typo
-- Allow for multiple CHR_EVENT_CLOSED events in QTest framework
-- Fix ACMD41 state machine for SD cards in SPI mode
-- Avoid confusing address calculation around eMMC RPMB HMAC
-- Fix a pair of build failures on Solaris (guest-agent and RDMA migration)
-- Correct QOM parent of LASI south bridge
-- Clarify MIPS / PPC 32-bit hosts removal in documentation
-- Prevent further uses of DEVICE_NATIVE_ENDIAN definition
-- Fix Error uses in eBPF
-- Update David Hildenbrand's email address
-----------------------------------------------------------------
-
-Bin Meng (2):
-  hw/sd: Fix incorrect idle state reporting in R1 response for SPI mode
-  hw/sd: Fix ACMD41 state machine in SPI mode
-
-Cédric Le Goater (1):
-  hw/intc/ioapic: Fix ACCEL_KERNEL_GSI_IRQFD_POSSIBLE typo
-
-David Hildenbrand (Red Hat) (1):
-  MAINTAINERS: Update David Hildenbrand's email address
-
-Djordje Todorovic (1):
-  scripts/checkpatch: Check DEVICE_NATIVE_ENDIAN
-
-Jan Kiszka (1):
-  hw/sd/sdcard: Avoid confusing address calculation in rpmb_calc_hmac
-
-Markus Armbruster (3):
-  ebpf: Fix stubs to set an error when they return failure
-  ebpf: Clean up useless error check in ebpf_rss_set_all()
-  ebpf: Make ebpf_rss_load() return value consistent with @errp
-
-Peter Maydell (1):
-  system/qtest.c: Allow for multiple CHR_EVENT_CLOSED events
-
-Philippe Mathieu-Daudé (7):
-  hw/arm: Re-enable xenpvh machine in qemu-system-arm/aarch64 binaries
-  qga/commands: Include proper Solaris header for getloadavg()
-  hw/southbridge/lasi: Correct LasiState parent
-  buildsys: Remove dead 'mips' entry in supported_cpus[] array
-  migration/rdma: Check ntohll() availability with meson
-  docs: Correct release of MIPS deprecations / removals
-  docs: Mention 32-bit PPC host as removed
-
-Yannick Voßen (1):
-  hw/dma/zynq-devcfg: Fix register memory
-
- MAINTAINERS                     | 18 +++++++++---------
- docs/about/deprecated.rst       |  2 +-
- docs/about/removed-features.rst |  7 ++++++-
- meson.build                     |  3 ++-
- include/hw/misc/lasi.h          |  4 ++--
- ebpf/ebpf_rss-stub.c            |  4 +++-
- ebpf/ebpf_rss.c                 | 10 +++-------
- hw/arm/xen-pvh.c                |  2 ++
- hw/dma/xlnx-zynq-devcfg.c       |  2 +-
- hw/intc/ioapic.c                |  4 ++--
- hw/net/virtio-net.c             |  4 +---
- hw/sd/sd.c                      | 33 +++++++++++++++++++--------------
- migration/rdma.c                |  4 +---
- qga/commands-posix.c            |  3 +++
- system/qtest.c                  |  4 ++++
- .mailmap                        |  1 +
- scripts/checkpatch.pl           |  4 ++++
- 17 files changed, 64 insertions(+), 45 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 38325e0617c..d1c5080e505 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -364,7 +364,7 @@ F: target/rx/
+ 
+ S390 TCG CPUs
+ M: Richard Henderson <richard.henderson@linaro.org>
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ R: Ilya Leoshkevich <iii@linux.ibm.com>
+ S: Maintained
+ F: target/s390x/
+@@ -1862,7 +1862,7 @@ F: target/s390x/ioinst.c
+ L: qemu-s390x@nongnu.org
+ 
+ S390 CPU models
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ S: Maintained
+ F: target/s390x/cpu_features*.[ch]
+ F: target/s390x/cpu_models.[ch]
+@@ -2384,7 +2384,7 @@ F: tests/functional/x86_64/test_virtio_version.py
+ 
+ virtio-balloon
+ M: Michael S. Tsirkin <mst@redhat.com>
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ S: Maintained
+ F: docs/interop/virtio-balloon-stats.rst
+ F: hw/virtio/virtio-balloon*.c
+@@ -2532,7 +2532,7 @@ F: hw/virtio/virtio-crypto-pci.c
+ F: include/hw/virtio/virtio-crypto.h
+ 
+ virtio based memory device
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ S: Supported
+ F: hw/s390x/virtio-ccw-md.c
+ F: hw/s390x/virtio-ccw-md.h
+@@ -2541,7 +2541,7 @@ F: hw/virtio/virtio-md-*.c
+ F: include/hw/virtio/virtio-md-pci.h
+ 
+ virtio-mem
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ S: Supported
+ W: https://virtio-mem.gitlab.io/
+ F: hw/virtio/virtio-mem.c
+@@ -2919,7 +2919,7 @@ L: qemu-s390x@nongnu.org
+ S390 floating interrupt controller
+ M: Halil Pasic <pasic@linux.ibm.com>
+ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ R: Jason Herne <jjherne@linux.ibm.com>
+ S: Supported
+ F: hw/intc/s390_flic*.c
+@@ -3248,7 +3248,7 @@ T: git https://gitlab.com/stsquad/qemu gdbstub/next
+ Memory API
+ M: Paolo Bonzini <pbonzini@redhat.com>
+ M: Peter Xu <peterx@redhat.com>
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Supported
+ F: include/system/ioport.h
+@@ -3268,7 +3268,7 @@ F: system/ram-block-attributes.c
+ F: scripts/coccinelle/memory-region-housekeeping.cocci
+ 
+ Memory devices
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ M: Igor Mammedov <imammedo@redhat.com>
+ R: Xiao Guangrong <xiaoguangrong.eric@gmail.com>
+ S: Supported
+@@ -3371,7 +3371,7 @@ R: Ilya Maximets <i.maximets@ovn.org>
+ F: net/af-xdp.c
+ 
+ Host Memory Backends
+-M: David Hildenbrand <david@redhat.com>
++M: David Hildenbrand <david@kernel.org>
+ M: Igor Mammedov <imammedo@redhat.com>
+ S: Maintained
+ F: backends/hostmem*.c
+diff --git a/.mailmap b/.mailmap
+index 7f817d9f425..0690f7be34b 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -82,6 +82,7 @@ Brian Cain <brian.cain@oss.qualcomm.com> <bcain@quicinc.com>
+ Brian Cain <brian.cain@oss.qualcomm.com> <quic_bcain@quicinc.com>
+ Christian Borntraeger <borntraeger@linux.ibm.com> <borntraeger@de.ibm.com>
+ Damien Hedde <damien.hedde@dahe.fr> <damien.hedde@greensocs.com>
++David Hildenbrand <david@kernel.org> <david@redhat.com>
+ Filip Bozuta <filip.bozuta@syrmia.com> <filip.bozuta@rt-rk.com.com>
+ Frederic Konrad <konrad.frederic@yahoo.fr> <fred.konrad@greensocs.com>
+ Frederic Konrad <konrad.frederic@yahoo.fr> <konrad@adacore.com>
 -- 
 2.51.0
 
