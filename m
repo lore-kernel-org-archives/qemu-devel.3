@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FF2CEBF97
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2630ACEDDA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLN7z-0007FC-Mk; Tue, 18 Nov 2025 09:56:19 -0500
+	id 1vLN84-0007GA-BI; Tue, 18 Nov 2025 09:56:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vLN7m-0007Dm-G7
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:56:12 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vLN7y-0007FF-F2
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:56:19 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vLN7k-0002hk-LG
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:56:05 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47798ded6fcso12034475e9.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:56:04 -0800 (PST)
+ id 1vLN7w-0002iX-Pz
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:56:18 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-477a1c28778so29845065e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:56:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763477763; x=1764082563; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763477775; x=1764082575; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mGAWhpUpxqCVxKw6l4fX0ruOU+Z0rt7SJWTNgkNOSSI=;
- b=WEUr51rwLErF6QbmfuKlI+JyyQVn3F7uzM9vLDHMQhN7TPdu+dRUs3AI3tJ0DGw+wm
- wRCmgrvfedFb50vHzYBJDRSMUiJlcSOoMnVgnN/gh//y0FyF+4eMtXbEc9G8/n7GjXQU
- r0qDX1XkYMcv2z0WA8EZS+rInaMfEOfabuGLcqre8wH4cf9cgT3J8UlJRqgV0dMGu9/1
- S96ssYTSMNh2bhBfoOER6Y7HROWmvbOT8217/etq5ZEEBokm0QJOLH8QNiXVLO6TiMGN
- 3rndhIdlZm5kxyguCyESRkcHnKuHIjn/43JzmOb6aWGNtcD10Rp3eMkLkyAkz/CtVglq
- reXA==
+ bh=9d2gAHZo7L2CTfU8YOYxTOD8AKPjn2BjhHOgQVBfgtg=;
+ b=d8Nre8GO1n53DQub5h3sRE9/HDA3W/jT1l3SlkyaB6itkKdu9wyDHNulmOdDN0cD9O
+ 3LoRl4ZFAjm69gLR8BlUmQ+qdTfIFiVVmpD87Yw84fxTD0fsubIOj5F4iYQBsC+Br46w
+ XibME5vJzAHWfpZf8yzmJ8JmRbRURzq8xN0Bel/fDFGL3gTFt+UWsAu/qXftjtG4wxoR
+ enN+pHgfdlynFYycQUN8GkmUgGXcelZK03E0bEfmiF9VMf3ppi/v6XKpi9MIezx6nCDd
+ b1ITmMoDtjmm6RtnzPpc1Hx4Vo6hdNaPSmnF6W+1iKtU/pa9uZPnwXbQTijhVqlrL7fi
+ xIAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763477763; x=1764082563;
+ d=1e100.net; s=20230601; t=1763477775; x=1764082575;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mGAWhpUpxqCVxKw6l4fX0ruOU+Z0rt7SJWTNgkNOSSI=;
- b=BbuCGnIwgsyfpKfZVEQ//n/yh1qTuou1pFngx1hTy0HUIUsXAkEZYIKuBCRgmDHQNa
- 44/gifrFny/ctLCBMHlEyPuSHgoPkkS9/ND+R4LPRmKj3zSJ3/jzSL97jEJyennanLPQ
- R2Nj5fHmTIU3r25W02eerc5TZ+6WfUSj9lrs/Q0IdRGWngg5jza93wXIinHX1U8DyW5a
- 1bi1s/Rxh4ZWABBjlAlTa9cNYkWvkd/vw8OFagKxxkQWVTLBXBCdGwuFjriYa+Ef5W+T
- gBDYbDYqp48RBCEvIggCl8k72Mac3NvibWiEkiZtMFfbQhh9nMn3tkkpc8B0GTPH5Bf3
- tM9A==
-X-Gm-Message-State: AOJu0YxOiYExQwGH2axTCaeOsEiK7otk1wnAy+U7AqKSkeAOIuJqf4Tp
- xHhoDAFE893q7AdXbd1BiGHfUadhzAt4cSuSGzH0LAr9ab9Fj2KlR+4DUBqSR9zfOZ6FEixT9FR
- iS0Sm
-X-Gm-Gg: ASbGncs0zBRjyIEtDiXeWxBGwSvozwTcF6NkPfpQz5s3hqutUjzM2ZfZxIdMF0T2L8E
- +7OCk9AAFvetOA3y6+NTjZUNGqvngLibDwx39rS/vRcKGlRofln0aOx76hl9plw0mEr+w3uGuyV
- lNG0KZg/Bk7JvWBg0IYsWMNT6/LIyJU1lcxovsqqHkmLnVmXKp1+JDvoySSQTbiiQfJsvYAz+Xt
- h4jsJ2RKZXJuFr3NzyFPb7YJtc8AIbe39ChbZMDeXsF0FHwhmkBVoXgVApCLdOXMYSlTEM5g8id
- FJsO0IFN5WYHd5ehREUrEXTlU7KdIfRDYpNhS8OylczQq1cxDiBJx5Vfb/WF3VqLfkJvA6kcwE2
- hWyeiG3CRNMuhxC174D9XKpDClEfInlOdwxO6Vs2P4H4PCDcniTlbdYGiA/VT6y01SJ1iOoFhSO
- KSW8jG+AaZlQ4=
-X-Google-Smtp-Source: AGHT+IEBHq+DGiSspoPRNeaWOBfeapeSc1YKuBKNV9A869w0A+rEo79/RI274cP7TikDzOvldLIq3Q==
-X-Received: by 2002:a05:600c:3b25:b0:477:7925:f7f3 with SMTP id
- 5b1f17b1804b1-4778fe62d4emr141128605e9.14.1763477762638; 
- Tue, 18 Nov 2025 06:56:02 -0800 (PST)
+ bh=9d2gAHZo7L2CTfU8YOYxTOD8AKPjn2BjhHOgQVBfgtg=;
+ b=uuXllW6qpAd5D5e+vRtgQ81wk84EzG2/6XD0hwv+I2aZMHmGimfQpKv+Xs3Iuda4/Y
+ fAzPyc5nh+zaDFsLBxiKJUByZhR2ZSrCiFu+GKuSZgEDezBncDRUXANg39VZtvP2zUI0
+ z13HJiAUpl4CYYGx5FwxPmwUdEUkVCfoqJofKKEZv2O3JNXqYCOWhSPK/2pLc7GBytRH
+ SA0f0gu9QIrB8kodXMuqAdvIYmyYv372UqtOTk9ucMr9GlVjezEoIY6yTZ4tdC+seDrv
+ 9AlxYsyM8l89Mt89B9fSka9CSceSKnEkz2/YXwTFMh7vwilK2ZOE8gkSzyOJahLP2BFS
+ gklQ==
+X-Gm-Message-State: AOJu0Yzuf1YeFAGOdZ19yoWd1EGhf9zIyb3CN6zAa450Wka13DfJ8R3o
+ NQkNtQgUHdQCAJ3J1DsV6VPXtfGeexcOtuKDQEKCBJJtVJU+hgr8v+SdNXsddp+NvV56mhvB1/8
+ 0dTW9
+X-Gm-Gg: ASbGncs8yWGSzifZsdt8taGcROoKsIBx4K1jecYzrOCdW1W7lx3+P8TV2qfHqzMjyFZ
+ k420hU3eIbCrEzoyVq08EKRESfzO+l9ltHnCH6feWwKMUvvK08oaN+X0lMq8hfNO7crOouruHxl
+ xOLl+H4SC26XwB0Kd1fscLecgfSvzJOv+9p4n2fXjZTkm43Jlad6FJDKWi0LlW1QeQDE8AUEBQv
+ BbYXiCcqZXGz2bauYyLSO3FLBlK9PErvzvWgIfTuY0/I1I2aKpajux9/eRjiCqXpIwCKz5Eecq9
+ JVUfAeTzvDuPIVoO/teo1+2vHSOdpab4riq5kCD/0rHtQsgIfjI4s/jg1Bn7nNAvot1VXC/nVcL
+ 4r0ueGn3TS9NjrZbQMXocHjBRvIuY7z+We2hWyQhSEo2hgg6QFfwXt88guAgl4g311mjAH25dlR
+ ClE3KVhbRJVAg=
+X-Google-Smtp-Source: AGHT+IHK4rLceBzk5WlTq/tj0va0cHFeFvh4MvYNVHnZpsB9Uaq/W9573Xi+P4S7jdJ4PB8k7BQytg==
+X-Received: by 2002:a05:600c:a06:b0:475:e007:bae0 with SMTP id
+ 5b1f17b1804b1-4778fe5ef06mr209550445e9.16.1763477774608; 
+ Tue, 18 Nov 2025 06:56:14 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e35b7esm378706095e9.4.2025.11.18.06.56.01
+ 5b1f17b1804b1-477952823d3sm222397085e9.11.2025.11.18.06.56.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Nov 2025 06:56:02 -0800 (PST)
+ Tue, 18 Nov 2025 06:56:13 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4A32C5F8B9;
- Tue, 18 Nov 2025 14:56:01 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0F5335F8B9;
+ Tue, 18 Nov 2025 14:56:13 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,  jsnow@redhat.com
-Subject: Re: [PATCH v2 3/3] mtest2make: do not repeat the same speed over
- and over
-In-Reply-To: <20251118102942.551194-4-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Tue, 18 Nov 2025 11:29:42 +0100")
+Subject: Re: [PATCH v2 0/3] mtest2make: clean up and make dependencies more
+ precise
+In-Reply-To: <20251118102942.551194-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 18 Nov 2025 11:29:39 +0100")
 References: <20251118102942.551194-1-pbonzini@redhat.com>
- <20251118102942.551194-4-pbonzini@redhat.com>
 User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Tue, 18 Nov 2025 14:56:01 +0000
-Message-ID: <87ikf7jsou.fsf@draig.linaro.org>
+Date: Tue, 18 Nov 2025 14:56:13 +0000
+Message-ID: <87cy5fjsoi.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,12 +108,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> There are just two of them (slow and thorough; quick is simply the
-> default).  Avoid repeating them for as many times as there are tests.
+> You probably have never thought much about scripts/mtest2make.py, and in
+> fact it has seen only a hendful of commits in the last few years.
+> The idea is pretty simple: gather the list of testsuites and their
+> dependencies, and turn a "make check-*" invocation into calling "ninja"
+> first and "meson test" second.  On top of that, it magically turns
+> SPEED=3Dthorough into invoking up to three suites named XYZ, XYZ-slow
+> and XYZ-thorough.
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> But even this incospicuous script can harbor a bug, or rather an "I
+> didn't really think too much about it" situation.  Dependencies are added
+> to suite XYZ independent of the speed that is used in the meson.build
+> file: add a dependency to a func-thorough test and "make check-func"
+> will build it at any requested speed.
+>
+> Fixing this is a one line change with some cleanup performed on the
+> front, and that cleanup is patch 1.  This (at least to me) also makes
+> the generated Makefile.mtest file a little bit easier to read, which is
+> nice to have.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Have a:
+
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+for the series.
+
+>
+> Paolo
+>
+> v1->v2: support "make check-SUITE" where SUITE includes a speed
+>
+> Paolo Bonzini (3):
+>   mtest2make: cleanup mtest-suites variables
+>   mtest2make: add dependencies to the "speed-qualified" suite
+>   mtest2make: do not repeat the same speed over and over
+>
+>  Makefile              |  4 +++-
+>  scripts/mtest2make.py | 43 ++++++++++++++++++-------------------------
+>  2 files changed, 21 insertions(+), 26 deletions(-)
 
 --=20
 Alex Benn=C3=A9e
