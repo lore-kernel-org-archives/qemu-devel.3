@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62377CEBF92
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 08:50:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A749CEBF93
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 08:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLHPi-0003y1-RR; Tue, 18 Nov 2025 03:50:14 -0500
+	id 1vLHQz-00057G-Hb; Tue, 18 Nov 2025 03:51:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLHPh-0003xk-0m
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:50:13 -0500
-Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ id 1vLHQx-000573-3g
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:51:31 -0500
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLHPf-0002W1-7R
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:50:12 -0500
-Received: by mail-io1-xd32.google.com with SMTP id
- ca18e2360f4ac-9486354dcb2so227995939f.3
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 00:50:10 -0800 (PST)
+ id 1vLHQv-0002aI-Ea
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:51:30 -0500
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-4335726d0f2so19362275ab.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 00:51:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763455810; x=1764060610; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763455888; x=1764060688; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=y3BnlYN7/7p1HLOlDXecJq+xrmfMpf6ziWPWiTn1jBQ=;
- b=rDL5Ubn+ryd+tEYWaD835VMz/4XRdHP1v8LeUevS12V6Ovfezb0v3qOZHz2QdpQwzf
- yMKoEkKIMwibk5CWUppLg3qtcuLgZ5Fm1g9CIQ6599m+tstn6KplO+t6sBwZVLVx+vIL
- 8eEDIJ6v/J7rHq3dtt8TqmuCtU4t6uKTDKeQLz0a+ykJ0t/VoY44F+VKcUsLqMvxOG0U
- EVyb5w14zxitDaWIhuoIKZepfNo7pIBnJvrqADBZyiXVaLa903cT4y33L3sT74qdgrpi
- iHBvY5VkUDNi4Zx3ksMoYLuMjPI1/Pakg320gK8B5fulbBG3ZiRPMkNxCk46oI7bA2X9
- HDiw==
+ bh=AeCMlJ0oFDB6DCdqA9G02/nnVAqKEFijozNBwGkclCU=;
+ b=avxPFaF96KHzwVhsKrss2raouWvnUIQdAdaDVXCV09lYtu+CLbFMR3pUTqdsAfpWSH
+ rrbCTu2zaW13lVh4rqvTVPBmnkCK/vZQBQH6Lt9p0VnAG1dvfvPAPx/YzJPyhcUJQkSj
+ XYpql1VXAywEllxSRvZIXHkvi/s8DqLm3I2xpeIgJKDA0wJc9l+rTiYLdN4p0HoIs8If
+ ZyRI9A59e0UkE/zENJTSbNxHgoMifbv2XWQaan4QUtH6V21AB3dKXI3lnjFMVGjvGR1E
+ 1hXftpS6pxD0w+3+eYc0UF7CkYdYbaJsZZT6iSOOS6pDltcCbLfqFJxqNmgYhPeH8ue2
+ FU/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763455810; x=1764060610;
+ d=1e100.net; s=20230601; t=1763455888; x=1764060688;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=y3BnlYN7/7p1HLOlDXecJq+xrmfMpf6ziWPWiTn1jBQ=;
- b=vhYJ3wu+qzxZjegOk4uB+2+7WIh02gHk6UkVuAzBMhVNs5jFnvPx104CNCnvb9dkFR
- OOWN819hrCh32dy5qC0ceQBcqgLpEnRoml4EBp/x4UO8xsbSmzpzV3htgYeSw4JLg3cn
- AJZAc+R9cbDReh9J91uVN6vnU6M+4aqAC8g/oPSpzUb7E2/3V5f2/hdqxmLk/PTC7XDc
- 2LA6F9PBtJLPHOA2C8IbVJzYmEE8JvLvpOHX08F+Gqs4NM1IViXEq8NcXFOf+YOHES6q
- ZnRrJLg77VuGScshBtwcIJCANhWZV6oyWNyg8HymDU9TcDweXLTo71wfMLUGM2/De3jH
- sHVg==
-X-Gm-Message-State: AOJu0YxlLDNjmYDhu1e0OKSCVwyx3SXWy4QcGTw2DERiJtjPtwIbW+CK
- vdyebwOGN6Jaovt45AGQOZ49iozlXnmE+puFxUnSo/zrX53yi5o6kEX1C01hk8ADFwg3C1nEyKz
- d8WP06K4=
-X-Gm-Gg: ASbGncs3a8wdCO5IU4yX7BNI0W9HD6hs9xX4xZH69lTZerbtwbylSel95m66XA5ADZ3
- 3riJKyqcFcz3OoXZj80oK16+WZO5T+r7i/N9sz+HyrfYd9S1aq8NpOqTLs/po0jjg1JV/dlxkLw
- mWnNN5dCi2yfyVpGt5BWofMLmJdZaAUTJTVeq+Oz/UeSgaNPYhrMbYROMk6PnLtUzJi6pU0V9Db
- QitbcW9GpX1f1XoD9/zvfZ8O0EgVHhA3Ls2ZsPuxPSOi+Gj459oZ9HNb683rIuB0fhiFK5BBjA+
- s21YjxaF0snMtQmkSB5yljbSSEX5bV8xkN4ZdrU0Q0IOk8EgtVSAphVxtA04elJ08W55g5RdsB2
- MvZ5SKTxtmgaF6zfg+AEuqaHjqLGIzjuoZ6sJpTtNkXSq8NPyl4OLV6RU3/UilbE1UCDJ7waMXP
- nihJ6NXOejWGqEj7DHFBhVt96w1rBOvioZr7WF3O4BpAq03iRHCr4gj8aB0dQZC0x0oVU=
-X-Google-Smtp-Source: AGHT+IERj/4eusOxJUfiyAvb9H50CjmttgkeXTfpx3yNFdQd2jmFpaJKn8M7MTA+JTX2mZDLeZHmcg==
-X-Received: by 2002:a05:6602:341c:b0:948:fba6:ed00 with SMTP id
- ca18e2360f4ac-948fba7010emr1158728839f.1.1763455809644; 
- Tue, 18 Nov 2025 00:50:09 -0800 (PST)
+ bh=AeCMlJ0oFDB6DCdqA9G02/nnVAqKEFijozNBwGkclCU=;
+ b=MdLVEEnfK4kDXkrhMQKkXMSFLfM1W0bNCv1dYXS6oijbZsrPdWmaDpMvdFtqHbClqt
+ hDdbOSBn1S7rKZ1+HTQfcvXyfVytS3UI76wrqd4dp9rQdabxiB56gyqMVIvf8UIa9QdW
+ oyJteoEBbC7jkaPRE5HT0Q0Fiwayrf2gCU2p7oik3CmFOenyhp+WX8W2KpBJm1cr9F6+
+ 2uxR4ZcMSb0jfmibdIxxwdsGUHEhi7iwYPCsqTHXDEHMApSDvMHmUZVsSKPNEEzVUctN
+ GgWVFnboty8Gf1oUz7gSEQqnCP7vFQO1cdHeg6B31N8xBR5IV3BcrQ42i2IOtn8TMCTL
+ s8Kg==
+X-Gm-Message-State: AOJu0Yy/Z7IF/vrhtlKy2cXaXSPUp+1p5TVf/ne4SOHmt1A/I0wNGM0v
+ 0RGlTJcbRZz8iRn0wXFVJNa9vh+tsBViHho85QnYeHEuVfbq5hZKki/iMQ8L+VHsY5dzCTrEhuU
+ dvP8YWfI=
+X-Gm-Gg: ASbGncttvQCG+i9l5Ir9qiqK/8eFSY6G9/hFR3xIDW6IAvl44wsiNuthdUbc/laSj/G
+ KDMgLatpZuGEInfgebQkMB1KZ7v1QfArsQmiAzc2VBdV5oH9Wfoy4rVOwiqixxcURRnyfZXHc2X
+ gJbsIOzZn5COyAa6HPXRN4gGVAur7A40GS9Kjsl8csWZBzAQK1ZQ6zS519E9f62DLFHBRN+RnqB
+ i44aEqx8WdT+fp2sCJN0aWoAdlm49f4dMjLvG8GBmUNzUywk8rIcR7+72pnv4iZ4aTOTvUmMNnj
+ xcYzwo7R/31qpmDyj8aOGZOjk1lGX/i4ywBXcQUSykZ9G2w/DvUMUJo7cpLF0TxRIkuaWWDvEAQ
+ HuSdSU+F984nisMJ2Yj9w8AiQMW63PlGkpMqpm5i5gnNW7qhdhC5YreO4m7ZzjsdKn9G7h5BKBT
+ PgJfwH7iIbjG7rCurYCeKCMXU4NhMdNBwLmjJSTm+L1jdI3iW/nAHufcDnDVmoVcTgEbZGedSf4
+ gdP0A==
+X-Google-Smtp-Source: AGHT+IGAWq8aBEW9GP9m37+HFNa5SEeUOW00vlnqIp8A66hQthCJz0RkVbohyNTdxSqPOw45+AgkhQ==
+X-Received: by 2002:a92:cacb:0:b0:435:9247:12c6 with SMTP id
+ e9e14a558f8ab-43592471494mr27943835ab.34.1763455888115; 
+ Tue, 18 Nov 2025 00:51:28 -0800 (PST)
 Received: from [10.89.10.227] ([172.59.191.229])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-434833c5ef5sm78850405ab.3.2025.11.18.00.50.08
+ 8926c6da1cb9f-5b7bd3171cbsm5819424173.32.2025.11.18.00.51.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 00:50:09 -0800 (PST)
-Message-ID: <45864b2c-7211-4f63-a4dd-9d2a9a8c3385@linaro.org>
-Date: Tue, 18 Nov 2025 09:50:05 +0100
+ Tue, 18 Nov 2025 00:51:27 -0800 (PST)
+Message-ID: <c3643b7e-fe13-4659-a510-0e2cc15c3acd@linaro.org>
+Date: Tue, 18 Nov 2025 09:51:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2 1/3] qga/commands: Include proper Solaris header
- for getloadavg()
+Subject: Re: [PATCH-for-10.2 3/3] target/arm/tcg: Undefine Solaris FSCALE
+ definition as a kludge
 To: qemu-devel@nongnu.org
 References: <20251117203834.83713-1-philmd@linaro.org>
- <20251117203834.83713-2-philmd@linaro.org>
+ <20251117203834.83713-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251117203834.83713-2-philmd@linaro.org>
+In-Reply-To: <20251117203834.83713-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
- envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,58 +108,103 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/17/25 21:38, Philippe Mathieu-Daudé wrote:
-> Solaris declares getloadavg() in <sys/loadavg.h>:
+>   CONFIG_SOLARIS_FSCALE
 > 
->      getloadavg(3C)       Standard C Library Functions       getloadavg(3C)
+> Solaris defines FSCALE in <sys/param.h>:
 > 
->      NAME
->             getloadavg - get system load averages
+>    301 /*
+>    302  * Scale factor for scaled integers used to count
+>    303  * %cpu time and load averages.
+>    304  */
+>    305 #define FSHIFT  8               /* bits to right of fixed binary point */
+>    306 #define FSCALE  (1<<FSHIFT)
 > 
->      SYNOPSIS
->             #include <sys/loadavg.h>
+> When emulating the SVE FSCALE instruction, we defines the same name
+> in decodetree format in target/arm/tcg/sve.decode:
 > 
->             int getloadavg(double loadavg[], int nelem);
+>    1129:FSCALE          01100101 .. 00 1001 100 ... ..... .....    @rdn_pg_rm
 > 
->      [...]
+> This leads to a definition clash:
 > 
->      Oracle Solaris 11.4           23 Jul 2020               getloadavg(3C)
+>    In file included from ../target/arm/tcg/translate-sve.c:21:
+>    ../target/arm/tcg/translate.h:875:17: error: pasting "trans_" and "(" does not give a valid preprocessing token
+>      875 |     static bool trans_##NAME(DisasContext *s, arg_##NAME *a) \
+>          |                 ^~~~~~
+>    ../target/arm/tcg/translate-sve.c:4205:5: note: in expansion of macro 'TRANS_FEAT'
+>     4205 |     TRANS_FEAT(NAME, FEAT, gen_gvec_fpst_arg_zpzz, name##_zpzz_fns[a->esz], a)
+>          |     ^~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:1: note: in expansion of macro 'DO_ZPZZ_FP'
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          | ^~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:12: error: expected declaration specifiers or '...' before numeric constant
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          |            ^~~~~~
+>    ../target/arm/tcg/translate.h:875:25: note: in definition of macro 'TRANS_FEAT'
+>      875 |     static bool trans_##NAME(DisasContext *s, arg_##NAME *a) \
+>          |                         ^~~~
+>    ../target/arm/tcg/translate-sve.c:4249:1: note: in expansion of macro 'DO_ZPZZ_FP'
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          | ^~~~~~~~~~
+>    ../target/arm/tcg/translate.h:875:47: error: pasting "arg_" and "(" does not give a valid preprocessing token
+>      875 |     static bool trans_##NAME(DisasContext *s, arg_##NAME *a) \
+>          |                                               ^~~~
+>    ../target/arm/tcg/translate-sve.c:4205:5: note: in expansion of macro 'TRANS_FEAT'
+>     4205 |     TRANS_FEAT(NAME, FEAT, gen_gvec_fpst_arg_zpzz, name##_zpzz_fns[a->esz], a)
+>          |     ^~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:1: note: in expansion of macro 'DO_ZPZZ_FP'
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          | ^~~~~~~~~~
+>    In file included from ../target/arm/tcg/translate-sve.c:100:
+>    libqemu-aarch64-softmmu.a.p/decode-sve.c.inc:1227:13: warning: 'trans_FSCALE' used but never defined
+>     1227 | static bool trans_FSCALE(DisasContext *ctx, arg_FSCALE *a);
+>          |             ^~~~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:30: warning: 'sve_fscalbn_zpzz_fns' defined but not used [-Wunused-const-variable=]
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          |                              ^~~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4201:42: note: in definition of macro 'DO_ZPZZ_FP'
+>     4201 |     static gen_helper_gvec_4_ptr * const name##_zpzz_fns[4] = { \
+>          |                                          ^~~~
 > 
-> Include it in order to avoid:
-> 
->    ../qga/commands-posix.c: In function 'qmp_guest_get_load':
->    ../qga/commands-posix.c:1408:9: error: implicit declaration of function 'getloadavg' [-Wimplicit-function-declaration]
->     1408 |     if (getloadavg(loadavg, G_N_ELEMENTS(loadavg)) < 0) {
->        |         ^~~~~~~~~~
->    ../qga/commands-posix.c:1408:9: warning: nested extern declaration of 'getloadavg' [-Wnested-externs]
-> 
-> ../configure relevant output:
-> 
->    C compiler for the host machine: gcc (gcc 14.2.0 "gcc (GCC) 14.2.0")
->    C linker for the host machine: gcc ld.solaris 5.11-1.3315
+> As a kludge, check the definition existence with meson, then undefine
+> it locally in target/arm/tcg/translate-sve.c file.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   qga/commands-posix.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   meson.build                    | 3 +++
+>   target/arm/tcg/translate-sve.c | 3 +++
+>   2 files changed, 6 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index 72edd6097a4..65dd2bc6873 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2779,6 +2779,9 @@ config_host_data.set('HAVE_TCP_KEEPINTVL',
+>                        #endif
+>                        int main(void) { return 0; }''',
+>                        name: 'Win32 TCP_KEEPINTVL'))
+> +if host_os == 'sunos'
+> +  config_host_data.set('CONFIG_SOLARIS_FSCALE', cc.has_header_symbol('sys/param.h', 'FSCALE'))
+> +endif
+>   
+>   # has_member
+>   config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
+> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+> index 07b827fa8e8..b6fd069aa0c 100644
+> --- a/target/arm/tcg/translate-sve.c
+> +++ b/target/arm/tcg/translate-sve.c
+> @@ -4246,6 +4246,9 @@ DO_ZPZZ_AH_FP_B16(FMAX_zpzz, aa64_sve, sve_fmax, sve_ah_fmax)
+>   DO_ZPZZ_FP_B16(FMINNM_zpzz, aa64_sve, sve_fminnum)
+>   DO_ZPZZ_FP_B16(FMAXNM_zpzz, aa64_sve, sve_fmaxnum)
+>   DO_ZPZZ_AH_FP(FABD, aa64_sve, sve_fabd, sve_ah_fabd)
+> +#ifdef CONFIG_SOLARIS_FSCALE
+> +#undef FSCALE /* Kludge for Solaris which defines FSCALE in <sys/param.h> */
+> +#endif
+>   DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>   DO_ZPZZ_FP(FDIV, aa64_sve, sve_fdiv)
+>   DO_ZPZZ_FP(FMULX, aa64_sve, sve_fmulx)
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+You don't need an ifdef for undef, just undef it.
+
 
 r~
-
-> 
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index c7059857e44..66f3e6f6733 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -43,6 +43,9 @@
->   #include <net/ethernet.h>
->   #endif
->   #ifdef CONFIG_SOLARIS
-> +#ifdef CONFIG_GETLOADAVG
-> +#include <sys/loadavg.h>
-> +#endif
->   #include <sys/sockio.h>
->   #endif
->   #endif
-
 
