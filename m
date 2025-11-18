@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C52CEE34C
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47BFCEE34B
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQy6-00016m-UJ; Tue, 18 Nov 2025 14:02:23 -0500
+	id 1vLQy3-0000z5-KB; Tue, 18 Nov 2025 14:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQy3-0000zR-8H
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:19 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQy0-0000r7-6T
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:17 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQxz-00064d-W9
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:18 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4775ae77516so64141095e9.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:02:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQxj-00063e-Qw
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:15 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6cb4so42379235e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:01:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763492532; x=1764097332; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763492518; x=1764097318; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=52zBhewqcn4T3m8Xjjm8OprozUFhcDO1Jmsc89Lvm6Y=;
- b=PPvK335PKMTbuBRmjFfWwxTWoK3lhwrHYr8p2t0K4dNBFHqLLBoCbMzy+uSl841EqS
- sOfK4viBWelw4LzxEAiH5dQtzaJxGHlEuh4CKC8J8WuUgLkp/wipNolhGXHUglNaQAKc
- FXeOCNL5W/dMRiabwgo6K2Ke4yL/tqCIa5DI0ML7zaUhwppF7W5pSNkJsicj6Jot/PzH
- i6CKCONnnCPl0YDCORypIN4l/P6LwTVTegYeQygGnoz0sJXSkZnBglwz0//jvQGSAbGh
- K4j/VGGXllLmimnNMAAlELf1ODMm2+f0TqQWd0bGMD6NnjXpGLP9rF/NEAA7TtfK0al7
- nMvg==
+ :reply-to; bh=gXiO5nPfAcYV2Wewa5o/aax8KoL/hNVg9xCYOqbljoU=;
+ b=RcecxDpOPCNAAH7VMq0PyOOW5DnyJAU43FojxmrIgeszSn0KfVWQJlxZraoWlgTMfn
+ POe/nkWtUC5VAELtCBWDGzNHQRXv8qCghpTmeGPlaS6hRPthbb8UujPswnUXcJQ5S9NG
+ kOOJSnCaKUxEMhoUYDG7FC+rAFBiOhQMQdClq5OX7SEySx4Me92k9H+NU3zM/ImmQ0Cb
+ XEefFIq1wAxVTL7dTT8TeHhrcKhE/5sY1ccif3dxDzbr2vOBRoDDaW2EvPPBB1jwmHMo
+ /1zMObPIPhSz/AUXpJJmXLDq+XrfDMvbUNGtNZZMBiJBI36lYN+XNhUEbN99j9GQt44Z
+ nZ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763492532; x=1764097332;
+ d=1e100.net; s=20230601; t=1763492518; x=1764097318;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=52zBhewqcn4T3m8Xjjm8OprozUFhcDO1Jmsc89Lvm6Y=;
- b=ai8OJwLINUPHlF8x/8H2H8zZ0ao/gnr7+XhDm5a32JiqLTg/Xs3kBcyKxyX72AOdli
- bP3vyCj7AKuUm00GgF3M8f52zaszlbzUSI/CFebiFZB//W++bkjJbKm/lAaKlUNPw0JS
- 9URccOCwHRDT0kqci8/1nx0k6+3bYWjy+QIEQjKZ602ZRLwk7bKSfkQfc9KWj5Mbz8Vb
- VQvLETYst0rsC7IryYm9lTdjy4bBnUa4ywjfgdnb+qKj3DxYHaKrsyKafc/djFB3l5Hd
- MAyoOqke2mPW+LkmVHCw/XA7gB8ahJ3hOSCoKPCFtqESdIhxrD9nAZcODzedOW3vD/kL
- p0bw==
-X-Gm-Message-State: AOJu0YzQeLHLN6ETA3kbE1rLak9PHr8ymx3U5f+9S4V9pLUEer0t0TGK
- w1nmFs7YwV6lpnsCrIll7wq45KIgG/7RnodhBsiXq+nXxowlAal4mBi4sHc+DZx4iZ/1pom3PrO
- f3IcHR4/XSQ==
-X-Gm-Gg: ASbGncvMnZTrfPG8pCr8ZhP0AZmLk80vBWHwLNeq7kkwXQMQ69P+TxnzVK8LcyDPvgN
- VbXTOyayq5pVlm+fuKAeO+7TVHUd/O+7/3NdLz1s+yxgqvH6o+4uiLcxBwR2rCaw0g7CTY/0F25
- tPjcqGtTqahlHVNFTvxkmdI13hcSM6j2Q+qeQYqXf5cycI6y7iTNDh6/8a+pkH16YGTrUxRWTxd
- snElASvHB7miEjEib7CBYOQsXAx4rKEIdFrsQSrDxWWrJqDuU9AwyEJyMKRsxETGYlzBlkimgFW
- TMsl2FILtaoMWQZv0A4qqIqHegGmKFIduhkuQuPCWyaJSLtdA+zYxKmQj1PTz7SZ5eTxXTAdiSi
- EUUw+Mz9oYW0f2+ZQm0SRSUhqLf/J5HIa1Knizb2mHcX3bGoKTrk8lT85nQfT0vKL+dbxjQvE+9
- eau+MD/S8TF2usXorFtlkzuu4lp1bdC1rOa5U7x8eMCKbdzA2xDSZlgA1u2dD2
-X-Google-Smtp-Source: AGHT+IF+Ak4ucZXHxVvcZEbcdLb1WpTyub83hwVD/+i3PwI2AZb9aRcTDtVhHYhbDgBu160Z6nACxQ==
-X-Received: by 2002:a05:600c:a05:b0:475:dc5c:3a89 with SMTP id
- 5b1f17b1804b1-4778fea881fmr169331455e9.34.1763492532588; 
- Tue, 18 Nov 2025 11:02:12 -0800 (PST)
+ bh=gXiO5nPfAcYV2Wewa5o/aax8KoL/hNVg9xCYOqbljoU=;
+ b=abw0qZjI6leJZaaSmqYqQ0Gah5bBwgmj8CGyt+JpFSfZ/tQDfKMZfQd+C1TcyCoOkn
+ mDVKZztfijIyIWRMTEaYv5wKHMpoyPDDA14/ADP4HT/tsnhfcvMGEppGnMD2I3A/k+ML
+ 1iIf+V1C6Z8u6yaYPzsjuvIT0A0a44FpzKEV0lRJTKqjMuXNOHf/NT9e4PWXIfaRV3VO
+ X60fsyUPLDd/XfmSC1LXpqJRV3dMcljTHwIZDbuZwB53QJH1W37cJHaPeVU8fxCOsN3a
+ CgZCjwAY8/7fgShKXQl+NrewbmSBpc/fIcSRHN9XOLxdanRWoq06A2WMSx7o1SI2KopL
+ kSeA==
+X-Gm-Message-State: AOJu0YyyiysT2j1AGziWOQchYbIV1PC0N5BkNrwsLpxjkESFKFFn9AW0
+ 0mViirXPbeKBthqPIzV3K7mQhNROVgx8+xvHwpXlSSUy+Khk2P88EuG/ndD/hW7hv+87xKjZe2e
+ cBT0ilKgZVQ==
+X-Gm-Gg: ASbGncukdp0GRSKDoieNZBl8WosFBKXl12C5G5F0hQqOQzTATgYkN4NZ+bmamHTlghE
+ W/rdPXqPrAUZqMhxXouAOLQBeXjSbC1aaUxmYMjgEb3zdP0BB7Fi6W31ly1MV4pfHs7H4XTbFV+
+ szR8SCmGbH01GPIGn7BIZUHnU1S2IF4UHMlmXQa601g+D3hkqY56jXvLbfFyNkAeP2Zlz7h69wF
+ AB342QzMWc/AOY+Qjl+pv4umsrk78XEY8Alrit/FsRK2Y4/sbjm8K+sKiQHWJC46bpspS0SrA2W
+ s4vI2grCMo5yVmMWx4zCtCYg8WStrYi6GVOozaaPUA62BtRLQTOBICoPP31WDBSUNDcu3CbJJMh
+ X47dayj/A0bj5gVeagVlCO82QXo62bQZmFHT574u1ojop0RGplcShRli/evgKzNJCSfEp9d6I7j
+ S8EHS7tSXGs60PL1+xjPiGV7GWILzHufbiD4DqtdqrbicGITHjoT2qXI1/sW1uKkOYb7XUx2w78
+ enwGFKXIw==
+X-Google-Smtp-Source: AGHT+IFmW7hb3No794ZGBnkpEBuGFkQvoaUG214AuAgxt+Ks2pwKrZwSd1O0dUDExG7EAzEO8GmONw==
+X-Received: by 2002:a05:600c:4585:b0:477:54cd:202e with SMTP id
+ 5b1f17b1804b1-4778fe59a0bmr167414665e9.2.1763492517763; 
+ Tue, 18 Nov 2025 11:01:57 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a9e19875sm22161035e9.16.2025.11.18.11.02.10
+ 5b1f17b1804b1-477b106a9b0sm4924475e9.11.2025.11.18.11.01.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Nov 2025 11:02:11 -0800 (PST)
+ Tue, 18 Nov 2025 11:01:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/18] hw/southbridge/lasi: Correct LasiState parent
-Date: Tue, 18 Nov 2025 20:00:45 +0100
-Message-ID: <20251118190053.39015-11-philmd@linaro.org>
+Subject: [PULL 08/18] hw/sd/sdcard: Avoid confusing address calculation in
+ rpmb_calc_hmac
+Date: Tue, 18 Nov 2025 20:00:43 +0100
+Message-ID: <20251118190053.39015-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251118190053.39015-1-philmd@linaro.org>
 References: <20251118190053.39015-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_LASI_CHIP inherits from TYPE_SYS_BUS_DEVICE, not
-TYPE_PCI_HOST_BRIDGE, so its parent structure is of
-SysBusDevice type.
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-Cc: qemu-stable@nongnu.org
-Fixes: 376b851909d ("hppa: Add support for LASI chip with i82596 NIC")
+From the source frame, we initially need to copy out all fields after
+data, thus starting from nonce on. Avoid expressing this indirectly by
+pointing to the end of the data field - which also raised the attention
+of Coverity (out-of-bound read /wrt data).
+
+Resolves: CID 1642869
+Reported-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <4f7e1952-ecbd-4484-b128-9d02de3a7935@siemens.com>
+[PMD: Add comment before the memcpy() call]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20251117091804.56529-1-philmd@linaro.org>
 ---
- include/hw/misc/lasi.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/sd/sd.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-index 04312d0b589..0e95be1c32a 100644
---- a/include/hw/misc/lasi.h
-+++ b/include/hw/misc/lasi.h
-@@ -13,8 +13,8 @@
- #define LASI_H
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index df5a36fad9d..40a75a43ffb 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1160,8 +1160,13 @@ static bool rpmb_calc_hmac(SDState *sd, const RPMBDataFrame *frame,
  
- #include "system/address-spaces.h"
--#include "hw/pci/pci_host.h"
- #include "hw/boards.h"
-+#include "hw/sysbus.h"
+         assert(RPMB_HASH_LEN <= sizeof(sd->data));
  
- #define TYPE_LASI_CHIP "lasi-chip"
- OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
-@@ -63,7 +63,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
- #define LASI_IRQ_PS2MOU_HPA 26
- 
- struct LasiState {
--    PCIHostState parent_obj;
-+    SysBusDevice parent_obj;
- 
-     uint32_t irr;
-     uint32_t imr;
+-        memcpy((uint8_t *)buf + RPMB_DATA_LEN, &frame->data[RPMB_DATA_LEN],
++        /*
++         * We will hash everything from data field to the end of RPMBDataFrame.
++         */
++        memcpy((uint8_t *)buf + RPMB_DATA_LEN,
++               (uint8_t *)frame + offsetof(RPMBDataFrame, nonce),
+                RPMB_HASH_LEN - RPMB_DATA_LEN);
++
+         offset = lduw_be_p(&frame->address) * RPMB_DATA_LEN + sd_part_offset(sd);
+         do {
+             if (blk_pread(sd->blk, offset, RPMB_DATA_LEN, buf, 0) < 0) {
 -- 
 2.51.0
 
