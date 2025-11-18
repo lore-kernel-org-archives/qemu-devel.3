@@ -4,63 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A738ACEE341
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F0DCEE33B
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLP7K-0000hJ-7M; Tue, 18 Nov 2025 12:03:46 -0500
+	id 1vLPMd-0007dv-I8; Tue, 18 Nov 2025 12:19:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7H-0000Yg-9E
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vLPMV-0007cB-VF
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:19:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7F-0004pv-U4
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:43 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vLPMU-0007aW-2v
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:19:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763485421;
+ s=mimecast20190719; t=1763486365;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Kd4Fq32hdGASnjcpIe+vXiX42HVXhbhgpWuo95KGk4I=;
- b=UF14tHeegyX2t/7hVC+eopzHvu97pOXWuD3VtjJek4dFVDy/YzKc3RItvU6mmNn4iNvhWu
- 80yeEEvhJzl9xXBLmKtWwQaBp3h4nUzZOor0AKi3boKzo646wSwCS2a5VK93G+E4p2s1dG
- QsA/HE7lrhwwbEYpB99HTlxYbAJjGbQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-M4CNT9JePFuKbrrP_MinbA-1; Tue,
- 18 Nov 2025 12:03:37 -0500
-X-MC-Unique: M4CNT9JePFuKbrrP_MinbA-1
-X-Mimecast-MFC-AGG-ID: M4CNT9JePFuKbrrP_MinbA_1763485416
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 873B8180049F; Tue, 18 Nov 2025 17:03:36 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.44.32.26])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA270300ABAF; Tue, 18 Nov 2025 17:03:34 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	richard.henderson@linaro.org,
-	qemu-devel@nongnu.org
-Subject: [PULL 15/19] =?UTF-8?q?blkreplay:=20Run=20BH=20in=20coroutine?=
- =?UTF-8?q?=E2=80=99s=20AioContext?=
-Date: Tue, 18 Nov 2025 18:02:52 +0100
-Message-ID: <20251118170256.272087-16-kwolf@redhat.com>
-In-Reply-To: <20251118170256.272087-1-kwolf@redhat.com>
-References: <20251118170256.272087-1-kwolf@redhat.com>
+ bh=8gwWe7l3hq80W4gg9CqHx5LL4WzS4y9HtAhcGxpMRhU=;
+ b=bKNKsCOiS2Znrm0AX+VX3hMeYF+cYDbKDyz73ovZt0f5yB6VaOAGEO+dSpuHr9J4NuFYGf
+ toOkkBSXsQQ4TBsISdYdTiP3wxMmkd176ZzgAVHx3YNHd3cw9kMn6eRnJkj8ltqxcpt1IG
+ ZhNBlao9ojvMcrL7za+G/uccJUaCgCY=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-197-DIlMMGR6MPCnNIzMfPQFKg-1; Tue, 18 Nov 2025 12:19:10 -0500
+X-MC-Unique: DIlMMGR6MPCnNIzMfPQFKg-1
+X-Mimecast-MFC-AGG-ID: DIlMMGR6MPCnNIzMfPQFKg_1763486349
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-640c4609713so8615389a12.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 09:19:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763486349; x=1764091149; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8gwWe7l3hq80W4gg9CqHx5LL4WzS4y9HtAhcGxpMRhU=;
+ b=ouzhNY2YAwtLGKdxAEFaD0uKjtJkGrN3NnfYuypPxdypezXNlnqVxRKXTcu2QjoxLs
+ PoEL8VJFHUHd8O0ehm4IsWTOZeWxuH830K7wS8ijZc+tdqjaAK17lk6OoPAtMgkZKtef
+ eiRj9/gwJKc5Y9m6StiYZmV6Pd9DihNMMcaQ6/r4nXjhVLUtnQYQ/F3B8QdUPoxV32GF
+ AqLHzUtIp0WMh4jpTB3t9erBep9jIcF0OcDNgS9dNkCXKPwl/v0JhxaFhlPcCBkR/IhS
+ Gf2hs+6M9SYM/1ufmVDEvroSa+54A5eojFDdzAhUyPft9uObfxq2YRX6+MddddVCgjwj
+ ZKBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763486349; x=1764091149;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8gwWe7l3hq80W4gg9CqHx5LL4WzS4y9HtAhcGxpMRhU=;
+ b=hyvdyrmKuJ4hLl0LO77N5IAbUPRcXA371a2Wt86o91/aI8g3Ka0B/kgPgtmrZQf03i
+ LVTh/54JLjWaa5WdLvcA5bbBr/PX9haTraaNLDl5/pazMbYe24HqK++fC7OFcdTH0qWF
+ uEJEeAkrw1LRBqOQjlPWHy3a/xZLS9MqNoFev/KwabYIvolyIg+7ncKWT0AMEUmsZfWC
+ k+1bU8hAywCifTWgNx79Us2BNZ8K7i3L+AQL24H2sOxFuojqrAStZtleN99FGiyHdysH
+ qSd6xuLbM7AJ3mTG67E23P8rK8VLApyv4YDI77UeR+JmFfFejLYJNg+X5Q9C1Va751ty
+ PXiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUW3D99IvK7bQefYUZT76CccrP79WitenEz/6fhaxLS4nSA3vksWmuUFSbjThZ8sHxl2iJtJ/815JLy@nongnu.org
+X-Gm-Message-State: AOJu0YzW/1BxsyZUBz1VV/pO7OhwxSTTWOMl5363fehkT5YnYLCnVdtq
+ g5AG0M7ycFYcshNhZIGlhl4+NGuiAYJEIfv9yx8RMyTrEaVN16m9ESeI7ONCatvpydAt/UGkO1f
+ l1aHDwAhiI0Hf78FAxpPoXevaXzcoUHkNbJmTAREVycdRwPuyYoN/vnil
+X-Gm-Gg: ASbGnctHzt1gXuVkwONxM8NzFv+8LuFie6L4mzJ6yiVJMmHe9rW55uIt1iVEVpx3rVs
+ D5qXxopnyG/j5J31IZmLJuOB+WS4yYXKbcavylr0f3lryDLTBMABfoe59w5RCE7RCfjkfx6VseQ
+ cZURIYlnS0PRJLw0RY24qUvm6ePmKbKJ+V+HAh8UPVcfPubUQdGTMWC4EVv4ZZ2ngIIZgRHrf1D
+ qkKklpKUabwuN2n1KRS0XYlB+PRO++7Z38uxVIGI5JBRfJVaoG0/LuaRiSjqSkIm2ron/vVdgjq
+ 1z8ShHKYdpQIZsMT+5EvqjRjwFg0Gy4SodjUjDo04cyIDmG/W9rHJIp2Q6c9ArYUnSP8ydlGKLR
+ /hir8z77Bqa3y7bdssNTdfxMnqZ2TbdfO90q48YKYnGqFNOC3ukWr2qBhXAoAy+VMZHdXEFB7NI
+ 2eZqyVRHfFSLaZ1eOEhyjzwN1IzVXMHLAArliyE9g=
+X-Received: by 2002:a05:6402:27d0:b0:640:d061:e6b1 with SMTP id
+ 4fb4d7f45d1cf-64350e1df7cmr16688383a12.10.1763486348617; 
+ Tue, 18 Nov 2025 09:19:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IExbKjH8XJoUM2hYZqa3Kdgidq8Y9mIV1GQ6698xrpXNU18FJNA66p1QkpRj3+jc/o3W2exdQ==
+X-Received: by 2002:a05:6402:27d0:b0:640:d061:e6b1 with SMTP id
+ 4fb4d7f45d1cf-64350e1df7cmr16688356a12.10.1763486348222; 
+ Tue, 18 Nov 2025 09:19:08 -0800 (PST)
+Received: from ?IPV6:2003:cf:d717:1f76:905c:29a8:188b:2aad?
+ (p200300cfd7171f76905c29a8188b2aad.dip0.t-ipconnect.de.
+ [2003:cf:d717:1f76:905c:29a8:188b:2aad])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6433a49806csm13107868a12.18.2025.11.18.09.19.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Nov 2025 09:19:06 -0800 (PST)
+Message-ID: <71efff01-5353-4d50-9779-51cd1e813d4d@redhat.com>
+Date: Tue, 18 Nov 2025 18:19:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/19] qcow2: Fix cache_clean_timer
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>,
+ Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
+References: <20251110154854.151484-1-hreitz@redhat.com>
+ <20251110154854.151484-13-hreitz@redhat.com> <aRs2OSuFy0HyW4EU@redhat.com>
+ <7a3dc3f2-cded-4e2f-a914-938acd52576f@redhat.com>
+ <aRyniMgeFyZMcU6q@redhat.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <aRyniMgeFyZMcU6q@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,38 +135,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+On 18.11.25 18:06, Kevin Wolf wrote:
+> Am 18.11.2025 um 12:01 hat Hanna Czenczek geschrieben:
+>> On 17.11.25 15:50, Kevin Wolf wrote:
+>>> Am 10.11.2025 um 16:48 hat Hanna Czenczek geschrieben:
+>>>> +/* s_locked specifies whether s->lock is held or not */
+>>>>    static void qcow2_update_options_commit(BlockDriverState *bs,
+>>>> -                                        Qcow2ReopenState *r)
+>>>> +                                        Qcow2ReopenState *r,
+>>>> +                                        bool s_locked)
+>>>>    {
+>>>>        BDRVQcow2State *s = bs->opaque;
+>>>>        int i;
+>>>> +    /*
+>>>> +     * We need to stop the cache-clean-timer before destroying the metadata
+>>>> +     * table caches
+>>>> +     */
+>>>> +    if (s_locked) {
+>>>> +        cache_clean_timer_co_locked_del_and_wait(bs);
+>>>> +    } else {
+>>>> +        cache_clean_timer_del_and_wait(bs);
+>>>> +    }
+>>>> +
+>>>>        if (s->l2_table_cache) {
+>>>>            qcow2_cache_destroy(s->l2_table_cache);
+>>>>        }
+>>>> @@ -1228,6 +1312,10 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
+>>>>        }
+>>>>        s->l2_table_cache = r->l2_table_cache;
+>>>>        s->refcount_block_cache = r->refcount_block_cache;
+>>>> +
+>>>> +    s->cache_clean_interval = r->cache_clean_interval;
+>>>> +    cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
+>>>> +
+>>>>        s->l2_slice_size = r->l2_slice_size;
+>>>>        s->overlap_check = r->overlap_check;
+>>>> @@ -1239,12 +1327,6 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
+>>>>        s->discard_no_unref = r->discard_no_unref;
+>>>> -    if (s->cache_clean_interval != r->cache_clean_interval) {
+>>>> -        cache_clean_timer_del(bs);
+>>>> -        s->cache_clean_interval = r->cache_clean_interval;
+>>>> -        cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
+>>>> -    }
+>>>> -
+>>>>        qapi_free_QCryptoBlockOpenOptions(s->crypto_opts);
+>>>>        s->crypto_opts = r->crypto_opts;
+>>>>    }
+>>> Is there any specific reason why you move cache_clean_timer_init()
+>>> earlier? I don't see an actual problem with the code as it is after this
+>>> change, but s->l2_slice_size is related to the cache in a way, so it
+>>> would feel safer if the cache cleaner were only started once all the
+>>> settings are updated and not only those that it actually happens to
+>>> access at the moment.
+>> Oh.  I don’t think there’s a good reason.  I think it makes sense to keep
+>> the set-up in the old place.  Can you do that in your tree?
+> Yes, I changed it back and applied the series to my block branch.
+> Thanks.
 
-While it does not matter in which AioContext we run aio_co_wake() to
-continue an exactly-once-yielding coroutine, making this commit not
-strictly necessary, there is also no reason why the BH should run in any
-context but the request’s AioContext.
+Thanks a lot!
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-16-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block/blkreplay.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/block/blkreplay.c b/block/blkreplay.c
-index 16d8b12dd9..8a6845425e 100644
---- a/block/blkreplay.c
-+++ b/block/blkreplay.c
-@@ -63,9 +63,10 @@ static void block_request_create(uint64_t reqid, BlockDriverState *bs,
-                                  Coroutine *co)
- {
-     Request *req = g_new(Request, 1);
-+    AioContext *ctx = qemu_coroutine_get_aio_context(co);
-     *req = (Request) {
-         .co = co,
--        .bh = aio_bh_new(bdrv_get_aio_context(bs), blkreplay_bh_cb, req),
-+        .bh = aio_bh_new(ctx, blkreplay_bh_cb, req),
-     };
-     replay_block_event(req->bh, reqid);
- }
--- 
-2.51.1
+Hanna
 
 
