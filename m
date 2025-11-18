@@ -4,147 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A7CCEE341
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B3CCEE342
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLPDQ-0000Dl-4R; Tue, 18 Nov 2025 12:10:06 -0500
+	id 1vLP6x-00005b-6h; Tue, 18 Nov 2025 12:03:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLPDF-0008JW-On
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:09:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP6u-0008Ut-Vs
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLPDB-0005mA-5l
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:09:53 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP6t-0004j7-Aw
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763485786;
+ s=mimecast20190719; t=1763485398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pmwbnmXAUaLRZQPkSwItf+tD5em01rqeo1O2Kyg5WFo=;
- b=ZSHZrKQvXNfW+LfA8/iTIPfEnzvVj0nF0TKHM2brvJ44pBiKKJe+40hA1KJ8B70qZL6tTT
- xwCQboztSoQqo+6vLTxC98LLXviR4QiZhEGqvutNI//z8SW8zg5q42hg6F0D+daOWoUphD
- i0GzekklkdeMw5s7zOALwsVZZJg6EFs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-cqnpklKWO2WJtu3PQu6ZVA-1; Tue, 18 Nov 2025 12:09:44 -0500
-X-MC-Unique: cqnpklKWO2WJtu3PQu6ZVA-1
-X-Mimecast-MFC-AGG-ID: cqnpklKWO2WJtu3PQu6ZVA_1763485783
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477771366cbso35332025e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 09:09:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763485783; x=1764090583; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=pmwbnmXAUaLRZQPkSwItf+tD5em01rqeo1O2Kyg5WFo=;
- b=al35dj3FPPvCFMdKOgQBDrcG8MWiz5jimhqAT9bZZ6osk05vrGxh4cqhsNeMR5rS9n
- 9jhXZNECmQIfc+QRoR0gHssZFAkCDnbX3FJx9z3CVLiJ6CWrDwfz8ctOK3YTfdpAQZTW
- JichLXbhWHFEJpZxFMNuS+M4Lt0YKmV/qVB2OnghD07Otdm0cdtd/OMiFF94Y4hWPvQn
- KtDn4QYEtr7UnvlVj1Zw/2GHgd1+DV/xVZvccqSOZNokaxLZyXhgzkrTVFKhbB1lPIyJ
- llm0cp1zCfhs/lXCinRtOvLr0ImaRcBZ7UtUAAWy0O48+Hix0ZjX5eabNvzaY8dKrSBL
- z57A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763485783; x=1764090583;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pmwbnmXAUaLRZQPkSwItf+tD5em01rqeo1O2Kyg5WFo=;
- b=btclJoJyYyFIuIMo3ukrZ/rGK5NiMk7dMeUsZkV+TpiDwGfWKmQM10ZsRbOyZzurcg
- +CbP6dLUh8JBNAN9vxNmnjj+9PteHd6bDpwskRpfLgfFtu9inItrGar+88HZMtFe2+8W
- H+0umnVkuMmt/8reX7wIzCI5afePywIA3ou9kDaxlKB7/7o+iSIg/j6eUNKHWAY9iWru
- Hy99KiJPGreX2uSrqROWMUEb7VbJRnOIZTciHN6e9L4ZT65IrfmEkabnlhFRIjJGimHj
- K/GnLhRvf86IoU5tgUcl2k8Gis1i5b8EjNCDjq6zdnFiUl2CgTSlMyEml5ANy9s4hLgs
- 9How==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHReGYJ7BtprJ3B9jy882Pd0MmSkJTSxc1scMdoTCYuWBjyc3pcfzauqPC7q3HHT3tZhc8dz+2Suw1@nongnu.org
-X-Gm-Message-State: AOJu0YzdjIlb3BloJOYzRCSQY1dx0oNBBOHMD+PExG4LcmfgSv+wyank
- yCAMrTJfV79URVzExtVJCBl3BJRX+SwmQsqvsiFKVoV+Mtfe+oTmDE/Xs4Q8wPEQ17SQbj3Kh2C
- fLGLya23lr9oijh9C4zqIUUk4S2dllcmOUVp/6/EJRvMhSeTOyzB0PW9p
-X-Gm-Gg: ASbGnct7bbvilUiovACpRJyv9MqvExbDfHvuzT6DCXbi8OGdmJ0Vhrr0R36pVxsUVVD
- qK3o3+y08okh+TFH/9g5Xfzw3FLJLH7hDAgFkeB/nJCRIe0Z0dxKklcu/cAEautQJ10U5ikUn0C
- hrXRHtY7U8+rKD8v9G83aBpqvw2EqudPXqbGvtGG4ate2cQcvrFtYTwNDQPNE98S55V3nSuzWOh
- NAVbkwBcsl22YAt7toZWuij73oUF34srnv4DYc+NjQjn4uQchZULNDtp1M/CZKlwdJ63XAYPUPs
- p5vzBKH7pR3mU5rAu4oP8aM0yP7OLwZECR0HM7TtttpwHA5mkDDk0u5W3mYnjRgg/eNphb/B+ET
- b/l/+fPk=
-X-Received: by 2002:a05:600c:1550:b0:477:a1a2:d829 with SMTP id
- 5b1f17b1804b1-477a1a2db72mr64971745e9.13.1763485783060; 
- Tue, 18 Nov 2025 09:09:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTbBQv6ckIk5ZuuZPfxbqxabm5AjRvJ+XNQI0x0ldGoCzqcLYZC68tpw89RbwxOvx0YTN1tQ==
-X-Received: by 2002:a05:600c:1550:b0:477:a1a2:d829 with SMTP id
- 5b1f17b1804b1-477a1a2db72mr64971515e9.13.1763485782709; 
- Tue, 18 Nov 2025 09:09:42 -0800 (PST)
-Received: from [192.168.0.7] ([47.64.114.102])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b106b10asm233895e9.10.2025.11.18.09.09.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 09:09:42 -0800 (PST)
-Message-ID: <e2cb7ff3-be41-4ec2-89f0-78994c5b9453@redhat.com>
-Date: Tue, 18 Nov 2025 18:09:40 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=BoVAI3DNADf87T1Nn/o5IlvAFQmrRR/j4uz+LlarMK8=;
+ b=FejO6JO9E4Wt5X1X1ewXnANxGPkFIKQwpazMYbTXGQ8ABQ5I9tS7YDGJyhgkMt9rAfZxed
+ P0eNidK1lTKMDIp1jfL/mevrQsxM4JRRO9f7aDuoQqp6NINIMZ/VgAWZf+9jVlctkGJc/K
+ jrlP5Cc/5ZTjGcvr4yTgMgt/R8EMo40=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-U1WFyAmUNKWCCISDpaKiSg-1; Tue,
+ 18 Nov 2025 12:03:14 -0500
+X-MC-Unique: U1WFyAmUNKWCCISDpaKiSg-1
+X-Mimecast-MFC-AGG-ID: U1WFyAmUNKWCCISDpaKiSg_1763485393
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B295191B4C1; Tue, 18 Nov 2025 17:03:13 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.44.32.26])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 01CC8300A88D; Tue, 18 Nov 2025 17:03:11 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	richard.henderson@linaro.org,
+	qemu-devel@nongnu.org
+Subject: [PULL 04/19] =?UTF-8?q?nfs:=20Run=20co=20BH=20CB=20in=20the=20cor?=
+ =?UTF-8?q?outine=E2=80=99s=20AioContext?=
+Date: Tue, 18 Nov 2025 18:02:41 +0100
+Message-ID: <20251118170256.272087-5-kwolf@redhat.com>
+In-Reply-To: <20251118170256.272087-1-kwolf@redhat.com>
+References: <20251118170256.272087-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] hw/southbridge/lasi: Correct LasiState parent
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
- Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20251117091804.56529-1-philmd@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251117091804.56529-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -153,7 +69,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,43 +85,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/11/2025 10.18, Philippe Mathieu-Daudé wrote:
-> TYPE_LASI_CHIP inherits from TYPE_SYS_BUS_DEVICE, not
-> TYPE_PCI_HOST_BRIDGE, so its parent structure is of
-> SysBusDevice type.
-> 
-> Fixes: 376b851909d ("hppa: Add support for LASI chip with i82596 NIC")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/misc/lasi.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-> index 04312d0b589..0e95be1c32a 100644
-> --- a/include/hw/misc/lasi.h
-> +++ b/include/hw/misc/lasi.h
-> @@ -13,8 +13,8 @@
->   #define LASI_H
->   
->   #include "system/address-spaces.h"
-> -#include "hw/pci/pci_host.h"
->   #include "hw/boards.h"
-> +#include "hw/sysbus.h"
->   
->   #define TYPE_LASI_CHIP "lasi-chip"
->   OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
-> @@ -63,7 +63,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
->   #define LASI_IRQ_PS2MOU_HPA 26
->   
->   struct LasiState {
-> -    PCIHostState parent_obj;
-> +    SysBusDevice parent_obj;
->   
->       uint32_t irr;
->       uint32_t imr;
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Looks right.
+Like in “rbd: Run co BH CB in the coroutine’s AioContext”, drop the
+completion flag, yield exactly once, and run the BH in the coroutine’s
+AioContext.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+(Can be reproduced with multiqueue by adding a usleep(100000) before the
+`while (!task.complete)` loops.)
+
+Like in “iscsi: Run co BH CB in the coroutine’s AioContext”, this makes
+nfs_co_generic_bh_cb() trivial, so we can drop it in favor of just
+calling aio_co_wake() directly.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20251110154854.151484-5-hreitz@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block/nfs.c | 41 ++++++++++++++++-------------------------
+ 1 file changed, 16 insertions(+), 25 deletions(-)
+
+diff --git a/block/nfs.c b/block/nfs.c
+index 0a7d38db09..1d3a34a30c 100644
+--- a/block/nfs.c
++++ b/block/nfs.c
+@@ -69,7 +69,6 @@ typedef struct NFSClient {
+ typedef struct NFSRPC {
+     BlockDriverState *bs;
+     int ret;
+-    int complete;
+     QEMUIOVector *iov;
+     struct stat *st;
+     Coroutine *co;
+@@ -230,14 +229,6 @@ static void coroutine_fn nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)
+     };
+ }
+ 
+-static void nfs_co_generic_bh_cb(void *opaque)
+-{
+-    NFSRPC *task = opaque;
+-
+-    task->complete = 1;
+-    aio_co_wake(task->co);
+-}
+-
+ /* Called (via nfs_service) with QemuMutex held.  */
+ static void
+ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+@@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+     if (task->ret < 0) {
+         error_report("NFS Error: %s", nfs_get_error(nfs));
+     }
+-    replay_bh_schedule_oneshot_event(task->client->aio_context,
+-                                     nfs_co_generic_bh_cb, task);
++
++    /*
++     * Safe to call: nfs_service(), which called us, is only run from the FD
++     * handlers, never from the request coroutine.  The request coroutine in
++     * turn will yield unconditionally.
++     * No need to release the lock, even if we directly enter the coroutine, as
++     * the lock is never re-taken after yielding.  (Note: If we do enter the
++     * coroutine, @task will probably be dangling once aio_co_wake() returns.)
++     */
++    aio_co_wake(task->co);
+ }
+ 
+ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+@@ -278,9 +277,7 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     if (task.ret < 0) {
+         return task.ret;
+@@ -328,9 +325,7 @@ static int coroutine_fn nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     if (my_buffer) {
+         g_free(buf);
+@@ -358,9 +353,7 @@ static int coroutine_fn nfs_co_flush(BlockDriverState *bs)
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     return task.ret;
+ }
+@@ -723,8 +716,8 @@ nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void *data,
+     if (task->ret < 0) {
+         error_report("NFS Error: %s", nfs_get_error(nfs));
+     }
+-    replay_bh_schedule_oneshot_event(task->client->aio_context,
+-                                     nfs_co_generic_bh_cb, task);
++    /* Safe to call, see nfs_co_generic_cb() */
++    aio_co_wake(task->co);
+ }
+ 
+ static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
+@@ -748,9 +741,7 @@ static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
+ 
+         nfs_set_events(client);
+     }
+-    while (!task.complete) {
+-        qemu_coroutine_yield();
+-    }
++    qemu_coroutine_yield();
+ 
+     return (task.ret < 0 ? task.ret : st.st_blocks * 512);
+ }
+-- 
+2.51.1
 
 
