@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F6FCED260
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 10:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FBDCED260
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 10:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLIyG-0006VY-Fs; Tue, 18 Nov 2025 05:30:00 -0500
+	id 1vLIyA-0006Tg-3P; Tue, 18 Nov 2025 05:29:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLIyE-0006UW-6R
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 05:29:58 -0500
+ id 1vLIy7-0006TJ-Nk
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 05:29:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLIyC-00032h-P5
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 05:29:57 -0500
+ id 1vLIy5-00030t-HN
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 05:29:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763461796;
+ s=mimecast20190719; t=1763461788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=do+UbaBiOOwddVkAoLI/+bC2dQuwohtwYVd2EuLCMA4=;
- b=Z0nSG5lE9NhtcWZ49wmqOnh2aMv7ohfgjAzxp1pJizbsqFv51FcQ+aetkjgVxcV9N9R1Cl
- oV6UHomshfKhSfIxgZnFZOdcNm6KkL1i1AokwgtngMNLh32VyXchJMXij9/CZiUsO44c44
- QbTIIXhh3Y5Pg8nZycRef1u3/0KPZCo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=R+hfx4DRO3dhZpmsIc6t8HCrbrlGqdcYs6jIPnvq7Xc=;
+ b=GhESwLtXY7/d7cX0FOTvA7+PMeCefKc5sANuE+p4etjWHriSMzlGUXt/5hsRnuXu/eSfL7
+ Olysd8rYaod2TH4f0VYyBsz2wbic2O+nO6pVCxwTEzOszV1rCW/lLWcW30NW+q7F5eNyrZ
+ ifOI1uFVlpQ27uLszDU9o21jDaoCPMI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-h73dvMsEOPexueXTj6VddA-1; Tue, 18 Nov 2025 05:29:54 -0500
-X-MC-Unique: h73dvMsEOPexueXTj6VddA-1
-X-Mimecast-MFC-AGG-ID: h73dvMsEOPexueXTj6VddA_1763461793
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477964c22e0so23717865e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 02:29:54 -0800 (PST)
+ us-mta-376-0g62ZjiHMoeAxTGJ1P0sUg-1; Tue, 18 Nov 2025 05:29:46 -0500
+X-MC-Unique: 0g62ZjiHMoeAxTGJ1P0sUg-1
+X-Mimecast-MFC-AGG-ID: 0g62ZjiHMoeAxTGJ1P0sUg_1763461785
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47777158a85so47081055e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 02:29:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763461792; x=1764066592; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=do+UbaBiOOwddVkAoLI/+bC2dQuwohtwYVd2EuLCMA4=;
- b=LI0C8v3cvh+rOJ9foQezRcaEdCyGUjtAj0Hk4xDrKgKtw0OuiBaA2YHuNU/3R63/s/
- vqnEZ8is5MQ4oaKYd9JWz/EL6hXjj3I+WIvHTp4uecL+2OSg4VK/VYCQV5wAGTFM71lQ
- SVDzUpRSR2ilJwafanNdhCbRsuqTjpeH+6nApEzRCj/A9GtwVoiFd7ijpIL5PxwLi422
- 6yDGAEBkfbUenVOKt6nh4CjH51Z6rLpeRY/JMA5yY6eDssVmKhpJfbr23dcYHIgcnLQ0
- 0FsLWOuvEVTWyUdmMpjtRJfsOreoMoEwbqUO/KO2B5ScgTVlOajJ/zIQnGkhtJpWnfH5
- RXkg==
+ d=redhat.com; s=google; t=1763461784; x=1764066584; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=R+hfx4DRO3dhZpmsIc6t8HCrbrlGqdcYs6jIPnvq7Xc=;
+ b=MTnvyuupz+u6WaMCilt0X+yJETZXVD0O4Hcou3WVgMqv3yDJ9VCTYsGm+vHLyXi/46
+ J3CZUKWGPoCqy6cYETsYH79aIlSBceT2l7ZUeNmd0gm+3RunFkVIV1STWlPfja5+VO8e
+ 4cxSJu9RYstoUzCsxQG3jrZu5dcPE4RwqCRMmmiP86/qfI1C0gYisYCIBMeCXBejHUQb
+ lSTZtu0SVVbN+xoULIjTXcmFtq07Wfbd/GnibSg0Fix4fZ1KuqL7kVUah/BQLsr/AFvF
+ gBRFe4C8/c218GS1GaxusdXXdtzAZHsgj+ox/emP92ExGpil2049hPaIgwNSEF2agkVk
+ DnlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763461792; x=1764066592;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=do+UbaBiOOwddVkAoLI/+bC2dQuwohtwYVd2EuLCMA4=;
- b=ioP4Vyx0meozGwVGyKdL62XOfDJnE0iohwD5JtgdfXHtodgJoic4uPra1Ma4S1eCXm
- 7QkIM8FIkxiCEsCGQb3Q26Fk9+D98i8vnU5LiJxiCECoDo6422DjYrPPhNKtydhlgTNu
- rzWm9xCXEBLM4Y9hOIbiKJdFMjlr3Qja2k8nvdtBJqgV7IPsungHphzuxiqIQBpxclFE
- wJRGDCRMSmnrnT5hEwaLFxmrLQy6plBveTSze3Jt9lGIgQtdszN3Jv3EiUO15My6ZrHb
- e61NJ4FJ8fYE6X7aCIcj820IfEh9IOitE87qMIg4tdS2L8kTLQTI4lcTQZHctR7kCnA0
- 38lg==
-X-Gm-Message-State: AOJu0YzvFB6Kwcchk1bNd0VGcGVgp3e6fSI4PKidopi/rswuaFKtZ5qR
- cfLgNLFusIjc487phzKr8RdqRVejdrg/LY9V4Fvfl12khZ65sh/xdQHTzRS2JfTppgb9ERArsw5
- 1h39wNjRmKf8qLTRg1rMA2HBYFQgDW0tKzeUX2t0q0lRdham/4f8o5semmjIYXWaxMwqaY+Y+z8
- BG0Tg9eeipg4naoDQeFG73nsPRaL/hBA2EUjoCJJMl
-X-Gm-Gg: ASbGncs0rxD9D0VH5txSSLBR2vNH3ArYqUQfTgFeKw+CtKRzELAaJFgFg9taqrVRZkX
- m7qOYdaQJOHLa5kgUcEGjyqx3nDuWFCc9ZBD4ONF/9/fIVkqHDaaimeJax18rh0PESRQsvtl2WG
- JaKV+KYttfLq7Ke96jW8ubroe9YUxdPC0oYi7mee9d6pOdkmGMvpZY9GIH/ULB3OiAHDME0TUVO
- gSsyOEXC9nmhe16Ox2OFOJzsMELg8W02l6mKd7WrmbCjxfTjvljyuX2F3Qhnvyl/nqYxz59FrFg
- 99jhbComDFLf5oRdcSHlw/gh88dLhHAJiyhK02egthhGkmnR3xs2Gpo27sxivEQqReBHmv/EnSp
- VZ9h7TAnHLb9l/eEsKr6SRp+iIvUKgP4SYvYXt4vYqHZsLaOcWabMDGHYktdHQveT9+st+88KbW
- muEdXIF1/MdxveCZA=
-X-Received: by 2002:a05:600c:a0b:b0:477:bf1:8c82 with SMTP id
- 5b1f17b1804b1-477a94fd02amr24196655e9.15.1763461792274; 
- Tue, 18 Nov 2025 02:29:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEy6/5UJNYCpNSIxBQZA7Mx7WNuk7k6GYNY3910D0VMtBf+TDiyacXTpCeZGx+swsAuTizSyQ==
-X-Received: by 2002:a05:600c:a0b:b0:477:bf1:8c82 with SMTP id
- 5b1f17b1804b1-477a94fd02amr24196345e9.15.1763461791842; 
- Tue, 18 Nov 2025 02:29:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763461784; x=1764066584;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R+hfx4DRO3dhZpmsIc6t8HCrbrlGqdcYs6jIPnvq7Xc=;
+ b=XfElXX8DID6WtVL3JPLIX7oXQObdhEL5iKWOEkK2Ns3cYS2w7FPuQvW5Wqr+FrCkB3
+ 5XHqFNal4c5Migfj9z1rzfBzYI7YWFxhm3+G+vBP7Jmwgd8Mox7p4E6E4RrqICPnZ5Ze
+ GDVS9UmNOsEjcYPDbMJrpjxHd9uT0p6YEr1bi9tSw2QJnEVO31mTuOT1RVX/k9Z5BJa/
+ qSWAMU0gWmOQYqauZv/sYVXH1tW2mgbpIkWPad3NBgi+76dUC3Ca6hX3nibuIwFG0bjG
+ BM9X2Ho13ktYrqsb8V4AKyunQILXDixF2ztU+1euhwcifol5gxKibpnihG9ODiBXzY7Q
+ bUkg==
+X-Gm-Message-State: AOJu0YxacMpQ6dxqbY3cAf3y6kQ1kaCmtelqdbfWZvpNXRszXj/g73kv
+ 5DEv0J0Mbt45nCRW9rszncjZAEzZz9V5PWf/Oc+CONNliOQKdyRiMk2qtOxWIIJz2P6zwK8gTN1
+ auTy3s67hUfTvrVaGuTP1gcf1+eANynjVxFkjBus7fDyp15TM5cnMLocT1+hQ+aidswCtCqP5fn
+ EzqbAKzxSHtTddMeGZ7hVgIkGGrKYq22/ugM1p0wqR
+X-Gm-Gg: ASbGncuemOAcxKcBZ2C8yx5XlA3Foww2Tu8t1OkodqR0ng42ZQ3CHrFRfmdLMrhxvno
+ aS4DysH03dXfJgQEUr16uAS4fIWm5BKajHPrW7hnqx5u6j8qxxAJ0p9nhWm/gBYz6p6bCk9gcCH
+ fEXIpCIHh19PwOyQrCsEgdQbOk1/9TGRQbOAOBVM+eNzIiEVn3i1dCdUkZ5YC0gvTHcDqymhag2
+ pVeU0nJK/oBo8/RZggehv9ad257+zvVA4hIwqml3jAHHO7TuLNRrNqZu9ajxT0SAguZATbr0a3+
+ XqjXl4A4jZRIrmQOT0KBxbHPl0AUWcoqfTZF2mCMbcHLehfWPAPZMjvjjVti6QpIUDAwbsPljHH
+ sUBd3MtvVvfqDMBCVDkJ+8ulDwBzZZBKkQHe9dwVBdRo9aSksCTZS63GoA4h4Od20JSVIjRD4PM
+ idq7JpqcXF7yr5pPM=
+X-Received: by 2002:a05:600c:c4a2:b0:477:c37:2ea7 with SMTP id
+ 5b1f17b1804b1-4778fe9ac28mr138363725e9.21.1763461784430; 
+ Tue, 18 Nov 2025 02:29:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFfgbzfPgvHk3YqWqplWecTFG4RW0B8VVpUCTha647QIbQ6ItCgggD1aNtQytxHnnz+dIerTw==
+X-Received: by 2002:a05:600c:c4a2:b0:477:c37:2ea7 with SMTP id
+ 5b1f17b1804b1-4778fe9ac28mr138363475e9.21.1763461784003; 
+ Tue, 18 Nov 2025 02:29:44 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a96a58c5sm15553695e9.0.2025.11.18.02.29.50
+ 5b1f17b1804b1-477a81c567bsm55651695e9.9.2025.11.18.02.29.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Nov 2025 02:29:50 -0800 (PST)
+ Tue, 18 Nov 2025 02:29:43 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com,
 	alex.bennee@linaro.org
-Subject: [PATCH v2 3/3] mtest2make: do not repeat the same speed over and over
-Date: Tue, 18 Nov 2025 11:29:42 +0100
-Message-ID: <20251118102942.551194-4-pbonzini@redhat.com>
+Subject: [PATCH v2 0/3] mtest2make: clean up and make dependencies more precise
+Date: Tue, 18 Nov 2025 11:29:39 +0100
+Message-ID: <20251118102942.551194-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251118102942.551194-1-pbonzini@redhat.com>
-References: <20251118102942.551194-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -123,40 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are just two of them (slow and thorough; quick is simply the
-default).  Avoid repeating them for as many times as there are tests.
+You probably have never thought much about scripts/mtest2make.py, and in
+fact it has seen only a hendful of commits in the last few years.
+The idea is pretty simple: gather the list of testsuites and their
+dependencies, and turn a "make check-*" invocation into calling "ninja"
+first and "meson test" second.  On top of that, it magically turns
+SPEED=thorough into invoking up to three suites named XYZ, XYZ-slow
+and XYZ-thorough.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- scripts/mtest2make.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+But even this incospicuous script can harbor a bug, or rather an "I
+didn't really think too much about it" situation.  Dependencies are added
+to suite XYZ independent of the speed that is used in the meson.build
+file: add a dependency to a func-thorough test and "make check-func"
+will build it at any requested speed.
 
-diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
-index 692e4867ec7..19c11ed9352 100644
---- a/scripts/mtest2make.py
-+++ b/scripts/mtest2make.py
-@@ -14,7 +14,7 @@
- class Suite(object):
-     def __init__(self):
-         self.deps = set()
--        self.speeds = []
-+        self.speeds = set()
- 
-     def names(self, base):
-         return [f'{base}-{speed}' for speed in self.speeds]
-@@ -62,10 +62,10 @@ def process_tests(test, targets, suites):
-         suites[s].deps.update(deps)
-         if s.endswith('-slow'):
-             s = s[:-5]
--            suites[s].speeds.append('slow')
-+            suites[s].speeds.add('slow')
-         if s.endswith('-thorough'):
-             s = s[:-9]
--            suites[s].speeds.append('thorough')
-+            suites[s].speeds.add('thorough')
- 
- def emit_prolog(suites, prefix):
-     all_targets = ' '.join((f'{prefix}-{k}' for k in suites.keys()))
+Fixing this is a one line change with some cleanup performed on the
+front, and that cleanup is patch 1.  This (at least to me) also makes
+the generated Makefile.mtest file a little bit easier to read, which is
+nice to have.
+
+Paolo
+
+v1->v2: support "make check-SUITE" where SUITE includes a speed
+
+Paolo Bonzini (3):
+  mtest2make: cleanup mtest-suites variables
+  mtest2make: add dependencies to the "speed-qualified" suite
+  mtest2make: do not repeat the same speed over and over
+
+ Makefile              |  4 +++-
+ scripts/mtest2make.py | 43 ++++++++++++++++++-------------------------
+ 2 files changed, 21 insertions(+), 26 deletions(-)
+
 -- 
 2.51.1
 
