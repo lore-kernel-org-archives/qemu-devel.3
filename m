@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A64CEE327
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 15:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E2ACEE32A
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 15:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLNxT-0005nU-CY; Tue, 18 Nov 2025 10:49:32 -0500
+	id 1vLNxi-00064s-AG; Tue, 18 Nov 2025 10:49:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vLNwv-000514-ST
+ id 1vLNwu-0004zr-3j
  for qemu-devel@nongnu.org; Tue, 18 Nov 2025 10:48:58 -0500
-Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vLNwt-0001xC-Sg
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 10:48:57 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id D05337A01E7;
+ id 1vLNwq-0001x1-JO
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 10:48:55 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id D061F1D00253;
  Tue, 18 Nov 2025 10:48:37 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Tue, 18 Nov 2025 10:48:37 -0500
+ by phl-compute-05.internal (MEProxy); Tue, 18 Nov 2025 10:48:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to; s=fm2; t=1763480917; x=
- 1763567317; bh=DHfMJm90VsM7kQKgvIvw0QuFSuaf25hpBjZModfq2y0=; b=H
- 2oHVDKXOvjyC877uQrR6ig2o11RNAiFi6XfdITzOtoU4A9T7+cq6DQk2lxcQzSPb
- 11yJIPZXMGY/mKxEZIzGGDvXWTDksXkZdUehgIuVxGOC3w8E0lrY/C6tMFLO4ezI
- pEyR0OBxX/101h5iFdd1iCqACNWxuRYccQLXUevzJitOtriygxt7fiVF0ULdSwEK
- cotNXcJM5UeGP7whdMWZe+TV5MQRqbxM1hLFAu630UL1YDzR/8YFJrquA2LzZRdi
- 0VGcZMlgU7K5oO3jK9t3OOikGsJXdHmTZRr6PMiRC6qVXKzmXU67Eumz03c4NcP0
- K8e/DBNQgtvFHjh7d8o+g==
+ 1763567317; bh=v9a5Rp/GL3pw3s6c7lYFE1jraXZm7oao+QupjGo4MmE=; b=G
+ FxI9agC3GClG0GjM9vJ981x9mC8l2P0sUwcWqI4Tf4j918Sbr5I4IfucBxsSuDtb
+ AmLxx2uJ5gxfo/aM+QQM2xqXpBAZZ/h8z21cMVTY6Bm1uQyEZ/+cQnJVIkd3WO7w
+ 6pxtqU4ymtbLAMMkHU/rjr9qm0fRsHRCy4vRE3MN2cm4XPEnBfRY3VlUXn0Ql9E9
+ SM669weckQda2qRP7XDYoX+BdKblgOLu6zCdgloBaqrIvIVjZ6JNiWdWicViAssn
+ ow6mXVqHEY6r5IUvKe+eK3Fpck5eB7r0AB61qJrPabHQku794LfViZcePAlCtu9/
+ osNwBZ6gg0Hc2fSGzvdRA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1763480917; x=1763567317; bh=D
- HfMJm90VsM7kQKgvIvw0QuFSuaf25hpBjZModfq2y0=; b=fjdkir2hJU8brX3F7
- xuJFdmKdcSmyOzy7ots7JdvIZuZ5dS1UGN7zJ3s+h925sVHPI9P4hmsCMLfOLl5e
- w0p57d0TfipUneebj4mbkhsaz2X2wAfQrfKy+8zWgetqVWUmLE6F1+h7ZcRDZ0Fk
- bt9bXR4j3mZU4tcIcSFSjU3YuFEj8U9kYxFc2EqJAM/mC8FtPmwDoYi/2zF+a0LT
- YWLuIQ2P1tVn0I9ipY1dpwqOjYmT1Yxh2T1i8oMnnZ0y5KZPYWl8ylgAJdB1MPL5
- APpI55IOMk3HSPCCNKspvbKh84FmAJ55q7O5hYBCDH2L9YbIpDq72RCkbhn4T1+S
- K5K9Q==
-X-ME-Sender: <xms:VZUcaQK3lEl0BgpYcAV95FuxyHVVIx4JGSbECzYhj6lNLtLxOOYi5A>
- <xme:VZUcaXmvZxTtx-9QNEimmLBuExEH5WBxKiUDIeWH6aREcARGQoCBBGQ-5EObry2RE
- 5QFJpgn6SbllspKs4LmlzUdh8W4jmHQhm_bdSvDegdGw4n3Bzjy6Wk>
-X-ME-Received: <xmr:VZUcaeF01r2t9bw12HEoTtZ0aEov5R-Ol9v7yOfImOe45E0RnWB8W973vHUv>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1763480917; x=1763567317; bh=v
+ 9a5Rp/GL3pw3s6c7lYFE1jraXZm7oao+QupjGo4MmE=; b=tRggQHdZp1raLaqkT
+ HZptVRJRDDNWRT07iLuD9obwY4JOLJNl98BnOAfIXRUn/g9YhFHXJNRAwlnb3Vgm
+ CMtBpoWanQ4F5ZNQHtLZPqu2gpviHD2IhzLqWhBiPPbyj5MJ0KafqGvUU8I99uEN
+ TJiwCkiFcociEYvI654m+G0PfdIDsFS57cvbYf5skWWYqd2hxR3+5Af1mkt3lJwR
+ 53jLRA0jO6LRlY4xS7+k5OrV2NqrP03vatddxA0FvwUtnRN24lQj5W+uZF1jFmMO
+ byRwkAVDsw+K0RitvBNtZaAfg0RdnT7NkqR0BQ36Q4/CcoHSrCqa8CD9Lqz2npv0
+ ztELQ==
+X-ME-Sender: <xms:VZUcaTQXqp1T0vMg_-LRsLxulYH-zYNFRp7_899bsFDGk5iAxsCMgQ>
+ <xme:VZUcacOQBiApe2Ev8K-DTnFfQ8VuX9IYSbEy-hGsXKDUk7EZF-v-f9hUnj9y_Ta5U
+ y1cEFUpQeVyIvutjiZpqqw0RPt3FFQHw9dg1ht_-pi_lhrgwaurPQ>
+X-ME-Received: <xmr:VZUcaWPdHEtkm5nhQcSk-qtmsCEpnqBSKUM_0Bs3ySwAtCxaAUmiwS0ZvlHd>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddujedvucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
  ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
  ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthho
- nhesvghikhdrsghmvgdrhhhu
-X-ME-Proxy: <xmx:VZUcaXFtiEfTUlGI8app84ElZV5uQTeClPoet0-0O46GvAquSsaHAQ>
- <xmx:VZUcabOa91MDNqd2YVtRNJrLSP8uYczv2bQ3lxYrvE_HyyRxtGJ7Vw>
- <xmx:VZUcaWEx_xZgZ4YCfs5orlMHFLKCeNxENaxF9Y34mj0fM1GEwC8OHg>
- <xmx:VZUcaSM2RCIn7xg6Ick0G-ymODJtPl-Sf3BDi7MEjHSesqcIC3ruhQ>
- <xmx:VZUcaeyX264EPezSDGOrTmGIZYSbuV49li5qD7sU-Imt9OgS6IV83yXV>
+ thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
+ gsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgv
+ lhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:VZUcacu4P8QFmX7VyeWhjI4Q6WDefopVUZiT4iMjzxHXRdL94D43wg>
+ <xmx:VZUcaQWMrZ5k5jDqahEAGJ8WjLjznBVPPNmQ72SmtA9l0PiIeLjA2Q>
+ <xmx:VZUcaUud3vCaui--3n1pEowohMOk9K7Izoio9krmvoheL3jNP1685g>
+ <xmx:VZUcacVkEQkIXPHIt3aU3EtjowaRx7zXGhvGUVK5q5LRARNOoFxBug>
+ <xmx:VZUcaeYDJ7zm43brimjKDAkbVN1nvpgpqBYUWz_m26Ugaxy510pWpREQ>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Nov 2025 10:48:37 -0500 (EST)
+ 18 Nov 2025 10:48:36 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id d2f15234;
+ by chomposaur (OpenSMTPD) with ESMTPA id 6ab2304b;
  Tue, 18 Nov 2025 15:48:31 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v3 10/11] ati-vga: Implement HOST_DATA register writes
-Date: Tue, 18 Nov 2025 10:48:11 -0500
-Message-ID: <20251118154812.57861-11-chad@jablonski.xyz>
+Subject: [PATCH v3 09/11] ati-vga: Refactor ati_2d_blt to use dst setup helper
+Date: Tue, 18 Nov 2025 10:48:10 -0500
+Message-ID: <20251118154812.57861-10-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251118154812.57861-1-chad@jablonski.xyz>
 References: <20251118154812.57861-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.153; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b2-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.145; envelope-from=chad@jablonski.xyz;
+ helo=fout-b2-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -113,183 +113,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Writing to any of the HOST_DATA0-7 registers pushes the written data
-into a 128-bit accumulator. When the accumulator is full a flush is
-triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
-will also initiate a flush. The flush itself is left for the next patch.
-
-Unaligned HOST_DATA* writes result in, from what I can tell, undefined
-behavior on real hardware. A well-behaved driver shouldn't be doing this
-anyway. For that reason they are not handled here at all.
+This is a pure refactor of the ati_2d_blt function to make use of the
+setup_2d_blt_dst helper and the struct it returns. There should be no
+changes in behavior in this patch.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c      | 33 +++++++++++++++++++++++++++++++++
- hw/display/ati_dbg.c  |  9 +++++++++
- hw/display/ati_int.h  |  9 +++++++++
- hw/display/ati_regs.h |  9 +++++++++
- 4 files changed, 60 insertions(+)
+ hw/display/ati_2d.c | 166 +++++++++++++++++++-------------------------
+ 1 file changed, 71 insertions(+), 95 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index cfb5dc2fb8..dc302eb6f2 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -555,6 +555,13 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index f2e01e28e9..e30a4cd941 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -130,55 +130,29 @@ void ati_2d_blt(ATIVGAState *s)
+             s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
+             surface_bits_per_pixel(ds),
+             (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
+-
+-    QemuRect dst = dst_rect(s);
+-    QemuRect scissor = sc_rect(s);
+-    QemuRect visible;
+-    if (!qemu_rect_intersect(&dst, &scissor, &visible)) {
+-        return;
+-    }
+-    uint32_t src_left_offset = visible.x - dst.x;
+-    uint32_t src_top_offset = visible.y - dst.y;
+-
+-    int bpp = ati_bpp_from_datatype(s);
+-    if (!bpp) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+-        return;
+-    }
+-    int dst_stride = s->regs.dst_pitch;
+-    if (!dst_stride) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
+-        return;
+-    }
+-    uint8_t *dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
+-
+-    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-        dst_bits += s->regs.crtc_offset & 0x07ffffff;
+-        dst_stride *= bpp;
+-    }
++    ATIBlitDest dst = setup_2d_blt_dst(s);
+     uint8_t *end = s->vga.vram_ptr + s->vga.vram_size;
+-    if (visible.x > 0x3fff || visible.y > 0x3fff || dst_bits >= end
+-        || dst_bits + visible.x
+-         + (visible.y + visible.height) * dst_stride >= end) {
+-        qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+-        return;
+-    }
++
+     DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
+             s->regs.src_offset, s->regs.dst_offset, s->regs.default_offset,
+             s->regs.src_pitch, s->regs.dst_pitch, s->regs.default_pitch,
+-            s->regs.src_x, s->regs.src_y, dst.x, dst.y, dst.width, dst.height,
+-            (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ? '>' : '<'),
+-            (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ? 'v' : '^'));
++            s->regs.src_x, s->regs.src_y,
++            dst.rect.x, dst.rect.y, dst.rect.width, dst.rect.height,
++            (dst.left_to_right ? '>' : '<'),
++            (dst.top_to_bottom ? 'v' : '^'));
++
+     switch (s->regs.dp_mix & GMC_ROP3_MASK) {
+     case ROP3_SRCCOPY:
+     {
+         bool fallback = false;
+-        unsigned src_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
+-                         s->regs.src_x + src_left_offset :
+-                         s->regs.src_x + 1 - dst.width + src_left_offset);
+-        unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+-                         s->regs.src_y + src_top_offset :
+-                         s->regs.src_y + 1 - dst.height + src_top_offset);
++        unsigned src_x = (dst.left_to_right ?
++                         s->regs.src_x + dst.src_left_offset :
++                         s->regs.src_x + 1 -
++                         dst.rect.width + dst.src_left_offset);
++        unsigned src_y = (dst.top_to_bottom ?
++                         s->regs.src_y + dst.src_top_offset :
++                         s->regs.src_y + 1 -
++                         dst.rect.height + dst.src_top_offset);
+         int src_stride = s->regs.src_pitch;
+         if (!src_stride) {
+             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
+@@ -188,44 +162,44 @@ void ati_2d_blt(ATIVGAState *s)
+ 
+         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+             src_bits += s->regs.crtc_offset & 0x07ffffff;
+-            src_stride *= bpp;
++            src_stride *= dst.bpp;
+         }
+         if (src_x > 0x3fff || src_y > 0x3fff || src_bits >= end
+             || src_bits + src_x
+-             + (src_y + visible.height) * src_stride >= end) {
++             + (src_y + dst.visible.height) * src_stride >= end) {
+             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+             return;
+         }
+ 
+         src_stride /= sizeof(uint32_t);
+-        dst_stride /= sizeof(uint32_t);
++        dst.stride /= sizeof(uint32_t);
+         DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
+-                src_bits, dst_bits, src_stride, dst_stride, bpp, bpp,
+-                src_x, src_y, visible.x, visible.y,
+-                visible.width, visible.height);
++                src_bits, dst.bits, src_stride, dst.stride, dst.bpp, dst.bpp,
++                src_x, src_y, dst.visible.x, dst.visible.y,
++                dst.visible.width, dst.visible.height);
+ #ifdef CONFIG_PIXMAN
+         if ((s->use_pixman & BIT(1)) &&
+-            s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT &&
+-            s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
+-            fallback = !pixman_blt((uint32_t *)src_bits, (uint32_t *)dst_bits,
+-                                   src_stride, dst_stride, bpp, bpp,
+-                                   src_x, src_y, visible.x, visible.y,
+-                                   visible.width, visible.height);
++            dst.left_to_right &&
++            dst.top_to_bottom) {
++            fallback = !pixman_blt((uint32_t *)src_bits, (uint32_t *)dst.bits,
++                                   src_stride, dst.stride, dst.bpp, dst.bpp,
++                                   src_x, src_y, dst.visible.x, dst.visible.y,
++                                   dst.visible.width, dst.visible.height);
+         } else if (s->use_pixman & BIT(1)) {
+             /* FIXME: We only really need a temporary if src and dst overlap */
+-            int llb = visible.width * (bpp / 8);
++            int llb = dst.visible.width * (dst.bpp / 8);
+             int tmp_stride = DIV_ROUND_UP(llb, sizeof(uint32_t));
+             uint32_t *tmp = g_malloc(tmp_stride * sizeof(uint32_t) *
+-                                     visible.height);
++                                     dst.visible.height);
+             fallback = !pixman_blt((uint32_t *)src_bits, tmp,
+-                                   src_stride, tmp_stride, bpp, bpp,
++                                   src_stride, tmp_stride, dst.bpp, dst.bpp,
+                                    src_x, src_y, 0, 0,
+-                                   visible.width, visible.height);
++                                   dst.visible.width, dst.visible.height);
+             if (!fallback) {
+-                fallback = !pixman_blt(tmp, (uint32_t *)dst_bits,
+-                                       tmp_stride, dst_stride, bpp, bpp,
+-                                       0, 0, visible.x, visible.y,
+-                                       visible.width, visible.height);
++                fallback = !pixman_blt(tmp, (uint32_t *)dst.bits,
++                                       tmp_stride, dst.stride, dst.bpp, dst.bpp,
++                                       0, 0, dst.visible.x, dst.visible.y,
++                                       dst.visible.width, dst.visible.height);
+             }
+             g_free(tmp);
+         } else
+@@ -234,35 +208,36 @@ void ati_2d_blt(ATIVGAState *s)
+             fallback = true;
+         }
+         if (fallback) {
+-            unsigned int y, i, j, bypp = bpp / 8;
++            unsigned int y, i, j, bypp = dst.bpp / 8;
+             unsigned int src_pitch = src_stride * sizeof(uint32_t);
+-            unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
++            unsigned int dst_pitch = dst.stride * sizeof(uint32_t);
+ 
+-            for (y = 0; y < visible.height; y++) {
+-                i = visible.x * bypp;
++            for (y = 0; y < dst.visible.height; y++) {
++                i = dst.visible.x * bypp;
+                 j = src_x * bypp;
+-                if (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
+-                    i += (visible.y + y) * dst_pitch;
++                if (dst.top_to_bottom) {
++                    i += (dst.visible.y + y) * dst_pitch;
+                     j += (src_y + y) * src_pitch;
+                 } else {
+-                    i += (visible.y + visible.height - 1 - y) * dst_pitch;
+-                    j += (src_y + visible.height - 1 - y) * src_pitch;
++                    i += (dst.visible.y + dst.visible.height - 1 - y) *
++                         dst_pitch;
++                    j += (src_y + dst.visible.height - 1 - y) * src_pitch;
+                 }
+-                memmove(&dst_bits[i], &src_bits[j], visible.width * bypp);
++                memmove(&dst.bits[i], &src_bits[j], dst.visible.width * bypp);
+             }
+         }
+-        if (dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
+-            dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
++        if (dst.bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
++            dst.bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
+             s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
+             memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
+                                     s->regs.dst_offset +
+-                                    visible.y * surface_stride(ds),
+-                                    visible.height * surface_stride(ds));
++                                    dst.visible.y * surface_stride(ds),
++                                    dst.visible.height * surface_stride(ds));
+         }
+-        s->regs.dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
+-                         visible.x + visible.width : visible.x);
+-        s->regs.dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+-                         visible.y + visible.height : visible.y);
++        s->regs.dst_x = (dst.left_to_right ?
++                         dst.visible.x + dst.visible.width : dst.visible.x);
++        s->regs.dst_y = (dst.top_to_bottom ?
++                         dst.visible.y + dst.visible.height : dst.visible.y);
+         break;
      }
- }
+     case ROP3_PATCOPY:
+@@ -285,37 +260,38 @@ void ati_2d_blt(ATIVGAState *s)
+             break;
+         }
  
-+static void ati_host_data_reset(ATIHostDataState *hd)
-+{
-+    hd->next = 0;
-+    hd->row = 0;
-+    hd->col = 0;
-+}
-+
- static void ati_mm_write(void *opaque, hwaddr addr,
-                            uint64_t data, unsigned int size)
- {
-@@ -830,6 +837,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+-        dst_stride /= sizeof(uint32_t);
++        dst.stride /= sizeof(uint32_t);
+         DPRINTF("pixman_fill(%p, %d, %d, %d, %d, %d, %d, %x)\n",
+-                dst_bits, dst_stride, bpp, visible.x, visible.y,
+-                visible.width, visible.height, filler);
++                dst.bits, dst.stride, dst.bpp, dst.visible.x, dst.visible.y,
++                dst.visible.width, dst.visible.height, filler);
+ #ifdef CONFIG_PIXMAN
+         if (!(s->use_pixman & BIT(0)) ||
+-            !pixman_fill((uint32_t *)dst_bits, dst_stride, bpp,
+-                         visible.x, visible.y, visible.width, visible.height,
++            !pixman_fill((uint32_t *)dst.bits, dst.stride, dst.bpp,
++                         dst.visible.x, dst.visible.y,
++                         dst.visible.width, dst.visible.height,
+                          filler))
+ #endif
+         {
+             /* fallback when pixman failed or we don't want to call it */
+-            unsigned int x, y, i, bypp = bpp / 8;
+-            unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
+-            for (y = 0; y < visible.height; y++) {
+-                i = visible.x * bypp + (visible.y + y) * dst_pitch;
+-                for (x = 0; x < visible.width; x++, i += bypp) {
+-                    stn_he_p(&dst_bits[i], bypp, filler);
++            unsigned int x, y, i, bypp = dst.bpp / 8;
++            unsigned int dst_pitch = dst.stride * sizeof(uint32_t);
++            for (y = 0; y < dst.visible.height; y++) {
++                i = dst.visible.x * bypp + (dst.visible.y + y) * dst_pitch;
++                for (x = 0; x < dst.visible.width; x++, i += bypp) {
++                    stn_he_p(&dst.bits[i], bypp, filler);
+                 }
+             }
+         }
+-        if (dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
+-            dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
++        if (dst.bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
++            dst.bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
+             s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
+             memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
+                                     s->regs.dst_offset +
+-                                    visible.y * surface_stride(ds),
+-                                    visible.height * surface_stride(ds));
++                                    dst.visible.y * surface_stride(ds),
++                                    dst.visible.height * surface_stride(ds));
+         }
+-        s->regs.dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+-                         visible.y + visible.height : visible.y);
++        s->regs.dst_y = (dst.top_to_bottom ?
++                         dst.visible.y + dst.visible.height : dst.visible.y);
          break;
-     case DST_WIDTH:
-         s->regs.dst_width = data & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case DST_HEIGHT:
-@@ -880,6 +888,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DST_HEIGHT_WIDTH:
-         s->regs.dst_width = data & 0x3fff;
-         s->regs.dst_height = (data >> 16) & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case DP_GUI_MASTER_CNTL:
-@@ -910,6 +919,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DST_WIDTH_X:
-         s->regs.dst_x = data & 0x3fff;
-         s->regs.dst_width = (data >> 16) & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case SRC_X_Y:
-@@ -923,6 +933,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case DST_WIDTH_HEIGHT:
-         s->regs.dst_height = data & 0x3fff;
-         s->regs.dst_width = (data >> 16) & 0x3fff;
-+        ati_host_data_reset(&s->host_data);
-         ati_2d_blt(s);
-         break;
-     case DST_HEIGHT_Y:
-@@ -1017,6 +1028,26 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         break;
-     case SRC_SC_BOTTOM:
-         s->regs.src_sc_bottom = data & 0x3fff;
-+    case HOST_DATA0:
-+    case HOST_DATA1:
-+    case HOST_DATA2:
-+    case HOST_DATA3:
-+    case HOST_DATA4:
-+    case HOST_DATA5:
-+    case HOST_DATA6:
-+    case HOST_DATA7:
-+        s->host_data.acc[s->host_data.next] = data;
-+        if (s->host_data.next >= 3) {
-+            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+            s->host_data.next = 0;
-+            break;
-+        }
-+        s->host_data.next += 1;
-+        break;
-+    case HOST_DATA_LAST:
-+        s->host_data.acc[s->host_data.next] = data;
-+        qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+        ati_host_data_reset(&s->host_data);
-         break;
+     }
      default:
-         break;
-@@ -1123,6 +1154,8 @@ static void ati_vga_reset(DeviceState *dev)
-     /* reset vga */
-     vga_common_reset(&s->vga);
-     s->mode = VGA_MODE;
-+
-+    ati_host_data_reset(&s->host_data);
- }
- 
- static void ati_vga_exit(PCIDevice *dev)
-diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
-index 3ffa7f35df..5c799d540a 100644
---- a/hw/display/ati_dbg.c
-+++ b/hw/display/ati_dbg.c
-@@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
-     {"MC_SRC1_CNTL", 0x19D8},
-     {"TEX_CNTL", 0x1800},
-     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
-+    {"HOST_DATA0", 0x17c0},
-+    {"HOST_DATA1", 0x17c4},
-+    {"HOST_DATA2", 0x17c8},
-+    {"HOST_DATA3", 0x17cc},
-+    {"HOST_DATA4", 0x17d0},
-+    {"HOST_DATA5", 0x17d4},
-+    {"HOST_DATA6", 0x17d8},
-+    {"HOST_DATA7", 0x17dc},
-+    {"HOST_DATA_LAST", 0x17e0},
-     {NULL, -1}
- };
- 
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 1e999b11c2..b9142ce6d8 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -15,6 +15,7 @@
- #include "hw/i2c/bitbang_i2c.h"
- #include "vga_int.h"
- #include "qom/object.h"
-+#include "qemu/units.h"
- 
- /*#define DEBUG_ATI*/
- 
-@@ -95,6 +96,13 @@ typedef struct ATIVGARegs {
-     uint16_t src_sc_right;
- } ATIVGARegs;
- 
-+typedef struct ATIHostDataState {
-+    uint32_t row;
-+    uint32_t col;
-+    uint32_t next;
-+    uint32_t acc[4];
-+} ATIHostDataState;
-+
- struct ATIVGAState {
-     PCIDevice dev;
-     VGACommonState vga;
-@@ -112,6 +120,7 @@ struct ATIVGAState {
-     MemoryRegion io;
-     MemoryRegion mm;
-     ATIVGARegs regs;
-+    ATIHostDataState host_data;
- };
- 
- const char *ati_reg_name(int num);
-diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index 02025eef36..9eb68fbec6 100644
---- a/hw/display/ati_regs.h
-+++ b/hw/display/ati_regs.h
-@@ -252,6 +252,15 @@
- #define DP_T12_CNTL                             0x178c
- #define DST_BRES_T1_LNTH                        0x1790
- #define DST_BRES_T2_LNTH                        0x1794
-+#define HOST_DATA0                              0x17c0
-+#define HOST_DATA1                              0x17c4
-+#define HOST_DATA2                              0x17c8
-+#define HOST_DATA3                              0x17cc
-+#define HOST_DATA4                              0x17d0
-+#define HOST_DATA5                              0x17d4
-+#define HOST_DATA6                              0x17d8
-+#define HOST_DATA7                              0x17dc
-+#define HOST_DATA_LAST                          0x17e0
- #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
- #define SCALE_OFFSET_0                          0x1998
- #define SCALE_PITCH                             0x199c
 -- 
 2.51.0
 
