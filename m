@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC17ECEBF93
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 07:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E76CCD19A
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 07:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLFzu-0007VF-V8; Tue, 18 Nov 2025 02:19:31 -0500
+	id 1vLG8e-0001kv-Dt; Tue, 18 Nov 2025 02:28:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLFzr-0007U0-UR
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 02:19:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLG8Z-0001kI-AM
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 02:28:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLFzq-0005W9-1X
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 02:19:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLG8X-00070e-92
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 02:28:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763450364;
+ s=mimecast20190719; t=1763450904;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VmJdiDmFPOlENInmh2WpPOtarGUE9pSC4w6eVPjoNRQ=;
- b=gW4VCU8osyKBKg1d9lg7U3RJ97GBy9OUpIWilYXzj8zSjBqDPwMRPzFWIpJKXiu5uC8cVT
- URaiDdpQV2DDtII7TAEy66ph8pHbDt24HhQEMEcJ+X1szc5sfuTYGh+KobSnw3uKthXp9m
- p5eShJ526qhcrKWPgQDbM3FgwQwPlH4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wGpupxMGnNcGjuuvqtXSaPbOS7efqiPqW69FMlPt8ds=;
+ b=Ibau+wfzK2GRa4FXFlktCJyMQCDNffyZt9HWfxf96UWZndmdDWJm5mrkTRSWmkCsW1aiLG
+ c9DVbycn3SiGPmxYXsN044fd4g7TS3mSOfzJIFRkDzxhrcrMplWX73PeC6kRj707U+Ba4Z
+ PsRODBZ8fxuzm0Lb/M9H0ZX0KDSqfMQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-bFN_erB9PFutbI4QjZS6QQ-1; Tue, 18 Nov 2025 02:19:22 -0500
-X-MC-Unique: bFN_erB9PFutbI4QjZS6QQ-1
-X-Mimecast-MFC-AGG-ID: bFN_erB9PFutbI4QjZS6QQ_1763450361
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b736eca894fso353704466b.1
- for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 23:19:21 -0800 (PST)
+ us-mta-222-zpcPJKTUOf6-mlJ8HEwd3A-1; Tue, 18 Nov 2025 02:28:22 -0500
+X-MC-Unique: zpcPJKTUOf6-mlJ8HEwd3A-1
+X-Mimecast-MFC-AGG-ID: zpcPJKTUOf6-mlJ8HEwd3A_1763450901
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4779da35d27so19185195e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 23:28:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763450361; x=1764055161; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763450901; x=1764055701; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=VmJdiDmFPOlENInmh2WpPOtarGUE9pSC4w6eVPjoNRQ=;
- b=NyT164TDK1zN41g1BWXi2J2sg4fr8wjnUo8dXbTlX45cROSzGwWjd/N7xHwoUk5rSG
- PdoktxQggwSoJGqw+eTjK++OCXykgEelCEaQmkIWus9jr3M4mzk8r/CzOVUQaMZdAzrG
- WVRAC20SXUGTzS7vMWfSgbHPHvM5H9v+NHLmORVgMYVhEg9k1UC80MstJDJl/wF+mr81
- 9n0nXXpqLa5cFa7kxOEUEwTf8pf9zonIQS/CjmQ7Hl1fLWd16JplCCtEr6HGKSnI2Ayv
- 1O4Kxet99Ls5HVRpetc5npYrC4pEOef+VB8MCE7WMnkEOL8ZapFmfMfTdRxXcNhetNNl
- eHqQ==
+ bh=wGpupxMGnNcGjuuvqtXSaPbOS7efqiPqW69FMlPt8ds=;
+ b=OS1KnEMTwhtk28o7DqeiIDEXfygBT/uElWb0XjY8WN7fs9SudhRoDatUlFGILi/3Ss
+ ugE1KOP571SZxXb/wTY9OyTuxtWezyc/NwFbz6rJxp0mQyolbW8XRQDTcMzX4TeuGzHA
+ EDU52wT8dQO1+KmCfLZIbrnIiH+eF3YM2sVnmbPSPQa40qjWM+QXfsGBCPqUBcAriAaz
+ s6geADNkD+o1PyWOIYGWsU07et/aP1Ph/ww+Z732NJA1TjvOSQvC57Pk/vDnMTosjuPI
+ q1l1Qmz+9wHG9pozpdX8m5QEZLWXNmWiuDkpFf8i7OkDFol4w6VfWw5pFIHpdbyqEd/G
+ E5Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763450361; x=1764055161;
+ d=1e100.net; s=20230601; t=1763450901; x=1764055701;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VmJdiDmFPOlENInmh2WpPOtarGUE9pSC4w6eVPjoNRQ=;
- b=QnLEnm8BRm37dUGDYL1ckjK6srijCd92Cg2GjDYAqdxggzi32r32DXgPBqs+MnLBaG
- JCxfZI5tdRa12jWWX8HM7Etaz0zjpimszJeutk0v2Q++oXhdMiWkpICV+A+WTppbi8v/
- Nz5BaricgAQ7TSiQo7/vWSwszR4oy/UOGBA0jJQRkllFLIy010dRliT2uuyYvcOyLGBq
- 3Lm9nAI0ykqdHGE48yeBTUK5Vx3YQQmpPYz2fojWHWI2hpgOXIhWL8+hu3g4yQs2LIzZ
- 74Ia76QQQ1vvBAhW6IlV7Vq9cBGV3VhGxfzyLHM8nWPqIPSSvAi3gpgbVZh1td9lXLcP
- cLVQ==
+ bh=wGpupxMGnNcGjuuvqtXSaPbOS7efqiPqW69FMlPt8ds=;
+ b=GxEVqLGsYFN+Mkn9DU6PWHVfq0LIbGa+rPKQyGfeGLbl/e2u0B+22MgnjKQfKK8g03
+ rvXl3tXmcymbX7uR8j3FUQ018ImscZvq/yIeQhFsCsTH+VQJi+nWKad/94g8uDbH9zZY
+ M2AaT0KAf47s4hnBIx/X3E+VFQTYKZ2lBB0e80U73nC7/jAnZDhL1EmSSOTUyhSZ6cB+
+ 0oRAli8PSI6qH6kMuFWPe8ohN900XqGXojAPhvW3l55BRHSXRW6SRCcbHrBq572OuULf
+ 9ivzGpCpq+k4bAiFuLm9M//wijKMTiDhvyojCbiHGcSz0WDFkwU3JNUmGf8Ez4JnpBNk
+ kWZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfgJB6gPl4mNISNMn5b1MDRK9uzeTcHCXudl4/kGW8czKSgCZpfUzZ+yUhDsgeiY4izg9FFuMwhM1G@nongnu.org
-X-Gm-Message-State: AOJu0YxWav6XsLDQa4TOKEJsb+/8A+RZzLG7O1nCpnunp8qCVHXbouqN
- Qd7W9Ebag9mOifp6Tl98VY97zPeHK0y2Ql6kBA8Vk8az0zRuwhAkmJ39NQkWpAZo3y+0mhOg91V
- a/u8iuWS7UoeJTdn8tJmHVzzoY225Zpn/3oS0Ex0HocKRnEX/w1l8Q9N9
-X-Gm-Gg: ASbGncvNyDv9IzA7BsZASM5F5HpLsISUH5bGpQvUadmOusxJ1xeNf13kMurLVRfU8cw
- htC3Vj1rwMg8VdnQrx/r8LMdJ9TvI2/OtFXnswU1nyc2Yq4fzw/NanWpGz2Csw1kR1bj3iK5hrj
- IkpVBn3gZS9OfIN2odq7ifRt/itfMXjtrWdLjvqIBkjLG4pYm4YWYy/0DmrK1zAPK1hdip7yTpW
- 4EZ9vWZ3/KMLmBnAL1+fU9hWA1xOgmuTE8qfDgVeCfJFxz5fLYFR53dWOUgzw67pH87SbPTThwi
- ss6ncIRxdLn+T80AZLlcE1pPRoE4NpnWIhCeC3qhqYil6aPVb9EUFe0nSkJBOIATl96ySO+ropS
- XW234YS4=
-X-Received: by 2002:a17:906:99c4:b0:b72:e158:8234 with SMTP id
- a640c23a62f3a-b73677edb41mr1701641766b.3.1763450360778; 
- Mon, 17 Nov 2025 23:19:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjcUM66lVLajpcsD+J5t/2c6Kqr1UR/H/duLU2HRmYRKqLoT2teKaft5Lh0DxTSUBLCuILPA==
-X-Received: by 2002:a17:906:99c4:b0:b72:e158:8234 with SMTP id
- a640c23a62f3a-b73677edb41mr1701639466b.3.1763450360361; 
- Mon, 17 Nov 2025 23:19:20 -0800 (PST)
+ AJvYcCVg2edlOLJbbPaEeX57lQy5SktDtvD9UeM+mF+qIY2rROZD3621J0fGfngc+t7VOYqbVrVPmtD1qPJd@nongnu.org
+X-Gm-Message-State: AOJu0Yx6FXhZNNwij/Yu8VjCe91SyHh7QCpMH5FxfCBwQULBGeAFj0FM
+ NyGRyOShaJrf9pmZPbljrJ3XElrDwBT+5MnNANjtLM2AZXOC9Qg2WJlmmWb43YiVyNNADL0KfqT
+ H6c658mjA94y6Ci29M1aqJkM25Y0XPQd/KMLk5nFazrN+ywmiXk0yATE2
+X-Gm-Gg: ASbGncu5s7uA4F2yepL1drw0TxJcIp97BIq3Bt/WKv9E8xnZaFjtquldxv3HYWuzCL2
+ nPxzrS7CCgfivaCjv9WnEo16v1Iv4EVTqaCcNhZ8ahbDVWJAWN4+8Ux+UesK68iiXED1hIFB8rQ
+ OlV/AdjXgWEV6GSUWpokKBWwYjr8Jfj3duE+bokOzE7D0aonHdP3L5xTtH56nJfG3d1JCvmwG1x
+ Dud1yEF5ST0oFBVChM5odKKpmdvsbqiwyHGtWTJgzZqq1dm6bcfsLtO5suLA4qCuPJGT/KBsz/F
+ RL+NqzYp3AfxHWb+zS3yzUFn6ua2Gz3+U1I+WqwzoVAIkGDsLBzjeWdROt+VqcaA9qyt8BknhwO
+ whEjXMpQ=
+X-Received: by 2002:a05:600c:1986:b0:477:28c1:26ce with SMTP id
+ 5b1f17b1804b1-4778fe41be4mr133978375e9.7.1763450901034; 
+ Mon, 17 Nov 2025 23:28:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFBxIRjtmRgli6x4FPtIWeyqAKfsaMirXZL0GLIbTnW1BdJtaRajgNpsQmRJA3Dzy0/sOOxQw==
+X-Received: by 2002:a05:600c:1986:b0:477:28c1:26ce with SMTP id
+ 5b1f17b1804b1-4778fe41be4mr133978115e9.7.1763450900596; 
+ Mon, 17 Nov 2025 23:28:20 -0800 (PST)
 Received: from [192.168.0.7] ([47.64.114.102])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b73a5d77a03sm378549666b.63.2025.11.17.23.19.19
+ 5b1f17b1804b1-47787e442c2sm357437635e9.7.2025.11.17.23.28.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Nov 2025 23:19:19 -0800 (PST)
-Message-ID: <f1f5e3a2-2528-4c15-8729-63a01acdd8a5@redhat.com>
-Date: Tue, 18 Nov 2025 08:19:18 +0100
+ Mon, 17 Nov 2025 23:28:20 -0800 (PST)
+Message-ID: <838dee9e-0bae-4ac5-b524-3c3b93c5eeef@redhat.com>
+Date: Tue, 18 Nov 2025 08:28:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/22] python/mkvenv: ensure HAVE_LIB variables are
- actually constants
+Subject: Re: [PATCH 02/22] python/qapi: add an ignore for Pylint 4.x
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
@@ -101,7 +100,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
 References: <20251117185131.953681-1-jsnow@redhat.com>
- <20251117185131.953681-2-jsnow@redhat.com>
+ <20251117185131.953681-3-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -146,10 +145,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251117185131.953681-2-jsnow@redhat.com>
+In-Reply-To: <20251117185131.953681-3-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -158,7 +157,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,23 +174,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/11/2025 19.51, John Snow wrote:
-> Pylint 4.x has refined checking for variable names that behave as
-> constants vs ones that do not; unfortunately our tricky import machinery
-> is perceived as these variables being re-assigned.
-> 
-> Add a temporary variable with an underscore and assign to the global
-> constants precisely once to alleviate this new nag message. Add an
-> ignore for this name for older versions of pylint that developers may
-> have installed locally.
-> 
-> (In other words: there is no solution that will cater to both pre- and
-> post- 4.x versions, so we target 4.x here and silence older versions.)
+> Pylint 4.x wants to use a different regex for _Stub for some reason;
+> just silence this.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   python/scripts/mkvenv.py | 24 ++++++++++++++++--------
->   python/setup.cfg         |  1 +
->   2 files changed, 17 insertions(+), 8 deletions(-)
+>   scripts/qapi/introspect.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+> index 89ee5d5f176..7e28de2279a 100644
+> --- a/scripts/qapi/introspect.py
+> +++ b/scripts/qapi/introspect.py
+> @@ -59,7 +59,7 @@
+>   #
+>   # Sadly, mypy does not support recursive types; so the _Stub alias is used to
+>   # mark the imprecision in the type model where we'd otherwise use JSONValue.
+> -_Stub = Any
+> +_Stub = Any  # pylint: disable=invalid-name
+>   _Scalar = Union[str, bool, None]
+>   _NonScalar = Union[Dict[str, _Stub], List[_Stub]]
+>   _Value = Union[_Scalar, _NonScalar]
+
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
